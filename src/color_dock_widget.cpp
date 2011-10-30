@@ -57,7 +57,7 @@ ColorWidget::ColorWidget(Map* map, QWidget* parent): QWidget(parent), map(map)
 	move_down_button = new QPushButton(QIcon("images/arrow-down.png"), tr("Move Down"));
 	QPushButton* help_button = new QPushButton(QIcon("images/help.png"), tr("Help"));
 
-	buttons_group_layout = new QGridLayout();
+	QGridLayout* buttons_group_layout = new QGridLayout();
 	buttons_group_layout->setMargin(0);
 	buttons_group_layout->addWidget(new_button, 0, 0);
 	buttons_group_layout->addWidget(delete_button, 0, 1);
@@ -86,7 +86,6 @@ ColorWidget::ColorWidget(Map* map, QWidget* parent): QWidget(parent), map(map)
 	// Connections
 	connect(color_table, SIGNAL(cellChanged(int,int)), this, SLOT(cellChange(int,int)));
 	connect(color_table, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentCellChange(int,int,int,int)));
-	//connect(color_table->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection))
 	connect(color_table, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(cellDoubleClick(int,int)));
 	
 	connect(new_button, SIGNAL(clicked(bool)), this, SLOT(newColor()));

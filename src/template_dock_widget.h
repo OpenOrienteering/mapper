@@ -18,60 +18,84 @@
  */
 
 
-#ifndef _OPENORIENTEERING_COLOR_DOCK_WIDGET_H_
-#define _OPENORIENTEERING_COLOR_DOCK_WIDGET_H_
+#ifndef _OPENORIENTEERING_TEMPLATE_DOCK_WIDGET_H_
+#define _OPENORIENTEERING_TEMPLATE_DOCK_WIDGET_H_
 
 #include <QWidget>
+
+#include <QItemSelection>
 
 QT_BEGIN_NAMESPACE
 class QGridLayout;
 class QPushButton;
 class QTableWidget;
 class QBoxLayout;
+class QToolButton;
+class QGroupBox;
 QT_END_NAMESPACE
 
 class Map;
+class Template;
+class MapView;
 
-class ColorWidget : public QWidget
+class TemplateWidget : public QWidget
 {
 Q_OBJECT
 public:
-	ColorWidget(Map* map, QWidget* parent = NULL);
-    virtual ~ColorWidget();
+	TemplateWidget(Map* map, MapView* main_view, QWidget* parent = NULL);
+	virtual ~TemplateWidget();
+	
+	void addTemplateAt(Template* new_template, int pos);
+	
+	static Template* showOpenTemplateDialog(QWidget* dialog_parent, MapView* main_view);
 	
 protected:
-    virtual void resizeEvent(QResizeEvent* event);
+	virtual void resizeEvent(QResizeEvent* event);
 	
 protected slots:
-	void newColor();
-	void deleteColor();
-	void duplicateColor();
-	void moveColorUp();
-	void moveColorDown();
+	void newTemplate(QAction* action);
+	void openTemplate();
+	void deleteTemplate();
+	void duplicateTemplate();
+	void moveTemplateUp();
+	void moveTemplateDown();
 	void showHelp();
 	
 	void cellChange(int row, int column);
+	void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 	void currentCellChange(int current_row, int current_column, int previous_row, int previous_column);
 	void cellDoubleClick(int row, int column);
+	
+	void moveByHandClicked(bool checked);
+	void georeferenceClicked(bool checked);
+	void groupClicked();
+	void moreActionClicked(QAction* action);
 	
 private:
 	void addRow(int row);
 	void updateRow(int row);
+	int posFromRow(int row);
 	
-	bool wide_layout;
-	QBoxLayout* layout;
-	
-	// Color list
-	QTableWidget* color_table;
+	QTableWidget* template_table;
 	
 	// Buttons
-	QWidget* buttons_group;
+	QWidget* list_buttons_group;
 	QPushButton* delete_button;
 	QPushButton* duplicate_button;
 	QPushButton* move_up_button;
 	QPushButton* move_down_button;
 	
+	QGroupBox* active_buttons_group;
+	QPushButton* move_by_hand_button;
+	QPushButton* georeference_button;
+	QPushButton* group_button;
+	QToolButton* more_button;
+	
+	bool wide_layout;
+	QBoxLayout* layout;
+	
 	Map* map;
+	MapView* main_view;
 	bool react_to_changes;
 };
 

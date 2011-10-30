@@ -5,9 +5,9 @@ find_package(Qt4 REQUIRED)
 #set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_BUILD_TYPE Debug)
 
-add_definitions(-ansi -pedantic -Wall)
+add_definitions(-ansi -pedantic)
 if (CMAKE_COMPILER_IS_GNUCXX)
-	add_definitions(-Wno-long-long -Wno-deprecated)
+	add_definitions(-Wno-long-long -Wno-deprecated -Wall)
 endif (CMAKE_COMPILER_IS_GNUCXX)
 set(CMAKE_CXX_FLAGS_DEBUG "-g3 -O0 -DDEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "-g0 -O2 -s")
@@ -16,6 +16,7 @@ include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR})
 
 set(Mapper_SRCS
  src/main.cpp
+ src/util.cpp
 
  src/main_window.cpp
  src/main_window_home_screen.cpp
@@ -24,6 +25,9 @@ set(Mapper_SRCS
  src/map_dialog_new.cpp
  src/map_editor.cpp
  src/color_dock_widget.cpp
+
+ src/template.cpp
+ src/template_dock_widget.cpp
 )
 qt4_automoc(${Mapper_SRCS})
 

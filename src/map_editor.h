@@ -56,13 +56,19 @@ public slots:
 	void loadSymbolsFromClicked();
 	void loadColorsFromClicked();
 	
+	void showTemplateWindow(bool show);
+	void openTemplateClicked();
+	
 private:
 	Map* map;
 	MapView* main_view;
 	MapWidget* map_widget;
 	
 	QAction* color_window_act;
-	QDockWidget* color_dock_widget;
+	EditorDockWidget* color_dock_widget;
+	
+	QAction* template_window_act;
+	EditorDockWidget* template_dock_widget;
 };
 
 class MapWidget : public QWidget
@@ -72,6 +78,16 @@ public:
 	~MapWidget();
 	
 	void setMapView(MapView* view);
+	inline MapView* getMapView() const {return view;}
+	
+	/// Map viewport (GUI) coordinates to view coordinates or the other way round
+	QRectF viewportToView(const QRect& input);
+	QPointF viewportToView(QPoint input);
+	QRectF viewToViewport(const QRectF& input);
+	QRectF viewToViewport(const QRect& input);
+	QPointF viewToViewport(QPoint input);
+	
+	void setTemplateCacheDirty(QRectF view_rect, bool front_cache);
 	
 protected:
 	virtual void paintEvent(QPaintEvent* event);
@@ -82,7 +98,14 @@ protected:
 	virtual void wheelEvent(QWheelEvent* event);
 	
 private:
+	void updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background);
+	
 	MapView* view;
+	
+	QImage* below_template_cache;			// cache for templates below map layer
+	QRect below_template_cache_dirty_rect;
+	QImage* above_template_cache;			// cache for templates above map layer
+	QRect above_template_cache_dirty_rect;
 };
 
 /// Custom QDockWidget which unchecks the associated menu action when closed

@@ -24,7 +24,7 @@
 
 #include <QtGui>
 
-NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent)
+NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
 	setWindowTitle(tr("Create new map"));
 	

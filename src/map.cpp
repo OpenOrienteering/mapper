@@ -23,9 +23,12 @@
 #include <assert.h>
 
 #include <QMessageBox>
+#include <QFile>
+#include <QPainter>
 
 #include "map_editor.h"
-#include <QFile>
+#include "template.h"
+#include "util.h"
 
 // ### Map::Color ###
 
@@ -55,12 +58,21 @@ void Map::Color::updateFromRGB()
 
 Map::Map()
 {
+	first_front_template = 0;
+	
 	colors_dirty = false;
+	templates_dirty = false;
 	unsaved_changes = false;
 }
 Map::~Map()
 {
+	int size = colors.size();
+	for (int i = 0; i < size; ++i)
+		delete colors[i];
 	
+	size = templates.size();
+	for (int i = 0; i < size; ++i)
+		delete templates[i];
 }
 
 bool Map::saveTo(const QString& path)
@@ -100,6 +112,7 @@ bool Map::saveTo(const QString& path)
 	file.close();
 	
 	colors_dirty = false;
+	templates_dirty = false;
 	unsaved_changes = false;
 	return true;
 }
@@ -247,6 +260,55 @@ void Map::setColorsDirty()
 	colors_dirty = true;
 }
 
+void Map::setTemplate(Template* temp, int pos)
+{
+	templates[pos] = temp;
+}
+void Map::addTemplate(Template* temp, int pos)
+{
+	templates.insert(templates.begin() + pos, temp);
+	checkIfFirstTemplateAdded();
+}
+void Map::deleteTemplate(int pos)
+{
+	templates.erase(templates.begin() + pos);
+	
+	// NOTE: unlike with the colors, not updating the map widget(s) here because it is more normal that all templates are deleted
+}
+void Map::setTemplateAreaDirty(Template* temp, QRectF area)
+{
+	bool front_cache = false;	// TODO: is there a better way to find out if that is a front or back template?
+	int size = (int)templates.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (templates[i] == temp)
+		{
+			front_cache = i >= getFirstFrontTemplate();
+			break;
+		}
+	}
+	
+	for (int i = 0; i < (int)widgets.size(); ++i)
+		widgets[i]->setTemplateCacheDirty(widgets[i]->getMapView()->calculateViewBoundingBox(area), front_cache);
+}
+void Map::setTemplateAreaDirty(int i)
+{
+	if (i == -1)
+		return;	// no assert here as convenience, so setTemplateAreaDirty(-1) can be called without effect for the map layer
+	assert(i >= 0 && i < (int)templates.size());
+	
+	templates[i]->setTemplateAreaDirty();
+}
+void Map::setTemplatesDirty()
+{
+	if (!templates_dirty && !unsaved_changes)
+	{
+		emit(gotUnsavedChanges());
+		unsaved_changes = true;
+	}
+	templates_dirty = true;
+}
+
 void Map::checkIfFirstColorAdded()
 {
 	if (getNumColors() == 1)
@@ -255,12 +317,103 @@ void Map::checkIfFirstColorAdded()
 		updateAllMapWidgets();
 	}
 }
+void Map::checkIfFirstTemplateAdded()
+{
+	if (getNumTemplates() == 1)
+	{
+		// This is the first template - the help text in the map widget(s) should be updated
+		updateAllMapWidgets();
+	}
+}
 
 // ### MapView ###
 
 MapView::MapView(Map* map) : map(map)
 {
+	zoom = 1;
+	rotation = 0;
+	position_x = 0;
+	position_y = 0;
+	view_x = 0;
+	view_y = 0;
+	update();
+}
 
+QRectF MapView::calculateViewedRect(QRectF view_rect)
+{
+	QPointF min = view_rect.topLeft();
+	QPointF max = view_rect.bottomRight();
+	MapCoordF top_left = viewToMapF(min.x(), min.y());
+	MapCoordF top_right = viewToMapF(max.x(), min.y());
+	MapCoordF bottom_right = viewToMapF(max.x(), max.y());
+	MapCoordF bottom_left = viewToMapF(min.x(), max.y());
+	
+	QRectF result = QRectF(top_left.getX(), top_left.getY(), 0, 0);
+	rectInclude(result, QPointF(top_right.getX(), top_right.getY()));
+	rectInclude(result, QPointF(bottom_right.getX(), bottom_right.getY()));
+	rectInclude(result, QPointF(bottom_left.getX(), bottom_left.getY()));
+	
+	return QRectF(result.left() - 0.001, result.top() - 0.001, result.width() + 0.002, result.height() + 0.002);
+}
+QRectF MapView::calculateViewBoundingBox(QRectF map_rect)
+{
+	QPointF min = map_rect.topLeft();
+	MapCoord map_min = MapCoord(min.x(), min.y());
+	QPointF max = map_rect.bottomRight();
+	MapCoord map_max = MapCoord(max.x(), max.y());
+	
+	QPointF top_left;
+	mapToView(map_min, top_left.rx(), top_left.ry());
+	QPointF bottom_right;
+	mapToView(map_max, bottom_right.rx(), bottom_right.ry());
+	
+	MapCoord map_top_right = MapCoord(max.x(), min.y());
+	QPointF top_right;
+	mapToView(map_top_right, top_right.rx(), top_right.ry());
+	
+	MapCoord map_bottom_left = MapCoord(min.x(), max.y());
+	QPointF bottom_left;
+	mapToView(map_bottom_left, bottom_left.rx(), bottom_left.ry());
+	
+	QRectF result = QRectF(top_left.x(), top_left.y(), 0, 0);
+	rectInclude(result, QPointF(top_right.x(), top_right.y()));
+	rectInclude(result, QPointF(bottom_right.x(), bottom_right.y()));
+	rectInclude(result, QPointF(bottom_left.x(), bottom_left.y()));
+	
+	return QRectF(result.left() - 1, result.top() - 1, result.width() + 2, result.height() + 2);
+}
+
+void MapView::applyTransform(QPainter* painter)
+{
+	QTransform world_transform;
+	world_transform.setMatrix(map_to_view.get(0, 0), map_to_view.get(0, 1), map_to_view.get(0, 2),
+							  map_to_view.get(1, 0), map_to_view.get(1, 1), map_to_view.get(1, 2),
+							  map_to_view.get(2, 0), map_to_view.get(2, 1), map_to_view.get(2, 2));
+	painter->setWorldTransform(world_transform, true);
+}
+
+void MapView::update()
+{
+	double cosr = cos(rotation);
+	double sinr = sin(rotation);
+	
+	const double screen_pixel_per_mm = 4.999838577;	// TODO: make configurable (by specifying screen diameter in inch + resolution, or dpi)
+													// Calculation: pixel_height / ( sqrt((c^2)/(aspect^2 + 1)) * 2.54 )
+	double final_zoom = zoom * screen_pixel_per_mm;
+	
+	// Create map_to_view
+	map_to_view.setSize(3, 3);
+	map_to_view.set(0, 0, final_zoom * cosr);
+	map_to_view.set(0, 1, final_zoom * (-sinr));
+	map_to_view.set(1, 0, final_zoom * sinr);
+	map_to_view.set(1, 1, final_zoom * cosr);
+	map_to_view.set(0, 2, -final_zoom*(position_x/1000.0)*cosr + final_zoom*(position_y/1000.0)*sinr - view_x);
+	map_to_view.set(1, 2, -final_zoom*(position_x/1000.0)*sinr - final_zoom*(position_y/1000.0)*cosr - view_y);
+	map_to_view.set(2, 2, 1);
+	
+	// Create view_to_map
+	view_to_map.setSize(3, 3);
+	map_to_view.invert(view_to_map);
 }
 
 #include "map.moc"
