@@ -21,13 +21,16 @@
 #ifndef _OPENORIENTEERING_MAP_EDITOR_H_
 #define _OPENORIENTEERING_MAP_EDITOR_H_
 
-#include "main_window.h"
-
 #include <QDockWidget>
+
+#include "main_window.h"
+#include "map.h"
 
 class MapView;
 class Map;
 class MapWidget;
+class MapEditorActivity;
+class MapEditorTool;
 class EditorDockWidget;
 
 class MapEditorController : public MainWindowController
@@ -37,6 +40,14 @@ public:
 	MapEditorController();
 	MapEditorController(Map* map);
 	~MapEditorController();
+	
+	void setTool(MapEditorTool* new_tool);
+	inline MapEditorTool* getTool() const {return current_tool;}
+	
+	void setEditorActivity(MapEditorActivity* new_activity);
+	inline MapEditorActivity* getEditorActivity() const {return editor_activity;}
+	
+	inline Map* getMap() const {return map;}
 	
 	virtual bool save(const QString& path);
 	virtual bool load(const QString& path);
@@ -64,48 +75,14 @@ private:
 	MapView* main_view;
 	MapWidget* map_widget;
 	
+	MapEditorTool* current_tool;
+	MapEditorActivity* editor_activity;
+	
 	QAction* color_window_act;
 	EditorDockWidget* color_dock_widget;
 	
 	QAction* template_window_act;
 	EditorDockWidget* template_dock_widget;
-};
-
-class MapWidget : public QWidget
-{
-public:
-	MapWidget(QWidget* parent = NULL);
-	~MapWidget();
-	
-	void setMapView(MapView* view);
-	inline MapView* getMapView() const {return view;}
-	
-	/// Map viewport (GUI) coordinates to view coordinates or the other way round
-	QRectF viewportToView(const QRect& input);
-	QPointF viewportToView(QPoint input);
-	QRectF viewToViewport(const QRectF& input);
-	QRectF viewToViewport(const QRect& input);
-	QPointF viewToViewport(QPoint input);
-	
-	void setTemplateCacheDirty(QRectF view_rect, bool front_cache);
-	
-protected:
-	virtual void paintEvent(QPaintEvent* event);
-	virtual void resizeEvent(QResizeEvent* event);
-	virtual void mousePressEvent(QMouseEvent* event);
-	virtual void mouseMoveEvent(QMouseEvent* event);
-	virtual void mouseReleaseEvent(QMouseEvent* event);
-	virtual void wheelEvent(QWheelEvent* event);
-	
-private:
-	void updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background);
-	
-	MapView* view;
-	
-	QImage* below_template_cache;			// cache for templates below map layer
-	QRect below_template_cache_dirty_rect;
-	QImage* above_template_cache;			// cache for templates above map layer
-	QRect above_template_cache_dirty_rect;
 };
 
 /// Custom QDockWidget which unchecks the associated menu action when closed
@@ -116,6 +93,60 @@ public:
     virtual void closeEvent(QCloseEvent* event);
 private:
 	QAction* action;
+};
+
+/// Represents a type of editing activity, e.g. georeferencing. Only one activity can be active at a time.
+/// This is for example used to close the georeferencing window when selecting an edit tool.
+class MapEditorActivity : public QObject
+{
+Q_OBJECT
+public:
+	virtual ~MapEditorActivity() {}
+	
+	/// All initializations apart from setting variables like the activity object should be done here instead of in the constructor,
+	/// as now the old activity was properly destroyed (including reseting the activity drawing).
+	virtual void init() {}
+	
+	void setActivityObject(void* address) {activity_object = address;}
+	inline void* getActivityObject() const {return activity_object;}
+	
+	/// All dynamic drawings must be drawn here using the given painter. Drawing is only possible in the area specified by calling map->setActivityBoundingBox().
+	virtual void draw(QPainter* painter, MapWidget* widget) {};
+	
+protected:
+	void* activity_object;
+};
+
+/// Represents a tool which works usually by using the mouse.
+/// The given button is unchecked when the tool is destroyed.
+/// NOTE: do not change any settings (e.g. status bar text) in the constructor, as another tool still might be
+/// active at that point in time! Instead, use the init() method.
+class MapEditorTool : public QObject
+{
+public:
+	MapEditorTool(MapEditorController* editor, QAction* tool_button = NULL);
+	virtual ~MapEditorTool();
+	
+	/// This is called when the tool is activated and should be used to change any settings, e.g. the status bar text
+	virtual void init() {}
+	/// Must return the cursor which should be used for the tool in the editor windows. TODO: How to change the cursor while active?
+	virtual QCursor* getCursor() = 0;
+	
+	/// All dynamic drawings must be drawn here using the given painter. Drawing is only possible in the area specified by calling map->setDrawingBoundingBox().
+	virtual void draw(QPainter* painter, MapWidget* widget) {};
+	
+	// Mouse input
+	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
+	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
+	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
+	
+	// Key input
+	virtual bool keyPressEvent(QKeyEvent* event) {return false;}
+	virtual bool keyReleaseEvent(QKeyEvent* event) {return false;}
+	
+protected:
+	QAction* tool_button;
+	MapEditorController* editor;
 };
 
 #endif

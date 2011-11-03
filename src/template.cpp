@@ -28,24 +28,31 @@
 #include "util.h"
 #include "map.h"
 
+// ### TemplateTransform ###
+
+Template::TemplateTransform::TemplateTransform()
+{
+	template_x = 0;
+	template_y = 0;
+	template_scale_x = 1;
+	template_scale_y = 1;
+	template_rotation = 0;
+}
+
 // ### Template ###
 
 Template::Template(const QString& filename, Map* map) : map(map)
 {
 	template_path = filename;
 	template_file = QFileInfo(filename).fileName();
+	template_valid = false;
 	
-	template_x = 0;
-	template_y = 0;
-	template_scale_x = 1;
-	template_scale_y = 1;
-	template_rotation = 0;
+	georeferenced = false;
+	georeferencing_dirty = true;
 	
 	template_group = -1;
 	
-	//templateCenterX = 0;
-	//templateCenterY = 0;
-	template_valid = false;
+	updateTransformationMatrices();
 }
 Template::Template(const Template& other)
 {
@@ -53,18 +60,18 @@ Template::Template(const Template& other)
 	
 	template_path = other.template_path;
 	template_file = other.template_file;
+	template_valid = other.template_valid;
 	
-	template_x = other.template_x;
-	template_y = other.template_y;
-	template_scale_x = other.template_scale_x;
-	template_scale_y = other.template_scale_y;
-	template_rotation = other.template_rotation;
+	cur_trans = other.cur_trans;
+	other_trans = other.other_trans;
+	georeferenced = other.georeferenced;
+	georeferencing_dirty = other.georeferencing_dirty;
+	
+	map_to_template = other.map_to_template;
+	template_to_map = other.template_to_map;
+	template_to_map_other = other.template_to_map_other;
 	
 	template_group = other.template_group;
-	
-	//templateCenterX = other.templateCenterX;
-	//templateCenterY = other.templateCenterY;
-	template_valid = other.template_valid;
 }
 Template::~Template()
 {	
@@ -72,8 +79,8 @@ Template::~Template()
 
 void Template::applyTemplateTransform(QPainter* painter)
 {
-	painter->translate(template_x / 1000.0, template_y / 1000.0);
-	painter->rotate(-template_rotation);
+	painter->translate(cur_trans.template_x / 1000.0, cur_trans.template_y / 1000.0);
+	painter->rotate(-cur_trans.template_rotation * (180 / M_PI));
 	painter->scale(getTemplateFinalScaleX(), getTemplateFinalScaleY());
 	//painter->translate(-templateCenterX, -templateCenterY);
 }
@@ -86,38 +93,66 @@ void Template::setTemplateAreaDirty()
 
 QRectF Template::calculateBoundingBox()
 {
-	// Calculate transformation matrix elements
-	double cosr = cos(-template_rotation);
-	double sinr = sin(-template_rotation);
-	double scale_x = getTemplateFinalScaleX();
-	double scale_y = getTemplateFinalScaleY();
-	
-	double t00 = scale_x * cosr;
-	double t01 = scale_y * (-sinr);
-	double t10 = scale_x * sinr;
-	double t11 = scale_y * cosr;
-	double t02 = template_x / 1000.0;
-	double t12 = template_y / 1000.0;
-	
-	// TODO: Test
-	QRectF testA(-10, -10, 0, 0);
-	QRectF testB(20, 20, 0, 0);
-	QRectF test = testA.united(testB);
-	
 	// Create bounding box by calculating the positions of all corners of the transformed extent rect
 	QRectF extent = getExtent();
-	QRectF bbox(extent.left() * t00 + extent.top() * t01 + t02, extent.left() * t10 + extent.top() * t11 + t12, 0, 0);
 	
-	QPointF top_right(extent.right() * t00 + extent.top() * t01 + t02, extent.right() * t10 + extent.top() * t11 + t12);
-	rectInclude(bbox, top_right);
-	
-	QPointF bottom_right(extent.right() * t00 + extent.bottom() * t01 + t02, extent.right() * t10 + extent.bottom() * t11 + t12);
-	rectInclude(bbox, bottom_right);
-	
-	QPointF bottom_left(extent.left() * t00 + extent.bottom() * t01 + t02, extent.left() * t10 + extent.bottom() * t11 + t12);
-	rectInclude(bbox, bottom_left);
-	
+	QRectF bbox(templateToMap(extent.topLeft()).toQPointF(), QSizeF(0, 0));
+	rectInclude(bbox, templateToMap(extent.topRight()).toQPointF());
+	rectInclude(bbox, templateToMap(extent.bottomRight()).toQPointF());
+	rectInclude(bbox, templateToMap(extent.bottomLeft()).toQPointF());
 	return bbox;
+}
+
+void Template::addPassPoint(const Template::PassPoint& point, int pos)
+{
+	passpoints.insert(passpoints.begin() + pos, point);
+}
+void Template::deletePassPoint(int pos)
+{
+	passpoints.erase(passpoints.begin() + pos);
+}
+void Template::clearPassPoints()
+{
+	passpoints.clear();
+	setGeoreferencingDirty(true);
+	georeferenced = false;
+}
+
+void Template::switchTransforms()
+{
+	setTemplateAreaDirty();
+	
+	TemplateTransform temp = cur_trans;
+	cur_trans = other_trans;
+	other_trans = temp;
+	template_to_map_other = template_to_map;
+	updateTransformationMatrices();
+	
+	georeferenced = !georeferenced;
+	setTemplateAreaDirty();
+	map->setTemplatesDirty();
+}
+void Template::getTransform(Template::TemplateTransform& out)
+{
+	out = cur_trans;
+}
+void Template::setTransform(const Template::TemplateTransform& transform)
+{
+	setTemplateAreaDirty();
+	
+	cur_trans = transform;
+	updateTransformationMatrices();
+	
+	setTemplateAreaDirty();
+	map->setTemplatesDirty();
+}
+void Template::getOtherTransform(Template::TemplateTransform& out)
+{
+	out = other_trans;
+}
+void Template::setOtherTransform(const Template::TemplateTransform& transform)
+{
+	other_trans = transform;
 }
 
 Template* Template::templateForFile(const QString& path, Map* map)
@@ -130,6 +165,27 @@ Template* Template::templateForFile(const QString& path, Map* map)
 		return NULL;	// TODO
 	else
 		return NULL;
+}
+
+void Template::updateTransformationMatrices()
+{
+	double cosr = cos(-cur_trans.template_rotation);
+	double sinr = sin(-cur_trans.template_rotation);
+	double scale_x = getTemplateFinalScaleX();
+	double scale_y = getTemplateFinalScaleY();
+	
+	template_to_map.setSize(3, 3);
+	template_to_map.set(0, 0, scale_x * cosr);
+	template_to_map.set(0, 1, scale_y * (-sinr));
+	template_to_map.set(1, 0, scale_x * sinr);
+	template_to_map.set(1, 1, scale_y * cosr);
+	template_to_map.set(0, 2, cur_trans.template_x / 1000.0);
+	template_to_map.set(1, 2, cur_trans.template_y / 1000.0);
+	template_to_map.set(2, 0, 0);
+	template_to_map.set(2, 1, 0);
+	template_to_map.set(2, 2, 1);
+	
+	template_to_map.invert(map_to_template);
 }
 
 // ### TemplateImage ###
@@ -145,8 +201,6 @@ TemplateImage::TemplateImage(const QString& filename, Map* map): Template(filena
 	}
 	
 	template_valid = true;
-	//templateCenterX = 0.5f * pixmap->width();
-	//templateCenterY = 0.5f * pixmap->height();
 }
 TemplateImage::TemplateImage(const TemplateImage& other): Template(other)
 {
@@ -169,11 +223,13 @@ bool TemplateImage::open(QWidget* dialog_parent, MapView* main_view)
 	if (open_dialog.exec() == QDialog::Rejected)
 		return false;
 	
-	template_scale_x = open_dialog.getMpp();
-	template_scale_y = open_dialog.getMpp();
+	cur_trans.template_scale_x = open_dialog.getMpp();
+	cur_trans.template_scale_y = open_dialog.getMpp();
 	
-	template_x = main_view->getPositionX();
-	template_y = main_view->getPositionY();
+	cur_trans.template_x = main_view->getPositionX();
+	cur_trans.template_y = main_view->getPositionY();
+	
+	updateTransformationMatrices();
 	
 	return true;
 }
@@ -188,11 +244,11 @@ QRectF TemplateImage::getExtent()
 
 double TemplateImage::getTemplateFinalScaleX() const
 {
-    return template_scale_x * 1000 / map->getScaleDenominator();
+	return cur_trans.template_scale_x * 1000 / map->getScaleDenominator();
 }
 double TemplateImage::getTemplateFinalScaleY() const
 {
-	return template_scale_y * 1000 / map->getScaleDenominator();
+	return cur_trans.template_scale_y * 1000 / map->getScaleDenominator();
 }
 
 TemplateImageOpenDialog::TemplateImageOpenDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)

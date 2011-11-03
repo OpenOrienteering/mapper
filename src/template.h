@@ -24,6 +24,8 @@
 #include <QDialog>
 #include <QRectF>
 
+#include "map.h"
+
 QT_BEGIN_NAMESPACE
 class QPixmap;
 class QPainter;
@@ -37,6 +39,25 @@ class MapView;
 class Template
 {
 public:
+	struct TemplateTransform
+	{
+		TemplateTransform();
+		
+		qint64 template_x;			// in 1/1000 mm
+		qint64 template_y;
+		double template_scale_x;
+		double template_scale_y;
+		double template_rotation;	// 0 - 2*M_PI
+	};
+	struct PassPoint
+	{
+		MapCoordF src_coords_template;		// start position specified by the user, in template coordinates
+		MapCoordF src_coords_map;			// start position specified by the user
+		MapCoordF dest_coords_map;			// end position specified by the user
+		MapCoordF calculated_coords_map;	// position where the point really ended up
+		double error;						// distance between dest_coords_map and calculated_coords_map; negative if not calculated yet
+	};
+	
 	Template(const QString& filename, Map* map);
 	Template(const Template& other);
 	virtual ~Template();
@@ -61,57 +82,105 @@ public:
 	/// Returns the bounding box of the template in map coordinates (mm) after transformations applied
 	QRectF calculateBoundingBox();
 	
-	/// Must return the extent of the template around the origin (before applying any transformations)
+	/// Must return the extent of the template around the origin (in template coordinates, without applying any transformations)
 	virtual QRectF getExtent() = 0;
 	
+	// Coordinate transformations between template coordinates and map coordinates
+	
+	inline MapCoordF mapToTemplate(MapCoordF coords)
+	{
+		return MapCoordF(map_to_template.get(0, 0) * coords.getX() + map_to_template.get(0, 1) * coords.getY() + map_to_template.get(0, 2),
+						 map_to_template.get(1, 0) * coords.getX() + map_to_template.get(1, 1) * coords.getY() + map_to_template.get(1, 2));
+	}
+	inline MapCoordF templateToMap(MapCoordF coords)
+	{
+		return MapCoordF(template_to_map.get(0, 0) * coords.getX() + template_to_map.get(0, 1) * coords.getY() + template_to_map.get(0, 2),
+						 template_to_map.get(1, 0) * coords.getX() + template_to_map.get(1, 1) * coords.getY() + template_to_map.get(1, 2));
+	}
+	inline MapCoordF templateToMap(QPointF coords)
+	{
+		return MapCoordF(template_to_map.get(0, 0) * coords.x() + template_to_map.get(0, 1) * coords.y() + template_to_map.get(0, 2),
+						 template_to_map.get(1, 0) * coords.x() + template_to_map.get(1, 1) * coords.y() + template_to_map.get(1, 2));
+	}
+	inline MapCoordF templateToMapOther(MapCoordF coords)	// normally not needed - this uses the other transformation parameters
+	{
+		return MapCoordF(template_to_map_other.get(0, 0) * coords.getX() + template_to_map_other.get(0, 1) * coords.getY() + template_to_map_other.get(0, 2),
+						 template_to_map_other.get(1, 0) * coords.getX() + template_to_map_other.get(1, 1) * coords.getY() + template_to_map_other.get(1, 2));
+	}
+	
+	// Pass points & georeferencing
+	
+	inline int getNumPassPoints() const {return passpoints.size();}
+	inline PassPoint* getPassPoint(int i) {return &passpoints[i];}
+	void addPassPoint(const PassPoint& point, int pos);
+	void deletePassPoint(int pos);
+	void clearPassPoints();
+	
+	void switchTransforms();	// change from georeferenced into original state or the other way round
+	void getTransform(TemplateTransform& out);
+	void setTransform(const TemplateTransform& transform);
+	void getOtherTransform(TemplateTransform& out);
+	void setOtherTransform(const TemplateTransform& transform);
+	
 	// Getters / Setters
+	
 	inline bool isTemplateValid() const {return template_valid;}
 	inline const QString& getTemplateFilename() const {return template_file;}
 	inline const QString& getTemplatePath() const {return template_path;}
 	
 	inline void setTemplateFilename(const QString& new_filename) {template_file = new_filename;}
 	
-	inline qint64 getTemplateX() const {return template_x;}
-	inline void setTemplateX(qint64 x) {template_x = x;}
+	inline qint64 getTemplateX() const {return cur_trans.template_x;}
+	inline void setTemplateX(qint64 x) {cur_trans.template_x = x; updateTransformationMatrices();}
 	
-	inline qint64 getTemplateY() const {return template_y;}
-	inline void setTemplateY(qint64 y) {template_y = y;}
+	inline qint64 getTemplateY() const {return cur_trans.template_y;}
+	inline void setTemplateY(qint64 y) {cur_trans.template_y = y; updateTransformationMatrices();}
 	
 	// These are the scale values for display; the scale values used for scale calculation can be
 	// different and are returned by getTemplateFinalScaleX/Y. For example, this can be used to
 	// display the scale in a different unit.
-	inline double getTemplateScaleX() const {return template_scale_x;}
-	inline void setTemplateScaleX(double scale_x) {template_scale_x = scale_x;}
-	inline double getTemplateScaleY() const {return template_scale_y;}
-	inline void setTemplateScaleY(double scale_y) {template_scale_y = scale_y;}
+	inline double getTemplateScaleX() const {return cur_trans.template_scale_x;}
+	inline void setTemplateScaleX(double scale_x) {cur_trans.template_scale_x = scale_x; updateTransformationMatrices();}
+	inline double getTemplateScaleY() const {return cur_trans.template_scale_y;}
+	inline void setTemplateScaleY(double scale_y) {cur_trans.template_scale_y = scale_y; updateTransformationMatrices();}
 	virtual double getTemplateFinalScaleX() const {return getTemplateScaleX();}
 	virtual double getTemplateFinalScaleY() const {return getTemplateScaleY();}
 	
-	inline double getTemplateRotation() const {return template_rotation;}
-	inline void setTemplateRotation(double rotation) {template_rotation = rotation;}
+	inline double getTemplateRotation() const {return cur_trans.template_rotation;}
+	inline void setTemplateRotation(double rotation) {cur_trans.template_rotation = rotation; updateTransformationMatrices();}
+	
+	inline bool isGeoreferencingApplied() const {return georeferenced;}
+	inline bool isGeoreferencingDirty() const {return georeferencing_dirty;}
+	inline void setGeoreferencingDirty(bool value) {georeferencing_dirty = value; if (value) map->setTemplatesDirty();}
 	
 	inline int getTemplateGroup() const {return template_group;}
 	inline void setTemplateGroup(int value) {template_group = value;}
+	
+	inline Map* getMap() const {return map;}
 	
 	/// Tries to find a matching template subclass for the given path by looking at the file extension
 	static Template* templateForFile(const QString& path, Map* map);
 	
 protected:
+	void updateTransformationMatrices();
+	
 	QString template_file;
 	QString template_path;
+	bool template_valid;		// if the file cannot be found or loaded, the template is invalid (to be filled by the derived class)
 	
-	qint64 template_x;			// in 1/1000 mm
-	qint64 template_y;
-	double template_scale_x;
-	double template_scale_y;
-	double template_rotation;	// 0 - 2*M_PI
+	// Transformation parameters & georeferencing; NOTE: call updateTransformationMatrices() after making direct changes to the transforms!
+	TemplateTransform cur_trans;
+	TemplateTransform other_trans;
+	bool georeferenced;			// if true, cur_trans is the georeferenced transformation, otherwise it is the original one
+	bool georeferencing_dirty;	// if true, the georeferenced transformation has to be recalculated
+	std::vector< PassPoint > passpoints;
+	
+	// Transformation matrices
+	Matrix map_to_template;
+	Matrix template_to_map;
+	Matrix template_to_map_other;
 	
 	int template_group;			// -1: no group
-	
-	// to be filled by the derived class
-	//float templateCenterX;
-	//float templateCenterY;
-	bool template_valid;		// if the file cannot be found or loaded, the template is invalid
 	
 	Map* map;					// the map which contains this template
 };

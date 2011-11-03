@@ -75,6 +75,17 @@ public:
 	/// Redraws all map widgets completely - that can be slow!
 	void updateAllMapWidgets();
 	
+	// Current drawing
+	
+	/// Sets the rect (given in map coordinates) as dirty rect for every map widget, enlarged by the given pixel border
+	void setDrawingBoundingBox(QRectF map_coords_rect, int pixel_border, bool do_update = true);
+	void clearDrawingBoundingBox();
+	
+	void setActivityBoundingBox(QRectF map_coords_rect, int pixel_border, bool do_update = true);
+	void clearActivityBoundingBox();
+	
+	void updateDrawing(QRectF map_coords_rect, int pixel_border);	// updates all dynamic drawing: tool & activity drawings
+	
 	// Colors
 	
 	inline int getNumColors() const {return (int)colors.size();}
@@ -207,6 +218,11 @@ public:
 		return (other.x == x) && (other.y == y);
 	}
 	
+    inline QPointF toQPointF()
+	{
+		return QPointF(x, y);
+	}
+	
 protected:
 	
 	double x;
@@ -225,15 +241,33 @@ public:
 	{
 		return MapCoord(view_to_map.get(0, 0) * x + view_to_map.get(0, 1) * y + view_to_map.get(0, 2), view_to_map.get(1, 0) * x + view_to_map.get(1, 1) * y + view_to_map.get(1, 2));
 	}
+	inline MapCoord viewToMap(QPointF point)
+	{
+		return viewToMap(point.x(), point.y());
+	}
 	inline MapCoordF viewToMapF(double x, double y)
 	{
 		return MapCoordF(view_to_map.get(0, 0) * x + view_to_map.get(0, 1) * y + view_to_map.get(0, 2), view_to_map.get(1, 0) * x + view_to_map.get(1, 1) * y + view_to_map.get(1, 2));
+	}
+	inline MapCoordF viewToMapF(QPointF point)
+	{
+		return viewToMapF(point.x(), point.y());
 	}
 	/// Converts map coordinates to view coordinates (with origin at the center of the view)
 	inline void mapToView(MapCoord coords, double& out_x, double& out_y)
 	{
 		out_x = map_to_view.get(0, 0) * coords.xd() + map_to_view.get(0, 1) * coords.yd() + map_to_view.get(0, 2);
 		out_y = map_to_view.get(1, 0) * coords.xd() + map_to_view.get(1, 1) * coords.yd() + map_to_view.get(1, 2);
+	}
+	inline QPointF mapToView(MapCoord coords)
+	{
+		return QPointF(map_to_view.get(0, 0) * coords.xd() + map_to_view.get(0, 1) * coords.yd() + map_to_view.get(0, 2),
+					   map_to_view.get(1, 0) * coords.xd() + map_to_view.get(1, 1) * coords.yd() + map_to_view.get(1, 2));
+	}
+	inline QPointF mapToView(MapCoordF coords)
+	{
+		return QPointF(map_to_view.get(0, 0) * coords.getX() + map_to_view.get(0, 1) * coords.getY() + map_to_view.get(0, 2),
+					   map_to_view.get(1, 0) * coords.getX() + map_to_view.get(1, 1) * coords.getY() + map_to_view.get(1, 2));
 	}
 	/// Calculates the bounding box of the map coordinates which can be viewed using the given view coordinates rect
 	QRectF calculateViewedRect(QRectF view_rect);

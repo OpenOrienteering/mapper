@@ -23,11 +23,13 @@ set(Mapper_SRCS
 
  src/map.cpp
  src/map_dialog_new.cpp
+ src/map_widget.cpp
  src/map_editor.cpp
  src/color_dock_widget.cpp
 
  src/template.cpp
  src/template_dock_widget.cpp
+ src/georeferencing.cpp
 )
 qt4_automoc(${Mapper_SRCS})
 

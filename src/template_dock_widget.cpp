@@ -26,8 +26,10 @@
 
 #include "map.h"
 #include "template.h"
+#include "map_editor.h"
+#include "georeferencing.h"
 
-TemplateWidget::TemplateWidget(Map* map, MapView* main_view, QWidget* parent): QWidget(parent), map(map), main_view(main_view)
+TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent): QWidget(parent), map(map), main_view(main_view), controller(controller)
 {
 	react_to_changes = true;
 	
@@ -86,6 +88,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, QWidget* parent): Q
 	move_by_hand_button = new QPushButton(QIcon("images/move.png"), tr("Move by hand"));
 	move_by_hand_button->setCheckable(true);
 	georeference_button = new QPushButton(tr("Georeference..."));	// TODO: needs icon (two connected crosses?)
+	georeference_button->setCheckable(true);
 	group_button = new QPushButton(QIcon("images/group.png"), tr("(Un)group"));
 	
 	more_button = new QToolButton();
@@ -265,7 +268,7 @@ void TemplateWidget::deleteTemplate()
 	
 	map->setTemplateAreaDirty(pos);
 	map->deleteTemplate(pos);
-	template_table->removeRow(pos);
+	template_table->removeRow(template_table->currentRow());
 	if (pos < map->getFirstFrontTemplate())
 		map->setFirstFrontTemplate(map->getFirstFrontTemplate() - 1);
 	
@@ -370,7 +373,9 @@ void TemplateWidget::selectionChanged(const QItemSelection& selected, const QIte
 		return;
 	
 	int current_row = template_table->currentRow();
-	bool map_row = posFromRow(current_row) < 0;	// does the selection contain the map row?
+	int pos = posFromRow(current_row);
+	bool map_row = pos < 0;	// does the selection contain the map row?
+	Template* temp = (current_row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
 	bool multiple_rows_selected = false;		// is more than one row selected?
 	
 	int first_selected_row = (template_table->selectedItems().size() > 0) ? template_table->selectedItems()[0]->row() : 0;
@@ -399,6 +404,11 @@ void TemplateWidget::selectionChanged(const QItemSelection& selected, const QIte
 		group_button->setEnabled(multiple_rows_selected || (!multiple_rows_selected && map->getTemplate(posFromRow(current_row))->getTemplateGroup() >= 0));
 		more_button->setEnabled(!multiple_rows_selected);
 	}
+	
+	if (multiple_rows_selected)
+		georeference_button->setChecked(false);
+	else
+		georeference_button->setChecked(temp && controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == (void*)temp);
 }
 void TemplateWidget::currentCellChange(int current_row, int current_column, int previous_row, int previous_column)
 {
@@ -415,7 +425,30 @@ void TemplateWidget::moveByHandClicked(bool checked)
 }
 void TemplateWidget::georeferenceClicked(bool checked)
 {
-	// TODO
+	if (checked)
+	{
+		Template* temp = map->getTemplate(posFromRow(template_table->currentRow()));
+		GeoreferencingActivity* activity = new GeoreferencingActivity(temp, controller);
+		controller->setEditorActivity(activity);
+		connect(activity->getDockWidget(), SIGNAL(closed()), this, SLOT(georeferencingWindowClosed()));
+	}
+	else
+	{
+		controller->setEditorActivity(NULL);	// TODO: default activity?!
+	}
+}
+void TemplateWidget::georeferencingWindowClosed()
+{
+	int current_row = template_table->currentRow();
+	if (current_row < 0)
+		return;
+	int pos = posFromRow(current_row);
+	if (pos < 0)
+		return;
+	Template* current_template = map->getTemplate(pos);
+	
+	if (controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == (void*)current_template)
+		georeference_button->setChecked(false);
 }
 void TemplateWidget::groupClicked()
 {

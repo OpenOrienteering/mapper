@@ -37,12 +37,13 @@ QT_END_NAMESPACE
 class Map;
 class Template;
 class MapView;
+class MapEditorController;
 
 class TemplateWidget : public QWidget
 {
 Q_OBJECT
 public:
-	TemplateWidget(Map* map, MapView* main_view, QWidget* parent = NULL);
+	TemplateWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent = NULL);
 	virtual ~TemplateWidget();
 	
 	void addTemplateAt(Template* new_template, int pos);
@@ -68,6 +69,7 @@ protected slots:
 	
 	void moveByHandClicked(bool checked);
 	void georeferenceClicked(bool checked);
+	void georeferencingWindowClosed();
 	void groupClicked();
 	void moreActionClicked(QAction* action);
 	
@@ -96,6 +98,7 @@ private:
 	
 	Map* map;
 	MapView* main_view;
+	MapEditorController* controller;
 	bool react_to_changes;
 };
 

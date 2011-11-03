@@ -23,6 +23,7 @@
 #include <QtGui>
 
 #include "map.h"
+#include "map_widget.h"
 #include "color_dock_widget.h"
 #include "template_dock_widget.h"
 #include "template.h"
@@ -33,15 +34,45 @@ MapEditorController::MapEditorController()
 {
 	map = NULL;
 	main_view = NULL;
+	editor_activity = NULL;
+	current_tool = NULL;	// TODO: default tool?
 }
 MapEditorController::MapEditorController(Map* map) : map(map)
 {
 	main_view = new MapView(map);
+	editor_activity = NULL;
+	current_tool = NULL;	// TODO: default tool?
 }
 MapEditorController::~MapEditorController()
 {
+	delete current_tool;
+	delete editor_activity;
 	delete main_view;
 	delete map;
+}
+
+void MapEditorController::setTool(MapEditorTool* new_tool)
+{
+	delete current_tool;
+	map->clearDrawingBoundingBox();
+	
+	current_tool = new_tool;
+	if (current_tool)
+		current_tool->init();
+	
+	map_widget->setTool(current_tool);
+}
+
+void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
+{
+	delete editor_activity;
+	map->clearActivityBoundingBox();
+	
+	editor_activity = new_activity;
+	if (editor_activity)
+		editor_activity->init();
+	
+	map_widget->setActivity(editor_activity);
 }
 
 bool MapEditorController::save(const QString& path)
@@ -227,7 +258,7 @@ void MapEditorController::showTemplateWindow(bool show)
 	else
 	{
 		template_dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, window);
-		template_dock_widget->setWidget(new TemplateWidget(map, main_view, template_dock_widget));
+		template_dock_widget->setWidget(new TemplateWidget(map, main_view, this, template_dock_widget));
 		window->addDockWidget(Qt::RightDockWidgetArea, template_dock_widget, Qt::Vertical);
 	}
 }
@@ -242,242 +273,12 @@ void MapEditorController::openTemplateClicked()
 	else
 	{
 		template_dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, window);
-		template_dock_widget->setWidget(new TemplateWidget(map, main_view, template_dock_widget));
+		template_dock_widget->setWidget(new TemplateWidget(map, main_view, this, template_dock_widget));
 		window->addDockWidget(Qt::RightDockWidgetArea, template_dock_widget, Qt::Vertical);
 	}
 	
 	TemplateWidget* template_widget = reinterpret_cast<TemplateWidget*>(template_dock_widget->widget());
 	template_widget->addTemplateAt(new_template, -1);
-}
-
-// ### MapWidget ###
-
-MapWidget::MapWidget(QWidget* parent) : QWidget(parent)
-{
-	view = NULL;
-	below_template_cache = NULL;
-	above_template_cache = NULL;
-	
-	setAttribute(Qt::WA_OpaquePaintEvent);
-	setAutoFillBackground(false);
-}
-MapWidget::~MapWidget()
-{
-	if (view)
-		view->getMap()->removeMapWidget(this);
-	
-	delete below_template_cache;
-	delete above_template_cache;
-}
-
-void MapWidget::setMapView(MapView* view)
-{
-	if (this->view != view)
-	{
-		if (this->view)
-			this->view->getMap()->removeMapWidget(this);
-		
-		this->view = view;
-		
-		if (view)
-			view->getMap()->addMapWidget(this);
-		
-		update();
-	}
-}
-
-QRectF MapWidget::viewportToView(const QRect& input)
-{
-	return QRectF(input.left() - 0.5*width(), input.top() - 0.5*height(), input.width(), input.height());
-}
-QPointF MapWidget::viewportToView(QPoint input)
-{
-	return QPointF(input.x() - 0.5*width(), input.y() - 0.5*height());
-}
-QRectF MapWidget::viewToViewport(const QRectF& input)
-{
-	return QRectF(input.left() + 0.5*width(), input.top() + 0.5*height(), input.width(), input.height());
-}
-QRectF MapWidget::viewToViewport(const QRect& input)
-{
-	return QRectF(input.left() + 0.5*width(), input.top() + 0.5*height(), input.width(), input.height());
-}
-QPointF MapWidget::viewToViewport(QPoint input)
-{
-	return QPointF(input.x() + 0.5*width(), input.y() + 0.5*height());
-}
-
-void MapWidget::setTemplateCacheDirty(QRectF view_rect, bool front_cache)
-{
-	QRect* cache_dirty_rect = front_cache ? &above_template_cache_dirty_rect : &below_template_cache_dirty_rect;
-	QRectF viewport_rect = viewToViewport(view_rect);
-	QRect integer_rect = QRect(viewport_rect.left() - 1, viewport_rect.top() - 1, viewport_rect.width() + 2, viewport_rect.height() + 2);
-	
-	if (cache_dirty_rect->isValid())
-		*cache_dirty_rect = cache_dirty_rect->united(integer_rect);
-	else
-		*cache_dirty_rect = integer_rect;
-	
-	update();
-}
-
-void MapWidget::paintEvent(QPaintEvent* event)
-{
-	// Draw on the widget
-	QPainter painter;
-	painter.begin(this);
-	painter.setClipRect(event->rect());
-	
-	// Background color
-	painter.fillRect(event->rect(), QColor(Qt::gray));	// TODO: do this more intelligently based on drag x/y
-	
-	// No colors defined? Provide a litte help message ... TODO: reactivate
-	/*if (view && view->getMap()->getNumColors() == 0)
-	{
-		QFont font = painter.font();
-		font.setPointSize(2 * font.pointSize());
-		font.setBold(true);
-		painter.setFont(font);
-		painter.drawText(QRect(0, 0, width(), height()), Qt::AlignCenter, tr("- Empty map -\nStart by defining some colors:\nSelect Symbols -> Color window to\nopen the color dialog and\ndefine the colors there."));
-	}
-	else if (true) // TODO; No symbols defined?
-	{
-		QFont font = painter.font();
-		font.setPointSize(2 * font.pointSize());
-		font.setBold(true);
-		painter.setFont(font);
-		painter.drawText(QRect(0, 0, width(), height()), Qt::AlignCenter, tr("- No symbols -\nNow define some symbols:\nRight-click in the symbol bar\nand select \"New\" to create\na new symbol."));
-	}
-	else if (view && view->getMap()->getNumTemplates() == 0 && NoObjectsTODO)	// No templates defined?
-	{
-		QFont font = painter.font();
-		font.setPointSize(2 * font.pointSize());
-		font.setBold(true);
-		painter.setFont(font);
-		painter.drawText(QRect(0, 0, width(), height()), Qt::AlignCenter, tr("- Ready to draw -\nStart drawing or load a base map.\nTo load a base map, click\nTemplates -> Open template..."));
-	}
-	else if (view)
-	{*/
-		// Update all dirty caches
-		// TODO: It would be an idea to do these updates in a background thread and use the old caches in the meantime
-		if (below_template_cache_dirty_rect.isValid())
-			updateTemplateCache(below_template_cache, below_template_cache_dirty_rect, 0, view->getMap()->getFirstFrontTemplate() - 1, true);
-		if (above_template_cache_dirty_rect.isValid())
-			updateTemplateCache(above_template_cache, above_template_cache_dirty_rect, view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1, false);
-		
-		// Draw caches
-		if (below_template_cache && view->getMap()->getFirstFrontTemplate() > 0)
-			painter.drawImage(QPoint(0, 0), *below_template_cache, rect());
-			//painter.drawPixmap(QPoint(view->getCameraDragX(), view->getCameraDragY()), *below_template_cache, rect());
-		
-		// TODO: Map cache
-		
-		if (above_template_cache && view->getMap()->getNumTemplates() - view->getMap()->getFirstFrontTemplate() > 0)
-			painter.drawImage(QPoint(0, 0), *above_template_cache, rect());
-			//painter.drawPixmap(QPoint(view->getCameraDragX(), view->getCameraDragY()), *above_template_cache, rect());
-	//}
-	
-	painter.end();
-}
-void MapWidget::resizeEvent(QResizeEvent* event)
-{
-	if (below_template_cache && below_template_cache->size() != event->size())
-	{
-		delete below_template_cache;
-		below_template_cache = NULL;
-		below_template_cache_dirty_rect = rect();
-	}
-	if (above_template_cache && above_template_cache->size() != event->size())
-	{
-		delete above_template_cache;
-		above_template_cache = NULL;
-		above_template_cache_dirty_rect = rect();
-	}
-}
-void MapWidget::mousePressEvent(QMouseEvent* event)
-{
-    QWidget::mousePressEvent(event);
-}
-void MapWidget::mouseMoveEvent(QMouseEvent* event)
-{
-    QWidget::mouseMoveEvent(event);
-}
-void MapWidget::mouseReleaseEvent(QMouseEvent* event)
-{
-    QWidget::mouseReleaseEvent(event);
-}
-void MapWidget::wheelEvent(QWheelEvent* event)
-{
-    QWidget::wheelEvent(event);
-}
-
-void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background)
-{
-	if (first_template > last_template)
-		return;	// no template visible
-	
-	if (!cache)
-	{
-		// Lazy allocation of cache image
-		cache = new QImage(size(), QImage::Format_ARGB32_Premultiplied);
-		dirty_rect = rect();
-		
-		//if (!use_background)
-		//	cache->fill(QColor(Qt::transparent));
-	}
-	
-	// Make sure not to use a bigger draw rect than necessary
-	dirty_rect = dirty_rect.intersected(rect());
-	
-	// Start drawing
-	QPainter painter;
-	painter.begin(cache);
-	painter.setClipRect(dirty_rect);
-	
-	// Fill with background color (TODO: make configurable)
-	if (use_background)
-		painter.fillRect(dirty_rect, Qt::white);
-	else
-	{
-		QPainter::CompositionMode mode = painter.compositionMode();
-		painter.setCompositionMode(QPainter::CompositionMode_Clear);
-		painter.fillRect(dirty_rect, Qt::transparent);
-		painter.setCompositionMode(mode);
-	}
-	
-	// Draw templates
-	Map* map = view->getMap();
-	
-	painter.translate(width() / 2.0, height() / 2.0);
-	view->applyTransform(&painter);
-	QRectF base_view_rect = view->calculateViewedRect(viewportToView(dirty_rect));
-	
-	for (int i = first_template; i <= last_template; ++i)
-	{
-		Template* templ = map->getTemplate(i);
-		float scale = view->getZoom() * std::max(templ->getTemplateScaleX(), templ->getTemplateScaleY());
-		
-		QRectF view_rect;
-		if (templ->getTemplateRotation() != 0)
-			view_rect = QRectF(-9e42, -9e42, 9e42, 9e42);	// TODO: transform base_view_rect (map coords) using template transform to template coords
-		else
-		{
-			view_rect.setLeft((base_view_rect.x() / templ->getTemplateScaleX()) - templ->getTemplateX());
-			view_rect.setTop((base_view_rect.y() / templ->getTemplateScaleY()) - templ->getTemplateY());
-			view_rect.setRight((base_view_rect.right() / templ->getTemplateScaleX()) - templ->getTemplateX());
-			view_rect.setBottom((base_view_rect.bottom() / templ->getTemplateScaleY()) - templ->getTemplateY());
-		}
-		
-		painter.save();
-		templ->applyTemplateTransform(&painter);
-		templ->drawTemplate(&painter, view_rect, scale);
-		painter.restore();
-	}
-	
-	painter.end();
-	
-	dirty_rect.setWidth(-1);
-	assert(!dirty_rect.isValid());
 }
 
 // ### EditorDockWidget ###
@@ -489,6 +290,17 @@ void EditorDockWidget::closeEvent(QCloseEvent* event)
 {
 	action->setChecked(false);
     QDockWidget::closeEvent(event);
+}
+
+// ### MapEditorTool ###
+
+MapEditorTool::MapEditorTool(MapEditorController* editor, QAction* tool_button): QObject(NULL), tool_button(tool_button), editor(editor)
+{
+}
+MapEditorTool::~MapEditorTool()
+{
+	if (tool_button)
+		tool_button->setChecked(false);
 }
 
 #include "map_editor.moc"

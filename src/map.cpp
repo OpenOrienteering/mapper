@@ -27,6 +27,7 @@
 #include <QPainter>
 
 #include "map_editor.h"
+#include "map_widget.h"
 #include "template.h"
 #include "util.h"
 
@@ -212,6 +213,34 @@ void Map::updateAllMapWidgets()
 		widgets[i]->update();
 }
 
+void Map::setDrawingBoundingBox(QRectF map_coords_rect, int pixel_border, bool do_update)
+{
+	for (int i = 0; i < (int)widgets.size(); ++i)
+		widgets[i]->setDrawingBoundingBox(map_coords_rect, pixel_border, do_update);
+}
+void Map::clearDrawingBoundingBox()
+{
+	for (int i = 0; i < (int)widgets.size(); ++i)
+		widgets[i]->clearDrawingBoundingBox();
+}
+
+void Map::setActivityBoundingBox(QRectF map_coords_rect, int pixel_border, bool do_update)
+{
+	for (int i = 0; i < (int)widgets.size(); ++i)
+		widgets[i]->setActivityBoundingBox(map_coords_rect, pixel_border, do_update);
+}
+void Map::clearActivityBoundingBox()
+{
+	for (int i = 0; i < (int)widgets.size(); ++i)
+		widgets[i]->clearActivityBoundingBox();
+}
+
+void Map::updateDrawing(QRectF map_coords_rect, int pixel_border)
+{
+	for (int i = 0; i < (int)widgets.size(); ++i)
+		widgets[i]->updateDrawing(map_coords_rect, pixel_border);
+}
+
 void Map::setColor(Map::Color* color, int pos)
 {
 	colors[pos] = color;
@@ -273,7 +302,11 @@ void Map::deleteTemplate(int pos)
 {
 	templates.erase(templates.begin() + pos);
 	
-	// NOTE: unlike with the colors, not updating the map widget(s) here because it is more normal that all templates are deleted
+	if (getNumTemplates() == 0)
+	{
+		// That was the last tempate - the help text in the map widget(s) should maybe be updated (if there are no objects)
+		updateAllMapWidgets();
+	}
 }
 void Map::setTemplateAreaDirty(Template* temp, QRectF area)
 {
@@ -289,7 +322,7 @@ void Map::setTemplateAreaDirty(Template* temp, QRectF area)
 	}
 	
 	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->setTemplateCacheDirty(widgets[i]->getMapView()->calculateViewBoundingBox(area), front_cache);
+		widgets[i]->markTemplateCacheDirty(widgets[i]->getMapView()->calculateViewBoundingBox(area), front_cache);
 }
 void Map::setTemplateAreaDirty(int i)
 {
@@ -409,10 +442,11 @@ void MapView::update()
 	map_to_view.set(1, 1, final_zoom * cosr);
 	map_to_view.set(0, 2, -final_zoom*(position_x/1000.0)*cosr + final_zoom*(position_y/1000.0)*sinr - view_x);
 	map_to_view.set(1, 2, -final_zoom*(position_x/1000.0)*sinr - final_zoom*(position_y/1000.0)*cosr - view_y);
+	map_to_view.set(2, 0, 0);
+	map_to_view.set(2, 1, 0);
 	map_to_view.set(2, 2, 1);
 	
 	// Create view_to_map
-	view_to_map.setSize(3, 3);
 	map_to_view.invert(view_to_map);
 }
 
