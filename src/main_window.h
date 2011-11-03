@@ -23,6 +23,10 @@
 
 #include <QtGui/QMainWindow>
 
+QT_BEGIN_NAMESPACE
+class QLabel;
+QT_END_NAMESPACE
+
 class MainWindow;
 
 /// Provides the window contents for a MainWindow
@@ -74,6 +78,9 @@ public:
 	void setHasUnsavedChanges(bool value);
 	inline bool hasUnsavedChanges() const {return has_unsaved_changes;}
 	
+	/// Sets the text in the status bar, which stays there as long as the current tool is active
+	void setStatusBarText(const QString& text);
+	
 public slots:
 	void showNewMapWizard();
 	void showOpenDialog();
@@ -112,6 +119,7 @@ private:
 	
 	QAction* saveAct;
 	QAction* saveAsAct;
+	QLabel* status_label;
 	
 	/// Canonical path to the currently open file or an empty string if the file was not saved yet ("untitled")
 	QString current_path;

@@ -50,7 +50,10 @@ MainWindow::MainWindow()
 	
 	setWindowIcon(QIcon("images/control.png"));
 	setAttribute(Qt::WA_DeleteOnClose);
+	
 	statusBar()->show();
+	status_label = new QLabel();
+	statusBar()->addWidget(status_label, 1);
 	
 	loadWindowSettings();
 }
@@ -193,6 +196,11 @@ void MainWindow::setHasUnsavedChanges(bool value)
 {
 	has_unsaved_changes = value;
 	updateWindowTitle();
+}
+
+void MainWindow::setStatusBarText(const QString& text)
+{
+	status_label->setText(text);
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)

@@ -110,7 +110,7 @@ int GeoreferencingActivity::findHoverPoint(Template* temp, QPoint mouse_pos, Map
 	return point_number;
 }
 
-void GeoreferencingActivity::calculateGeoreferencing(Template* temp, Template::TemplateTransform& out)
+bool GeoreferencingActivity::calculateGeoreferencing(Template* temp, Template::TemplateTransform& out, QWidget* dialog_parent)
 {
 	int num_pass_points = temp->getNumPassPoints();
 	if (temp->isGeoreferencingApplied())	// get original transformation
@@ -154,7 +154,11 @@ void GeoreferencingActivity::calculateGeoreferencing(Template* temp, Template::T
 		
 		Matrix mat_temp, mat_temp2, pseudo_inverse;
 		transposed.multiply(mat, mat_temp);
-		mat_temp.invert(mat_temp2);
+		if (!mat_temp.invert(mat_temp2))
+		{
+			QMessageBox::warning(dialog_parent, tr("Error"), tr("Failed to calculate georeferencing!"));
+			return false;
+		}
 		mat_temp2.multiply(transposed, pseudo_inverse);
 		
 		// Calculate transformation parameters
@@ -196,6 +200,8 @@ void GeoreferencingActivity::calculateGeoreferencing(Template* temp, Template::T
 			point->error = point->calculated_coords_map.lengthTo(point->dest_coords_map);
 		}
 	}
+	
+	return true;
 }
 
 // ### GeoreferencingDockWidget ###
@@ -300,10 +306,12 @@ void GeoreferencingWidget::addPassPoint(MapCoordF src, MapCoordF dest)
 	if (georef)
 	{
 		Template::TemplateTransform transformation;
-		GeoreferencingActivity::calculateGeoreferencing(temp, transformation);
-		updatePointErrors();
-		temp->setTransform(transformation);
-		temp->setGeoreferencingDirty(false);
+		if (GeoreferencingActivity::calculateGeoreferencing(temp, transformation, this))
+		{
+			updatePointErrors();
+			temp->setTransform(transformation);
+			temp->setGeoreferencingDirty(false);
+		}
 	}
 	updateDirtyRect();
 	updateActions();
@@ -319,10 +327,12 @@ void GeoreferencingWidget::deletePassPoint(int number)
 	if (temp->isGeoreferencingApplied())
 	{
 		Template::TemplateTransform transformation;
-		GeoreferencingActivity::calculateGeoreferencing(temp, transformation);
-		updatePointErrors();
-		temp->setTransform(transformation);
-		temp->setGeoreferencingDirty(false);
+		if (GeoreferencingActivity::calculateGeoreferencing(temp, transformation, this))
+		{
+			updatePointErrors();
+			temp->setTransform(transformation);
+			temp->setGeoreferencingDirty(false);
+		}
 	}
 	updateDirtyRect(false);
 	updateActions();
@@ -360,7 +370,11 @@ void GeoreferencingWidget::applyClicked(bool checked)
 		if (temp->isGeoreferencingDirty())
 		{
 			Template::TemplateTransform transformation;
-			GeoreferencingActivity::calculateGeoreferencing(temp, transformation);
+			if (!GeoreferencingActivity::calculateGeoreferencing(temp, transformation, this))
+			{
+				apply_check->setChecked(false);
+				return;
+			}
 			updatePointErrors();
 			temp->setOtherTransform(transformation);
 			temp->setGeoreferencingDirty(false);
@@ -526,7 +540,8 @@ GeoreferencingAddTool::GeoreferencingAddTool(MapEditorController* editor, QActio
 }
 void GeoreferencingAddTool::init()
 {
-	// TODO: setStatusBarText(tr("<b>Left mouse click</b> to set the source position of the pass point"));
+	// NOTE: this is called by other methods to set this text again. Change that behavior if adding stuff here
+	setStatusBarText(tr("<b>Left mouse click</b> to set the source position of the pass point"));
 }
 
 bool GeoreferencingAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -539,6 +554,8 @@ bool GeoreferencingAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_co
 			mouse_pos = map_coord;
 			first_point_set = true;
 			setDirtyRect(map_coord);
+			
+			setStatusBarText(tr("<b>Left mouse click</b> to set the destination position of the pass point, <b>Esc</b> to abort"));
 		}
 		else
 		{
@@ -546,6 +563,8 @@ bool GeoreferencingAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_co
 			
 			first_point_set = false;
 			editor->getMap()->clearDrawingBoundingBox();
+			
+			init();
 		}
 		
 		return true;
@@ -568,6 +587,8 @@ bool GeoreferencingAddTool::keyPressEvent(QKeyEvent* event)
 	{
 		first_point_set = false;
 		editor->getMap()->clearDrawingBoundingBox();
+		
+		init();
 		return true;
 	}
     return false;
@@ -617,7 +638,7 @@ GeoreferencingMoveTool::GeoreferencingMoveTool(MapEditorController* editor, QAct
 }
 void GeoreferencingMoveTool::init()
 {
-	// TODO: setStatusBarText(tr("<b>Left mouse drag</b> to move pass points"));
+	setStatusBarText(tr("<b>Left mouse drag</b> to move pass points"));
 }
 
 bool GeoreferencingMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -667,11 +688,13 @@ bool GeoreferencingMoveTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map
 		if (temp->isGeoreferencingApplied())
 		{
 			Template::TemplateTransform transformation;
-			GeoreferencingActivity::calculateGeoreferencing(temp, transformation);
-			this->widget->updatePointErrors();
-			this->widget->updateDirtyRect();
-			temp->setTransform(transformation);
-			temp->setGeoreferencingDirty(false);
+			if (GeoreferencingActivity::calculateGeoreferencing(temp, transformation, this->widget))
+			{
+				this->widget->updatePointErrors();
+				this->widget->updateDirtyRect();
+				temp->setTransform(transformation);
+				temp->setGeoreferencingDirty(false);
+			}
 		}
 		
 		dragging = false;
@@ -732,7 +755,7 @@ GeoreferencingDeleteTool::GeoreferencingDeleteTool(MapEditorController* editor, 
 }
 void GeoreferencingDeleteTool::init()
 {
-	// TODO: setStatusBarText(tr("<b>Left mouse click</b> to delete pass points"));
+	setStatusBarText(tr("<b>Left mouse click</b> to delete pass points"));
 }
 
 bool GeoreferencingDeleteTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)

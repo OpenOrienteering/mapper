@@ -52,7 +52,7 @@ public:
 	
 	static void drawCross(QPainter* painter, QPointF midpoint, QColor color);
 	static int findHoverPoint(Template* temp, QPoint mouse_pos, MapWidget* widget, bool& point_src);
-	static void calculateGeoreferencing(Template* temp, Template::TemplateTransform& out);
+	static bool calculateGeoreferencing(Template* temp, Template::TemplateTransform& out, QWidget* dialog_parent);
 	
 	static float cross_radius;
 	

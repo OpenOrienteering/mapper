@@ -129,7 +129,7 @@ public:
 	
 	/// This is called when the tool is activated and should be used to change any settings, e.g. the status bar text
 	virtual void init() {}
-	/// Must return the cursor which should be used for the tool in the editor windows. TODO: How to change the cursor while active?
+	/// Must return the cursor which should be used for the tool in the editor windows. TODO: How to change the cursor for all map widgets while active?
 	virtual QCursor* getCursor() = 0;
 	
 	/// All dynamic drawings must be drawn here using the given painter. Drawing is only possible in the area specified by calling map->setDrawingBoundingBox().
@@ -145,6 +145,9 @@ public:
 	virtual bool keyReleaseEvent(QKeyEvent* event) {return false;}
 	
 protected:
+	/// Can be called by subclasses to display help text in the status bar
+	void setStatusBarText(const QString& text);
+	
 	QAction* tool_button;
 	MapEditorController* editor;
 };

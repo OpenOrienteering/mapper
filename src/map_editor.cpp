@@ -55,6 +55,7 @@ void MapEditorController::setTool(MapEditorTool* new_tool)
 {
 	delete current_tool;
 	map->clearDrawingBoundingBox();
+	window->setStatusBarText("");
 	
 	current_tool = new_tool;
 	if (current_tool)
@@ -301,6 +302,11 @@ MapEditorTool::~MapEditorTool()
 {
 	if (tool_button)
 		tool_button->setChecked(false);
+}
+
+void MapEditorTool::setStatusBarText(const QString& text)
+{
+	editor->getWindow()->setStatusBarText(text);
 }
 
 #include "map_editor.moc"

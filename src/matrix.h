@@ -185,7 +185,7 @@ public:
 		
 		return result;
 	}
-	void invert(Matrix& out) const
+	bool invert(Matrix& out) const
 	{
 		Matrix a = Matrix(*this);
 		out.setSize(n, m);
@@ -210,10 +210,7 @@ public:
 					}
 				}
 				if (highest == 0)
-				{
-					print();
-					assert(false);
-				}
+					return false;
 				if (i - 1 != highest_pos)
 				{
 					a.swapRows(i - 1, highest_pos);
@@ -249,6 +246,8 @@ public:
 			for (int j = 0; j < m; ++j)
 				out.set(i, j, out.get(i, j) * factor);
 		}
+		
+		return true;
 	}
 	
 	void print() const
