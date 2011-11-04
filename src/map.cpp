@@ -210,7 +210,7 @@ void Map::removeMapWidget(MapWidget* widget)
 void Map::updateAllMapWidgets()
 {
 	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->update();
+		widgets[i]->updateEverything();
 }
 
 void Map::setDrawingBoundingBox(QRectF map_coords_rect, int pixel_border, bool do_update)
@@ -361,6 +361,9 @@ void Map::checkIfFirstTemplateAdded()
 
 // ### MapView ###
 
+const double screen_pixel_per_mm = 4.999838577;	// TODO: make configurable (by specifying screen diameter in inch + resolution, or dpi)
+// Calculation: pixel_height / ( sqrt((c^2)/(aspect^2 + 1)) * 2.54 )
+
 MapView::MapView(Map* map) : map(map)
 {
 	zoom = 1;
@@ -370,6 +373,41 @@ MapView::MapView(Map* map) : map(map)
 	view_x = 0;
 	view_y = 0;
 	update();
+}
+
+void MapView::addMapWidget(MapWidget* widget)
+{
+	widgets.push_back(widget);
+	
+	map->addMapWidget(widget);
+}
+void MapView::removeMapWidget(MapWidget* widget)
+{
+	for (int i = 0; i < (int)widgets.size(); ++i)
+	{
+		if (widgets[i] == widget)
+		{
+			widgets.erase(widgets.begin() + i);
+			return;
+		}
+	}
+	assert(false);
+	
+	map->removeMapWidget(widget);
+}
+void MapView::updateAllMapWidgets()
+{
+	for (int i = 0; i < (int)widgets.size(); ++i)
+		widgets[i]->updateEverything();
+}
+
+double MapView::lengthToPixel(qint64 length)
+{
+	return zoom * screen_pixel_per_mm * (length / 1000.0);
+}
+qint64 MapView::pixelToLength(double pixel)
+{
+	return qRound64(1000 * pixel / (zoom * screen_pixel_per_mm));
 }
 
 QRectF MapView::calculateViewedRect(QRectF view_rect)
@@ -419,10 +457,59 @@ QRectF MapView::calculateViewBoundingBox(QRectF map_rect)
 void MapView::applyTransform(QPainter* painter)
 {
 	QTransform world_transform;
-	world_transform.setMatrix(map_to_view.get(0, 0), map_to_view.get(0, 1), map_to_view.get(0, 2),
-							  map_to_view.get(1, 0), map_to_view.get(1, 1), map_to_view.get(1, 2),
-							  map_to_view.get(2, 0), map_to_view.get(2, 1), map_to_view.get(2, 2));
+	// NOTE: transposing the matrix here ...
+	world_transform.setMatrix(map_to_view.get(0, 0), map_to_view.get(1, 0), map_to_view.get(2, 0),
+							  map_to_view.get(0, 1), map_to_view.get(1, 1), map_to_view.get(2, 1),
+							  map_to_view.get(0, 2), map_to_view.get(1, 2), map_to_view.get(2, 2));
 	painter->setWorldTransform(world_transform, true);
+}
+
+void MapView::setDragOffset(QPoint offset)
+{
+	drag_offset = offset;
+	for (int i = 0; i < (int)widgets.size(); ++i)
+		widgets[i]->setDragOffset(drag_offset);
+}
+void MapView::completeDragging(QPoint offset)
+{
+	drag_offset = QPoint(0, 0);
+	qint64 move_x = -pixelToLength(offset.x());
+	qint64 move_y = -pixelToLength(offset.y());
+	
+	for (int i = 0; i < (int)widgets.size(); ++i)
+		widgets[i]->completeDragging(offset, move_x, move_y);
+	
+	position_x += move_x;
+	position_y += move_y;
+	update();
+}
+
+void MapView::setZoom(float value)
+{
+	float zoom_factor = value / zoom;
+	for (int i = 0; i < (int)widgets.size(); ++i)
+		widgets[i]->zoom(zoom_factor);
+	
+	zoom = value;
+	update();
+}
+void MapView::setPositionX(qint64 value)
+{
+	qint64 offset = value - position_x;
+	for (int i = 0; i < (int)widgets.size(); ++i)
+		widgets[i]->moveView(offset, 0);
+	
+	position_x = value;
+	update();
+}
+void MapView::setPositionY(qint64 value)
+{
+	qint64 offset = value - position_y;
+	for (int i = 0; i < (int)widgets.size(); ++i)
+		widgets[i]->moveView(0, offset);
+	
+	position_y = value;
+	update();
 }
 
 void MapView::update()
@@ -430,9 +517,7 @@ void MapView::update()
 	double cosr = cos(rotation);
 	double sinr = sin(rotation);
 	
-	const double screen_pixel_per_mm = 4.999838577;	// TODO: make configurable (by specifying screen diameter in inch + resolution, or dpi)
-													// Calculation: pixel_height / ( sqrt((c^2)/(aspect^2 + 1)) * 2.54 )
-	double final_zoom = zoom * screen_pixel_per_mm;
+	double final_zoom = lengthToPixel(1000);
 	
 	// Create map_to_view
 	map_to_view.setSize(3, 3);

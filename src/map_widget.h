@@ -56,6 +56,13 @@ public:
 	QPointF mapToViewport(MapCoord input);
 	QPointF mapToViewport(MapCoordF input);
 	
+	/// View changes
+	void zoom(float factor);	// factor is the ratio of new_zoom / old_zoom
+	void moveView(qint64 x, qint64 y);
+	
+	void setDragOffset(QPoint offset);
+	void completeDragging(QPoint offset, qint64 dx, qint64 dy);
+	
 	/// Mark a rectangular region of a template cache as dirty. This rect is united with possible previous dirty rects of that cache.
 	void markTemplateCacheDirty(QRectF view_rect, bool front_cache);
 	
@@ -69,6 +76,7 @@ public:
 	void clearActivityBoundingBox();
 	
 	void updateDrawing(QRectF map_rect, int pixel_border);
+	void updateEverything();	// invalidates all caches and redraws the whole widget
 	
 protected:
 	virtual void paintEvent(QPaintEvent* event);
@@ -91,10 +99,24 @@ private:
 	void setDynamicBoundingBox(QRectF map_rect, int pixel_border, QRect& dirty_rect_old, QRectF& dirty_rect_new, int& dirty_rect_new_border, bool do_update);
 	void clearDynamicBoundingBox(QRect& dirty_rect_old, QRectF& dirty_rect_new, int& dirty_rect_new_border);
 	
+	void zoomDirtyRect(QRect& dirty_rect, qreal zoom_factor);
+	void zoomDirtyRect(QRectF& dirty_rect, qreal zoom_factor);
+	void moveDirtyRect(QRect& dirty_rect, qreal x, qreal y);
+	void moveDirtyRect(QRectF& dirty_rect, qreal x, qreal y);
+	
+	void showHelpMessage(QPainter* painter, const QString& text);
+	
 	MapView* view;
 	MapEditorTool* tool;
 	MapEditorActivity* activity;
 	
+	// Panning
+	bool dragging;
+	QPoint drag_start_pos;
+	QPoint drag_offset;
+	QCursor normal_cursor;	// cursor used when not dragging
+	
+	// Template caches
 	QImage* below_template_cache;			// cache for templates below map layer
 	QRect below_template_cache_dirty_rect;
 	QImage* above_template_cache;			// cache for templates above map layer

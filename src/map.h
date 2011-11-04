@@ -236,6 +236,12 @@ public:
 	/// Creates a default view looking at the origin
 	MapView(Map* map);
 	
+	/// Must be called to notify the map view of new widgets displaying it. Useful to notify the widgets which need to be redrawn
+	void addMapWidget(MapWidget* widget);
+	void removeMapWidget(MapWidget* widget);
+	/// Redraws all map widgets completely - that can be slow!
+	void updateAllMapWidgets();
+	
 	/// Converts x, y (with origin at the center of the view) to map coordinates
 	inline MapCoord viewToMap(double x, double y)
 	{
@@ -269,6 +275,11 @@ public:
 		return QPointF(map_to_view.get(0, 0) * coords.getX() + map_to_view.get(0, 1) * coords.getY() + map_to_view.get(0, 2),
 					   map_to_view.get(1, 0) * coords.getX() + map_to_view.get(1, 1) * coords.getY() + map_to_view.get(1, 2));
 	}
+	
+	/// Convert lengths between map and pixel display
+	double lengthToPixel(qint64 length);
+	qint64 pixelToLength(double pixel);
+	
 	/// Calculates the bounding box of the map coordinates which can be viewed using the given view coordinates rect
 	QRectF calculateViewedRect(QRectF view_rect);
 	/// Calculates the bounding box in view coordinates of the given map coordinates rect
@@ -281,22 +292,29 @@ public:
 	///         it cannot do that. So this offset must be applied before calling this method.
 	void applyTransform(QPainter* painter);
 	
+	// Dragging
+	void setDragOffset(QPoint offset);
+	void completeDragging(QPoint offset);
+	
 	inline Map* getMap() const {return map;}
 	
 	inline float getZoom() const {return zoom;}
-	inline void setZoom(float value) {zoom = value; update();}
+	void setZoom(float value);
 	inline float getRotation() const {return rotation;}
 	inline void setRotation(float value) {rotation = value; update();}
 	inline qint64 getPositionX() const {return position_x;}
-	inline void setPositionX(qint64 value) {position_x = value; update();}
+	void setPositionX(qint64 value);
 	inline qint64 getPositionY() const {return position_y;}
-	inline void setPositionY(qint64 value) {position_y = value; update();}
+	void setPositionY(qint64 value);
 	inline int getViewX() const {return view_x;}
 	inline void setViewX(int value) {view_x = value; update();}
 	inline int getViewY() const {return view_y;}
 	inline void setViewY(int value) {view_y = value; update();}
+	inline QPoint getDragOffset() const {return drag_offset;}
 	
 private:
+	typedef std::vector<MapWidget*> WidgetVector;
+	
 	void update();		// recalculates the x_to_y matrices
 	
 	Map* map;
@@ -307,9 +325,12 @@ private:
 	qint64 position_y;
 	int view_x;			// view offset (so the view can be rotated around a point which is not in its center) ...
 	int view_y;			// ... this can be used to always look ahead of the GPS position if a digital compass is present
+	QPoint drag_offset;	// the distance the content of the view was dragged with the mouse, in pixels
 	
 	Matrix view_to_map;
 	Matrix map_to_view;
+	
+	WidgetVector widgets;
 };
 
 #endif
