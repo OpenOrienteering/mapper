@@ -315,18 +315,22 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	{*/
 		// Update all dirty caches
 		// TODO: It would be an idea to do these updates in a background thread and use the old caches in the meantime
-		if (below_template_cache_dirty_rect.isValid())
+		bool below_template_visible = containsVisibleTemplate(0, view->getMap()->getFirstFrontTemplate() - 1);
+		if (below_template_visible && below_template_cache_dirty_rect.isValid())
 			updateTemplateCache(below_template_cache, below_template_cache_dirty_rect, 0, view->getMap()->getFirstFrontTemplate() - 1, true);
-		if (above_template_cache_dirty_rect.isValid())
+		bool above_template_visible = containsVisibleTemplate(view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1);
+		if (above_template_visible && above_template_cache_dirty_rect.isValid())
 			updateTemplateCache(above_template_cache, above_template_cache_dirty_rect, view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1, false);
 		
+		// TODO: Make sure that some cache (below_cache or map_cache) contains the background (white?) or it is drawn here
+		
 		// Draw caches
-		if (below_template_cache && view->getMap()->getFirstFrontTemplate() > 0)
+		if (below_template_visible && below_template_cache && view->getMap()->getFirstFrontTemplate() > 0)
 			painter.drawImage(drag_offset, *below_template_cache, rect());
 		
 		// TODO: Map cache
 		
-		if (above_template_cache && view->getMap()->getNumTemplates() - view->getMap()->getFirstFrontTemplate() > 0)
+		if (above_template_visible && above_template_cache && view->getMap()->getNumTemplates() - view->getMap()->getFirstFrontTemplate() > 0)
 			painter.drawImage(drag_offset, *above_template_cache, rect());
 		
 		// Show current drawings
@@ -463,10 +467,23 @@ void MapWidget::keyReleaseEvent(QKeyEvent* event)
     QWidget::keyReleaseEvent(event);
 }
 
-void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background)
+bool MapWidget::containsVisibleTemplate(int first_template, int last_template)
 {
 	if (first_template > last_template)
-		return;	// no template visible
+		return false;	// no template visible
+		
+	Map* map = view->getMap();
+	for (int i = first_template; i <= last_template; ++i)
+	{
+		if (view->isTemplateVisible(map->getTemplate(i)))
+			return true;
+	}
+	
+	return false;
+}
+void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background)
+{
+	assert(containsVisibleTemplate(first_template, last_template));
 	
 	if (!cache)
 	{
@@ -498,15 +515,16 @@ void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first
 	}
 	
 	// Draw templates
-	Map* map = view->getMap();
-	
 	painter.translate(width() / 2.0, height() / 2.0);
 	view->applyTransform(&painter);
 	QRectF base_view_rect = view->calculateViewedRect(viewportToView(dirty_rect));
 	
+	Map* map = view->getMap();
 	for (int i = first_template; i <= last_template; ++i)
 	{
 		Template* templ = map->getTemplate(i);
+		if (!view->isTemplateVisible(templ))
+			continue;
 		float scale = view->getZoom() * std::max(templ->getTemplateScaleX(), templ->getTemplateScaleY());
 		
 		QRectF view_rect;
@@ -522,7 +540,7 @@ void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first
 		
 		painter.save();
 		templ->applyTemplateTransform(&painter);
-		templ->drawTemplate(&painter, view_rect, scale);
+		templ->drawTemplate(&painter, view_rect, scale, view->getTemplateVisibility(templ)->opacity);
 		painter.restore();
 	}
 	

@@ -300,7 +300,14 @@ void Map::addTemplate(Template* temp, int pos)
 }
 void Map::deleteTemplate(int pos)
 {
-	templates.erase(templates.begin() + pos);
+	TemplateVector::iterator it = templates.begin() + pos;
+	Template* temp = *it;
+	
+	// Delete visibility information for the template from all views - get the views indirectly by iterating over all widgets
+	for (int i = 0; i < (int)widgets.size(); ++i)
+		widgets[i]->getMapView()->deleteTemplateVisibility(temp);
+	
+	templates.erase(it);
 	
 	if (getNumTemplates() == 0)
 	{
@@ -322,7 +329,8 @@ void Map::setTemplateAreaDirty(Template* temp, QRectF area)
 	}
 	
 	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->markTemplateCacheDirty(widgets[i]->getMapView()->calculateViewBoundingBox(area), front_cache);
+		if (widgets[i]->getMapView()->isTemplateVisible(temp))
+			widgets[i]->markTemplateCacheDirty(widgets[i]->getMapView()->calculateViewBoundingBox(area), front_cache);
 }
 void Map::setTemplateAreaDirty(int i)
 {
@@ -373,6 +381,11 @@ MapView::MapView(Map* map) : map(map)
 	view_x = 0;
 	view_y = 0;
 	update();
+}
+MapView::~MapView()
+{
+	foreach (TemplateVisibility* vis, template_visibilities)
+		delete vis;
 }
 
 void MapView::addMapWidget(MapWidget* widget)
@@ -533,6 +546,33 @@ void MapView::update()
 	
 	// Create view_to_map
 	map_to_view.invert(view_to_map);
+}
+
+bool MapView::isTemplateVisible(Template* temp)
+{
+	if (template_visibilities.contains(temp))
+	{
+		TemplateVisibility* vis = template_visibilities.value(temp);
+		return vis->visible && vis->opacity > 0;
+	}
+	else
+		return false;
+}
+TemplateVisibility* MapView::getTemplateVisibility(Template* temp)
+{
+	if (!template_visibilities.contains(temp))
+	{
+		TemplateVisibility* vis = new TemplateVisibility();
+		template_visibilities.insert(temp, vis);
+		return vis;
+	}
+	else
+		return template_visibilities.value(temp);
+}
+void MapView::deleteTemplateVisibility(Template* temp)
+{
+	delete template_visibilities.value(temp);
+	template_visibilities.remove(temp);
 }
 
 #include "map.moc"

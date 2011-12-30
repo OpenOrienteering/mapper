@@ -165,7 +165,11 @@ void TemplateWidget::addTemplateAt(Template* new_template, int pos)
 	if (pos < 0)
 		pos = map->getFirstFrontTemplate() - 1;
 	
+	// Add template and make it visible in the currently active view; TODO: currently, it is made visible in the main view -> support multiple views
 	map->addTemplate(new_template, pos);
+	TemplateVisibility* vis = main_view->getTemplateVisibility(new_template);
+	vis->visible = true;
+	vis->opacity = 1;
 	map->setTemplateAreaDirty(pos);
 	
 	++row;	// always insert new row below the selected row
@@ -365,7 +369,77 @@ void TemplateWidget::showHelp()
 
 void TemplateWidget::cellChange(int row, int column)
 {
-	// TODO
+	if (!react_to_changes)
+		return;
+	
+	int pos = posFromRow(row);
+	Template* temp = (row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
+	if (!temp)
+		return;
+	
+	react_to_changes = false;
+	
+	QString text = template_table->item(row, column)->text().trimmed();
+	TemplateVisibility* vis = main_view->getTemplateVisibility(temp);
+	
+	if (column == 0)
+	{
+		bool visible_new = template_table->item(row, column)->checkState() == Qt::Checked;
+		if (!visible_new)
+			map->setTemplateAreaDirty(pos);
+		
+		vis->visible = visible_new;
+		
+		if (visible_new)
+			map->setTemplateAreaDirty(pos);
+	}
+	else if (column == 1)
+	{
+		bool ok = true;
+		float fvalue;
+		if (text.endsWith('%'))
+		{
+			text.chop(1);
+			fvalue = text.toFloat(&ok) / 100.0f;
+		}
+		else
+			fvalue = text.toFloat(&ok);
+		
+		if (!ok || fvalue < 0 || fvalue > 1)
+		{
+			QMessageBox::warning(window(), tr("Error"), tr("Please enter a valid number from 0 to 1, or specify a percentage from 0 to 100!"));
+			template_table->item(row, column)->setText(QString::number(vis->opacity * 100) + "%");
+		}
+		else
+		{
+			if (fvalue <= 0)
+				map->setTemplateAreaDirty(pos);
+			
+			vis->opacity = fvalue;
+			
+			if (fvalue > 0)
+				map->setTemplateAreaDirty(pos);
+		}
+	}
+	else if (column == 2)
+	{
+		bool ok = true;
+		int ivalue = text.toInt(&ok);
+		
+		if (text.isEmpty())
+		{
+			temp->setTemplateGroup(-1);
+		}
+		else if (!ok)
+		{
+			QMessageBox::warning(window(), tr("Error"), tr("Please enter a valid integer number to set a group or leave the field empty to ungroup the template!"));
+			template_table->item(row, column)->setText(QString::number(temp->getTemplateGroup()));
+		}
+		else
+			temp->setTemplateGroup(ivalue);
+	}
+	
+	react_to_changes = true;
 }
 void TemplateWidget::selectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
 {
@@ -524,13 +598,17 @@ void TemplateWidget::updateRow(int row)
 		template_table->item(row, 0)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 		template_table->item(row, 1)->setBackgroundColor(Qt::white);
 		template_table->item(row, 1)->setFlags(Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+		template_table->item(row, 1)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
 		template_table->item(row, 2)->setBackgroundColor(Qt::white);
 		template_table->item(row, 2)->setFlags(Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+		template_table->item(row, 2)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
 		
 		Template* temp = map->getTemplate(pos);
-		// TODO: Get visibility values from the MapView of the active MapWidget
-		template_table->item(row, 0)->setCheckState(Qt::Unchecked);	// TODO
-		template_table->item(row, 1)->setText("TODO%");
+		// TODO: Get visibility values from the MapView of the active MapWidget (instead of always main_view)
+		TemplateVisibility* vis = main_view->getTemplateVisibility(temp);
+		
+		template_table->item(row, 0)->setCheckState(vis->visible ? Qt::Checked : Qt::Unchecked);
+		template_table->item(row, 1)->setText(QString::number(vis->opacity * 100) + "%");
 		template_table->item(row, 2)->setText((temp->getTemplateGroup() < 0) ? "" : QString::number(temp->getTemplateGroup()));
 		template_table->item(row, 3)->setText(temp->getTemplateFilename());
 	}

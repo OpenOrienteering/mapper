@@ -72,9 +72,9 @@ public:
 	/// Applies the transformation to the given painter. The map scale denominator may be used to calculate the final template scale.
 	void applyTemplateTransform(QPainter* painter);
 	
-	/// Must draw the template using the given painter. The clip rect is in template coordinates,
+	/// Must draw the template using the given painter with the given opacity. The clip rect is in template coordinates,
 	/// the scale is the combined view & template scale, which can be used to give a minimum size to elements
-	virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale) = 0;
+	virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity) = 0;
 	
 	/// Marks the whole area of the template as "to be redrawn". Use this before and after modifications to the template transformation.
 	void setTemplateAreaDirty();
@@ -194,7 +194,7 @@ public:
     virtual Template* duplicate();
 	
     virtual bool open(QWidget* dialog_parent, MapView* main_view);
-    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale);
+    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity);
     virtual QRectF getExtent();
 	
 	virtual double getTemplateFinalScaleX() const;

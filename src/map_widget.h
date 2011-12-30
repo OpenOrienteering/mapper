@@ -93,6 +93,7 @@ protected:
     virtual void keyReleaseEvent(QKeyEvent* event);
 	
 private:
+	bool containsVisibleTemplate(int first_template, int last_template);
 	void updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background);
 	
 	QRect calculateViewportBoundingBox(QRectF map_rect, int pixel_border);

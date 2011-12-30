@@ -26,6 +26,7 @@
 #include <QString>
 #include <QColor>
 #include <QRect>
+#include <QHash>
 
 #include "matrix.h"
 
@@ -105,7 +106,7 @@ public:
 	void setTemplate(Template* temp, int pos);
 	void addTemplate(Template* temp, int pos);				// NOTE: adjust first_front_template manually!
 	void deleteTemplate(int pos);							// NOTE: adjust first_front_template manually!
-	void setTemplateAreaDirty(Template* temp, QRectF area);	// marks the respecive regions in the template caches as dirty
+	void setTemplateAreaDirty(Template* temp, QRectF area);	// marks the respecive regions in the template caches as dirty; does nothing if the template is not visible in a widget! So make sure to call this and showing/hiding a template in the correct order!
 	void setTemplateAreaDirty(int i);						// this does nothing for i == -1
 	void setTemplatesDirty();
 	
@@ -229,12 +230,26 @@ protected:
 	double y;
 };
 
+/// Contains all visibility information for a template. This is stored in the MapViews
+struct TemplateVisibility
+{
+	float opacity;	// 0 to 1
+	bool visible;
+	
+	inline TemplateVisibility()
+	{
+		opacity = 1;
+		visible = false;
+	}
+};
+
 /// Stores view position, zoom, rotation and template visibilities to define a view onto a map
 class MapView
 {
 public:
 	/// Creates a default view looking at the origin
 	MapView(Map* map);
+	~MapView();
 	
 	/// Must be called to notify the map view of new widgets displaying it. Useful to notify the widgets which need to be redrawn
 	void addMapWidget(MapWidget* widget);
@@ -312,6 +327,11 @@ public:
 	inline void setViewY(int value) {view_y = value; update();}
 	inline QPoint getDragOffset() const {return drag_offset;}
 	
+	// Template visibilities
+	bool isTemplateVisible(Template* temp);						// checks if the template is visible without creating a template visibility object if none exists
+	TemplateVisibility* getTemplateVisibility(Template* temp);	// returns the template visibility object, creates one if not there yet with the default settings (invisible)
+	void deleteTemplateVisibility(Template* temp);				// call this when a template is deleted to destroy the template visibility object
+	
 private:
 	typedef std::vector<MapWidget*> WidgetVector;
 	
@@ -329,6 +349,8 @@ private:
 	
 	Matrix view_to_map;
 	Matrix map_to_view;
+	
+	QHash<Template*, TemplateVisibility*> template_visibilities;
 	
 	WidgetVector widgets;
 };
