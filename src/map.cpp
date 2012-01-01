@@ -297,6 +297,8 @@ void Map::addTemplate(Template* temp, int pos)
 {
 	templates.insert(templates.begin() + pos, temp);
 	checkIfFirstTemplateAdded();
+	
+	emit(templateAdded(temp));
 }
 void Map::deleteTemplate(int pos)
 {
@@ -314,8 +316,11 @@ void Map::deleteTemplate(int pos)
 		// That was the last tempate - the help text in the map widget(s) should maybe be updated (if there are no objects)
 		updateAllMapWidgets();
 	}
+	
+	emit(templateDeleted(temp));
+	delete temp;
 }
-void Map::setTemplateAreaDirty(Template* temp, QRectF area)
+void Map::setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border)
 {
 	bool front_cache = false;	// TODO: is there a better way to find out if that is a front or back template?
 	int size = (int)templates.size();
@@ -330,7 +335,7 @@ void Map::setTemplateAreaDirty(Template* temp, QRectF area)
 	
 	for (int i = 0; i < (int)widgets.size(); ++i)
 		if (widgets[i]->getMapView()->isTemplateVisible(temp))
-			widgets[i]->markTemplateCacheDirty(widgets[i]->getMapView()->calculateViewBoundingBox(area), front_cache);
+			widgets[i]->markTemplateCacheDirty(widgets[i]->getMapView()->calculateViewBoundingBox(area), pixel_border, front_cache);
 }
 void Map::setTemplateAreaDirty(int i)
 {

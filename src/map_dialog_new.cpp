@@ -40,6 +40,7 @@ NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMe
 	
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
 	create_button = new QPushButton(QIcon("images/arrow-right.png"), tr("Create"));
+	create_button->setDefault(true);
 	
 	QHBoxLayout* scale_layout = new QHBoxLayout();
 	scale_layout->addWidget(scale_label);

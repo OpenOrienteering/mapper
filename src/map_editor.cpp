@@ -27,6 +27,7 @@
 #include "color_dock_widget.h"
 #include "template_dock_widget.h"
 #include "template.h"
+#include "paint_on_template.h"
 
 // ### MapEditorController ###
 
@@ -34,14 +35,21 @@ MapEditorController::MapEditorController()
 {
 	map = NULL;
 	main_view = NULL;
+	
 	editor_activity = NULL;
 	current_tool = NULL;	// TODO: default tool?
+	last_painted_on_template = NULL;
 }
-MapEditorController::MapEditorController(Map* map) : map(map)
+MapEditorController::MapEditorController(Map* map)
 {
-	main_view = new MapView(map);
+	this->map = NULL;
+	main_view = NULL;
+	
+	setMap(map);
+	
 	editor_activity = NULL;
 	current_tool = NULL;	// TODO: default tool?
+	last_painted_on_template = NULL;
 }
 MapEditorController::~MapEditorController()
 {
@@ -90,7 +98,7 @@ bool MapEditorController::load(const QString& path)
 	
 	bool result = map->loadFrom(path);
 	if (result)
-		main_view = new MapView(map);
+		setMap(map);
 	else
 		delete map;
 	
@@ -197,6 +205,24 @@ void MapEditorController::attach(MainWindow* window)
 	template_menu->addAction(open_template_act);
 	
 	// TODO: Map menu
+	
+	// Toolbar
+	QToolBar* toolbar_drawing = window->addToolBar(tr("Drawing"));
+	
+	paint_on_template_act = new QAction(QIcon("images/pencil.png"), tr("Paint on template"), this);
+	paint_on_template_act->setCheckable(true);
+	updatePaintOnTemplateAction();
+	connect(paint_on_template_act, SIGNAL(triggered(bool)), this, SLOT(paintOnTemplateClicked(bool)));
+	
+	QToolButton* paint_on_template_button = new QToolButton();
+	paint_on_template_button->setCheckable(true);
+	paint_on_template_button->setDefaultAction(paint_on_template_act);
+	paint_on_template_button->setPopupMode(QToolButton::MenuButtonPopup);
+	QMenu* paint_on_template_menu = new QMenu(paint_on_template_button);
+	paint_on_template_menu->addAction(tr("Select template..."));
+	paint_on_template_button->setMenu(paint_on_template_menu);
+	toolbar_drawing->addWidget(paint_on_template_button);
+	connect(paint_on_template_menu, SIGNAL(triggered(QAction*)), this, SLOT(paintOnTemplateSelectClicked()));
 }
 void MapEditorController::detach()
 {
@@ -280,6 +306,103 @@ void MapEditorController::openTemplateClicked()
 	
 	TemplateWidget* template_widget = reinterpret_cast<TemplateWidget*>(template_dock_widget->widget());
 	template_widget->addTemplateAt(new_template, -1);
+}
+
+void MapEditorController::paintOnTemplateClicked(bool checked)
+{
+	if (checked)
+	{
+		if (!last_painted_on_template)
+			paintOnTemplateSelectClicked();
+		else
+			paintOnTemplate(last_painted_on_template);
+	}
+	else
+		setTool(NULL);
+}
+void MapEditorController::paintOnTemplateSelectClicked()
+{
+	Template* only_paintable_template = NULL;
+	for (int i = 0; i < map->getNumTemplates(); ++i)
+	{
+		if (map->getTemplate(i)->canBeDrawnOnto())
+		{
+			if (!only_paintable_template)
+				only_paintable_template = map->getTemplate(i);
+			else
+			{
+				only_paintable_template = NULL;
+				break;
+			}
+		}
+	}
+	
+	if (only_paintable_template)
+		last_painted_on_template = only_paintable_template;
+	else
+	{
+		PaintOnTemplateSelectDialog paintDialog(map, window);
+		paintDialog.setWindowModality(Qt::WindowModal);
+		if (paintDialog.exec() == QDialog::Rejected)
+		{
+			paint_on_template_act->setChecked(false);
+			return;
+		}
+		
+		last_painted_on_template = paintDialog.getSelectedTemplate();
+	}
+	paintOnTemplate(last_painted_on_template);
+}
+void MapEditorController::paintOnTemplate(Template* temp)
+{
+	setTool(new PaintOnTemplateTool(this, paint_on_template_act, temp));
+	paint_on_template_act->setChecked(true);
+}
+void MapEditorController::updatePaintOnTemplateAction()
+{
+	if (map)
+	{
+		int i;
+		for (i = 0; i < map->getNumTemplates(); ++i)
+		{
+			if (map->getTemplate(i)->canBeDrawnOnto())
+				break;
+		}
+		paint_on_template_act->setEnabled(i != map->getNumTemplates());
+	}
+	else
+		paint_on_template_act->setEnabled(false);
+	
+	if (paint_on_template_act->isEnabled())
+		paint_on_template_act->setStatusTip(tr("Paint free-handedly on a template"));
+	else
+		paint_on_template_act->setStatusTip(tr("Paint free-handedly on a template. Create or load a template which can be drawn onto to activate this button"));
+}
+
+void MapEditorController::templateAdded(Template* temp)
+{
+	if (temp->canBeDrawnOnto())
+		updatePaintOnTemplateAction();
+}
+void MapEditorController::templateDeleted(Template* temp)
+{
+	if (temp->canBeDrawnOnto())
+		updatePaintOnTemplateAction();
+}
+
+void MapEditorController::setMap(Map* map)
+{
+	if (this->map)
+	{
+		disconnect(this->map, SIGNAL(templateAdded(Template*)), this, SLOT(templateAdded(Template*)));
+		disconnect(this->map, SIGNAL(templateDeleted(Template*)), this, SLOT(templateDeleted(Template*)));
+	}
+	
+	this->map = map;
+	main_view = new MapView(map);
+	
+	connect(map, SIGNAL(templateAdded(Template*)), this, SLOT(templateAdded(Template*)));
+	connect(map, SIGNAL(templateDeleted(Template*)), this, SLOT(templateDeleted(Template*)));
 }
 
 // ### EditorDockWidget ###

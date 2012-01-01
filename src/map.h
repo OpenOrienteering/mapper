@@ -104,10 +104,10 @@ public:
 	inline void setFirstFrontTemplate(int pos) {first_front_template = pos;}
 	inline int getFirstFrontTemplate() const {return first_front_template;}
 	void setTemplate(Template* temp, int pos);
-	void addTemplate(Template* temp, int pos);				// NOTE: adjust first_front_template manually!
-	void deleteTemplate(int pos);							// NOTE: adjust first_front_template manually!
-	void setTemplateAreaDirty(Template* temp, QRectF area);	// marks the respecive regions in the template caches as dirty; does nothing if the template is not visible in a widget! So make sure to call this and showing/hiding a template in the correct order!
-	void setTemplateAreaDirty(int i);						// this does nothing for i == -1
+	void addTemplate(Template* temp, int pos);									// NOTE: adjust first_front_template manually!
+	void deleteTemplate(int pos);												// NOTE: adjust first_front_template manually!
+	void setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border);	// marks the respecive regions in the template caches as dirty; area is given in map coords (mm). Does nothing if the template is not visible in a widget! So make sure to call this and showing/hiding a template in the correct order!
+	void setTemplateAreaDirty(int i);											// this does nothing for i == -1
 	void setTemplatesDirty();
 	
 	// Other settings
@@ -117,6 +117,9 @@ public:
 	
 signals:
 	void gotUnsavedChanges();
+	
+	void templateAdded(Template* temp);
+	void templateDeleted(Template* temp);
 	
 private:
 	typedef std::vector<Color*> ColorVector;

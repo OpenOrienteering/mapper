@@ -26,6 +26,7 @@
 #include "main_window.h"
 #include "map.h"
 
+class Template;
 class MapView;
 class Map;
 class MapWidget;
@@ -70,7 +71,18 @@ public slots:
 	void showTemplateWindow(bool show);
 	void openTemplateClicked();
 	
+	void paintOnTemplateClicked(bool checked);
+	void paintOnTemplateSelectClicked();
+	
+	void templateAdded(Template* temp);
+	void templateDeleted(Template* temp);
+	
 private:
+	void setMap(Map* map);
+	
+	void paintOnTemplate(Template* temp);
+	void updatePaintOnTemplateAction();
+	
 	Map* map;
 	MapView* main_view;
 	MapWidget* map_widget;
@@ -83,6 +95,9 @@ private:
 	
 	QAction* template_window_act;
 	EditorDockWidget* template_dock_widget;
+	
+	QAction* paint_on_template_act;
+	Template* last_painted_on_template;
 };
 
 /// Custom QDockWidget which unchecks the associated menu action when closed

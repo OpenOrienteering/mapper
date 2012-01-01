@@ -50,7 +50,6 @@ void GeoreferencingActivity::init()
 	dock->setFloating(true);
 	dock->show();
 	dock->setGeometry(controller->getWindow()->geometry().left() + 40, controller->getWindow()->geometry().top() + 100, dock->width(), dock->height());
-	//controller->getWindow()->addDockWidget(Qt::LeftDockWidgetArea, dock, Qt::Vertical);
 }
 
 void GeoreferencingActivity::draw(QPainter* painter, MapWidget* widget)
@@ -632,7 +631,7 @@ GeoreferencingMoveTool::GeoreferencingMoveTool(MapEditorController* editor, QAct
 	
 	if (!cursor)
 	{
-		cursor = new QCursor(QPixmap("images/cursor-georeferencing-move.png"), 0, 0);
+		cursor = new QCursor(QPixmap("images/cursor-georeferencing-move.png"), 1, 1);
 		cursor_invisible = new QCursor(QPixmap("images/cursor-invisible.png"), 0, 0);
 	}
 }
@@ -751,7 +750,7 @@ QCursor* GeoreferencingDeleteTool::cursor = NULL;
 GeoreferencingDeleteTool::GeoreferencingDeleteTool(MapEditorController* editor, QAction* tool_button, GeoreferencingWidget* widget): GeoreferencingEditTool(editor, tool_button, widget)
 {
 	if (!cursor)
-		cursor = new QCursor(QPixmap("images/cursor-delete.png"), 0, 0);
+		cursor = new QCursor(QPixmap("images/cursor-delete.png"), 1, 1);
 }
 void GeoreferencingDeleteTool::init()
 {

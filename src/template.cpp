@@ -47,6 +47,8 @@ Template::Template(const QString& filename, Map* map) : map(map)
 	template_file = QFileInfo(filename).fileName();
 	template_valid = false;
 	
+	has_unsaved_changes = false;
+	
 	georeferenced = false;
 	georeferencing_dirty = true;
 	
@@ -61,6 +63,8 @@ Template::Template(const Template& other)
 	template_path = other.template_path;
 	template_file = other.template_file;
 	template_valid = other.template_valid;
+	
+	has_unsaved_changes = other.has_unsaved_changes;	// TODO: = false to prevent saving the changes twice?
 	
 	cur_trans = other.cur_trans;
 	other_trans = other.other_trans;
@@ -88,7 +92,7 @@ void Template::applyTemplateTransform(QPainter* painter)
 void Template::setTemplateAreaDirty()
 {
 	QRectF template_area = calculateBoundingBox();
-	map->setTemplateAreaDirty(this, template_area);	// TODO: Would be better to do this with the corner points, instead of the bounding box
+	map->setTemplateAreaDirty(this, template_area, 0);	// TODO: Would be better to do this with the corner points, instead of the bounding box
 }
 
 QRectF Template::calculateBoundingBox()
@@ -101,6 +105,32 @@ QRectF Template::calculateBoundingBox()
 	rectInclude(bbox, templateToMap(extent.bottomRight()).toQPointF());
 	rectInclude(bbox, templateToMap(extent.bottomLeft()).toQPointF());
 	return bbox;
+}
+
+void Template::drawOntoTemplate(MapCoordF* coords, int num_coords, QColor color, float width, QRectF map_bbox)
+{
+	assert(canBeDrawnOnto());
+	assert(num_coords > 1);
+	
+	if (!map_bbox.isValid())
+	{
+		map_bbox = QRectF(coords[0].getX(), coords[0].getY(), 0, 0);
+		for (int i = 1; i < num_coords; ++i)
+			rectInclude(map_bbox, coords[i].toQPointF());
+	}
+	float radius = qMin(getTemplateFinalScaleX(), getTemplateFinalScaleY()) * qMax((width+1) / 2, 1.0f);
+	QRectF radius_bbox = QRectF(map_bbox.left() - radius, map_bbox.top() - radius, map_bbox.width() + 2*radius, map_bbox.height() + 2*radius);
+	
+	QPointF* points = new QPointF[num_coords];
+	for (int i = 0; i < num_coords; ++i)
+		points[i] = mapToTemplateQPoint(coords[i]);
+	
+	drawOntoTemplateImpl(points, num_coords, color, width);
+	map->setTemplateAreaDirty(this, radius_bbox, 0);
+	
+	delete[] points;
+	
+	setHasUnsavedChanges(true);
 }
 
 void Template::addPassPoint(const Template::PassPoint& point, int pos)
@@ -250,6 +280,26 @@ double TemplateImage::getTemplateFinalScaleX() const
 double TemplateImage::getTemplateFinalScaleY() const
 {
 	return cur_trans.template_scale_y * 1000 / map->getScaleDenominator();
+}
+
+void TemplateImage::drawOntoTemplateImpl(QPointF* points, int num_points, QColor color, float width)
+{
+	for (int i = 0; i < num_points; ++i)
+		points[i] = QPointF(points[i].x() + pixmap->width() * 0.5, points[i].y() + pixmap->height() * 0.5);
+	
+    QPainter painter;
+	painter.begin(pixmap);
+	
+	QPen pen(color);
+	pen.setWidthF(width);
+	pen.setCapStyle(Qt::RoundCap);
+	pen.setJoinStyle(Qt::RoundJoin);
+	painter.setPen(pen);
+	painter.setRenderHint(QPainter::Antialiasing);
+	
+	painter.drawPolyline(points, num_points);
+	
+	painter.end();
 }
 
 TemplateImageOpenDialog::TemplateImageOpenDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)

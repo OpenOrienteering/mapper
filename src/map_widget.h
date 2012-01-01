@@ -64,7 +64,7 @@ public:
 	void completeDragging(QPoint offset, qint64 dx, qint64 dy);
 	
 	/// Mark a rectangular region of a template cache as dirty. This rect is united with possible previous dirty rects of that cache.
-	void markTemplateCacheDirty(QRectF view_rect, bool front_cache);
+	void markTemplateCacheDirty(QRectF view_rect, int pixel_border, bool front_cache);
 	
 	/// Set the given rect as bounding box for the current drawing.
 	/// NOTE: Unlike with markTemplateCacheDirty(), multiple calls to these methods do not result in uniting all given rects, instead only the last rect is used!

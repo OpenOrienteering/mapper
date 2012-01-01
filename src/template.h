@@ -82,6 +82,13 @@ public:
 	/// Returns the bounding box of the template in map coordinates (mm) after transformations applied
 	QRectF calculateBoundingBox();
 	
+	/// Must return if freehand drawing onto the template is possible
+	virtual bool canBeDrawnOnto() {return false;}
+	
+	/// Draws onto the template. coords is an array of points with which the drawn line is defined and must contain at least 2 points.
+	/// map_bbox can be an invalid rect, then the method will calculate it itself.
+	void drawOntoTemplate(MapCoordF* coords, int num_coords, QColor color, float width, QRectF map_bbox);
+	
 	/// Must return the extent of the template around the origin (in template coordinates, without applying any transformations)
 	virtual QRectF getExtent() = 0;
 	
@@ -90,6 +97,11 @@ public:
 	inline MapCoordF mapToTemplate(MapCoordF coords)
 	{
 		return MapCoordF(map_to_template.get(0, 0) * coords.getX() + map_to_template.get(0, 1) * coords.getY() + map_to_template.get(0, 2),
+						 map_to_template.get(1, 0) * coords.getX() + map_to_template.get(1, 1) * coords.getY() + map_to_template.get(1, 2));
+	}
+	inline QPointF mapToTemplateQPoint(MapCoordF coords)
+	{
+		return QPointF(map_to_template.get(0, 0) * coords.getX() + map_to_template.get(0, 1) * coords.getY() + map_to_template.get(0, 2),
 						 map_to_template.get(1, 0) * coords.getX() + map_to_template.get(1, 1) * coords.getY() + map_to_template.get(1, 2));
 	}
 	inline MapCoordF templateToMap(MapCoordF coords)
@@ -136,7 +148,7 @@ public:
 	inline qint64 getTemplateY() const {return cur_trans.template_y;}
 	inline void setTemplateY(qint64 y) {cur_trans.template_y = y; updateTransformationMatrices();}
 	
-	// These are the scale values for display; the scale values used for scale calculation can be
+	// These are the scale values for display (as text); the scale values used for the real scale calculation can be
 	// different and are returned by getTemplateFinalScaleX/Y. For example, this can be used to
 	// display the scale in a different unit.
 	inline double getTemplateScaleX() const {return cur_trans.template_scale_x;}
@@ -156,17 +168,25 @@ public:
 	inline int getTemplateGroup() const {return template_group;}
 	inline void setTemplateGroup(int value) {template_group = value;}
 	
+	inline bool hasUnsavedChanges() const {return has_unsaved_changes;}
+	inline void setHasUnsavedChanges(bool value) {has_unsaved_changes = value; if (value) map->setTemplatesDirty();}
+	
 	inline Map* getMap() const {return map;}
 	
 	/// Tries to find a matching template subclass for the given path by looking at the file extension
 	static Template* templateForFile(const QString& path, Map* map);
 	
 protected:
+	/// Must be implemented to draw the polyline given by the points onto the template if canBeDrawnOnto() returns true
+	virtual void drawOntoTemplateImpl(QPointF* points, int num_points, QColor color, float width) {}
+	
 	void updateTransformationMatrices();
 	
 	QString template_file;
 	QString template_path;
 	bool template_valid;		// if the file cannot be found or loaded, the template is invalid (to be filled by the derived class)
+	
+	bool has_unsaved_changes;	// does the template itself (not its transformation) have unsaved changes (e.g. GPS track has changed, image has been painted on)
 	
 	// Transformation parameters & georeferencing; NOTE: call updateTransformationMatrices() after making direct changes to the transforms!
 	TemplateTransform cur_trans;
@@ -185,6 +205,7 @@ protected:
 	Map* map;					// the map which contains this template
 };
 
+/// A raster image used as template
 class TemplateImage : public Template
 {
 public:
@@ -196,13 +217,17 @@ public:
     virtual bool open(QWidget* dialog_parent, MapView* main_view);
     virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity);
     virtual QRectF getExtent();
+	virtual bool canBeDrawnOnto() {return true;}
 	
 	virtual double getTemplateFinalScaleX() const;
 	virtual double getTemplateFinalScaleY() const;
 	
 protected:
+    virtual void drawOntoTemplateImpl(QPointF* points, int num_points, QColor color, float width);
+	
 	QPixmap* pixmap;	// TODO: Change that to QImage?
 };
+/// Initial setting dialog when opening a raster image as template, asking for the meters per pixel
 class TemplateImageOpenDialog : public QDialog
 {
 Q_OBJECT
@@ -220,5 +245,13 @@ private:
 	QLineEdit* mpp_edit;
 	QPushButton* open_button;
 };
+
+/// A dynamically growable template layer which can be drawn upon - TODO
+/*class TemplateSketch : public Template
+{
+public:
+	/// creates an empty sketch
+	TemplateSketch();
+};*/
 
 #endif

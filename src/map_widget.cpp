@@ -188,11 +188,12 @@ void MapWidget::moveDirtyRect(QRect& dirty_rect, qreal x, qreal y)
 	dirty_rect.adjust(x, y, x, y);
 }
 
-void MapWidget::markTemplateCacheDirty(QRectF view_rect, bool front_cache)
+void MapWidget::markTemplateCacheDirty(QRectF view_rect, int pixel_border, bool front_cache)
 {
 	QRect* cache_dirty_rect = front_cache ? &above_template_cache_dirty_rect : &below_template_cache_dirty_rect;
 	QRectF viewport_rect = viewToViewport(view_rect);
-	QRect integer_rect = QRect(viewport_rect.left() - 1, viewport_rect.top() - 1, viewport_rect.width() + 2, viewport_rect.height() + 2);
+	QRect integer_rect = QRect(viewport_rect.left() - (1+pixel_border), viewport_rect.top() - (1+pixel_border),
+							   viewport_rect.width() + 2*(1+pixel_border), viewport_rect.height() + 2*(1+pixel_border));
 	
 	if (!integer_rect.intersects(rect()))
 		return;

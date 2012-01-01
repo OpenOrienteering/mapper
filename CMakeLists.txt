@@ -30,6 +30,7 @@ set(Mapper_SRCS
  src/template.cpp
  src/template_dock_widget.cpp
  src/georeferencing.cpp
+ src/paint_on_template.cpp
 )
 qt4_automoc(${Mapper_SRCS})
 
