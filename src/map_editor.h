@@ -26,6 +26,10 @@
 #include "main_window.h"
 #include "map.h"
 
+QT_BEGIN_NAMESPACE
+class QLabel;
+QT_END_NAMESPACE
+
 class Template;
 class MapView;
 class Map;
@@ -101,6 +105,9 @@ private:
 	
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;
+	
+	QLabel* statusbar_zoom_label;
+	QLabel* statusbar_cursorpos_label;
 };
 
 /// Custom QDockWidget which unchecks the associated menu action when closed

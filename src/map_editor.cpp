@@ -119,16 +119,31 @@ void MapEditorController::loadWidgetsAndViews(QFile* file)
 
 void MapEditorController::attach(MainWindow* window)
 {
+	color_dock_widget = NULL;
+	template_dock_widget = NULL;
+	
 	this->window = window;
 	window->setHasOpenedFile(true);
 	connect(map, SIGNAL(gotUnsavedChanges()), window, SLOT(gotUnsavedChanges()));
 	
+	// Add zoom / cursor position field to status bar
+	statusbar_zoom_label = new QLabel();
+	statusbar_zoom_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
+	statusbar_zoom_label->setFixedWidth(90);
+	statusbar_zoom_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+	statusbar_cursorpos_label = new QLabel();
+	statusbar_cursorpos_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
+	statusbar_cursorpos_label->setFixedWidth(100);
+	statusbar_cursorpos_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+	window->statusBar()->addPermanentWidget(statusbar_zoom_label);
+	window->statusBar()->addPermanentWidget(statusbar_cursorpos_label);
+	
+	// Create map widget
 	map_widget = new MapWidget();
 	map_widget->setMapView(main_view);
+	map_widget->setZoomLabel(statusbar_zoom_label);
+	map_widget->setCursorposLabel(statusbar_cursorpos_label);
 	window->setCentralWidget(map_widget);
-	
-	color_dock_widget = NULL;
-	template_dock_widget = NULL;
 	
 	// Edit menu
 	QAction* undo_act = new QAction(QIcon("images/undo.png"), tr("Undo"), this);	// TODO: update this with a desc. of what will be undone
@@ -254,6 +269,9 @@ void MapEditorController::detach()
 	QWidget* widget = window->centralWidget();
 	window->setCentralWidget(NULL);
 	delete widget;
+	
+	delete statusbar_zoom_label;
+	delete statusbar_cursorpos_label;
 }
 
 void MapEditorController::undo()

@@ -25,6 +25,10 @@
 
 #include "map.h"
 
+QT_BEGIN_NAMESPACE
+class QLabel;
+QT_END_NAMESPACE
+
 class MapEditorActivity;
 class MapEditorTool;
 class MapView;
@@ -78,6 +82,10 @@ public:
 	void updateDrawing(QRectF map_rect, int pixel_border);
 	void updateEverything();	// invalidates all caches and redraws the whole widget
 	
+	// Set the labels where the map widget will display the respective piece of information
+	void setZoomLabel(QLabel* zoom_label);
+	void setCursorposLabel(QLabel* cursorpos_label);
+	
 protected:
 	virtual void paintEvent(QPaintEvent* event);
 	virtual void resizeEvent(QResizeEvent* event);
@@ -107,9 +115,15 @@ private:
 	
 	void showHelpMessage(QPainter* painter, const QString& text);
 	
+	void updateZoomLabel();
+	void updateCursorposLabel(MapCoordF pos);
+	
 	MapView* view;
 	MapEditorTool* tool;
 	MapEditorActivity* activity;
+	
+	QLabel* zoom_label;
+	QLabel* cursorpos_label;
 	
 	// Panning
 	bool dragging;

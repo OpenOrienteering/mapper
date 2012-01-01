@@ -41,6 +41,8 @@ MapWidget::MapWidget(QWidget* parent) : QWidget(parent)
 	activity_dirty_rect_old = QRect();
 	activity_dirty_rect_new = QRectF();
 	activity_dirty_rect_new_border = -1;
+	zoom_label = NULL;
+	cursorpos_label = NULL;
 	
 	below_template_cache_dirty_rect = rect();
 	above_template_cache_dirty_rect = rect();
@@ -280,6 +282,30 @@ QRect MapWidget::calculateViewportBoundingBox(QRectF map_rect, int pixel_border)
 	return integer_rect;
 }
 
+void MapWidget::setZoomLabel(QLabel* zoom_label)
+{
+	this->zoom_label = zoom_label;
+	updateZoomLabel();
+}
+void MapWidget::setCursorposLabel(QLabel* cursorpos_label)
+{
+	this->cursorpos_label = cursorpos_label;
+}
+void MapWidget::updateZoomLabel()
+{
+	if (!zoom_label)
+		return;
+	
+	zoom_label->setText(tr("Zoom: %1x").arg(view->getZoom(), 0, 'g', 3));
+}
+void MapWidget::updateCursorposLabel(MapCoordF pos)
+{
+	if (!cursorpos_label)
+		return;
+	
+	cursorpos_label->setText(QString::number(pos.getX(), 'f', 2) + " " + QString::number(pos.getY(), 'f', 2));
+}
+
 void MapWidget::showHelpMessage(QPainter* painter, const QString& text)
 {
 	painter->fillRect(rect(), QColor(Qt::gray));
@@ -310,11 +336,11 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	
 	// No colors defined? Provide a litte help message ... TODO: reactivate
 	/*if (view && view->getMap()->getNumColors() == 0)
-		showHelpMessage(&painter, tr("- Empty map -\nStart by defining some colors:\nSelect Symbols -> Color window to\nopen the color dialog and\ndefine the colors there."));
+		showHelpMessage(&painter, tr("Empty map!\n\nStart by defining some colors:\nSelect Symbols -> Color window to\nopen the color dialog and\ndefine the colors there."));
 	else if (true) // TODO; No symbols defined?
-		showHelpMessage(&painter, tr("- No symbols -\nNow define some symbols:\nRight-click in the symbol bar\nand select \"New\" to create\na new symbol."));
+		showHelpMessage(&painter, tr("No symbols!\n\nNow define some symbols:\nRight-click in the symbol bar\nand select \"New\" to create\na new symbol."));
 	else*/ if (view && view->getMap()->getNumTemplates() == 0) /* && NoObjectsTODO)*/	// No templates defined?
-		showHelpMessage(&painter, tr("- Ready to draw -\nStart drawing or load a base map.\nTo load a base map, click\nTemplates -> Open template..."));
+		showHelpMessage(&painter, tr("Ready to draw!\n\nStart drawing or load a base map.\nTo load a base map, click\nTemplates -> Open template..."));
 	else if (view)
 	{
 		// Update all dirty caches
@@ -331,6 +357,8 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		// Draw caches
 		if (below_template_visible && below_template_cache && view->getMap()->getFirstFrontTemplate() > 0)
 			painter.drawImage(drag_offset, *below_template_cache, rect());
+		else
+			painter.fillRect(QRect(drag_offset.x(), drag_offset.y(), width(), height()), Qt::white);	// TODO: It's not as easy as that, see above.
 		
 		// TODO: Map cache
 		
@@ -405,6 +433,8 @@ void MapWidget::mouseMoveEvent(QMouseEvent* event)
 		view->setDragOffset(event->pos() - drag_start_pos);
 		return;
 	}
+	else
+		updateCursorposLabel(view->viewToMapF(viewportToView(event->pos())));
 	
 	if (tool && tool->mouseMoveEvent(event, view->viewToMapF(viewportToView(event->pos())), this))
 	{
@@ -450,6 +480,8 @@ void MapWidget::wheelEvent(QWheelEvent* event)
 			}
 			else
 				view->setZoom(view->getZoom() * 1 / (2 * -num_steps));
+			
+			updateZoomLabel();
 		}
 		
 		event->accept();
