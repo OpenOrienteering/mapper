@@ -17,6 +17,7 @@ include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR})
 set(Mapper_SRCS
  src/main.cpp
  src/util.cpp
+ src/matrix.cpp
 
  src/main_window.cpp
  src/main_window_home_screen.cpp

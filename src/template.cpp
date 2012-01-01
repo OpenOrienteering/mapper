@@ -38,6 +38,43 @@ Template::TemplateTransform::TemplateTransform()
 	template_scale_y = 1;
 	template_rotation = 0;
 }
+void Template::TemplateTransform::save(QFile* file)
+{
+	file->write((const char*)&template_x, sizeof(qint64));
+	file->write((const char*)&template_y, sizeof(qint64));
+	
+	file->write((const char*)&template_scale_x, sizeof(qint64));
+	file->write((const char*)&template_scale_y, sizeof(qint64));
+	file->write((const char*)&template_rotation, sizeof(qint64));
+}
+void Template::TemplateTransform::load(QFile* file)
+{
+	file->read((char*)&template_x, sizeof(qint64));
+	file->read((char*)&template_y, sizeof(qint64));
+	
+	file->read((char*)&template_scale_x, sizeof(qint64));
+	file->read((char*)&template_scale_y, sizeof(qint64));
+	file->read((char*)&template_rotation, sizeof(qint64));
+}
+
+// ### PassPoint ###
+
+void Template::PassPoint::save(QFile* file)
+{
+	file->write((const char*)&src_coords_template, sizeof(MapCoordF));
+	file->write((const char*)&src_coords_map, sizeof(MapCoordF));
+	file->write((const char*)&dest_coords_map, sizeof(MapCoordF));
+	file->write((const char*)&calculated_coords_map, sizeof(MapCoordF));
+	file->write((const char*)&error, sizeof(double));
+}
+void Template::PassPoint::load(QFile* file)
+{
+	file->read((char*)&src_coords_template, sizeof(MapCoordF));
+	file->read((char*)&src_coords_map, sizeof(MapCoordF));
+	file->read((char*)&dest_coords_map, sizeof(MapCoordF));
+	file->read((char*)&calculated_coords_map, sizeof(MapCoordF));
+	file->read((char*)&error, sizeof(double));
+}
 
 // ### Template ###
 
@@ -79,6 +116,65 @@ Template::Template(const Template& other)
 }
 Template::~Template()
 {	
+}
+
+void Template::saveTemplateParameters(QFile* file)
+{
+	saveString(file, template_file);
+	
+	cur_trans.save(file);
+	other_trans.save(file);
+	
+	file->write((const char*)&georeferenced, sizeof(bool));
+	file->write((const char*)&georeferencing_dirty, sizeof(bool));
+	
+	int num_passpoints = (int)passpoints.size();
+	file->write((const char*)&num_passpoints, sizeof(int));
+	for (int i = 0; i < num_passpoints; ++i)
+		passpoints[i].save(file);
+	
+	map_to_template.save(file);
+	template_to_map.save(file);
+	template_to_map_other.save(file);
+	
+	file->write((const char*)&template_group, sizeof(int));
+}
+void Template::loadTemplateParameters(QFile* file)
+{
+	loadString(file, template_file);
+	
+	cur_trans.load(file);
+	other_trans.load(file);
+	
+	file->read((char*)&georeferenced, sizeof(bool));
+	file->read((char*)&georeferencing_dirty, sizeof(bool));
+	
+	int num_passpoints;
+	file->read((char*)&num_passpoints, sizeof(int));
+	passpoints.resize(num_passpoints);
+	for (int i = 0; i < num_passpoints; ++i)
+		passpoints[i].load(file);
+	
+	map_to_template.load(file);
+	template_to_map.load(file);
+	template_to_map_other.load(file);
+	
+	file->read((char*)&template_group, sizeof(int));
+}
+
+bool Template::changeTemplateFile(const QString& filename)
+{
+	bool ret_val = changeTemplateFileImpl(filename);
+	if (ret_val)
+	{
+		template_path = filename;
+		template_file = QFileInfo(filename).fileName();
+		template_valid = true;
+		
+		setTemplateAreaDirty();
+		map->setTemplatesDirty();
+	}
+	return ret_val;
 }
 
 void Template::applyTemplateTransform(QPainter* painter)
@@ -245,6 +341,10 @@ Template* TemplateImage::duplicate()
 	TemplateImage* copy = new TemplateImage(*this);
 	return copy;
 }
+bool TemplateImage::saveTemplateFile()
+{
+	return pixmap->save(template_path);
+}
 
 bool TemplateImage::open(QWidget* dialog_parent, MapView* main_view)
 {
@@ -300,6 +400,23 @@ void TemplateImage::drawOntoTemplateImpl(QPointF* points, int num_points, QColor
 	painter.drawPolyline(points, num_points);
 	
 	painter.end();
+}
+bool TemplateImage::changeTemplateFileImpl(const QString& filename)
+{
+	QPixmap* new_pixmap = new QPixmap(filename);
+	if (new_pixmap->isNull())
+	{
+		delete new_pixmap;
+		new_pixmap = NULL;
+		return false;
+	}
+	else
+	{
+		if (pixmap)
+			delete pixmap;
+		pixmap = new_pixmap;
+		return true;
+	}
 }
 
 TemplateImageOpenDialog::TemplateImageOpenDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)

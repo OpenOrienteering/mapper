@@ -18,30 +18,22 @@
  */
 
 
-#ifndef UTIL_H
-#define UTIL_H
+#include "matrix.h"
 
-#include <QDoubleValidator>
-#include <QRectF>
+#include <QFile>
 
-QT_BEGIN_NAMESPACE
-class QFile;
-QT_END_NAMESPACE
-
-/// Double validator for line edit widgets
-class DoubleValidator : public QDoubleValidator
+void Matrix::save(QFile* file)
 {
-public:
-	DoubleValidator(double bottom, double top = 10e10, QObject* parent = NULL, int decimals = 20);
+	file->write((const char*)&n, sizeof(int));
+	file->write((const char*)&m, sizeof(int));
+	file->write((const char*)d, n*m * sizeof(double));
+}
+void Matrix::load(QFile* file)
+{
+	int new_n, new_m;
+	file->read((char*)&new_n, sizeof(int));
+	file->read((char*)&new_m, sizeof(int));
 	
-	virtual State validate(QString& input, int& pos) const;
-};
-
-/// Enlarges the rect to include the given point
-void rectInclude(QRectF& rect, QPointF point);
-
-/// Helper functions to save a string to a file and load it again
-void saveString(QFile* file, const QString& str);
-void loadString(QFile* file, QString& str);
-
-#endif
+	setSize(new_n, new_m);
+	file->read((char*)d, n*m * sizeof(double));
+}

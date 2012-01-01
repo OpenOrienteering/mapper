@@ -45,7 +45,7 @@ MapEditorController::MapEditorController(Map* map)
 	this->map = NULL;
 	main_view = NULL;
 	
-	setMap(map);
+	setMap(map, true);
 	
 	editor_activity = NULL;
 	current_tool = NULL;	// TODO: default tool?
@@ -87,7 +87,7 @@ void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
 bool MapEditorController::save(const QString& path)
 {
 	if (map)
-		return map->saveTo(path);
+		return map->saveTo(path, this);
 	else
 		return false;
 }
@@ -96,13 +96,25 @@ bool MapEditorController::load(const QString& path)
 	if (!map)
 		map = new Map();
 	
-	bool result = map->loadFrom(path);
+	bool result = map->loadFrom(path, this);
 	if (result)
-		setMap(map);
+		setMap(map, false);
 	else
 		delete map;
 	
 	return result;
+}
+
+void MapEditorController::saveWidgetsAndViews(QFile* file)
+{
+	// TODO: currently, this just saves/loads the main view
+	
+	main_view->save(file);
+}
+void MapEditorController::loadWidgetsAndViews(QFile* file)
+{
+	main_view = new MapView(map);
+	main_view->load(file);
 }
 
 void MapEditorController::attach(MainWindow* window)
@@ -223,6 +235,19 @@ void MapEditorController::attach(MainWindow* window)
 	paint_on_template_button->setMenu(paint_on_template_menu);
 	toolbar_drawing->addWidget(paint_on_template_button);
 	connect(paint_on_template_menu, SIGNAL(triggered(QAction*)), this, SLOT(paintOnTemplateSelectClicked()));
+	
+	// Check if there is an invalid template and if so, output a warning
+	bool has_invalid_template = false;
+	for (int i = 0; i < map->getNumTemplates(); ++i)
+	{
+		if (!map->getTemplate(i)->isTemplateValid())
+		{
+			has_invalid_template = true;
+			break;
+		}
+	}
+	if (has_invalid_template)
+		window->setStatusBarText("<font color=\"#c00\">" + tr("One or more templates could not be loaded. Use the Templates -> Template setup window to resolve the issue(s) by clicking on the red template file name(s).") + "</font>");
 }
 void MapEditorController::detach()
 {
@@ -365,7 +390,7 @@ void MapEditorController::updatePaintOnTemplateAction()
 		int i;
 		for (i = 0; i < map->getNumTemplates(); ++i)
 		{
-			if (map->getTemplate(i)->canBeDrawnOnto())
+			if (map->getTemplate(i)->canBeDrawnOnto() && map->getTemplate(i)->isTemplateValid())
 				break;
 		}
 		paint_on_template_act->setEnabled(i != map->getNumTemplates());
@@ -390,7 +415,7 @@ void MapEditorController::templateDeleted(Template* temp)
 		updatePaintOnTemplateAction();
 }
 
-void MapEditorController::setMap(Map* map)
+void MapEditorController::setMap(Map* map, bool create_new_map_view)
 {
 	if (this->map)
 	{
@@ -399,7 +424,8 @@ void MapEditorController::setMap(Map* map)
 	}
 	
 	this->map = map;
-	main_view = new MapView(map);
+	if (create_new_map_view)
+		main_view = new MapView(map);
 	
 	connect(map, SIGNAL(templateAdded(Template*)), this, SLOT(templateAdded(Template*)));
 	connect(map, SIGNAL(templateDeleted(Template*)), this, SLOT(templateDeleted(Template*)));

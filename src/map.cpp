@@ -76,8 +76,10 @@ Map::~Map()
 		delete templates[i];
 }
 
-bool Map::saveTo(const QString& path)
+bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 {
+	assert(map_editor && "Preserving the widget&view information without retrieving it from a MapEditorController is not implemented yet!");
+	
 	QFile file(path);
 	if (!file.open(QIODevice::WriteOnly))
 	{
@@ -91,6 +93,8 @@ bool Map::saveTo(const QString& path)
 	
 	const int FILE_VERSION_ID = 0;
 	file.write((const char*)&FILE_VERSION_ID, sizeof(int));
+	
+	file.write((const char*)&scale_denominator, sizeof(int));
 	
 	// Write colors
 	int num_colors = (int)colors.size();
@@ -110,6 +114,35 @@ bool Map::saveTo(const QString& path)
 		saveString(&file, color->name);
 	}
 	
+	// Write templates
+	file.write((const char*)&first_front_template, sizeof(int));
+	
+	int num_templates = getNumTemplates();
+	file.write((const char*)&num_templates, sizeof(int));
+	
+	for (int i = 0; i < num_templates; ++i)
+	{
+		Template* temp = getTemplate(i);
+		
+		saveString(&file, temp->getTemplatePath());
+		
+		temp->saveTemplateParameters(&file);	// save transformation etc.
+		if (temp->hasUnsavedChanges())
+		{
+			// Save the template itself (e.g. image, gpx file, etc.)
+			temp->saveTemplateFile();
+			temp->setHasUnsavedChanges(false);
+		}
+	}
+	
+	// Write widgets and views; TODO: currently, just this just writes the view of widgets[0] ...
+	if (map_editor)
+		map_editor->saveWidgetsAndViews(&file);
+	else
+	{
+		// TODO
+	}
+	
 	file.close();
 	
 	colors_dirty = false;
@@ -117,27 +150,7 @@ bool Map::saveTo(const QString& path)
 	unsaved_changes = false;
 	return true;
 }
-void Map::saveString(QFile* file, const QString& str)
-{
-	int length = str.length();
-	
-	file->write((const char*)&length, sizeof(int));
-	file->write((const char*)str.constData(), length * sizeof(QChar));
-}
-void Map::loadString(QFile* file, QString& str)
-{
-	int length;
-	
-	file->read((char*)&length, sizeof(int));
-	if (length > 0)
-	{
-		str.resize(length);
-		file->read((char*)str.data(), length * sizeof(QChar));
-	}
-	else
-		str = "";
-}
-bool Map::loadFrom(const QString& path)
+bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 {
 	QFile file(path);
 	if (!file.open(QIODevice::ReadOnly))
@@ -165,6 +178,8 @@ bool Map::loadFrom(const QString& path)
 	if (FILE_VERSION_ID != 0)
 		QMessageBox::warning(NULL, tr("Warning"), tr("Problem while opening file:\n%1\n\nUnknown file format version.").arg(path));
 	
+	file.read((char*)&scale_denominator, sizeof(int));
+	
 	// Load colors
 	int num_colors;
 	file.read((char*)&num_colors, sizeof(int));
@@ -187,7 +202,34 @@ bool Map::loadFrom(const QString& path)
 		colors[i] = color;
 	}
 	
+	// Load templates
+	file.read((char*)&first_front_template, sizeof(int));
+	
+	int num_templates;
+	file.read((char*)&num_templates, sizeof(int));
+	templates.resize(num_templates);
+	
+	for (int i = 0; i < num_templates; ++i)
+	{
+		QString path;
+		loadString(&file, path);
+		
+		Template* temp = Template::templateForFile(path, this);
+		temp->loadTemplateParameters(&file);
+		
+		templates[i] = temp;
+	}
+	
+	// Restore widgets and views
+	if (map_editor)
+		map_editor->loadWidgetsAndViews(&file);
+	else
+	{
+		// TODO
+	}
+	
 	file.close();
+	
 	return true;
 }
 
@@ -289,6 +331,15 @@ void Map::setColorsDirty()
 	colors_dirty = true;
 }
 
+int Map::getTemplateNumber(Template* temp) const
+{
+	for (int i = 0; i < (int)templates.size(); ++i)
+	{
+		if (templates[i] == temp)
+			return i;
+	}
+	assert(false);
+}
 void Map::setTemplate(Template* temp, int pos)
 {
 	templates[pos] = temp;
@@ -391,6 +442,55 @@ MapView::~MapView()
 {
 	foreach (TemplateVisibility* vis, template_visibilities)
 		delete vis;
+}
+
+void MapView::save(QFile* file)
+{
+	file->write((const char*)&zoom, sizeof(double));
+	file->write((const char*)&rotation, sizeof(double));
+	file->write((const char*)&position_x, sizeof(qint64));
+	file->write((const char*)&position_y, sizeof(qint64));
+	file->write((const char*)&view_x, sizeof(int));
+	file->write((const char*)&view_y, sizeof(int));
+	file->write((const char*)&drag_offset, sizeof(QPoint));
+	
+	int num_template_visibilities = template_visibilities.size();
+	file->write((const char*)&num_template_visibilities, sizeof(int));
+	QHash<Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
+	while (it != template_visibilities.constEnd())
+	{
+		int pos = map->getTemplateNumber(it.key());
+		file->write((const char*)&pos, sizeof(int));
+		
+		file->write((const char*)&it.value()->visible, sizeof(bool));
+		file->write((const char*)&it.value()->opacity, sizeof(float));
+		
+		++it;
+	}
+}
+void MapView::load(QFile* file)
+{
+	file->read((char*)&zoom, sizeof(double));
+	file->read((char*)&rotation, sizeof(double));
+	file->read((char*)&position_x, sizeof(qint64));
+	file->read((char*)&position_y, sizeof(qint64));
+	file->read((char*)&view_x, sizeof(int));
+	file->read((char*)&view_y, sizeof(int));
+	file->read((char*)&drag_offset, sizeof(QPoint));
+	update();
+	
+	int num_template_visibilities;
+	file->read((char*)&num_template_visibilities, sizeof(int));
+	
+	for (int i = 0; i < num_template_visibilities; ++i)
+	{
+		int pos;
+		file->read((char*)&pos, sizeof(int));
+		
+		TemplateVisibility* vis = getTemplateVisibility(map->getTemplate(pos));
+		file->read((char*)&vis->visible, sizeof(bool));
+		file->read((char*)&vis->opacity, sizeof(float));
+	}
 }
 
 void MapView::addMapWidget(MapWidget* widget)

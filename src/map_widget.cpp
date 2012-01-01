@@ -42,6 +42,9 @@ MapWidget::MapWidget(QWidget* parent) : QWidget(parent)
 	activity_dirty_rect_new = QRectF();
 	activity_dirty_rect_new_border = -1;
 	
+	below_template_cache_dirty_rect = rect();
+	above_template_cache_dirty_rect = rect();
+	
 	setAttribute(Qt::WA_OpaquePaintEvent);
 	setAutoFillBackground(false);
 	setMouseTracking(true);
@@ -310,10 +313,10 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		showHelpMessage(&painter, tr("- Empty map -\nStart by defining some colors:\nSelect Symbols -> Color window to\nopen the color dialog and\ndefine the colors there."));
 	else if (true) // TODO; No symbols defined?
 		showHelpMessage(&painter, tr("- No symbols -\nNow define some symbols:\nRight-click in the symbol bar\nand select \"New\" to create\na new symbol."));
-	else if (view && view->getMap()->getNumTemplates() == 0 && NoObjectsTODO)	// No templates defined?
+	else*/ if (view && view->getMap()->getNumTemplates() == 0) /* && NoObjectsTODO)*/	// No templates defined?
 		showHelpMessage(&painter, tr("- Ready to draw -\nStart drawing or load a base map.\nTo load a base map, click\nTemplates -> Open template..."));
 	else if (view)
-	{*/
+	{
 		// Update all dirty caches
 		// TODO: It would be an idea to do these updates in a background thread and use the old caches in the meantime
 		bool below_template_visible = containsVisibleTemplate(0, view->getMap()->getFirstFrontTemplate() - 1);
@@ -360,7 +363,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
 			
 			drawing_dirty_rect_old = viewport_dirty_rect;
 		}
-	//}
+	}
 	
 	painter.end();
 }
@@ -523,25 +526,25 @@ void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first
 	Map* map = view->getMap();
 	for (int i = first_template; i <= last_template; ++i)
 	{
-		Template* templ = map->getTemplate(i);
-		if (!view->isTemplateVisible(templ))
+		Template* temp = map->getTemplate(i);
+		if (!view->isTemplateVisible(temp) || !temp->isTemplateValid())
 			continue;
-		float scale = view->getZoom() * std::max(templ->getTemplateScaleX(), templ->getTemplateScaleY());
+		float scale = view->getZoom() * std::max(temp->getTemplateScaleX(), temp->getTemplateScaleY());
 		
 		QRectF view_rect;
-		if (templ->getTemplateRotation() != 0)
+		if (temp->getTemplateRotation() != 0)
 			view_rect = QRectF(-9e42, -9e42, 9e42, 9e42);	// TODO: transform base_view_rect (map coords) using template transform to template coords
 		else
 		{
-			view_rect.setLeft((base_view_rect.x() / templ->getTemplateScaleX()) - templ->getTemplateX());
-			view_rect.setTop((base_view_rect.y() / templ->getTemplateScaleY()) - templ->getTemplateY());
-			view_rect.setRight((base_view_rect.right() / templ->getTemplateScaleX()) - templ->getTemplateX());
-			view_rect.setBottom((base_view_rect.bottom() / templ->getTemplateScaleY()) - templ->getTemplateY());
+			view_rect.setLeft((base_view_rect.x() / temp->getTemplateScaleX()) - temp->getTemplateX());
+			view_rect.setTop((base_view_rect.y() / temp->getTemplateScaleY()) - temp->getTemplateY());
+			view_rect.setRight((base_view_rect.right() / temp->getTemplateScaleX()) - temp->getTemplateX());
+			view_rect.setBottom((base_view_rect.bottom() / temp->getTemplateScaleY()) - temp->getTemplateY());
 		}
 		
 		painter.save();
-		templ->applyTemplateTransform(&painter);
-		templ->drawTemplate(&painter, view_rect, scale, view->getTemplateVisibility(templ)->opacity);
+		temp->applyTemplateTransform(&painter);
+		temp->drawTemplate(&painter, view_rect, scale, view->getTemplateVisibility(temp)->opacity);
 		painter.restore();
 	}
 	

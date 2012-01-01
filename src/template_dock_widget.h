@@ -78,6 +78,8 @@ private:
 	void updateRow(int row);
 	int posFromRow(int row);
 	
+	void changeTemplateFile(int row);
+	
 	QTableWidget* template_table;
 	
 	// Buttons

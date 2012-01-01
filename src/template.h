@@ -30,6 +30,7 @@ QT_BEGIN_NAMESPACE
 class QPixmap;
 class QPainter;
 class QLineEdit;
+class QFile;
 QT_END_NAMESPACE
 
 class Map;
@@ -43,6 +44,9 @@ public:
 	{
 		TemplateTransform();
 		
+		void save(QFile* file);
+		void load(QFile* file);
+		
 		qint64 template_x;			// in 1/1000 mm
 		qint64 template_y;
 		double template_scale_x;
@@ -51,6 +55,9 @@ public:
 	};
 	struct PassPoint
 	{
+		void save(QFile* file);
+		void load(QFile* file);
+		
 		MapCoordF src_coords_template;		// start position specified by the user, in template coordinates
 		MapCoordF src_coords_map;			// start position specified by the user
 		MapCoordF dest_coords_map;			// end position specified by the user
@@ -64,6 +71,15 @@ public:
 	
 	/// Must create a duplicate of the template
 	virtual Template* duplicate() = 0;
+	
+	/// Saves parameters such as transformation, georeferencing, etc.
+	void saveTemplateParameters(QFile* file);
+	void loadTemplateParameters(QFile* file);
+	/// Saves the template itself, returns if successful. This is called when saving the map and the template hasUnsavedChanges() returns true
+	virtual bool saveTemplateFile() {return false;}
+	
+	/// Changes a template's file without changing the parameters. Useful when a template file has been moved. Returns if successful.
+	bool changeTemplateFile(const QString& filename);
 	
 	/// Is called when the template is opened by the user. Can show an initial configuration dialog
 	/// and possibly adjust the template position to the main view. If this returns false, the template is closed again.
@@ -180,6 +196,9 @@ protected:
 	/// Must be implemented to draw the polyline given by the points onto the template if canBeDrawnOnto() returns true
 	virtual void drawOntoTemplateImpl(QPointF* points, int num_points, QColor color, float width) {}
 	
+	/// Must be implemented to make changing the template file possible
+	virtual bool changeTemplateFileImpl(const QString& filename) {return false;}
+	
 	void updateTransformationMatrices();
 	
 	QString template_file;
@@ -213,6 +232,7 @@ public:
 	TemplateImage(const TemplateImage& other);
     virtual ~TemplateImage();
     virtual Template* duplicate();
+    virtual bool saveTemplateFile();
 	
     virtual bool open(QWidget* dialog_parent, MapView* main_view);
     virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity);
@@ -224,6 +244,7 @@ public:
 	
 protected:
     virtual void drawOntoTemplateImpl(QPointF* points, int num_points, QColor color, float width);
+    virtual bool changeTemplateFileImpl(const QString& filename);
 	
 	QPixmap* pixmap;	// TODO: Change that to QImage?
 };

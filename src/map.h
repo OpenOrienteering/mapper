@@ -39,6 +39,7 @@ class MapWidget;
 class MapCoord;
 class MapCoordF;
 class Template;
+class MapEditorController;
 
 /// Central class for an OpenOrienteering map
 class Map : public QObject
@@ -65,10 +66,10 @@ public:
 	Map();
 	~Map();
 	
-	/// Attempts to save the map to the given file.
-	bool saveTo(const QString& path);
+	/// Attempts to save the map to the given file. If a MapEditorController is given, the widget positions and MapViews stored in the map file are also updated.
+	bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
 	/// Attempts to load the map from the specified path. Returns true on success.
-	bool loadFrom(const QString& path);
+	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL);
 	
 	/// Must be called to notify the map of new widgets displaying it. Useful to notify the widgets about which parts of the map have changed and need to be redrawn
 	void addMapWidget(MapWidget* widget);
@@ -101,6 +102,7 @@ public:
 	
 	inline int getNumTemplates() const {return templates.size();}
 	inline Template* getTemplate(int i) {return templates[i];}
+	int getTemplateNumber(Template* temp) const;
 	inline void setFirstFrontTemplate(int pos) {first_front_template = pos;}
 	inline int getFirstFrontTemplate() const {return first_front_template;}
 	void setTemplate(Template* temp, int pos);
@@ -128,8 +130,6 @@ private:
 	
 	void checkIfFirstColorAdded();
 	void checkIfFirstTemplateAdded();
-	void saveString(QFile* file, const QString& str);
-	void loadString(QFile* file, QString& str);
 	
 	ColorVector colors;
 	TemplateVector templates;
@@ -253,6 +253,9 @@ public:
 	/// Creates a default view looking at the origin
 	MapView(Map* map);
 	~MapView();
+	
+	void save(QFile* file);
+	void load(QFile* file);
 	
 	/// Must be called to notify the map view of new widgets displaying it. Useful to notify the widgets which need to be redrawn
 	void addMapWidget(MapWidget* widget);

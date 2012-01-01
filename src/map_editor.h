@@ -53,6 +53,9 @@ public:
 	virtual bool save(const QString& path);
 	virtual bool load(const QString& path);
 	
+	void saveWidgetsAndViews(QFile* file);
+	void loadWidgetsAndViews(QFile* file);
+	
     virtual void attach(MainWindow* window);
     virtual void detach();
 	
@@ -78,7 +81,7 @@ public slots:
 	void templateDeleted(Template* temp);
 	
 private:
-	void setMap(Map* map);
+	void setMap(Map* map, bool create_new_map_view);
 	
 	void paintOnTemplate(Template* temp);
 	void updatePaintOnTemplateAction();

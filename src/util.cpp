@@ -20,6 +20,8 @@
 
 #include "util.h"
 
+#include <QFile>
+
 DoubleValidator::DoubleValidator(double bottom, double top, QObject* parent, int decimals) : QDoubleValidator(bottom, top, decimals, parent)
 {
 	// Don't cause confusion, accept only English formatting
@@ -44,4 +46,25 @@ void rectInclude(QRectF& rect, QPointF point)
 		rect.setTop(point.y());
 	else if (point.y() > rect.bottom())
 		rect.setBottom(point.y());
+}
+
+void saveString(QFile* file, const QString& str)
+{
+	int length = str.length();
+	
+	file->write((const char*)&length, sizeof(int));
+	file->write((const char*)str.constData(), length * sizeof(QChar));
+}
+void loadString(QFile* file, QString& str)
+{
+	int length;
+	
+	file->read((char*)&length, sizeof(int));
+	if (length > 0)
+	{
+		str.resize(length);
+		file->read((char*)str.data(), length * sizeof(QChar));
+	}
+	else
+		str = "";
 }

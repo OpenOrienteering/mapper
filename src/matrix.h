@@ -26,6 +26,12 @@
 #include <stdio.h>
 #include <math.h>
 
+#include <QObject>
+
+QT_BEGIN_NAMESPACE
+class QFile;
+QT_END_NAMESPACE
+
 class Matrix
 {
 public:
@@ -47,6 +53,9 @@ public:
 	{
 		delete[] d;
 	}
+	
+	void save(QFile* file);
+	void load(QFile* file);
 	
 	inline int getRows() const {return n;}
 	inline int getCols() const {return m;}

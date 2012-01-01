@@ -87,7 +87,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	
 	move_by_hand_button = new QPushButton(QIcon("images/move.png"), tr("Move by hand"));
 	move_by_hand_button->setCheckable(true);
-	georeference_button = new QPushButton(tr("Georeference..."));	// TODO: needs icon (two connected crosses?)
+	georeference_button = new QPushButton(QIcon("images/georeferencing.png"), tr("Georeference..."));
 	georeference_button->setCheckable(true);
 	group_button = new QPushButton(QIcon("images/group.png"), tr("(Un)group"));
 	
@@ -127,7 +127,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	// Connections
 	connect(template_table, SIGNAL(cellChanged(int,int)), this, SLOT(cellChange(int,int)));
 	connect(template_table->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(selectionChanged(QItemSelection,QItemSelection)));
-	connect(template_table, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentCellChange(int,int,int,int)));	// TODO: unncessary?
+	connect(template_table, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentCellChange(int,int,int,int)));
 	connect(template_table, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(cellDoubleClick(int,int)));
 	
 	connect(new_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(newTemplate(QAction*)));
@@ -486,11 +486,28 @@ void TemplateWidget::selectionChanged(const QItemSelection& selected, const QIte
 }
 void TemplateWidget::currentCellChange(int current_row, int current_column, int previous_row, int previous_column)
 {
-
+	if (current_column == 3)
+	{
+		int pos = posFromRow(current_row);
+		Template* temp = (current_row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
+		if (!temp)
+			return;
+		
+		if (!temp->isTemplateValid())
+			changeTemplateFile(current_row);
+	}
 }
 void TemplateWidget::cellDoubleClick(int row, int column)
 {
-	// TODO?
+	if (column == 3)
+	{
+		int pos = posFromRow(row);
+		Template* temp = (row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
+		if (!temp)
+			return;
+		
+		changeTemplateFile(row);
+	}
 }
 
 void TemplateWidget::moveByHandClicked(bool checked)
@@ -591,6 +608,7 @@ void TemplateWidget::updateRow(int row)
 			item->setText("");
 		}
 		template_table->item(row, 3)->setText(tr("- Map -"));
+		template_table->item(row, 3)->setTextColor(QPalette().color(QPalette::Text));
 	}
 	else
 	{
@@ -611,6 +629,8 @@ void TemplateWidget::updateRow(int row)
 		template_table->item(row, 1)->setText(QString::number(vis->opacity * 100) + "%");
 		template_table->item(row, 2)->setText((temp->getTemplateGroup() < 0) ? "" : QString::number(temp->getTemplateGroup()));
 		template_table->item(row, 3)->setText(temp->getTemplateFilename());
+		
+		template_table->item(row, 3)->setTextColor(temp->isTemplateValid() ? QPalette().color(QPalette::Text) : qRgb(204, 0, 0));
 	}
 	react_to_changes = true;
 }
@@ -625,6 +645,23 @@ int TemplateWidget::posFromRow(int row)
 		return pos - 1;
 	else
 		return pos;
+}
+
+void TemplateWidget::changeTemplateFile(int row)
+{
+	QString path = QFileDialog::getOpenFileName(this, tr("Find the moved template file"), QString(), tr("All files (*.*)"));
+	path = QFileInfo(path).canonicalFilePath();
+	if (path.isEmpty())
+		return;
+	
+	int pos = posFromRow(row);
+	Template* temp = (row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
+	assert(temp);
+	
+	if (temp->changeTemplateFile(path))
+		updateRow(row);
+	else
+		QMessageBox::warning(this, tr("Error"), tr("Cannot change the template to this file! Does the file have a correct format for the template?"));
 }
 
 #include "template_dock_widget.moc"
