@@ -551,8 +551,10 @@ void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first
 	}
 	
 	// Draw templates
+	painter.save();
 	painter.translate(width() / 2.0, height() / 2.0);
 	view->applyTransform(&painter);
+	
 	QRectF base_view_rect = view->calculateViewedRect(viewportToView(dirty_rect));
 	
 	Map* map = view->getMap();
@@ -578,8 +580,16 @@ void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first
 		temp->applyTemplateTransform(&painter);
 		temp->drawTemplate(&painter, view_rect, scale, view->getTemplateVisibility(temp)->opacity);
 		painter.restore();
+		painter.restore();
+		temp->drawTemplateUntransformed(&painter, dirty_rect, this);
+		//if (i < last_template)
+		//{
+			painter.save();
+			painter.translate(width() / 2.0, height() / 2.0);
+			view->applyTransform(&painter);
+		//}
 	}
-	
+	painter.restore();
 	painter.end();
 	
 	dirty_rect.setWidth(-1);

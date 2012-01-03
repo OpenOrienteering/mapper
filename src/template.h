@@ -35,10 +35,12 @@ QT_END_NAMESPACE
 
 class Map;
 class MapView;
+class MapWidget;
 
 /// Base class for templates
-class Template
+class Template : public QObject
 {
+Q_OBJECT
 public:
 	struct TemplateTransform
 	{
@@ -72,6 +74,9 @@ public:
 	/// Must create a duplicate of the template
 	virtual Template* duplicate() = 0;
 	
+	/// Returns a string which should identify the type of the template uniquely: the class name. Very simple RTTI feature.
+	virtual const QString getTemplateType() = 0;
+	
 	/// Saves parameters such as transformation, georeferencing, etc.
 	void saveTemplateParameters(QFile* file);
 	void loadTemplateParameters(QFile* file);
@@ -83,14 +88,19 @@ public:
 	
 	/// Is called when the template is opened by the user. Can show an initial configuration dialog
 	/// and possibly adjust the template position to the main view. If this returns false, the template is closed again.
-	virtual bool open(QWidget* dialog_parent, MapView* main_view) {return true;}
+	/// Note: this should call updateTransformationMatrices(). TODO: would it be better to always call this automatically after calling open()?
+	virtual bool open(QWidget* dialog_parent, MapView* main_view) {updateTransformationMatrices(); return true;}
 	
 	/// Applies the transformation to the given painter. The map scale denominator may be used to calculate the final template scale.
 	void applyTemplateTransform(QPainter* painter);
 	
 	/// Must draw the template using the given painter with the given opacity. The clip rect is in template coordinates,
-	/// the scale is the combined view & template scale, which can be used to give a minimum size to elements
+	/// the scale is the combined view & template scale, which can be used to give a minimum size to elements.
+	/// The painter transformation is set to use template coordinates.
 	virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity) = 0;
+	
+	/// Can draw untransformed parts of the template (like texts) in viewport coordinates.
+	virtual void drawTemplateUntransformed(QPainter* painter, QRect& clip_rect, MapWidget* widget) {}
 	
 	/// Marks the whole area of the template as "to be redrawn". Use this before and after modifications to the template transformation.
 	void setTemplateAreaDirty();
@@ -223,56 +233,5 @@ protected:
 	
 	Map* map;					// the map which contains this template
 };
-
-/// A raster image used as template
-class TemplateImage : public Template
-{
-public:
-	TemplateImage(const QString& filename, Map* map);
-	TemplateImage(const TemplateImage& other);
-    virtual ~TemplateImage();
-    virtual Template* duplicate();
-    virtual bool saveTemplateFile();
-	
-    virtual bool open(QWidget* dialog_parent, MapView* main_view);
-    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity);
-    virtual QRectF getExtent();
-	virtual bool canBeDrawnOnto() {return true;}
-	
-	virtual double getTemplateFinalScaleX() const;
-	virtual double getTemplateFinalScaleY() const;
-	
-protected:
-    virtual void drawOntoTemplateImpl(QPointF* points, int num_points, QColor color, float width);
-    virtual bool changeTemplateFileImpl(const QString& filename);
-	
-	QPixmap* pixmap;	// TODO: Change that to QImage?
-};
-/// Initial setting dialog when opening a raster image as template, asking for the meters per pixel
-class TemplateImageOpenDialog : public QDialog
-{
-Q_OBJECT
-public:
-	TemplateImageOpenDialog(QWidget* parent);
-	
-	inline double getMpp() const {return mpp;}
-	
-protected slots:
-	void mppChanged(const QString& new_text);
-	
-private:
-	double mpp;
-	
-	QLineEdit* mpp_edit;
-	QPushButton* open_button;
-};
-
-/// A dynamically growable template layer which can be drawn upon - TODO
-/*class TemplateSketch : public Template
-{
-public:
-	/// creates an empty sketch
-	TemplateSketch();
-};*/
 
 #endif

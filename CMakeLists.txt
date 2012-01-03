@@ -29,9 +29,14 @@ set(Mapper_SRCS
  src/color_dock_widget.cpp
 
  src/template.cpp
+ src/template_image.cpp
+ src/template_gps.cpp
  src/template_dock_widget.cpp
  src/georeferencing.cpp
  src/paint_on_template.cpp
+
+ src/gps_coordinates.cpp
+ src/gps_track.cpp
 )
 qt4_automoc(${Mapper_SRCS})
 

@@ -28,6 +28,7 @@
 #include "template_dock_widget.h"
 #include "template.h"
 #include "paint_on_template.h"
+#include "gps_coordinates.h"
 
 // ### MapEditorController ###
 
@@ -233,6 +234,13 @@ void MapEditorController::attach(MainWindow* window)
 	
 	// TODO: Map menu
 	
+	// GPS menu
+	QAction* edit_gps_projection_parameters_act = new QAction(tr("Edit projection parameters..."), this);
+	connect(edit_gps_projection_parameters_act, SIGNAL(triggered()), this, SLOT(editGPSProjectionParameters()));
+	
+	QMenu* gps_menu = window->menuBar()->addMenu(tr("&GPS"));
+	gps_menu->addAction(edit_gps_projection_parameters_act);
+	
 	// Toolbar
 	QToolBar* toolbar_drawing = window->addToolBar(tr("Drawing"));
 	
@@ -349,6 +357,16 @@ void MapEditorController::openTemplateClicked()
 	
 	TemplateWidget* template_widget = reinterpret_cast<TemplateWidget*>(template_dock_widget->widget());
 	template_widget->addTemplateAt(new_template, -1);
+}
+
+void MapEditorController::editGPSProjectionParameters()
+{
+	GPSProjectionParametersDialog dialog(window, &map->getGPSProjectionParameters());
+	dialog.setWindowModality(Qt::WindowModal);
+	if (dialog.exec() == QDialog::Rejected)
+		return;
+	
+	map->setGPSProjectionParameters(dialog.getParameters());
 }
 
 void MapEditorController::paintOnTemplateClicked(bool checked)

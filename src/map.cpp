@@ -30,6 +30,7 @@
 #include "map_widget.h"
 #include "template.h"
 #include "util.h"
+#include "gps_coordinates.h"
 
 // ### Map::Color ###
 
@@ -61,6 +62,9 @@ Map::Map()
 {
 	first_front_template = 0;
 	
+	gps_projection_params_set = false;
+	gps_projection_parameters = new GPSProjectionParameters();
+	
 	colors_dirty = false;
 	templates_dirty = false;
 	unsaved_changes = false;
@@ -74,6 +78,8 @@ Map::~Map()
 	size = templates.size();
 	for (int i = 0; i < size; ++i)
 		delete templates[i];
+	
+	delete gps_projection_parameters;
 }
 
 bool Map::saveTo(const QString& path, MapEditorController* map_editor)
@@ -95,6 +101,9 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 	file.write((const char*)&FILE_VERSION_ID, sizeof(int));
 	
 	file.write((const char*)&scale_denominator, sizeof(int));
+	
+	file.write((const char*)&gps_projection_params_set, sizeof(bool));
+	file.write((const char*)gps_projection_parameters, sizeof(GPSProjectionParameters));
 	
 	// Write colors
 	int num_colors = (int)colors.size();
@@ -179,6 +188,9 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 		QMessageBox::warning(NULL, tr("Warning"), tr("Problem while opening file:\n%1\n\nUnknown file format version.").arg(path));
 	
 	file.read((char*)&scale_denominator, sizeof(int));
+	
+	file.read((char*)&gps_projection_params_set, sizeof(bool));
+	file.read((char*)gps_projection_parameters, sizeof(GPSProjectionParameters));
 	
 	// Load colors
 	int num_colors;
@@ -404,6 +416,20 @@ void Map::setTemplatesDirty()
 		unsaved_changes = true;
 	}
 	templates_dirty = true;
+}
+
+void Map::setGPSProjectionParameters(const GPSProjectionParameters& params)
+{
+	*gps_projection_parameters = params;
+	gps_projection_parameters->update();
+	gps_projection_params_set = true;
+	emit(gpsProjectionParametersChanged());
+	
+	if (!unsaved_changes)
+	{
+		emit(gotUnsavedChanges());
+		unsaved_changes = true;
+	}
 }
 
 void Map::checkIfFirstColorAdded()

@@ -78,6 +78,8 @@ public slots:
 	void showTemplateWindow(bool show);
 	void openTemplateClicked();
 	
+	void editGPSProjectionParameters();
+	
 	void paintOnTemplateClicked(bool checked);
 	void paintOnTemplateSelectClicked();
 	

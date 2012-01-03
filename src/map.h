@@ -40,6 +40,7 @@ class MapCoord;
 class MapCoordF;
 class Template;
 class MapEditorController;
+class GPSProjectionParameters;
 
 /// Central class for an OpenOrienteering map
 class Map : public QObject
@@ -117,11 +118,17 @@ public:
 	inline void setScaleDenominator(int value) {scale_denominator = value;}
 	inline int getScaleDenominator() const {return scale_denominator;}
 	
+	inline bool areGPSProjectionParametersSet() const {return gps_projection_params_set;}
+	void setGPSProjectionParameters(const GPSProjectionParameters& params);
+	inline const GPSProjectionParameters& getGPSProjectionParameters() const {return *gps_projection_parameters;}
+	
 signals:
 	void gotUnsavedChanges();
 	
 	void templateAdded(Template* temp);
 	void templateDeleted(Template* temp);
+	
+	void gpsProjectionParametersChanged();
 	
 private:
 	typedef std::vector<Color*> ColorVector;
@@ -133,14 +140,17 @@ private:
 	
 	ColorVector colors;
 	TemplateVector templates;
-	int first_front_template;	// index of the first template in templates which should be drawn in front of the map
+	int first_front_template;		// index of the first template in templates which should be drawn in front of the map
 	WidgetVector widgets;
 	
-	bool colors_dirty;		// are there unsaved changes for the colors?
-	bool templates_dirty;	//    ... for the templates?
-	bool unsaved_changes;	// are there unsaved changes for any component?
+	bool gps_projection_params_set;	// have the parameters been set (are they valid)?
+	GPSProjectionParameters* gps_projection_parameters;
 	
-	int scale_denominator;	// this is the number x if the scale is written as 1:x
+	int scale_denominator;			// this is the number x if the scale is written as 1:x
+	
+	bool colors_dirty;				// are there unsaved changes for the colors?
+	bool templates_dirty;			//    ... for the templates?
+	bool unsaved_changes;			// are there unsaved changes for any component?
 };
 
 /// Coordinates of a point in a map.
