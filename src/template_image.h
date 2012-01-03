@@ -23,6 +23,11 @@
 
 #include "template.h"
 
+QT_BEGIN_NAMESPACE
+class QCheckBox;
+class QRadioButton;
+QT_END_NAMESPACE
+
 /// A raster image used as template
 class TemplateImage : public Template
 {
@@ -56,15 +61,20 @@ Q_OBJECT
 public:
 	TemplateImageOpenDialog(QWidget* parent);
 	
-	inline double getMpp() const {return mpp;}
+	inline double getMpp(Map* map) const;
 	
 protected slots:
-	void mppChanged(const QString& new_text);
+	void mppRadioClicked(bool checked);
+	void dpiRadioClicked(bool checked);
+	void scaleCheckClicked(bool checked);
 	
 private:
-	double mpp;
-	
+	QRadioButton* mpp_radio;
+	QRadioButton* dpi_radio;
+	QCheckBox* scale_check;
 	QLineEdit* mpp_edit;
+	QLineEdit* dpi_edit;
+	QLineEdit* scale_edit;
 	QPushButton* open_button;
 };
 

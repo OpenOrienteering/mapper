@@ -61,8 +61,8 @@ bool TemplateImage::open(QWidget* dialog_parent, MapView* main_view)
 	if (open_dialog.exec() == QDialog::Rejected)
 		return false;
 	
-	cur_trans.template_scale_x = open_dialog.getMpp();
-	cur_trans.template_scale_y = open_dialog.getMpp();
+	cur_trans.template_scale_x = open_dialog.getMpp(map);
+	cur_trans.template_scale_y = cur_trans.template_scale_x;
 	
 	cur_trans.template_x = main_view->getPositionX();
 	cur_trans.template_y = main_view->getPositionY();
@@ -131,14 +131,36 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(QWidget* parent) : QDialog(pare
 {
 	setWindowTitle(tr("Open image template"));
 	
-	QLabel* mpp_label = new QLabel(tr("Meters per pixel:"));
+	mpp_radio = new QRadioButton(tr("Meters per pixel:"));
 	mpp_edit = new QLineEdit("1");
 	mpp_edit->setValidator(new DoubleValidator(0, 999999, mpp_edit));
 	
+	dpi_radio = new QRadioButton(tr("Scanned with"));
+	dpi_edit = new QLineEdit("300");
+	dpi_edit->setValidator(new DoubleValidator(1, 999999, dpi_edit));
+	dpi_edit->setEnabled(false);
+	QLabel* dpi_label = new QLabel(tr("dpi"));
+	
+	scale_check = new QCheckBox(tr("Different template scale 1 :"));
+	scale_check->setEnabled(false);
+	scale_edit = new QLineEdit("15000");
+	scale_edit->setValidator(new QIntValidator(1, 999999, scale_edit));
+	scale_edit->setEnabled(false);
+	
 	QHBoxLayout* mpp_layout = new QHBoxLayout();
-	mpp_layout->addWidget(mpp_label);
+	mpp_layout->addWidget(mpp_radio);
 	mpp_layout->addWidget(mpp_edit);
 	mpp_layout->addStretch(1);
+	QHBoxLayout* dpi_layout = new QHBoxLayout();
+	dpi_layout->addWidget(dpi_radio);
+	dpi_layout->addWidget(dpi_edit);
+	dpi_layout->addWidget(dpi_label);
+	dpi_layout->addStretch(1);
+	QHBoxLayout* scale_layout = new QHBoxLayout();
+	scale_layout->addSpacing(16);
+	scale_layout->addWidget(scale_check);
+	scale_layout->addWidget(scale_edit);
+	scale_layout->addStretch(1);
 	
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
 	open_button = new QPushButton(QIcon("images/arrow-right.png"), tr("Open"));
@@ -151,21 +173,54 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(QWidget* parent) : QDialog(pare
 	
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addLayout(mpp_layout);
+	layout->addLayout(dpi_layout);
+	layout->addLayout(scale_layout);
 	layout->addSpacing(16);
 	layout->addLayout(buttons_layout);
 	setLayout(layout);
 	
 	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
 	connect(open_button, SIGNAL(clicked(bool)), this, SLOT(accept()));
-	connect(mpp_edit, SIGNAL(textChanged(QString)), this, SLOT(mppChanged(QString)));
+	connect(mpp_radio, SIGNAL(clicked(bool)), this, SLOT(mppRadioClicked(bool)));
+	connect(dpi_radio, SIGNAL(clicked(bool)), this, SLOT(dpiRadioClicked(bool)));
+	connect(scale_check, SIGNAL(clicked(bool)), this, SLOT(scaleCheckClicked(bool)));
 	
-	mpp = 1;
+	mpp_radio->setChecked(true);
 }
-void TemplateImageOpenDialog::mppChanged(const QString& new_text)
+double TemplateImageOpenDialog::getMpp(Map* map) const
 {
-	bool ok = false;
-	mpp = new_text.toDouble(&ok);
-	open_button->setEnabled(ok);
+	if (mpp_radio->isChecked())
+		return mpp_edit->text().toDouble();
+	else
+	{
+		double dpi = dpi_edit->text().toDouble();		// dots/pixels per inch(on map)
+		double ipd = 1 / dpi;							// inch(on map) per pixel
+		double mpd = ipd * 0.0254;						// meters(on map) per pixel
+		double mpp;										// meters(in reality) per pixel
+		if (scale_check->isChecked())
+			mpp = mpd * scale_edit->text().toDouble();
+		else
+			mpp = mpd * map->getScaleDenominator();
+		return mpp;
+	}
+}
+void TemplateImageOpenDialog::mppRadioClicked(bool checked)
+{
+	dpi_edit->setEnabled(!checked);
+	scale_check->setEnabled(!checked);
+	scale_edit->setEnabled(!checked && scale_check->isChecked());
+	mpp_edit->setEnabled(checked);
+}
+void TemplateImageOpenDialog::dpiRadioClicked(bool checked)
+{
+	dpi_edit->setEnabled(checked);
+	scale_check->setEnabled(checked);
+	scale_edit->setEnabled(checked && scale_check->isChecked());
+	mpp_edit->setEnabled(!checked);
+}
+void TemplateImageOpenDialog::scaleCheckClicked(bool checked)
+{
+	scale_edit->setEnabled(checked);
 }
 
 #include "template_image.moc"
