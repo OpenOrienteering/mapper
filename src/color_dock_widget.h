@@ -39,6 +39,8 @@ public:
 	ColorWidget(Map* map, QWidget* parent = NULL);
     virtual ~ColorWidget();
 	
+    virtual QSize sizeHint() const;
+	
 protected:
     virtual void resizeEvent(QResizeEvent* event);
 	

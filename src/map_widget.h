@@ -36,6 +36,7 @@ class MapView;
 class MapWidget : public QWidget
 {
 Q_OBJECT
+friend class MapView;
 public:
 	MapWidget(QWidget* parent = NULL);
 	~MapWidget();
@@ -70,6 +71,9 @@ public:
 	/// Mark a rectangular region of a template cache as dirty. This rect is united with possible previous dirty rects of that cache.
 	void markTemplateCacheDirty(QRectF view_rect, int pixel_border, bool front_cache);
 	
+	/// Mark a rectangular region of the map cache as dirty. This rect is united with possible previous dirty rects of that cache.
+	void markObjectAreaDirty(QRectF map_rect);
+	
 	/// Set the given rect as bounding box for the current drawing.
 	/// NOTE: Unlike with markTemplateCacheDirty(), multiple calls to these methods do not result in uniting all given rects, instead only the last rect is used!
 	/// Pass QRect() to disable the current drawing.
@@ -85,6 +89,8 @@ public:
 	// Set the labels where the map widget will display the respective piece of information
 	void setZoomLabel(QLabel* zoom_label);
 	void setCursorposLabel(QLabel* cursorpos_label);
+	
+    virtual QSize sizeHint() const;
 	
 protected:
 	virtual void paintEvent(QPaintEvent* event);
@@ -103,6 +109,7 @@ protected:
 private:
 	bool containsVisibleTemplate(int first_template, int last_template);
 	void updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background);
+	void updateMapCache(bool use_background);
 	
 	QRect calculateViewportBoundingBox(QRectF map_rect, int pixel_border);
 	void setDynamicBoundingBox(QRectF map_rect, int pixel_border, QRect& dirty_rect_old, QRectF& dirty_rect_new, int& dirty_rect_new_border, bool do_update);
@@ -136,6 +143,10 @@ private:
 	QRect below_template_cache_dirty_rect;
 	QImage* above_template_cache;			// cache for templates above map layer
 	QRect above_template_cache_dirty_rect;
+	
+	// Map cache
+	QImage* map_cache;
+	QRect map_cache_dirty_rect;
 	
 	// Dirty regions for drawings (tools) and activities
 	QRect drawing_dirty_rect_old;			// dirty rect for dynamic display which has been drawn (and will have to be erased by the next draw operation)

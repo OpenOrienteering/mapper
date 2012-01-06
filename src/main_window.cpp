@@ -36,16 +36,17 @@ MainWindowController* MainWindowController::controllerForFile(const QString& fil
 {
 	// Check file extension and return fitting controller
 	if (filename.endsWith(".omap", Qt::CaseInsensitive) || filename.endsWith(".ocd", Qt::CaseInsensitive))
-		return new MapEditorController();
+		return new MapEditorController(MapEditorController::MapEditor);
 	
 	return NULL;
 }
 
 // ### MainWindow ###
 
-MainWindow::MainWindow()
+MainWindow::MainWindow(bool show_menu)
 {
 	controller = NULL;
+	this->show_menu = show_menu;
 	setCurrentFile("");
 	
 	setWindowIcon(QIcon("images/control.png"));
@@ -81,12 +82,14 @@ void MainWindow::setController(MainWindowController* new_controller)
 	has_unsaved_changes = false;
 	setCurrentFile("");
 	
-	createFileMenu();
+	if (show_menu)
+		createFileMenu();
 	
 	controller = new_controller;
 	controller->attach(this);
 	
-	createHelpMenu();
+	if (show_menu)
+		createHelpMenu();
 }
 void MainWindow::createFileMenu()
 {
@@ -311,12 +314,12 @@ void MainWindow::showNewMapWizard()
 	// Open in current or new window?
 	if (has_opened_file)
 	{
-		MainWindow* new_window = new MainWindow();
-		new_window->setController(new MapEditorController(new_map));
+		MainWindow* new_window = new MainWindow(true);
+		new_window->setController(new MapEditorController(MapEditorController::MapEditor, new_map));
 		new_window->show();
 	}
 	else
-		setController(new MapEditorController(new_map));
+		setController(new MapEditorController(MapEditorController::MapEditor, new_map));
 }
 void MainWindow::showOpenDialog()
 {
@@ -354,7 +357,7 @@ bool MainWindow::openPath(QString path)
 	
 	MainWindow* open_window;
 	if (has_opened_file)
-		open_window = new MainWindow();
+		open_window = new MainWindow(true);
 	else
 		open_window = this;
 	open_window->setController(new_controller);

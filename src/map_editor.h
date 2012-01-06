@@ -42,8 +42,15 @@ class MapEditorController : public MainWindowController
 {
 Q_OBJECT
 public:
-	MapEditorController();
-	MapEditorController(Map* map);
+	enum OperatingMode
+	{
+		MapEditor = 0,
+		PointSymbolEditor = 1,
+		SymbolPreview = 2
+	};
+	
+	MapEditorController(OperatingMode mode);
+	MapEditorController(OperatingMode mode, Map* map);
 	~MapEditorController();
 	
 	void setTool(MapEditorTool* new_tool);
@@ -53,6 +60,7 @@ public:
 	inline MapEditorActivity* getEditorActivity() const {return editor_activity;}
 	
 	inline Map* getMap() const {return map;}
+	inline MapWidget* getMainWidget() const {return map_widget;}
 	
 	virtual bool save(const QString& path);
 	virtual bool load(const QString& path);
@@ -83,11 +91,14 @@ public slots:
 	void paintOnTemplateClicked(bool checked);
 	void paintOnTemplateSelectClicked();
 	
-	void templateAdded(Template* temp);
-	void templateDeleted(Template* temp);
+	void templateAdded(int pos, Template* temp);
+	void templateDeleted(int pos, Template* temp);
 	
 private:
 	void setMap(Map* map, bool create_new_map_view);
+	
+	void createMenu();
+	void createToolbar();
 	
 	void paintOnTemplate(Template* temp);
 	void updatePaintOnTemplateAction();
@@ -96,11 +107,16 @@ private:
 	MapView* main_view;
 	MapWidget* map_widget;
 	
+	OperatingMode mode;
+	
 	MapEditorTool* current_tool;
 	MapEditorActivity* editor_activity;
 	
 	QAction* color_window_act;
 	EditorDockWidget* color_dock_widget;
+	
+	QAction* symbol_window_act;
+	EditorDockWidget* symbol_dock_widget;
 	
 	QAction* template_window_act;
 	EditorDockWidget* template_dock_widget;

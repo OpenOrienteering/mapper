@@ -35,7 +35,7 @@ int main(int argc, char** argv)
 	QCoreApplication::setApplicationName("OpenOrienteering");
 	
 	// Create first main window - if a program parameter is specified, open the file
-	first_window = new MainWindow();
+	first_window = new MainWindow(true);
 	if (argc > 1)
 	{
 		if (!first_window->openPath(argv[1]))

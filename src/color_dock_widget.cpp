@@ -25,6 +25,7 @@
 #include <QtGui>
 
 #include "map.h"
+#include "map_color.h"
 
 ColorWidget::ColorWidget(Map* map, QWidget* parent): QWidget(parent), map(map)
 {
@@ -104,6 +105,11 @@ ColorWidget::~ColorWidget()
 	settings.endGroup();
 }
 
+QSize ColorWidget::sizeHint() const
+{
+    return QSize(450, 300);
+}
+
 void ColorWidget::resizeEvent(QResizeEvent* event)
 {
 	int width = event->size().width();
@@ -168,7 +174,7 @@ void ColorWidget::duplicateColor()
 	int row = color_table->currentRow();
 	assert(row >= 0);
 	
-	Map::Color* new_color = new Map::Color(*map->getColor(row));
+	MapColor* new_color = new MapColor(*map->getColor(row));
 	new_color->name = new_color->name + tr(" (Duplicate)");
 	map->addColor(new_color, row);
 	
@@ -183,8 +189,8 @@ void ColorWidget::moveColorUp()
 	int row = color_table->currentRow();
 	assert(row >= 1);
 	
-	Map::Color* above_color = map->getColor(row - 1);
-	Map::Color* cur_color = map->getColor(row);
+	MapColor* above_color = map->getColor(row - 1);
+	MapColor* cur_color = map->getColor(row);
 	map->setColor(cur_color, row - 1);
 	map->setColor(above_color, row);
 	updateRow(row - 1);
@@ -199,8 +205,8 @@ void ColorWidget::moveColorDown()
 	int row = color_table->currentRow();
 	assert(row < color_table->rowCount() - 1);
 	
-	Map::Color* below_color = map->getColor(row + 1);
-	Map::Color* cur_color = map->getColor(row);
+	MapColor* below_color = map->getColor(row + 1);
+	MapColor* cur_color = map->getColor(row);
 	map->setColor(cur_color, row + 1);
 	map->setColor(below_color, row);
 	updateRow(row + 1);
@@ -221,12 +227,12 @@ void ColorWidget::cellChange(int row, int column)
 		return;
 	react_to_changes = false;
 	
-	Map::Color* color = map->getColor(row);
+	MapColor* color = map->getColor(row);
 	QString text = color_table->item(row, column)->text().trimmed();
 	
 	if (column == 1)
 		color->name = text;
-	else if (column >= 2 && column <= 5)
+	else if (column >= 2 && column <= 9)
 	{
 		bool ok = true;
 		float fvalue;
@@ -291,7 +297,7 @@ void ColorWidget::cellDoubleClick(int row, int column)
 {
 	if (column == 0)
 	{
-		Map::Color* color = map->getColor(row);
+		MapColor* color = map->getColor(row);
 		
 		QColor newColor = QColorDialog::getColor(color->color, window());
 		if (newColor.isValid())
@@ -331,7 +337,7 @@ void ColorWidget::updateRow(int row)
 {
 	react_to_changes = false;
 	
-	Map::Color* color = map->getColor(row);
+	MapColor* color = map->getColor(row);
 	
 	color_table->item(row, 0)->setBackgroundColor(color->color);
 	

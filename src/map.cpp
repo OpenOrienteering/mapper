@@ -26,34 +26,43 @@
 #include <QFile>
 #include <QPainter>
 
+#include "map_color.h"
 #include "map_editor.h"
 #include "map_widget.h"
 #include "template.h"
 #include "util.h"
 #include "gps_coordinates.h"
+#include "symbol.h"
+#include "symbol_point.h"
+#include "object.h"
 
-// ### Map::Color ###
-
-void Map::Color::updateFromCMYK()
+MapLayer::MapLayer(const QString& name) : name(name)
 {
-	color.setCmykF(c, m, y, k);
-	qreal rr, rg, rb;
-	color.getRgbF(&rr, &rg, &rb);
-	r = rr;
-	g = rg;
-	b = rb;
-	assert(color.spec() == QColor::Cmyk);
 }
-void Map::Color::updateFromRGB()
+MapLayer::~MapLayer()
 {
-	color.setRgbF(r, g, b);
-	color.convertTo(QColor::Cmyk);
-	qreal rc, rm, ry, rk;
-	color.getCmykF(&rc, &rm, &ry, &rk, NULL);
-	c = rc;
-	m = rm;
-	y = ry;
-	k = rk;
+	int size = objects.size();
+	for (int i = 0; i < size; ++i)
+		delete objects[i];
+}
+void MapLayer::deleteObject(int pos)
+{
+	delete objects[pos];
+	objects.erase(objects.begin() + pos);
+}
+bool MapLayer::deleteObject(Object* object)
+{
+	int size = objects.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (objects[i] == object)
+		{
+			delete object;
+			objects.erase(objects.begin() + i);
+			return true;
+		}
+	}
+	return false;
 }
 
 // ### Map ###
@@ -62,11 +71,16 @@ Map::Map()
 {
 	first_front_template = 0;
 	
+	layers.push_back(new MapLayer(tr("default layer")));
+	current_layer = layers[0];
+	
 	gps_projection_params_set = false;
 	gps_projection_parameters = new GPSProjectionParameters();
 	
 	colors_dirty = false;
+	symbols_dirty = false;
 	templates_dirty = false;
+	objects_dirty = false;
 	unsaved_changes = false;
 }
 Map::~Map()
@@ -75,9 +89,17 @@ Map::~Map()
 	for (int i = 0; i < size; ++i)
 		delete colors[i];
 	
+	size = symbols.size();
+	for (int i = 0; i < size; ++i)
+		delete symbols[i];
+	
 	size = templates.size();
 	for (int i = 0; i < size; ++i)
 		delete templates[i];
+	
+	size = layers.size();
+	for (int i = 0; i < size; ++i)
+		delete layers[i];
 	
 	delete gps_projection_parameters;
 }
@@ -111,7 +133,7 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 	
 	for (int i = 0; i < num_colors; ++i)
 	{
-		Color* color = colors[i];
+		MapColor* color = colors[i];
 		
 		file.write((const char*)&color->priority, sizeof(int));
 		file.write((const char*)&color->c, sizeof(float));
@@ -121,6 +143,19 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 		file.write((const char*)&color->opacity, sizeof(float));
 		
 		saveString(&file, color->name);
+	}
+	
+	// Write symbols
+	int num_symbols = getNumSymbols();
+	file.write((const char*)&num_symbols, sizeof(int));
+	
+	for (int i = 0; i < num_symbols; ++i)
+	{
+		Symbol* symbol = getSymbol(i);
+		
+		int type = static_cast<int>(symbol->getType());
+		file.write((const char*)&type, sizeof(int));
+		symbol->save(&file, this);
 	}
 	
 	// Write templates
@@ -155,7 +190,9 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 	file.close();
 	
 	colors_dirty = false;
+	symbols_dirty = false;
 	templates_dirty = false;
+	objects_dirty = false;
 	unsaved_changes = false;
 	return true;
 }
@@ -167,6 +204,8 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 		QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\nfor reading.").arg(path));
 		return false;
 	}
+	
+	clear();
 	
 	char buffer[256];
 	
@@ -199,7 +238,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 	
 	for (int i = 0; i < num_colors; ++i)
 	{
-		Color* color = new Color();
+		MapColor* color = new MapColor();
 		
 		file.read((char*)&color->priority, sizeof(int));
 		file.read((char*)&color->c, sizeof(float));
@@ -212,6 +251,26 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 		loadString(&file, color->name);
 		
 		colors[i] = color;
+	}
+	
+	// Load symbols
+	int num_symbols;
+	file.read((char*)&num_symbols, sizeof(int));
+	symbols.resize(num_symbols);
+	
+	for (int i = 0; i < num_symbols; ++i)
+	{
+		int symbol_type;
+		file.read((char*)&symbol_type, sizeof(int));
+		
+		Symbol* symbol = NULL;
+		if (symbol_type == Symbol::Point)
+			symbol = new PointSymbol(this);
+		else
+			return false;
+		
+		symbol->load(&file, this);
+		symbols[i] = symbol;
 	}
 	
 	// Load templates
@@ -243,6 +302,164 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 	file.close();
 	
 	return true;
+}
+
+void Map::clear()
+{
+	int size = colors.size();
+	for (int i = 0; i < size; ++i)
+		delete colors[i];
+	colors.clear();
+	
+	size = symbols.size();
+	for (int i = 0; i < size; ++i)
+		delete symbols[i];
+	symbols.clear();
+	
+	size = templates.size();
+	for (int i = 0; i < size; ++i)
+		delete templates[i];
+	templates.clear();
+	first_front_template = 0;
+	
+	size = layers.size();
+	for (int i = 0; i < size; ++i)
+		delete layers[i];
+	layers.clear();
+	current_layer = NULL;
+	
+	widgets.clear();
+	
+	gps_projection_params_set = false;
+	delete gps_projection_parameters;
+	gps_projection_parameters = new GPSProjectionParameters();
+	
+	colors_dirty = true;
+	symbols_dirty = true;
+	templates_dirty = true;
+	objects_dirty = true;
+	unsaved_changes = true;
+}
+
+void Map::draw(QPainter* painter, QRectF bounding_box)
+{
+	// Update the renderables of all objects marked as dirty
+	updateObjects();
+	
+	// The actual drawing
+	// TODO: improve performance by using some spatial acceleration structure?
+	RenderStates states;
+	states.color_priority = -1;
+	states.mode = RenderStates::Reserved;
+	states.clip_path = NULL;
+	
+	QPainterPath initial_clip = painter->clipPath();
+	bool no_initial_clip = initial_clip.isEmpty();
+	
+	painter->save();
+	for (Renderables::const_iterator it = renderables.begin(); it != renderables.end(); ++it)
+	{
+		const RenderStates& new_states = (*it).first;
+		Renderable* renderable = (*it).second;
+		
+		if (new_states.color_priority == -1)
+			continue;
+		
+		// Bounds check
+		const QRectF& extent = renderable->getExtent();
+		if (extent.right() < bounding_box.x())	continue;
+		if (extent.bottom() < bounding_box.y())	continue;
+		if (extent.x() > bounding_box.right())	continue;
+		if (extent.y() > bounding_box.bottom())	continue;
+		
+		// Change render states?
+		if (states != new_states)
+		{
+			if (new_states.mode == RenderStates::PenOnly)
+			{
+				//if (forceMinSize && new_states.pen_width * scale <= 1.0f)
+				//	painter->setPen(QPen(r->getSymbol()->getColor()->color, 0));
+				//else
+					painter->setPen(QPen(colors[new_states.color_priority]->color, new_states.pen_width));
+				
+				painter->setBrush(QBrush(Qt::NoBrush));
+			}
+			else if (new_states.mode == RenderStates::BrushOnly)
+			{
+				QBrush brush(colors[new_states.color_priority]->color);
+				
+				painter->setPen(QPen(Qt::NoPen));
+				painter->setBrush(brush);	
+			}
+			
+			if (states.clip_path != new_states.clip_path)
+			{
+				if (no_initial_clip)
+				{
+					if (new_states.clip_path)
+						painter->setClipPath(*new_states.clip_path, Qt::ReplaceClip);
+					else
+						painter->setClipPath(initial_clip, Qt::NoClip);
+				}
+				else
+				{
+					painter->setClipPath(initial_clip, Qt::ReplaceClip);
+					if (new_states.clip_path)
+						painter->setClipPath(*new_states.clip_path, Qt::IntersectClip);
+				}
+			}
+			
+			states = new_states;
+		}
+		
+		// Render the renderable
+		renderable->render(*painter); //, scale, forceMinSize);
+	}
+	painter->restore();
+}
+void Map::updateObjects()
+{
+	// TODO: It maybe would be better if the objects entered themselves into a separate list when they get dirty so not all objects have to be traversed here
+	int size = layers.size();
+	for (int l = 0; l < size; ++l)
+	{
+		MapLayer* layer = layers[l];
+		int obj_size = layer->getNumObjects();
+		for (int i = 0; i < obj_size; ++i)
+		{
+			Object* object = layer->getObject(i);
+			if (!object->update())
+				continue;
+		}
+	}
+}
+void Map::removeRenderablesOfObject(Object* object)
+{
+	Renderables::iterator itend = renderables.end();
+	for (Renderables::iterator it = renderables.begin(); it != itend; )
+	{
+		if ((*it).second->getCreator() == object)
+		{
+			//delete (*it).second;
+			Renderables::iterator todelete = it;
+			++it;
+			renderables.erase(todelete);
+		}
+		else
+			++it;
+	}
+}
+void Map::insertRenderablesOfObject(Object* object)
+{
+	RenderableVector::const_iterator it_end = object->endRenderables();
+	for (RenderableVector::const_iterator it = object->beginRenderables(); it != it_end; ++it)
+	{
+		Renderable* renderable = *it;
+		RenderStates key;
+		renderable->getRenderStates(key);
+		
+		renderables.insert(Renderables::value_type(key, renderable));	
+	}
 }
 
 void Map::addMapWidget(MapWidget* widget)
@@ -295,43 +512,63 @@ void Map::updateDrawing(QRectF map_coords_rect, int pixel_border)
 		widgets[i]->updateDrawing(map_coords_rect, pixel_border);
 }
 
-void Map::setColor(Map::Color* color, int pos)
+void Map::setColor(MapColor* color, int pos)
 {
 	colors[pos] = color;
 	color->priority = pos;
+	
+	emit(colorChanged(pos, color));
 }
-Map::Color* Map::addColor(int pos)
+MapColor* Map::addColor(int pos)
 {
-	Color* new_color = new Color();
+	MapColor* new_color = new MapColor();
 	new_color->name = tr("New color");
 	new_color->priority = pos;
 	new_color->c = 0;
 	new_color->m = 0;
 	new_color->y = 0;
 	new_color->k = 1;
+	new_color->opacity = 1;
 	new_color->updateFromCMYK();
 	
 	colors.insert(colors.begin() + pos, new_color);
+	adjustColorPriorities(pos + 1, colors.size() - 1);
 	checkIfFirstColorAdded();
+	emit(colorAdded(pos, new_color));
 	return new_color;
 }
-void Map::addColor(Map::Color* color, int pos)
+void Map::addColor(MapColor* color, int pos)
 {
 	colors.insert(colors.begin() + pos, color);
+	adjustColorPriorities(pos + 1, colors.size() - 1);
 	checkIfFirstColorAdded();
+	emit(colorAdded(pos, color));
 	color->priority = pos;
 }
 void Map::deleteColor(int pos)
 {
+	MapColor* temp = colors[pos];
+	delete colors[pos];
 	colors.erase(colors.begin() + pos);
-	for (int i = pos; i < (int)colors.size(); ++i)
-		colors[i]->priority = i;
+	adjustColorPriorities(pos, colors.size() - 1);
 	
 	if (getNumColors() == 0)
 	{
 		// That was the last color - the help text in the map widget(s) should be updated
 		updateAllMapWidgets();
 	}
+	
+	emit(colorDeleted(pos, temp));
+}
+int Map::findColorIndex(MapColor* color)
+{
+	int size = (int)colors.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (colors[i] == color)
+			return i;
+	}
+	assert(false);
 }
 void Map::setColorsDirty()
 {
@@ -341,6 +578,59 @@ void Map::setColorsDirty()
 		unsaved_changes = true;
 	}
 	colors_dirty = true;
+}
+
+void Map::copyColorsFrom(Map* map)
+{
+	for (int i = getNumColors() - 1; i >= 0; --i)
+		deleteColor(i);
+	
+	colors = map->colors;
+	for (int i = getNumColors() - 1; i >= 0; --i)
+		colors[i] = new MapColor(*colors[i]);
+}
+
+void Map::adjustColorPriorities(int first, int last)
+{
+	// TODO: delete or update RenderStates with these colors
+	for (int i = first; i <= last; ++i)
+		colors[i]->priority = i;
+}
+
+void Map::addSymbol(Symbol* symbol, int pos)
+{
+	symbols.insert(symbols.begin() + pos, symbol);
+	checkIfFirstSymbolAdded();
+	emit(symbolAdded(pos, symbol));
+}
+void Map::setSymbol(Symbol* symbol, int pos)
+{
+	symbols[pos] = symbol;
+	
+	emit(symbolChanged(pos, symbol));
+}
+void Map::deleteSymbol(int pos)
+{
+	Symbol* temp = symbols[pos];
+	delete symbols[pos];
+	symbols.erase(symbols.begin() + pos);
+	
+	if (getNumSymbols() == 0)
+	{
+		// That was the last symbol - the help text in the map widget(s) should be updated
+		updateAllMapWidgets();
+	}
+	
+	emit(symbolDeleted(pos, temp));
+}
+void Map::setSymbolsDirty()
+{
+	if (!symbols_dirty && !unsaved_changes)
+	{
+		emit(gotUnsavedChanges());
+		unsaved_changes = true;
+	}
+	symbols_dirty = true;
 }
 
 int Map::getTemplateNumber(Template* temp) const
@@ -355,13 +645,14 @@ int Map::getTemplateNumber(Template* temp) const
 void Map::setTemplate(Template* temp, int pos)
 {
 	templates[pos] = temp;
+	emit(templateChanged(pos, templates[pos]));
 }
 void Map::addTemplate(Template* temp, int pos)
 {
 	templates.insert(templates.begin() + pos, temp);
 	checkIfFirstTemplateAdded();
 	
-	emit(templateAdded(temp));
+	emit(templateAdded(pos, temp));
 }
 void Map::deleteTemplate(int pos)
 {
@@ -380,7 +671,7 @@ void Map::deleteTemplate(int pos)
 		updateAllMapWidgets();
 	}
 	
-	emit(templateDeleted(temp));
+	emit(templateDeleted(pos, temp));
 	delete temp;
 }
 void Map::setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border)
@@ -418,6 +709,48 @@ void Map::setTemplatesDirty()
 	templates_dirty = true;
 }
 
+int Map::getNumObjects()
+{
+	int num_objects = 0;
+	int size = layers.size();
+	for (int i = 0; i < size; ++i)
+		num_objects += layers[i]->getNumObjects();
+	return num_objects;
+}
+void Map::addObject(Object* object)
+{
+	current_layer->addObject(object, current_layer->getNumObjects());
+	setObjectsDirty();
+}
+void Map::deleteObject(Object* object)
+{
+	int size = layers.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (layers[i]->deleteObject(object))
+		{
+			setObjectsDirty();
+			return;
+		}
+	}
+	assert(false);
+}
+void Map::setObjectsDirty()
+{
+	if (!objects_dirty && !unsaved_changes)
+	{
+		emit(gotUnsavedChanges());
+		unsaved_changes = true;
+	}
+	objects_dirty = true;
+}
+
+void Map::setObjectAreaDirty(QRectF map_coords_rect)
+{
+	for (int i = 0; i < (int)widgets.size(); ++i)
+		widgets[i]->markObjectAreaDirty(map_coords_rect);
+}
+
 void Map::setGPSProjectionParameters(const GPSProjectionParameters& params)
 {
 	*gps_projection_parameters = params;
@@ -437,6 +770,14 @@ void Map::checkIfFirstColorAdded()
 	if (getNumColors() == 1)
 	{
 		// This is the first color - the help text in the map widget(s) should be updated
+		updateAllMapWidgets();
+	}
+}
+void Map::checkIfFirstSymbolAdded()
+{
+	if (getNumSymbols() == 1)
+	{
+		// This is the first symbol - the help text in the map widget(s) should be updated
 		updateAllMapWidgets();
 	}
 }
@@ -636,6 +977,9 @@ void MapView::setZoom(float value)
 	
 	zoom = value;
 	update();
+	
+	for (int i = 0; i < (int)widgets.size(); ++i)
+		widgets[i]->updateZoomLabel();
 }
 void MapView::setPositionX(qint64 value)
 {

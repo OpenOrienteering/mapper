@@ -18,32 +18,47 @@
  */
 
 
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef _OPENORIENTEERING_MAP_COLOR_H_
+#define _OPENORIENTEERING_MAP_COLOR_H_
 
-#include <QDoubleValidator>
-#include <QRectF>
+#include <QString>
+#include <QColor>
+#include <QComboBox>
 
-QT_BEGIN_NAMESPACE
-class QFile;
-QT_END_NAMESPACE
+class Map;
 
-/// Double validator for line edit widgets
-class DoubleValidator : public QDoubleValidator
+struct MapColor
 {
-public:
-	DoubleValidator(double bottom, double top = 10e10, QObject* parent = NULL, int decimals = 20);
+	void updateFromCMYK();
+	void updateFromRGB();
 	
-	virtual State validate(QString& input, int& pos) const;
+	QString name;
+	int priority;
+	
+	// values are in range [0; 1]
+	float c, m, y, k;
+	float r, g, b;
+	float opacity;
+	
+	QColor color;
 };
 
-/// Enlarges the rect to include the given point
-void rectInclude(QRectF& rect, QPointF point);
-/// Enlarges the rect to include the given rect
-void rectInclude(QRectF& rect, QRectF other_rect);
-
-/// Helper functions to save a string to a file and load it again
-void saveString(QFile* file, const QString& str);
-void loadString(QFile* file, QString& str);
+class ColorDropDown : public QComboBox
+{
+Q_OBJECT
+public:
+	ColorDropDown(Map* map, MapColor* initial_color = NULL, QWidget* parent = NULL);
+	
+	/// Returns the selected color or NULL if no color selected
+	MapColor* color();
+	
+protected slots:
+	void colorAdded(int pos, MapColor* color);
+	void colorChanged(int pos, MapColor* color);
+	void colorDeleted(int pos, MapColor* color);
+	
+private:
+	Map* map;
+};
 
 #endif

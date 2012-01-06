@@ -25,6 +25,7 @@
 #include "map.h"
 #include "map_widget.h"
 #include "color_dock_widget.h"
+#include "symbol_dock_widget.h"
 #include "template_dock_widget.h"
 #include "template.h"
 #include "paint_on_template.h"
@@ -32,8 +33,9 @@
 
 // ### MapEditorController ###
 
-MapEditorController::MapEditorController()
+MapEditorController::MapEditorController(OperatingMode mode)
 {
+	this->mode = mode;
 	map = NULL;
 	main_view = NULL;
 	
@@ -41,8 +43,9 @@ MapEditorController::MapEditorController()
 	current_tool = NULL;	// TODO: default tool?
 	last_painted_on_template = NULL;
 }
-MapEditorController::MapEditorController(Map* map)
+MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 {
+	this->mode = mode;
 	this->map = NULL;
 	main_view = NULL;
 	
@@ -121,10 +124,12 @@ void MapEditorController::loadWidgetsAndViews(QFile* file)
 void MapEditorController::attach(MainWindow* window)
 {
 	color_dock_widget = NULL;
+	symbol_dock_widget = NULL;
 	template_dock_widget = NULL;
 	
 	this->window = window;
-	window->setHasOpenedFile(true);
+	if (mode == MapEditor)
+		window->setHasOpenedFile(true);
 	connect(map, SIGNAL(gotUnsavedChanges()), window, SLOT(gotUnsavedChanges()));
 	
 	// Add zoom / cursor position field to status bar
@@ -146,6 +151,33 @@ void MapEditorController::attach(MainWindow* window)
 	map_widget->setCursorposLabel(statusbar_cursorpos_label);
 	window->setCentralWidget(map_widget);
 	
+	// Create menu
+	if (mode == MapEditor)
+		createMenu();
+	
+	// Create toolbar
+	if (mode == MapEditor)
+		createToolbar();
+	
+	// Check if there is an invalid template and if so, output a warning
+	bool has_invalid_template = false;
+	for (int i = 0; i < map->getNumTemplates(); ++i)
+	{
+		if (!map->getTemplate(i)->isTemplateValid())
+		{
+			has_invalid_template = true;
+			break;
+		}
+	}
+	if (has_invalid_template)
+		window->setStatusBarText("<font color=\"#c00\">" + tr("One or more templates could not be loaded. Use the Templates -> Template setup window to resolve the issue(s) by clicking on the red template file name(s).") + "</font>");
+
+	// Show the symbol window
+	if (mode == MapEditor)
+		symbol_window_act->trigger();
+}
+void MapEditorController::createMenu()
+{
 	// Edit menu
 	QAction* undo_act = new QAction(QIcon("images/undo.png"), tr("Undo"), this);	// TODO: update this with a desc. of what will be undone
 	undo_act->setShortcuts(QKeySequence::Undo);
@@ -181,7 +213,7 @@ void MapEditorController::attach(MainWindow* window)
 	edit_menu->addAction(paste_act);
 	
 	// Symbols menu
-	QAction* symbol_window_act = new QAction(QIcon("images/window-new.png"), tr("Symbol window"), this);
+	symbol_window_act = new QAction(QIcon("images/window-new.png"), tr("Symbol window"), this);
 	symbol_window_act->setCheckable(true);
 	symbol_window_act->setStatusTip(tr("Show/Hide the symbol window"));
 	connect(symbol_window_act, SIGNAL(triggered(bool)), this, SLOT(showSymbolWindow(bool)));
@@ -240,8 +272,9 @@ void MapEditorController::attach(MainWindow* window)
 	
 	QMenu* gps_menu = window->menuBar()->addMenu(tr("&GPS"));
 	gps_menu->addAction(edit_gps_projection_parameters_act);
-	
-	// Toolbar
+}
+void MapEditorController::createToolbar()
+{
 	QToolBar* toolbar_drawing = window->addToolBar(tr("Drawing"));
 	
 	paint_on_template_act = new QAction(QIcon("images/pencil.png"), tr("Paint on template"), this);
@@ -258,19 +291,6 @@ void MapEditorController::attach(MainWindow* window)
 	paint_on_template_button->setMenu(paint_on_template_menu);
 	toolbar_drawing->addWidget(paint_on_template_button);
 	connect(paint_on_template_menu, SIGNAL(triggered(QAction*)), this, SLOT(paintOnTemplateSelectClicked()));
-	
-	// Check if there is an invalid template and if so, output a warning
-	bool has_invalid_template = false;
-	for (int i = 0; i < map->getNumTemplates(); ++i)
-	{
-		if (!map->getTemplate(i)->isTemplateValid())
-		{
-			has_invalid_template = true;
-			break;
-		}
-	}
-	if (has_invalid_template)
-		window->setStatusBarText("<font color=\"#c00\">" + tr("One or more templates could not be loaded. Use the Templates -> Template setup window to resolve the issue(s) by clicking on the red template file name(s).") + "</font>");
 }
 void MapEditorController::detach()
 {
@@ -306,7 +326,14 @@ void MapEditorController::paste()
 
 void MapEditorController::showSymbolWindow(bool show)
 {
-	
+	if (symbol_dock_widget)
+		symbol_dock_widget->setVisible(!symbol_dock_widget->isVisible());
+	else
+	{
+		symbol_dock_widget = new EditorDockWidget(tr("Symbols"), symbol_window_act, window);
+		symbol_dock_widget->setWidget(new SymbolWidget(map, symbol_dock_widget));
+		window->addDockWidget(Qt::RightDockWidgetArea, symbol_dock_widget, Qt::Vertical);
+	}
 }
 void MapEditorController::showColorWindow(bool show)
 {
@@ -440,12 +467,12 @@ void MapEditorController::updatePaintOnTemplateAction()
 		paint_on_template_act->setStatusTip(tr("Paint free-handedly on a template. Create or load a template which can be drawn onto to activate this button"));
 }
 
-void MapEditorController::templateAdded(Template* temp)
+void MapEditorController::templateAdded(int pos, Template* temp)
 {
 	if (temp->canBeDrawnOnto())
 		updatePaintOnTemplateAction();
 }
-void MapEditorController::templateDeleted(Template* temp)
+void MapEditorController::templateDeleted(int pos, Template* temp)
 {
 	if (temp->canBeDrawnOnto())
 		updatePaintOnTemplateAction();
@@ -463,8 +490,8 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 	if (create_new_map_view)
 		main_view = new MapView(map);
 	
-	connect(map, SIGNAL(templateAdded(Template*)), this, SLOT(templateAdded(Template*)));
-	connect(map, SIGNAL(templateDeleted(Template*)), this, SLOT(templateDeleted(Template*)));
+	connect(map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
+	connect(map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
 }
 
 // ### EditorDockWidget ###

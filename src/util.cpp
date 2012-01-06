@@ -47,6 +47,18 @@ void rectInclude(QRectF& rect, QPointF point)
 	else if (point.y() > rect.bottom())
 		rect.setBottom(point.y());
 }
+void rectInclude(QRectF& rect, QRectF other_rect)
+{
+	if (other_rect.left() < rect.left())
+		rect.setLeft(other_rect.left());
+	if (other_rect.right() > rect.right())
+		rect.setRight(other_rect.right());
+	
+	if (other_rect.top() < rect.top())
+		rect.setTop(other_rect.top());
+	if (other_rect.bottom() > rect.bottom())
+		rect.setBottom(other_rect.bottom());
+}
 
 void saveString(QFile* file, const QString& str)
 {

@@ -26,7 +26,16 @@ set(Mapper_SRCS
  src/map_dialog_new.cpp
  src/map_widget.cpp
  src/map_editor.cpp
+
+ src/map_color.cpp
  src/color_dock_widget.cpp
+
+ src/symbol.cpp
+ src/symbol_dock_widget.cpp
+ src/symbol_setting_dialog.cpp
+ src/symbol_point.cpp
+ src/renderable.cpp
+ src/object.cpp
 
  src/template.cpp
  src/template_image.cpp

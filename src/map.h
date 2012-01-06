@@ -22,47 +22,57 @@
 #define _OPENORIENTEERING_MAP_H_
 
 #include <vector>
+#include <map>
 
 #include <QString>
-#include <QColor>
 #include <QRect>
 #include <QHash>
 
 #include "matrix.h"
+#include "map_coord.h"
+#include "renderable.h"
 
 QT_BEGIN_NAMESPACE
 class QFile;
 class QPainter;
 QT_END_NAMESPACE
 
+class MapColor;
 class MapWidget;
 class MapCoord;
 class MapCoordF;
+class Symbol;
 class Template;
+class Object;
 class MapEditorController;
 class GPSProjectionParameters;
+
+class MapLayer
+{
+public:
+	MapLayer(const QString& name);
+	~MapLayer();
+	
+	inline const QString& getName() const {return name;}
+	inline void setName(const QString new_name) {name = new_name;}
+	
+	inline int getNumObjects() const {return (int)objects.size();}
+	inline Object* getObject(int i) {return objects[i];}
+	inline void setObject(Object* object, int pos) {objects[pos] = object;}
+	inline void addObject(Object* object, int pos) {objects.insert(objects.begin() + pos, object);}
+	inline void deleteObject(int pos);
+	bool deleteObject(Object* object);	// returns if the object was found
+	
+private:
+	QString name;
+	std::vector<Object*> objects;	// TODO: this could / should be a spatial representation optimized for quick access
+};
 
 /// Central class for an OpenOrienteering map
 class Map : public QObject
 {
 Q_OBJECT
 public:
-	struct Color
-	{
-		void updateFromCMYK();
-		void updateFromRGB();
-		
-		QString name;
-		int priority;
-		
-		// values are in range [0; 1]
-		float c, m, y, k;
-		float r, g, b;
-		float opacity;
-		
-		QColor color;
-	};
-	
 	/// Creates a new, empty map
 	Map();
 	~Map();
@@ -71,6 +81,14 @@ public:
 	bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
 	/// Attempts to load the map from the specified path. Returns true on success.
 	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL);
+	
+	/// Deletes all map data
+	void clear();
+	
+	/// Draws the part of the map which is visible in the given bounding box in map coordinates
+	void draw(QPainter* painter, QRectF bounding_box);
+	/// Updates the renderables and extent of all objects which have been changed. This is automatically called by draw(), you normally do not need it
+	void updateObjects();
 	
 	/// Must be called to notify the map of new widgets displaying it. Useful to notify the widgets about which parts of the map have changed and need to be redrawn
 	void addMapWidget(MapWidget* widget);
@@ -92,12 +110,24 @@ public:
 	// Colors
 	
 	inline int getNumColors() const {return (int)colors.size();}
-	inline Color* getColor(int i) {return colors[i];}
-	void setColor(Color* color, int pos);
-	Color* addColor(int pos);
-	void addColor(Color* color, int pos);
+	inline MapColor* getColor(int i) {return colors[i];}
+	void setColor(MapColor* color, int pos);
+	MapColor* addColor(int pos);
+	void addColor(MapColor* color, int pos);
 	void deleteColor(int pos);
+	int findColorIndex(MapColor* color);
 	void setColorsDirty();
+	
+	void copyColorsFrom(Map* map);
+	
+	// Symbols
+	
+	inline int getNumSymbols() const {return (int)symbols.size();}
+	inline Symbol* getSymbol(int i) {return symbols[i];}
+	void setSymbol(Symbol* symbol, int pos);
+	void addSymbol(Symbol* symbol, int pos);
+	void deleteSymbol(int pos);
+	void setSymbolsDirty();
 	
 	// Templates
 	
@@ -109,9 +139,25 @@ public:
 	void setTemplate(Template* temp, int pos);
 	void addTemplate(Template* temp, int pos);									// NOTE: adjust first_front_template manually!
 	void deleteTemplate(int pos);												// NOTE: adjust first_front_template manually!
-	void setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border);	// marks the respecive regions in the template caches as dirty; area is given in map coords (mm). Does nothing if the template is not visible in a widget! So make sure to call this and showing/hiding a template in the correct order!
+	void setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border);	// marks the respective regions in the template caches as dirty; area is given in map coords (mm). Does nothing if the template is not visible in a widget! So make sure to call this and showing/hiding a template in the correct order!
 	void setTemplateAreaDirty(int i);											// this does nothing for i == -1
 	void setTemplatesDirty();
+	
+	// Objects
+	
+	inline int getNumLayers() const {return (int)layers.size();}
+	inline MapLayer* getLayer(int i) {return layers[i];}
+	// TODO: Layer management
+	
+	int getNumObjects();
+	void addObject(Object* object);
+	void deleteObject(Object* object);
+	void setObjectsDirty();
+	
+	void setObjectAreaDirty(QRectF map_coords_rect);
+	
+	void removeRenderablesOfObject(Object* object);	// NOTE: does not delete the renderables, just removes them from display
+	void insertRenderablesOfObject(Object* object);
 	
 	// Other settings
 	
@@ -125,23 +171,42 @@ public:
 signals:
 	void gotUnsavedChanges();
 	
-	void templateAdded(Template* temp);
-	void templateDeleted(Template* temp);
+	void colorAdded(int pos, MapColor* color);
+	void colorChanged(int pos, MapColor* color);
+	void colorDeleted(int pos, MapColor* color);
+	
+	void symbolAdded(int pos, Symbol* symbol);
+	void symbolChanged(int pos, Symbol* symbol);
+	void symbolDeleted(int pos, Symbol* symbol);
+	
+	void templateAdded(int pos, Template* temp);
+	void templateChanged(int pos, Template* temp);
+	void templateDeleted(int pos, Template* temp);
 	
 	void gpsProjectionParametersChanged();
 	
 private:
-	typedef std::vector<Color*> ColorVector;
+	typedef std::vector<MapColor*> ColorVector;
+	typedef std::vector<Symbol*> SymbolVector;
 	typedef std::vector<Template*> TemplateVector;
+	typedef std::vector<MapLayer*> LayerVector;
 	typedef std::vector<MapWidget*> WidgetVector;
+	typedef std::map<RenderStates, Renderable*> Renderables;
 	
 	void checkIfFirstColorAdded();
+	void checkIfFirstSymbolAdded();
 	void checkIfFirstTemplateAdded();
 	
+	void adjustColorPriorities(int first, int last);
+	
 	ColorVector colors;
+	SymbolVector symbols;
 	TemplateVector templates;
 	int first_front_template;		// index of the first template in templates which should be drawn in front of the map
+	LayerVector layers;
+	MapLayer* current_layer;
 	WidgetVector widgets;
+	Renderables renderables;
 	
 	bool gps_projection_params_set;	// have the parameters been set (are they valid)?
 	GPSProjectionParameters* gps_projection_parameters;
@@ -149,98 +214,10 @@ private:
 	int scale_denominator;			// this is the number x if the scale is written as 1:x
 	
 	bool colors_dirty;				// are there unsaved changes for the colors?
+	bool symbols_dirty;				//    ... for the symbols?
 	bool templates_dirty;			//    ... for the templates?
+	bool objects_dirty;				//    ... for the objects?
 	bool unsaved_changes;			// are there unsaved changes for any component?
-};
-
-/// Coordinates of a point in a map.
-/// Saved as 64bit integers, where in addition some flags about the type of the point can be stored in the lowest 4 bits.
-class MapCoord
-{
-public:
-	/// Create coordinates from position given in millimeters
-	inline MapCoord(double x, double y)
-	{
-		this->x = qRound64(x * 1000) << 4;
-		this->y = qRound64(y * 1000) << 4;
-	}
-	
-	// Get the coordinates as doubles
-	inline double xd() {return (x >> 4) / 1000.0;}
-	inline double yd() {return (y >> 4) / 1000.0;}
-	
-private:
-	qint64 x;
-	qint64 y;
-};
-
-/// Floating point map coordinates, only for rendering.
-class MapCoordF
-{
-public:
-	
-	inline MapCoordF() {}
-	inline MapCoordF(double x, double y) {setX(x); setY(y);}
-	inline MapCoordF(const MapCoordF& copy) {x = copy.x; y = copy.y;}
-	
-    inline void setX(double x) {this->x = x;};
-	double getX() const {return x;}
-	
-	inline void setY(double y) {this->y = y;};
-	double getY() const {return y;}
-	
-	inline void normalize()
-	{
-		double length = sqrt(getX()*getX() + getY()*getY());
-		if (length < 1e-08)
-			return;
-		
-		setX(getX() / length);
-		setY(getY() / length);
-	}
-	
-	inline double length() const {return sqrt(x*x + y*y);}
-	inline double lengthSquared() const {return x*x + y*y;}
-	
-	inline double lengthTo(const MapCoordF& to)
-	{
-		double dx = to.getX() - getX();
-		double dy = to.getY() - getY();
-		return sqrt(dx*dx + dy*dy);
-	}
-	
-	inline double getAngle()
-	{
-		return atan2(y, x);
-	}
-	
-	/// Get a perpendicular vector pointing to the right
-	inline void perpRight()
-	{
-		double x = getX();
-		setX(-getY());
-		setY(x);
-	}
-	
-	MapCoord toMapCoord()
-	{
-		return MapCoord(x, y);
-	}
-	
-	inline bool operator== (const MapCoordF& other) const
-	{
-		return (other.x == x) && (other.y == y);
-	}
-	
-    inline QPointF toQPointF()
-	{
-		return QPointF(x, y);
-	}
-	
-protected:
-	
-	double x;
-	double y;
 };
 
 /// Contains all visibility information for a template. This is stored in the MapViews

@@ -18,32 +18,37 @@
  */
 
 
-#ifndef UTIL_H
-#define UTIL_H
+#include "symbol.h"
 
-#include <QDoubleValidator>
-#include <QRectF>
+#include <QFile>
 
-QT_BEGIN_NAMESPACE
-class QFile;
-QT_END_NAMESPACE
+#include "util.h"
 
-/// Double validator for line edit widgets
-class DoubleValidator : public QDoubleValidator
+Symbol::Symbol() : name(""), description(""), is_helper_symbol(false)
 {
-public:
-	DoubleValidator(double bottom, double top = 10e10, QObject* parent = NULL, int decimals = 20);
+	for (int i = 0; i < number_components; ++i)
+		number[i] = -1;
+}
+
+void Symbol::save(QFile* file, Map* map)
+{
+	saveString(file, name);
+	for (int i = 0; i < number_components; ++i)
+		file->write((const char*)&number[i], sizeof(int));
+	saveString(file, description);
+	file->write((const char*)&is_helper_symbol, sizeof(bool));
 	
-	virtual State validate(QString& input, int& pos) const;
-};
+	saveImpl(file, map);
+}
+void Symbol::load(QFile* file, Map* map)
+{
+	loadString(file, name);
+	for (int i = 0; i < number_components; ++i)
+		file->read((char*)&number[i], sizeof(int));
+	loadString(file, description);
+	file->read((char*)&is_helper_symbol, sizeof(bool));
+	
+	loadImpl(file, map);
+}
 
-/// Enlarges the rect to include the given point
-void rectInclude(QRectF& rect, QPointF point);
-/// Enlarges the rect to include the given rect
-void rectInclude(QRectF& rect, QRectF other_rect);
-
-/// Helper functions to save a string to a file and load it again
-void saveString(QFile* file, const QString& str);
-void loadString(QFile* file, QString& str);
-
-#endif
+#include "symbol.moc"

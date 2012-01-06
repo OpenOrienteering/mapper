@@ -35,6 +35,7 @@ MapWidget::MapWidget(QWidget* parent) : QWidget(parent)
 	drag_offset = QPoint(0, 0);
 	below_template_cache = NULL;
 	above_template_cache = NULL;
+	map_cache = NULL;
 	drawing_dirty_rect_old = QRect();
 	drawing_dirty_rect_new = QRectF();
 	drawing_dirty_rect_new_border = -1;
@@ -46,6 +47,7 @@ MapWidget::MapWidget(QWidget* parent) : QWidget(parent)
 	
 	below_template_cache_dirty_rect = rect();
 	above_template_cache_dirty_rect = rect();
+	map_cache_dirty_rect = rect();
 	
 	setAttribute(Qt::WA_OpaquePaintEvent);
 	setAutoFillBackground(false);
@@ -210,6 +212,21 @@ void MapWidget::markTemplateCacheDirty(QRectF view_rect, int pixel_border, bool 
 	
 	update(integer_rect);
 }
+void MapWidget::markObjectAreaDirty(QRectF map_rect)
+{
+	const int pixel_border = 0;
+	QRect viewport_rect = calculateViewportBoundingBox(map_rect, pixel_border);
+	
+	if (!viewport_rect.intersects(rect()))
+		return;
+	
+	if (map_cache_dirty_rect.isValid())
+		map_cache_dirty_rect = map_cache_dirty_rect.united(viewport_rect);
+	else
+		map_cache_dirty_rect = viewport_rect;
+	
+	update(viewport_rect);
+}
 void MapWidget::setDrawingBoundingBox(QRectF map_rect, int pixel_border, bool do_update)
 {
 	setDynamicBoundingBox(map_rect, pixel_border, drawing_dirty_rect_old, drawing_dirty_rect_new, drawing_dirty_rect_new_border, do_update);
@@ -237,6 +254,7 @@ void MapWidget::updateEverything()
 {
 	below_template_cache_dirty_rect = rect();
 	above_template_cache_dirty_rect = rect();
+	map_cache_dirty_rect = rect();
 	update();
 }
 void MapWidget::setDynamicBoundingBox(QRectF map_rect, int pixel_border, QRect& dirty_rect_old, QRectF& dirty_rect_new, int& dirty_rect_new_border, bool do_update)
@@ -306,6 +324,11 @@ void MapWidget::updateCursorposLabel(MapCoordF pos)
 	cursorpos_label->setText(QString::number(pos.getX(), 'f', 2) + " " + QString::number(pos.getY(), 'f', 2));
 }
 
+QSize MapWidget::sizeHint() const
+{
+    return QSize(640, 480);
+}
+
 void MapWidget::showHelpMessage(QPainter* painter, const QString& text)
 {
 	painter->fillRect(rect(), QColor(Qt::gray));
@@ -339,7 +362,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		showHelpMessage(&painter, tr("Empty map!\n\nStart by defining some colors:\nSelect Symbols -> Color window to\nopen the color dialog and\ndefine the colors there."));
 	else if (true) // TODO; No symbols defined?
 		showHelpMessage(&painter, tr("No symbols!\n\nNow define some symbols:\nRight-click in the symbol bar\nand select \"New\" to create\na new symbol."));
-	else*/ if (view && view->getMap()->getNumTemplates() == 0) /* && NoObjectsTODO)*/	// No templates defined?
+	else*/ if (view && view->getMap()->getNumTemplates() == 0 && view->getMap()->getNumObjects() == 0)	// No templates or objects defined?
 		showHelpMessage(&painter, tr("Ready to draw!\n\nStart drawing or load a base map.\nTo load a base map, click\nTemplates -> Open template..."));
 	else if (view)
 	{
@@ -352,6 +375,9 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		if (above_template_visible && above_template_cache_dirty_rect.isValid())
 			updateTemplateCache(above_template_cache, above_template_cache_dirty_rect, view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1, false);
 		
+		if (map_cache_dirty_rect.isValid())
+			updateMapCache(false);
+		
 		// TODO: Make sure that some cache (below_cache or map_cache) contains the background (white?) or it is drawn here
 		
 		// Draw caches
@@ -360,7 +386,8 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		else
 			painter.fillRect(QRect(drag_offset.x(), drag_offset.y(), width(), height()), Qt::white);	// TODO: It's not as easy as that, see above.
 		
-		// TODO: Map cache
+		if (map_cache)
+			painter.drawImage(drag_offset, *map_cache, rect());
 		
 		if (above_template_visible && above_template_cache && view->getMap()->getNumTemplates() - view->getMap()->getFirstFrontTemplate() > 0)
 			painter.drawImage(drag_offset, *above_template_cache, rect());
@@ -408,6 +435,13 @@ void MapWidget::resizeEvent(QResizeEvent* event)
 		delete above_template_cache;
 		above_template_cache = NULL;
 		above_template_cache_dirty_rect = rect();
+	}
+	
+	if (map_cache && map_cache->size() != event->size())
+	{
+		delete map_cache;
+		map_cache = NULL;
+		map_cache_dirty_rect = rect();
 	}
 }
 void MapWidget::mousePressEvent(QMouseEvent* event)
@@ -480,8 +514,6 @@ void MapWidget::wheelEvent(QWheelEvent* event)
 			}
 			else
 				view->setZoom(view->getZoom() * 1 / (2 * -num_steps));
-			
-			updateZoomLabel();
 		}
 		
 		event->accept();
@@ -526,9 +558,6 @@ void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first
 		// Lazy allocation of cache image
 		cache = new QImage(size(), QImage::Format_ARGB32_Premultiplied);
 		dirty_rect = rect();
-		
-		//if (!use_background)
-		//	cache->fill(QColor(Qt::transparent));
 	}
 	
 	// Make sure not to use a bigger draw rect than necessary
@@ -555,9 +584,9 @@ void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first
 	painter.translate(width() / 2.0, height() / 2.0);
 	view->applyTransform(&painter);
 	
-	QRectF base_view_rect = view->calculateViewedRect(viewportToView(dirty_rect));
-	
 	Map* map = view->getMap();
+	QRectF map_view_rect = view->calculateViewedRect(viewportToView(dirty_rect));
+
 	for (int i = first_template; i <= last_template; ++i)
 	{
 		Template* temp = map->getTemplate(i);
@@ -570,10 +599,10 @@ void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first
 			view_rect = QRectF(-9e42, -9e42, 9e42, 9e42);	// TODO: transform base_view_rect (map coords) using template transform to template coords
 		else
 		{
-			view_rect.setLeft((base_view_rect.x() / temp->getTemplateScaleX()) - temp->getTemplateX());
-			view_rect.setTop((base_view_rect.y() / temp->getTemplateScaleY()) - temp->getTemplateY());
-			view_rect.setRight((base_view_rect.right() / temp->getTemplateScaleX()) - temp->getTemplateX());
-			view_rect.setBottom((base_view_rect.bottom() / temp->getTemplateScaleY()) - temp->getTemplateY());
+			view_rect.setLeft((map_view_rect.x() / temp->getTemplateScaleX()) - temp->getTemplateX());
+			view_rect.setTop((map_view_rect.y() / temp->getTemplateScaleY()) - temp->getTemplateY());
+			view_rect.setRight((map_view_rect.right() / temp->getTemplateScaleX()) - temp->getTemplateX());
+			view_rect.setBottom((map_view_rect.bottom() / temp->getTemplateScaleY()) - temp->getTemplateY());
 		}
 		
 		painter.save();
@@ -594,6 +623,48 @@ void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first
 	
 	dirty_rect.setWidth(-1);
 	assert(!dirty_rect.isValid());
+}
+void MapWidget::updateMapCache(bool use_background)
+{
+	if (!map_cache)
+	{
+		// Lazy allocation of cache image
+		map_cache = new QImage(size(), QImage::Format_ARGB32_Premultiplied);
+		map_cache_dirty_rect = rect();
+	}
+	
+	// Make sure not to use a bigger draw rect than necessary
+	map_cache_dirty_rect = map_cache_dirty_rect.intersected(rect());
+	
+	// Start drawing
+	QPainter painter;
+	painter.begin(map_cache);
+	painter.setClipRect(map_cache_dirty_rect);
+	
+	// Fill with background color (TODO: make configurable)
+	if (use_background)
+		painter.fillRect(map_cache_dirty_rect, Qt::white);
+	else
+	{
+		QPainter::CompositionMode mode = painter.compositionMode();
+		painter.setCompositionMode(QPainter::CompositionMode_Clear);
+		painter.fillRect(map_cache_dirty_rect, Qt::transparent);
+		painter.setCompositionMode(mode);
+	}
+	
+	// Draw map
+	painter.translate(width() / 2.0, height() / 2.0);
+	view->applyTransform(&painter);
+	
+	Map* map = view->getMap();
+	QRectF map_view_rect = view->calculateViewedRect(viewportToView(map_cache_dirty_rect));
+	map->draw(&painter, map_view_rect);
+	
+	// Finish drawing
+	painter.end();
+	
+	map_cache_dirty_rect.setWidth(-1);
+	assert(!map_cache_dirty_rect.isValid());
 }
 
 #include "map_widget.moc"

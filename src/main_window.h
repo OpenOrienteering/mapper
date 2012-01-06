@@ -61,7 +61,7 @@ class MainWindow : public QMainWindow
 {
 Q_OBJECT
 public:
-	MainWindow();
+	MainWindow(bool show_menu);
 	virtual ~MainWindow();
 	
 	/// Change the controller
@@ -116,6 +116,7 @@ private:
 	
 	/// The active controller
 	MainWindowController* controller;
+	bool show_menu;
 	
 	QAction* saveAct;
 	QAction* saveAsAct;
