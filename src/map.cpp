@@ -1,5 +1,5 @@
 /*
- *    Copyright 2011 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -386,13 +386,15 @@ void Map::draw(QPainter* painter, QRectF bounding_box)
 					painter->setPen(QPen(colors[new_states.color_priority]->color, new_states.pen_width));
 				
 				painter->setBrush(QBrush(Qt::NoBrush));
+				painter->setOpacity(colors[new_states.color_priority]->opacity);
 			}
 			else if (new_states.mode == RenderStates::BrushOnly)
 			{
 				QBrush brush(colors[new_states.color_priority]->color);
 				
 				painter->setPen(QPen(Qt::NoPen));
-				painter->setBrush(brush);	
+				painter->setBrush(brush);
+				painter->setOpacity(colors[new_states.color_priority]->opacity);
 			}
 			
 			if (states.clip_path != new_states.clip_path)
@@ -647,6 +649,16 @@ void Map::deleteSymbol(int pos)
 	}
 	
 	emit(symbolDeleted(pos, temp));
+}
+int Map::findSymbolIndex(Symbol* symbol)
+{
+	int size = (int)symbols.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (symbols[i] == symbol)
+			return i;
+	}
+	assert(false);
 }
 void Map::setSymbolsDirty()
 {

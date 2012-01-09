@@ -1,5 +1,5 @@
 /*
- *    Copyright 2011 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -31,6 +31,9 @@
 class MapCoord
 {
 public:
+	/// Create un-initialized MapCoord
+	inline MapCoord() {}
+	
 	/// Create coordinates from position given in millimeters
 	inline MapCoord(double x, double y)
 	{

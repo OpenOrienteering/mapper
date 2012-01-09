@@ -1,5 +1,5 @@
 /*
- *    Copyright 2011 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -196,6 +196,13 @@ Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapView
 	
 	if (!new_temp->open(dialog_parent, main_view))
 	{
+		delete new_temp;
+		return NULL;
+	}
+	
+	if (!new_temp->isTemplateValid())
+	{
+		QMessageBox::warning(dialog_parent, tr("Error"), tr("Cannot open template:\n%1\n\nFailed to load template. Does the file exist and is it valid?").arg(path));
 		delete new_temp;
 		return NULL;
 	}

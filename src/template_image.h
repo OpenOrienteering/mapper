@@ -1,5 +1,5 @@
 /*
- *    Copyright 2011 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -55,7 +55,7 @@ protected:
     virtual void drawOntoTemplateImpl(QPointF* points, int num_points, QColor color, float width);
     virtual bool changeTemplateFileImpl(const QString& filename);
 	
-	QPixmap* pixmap;	// TODO: Change that to QImage?
+	QImage* image;
 };
 /// Initial setting dialog when opening a raster image as template, asking for the meters per pixel
 class TemplateImageOpenDialog : public QDialog

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2011 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -23,6 +23,10 @@
 
 #include "map_coord.h"
 #include "renderable.h"
+
+QT_BEGIN_NAMESPACE
+class QFile;
+QT_END_NAMESPACE
 
 class Symbol;
 class Map;
@@ -48,6 +52,9 @@ public:
 	
 	/// Returns the object type determined by the subclass
 	inline Type getType() {return type;}
+	
+	void save(QFile* file);
+	void load(QFile* file);
 	
 	/// Checks if the output_dirty flag is set and if yes, regenerates output and extent; returns true if output was previously dirty.
 	/// Use force == true to force a redraw

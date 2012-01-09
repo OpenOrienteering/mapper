@@ -1,5 +1,5 @@
 /*
- *    Copyright 2011 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -20,6 +20,8 @@
 
 #include "object.h"
 
+#include <QFile>
+
 #include "symbol.h"
 #include "symbol_point.h"
 #include "util.h"
@@ -35,6 +37,43 @@ Object::~Object()
 	int size = (int)output.size();
 	for (int i = 0; i < size; ++i)
 		delete output[i];
+}
+
+void Object::save(QFile* file)
+{
+	int i_type = (int)type;
+	file->write((const char*)&i_type, sizeof(int));
+	
+	int symbol_index = -1;
+	if (map)
+		symbol_index = map->findSymbolIndex(symbol);
+	file->write((const char*)&symbol_index, sizeof(int));
+	
+	int num_coords = (int)coords.size();
+	file->write((const char*)&num_coords, sizeof(int));
+	file->write((const char*)&coords[0], num_coords * sizeof(MapCoord));
+	
+	file->write((const char*)&path_closed, sizeof(bool));
+}
+void Object::load(QFile* file)
+{
+	int i_type;
+	file->read((char*)&i_type, sizeof(int));
+	type = (Type)i_type;
+	
+	int symbol_index;
+	file->read((char*)&symbol_index, sizeof(int));
+	if (symbol_index < 0)
+		symbol = NULL;
+	else
+		symbol = map->getSymbol(symbol_index);
+	
+	int num_coords;
+	file->read((char*)&num_coords, sizeof(int));
+	coords.resize(num_coords);
+	file->read((char*)&coords[0], num_coords * sizeof(MapCoord));
+	
+	file->read((char*)&path_closed, sizeof(bool));
 }
 
 bool Object::update(bool force)
@@ -78,16 +117,17 @@ bool Object::update(bool force)
 	output_dirty = false;
 	
 	if (map)
+	{
 		map->insertRenderablesOfObject(this);
-	
-	if (extent.isValid())
-		map->setObjectAreaDirty(extent);
+		if (extent.isValid())
+			map->setObjectAreaDirty(extent);
+	}
 	
 	return true;
 }
 void Object::clearOutput()
 {
-	if (extent.isValid())
+	if (map && extent.isValid())
 		map->setObjectAreaDirty(extent);
 	
 	int size = output.size();

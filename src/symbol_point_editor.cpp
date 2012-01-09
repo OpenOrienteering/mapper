@@ -1,5 +1,5 @@
 /*
- *    Copyright 2011 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -302,6 +302,7 @@ bool PointSymbolEditorWidget::addCoordinate(MapCoordF new_coord)
 	path->addCoordinate(row, new_coord.toMapCoord());
 	
 	updateCoordsTable();
+	coords_table->setCurrentItem(coords_table->item(row, (coords_table->currentColumn() < 0) ? 0 : coords_table->currentColumn()));
 	getMidpointObject()->update(true);
 	return true;
 }
@@ -383,21 +384,21 @@ void PointSymbolEditorWidget::elementChanged(int row)
 void PointSymbolEditorWidget::addPointClicked()
 {
 	PointSymbol* new_point = new PointSymbol();
-	PointObject* new_object = new PointObject(map, MapCoord(0, 0), new_point);
+	PointObject* new_object = new PointObject(NULL, MapCoord(0, 0), new_point);
 	
 	insertElement(new_object, new_point);
 }
 void PointSymbolEditorWidget::addLineClicked()
 {
 	LineSymbol* new_line = new LineSymbol();
-	PathObject* new_object = new PathObject(map, new_line);
+	PathObject* new_object = new PathObject(NULL, new_line);
 	
 	insertElement(new_object, new_line);
 }
 void PointSymbolEditorWidget::addAreaClicked()
 {
 	AreaSymbol* new_area = new AreaSymbol();
-	PathObject* new_object = new PathObject(map, new_area);
+	PathObject* new_object = new PathObject(NULL, new_area);
 	
 	insertElement(new_object, new_area);
 }

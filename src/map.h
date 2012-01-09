@@ -1,5 +1,5 @@
 /*
- *    Copyright 2011 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -131,6 +131,7 @@ public:
 	void setSymbol(Symbol* symbol, int pos);
 	void addSymbol(Symbol* symbol, int pos);
 	void deleteSymbol(int pos);
+	int findSymbolIndex(Symbol* symbol);
 	void setSymbolsDirty();
 	
 	// Templates

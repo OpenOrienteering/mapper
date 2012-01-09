@@ -1,5 +1,5 @@
 /*
- *    Copyright 2011 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -140,6 +140,14 @@ void PointSymbol::saveImpl(QFile* file, Map* map)
 	file->write((const char*)&outer_width, sizeof(int));
 	temp = map->findColorIndex(outer_color);
 	file->write((const char*)&temp, sizeof(int));
+	
+	int num_elements = (int)objects.size();
+	file->write((const char*)&num_elements, sizeof(int));
+	for (int i = 0; i < num_elements; ++i)
+	{
+		symbols[i]->save(file, map);
+		objects[i]->save(file);
+	}
 }
 void PointSymbol::loadImpl(QFile* file, Map* map)
 {
@@ -153,6 +161,16 @@ void PointSymbol::loadImpl(QFile* file, Map* map)
 	file->read((char*)&outer_width, sizeof(int));
 	file->read((char*)&temp, sizeof(int));
 	outer_color = map->getColor(temp);
+	
+	int num_elements;
+	file->read((char*)&num_elements, sizeof(int));
+	objects.resize(num_elements);
+	symbols.resize(num_elements);
+	for (int i = 0; i < num_elements; ++i)
+	{
+		symbols[i]->load(file, map);
+		objects[i]->load(file);
+	}
 }
 
 // ### PointSymbolSettings ###

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2011 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -26,11 +26,11 @@
 
 TemplateImage::TemplateImage(const QString& filename, Map* map) : Template(filename, map)
 {
-	pixmap = new QPixmap(filename);
-	if (pixmap->isNull())
+	image = new QImage(filename);
+	if (image->isNull())
 	{
-		delete pixmap;
-		pixmap = NULL;
+		delete image;
+		image = NULL;
 		return;
 	}
 	
@@ -38,11 +38,11 @@ TemplateImage::TemplateImage(const QString& filename, Map* map) : Template(filen
 }
 TemplateImage::TemplateImage(const TemplateImage& other) : Template(other)
 {
-	pixmap = new QPixmap(*other.pixmap);
+	image = new QImage(*other.image);
 }
 TemplateImage::~TemplateImage()
 {
-	delete pixmap;
+	delete image;
 }
 Template* TemplateImage::duplicate()
 {
@@ -51,11 +51,14 @@ Template* TemplateImage::duplicate()
 }
 bool TemplateImage::saveTemplateFile()
 {
-	return pixmap->save(template_path);
+	return image->save(template_path);
 }
 
 bool TemplateImage::open(QWidget* dialog_parent, MapView* main_view)
 {
+	if (getTemplateFilename().endsWith(".gif", Qt::CaseInsensitive))
+		QMessageBox::warning(dialog_parent, tr("Warning"), tr("Loading a GIF image template.\nSaving GIF files is not supported. This means that drawings on this template won't be saved!\nIf you do not intend to draw on this template however, that is no problem."));
+	
 	TemplateImageOpenDialog open_dialog(dialog_parent);
 	open_dialog.setWindowModality(Qt::WindowModal);
 	if (open_dialog.exec() == QDialog::Rejected)
@@ -74,27 +77,25 @@ bool TemplateImage::open(QWidget* dialog_parent, MapView* main_view)
 void TemplateImage::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity)
 {
 	painter->setOpacity(opacity);
-	painter->drawPixmap(QPointF(-pixmap->width() * 0.5, -pixmap->height() * 0.5), *pixmap);
+	painter->drawImage(QPointF(-image->width() * 0.5, -image->height() * 0.5), *image);
 }
 QRectF TemplateImage::getExtent()
 {
-	return QRectF(-pixmap->width() * 0.5, -pixmap->height() * 0.5, pixmap->width(), pixmap->height());
+	return QRectF(-image->width() * 0.5, -image->height() * 0.5, image->width(), image->height());
 }
 
 QPointF TemplateImage::calcCenterOfGravity(QRgb background_color)
 {
-	QImage image = pixmap->toImage();
-	
 	int num_points = 0;
 	QPointF center = QPointF(0, 0);
-	int width = image.width();
-	int height = image.height();
+	int width = image->width();
+	int height = image->height();
 	
 	for (int x = 0; x < width; ++x)
 	{
 		for (int y = 0; y < height; ++y)
 		{
-			QRgb pixel = image.pixel(x, y);
+			QRgb pixel = image->pixel(x, y);
 			if (qAlpha(pixel) < 127 || pixel == background_color)
 				continue;
 			
@@ -105,7 +106,7 @@ QPointF TemplateImage::calcCenterOfGravity(QRgb background_color)
 	
 	if (num_points > 0)
 		center = QPointF(center.x() / num_points, center.y() / num_points);
-	center -= QPointF(pixmap->width() * 0.5 - 0.5, pixmap->height() * 0.5 - 0.5);
+	center -= QPointF(image->width() * 0.5 - 0.5, image->height() * 0.5 - 0.5);
 	
 	return center;
 }
@@ -122,10 +123,14 @@ double TemplateImage::getTemplateFinalScaleY() const
 void TemplateImage::drawOntoTemplateImpl(QPointF* points, int num_points, QColor color, float width)
 {
 	for (int i = 0; i < num_points; ++i)
-		points[i] = QPointF(points[i].x() + pixmap->width() * 0.5, points[i].y() + pixmap->height() * 0.5);
+		points[i] = QPointF(points[i].x() + image->width() * 0.5, points[i].y() + image->height() * 0.5);
 	
     QPainter painter;
-	painter.begin(pixmap);
+	painter.begin(image);
+	if (color.alpha() == 0)
+		painter.setCompositionMode(QPainter::CompositionMode_Clear);
+	else
+		painter.setOpacity(color.alphaF());
 	
 	QPen pen(color);
 	pen.setWidthF(width);
@@ -140,18 +145,18 @@ void TemplateImage::drawOntoTemplateImpl(QPointF* points, int num_points, QColor
 }
 bool TemplateImage::changeTemplateFileImpl(const QString& filename)
 {
-	QPixmap* new_pixmap = new QPixmap(filename);
-	if (new_pixmap->isNull())
+	QImage* new_image = new QImage(filename);
+	if (new_image->isNull())
 	{
-		delete new_pixmap;
-		new_pixmap = NULL;
+		delete new_image;
+		new_image = NULL;
 		return false;
 	}
 	else
 	{
-		if (pixmap)
-			delete pixmap;
-		pixmap = new_pixmap;
+		if (image)
+			delete image;
+		image = new_image;
 		return true;
 	}
 }
