@@ -26,16 +26,24 @@
 #include "util.h"
 #include "map_color.h"
 #include "symbol_setting_dialog.h"
+#include "object.h"
 
-PointSymbol::PointSymbol(Map* map) : Symbol()
+PointSymbol::PointSymbol() : Symbol(Symbol::Point)
 {
 	rotatable = false;
 	inner_radius = 1000;
 	inner_color = NULL;
-	outer_width = 250;
+	outer_width = 0;
 	outer_color = NULL;
-	
-	connect(map, SIGNAL(colorDeleted(int,MapColor*)), this, SLOT(colorDeleted(int,MapColor*)));
+}
+PointSymbol::~PointSymbol()
+{
+	int size = objects.size();
+	for (int i = 0; i < size; ++i)
+	{
+		delete objects[i];
+		delete symbols[i];
+	}
 }
 
 void PointSymbol::createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output)
@@ -45,7 +53,72 @@ void PointSymbol::createRenderables(Object* object, const MapCoordVectorF& coord
 	if (outer_color && outer_width > 0)
 		output.push_back(new CircleRenderable(this, coords[0]));
 	
-	// TODO: other geometry - possibly needs to be moved and rotated
+	PointObject* point = reinterpret_cast<PointObject*>(object);
+	float rotation = point->getRotation();
+	double offset_x = coords[0].getX();
+	double offset_y = coords[0].getY();
+	
+	// Add elements which possibly need to be moved and rotated
+	int size = (int)objects.size();
+	for (int i = 0; i < size; ++i)
+	{
+		MapCoordVectorF transformed_coords;
+		const MapCoordVector& original_coords = objects[i]->getCoordinateVector();
+		
+		int coords_size = original_coords.size();
+		transformed_coords.resize(coords_size);
+		
+		if (rotation == 0)
+		{
+			for (int c = 0; c < coords_size; ++c)
+			{
+				transformed_coords[c] = MapCoordF(original_coords[c].xd() + offset_x,
+												  original_coords[c].yd() + offset_y);
+			}
+		}
+		else
+		{
+			float cosr = cos(rotation);
+			float sinr = sin(rotation);
+			
+			for (int c = 0; c < coords_size; ++c)
+			{
+				float ox = original_coords[c].xd();
+				float oy = original_coords[c].yd();
+				transformed_coords[c] = MapCoordF(ox * cosr - oy * sinr + offset_x,
+												  oy * cosr + ox * sinr + offset_y);
+			}
+		}
+		
+		// TODO: if this point is rotated, it has to pass it on to its children to make it work that rotatable point objects can be children.
+		// But currently only basic, rotationally symmetric points can be children, so it does not matter for now.
+		symbols[i]->createRenderables(objects[i], transformed_coords, output);
+	}
+}
+
+int PointSymbol::getNumElements()
+{
+	return (int)objects.size();
+}
+void PointSymbol::addElement(int pos, Object* object, Symbol* symbol)
+{
+	objects.insert(objects.begin() + pos, object);
+	symbols.insert(symbols.begin() + pos, symbol);
+}
+Object* PointSymbol::getElementObject(int pos)
+{
+	return objects[pos];
+}
+Symbol* PointSymbol::getElementSymbol(int pos)
+{
+	return symbols[pos];
+}
+void PointSymbol::deleteElement(int pos)
+{
+	delete objects[pos];
+	objects.erase(objects.begin() + pos);
+	delete symbols[pos];
+	symbols.erase(symbols.begin() + pos);
 }
 
 void PointSymbol::colorDeleted(int pos, MapColor* color)
@@ -91,82 +164,17 @@ PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, Map* map, SymbolSe
 	oriented_to_north_check = new QCheckBox(tr("Always oriented to north (not rotatable)"));
 	oriented_to_north_check->setChecked(!symbol->rotatable);
 	
-	QLabel* inner_radius_label = new QLabel(tr("Inner radius <b>a</b> [mm]:"));
-	inner_radius_edit = new QLineEdit(QString::number(0.001 * symbol->inner_radius));
-	inner_radius_edit->setValidator(new DoubleValidator(0, 99999, inner_radius_edit));
+	QVBoxLayout* layout = new QVBoxLayout();
+	layout->addWidget(oriented_to_north_check);
+	layout->setAlignment(oriented_to_north_check, Qt::AlignLeft);
 	
-	QLabel* inner_color_label = new QLabel(tr("Inner color:"));
-	inner_color_edit = new ColorDropDown(map, symbol->inner_color);
-	
-	QLabel* outer_width_label = new QLabel(tr("Outer width <b>b</b> [mm]:"));
-	outer_width_edit = new QLineEdit(QString::number(0.001 * symbol->outer_width));
-	outer_width_edit->setValidator(new DoubleValidator(0, 99999, outer_width_edit));
-	
-	QLabel* outer_color_label = new QLabel(tr("Outer color:"));
-	outer_color_edit = new ColorDropDown(map, symbol->outer_color);
-	
-	QLabel* explanation_label = new QLabel();
-	explanation_label->setPixmap(QPixmap("images/symbol_point_explanation.png"));
-	
-	QHBoxLayout* inner_radius_layout = new QHBoxLayout();
-	inner_radius_layout->addWidget(inner_radius_label);
-	inner_radius_layout->addWidget(inner_radius_edit);
-	inner_radius_layout->addStretch(1);
-	QHBoxLayout* inner_color_layout = new QHBoxLayout();
-	inner_color_layout->addWidget(inner_color_label);
-	inner_color_layout->addWidget(inner_color_edit);
-	inner_color_layout->addStretch(1);
-	QHBoxLayout* outer_width_layout = new QHBoxLayout();
-	outer_width_layout->addWidget(outer_width_label);
-	outer_width_layout->addWidget(outer_width_edit);
-	outer_width_layout->addStretch(1);
-	QHBoxLayout* outer_color_layout = new QHBoxLayout();
-	outer_color_layout->addWidget(outer_color_label);
-	outer_color_layout->addWidget(outer_color_edit);
-	outer_color_layout->addStretch(1);
-	
-	QVBoxLayout* edits_layout = new QVBoxLayout();
-	edits_layout->addWidget(oriented_to_north_check);
-	edits_layout->setAlignment(oriented_to_north_check, Qt::AlignLeft);
-	edits_layout->addLayout(inner_radius_layout);
-	edits_layout->addLayout(inner_color_layout);
-	edits_layout->addLayout(outer_width_layout);
-	edits_layout->addLayout(outer_color_layout);
-	
-	QHBoxLayout* layout = new QHBoxLayout();
-	layout->addLayout(edits_layout);
-	layout->addWidget(explanation_label);
 	setLayout(layout);
 	
 	connect(oriented_to_north_check, SIGNAL(clicked(bool)), this, SLOT(orientedToNorthClicked(bool)));
-	connect(inner_radius_edit, SIGNAL(textEdited(QString)), this, SLOT(innerRadiusChanged(QString)));
-	connect(inner_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(innerColorChanged()));
-	connect(outer_width_edit, SIGNAL(textEdited(QString)), this, SLOT(outerWidthChanged(QString)));
-	connect(outer_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(outerColorChanged()));
 }
 void PointSymbolSettings::orientedToNorthClicked(bool checked)
 {
 	symbol->rotatable = !checked;
-}
-void PointSymbolSettings::innerRadiusChanged(QString text)
-{
-	symbol->inner_radius = qRound(1000 * text.toDouble());
-	dialog->updatePreview();
-}
-void PointSymbolSettings::innerColorChanged()
-{
-	symbol->inner_color = inner_color_edit->color();
-	dialog->updatePreview();
-}
-void PointSymbolSettings::outerWidthChanged(QString text)
-{
-	symbol->outer_width = qRound(1000 * text.toDouble());
-	dialog->updatePreview();
-}
-void PointSymbolSettings::outerColorChanged()
-{
-	symbol->outer_color = outer_color_edit->color();
-	dialog->updatePreview();
 }
 
 #include "symbol_point.moc"

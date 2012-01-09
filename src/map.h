@@ -60,8 +60,8 @@ public:
 	inline Object* getObject(int i) {return objects[i];}
 	inline void setObject(Object* object, int pos) {objects[pos] = object;}
 	inline void addObject(Object* object, int pos) {objects.insert(objects.begin() + pos, object);}
-	inline void deleteObject(int pos);
-	bool deleteObject(Object* object);	// returns if the object was found
+	inline void deleteObject(int pos, bool remove_only);
+	bool deleteObject(Object* object, bool remove_only);	// returns if the object was found
 	
 private:
 	QString name;
@@ -151,12 +151,12 @@ public:
 	
 	int getNumObjects();
 	void addObject(Object* object);
-	void deleteObject(Object* object);
+	void deleteObject(Object* object, bool remove_only);						// remove_only will remove the object from the map, but not call "delete object";
 	void setObjectsDirty();
 	
 	void setObjectAreaDirty(QRectF map_coords_rect);
 	
-	void removeRenderablesOfObject(Object* object);	// NOTE: does not delete the renderables, just removes them from display
+	void removeRenderablesOfObject(Object* object, bool mark_area_as_dirty);	// NOTE: does not delete the renderables, just removes them from display
 	void insertRenderablesOfObject(Object* object);
 	
 	// Other settings
@@ -191,7 +191,7 @@ private:
 	typedef std::vector<Template*> TemplateVector;
 	typedef std::vector<MapLayer*> LayerVector;
 	typedef std::vector<MapWidget*> WidgetVector;
-	typedef std::map<RenderStates, Renderable*> Renderables;
+	typedef std::multimap<RenderStates, Renderable*> Renderables;
 	
 	void checkIfFirstColorAdded();
 	void checkIfFirstSymbolAdded();

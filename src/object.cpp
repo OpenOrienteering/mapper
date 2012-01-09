@@ -27,6 +27,7 @@
 Object::Object(Map* map, Object::Type type, Symbol* symbol) : type(type), symbol(symbol), map(map)
 {
 	output_dirty = true;
+	path_closed = false;
 	extent = QRectF();
 }
 Object::~Object()
@@ -44,7 +45,7 @@ bool Object::update(bool force)
 	bool had_output_before = !output.empty();
 	clearOutput();
 	if (map && had_output_before)
-		map->removeRenderablesOfObject(this);
+		map->removeRenderablesOfObject(this, false);
 	
 	// Calculate float coordinates
 	MapCoordVectorF coordsF;
@@ -112,10 +113,18 @@ bool Object::setSymbol(Symbol* new_symbol)
 	return true;
 }
 
+// ### PathObject ###
+
+PathObject::PathObject(Map* map, Symbol* symbol) : Object(map, Object::Path, symbol)
+{
+	assert(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
+}
+
 // ### PointObject ###
 
 PointObject::PointObject(Map* map, MapCoord position, Symbol* symbol) : Object(map, Object::Point, symbol)
 {
+	assert(!symbol || (symbol->getType() == Symbol::Point));
 	rotation = 0;
 	coords.push_back(position);
 }
@@ -123,6 +132,10 @@ void PointObject::setPosition(MapCoord position)
 {
 	coords[0] = position;
 	setOutputDirty();
+}
+MapCoord PointObject::getPosition()
+{
+	return coords[0];
 }
 void PointObject::setRotation(float new_rotation)
 {

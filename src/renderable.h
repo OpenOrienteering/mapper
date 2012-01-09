@@ -31,6 +31,8 @@ QT_END_NAMESPACE
 
 class Symbol;
 class PointSymbol;
+class LineSymbol;
+class AreaSymbol;
 class Object;
 
 /// Contains state information about the painter which must be set when rendering a Renderable. Used to order the Renderables by color and minimize state changes
@@ -136,6 +138,33 @@ public:
 protected:
 	QRectF rect;
 	float line_width;
+};
+
+class LineRenderable : public Renderable
+{
+public:
+	LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed);
+	virtual void render(QPainter& painter);
+	virtual void getRenderStates(RenderStates& out);
+	//virtual Renderable* clone();
+	
+protected:
+	QPainterPath path;
+	float line_width;
+	Qt::PenCapStyle cap_style;
+	Qt::PenJoinStyle join_style;
+};
+
+class AreaRenderable : public Renderable
+{
+public:
+	AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords);
+	virtual void render(QPainter& painter);
+	virtual void getRenderStates(RenderStates& out);
+	//virtual Renderable* clone();
+	
+protected:
+	QPainterPath path;
 };
 
 #endif

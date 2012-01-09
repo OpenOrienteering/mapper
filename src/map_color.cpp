@@ -68,6 +68,10 @@ MapColor* ColorDropDown::color()
 {
 	return reinterpret_cast<MapColor*>(itemData(currentIndex()).value<void*>());
 }
+void ColorDropDown::setColor(MapColor* color)
+{
+	setCurrentIndex(findData(qVariantFromValue<void*>(color)));
+}
 
 void ColorDropDown::colorAdded(int pos, MapColor* color)
 {

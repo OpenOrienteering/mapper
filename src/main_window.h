@@ -61,7 +61,7 @@ class MainWindow : public QMainWindow
 {
 Q_OBJECT
 public:
-	MainWindow(bool show_menu);
+	MainWindow(bool as_main_window);
 	virtual ~MainWindow();
 	
 	/// Change the controller

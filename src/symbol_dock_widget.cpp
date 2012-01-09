@@ -216,7 +216,7 @@ void SymbolWidget::resizeEvent(QResizeEvent* event)
 
 void SymbolWidget::newPointSymbol()
 {
-	PointSymbol* new_symbol = new PointSymbol(map);
+	PointSymbol* new_symbol = new PointSymbol();
 	
 	SymbolSettingDialog dialog(new_symbol, map, this);
 	dialog.setWindowModality(Qt::WindowModal);

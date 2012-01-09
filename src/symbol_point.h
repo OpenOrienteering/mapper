@@ -37,29 +37,36 @@ class ColorDropDown;
 
 class PointSymbol : public Symbol
 {
-Q_OBJECT
 friend class PointSymbolSettings;
+friend class PointSymbolEditorWidget;
 public:
 	/// Constructs an empty point symbol
-	PointSymbol(Map* map);
-	
-    virtual Type getType() {return Symbol::Point;}
+	PointSymbol();
+    virtual ~PointSymbol();
     
     virtual void createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output);
+	virtual void colorDeleted(int pos, MapColor* color);
 	
-	// Getters / Setters
+	// Contained objects and symbols (elements)
+	int getNumElements();
+	void addElement(int pos, Object* object, Symbol* symbol);
+	Object* getElementObject(int pos);
+	Symbol* getElementSymbol(int pos);
+	void deleteElement(int pos);
+	
+	// Getters
 	inline bool isRotatable() const {return rotatable;}
 	inline int getInnerRadius() const {return inner_radius;}
 	inline MapColor* getInnerColor() const {return inner_color;}
 	inline int getOuterWidth() const {return outer_width;}
 	inline MapColor* getOuterColor() const {return outer_color;}
 	
-public slots:
-	void colorDeleted(int pos, MapColor* color);
-	
 protected:
     virtual void saveImpl(QFile* file, Map* map);
     virtual void loadImpl(QFile* file, Map* map);
+	
+	std::vector<Object*> objects;
+	std::vector<Symbol*> symbols;
 	
 	bool rotatable;
 	int inner_radius;		// in 1/1000 mm
@@ -76,20 +83,12 @@ public:
 	
 public slots:
 	void orientedToNorthClicked(bool checked);
-	void innerRadiusChanged(QString text);
-	void innerColorChanged();
-	void outerWidthChanged(QString text);
-	void outerColorChanged();
 	
 private:
 	PointSymbol* symbol;
 	SymbolSettingDialog* dialog;
 	
 	QCheckBox* oriented_to_north_check;
-	QLineEdit* inner_radius_edit;
-	ColorDropDown* inner_color_edit;
-	QLineEdit* outer_width_edit;
-	ColorDropDown* outer_color_edit;
 };
 
 #endif

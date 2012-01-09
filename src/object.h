@@ -58,6 +58,8 @@ public:
 	
 	/// Returns the coordinate vector
 	inline const MapCoordVector& getCoordinateVector() const {return coords;}
+	inline int getCoordinateCount() const {return (int)coords.size();}
+	inline MapCoord getCoordinate(int pos) const {return coords[pos];}
 	
 	// Methods to traverse the output
 	inline RenderableVector::const_iterator beginRenderables() const {return output.begin();}
@@ -66,6 +68,9 @@ public:
 	// Getters / Setters
 	inline void setOutputDirty(bool dirty = true) {output_dirty = dirty;}
 	inline bool isOutputDirty() const {return output_dirty;}
+	
+	inline void setPathClosed(bool value = true) {path_closed = value;}
+	inline bool isPathClosed() const {return path_closed;}
 	
 	/// NOTE: The extent is only valid after update() has been called!
 	inline const QRectF& getExtent() const {return extent;}
@@ -79,20 +84,33 @@ protected:
 	Type type;
 	Symbol* symbol;
 	MapCoordVector coords;
+	bool path_closed;		// does the coordinates represent a closed path (return to first coord after the last?)
 	Map* map;
 	
-	bool output_dirty;	// does the output have to be re-generated because of changes?
+	bool output_dirty;		// does the output have to be re-generated because of changes?
 	RenderableVector output;
 	QRectF extent;		// only valid after calling update()
 };
 
-/// Object which can only be used for point symbols, and is also the only object which can be used with them
+/// Object type which can be used for line, area and combined symbols
+class PathObject : public Object
+{
+public:
+	PathObject(Map* map, Symbol* symbol = NULL);
+	
+	inline void setCoordinate(int pos, MapCoord c) {coords[pos] = c;}
+	inline void addCoordinate(int pos, MapCoord c) {coords.insert(coords.begin() + pos, c);}
+	inline void deleteCoordinate(int pos) {coords.erase(coords.begin() + pos);}
+};
+
+/// Object type which can only be used for point symbols, and is also the only object which can be used with them
 class PointObject : public Object
 {
 public:
 	PointObject(Map* map, MapCoord position, Symbol* symbol = NULL);
 	
 	void setPosition(MapCoord position);
+	MapCoord getPosition();
 	
 	void setRotation(float new_rotation);
 	inline float getRotation() const {return rotation;}

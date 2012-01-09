@@ -43,10 +43,10 @@ MainWindowController* MainWindowController::controllerForFile(const QString& fil
 
 // ### MainWindow ###
 
-MainWindow::MainWindow(bool show_menu)
+MainWindow::MainWindow(bool as_main_window)
 {
 	controller = NULL;
-	this->show_menu = show_menu;
+	this->show_menu = as_main_window;
 	setCurrentFile("");
 	
 	setWindowIcon(QIcon("images/control.png"));
@@ -55,6 +55,7 @@ MainWindow::MainWindow(bool show_menu)
 	statusBar()->show();
 	status_label = new QLabel();
 	statusBar()->addWidget(status_label, 1);
+	statusBar()->setSizeGripEnabled(as_main_window);
 	
 	loadWindowSettings();
 }

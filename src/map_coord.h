@@ -38,16 +38,28 @@ public:
 		this->y = qRound64(y * 1000) << 4;
 	}
 	
+	inline void setX(double x) {this->x = (qRound64(x * 1000) << 4) | (this->x & 15);}
+	inline void setY(double y) {this->y = (qRound64(y * 1000) << 4) | (this->y & 15);}
+	
 	// Get the coordinates as doubles
-	inline double xd() {return (x >> 4) / 1000.0;}
-	inline double yd() {return (y >> 4) / 1000.0;}
+	inline double xd() const {return (x >> 4) / 1000.0;}
+	inline double yd() const {return (y >> 4) / 1000.0;}
+	
+	// Is this point the first point of a cubic bezier curve segment?
+	inline bool isCurveStart() const {return x & 1;}
+	inline void setCurveStart(bool value) {x = (x & (~1)) | (value ? 1 : 0);}
+	
+	inline QPointF toQPointF() const
+	{
+		return QPointF(xd(), yd());
+	}
 	
 private:
 	qint64 x;
 	qint64 y;
 };
 
-/// Floating point map coordinates, only for rendering.
+/// Floating point map coordinates, only for rendering. TODO: replace with QPointF everywhere? Derive from QPointF and add nice-to-have features?
 class MapCoordF
 {
 public:
@@ -75,14 +87,14 @@ public:
 	inline double length() const {return sqrt(x*x + y*y);}
 	inline double lengthSquared() const {return x*x + y*y;}
 	
-	inline double lengthTo(const MapCoordF& to)
+	inline double lengthTo(const MapCoordF& to) const
 	{
 		double dx = to.getX() - getX();
 		double dy = to.getY() - getY();
 		return sqrt(dx*dx + dy*dy);
 	}
 	
-	inline double getAngle()
+	inline double getAngle() const
 	{
 		return atan2(y, x);
 	}
@@ -95,7 +107,7 @@ public:
 		setY(x);
 	}
 	
-	MapCoord toMapCoord()
+	MapCoord toMapCoord() const
 	{
 		return MapCoord(x, y);
 	}
@@ -105,7 +117,7 @@ public:
 		return (other.x == x) && (other.y == y);
 	}
 	
-    inline QPointF toQPointF()
+	inline QPointF toQPointF() const
 	{
 		return QPointF(x, y);
 	}

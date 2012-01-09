@@ -29,6 +29,11 @@ class Map;
 
 struct MapColor
 {
+	enum SpecialValues
+	{
+		Reserved = -1	// used to mark renderables which should not be inserted into the map
+	};
+	
 	void updateFromCMYK();
 	void updateFromRGB();
 	
@@ -51,6 +56,9 @@ public:
 	
 	/// Returns the selected color or NULL if no color selected
 	MapColor* color();
+	
+	/// Sets the selection to the given color
+	void setColor(MapColor* color);
 	
 protected slots:
 	void colorAdded(int pos, MapColor* color);

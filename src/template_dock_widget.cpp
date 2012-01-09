@@ -57,7 +57,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	//new_button->setIcon(QIcon("images/new.png"));	// This aligns the text left which looks strange. Besides, the button is not the most important one, so omitting the icon may be better
 	new_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	new_button->setPopupMode(QToolButton::InstantPopup);
-	new_button->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum));
+	new_button->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
 	QMenu* new_button_menu = new QMenu(new_button);
 	new_button_menu->addAction(tr("Sketch"));
 	new_button_menu->addAction(tr("GPS"));
@@ -94,7 +94,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	more_button = new QToolButton();
 	more_button->setText(tr("More..."));
 	more_button->setPopupMode(QToolButton::InstantPopup);
-	more_button->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum));
+	more_button->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
 	QMenu* more_button_menu = new QMenu(more_button);
 	more_button_menu->addAction(QIcon("images/window-new.png"), tr("Numeric transformation window"));
 	more_button_menu->addAction(tr("Set transparent color..."));

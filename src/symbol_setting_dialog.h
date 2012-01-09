@@ -33,6 +33,7 @@ class Map;
 class Symbol;
 class MainWindow;
 class PointSymbol;
+class PointSymbolEditorWidget;
 
 class SymbolSettingDialog : public QDialog
 {
@@ -49,8 +50,9 @@ protected slots:
 	void helperSymbolClicked(bool checked);
 	
 private:
-	void createPreviewMap();
-	void createPointSymbolEditor(PointSymbol* point);
+	//void createPreviewMap();
+	//void createPointSymbolEditor(PointSymbol* point);
+	PointSymbolEditorWidget* createPointSymbolEditor();
 	
 	void updateNumberEdits();
 	void updateOkButton();

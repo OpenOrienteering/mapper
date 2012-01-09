@@ -18,35 +18,30 @@
  */
 
 
+#ifndef _OPENORIENTEERING_SYMBOL_AREA_H_
+#define _OPENORIENTEERING_SYMBOL_AREA_H_
+
 #include "symbol.h"
 
-#include <QFile>
-
-#include "util.h"
-
-Symbol::Symbol(Type type) : type(type), name(""), description(""), is_helper_symbol(false)
+class AreaSymbol : public Symbol
 {
-	for (int i = 0; i < number_components; ++i)
-		number[i] = -1;
-}
-
-void Symbol::save(QFile* file, Map* map)
-{
-	saveString(file, name);
-	for (int i = 0; i < number_components; ++i)
-		file->write((const char*)&number[i], sizeof(int));
-	saveString(file, description);
-	file->write((const char*)&is_helper_symbol, sizeof(bool));
+friend class PointSymbolSettings;
+friend class PointSymbolEditorWidget;
+public:
+	AreaSymbol();
+	virtual ~AreaSymbol();
 	
-	saveImpl(file, map);
-}
-void Symbol::load(QFile* file, Map* map)
-{
-	loadString(file, name);
-	for (int i = 0; i < number_components; ++i)
-		file->read((char*)&number[i], sizeof(int));
-	loadString(file, description);
-	file->read((char*)&is_helper_symbol, sizeof(bool));
+	virtual void createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output);
+	virtual void colorDeleted(int pos, MapColor* color);
 	
-	loadImpl(file, map);
-}
+	// Getters
+	inline MapColor* getColor() const {return color;}
+	
+protected:
+	virtual void saveImpl(QFile* file, Map* map);
+	virtual void loadImpl(QFile* file, Map* map);
+	
+	MapColor* color;
+};
+
+#endif

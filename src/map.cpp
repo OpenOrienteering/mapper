@@ -45,19 +45,21 @@ MapLayer::~MapLayer()
 	for (int i = 0; i < size; ++i)
 		delete objects[i];
 }
-void MapLayer::deleteObject(int pos)
+void MapLayer::deleteObject(int pos, bool remove_only)
 {
-	delete objects[pos];
+	if (!remove_only)
+		delete objects[pos];
 	objects.erase(objects.begin() + pos);
 }
-bool MapLayer::deleteObject(Object* object)
+bool MapLayer::deleteObject(Object* object, bool remove_only)
 {
 	int size = objects.size();
 	for (int i = 0; i < size; ++i)
 	{
 		if (objects[i] == object)
 		{
-			delete object;
+			if (!remove_only)
+				delete object;
 			objects.erase(objects.begin() + i);
 			return true;
 		}
@@ -265,7 +267,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 		
 		Symbol* symbol = NULL;
 		if (symbol_type == Symbol::Point)
-			symbol = new PointSymbol(this);
+			symbol = new PointSymbol();
 		else
 			return false;
 		
@@ -362,9 +364,6 @@ void Map::draw(QPainter* painter, QRectF bounding_box)
 		const RenderStates& new_states = (*it).first;
 		Renderable* renderable = (*it).second;
 		
-		if (new_states.color_priority == -1)
-			continue;
-		
 		// Bounds check
 		const QRectF& extent = renderable->getExtent();
 		if (extent.right() < bounding_box.x())	continue;
@@ -433,14 +432,15 @@ void Map::updateObjects()
 		}
 	}
 }
-void Map::removeRenderablesOfObject(Object* object)
+void Map::removeRenderablesOfObject(Object* object, bool mark_area_as_dirty)
 {
 	Renderables::iterator itend = renderables.end();
 	for (Renderables::iterator it = renderables.begin(); it != itend; )
 	{
 		if ((*it).second->getCreator() == object)
 		{
-			//delete (*it).second;
+			if (mark_area_as_dirty)
+				setObjectAreaDirty((*it).second->getExtent());
 			Renderables::iterator todelete = it;
 			++it;
 			renderables.erase(todelete);
@@ -455,10 +455,11 @@ void Map::insertRenderablesOfObject(Object* object)
 	for (RenderableVector::const_iterator it = object->beginRenderables(); it != it_end; ++it)
 	{
 		Renderable* renderable = *it;
-		RenderStates key;
-		renderable->getRenderStates(key);
+		RenderStates render_states;
+		renderable->getRenderStates(render_states);
 		
-		renderables.insert(Renderables::value_type(key, renderable));	
+		if (render_states.color_priority != MapColor::Reserved)
+			renderables.insert(Renderables::value_type(render_states, renderable));	
 	}
 }
 
@@ -559,6 +560,9 @@ void Map::deleteColor(int pos)
 	}
 	
 	emit(colorDeleted(pos, temp));
+	int size = (int)symbols.size();
+	for (int i = 0; i < size; ++i)
+		symbols[i]->colorDeleted(pos, temp);
 }
 int Map::findColorIndex(MapColor* color)
 {
@@ -720,15 +724,17 @@ int Map::getNumObjects()
 void Map::addObject(Object* object)
 {
 	current_layer->addObject(object, current_layer->getNumObjects());
+	object->update(true);
 	setObjectsDirty();
 }
-void Map::deleteObject(Object* object)
+void Map::deleteObject(Object* object, bool remove_only)
 {
 	int size = layers.size();
 	for (int i = 0; i < size; ++i)
 	{
-		if (layers[i]->deleteObject(object))
+		if (layers[i]->deleteObject(object, remove_only))
 		{
+			removeRenderablesOfObject(object, true);
 			setObjectsDirty();
 			return;
 		}

@@ -29,9 +29,11 @@
 #include "map_editor.h"
 #include "object.h"
 #include "map_widget.h"
+#include "symbol_point_editor.h"
 
 SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
+	setSizeGripEnabled(true);
 	this->symbol = symbol;
 	
 	QGroupBox* general_group = new QGroupBox(tr("General"));
@@ -41,6 +43,7 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* pare
 	for (int i = 0; i < Symbol::number_components; ++i)
 	{
 		number_edit[i] = new QLineEdit((symbol->getNumberComponent(i) < 0) ? "" : QString::number(symbol->getNumberComponent(i)));
+		number_edit[i]->setMaximumWidth(60);
 		number_edit[i]->setValidator(new QIntValidator(0, 99999, number_edit[i]));
 	}
 	QLabel* name_label = new QLabel(tr("Name:"));
@@ -60,7 +63,10 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* pare
 	
 	preview_map = new Map();
 	preview_map->copyColorsFrom(map);
-	createPreviewMap();
+	
+	//createPreviewMap();
+	PointSymbolEditorWidget* point_sybol_editor = createPointSymbolEditor();
+	
 	preview_widget = new MainWindow(false);
 	MapEditorController* controller = new MapEditorController((symbol->getType() == Symbol::Point) ? MapEditorController::PointSymbolEditor : MapEditorController::SymbolPreview, preview_map);
 	preview_widget->setController(controller);
@@ -103,6 +109,7 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* pare
 	QHBoxLayout* layout = new QHBoxLayout();
 	layout->addLayout(left_layout);
 	layout->addWidget(preview_widget, 1);
+	layout->addWidget(point_sybol_editor);
 	setLayout(layout);
 	
 	for (int i = 0; i < Symbol::number_components; ++i)
@@ -158,7 +165,7 @@ void SymbolSettingDialog::helperSymbolClicked(bool checked)
 	symbol->setIsHelperSymbol(checked);
 }
 
-void SymbolSettingDialog::createPreviewMap()
+/*void SymbolSettingDialog::createPreviewMap()
 {
 	if (symbol->getType() == Symbol::Point)
 		createPointSymbolEditor(reinterpret_cast<PointSymbol*>(symbol));
@@ -167,6 +174,19 @@ void SymbolSettingDialog::createPointSymbolEditor(PointSymbol* point)
 {
 	PointObject* object = new PointObject(preview_map, MapCoord(0, 0), point);
 	preview_map->addObject(object);
+}*/
+PointSymbolEditorWidget* SymbolSettingDialog::createPointSymbolEditor()
+{
+	if (symbol->getType() == Symbol::Point)
+	{
+		PointSymbol* point = reinterpret_cast<PointSymbol*>(symbol);
+		std::vector<PointSymbol*> point_vector;
+		point_vector.push_back(point);
+		return new PointSymbolEditorWidget(preview_map, point_vector);
+	}
+	
+	assert(false);
+	return NULL;
 }
 
 void SymbolSettingDialog::updateNumberEdits()

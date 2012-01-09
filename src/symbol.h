@@ -38,9 +38,8 @@ class Object;
 
 /// Base class for map symbols.
 /// Provides among other things a symbol number consisting of multiple parts, e.g. "2.4.12". Parts which are not set are assigned the value -1.
-class Symbol : public QObject
+class Symbol
 {
-Q_OBJECT
 public:
 	enum Type
 	{
@@ -52,11 +51,11 @@ public:
 	};
 	
 	/// Constructs an empty symbol
-	Symbol();
+	Symbol(Type type);
 	virtual ~Symbol() {}
 	
 	/// Returns the type of the symbol.
-	virtual Type getType() = 0;
+	inline Type getType() {return type;}
 	
 	/// Saving and loading
 	void save(QFile* file, Map* map);
@@ -65,6 +64,9 @@ public:
 	/// Creates renderables to display one specific instance of this symbol defined by the given object and coordinates
 	/// (NOTE: do not use the object's coordinates as the given coordinates can be an updated, transformed version of them!)
 	virtual void createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output) = 0;
+	
+	/// Called by the map in which the symbol is to notify it of a color being deleted (pointer becomes invalid, indices change)
+	virtual void colorDeleted(int pos, MapColor* color) {}
 	
 	// Getters / Setters
 	inline const QString& getName() const {return name;}
@@ -87,6 +89,7 @@ protected:
 	/// Must be overridden to load type-specific symbol properties. See saveImpl()
 	virtual void loadImpl(QFile* file, Map* map) = 0;
 	
+	Type type;
 	QString name;
 	int number[number_components];
 	QString description;
