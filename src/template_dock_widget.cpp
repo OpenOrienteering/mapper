@@ -182,7 +182,7 @@ void TemplateWidget::addTemplateAt(Template* new_template, int pos)
 Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapView* main_view)
 {
 	// TODO: save directory
-	QString path = QFileDialog::getOpenFileName(dialog_parent, tr("Open image, laserscan, GPS track or sketch ..."), QString(), tr("All files (*.*)"));
+	QString path = QFileDialog::getOpenFileName(dialog_parent, tr("Open image or GPS track ..."), QString(), tr("All files (*.*)"));
 	path = QFileInfo(path).canonicalFilePath();
 	if (path.isEmpty())
 		return NULL;

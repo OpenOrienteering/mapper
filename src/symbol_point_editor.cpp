@@ -30,6 +30,7 @@
 #include "map_color.h"
 #include "object.h"
 #include "util.h"
+#include "map_widget.h"
 
 PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, std::vector< PointSymbol* > symbols, QWidget* parent) : QWidget(parent), map(map)
 {
@@ -247,6 +248,62 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, std::vector< PointSym
 	
 	element_list->setCurrentRow(0);
 	elementChanged(0);
+}
+
+bool PointSymbolEditorWidget::changeCurrentCoordinate(MapCoordF new_coord)
+{
+	Object* object = getCurrentElementObject();
+	if (object == getMidpointObject())
+		return false;
+	
+	if (object->getType() == Object::Point)
+	{
+		PointObject* point = reinterpret_cast<PointObject*>(object);
+		MapCoord coord = point->getPosition();
+		coord.setX(new_coord.getX());
+		coord.setY(new_coord.getY());
+		point->setPosition(coord);
+	}
+	else
+	{
+		int row = coords_table->currentRow();
+		if (row < 0)
+			return false;
+		assert(object->getType() == Object::Path);
+		assert(row < object->getCoordinateCount());
+		PathObject* path = reinterpret_cast<PathObject*>(object);
+		MapCoord coord = path->getCoordinate(row);
+		coord.setX(new_coord.getX());
+		coord.setY(new_coord.getY());
+		path->setCoordinate(row, coord);
+	}
+	
+	updateCoordsTable();
+	getMidpointObject()->update(true);
+	return true;
+}
+bool PointSymbolEditorWidget::addCoordinate(MapCoordF new_coord)
+{
+	Object* object = getCurrentElementObject();
+	if (object == getMidpointObject())
+		return false;
+	
+	if (object->getType() == Object::Point)
+		return changeCurrentCoordinate(new_coord);
+	assert(object->getType() == Object::Path);
+	PathObject* path = reinterpret_cast<PathObject*>(object);
+	
+	int row = coords_table->currentRow();
+	if (row < 0)
+		row = coords_table->rowCount();
+	else
+		++row;
+	
+	path->addCoordinate(row, new_coord.toMapCoord());
+	
+	updateCoordsTable();
+	getMidpointObject()->update(true);
+	return true;
 }
 
 void PointSymbolEditorWidget::updateElementList()
@@ -624,6 +681,70 @@ Symbol* PointSymbolEditorWidget::getCurrentElementSymbol()
 		return current_symbol->getElementSymbol(element_list->currentRow() - 1);
 	else
 		return current_symbol;
+}
+
+// ### PointSymbolEditorTool ###
+
+QCursor* PointSymbolEditorTool::cursor = NULL;
+
+PointSymbolEditorTool::PointSymbolEditorTool(MapEditorController* editor, PointSymbolEditorWidget* widget): MapEditorTool(editor)
+{
+	this->widget = widget;
+	
+	if (!cursor)
+		cursor = new QCursor(QPixmap("images/cursor-crosshair.png"), 11, 11);
+}
+void PointSymbolEditorTool::init()
+{
+    setStatusBarText(tr("<b>Click</b> to add a coordinate, <b>Ctrl+Click</b> to change the selected coordinate"));
+}
+bool PointSymbolEditorTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+{
+	if (event->button() == Qt::LeftButton)
+	{
+		if (event->modifiers() & Qt::CTRL)
+			this->widget->changeCurrentCoordinate(map_coord);
+		else
+			this->widget->addCoordinate(map_coord);
+		return true;
+	}
+	return false;
+}
+
+// ### PointSymbolEditorActivity ###
+
+const int PointSymbolEditorActivity::cross_radius = 5;
+
+PointSymbolEditorActivity::PointSymbolEditorActivity(Map* map, PointSymbolEditorWidget* widget): MapEditorActivity(), map(map), widget(widget)
+{
+}
+void PointSymbolEditorActivity::init()
+{
+	QRectF rect = QRectF(widget->symbol_info[0].origin_x, widget->symbol_info[0].origin_y, 0, 0);
+	for (int i = 1; i < (int)widget->symbol_info.size(); ++i)
+		rectInclude(rect, QPointF(widget->symbol_info[i].origin_x, widget->symbol_info[i].origin_y));
+	
+    map->setActivityBoundingBox(rect, cross_radius + 1);
+}
+void PointSymbolEditorActivity::draw(QPainter* painter, MapWidget* widget)
+{
+    for (int i = 0; i < (int)this->widget->symbol_info.size(); ++i)
+	{
+		PointSymbolEditorWidget::SymbolInfo& info = this->widget->symbol_info[i];
+		QPointF midpoint = widget->mapToViewport(MapCoordF(info.origin_x, info.origin_y));
+		
+		QPen pen = QPen(Qt::white);
+		pen.setWidth(3);
+		painter->setPen(pen);
+		painter->drawLine(midpoint + QPointF(0, -cross_radius), midpoint + QPointF(0, cross_radius));
+		painter->drawLine(midpoint + QPointF(-cross_radius, 0), midpoint + QPointF(cross_radius, 0));
+		
+		pen.setWidth(0);
+		pen.setColor(Qt::black);
+		painter->setPen(pen);
+		painter->drawLine(midpoint + QPointF(0, -cross_radius), midpoint + QPointF(0, cross_radius));
+		painter->drawLine(midpoint + QPointF(-cross_radius, 0), midpoint + QPointF(cross_radius, 0));
+	}
 }
 
 #include "symbol_point_editor.moc"

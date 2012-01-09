@@ -103,6 +103,10 @@ Map::~Map()
 	for (int i = 0; i < size; ++i)
 		delete layers[i];
 	
+	/*size = views.size();
+	for (int i = size; i >= 0; --i)
+		delete views[i];*/
+	
 	delete gps_projection_parameters;
 }
 
@@ -485,6 +489,23 @@ void Map::updateAllMapWidgets()
 		widgets[i]->updateEverything();
 }
 
+/*void Map::addMapView(MapView* view)
+{
+	views.push_back(view);
+}
+void Map::removeMapView(MapView* view)
+{
+	for (int i = 0; i < (int)views.size(); ++i)
+	{
+		if (views[i] == view)
+		{
+			views.erase(views.begin() + i);
+			return;
+		}
+	}
+	assert(false);
+}*/
+
 void Map::setDrawingBoundingBox(QRectF map_coords_rect, int pixel_border, bool do_update)
 {
 	for (int i = 0; i < (int)widgets.size(); ++i)
@@ -810,9 +831,13 @@ MapView::MapView(Map* map) : map(map)
 	view_x = 0;
 	view_y = 0;
 	update();
+	
+	//map->addMapView(this);
 }
 MapView::~MapView()
 {
+	//map->removeMapView(this);
+	
 	foreach (TemplateVisibility* vis, template_visibilities)
 		delete vis;
 }

@@ -45,6 +45,9 @@ public:
     virtual QRectF getExtent();
 	virtual bool canBeDrawnOnto() {return true;}
 	
+	/// Calculates the image's center of gravity in template coordinates by iterating over all pixels, leaving out the pixels with background_color.
+	QPointF calcCenterOfGravity(QRgb background_color);
+	
 	virtual double getTemplateFinalScaleX() const;
 	virtual double getTemplateFinalScaleY() const;
 	

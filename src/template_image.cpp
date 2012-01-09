@@ -81,6 +81,35 @@ QRectF TemplateImage::getExtent()
 	return QRectF(-pixmap->width() * 0.5, -pixmap->height() * 0.5, pixmap->width(), pixmap->height());
 }
 
+QPointF TemplateImage::calcCenterOfGravity(QRgb background_color)
+{
+	QImage image = pixmap->toImage();
+	
+	int num_points = 0;
+	QPointF center = QPointF(0, 0);
+	int width = image.width();
+	int height = image.height();
+	
+	for (int x = 0; x < width; ++x)
+	{
+		for (int y = 0; y < height; ++y)
+		{
+			QRgb pixel = image.pixel(x, y);
+			if (qAlpha(pixel) < 127 || pixel == background_color)
+				continue;
+			
+			center += QPointF(x, y);
+			++num_points;
+		}
+	}
+	
+	if (num_points > 0)
+		center = QPointF(center.x() / num_points, center.y() / num_points);
+	center -= QPointF(pixmap->width() * 0.5 - 0.5, pixmap->height() * 0.5 - 0.5);
+	
+	return center;
+}
+
 double TemplateImage::getTemplateFinalScaleX() const
 {
 	return cur_trans.template_scale_x * 1000 / map->getScaleDenominator();

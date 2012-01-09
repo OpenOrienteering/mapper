@@ -22,6 +22,7 @@
 #define _OPENORIENTEERING_SYMBOL_POINT_EDITOR_H_
 
 #include <QWidget>
+#include "map_editor.h"
 
 QT_BEGIN_NAMESPACE
 class QComboBox;
@@ -43,8 +44,12 @@ class Map;
 class PointSymbolEditorWidget : public QWidget
 {
 Q_OBJECT
+friend class PointSymbolEditorActivity;
 public:
 	PointSymbolEditorWidget(Map* map, std::vector< PointSymbol* > symbols, QWidget* parent = 0);
+	
+	bool changeCurrentCoordinate(MapCoordF new_coord);	// returns if successful
+	bool addCoordinate(MapCoordF new_coord);				// returns if successful
 	
 private slots:
 	void updateElementList();
@@ -123,6 +128,37 @@ private:
 	
 	bool react_to_changes;
 	Map* map;
+};
+
+class PointSymbolEditorTool : public MapEditorTool
+{
+Q_OBJECT
+public:
+	PointSymbolEditorTool(MapEditorController* editor, PointSymbolEditorWidget* widget);
+	
+    virtual void init();
+    virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+    virtual QCursor* getCursor() {return cursor;};
+	
+	static QCursor* cursor;
+	
+private:
+	PointSymbolEditorWidget* widget;
+};
+
+class PointSymbolEditorActivity : public MapEditorActivity
+{
+public:
+	PointSymbolEditorActivity(Map* map, PointSymbolEditorWidget* widget);
+	
+    virtual void init();
+    virtual void draw(QPainter* painter, MapWidget* widget);
+	
+private:
+	Map* map;
+	PointSymbolEditorWidget* widget;
+	
+	static const int cross_radius;
 };
 
 #endif

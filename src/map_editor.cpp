@@ -469,12 +469,12 @@ void MapEditorController::updatePaintOnTemplateAction()
 
 void MapEditorController::templateAdded(int pos, Template* temp)
 {
-	if (temp->canBeDrawnOnto())
+	if (mode == MapEditor && temp->canBeDrawnOnto())
 		updatePaintOnTemplateAction();
 }
 void MapEditorController::templateDeleted(int pos, Template* temp)
 {
-	if (temp->canBeDrawnOnto())
+	if (mode == MapEditor && temp->canBeDrawnOnto())
 		updatePaintOnTemplateAction();
 }
 

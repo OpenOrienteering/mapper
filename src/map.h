@@ -39,8 +39,7 @@ QT_END_NAMESPACE
 
 class MapColor;
 class MapWidget;
-class MapCoord;
-class MapCoordF;
+class MapView;
 class Symbol;
 class Template;
 class Object;
@@ -95,6 +94,11 @@ public:
 	void removeMapWidget(MapWidget* widget);
 	/// Redraws all map widgets completely - that can be slow!
 	void updateAllMapWidgets();
+	
+	/// MapViews register themselves using this method (and deregister using removeMapView()).
+	/// If there are map views left when the map is destructed, it will delete them
+	/*void addMapView(MapView* view);
+	void removeMapView(MapView* view);*/
 	
 	// Current drawing
 	
@@ -191,6 +195,7 @@ private:
 	typedef std::vector<Template*> TemplateVector;
 	typedef std::vector<MapLayer*> LayerVector;
 	typedef std::vector<MapWidget*> WidgetVector;
+	typedef std::vector<MapView*> ViewVector;
 	typedef std::multimap<RenderStates, Renderable*> Renderables;
 	
 	void checkIfFirstColorAdded();
@@ -206,6 +211,7 @@ private:
 	LayerVector layers;
 	MapLayer* current_layer;
 	WidgetVector widgets;
+	ViewVector views;
 	Renderables renderables;
 	
 	bool gps_projection_params_set;	// have the parameters been set (are they valid)?

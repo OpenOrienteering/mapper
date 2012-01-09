@@ -27,9 +27,12 @@ QT_BEGIN_NAMESPACE
 class QLineEdit;
 class QTextEdit;
 class QCheckBox;
+class QLabel;
+class QToolButton;
 QT_END_NAMESPACE
 
 class Map;
+class MapView;
 class Symbol;
 class MainWindow;
 class PointSymbol;
@@ -40,6 +43,7 @@ class SymbolSettingDialog : public QDialog
 Q_OBJECT
 public:
 	SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* parent);
+    virtual ~SymbolSettingDialog();
 	
 	void updatePreview();
 	
@@ -48,6 +52,10 @@ protected slots:
 	void nameChanged(QString text);
 	void descriptionChanged();
 	void helperSymbolClicked(bool checked);
+	
+	void loadTemplateClicked();
+	void centerTemplateBBox();
+	void centerTemplateGravity();
 	
 private:
 	//void createPreviewMap();
@@ -67,6 +75,10 @@ private:
 	
 	MainWindow* preview_widget;
 	Map* preview_map;
+	MapView* preview_map_view;
+	
+	QLabel* template_file_label;
+	QToolButton* center_template_button;
 	
 	QPushButton* ok_button;
 };

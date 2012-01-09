@@ -30,6 +30,9 @@
 #include "object.h"
 #include "map_widget.h"
 #include "symbol_point_editor.h"
+#include "template_dock_widget.h"
+#include "template.h"
+#include "template_image.h"
 
 SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
@@ -63,15 +66,56 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* pare
 	
 	preview_map = new Map();
 	preview_map->copyColorsFrom(map);
+	preview_map->setScaleDenominator(map->getScaleDenominator());
 	
 	//createPreviewMap();
-	PointSymbolEditorWidget* point_sybol_editor = createPointSymbolEditor();
 	
 	preview_widget = new MainWindow(false);
 	MapEditorController* controller = new MapEditorController((symbol->getType() == Symbol::Point) ? MapEditorController::PointSymbolEditor : MapEditorController::SymbolPreview, preview_map);
 	preview_widget->setController(controller);
-	MapView* map_view = controller->getMainWidget()->getMapView();
-	map_view->setZoom(8 * map_view->getZoom());
+	preview_map_view = controller->getMainWidget()->getMapView();
+	preview_map_view->setZoom(8 * preview_map_view->getZoom());
+	
+	PointSymbolEditorWidget* point_sybol_editor = createPointSymbolEditor();
+	controller->setTool(new PointSymbolEditorTool(controller, point_sybol_editor));
+	controller->setEditorActivity(new PointSymbolEditorActivity(preview_map, point_sybol_editor));
+	
+	QVBoxLayout* middle_layout = NULL;
+	if (symbol->getType() == Symbol::Point)
+	{
+		QLabel* template_label = new QLabel(tr("<b>Template</b>: "));
+		template_file_label = new QLabel(tr("(none)"));
+		QPushButton* load_template_button = new QPushButton(tr("Open..."));
+		
+		center_template_button = new QToolButton();
+		center_template_button->setText(tr("Center template..."));
+		center_template_button->setToolButtonStyle(Qt::ToolButtonTextOnly);
+		center_template_button->setPopupMode(QToolButton::InstantPopup);
+		center_template_button->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
+		QMenu* center_template_menu = new QMenu(center_template_button);
+		center_template_menu->addAction(tr("bounding box on origin"), this, SLOT(centerTemplateBBox()));
+		center_template_menu->addAction(tr("center of gravity on origin"), this, SLOT(centerTemplateGravity()));
+		center_template_button->setMenu(center_template_menu);
+		
+		center_template_button->setEnabled(false);
+		
+		QHBoxLayout* template_layout = new QHBoxLayout();
+		template_layout->addWidget(template_label);
+		template_layout->addWidget(template_file_label, 1);
+		template_layout->addWidget(load_template_button);
+		template_layout->addWidget(center_template_button);
+		
+		middle_layout = new QVBoxLayout();
+		middle_layout->addWidget(preview_widget);
+		middle_layout->addLayout(template_layout);
+		
+		connect(load_template_button, SIGNAL(clicked(bool)), this, SLOT(loadTemplateClicked()));
+	}
+	else
+	{
+		template_file_label = NULL;
+		center_template_button = NULL;
+	}
 	
 	QHBoxLayout* number_layout = new QHBoxLayout();
 	number_layout->addWidget(number_label);
@@ -108,7 +152,10 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* pare
 	
 	QHBoxLayout* layout = new QHBoxLayout();
 	layout->addLayout(left_layout);
-	layout->addWidget(preview_widget, 1);
+	if (middle_layout)
+		layout->addLayout(middle_layout);
+	else
+		layout->addWidget(preview_widget, 1);
 	layout->addWidget(point_sybol_editor);
 	setLayout(layout);
 	
@@ -123,6 +170,9 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* pare
 	updateNumberEdits();
 	updateOkButton();
 	updateWindowTitle();
+}
+SymbolSettingDialog::~SymbolSettingDialog()
+{
 }
 
 void SymbolSettingDialog::updatePreview()
@@ -163,6 +213,61 @@ void SymbolSettingDialog::descriptionChanged()
 void SymbolSettingDialog::helperSymbolClicked(bool checked)
 {
 	symbol->setIsHelperSymbol(checked);
+}
+
+void SymbolSettingDialog::loadTemplateClicked()
+{
+	Template* temp = TemplateWidget::showOpenTemplateDialog(this, preview_map_view);
+	if (!temp)
+		return;
+	
+	if (preview_map->getNumTemplates() > 0)
+	{
+		// Delete old template
+		preview_map->setTemplateAreaDirty(0);
+		preview_map->deleteTemplate(0);
+	}
+	
+	preview_map->setFirstFrontTemplate(1);
+	
+	preview_map->addTemplate(temp, 0);
+	TemplateVisibility* vis = preview_map_view->getTemplateVisibility(temp);
+	vis->visible = true;
+	vis->opacity = 1;
+	preview_map->setTemplateAreaDirty(0);
+	
+	template_file_label->setText(temp->getTemplateFilename());
+	center_template_button->setEnabled(temp->getTemplateType().compare("TemplateImage") == 0);
+}
+void SymbolSettingDialog::centerTemplateBBox()
+{
+	assert(preview_map->getNumTemplates() == 1);
+	Template* temp = preview_map->getTemplate(0);
+	
+	QRectF extent = temp->getExtent();
+	QPointF center = extent.center();
+	MapCoordF map_center_current = temp->templateToMap(center);
+	
+	preview_map->setTemplateAreaDirty(0);
+	temp->setTemplateX(temp->getTemplateX() - qRound64(1000 * map_center_current.getX()));
+	temp->setTemplateY(temp->getTemplateY() - qRound64(1000 * map_center_current.getY()));
+	preview_map->setTemplateAreaDirty(0);
+}
+void SymbolSettingDialog::centerTemplateGravity()
+{
+	assert(preview_map->getNumTemplates() == 1);
+	Template* temp = preview_map->getTemplate(0);
+	TemplateImage* image = reinterpret_cast<TemplateImage*>(temp);
+	
+	QColor background_color = QColorDialog::getColor(Qt::white, this, tr("Select background color"));
+	if (!background_color.isValid())
+		return;
+	MapCoordF map_center_current = temp->templateToMap(image->calcCenterOfGravity(background_color.rgb()));
+	
+	preview_map->setTemplateAreaDirty(0);
+	temp->setTemplateX(temp->getTemplateX() - qRound64(1000 * map_center_current.getX()));
+	temp->setTemplateY(temp->getTemplateY() - qRound64(1000 * map_center_current.getY()));
+	preview_map->setTemplateAreaDirty(0);
 }
 
 /*void SymbolSettingDialog::createPreviewMap()
