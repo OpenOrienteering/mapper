@@ -30,52 +30,208 @@
 
 // ### SymbolRenderWidget ###
 
-SymbolRenderWidget::SymbolRenderWidget(QScrollBar* scroll_bar, SymbolWidget* parent) : QWidget(parent), scroll_bar(scroll_bar)
+SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolWidget* parent) : QWidget(parent), scroll_bar(scroll_bar), symbol_widget(parent), map(map)
 {
+	current_symbol_index = -1;
+	hover_symbol_index = -1;
+	
+	last_drop_row = -1;
+	last_drop_pos = -1;
+	
 	setAttribute(Qt::WA_OpaquePaintEvent);
 	setAutoFillBackground(false);
 	setMouseTracking(true);
 	setFocusPolicy(Qt::ClickFocus);
+	setAcceptDrops(true);
 	
 	context_menu = new QMenu(this);
 	
-	QMenu* new_menu = new QMenu(tr("New"), context_menu);
-	/*QAction* new_point_action =*/ new_menu->addAction(tr("Point symbol"), parent, SLOT(newPointSymbol()));
-	QAction* new_line_action = new_menu->addAction(tr("Line symbol"));
+	QMenu* new_menu = new QMenu(tr("New symbol"), context_menu);
+	/*QAction* new_point_action =*/ new_menu->addAction(tr("Point"), this, SLOT(newPointSymbol()));
+	QAction* new_line_action = new_menu->addAction(tr("Line"));
 	new_line_action->setEnabled(false);
-	QAction* new_area_action = new_menu->addAction(tr("Area symbol"));
+	QAction* new_area_action = new_menu->addAction(tr("Area"));
 	new_area_action->setEnabled(false);
-	QAction* new_text_action = new_menu->addAction(tr("Text symbol"));
+	QAction* new_text_action = new_menu->addAction(tr("Text"));
 	new_text_action->setEnabled(false);
-	QAction* new_combined_action = new_menu->addAction(tr("Combined symbol"));
+	QAction* new_combined_action = new_menu->addAction(tr("Combined"));
 	new_combined_action->setEnabled(false);
-	
 	context_menu->addMenu(new_menu);
-	/*QAction* duplicate_action =*/ context_menu->addAction(tr("Duplicate"), parent, SLOT(duplicateSymbol()));
-	/*QAction* delete_action =*/ context_menu->addAction(tr("Delete"), parent, SLOT(deleteSymbol()));
+	
+	edit_action = context_menu->addAction(tr("Edit"), this, SLOT(editSymbol()));
+	context_menu->addSeparator();
+	duplicate_action = context_menu->addAction(tr("Duplicate"), this, SLOT(duplicateSymbol()));
+	delete_action = context_menu->addAction(tr("Delete"), this, SLOT(deleteSymbols()));
+	context_menu->addSeparator();
+	
+	QMenu* select_menu = new QMenu(tr("Select"), context_menu);
+	select_menu->addAction(tr("All"), this, SLOT(selectAll()));
+	select_menu->addAction(tr("Invert"), this, SLOT(invertSelection()));
+	context_menu->addMenu(select_menu);
 }
 
 bool SymbolRenderWidget::scrollBarNeeded(int width, int height)
 {
-	// TODO
+	int icons_per_row, num_rows;
+	getRowInfo(width, height, icons_per_row, num_rows);
 	
-	return false;
+	return (num_rows * Symbol::icon_size) > height;
 }
 void SymbolRenderWidget::setScrollBar(QScrollBar* new_scroll_bar)
 {
-	// TODO
+	if (scroll_bar)
+		disconnect(scroll_bar, SIGNAL(valueChanged(int)), this, SLOT(setScroll(int)));
+	else
+		new_scroll_bar->setValue(0);
 	
 	scroll_bar = new_scroll_bar;
+	updateScrollRange();
+	
+	if (scroll_bar)
+		connect(scroll_bar, SIGNAL(valueChanged(int)), this, SLOT(setScroll(int)));
 }
 
 void SymbolRenderWidget::setScroll(int new_scroll)
 {
-	// TODO
+	update();
+}
+
+void SymbolRenderWidget::selectSingleSymbol(int i)
+{
+	updateSelectedIcons();
+	selected_symbols.clear();
+	if (i >= 0)
+	{
+		selected_symbols.insert(i);
+		updateIcon(i);
+	}
+}
+bool SymbolRenderWidget::isSymbolSelected(int i)
+{
+	return selected_symbols.find(i) != selected_symbols.end();
+}
+int SymbolRenderWidget::getNumSelectedSymbols()
+{
+	return (int)selected_symbols.size();
 }
 
 void SymbolRenderWidget::mouseMove(int x, int y)
 {
-
+	int i = getSymbolIndexAt(x, y);
+	
+	if (i != hover_symbol_index)
+	{
+		updateIcon(hover_symbol_index);
+		hover_symbol_index = i;
+		updateIcon(hover_symbol_index);
+		
+		if (hover_symbol_index >= 0)
+		{
+			Symbol* symbol = map->getSymbol(hover_symbol_index);
+			if (SymbolToolTip::getCurrentTipSymbol() != symbol)
+				SymbolToolTip::showTip(QRect(mapToGlobal(getIconRect(hover_symbol_index).topLeft()), QSize(Symbol::icon_size, Symbol::icon_size)), symbol, this);
+		}
+		else
+			SymbolToolTip::hideTip();
+	}
+}
+int SymbolRenderWidget::getSymbolIndexAt(int x, int y)
+{
+	int icons_per_row, num_rows;
+	getRowInfo(width(), height(), icons_per_row, num_rows);
+	int scroll = scroll_bar ? scroll_bar->value() : 0;
+	
+	int icon_in_row = floor(x / (float)Symbol::icon_size);
+	if (icon_in_row >= icons_per_row)
+		return -1;
+	int i = icon_in_row + icons_per_row * floor((y + scroll) / (float)Symbol::icon_size);
+	if (i >= map->getNumSymbols())
+		return -1;
+	
+	return i;
+}
+QRect SymbolRenderWidget::getIconRect(int i)
+{
+	if (i < 0)
+		return QRect();
+	int icons_per_row, num_rows;
+	getRowInfo(width(), height(), icons_per_row, num_rows);
+	int scroll = scroll_bar ? scroll_bar->value() : 0;
+	
+	int x = i % icons_per_row;
+	int y = i / icons_per_row;
+	return QRect(x * Symbol::icon_size, y * Symbol::icon_size - scroll, Symbol::icon_size, Symbol::icon_size);
+}
+void SymbolRenderWidget::updateIcon(int i)
+{
+	if (i < 0)
+		return;
+	update(getIconRect(i));
+}
+void SymbolRenderWidget::updateSelectedIcons()
+{
+	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+		updateIcon(*it);
+}
+void SymbolRenderWidget::getRowInfo(int width, int height, int& icons_per_row, int& num_rows)
+{
+	icons_per_row = qMax(1, qRound(width / (float)Symbol::icon_size));
+	num_rows = ceil(map->getNumSymbols() / (float)icons_per_row);
+}
+bool SymbolRenderWidget::getDropPosition(QPoint pos, int& row, int& pos_in_row)
+{
+	int icons_per_row, num_rows;
+	getRowInfo(width(), height(), icons_per_row, num_rows);
+	int scroll = scroll_bar ? scroll_bar->value() : 0;
+	
+	row = floor((pos.y() + scroll) / (float)Symbol::icon_size);
+	if (row >= num_rows)
+	{
+		row = -1;
+		pos_in_row = -1;
+		return false;
+	}
+	
+	pos_in_row = floor((pos.x() + Symbol::icon_size / 2) / (float)Symbol::icon_size);
+	if (pos_in_row > icons_per_row)
+		pos_in_row = icons_per_row;
+	
+	int global_pos = row * icons_per_row + pos_in_row;
+	if (global_pos > map->getNumSymbols())
+	{
+		row = -1;
+		pos_in_row = -1;
+		return false;
+	}
+	
+	return true;
+}
+QRect SymbolRenderWidget::getDragIndicatorRect(int row, int pos_in_row)
+{
+	const int rect_width = 3;
+	
+	int icons_per_row, num_rows;
+	getRowInfo(width(), height(), icons_per_row, num_rows);
+	int scroll = scroll_bar ? scroll_bar->value() : 0;
+	
+	return QRect(pos_in_row * Symbol::icon_size - rect_width / 2 - 1, row * Symbol::icon_size - scroll - 1, rect_width, Symbol::icon_size + 2);
+}
+void SymbolRenderWidget::updateScrollRange()
+{
+	if (!scroll_bar)
+		return;
+	int icons_per_row, num_rows;
+	getRowInfo(width(), height(), icons_per_row, num_rows);
+	
+	int pixels_too_much = qMax(0, (num_rows * Symbol::icon_size) - height());
+	if (pixels_too_much > 0)
+	{
+		scroll_bar->setEnabled(true);
+		scroll_bar->setMinimum(0);
+		scroll_bar->setMaximum(pixels_too_much);
+	}
+	else
+		scroll_bar->setEnabled(false);
 }
 
 void SymbolRenderWidget::paintEvent(QPaintEvent* event)
@@ -86,32 +242,161 @@ void SymbolRenderWidget::paintEvent(QPaintEvent* event)
 	QRect rect = event->rect().intersected(QRect(0, 0, width(), height()));
 	painter.setClipRect(rect);
 	
+	// White background
 	painter.fillRect(rect, Qt::white);
-	// TODO
+	
+	// Cells
+	painter.setPen(Qt::gray);
+	
+	int icons_per_row, num_rows;
+	getRowInfo(width(), height(), icons_per_row, num_rows);
+	
+	int scroll = scroll_bar ? scroll_bar->value() : 0;
+	int x = 0;
+	int y = floor(scroll / (float)Symbol::icon_size);
+	for (int i = icons_per_row * y; i < map->getNumSymbols(); ++i)
+	{
+		QImage* icon = map->getSymbol(i)->getIcon(map);
+		
+		QPoint corner(x * Symbol::icon_size, y * Symbol::icon_size - scroll);
+		painter.drawImage(corner, *icon);
+		
+		if (i == hover_symbol_index || isSymbolSelected(i))
+		{
+			painter.setPen(Qt::white);
+			painter.drawRect(corner.x() + 1, corner.y() + 1, Symbol::icon_size - 4, Symbol::icon_size - 4);
+			
+			QPen pen(isSymbolSelected(i) ? qRgb(12, 0, 255) : qRgb(255, 150, 0));
+			painter.setPen(pen);
+			painter.drawRect(corner.x() + 0, corner.y() + 0, Symbol::icon_size - 2, Symbol::icon_size - 2);
+			
+			if (i == current_symbol_index && isSymbolSelected(i))
+			{
+				QPen pen(Qt::white);
+				pen.setStyle(Qt::DotLine);
+				painter.setPen(pen);
+				painter.drawRect(corner.x() + 0, corner.y() + 0, Symbol::icon_size - 2, Symbol::icon_size - 2);
+			}
+			
+			painter.setPen(Qt::gray);
+		}
+		
+		painter.drawLine(corner + QPoint(0, Symbol::icon_size - 1), corner + QPoint(Symbol::icon_size - 1, Symbol::icon_size - 1));
+		painter.drawLine(corner + QPoint(Symbol::icon_size - 1, 0), corner + QPoint(Symbol::icon_size - 1, Symbol::icon_size - 2));
+		
+		++x;
+		if (x >= icons_per_row)
+		{
+			x = 0;
+			++y;
+			if (y * Symbol::icon_size - scroll >= height())
+				break;
+		}
+	}
+	
+	// Drop indicator?
+	if (last_drop_pos >= 0 && last_drop_row >= 0)
+	{
+		QRect drop_rect = getDragIndicatorRect(last_drop_row, last_drop_pos);
+		painter.setPen(qRgb(255, 150, 0));
+		painter.setBrush(Qt::NoBrush);
+		painter.drawRect(drop_rect.left(), drop_rect.top(), drop_rect.width() - 1, drop_rect.height() - 1);
+	}
 	
 	painter.end();
 }
+void SymbolRenderWidget::resizeEvent(QResizeEvent* event)
+{
+    updateScrollRange();
+}
 void SymbolRenderWidget::mouseMoveEvent(QMouseEvent* event)
 {
-	mouseMove(event->x(), event->y());
+	if (event->buttons() & Qt::LeftButton && current_symbol_index >= 0)
+	{
+		if ((event->pos() - last_click_pos).manhattanLength() < QApplication::startDragDistance())
+			return;
+		
+		SymbolToolTip::hideTip();
+		
+		QDrag* drag = new QDrag(this);
+		QMimeData* mime_data = new QMimeData();
+		
+		QByteArray data;
+		data.append((const char*)&current_symbol_index, sizeof(int));
+		mime_data->setData("openorienteering/symbol", data);
+		drag->setMimeData(mime_data);
+		
+		drag->exec(Qt::MoveAction);
+	}
+	else if (event->button() == Qt::NoButton)
+		mouseMove(event->x(), event->y());
 	event->accept();
 }
 void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 {
-	// TODO: set "current symbol"
+	updateIcon(current_symbol_index);
+	current_symbol_index = getSymbolIndexAt(event->x(), event->y());
+	updateIcon(current_symbol_index);
+	
+	if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton)
+	{
+		if (event->modifiers() & Qt::ShiftModifier)
+		{
+			if (current_symbol_index >= 0)
+			{
+				if (!isSymbolSelected(current_symbol_index))
+					selected_symbols.insert(current_symbol_index);
+				else
+					selected_symbols.erase(current_symbol_index);
+			}
+		}
+		else
+		{
+			if (!isSymbolSelected(current_symbol_index) && !(event->button() == Qt::RightButton && current_symbol_index < 0))
+				selectSingleSymbol(current_symbol_index);
+		}
+	}
 	
 	if (event->button() == Qt::RightButton)
 	{
+		bool have_selection = getNumSelectedSymbols() > 0;
+		bool single_selection = getNumSelectedSymbols() == 1 && current_symbol_index >= 0;
+		
+		edit_action->setEnabled(single_selection);
+		duplicate_action->setEnabled(single_selection);
+		delete_action->setEnabled(have_selection);
+		
 		context_menu->popup(event->globalPos());
 		event->accept();
 	}
+	else if (event->button() == Qt::LeftButton && current_symbol_index >= 0 && !(event->modifiers() & Qt::ShiftModifier))
+	{
+		last_click_pos = event->pos();
+		last_drop_pos = -1;
+		last_drop_row = -1;
+	}
+}
+void SymbolRenderWidget::mouseDoubleClickEvent(QMouseEvent* event)
+{
+    int i = getSymbolIndexAt(event->x(), event->y());
+	if (i < 0)
+		return;
 	
-	// event->modifiers() & Qt::ShiftModifier
-	// TODO
+	updateIcon(current_symbol_index);
+	current_symbol_index = i;
+	updateIcon(current_symbol_index);
+	editSymbol();
+}
+void SymbolRenderWidget::enterEvent(QEvent* event)
+{
+	setFocus();
 }
 void SymbolRenderWidget::leaveEvent(QEvent* event)
 {
-	// TODO
+	updateIcon(hover_symbol_index);
+	hover_symbol_index = -1;
+	
+	SymbolToolTip::hideTip();
 }
 void SymbolRenderWidget::wheelEvent(QWheelEvent* event)
 {
@@ -125,6 +410,155 @@ void SymbolRenderWidget::wheelEvent(QWheelEvent* event)
 	QWidget::wheelEvent(event);
 }
 
+void SymbolRenderWidget::dragEnterEvent(QDragEnterEvent* event)
+{
+	if (event->mimeData()->hasFormat("openorienteering/symbol"))
+		event->acceptProposedAction();
+}
+void SymbolRenderWidget::dragMoveEvent(QDragMoveEvent* event)
+{
+	if (event->mimeData()->hasFormat("openorienteering/symbol"))
+	{
+		int row, pos_in_row;
+		if (!getDropPosition(event->pos(), row, pos_in_row))
+		{
+			if (last_drop_pos >= 0 && last_drop_row >= 0)
+			{
+				update(getDragIndicatorRect(last_drop_row, last_drop_pos));
+				last_drop_pos = -1;
+				last_drop_row = -1;
+			}
+			return;
+		}
+		
+		if (row != last_drop_row || pos_in_row != last_drop_pos)
+		{
+			if (last_drop_row >= 0 && last_drop_pos >= 0)
+				update(getDragIndicatorRect(last_drop_row, last_drop_pos));
+			
+			last_drop_row = row;
+			last_drop_pos = pos_in_row;
+			
+			if (last_drop_row >= 0 && last_drop_pos >= 0)
+				update(getDragIndicatorRect(last_drop_row, last_drop_pos));
+		}
+		
+		event->acceptProposedAction();
+	}
+}
+void SymbolRenderWidget::dropEvent(QDropEvent* event)
+{
+	last_drop_row = -1;
+	last_drop_pos = -1;
+	
+	if (event->source() != this || current_symbol_index < 0)
+		return;
+	
+	if (event->proposedAction() == Qt::MoveAction)
+	{
+		int row, pos_in_row;
+		if (!getDropPosition(event->pos(), row, pos_in_row))
+			return;
+		
+		int icons_per_row, num_rows;
+		getRowInfo(width(), height(), icons_per_row, num_rows);
+		
+		int pos = row * icons_per_row + pos_in_row;
+		if (pos == current_symbol_index)
+			return;
+		
+		event->acceptProposedAction();
+		
+		map->moveSymbol(current_symbol_index, pos);
+		if (pos > current_symbol_index)
+			--pos;
+		current_symbol_index = pos;
+		selectSingleSymbol(pos);
+		update();
+	}
+}
+
+void SymbolRenderWidget::newPointSymbol()
+{
+	newSymbol(new PointSymbol());
+}
+void SymbolRenderWidget::editSymbol()
+{
+	assert(current_symbol_index >= 0);
+	
+	Symbol* edit_symbol = map->getSymbol(current_symbol_index)->duplicate();
+
+	SymbolSettingDialog dialog(edit_symbol, map, this);
+	dialog.setWindowModality(Qt::WindowModal);
+	if (dialog.exec() == QDialog::Rejected)
+	{
+		delete edit_symbol;
+		return;
+	}
+	
+	edit_symbol->getIcon(map, true);
+	map->setSymbol(edit_symbol, current_symbol_index);
+	updateIcon(current_symbol_index);
+	
+	map->setSymbolsDirty();
+}
+void SymbolRenderWidget::deleteSymbols()
+{
+	for (std::set<int>::const_reverse_iterator it = selected_symbols.rbegin(); it != selected_symbols.rend(); ++it)
+		map->deleteSymbol(*it);
+	selected_symbols.clear();
+	update();
+	
+	symbol_widget->adjustSize();
+	map->setSymbolsDirty();
+}
+void SymbolRenderWidget::duplicateSymbol()
+{
+	assert(current_symbol_index >= 0);
+	
+	map->addSymbol(map->getSymbol(current_symbol_index)->duplicate(), current_symbol_index + 1);
+	selectSingleSymbol(current_symbol_index + 1);
+	
+	symbol_widget->adjustSize();
+	map->setSymbolsDirty();
+}
+void SymbolRenderWidget::selectAll()
+{
+	for (int i = 0; i < map->getNumSymbols(); ++i)
+		selected_symbols.insert(i);
+	update();
+}
+void SymbolRenderWidget::invertSelection()
+{
+	std::set<int> new_set;
+	for (int i = 0; i < map->getNumSymbols(); ++i)
+	{
+		if (!isSymbolSelected(i))
+			new_set.insert(i);
+	}
+	selected_symbols = new_set;
+	update();
+}
+
+bool SymbolRenderWidget::newSymbol(Symbol* new_symbol)
+{
+	SymbolSettingDialog dialog(new_symbol, map, this);
+	dialog.setWindowModality(Qt::WindowModal);
+	if (dialog.exec() == QDialog::Rejected)
+	{
+		delete new_symbol;
+		return false;
+	}
+	
+	int pos = currentSymbolIndex();
+	map->addSymbol(new_symbol, (pos >= 0) ? pos : map->getNumSymbols());
+	selectSingleSymbol(pos);
+	
+	symbol_widget->adjustSize();
+	map->setSymbolsDirty();
+	return true;
+}
+
 // ### SymbolWidget ###
 
 SymbolWidget::SymbolWidget(Map* map, QWidget* parent): QWidget(parent), map(map)
@@ -134,7 +568,9 @@ SymbolWidget::SymbolWidget(Map* map, QWidget* parent): QWidget(parent), map(map)
 	scroll_bar = new QScrollBar();
 	scroll_bar->hide();
 	scroll_bar->setOrientation(Qt::Vertical);
-	render_widget = new SymbolRenderWidget(scroll_bar, this);
+	scroll_bar->setSingleStep(Symbol::icon_size);
+	scroll_bar->setPageStep(3 * Symbol::icon_size);
+	render_widget = new SymbolRenderWidget(map, scroll_bar, this);
 	
 	// Load settings
 	QSettings settings;
@@ -149,9 +585,6 @@ SymbolWidget::SymbolWidget(Map* map, QWidget* parent): QWidget(parent), map(map)
 	layout->addWidget(render_widget, 1);
 	layout->addWidget(scroll_bar);
 	setLayout(layout);
-	
-	// Connections
-	connect(scroll_bar, SIGNAL(valueChanged(int)), render_widget, SLOT(setScroll(int)));
 }
 SymbolWidget::~SymbolWidget()
 {
@@ -166,13 +599,10 @@ QSize SymbolWidget::sizeHint() const
 	return preferred_size;
 }
 
-void SymbolWidget::resizeEvent(QResizeEvent* event)
+void SymbolWidget::adjustSize(int width, int height)
 {
-	if (no_resize_handling)
-		return;
-	
-	int width = event->size().width();
-	int height = event->size().height();
+	if (width < 0) width = this->width();
+	if (height < 0) height = this->height();
 	
 	// Do we need a scroll bar?
 	bool scroll_needed = render_widget->scrollBarNeeded(width, height);
@@ -187,56 +617,151 @@ void SymbolWidget::resizeEvent(QResizeEvent* event)
 		render_widget->setScrollBar(scroll_bar);
 	}
 	
-	// TODO
-	int new_width = 200;
+	// Determine optimal width
+	int new_width;
+	if (scroll_needed)
+	{
+		int icons_in_row = floor(width / (float)Symbol::icon_size);
+		new_width = icons_in_row * Symbol::icon_size + scroll_bar->width();
+	}
+	else
+		new_width = width;
+	
 	no_resize_handling = true;
 	resize(new_width, height);
 	no_resize_handling = false;
-/*
- width = renderWindow->width();
- 
- rest = width % symbolEntryWidth;
- if (rest == 0)
-	 return;
- 
- width -= rest;
- if (rest >= symbolEntryWidth/2)
-	 width += symbolEntryWidth;
- 
- if (scrollBar->isVisible())
-	 width += scrollBar->width();
- 
- noResizeHandling = true;
- preferredSize.setWidth(width);
- resize(width, height);
-*/
+}
+
+void SymbolWidget::resizeEvent(QResizeEvent* event)
+{
+	if (no_resize_handling)
+		return;
+	
+	adjustSize(event->size().width(), event->size().height());
 	
     event->accept();
 }
-
-void SymbolWidget::newPointSymbol()
+void SymbolWidget::keyPressEvent(QKeyEvent* event)
 {
-	PointSymbol* new_symbol = new PointSymbol();
+    if (event->key() == Qt::Key_F1 && SymbolToolTip::getTip() != NULL)
+		SymbolToolTip::getTip()->showDescription();
+}
+
+// ### SymbolToolTip ###
+
+SymbolToolTip* SymbolToolTip::tooltip = NULL;
+
+SymbolToolTip::SymbolToolTip(Symbol* symbol, QRect icon_rect, QWidget* parent) : QWidget(parent), symbol(symbol), icon_rect(icon_rect)
+{
+	setWindowFlags(Qt::ToolTip | Qt::FramelessWindowHint);
+	setAttribute(Qt::WA_OpaquePaintEvent);
 	
-	SymbolSettingDialog dialog(new_symbol, map, this);
-	dialog.setWindowModality(Qt::WindowModal);
-	if (dialog.exec() == QDialog::Rejected)
+	QPalette text_palette;
+	text_palette.setColor(QPalette::WindowText, qRgb(0, 0, 0));
+	
+	QLabel* upper_label = new QLabel(symbol->getNumberAsString() + " <b>" + symbol->getName() + "</b>");
+	upper_label->setPalette(text_palette);
+	help_label = NULL;
+	help_shown = false;
+	if (!symbol->getDescription().isEmpty())
+	{
+		help_label = new QLabel("<i>" + tr("Press F1 to view the description") + "</i>");
+		help_label->setPalette(text_palette);
+		//help_label->setMaximumWidth(500);
+		help_label->setWordWrap(true);
+	}
+
+	QVBoxLayout* layout = new QVBoxLayout();
+	layout->setContentsMargins(4, 4, 4, 4);	// NOTE: Tried to getContentsMargins() and set to half of that, but this returned zero
+	layout->addWidget(upper_label);
+	if (help_label)
+		layout->addWidget(help_label);
+	setLayout(layout);
+}
+void SymbolToolTip::showDescription()
+{
+	if (!help_label || help_shown)
 		return;
 	
-	map->addSymbol(new_symbol, 0); //render_widget->getCurrentSymbolIndex()); TODO
-	render_widget->update();
+	help_label->setText(symbol->getDescription());
+	adjustSize();
+	setPosition();
+	help_shown = true;
 }
-void SymbolWidget::deleteSymbol()
+
+void SymbolToolTip::enterEvent(QEvent* event)
 {
-	// TODO
-	
-	map->setSymbolsDirty();
+    hideTip();
 }
-void SymbolWidget::duplicateSymbol()
+void SymbolToolTip::paintEvent(QPaintEvent* event)
 {
-	// TODO
+	QPainter painter(this);
 	
-	map->setSymbolsDirty();
+	painter.setPen(Qt::gray);
+	painter.setBrush(Qt::white);
+	
+	QRect rect(0, 0, width() - 1, height() - 1);
+	painter.drawRect(rect);
+	
+	painter.end();
+}
+
+void SymbolToolTip::setPosition()
+{
+	QSize size = this->size();
+	QRect desktop = QApplication::desktop()->screenGeometry(QCursor::pos());
+	
+	const int margin = 3;
+	const bool hasRoomToLeft  = (icon_rect.left()   - size.width()  - margin >= desktop.left());
+	const bool hasRoomToRight = (icon_rect.right()  + size.width()  + margin <= desktop.right());
+	const bool hasRoomAbove   = (icon_rect.top()    - size.height() - margin >= desktop.top());
+	const bool hasRoomBelow   = (icon_rect.bottom() + size.height() + margin <= desktop.bottom());
+	if (!hasRoomAbove && !hasRoomBelow && !hasRoomToLeft && !hasRoomToRight) {
+		return;
+	}
+	
+	int x = 0;
+	int y = 0;
+	
+	if (hasRoomBelow || hasRoomAbove) {
+		y = hasRoomBelow ? icon_rect.bottom() + margin : icon_rect.top() - size.height() - margin;
+		x = qMin(qMax(desktop.left() + margin, icon_rect.center().x() - size.width() / 2), desktop.right() - size.width() - margin);
+	} else {
+		assert(hasRoomToLeft || hasRoomToRight);
+		x = hasRoomToRight ? icon_rect.right() + margin : icon_rect.left() - size.width() - margin;
+		y = qMin(qMax(desktop.top() + margin, icon_rect.center().y() - size.height() / 2), desktop.bottom() - size.height() - margin);
+	}
+	
+	move(QPoint(x, y));
+}
+
+void SymbolToolTip::showTip(QRect rect, Symbol* symbol, QWidget* parent)
+{
+	hideTip();
+	
+	tooltip = new SymbolToolTip(symbol, rect, parent);
+	tooltip->adjustSize();
+	tooltip->setPosition();
+	tooltip->show();
+}
+void SymbolToolTip::hideTip()
+{
+	if (tooltip)
+	{
+		tooltip->hide();
+		tooltip->deleteLater();
+		tooltip = NULL;
+	}
+}
+SymbolToolTip* SymbolToolTip::getTip()
+{
+	return tooltip;
+}
+Symbol* SymbolToolTip::getCurrentTipSymbol()
+{
+	if (!tooltip)
+		return NULL;
+	return tooltip->symbol;
 }
 
 #include "symbol_dock_widget.moc"

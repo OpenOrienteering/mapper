@@ -45,6 +45,30 @@ PointSymbol::~PointSymbol()
 		delete symbols[i];
 	}
 }
+Symbol* PointSymbol::duplicate()
+{
+	PointSymbol* new_point = new PointSymbol();
+	new_point->duplicateImplCommon(this);
+	
+	new_point->rotatable = rotatable;
+	new_point->inner_radius = inner_radius;
+	new_point->inner_color = inner_color;
+	new_point->outer_width = outer_width;
+	new_point->outer_color = outer_color;
+	
+	new_point->symbols.resize(symbols.size());
+	for (int i = 0; i < (int)symbols.size(); ++i)
+		new_point->symbols[i] = symbols[i]->duplicate();
+	
+	new_point->objects.resize(objects.size());
+	for (int i = 0; i < (int)objects.size(); ++i)
+	{
+		new_point->objects[i] = objects[i]->duplicate();
+		new_point->objects[i]->setSymbol(new_point->symbols[i]);
+	}
+	
+	return new_point;
+}
 
 void PointSymbol::createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output)
 {
@@ -145,22 +169,27 @@ void PointSymbol::saveImpl(QFile* file, Map* map)
 	file->write((const char*)&num_elements, sizeof(int));
 	for (int i = 0; i < num_elements; ++i)
 	{
+		int save_type = static_cast<int>(symbols[i]->getType());
+		file->write((const char*)&save_type, sizeof(int));
 		symbols[i]->save(file, map);
+		
+		save_type = static_cast<int>(objects[i]->getType());
+		file->write((const char*)&save_type, sizeof(int));
 		objects[i]->save(file);
 	}
 }
-void PointSymbol::loadImpl(QFile* file, Map* map)
+bool PointSymbol::loadImpl(QFile* file, Map* map)
 {
 	file->read((char*)&rotatable, sizeof(bool));
 	
 	file->read((char*)&inner_radius, sizeof(int));
 	int temp;
 	file->read((char*)&temp, sizeof(int));
-	inner_color = map->getColor(temp);
+	inner_color = (temp >= 0) ? map->getColor(temp) : NULL;
 	
 	file->read((char*)&outer_width, sizeof(int));
 	file->read((char*)&temp, sizeof(int));
-	outer_color = map->getColor(temp);
+	outer_color = (temp >= 0) ? map->getColor(temp) : NULL;
 	
 	int num_elements;
 	file->read((char*)&num_elements, sizeof(int));
@@ -168,9 +197,22 @@ void PointSymbol::loadImpl(QFile* file, Map* map)
 	symbols.resize(num_elements);
 	for (int i = 0; i < num_elements; ++i)
 	{
-		symbols[i]->load(file, map);
+		int save_type;
+		file->read((char*)&save_type, sizeof(int));
+		symbols[i] = Symbol::getSymbolForType(static_cast<Symbol::Type>(save_type));
+		if (!symbols[i])
+			return false;
+		if (!symbols[i]->load(file, map))
+			return false;
+		
+		file->read((char*)&save_type, sizeof(int));
+		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), NULL, symbols[i]);
+		if (!objects[i])
+			return false;
 		objects[i]->load(file);
 	}
+	
+	return true;
 }
 
 // ### PointSymbolSettings ###

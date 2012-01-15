@@ -49,6 +49,7 @@ void DotRenderable::getRenderStates(RenderStates& out)
 	PointSymbol* point = reinterpret_cast<PointSymbol*>(symbol);
 	
 	out.color_priority = point->getInnerColor()->priority;
+	assert(out.color_priority < 3000);
 	out.mode = RenderStates::BrushOnly;
 	out.pen_width = 0;
 	out.clip_path = clip_path;
@@ -79,6 +80,7 @@ void CircleRenderable::getRenderStates(RenderStates& out)
 	PointSymbol* point = reinterpret_cast<PointSymbol*>(symbol);
 	
 	out.color_priority = point->getOuterColor()->priority;
+	assert(out.color_priority < 3000);
 	out.mode = RenderStates::PenOnly;
 	out.pen_width = line_width;
 	out.clip_path = clip_path;

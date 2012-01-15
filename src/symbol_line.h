@@ -46,6 +46,7 @@ public:
 	/// Constructs an empty point symbol
 	LineSymbol();
 	virtual ~LineSymbol();
+    virtual Symbol* duplicate();
 	
 	virtual void createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output);
 	virtual void colorDeleted(int pos, MapColor* color);
@@ -63,7 +64,7 @@ public:
 	
 protected:
 	virtual void saveImpl(QFile* file, Map* map);
-	virtual void loadImpl(QFile* file, Map* map);
+	virtual bool loadImpl(QFile* file, Map* map);
 	
 	int line_width;		// in 1/1000 mm
 	MapColor* color;

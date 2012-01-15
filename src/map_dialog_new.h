@@ -28,6 +28,7 @@
 QT_BEGIN_NAMESPACE
 class QComboBox;
 class QListWidget;
+class QListWidgetItem;
 QT_END_NAMESPACE
 
 class NewMapDialog : public QDialog
@@ -42,6 +43,7 @@ public:
 public slots:
 	void createClicked();
     void scaleChanged(QString new_text);
+    void symbolSetDoubleClicked(QListWidgetItem* item);
 	
 private:
 	void loadSymbolSetMap();

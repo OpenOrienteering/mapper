@@ -21,42 +21,92 @@
 #ifndef _OPENORIENTEERING_SYMBOL_DOCK_WIDGET_H_
 #define _OPENORIENTEERING_SYMBOL_DOCK_WIDGET_H_
 
+#include <set>
+
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE
 class QScrollBar;
 class QHBoxLayout;
 class QMenu;
+class QLabel;
 QT_END_NAMESPACE
 
 class Map;
+class Symbol;
 class SymbolWidget;
 
 class SymbolRenderWidget : public QWidget
 {
 Q_OBJECT
 public:
-	SymbolRenderWidget(QScrollBar* scroll_bar, SymbolWidget* parent);
+	SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolWidget* parent);
 	
 	inline bool scrollBarNeeded(int width, int height);
 	void setScrollBar(QScrollBar* new_scroll_bar);
 	
-public slots:
-	inline void setScroll(int new_scroll);
+	/// Returns the single "current" symbol (the symbol which was clicked last). Can be -1 if no symbol selected
+	inline int currentSymbolIndex() const {return current_symbol_index;}
+	
+protected slots:
+	void newPointSymbol();
+	void editSymbol();
+	void deleteSymbols();
+	void duplicateSymbol();
+	void selectAll();
+	void invertSelection();
+	
+	void setScroll(int new_scroll);
 	
 protected:
+	int current_symbol_index;
+	int hover_symbol_index;
+	std::set<int> selected_symbols;
+	
+	QPoint last_click_pos;
+	int last_drop_pos;
+	int last_drop_row;
+	
 	QScrollBar* scroll_bar;
+	SymbolWidget* symbol_widget;
 	QMenu* context_menu;
+	QAction* edit_action;
+	QAction* duplicate_action;
+	QAction* delete_action;
+	
+	Map* map;
+	
+	void selectSingleSymbol(int i);
+	bool isSymbolSelected(int i);
+	int getNumSelectedSymbols();
+	
+	bool newSymbol(Symbol* new_symbol);
 	
 	void mouseMove(int x, int y);
+	int getSymbolIndexAt(int x, int y);
+	QRect getIconRect(int i);
+	void updateIcon(int i);
+	void updateSelectedIcons();
+	void getRowInfo(int width, int height, int& icons_per_row, int& num_rows);
+	bool getDropPosition(QPoint pos, int& row, int& pos_in_row);
+	QRect getDragIndicatorRect(int row, int pos_in_row);
+	void updateScrollRange();
 	
 	virtual void paintEvent(QPaintEvent* event);
+    virtual void resizeEvent(QResizeEvent* event);
     virtual void mouseMoveEvent(QMouseEvent* event);
     virtual void mousePressEvent(QMouseEvent* event);
+    virtual void mouseDoubleClickEvent(QMouseEvent* event);
+    virtual void enterEvent(QEvent* event);
     virtual void leaveEvent(QEvent* event);
     virtual void wheelEvent(QWheelEvent* event);
+	
+    virtual void dragEnterEvent(QDragEnterEvent* event);
+    virtual void dragMoveEvent(QDragMoveEvent* event);
+    virtual void dropEvent(QDropEvent* event);
 };
 
+/// Combines SymbolRenderWidget and a scroll bar to a symbol widget
 class SymbolWidget : public QWidget
 {
 Q_OBJECT
@@ -64,15 +114,13 @@ public:
 	SymbolWidget(Map* map, QWidget* parent = NULL);
 	virtual ~SymbolWidget();
 	
+	void adjustSize(int width = -1, int height = -1);
+	
     virtual QSize sizeHint() const;
 	
 protected:
     virtual void resizeEvent(QResizeEvent* event);
-	
-protected slots:
-	void newPointSymbol();
-	void deleteSymbol();
-	void duplicateSymbol();
+    virtual void keyPressEvent(QKeyEvent* event);
 	
 private:
 	SymbolRenderWidget* render_widget;
@@ -83,6 +131,33 @@ private:
 	QSize preferred_size;
 	
 	Map* map;
+};
+
+class SymbolToolTip : public QWidget
+{
+Q_OBJECT
+public:
+	SymbolToolTip(Symbol* symbol, QRect icon_rect, QWidget* parent);
+	void showDescription();
+	
+	static void showTip(QRect rect, Symbol* symbol, QWidget* parent);
+	static void hideTip();
+	static SymbolToolTip* getTip();
+	static Symbol* getCurrentTipSymbol();
+	
+protected:
+    virtual void enterEvent(QEvent* event);
+    virtual void paintEvent(QPaintEvent* event);
+	
+private:
+	void setPosition();
+	
+	bool help_shown;
+	QLabel* help_label;
+	Symbol* symbol;
+	QRect icon_rect;
+	
+	static SymbolToolTip* tooltip;
 };
 
 #endif

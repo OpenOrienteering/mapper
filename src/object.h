@@ -49,6 +49,7 @@ public:
 	/// Creates an empty object
 	Object(Map* map, Type type, Symbol* symbol = NULL);
 	virtual ~Object();
+	virtual Object* duplicate() = 0;
 	
 	/// Returns the object type determined by the subclass
 	inline Type getType() {return type;}
@@ -84,6 +85,8 @@ public:
 	
 	inline Map* getMap() const {return map;}
 	
+	static Object* getObjectForType(Type type, Map* map, Symbol* symbol = NULL);
+	
 protected:
 	/// Removes all output of the object. It will be re-generated the next time update() is called
 	void clearOutput();
@@ -104,6 +107,7 @@ class PathObject : public Object
 {
 public:
 	PathObject(Map* map, Symbol* symbol = NULL);
+    virtual Object* duplicate();
 	
 	inline void setCoordinate(int pos, MapCoord c) {coords[pos] = c;}
 	inline void addCoordinate(int pos, MapCoord c) {coords.insert(coords.begin() + pos, c);}
@@ -115,6 +119,7 @@ class PointObject : public Object
 {
 public:
 	PointObject(Map* map, MapCoord position, Symbol* symbol = NULL);
+    virtual Object* duplicate();
 	
 	void setPosition(MapCoord position);
 	MapCoord getPosition();

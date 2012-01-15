@@ -37,6 +37,7 @@ class QFile;
 class QPainter;
 QT_END_NAMESPACE
 
+class Map;
 class MapColor;
 class MapWidget;
 class MapView;
@@ -51,6 +52,9 @@ class MapLayer
 public:
 	MapLayer(const QString& name);
 	~MapLayer();
+	
+	void save(QFile* file, Map* map);
+	bool load(QFile* file, Map* map);
 	
 	inline const QString& getName() const {return name;}
 	inline void setName(const QString new_name) {name = new_name;}
@@ -113,16 +117,16 @@ public:
 	
 	// Colors
 	
-	inline int getNumColors() const {return (int)colors.size();}
-	inline MapColor* getColor(int i) {return colors[i];}
+	inline int getNumColors() const {return (int)color_set->colors.size();}
+	inline MapColor* getColor(int i) {return color_set->colors[i];}
 	void setColor(MapColor* color, int pos);
 	MapColor* addColor(int pos);
 	void addColor(MapColor* color, int pos);
 	void deleteColor(int pos);
-	int findColorIndex(MapColor* color);
+	int findColorIndex(MapColor* color);	// returns -1 if not found
 	void setColorsDirty();
 	
-	void copyColorsFrom(Map* map);
+	void useColorsFrom(Map* map);
 	
 	// Symbols
 	
@@ -130,6 +134,7 @@ public:
 	inline Symbol* getSymbol(int i) {return symbols[i];}
 	void setSymbol(Symbol* symbol, int pos);
 	void addSymbol(Symbol* symbol, int pos);
+	void moveSymbol(int from, int to);
 	void deleteSymbol(int pos);
 	int findSymbolIndex(Symbol* symbol);
 	void setSymbolsDirty();
@@ -151,7 +156,9 @@ public:
 	// Objects
 	
 	inline int getNumLayers() const {return (int)layers.size();}
-	inline MapLayer* getLayer(int i) {return layers[i];}
+	inline MapLayer* getLayer(int i) const {return layers[i];}
+	inline MapLayer* getCurrentLayer() const {return current_layer;}
+	int findCurrentLayerIndex() const;
 	// TODO: Layer management
 	
 	int getNumObjects();
@@ -199,13 +206,25 @@ private:
 	typedef std::vector<MapView*> ViewVector;
 	typedef std::multimap<RenderStates, Renderable*> Renderables;
 	
+	struct MapColorSet
+	{
+		ColorVector colors;
+		
+		MapColorSet();
+		void addReference();
+		void dereference();
+		
+	private:
+		int ref_count;
+	};
+	
 	void checkIfFirstColorAdded();
 	void checkIfFirstSymbolAdded();
 	void checkIfFirstTemplateAdded();
 	
 	void adjustColorPriorities(int first, int last);
 	
-	ColorVector colors;
+	MapColorSet* color_set;
 	SymbolVector symbols;
 	TemplateVector templates;
 	int first_front_template;		// index of the first template in templates which should be drawn in front of the map

@@ -482,8 +482,8 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 {
 	if (this->map)
 	{
-		disconnect(this->map, SIGNAL(templateAdded(Template*)), this, SLOT(templateAdded(Template*)));
-		disconnect(this->map, SIGNAL(templateDeleted(Template*)), this, SLOT(templateDeleted(Template*)));
+		disconnect(this->map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
+		disconnect(this->map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
 	}
 	
 	this->map = map;

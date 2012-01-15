@@ -41,9 +41,6 @@ Object::~Object()
 
 void Object::save(QFile* file)
 {
-	int i_type = (int)type;
-	file->write((const char*)&i_type, sizeof(int));
-	
 	int symbol_index = -1;
 	if (map)
 		symbol_index = map->findSymbolIndex(symbol);
@@ -57,15 +54,9 @@ void Object::save(QFile* file)
 }
 void Object::load(QFile* file)
 {
-	int i_type;
-	file->read((char*)&i_type, sizeof(int));
-	type = (Type)i_type;
-	
 	int symbol_index;
 	file->read((char*)&symbol_index, sizeof(int));
-	if (symbol_index < 0)
-		symbol = NULL;
-	else
+	if (symbol_index >= 0)
 		symbol = map->getSymbol(symbol_index);
 	
 	int num_coords;
@@ -153,11 +144,31 @@ bool Object::setSymbol(Symbol* new_symbol)
 	return true;
 }
 
+Object* Object::getObjectForType(Object::Type type, Map* map, Symbol* symbol)
+{
+	if (type == Point)
+		return new PointObject(map, MapCoord(0, 0), symbol);
+	else if (type == Path)
+		return new PathObject(map, symbol);
+	else
+	{
+		assert(false);
+		return NULL;
+	}
+}
+
 // ### PathObject ###
 
 PathObject::PathObject(Map* map, Symbol* symbol) : Object(map, Object::Path, symbol)
 {
 	assert(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
+}
+Object* PathObject::duplicate()
+{
+	PathObject* new_path = new PathObject(map, symbol);
+	new_path->coords = coords;
+	new_path->path_closed = path_closed;
+	return new_path;
 }
 
 // ### PointObject ###
@@ -168,6 +179,16 @@ PointObject::PointObject(Map* map, MapCoord position, Symbol* symbol) : Object(m
 	rotation = 0;
 	coords.push_back(position);
 }
+Object* PointObject::duplicate()
+{
+	PointObject* new_point = new PointObject(map, coords[0], symbol);
+	new_point->coords = coords;
+	new_point->path_closed = path_closed;
+	
+	new_point->rotation = rotation;
+	return new_point;
+}
+
 void PointObject::setPosition(MapCoord position)
 {
 	coords[0] = position;

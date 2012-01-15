@@ -52,14 +52,15 @@ public:
 	
 	/// Constructs an empty symbol
 	Symbol(Type type);
-	virtual ~Symbol() {}
+	virtual ~Symbol();
+	virtual Symbol* duplicate() = 0;
 	
 	/// Returns the type of the symbol.
 	inline Type getType() {return type;}
 	
 	/// Saving and loading
 	void save(QFile* file, Map* map);
-	void load(QFile* file, Map* map);
+	bool load(QFile* file, Map* map);
 	
 	/// Creates renderables to display one specific instance of this symbol defined by the given object and coordinates
 	/// (NOTE: do not use the object's coordinates as the given coordinates can be an updated, transformed version of them!)
@@ -68,10 +69,14 @@ public:
 	/// Called by the map in which the symbol is to notify it of a color being deleted (pointer becomes invalid, indices change)
 	virtual void colorDeleted(int pos, MapColor* color) {}
 	
+	/// Returns the symbol's icon, creates it if it was not created yet. update == true forces an update of the icon.
+	QImage* getIcon(Map* map, bool update = false);
+	
 	// Getters / Setters
 	inline const QString& getName() const {return name;}
 	inline void setName(const QString& new_name) {name = new_name;}
 	
+	QString getNumberAsString();
 	inline int getNumberComponent(int i) const {assert(i >= 0 && i < number_components); return number[i];}
 	inline void setNumberComponent(int i, int new_number) {assert(i >= 0 && i < number_components); number[i] = new_number;}
 	
@@ -81,19 +86,27 @@ public:
 	inline bool isHelperSymbol() const {return is_helper_symbol;}
 	inline void setIsHelperSymbol(bool value) {is_helper_symbol = value;}
 	
+	// Static
+	static Symbol* getSymbolForType(Type type);
+	
 	static const int number_components = 3;
+	static const int icon_size = 32;
 	
 protected:
 	/// Must be overridden to save type-specific symbol properties. The map pointer can be used to get persistent indices to any pointers on map data
 	virtual void saveImpl(QFile* file, Map* map) = 0;
 	/// Must be overridden to load type-specific symbol properties. See saveImpl()
-	virtual void loadImpl(QFile* file, Map* map) = 0;
+	virtual bool loadImpl(QFile* file, Map* map) = 0;
+	
+	/// Duplicates properties which are common for all symbols from other to this object
+	void duplicateImplCommon(Symbol* other);
 	
 	Type type;
 	QString name;
 	int number[number_components];
 	QString description;
 	bool is_helper_symbol;
+	QImage* icon;
 };
 
 #endif

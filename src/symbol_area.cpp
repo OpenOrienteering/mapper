@@ -31,6 +31,13 @@ AreaSymbol::AreaSymbol() : Symbol(Symbol::Area)
 AreaSymbol::~AreaSymbol()
 {
 }
+Symbol* AreaSymbol::duplicate()
+{
+	AreaSymbol* new_area = new AreaSymbol();
+	new_area->duplicateImplCommon(this);
+	new_area->color = color;
+	return new_area;
+}
 
 void AreaSymbol::createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output)
 {
@@ -52,9 +59,10 @@ void AreaSymbol::saveImpl(QFile* file, Map* map)
 	int temp = map->findColorIndex(color);
 	file->write((const char*)&temp, sizeof(int));
 }
-void AreaSymbol::loadImpl(QFile* file, Map* map)
+bool AreaSymbol::loadImpl(QFile* file, Map* map)
 {
 	int temp;
 	file->read((char*)&temp, sizeof(int));
-	color = map->getColor(temp);
+	color = (temp >= 0) ? map->getColor(temp) : NULL;
+	return true;
 }

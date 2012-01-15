@@ -67,6 +67,7 @@ NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMe
 		scale_combo->addItem(QString::number(it->first));
 	
 	connect(scale_combo, SIGNAL(editTextChanged(QString)), this, SLOT(scaleChanged(QString)));
+	connect(symbol_set_list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(symbolSetDoubleClicked(QListWidgetItem*)));
 	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
 	connect(create_button, SIGNAL(clicked(bool)), this, SLOT(createClicked()));
 	
@@ -121,6 +122,11 @@ void NewMapDialog::scaleChanged(QString new_text)
 		
 		symbol_set_list->setCurrentRow(0);
 	}
+}
+void NewMapDialog::symbolSetDoubleClicked(QListWidgetItem* item)
+{
+	symbol_set_list->setCurrentItem(item);
+	accept();
 }
 void NewMapDialog::createClicked()
 {

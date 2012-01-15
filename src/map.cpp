@@ -41,9 +41,42 @@ MapLayer::MapLayer(const QString& name) : name(name)
 }
 MapLayer::~MapLayer()
 {
-	int size = objects.size();
+	int size = (int)objects.size();
 	for (int i = 0; i < size; ++i)
 		delete objects[i];
+}
+void MapLayer::save(QFile* file, Map* map)
+{
+	saveString(file, name);
+	
+	int size = (int)objects.size();
+	file->write((const char*)&size, sizeof(int));
+	
+	for (int i = 0; i < size; ++i)
+	{
+		int save_type = static_cast<int>(objects[i]->getType());
+		file->write((const char*)&save_type, sizeof(int));
+		objects[i]->save(file);
+	}
+}
+bool MapLayer::load(QFile* file, Map* map)
+{
+	loadString(file, name);
+	
+	int size;
+	file->read((char*)&size, sizeof(int));
+	objects.resize(size);
+	
+	for (int i = 0; i < size; ++i)
+	{
+		int save_type;
+		file->read((char*)&save_type, sizeof(int));
+		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), map, NULL);
+		if (!objects[i])
+			return false;
+		objects[i]->load(file);
+	}
+	return true;
 }
 void MapLayer::deleteObject(int pos, bool remove_only)
 {
@@ -67,6 +100,29 @@ bool MapLayer::deleteObject(Object* object, bool remove_only)
 	return false;
 }
 
+// ### MapColorSet ###
+
+Map::MapColorSet::MapColorSet()
+{
+	ref_count = 1;
+}
+void Map::MapColorSet::addReference()
+{
+	++ref_count;
+}
+void Map::MapColorSet::dereference()
+{
+	--ref_count;
+	if (ref_count == 0)
+	{
+		int size = colors.size();
+		for (int i = 0; i < size; ++i)
+			delete colors[i];
+		
+		delete this;
+	}
+}
+
 // ### Map ###
 
 Map::Map()
@@ -75,6 +131,8 @@ Map::Map()
 	
 	layers.push_back(new MapLayer(tr("default layer")));
 	current_layer = layers[0];
+	
+	color_set = new MapColorSet();
 	
 	gps_projection_params_set = false;
 	gps_projection_parameters = new GPSProjectionParameters();
@@ -87,11 +145,7 @@ Map::Map()
 }
 Map::~Map()
 {
-	int size = colors.size();
-	for (int i = 0; i < size; ++i)
-		delete colors[i];
-	
-	size = symbols.size();
+	int size = symbols.size();
 	for (int i = 0; i < size; ++i)
 		delete symbols[i];
 	
@@ -106,6 +160,8 @@ Map::~Map()
 	/*size = views.size();
 	for (int i = size; i >= 0; --i)
 		delete views[i];*/
+	
+	color_set->dereference();
 	
 	delete gps_projection_parameters;
 }
@@ -134,12 +190,12 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 	file.write((const char*)gps_projection_parameters, sizeof(GPSProjectionParameters));
 	
 	// Write colors
-	int num_colors = (int)colors.size();
+	int num_colors = (int)color_set->colors.size();
 	file.write((const char*)&num_colors, sizeof(int));
 	
 	for (int i = 0; i < num_colors; ++i)
 	{
-		MapColor* color = colors[i];
+		MapColor* color = color_set->colors[i];
 		
 		file.write((const char*)&color->priority, sizeof(int));
 		file.write((const char*)&color->c, sizeof(float));
@@ -193,6 +249,19 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 		// TODO
 	}
 	
+	// Write layers
+	int current_layer_index = findCurrentLayerIndex();
+	file.write((const char*)&current_layer_index, sizeof(int));
+	
+	int num_layers = getNumLayers();
+	file.write((const char*)&num_layers, sizeof(int));
+	
+	for (int i = 0; i < num_layers; ++i)
+	{
+		MapLayer* layer = getLayer(i);
+		layer->save(&file, this);
+	}
+	
 	file.close();
 	
 	colors_dirty = false;
@@ -240,7 +309,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 	// Load colors
 	int num_colors;
 	file.read((char*)&num_colors, sizeof(int));
-	colors.resize(num_colors);
+	color_set->colors.resize(num_colors);
 	
 	for (int i = 0; i < num_colors; ++i)
 	{
@@ -256,7 +325,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 		
 		loadString(&file, color->name);
 		
-		colors[i] = color;
+		color_set->colors[i] = color;
 	}
 	
 	// Load symbols
@@ -269,10 +338,8 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 		int symbol_type;
 		file.read((char*)&symbol_type, sizeof(int));
 		
-		Symbol* symbol = NULL;
-		if (symbol_type == Symbol::Point)
-			symbol = new PointSymbol();
-		else
+		Symbol* symbol = Symbol::getSymbolForType(static_cast<Symbol::Type>(symbol_type));
+		if (!symbol)
 			return false;
 		
 		symbol->load(&file, this);
@@ -302,8 +369,29 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 		map_editor->loadWidgetsAndViews(&file);
 	else
 	{
-		// TODO
+		// TODO: HACK
+		MapView* main_view = new MapView(this);
+		main_view->load(&file);
+		delete main_view;
 	}
+	
+	// Load layers
+	int current_layer_index;
+	file.read((char*)&current_layer_index, sizeof(int));
+	
+	int num_layers;
+	if (file.read((char*)&num_layers, sizeof(int)) < sizeof(int))
+		return false;
+	layers.resize(num_layers);
+	
+	for (int i = 0; i < num_layers; ++i)
+	{
+		MapLayer* layer = new MapLayer("");
+		layer->load(&file, this);
+		layers[i] = layer;
+	}
+	
+	current_layer = layers[current_layer_index];
 	
 	file.close();
 	
@@ -312,12 +400,10 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 
 void Map::clear()
 {
-	int size = colors.size();
-	for (int i = 0; i < size; ++i)
-		delete colors[i];
-	colors.clear();
+	color_set->dereference();
+	color_set = new MapColorSet();
 	
-	size = symbols.size();
+	int size = symbols.size();
 	for (int i = 0; i < size; ++i)
 		delete symbols[i];
 	symbols.clear();
@@ -383,18 +469,18 @@ void Map::draw(QPainter* painter, QRectF bounding_box)
 				//if (forceMinSize && new_states.pen_width * scale <= 1.0f)
 				//	painter->setPen(QPen(r->getSymbol()->getColor()->color, 0));
 				//else
-					painter->setPen(QPen(colors[new_states.color_priority]->color, new_states.pen_width));
+					painter->setPen(QPen(color_set->colors[new_states.color_priority]->color, new_states.pen_width));
 				
 				painter->setBrush(QBrush(Qt::NoBrush));
-				painter->setOpacity(colors[new_states.color_priority]->opacity);
+				painter->setOpacity(color_set->colors[new_states.color_priority]->opacity);
 			}
 			else if (new_states.mode == RenderStates::BrushOnly)
 			{
-				QBrush brush(colors[new_states.color_priority]->color);
+				QBrush brush(color_set->colors[new_states.color_priority]->color);
 				
 				painter->setPen(QPen(Qt::NoPen));
 				painter->setBrush(brush);
-				painter->setOpacity(colors[new_states.color_priority]->opacity);
+				painter->setOpacity(color_set->colors[new_states.color_priority]->opacity);
 			}
 			
 			if (states.clip_path != new_states.clip_path)
@@ -538,7 +624,7 @@ void Map::updateDrawing(QRectF map_coords_rect, int pixel_border)
 
 void Map::setColor(MapColor* color, int pos)
 {
-	colors[pos] = color;
+	color_set->colors[pos] = color;
 	color->priority = pos;
 	
 	emit(colorChanged(pos, color));
@@ -555,26 +641,26 @@ MapColor* Map::addColor(int pos)
 	new_color->opacity = 1;
 	new_color->updateFromCMYK();
 	
-	colors.insert(colors.begin() + pos, new_color);
-	adjustColorPriorities(pos + 1, colors.size() - 1);
+	color_set->colors.insert(color_set->colors.begin() + pos, new_color);
+	adjustColorPriorities(pos + 1, color_set->colors.size() - 1);
 	checkIfFirstColorAdded();
 	emit(colorAdded(pos, new_color));
 	return new_color;
 }
 void Map::addColor(MapColor* color, int pos)
 {
-	colors.insert(colors.begin() + pos, color);
-	adjustColorPriorities(pos + 1, colors.size() - 1);
+	color_set->colors.insert(color_set->colors.begin() + pos, color);
+	adjustColorPriorities(pos + 1, color_set->colors.size() - 1);
 	checkIfFirstColorAdded();
 	emit(colorAdded(pos, color));
 	color->priority = pos;
 }
 void Map::deleteColor(int pos)
 {
-	MapColor* temp = colors[pos];
-	delete colors[pos];
-	colors.erase(colors.begin() + pos);
-	adjustColorPriorities(pos, colors.size() - 1);
+	MapColor* temp = color_set->colors[pos];
+	delete color_set->colors[pos];
+	color_set->colors.erase(color_set->colors.begin() + pos);
+	adjustColorPriorities(pos, color_set->colors.size() - 1);
 	
 	if (getNumColors() == 0)
 	{
@@ -589,13 +675,13 @@ void Map::deleteColor(int pos)
 }
 int Map::findColorIndex(MapColor* color)
 {
-	int size = (int)colors.size();
+	int size = (int)color_set->colors.size();
 	for (int i = 0; i < size; ++i)
 	{
-		if (colors[i] == color)
+		if (color_set->colors[i] == color)
 			return i;
 	}
-	assert(false);
+	return -1;
 }
 void Map::setColorsDirty()
 {
@@ -607,21 +693,18 @@ void Map::setColorsDirty()
 	colors_dirty = true;
 }
 
-void Map::copyColorsFrom(Map* map)
+void Map::useColorsFrom(Map* map)
 {
-	for (int i = getNumColors() - 1; i >= 0; --i)
-		deleteColor(i);
-	
-	colors = map->colors;
-	for (int i = getNumColors() - 1; i >= 0; --i)
-		colors[i] = new MapColor(*colors[i]);
+	color_set->dereference();
+	color_set = map->color_set;
+	color_set->addReference();
 }
 
 void Map::adjustColorPriorities(int first, int last)
 {
 	// TODO: delete or update RenderStates with these colors
 	for (int i = first; i <= last; ++i)
-		colors[i]->priority = i;
+		color_set->colors[i]->priority = i;
 }
 
 void Map::addSymbol(Symbol* symbol, int pos)
@@ -629,12 +712,24 @@ void Map::addSymbol(Symbol* symbol, int pos)
 	symbols.insert(symbols.begin() + pos, symbol);
 	checkIfFirstSymbolAdded();
 	emit(symbolAdded(pos, symbol));
+	setSymbolsDirty();
+}
+void Map::moveSymbol(int from, int to)
+{
+	symbols.insert(symbols.begin() + to, symbols[from]);
+	if (from > to)
+		++from;
+	symbols.erase(symbols.begin() + from);
+	// TODO: emit(symbolChanged(pos, symbol)); ?
+	setSymbolsDirty();
 }
 void Map::setSymbol(Symbol* symbol, int pos)
 {
+	delete symbols[pos];
 	symbols[pos] = symbol;
 	
 	emit(symbolChanged(pos, symbol));
+	setSymbolsDirty();
 }
 void Map::deleteSymbol(int pos)
 {
@@ -649,6 +744,7 @@ void Map::deleteSymbol(int pos)
 	}
 	
 	emit(symbolDeleted(pos, temp));
+	setSymbolsDirty();
 }
 int Map::findSymbolIndex(Symbol* symbol)
 {
@@ -744,6 +840,17 @@ void Map::setTemplatesDirty()
 		unsaved_changes = true;
 	}
 	templates_dirty = true;
+}
+
+int Map::findCurrentLayerIndex() const
+{
+	int size = (int)layers.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (layers[i] == current_layer)
+			return i;
+	}
+	assert(false);
 }
 
 int Map::getNumObjects()

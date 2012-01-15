@@ -34,6 +34,16 @@ LineSymbol::LineSymbol() : Symbol(Symbol::Line)
 LineSymbol::~LineSymbol()
 {
 }
+Symbol* LineSymbol::duplicate()
+{
+	LineSymbol* new_line = new LineSymbol();
+	new_line->duplicateImplCommon(this);
+	new_line->line_width = line_width;
+	new_line->color = color;
+	new_line->cap_style = cap_style;
+	new_line->join_style = join_style;
+	return new_line;
+}
 
 void LineSymbol::createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output)
 {
@@ -58,10 +68,11 @@ void LineSymbol::saveImpl(QFile* file, Map* map)
 	int temp = map->findColorIndex(color);
 	file->write((const char*)&temp, sizeof(int));
 }
-void LineSymbol::loadImpl(QFile* file, Map* map)
+bool LineSymbol::loadImpl(QFile* file, Map* map)
 {
 	file->read((char*)&line_width, sizeof(int));
 	int temp;
 	file->read((char*)&temp, sizeof(int));
-	color = map->getColor(temp);
+	color = (temp >= 0) ? map->getColor(temp) : NULL;
+	return true;
 }

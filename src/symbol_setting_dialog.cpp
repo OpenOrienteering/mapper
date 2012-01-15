@@ -54,6 +54,7 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* pare
 	QLabel* description_label = new QLabel(tr("Description:"));
 	description_edit = new QTextEdit(symbol->getDescription());
 	helper_symbol_check = new QCheckBox(tr("Helper symbol (not shown in finished map)"));
+	helper_symbol_check->setChecked(symbol->isHelperSymbol());
 	
 	QWidget* type_specific_settings;
 	Symbol::Type type = symbol->getType();
@@ -65,7 +66,7 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* pare
 	ok_button->setDefault(true);
 	
 	preview_map = new Map();
-	preview_map->copyColorsFrom(map);
+	preview_map->useColorsFrom(map);
 	preview_map->setScaleDenominator(map->getScaleDenominator());
 	
 	//createPreviewMap();
@@ -163,6 +164,7 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* pare
 		connect(number_edit[i], SIGNAL(textEdited(QString)), this, SLOT(numberChanged(QString)));
 	connect(name_edit, SIGNAL(textEdited(QString)), this, SLOT(nameChanged(QString)));
 	connect(description_edit, SIGNAL(textChanged()), this, SLOT(descriptionChanged()));
+	connect(helper_symbol_check, SIGNAL(clicked(bool)), this, SLOT(helperSymbolClicked(bool)));
 	
 	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
 	connect(ok_button, SIGNAL(clicked(bool)), this, SLOT(accept()));
