@@ -44,6 +44,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	setMouseTracking(true);
 	setFocusPolicy(Qt::ClickFocus);
 	setAcceptDrops(true);
+	setStatusTip(tr("For symbols with description, press F1 while the tooltip is visible to show it"));
 	
 	context_menu = new QMenu(this);
 	
@@ -695,29 +696,26 @@ SymbolToolTip::SymbolToolTip(Symbol* symbol, QRect icon_rect, QWidget* parent) :
 	
 	QLabel* upper_label = new QLabel(symbol->getNumberAsString() + " <b>" + symbol->getName() + "</b>");
 	upper_label->setPalette(text_palette);
-	help_label = NULL;
 	help_shown = false;
-	if (!symbol->getDescription().isEmpty())
-	{
-		help_label = new QLabel("<i>" + tr("Press F1 to view the description") + "</i>");
-		help_label->setPalette(text_palette);
-		//help_label->setMaximumWidth(500);
-		help_label->setWordWrap(true);
-	}
+
+	help_label = new QLabel("<i>" + (symbol->getDescription().isEmpty() ? tr("No description!") : symbol->getDescription()) + "</i>");
+	help_label->setPalette(text_palette);
+	//help_label->setMaximumWidth(500);
+	help_label->setWordWrap(true);
+	help_label->hide();
 
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->setContentsMargins(4, 4, 4, 4);	// NOTE: Tried to getContentsMargins() and set to half of that, but this returned zero
 	layout->addWidget(upper_label);
-	if (help_label)
-		layout->addWidget(help_label);
+	layout->addWidget(help_label);
 	setLayout(layout);
 }
 void SymbolToolTip::showDescription()
 {
-	if (!help_label || help_shown)
+	if (help_shown)
 		return;
 	
-	help_label->setText(symbol->getDescription());
+	help_label->show();
 	adjustSize();
 	setPosition();
 	help_shown = true;
