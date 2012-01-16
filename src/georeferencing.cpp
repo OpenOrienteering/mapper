@@ -540,35 +540,34 @@ GeoreferencingAddTool::GeoreferencingAddTool(MapEditorController* editor, QActio
 void GeoreferencingAddTool::init()
 {
 	// NOTE: this is called by other methods to set this text again. Change that behavior if adding stuff here
-	setStatusBarText(tr("<b>Left mouse click</b> to set the source position of the pass point"));
+	setStatusBarText(tr("<b>Click</b> to set the source position of the pass point"));
 }
 
 bool GeoreferencingAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (event->button() == Qt::LeftButton)
+	if (event->button() != Qt::LeftButton)
+		return false;
+	
+	if (!first_point_set)
 	{
-		if (!first_point_set)
-		{
-			first_point = map_coord;
-			mouse_pos = map_coord;
-			first_point_set = true;
-			setDirtyRect(map_coord);
-			
-			setStatusBarText(tr("<b>Left mouse click</b> to set the destination position of the pass point, <b>Esc</b> to abort"));
-		}
-		else
-		{
-			this->widget->addPassPoint(first_point, map_coord);
-			
-			first_point_set = false;
-			editor->getMap()->clearDrawingBoundingBox();
-			
-			init();
-		}
+		first_point = map_coord;
+		mouse_pos = map_coord;
+		first_point_set = true;
+		setDirtyRect(map_coord);
 		
-		return true;
+		setStatusBarText(tr("<b>Click</b> to set the destination position of the pass point, <b>Esc</b> to abort"));
 	}
-	return false;
+	else
+	{
+		this->widget->addPassPoint(first_point, map_coord);
+		
+		first_point_set = false;
+		editor->getMap()->clearDrawingBoundingBox();
+		
+		init();
+	}
+	
+	return true;
 }
 bool GeoreferencingAddTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
@@ -637,11 +636,14 @@ GeoreferencingMoveTool::GeoreferencingMoveTool(MapEditorController* editor, QAct
 }
 void GeoreferencingMoveTool::init()
 {
-	setStatusBarText(tr("<b>Left mouse drag</b> to move pass points"));
+	setStatusBarText(tr("<b>Drag</b> to move pass points"));
 }
 
 bool GeoreferencingMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	if (event->button() != Qt::LeftButton)
+		return false;
+	
 	bool georef = this->widget->getTemplate()->isGeoreferencingApplied();
 	
 	active_point = GeoreferencingActivity::findHoverPoint(this->widget->getTemplate(), event->pos(), widget, active_point_is_src);
@@ -754,11 +756,14 @@ GeoreferencingDeleteTool::GeoreferencingDeleteTool(MapEditorController* editor, 
 }
 void GeoreferencingDeleteTool::init()
 {
-	setStatusBarText(tr("<b>Left mouse click</b> to delete pass points"));
+	setStatusBarText(tr("<b>Click</b> to delete pass points"));
 }
 
 bool GeoreferencingDeleteTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	if (event->button() != Qt::LeftButton)
+		return false;
+	
 	bool georef = this->widget->getTemplate()->isGeoreferencingApplied();
 	
 	active_point = GeoreferencingActivity::findHoverPoint(this->widget->getTemplate(), event->pos(), widget, active_point_is_src);

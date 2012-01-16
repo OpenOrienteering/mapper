@@ -56,10 +56,17 @@ void LineSymbol::createRenderables(Object* object, const MapCoordVectorF& coords
 			output.push_back(new LineRenderable(this, coords, object->getCoordinateVector(), object->isPathClosed()));
 	}
 }
-void LineSymbol::colorDeleted(int pos, MapColor* color)
+void LineSymbol::colorDeleted(Map* map, int pos, MapColor* color)
 {
     if (color == this->color)
+	{
 		this->color = NULL;
+		getIcon(map, true);
+	}
+}
+bool LineSymbol::containsColor(MapColor* color)
+{
+	return color == this->color;
 }
 
 void LineSymbol::saveImpl(QFile* file, Map* map)

@@ -47,6 +47,8 @@ set(Mapper_SRCS
  src/georeferencing.cpp
  src/paint_on_template.cpp
 
+ src/draw_point.cpp
+
  src/gps_coordinates.cpp
  src/gps_track.cpp
 )

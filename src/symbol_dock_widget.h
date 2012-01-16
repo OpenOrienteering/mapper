@@ -45,6 +45,9 @@ public:
 	inline bool scrollBarNeeded(int width, int height);
 	void setScrollBar(QScrollBar* new_scroll_bar);
 	
+	int getNumSelectedSymbols();
+	Symbol* getSingleSelectedSymbol();
+	
 	/// Returns the single "current" symbol (the symbol which was clicked last). Can be -1 if no symbol selected
 	inline int currentSymbolIndex() const {return current_symbol_index;}
 	
@@ -78,7 +81,6 @@ protected:
 	
 	void selectSingleSymbol(int i);
 	bool isSymbolSelected(int i);
-	int getNumSelectedSymbols();
 	
 	bool newSymbol(Symbol* new_symbol);
 	
@@ -114,9 +116,17 @@ public:
 	SymbolWidget(Map* map, QWidget* parent = NULL);
 	virtual ~SymbolWidget();
 	
-	void adjustSize(int width = -1, int height = -1);
+	/// Returns the selected symbol IF EXACTLY ONE symbol is selected, otherwise returns NULL
+	Symbol* getSingleSelectedSymbol();
+	int getNumSelectedSymbols();
 	
+	void adjustSize(int width = -1, int height = -1);
     virtual QSize sizeHint() const;
+	
+	inline void emitSelectedSymbolsChanged() {emit selectedSymbolsChanged();}
+	
+signals:
+	void selectedSymbolsChanged();
 	
 protected:
     virtual void resizeEvent(QResizeEvent* event);

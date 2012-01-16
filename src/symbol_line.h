@@ -49,7 +49,8 @@ public:
     virtual Symbol* duplicate();
 	
 	virtual void createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output);
-	virtual void colorDeleted(int pos, MapColor* color);
+	virtual void colorDeleted(Map* map, int pos, MapColor* color);
+    virtual bool containsColor(MapColor* color);
 	
 	/// Returns the limit for miter joins in units of the line width.
 	/// See the Qt docs for QPainter::setMiterJoin().

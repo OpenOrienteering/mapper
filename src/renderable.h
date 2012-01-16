@@ -23,12 +23,15 @@
 
 #include <QPainter>
 
+#include <map>
+
 #include "map_coord.h"
 
 QT_BEGIN_NAMESPACE
 class QPainterPath;
 QT_END_NAMESPACE
 
+class Map;
 class Symbol;
 class PointSymbol;
 class LineSymbol;
@@ -117,6 +120,24 @@ protected:
 };
 
 typedef std::vector<Renderable*> RenderableVector;
+
+/// Container for renderables which sorts them by color priority and renders them
+class RenderableContainer
+{
+public:
+	RenderableContainer(Map* map);
+	
+	void draw(QPainter* painter, QRectF bounding_box, float opacity_factor = 1.0f);
+	
+	void removeRenderablesOfObject(Object* object, bool mark_area_as_dirty);	// NOTE: does not delete the renderables, just removes them from display
+	void insertRenderablesOfObject(Object* object);
+	
+private:
+	typedef std::multimap<RenderStates, Renderable*> Renderables;
+	
+	Renderables renderables;
+	Map* map;
+};
 
 class DotRenderable : public Renderable
 {

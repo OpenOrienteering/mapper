@@ -101,6 +101,7 @@ protected:
 	virtual void mouseMoveEvent(QMouseEvent* event);
 	virtual void mouseReleaseEvent(QMouseEvent* event);
 	virtual void wheelEvent(QWheelEvent* event);
+    virtual void leaveEvent(QEvent* event);
 	
 	// Key input
     virtual void keyPressEvent(QKeyEvent* event);

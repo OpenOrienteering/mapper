@@ -47,7 +47,7 @@ void rectInclude(QRectF& rect, QPointF point)
 	else if (point.y() > rect.bottom())
 		rect.setBottom(point.y());
 }
-void rectInclude(QRectF& rect, QRectF other_rect)
+void rectInclude(QRectF& rect, const QRectF& other_rect)
 {
 	if (other_rect.left() < rect.left())
 		rect.setLeft(other_rect.left());

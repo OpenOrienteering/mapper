@@ -68,6 +68,8 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	select_menu->addAction(tr("All"), this, SLOT(selectAll()));
 	select_menu->addAction(tr("Invert"), this, SLOT(invertSelection()));
 	context_menu->addMenu(select_menu);
+	
+	connect(map, SIGNAL(colorDeleted(int,MapColor*)), this, SLOT(update()));
 }
 
 bool SymbolRenderWidget::scrollBarNeeded(int width, int height)
@@ -91,6 +93,13 @@ void SymbolRenderWidget::setScrollBar(QScrollBar* new_scroll_bar)
 		connect(scroll_bar, SIGNAL(valueChanged(int)), this, SLOT(setScroll(int)));
 }
 
+Symbol* SymbolRenderWidget::getSingleSelectedSymbol()
+{
+	if (selected_symbols.size() != 1)
+		return NULL;
+	return map->getSymbol(*(selected_symbols.begin()));
+}
+
 void SymbolRenderWidget::setScroll(int new_scroll)
 {
 	update();
@@ -105,6 +114,7 @@ void SymbolRenderWidget::selectSingleSymbol(int i)
 		selected_symbols.insert(i);
 		updateIcon(i);
 	}
+	symbol_widget->emitSelectedSymbolsChanged();
 }
 bool SymbolRenderWidget::isSymbolSelected(int i)
 {
@@ -348,6 +358,7 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 					selected_symbols.insert(current_symbol_index);
 				else
 					selected_symbols.erase(current_symbol_index);
+				symbol_widget->emitSelectedSymbolsChanged();
 			}
 		}
 		else
@@ -505,8 +516,16 @@ void SymbolRenderWidget::editSymbol()
 void SymbolRenderWidget::deleteSymbols()
 {
 	for (std::set<int>::const_reverse_iterator it = selected_symbols.rbegin(); it != selected_symbols.rend(); ++it)
+	{
+		if (map->doObjectsExistWithSymbol(map->getSymbol(*it)))
+		{
+			if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains objects with the symbol \"%1\". Deleting it will delete those objects! Do you really want to do that?").arg(map->getSymbol(*it)->getName()), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+				continue;
+		}
 		map->deleteSymbol(*it);
+	}
 	selected_symbols.clear();
+	symbol_widget->emitSelectedSymbolsChanged();
 	update();
 	
 	symbol_widget->adjustSize();
@@ -526,6 +545,7 @@ void SymbolRenderWidget::selectAll()
 {
 	for (int i = 0; i < map->getNumSymbols(); ++i)
 		selected_symbols.insert(i);
+	symbol_widget->emitSelectedSymbolsChanged();
 	update();
 }
 void SymbolRenderWidget::invertSelection()
@@ -537,6 +557,7 @@ void SymbolRenderWidget::invertSelection()
 			new_set.insert(i);
 	}
 	selected_symbols = new_set;
+	symbol_widget->emitSelectedSymbolsChanged();
 	update();
 }
 
@@ -597,6 +618,15 @@ SymbolWidget::~SymbolWidget()
 QSize SymbolWidget::sizeHint() const
 {
 	return preferred_size;
+}
+
+Symbol* SymbolWidget::getSingleSelectedSymbol()
+{
+	return render_widget->getSingleSelectedSymbol();
+}
+int SymbolWidget::getNumSelectedSymbols()
+{
+	return render_widget->getNumSelectedSymbols();
 }
 
 void SymbolWidget::adjustSize(int width, int height)

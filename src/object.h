@@ -61,9 +61,6 @@ public:
 	/// Use force == true to force a redraw
 	bool update(bool force = false);
 	
-	/// Changes the object's symbol, returns if successful. Some conversions are impossible, for example point to line
-	bool setSymbol(Symbol* new_symbol);
-	
 	/// Returns the coordinate vector
 	inline const MapCoordVector& getCoordinateVector() const {return coords;}
 	inline int getCoordinateCount() const {return (int)coords.size();}
@@ -79,6 +76,12 @@ public:
 	
 	inline void setPathClosed(bool value = true) {path_closed = value;}
 	inline bool isPathClosed() const {return path_closed;}
+	
+	/// Changes the object's symbol, returns if successful. Some conversions are impossible, for example point to line.
+	/// Normally, this method checks if the types of the old and the new symbol are compatible. If the old symbol pointer
+	/// is no longer valid, you can use no_checks to disable this.
+	bool setSymbol(Symbol* new_symbol, bool no_checks);
+	inline Symbol* getSymbol() const {return symbol;}
 	
 	/// NOTE: The extent is only valid after update() has been called!
 	inline const QRectF& getExtent() const {return extent;}

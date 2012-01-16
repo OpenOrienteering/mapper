@@ -37,6 +37,7 @@ class MapWidget;
 class MapEditorActivity;
 class MapEditorTool;
 class EditorDockWidget;
+class SymbolWidget;
 
 class MapEditorController : public MainWindowController
 {
@@ -88,6 +89,9 @@ public slots:
 	
 	void editGPSProjectionParameters();
 	
+	void selectedSymbolsChanged();
+	void drawPointClicked(bool checked);
+	
 	void paintOnTemplateClicked(bool checked);
 	void paintOnTemplateSelectClicked();
 	
@@ -117,9 +121,12 @@ private:
 	
 	QAction* symbol_window_act;
 	EditorDockWidget* symbol_dock_widget;
+	SymbolWidget* symbol_widget;
 	
 	QAction* template_window_act;
 	EditorDockWidget* template_dock_widget;
+	
+	QAction* draw_point_act;
 	
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;

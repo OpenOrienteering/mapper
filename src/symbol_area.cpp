@@ -48,10 +48,17 @@ void AreaSymbol::createRenderables(Object* object, const MapCoordVectorF& coords
 		output.push_back(new AreaRenderable(this, coords, object->getCoordinateVector()));
 	}
 }
-void AreaSymbol::colorDeleted(int pos, MapColor* color)
+void AreaSymbol::colorDeleted(Map* map, int pos, MapColor* color)
 {
     if (color == this->color)
+	{
 		this->color = NULL;
+		getIcon(map, true);
+	}
+}
+bool AreaSymbol::containsColor(MapColor* color)
+{
+	return color == this->color;
 }
 
 void AreaSymbol::saveImpl(QFile* file, Map* map)

@@ -391,33 +391,33 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		
 		if (above_template_visible && above_template_cache && view->getMap()->getNumTemplates() - view->getMap()->getFirstFrontTemplate() > 0)
 			painter.drawImage(drag_offset, *above_template_cache, rect());
+	}
+	
+	// Show current drawings
+	if (activity_dirty_rect_new.isValid() || activity_dirty_rect_new_border >= 0)
+	{
+		QRect viewport_dirty_rect = calculateViewportBoundingBox(activity_dirty_rect_new, activity_dirty_rect_new_border);
 		
-		// Show current drawings
-		if (activity_dirty_rect_new.isValid() || activity_dirty_rect_new_border >= 0)
+		if (viewport_dirty_rect.intersects(event->rect()))
 		{
-			QRect viewport_dirty_rect = calculateViewportBoundingBox(activity_dirty_rect_new, activity_dirty_rect_new_border);
-			
-			if (viewport_dirty_rect.intersects(event->rect()))
-			{
-				painter.setClipRect(viewport_dirty_rect.intersected(event->rect()));
-				activity->draw(&painter, this);
-			}
-			
-			activity_dirty_rect_old = viewport_dirty_rect;
+			painter.setClipRect(viewport_dirty_rect.intersected(event->rect()));
+			activity->draw(&painter, this);
 		}
 		
-		if (drawing_dirty_rect_new.isValid() || drawing_dirty_rect_new_border >= 0)
+		activity_dirty_rect_old = viewport_dirty_rect;
+	}
+	
+	if (drawing_dirty_rect_new.isValid() || drawing_dirty_rect_new_border >= 0)
+	{
+		QRect viewport_dirty_rect = calculateViewportBoundingBox(drawing_dirty_rect_new, drawing_dirty_rect_new_border);
+		
+		if (viewport_dirty_rect.intersects(event->rect()))
 		{
-			QRect viewport_dirty_rect = calculateViewportBoundingBox(drawing_dirty_rect_new, drawing_dirty_rect_new_border);
-			
-			if (viewport_dirty_rect.intersects(event->rect()))
-			{
-				painter.setClipRect(viewport_dirty_rect.intersected(event->rect()));
-				tool->draw(&painter, this);
-			}
-			
-			drawing_dirty_rect_old = viewport_dirty_rect;
+			painter.setClipRect(viewport_dirty_rect.intersected(event->rect()));
+			tool->draw(&painter, this);
 		}
+		
+		drawing_dirty_rect_old = viewport_dirty_rect;
 	}
 	
 	painter.end();
@@ -514,12 +514,24 @@ void MapWidget::wheelEvent(QWheelEvent* event)
 			}
 			else
 				view->setZoom(view->getZoom() * 1 / (2 * -num_steps));
+			
+			// Send a mouse move event to the current tool as zooming out can move the mouse position on the map
+			if (tool)
+			{
+				QMouseEvent* mouse_event = new QMouseEvent(QEvent::HoverMove, event->pos(), Qt::NoButton, Qt::NoButton, Qt::NoModifier);
+				tool->mouseMoveEvent(mouse_event, view->viewToMapF(viewportToView(event->pos())), this);
+				delete mouse_event;
+			}
 		}
 		
 		event->accept();
 	}
 	else
 		event->ignore();
+}
+void MapWidget::leaveEvent(QEvent* event)
+{
+	clearDrawingBoundingBox();
 }
 
 void MapWidget::keyPressEvent(QKeyEvent* event)

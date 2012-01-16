@@ -22,7 +22,6 @@
 #define _OPENORIENTEERING_MAP_H_
 
 #include <vector>
-#include <map>
 
 #include <QString>
 #include <QRect>
@@ -50,7 +49,7 @@ class GPSProjectionParameters;
 class MapLayer
 {
 public:
-	MapLayer(const QString& name);
+	MapLayer(const QString& name, Map* map);
 	~MapLayer();
 	
 	void save(QFile* file, Map* map);
@@ -66,15 +65,22 @@ public:
 	inline void deleteObject(int pos, bool remove_only);
 	bool deleteObject(Object* object, bool remove_only);	// returns if the object was found
 	
+	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
+	void deleteAllObjectsWithSymbol(Symbol* symbol);
+	bool doObjectsExistWithSymbol(Symbol* symbol);
+	void forceUpdateOfAllObjects(Symbol* with_symbol = NULL);
+	
 private:
 	QString name;
 	std::vector<Object*> objects;	// TODO: this could / should be a spatial representation optimized for quick access
+	Map* map;
 };
 
 /// Central class for an OpenOrienteering map
 class Map : public QObject
 {
 Q_OBJECT
+friend class RenderableContainer;
 public:
 	/// Creates a new, empty map
 	Map();
@@ -127,6 +133,7 @@ public:
 	void setColorsDirty();
 	
 	void useColorsFrom(Map* map);
+	bool isColorUsedByASymbol(MapColor* color);
 	
 	// Symbols
 	
@@ -168,6 +175,11 @@ public:
 	
 	void setObjectAreaDirty(QRectF map_coords_rect);
 	
+	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
+	void deleteAllObjectsWithSymbol(Symbol* symbol);
+	bool doObjectsExistWithSymbol(Symbol* symbol);
+	void forceUpdateOfAllObjects(Symbol* with_symbol = NULL);					// if with_symbol == NULL, all objects are affected
+	
 	void removeRenderablesOfObject(Object* object, bool mark_area_as_dirty);	// NOTE: does not delete the renderables, just removes them from display
 	void insertRenderablesOfObject(Object* object);
 	
@@ -204,7 +216,6 @@ private:
 	typedef std::vector<MapLayer*> LayerVector;
 	typedef std::vector<MapWidget*> WidgetVector;
 	typedef std::vector<MapView*> ViewVector;
-	typedef std::multimap<RenderStates, Renderable*> Renderables;
 	
 	struct MapColorSet
 	{
@@ -232,7 +243,7 @@ private:
 	MapLayer* current_layer;
 	WidgetVector widgets;
 	ViewVector views;
-	Renderables renderables;
+	RenderableContainer renderables;
 	
 	bool gps_projection_params_set;	// have the parameters been set (are they valid)?
 	GPSProjectionParameters* gps_projection_parameters;

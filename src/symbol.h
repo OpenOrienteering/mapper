@@ -47,7 +47,9 @@ public:
 		Line = 1,
 		Area = 2,
 		Text = 3,
-		Combined = 4
+		Combined = 4,
+		
+		NoSymbol = -1
 	};
 	
 	/// Constructs an empty symbol
@@ -67,7 +69,10 @@ public:
 	virtual void createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output) = 0;
 	
 	/// Called by the map in which the symbol is to notify it of a color being deleted (pointer becomes invalid, indices change)
-	virtual void colorDeleted(int pos, MapColor* color) {}
+	virtual void colorDeleted(Map* map, int pos, MapColor* color) {}
+	
+	/// Must return if the given color is used by this symbol
+	virtual bool containsColor(MapColor* color) = 0;
 	
 	/// Returns the symbol's icon, creates it if it was not created yet. update == true forces an update of the icon.
 	QImage* getIcon(Map* map, bool update = false);

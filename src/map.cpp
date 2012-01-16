@@ -36,7 +36,7 @@
 #include "symbol_point.h"
 #include "object.h"
 
-MapLayer::MapLayer(const QString& name) : name(name)
+MapLayer::MapLayer(const QString& name, Map* map) : name(name), map(map)
 {
 }
 MapLayer::~MapLayer()
@@ -80,6 +80,7 @@ bool MapLayer::load(QFile* file, Map* map)
 }
 void MapLayer::deleteObject(int pos, bool remove_only)
 {
+	map->removeRenderablesOfObject(objects[pos], true);
 	if (!remove_only)
 		delete objects[pos];
 	objects.erase(objects.begin() + pos);
@@ -87,17 +88,60 @@ void MapLayer::deleteObject(int pos, bool remove_only)
 bool MapLayer::deleteObject(Object* object, bool remove_only)
 {
 	int size = objects.size();
-	for (int i = 0; i < size; ++i)
+	for (int i = size - 1; i >= 0; --i)
 	{
 		if (objects[i] == object)
 		{
-			if (!remove_only)
-				delete object;
-			objects.erase(objects.begin() + i);
+			deleteObject(i, remove_only);
 			return true;
 		}
 	}
 	return false;
+}
+
+void MapLayer::changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol)
+{
+	int size = objects.size();
+	for (int i = size - 1; i >= 0; --i)
+	{
+		if (objects[i]->getSymbol() != old_symbol)
+			continue;
+		
+		if (!objects[i]->setSymbol(new_symbol, false))
+			deleteObject(i, false);
+		else
+			objects[i]->update(true);
+	}
+}
+void MapLayer::deleteAllObjectsWithSymbol(Symbol* symbol)
+{
+	int size = objects.size();
+	for (int i = size - 1; i >= 0; --i)
+	{
+		if (objects[i]->getSymbol() != symbol)
+			continue;
+		
+		deleteObject(i, false);
+	}
+}
+bool MapLayer::doObjectsExistWithSymbol(Symbol* symbol)
+{
+	int size = objects.size();
+	for (int i = size - 1; i >= 0; --i)
+	{
+		if (objects[i]->getSymbol() == symbol)
+			return true;
+	}
+	return false;
+}
+void MapLayer::forceUpdateOfAllObjects(Symbol* with_symbol)
+{
+	int size = objects.size();
+	for (int i = size - 1; i >= 0; --i)
+	{
+		if (with_symbol == NULL || objects[i]->getSymbol() == with_symbol)
+			objects[i]->update(true);
+	}
 }
 
 // ### MapColorSet ###
@@ -125,11 +169,11 @@ void Map::MapColorSet::dereference()
 
 // ### Map ###
 
-Map::Map()
+Map::Map() : renderables(this)
 {
 	first_front_template = 0;
 	
-	layers.push_back(new MapLayer(tr("default layer")));
+	layers.push_back(new MapLayer(tr("default layer"), this));
 	current_layer = layers[0];
 	
 	color_set = new MapColorSet();
@@ -386,7 +430,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 	
 	for (int i = 0; i < num_layers; ++i)
 	{
-		MapLayer* layer = new MapLayer("");
+		MapLayer* layer = new MapLayer("", this);
 		layer->load(&file, this);
 		layers[i] = layer;
 	}
@@ -439,74 +483,7 @@ void Map::draw(QPainter* painter, QRectF bounding_box)
 	updateObjects();
 	
 	// The actual drawing
-	// TODO: improve performance by using some spatial acceleration structure?
-	RenderStates states;
-	states.color_priority = -1;
-	states.mode = RenderStates::Reserved;
-	states.clip_path = NULL;
-	
-	QPainterPath initial_clip = painter->clipPath();
-	bool no_initial_clip = initial_clip.isEmpty();
-	
-	painter->save();
-	for (Renderables::const_iterator it = renderables.begin(); it != renderables.end(); ++it)
-	{
-		const RenderStates& new_states = (*it).first;
-		Renderable* renderable = (*it).second;
-		
-		// Bounds check
-		const QRectF& extent = renderable->getExtent();
-		if (extent.right() < bounding_box.x())	continue;
-		if (extent.bottom() < bounding_box.y())	continue;
-		if (extent.x() > bounding_box.right())	continue;
-		if (extent.y() > bounding_box.bottom())	continue;
-		
-		// Change render states?
-		if (states != new_states)
-		{
-			if (new_states.mode == RenderStates::PenOnly)
-			{
-				//if (forceMinSize && new_states.pen_width * scale <= 1.0f)
-				//	painter->setPen(QPen(r->getSymbol()->getColor()->color, 0));
-				//else
-					painter->setPen(QPen(color_set->colors[new_states.color_priority]->color, new_states.pen_width));
-				
-				painter->setBrush(QBrush(Qt::NoBrush));
-				painter->setOpacity(color_set->colors[new_states.color_priority]->opacity);
-			}
-			else if (new_states.mode == RenderStates::BrushOnly)
-			{
-				QBrush brush(color_set->colors[new_states.color_priority]->color);
-				
-				painter->setPen(QPen(Qt::NoPen));
-				painter->setBrush(brush);
-				painter->setOpacity(color_set->colors[new_states.color_priority]->opacity);
-			}
-			
-			if (states.clip_path != new_states.clip_path)
-			{
-				if (no_initial_clip)
-				{
-					if (new_states.clip_path)
-						painter->setClipPath(*new_states.clip_path, Qt::ReplaceClip);
-					else
-						painter->setClipPath(initial_clip, Qt::NoClip);
-				}
-				else
-				{
-					painter->setClipPath(initial_clip, Qt::ReplaceClip);
-					if (new_states.clip_path)
-						painter->setClipPath(*new_states.clip_path, Qt::IntersectClip);
-				}
-			}
-			
-			states = new_states;
-		}
-		
-		// Render the renderable
-		renderable->render(*painter); //, scale, forceMinSize);
-	}
-	painter->restore();
+	renderables.draw(painter, bounding_box);
 }
 void Map::updateObjects()
 {
@@ -526,33 +503,11 @@ void Map::updateObjects()
 }
 void Map::removeRenderablesOfObject(Object* object, bool mark_area_as_dirty)
 {
-	Renderables::iterator itend = renderables.end();
-	for (Renderables::iterator it = renderables.begin(); it != itend; )
-	{
-		if ((*it).second->getCreator() == object)
-		{
-			if (mark_area_as_dirty)
-				setObjectAreaDirty((*it).second->getExtent());
-			Renderables::iterator todelete = it;
-			++it;
-			renderables.erase(todelete);
-		}
-		else
-			++it;
-	}
+	renderables.removeRenderablesOfObject(object, mark_area_as_dirty);
 }
 void Map::insertRenderablesOfObject(Object* object)
 {
-	RenderableVector::const_iterator it_end = object->endRenderables();
-	for (RenderableVector::const_iterator it = object->beginRenderables(); it != it_end; ++it)
-	{
-		Renderable* renderable = *it;
-		RenderStates render_states;
-		renderable->getRenderStates(render_states);
-		
-		if (render_states.color_priority != MapColor::Reserved)
-			renderables.insert(Renderables::value_type(render_states, renderable));	
-	}
+	renderables.insertRenderablesOfObject(object);
 }
 
 void Map::addMapWidget(MapWidget* widget)
@@ -668,10 +623,10 @@ void Map::deleteColor(int pos)
 		updateAllMapWidgets();
 	}
 	
-	emit(colorDeleted(pos, temp));
 	int size = (int)symbols.size();
 	for (int i = 0; i < size; ++i)
-		symbols[i]->colorDeleted(pos, temp);
+		symbols[i]->colorDeleted(this, pos, temp);
+	emit(colorDeleted(pos, temp));
 }
 int Map::findColorIndex(MapColor* color)
 {
@@ -699,6 +654,16 @@ void Map::useColorsFrom(Map* map)
 	color_set = map->color_set;
 	color_set->addReference();
 }
+bool Map::isColorUsedByASymbol(MapColor* color)
+{
+	int size = (int)symbols.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (symbols[i]->containsColor(color))
+			return true;
+	}
+	return false;
+}
 
 void Map::adjustColorPriorities(int first, int last)
 {
@@ -725,6 +690,9 @@ void Map::moveSymbol(int from, int to)
 }
 void Map::setSymbol(Symbol* symbol, int pos)
 {
+	changeSymbolForAllObjects(symbols[pos], symbol);
+	
+	// Change the symbol
 	delete symbols[pos];
 	symbols[pos] = symbol;
 	
@@ -733,6 +701,9 @@ void Map::setSymbol(Symbol* symbol, int pos)
 }
 void Map::deleteSymbol(int pos)
 {
+	deleteAllObjectsWithSymbol(symbols[pos]);
+	
+	// Delete the symbol
 	Symbol* temp = symbols[pos];
 	delete symbols[pos];
 	symbols.erase(symbols.begin() + pos);
@@ -866,6 +837,9 @@ void Map::addObject(Object* object)
 	current_layer->addObject(object, current_layer->getNumObjects());
 	object->update(true);
 	setObjectsDirty();
+	
+	if (getNumObjects() == 1)
+		updateAllMapWidgets();
 }
 void Map::deleteObject(Object* object, bool remove_only)
 {
@@ -895,6 +869,35 @@ void Map::setObjectAreaDirty(QRectF map_coords_rect)
 {
 	for (int i = 0; i < (int)widgets.size(); ++i)
 		widgets[i]->markObjectAreaDirty(map_coords_rect);
+}
+
+void Map::changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol)
+{
+	int size = layers.size();
+	for (int i = 0; i < size; ++i)
+		layers[i]->changeSymbolForAllObjects(old_symbol, new_symbol);
+}
+void Map::deleteAllObjectsWithSymbol(Symbol* symbol)
+{
+	int size = layers.size();
+	for (int i = 0; i < size; ++i)
+		layers[i]->deleteAllObjectsWithSymbol(symbol);
+}
+bool Map::doObjectsExistWithSymbol(Symbol* symbol)
+{
+	int size = layers.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (layers[i]->doObjectsExistWithSymbol(symbol))
+			return true;
+	}
+	return false;
+}
+void Map::forceUpdateOfAllObjects(Symbol* with_symbol)
+{
+	int size = layers.size();
+	for (int i = 0; i < size; ++i)
+		layers[i]->forceUpdateOfAllObjects(with_symbol);
 }
 
 void Map::setGPSProjectionParameters(const GPSProjectionParameters& params)

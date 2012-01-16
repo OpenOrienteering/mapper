@@ -20,7 +20,9 @@
 
 #include "renderable.h"
 
+#include "map.h"
 #include "map_color.h"
+#include "object.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
 #include "symbol_area.h"
@@ -31,6 +33,117 @@ Renderable::Renderable()
 }
 Renderable::~Renderable()
 {
+}
+
+// ### RenderableContainer ###
+
+RenderableContainer::RenderableContainer(Map* map) : map(map)
+{
+}
+
+void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, float opacity_factor)
+{
+	Map::ColorVector& colors = map->color_set->colors;
+	
+	// TODO: improve performance by using some spatial acceleration structure?
+	RenderStates states;
+	states.color_priority = -1;
+	states.mode = RenderStates::Reserved;
+	states.clip_path = NULL;
+	
+	QPainterPath initial_clip = painter->clipPath();
+	bool no_initial_clip = initial_clip.isEmpty();
+	
+	painter->save();
+	for (Renderables::const_iterator it = renderables.begin(); it != renderables.end(); ++it)
+	{
+		const RenderStates& new_states = (*it).first;
+		Renderable* renderable = (*it).second;
+		
+		// Bounds check
+		const QRectF& extent = renderable->getExtent();
+		if (extent.right() < bounding_box.x())	continue;
+		if (extent.bottom() < bounding_box.y())	continue;
+		if (extent.x() > bounding_box.right())	continue;
+		if (extent.y() > bounding_box.bottom())	continue;
+		
+		// Change render states?
+		if (states != new_states)
+		{
+			if (new_states.mode == RenderStates::PenOnly)
+			{
+				//if (forceMinSize && new_states.pen_width * scale <= 1.0f)
+				//	painter->setPen(QPen(r->getSymbol()->getColor()->color, 0));
+				//else
+					painter->setPen(QPen(colors[new_states.color_priority]->color, new_states.pen_width));
+				
+				painter->setBrush(QBrush(Qt::NoBrush));
+				painter->setOpacity(opacity_factor * colors[new_states.color_priority]->opacity);
+			}
+			else if (new_states.mode == RenderStates::BrushOnly)
+			{
+				QBrush brush(colors[new_states.color_priority]->color);
+				
+				painter->setPen(QPen(Qt::NoPen));
+				painter->setBrush(brush);
+				painter->setOpacity(opacity_factor * colors[new_states.color_priority]->opacity);
+			}
+			
+			if (states.clip_path != new_states.clip_path)
+			{
+				if (no_initial_clip)
+				{
+					if (new_states.clip_path)
+						painter->setClipPath(*new_states.clip_path, Qt::ReplaceClip);
+					else
+						painter->setClipPath(initial_clip, Qt::NoClip);
+				}
+				else
+				{
+					painter->setClipPath(initial_clip, Qt::ReplaceClip);
+					if (new_states.clip_path)
+						painter->setClipPath(*new_states.clip_path, Qt::IntersectClip);
+				}
+			}
+			
+			states = new_states;
+		}
+		
+		// Render the renderable
+		renderable->render(*painter); //, scale, forceMinSize);
+	}
+	painter->restore();
+}
+
+void RenderableContainer::insertRenderablesOfObject(Object* object)
+{
+	RenderableVector::const_iterator it_end = object->endRenderables();
+	for (RenderableVector::const_iterator it = object->beginRenderables(); it != it_end; ++it)
+	{
+		Renderable* renderable = *it;
+		RenderStates render_states;
+		renderable->getRenderStates(render_states);
+		
+		if (render_states.color_priority != MapColor::Reserved)
+			renderables.insert(Renderables::value_type(render_states, renderable));	
+	}
+}
+void RenderableContainer::removeRenderablesOfObject(Object* object, bool mark_area_as_dirty)
+{
+	Renderables::iterator itend = renderables.end();
+	for (Renderables::iterator it = renderables.begin(); it != itend; )
+	{
+		if ((*it).second->getCreator() == object)
+		{
+			if (mark_area_as_dirty)
+				map->setObjectAreaDirty((*it).second->getExtent());
+			Renderables::iterator todelete = it;
+			++it;
+			renderables.erase(todelete);
+		}
+		else
+			++it;
+	}
 }
 
 // ### DotRenderable ###

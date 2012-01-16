@@ -33,7 +33,8 @@ public:
     virtual Symbol* duplicate();
 	
 	virtual void createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output);
-	virtual void colorDeleted(int pos, MapColor* color);
+	virtual void colorDeleted(Map* map, int pos, MapColor* color);
+    virtual bool containsColor(MapColor* color);
 	
 	// Getters
 	inline MapColor* getColor() const {return color;}

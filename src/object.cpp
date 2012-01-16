@@ -129,9 +129,9 @@ void Object::clearOutput()
 	output_dirty = true;
 }
 
-bool Object::setSymbol(Symbol* new_symbol)
+bool Object::setSymbol(Symbol* new_symbol, bool no_checks)
 {
-	if (new_symbol && symbol)
+	if (!no_checks && new_symbol && symbol)
 	{
 		if ((new_symbol->getType() == Symbol::Point || symbol->getType() == Symbol::Point) && !(new_symbol->getType() == Symbol::Point && symbol->getType() == Symbol::Point))
 			return false;	// Changing something from or to point is not allowed

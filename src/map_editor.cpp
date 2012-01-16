@@ -30,6 +30,8 @@
 #include "template.h"
 #include "paint_on_template.h"
 #include "gps_coordinates.h"
+#include "symbol.h"
+#include "draw_point.h"
 
 // ### MapEditorController ###
 
@@ -39,6 +41,7 @@ MapEditorController::MapEditorController(OperatingMode mode)
 	map = NULL;
 	main_view = NULL;
 	
+	symbol_widget = NULL;
 	editor_activity = NULL;
 	current_tool = NULL;	// TODO: default tool?
 	last_painted_on_template = NULL;
@@ -277,6 +280,13 @@ void MapEditorController::createToolbar()
 {
 	QToolBar* toolbar_drawing = window->addToolBar(tr("Drawing"));
 	
+	draw_point_act = new QAction(QIcon("images/draw-point.png"), tr("Set point objects"), this);
+	draw_point_act->setCheckable(true);
+	connect(draw_point_act, SIGNAL(triggered(bool)), this, SLOT(drawPointClicked(bool)));
+	toolbar_drawing->addAction(draw_point_act);
+	
+	toolbar_drawing->addSeparator();
+	
 	paint_on_template_act = new QAction(QIcon("images/pencil.png"), tr("Paint on template"), this);
 	paint_on_template_act->setCheckable(true);
 	updatePaintOnTemplateAction();
@@ -331,8 +341,12 @@ void MapEditorController::showSymbolWindow(bool show)
 	else
 	{
 		symbol_dock_widget = new EditorDockWidget(tr("Symbols"), symbol_window_act, window);
-		symbol_dock_widget->setWidget(new SymbolWidget(map, symbol_dock_widget));
+		symbol_widget = new SymbolWidget(map, symbol_dock_widget);
+		symbol_dock_widget->setWidget(symbol_widget);
 		window->addDockWidget(Qt::RightDockWidgetArea, symbol_dock_widget, Qt::Vertical);
+		
+		connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
+		selectedSymbolsChanged();
 	}
 }
 void MapEditorController::showColorWindow(bool show)
@@ -394,6 +408,21 @@ void MapEditorController::editGPSProjectionParameters()
 		return;
 	
 	map->setGPSProjectionParameters(dialog.getParameters());
+}
+
+void MapEditorController::selectedSymbolsChanged()
+{
+	Symbol::Type type = Symbol::NoSymbol;
+	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
+	if (symbol)
+		type = symbol->getType();
+	
+	draw_point_act->setEnabled(type == Symbol::Point);
+	draw_point_act->setToolTip(tr("This tool places point objects on the map.") + ((type == Symbol::Point) ? (" " + tr("Select a point symbol to be able to use this tool.")) : ""));
+}
+void MapEditorController::drawPointClicked(bool checked)
+{
+	setTool(checked ? new DrawPointTool(this, draw_point_act, symbol_widget) : NULL);
 }
 
 void MapEditorController::paintOnTemplateClicked(bool checked)

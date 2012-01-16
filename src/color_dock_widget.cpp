@@ -157,17 +157,26 @@ void ColorWidget::newColor()
 	color_table->setCurrentCell(row, 1);
 	
 	map->setColorsDirty();
+	map->forceUpdateOfAllObjects();
 }
 void ColorWidget::deleteColor()
 {
 	int row = color_table->currentRow();
 	assert(row >= 0);
 	
+	// Show a warning if the color is used
+	if (map->isColorUsedByASymbol(map->getColor(row)))
+	{
+		if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?"), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+			return;
+	}
+	
 	map->deleteColor(row);
 	color_table->removeRow(row);
 	currentCellChange(color_table->currentRow(), color_table->currentColumn(), -1, -1);
 	
 	map->setColorsDirty();
+	map->forceUpdateOfAllObjects();
 }
 void ColorWidget::duplicateColor()
 {
@@ -183,6 +192,7 @@ void ColorWidget::duplicateColor()
 	color_table->setCurrentCell(row, 1);
 	
 	map->setColorsDirty();
+	map->forceUpdateOfAllObjects();
 }
 void ColorWidget::moveColorUp()
 {
@@ -199,6 +209,7 @@ void ColorWidget::moveColorUp()
 	color_table->setCurrentCell(row - 1, color_table->currentColumn());
 	
 	map->setColorsDirty();
+	map->forceUpdateOfAllObjects();
 }
 void ColorWidget::moveColorDown()
 {
@@ -215,6 +226,7 @@ void ColorWidget::moveColorDown()
 	color_table->setCurrentCell(row + 1, color_table->currentColumn());
 	
 	map->setColorsDirty();
+	map->forceUpdateOfAllObjects();
 }
 void ColorWidget::showHelp()
 {
@@ -282,6 +294,7 @@ void ColorWidget::cellChange(int row, int column)
 	react_to_changes = true;
 	
 	map->setColorsDirty();
+	map->forceUpdateOfAllObjects();
 }
 void ColorWidget::currentCellChange(int current_row, int current_column, int previous_row, int previous_column)
 {
@@ -313,6 +326,7 @@ void ColorWidget::cellDoubleClick(int row, int column)
 			updateRow(row);
 			
 			map->setColorsDirty();
+			map->forceUpdateOfAllObjects();
 		}
 	}
 }

@@ -64,7 +64,7 @@ Symbol* PointSymbol::duplicate()
 	for (int i = 0; i < (int)objects.size(); ++i)
 	{
 		new_point->objects[i] = objects[i]->duplicate();
-		new_point->objects[i]->setSymbol(new_point->symbols[i]);
+		new_point->objects[i]->setSymbol(new_point->symbols[i], true);
 	}
 	
 	return new_point;
@@ -78,7 +78,7 @@ void PointSymbol::createRenderables(Object* object, const MapCoordVectorF& coord
 		output.push_back(new CircleRenderable(this, coords[0]));
 	
 	PointObject* point = reinterpret_cast<PointObject*>(object);
-	float rotation = point->getRotation();
+	float rotation = -point->getRotation();
 	double offset_x = coords[0].getX();
 	double offset_y = coords[0].getY();
 	
@@ -145,12 +145,46 @@ void PointSymbol::deleteElement(int pos)
 	symbols.erase(symbols.begin() + pos);
 }
 
-void PointSymbol::colorDeleted(int pos, MapColor* color)
+void PointSymbol::colorDeleted(Map* map, int pos, MapColor* color)
+{
+	bool change = false;
+	
+	if (color == inner_color)
+	{
+		inner_color = NULL;
+		change = true;
+	}
+	if (color == outer_color)
+	{
+		outer_color = NULL;
+		change = true;
+	}
+	
+	int num_elements = (int)objects.size();
+	for (int i = 0; i < num_elements; ++i)
+	{
+		symbols[i]->colorDeleted(map, pos, color);
+		change = true;
+	}
+	
+	if (change)
+		getIcon(map, true);
+}
+bool PointSymbol::containsColor(MapColor* color)
 {
 	if (color == inner_color)
-		inner_color = NULL;
+		return true;
 	if (color == outer_color)
-		outer_color = NULL;
+		return true;
+	
+	int num_elements = (int)objects.size();
+	for (int i = 0; i < num_elements; ++i)
+	{
+		if (symbols[i]->containsColor(color))
+			return true;
+	}
+	
+	return false;
 }
 
 void PointSymbol::saveImpl(QFile* file, Map* map)
