@@ -21,11 +21,20 @@
 #ifndef _OPENORIENTEERING_SYMBOL_LINE_H_
 #define _OPENORIENTEERING_SYMBOL_LINE_H_
 
+#include <QGroupBox>
+
 #include "symbol.h"
+
+QT_BEGIN_NAMESPACE
+class QLineEdit;
+QT_END_NAMESPACE
+
+class ColorDropDown;
+class SymbolSettingDialog;
 
 class LineSymbol : public Symbol
 {
-friend class PointSymbolSettings;
+friend class LineSymbolSettings;
 friend class PointSymbolEditorWidget;
 public:
 	enum CapStyle
@@ -71,6 +80,24 @@ protected:
 	MapColor* color;
 	CapStyle cap_style;
 	JoinStyle join_style;
+};
+
+class LineSymbolSettings : public QGroupBox
+{
+Q_OBJECT
+public:
+	LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSettingDialog* parent);
+	
+protected slots:
+	void widthChanged(QString text);
+	void colorChanged();
+	
+private:
+	LineSymbol* symbol;
+	SymbolSettingDialog* dialog;
+	
+	QLineEdit* width_edit;
+	ColorDropDown* color_edit;
 };
 
 #endif

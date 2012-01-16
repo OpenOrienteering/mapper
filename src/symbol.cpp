@@ -105,8 +105,8 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	else if (type == Line)
 	{
 		PathObject* path = new PathObject(&icon_map, this);
-		path->addCoordinate(0, MapCoord(-max_icon_mm_half, -max_icon_mm_half));
-		path->addCoordinate(1, MapCoord(max_icon_mm_half, max_icon_mm_half));
+		path->addCoordinate(0, MapCoord(-max_icon_mm_half, max_icon_mm_half));
+		path->addCoordinate(1, MapCoord(max_icon_mm_half, -max_icon_mm_half));
 		object = path;
 	}
 	else

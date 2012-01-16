@@ -24,6 +24,7 @@
 
 #include "symbol.h"
 #include "symbol_point.h"
+#include "symbol_line.h"
 #include "main_window.h"
 #include "map.h"
 #include "map_editor.h"
@@ -60,6 +61,10 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* pare
 	Symbol::Type type = symbol->getType();
 	if (type == Symbol::Point)
 		type_specific_settings = new PointSymbolSettings(reinterpret_cast<PointSymbol*>(symbol), map, this);
+	else if (type == Symbol::Line)
+		type_specific_settings = new LineSymbolSettings(reinterpret_cast<LineSymbol*>(symbol), map, this);
+	else
+		assert(false);
 	
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
 	ok_button = new QPushButton(QIcon("images/arrow-right.png"), tr("Ok"));
@@ -69,17 +74,20 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* pare
 	preview_map->useColorsFrom(map);
 	preview_map->setScaleDenominator(map->getScaleDenominator());
 	
-	//createPreviewMap();
+	createPreviewMap();
 	
 	preview_widget = new MainWindow(false);
-	MapEditorController* controller = new MapEditorController((symbol->getType() == Symbol::Point) ? MapEditorController::PointSymbolEditor : MapEditorController::SymbolPreview, preview_map);
+	MapEditorController* controller = new MapEditorController(MapEditorController::SymbolEditor, preview_map);
 	preview_widget->setController(controller);
 	preview_map_view = controller->getMainWidget()->getMapView();
-	preview_map_view->setZoom(8 * preview_map_view->getZoom());
+	preview_map_view->setZoom(((symbol->getType() == Symbol::Point) ? 8 : 2) * preview_map_view->getZoom());
 	
-	PointSymbolEditorWidget* point_sybol_editor = createPointSymbolEditor();
-	controller->setTool(new PointSymbolEditorTool(controller, point_sybol_editor));
-	controller->setEditorActivity(new PointSymbolEditorActivity(preview_map, point_sybol_editor));
+	PointSymbolEditorWidget* point_symbol_editor = createPointSymbolEditor();
+	if (point_symbol_editor)
+	{
+		controller->setTool(new PointSymbolEditorTool(controller, point_symbol_editor));
+		controller->setEditorActivity(new PointSymbolEditorActivity(preview_map, point_symbol_editor));
+	}
 	
 	QVBoxLayout* middle_layout = NULL;
 	if (symbol->getType() == Symbol::Point)
@@ -157,7 +165,8 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* pare
 		layout->addLayout(middle_layout);
 	else
 		layout->addWidget(preview_widget, 1);
-	layout->addWidget(point_sybol_editor);
+	if (point_symbol_editor)
+		layout->addWidget(point_symbol_editor);
 	setLayout(layout);
 	
 	for (int i = 0; i < Symbol::number_components; ++i)
@@ -179,6 +188,8 @@ SymbolSettingDialog::~SymbolSettingDialog()
 
 void SymbolSettingDialog::updatePreview()
 {
+	createPreviewMap();
+	
 	for (int l = 0; l < preview_map->getNumLayers(); ++l)
 		for (int i = 0; i < preview_map->getLayer(l)->getNumObjects(); ++i)
 			preview_map->getLayer(l)->getObject(i)->update(true);
@@ -272,16 +283,40 @@ void SymbolSettingDialog::centerTemplateGravity()
 	preview_map->setTemplateAreaDirty(0);
 }
 
-/*void SymbolSettingDialog::createPreviewMap()
+void SymbolSettingDialog::createPreviewMap()
 {
-	if (symbol->getType() == Symbol::Point)
-		createPointSymbolEditor(reinterpret_cast<PointSymbol*>(symbol));
+	for (int i = 0; i < (int)preview_objects.size(); ++i)
+		preview_map->deleteObject(preview_objects[i], false);
+	preview_objects.clear();
+	
+	if (symbol->getType() == Symbol::Line)
+	{
+		LineSymbol* line = reinterpret_cast<LineSymbol*>(symbol);
+		// NOTE: Uncommenting this can result in zero objects on the preview map -> a help text is shown
+		//if (line->getLineWidth() <= 0 || line->getColor() == NULL)
+		//	return;
+		
+		const int num_lines = 7;
+		const float y_offset = (0.001f * line->getLineWidth()) * 2.5f;
+		const float min_length = 1;
+		const float max_length = 10;
+		
+		float y_start = 0 - 0.5f * (y_offset * (num_lines - 1));
+		
+		for (int i = 0; i < num_lines; ++i)
+		{
+			float length = min_length + (i / (float)(num_lines - 1)) * (max_length - min_length);
+			float y = y_start + i * y_offset;
+			
+			PathObject* path = new PathObject(preview_map, line);
+			path->addCoordinate(0, MapCoordF(-0.5f * length, y).toMapCoord());
+			path->addCoordinate(1, MapCoordF(0.5f * length, y).toMapCoord());
+			preview_map->addObject(path);
+			
+			preview_objects.push_back(path);
+		}
+	}
 }
-void SymbolSettingDialog::createPointSymbolEditor(PointSymbol* point)
-{
-	PointObject* object = new PointObject(preview_map, MapCoord(0, 0), point);
-	preview_map->addObject(object);
-}*/
 PointSymbolEditorWidget* SymbolSettingDialog::createPointSymbolEditor()
 {
 	if (symbol->getType() == Symbol::Point)
@@ -290,6 +325,11 @@ PointSymbolEditorWidget* SymbolSettingDialog::createPointSymbolEditor()
 		std::vector<PointSymbol*> point_vector;
 		point_vector.push_back(point);
 		return new PointSymbolEditorWidget(preview_map, point_vector);
+	}
+	else if (symbol->getType() == Symbol::Line)
+	{
+		// TODO!
+		return NULL;
 	}
 	
 	assert(false);

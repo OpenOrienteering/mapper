@@ -46,8 +46,7 @@ public:
 	enum OperatingMode
 	{
 		MapEditor = 0,
-		PointSymbolEditor = 1,
-		SymbolPreview = 2
+		SymbolEditor = 1
 	};
 	
 	MapEditorController(OperatingMode mode);

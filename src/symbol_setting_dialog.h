@@ -37,6 +37,7 @@ class Symbol;
 class MainWindow;
 class PointSymbol;
 class PointSymbolEditorWidget;
+class Object;
 
 class SymbolSettingDialog : public QDialog
 {
@@ -58,8 +59,7 @@ protected slots:
 	void centerTemplateGravity();
 	
 private:
-	//void createPreviewMap();
-	//void createPointSymbolEditor(PointSymbol* point);
+	void createPreviewMap();
 	PointSymbolEditorWidget* createPointSymbolEditor();
 	
 	void updateNumberEdits();
@@ -76,6 +76,7 @@ private:
 	MainWindow* preview_widget;
 	Map* preview_map;
 	MapView* preview_map_view;
+	std::vector<Object*> preview_objects;
 	
 	QLabel* template_file_label;
 	QToolButton* center_template_button;

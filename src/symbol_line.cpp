@@ -20,9 +20,13 @@
 
 #include "symbol_line.h"
 
+#include <QtGui>
 #include <QFile>
 
 #include "object.h"
+#include "map_color.h"
+#include "util.h"
+#include "symbol_setting_dialog.h"
 
 LineSymbol::LineSymbol() : Symbol(Symbol::Line)
 {
@@ -83,3 +87,39 @@ bool LineSymbol::loadImpl(QFile* file, Map* map)
 	color = (temp >= 0) ? map->getColor(temp) : NULL;
 	return true;
 }
+
+// ### LineSymbolSettings ###
+
+LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSettingDialog* parent) : QGroupBox(tr("Line settings"), parent), symbol(symbol), dialog(parent)
+{
+	QLabel* width_label = new QLabel(tr("Line width:"));
+	width_edit = new QLineEdit(QString::number(symbol->getLineWidth()));
+	width_edit->setValidator(new DoubleValidator(0, 999999, width_edit));
+	
+	QLabel* color_label = new QLabel(tr("Line color:"));
+	color_edit = new ColorDropDown(map, symbol->getColor());
+	
+	QGridLayout* layout = new QGridLayout();
+	layout->addWidget(width_label, 0, 0);
+	layout->addWidget(width_edit, 0, 1);
+	layout->addWidget(color_label, 1, 0);
+	layout->addWidget(color_edit, 1, 1);
+	
+	setLayout(layout);
+	
+	connect(width_edit, SIGNAL(textEdited(QString)), this, SLOT(widthChanged(QString)));
+	connect(color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChanged()));
+}
+
+void LineSymbolSettings::widthChanged(QString text)
+{
+	symbol->line_width = qRound64(1000 * text.toFloat());
+	dialog->updatePreview();
+}
+void LineSymbolSettings::colorChanged()
+{
+	symbol->color = color_edit->color();
+	dialog->updatePreview();
+}
+
+#include "symbol_line.moc"

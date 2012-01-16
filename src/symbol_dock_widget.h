@@ -53,6 +53,7 @@ public:
 	
 protected slots:
 	void newPointSymbol();
+	void newLineSymbol();
 	void editSymbol();
 	void deleteSymbols();
 	void duplicateSymbol();
