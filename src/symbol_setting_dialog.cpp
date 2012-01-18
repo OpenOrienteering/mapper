@@ -34,6 +34,7 @@
 #include "template_dock_widget.h"
 #include "template.h"
 #include "template_image.h"
+#include "symbol_area.h"
 
 SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
@@ -63,6 +64,8 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* pare
 		type_specific_settings = new PointSymbolSettings(reinterpret_cast<PointSymbol*>(symbol), map, this);
 	else if (type == Symbol::Line)
 		type_specific_settings = new LineSymbolSettings(reinterpret_cast<LineSymbol*>(symbol), map, this);
+	else if (type == Symbol::Area)
+		type_specific_settings = new AreaSymbolSettings(reinterpret_cast<AreaSymbol*>(symbol), map, this);
 	else
 		assert(false);
 	
@@ -315,6 +318,21 @@ void SymbolSettingDialog::createPreviewMap()
 			preview_objects.push_back(path);
 		}
 	}
+	else if (symbol->getType() == Symbol::Area)
+	{
+		AreaSymbol* area = reinterpret_cast<AreaSymbol*>(symbol);
+		
+		const float half_radius = 5;
+		
+		PathObject* path = new PathObject(preview_map, area);
+		path->addCoordinate(0, MapCoordF(-half_radius, -half_radius).toMapCoord());
+		path->addCoordinate(1, MapCoordF(half_radius, -half_radius).toMapCoord());
+		path->addCoordinate(2, MapCoordF(half_radius, half_radius).toMapCoord());
+		path->addCoordinate(3, MapCoordF(-half_radius, half_radius).toMapCoord());
+		preview_map->addObject(path);
+		
+		preview_objects.push_back(path);
+	}
 }
 PointSymbolEditorWidget* SymbolSettingDialog::createPointSymbolEditor()
 {
@@ -326,6 +344,11 @@ PointSymbolEditorWidget* SymbolSettingDialog::createPointSymbolEditor()
 		return new PointSymbolEditorWidget(preview_map, point_vector);
 	}
 	else if (symbol->getType() == Symbol::Line)
+	{
+		// TODO!
+		return NULL;
+	}
+	else if (symbol->getType() == Symbol::Area)
 	{
 		// TODO!
 		return NULL;
@@ -352,7 +375,7 @@ void SymbolSettingDialog::updateOkButton()
 void SymbolSettingDialog::updateWindowTitle()
 {
 	if (symbol->getName().isEmpty())
-		setWindowTitle(tr("Symbol settings"));
+		setWindowTitle(tr("Symbol settings - Please enter a symbol name!"));
 	else
 		setWindowTitle(tr("Symbol settings for %1").arg(symbol->getName()));
 }

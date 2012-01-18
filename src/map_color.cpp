@@ -59,6 +59,7 @@ ColorDropDown::ColorDropDown(Map* map, MapColor* initial_color, QWidget* parent)
 		addItem(color->name, qVariantFromValue<void*>(color));
 		setItemData(i + 1, color->color, Qt::DecorationRole);
 	}
+	setColor(initial_color);
 	
 	connect(map, SIGNAL(colorAdded(int,MapColor*)), this, SLOT(colorAdded(int,MapColor*)));
 	connect(map, SIGNAL(colorChanged(int,MapColor*)), this, SLOT(colorChanged(int,MapColor*)));

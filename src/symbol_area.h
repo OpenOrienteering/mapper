@@ -21,11 +21,16 @@
 #ifndef _OPENORIENTEERING_SYMBOL_AREA_H_
 #define _OPENORIENTEERING_SYMBOL_AREA_H_
 
+#include <QGroupBox>
+
 #include "symbol.h"
+
+class ColorDropDown;
+class SymbolSettingDialog;
 
 class AreaSymbol : public Symbol
 {
-friend class PointSymbolSettings;
+friend class AreaSymbolSettings;
 friend class PointSymbolEditorWidget;
 public:
 	AreaSymbol();
@@ -44,6 +49,22 @@ protected:
 	virtual bool loadImpl(QFile* file, Map* map);
 	
 	MapColor* color;
+};
+
+class AreaSymbolSettings : public QGroupBox
+{
+Q_OBJECT
+public:
+	AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSettingDialog* parent);
+	
+protected slots:
+	void colorChanged();
+	
+private:
+	AreaSymbol* symbol;
+	SymbolSettingDialog* dialog;
+	
+	ColorDropDown* color_edit;
 };
 
 #endif

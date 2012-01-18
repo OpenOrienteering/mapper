@@ -54,6 +54,7 @@ public:
 protected slots:
 	void newPointSymbol();
 	void newLineSymbol();
+	void newAreaSymbol();
 	void editSymbol();
 	void deleteSymbols();
 	void duplicateSymbol();

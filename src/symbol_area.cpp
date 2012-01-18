@@ -20,9 +20,12 @@
 
 #include "symbol_area.h"
 
+#include <QtGui>
 #include <QFile>
 
 #include "object.h"
+#include "symbol_setting_dialog.h"
+#include "map_color.h"
 
 AreaSymbol::AreaSymbol() : Symbol(Symbol::Area)
 {
@@ -73,3 +76,27 @@ bool AreaSymbol::loadImpl(QFile* file, Map* map)
 	color = (temp >= 0) ? map->getColor(temp) : NULL;
 	return true;
 }
+
+// ### AreaSymbolSettings ###
+
+AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSettingDialog* parent) : QGroupBox(tr("Area settings"), parent), symbol(symbol), dialog(parent)
+{
+	QLabel* color_label = new QLabel(tr("Area color:"));
+	color_edit = new ColorDropDown(map, symbol->getColor());
+	
+	QGridLayout* layout = new QGridLayout();
+	layout->addWidget(color_label, 0, 0);
+	layout->addWidget(color_edit, 0, 1);
+	
+	setLayout(layout);
+	
+	connect(color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChanged()));
+}
+
+void AreaSymbolSettings::colorChanged()
+{
+	symbol->color = color_edit->color();
+	dialog->updatePreview();
+}
+
+#include "symbol_area.moc"
