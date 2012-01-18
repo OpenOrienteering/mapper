@@ -292,9 +292,8 @@ void SymbolSettingDialog::createPreviewMap()
 	if (symbol->getType() == Symbol::Line)
 	{
 		LineSymbol* line = reinterpret_cast<LineSymbol*>(symbol);
-		// NOTE: Uncommenting this can result in zero objects on the preview map -> a help text is shown
-		//if (line->getLineWidth() <= 0 || line->getColor() == NULL)
-		//	return;
+		if (line->getLineWidth() <= 0 || line->getColor() == NULL)
+			return;
 		
 		const int num_lines = 7;
 		const float y_offset = (0.001f * line->getLineWidth()) * 2.5f;

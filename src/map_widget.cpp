@@ -27,7 +27,7 @@
 #include "map_editor.h"
 #include "template.h"
 
-MapWidget::MapWidget(QWidget* parent) : QWidget(parent)
+MapWidget::MapWidget(bool show_help, QWidget* parent) : QWidget(parent), show_help(show_help)
 {
 	view = NULL;
 	tool = NULL;
@@ -357,12 +357,12 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	else if (drag_offset.y() < 0)
 		painter.fillRect(QRect(0, height() + drag_offset.y(), width(), -drag_offset.y()), QColor(Qt::gray));
 	
-	// No colors defined? Provide a litte help message ... TODO: reactivate
-	/*if (view && view->getMap()->getNumColors() == 0)
+	// No colors defined? Provide a litte help message ...
+	if (show_help && view && view->getMap()->getNumColors() == 0)
 		showHelpMessage(&painter, tr("Empty map!\n\nStart by defining some colors:\nSelect Symbols -> Color window to\nopen the color dialog and\ndefine the colors there."));
-	else if (true) // TODO; No symbols defined?
-		showHelpMessage(&painter, tr("No symbols!\n\nNow define some symbols:\nRight-click in the symbol bar\nand select \"New\" to create\na new symbol."));
-	else*/ if (view && view->getMap()->getNumTemplates() == 0 && view->getMap()->getNumObjects() == 0)	// No templates or objects defined?
+	else if (show_help && view && view->getMap()->getNumSymbols() == 0)
+		showHelpMessage(&painter, tr("No symbols!\n\nNow define some symbols:\nRight-click in the symbol bar\nand select \"New symbol\"\nto create one."));
+	else if (show_help && view && view->getMap()->getNumTemplates() == 0 && view->getMap()->getNumObjects() == 0)	// No templates or objects defined?
 		showHelpMessage(&painter, tr("Ready to draw!\n\nStart drawing or load a base map.\nTo load a base map, click\nTemplates -> Open template..."));
 	else if (view)
 	{
@@ -503,17 +503,50 @@ void MapWidget::wheelEvent(QWheelEvent* event)
 		{
 			if (num_steps > 0)
 			{
+				const double limit = 512;
+				
+				// Zooming in - adjust camera position so the cursor stays at the same position on the map
+				if (view->getZoom() >= limit)
+				{
+					event->ignore();
+					return;
+				}
+				
+				bool set_to_limit = false;
 				double zoom_factor = 2 * num_steps;
+				if (view->getZoom() * zoom_factor > limit)
+				{
+					zoom_factor = limit / view->getZoom();
+					set_to_limit = true;
+				}
 				MapCoordF mouse_pos_map = view->viewToMapF(viewportToView(event->pos()));
 				MapCoordF mouse_pos_to_view_center(view->getPositionX()/1000.0 - mouse_pos_map.getX(), view->getPositionY()/1000.0 - mouse_pos_map.getY());
 				mouse_pos_to_view_center = MapCoordF(mouse_pos_to_view_center.getX() * 1 / zoom_factor, mouse_pos_to_view_center.getY() * 1 / zoom_factor);
 				
-				view->setZoom(view->getZoom() * zoom_factor);
+				view->setZoom(set_to_limit ? limit : (view->getZoom() * zoom_factor));
 				view->setPositionX(qRound64(1000 * (mouse_pos_map.getX() + mouse_pos_to_view_center.getX())));
 				view->setPositionY(qRound64(1000 * (mouse_pos_map.getY() + mouse_pos_to_view_center.getY())));
 			}
 			else
-				view->setZoom(view->getZoom() * 1 / (2 * -num_steps));
+			{
+				// Zooming out
+				const double limit = 1 / 16.0;
+				if (view->getZoom() <= limit)
+				{
+					event->ignore();
+					return;
+				}
+				
+				bool set_to_limit = false;
+				double zoom_factor = 1 / (2 * -num_steps);
+				if (view->getZoom() * zoom_factor < limit)
+				{
+					zoom_factor = limit / view->getZoom();
+					set_to_limit = true;
+				}
+				
+				view->setZoom(set_to_limit ? limit : (view->getZoom() * zoom_factor));
+			}
 			
 			// Send a mouse move event to the current tool as zooming out can move the mouse position on the map
 			if (tool)

@@ -3,7 +3,7 @@
 Requirements:
 Qt, cmake and a C++ compiler.
 
-The program is known to work with Qt 4.7 and not to compile with Qt 4.3.
+The program is known to work with Qt 4.7 and not to compile with Qt 4.4 or earlier.
 Information about other versions is not available, feel free to give feedback about them.
 
 Building:

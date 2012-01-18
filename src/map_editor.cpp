@@ -148,7 +148,7 @@ void MapEditorController::attach(MainWindow* window)
 	window->statusBar()->addPermanentWidget(statusbar_cursorpos_label);
 	
 	// Create map widget
-	map_widget = new MapWidget();
+	map_widget = new MapWidget(mode == MapEditor);
 	map_widget->setMapView(main_view);
 	map_widget->setZoomLabel(statusbar_zoom_label);
 	map_widget->setCursorposLabel(statusbar_cursorpos_label);

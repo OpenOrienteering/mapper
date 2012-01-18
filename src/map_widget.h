@@ -38,7 +38,7 @@ class MapWidget : public QWidget
 Q_OBJECT
 friend class MapView;
 public:
-	MapWidget(QWidget* parent = NULL);
+	MapWidget(bool show_help, QWidget* parent = NULL);
 	~MapWidget();
 	
 	void setMapView(MapView* view);
@@ -132,6 +132,8 @@ private:
 	
 	QLabel* zoom_label;
 	QLabel* cursorpos_label;
+	
+	bool show_help;
 	
 	// Panning
 	bool dragging;
