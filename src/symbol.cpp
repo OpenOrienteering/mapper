@@ -28,6 +28,7 @@
 #include "symbol_point.h"
 #include "symbol_area.h"
 #include "symbol_text.h"
+#include "symbol_combined.h"
 
 Symbol::Symbol(Type type) : type(type), name(""), description(""), is_helper_symbol(false), icon(NULL)
 {
@@ -119,6 +120,14 @@ QImage* Symbol::getIcon(Map* map, bool update)
 		text->setText("A");
 		object = text;
 	}
+	else if (type == Combined)
+	{
+		PathObject* path = new PathObject(&icon_map, this);
+		for (int i = 0; i < 5; ++i)
+			path->addCoordinate(i, MapCoord(sin(2*M_PI * i/5.0) * max_icon_mm_half, -cos(2*M_PI * i/5.0) * max_icon_mm_half));
+		path->setPathClosed(true);
+		object = path;
+	}
 	else
 		assert(false);
 	
@@ -163,6 +172,8 @@ Symbol* Symbol::getSymbolForType(Symbol::Type type)
 		return new AreaSymbol();
 	else if (type == Symbol::Text)
 		return new TextSymbol();
+	else if (type == Symbol::Combined)
+		return new CombinedSymbol();
 	else
 	{
 		assert(false);
@@ -183,3 +194,39 @@ void Symbol::duplicateImplCommon(Symbol* other)
 	else
 		icon = NULL;
 }
+
+// ### SymbolDropDown ###
+
+SymbolDropDown::SymbolDropDown(Map* map, int filter, Symbol* initial_symbol, Symbol* excluded_symbol, QWidget* parent): QComboBox(), map(map)
+{
+	addItem(tr("- none -"), qVariantFromValue<void*>(NULL));
+	
+	int size = map->getNumSymbols();
+	for (int i = 0; i < size; ++i)
+	{
+		Symbol* symbol = map->getSymbol(i);
+		if (!(symbol->getType() & filter))
+			continue;
+		if (symbol == excluded_symbol)
+			continue;
+		if (symbol->getType() == Symbol::Combined)	// TODO: if point objects start to be able to contain objects of other ordinary symbols, add a check for these here, too, to prevent circular references
+		{
+			CombinedSymbol* combined_symbol = reinterpret_cast<CombinedSymbol*>(symbol);
+			if (combined_symbol->containsSymbol(excluded_symbol))
+				continue;
+		}
+		
+		addItem(QPixmap::fromImage(*symbol->getIcon(map)), symbol->getName(), qVariantFromValue<void*>(symbol));
+	}
+	setSymbol(initial_symbol);
+}
+Symbol* SymbolDropDown::symbol()
+{
+	return reinterpret_cast<Symbol*>(itemData(currentIndex()).value<void*>());
+}
+void SymbolDropDown::setSymbol(Symbol* symbol)
+{
+	setCurrentIndex(findData(qVariantFromValue<void*>(symbol)));
+}
+
+#include "symbol.moc"

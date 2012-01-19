@@ -23,8 +23,7 @@
 
 #include <assert.h>
 
-#include <QString>
-#include <QObject>
+#include <QComboBox>
 
 #include "map.h"
 #include "renderable.h"
@@ -43,13 +42,14 @@ class Symbol
 public:
 	enum Type
 	{
-		Point = 0,
-		Line = 1,
-		Area = 2,
-		Text = 3,
-		Combined = 4,
+		Point = 1,
+		Line = 2,
+		Area = 4,
+		Text = 8,
+		Combined = 16,
 		
-		NoSymbol = -1
+		NoSymbol = 0,
+		AllSymbols = Point | Line | Area | Text | Combined
 	};
 	
 	/// Constructs an empty symbol
@@ -63,6 +63,8 @@ public:
 	/// Saving and loading
 	void save(QFile* file, Map* map);
 	bool load(QFile* file, Map* map);
+	/// Called after loading of the map is finished. Can do tasks that need to reference other symbols or map objects.
+	virtual bool loadFinished(Map* map) {return true;}
 	
 	/// Creates renderables to display one specific instance of this symbol defined by the given object and coordinates
 	/// (NOTE: do not use the object's coordinates as the given coordinates can be an updated, transformed version of them!)
@@ -112,6 +114,26 @@ protected:
 	QString description;
 	bool is_helper_symbol;
 	QImage* icon;
+};
+
+class SymbolDropDown : public QComboBox
+{
+Q_OBJECT
+public:
+	/// filter is a bitwise-or combination of the allowed Symbol::Type types.
+	SymbolDropDown(Map* map, int filter, Symbol* initial_symbol = NULL, Symbol* excluded_symbol = NULL, QWidget* parent = NULL);
+	
+	/// Returns the selected symbol or NULL if no symbol selected
+	Symbol* symbol();
+	
+	/// Sets the selection to the given symbol
+	void setSymbol(Symbol* symbol);
+	
+protected slots:
+	// TODO: react to changes in the map (not important as long as that cannot happen as long as a SymbolDropDown is shown, which is the case currently)
+	
+private:
+	Map* map;
 };
 
 #endif

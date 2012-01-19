@@ -30,6 +30,7 @@
 #include "symbol_line.h"
 #include "symbol_area.h"
 #include "symbol_text.h"
+#include "symbol_combined.h"
 
 // ### SymbolRenderWidget ###
 
@@ -55,8 +56,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	/*QAction* new_line_action =*/ new_menu->addAction(tr("Line"), this, SLOT(newLineSymbol()));
 	/*QAction* new_area_action =*/ new_menu->addAction(tr("Area"), this, SLOT(newAreaSymbol()));
 	/*QAction* new_text_action =*/ new_menu->addAction(tr("Text"), this, SLOT(newTextSymbol()));
-	QAction* new_combined_action = new_menu->addAction(tr("Combined"));
-	new_combined_action->setEnabled(false);
+	/*QAction* new_combined_action =*/ new_menu->addAction(tr("Combined"), this, SLOT(newCombinedSymbol()));
 	context_menu->addMenu(new_menu);
 	
 	edit_action = context_menu->addAction(tr("Edit"), this, SLOT(editSymbol()));
@@ -506,13 +506,18 @@ void SymbolRenderWidget::newTextSymbol()
 {
 	newSymbol(new TextSymbol());
 }
+void SymbolRenderWidget::newCombinedSymbol()
+{
+	newSymbol(new CombinedSymbol());
+}
 void SymbolRenderWidget::editSymbol()
 {
 	assert(current_symbol_index >= 0);
 	
-	Symbol* edit_symbol = map->getSymbol(current_symbol_index)->duplicate();
+	Symbol* in_map_symbol = map->getSymbol(current_symbol_index);
+	Symbol* edit_symbol = in_map_symbol->duplicate();
 
-	SymbolSettingDialog dialog(edit_symbol, map, this);
+	SymbolSettingDialog dialog(edit_symbol, in_map_symbol, map, this);
 	dialog.setWindowModality(Qt::WindowModal);
 	if (dialog.exec() == QDialog::Rejected)
 	{
@@ -576,7 +581,7 @@ void SymbolRenderWidget::invertSelection()
 
 bool SymbolRenderWidget::newSymbol(Symbol* new_symbol)
 {
-	SymbolSettingDialog dialog(new_symbol, map, this);
+	SymbolSettingDialog dialog(new_symbol, NULL, map, this);
 	dialog.setWindowModality(Qt::WindowModal);
 	if (dialog.exec() == QDialog::Rejected)
 	{

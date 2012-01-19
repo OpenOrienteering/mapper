@@ -36,8 +36,9 @@
 #include "template_image.h"
 #include "template_dock_widget.h"
 #include "symbol_point_editor.h"
+#include "symbol_combined.h"
 
-SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
+SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Symbol* in_map_symbol, Map* map, QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
 	setSizeGripEnabled(true);
 	this->symbol = symbol;
@@ -69,6 +70,8 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* pare
 		type_specific_settings = new AreaSymbolSettings(reinterpret_cast<AreaSymbol*>(symbol), map, this);
 	else if (type == Symbol::Text)
 		type_specific_settings = new TextSymbolSettings(reinterpret_cast<TextSymbol*>(symbol), map, this);
+	else if (type == Symbol::Combined)
+		type_specific_settings = new CombinedSymbolSettings(reinterpret_cast<CombinedSymbol*>(symbol), reinterpret_cast<CombinedSymbol*>(in_map_symbol), map, this);
 	else
 		assert(false);
 	
@@ -89,7 +92,7 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* pare
 	float zoom_factor = 1;
 	if (symbol->getType() == Symbol::Point)
 		zoom_factor = 8;
-	else if (symbol->getType() == Symbol::Line)
+	else if (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Combined)
 		zoom_factor = 2;
 	preview_map_view->setZoom(zoom_factor * preview_map_view->getZoom());
 	
@@ -328,11 +331,9 @@ void SymbolSettingDialog::createPreviewMap()
 	}
 	else if (symbol->getType() == Symbol::Area)
 	{
-		AreaSymbol* area = reinterpret_cast<AreaSymbol*>(symbol);
-		
 		const float half_radius = 5;
 		
-		PathObject* path = new PathObject(preview_map, area);
+		PathObject* path = new PathObject(preview_map, symbol);
 		path->addCoordinate(0, MapCoordF(-half_radius, -half_radius).toMapCoord());
 		path->addCoordinate(1, MapCoordF(half_radius, -half_radius).toMapCoord());
 		path->addCoordinate(2, MapCoordF(half_radius, half_radius).toMapCoord());
@@ -345,7 +346,7 @@ void SymbolSettingDialog::createPreviewMap()
 	{
 		TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);
 		
-		// TODO: Suggestion for the German translation: "Franz, der OL für eine Abkürzung\nvon Oldenbourg hält, jagt im komplett\nverwahrlosten Taxi quer durch Bayern\n1234567890"
+		// TODO: Suggestion for the German translation: "Franz, der OL für die Abkürzung\nvon Oldenbourg hält, jagt im komplett\nverwahrlosten Taxi quer durch Bayern\n1234567890"
 		const QString string = tr("The quick brown fox\ntakes the routechoice\nto jump over the lazy dog\n1234567890");
 		
 		TextObject* object = new TextObject(preview_map, text_symbol);
@@ -356,6 +357,18 @@ void SymbolSettingDialog::createPreviewMap()
 		preview_map->addObject(object);
 		
 		preview_objects.push_back(object);
+	}
+	else if (symbol->getType() == Symbol::Combined)
+	{
+		const float radius = 5;
+		
+		PathObject* path = new PathObject(preview_map, symbol);
+		for (int i = 0; i < 5; ++i)
+			path->addCoordinate(i, MapCoord(sin(2*M_PI * i/5.0) * radius, -cos(2*M_PI * i/5.0) * radius));
+		path->setPathClosed(true);
+		preview_map->addObject(path);
+		
+		preview_objects.push_back(path);
 	}
 }
 PointSymbolEditorWidget* SymbolSettingDialog::createPointSymbolEditor()
@@ -377,7 +390,7 @@ PointSymbolEditorWidget* SymbolSettingDialog::createPointSymbolEditor()
 		// TODO!
 		return NULL;
 	}
-	else if (symbol->getType() == Symbol::Text)
+	else if (symbol->getType() == Symbol::Text || symbol->getType() == Symbol::Combined)
 		return NULL;
 	
 	assert(false);

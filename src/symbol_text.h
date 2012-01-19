@@ -25,11 +25,11 @@
 
 #include "symbol.h"
 
-class QCheckBox;
 QT_BEGIN_NAMESPACE
 class QLineEdit;
 class QFontComboBox;
 class QPushButton;
+class QCheckBox;
 QT_END_NAMESPACE
 
 class ColorDropDown;

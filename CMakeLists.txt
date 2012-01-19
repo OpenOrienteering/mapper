@@ -38,6 +38,7 @@ set(Mapper_SRCS
  src/symbol_line.cpp
  src/symbol_area.cpp
  src/symbol_text.cpp
+ src/symbol_combined.cpp
  src/renderable.cpp
  src/object.cpp
 

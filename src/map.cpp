@@ -439,6 +439,13 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 	
 	file.close();
 	
+	// Post processing
+	for (int i = 0; i < num_symbols; ++i)
+	{
+		if (!symbols[i]->loadFinished(this))
+			return false;
+	}
+	
 	return true;
 }
 

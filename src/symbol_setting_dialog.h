@@ -43,7 +43,7 @@ class SymbolSettingDialog : public QDialog
 {
 Q_OBJECT
 public:
-	SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* parent);
+	SymbolSettingDialog(Symbol* symbol, Symbol* in_map_symbol, Map* map, QWidget* parent);
     virtual ~SymbolSettingDialog();
 	
 	void updatePreview();
