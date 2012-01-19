@@ -27,7 +27,7 @@
 #include "map_editor.h"
 #include "template.h"
 
-MapWidget::MapWidget(bool show_help, QWidget* parent) : QWidget(parent), show_help(show_help)
+MapWidget::MapWidget(bool show_help, bool use_antialiasing, QWidget* parent) : QWidget(parent), show_help(show_help), use_antialiasing(use_antialiasing)
 {
 	view = NULL;
 	tool = NULL;
@@ -696,6 +696,9 @@ void MapWidget::updateMapCache(bool use_background)
 		painter.fillRect(map_cache_dirty_rect, Qt::transparent);
 		painter.setCompositionMode(mode);
 	}
+	
+	if (use_antialiasing)
+		painter.setRenderHint(QPainter::Antialiasing);
 	
 	// Draw map
 	painter.translate(width() / 2.0, height() / 2.0);

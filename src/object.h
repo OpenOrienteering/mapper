@@ -21,6 +21,8 @@
 #ifndef _OPENORIENTEERING_OBJECT_H_
 #define _OPENORIENTEERING_OBJECT_H_
 
+#include <assert.h>
+
 #include "map_coord.h"
 #include "renderable.h"
 
@@ -97,7 +99,7 @@ protected:
 	Type type;
 	Symbol* symbol;
 	MapCoordVector coords;
-	bool path_closed;		// does the coordinates represent a closed path (return to first coord after the last?)
+	bool path_closed;		// does the coordinates represent a closed path (return to first coord after the last?)   TODO: Move this to PathObject?!
 	Map* map;
 	
 	bool output_dirty;		// does the output have to be re-generated because of changes?
@@ -131,6 +133,55 @@ public:
 	inline float getRotation() const {return rotation;}
 	
 private:
+	float rotation;	// 0 to 2*M_PI
+};
+
+/// Object type which can only be used for text symbols.
+/// Contains either 1 coordinate (single anchor point) or 2 coordinates (word wrap box: midpoint coordinate and width/height in second coordinate)
+class TextObject : public Object
+{
+public:
+	enum HorizontalAlignment
+	{
+		AlignLeft = 0,
+		AlignHCenter = 1,
+		AlignRight = 2
+	};
+	
+	enum VerticalAlignment
+	{
+		AlignBaseline = 0,
+		AlignTop = 1,
+		AlignVCenter = 2,
+		AlignBottom = 3
+	};
+	
+	TextObject(Map* map, Symbol* symbol = NULL);
+	virtual Object* duplicate();
+	
+	inline bool hasSingleAnchor() const {return coords.size() == 1;}
+	void setAnchorPosition(MapCoord position);
+	MapCoord getAnchorPosition();	// or midpoint if a box is used
+	void setBox(MapCoord midpoint, double width, double height);
+	inline double getBoxWidth() const {assert(!hasSingleAnchor()); return coords[1].xd();}
+	inline double getBoxHeight() const {assert(!hasSingleAnchor()); return coords[1].yd();}
+	
+	void setText(const QString& text);
+	inline const QString& getText() const {return text;}
+	
+	void setHorizontalAlignment(HorizontalAlignment h_align);
+	inline HorizontalAlignment getHorizontalAlignment() const {return h_align;}
+	
+	void setVerticalAlignment(VerticalAlignment v_align);
+	inline VerticalAlignment getVerticalAlignment() const {return v_align;}
+	
+	void setRotation(float new_rotation);
+	inline float getRotation() const {return rotation;}
+	
+private:
+	QString text;
+	HorizontalAlignment h_align;
+	VerticalAlignment v_align;
 	float rotation;	// 0 to 2*M_PI
 };
 

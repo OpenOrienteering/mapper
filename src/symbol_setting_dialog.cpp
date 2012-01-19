@@ -22,19 +22,20 @@
 
 #include <QtGui>
 
+#include "map.h"
+#include "object.h"
 #include "symbol.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
+#include "symbol_area.h"
+#include "symbol_text.h"
 #include "main_window.h"
-#include "map.h"
 #include "map_editor.h"
-#include "object.h"
 #include "map_widget.h"
-#include "symbol_point_editor.h"
-#include "template_dock_widget.h"
 #include "template.h"
 #include "template_image.h"
-#include "symbol_area.h"
+#include "template_dock_widget.h"
+#include "symbol_point_editor.h"
 
 SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
@@ -66,6 +67,8 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* pare
 		type_specific_settings = new LineSymbolSettings(reinterpret_cast<LineSymbol*>(symbol), map, this);
 	else if (type == Symbol::Area)
 		type_specific_settings = new AreaSymbolSettings(reinterpret_cast<AreaSymbol*>(symbol), map, this);
+	else if (type == Symbol::Text)
+		type_specific_settings = new TextSymbolSettings(reinterpret_cast<TextSymbol*>(symbol), map, this);
 	else
 		assert(false);
 	
@@ -83,7 +86,12 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Map* map, QWidget* pare
 	MapEditorController* controller = new MapEditorController(MapEditorController::SymbolEditor, preview_map);
 	preview_widget->setController(controller);
 	preview_map_view = controller->getMainWidget()->getMapView();
-	preview_map_view->setZoom(((symbol->getType() == Symbol::Point) ? 8 : 2) * preview_map_view->getZoom());
+	float zoom_factor = 1;
+	if (symbol->getType() == Symbol::Point)
+		zoom_factor = 8;
+	else if (symbol->getType() == Symbol::Line)
+		zoom_factor = 2;
+	preview_map_view->setZoom(zoom_factor * preview_map_view->getZoom());
 	
 	PointSymbolEditorWidget* point_symbol_editor = createPointSymbolEditor();
 	if (point_symbol_editor)
@@ -333,6 +341,22 @@ void SymbolSettingDialog::createPreviewMap()
 		
 		preview_objects.push_back(path);
 	}
+	else if (symbol->getType() == Symbol::Text)
+	{
+		TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);
+		
+		// TODO: Suggestion for the German translation: "Franz, der OL für eine Abkürzung\nvon Oldenbourg hält, jagt im komplett\nverwahrlosten Taxi quer durch Bayern\n1234567890"
+		const QString string = tr("The quick brown fox\ntakes the routechoice\nto jump over the lazy dog\n1234567890");
+		
+		TextObject* object = new TextObject(preview_map, text_symbol);
+		object->setAnchorPosition(MapCoord(0, 0));
+		object->setText(string);
+		object->setHorizontalAlignment(TextObject::AlignHCenter);
+		object->setVerticalAlignment(TextObject::AlignVCenter);
+		preview_map->addObject(object);
+		
+		preview_objects.push_back(object);
+	}
 }
 PointSymbolEditorWidget* SymbolSettingDialog::createPointSymbolEditor()
 {
@@ -353,6 +377,8 @@ PointSymbolEditorWidget* SymbolSettingDialog::createPointSymbolEditor()
 		// TODO!
 		return NULL;
 	}
+	else if (symbol->getType() == Symbol::Text)
+		return NULL;
 	
 	assert(false);
 	return NULL;

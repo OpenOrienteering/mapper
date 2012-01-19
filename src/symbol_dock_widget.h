@@ -55,6 +55,7 @@ protected slots:
 	void newPointSymbol();
 	void newLineSymbol();
 	void newAreaSymbol();
+	void newTextSymbol();
 	void editSymbol();
 	void deleteSymbols();
 	void duplicateSymbol();

@@ -204,4 +204,70 @@ void PointObject::setRotation(float new_rotation)
 	assert(point && point->isRotatable());
 	
 	rotation = new_rotation;
+	setOutputDirty();
+}
+
+// ### TextObject ###
+
+TextObject::TextObject(Map* map, Symbol* symbol): Object(map, Object::Text, symbol)
+{
+	assert(!symbol || (symbol->getType() == Symbol::Text));
+	coords.push_back(MapCoord(0, 0));
+	text = "";
+	h_align = AlignHCenter;
+	v_align = AlignVCenter;
+	rotation = 0;
+}
+Object* TextObject::duplicate()
+{
+	TextObject* new_text = new TextObject(map, symbol);
+	new_text->coords = coords;
+	new_text->path_closed = path_closed;
+	
+	new_text->text = text;
+	new_text->h_align = h_align;
+	new_text->v_align = v_align;
+	new_text->rotation = rotation;
+	return new_text;
+}
+
+void TextObject::setAnchorPosition(MapCoord position)
+{
+	coords.resize(1);
+	coords[0] = position;
+	setOutputDirty();
+}
+MapCoord TextObject::getAnchorPosition()
+{
+	return coords[0];
+}
+void TextObject::setBox(MapCoord midpoint, double width, double height)
+{
+	coords.resize(2);
+	coords[0] = midpoint;
+	coords[1] = MapCoord(width, height);
+	setOutputDirty();
+}
+
+void TextObject::setText(const QString& text)
+{
+	this->text = text;
+	setOutputDirty();
+}
+
+void TextObject::setHorizontalAlignment(TextObject::HorizontalAlignment h_align)
+{
+	this->h_align = h_align;
+	setOutputDirty();
+}
+void TextObject::setVerticalAlignment(TextObject::VerticalAlignment v_align)
+{
+	this->v_align = v_align;
+	setOutputDirty();
+}
+
+void TextObject::setRotation(float new_rotation)
+{
+	rotation = new_rotation;
+	setOutputDirty();
 }

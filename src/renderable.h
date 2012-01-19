@@ -32,11 +32,12 @@ class QPainterPath;
 QT_END_NAMESPACE
 
 class Map;
+class Object;
 class Symbol;
 class PointSymbol;
 class LineSymbol;
 class AreaSymbol;
-class Object;
+class TextSymbol;
 
 /// Contains state information about the painter which must be set when rendering a Renderable. Used to order the Renderables by color and minimize state changes
 struct RenderStates
@@ -186,6 +187,22 @@ public:
 	
 protected:
 	QPainterPath path;
+};
+
+class TextRenderable : public Renderable
+{
+public:
+	TextRenderable(TextSymbol* symbol, double line_x, double line_y, double anchor_x, double anchor_y, double rotation, const QString& line, const QFont& font);
+	virtual void render(QPainter& painter);
+	virtual void getRenderStates(RenderStates& out);
+	//virtual Renderable* clone();
+	
+protected:
+	QPainterPath path;
+	double anchor_x;
+	double anchor_y;
+	double rotation;
+	double scale_factor;
 };
 
 #endif

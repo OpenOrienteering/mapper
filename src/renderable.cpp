@@ -26,6 +26,8 @@
 #include "symbol_point.h"
 #include "symbol_line.h"
 #include "symbol_area.h"
+#include "symbol_text.h"
+#include "util.h"
 
 Renderable::Renderable()
 {
@@ -159,7 +161,7 @@ DotRenderable::DotRenderable(PointSymbol* symbol, MapCoordF coord) : Renderable(
 }
 void DotRenderable::getRenderStates(RenderStates& out)
 {
-	PointSymbol* point = reinterpret_cast<PointSymbol*>(symbol);
+	PointSymbol* point = reinterpret_cast<PointSymbol*>(symbol);	// TODO: Check: do all renderables keep the symbol pointer just to fetch their color priority? Isn't that a bit strange?
 	
 	out.color_priority = point->getInnerColor()->priority;
 	assert(out.color_priority < 3000);
@@ -341,4 +343,75 @@ void AreaRenderable::getRenderStates(RenderStates& out)
 void AreaRenderable::render(QPainter& painter)
 {
 	painter.drawPath(path);
+}
+
+// ### TextRenderable ###
+
+TextRenderable::TextRenderable(TextSymbol* symbol, double line_x, double line_y, double anchor_x, double anchor_y, double rotation, const QString& line, const QFont& font) : Renderable()
+{
+	this->symbol = symbol;
+	this->anchor_x = anchor_x;
+	this->anchor_y = anchor_y;
+	this->rotation = rotation;
+	scale_factor = symbol->getFontSize() / TextSymbol::internal_point_size;
+	
+	path.setFillRule(Qt::WindingFill);	// Otherwise, when text and an underline intersect, holes appear
+	/*if (rotation == 0)
+		path.addText(line_x + anchor_x, line_y + anchor_y, font, line);
+	else*/
+		path.addText(line_x, line_y, font, line);
+	
+	// Get extent
+	extent = path.controlPointRect();
+	extent = QRectF(scale_factor * extent.left(), scale_factor * extent.top(), scale_factor * extent.width(), scale_factor * extent.height());
+	if (rotation != 0)
+	{
+		float rcos = cos(-rotation);
+		float rsin = sin(-rotation);
+		
+		std::vector<QPointF> extent_corners;
+		extent_corners.push_back(extent.topLeft());
+		extent_corners.push_back(extent.topRight());
+		extent_corners.push_back(extent.bottomRight());
+		extent_corners.push_back(extent.bottomLeft());
+		
+		for (int i = 0; i < 4; ++i)
+		{
+			float x = extent_corners[i].x() * rcos - extent_corners[i].y() * rsin;
+			float y = extent_corners[i].y() * rcos + extent_corners[i].x() * rsin;
+			
+			if (i == 0)
+				extent = QRectF(x, y, 0, 0);
+			else
+				rectInclude(extent, QPointF(x, y));
+		}
+	}
+	extent = QRectF(extent.left() + anchor_x, extent.top() + anchor_y, extent.width(), extent.height());
+	
+	assert(extent.right() < 999999);	// assert if bogus values are returned
+}
+void TextRenderable::getRenderStates(RenderStates& out)
+{
+	TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);
+	
+	out.color_priority = text_symbol->getColor()->priority;
+	out.mode = RenderStates::BrushOnly;
+	out.pen_width = 0;
+	out.clip_path = clip_path;
+}
+void TextRenderable::render(QPainter& painter)
+{
+	// NOTE: mini-optimization to prevent the save-restore for un-rotated texts which could be used when the scale-hack is no longer necessary
+	/*if (rotation == 0)
+		painter.drawPath(path);
+	else
+	{*/
+		painter.save();
+		painter.translate(anchor_x, anchor_y);
+		if (rotation != 0)
+			painter.rotate(rotation);
+		painter.scale(scale_factor, scale_factor);
+		painter.drawPath(path);
+		painter.restore();
+	//}
 }

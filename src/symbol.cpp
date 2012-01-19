@@ -27,6 +27,7 @@
 #include "symbol_line.h"
 #include "symbol_point.h"
 #include "symbol_area.h"
+#include "symbol_text.h"
 
 Symbol::Symbol(Type type) : type(type), name(""), description(""), is_helper_symbol(false), icon(NULL)
 {
@@ -93,6 +94,13 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	Object* object = NULL;
 	if (type == Point)
 		object = new PointObject(&icon_map, MapCoord(0, 0), this);
+	else if (type == Line)
+	{
+		PathObject* path = new PathObject(&icon_map, this);
+		path->addCoordinate(0, MapCoord(-max_icon_mm_half, max_icon_mm_half));
+		path->addCoordinate(1, MapCoord(max_icon_mm_half, -max_icon_mm_half));
+		object = path;
+	}
 	else if (type == Area)
 	{
 		PathObject* path = new PathObject(&icon_map, this);
@@ -102,12 +110,14 @@ QImage* Symbol::getIcon(Map* map, bool update)
 		path->addCoordinate(3, MapCoord(-max_icon_mm_half, max_icon_mm_half));
 		object = path;
 	}
-	else if (type == Line)
+	else if (type == Text)
 	{
-		PathObject* path = new PathObject(&icon_map, this);
-		path->addCoordinate(0, MapCoord(-max_icon_mm_half, max_icon_mm_half));
-		path->addCoordinate(1, MapCoord(max_icon_mm_half, -max_icon_mm_half));
-		object = path;
+		TextObject* text = new TextObject(&icon_map, this);
+		text->setAnchorPosition(MapCoord(0, 0));
+		text->setHorizontalAlignment(TextObject::AlignHCenter);
+		text->setVerticalAlignment(TextObject::AlignVCenter);
+		text->setText("A");
+		object = text;
 	}
 	else
 		assert(false);
@@ -151,6 +161,8 @@ Symbol* Symbol::getSymbolForType(Symbol::Type type)
 		return new LineSymbol();
 	else if (type == Symbol::Area)
 		return new AreaSymbol();
+	else if (type == Symbol::Text)
+		return new TextSymbol();
 	else
 	{
 		assert(false);

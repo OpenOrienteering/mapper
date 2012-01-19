@@ -29,6 +29,7 @@
 #include "symbol_point.h"
 #include "symbol_line.h"
 #include "symbol_area.h"
+#include "symbol_text.h"
 
 // ### SymbolRenderWidget ###
 
@@ -53,8 +54,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	/*QAction* new_point_action =*/ new_menu->addAction(tr("Point"), this, SLOT(newPointSymbol()));
 	/*QAction* new_line_action =*/ new_menu->addAction(tr("Line"), this, SLOT(newLineSymbol()));
 	/*QAction* new_area_action =*/ new_menu->addAction(tr("Area"), this, SLOT(newAreaSymbol()));
-	QAction* new_text_action = new_menu->addAction(tr("Text"));
-	new_text_action->setEnabled(false);
+	/*QAction* new_text_action =*/ new_menu->addAction(tr("Text"), this, SLOT(newTextSymbol()));
 	QAction* new_combined_action = new_menu->addAction(tr("Combined"));
 	new_combined_action->setEnabled(false);
 	context_menu->addMenu(new_menu);
@@ -501,6 +501,10 @@ void SymbolRenderWidget::newLineSymbol()
 void SymbolRenderWidget::newAreaSymbol()
 {
 	newSymbol(new AreaSymbol());
+}
+void SymbolRenderWidget::newTextSymbol()
+{
+	newSymbol(new TextSymbol());
 }
 void SymbolRenderWidget::editSymbol()
 {
