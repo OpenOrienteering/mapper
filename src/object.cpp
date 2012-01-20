@@ -98,8 +98,11 @@ bool Object::update(bool force)
 		for (++it; it != end; ++it)
 		{
 			(*it)->setCreator(this);
-			rectInclude(extent, (*it)->getExtent());
-			assert(extent.right() < 999999);	// assert if bogus values are returned
+			if ((*it)->getClipPath() == NULL)	// NOTE: This check is not done for the first element
+			{
+				rectInclude(extent, (*it)->getExtent());
+				assert(extent.right() < 999999);	// assert if bogus values are returned
+			}
 		}
 	}
 	else

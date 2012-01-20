@@ -60,21 +60,6 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Symbol* in_map_symbol, 
 	helper_symbol_check = new QCheckBox(tr("Helper symbol (not shown in finished map)"));
 	helper_symbol_check->setChecked(symbol->isHelperSymbol());
 	
-	QWidget* type_specific_settings;
-	Symbol::Type type = symbol->getType();
-	if (type == Symbol::Point)
-		type_specific_settings = new PointSymbolSettings(reinterpret_cast<PointSymbol*>(symbol), map, this);
-	else if (type == Symbol::Line)
-		type_specific_settings = new LineSymbolSettings(reinterpret_cast<LineSymbol*>(symbol), map, this);
-	else if (type == Symbol::Area)
-		type_specific_settings = new AreaSymbolSettings(reinterpret_cast<AreaSymbol*>(symbol), map, this);
-	else if (type == Symbol::Text)
-		type_specific_settings = new TextSymbolSettings(reinterpret_cast<TextSymbol*>(symbol), map, this);
-	else if (type == Symbol::Combined)
-		type_specific_settings = new CombinedSymbolSettings(reinterpret_cast<CombinedSymbol*>(symbol), reinterpret_cast<CombinedSymbol*>(in_map_symbol), map, this);
-	else
-		assert(false);
-	
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
 	ok_button = new QPushButton(QIcon("images/arrow-right.png"), tr("Ok"));
 	ok_button->setDefault(true);
@@ -96,12 +81,22 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Symbol* in_map_symbol, 
 		zoom_factor = 2;
 	preview_map_view->setZoom(zoom_factor * preview_map_view->getZoom());
 	
-	PointSymbolEditorWidget* point_symbol_editor = createPointSymbolEditor();
-	if (point_symbol_editor)
-	{
-		controller->setTool(new PointSymbolEditorTool(controller, point_symbol_editor));
-		controller->setEditorActivity(new PointSymbolEditorActivity(preview_map, point_symbol_editor));
-	}
+	PointSymbolEditorWidget* point_symbol_editor = createPointSymbolEditor(controller);
+	
+	QWidget* type_specific_settings;
+	Symbol::Type type = symbol->getType();
+	if (type == Symbol::Point)
+		type_specific_settings = new PointSymbolSettings(reinterpret_cast<PointSymbol*>(symbol), map, this);
+	else if (type == Symbol::Line)
+		type_specific_settings = new LineSymbolSettings(reinterpret_cast<LineSymbol*>(symbol), map, this);
+	else if (type == Symbol::Area)
+		type_specific_settings = new AreaSymbolSettings(reinterpret_cast<AreaSymbol*>(symbol), map, this, point_symbol_editor);
+	else if (type == Symbol::Text)
+		type_specific_settings = new TextSymbolSettings(reinterpret_cast<TextSymbol*>(symbol), map, this);
+	else if (type == Symbol::Combined)
+		type_specific_settings = new CombinedSymbolSettings(reinterpret_cast<CombinedSymbol*>(symbol), reinterpret_cast<CombinedSymbol*>(in_map_symbol), map, this);
+	else
+		assert(false);
 	
 	QVBoxLayout* middle_layout = NULL;
 	if (symbol->getType() == Symbol::Point)
@@ -331,13 +326,14 @@ void SymbolSettingDialog::createPreviewMap()
 	}
 	else if (symbol->getType() == Symbol::Area)
 	{
-		const float half_radius = 5;
+		const float half_radius = 8;
+		const float offset_y = 0;
 		
 		PathObject* path = new PathObject(preview_map, symbol);
-		path->addCoordinate(0, MapCoordF(-half_radius, -half_radius).toMapCoord());
-		path->addCoordinate(1, MapCoordF(half_radius, -half_radius).toMapCoord());
-		path->addCoordinate(2, MapCoordF(half_radius, half_radius).toMapCoord());
-		path->addCoordinate(3, MapCoordF(-half_radius, half_radius).toMapCoord());
+		path->addCoordinate(0, MapCoordF(-half_radius, -half_radius + offset_y).toMapCoord());
+		path->addCoordinate(1, MapCoordF(half_radius, -half_radius + offset_y).toMapCoord());
+		path->addCoordinate(2, MapCoordF(half_radius, half_radius + offset_y).toMapCoord());
+		path->addCoordinate(3, MapCoordF(-half_radius, half_radius + offset_y).toMapCoord());
 		preview_map->addObject(path);
 		
 		preview_objects.push_back(path);
@@ -371,14 +367,14 @@ void SymbolSettingDialog::createPreviewMap()
 		preview_objects.push_back(path);
 	}
 }
-PointSymbolEditorWidget* SymbolSettingDialog::createPointSymbolEditor()
+PointSymbolEditorWidget* SymbolSettingDialog::createPointSymbolEditor(MapEditorController* controller)
 {
 	if (symbol->getType() == Symbol::Point)
 	{
 		PointSymbol* point = reinterpret_cast<PointSymbol*>(symbol);
 		std::vector<PointSymbol*> point_vector;
 		point_vector.push_back(point);
-		return new PointSymbolEditorWidget(preview_map, point_vector);
+		return new PointSymbolEditorWidget(preview_map, controller, point_vector);
 	}
 	else if (symbol->getType() == Symbol::Line)
 	{
@@ -387,8 +383,16 @@ PointSymbolEditorWidget* SymbolSettingDialog::createPointSymbolEditor()
 	}
 	else if (symbol->getType() == Symbol::Area)
 	{
-		// TODO!
-		return NULL;
+		AreaSymbol* area = reinterpret_cast<AreaSymbol*>(symbol);
+		std::vector<PointSymbol*> point_vector;
+		for (int i = 0; i < area->getNumFillPatterns(); ++i)
+		{
+			if (area->getFillPattern(i).type == AreaSymbol::FillPattern::PointPattern)
+				point_vector.push_back(area->getFillPattern(i).point);
+		}
+		PointSymbolEditorWidget* point_editor = new PointSymbolEditorWidget(preview_map, controller, point_vector, 16);
+		connect(point_editor, SIGNAL(symbolEdited()), this, SLOT(createPreviewMap()));
+		return point_editor;
 	}
 	else if (symbol->getType() == Symbol::Text || symbol->getType() == Symbol::Combined)
 		return NULL;

@@ -152,8 +152,7 @@ void RenderableContainer::removeRenderablesOfObject(Object* object, bool mark_ar
 
 DotRenderable::DotRenderable(PointSymbol* symbol, MapCoordF coord) : Renderable()
 {
-	this->symbol = symbol;
-	
+	color_priority = symbol->getInnerColor()->priority;
 	double x = coord.getX();
 	double y = coord.getY();
 	double radius = (0.001 * symbol->getInnerRadius());
@@ -161,9 +160,7 @@ DotRenderable::DotRenderable(PointSymbol* symbol, MapCoordF coord) : Renderable(
 }
 void DotRenderable::getRenderStates(RenderStates& out)
 {
-	PointSymbol* point = reinterpret_cast<PointSymbol*>(symbol);	// TODO: Check: do all renderables keep the symbol pointer just to fetch their color priority? Isn't that a bit strange?
-	
-	out.color_priority = point->getInnerColor()->priority;
+	out.color_priority = color_priority;
 	assert(out.color_priority < 3000);
 	out.mode = RenderStates::BrushOnly;
 	out.pen_width = 0;
@@ -181,8 +178,7 @@ void DotRenderable::render(QPainter& painter)
 
 CircleRenderable::CircleRenderable(PointSymbol* symbol, MapCoordF coord) : Renderable()
 {
-	this->symbol = symbol;
-	
+	color_priority = symbol->getOuterColor()->priority;
 	double x = coord.getX();
 	double y = coord.getY();
 	line_width = 0.001f * symbol->getOuterWidth();
@@ -192,9 +188,7 @@ CircleRenderable::CircleRenderable(PointSymbol* symbol, MapCoordF coord) : Rende
 }
 void CircleRenderable::getRenderStates(RenderStates& out)
 {
-	PointSymbol* point = reinterpret_cast<PointSymbol*>(symbol);
-	
-	out.color_priority = point->getOuterColor()->priority;
+	out.color_priority = color_priority;
 	assert(out.color_priority < 3000);
 	out.mode = RenderStates::PenOnly;
 	out.pen_width = line_width;
@@ -212,8 +206,7 @@ void CircleRenderable::render(QPainter& painter)
 
 LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed) : Renderable()
 {
-	this->symbol = symbol;
-	
+	color_priority = symbol->getColor()->priority;
 	line_width = 0.001f * symbol->getLineWidth();
 	
 	switch (symbol->getCapStyle())
@@ -261,9 +254,7 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 }
 void LineRenderable::getRenderStates(RenderStates& out)
 {
-	LineSymbol* line = reinterpret_cast<LineSymbol*>(symbol);
-	
-	out.color_priority = line->getColor()->priority;
+	out.color_priority = color_priority;
 	out.mode = RenderStates::PenOnly;
 	out.pen_width = line_width;
 	out.clip_path = clip_path;
@@ -293,7 +284,7 @@ void LineRenderable::render(QPainter& painter)
 
 AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords) : Renderable()
 {
-	this->symbol = symbol;
+	color_priority = symbol->getColor() ? symbol->getColor()->priority : MapColor::Reserved;
 	
 	// Special case: first coord
 	path.moveTo(transformed_coords[0].toQPointF());
@@ -329,16 +320,10 @@ AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transf
 }
 void AreaRenderable::getRenderStates(RenderStates& out)
 {
-	AreaSymbol* area = reinterpret_cast<AreaSymbol*>(symbol);
-	if (area->getColor() != NULL)
-	{
-		out.color_priority = area->getColor()->priority;
-		out.mode = RenderStates::BrushOnly;
-		out.pen_width = 0;
-		out.clip_path = clip_path;
-	}
-	else
-		out.color_priority = MapColor::Reserved;
+	out.color_priority = color_priority;
+	out.mode = RenderStates::BrushOnly;
+	out.pen_width = 0;
+	out.clip_path = clip_path;
 }
 void AreaRenderable::render(QPainter& painter)
 {
@@ -349,7 +334,7 @@ void AreaRenderable::render(QPainter& painter)
 
 TextRenderable::TextRenderable(TextSymbol* symbol, double line_x, double line_y, double anchor_x, double anchor_y, double rotation, const QString& line, const QFont& font) : Renderable()
 {
-	this->symbol = symbol;
+	color_priority = symbol->getColor()->priority;
 	this->anchor_x = anchor_x;
 	this->anchor_y = anchor_y;
 	this->rotation = rotation;
@@ -392,9 +377,7 @@ TextRenderable::TextRenderable(TextSymbol* symbol, double line_x, double line_y,
 }
 void TextRenderable::getRenderStates(RenderStates& out)
 {
-	TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);
-	
-	out.color_priority = text_symbol->getColor()->priority;
+	out.color_priority = color_priority;
 	out.mode = RenderStates::BrushOnly;
 	out.pen_width = 0;
 	out.clip_path = clip_path;

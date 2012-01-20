@@ -94,13 +94,13 @@ public:
 	virtual ~Renderable();
 	
 	inline const QRectF& getExtent() const {return extent;}
-	inline Symbol* getSymbol() const {return symbol;}
 	
 	/// Renders the renderable with the given painter
 	virtual void render(QPainter& painter) = 0;
 	
-	/// Sets the clip path to use (NULL by default)
-	//inline void setClipPath(QPainterPath* new_clip_path) {clip_path = new_clip_path;}
+	/// Sets / gets the clip path to use (NULL by default)
+	inline void setClipPath(QPainterPath* new_clip_path) {clip_path = new_clip_path;}
+	inline QPainterPath* getClipPath() const {return clip_path;}
 	
 	/// Creates the render state information which must be set when rendering this renderable
 	virtual void getRenderStates(RenderStates& out) = 0;
@@ -115,8 +115,8 @@ public:
 protected:
 	
 	QRectF extent;
-	Symbol* symbol;
 	Object* creator;	// this is useful for the deletion of all renderables created by an object
+	int color_priority;
 	QPainterPath* clip_path;
 };
 
@@ -184,6 +184,8 @@ public:
 	virtual void render(QPainter& painter);
 	virtual void getRenderStates(RenderStates& out);
 	//virtual Renderable* clone();
+	
+	inline QPainterPath* getPainterPath() {return &path;}
 	
 protected:
 	QPainterPath path;

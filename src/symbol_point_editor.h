@@ -34,6 +34,7 @@ class QTableWidget;
 class QCheckBox;
 QT_END_NAMESPACE
 
+class PointSymbolEditorActivity;
 class PointObject;
 class PointSymbol;
 class ColorDropDown;
@@ -46,10 +47,20 @@ class PointSymbolEditorWidget : public QWidget
 Q_OBJECT
 friend class PointSymbolEditorActivity;
 public:
-	PointSymbolEditorWidget(Map* map, std::vector< PointSymbol* > symbols, QWidget* parent = 0);
+	PointSymbolEditorWidget(Map* map, MapEditorController* controller, std::vector< PointSymbol* > symbols, float offset_y = 0, QWidget* parent = 0);
+	
+	/// Add or remove symbols from the list of editable symbols
+	void addSymbol(PointSymbol* symbol);
+	void removeSymbol(PointSymbol* symbol);
+	
+	void setCurrentSymbol(PointSymbol* symbol);
+	void updateSymbolNames();
 	
 	bool changeCurrentCoordinate(MapCoordF new_coord);	// returns if successful
 	bool addCoordinate(MapCoordF new_coord);				// returns if successful
+	
+signals:
+	void symbolEdited();
 	
 private slots:
 	void updateElementList();
@@ -88,6 +99,7 @@ private:
 		PointObject* midpoint_object;
 	};
 	
+	void updateSymbolPositions();
 	void updateCoordsTable();
 	void addCoordsRow(int row);
 	void updateCoordsRow(int row);
@@ -101,6 +113,7 @@ private:
 	Object* getMidpointObject();
 	
 	std::vector< SymbolInfo > symbol_info;
+	QLabel* current_symbol_label;
 	QComboBox* current_symbol_combo;
 	PointSymbol* current_symbol;
 	
@@ -127,6 +140,8 @@ private:
 	QPushButton* delete_coord_button;
 	
 	bool react_to_changes;
+	float offset_y;
+	PointSymbolEditorActivity* activity;
 	Map* map;
 };
 
@@ -152,6 +167,7 @@ public:
 	PointSymbolEditorActivity(Map* map, PointSymbolEditorWidget* widget);
 	
     virtual void init();
+	void update();
     virtual void draw(QPainter* painter, MapWidget* widget);
 	
 private:

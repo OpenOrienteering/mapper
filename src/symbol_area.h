@@ -25,14 +25,46 @@
 
 #include "symbol.h"
 
+QT_BEGIN_NAMESPACE
+class QPushButton;
+class QLabel;
+QT_END_NAMESPACE
+
 class ColorDropDown;
 class SymbolSettingDialog;
+class PointSymbolEditorWidget;
+class PathObject;
 
 class AreaSymbol : public Symbol
 {
 friend class AreaSymbolSettings;
 friend class PointSymbolEditorWidget;
 public:
+	struct FillPattern
+	{
+		enum Type
+		{
+			LinePattern = 1,
+			PointPattern = 2
+		};
+		
+		Type type;
+		float angle;			// 0 to 2*M_PI
+		int line_spacing;		// in 0.001mm
+		
+		MapColor* line_color;	// only if type == LinePattern
+		int line_width;			// line width if type == LinePattern
+		
+		int point_distance;		// point distance if type == PointPattern
+		PointSymbol* point;		// contained point symbol if type == PointPattern
+		
+		FillPattern();
+		void save(QFile* file, Map* map);
+		bool load(QFile* file, Map* map);
+		void createRenderables(QRectF extent, RenderableVector& output);
+		void createLine(MapCoordVectorF& coords, LineSymbol* line, PathObject* path, RenderableVector& output);
+	};
+	
 	AreaSymbol();
 	virtual ~AreaSymbol();
     virtual Symbol* duplicate();
@@ -44,27 +76,61 @@ public:
 	// Getters
 	inline MapColor* getColor() const {return color;}
 	
+	inline int getNumFillPatterns() const {return (int)patterns.size();}
+	inline FillPattern& getFillPattern(int i) {return patterns[i];}
+	
 protected:
 	virtual void saveImpl(QFile* file, Map* map);
 	virtual bool loadImpl(QFile* file, Map* map);
 	
 	MapColor* color;
+	std::vector<FillPattern> patterns;
 };
 
 class AreaSymbolSettings : public QGroupBox
 {
 Q_OBJECT
 public:
-	AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSettingDialog* parent);
+	AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSettingDialog* parent, PointSymbolEditorWidget* point_editor);
 	
 protected slots:
 	void colorChanged();
+	void addFillClicked();
+	void deleteFillClicked();
+	void fillNumberChanged(int index);
+	void fillTypeChanged(int index);
+	void fillAngleChanged(QString text);
+	void fillSpacingChanged(QString text);
+	void fillColorChanged();
+	void fillLinewidthChanged(QString text);
+	void fillPointdistChanged(QString text);
 	
 private:
+	void updatePointSymbolNames();
+	void updateFillWidgets(bool show);
+	
 	AreaSymbol* symbol;
 	SymbolSettingDialog* dialog;
+	PointSymbolEditorWidget* point_editor;
 	
 	ColorDropDown* color_edit;
+	QPushButton* add_fill_button;
+	QPushButton* delete_fill_button;
+	
+	QWidget* fill_pattern_widget;
+	QComboBox* fill_number_combo;
+	QComboBox* fill_type_combo;
+	QLineEdit* fill_angle_edit;
+	QLineEdit* fill_spacing_edit;
+	
+	QLabel* fill_color_label;
+	ColorDropDown* fill_color_edit;
+	QLabel* fill_linewidth_label;
+	QLineEdit* fill_linewidth_edit;
+	QLabel* fill_pointdist_label;
+	QLineEdit* fill_pointdist_edit;
+	
+	bool react_to_changes;
 };
 
 #endif

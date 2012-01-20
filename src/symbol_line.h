@@ -66,11 +66,15 @@ public:
 	/// TODO: Should that better be a line property?
 	static const float miterLimit() {return 1;}
 	
-	// Getters
+	// Getters / Setters
 	inline int getLineWidth() const {return line_width;}
+	inline void setLineWidth(double width) {line_width = qRound(1000 * width);}
 	inline MapColor* getColor() const {return color;}
+	inline void setColor(MapColor* color) {this->color = color;}
 	inline CapStyle getCapStyle() const {return cap_style;}
+	inline void setCapStyle(CapStyle style) {cap_style = style;}
 	inline JoinStyle getJoinStyle() const {return join_style;}
+	inline void setJoinStyle(JoinStyle style) {join_style = style;}
 	
 protected:
 	virtual void saveImpl(QFile* file, Map* map);
