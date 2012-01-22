@@ -72,6 +72,10 @@ Symbol* PointSymbol::duplicate()
 
 void PointSymbol::createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output)
 {
+	createRenderablesScaled(object, coords, output, 1.0f);
+}
+void PointSymbol::createRenderablesScaled(Object* object, const MapCoordVectorF& coords, RenderableVector& output, float coord_scale)
+{
 	if (inner_color && inner_radius > 0)
 		output.push_back(new DotRenderable(this, coords[0]));
 	if (outer_color && outer_width > 0)
@@ -96,8 +100,8 @@ void PointSymbol::createRenderables(Object* object, const MapCoordVectorF& coord
 		{
 			for (int c = 0; c < coords_size; ++c)
 			{
-				transformed_coords[c] = MapCoordF(original_coords[c].xd() + offset_x,
-												  original_coords[c].yd() + offset_y);
+				transformed_coords[c] = MapCoordF(coord_scale * original_coords[c].xd() + offset_x,
+												  coord_scale * original_coords[c].yd() + offset_y);
 			}
 		}
 		else
@@ -107,8 +111,8 @@ void PointSymbol::createRenderables(Object* object, const MapCoordVectorF& coord
 			
 			for (int c = 0; c < coords_size; ++c)
 			{
-				float ox = original_coords[c].xd();
-				float oy = original_coords[c].yd();
+				float ox = coord_scale * original_coords[c].xd();
+				float oy = coord_scale * original_coords[c].yd();
 				transformed_coords[c] = MapCoordF(ox * cosr - oy * sinr + offset_x,
 												  oy * cosr + ox * sinr + offset_y);
 			}
@@ -120,7 +124,7 @@ void PointSymbol::createRenderables(Object* object, const MapCoordVectorF& coord
 	}
 }
 
-int PointSymbol::getNumElements()
+int PointSymbol::getNumElements() const
 {
 	return (int)objects.size();
 }
@@ -143,6 +147,11 @@ void PointSymbol::deleteElement(int pos)
 	objects.erase(objects.begin() + pos);
 	delete symbols[pos];
 	symbols.erase(symbols.begin() + pos);
+}
+
+bool PointSymbol::isEmpty() const
+{
+	return getNumElements() == 0 && (inner_color == NULL || inner_radius == 0) && (outer_color == NULL || outer_width == 0);
 }
 
 void PointSymbol::colorDeleted(Map* map, int pos, MapColor* color)

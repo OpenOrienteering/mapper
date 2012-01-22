@@ -52,6 +52,14 @@ public:
 	inline bool isCurveStart() const {return x & 1;}
 	inline void setCurveStart(bool value) {x = (x & (~1)) | (value ? 1 : 0);}
 	
+	// Is this the first point of a hole in an area or the start of a hole for a line?
+	inline bool isHolePoint() const {return y & 1;}
+	inline void setHolePoint(bool value) {y = (y & (~1)) | (value ? 1 : 0);}
+	
+	// Should a dash of a line be placed here?
+	inline bool isDashPoint() const {return y & 2;}
+	inline void setDashPoint(bool value) {y = (y & (~2)) | (value ? 2 : 0);}
+	
 	inline QPointF toQPointF() const
 	{
 		return QPointF(xd(), yd());
@@ -118,6 +126,15 @@ public:
 	inline bool operator== (const MapCoordF& other) const
 	{
 		return (other.x == x) && (other.y == y);
+	}
+	
+	inline MapCoordF operator* (const float factor) const
+	{
+		return MapCoordF(factor*x, factor*y);
+	}
+	inline MapCoordF operator+ (const MapCoordF& other) const
+	{
+		return MapCoordF(x+other.x, y+other.y);
 	}
 	
 	inline QPointF toQPointF() const

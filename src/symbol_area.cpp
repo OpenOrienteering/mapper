@@ -111,6 +111,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, RenderableVector&
 	// Helpers
 	LineSymbol line;
 	PathObject path(NULL, NULL);
+	PointObject point_object(NULL, MapCoord(0, 0), point);
 	MapCoordVectorF coords;
 	if (type == LinePattern)
 	{
@@ -137,7 +138,6 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, RenderableVector&
 	else
 	{
 		// TODO: Ugly method to get the point's extent
-		PointObject point_object(NULL, MapCoord(0, 0), point);
 		point_object.update(true);
 		fill_extent = point_object.getExtent();
 	}
@@ -152,7 +152,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, RenderableVector&
 		{
 			coords[0] = MapCoordF(cur, extent.top());
 			coords[1] = MapCoordF(cur, extent.bottom());
-			createLine(coords, &line, &path, output);
+			createLine(coords, &line, &path, &point_object, output);
 		}
 	}
 	else if (qAbs(rotation - 0) < 0.0001)
@@ -163,7 +163,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, RenderableVector&
 		{
 			coords[0] = MapCoordF(extent.left(), cur);
 			coords[1] = MapCoordF(extent.right(), cur);
-			createLine(coords, &line, &path, output);
+			createLine(coords, &line, &path, &point_object, output);
 		}
 	}
 	else
@@ -208,7 +208,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, RenderableVector&
 				// Create the renderable(s)
 				coords[0] = MapCoordF(start_x, start_y);
 				coords[1] = MapCoordF(end_x, end_y);
-				createLine(coords, &line, &path, output);
+				createLine(coords, &line, &path, &point_object, output);
 				
 				// Move to next position
 				start_x += dist_x;
@@ -245,7 +245,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, RenderableVector&
 				// Create the renderable(s)
 				coords[0] = MapCoordF(start_x, start_y);
 				coords[1] = MapCoordF(end_x, end_y);
-				createLine(coords, &line, &path, output);
+				createLine(coords, &line, &path, &point_object, output);
 				
 				// Move to next position
 				start_x += dist_x;
@@ -254,7 +254,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, RenderableVector&
 		}
 	}
 }
-void AreaSymbol::FillPattern::createLine(MapCoordVectorF& coords, LineSymbol* line, PathObject* path, RenderableVector& output)
+void AreaSymbol::FillPattern::createLine(MapCoordVectorF& coords, LineSymbol* line, PathObject* path, PointObject* point_object, RenderableVector& output)
 {
 	if (type == LinePattern)
 		line->createRenderables(path, coords, output);
@@ -276,8 +276,8 @@ void AreaSymbol::FillPattern::createLine(MapCoordVectorF& coords, LineSymbol* li
 		
 		for (float cur = first; cur < length; cur += 0.001*point_distance)
 		{
-			// TODO: hack-ish misuse of the point symbol here (with a path instead of point object and with coords.size() == 2 instead of 1)
-			point->createRenderables(path, coords, output);
+			// TODO: hack-ish misuse of the point symbol here (with a different point object and with coords.size() == 2 instead of 1)
+			point->createRenderables(point_object, coords, output);
 			coords[0].setX(coords[0].getX() + step_x);
 			coords[0].setY(coords[0].getY() + step_y);
 		}

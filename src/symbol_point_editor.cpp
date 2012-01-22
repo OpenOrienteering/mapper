@@ -361,9 +361,11 @@ bool PointSymbolEditorWidget::addCoordinate(MapCoordF new_coord)
 
 void PointSymbolEditorWidget::updateSymbolPositions()
 {
+	const float symbol_distance = 10;
+	
 	for (int i = 0; i < (int)symbol_info.size(); ++i)
 	{
-		symbol_info[i].origin_x = -10 * ((int)symbol_info.size() - 1) + 20 * i;
+		symbol_info[i].origin_x = -(symbol_distance / 2) * ((int)symbol_info.size() - 1) + symbol_distance * i;
 		symbol_info[i].origin_y = offset_y;
 		
 		symbol_info[i].midpoint_object->setPosition(MapCoord(symbol_info[i].origin_x, symbol_info[i].origin_y));
@@ -561,7 +563,15 @@ void PointSymbolEditorWidget::lineClosedClicked(bool checked)
 {
 	if (!react_to_changes) return;
 	Object* object = getCurrentElementObject();
+	if (!checked && object->getCoordinateCount() >= 3 && object->getCoordinate(object->getCoordinateCount() - 3).isCurveStart())
+	{
+		PathObject* path = reinterpret_cast<PathObject*>(object);
+		MapCoord coord = path->getCoordinate(object->getCoordinateCount() - 3);
+		coord.setCurveStart(false);
+		path->setCoordinate(object->getCoordinateCount() - 3, coord);
+	}
 	object->setPathClosed(checked);
+	updateCoordsTable();
 	getMidpointObject()->update(true);
 	emit(symbolEdited());
 }
@@ -713,7 +723,7 @@ void PointSymbolEditorWidget::updateCoordsRow(int row)
 	coords_table->item(row, 1)->setText(QString::number(coords[row].yd()));
 	
 	bool has_curve_start_box = (object->getType() != Object::Point) &&
-	                           (row < (int)coords.size() - 3) &&
+	                           (row < (int)coords.size() - (object->isPathClosed() ? 2 : 3)) &&
 	                           (!coords[row+1].isCurveStart() && !coords[row+2].isCurveStart()) &&
 	                           (row <= 0 || !coords[row-1].isCurveStart()) &&
 	                           (row <= 1 || !coords[row-2].isCurveStart());

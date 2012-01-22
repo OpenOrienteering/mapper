@@ -27,6 +27,9 @@
 #include "map_color.h"
 #include "util.h"
 #include "symbol_setting_dialog.h"
+#include "symbol_point.h"
+
+const float LineSymbol::bezier_error = 0.25f;
 
 LineSymbol::LineSymbol() : Symbol(Symbol::Line)
 {
@@ -34,6 +37,21 @@ LineSymbol::LineSymbol() : Symbol(Symbol::Line)
 	color = NULL;
 	cap_style = FlatCap;
 	join_style = MiterJoin;
+	pointed_cap_length = 1000;
+	
+	start_symbol = NULL;
+	mid_symbol = NULL;
+	end_symbol = NULL;
+	dash_symbol = NULL;
+	
+	dashed = false;
+	segment_length = 4000;
+
+	dash_length = 4000;
+	break_length = 1000;
+	dashes_in_group = 1;
+	in_group_break_length = 500;
+	half_outer_dashes = false;
 }
 LineSymbol::~LineSymbol()
 {
@@ -46,6 +64,18 @@ Symbol* LineSymbol::duplicate()
 	new_line->color = color;
 	new_line->cap_style = cap_style;
 	new_line->join_style = join_style;
+	new_line->pointed_cap_length = pointed_cap_length;
+	new_line->start_symbol = start_symbol ? reinterpret_cast<PointSymbol*>(start_symbol->duplicate()) : NULL;
+	new_line->mid_symbol = mid_symbol ? reinterpret_cast<PointSymbol*>(mid_symbol->duplicate()) : NULL;
+	new_line->end_symbol = end_symbol ? reinterpret_cast<PointSymbol*>(end_symbol->duplicate()) : NULL;
+	new_line->dash_symbol = dash_symbol ? reinterpret_cast<PointSymbol*>(dash_symbol->duplicate()) : NULL;
+	new_line->dashed = dashed;
+	new_line->segment_length = segment_length;
+	new_line->dash_length = dash_length;
+	new_line->break_length = break_length;
+	new_line->dashes_in_group = dashes_in_group;
+	new_line->in_group_break_length = in_group_break_length;
+	new_line->half_outer_dashes = half_outer_dashes;
 	return new_line;
 }
 
@@ -54,12 +84,294 @@ void LineSymbol::createRenderables(Object* object, const MapCoordVectorF& coords
 	if (coords.size() < 2)
 		return;
 	
-	if (cap_style != PointedCap)	// TODO: more conditions to check if line is "simple" (no dashes)
+	// Start or end symbol?
+	if (start_symbol)
 	{
+		// NOTE: misuse of the point symbol
+		PointObject point_object(NULL, MapCoord(0, 0), start_symbol);
+		point_object.setRotation(atan2(-(coords[1].getY() - coords[0].getY()), coords[1].getX() - coords[0].getX()));
+		start_symbol->createRenderables(&point_object, coords, output);
+	}
+	if (end_symbol)
+	{
+		size_t last = coords.size() - 1;
+		PointObject point_object(NULL, MapCoord(0, 0), end_symbol);
+		point_object.setRotation(atan2(-(coords[last].getY() - coords[last-1].getY()), coords[last].getX() - coords[last-1].getX()));
+		MapCoordVectorF end_coord;
+		end_coord.push_back(coords[last]);
+		end_symbol->createRenderables(&point_object, end_coord, output);
+	}
+	
+	if (!dashed)
+	{
+		// Base line?
 		if (color && line_width > 0)
-			output.push_back(new LineRenderable(this, coords, object->getCoordinateVector(), object->isPathClosed()));
+		{
+			if (cap_style != PointedCap)
+				output.push_back(new LineRenderable(this, coords, object->getCoordinateVector(), object->isPathClosed()));
+			else
+			{
+				// TODO: pointed caps
+			}
+		}
+		
+		// Symbols?
+		if (mid_symbol && !mid_symbol->isEmpty() && segment_length > 0)
+			createDottedRenderables(object, coords, output);
+	}
+	else
+	{
+		// Dashed lines
+		// TODO
+	}
+	
+	// Dash symbols
+	if (dash_symbol && !dash_symbol->isEmpty())
+		createDashSymbolRenderables(object, coords, output);
+}
+void LineSymbol::createDashSymbolRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output)
+{
+	const MapCoordVector& flags = object->getCoordinateVector();
+	PointObject point_object(NULL, MapCoord(0, 0), dash_symbol);
+	MapCoordVectorF point_coord;
+	point_coord.push_back(MapCoordF(0, 0));
+	MapCoordF right_vector;
+	
+	int size = (int)coords.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (!flags[i].isDashPoint())
+			continue;
+		
+		if (i == 0)
+		{
+			point_object.setRotation(atan2(-(coords[1].getY() - coords[0].getY()), coords[1].getX() - coords[0].getX()));
+			point_coord[0] = coords[0];
+			dash_symbol->createRenderables(&point_object, point_coord, output);
+		}
+		else if (i == size - 1)
+		{
+			point_object.setRotation(atan2(-(coords[size-1].getY() - coords[size-2].getY()), coords[size-1].getX() - coords[size-2].getX()));
+			point_coord[0] = coords[size-1];
+			dash_symbol->createRenderables(&point_object, point_coord, output);
+		}
+		else
+		{
+			MapCoordF to_cur = MapCoordF(coords[i].getX() - coords[i-1].getX(), coords[i].getY() - coords[i-1].getY());
+			MapCoordF right = MapCoordF(coords[i+1].getX() - coords[i-1].getX(), coords[i+1].getY() - coords[i-1].getY());
+			right.perpRight();
+			
+			point_object.setRotation(atan2(right.getX(), right.getY()));
+			point_coord[0] = coords[i];
+			
+			to_cur.normalize();
+			right.normalize();
+			float coord_scale = 1.0f / sin(acos(right.getX() * to_cur.getX() + right.getY() * to_cur.getY()));
+			dash_symbol->createRenderablesScaled(&point_object, point_coord, output, coord_scale);
+		}
 	}
 }
+void LineSymbol::createDottedRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output)
+{
+	const MapCoordVector& flags = object->getCoordinateVector();
+	PointObject point_object(NULL, MapCoord(0, 0), mid_symbol);
+	MapCoordVectorF point_coord;
+	point_coord.push_back(MapCoordF(0, 0));
+	MapCoordF right_vector;
+	
+	int size = (int)coords.size();
+	float segment_length_f = 0.001f * segment_length;
+	bool is_first_part = true;
+	int part_start = 0;
+	int part_end = 0;
+	LineCoordVector line_coords;
+	while (getNextLinePart(flags, coords, part_start, part_end, &line_coords))
+	{
+		if (is_first_part)
+		{
+			// Insert point at start coordinate
+			point_object.setRotation(atan2(-(coords[part_start+1].getY() - coords[part_start].getY()), coords[part_start+1].getX() - coords[part_start].getX()));
+			point_coord[0] = coords[part_start];
+			mid_symbol->createRenderables(&point_object, point_coord, output);
+			
+			is_first_part = false;
+		}
+		
+		double length = line_coords[line_coords.size() - 1].clen;
+		
+		int lower_segment_count = qMax(1, qRound(floor(length / segment_length_f)));
+		int higher_segment_count = qRound(ceil(length / segment_length_f));
+		double lower_count_deviation = (length - lower_segment_count * segment_length_f) / lower_segment_count;
+		double higher_count_deviation = (-1) * (length - higher_segment_count * segment_length_f) / higher_segment_count;
+		
+		int line_coord_search_start = 0;
+		int segment_count = (lower_count_deviation > higher_count_deviation) ? higher_segment_count : lower_segment_count;
+		for (int i = 0; i < segment_count - 1; ++i)
+		{
+			calcPositionAt(flags, coords, line_coords, (i+1) * length / segment_count, line_coord_search_start, &point_coord[0], &right_vector);
+			point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+			mid_symbol->createRenderables(&point_object, point_coord, output);
+		}
+		
+		// Insert point at end coordinate
+		if (flags[part_end].isHolePoint() || part_end == size - 1)
+			point_object.setRotation(atan2(-(coords[part_end].getY() - coords[part_end-1].getY()), coords[part_end].getX() - coords[part_end-1].getX()));
+		else
+		{
+			// The position of the next point has to be respected
+			point_object.setRotation(atan2(-(coords[part_end+1].getY() - coords[part_end-1].getY()), coords[part_end+1].getX() - coords[part_end-1].getX()));
+		}
+		point_coord[0] = coords[part_end];
+		mid_symbol->createRenderables(&point_object, point_coord, output);
+		
+		if (flags[part_end].isHolePoint())
+			is_first_part = true;
+	}
+}
+bool LineSymbol::getNextLinePart(const MapCoordVector& flags, const MapCoordVectorF& coords, int& part_start, int& part_end, LineSymbol::LineCoordVector* line_coords)
+{
+	int size = (int)coords.size();
+	if (part_end == size - 1)
+		return false;
+	line_coords->clear();
+	
+	part_start = part_end;
+	if (flags[part_start].isHolePoint())
+		++part_start;
+	
+	LineCoord start;
+	start.clen = 0;
+	start.index = part_start;
+	start.pos = coords[part_start];
+	start.param = 0;
+	line_coords->push_back(start);
+	
+	for (int i = part_start + 1; i < size; ++i)
+	{
+		if (flags[i-1].isCurveStart())
+		{
+			if (i == size - 2)
+				curveToLineCoord(coords[i-1], coords[i], coords[i+1], coords[0], i-1, bezier_error, line_coords);
+			else
+				curveToLineCoord(coords[i-1], coords[i], coords[i+1], coords[i+2], i-1, bezier_error, line_coords);
+			i += 2;
+		}
+		else
+		{
+			LineCoord coord;
+			coord.clen = line_coords->at(line_coords->size() - 1).clen + coords[i].lengthTo(coords[i-1]);
+			coord.index = i - 1;
+			coord.pos = coords[i];
+			coord.param = 1;
+			line_coords->push_back(coord);
+		}
+		
+		if (i < size && flags[i].isHolePoint() || flags[i].isDashPoint())
+		{
+			part_end = i;
+			return true;
+		}
+	}
+	
+	part_end = size - 1;
+	return true;
+}
+void LineSymbol::curveToLineCoordRec(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, LineSymbol::LineCoordVector* line_coords, float p0, float p1)
+{
+	float outer_len = c0.lengthTo(c1) + c1.lengthTo(c2) + c2.lengthTo(c3);
+	float inner_len = c0.lengthTo(c3);
+	float p_half = 0.5f * (p0 + p1);
+	
+	if (outer_len - inner_len <= max_error)
+	{
+		LineCoord coord;
+		LineCoord& prev = line_coords->at(line_coords->size() - 1);
+		coord.pos.setX(0.5f * (c1.getX() + c2.getX()));
+		coord.pos.setY(0.5f * (c1.getY() + c2.getY()));
+		coord.param = p_half;
+		coord.clen = coord.pos.lengthTo(prev.pos) + prev.clen;
+		coord.index = coord_index;
+		
+		line_coords->push_back(coord);
+		return;
+	}
+	else
+	{
+		// Split in two
+		MapCoordF c01((c0.getX() + c1.getX()) * 0.5f, (c0.getY() + c1.getY()) * 0.5f);
+		MapCoordF c12((c1.getX() + c2.getX()) * 0.5f, (c1.getY() + c2.getY()) * 0.5f);
+		MapCoordF c23((c2.getX() + c3.getX()) * 0.5f, (c2.getY() + c3.getY()) * 0.5f);
+		MapCoordF c012((c01.getX() + c12.getX()) * 0.5f, (c01.getY() + c12.getY()) * 0.5f);
+		MapCoordF c123((c12.getX() + c23.getX()) * 0.5f, (c12.getY() + c23.getY()) * 0.5f);
+		MapCoordF c0123((c012.getX() + c123.getX()) * 0.5f, (c012.getY() + c123.getY()) * 0.5f);
+		
+		curveToLineCoordRec(c0, c01, c012, c0123, coord_index, max_error, line_coords, p0, p_half);
+		curveToLineCoordRec(c0123, c123, c23, c3, coord_index, max_error, line_coords, p_half, p1);
+	}
+}
+void LineSymbol::curveToLineCoord(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, LineSymbol::LineCoordVector* line_coords)
+{
+	// Add curve coordinates
+	curveToLineCoordRec(c0, c1, c2, c3, coord_index, max_error, line_coords, 0, 1);
+	
+	// Add end point
+	LineCoord end;
+	end.clen = line_coords->at(line_coords->size() - 1).clen + c3.lengthTo(line_coords->at(line_coords->size() - 1).pos);
+	end.index = coord_index;
+	end.pos = c3;
+	end.param = 1;
+	line_coords->push_back(end);
+}
+void LineSymbol::calcPositionAt(const MapCoordVector& flags, const MapCoordVectorF& coords, const LineSymbol::LineCoordVector& line_coords, float length, int& line_coord_search_start, MapCoordF* out_pos, MapCoordF* out_right_vector)
+{
+	int size = (int)line_coords.size();
+	for (int i = line_coord_search_start; i < size; ++i)
+	{
+		if (line_coords[i].clen < length)
+			continue;
+		int index = line_coords[i].index;
+		
+		if (flags[index].isCurveStart())
+		{
+			float factor = (length - line_coords[i-1].clen) / (line_coords[i].clen - line_coords[i-1].clen);
+			float prev_param = (line_coords[i-1].index == line_coords[i].index) ? line_coords[i-1].param : 0;
+			float p = prev_param + (line_coords[i].param - prev_param) * factor;
+			assert(p >= 0 && p <= 1);
+			MapCoordF o0, o1, o4;
+			if (index < (int)flags.size() - 3)
+				splitBezierCurve(coords[index], coords[index+1], coords[index+2], coords[index+3], p, o0, o1, *out_pos, *out_right_vector, o4);
+			else
+				splitBezierCurve(coords[index], coords[index+1], coords[index+2], coords[0], p, o0, o1, *out_pos, *out_right_vector, o4);
+			
+			out_right_vector->setX(out_right_vector->getX() - o1.getX());
+			out_right_vector->setY(out_right_vector->getY() - o1.getY());
+			out_right_vector->perpRight();
+		}
+		else
+		{
+			float factor = (length - line_coords[i-1].clen) / (line_coords[i].clen - line_coords[i-1].clen);
+			out_right_vector->setX(line_coords[i].pos.getX() - line_coords[i-1].pos.getX());
+			out_right_vector->setY(line_coords[i].pos.getY() - line_coords[i-1].pos.getY());
+			out_pos->setX(line_coords[i-1].pos.getX() + factor * out_right_vector->getX());
+			out_pos->setY(line_coords[i-1].pos.getY() + factor * out_right_vector->getY());
+			out_right_vector->perpRight();
+		}
+		
+		line_coord_search_start = i;
+		return;
+	}
+	assert(false);
+}
+void LineSymbol::splitBezierCurve(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, float p, MapCoordF& o0, MapCoordF& o1, MapCoordF& o2, MapCoordF& o3, MapCoordF& o4)
+{
+	o0 = MapCoordF(c0.getX() + (c1.getX() - c0.getX()) * p, c0.getY() + (c1.getY() - c0.getY()) * p);
+	MapCoordF c12(c1.getX() + (c2.getX() - c1.getX()) * p, c1.getY() + (c2.getY() - c1.getY()) * p);
+	o4 = MapCoordF(c2.getX() + (c3.getX() - c2.getX()) * p, c2.getY() + (c3.getY() - c2.getY()) * p);
+	o1 = MapCoordF(o0.getX() + (c12.getX() - o0.getX()) * p, o0.getY() + (c12.getY() - o0.getY()) * p);
+	o3 = MapCoordF(c12.getX() + (o4.getX() - c12.getX()) * p, c12.getY() + (o4.getY() - c12.getY()) * p);
+	o2 = MapCoordF(o1.getX() + (o3.getX() - o1.getX()) * p, o1.getY() + (o3.getY() - o1.getY()) * p);
+}
+
 void LineSymbol::colorDeleted(Map* map, int pos, MapColor* color)
 {
     if (color == this->color)
@@ -73,11 +385,90 @@ bool LineSymbol::containsColor(MapColor* color)
 	return color == this->color;
 }
 
+void LineSymbol::ensurePointSymbols(const QString& start_name, const QString& mid_name, const QString& end_name, const QString& dash_name)
+{
+	if (!start_symbol)
+	{
+		start_symbol = new PointSymbol();
+		start_symbol->setName(start_name);
+		start_symbol->setRotatable(true);
+	}
+	if (!mid_symbol)
+	{
+		mid_symbol = new PointSymbol();
+		mid_symbol->setName(mid_name);
+		mid_symbol->setRotatable(true);
+	}
+	if (!end_symbol)
+	{
+		end_symbol = new PointSymbol();
+		end_symbol->setName(end_name);
+		end_symbol->setRotatable(true);
+	}
+	if (!dash_symbol)
+	{
+		dash_symbol = new PointSymbol();
+		dash_symbol->setName(dash_name);
+		dash_symbol->setRotatable(true);
+	}
+}
+void LineSymbol::cleanupPointSymbols()
+{
+	if (start_symbol->isEmpty())
+	{
+		delete start_symbol;
+		start_symbol = NULL;
+	}
+	if (mid_symbol->isEmpty())
+	{
+		delete mid_symbol;
+		mid_symbol = NULL;
+	}
+	if (end_symbol->isEmpty())
+	{
+		delete end_symbol;
+		end_symbol = NULL;
+	}
+	if (dash_symbol->isEmpty())
+	{
+		delete dash_symbol;
+		dash_symbol = NULL;
+	}
+}
+
 void LineSymbol::saveImpl(QFile* file, Map* map)
 {
 	file->write((const char*)&line_width, sizeof(int));
 	int temp = map->findColorIndex(color);
 	file->write((const char*)&temp, sizeof(int));
+	temp = (int)cap_style;
+	file->write((const char*)&temp, sizeof(int));
+	temp = (int)join_style;
+	file->write((const char*)&temp, sizeof(int));
+	file->write((const char*)&pointed_cap_length, sizeof(int));
+	bool have_symbol = start_symbol != NULL;
+	file->write((const char*)&have_symbol, sizeof(bool));
+	if (have_symbol)
+		start_symbol->save(file, map);
+	have_symbol = mid_symbol != NULL;
+	file->write((const char*)&have_symbol, sizeof(bool));
+	if (have_symbol)
+		mid_symbol->save(file, map);
+	have_symbol = end_symbol != NULL;
+	file->write((const char*)&have_symbol, sizeof(bool));
+	if (have_symbol)
+		end_symbol->save(file, map);
+	have_symbol = dash_symbol != NULL;
+	file->write((const char*)&have_symbol, sizeof(bool));
+	if (have_symbol)
+		dash_symbol->save(file, map);
+	file->write((const char*)&dashed, sizeof(bool));
+	file->write((const char*)&segment_length, sizeof(int));
+	file->write((const char*)&dash_length, sizeof(int));
+	file->write((const char*)&break_length, sizeof(int));
+	file->write((const char*)&dashes_in_group, sizeof(int));
+	file->write((const char*)&in_group_break_length, sizeof(int));
+	file->write((const char*)&half_outer_dashes, sizeof(bool));
 }
 bool LineSymbol::loadImpl(QFile* file, Map* map)
 {
@@ -85,6 +476,47 @@ bool LineSymbol::loadImpl(QFile* file, Map* map)
 	int temp;
 	file->read((char*)&temp, sizeof(int));
 	color = (temp >= 0) ? map->getColor(temp) : NULL;
+	file->read((char*)&temp, sizeof(int));
+	cap_style = (CapStyle)temp;
+	file->read((char*)&temp, sizeof(int));
+	join_style = (JoinStyle)temp;
+	file->read((char*)&pointed_cap_length, sizeof(int));
+	bool have_symbol;
+	file->read((char*)&have_symbol, sizeof(bool));
+	if (have_symbol)
+	{
+		start_symbol = new PointSymbol();
+		if (!start_symbol->load(file, map))
+			return false;
+	}
+	file->read((char*)&have_symbol, sizeof(bool));
+	if (have_symbol)
+	{
+		mid_symbol = new PointSymbol();
+		if (!mid_symbol->load(file, map))
+			return false;
+	}
+	file->read((char*)&have_symbol, sizeof(bool));
+	if (have_symbol)
+	{
+		end_symbol = new PointSymbol();
+		if (!end_symbol->load(file, map))
+			return false;
+	}
+	file->read((char*)&have_symbol, sizeof(bool));
+	if (have_symbol)
+	{
+		dash_symbol = new PointSymbol();
+		if (!dash_symbol->load(file, map))
+			return false;
+	}
+	file->read((char*)&dashed, sizeof(bool));
+	file->read((char*)&segment_length, sizeof(int));
+	file->read((char*)&dash_length, sizeof(int));
+	file->read((char*)&break_length, sizeof(int));
+	file->read((char*)&dashes_in_group, sizeof(int));
+	file->read((char*)&in_group_break_length, sizeof(int));
+	file->read((char*)&half_outer_dashes, sizeof(bool));
 	return true;
 }
 
@@ -99,27 +531,224 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSetti
 	QLabel* color_label = new QLabel(tr("Line color:"));
 	color_edit = new ColorDropDown(map, symbol->getColor());
 	
+	line_settings_widget = new QWidget();
+	QLabel* line_cap_label = new QLabel(tr("Line cap:"));
+	line_cap_combo = new QComboBox();
+	line_cap_combo->addItem(tr("flat"), QVariant(LineSymbol::FlatCap));
+	line_cap_combo->addItem(tr("round"), QVariant(LineSymbol::RoundCap));
+	line_cap_combo->addItem(tr("square"), QVariant(LineSymbol::SquareCap));
+	line_cap_combo->addItem(tr("pointed"), QVariant(LineSymbol::PointedCap));
+	line_cap_combo->setCurrentIndex(line_cap_combo->findData(symbol->cap_style));
+	
+	QLabel* line_join_label = new QLabel(tr("Line join:"));
+	line_join_combo = new QComboBox();
+	line_join_combo->addItem(tr("miter"), QVariant(LineSymbol::MiterJoin));
+	line_join_combo->addItem(tr("round"), QVariant(LineSymbol::RoundJoin));
+	line_join_combo->addItem(tr("bevel"), QVariant(LineSymbol::BevelJoin));
+	line_join_combo->setCurrentIndex(line_join_combo->findData(symbol->join_style));
+	
+	pointed_cap_length_label = new QLabel(tr("Cap length:"));
+	pointed_cap_length_edit = new QLineEdit(QString::number(1000 * symbol->pointed_cap_length));
+	pointed_cap_length_edit->setValidator(new DoubleValidator(0, 999999, pointed_cap_length_edit));
+	
+	dashed_check = new QCheckBox(tr("Line is dashed"));
+	dashed_check->setChecked(symbol->dashed);
+	
+	QGridLayout* line_settings_layout = new QGridLayout();
+	line_settings_layout->setMargin(0);
+	line_settings_layout->addWidget(line_cap_label, 0, 0);
+	line_settings_layout->addWidget(line_cap_combo, 0, 1);
+	line_settings_layout->addWidget(line_join_label, 1, 0);
+	line_settings_layout->addWidget(line_join_combo, 1, 1);
+	line_settings_layout->addWidget(pointed_cap_length_label, 2, 0);
+	line_settings_layout->addWidget(pointed_cap_length_edit, 2, 1);
+	line_settings_layout->addWidget(dashed_check, 3, 0, 1, 2);
+	line_settings_widget->setLayout(line_settings_layout);
+	
+	undashed_widget = new QWidget();
+	QLabel* segment_length_label = new QLabel(tr("Segment length:"));
+	segment_length_edit = new QLineEdit(QString::number(0.001 * symbol->segment_length));
+	segment_length_edit->setValidator(new DoubleValidator(0, 999999, segment_length_edit));
+	
+	QGridLayout* undashed_layout = new QGridLayout();
+	undashed_layout->setMargin(0);
+	undashed_layout->addWidget(segment_length_label, 0, 0);
+	undashed_layout->addWidget(segment_length_edit, 0, 1);
+	undashed_widget->setLayout(undashed_layout);
+	
+	dashed_widget = new QWidget();
+	
+	QLabel* dash_length_label = new QLabel(tr("Dash length:"));
+	dash_length_edit = new QLineEdit(QString::number(0.001 * symbol->dash_length));
+	dash_length_edit->setValidator(new DoubleValidator(0, 999999, dash_length_edit));
+	
+	QLabel* break_length_label = new QLabel(tr("Break length:"));
+	break_length_edit = new QLineEdit(QString::number(0.001 * symbol->break_length));
+	break_length_edit->setValidator(new DoubleValidator(0, 999999, break_length_edit));
+	
+	QLabel* dash_group_label = new QLabel(tr("Dashes grouped together:"));
+	dash_group_combo = new QComboBox();
+	dash_group_combo->addItem(tr("none"), QVariant(1));
+	dash_group_combo->addItem(tr("2"), QVariant(2));
+	dash_group_combo->addItem(tr("3"), QVariant(3));
+	dash_group_combo->addItem(tr("4"), QVariant(4));
+	
+	in_group_break_length_label = new QLabel(tr("In-group break length:"));
+	in_group_break_length_edit = new QLineEdit(QString::number(0.001 * symbol->in_group_break_length));
+	in_group_break_length_edit->setValidator(new DoubleValidator(0, 999999, in_group_break_length_edit));
+	
+	half_outer_dashes_check = new QCheckBox(tr("Half length of first and last dash"));
+	
+	QGridLayout* dashed_layout = new QGridLayout();
+	dashed_layout->setMargin(0);
+	dashed_layout->addWidget(dash_length_label, 0, 0);
+	dashed_layout->addWidget(dash_length_edit, 0, 1);
+	dashed_layout->addWidget(break_length_label, 1, 0);
+	dashed_layout->addWidget(break_length_edit, 1, 1);
+	dashed_layout->addWidget(dash_group_label, 2, 0);
+	dashed_layout->addWidget(dash_group_combo, 2, 1);
+	dashed_layout->addWidget(in_group_break_length_label, 3, 0);
+	dashed_layout->addWidget(in_group_break_length_edit, 3, 1);
+	dashed_layout->addWidget(half_outer_dashes_check, 4, 0, 1, 2);
+	dashed_widget->setLayout(dashed_layout);
+	
 	QGridLayout* layout = new QGridLayout();
 	layout->addWidget(width_label, 0, 0);
 	layout->addWidget(width_edit, 0, 1);
 	layout->addWidget(color_label, 1, 0);
 	layout->addWidget(color_edit, 1, 1);
-	
+	layout->addWidget(line_settings_widget, 2, 0, 1, 2);
+	layout->addWidget(undashed_widget, 3, 0, 1, 2);
+	layout->addWidget(dashed_widget, 4, 0, 1, 2);
 	setLayout(layout);
+	
+	updateWidgets(false);
 	
 	connect(width_edit, SIGNAL(textEdited(QString)), this, SLOT(widthChanged(QString)));
 	connect(color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChanged()));
+	connect(line_cap_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(lineCapChanged(int)));
+	connect(line_join_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(lineJoinChanged(int)));
+	connect(pointed_cap_length_edit, SIGNAL(textEdited(QString)), this, SLOT(pointedLineCapLengthChanged(QString)));
+	connect(dashed_check, SIGNAL(clicked(bool)), this, SLOT(dashedChanged(bool)));
+	connect(segment_length_edit, SIGNAL(textEdited(QString)), this, SLOT(segmentLengthChanged(QString)));
+	connect(dash_length_edit, SIGNAL(textEdited(QString)), this, SLOT(dashLengthChanged(QString)));
+	connect(break_length_edit, SIGNAL(textEdited(QString)), this, SLOT(breakLengthChanged(QString)));
+	connect(dash_group_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(dashGroupsChanged(int)));
+	connect(in_group_break_length_edit, SIGNAL(textEdited(QString)), this, SLOT(inGroupBreakLengthChanged(QString)));
+	connect(half_outer_dashes_check, SIGNAL(clicked(bool)), this, SLOT(halfOuterDashesChanged(bool)));
 }
 
 void LineSymbolSettings::widthChanged(QString text)
 {
 	symbol->line_width = qRound64(1000 * text.toFloat());
 	dialog->updatePreview();
+	updateWidgets();
 }
 void LineSymbolSettings::colorChanged()
 {
 	symbol->color = color_edit->color();
 	dialog->updatePreview();
+	updateWidgets();
+}
+void LineSymbolSettings::lineCapChanged(int index)
+{
+	symbol->cap_style = (LineSymbol::CapStyle)line_cap_combo->itemData(index).toInt();
+	dialog->updatePreview();
+	updateWidgets();
+}
+void LineSymbolSettings::lineJoinChanged(int index)
+{
+	symbol->join_style = (LineSymbol::JoinStyle)line_join_combo->itemData(index).toInt();
+	dialog->updatePreview();
+}
+void LineSymbolSettings::pointedLineCapLengthChanged(QString text)
+{
+	symbol->pointed_cap_length = qRound(1000 * text.toFloat());
+	dialog->updatePreview();
+}
+void LineSymbolSettings::dashedChanged(bool checked)
+{
+	symbol->dashed = checked;
+	dialog->updatePreview();
+	updateWidgets();
+}
+void LineSymbolSettings::segmentLengthChanged(QString text)
+{
+	symbol->segment_length = qRound(1000 * text.toFloat());
+	dialog->updatePreview();
+}
+void LineSymbolSettings::dashLengthChanged(QString text)
+{
+	symbol->dash_length = qRound(1000 * text.toFloat());
+	dialog->updatePreview();
+}
+void LineSymbolSettings::breakLengthChanged(QString text)
+{
+	symbol->break_length = qRound(1000 * text.toFloat());
+	dialog->updatePreview();
+}
+void LineSymbolSettings::dashGroupsChanged(int index)
+{
+	symbol->dashes_in_group = dash_group_combo->itemData(index).toInt();
+	dialog->updatePreview();
+	updateWidgets();
+}
+void LineSymbolSettings::inGroupBreakLengthChanged(QString text)
+{
+	symbol->in_group_break_length = qRound(1000 * text.toFloat());
+	dialog->updatePreview();
+}
+void LineSymbolSettings::halfOuterDashesChanged(bool checked)
+{
+	symbol->half_outer_dashes = checked;
+	dialog->updatePreview();
+}
+
+void LineSymbolSettings::updateWidgets(bool show)
+{
+	color_edit->setEnabled(symbol->line_width > 0);
+	
+	if (show)
+		line_settings_widget->setVisible(symbol->line_width > 0 && symbol->color != NULL);
+	else if (!(symbol->line_width > 0 && symbol->color != NULL))
+		line_settings_widget->hide();
+	
+	if (show)
+	{
+		pointed_cap_length_label->setVisible(symbol->cap_style == LineSymbol::PointedCap);
+		pointed_cap_length_edit->setVisible(symbol->cap_style == LineSymbol::PointedCap);
+	}
+	else if (!(symbol->cap_style == LineSymbol::PointedCap))
+	{
+		pointed_cap_length_label->hide();
+		pointed_cap_length_edit->hide();
+	}
+	
+	if (show)
+		undashed_widget->setVisible(symbol->line_width > 0 && symbol->color != NULL && !symbol->dashed);
+	else if (!(symbol->line_width > 0 && symbol->color != NULL && !symbol->dashed))
+		undashed_widget->hide();
+	
+	if (show)
+		dashed_widget->setVisible(symbol->line_width > 0 && symbol->color != NULL && symbol->dashed);
+	else if (!(symbol->line_width > 0 && symbol->color != NULL && symbol->dashed))
+		dashed_widget->hide();
+	
+	if (show)
+	{
+		in_group_break_length_label->setVisible(symbol->dashes_in_group > 1);
+		in_group_break_length_edit->setVisible(symbol->dashes_in_group > 1);
+	}
+	else if (!(symbol->dashes_in_group > 1))
+	{
+		in_group_break_length_label->hide();
+		in_group_break_length_edit->hide();
+	}
+	
+	if (show)
+		half_outer_dashes_check->setVisible(symbol->dashes_in_group == 1);
+	else if (!(symbol->dashes_in_group == 1))
+		half_outer_dashes_check->hide();
 }
 
 #include "symbol_line.moc"

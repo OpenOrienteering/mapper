@@ -46,18 +46,23 @@ public:
     virtual Symbol* duplicate();
     
     virtual void createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output);
+	void createRenderablesScaled(Object* object, const MapCoordVectorF& coords, RenderableVector& output, float coord_scale);
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
     virtual bool containsColor(MapColor* color);
 	
 	// Contained objects and symbols (elements)
-	int getNumElements();
+	int getNumElements() const;
 	void addElement(int pos, Object* object, Symbol* symbol);
 	Object* getElementObject(int pos);
 	Symbol* getElementSymbol(int pos);
 	void deleteElement(int pos);
 	
-	// Getters
+	/// Returns true if the point contains no elements and does not create renderables itself
+	bool isEmpty() const;
+	
+	// Getters / Setters
 	inline bool isRotatable() const {return rotatable;}
+	inline void setRotatable(bool enable) {rotatable = enable;}
 	inline int getInnerRadius() const {return inner_radius;}
 	inline MapColor* getInnerColor() const {return inner_color;}
 	inline int getOuterWidth() const {return outer_width;}

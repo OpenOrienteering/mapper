@@ -61,6 +61,9 @@ protected slots:
 	void centerTemplateBBox();
 	void centerTemplateGravity();
 	
+protected:
+    virtual void closeEvent(QCloseEvent* event);
+	
 private:
 	PointSymbolEditorWidget* createPointSymbolEditor(MapEditorController* controller);
 	

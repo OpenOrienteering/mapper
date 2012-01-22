@@ -226,17 +226,36 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 	int size = (int)coords.size();
 	assert(size >= 2);
 	
+	bool hole = false;
 	path.moveTo(transformed_coords[0].toQPointF());
 	for (int i = 1; i < size; ++i)
 	{
+		if (hole)
+		{
+			path.moveTo(transformed_coords[i].toQPointF());
+			hole = false;
+			continue;
+		}
+		
 		if (coords[i-1].isCurveStart())
 		{
-			assert(i < size - 2);
-			path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
-			i += 2;
+			if (i == size - 2 && closed)
+			{
+				path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[0].toQPointF());
+				++i;
+			}
+			else
+			{
+				assert(i < size - 2);
+				path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
+				i += 2;
+			}
 		}
 		else
 			path.lineTo(transformed_coords[i].toQPointF());
+		
+		if (coords[i].isHolePoint())
+			hole = true;
 	}
 	
 	if (closed)
@@ -295,15 +314,23 @@ AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transf
 	{
 		if (coords[i-1].isCurveStart())
 		{
-			assert(i < size - 2);
-			path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
-			i += 2;
+			if (i == size - 2)
+			{
+				path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[0].toQPointF());
+				++i;
+			}
+			else
+			{
+				assert(i < size - 2);
+				path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
+				i += 2;
+			}
 		}
-		/*else if (coords[i].getFirstHolePoint())
+		else if (coords[i].isHolePoint())
 		{
 			path.closeSubpath();
 			path.moveTo(transformed_coords[i].toQPointF());
-		}*/
+		}
 		else
 			path.lineTo(transformed_coords[i].toQPointF());
 	}

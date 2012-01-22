@@ -292,6 +292,18 @@ void SymbolSettingDialog::centerTemplateGravity()
 	preview_map->setTemplateAreaDirty(0);
 }
 
+void SymbolSettingDialog::closeEvent(QCloseEvent* event)
+{
+	// If editing a line symbol, strip unnecessary point symbols
+	if (symbol->getType() == Symbol::Line)
+	{
+		LineSymbol* line = reinterpret_cast<LineSymbol*>(symbol);
+		line->cleanupPointSymbols();
+	}
+	
+	event->accept();
+}
+
 void SymbolSettingDialog::createPreviewMap()
 {
 	for (int i = 0; i < (int)preview_objects.size(); ++i)
@@ -304,12 +316,13 @@ void SymbolSettingDialog::createPreviewMap()
 		if (line->getLineWidth() <= 0 || line->getColor() == NULL)
 			return;
 		
-		const int num_lines = 7;
-		const float y_offset = (0.001f * line->getLineWidth()) * 2.5f;
+		const int num_lines = 10;
 		const float min_length = 1;
-		const float max_length = 10;
+		const float max_length = 15;
+		const float x_offset = -0.5f * max_length;
+		const float y_offset = (0.001f * line->getLineWidth()) * 2.5f;
 		
-		float y_start = 0 - 0.5f * (y_offset * (num_lines - 1));
+		float y_start = 0 - (y_offset * (num_lines - 1));
 		
 		for (int i = 0; i < num_lines; ++i)
 		{
@@ -317,12 +330,71 @@ void SymbolSettingDialog::createPreviewMap()
 			float y = y_start + i * y_offset;
 			
 			PathObject* path = new PathObject(preview_map, line);
-			path->addCoordinate(0, MapCoordF(-0.5f * length, y).toMapCoord());
-			path->addCoordinate(1, MapCoordF(0.5f * length, y).toMapCoord());
+			path->addCoordinate(0, MapCoordF(x_offset - length, y).toMapCoord());
+			path->addCoordinate(1, MapCoordF(x_offset, y).toMapCoord());
 			preview_map->addObject(path);
 			
 			preview_objects.push_back(path);
 		}
+		
+		const int num_circular_lines = 12;
+		const float inner_radius = 4;
+		const float center_x = 2*inner_radius + 0.5f * max_length;
+		const float center_y = 0.5f * y_start;
+		
+		for (int i = 0; i < num_circular_lines; ++i)
+		{
+			float angle = (i / (float)num_circular_lines) * 2*M_PI;
+			float length = min_length + (i / (float)(num_circular_lines - 1)) * (max_length - min_length);
+			
+			PathObject* path = new PathObject(preview_map, line);
+			path->addCoordinate(0, ((MapCoordF(sin(angle), -cos(angle)) * inner_radius) + MapCoordF(center_x, center_y)).toMapCoord());
+			path->addCoordinate(1, ((MapCoordF(sin(angle), -cos(angle)) * (inner_radius + length)) + MapCoordF(center_x, center_y)).toMapCoord());
+			preview_map->addObject(path);
+			
+			preview_objects.push_back(path);
+		}
+		
+		const float snake_min_x = -1.5f * max_length;
+		const float snake_max_x = 1.5f * max_length;
+		const float snake_max_y = qMin(0.5f * y_start - inner_radius - max_length, y_offset) - 4;
+		const float snake_min_y = snake_max_y - 6;
+		const int snake_steps = 8;
+		
+		PathObject* path = new PathObject(preview_map, line);
+		for (int i = 0; i < snake_steps; ++i)
+		{
+			MapCoord coord(snake_min_x + (i / (float)(snake_steps-1)) * (snake_max_x - snake_min_x), snake_min_y + (i % 2) * (snake_max_y - snake_min_y));
+			coord.setDashPoint(true);
+			path->addCoordinate(i, coord);
+		}
+		preview_map->addObject(path);
+		preview_objects.push_back(path);
+		
+		const float curve_min_x = snake_min_x;
+		const float curve_max_x = snake_max_x;
+		const float curve_max_y = snake_min_y - 4;
+		const float curve_min_y = curve_max_y - 6;
+		
+		path = new PathObject(preview_map, line);
+		MapCoord coord = MapCoord(curve_min_x, curve_min_y);
+		coord.setCurveStart(true);
+		path->addCoordinate(0, coord);
+		coord = MapCoord(curve_min_x + (curve_max_x - curve_min_x) / 6, curve_max_y);
+		path->addCoordinate(1, coord);
+		coord = MapCoord(curve_min_x + 2 * (curve_max_x - curve_min_x) / 6, curve_max_y);
+		path->addCoordinate(2, coord);
+		coord = MapCoord(curve_min_x + 3 * (curve_max_x - curve_min_x) / 6, 0.5f * (curve_min_y + curve_max_y));
+		coord.setCurveStart(true);
+		path->addCoordinate(3, coord);
+		coord = MapCoord(curve_min_x + 4 * (curve_max_x - curve_min_x) / 6, curve_min_y);
+		path->addCoordinate(4, coord);
+		coord = MapCoord(curve_min_x + 5 * (curve_max_x - curve_min_x) / 6, curve_min_y);
+		path->addCoordinate(5, coord);
+		coord = MapCoord(curve_max_x, curve_max_y);
+		path->addCoordinate(6, coord);
+		preview_map->addObject(path);
+		preview_objects.push_back(path);
 	}
 	else if (symbol->getType() == Symbol::Area)
 	{
@@ -378,8 +450,16 @@ PointSymbolEditorWidget* SymbolSettingDialog::createPointSymbolEditor(MapEditorC
 	}
 	else if (symbol->getType() == Symbol::Line)
 	{
-		// TODO!
-		return NULL;
+		LineSymbol* line = reinterpret_cast<LineSymbol*>(symbol);
+		line->ensurePointSymbols(tr("Start symbol"), tr("Mid symbol"), tr("End symbol"), tr("Dash symbol"));
+		std::vector<PointSymbol*> point_vector;
+		point_vector.push_back(line->getStartSymbol());
+		point_vector.push_back(line->getMidSymbol());
+		point_vector.push_back(line->getEndSymbol());
+		point_vector.push_back(line->getDashSymbol());
+		PointSymbolEditorWidget* point_editor = new PointSymbolEditorWidget(preview_map, controller, point_vector, 16);
+		connect(point_editor, SIGNAL(symbolEdited()), this, SLOT(createPreviewMap()));
+		return point_editor;
 	}
 	else if (symbol->getType() == Symbol::Area)
 	{

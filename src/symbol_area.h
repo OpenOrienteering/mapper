@@ -34,6 +34,7 @@ class ColorDropDown;
 class SymbolSettingDialog;
 class PointSymbolEditorWidget;
 class PathObject;
+class PointObject;
 
 class AreaSymbol : public Symbol
 {
@@ -62,7 +63,7 @@ public:
 		void save(QFile* file, Map* map);
 		bool load(QFile* file, Map* map);
 		void createRenderables(QRectF extent, RenderableVector& output);
-		void createLine(MapCoordVectorF& coords, LineSymbol* line, PathObject* path, RenderableVector& output);
+		void createLine(MapCoordVectorF& coords, LineSymbol* line, PathObject* path, PointObject* point_object, RenderableVector& output);
 	};
 	
 	AreaSymbol();
