@@ -104,6 +104,8 @@ protected:
 	virtual void saveImpl(QFile* file, Map* map);
 	virtual bool loadImpl(QFile* file, Map* map);
 	
+	void createDashedLineRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output);
+	void advanceDashedLineTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const LineCoordVector& line_coords, int& cur_line_coord, int& current_index, float cur_length, int start_bezier_index, MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, const MapCoordF& o3, const MapCoordF& o4);
 	void createDashSymbolRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output);
 	void createDottedRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output);
 	bool getNextLinePart(const MapCoordVector& flags, const MapCoordVectorF& coords, int& part_start, int& part_end, LineCoordVector* line_coords);

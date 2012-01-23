@@ -122,12 +122,260 @@ void LineSymbol::createRenderables(Object* object, const MapCoordVectorF& coords
 	else
 	{
 		// Dashed lines
-		// TODO
+		if (dash_length > 0)
+			createDashedLineRenderables(object, coords, output);
 	}
 	
 	// Dash symbols
 	if (dash_symbol && !dash_symbol->isEmpty())
 		createDashSymbolRenderables(object, coords, output);
+}
+void LineSymbol::createDashedLineRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output)
+{
+	const MapCoordVector& flags = object->getCoordinateVector();
+	int size = (int)coords.size();
+	
+	PointObject point_object(NULL, MapCoord(0, 0), mid_symbol);
+	MapCoordVectorF point_coord;
+	point_coord.push_back(MapCoordF(0, 0));
+	MapCoordF right_vector;
+	
+	float dash_length_f = 0.001f * dash_length;
+	float break_length_f = 0.001f * break_length;
+	float in_group_break_length_f = 0.001f * in_group_break_length;
+	
+	int part_start = 0;
+	int part_end = 0;
+	LineCoordVector line_coords;
+	MapCoordVector processed_flags;
+	MapCoordVectorF processed_coords;
+	processed_flags.reserve(4 * coords.size());
+	processed_coords.reserve(4 * coords.size());
+	processed_flags.push_back(flags[0]);
+	processed_coords.push_back(coords[0]);
+	
+	while (getNextLinePart(flags, coords, part_start, part_end, &line_coords))
+	{
+		int line_coords_size = (int)line_coords.size();
+		
+		bool starts_with_dashpoint = (part_start > 0 && flags[part_start].isDashPoint());
+		bool ends_with_dashpoint = (part_end < size - 1 && flags[part_end].isDashPoint());
+		bool half_first_dash = (part_start == 0 && half_outer_dashes) || (starts_with_dashpoint && dashes_in_group == 1);
+		bool half_last_dash = (part_end == size - 1 && half_outer_dashes) || (ends_with_dashpoint && dashes_in_group == 1);
+		
+		double length = line_coords[line_coords_size - 1].clen;
+		
+		float num_dashes_f = (length + break_length_f - (half_first_dash ? 0.5f*dash_length_f : 0) - (half_last_dash ? 0.5f*dash_length_f : 0)) /
+		                     (break_length_f + dashes_in_group * dash_length_f + in_group_break_length_f);
+		num_dashes_f += (half_first_dash ? 1 : 0) + (half_last_dash ? 1 : 0);
+		int lower_dashgroup_count = qRound(floor(num_dashes_f));
+		
+		float switch_deviation = 0.2f * ((dashes_in_group*dash_length_f + break_length_f + (dashes_in_group-1)*in_group_break_length_f)) / dashes_in_group;
+		float minimum_optimum_length = (2*dashes_in_group*dash_length_f + break_length_f + 2*(dashes_in_group-1)*in_group_break_length_f);
+		float minimum_optimum_num_dashes = 2*dashes_in_group - (half_first_dash ? 0.5f : 0) - (half_last_dash ? 0.5f : 0);
+		if (lower_dashgroup_count <= 1 && length < minimum_optimum_length - minimum_optimum_num_dashes * switch_deviation)
+		{
+			// Line part too short for dashes, use just one continuous line for it
+			for (int i = part_start + 1; i <= part_end; ++i)
+			{
+				processed_flags.push_back(flags[i]);
+				processed_coords.push_back(coords[i]);
+			}
+			
+			// Create mid symbol? TODO: support multiple mid symbols
+			if (mid_symbol && !mid_symbol->isEmpty())
+			{
+				int search_start = 0;
+				calcPositionAt(flags, coords, line_coords, length / 2, search_start, &point_coord[0], &right_vector);
+				point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+				mid_symbol->createRenderables(&point_object, point_coord, output);
+			}
+		}
+		else
+		{
+			int higher_dashgroup_count = qRound(ceil(num_dashes_f));
+			float lower_dashgroup_deviation = (length - (lower_dashgroup_count*dashes_in_group*dash_length_f + (lower_dashgroup_count-1)*break_length_f + lower_dashgroup_count*(dashes_in_group-1)*in_group_break_length_f)) / (lower_dashgroup_count*dashes_in_group);
+			float higher_dashgroup_deviation = (-1) * (length - (higher_dashgroup_count*dashes_in_group*dash_length_f + (higher_dashgroup_count-1)*break_length_f + higher_dashgroup_count*(dashes_in_group-1)*in_group_break_length_f)) / (higher_dashgroup_count*dashes_in_group);
+			int num_dashgroups = (lower_dashgroup_deviation > higher_dashgroup_deviation) ? higher_dashgroup_count : lower_dashgroup_count;
+			assert(num_dashgroups >= 2);
+			
+			int num_half_dashes = 2*num_dashgroups*dashes_in_group - (half_first_dash ? 1 : 0) - (half_last_dash ? 1 : 0);
+			float adapted_dash_length = (length - (num_dashgroups-1)*break_length_f - num_dashgroups*(dashes_in_group-1)*in_group_break_length_f) / (0.5f*num_half_dashes);
+			
+			float cur_length = 0;
+			int cur_line_coord = 1;
+			
+			for (int dashgroup = 0; dashgroup < num_dashgroups; ++dashgroup)
+			{
+				for (int dash = 0; dash < dashes_in_group; ++dash)
+				{
+					bool is_first_dash = dashgroup == 0 && dash == 0;
+					bool is_half_dash = (is_first_dash && half_first_dash) || (dashgroup == num_dashgroups-1 && dash == dashes_in_group-1 && half_last_dash);
+					float cur_dash_length = is_half_dash ? adapted_dash_length / 2 : adapted_dash_length;
+					
+					// Get dash start position
+					while (cur_line_coord < line_coords_size - 1 && line_coords[cur_line_coord].clen < cur_length)
+						++cur_line_coord;
+					int start_bezier_index = -1;	// if the dash starts at a bezier curve, this is the curve's index, otherwise -1
+					float start_bezier_split_param;	// the parameter value where the split of the curve for the dash start was made
+					MapCoordF o3, o4;				// temporary bezier control points
+					if (flags[line_coords[cur_line_coord].index].isCurveStart())
+					{
+						int index = line_coords[cur_line_coord].index;
+						float factor = (cur_length - line_coords[cur_line_coord-1].clen) / (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen);
+						assert(factor >= 0 && factor <= 1.001f);
+						if (factor > 1)
+							factor = 1;
+						float prev_param = (line_coords[cur_line_coord-1].index == line_coords[cur_line_coord].index) ? line_coords[cur_line_coord-1].param : 0;
+						assert(prev_param <= line_coords[cur_line_coord].param);
+						float p = prev_param + (line_coords[cur_line_coord].param - prev_param) * factor;
+						assert(p >= 0 && p <= 1);
+						
+						MapCoordF o0, o1;
+						if (is_first_dash)
+						{
+							MapCoordF o2;
+							splitBezierCurve(coords[index], coords[index+1], coords[index+2], (index < (int)flags.size() - 3) ? coords[index+3] : coords[0], p, o0, o1, o2, o3, o4);
+						}
+						else
+						{
+							processed_coords.push_back(MapCoordF(0, 0));
+							splitBezierCurve(coords[index], coords[index+1], coords[index+2], (index < (int)flags.size() - 3) ? coords[index+3] : coords[0], p, o0, o1, processed_coords[processed_coords.size() - 1], o3, o4);
+							MapCoord flag(0, 0);
+							flag.setCurveStart(true);
+							processed_flags.push_back(flag);
+						}
+						
+						start_bezier_split_param = p;
+						start_bezier_index = index;
+					}
+					else if (!is_first_dash)
+					{
+						processed_coords.push_back(MapCoordF(0, 0));
+						calcPositionAt(flags, coords, line_coords, cur_length, cur_line_coord, &processed_coords[processed_coords.size() - 1], NULL);
+						processed_flags.push_back(MapCoord(0, 0));
+					}
+					
+					int current_index = line_coords[cur_line_coord].index;
+					
+					// Place mid symbol? TODO: support multiple mid symbols
+					if (mid_symbol && !mid_symbol->isEmpty() && !is_half_dash)
+					{
+						cur_length += 0.5f * cur_dash_length;
+						
+						MapCoordF right_vector;
+						advanceDashedLineTo(flags, coords, line_coords, cur_line_coord, current_index, cur_length, start_bezier_index, processed_flags, processed_coords, o3, o4);
+						calcPositionAt(flags, coords, line_coords, cur_length, cur_line_coord, &point_coord[0], &right_vector);
+						point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+						mid_symbol->createRenderables(&point_object, point_coord, output);
+						
+						cur_length += 0.5f * cur_dash_length;
+					}
+					else
+						cur_length += cur_dash_length;
+					
+					// Get dash end position
+					advanceDashedLineTo(flags, coords, line_coords, cur_line_coord, current_index, cur_length, start_bezier_index, processed_flags, processed_coords, o3, o4);
+					
+					processed_coords.push_back(MapCoordF(0, 0));
+					if (flags[current_index].isCurveStart())
+					{
+						int index = line_coords[cur_line_coord].index;
+						float factor = (cur_length - line_coords[cur_line_coord-1].clen) / (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen);
+						assert(factor >= 0 && factor <= 1.001f);
+						if (factor > 1)
+							factor = 1;
+						float prev_param = (line_coords[cur_line_coord-1].index == line_coords[cur_line_coord].index) ? line_coords[cur_line_coord-1].param : 0;
+						assert(prev_param <= line_coords[cur_line_coord].param);
+						float p = prev_param + (line_coords[cur_line_coord].param - prev_param) * factor;
+						assert(p >= 0 && p <= 1);
+						
+						processed_flags.push_back(MapCoord(0, 0));
+						processed_coords.push_back(MapCoordF(0, 0));
+						processed_flags.push_back(MapCoord(0, 0));
+						processed_coords.push_back(MapCoordF(0, 0));
+						MapCoordF unused, unused2;
+						
+						if (start_bezier_index == current_index)
+						{
+							// The dash end is in the same curve as the start, need to make a second split with the correct parameter
+							p = (p - start_bezier_split_param) / (1 - start_bezier_split_param);
+							assert(p >= 0 && p <= 1);
+							
+							splitBezierCurve(processed_coords[processed_coords.size() - 4], o3, o4, (index < (int)flags.size() - 3) ? coords[index+3] : coords[0],
+											 p, processed_coords[processed_coords.size() - 3], processed_coords[processed_coords.size() - 2],
+											 processed_coords[processed_coords.size() - 1], unused, unused2);
+						}
+						else
+						{
+							splitBezierCurve(coords[index], coords[index+1], coords[index+2], (index < (int)flags.size() - 3) ? coords[index+3] : coords[0],
+											 p, processed_coords[processed_coords.size() - 3], processed_coords[processed_coords.size() - 2],
+											 processed_coords[processed_coords.size() - 1], unused, unused2);
+						}
+					}
+					else
+						calcPositionAt(flags, coords, line_coords, cur_length, cur_line_coord, &processed_coords[processed_coords.size() - 1], NULL);
+					
+					MapCoord flag(0, 0);
+					if (!(ends_with_dashpoint && dash == dashes_in_group - 1 && dashgroup == num_dashgroups - 1))
+						flag.setHolePoint(true);
+					processed_flags.push_back(flag);
+					
+					if (dash < dashes_in_group - 1)
+						cur_length += in_group_break_length_f;
+				}
+				cur_length += break_length_f;
+			}
+		}
+		
+		if (ends_with_dashpoint && dashes_in_group == 1)
+		{
+			// Place a mid symbol on the dash point
+			MapCoordF right = MapCoordF(coords[part_end+1].getX() - coords[part_end-1].getX(), coords[part_end+1].getY() - coords[part_end-1].getY());
+			right.perpRight();
+			point_object.setRotation(atan2(right.getX(), right.getY()));
+			point_coord[0] = coords[part_end];
+			mid_symbol->createRenderables(&point_object, point_coord, output);
+		}
+	}
+	
+	// Create line renderable
+	output.push_back(new LineRenderable(this, processed_coords, processed_flags, object->isPathClosed()));
+}
+void LineSymbol::advanceDashedLineTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const LineCoordVector& line_coords, int& cur_line_coord, int& current_index, float cur_length,
+									 int start_bezier_index, MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, const MapCoordF& o3, const MapCoordF& o4)
+{
+	int line_coords_size = (int)line_coords.size();
+	while (cur_line_coord < line_coords_size - 1 && line_coords[cur_line_coord].clen < cur_length)
+	{
+		++cur_line_coord;
+		if (line_coords[cur_line_coord].index != current_index)
+		{
+			if (current_index == start_bezier_index)
+			{
+				processed_flags.push_back(MapCoord(0, 0));
+				processed_coords.push_back(o3);
+				processed_flags.push_back(MapCoord(0, 0));
+				processed_coords.push_back(o4);
+				processed_flags.push_back(flags[line_coords[current_index].index + 3]);
+				processed_coords.push_back(coords[line_coords[current_index].index + 3]);
+				
+				current_index += 3;
+				assert(current_index == line_coords[cur_line_coord].index);
+			}
+			else
+			{
+				assert((!flags[line_coords[current_index].index].isCurveStart() && current_index + 1 == line_coords[cur_line_coord].index) ||
+				       (flags[line_coords[current_index].index].isCurveStart() && current_index + 3 == line_coords[cur_line_coord].index));
+				do
+				{
+					++current_index;
+					processed_flags.push_back(flags[current_index]);
+					processed_coords.push_back(coords[current_index]);
+				} while (current_index < line_coords[cur_line_coord].index);
+			}
+		}
+	}	
 }
 void LineSymbol::createDashSymbolRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output)
 {
@@ -208,6 +456,7 @@ void LineSymbol::createDottedRenderables(Object* object, const MapCoordVectorF& 
 		int segment_count = (lower_count_deviation > higher_count_deviation) ? higher_segment_count : lower_segment_count;
 		for (int i = 0; i < segment_count - 1; ++i)
 		{
+			// TODO: support multiple mid symbols
 			calcPositionAt(flags, coords, line_coords, (i+1) * length / segment_count, line_coord_search_start, &point_coord[0], &right_vector);
 			point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 			mid_symbol->createRenderables(&point_object, point_coord, output);
@@ -266,7 +515,7 @@ bool LineSymbol::getNextLinePart(const MapCoordVector& flags, const MapCoordVect
 			line_coords->push_back(coord);
 		}
 		
-		if (i < size && flags[i].isHolePoint() || flags[i].isDashPoint())
+		if (i < size && (flags[i].isHolePoint() || flags[i].isDashPoint()))
 		{
 			part_end = i;
 			return true;
@@ -325,7 +574,7 @@ void LineSymbol::curveToLineCoord(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapC
 void LineSymbol::calcPositionAt(const MapCoordVector& flags, const MapCoordVectorF& coords, const LineSymbol::LineCoordVector& line_coords, float length, int& line_coord_search_start, MapCoordF* out_pos, MapCoordF* out_right_vector)
 {
 	int size = (int)line_coords.size();
-	for (int i = line_coord_search_start; i < size; ++i)
+	for (int i = qMax(1, line_coord_search_start); i < size; ++i)	// i may not be 0 because the previous LineParam is accessed (and it is unnecessary to look at the 0th line ;coord)
 	{
 		if (line_coords[i].clen < length)
 			continue;
@@ -334,36 +583,76 @@ void LineSymbol::calcPositionAt(const MapCoordVector& flags, const MapCoordVecto
 		if (flags[index].isCurveStart())
 		{
 			float factor = (length - line_coords[i-1].clen) / (line_coords[i].clen - line_coords[i-1].clen);
+			assert(factor >= 0 && factor <= 1.001f);
+			if (factor > 1)
+				factor = 1;
 			float prev_param = (line_coords[i-1].index == line_coords[i].index) ? line_coords[i-1].param : 0;
+			assert(prev_param <= line_coords[i].param);
 			float p = prev_param + (line_coords[i].param - prev_param) * factor;
 			assert(p >= 0 && p <= 1);
-			MapCoordF o0, o1, o4;
+			MapCoordF o0, o1, o3, o4;
 			if (index < (int)flags.size() - 3)
-				splitBezierCurve(coords[index], coords[index+1], coords[index+2], coords[index+3], p, o0, o1, *out_pos, *out_right_vector, o4);
+				splitBezierCurve(coords[index], coords[index+1], coords[index+2], coords[index+3], p, o0, o1, *out_pos, o3, o4);
 			else
-				splitBezierCurve(coords[index], coords[index+1], coords[index+2], coords[0], p, o0, o1, *out_pos, *out_right_vector, o4);
+				splitBezierCurve(coords[index], coords[index+1], coords[index+2], coords[0], p, o0, o1, *out_pos, o3, o4);
 			
-			out_right_vector->setX(out_right_vector->getX() - o1.getX());
-			out_right_vector->setY(out_right_vector->getY() - o1.getY());
-			out_right_vector->perpRight();
+			if (out_right_vector)
+			{
+				out_right_vector->setX(o3.getX() - o1.getX());
+				out_right_vector->setY(o3.getY() - o1.getY());
+				out_right_vector->perpRight();
+			}
 		}
 		else
 		{
 			float factor = (length - line_coords[i-1].clen) / (line_coords[i].clen - line_coords[i-1].clen);
-			out_right_vector->setX(line_coords[i].pos.getX() - line_coords[i-1].pos.getX());
-			out_right_vector->setY(line_coords[i].pos.getY() - line_coords[i-1].pos.getY());
-			out_pos->setX(line_coords[i-1].pos.getX() + factor * out_right_vector->getX());
-			out_pos->setY(line_coords[i-1].pos.getY() + factor * out_right_vector->getY());
-			out_right_vector->perpRight();
+			assert(factor >= 0 && factor <= 1.001f);
+			if (factor > 1)
+				factor = 1;
+			MapCoordF to_next(line_coords[i].pos.getX() - line_coords[i-1].pos.getX(), line_coords[i].pos.getY() - line_coords[i-1].pos.getY());
+			out_pos->setX(line_coords[i-1].pos.getX() + factor * to_next.getX());
+			out_pos->setY(line_coords[i-1].pos.getY() + factor * to_next.getY());
+			if (out_right_vector)
+			{
+				*out_right_vector = to_next;
+				out_right_vector->perpRight();
+			}
 		}
 		
 		line_coord_search_start = i;
 		return;
 	}
-	assert(false);
+	
+	assert(length < line_coords[line_coords.size() - 1].clen + 0.01f);
+	*out_pos = line_coords[line_coords.size() - 1].pos;
+	if (out_right_vector)
+	{
+		out_right_vector->setX(line_coords[line_coords.size() - 1].pos.getX() - line_coords[line_coords.size() - 2].pos.getX());
+		out_right_vector->setY(line_coords[line_coords.size() - 1].pos.getY() - line_coords[line_coords.size() - 2].pos.getY());
+		out_right_vector->perpRight();
+	}
 }
 void LineSymbol::splitBezierCurve(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, float p, MapCoordF& o0, MapCoordF& o1, MapCoordF& o2, MapCoordF& o3, MapCoordF& o4)
 {
+	if (p >= 1)
+	{
+		o0 = c1;
+		o1 = c2;
+		o2 = c3;
+		o3 = c3;
+		o4 = c3;
+		return;
+	}
+	else if (p <= 0)
+	{
+		o0 = c0;
+		o1 = c0;
+		o2 = c0;
+		o3 = c1;
+		o4 = c2;
+		return;
+	}
+	
 	o0 = MapCoordF(c0.getX() + (c1.getX() - c0.getX()) * p, c0.getY() + (c1.getY() - c0.getY()) * p);
 	MapCoordF c12(c1.getX() + (c2.getX() - c1.getX()) * p, c1.getY() + (c2.getY() - c1.getY()) * p);
 	o4 = MapCoordF(c2.getX() + (c3.getX() - c2.getX()) * p, c2.getY() + (c3.getY() - c2.getY()) * p);
@@ -690,6 +979,11 @@ void LineSymbolSettings::breakLengthChanged(QString text)
 void LineSymbolSettings::dashGroupsChanged(int index)
 {
 	symbol->dashes_in_group = dash_group_combo->itemData(index).toInt();
+	if (symbol->dashes_in_group > 1)
+	{
+		symbol->half_outer_dashes = false;
+		half_outer_dashes_check->setChecked(false);
+	}
 	dialog->updatePreview();
 	updateWidgets();
 }
