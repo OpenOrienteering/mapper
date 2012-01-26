@@ -116,6 +116,7 @@ public:
 	
 	inline void setCoordinate(int pos, MapCoord c) {coords[pos] = c;}
 	inline void addCoordinate(int pos, MapCoord c) {coords.insert(coords.begin() + pos, c);}
+	inline void addCoordinate(MapCoord c) {coords.push_back(c);}
 	inline void deleteCoordinate(int pos) {coords.erase(coords.begin() + pos);}
 };
 

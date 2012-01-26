@@ -74,8 +74,9 @@ public:
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
     virtual bool containsColor(MapColor* color);
 	
-	// Getters
+	// Getters / Setters
 	inline MapColor* getColor() const {return color;}
+	inline void setColor(MapColor* color) {this->color = color;}
 	
 	inline int getNumFillPatterns() const {return (int)patterns.size();}
 	inline FillPattern& getFillPattern(int i) {return patterns[i];}

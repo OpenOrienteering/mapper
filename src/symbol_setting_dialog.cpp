@@ -318,7 +318,7 @@ void SymbolSettingDialog::createPreviewMap()
 		
 		const int num_lines = 15;
 		const float min_length = 0.5f;
-		const float max_length = 18;
+		const float max_length = 15;
 		const float x_offset = -0.5f * max_length;
 		const float y_offset = (0.001f * line->getLineWidth()) * 3.5f;
 		
@@ -357,7 +357,7 @@ void SymbolSettingDialog::createPreviewMap()
 		
 		const float snake_min_x = -1.5f * max_length;
 		const float snake_max_x = 1.5f * max_length;
-		const float snake_max_y = qMin(0.5f * y_start - inner_radius - max_length, y_offset) - 4;
+		const float snake_max_y = qMin(0.5f * y_start - inner_radius - max_length, y_start) - 4;
 		const float snake_min_y = snake_max_y - 6;
 		const int snake_steps = 8;
 		
@@ -379,20 +379,20 @@ void SymbolSettingDialog::createPreviewMap()
 		path = new PathObject(preview_map, line);
 		MapCoord coord = MapCoord(curve_min_x, curve_min_y);
 		coord.setCurveStart(true);
-		path->addCoordinate(0, coord);
+		path->addCoordinate(coord);
 		coord = MapCoord(curve_min_x + (curve_max_x - curve_min_x) / 6, curve_max_y);
-		path->addCoordinate(1, coord);
+		path->addCoordinate(coord);
 		coord = MapCoord(curve_min_x + 2 * (curve_max_x - curve_min_x) / 6, curve_max_y);
-		path->addCoordinate(2, coord);
+		path->addCoordinate(coord);
 		coord = MapCoord(curve_min_x + 3 * (curve_max_x - curve_min_x) / 6, 0.5f * (curve_min_y + curve_max_y));
 		coord.setCurveStart(true);
-		path->addCoordinate(3, coord);
+		path->addCoordinate(coord);
 		coord = MapCoord(curve_min_x + 4 * (curve_max_x - curve_min_x) / 6, curve_min_y);
-		path->addCoordinate(4, coord);
+		path->addCoordinate(coord);
 		coord = MapCoord(curve_min_x + 5 * (curve_max_x - curve_min_x) / 6, curve_min_y);
-		path->addCoordinate(5, coord);
+		path->addCoordinate(coord);
 		coord = MapCoord(curve_max_x, curve_max_y);
-		path->addCoordinate(6, coord);
+		path->addCoordinate(coord);
 		preview_map->addObject(path);
 		preview_objects.push_back(path);
 	}
