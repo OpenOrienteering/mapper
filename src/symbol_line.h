@@ -105,7 +105,8 @@ protected:
 	virtual bool loadImpl(QFile* file, Map* map);
 	
 	void processContinuousLine(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, const LineCoordVector& line_coords,
-							   float start, float end, bool has_start, bool has_end, int& cur_line_coord, MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, RenderableVector& output);
+							   float start, float end, bool has_start, bool has_end, int& cur_line_coord,
+							   MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, bool include_first_point, bool set_mid_symbols, RenderableVector& output);
 	void createPointedLineCap(const MapCoordVector& flags, const MapCoordVectorF& coords, const LineCoordVector& line_coords,
 							  float start, float end, int& cur_line_coord, bool is_end, RenderableVector& output);
 	MapCoordF calculateRightVector(const MapCoordVectorF& coords, int i, float* scaling);
@@ -115,11 +116,10 @@ protected:
 								std::vector<float>* out_lengths, bool set_mid_symbols, RenderableVector& output);
 	void advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const LineCoordVector& line_coords, int& cur_line_coord, int& current_index, float cur_length,
 								  int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, std::vector<float>* out_lengths, const MapCoordF& o3, const MapCoordF& o4);
-	void createDashedLineRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output);
-	void advanceDashedLineTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const LineCoordVector& line_coords, int& cur_line_coord, int& current_index, float cur_length, int start_bezier_index, MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, const MapCoordF& o3, const MapCoordF& o4);
+	void processDashedLine(Object* object, const MapCoordVectorF& coords, MapCoordVector& out_flags, MapCoordVectorF& out_coords, RenderableVector& output);
 	void createDashSymbolRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output);
 	void createDottedRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output);
-	bool getNextLinePart(const MapCoordVector& flags, const MapCoordVectorF& coords, int& part_start, int& part_end, LineCoordVector* line_coords, bool break_at_dash_points);
+	bool getNextLinePart(const MapCoordVector& flags, const MapCoordVectorF& coords, int& part_start, int& part_end, LineCoordVector* line_coords, bool break_at_dash_points, bool append_line_coords);
 	void curveToLineCoordRec(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, LineCoordVector* line_coords, float p0, float p1);
 	void curveToLineCoord(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, LineCoordVector* line_coords);
 	void calcPositionAt(const MapCoordVector& flags, const MapCoordVectorF& coords, const LineCoordVector& line_coords, float length, int& line_coord_search_start, MapCoordF* out_pos, MapCoordF* out_right_vector);

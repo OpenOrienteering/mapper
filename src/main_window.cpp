@@ -46,6 +46,7 @@ MainWindowController* MainWindowController::controllerForFile(const QString& fil
 MainWindow::MainWindow(bool as_main_window)
 {
 	controller = NULL;
+	has_unsaved_changes = false;
 	this->show_menu = as_main_window;
 	setCurrentFile("");
 	

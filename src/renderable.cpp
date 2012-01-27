@@ -206,6 +206,7 @@ void CircleRenderable::render(QPainter& painter)
 
 LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed) : Renderable()
 {
+	assert(transformed_coords.size() == coords.size());
 	color_priority = symbol->getColor()->priority;
 	line_width = 0.001f * symbol->getLineWidth();
 	
@@ -241,6 +242,7 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 		{
 			if (i == size - 2 && closed)
 			{
+				assert(i < size - 1);
 				path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[0].toQPointF());
 				++i;
 			}
@@ -303,6 +305,7 @@ void LineRenderable::render(QPainter& painter)
 
 AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords) : Renderable()
 {
+	assert(transformed_coords.size() >= 3 && transformed_coords.size() == coords.size());
 	color_priority = symbol->getColor() ? symbol->getColor()->priority : MapColor::Reserved;
 	
 	// Special case: first coord
@@ -316,6 +319,7 @@ AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transf
 		{
 			if (i == size - 2)
 			{
+				assert(i < size - 1);
 				path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[0].toQPointF());
 				++i;
 			}
@@ -355,6 +359,20 @@ void AreaRenderable::getRenderStates(RenderStates& out)
 void AreaRenderable::render(QPainter& painter)
 {
 	painter.drawPath(path);
+	
+	// DEBUG: show all control points
+	/*QPen pen(painter.pen());
+	QBrush brush(painter.brush());
+	QPen debugPen(QColor(Qt::red));
+	painter.setPen(debugPen);
+	painter.setBrush(Qt::NoBrush);
+	for (int i = 0; i < path.elementCount(); ++i)
+	{
+		const QPainterPath::Element& e = path.elementAt(i);
+		painter.drawEllipse(QPointF(e.x, e.y), 0.1f, 0.1f);
+	}
+	painter.setPen(pen);
+	painter.setBrush(brush);*/
 }
 
 // ### TextRenderable ###

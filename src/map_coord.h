@@ -31,8 +31,8 @@
 class MapCoord
 {
 public:
-	/// Create un-initialized MapCoord
-	inline MapCoord() {}
+	/// Create null MapCoord
+	inline MapCoord() : x(0), y(0) {}
 	
 	/// Create coordinates from position given in millimeters
 	inline MapCoord(double x, double y)
@@ -103,6 +103,12 @@ public:
 		double dx = to.getX() - getX();
 		double dy = to.getY() - getY();
 		return sqrt(dx*dx + dy*dy);
+	}
+	inline double lengthToSquared(const MapCoordF& to) const
+	{
+		double dx = to.getX() - getX();
+		double dy = to.getY() - getY();
+		return dx*dx + dy*dy;
 	}
 	
 	inline double getAngle() const

@@ -72,10 +72,8 @@ bool Object::update(bool force)
 	if (!force && !output_dirty)
 		return false;
 	
-	bool had_output_before = !output.empty();
+	map->removeRenderablesOfObject(this, false);
 	clearOutput();
-	if (map && had_output_before)
-		map->removeRenderablesOfObject(this, false);
 	
 	// Calculate float coordinates
 	MapCoordVectorF coordsF;

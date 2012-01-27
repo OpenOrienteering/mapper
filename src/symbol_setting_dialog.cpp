@@ -193,6 +193,7 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Symbol* in_map_symbol, 
 }
 SymbolSettingDialog::~SymbolSettingDialog()
 {
+	delete[] number_edit;
 }
 
 void SymbolSettingDialog::updatePreview()
