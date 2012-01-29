@@ -17,6 +17,7 @@ include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR})
 set(Mapper_SRCS
  src/main.cpp
  src/util.cpp
+ src/qbezier.cpp
  src/matrix.cpp
 
  src/main_window.cpp

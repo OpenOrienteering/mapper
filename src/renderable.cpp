@@ -233,6 +233,7 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 	{
 		if (hole)
 		{
+			assert(!coords[i].isHolePoint() && "Two hole points in a row!");
 			path.moveTo(transformed_coords[i].toQPointF());
 			hole = false;
 			continue;
@@ -296,7 +297,7 @@ void LineRenderable::render(QPainter& painter)
 	for (int i = 0; i < path.elementCount(); ++i)
 	{
 		const QPainterPath::Element& e = path.elementAt(i);
-		painter.drawEllipse(QPointF(e.x, e.y), 2, 2);
+		painter.drawEllipse(QPointF(e.x, e.y), 0.2f, 0.2f);
 	}
 	painter.setPen(pen);*/
 }

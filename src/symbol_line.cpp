@@ -29,6 +29,7 @@
 #include "symbol_setting_dialog.h"
 #include "symbol_point.h"
 #include "symbol_area.h"
+#include "qbezier_p.h"
 
 const float LineSymbol::bezier_error = 0.25f;
 
@@ -60,6 +61,7 @@ LineSymbol::LineSymbol() : Symbol(Symbol::Line)
 	have_border_lines = false;
 	border_color = NULL;
 	border_width = 0;
+	border_shift = 0;
 	dashed_border = false;
 	border_dash_length = 2 * 1000;
 	border_break_length = 1 * 1000;
@@ -100,6 +102,10 @@ Symbol* LineSymbol::duplicate()
 
 void LineSymbol::createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output)
 {
+	createRenderables(object->isPathClosed(), object->getCoordinateVector(), coords, output);
+}
+void LineSymbol::createRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
+{
 	if (coords.size() < 2)
 		return;
 	
@@ -123,27 +129,28 @@ void LineSymbol::createRenderables(Object* object, const MapCoordVectorF& coords
 	
 	// Dash symbols?
 	if (dash_symbol && !dash_symbol->isEmpty())
-		createDashSymbolRenderables(object, coords, output);
+		createDashSymbolRenderables(path_closed, flags, coords, output);
 	
 	// The line itself
 	MapCoordVector processed_flags;
 	MapCoordVectorF processed_coords;
+	bool create_border = have_border_lines && border_width > 0 && border_color != NULL && !(border_dash_length == 0 && dashed_border);
 	if (!dashed)
 	{
 		// Base line?
-		if (color && line_width > 0)
+		if (line_width > 0)
 		{
-			if (cap_style != PointedCap || pointed_cap_length == 0)	// TODO: && !border_line
-				output.push_back(new LineRenderable(this, coords, object->getCoordinateVector(), object->isPathClosed()));
-			else
+			if (color && (cap_style != PointedCap || pointed_cap_length == 0) && !have_border_lines)
+				output.push_back(new LineRenderable(this, coords, flags, path_closed));
+			else if (have_border_lines || (cap_style == PointedCap && pointed_cap_length > 0))
 			{
 				int part_start = 0;
 				int part_end = 0;
 				LineCoordVector line_coords;
-				while (getNextLinePart(object->getCoordinateVector(), coords, part_start, part_end, &line_coords, false, false))
+				while (getNextLinePart(flags, coords, part_start, part_end, &line_coords, false, false))
 				{
 					int cur_line_coord = 1;
-					processContinuousLine(object, object->getCoordinateVector(), coords, line_coords, 0, line_coords[line_coords.size() - 1].clen,
+					processContinuousLine(path_closed, flags, coords, line_coords, 0, line_coords[line_coords.size() - 1].clen,
 										  true, true, cur_line_coord, processed_flags, processed_coords, true, false, output);
 				}
 			}
@@ -151,22 +158,130 @@ void LineSymbol::createRenderables(Object* object, const MapCoordVectorF& coords
 		
 		// Symbols?
 		if (mid_symbol && !mid_symbol->isEmpty() && segment_length > 0)
-			createDottedRenderables(object, coords, output);
+			createDottedRenderables(path_closed, flags, coords, output);
 	}
 	else
 	{
 		// Dashed lines
 		if (dash_length > 0)
-			processDashedLine(object, coords, processed_flags, processed_coords, output);
+			processDashedLine(path_closed, flags, coords, processed_flags, processed_coords, output);
 		else
 			return;	// wrong parameter
 	}
 	
 	assert(processed_coords.size() != 1);
 	if (processed_coords.size() >= 2)
-		output.push_back(new LineRenderable(this, processed_coords, processed_flags, object->isPathClosed()));
+	{
+		// Create main line renderable
+		if (color)
+			output.push_back(new LineRenderable(this, processed_coords, processed_flags, path_closed));
+		
+		// Border lines?
+		if (create_border)
+			createBorderLines(processed_flags, processed_coords, path_closed, output);
+	}
 }
-void LineSymbol::processContinuousLine(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, const LineCoordVector& line_coords,
+void LineSymbol::createBorderLines(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output)
+{
+	LineSymbol border_symbol;
+	border_symbol.line_width = border_width;
+	border_symbol.color = border_color;
+	
+	MapCoordVector border_flags;
+	MapCoordVectorF border_coords;
+	
+	float shift = 0.001f * 0.5f * line_width + 0.001f * border_shift;
+	
+	if (dashed_border)
+	{
+		MapCoordVector dashed_flags;
+		MapCoordVectorF dashed_coords;
+		
+		border_symbol.dashed = true;
+		border_symbol.dash_length = border_dash_length;
+		border_symbol.break_length = border_break_length;
+		border_symbol.processDashedLine(path_closed, flags, coords, dashed_flags, dashed_coords, output);
+		border_symbol.dashed = false;	// important, otherwise more dashes might be added by createRenderables()!
+		
+		shiftCoordinates(dashed_flags, dashed_coords, shift, border_flags, border_coords);
+		border_symbol.createRenderables(path_closed, border_flags, border_coords, output);
+		shiftCoordinates(dashed_flags, dashed_coords, -shift, border_flags, border_coords);
+		border_symbol.createRenderables(path_closed, border_flags, border_coords, output);
+	}
+	else
+	{
+		shiftCoordinates(flags, coords, shift, border_flags, border_coords);
+		border_symbol.createRenderables(path_closed, border_flags, border_coords, output);
+		shiftCoordinates(flags, coords, -shift, border_flags, border_coords);
+		border_symbol.createRenderables(path_closed, border_flags, border_coords, output);
+	}
+}
+void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, float shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords)
+{
+	const float curve_threshold = 0.05f;	// TODO: decrease for export/print?
+	const int MAX_OFFSET = 16;
+	QBezier offsetCurves[MAX_OFFSET];
+	
+	int size = flags.size();
+	out_flags.clear();
+	out_coords.clear();
+	out_flags.reserve(size);
+	out_coords.reserve(size);
+	
+	MapCoord no_flags;
+	
+	for (int i = 0; i < size; ++i)
+	{
+		float scaling;
+		MapCoordF right_vector = calculateRightVector(flags, coords, i, &scaling);
+		float radius = scaling * shift;
+		
+		if (flags[i].isCurveStart())
+		{
+			// Use QBezier code to shift the curve, but set start and end point manually to get the correct end points (because of line joins)
+			// TODO: it may be necessary to remove some of the generated curves in the case an outer point is moved inwards
+			QBezier bezier = QBezier::fromPoints(coords[i].toQPointF(), coords[i+1].toQPointF(), coords[i+2].toQPointF(), coords[(i+3) % size].toQPointF());
+			
+			int count = bezier.shifted(offsetCurves, MAX_OFFSET, -shift, curve_threshold);
+			if (count)
+			{
+				out_flags.push_back(no_flags);
+				out_coords.push_back(MapCoordF(coords[i].getX() + radius * right_vector.getX(), coords[i].getY() + radius * right_vector.getY()));
+				
+				for (int i = 0; i < count; ++i)
+				{
+					out_flags[out_flags.size() - 1].setCurveStart(true);
+					
+					out_flags.push_back(no_flags);
+					out_coords.push_back(MapCoordF(offsetCurves[i].pt2().x(), offsetCurves[i].pt2().y()));
+					
+					out_flags.push_back(no_flags);
+					out_coords.push_back(MapCoordF(offsetCurves[i].pt3().x(), offsetCurves[i].pt3().y()));
+					
+					if (i < count - 1)
+					{
+						out_flags.push_back(no_flags);
+						out_coords.push_back(MapCoordF(offsetCurves[i].pt4().x(), offsetCurves[i].pt4().y()));
+					}
+				}
+				
+				/*float end_scaling;
+				MapCoordF end_right_vector = calculateRightVector(flags, coords, i+3, &end_scaling);
+				float end_radius = end_scaling * shift;
+				out_flags.push_back(no_flags);
+				out_coords.push_back(MapCoordF(coords[i+3].getX() + end_radius * end_right_vector.getX(), coords[i].getY() + end_radius * end_right_vector.getY()));*/
+			}
+			
+			i += 2;
+		}
+		else
+		{
+			out_flags.push_back(flags[i]);
+			out_coords.push_back(MapCoordF(coords[i].getX() + radius * right_vector.getX(), coords[i].getY() + radius * right_vector.getY()));
+		}
+	}
+}
+void LineSymbol::processContinuousLine(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, const LineCoordVector& line_coords,
 									   float start, float end, bool has_start, bool has_end, int& cur_line_coord,
 									   MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, bool include_first_point, bool set_mid_symbols, RenderableVector& output)
 {
@@ -239,11 +354,11 @@ void LineSymbol::createPointedLineCap(const MapCoordVector& flags, const MapCoor
 		if (orig_end_index >= (int)coords.size())
 			orig_end_index = 0;
 		if (cap_middle_coords[i].lengthToSquared(coords[orig_start_index]) < 0.001f*0.001f)
-			right_vector = calculateRightVector(coords, orig_start_index, &scaling);
+			right_vector = calculateRightVector(flags, coords, orig_start_index, &scaling);
 		else if (cap_middle_coords[i].lengthToSquared(coords[orig_end_index]) < 0.001f*0.001f)
-			right_vector = calculateRightVector(coords, orig_end_index, &scaling);
+			right_vector = calculateRightVector(flags, coords, orig_end_index, &scaling);
 		else
-			right_vector = calculateRightVector(cap_middle_coords, i, &scaling);
+			right_vector = calculateRightVector(cap_flags, cap_middle_coords, i, &scaling);
 		assert(right_vector.lengthSquared() < 1.01f);
 		float radius = factor * scaling * line_half_width;
 		if (radius > 2 * line_half_width)
@@ -339,9 +454,9 @@ void LineSymbol::createPointedLineCap(const MapCoordVector& flags, const MapCoor
 	assert(cap_coords.size() >= 3 && cap_coords.size() == cap_flags.size());
 	output.push_back(new AreaRenderable(&area_symbol, cap_coords, cap_flags));
 }
-MapCoordF LineSymbol::calculateRightVector(const MapCoordVectorF& coords, int i, float* scaling)
+MapCoordF LineSymbol::calculateRightVector(const MapCoordVector& flags, const MapCoordVectorF& coords, int i, float* scaling)
 {
-	if (i == 0)
+	if (i == 0 || (i > 0 && flags[i-1].isHolePoint()))
 	{
 		if (scaling)
 			*scaling = 1;
@@ -350,7 +465,7 @@ MapCoordF LineSymbol::calculateRightVector(const MapCoordVectorF& coords, int i,
 		right.normalize();
 		return right;
 	}
-	else if (i == (int)coords.size() - 1)
+	else if (i == (int)coords.size() - 1 || flags[i].isHolePoint())
 	{
 		if (scaling)
 			*scaling = 1;
@@ -570,7 +685,8 @@ void LineSymbol::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 			else
 			{
 				assert((!flags[current_index].isCurveStart() && current_index + 1 == line_coords[cur_line_coord].index) ||
-				       (flags[current_index].isCurveStart() && current_index + 3 == line_coords[cur_line_coord].index));
+				       (flags[current_index].isCurveStart() && current_index + 3 == line_coords[cur_line_coord].index) ||
+				       (flags[current_index+1].isHolePoint() && current_index + 2 == line_coords[cur_line_coord].index));
 				do
 				{
 					++current_index;
@@ -583,9 +699,8 @@ void LineSymbol::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 		}
 	}	
 }
-void LineSymbol::processDashedLine(Object* object, const MapCoordVectorF& coords, MapCoordVector& out_flags, MapCoordVectorF& out_coords, RenderableVector& output)
+void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, MapCoordVector& out_flags, MapCoordVectorF& out_coords, RenderableVector& output)
 {
-	const MapCoordVector& flags = object->getCoordinateVector();
 	int size = (int)coords.size();
 	
 	PointObject point_object(NULL, MapCoord(0, 0), mid_symbol);
@@ -611,7 +726,11 @@ void LineSymbol::processDashedLine(Object* object, const MapCoordVectorF& coords
 	while (getNextLinePart(flags, coords, part_start, part_end, &line_coords, true, true))
 	{
 		if (part_start > 0 && flags[part_start-1].isHolePoint())
+		{
+			++first_line_coord;
+			cur_line_coord = first_line_coord + 1;
 			cur_length = line_coords[first_line_coord].clen;
+		}
 		int line_coords_size = (int)line_coords.size();
 		
 		bool starts_with_dashpoint = (part_start > 0 && flags[part_start].isDashPoint());
@@ -634,7 +753,7 @@ void LineSymbol::processDashedLine(Object* object, const MapCoordVectorF& coords
 			// Line part too short for dashes, use just one continuous line for it
 			if (!ends_with_dashpoint)
 			{
-				processContinuousLine(object, flags, coords, line_coords, cur_length, cur_length + length + old_length,
+				processContinuousLine(path_closed, flags, coords, line_coords, cur_length, cur_length + length + old_length,
 									out_flags.empty() || out_flags[out_flags.size() - 1].isHolePoint(), true,
 									cur_line_coord, out_flags, out_coords, true, old_length == 0 && length >= dash_length_f - switch_deviation, output);
 				cur_length += length + old_length;
@@ -664,13 +783,13 @@ void LineSymbol::processDashedLine(Object* object, const MapCoordVectorF& coords
 					
 					// The dash has an end if it is not the dash before a dashpoint and not the last dash in a closed path
 					bool has_end = !(ends_with_dashpoint && dash == dashes_in_group - 1 && dashgroup == num_dashgroups - 1) &&
-					               !(dash == dashes_in_group - 1 && dashgroup == num_dashgroups - 1 && object->isPathClosed() && part_end == size - 1);
+					               !(dash == dashes_in_group - 1 && dashgroup == num_dashgroups - 1 && path_closed && part_end == size - 1);
 					
 					if (has_end)
 					{
-						processContinuousLine(object, flags, coords, line_coords, cur_length, cur_length + old_length + cur_dash_length,
-											out_flags.empty() || out_flags[out_flags.size() - 1].isHolePoint(), has_end,
-											cur_line_coord, out_flags, out_coords, true, !is_half_dash, output);
+						processContinuousLine(path_closed, flags, coords, line_coords, cur_length, cur_length + old_length + cur_dash_length,
+											  out_flags.empty() || out_flags[out_flags.size() - 1].isHolePoint(), has_end,
+											  cur_line_coord, out_flags, out_coords, true, !is_half_dash, output);
 						cur_length += old_length + cur_dash_length;
 						old_length = 0;
 						dash_point_before = false;
@@ -693,7 +812,7 @@ void LineSymbol::processDashedLine(Object* object, const MapCoordVectorF& coords
 		if (ends_with_dashpoint && dashes_in_group == 1 && mid_symbol && !mid_symbol->isEmpty())
 		{
 			// Place a mid symbol on the dash point
-			MapCoordF right = calculateRightVector(coords, part_end, NULL);
+			MapCoordF right = calculateRightVector(flags, coords, part_end, NULL);
 			point_object.setRotation(atan2(right.getX(), right.getY()));
 			point_coord[0] = coords[part_end];
 			mid_symbol->createRenderables(&point_object, point_coord, output);
@@ -705,9 +824,8 @@ void LineSymbol::processDashedLine(Object* object, const MapCoordVectorF& coords
 		first_line_coord = line_coords_size - 1;
 	}
 }
-void LineSymbol::createDashSymbolRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output)
+void LineSymbol::createDashSymbolRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
 {
-	const MapCoordVector& flags = object->getCoordinateVector();
 	PointObject point_object(NULL, MapCoord(0, 0), dash_symbol);
 	MapCoordVectorF point_coord;
 	point_coord.push_back(MapCoordF(0, 0));
@@ -719,40 +837,16 @@ void LineSymbol::createDashSymbolRenderables(Object* object, const MapCoordVecto
 		if (!flags[i].isDashPoint())
 			continue;
 		
-		if (i == 0)
-		{
-			point_object.setRotation(atan2(-(coords[1].getY() - coords[0].getY()), coords[1].getX() - coords[0].getX()));
-			point_coord[0] = coords[0];
-			dash_symbol->createRenderables(&point_object, point_coord, output);
-		}
-		else if (i == size - 1)
-		{
-			point_object.setRotation(atan2(-(coords[size-1].getY() - coords[size-2].getY()), coords[size-1].getX() - coords[size-2].getX()));
-			point_coord[0] = coords[size-1];
-			dash_symbol->createRenderables(&point_object, point_coord, output);
-		}
-		else
-		{
-			MapCoordF to_cur = MapCoordF(coords[i].getX() - coords[i-1].getX(), coords[i].getY() - coords[i-1].getY());
-			MapCoordF to_next = MapCoordF(coords[i+1].getX() - coords[i].getX(), coords[i+1].getY() - coords[i].getY());
-			to_cur.normalize();
-			to_next.normalize();
-			MapCoordF right = MapCoordF(to_next.getX() + to_cur.getX(), to_next.getY() + to_cur.getY());
-			right.perpRight();
-			
-			point_object.setRotation(atan2(right.getX(), right.getY()));
-			point_coord[0] = coords[i];
-			
-			to_cur.normalize();
-			right.normalize();
-			float coord_scale = 1.0f / sin(acos(right.getX() * to_cur.getX() + right.getY() * to_cur.getY()));
-			dash_symbol->createRenderablesScaled(&point_object, point_coord, output, coord_scale);
-		}
+		float scaling;
+		MapCoordF right = calculateRightVector(flags, coords, i, &scaling);
+		
+		point_object.setRotation(atan2(right.getX(), right.getY()));
+		point_coord[0] = coords[i];
+		dash_symbol->createRenderablesScaled(&point_object, point_coord, output, scaling);
 	}
 }
-void LineSymbol::createDottedRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output)
+void LineSymbol::createDottedRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
 {
-	const MapCoordVector& flags = object->getCoordinateVector();
 	PointObject point_object(NULL, MapCoord(0, 0), mid_symbol);
 	MapCoordVectorF point_coord;
 	point_coord.push_back(MapCoordF(0, 0));
@@ -1098,6 +1192,7 @@ void LineSymbol::saveImpl(QFile* file, Map* map)
 	temp = map->findColorIndex(border_color);
 	file->write((const char*)&temp, sizeof(int));
 	file->write((const char*)&border_width, sizeof(int));
+	file->write((const char*)&border_shift, sizeof(int));
 	file->write((const char*)&dashed_border, sizeof(bool));
 	file->write((const char*)&border_dash_length, sizeof(int));
 	file->write((const char*)&border_break_length, sizeof(int));
@@ -1155,6 +1250,7 @@ bool LineSymbol::loadImpl(QFile* file, Map* map)
 	file->read((char*)&temp, sizeof(int));
 	border_color = (temp >= 0) ? map->getColor(temp) : NULL;
 	file->read((char*)&border_width, sizeof(int));
+	file->read((char*)&border_shift, sizeof(int));
 	file->read((char*)&dashed_border, sizeof(bool));
 	file->read((char*)&border_dash_length, sizeof(int));
 	file->read((char*)&border_break_length, sizeof(int));
@@ -1197,7 +1293,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSetti
 	
 	QGridLayout* line_settings_layout = new QGridLayout();
 	line_settings_layout->setMargin(0);
-	line_settings_layout->setSpacing(0);
+	line_settings_layout->setVerticalSpacing(0);
 	line_settings_layout->setHorizontalSpacing(5);
 	line_settings_layout->addWidget(line_cap_label, 0, 0);
 	line_settings_layout->addWidget(line_cap_combo, 0, 1);
@@ -1253,7 +1349,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSetti
 	
 	QGridLayout* dashed_layout = new QGridLayout();
 	dashed_layout->setMargin(0);
-	dashed_layout->setSpacing(0);
+	dashed_layout->setVerticalSpacing(0);
 	dashed_layout->setHorizontalSpacing(5);
 	dashed_layout->addWidget(dash_length_label, 0, 0);
 	dashed_layout->addWidget(dash_length_edit, 0, 1);
@@ -1282,6 +1378,10 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSetti
 	QLabel* border_color_label = new QLabel(tr("Border color:"));
 	border_color_edit = new ColorDropDown(map, symbol->border_color);
 	
+	QLabel* border_shift_label = new QLabel(tr("Border shift:"));
+	border_shift_edit = new QLineEdit(QString::number(0.001f * symbol->border_shift));
+	border_shift_edit->setValidator(new DoubleValidator(0, 999999, border_shift_edit));
+	
 	border_dashed_check = new QCheckBox(tr("Border is dashed"));
 	
 	border_dash_widget = new QWidget();
@@ -1296,7 +1396,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSetti
 
 	QGridLayout* border_dash_layout = new QGridLayout();
 	border_dash_layout->setMargin(0);
-	border_dash_layout->setSpacing(0);
+	border_dash_layout->setVerticalSpacing(0);
 	border_dash_layout->setHorizontalSpacing(5);
 	border_dash_layout->addWidget(border_dash_length_label, 0, 0);
 	border_dash_layout->addWidget(border_dash_length_edit, 0, 1);
@@ -1306,18 +1406,21 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSetti
 	
 	QGridLayout* border_layout = new QGridLayout();
 	border_layout->setMargin(0);
-	border_layout->setSpacing(0);
+	border_layout->setVerticalSpacing(0);
 	border_layout->setHorizontalSpacing(5);
 	border_layout->addWidget(border_width_label, 0, 0);
 	border_layout->addWidget(border_width_edit, 0, 1);
 	border_layout->addWidget(border_color_label, 1, 0);
 	border_layout->addWidget(border_color_edit, 1, 1);
-	border_layout->addWidget(border_dashed_check, 2, 0, 1, 2);
-	border_layout->addWidget(border_dash_widget, 3, 0, 1, 2);
+	border_layout->addWidget(border_shift_label, 2, 0);
+	border_layout->addWidget(border_shift_edit, 2, 1);
+	border_layout->addWidget(border_dashed_check, 3, 0, 1, 2);
+	border_layout->addWidget(border_dash_widget, 4, 0, 1, 2);
 	border_widget->setLayout(border_layout);
 	
 	QGridLayout* layout = new QGridLayout();
-	layout->setSpacing(0);
+	layout->setVerticalSpacing(0);
+	layout->setHorizontalSpacing(5);
 	layout->addWidget(width_label, 0, 0);
 	layout->addWidget(width_edit, 0, 1);
 	layout->addWidget(color_label, 1, 0);
@@ -1348,6 +1451,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSetti
 	connect(border_check, SIGNAL(clicked(bool)), this, SLOT(borderCheckClicked(bool)));
 	connect(border_width_edit, SIGNAL(textEdited(QString)), this, SLOT(borderWidthEdited(QString)));
 	connect(border_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(borderColorChanged()));
+	connect(border_shift_edit, SIGNAL(textEdited(QString)), this, SLOT(borderShiftChanged(QString)));
 	connect(border_dashed_check, SIGNAL(clicked(bool)), this, SLOT(borderDashedClicked(bool)));
 	connect(border_dash_length_edit, SIGNAL(textEdited(QString)), this, SLOT(borderDashesChanged(QString)));
 	connect(border_break_length_edit, SIGNAL(textEdited(QString)), this, SLOT(borderDashesChanged(QString)));
@@ -1448,6 +1552,11 @@ void LineSymbolSettings::borderWidthEdited(QString text)
 void LineSymbolSettings::borderColorChanged()
 {
 	symbol->border_color = border_color_edit->color();
+	dialog->updatePreview();
+}
+void LineSymbolSettings::borderShiftChanged(QString text)
+{
+	symbol->border_shift = qRound(1000 * text.toFloat());
 	dialog->updatePreview();
 }
 void LineSymbolSettings::borderDashedClicked(bool checked)
