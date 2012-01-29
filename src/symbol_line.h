@@ -149,9 +149,16 @@ protected:
 	int dashes_in_group;
 	int in_group_break_length;
 	bool half_outer_dashes;
+	int mid_symbols_per_dash;
+	int mid_symbol_distance;
 	
 	// Border lines
-	// TODO
+	bool have_border_lines;
+	MapColor* border_color;
+	int border_width;
+	bool dashed_border;
+	int border_dash_length;
+	int border_break_length;
 };
 
 class LineSymbolSettings : public QGroupBox
@@ -173,6 +180,13 @@ protected slots:
 	void dashGroupsChanged(int index);
 	void inGroupBreakLengthChanged(QString text);
 	void halfOuterDashesChanged(bool checked);
+	void midSymbolsPerDashChanged(QString text);
+	void midSymbolDistanceChanged(QString text);
+	void borderCheckClicked(bool checked);
+	void borderWidthEdited(QString text);
+	void borderColorChanged();
+	void borderDashedClicked(bool checked);
+	void borderDashesChanged(QString text);
 	
 private:
 	void updateWidgets(bool show = true);
@@ -203,9 +217,19 @@ private:
 	QLabel* in_group_break_length_label;
 	QLineEdit* in_group_break_length_edit;
 	QCheckBox* half_outer_dashes_check;
+	QLineEdit* mid_symbol_per_dash_edit;
+	QLabel* mid_symbol_distance_label;
+	QLineEdit* mid_symbol_distance_edit;
 	
 	// enabled if line_width > 0
-	// TODO: border line edits
+	QWidget* border_widget;
+	QCheckBox* border_check;
+	QLineEdit* border_width_edit;
+	ColorDropDown* border_color_edit;
+	QCheckBox* border_dashed_check;
+	QWidget* border_dash_widget;
+	QLineEdit* border_dash_length_edit;
+	QLineEdit* border_break_length_edit;
 };
 
 #endif
