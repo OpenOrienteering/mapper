@@ -257,7 +257,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, RenderableVector&
 void AreaSymbol::FillPattern::createLine(MapCoordVectorF& coords, LineSymbol* line, PathObject* path, PointObject* point_object, RenderableVector& output)
 {
 	if (type == LinePattern)
-		line->createRenderables(path, coords, output);
+		line->createRenderables(path, path->getRawCoordinateVector(), coords, false, output);
 	else
 	{
 		MapCoordF to_end = MapCoordF(coords[1].getX() - coords[0].getX(), coords[1].getY() - coords[0].getY());
@@ -277,7 +277,7 @@ void AreaSymbol::FillPattern::createLine(MapCoordVectorF& coords, LineSymbol* li
 		for (float cur = first; cur < length; cur += 0.001*point_distance)
 		{
 			// TODO: hack-ish misuse of the point symbol here (with a different point object and with coords.size() == 2 instead of 1)
-			point->createRenderables(point_object, coords, output);
+			point->createRenderables(point_object, point_object->getRawCoordinateVector(), coords, false, output);
 			coords[0].setX(coords[0].getX() + step_x);
 			coords[0].setY(coords[0].getY() + step_y);
 		}
@@ -312,13 +312,13 @@ Symbol* AreaSymbol::duplicate()
 	return new_area;
 }
 
-void AreaSymbol::createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output)
+void AreaSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output)
 {
 	if (coords.size() >= 3)
 	{
 		// The shape output is even created if the area is not filled with a color
 		// because the QPainterPath created by it is needed as clip path for the fill objects
-		AreaRenderable* clip_path = new AreaRenderable(this, coords, object->getCoordinateVector());
+		AreaRenderable* clip_path = new AreaRenderable(this, coords, flags);
 		output.push_back(clip_path);
 		
 		int size = (int)patterns.size();

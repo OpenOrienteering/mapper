@@ -70,11 +70,11 @@ Symbol* PointSymbol::duplicate()
 	return new_point;
 }
 
-void PointSymbol::createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output)
+void PointSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output)
 {
-	createRenderablesScaled(object, coords, output, 1.0f);
+	createRenderablesScaled(object, flags, coords, path_closed, output, 1.0f);
 }
-void PointSymbol::createRenderablesScaled(Object* object, const MapCoordVectorF& coords, RenderableVector& output, float coord_scale)
+void PointSymbol::createRenderablesScaled(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output, float coord_scale)
 {
 	if (inner_color && inner_radius > 0)
 		output.push_back(new DotRenderable(this, coords[0]));
@@ -91,17 +91,16 @@ void PointSymbol::createRenderablesScaled(Object* object, const MapCoordVectorF&
 	for (int i = 0; i < size; ++i)
 	{
 		MapCoordVectorF transformed_coords;
-		const MapCoordVector& original_coords = objects[i]->getCoordinateVector();
 		
-		int coords_size = original_coords.size();
-		transformed_coords.resize(coords_size);
+		int coords_size = objects[i]->getCoordinateCount();
+		transformed_coords.resize(coords_size + ((objects[i]->isPathClosed() && coords_size > 0) ? 1 : 0));
 		
 		if (rotation == 0)
 		{
 			for (int c = 0; c < coords_size; ++c)
 			{
-				transformed_coords[c] = MapCoordF(coord_scale * original_coords[c].xd() + offset_x,
-												  coord_scale * original_coords[c].yd() + offset_y);
+				transformed_coords[c] = MapCoordF(coord_scale * objects[i]->getCoordinate(c).xd() + offset_x,
+												  coord_scale * objects[i]->getCoordinate(c).yd() + offset_y);
 			}
 		}
 		else
@@ -111,16 +110,19 @@ void PointSymbol::createRenderablesScaled(Object* object, const MapCoordVectorF&
 			
 			for (int c = 0; c < coords_size; ++c)
 			{
-				float ox = coord_scale * original_coords[c].xd();
-				float oy = coord_scale * original_coords[c].yd();
+				float ox = coord_scale * objects[i]->getCoordinate(c).xd();
+				float oy = coord_scale * objects[i]->getCoordinate(c).yd();
 				transformed_coords[c] = MapCoordF(ox * cosr - oy * sinr + offset_x,
 												  oy * cosr + ox * sinr + offset_y);
 			}
 		}
 		
+		if (objects[i]->isPathClosed() && coords_size > 0)
+			transformed_coords[coords_size] = transformed_coords[0];
+		
 		// TODO: if this point is rotated, it has to pass it on to its children to make it work that rotatable point objects can be children.
 		// But currently only basic, rotationally symmetric points can be children, so it does not matter for now.
-		symbols[i]->createRenderables(objects[i], transformed_coords, output);
+		symbols[i]->createRenderables(objects[i], objects[i]->getRawCoordinateVector(), transformed_coords, objects[i]->isPathClosed(), output);
 	}
 }
 

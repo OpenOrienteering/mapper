@@ -478,6 +478,7 @@ void PointSymbolEditorWidget::addAreaClicked()
 {
 	AreaSymbol* new_area = new AreaSymbol();
 	PathObject* new_object = new PathObject(NULL, new_area);
+	new_object->setPathClosed(true);
 	
 	insertElement(new_object, new_area);
 }
@@ -629,9 +630,8 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 		}
 		else
 		{
-			const MapCoordVector& coords = object->getCoordinateVector();
 			react_to_changes = false;
-			coords_table->item(row, column)->setText(QString::number((column == 0) ? coords[row].xd() : coords[row].yd()));
+			coords_table->item(row, column)->setText(QString::number((column == 0) ? object->getCoordinate(row).xd() : object->getCoordinate(row).yd()));
 			react_to_changes = true;
 		}
 	}
@@ -717,20 +717,19 @@ void PointSymbolEditorWidget::updateCoordsRow(int row)
 {
 	assert(element_list->currentRow() > 0);
 	Object* object = getCurrentElementObject();
-	const MapCoordVector& coords = object->getCoordinateVector();
 	
-	coords_table->item(row, 0)->setText(QString::number(coords[row].xd()));
-	coords_table->item(row, 1)->setText(QString::number(coords[row].yd()));
+	coords_table->item(row, 0)->setText(QString::number(object->getCoordinate(row).xd()));
+	coords_table->item(row, 1)->setText(QString::number(object->getCoordinate(row).yd()));
 	
 	bool has_curve_start_box = (object->getType() != Object::Point) &&
-	                           (row < (int)coords.size() - (object->isPathClosed() ? 2 : 3)) &&
-	                           (!coords[row+1].isCurveStart() && !coords[row+2].isCurveStart()) &&
-	                           (row <= 0 || !coords[row-1].isCurveStart()) &&
-	                           (row <= 1 || !coords[row-2].isCurveStart());
+	                           (row < object->getCoordinateCount() - (object->isPathClosed() ? 2 : 3)) &&
+	                           (!object->getCoordinate(row+1).isCurveStart() && !object->getCoordinate(row+2).isCurveStart()) &&
+	                           (row <= 0 || !object->getCoordinate(row-1).isCurveStart()) &&
+	                           (row <= 1 || !object->getCoordinate(row-2).isCurveStart());
 	if (has_curve_start_box)
 	{
 		coords_table->item(row, 2)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable);
-		coords_table->item(row, 2)->setCheckState(coords[row].isCurveStart() ? Qt::Checked : Qt::Unchecked);
+		coords_table->item(row, 2)->setCheckState(object->getCoordinate(row).isCurveStart() ? Qt::Checked : Qt::Unchecked);
 	}
 	else
 	{

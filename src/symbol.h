@@ -68,7 +68,7 @@ public:
 	
 	/// Creates renderables to display one specific instance of this symbol defined by the given object and coordinates
 	/// (NOTE: do not use the object's coordinates as the given coordinates can be an updated, transformed version of them!)
-	virtual void createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output) = 0;
+	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output) = 0;
 	
 	/// Called by the map in which the symbol is to notify it of a color being deleted (pointer becomes invalid, indices change)
 	virtual void colorDeleted(Map* map, int pos, MapColor* color) {}

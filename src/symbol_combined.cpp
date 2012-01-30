@@ -42,13 +42,13 @@ Symbol* CombinedSymbol::duplicate()
 	return new_symbol;
 }
 
-void CombinedSymbol::createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output)
+void CombinedSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output)
 {
 	int size = (int)parts.size();
 	for (int i = 0; i < size; ++i)
 	{
 		if (parts[i])
-			parts[i]->createRenderables(object, coords, output);
+			parts[i]->createRenderables(object, flags, coords, path_closed, output);
 	}
 }
 void CombinedSymbol::colorDeleted(Map* map, int pos, MapColor* color)

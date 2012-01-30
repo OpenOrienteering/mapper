@@ -60,7 +60,7 @@ public:
 	virtual ~LineSymbol();
     virtual Symbol* duplicate();
 	
-	virtual void createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output);
+	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output);
 	void createRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
     virtual bool containsColor(MapColor* color);
@@ -106,14 +106,14 @@ protected:
 	virtual bool loadImpl(QFile* file, Map* map);
 	
 	void createBorderLines(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output);
-	void shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, float shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords);
+	void shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, float shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords);
 	void processContinuousLine(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, const LineCoordVector& line_coords,
 							   float start, float end, bool has_start, bool has_end, int& cur_line_coord,
 							   MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, bool include_first_point, bool set_mid_symbols, RenderableVector& output);
 	void createPointedLineCap(const MapCoordVector& flags, const MapCoordVectorF& coords, const LineCoordVector& line_coords,
 							  float start, float end, int& cur_line_coord, bool is_end, RenderableVector& output);
-	MapCoordF calculateRightVector(const MapCoordVector& flags, const MapCoordVectorF& coords, int i, float* scaling);
-	MapCoordF calculateTangent(const MapCoordVectorF& coords, int i, bool backward, bool second_try = false);
+	MapCoordF calculateRightVector(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, int i, float* scaling);
+	MapCoordF calculateTangent(const MapCoordVectorF& coords, int i, bool backward, bool& ok);
 	void getCoordinatesForRange(const MapCoordVector& flags, const MapCoordVectorF& coords, const LineSymbol::LineCoordVector& line_coords,
 								float start, float end, int& cur_line_coord, bool include_start_coord, MapCoordVector& out_flags, MapCoordVectorF& out_coords,
 								std::vector<float>* out_lengths, bool set_mid_symbols, RenderableVector& output);

@@ -83,7 +83,7 @@ bool Object::update(bool force)
 		coordsF[i] = MapCoordF(coords[i].xd(), coords[i].yd());
 	
 	// Create renderables
-	symbol->createRenderables(this, coordsF, output);
+	symbol->createRenderables(this, coords, coordsF, path_closed, output);
 	
 	// Calculate extent and set this object as creator of the renderables
 	RenderableVector::const_iterator end = output.end();
@@ -130,6 +130,26 @@ void Object::clearOutput()
 	output_dirty = true;
 }
 
+void Object::setPathClosed(bool value)
+{
+	if (!path_closed && value)
+	{
+		if (!coords.empty())
+			coords.push_back(coords[0]);
+		
+		path_closed = true;
+		setOutputDirty();
+	}
+	else if (path_closed && !value)
+	{
+		if (!coords.empty())
+			coords.pop_back();
+		
+		path_closed = false;
+		setOutputDirty();
+	}
+}
+
 bool Object::setSymbol(Symbol* new_symbol, bool no_checks)
 {
 	if (!no_checks && new_symbol && symbol)
@@ -170,6 +190,46 @@ Object* PathObject::duplicate()
 	new_path->coords = coords;
 	new_path->path_closed = path_closed;
 	return new_path;
+}
+
+void PathObject::setCoordinate(int pos, MapCoord c)
+{
+	assert(pos >= 0 && pos < getCoordinateCount());
+	coords[pos] = c;
+	
+	if (path_closed && pos == 0)
+		coords[coords.size() - 1] = c;
+}
+void PathObject::addCoordinate(int pos, MapCoord c)
+{
+	assert(pos >= 0 && pos <= getCoordinateCount());
+	coords.insert(coords.begin() + pos, c);
+	
+	if (path_closed && coords.size() == 1)
+		coords.push_back(coords[0]);
+}
+void PathObject::addCoordinate(MapCoord c)
+{
+	if (path_closed)
+	{
+		if (coords.empty())
+		{
+			coords.push_back(c);
+			coords.push_back(c);
+		}
+		else
+			coords.insert(coords.begin() + (coords.size() - 1), c);
+	}
+	else
+		coords.push_back(c);
+}
+void PathObject::deleteCoordinate(int pos)
+{
+	assert(pos >= 0 && pos < getCoordinateCount());
+	coords.erase(coords.begin() + pos);
+	
+	if (path_closed && coords.size() == 1)
+		coords.clear();
 }
 
 // ### PointObject ###

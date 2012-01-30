@@ -400,8 +400,43 @@ void SymbolSettingDialog::createPreviewMap()
 		// Debug objects
 		
 		/*
-		// Path with holes
+		// Closed path, rectangular
 		PathObject* path;
+		MapCoord coord;
+		
+		path = new PathObject(preview_map, line);
+		coord = MapCoord(-20, -10);
+		//coord.setCurveStart(true);
+		path->addCoordinate(coord);
+		coord = MapCoord(20, -10);
+		path->addCoordinate(coord);
+		coord = MapCoord(20, 10);
+		path->addCoordinate(coord);
+		coord = MapCoord(-20, 10);
+		path->addCoordinate(coord);
+		path->setPathClosed(true);
+		preview_map->addObject(path);
+		preview_objects.push_back(path);*/
+		
+		// Closed path, curve
+		/*PathObject* path;
+		MapCoord coord;
+		
+		path = new PathObject(preview_map, line);
+		path->setPathClosed(true);
+		coord = MapCoord(-20, 10);
+		coord.setCurveStart(true);
+		path->addCoordinate(coord);
+		coord = MapCoord(-10, 0);
+		path->addCoordinate(coord);
+		coord = MapCoord(-10, 10);
+		path->addCoordinate(coord);
+		
+		preview_map->addObject(path);
+		preview_objects.push_back(path);*/
+		
+		// Path with holes
+		/*PathObject* path;
 		MapCoord coord;
 		
 		path = new PathObject(preview_map, line);
@@ -413,11 +448,13 @@ void SymbolSettingDialog::createPreviewMap()
 		coord = MapCoord(0, -10);
 		path->addCoordinate(coord);
 		coord = MapCoord(10, 10);
-		coord.setHolePoint(true);
 		path->addCoordinate(coord);
 		coord = MapCoord(20, 10);
+		coord.setHolePoint(true);
 		path->addCoordinate(coord);
 		coord = MapCoord(30, 10);
+		path->addCoordinate(coord);
+		coord = MapCoord(40, 10);
 		path->addCoordinate(coord);
 
 		preview_map->addObject(path);

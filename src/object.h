@@ -64,8 +64,8 @@ public:
 	bool update(bool force = false);
 	
 	/// Returns the coordinate vector
-	inline const MapCoordVector& getCoordinateVector() const {return coords;}
-	inline int getCoordinateCount() const {return (int)coords.size();}
+	inline const MapCoordVector& getRawCoordinateVector() const {return coords;}	// NOTE: for closed paths, the last and first elements of this vector are equal
+	inline int getCoordinateCount() const {return qMax(0, (int)coords.size() - (path_closed ? 1 : 0));}
 	inline MapCoord getCoordinate(int pos) const {return coords[pos];}
 	
 	// Methods to traverse the output
@@ -76,7 +76,7 @@ public:
 	inline void setOutputDirty(bool dirty = true) {output_dirty = dirty;}
 	inline bool isOutputDirty() const {return output_dirty;}
 	
-	inline void setPathClosed(bool value = true) {path_closed = value;}
+	void setPathClosed(bool value = true);
 	inline bool isPathClosed() const {return path_closed;}
 	
 	/// Changes the object's symbol, returns if successful. Some conversions are impossible, for example point to line.
@@ -114,10 +114,10 @@ public:
 	PathObject(Map* map, Symbol* symbol = NULL);
     virtual Object* duplicate();
 	
-	inline void setCoordinate(int pos, MapCoord c) {coords[pos] = c;}
-	inline void addCoordinate(int pos, MapCoord c) {coords.insert(coords.begin() + pos, c);}
-	inline void addCoordinate(MapCoord c) {coords.push_back(c);}
-	inline void deleteCoordinate(int pos) {coords.erase(coords.begin() + pos);}
+	void setCoordinate(int pos, MapCoord c);
+	void addCoordinate(int pos, MapCoord c);
+	void addCoordinate(MapCoord c);
+	void deleteCoordinate(int pos);
 };
 
 /// Object type which can only be used for point symbols, and is also the only object which can be used with them

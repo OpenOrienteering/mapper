@@ -59,7 +59,7 @@ Symbol* TextSymbol::duplicate()
 	return new_text;
 }
 
-void TextSymbol::createRenderables(Object* object, const MapCoordVectorF& coords, RenderableVector& output)
+void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output)
 {
 	if (!color)
 		return;

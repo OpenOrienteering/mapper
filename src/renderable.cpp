@@ -228,12 +228,19 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 	assert(size >= 2);
 	
 	bool hole = false;
+	QPainterPath first_subpath;
+	
 	path.moveTo(transformed_coords[0].toQPointF());
 	for (int i = 1; i < size; ++i)
 	{
 		if (hole)
 		{
 			assert(!coords[i].isHolePoint() && "Two hole points in a row!");
+			if (first_subpath.isEmpty() && closed)
+			{
+				first_subpath = path;
+				path = QPainterPath();
+			}
 			path.moveTo(transformed_coords[i].toQPointF());
 			hole = false;
 			continue;
@@ -262,7 +269,12 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 	}
 	
 	if (closed)
-		path.closeSubpath();
+	{
+		if (first_subpath.isEmpty())
+			path.closeSubpath();
+		else
+			path.connectPath(first_subpath);
+	}
 	
 	// Get extent
 	const QRectF rect = path.controlPointRect();
