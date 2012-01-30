@@ -1,3 +1,3 @@
 2
-Thanks for using OpenOrienteering! Are you a new user of this program? Check out the <a href="settings">settings</a> and adjust the program to your needs! If you need further advice, you can also read the <a href="help">help</a>.
+Thanks for using OpenOrienteering Mapper! Did you use the program before? Check out the <a href="settings">settings</a> and adjust it to your needs! If you need further advice, you can also read the <a href="help">help</a>.
 This is the second tip of the day, but it is not a tip yet! You are invited to write one ...

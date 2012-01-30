@@ -1320,7 +1320,7 @@ bool LineSymbol::loadImpl(QFile* file, Map* map)
 LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSettingDialog* parent) : QGroupBox(tr("Line settings"), parent), symbol(symbol), dialog(parent)
 {
 	QLabel* width_label = new QLabel(tr("Line width:"));
-	width_edit = new QLineEdit(QString::number(symbol->getLineWidth()));
+	width_edit = new QLineEdit(QString::number(0.001f * symbol->getLineWidth()));
 	width_edit->setValidator(new DoubleValidator(0, 999999, width_edit));
 	
 	QLabel* color_label = new QLabel(tr("Line color:"));
@@ -1654,8 +1654,8 @@ void LineSymbolSettings::updateWidgets(bool show)
 	}
 	
 	if (show)
-		undashed_widget->setVisible(symbol->line_width > 0 && symbol->color != NULL && !symbol->dashed);
-	else if (!(symbol->line_width > 0 && symbol->color != NULL && !symbol->dashed))
+		undashed_widget->setVisible(!symbol->dashed);
+	else if (!(!symbol->dashed))
 		undashed_widget->hide();
 	
 	if (show)

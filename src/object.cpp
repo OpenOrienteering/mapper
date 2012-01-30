@@ -72,7 +72,8 @@ bool Object::update(bool force)
 	if (!force && !output_dirty)
 		return false;
 	
-	map->removeRenderablesOfObject(this, false);
+	if (map)
+		map->removeRenderablesOfObject(this, false);
 	clearOutput();
 	
 	// Calculate float coordinates

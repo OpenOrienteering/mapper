@@ -314,14 +314,12 @@ void SymbolSettingDialog::createPreviewMap()
 	if (symbol->getType() == Symbol::Line)
 	{
 		LineSymbol* line = reinterpret_cast<LineSymbol*>(symbol);
-		if (line->getLineWidth() <= 0 || line->getColor() == NULL)
-			return;
 		
 		const int num_lines = 15;
 		const float min_length = 0.5f;
 		const float max_length = 15;
 		const float x_offset = -0.5f * max_length;
-		const float y_offset = (0.001f * line->getLineWidth()) * 3.5f;
+		const float y_offset = (0.001f * qMax(1000, line->getLineWidth())) * 3.5f;
 		
 		float y_start = 0 - (y_offset * (num_lines - 1));
 		
