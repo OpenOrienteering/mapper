@@ -61,7 +61,7 @@ public:
 		
 		FillPattern();
 		void save(QFile* file, Map* map);
-		bool load(QFile* file, Map* map);
+		bool load(QFile* file, int version, Map* map);
 		void createRenderables(QRectF extent, RenderableVector& output);
 		void createLine(MapCoordVectorF& coords, LineSymbol* line, PathObject* path, PointObject* point_object, RenderableVector& output);
 	};
@@ -83,7 +83,7 @@ public:
 	
 protected:
 	virtual void saveImpl(QFile* file, Map* map);
-	virtual bool loadImpl(QFile* file, Map* map);
+	virtual bool loadImpl(QFile* file, int version, Map* map);
 	
 	MapColor* color;
 	std::vector<FillPattern> patterns;

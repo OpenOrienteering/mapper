@@ -67,7 +67,7 @@ void AreaSymbol::FillPattern::save(QFile* file, Map* map)
 			point->save(file, map);
 	}
 }
-bool AreaSymbol::FillPattern::load(QFile* file, Map* map)
+bool AreaSymbol::FillPattern::load(QFile* file, int version, Map* map)
 {
 	qint32 itype;
 	file->read((char*)&itype, sizeof(qint32));
@@ -90,7 +90,7 @@ bool AreaSymbol::FillPattern::load(QFile* file, Map* map)
 		if (have_point)
 		{
 			point = new PointSymbol();
-			if (!point->load(file, map))
+			if (!point->load(file, version, map))
 				return false;
 		}
 		else
@@ -380,7 +380,7 @@ void AreaSymbol::saveImpl(QFile* file, Map* map)
 	for (int i = 0; i < size; ++i)
 		patterns[i].save(file, map);
 }
-bool AreaSymbol::loadImpl(QFile* file, Map* map)
+bool AreaSymbol::loadImpl(QFile* file, int version, Map* map)
 {
 	int temp;
 	file->read((char*)&temp, sizeof(int));
@@ -390,7 +390,7 @@ bool AreaSymbol::loadImpl(QFile* file, Map* map)
 	file->read((char*)&size, sizeof(int));
 	patterns.resize(size);
 	for (int i = 0; i < size; ++i)
-		if (!patterns[i].load(file, map))
+		if (!patterns[i].load(file, version, map))
 			return false;
 	
 	return true;

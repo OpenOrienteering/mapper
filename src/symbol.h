@@ -62,7 +62,7 @@ public:
 	
 	/// Saving and loading
 	void save(QFile* file, Map* map);
-	bool load(QFile* file, Map* map);
+	bool load(QFile* file, int version, Map* map);
 	/// Called after loading of the map is finished. Can do tasks that need to reference other symbols or map objects.
 	virtual bool loadFinished(Map* map) {return true;}
 	
@@ -103,7 +103,7 @@ protected:
 	/// Must be overridden to save type-specific symbol properties. The map pointer can be used to get persistent indices to any pointers on map data
 	virtual void saveImpl(QFile* file, Map* map) = 0;
 	/// Must be overridden to load type-specific symbol properties. See saveImpl()
-	virtual bool loadImpl(QFile* file, Map* map) = 0;
+	virtual bool loadImpl(QFile* file, int version, Map* map) = 0;
 	
 	/// Duplicates properties which are common for all symbols from other to this object
 	void duplicateImplCommon(Symbol* other);

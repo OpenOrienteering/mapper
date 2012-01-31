@@ -67,7 +67,7 @@ public:
 	
 protected:
 	virtual void saveImpl(QFile* file, Map* map);
-	virtual bool loadImpl(QFile* file, Map* map);
+	virtual bool loadImpl(QFile* file, int version, Map* map);
 	
 	bool getNextLine(const QString& text, int& pos, QString& out_line, bool word_wrap, double max_width, const QFontMetricsF& metrics);
 	bool isSpace(QChar c);

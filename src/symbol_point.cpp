@@ -223,7 +223,7 @@ void PointSymbol::saveImpl(QFile* file, Map* map)
 		objects[i]->save(file);
 	}
 }
-bool PointSymbol::loadImpl(QFile* file, Map* map)
+bool PointSymbol::loadImpl(QFile* file, int version, Map* map)
 {
 	file->read((char*)&rotatable, sizeof(bool));
 	
@@ -247,7 +247,7 @@ bool PointSymbol::loadImpl(QFile* file, Map* map)
 		symbols[i] = Symbol::getSymbolForType(static_cast<Symbol::Type>(save_type));
 		if (!symbols[i])
 			return false;
-		if (!symbols[i]->load(file, map))
+		if (!symbols[i]->load(file, version, map))
 			return false;
 		
 		file->read((char*)&save_type, sizeof(int));

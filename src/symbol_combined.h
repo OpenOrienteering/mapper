@@ -51,7 +51,7 @@ public:
 	
 protected:
 	virtual void saveImpl(QFile* file, Map* map);
-	virtual bool loadImpl(QFile* file, Map* map);
+	virtual bool loadImpl(QFile* file, int version, Map* map);
 	
 	std::vector<Symbol*> parts;
 };

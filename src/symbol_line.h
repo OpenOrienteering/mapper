@@ -103,7 +103,7 @@ protected:
 	typedef std::vector<LineCoord> LineCoordVector;
 	
 	virtual void saveImpl(QFile* file, Map* map);
-	virtual bool loadImpl(QFile* file, Map* map);
+	virtual bool loadImpl(QFile* file, int version, Map* map);
 	
 	void createBorderLines(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output);
 	void shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, float shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords);
@@ -145,6 +145,7 @@ protected:
 	
 	// Not dashed
 	int segment_length;
+	int end_length;
 	
 	// Dashed
 	int dash_length;
@@ -179,6 +180,7 @@ protected slots:
 	void pointedLineCapLengthChanged(QString text);
 	void dashedChanged(bool checked);
 	void segmentLengthChanged(QString text);
+	void endLengthChanged(QString text);
 	void dashLengthChanged(QString text);
 	void breakLengthChanged(QString text);
 	void dashGroupsChanged(int index);
@@ -213,6 +215,7 @@ private:
 	// dashed == false
 	QWidget* undashed_widget;
 	QLineEdit* segment_length_edit;
+	QLineEdit* end_length_edit;
 	
 	// dashed == true
 	QWidget* dashed_widget;

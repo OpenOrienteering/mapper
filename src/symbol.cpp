@@ -50,7 +50,7 @@ void Symbol::save(QFile* file, Map* map)
 	
 	saveImpl(file, map);
 }
-bool Symbol::load(QFile* file, Map* map)
+bool Symbol::load(QFile* file, int version, Map* map)
 {
 	loadString(file, name);
 	for (int i = 0; i < number_components; ++i)
@@ -58,7 +58,7 @@ bool Symbol::load(QFile* file, Map* map)
 	loadString(file, description);
 	file->read((char*)&is_helper_symbol, sizeof(bool));
 	
-	return loadImpl(file, map);
+	return loadImpl(file, version, map);
 }
 
 QImage* Symbol::getIcon(Map* map, bool update)

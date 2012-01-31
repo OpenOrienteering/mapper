@@ -186,7 +186,7 @@ void TextSymbol::saveImpl(QFile* file, Map* map)
 	file->write((const char*)&underline, sizeof(bool));
 	file->write((const char*)&line_spacing, sizeof(float));
 }
-bool TextSymbol::loadImpl(QFile* file, Map* map)
+bool TextSymbol::loadImpl(QFile* file, int version, Map* map)
 {
 	int temp;
 	file->read((char*)&temp, sizeof(int));

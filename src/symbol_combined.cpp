@@ -88,7 +88,7 @@ void CombinedSymbol::saveImpl(QFile* file, Map* map)
 		file->write((const char*)&temp, sizeof(int));
 	}
 }
-bool CombinedSymbol::loadImpl(QFile* file, Map* map)
+bool CombinedSymbol::loadImpl(QFile* file, int version, Map* map)
 {
 	int size;
 	file->read((char*)&size, sizeof(int));

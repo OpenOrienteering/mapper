@@ -225,8 +225,8 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 	const char FILE_TYPE_ID[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 	file.write(FILE_TYPE_ID, 4);
 	
-	const int FILE_VERSION_ID = 0;
-	file.write((const char*)&FILE_VERSION_ID, sizeof(int));
+	const int FILE_FORMAT_VERSION = 1;
+	file.write((const char*)&FILE_FORMAT_VERSION, sizeof(int));
 	
 	file.write((const char*)&scale_denominator, sizeof(int));
 	
@@ -340,9 +340,9 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 		}
 	}
 	
-	int FILE_VERSION_ID;
-	file.read((char*)&FILE_VERSION_ID, sizeof(int));
-	if (FILE_VERSION_ID != 0)
+	int version;
+	file.read((char*)&version, sizeof(int));
+	if (version < 0 || version > 1)
 		QMessageBox::warning(NULL, tr("Warning"), tr("Problem while opening file:\n%1\n\nUnknown file format version.").arg(path));
 	
 	file.read((char*)&scale_denominator, sizeof(int));
@@ -386,7 +386,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 		if (!symbol)
 			return false;
 		
-		symbol->load(&file, this);
+		symbol->load(&file, version, this);
 		symbols[i] = symbol;
 	}
 	
@@ -477,11 +477,11 @@ void Map::clear()
 	delete gps_projection_parameters;
 	gps_projection_parameters = new GPSProjectionParameters();
 	
-	colors_dirty = true;
-	symbols_dirty = true;
-	templates_dirty = true;
-	objects_dirty = true;
-	unsaved_changes = true;
+	colors_dirty = false;
+	symbols_dirty = false;
+	templates_dirty = false;
+	objects_dirty = false;
+	unsaved_changes = false;
 }
 
 void Map::draw(QPainter* painter, QRectF bounding_box)
