@@ -37,6 +37,7 @@ LineSymbol::LineSymbol() : Symbol(Symbol::Line)
 {
 	line_width = 0;
 	color = NULL;
+	minimum_length = 0;
 	cap_style = FlatCap;
 	join_style = MiterJoin;
 	pointed_cap_length = 1000;
@@ -50,6 +51,8 @@ LineSymbol::LineSymbol() : Symbol(Symbol::Line)
 	
 	segment_length = 4000;
 	end_length = 0;
+	minimum_mid_symbol_count = 0;
+	minimum_mid_symbol_count_when_closed = 0;
 
 	dash_length = 4000;
 	break_length = 1000;
@@ -77,6 +80,7 @@ Symbol* LineSymbol::duplicate()
 	new_line->duplicateImplCommon(this);
 	new_line->line_width = line_width;
 	new_line->color = color;
+	new_line->minimum_length = minimum_length;
 	new_line->cap_style = cap_style;
 	new_line->join_style = join_style;
 	new_line->pointed_cap_length = pointed_cap_length;
@@ -87,6 +91,8 @@ Symbol* LineSymbol::duplicate()
 	new_line->dashed = dashed;
 	new_line->segment_length = segment_length;
 	new_line->end_length = end_length;
+	new_line->minimum_mid_symbol_count = minimum_mid_symbol_count;
+	new_line->minimum_mid_symbol_count_when_closed = minimum_mid_symbol_count_when_closed;
 	new_line->dash_length = dash_length;
 	new_line->break_length = break_length;
 	new_line->dashes_in_group = dashes_in_group;
@@ -1253,6 +1259,7 @@ void LineSymbol::saveImpl(QFile* file, Map* map)
 	file->write((const char*)&line_width, sizeof(int));
 	int temp = map->findColorIndex(color);
 	file->write((const char*)&temp, sizeof(int));
+	file->write((const char*)&minimum_length, sizeof(int));
 	temp = (int)cap_style;
 	file->write((const char*)&temp, sizeof(int));
 	temp = (int)join_style;
@@ -1277,6 +1284,8 @@ void LineSymbol::saveImpl(QFile* file, Map* map)
 	file->write((const char*)&dashed, sizeof(bool));
 	file->write((const char*)&segment_length, sizeof(int));
 	file->write((const char*)&end_length, sizeof(int));
+	file->write((const char*)&minimum_mid_symbol_count, sizeof(int));
+	file->write((const char*)&minimum_mid_symbol_count_when_closed, sizeof(int));
 	file->write((const char*)&dash_length, sizeof(int));
 	file->write((const char*)&break_length, sizeof(int));
 	file->write((const char*)&dashes_in_group, sizeof(int));
@@ -1299,6 +1308,8 @@ bool LineSymbol::loadImpl(QFile* file, int version, Map* map)
 	int temp;
 	file->read((char*)&temp, sizeof(int));
 	color = (temp >= 0) ? map->getColor(temp) : NULL;
+	if (version >= 2)
+		file->read((char*)&minimum_length, sizeof(int));
 	file->read((char*)&temp, sizeof(int));
 	cap_style = (CapStyle)temp;
 	file->read((char*)&temp, sizeof(int));
@@ -1337,6 +1348,11 @@ bool LineSymbol::loadImpl(QFile* file, int version, Map* map)
 	file->read((char*)&segment_length, sizeof(int));
 	if (version >= 1)
 		file->read((char*)&end_length, sizeof(int));
+	if (version >= 2)
+	{
+		file->read((char*)&minimum_mid_symbol_count, sizeof(int));
+		file->read((char*)&minimum_mid_symbol_count_when_closed, sizeof(int));	
+	}
 	file->read((char*)&dash_length, sizeof(int));
 	file->read((char*)&break_length, sizeof(int));
 	file->read((char*)&dashes_in_group, sizeof(int));
@@ -1365,6 +1381,10 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSetti
 	
 	QLabel* color_label = new QLabel(tr("Line color:"));
 	color_edit = new ColorDropDown(map, symbol->getColor());
+	
+	QLabel* minimum_length_label = new QLabel(tr("Minimum line length:"));
+	minimum_length_edit = new QLineEdit(QString::number(0.001f * symbol->minimum_length));
+	minimum_length_edit->setValidator(new DoubleValidator(0, 999999, minimum_length_edit));
 	
 	line_settings_widget = new QWidget();
 	QLabel* line_cap_label = new QLabel(tr("Line cap:"));
@@ -1411,6 +1431,14 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSetti
 	end_length_edit = new QLineEdit(QString::number(0.001 * symbol->end_length));
 	end_length_edit->setValidator(new DoubleValidator(0, 999999, end_length_edit));
 	
+	QLabel* minimum_mid_symbol_count_label = new QLabel(tr("Minimum mid symbol count:"));
+	minimum_mid_symbol_count_edit = new QLineEdit(QString::number(0.001f * symbol->minimum_mid_symbol_count));
+	minimum_mid_symbol_count_edit->setValidator(new DoubleValidator(0, 999999, minimum_mid_symbol_count_edit));
+	
+	QLabel* minimum_mid_symbol_count_when_closed_label = new QLabel(tr("Minimum mid symbol count when closed:"));
+	minimum_mid_symbol_count_when_closed_edit = new QLineEdit(QString::number(0.001f * symbol->minimum_mid_symbol_count_when_closed));
+	minimum_mid_symbol_count_when_closed_edit->setValidator(new DoubleValidator(0, 999999, minimum_mid_symbol_count_when_closed_edit));
+	
 	QGridLayout* undashed_layout = new QGridLayout();
 	undashed_layout->setMargin(0);
 	undashed_layout->setSpacing(0);
@@ -1418,6 +1446,10 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSetti
 	undashed_layout->addWidget(segment_length_edit, 0, 1);
 	undashed_layout->addWidget(end_length_label, 1, 0);
 	undashed_layout->addWidget(end_length_edit, 1, 1);
+	undashed_layout->addWidget(minimum_mid_symbol_count_label, 2, 0);
+	undashed_layout->addWidget(minimum_mid_symbol_count_edit, 2, 1);
+	undashed_layout->addWidget(minimum_mid_symbol_count_when_closed_label, 3, 0);
+	undashed_layout->addWidget(minimum_mid_symbol_count_when_closed_edit, 3, 1);
 	undashed_widget->setLayout(undashed_layout);
 	
 	dashed_widget = new QWidget();
@@ -1532,23 +1564,28 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSetti
 	layout->addWidget(width_edit, 0, 1);
 	layout->addWidget(color_label, 1, 0);
 	layout->addWidget(color_edit, 1, 1);
-	layout->addWidget(line_settings_widget, 2, 0, 1, 2);
-	layout->addWidget(undashed_widget, 3, 0, 1, 2);
-	layout->addWidget(dashed_widget, 4, 0, 1, 2);
-	layout->addWidget(border_check, 5, 0, 1, 2);
-	layout->addWidget(border_widget, 6, 0, 1, 2);
+	layout->addWidget(minimum_length_label, 2, 0);
+	layout->addWidget(minimum_length_edit, 2, 1);
+	layout->addWidget(line_settings_widget, 3, 0, 1, 2);
+	layout->addWidget(undashed_widget, 4, 0, 1, 2);
+	layout->addWidget(dashed_widget, 5, 0, 1, 2);
+	layout->addWidget(border_check, 6, 0, 1, 2);
+	layout->addWidget(border_widget, 7, 0, 1, 2);
 	setLayout(layout);
 	
 	updateWidgets(false);
 	
 	connect(width_edit, SIGNAL(textEdited(QString)), this, SLOT(widthChanged(QString)));
 	connect(color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChanged()));
+	connect(minimum_length_edit, SIGNAL(textEdited(QString)), this, SLOT(minimumDimensionsEdited(QString)));
 	connect(line_cap_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(lineCapChanged(int)));
 	connect(line_join_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(lineJoinChanged(int)));
 	connect(pointed_cap_length_edit, SIGNAL(textEdited(QString)), this, SLOT(pointedLineCapLengthChanged(QString)));
 	connect(dashed_check, SIGNAL(clicked(bool)), this, SLOT(dashedChanged(bool)));
 	connect(segment_length_edit, SIGNAL(textEdited(QString)), this, SLOT(segmentLengthChanged(QString)));
 	connect(end_length_edit, SIGNAL(textEdited(QString)), this, SLOT(endLengthChanged(QString)));
+	connect(minimum_mid_symbol_count_edit, SIGNAL(textEdited(QString)), this, SLOT(minimumDimensionsEdited(QString)));
+	connect(minimum_mid_symbol_count_when_closed_edit, SIGNAL(textEdited(QString)), this, SLOT(minimumDimensionsEdited(QString)));
 	connect(dash_length_edit, SIGNAL(textEdited(QString)), this, SLOT(dashLengthChanged(QString)));
 	connect(break_length_edit, SIGNAL(textEdited(QString)), this, SLOT(breakLengthChanged(QString)));
 	connect(dash_group_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(dashGroupsChanged(int)));
@@ -1567,7 +1604,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSetti
 
 void LineSymbolSettings::widthChanged(QString text)
 {
-	symbol->line_width = qRound64(1000 * text.toFloat());
+	symbol->line_width = qRound(1000 * text.toFloat());
 	dialog->updatePreview();
 	updateWidgets();
 }
@@ -1576,6 +1613,12 @@ void LineSymbolSettings::colorChanged()
 	symbol->color = color_edit->color();
 	dialog->updatePreview();
 	updateWidgets();
+}
+void LineSymbolSettings::minimumDimensionsEdited(QString text)
+{
+	symbol->minimum_length = qRound(1000 * minimum_length_edit->text().toFloat());
+	symbol->minimum_mid_symbol_count = qRound(1000 * minimum_mid_symbol_count_edit->text().toFloat());
+	symbol->minimum_mid_symbol_count_when_closed = qRound(1000 * minimum_mid_symbol_count_when_closed_edit->text().toFloat());
 }
 void LineSymbolSettings::lineCapChanged(int index)
 {

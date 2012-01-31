@@ -87,25 +87,20 @@ bool Object::update(bool force)
 	symbol->createRenderables(this, coords, coordsF, path_closed, output);
 	
 	// Calculate extent and set this object as creator of the renderables
+	extent = QRectF();
 	RenderableVector::const_iterator end = output.end();
-	RenderableVector::const_iterator it = output.begin();
-	if (it != end)
+	for (RenderableVector::const_iterator it = output.begin(); it != end; ++it)
 	{
 		(*it)->setCreator(this);
-		extent = (*it)->getExtent();
-		assert(extent.right() < 999999);	// assert if bogus values are returned
-		for (++it; it != end; ++it)
+		if ((*it)->getClipPath() == NULL)
 		{
-			(*it)->setCreator(this);
-			if ((*it)->getClipPath() == NULL)	// NOTE: This check is not done for the first element
-			{
+			if (extent.isValid())
 				rectInclude(extent, (*it)->getExtent());
-				assert(extent.right() < 999999);	// assert if bogus values are returned
-			}
+			else
+				extent = (*it)->getExtent();
+			assert(extent.right() < 999999);	// assert if bogus values are returned
 		}
 	}
-	else
-		extent = QRectF();
 	
 	output_dirty = false;
 	

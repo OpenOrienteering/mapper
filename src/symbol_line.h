@@ -131,6 +131,7 @@ protected:
 	// Base line
 	int line_width;		// in 1/1000 mm
 	MapColor* color;
+	int minimum_length;
 	CapStyle cap_style;
 	JoinStyle join_style;
 	int pointed_cap_length;
@@ -146,6 +147,8 @@ protected:
 	// Not dashed
 	int segment_length;
 	int end_length;
+	int minimum_mid_symbol_count;
+	int minimum_mid_symbol_count_when_closed;
 	
 	// Dashed
 	int dash_length;
@@ -175,6 +178,7 @@ public:
 protected slots:
 	void widthChanged(QString text);
 	void colorChanged();
+	void minimumDimensionsEdited(QString text);
 	void lineCapChanged(int index);
 	void lineJoinChanged(int index);
 	void pointedLineCapLengthChanged(QString text);
@@ -203,6 +207,7 @@ private:
 	
 	QLineEdit* width_edit;
 	ColorDropDown* color_edit;
+	QLineEdit* minimum_length_edit;
 	
 	// enabled if line_width > 0 && color != NULL
 	QWidget* line_settings_widget;
@@ -216,6 +221,8 @@ private:
 	QWidget* undashed_widget;
 	QLineEdit* segment_length_edit;
 	QLineEdit* end_length_edit;
+	QLineEdit* minimum_mid_symbol_count_edit;
+	QLineEdit* minimum_mid_symbol_count_when_closed_edit;
 	
 	// dashed == true
 	QWidget* dashed_widget;

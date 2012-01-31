@@ -86,6 +86,7 @@ protected:
 	virtual bool loadImpl(QFile* file, int version, Map* map);
 	
 	MapColor* color;
+	int minimum_area;	// in mm^2
 	std::vector<FillPattern> patterns;
 };
 
@@ -97,6 +98,7 @@ public:
 	
 protected slots:
 	void colorChanged();
+	void minimumDimensionsChanged(QString text);
 	void addFillClicked();
 	void deleteFillClicked();
 	void fillNumberChanged(int index);
@@ -116,6 +118,7 @@ private:
 	PointSymbolEditorWidget* point_editor;
 	
 	ColorDropDown* color_edit;
+	QLineEdit* minimum_area_edit;
 	QPushButton* add_fill_button;
 	QPushButton* delete_fill_button;
 	

@@ -255,6 +255,9 @@ private:
 	bool templates_dirty;			//    ... for the templates?
 	bool objects_dirty;				//    ... for the objects?
 	bool unsaved_changes;			// are there unsaved changes for any component?
+	
+	static const int least_supported_file_format_version;
+	static const int current_file_format_version;
 };
 
 /// Contains all visibility information for a template. This is stored in the MapViews

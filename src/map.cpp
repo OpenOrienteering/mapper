@@ -169,6 +169,9 @@ void Map::MapColorSet::dereference()
 
 // ### Map ###
 
+const int Map::least_supported_file_format_version = 0;
+const int Map::current_file_format_version = 2;
+
 Map::Map() : renderables(this)
 {
 	first_front_template = 0;
@@ -224,9 +227,7 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 	// Basic stuff
 	const char FILE_TYPE_ID[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 	file.write(FILE_TYPE_ID, 4);
-	
-	const int FILE_FORMAT_VERSION = 1;
-	file.write((const char*)&FILE_FORMAT_VERSION, sizeof(int));
+	file.write((const char*)&current_file_format_version, sizeof(int));
 	
 	file.write((const char*)&scale_denominator, sizeof(int));
 	
@@ -342,8 +343,18 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 	
 	int version;
 	file.read((char*)&version, sizeof(int));
-	if (version < 0 || version > 1)
-		QMessageBox::warning(NULL, tr("Warning"), tr("Problem while opening file:\n%1\n\nUnknown file format version.").arg(path));
+	if (version < 0)
+		QMessageBox::warning(NULL, tr("Warning"), tr("Problem while opening file:\n%1\n\nInvalid file format version.").arg(path));
+	else if (version < least_supported_file_format_version)
+	{
+		QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nUnsupported file format version. Please use an older program version to load and update the file.").arg(path));
+		return false;
+	}
+	else if (version > current_file_format_version)
+	{
+		QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nFile format version too high. Please update to a newer program version to load this file.").arg(path));
+		return false;
+	}
 	
 	file.read((char*)&scale_denominator, sizeof(int));
 	

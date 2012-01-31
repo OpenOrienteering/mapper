@@ -289,6 +289,7 @@ void AreaSymbol::FillPattern::createLine(MapCoordVectorF& coords, LineSymbol* li
 AreaSymbol::AreaSymbol() : Symbol(Symbol::Area)
 {
 	color = NULL;
+	minimum_area = 0;
 }
 AreaSymbol::~AreaSymbol()
 {
@@ -303,6 +304,7 @@ Symbol* AreaSymbol::duplicate()
 	AreaSymbol* new_area = new AreaSymbol();
 	new_area->duplicateImplCommon(this);
 	new_area->color = color;
+	new_area->minimum_area = minimum_area;
 	new_area->patterns = patterns;
 	for (int i = 0; i < (int)new_area->patterns.size(); ++i)
 	{
@@ -374,6 +376,7 @@ void AreaSymbol::saveImpl(QFile* file, Map* map)
 {
 	int temp = map->findColorIndex(color);
 	file->write((const char*)&temp, sizeof(int));
+	file->write((const char*)&minimum_area, sizeof(int));
 	
 	int size = (int)patterns.size();
 	file->write((const char*)&size, sizeof(int));
@@ -385,6 +388,8 @@ bool AreaSymbol::loadImpl(QFile* file, int version, Map* map)
 	int temp;
 	file->read((char*)&temp, sizeof(int));
 	color = (temp >= 0) ? map->getColor(temp) : NULL;
+	if (version >= 2)
+		file->read((char*)&minimum_area, sizeof(int));
 	
 	int size;
 	file->read((char*)&size, sizeof(int));
@@ -405,6 +410,10 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSetti
 	
 	QLabel* color_label = new QLabel(tr("Area color:"));
 	color_edit = new ColorDropDown(map, symbol->getColor());
+	
+	QLabel* minimum_area_label = new QLabel(tr("Minimum area:"));
+	minimum_area_edit = new QLineEdit(QString::number(0.001f * symbol->minimum_area));
+	minimum_area_edit->setValidator(new DoubleValidator(0, 999999, minimum_area_edit));
 	
 	QLabel* fill_pattern_label = new QLabel("<b>" + tr("Fill patterns") + "</b>");
 	add_fill_button = new QPushButton(QIcon("images/plus.png"), "");
@@ -442,7 +451,9 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSetti
 	QGridLayout* top_layout = new QGridLayout();
 	top_layout->addWidget(color_label, 0, 0);
 	top_layout->addWidget(color_edit, 0, 1);
-	top_layout->addWidget(fill_pattern_label, 1, 0, 1, 2);
+	top_layout->addWidget(minimum_area_label, 1, 0);
+	top_layout->addWidget(minimum_area_edit, 1, 1);
+	top_layout->addWidget(fill_pattern_label, 2, 0, 1, 2);
 	
 	QHBoxLayout* buttons_layout = new QHBoxLayout();
 	buttons_layout->addStretch(1);
@@ -479,6 +490,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSetti
 	updateFillWidgets(false);
 	
 	connect(color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChanged()));
+	connect(minimum_area_edit, SIGNAL(textEdited(QString)), this, SLOT(minimumDimensionsChanged(QString)));
 	connect(add_fill_button, SIGNAL(clicked(bool)), this, SLOT(addFillClicked()));
 	connect(delete_fill_button, SIGNAL(clicked(bool)), this, SLOT(deleteFillClicked()));
 	connect(fill_number_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(fillNumberChanged(int)));
@@ -558,6 +570,10 @@ void AreaSymbolSettings::colorChanged()
 {
 	symbol->color = color_edit->color();
 	dialog->updatePreview();
+}
+void AreaSymbolSettings::minimumDimensionsChanged(QString text)
+{
+	symbol->minimum_area = qRound(1000 * minimum_area_edit->text().toFloat());
 }
 void AreaSymbolSettings::addFillClicked()
 {
