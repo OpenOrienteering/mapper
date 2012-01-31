@@ -170,6 +170,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	
 	add_coord_button = new QPushButton(QIcon("images/plus.png"), "");
 	delete_coord_button = new QPushButton(QIcon("images/minus.png"), "");
+	center_coords_button = new QPushButton(tr("Center by coordinate average"));
 	
 	// Layout
 	QVBoxLayout* layout = new QVBoxLayout();
@@ -199,10 +200,10 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	layout->addWidget(coordinates_label);
 	layout->addWidget(coords_table);
 	QHBoxLayout* coords_buttons_layout = new QHBoxLayout();
-	coords_buttons_layout->addStretch(1);
 	coords_buttons_layout->addWidget(add_coord_button);
 	coords_buttons_layout->addWidget(delete_coord_button);
 	coords_buttons_layout->addStretch(1);
+	coords_buttons_layout->addWidget(center_coords_button);
 	layout->addLayout(coords_buttons_layout);
 	setLayout(layout);
 	
@@ -237,6 +238,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	connect(coords_table, SIGNAL(cellChanged(int,int)), this, SLOT(coordinateChanged(int,int)));
 	connect(add_coord_button, SIGNAL(clicked(bool)), this, SLOT(addCoordClicked()));
 	connect(delete_coord_button, SIGNAL(clicked(bool)), this, SLOT(deleteCoordClicked()));
+	connect(center_coords_button, SIGNAL(clicked(bool)), this, SLOT(centerCoordsClicked()));
 	
 	if (current_symbol_combo->count() > 0)
 	{
@@ -409,6 +411,7 @@ void PointSymbolEditorWidget::elementChanged(int row)
 	coords_table->setEnabled(enable);
 	add_coord_button->setEnabled(enable);
 	delete_coord_button->setEnabled(enable);
+	center_coords_button->setEnabled(enable);
 	delete_element_button->setEnabled(enable && row > 0);	// cannot delete first row
 	
 	if (row < 0)
@@ -450,6 +453,7 @@ void PointSymbolEditorWidget::elementChanged(int row)
 	coords_table->setEnabled(row > 0);
 	add_coord_button->setEnabled(symbol->getType() != Symbol::Point);
 	updateDeleteCoordButton();
+	center_coords_button->setEnabled(coords_table->rowCount() > 0);
 	
 	coords_table->setColumnHidden(2, symbol->getType() == Symbol::Point);
 	if (row > 0)
@@ -589,6 +593,7 @@ void PointSymbolEditorWidget::areaColorChanged()
 void PointSymbolEditorWidget::currentCoordChanged()
 {
 	updateDeleteCoordButton();
+	center_coords_button->setEnabled(coords_table->rowCount() > 0);
 }
 void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 {
@@ -680,6 +685,40 @@ void PointSymbolEditorWidget::deleteCoordClicked()
 	emit(symbolEdited());
 	updateDeleteCoordButton();
 }
+void PointSymbolEditorWidget::centerCoordsClicked()
+{
+	Object* object = getCurrentElementObject();
+	
+	if (object->getType() == Object::Point)
+	{
+		PointObject* point = reinterpret_cast<PointObject*>(object);
+		point->setPosition(MapCoord(0, 0));
+	}
+	else
+	{
+		assert(object->getType() == Object::Path);
+		PathObject* path = reinterpret_cast<PathObject*>(object);
+		
+		MapCoordF center = MapCoordF(0, 0);
+		int size = path->getCoordinateCount();
+		assert(size > 0);
+		for (int i = 0; i < size; ++i)
+			center = MapCoordF(center.getX() + path->getCoordinate(i).xd(), center.getY() + path->getCoordinate(i).yd());
+		center = MapCoordF(center.getX() / path->getCoordinateCount(), center.getY() / path->getCoordinateCount());
+		
+		for (int i = 0; i < size; ++i)
+		{
+			MapCoord coord = path->getCoordinate(i);
+			coord.setX(coord.xd() - center.getX());
+			coord.setY(coord.yd() - center.getY());
+			path->setCoordinate(i, coord);
+		}
+		
+		updateCoordsTable();
+		getMidpointObject()->update(true);
+		emit(symbolEdited());
+	}
+}
 
 void PointSymbolEditorWidget::updateCoordsTable()
 {
@@ -690,6 +729,8 @@ void PointSymbolEditorWidget::updateCoordsTable()
 	coords_table->setRowCount(num_rows);
 	for (int i = 0; i < num_rows; ++i)
 		addCoordsRow(i);
+	
+	center_coords_button->setEnabled(num_rows > 0);
 	
 	react_to_changes = temp;
 }

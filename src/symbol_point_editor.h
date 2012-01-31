@@ -90,6 +90,7 @@ private slots:
 	void coordinateChanged(int row, int column);
 	void addCoordClicked();
 	void deleteCoordClicked();
+	void centerCoordsClicked();
 	
 private:
 	struct SymbolInfo
@@ -138,6 +139,7 @@ private:
 	QTableWidget* coords_table;
 	QPushButton* add_coord_button;
 	QPushButton* delete_coord_button;
+	QPushButton* center_coords_button;
 	
 	bool react_to_changes;
 	float offset_y;
