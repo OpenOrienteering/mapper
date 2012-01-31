@@ -76,6 +76,11 @@ public:
 	/// Must return if the given color is used by this symbol
 	virtual bool containsColor(MapColor* color) = 0;
 	
+	/// Called by the map in which the symbol is to notify it of a symbol being deleted (pointer becomes invalid).
+	/// If new_symbol == NULL, the symbol is being deleted.
+	/// Must return true if this symbol contained the deleted symbol.
+	virtual bool symbolChanged(Symbol* old_symbol, Symbol* new_symbol) {return false;}
+	
 	/// Scales the whole symbol
 	virtual void scale(double factor) = 0;
 	

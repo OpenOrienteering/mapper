@@ -65,6 +65,7 @@ public:
 	inline void deleteObject(int pos, bool remove_only);
 	bool deleteObject(Object* object, bool remove_only);	// returns if the object was found
 	
+	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
 	void deleteAllObjectsWithSymbol(Symbol* symbol);
 	bool doObjectsExistWithSymbol(Symbol* symbol);
@@ -175,6 +176,7 @@ public:
 	
 	void setObjectAreaDirty(QRectF map_coords_rect);
 	
+	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
 	void deleteAllObjectsWithSymbol(Symbol* symbol);
 	bool doObjectsExistWithSymbol(Symbol* symbol);

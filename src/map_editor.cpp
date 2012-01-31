@@ -389,7 +389,7 @@ void MapEditorController::scaleAllSymbolsClicked()
 		symbol->scale(percent / 100.0);
 		symbol->getIcon(map, true);
 
-		map->changeSymbolForAllObjects(symbol, symbol);	// update the objects
+		map->updateAllObjectsWithSymbol(symbol);
 	}
 	
 	if (symbol_dock_widget)

@@ -99,6 +99,17 @@ bool MapLayer::deleteObject(Object* object, bool remove_only)
 	return false;
 }
 
+void MapLayer::updateAllObjectsWithSymbol(Symbol* symbol)
+{
+	int size = objects.size();
+	for (int i = size - 1; i >= 0; --i)
+	{
+		if (objects[i]->getSymbol() != symbol)
+			continue;
+		
+		objects[i]->update(true);
+	}
+}
 void MapLayer::changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol)
 {
 	int size = objects.size();
@@ -710,6 +721,16 @@ void Map::setSymbol(Symbol* symbol, int pos)
 {
 	changeSymbolForAllObjects(symbols[pos], symbol);
 	
+	int size = (int)symbols.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (i == pos)
+			continue;
+		
+		if (symbols[i]->symbolChanged(symbols[pos], symbol))
+			updateAllObjectsWithSymbol(symbols[i]);
+	}
+	
 	// Change the symbol
 	delete symbols[pos];
 	symbols[pos] = symbol;
@@ -720,6 +741,16 @@ void Map::setSymbol(Symbol* symbol, int pos)
 void Map::deleteSymbol(int pos)
 {
 	deleteAllObjectsWithSymbol(symbols[pos]);
+	
+	int size = (int)symbols.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (i == pos)
+			continue;
+		
+		if (symbols[i]->symbolChanged(symbols[pos], NULL))
+			updateAllObjectsWithSymbol(symbols[i]);
+	}
 	
 	// Delete the symbol
 	Symbol* temp = symbols[pos];
@@ -889,6 +920,12 @@ void Map::setObjectAreaDirty(QRectF map_coords_rect)
 		widgets[i]->markObjectAreaDirty(map_coords_rect);
 }
 
+void Map::updateAllObjectsWithSymbol(Symbol* symbol)
+{
+	int size = layers.size();
+	for (int i = 0; i < size; ++i)
+		layers[i]->updateAllObjectsWithSymbol(symbol);
+}
 void Map::changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol)
 {
 	int size = layers.size();

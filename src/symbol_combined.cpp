@@ -60,6 +60,20 @@ bool CombinedSymbol::containsColor(MapColor* color)
 	// Do nothing. The parts are assumed to be ordinary symbols, so they will get this call independently
 	return false;
 }
+bool CombinedSymbol::symbolChanged(Symbol* old_symbol, Symbol* new_symbol)
+{
+	bool have_symbol = false;
+	int size = (int)parts.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (parts[i] == old_symbol)
+		{
+			have_symbol = true;
+			parts[i] = new_symbol;
+		}
+	}
+	return have_symbol;
+}
 bool CombinedSymbol::containsSymbol(Symbol* symbol)
 {
 	int size = (int)parts.size();
