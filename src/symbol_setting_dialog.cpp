@@ -88,7 +88,7 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Symbol* in_map_symbol, 
 	if (type == Symbol::Point)
 		type_specific_settings = new PointSymbolSettings(reinterpret_cast<PointSymbol*>(symbol), map, this);
 	else if (type == Symbol::Line)
-		type_specific_settings = new LineSymbolSettings(reinterpret_cast<LineSymbol*>(symbol), map, this);
+		type_specific_settings = new LineSymbolSettings(reinterpret_cast<LineSymbol*>(symbol), map, point_symbol_editor, this);
 	else if (type == Symbol::Area)
 		type_specific_settings = new AreaSymbolSettings(reinterpret_cast<AreaSymbol*>(symbol), map, this, point_symbol_editor);
 	else if (type == Symbol::Text)

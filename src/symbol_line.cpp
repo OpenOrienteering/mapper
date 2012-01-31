@@ -27,6 +27,7 @@
 #include "map_color.h"
 #include "util.h"
 #include "symbol_setting_dialog.h"
+#include "symbol_point_editor.h"
 #include "symbol_point.h"
 #include "symbol_area.h"
 #include "qbezier_p.h"
@@ -1405,7 +1406,7 @@ bool LineSymbol::loadImpl(QFile* file, int version, Map* map)
 
 // ### LineSymbolSettings ###
 
-LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSettingDialog* parent) : QGroupBox(tr("Line settings"), parent), symbol(symbol), dialog(parent)
+LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbolEditorWidget* point_editor, SymbolSettingDialog* parent) : QGroupBox(tr("Line settings"), parent), symbol(symbol), dialog(parent)
 {
 	QLabel* width_label = new QLabel(tr("Line width:"));
 	width_edit = new QLineEdit(QString::number(0.001f * symbol->getLineWidth()));
@@ -1607,6 +1608,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSetti
 	
 	updateWidgets(false);
 	
+	connect(point_editor, SIGNAL(symbolEdited()), this, SLOT(pointSymbolEdited()));
 	connect(width_edit, SIGNAL(textEdited(QString)), this, SLOT(widthChanged(QString)));
 	connect(color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChanged()));
 	connect(minimum_length_edit, SIGNAL(textEdited(QString)), this, SLOT(minimumDimensionsEdited(QString)));
@@ -1634,6 +1636,10 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSetti
 	connect(border_break_length_edit, SIGNAL(textEdited(QString)), this, SLOT(borderDashesChanged(QString)));
 }
 
+void LineSymbolSettings::pointSymbolEdited()
+{
+	updateWidgets();
+}
 void LineSymbolSettings::widthChanged(QString text)
 {
 	symbol->line_width = qRound(1000 * text.toFloat());
@@ -1781,8 +1787,8 @@ void LineSymbolSettings::updateWidgets(bool show)
 	}
 	
 	if (show)
-		undashed_widget->setVisible(!symbol->dashed);
-	else if (!(!symbol->dashed))
+		undashed_widget->setVisible(!symbol->dashed && !symbol->mid_symbol->isEmpty());
+	else if (!(!symbol->dashed && !symbol->mid_symbol->isEmpty()))
 		undashed_widget->hide();
 	
 	if (show)

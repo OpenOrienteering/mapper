@@ -33,6 +33,7 @@ QT_END_NAMESPACE
 
 class ColorDropDown;
 class SymbolSettingDialog;
+class PointSymbolEditorWidget;
 class PointSymbol;
 
 class LineSymbol : public Symbol
@@ -174,9 +175,10 @@ class LineSymbolSettings : public QGroupBox
 {
 Q_OBJECT
 public:
-	LineSymbolSettings(LineSymbol* symbol, Map* map, SymbolSettingDialog* parent);
+	LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbolEditorWidget* point_editor, SymbolSettingDialog* parent);
 	
 protected slots:
+	void pointSymbolEdited();
 	void widthChanged(QString text);
 	void colorChanged();
 	void minimumDimensionsEdited(QString text);
