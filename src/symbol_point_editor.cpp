@@ -74,14 +74,14 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	
 	// Point
 	QWidget* point_properties = new QWidget();
-	QLabel* point_inner_radius_label = new QLabel(tr("Inner radius <b>a</b> [mm]:"));
+	QLabel* point_inner_radius_label = new QLabel(tr("Diameter <b>a</b>:"));
 	point_inner_radius_edit = new QLineEdit();
 	point_inner_radius_edit->setValidator(new DoubleValidator(0, 99999, point_inner_radius_edit));
 	
 	QLabel* point_inner_color_label = new QLabel(tr("Inner color:"));
 	point_inner_color_edit = new ColorDropDown(map);
 	
-	QLabel* point_outer_width_label = new QLabel(tr("Outer width <b>b</b> [mm]:"));
+	QLabel* point_outer_width_label = new QLabel(tr("Outer width <b>b</b>:"));
 	point_outer_width_edit = new QLineEdit();
 	point_outer_width_edit->setValidator(new DoubleValidator(0, 99999, point_outer_width_edit));
 	
@@ -106,7 +106,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	
 	// Line
 	QWidget* line_properties = new QWidget();
-	QLabel* line_width_label = new QLabel(tr("Line width [mm]:"));
+	QLabel* line_width_label = new QLabel(tr("Line width:"));
 	line_width_edit = new QLineEdit();
 	line_width_edit->setValidator(new DoubleValidator(0, 99999, line_width_edit));
 	
@@ -442,7 +442,7 @@ void PointSymbolEditorWidget::elementChanged(int row)
 	{
 		stack_index = 0;
 		PointSymbol* point = reinterpret_cast<PointSymbol*>(symbol);
-		point_inner_radius_edit->setText(QString::number(0.001 * point->getInnerRadius()));
+		point_inner_radius_edit->setText(QString::number(2 * 0.001 * point->getInnerRadius()));
 		point_inner_color_edit->setColor(point->getInnerColor());
 		point_outer_width_edit->setText(QString::number(0.001 * point->getOuterWidth()));
 		point_outer_color_edit->setColor(point->getOuterColor());
@@ -503,7 +503,7 @@ void PointSymbolEditorWidget::pointInnerRadiusChanged(QString text)
 {
 	if (!react_to_changes) return;
 	PointSymbol* symbol = reinterpret_cast<PointSymbol*>(getCurrentElementSymbol());
-	symbol->inner_radius = qRound(1000 * text.toDouble());
+	symbol->inner_radius = qRound(1000 * 0.5 * text.toDouble());
 	getMidpointObject()->update(true);
 	emit(symbolEdited());
 }

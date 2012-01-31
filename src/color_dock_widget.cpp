@@ -112,12 +112,13 @@ QSize ColorWidget::sizeHint() const
 
 void ColorWidget::resizeEvent(QResizeEvent* event)
 {
+	// NOTE: The commented parts change the layout to horizontal if the widget is wider than high, but this leads to "layout jumping" (bad usability)
 	int width = event->size().width();
 	int height = event->size().height();
 	
 	bool change = (layout == NULL);
-	if ((width >= height && !wide_layout) || (width < height && wide_layout))
-		change = true;
+	//if ((width >= height && !wide_layout) || (width < height && wide_layout))
+	//	change = true;
 	
 	if (change)
 	{
@@ -128,9 +129,9 @@ void ColorWidget::resizeEvent(QResizeEvent* event)
 			delete layout;
 		}
 		
-		if (width >= height)
-			layout = new QHBoxLayout();
-		else if (width < height)
+		//if (width >= height)
+		//	layout = new QHBoxLayout();
+		//else if (width < height)
 			layout = new QVBoxLayout();
 		
 		layout->setMargin(0);
