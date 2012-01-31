@@ -51,7 +51,9 @@ public:
 		
 		Type type;
 		float angle;			// 0 to 2*M_PI
-		int line_spacing;		// in 0.001mm
+		int line_spacing;		// as usual, in 0.001mm
+		int line_offset;
+		int offset_along_line;	// only if type == PointPattern
 		
 		MapColor* line_color;	// only if type == LinePattern
 		int line_width;			// line width if type == LinePattern
@@ -107,6 +109,8 @@ protected slots:
 	void fillTypeChanged(int index);
 	void fillAngleChanged(QString text);
 	void fillSpacingChanged(QString text);
+	void fillLineOffsetChanged(QString text);
+	void fillOffsetAlongLineChanged(QString text);
 	void fillColorChanged();
 	void fillLinewidthChanged(QString text);
 	void fillPointdistChanged(QString text);
@@ -129,6 +133,9 @@ private:
 	QComboBox* fill_type_combo;
 	QLineEdit* fill_angle_edit;
 	QLineEdit* fill_spacing_edit;
+	QLineEdit* fill_line_offset_edit;
+	QLabel* fill_offset_along_line_label;
+	QLineEdit* fill_offset_along_line_edit;
 	
 	QLabel* fill_color_label;
 	ColorDropDown* fill_color_edit;

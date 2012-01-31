@@ -38,6 +38,8 @@ AreaSymbol::FillPattern::FillPattern()
 	type = LinePattern;
 	angle = 0;
 	line_spacing = 5 * 1000;
+	line_offset = 0;
+	offset_along_line = 0;
 	
 	line_color = NULL;
 	line_width = 0;
@@ -51,6 +53,8 @@ void AreaSymbol::FillPattern::save(QFile* file, Map* map)
 	file->write((const char*)&itype, sizeof(qint32));
 	file->write((const char*)&angle, sizeof(float));
 	file->write((const char*)&line_spacing, sizeof(int));
+	file->write((const char*)&line_offset, sizeof(int));
+	file->write((const char*)&offset_along_line, sizeof(int));
 	
 	if (type == LinePattern)
 	{
@@ -74,6 +78,11 @@ bool AreaSymbol::FillPattern::load(QFile* file, int version, Map* map)
 	type = (Type)itype;
 	file->read((char*)&angle, sizeof(float));
 	file->read((char*)&line_spacing, sizeof(int));
+	if (version >= 3)
+	{
+		file->read((char*)&line_offset, sizeof(int));
+		file->read((char*)&offset_along_line, sizeof(int));
+	}
 	
 	if (type == LinePattern)
 	{
@@ -144,10 +153,11 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, RenderableVector&
 	extent = QRectF(extent.topLeft() - fill_extent.bottomRight(), extent.bottomRight() - fill_extent.topLeft());
 	
 	// Fill
+	const float offset = 0.001f * line_offset;
 	if (qAbs(rotation - M_PI/2) < 0.0001)
 	{
 		// Special case: vertical lines
-		double first = /*offset +*/ ceil((extent.left() /*- offset*/) / (0.001*line_spacing)) * 0.001*line_spacing;
+		double first = offset + ceil((extent.left() - offset) / (0.001*line_spacing)) * 0.001*line_spacing;
 		for (double cur = first; cur < extent.right(); cur += 0.001*line_spacing)
 		{
 			coords[0] = MapCoordF(cur, extent.top());
@@ -158,7 +168,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, RenderableVector&
 	else if (qAbs(rotation - 0) < 0.0001)
 	{
 		// Special case: horizontal lines
-		double first = /*offset +*/ ceil((extent.top() /*- offset*/) / (0.001*line_spacing)) * 0.001*line_spacing;
+		double first = offset + ceil((extent.top() - offset) / (0.001*line_spacing)) * 0.001*line_spacing;
 		for (double cur = first; cur < extent.bottom(); cur += 0.001*line_spacing)
 		{
 			coords[0] = MapCoordF(extent.left(), cur);
@@ -172,7 +182,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, RenderableVector&
 		float xfactor = 1.0f / sin(rotation);
 		float yfactor = 1.0f / cos(rotation);
 		
-		const float offset = 0;
+		const float offset = 0.001f * line_offset;
 		float dist_x = xfactor * 0.001*line_spacing;
 		float dist_y = yfactor * 0.001*line_spacing;
 		float offset_x = xfactor * offset;
@@ -265,7 +275,7 @@ void AreaSymbol::FillPattern::createLine(MapCoordVectorF& coords, LineSymbol* li
 		float dir_x = to_end.getX() / length;
 		float dir_y = to_end.getY() / length;
 		
-		const float offset = 0;
+		float offset = 0.001f * offset_along_line;
 		float base_dist = dir_x * coords[0].getX() + dir_y * coords[0].getY();	// distance of coords[0] from the zero line
 		float first = (offset + ceil((base_dist - offset) / (0.001*point_distance)) * 0.001*point_distance) - base_dist;
 		
@@ -456,6 +466,14 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSetti
 	fill_spacing_edit = new QLineEdit();
 	fill_spacing_edit->setValidator(new DoubleValidator(0, 999999, fill_spacing_edit));
 	
+	QLabel* fill_line_offset_label = new QLabel(tr("Line offset:"));
+	fill_line_offset_edit = new QLineEdit();
+	fill_line_offset_edit->setValidator(new DoubleValidator(-999999, 999999, fill_line_offset_edit));
+	
+	fill_offset_along_line_label = new QLabel(tr("Offset along line:"));
+	fill_offset_along_line_edit = new QLineEdit();
+	fill_offset_along_line_edit->setValidator(new DoubleValidator(-999999, 999999, fill_offset_along_line_edit));
+	
 	fill_color_label = new QLabel(tr("Line color:"));
 	fill_color_edit = new ColorDropDown(map);
 	fill_linewidth_label = new QLabel(tr("Line width:"));
@@ -490,14 +508,18 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSetti
 	fill_pattern_layout->addWidget(fill_angle_edit, 2, 1);
 	fill_pattern_layout->addWidget(fill_spacing_label, 3, 0);
 	fill_pattern_layout->addWidget(fill_spacing_edit, 3, 1);
+	fill_pattern_layout->addWidget(fill_line_offset_label, 4, 0);
+	fill_pattern_layout->addWidget(fill_line_offset_edit, 4, 1);
+	fill_pattern_layout->addWidget(fill_offset_along_line_label, 5, 0);
+	fill_pattern_layout->addWidget(fill_offset_along_line_edit, 5, 1);
 	
-	fill_pattern_layout->addWidget(fill_color_label, 4, 0);
-	fill_pattern_layout->addWidget(fill_color_edit, 4, 1);
-	fill_pattern_layout->addWidget(fill_linewidth_label, 5, 0);
-	fill_pattern_layout->addWidget(fill_linewidth_edit, 5, 1);
+	fill_pattern_layout->addWidget(fill_color_label, 6, 0);
+	fill_pattern_layout->addWidget(fill_color_edit, 6, 1);
+	fill_pattern_layout->addWidget(fill_linewidth_label, 7, 0);
+	fill_pattern_layout->addWidget(fill_linewidth_edit, 7, 1);
 	
-	fill_pattern_layout->addWidget(fill_pointdist_label, 6, 0);
-	fill_pattern_layout->addWidget(fill_pointdist_edit, 6, 1);
+	fill_pattern_layout->addWidget(fill_pointdist_label, 8, 0);
+	fill_pattern_layout->addWidget(fill_pointdist_edit, 8, 1);
 	fill_pattern_widget->setLayout(fill_pattern_layout);
 	
 	QVBoxLayout* layout = new QVBoxLayout();
@@ -516,6 +538,8 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSetti
 	connect(fill_type_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(fillTypeChanged(int)));
 	connect(fill_angle_edit, SIGNAL(textEdited(QString)), this, SLOT(fillAngleChanged(QString)));
 	connect(fill_spacing_edit, SIGNAL(textEdited(QString)), this, SLOT(fillSpacingChanged(QString)));
+	connect(fill_line_offset_edit, SIGNAL(textEdited(QString)), this, SLOT(fillLineOffsetChanged(QString)));
+	connect(fill_offset_along_line_edit, SIGNAL(textEdited(QString)), this, SLOT(fillOffsetAlongLineChanged(QString)));
 	
 	connect(fill_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(fillColorChanged()));
 	connect(fill_linewidth_edit, SIGNAL(textEdited(QString)), this, SLOT(fillLinewidthChanged(QString)));
@@ -551,6 +575,7 @@ void AreaSymbolSettings::updateFillWidgets(bool show)
 	fill_type_combo->setCurrentIndex(fill_type_combo->findData(fill->type));
 	fill_angle_edit->setText(QString::number(fill->angle * 360 / (2*M_PI)));
 	fill_spacing_edit->setText(QString::number(0.001 * fill->line_spacing));
+	fill_line_offset_edit->setText(QString::number(0.001 * fill->line_offset));
 	
 	if (fill->type == AreaSymbol::FillPattern::LinePattern)
 	{
@@ -561,6 +586,8 @@ void AreaSymbolSettings::updateFillWidgets(bool show)
 			fill_linewidth_label->show();
 			fill_linewidth_edit->show();
 		}
+		fill_offset_along_line_label->hide();
+		fill_offset_along_line_edit->hide();
 		fill_pointdist_label->hide();
 		fill_pointdist_edit->hide();
 		
@@ -571,6 +598,8 @@ void AreaSymbolSettings::updateFillWidgets(bool show)
 	{
 		if (show)
 		{
+			fill_offset_along_line_label->show();
+			fill_offset_along_line_edit->show();
 			fill_pointdist_label->show();
 			fill_pointdist_edit->show();
 		}
@@ -579,6 +608,7 @@ void AreaSymbolSettings::updateFillWidgets(bool show)
 		fill_linewidth_label->hide();
 		fill_linewidth_edit->hide();
 
+		fill_offset_along_line_edit->setText(QString::number(0.001 * fill->offset_along_line));
 		fill_pointdist_edit->setText(QString::number(0.001 * fill->point_distance));
 		point_editor->setCurrentSymbol(fill->point);
 	}
@@ -670,6 +700,21 @@ void AreaSymbolSettings::fillSpacingChanged(QString text)
 	if (!react_to_changes) return;
 	AreaSymbol::FillPattern* fill = &symbol->patterns[fill_number_combo->currentIndex()];
 	fill->line_spacing = qRound(1000 * text.toFloat());
+	dialog->updatePreview();
+}
+void AreaSymbolSettings::fillLineOffsetChanged(QString text)
+{
+	if (!react_to_changes) return;
+	AreaSymbol::FillPattern* fill = &symbol->patterns[fill_number_combo->currentIndex()];
+	fill->line_offset = qRound(1000 * text.toFloat());
+	dialog->updatePreview();
+}
+void AreaSymbolSettings::fillOffsetAlongLineChanged(QString text)
+{
+	if (!react_to_changes) return;
+	AreaSymbol::FillPattern* fill = &symbol->patterns[fill_number_combo->currentIndex()];
+	assert(fill->type == AreaSymbol::FillPattern::PointPattern);
+	fill->offset_along_line = qRound(1000 * text.toFloat());
 	dialog->updatePreview();
 }
 
