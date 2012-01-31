@@ -284,6 +284,16 @@ void AreaSymbol::FillPattern::createLine(MapCoordVectorF& coords, LineSymbol* li
 	}
 }
 
+void AreaSymbol::FillPattern::scale(double factor)
+{
+	line_spacing = qRound(factor*factor * line_spacing);
+	line_width = qRound(factor*factor * line_width);
+	point_distance = qRound(factor*factor * point_distance);
+	
+	if (point)
+		point->scale(factor);
+}
+
 // ### AreaSymbol ###
 
 AreaSymbol::AreaSymbol() : Symbol(Symbol::Area)
@@ -370,6 +380,15 @@ bool AreaSymbol::containsColor(MapColor* color)
 	}
 	
 	return false;
+}
+
+void AreaSymbol::scale(double factor)
+{
+	minimum_area = qRound(factor*factor * minimum_area);
+	
+	int size = (int)patterns.size();
+	for (int i = 0; i < size; ++i)
+		patterns[i].scale(factor);
 }
 
 void AreaSymbol::saveImpl(QFile* file, Map* map)

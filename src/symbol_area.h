@@ -64,6 +64,7 @@ public:
 		bool load(QFile* file, int version, Map* map);
 		void createRenderables(QRectF extent, RenderableVector& output);
 		void createLine(MapCoordVectorF& coords, LineSymbol* line, PathObject* path, PointObject* point_object, RenderableVector& output);
+		void scale(double factor);
 	};
 	
 	AreaSymbol();
@@ -73,6 +74,7 @@ public:
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output);
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
     virtual bool containsColor(MapColor* color);
+    virtual void scale(double factor);
 	
 	// Getters / Setters
 	inline MapColor* getColor() const {return color;}

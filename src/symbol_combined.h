@@ -46,6 +46,7 @@ public:
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
     virtual bool containsColor(MapColor* color);
 	bool containsSymbol(Symbol* symbol);
+    virtual void scale(double factor);
 	
 	virtual bool loadFinished(Map* map);
 	

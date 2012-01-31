@@ -76,6 +76,9 @@ public:
 	/// Must return if the given color is used by this symbol
 	virtual bool containsColor(MapColor* color) = 0;
 	
+	/// Scales the whole symbol
+	virtual void scale(double factor) = 0;
+	
 	/// Returns the symbol's icon, creates it if it was not created yet. update == true forces an update of the icon.
 	QImage* getIcon(Map* map, bool update = false);
 	

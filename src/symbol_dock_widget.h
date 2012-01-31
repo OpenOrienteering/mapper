@@ -58,6 +58,7 @@ protected slots:
 	void newTextSymbol();
 	void newCombinedSymbol();
 	void editSymbol();
+	void scaleSymbol();
 	void deleteSymbols();
 	void duplicateSymbol();
 	void selectAll();
@@ -78,6 +79,7 @@ protected:
 	SymbolWidget* symbol_widget;
 	QMenu* context_menu;
 	QAction* edit_action;
+	QAction* scale_action;
 	QAction* duplicate_action;
 	QAction* delete_action;
 	
@@ -128,6 +130,7 @@ public:
     virtual QSize sizeHint() const;
 	
 	inline void emitSelectedSymbolsChanged() {emit selectedSymbolsChanged();}
+	inline SymbolRenderWidget* getRenderWidget() const {return render_widget;}
 	
 signals:
 	void selectedSymbolsChanged();

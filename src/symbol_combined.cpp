@@ -76,6 +76,10 @@ bool CombinedSymbol::containsSymbol(Symbol* symbol)
 	}
 	return false;
 }
+void CombinedSymbol::scale(double factor)
+{
+	// Do nothing. The parts are assumed to be ordinary symbols, so they will get this call independently
+}
 
 void CombinedSymbol::saveImpl(QFile* file, Map* map)
 {

@@ -198,6 +198,40 @@ bool PointSymbol::containsColor(MapColor* color)
 	return false;
 }
 
+void PointSymbol::scale(double factor)
+{
+	inner_radius = qRound(inner_radius * factor);
+	outer_width = qRound(outer_width * factor);
+	
+	int size = (int)objects.size();
+	for (int i = 0; i < size; ++i)
+	{
+		// Scale symbol
+		symbols[i]->scale(factor);
+		
+		// Scale object
+		if (objects[i]->getType() == Object::Point)
+		{
+			PointObject* point = reinterpret_cast<PointObject*>(objects[i]);
+			point->setPosition(MapCoord(point->getPosition().xd() * factor, point->getPosition().yd() * factor));
+		}
+		else
+		{
+			assert(objects[i]->getType() == Object::Path);
+			PathObject* path = reinterpret_cast<PathObject*>(objects[i]);
+			
+			int coords_size = path->getCoordinateCount();
+			for (int c = 0; c < coords_size; ++c)
+			{
+				MapCoord coord = path->getCoordinate(c);
+				coord.setX(factor * coord.xd());
+				coord.setY(factor * coord.yd());
+				path->setCoordinate(c, coord);
+			}
+		}
+	}
+}
+
 void PointSymbol::saveImpl(QFile* file, Map* map)
 {
 	file->write((const char*)&rotatable, sizeof(bool));

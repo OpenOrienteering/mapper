@@ -163,6 +163,13 @@ bool TextSymbol::containsColor(MapColor* color)
 	return color == this->color;
 }
 
+void TextSymbol::scale(double factor)
+{
+	ascent_size = qRound(factor * ascent_size);
+	
+	updateQFont();
+}
+
 void TextSymbol::updateQFont()
 {
 	qfont = QFont();

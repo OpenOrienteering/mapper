@@ -64,6 +64,7 @@ public:
 	void createRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
     virtual bool containsColor(MapColor* color);
+    virtual void scale(double factor);
 	
 	/// Creates empty point symbols for contained NULL symbols with the given names
 	void ensurePointSymbols(const QString& start_name, const QString& mid_name, const QString& end_name, const QString& dash_name);

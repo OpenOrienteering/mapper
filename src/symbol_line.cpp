@@ -1203,6 +1203,38 @@ bool LineSymbol::containsColor(MapColor* color)
 	return color == this->color;
 }
 
+void LineSymbol::scale(double factor)
+{
+	line_width = qRound(factor * line_width);
+	
+	minimum_length = qRound(factor * minimum_length);
+	pointed_cap_length = qRound(factor * pointed_cap_length);
+	
+	if (start_symbol)
+		start_symbol->scale(factor);
+	if (mid_symbol)
+		mid_symbol->scale(factor);
+	if (end_symbol)
+		end_symbol->scale(factor);
+	if (dash_symbol)
+		dash_symbol->scale(factor);
+
+	segment_length = qRound(factor * segment_length);
+	end_length = qRound(factor * end_length);
+	minimum_mid_symbol_count = qRound(factor * minimum_mid_symbol_count);
+	minimum_mid_symbol_count_when_closed = qRound(factor * minimum_mid_symbol_count_when_closed);
+
+	dash_length = qRound(factor * dash_length);
+	break_length = qRound(factor * break_length);
+	in_group_break_length = qRound(factor * in_group_break_length);
+	mid_symbol_distance = qRound(factor * mid_symbol_distance);
+
+	border_width = qRound(factor * border_width);
+	border_shift = qRound(factor * border_shift);
+	border_dash_length = qRound(factor * border_dash_length);
+	border_break_length = qRound(factor * border_break_length);
+}
+
 void LineSymbol::ensurePointSymbols(const QString& start_name, const QString& mid_name, const QString& end_name, const QString& dash_name)
 {
 	if (!start_symbol)

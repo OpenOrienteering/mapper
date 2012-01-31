@@ -47,7 +47,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	setMouseTracking(true);
 	setFocusPolicy(Qt::ClickFocus);
 	setAcceptDrops(true);
-	setStatusTip(tr("For symbols with description, press F1 while the tooltip is visible to show it"));
+	setStatusTip(tr("For symbols with description, press <b>F1</b> while the tooltip is visible to show it"));
 	
 	context_menu = new QMenu(this);
 	
@@ -60,6 +60,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	context_menu->addMenu(new_menu);
 	
 	edit_action = context_menu->addAction(tr("Edit"), this, SLOT(editSymbol()));
+	scale_action = context_menu->addAction(tr("Scale..."), this, SLOT(scaleSymbol()));
 	context_menu->addSeparator();
 	duplicate_action = context_menu->addAction(tr("Duplicate"), this, SLOT(duplicateSymbol()));
 	delete_action = context_menu->addAction(tr("Delete"), this, SLOT(deleteSymbols()));
@@ -375,6 +376,7 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 		bool single_selection = getNumSelectedSymbols() == 1 && current_symbol_index >= 0;
 		
 		edit_action->setEnabled(single_selection);
+		scale_action->setEnabled(single_selection);
 		duplicate_action->setEnabled(single_selection);
 		delete_action->setEnabled(have_selection);
 		
@@ -528,6 +530,23 @@ void SymbolRenderWidget::editSymbol()
 	edit_symbol->getIcon(map, true);
 	map->setSymbol(edit_symbol, current_symbol_index);
 	updateIcon(current_symbol_index);
+	
+	map->setSymbolsDirty();
+}
+void SymbolRenderWidget::scaleSymbol()
+{
+	assert(current_symbol_index >= 0);
+	Symbol* symbol = map->getSymbol(current_symbol_index);
+	
+	bool ok;
+	double percent = QInputDialog::getDouble(this, tr("Scale symbol %1").arg(symbol->getName()), tr("Scale to percentage:"), 100, 0, 999999, 6, &ok);
+	if (!ok || percent == 100)
+		return;
+	
+	symbol->scale(percent / 100.0);
+	symbol->getIcon(map, true);
+	updateIcon(current_symbol_index);
+	map->changeSymbolForAllObjects(symbol, symbol);	// update the objects
 	
 	map->setSymbolsDirty();
 }

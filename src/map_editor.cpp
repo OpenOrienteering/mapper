@@ -234,12 +234,17 @@ void MapEditorController::createMenu()
 	load_colors_from_act->setStatusTip(tr("Replace the colors with those from another map file"));
 	connect(load_colors_from_act, SIGNAL(triggered()), this, SLOT(loadColorsFromClicked()));
 	
+	QAction* scale_all_symbols_act = new QAction(tr("Scale all symbols..."), this);
+	scale_all_symbols_act->setStatusTip(tr("Scale the whole symbol set"));
+	connect(scale_all_symbols_act, SIGNAL(triggered()), this, SLOT(scaleAllSymbolsClicked()));
+	
 	QMenu* symbols_menu = window->menuBar()->addMenu(tr("Sy&mbols"));
 	symbols_menu->addAction(symbol_window_act);
 	symbols_menu->addAction(color_window_act);
 	symbols_menu->addSeparator();
 	symbols_menu->addAction(load_symbols_from_act);
 	symbols_menu->addAction(load_colors_from_act);
+	symbols_menu->addAction(scale_all_symbols_act);
 	
 	// Templates menu
 	template_window_act = new QAction(QIcon("images/window-new.png"), tr("Template setup window"), this);
@@ -363,11 +368,36 @@ void MapEditorController::showColorWindow(bool show)
 
 void MapEditorController::loadSymbolsFromClicked()
 {
-
+	// TODO
 }
 void MapEditorController::loadColorsFromClicked()
 {
+	// TODO
+}
+void MapEditorController::scaleAllSymbolsClicked()
+{
+	bool ok;
+	double percent = QInputDialog::getDouble(window, tr("Scale all symbols"), tr("Scale to percentage:"), 100, 0, 999999, 6, &ok);
+	if (!ok || percent == 100)
+		return;
+	
+	int size = map->getNumSymbols();
+	for (int i = 0; i < size; ++i)
+	{
+		Symbol* symbol = map->getSymbol(i);
+		
+		symbol->scale(percent / 100.0);
+		symbol->getIcon(map, true);
 
+		map->changeSymbolForAllObjects(symbol, symbol);	// update the objects
+	}
+	
+	if (symbol_dock_widget)
+	{
+		SymbolWidget* symbol_widget = reinterpret_cast<SymbolWidget*>(symbol_dock_widget->widget());
+		symbol_widget->getRenderWidget()->update();
+	}
+	map->setSymbolsDirty();
 }
 
 void MapEditorController::showTemplateWindow(bool show)

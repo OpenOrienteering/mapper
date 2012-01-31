@@ -82,6 +82,7 @@ public slots:
 	void showColorWindow(bool show);
 	void loadSymbolsFromClicked();
 	void loadColorsFromClicked();
+	void scaleAllSymbolsClicked();
 	
 	void showTemplateWindow(bool show);
 	void openTemplateClicked();

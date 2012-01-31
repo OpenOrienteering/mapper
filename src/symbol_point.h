@@ -49,6 +49,7 @@ public:
 	void createRenderablesScaled(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output, float coord_scale);
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
     virtual bool containsColor(MapColor* color);
+    virtual void scale(double factor);
 	
 	// Contained objects and symbols (elements)
 	int getNumElements() const;
