@@ -28,6 +28,7 @@
 QT_BEGIN_NAMESPACE
 class QPushButton;
 class QLabel;
+class QCheckBox;
 QT_END_NAMESPACE
 
 class ColorDropDown;
@@ -51,6 +52,7 @@ public:
 		
 		Type type;
 		float angle;			// 0 to 2*M_PI
+		bool rotatable;
 		int line_spacing;		// as usual, in 0.001mm
 		int line_offset;
 		int offset_along_line;	// only if type == PointPattern
@@ -108,6 +110,7 @@ protected slots:
 	void fillNumberChanged(int index);
 	void fillTypeChanged(int index);
 	void fillAngleChanged(QString text);
+	void fillRotatableClicked(bool checked);
 	void fillSpacingChanged(QString text);
 	void fillLineOffsetChanged(QString text);
 	void fillOffsetAlongLineChanged(QString text);
@@ -132,6 +135,7 @@ private:
 	QComboBox* fill_number_combo;
 	QComboBox* fill_type_combo;
 	QLineEdit* fill_angle_edit;
+	QCheckBox* fill_rotatable_check;
 	QLineEdit* fill_spacing_edit;
 	QLineEdit* fill_line_offset_edit;
 	QLabel* fill_offset_along_line_label;

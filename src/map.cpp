@@ -181,7 +181,7 @@ void Map::MapColorSet::dereference()
 // ### Map ###
 
 const int Map::least_supported_file_format_version = 0;
-const int Map::current_file_format_version = 3;
+const int Map::current_file_format_version = 4;
 
 Map::Map() : renderables(this)
 {

@@ -37,6 +37,7 @@ AreaSymbol::FillPattern::FillPattern()
 {
 	type = LinePattern;
 	angle = 0;
+	rotatable = false;
 	line_spacing = 5 * 1000;
 	line_offset = 0;
 	offset_along_line = 0;
@@ -52,6 +53,7 @@ void AreaSymbol::FillPattern::save(QFile* file, Map* map)
 	qint32 itype = type;
 	file->write((const char*)&itype, sizeof(qint32));
 	file->write((const char*)&angle, sizeof(float));
+	file->write((const char*)&rotatable, sizeof(bool));
 	file->write((const char*)&line_spacing, sizeof(int));
 	file->write((const char*)&line_offset, sizeof(int));
 	file->write((const char*)&offset_along_line, sizeof(int));
@@ -77,6 +79,8 @@ bool AreaSymbol::FillPattern::load(QFile* file, int version, Map* map)
 	file->read((char*)&itype, sizeof(qint32));
 	type = (Type)itype;
 	file->read((char*)&angle, sizeof(float));
+	if (version >= 4)
+		file->read((char*)&rotatable, sizeof(bool));
 	file->read((char*)&line_spacing, sizeof(int));
 	if (version >= 3)
 	{
@@ -462,6 +466,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSetti
 	QLabel* fill_angle_label = new QLabel(tr("Angle [degrees]:"));
 	fill_angle_edit = new QLineEdit();	// TODO: Use special angle edit widget
 	fill_angle_edit->setValidator(new DoubleValidator(0, 360, fill_angle_edit));
+	fill_rotatable_check = new QCheckBox(tr("Filling is rotatable by mapper"));
 	QLabel* fill_spacing_label = new QLabel(tr("Distance between lines:"));
 	fill_spacing_edit = new QLineEdit();
 	fill_spacing_edit->setValidator(new DoubleValidator(0, 999999, fill_spacing_edit));
@@ -506,20 +511,21 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSetti
 	fill_pattern_layout->addWidget(fill_type_combo, 1, 1);
 	fill_pattern_layout->addWidget(fill_angle_label, 2, 0);
 	fill_pattern_layout->addWidget(fill_angle_edit, 2, 1);
-	fill_pattern_layout->addWidget(fill_spacing_label, 3, 0);
-	fill_pattern_layout->addWidget(fill_spacing_edit, 3, 1);
-	fill_pattern_layout->addWidget(fill_line_offset_label, 4, 0);
-	fill_pattern_layout->addWidget(fill_line_offset_edit, 4, 1);
-	fill_pattern_layout->addWidget(fill_offset_along_line_label, 5, 0);
-	fill_pattern_layout->addWidget(fill_offset_along_line_edit, 5, 1);
+	fill_pattern_layout->addWidget(fill_rotatable_check, 3, 0, 1, 2);
+	fill_pattern_layout->addWidget(fill_spacing_label, 4, 0);
+	fill_pattern_layout->addWidget(fill_spacing_edit, 4, 1);
+	fill_pattern_layout->addWidget(fill_line_offset_label, 5, 0);
+	fill_pattern_layout->addWidget(fill_line_offset_edit, 5, 1);
+	fill_pattern_layout->addWidget(fill_offset_along_line_label, 6, 0);
+	fill_pattern_layout->addWidget(fill_offset_along_line_edit, 6, 1);
 	
-	fill_pattern_layout->addWidget(fill_color_label, 6, 0);
-	fill_pattern_layout->addWidget(fill_color_edit, 6, 1);
-	fill_pattern_layout->addWidget(fill_linewidth_label, 7, 0);
-	fill_pattern_layout->addWidget(fill_linewidth_edit, 7, 1);
+	fill_pattern_layout->addWidget(fill_color_label, 7, 0);
+	fill_pattern_layout->addWidget(fill_color_edit, 7, 1);
+	fill_pattern_layout->addWidget(fill_linewidth_label, 8, 0);
+	fill_pattern_layout->addWidget(fill_linewidth_edit, 8, 1);
 	
-	fill_pattern_layout->addWidget(fill_pointdist_label, 8, 0);
-	fill_pattern_layout->addWidget(fill_pointdist_edit, 8, 1);
+	fill_pattern_layout->addWidget(fill_pointdist_label, 9, 0);
+	fill_pattern_layout->addWidget(fill_pointdist_edit, 9, 1);
 	fill_pattern_widget->setLayout(fill_pattern_layout);
 	
 	QVBoxLayout* layout = new QVBoxLayout();
@@ -537,6 +543,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSetti
 	connect(fill_number_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(fillNumberChanged(int)));
 	connect(fill_type_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(fillTypeChanged(int)));
 	connect(fill_angle_edit, SIGNAL(textEdited(QString)), this, SLOT(fillAngleChanged(QString)));
+	connect(fill_rotatable_check, SIGNAL(clicked(bool)), this, SLOT(fillRotatableClicked(bool)));
 	connect(fill_spacing_edit, SIGNAL(textEdited(QString)), this, SLOT(fillSpacingChanged(QString)));
 	connect(fill_line_offset_edit, SIGNAL(textEdited(QString)), this, SLOT(fillLineOffsetChanged(QString)));
 	connect(fill_offset_along_line_edit, SIGNAL(textEdited(QString)), this, SLOT(fillOffsetAlongLineChanged(QString)));
@@ -574,6 +581,7 @@ void AreaSymbolSettings::updateFillWidgets(bool show)
 	react_to_changes = false;
 	fill_type_combo->setCurrentIndex(fill_type_combo->findData(fill->type));
 	fill_angle_edit->setText(QString::number(fill->angle * 360 / (2*M_PI)));
+	fill_rotatable_check->setChecked(fill->rotatable);
 	fill_spacing_edit->setText(QString::number(0.001 * fill->line_spacing));
 	fill_line_offset_edit->setText(QString::number(0.001 * fill->line_offset));
 	
@@ -694,6 +702,12 @@ void AreaSymbolSettings::fillAngleChanged(QString text)
 	AreaSymbol::FillPattern* fill = &symbol->patterns[fill_number_combo->currentIndex()];
 	fill->angle = text.toFloat() * (2*M_PI) / 360.0;
 	dialog->updatePreview();
+}
+void AreaSymbolSettings::fillRotatableClicked(bool checked)
+{
+	if (!react_to_changes) return;
+	AreaSymbol::FillPattern* fill = &symbol->patterns[fill_number_combo->currentIndex()];
+	fill->rotatable = checked;
 }
 void AreaSymbolSettings::fillSpacingChanged(QString text)
 {
