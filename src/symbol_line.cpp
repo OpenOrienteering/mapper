@@ -60,7 +60,7 @@ LineSymbol::LineSymbol() : Symbol(Symbol::Line)
 	dashes_in_group = 1;
 	in_group_break_length = 500;
 	half_outer_dashes = false;
-	mid_symbols_per_dash = 1;
+	mid_symbols_per_spot = 1;
 	mid_symbol_distance = 0;
 	
 	// Border lines
@@ -99,7 +99,7 @@ Symbol* LineSymbol::duplicate()
 	new_line->dashes_in_group = dashes_in_group;
 	new_line->in_group_break_length = in_group_break_length;
 	new_line->half_outer_dashes = half_outer_dashes;
-	new_line->mid_symbols_per_dash = mid_symbols_per_dash;
+	new_line->mid_symbols_per_spot = mid_symbols_per_spot;
 	new_line->mid_symbol_distance = mid_symbol_distance;
 	new_line->have_border_lines = have_border_lines;
 	new_line->border_color = border_color;
@@ -650,7 +650,7 @@ void LineSymbol::getCoordinatesForRange(const MapCoordVector& flags, const MapCo
 	int current_index = line_coords[cur_line_coord].index;
 	
 	// Middle position
-	int num_mid_symbols = qMax(1, mid_symbols_per_dash);
+	int num_mid_symbols = qMax(1, mid_symbols_per_spot);
 	if (set_mid_symbols && mid_symbol && !mid_symbol->isEmpty() && (num_mid_symbols-1) * 0.001f * mid_symbol_distance <= end - start)
 	{
 		PointObject point_object(NULL, MapCoord(0, 0), mid_symbol);
@@ -816,10 +816,10 @@ void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags
 		
 		double length = line_coords[line_coords_size - 1].clen - line_coords[first_line_coord].clen;
 		
-		float num_dashes_f = (length + break_length_f - (half_first_dash ? 0.5f*dash_length_f : 0) - (half_last_dash ? 0.5f*dash_length_f : 0)) /
-		                     (break_length_f + dashes_in_group * dash_length_f + in_group_break_length_f);
-		num_dashes_f += (half_first_dash ? 1 : 0) + (half_last_dash ? 1 : 0);
-		int lower_dashgroup_count = qRound(floor(num_dashes_f));
+		float num_dashgroups_f = (length + break_length_f - (half_first_dash ? 0.5f*dash_length_f : 0) - (half_last_dash ? 0.5f*dash_length_f : 0)) /
+		(break_length_f + dashes_in_group * dash_length_f + (dashes_in_group-1) * in_group_break_length_f);
+		num_dashgroups_f += (half_first_dash ? 1 : 0) + (half_last_dash ? 1 : 0);
+		int lower_dashgroup_count = qRound(floor(num_dashgroups_f));
 		
 		float switch_deviation = 0.2f * ((dashes_in_group*dash_length_f + break_length_f + (dashes_in_group-1)*in_group_break_length_f)) / dashes_in_group;
 		float minimum_optimum_length = (2*dashes_in_group*dash_length_f + break_length_f + 2*(dashes_in_group-1)*in_group_break_length_f);
@@ -840,9 +840,11 @@ void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags
 		}
 		else
 		{
-			int higher_dashgroup_count = qRound(ceil(num_dashes_f));
+			int higher_dashgroup_count = qRound(ceil(num_dashgroups_f));
 			float lower_dashgroup_deviation = (length - (lower_dashgroup_count*dashes_in_group*dash_length_f + (lower_dashgroup_count-1)*break_length_f + lower_dashgroup_count*(dashes_in_group-1)*in_group_break_length_f)) / (lower_dashgroup_count*dashes_in_group);
 			float higher_dashgroup_deviation = (-1) * (length - (higher_dashgroup_count*dashes_in_group*dash_length_f + (higher_dashgroup_count-1)*break_length_f + higher_dashgroup_count*(dashes_in_group-1)*in_group_break_length_f)) / (higher_dashgroup_count*dashes_in_group);
+			if (!half_first_dash && !half_last_dash)
+				assert(lower_dashgroup_deviation >= 0 && higher_dashgroup_deviation >= 0); // TODO; seems to fail as long as halving first/last dashes affects the outermost dash only
 			int num_dashgroups = (lower_dashgroup_deviation > higher_dashgroup_deviation) ? higher_dashgroup_count : lower_dashgroup_count;
 			assert(num_dashgroups >= 2);
 			
@@ -927,6 +929,7 @@ void LineSymbol::createDottedRenderables(bool path_closed, const MapCoordVector&
 	
 	float segment_length_f = 0.001f * segment_length;
 	float end_length_f = 0.001f * end_length;
+	float mid_symbol_distance_f = 0.001f * mid_symbol_distance;
 	bool is_first_part = true;
 	int part_start = 0;
 	int part_end = 0;
@@ -952,47 +955,89 @@ void LineSymbol::createDottedRenderables(bool path_closed, const MapCoordVector&
 		double segmented_length = length;
 		if (end_length > 0)
 			segmented_length = qMax(0.0, length - 2 * end_length_f);
+		segmented_length -= (mid_symbols_per_spot - 1) * mid_symbol_distance_f;
 		
-		int lower_segment_count = qMax((end_length == 0) ? 1 : 0, qRound(floor(segmented_length / segment_length_f)));
-		int higher_segment_count = qMax((end_length == 0) ? 1 : 0, qRound(ceil(segmented_length / segment_length_f)));
+		int lower_segment_count = qMax((end_length == 0) ? 1 : 0, qRound(floor(segmented_length / (segment_length_f + (mid_symbols_per_spot - 1) * mid_symbol_distance_f))));
+		int higher_segment_count = qMax((end_length == 0) ? 1 : 0, qRound(ceil(segmented_length / (segment_length_f + (mid_symbols_per_spot - 1) * mid_symbol_distance_f))));
 
 		int line_coord_search_start = 0;
 		if (end_length > 0)
 		{
-			double lower_abs_deviation = qAbs(length - lower_segment_count * segment_length_f - 2 * end_length_f);
-			double higher_abs_deviation = qAbs(length - higher_segment_count * segment_length_f - 2 * end_length_f);
-			int segment_count = (lower_abs_deviation >= higher_abs_deviation) ? higher_segment_count : lower_segment_count;
-			
-			double deviation = (lower_abs_deviation >= higher_abs_deviation) ? (-1 * higher_abs_deviation) : (lower_abs_deviation);
-			double ideal_length = segment_count * segment_length_f + 2 * end_length_f;
-			double adapted_end_length = end_length_f + deviation * (end_length_f / ideal_length);
-			double adapted_segment_length = segment_length_f + deviation * (segment_length_f / ideal_length);
-			assert(qAbs(2*adapted_end_length + segment_count*adapted_segment_length - length) < 0.001f);
-			
-			for (int i = 0; i < segment_count + 1; ++i)
+			if (length <= (mid_symbols_per_spot - 1) * mid_symbol_distance_f)
 			{
-				calcPositionAt(flags, coords, line_coords, adapted_end_length + i * adapted_segment_length, line_coord_search_start, &point_coord[0], &right_vector);
+				// Insert point at start coordinate
+				right_vector = calculateRightVector(flags, coords, path_closed, part_start, NULL);
 				point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+				point_coord[0] = coords[part_start];
 				mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, false, output);
+				
+				// Insert point at end coordinate
+				right_vector = calculateRightVector(flags, coords, path_closed, part_end, NULL);
+				point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+				point_coord[0] = coords[part_end];
+				mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, false, output);
+			}
+			else
+			{
+				double lower_abs_deviation = qAbs(length - lower_segment_count * segment_length_f - (lower_segment_count+1)*(mid_symbols_per_spot - 1)*mid_symbol_distance_f - 2 * end_length_f);
+				double higher_abs_deviation = qAbs(length - higher_segment_count * segment_length_f - (higher_segment_count+1)*(mid_symbols_per_spot - 1)*mid_symbol_distance_f - 2 * end_length_f);
+				int segment_count = (lower_abs_deviation >= higher_abs_deviation) ? higher_segment_count : lower_segment_count;
+				
+				double deviation = (lower_abs_deviation >= higher_abs_deviation) ? (-1 * higher_abs_deviation) : (lower_abs_deviation);
+				double ideal_length = segment_count * segment_length_f + 2 * end_length_f;
+				double adapted_end_length = end_length_f + deviation * (end_length_f / ideal_length);
+				double adapted_segment_length = segment_length_f + deviation * (segment_length_f / ideal_length);
+				assert(qAbs(2*adapted_end_length + segment_count*adapted_segment_length + (segment_count + 1)*(mid_symbols_per_spot - 1)*mid_symbol_distance_f - length) < 0.001f);
+				
+				if (adapted_segment_length >= 0)
+				{
+					for (int i = 0; i < segment_count + 1; ++i)
+					{
+						for (int s = 0; s < mid_symbols_per_spot; ++s)
+						{
+							double position = adapted_end_length + s * mid_symbol_distance_f + i * (adapted_segment_length + (mid_symbols_per_spot - 1)*mid_symbol_distance_f);
+							calcPositionAt(flags, coords, line_coords, position, line_coord_search_start, &point_coord[0], &right_vector);
+							point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+							mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, false, output);
+						}
+					}
+				}
 			}
 		}
 		else
 		{
-			double lower_segment_deviation = qAbs(length - lower_segment_count * segment_length_f) / lower_segment_count;
-			double higher_segment_deviation = qAbs(length - higher_segment_count * segment_length_f) / higher_segment_count;
-			int segment_count = (lower_segment_deviation > higher_segment_deviation) ? higher_segment_count : lower_segment_count;
-			
-			for (int i = 0; i < segment_count - 1; ++i)
+			if (length > (mid_symbols_per_spot - 1)*mid_symbol_distance_f)
 			{
-				calcPositionAt(flags, coords, line_coords, (i+1) * length / segment_count, line_coord_search_start, &point_coord[0], &right_vector);
-				point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
-				mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, false, output);
+				double lower_segment_deviation = qAbs(length - lower_segment_count * segment_length_f - (lower_segment_count+1)*(mid_symbols_per_spot - 1)*mid_symbol_distance_f) / lower_segment_count;
+				double higher_segment_deviation = qAbs(length - higher_segment_count * segment_length_f - (higher_segment_count+1)*(mid_symbols_per_spot - 1)*mid_symbol_distance_f) / higher_segment_count;
+				int segment_count = (lower_segment_deviation > higher_segment_deviation) ? higher_segment_count : lower_segment_count;
+				double adapted_segment_length = (length - (segment_count+1)*(mid_symbols_per_spot - 1)*mid_symbol_distance_f) / segment_count + (mid_symbols_per_spot - 1)*mid_symbol_distance_f;
+				assert(qAbs(segment_count * adapted_segment_length + (mid_symbols_per_spot - 1)*mid_symbol_distance_f) - length < 0.001f);
+				
+				if (adapted_segment_length >= (mid_symbols_per_spot - 1)*mid_symbol_distance_f)
+				{
+					for (int i = 0; i <= segment_count; ++i)
+					{
+						for (int s = 0; s < mid_symbols_per_spot; ++s)
+						{
+							// The outermost symbols are handled outside this loop
+							if (i == 0 && s == 0)
+								continue;
+							if (i == segment_count && s == mid_symbols_per_spot - 1)
+								break;
+							
+							calcPositionAt(flags, coords, line_coords, s * mid_symbol_distance_f + i * adapted_segment_length, line_coord_search_start, &point_coord[0], &right_vector);
+							point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+							mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, false, output);
+						}
+					}
+				}
 			}
 		}
 		
-		// Insert point at end coordinate
 		if (end_length == 0)
 		{
+			// Insert point at end coordinate
 			right_vector = calculateRightVector(flags, coords, path_closed, part_end, NULL);
 			point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 			point_coord[0] = coords[part_end];
@@ -1324,7 +1369,7 @@ void LineSymbol::saveImpl(QFile* file, Map* map)
 	file->write((const char*)&dashes_in_group, sizeof(int));
 	file->write((const char*)&in_group_break_length, sizeof(int));
 	file->write((const char*)&half_outer_dashes, sizeof(bool));
-	file->write((const char*)&mid_symbols_per_dash, sizeof(int));
+	file->write((const char*)&mid_symbols_per_spot, sizeof(int));
 	file->write((const char*)&mid_symbol_distance, sizeof(int));
 	file->write((const char*)&have_border_lines, sizeof(bool));
 	temp = map->findColorIndex(border_color);
@@ -1391,7 +1436,7 @@ bool LineSymbol::loadImpl(QFile* file, int version, Map* map)
 	file->read((char*)&dashes_in_group, sizeof(int));
 	file->read((char*)&in_group_break_length, sizeof(int));
 	file->read((char*)&half_outer_dashes, sizeof(bool));
-	file->read((char*)&mid_symbols_per_dash, sizeof(int));
+	file->read((char*)&mid_symbols_per_spot, sizeof(int));
 	file->read((char*)&mid_symbol_distance, sizeof(int));
 	file->read((char*)&have_border_lines, sizeof(bool));
 	file->read((char*)&temp, sizeof(int));
@@ -1474,7 +1519,8 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbol
 	
 	QGridLayout* undashed_layout = new QGridLayout();
 	undashed_layout->setMargin(0);
-	undashed_layout->setSpacing(0);
+	undashed_layout->setVerticalSpacing(0);
+	undashed_layout->setHorizontalSpacing(2);
 	undashed_layout->addWidget(segment_length_label, 0, 0);
 	undashed_layout->addWidget(segment_length_edit, 0, 1);
 	undashed_layout->addWidget(end_length_label, 1, 0);
@@ -1510,14 +1556,6 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbol
 	half_outer_dashes_check = new QCheckBox(tr("Half length of first and last dash"));
 	half_outer_dashes_check->setChecked(symbol->half_outer_dashes);
 	
-	QLabel* mid_symbol_per_dash_label = new QLabel(tr("Mid symbols per dash:"));
-	mid_symbol_per_dash_edit = new QLineEdit(QString::number(symbol->mid_symbols_per_dash));
-	mid_symbol_per_dash_edit->setValidator(new QIntValidator(1, 99, mid_symbol_per_dash_edit));
-	
-	mid_symbol_distance_label = new QLabel(tr("Mid symbol distance:"));
-	mid_symbol_distance_edit = new QLineEdit(QString::number(0.001 * symbol->mid_symbol_distance));
-	mid_symbol_distance_edit->setValidator(new DoubleValidator(0, 999999, mid_symbol_distance_edit));
-	
 	QGridLayout* dashed_layout = new QGridLayout();
 	dashed_layout->setMargin(0);
 	dashed_layout->setVerticalSpacing(0);
@@ -1531,11 +1569,26 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbol
 	dashed_layout->addWidget(in_group_break_length_label, 3, 0);
 	dashed_layout->addWidget(in_group_break_length_edit, 3, 1);
 	dashed_layout->addWidget(half_outer_dashes_check, 4, 0, 1, 2);
-	dashed_layout->addWidget(mid_symbol_per_dash_label, 5, 0);
-	dashed_layout->addWidget(mid_symbol_per_dash_edit, 5, 1);
-	dashed_layout->addWidget(mid_symbol_distance_label, 6, 0);
-	dashed_layout->addWidget(mid_symbol_distance_edit, 6, 1);
 	dashed_widget->setLayout(dashed_layout);
+	
+	mid_symbol_widget = new QWidget();
+	QLabel* mid_symbol_per_spot_label = new QLabel(tr("Mid symbols per spot:"));
+	mid_symbol_per_spot_edit = new QLineEdit(QString::number(symbol->mid_symbols_per_spot));
+	mid_symbol_per_spot_edit->setValidator(new QIntValidator(1, 99, mid_symbol_per_spot_edit));
+	
+	mid_symbol_distance_label = new QLabel(tr("Mid symbol distance:"));
+	mid_symbol_distance_edit = new QLineEdit(QString::number(0.001 * symbol->mid_symbol_distance));
+	mid_symbol_distance_edit->setValidator(new DoubleValidator(0, 999999, mid_symbol_distance_edit));
+	
+	QGridLayout* mid_symbol_layout = new QGridLayout();
+	mid_symbol_layout->setMargin(0);
+	mid_symbol_layout->setVerticalSpacing(0);
+	mid_symbol_layout->setHorizontalSpacing(5);
+	mid_symbol_layout->addWidget(mid_symbol_per_spot_label, 0, 0);
+	mid_symbol_layout->addWidget(mid_symbol_per_spot_edit, 0, 1);
+	mid_symbol_layout->addWidget(mid_symbol_distance_label, 1, 0);
+	mid_symbol_layout->addWidget(mid_symbol_distance_edit, 1, 1);
+	mid_symbol_widget->setLayout(mid_symbol_layout);
 	
 	border_check = new QCheckBox(tr("Enable border lines"));
 	border_check->setChecked(symbol->have_border_lines);
@@ -1602,8 +1655,9 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbol
 	layout->addWidget(line_settings_widget, 3, 0, 1, 2);
 	layout->addWidget(undashed_widget, 4, 0, 1, 2);
 	layout->addWidget(dashed_widget, 5, 0, 1, 2);
-	layout->addWidget(border_check, 6, 0, 1, 2);
-	layout->addWidget(border_widget, 7, 0, 1, 2);
+	layout->addWidget(mid_symbol_widget, 6, 0, 1, 2);
+	layout->addWidget(border_check, 7, 0, 1, 2);
+	layout->addWidget(border_widget, 8, 0, 1, 2);
 	setLayout(layout);
 	
 	updateWidgets(false);
@@ -1625,7 +1679,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbol
 	connect(dash_group_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(dashGroupsChanged(int)));
 	connect(in_group_break_length_edit, SIGNAL(textEdited(QString)), this, SLOT(inGroupBreakLengthChanged(QString)));
 	connect(half_outer_dashes_check, SIGNAL(clicked(bool)), this, SLOT(halfOuterDashesChanged(bool)));
-	connect(mid_symbol_per_dash_edit, SIGNAL(textEdited(QString)), this, SLOT(midSymbolsPerDashChanged(QString)));
+	connect(mid_symbol_per_spot_edit, SIGNAL(textEdited(QString)), this, SLOT(midSymbolsPerDashChanged(QString)));
 	connect(mid_symbol_distance_edit, SIGNAL(textEdited(QString)), this, SLOT(midSymbolDistanceChanged(QString)));
 	connect(border_check, SIGNAL(clicked(bool)), this, SLOT(borderCheckClicked(bool)));
 	connect(border_width_edit, SIGNAL(textEdited(QString)), this, SLOT(borderWidthEdited(QString)));
@@ -1723,7 +1777,7 @@ void LineSymbolSettings::halfOuterDashesChanged(bool checked)
 }
 void LineSymbolSettings::midSymbolsPerDashChanged(QString text)
 {
-	symbol->mid_symbols_per_dash = qMax(1, text.toInt());
+	symbol->mid_symbols_per_spot = qMax(1, text.toInt());
 	dialog->updatePreview();
 	updateWidgets();
 }
@@ -1813,11 +1867,16 @@ void LineSymbolSettings::updateWidgets(bool show)
 		half_outer_dashes_check->hide();
 	
 	if (show)
+		mid_symbol_widget->setVisible(!symbol->mid_symbol->isEmpty());
+	else if (!(!symbol->mid_symbol->isEmpty()))
+		mid_symbol_widget->hide();
+	
+	if (show)
 	{
-		mid_symbol_distance_label->setVisible(symbol->mid_symbols_per_dash > 1);
-		mid_symbol_distance_edit->setVisible(symbol->mid_symbols_per_dash > 1);
+		mid_symbol_distance_label->setVisible(symbol->mid_symbols_per_spot > 1);
+		mid_symbol_distance_edit->setVisible(symbol->mid_symbols_per_spot > 1);
 	}
-	else if (!(symbol->mid_symbols_per_dash > 1))
+	else if (!(symbol->mid_symbols_per_spot > 1))
 	{
 		mid_symbol_distance_label->hide();
 		mid_symbol_distance_edit->hide();

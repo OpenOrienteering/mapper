@@ -146,6 +146,9 @@ protected:
 	PointSymbol* end_symbol;
 	PointSymbol* dash_symbol;
 	
+	int mid_symbols_per_spot;
+	int mid_symbol_distance;
+	
 	// Not dashed
 	int segment_length;
 	int end_length;
@@ -158,8 +161,6 @@ protected:
 	int dashes_in_group;
 	int in_group_break_length;
 	bool half_outer_dashes;
-	int mid_symbols_per_dash;
-	int mid_symbol_distance;
 	
 	// Border lines
 	bool have_border_lines;
@@ -220,7 +221,7 @@ private:
 	QLineEdit* pointed_cap_length_edit;
 	QCheckBox* dashed_check;
 	
-	// dashed == false
+	// dashed == false && mid_symbol
 	QWidget* undashed_widget;
 	QLineEdit* segment_length_edit;
 	QLineEdit* end_length_edit;
@@ -235,7 +236,10 @@ private:
 	QLabel* in_group_break_length_label;
 	QLineEdit* in_group_break_length_edit;
 	QCheckBox* half_outer_dashes_check;
-	QLineEdit* mid_symbol_per_dash_edit;
+	
+	// mid_symbol
+	QWidget* mid_symbol_widget;
+	QLineEdit* mid_symbol_per_spot_edit;
 	QLabel* mid_symbol_distance_label;
 	QLineEdit* mid_symbol_distance_edit;
 	
