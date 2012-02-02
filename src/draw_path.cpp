@@ -56,11 +56,6 @@ void DrawPathTool::init()
 DrawPathTool::~DrawPathTool()
 {
 	deleteObjects();
-	if (preview_path)
-	{
-		renderables.removeRenderablesOfObject(preview_path, false);
-		delete preview_path;
-	}
 	delete path_combination;
 }
 
@@ -573,6 +568,7 @@ void DrawPathTool::deleteObjects()
 	{
 		renderables.removeRenderablesOfObject(preview_path, false);
 		delete preview_path;
+		preview_path = NULL;
 	}
 }
 void DrawPathTool::addPreviewSymbols(Symbol* symbol)

@@ -189,7 +189,7 @@ LineSymbol* Map::covering_white_line;
 LineSymbol* Map::covering_red_line;
 
 const int Map::least_supported_file_format_version = 0;
-const int Map::current_file_format_version = 4;
+const int Map::current_file_format_version = 5;
 
 Map::Map() : renderables(this)
 {

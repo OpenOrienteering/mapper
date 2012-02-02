@@ -156,6 +156,7 @@ protected:
 	// Not dashed
 	int segment_length;
 	int end_length;
+	bool show_at_least_one_symbol;
 	int minimum_mid_symbol_count;
 	int minimum_mid_symbol_count_when_closed;
 	
@@ -193,6 +194,7 @@ protected slots:
 	void dashedChanged(bool checked);
 	void segmentLengthChanged(QString text);
 	void endLengthChanged(QString text);
+	void showAtLeastOneSymbolChanged(bool checked);
 	void dashLengthChanged(QString text);
 	void breakLengthChanged(QString text);
 	void dashGroupsChanged(int index);
@@ -229,6 +231,7 @@ private:
 	QWidget* undashed_widget;
 	QLineEdit* segment_length_edit;
 	QLineEdit* end_length_edit;
+	QCheckBox* show_at_least_one_symbol_check;
 	QLineEdit* minimum_mid_symbol_count_edit;
 	QLineEdit* minimum_mid_symbol_count_when_closed_edit;
 	
