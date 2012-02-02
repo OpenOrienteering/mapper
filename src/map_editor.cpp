@@ -32,6 +32,7 @@
 #include "gps_coordinates.h"
 #include "symbol.h"
 #include "draw_point.h"
+#include "draw_path.h"
 
 // ### MapEditorController ###
 
@@ -290,6 +291,11 @@ void MapEditorController::createToolbar()
 	connect(draw_point_act, SIGNAL(triggered(bool)), this, SLOT(drawPointClicked(bool)));
 	toolbar_drawing->addAction(draw_point_act);
 	
+	draw_path_act = new QAction(QIcon("images/draw-path.png"), tr("Draw paths"), this);
+	draw_path_act->setCheckable(true);
+	connect(draw_path_act, SIGNAL(triggered(bool)), this, SLOT(drawPathClicked(bool)));
+	toolbar_drawing->addAction(draw_path_act);
+	
 	toolbar_drawing->addSeparator();
 	
 	paint_on_template_act = new QAction(QIcon("images/pencil.png"), tr("Paint on template"), this);
@@ -448,11 +454,17 @@ void MapEditorController::selectedSymbolsChanged()
 		type = symbol->getType();
 	
 	draw_point_act->setEnabled(type == Symbol::Point);
-	draw_point_act->setToolTip(tr("This tool places point objects on the map.") + ((type == Symbol::Point) ? (" " + tr("Select a point symbol to be able to use this tool.")) : ""));
+	draw_point_act->setToolTip(tr("Place point objects on the map.") + (draw_point_act->isEnabled() ? (" " + tr("Select a point symbol to be able to use this tool.")) : ""));
+	draw_path_act->setEnabled(type == Symbol::Line || type == Symbol::Area || type == Symbol::Combined);
+	draw_path_act->setToolTip(tr("Draw polygonal and curved lines.") + (draw_path_act->isEnabled() ? (" " + tr("Select a line, area or combined symbol to be able to use this tool.")) : ""));
 }
 void MapEditorController::drawPointClicked(bool checked)
 {
 	setTool(checked ? new DrawPointTool(this, draw_point_act, symbol_widget) : NULL);
+}
+void MapEditorController::drawPathClicked(bool checked)
+{
+	setTool(checked ? new DrawPathTool(this, draw_path_act, symbol_widget) : NULL);
 }
 
 void MapEditorController::paintOnTemplateClicked(bool checked)

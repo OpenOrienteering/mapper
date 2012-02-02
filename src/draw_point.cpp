@@ -73,7 +73,7 @@ bool DrawPointTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	{
 		// Show preview object at this position
 		if (!preview_object)
-			preview_object = new PointObject(NULL, map_coord.toMapCoord(), point);
+			preview_object = new PointObject(point);
 		else
 		{
 			renderables.removeRenderablesOfObject(preview_object, false);
@@ -117,8 +117,12 @@ bool DrawPointTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 }
 bool DrawPointTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	if (event->button() != Qt::LeftButton)
+		return false;
+	
 	PointSymbol* symbol = reinterpret_cast<PointSymbol*>(symbol_widget->getSingleSelectedSymbol());
-	PointObject* point = new PointObject(editor->getMap(), click_pos_map.toMapCoord(), symbol);
+	PointObject* point = new PointObject(symbol);
+	point->setPosition(click_pos_map.toMapCoord());
 	if (symbol->isRotatable())
 		point->setRotation(calculateRotation(event->pos(), map_coord));
 	editor->getMap()->addObject(point);
@@ -127,6 +131,11 @@ bool DrawPointTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, M
 	dragging = false;
 	return true;
 }
+void DrawPointTool::leaveEvent(QEvent* event)
+{
+	editor->getMap()->clearDrawingBoundingBox();
+}
+
 void DrawPointTool::draw(QPainter* painter, MapWidget* widget)
 {
 	if (preview_object)
@@ -136,9 +145,7 @@ void DrawPointTool::draw(QPainter* painter, MapWidget* widget)
 						   widget->height() / 2.0 + widget->getMapView()->getDragOffset().y());
 		widget->getMapView()->applyTransform(painter);
 		
-		painter->setRenderHint(QPainter::Antialiasing);
-		renderables.draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), 0.5f);
-		painter->setRenderHint(QPainter::Antialiasing, false);
+		renderables.draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), 0.5f);
 		
 		painter->restore();
 	}

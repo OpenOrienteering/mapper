@@ -96,7 +96,7 @@ public:
 	inline const QRectF& getExtent() const {return extent;}
 	
 	/// Renders the renderable with the given painter
-	virtual void render(QPainter& painter) = 0;
+	virtual void render(QPainter& painter, bool force_min_size, float scaling) = 0;
 	
 	/// Sets / gets the clip path to use (NULL by default)
 	inline void setClipPath(QPainterPath* new_clip_path) {clip_path = new_clip_path;}
@@ -128,7 +128,7 @@ class RenderableContainer
 public:
 	RenderableContainer(Map* map);
 	
-	void draw(QPainter* painter, QRectF bounding_box, float opacity_factor = 1.0f);
+	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, float opacity_factor = 1.0f);
 	
 	void removeRenderablesOfObject(Object* object, bool mark_area_as_dirty);	// NOTE: does not delete the renderables, just removes them from display
 	void insertRenderablesOfObject(Object* object);
@@ -144,7 +144,7 @@ class DotRenderable : public Renderable
 {
 public:
 	DotRenderable(PointSymbol* symbol, MapCoordF coord);
-	virtual void render(QPainter& painter);
+	virtual void render(QPainter& painter, bool force_min_size, float scaling);
 	virtual void getRenderStates(RenderStates& out);
 	//virtual Renderable* clone();
 };
@@ -153,7 +153,7 @@ class CircleRenderable : public Renderable
 {
 public:
 	CircleRenderable(PointSymbol* symbol, MapCoordF coord);
-	virtual void render(QPainter& painter);
+	virtual void render(QPainter& painter, bool force_min_size, float scaling);
 	virtual void getRenderStates(RenderStates& out);
 	//virtual Renderable* clone();
 	
@@ -166,7 +166,7 @@ class LineRenderable : public Renderable
 {
 public:
 	LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed);
-	virtual void render(QPainter& painter);
+	virtual void render(QPainter& painter, bool force_min_size, float scaling);
 	virtual void getRenderStates(RenderStates& out);
 	//virtual Renderable* clone();
 	
@@ -181,7 +181,7 @@ class AreaRenderable : public Renderable
 {
 public:
 	AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords);
-	virtual void render(QPainter& painter);
+	virtual void render(QPainter& painter, bool force_min_size, float scaling);
 	virtual void getRenderStates(RenderStates& out);
 	//virtual Renderable* clone();
 	
@@ -195,7 +195,7 @@ class TextRenderable : public Renderable
 {
 public:
 	TextRenderable(TextSymbol* symbol, double line_x, double line_y, double anchor_x, double anchor_y, double rotation, const QString& line, const QFont& font);
-	virtual void render(QPainter& painter);
+	virtual void render(QPainter& painter, bool force_min_size, float scaling);
 	virtual void getRenderStates(RenderStates& out);
 	//virtual Renderable* clone();
 	

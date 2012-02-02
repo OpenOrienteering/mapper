@@ -18,20 +18,23 @@
  */
 
 
-#ifndef _OPENORIENTEERING_DRAW_POINT_H_
-#define _OPENORIENTEERING_DRAW_POINT_H_
+#ifndef _OPENORIENTEERING_DRAW_PATH_H_
+#define _OPENORIENTEERING_DRAW_PATH_H_
 
 #include "map_editor.h"
 
+class CombinedSymbol;
 class PointObject;
+class PathObject;
+class Symbol;
 
 /// Tool to draw point objects
-class DrawPointTool : public MapEditorTool
+class DrawPathTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	DrawPointTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
-    virtual ~DrawPointTool();
+	DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
+	virtual ~DrawPathTool();
 	
     virtual void init();
     virtual QCursor* getCursor() {return cursor;}
@@ -39,7 +42,12 @@ public:
     virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
     virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+    virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
     virtual void leaveEvent(QEvent* event);
+	
+    virtual bool keyPressEvent(QKeyEvent* event);
+    virtual bool keyReleaseEvent(QKeyEvent* event);
+    virtual void focusOutEvent(QFocusEvent* event);
 	
     virtual void draw(QPainter* painter, MapWidget* widget);
 	
@@ -49,16 +57,49 @@ protected slots:
 	void selectedSymbolsChanged();
 	
 protected:
+	void createPreviewCurve(MapCoord position, float direction);
+	void closeDrawing();
+	void finishDrawing();
+	void abortDrawing();
+	void undoLastPoint();
+	
 	void setDirtyRect(MapCoordF mouse_pos);
+	void includePreviewRects(QRectF& rect);
 	float calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map);
+	void updateStatusText();
+	
+	//bool isLastPointCurveStart();
+	void updatePreviewPath();
+	
+	void hidePreviewPoints();
+	void deleteObjects();
+	void addPreviewSymbols(Symbol* symbol);
 	
 	QPoint click_pos;
 	MapCoordF click_pos_map;
 	QPoint cur_pos;
 	MapCoordF cur_pos_map;
+	MapCoordF previous_pos_map;
+	MapCoordF previous_drag_map;
 	bool dragging;
 	
-	PointObject* preview_object;
+	bool draw_in_progress;
+	bool path_has_preview_point;
+	bool previous_point_is_curve_point;
+	float previous_point_direction;
+	bool create_segment;
+	
+	bool space_pressed;
+	
+	std::vector<PointSymbol*> preview_point_symbols;
+	std::vector<bool> preview_point_symbols_external;
+	std::vector<PointObject*> preview_points;
+	bool preview_points_shown;
+	
+	CombinedSymbol* path_combination;
+	Symbol* drawing_symbol;
+	PathObject* preview_path;
+	
 	RenderableContainer renderables;
 	SymbolWidget* symbol_widget;
 };

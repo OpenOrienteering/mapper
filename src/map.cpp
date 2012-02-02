@@ -29,12 +29,13 @@
 #include "map_color.h"
 #include "map_editor.h"
 #include "map_widget.h"
-#include "template.h"
 #include "util.h"
+#include "template.h"
 #include "gps_coordinates.h"
+#include "object.h"
 #include "symbol.h"
 #include "symbol_point.h"
-#include "object.h"
+#include "symbol_line.h"
 
 MapLayer::MapLayer(const QString& name, Map* map) : name(name), map(map)
 {
@@ -71,10 +72,11 @@ bool MapLayer::load(QFile* file, Map* map)
 	{
 		int save_type;
 		file->read((char*)&save_type, sizeof(int));
-		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), map, NULL);
+		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), NULL);
 		if (!objects[i])
 			return false;
 		objects[i]->load(file);
+		addObject(objects[i], getNumObjects());
 	}
 	return true;
 }
@@ -180,11 +182,20 @@ void Map::MapColorSet::dereference()
 
 // ### Map ###
 
+bool Map::static_initialized = false;
+MapColor Map::covering_white;
+MapColor Map::covering_red;
+LineSymbol* Map::covering_white_line;
+LineSymbol* Map::covering_red_line;
+
 const int Map::least_supported_file_format_version = 0;
 const int Map::current_file_format_version = 4;
 
 Map::Map() : renderables(this)
 {
+	if (!static_initialized)
+		initStatic();
+	
 	first_front_template = 0;
 	
 	layers.push_back(new MapLayer(tr("default layer"), this));
@@ -506,13 +517,13 @@ void Map::clear()
 	unsaved_changes = false;
 }
 
-void Map::draw(QPainter* painter, QRectF bounding_box)
+void Map::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling)
 {
 	// Update the renderables of all objects marked as dirty
 	updateObjects();
 	
 	// The actual drawing
-	renderables.draw(painter, bounding_box);
+	renderables.draw(painter, bounding_box, force_min_size, scaling);
 }
 void Map::updateObjects()
 {
@@ -701,6 +712,33 @@ void Map::adjustColorPriorities(int first, int last)
 		color_set->colors[i]->priority = i;
 }
 
+void Map::initStatic()
+{
+	static_initialized = true;
+	
+	covering_white.opacity = 1000;	// HACK: (almost) always opaque, even if multiplied by opacity factors
+	covering_white.r = 1;
+	covering_white.g = 1;
+	covering_white.b = 1;
+	covering_white.updateFromRGB();
+	covering_white.priority = MapColor::CoveringWhite;
+	
+	covering_red.opacity = 1000;
+	covering_red.r = 1;
+	covering_red.g = 0;
+	covering_red.b = 0;
+	covering_red.updateFromRGB();
+	covering_red.priority = MapColor::CoveringRed;
+	
+	covering_white_line = new LineSymbol();
+	covering_white_line->setColor(&covering_white);
+	covering_white_line->setLineWidth(3);
+	
+	covering_red_line = new LineSymbol();
+	covering_red_line->setColor(&covering_red);
+	covering_red_line->setLineWidth(0.1);
+}
+
 void Map::addSymbol(Symbol* symbol, int pos)
 {
 	symbols.insert(symbols.begin() + pos, symbol);
@@ -883,6 +921,8 @@ int Map::getNumObjects()
 }
 void Map::addObject(Object* object)
 {
+	object->setMap(this);
+	
 	current_layer->addObject(object, current_layer->getNumObjects());
 	object->update(true);
 	setObjectsDirty();
@@ -899,6 +939,8 @@ void Map::deleteObject(Object* object, bool remove_only)
 		{
 			removeRenderablesOfObject(object, true);
 			setObjectsDirty();
+			if (remove_only)
+				object->setMap(NULL);
 			return;
 		}
 	}

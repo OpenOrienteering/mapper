@@ -57,8 +57,11 @@ public:
 	virtual ~Symbol();
 	virtual Symbol* duplicate() = 0;
 	
-	/// Returns the type of the symbol.
+	/// Returns the type of the symbol
 	inline Type getType() {return type;}
+	
+	/// Returns the or-ed together bitmask of all symbol types this symbol contains
+	virtual Type getContainedTypes() {return getType();}
 	
 	/// Saving and loading
 	void save(QFile* file, Map* map);

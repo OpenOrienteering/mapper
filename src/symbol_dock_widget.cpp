@@ -47,7 +47,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	setMouseTracking(true);
 	setFocusPolicy(Qt::ClickFocus);
 	setAcceptDrops(true);
-	setStatusTip(tr("For symbols with description, press <b>F1</b> while the tooltip is visible to show it"));
+	setStatusTip(tr("For symbols with description, press F1 while the tooltip is visible to show it"));
 	
 	context_menu = new QMenu(this);
 	

@@ -65,9 +65,13 @@ public:
 	inline bool isRotatable() const {return rotatable;}
 	inline void setRotatable(bool enable) {rotatable = enable;}
 	inline int getInnerRadius() const {return inner_radius;}
+	inline void setInnerRadius(int value) {inner_radius = value;}
 	inline MapColor* getInnerColor() const {return inner_color;}
+	inline void setInnerColor(MapColor* color) {inner_color = color;}
 	inline int getOuterWidth() const {return outer_width;}
+	inline void setOuterWidth(int value) {outer_width = value;}
 	inline MapColor* getOuterColor() const {return outer_color;}
+	inline void setOuterColor(MapColor* color) {outer_color = color;}
 	
 protected:
     virtual void saveImpl(QFile* file, Map* map);

@@ -77,7 +77,7 @@ public:
 	/// TODO: Should that better be a line property?
 	static const float miterLimit() {return 1;}
 	
-	// Getters / Setters
+	// Getters / Setters TODO: complete
 	inline int getLineWidth() const {return line_width;}
 	inline void setLineWidth(double width) {line_width = qRound(1000 * width);}
 	inline MapColor* getColor() const {return color;}
@@ -90,6 +90,10 @@ public:
 	inline PointSymbol* getMidSymbol() {return mid_symbol;}
 	inline PointSymbol* getEndSymbol() {return end_symbol;}
 	inline PointSymbol* getDashSymbol() {return dash_symbol;}
+	inline bool hasBorder() const {return have_border_lines;}
+	inline int getBorderLineWidth() const {return border_width;}
+	inline MapColor* getBorderColor() const {return border_color;}
+	inline int getBorderShift() const {return border_shift;}
 	
 	// TODO: make configurable
 	static const float bezier_error;

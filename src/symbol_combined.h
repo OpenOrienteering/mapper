@@ -48,8 +48,16 @@ public:
     virtual bool symbolChanged(Symbol* old_symbol, Symbol* new_symbol);
 	bool containsSymbol(Symbol* symbol);
     virtual void scale(double factor);
+	virtual Type getContainedTypes();
 	
 	virtual bool loadFinished(Map* map);
+	
+	// Getters / Setter
+	inline int getNumParts() const {return (int)parts.size();}
+	inline void setNumParts(int num) {parts.resize(num);}
+	
+	inline Symbol* getPart(int i) const {return parts[i];}
+	inline void setPart(int i, Symbol* symbol) {parts[i] = symbol;}
 	
 protected:
 	virtual void saveImpl(QFile* file, Map* map);

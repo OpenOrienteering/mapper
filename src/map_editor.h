@@ -91,6 +91,7 @@ public slots:
 	
 	void selectedSymbolsChanged();
 	void drawPointClicked(bool checked);
+	void drawPathClicked(bool checked);
 	
 	void paintOnTemplateClicked(bool checked);
 	void paintOnTemplateSelectClicked();
@@ -127,6 +128,7 @@ private:
 	EditorDockWidget* template_dock_widget;
 	
 	QAction* draw_point_act;
+	QAction* draw_path_act;
 	
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;
@@ -189,10 +191,13 @@ public:
 	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
 	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
+	virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
+	virtual void leaveEvent(QEvent* event) {}
 	
 	// Key input
 	virtual bool keyPressEvent(QKeyEvent* event) {return false;}
 	virtual bool keyReleaseEvent(QKeyEvent* event) {return false;}
+	virtual void focusOutEvent(QFocusEvent* event) {}
 	
 protected:
 	/// Can be called by subclasses to display help text in the status bar

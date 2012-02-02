@@ -94,17 +94,21 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	// Create geometry
 	Object* object = NULL;
 	if (type == Point)
-		object = new PointObject(&icon_map, MapCoord(0, 0), this);
+	{
+		PointObject* point = new PointObject(this);
+		point->setPosition(MapCoord(0, 0));
+		object = point;
+	}
 	else if (type == Line)
 	{
-		PathObject* path = new PathObject(&icon_map, this);
+		PathObject* path = new PathObject(this);
 		path->addCoordinate(0, MapCoord(-max_icon_mm_half, max_icon_mm_half));
 		path->addCoordinate(1, MapCoord(max_icon_mm_half, -max_icon_mm_half));
 		object = path;
 	}
 	else if (type == Area)
 	{
-		PathObject* path = new PathObject(&icon_map, this);
+		PathObject* path = new PathObject(this);
 		path->addCoordinate(0, MapCoord(-max_icon_mm_half, -max_icon_mm_half));
 		path->addCoordinate(1, MapCoord(max_icon_mm_half, -max_icon_mm_half));
 		path->addCoordinate(2, MapCoord(max_icon_mm_half, max_icon_mm_half));
@@ -113,7 +117,7 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	}
 	else if (type == Text)
 	{
-		TextObject* text = new TextObject(&icon_map, this);
+		TextObject* text = new TextObject(this);
 		text->setAnchorPosition(MapCoord(0, 0));
 		text->setHorizontalAlignment(TextObject::AlignHCenter);
 		text->setVerticalAlignment(TextObject::AlignVCenter);
@@ -122,7 +126,7 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	}
 	else if (type == Combined)
 	{
-		PathObject* path = new PathObject(&icon_map, this);
+		PathObject* path = new PathObject(this);
 		for (int i = 0; i < 5; ++i)
 			path->addCoordinate(i, MapCoord(sin(2*M_PI * i/5.0) * max_icon_mm_half, -cos(2*M_PI * i/5.0) * max_icon_mm_half));
 		path->setPathClosed(true);
@@ -141,7 +145,7 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	
 	painter.translate(0.5f * (icon_size-1), 0.5f * (icon_size-1));
 	view.applyTransform(&painter);
-	icon_map.draw(&painter, QRectF(-10000, -10000, 20000, 20000));
+	icon_map.draw(&painter, QRectF(-10000, -10000, 20000, 20000), false, view.calculateFinalZoomFactor());
 	
 	painter.end();
 	

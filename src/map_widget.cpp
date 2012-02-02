@@ -492,6 +492,16 @@ void MapWidget::mouseReleaseEvent(QMouseEvent* event)
 		return;
 	}
 }
+void MapWidget::mouseDoubleClickEvent(QMouseEvent* event)
+{
+	if (tool && tool->mouseDoubleClickEvent(event, view->viewToMapF(viewportToView(event->pos())), this))
+	{
+		event->accept();
+		return;
+	}
+	
+	QWidget::mouseDoubleClickEvent(event);
+}
 void MapWidget::wheelEvent(QWheelEvent* event)
 {
 	if (event->orientation() == Qt::Vertical)
@@ -564,7 +574,8 @@ void MapWidget::wheelEvent(QWheelEvent* event)
 }
 void MapWidget::leaveEvent(QEvent* event)
 {
-	clearDrawingBoundingBox();
+	if (tool)
+		tool->leaveEvent(event);
 }
 
 void MapWidget::keyPressEvent(QKeyEvent* event)
@@ -578,6 +589,12 @@ void MapWidget::keyReleaseEvent(QKeyEvent* event)
 	if (tool && tool->keyReleaseEvent(event))
 		return;
     QWidget::keyReleaseEvent(event);
+}
+void MapWidget::focusOutEvent(QFocusEvent* event)
+{
+	if (tool)
+		tool->focusOutEvent(event);
+    QWidget::focusOutEvent(event);
 }
 
 bool MapWidget::containsVisibleTemplate(int first_template, int last_template)
@@ -706,7 +723,7 @@ void MapWidget::updateMapCache(bool use_background)
 	
 	Map* map = view->getMap();
 	QRectF map_view_rect = view->calculateViewedRect(viewportToView(map_cache_dirty_rect));
-	map->draw(&painter, map_view_rect);
+	map->draw(&painter, map_view_rect, true, view->calculateFinalZoomFactor());
 	
 	// Finish drawing
 	painter.end();

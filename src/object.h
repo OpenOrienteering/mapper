@@ -49,7 +49,7 @@ public:
 	};
 	
 	/// Creates an empty object
-	Object(Map* map, Type type, Symbol* symbol = NULL);
+	Object(Type type, Symbol* symbol = NULL);
 	virtual ~Object();
 	virtual Object* duplicate() = 0;
 	
@@ -88,9 +88,10 @@ public:
 	/// NOTE: The extent is only valid after update() has been called!
 	inline const QRectF& getExtent() const {return extent;}
 	
+	inline void setMap(Map* map) {this->map = map;}
 	inline Map* getMap() const {return map;}
 	
-	static Object* getObjectForType(Type type, Map* map, Symbol* symbol = NULL);
+	static Object* getObjectForType(Type type, Symbol* symbol = NULL);
 	
 protected:
 	/// Removes all output of the object. It will be re-generated the next time update() is called
@@ -111,7 +112,7 @@ protected:
 class PathObject : public Object
 {
 public:
-	PathObject(Map* map, Symbol* symbol = NULL);
+	PathObject(Symbol* symbol = NULL);
     virtual Object* duplicate();
 	
 	void setCoordinate(int pos, MapCoord c);
@@ -124,7 +125,7 @@ public:
 class PointObject : public Object
 {
 public:
-	PointObject(Map* map, MapCoord position, Symbol* symbol = NULL);
+	PointObject(Symbol* symbol = NULL);
     virtual Object* duplicate();
 	
 	void setPosition(MapCoord position);
@@ -157,7 +158,7 @@ public:
 		AlignBottom = 3
 	};
 	
-	TextObject(Map* map, Symbol* symbol = NULL);
+	TextObject(Symbol* symbol = NULL);
 	virtual Object* duplicate();
 	
 	inline bool hasSingleAnchor() const {return coords.size() == 1;}

@@ -29,9 +29,11 @@ class Map;
 
 struct MapColor
 {
-	enum SpecialValues
+	enum SpecialPriorities
 	{
-		Reserved = -1	// used to mark renderables which should not be inserted into the map
+		CoveringRed = -3,
+		CoveringWhite = -2,		// used for tool helper line colors	
+		Reserved = -1			// used to mark renderables which should not be inserted into the map
 	};
 	
 	void updateFromCMYK();

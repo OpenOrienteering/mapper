@@ -96,7 +96,7 @@ public:
 	void clear();
 	
 	/// Draws the part of the map which is visible in the given bounding box in map coordinates
-	void draw(QPainter* painter, QRectF bounding_box);
+	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling);
 	/// Updates the renderables and extent of all objects which have been changed. This is automatically called by draw(), you normally do not need it
 	void updateObjects();
 	
@@ -194,6 +194,13 @@ public:
 	void setGPSProjectionParameters(const GPSProjectionParameters& params);
 	inline const GPSProjectionParameters& getGPSProjectionParameters() const {return *gps_projection_parameters;}
 	
+	// Static
+	
+	static MapColor* getCoveringWhite() {return &covering_white;}
+	static MapColor* getCoveringRed() {return &covering_red;}
+	static LineSymbol* getCoveringWhiteLine() {return covering_white_line;}
+	static LineSymbol* getCoveringRedLine() {return covering_red_line;}
+	
 signals:
 	void gotUnsavedChanges();
 	
@@ -237,6 +244,8 @@ private:
 	
 	void adjustColorPriorities(int first, int last);
 	
+	void initStatic();
+	
 	MapColorSet* color_set;
 	SymbolVector symbols;
 	TemplateVector templates;
@@ -257,6 +266,14 @@ private:
 	bool templates_dirty;			//    ... for the templates?
 	bool objects_dirty;				//    ... for the objects?
 	bool unsaved_changes;			// are there unsaved changes for any component?
+	
+	// Static
+	
+	static bool static_initialized;
+	static MapColor covering_white;
+	static MapColor covering_red;
+	static LineSymbol* covering_white_line;
+	static LineSymbol* covering_red_line;
 	
 	static const int least_supported_file_format_version;
 	static const int current_file_format_version;
@@ -348,6 +365,7 @@ public:
 	
 	inline Map* getMap() const {return map;}
 	
+	inline float calculateFinalZoomFactor() {return lengthToPixel(1000);}
 	inline float getZoom() const {return zoom;}
 	void setZoom(float value);
 	inline float getRotation() const {return rotation;}

@@ -41,7 +41,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	symbol_info.resize(symbols.size());
 	for (int i = 0; i < (int)symbols.size(); ++i)
 	{
-		symbol_info[i].midpoint_object = new PointObject(map, MapCoord(0, 0), symbols[i]);
+		symbol_info[i].midpoint_object = new PointObject(symbols[i]);
 		map->addObject(symbol_info[i].midpoint_object);
 	}
 	
@@ -262,7 +262,7 @@ void PointSymbolEditorWidget::addSymbol(PointSymbol* symbol)
 {
 	int index = (int)symbol_info.size();
 	symbol_info.insert(symbol_info.begin() + index, SymbolInfo());
-	symbol_info[index].midpoint_object = new PointObject(map, MapCoord(0, 0), symbol);
+	symbol_info[index].midpoint_object = new PointObject(symbol);
 	map->addObject(symbol_info[index].midpoint_object);
 	current_symbol_combo->insertItem(index, symbol->getName(), qVariantFromValue<void*>(symbol));
 	current_symbol_combo->setCurrentIndex(index);
@@ -467,21 +467,21 @@ void PointSymbolEditorWidget::elementChanged(int row)
 void PointSymbolEditorWidget::addPointClicked()
 {
 	PointSymbol* new_point = new PointSymbol();
-	PointObject* new_object = new PointObject(NULL, MapCoord(0, 0), new_point);
+	PointObject* new_object = new PointObject(new_point);
 	
 	insertElement(new_object, new_point);
 }
 void PointSymbolEditorWidget::addLineClicked()
 {
 	LineSymbol* new_line = new LineSymbol();
-	PathObject* new_object = new PathObject(NULL, new_line);
+	PathObject* new_object = new PathObject(new_line);
 	
 	insertElement(new_object, new_line);
 }
 void PointSymbolEditorWidget::addAreaClicked()
 {
 	AreaSymbol* new_area = new AreaSymbol();
-	PathObject* new_object = new PathObject(NULL, new_area);
+	PathObject* new_object = new PathObject(new_area);
 	new_object->setPathClosed(true);
 	
 	insertElement(new_object, new_area);

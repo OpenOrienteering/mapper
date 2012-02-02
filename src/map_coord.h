@@ -48,6 +48,21 @@ public:
 	inline double xd() const {return (x >> 4) / 1000.0;}
 	inline double yd() const {return (y >> 4) / 1000.0;}
 	
+	inline double lengthSquaredTo(const MapCoord& other)
+	{
+		double dx = xd() - other.xd();
+		double dy = yd() - other.yd();
+		return dx*dx + dy*dy;
+	}
+	inline double lengthTo(const MapCoord& other)
+	{
+		return sqrt(lengthSquaredTo(other));
+	}
+	inline bool isPositionEqualTo(const MapCoord& other)
+	{
+		return ((x >> 4) == (other.x >> 4)) && ((y >> 4) == (other.y >> 4));
+	}
+	
 	// Is this point the first point of a cubic bezier curve segment?
 	inline bool isCurveStart() const {return x & 1;}
 	inline void setCurveStart(bool value) {x = (x & (~1)) | (value ? 1 : 0);}
@@ -77,6 +92,7 @@ public:
 	
 	inline MapCoordF() {}
 	inline MapCoordF(double x, double y) {setX(x); setY(y);}
+	inline explicit MapCoordF(MapCoord coord) {setX(coord.xd()); setY(coord.yd());}
 	inline MapCoordF(const MapCoordF& copy) {x = copy.x; y = copy.y;}
 	
     inline void setX(double x) {this->x = x;};

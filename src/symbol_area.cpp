@@ -123,8 +123,8 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, RenderableVector&
 	
 	// Helpers
 	LineSymbol line;
-	PathObject path(NULL, NULL);
-	PointObject point_object(NULL, MapCoord(0, 0), point);
+	PathObject path(NULL);
+	PointObject point_object(point);
 	MapCoordVectorF coords;
 	if (type == LinePattern)
 	{
@@ -467,7 +467,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSetti
 	fill_angle_edit = new QLineEdit();	// TODO: Use special angle edit widget
 	fill_angle_edit->setValidator(new DoubleValidator(0, 360, fill_angle_edit));
 	fill_rotatable_check = new QCheckBox(tr("Filling is rotatable by mapper"));
-	QLabel* fill_spacing_label = new QLabel(tr("Distance between lines:"));
+	QLabel* fill_spacing_label = new QLabel(tr("Distance between center lines:"));
 	fill_spacing_edit = new QLineEdit();
 	fill_spacing_edit->setValidator(new DoubleValidator(0, 999999, fill_spacing_edit));
 	

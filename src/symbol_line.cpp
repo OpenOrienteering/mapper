@@ -128,7 +128,7 @@ void LineSymbol::createRenderables(bool path_closed, const MapCoordVector& flags
 		if (ok)
 		{
 			// NOTE: misuse of the point symbol
-			PointObject point_object(NULL, MapCoord(0, 0), start_symbol);
+			PointObject point_object(start_symbol);
 			point_object.setRotation(atan2(-tangent.getY(), tangent.getX()));
 			start_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), coords, false, output);
 		}
@@ -141,7 +141,7 @@ void LineSymbol::createRenderables(bool path_closed, const MapCoordVector& flags
 		MapCoordF tangent = calculateTangent(coords, last, true, ok);
 		if (ok)
 		{
-			PointObject point_object(NULL, MapCoord(0, 0), end_symbol);
+			PointObject point_object(end_symbol);
 			point_object.setRotation(atan2(-tangent.getY(), tangent.getX()));
 			MapCoordVectorF end_coord;
 			end_coord.push_back(coords[last]);
@@ -555,7 +555,7 @@ MapCoordF LineSymbol::calculateRightVector(const MapCoordVector& flags, const Ma
 	MapCoordF right = MapCoordF(-to_coord.getY() - to_next.getY(), to_next.getX() + to_coord.getX());
 	right.normalize();
 	if (scaling)
-		*scaling = 1.0f / sin(acos(right.getX() * to_coord.getX() + right.getY() * to_coord.getY()));
+		*scaling = qMin(1.0f / sin(acos(right.getX() * to_coord.getX() + right.getY() * to_coord.getY())), 2.0 * miterLimit());
 	
 	return right;
 }
@@ -653,7 +653,7 @@ void LineSymbol::getCoordinatesForRange(const MapCoordVector& flags, const MapCo
 	int num_mid_symbols = qMax(1, mid_symbols_per_spot);
 	if (set_mid_symbols && mid_symbol && !mid_symbol->isEmpty() && (num_mid_symbols-1) * 0.001f * mid_symbol_distance <= end - start)
 	{
-		PointObject point_object(NULL, MapCoord(0, 0), mid_symbol);
+		PointObject point_object(mid_symbol);
 		MapCoordVectorF point_coord;
 		point_coord.push_back(MapCoordF(0, 0));
 		MapCoordF right_vector;
@@ -777,7 +777,7 @@ void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags
 {
 	int size = (int)coords.size();
 	
-	PointObject point_object(NULL, MapCoord(0, 0), mid_symbol);
+	PointObject point_object(mid_symbol);
 	MapCoordVectorF point_coord;
 	point_coord.push_back(MapCoordF(0, 0));
 	MapCoordF right_vector;
@@ -901,7 +901,7 @@ void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags
 }
 void LineSymbol::createDashSymbolRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
 {
-	PointObject point_object(NULL, MapCoord(0, 0), dash_symbol);
+	PointObject point_object(dash_symbol);
 	MapCoordVectorF point_coord;
 	point_coord.push_back(MapCoordF(0, 0));
 	MapCoordF right_vector;
@@ -922,7 +922,7 @@ void LineSymbol::createDashSymbolRenderables(bool path_closed, const MapCoordVec
 }
 void LineSymbol::createDottedRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
 {
-	PointObject point_object(NULL, MapCoord(0, 0), mid_symbol);
+	PointObject point_object(mid_symbol);
 	MapCoordVectorF point_coord;
 	point_coord.push_back(MapCoordF(0, 0));
 	MapCoordF right_vector;

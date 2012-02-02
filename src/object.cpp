@@ -26,7 +26,7 @@
 #include "symbol_point.h"
 #include "util.h"
 
-Object::Object(Map* map, Object::Type type, Symbol* symbol) : type(type), symbol(symbol), map(map)
+Object::Object(Object::Type type, Symbol* symbol) : type(type), symbol(symbol), map(NULL)
 {
 	output_dirty = true;
 	path_closed = false;
@@ -161,12 +161,12 @@ bool Object::setSymbol(Symbol* new_symbol, bool no_checks)
 	return true;
 }
 
-Object* Object::getObjectForType(Object::Type type, Map* map, Symbol* symbol)
+Object* Object::getObjectForType(Object::Type type, Symbol* symbol)
 {
 	if (type == Point)
-		return new PointObject(map, MapCoord(0, 0), symbol);
+		return new PointObject(symbol);
 	else if (type == Path)
-		return new PathObject(map, symbol);
+		return new PathObject(symbol);
 	else
 	{
 		assert(false);
@@ -176,13 +176,13 @@ Object* Object::getObjectForType(Object::Type type, Map* map, Symbol* symbol)
 
 // ### PathObject ###
 
-PathObject::PathObject(Map* map, Symbol* symbol) : Object(map, Object::Path, symbol)
+PathObject::PathObject(Symbol* symbol) : Object(Object::Path, symbol)
 {
 	assert(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
 }
 Object* PathObject::duplicate()
 {
-	PathObject* new_path = new PathObject(map, symbol);
+	PathObject* new_path = new PathObject(symbol);
 	new_path->coords = coords;
 	new_path->path_closed = path_closed;
 	return new_path;
@@ -230,15 +230,15 @@ void PathObject::deleteCoordinate(int pos)
 
 // ### PointObject ###
 
-PointObject::PointObject(Map* map, MapCoord position, Symbol* symbol) : Object(map, Object::Point, symbol)
+PointObject::PointObject(Symbol* symbol) : Object(Object::Point, symbol)
 {
 	assert(!symbol || (symbol->getType() == Symbol::Point));
 	rotation = 0;
-	coords.push_back(position);
+	coords.push_back(MapCoord(0, 0));
 }
 Object* PointObject::duplicate()
 {
-	PointObject* new_point = new PointObject(map, coords[0], symbol);
+	PointObject* new_point = new PointObject(symbol);
 	new_point->coords = coords;
 	new_point->path_closed = path_closed;
 	
@@ -266,7 +266,7 @@ void PointObject::setRotation(float new_rotation)
 
 // ### TextObject ###
 
-TextObject::TextObject(Map* map, Symbol* symbol): Object(map, Object::Text, symbol)
+TextObject::TextObject(Symbol* symbol): Object(Object::Text, symbol)
 {
 	assert(!symbol || (symbol->getType() == Symbol::Text));
 	coords.push_back(MapCoord(0, 0));
@@ -277,7 +277,7 @@ TextObject::TextObject(Map* map, Symbol* symbol): Object(map, Object::Text, symb
 }
 Object* TextObject::duplicate()
 {
-	TextObject* new_text = new TextObject(map, symbol);
+	TextObject* new_text = new TextObject(symbol);
 	new_text->coords = coords;
 	new_text->path_closed = path_closed;
 	

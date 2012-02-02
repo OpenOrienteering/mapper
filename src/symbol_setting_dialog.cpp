@@ -328,7 +328,7 @@ void SymbolSettingDialog::createPreviewMap()
 			float length = min_length + (i / (float)(num_lines - 1)) * (max_length - min_length);
 			float y = y_start + i * y_offset;
 			
-			PathObject* path = new PathObject(preview_map, line);
+			PathObject* path = new PathObject(line);
 			path->addCoordinate(0, MapCoordF(x_offset - length, y).toMapCoord());
 			path->addCoordinate(1, MapCoordF(x_offset, y).toMapCoord());
 			preview_map->addObject(path);
@@ -346,7 +346,7 @@ void SymbolSettingDialog::createPreviewMap()
 			float angle = (i / (float)num_circular_lines) * 2*M_PI;
 			float length = min_length + (i / (float)(num_circular_lines - 1)) * (max_length - min_length);
 			
-			PathObject* path = new PathObject(preview_map, line);
+			PathObject* path = new PathObject(line);
 			path->addCoordinate(0, ((MapCoordF(sin(angle), -cos(angle)) * inner_radius) + MapCoordF(center_x, center_y)).toMapCoord());
 			path->addCoordinate(1, ((MapCoordF(sin(angle), -cos(angle)) * (inner_radius + length)) + MapCoordF(center_x, center_y)).toMapCoord());
 			preview_map->addObject(path);
@@ -360,7 +360,7 @@ void SymbolSettingDialog::createPreviewMap()
 		const float snake_min_y = snake_max_y - 6;
 		const int snake_steps = 8;
 		
-		PathObject* path = new PathObject(preview_map, line);
+		PathObject* path = new PathObject(line);
 		for (int i = 0; i < snake_steps; ++i)
 		{
 			MapCoord coord(snake_min_x + (i / (float)(snake_steps-1)) * (snake_max_x - snake_min_x), snake_min_y + (i % 2) * (snake_max_y - snake_min_y));
@@ -375,7 +375,7 @@ void SymbolSettingDialog::createPreviewMap()
 		const float curve_max_y = snake_min_y - 4;
 		const float curve_min_y = curve_max_y - 6;
 		
-		path = new PathObject(preview_map, line);
+		path = new PathObject(line);
 		MapCoord coord = MapCoord(curve_min_x, curve_min_y);
 		coord.setCurveStart(true);
 		path->addCoordinate(coord);
@@ -463,7 +463,7 @@ void SymbolSettingDialog::createPreviewMap()
 		const float half_radius = 8;
 		const float offset_y = 0;
 		
-		PathObject* path = new PathObject(preview_map, symbol);
+		PathObject* path = new PathObject(symbol);
 		path->addCoordinate(0, MapCoordF(-half_radius, -half_radius + offset_y).toMapCoord());
 		path->addCoordinate(1, MapCoordF(half_radius, -half_radius + offset_y).toMapCoord());
 		path->addCoordinate(2, MapCoordF(half_radius, half_radius + offset_y).toMapCoord());
@@ -479,7 +479,7 @@ void SymbolSettingDialog::createPreviewMap()
 		// TODO: Suggestion for the German translation: "Franz, der OL für die Abkürzung\nvon Oldenbourg hält, jagt im komplett\nverwahrlosten Taxi quer durch Bayern\n1234567890"
 		const QString string = tr("The quick brown fox\ntakes the routechoice\nto jump over the lazy dog\n1234567890");
 		
-		TextObject* object = new TextObject(preview_map, text_symbol);
+		TextObject* object = new TextObject(text_symbol);
 		object->setAnchorPosition(MapCoord(0, 0));
 		object->setText(string);
 		object->setHorizontalAlignment(TextObject::AlignHCenter);
@@ -492,7 +492,7 @@ void SymbolSettingDialog::createPreviewMap()
 	{
 		const float radius = 5;
 		
-		PathObject* path = new PathObject(preview_map, symbol);
+		PathObject* path = new PathObject(symbol);
 		for (int i = 0; i < 5; ++i)
 			path->addCoordinate(i, MapCoord(sin(2*M_PI * i/5.0) * radius, -cos(2*M_PI * i/5.0) * radius));
 		path->setPathClosed(true);

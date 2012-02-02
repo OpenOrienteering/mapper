@@ -43,7 +43,7 @@ RenderableContainer::RenderableContainer(Map* map) : map(map)
 {
 }
 
-void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, float opacity_factor)
+void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, float opacity_factor)
 {
 	Map::ColorVector& colors = map->color_set->colors;
 	
@@ -72,24 +72,43 @@ void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, float opa
 		// Change render states?
 		if (states != new_states)
 		{
+			MapColor* color;
+			float pen_width;
+			
+			if (new_states.color_priority > MapColor::Reserved)
+			{
+				pen_width = new_states.pen_width;
+				color = colors[new_states.color_priority];
+			}
+			else
+			{
+				painter->setRenderHint(QPainter::Antialiasing, true);	// this is not undone here anywhere as it should apply to all special symbols and these are always painted last
+				pen_width = new_states.pen_width / scaling;
+				
+				if (new_states.color_priority == MapColor::CoveringWhite)
+					color = Map::getCoveringWhite();
+				else if (new_states.color_priority == MapColor::CoveringRed)
+					color = Map::getCoveringRed();
+				else
+					assert(!"Invalid special color!");
+			}
+			
 			if (new_states.mode == RenderStates::PenOnly)
 			{
-				//if (forceMinSize && new_states.pen_width * scale <= 1.0f)
-				//	painter->setPen(QPen(r->getSymbol()->getColor()->color, 0));
-				//else
-					painter->setPen(QPen(colors[new_states.color_priority]->color, new_states.pen_width));
+				bool pen_too_small = (force_min_size && pen_width * scaling <= 1.0f);
+				painter->setPen(QPen(color->color, pen_too_small ? 0 : pen_width));
 				
 				painter->setBrush(QBrush(Qt::NoBrush));
-				painter->setOpacity(opacity_factor * colors[new_states.color_priority]->opacity);
 			}
 			else if (new_states.mode == RenderStates::BrushOnly)
 			{
-				QBrush brush(colors[new_states.color_priority]->color);
+				QBrush brush(color->color);
 				
 				painter->setPen(QPen(Qt::NoPen));
 				painter->setBrush(brush);
-				painter->setOpacity(opacity_factor * colors[new_states.color_priority]->opacity);
 			}
+			
+			painter->setOpacity(qMin(1.0f, opacity_factor * color->opacity));
 			
 			if (states.clip_path != new_states.clip_path)
 			{
@@ -112,7 +131,7 @@ void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, float opa
 		}
 		
 		// Render the renderable
-		renderable->render(*painter); //, scale, forceMinSize);
+		renderable->render(*painter, force_min_size, scaling);
 	}
 	painter->restore();
 }
@@ -166,11 +185,11 @@ void DotRenderable::getRenderStates(RenderStates& out)
 	out.pen_width = 0;
 	out.clip_path = clip_path;
 }
-void DotRenderable::render(QPainter& painter)
+void DotRenderable::render(QPainter& painter, bool force_min_size, float scaling)
 {
-	/*if (forceMinSize && rect.width() * scale < 1.5f)
-		painter.drawEllipse(rect.center(), 0.5f * (1/scale), 0.5f * (1/scale));
-	else*/
+	if (force_min_size && extent.width() * scaling < 1.5f)
+		painter.drawEllipse(extent.center(), 0.5f * (1/scaling), 0.5f * (1/scaling));
+	else
 		painter.drawEllipse(extent);
 }
 
@@ -194,11 +213,11 @@ void CircleRenderable::getRenderStates(RenderStates& out)
 	out.pen_width = line_width;
 	out.clip_path = clip_path;
 }
-void CircleRenderable::render(QPainter& painter)
+void CircleRenderable::render(QPainter& painter, bool force_min_size, float scaling)
 {
-	/*if (forceMinSize && rect.width() * scale < 1.5f)
-		painter.drawEllipse(rect.center(), 0.5f * (1/scale), 0.5f * (1/scale));
-	else*/
+	if (force_min_size && rect.width() * scaling < 1.5f)
+		painter.drawEllipse(rect.center(), 0.5f * (1/scaling), 0.5f * (1/scaling));
+	else
 		painter.drawEllipse(rect);
 }
 
@@ -293,7 +312,7 @@ void LineRenderable::getRenderStates(RenderStates& out)
 	out.pen_width = line_width;
 	out.clip_path = clip_path;
 }
-void LineRenderable::render(QPainter& painter)
+void LineRenderable::render(QPainter& painter, bool force_min_size, float scaling)
 {
 	QPen pen(painter.pen());
 	pen.setCapStyle(cap_style);
@@ -369,7 +388,7 @@ void AreaRenderable::getRenderStates(RenderStates& out)
 	out.pen_width = 0;
 	out.clip_path = clip_path;
 }
-void AreaRenderable::render(QPainter& painter)
+void AreaRenderable::render(QPainter& painter, bool force_min_size, float scaling)
 {
 	painter.drawPath(path);
 	
@@ -440,7 +459,7 @@ void TextRenderable::getRenderStates(RenderStates& out)
 	out.pen_width = 0;
 	out.clip_path = clip_path;
 }
-void TextRenderable::render(QPainter& painter)
+void TextRenderable::render(QPainter& painter, bool force_min_size, float scaling)
 {
 	// NOTE: mini-optimization to prevent the save-restore for un-rotated texts which could be used when the scale-hack is no longer necessary
 	/*if (rotation == 0)

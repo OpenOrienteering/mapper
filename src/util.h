@@ -38,9 +38,11 @@ public:
 };
 
 /// Enlarges the rect to include the given point
-void rectInclude(QRectF& rect, QPointF point);
+void rectInclude(QRectF& rect, QPointF point); // does not work if rect is invalid
+void rectIncludeSafe(QRectF& rect, QPointF point); // checks if rect is invalid
 /// Enlarges the rect to include the given rect
-void rectInclude(QRectF& rect, const QRectF& other_rect);
+void rectInclude(QRectF& rect, const QRectF& other_rect); // does not work if rect is invalid
+void rectIncludeSafe(QRectF& rect, const QRectF& other_rect); // checks if rect is invalid
 
 /// Helper functions to save a string to a file and load it again
 void saveString(QFile* file, const QString& str);

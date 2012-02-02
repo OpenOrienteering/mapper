@@ -94,6 +94,16 @@ void CombinedSymbol::scale(double factor)
 {
 	// Do nothing. The parts are assumed to be ordinary symbols, so they will get this call independently
 }
+Symbol::Type CombinedSymbol::getContainedTypes()
+{
+	int type = (int)getType();
+	
+	int size = (int)parts.size();
+	for (int i = 0; i < size; ++i)
+		type |= parts[i]->getContainedTypes();
+	
+	return (Type)type;
+}
 
 void CombinedSymbol::saveImpl(QFile* file, Map* map)
 {
