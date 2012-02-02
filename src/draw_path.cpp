@@ -103,8 +103,11 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 			preview_path->setCoordinate(preview_path->getCoordinateCount() - 1, coord);
 		else
 		{
-			preview_path->addCoordinate(coord);
-			updatePreviewPath();
+			if (preview_path->getCoordinateCount() == 0 || !preview_path->getCoordinate(preview_path->getCoordinateCount() - 1).isPositionEqualTo(coord))
+			{
+				preview_path->addCoordinate(coord);
+				updatePreviewPath();
+			}
 		}
 		
 		path_has_preview_point = false;

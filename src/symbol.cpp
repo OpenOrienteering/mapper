@@ -74,7 +74,7 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	MapView view(&icon_map);
 	
 	// If the icon is bigger than the rectagle with this zoom factor, it is zoomed out to fit into the rectangle
-	const float best_zoom = 3;
+	const float best_zoom = 2;
 	view.setZoom(best_zoom);
 	const float max_icon_mm = 0.001f * view.pixelToLength(Symbol::icon_size - 1);
 	const float max_icon_mm_half = 0.5f * max_icon_mm;

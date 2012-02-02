@@ -300,9 +300,11 @@ void AreaSymbol::FillPattern::createLine(MapCoordVectorF& coords, LineSymbol* li
 
 void AreaSymbol::FillPattern::scale(double factor)
 {
-	line_spacing = qRound(factor*factor * line_spacing);
-	line_width = qRound(factor*factor * line_width);
-	point_distance = qRound(factor*factor * point_distance);
+	line_spacing = qRound(factor * line_spacing);
+	line_width = qRound(factor * line_width);
+	line_offset = qRound(factor * line_offset);
+	offset_along_line = qRound(factor * offset_along_line);
+	point_distance = qRound(factor * point_distance);
 	
 	if (point)
 		point->scale(factor);
