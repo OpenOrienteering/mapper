@@ -42,8 +42,8 @@ MapEditorController::MapEditorController(OperatingMode mode)
 	this->mode = mode;
 	map = NULL;
 	main_view = NULL;
-	
 	symbol_widget = NULL;
+	
 	editor_activity = NULL;
 	current_tool = NULL;	// TODO: default tool?
 	last_painted_on_template = NULL;
@@ -53,6 +53,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	this->mode = mode;
 	this->map = NULL;
 	main_view = NULL;
+	symbol_widget = NULL;
 	
 	setMap(map, true);
 	

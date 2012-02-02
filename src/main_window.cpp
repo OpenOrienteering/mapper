@@ -53,12 +53,14 @@ MainWindow::MainWindow(bool as_main_window)
 	setWindowIcon(QIcon("images/control.png"));
 	setAttribute(Qt::WA_DeleteOnClose);
 	
-	statusBar()->show();
+	if (as_main_window)
+		statusBar()->show();
 	status_label = new QLabel();
 	statusBar()->addWidget(status_label, 1);
 	statusBar()->setSizeGripEnabled(as_main_window);
 	
-	loadWindowSettings();
+	if (as_main_window)
+		loadWindowSettings();
 }
 MainWindow::~MainWindow()
 {
