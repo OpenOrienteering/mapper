@@ -101,6 +101,14 @@ bool MapLayer::deleteObject(Object* object, bool remove_only)
 	return false;
 }
 
+void MapLayer::scaleAllObjects(double factor)
+{
+	int size = objects.size();
+	for (int i = size - 1; i >= 0; --i)
+		objects[i]->scale(factor);
+	
+	forceUpdateOfAllObjects();
+}
 void MapLayer::updateAllObjectsWithSymbol(Symbol* symbol)
 {
 	int size = objects.size();
@@ -824,6 +832,23 @@ void Map::setSymbolsDirty()
 	symbols_dirty = true;
 }
 
+void Map::scaleAllSymbols(double factor)
+{
+	int size = getNumSymbols();
+	for (int i = 0; i < size; ++i)
+	{
+		Symbol* symbol = getSymbol(i);
+		
+		symbol->scale(factor);
+		symbol->getIcon(this, true);
+		
+		updateAllObjectsWithSymbol(symbol);
+		emit(symbolChanged(i, symbol));
+	}
+	
+	setSymbolsDirty();
+}
+
 int Map::getTemplateNumber(Template* temp) const
 {
 	for (int i = 0; i < (int)templates.size(); ++i)
@@ -962,6 +987,12 @@ void Map::setObjectAreaDirty(QRectF map_coords_rect)
 		widgets[i]->markObjectAreaDirty(map_coords_rect);
 }
 
+void Map::scaleAllObjects(double factor)
+{
+	int size = layers.size();
+	for (int i = 0; i < size; ++i)
+		layers[i]->scaleAllObjects(factor);
+}
 void Map::updateAllObjectsWithSymbol(Symbol* symbol)
 {
 	int size = layers.size();

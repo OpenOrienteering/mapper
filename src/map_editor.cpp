@@ -24,6 +24,7 @@
 
 #include "map.h"
 #include "map_widget.h"
+#include "map_dialog_scale.h"
 #include "color_dock_widget.h"
 #include "symbol_dock_widget.h"
 #include "template_dock_widget.h"
@@ -249,6 +250,14 @@ void MapEditorController::createMenu()
 	symbols_menu->addAction(load_colors_from_act);
 	symbols_menu->addAction(scale_all_symbols_act);
 	
+	// Map menu
+	QAction* scale_map_act = new QAction(tr("Change map scale..."), this);
+	scale_map_act->setStatusTip(tr("Change the map scale and adjust map objects and symbol sizes"));
+	connect(scale_map_act, SIGNAL(triggered(bool)), this, SLOT(scaleMapClicked()));
+	
+	QMenu* map_menu = window->menuBar()->addMenu(tr("M&ap"));
+	map_menu->addAction(scale_map_act);
+	
 	// Templates menu
 	template_window_act = new QAction(QIcon("images/window-new.png"), tr("Template setup window"), this);
 	template_window_act->setCheckable(true);
@@ -356,6 +365,7 @@ void MapEditorController::showSymbolWindow(bool show)
 		symbol_dock_widget = new EditorDockWidget(tr("Symbols"), symbol_window_act, window);
 		symbol_widget = new SymbolWidget(map, symbol_dock_widget);
 		connect(window, SIGNAL(keyPressed(QKeyEvent*)), symbol_widget, SLOT(keyPressed(QKeyEvent*)));
+		connect(map, SIGNAL(symbolChanged(int,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*)));	// NOTE: adjust setMap() if changing this!
 		symbol_dock_widget->setWidget(symbol_widget);
 		window->addDockWidget(Qt::RightDockWidgetArea, symbol_dock_widget, Qt::Vertical);
 		
@@ -390,23 +400,14 @@ void MapEditorController::scaleAllSymbolsClicked()
 	if (!ok || percent == 100)
 		return;
 	
-	int size = map->getNumSymbols();
-	for (int i = 0; i < size; ++i)
-	{
-		Symbol* symbol = map->getSymbol(i);
-		
-		symbol->scale(percent / 100.0);
-		symbol->getIcon(map, true);
+	map->scaleAllSymbols(percent / 100.0);
+}
 
-		map->updateAllObjectsWithSymbol(symbol);
-	}
-	
-	if (symbol_dock_widget)
-	{
-		SymbolWidget* symbol_widget = reinterpret_cast<SymbolWidget*>(symbol_dock_widget->widget());
-		symbol_widget->getRenderWidget()->update();
-	}
-	map->setSymbolsDirty();
+void MapEditorController::scaleMapClicked()
+{
+	ScaleMapDialog dialog(window, map);
+	dialog.setWindowModality(Qt::WindowModal);
+	dialog.exec();
 }
 
 void MapEditorController::showTemplateWindow(bool show)
@@ -558,6 +559,8 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 	{
 		disconnect(this->map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
 		disconnect(this->map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
+		if (symbol_widget)
+			disconnect(map, SIGNAL(symbolChanged(int,Symbol*)), symbol_widget, SLOT(symbolChanged(int, Symbol*)));
 	}
 	
 	this->map = map;
@@ -566,6 +569,8 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 	
 	connect(map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
 	connect(map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
+	if (symbol_widget)
+		connect(map, SIGNAL(symbolChanged(int,Symbol*)), symbol_widget, SLOT(symbolChanged(int, Symbol*)));
 }
 
 // ### EditorDockWidget ###

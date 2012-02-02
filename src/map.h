@@ -65,6 +65,7 @@ public:
 	inline void deleteObject(int pos, bool remove_only);
 	bool deleteObject(Object* object, bool remove_only);	// returns if the object was found
 	
+	void scaleAllObjects(double factor);
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
 	void deleteAllObjectsWithSymbol(Symbol* symbol);
@@ -147,6 +148,8 @@ public:
 	int findSymbolIndex(Symbol* symbol);
 	void setSymbolsDirty();
 	
+	void scaleAllSymbols(double factor);
+	
 	// Templates
 	
 	inline int getNumTemplates() const {return templates.size();}
@@ -176,6 +179,7 @@ public:
 	
 	void setObjectAreaDirty(QRectF map_coords_rect);
 	
+	void scaleAllObjects(double factor);
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
 	void deleteAllObjectsWithSymbol(Symbol* symbol);

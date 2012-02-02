@@ -525,9 +525,6 @@ void SymbolRenderWidget::editSymbol()
 	
 	edit_symbol->getIcon(map, true);
 	map->setSymbol(edit_symbol, current_symbol_index);
-	updateIcon(current_symbol_index);
-	
-	map->setSymbolsDirty();
 }
 void SymbolRenderWidget::scaleSymbol()
 {
@@ -708,6 +705,10 @@ void SymbolWidget::keyPressed(QKeyEvent* event)
 {
 	if (event->key() == Qt::Key_F1 && SymbolToolTip::getTip() != NULL)
 		SymbolToolTip::getTip()->showDescription();
+}
+void SymbolWidget::symbolChanged(int pos, Symbol* symbol)
+{
+	render_widget->updateIcon(pos);
 }
 
 // ### SymbolToolTip ###

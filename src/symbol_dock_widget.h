@@ -48,6 +48,8 @@ public:
 	int getNumSelectedSymbols();
 	Symbol* getSingleSelectedSymbol();
 	
+	void updateIcon(int i);
+	
 	/// Returns the single "current" symbol (the symbol which was clicked last). Can be -1 if no symbol selected
 	inline int currentSymbolIndex() const {return current_symbol_index;}
 	
@@ -93,7 +95,6 @@ protected:
 	void mouseMove(int x, int y);
 	int getSymbolIndexAt(int x, int y);
 	QRect getIconRect(int i);
-	void updateIcon(int i);
 	void updateSelectedIcons();
 	void getRowInfo(int width, int height, int& icons_per_row, int& num_rows);
 	bool getDropPosition(QPoint pos, int& row, int& pos_in_row);
@@ -133,6 +134,7 @@ public:
 	
 public slots:
 	virtual void keyPressed(QKeyEvent* event);
+	void symbolChanged(int pos, Symbol* symbol);
 	
 signals:
 	void selectedSymbolsChanged();

@@ -24,9 +24,10 @@ set(Mapper_SRCS
  src/main_window_home_screen.cpp
 
  src/map.cpp
- src/map_dialog_new.cpp
  src/map_widget.cpp
  src/map_editor.cpp
+ src/map_dialog_new.cpp
+ src/map_dialog_scale.cpp
 
  src/map_color.cpp
  src/color_dock_widget.cpp

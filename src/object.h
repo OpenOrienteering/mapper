@@ -63,6 +63,9 @@ public:
 	/// Use force == true to force a redraw
 	bool update(bool force = false);
 	
+	/// Scales all coordinates, with the origin as scaling center
+	void scale(double factor);
+	
 	/// Returns the coordinate vector
 	inline const MapCoordVector& getRawCoordinateVector() const {return coords;}	// NOTE: for closed paths, the last and first elements of this vector are equal
 	inline int getCoordinateCount() const {return qMax(0, (int)coords.size() - (path_closed ? 1 : 0));}

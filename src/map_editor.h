@@ -84,6 +84,8 @@ public slots:
 	void loadColorsFromClicked();
 	void scaleAllSymbolsClicked();
 	
+	void scaleMapClicked();
+	
 	void showTemplateWindow(bool show);
 	void openTemplateClicked();
 	

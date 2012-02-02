@@ -126,6 +126,20 @@ void Object::clearOutput()
 	output_dirty = true;
 }
 
+void Object::scale(double factor)
+{
+	int coords_size = coords.size();
+	for (int c = 0; c < coords_size; ++c)
+	{
+		MapCoord coord = coords[c];
+		coord.setX(factor * coord.xd());
+		coord.setY(factor * coord.yd());
+		coords[c] = coord;
+	}
+	
+	setOutputDirty();
+}
+
 void Object::setPathClosed(bool value)
 {
 	if (!path_closed && value)
