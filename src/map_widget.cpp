@@ -578,13 +578,13 @@ void MapWidget::leaveEvent(QEvent* event)
 		tool->leaveEvent(event);
 }
 
-void MapWidget::keyPressEvent(QKeyEvent* event)
+void MapWidget::keyPressed(QKeyEvent* event)
 {
 	if (tool && tool->keyPressEvent(event))
 		return;
     QWidget::keyPressEvent(event);
 }
-void MapWidget::keyReleaseEvent(QKeyEvent* event)
+void MapWidget::keyReleased(QKeyEvent* event)
 {
 	if (tool && tool->keyReleaseEvent(event))
 		return;
@@ -723,7 +723,7 @@ void MapWidget::updateMapCache(bool use_background)
 	
 	Map* map = view->getMap();
 	QRectF map_view_rect = view->calculateViewedRect(viewportToView(map_cache_dirty_rect));
-	map->draw(&painter, map_view_rect, true, view->calculateFinalZoomFactor());
+	map->draw(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor());
 	
 	// Finish drawing
 	painter.end();

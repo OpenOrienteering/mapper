@@ -149,7 +149,9 @@ void MapEditorController::attach(MainWindow* window)
 	window->statusBar()->addPermanentWidget(statusbar_cursorpos_label);
 	
 	// Create map widget
-	map_widget = new MapWidget(mode == MapEditor, mode == SymbolEditor);
+	map_widget = new MapWidget(mode == MapEditor, true); //mode == SymbolEditor);	TODO: Make antialiasing configurable
+	connect(window, SIGNAL(keyPressed(QKeyEvent*)), map_widget, SLOT(keyPressed(QKeyEvent*)));
+	connect(window, SIGNAL(keyReleased(QKeyEvent*)), map_widget, SLOT(keyPressed(QKeyEvent*)));
 	map_widget->setMapView(main_view);
 	map_widget->setZoomLabel(statusbar_zoom_label);
 	map_widget->setCursorposLabel(statusbar_cursorpos_label);
@@ -353,6 +355,7 @@ void MapEditorController::showSymbolWindow(bool show)
 	{
 		symbol_dock_widget = new EditorDockWidget(tr("Symbols"), symbol_window_act, window);
 		symbol_widget = new SymbolWidget(map, symbol_dock_widget);
+		connect(window, SIGNAL(keyPressed(QKeyEvent*)), symbol_widget, SLOT(keyPressed(QKeyEvent*)));
 		symbol_dock_widget->setWidget(symbol_widget);
 		window->addDockWidget(Qt::RightDockWidgetArea, symbol_dock_widget, Qt::Vertical);
 		

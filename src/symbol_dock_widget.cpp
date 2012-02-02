@@ -401,10 +401,6 @@ void SymbolRenderWidget::mouseDoubleClickEvent(QMouseEvent* event)
 	updateIcon(current_symbol_index);
 	editSymbol();
 }
-void SymbolRenderWidget::enterEvent(QEvent* event)
-{
-	setFocus();
-}
 void SymbolRenderWidget::leaveEvent(QEvent* event)
 {
 	updateIcon(hover_symbol_index);
@@ -708,9 +704,9 @@ void SymbolWidget::resizeEvent(QResizeEvent* event)
 	
     event->accept();
 }
-void SymbolWidget::keyPressEvent(QKeyEvent* event)
+void SymbolWidget::keyPressed(QKeyEvent* event)
 {
-    if (event->key() == Qt::Key_F1 && SymbolToolTip::getTip() != NULL)
+	if (event->key() == Qt::Key_F1 && SymbolToolTip::getTip() != NULL)
 		SymbolToolTip::getTip()->showDescription();
 }
 

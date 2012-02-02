@@ -92,6 +92,10 @@ public:
 	
     virtual QSize sizeHint() const;
 	
+public slots:
+	void keyPressed(QKeyEvent* event);
+	void keyReleased(QKeyEvent* event);
+	
 protected:
 	virtual void paintEvent(QPaintEvent* event);
 	virtual void resizeEvent(QResizeEvent* event);
@@ -104,9 +108,7 @@ protected:
 	virtual void wheelEvent(QWheelEvent* event);
     virtual void leaveEvent(QEvent* event);
 	
-	// Key input
-    virtual void keyPressEvent(QKeyEvent* event);
-    virtual void keyReleaseEvent(QKeyEvent* event);
+	// Key input (see also slots)
     virtual void focusOutEvent(QFocusEvent* event);
 	
 private:

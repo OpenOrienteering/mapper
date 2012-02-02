@@ -105,7 +105,6 @@ protected:
     virtual void mouseMoveEvent(QMouseEvent* event);
     virtual void mousePressEvent(QMouseEvent* event);
     virtual void mouseDoubleClickEvent(QMouseEvent* event);
-    virtual void enterEvent(QEvent* event);
     virtual void leaveEvent(QEvent* event);
     virtual void wheelEvent(QWheelEvent* event);
 	
@@ -132,12 +131,14 @@ public:
 	inline void emitSelectedSymbolsChanged() {emit selectedSymbolsChanged();}
 	inline SymbolRenderWidget* getRenderWidget() const {return render_widget;}
 	
+public slots:
+	virtual void keyPressed(QKeyEvent* event);
+	
 signals:
 	void selectedSymbolsChanged();
 	
 protected:
     virtual void resizeEvent(QResizeEvent* event);
-    virtual void keyPressEvent(QKeyEvent* event);
 	
 private:
 	SymbolRenderWidget* render_widget;

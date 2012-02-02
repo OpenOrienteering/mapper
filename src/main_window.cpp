@@ -218,6 +218,16 @@ void MainWindow::closeEvent(QCloseEvent* event)
 	else
 		event->ignore();
 }
+void MainWindow::keyPressEvent(QKeyEvent* event)
+{
+	emit(keyPressed(event));
+    QWidget::keyPressEvent(event);
+}
+void MainWindow::keyReleaseEvent(QKeyEvent* event)
+{
+	emit(keyReleased(event));
+    QWidget::keyReleaseEvent(event);
+}
 
 bool MainWindow::showSaveOnCloseDialog()
 {
@@ -311,7 +321,14 @@ void MainWindow::showNewMapWizard()
 	if (symbol_set_path.isEmpty())
 		new_map->setScaleDenominator(newMapDialog.getSelectedScale());
 	else
+	{
 		new_map->loadFrom(symbol_set_path);
+		if (new_map->getScaleDenominator() != newMapDialog.getSelectedScale())
+		{
+			QMessageBox::warning(this, tr("Warning"), tr("The selected map scale is 1:%1, but the selected symbol file has a scale of 1:%2! Is the file in the wrong folder?\n\nThe new map's scale will be 1:%3.").arg(newMapDialog.getSelectedScale()).arg(new_map->getScaleDenominator()).arg(newMapDialog.getSelectedScale()));
+			new_map->setScaleDenominator(newMapDialog.getSelectedScale());
+		}
+	}
 	
 	// Open in current or new window?
 	if (has_opened_file)

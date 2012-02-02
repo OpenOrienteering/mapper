@@ -95,8 +95,14 @@ public slots:
 	
 	void gotUnsavedChanges();
 	
+signals:
+	void keyPressed(QKeyEvent* event);
+	void keyReleased(QKeyEvent* event);
+	
 protected:
 	virtual void closeEvent(QCloseEvent *event);
+    virtual void keyPressEvent(QKeyEvent* event);
+    virtual void keyReleaseEvent(QKeyEvent* event);
 	
 private:
 	/// Called when the user closes the window with unsaved changes. Returns true if window should be closed, false otherwise

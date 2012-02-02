@@ -255,16 +255,19 @@ void DrawPathTool::leaveEvent(QEvent* event)
 
 bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 {
-    if (event->key() == Qt::Key_Escape)
-		abortDrawing();
-	else if (event->key() == Qt::Key_Backspace)
-		undoLastPoint();
-	else if (event->key() == Qt::Key_Return)
+	if (draw_in_progress)
 	{
-		closeDrawing();
-		finishDrawing();
+		if (event->key() == Qt::Key_Escape)
+			abortDrawing();
+		else if (event->key() == Qt::Key_Backspace)
+			undoLastPoint();
+		else if (event->key() == Qt::Key_Return)
+		{
+			closeDrawing();
+			finishDrawing();
+		}
 	}
-	else if (event->key() == Qt::Key_Space)
+	if (event->key() == Qt::Key_Space)
 	{
 		space_pressed = true;
 		updateStatusText();
