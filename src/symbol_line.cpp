@@ -75,6 +75,10 @@ LineSymbol::LineSymbol() : Symbol(Symbol::Line)
 }
 LineSymbol::~LineSymbol()
 {
+	delete start_symbol;
+	delete mid_symbol;
+	delete end_symbol;
+	delete dash_symbol;
 }
 Symbol* LineSymbol::duplicate()
 {
@@ -868,7 +872,7 @@ void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags
 						bool has_end = !(dash == dashes_in_group - 1 && dashgroup == num_dashgroups - 1 && path_closed && part_end == size - 1);
 						
 						processContinuousLine(path_closed, flags, coords, line_coords, cur_length, cur_length + old_length + cur_dash_length,
-											  (!path_closed && out_flags.empty()) || out_flags[out_flags.size() - 1].isHolePoint(), has_end,
+											  (!path_closed && out_flags.empty()) || (!out_flags.empty() && out_flags[out_flags.size() - 1].isHolePoint()), has_end,
 											  cur_line_coord, out_flags, out_coords, true, !is_half_dash, output);
 						cur_length += old_length + cur_dash_length;
 						old_length = 0;

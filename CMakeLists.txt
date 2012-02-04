@@ -51,6 +51,7 @@ set(Mapper_SRCS
  src/georeferencing.cpp
  src/paint_on_template.cpp
 
+ src/edit_tool.cpp
  src/draw_point.cpp
  src/draw_path.cpp
 

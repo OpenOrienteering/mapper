@@ -101,6 +101,30 @@ bool MapLayer::deleteObject(Object* object, bool remove_only)
 	return false;
 }
 
+void MapLayer::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, SelectionInfoVector& out)
+{
+	int size = objects.size();
+	for (int i = 0; i < size; ++i)
+	{
+		objects[i]->update();
+		int selected_type = objects[i]->isPointOnObject(coord, tolerance, extended_selection);
+		if (selected_type != (int)Symbol::NoSymbol)
+			out.push_back(std::pair<int, Object*>(selected_type, objects[i]));
+	}
+}
+void MapLayer::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vector< Object* >& out)
+{
+	QRectF rect = QRectF(corner1.toQPointF(), corner2.toQPointF());
+	
+	int size = objects.size();
+	for (int i = 0; i < size; ++i)
+	{
+		objects[i]->update();
+		if (rect.intersects(objects[i]->getExtent()) && objects[i]->isPathPointInBox(rect))
+			out.push_back(objects[i]);
+	}
+}
+
 void MapLayer::scaleAllObjects(double factor)
 {
 	int size = objects.size();
@@ -199,7 +223,7 @@ LineSymbol* Map::covering_red_line;
 const int Map::least_supported_file_format_version = 0;
 const int Map::current_file_format_version = 5;
 
-Map::Map() : renderables(this)
+Map::Map() : renderables(this), selection_renderables(this)
 {
 	if (!static_initialized)
 		initStatic();
@@ -552,10 +576,81 @@ void Map::updateObjects()
 void Map::removeRenderablesOfObject(Object* object, bool mark_area_as_dirty)
 {
 	renderables.removeRenderablesOfObject(object, mark_area_as_dirty);
+	if (isObjectSelected(object))
+		removeSelectionRenderables(object);
 }
 void Map::insertRenderablesOfObject(Object* object)
 {
 	renderables.insertRenderablesOfObject(object);
+	if (isObjectSelected(object))
+		addSelectionRenderables(object);
+}
+
+void Map::includeSelectionRect(QRectF& rect)
+{
+	ObjectSelection::const_iterator it_end = selectedObjectsEnd();
+	ObjectSelection::const_iterator it = selectedObjectsBegin();
+	if (it != it_end)
+		rectIncludeSafe(rect, (*it)->getExtent());
+	else
+		return;
+	++it;
+	
+	while (it != it_end)
+	{
+		rectInclude(rect, (*it)->getExtent());
+		++it;
+	}
+}
+void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, RenderableContainer* replacement_renderables)
+{
+	const float selection_opacity_factor = 0.35f;
+	
+	MapView* view = widget->getMapView();
+	
+	painter->save();
+	painter->translate(widget->width() / 2.0 + view->getDragOffset().x(), widget->height() / 2.0 + view->getDragOffset().y());
+	view->applyTransform(painter);
+	
+	if (!replacement_renderables)
+		replacement_renderables = &selection_renderables;
+	replacement_renderables->draw(painter, view->calculateViewedRect(widget->viewportToView(widget->rect())), force_min_size, view->calculateFinalZoomFactor(), selection_opacity_factor, true);
+	
+	painter->restore();
+}
+
+void Map::addObjectToSelection(Object* object)
+{
+	assert(!isObjectSelected(object));
+	object_selection.insert(object);
+	addSelectionRenderables(object);
+}
+void Map::removeObjectFromSelection(Object* object)
+{
+	assert(object_selection.remove(object) && "Map::removeObjectFromSelection: object was not selected!");
+	removeSelectionRenderables(object);
+}
+bool Map::isObjectSelected(Object* object)
+{
+	return object_selection.contains(object);
+}
+bool Map::toggleObjectSelection(Object* object)
+{
+	if (isObjectSelected(object))
+	{
+		removeObjectFromSelection(object);
+		return false;
+	}
+	else
+	{
+		addObjectToSelection(object);
+		return true;
+	}
+}
+void Map::clearObjectSelection()
+{
+	selection_renderables.clear();
+	object_selection.clear();
 }
 
 void Map::addMapWidget(MapWidget* widget)
@@ -718,6 +813,21 @@ void Map::adjustColorPriorities(int first, int last)
 	// TODO: delete or update RenderStates with these colors
 	for (int i = first; i <= last; ++i)
 		color_set->colors[i]->priority = i;
+}
+
+void Map::addSelectionRenderables(Object* object)
+{
+	object->update(false);
+	selection_renderables.insertRenderablesOfObject(object);
+}
+void Map::updateSelectionRenderables(Object* object)
+{
+	removeSelectionRenderables(object);
+	addSelectionRenderables(object);
+}
+void Map::removeSelectionRenderables(Object* object)
+{
+	selection_renderables.removeRenderablesOfObject(object, false);
 }
 
 void Map::initStatic()
@@ -985,6 +1095,14 @@ void Map::setObjectAreaDirty(QRectF map_coords_rect)
 {
 	for (int i = 0; i < (int)widgets.size(); ++i)
 		widgets[i]->markObjectAreaDirty(map_coords_rect);
+}
+void Map::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, SelectionInfoVector& out)
+{
+	current_layer->findObjectsAt(coord, tolerance, extended_selection, out);
+}
+void Map::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vector< Object* >& out)
+{
+	current_layer->findObjectsAtBox(corner1, corner2, out);
 }
 
 void Map::scaleAllObjects(double factor)

@@ -47,14 +47,13 @@ MainWindow::MainWindow(bool as_main_window)
 {
 	controller = NULL;
 	has_unsaved_changes = false;
+	has_opened_file = false;
 	this->show_menu = as_main_window;
 	setCurrentFile("");
 	
 	setWindowIcon(QIcon("images/control.png"));
 	setAttribute(Qt::WA_DeleteOnClose);
 	
-	if (as_main_window)
-		statusBar()->show();
 	status_label = new QLabel();
 	statusBar()->addWidget(status_label, 1);
 	statusBar()->setSizeGripEnabled(as_main_window);

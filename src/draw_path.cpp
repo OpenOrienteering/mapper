@@ -317,12 +317,12 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 	{
 		if (dragging && (cur_pos - click_pos).manhattanLength() >= QApplication::startDragDistance())
 		{
-			painter->setPen(qRgb(255, 150, 0));
+			painter->setPen(active_color);
 			painter->drawLine(widget->mapToViewport(click_pos_map), widget->mapToViewport(cur_pos_map));
 		}
 		if (previous_point_is_curve_point)
 		{
-			painter->setPen(qRgb(255, 150, 0));
+			painter->setPen(active_color);
 			painter->drawLine(widget->mapToViewport(previous_pos_map), widget->mapToViewport(previous_drag_map));
 		}
 	}
@@ -564,7 +564,7 @@ void DrawPathTool::deleteObjects()
 	size = (int)preview_point_symbols.size();
 	for (int i = 0; i < size; ++i)
 	{
-		if (preview_point_symbols_external[i])
+		if (!preview_point_symbols_external[i])
 			delete preview_point_symbols[i];
 	}
 	preview_point_symbols.clear();

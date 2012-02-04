@@ -26,6 +26,7 @@
 #include <QString>
 #include <QRect>
 #include <QHash>
+#include <QSet>
 
 #include "matrix.h"
 #include "map_coord.h"
@@ -46,6 +47,8 @@ class Object;
 class MapEditorController;
 class GPSProjectionParameters;
 
+typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
+
 class MapLayer
 {
 public:
@@ -64,6 +67,9 @@ public:
 	inline void addObject(Object* object, int pos) {objects.insert(objects.begin() + pos, object);}
 	inline void deleteObject(int pos, bool remove_only);
 	bool deleteObject(Object* object, bool remove_only);	// returns if the object was found
+	
+	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, SelectionInfoVector& out);
+	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vector<Object*>& out);
 	
 	void scaleAllObjects(double factor);
 	void updateAllObjectsWithSymbol(Symbol* symbol);
@@ -84,6 +90,8 @@ class Map : public QObject
 Q_OBJECT
 friend class RenderableContainer;
 public:
+	typedef QSet<Object*> ObjectSelection;
+	
 	/// Creates a new, empty map
 	Map();
 	~Map();
@@ -178,6 +186,8 @@ public:
 	void setObjectsDirty();
 	
 	void setObjectAreaDirty(QRectF map_coords_rect);
+	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, SelectionInfoVector& out);
+	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vector<Object*>& out);
 	
 	void scaleAllObjects(double factor);
 	void updateAllObjectsWithSymbol(Symbol* symbol);
@@ -188,6 +198,21 @@ public:
 	
 	void removeRenderablesOfObject(Object* object, bool mark_area_as_dirty);	// NOTE: does not delete the renderables, just removes them from display
 	void insertRenderablesOfObject(Object* object);
+	
+	// Object selection
+	
+	inline int getNumSelectedObjects() {return (int)object_selection.size();}
+	inline ObjectSelection::const_iterator selectedObjectsBegin() {return object_selection.constBegin();}
+	inline ObjectSelection::const_iterator selectedObjectsEnd() {return object_selection.constEnd();}
+	
+	void includeSelectionRect(QRectF& rect); // enlarges rect to cover the selected objects
+	void drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, RenderableContainer* replacement_renderables = NULL);
+	
+	void addObjectToSelection(Object* object);
+	void removeObjectFromSelection(Object* object);
+	bool isObjectSelected(Object* object);
+	bool toggleObjectSelection(Object* object);	// returns true if the object was selected, false if deselected
+	void clearObjectSelection();
 	
 	// Other settings
 	
@@ -248,6 +273,10 @@ private:
 	
 	void adjustColorPriorities(int first, int last);
 	
+	void addSelectionRenderables(Object* object);
+	void updateSelectionRenderables(Object* object);
+	void removeSelectionRenderables(Object* object);
+	
 	void initStatic();
 	
 	MapColorSet* color_set;
@@ -255,10 +284,12 @@ private:
 	TemplateVector templates;
 	int first_front_template;		// index of the first template in templates which should be drawn in front of the map
 	LayerVector layers;
+	ObjectSelection object_selection;
 	MapLayer* current_layer;
 	WidgetVector widgets;
 	ViewVector views;
 	RenderableContainer renderables;
+	RenderableContainer selection_renderables;
 	
 	bool gps_projection_params_set;	// have the parameters been set (are they valid)?
 	GPSProjectionParameters* gps_projection_parameters;

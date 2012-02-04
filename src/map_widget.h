@@ -60,6 +60,8 @@ public:
 	MapCoordF viewportToMapF(QPoint input);
 	QPointF mapToViewport(MapCoord input);
 	QPointF mapToViewport(MapCoordF input);
+	QPointF mapToViewport(QPointF input);
+	QRectF mapToViewport(const QRectF& input);
 	
 	/// View changes
 	void zoom(float factor);	// factor is the ratio of new_zoom / old_zoom

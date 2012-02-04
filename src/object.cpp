@@ -126,6 +126,20 @@ void Object::clearOutput()
 	output_dirty = true;
 }
 
+void Object::move(qint64 dx, qint64 dy)
+{
+	int coords_size = coords.size();
+	for (int c = 0; c < coords_size; ++c)
+	{
+		MapCoord coord = coords[c];
+		coord.setRawX(dx + coord.rawX());
+		coord.setRawY(dy + coord.rawY());
+		coords[c] = coord;
+	}
+	
+	setOutputDirty();
+}
+
 void Object::scale(double factor)
 {
 	int coords_size = coords.size();
@@ -138,6 +152,49 @@ void Object::scale(double factor)
 	}
 	
 	setOutputDirty();
+}
+
+int Object::isPointOnObject(MapCoordF coord, float tolerance, bool extended_selection)
+{
+	Symbol::Type type = symbol->getType();
+	
+	// Special case for points
+	if (type == Symbol::Point)
+	{
+		if (!extended_selection)
+			return (coord.lengthToSquared(MapCoordF(coords[0])) <= tolerance) ? Symbol::Point : Symbol::NoSymbol;
+		else
+			return extent.contains(coord.toQPointF());
+	}
+	
+	// First check using extent
+	if (coord.getX() < extent.left() - tolerance) return Symbol::NoSymbol;
+	if (coord.getY() < extent.top() - tolerance) return Symbol::NoSymbol;
+	if (coord.getX() > extent.right() + tolerance) return Symbol::NoSymbol;
+	if (coord.getY() > extent.bottom() + tolerance) return Symbol::NoSymbol;
+
+	// Use only the extent for now
+	// TODO: more precise logic for lines and areas!
+	
+	return symbol->getType();
+}
+bool Object::isPathPointInBox(QRectF box)
+{
+	int size = coords.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (box.contains(coords[i].toQPointF()))
+			return true;
+		
+		if (coords[i].isCurveStart())
+			i += 2;
+	}
+	return false;
+}
+
+void Object::takeRenderables()
+{
+	output.clear();
 }
 
 void Object::setPathClosed(bool value)

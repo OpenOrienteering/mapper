@@ -92,6 +92,7 @@ public slots:
 	void editGPSProjectionParameters();
 	
 	void selectedSymbolsChanged();
+	void editToolClicked(bool checked);
 	void drawPointClicked(bool checked);
 	void drawPathClicked(bool checked);
 	
@@ -129,6 +130,7 @@ private:
 	QAction* template_window_act;
 	EditorDockWidget* template_dock_widget;
 	
+	QAction* edit_tool_act;
 	QAction* draw_point_act;
 	QAction* draw_path_act;
 	
@@ -200,6 +202,11 @@ public:
 	virtual bool keyPressEvent(QKeyEvent* event) {return false;}
 	virtual bool keyReleaseEvent(QKeyEvent* event) {return false;}
 	virtual void focusOutEvent(QFocusEvent* event) {}
+	
+	static const int click_tolerance;
+	static const QRgb inactive_color;
+	static const QRgb active_color;
+	static const QRgb selection_color;
 	
 protected:
 	/// Can be called by subclasses to display help text in the status bar

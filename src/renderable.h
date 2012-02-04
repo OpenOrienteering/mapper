@@ -91,6 +91,7 @@ class Renderable
 {
 public:
 	Renderable();
+	Renderable(const Renderable& other);
 	virtual ~Renderable();
 	
 	inline const QRectF& getExtent() const {return extent;}
@@ -106,7 +107,7 @@ public:
 	virtual void getRenderStates(RenderStates& out) = 0;
 	
 	/// Creates a clone of this renderable
-	//virtual Renderable* clone() = 0;
+	//virtual Renderable* duplicate() = 0;
 	
 	/// Set/Get the object which created this renderable
 	inline void setCreator(Object* creator) {this->creator = creator;}
@@ -128,13 +129,18 @@ class RenderableContainer
 public:
 	RenderableContainer(Map* map);
 	
-	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, float opacity_factor = 1.0f);
+	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, float opacity_factor = 1.0f, bool highlighted = false);
 	
 	void removeRenderablesOfObject(Object* object, bool mark_area_as_dirty);	// NOTE: does not delete the renderables, just removes them from display
 	void insertRenderablesOfObject(Object* object);
 	
+    void clear();
+	inline bool isEmpty() const {return renderables.empty();}
+	
 private:
 	typedef std::multimap<RenderStates, Renderable*> Renderables;
+	
+	QColor getHighlightedColor(const QColor& original);
 	
 	Renderables renderables;
 	Map* map;
@@ -144,18 +150,20 @@ class DotRenderable : public Renderable
 {
 public:
 	DotRenderable(PointSymbol* symbol, MapCoordF coord);
+	DotRenderable(const DotRenderable& other);
 	virtual void render(QPainter& painter, bool force_min_size, float scaling);
 	virtual void getRenderStates(RenderStates& out);
-	//virtual Renderable* clone();
+	//virtual Renderable* duplicate() {return new DotRenderable(*this);}
 };
 
 class CircleRenderable : public Renderable
 {
 public:
 	CircleRenderable(PointSymbol* symbol, MapCoordF coord);
+	CircleRenderable(const CircleRenderable& other);
 	virtual void render(QPainter& painter, bool force_min_size, float scaling);
 	virtual void getRenderStates(RenderStates& out);
-	//virtual Renderable* clone();
+	//virtual Renderable* duplicate() {return new CircleRenderable(*this);}
 	
 protected:
 	QRectF rect;
@@ -166,9 +174,10 @@ class LineRenderable : public Renderable
 {
 public:
 	LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed);
+	LineRenderable(const LineRenderable& other);
 	virtual void render(QPainter& painter, bool force_min_size, float scaling);
 	virtual void getRenderStates(RenderStates& out);
-	//virtual Renderable* clone();
+	//virtual Renderable* duplicate() {return new LineRenderable(*this);}
 	
 protected:
 	QPainterPath path;
@@ -181,9 +190,10 @@ class AreaRenderable : public Renderable
 {
 public:
 	AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords);
+	AreaRenderable(const AreaRenderable& other);
 	virtual void render(QPainter& painter, bool force_min_size, float scaling);
 	virtual void getRenderStates(RenderStates& out);
-	//virtual Renderable* clone();
+	//virtual Renderable* duplicate() {return new AreaRenderable(*this);}
 	
 	inline QPainterPath* getPainterPath() {return &path;}
 	
@@ -195,9 +205,10 @@ class TextRenderable : public Renderable
 {
 public:
 	TextRenderable(TextSymbol* symbol, double line_x, double line_y, double anchor_x, double anchor_y, double rotation, const QString& line, const QFont& font);
+	TextRenderable(const TextRenderable& other);
 	virtual void render(QPainter& painter, bool force_min_size, float scaling);
 	virtual void getRenderStates(RenderStates& out);
-	//virtual Renderable* clone();
+	//virtual Renderable* duplicate() {return new TextRenderable(*this);}
 	
 protected:
 	QPainterPath path;

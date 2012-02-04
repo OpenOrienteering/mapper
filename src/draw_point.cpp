@@ -152,7 +152,7 @@ void DrawPointTool::draw(QPainter* painter, MapWidget* widget)
 	
 	if (dragging && (cur_pos - click_pos).manhattanLength() >= QApplication::startDragDistance())
 	{
-		painter->setPen(qRgb(255, 150, 0));
+		painter->setPen(active_color);
 		painter->drawLine(widget->mapToViewport(click_pos_map), widget->mapToViewport(cur_pos_map));
 	}
 }

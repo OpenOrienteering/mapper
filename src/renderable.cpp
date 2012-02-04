@@ -33,6 +33,13 @@ Renderable::Renderable()
 {
 	clip_path = NULL;
 }
+Renderable::Renderable(const Renderable& other)
+{
+	extent = other.extent;
+	creator = other.creator;
+	color_priority = other.color_priority;
+	clip_path = other.clip_path;
+}
 Renderable::~Renderable()
 {
 }
@@ -43,7 +50,7 @@ RenderableContainer::RenderableContainer(Map* map) : map(map)
 {
 }
 
-void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, float opacity_factor)
+void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, float opacity_factor, bool highlighted)
 {
 	Map::ColorVector& colors = map->color_set->colors;
 	
@@ -57,7 +64,8 @@ void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool forc
 	bool no_initial_clip = initial_clip.isEmpty();
 	
 	painter->save();
-	for (Renderables::const_iterator it = renderables.begin(); it != renderables.end(); ++it)
+	Renderables::const_iterator it_end = renderables.end();
+	for (Renderables::const_iterator it = renderables.begin(); it != it_end; ++it)
 	{
 		const RenderStates& new_states = (*it).first;
 		Renderable* renderable = (*it).second;
@@ -96,13 +104,13 @@ void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool forc
 			if (new_states.mode == RenderStates::PenOnly)
 			{
 				bool pen_too_small = (force_min_size && pen_width * scaling <= 1.0f);
-				painter->setPen(QPen(color->color, pen_too_small ? 0 : pen_width));
+				painter->setPen(QPen(highlighted ? getHighlightedColor(color->color) : color->color, pen_too_small ? 0 : pen_width));
 				
 				painter->setBrush(QBrush(Qt::NoBrush));
 			}
 			else if (new_states.mode == RenderStates::BrushOnly)
 			{
-				QBrush brush(color->color);
+				QBrush brush(highlighted ? getHighlightedColor(color->color) : color->color);
 				
 				painter->setPen(QPen(Qt::NoPen));
 				painter->setBrush(brush);
@@ -167,6 +175,22 @@ void RenderableContainer::removeRenderablesOfObject(Object* object, bool mark_ar
 	}
 }
 
+void RenderableContainer::clear()
+{
+	renderables.clear();
+}
+
+QColor RenderableContainer::getHighlightedColor(const QColor& original)
+{
+	const int highlight_alpha = 255;
+	const float factor = 0.3f;
+	
+	if (original.value() > 127)
+		return QColor(factor * original.red(), factor * original.green(), factor * original.blue(), highlight_alpha);
+	else
+		return QColor((1 - factor) * 255 + factor * original.red(), (1 - factor) * 255 + factor * original.green(), (1 - factor) * 255 + factor * original.blue(), highlight_alpha);
+}
+
 // ### DotRenderable ###
 
 DotRenderable::DotRenderable(PointSymbol* symbol, MapCoordF coord) : Renderable()
@@ -176,6 +200,9 @@ DotRenderable::DotRenderable(PointSymbol* symbol, MapCoordF coord) : Renderable(
 	double y = coord.getY();
 	double radius = (0.001 * symbol->getInnerRadius());
 	extent = QRectF(x - radius, y - radius, 2 * radius, 2 * radius);
+}
+DotRenderable::DotRenderable(const DotRenderable& other) : Renderable(other)
+{
 }
 void DotRenderable::getRenderStates(RenderStates& out)
 {
@@ -204,6 +231,11 @@ CircleRenderable::CircleRenderable(PointSymbol* symbol, MapCoordF coord) : Rende
 	double radius = (0.001 * symbol->getInnerRadius()) + 0.5f * line_width;
 	rect = QRectF(x - radius, y - radius, 2 * radius, 2 * radius);
 	extent = QRectF(rect.x() - 0.5*line_width, rect.y() - 0.5*line_width, rect.width() + line_width, rect.height() + line_width);
+}
+CircleRenderable::CircleRenderable(const CircleRenderable& other): Renderable(other)
+{
+	rect = other.rect;
+	line_width = other.line_width;
 }
 void CircleRenderable::getRenderStates(RenderStates& out)
 {
@@ -305,6 +337,13 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 	extent = QRectF(rect.x() - extra_border, rect.y() - extra_border, rect.width() + 2*extra_border, rect.height() + 2*extra_border);
 	assert(extent.right() < 999999);	// assert if bogus values are returned
 }
+LineRenderable::LineRenderable(const LineRenderable& other) : Renderable(other)
+{
+	path = other.path;
+	line_width = other.line_width;
+	cap_style = other.cap_style;
+	join_style = other.join_style;
+}
 void LineRenderable::getRenderStates(RenderStates& out)
 {
 	out.color_priority = color_priority;
@@ -381,6 +420,10 @@ AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transf
 	extent = path.controlPointRect();
 	assert(extent.right() < 999999);	// assert if bogus values are returned
 }
+AreaRenderable::AreaRenderable(const AreaRenderable& other) : Renderable(other)
+{
+	path = other.path;
+}
 void AreaRenderable::getRenderStates(RenderStates& out)
 {
 	out.color_priority = color_priority;
@@ -451,6 +494,14 @@ TextRenderable::TextRenderable(TextSymbol* symbol, double line_x, double line_y,
 	extent = QRectF(extent.left() + anchor_x, extent.top() + anchor_y, extent.width(), extent.height());
 	
 	assert(extent.right() < 999999);	// assert if bogus values are returned
+}
+TextRenderable::TextRenderable(const TextRenderable& other) : Renderable(other)
+{
+	path = other.path;
+	anchor_x = other.anchor_x;
+	anchor_y = other.anchor_y;
+	rotation = other.rotation;
+	scale_factor = other.scale_factor;
 }
 void TextRenderable::getRenderStates(RenderStates& out)
 {

@@ -133,6 +133,14 @@ QPointF MapWidget::mapToViewport(MapCoordF input)
 {
 	return viewToViewport(view->mapToView(input));
 }
+QPointF MapWidget::mapToViewport(QPointF input)
+{
+	return viewToViewport(view->mapToView(MapCoordF(input.x(), input.y())));
+}
+QRectF MapWidget::mapToViewport(const QRectF& input)
+{
+	return QRectF(mapToViewport(input.topLeft()), mapToViewport(input.bottomRight()));
+}
 
 void MapWidget::zoom(float factor)
 {

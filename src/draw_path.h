@@ -28,7 +28,7 @@ class PointObject;
 class PathObject;
 class Symbol;
 
-/// Tool to draw point objects
+/// Tool to draw path objects
 class DrawPathTool : public MapEditorTool
 {
 Q_OBJECT

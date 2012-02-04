@@ -34,6 +34,7 @@
 #include "symbol.h"
 #include "draw_point.h"
 #include "draw_path.h"
+#include "edit_tool.h"
 
 // ### MapEditorController ###
 
@@ -153,7 +154,7 @@ void MapEditorController::attach(MainWindow* window)
 	// Create map widget
 	map_widget = new MapWidget(mode == MapEditor, true); //mode == SymbolEditor);	TODO: Make antialiasing configurable
 	connect(window, SIGNAL(keyPressed(QKeyEvent*)), map_widget, SLOT(keyPressed(QKeyEvent*)));
-	connect(window, SIGNAL(keyReleased(QKeyEvent*)), map_widget, SLOT(keyPressed(QKeyEvent*)));
+	connect(window, SIGNAL(keyReleased(QKeyEvent*)), map_widget, SLOT(keyReleased(QKeyEvent*)));
 	map_widget->setMapView(main_view);
 	map_widget->setZoomLabel(statusbar_zoom_label);
 	map_widget->setCursorposLabel(statusbar_cursorpos_label);
@@ -297,6 +298,11 @@ void MapEditorController::createMenu()
 void MapEditorController::createToolbar()
 {
 	QToolBar* toolbar_drawing = window->addToolBar(tr("Drawing"));
+	
+	edit_tool_act = new QAction(QIcon("images/tool-edit.png"), tr("Edit objects"), this);
+	edit_tool_act->setCheckable(true);
+	connect(edit_tool_act, SIGNAL(triggered(bool)), this, SLOT(editToolClicked(bool)));
+	toolbar_drawing->addAction(edit_tool_act);
 	
 	draw_point_act = new QAction(QIcon("images/draw-point.png"), tr("Set point objects"), this);
 	draw_point_act->setCheckable(true);
@@ -463,6 +469,10 @@ void MapEditorController::selectedSymbolsChanged()
 	draw_path_act->setEnabled(type == Symbol::Line || type == Symbol::Area || type == Symbol::Combined);
 	draw_path_act->setToolTip(tr("Draw polygonal and curved lines.") + (draw_path_act->isEnabled() ? (" " + tr("Select a line, area or combined symbol to be able to use this tool.")) : ""));
 }
+void MapEditorController::editToolClicked(bool checked)
+{
+	setTool(checked ? new EditTool(this, edit_tool_act) : NULL);
+}
 void MapEditorController::drawPointClicked(bool checked)
 {
 	setTool(checked ? new DrawPointTool(this, draw_point_act, symbol_widget) : NULL);
@@ -586,6 +596,11 @@ void EditorDockWidget::closeEvent(QCloseEvent* event)
 }
 
 // ### MapEditorTool ###
+
+const int MapEditorTool::click_tolerance = 5;
+const QRgb MapEditorTool::inactive_color = qRgb(0, 0, 255);
+const QRgb MapEditorTool::active_color = qRgb(255, 150, 0);
+const QRgb MapEditorTool::selection_color = qRgb(210, 0, 229);
 
 MapEditorTool::MapEditorTool(MapEditorController* editor, QAction* tool_button): QObject(NULL), tool_button(tool_button), editor(editor)
 {

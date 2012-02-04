@@ -63,8 +63,22 @@ public:
 	/// Use force == true to force a redraw
 	bool update(bool force = false);
 	
+	/// Moves the whole object
+	void move(qint64 dx, qint64 dy);
+	
 	/// Scales all coordinates, with the origin as scaling center
 	void scale(double factor);
+	
+	/// Checks if the given coord, with the given tolerance, is on this object; with extended_selection, the coord is on point objects always if it is whithin their extent,
+	/// otherwise it has to be close to their midpoint. Returns a Symbol::Type which specifies on which symbol type the coord is
+	/// (important for combined symbols which can have areas and lines).
+	int isPointOnObject(MapCoordF coord, float tolerance, bool extended_selection);
+	
+	/// Checks if a path point (excluding curve control points) is included in the given box
+	bool isPathPointInBox(QRectF box);
+	
+	/// Take ownership of the renderables
+	void takeRenderables();
 	
 	/// Returns the coordinate vector
 	inline const MapCoordVector& getRawCoordinateVector() const {return coords;}	// NOTE: for closed paths, the last and first elements of this vector are equal
@@ -74,6 +88,7 @@ public:
 	// Methods to traverse the output
 	inline RenderableVector::const_iterator beginRenderables() const {return output.begin();}
 	inline RenderableVector::const_iterator endRenderables() const {return output.end();}
+	inline int getNumRenderables() const {return (int)output.size();}
 	
 	// Getters / Setters
 	inline void setOutputDirty(bool dirty = true) {output_dirty = dirty;}
