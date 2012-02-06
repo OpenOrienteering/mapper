@@ -200,6 +200,9 @@ void MapEditorController::attach(MainWindow* window)
 		setEditTool();
 	}
 	
+	// Update enabled/disabled state for the tools
+	selectedObjectsChanged();
+	
 	// Check if there is an invalid template and if so, output a warning
 	bool has_invalid_template = false;
 	for (int i = 0; i < map->getNumTemplates(); ++i)
@@ -370,6 +373,11 @@ void MapEditorController::createToolbar()
 	// Editing toolbar
 	QToolBar* toolbar_editing = window->addToolBar(tr("Editing"));
 	
+	duplicate_act = new QAction(QIcon("images/tool-duplicate.png"), tr("Duplicate"), this);
+	duplicate_act->setShortcut(tr("Ctrl+D"));
+	connect(duplicate_act, SIGNAL(triggered(bool)), this, SLOT(duplicateClicked()));
+	toolbar_editing->addAction(duplicate_act);
+	
 	switch_symbol_act = new QAction(QIcon("images/tool-switch-symbol.png"), tr("Switch symbol"), this);
 	connect(switch_symbol_act, SIGNAL(triggered(bool)), this, SLOT(switchSymbolClicked()));
 	toolbar_editing->addAction(switch_symbol_act);
@@ -522,7 +530,10 @@ void MapEditorController::selectedSymbolsChanged()
 }
 void MapEditorController::selectedObjectsChanged()
 {
-	// Could add something here
+	bool have_selection = map->getNumSelectedObjects() > 0;
+	
+	duplicate_act->setEnabled(have_selection);
+	duplicate_act->setStatusTip(tr("Duplicate the selected object(s).") + (duplicate_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
 	
 	selectedSymbolsOrObjectsChanged();
 }
@@ -559,6 +570,23 @@ void MapEditorController::drawPathClicked(bool checked)
 	setTool(checked ? new DrawPathTool(this, draw_path_act, symbol_widget) : NULL);
 }
 
+void MapEditorController::duplicateClicked()
+{
+	std::vector<Object*> new_objects;
+	new_objects.reserve(map->getNumSelectedObjects());
+	
+	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		Object* duplicate = (*it)->duplicate();
+		map->addObject(duplicate);
+		new_objects.push_back(duplicate);
+	}
+	
+	map->clearObjectSelection(false);
+	for (int i = 0; i < (int)new_objects.size(); ++i)
+		map->addObjectToSelection(new_objects[i], i == (int)new_objects.size() - 1);
+}
 void MapEditorController::switchSymbolClicked()
 {
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();

@@ -106,9 +106,6 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 {
 	bool mouse_down = event->buttons() & Qt::LeftButton;
 	
-	cur_pos = event->pos();
-	cur_pos_map = map_coord;
-	
 	if (!mouse_down)
 	{
 		updateHoverPoint(widget->mapToViewport(map_coord), widget);
@@ -151,9 +148,17 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 				updatePreviewObjects();
 			}
 			else if (box_selection)
+			{
+				cur_pos = event->pos();
+				cur_pos_map = map_coord;
 				updateDirtyRect();
+			}
 		}
 	}
+	
+	// NOTE: This must be after the rest of the processing
+	cur_pos = event->pos();
+	cur_pos_map = map_coord;
 	
 	return true;
 }
