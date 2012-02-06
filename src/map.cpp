@@ -596,6 +596,28 @@ void Map::insertRenderablesOfObject(Object* object)
 		addSelectionRenderables(object);
 }
 
+void Map::getSelectionToSymbolCompatibility(Symbol* symbol, bool& out_compatible, bool& out_different)
+{
+	out_compatible = symbol != NULL && (getNumSelectedObjects() > 0);
+	out_different = false;
+	
+	if (symbol)
+	{
+		ObjectSelection::const_iterator it_end = selectedObjectsEnd();
+		for (ObjectSelection::const_iterator it = selectedObjectsBegin(); it != it_end; ++it)
+		{
+			if (!symbol->isTypeCompatibleTo(*it))
+			{
+				out_compatible = false;
+				out_different = true;
+				return;
+			}
+			else if (symbol != (*it)->getSymbol())
+				out_different = true;
+		}
+	}
+}
+
 void Map::includeSelectionRect(QRectF& rect)
 {
 	ObjectSelection::const_iterator it_end = selectedObjectsEnd();
@@ -629,38 +651,45 @@ void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widge
 	painter->restore();
 }
 
-void Map::addObjectToSelection(Object* object)
+void Map::addObjectToSelection(Object* object, bool emit_selection_changed)
 {
 	assert(!isObjectSelected(object));
 	object_selection.insert(object);
 	addSelectionRenderables(object);
+	if (emit_selection_changed)
+		emit(selectedObjectsChanged());
 }
-void Map::removeObjectFromSelection(Object* object)
+void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
 {
 	assert(object_selection.remove(object) && "Map::removeObjectFromSelection: object was not selected!");
 	removeSelectionRenderables(object);
+	if (emit_selection_changed)
+		emit(selectedObjectsChanged());
 }
 bool Map::isObjectSelected(Object* object)
 {
 	return object_selection.contains(object);
 }
-bool Map::toggleObjectSelection(Object* object)
+bool Map::toggleObjectSelection(Object* object, bool emit_selection_changed)
 {
 	if (isObjectSelected(object))
 	{
-		removeObjectFromSelection(object);
+		removeObjectFromSelection(object, emit_selection_changed);
 		return false;
 	}
 	else
 	{
-		addObjectToSelection(object);
+		addObjectToSelection(object, emit_selection_changed);
 		return true;
 	}
 }
-void Map::clearObjectSelection()
+void Map::clearObjectSelection(bool emit_selection_changed)
 {
 	selection_renderables.clear();
 	object_selection.clear();
+	
+	if (emit_selection_changed)
+		emit(selectedObjectsChanged());
 }
 
 void Map::addMapWidget(MapWidget* widget)

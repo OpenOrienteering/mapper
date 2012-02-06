@@ -106,6 +106,9 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 {
 	bool mouse_down = event->buttons() & Qt::LeftButton;
 	
+	cur_pos = event->pos();
+	cur_pos_map = map_coord;
+	
 	if (!mouse_down)
 	{
 		updateHoverPoint(widget->mapToViewport(map_coord), widget);
@@ -152,9 +155,6 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 		}
 	}
 	
-	cur_pos = event->pos();
-	cur_pos_map = map_coord;
-	
 	return true;
 }
 bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -195,16 +195,16 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 			{
 				if (map->getNumSelectedObjects() > 0)
 					selection_changed = true;
-				map->clearObjectSelection();
+				map->clearObjectSelection(false);
 			}
 			
 			int size = objects.size();
 			for (int i = 0; i < size; ++i)
 			{
 				if (!(event->modifiers() & Qt::ShiftModifier))
-					map->addObjectToSelection(objects[i]);
+					map->addObjectToSelection(objects[i], i == size - 1);
 				else
-					map->toggleObjectSelection(objects[i]);
+					map->toggleObjectSelection(objects[i], i == size - 1);
 				selection_changed = true;
 			}
 			
@@ -235,7 +235,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 			{
 				// Clicked on empty space, deselect everything
 				last_results.clear();
-				map->clearObjectSelection();
+				map->clearObjectSelection(true);
 				selection_changed = true;
 			}
 			else if (!last_results.empty() && selectionInfosEqual(objects, last_results))
@@ -243,8 +243,8 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 				// If this result is the same as last time, select next object
 				next_object_to_select = next_object_to_select % last_results_ordered.size();
 				
-				map->clearObjectSelection();
-				map->addObjectToSelection(last_results_ordered[next_object_to_select].second);
+				map->clearObjectSelection(false);
+				map->addObjectToSelection(last_results_ordered[next_object_to_select].second, true);
 				selection_changed = true;
 				
 				++next_object_to_select;
@@ -257,15 +257,15 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 				last_results_ordered = objects;
 				next_object_to_select = 1;
 				
-				map->clearObjectSelection();
+				map->clearObjectSelection(false);
 				if (single_selected_object == objects.begin()->second)
 				{
 					next_object_to_select = next_object_to_select % last_results_ordered.size();
-					map->addObjectToSelection(objects[next_object_to_select].second);
+					map->addObjectToSelection(objects[next_object_to_select].second, true);
 					++next_object_to_select;
 				}
 				else
-					map->addObjectToSelection(objects.begin()->second);
+					map->addObjectToSelection(objects.begin()->second, true);
 				selection_changed = true;
 			}
 		}
@@ -281,7 +281,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 				// Toggle last selected object - must work the same way, regardless if other objects are selected or not
 				next_object_to_select = next_object_to_select % last_results_ordered.size();
 				
-				if (map->toggleObjectSelection(last_results_ordered[next_object_to_select].second) == false)
+				if (map->toggleObjectSelection(last_results_ordered[next_object_to_select].second, true) == false)
 					++next_object_to_select;	// only advance if object has been deselected
 				selection_changed = true;
 			}
@@ -292,7 +292,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 				std::sort(objects.begin(), objects.end(), sortObjects);
 				last_results_ordered = objects;
 				
-				map->toggleObjectSelection(objects.begin()->second);
+				map->toggleObjectSelection(objects.begin()->second, true);
 				selection_changed = true;
 			}
 		}
@@ -447,7 +447,7 @@ bool EditTool::keyPressEvent(QKeyEvent* event)
 		Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
 		for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
 			editor->getMap()->deleteObject(*it, false);
-		editor->getMap()->clearObjectSelection();
+		editor->getMap()->clearObjectSelection(true);
 		updateStatusText();
 	}
 	else if (event->key() == Qt::Key_Tab)

@@ -228,12 +228,10 @@ void Object::setPathClosed(bool value)
 
 bool Object::setSymbol(Symbol* new_symbol, bool no_checks)
 {
-	if (!no_checks && new_symbol && symbol)
+	if (!no_checks && new_symbol)
 	{
-		if ((new_symbol->getType() == Symbol::Point || symbol->getType() == Symbol::Point) && !(new_symbol->getType() == Symbol::Point && symbol->getType() == Symbol::Point))
-			return false;	// Changing something from or to point is not allowed
-		if ((new_symbol->getType() == Symbol::Text || symbol->getType() == Symbol::Text) && !(new_symbol->getType() == Symbol::Text && symbol->getType() == Symbol::Text))
-			return false;	// Changing something from or to text is not allowed
+		if (!new_symbol->isTypeCompatibleTo(this))
+			return false;
 	}
 	
 	symbol = new_symbol;

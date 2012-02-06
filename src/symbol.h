@@ -63,6 +63,9 @@ public:
 	/// Returns the or-ed together bitmask of all symbol types this symbol contains
 	virtual Type getContainedTypes() {return getType();}
 	
+	/// Can the symbol be applied to the given object?
+	bool isTypeCompatibleTo(Object* object);
+	
 	/// Saving and loading
 	void save(QFile* file, Map* map);
 	bool load(QFile* file, int version, Map* map);

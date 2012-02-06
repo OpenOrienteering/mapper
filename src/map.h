@@ -205,14 +205,17 @@ public:
 	inline ObjectSelection::const_iterator selectedObjectsBegin() {return object_selection.constBegin();}
 	inline ObjectSelection::const_iterator selectedObjectsEnd() {return object_selection.constEnd();}
 	
+	/// Returns if 1) all selected objects are compatible to the given symbol and 2) at least one of the selected objects' symbols is different to the given symbol
+	void getSelectionToSymbolCompatibility(Symbol* symbol, bool& out_compatible, bool& out_different);
+	
 	void includeSelectionRect(QRectF& rect); // enlarges rect to cover the selected objects
 	void drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, RenderableContainer* replacement_renderables = NULL);
 	
-	void addObjectToSelection(Object* object);
-	void removeObjectFromSelection(Object* object);
+	void addObjectToSelection(Object* object, bool emit_selection_changed);
+	void removeObjectFromSelection(Object* object, bool emit_selection_changed);
 	bool isObjectSelected(Object* object);
-	bool toggleObjectSelection(Object* object);	// returns true if the object was selected, false if deselected
-	void clearObjectSelection();
+	bool toggleObjectSelection(Object* object, bool emit_selection_changed);	// returns true if the object was selected, false if deselected
+	void clearObjectSelection(bool emit_selection_changed);
 	
 	// Other settings
 	
@@ -245,6 +248,7 @@ signals:
 	void templateChanged(int pos, Template* temp);
 	void templateDeleted(int pos, Template* temp);
 	
+	void selectedObjectsChanged();
 	void gpsProjectionParametersChanged();
 	
 private:

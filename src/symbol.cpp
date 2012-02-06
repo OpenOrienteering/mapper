@@ -40,6 +40,18 @@ Symbol::~Symbol()
 	delete icon;
 }
 
+bool Symbol::isTypeCompatibleTo(Object* object)
+{
+	if (type == Point && object->getType() == Object::Point)
+		return true;
+	else if ((type == Line || type == Area || type == Combined) && object->getType() == Object::Path)
+		return true;
+	else if (type == Text && object->getType() == Object::Text)
+		return true;
+
+	return false;
+}
+
 void Symbol::save(QFile* file, Map* map)
 {
 	saveString(file, name);

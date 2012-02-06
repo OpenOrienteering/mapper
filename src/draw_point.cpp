@@ -126,8 +126,8 @@ bool DrawPointTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, M
 	if (symbol->isRotatable())
 		point->setRotation(calculateRotation(event->pos(), map_coord));
 	editor->getMap()->addObject(point);
-	editor->getMap()->clearObjectSelection();
-	editor->getMap()->addObjectToSelection(point);
+	editor->getMap()->clearObjectSelection(false);
+	editor->getMap()->addObjectToSelection(point, true);
 	editor->getMap()->clearDrawingBoundingBox();
 	
 	dragging = false;

@@ -95,9 +95,14 @@ public slots:
 	void editGPSProjectionParameters();
 	
 	void selectedSymbolsChanged();
+	void selectedObjectsChanged();
+	void selectedSymbolsOrObjectsChanged();
+	
 	void editToolClicked(bool checked);
 	void drawPointClicked(bool checked);
 	void drawPathClicked(bool checked);
+	
+	void fillBorderClicked();
 	
 	void paintOnTemplateClicked(bool checked);
 	void paintOnTemplateSelectClicked();
@@ -136,6 +141,8 @@ private:
 	QAction* edit_tool_act;
 	QAction* draw_point_act;
 	QAction* draw_path_act;
+	
+	QAction* fill_border_act;
 	
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;

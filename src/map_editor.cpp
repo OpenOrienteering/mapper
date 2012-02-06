@@ -44,6 +44,7 @@ MapEditorController::MapEditorController(OperatingMode mode)
 	map = NULL;
 	main_view = NULL;
 	symbol_widget = NULL;
+	window = NULL;
 	
 	editor_activity = NULL;
 	current_tool = NULL;	// TODO: default tool?
@@ -55,6 +56,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	this->map = NULL;
 	main_view = NULL;
 	symbol_widget = NULL;
+	window = NULL;
 	
 	setMap(map, true);
 	
@@ -330,6 +332,7 @@ void MapEditorController::createMenu()
 }
 void MapEditorController::createToolbar()
 {
+	// Drawing toolbar
 	QToolBar* toolbar_drawing = window->addToolBar(tr("Drawing"));
 	
 	edit_tool_act = new QAction(QIcon("images/tool-edit.png"), tr("Edit objects"), this);
@@ -363,6 +366,13 @@ void MapEditorController::createToolbar()
 	paint_on_template_button->setMenu(paint_on_template_menu);
 	toolbar_drawing->addWidget(paint_on_template_button);
 	connect(paint_on_template_menu, SIGNAL(triggered(QAction*)), this, SLOT(paintOnTemplateSelectClicked()));
+	
+	// Editing toolbar
+	QToolBar* toolbar_editing = window->addToolBar(tr("Editing"));
+	
+	fill_border_act = new QAction(QIcon("images/tool-fill-border.png"), tr("Fill / Create border"), this);
+	connect(fill_border_act, SIGNAL(triggered(bool)), this, SLOT(fillBorderClicked()));
+	toolbar_editing->addAction(fill_border_act);
 }
 void MapEditorController::detach()
 {
@@ -409,6 +419,7 @@ void MapEditorController::showSymbolWindow(bool show)
 		symbol_dock_widget->setWidget(symbol_widget);
 		window->addDockWidget(Qt::RightDockWidgetArea, symbol_dock_widget, Qt::Vertical);
 		
+		connect(symbol_widget, SIGNAL(fillBorderClicked()), this, SLOT(fillBorderClicked()));
 		connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
 		selectedSymbolsChanged();
 	}
@@ -501,7 +512,30 @@ void MapEditorController::selectedSymbolsChanged()
 	draw_point_act->setStatusTip(tr("Place point objects on the map.") + (draw_point_act->isEnabled() ? "" : (" " + tr("Select a point symbol to be able to use this tool."))));
 	draw_path_act->setEnabled(type == Symbol::Line || type == Symbol::Area || type == Symbol::Combined);
 	draw_path_act->setStatusTip(tr("Draw polygonal and curved lines.") + (draw_path_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
+
+	selectedSymbolsOrObjectsChanged();
 }
+void MapEditorController::selectedObjectsChanged()
+{
+	// Could add something here
+	
+	selectedSymbolsOrObjectsChanged();
+}
+void MapEditorController::selectedSymbolsOrObjectsChanged()
+{
+	Symbol::Type single_symbol_type = Symbol::NoSymbol;
+	Symbol* single_symbol = symbol_widget ? symbol_widget->getSingleSelectedSymbol() : NULL;
+	if (single_symbol)
+		single_symbol_type = single_symbol->getType();
+	
+	bool single_symbol_compatible;
+	bool single_symbol_different;
+	map->getSelectionToSymbolCompatibility(single_symbol, single_symbol_compatible, single_symbol_different);
+	
+	fill_border_act->setEnabled(single_symbol_compatible && single_symbol_different);
+	fill_border_act->setStatusTip(tr("Fill the selected line or create a border for the selected area.") + (fill_border_act->isEnabled() ? "" : (" " + tr("Select a line or area object and a fitting symbol to activate this tool."))));
+}
+
 void MapEditorController::editToolClicked(bool checked)
 {
 	if (checked)
@@ -516,6 +550,26 @@ void MapEditorController::drawPointClicked(bool checked)
 void MapEditorController::drawPathClicked(bool checked)
 {
 	setTool(checked ? new DrawPathTool(this, draw_path_act, symbol_widget) : NULL);
+}
+
+void MapEditorController::fillBorderClicked()
+{
+	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
+	std::vector<Object*> new_objects;
+	new_objects.reserve(map->getNumSelectedObjects());
+	
+	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		Object* duplicate = (*it)->duplicate();
+		duplicate->setSymbol(symbol, true);
+		map->addObject(duplicate);
+		new_objects.push_back(duplicate);
+	}
+	
+	map->clearObjectSelection(false);
+	for (int i = 0; i < (int)new_objects.size(); ++i)
+		map->addObjectToSelection(new_objects[i], i == (int)new_objects.size() - 1);
 }
 
 void MapEditorController::paintOnTemplateClicked(bool checked)
@@ -604,6 +658,7 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 {
 	if (this->map)
 	{
+		disconnect(map, SIGNAL(selectedObjectsChanged()), this, SLOT(selectedObjectsChanged()));
 		disconnect(this->map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
 		disconnect(this->map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
 		if (symbol_widget)
@@ -614,10 +669,14 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 	if (create_new_map_view)
 		main_view = new MapView(map);
 	
+	connect(map, SIGNAL(selectedObjectsChanged()), this, SLOT(selectedObjectsChanged()));
 	connect(map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
 	connect(map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
 	if (symbol_widget)
 		connect(map, SIGNAL(symbolChanged(int,Symbol*)), symbol_widget, SLOT(symbolChanged(int, Symbol*)));
+	
+	if (window)
+		selectedObjectsChanged();
 }
 
 // ### EditorDockWidget ###

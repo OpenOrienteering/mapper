@@ -452,8 +452,8 @@ void DrawPathTool::finishDrawing()
 	{
 		preview_path->setSymbol(drawing_symbol, true);
 		editor->getMap()->addObject(preview_path);
-		editor->getMap()->clearObjectSelection();
-		editor->getMap()->addObjectToSelection(preview_path);
+		editor->getMap()->clearObjectSelection(false);
+		editor->getMap()->addObjectToSelection(preview_path, true);
 	}
 	editor->getMap()->clearDrawingBoundingBox();
 	
