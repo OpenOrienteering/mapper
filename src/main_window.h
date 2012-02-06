@@ -47,6 +47,9 @@ public:
 	/// Detach from a main window. The controller should delete its user interface here.
 	virtual void detach() {}
 	
+	/// Used to notify the controller that the recent files list has changed
+	virtual void recentFilesUpdated() {}
+	
 	inline MainWindow* getWindow() const {return window;}
 	
 	static MainWindowController* controllerForFile(const QString& filename);
@@ -85,8 +88,10 @@ public slots:
 	void showNewMapWizard();
 	void showOpenDialog();
 	bool openPath(QString path);
-	void save();
-	void saveAs();
+	void openRecentFile();
+	void updateRecentFileActions(bool show);
+	bool save();
+	bool saveAs();
 	
 	void showSettings();
 	void showAbout();
@@ -105,6 +110,10 @@ protected:
     virtual void keyReleaseEvent(QKeyEvent* event);
 	
 private:
+	enum {
+		max_recent_files = 10
+	};
+	
 	/// Called when the user closes the window with unsaved changes. Returns true if window should be closed, false otherwise
 	bool showSaveOnCloseDialog();
 	
@@ -124,8 +133,12 @@ private:
 	MainWindowController* controller;
 	bool show_menu;
 	
-	QAction* saveAct;
-	QAction* saveAsAct;
+	QMenu* file_menu;
+	QAction* save_act;
+	QAction* save_as_act;
+	QMenu* open_recent_menu;
+	bool open_recent_menu_inserted;
+	QAction* recent_file_act[max_recent_files];
 	QLabel* status_label;
 	
 	/// Canonical path to the currently open file or an empty string if the file was not saved yet ("untitled")

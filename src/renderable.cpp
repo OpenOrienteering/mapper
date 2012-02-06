@@ -281,7 +281,16 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 	bool hole = false;
 	QPainterPath first_subpath;
 	
+	float join_border = line_width * 0.5f;
+	float cap_border = line_width * 0.5f;
+	if (symbol->getJoinStyle() == LineSymbol::MiterJoin)
+		join_border *= (2 * LineSymbol::miterLimit()) + 0.1f;
+	else if (symbol->getCapStyle() == LineSymbol::SquareCap)
+		cap_border *= 1.5f;
+	
 	path.moveTo(transformed_coords[0].toQPointF());
+	extent = QRectF(transformed_coords[0].getX() - cap_border, transformed_coords[0].getY() - cap_border, 2 * cap_border, 2 * cap_border);
+	
 	for (int i = 1; i < size; ++i)
 	{
 		if (hole)
@@ -293,30 +302,38 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 				path = QPainterPath();
 			}
 			path.moveTo(transformed_coords[i].toQPointF());
+			extentInclude(transformed_coords[i], cap_border);
 			hole = false;
 			continue;
 		}
 		
 		if (coords[i-1].isCurveStart())
 		{
-			if (i == size - 2 && closed)
+			/*if (i == size - 2 && closed)
 			{
 				assert(i < size - 1);
 				path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[0].toQPointF());
 				++i;
 			}
 			else
-			{
+			{*/
 				assert(i < size - 2);
 				path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
+				extentInclude(transformed_coords[i], 0);
+				extentInclude(transformed_coords[i+1], 0);
 				i += 2;
-			}
+			//}
 		}
 		else
 			path.lineTo(transformed_coords[i].toQPointF());
 		
 		if (coords[i].isHolePoint())
 			hole = true;
+		
+		if ((i < size - 1 || closed) && !hole)
+			extentInclude(transformed_coords[i], join_border);
+		else
+			extentInclude(transformed_coords[i], cap_border);
 	}
 	
 	if (closed)
@@ -327,14 +344,6 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 			path.connectPath(first_subpath);
 	}
 	
-	// Get extent
-	const QRectF rect = path.controlPointRect();
-	float extra_border = line_width * 0.5f;
-	if (symbol->getJoinStyle() == LineSymbol::MiterJoin)
-		extra_border *= (2 * LineSymbol::miterLimit()) + 0.1f;
-	else if (symbol->getCapStyle() == LineSymbol::SquareCap)
-		extra_border *= 1.5f;
-	extent = QRectF(rect.x() - extra_border, rect.y() - extra_border, rect.width() + 2*extra_border, rect.height() + 2*extra_border);
 	assert(extent.right() < 999999);	// assert if bogus values are returned
 }
 LineRenderable::LineRenderable(const LineRenderable& other) : Renderable(other)

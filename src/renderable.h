@@ -26,6 +26,7 @@
 #include <map>
 
 #include "map_coord.h"
+#include "util.h"
 
 QT_BEGIN_NAMESPACE
 class QPainterPath;
@@ -180,6 +181,13 @@ public:
 	//virtual Renderable* duplicate() {return new LineRenderable(*this);}
 	
 protected:
+	inline void extentInclude(const MapCoordF& coord, float border)
+	{
+		rectInclude(extent, QPointF(coord.getX() - border, coord.getY() - border));
+		if (border > 0)
+			rectInclude(extent, QPointF(coord.getX() + border, coord.getY() + border));
+	}
+	
 	QPainterPath path;
 	float line_width;
 	Qt::PenCapStyle cap_style;

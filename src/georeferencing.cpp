@@ -63,16 +63,16 @@ void GeoreferencingActivity::draw(QPainter* painter, MapWidget* widget)
 		QPointF start = widget->mapToViewport(georef ? point->calculated_coords_map : point->src_coords_map);
 		QPointF end = widget->mapToViewport(point->dest_coords_map);
 		
-		drawCross(painter, start, QColor(Qt::red));
+		drawCross(painter, start.toPoint(), QColor(Qt::red));
 		painter->drawLine(start, end);
-		drawCross(painter, end, QColor(Qt::green));
+		drawCross(painter, end.toPoint(), QColor(Qt::green));
 	}
 }
-void GeoreferencingActivity::drawCross(QPainter* painter, QPointF midpoint, QColor color)
+void GeoreferencingActivity::drawCross(QPainter* painter, QPoint midpoint, QColor color)
 {
 	painter->setPen(color);
-	painter->drawLine(midpoint + QPointF(0, -GeoreferencingActivity::cross_radius), midpoint + QPointF(0, GeoreferencingActivity::cross_radius));
-	painter->drawLine(midpoint + QPointF(-GeoreferencingActivity::cross_radius, 0), midpoint + QPointF(GeoreferencingActivity::cross_radius, 0));
+	painter->drawLine(midpoint + QPoint(0, -GeoreferencingActivity::cross_radius), midpoint + QPoint(0, GeoreferencingActivity::cross_radius));
+	painter->drawLine(midpoint + QPoint(-GeoreferencingActivity::cross_radius, 0), midpoint + QPoint(GeoreferencingActivity::cross_radius, 0));
 }
 
 int GeoreferencingActivity::findHoverPoint(Template* temp, QPoint mouse_pos, MapWidget* widget, bool& point_src)
@@ -487,7 +487,7 @@ void GeoreferencingEditTool::draw(QPainter* painter, MapWidget* widget)
 	{
 		Template::PassPoint* point = this->widget->getTemplate()->getPassPoint(active_point);
 		MapCoordF position = active_point_is_src ? (georef ? point->calculated_coords_map : point->src_coords_map) : point->dest_coords_map;
-		QPointF viewport_pos = widget->mapToViewport(position);
+		QPoint viewport_pos = widget->mapToViewport(position).toPoint();
 		
 		painter->setPen(active_point_is_src ? Qt::red : Qt::green);
 		painter->setBrush(Qt::NoBrush);
@@ -599,7 +599,7 @@ void GeoreferencingAddTool::draw(QPainter* painter, MapWidget* widget)
 		QPointF start = widget->mapToViewport(first_point);
 		QPointF end = widget->mapToViewport(mouse_pos);
 		
-		GeoreferencingActivity::drawCross(painter, start, Qt::red);
+		GeoreferencingActivity::drawCross(painter, start.toPoint(), Qt::red);
 		
 		MapCoordF to_end = MapCoordF((end - start).x(), (end - start).y());
 		if (to_end.lengthSquared() > 3*3)
@@ -738,7 +738,7 @@ void GeoreferencingMoveTool::setActivePointPosition(MapCoordF map_coord)
 	
 	this->widget->updateRow(active_point);
 	
-	editor->getMap()->setDrawingBoundingBox(QRectF(changed_coords->getX(), changed_coords->getY(), 0, 0), GeoreferencingActivity::cross_radius, false);
+	editor->getMap()->setDrawingBoundingBox(QRectF(changed_coords->getX(), changed_coords->getY(), 0, 0), GeoreferencingActivity::cross_radius + 1, false);
 	editor->getMap()->updateDrawing(changed_rect, GeoreferencingActivity::cross_radius + 1);
 	widget->updateDirtyRect();
 	

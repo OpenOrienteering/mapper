@@ -76,6 +76,7 @@ void MainWindow::setController(MainWindowController* new_controller)
 	{
 		controller->detach();
 		delete controller;
+		controller = NULL;
 		
 		// Just to make sure ...
 		menuBar()->clear();
@@ -96,41 +97,51 @@ void MainWindow::setController(MainWindowController* new_controller)
 }
 void MainWindow::createFileMenu()
 {
-	QAction* newAct = new QAction(QIcon("images/new.png"), tr("&New"), this);
-	newAct->setShortcuts(QKeySequence::New);
-	newAct->setStatusTip(tr("Create a new map"));
-	connect(newAct, SIGNAL(triggered()), this, SLOT(showNewMapWizard()));
+	QAction* new_act = new QAction(QIcon("images/new.png"), tr("&New"), this);
+	new_act->setShortcuts(QKeySequence::New);
+	new_act->setStatusTip(tr("Create a new map"));
+	connect(new_act, SIGNAL(triggered()), this, SLOT(showNewMapWizard()));
 	
-	QAction* openAct = new QAction(QIcon("images/open.png"), tr("&Open..."), this);
-	openAct->setShortcuts(QKeySequence::Open);
-	openAct->setStatusTip(tr("Open an existing file"));
-	connect(openAct, SIGNAL(triggered()), this, SLOT(showOpenDialog()));
+	QAction* open_act = new QAction(QIcon("images/open.png"), tr("&Open..."), this);
+	open_act->setShortcuts(QKeySequence::Open);
+	open_act->setStatusTip(tr("Open an existing file"));
+	connect(open_act, SIGNAL(triggered()), this, SLOT(showOpenDialog()));
+	
+	open_recent_menu = new QMenu(tr("Open &recent"), this);
+	for (int i = 0; i < max_recent_files; ++i)
+	{
+		recent_file_act[i] = new QAction(this);
+		connect(recent_file_act[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
+	}
+	open_recent_menu_inserted = false;
 	
 	// TODO: importAct? Or better in the map menu?
+	// NOTE: if you insert something between open_recent_menu and save_act, adjust updateRecentFileActions()!
 	
-	saveAct = new QAction(QIcon("images/save.png"), tr("&Save..."), this);
-	saveAct->setShortcuts(QKeySequence::Save);
-	connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
+	save_act = new QAction(QIcon("images/save.png"), tr("&Save..."), this);
+	save_act->setShortcuts(QKeySequence::Save);
+	connect(save_act, SIGNAL(triggered()), this, SLOT(save()));
 	
-	saveAsAct = new QAction(tr("Save &as..."), this);
-	saveAsAct->setShortcuts(QKeySequence::SaveAs);
-	connect(saveAsAct, SIGNAL(triggered()), this, SLOT(saveAs()));
+	save_as_act = new QAction(tr("Save &as..."), this);
+	save_as_act->setShortcuts(QKeySequence::SaveAs);
+	connect(save_as_act, SIGNAL(triggered()), this, SLOT(saveAs()));
 	
-	QAction* closeAct = new QAction(tr("Close"), this);
-	closeAct->setShortcut(tr("Ctrl+W"));
-	closeAct->setStatusTip(tr("Close this window"));
-	connect(closeAct, SIGNAL(triggered()), this, SLOT(close()));
+	QAction* close_act = new QAction(tr("Close"), this);
+	close_act->setShortcut(tr("Ctrl+W"));
+	close_act->setStatusTip(tr("Close this window"));
+	connect(close_act, SIGNAL(triggered()), this, SLOT(close()));
 	
-	QMenu* fileMenu = menuBar()->addMenu(tr("&File"));
-	fileMenu->addAction(newAct);
-	fileMenu->addAction(openAct);
-	fileMenu->addAction(saveAct);
-	fileMenu->addAction(saveAsAct);
-	fileMenu->addSeparator();
-	fileMenu->addAction(closeAct);
+	file_menu = menuBar()->addMenu(tr("&File"));
+	file_menu->addAction(new_act);
+	file_menu->addAction(open_act);
+	file_menu->addAction(save_act);
+	file_menu->addAction(save_as_act);
+	file_menu->addSeparator();
+	file_menu->addAction(close_act);
 	
-	saveAct->setVisible(false);
-	saveAsAct->setVisible(false);
+	save_act->setVisible(false);
+	save_as_act->setVisible(false);
+	updateRecentFileActions(false);
 }
 void MainWindow::createHelpMenu()
 {
@@ -162,38 +173,38 @@ void MainWindow::setCurrentFile(const QString& path)
 	if (path.isEmpty())
 		return;
 	
-	// Update recent file lists - TODO
-	/*
-	# define MAX_RECENT_FILES 10
-	
+	// Update recent file lists
 	QSettings settings;
 	
 	QStringList files = settings.value("recentFileList").toStringList();
+	if (!files.isEmpty() && files.first() == path)
+		return;
+	
 	files.removeAll(path);
 	files.prepend(path);
-	while (files.size() > MAX_RECENT_FILES)
+	while (files.size() > max_recent_files)
 		files.removeLast();
 	
 	settings.setValue("recentFileList", files);
 	
 	foreach (QWidget* widget, QApplication::topLevelWidgets())
 	{
-		MainWindow* mainWin = qobject_cast<MainWindow*>(widget);
-		if (mainWin)
-			mainWin->updateRecentFileActions();
-	}*/
+		MainWindow* main_window = qobject_cast<MainWindow*>(widget);
+		if (main_window)
+			main_window->updateRecentFileActions(true);
+	}
 }
 void MainWindow::setHasOpenedFile(bool value)
 {
 	if (value && !has_opened_file)
 	{
-		saveAct->setVisible(true);
-		saveAsAct->setVisible(true);
+		save_act->setVisible(true);
+		save_as_act->setVisible(true);
 	}
 	else if (!value && has_opened_file)
 	{
-		saveAct->setVisible(false);
-		saveAsAct->setVisible(false);
+		save_act->setVisible(false);
+		save_as_act->setVisible(false);
 	}
 	has_opened_file = value;
 	updateWindowTitle();
@@ -234,7 +245,6 @@ bool MainWindow::showSaveOnCloseDialog()
 {
 	if (has_opened_file && has_unsaved_changes)
 	{
-		/* TODO! Differ between untitled files (Save as..) and other ones
 		QMessageBox::StandardButton ret;
 		ret = QMessageBox::warning(this, APP_NAME,
 								   tr("The document has been modified.\n"
@@ -242,9 +252,9 @@ bool MainWindow::showSaveOnCloseDialog()
 								   QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
 
 	   if (ret == QMessageBox::Save)
-		   return controller->save();
+		   return save();
 	   else if (ret == QMessageBox::Cancel)
-		   return false;*/
+		   return false;
 	}
 	
     return true;
@@ -389,38 +399,67 @@ bool MainWindow::openPath(QString path)
 	open_window->activateWindow();
 	return true;
 }
-void MainWindow::save()
+void MainWindow::openRecentFile()
+{
+	QAction *action = qobject_cast<QAction*>(sender());
+	if (action)
+		openPath(action->data().toString());
+}
+void MainWindow::updateRecentFileActions(bool show)
+{
+	QSettings settings;
+	QStringList files = settings.value("recentFileList").toStringList();
+	
+	int num_recent_files = qMin(files.size(), (int)max_recent_files);
+	
+	open_recent_menu->clear();
+	for (int i = 0; i < num_recent_files; ++i) {
+		QString text = tr("&%1 %2").arg(i + 1).arg(QFileInfo(files[i]).fileName());
+		recent_file_act[i]->setText(text);
+		recent_file_act[i]->setData(files[i]);
+		open_recent_menu->addAction(recent_file_act[i]);
+	}
+	
+	if (num_recent_files > 0 && !open_recent_menu_inserted)
+		file_menu->insertMenu(save_act, open_recent_menu);
+	else if (!(num_recent_files > 0) && open_recent_menu_inserted)
+		file_menu->removeAction(open_recent_menu->menuAction());
+	open_recent_menu_inserted = num_recent_files > 0;
+	
+	if (controller)
+		controller->recentFilesUpdated();
+}
+bool MainWindow::save()
 {
 	if (!controller)
-		return;
+		return false;
 	if (current_path.isEmpty())
-	{
-		saveAs();
-		return;
-	}
+		return saveAs();
 	
 	if (controller->save(current_path))
 		setHasUnsavedChanges(false);
+	return true;
 }
-void MainWindow::saveAs()
+bool MainWindow::saveAs()
 {
 	if (!controller)
-		return;
+		return false;
 	
 	QString path = QFileDialog::getSaveFileName(this, tr("Save file ..."), QString(), tr("Maps (*.omap *.ocd);;All files (*.*)"));
 	if (path.isEmpty())
-		return;
+		return false;
 	if (!path.endsWith(".omap", Qt::CaseInsensitive))
 		path.append(".omap");
 	
 	setCurrentFile(path);
-	save();
+	return save();
 	//assert(current_path == QFileInfo(current_path).canonicalFilePath());
 }
 
 void MainWindow::showSettings()
 {
 	// TODO
+	QMessageBox::information(this, tr("Error"), tr("Sorry, settings are not implemented yet!"));
 }
 void MainWindow::showAbout()
 {
@@ -429,7 +468,7 @@ void MainWindow::showAbout()
 	
 	QLabel* about_label = new QLabel("<a href=\"http://openorienteering.org\"><img src=\"images/open-orienteering.png\"/></a><br/><br/>"
 									 "OpenOrienteering Mapper<br/>"
-									 "Copyright (C) 2011  Thomas Sch&ouml;ps<br/>"
+									 "Copyright (C) 2012  Thomas Sch&ouml;ps<br/>"
 									 "This program comes with ABSOLUTELY NO WARRANTY;<br/>"
 									 "This is free software, and you are welcome to redistribute it<br/>"
 									 "under certain conditions; see the file COPYING for details.");
@@ -450,6 +489,7 @@ void MainWindow::showAbout()
 void MainWindow::showHelp()
 {
 	// TODO
+	QMessageBox::information(this, tr("Error"), tr("Sorry, help is not implemented yet!"));
 }
 void MainWindow::linkClicked(QString link)
 {

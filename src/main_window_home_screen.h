@@ -29,6 +29,10 @@ class QListWidget;
 class QLabel;
 QT_END_NAMESPACE
 
+class HomeScreenWidget;
+class DocumentSelectionWidget;
+class QListWidgetItem;
+
 class HomeScreenController : public MainWindowController
 {
 Q_OBJECT
@@ -38,6 +42,11 @@ public:
 	
     virtual void attach(MainWindow* window);
     virtual void detach();
+	
+    virtual void recentFilesUpdated();
+	
+private:
+	HomeScreenWidget* widget;
 };
 
 class HomeScreenWidget : public QWidget
@@ -47,11 +56,14 @@ public:
 	HomeScreenWidget(HomeScreenController* controller, QWidget* parent = NULL);
 	virtual ~HomeScreenWidget();
 	
+	void recentFilesUpdated();
+	
 protected:
     virtual void paintEvent(QPaintEvent* event);
 	
 private:
 	HomeScreenController* controller;
+	DocumentSelectionWidget* maps_widget;
 };
 
 class DocumentSelectionWidget : public QWidget
@@ -68,18 +80,25 @@ signals:
 	void pathOpened(QString path);
 	void newClicked();
 	
-protected slots:
+public slots:
 	void openDoc();
 	void newDoc();
+	
+	void updateRecentFiles();
+	void recentFileClicked(QListWidgetItem* item);
+	void emitPathOpened();
+    void clearListClicked();
 	
 protected:
     virtual void paintEvent(QPaintEvent* event);
 	
 private:
 	QListWidget* recent_docs_list;
+	QTimer* timer;
 	
 	QString open_title_text;
 	QString open_filter_text;
+	QString path;
 };
 
 class HomeScreenTipOfTheDayWidget : public QWidget
@@ -109,10 +128,12 @@ public:
 signals:
 	void settingsClicked();
 	void aboutClicked();
+	void helpClicked();
 	
 private slots:
 	void settingsSlot();
 	void aboutSlot();
+	void helpSlot();
 };
 
 #endif

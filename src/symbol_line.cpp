@@ -1248,15 +1248,48 @@ void LineSymbol::splitBezierCurve(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapC
 
 void LineSymbol::colorDeleted(Map* map, int pos, MapColor* color)
 {
+	bool have_changes = false;
+	if (mid_symbol && mid_symbol->containsColor(color))
+	{
+		mid_symbol->colorDeleted(map, pos, color);
+		have_changes = true;
+	}
+	if (start_symbol && start_symbol->containsColor(color))
+	{
+		start_symbol->colorDeleted(map, pos, color);
+		have_changes = true;
+	}
+	if (end_symbol && end_symbol->containsColor(color))
+	{
+		end_symbol->colorDeleted(map, pos, color);
+		have_changes = true;
+	}
+	if (dash_symbol && dash_symbol->containsColor(color))
+	{
+		dash_symbol->colorDeleted(map, pos, color);
+		have_changes = true;
+	}
     if (color == this->color)
 	{
 		this->color = NULL;
-		getIcon(map, true);
+		have_changes = true;
 	}
+	if (have_changes)
+		getIcon(map, true);
 }
 bool LineSymbol::containsColor(MapColor* color)
 {
-	return color == this->color;
+	if (color == this->color)
+		return true;
+	if (mid_symbol && mid_symbol->containsColor(color))
+		return true;
+	if (start_symbol && start_symbol->containsColor(color))
+		return true;
+	if (end_symbol && end_symbol->containsColor(color))
+		return true;
+	if (dash_symbol && dash_symbol->containsColor(color))
+		return true;
+	return false;
 }
 
 void LineSymbol::scale(double factor)

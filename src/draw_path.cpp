@@ -315,13 +315,22 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 	
 	if (draw_in_progress)
 	{
+		painter->setRenderHint(QPainter::Antialiasing);
 		if (dragging && (cur_pos - click_pos).manhattanLength() >= QApplication::startDragDistance())
 		{
+			QPen pen(qRgb(255, 255, 255));
+			pen.setWidth(3);
+			painter->setPen(pen);
+			painter->drawLine(widget->mapToViewport(click_pos_map), widget->mapToViewport(cur_pos_map));
 			painter->setPen(active_color);
 			painter->drawLine(widget->mapToViewport(click_pos_map), widget->mapToViewport(cur_pos_map));
 		}
 		if (previous_point_is_curve_point)
 		{
+			QPen pen(qRgb(255, 255, 255));
+			pen.setWidth(3);
+			painter->setPen(pen);
+			painter->drawLine(widget->mapToViewport(previous_pos_map), widget->mapToViewport(previous_drag_map));
 			painter->setPen(active_color);
 			painter->drawLine(widget->mapToViewport(previous_pos_map), widget->mapToViewport(previous_drag_map));
 		}
@@ -441,6 +450,8 @@ void DrawPathTool::finishDrawing()
 	{
 		preview_path->setSymbol(drawing_symbol, true);
 		editor->getMap()->addObject(preview_path);
+		editor->getMap()->clearObjectSelection();
+		editor->getMap()->addObjectToSelection(preview_path);
 	}
 	editor->getMap()->clearDrawingBoundingBox();
 	
@@ -576,6 +587,7 @@ void DrawPathTool::deleteObjects()
 		delete preview_path;
 		preview_path = NULL;
 	}
+	draw_in_progress = false;
 }
 void DrawPathTool::addPreviewSymbols(Symbol* symbol)
 {

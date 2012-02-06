@@ -75,8 +75,7 @@ bool MapLayer::load(QFile* file, Map* map)
 		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), NULL);
 		if (!objects[i])
 			return false;
-		objects[i]->load(file);
-		addObject(objects[i], getNumObjects());
+		objects[i]->load(file, map);
 	}
 	return true;
 }
@@ -451,7 +450,11 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 		if (!symbol)
 			return false;
 		
-		symbol->load(&file, version, this);
+		if (!symbol->load(&file, version, this))
+		{
+			QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError while loading a symbol.").arg(path));
+			return false;
+		}
 		symbols[i] = symbol;
 	}
 	
@@ -496,11 +499,15 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 	for (int i = 0; i < num_layers; ++i)
 	{
 		MapLayer* layer = new MapLayer("", this);
-		layer->load(&file, this);
+		if (i == current_layer_index)
+			current_layer = layer;
+		if (!layer->load(&file, this))
+		{
+			QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError while loading a layer.").arg(path));
+			return false;
+		}
 		layers[i] = layer;
 	}
-	
-	current_layer = layers[current_layer_index];
 	
 	file.close();
 	
@@ -508,7 +515,10 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 	for (int i = 0; i < num_symbols; ++i)
 	{
 		if (!symbols[i]->loadFinished(this))
+		{
+			QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError during symbol post-processing.").arg(path));
 			return false;
+		}
 	}
 	
 	return true;

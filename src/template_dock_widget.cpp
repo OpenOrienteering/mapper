@@ -62,6 +62,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	new_button_menu->addAction(tr("Sketch"));
 	new_button_menu->addAction(tr("GPS"));
 	new_button->setMenu(new_button_menu);
+	new_button->setEnabled(false);	// TODO!
 	
 	QPushButton* open_button = new QPushButton(QIcon("images/open.png"), tr("Open..."));
 	delete_button = new QPushButton(QIcon("images/minus.png"), tr("Delete"));
@@ -69,6 +70,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	move_up_button = new QPushButton(QIcon("images/arrow-up.png"), tr("Move Up"));
 	move_down_button = new QPushButton(QIcon("images/arrow-down.png"), tr("Move Down"));
 	QPushButton* help_button = new QPushButton(QIcon("images/help.png"), tr("Help"));
+	help_button->setVisible(false);	// TODO!
 
 	QGridLayout* list_buttons_group_layout = new QGridLayout();
 	list_buttons_group_layout->setMargin(0);
@@ -215,9 +217,11 @@ void TemplateWidget::resizeEvent(QResizeEvent* event)
 	int width = event->size().width();
 	int height = event->size().height();
 	
+	// NOTE: layout direction adaption deactivated for better usability
+	
 	bool change = (layout == NULL);
-	if ((width >= height && !wide_layout) || (width < height && wide_layout))
-		change = true;
+	//if ((width >= height && !wide_layout) || (width < height && wide_layout))
+	//	change = true;
 	
 	if (change)
 	{
@@ -228,9 +232,9 @@ void TemplateWidget::resizeEvent(QResizeEvent* event)
 			delete layout;
 		}
 		
-		if (width >= height)
-			layout = new QHBoxLayout();
-		else if (width < height)
+		//if (width >= height)
+		//	layout = new QHBoxLayout();
+		//else if (width < height)
 			layout = new QVBoxLayout();
 		
 		layout->setMargin(0);
@@ -480,10 +484,11 @@ void TemplateWidget::selectionChanged(const QItemSelection& selected, const QIte
 	active_buttons_group->setEnabled(enable_active_buttons);
 	if (enable_active_buttons)
 	{
-		move_by_hand_button->setEnabled(!multiple_rows_selected);
+		// TODO: Implement and enable buttons again
+		move_by_hand_button->setEnabled(false); //!multiple_rows_selected);
 		georeference_button->setEnabled(!multiple_rows_selected);
-		group_button->setEnabled(multiple_rows_selected || (!multiple_rows_selected && map->getTemplate(posFromRow(current_row))->getTemplateGroup() >= 0));
-		more_button->setEnabled(!multiple_rows_selected);
+		group_button->setEnabled(false); //multiple_rows_selected || (!multiple_rows_selected && map->getTemplate(posFromRow(current_row))->getTemplateGroup() >= 0));
+		more_button->setEnabled(false); //!multiple_rows_selected);
 	}
 	
 	if (multiple_rows_selected)

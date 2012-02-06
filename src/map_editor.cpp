@@ -111,7 +111,10 @@ bool MapEditorController::load(const QString& path)
 	if (result)
 		setMap(map, false);
 	else
+	{
 		delete map;
+		map = NULL;
+	}
 	
 	return result;
 }
@@ -168,6 +171,13 @@ void MapEditorController::attach(MainWindow* window)
 	if (mode == MapEditor)
 		createToolbar();
 	
+	// Auto-select the edit tool
+	if (mode == MapEditor)
+	{
+		edit_tool_act->setChecked(true);
+		setTool(new EditTool(this, edit_tool_act));
+	}
+	
 	// Check if there is an invalid template and if so, output a warning
 	bool has_invalid_template = false;
 	for (int i = 0; i < map->getNumTemplates(); ++i)
@@ -187,8 +197,8 @@ void MapEditorController::attach(MainWindow* window)
 }
 void MapEditorController::createMenu()
 {
-	// Edit menu
-	QAction* undo_act = new QAction(QIcon("images/undo.png"), tr("Undo"), this);	// TODO: update this with a desc. of what will be undone
+	// Edit menu - TODO
+	/*QAction* undo_act = new QAction(QIcon("images/undo.png"), tr("Undo"), this);	// TODO: update this with a desc. of what will be undone
 	undo_act->setShortcuts(QKeySequence::Undo);
 	undo_act->setStatusTip(tr("Undo the last step"));
 	connect(undo_act, SIGNAL(triggered()), this, SLOT(undo()));
@@ -219,7 +229,7 @@ void MapEditorController::createMenu()
 	edit_menu->addSeparator();
 	edit_menu->addAction(cut_act);
 	edit_menu->addAction(copy_act);
-	edit_menu->addAction(paste_act);
+	edit_menu->addAction(paste_act);*/
 	
 	// Symbols menu
 	symbol_window_act = new QAction(QIcon("images/window-new.png"), tr("Symbol window"), this);
@@ -232,13 +242,14 @@ void MapEditorController::createMenu()
 	color_window_act->setStatusTip(tr("Show/Hide the color window"));
 	connect(color_window_act, SIGNAL(triggered(bool)), this, SLOT(showColorWindow(bool)));
 	
-	QAction* load_symbols_from_act = new QAction(tr("Load symbols from..."), this);
+	// TODO
+	/*QAction* load_symbols_from_act = new QAction(tr("Load symbols from..."), this);
 	load_symbols_from_act->setStatusTip(tr("Replace the symbols with those from another map file"));
 	connect(load_symbols_from_act, SIGNAL(triggered()), this, SLOT(loadSymbolsFromClicked()));
 	
 	QAction* load_colors_from_act = new QAction(tr("Load colors from..."), this);
 	load_colors_from_act->setStatusTip(tr("Replace the colors with those from another map file"));
-	connect(load_colors_from_act, SIGNAL(triggered()), this, SLOT(loadColorsFromClicked()));
+	connect(load_colors_from_act, SIGNAL(triggered()), this, SLOT(loadColorsFromClicked()));*/
 	
 	QAction* scale_all_symbols_act = new QAction(tr("Scale all symbols..."), this);
 	scale_all_symbols_act->setStatusTip(tr("Scale the whole symbol set"));
@@ -248,8 +259,8 @@ void MapEditorController::createMenu()
 	symbols_menu->addAction(symbol_window_act);
 	symbols_menu->addAction(color_window_act);
 	symbols_menu->addSeparator();
-	symbols_menu->addAction(load_symbols_from_act);
-	symbols_menu->addAction(load_colors_from_act);
+	/*symbols_menu->addAction(load_symbols_from_act);
+	symbols_menu->addAction(load_colors_from_act);*/
 	symbols_menu->addAction(scale_all_symbols_act);
 	
 	// Map menu
@@ -266,23 +277,25 @@ void MapEditorController::createMenu()
 	template_window_act->setStatusTip(tr("Show/Hide the template window"));
 	connect(template_window_act, SIGNAL(triggered(bool)), this, SLOT(showTemplateWindow(bool)));
 	
+	/* TODO
 	QAction* template_config_window_act = new QAction(QIcon("images/window-new.png"), tr("Template configurations window"), this);
 	template_config_window_act->setCheckable(true);
 	template_config_window_act->setStatusTip(tr("Show/Hide the template configurations window"));
-	//connect(template_config_window_act, SIGNAL(triggered(bool)), this, SLOT(showTemplateConfigurationsWindow(bool))); TODO
+	connect(template_config_window_act, SIGNAL(triggered(bool)), this, SLOT(showTemplateConfigurationsWindow(bool)));
 	
 	QAction* template_visibilities_window_act = new QAction(QIcon("images/window-new.png"), tr("Template visibilities window"), this);
 	template_visibilities_window_act->setCheckable(true);
 	template_visibilities_window_act->setStatusTip(tr("Show/Hide the template visibilities window"));
-	//connect(template_visibilities_window_act, SIGNAL(triggered(bool)), this, SLOT(showTemplateVisibilitiesWindow(bool))); TODO
+	connect(template_visibilities_window_act, SIGNAL(triggered(bool)), this, SLOT(showTemplateVisibilitiesWindow(bool)));
+	*/
 	
 	QAction* open_template_act = new QAction(tr("Open template..."), this);
 	connect(open_template_act, SIGNAL(triggered()), this, SLOT(openTemplateClicked()));
 	
 	QMenu* template_menu = window->menuBar()->addMenu(tr("&Templates"));
 	template_menu->addAction(template_window_act);
-	template_menu->addAction(template_config_window_act);
-	template_menu->addAction(template_visibilities_window_act);
+	/*template_menu->addAction(template_config_window_act);
+	template_menu->addAction(template_visibilities_window_act);*/
 	template_menu->addSeparator();
 	template_menu->addAction(open_template_act);
 	
@@ -465,9 +478,9 @@ void MapEditorController::selectedSymbolsChanged()
 		type = symbol->getType();
 	
 	draw_point_act->setEnabled(type == Symbol::Point);
-	draw_point_act->setToolTip(tr("Place point objects on the map.") + (draw_point_act->isEnabled() ? (" " + tr("Select a point symbol to be able to use this tool.")) : ""));
+	draw_point_act->setStatusTip(tr("Place point objects on the map.") + (draw_point_act->isEnabled() ? "" : (" " + tr("Select a point symbol to be able to use this tool."))));
 	draw_path_act->setEnabled(type == Symbol::Line || type == Symbol::Area || type == Symbol::Combined);
-	draw_path_act->setToolTip(tr("Draw polygonal and curved lines.") + (draw_path_act->isEnabled() ? (" " + tr("Select a line, area or combined symbol to be able to use this tool.")) : ""));
+	draw_path_act->setStatusTip(tr("Draw polygonal and curved lines.") + (draw_path_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
 }
 void MapEditorController::editToolClicked(bool checked)
 {

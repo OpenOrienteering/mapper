@@ -714,6 +714,7 @@ void SymbolWidget::symbolChanged(int pos, Symbol* symbol)
 // ### SymbolToolTip ###
 
 SymbolToolTip* SymbolToolTip::tooltip = NULL;
+QTimer* SymbolToolTip::tooltip_timer = NULL;
 
 SymbolToolTip::SymbolToolTip(Symbol* symbol, QRect icon_rect, QWidget* parent) : QWidget(parent), symbol(symbol), icon_rect(icon_rect)
 {
@@ -798,12 +799,21 @@ void SymbolToolTip::setPosition()
 
 void SymbolToolTip::showTip(QRect rect, Symbol* symbol, QWidget* parent)
 {
+	const int delay = 100;
+	
 	hideTip();
 	
 	tooltip = new SymbolToolTip(symbol, rect, parent);
 	tooltip->adjustSize();
 	tooltip->setPosition();
-	tooltip->show();
+	
+	if (!tooltip_timer)
+	{
+		tooltip_timer = new QTimer();
+		tooltip_timer->setSingleShot(true);
+	}
+	connect(tooltip_timer, SIGNAL(timeout()), tooltip, SLOT(show()));
+	tooltip_timer->start(delay);
 }
 void SymbolToolTip::hideTip()
 {

@@ -64,6 +64,7 @@ protected:
 	virtual bool loadImpl(QFile* file, int version, Map* map);
 	
 	std::vector<Symbol*> parts;
+	std::vector<int> temp_part_indices;	// temporary vector of the indices of the 'parts' symbols, used just for loading
 };
 
 class CombinedSymbolSettings : public QGroupBox

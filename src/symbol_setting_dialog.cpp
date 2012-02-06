@@ -185,7 +185,7 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Symbol* in_map_symbol, 
 	connect(helper_symbol_check, SIGNAL(clicked(bool)), this, SLOT(helperSymbolClicked(bool)));
 	
 	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
-	connect(ok_button, SIGNAL(clicked(bool)), this, SLOT(accept()));
+	connect(ok_button, SIGNAL(clicked(bool)), this, SLOT(okClicked()));
 	
 	updateNumberEdits();
 	updateOkButton();
@@ -293,7 +293,7 @@ void SymbolSettingDialog::centerTemplateGravity()
 	preview_map->setTemplateAreaDirty(0);
 }
 
-void SymbolSettingDialog::closeEvent(QCloseEvent* event)
+void SymbolSettingDialog::okClicked()
 {
 	// If editing a line symbol, strip unnecessary point symbols
 	if (symbol->getType() == Symbol::Line)
@@ -301,8 +301,8 @@ void SymbolSettingDialog::closeEvent(QCloseEvent* event)
 		LineSymbol* line = reinterpret_cast<LineSymbol*>(symbol);
 		line->cleanupPointSymbols();
 	}
-	
-	event->accept();
+
+	accept();
 }
 
 void SymbolSettingDialog::createPreviewMap()

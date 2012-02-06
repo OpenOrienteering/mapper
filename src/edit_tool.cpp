@@ -182,6 +182,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 			
 			map->setObjectAreaDirty(original_selection_extent);
 			updateDirtyRect();
+			map->setObjectsDirty();
 		}
 		else if (box_selection)
 		{

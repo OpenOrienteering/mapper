@@ -52,8 +52,10 @@ void Object::save(QFile* file)
 	
 	file->write((const char*)&path_closed, sizeof(bool));
 }
-void Object::load(QFile* file)
+void Object::load(QFile* file, Map* map)
 {
+	this->map = map;
+	
 	int symbol_index;
 	file->read((char*)&symbol_index, sizeof(int));
 	if (symbol_index >= 0)
@@ -65,6 +67,8 @@ void Object::load(QFile* file)
 	file->read((char*)&coords[0], num_coords * sizeof(MapCoord));
 	
 	file->read((char*)&path_closed, sizeof(bool));
+	
+	output_dirty = true;
 }
 
 bool Object::update(bool force)

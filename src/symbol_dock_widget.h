@@ -178,6 +178,7 @@ private:
 	QRect icon_rect;
 	
 	static SymbolToolTip* tooltip;
+	static QTimer* tooltip_timer;
 };
 
 #endif

@@ -52,7 +52,7 @@ void rectIncludeSafe(QRectF& rect, QPointF point)
 	if (rect.isValid())
 		rectInclude(rect, point);
 	else
-		rect = QRectF(point.x(), point.y(), 1, 1);
+		rect = QRectF(point.x(), point.y(), 0.0001, 0.0001);
 }
 void rectInclude(QRectF& rect, const QRectF& other_rect)
 {

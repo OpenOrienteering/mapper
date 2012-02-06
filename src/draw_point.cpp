@@ -126,6 +126,8 @@ bool DrawPointTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, M
 	if (symbol->isRotatable())
 		point->setRotation(calculateRotation(event->pos(), map_coord));
 	editor->getMap()->addObject(point);
+	editor->getMap()->clearObjectSelection();
+	editor->getMap()->addObjectToSelection(point);
 	editor->getMap()->clearDrawingBoundingBox();
 	
 	dragging = false;
@@ -152,6 +154,12 @@ void DrawPointTool::draw(QPainter* painter, MapWidget* widget)
 	
 	if (dragging && (cur_pos - click_pos).manhattanLength() >= QApplication::startDragDistance())
 	{
+		painter->setRenderHint(QPainter::Antialiasing);
+		
+		QPen pen(qRgb(255, 255, 255));
+		pen.setWidth(3);
+		painter->setPen(pen);
+		painter->drawLine(widget->mapToViewport(click_pos_map), widget->mapToViewport(cur_pos_map));
 		painter->setPen(active_color);
 		painter->drawLine(widget->mapToViewport(click_pos_map), widget->mapToViewport(cur_pos_map));
 	}

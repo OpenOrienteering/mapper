@@ -37,13 +37,18 @@ HomeScreenController::~HomeScreenController()
 void HomeScreenController::attach(MainWindow* window)
 {
 	this->window = window;
-	window->setCentralWidget(new HomeScreenWidget(this));
+	widget = new HomeScreenWidget(this);
+	window->setCentralWidget(widget);
 }
 void HomeScreenController::detach()
 {
-	QWidget* widget = window->centralWidget();
 	window->setCentralWidget(NULL);
 	delete widget;
+}
+
+void HomeScreenController::recentFilesUpdated()
+{
+	widget->recentFilesUpdated();
 }
 
 // ### HomeScreenWidget ###
@@ -53,7 +58,7 @@ HomeScreenWidget::HomeScreenWidget(HomeScreenController* controller, QWidget* pa
 	QLabel* title_label = new QLabel(QString("<img src=\"images/title.png\"/>"));	// <br/>") + APP_VERSION
 	title_label->setAlignment(Qt::AlignCenter);
 	
-	DocumentSelectionWidget* maps_widget = new DocumentSelectionWidget(tr("Maps"), tr("Create a new map ..."), tr("Open map ..."), tr("Recent maps"),
+	maps_widget = new DocumentSelectionWidget(tr("Maps"), tr("Create a new map ..."), tr("Open map ..."), tr("Recent maps"),
 																	   tr("Open Map ..."), tr("Maps (*.omap *.ocd);;All files (*.*)"));
 	HomeScreenTipOfTheDayWidget* tips_widget = new HomeScreenTipOfTheDayWidget(controller);
 	HomeScreenOtherWidget* other_widget = new HomeScreenOtherWidget();
@@ -74,10 +79,15 @@ HomeScreenWidget::HomeScreenWidget(HomeScreenController* controller, QWidget* pa
 	
 	connect(other_widget, SIGNAL(settingsClicked()), controller->getWindow(), SLOT(showSettings()));
 	connect(other_widget, SIGNAL(aboutClicked()), controller->getWindow(), SLOT(showAbout()));
+	connect(other_widget, SIGNAL(helpClicked()), controller->getWindow(), SLOT(showHelp()));
 }
 HomeScreenWidget::~HomeScreenWidget()
 {
+}
 
+void HomeScreenWidget::recentFilesUpdated()
+{
+	maps_widget->updateRecentFiles();
 }
 
 void HomeScreenWidget::paintEvent(QPaintEvent* event)
@@ -94,7 +104,7 @@ void HomeScreenWidget::paintEvent(QPaintEvent* event)
 
 DocumentSelectionWidget::DocumentSelectionWidget(const QString& title, const QString& new_text, const QString& open_text,
 												 const QString& recent_text, const QString& open_title_text, const QString& open_filter_text, QWidget* parent)
- : QWidget(parent), open_title_text(open_title_text), open_filter_text(open_filter_text)
+ : QWidget(parent), timer(NULL), open_title_text(open_title_text), open_filter_text(open_filter_text)
 {
 	QLabel* title_label = new QLabel(title);
 	QFont title_font = title_label->font();
@@ -107,37 +117,40 @@ DocumentSelectionWidget::DocumentSelectionWidget(const QString& title, const QSt
 	new_button->setIcon(QIcon("images/new.png"));
 	QCommandLinkButton* open_button = new QCommandLinkButton(open_text);
 	open_button->setIcon(QIcon("images/open.png"));
-	QCommandLinkButton* help_button = new QCommandLinkButton(tr("Help"));
-	help_button->setIcon(QIcon("images/help.png"));
 	
 	QFont button_font = new_button->font();
 	button_font.setPointSize((int)(1.5 * button_font.pointSize()));
 	new_button->setFont(button_font);
 	open_button->setFont(button_font);
-	help_button->setFont(button_font);
 	
 	QLabel* recent_label = new QLabel(recent_text);
 	recent_docs_list = new QListWidget();
+	recent_docs_list->setCursor(Qt::PointingHandCursor);
+	updateRecentFiles();
+	
+	QPushButton* clear_list_button = new QPushButton(tr("Clear list"));
 	
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget(title_label);
 	layout->addSpacing(16);
 	layout->addWidget(new_button);
 	layout->addWidget(open_button);
-	layout->addWidget(help_button);
 	layout->addSpacing(16);
 	layout->addWidget(recent_label);
 	layout->addWidget(recent_docs_list);
+	layout->addWidget(clear_list_button);
 	setLayout(layout);
 	
 	setAutoFillBackground(false);
 	
 	connect(new_button, SIGNAL(clicked(bool)), this, SLOT(newDoc()));
 	connect(open_button, SIGNAL(clicked(bool)), this, SLOT(openDoc()));
+	connect(recent_docs_list, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(recentFileClicked(QListWidgetItem*)));
+	connect(clear_list_button, SIGNAL(clicked(bool)), this, SLOT(clearListClicked()));
 }
 DocumentSelectionWidget::~DocumentSelectionWidget()
 {
-
+	delete timer;
 }
 
 void DocumentSelectionWidget::refreshRecentDocs()
@@ -159,6 +172,51 @@ void DocumentSelectionWidget::openDoc()
 		return;
 	
 	emit(pathOpened(path));
+}
+
+void DocumentSelectionWidget::updateRecentFiles()
+{
+	recent_docs_list->clear();
+	
+	QSettings settings;
+	QStringList files = settings.value("recentFileList").toStringList();
+	
+	int num_recent_files = files.size();
+	for (int i = 0; i < num_recent_files; ++i) {
+		QString text = tr("%1").arg(QFileInfo(files[i]).fileName());
+		
+		QListWidgetItem* new_item = new QListWidgetItem(text);
+		new_item->setData(Qt::UserRole, files[i]);
+		recent_docs_list->addItem(new_item);
+	}
+}
+void DocumentSelectionWidget::recentFileClicked(QListWidgetItem* item)
+{
+	if (timer)
+		return;
+	
+	path = item->data(Qt::UserRole).toString();
+	
+	timer = new QTimer();
+	timer->setSingleShot(true);
+	connect(timer, SIGNAL(timeout()), this, SLOT(emitPathOpened()));
+	timer->start(0);
+}
+void DocumentSelectionWidget::emitPathOpened()
+{
+	emit(pathOpened(path));
+}
+void DocumentSelectionWidget::clearListClicked()
+{
+	QSettings settings;
+	settings.setValue("recentFileList", QStringList());
+	
+	foreach (QWidget* widget, QApplication::topLevelWidgets())
+	{
+		MainWindow* main_window = qobject_cast<MainWindow*>(widget);
+		if (main_window)
+			main_window->updateRecentFileActions(true);
+	}
 }
 
 void DocumentSelectionWidget::paintEvent(QPaintEvent* event)
@@ -272,21 +330,26 @@ HomeScreenOtherWidget::HomeScreenOtherWidget(QWidget* parent) : QWidget(parent)
 	settings_button->setIcon(QIcon("images/settings.png"));
 	QCommandLinkButton* about_button = new QCommandLinkButton(tr("About"));
 	about_button->setIcon(QIcon("images/about.png"));
+	QCommandLinkButton* help_button = new QCommandLinkButton(tr("Help"));
+	help_button->setIcon(QIcon("images/help.png"));
 	
 	QFont button_font = settings_button->font();
 	button_font.setPointSize((int)(1.5 * button_font.pointSize()));
 	settings_button->setFont(button_font);
 	about_button->setFont(button_font);
+	help_button->setFont(button_font);
 	
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget(settings_button);
 	layout->addWidget(about_button);
+	layout->addWidget(help_button);
 	setLayout(layout);
 	
 	setAutoFillBackground(true);
 	
 	connect(settings_button, SIGNAL(clicked(bool)), this, SLOT(settingsSlot()));
 	connect(about_button, SIGNAL(clicked(bool)), this, SLOT(aboutSlot()));
+	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(helpSlot()));
 }
 void HomeScreenOtherWidget::aboutSlot()
 {
@@ -295,6 +358,10 @@ void HomeScreenOtherWidget::aboutSlot()
 void HomeScreenOtherWidget::settingsSlot()
 {
 	emit(settingsClicked());
+}
+void HomeScreenOtherWidget::helpSlot()
+{
+	emit(helpClicked());
 }
 
 #include "main_window_home_screen.moc"

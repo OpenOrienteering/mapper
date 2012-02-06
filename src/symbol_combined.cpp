@@ -120,21 +120,28 @@ bool CombinedSymbol::loadImpl(QFile* file, int version, Map* map)
 {
 	int size;
 	file->read((char*)&size, sizeof(int));
-	parts.resize(size);
+	temp_part_indices.resize(size);
 	
 	for (int i = 0; i < size; ++i)
 	{
 		int temp;
 		file->read((char*)&temp, sizeof(int));
-		parts[i] = reinterpret_cast<Symbol*>(temp);
+		temp_part_indices[i] = temp;
 	}
 	return true;
 }
 bool CombinedSymbol::loadFinished(Map* map)
 {
-	int size = (int)parts.size();
+	int size = (int)temp_part_indices.size();
+	parts.resize(size);
 	for (int i = 0; i < size; ++i)
-		parts[i] = map->getSymbol(reinterpret_cast<int>(parts[i]));
+	{
+		int index = temp_part_indices[i];
+		if (index < 0 || index >= map->getNumSymbols())
+			return false;
+		parts[i] = map->getSymbol(index);
+	}
+	temp_part_indices.clear();
 	return true;
 }
 
@@ -151,7 +158,7 @@ CombinedSymbolSettings::CombinedSymbolSettings(CombinedSymbol* symbol, CombinedS
 	number_edit = new QComboBox();
 	for (int i = 2; i <= max_count; ++i)
 		number_edit->addItem(QString::number(i), QVariant(i));
-	number_edit->setCurrentIndex(number_edit->findData(symbol->parts.size()));
+	number_edit->setCurrentIndex(number_edit->findData((int)symbol->parts.size()));
 	
 	layout->addWidget(number_label, 0, 0);
 	layout->addWidget(number_edit, 0, 1);

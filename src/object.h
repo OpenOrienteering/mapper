@@ -57,7 +57,7 @@ public:
 	inline Type getType() {return type;}
 	
 	void save(QFile* file);
-	void load(QFile* file);
+	void load(QFile* file, Map* map);
 	
 	/// Checks if the output_dirty flag is set and if yes, regenerates output and extent; returns true if output was previously dirty.
 	/// Use force == true to force a redraw
