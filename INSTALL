@@ -15,3 +15,6 @@ make -jX    (where X is the number of threads for building)
 Running:
 cd ../bin       (if still in the build directory)
 ./Mapper -graphicssystem raster
+
+The option "-graphicssystem raster" is a Qt option which usually leads to better performance.
+If this does not work (like reported for a recent version of Mac OS X), just leave it away.

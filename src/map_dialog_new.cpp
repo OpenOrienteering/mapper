@@ -66,12 +66,13 @@ NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMe
 	for (std::map<int, QStringList>::iterator it = symbol_set_map.begin(); it != symbol_set_map.end(); ++it)
 		scale_combo->addItem(QString::number(it->first));
 	
+	const QString default_scale = "10000";
+	scale_combo->setEditText(default_scale);
 	connect(scale_combo, SIGNAL(editTextChanged(QString)), this, SLOT(scaleChanged(QString)));
 	connect(symbol_set_list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(symbolSetDoubleClicked(QListWidgetItem*)));
 	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
 	connect(create_button, SIGNAL(clicked(bool)), this, SLOT(createClicked()));
-	
-	scale_combo->setEditText("10000");
+	scaleChanged(default_scale);
 }
 
 int NewMapDialog::getSelectedScale()

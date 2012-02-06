@@ -492,7 +492,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 	file.read((char*)&current_layer_index, sizeof(int));
 	
 	int num_layers;
-	if (file.read((char*)&num_layers, sizeof(int)) < sizeof(int))
+	if (file.read((char*)&num_layers, sizeof(int)) < (int)sizeof(int))
 		return false;
 	layers.resize(num_layers);
 	
