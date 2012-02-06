@@ -833,7 +833,7 @@ Symbol* PointSymbolEditorWidget::getCurrentElementSymbol()
 
 QCursor* PointSymbolEditorTool::cursor = NULL;
 
-PointSymbolEditorTool::PointSymbolEditorTool(MapEditorController* editor, PointSymbolEditorWidget* widget): MapEditorTool(editor)
+PointSymbolEditorTool::PointSymbolEditorTool(MapEditorController* editor, PointSymbolEditorWidget* widget): MapEditorTool(editor, Other)
 {
 	this->widget = widget;
 	

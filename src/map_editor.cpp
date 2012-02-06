@@ -90,7 +90,8 @@ void MapEditorController::setTool(MapEditorTool* new_tool)
 }
 void MapEditorController::setEditTool()
 {
-	setTool(new EditTool(this, edit_tool_act));
+	if (!current_tool || !current_tool->getType() == MapEditorTool::Edit)
+		setTool(new EditTool(this, edit_tool_act));
 }
 MapEditorTool* MapEditorController::getDefaultDrawToolForSymbol(Symbol* symbol)
 {
@@ -586,6 +587,9 @@ void MapEditorController::duplicateClicked()
 	map->clearObjectSelection(false);
 	for (int i = 0; i < (int)new_objects.size(); ++i)
 		map->addObjectToSelection(new_objects[i], i == (int)new_objects.size() - 1);
+	
+	setEditTool();
+	window->statusBar()->showMessage(tr("%1 object(s) duplicated").arg((int)new_objects.size()), 2000);
 }
 void MapEditorController::switchSymbolClicked()
 {
@@ -745,7 +749,7 @@ const QRgb MapEditorTool::inactive_color = qRgb(0, 0, 255);
 const QRgb MapEditorTool::active_color = qRgb(255, 150, 0);
 const QRgb MapEditorTool::selection_color = qRgb(210, 0, 229);
 
-MapEditorTool::MapEditorTool(MapEditorController* editor, QAction* tool_button): QObject(NULL), tool_button(tool_button), editor(editor)
+MapEditorTool::MapEditorTool(MapEditorController* editor, Type type, QAction* tool_button): QObject(NULL), tool_button(tool_button), type(type), editor(editor)
 {
 }
 MapEditorTool::~MapEditorTool()

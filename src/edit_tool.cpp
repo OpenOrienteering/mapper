@@ -33,7 +33,7 @@
 QCursor* EditTool::cursor = NULL;
 QImage* EditTool::point_handles = NULL;
 
-EditTool::EditTool(MapEditorController* editor, QAction* tool_button): MapEditorTool(editor, tool_button), renderables(editor->getMap())
+EditTool::EditTool(MapEditorController* editor, QAction* tool_button): MapEditorTool(editor, Edit, tool_button), renderables(editor->getMap())
 {
 	dragging = false;
 	hover_point = -2;

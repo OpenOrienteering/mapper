@@ -33,7 +33,7 @@
 
 QCursor* DrawPathTool::cursor = NULL;
 
-DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget): MapEditorTool(editor, tool_button), renderables(editor->getMap()), symbol_widget(symbol_widget)
+DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget): MapEditorTool(editor, Other, tool_button), renderables(editor->getMap()), symbol_widget(symbol_widget)
 {
 	dragging = false;
 	draw_in_progress = false;

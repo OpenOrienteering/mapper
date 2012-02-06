@@ -194,7 +194,13 @@ protected:
 class MapEditorTool : public QObject
 {
 public:
-	MapEditorTool(MapEditorController* editor, QAction* tool_button = NULL);
+	enum Type
+	{
+		Other = 0,
+		Edit = 1
+	};
+	
+	MapEditorTool(MapEditorController* editor, Type type, QAction* tool_button = NULL);
 	virtual ~MapEditorTool();
 	
 	/// This is called when the tool is activated and should be used to change any settings, e.g. the status bar text
@@ -217,6 +223,7 @@ public:
 	virtual bool keyReleaseEvent(QKeyEvent* event) {return false;}
 	virtual void focusOutEvent(QFocusEvent* event) {}
 	
+	inline Type getType() const {return type;}
 	inline QAction* getAction() const {return tool_button;}
 	
 	static const int click_tolerance;
@@ -229,6 +236,7 @@ protected:
 	void setStatusBarText(const QString& text);
 	
 	QAction* tool_button;
+	Type type;
 	MapEditorController* editor;
 };
 

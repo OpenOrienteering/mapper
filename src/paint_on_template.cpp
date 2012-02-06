@@ -29,7 +29,7 @@
 QCursor* PaintOnTemplateTool::cursor = NULL;
 int PaintOnTemplateTool::erase_width = 4;
 
-PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* tool_button, Template* temp) : MapEditorTool(editor, tool_button)
+PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* tool_button, Template* temp) : MapEditorTool(editor, Other, tool_button)
 {
 	paint_color = Qt::black;
 	dragging = false;

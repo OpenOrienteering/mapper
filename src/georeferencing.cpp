@@ -474,7 +474,7 @@ void GeoreferencingWidget::updateDirtyRect(bool redraw)
 
 // ### GeoreferencingEditTool ###
 
-GeoreferencingEditTool::GeoreferencingEditTool(MapEditorController* editor, QAction* tool_button, GeoreferencingWidget* widget): MapEditorTool(editor, tool_button), widget(widget)
+GeoreferencingEditTool::GeoreferencingEditTool(MapEditorController* editor, QAction* tool_button, GeoreferencingWidget* widget): MapEditorTool(editor, Other, tool_button), widget(widget)
 {
 	active_point = -1;
 }
@@ -530,7 +530,7 @@ void GeoreferencingEditTool::findHoverPoint(QPoint mouse_pos, MapWidget* map_wid
 
 QCursor* GeoreferencingAddTool::cursor = NULL;
 
-GeoreferencingAddTool::GeoreferencingAddTool(MapEditorController* editor, QAction* tool_button, GeoreferencingWidget* widget): MapEditorTool(editor, tool_button), widget(widget)
+GeoreferencingAddTool::GeoreferencingAddTool(MapEditorController* editor, QAction* tool_button, GeoreferencingWidget* widget): MapEditorTool(editor, Other, tool_button), widget(widget)
 {
 	first_point_set = false;
 	
