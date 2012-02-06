@@ -408,7 +408,7 @@ void LineRenderable::render(QPainter& painter, bool force_min_size, float scalin
 
 // ### AreaRenderable ###
 
-AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords) : Renderable()
+AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector* path_coords) : Renderable()
 {
 	assert(transformed_coords.size() >= 3 && transformed_coords.size() == coords.size());
 	color_priority = symbol->getColor() ? symbol->getColor()->priority : MapColor::Reserved;
@@ -451,7 +451,15 @@ AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transf
 	//	path.setFillRule(Qt::WindingFill);
 	
 	// Get extent
-	extent = path.controlPointRect();
+	if (path_coords && path_coords->size() > 0)
+	{
+		int path_coords_size = path_coords->size();
+		extent = QRectF(path_coords->at(0).pos.getX(), path_coords->at(0).pos.getY(), 0.0001f, 0.0001f);
+		for (int i = 1; i < path_coords_size; ++i)
+			rectInclude(extent, path_coords->at(i).pos.toQPointF());
+	}
+	else
+		extent = path.controlPointRect();
 	assert(extent.right() < 999999);	// assert if bogus values are returned
 }
 AreaRenderable::AreaRenderable(const AreaRenderable& other) : Renderable(other)

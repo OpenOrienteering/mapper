@@ -346,7 +346,7 @@ void AreaSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 	{
 		// The shape output is even created if the area is not filled with a color
 		// because the QPainterPath created by it is needed as clip path for the fill objects
-		AreaRenderable* clip_path = new AreaRenderable(this, coords, flags);
+		AreaRenderable* clip_path = new AreaRenderable(this, coords, flags, &object->getPathCoordinateVector());
 		output.push_back(clip_path);
 		
 		int size = (int)patterns.size();

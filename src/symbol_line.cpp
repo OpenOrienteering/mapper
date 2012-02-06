@@ -522,7 +522,7 @@ void LineSymbol::createPointedLineCap(const MapCoordVector& flags, const MapCoor
 	
 	// Add renderable
 	assert(cap_coords.size() >= 3 && cap_coords.size() == cap_flags.size());
-	output.push_back(new AreaRenderable(&area_symbol, cap_coords, cap_flags));
+	output.push_back(new AreaRenderable(&area_symbol, cap_coords, cap_flags, NULL));
 }
 void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, MapCoordVector& out_flags, MapCoordVectorF& out_coords, RenderableVector& output)
 {
