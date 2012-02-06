@@ -78,9 +78,29 @@ void MapEditorController::setTool(MapEditorTool* new_tool)
 	
 	current_tool = new_tool;
 	if (current_tool)
+	{
 		current_tool->init();
+		if (current_tool->getAction())
+			current_tool->getAction()->setChecked(true);
+	}
 	
 	map_widget->setTool(current_tool);
+}
+void MapEditorController::setEditTool()
+{
+	setTool(new EditTool(this, edit_tool_act));
+}
+MapEditorTool* MapEditorController::getDefaultDrawToolForSymbol(Symbol* symbol)
+{
+	if (!symbol)
+		return NULL;
+	else if (symbol->getType() == Symbol::Point)
+		return new DrawPointTool(this, draw_point_act, symbol_widget);
+	else if (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined)
+		return new DrawPathTool(this, draw_path_act, symbol_widget);
+	else
+		assert(false);
+	return NULL;
 }
 
 void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
@@ -175,7 +195,7 @@ void MapEditorController::attach(MainWindow* window)
 	if (mode == MapEditor)
 	{
 		edit_tool_act->setChecked(true);
-		setTool(new EditTool(this, edit_tool_act));
+		setEditTool();
 	}
 	
 	// Check if there is an invalid template and if so, output a warning
@@ -356,24 +376,24 @@ void MapEditorController::detach()
 
 void MapEditorController::undo()
 {
-
+	// TODO
 }
 void MapEditorController::redo()
 {
-
+	// TODO
 }
 
 void MapEditorController::cut()
 {
-
+	// TODO
 }
 void MapEditorController::copy()
 {
-
+	// TODO
 }
 void MapEditorController::paste()
 {
-
+	// TODO
 }
 
 void MapEditorController::showSymbolWindow(bool show)
@@ -484,7 +504,10 @@ void MapEditorController::selectedSymbolsChanged()
 }
 void MapEditorController::editToolClicked(bool checked)
 {
-	setTool(checked ? new EditTool(this, edit_tool_act) : NULL);
+	if (checked)
+		setEditTool();
+	else
+		setTool(NULL);
 }
 void MapEditorController::drawPointClicked(bool checked)
 {

@@ -32,8 +32,6 @@
 #include "symbol_area.h"
 #include "qbezier_p.h"
 
-const float LineSymbol::bezier_error = 0.25f;
-
 LineSymbol::LineSymbol() : Symbol(Symbol::Line)
 {
 	line_width = 0;
@@ -119,18 +117,27 @@ Symbol* LineSymbol::duplicate()
 
 void LineSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output)
 {
-	createRenderables(path_closed, flags, coords, output);
+	createRenderables(path_closed, flags, coords, (PathCoordVector*)&object->getPathCoordinateVector(), output);
 }
-void LineSymbol::createRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
+void LineSymbol::createRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, RenderableVector& output)
 {
+	// TODO: Optimization: Use pre-supplied path_coords in more places
+	
 	if (coords.size() < 2)
 		return;
+	
+	PathCoordVector local_path_coords;
+	if (!path_coords)
+	{
+		PathCoord::calculatePathCoords(flags, coords, &local_path_coords);
+		path_coords = &local_path_coords;
+	}
 	
 	// Start or end symbol?
 	if (start_symbol)
 	{
 		bool ok;
-		MapCoordF tangent = calculateTangent(coords, 0, false, ok);
+		MapCoordF tangent = PathCoord::calculateTangent(coords, 0, false, ok);
 		if (ok)
 		{
 			// NOTE: misuse of the point symbol
@@ -144,7 +151,7 @@ void LineSymbol::createRenderables(bool path_closed, const MapCoordVector& flags
 		size_t last = coords.size() - 1;
 		
 		bool ok;
-		MapCoordF tangent = calculateTangent(coords, last, true, ok);
+		MapCoordF tangent = PathCoord::calculateTangent(coords, last, true, ok);
 		if (ok)
 		{
 			PointObject point_object(end_symbol);
@@ -169,13 +176,13 @@ void LineSymbol::createRenderables(bool path_closed, const MapCoordVector& flags
 		if (line_width > 0)
 		{
 			if (color && (cap_style != PointedCap || pointed_cap_length == 0) && !have_border_lines)
-				output.push_back(new LineRenderable(this, coords, flags, path_closed));
+				output.push_back(new LineRenderable(this, coords, flags, *path_coords, path_closed));
 			else if (have_border_lines || (cap_style == PointedCap && pointed_cap_length > 0))
 			{
 				int part_start = 0;
 				int part_end = 0;
-				LineCoordVector line_coords;
-				while (getNextLinePart(flags, coords, part_start, part_end, &line_coords, false, false))
+				PathCoordVector line_coords;
+				while (PathCoord::getNextPathPart(flags, coords, part_start, part_end, &line_coords, false, false))
 				{
 					int cur_line_coord = 1;
 					bool has_start = !(part_start == 0 && path_closed);
@@ -205,7 +212,7 @@ void LineSymbol::createRenderables(bool path_closed, const MapCoordVector& flags
 	{
 		// Create main line renderable
 		if (color)
-			output.push_back(new LineRenderable(this, processed_coords, processed_flags, path_closed));
+			output.push_back(new LineRenderable(this, processed_coords, processed_flags, *path_coords, path_closed));
 		
 		// Border lines?
 		if (create_border)
@@ -235,16 +242,16 @@ void LineSymbol::createBorderLines(const MapCoordVector& flags, const MapCoordVe
 		border_symbol.dashed = false;	// important, otherwise more dashes might be added by createRenderables()!
 		
 		shiftCoordinates(dashed_flags, dashed_coords, path_closed, shift, border_flags, border_coords);
-		border_symbol.createRenderables(path_closed, border_flags, border_coords, output);
+		border_symbol.createRenderables(path_closed, border_flags, border_coords, NULL, output);
 		shiftCoordinates(dashed_flags, dashed_coords, path_closed, -shift, border_flags, border_coords);
-		border_symbol.createRenderables(path_closed, border_flags, border_coords, output);
+		border_symbol.createRenderables(path_closed, border_flags, border_coords, NULL, output);
 	}
 	else
 	{
 		shiftCoordinates(flags, coords, path_closed, shift, border_flags, border_coords);
-		border_symbol.createRenderables(path_closed, border_flags, border_coords, output);
+		border_symbol.createRenderables(path_closed, border_flags, border_coords, NULL, output);
 		shiftCoordinates(flags, coords, path_closed, -shift, border_flags, border_coords);
-		border_symbol.createRenderables(path_closed, border_flags, border_coords, output);
+		border_symbol.createRenderables(path_closed, border_flags, border_coords, NULL, output);
 	}
 }
 void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, float shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords)
@@ -264,7 +271,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 	for (int i = 0; i < size; ++i)
 	{
 		float scaling;
-		MapCoordF right_vector = calculateRightVector(flags, coords, path_closed, i, &scaling);
+		MapCoordF right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, i, &scaling);
 		float radius = scaling * shift;
 		
 		if (flags[i].isCurveStart())
@@ -325,7 +332,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 				}
 				
 				/*float end_scaling;
-				MapCoordF end_right_vector = calculateRightVector(flags, coords, path_closed, i+3, &end_scaling);
+				MapCoordF end_right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, i+3, &end_scaling);
 				float end_radius = end_scaling * shift;
 				out_flags.push_back(no_flags);
 				out_coords.push_back(MapCoordF(coords[i+3].getX() + end_radius * end_right_vector.getX(), coords[i].getY() + end_radius * end_right_vector.getY()));*/
@@ -340,7 +347,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 		}
 	}
 }
-void LineSymbol::processContinuousLine(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, const LineCoordVector& line_coords,
+void LineSymbol::processContinuousLine(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
 									   float start, float end, bool has_start, bool has_end, int& cur_line_coord,
 									   MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, bool include_first_point, bool set_mid_symbols, RenderableVector& output)
 {
@@ -367,8 +374,8 @@ void LineSymbol::processContinuousLine(bool path_closed, const MapCoordVector& f
 	if (create_line)
 	{
 		// Add line to processed_coords/flags
-		getCoordinatesForRange(flags, coords, line_coords, start + (has_start_cap ? adapted_cap_length : 0), end - (has_end_cap ? adapted_cap_length : 0), cur_line_coord,
-							   include_first_point, processed_flags, processed_coords, NULL, set_mid_symbols, output);
+		calculateCoordinatesForRange(flags, coords, line_coords, start + (has_start_cap ? adapted_cap_length : 0), end - (has_end_cap ? adapted_cap_length : 0), cur_line_coord,
+									 include_first_point, processed_flags, processed_coords, NULL, set_mid_symbols, output);
 	}
 	
 	if (has_end_cap)
@@ -379,7 +386,7 @@ void LineSymbol::processContinuousLine(bool path_closed, const MapCoordVector& f
 	if (has_end && !processed_flags.empty())
 		processed_flags[processed_flags.size() - 1].setHolePoint(true);
 }
-void LineSymbol::createPointedLineCap(const MapCoordVector& flags, const MapCoordVectorF& coords, const LineSymbol::LineCoordVector& line_coords,
+void LineSymbol::createPointedLineCap(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
 									  float start, float end, int& cur_line_coord, bool is_end, RenderableVector& output)
 {
 	AreaSymbol area_symbol;
@@ -393,7 +400,7 @@ void LineSymbol::createPointedLineCap(const MapCoordVector& flags, const MapCoor
 	MapCoordVectorF cap_middle_coords;
 	std::vector<float> cap_lengths;
 	
-	getCoordinatesForRange(flags, coords, line_coords, start, end, cur_line_coord, true, cap_flags, cap_middle_coords, &cap_lengths, false, output);
+	calculateCoordinatesForRange(flags, coords, line_coords, start, end, cur_line_coord, true, cap_flags, cap_middle_coords, &cap_lengths, false, output);
 	
 	// Calculate coordinates on the left and right side of the line
 	int cap_size = (int)cap_middle_coords.size();
@@ -413,11 +420,11 @@ void LineSymbol::createPointedLineCap(const MapCoordVector& flags, const MapCoor
 		if (orig_end_index >= (int)coords.size())
 			orig_end_index = 0;
 		if (cap_middle_coords[i].lengthToSquared(coords[orig_start_index]) < 0.001f*0.001f)
-			right_vector = calculateRightVector(flags, coords, false, orig_start_index, &scaling);
+			right_vector = PathCoord::calculateRightVector(flags, coords, false, orig_start_index, &scaling);
 		else if (cap_middle_coords[i].lengthToSquared(coords[orig_end_index]) < 0.001f*0.001f)
-			right_vector = calculateRightVector(flags, coords, false, orig_end_index, &scaling);
+			right_vector = PathCoord::calculateRightVector(flags, coords, false, orig_end_index, &scaling);
 		else
-			right_vector = calculateRightVector(cap_flags, cap_middle_coords, false, i, &scaling);
+			right_vector = PathCoord::calculateRightVector(cap_flags, cap_middle_coords, false, i, &scaling);
 		assert(right_vector.lengthSquared() < 1.01f);
 		float radius = factor * scaling * line_half_width;
 		if (radius > 2 * line_half_width)
@@ -435,7 +442,7 @@ void LineSymbol::createPointedLineCap(const MapCoordVector& flags, const MapCoor
 			const float overlap_factor = 0.005f;
 			
 			bool ok;
-			MapCoordF tangent = calculateTangent(cap_middle_coords, i, !is_end, ok);
+			MapCoordF tangent = PathCoord::calculateTangent(cap_middle_coords, i, !is_end, ok);
 			if (ok)
 			{
 				tangent.normalize();
@@ -517,268 +524,6 @@ void LineSymbol::createPointedLineCap(const MapCoordVector& flags, const MapCoor
 	assert(cap_coords.size() >= 3 && cap_coords.size() == cap_flags.size());
 	output.push_back(new AreaRenderable(&area_symbol, cap_coords, cap_flags));
 }
-MapCoordF LineSymbol::calculateRightVector(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, int i, float* scaling)
-{
-	bool ok;
-	
-	if ((i == 0 && !path_closed) || (i > 0 && flags[i-1].isHolePoint()))
-	{
-		if (scaling)
-			*scaling = 1;
-		MapCoordF right = calculateTangent(coords, i, false, ok);
-		right.perpRight();
-		right.normalize();
-		return right;
-	}
-	else if ((i == (int)coords.size() - 1 && !path_closed) || flags[i].isHolePoint())
-	{
-		if (scaling)
-			*scaling = 1;
-		MapCoordF right = calculateTangent(coords, i, true, ok);
-		right.perpRight();
-		right.normalize();
-		return right;
-	}
-	
-	MapCoordF to_coord = calculateTangent(coords, i, true, ok);
-	if (!ok)
-	{
-		if (path_closed)
-			to_coord = calculateTangent(coords, (int)coords.size() - 1, true, ok);
-		else
-			to_coord = calculateTangent(coords, i, false, ok);
-	}
-	to_coord.normalize();
-	MapCoordF to_next = calculateTangent(coords, i, false, ok);
-	if (!ok)
-	{
-		if (path_closed)
-			to_next = calculateTangent(coords, 0, false, ok);
-		else
-			to_next = calculateTangent(coords, i, true, ok);
-	}
-	to_next.normalize();
-	MapCoordF right = MapCoordF(-to_coord.getY() - to_next.getY(), to_next.getX() + to_coord.getX());
-	right.normalize();
-	if (scaling)
-		*scaling = qMin(1.0f / sin(acos(right.getX() * to_coord.getX() + right.getY() * to_coord.getY())), 2.0 * miterLimit());
-	
-	return right;
-}
-MapCoordF LineSymbol::calculateTangent(const MapCoordVectorF& coords, int i, bool backward, bool& ok)
-{
-	// TODO: use this for tangent calculation in LineSymbol or for objects in general
-	
-	ok = true;
-	MapCoordF tangent;
-	if (backward)
-	{
-		//assert(i >= 1);
-		for (int k = i-1; k >= 0; --k)
-		{
-			tangent = MapCoordF(coords[i].getX() - coords[k].getX(), coords[i].getY() - coords[k].getY());
-			if (tangent.lengthSquared() > 0.01f*0.01f)
-				return tangent;
-		}
-		
-		ok = false;
-	}
-	else
-	{
-		int size = (int)coords.size();
-		//assert(i < size - 1);
-		for (int k = i+1; k < size; ++k)
-		{
-			tangent = MapCoordF(coords[k].getX() - coords[i].getX(), coords[k].getY() - coords[i].getY());
-			if (tangent.lengthSquared() > 0.01f*0.01f)
-				return tangent;
-		}
-		
-		ok = false;
-	}
-	return tangent;
-}
-
-void LineSymbol::getCoordinatesForRange(const MapCoordVector& flags, const MapCoordVectorF& coords, const LineSymbol::LineCoordVector& line_coords,
-										float start, float end, int& cur_line_coord, bool include_start_coord, MapCoordVector& out_flags, MapCoordVectorF& out_coords,
-										std::vector<float>* out_lengths, bool set_mid_symbols, RenderableVector& output)
-{
-	assert(cur_line_coord > 0);
-	int line_coords_size = (int)line_coords.size();
-	while (cur_line_coord < line_coords_size - 1 && line_coords[cur_line_coord].clen < start)
-		++cur_line_coord;
-	
-	// Start position
-	int start_bezier_index = -1;	// if the range starts at a bezier curve, this is the curve's index, otherwise -1
-	float start_bezier_split_param;	// the parameter value where the split of the curve for the range start was made
-	MapCoordF o3, o4;				// temporary bezier control points
-	if (flags[line_coords[cur_line_coord].index].isCurveStart())
-	{
-		int index = line_coords[cur_line_coord].index;
-		float factor = (start - line_coords[cur_line_coord-1].clen) / (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen);
-		assert(factor >= 0 && factor <= 1.001f);
-		if (factor > 1)
-			factor = 1;
-		float prev_param = (line_coords[cur_line_coord-1].index == line_coords[cur_line_coord].index) ? line_coords[cur_line_coord-1].param : 0;
-		assert(prev_param <= line_coords[cur_line_coord].param);
-		float p = prev_param + (line_coords[cur_line_coord].param - prev_param) * factor;
-		assert(p >= 0 && p <= 1);
-		
-		MapCoordF o0, o1;
-		if (!include_start_coord)
-		{
-			MapCoordF o2;
-			splitBezierCurve(coords[index], coords[index+1], coords[index+2], (index < (int)flags.size() - 3) ? coords[index+3] : coords[0], p, o0, o1, o2, o3, o4);
-		}
-		else
-		{
-			out_coords.push_back(MapCoordF(0, 0));
-			splitBezierCurve(coords[index], coords[index+1], coords[index+2], (index < (int)flags.size() - 3) ? coords[index+3] : coords[0], p, o0, o1, out_coords[out_coords.size() - 1], o3, o4);
-			MapCoord flag(0, 0);
-			flag.setCurveStart(true);
-			out_flags.push_back(flag);
-			if (out_lengths)
-				out_lengths->push_back(start);
-		}
-		
-		start_bezier_split_param = p;
-		start_bezier_index = index;
-	}
-	else if (include_start_coord)
-	{
-		out_coords.push_back(MapCoordF(0, 0));
-		calcPositionAt(flags, coords, line_coords, start, cur_line_coord, &out_coords[out_coords.size() - 1], NULL);
-		out_flags.push_back(MapCoord(0, 0));
-		if (out_lengths)
-			out_lengths->push_back(start);
-	}
-	
-	int current_index = line_coords[cur_line_coord].index;
-	
-	// Middle position
-	int num_mid_symbols = qMax(1, mid_symbols_per_spot);
-	if (set_mid_symbols && mid_symbol && !mid_symbol->isEmpty() && (num_mid_symbols-1) * 0.001f * mid_symbol_distance <= end - start)
-	{
-		PointObject point_object(mid_symbol);
-		MapCoordVectorF point_coord;
-		point_coord.push_back(MapCoordF(0, 0));
-		MapCoordF right_vector;
-		
-		float mid_position = (end + start) / 2 - ((num_mid_symbols-1) * 0.001f * mid_symbol_distance) / 2;
-		advanceCoordinateRangeTo(flags, coords, line_coords, cur_line_coord, current_index, mid_position, start_bezier_index, out_flags, out_coords, out_lengths, o3, o4);
-		
-		for (int i = 0; i < num_mid_symbols; ++i)
-		{
-			calcPositionAt(flags, coords, line_coords, mid_position, cur_line_coord, &point_coord[0], &right_vector);
-			
-			point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
-			mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, false, output);
-			
-			mid_position += 0.001f * mid_symbol_distance;
-			if (i < num_mid_symbols - 1)
-				advanceCoordinateRangeTo(flags, coords, line_coords, cur_line_coord, current_index, mid_position, start_bezier_index, out_flags, out_coords, out_lengths, o3, o4);
-		}
-	}
-	
-	// End position
-	advanceCoordinateRangeTo(flags, coords, line_coords, cur_line_coord, current_index, end, start_bezier_index, out_flags, out_coords, out_lengths, o3, o4);
-	
-	out_coords.push_back(MapCoordF(0, 0));
-	if (flags[current_index].isCurveStart())
-	{
-		int index = line_coords[cur_line_coord].index;
-		float factor = (end - line_coords[cur_line_coord-1].clen) / (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen);
-		assert(factor >= 0 && factor <= 1.001f);
-		if (factor > 1)
-			factor = 1;
-		float prev_param = (line_coords[cur_line_coord-1].index == line_coords[cur_line_coord].index) ? line_coords[cur_line_coord-1].param : 0;
-		assert(prev_param <= line_coords[cur_line_coord].param);
-		float p = prev_param + (line_coords[cur_line_coord].param - prev_param) * factor;
-		assert(p >= 0 && p <= 1);
-		
-		out_flags.push_back(MapCoord(0, 0));
-		out_coords.push_back(MapCoordF(0, 0));
-		out_flags.push_back(MapCoord(0, 0));
-		out_coords.push_back(MapCoordF(0, 0));
-		if (out_lengths)
-		{
-			out_lengths->push_back(-1);
-			out_lengths->push_back(-1);
-		}
-		MapCoordF unused, unused2;
-		
-		out_flags.push_back(MapCoord(0, 0));
-		if (start_bezier_index == current_index)
-		{
-			// The dash end is in the same curve as the start, need to make a second split with the correct parameter
-			p = (p - start_bezier_split_param) / (1 - start_bezier_split_param);
-			assert(p >= 0 && p <= 1);
-			
-			splitBezierCurve(out_coords[out_coords.size() - 4], o3, o4, (index < (int)flags.size() - 3) ? coords[index+3] : coords[0],
-							 p, out_coords[out_coords.size() - 3], out_coords[out_coords.size() - 2],
-							 out_coords[out_coords.size() - 1], unused, unused2);
-		}
-		else
-		{
-			splitBezierCurve(coords[index], coords[index+1], coords[index+2], (index < (int)flags.size() - 3) ? coords[index+3] : coords[0],
-							 p, out_coords[out_coords.size() - 3], out_coords[out_coords.size() - 2],
-							 out_coords[out_coords.size() - 1], unused, unused2);
-		}
-		if (out_lengths)
-			out_lengths->push_back(end);
-	}
-	else
-	{
-		out_flags.push_back(MapCoord(0, 0));
-		calcPositionAt(flags, coords, line_coords, end, cur_line_coord, &out_coords[out_coords.size() - 1], NULL);
-		if (out_lengths)
-			out_lengths->push_back(end);
-	}
-}
-void LineSymbol::advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const LineCoordVector& line_coords, int& cur_line_coord, int& current_index, float cur_length,
-									 int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, std::vector<float>* out_lengths, const MapCoordF& o3, const MapCoordF& o4)
-{
-	int line_coords_size = (int)line_coords.size();
-	while (cur_line_coord < line_coords_size - 1 && line_coords[cur_line_coord].clen < cur_length)
-	{
-		++cur_line_coord;
-		if (line_coords[cur_line_coord].index != current_index)
-		{
-			if (current_index == start_bezier_index)
-			{
-				out_flags.push_back(MapCoord(0, 0));
-				out_coords.push_back(o3);
-				if (out_lengths)
-					out_lengths->push_back(-1);
-				out_flags.push_back(MapCoord(0, 0));
-				out_coords.push_back(o4);
-				if (out_lengths)
-					out_lengths->push_back(-1);
-				out_flags.push_back(flags[current_index + 3]);
-				out_coords.push_back(coords[current_index + 3]);
-				if (out_lengths)
-					out_lengths->push_back(line_coords[cur_line_coord-1].clen);
-				
-				current_index += 3;
-				assert(current_index == line_coords[cur_line_coord].index);
-			}
-			else
-			{
-				assert((!flags[current_index].isCurveStart() && current_index + 1 == line_coords[cur_line_coord].index) ||
-				       (flags[current_index].isCurveStart() && current_index + 3 == line_coords[cur_line_coord].index) ||
-				       (flags[current_index+1].isHolePoint() && current_index + 2 == line_coords[cur_line_coord].index));
-				do
-				{
-					++current_index;
-					out_flags.push_back(flags[current_index]);
-					out_coords.push_back(coords[current_index]);
-					if (out_lengths)
-						out_lengths->push_back(line_coords[cur_line_coord-1].clen);
-				} while (current_index < line_coords[cur_line_coord].index);
-			}
-		}
-	}	
-}
 void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, MapCoordVector& out_flags, MapCoordVectorF& out_coords, RenderableVector& output)
 {
 	int size = (int)coords.size();
@@ -794,7 +539,7 @@ void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags
 	
 	int part_start = 0;
 	int part_end = 0;
-	LineCoordVector line_coords;
+	PathCoordVector line_coords;
 	out_flags.reserve(4 * coords.size());
 	out_coords.reserve(4 * coords.size());
 	
@@ -803,7 +548,7 @@ void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags
 	float old_length = 0;	// length from line part(s) before dash point(s) which is not accounted for yet
 	int first_line_coord = 0;
 	int cur_line_coord = 1;
-	while (getNextLinePart(flags, coords, part_start, part_end, &line_coords, true, true))
+	while (PathCoord::getNextPathPart(flags, coords, part_start, part_end, &line_coords, true, true))
 	{
 		if (part_start > 0 && flags[part_start-1].isHolePoint())
 		{
@@ -893,7 +638,7 @@ void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags
 		if (ends_with_dashpoint && dashes_in_group == 1 && mid_symbol && !mid_symbol->isEmpty())
 		{
 			// Place a mid symbol on the dash point
-			MapCoordF right = calculateRightVector(flags, coords, path_closed, part_end, NULL);
+			MapCoordF right = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
 			point_object.setRotation(atan2(right.getX(), right.getY()));
 			point_coord[0] = coords[part_end];
 			mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, false, output);
@@ -919,7 +664,7 @@ void LineSymbol::createDashSymbolRenderables(bool path_closed, const MapCoordVec
 			continue;
 		
 		float scaling;
-		MapCoordF right = calculateRightVector(flags, coords, path_closed, i, &scaling);
+		MapCoordF right = PathCoord::calculateRightVector(flags, coords, path_closed, i, &scaling);
 		
 		point_object.setRotation(atan2(right.getX(), right.getY()));
 		point_coord[0] = coords[i];
@@ -940,15 +685,15 @@ void LineSymbol::createDottedRenderables(bool path_closed, const MapCoordVector&
 	bool is_first_part = true;
 	int part_start = 0;
 	int part_end = 0;
-	LineCoordVector line_coords;
-	while (getNextLinePart(flags, coords, part_start, part_end, &line_coords, true, false))
+	PathCoordVector line_coords;
+	while (PathCoord::getNextPathPart(flags, coords, part_start, part_end, &line_coords, true, false))
 	{
 		if (is_first_part)
 		{
 			if (end_length == 0)
 			{
 				// Insert point at start coordinate
-				right_vector = calculateRightVector(flags, coords, path_closed, part_start, NULL);
+				right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_start, NULL);
 				point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 				point_coord[0] = coords[part_start];
 				mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, false, output);
@@ -975,13 +720,13 @@ void LineSymbol::createDottedRenderables(bool path_closed, const MapCoordVector&
 				if (show_at_least_one_symbol)
 				{
 					// Insert point at start coordinate
-					right_vector = calculateRightVector(flags, coords, path_closed, part_start, NULL);
+					right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_start, NULL);
 					point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 					point_coord[0] = coords[part_start];
 					mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, false, output);
 					
 					// Insert point at end coordinate
-					right_vector = calculateRightVector(flags, coords, path_closed, part_end, NULL);
+					right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
 					point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 					point_coord[0] = coords[part_end];
 					mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, false, output);
@@ -1006,7 +751,7 @@ void LineSymbol::createDottedRenderables(bool path_closed, const MapCoordVector&
 						for (int s = 0; s < mid_symbols_per_spot; ++s)
 						{
 							double position = adapted_end_length + s * mid_symbol_distance_f + i * (adapted_segment_length + mid_symbols_length);
-							calcPositionAt(flags, coords, line_coords, position, line_coord_search_start, &point_coord[0], &right_vector);
+							PathCoord::PathCoord::calculatePositionAt(flags, coords, line_coords, position, line_coord_search_start, &point_coord[0], &right_vector);
 							point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 							mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, false, output);
 						}
@@ -1036,7 +781,7 @@ void LineSymbol::createDottedRenderables(bool path_closed, const MapCoordVector&
 							if (i == segment_count && s == mid_symbols_per_spot - 1)
 								break;
 							
-							calcPositionAt(flags, coords, line_coords, s * mid_symbol_distance_f + i * adapted_segment_length, line_coord_search_start, &point_coord[0], &right_vector);
+							PathCoord::PathCoord::calculatePositionAt(flags, coords, line_coords, s * mid_symbol_distance_f + i * adapted_segment_length, line_coord_search_start, &point_coord[0], &right_vector);
 							point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 							mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, false, output);
 						}
@@ -1048,7 +793,7 @@ void LineSymbol::createDottedRenderables(bool path_closed, const MapCoordVector&
 		if (end_length == 0)
 		{
 			// Insert point at end coordinate
-			right_vector = calculateRightVector(flags, coords, path_closed, part_end, NULL);
+			right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
 			point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 			point_coord[0] = coords[part_end];
 			mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, false, output);
@@ -1058,192 +803,186 @@ void LineSymbol::createDottedRenderables(bool path_closed, const MapCoordVector&
 			is_first_part = true;
 	}
 }
-bool LineSymbol::getNextLinePart(const MapCoordVector& flags, const MapCoordVectorF& coords, int& part_start, int& part_end, LineSymbol::LineCoordVector* line_coords, bool break_at_dash_points, bool append_line_coords)
+
+void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
+										float start, float end, int& cur_line_coord, bool include_start_coord, MapCoordVector& out_flags, MapCoordVectorF& out_coords,
+										std::vector<float>* out_lengths, bool set_mid_symbols, RenderableVector& output)
 {
-	int size = (int)coords.size();
-	if (part_end == size - 1)
-		return false;
-	if (!append_line_coords)
-		line_coords->clear();
+	assert(cur_line_coord > 0);
+	int line_coords_size = (int)line_coords.size();
+	while (cur_line_coord < line_coords_size - 1 && line_coords[cur_line_coord].clen < start)
+		++cur_line_coord;
 	
-	part_start = part_end;
-	if (flags[part_start].isHolePoint())
-		++part_start;
-	
-	if (!append_line_coords || line_coords->empty() || (part_start > 0 && flags[part_start-1].isHolePoint()))
+	// Start position
+	int start_bezier_index = -1;	// if the range starts at a bezier curve, this is the curve's index, otherwise -1
+	float start_bezier_split_param;	// the parameter value where the split of the curve for the range start was made
+	MapCoordF o3, o4;				// temporary bezier control points
+	if (flags[line_coords[cur_line_coord].index].isCurveStart())
 	{
-		LineCoord start;
-		start.clen = 0;
-		start.index = part_start;
-		start.pos = coords[part_start];
-		start.param = 0;
-		line_coords->push_back(start);
-	}
-	
-	for (int i = part_start + 1; i < size; ++i)
-	{
-		if (flags[i-1].isCurveStart())
+		int index = line_coords[cur_line_coord].index;
+		float factor = (start - line_coords[cur_line_coord-1].clen) / (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen);
+		assert(factor >= 0 && factor <= 1.001f);
+		if (factor > 1)
+			factor = 1;
+		float prev_param = (line_coords[cur_line_coord-1].index == line_coords[cur_line_coord].index) ? line_coords[cur_line_coord-1].param : 0;
+		assert(prev_param <= line_coords[cur_line_coord].param);
+		float p = prev_param + (line_coords[cur_line_coord].param - prev_param) * factor;
+		assert(p >= 0 && p <= 1);
+		
+		MapCoordF o0, o1;
+		if (!include_start_coord)
 		{
-			if (i == size - 2)
-				curveToLineCoord(coords[i-1], coords[i], coords[i+1], coords[0], i-1, bezier_error, line_coords);
-			else
-				curveToLineCoord(coords[i-1], coords[i], coords[i+1], coords[i+2], i-1, bezier_error, line_coords);
-			i += 2;
+			MapCoordF o2;
+			PathCoord::splitBezierCurve(coords[index], coords[index+1], coords[index+2], (index < (int)flags.size() - 3) ? coords[index+3] : coords[0], p, o0, o1, o2, o3, o4);
 		}
 		else
 		{
-			LineCoord coord;
-			coord.clen = line_coords->at(line_coords->size() - 1).clen + coords[i].lengthTo(coords[i-1]);
-			coord.index = i - 1;
-			coord.pos = coords[i];
-			coord.param = 1;
-			line_coords->push_back(coord);
+			out_coords.push_back(MapCoordF(0, 0));
+			PathCoord::splitBezierCurve(coords[index], coords[index+1], coords[index+2], (index < (int)flags.size() - 3) ? coords[index+3] : coords[0], p, o0, o1, out_coords[out_coords.size() - 1], o3, o4);
+			MapCoord flag(0, 0);
+			flag.setCurveStart(true);
+			out_flags.push_back(flag);
+			if (out_lengths)
+				out_lengths->push_back(start);
 		}
 		
-		if (i < size && (flags[i].isHolePoint() || (break_at_dash_points && flags[i].isDashPoint())))
+		start_bezier_split_param = p;
+		start_bezier_index = index;
+	}
+	else if (include_start_coord)
+	{
+		out_coords.push_back(MapCoordF(0, 0));
+		PathCoord::calculatePositionAt(flags, coords, line_coords, start, cur_line_coord, &out_coords[out_coords.size() - 1], NULL);
+		out_flags.push_back(MapCoord(0, 0));
+		if (out_lengths)
+			out_lengths->push_back(start);
+	}
+	
+	int current_index = line_coords[cur_line_coord].index;
+	
+	// Middle position
+	int num_mid_symbols = qMax(1, mid_symbols_per_spot);
+	if (set_mid_symbols && mid_symbol && !mid_symbol->isEmpty() && (num_mid_symbols-1) * 0.001f * mid_symbol_distance <= end - start)
+	{
+		PointObject point_object(mid_symbol);
+		MapCoordVectorF point_coord;
+		point_coord.push_back(MapCoordF(0, 0));
+		MapCoordF right_vector;
+		
+		float mid_position = (end + start) / 2 - ((num_mid_symbols-1) * 0.001f * mid_symbol_distance) / 2;
+		advanceCoordinateRangeTo(flags, coords, line_coords, cur_line_coord, current_index, mid_position, start_bezier_index, out_flags, out_coords, out_lengths, o3, o4);
+		
+		for (int i = 0; i < num_mid_symbols; ++i)
 		{
-			part_end = i;
-			return true;
+			PathCoord::calculatePositionAt(flags, coords, line_coords, mid_position, cur_line_coord, &point_coord[0], &right_vector);
+			
+			point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+			mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, false, output);
+			
+			mid_position += 0.001f * mid_symbol_distance;
+			if (i < num_mid_symbols - 1)
+				advanceCoordinateRangeTo(flags, coords, line_coords, cur_line_coord, current_index, mid_position, start_bezier_index, out_flags, out_coords, out_lengths, o3, o4);
 		}
 	}
 	
-	part_end = size - 1;
-	return true;
-}
-void LineSymbol::curveToLineCoordRec(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, LineSymbol::LineCoordVector* line_coords, float p0, float p1)
-{
-	float outer_len = c0.lengthTo(c1) + c1.lengthTo(c2) + c2.lengthTo(c3);
-	float inner_len = c0.lengthTo(c3);
-	float p_half = 0.5f * (p0 + p1);
+	// End position
+	advanceCoordinateRangeTo(flags, coords, line_coords, cur_line_coord, current_index, end, start_bezier_index, out_flags, out_coords, out_lengths, o3, o4);
 	
-	if (outer_len - inner_len <= max_error)
+	out_coords.push_back(MapCoordF(0, 0));
+	if (flags[current_index].isCurveStart())
 	{
-		LineCoord coord;
-		LineCoord& prev = line_coords->at(line_coords->size() - 1);
-		coord.pos.setX(0.5f * (c1.getX() + c2.getX()));
-		coord.pos.setY(0.5f * (c1.getY() + c2.getY()));
-		coord.param = p_half;
-		coord.clen = coord.pos.lengthTo(prev.pos) + prev.clen;
-		coord.index = coord_index;
+		int index = line_coords[cur_line_coord].index;
+		float factor = (end - line_coords[cur_line_coord-1].clen) / (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen);
+		assert(factor >= 0 && factor <= 1.001f);
+		if (factor > 1)
+			factor = 1;
+		float prev_param = (line_coords[cur_line_coord-1].index == line_coords[cur_line_coord].index) ? line_coords[cur_line_coord-1].param : 0;
+		assert(prev_param <= line_coords[cur_line_coord].param);
+		float p = prev_param + (line_coords[cur_line_coord].param - prev_param) * factor;
+		assert(p >= 0 && p <= 1);
 		
-		line_coords->push_back(coord);
-		return;
+		out_flags.push_back(MapCoord(0, 0));
+		out_coords.push_back(MapCoordF(0, 0));
+		out_flags.push_back(MapCoord(0, 0));
+		out_coords.push_back(MapCoordF(0, 0));
+		if (out_lengths)
+		{
+			out_lengths->push_back(-1);
+			out_lengths->push_back(-1);
+		}
+		MapCoordF unused, unused2;
+		
+		out_flags.push_back(MapCoord(0, 0));
+		if (start_bezier_index == current_index)
+		{
+			// The dash end is in the same curve as the start, need to make a second split with the correct parameter
+			p = (p - start_bezier_split_param) / (1 - start_bezier_split_param);
+			assert(p >= 0 && p <= 1);
+			
+			PathCoord::splitBezierCurve(out_coords[out_coords.size() - 4], o3, o4, (index < (int)flags.size() - 3) ? coords[index+3] : coords[0],
+										p, out_coords[out_coords.size() - 3], out_coords[out_coords.size() - 2],
+										out_coords[out_coords.size() - 1], unused, unused2);
+		}
+		else
+		{
+			PathCoord::splitBezierCurve(coords[index], coords[index+1], coords[index+2], (index < (int)flags.size() - 3) ? coords[index+3] : coords[0],
+										p, out_coords[out_coords.size() - 3], out_coords[out_coords.size() - 2],
+										out_coords[out_coords.size() - 1], unused, unused2);
+		}
+		if (out_lengths)
+			out_lengths->push_back(end);
 	}
 	else
 	{
-		// Split in two
-		MapCoordF c01((c0.getX() + c1.getX()) * 0.5f, (c0.getY() + c1.getY()) * 0.5f);
-		MapCoordF c12((c1.getX() + c2.getX()) * 0.5f, (c1.getY() + c2.getY()) * 0.5f);
-		MapCoordF c23((c2.getX() + c3.getX()) * 0.5f, (c2.getY() + c3.getY()) * 0.5f);
-		MapCoordF c012((c01.getX() + c12.getX()) * 0.5f, (c01.getY() + c12.getY()) * 0.5f);
-		MapCoordF c123((c12.getX() + c23.getX()) * 0.5f, (c12.getY() + c23.getY()) * 0.5f);
-		MapCoordF c0123((c012.getX() + c123.getX()) * 0.5f, (c012.getY() + c123.getY()) * 0.5f);
-		
-		curveToLineCoordRec(c0, c01, c012, c0123, coord_index, max_error, line_coords, p0, p_half);
-		curveToLineCoordRec(c0123, c123, c23, c3, coord_index, max_error, line_coords, p_half, p1);
+		out_flags.push_back(MapCoord(0, 0));
+		PathCoord::calculatePositionAt(flags, coords, line_coords, end, cur_line_coord, &out_coords[out_coords.size() - 1], NULL);
+		if (out_lengths)
+			out_lengths->push_back(end);
 	}
 }
-void LineSymbol::curveToLineCoord(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, LineSymbol::LineCoordVector* line_coords)
+void LineSymbol::advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords, int& cur_line_coord, int& current_index, float cur_length,
+									 int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, std::vector<float>* out_lengths, const MapCoordF& o3, const MapCoordF& o4)
 {
-	// Add curve coordinates
-	curveToLineCoordRec(c0, c1, c2, c3, coord_index, max_error, line_coords, 0, 1);
-	
-	// Add end point
-	LineCoord end;
-	end.clen = line_coords->at(line_coords->size() - 1).clen + c3.lengthTo(line_coords->at(line_coords->size() - 1).pos);
-	end.index = coord_index;
-	end.pos = c3;
-	end.param = 1;
-	line_coords->push_back(end);
-}
-void LineSymbol::calcPositionAt(const MapCoordVector& flags, const MapCoordVectorF& coords, const LineSymbol::LineCoordVector& line_coords, float length, int& line_coord_search_start, MapCoordF* out_pos, MapCoordF* out_right_vector)
-{
-	int size = (int)line_coords.size();
-	for (int i = qMax(1, line_coord_search_start); i < size; ++i)	// i may not be 0 because the previous LineParam is accessed (and it is unnecessary to look at the 0th line ;coord)
+	int line_coords_size = (int)line_coords.size();
+	while (cur_line_coord < line_coords_size - 1 && line_coords[cur_line_coord].clen < cur_length)
 	{
-		if (line_coords[i].clen < length)
-			continue;
-		int index = line_coords[i].index;
-		
-		if (flags[index].isCurveStart())
+		++cur_line_coord;
+		if (line_coords[cur_line_coord].index != current_index)
 		{
-			float factor = (length - line_coords[i-1].clen) / (line_coords[i].clen - line_coords[i-1].clen);
-			assert(factor >= 0 && factor <= 1.001f);
-			if (factor > 1)
-				factor = 1;
-			float prev_param = (line_coords[i-1].index == line_coords[i].index) ? line_coords[i-1].param : 0;
-			assert(prev_param <= line_coords[i].param);
-			float p = prev_param + (line_coords[i].param - prev_param) * factor;
-			assert(p >= 0 && p <= 1);
-			MapCoordF o0, o1, o3, o4;
-			if (index < (int)flags.size() - 3)
-				splitBezierCurve(coords[index], coords[index+1], coords[index+2], coords[index+3], p, o0, o1, *out_pos, o3, o4);
+			if (current_index == start_bezier_index)
+			{
+				out_flags.push_back(MapCoord(0, 0));
+				out_coords.push_back(o3);
+				if (out_lengths)
+					out_lengths->push_back(-1);
+				out_flags.push_back(MapCoord(0, 0));
+				out_coords.push_back(o4);
+				if (out_lengths)
+					out_lengths->push_back(-1);
+				out_flags.push_back(flags[current_index + 3]);
+				out_coords.push_back(coords[current_index + 3]);
+				if (out_lengths)
+					out_lengths->push_back(line_coords[cur_line_coord-1].clen);
+				
+				current_index += 3;
+				assert(current_index == line_coords[cur_line_coord].index);
+			}
 			else
-				splitBezierCurve(coords[index], coords[index+1], coords[index+2], coords[0], p, o0, o1, *out_pos, o3, o4);
-			
-			if (out_right_vector)
 			{
-				out_right_vector->setX(o3.getX() - o1.getX());
-				out_right_vector->setY(o3.getY() - o1.getY());
-				out_right_vector->perpRight();
+				assert((!flags[current_index].isCurveStart() && current_index + 1 == line_coords[cur_line_coord].index) ||
+				       (flags[current_index].isCurveStart() && current_index + 3 == line_coords[cur_line_coord].index) ||
+				       (flags[current_index+1].isHolePoint() && current_index + 2 == line_coords[cur_line_coord].index));
+				do
+				{
+					++current_index;
+					out_flags.push_back(flags[current_index]);
+					out_coords.push_back(coords[current_index]);
+					if (out_lengths)
+						out_lengths->push_back(line_coords[cur_line_coord-1].clen);
+				} while (current_index < line_coords[cur_line_coord].index);
 			}
 		}
-		else
-		{
-			float factor = (length - line_coords[i-1].clen) / (line_coords[i].clen - line_coords[i-1].clen);
-			assert(factor >= 0 && factor <= 1.001f);
-			if (factor > 1)
-				factor = 1;
-			MapCoordF to_next(line_coords[i].pos.getX() - line_coords[i-1].pos.getX(), line_coords[i].pos.getY() - line_coords[i-1].pos.getY());
-			out_pos->setX(line_coords[i-1].pos.getX() + factor * to_next.getX());
-			out_pos->setY(line_coords[i-1].pos.getY() + factor * to_next.getY());
-			if (out_right_vector)
-			{
-				*out_right_vector = to_next;
-				out_right_vector->perpRight();
-			}
-		}
-		
-		line_coord_search_start = i;
-		return;
-	}
-	
-	assert(length < line_coords[line_coords.size() - 1].clen + 0.01f);
-	*out_pos = line_coords[line_coords.size() - 1].pos;
-	if (out_right_vector)
-	{
-		out_right_vector->setX(line_coords[line_coords.size() - 1].pos.getX() - line_coords[line_coords.size() - 2].pos.getX());
-		out_right_vector->setY(line_coords[line_coords.size() - 1].pos.getY() - line_coords[line_coords.size() - 2].pos.getY());
-		out_right_vector->perpRight();
-	}
-}
-void LineSymbol::splitBezierCurve(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, float p, MapCoordF& o0, MapCoordF& o1, MapCoordF& o2, MapCoordF& o3, MapCoordF& o4)
-{
-	if (p >= 1)
-	{
-		o0 = c1;
-		o1 = c2;
-		o2 = c3;
-		o3 = c3;
-		o4 = c3;
-		return;
-	}
-	else if (p <= 0)
-	{
-		o0 = c0;
-		o1 = c0;
-		o2 = c0;
-		o3 = c1;
-		o4 = c2;
-		return;
-	}
-	
-	o0 = MapCoordF(c0.getX() + (c1.getX() - c0.getX()) * p, c0.getY() + (c1.getY() - c0.getY()) * p);
-	MapCoordF c12(c1.getX() + (c2.getX() - c1.getX()) * p, c1.getY() + (c2.getY() - c1.getY()) * p);
-	o4 = MapCoordF(c2.getX() + (c3.getX() - c2.getX()) * p, c2.getY() + (c3.getY() - c2.getY()) * p);
-	o1 = MapCoordF(o0.getX() + (c12.getX() - o0.getX()) * p, o0.getY() + (c12.getY() - o0.getY()) * p);
-	o3 = MapCoordF(c12.getX() + (o4.getX() - c12.getX()) * p, c12.getY() + (o4.getY() - c12.getY()) * p);
-	o2 = MapCoordF(o1.getX() + (o3.getX() - o1.getX()) * p, o1.getY() + (o3.getY() - o1.getY()) * p);
+	}	
 }
 
 void LineSymbol::colorDeleted(Map* map, int pos, MapColor* color)

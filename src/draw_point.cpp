@@ -137,6 +137,14 @@ void DrawPointTool::leaveEvent(QEvent* event)
 {
 	editor->getMap()->clearDrawingBoundingBox();
 }
+bool DrawPointTool::keyPressEvent(QKeyEvent* event)
+{
+	if (event->key() == Qt::Key_Tab)
+		editor->setEditTool();
+	else
+		return false;
+	return true;
+}
 
 void DrawPointTool::draw(QPainter* painter, MapWidget* widget)
 {
@@ -193,8 +201,12 @@ float DrawPointTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map
 
 void DrawPointTool::selectedSymbolsChanged()
 {
-	if (symbol_widget->getSingleSelectedSymbol() == NULL || symbol_widget->getSingleSelectedSymbol()->getType() != Symbol::Point)
-		editor->setTool(NULL);	// TODO: The selection of another single symbol should auto-activate a fitting draw tool!
+	Symbol* single_selected_symbol = symbol_widget->getSingleSelectedSymbol();
+	if (single_selected_symbol == NULL || single_selected_symbol->getType() != Symbol::Point)
+	{
+		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(single_selected_symbol);
+		editor->setTool(draw_tool);	
+	}
 }
 
 #include "draw_point.moc"

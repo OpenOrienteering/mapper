@@ -28,6 +28,7 @@
 #include "symbol.h"
 #include "object.h"
 #include "map_widget.h"
+#include "symbol_dock_widget.h"
 
 QCursor* EditTool::cursor = NULL;
 QImage* EditTool::point_handles = NULL;
@@ -448,6 +449,12 @@ bool EditTool::keyPressEvent(QKeyEvent* event)
 			editor->getMap()->deleteObject(*it, false);
 		editor->getMap()->clearObjectSelection();
 		updateStatusText();
+	}
+	else if (event->key() == Qt::Key_Tab)
+	{
+		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(editor->getSymbolWidget()->getSingleSelectedSymbol());
+		if (draw_tool)
+			editor->setTool(draw_tool);
 	}
 	else
 		return false;

@@ -270,7 +270,9 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 			finishDrawing();
 		}
 	}
-	if (event->key() == Qt::Key_Space)
+	if (event->key() == Qt::Key_Tab)
+		editor->setEditTool();
+	else if (event->key() == Qt::Key_Space)
 	{
 		space_pressed = true;
 		updateStatusText();
@@ -638,7 +640,8 @@ void DrawPathTool::selectedSymbolsChanged()
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
 	if (symbol == NULL || ((symbol->getType() & (Symbol::Line | Symbol::Area | Symbol::Combined)) == 0))
 	{
-		editor->setTool(NULL);	// TODO: The selection of another single symbol should auto-activate a fitting draw tool!
+		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(symbol);
+		editor->setTool(draw_tool);	
 		return;
 	}
 

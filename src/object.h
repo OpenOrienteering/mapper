@@ -25,6 +25,7 @@
 
 #include "map_coord.h"
 #include "renderable.h"
+#include "path_coord.h"
 
 QT_BEGIN_NAMESPACE
 class QFile;
@@ -37,8 +38,6 @@ class Map;
 class Object
 {
 public:
-	typedef std::vector<Renderable*> RenderaleVector;
-	
 	enum Type
 	{
 		Point = 0,	// A single coordinate, no futher coordinates can be added
@@ -80,17 +79,17 @@ public:
 	/// Take ownership of the renderables
 	void takeRenderables();
 	
-	/// Returns the coordinate vector
-	inline const MapCoordVector& getRawCoordinateVector() const {return coords;}	// NOTE: for closed paths, the last and first elements of this vector are equal
-	inline int getCoordinateCount() const {return qMax(0, (int)coords.size() - (path_closed ? 1 : 0));}
-	inline MapCoord getCoordinate(int pos) const {return coords[pos];}
-	
 	// Methods to traverse the output
 	inline RenderableVector::const_iterator beginRenderables() const {return output.begin();}
 	inline RenderableVector::const_iterator endRenderables() const {return output.end();}
 	inline int getNumRenderables() const {return (int)output.size();}
 	
 	// Getters / Setters
+	inline const MapCoordVector& getRawCoordinateVector() const {return coords;}	// NOTE: for closed paths, the last and first elements of this vector are equal
+	inline int getCoordinateCount() const {return qMax(0, (int)coords.size() - (path_closed ? 1 : 0));}
+	inline MapCoord getCoordinate(int pos) const {return coords[pos];}
+	inline const PathCoordVector& getPathCoordinateVector() const {return path_coords;}
+	
 	inline void setOutputDirty(bool dirty = true) {output_dirty = dirty;}
 	inline bool isOutputDirty() const {return output_dirty;}
 	
@@ -118,12 +117,13 @@ protected:
 	Type type;
 	Symbol* symbol;
 	MapCoordVector coords;
-	bool path_closed;		// does the coordinates represent a closed path (return to first coord after the last?)   TODO: Move this to PathObject?!
+	bool path_closed;				// does the coordinates represent a closed path (return to first coord after the last?)   TODO: Move this to PathObject?!
 	Map* map;
 	
-	bool output_dirty;		// does the output have to be re-generated because of changes?
-	RenderableVector output;
-	QRectF extent;		// only valid after calling update()
+	bool output_dirty;				// does the output have to be re-generated because of changes?
+	RenderableVector output;		// only valid after calling update()
+	PathCoordVector path_coords;	// these are calculated for symbols containing line or area symbols, only valid after calling update()
+	QRectF extent;					// only valid after calling update()
 };
 
 /// Object type which can be used for line, area and combined symbols

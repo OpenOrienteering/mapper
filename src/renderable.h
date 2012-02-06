@@ -26,7 +26,7 @@
 #include <map>
 
 #include "map_coord.h"
-#include "util.h"
+#include "path_coord.h"
 
 QT_BEGIN_NAMESPACE
 class QPainterPath;
@@ -174,19 +174,15 @@ protected:
 class LineRenderable : public Renderable
 {
 public:
-	LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed);
+	LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector& path_coords, bool closed);
 	LineRenderable(const LineRenderable& other);
 	virtual void render(QPainter& painter, bool force_min_size, float scaling);
 	virtual void getRenderStates(RenderStates& out);
 	//virtual Renderable* duplicate() {return new LineRenderable(*this);}
 	
 protected:
-	inline void extentInclude(const MapCoordF& coord, float border)
-	{
-		rectInclude(extent, QPointF(coord.getX() - border, coord.getY() - border));
-		if (border > 0)
-			rectInclude(extent, QPointF(coord.getX() + border, coord.getY() + border));
-	}
+	void extentIncludeCap(int i, float half_line_width, bool end_cap, LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed);
+	void extentIncludeJoin(int i, float half_line_width, LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed);
 	
 	QPainterPath path;
 	float line_width;

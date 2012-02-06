@@ -40,6 +40,7 @@ public:
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
     virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
     virtual void leaveEvent(QEvent* event);
+    virtual bool keyPressEvent(QKeyEvent* event);
 	
     virtual void draw(QPainter* painter, MapWidget* widget);
 	

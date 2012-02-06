@@ -255,11 +255,12 @@ void CircleRenderable::render(QPainter& painter, bool force_min_size, float scal
 
 // ### LineRenderable ###
 
-LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed) : Renderable()
+LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector& path_coords, bool closed) : Renderable()
 {
 	assert(transformed_coords.size() == coords.size());
 	color_priority = symbol->getColor()->priority;
 	line_width = 0.001f * symbol->getLineWidth();
+	float half_line_width = 0.5f * line_width;
 	
 	switch (symbol->getCapStyle())
 	{
@@ -281,15 +282,9 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 	bool hole = false;
 	QPainterPath first_subpath;
 	
-	float join_border = line_width * 0.5f;
-	float cap_border = line_width * 0.5f;
-	if (symbol->getJoinStyle() == LineSymbol::MiterJoin)
-		join_border *= (2 * LineSymbol::miterLimit()) + 0.1f;
-	else if (symbol->getCapStyle() == LineSymbol::SquareCap)
-		cap_border *= 1.5f;
-	
 	path.moveTo(transformed_coords[0].toQPointF());
-	extent = QRectF(transformed_coords[0].getX() - cap_border, transformed_coords[0].getY() - cap_border, 2 * cap_border, 2 * cap_border);
+	extent = QRectF(transformed_coords[0].getX(), transformed_coords[0].getY(), 0.0001f, 0.0001f);
+	extentIncludeCap(0, half_line_width, false, symbol, transformed_coords, coords, closed);
 	
 	for (int i = 1; i < size; ++i)
 	{
@@ -302,27 +297,16 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 				path = QPainterPath();
 			}
 			path.moveTo(transformed_coords[i].toQPointF());
-			extentInclude(transformed_coords[i], cap_border);
+			extentIncludeCap(i, half_line_width, false, symbol, transformed_coords, coords, closed);
 			hole = false;
 			continue;
 		}
 		
 		if (coords[i-1].isCurveStart())
 		{
-			/*if (i == size - 2 && closed)
-			{
-				assert(i < size - 1);
-				path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[0].toQPointF());
-				++i;
-			}
-			else
-			{*/
-				assert(i < size - 2);
-				path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
-				extentInclude(transformed_coords[i], 0);
-				extentInclude(transformed_coords[i+1], 0);
-				i += 2;
-			//}
+			assert(i < size - 2);
+			path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
+			i += 2;
 		}
 		else
 			path.lineTo(transformed_coords[i].toQPointF());
@@ -331,9 +315,9 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 			hole = true;
 		
 		if ((i < size - 1 || closed) && !hole)
-			extentInclude(transformed_coords[i], join_border);
+			extentIncludeJoin(i, half_line_width, symbol, transformed_coords, coords, closed);
 		else
-			extentInclude(transformed_coords[i], cap_border);
+			extentIncludeCap(i, half_line_width, true, symbol, transformed_coords, coords, closed);
 	}
 	
 	if (closed)
@@ -344,7 +328,48 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 			path.connectPath(first_subpath);
 	}
 	
+	// Extend extent with bezier curve points from the path coords
+	int path_coords_size = path_coords.size();
+	for (int i = 1; i < path_coords_size - 1; ++i)
+	{
+		if (path_coords[i].param == 1)
+			continue;
+		
+		MapCoordF to_coord = MapCoordF(path_coords[i].pos.getX() - path_coords[i-1].pos.getX(), path_coords[i].pos.getY() - path_coords[i-1].pos.getY());
+		MapCoordF to_next = MapCoordF(path_coords[i+1].pos.getX() - path_coords[i].pos.getX(), path_coords[i+1].pos.getY() - path_coords[i].pos.getY());
+		to_coord.normalize();
+		to_next.normalize();
+		MapCoordF right = MapCoordF(-to_coord.getY() - to_next.getY(), to_next.getX() + to_coord.getX());
+		right.normalize();
+		
+		rectInclude(extent, QPointF(path_coords[i].pos.getX() + half_line_width * right.getX(), path_coords[i].pos.getY() + half_line_width * right.getY()));
+		rectInclude(extent, QPointF(path_coords[i].pos.getX() - half_line_width * right.getX(), path_coords[i].pos.getY() - half_line_width * right.getY()));
+	}
+	
 	assert(extent.right() < 999999);	// assert if bogus values are returned
+}
+void LineRenderable::extentIncludeCap(int i, float half_line_width, bool end_cap, LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed)
+{
+	MapCoordF right = PathCoord::calculateRightVector(coords, transformed_coords, closed, i, NULL);
+	rectInclude(extent, QPointF(transformed_coords[i].getX() + half_line_width * right.getX(), transformed_coords[i].getY() + half_line_width * right.getY()));
+	rectInclude(extent, QPointF(transformed_coords[i].getX() - half_line_width * right.getX(), transformed_coords[i].getY() - half_line_width * right.getY()));
+	if (symbol->getCapStyle() == LineSymbol::SquareCap)
+	{
+		MapCoordF back = right;
+		back.perpRight();
+		
+		float sign = end_cap ? -1 : 1;
+		rectInclude(extent, QPointF(transformed_coords[i].getX() + half_line_width * (-right.getX() + sign*back.getX()), transformed_coords[i].getY() + half_line_width * (-right.getY() + sign*back.getY())));
+		rectInclude(extent, QPointF(transformed_coords[i].getX() + half_line_width * (right.getX() + sign*back.getX()), transformed_coords[i].getY() + half_line_width * (right.getY() + sign*back.getY())));
+	}
+}
+void LineRenderable::extentIncludeJoin(int i, float half_line_width, LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed)
+{
+	float scaling = 1;
+	MapCoordF right = PathCoord::calculateRightVector(coords, transformed_coords, closed, i, (symbol->getJoinStyle() == LineSymbol::MiterJoin) ? &scaling : NULL);
+	float factor = scaling * half_line_width;
+	rectInclude(extent, QPointF(transformed_coords[i].getX() + factor * right.getX(), transformed_coords[i].getY() + factor * right.getY()));
+	rectInclude(extent, QPointF(transformed_coords[i].getX() - factor * right.getX(), transformed_coords[i].getY() - factor * right.getY()));
 }
 LineRenderable::LineRenderable(const LineRenderable& other) : Renderable(other)
 {

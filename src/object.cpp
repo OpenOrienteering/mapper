@@ -87,6 +87,11 @@ bool Object::update(bool force)
 	for (int i = 0; i < size; ++i)
 		coordsF[i] = MapCoordF(coords[i].xd(), coords[i].yd());
 	
+	// If the symbol contains a line or area symbol, calculate path coordinates
+	path_coords.clear();
+	if (symbol->getContainedTypes() & (Symbol::Area | Symbol::Line))
+		PathCoord::calculatePathCoords(coords, coordsF, &path_coords);
+	
 	// Create renderables
 	symbol->createRenderables(this, coords, coordsF, path_closed, output);
 	

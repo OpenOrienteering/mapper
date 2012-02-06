@@ -54,13 +54,16 @@ public:
 	~MapEditorController();
 	
 	void setTool(MapEditorTool* new_tool);
+	void setEditTool();
 	inline MapEditorTool* getTool() const {return current_tool;}
+	MapEditorTool* getDefaultDrawToolForSymbol(Symbol* symbol);
 	
 	void setEditorActivity(MapEditorActivity* new_activity);
 	inline MapEditorActivity* getEditorActivity() const {return editor_activity;}
 	
 	inline Map* getMap() const {return map;}
 	inline MapWidget* getMainWidget() const {return map_widget;}
+	inline SymbolWidget* getSymbolWidget() const {return symbol_widget;}
 	
 	virtual bool save(const QString& path);
 	virtual bool load(const QString& path);
@@ -202,6 +205,8 @@ public:
 	virtual bool keyPressEvent(QKeyEvent* event) {return false;}
 	virtual bool keyReleaseEvent(QKeyEvent* event) {return false;}
 	virtual void focusOutEvent(QFocusEvent* event) {}
+	
+	inline QAction* getAction() const {return tool_button;}
 	
 	static const int click_tolerance;
 	static const QRgb inactive_color;

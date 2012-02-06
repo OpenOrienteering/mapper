@@ -24,6 +24,7 @@
 #include <QGroupBox>
 
 #include "symbol.h"
+#include "path_coord.h"
 
 QT_BEGIN_NAMESPACE
 class QLineEdit;
@@ -62,7 +63,7 @@ public:
     virtual Symbol* duplicate();
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output);
-	void createRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
+	void createRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, RenderableVector& output);
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
     virtual bool containsColor(MapColor* color);
     virtual void scale(double factor);
@@ -95,44 +96,26 @@ public:
 	inline MapColor* getBorderColor() const {return border_color;}
 	inline int getBorderShift() const {return border_shift;}
 	
-	// TODO: make configurable
-	static const float bezier_error;
-	
 protected:
-	struct LineCoord
-	{
-		MapCoordF pos;
-		float clen;		// cumulative length since line part start
-		int index;		// index into the MapCoordVector(F) to the first coordinate of the segment which contains this LineCoord
-		float param;	// value of the curve parameter for this position
-	};
-	typedef std::vector<LineCoord> LineCoordVector;
-	
 	virtual void saveImpl(QFile* file, Map* map);
 	virtual bool loadImpl(QFile* file, int version, Map* map);
 	
 	void createBorderLines(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output);
 	void shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, float shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords);
-	void processContinuousLine(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, const LineCoordVector& line_coords,
+	void processContinuousLine(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
 							   float start, float end, bool has_start, bool has_end, int& cur_line_coord,
 							   MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, bool include_first_point, bool set_mid_symbols, RenderableVector& output);
-	void createPointedLineCap(const MapCoordVector& flags, const MapCoordVectorF& coords, const LineCoordVector& line_coords,
+	void createPointedLineCap(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
 							  float start, float end, int& cur_line_coord, bool is_end, RenderableVector& output);
-	MapCoordF calculateRightVector(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, int i, float* scaling);
-	MapCoordF calculateTangent(const MapCoordVectorF& coords, int i, bool backward, bool& ok);
-	void getCoordinatesForRange(const MapCoordVector& flags, const MapCoordVectorF& coords, const LineSymbol::LineCoordVector& line_coords,
-								float start, float end, int& cur_line_coord, bool include_start_coord, MapCoordVector& out_flags, MapCoordVectorF& out_coords,
-								std::vector<float>* out_lengths, bool set_mid_symbols, RenderableVector& output);
-	void advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const LineCoordVector& line_coords, int& cur_line_coord, int& current_index, float cur_length,
-								  int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, std::vector<float>* out_lengths, const MapCoordF& o3, const MapCoordF& o4);
 	void processDashedLine(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, MapCoordVector& out_flags, MapCoordVectorF& out_coords, RenderableVector& output);
 	void createDashSymbolRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
 	void createDottedRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
-	bool getNextLinePart(const MapCoordVector& flags, const MapCoordVectorF& coords, int& part_start, int& part_end, LineCoordVector* line_coords, bool break_at_dash_points, bool append_line_coords);
-	void curveToLineCoordRec(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, LineCoordVector* line_coords, float p0, float p1);
-	void curveToLineCoord(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, LineCoordVector* line_coords);
-	void calcPositionAt(const MapCoordVector& flags, const MapCoordVectorF& coords, const LineCoordVector& line_coords, float length, int& line_coord_search_start, MapCoordF* out_pos, MapCoordF* out_right_vector);
-	void splitBezierCurve(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, float p, MapCoordF& o0, MapCoordF& o1, MapCoordF& o2, MapCoordF& o3, MapCoordF& o4);
+	
+	void calculateCoordinatesForRange(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
+									  float start, float end, int& cur_line_coord, bool include_start_coord, MapCoordVector& out_flags, MapCoordVectorF& out_coords,
+									  std::vector<float>* out_lengths, bool set_mid_symbols, RenderableVector& output);
+	void advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords, int& cur_line_coord, int& current_index, float cur_length,
+								  int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, std::vector<float>* out_lengths, const MapCoordF& o3, const MapCoordF& o4);
 	
 	// Base line
 	int line_width;		// in 1/1000 mm
