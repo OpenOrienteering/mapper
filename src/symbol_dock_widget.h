@@ -82,6 +82,7 @@ protected:
 	QMenu* context_menu;
 	QAction* edit_action;
 	QAction* scale_action;
+	QAction* switch_symbol_action;
 	QAction* fill_border_action;
 	QAction* duplicate_action;
 	QAction* delete_action;
@@ -137,10 +138,13 @@ public slots:
 	virtual void keyPressed(QKeyEvent* event);
 	void symbolChanged(int pos, Symbol* symbol);
 	
+	void emitSwitchSymbolClicked() {emit switchSymbolClicked();}
 	void emitFillBorderClicked() {emit fillBorderClicked();}
 	
 signals:
 	void selectedSymbolsChanged();
+	
+	void switchSymbolClicked();
 	void fillBorderClicked();
 	
 protected:

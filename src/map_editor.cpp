@@ -370,6 +370,10 @@ void MapEditorController::createToolbar()
 	// Editing toolbar
 	QToolBar* toolbar_editing = window->addToolBar(tr("Editing"));
 	
+	switch_symbol_act = new QAction(QIcon("images/tool-switch-symbol.png"), tr("Switch symbol"), this);
+	connect(switch_symbol_act, SIGNAL(triggered(bool)), this, SLOT(switchSymbolClicked()));
+	toolbar_editing->addAction(switch_symbol_act);
+	
 	fill_border_act = new QAction(QIcon("images/tool-fill-border.png"), tr("Fill / Create border"), this);
 	connect(fill_border_act, SIGNAL(triggered(bool)), this, SLOT(fillBorderClicked()));
 	toolbar_editing->addAction(fill_border_act);
@@ -419,6 +423,7 @@ void MapEditorController::showSymbolWindow(bool show)
 		symbol_dock_widget->setWidget(symbol_widget);
 		window->addDockWidget(Qt::RightDockWidgetArea, symbol_dock_widget, Qt::Vertical);
 		
+		connect(symbol_widget, SIGNAL(switchSymbolClicked()), this, SLOT(switchSymbolClicked()));
 		connect(symbol_widget, SIGNAL(fillBorderClicked()), this, SLOT(fillBorderClicked()));
 		connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
 		selectedSymbolsChanged();
@@ -532,8 +537,10 @@ void MapEditorController::selectedSymbolsOrObjectsChanged()
 	bool single_symbol_different;
 	map->getSelectionToSymbolCompatibility(single_symbol, single_symbol_compatible, single_symbol_different);
 	
+	switch_symbol_act->setEnabled(single_symbol_compatible && single_symbol_different);
+	switch_symbol_act->setStatusTip(tr("Switches the symbol of the selected object(s) to the selected symbol.") + (switch_symbol_act->isEnabled() ? "" : (" " + tr("Select at least one object and a fitting, different symbol to activate this tool."))));
 	fill_border_act->setEnabled(single_symbol_compatible && single_symbol_different);
-	fill_border_act->setStatusTip(tr("Fill the selected line or create a border for the selected area.") + (fill_border_act->isEnabled() ? "" : (" " + tr("Select a line or area object and a fitting symbol to activate this tool."))));
+	fill_border_act->setStatusTip(tr("Fill the selected line(s) or create a border for the selected area(s).") + (fill_border_act->isEnabled() ? "" : (" " + tr("Select at least one object and a fitting, different symbol to activate this tool."))));
 }
 
 void MapEditorController::editToolClicked(bool checked)
@@ -552,6 +559,19 @@ void MapEditorController::drawPathClicked(bool checked)
 	setTool(checked ? new DrawPathTool(this, draw_path_act, symbol_widget) : NULL);
 }
 
+void MapEditorController::switchSymbolClicked()
+{
+	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
+	
+	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		(*it)->setSymbol(symbol, true);
+		(*it)->update(true);
+	}
+	
+	map->setObjectsDirty();
+}
 void MapEditorController::fillBorderClicked()
 {
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();

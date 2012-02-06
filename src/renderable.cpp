@@ -350,9 +350,17 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 }
 void LineRenderable::extentIncludeCap(int i, float half_line_width, bool end_cap, LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed)
 {
+	if (symbol->getCapStyle() == LineSymbol::RoundCap)
+	{
+		rectInclude(extent, QPointF(transformed_coords[i].getX() - half_line_width, transformed_coords[i].getY() - half_line_width));
+		rectInclude(extent, QPointF(transformed_coords[i].getX() + half_line_width, transformed_coords[i].getY() + half_line_width));
+		return;
+	}
+	
 	MapCoordF right = PathCoord::calculateRightVector(coords, transformed_coords, closed, i, NULL);
 	rectInclude(extent, QPointF(transformed_coords[i].getX() + half_line_width * right.getX(), transformed_coords[i].getY() + half_line_width * right.getY()));
 	rectInclude(extent, QPointF(transformed_coords[i].getX() - half_line_width * right.getX(), transformed_coords[i].getY() - half_line_width * right.getY()));
+	
 	if (symbol->getCapStyle() == LineSymbol::SquareCap)
 	{
 		MapCoordF back = right;

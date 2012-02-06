@@ -62,7 +62,8 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	edit_action = context_menu->addAction(tr("Edit"), this, SLOT(editSymbol()));
 	scale_action = context_menu->addAction(tr("Scale..."), this, SLOT(scaleSymbol()));
 	context_menu->addSeparator();
-	fill_border_action = context_menu->addAction(tr("Fill / Create border"), parent, SLOT(emitFillBorderClicked()));
+	switch_symbol_action = context_menu->addAction(tr("Switch symbol of selected object(s)"), parent, SLOT(emitSwitchSymbolClicked()));
+	fill_border_action = context_menu->addAction(tr("Fill / Create border for selected object(s)"), parent, SLOT(emitFillBorderClicked()));
 	context_menu->addSeparator();
 	duplicate_action = context_menu->addAction(tr("Duplicate"), this, SLOT(duplicateSymbol()));
 	delete_action = context_menu->addAction(tr("Delete"), this, SLOT(deleteSymbols()));
@@ -384,6 +385,7 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 		
 		edit_action->setEnabled(single_selection);
 		scale_action->setEnabled(single_selection);
+		switch_symbol_action->setEnabled(single_symbol_compatible && single_symbol_different);
 		fill_border_action->setEnabled(single_symbol_compatible && single_symbol_different);
 		duplicate_action->setEnabled(single_selection);
 		delete_action->setEnabled(have_selection);

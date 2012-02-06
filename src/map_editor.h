@@ -102,6 +102,7 @@ public slots:
 	void drawPointClicked(bool checked);
 	void drawPathClicked(bool checked);
 	
+	void switchSymbolClicked();
 	void fillBorderClicked();
 	
 	void paintOnTemplateClicked(bool checked);
@@ -142,6 +143,7 @@ private:
 	QAction* draw_point_act;
 	QAction* draw_path_act;
 	
+	QAction* switch_symbol_act;
 	QAction* fill_border_act;
 	
 	QAction* paint_on_template_act;
