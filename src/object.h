@@ -68,6 +68,9 @@ public:
 	/// Scales all coordinates, with the origin as scaling center
 	void scale(double factor);
 	
+	/// Reverses the object's coordinates, resulting in switching the dash direction for line symbols
+	void reverse();
+	
 	/// Checks if the given coord, with the given tolerance, is on this object; with extended_selection, the coord is on point objects always if it is whithin their extent,
 	/// otherwise it has to be close to their midpoint. Returns a Symbol::Type which specifies on which symbol type the coord is
 	/// (important for combined symbols which can have areas and lines).

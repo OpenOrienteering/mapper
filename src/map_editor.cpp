@@ -375,7 +375,7 @@ void MapEditorController::createToolbar()
 	QToolBar* toolbar_editing = window->addToolBar(tr("Editing"));
 	
 	duplicate_act = new QAction(QIcon("images/tool-duplicate.png"), tr("Duplicate"), this);
-	duplicate_act->setShortcut(tr("Ctrl+D"));
+	duplicate_act->setShortcut(tr("D"));
 	connect(duplicate_act, SIGNAL(triggered(bool)), this, SLOT(duplicateClicked()));
 	toolbar_editing->addAction(duplicate_act);
 	
@@ -386,6 +386,11 @@ void MapEditorController::createToolbar()
 	fill_border_act = new QAction(QIcon("images/tool-fill-border.png"), tr("Fill / Create border"), this);
 	connect(fill_border_act, SIGNAL(triggered(bool)), this, SLOT(fillBorderClicked()));
 	toolbar_editing->addAction(fill_border_act);
+	
+	switch_dashes_act = new QAction(QIcon("images/tool-switch-dashes.png"), tr("Switch dash direction"), this);
+	switch_dashes_act->setShortcut(tr("Ctrl+D"));
+	connect(switch_dashes_act, SIGNAL(triggered(bool)), this, SLOT(switchDashesClicked()));
+	toolbar_editing->addAction(switch_dashes_act);
 }
 void MapEditorController::detach()
 {
@@ -532,9 +537,22 @@ void MapEditorController::selectedSymbolsChanged()
 void MapEditorController::selectedObjectsChanged()
 {
 	bool have_selection = map->getNumSelectedObjects() > 0;
+	bool have_line = false;
+	
+	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		if ((*it)->getSymbol()->getContainedTypes() & Symbol::Line)
+		{
+			have_line = true;
+			break;
+		}
+	}
 	
 	duplicate_act->setEnabled(have_selection);
 	duplicate_act->setStatusTip(tr("Duplicate the selected object(s).") + (duplicate_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
+	switch_dashes_act->setEnabled(have_line);
+	switch_dashes_act->setStatusTip(tr("Switch the direction of symbols on line objects.") + (switch_dashes_act->isEnabled() ? "" : (" " + tr("Select at least one line object to activate this tool."))));
 	
 	selectedSymbolsOrObjectsChanged();
 }
@@ -622,6 +640,20 @@ void MapEditorController::fillBorderClicked()
 	map->clearObjectSelection(false);
 	for (int i = 0; i < (int)new_objects.size(); ++i)
 		map->addObjectToSelection(new_objects[i], i == (int)new_objects.size() - 1);
+}
+void MapEditorController::switchDashesClicked()
+{
+	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		if ((*it)->getSymbol()->getContainedTypes() & Symbol::Line)
+		{
+			(*it)->reverse();
+			(*it)->update(true);
+		}
+	}
+	
+	map->setObjectsDirty();
 }
 
 void MapEditorController::paintOnTemplateClicked(bool checked)

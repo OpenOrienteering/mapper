@@ -163,6 +163,36 @@ void Object::scale(double factor)
 	setOutputDirty();
 }
 
+void Object::reverse()
+{
+	int coords_size = coords.size();
+	for (int c = 0; c < coords_size; ++c)
+	{
+		MapCoord coord = coords[c];
+		if (c < coords_size  / 2)
+		{
+			coords[c] = coords[coords_size - 1 - c];
+			coords[coords_size - 1 - c] = coord;
+		}
+		
+		if (!(c == 0 && path_closed) && coords[c].isCurveStart())
+		{
+			assert(c >= 3);
+			coords[c - 3].setCurveStart(true);
+			if (!(c == coords_size - 1 && path_closed))
+				coords[c].setCurveStart(false);
+		}
+		else if (coords[c].isHolePoint())
+		{
+			assert(c >= 1);
+			coords[c - 3].setHolePoint(true);
+			coords[c].setHolePoint(false);
+		}
+	}
+	
+	setOutputDirty();
+}
+
 int Object::isPointOnObject(MapCoordF coord, float tolerance, bool extended_selection)
 {
 	Symbol::Type type = symbol->getType();

@@ -105,6 +105,7 @@ public slots:
 	void duplicateClicked();
 	void switchSymbolClicked();
 	void fillBorderClicked();
+	void switchDashesClicked();
 	
 	void paintOnTemplateClicked(bool checked);
 	void paintOnTemplateSelectClicked();
@@ -147,6 +148,7 @@ private:
 	QAction* duplicate_act;
 	QAction* switch_symbol_act;
 	QAction* fill_border_act;
+	QAction* switch_dashes_act;
 	
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;
