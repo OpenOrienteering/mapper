@@ -140,7 +140,7 @@ void TemplateGPS::drawTemplate(QPainter* painter, QRectF& clip_rect, double scal
 		painter->drawPath(path);
 	}
 }
-void TemplateGPS::drawTemplateUntransformed(QPainter* painter, QRect& clip_rect, MapWidget* widget)
+void TemplateGPS::drawTemplateUntransformed(QPainter* painter, const QRect& clip_rect, MapWidget* widget)
 {
 	// Waypoints
 	painter->setRenderHint(QPainter::Antialiasing);

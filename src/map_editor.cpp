@@ -25,6 +25,7 @@
 #include "map.h"
 #include "map_widget.h"
 #include "map_dialog_scale.h"
+#include "print_dock_widget.h"
 #include "color_dock_widget.h"
 #include "symbol_dock_widget.h"
 #include "template_dock_widget.h"
@@ -47,7 +48,8 @@ MapEditorController::MapEditorController(OperatingMode mode)
 	window = NULL;
 	
 	editor_activity = NULL;
-	current_tool = NULL;	// TODO: default tool?
+	current_tool = NULL;
+	override_tool = NULL;
 	last_painted_on_template = NULL;
 }
 MapEditorController::MapEditorController(OperatingMode mode, Map* map)
@@ -61,12 +63,14 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	setMap(map, true);
 	
 	editor_activity = NULL;
-	current_tool = NULL;	// TODO: default tool?
+	current_tool = NULL;
+	override_tool = NULL;
 	last_painted_on_template = NULL;
 }
 MapEditorController::~MapEditorController()
 {
 	delete current_tool;
+	delete override_tool;
 	delete editor_activity;
 	delete main_view;
 	delete map;
@@ -75,23 +79,49 @@ MapEditorController::~MapEditorController()
 void MapEditorController::setTool(MapEditorTool* new_tool)
 {
 	delete current_tool;
-	map->clearDrawingBoundingBox();
-	window->setStatusBarText("");
+	if (!override_tool)
+	{
+		map->clearDrawingBoundingBox();
+		window->setStatusBarText("");
+	}
 	
 	current_tool = new_tool;
-	if (current_tool)
+	if (current_tool && !override_tool)
 	{
 		current_tool->init();
 		if (current_tool->getAction())
 			current_tool->getAction()->setChecked(true);
 	}
 	
-	map_widget->setTool(current_tool);
+	if (!override_tool)
+		map_widget->setTool(current_tool);
 }
 void MapEditorController::setEditTool()
 {
 	if (!current_tool || !current_tool->getType() == MapEditorTool::Edit)
 		setTool(new EditTool(this, edit_tool_act));
+}
+void MapEditorController::setOverrideTool(MapEditorTool* new_override_tool)
+{
+	delete override_tool;
+	map->clearDrawingBoundingBox();
+	window->setStatusBarText("");
+	
+	override_tool = new_override_tool;
+	if (override_tool)
+	{
+		override_tool->init();
+		if (override_tool->getAction())
+			override_tool->getAction()->setChecked(true);
+	}
+	else if (current_tool)
+	{
+		current_tool->init();
+		if (current_tool->getAction())
+			current_tool->getAction()->setChecked(true);
+	}
+	
+	map_widget->setTool(override_tool ? override_tool : current_tool);
 }
 MapEditorTool* MapEditorController::getDefaultDrawToolForSymbol(Symbol* symbol)
 {
@@ -156,6 +186,7 @@ void MapEditorController::loadWidgetsAndViews(QFile* file)
 
 void MapEditorController::attach(MainWindow* window)
 {
+	print_dock_widget = NULL;
 	color_dock_widget = NULL;
 	symbol_dock_widget = NULL;
 	template_dock_widget = NULL;
@@ -223,6 +254,15 @@ void MapEditorController::attach(MainWindow* window)
 }
 void MapEditorController::createMenu()
 {
+	// Extend file menu
+	print_act = new QAction(QIcon("images/print.png"), tr("Print..."), this);
+	print_act->setShortcuts(QKeySequence::Print);
+	connect(print_act, SIGNAL(triggered()), this, SLOT(printClicked()));
+	
+	QMenu* file_menu = window->getFileMenu();
+	file_menu->insertAction(window->getCloseAct(), print_act);
+	file_menu->insertSeparator(window->getCloseAct());
+	
 	// Edit menu - TODO
 	/*QAction* undo_act = new QAction(QIcon("images/undo.png"), tr("Undo"), this);	// TODO: update this with a desc. of what will be undone
 	undo_act->setShortcuts(QKeySequence::Undo);
@@ -402,6 +442,28 @@ void MapEditorController::detach()
 	delete statusbar_cursorpos_label;
 }
 
+void MapEditorController::printClicked()
+{
+	if (print_dock_widget)
+	{
+		if (!print_dock_widget->isVisible())
+			print_widget->activate();
+		print_dock_widget->setVisible(!print_dock_widget->isVisible());
+	}
+	else
+	{
+		print_dock_widget = new EditorDockWidget(tr("Print or Export"), print_act, window);
+		print_widget = new PrintWidget(map, window, main_view, this, print_dock_widget);
+		print_dock_widget->setChild(print_widget);
+		
+		// Show dock in floating state
+		print_dock_widget->setFloating(true);
+		print_dock_widget->show();
+		print_dock_widget->setGeometry(getWindow()->geometry().left() + 40, getWindow()->geometry().top() + 100, print_dock_widget->width(), print_dock_widget->height());
+		//window->addDockWidget(Qt::LeftDockWidgetArea, print_dock_widget, Qt::Vertical);
+	}	
+}
+
 void MapEditorController::undo()
 {
 	// TODO
@@ -434,7 +496,7 @@ void MapEditorController::showSymbolWindow(bool show)
 		symbol_widget = new SymbolWidget(map, symbol_dock_widget);
 		connect(window, SIGNAL(keyPressed(QKeyEvent*)), symbol_widget, SLOT(keyPressed(QKeyEvent*)));
 		connect(map, SIGNAL(symbolChanged(int,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*)));	// NOTE: adjust setMap() if changing this!
-		symbol_dock_widget->setWidget(symbol_widget);
+		symbol_dock_widget->setChild(symbol_widget);
 		window->addDockWidget(Qt::RightDockWidgetArea, symbol_dock_widget, Qt::Vertical);
 		
 		connect(symbol_widget, SIGNAL(switchSymbolClicked()), this, SLOT(switchSymbolClicked()));
@@ -450,7 +512,7 @@ void MapEditorController::showColorWindow(bool show)
 	else
 	{
 		color_dock_widget = new EditorDockWidget(tr("Colors"), color_window_act, window);
-		color_dock_widget->setWidget(new ColorWidget(map, color_dock_widget));
+		color_dock_widget->setChild(new ColorWidget(map, color_dock_widget));
 		window->addDockWidget(Qt::LeftDockWidgetArea, color_dock_widget, Qt::Vertical);
 	}
 }
@@ -487,7 +549,7 @@ void MapEditorController::showTemplateWindow(bool show)
 	else
 	{
 		template_dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, window);
-		template_dock_widget->setWidget(new TemplateWidget(map, main_view, this, template_dock_widget));
+		template_dock_widget->setChild(new TemplateWidget(map, main_view, this, template_dock_widget));
 		window->addDockWidget(Qt::RightDockWidgetArea, template_dock_widget, Qt::Vertical);
 	}
 }
@@ -502,7 +564,7 @@ void MapEditorController::openTemplateClicked()
 	else
 	{
 		template_dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, window);
-		template_dock_widget->setWidget(new TemplateWidget(map, main_view, this, template_dock_widget));
+		template_dock_widget->setChild(new TemplateWidget(map, main_view, this, template_dock_widget));
 		window->addDockWidget(Qt::RightDockWidgetArea, template_dock_widget, Qt::Vertical);
 	}
 	
@@ -768,9 +830,16 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 EditorDockWidget::EditorDockWidget(const QString title, QAction* action, QWidget* parent): QDockWidget(title, parent), action(action)
 {
 }
+void EditorDockWidget::setChild(EditorDockWidgetChild* child)
+{
+	this->child = child;
+	setWidget(child);
+}
 void EditorDockWidget::closeEvent(QCloseEvent* event)
 {
-	action->setChecked(false);
+	if (action)
+		action->setChecked(false);
+	child->closed();
     QDockWidget::closeEvent(event);
 }
 

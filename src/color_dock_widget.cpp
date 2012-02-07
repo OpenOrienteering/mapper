@@ -27,7 +27,7 @@
 #include "map.h"
 #include "map_color.h"
 
-ColorWidget::ColorWidget(Map* map, QWidget* parent): QWidget(parent), map(map)
+ColorWidget::ColorWidget(Map* map, QWidget* parent): EditorDockWidgetChild(parent), map(map)
 {
 	react_to_changes = true;
 	

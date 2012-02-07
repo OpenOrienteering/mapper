@@ -29,7 +29,7 @@
 #include "map_editor.h"
 #include "georeferencing.h"
 
-TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent): QWidget(parent), map(map), main_view(main_view), controller(controller)
+TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent): EditorDockWidgetChild(parent), map(map), main_view(main_view), controller(controller)
 {
 	react_to_changes = true;
 	

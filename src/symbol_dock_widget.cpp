@@ -622,7 +622,7 @@ bool SymbolRenderWidget::newSymbol(Symbol* new_symbol)
 
 // ### SymbolWidget ###
 
-SymbolWidget::SymbolWidget(Map* map, QWidget* parent): QWidget(parent), map(map)
+SymbolWidget::SymbolWidget(Map* map, QWidget* parent): EditorDockWidgetChild(parent), map(map)
 {
 	no_resize_handling = false;
 	
@@ -809,7 +809,7 @@ void SymbolToolTip::setPosition()
 
 void SymbolToolTip::showTip(QRect rect, Symbol* symbol, QWidget* parent)
 {
-	const int delay = 100;
+	const int delay = 150;
 	
 	hideTip();
 	

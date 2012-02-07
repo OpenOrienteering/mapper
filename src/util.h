@@ -21,6 +21,8 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+#include "map_coord.h"
+
 #include <QDoubleValidator>
 #include <QRectF>
 
@@ -38,6 +40,7 @@ public:
 };
 
 /// Enlarges the rect to include the given point
+void rectInclude(QRectF& rect, MapCoordF point); // does not work if rect is invalid
 void rectInclude(QRectF& rect, QPointF point); // does not work if rect is invalid
 void rectIncludeSafe(QRectF& rect, QPointF point); // checks if rect is invalid
 /// Enlarges the rect to include the given rect

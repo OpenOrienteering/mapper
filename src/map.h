@@ -71,6 +71,7 @@ public:
 	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, SelectionInfoVector& out);
 	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vector<Object*>& out);
 	
+	QRectF calculateExtent();
 	void scaleAllObjects(double factor);
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
@@ -106,8 +107,13 @@ public:
 	
 	/// Draws the part of the map which is visible in the given bounding box in map coordinates
 	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling);
+	/// Draws the templates first_template until last_template which are visible in the given bouding box. view determines template visibility and can be NULL to show all templates.
+	/// draw_untransformed_parts is only possible with a MapWidget (because of MapWidget::mapToViewport()). Otherwise, set it to NULL.
+	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, bool draw_untransformed_parts, const QRect& untransformed_dirty_rect, MapWidget* widget, MapView* view);
 	/// Updates the renderables and extent of all objects which have been changed. This is automatically called by draw(), you normally do not need it
 	void updateObjects();
+	/// Calculates the extent of all map objects (and possibly templates)
+	QRectF calculateExtent(bool include_templates);
 	
 	/// Must be called to notify the map of new widgets displaying it. Useful to notify the widgets about which parts of the map have changed and need to be redrawn
 	void addMapWidget(MapWidget* widget);
@@ -226,6 +232,10 @@ public:
 	void setGPSProjectionParameters(const GPSProjectionParameters& params);
 	inline const GPSProjectionParameters& getGPSProjectionParameters() const {return *gps_projection_parameters;}
 	
+	inline bool arePrintParametersSet() const {return print_params_set;}
+	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height);
+	void getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& center, float& left, float& top, float& width, float& height);
+	
 	// Static
 	
 	static MapColor* getCoveringWhite() {return &covering_white;}
@@ -297,6 +307,17 @@ private:
 	
 	bool gps_projection_params_set;	// have the parameters been set (are they valid)?
 	GPSProjectionParameters* gps_projection_parameters;
+	
+	bool print_params_set;			// have the parameters been set (are they valid)?
+	int print_orientation;			// QPrinter::Orientation
+	int print_format;				// QPrinter::PaperSize
+	float print_dpi;
+	bool print_show_templates;
+	bool print_center;
+	float print_area_left;
+	float print_area_top;
+	float print_area_width;
+	float print_area_height;
 	
 	int scale_denominator;			// this is the number x if the scale is written as 1:x
 	

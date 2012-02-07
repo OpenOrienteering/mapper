@@ -126,7 +126,7 @@ void MainWindow::createFileMenu()
 	save_as_act->setShortcuts(QKeySequence::SaveAs);
 	connect(save_as_act, SIGNAL(triggered()), this, SLOT(saveAs()));
 	
-	QAction* close_act = new QAction(tr("Close"), this);
+	close_act = new QAction(tr("Close"), this);
 	close_act->setShortcut(tr("Ctrl+W"));
 	close_act->setStatusTip(tr("Close this window"));
 	connect(close_act, SIGNAL(triggered()), this, SLOT(close()));
@@ -284,14 +284,16 @@ void MainWindow::loadWindowSettings()
 	if (maximized)
 		showMaximized();
 }
-MainWindow* MainWindow::findMainWindow(const QString& fileName)
+MainWindow* MainWindow::findMainWindow(const QString& file_name)
 {
-	QString canonicalFilePath = QFileInfo(fileName).canonicalFilePath();
+	QString canonical_file_path = QFileInfo(file_name).canonicalFilePath();
+	if (canonical_file_path.isEmpty())
+		return NULL;
 	
 	foreach (QWidget *widget, qApp->topLevelWidgets())
 	{
 		MainWindow* other = qobject_cast<MainWindow*>(widget);
-		if (other && other->getCurrentFilePath() == canonicalFilePath)
+		if (other && other->getCurrentFilePath() == canonical_file_path)
 			return other;
 	}
 	

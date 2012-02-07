@@ -656,38 +656,9 @@ void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first
 	
 	Map* map = view->getMap();
 	QRectF map_view_rect = view->calculateViewedRect(viewportToView(dirty_rect));
+	
+	map->drawTemplates(&painter, map_view_rect, first_template, last_template, true, dirty_rect, this, view);
 
-	for (int i = first_template; i <= last_template; ++i)
-	{
-		Template* temp = map->getTemplate(i);
-		if (!view->isTemplateVisible(temp) || !temp->isTemplateValid())
-			continue;
-		float scale = view->getZoom() * std::max(temp->getTemplateScaleX(), temp->getTemplateScaleY());
-		
-		QRectF view_rect;
-		if (temp->getTemplateRotation() != 0)
-			view_rect = QRectF(-9e42, -9e42, 9e42, 9e42);	// TODO: transform base_view_rect (map coords) using template transform to template coords
-		else
-		{
-			view_rect.setLeft((map_view_rect.x() / temp->getTemplateScaleX()) - temp->getTemplateX());
-			view_rect.setTop((map_view_rect.y() / temp->getTemplateScaleY()) - temp->getTemplateY());
-			view_rect.setRight((map_view_rect.right() / temp->getTemplateScaleX()) - temp->getTemplateX());
-			view_rect.setBottom((map_view_rect.bottom() / temp->getTemplateScaleY()) - temp->getTemplateY());
-		}
-		
-		painter.save();
-		temp->applyTemplateTransform(&painter);
-		temp->drawTemplate(&painter, view_rect, scale, view->getTemplateVisibility(temp)->opacity);
-		painter.restore();
-		painter.restore();
-		temp->drawTemplateUntransformed(&painter, dirty_rect, this);
-		//if (i < last_template)
-		//{
-			painter.save();
-			painter.translate(width() / 2.0, height() / 2.0);
-			view->applyTransform(&painter);
-		//}
-	}
 	painter.restore();
 	painter.end();
 	

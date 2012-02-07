@@ -84,6 +84,10 @@ public:
 	/// Sets the text in the status bar, which stays there as long as the current tool is active
 	void setStatusBarText(const QString& text);
 	
+	// Getters to make it possible to extend the file menu before close_act
+	inline QMenu* getFileMenu() const {return file_menu;}
+	inline QAction* getCloseAct() const {return close_act;}
+	
 public slots:
 	void showNewMapWizard();
 	void showOpenDialog();
@@ -126,7 +130,7 @@ private:
 	void createFileMenu();
 	void createHelpMenu();
 	
-	static MainWindow* findMainWindow(const QString& fileName);
+	static MainWindow* findMainWindow(const QString& file_name);
 	
 	
 	/// The active controller
@@ -139,6 +143,7 @@ private:
 	QMenu* open_recent_menu;
 	bool open_recent_menu_inserted;
 	QAction* recent_file_act[max_recent_files];
+	QAction* close_act;
 	QLabel* status_label;
 	
 	/// Canonical path to the currently open file or an empty string if the file was not saved yet ("untitled")

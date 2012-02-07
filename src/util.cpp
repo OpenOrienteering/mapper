@@ -35,6 +35,18 @@ QValidator::State DoubleValidator::validate(QString& input, int& pos) const
 	return QDoubleValidator::validate(input, pos);
 }
 
+void rectInclude(QRectF& rect, MapCoordF point)
+{
+	if (point.getX() < rect.left())
+		rect.setLeft(point.getX());
+	else if (point.getX() > rect.right())
+		rect.setRight(point.getX());
+	
+	if (point.getY() < rect.top())
+		rect.setTop(point.getY());
+	else if (point.getY() > rect.bottom())
+		rect.setBottom(point.getY());
+}
 void rectInclude(QRectF& rect, QPointF point)
 {
 	if (point.x() < rect.left())
@@ -68,10 +80,13 @@ void rectInclude(QRectF& rect, const QRectF& other_rect)
 }
 void rectIncludeSafe(QRectF& rect, const QRectF& other_rect)
 {
-	if (rect.isValid())
-		rectInclude(rect, other_rect);
-	else
-		rect = other_rect;
+	if (other_rect.isValid())
+	{
+		if (rect.isValid())
+			rectInclude(rect, other_rect);
+		else 
+			rect = other_rect;
+	}
 }
 
 void saveString(QFile* file, const QString& str)

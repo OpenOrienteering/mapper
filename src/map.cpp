@@ -124,6 +124,25 @@ void MapLayer::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vecto
 	}
 }
 
+QRectF MapLayer::calculateExtent()
+{
+	QRectF rect;
+	
+	int size = objects.size();
+	if (size > 0)
+	{
+		objects[0]->update();
+		rect = objects[0]->getExtent();
+	}
+	
+	for (int i = 1; i < size; ++i)
+	{
+		objects[i]->update();
+		rectInclude(rect, objects[i]->getExtent());
+	}
+	
+	return rect;
+}
 void MapLayer::scaleAllObjects(double factor)
 {
 	int size = objects.size();
@@ -220,7 +239,7 @@ LineSymbol* Map::covering_white_line;
 LineSymbol* Map::covering_red_line;
 
 const int Map::least_supported_file_format_version = 0;
-const int Map::current_file_format_version = 5;
+const int Map::current_file_format_version = 6;
 
 Map::Map() : renderables(this), selection_renderables(this)
 {
@@ -234,6 +253,7 @@ Map::Map() : renderables(this), selection_renderables(this)
 	
 	color_set = new MapColorSet();
 	
+	print_params_set = false;
 	gps_projection_params_set = false;
 	gps_projection_parameters = new GPSProjectionParameters();
 	
@@ -286,6 +306,20 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 	
 	file.write((const char*)&gps_projection_params_set, sizeof(bool));
 	file.write((const char*)gps_projection_parameters, sizeof(GPSProjectionParameters));
+	
+	file.write((const char*)&print_params_set, sizeof(bool));
+	if (print_params_set)
+	{
+		file.write((const char*)&print_orientation, sizeof(int));
+		file.write((const char*)&print_format, sizeof(int));
+		file.write((const char*)&print_dpi, sizeof(float));
+		file.write((const char*)&print_show_templates, sizeof(bool));
+		file.write((const char*)&print_center, sizeof(bool));
+		file.write((const char*)&print_area_left, sizeof(float));
+		file.write((const char*)&print_area_top, sizeof(float));
+		file.write((const char*)&print_area_width, sizeof(float));
+		file.write((const char*)&print_area_height, sizeof(float));
+	}
 	
 	// Write colors
 	int num_colors = (int)color_set->colors.size();
@@ -413,6 +447,23 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 	
 	file.read((char*)&gps_projection_params_set, sizeof(bool));
 	file.read((char*)gps_projection_parameters, sizeof(GPSProjectionParameters));
+	
+	if (version >= 6)
+	{
+		file.read((char*)&print_params_set, sizeof(bool));
+		if (print_params_set)
+		{
+			file.read((char*)&print_orientation, sizeof(int));
+			file.read((char*)&print_format, sizeof(int));
+			file.read((char*)&print_dpi, sizeof(float));
+			file.read((char*)&print_show_templates, sizeof(bool));
+			file.read((char*)&print_center, sizeof(bool));
+			file.read((char*)&print_area_left, sizeof(float));
+			file.read((char*)&print_area_top, sizeof(float));
+			file.read((char*)&print_area_width, sizeof(float));
+			file.read((char*)&print_area_height, sizeof(float));
+		}
+	}
 	
 	// Load colors
 	int num_colors;
@@ -566,6 +617,39 @@ void Map::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, floa
 	
 	// The actual drawing
 	renderables.draw(painter, bounding_box, force_min_size, scaling);
+}
+void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, bool draw_untransformed_parts, const QRect& untransformed_dirty_rect, MapWidget* widget, MapView* view)
+{
+	for (int i = first_template; i <= last_template; ++i)
+	{
+		Template* temp = getTemplate(i);
+		if ((view && !view->isTemplateVisible(temp)) || !temp->isTemplateValid())
+			continue;
+		float scale = (view ? view->getZoom() : 1) * std::max(temp->getTemplateScaleX(), temp->getTemplateScaleY());
+		
+		QRectF view_rect;
+		if (temp->getTemplateRotation() != 0)
+			view_rect = QRectF(-9e42, -9e42, 9e42, 9e42);	// TODO: transform base_view_rect (map coords) using template transform to template coords
+		else
+		{
+			view_rect.setLeft((bounding_box.x() / temp->getTemplateScaleX()) - temp->getTemplateX());
+			view_rect.setTop((bounding_box.y() / temp->getTemplateScaleY()) - temp->getTemplateY());
+			view_rect.setRight((bounding_box.right() / temp->getTemplateScaleX()) - temp->getTemplateX());
+			view_rect.setBottom((bounding_box.bottom() / temp->getTemplateScaleY()) - temp->getTemplateY());
+		}
+		
+		painter->save();
+		temp->applyTemplateTransform(painter);
+		temp->drawTemplate(painter, view_rect, scale, view ? view->getTemplateVisibility(temp)->opacity : 1);
+		painter->restore();
+		
+		if (draw_untransformed_parts && widget)
+		{
+			painter->resetMatrix();
+			temp->drawTemplateUntransformed(painter, untransformed_dirty_rect, widget);
+			painter->resetMatrix();
+		}
+	}
 }
 void Map::updateObjects()
 {
@@ -1130,6 +1214,31 @@ void Map::setObjectsDirty()
 	objects_dirty = true;
 }
 
+QRectF Map::calculateExtent(bool include_templates)
+{
+	QRectF rect;
+	
+	// Objects
+	int size = layers.size();
+	for (int i = 0; i < size; ++i)
+		rectIncludeSafe(rect, layers[i]->calculateExtent());
+	
+	// Templates
+	if (include_templates)
+	{
+		size = templates.size();
+		for (int i = 0; i < size; ++i)
+		{
+			QRectF template_extent = templates[i]->getExtent();
+			rectInclude(rect, templates[i]->templateToMap(template_extent.topLeft()));
+			rectInclude(rect, templates[i]->templateToMap(template_extent.topRight()));
+			rectInclude(rect, templates[i]->templateToMap(template_extent.bottomRight()));
+			rectInclude(rect, templates[i]->templateToMap(template_extent.bottomLeft()));
+		}
+	}
+	
+	return rect;
+}
 void Map::setObjectAreaDirty(QRectF map_coords_rect)
 {
 	for (int i = 0; i < (int)widgets.size(); ++i)
@@ -1197,6 +1306,38 @@ void Map::setGPSProjectionParameters(const GPSProjectionParameters& params)
 		emit(gotUnsavedChanges());
 		unsaved_changes = true;
 	}
+}
+
+void Map::setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height)
+{
+	print_orientation = orientation;
+	print_format = format;
+	print_dpi = dpi;
+	print_show_templates = show_templates;
+	print_center = center;
+	print_area_left = left;
+	print_area_top = top;
+	print_area_width = width;
+	print_area_height = height;
+	
+	print_params_set = true;
+	if (!unsaved_changes)
+	{
+		emit(gotUnsavedChanges());
+		unsaved_changes = true;
+	}
+}
+void Map::getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& center, float& left, float& top, float& width, float& height)
+{
+	orientation = print_orientation;
+	format = print_format;
+	dpi = print_dpi;
+	show_templates = print_show_templates;
+	center = print_center;
+	left = print_area_left;
+	top = print_area_top;
+	width = print_area_width;
+	height = print_area_height;
 }
 
 void Map::checkIfFirstColorAdded()

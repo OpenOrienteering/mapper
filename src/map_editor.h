@@ -38,6 +38,7 @@ class MapEditorActivity;
 class MapEditorTool;
 class EditorDockWidget;
 class SymbolWidget;
+class PrintWidget;
 
 class MapEditorController : public MainWindowController
 {
@@ -55,6 +56,7 @@ public:
 	
 	void setTool(MapEditorTool* new_tool);
 	void setEditTool();
+	void setOverrideTool(MapEditorTool* new_override_tool);
 	inline MapEditorTool* getTool() const {return current_tool;}
 	MapEditorTool* getDefaultDrawToolForSymbol(Symbol* symbol);
 	
@@ -75,6 +77,8 @@ public:
     virtual void detach();
 	
 public slots:
+	void printClicked();
+	
 	void undo();
 	void redo();
 	void cut();
@@ -129,7 +133,12 @@ private:
 	OperatingMode mode;
 	
 	MapEditorTool* current_tool;
+	MapEditorTool* override_tool;
 	MapEditorActivity* editor_activity;
+	
+	QAction* print_act;
+	EditorDockWidget* print_dock_widget;
+	PrintWidget* print_widget;
 	
 	QAction* color_window_act;
 	EditorDockWidget* color_dock_widget;
@@ -157,14 +166,26 @@ private:
 	QLabel* statusbar_cursorpos_label;
 };
 
-/// Custom QDockWidget which unchecks the associated menu action when closed
+class EditorDockWidgetChild : public QWidget
+{
+Q_OBJECT
+public:
+	inline EditorDockWidgetChild(QWidget* parent) : QWidget(parent) {}
+	virtual void closed() {}
+};
+/// Custom QDockWidget which unchecks the associated menu action when closed and delivers a notification to its child
 class EditorDockWidget : public QDockWidget
 {
+Q_OBJECT
 public:
 	EditorDockWidget(const QString title, QAction* action, QWidget* parent = NULL);
+	void setChild(EditorDockWidgetChild* child);
     virtual void closeEvent(QCloseEvent* event);
+signals:
+	void closed();
 private:
 	QAction* action;
+	EditorDockWidgetChild* child;
 };
 
 /// Represents a type of editing activity, e.g. georeferencing. Only one activity can be active at a time.

@@ -100,7 +100,7 @@ public:
 	virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity) = 0;
 	
 	/// Can draw untransformed parts of the template (like texts) in viewport coordinates.
-	virtual void drawTemplateUntransformed(QPainter* painter, QRect& clip_rect, MapWidget* widget) {}
+	virtual void drawTemplateUntransformed(QPainter* painter, const QRect& clip_rect, MapWidget* widget) {}
 	
 	/// Marks the whole area of the template as "to be redrawn". Use this before and after modifications to the template transformation.
 	void setTemplateAreaDirty();

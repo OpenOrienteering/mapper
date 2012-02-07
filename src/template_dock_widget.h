@@ -21,6 +21,8 @@
 #ifndef _OPENORIENTEERING_TEMPLATE_DOCK_WIDGET_H_
 #define _OPENORIENTEERING_TEMPLATE_DOCK_WIDGET_H_
 
+#include "map_editor.h"
+
 #include <QWidget>
 
 #include <QItemSelection>
@@ -39,7 +41,7 @@ class Template;
 class MapView;
 class MapEditorController;
 
-class TemplateWidget : public QWidget
+class TemplateWidget : public EditorDockWidgetChild
 {
 Q_OBJECT
 public:

@@ -204,6 +204,8 @@ void DocumentSelectionWidget::recentFileClicked(QListWidgetItem* item)
 }
 void DocumentSelectionWidget::emitPathOpened()
 {
+	delete timer;
+	timer = NULL;
 	emit(pathOpened(path));
 }
 void DocumentSelectionWidget::clearListClicked()

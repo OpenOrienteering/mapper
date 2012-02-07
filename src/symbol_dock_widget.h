@@ -21,6 +21,8 @@
 #ifndef _OPENORIENTEERING_SYMBOL_DOCK_WIDGET_H_
 #define _OPENORIENTEERING_SYMBOL_DOCK_WIDGET_H_
 
+#include "map_editor.h"
+
 #include <set>
 
 #include <QWidget>
@@ -117,7 +119,7 @@ protected:
 };
 
 /// Combines SymbolRenderWidget and a scroll bar to a symbol widget
-class SymbolWidget : public QWidget
+class SymbolWidget : public EditorDockWidgetChild
 {
 Q_OBJECT
 public:

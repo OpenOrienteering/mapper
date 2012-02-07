@@ -21,6 +21,8 @@
 #ifndef _OPENORIENTEERING_COLOR_DOCK_WIDGET_H_
 #define _OPENORIENTEERING_COLOR_DOCK_WIDGET_H_
 
+#include "map_editor.h"
+
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -32,7 +34,7 @@ QT_END_NAMESPACE
 
 class Map;
 
-class ColorWidget : public QWidget
+class ColorWidget : public EditorDockWidgetChild
 {
 Q_OBJECT
 public:
