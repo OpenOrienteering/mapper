@@ -28,6 +28,7 @@
 #include <QHash>
 #include <QSet>
 
+#include "undo.h"
 #include "matrix.h"
 #include "map_coord.h"
 #include "renderable.h"
@@ -63,9 +64,10 @@ public:
 	
 	inline int getNumObjects() const {return (int)objects.size();}
 	inline Object* getObject(int i) {return objects[i];}
-	inline void setObject(Object* object, int pos) {objects[pos] = object;}
-	inline void addObject(Object* object, int pos) {objects.insert(objects.begin() + pos, object);}
-	inline void deleteObject(int pos, bool remove_only);
+	int findObjectIndex(Object* object);					// asserts that the object is contained in the layer
+	void setObject(Object* object, int pos, bool delete_old);
+	void addObject(Object* object, int pos);
+	void deleteObject(int pos, bool remove_only);
 	bool deleteObject(Object* object, bool remove_only);	// returns if the object was found
 	
 	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, SelectionInfoVector& out);
@@ -75,7 +77,7 @@ public:
 	void scaleAllObjects(double factor);
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
-	void deleteAllObjectsWithSymbol(Symbol* symbol);
+	bool deleteAllObjectsWithSymbol(Symbol* symbol);		// returns if there was an object that was deleted
 	bool doObjectsExistWithSymbol(Symbol* symbol);
 	void forceUpdateOfAllObjects(Symbol* with_symbol = NULL);
 	
@@ -180,14 +182,16 @@ public:
 	
 	// Objects
 	
+	inline UndoManager& objectUndoManager() {return object_undo_manager;}
+	
 	inline int getNumLayers() const {return (int)layers.size();}
 	inline MapLayer* getLayer(int i) const {return layers[i];}
 	inline MapLayer* getCurrentLayer() const {return current_layer;}
-	int findCurrentLayerIndex() const;
+	inline int getCurrentLayerIndex() const {return current_layer_index;}
 	// TODO: Layer management
 	
 	int getNumObjects();
-	void addObject(Object* object);
+	int addObject(Object* object, int layer_index = -1);						// returns the index of the added object in the layer
 	void deleteObject(Object* object, bool remove_only);						// remove_only will remove the object from the map, but not call "delete object";
 	void setObjectsDirty();
 	
@@ -198,7 +202,7 @@ public:
 	void scaleAllObjects(double factor);
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
-	void deleteAllObjectsWithSymbol(Symbol* symbol);
+	bool deleteAllObjectsWithSymbol(Symbol* symbol);							// returns if there was an object that was deleted
 	bool doObjectsExistWithSymbol(Symbol* symbol);
 	void forceUpdateOfAllObjects(Symbol* with_symbol = NULL);					// if with_symbol == NULL, all objects are affected
 	
@@ -236,6 +240,9 @@ public:
 	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height);
 	void getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& center, float& left, float& top, float& width, float& height);
 	
+	void setHasUnsavedChanges(bool has_unsaved_changes = true);
+	inline bool hasUnsavedChanged() const {return unsaved_changes;}
+	
 	// Static
 	
 	static MapColor* getCoveringWhite() {return &covering_white;}
@@ -248,15 +255,15 @@ signals:
 	
 	void colorAdded(int pos, MapColor* color);
 	void colorChanged(int pos, MapColor* color);
-	void colorDeleted(int pos, MapColor* color);
+	void colorDeleted(int pos, MapColor* old_color);
 	
 	void symbolAdded(int pos, Symbol* symbol);
-	void symbolChanged(int pos, Symbol* symbol);
-	void symbolDeleted(int pos, Symbol* symbol);
+	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
+	void symbolDeleted(int pos, Symbol* old_symbol);
 	
 	void templateAdded(int pos, Template* temp);
 	void templateChanged(int pos, Template* temp);
-	void templateDeleted(int pos, Template* temp);
+	void templateDeleted(int pos, Template* old_temp);
 	
 	void selectedObjectsChanged();
 	void gpsProjectionParametersChanged();
@@ -291,7 +298,7 @@ private:
 	void updateSelectionRenderables(Object* object);
 	void removeSelectionRenderables(Object* object);
 	
-	void initStatic();
+	static void initStatic();
 	
 	MapColorSet* color_set;
 	SymbolVector symbols;
@@ -299,7 +306,9 @@ private:
 	int first_front_template;		// index of the first template in templates which should be drawn in front of the map
 	LayerVector layers;
 	ObjectSelection object_selection;
+	UndoManager object_undo_manager;
 	MapLayer* current_layer;
+	int current_layer_index;
 	WidgetVector widgets;
 	ViewVector views;
 	RenderableContainer renderables;

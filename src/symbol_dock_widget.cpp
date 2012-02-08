@@ -559,7 +559,7 @@ void SymbolRenderWidget::deleteSymbols()
 	{
 		if (map->doObjectsExistWithSymbol(map->getSymbol(*it)))
 		{
-			if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains objects with the symbol \"%1\". Deleting it will delete those objects! Do you really want to do that?").arg(map->getSymbol(*it)->getName()), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+			if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains objects with the symbol \"%1\". Deleting it will delete those objects and clear the undo history! Do you really want to do that?").arg(map->getSymbol(*it)->getName()), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
 				continue;
 		}
 		map->deleteSymbol(*it);
@@ -716,7 +716,7 @@ void SymbolWidget::keyPressed(QKeyEvent* event)
 	if (event->key() == Qt::Key_F1 && SymbolToolTip::getTip() != NULL)
 		SymbolToolTip::getTip()->showDescription();
 }
-void SymbolWidget::symbolChanged(int pos, Symbol* symbol)
+void SymbolWidget::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
 {
 	render_widget->updateIcon(pos);
 }

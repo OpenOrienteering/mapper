@@ -50,8 +50,7 @@ public:
 		SymbolEditor = 1
 	};
 	
-	MapEditorController(OperatingMode mode);
-	MapEditorController(OperatingMode mode, Map* map);
+	MapEditorController(OperatingMode mode, Map* map = NULL);
 	~MapEditorController();
 	
 	void setTool(MapEditorTool* new_tool);
@@ -59,6 +58,9 @@ public:
 	void setOverrideTool(MapEditorTool* new_override_tool);
 	inline MapEditorTool* getTool() const {return current_tool;}
 	MapEditorTool* getDefaultDrawToolForSymbol(Symbol* symbol);
+	
+	/// If this is set to true (usually by the current tool), undo/redo is deactivated
+	void setEditingInProgress(bool value);
 	
 	void setEditorActivity(MapEditorActivity* new_activity);
 	inline MapEditorActivity* getEditorActivity() const {return editor_activity;}
@@ -101,6 +103,7 @@ public slots:
 	void selectedSymbolsChanged();
 	void selectedObjectsChanged();
 	void selectedSymbolsOrObjectsChanged();
+	void undoStepAvailabilityChanged();
 	
 	void editToolClicked(bool checked);
 	void drawPointClicked(bool checked);
@@ -126,6 +129,8 @@ private:
 	void paintOnTemplate(Template* temp);
 	void updatePaintOnTemplateAction();
 	
+	void doUndo(bool redo);
+	
 	Map* map;
 	MapView* main_view;
 	MapWidget* map_widget;
@@ -136,9 +141,14 @@ private:
 	MapEditorTool* override_tool;
 	MapEditorActivity* editor_activity;
 	
+	bool editing_in_progress;
+	
 	QAction* print_act;
 	EditorDockWidget* print_dock_widget;
 	PrintWidget* print_widget;
+	
+	QAction* undo_act;
+	QAction* redo_act;
 	
 	QAction* color_window_act;
 	EditorDockWidget* color_dock_widget;

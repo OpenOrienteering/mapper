@@ -55,6 +55,8 @@ public:
 	
 protected slots:
 	void selectedSymbolsChanged();
+	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
+	void symbolDeleted(int pos, Symbol* old_symbol);
 	
 protected:
 	void createPreviewCurve(MapCoord position, float direction);
@@ -100,6 +102,7 @@ protected:
 	Symbol* drawing_symbol;
 	PathObject* preview_path;
 	
+	Symbol* last_used_symbol;
 	RenderableContainer renderables;
 	SymbolWidget* symbol_widget;
 };

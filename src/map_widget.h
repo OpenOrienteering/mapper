@@ -70,6 +70,9 @@ public:
 	void setDragOffset(QPoint offset);
 	void completeDragging(QPoint offset, qint64 dx, qint64 dy);
 	
+	void ensureVisibilityOfRect(const QRectF& map_rect);	// does nothing if the rect is completely in view
+	void adjustViewToRect(const QRectF& map_rect);			// sets the view so the rect is centered and zooomed to fill the widget
+	
 	/// Mark a rectangular region of a template cache as dirty. This rect is united with possible previous dirty rects of that cache.
 	void markTemplateCacheDirty(QRectF view_rect, int pixel_border, bool front_cache);
 	

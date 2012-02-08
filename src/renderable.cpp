@@ -373,6 +373,13 @@ void LineRenderable::extentIncludeCap(int i, float half_line_width, bool end_cap
 }
 void LineRenderable::extentIncludeJoin(int i, float half_line_width, LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed)
 {
+	if (symbol->getJoinStyle() == LineSymbol::RoundJoin)
+	{
+		rectInclude(extent, QPointF(transformed_coords[i].getX() - half_line_width, transformed_coords[i].getY() - half_line_width));
+		rectInclude(extent, QPointF(transformed_coords[i].getX() + half_line_width, transformed_coords[i].getY() + half_line_width));
+		return;
+	}
+	
 	float scaling = 1;
 	MapCoordF right = PathCoord::calculateRightVector(coords, transformed_coords, closed, i, (symbol->getJoinStyle() == LineSymbol::MiterJoin) ? &scaling : NULL);
 	float factor = scaling * half_line_width;

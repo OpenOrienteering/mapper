@@ -138,7 +138,7 @@ public:
 	
 public slots:
 	virtual void keyPressed(QKeyEvent* event);
-	void symbolChanged(int pos, Symbol* symbol);
+	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
 	
 	void emitSwitchSymbolClicked() {emit switchSymbolClicked();}
 	void emitFillBorderClicked() {emit fillBorderClicked();}

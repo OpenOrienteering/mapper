@@ -36,22 +36,11 @@
 #include "draw_point.h"
 #include "draw_path.h"
 #include "edit_tool.h"
+#include "util.h"
+#include "map_undo.h"
 
 // ### MapEditorController ###
 
-MapEditorController::MapEditorController(OperatingMode mode)
-{
-	this->mode = mode;
-	map = NULL;
-	main_view = NULL;
-	symbol_widget = NULL;
-	window = NULL;
-	
-	editor_activity = NULL;
-	current_tool = NULL;
-	override_tool = NULL;
-	last_painted_on_template = NULL;
-}
 MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 {
 	this->mode = mode;
@@ -59,8 +48,10 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	main_view = NULL;
 	symbol_widget = NULL;
 	window = NULL;
+	editing_in_progress = false;
 	
-	setMap(map, true);
+	if (map)
+		setMap(map, true);
 	
 	editor_activity = NULL;
 	current_tool = NULL;
@@ -134,6 +125,17 @@ MapEditorTool* MapEditorController::getDefaultDrawToolForSymbol(Symbol* symbol)
 	else
 		assert(false);
 	return NULL;
+}
+
+void MapEditorController::setEditingInProgress(bool value)
+{
+	if (value != editing_in_progress)
+	{
+		editing_in_progress = value;
+		
+		undo_act->setEnabled(!editing_in_progress && map->objectUndoManager().getNumUndoSteps() > 0);
+		redo_act->setEnabled(!editing_in_progress && map->objectUndoManager().getNumRedoSteps() > 0);
+	}
 }
 
 void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
@@ -232,8 +234,10 @@ void MapEditorController::attach(MainWindow* window)
 		setEditTool();
 	}
 	
-	// Update enabled/disabled state for the tools
+	// Update enabled/disabled state for the tools ...
 	selectedObjectsChanged();
+	// ... and for undo
+	undoStepAvailabilityChanged();
 	
 	// Check if there is an invalid template and if so, output a warning
 	bool has_invalid_template = false;
@@ -263,21 +267,19 @@ void MapEditorController::createMenu()
 	file_menu->insertAction(window->getCloseAct(), print_act);
 	file_menu->insertSeparator(window->getCloseAct());
 	
-	// Edit menu - TODO
-	/*QAction* undo_act = new QAction(QIcon("images/undo.png"), tr("Undo"), this);	// TODO: update this with a desc. of what will be undone
+	// Edit menu
+	undo_act = new QAction(QIcon("images/undo.png"), tr("Undo"), this);	// TODO: update this with a desc. of what will be undone
 	undo_act->setShortcuts(QKeySequence::Undo);
 	undo_act->setStatusTip(tr("Undo the last step"));
 	connect(undo_act, SIGNAL(triggered()), this, SLOT(undo()));
 	
-	QAction* redo_act = new QAction(QIcon("images/redo.png"), tr("Redo"), this);	// TODO: update this with a desc. of what will be redone
+	redo_act = new QAction(QIcon("images/redo.png"), tr("Redo"), this);	// TODO: update this with a desc. of what will be redone
 	redo_act->setShortcuts(QKeySequence::Redo);
 	redo_act->setStatusTip(tr("Redo the next step"));
 	connect(redo_act, SIGNAL(triggered()), this, SLOT(redo()));
 	
-	undo_act->setEnabled(false);
-	redo_act->setEnabled(false);
-	
-	QAction* cut_act = new QAction(QIcon("images/cut.png"), tr("Cu&t"), this);
+	// TODO
+	/*QAction* cut_act = new QAction(QIcon("images/cut.png"), tr("Cu&t"), this);
 	cut_act->setShortcuts(QKeySequence::Cut);
 	connect(cut_act, SIGNAL(triggered()), this, SLOT(cut()));
 	
@@ -287,12 +289,12 @@ void MapEditorController::createMenu()
 	
 	QAction* paste_act = new QAction(QIcon("images/paste.png"), tr("&Paste"), this);
 	paste_act->setShortcuts(QKeySequence::Paste);
-	connect(paste_act, SIGNAL(triggered()), this, SLOT(paste()));
+	connect(paste_act, SIGNAL(triggered()), this, SLOT(paste()));*/
 	
 	QMenu* edit_menu = window->menuBar()->addMenu(tr("&Edit"));
 	edit_menu->addAction(undo_act);
 	edit_menu->addAction(redo_act);
-	edit_menu->addSeparator();
+	/*edit_menu->addSeparator();
 	edit_menu->addAction(cut_act);
 	edit_menu->addAction(copy_act);
 	edit_menu->addAction(paste_act);*/
@@ -466,11 +468,47 @@ void MapEditorController::printClicked()
 
 void MapEditorController::undo()
 {
-	// TODO
+	doUndo(false);
 }
 void MapEditorController::redo()
 {
-	// TODO
+	doUndo(true);
+}
+void MapEditorController::doUndo(bool redo)
+{
+	MapUndoStep* step = reinterpret_cast<MapUndoStep*>(redo ? map->objectUndoManager().getLastRedoStep() : map->objectUndoManager().getLastUndoStep());
+	MapLayer* affected_layer = map->getLayer(step->getLayer());
+	std::vector<int> affected_objects;
+	step->getAffectedOutcome(affected_objects);
+	
+	bool in_saved_state, done;
+	if (redo)
+		in_saved_state = map->objectUndoManager().redo(window, &done);
+	else
+		in_saved_state = map->objectUndoManager().undo(window, &done);
+	
+	if (!done)
+		return;
+	
+	if (map->hasUnsavedChanged() && in_saved_state)
+	{
+		map->setHasUnsavedChanges(false);
+		window->setHasUnsavedChanges(false);
+	}
+	else if (!map->hasUnsavedChanged() && !in_saved_state)
+		map->setHasUnsavedChanges(true);
+	
+	// Select affected objects and ensure that they are visible
+	map->clearObjectSelection((int)affected_objects.size() == 0);
+	QRectF object_rect;
+	for (int i = 0; i < (int)affected_objects.size(); ++i)
+	{
+		Object* object = affected_layer->getObject(affected_objects[i]);
+		rectIncludeSafe(object_rect, object->getExtent());
+		map->addObjectToSelection(object, i == (int)affected_objects.size() - 1);
+	}
+	if (object_rect.isValid())
+		map_widget->ensureVisibilityOfRect(object_rect);
 }
 
 void MapEditorController::cut()
@@ -495,7 +533,7 @@ void MapEditorController::showSymbolWindow(bool show)
 		symbol_dock_widget = new EditorDockWidget(tr("Symbols"), symbol_window_act, window);
 		symbol_widget = new SymbolWidget(map, symbol_dock_widget);
 		connect(window, SIGNAL(keyPressed(QKeyEvent*)), symbol_widget, SLOT(keyPressed(QKeyEvent*)));
-		connect(map, SIGNAL(symbolChanged(int,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*)));	// NOTE: adjust setMap() if changing this!
+		connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*,Symbol*)));	// NOTE: adjust setMap() if changing this!
 		symbol_dock_widget->setChild(symbol_widget);
 		window->addDockWidget(Qt::RightDockWidgetArea, symbol_dock_widget, Qt::Vertical);
 		
@@ -598,6 +636,9 @@ void MapEditorController::selectedSymbolsChanged()
 }
 void MapEditorController::selectedObjectsChanged()
 {
+	if (mode != MapEditor)
+		return;
+	
 	bool have_selection = map->getNumSelectedObjects() > 0;
 	bool have_line = false;
 	
@@ -634,6 +675,14 @@ void MapEditorController::selectedSymbolsOrObjectsChanged()
 	fill_border_act->setEnabled(single_symbol_compatible && single_symbol_different);
 	fill_border_act->setStatusTip(tr("Fill the selected line(s) or create a border for the selected area(s).") + (fill_border_act->isEnabled() ? "" : (" " + tr("Select at least one object and a fitting, different symbol to activate this tool."))));
 }
+void MapEditorController::undoStepAvailabilityChanged()
+{
+	if (mode != MapEditor)
+		return;
+	
+	undo_act->setEnabled(map->objectUndoManager().getNumUndoSteps() > 0);
+	redo_act->setEnabled(map->objectUndoManager().getNumRedoSteps() > 0);
+}
 
 void MapEditorController::editToolClicked(bool checked)
 {
@@ -664,31 +713,45 @@ void MapEditorController::duplicateClicked()
 		new_objects.push_back(duplicate);
 	}
 	
+	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
+	MapLayer* layer = map->getCurrentLayer();
+	
 	map->clearObjectSelection(false);
 	for (int i = 0; i < (int)new_objects.size(); ++i)
+	{
+		undo_step->addObject(layer->findObjectIndex(new_objects[i]));
 		map->addObjectToSelection(new_objects[i], i == (int)new_objects.size() - 1);
+	}
 	
+	map->objectUndoManager().addNewUndoStep(undo_step);
 	setEditTool();
 	window->statusBar()->showMessage(tr("%1 object(s) duplicated").arg((int)new_objects.size()), 2000);
 }
 void MapEditorController::switchSymbolClicked()
 {
+	SwitchSymbolUndoStep* undo_step = new SwitchSymbolUndoStep(map);
+	MapLayer* layer = map->getCurrentLayer();
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
 	
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 	{
+		undo_step->addObject(layer->findObjectIndex(*it), (*it)->getSymbol());
 		(*it)->setSymbol(symbol, true);
 		(*it)->update(true);
 	}
 	
 	map->setObjectsDirty();
+	map->objectUndoManager().addNewUndoStep(undo_step);
 }
 void MapEditorController::fillBorderClicked()
 {
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
 	std::vector<Object*> new_objects;
 	new_objects.reserve(map->getNumSelectedObjects());
+	
+	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
+	MapLayer* layer = map->getCurrentLayer();
 	
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
@@ -701,10 +764,17 @@ void MapEditorController::fillBorderClicked()
 	
 	map->clearObjectSelection(false);
 	for (int i = 0; i < (int)new_objects.size(); ++i)
+	{
 		map->addObjectToSelection(new_objects[i], i == (int)new_objects.size() - 1);
+		undo_step->addObject(layer->findObjectIndex(new_objects[i]));
+	}
+	map->objectUndoManager().addNewUndoStep(undo_step);
 }
 void MapEditorController::switchDashesClicked()
 {
+	SwitchDashesUndoStep* undo_step = new SwitchDashesUndoStep(map);
+	MapLayer* layer = map->getCurrentLayer();
+	
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 	{
@@ -712,10 +782,13 @@ void MapEditorController::switchDashesClicked()
 		{
 			(*it)->reverse();
 			(*it)->update(true);
+			
+			undo_step->addObject(layer->findObjectIndex(*it));
 		}
 	}
 	
 	map->setObjectsDirty();
+	map->objectUndoManager().addNewUndoStep(undo_step);
 }
 
 void MapEditorController::paintOnTemplateClicked(bool checked)
@@ -804,25 +877,26 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 {
 	if (this->map)
 	{
-		disconnect(map, SIGNAL(selectedObjectsChanged()), this, SLOT(selectedObjectsChanged()));
-		disconnect(this->map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
-		disconnect(this->map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
-		if (symbol_widget)
-			disconnect(map, SIGNAL(symbolChanged(int,Symbol*)), symbol_widget, SLOT(symbolChanged(int, Symbol*)));
+		map->disconnect(this);
+		map->disconnect(symbol_widget);
 	}
 	
 	this->map = map;
 	if (create_new_map_view)
 		main_view = new MapView(map);
 	
+	connect(&map->objectUndoManager(), SIGNAL(undoStepAvailabilityChanged()), this, SLOT(undoStepAvailabilityChanged()));
 	connect(map, SIGNAL(selectedObjectsChanged()), this, SLOT(selectedObjectsChanged()));
 	connect(map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
 	connect(map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
 	if (symbol_widget)
-		connect(map, SIGNAL(symbolChanged(int,Symbol*)), symbol_widget, SLOT(symbolChanged(int, Symbol*)));
+		connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*,Symbol*)));
 	
 	if (window)
+	{
+		undoStepAvailabilityChanged();
 		selectedObjectsChanged();
+	}
 }
 
 // ### EditorDockWidget ###

@@ -28,6 +28,7 @@
 #include "symbol.h"
 #include "object.h"
 #include "map_widget.h"
+#include "map_undo.h"
 #include "symbol_dock_widget.h"
 
 QCursor* EditTool::cursor = NULL;
@@ -45,8 +46,8 @@ EditTool::EditTool(MapEditorController* editor, QAction* tool_button): MapEditor
 }
 void EditTool::init()
 {
-	updateDirtyRect();
-	updateStatusText();
+	connect(editor->getMap(), SIGNAL(selectedObjectsChanged()), this, SLOT(selectedObjectsChanged()));
+	selectedObjectsChanged();
 }
 EditTool::~EditTool()
 {
@@ -117,10 +118,12 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 			// Start dragging
 			if (hover_point >= -1)
 			{
-				// Temporarily take the edited objects out of the map so their map renderables are not updated
+				// Temporarily take the edited objects out of the map so their map renderables are not updated, and make duplicates of them before for the edit step
 				Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
 				for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
 				{
+					undo_duplicates.push_back((*it)->duplicate());
+					
 					(*it)->setMap(NULL);
 					
 					// Cache old renderables until the object is inserted into the map again
@@ -133,6 +136,8 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 				
 				// Save original extent to be able to mark it as dirty later
 				original_selection_extent = selection_extent;
+				
+				editor->setEditingInProgress(true);
 			}
 			else if (hover_point == -2)
 				box_selection = true;
@@ -168,7 +173,6 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 		return false;
 	
 	Map* map = editor->getMap();
-	bool selection_changed = false;
 	
 	if (dragging)
 	{
@@ -177,11 +181,17 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 		{
 			updateDragging(event->pos(), widget);
 			
+			ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
+			
+			int i = 0;
 			Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
 			for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
 			{
 				(*it)->setMap(map);
 				(*it)->update(true);
+				
+				undo_step->addObject(*it, undo_duplicates[i]);
+				++i;
 			}
 			renderables.clear();
 			deleteOldRenderables();
@@ -189,10 +199,17 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 			map->setObjectAreaDirty(original_selection_extent);
 			updateDirtyRect();
 			map->setObjectsDirty();
+			
+			undo_duplicates.clear();
+			map->objectUndoManager().addNewUndoStep(undo_step);
+			
+			editor->setEditingInProgress(false);
 		}
 		else if (box_selection)
 		{
 			// Do box selection
+			bool selection_changed = false;
+			
 			std::vector<Object*> objects;
 			map->findObjectsAtBox(click_pos_map, cur_pos_map, objects);
 			
@@ -214,8 +231,9 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 			}
 			
 			box_selection = false;
-			if (!selection_changed)
-				updateDirtyRect();
+			if (selection_changed)
+				updateStatusText();
+			updateDirtyRect();
 		}
 		
 		dragging = false;
@@ -241,7 +259,6 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 				// Clicked on empty space, deselect everything
 				last_results.clear();
 				map->clearObjectSelection(true);
-				selection_changed = true;
 			}
 			else if (!last_results.empty() && selectionInfosEqual(objects, last_results))
 			{
@@ -250,7 +267,6 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 				
 				map->clearObjectSelection(false);
 				map->addObjectToSelection(last_results_ordered[next_object_to_select].second, true);
-				selection_changed = true;
 				
 				++next_object_to_select;
 			}
@@ -271,7 +287,6 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 				}
 				else
 					map->addObjectToSelection(objects.begin()->second, true);
-				selection_changed = true;
 			}
 		}
 		else
@@ -288,7 +303,6 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 				
 				if (map->toggleObjectSelection(last_results_ordered[next_object_to_select].second, true) == false)
 					++next_object_to_select;	// only advance if object has been deselected
-				selection_changed = true;
 			}
 			else
 			{
@@ -298,15 +312,8 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 				last_results_ordered = objects;
 				
 				map->toggleObjectSelection(objects.begin()->second, true);
-				selection_changed = true;
 			}
 		}
-	}
-	
-	if (selection_changed)
-	{
-		updateStatusText();
-		updateDirtyRect();
 	}
 	
 	return true;
@@ -449,11 +456,20 @@ bool EditTool::keyPressEvent(QKeyEvent* event)
 	
 	if (num_selected_objects > 0 && event->key() == Qt::Key_Delete)
 	{
+		AddObjectsUndoStep* undo_step = new AddObjectsUndoStep(editor->getMap());
+		MapLayer* layer = editor->getMap()->getCurrentLayer();
+		
 		Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
 		for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
-			editor->getMap()->deleteObject(*it, false);
+		{
+			int index = layer->findObjectIndex(*it);
+			undo_step->addObject(index, *it);
+		}
+		for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
+			editor->getMap()->deleteObject(*it, true);
 		editor->getMap()->clearObjectSelection(true);
 		updateStatusText();
+		editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
 	}
 	else if (event->key() == Qt::Key_Tab)
 	{
@@ -509,6 +525,12 @@ void EditTool::draw(QPainter* painter, MapWidget* widget)
 		painter->setPen(qRgb(255, 255, 255));
 		painter->drawRect(QRect(top_left + QPoint(1, 1), bottom_right - QPoint(2, 2)));
 	}
+}
+
+void EditTool::selectedObjectsChanged()
+{
+	updateStatusText();
+	updateDirtyRect();
 }
 
 void EditTool::updateStatusText()

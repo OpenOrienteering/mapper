@@ -79,12 +79,51 @@ bool MapLayer::load(QFile* file, Map* map)
 	}
 	return true;
 }
+
+int MapLayer::findObjectIndex(Object* object)
+{
+	int size = objects.size();
+	for (int i = size - 1; i >= 0; --i)
+	{
+		if (objects[i] == object)
+			return i;
+	}
+	assert(false);
+	return -1;
+}
+void MapLayer::setObject(Object* object, int pos, bool delete_old)
+{
+	map->removeRenderablesOfObject(objects[pos], true);
+	if (delete_old)
+		delete objects[pos];
+	
+	objects[pos] = object;
+	object->setMap(map);
+	object->update(true);
+	map->setObjectsDirty();
+}
+void MapLayer::addObject(Object* object, int pos)
+{
+	objects.insert(objects.begin() + pos, object);
+	object->setMap(map);
+	object->update(true);
+	map->setObjectsDirty();
+	
+	if (map->getNumObjects() == 1)
+		map->updateAllMapWidgets();
+}
 void MapLayer::deleteObject(int pos, bool remove_only)
 {
 	map->removeRenderablesOfObject(objects[pos], true);
-	if (!remove_only)
+	if (remove_only)
+		objects[pos]->setMap(NULL);
+	else
 		delete objects[pos];
 	objects.erase(objects.begin() + pos);
+	map->setObjectsDirty();
+	
+	if (map->getNumObjects() == 0)
+		map->updateAllMapWidgets();
 }
 bool MapLayer::deleteObject(Object* object, bool remove_only)
 {
@@ -176,8 +215,9 @@ void MapLayer::changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol)
 			objects[i]->update(true);
 	}
 }
-void MapLayer::deleteAllObjectsWithSymbol(Symbol* symbol)
+bool MapLayer::deleteAllObjectsWithSymbol(Symbol* symbol)
 {
+	bool object_deleted = false;
 	int size = objects.size();
 	for (int i = size - 1; i >= 0; --i)
 	{
@@ -185,7 +225,9 @@ void MapLayer::deleteAllObjectsWithSymbol(Symbol* symbol)
 			continue;
 		
 		deleteObject(i, false);
+		object_deleted = true;
 	}
+	return object_deleted;
 }
 bool MapLayer::doObjectsExistWithSymbol(Symbol* symbol)
 {
@@ -239,7 +281,7 @@ LineSymbol* Map::covering_white_line;
 LineSymbol* Map::covering_red_line;
 
 const int Map::least_supported_file_format_version = 0;
-const int Map::current_file_format_version = 6;
+const int Map::current_file_format_version = 7;
 
 Map::Map() : renderables(this), selection_renderables(this)
 {
@@ -249,9 +291,12 @@ Map::Map() : renderables(this), selection_renderables(this)
 	first_front_template = 0;
 	
 	layers.push_back(new MapLayer(tr("default layer"), this));
-	current_layer = layers[0];
+	current_layer_index = 0;
+	current_layer = layers[current_layer_index];
 	
 	color_set = new MapColorSet();
+	
+	object_undo_manager.setOwner(this);
 	
 	print_params_set = false;
 	gps_projection_params_set = false;
@@ -373,7 +418,7 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 		}
 	}
 	
-	// Write widgets and views; TODO: currently, just this just writes the view of widgets[0] ...
+	// Write widgets and views; TODO: currently, this just writes the view of widgets[0] ...
 	if (map_editor)
 		map_editor->saveWidgetsAndViews(&file);
 	else
@@ -381,8 +426,10 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 		// TODO
 	}
 	
+	// Write undo steps
+	object_undo_manager.save(&file);
+	
 	// Write layers
-	int current_layer_index = findCurrentLayerIndex();
 	file.write((const char*)&current_layer_index, sizeof(int));
 	
 	int num_layers = getNumLayers();
@@ -401,6 +448,9 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 	templates_dirty = false;
 	objects_dirty = false;
 	unsaved_changes = false;
+	
+	objectUndoManager().notifyOfSave();
+	
 	return true;
 }
 bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
@@ -538,8 +588,14 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 		delete main_view;
 	}
 	
+	// Load undo steps
+	if (version >= 7)
+	{
+		if (!object_undo_manager.load(&file))
+			return false;
+	}
+	
 	// Load layers
-	int current_layer_index;
 	file.read((char*)&current_layer_index, sizeof(int));
 	
 	int num_layers;
@@ -596,6 +652,7 @@ void Map::clear()
 		delete layers[i];
 	layers.clear();
 	current_layer = NULL;
+	current_layer_index = -1;
 	
 	widgets.clear();
 	
@@ -906,11 +963,7 @@ int Map::findColorIndex(MapColor* color)
 }
 void Map::setColorsDirty()
 {
-	if (!colors_dirty && !unsaved_changes)
-	{
-		emit(gotUnsavedChanges());
-		unsaved_changes = true;
-	}
+	setHasUnsavedChanges();
 	colors_dirty = true;
 }
 
@@ -1011,15 +1064,17 @@ void Map::setSymbol(Symbol* symbol, int pos)
 	}
 	
 	// Change the symbol
-	delete symbols[pos];
+	Symbol* old_symbol = symbols[pos];
+	delete old_symbol;
 	symbols[pos] = symbol;
 	
-	emit(symbolChanged(pos, symbol));
+	emit(symbolChanged(pos, symbol, old_symbol));
 	setSymbolsDirty();
 }
 void Map::deleteSymbol(int pos)
 {
-	deleteAllObjectsWithSymbol(symbols[pos]);
+	if (deleteAllObjectsWithSymbol(symbols[pos]))
+		object_undo_manager.clear();
 	
 	int size = (int)symbols.size();
 	for (int i = 0; i < size; ++i)
@@ -1057,11 +1112,7 @@ int Map::findSymbolIndex(Symbol* symbol)
 }
 void Map::setSymbolsDirty()
 {
-	if (!symbols_dirty && !unsaved_changes)
-	{
-		emit(gotUnsavedChanges());
-		unsaved_changes = true;
-	}
+	setHasUnsavedChanges();
 	symbols_dirty = true;
 }
 
@@ -1076,7 +1127,7 @@ void Map::scaleAllSymbols(double factor)
 		symbol->getIcon(this, true);
 		
 		updateAllObjectsWithSymbol(symbol);
-		emit(symbolChanged(i, symbol));
+		emit(symbolChanged(i, symbol, symbol));
 	}
 	
 	setSymbolsDirty();
@@ -1150,23 +1201,8 @@ void Map::setTemplateAreaDirty(int i)
 }
 void Map::setTemplatesDirty()
 {
-	if (!templates_dirty && !unsaved_changes)
-	{
-		emit(gotUnsavedChanges());
-		unsaved_changes = true;
-	}
+	setHasUnsavedChanges();
 	templates_dirty = true;
-}
-
-int Map::findCurrentLayerIndex() const
-{
-	int size = (int)layers.size();
-	for (int i = 0; i < size; ++i)
-	{
-		if (layers[i] == current_layer)
-			return i;
-	}
-	assert(false);
 }
 
 int Map::getNumObjects()
@@ -1177,16 +1213,13 @@ int Map::getNumObjects()
 		num_objects += layers[i]->getNumObjects();
 	return num_objects;
 }
-void Map::addObject(Object* object)
+int Map::addObject(Object* object, int layer_index)
 {
-	object->setMap(this);
+	MapLayer* layer = layers[(layer_index < 0) ? current_layer_index : layer_index];
+	int object_index = layer->getNumObjects();
+	layer->addObject(object, object_index);
 	
-	current_layer->addObject(object, current_layer->getNumObjects());
-	object->update(true);
-	setObjectsDirty();
-	
-	if (getNumObjects() == 1)
-		updateAllMapWidgets();
+	return object_index;
 }
 void Map::deleteObject(Object* object, bool remove_only)
 {
@@ -1194,23 +1227,13 @@ void Map::deleteObject(Object* object, bool remove_only)
 	for (int i = 0; i < size; ++i)
 	{
 		if (layers[i]->deleteObject(object, remove_only))
-		{
-			removeRenderablesOfObject(object, true);
-			setObjectsDirty();
-			if (remove_only)
-				object->setMap(NULL);
 			return;
-		}
 	}
 	assert(false);
 }
 void Map::setObjectsDirty()
 {
-	if (!objects_dirty && !unsaved_changes)
-	{
-		emit(gotUnsavedChanges());
-		unsaved_changes = true;
-	}
+	setHasUnsavedChanges();
 	objects_dirty = true;
 }
 
@@ -1271,11 +1294,13 @@ void Map::changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol)
 	for (int i = 0; i < size; ++i)
 		layers[i]->changeSymbolForAllObjects(old_symbol, new_symbol);
 }
-void Map::deleteAllObjectsWithSymbol(Symbol* symbol)
+bool Map::deleteAllObjectsWithSymbol(Symbol* symbol)
 {
+	bool object_deleted = false;
 	int size = layers.size();
 	for (int i = 0; i < size; ++i)
-		layers[i]->deleteAllObjectsWithSymbol(symbol);
+		object_deleted = object_deleted || layers[i]->deleteAllObjectsWithSymbol(symbol);
+	return object_deleted;
 }
 bool Map::doObjectsExistWithSymbol(Symbol* symbol)
 {
@@ -1301,11 +1326,7 @@ void Map::setGPSProjectionParameters(const GPSProjectionParameters& params)
 	gps_projection_params_set = true;
 	emit(gpsProjectionParametersChanged());
 	
-	if (!unsaved_changes)
-	{
-		emit(gotUnsavedChanges());
-		unsaved_changes = true;
-	}
+	setHasUnsavedChanges();
 }
 
 void Map::setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height)
@@ -1321,11 +1342,7 @@ void Map::setPrintParameters(int orientation, int format, float dpi, bool show_t
 	print_area_height = height;
 	
 	print_params_set = true;
-	if (!unsaved_changes)
-	{
-		emit(gotUnsavedChanges());
-		unsaved_changes = true;
-	}
+	setHasUnsavedChanges();
 }
 void Map::getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& center, float& left, float& top, float& width, float& height)
 {
@@ -1338,6 +1355,26 @@ void Map::getPrintParameters(int& orientation, int& format, float& dpi, bool& sh
 	top = print_area_top;
 	width = print_area_width;
 	height = print_area_height;
+}
+
+void Map::setHasUnsavedChanges(bool has_unsaved_changes)
+{
+	if (!has_unsaved_changes)
+	{
+		colors_dirty = false;
+		symbols_dirty = false;
+		templates_dirty = false;
+		objects_dirty = false;
+		unsaved_changes = false;
+	}
+	else
+	{
+		if (!unsaved_changes)
+		{
+			emit(gotUnsavedChanges());
+			unsaved_changes = true;
+		}
+	}
 }
 
 void Map::checkIfFirstColorAdded()

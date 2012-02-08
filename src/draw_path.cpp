@@ -30,6 +30,7 @@
 #include "symbol_point.h"
 #include "symbol_line.h"
 #include "symbol_combined.h"
+#include "map_undo.h"
 
 QCursor* DrawPathTool::cursor = NULL;
 
@@ -45,6 +46,8 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, Sy
 	
 	selectedSymbolsChanged();
 	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
+	connect(editor->getMap(), SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(symbolChanged(int,Symbol*,Symbol*)));
+	connect(editor->getMap(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
 	
 	if (!cursor)
 		cursor = new QCursor(QPixmap("images/cursor-draw-path.png"), 11, 11);
@@ -90,6 +93,8 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 			
 			draw_in_progress = true;
 			updateStatusText();
+			
+			editor->setEditingInProgress(true);
 		}
 
 		// Set path point
@@ -451,9 +456,13 @@ void DrawPathTool::finishDrawing()
 	else
 	{
 		preview_path->setSymbol(drawing_symbol, true);
-		editor->getMap()->addObject(preview_path);
+		int index = editor->getMap()->addObject(preview_path);
 		editor->getMap()->clearObjectSelection(false);
 		editor->getMap()->addObjectToSelection(preview_path, true);
+		
+		DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(editor->getMap());
+		undo_step->addObject(index);
+		editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
 	}
 	editor->getMap()->clearDrawingBoundingBox();
 	
@@ -462,6 +471,7 @@ void DrawPathTool::finishDrawing()
 	draw_in_progress = false;
 	
 	updateStatusText();
+	editor->setEditingInProgress(false);
 }
 void DrawPathTool::abortDrawing()
 {
@@ -474,6 +484,7 @@ void DrawPathTool::abortDrawing()
 	draw_in_progress = false;
 	
 	updateStatusText();
+	editor->setEditingInProgress(false);
 }
 
 void DrawPathTool::setDirtyRect(MapCoordF mouse_pos)
@@ -637,6 +648,9 @@ void DrawPathTool::addPreviewSymbols(Symbol* symbol)
 
 void DrawPathTool::selectedSymbolsChanged()
 {
+	if (draw_in_progress)
+		abortDrawing();
+	
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
 	if (symbol == NULL || ((symbol->getType() & (Symbol::Line | Symbol::Area | Symbol::Combined)) == 0))
 	{
@@ -653,6 +667,18 @@ void DrawPathTool::selectedSymbolsChanged()
 	preview_points.resize(size);
 	for (int i = 0; i < size; ++i)
 		preview_points[i] = new PointObject(preview_point_symbols[i]);
+	
+	last_used_symbol = symbol;
+}
+void DrawPathTool::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
+{
+	if (old_symbol == last_used_symbol)
+		selectedSymbolsChanged();
+}
+void DrawPathTool::symbolDeleted(int pos, Symbol* old_symbol)
+{
+	if (old_symbol == last_used_symbol)
+		editor->setEditTool();
 }
 
 #include "draw_path.moc"

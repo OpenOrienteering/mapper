@@ -48,6 +48,8 @@ public:
 	
 protected slots:
 	void selectedSymbolsChanged();
+	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
+	void symbolDeleted(int pos, Symbol* old_symbol);
 	
 protected:
 	void setDirtyRect(MapCoordF mouse_pos);
@@ -59,6 +61,7 @@ protected:
 	MapCoordF cur_pos_map;
 	bool dragging;
 	
+	Symbol* last_used_symbol;
 	PointObject* preview_object;
 	RenderableContainer renderables;
 	SymbolWidget* symbol_widget;

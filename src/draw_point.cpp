@@ -27,6 +27,7 @@
 #include "symbol.h"
 #include "object.h"
 #include "map_widget.h"
+#include "map_undo.h"
 #include "symbol_point.h"
 
 QCursor* DrawPointTool::cursor = NULL;
@@ -37,6 +38,8 @@ DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button, 
 	preview_object = NULL;
 	
 	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
+	connect(editor->getMap(), SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(symbolChanged(int,Symbol*,Symbol*)));
+	connect(editor->getMap(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
 	
 	if (!cursor)
 		cursor = new QCursor(QPixmap("images/cursor-draw-point.png"), 11, 11);
@@ -99,6 +102,7 @@ bool DrawPointTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	if (point->isRotatable())
 	{
 		dragging = true;
+		editor->setEditingInProgress(true);
 		cur_pos = event->pos();
 		cur_pos_map = map_coord;
 		
@@ -120,17 +124,24 @@ bool DrawPointTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, M
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
+	Map* map = editor->getMap();
+	
 	PointSymbol* symbol = reinterpret_cast<PointSymbol*>(symbol_widget->getSingleSelectedSymbol());
 	PointObject* point = new PointObject(symbol);
 	point->setPosition(click_pos_map.toMapCoord());
 	if (symbol->isRotatable())
 		point->setRotation(calculateRotation(event->pos(), map_coord));
-	editor->getMap()->addObject(point);
-	editor->getMap()->clearObjectSelection(false);
-	editor->getMap()->addObjectToSelection(point, true);
-	editor->getMap()->clearDrawingBoundingBox();
+	int index = map->addObject(point);
+	map->clearObjectSelection(false);
+	map->addObjectToSelection(point, true);
+	map->clearDrawingBoundingBox();
+	
+	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
+	undo_step->addObject(index);
+	map->objectUndoManager().addNewUndoStep(undo_step);
 	
 	dragging = false;
+	editor->setEditingInProgress(false);
 	return true;
 }
 void DrawPointTool::leaveEvent(QEvent* event)
@@ -207,6 +218,17 @@ void DrawPointTool::selectedSymbolsChanged()
 		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(single_selected_symbol);
 		editor->setTool(draw_tool);	
 	}
+	else
+		last_used_symbol = single_selected_symbol;
+}
+void DrawPointTool::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
+{
+	// No need to react here
+}
+void DrawPointTool::symbolDeleted(int pos, Symbol* old_symbol)
+{
+	if (last_used_symbol == old_symbol)
+		editor->setEditTool();
 }
 
 #include "draw_point.moc"

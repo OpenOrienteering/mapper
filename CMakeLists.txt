@@ -17,6 +17,7 @@ include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR})
 set(Mapper_SRCS
  src/main.cpp
  src/util.cpp
+ src/undo.cpp
  src/qbezier.cpp
  src/matrix.cpp
 
@@ -27,6 +28,7 @@ set(Mapper_SRCS
  src/map.cpp
  src/map_widget.cpp
  src/map_editor.cpp
+ src/map_undo.cpp
  src/map_dialog_new.cpp
  src/map_dialog_scale.cpp
 

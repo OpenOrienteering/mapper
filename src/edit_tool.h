@@ -52,6 +52,9 @@ public:
 	static QCursor* cursor;
 	static QImage* point_handles;
 	
+public slots:
+	void selectedObjectsChanged();
+	
 protected:
 	/// The numbers correspond to the position in point-handles.png
 	enum PointHandleType
@@ -94,6 +97,7 @@ protected:
 	int opposite_curve_handle_index;	// -1 if no opposite curve handle
 	double opposite_curve_handle_dist;
 	int curve_anchor_index;				// if moving a curve handle, this is the index of the point between the handle and its opposite handle, if that exists
+	std::vector<Object*> undo_duplicates;
 	
 	// Information about the last click
 	SelectionInfoVector last_results;

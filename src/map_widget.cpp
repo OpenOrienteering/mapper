@@ -174,6 +174,42 @@ void MapWidget::completeDragging(QPoint offset, qint64 dx, qint64 dy)
 	drag_offset = QPoint(0, 0);
 	moveView(dx, dy);
 }
+
+void MapWidget::ensureVisibilityOfRect(const QRectF& map_rect)
+{
+	const int pixel_border = 70;	// amount in pixels that is scrolled "too much" if the rect is not completely visible
+	
+	QRectF viewport_rect = mapToViewport(map_rect);
+	if (rect().contains(viewport_rect.topLeft().toPoint()) && rect().contains(viewport_rect.bottomRight().toPoint()))
+		return;
+	
+	if (viewport_rect.left() < 0)
+		view->setPositionX(view->getPositionX() + view->pixelToLength(viewport_rect.left() - pixel_border));
+	else if (viewport_rect.right() > width())
+		view->setPositionX(view->getPositionX() + view->pixelToLength(viewport_rect.right() - width() + pixel_border));
+	
+	if (viewport_rect.top() < 0)
+		view->setPositionY(view->getPositionY() + view->pixelToLength(viewport_rect.top() - pixel_border));
+	else if (viewport_rect.bottom() > height())
+		view->setPositionY(view->getPositionY() + view->pixelToLength(viewport_rect.bottom() - height() + pixel_border));
+	
+	// If the rect is still not completely in view, we have to zoom out
+	viewport_rect = mapToViewport(map_rect);
+	if (!(rect().contains(viewport_rect.topLeft().toPoint()) && rect().contains(viewport_rect.bottomRight().toPoint())))
+		adjustViewToRect(map_rect);
+}
+void MapWidget::adjustViewToRect(const QRectF& map_rect)
+{
+	const int pixel_border = 15;
+	
+	view->setPositionX(qRound64(1000 * (map_rect.left() + map_rect.width() / 2)));
+	view->setPositionY(qRound64(1000 * (map_rect.top() + map_rect.height() / 2)));
+	
+	QRectF viewport_rect = mapToViewport(map_rect);
+	float zoom_factor = qMin(height() / (viewport_rect.height() + 2*pixel_border), width() / (viewport_rect.width() + 2*pixel_border));
+	view->setZoom(view->getZoom() * zoom_factor);
+}
+
 void MapWidget::zoomDirtyRect(QRectF& dirty_rect, qreal zoom_factor)
 {
 	if (!dirty_rect.isValid())
