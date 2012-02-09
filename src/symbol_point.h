@@ -31,7 +31,7 @@ class QCheckBox;
 QT_END_NAMESPACE
 
 class Map;
-class MapColor;
+struct MapColor;
 class SymbolSettingDialog;
 class ColorDropDown;
 

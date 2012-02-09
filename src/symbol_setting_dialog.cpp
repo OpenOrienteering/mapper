@@ -147,8 +147,7 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Symbol* in_map_symbol, 
 	
 	QHBoxLayout* name_layout = new QHBoxLayout();
 	name_layout->addWidget(name_label);
-	name_layout->addWidget(name_edit);
-	name_layout->addStretch(1);
+	name_layout->addWidget(name_edit, 1);
 	
 	QHBoxLayout* buttons_layout = new QHBoxLayout();
 	buttons_layout->addWidget(cancel_button);
@@ -508,7 +507,7 @@ PointSymbolEditorWidget* SymbolSettingDialog::createPointSymbolEditor(MapEditorC
 		PointSymbol* point = reinterpret_cast<PointSymbol*>(symbol);
 		std::vector<PointSymbol*> point_vector;
 		point_vector.push_back(point);
-		return new PointSymbolEditorWidget(preview_map, controller, point_vector);
+		return new PointSymbolEditorWidget(preview_map, controller, point_vector, 0, this);
 	}
 	else if (symbol->getType() == Symbol::Line)
 	{
@@ -519,7 +518,7 @@ PointSymbolEditorWidget* SymbolSettingDialog::createPointSymbolEditor(MapEditorC
 		point_vector.push_back(line->getMidSymbol());
 		point_vector.push_back(line->getEndSymbol());
 		point_vector.push_back(line->getDashSymbol());
-		PointSymbolEditorWidget* point_editor = new PointSymbolEditorWidget(preview_map, controller, point_vector, 16);
+		PointSymbolEditorWidget* point_editor = new PointSymbolEditorWidget(preview_map, controller, point_vector, 16, this);
 		connect(point_editor, SIGNAL(symbolEdited()), this, SLOT(createPreviewMap()));
 		return point_editor;
 	}
@@ -532,7 +531,7 @@ PointSymbolEditorWidget* SymbolSettingDialog::createPointSymbolEditor(MapEditorC
 			if (area->getFillPattern(i).type == AreaSymbol::FillPattern::PointPattern)
 				point_vector.push_back(area->getFillPattern(i).point);
 		}
-		PointSymbolEditorWidget* point_editor = new PointSymbolEditorWidget(preview_map, controller, point_vector, 16);
+		PointSymbolEditorWidget* point_editor = new PointSymbolEditorWidget(preview_map, controller, point_vector, 16, this);
 		connect(point_editor, SIGNAL(symbolEdited()), this, SLOT(createPreviewMap()));
 		return point_editor;
 	}

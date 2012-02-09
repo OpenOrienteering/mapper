@@ -70,7 +70,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	
 	QLabel* current_element_label = new QLabel("<b>" + tr("Current element") + "</b>");
 	
-	element_properties_layout = new QStackedLayout();
+	element_properties_widget = new QStackedWidget();
 	
 	// Point
 	QWidget* point_properties = new QWidget();
@@ -102,7 +102,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	point_layout->addWidget(point_outer_color_edit, 3, 1);
 	point_layout->addWidget(explanation_label, 0, 2, 4, 1);
 	point_properties->setLayout(point_layout);
-	element_properties_layout->addWidget(point_properties);
+	element_properties_widget->addWidget(point_properties);
 	
 	// Line
 	QWidget* line_properties = new QWidget();
@@ -139,7 +139,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	line_layout->addWidget(line_join_edit, 3, 1);
 	line_layout->addWidget(line_closed_check, 4, 0, 1, 2);
 	line_properties->setLayout(line_layout);
-	element_properties_layout->addWidget(line_properties);
+	element_properties_widget->addWidget(line_properties);
 	
 	// Area
 	QWidget* area_properties = new QWidget();
@@ -151,7 +151,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	area_layout->addWidget(area_color_edit, 0, 1);
 	area_layout->setRowStretch(1, 1);
 	area_properties->setLayout(area_layout);
-	element_properties_layout->addWidget(area_properties);
+	element_properties_widget->addWidget(area_properties);
 	
 	// Coordinates
 	QLabel* coordinates_label = new QLabel(tr("Coordinates:"));
@@ -194,7 +194,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	layout->addSpacing(16);
 	
 	layout->addWidget(current_element_label);
-	layout->addLayout(element_properties_layout);
+	layout->addWidget(element_properties_widget);
 	layout->addSpacing(16);
 	
 	layout->addWidget(coordinates_label);
@@ -447,7 +447,7 @@ void PointSymbolEditorWidget::elementChanged(int row)
 		point_outer_width_edit->setText(QString::number(0.001 * point->getOuterWidth()));
 		point_outer_color_edit->setColor(point->getOuterColor());
 	}
-	element_properties_layout->setCurrentIndex(stack_index);
+	element_properties_widget->setCurrentIndex(stack_index);
 	
 	coords_table->clearContents();
 	coords_table->setEnabled(row > 0);
@@ -805,6 +805,7 @@ QString PointSymbolEditorWidget::getLabelForSymbol(Symbol* symbol)
 		return tr("Area");
 	
 	assert(false);
+	return tr("Unknown");
 }
 
 Object* PointSymbolEditorWidget::getMidpointObject()
@@ -887,19 +888,19 @@ void PointSymbolEditorActivity::draw(QPainter* painter, MapWidget* widget)
     for (int i = 0; i < (int)this->widget->symbol_info.size(); ++i)
 	{
 		PointSymbolEditorWidget::SymbolInfo& info = this->widget->symbol_info[i];
-		QPointF midpoint = widget->mapToViewport(MapCoordF(info.origin_x, info.origin_y));
+		QPoint midpoint = widget->mapToViewport(MapCoordF(info.origin_x, info.origin_y)).toPoint();
 		
 		QPen pen = QPen(Qt::white);
 		pen.setWidth(3);
 		painter->setPen(pen);
-		painter->drawLine(midpoint + QPointF(0, -cross_radius), midpoint + QPointF(0, cross_radius));
-		painter->drawLine(midpoint + QPointF(-cross_radius, 0), midpoint + QPointF(cross_radius, 0));
+		painter->drawLine(midpoint + QPoint(0, -cross_radius), midpoint + QPoint(0, cross_radius));
+		painter->drawLine(midpoint + QPoint(-cross_radius, 0), midpoint + QPoint(cross_radius, 0));
 		
 		pen.setWidth(0);
 		pen.setColor(Qt::black);
 		painter->setPen(pen);
-		painter->drawLine(midpoint + QPointF(0, -cross_radius), midpoint + QPointF(0, cross_radius));
-		painter->drawLine(midpoint + QPointF(-cross_radius, 0), midpoint + QPointF(cross_radius, 0));
+		painter->drawLine(midpoint + QPoint(0, -cross_radius), midpoint + QPoint(0, cross_radius));
+		painter->drawLine(midpoint + QPoint(-cross_radius, 0), midpoint + QPoint(cross_radius, 0));
 	}
 }
 

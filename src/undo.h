@@ -32,7 +32,7 @@ class QFile;
 QT_END_NAMESPACE
 
 class Map;
-class MapColor;
+struct MapColor;
 class Symbol;
 class Object;
 

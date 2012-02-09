@@ -26,6 +26,7 @@
 #define _OPENORIENTEERING_GPS_COORDINATES_H_
 
 #include <QDialog>
+#include <qmath.h>
 
 #include "map.h"
 

@@ -258,7 +258,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 {
 	const float curve_threshold = 0.03f;	// TODO: decrease for export/print?
 	const int MAX_OFFSET = 16;
-	QBezier offsetCurves[MAX_OFFSET];
+	QBezierCopy offsetCurves[MAX_OFFSET];
 	
 	int size = flags.size();
 	out_flags.clear();
@@ -276,15 +276,15 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 		
 		if (flags[i].isCurveStart())
 		{
-			// Use QBezier code to shift the curve, but set start and end point manually to get the correct end points (because of line joins)
+			// Use QBezierCopy code to shift the curve, but set start and end point manually to get the correct end points (because of line joins)
 			// TODO: it may be necessary to remove some of the generated curves in the case an outer point is moved inwards
-			QBezier bezier;
+			QBezierCopy bezier;
 			
 			bool reverse = (-shift < 0);
 			if (!reverse)
-				bezier = QBezier::fromPoints(coords[i].toQPointF(), coords[i+1].toQPointF(), coords[i+2].toQPointF(), coords[(i+3) % size].toQPointF());
+				bezier = QBezierCopy::fromPoints(coords[i].toQPointF(), coords[i+1].toQPointF(), coords[i+2].toQPointF(), coords[(i+3) % size].toQPointF());
 			else
-				bezier = QBezier::fromPoints(coords[(i+3) % size].toQPointF(), coords[i+2].toQPointF(), coords[i+1].toQPointF(), coords[i].toQPointF());
+				bezier = QBezierCopy::fromPoints(coords[(i+3) % size].toQPointF(), coords[i+2].toQPointF(), coords[i+1].toQPointF(), coords[i].toQPointF());
 			
 			int count = bezier.shifted(offsetCurves, MAX_OFFSET, qAbs(shift), curve_threshold);
 			if (count)
@@ -751,7 +751,7 @@ void LineSymbol::createDottedRenderables(bool path_closed, const MapCoordVector&
 						for (int s = 0; s < mid_symbols_per_spot; ++s)
 						{
 							double position = adapted_end_length + s * mid_symbol_distance_f + i * (adapted_segment_length + mid_symbols_length);
-							PathCoord::PathCoord::calculatePositionAt(flags, coords, line_coords, position, line_coord_search_start, &point_coord[0], &right_vector);
+							PathCoord::calculatePositionAt(flags, coords, line_coords, position, line_coord_search_start, &point_coord[0], &right_vector);
 							point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 							mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, false, output);
 						}
@@ -781,7 +781,7 @@ void LineSymbol::createDottedRenderables(bool path_closed, const MapCoordVector&
 							if (i == segment_count && s == mid_symbols_per_spot - 1)
 								break;
 							
-							PathCoord::PathCoord::calculatePositionAt(flags, coords, line_coords, s * mid_symbol_distance_f + i * adapted_segment_length, line_coord_search_start, &point_coord[0], &right_vector);
+							PathCoord::calculatePositionAt(flags, coords, line_coords, s * mid_symbol_distance_f + i * adapted_segment_length, line_coord_search_start, &point_coord[0], &right_vector);
 							point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 							mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, false, output);
 						}

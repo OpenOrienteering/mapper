@@ -597,14 +597,18 @@ void MapEditorController::openTemplateClicked()
 	if (!new_template)
 		return;
 	
-	if (template_dock_widget && !template_dock_widget->isVisible())
-		template_dock_widget->setVisible(true);
+	if (template_dock_widget)
+	{
+		if (!template_dock_widget->isVisible())
+			template_dock_widget->setVisible(true);
+	}
 	else
 	{
 		template_dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, window);
 		template_dock_widget->setChild(new TemplateWidget(map, main_view, this, template_dock_widget));
 		window->addDockWidget(Qt::RightDockWidgetArea, template_dock_widget, Qt::Vertical);
 	}
+	template_window_act->setChecked(true);
 	
 	TemplateWidget* template_widget = reinterpret_cast<TemplateWidget*>(template_dock_widget->widget());
 	template_widget->addTemplateAt(new_template, -1);

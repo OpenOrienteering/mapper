@@ -219,8 +219,9 @@ void PrintWidget::setPrinterSettings(QPrinter* printer)
 	printer->setDocName(QFileInfo(main_window->getCurrentFilePath()).fileName());
 	printer->setFullPage(true);
 	printer->setOrientation((QPrinter::Orientation)page_orientation_combo->itemData(page_orientation_combo->currentIndex()).toInt());
-	printer->setPaperSize((QPrinter::PaperSize)page_format_combo->itemData(page_format_combo->currentIndex()).toInt());
-	if (printer->paperSize() == QPrinter::Custom)
+	QPrinter::PaperSize paper_size = (QPrinter::PaperSize)page_format_combo->itemData(page_format_combo->currentIndex()).toInt();
+	printer->setPaperSize(paper_size);
+	if (paper_size == QPrinter::Custom)
 		printer->setPaperSize(QSizeF(print_width, print_height), QPrinter::Millimeter);
 	printer->setColorMode(QPrinter::Color);
 	if (!exporter)
@@ -262,9 +263,12 @@ void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& p
 
 void PrintWidget::currentDeviceChanged()
 {
+	if (device_combo->currentIndex() < 0)
+		return;
 	react_to_changes = false;
 	
 	int index = device_combo->itemData(device_combo->currentIndex()).toInt();
+	assert(index >= -2 && index < (int)printers.size());
 	bool exporter = index < 0;
 	bool image_exporter = index == (int)ImageExporter;
 	
@@ -283,6 +287,7 @@ void PrintWidget::currentDeviceChanged()
 	page_format_combo->clear();
 	
 	QList<QPrinter::PaperSize> size_list;
+	// NOTE: Using QPrinterInfo::supportedPaperSizes() leads to a crash for me on Windows as soon as the returned QList is destroyed on Qt 4.8. Maybe a QT bug? Disabling it for now.
 	if (!exporter)
 		size_list = printers[index].supportedPaperSizes();
 	

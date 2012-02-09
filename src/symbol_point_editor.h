@@ -28,7 +28,7 @@ QT_BEGIN_NAMESPACE
 class QComboBox;
 class QListWidget;
 class QPushButton;
-class QStackedLayout;
+class QStackedWidget;
 class QLineEdit;
 class QTableWidget;
 class QCheckBox;
@@ -121,7 +121,7 @@ private:
 	QListWidget* element_list;
 	QPushButton* delete_element_button;
 	
-	QStackedLayout* element_properties_layout;
+	QStackedWidget* element_properties_widget;
 	
 	QLineEdit* point_inner_radius_edit;
 	ColorDropDown* point_inner_color_edit;

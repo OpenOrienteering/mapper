@@ -32,6 +32,10 @@ QT_BEGIN_NAMESPACE
 class QFile;
 QT_END_NAMESPACE
 
+#ifdef _MSC_VER
+	#define isnan _isnan
+#endif
+
 class Matrix
 {
 public:

@@ -5,12 +5,13 @@ find_package(Qt4 REQUIRED)
 #set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_BUILD_TYPE Debug)
 
-add_definitions(-ansi -pedantic)
 if (CMAKE_COMPILER_IS_GNUCXX)
-	add_definitions(-Wno-long-long -Wno-deprecated -Wall)
+	add_definitions(-Wno-long-long -Wno-deprecated -Wall -ansi -pedantic)
+	set(CMAKE_CXX_FLAGS_DEBUG "-g3 -O0 -DDEBUG")
+	set(CMAKE_CXX_FLAGS_RELEASE "-g0 -O2 -s")
+else (CMAKE_COMPILER_IS_GNUCXX)
+	set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
 endif (CMAKE_COMPILER_IS_GNUCXX)
-set(CMAKE_CXX_FLAGS_DEBUG "-g3 -O0 -DDEBUG")
-set(CMAKE_CXX_FLAGS_RELEASE "-g0 -O2 -s")
 
 include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR})
 

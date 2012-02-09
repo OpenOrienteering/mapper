@@ -21,6 +21,7 @@
 #include "symbol.h"
 
 #include <QFile>
+#include <qmath.h>
 
 #include "util.h"
 #include "object.h"

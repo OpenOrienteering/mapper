@@ -677,6 +677,8 @@ void Map::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, floa
 }
 void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, bool draw_untransformed_parts, const QRect& untransformed_dirty_rect, MapWidget* widget, MapView* view)
 {
+	bool really_draw_untransformed_parts = draw_untransformed_parts && widget;
+
 	for (int i = first_template; i <= last_template; ++i)
 	{
 		Template* temp = getTemplate(i);
@@ -695,16 +697,18 @@ void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_templa
 			view_rect.setBottom((bounding_box.bottom() / temp->getTemplateScaleY()) - temp->getTemplateY());
 		}
 		
+		if (really_draw_untransformed_parts)
+			painter->save();
 		painter->save();
 		temp->applyTemplateTransform(painter);
 		temp->drawTemplate(painter, view_rect, scale, view ? view->getTemplateVisibility(temp)->opacity : 1);
 		painter->restore();
 		
-		if (draw_untransformed_parts && widget)
+		if (really_draw_untransformed_parts)
 		{
 			painter->resetMatrix();
 			temp->drawTemplateUntransformed(painter, untransformed_dirty_rect, widget);
-			painter->resetMatrix();
+			painter->restore();
 		}
 	}
 }
@@ -1109,6 +1113,7 @@ int Map::findSymbolIndex(Symbol* symbol)
 			return i;
 	}
 	assert(false);
+	return -1;
 }
 void Map::setSymbolsDirty()
 {
@@ -1141,6 +1146,7 @@ int Map::getTemplateNumber(Template* temp) const
 			return i;
 	}
 	assert(false);
+	return -1;
 }
 void Map::setTemplate(Template* temp, int pos)
 {
@@ -1331,6 +1337,10 @@ void Map::setGPSProjectionParameters(const GPSProjectionParameters& params)
 
 void Map::setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height)
 {
+	if ((print_orientation != orientation) || (print_format != format) || (print_dpi != dpi) || (print_show_templates != show_templates) ||
+		(print_center != center) || (print_area_left != left) || (print_area_top != top) || (print_area_width != width) || (print_area_height != height))
+		setHasUnsavedChanges();
+
 	print_orientation = orientation;
 	print_format = format;
 	print_dpi = dpi;
@@ -1342,7 +1352,6 @@ void Map::setPrintParameters(int orientation, int format, float dpi, bool show_t
 	print_area_height = height;
 	
 	print_params_set = true;
-	setHasUnsavedChanges();
 }
 void Map::getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& center, float& left, float& top, float& width, float& height)
 {

@@ -1,3 +1,35 @@
+== Installation on Windows ==
+
+Requirements:
+Qt, cmake and a C++ compiler.
+
+The easiest way to get Qt is to intall the Qt SDK. The program is known to work with Qt 4.8.
+When this is done, run cmake (I used the GUI version) and point it to the directory in which
+CMakeLists.txt (and the file you are reading now) are in.
+You can choose the build directory freely, but it is convenient to use a new subdirectory in this folder.
+
+Then click "Configure". For me, it aborted saying that QMake cannot be found. In this case, enter its path
+in the red line for the "QT_QMAKE_EXECUTABLE" key, for example "C:/QtSDK/Desktop/Qt/4.8.0/msvc2010/bin/qmake.exe".
+Click "Configure" again and it should run through. Because "Generate" was not enabled yet, I had to click "Configure"
+a third time and then finally "Generate".
+
+This generates the build files in the directory you specified earlier. If you use MinGW, you should now be able to
+run "make" in this directory, though I have not tried it - feedback on that is welcome! Instead, I used Visual C++ 2010.
+In this case, a *.sln file is generated in the build directory which should be opened as the next step.
+
+Three projects should be visible in the Solution Explorer which is by default on the left side. Right click the
+"Mapper" project and choose "Set as StartUp project". Right click it again and choose "Properties".
+Change "Configuration" to "All configurations" on the top left.
+In Linker -> System, change "SubSystem" to Windows.
+In Debugging, change "Working directory" to the bin subdirectory. If you created the build directory
+as a subdirectory of that containing CMakeLists.txt, you can use "$(ProjectDir)..\bin" (without the ").
+If you want to run the Debug version, set the configuration to Debug, go to C/C++ -> Code Generation and
+set "Runtime Library" to "Multi-threaded Debug DLL". If you forget that, everything will seem to run well, but you will
+encounter strange crashes on QList destructors. You may also want to disable optimizations for the debug version.
+
+Finally, build and run the program.
+
+
 == Installation on Linux ==
 
 Requirements:

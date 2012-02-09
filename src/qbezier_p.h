@@ -39,8 +39,8 @@
 **
 ****************************************************************************/
 
-#ifndef QBEZIER_P_H
-#define QBEZIER_P_H
+#ifndef QBezierCopy_P_H
+#define QBezierCopy_P_H
 
 //
 //  W A R N I N G
@@ -65,10 +65,10 @@ QT_BEGIN_NAMESPACE
 
 class QPolygonF;
 
-class Q_GUI_EXPORT QBezier
+class QBezierCopy
 {
 public:
-    static QBezier fromPoints(const QPointF &p1, const QPointF &p2,
+    static QBezierCopy fromPoints(const QPointF &p1, const QPointF &p2,
                               const QPointF &p3, const QPointF &p4);
 
     static void coefficients(qreal t, qreal &a, qreal &b, qreal &c, qreal &d);
@@ -96,7 +96,7 @@ public:
     QPointF pt3() const { return QPointF(x3, y3); }
     QPointF pt4() const { return QPointF(x4, y4); }
 
-    QBezier mapBy(const QTransform &transform) const;
+    QBezierCopy mapBy(const QTransform &transform) const;
 
     inline QPointF midPoint() const;
     inline QLineF midTangent() const;
@@ -104,24 +104,24 @@ public:
     inline QLineF startTangent() const;
     inline QLineF endTangent() const;
 
-    inline void parameterSplitLeft(qreal t, QBezier *left);
-    inline void split(QBezier *firstHalf, QBezier *secondHalf) const;
+    inline void parameterSplitLeft(qreal t, QBezierCopy *left);
+    inline void split(QBezierCopy *firstHalf, QBezierCopy *secondHalf) const;
 
-    int shifted(QBezier *curveSegments, int maxSegmets,
+    int shifted(QBezierCopy *curveSegments, int maxSegmets,
                 qreal offset, float threshold) const;
 
-    QBezier bezierOnInterval(qreal t0, qreal t1) const;
-    QBezier getSubRange(qreal t0, qreal t1) const;
+    QBezierCopy bezierOnInterval(qreal t0, qreal t1) const;
+    QBezierCopy getSubRange(qreal t0, qreal t1) const;
 
     qreal x1, y1, x2, y2, x3, y3, x4, y4;
 };
 
-inline QPointF QBezier::midPoint() const
+inline QPointF QBezierCopy::midPoint() const
 {
     return QPointF((x1 + x4 + 3*(x2 + x3))/8., (y1 + y4 + 3*(y2 + y3))/8.);
 }
 
-inline QLineF QBezier::midTangent() const
+inline QLineF QBezierCopy::midTangent() const
 {
     QPointF mid = midPoint();
     QLineF dir(QLineF(x1, y1, x2, y2).pointAt(0.5), QLineF(x3, y3, x4, y4).pointAt(0.5));
@@ -129,7 +129,7 @@ inline QLineF QBezier::midTangent() const
                   mid.x() + dir.dx(), mid.y() + dir.dy());
 }
 
-inline QLineF QBezier::startTangent() const
+inline QLineF QBezierCopy::startTangent() const
 {
     QLineF tangent(pt1(), pt2());
     if (tangent.isNull())
@@ -139,7 +139,7 @@ inline QLineF QBezier::startTangent() const
     return tangent;
 }
 
-inline QLineF QBezier::endTangent() const
+inline QLineF QBezierCopy::endTangent() const
 {
     QLineF tangent(pt4(), pt3());
     if (tangent.isNull())
@@ -149,7 +149,7 @@ inline QLineF QBezier::endTangent() const
     return tangent;
 }
 
-inline void QBezier::coefficients(qreal t, qreal &a, qreal &b, qreal &c, qreal &d)
+inline void QBezierCopy::coefficients(qreal t, qreal &a, qreal &b, qreal &c, qreal &d)
 {
     qreal m_t = 1. - t;
     b = m_t * m_t;
@@ -160,7 +160,7 @@ inline void QBezier::coefficients(qreal t, qreal &a, qreal &b, qreal &c, qreal &
     c *= 3. * m_t;
 }
 
-inline QPointF QBezier::pointAt(qreal t) const
+inline QPointF QBezierCopy::pointAt(qreal t) const
 {
 #if 1
     qreal a, b, c, d;
@@ -185,7 +185,7 @@ inline QPointF QBezier::pointAt(qreal t) const
 #endif
 }
 
-inline QPointF QBezier::normalVector(qreal t) const
+inline QPointF QBezierCopy::normalVector(qreal t) const
 {
     qreal m_t = 1. - t;
     qreal a = m_t * m_t;
@@ -195,7 +195,7 @@ inline QPointF QBezier::normalVector(qreal t) const
     return QPointF((y2-y1) * a + (y3-y2) * b + (y4-y3) * c,  -(x2-x1) * a - (x3-x2) * b - (x4-x3) * c);
 }
 
-inline QPointF QBezier::derivedAt(qreal t) const
+inline QPointF QBezierCopy::derivedAt(qreal t) const
 {
     // p'(t) = 3 * (-(1-2t+t^2) * p0 + (1 - 4 * t + 3 * t^2) * p1 + (2 * t - 3 * t^2) * p2 + t^2 * p3)
 
@@ -210,7 +210,7 @@ inline QPointF QBezier::derivedAt(qreal t) const
                        a * y1 + b * y2 + c * y3 + d * y4);
 }
 
-inline QPointF QBezier::secondDerivedAt(qreal t) const
+inline QPointF QBezierCopy::secondDerivedAt(qreal t) const
 {
     qreal a = 2. - 2. * t;
     qreal b = -4 + 6 * t;
@@ -221,7 +221,7 @@ inline QPointF QBezier::secondDerivedAt(qreal t) const
                        a * y1 + b * y2 + c * y3 + d * y4);
 }
 
-inline void QBezier::split(QBezier *firstHalf, QBezier *secondHalf) const
+inline void QBezierCopy::split(QBezierCopy *firstHalf, QBezierCopy *secondHalf) const
 {
     Q_ASSERT(firstHalf);
     Q_ASSERT(secondHalf);
@@ -245,7 +245,7 @@ inline void QBezier::split(QBezier *firstHalf, QBezier *secondHalf) const
     firstHalf->y4 = secondHalf->y1 = (firstHalf->y3 + secondHalf->y2)*.5;
 }
 
-inline void QBezier::parameterSplitLeft(qreal t, QBezier *left)
+inline void QBezierCopy::parameterSplitLeft(qreal t, QBezierCopy *left)
 {
     left->x1 = x1;
     left->y1 = y1;
@@ -271,4 +271,4 @@ inline void QBezier::parameterSplitLeft(qreal t, QBezier *left)
 
 QT_END_NAMESPACE
 
-#endif // QBEZIER_P_H
+#endif // QBezierCopy_P_H

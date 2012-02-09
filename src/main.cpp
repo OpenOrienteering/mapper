@@ -51,3 +51,11 @@ int main(int argc, char** argv)
 	first_window->show();
 	return qapp.exec();
 }
+
+#ifdef WIN32
+#include "Windows.h"
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+	return main(0, NULL);
+}
+#endif

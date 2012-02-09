@@ -72,10 +72,10 @@ static inline qreal log4(qreal x)
 /*!
   \internal
 */
-QBezier QBezier::fromPoints(const QPointF &p1, const QPointF &p2,
+QBezierCopy QBezierCopy::fromPoints(const QPointF &p1, const QPointF &p2,
                             const QPointF &p3, const QPointF &p4)
 {
-    QBezier b;
+    QBezierCopy b;
     b.x1 = p1.x();
     b.y1 = p1.y();
     b.x2 = p2.x();
@@ -90,7 +90,7 @@ QBezier QBezier::fromPoints(const QPointF &p1, const QPointF &p2,
 /*!
   \internal
 */
-QPolygonF QBezier::toPolygon(qreal bezier_flattening_threshold) const
+QPolygonF QBezierCopy::toPolygon(qreal bezier_flattening_threshold) const
 {
     // flattening is done by splitting the bezier until we can replace the segment by a straight
     // line. We split further until the control points are close enough to the line connecting the
@@ -109,15 +109,15 @@ QPolygonF QBezier::toPolygon(qreal bezier_flattening_threshold) const
     return polygon;
 }
 
-QBezier QBezier::mapBy(const QTransform &transform) const
+QBezierCopy QBezierCopy::mapBy(const QTransform &transform) const
 {
-    return QBezier::fromPoints(transform.map(pt1()), transform.map(pt2()), transform.map(pt3()), transform.map(pt4()));
+    return QBezierCopy::fromPoints(transform.map(pt1()), transform.map(pt2()), transform.map(pt3()), transform.map(pt4()));
 }
 
-QBezier QBezier::getSubRange(qreal t0, qreal t1) const
+QBezierCopy QBezierCopy::getSubRange(qreal t0, qreal t1) const
 {
-    QBezier result;
-    QBezier temp;
+    QBezierCopy result;
+    QBezierCopy temp;
 
     // cut at t1
     if (qFuzzyIsNull(t1 - qreal(1.))) {
@@ -192,11 +192,11 @@ static inline bool findInflections(qreal a, qreal b, qreal c,
 }
 
 
-void QBezier::addToPolygon(QPolygonF *polygon, qreal bezier_flattening_threshold) const
+void QBezierCopy::addToPolygon(QPolygonF *polygon, qreal bezier_flattening_threshold) const
 {
-    QBezier beziers[32];
+    QBezierCopy beziers[32];
     beziers[0] = *this;
-    QBezier *b = beziers;
+    QBezierCopy *b = beziers;
 
     while (b >= beziers) {
         // check if we can pop the top bezier curve from the stack
@@ -224,7 +224,7 @@ void QBezier::addToPolygon(QPolygonF *polygon, qreal bezier_flattening_threshold
     }
 }
 
-QRectF QBezier::bounds() const
+QRectF QBezierCopy::bounds() const
 {
     qreal xmin = x1;
     qreal xmax = x1;
@@ -266,7 +266,7 @@ enum ShiftResult {
     Circle
 };
 
-static ShiftResult good_offset(const QBezier *b1, const QBezier *b2, qreal offset, qreal threshold)
+static ShiftResult good_offset(const QBezierCopy *b1, const QBezierCopy *b2, qreal offset, qreal threshold)
 {
     const qreal o2 = offset*offset;
     const qreal max_dist_line = threshold*offset*offset;
@@ -298,7 +298,7 @@ static inline QLineF qline_shifted(const QPointF &p1, const QPointF &p2, qreal o
     return l;
 }
 
-static bool qbezier_is_line(QPointF *points, int pointCount)
+static bool QBezierCopy_is_line(QPointF *points, int pointCount)
 {
     Q_ASSERT(pointCount > 2);
 
@@ -320,7 +320,7 @@ static bool qbezier_is_line(QPointF *points, int pointCount)
     return false;
 }
 
-static ShiftResult shift(const QBezier *orig, QBezier *shifted, qreal offset, qreal threshold)
+static ShiftResult shift(const QBezierCopy *orig, QBezierCopy *shifted, qreal offset, qreal threshold)
 {
     int map[4];
     bool p1_p2_equal = (orig->x1 == orig->x2 && orig->y1 == orig->y2);
@@ -352,12 +352,12 @@ static ShiftResult shift(const QBezier *orig, QBezier *shifted, qreal offset, qr
 
     // We need to specialcase lines of 3 or 4 points due to numerical
     // instability in intersections below
-    if (np > 2 && qbezier_is_line(points, np)) {
+    if (np > 2 && QBezierCopy_is_line(points, np)) {
         if (points[0] == points[np-1])
             return Discard;
 
         QLineF l = qline_shifted(points[0], points[np-1], offset);
-        *shifted = QBezier::fromPoints(l.p1(), l.pointAt(qreal(0.33)), l.pointAt(qreal(0.66)), l.p2());
+        *shifted = QBezierCopy::fromPoints(l.p1(), l.pointAt(qreal(0.33)), l.pointAt(qreal(0.66)), l.p2());
         return Ok;
     }
 
@@ -403,7 +403,7 @@ static ShiftResult shift(const QBezier *orig, QBezier *shifted, qreal offset, qr
 
     points_shifted[np - 1] = points[np - 1] + offset * prev_normal;
 
-    *shifted = QBezier::fromPoints(points_shifted[map[0]], points_shifted[map[1]],
+    *shifted = QBezierCopy::fromPoints(points_shifted[map[0]], points_shifted[map[1]],
                                    points_shifted[map[2]], points_shifted[map[3]]);
 
     return good_offset(orig, shifted, offset, threshold);
@@ -415,7 +415,7 @@ static ShiftResult shift(const QBezier *orig, QBezier *shifted, qreal offset, qr
 #define KAPPA 0.5522847498
 
 
-static bool addCircle(const QBezier *b, qreal offset, QBezier *o)
+static bool addCircle(const QBezierCopy *b, qreal offset, QBezierCopy *o)
 {
     QPointF normals[3];
 
@@ -475,7 +475,7 @@ static bool addCircle(const QBezier *b, qreal offset, QBezier *o)
     return true;
 }
 
-int QBezier::shifted(QBezier *curveSegments, int maxSegments, qreal offset, float threshold) const
+int QBezierCopy::shifted(QBezierCopy *curveSegments, int maxSegments, qreal offset, float threshold) const
 {
     Q_ASSERT(curveSegments);
     Q_ASSERT(maxSegments > 0);
@@ -485,11 +485,11 @@ int QBezier::shifted(QBezier *curveSegments, int maxSegments, qreal offset, floa
         return 0;
 
     --maxSegments;
-    QBezier beziers[10];
+    QBezierCopy beziers[10];
 redo:
     beziers[0] = *this;
-    QBezier *b = beziers;
-    QBezier *o = curveSegments;
+    QBezierCopy *b = beziers;
+    QBezierCopy *o = curveSegments;
 
     while (b >= beziers) {
         int stack_segments = b - beziers + 1;
@@ -533,7 +533,7 @@ give_up:
 }
 
 #ifdef QDEBUG_BEZIER
-static QDebug operator<<(QDebug dbg, const QBezier &bz)
+static QDebug operator<<(QDebug dbg, const QBezierCopy &bz)
 {
     dbg << '[' << bz.x1<< ", " << bz.y1 << "], "
         << '[' << bz.x2 <<", " << bz.y2 << "], "
@@ -543,8 +543,8 @@ static QDebug operator<<(QDebug dbg, const QBezier &bz)
 }
 #endif
 
-static inline void splitBezierAt(const QBezier &bez, qreal t,
-                                 QBezier *left, QBezier *right)
+static inline void splitBezierAt(const QBezierCopy &bez, qreal t,
+                                 QBezierCopy *left, QBezierCopy *right)
 {
     left->x1 = bez.x1;
     left->y1 = bez.y1;
@@ -571,7 +571,7 @@ static inline void splitBezierAt(const QBezier &bez, qreal t,
     right->y4 = bez.y4;
 }
 
-qreal QBezier::length(qreal error) const
+qreal QBezierCopy::length(qreal error) const
 {
     qreal length = 0.0;
 
@@ -580,9 +580,9 @@ qreal QBezier::length(qreal error) const
     return length;
 }
 
-void QBezier::addIfClose(qreal *length, qreal error) const
+void QBezierCopy::addIfClose(qreal *length, qreal error) const
 {
-    QBezier left, right;     /* bez poly splits */
+    QBezierCopy left, right;     /* bez poly splits */
 
     qreal len = 0.0;        /* arc length */
     qreal chord;            /* chord length */
@@ -605,7 +605,7 @@ void QBezier::addIfClose(qreal *length, qreal error) const
     return;
 }
 
-qreal QBezier::tForY(qreal t0, qreal t1, qreal y) const
+qreal QBezierCopy::tForY(qreal t0, qreal t1, qreal y) const
 {
     qreal py0 = pointAt(t0).y();
     qreal py1 = pointAt(t1).y();
@@ -630,7 +630,7 @@ qreal QBezier::tForY(qreal t0, qreal t1, qreal y) const
         qreal t = 0.5 * (t0 + t1);
 
         qreal a, b, c, d;
-        QBezier::coefficients(t, a, b, c, d);
+        QBezierCopy::coefficients(t, a, b, c, d);
         qreal yt = a * y1 + b * y2 + c * y3 + d * y4;
 
         if (yt < y) {
@@ -647,7 +647,7 @@ qreal QBezier::tForY(qreal t0, qreal t1, qreal y) const
     return t0;
 }
 
-int QBezier::stationaryYPoints(qreal &t0, qreal &t1) const
+int QBezierCopy::stationaryYPoints(qreal &t0, qreal &t1) const
 {
     // y(t) = (1 - t)^3 * y1 + 3 * (1 - t)^2 * t * y2 + 3 * (1 - t) * t^2 * y3 + t^3 * y4
     // y'(t) = 3 * (-(1-2t+t^2) * y1 + (1 - 4 * t + 3 * t^2) * y2 + (2 * t - 3 * t^2) * y3 + t^2 * y4)
@@ -696,7 +696,7 @@ int QBezier::stationaryYPoints(qreal &t0, qreal &t1) const
     return 0;
 }
 
-qreal QBezier::tAtLength(qreal l) const
+qreal QBezierCopy::tAtLength(qreal l) const
 {
     qreal len = length();
     qreal t   = 1.0;
@@ -710,8 +710,8 @@ qreal QBezier::tAtLength(qreal l) const
     qreal lastBigger = 1.;
     while (1) {
         //qDebug()<<"\tt is "<<t;
-        QBezier right = *this;
-        QBezier left;
+        QBezierCopy right = *this;
+        QBezierCopy left;
         right.parameterSplitLeft(t, &left);
         qreal lLen = left.length();
         if (qAbs(lLen - l) < error)
@@ -729,14 +729,14 @@ qreal QBezier::tAtLength(qreal l) const
     return t;
 }
 
-QBezier QBezier::bezierOnInterval(qreal t0, qreal t1) const
+QBezierCopy QBezierCopy::bezierOnInterval(qreal t0, qreal t1) const
 {
     if (t0 == 0 && t1 == 1)
         return *this;
 
-    QBezier bezier = *this;
+    QBezierCopy bezier = *this;
 
-    QBezier result;
+    QBezierCopy result;
     bezier.parameterSplitLeft(t0, &result);
     qreal trueT = (t1-t0)/(1-t0);
     bezier.parameterSplitLeft(trueT, &result);

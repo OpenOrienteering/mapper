@@ -39,14 +39,14 @@ class QPainter;
 QT_END_NAMESPACE
 
 class Map;
-class MapColor;
+struct MapColor;
 class MapWidget;
 class MapView;
 class Symbol;
 class Template;
 class Object;
 class MapEditorController;
-class GPSProjectionParameters;
+struct GPSProjectionParameters;
 
 typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
 

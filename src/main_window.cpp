@@ -276,7 +276,7 @@ void MainWindow::loadWindowSettings()
 	settings.beginGroup("MainWindow");
 	QPoint pos = settings.value("pos", QPoint(100, 100)).toPoint();
 	QSize size = settings.value("size", QSize(800, 600)).toSize();
-	bool maximized = settings.value("maximized", true).toBool();
+	bool maximized = settings.value("maximized", false).toBool();
 	settings.endGroup();
 	
 	move(pos);

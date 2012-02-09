@@ -119,7 +119,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, RenderableVector&
 		return;
 	
 	// Make rotation unique
-	float rotation = fmod(angle, M_PI);
+	double rotation = fmod(1.0 * angle, M_PI);
 	
 	// Helpers
 	LineSymbol line;
