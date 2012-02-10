@@ -376,6 +376,24 @@ QSize MapWidget::sizeHint() const
     return QSize(640, 480);
 }
 
+void MapWidget::startPanning(QPoint cursor_pos)
+{
+	if (dragging)
+		return;
+	dragging = true;
+	drag_start_pos = cursor_pos;
+	normal_cursor = cursor();
+	setCursor(Qt::ClosedHandCursor);
+}
+void MapWidget::finishPanning(QPoint cursor_pos)
+{
+	if (!dragging)
+		return;
+	dragging = false;
+	view->completeDragging(cursor_pos - drag_start_pos);
+	setCursor(normal_cursor);
+}
+
 void MapWidget::showHelpMessage(QPainter* painter, const QString& text)
 {
 	painter->fillRect(rect(), QColor(Qt::gray));
@@ -493,6 +511,12 @@ void MapWidget::resizeEvent(QResizeEvent* event)
 }
 void MapWidget::mousePressEvent(QMouseEvent* event)
 {
+	if (dragging)
+	{
+		event->accept();
+		return;
+	}
+	
 	if (tool && tool->mousePressEvent(event, view->viewToMapF(viewportToView(event->pos())), this))
 	{
 		event->accept();
@@ -501,10 +525,8 @@ void MapWidget::mousePressEvent(QMouseEvent* event)
 	
 	if (event->button() == Qt::MiddleButton)
 	{
-		dragging = true;
-		drag_start_pos = event->pos();
-		normal_cursor = cursor();
-		setCursor(Qt::ClosedHandCursor);
+		startPanning(event->pos());
+		event->accept();
 	}
 }
 void MapWidget::mouseMoveEvent(QMouseEvent* event)
@@ -527,9 +549,8 @@ void MapWidget::mouseReleaseEvent(QMouseEvent* event)
 {
 	if (dragging)
 	{
-		dragging = false;
-		view->completeDragging(event->pos() - drag_start_pos);
-		setCursor(normal_cursor);
+		finishPanning(event->pos());
+		event->accept();
 		return;
 	}
 	
@@ -554,58 +575,11 @@ void MapWidget::wheelEvent(QWheelEvent* event)
 	if (event->orientation() == Qt::Vertical)
 	{
 		float degrees = event->delta() / 8.0f;
-		float num_steps = 0.5f * (degrees / 15.0f);
+		float num_steps = degrees / 15.0f;
 		
 		if (view)
 		{
-			if (num_steps > 0)
-			{
-				const double limit = 512;
-				
-				// Zooming in - adjust camera position so the cursor stays at the same position on the map
-				if (view->getZoom() >= limit)
-				{
-					event->ignore();
-					return;
-				}
-				
-				bool set_to_limit = false;
-				double zoom_to = pow(2, log2(view->getZoom()) + num_steps);
-				double zoom_factor = zoom_to / view->getZoom();
-				if (view->getZoom() * zoom_factor > limit)
-				{
-					zoom_factor = limit / view->getZoom();
-					set_to_limit = true;
-				}
-				MapCoordF mouse_pos_map = view->viewToMapF(viewportToView(event->pos()));
-				MapCoordF mouse_pos_to_view_center(view->getPositionX()/1000.0 - mouse_pos_map.getX(), view->getPositionY()/1000.0 - mouse_pos_map.getY());
-				mouse_pos_to_view_center = MapCoordF(mouse_pos_to_view_center.getX() * 1 / zoom_factor, mouse_pos_to_view_center.getY() * 1 / zoom_factor);
-				
-				view->setZoom(set_to_limit ? limit : (view->getZoom() * zoom_factor));
-				view->setPositionX(qRound64(1000 * (mouse_pos_map.getX() + mouse_pos_to_view_center.getX())));
-				view->setPositionY(qRound64(1000 * (mouse_pos_map.getY() + mouse_pos_to_view_center.getY())));
-			}
-			else
-			{
-				// Zooming out
-				const double limit = 1 / 16.0;
-				if (view->getZoom() <= limit)
-				{
-					event->ignore();
-					return;
-				}
-				
-				bool set_to_limit = false;
-				double zoom_to = pow(2, log2(view->getZoom()) + num_steps);
-				double zoom_factor = zoom_to / view->getZoom();
-				if (view->getZoom() * zoom_factor < limit)
-				{
-					zoom_factor = limit / view->getZoom();
-					set_to_limit = true;
-				}
-				
-				view->setZoom(set_to_limit ? limit : (view->getZoom() * zoom_factor));
-			}
+			view->zoomSteps(num_steps, true, viewportToView(event->pos()));
 			
 			// Send a mouse move event to the current tool as zooming out can move the mouse position on the map
 			if (tool)
@@ -631,6 +605,14 @@ void MapWidget::keyPressed(QKeyEvent* event)
 {
 	if (tool && tool->keyPressEvent(event))
 		return;
+	
+	if (event->key() == Qt::Key_F6)
+	{
+		startPanning(mapFromGlobal(QCursor::pos()));
+		event->accept();
+		return;
+	}
+	
     QWidget::keyPressEvent(event);
 }
 void MapWidget::keyReleased(QKeyEvent* event)

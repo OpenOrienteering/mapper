@@ -299,6 +299,19 @@ void MapEditorController::createMenu()
 	edit_menu->addAction(copy_act);
 	edit_menu->addAction(paste_act);*/
 	
+	// View menu
+	QAction* zoom_in_act = new QAction(QIcon("images/view-zoom-in.png"), tr("Zoom in"), this);
+	zoom_in_act->setShortcut(tr("F7"));
+	connect(zoom_in_act, SIGNAL(triggered()), this, SLOT(zoomIn()));
+	
+	QAction* zoom_out_act = new QAction(QIcon("images/view-zoom-out.png"), tr("Zoom in"), this);
+	zoom_out_act->setShortcut(tr("F8"));
+	connect(zoom_out_act, SIGNAL(triggered()), this, SLOT(zoomOut()));
+	
+	QMenu* view_menu = window->menuBar()->addMenu(tr("&View"));
+	view_menu->addAction(zoom_in_act);
+	view_menu->addAction(zoom_out_act);
+	
 	// Symbols menu
 	symbol_window_act = new QAction(QIcon("images/window-new.png"), tr("Symbol window"), this);
 	symbol_window_act->setCheckable(true);
@@ -529,6 +542,15 @@ void MapEditorController::copy()
 void MapEditorController::paste()
 {
 	// TODO
+}
+
+void MapEditorController::zoomIn()
+{
+	main_view->zoomSteps(1, false);
+}
+void MapEditorController::zoomOut()
+{
+	main_view->zoomSteps(-1, false);
 }
 
 void MapEditorController::showSymbolWindow(bool show)

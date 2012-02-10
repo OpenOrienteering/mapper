@@ -130,6 +130,9 @@ private:
 	void moveDirtyRect(QRect& dirty_rect, qreal x, qreal y);
 	void moveDirtyRect(QRectF& dirty_rect, qreal x, qreal y);
 	
+	void startPanning(QPoint cursor_pos);
+	void finishPanning(QPoint cursor_pos);
+	
 	void showHelpMessage(QPainter* painter, const QString& text);
 	
 	void updateZoomLabel();

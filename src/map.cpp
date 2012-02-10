@@ -1609,6 +1609,64 @@ void MapView::completeDragging(QPoint offset)
 	update();
 }
 
+bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF cursor_pos_view)
+{
+	const double zoom_in_limit = 512;
+	const double zoom_out_limit = 1 / 16.0;
+	
+	num_steps = 0.5f * num_steps;
+	
+	if (num_steps > 0)
+	{
+		// Zooming in - adjust camera position so the cursor stays at the same position on the map
+		if (getZoom() >= zoom_in_limit)
+			return false;
+		
+		bool set_to_limit = false;
+		double zoom_to = pow(2, log2(getZoom()) + num_steps);
+		double zoom_factor = zoom_to / getZoom();
+		if (getZoom() * zoom_factor > zoom_in_limit)
+		{
+			zoom_factor = zoom_in_limit / getZoom();
+			set_to_limit = true;
+		}
+		
+		MapCoordF mouse_pos_map;
+		MapCoordF mouse_pos_to_view_center;
+		if (preserve_cursor_pos)
+		{
+			mouse_pos_map = viewToMapF(cursor_pos_view);
+			mouse_pos_to_view_center = MapCoordF(getPositionX()/1000.0 - mouse_pos_map.getX(), getPositionY()/1000.0 - mouse_pos_map.getY());
+			mouse_pos_to_view_center = MapCoordF(mouse_pos_to_view_center.getX() * 1 / zoom_factor, mouse_pos_to_view_center.getY() * 1 / zoom_factor);
+		}
+		
+		setZoom(set_to_limit ? zoom_in_limit : (getZoom() * zoom_factor));
+		if (preserve_cursor_pos)
+		{
+			setPositionX(qRound64(1000 * (mouse_pos_map.getX() + mouse_pos_to_view_center.getX())));
+			setPositionY(qRound64(1000 * (mouse_pos_map.getY() + mouse_pos_to_view_center.getY())));
+		}
+	}
+	else
+	{
+		// Zooming out
+		if (getZoom() <= zoom_out_limit)
+			return false;
+		
+		bool set_to_limit = false;
+		double zoom_to = pow(2, log2(getZoom()) + num_steps);
+		double zoom_factor = zoom_to / getZoom();
+		if (getZoom() * zoom_factor < zoom_out_limit)
+		{
+			zoom_factor = zoom_out_limit / getZoom();
+			set_to_limit = true;
+		}
+		
+		setZoom(set_to_limit ? zoom_out_limit : (getZoom() * zoom_factor));
+	}
+	return true;
+}
+
 void MapView::setZoom(float value)
 {
 	float zoom_factor = value / zoom;

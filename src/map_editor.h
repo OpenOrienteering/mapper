@@ -87,6 +87,9 @@ public slots:
 	void copy();
 	void paste();
 	
+	void zoomIn();
+	void zoomOut();
+	
 	void showSymbolWindow(bool show);
 	void showColorWindow(bool show);
 	void loadSymbolsFromClicked();
@@ -132,6 +135,7 @@ private:
 	void updatePaintOnTemplateAction();
 	
 	void doUndo(bool redo);
+	void zoom(float steps);
 	
 	Map* map;
 	MapView* main_view;

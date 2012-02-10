@@ -434,6 +434,9 @@ public:
 	void setDragOffset(QPoint offset);
 	void completeDragging(QPoint offset);
 	
+	// Zooming, returns if the view was zoomed
+	bool zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF cursor_pos_view = QPointF());
+	
 	inline Map* getMap() const {return map;}
 	
 	inline float calculateFinalZoomFactor() {return lengthToPixel(1000);}
