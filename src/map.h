@@ -75,6 +75,7 @@ public:
 	
 	QRectF calculateExtent();
 	void scaleAllObjects(double factor);
+	void updateAllObjects();
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
 	bool deleteAllObjectsWithSymbol(Symbol* symbol);		// returns if there was an object that was deleted
@@ -200,6 +201,7 @@ public:
 	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vector<Object*>& out);
 	
 	void scaleAllObjects(double factor);
+	void updateAllObjects();
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
 	bool deleteAllObjectsWithSymbol(Symbol* symbol);							// returns if there was an object that was deleted

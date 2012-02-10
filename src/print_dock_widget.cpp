@@ -218,11 +218,13 @@ void PrintWidget::setPrinterSettings(QPrinter* printer)
 	
 	printer->setDocName(QFileInfo(main_window->getCurrentFilePath()).fileName());
 	printer->setFullPage(true);
-	printer->setOrientation((QPrinter::Orientation)page_orientation_combo->itemData(page_orientation_combo->currentIndex()).toInt());
 	QPrinter::PaperSize paper_size = (QPrinter::PaperSize)page_format_combo->itemData(page_format_combo->currentIndex()).toInt();
-	printer->setPaperSize(paper_size);
+	QPrinter::Orientation orientation = (QPrinter::Orientation)page_orientation_combo->itemData(page_orientation_combo->currentIndex()).toInt();
+	printer->setOrientation((paper_size == QPrinter::Custom) ? QPrinter::Portrait : orientation);
 	if (paper_size == QPrinter::Custom)
 		printer->setPaperSize(QSizeF(print_width, print_height), QPrinter::Millimeter);
+	else
+		printer->setPaperSize(paper_size);
 	printer->setColorMode(QPrinter::Color);
 	if (!exporter)
 	{

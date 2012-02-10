@@ -190,6 +190,12 @@ void MapLayer::scaleAllObjects(double factor)
 	
 	forceUpdateOfAllObjects();
 }
+void MapLayer::updateAllObjects()
+{
+	int size = objects.size();
+	for (int i = size - 1; i >= 0; --i)
+		objects[i]->update(true);
+}
 void MapLayer::updateAllObjectsWithSymbol(Symbol* symbol)
 {
 	int size = objects.size();
@@ -1131,9 +1137,9 @@ void Map::scaleAllSymbols(double factor)
 		symbol->scale(factor);
 		symbol->getIcon(this, true);
 		
-		updateAllObjectsWithSymbol(symbol);
 		emit(symbolChanged(i, symbol, symbol));
 	}
+	updateAllObjects();
 	
 	setSymbolsDirty();
 }
@@ -1287,6 +1293,12 @@ void Map::scaleAllObjects(double factor)
 	int size = layers.size();
 	for (int i = 0; i < size; ++i)
 		layers[i]->scaleAllObjects(factor);
+}
+void Map::updateAllObjects()
+{
+	int size = layers.size();
+	for (int i = 0; i < size; ++i)
+		layers[i]->updateAllObjects();
 }
 void Map::updateAllObjectsWithSymbol(Symbol* symbol)
 {
