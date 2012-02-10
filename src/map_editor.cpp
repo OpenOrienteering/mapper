@@ -378,6 +378,13 @@ void MapEditorController::createMenu()
 }
 void MapEditorController::createToolbar()
 {
+	// View toolbar
+	QToolBar* toolbar_view = window->addToolBar(tr("View"));
+	
+	QAction* show_all_act = new QAction(QIcon("images/view-show-all.png"), tr("Show whole map"), this);
+	connect(show_all_act, SIGNAL(triggered(bool)), this, SLOT(showWholeMap()));
+	toolbar_view->addAction(show_all_act);
+	
 	// Drawing toolbar
 	QToolBar* toolbar_drawing = window->addToolBar(tr("Drawing"));
 	
@@ -686,6 +693,12 @@ void MapEditorController::undoStepAvailabilityChanged()
 	
 	undo_act->setEnabled(map->objectUndoManager().getNumUndoSteps() > 0);
 	redo_act->setEnabled(map->objectUndoManager().getNumRedoSteps() > 0);
+}
+
+void MapEditorController::showWholeMap()
+{
+	QRectF map_extent = map->calculateExtent(true, main_view);
+	map_widget->adjustViewToRect(map_extent);
 }
 
 void MapEditorController::editToolClicked(bool checked)

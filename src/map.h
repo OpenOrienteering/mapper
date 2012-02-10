@@ -116,7 +116,7 @@ public:
 	/// Updates the renderables and extent of all objects which have been changed. This is automatically called by draw(), you normally do not need it
 	void updateObjects();
 	/// Calculates the extent of all map objects (and possibly templates)
-	QRectF calculateExtent(bool include_templates);
+	QRectF calculateExtent(bool include_templates, MapView* view);
 	
 	/// Must be called to notify the map of new widgets displaying it. Useful to notify the widgets about which parts of the map have changed and need to be redrawn
 	void addMapWidget(MapWidget* widget);

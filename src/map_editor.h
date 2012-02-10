@@ -105,6 +105,8 @@ public slots:
 	void selectedSymbolsOrObjectsChanged();
 	void undoStepAvailabilityChanged();
 	
+	void showWholeMap();
+	
 	void editToolClicked(bool checked);
 	void drawPointClicked(bool checked);
 	void drawPathClicked(bool checked);

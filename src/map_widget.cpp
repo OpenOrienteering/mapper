@@ -205,9 +205,12 @@ void MapWidget::adjustViewToRect(const QRectF& map_rect)
 	view->setPositionX(qRound64(1000 * (map_rect.left() + map_rect.width() / 2)));
 	view->setPositionY(qRound64(1000 * (map_rect.top() + map_rect.height() / 2)));
 	
-	QRectF viewport_rect = mapToViewport(map_rect);
-	float zoom_factor = qMin(height() / (viewport_rect.height() + 2*pixel_border), width() / (viewport_rect.width() + 2*pixel_border));
-	view->setZoom(view->getZoom() * zoom_factor);
+	// NOTE: The loop is an inelegant way to fight inaccuracies that occur somewhere ...
+	for (int i = 0; i < 10; ++i)
+	{
+		float zoom_factor = qMin(height() / (view->lengthToPixel(1000 * map_rect.height()) + 2*pixel_border), width() / (view->lengthToPixel(1000 * map_rect.width()) + 2*pixel_border));
+		view->setZoom(view->getZoom() * zoom_factor);
+	}
 }
 
 void MapWidget::zoomDirtyRect(QRectF& dirty_rect, qreal zoom_factor)

@@ -1249,7 +1249,7 @@ void Map::setObjectsDirty()
 	objects_dirty = true;
 }
 
-QRectF Map::calculateExtent(bool include_templates)
+QRectF Map::calculateExtent(bool include_templates, MapView* view)
 {
 	QRectF rect;
 	
@@ -1264,6 +1264,9 @@ QRectF Map::calculateExtent(bool include_templates)
 		size = templates.size();
 		for (int i = 0; i < size; ++i)
 		{
+			if (view && !view->isTemplateVisible(templates[i]))
+				continue;
+			
 			QRectF template_extent = templates[i]->getExtent();
 			rectInclude(rect, templates[i]->templateToMap(template_extent.topLeft()));
 			rectInclude(rect, templates[i]->templateToMap(template_extent.topRight()));

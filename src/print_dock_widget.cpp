@@ -73,7 +73,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 		page_orientation_combo->setCurrentIndex(page_orientation_combo->findData(orientation));
 	else
 	{
-		QRectF map_extent = map->calculateExtent(show_templates_check->isChecked());
+		QRectF map_extent = map->calculateExtent(show_templates_check->isChecked(), main_view);
 		QPrinter::Orientation best_orientation = (map_extent.width() > map_extent.height()) ? QPrinter::Landscape : QPrinter::Portrait;
 		page_orientation_combo->setCurrentIndex(page_orientation_combo->findData((int)best_orientation));
 	}
@@ -238,7 +238,7 @@ void PrintWidget::setPrinterSettings(QPrinter* printer)
 }
 void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& page_rect, bool white_background)
 {
-	QRectF map_extent = map->calculateExtent(show_templates_check->isChecked());
+	QRectF map_extent = map->calculateExtent(show_templates_check->isChecked(), main_view);
 	
 	QPainter painter;
 	painter.begin(paint_device);
@@ -400,7 +400,7 @@ void PrintWidget::centerPrintArea()
 {
 	center_button->setChecked(true);
 	
-	QRectF map_extent = map->calculateExtent(show_templates_check->isChecked());
+	QRectF map_extent = map->calculateExtent(show_templates_check->isChecked(), main_view);
 	if (!map_extent.isValid())
 	{
 		left_edit->setText("0");
