@@ -550,8 +550,8 @@ void MapWidget::wheelEvent(QWheelEvent* event)
 {
 	if (event->orientation() == Qt::Vertical)
 	{
-		float degrees = event->delta() / 8;
-		float num_steps = degrees / 15;
+		float degrees = event->delta() / 8.0f;
+		float num_steps = 0.5f * (degrees / 15.0f);
 		
 		if (view)
 		{
@@ -567,7 +567,8 @@ void MapWidget::wheelEvent(QWheelEvent* event)
 				}
 				
 				bool set_to_limit = false;
-				double zoom_factor = 2 * num_steps;
+				double zoom_to = pow(2, log2(view->getZoom()) + num_steps);
+				double zoom_factor = zoom_to / view->getZoom();
 				if (view->getZoom() * zoom_factor > limit)
 				{
 					zoom_factor = limit / view->getZoom();
@@ -592,7 +593,8 @@ void MapWidget::wheelEvent(QWheelEvent* event)
 				}
 				
 				bool set_to_limit = false;
-				double zoom_factor = 1 / (2 * -num_steps);
+				double zoom_to = pow(2, log2(view->getZoom()) + num_steps);
+				double zoom_factor = zoom_to / view->getZoom();
 				if (view->getZoom() * zoom_factor < limit)
 				{
 					zoom_factor = limit / view->getZoom();
