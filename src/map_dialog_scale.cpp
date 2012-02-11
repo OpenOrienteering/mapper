@@ -40,7 +40,7 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 	adjust_objects_check->setChecked(true);
 	
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	ok_button = new QPushButton(QIcon("images/arrow-right.png"), tr("Adjust"));
+	ok_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("Adjust"));
 	ok_button->setDefault(true);
 	
 	QHBoxLayout* scale_layout = new QHBoxLayout();

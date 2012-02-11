@@ -51,7 +51,7 @@ MainWindow::MainWindow(bool as_main_window)
 	this->show_menu = as_main_window;
 	setCurrentFile("");
 	
-	setWindowIcon(QIcon("images/control.png"));
+	setWindowIcon(QIcon(":/images/control.png"));
 	setAttribute(Qt::WA_DeleteOnClose);
 	
 	status_label = new QLabel();
@@ -97,12 +97,12 @@ void MainWindow::setController(MainWindowController* new_controller)
 }
 void MainWindow::createFileMenu()
 {
-	QAction* new_act = new QAction(QIcon("images/new.png"), tr("&New"), this);
+	QAction* new_act = new QAction(QIcon(":/images/new.png"), tr("&New"), this);
 	new_act->setShortcuts(QKeySequence::New);
 	new_act->setStatusTip(tr("Create a new map"));
 	connect(new_act, SIGNAL(triggered()), this, SLOT(showNewMapWizard()));
 	
-	QAction* open_act = new QAction(QIcon("images/open.png"), tr("&Open..."), this);
+	QAction* open_act = new QAction(QIcon(":/images/open.png"), tr("&Open..."), this);
 	open_act->setShortcuts(QKeySequence::Open);
 	open_act->setStatusTip(tr("Open an existing file"));
 	connect(open_act, SIGNAL(triggered()), this, SLOT(showOpenDialog()));
@@ -118,7 +118,7 @@ void MainWindow::createFileMenu()
 	// TODO: importAct? Or better in the map menu?
 	// NOTE: if you insert something between open_recent_menu and save_act, adjust updateRecentFileActions()!
 	
-	save_act = new QAction(QIcon("images/save.png"), tr("&Save..."), this);
+	save_act = new QAction(QIcon(":/images/save.png"), tr("&Save..."), this);
 	save_act->setShortcuts(QKeySequence::Save);
 	connect(save_act, SIGNAL(triggered()), this, SLOT(save()));
 	
@@ -146,7 +146,7 @@ void MainWindow::createFileMenu()
 void MainWindow::createHelpMenu()
 {
 	// Help menu
-	QAction* manualAct = new QAction(QIcon("images/help.png"), tr("Open &Manual"), this);
+	QAction* manualAct = new QAction(QIcon(":/images/help.png"), tr("Open &Manual"), this);
 	manualAct->setStatusTip(tr("Show the help file for this application"));
 	connect(manualAct, SIGNAL(triggered()), this, SLOT(showHelp()));
 	
@@ -468,7 +468,7 @@ void MainWindow::showAbout()
 	QDialog about_dialog(this);
 	about_dialog.setWindowTitle(tr("About %1").arg(APP_NAME));
 	
-	QLabel* about_label = new QLabel("<a href=\"http://openorienteering.org\"><img src=\"images/open-orienteering.png\"/></a><br/><br/>"
+	QLabel* about_label = new QLabel("<a href=\"http://openorienteering.org\"><img src=\":/images/open-orienteering.png\"/></a><br/><br/>"
 									 "OpenOrienteering Mapper<br/>"
 									 "Copyright (C) 2012  Thomas Sch&ouml;ps<br/>"
 									 "This program comes with ABSOLUTELY NO WARRANTY;<br/>"

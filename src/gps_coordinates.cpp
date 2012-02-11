@@ -236,7 +236,7 @@ GPSProjectionParametersDialog::GPSProjectionParametersDialog(QWidget* parent, co
 	edit_layout->setRowStretch(7, 1);
 	
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	ok_button = new QPushButton(QIcon("images/arrow-right.png"), tr("Ok"));
+	ok_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("Ok"));
 	ok_button->setDefault(true);
 	
 	QHBoxLayout* buttons_layout = new QHBoxLayout();

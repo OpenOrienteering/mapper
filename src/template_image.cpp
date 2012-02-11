@@ -197,7 +197,7 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(QWidget* parent) : QDialog(pare
 	scale_layout->addStretch(1);
 	
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	open_button = new QPushButton(QIcon("images/arrow-right.png"), tr("Open"));
+	open_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("Open"));
 	open_button->setDefault(true);
 	
 	QHBoxLayout* buttons_layout = new QHBoxLayout();

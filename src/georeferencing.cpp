@@ -222,15 +222,15 @@ GeoreferencingWidget::GeoreferencingWidget(Template* temp, MapEditorController* 
 	toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	toolbar->setFloatable(false);
 	
-	new_act = new QAction(QIcon("images/cursor-georeferencing-add.png"), tr("New point"), this);
+	new_act = new QAction(QIcon(":/images/cursor-georeferencing-add.png"), tr("New point"), this);
 	new_act->setCheckable(true);
 	toolbar->addAction(new_act);
 
-	move_act = new QAction(QIcon("images/move.png"), tr("Move"), this);
+	move_act = new QAction(QIcon(":/images/move.png"), tr("Move"), this);
 	move_act->setCheckable(true);
 	toolbar->addAction(move_act);
 	
-	delete_act = new QAction(QIcon("images/delete.png"), tr("Delete"), this);
+	delete_act = new QAction(QIcon(":/images/delete.png"), tr("Delete"), this);
 	delete_act->setCheckable(true);
 	toolbar->addAction(delete_act);
 	
@@ -535,7 +535,7 @@ GeoreferencingAddTool::GeoreferencingAddTool(MapEditorController* editor, QActio
 	first_point_set = false;
 	
 	if (!cursor)
-		cursor = new QCursor(QPixmap("images/cursor-georeferencing-add.png"), 11, 11);
+		cursor = new QCursor(QPixmap(":/images/cursor-georeferencing-add.png"), 11, 11);
 }
 void GeoreferencingAddTool::init()
 {
@@ -630,8 +630,8 @@ GeoreferencingMoveTool::GeoreferencingMoveTool(MapEditorController* editor, QAct
 	
 	if (!cursor)
 	{
-		cursor = new QCursor(QPixmap("images/cursor-georeferencing-move.png"), 1, 1);
-		cursor_invisible = new QCursor(QPixmap("images/cursor-invisible.png"), 0, 0);
+		cursor = new QCursor(QPixmap(":/images/cursor-georeferencing-move.png"), 1, 1);
+		cursor_invisible = new QCursor(QPixmap(":/images/cursor-invisible.png"), 0, 0);
 	}
 }
 void GeoreferencingMoveTool::init()
@@ -752,7 +752,7 @@ QCursor* GeoreferencingDeleteTool::cursor = NULL;
 GeoreferencingDeleteTool::GeoreferencingDeleteTool(MapEditorController* editor, QAction* tool_button, GeoreferencingWidget* widget): GeoreferencingEditTool(editor, tool_button, widget)
 {
 	if (!cursor)
-		cursor = new QCursor(QPixmap("images/cursor-delete.png"), 1, 1);
+		cursor = new QCursor(QPixmap(":/images/cursor-delete.png"), 1, 1);
 }
 void GeoreferencingDeleteTool::init()
 {

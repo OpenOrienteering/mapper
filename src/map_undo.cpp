@@ -20,6 +20,8 @@
 
 #include "map_undo.h"
 
+#include <algorithm>
+
 #include <QFile>
 
 #include "map.h"

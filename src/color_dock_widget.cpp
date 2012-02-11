@@ -51,12 +51,12 @@ ColorWidget::ColorWidget(Map* map, QWidget* parent): EditorDockWidgetChild(paren
 	// Buttons
 	buttons_group = new QWidget();
 	
-	QPushButton* new_button = new QPushButton(QIcon("images/plus.png"), tr("New"));
-	delete_button = new QPushButton(QIcon("images/minus.png"), tr("Delete"));
-	duplicate_button = new QPushButton(QIcon("images/copy.png"), tr("Duplicate"));
-	move_up_button = new QPushButton(QIcon("images/arrow-up.png"), tr("Move Up"));
-	move_down_button = new QPushButton(QIcon("images/arrow-down.png"), tr("Move Down"));
-	QPushButton* help_button = new QPushButton(QIcon("images/help.png"), tr("Help"));
+	QPushButton* new_button = new QPushButton(QIcon(":/images/plus.png"), tr("New"));
+	delete_button = new QPushButton(QIcon(":/images/minus.png"), tr("Delete"));
+	duplicate_button = new QPushButton(QIcon(":/images/copy.png"), tr("Duplicate"));
+	move_up_button = new QPushButton(QIcon(":/images/arrow-up.png"), tr("Move Up"));
+	move_down_button = new QPushButton(QIcon(":/images/arrow-down.png"), tr("Move Down"));
+	QPushButton* help_button = new QPushButton(QIcon(":/images/help.png"), tr("Help"));
 
 	QGridLayout* buttons_group_layout = new QGridLayout();
 	buttons_group_layout->setMargin(0);

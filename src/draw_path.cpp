@@ -50,7 +50,7 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, Sy
 	connect(editor->getMap(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
 	
 	if (!cursor)
-		cursor = new QCursor(QPixmap("images/cursor-draw-path.png"), 11, 11);
+		cursor = new QCursor(QPixmap(":/images/cursor-draw-path.png"), 11, 11);
 }
 void DrawPathTool::init()
 {
@@ -279,7 +279,7 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 		editor->setEditTool();
 	else if (event->key() == Qt::Key_Space)
 	{
-		space_pressed = true;
+		space_pressed = !space_pressed;
 		updateStatusText();
 	}
 	else
@@ -289,21 +289,13 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 }
 bool DrawPathTool::keyReleaseEvent(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Space)
-	{
-		space_pressed = false;
-		updateStatusText();
-	}
-	else
-		return false;
-	
-	return true;
+	return false;
 }
 void DrawPathTool::focusOutEvent(QFocusEvent* event)
 {
 	// Deactivate all modifiers - not always correct, but should be wrong only in very unusual cases and better than leaving the modifiers on forever
-	space_pressed = false;
-	updateStatusText();
+	//space_pressed = false;
+	//updateStatusText();
 }
 
 void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
@@ -529,34 +521,21 @@ float DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map)
 }
 void DrawPathTool::updateStatusText()
 {
+	QString text = "";
+	if (space_pressed)
+		text += tr("<b>Dash points on.</b> ");
+	
 	if (!draw_in_progress)
-		setStatusBarText(tr("<b>Click</b> to start a polygonal segment, <b>Drag</b> to start a curve"));
+		text += tr("<b>Click</b> to start a polygonal segment, <b>Drag</b> to start a curve");
 	else
 	{
-		if (space_pressed)
-		{
-			setStatusBarText(tr("<b>Space pressed</b>: set dash points"));
-		}
-		else
-		{
-			setStatusBarText(tr("<b>Click</b> to draw a polygonal segment, <b>Drag</b> to draw a curve, <b>Right or double click</b> to finish the path, "
-								"<b>Return</b> to close the path, <b>Backspace</b> to undo, <b>Esc</b> to abort. Try holding <b>Space</b>"));
-		}
+		text += tr("<b>Click</b> to draw a polygonal segment, <b>Drag</b> to draw a curve, <b>Right or double click</b> to finish the path, "
+					"<b>Return</b> to close the path, <b>Backspace</b> to undo, <b>Esc</b> to abort. Try <b>Space</b>");
 	}
+	
+	setStatusBarText(text);
 }
 
-/*bool DrawPathTool::isLastPointCurveStart()
-{
-	if (!preview_path || !preview_path->getCoordinateCount() > 0)
-		return false;
-	
-	if (!path_has_preview_point && preview_path->getCoordinate(preview_path->getCoordinateCount() - 1).isCurveStart())
-		return true;
-	else if (path_has_preview_point && preview_path->getCoordinateCount() > 3 && preview_path->getCoordinate(preview_path->getCoordinateCount() - 4).isCurveStart())
-		return true;
-	
-	return false;
-}*/
 void DrawPathTool::updatePreviewPath()
 {
 	renderables.removeRenderablesOfObject(preview_path, false);

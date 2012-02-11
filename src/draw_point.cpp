@@ -42,7 +42,7 @@ DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button, 
 	connect(editor->getMap(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
 	
 	if (!cursor)
-		cursor = new QCursor(QPixmap("images/cursor-draw-point.png"), 11, 11);
+		cursor = new QCursor(QPixmap(":/images/cursor-draw-point.png"), 11, 11);
 }
 void DrawPointTool::init()
 {

@@ -40,9 +40,9 @@ EditTool::EditTool(MapEditorController* editor, QAction* tool_button): MapEditor
 	hover_point = -2;
 
 	if (!cursor)
-		cursor = new QCursor(QPixmap("images/cursor-hollow.png"), 1, 1);
+		cursor = new QCursor(QPixmap(":/images/cursor-hollow.png"), 1, 1);
 	if (!point_handles)
-		point_handles = new QImage("images/point-handles.png");
+		point_handles = new QImage(":/images/point-handles.png");
 }
 void EditTool::init()
 {

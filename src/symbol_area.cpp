@@ -451,8 +451,8 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSetti
 	minimum_area_edit->setValidator(new DoubleValidator(0, 999999, minimum_area_edit));
 	
 	QLabel* fill_pattern_label = new QLabel("<b>" + tr("Fill patterns") + "</b>");
-	add_fill_button = new QPushButton(QIcon("images/plus.png"), "");
-	delete_fill_button = new QPushButton(QIcon("images/minus.png"), "");
+	add_fill_button = new QPushButton(QIcon(":/images/plus.png"), "");
+	delete_fill_button = new QPushButton(QIcon(":/images/minus.png"), "");
 	
 	fill_pattern_widget = new QWidget();
 	QLabel* fill_number_label = new QLabel(tr("Pattern number:"));

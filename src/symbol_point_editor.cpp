@@ -55,9 +55,9 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	element_list = new QListWidget();
 	updateElementList();
 	
-	delete_element_button = new QPushButton(QIcon("images/minus.png"), "");
+	delete_element_button = new QPushButton(QIcon(":/images/minus.png"), "");
 	QToolButton* add_element_button = new QToolButton();
-	add_element_button->setIcon(QIcon("images/plus.png"));
+	add_element_button->setIcon(QIcon(":/images/plus.png"));
 	add_element_button->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	add_element_button->setPopupMode(QToolButton::InstantPopup);
 	add_element_button->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
@@ -89,7 +89,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	point_outer_color_edit = new ColorDropDown(map);
 	
 	QLabel* explanation_label = new QLabel();
-	explanation_label->setPixmap(QPixmap("images/symbol_point_explanation.png"));
+	explanation_label->setPixmap(QPixmap(":/images/symbol_point_explanation.png"));
 	
 	QGridLayout* point_layout = new QGridLayout();
 	point_layout->addWidget(point_inner_radius_label, 0, 0);
@@ -168,8 +168,8 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	header_view->setResizeMode(2, QHeaderView::ResizeToContents);
 	header_view->setClickable(false);
 	
-	add_coord_button = new QPushButton(QIcon("images/plus.png"), "");
-	delete_coord_button = new QPushButton(QIcon("images/minus.png"), "");
+	add_coord_button = new QPushButton(QIcon(":/images/plus.png"), "");
+	delete_coord_button = new QPushButton(QIcon(":/images/minus.png"), "");
 	center_coords_button = new QPushButton(tr("Center by coordinate average"));
 	
 	// Layout
@@ -839,7 +839,7 @@ PointSymbolEditorTool::PointSymbolEditorTool(MapEditorController* editor, PointS
 	this->widget = widget;
 	
 	if (!cursor)
-		cursor = new QCursor(QPixmap("images/cursor-crosshair.png"), 11, 11);
+		cursor = new QCursor(QPixmap(":/images/cursor-crosshair.png"), 11, 11);
 }
 void PointSymbolEditorTool::init()
 {
