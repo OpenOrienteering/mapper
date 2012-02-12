@@ -231,4 +231,4 @@ void DrawPointTool::symbolDeleted(int pos, Symbol* old_symbol)
 		editor->setEditTool();
 }
 
-#include "draw_point.moc"
+#include "moc_draw_point.cpp"

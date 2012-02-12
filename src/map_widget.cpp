@@ -734,4 +734,4 @@ void MapWidget::updateMapCache(bool use_background)
 	assert(!map_cache_dirty_rect.isValid());
 }
 
-#include "map_widget.moc"
+#include "moc_map_widget.cpp"

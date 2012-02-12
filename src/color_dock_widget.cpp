@@ -371,4 +371,4 @@ void ColorWidget::updateRow(int row)
 	react_to_changes = true;
 }
 
-#include "color_dock_widget.moc"
+#include "moc_color_dock_widget.cpp"

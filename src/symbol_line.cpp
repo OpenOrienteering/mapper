@@ -1696,4 +1696,4 @@ void LineSymbolSettings::updateWidgets(bool show)
 		border_dash_widget->hide();
 }
 
-#include "symbol_line.moc"
+#include "moc_symbol_line.cpp"

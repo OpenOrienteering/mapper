@@ -204,4 +204,4 @@ bool TemplateGPS::changeTemplateFileImpl(const QString& filename)
 	return true;
 }
 
-#include "template_gps.moc"
+#include "moc_template_gps.cpp"

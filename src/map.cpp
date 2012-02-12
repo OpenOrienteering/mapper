@@ -1748,4 +1748,4 @@ void MapView::deleteTemplateVisibility(Template* temp)
 	template_visibilities.remove(temp);
 }
 
-#include "map.moc"
+#include "moc_map.cpp"

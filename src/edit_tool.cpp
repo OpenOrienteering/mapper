@@ -657,4 +657,4 @@ void EditTool::updateDragging(QPoint cursor_pos, MapWidget* widget)
 	}
 }
 
-#include "edit_tool.moc"
+#include "moc_edit_tool.cpp"

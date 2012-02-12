@@ -261,4 +261,4 @@ void UndoManager::clearRedoSteps()
 	redo_steps.clear();
 }
 
-#include "undo.moc"
+#include "moc_undo.cpp"

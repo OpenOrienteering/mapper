@@ -366,4 +366,4 @@ void HomeScreenOtherWidget::helpSlot()
 	emit(helpClicked());
 }
 
-#include "main_window_home_screen.moc"
+#include "moc_main_window_home_screen.cpp"

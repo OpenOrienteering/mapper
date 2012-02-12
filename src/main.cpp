@@ -18,16 +18,24 @@
  */
 
 
-#include <QtGui/QApplication>
+#include "../qtsingleapplication/QtSingleApplication.h"
 #include <QMessageBox>
+#include <QDebug>
 
 #include "main_window.h"
 #include "main_window_home_screen.h"
 
 int main(int argc, char** argv)
 {
-	// Create application
-	QApplication qapp(argc, argv);
+    // Create single-instance application.
+    // Use "oo-mapper" instead of the executable as identifier, in case we launch from different paths.
+    QtSingleApplication qapp("oo-mapper", argc, argv);
+    if (qapp.isRunning()) {
+        // Send a message to activate the running app, and optionally open a file
+        qapp.sendMessage((argc > 1) ? argv[1] : "");
+        return 0;
+    }
+
 	MainWindow* first_window = NULL;
 	
 	// Set settings defaults
@@ -46,9 +54,14 @@ int main(int argc, char** argv)
 	}
 	else
 		first_window->setController(new HomeScreenController());
-	
+
+    // If we need to response to a second app launch, do so, but also accept a file open request.
+    qapp.setActivationWindow(first_window);
+    QObject::connect(&qapp, SIGNAL(messageReceived(const QString&)), first_window, SLOT(openPath(const QString &)));
+
 	// Let application run
 	first_window->show();
+	first_window->raise();
 	return qapp.exec();
 }
 

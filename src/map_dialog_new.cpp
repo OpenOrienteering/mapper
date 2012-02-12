@@ -164,4 +164,4 @@ void NewMapDialog::loadSymbolSetMap()
 	}
 }
 
-#include "map_dialog_new.moc"
+#include "moc_map_dialog_new.cpp"

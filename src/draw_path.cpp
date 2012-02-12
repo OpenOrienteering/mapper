@@ -660,4 +660,4 @@ void DrawPathTool::symbolDeleted(int pos, Symbol* old_symbol)
 		editor->setEditTool();
 }
 
-#include "draw_path.moc"
+#include "moc_draw_path.cpp"

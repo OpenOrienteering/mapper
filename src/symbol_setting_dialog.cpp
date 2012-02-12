@@ -564,4 +564,4 @@ void SymbolSettingDialog::updateWindowTitle()
 		setWindowTitle(tr("Symbol settings for %1").arg(symbol->getName()));
 }
 
-#include "symbol_setting_dialog.moc"
+#include "moc_symbol_setting_dialog.cpp"

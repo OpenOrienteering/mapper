@@ -295,4 +295,4 @@ void PointSymbolSettings::orientedToNorthClicked(bool checked)
 	symbol->rotatable = !checked;
 }
 
-#include "symbol_point.moc"
+#include "moc_symbol_point.cpp"

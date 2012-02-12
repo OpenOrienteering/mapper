@@ -785,4 +785,4 @@ bool GeoreferencingDeleteTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_
 	return true;
 }
 
-#include "georeferencing.moc"
+#include "moc_georeferencing.cpp"

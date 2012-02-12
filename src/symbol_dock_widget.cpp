@@ -845,4 +845,4 @@ Symbol* SymbolToolTip::getCurrentTipSymbol()
 	return tooltip->symbol;
 }
 
-#include "symbol_dock_widget.moc"
+#include "moc_symbol_dock_widget.cpp"

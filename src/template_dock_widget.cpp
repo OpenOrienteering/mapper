@@ -676,4 +676,4 @@ void TemplateWidget::changeTemplateFile(int row)
 		QMessageBox::warning(this, tr("Error"), tr("Cannot change the template to this file! Is the format of the file correct for this template type?"));
 }
 
-#include "template_dock_widget.moc"
+#include "moc_template_dock_widget.cpp"

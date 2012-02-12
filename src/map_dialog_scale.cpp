@@ -84,4 +84,4 @@ void ScaleMapDialog::okClicked()
 	accept();
 }
 
-#include "map_dialog_scale.moc"
+#include "moc_map_dialog_scale.cpp"

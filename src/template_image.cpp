@@ -257,4 +257,4 @@ void TemplateImageOpenDialog::scaleCheckClicked(bool checked)
 	scale_edit->setEnabled(checked);
 }
 
-#include "template_image.moc"
+#include "moc_template_image.cpp"
