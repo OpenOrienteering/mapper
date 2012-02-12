@@ -343,15 +343,16 @@ void MainWindow::showNewMapWizard()
 		}
 	}
 	
-	// Open in current or new window?
+	MainWindow* new_window;
 	if (has_opened_file)
-	{
-		MainWindow* new_window = new MainWindow(true);
-		new_window->setController(new MapEditorController(MapEditorController::MapEditor, new_map));
-		new_window->show();
-	}
+		new_window = new MainWindow(true);
 	else
-		setController(new MapEditorController(MapEditorController::MapEditor, new_map));
+		new_window = this;
+	new_window->setController(new MapEditorController(MapEditorController::MapEditor, new_map));
+	
+	new_window->show();
+	new_window->raise();
+	new_window->activateWindow();
 }
 void MainWindow::showOpenDialog()
 {
