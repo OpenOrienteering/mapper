@@ -8,6 +8,7 @@ DEPENDPATH += . src
 INCLUDEPATH += . src
 
 QT += network
+QMAKE_CFLAGS += -std=c99
 
 # Input
 HEADERS += src/color_dock_widget.h \

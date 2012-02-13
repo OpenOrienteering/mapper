@@ -55,7 +55,7 @@ int main(int argc, char** argv)
 	else
 		first_window->setController(new HomeScreenController());
 
-    // If we need to response to a second app launch, do so, but also accept a file open request.
+    // If we need to respond to a second app launch, do so, but also accept a file open request.
     qapp.setActivationWindow(first_window);
     QObject::connect(&qapp, SIGNAL(messageReceived(const QString&)), first_window, SLOT(openPath(const QString &)));
 

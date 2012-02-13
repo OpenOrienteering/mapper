@@ -255,7 +255,8 @@ void MapEditorController::attach(MainWindow* window)
 		symbol_window_act->trigger();
 }
 
-QAction *MapEditorController::newAction(const char *id, const char *text, QObject *receiver, const char *slot, const char *icon, const char *tip) {
+QAction *MapEditorController::newAction(const char *id, const char *text, QObject *receiver, const char *slot, const char *icon, const char *tip)
+{
     QAction *action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), QObject::tr(text), this);
     if (tip) action->setStatusTip(QObject::tr(tip));
     if (receiver) QObject::connect(action, SIGNAL(triggered()), receiver, slot);
@@ -263,7 +264,8 @@ QAction *MapEditorController::newAction(const char *id, const char *text, QObjec
     return action;
 }
 
-QAction *MapEditorController::newCheckAction(const char *id, const char *text, QObject *receiver, const char *slot, const char *icon, const char *tip) {
+QAction *MapEditorController::newCheckAction(const char *id, const char *text, QObject *receiver, const char *slot, const char *icon, const char *tip)
+{
     QAction *action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), QObject::tr(text), this);
     action->setCheckable(true);
     if (tip) action->setStatusTip(QObject::tr(tip));
@@ -272,12 +274,14 @@ QAction *MapEditorController::newCheckAction(const char *id, const char *text, Q
     return action;
 }
 
-QAction *MapEditorController::findAction(const char *id) {
+QAction *MapEditorController::findAction(const char *id)
+{
     if (!actionsById.contains(id)) return actionsById[""];
     else return actionsById[id];
 }
 
-void MapEditorController::assignKeyboardShortcuts() {
+void MapEditorController::assignKeyboardShortcuts()
+{
     // Standard keyboard shortcuts
     findAction("print")->setShortcut(QKeySequence::Print);
     findAction("undo")->setShortcut(QKeySequence::Undo);
