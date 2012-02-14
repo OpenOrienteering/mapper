@@ -54,7 +54,8 @@ HEADERS += src/color_dock_widget.h \
            qtsingleapplication/qtlocalpeer.h \
            qtsingleapplication/qtlockedfile.h \
            qtsingleapplication/qtsingleapplication.h \
-           qtsingleapplication/qtsinglecoreapplication.h
+           qtsingleapplication/qtsinglecoreapplication.h \
+    src/persist.h
 SOURCES += src/color_dock_widget.cpp \
            src/draw_path.cpp \
            src/draw_point.cpp \
