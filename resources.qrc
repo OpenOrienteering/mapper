@@ -11,6 +11,7 @@
   <file>images/cursor-delete.png</file>
   <file>images/cursor-draw-path.png</file>
   <file>images/cursor-draw-point.png</file>
+  <file>images/cursor-draw-text.png</file>
   <file>images/cursor-georeferencing-add.png</file>
   <file>images/cursor-georeferencing-move.png</file>
   <file>images/cursor-hollow.png</file>
@@ -20,6 +21,7 @@
   <file>images/delete.png</file>
   <file>images/draw-path.png</file>
   <file>images/draw-point.png</file>
+  <file>images/draw-text.png</file>
   <file>images/georeferencing.png</file>
   <file>images/group.png</file>
   <file>images/help.png</file>
@@ -37,6 +39,13 @@
   <file>images/save.png</file>
   <file>images/settings.png</file>
   <file>images/symbol_point_explanation.png</file>
+  <file>images/text-align-left.png</file>
+  <file>images/text-align-hcenter.png</file>
+  <file>images/text-align-right.png</file>
+  <file>images/text-align-top.png</file>
+  <file>images/text-align-vcenter.png</file>
+  <file>images/text-align-baseline.png</file>
+  <file>images/text-align-bottom.png</file>
   <file>images/title.png</file>
   <file>images/tool-duplicate.png</file>
   <file>images/tool-edit.png</file>

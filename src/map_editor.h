@@ -78,6 +78,9 @@ public:
     virtual void attach(MainWindow* window);
     virtual void detach();
 	
+    virtual void keyPressEvent(QKeyEvent* event);
+    virtual void keyReleaseEvent(QKeyEvent* event);
+	
 public slots:
 	void printClicked();
 	
@@ -113,6 +116,7 @@ public slots:
 	void editToolClicked(bool checked);
 	void drawPointClicked(bool checked);
 	void drawPathClicked(bool checked);
+	void drawTextClicked(bool checked);
 	
 	void duplicateClicked();
 	void switchSymbolClicked();
@@ -169,6 +173,7 @@ private:
 	QAction* edit_tool_act;
 	QAction* draw_point_act;
 	QAction* draw_path_act;
+	QAction* draw_text_act;
 	
 	QAction* duplicate_act;
 	QAction* switch_symbol_act;

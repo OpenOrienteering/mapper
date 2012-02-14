@@ -56,7 +56,7 @@ public:
 	virtual UndoStep* undo() = 0;
 	
 	virtual void save(QFile* file) = 0;
-	virtual bool load(QFile* file) = 0;
+	virtual bool load(QFile* file, int version) = 0;
 	
 	/// Returns if the step can still be undone. This must be true after generating the step
 	/// (otherwise it would not make sense to generate it) but can change to false if an object the step depends on,
@@ -82,7 +82,7 @@ public:
 	~UndoManager();
 	
 	void save(QFile* file);
-	bool load(QFile* file);
+	bool load(QFile* file, int version);
 	
 	/// Call this to add a new step resulting from an edit action
 	void addNewUndoStep(UndoStep* step);
@@ -113,7 +113,7 @@ private:
 	void clearUndoSteps();
 	void clearRedoSteps();
 	void saveSteps(std::deque<UndoStep*>& steps, QFile* file);
-	bool loadSteps(std::deque<UndoStep*>& steps, QFile* file);
+	bool loadSteps(std::deque< UndoStep* >& steps, QFile* file, int version);
 	
 	int saved_step_index;				// 0 would be the current state, negative indices stand for the undo steps, positive indices for the redo steps
 	int loaded_step_index;				// indexing like for saved_step_index

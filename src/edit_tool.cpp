@@ -30,6 +30,8 @@
 #include "map_widget.h"
 #include "map_undo.h"
 #include "symbol_dock_widget.h"
+#include "draw_text.h"
+#include "symbol_text.h"
 
 QCursor* EditTool::cursor = NULL;
 QImage* EditTool::point_handles = NULL;
@@ -38,6 +40,7 @@ EditTool::EditTool(MapEditorController* editor, QAction* tool_button): MapEditor
 {
 	dragging = false;
 	hover_point = -2;
+	text_editor = NULL;
 
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-hollow.png"), 1, 1);
@@ -51,6 +54,8 @@ void EditTool::init()
 }
 EditTool::~EditTool()
 {
+	if (text_editor)
+		delete text_editor;
 	deleteOldRenderables();
 }
 
@@ -61,14 +66,14 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 	
 	updateHoverPoint(widget->mapToViewport(map_coord), widget);
 	
+	bool single_object_selected = editor->getMap()->getNumSelectedObjects() == 1;
+	Object* single_selected_object = NULL;
+	if (single_object_selected)
+		single_selected_object = *editor->getMap()->selectedObjectsBegin();
+	
 	if (hover_point >= 0)
 	{
 		opposite_curve_handle_index = -1;
-		
-		bool single_object_selected = editor->getMap()->getNumSelectedObjects() == 1;
-		Object* single_selected_object = NULL;
-		if (single_object_selected)
-			single_selected_object = *editor->getMap()->selectedObjectsBegin();
 		
 		if (single_object_selected && single_selected_object->getType() == Object::Path)
 		{
@@ -94,6 +99,36 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 				opposite_curve_handle_dist = path->getCoordinate(opposite_curve_handle_index).lengthTo(path->getCoordinate(curve_anchor_index));
 		}
 	}
+	else if (hover_point == -2)
+	{
+		if (text_editor)
+			return text_editor->mousePressEvent(event, map_coord, widget);
+		
+		if (hoveringOverSingleText(map_coord))
+		{
+			TextObject* text_object = reinterpret_cast<TextObject*>(single_selected_object);
+			
+			startEditing();
+			
+			// Don't show the original text while editing
+			editor->getMap()->removeRenderablesOfObject(single_selected_object, true);
+			
+			// Make sure that the TextObjectEditorHelper remembers the correct standard cursor
+			widget->setCursor(*getCursor());
+			
+			old_text = text_object->getText();
+			old_horz_alignment = (int)text_object->getHorizontalAlignment();
+			old_vert_alignment = (int)text_object->getVerticalAlignment();
+			text_editor = new TextObjectEditorHelper(text_object, editor);
+			connect(text_editor, SIGNAL(selectionChanged(bool)), this, SLOT(textSelectionChanged(bool)));
+			
+			// Select clicked position
+			int pos = text_object->calcTextPositionAt(map_coord, false);
+			text_editor->setSelection(pos, pos);
+			
+			updatePreviewObjects();
+		}
+	}
 	
 	click_pos = event->pos();
 	click_pos_map = map_coord;
@@ -109,36 +144,27 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 	
 	if (!mouse_down)
 	{
+		if (text_editor)
+			return text_editor->mouseMoveEvent(event, map_coord, widget);
+		
 		updateHoverPoint(widget->mapToViewport(map_coord), widget);
+		
+		// For texts, decide whether to show the beam cursor
+		if (hoveringOverSingleText(map_coord))
+			widget->setCursor(QCursor(Qt::IBeamCursor));
+		else
+			widget->setCursor(*getCursor());
 	}
 	else // if (mouse_down)
 	{
+		if (text_editor && hover_point == -2)
+			return text_editor->mouseMoveEvent(event, map_coord, widget);
+		
 		if (!dragging && (event->pos() - click_pos).manhattanLength() >= 1)
 		{
 			// Start dragging
 			if (hover_point >= -1)
-			{
-				// Temporarily take the edited objects out of the map so their map renderables are not updated, and make duplicates of them before for the edit step
-				Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
-				for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
-				{
-					undo_duplicates.push_back((*it)->duplicate());
-					
-					(*it)->setMap(NULL);
-					
-					// Cache old renderables until the object is inserted into the map again
-					old_renderables.reserve(old_renderables.size() + (*it)->getNumRenderables());
-					RenderableVector::const_iterator rit_end = (*it)->endRenderables();
-					for (RenderableVector::const_iterator rit = (*it)->beginRenderables(); rit != rit_end; ++rit)
-						old_renderables.push_back(*rit);
-					(*it)->takeRenderables();
-				}
-				
-				// Save original extent to be able to mark it as dirty later
-				original_selection_extent = selection_extent;
-				
-				editor->setEditingInProgress(true);
-			}
+				startEditing();
 			else if (hover_point == -2)
 				box_selection = true;
 			
@@ -174,36 +200,21 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 	
 	Map* map = editor->getMap();
 	
+	if (text_editor && hover_point == -2)
+	{
+		if (text_editor->mouseReleaseEvent(event, map_coord, widget))
+			return true;
+		else
+			finishEditing();
+	}
+	
 	if (dragging)
 	{
 		// Dragging finished
 		if (hover_point >= -1)
 		{
 			updateDragging(event->pos(), widget);
-			
-			ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
-			
-			int i = 0;
-			Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
-			for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
-			{
-				(*it)->setMap(map);
-				(*it)->update(true);
-				
-				undo_step->addObject(*it, undo_duplicates[i]);
-				++i;
-			}
-			renderables.clear();
-			deleteOldRenderables();
-			
-			map->setObjectAreaDirty(original_selection_extent);
-			updateDirtyRect();
-			map->setObjectsDirty();
-			
-			undo_duplicates.clear();
-			map->objectUndoManager().addNewUndoStep(undo_step);
-			
-			editor->setEditingInProgress(false);
+			finishEditing();
 		}
 		else if (box_selection)
 		{
@@ -353,6 +364,23 @@ int EditTool::findHoverPoint(QPointF cursor, Object* object, MapWidget* widget)
 			if (distanceSquared(widget->mapToViewport(point->getPosition()), cursor) <= click_tolerance_squared)
 				return 0;
 		}
+		else if (object->getType() == Object::Text)
+		{
+			if (text_editor)
+				return -2;
+			
+			TextObject* text = reinterpret_cast<TextObject*>(object);
+			if (text->hasSingleAnchor() && distanceSquared(widget->mapToViewport(text->getAnchorPosition()), cursor) <= click_tolerance_squared)
+				return 0;
+			else if (!text->hasSingleAnchor())
+			{
+				for (int i = 0; i < 4; ++i)
+				{
+					if (distanceSquared(widget->mapToViewport(box_text_handles[i]), cursor) <= click_tolerance_squared)
+						return i;
+				}
+			}
+		}
 		else if (object->getType() == Object::Path)
 		{
 			PathObject* path = reinterpret_cast<PathObject*>(object);
@@ -384,6 +412,17 @@ void EditTool::drawPointHandles(QPainter* painter, Object* object, MapWidget* wi
 	{
 		PointObject* point = reinterpret_cast<PointObject*>(object);
 		drawPointHandle(painter, widget->mapToViewport(point->getPosition()), NormalHandle, hover_point == 0);
+	}
+	else if (object->getType() == Object::Text)
+	{
+		TextObject* text = reinterpret_cast<TextObject*>(object);
+		if (text->hasSingleAnchor())
+			drawPointHandle(painter, widget->mapToViewport(text->getAnchorPosition()), NormalHandle, hover_point == 0);
+		else
+		{
+			for (int i = 0; i < 4; ++i)
+				drawPointHandle(painter, widget->mapToViewport(box_text_handles[i]), NormalHandle, hover_point == i);
+		}
 	}
 	else if (object->getType() == Object::Path)
 	{
@@ -449,28 +488,37 @@ void EditTool::drawCurveHandleLine(QPainter* painter, QPointF point, QPointF cur
 	
 	painter->drawLine(point, curve_handle);
 }
+void EditTool::calculateBoxTextHandles()
+{
+	Map* map = editor->getMap();
+	Object* single_selected_object = (map->getNumSelectedObjects() == 1) ? *map->selectedObjectsBegin() : NULL;
+	if (single_selected_object && single_selected_object->getType() == Object::Text)
+	{
+		TextObject* text_object = reinterpret_cast<TextObject*>(single_selected_object);
+		if (!text_object->hasSingleAnchor())
+		{
+			TextObject* text_object = reinterpret_cast<TextObject*>(*editor->getMap()->selectedObjectsBegin());
+			
+			QTransform transform;
+			transform.rotate(-text_object->getRotation() * 180 / M_PI);
+			box_text_handles[0] = transform.map(QPointF(text_object->getBoxWidth() / 2, -text_object->getBoxHeight() / 2)) + text_object->getAnchorPosition().toQPointF();
+			box_text_handles[1] = transform.map(QPointF(text_object->getBoxWidth() / 2, text_object->getBoxHeight() / 2)) + text_object->getAnchorPosition().toQPointF();
+			box_text_handles[2] = transform.map(QPointF(-text_object->getBoxWidth() / 2, text_object->getBoxHeight() / 2)) + text_object->getAnchorPosition().toQPointF();
+			box_text_handles[3] = transform.map(QPointF(-text_object->getBoxWidth() / 2, -text_object->getBoxHeight() / 2)) + text_object->getAnchorPosition().toQPointF();
+			updateDirtyRect();
+		}
+	}
+}
 
 bool EditTool::keyPressEvent(QKeyEvent* event)
 {
+	if (text_editor)
+		return text_editor->keyPressEvent(event);
+	
 	int num_selected_objects = editor->getMap()->getNumSelectedObjects();
 	
 	if (num_selected_objects > 0 && event->key() == Qt::Key_Delete)
-	{
-		AddObjectsUndoStep* undo_step = new AddObjectsUndoStep(editor->getMap());
-		MapLayer* layer = editor->getMap()->getCurrentLayer();
-		
-		Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
-		for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
-		{
-			int index = layer->findObjectIndex(*it);
-			undo_step->addObject(index, *it);
-		}
-		for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
-			editor->getMap()->deleteObject(*it, true);
-		editor->getMap()->clearObjectSelection(true);
-		updateStatusText();
-		editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
-	}
+		deleteSelectedObjects();
 	else if (event->key() == Qt::Key_Tab)
 	{
 		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(editor->getSymbolWidget()->getSingleSelectedSymbol());
@@ -484,7 +532,9 @@ bool EditTool::keyPressEvent(QKeyEvent* event)
 }
 bool EditTool::keyReleaseEvent(QKeyEvent* event)
 {
-	// Nothing (yet?)
+	if (text_editor)
+		return text_editor->keyReleaseEvent(event);
+	
 	return false;
 }
 
@@ -494,20 +544,33 @@ void EditTool::draw(QPainter* painter, MapWidget* widget)
 	if (num_selected_objects > 0)
 	{
 		editor->getMap()->drawSelection(painter, true, widget, renderables.isEmpty() ? NULL : &renderables);
-		if (selection_extent.isValid())
-		{
-			QPen pen((hover_point == -1) ? active_color : selection_color);
-			pen.setStyle(Qt::DashLine);
-			painter->setPen(pen);
-			painter->setBrush(Qt::NoBrush);
-			painter->drawRect(widget->mapToViewport(selection_extent));
-		}
 		
-		if (num_selected_objects == 1)
+		if (!text_editor)
 		{
-			Object* selection = *editor->getMap()->selectedObjectsBegin();
-			drawPointHandles(painter, selection, widget);
+			if (selection_extent.isValid())
+			{
+				QPen pen((hover_point == -1) ? active_color : selection_color);
+				pen.setStyle(Qt::DashLine);
+				painter->setPen(pen);
+				painter->setBrush(Qt::NoBrush);
+				painter->drawRect(widget->mapToViewport(selection_extent));
+			}
+			
+			if (num_selected_objects == 1)
+			{
+				Object* selection = *editor->getMap()->selectedObjectsBegin();
+				drawPointHandles(painter, selection, widget);
+			}
 		}
+	}
+	
+	// Text editor
+	if (text_editor)
+	{
+		painter->save();
+		widget->applyMapTransform(painter);
+		text_editor->draw(painter, widget);
+		painter->restore();
 	}
 	
 	// Box selection
@@ -531,6 +594,11 @@ void EditTool::selectedObjectsChanged()
 {
 	updateStatusText();
 	updateDirtyRect();
+	calculateBoxTextHandles();
+}
+void EditTool::textSelectionChanged(bool text_change)
+{
+	updatePreviewObjects();
 }
 
 void EditTool::updateStatusText()
@@ -571,6 +639,21 @@ void EditTool::updateDirtyRect()
 		for (int i = 0; i < size; ++i)
 			rectInclude(rect, path->getCoordinate(i).toQPointF());
 	}
+	else if (single_object_selected && object->getType() == Object::Text)
+	{
+		TextObject* text_object = reinterpret_cast<TextObject*>(object);
+		if (text_object->hasSingleAnchor())
+			rectInclude(rect, MapCoordF(text_object->getAnchorPosition()));
+		else
+		{
+			for (int i = 0; i < 4; ++i)
+				rectInclude(rect, box_text_handles[i]);
+		}
+	}
+	
+	// Text selection
+	if (text_editor)
+		text_editor->includeDirtyRect(rect);
 	
 	// Box selection
 	if (dragging && box_selection)
@@ -604,7 +687,29 @@ void EditTool::updateDragging(QPoint cursor_pos, MapWidget* widget)
 	qint64 delta_x = widget->getMapView()->pixelToLength(cursor_pos.x() - click_pos.x()) - prev_drag_x;
 	qint64 delta_y = widget->getMapView()->pixelToLength(cursor_pos.y() - click_pos.y()) - prev_drag_y;
 	
-	if (hover_point == -1 || (map->getNumSelectedObjects() == 1 && (*map->selectedObjectsBegin())->getType() == Object::Point))
+	Object::Type first_selected_object_type = (*map->selectedObjectsBegin())->getType();
+	if (hover_point >= 0 && first_selected_object_type == Object::Text && (reinterpret_cast<TextObject*>(*map->selectedObjectsBegin())->hasSingleAnchor() == false))
+	{
+		// Dragging a box text object handle
+		TextObject* text_object = reinterpret_cast<TextObject*>(*map->selectedObjectsBegin());
+		TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(text_object->getSymbol());
+		
+		QTransform transform;
+		transform.rotate(text_object->getRotation() * 180 / M_PI);
+		QPointF delta_point = transform.map(QPointF(delta_x, delta_y));
+		
+		int x_sign = (hover_point <= 1) ? 1 : -1;
+		int y_sign = (hover_point >= 1 && hover_point <= 2) ? 1 : -1;
+		
+		double new_box_width = qMax(text_symbol->getFontSize() / 2, text_object->getBoxWidth() + 0.001 * x_sign * delta_point.x());
+		double new_box_height = qMax(text_symbol->getFontSize() / 2, text_object->getBoxHeight() + 0.001 * y_sign * delta_point.y());
+		
+		text_object->move(delta_x / 2, delta_y / 2);
+		text_object->setBox(text_object->getAnchorPosition(), new_box_width, new_box_height);
+		calculateBoxTextHandles();
+	}
+	else if (hover_point == -1 || (map->getNumSelectedObjects() == 1 &&
+		(first_selected_object_type == Object::Point || first_selected_object_type == Object::Text)))
 	{
 		Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 		for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
@@ -655,6 +760,121 @@ void EditTool::updateDragging(QPoint cursor_pos, MapWidget* widget)
 			path->setCoordinate(opposite_curve_handle_index, control);
 		}
 	}
+}
+
+bool EditTool::hoveringOverSingleText(MapCoordF cursor_pos_map)
+{
+	if (hover_point != -2)
+		return false;
+	
+	Map* map = editor->getMap();
+	Object* single_selected_object = (map->getNumSelectedObjects() == 1) ? *map->selectedObjectsBegin() : NULL;
+	if (single_selected_object && single_selected_object->getType() == Object::Text)
+	{
+		TextObject* text_object = reinterpret_cast<TextObject*>(single_selected_object);
+		return text_object->calcTextPositionAt(cursor_pos_map, true) >= 0;
+	}
+	return false;
+}
+
+void EditTool::startEditing()
+{
+	Map* map = editor->getMap();
+	
+	// Temporarily take the edited objects out of the map so their map renderables are not updated, and make duplicates of them before for the edit step
+	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		undo_duplicates.push_back((*it)->duplicate());
+		
+		(*it)->setMap(NULL);
+		
+		// Cache old renderables until the object is inserted into the map again
+		old_renderables.reserve(old_renderables.size() + (*it)->getNumRenderables());
+		RenderableVector::const_iterator rit_end = (*it)->endRenderables();
+		for (RenderableVector::const_iterator rit = (*it)->beginRenderables(); rit != rit_end; ++rit)
+			old_renderables.push_back(*rit);
+		(*it)->takeRenderables();
+	}
+	
+	// Save original extent to be able to mark it as dirty later
+	original_selection_extent = selection_extent;
+	
+	editor->setEditingInProgress(true);
+}
+void EditTool::finishEditing()
+{
+	Map* map = editor->getMap();
+	bool create_undo_step = true;
+	bool delete_objects = false;
+	
+	if (text_editor)
+	{
+		delete text_editor;
+		text_editor = NULL;
+		
+		TextObject* text_object = reinterpret_cast<TextObject*>(*editor->getMap()->selectedObjectsBegin());
+		if (text_object->getText().isEmpty())
+		{
+			text_object->setText(old_text);
+			text_object->setHorizontalAlignment((TextObject::HorizontalAlignment)old_horz_alignment);
+			text_object->setVerticalAlignment((TextObject::VerticalAlignment)old_vert_alignment);
+			create_undo_step = false;
+			delete_objects = true;
+		}
+		else if (text_object->getText() == old_text && (int)text_object->getHorizontalAlignment() == old_horz_alignment && (int)text_object->getVerticalAlignment() == old_vert_alignment)
+			create_undo_step = false;
+	}
+	
+	ReplaceObjectsUndoStep* undo_step = create_undo_step ? new ReplaceObjectsUndoStep(map) : NULL;
+	
+	int i = 0;
+	Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		if (!delete_objects)
+		{
+			(*it)->setMap(map);
+			(*it)->update(true);
+		}
+		
+		if (create_undo_step)
+			undo_step->addObject(*it, undo_duplicates[i]);
+		else
+			delete undo_duplicates[i];
+		++i;
+	}
+	renderables.clear();
+	deleteOldRenderables();
+	
+	map->setObjectAreaDirty(original_selection_extent);
+	updateDirtyRect();
+	map->setObjectsDirty();
+	
+	undo_duplicates.clear();
+	if (create_undo_step)
+		map->objectUndoManager().addNewUndoStep(undo_step);
+	if (delete_objects)
+		deleteSelectedObjects();
+	
+	editor->setEditingInProgress(false);
+}
+void EditTool::deleteSelectedObjects()
+{
+	AddObjectsUndoStep* undo_step = new AddObjectsUndoStep(editor->getMap());
+	MapLayer* layer = editor->getMap()->getCurrentLayer();
+	
+	Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		int index = layer->findObjectIndex(*it);
+		undo_step->addObject(index, *it);
+	}
+	for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
+		editor->getMap()->deleteObject(*it, true);
+	editor->getMap()->clearObjectSelection(true);
+	updateStatusText();
+	editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
 }
 
 #include "edit_tool.moc"

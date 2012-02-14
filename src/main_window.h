@@ -47,6 +47,10 @@ public:
 	/// Detach from a main window. The controller should delete its user interface here.
 	virtual void detach() {}
 	
+	// Get key press events from the main window
+	virtual void keyPressEvent(QKeyEvent* event) {}
+	virtual void keyReleaseEvent(QKeyEvent* event) {}
+	
 	/// Used to notify the controller that the recent files list has changed
 	virtual void recentFilesUpdated() {}
 	

@@ -60,7 +60,7 @@ void MapLayer::save(QFile* file, Map* map)
 		objects[i]->save(file);
 	}
 }
-bool MapLayer::load(QFile* file, Map* map)
+bool MapLayer::load(QFile* file, int version, Map* map)
 {
 	loadString(file, name);
 	
@@ -75,7 +75,7 @@ bool MapLayer::load(QFile* file, Map* map)
 		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), NULL);
 		if (!objects[i])
 			return false;
-		objects[i]->load(file, map);
+		objects[i]->load(file, version, map);
 	}
 	return true;
 }
@@ -287,7 +287,7 @@ LineSymbol* Map::covering_white_line;
 LineSymbol* Map::covering_red_line;
 
 const int Map::least_supported_file_format_version = 0;
-const int Map::current_file_format_version = 7;
+const int Map::current_file_format_version = 8;
 
 Map::Map() : renderables(this), selection_renderables(this)
 {
@@ -597,7 +597,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 	// Load undo steps
 	if (version >= 7)
 	{
-		if (!object_undo_manager.load(&file))
+		if (!object_undo_manager.load(&file, version))
 			return false;
 	}
 	
@@ -614,7 +614,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 		MapLayer* layer = new MapLayer("", this);
 		if (i == current_layer_index)
 			current_layer = layer;
-		if (!layer->load(&file, this))
+		if (!layer->load(&file, version, this))
 		{
 			QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError while loading a layer.").arg(path));
 			return false;

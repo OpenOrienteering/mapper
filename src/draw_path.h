@@ -70,7 +70,6 @@ protected:
 	float calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map);
 	void updateStatusText();
 	
-	//bool isLastPointCurveStart();
 	void updatePreviewPath();
 	
 	void hidePreviewPoints();

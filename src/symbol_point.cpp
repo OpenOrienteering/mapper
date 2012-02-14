@@ -267,7 +267,7 @@ bool PointSymbol::loadImpl(QFile* file, int version, Map* map)
 		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), symbols[i]);
 		if (!objects[i])
 			return false;
-		objects[i]->load(file, NULL);
+		objects[i]->load(file, version, NULL);
 	}
 	
 	return true;

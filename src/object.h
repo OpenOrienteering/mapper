@@ -56,7 +56,7 @@ public:
 	inline Type getType() {return type;}
 	
 	void save(QFile* file);
-	void load(QFile* file, Map* map);
+	void load(QFile* file, int version, Map* map);
 	
 	/// Checks if the output_dirty flag is set and if yes, regenerates output and extent; returns true if output was previously dirty.
 	/// Use force == true to force a redraw
@@ -159,6 +159,19 @@ private:
 	float rotation;	// 0 to 2*M_PI
 };
 
+struct TextObjectLineInfo
+{
+	QString text;			// substring shown in this line
+	int start_index;		// line start character index in original string
+	int end_index;
+	QRectF bounding_box;	// in text transformation
+	double line_x;			// left endpoint of the baseline of this line of text in text coordinates
+	double line_y;
+	
+	inline TextObjectLineInfo(const QString& text, int start_index, int end_index, const QRectF& bounding_box, double line_x, double line_y)
+	 : text(text), start_index(start_index), end_index(end_index), bounding_box(bounding_box), line_x(line_x), line_y(line_y) {}
+};
+
 /// Object type which can only be used for text symbols.
 /// Contains either 1 coordinate (single anchor point) or 2 coordinates (word wrap box: midpoint coordinate and width/height in second coordinate)
 class TextObject : public Object
@@ -189,6 +202,9 @@ public:
 	inline double getBoxWidth() const {assert(!hasSingleAnchor()); return coords[1].xd();}
 	inline double getBoxHeight() const {assert(!hasSingleAnchor()); return coords[1].yd();}
 	
+	QTransform calcTextToMapTransform();
+	QTransform calcMapToTextTransform();
+	
 	void setText(const QString& text);
 	inline const QString& getText() const {return text;}
 	
@@ -201,11 +217,23 @@ public:
 	void setRotation(float new_rotation);
 	inline float getRotation() const {return rotation;}
 	
+	inline int getNumLineInfos() const {return (int)line_infos.size();}
+	inline TextObjectLineInfo* getLineInfo(int i) {return &line_infos[i];}
+	inline void clearLineInfos() {line_infos.clear();}
+	inline void addLineInfo(TextObjectLineInfo line_info) {line_infos.push_back(line_info);}
+	
+	int calcTextPositionAt(MapCoordF coord, bool find_line_only);	// returns -1 if the coordinate is not at a text position
+	int findLetterPosition(TextObjectLineInfo* line_info, QPointF point, const QFontMetricsF& metrics);
+	TextObjectLineInfo* findLineInfoForIndex(int index);
+	
 private:
 	QString text;
 	HorizontalAlignment h_align;
 	VerticalAlignment v_align;
 	float rotation;	// 0 to 2*M_PI
+	
+	/// when renderables are generated for this object by a call to update(), this is filled with information about the generated lines
+	std::vector<TextObjectLineInfo> line_infos;
 };
 
 #endif

@@ -93,20 +93,20 @@ void UndoManager::saveSteps(std::deque< UndoStep* >& steps, QFile* file)
 		steps[i]->save(file);
 	}
 }
-bool UndoManager::load(QFile* file)
+bool UndoManager::load(QFile* file, int version)
 {
 	clearUndoSteps();
 	clearRedoSteps();
 	
-	if (!loadSteps(undo_steps, file))
+	if (!loadSteps(undo_steps, file, version))
 		return false;
-	if (!loadSteps(redo_steps, file))
+	if (!loadSteps(redo_steps, file, version))
 		return false;
 	saved_step_index = 0;
 	loaded_step_index = 0;
 	return true;
 }
-bool UndoManager::loadSteps(std::deque< UndoStep* >& steps, QFile* file)
+bool UndoManager::loadSteps(std::deque< UndoStep* >& steps, QFile* file, int version)
 {
 	int size;
 	file->read((char*)&size, sizeof(int));
@@ -116,7 +116,7 @@ bool UndoManager::loadSteps(std::deque< UndoStep* >& steps, QFile* file)
 		int type;
 		file->read((char*)&type, sizeof(int));
 		steps[i] = UndoStep::getUndoStepForType((UndoStep::Type)type, owner);
-		if (!steps[i]->load(file))
+		if (!steps[i]->load(file, version))
 			return false;
 	}
 	return true;

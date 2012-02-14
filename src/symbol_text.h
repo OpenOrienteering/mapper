@@ -53,6 +53,7 @@ public:
     virtual void scale(double factor);
 	
 	void updateQFont();
+	inline double calculateInternalScaling() const {return internal_point_size / (0.001 * ascent_size);}
 	
 	// Getters
 	inline MapColor* getColor() const {return color;}
@@ -62,6 +63,7 @@ public:
 	inline bool isItalic() const {return italic;}
 	inline bool isUnderlined() const {return underline;}
 	inline float getLineSpacing() const {return line_spacing;}
+	inline const QFont& getQFont() const {return qfont;}
 	
 	static const float pt_in_mm;	// 1 pt in mm
 	static const float internal_point_size;

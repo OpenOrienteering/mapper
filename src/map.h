@@ -57,7 +57,7 @@ public:
 	~MapLayer();
 	
 	void save(QFile* file, Map* map);
-	bool load(QFile* file, Map* map);
+	bool load(QFile* file, int version, Map* map);
 	
 	inline const QString& getName() const {return name;}
 	inline void setName(const QString new_name) {name = new_name;}

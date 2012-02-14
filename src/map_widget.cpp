@@ -92,6 +92,13 @@ void MapWidget::setActivity(MapEditorActivity* activity)
 	this->activity = activity;
 }
 
+void MapWidget::applyMapTransform(QPainter* painter)
+{
+	painter->translate(width() / 2.0 + getMapView()->getDragOffset().x(),
+					   height() / 2.0 + getMapView()->getDragOffset().y());
+	getMapView()->applyTransform(painter);
+}
+
 QRectF MapWidget::viewportToView(const QRect& input)
 {
 	return QRectF(input.left() - 0.5*width() - drag_offset.x(), input.top() - 0.5*height() - drag_offset.y(), input.width(), input.height());
@@ -604,7 +611,10 @@ void MapWidget::leaveEvent(QEvent* event)
 void MapWidget::keyPressed(QKeyEvent* event)
 {
 	if (tool && tool->keyPressEvent(event))
+	{
+		event->accept();
 		return;
+	}
 	
 	if (event->key() == Qt::Key_F6)
 	{
@@ -618,7 +628,10 @@ void MapWidget::keyPressed(QKeyEvent* event)
 void MapWidget::keyReleased(QKeyEvent* event)
 {
 	if (tool && tool->keyReleaseEvent(event))
+	{
+		event->accept();
 		return;
+	}
     QWidget::keyReleaseEvent(event);
 }
 void MapWidget::focusOutEvent(QFocusEvent* event)
