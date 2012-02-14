@@ -1,3 +1,4 @@
+.DS_Store
 *.kdev4
 bin/Mapper
 bin/*.omap

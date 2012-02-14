@@ -207,7 +207,14 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 		else
 			finishEditing();
 	}
-	
+
+	// Mac convention for selecting multiple items is the command key (In Qt the command key is ControlModifier)
+	#ifdef Q_WS_MAC
+		Qt::KeyboardModifier select_modifier = Qt::ControlModifier;
+	#else
+		Qt::KeyboardModifier select_modifier = Qt::ShiftModifier;
+	#endif
+
 	if (dragging)
 	{
 		// Dragging finished
@@ -224,7 +231,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 			std::vector<Object*> objects;
 			map->findObjectsAtBox(click_pos_map, cur_pos_map, objects);
 			
-			if (!(event->modifiers() & Qt::ShiftModifier))
+			if (!(event->modifiers() & select_modifier))
 			{
 				if (map->getNumSelectedObjects() > 0)
 					selection_changed = true;
@@ -234,7 +241,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 			int size = objects.size();
 			for (int i = 0; i < size; ++i)
 			{
-				if (!(event->modifiers() & Qt::ShiftModifier))
+				if (!(event->modifiers() & select_modifier))
 					map->addObjectToSelection(objects[i], i == size - 1);
 				else
 					map->toggleObjectSelection(objects[i], i == size - 1);
@@ -263,7 +270,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 			map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(1.5f * MapEditorTool::click_tolerance), true, objects);
 		
 		// Selection logic, trying to select the most relevant object(s)
-		if (!(event->modifiers() & Qt::ShiftModifier) || map->getNumSelectedObjects() == 0)
+		if (!(event->modifiers() & select_modifier) || map->getNumSelectedObjects() == 0)
 		{
 			if (objects.empty())
 			{
@@ -517,8 +524,16 @@ bool EditTool::keyPressEvent(QKeyEvent* event)
 	
 	int num_selected_objects = editor->getMap()->getNumSelectedObjects();
 	
-	if (num_selected_objects > 0 && event->key() == Qt::Key_Delete)
+	// Delete objects if the delete key is pressed, or backspace key on Mac OSX, since that is the convention for Mac apps
+	#ifdef Q_WS_MAC
+		Qt::Key delete_key = Qt::Key_Backspace;
+	#else
+		Qt::Key delete_key = Qt::Key_Delete;
+	#endif
+
+	if (num_selected_objects > 0 && event->key() == delete_key)
 		deleteSelectedObjects();
+
 	else if (event->key() == Qt::Key_Tab)
 	{
 		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(editor->getSymbolWidget()->getSingleSelectedSymbol());

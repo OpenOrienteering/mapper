@@ -281,6 +281,10 @@ int Object::isPointOnObject(MapCoordF coord, float tolerance, bool extended_sele
 bool Object::isPathPointInBox(QRectF box)
 {
 	int size = coords.size();
+	
+	if (type == Text)
+		return extent.intersects(box);
+	
 	for (int i = 0; i < size; ++i)
 	{
 		if (box.contains(coords[i].toQPointF()))
