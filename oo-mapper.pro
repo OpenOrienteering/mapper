@@ -7,13 +7,17 @@ TARGET =
 DEPENDPATH += . src
 INCLUDEPATH += . src
 
+# Needed for QtSingleApplication
 QT += network
+
+# Needed when compiling pure C code
 QMAKE_CFLAGS += -std=c99
 
 # Input
 HEADERS += src/color_dock_widget.h \
            src/draw_path.h \
            src/draw_point.h \
+           src/draw_text.h \
            src/edit_tool.h \
            src/georeferencing.h \
            src/global.h \
@@ -59,6 +63,7 @@ HEADERS += src/color_dock_widget.h \
 SOURCES += src/color_dock_widget.cpp \
            src/draw_path.cpp \
            src/draw_point.cpp \
+           src/draw_text.cpp \
            src/edit_tool.cpp \
            src/georeferencing.cpp \
            src/gps_coordinates.cpp \
@@ -101,4 +106,5 @@ SOURCES += src/color_dock_widget.cpp \
            qtsingleapplication/qtsingleapplication.cpp \
            qtsingleapplication/qtsinglecoreapplication.cpp
 RESOURCES += resources.qrc
+
 

@@ -28,6 +28,7 @@ class CombinedSymbol;
 class PointObject;
 class PathObject;
 class Symbol;
+class TextObjectEditorHelper;
 
 /// Tool to draw point objects
 class EditTool : public MapEditorTool
@@ -54,6 +55,7 @@ public:
 	
 public slots:
 	void selectedObjectsChanged();
+	void textSelectionChanged(bool text_change);
 	
 protected:
 	/// The numbers correspond to the position in point-handles.png
@@ -71,6 +73,11 @@ protected:
 	void updateDirtyRect();
 	void updateHoverPoint(QPointF point, MapWidget* widget);
 	void updateDragging(QPoint cursor_pos, MapWidget* widget);
+	bool hoveringOverSingleText(MapCoordF cursor_pos_map);
+	
+	void startEditing();
+	void finishEditing();
+	void deleteSelectedObjects();
 	
 	static bool sortObjects(const std::pair<int, Object*>& a, const std::pair<int, Object*>& b);
 	bool selectionInfosEqual(const SelectionInfoVector& a, const SelectionInfoVector& b);
@@ -81,6 +88,7 @@ protected:
 	void drawPointHandles(QPainter* painter, Object* object, MapWidget* widget);
 	void drawPointHandle(QPainter* painter, QPointF point, PointHandleType type, bool active);
 	void drawCurveHandleLine(QPainter* painter, QPointF point, QPointF curve_handle, bool active);
+	void calculateBoxTextHandles();
 	
 	// Mouse handling
 	QPoint click_pos;
@@ -98,6 +106,12 @@ protected:
 	double opposite_curve_handle_dist;
 	int curve_anchor_index;				// if moving a curve handle, this is the index of the point between the handle and its opposite handle, if that exists
 	std::vector<Object*> undo_duplicates;
+	
+	TextObjectEditorHelper* text_editor;
+	QString old_text;					// to prevent creating an undo step if text edit mode is entered and left, but no text was changed
+	int old_horz_alignment;
+	int old_vert_alignment;
+	QPointF box_text_handles[4];
 	
 	// Information about the last click
 	SelectionInfoVector last_results;

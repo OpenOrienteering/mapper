@@ -232,13 +232,23 @@ void MainWindow::closeEvent(QCloseEvent* event)
 }
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
-	emit(keyPressed(event));
-    QWidget::keyPressEvent(event);
+	if (controller)
+		controller->keyPressEvent(event);
+	if (!event->isAccepted())
+	{
+		emit(keyPressed(event));
+		QWidget::keyPressEvent(event);
+	}
 }
 void MainWindow::keyReleaseEvent(QKeyEvent* event)
 {
-	emit(keyReleased(event));
-    QWidget::keyReleaseEvent(event);
+	if (controller)
+		controller->keyReleaseEvent(event);
+	if (!event->isAccepted())
+	{
+		emit(keyReleased(event));
+		QWidget::keyReleaseEvent(event);
+	}
 }
 
 bool MainWindow::showSaveOnCloseDialog()

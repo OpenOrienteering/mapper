@@ -22,9 +22,11 @@
 
 #include <QFile>
 
+#include "util.h"
 #include "symbol.h"
 #include "symbol_point.h"
-#include "util.h"
+#include "symbol_text.h"
+#include "map_editor.h"
 
 Object::Object(Object::Type type, Symbol* symbol) : type(type), symbol(symbol), map(NULL)
 {
@@ -51,8 +53,31 @@ void Object::save(QFile* file)
 	file->write((const char*)&coords[0], num_coords * sizeof(MapCoord));
 	
 	file->write((const char*)&path_closed, sizeof(bool));
+	
+	// Central handling of sub-types here to avoid virtual methods
+	if (type == Point)
+	{
+		PointObject* point = reinterpret_cast<PointObject*>(this);
+		PointSymbol* point_symbol = reinterpret_cast<PointSymbol*>(point->getSymbol());
+		if (point_symbol->isRotatable())
+		{
+			float rotation = point->getRotation();
+			file->write((const char*)&rotation, sizeof(float));
+		}
+	}
+	else if (type == Text)
+	{
+		TextObject* text = reinterpret_cast<TextObject*>(this);
+		float rotation = text->getRotation();
+		file->write((const char*)&rotation, sizeof(float));
+		int temp = (int)text->getHorizontalAlignment();
+		file->write((const char*)&temp, sizeof(int));
+		temp = (int)text->getVerticalAlignment();
+		file->write((const char*)&temp, sizeof(int));
+		saveString(file, text->getText());
+	}
 }
-void Object::load(QFile* file, Map* map)
+void Object::load(QFile* file, int version, Map* map)
 {
 	this->map = map;
 	
@@ -67,6 +92,38 @@ void Object::load(QFile* file, Map* map)
 	file->read((char*)&coords[0], num_coords * sizeof(MapCoord));
 	
 	file->read((char*)&path_closed, sizeof(bool));
+	
+	if (version >= 8)
+	{
+		if (type == Point)
+		{
+			PointObject* point = reinterpret_cast<PointObject*>(this);
+			PointSymbol* point_symbol = reinterpret_cast<PointSymbol*>(point->getSymbol());
+			if (point_symbol->isRotatable())
+			{
+				float rotation;
+				file->read((char*)&rotation, sizeof(float));
+				point->setRotation(rotation);
+			}
+		}
+		else if (type == Text)
+		{
+			TextObject* text = reinterpret_cast<TextObject*>(this);
+			float rotation;
+			file->read((char*)&rotation, sizeof(float));
+			text->setRotation(rotation);
+			
+			int temp;
+			file->read((char*)&temp, sizeof(int));
+			text->setHorizontalAlignment((TextObject::HorizontalAlignment)temp);
+			file->read((char*)&temp, sizeof(int));
+			text->setVerticalAlignment((TextObject::VerticalAlignment)temp);
+			
+			QString str;
+			loadString(file, str);
+			text->setText(str);
+		}
+	}
 	
 	output_dirty = true;
 }
@@ -138,6 +195,10 @@ void Object::clearOutput()
 void Object::move(qint64 dx, qint64 dy)
 {
 	int coords_size = coords.size();
+	
+	if (type == Text && coords_size == 2)
+		coords_size = 1;	// don't touch box width / height for box texts
+	
 	for (int c = 0; c < coords_size; ++c)
 	{
 		MapCoord coord = coords[c];
@@ -220,6 +281,10 @@ int Object::isPointOnObject(MapCoordF coord, float tolerance, bool extended_sele
 bool Object::isPathPointInBox(QRectF box)
 {
 	int size = coords.size();
+	
+	if (type == Text)
+		return extent.intersects(box);
+	
 	for (int i = 0; i < size; ++i)
 	{
 		if (box.contains(coords[i].toQPointF()))
@@ -275,6 +340,8 @@ Object* Object::getObjectForType(Object::Type type, Symbol* symbol)
 		return new PointObject(symbol);
 	else if (type == Path)
 		return new PathObject(symbol);
+	else if (type == Text)
+		return new TextObject(symbol);
 	else
 	{
 		assert(false);
@@ -414,6 +481,33 @@ void TextObject::setBox(MapCoord midpoint, double width, double height)
 	setOutputDirty();
 }
 
+QTransform TextObject::calcTextToMapTransform()
+{
+	TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);
+	
+	QTransform transform;
+	double scaling = 1.0f / text_symbol->calculateInternalScaling();
+	transform.translate(coords[0].xd(), coords[0].yd());
+	if (rotation != 0)
+		transform.rotate(-rotation * 180 / M_PI);
+	transform.scale(scaling, scaling);
+	
+	return transform;
+}
+QTransform TextObject::calcMapToTextTransform()
+{
+	TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);
+	
+	QTransform transform;
+	double scaling = 1.0f / text_symbol->calculateInternalScaling();
+	transform.scale(1.0f / scaling, 1.0f / scaling);
+	if (rotation != 0)
+		transform.rotate(rotation * 180 / M_PI);
+	transform.translate(-coords[0].xd(), -coords[0].yd());
+	
+	return transform;
+}
+
 void TextObject::setText(const QString& text)
 {
 	this->text = text;
@@ -435,4 +529,78 @@ void TextObject::setRotation(float new_rotation)
 {
 	rotation = new_rotation;
 	setOutputDirty();
+}
+
+int TextObject::calcTextPositionAt(MapCoordF coord, bool find_line_only)
+{
+	TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);
+	QFontMetricsF metrics(text_symbol->getQFont());
+	
+	QTransform transform = calcMapToTextTransform();
+	QPointF point = transform.map(coord.toQPointF());
+	
+	for (int line = 0; line < getNumLineInfos(); ++line)
+	{
+		TextObjectLineInfo* line_info = getLineInfo(line);
+		if (line_info->line_y - metrics.ascent() > point.y())
+			return -1;	// NOTE: Only true as long as every line has a bigger or equal y value than the line before
+		
+		if (point.x() < line_info->line_x - MapEditorTool::click_tolerance) continue;
+		if (point.y() > line_info->line_y + metrics.descent()) continue;
+		if (point.x() > line_info->line_x + metrics.width(line_info->text) + MapEditorTool::click_tolerance) continue;
+		
+		// Position in the line rect.
+		if (find_line_only)
+			return line;
+		else
+			return line_info->start_index + findLetterPosition(line_info, point, metrics);
+	}
+	return -1;
+}
+int TextObject::findLetterPosition(TextObjectLineInfo* line_info, QPointF point, const QFontMetricsF& metrics)
+{
+	int left = 0;
+	int right = line_info->text.length();
+	while (right != left)	
+	{
+		int middle = (left + right) / 2;
+		float x = line_info->line_x + metrics.width(line_info->text.left(middle));
+		if (point.x() >= x)
+		{
+			if (middle >= right)
+				return right;
+			float next = line_info->line_x + metrics.width(line_info->text.left(middle + 1));
+			if (point.x() < next)
+				if (point.x() < (x + next) / 2)
+					return middle;
+				else
+					return middle + 1;
+			else
+				left = middle + 1;
+		}
+		else // if (point.x() < x)
+		{
+			if (middle <= 0)
+				return 0;
+			float prev = line_info->line_x + metrics.width(line_info->text.left(middle - 1));
+			if (point.x() > prev)
+				if (point.x() > (x + prev) / 2)
+					return middle;
+				else
+					return middle - 1;
+			else
+				right = middle - 1;
+		}
+	}
+	return right;
+}
+TextObjectLineInfo* TextObject::findLineInfoForIndex(int index)
+{
+	for (int line = 0; line < getNumLineInfos() - 1; ++line)
+	{
+		TextObjectLineInfo* line_info = getLineInfo(line);
+		if (index <= line_info->end_index + (text[line_info->start_index] == '\n' ? 0 : 1))
+			return line_info;
+	}
+	return getLineInfo(getNumLineInfos() - 1);
 }

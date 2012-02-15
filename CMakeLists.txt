@@ -59,6 +59,7 @@ set(Mapper_SRCS
  src/edit_tool.cpp
  src/draw_point.cpp
  src/draw_path.cpp
+ src/draw_text.cpp
 
  src/gps_coordinates.cpp
  src/gps_track.cpp

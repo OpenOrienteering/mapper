@@ -24,6 +24,7 @@
 
 #include "map.h"
 #include "map_widget.h"
+#include "map_undo.h"
 #include "map_dialog_scale.h"
 #include "print_dock_widget.h"
 #include "color_dock_widget.h"
@@ -35,9 +36,9 @@
 #include "symbol.h"
 #include "draw_point.h"
 #include "draw_path.h"
+#include "draw_text.h"
 #include "edit_tool.h"
 #include "util.h"
-#include "map_undo.h"
 
 // ### MapEditorController ###
 
@@ -124,6 +125,8 @@ MapEditorTool* MapEditorController::getDefaultDrawToolForSymbol(Symbol* symbol)
 		return new DrawPointTool(this, draw_point_act, symbol_widget);
 	else if (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined)
 		return new DrawPathTool(this, draw_path_act, symbol_widget);
+	else if (symbol->getType() == Symbol::Text)
+		return new DrawTextTool(this, draw_text_act, symbol_widget);
 	else
 		assert(false);
 	return NULL;
@@ -324,6 +327,7 @@ void MapEditorController::createMenuAndToolbars()
     edit_tool_act = newCheckAction("editobjects", "Edit objects", this, SLOT(editToolClicked(bool)), "tool-edit.png");
     draw_point_act = newCheckAction("setpoint", "Set point objects", this, SLOT(drawPointClicked(bool)), "draw-point.png");
     draw_path_act = newCheckAction("drawpath", "Draw paths", this, SLOT(drawPathClicked(bool)), "draw-path.png");
+    draw_text_act = newCheckAction("drawtext", "Write text", this, SLOT(drawTextClicked(bool)), "draw-text.png");
     duplicate_act = newAction("duplicate", "Duplicate", this, SLOT(duplicateClicked()), "tool-duplicate.png"); // D
     switch_symbol_act = newAction("switchsymbol", "Switch symbol", this, SLOT(switchSymbolClicked()), "tool-switch-symbol.png");
     fill_border_act = newAction("fillborder", "Fill / Create border", this, SLOT(fillBorderClicked()), "tool-fill-border.png");
@@ -357,6 +361,7 @@ void MapEditorController::createMenuAndToolbars()
     tools_menu->addAction(edit_tool_act);
     tools_menu->addAction(draw_point_act);
     tools_menu->addAction(draw_path_act);
+    tools_menu->addAction(draw_text_act);
     tools_menu->addAction(duplicate_act);
     tools_menu->addAction(switch_symbol_act);
     tools_menu->addAction(fill_border_act);
@@ -399,6 +404,8 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_drawing->addAction(edit_tool_act);
     toolbar_drawing->addAction(draw_point_act);
 	toolbar_drawing->addAction(draw_path_act);
+    toolbar_drawing->addAction(draw_text_act);
+
 	toolbar_drawing->addSeparator();
 
     // Leave this for the time being...
@@ -418,8 +425,8 @@ void MapEditorController::createMenuAndToolbars()
 	connect(paint_on_template_menu, SIGNAL(triggered(QAction*)), this, SLOT(paintOnTemplateSelectClicked()));
 	
 	// Editing toolbar
-	QToolBar* toolbar_editing = new QToolBar(); //  = window->addToolBar(tr("Editing"));
-	toolbar_editing->addAction(duplicate_act);
+	QToolBar* toolbar_editing = window->addToolBar(tr("Editing"));
+    toolbar_editing->addAction(duplicate_act);
     toolbar_editing->addAction(switch_symbol_act);
 	toolbar_editing->addAction(fill_border_act);
     toolbar_editing->addAction(switch_dashes_act);
@@ -433,6 +440,23 @@ void MapEditorController::detach()
 	
 	delete statusbar_zoom_label;
 	delete statusbar_cursorpos_label;
+}
+
+void MapEditorController::keyPressEvent(QKeyEvent* event)
+{
+    map_widget->keyPressed(event);
+	if (event->isAccepted())
+		return;
+	
+	if (event->key() == Qt::Key_D && duplicate_act->isEnabled())
+	{
+		duplicateClicked();
+		event->accept();
+	}
+}
+void MapEditorController::keyReleaseEvent(QKeyEvent* event)
+{
+	map_widget->keyReleased(event);
 }
 
 void MapEditorController::printClicked()
@@ -635,7 +659,9 @@ void MapEditorController::selectedSymbolsChanged()
 	draw_point_act->setStatusTip(tr("Place point objects on the map.") + (draw_point_act->isEnabled() ? "" : (" " + tr("Select a point symbol to be able to use this tool."))));
 	draw_path_act->setEnabled(type == Symbol::Line || type == Symbol::Area || type == Symbol::Combined);
 	draw_path_act->setStatusTip(tr("Draw polygonal and curved lines.") + (draw_path_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
-
+	draw_text_act->setEnabled(type == Symbol::Text);
+	draw_text_act->setStatusTip(tr("Write text on the map.") + (draw_text_act->isEnabled() ? "" : (" " + tr("Select a text symbol to be able to use this tool."))));
+	
 	selectedSymbolsOrObjectsChanged();
 }
 void MapEditorController::selectedObjectsChanged()
@@ -708,6 +734,10 @@ void MapEditorController::drawPointClicked(bool checked)
 void MapEditorController::drawPathClicked(bool checked)
 {
 	setTool(checked ? new DrawPathTool(this, draw_path_act, symbol_widget) : NULL);
+}
+void MapEditorController::drawTextClicked(bool checked)
+{
+	setTool(checked ? new DrawTextTool(this, draw_text_act, symbol_widget) : NULL);
 }
 
 void MapEditorController::duplicateClicked()

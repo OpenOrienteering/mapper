@@ -44,7 +44,7 @@ void MapUndoStep::save(QFile* file)
 	for (int i = 0; i < size; ++i)
 		file->write((char*)&affected_objects[i], sizeof(int));
 }
-bool MapUndoStep::load(QFile* file)
+bool MapUndoStep::load(QFile* file, int version)
 {
 	file->read((char*)&layer, sizeof(int));
 	int size;
@@ -95,9 +95,9 @@ void ObjectContainingUndoStep::save(QFile* file)
 		objects[i]->save(file);
 	}
 }
-bool ObjectContainingUndoStep::load(QFile* file)
+bool ObjectContainingUndoStep::load(QFile* file, int version)
 {
-	if (!MapUndoStep::load(file))
+	if (!MapUndoStep::load(file, version))
 		return false;
 	
 	int size = (int)affected_objects.size();
@@ -109,7 +109,7 @@ bool ObjectContainingUndoStep::load(QFile* file)
 		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), NULL);
 		if (!objects[i])
 			return false;
-		objects[i]->load(file, map);
+		objects[i]->load(file, version, map);
 	}
 	return true;
 }
@@ -248,9 +248,9 @@ void SwitchSymbolUndoStep::save(QFile* file)
 		file->write((char*)&index, sizeof(int));
 	}
 }
-bool SwitchSymbolUndoStep::load(QFile* file)
+bool SwitchSymbolUndoStep::load(QFile* file, int version)
 {
-    if (!MapUndoStep::load(file))
+    if (!MapUndoStep::load(file, version))
 		return false;
 	
 	int size = (int)affected_objects.size();

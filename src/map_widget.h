@@ -47,6 +47,8 @@ public:
 	void setTool(MapEditorTool* tool);
 	void setActivity(MapEditorActivity* activity);
 	
+	void applyMapTransform(QPainter* painter);
+	
 	/// Map viewport (GUI) coordinates to view coordinates or the other way round
 	QRectF viewportToView(const QRect& input);
 	QPointF viewportToView(QPoint input);

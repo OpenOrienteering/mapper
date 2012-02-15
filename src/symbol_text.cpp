@@ -61,10 +61,14 @@ Symbol* TextSymbol::duplicate()
 
 void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output)
 {
+	// This method always creates at least one LineInfo, which makes the implementation of TextObjectEditorHelper easier
+	
+	TextObject* text_object = reinterpret_cast<TextObject*>(object);
+	text_object->clearLineInfos();
+	
 	if (!color)
 		return;
 	
-	TextObject* text_object = reinterpret_cast<TextObject*>(object);
 	QFontMetricsF metrics(qfont);
 	const QString& text = text_object->getText();
 	
@@ -80,9 +84,7 @@ void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 		box_height = text_object->getBoxHeight();
 	}
 	
-	double scaling = internal_point_size / (0.001 * ascent_size);
-	anchor_x *= scaling;
-	anchor_y *= scaling;
+	double scaling = calculateInternalScaling();
 	box_width *= scaling;
 	box_height *= scaling;
 	
@@ -137,9 +139,10 @@ void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 	while (getNextLine(text, pos, line, use_box, box_width, metrics))
 	{
 		double line_x = start_x;
+		QRectF bounding_rect = metrics.boundingRect(line);
+		double line_width = metrics.width(line);
 		if (h_align != TextObject::AlignLeft)
 		{
-			double line_width = metrics.tightBoundingRect(line).width();
 			if (h_align == TextObject::AlignHCenter)
 				line_x -= 0.5 * line_width;
 			else
@@ -147,6 +150,8 @@ void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 		}
 		
 		output.push_back(new TextRenderable(this, line_x, line_y, anchor_x, anchor_y, text_object->getRotation(), line, qfont));
+		text_object->addLineInfo(TextObjectLineInfo(line, pos - line.length(), pos - qMin(1, line.length()), bounding_rect, line_x, line_y));
+		
 		line_y += line_spacing * metrics.lineSpacing();
 	}
 }
@@ -178,6 +183,9 @@ void TextSymbol::updateQFont()
 	qfont.setUnderline(underline);
 	qfont.setPointSizeF(internal_point_size);
 	qfont.setFamily(font_family);
+	#if (QT_VERSION >= 0x040800)
+	qfont.setHintingPreference(QFont::PreferNoHinting);
+	#endif
 	
 	qfont.setStyleStrategy(QFont::ForceOutline);
 }
@@ -228,7 +236,7 @@ bool TextSymbol::getNextLine(const QString& text, int& pos, QString& out_line, b
 				break;
 			out_line += text[pos];
 			
-			if (!isSpace(text[pos]) && last_space >= 0 && metrics.tightBoundingRect(out_line).width() > max_width)
+			if (!isSpace(text[pos]) && last_space >= 0 && metrics.boundingRect(out_line).width() > max_width)
 			{
 				// Break text at last space
 				pos = last_space;

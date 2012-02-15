@@ -577,7 +577,7 @@ void TextRenderable::render(QPainter& painter, bool force_min_size, float scalin
 		painter.save();
 		painter.translate(anchor_x, anchor_y);
 		if (rotation != 0)
-			painter.rotate(rotation);
+			painter.rotate(-rotation * 180 / M_PI);
 		painter.scale(scale_factor, scale_factor);
 		painter.drawPath(path);
 		painter.restore();
