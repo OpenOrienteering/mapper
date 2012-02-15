@@ -27,8 +27,16 @@ class Persistor;
  */
 class PersistenceException : public std::exception {
 public:
-    PersistenceException(const char *message) : std::exception(message) {
+    PersistenceException(const char *message) : std::exception(), m(message)
+    {
     }
+
+    const char *what() const throw()
+    {
+        return m;
+    }
+private:
+    const char *m;
 };
 
 
@@ -90,26 +98,30 @@ public:
  */
 
 
+/** String persistor - converts everything to QStrings
+ *
+ */
+
 /** XML persistor - makes a pretty human-readable file. Paths, however, are compressed
  *  into single strings, the same way as SVG.
  */
 
 class XMLPersistor {
-    void readBytes(char *bytes, size_t count) = 0;
-    QByteArray readBytes(size_t count) = 0;
-    bool readBool() = 0;
-    int readInt() = 0;
-    float readFloat() = 0;
-    QString readString() = 0;
-    QPointF readPoint() = 0;
+    void readBytes(char *bytes, size_t count);
+    QByteArray readBytes(size_t count);
+    bool readBool();
+    int readInt();
+    float readFloat();
+    QString readString();
+    QPointF readPoint();
 
-    void writeBytes(const char *bytes, size_t count) = 0;
-    void writeBytes(const QByteArray &bytes) = 0;
-    void writeBool(bool value) = 0;
-    void writeInt(int value) = 0;
-    void writeFloat(float value) = 0;
-    void writeString(const QString &value) = 0;
-    void writePoint(const QPointF &value) = 0;
+    void writeBytes(const char *bytes, size_t count);
+    void writeBytes(const QByteArray &bytes);
+    void writeBool(bool value);
+    void writeInt(int value);
+    void writeFloat(float value);
+    void writeString(const QString &value);
+    void writePoint(const QPointF &value);
 
     // Traversal
     XMLPersistor &child(const QString &name);

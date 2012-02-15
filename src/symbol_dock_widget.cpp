@@ -32,16 +32,6 @@
 #include "symbol_text.h"
 #include "symbol_combined.h"
 
-// STL comparison function for sorting symbols by number
-bool Compare_symbolByNumber(Symbol *s1, Symbol *s2) {
-    int n1 = s1->number_components, n2 = s2->number_components;
-    for (int i = 0; i < n1 && i < n2; i++) {
-        if (s1->getNumberComponent(i) < s2->getNumberComponent(i)) return true;
-    }
-    return false;
-}
-
-
 // ### SymbolRenderWidget ###
 
 SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolWidget* parent) : QWidget(parent), scroll_bar(scroll_bar), symbol_widget(parent), map(map)
@@ -51,9 +41,6 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	
 	last_drop_row = -1;
 	last_drop_pos = -1;
-
-    sort_type = SortByMapOrder;
-    updateSortIndexMapping();
 	
 	setAttribute(Qt::WA_OpaquePaintEvent);
 	setAutoFillBackground(false);
@@ -75,20 +62,15 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	edit_action = context_menu->addAction(tr("Edit"), this, SLOT(editSymbol()));
     duplicate_action = context_menu->addAction(tr("Duplicate"), this, SLOT(duplicateSymbol()));
     delete_action = context_menu->addAction(tr("Delete"), this, SLOT(deleteSymbols()));
+    context_menu->addSeparator();
     scale_action = context_menu->addAction(tr("Scale..."), this, SLOT(scaleSymbol()));
-	context_menu->addSeparator();
-	
-    context_menu->addAction(tr("Select all symbols"), this, SLOT(selectAll()));
+    context_menu->addSeparator();
+    context_menu->addAction(tr("Select all"), this, SLOT(selectAll()));
     context_menu->addAction(tr("Invert selection"), this, SLOT(invertSelection()));
     context_menu->addSeparator();
-
-    context_menu->addAction(tr("Sort by map order"), this, SLOT(sortByMapOrder()));
-    context_menu->addAction(tr("Sort by symbol number"), this, SLOT(sortByNumber()));
-    context_menu->addSeparator();
-
-    switch_symbol_action = context_menu->addAction(tr("Switch symbol of selected object(s)"), parent, SLOT(emitSwitchSymbolClicked()));
-    fill_border_action = context_menu->addAction(tr("Fill / Create border for selected object(s)"), parent, SLOT(emitFillBorderClicked()));
-
+	switch_symbol_action = context_menu->addAction(tr("Switch symbol of selected object(s)"), parent, SLOT(emitSwitchSymbolClicked()));
+	fill_border_action = context_menu->addAction(tr("Fill / Create border for selected object(s)"), parent, SLOT(emitFillBorderClicked()));
+	
 	connect(map, SIGNAL(colorDeleted(int,MapColor*)), this, SLOT(update()));
 }
 
@@ -157,7 +139,7 @@ void SymbolRenderWidget::mouseMove(int x, int y)
 		
 		if (hover_symbol_index >= 0)
 		{
-            Symbol* symbol = getSortedSymbol(hover_symbol_index);
+			Symbol* symbol = map->getSymbol(hover_symbol_index);
 			if (SymbolToolTip::getCurrentTipSymbol() != symbol)
 				SymbolToolTip::showTip(QRect(mapToGlobal(getIconRect(hover_symbol_index).topLeft()), QSize(Symbol::icon_size, Symbol::icon_size)), symbol, this);
 		}
@@ -286,7 +268,7 @@ void SymbolRenderWidget::paintEvent(QPaintEvent* event)
 	int y = floor(scroll / (float)Symbol::icon_size);
 	for (int i = icons_per_row * y; i < map->getNumSymbols(); ++i)
 	{
-        QImage* icon = getSortedSymbol(i)->getIcon(map);
+		QImage* icon = map->getSymbol(i)->getIcon(map);
 		
 		QPoint corner(x * Symbol::icon_size, y * Symbol::icon_size - scroll);
 		painter.drawImage(corner, *icon);
@@ -405,7 +387,6 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 		duplicate_action->setEnabled(single_selection);
 		delete_action->setEnabled(have_selection);
 		
-        SymbolToolTip::hideTip(); // Tooltip obscures the context menu on OS X
 		context_menu->popup(event->globalPos());
 		event->accept();
 	}
@@ -537,8 +518,8 @@ void SymbolRenderWidget::newCombinedSymbol()
 void SymbolRenderWidget::editSymbol()
 {
 	assert(current_symbol_index >= 0);
-
-    Symbol* in_map_symbol = getSortedSymbol(current_symbol_index);
+	
+	Symbol* in_map_symbol = map->getSymbol(current_symbol_index);
 	Symbol* edit_symbol = in_map_symbol->duplicate();
 
 	SymbolSettingDialog dialog(edit_symbol, in_map_symbol, map, this);
@@ -555,7 +536,7 @@ void SymbolRenderWidget::editSymbol()
 void SymbolRenderWidget::scaleSymbol()
 {
 	assert(current_symbol_index >= 0);
-    Symbol* symbol = getSortedSymbol(current_symbol_index);
+	Symbol* symbol = map->getSymbol(current_symbol_index);
 	
 	bool ok;
 	double percent = QInputDialog::getDouble(this, tr("Scale symbol %1").arg(symbol->getName()), tr("Scale to percentage:"), 100, 0, 999999, 6, &ok);
@@ -573,9 +554,9 @@ void SymbolRenderWidget::deleteSymbols()
 {
 	for (std::set<int>::const_reverse_iterator it = selected_symbols.rbegin(); it != selected_symbols.rend(); ++it)
 	{
-        if (map->doObjectsExistWithSymbol(getSortedSymbol(*it)))
+		if (map->doObjectsExistWithSymbol(map->getSymbol(*it)))
 		{
-            if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains objects with the symbol \"%1\". Deleting it will delete those objects and clear the undo history! Do you really want to do that?").arg(getSortedSymbol(*it)->getName()), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+			if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains objects with the symbol \"%1\". Deleting it will delete those objects and clear the undo history! Do you really want to do that?").arg(map->getSymbol(*it)->getName()), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
 				continue;
 		}
 		map->deleteSymbol(*it);
@@ -591,7 +572,7 @@ void SymbolRenderWidget::duplicateSymbol()
 {
 	assert(current_symbol_index >= 0);
 	
-    map->addSymbol(getSortedSymbol(current_symbol_index)->duplicate(), current_symbol_index + 1);
+	map->addSymbol(map->getSymbol(current_symbol_index)->duplicate(), current_symbol_index + 1);
 	selectSingleSymbol(current_symbol_index + 1);
 	
 	symbol_widget->adjustSize();
@@ -617,39 +598,6 @@ void SymbolRenderWidget::invertSelection()
 	update();
 }
 
-void SymbolRenderWidget::sortByMapOrder()
-{
-    sort_type = SortByMapOrder;
-    updateSortIndexMapping();
-}
-
-void SymbolRenderWidget::sortByNumber()
-{
-    sort_type = SortByNumber;
-    updateSortIndexMapping();
-}
-
-void SymbolRenderWidget::updateSortIndexMapping()
-{
-    qDebug() << "SymbolRenderWidget: Need to update sort index mapping";
-    sorted_symbols.clear();
-    if (sort_type != SortByMapOrder) {
-        for (int i = 0; i < map->getNumSymbols(); i++) {
-            sorted_symbols.push_back(map->getSymbol(i));
-        }
-        std::stable_sort(sorted_symbols.begin(), sorted_symbols.end(), Compare_symbolByNumber);
-    }
-    update(); // repaint widget
-}
-
-
-Symbol *SymbolRenderWidget::getSortedSymbol(int index)
-{
-    if (sort_type == SortByMapOrder) return map->getSymbol(index);
-    return sorted_symbols[index];
-}
-
-
 bool SymbolRenderWidget::newSymbol(Symbol* new_symbol)
 {
 	SymbolSettingDialog dialog(new_symbol, NULL, map, this);
@@ -666,8 +614,6 @@ bool SymbolRenderWidget::newSymbol(Symbol* new_symbol)
 	
 	symbol_widget->adjustSize();
 	map->setSymbolsDirty();
-
-    updateSortIndexMapping();
 	return true;
 }
 

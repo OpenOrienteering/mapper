@@ -67,8 +67,6 @@ protected slots:
 	void duplicateSymbol();
 	void selectAll();
 	void invertSelection();
-    void sortByMapOrder();
-    void sortByNumber();
 	
 	void setScroll(int new_scroll);
 	
@@ -93,27 +91,6 @@ protected:
 	
 	Map* map;
 	
-    // Sort handling
-
-    // An enumeration to define the sort types
-    enum SortType { SortByMapOrder, SortByNumber };
-
-    // Which sort type is currently selected? This is a non-persisted, widget attribute.
-    SortType sort_type;
-
-    // A vector mapping symbol index in the widget to symbol in the map. Will be empty
-    // for SortByMapOrder and have map->numSymbols() entries otherwise.
-    std::vector<Symbol *> sorted_symbols;
-
-    // Updates the sort index mapping. Is called after the sort type has changed;
-    // after a symbol is added or deleted; or if any symbol changes.
-    void updateSortIndexMapping();
-
-    // Returns the symbol at the given index for the widget. Delegates to the map for
-    // SortByMapOrder, and uses the sort_index_mapping otherwise. This should replace
-    // all references to map->getSymbol().
-    Symbol *getSortedSymbol(int index);
-
 	void selectSingleSymbol(int i);
 	bool isSymbolSelected(int i);
 	
