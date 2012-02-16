@@ -130,6 +130,11 @@ public:
 		return dx*dx + dy*dy;
 	}
 	
+	inline double dot(const MapCoordF& other) const
+	{
+		return x * other.x + y * other.y;
+	}
+	
 	inline double getAngle() const
 	{
 		return atan2(y, x);

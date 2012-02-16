@@ -264,7 +264,7 @@ int Object::isPointOnObject(MapCoordF coord, float tolerance, bool extended_sele
 		if (!extended_selection)
 			return (coord.lengthToSquared(MapCoordF(coords[0])) <= tolerance) ? Symbol::Point : Symbol::NoSymbol;
 		else
-			return extent.contains(coord.toQPointF());
+			return extent.contains(coord.toQPointF()) ? Symbol::Point : Symbol::NoSymbol;
 	}
 	
 	// First check using extent
@@ -272,11 +272,72 @@ int Object::isPointOnObject(MapCoordF coord, float tolerance, bool extended_sele
 	if (coord.getY() < extent.top() - tolerance) return Symbol::NoSymbol;
 	if (coord.getX() > extent.right() + tolerance) return Symbol::NoSymbol;
 	if (coord.getY() > extent.bottom() + tolerance) return Symbol::NoSymbol;
-
-	// Use only the extent for now
-	// TODO: more precise logic for lines and areas!
 	
-	return symbol->getType();
+	// Special case for texts
+	if (type == Symbol::Text)
+	{
+		TextObject* text_object = reinterpret_cast<TextObject*>(this);
+		return (text_object->calcTextPositionAt(coord, true) != -1) ? Symbol::Text : Symbol::NoSymbol;
+	}
+
+	Symbol::Type contained_types = symbol->getContainedTypes();
+	int coords_size = (int)coords.size();
+
+	// Check for line selection
+	if (contained_types & Symbol::Line)
+	{
+		update(false);
+		int size = (int)path_coords.size();
+		for (int i = 0; i < size - 1; ++i)
+		{
+			assert(path_coords[i].index < coords_size);
+			if (coords[path_coords[i].index].isHolePoint())
+				continue;
+			
+			MapCoordF to_coord = MapCoordF(coord.getX() - path_coords[i].pos.getX(), coord.getY() - path_coords[i].pos.getY());
+			MapCoordF to_next = MapCoordF(path_coords[i+1].pos.getX() - path_coords[i].pos.getX(), path_coords[i+1].pos.getY() - path_coords[i].pos.getY());
+			MapCoordF tangent = to_next;
+			tangent.normalize();
+			
+			float dist_along_line = to_coord.dot(tangent);
+			if (dist_along_line < -tolerance)
+				continue;
+			else if (dist_along_line < 0 && to_coord.lengthSquared() <= tolerance*tolerance)
+				return Symbol::Line;
+			
+			float line_length = path_coords[i+1].clen - path_coords[i].clen;
+			if (dist_along_line > line_length + tolerance)
+				continue;
+			else if (dist_along_line > line_length && coord.lengthToSquared(path_coords[i+1].pos) <= tolerance*tolerance)
+				return Symbol::Line;
+			
+			MapCoordF right = tangent;
+			right.perpRight();
+			
+			float dist_from_line = qAbs(right.dot(to_coord));
+			if (dist_from_line <= tolerance)
+				return Symbol::Line;
+		}
+	}
+	
+	// Check for area selection
+	if (contained_types & Symbol::Area)
+	{
+		bool inside = false;
+		int size = (int)path_coords.size();
+		int i, j;
+		for (i = 0, j = size - 1; i < size; j = i++)
+		{
+			if ( ((path_coords[i].pos.getY() > coord.getY()) != (path_coords[j].pos.getY() > coord.getY())) &&
+				(coord.getX() < (path_coords[j].pos.getX() - path_coords[i].pos.getX()) *
+				 (coord.getY() - path_coords[i].pos.getY()) / (path_coords[j].pos.getY() - path_coords[i].pos.getY()) + path_coords[i].pos.getX()) )
+				inside = !inside;
+		}
+		if (inside)
+			return Symbol::Area;
+	}
+	
+	return Symbol::NoSymbol;
 }
 bool Object::isPathPointInBox(QRectF box)
 {
