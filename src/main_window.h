@@ -101,6 +101,8 @@ public slots:
 	bool save();
 	bool saveAs();
 	
+	void toggleFullscreenMode();
+	
 	void showSettings();
 	void showAbout();
 	void showHelp();

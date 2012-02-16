@@ -303,6 +303,10 @@ void MapEditorController::createMenu()
 	edit_menu->addAction(paste_act);*/
 	
 	// View menu
+	QAction* fullscreen_act = new QAction(tr("Toggle fullscreen mode"), this);
+	fullscreen_act->setShortcut(tr("F11"));
+	connect(fullscreen_act, SIGNAL(triggered()), window, SLOT(toggleFullscreenMode()));
+	
 	QAction* zoom_in_act = new QAction(QIcon(":/images/view-zoom-in.png"), tr("Zoom in"), this);
 	zoom_in_act->setShortcut(tr("F7"));
 	connect(zoom_in_act, SIGNAL(triggered()), this, SLOT(zoomIn()));
@@ -312,6 +316,7 @@ void MapEditorController::createMenu()
 	connect(zoom_out_act, SIGNAL(triggered()), this, SLOT(zoomOut()));
 	
 	QMenu* view_menu = window->menuBar()->addMenu(tr("&View"));
+	view_menu->addAction(fullscreen_act);
 	view_menu->addAction(zoom_in_act);
 	view_menu->addAction(zoom_out_act);
 	
