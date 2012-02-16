@@ -315,10 +315,14 @@ void MapEditorController::createMenu()
 	zoom_out_act->setShortcut(tr("F8"));
 	connect(zoom_out_act, SIGNAL(triggered()), this, SLOT(zoomOut()));
 	
+	QAction* custom_zoom_act = new QAction(tr("Set custom zoom factor..."), this);
+	connect(custom_zoom_act, SIGNAL(triggered()), this, SLOT(setCustomZoomFactorClicked()));
+	
 	QMenu* view_menu = window->menuBar()->addMenu(tr("&View"));
 	view_menu->addAction(fullscreen_act);
 	view_menu->addAction(zoom_in_act);
 	view_menu->addAction(zoom_out_act);
+	view_menu->addAction(custom_zoom_act);
 	
 	// Symbols menu
 	symbol_window_act = new QAction(QIcon(":/images/window-new.png"), tr("Symbol window"), this);
@@ -580,6 +584,15 @@ void MapEditorController::zoomIn()
 void MapEditorController::zoomOut()
 {
 	main_view->zoomSteps(-1, false);
+}
+void MapEditorController::setCustomZoomFactorClicked()
+{
+	bool ok;
+	double factor = QInputDialog::getDouble(window, tr("Set custom zoom factor"), tr("Zoom factor:"), main_view->getZoom(), MapView::zoom_out_limit, MapView::zoom_in_limit, 3, &ok);
+	if (!ok || factor == main_view->getZoom())
+		return;
+	
+	main_view->setZoom(factor);
 }
 
 void MapEditorController::showSymbolWindow(bool show)

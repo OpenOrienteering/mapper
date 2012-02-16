@@ -459,6 +459,10 @@ public:
 	TemplateVisibility* getTemplateVisibility(Template* temp);	// returns the template visibility object, creates one if not there yet with the default settings (invisible)
 	void deleteTemplateVisibility(Template* temp);				// call this when a template is deleted to destroy the template visibility object
 	
+	// Static
+	static const double zoom_in_limit;
+	static const double zoom_out_limit;
+	
 private:
 	typedef std::vector<MapWidget*> WidgetVector;
 	

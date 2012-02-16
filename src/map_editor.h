@@ -92,6 +92,7 @@ public slots:
 	
 	void zoomIn();
 	void zoomOut();
+	void setCustomZoomFactorClicked();
 	
 	void showSymbolWindow(bool show);
 	void showColorWindow(bool show);
