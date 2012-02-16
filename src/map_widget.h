@@ -134,6 +134,7 @@ private:
 	
 	void startPanning(QPoint cursor_pos);
 	void finishPanning(QPoint cursor_pos);
+	void moveMap(int steps_x, int steps_y);
 	
 	void showHelpMessage(QPainter* painter, const QString& text);
 	

@@ -400,6 +400,21 @@ void MapWidget::finishPanning(QPoint cursor_pos)
 	view->completeDragging(cursor_pos - drag_start_pos);
 	setCursor(normal_cursor);
 }
+void MapWidget::moveMap(int steps_x, int steps_y)
+{
+	const float move_factor = 1 / 4.0f;
+	
+	if (steps_x != 0)
+	{
+		float pixels_x = width() * steps_x * move_factor;
+		view->setPositionX(view->getPositionX() + view->pixelToLength(pixels_x));
+	}
+	if (steps_y != 0)
+	{
+		float pixels_y = height() * steps_y * move_factor;
+		view->setPositionY(view->getPositionY() + view->pixelToLength(pixels_y));
+	}
+}
 
 void MapWidget::showHelpMessage(QPainter* painter, const QString& text)
 {
@@ -617,13 +632,22 @@ void MapWidget::keyPressed(QKeyEvent* event)
 	}
 	
 	if (event->key() == Qt::Key_F6)
-	{
 		startPanning(mapFromGlobal(QCursor::pos()));
-		event->accept();
+	else if (event->key() == Qt::Key_Up)
+		moveMap(0, -1);
+	else if (event->key() == Qt::Key_Down)
+		moveMap(0, 1);
+	else if (event->key() == Qt::Key_Left)
+		moveMap(-1, 0);
+	else if (event->key() == Qt::Key_Right)
+		moveMap(1, 0);
+	else
+	{
+		QWidget::keyPressEvent(event);
 		return;
 	}
 	
-    QWidget::keyPressEvent(event);
+	event->accept();
 }
 void MapWidget::keyReleased(QKeyEvent* event)
 {
