@@ -1059,6 +1059,14 @@ void Map::moveSymbol(int from, int to)
 	// TODO: emit(symbolChanged(pos, symbol)); ?
 	setSymbolsDirty();
 }
+
+void Map::sortSymbols(bool (*cmp)(Symbol *, Symbol *)) {
+    if (!cmp) return;
+    std::stable_sort(symbols.begin(), symbols.end(), cmp);
+    // TODO: emit(symbolChanged(pos, symbol)); ? s/b same choice as for above, in moveSymbol()
+    setSymbolsDirty();
+}
+
 void Map::setSymbol(Symbol* symbol, int pos)
 {
 	changeSymbolForAllObjects(symbols[pos], symbol);
@@ -1748,4 +1756,4 @@ void MapView::deleteTemplateVisibility(Template* temp)
 	template_visibilities.remove(temp);
 }
 
-#include "moc_map.cpp"
+#include "map.moc"

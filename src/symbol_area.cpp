@@ -759,4 +759,4 @@ void AreaSymbolSettings::fillPointdistChanged(QString text)
 	dialog->updatePreview();
 }
 
-#include "moc_symbol_area.cpp"
+#include "symbol_area.moc"

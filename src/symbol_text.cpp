@@ -397,4 +397,4 @@ void TextSymbolSettings::lineSpacingChanged(QString text)
 	dialog->updatePreview();
 }
 
-#include "moc_symbol_text.cpp"
+#include "symbol_text.moc"

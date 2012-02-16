@@ -519,4 +519,4 @@ void MainWindow::gotUnsavedChanges()
 	setHasUnsavedChanges(true);
 }
 
-#include "moc_main_window.cpp"
+#include "main_window.moc"

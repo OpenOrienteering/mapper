@@ -67,6 +67,7 @@ protected slots:
 	void duplicateSymbol();
 	void selectAll();
 	void invertSelection();
+    void sortByNumber();
 	
 	void setScroll(int new_scroll);
 	

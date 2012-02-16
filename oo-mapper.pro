@@ -3,7 +3,7 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = 
+TARGET = Mapper
 DEPENDPATH += . src
 INCLUDEPATH += . src
 
@@ -56,10 +56,7 @@ HEADERS += src/color_dock_widget.h \
            src/undo.h \
            src/util.h \
            qtsingleapplication/qtlocalpeer.h \
-           qtsingleapplication/qtlockedfile.h \
-           qtsingleapplication/qtsingleapplication.h \
-           qtsingleapplication/qtsinglecoreapplication.h \
-    src/persist.h
+           qtsingleapplication/qtsingleapplication.h
 SOURCES += src/color_dock_widget.cpp \
            src/draw_path.cpp \
            src/draw_point.cpp \
@@ -101,10 +98,10 @@ SOURCES += src/color_dock_widget.cpp \
            src/undo.cpp \
            src/util.cpp \
            qtsingleapplication/qtlocalpeer.cpp \
-           qtsingleapplication/qtlockedfile.cpp \
-           qtsingleapplication/qtlockedfile_unix.cpp \
-           qtsingleapplication/qtsingleapplication.cpp \
-           qtsingleapplication/qtsinglecoreapplication.cpp
+           qtsingleapplication/qtsingleapplication.cpp
 RESOURCES += resources.qrc
+
+OTHER_FILES += \
+    CMakeLists.txt
 
 

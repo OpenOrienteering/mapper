@@ -276,4 +276,4 @@ void GPSProjectionParametersDialog::editChanged()
 	ok_button->setEnabled(true);
 }
 
-#include "moc_gps_coordinates.cpp"
+#include "gps_coordinates.moc"

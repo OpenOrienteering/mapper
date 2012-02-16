@@ -221,4 +221,4 @@ void CombinedSymbolSettings::symbolChanged(int index)
 	dialog->updatePreview();
 }
 
-#include "moc_symbol_combined.cpp"
+#include "symbol_combined.moc"

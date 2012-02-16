@@ -978,4 +978,4 @@ void MapEditorTool::setStatusBarText(const QString& text)
 	editor->getWindow()->setStatusBarText(text);
 }
 
-#include "moc_map_editor.cpp"
+#include "map_editor.moc"

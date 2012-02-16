@@ -161,6 +161,7 @@ public:
 	void setSymbol(Symbol* symbol, int pos);
 	void addSymbol(Symbol* symbol, int pos);
 	void moveSymbol(int from, int to);
+    void sortSymbols(bool (*cmp)(Symbol *, Symbol *));
 	void deleteSymbol(int pos);
 	int findSymbolIndex(Symbol* symbol);
 	void setSymbolsDirty();
@@ -376,7 +377,7 @@ public:
 	
 	/// Must be called to notify the map view of new widgets displaying it. Useful to notify the widgets which need to be redrawn
 	void addMapWidget(MapWidget* widget);
-	void removeMapWidget(MapWidget* widget);
+    void removeMapWidget(MapWidget* widget);
 	/// Redraws all map widgets completely - that can be slow!
 	void updateAllMapWidgets();
 	

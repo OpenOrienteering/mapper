@@ -63,6 +63,9 @@ set(Mapper_SRCS
 
  src/gps_coordinates.cpp
  src/gps_track.cpp
+ 
+ qtsingleapplication/qtlocalpeer.cpp
+ qtsingleapplication/qtsingleapplication.cpp
 )
 qt4_automoc(${Mapper_SRCS})
 
@@ -87,4 +90,5 @@ endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 target_link_libraries(Mapper
  ${QT_QTCORE_LIBRARY}
  ${QT_QTGUI_LIBRARY}
+ ${QT_QTNETWORK_LIBRARY}
 )

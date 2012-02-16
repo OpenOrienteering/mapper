@@ -342,3 +342,5 @@ void QtSingleApplication::activateWindow()
 
     \obsolete
 */
+
+#include "QtSingleApplication.moc"

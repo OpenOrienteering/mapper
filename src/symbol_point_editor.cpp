@@ -904,4 +904,4 @@ void PointSymbolEditorActivity::draw(QPainter* painter, MapWidget* widget)
 	}
 }
 
-#include "moc_symbol_point_editor.cpp"
+#include "symbol_point_editor.moc"

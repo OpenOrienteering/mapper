@@ -32,6 +32,17 @@
 #include "symbol_text.h"
 #include "symbol_combined.h"
 
+
+// STL comparison function for sorting symbols by number
+static bool Compare_symbolByNumber(Symbol *s1, Symbol *s2) {
+    int n1 = s1->number_components, n2 = s2->number_components;
+    for (int i = 0; i < n1 && i < n2; i++) {
+        if (s1->getNumberComponent(i) < s2->getNumberComponent(i)) return true;
+    }
+    return false;
+}
+
+
 // ### SymbolRenderWidget ###
 
 SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolWidget* parent) : QWidget(parent), scroll_bar(scroll_bar), symbol_widget(parent), map(map)
@@ -62,15 +73,16 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	edit_action = context_menu->addAction(tr("Edit"), this, SLOT(editSymbol()));
     duplicate_action = context_menu->addAction(tr("Duplicate"), this, SLOT(duplicateSymbol()));
     delete_action = context_menu->addAction(tr("Delete"), this, SLOT(deleteSymbols()));
-    context_menu->addSeparator();
     scale_action = context_menu->addAction(tr("Scale..."), this, SLOT(scaleSymbol()));
-    context_menu->addSeparator();
+	context_menu->addSeparator();
+	switch_symbol_action = context_menu->addAction(tr("Switch symbol of selected object(s)"), parent, SLOT(emitSwitchSymbolClicked()));
+	fill_border_action = context_menu->addAction(tr("Fill / Create border for selected object(s)"), parent, SLOT(emitFillBorderClicked()));
+	context_menu->addSeparator();
     context_menu->addAction(tr("Select all"), this, SLOT(selectAll()));
     context_menu->addAction(tr("Invert selection"), this, SLOT(invertSelection()));
     context_menu->addSeparator();
-	switch_symbol_action = context_menu->addAction(tr("Switch symbol of selected object(s)"), parent, SLOT(emitSwitchSymbolClicked()));
-	fill_border_action = context_menu->addAction(tr("Fill / Create border for selected object(s)"), parent, SLOT(emitFillBorderClicked()));
-	
+    context_menu->addAction(tr("Sort by number"), this, SLOT(sortByNumber()));
+
 	connect(map, SIGNAL(colorDeleted(int,MapColor*)), this, SLOT(update()));
 }
 
@@ -486,7 +498,15 @@ void SymbolRenderWidget::dropEvent(QDropEvent* event)
 		
 		event->acceptProposedAction();
 		
+        // save selection
+        std::set<Symbol *> sel;
+        for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it) {
+            sel.insert(map->getSymbol(*it));
+        }
+
 		map->moveSymbol(current_symbol_index, pos);
+
+
 		if (pos > current_symbol_index)
 			--pos;
 		current_symbol_index = pos;
@@ -597,7 +617,24 @@ void SymbolRenderWidget::invertSelection()
 	symbol_widget->emitSelectedSymbolsChanged();
 	update();
 }
+void SymbolRenderWidget::sortByNumber()
+{
+    // save selection
+    std::set<Symbol *> sel;
+    for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it) {
+        sel.insert(map->getSymbol(*it));
+    }
 
+    map->sortSymbols(Compare_symbolByNumber);
+
+    //restore selection
+    selected_symbols.clear();
+    for (int i = 0; i < map->getNumSymbols(); i++) {
+        if (sel.find(map->getSymbol(i)) != sel.end()) selected_symbols.insert(i);
+    }
+
+    update();
+}
 bool SymbolRenderWidget::newSymbol(Symbol* new_symbol)
 {
 	SymbolSettingDialog dialog(new_symbol, NULL, map, this);
@@ -842,4 +879,4 @@ Symbol* SymbolToolTip::getCurrentTipSymbol()
 	return tooltip->symbol;
 }
 
-#include "moc_symbol_dock_widget.cpp"
+#include "symbol_dock_widget.moc"
