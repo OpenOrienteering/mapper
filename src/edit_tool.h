@@ -47,11 +47,16 @@ public:
 	
     virtual bool keyPressEvent(QKeyEvent* event);
     virtual bool keyReleaseEvent(QKeyEvent* event);
+    virtual void focusOutEvent(QFocusEvent* event);
 	
     virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	static QCursor* cursor;
 	static QImage* point_handles;
+	
+	static const Qt::KeyboardModifiers selection_modifier;
+	static const Qt::KeyboardModifiers control_point_modifier;
+	static const Qt::Key control_point_key;
 	
 public slots:
 	void selectedObjectsChanged();
@@ -97,6 +102,10 @@ protected:
 	MapCoordF cur_pos_map;
 	bool dragging;
 	bool box_selection;
+	bool no_more_effect_on_click;
+	
+	bool control_pressed;
+	bool space_pressed;
 	
 	// Information about the selection
 	QRectF selection_extent;

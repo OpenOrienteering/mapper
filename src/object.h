@@ -136,10 +136,14 @@ public:
 	PathObject(Symbol* symbol = NULL);
     virtual Object* duplicate();
 	
+	int calcNumRegularPoints();
+	void calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq, PathCoord& out_path_coord);
+	int subdivide(int index, float param);	// returns the index of the added point
+	
 	void setCoordinate(int pos, MapCoord c);
 	void addCoordinate(int pos, MapCoord c);
 	void addCoordinate(MapCoord c);
-	void deleteCoordinate(int pos);
+	void deleteCoordinate(int pos, bool adjust_other_coords);	// adjust_other_coords does not work if deleting bezier curve handles!
 };
 
 /// Object type which can only be used for point symbols, and is also the only object which can be used with them

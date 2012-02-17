@@ -23,6 +23,7 @@
 
 #include <vector>
 #include <math.h>
+#include <assert.h>
 
 #include <QPointF>
 
@@ -78,6 +79,102 @@ public:
 	inline bool isDashPoint() const {return y & 2;}
 	inline void setDashPoint(bool value) {y = (y & (~2)) | (value ? 2 : 0);}
 	
+	inline MapCoord& operator= (const MapCoord& other)
+	{
+		x = other.x;
+		y = other.y;
+		return *this;
+	}
+	inline bool operator== (const MapCoord& other) const
+	{
+		return (other.x == x) && (other.y == y);
+	}
+	inline bool operator != (const MapCoord& other) const
+	{
+		return (other.x != x) || (other.y != y);
+	}
+	
+	inline MapCoord operator* (const double factor) const
+	{
+		MapCoord out(*this);
+		out.setX(out.xd() * factor);
+		out.setY(out.yd() * factor);
+		return out;
+	}
+	inline MapCoord operator/ (const double scalar) const
+	{
+		assert(scalar != 0);
+		MapCoord out(*this);
+		out.setX(out.xd() / scalar);
+		out.setY(out.yd() / scalar);
+		return out;
+	}
+	inline MapCoord operator+ (const MapCoord& other) const
+	{
+		MapCoord out(*this);
+		out.setRawX(out.rawX() + other.rawX());
+		out.setRawY(out.rawY() + other.rawY());
+		return out;
+	}
+	inline MapCoord operator- (const MapCoord& other) const
+	{
+		MapCoord out(*this);
+		out.setRawX(out.rawX() - other.rawX());
+		out.setRawY(out.rawY() - other.rawY());
+		return out;
+	}
+	inline MapCoord& operator+ ()
+	{
+		return *this;
+	}
+	inline MapCoord operator- ()
+	{
+		MapCoord out(*this);
+		out.setRawX(-out.rawX());
+		out.setRawY(-out.rawY());
+		return out;
+	}
+	
+	inline friend MapCoord operator* (double scalar, const MapCoord& rhs_vector)
+	{
+		MapCoord out(rhs_vector);
+		out.setRawX(qRound64(scalar * out.rawX()));
+		out.setRawY(qRound64(scalar * out.rawY()));
+		return out;
+	}
+	inline friend MapCoord operator/ (double scalar, const MapCoord& rhs_vector)
+	{
+		MapCoord out(rhs_vector);
+		out.setRawX(qRound64(out.rawX() / scalar));
+		out.setRawY(qRound64(out.rawY() / scalar));
+		return out;
+	}
+	
+	inline MapCoord& operator+= (const MapCoord& rhs_vector)
+	{
+		setRawX(rawX() + rhs_vector.rawX());
+		setRawY(rawY() + rhs_vector.rawY());
+		return *this;
+	}
+	inline MapCoord& operator-= (const MapCoord& rhs_vector)
+	{
+		setRawX(rawX() - rhs_vector.rawX());
+		setRawY(rawY() - rhs_vector.rawY());
+		return *this;
+	}
+	inline MapCoord& operator*= (const double factor)
+	{
+		setRawX(qRound64(factor * rawX()));
+		setRawY(qRound64(factor * rawY()));
+		return *this;
+	}
+	inline MapCoord& operator/= (const double scalar)
+	{
+		setRawX(qRound64(rawX() / scalar));
+		setRawY(qRound64(rawY() / scalar));
+		return *this;
+	}
+	
 	inline QPointF toQPointF() const
 	{
 		return QPointF(xd(), yd());
@@ -130,14 +227,37 @@ public:
 		return dx*dx + dy*dy;
 	}
 	
+	inline void toLength(float target_length)
+	{
+		double len = length();
+		if (len > 1e-08)
+		{
+			double factor = target_length / len;
+			x *= factor;
+			y *= factor;
+		}
+	}
+	
 	inline double dot(const MapCoordF& other) const
 	{
 		return x * other.x + y * other.y;
 	}
 	
+	/// Returns the angle of the vector relative to the vector (1, 0) in radians, range [-PI; +PI].
+	/// Vector3(0, 1).getAngle() returns +PI/2, Vector3(0, -1).getAngle() returns -PI/2.
 	inline double getAngle() const
 	{
 		return atan2(y, x);
+	}
+	
+	/// Rotates the vector. Positive values for angle (in radians) result in a counter-clockwise rotation
+	/// in a coordinate system where the x-axis is right and the y-axis is up.
+	inline void rotate(double angle)
+	{
+		double new_angle = getAngle() + angle;
+		double len = length();
+		x = cos(new_angle) * len;
+		y = sin(new_angle) * len;
 	}
 	
 	/// Get a perpendicular vector pointing to the right
@@ -153,18 +273,80 @@ public:
 		return MapCoord(x, y);
 	}
 	
+	inline MapCoordF& operator= (const MapCoordF& other)
+	{
+		x = other.x;
+		y = other.y;
+		return *this;
+	}
 	inline bool operator== (const MapCoordF& other) const
 	{
 		return (other.x == x) && (other.y == y);
 	}
+	inline bool operator != (const MapCoordF& other) const
+	{
+		return (other.x != x) || (other.y != y);
+	}
 	
-	inline MapCoordF operator* (const float factor) const
+	inline MapCoordF operator* (const double factor) const
 	{
 		return MapCoordF(factor*x, factor*y);
+	}
+	inline MapCoordF operator/ (const double scalar) const
+	{
+		assert(scalar != 0);
+		return MapCoordF(x/scalar, y/scalar);
 	}
 	inline MapCoordF operator+ (const MapCoordF& other) const
 	{
 		return MapCoordF(x+other.x, y+other.y);
+	}
+	inline MapCoordF operator- (const MapCoordF& other) const
+	{
+		return MapCoordF(x-other.x, y-other.y);
+	}
+	inline MapCoordF& operator+ ()
+	{
+		return *this;
+	}
+	inline MapCoordF operator- ()
+	{
+		return MapCoordF(-x, -y);
+	}
+	
+	inline friend MapCoordF operator* (double scalar, const MapCoordF& rhs_vector)
+	{
+		return MapCoordF(scalar * rhs_vector.getX(), scalar * rhs_vector.getY());
+	}
+	inline friend MapCoordF operator/ (double scalar, const MapCoordF& rhs_vector)
+	{
+		return MapCoordF(scalar / rhs_vector.getX(), scalar / rhs_vector.getY());
+	}
+	
+	inline MapCoordF& operator+= (const MapCoordF& rhs_vector)
+	{
+		x += rhs_vector.x;
+		y += rhs_vector.y;
+		return *this;
+	}
+	inline MapCoordF& operator-= (const MapCoordF& rhs_vector)
+	{
+		x -= rhs_vector.x;
+		y -= rhs_vector.y;
+		return *this;
+	}
+	inline MapCoordF& operator*= (const double factor)
+	{
+		x *= factor;
+		y *= factor;
+		return *this;
+	}
+	inline MapCoordF& operator/= (const double scalar)
+	{
+		assert(scalar != 0);
+		x /= scalar;
+		y /= scalar;
+		return *this;
 	}
 	
 	inline QPointF toQPointF() const
