@@ -296,6 +296,7 @@ void MapEditorController::assignKeyboardShortcuts()
     // Custom keyboard shortcuts
     findAction("zoomin")->setShortcut(QKeySequence("F7"));
     findAction("zoomout")->setShortcut(QKeySequence("F8"));
+    findAction("fullscreen")->setShortcut(QKeySequence("F11"));
     findAction("duplicate")->setShortcut(QKeySequence("D"));
     findAction("switchdashes")->setShortcut(QKeySequence("Ctrl+D"));
 }
@@ -332,6 +333,8 @@ void MapEditorController::createMenuAndToolbars()
     switch_symbol_act = newAction("switchsymbol", "Switch symbol", this, SLOT(switchSymbolClicked()), "tool-switch-symbol.png");
     fill_border_act = newAction("fillborder", "Fill / Create border", this, SLOT(fillBorderClicked()), "tool-fill-border.png");
     switch_dashes_act = newAction("switchdashes", "Switch dash direction", this, SLOT(switchDashesClicked()), "tool-switch-dashes"); // Ctrl+D
+    QAction* fullscreen_act = newAction("fullscreen", "Toggle fullscreen mode", window, SLOT(toggleFullscreenMode()));
+    QAction* custom_zoom_act = newAction("setzoom", "Set custom zoom factor...", this, SLOT(setCustomZoomFactorClicked()));
 
     // Refactored so we can do custom key bindings in the future
     assignKeyboardShortcuts();
@@ -355,6 +358,9 @@ void MapEditorController::createMenuAndToolbars()
 	view_menu->addAction(zoom_in_act);
 	view_menu->addAction(zoom_out_act);
     view_menu->addAction(show_all_act);
+    view_menu->addAction(custom_zoom_act);
+    view_menu->addSeparator();
+    view_menu->addAction(fullscreen_act);
 
     // Tools menu
     QMenu *tools_menu = window->menuBar()->addMenu(tr("&Tools"));
@@ -546,6 +552,15 @@ void MapEditorController::zoomIn()
 void MapEditorController::zoomOut()
 {
 	main_view->zoomSteps(-1, false);
+}
+void MapEditorController::setCustomZoomFactorClicked()
+{
+	bool ok;
+	double factor = QInputDialog::getDouble(window, tr("Set custom zoom factor"), tr("Zoom factor:"), main_view->getZoom(), MapView::zoom_out_limit, MapView::zoom_in_limit, 3, &ok);
+	if (!ok || factor == main_view->getZoom())
+		return;
+	
+	main_view->setZoom(factor);
 }
 
 void MapEditorController::showSymbolWindow(bool show)

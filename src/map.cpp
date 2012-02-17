@@ -1495,6 +1495,9 @@ void Map::checkIfFirstTemplateAdded()
 const double screen_pixel_per_mm = 4.999838577;	// TODO: make configurable (by specifying screen diameter in inch + resolution, or dpi)
 // Calculation: pixel_height / ( sqrt((c^2)/(aspect^2 + 1)) * 2.54 )
 
+const double MapView::zoom_in_limit = 512;
+const double MapView::zoom_out_limit = 1 / 16.0;
+
 MapView::MapView(Map* map) : map(map)
 {
 	zoom = 1;
@@ -1675,9 +1678,6 @@ void MapView::completeDragging(QPoint offset)
 
 bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF cursor_pos_view)
 {
-	const double zoom_in_limit = 512;
-	const double zoom_out_limit = 1 / 16.0;
-	
 	num_steps = 0.5f * num_steps;
 	
 	if (num_steps > 0)

@@ -474,6 +474,14 @@ bool MainWindow::saveAs()
 	//assert(current_path == QFileInfo(current_path).canonicalFilePath());
 }
 
+void MainWindow::toggleFullscreenMode()
+{
+	if (isFullScreen())
+		showNormal();
+	else
+		showFullScreen();
+}
+
 void MainWindow::showSettings()
 {
 	// TODO
