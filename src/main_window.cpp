@@ -345,7 +345,9 @@ void MainWindow::showNewMapWizard()
 		new_map->setScaleDenominator(newMapDialog.getSelectedScale());
 	else
 	{
+		qDebug() << symbol_set_path;
 		new_map->loadFrom(symbol_set_path);
+		qDebug() << symbol_set_path;
 		if (new_map->getScaleDenominator() != newMapDialog.getSelectedScale())
 		{
 			QMessageBox::warning(this, tr("Warning"), tr("The selected map scale is 1:%1, but the selected symbol file has a scale of 1:%2! Is the file in the wrong folder?\n\nThe new map's scale will be 1:%3.").arg(newMapDialog.getSelectedScale()).arg(new_map->getScaleDenominator()).arg(newMapDialog.getSelectedScale()));
@@ -377,6 +379,9 @@ void MainWindow::showOpenDialog()
 }
 bool MainWindow::openPath(QString path)
 {
+    // Empty path does nothing. This also helps with the single instance application code.
+    if (path.isEmpty()) return true;
+
 	MainWindow* existing = findMainWindow(path);
 	if (existing)
 	{

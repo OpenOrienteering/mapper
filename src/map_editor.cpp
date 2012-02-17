@@ -58,6 +58,8 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	current_tool = NULL;
 	override_tool = NULL;
 	last_painted_on_template = NULL;
+
+    actionsById[""] = new QAction(this); // dummy action
 }
 MapEditorController::~MapEditorController()
 {
@@ -222,13 +224,9 @@ void MapEditorController::attach(MainWindow* window)
 	map_widget->setCursorposLabel(statusbar_cursorpos_label);
 	window->setCentralWidget(map_widget);
 	
-	// Create menu
+    // Create menu and toolbar together, so actions can be inserted into one or both
 	if (mode == MapEditor)
-		createMenu();
-	
-	// Create toolbar
-	if (mode == MapEditor)
-		createToolbar();
+        createMenuAndToolbars();
 	
 	// Auto-select the edit tool
 	if (mode == MapEditor)
@@ -259,97 +257,129 @@ void MapEditorController::attach(MainWindow* window)
 	if (mode == MapEditor)
 		symbol_window_act->trigger();
 }
-void MapEditorController::createMenu()
+
+QAction *MapEditorController::newAction(const char *id, const char *text, QObject *receiver, const char *slot, const char *icon, const char *tip)
 {
-	// Extend file menu
-	print_act = new QAction(QIcon(":/images/print.png"), tr("Print..."), this);
-	print_act->setShortcuts(QKeySequence::Print);
-	connect(print_act, SIGNAL(triggered()), this, SLOT(printClicked()));
-	
+    QAction *action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), QObject::tr(text), this);
+    if (tip) action->setStatusTip(QObject::tr(tip));
+    if (receiver) QObject::connect(action, SIGNAL(triggered()), receiver, slot);
+    actionsById[id] = action;
+    return action;
+}
+
+QAction *MapEditorController::newCheckAction(const char *id, const char *text, QObject *receiver, const char *slot, const char *icon, const char *tip)
+{
+    QAction *action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), QObject::tr(text), this);
+    action->setCheckable(true);
+    if (tip) action->setStatusTip(QObject::tr(tip));
+    if (receiver) QObject::connect(action, SIGNAL(triggered(bool)), receiver, slot);
+    actionsById[id] = action;
+    return action;
+}
+
+QAction *MapEditorController::findAction(const char *id)
+{
+    if (!actionsById.contains(id)) return actionsById[""];
+    else return actionsById[id];
+}
+
+void MapEditorController::assignKeyboardShortcuts()
+{
+    // Standard keyboard shortcuts
+    findAction("print")->setShortcut(QKeySequence::Print);
+    findAction("undo")->setShortcut(QKeySequence::Undo);
+    findAction("redo")->setShortcut(QKeySequence::Redo);
+    findAction("cut")->setShortcut(QKeySequence::Cut);
+    findAction("copy")->setShortcut(QKeySequence::Copy);
+    findAction("paste")->setShortcut(QKeySequence::Paste);
+
+    // Custom keyboard shortcuts
+    findAction("zoomin")->setShortcut(QKeySequence("F7"));
+    findAction("zoomout")->setShortcut(QKeySequence("F8"));
+    findAction("fullscreen")->setShortcut(QKeySequence("F11"));
+    findAction("duplicate")->setShortcut(QKeySequence("D"));
+    findAction("switchdashes")->setShortcut(QKeySequence("Ctrl+D"));
+
+    findAction("editobjects")->setShortcut(QKeySequence("E"));
+    findAction("drawpoint")->setShortcut(QKeySequence("S"));
+    findAction("drawpath")->setShortcut(QKeySequence("P"));
+    findAction("drawtext")->setShortcut(QKeySequence("T"));
+}
+
+void MapEditorController::createMenuAndToolbars()
+{
+    // Define all the actions, saving them into variables as necessary. Can also get them by ID.
+    print_act = newAction("print", "Print...", this, SLOT(printClicked()), "print.png");
+    undo_act = newAction("undo", "Undo", this, SLOT(undo()), "undo.png", "Undo the last step");
+    redo_act = newAction("redo", "Redo", this, SLOT(redo()), "redo.png", "Redo the last step");
+    QAction* cut_act = newAction("cut", "Cu&t", this, SLOT(cut()), "cut.png");
+    QAction* copy_act = newAction("copy", "C&opy", this, SLOT(copy()), "copy.png");
+    QAction* paste_act = newAction("paste", "&Paste", this, SLOT(paste()), "paste");
+    QAction* zoom_in_act = newAction("zoomin", "Zoom in", this, SLOT(zoomIn()), "view-zoom-in.png"); // F7
+    QAction* zoom_out_act = newAction("zoomout", "Zoom out", this, SLOT(zoomOut()), "view-zoom-out.png"); // F8
+    symbol_window_act = newCheckAction("symbolwindow", "Symbol window", this, SLOT(showSymbolWindow(bool)), "window-new.png", "Show/Hide the symbol window");
+    color_window_act = newCheckAction("colorwindow", "Color window", this, SLOT(showColorWindow(bool)), "window-new.png", "Show/Hide the color window");
+    QAction *load_symbols_from_act = newAction("loadsymbols", "Load symbols from...", this, SLOT(loadSymbolsFromClicked()), NULL, "Replace the symbols with those from another map file");
+    QAction *load_colors_from_act = newAction("loadcolors", "Load colors from...", this, SLOT(loadColorsFromClicked()), NULL, "Replace the colors with those from another map file");
+    QAction *scale_all_symbols_act = newAction("scaleall", "Scale all symbols...", this, SLOT(scaleAllSymbolsClicked()), NULL, "Scale the whole symbol set");
+    QAction *scale_map_act = newAction("scalemap", "Change map scale...", this, SLOT(scaleMapClicked()), NULL, "Change the map scale and adjust map objects and symbol sizes");
+    template_window_act = newCheckAction("templatewindow", "Template setup window", this, SLOT(showTemplateWindow(bool)), "window-new", "Show/Hide the template window");
+    //QAction* template_config_window_act = newCheckAction("templateconfigwindow", "Template configurations window", this, SLOT(showTemplateConfigurationsWindow(bool)), "window-new", "Show/Hide the template configurations window");
+    //QAction* template_visibilities_window_act = newCheckAction("templatevisibilitieswindow", "Template visibilities window", this, SLOT(showTemplateVisbilitiesWindow(bool)), "window-new", "Show/Hide the template visibilities window");
+    QAction* open_template_act = newAction("opentemplate", "Open template...", this, SLOT(openTemplateClicked()));
+    QAction* edit_gps_projection_parameters_act = newAction("gpsproj", "Edit projection parameters...", this, SLOT(editGPSProjectionParameters()));
+    QAction* show_all_act = newAction("showall", "Show whole map", this, SLOT(showWholeMap()), "view-show-all.png");
+    edit_tool_act = newCheckAction("editobjects", "Edit objects", this, SLOT(editToolClicked(bool)), "tool-edit.png");
+    draw_point_act = newCheckAction("drawpoint", "Set point objects", this, SLOT(drawPointClicked(bool)), "draw-point.png");
+    draw_path_act = newCheckAction("drawpath", "Draw paths", this, SLOT(drawPathClicked(bool)), "draw-path.png");
+    draw_text_act = newCheckAction("drawtext", "Write text", this, SLOT(drawTextClicked(bool)), "draw-text.png");
+    duplicate_act = newAction("duplicate", "Duplicate", this, SLOT(duplicateClicked()), "tool-duplicate.png"); // D
+    switch_symbol_act = newAction("switchsymbol", "Switch symbol", this, SLOT(switchSymbolClicked()), "tool-switch-symbol.png");
+    fill_border_act = newAction("fillborder", "Fill / Create border", this, SLOT(fillBorderClicked()), "tool-fill-border.png");
+    switch_dashes_act = newAction("switchdashes", "Switch dash direction", this, SLOT(switchDashesClicked()), "tool-switch-dashes"); // Ctrl+D
+    QAction* fullscreen_act = newAction("fullscreen", "Toggle fullscreen mode", window, SLOT(toggleFullscreenMode()));
+    QAction* custom_zoom_act = newAction("setzoom", "Set custom zoom factor...", this, SLOT(setCustomZoomFactorClicked()));
+
+    // Refactored so we can do custom key bindings in the future
+    assignKeyboardShortcuts();
+
+    // Extend file menu
 	QMenu* file_menu = window->getFileMenu();
 	file_menu->insertAction(window->getCloseAct(), print_act);
 	file_menu->insertSeparator(window->getCloseAct());
-	
-	// Edit menu
-	undo_act = new QAction(QIcon(":/images/undo.png"), tr("Undo"), this);	// TODO: update this with a desc. of what will be undone
-	undo_act->setShortcuts(QKeySequence::Undo);
-	undo_act->setStatusTip(tr("Undo the last step"));
-	connect(undo_act, SIGNAL(triggered()), this, SLOT(undo()));
-	
-	redo_act = new QAction(QIcon(":/images/redo.png"), tr("Redo"), this);	// TODO: update this with a desc. of what will be redone
-	redo_act->setShortcuts(QKeySequence::Redo);
-	redo_act->setStatusTip(tr("Redo the next step"));
-	connect(redo_act, SIGNAL(triggered()), this, SLOT(redo()));
-	
-	// TODO
-	/*QAction* cut_act = new QAction(QIcon(":/images/cut.png"), tr("Cu&t"), this);
-	cut_act->setShortcuts(QKeySequence::Cut);
-	connect(cut_act, SIGNAL(triggered()), this, SLOT(cut()));
-	
-	QAction* copy_act = new QAction(QIcon(":/images/copy.png"), tr("&Copy"), this);
-	copy_act->setShortcuts(QKeySequence::Copy);
-	connect(copy_act, SIGNAL(triggered()), this, SLOT(copy()));
-	
-	QAction* paste_act = new QAction(QIcon(":/images/paste.png"), tr("&Paste"), this);
-	paste_act->setShortcuts(QKeySequence::Paste);
-	connect(paste_act, SIGNAL(triggered()), this, SLOT(paste()));*/
-	
+		
+    // Edit menu
 	QMenu* edit_menu = window->menuBar()->addMenu(tr("&Edit"));
 	edit_menu->addAction(undo_act);
 	edit_menu->addAction(redo_act);
-	/*edit_menu->addSeparator();
-	edit_menu->addAction(cut_act);
-	edit_menu->addAction(copy_act);
-	edit_menu->addAction(paste_act);*/
+    edit_menu->addSeparator();
+    //edit_menu->addAction(cut_act);
+    //edit_menu->addAction(copy_act);
+    //edit_menu->addAction(paste_act);
 	
 	// View menu
-	QAction* fullscreen_act = new QAction(tr("Toggle fullscreen mode"), this);
-	fullscreen_act->setShortcut(tr("F11"));
-	connect(fullscreen_act, SIGNAL(triggered()), window, SLOT(toggleFullscreenMode()));
-	
-	QAction* zoom_in_act = new QAction(QIcon(":/images/view-zoom-in.png"), tr("Zoom in"), this);
-	zoom_in_act->setShortcut(tr("F7"));
-	connect(zoom_in_act, SIGNAL(triggered()), this, SLOT(zoomIn()));
-	
-	QAction* zoom_out_act = new QAction(QIcon(":/images/view-zoom-out.png"), tr("Zoom in"), this);
-	zoom_out_act->setShortcut(tr("F8"));
-	connect(zoom_out_act, SIGNAL(triggered()), this, SLOT(zoomOut()));
-	
-	QAction* custom_zoom_act = new QAction(tr("Set custom zoom factor..."), this);
-	connect(custom_zoom_act, SIGNAL(triggered()), this, SLOT(setCustomZoomFactorClicked()));
-	
 	QMenu* view_menu = window->menuBar()->addMenu(tr("&View"));
-	view_menu->addAction(fullscreen_act);
 	view_menu->addAction(zoom_in_act);
 	view_menu->addAction(zoom_out_act);
-	view_menu->addAction(custom_zoom_act);
+    view_menu->addAction(show_all_act);
+    view_menu->addAction(custom_zoom_act);
+    view_menu->addSeparator();
+    view_menu->addAction(fullscreen_act);
+
+    // Tools menu
+    QMenu *tools_menu = window->menuBar()->addMenu(tr("&Tools"));
+    tools_menu->addAction(edit_tool_act);
+    tools_menu->addAction(draw_point_act);
+    tools_menu->addAction(draw_path_act);
+    tools_menu->addAction(draw_text_act);
+    tools_menu->addAction(duplicate_act);
+    tools_menu->addAction(switch_symbol_act);
+    tools_menu->addAction(fill_border_act);
+    tools_menu->addAction(switch_dashes_act);
 	
 	// Symbols menu
-	symbol_window_act = new QAction(QIcon(":/images/window-new.png"), tr("Symbol window"), this);
-	symbol_window_act->setCheckable(true);
-	symbol_window_act->setStatusTip(tr("Show/Hide the symbol window"));
-	connect(symbol_window_act, SIGNAL(triggered(bool)), this, SLOT(showSymbolWindow(bool)));
-	
-	color_window_act = new QAction(QIcon(":/images/window-new.png"), tr("Color window"), this);
-	color_window_act->setCheckable(true);
-	color_window_act->setStatusTip(tr("Show/Hide the color window"));
-	connect(color_window_act, SIGNAL(triggered(bool)), this, SLOT(showColorWindow(bool)));
-	
-	// TODO
-	/*QAction* load_symbols_from_act = new QAction(tr("Load symbols from..."), this);
-	load_symbols_from_act->setStatusTip(tr("Replace the symbols with those from another map file"));
-	connect(load_symbols_from_act, SIGNAL(triggered()), this, SLOT(loadSymbolsFromClicked()));
-	
-	QAction* load_colors_from_act = new QAction(tr("Load colors from..."), this);
-	load_colors_from_act->setStatusTip(tr("Replace the colors with those from another map file"));
-	connect(load_colors_from_act, SIGNAL(triggered()), this, SLOT(loadColorsFromClicked()));*/
-	
-	QAction* scale_all_symbols_act = new QAction(tr("Scale all symbols..."), this);
-	scale_all_symbols_act->setStatusTip(tr("Scale the whole symbol set"));
-	connect(scale_all_symbols_act, SIGNAL(triggered()), this, SLOT(scaleAllSymbolsClicked()));
-	
-	QMenu* symbols_menu = window->menuBar()->addMenu(tr("Sy&mbols"));
-	symbols_menu->addAction(symbol_window_act);
+    QMenu* symbols_menu = window->menuBar()->addMenu(tr("Sy&mbols"));
+    symbols_menu->addAction(symbol_window_act);
 	symbols_menu->addAction(color_window_act);
 	symbols_menu->addSeparator();
 	/*symbols_menu->addAction(load_symbols_from_act);
@@ -357,34 +387,10 @@ void MapEditorController::createMenu()
 	symbols_menu->addAction(scale_all_symbols_act);
 	
 	// Map menu
-	QAction* scale_map_act = new QAction(tr("Change map scale..."), this);
-	scale_map_act->setStatusTip(tr("Change the map scale and adjust map objects and symbol sizes"));
-	connect(scale_map_act, SIGNAL(triggered(bool)), this, SLOT(scaleMapClicked()));
-	
 	QMenu* map_menu = window->menuBar()->addMenu(tr("M&ap"));
 	map_menu->addAction(scale_map_act);
 	
 	// Templates menu
-	template_window_act = new QAction(QIcon(":/images/window-new.png"), tr("Template setup window"), this);
-	template_window_act->setCheckable(true);
-	template_window_act->setStatusTip(tr("Show/Hide the template window"));
-	connect(template_window_act, SIGNAL(triggered(bool)), this, SLOT(showTemplateWindow(bool)));
-	
-	/* TODO
-	QAction* template_config_window_act = new QAction(QIcon(":/images/window-new.png"), tr("Template configurations window"), this);
-	template_config_window_act->setCheckable(true);
-	template_config_window_act->setStatusTip(tr("Show/Hide the template configurations window"));
-	connect(template_config_window_act, SIGNAL(triggered(bool)), this, SLOT(showTemplateConfigurationsWindow(bool)));
-	
-	QAction* template_visibilities_window_act = new QAction(QIcon(":/images/window-new.png"), tr("Template visibilities window"), this);
-	template_visibilities_window_act->setCheckable(true);
-	template_visibilities_window_act->setStatusTip(tr("Show/Hide the template visibilities window"));
-	connect(template_visibilities_window_act, SIGNAL(triggered(bool)), this, SLOT(showTemplateVisibilitiesWindow(bool)));
-	*/
-	
-	QAction* open_template_act = new QAction(tr("Open template..."), this);
-	connect(open_template_act, SIGNAL(triggered()), this, SLOT(openTemplateClicked()));
-	
 	QMenu* template_menu = window->menuBar()->addMenu(tr("&Templates"));
 	template_menu->addAction(template_window_act);
 	/*template_menu->addAction(template_config_window_act);
@@ -392,50 +398,36 @@ void MapEditorController::createMenu()
 	template_menu->addSeparator();
 	template_menu->addAction(open_template_act);
 	
-	// TODO: Map menu
-	
 	// GPS menu
-	QAction* edit_gps_projection_parameters_act = new QAction(tr("Edit projection parameters..."), this);
-	connect(edit_gps_projection_parameters_act, SIGNAL(triggered()), this, SLOT(editGPSProjectionParameters()));
-	
 	QMenu* gps_menu = window->menuBar()->addMenu(tr("&GPS"));
 	gps_menu->addAction(edit_gps_projection_parameters_act);
-}
-void MapEditorController::createToolbar()
-{
-	// View toolbar
-	QToolBar* toolbar_view = window->addToolBar(tr("View"));
-	
-	QAction* show_all_act = new QAction(QIcon(":/images/view-show-all.png"), tr("Show whole map"), this);
-	connect(show_all_act, SIGNAL(triggered(bool)), this, SLOT(showWholeMap()));
-	toolbar_view->addAction(show_all_act);
-	
+
+
+
+#ifndef Q_WS_MAC
+    // disable toolbars on OS X for the moment - any call to addToolBar() appears to
+    // torpedo the main window. The app is still running, but the window actually disappears
+    // and all menu items contributed to the menu bar disappear, leaving only the Application
+    // menu, (Quit, Services, etc.)
+
+    // This is the main reason I refactored the action setup; made it easier to ensure all
+    // actions made it into the menu system where I could use them.
+
+    // View toolbar
+    QToolBar* toolbar_view = new QToolBar(); // window->addToolBar("View");
+    toolbar_view->addAction(show_all_act);
+
 	// Drawing toolbar
-	QToolBar* toolbar_drawing = window->addToolBar(tr("Drawing"));
-	
-	edit_tool_act = new QAction(QIcon(":/images/tool-edit.png"), tr("Edit objects"), this);
-	edit_tool_act->setCheckable(true);
-	connect(edit_tool_act, SIGNAL(triggered(bool)), this, SLOT(editToolClicked(bool)));
+	QToolBar* toolbar_drawing = new QToolBar(); //  = window->addToolBar(tr("Drawing"));
 	toolbar_drawing->addAction(edit_tool_act);
-	
-	draw_point_act = new QAction(QIcon(":/images/draw-point.png"), tr("Set point objects"), this);
-	draw_point_act->setCheckable(true);
-	connect(draw_point_act, SIGNAL(triggered(bool)), this, SLOT(drawPointClicked(bool)));
-	toolbar_drawing->addAction(draw_point_act);
-	
-	draw_path_act = new QAction(QIcon(":/images/draw-path.png"), tr("Draw paths"), this);
-	draw_path_act->setCheckable(true);
-	connect(draw_path_act, SIGNAL(triggered(bool)), this, SLOT(drawPathClicked(bool)));
+    toolbar_drawing->addAction(draw_point_act);
 	toolbar_drawing->addAction(draw_path_act);
-	
-	draw_text_act = new QAction(QIcon(":/images/draw-text.png"), tr("Write text"), this);
-	draw_text_act->setCheckable(true);
-	connect(draw_text_act, SIGNAL(triggered(bool)), this, SLOT(drawTextClicked(bool)));
-	toolbar_drawing->addAction(draw_text_act);
-	
+    toolbar_drawing->addAction(draw_text_act);
+
 	toolbar_drawing->addSeparator();
-	
-	paint_on_template_act = new QAction(QIcon(":/images/pencil.png"), tr("Paint on template"), this);
+
+    // Leave this for the time being...
+    paint_on_template_act = new QAction(QIcon(":/images/pencil.png"), tr("Paint on template"), this);
 	paint_on_template_act->setCheckable(true);
 	updatePaintOnTemplateAction();
 	connect(paint_on_template_act, SIGNAL(triggered(bool)), this, SLOT(paintOnTemplateClicked(bool)));
@@ -452,23 +444,12 @@ void MapEditorController::createToolbar()
 	
 	// Editing toolbar
 	QToolBar* toolbar_editing = window->addToolBar(tr("Editing"));
-	
-	duplicate_act = new QAction(QIcon(":/images/tool-duplicate.png"), tr("Duplicate"), this);
-	connect(duplicate_act, SIGNAL(triggered(bool)), this, SLOT(duplicateClicked()));
-	toolbar_editing->addAction(duplicate_act);
-	
-	switch_symbol_act = new QAction(QIcon(":/images/tool-switch-symbol.png"), tr("Switch symbol"), this);
-	connect(switch_symbol_act, SIGNAL(triggered(bool)), this, SLOT(switchSymbolClicked()));
-	toolbar_editing->addAction(switch_symbol_act);
-	
-	fill_border_act = new QAction(QIcon(":/images/tool-fill-border.png"), tr("Fill / Create border"), this);
-	connect(fill_border_act, SIGNAL(triggered(bool)), this, SLOT(fillBorderClicked()));
+    toolbar_editing->addAction(duplicate_act);
+    toolbar_editing->addAction(switch_symbol_act);
 	toolbar_editing->addAction(fill_border_act);
-	
-	switch_dashes_act = new QAction(QIcon(":/images/tool-switch-dashes.png"), tr("Switch dash direction"), this);
-	switch_dashes_act->setShortcut(tr("Ctrl+D"));
-	connect(switch_dashes_act, SIGNAL(triggered(bool)), this, SLOT(switchDashesClicked()));
-	toolbar_editing->addAction(switch_dashes_act);
+    toolbar_editing->addAction(switch_dashes_act);
+#endif
+
 }
 void MapEditorController::detach()
 {

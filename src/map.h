@@ -46,12 +46,14 @@ class Symbol;
 class Template;
 class Object;
 class MapEditorController;
+class OCAD8FileImport;
 struct GPSProjectionParameters;
 
 typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
 
 class MapLayer
 {
+friend class OCAD8FileImport;
 public:
 	MapLayer(const QString& name, Map* map);
 	~MapLayer();
@@ -93,6 +95,7 @@ class Map : public QObject
 {
 Q_OBJECT
 friend class RenderableContainer;
+friend class OCAD8FileImport;
 public:
 	typedef QSet<Object*> ObjectSelection;
 	
@@ -104,7 +107,7 @@ public:
 	bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
 	/// Attempts to load the map from the specified path. Returns true on success.
 	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL);
-	
+
 	/// Deletes all map data
 	void clear();
 	
@@ -161,6 +164,7 @@ public:
 	void setSymbol(Symbol* symbol, int pos);
 	void addSymbol(Symbol* symbol, int pos);
 	void moveSymbol(int from, int to);
+    void sortSymbols(bool (*cmp)(Symbol *, Symbol *));
 	void deleteSymbol(int pos);
 	int findSymbolIndex(Symbol* symbol);
 	void setSymbolsDirty();
@@ -252,6 +256,12 @@ public:
 	static LineSymbol* getCoveringWhiteLine() {return covering_white_line;}
 	static LineSymbol* getCoveringRedLine() {return covering_red_line;}
 	
+protected:
+    /// Attempts to load an OCAD 7/8 map from the specified file. Returns true on success.
+    bool loadFromOCAD78(const QString &path, MapEditorController* map_editor = NULL);
+    /// Attempts to load a map in native file format from the specified file. Returns true on success.
+    bool loadFromNative(const QString &path, MapEditorController* map_editor = NULL);
+
 signals:
 	void gotUnsavedChanges();
 	
@@ -376,7 +386,7 @@ public:
 	
 	/// Must be called to notify the map view of new widgets displaying it. Useful to notify the widgets which need to be redrawn
 	void addMapWidget(MapWidget* widget);
-	void removeMapWidget(MapWidget* widget);
+    void removeMapWidget(MapWidget* widget);
 	/// Redraws all map widgets completely - that can be slow!
 	void updateAllMapWidgets();
 	

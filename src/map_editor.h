@@ -42,6 +42,7 @@ class PrintWidget;
 
 class MapEditorController : public MainWindowController
 {
+friend class Map;
 Q_OBJECT
 public:
 	enum OperatingMode
@@ -133,8 +134,11 @@ public slots:
 private:
 	void setMap(Map* map, bool create_new_map_view);
 	
-	void createMenu();
-	void createToolbar();
+    QAction *newAction(const char *id, const char *text, QObject *receiver, const char *slot, const char *icon = NULL, const char *tip = NULL);
+    QAction *newCheckAction(const char *id, const char *text, QObject *receiver, const char *slot, const char *icon = NULL, const char *tip = NULL);
+    QAction *findAction(const char *id);
+    void assignKeyboardShortcuts();
+    void createMenuAndToolbars();
 	
 	void paintOnTemplate(Template* temp);
 	void updatePaintOnTemplateAction();
@@ -153,6 +157,9 @@ private:
 	MapEditorActivity* editor_activity;
 	
 	bool editing_in_progress;
+
+    // Action handling
+    QHash<const char *, QAction *> actionsById;
 	
 	QAction* print_act;
 	EditorDockWidget* print_dock_widget;

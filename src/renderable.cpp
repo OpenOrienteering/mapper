@@ -17,6 +17,7 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <iostream>
 
 #include "renderable.h"
 
@@ -257,6 +258,11 @@ void CircleRenderable::render(QPainter& painter, bool force_min_size, float scal
 
 LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector& path_coords, bool closed) : Renderable()
 {
+    /*
+    for (int i = 0; i < coords.size(); i++) fprintf(stderr, "%x,%x   ", coords[i].internalX(), coords[i].internalY());
+    fprintf(stderr, "\n\n");
+    */
+
 	assert(transformed_coords.size() == coords.size());
 	color_priority = symbol->getColor()->priority;
 	line_width = 0.001f * symbol->getLineWidth();
@@ -304,7 +310,7 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 		
 		if (coords[i-1].isCurveStart())
 		{
-			assert(i < size - 2);
+            assert(i < size - 2);
 			path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
 			i += 2;
 		}

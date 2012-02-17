@@ -39,6 +39,7 @@ class Object;
 /// Provides among other things a symbol number consisting of multiple parts, e.g. "2.4.12". Parts which are not set are assigned the value -1.
 class Symbol
 {
+friend class OCAD8FileImport;
 public:
 	enum Type
 	{

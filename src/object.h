@@ -37,6 +37,7 @@ class Map;
 /// Base class which combines coordinates and a symbol to form an object (in a map or point symbol).
 class Object
 {
+friend class OCAD8FileImport;
 public:
 	enum Type
 	{

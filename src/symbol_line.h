@@ -41,6 +41,7 @@ class LineSymbol : public Symbol
 {
 friend class LineSymbolSettings;
 friend class PointSymbolEditorWidget;
+friend class OCAD8FileImport;
 public:
 	enum CapStyle
 	{
