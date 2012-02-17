@@ -50,7 +50,9 @@ public:
 	inline double yd() const {return (y >> 4) / 1000.0;}
 	inline qint64 rawX() const {return x >> 4;}
 	inline qint64 rawY() const {return y >> 4;}
-	
+    inline qint64 internalX() const {return x;}
+    inline qint64 internalY() const {return y;}
+
 	inline double lengthSquaredTo(const MapCoord& other)
 	{
 		double dx = xd() - other.xd();
@@ -82,7 +84,7 @@ public:
 	{
 		return QPointF(xd(), yd());
 	}
-	
+
 private:
 	qint64 x;
 	qint64 y;

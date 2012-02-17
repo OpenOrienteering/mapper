@@ -25,6 +25,7 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QPainter>
+#include <QDebug>
 
 #include "map_color.h"
 #include "map_editor.h"
@@ -36,6 +37,7 @@
 #include "symbol.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
+#include "ocad8_file_import.h"
 
 MapLayer::MapLayer(const QString& name, Map* map) : name(name), map(map)
 {
@@ -467,35 +469,101 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 		QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\nfor reading.").arg(path));
 		return false;
 	}
-	
-	clear();
-	
+
 	char buffer[256];
-	
-	// Basic stuff
-	const char FILE_TYPE_ID[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
-	file.read(buffer, 4);
-	for (int i = 0; i < 4; ++i)
-	{
-		if (buffer[i] != FILE_TYPE_ID[i])
-		{
-			QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\n\nInvalid file type.").arg(path));
-			return false;
-		}
-	}
-	
+    file.read(buffer, 8);
+    file.close();
+
+    bool ok = false;
+    const unsigned char FILE_TYPE_ID[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
+    const unsigned char OCAD_MAGIC[2] = { 0xAD, 0x0C }; // "0x0CAD"
+    if (memcmp(buffer, FILE_TYPE_ID, 4) != 0)
+    {
+        if (memcmp(buffer, OCAD_MAGIC, 2) != 0)
+        {
+            // fall through
+        }
+        else
+        {
+            int ocad_major = buffer[4];
+            if (ocad_major == 7 || ocad_major == 8)
+            {
+                clear();
+                ok = loadFromOCAD78(path, map_editor);
+            }
+        }
+    }
+    else
+    {
+        clear();
+        ok = loadFromNative(path, map_editor);
+    }
+
+
+
+    if (!ok)
+    {
+        QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\n\nInvalid file type.").arg(path));
+        return false;
+    }
+
+    // Post processing
+    for (unsigned int i = 0; i < symbols.size(); ++i)
+    {
+        if (!symbols[i]->loadFinished(this))
+        {
+            QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError during symbol post-processing.").arg(path));
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool Map::loadFromOCAD78(const QString &path, MapEditorController *map_editor)
+{
+    MapView *view = new MapView(this);
+    map_editor->main_view = view;
+
+    OCAD8FileImport importer(this, view);
+    importer.loadFrom(path.toLocal8Bit().constData());
+
+    if (!importer.warnings().empty())
+    {
+        for (std::vector<QString>::const_iterator it = importer.warnings().begin(); it != importer.warnings().end(); ++it) {
+            qDebug() << *it;
+        }
+    }
+
+    return true;
+}
+
+bool Map::loadFromNative(const QString &path, MapEditorController* map_editor)
+{
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\nfor reading.").arg(path));
+        return false;
+    }
+    // note: ~QFile() will close the file when this method returns and the variable goes out of scope.
+
+    char buffer[256];
+    file.read(buffer, 4); // read the magic
+    // TODO: should we assert? this shouldn't be called except from loadTo(), where it's already been checked...
+
 	int version;
 	file.read((char*)&version, sizeof(int));
 	if (version < 0)
-		QMessageBox::warning(NULL, tr("Warning"), tr("Problem while opening file:\n%1\n\nInvalid file format version.").arg(path));
+        QMessageBox::warning(NULL, tr("Warning"), tr("Problem while opening file:\n%1\n\nInvalid file format version.").arg(file.fileName()));
 	else if (version < least_supported_file_format_version)
 	{
-		QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nUnsupported file format version. Please use an older program version to load and update the file.").arg(path));
+        QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nUnsupported file format version. Please use an older program version to load and update the file.").arg(file.fileName()));
 		return false;
 	}
 	else if (version > current_file_format_version)
 	{
-		QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nFile format version too high. Please update to a newer program version to load this file.").arg(path));
+        QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nFile format version too high. Please update to a newer program version to load this file.").arg(file.fileName()));
 		return false;
 	}
 	
@@ -559,7 +627,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 		
 		if (!symbol->load(&file, version, this))
 		{
-			QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError while loading a symbol.").arg(path));
+            QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError while loading a symbol.").arg(file.fileName()));
 			return false;
 		}
 		symbols[i] = symbol;
@@ -616,25 +684,13 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 			current_layer = layer;
 		if (!layer->load(&file, version, this))
 		{
-			QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError while loading a layer.").arg(path));
+            QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError while loading a layer.").arg(file.fileName()));
 			return false;
 		}
 		layers[i] = layer;
 	}
 	
-	file.close();
-	
-	// Post processing
-	for (int i = 0; i < num_symbols; ++i)
-	{
-		if (!symbols[i]->loadFinished(this))
-		{
-			QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError during symbol post-processing.").arg(path));
-			return false;
-		}
-	}
-	
-	return true;
+    return true;
 }
 
 void Map::clear()

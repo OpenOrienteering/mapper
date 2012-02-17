@@ -42,6 +42,7 @@ class PrintWidget;
 
 class MapEditorController : public MainWindowController
 {
+friend class Map;
 Q_OBJECT
 public:
 	enum OperatingMode

@@ -5,17 +5,32 @@ find_package(Qt4 REQUIRED)
 #set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_BUILD_TYPE Debug)
 
+
 if (CMAKE_COMPILER_IS_GNUCXX)
-	add_definitions(-Wno-long-long -Wno-deprecated -Wall -ansi -pedantic)
+        add_definitions(-Wno-long-long -Wno-deprecated -Wall -std=c99 -pedantic)
 	set(CMAKE_CXX_FLAGS_DEBUG "-g3 -O0 -DDEBUG")
 	set(CMAKE_CXX_FLAGS_RELEASE "-g0 -O2 -s")
 else (CMAKE_COMPILER_IS_GNUCXX)
-	set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
+        set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
 endif (CMAKE_COMPILER_IS_GNUCXX)
 
 include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR})
 
 set(Mapper_SRCS
+ libocad/types.c
+ libocad/array.c
+ libocad/geometry.c
+ libocad/path.c
+ libocad/file.c
+ libocad/color.c
+ libocad/setup.c
+ libocad/symbol.c
+ libocad/object.c
+ libocad/template.c
+
+ qtsingleapplication/qtlocalpeer.cpp
+ qtsingleapplication/qtsingleapplication.cpp
+
  src/main.cpp
  src/util.cpp
  src/undo.cpp
@@ -62,10 +77,9 @@ set(Mapper_SRCS
  src/draw_text.cpp
 
  src/gps_coordinates.cpp
- src/gps_track.cpp
- 
- qtsingleapplication/qtlocalpeer.cpp
- qtsingleapplication/qtsingleapplication.cpp
+ src/gps_track.cpp 
+
+ src/ocad8_file_import.cpp
 )
 qt4_automoc(${Mapper_SRCS})
 

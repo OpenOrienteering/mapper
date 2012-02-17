@@ -56,7 +56,9 @@ HEADERS += src/color_dock_widget.h \
            src/undo.h \
            src/util.h \
            qtsingleapplication/qtlocalpeer.h \
-           qtsingleapplication/qtsingleapplication.h
+           qtsingleapplication/qtsingleapplication.h \
+           libocad/libocad.h \
+    src/ocad8_file_import.h
 SOURCES += src/color_dock_widget.cpp \
            src/draw_path.cpp \
            src/draw_point.cpp \
@@ -98,10 +100,22 @@ SOURCES += src/color_dock_widget.cpp \
            src/undo.cpp \
            src/util.cpp \
            qtsingleapplication/qtlocalpeer.cpp \
-           qtsingleapplication/qtsingleapplication.cpp
+           qtsingleapplication/qtsingleapplication.cpp \
+           libocad/types.c \
+           libocad/array.c \
+           libocad/geometry.c \
+           libocad/path.c \
+           libocad/file.c \
+           libocad/setup.c \
+           libocad/color.c \
+           libocad/symbol.c \
+           libocad/object.c \
+           libocad/template.c \
+    src/ocad8_file_import.cpp
 RESOURCES += resources.qrc
 
 OTHER_FILES += \
     CMakeLists.txt
+
 
 

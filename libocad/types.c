@@ -1,0 +1,51 @@
+#include <string.h>
+
+#include "libocad.h"
+
+const s32 *ocad_point(s32 *buf, const OCADPoint *pt) {
+	buf[0] = pt->x >> 8;
+	buf[1] = pt->y >> 8;
+	buf[2] = (pt->x & 0xff) | (pt->y & 0xff) << 8;
+	return buf;
+}
+
+const s32 *ocad_point2(s32 **pbuf, const OCADPoint *pt) {
+	s32 *buf = *pbuf;
+	ocad_point(buf, pt);
+	*pbuf = buf + 3;
+	return buf;
+}
+
+
+const char *ocad_str(char *buf, const str *ostr) {
+	int n = *ostr;
+	memcpy(buf, ostr + 1, n);
+	buf[n] = 0;
+	return buf;
+}
+
+const char *ocad_str2(char **pbuf, const str *ostr) {
+	char *buf = *pbuf;
+	int n = *ostr;
+	memcpy(buf, ostr + 1, n);
+	buf[n] = 0;
+	*pbuf = buf + (n + 1);
+	return buf;
+}
+
+void ocad_to_real(s32 *from, double *to, u32 count) {
+	u32 n = count * 2;
+	for (u32 i = 0; i < n; i += 2) {
+		double x = from[i], y = from[i + 1];
+		to[i] = x; to[i + 1] = y;
+	}
+}
+
+void dump_bytes(u8 *base, u32 size) {
+	for (u32 i = 0; i < size; i++) {
+		if (i % 16 == 0) fprintf(stderr, "%06x:", i);
+		fprintf(stderr, " %02x", base[i]);
+		if (i %16 == 15) fprintf(stderr, "\n");
+	}
+	if (size % 16 != 15) fprintf(stderr, "\n");
+}
