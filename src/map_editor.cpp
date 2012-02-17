@@ -299,12 +299,16 @@ void MapEditorController::assignKeyboardShortcuts()
     findAction("fullscreen")->setShortcut(QKeySequence("F11"));
     findAction("duplicate")->setShortcut(QKeySequence("D"));
     findAction("switchdashes")->setShortcut(QKeySequence("Ctrl+D"));
+
+    findAction("editobjects")->setShortcut(QKeySequence("E"));
+    findAction("drawpoint")->setShortcut(QKeySequence("S"));
+    findAction("drawpath")->setShortcut(QKeySequence("P"));
+    findAction("drawtext")->setShortcut(QKeySequence("T"));
 }
 
 void MapEditorController::createMenuAndToolbars()
 {
     // Define all the actions, saving them into variables as necessary. Can also get them by ID.
-
     print_act = newAction("print", "Print...", this, SLOT(printClicked()), "print.png");
     undo_act = newAction("undo", "Undo", this, SLOT(undo()), "undo.png", "Undo the last step");
     redo_act = newAction("redo", "Redo", this, SLOT(redo()), "redo.png", "Redo the last step");
@@ -326,7 +330,7 @@ void MapEditorController::createMenuAndToolbars()
     QAction* edit_gps_projection_parameters_act = newAction("gpsproj", "Edit projection parameters...", this, SLOT(editGPSProjectionParameters()));
     QAction* show_all_act = newAction("showall", "Show whole map", this, SLOT(showWholeMap()), "view-show-all.png");
     edit_tool_act = newCheckAction("editobjects", "Edit objects", this, SLOT(editToolClicked(bool)), "tool-edit.png");
-    draw_point_act = newCheckAction("setpoint", "Set point objects", this, SLOT(drawPointClicked(bool)), "draw-point.png");
+    draw_point_act = newCheckAction("drawpoint", "Set point objects", this, SLOT(drawPointClicked(bool)), "draw-point.png");
     draw_path_act = newCheckAction("drawpath", "Draw paths", this, SLOT(drawPathClicked(bool)), "draw-path.png");
     draw_text_act = newCheckAction("drawtext", "Write text", this, SLOT(drawTextClicked(bool)), "draw-text.png");
     duplicate_act = newAction("duplicate", "Duplicate", this, SLOT(duplicateClicked()), "tool-duplicate.png"); // D
@@ -399,7 +403,15 @@ void MapEditorController::createMenuAndToolbars()
 	gps_menu->addAction(edit_gps_projection_parameters_act);
 
 
-  /* disable toolbars for the moment - this behaves really funky on OS X
+
+#ifndef Q_WS_MAC
+    // disable toolbars on OS X for the moment - any call to addToolBar() appears to
+    // torpedo the main window. The app is still running, but the window actually disappears
+    // and all menu items contributed to the menu bar disappear, leaving only the Application
+    // menu, (Quit, Services, etc.)
+
+    // This is the main reason I refactored the action setup; made it easier to ensure all
+    // actions made it into the menu system where I could use them.
 
     // View toolbar
     QToolBar* toolbar_view = new QToolBar(); // window->addToolBar("View");
@@ -436,7 +448,8 @@ void MapEditorController::createMenuAndToolbars()
     toolbar_editing->addAction(switch_symbol_act);
 	toolbar_editing->addAction(fill_border_act);
     toolbar_editing->addAction(switch_dashes_act);
-   */
+#endif
+
 }
 void MapEditorController::detach()
 {
