@@ -634,7 +634,7 @@ void DrawPathTool::selectedSymbolsChanged()
 	if (symbol == NULL || ((symbol->getType() & (Symbol::Line | Symbol::Area | Symbol::Combined)) == 0))
 	{
 		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(symbol);
-		editor->setTool(draw_tool);	
+		editor->setTool(draw_tool);
 		return;
 	}
 

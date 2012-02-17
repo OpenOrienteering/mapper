@@ -93,7 +93,7 @@ void MapEditorController::setTool(MapEditorTool* new_tool)
 void MapEditorController::setEditTool()
 {
 	if (!current_tool || !current_tool->getType() == MapEditorTool::Edit)
-		setTool(new EditTool(this, edit_tool_act));
+		setTool(new EditTool(this, edit_tool_act, symbol_widget));
 }
 void MapEditorController::setOverrideTool(MapEditorTool* new_override_tool)
 {
@@ -120,7 +120,7 @@ void MapEditorController::setOverrideTool(MapEditorTool* new_override_tool)
 MapEditorTool* MapEditorController::getDefaultDrawToolForSymbol(Symbol* symbol)
 {
 	if (!symbol)
-		return NULL;
+		return new EditTool(this, edit_tool_act, symbol_widget);
 	else if (symbol->getType() == Symbol::Point)
 		return new DrawPointTool(this, draw_point_act, symbol_widget);
 	else if (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined)
@@ -228,13 +228,6 @@ void MapEditorController::attach(MainWindow* window)
 	if (mode == MapEditor)
         createMenuAndToolbars();
 	
-	// Auto-select the edit tool
-	if (mode == MapEditor)
-	{
-		edit_tool_act->setChecked(true);
-		setEditTool();
-	}
-	
 	// Update enabled/disabled state for the tools ...
 	selectedObjectsChanged();
 	// ... and for undo
@@ -256,6 +249,13 @@ void MapEditorController::attach(MainWindow* window)
 	// Show the symbol window
 	if (mode == MapEditor)
 		symbol_window_act->trigger();
+	
+	// Auto-select the edit tool
+	if (mode == MapEditor)
+	{
+		edit_tool_act->setChecked(true);
+		setEditTool();
+	}
 }
 
 QAction *MapEditorController::newAction(const char *id, const char *text, QObject *receiver, const char *slot, const char *icon, const char *tip)

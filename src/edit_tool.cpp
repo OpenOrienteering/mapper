@@ -47,9 +47,7 @@ const Qt::KeyboardModifiers EditTool::control_point_modifier = Qt::ControlModifi
 const Qt::Key EditTool::control_point_key = Qt::Key_Control;
 #endif
 
-
-
-EditTool::EditTool(MapEditorController* editor, QAction* tool_button): MapEditorTool(editor, Edit, tool_button), renderables(editor->getMap())
+EditTool::EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget) : MapEditorTool(editor, Edit, tool_button), renderables(editor->getMap()), symbol_widget(symbol_widget)
 {
 	dragging = false;
 	hover_point = -2;
@@ -66,6 +64,7 @@ EditTool::EditTool(MapEditorController* editor, QAction* tool_button): MapEditor
 void EditTool::init()
 {
 	connect(editor->getMap(), SIGNAL(selectedObjectsChanged()), this, SLOT(selectedObjectsChanged()));
+	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
 	selectedObjectsChanged();
 }
 EditTool::~EditTool()
@@ -704,6 +703,15 @@ void EditTool::selectedObjectsChanged()
 	updateStatusText();
 	updateDirtyRect();
 	calculateBoxTextHandles();
+}
+void EditTool::selectedSymbolsChanged()
+{
+	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
+	if (symbol && editor->getMap()->getNumSelectedObjects() == 0)
+	{
+		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(symbol);
+		editor->setTool(draw_tool);
+	}
 }
 void EditTool::textSelectionChanged(bool text_change)
 {

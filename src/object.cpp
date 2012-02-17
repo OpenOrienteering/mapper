@@ -20,6 +20,7 @@
 
 #include "object.h"
 
+#include <qmath.h>
 #include <QFile>
 
 #include "util.h"

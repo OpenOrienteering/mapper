@@ -35,7 +35,7 @@ class EditTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	EditTool(MapEditorController* editor, QAction* tool_button);
+	EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
 	virtual ~EditTool();
 	
     virtual void init();
@@ -60,6 +60,7 @@ public:
 	
 public slots:
 	void selectedObjectsChanged();
+	void selectedSymbolsChanged();
 	void textSelectionChanged(bool text_change);
 	
 protected:
@@ -129,6 +130,7 @@ protected:
 	
 	RenderableVector old_renderables;
 	RenderableContainer renderables;
+	SymbolWidget* symbol_widget;
 };
 
 #endif
