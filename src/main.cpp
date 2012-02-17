@@ -18,7 +18,7 @@
  */
 
 
-#include "../qtsingleapplication/QtSingleApplication.h"
+#include "../qtsingleapplication/qtsingleapplication.h"
 #include <QMessageBox>
 #include <QDebug>
 

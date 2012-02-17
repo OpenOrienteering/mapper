@@ -7,11 +7,17 @@ set(CMAKE_BUILD_TYPE Debug)
 
 
 if (CMAKE_COMPILER_IS_GNUCXX)
-        add_definitions(-Wno-long-long -Wno-deprecated -Wall -std=c99 -pedantic)
-	set(CMAKE_CXX_FLAGS_DEBUG "-g3 -O0 -DDEBUG")
+	set(CMAKE_CXX_FLAGS "-Wno-long-long -Wno-deprecated -Wall -pedantic")
+	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
 	set(CMAKE_CXX_FLAGS_RELEASE "-g0 -O2 -s")
+	set(CMAKE_CXX_FLAGS_DEBUG "-g3 -O0 -DDEBUG")
+
+	set(CMAKE_C_FLAGS "${CMAKE_CXX_FLAGS} -std=c99")
+	set(CMAKE_C_FLAGS_RELWITHDEBINFO ${CMAKE_CXX_FLAGS_RELWITHDEBINFO})
+	set(CMAKE_C_FLAGS_RELEASE} ${CMAKE_CXX_FLAGS_RELEASE})
+	set(CMAKE_C_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
 else (CMAKE_COMPILER_IS_GNUCXX)
-        set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
+	set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
 endif (CMAKE_COMPILER_IS_GNUCXX)
 
 include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR})
@@ -89,15 +95,15 @@ qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-        add_executable(Mapper
-        MACOSX_BUNDLE
-	${Mapper_SRCS}
-        ${Mapper_RESOURCES_RCC}
-        )
+	add_executable(Mapper
+		MACOSX_BUNDLE
+		${Mapper_SRCS}
+		${Mapper_RESOURCES_RCC}
+	)
 else(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 	add_executable(Mapper
-	${Mapper_SRCS}
-	${Mapper_RESOURCES_RCC}
+		${Mapper_SRCS}
+		${Mapper_RESOURCES_RCC}
 	)
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 

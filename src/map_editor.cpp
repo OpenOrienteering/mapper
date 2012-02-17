@@ -414,11 +414,11 @@ void MapEditorController::createMenuAndToolbars()
     // actions made it into the menu system where I could use them.
 
     // View toolbar
-    QToolBar* toolbar_view = new QToolBar(); // window->addToolBar("View");
+    QToolBar* toolbar_view = window->addToolBar("View");
     toolbar_view->addAction(show_all_act);
 
 	// Drawing toolbar
-	QToolBar* toolbar_drawing = new QToolBar(); //  = window->addToolBar(tr("Drawing"));
+	QToolBar* toolbar_drawing = window->addToolBar(tr("Drawing"));
 	toolbar_drawing->addAction(edit_tool_act);
     toolbar_drawing->addAction(draw_point_act);
 	toolbar_drawing->addAction(draw_path_act);
