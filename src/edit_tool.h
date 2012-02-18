@@ -35,7 +35,7 @@ class EditTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	EditTool(MapEditorController* editor, QAction* tool_button);
+	EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
 	virtual ~EditTool();
 	
     virtual void init();
@@ -47,14 +47,20 @@ public:
 	
     virtual bool keyPressEvent(QKeyEvent* event);
     virtual bool keyReleaseEvent(QKeyEvent* event);
+    virtual void focusOutEvent(QFocusEvent* event);
 	
     virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	static QCursor* cursor;
 	static QImage* point_handles;
 	
+	static const Qt::KeyboardModifiers selection_modifier;
+	static const Qt::KeyboardModifiers control_point_modifier;
+	static const Qt::Key control_point_key;
+	
 public slots:
 	void selectedObjectsChanged();
+	void selectedSymbolsChanged();
 	void textSelectionChanged(bool text_change);
 	
 protected:
@@ -97,6 +103,10 @@ protected:
 	MapCoordF cur_pos_map;
 	bool dragging;
 	bool box_selection;
+	bool no_more_effect_on_click;
+	
+	bool control_pressed;
+	bool space_pressed;
 	
 	// Information about the selection
 	QRectF selection_extent;
@@ -120,6 +130,7 @@ protected:
 	
 	RenderableVector old_renderables;
 	RenderableContainer renderables;
+	SymbolWidget* symbol_widget;
 };
 
 #endif

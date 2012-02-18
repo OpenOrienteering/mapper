@@ -17,9 +17,9 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
-
 #include "renderable.h"
+
+#include <qmath.h>
 
 #include "map.h"
 #include "map_color.h"

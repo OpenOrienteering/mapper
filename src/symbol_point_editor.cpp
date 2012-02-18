@@ -678,7 +678,7 @@ void PointSymbolEditorWidget::deleteCoordClicked()
 	int row = coords_table->currentRow();
 	assert(row >= 0);
 	
-	path->deleteCoordinate(row);
+	path->deleteCoordinate(row, false);
 	
 	updateCoordsTable();	// NOTE: incremental updates (to the curve start boxes) would be possible but mean some implementation effort
 	getMidpointObject()->update(true);

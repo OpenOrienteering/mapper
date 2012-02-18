@@ -36,11 +36,25 @@
 QCursor* EditTool::cursor = NULL;
 QImage* EditTool::point_handles = NULL;
 
-EditTool::EditTool(MapEditorController* editor, QAction* tool_button): MapEditorTool(editor, Edit, tool_button), renderables(editor->getMap())
+// Mac convention for selecting multiple items is the command key (In Qt the command key is ControlModifier)
+#ifdef Q_WS_MAC
+const Qt::KeyboardModifiers EditTool::selection_modifier = Qt::ControlModifier;
+const Qt::KeyboardModifiers EditTool::control_point_modifier = Qt::ShiftModifier;
+const Qt::Key EditTool::control_point_key = Qt::Key_Shift;
+#else
+const Qt::KeyboardModifiers EditTool::selection_modifier = Qt::ShiftModifier;
+const Qt::KeyboardModifiers EditTool::control_point_modifier = Qt::ControlModifier;
+const Qt::Key EditTool::control_point_key = Qt::Key_Control;
+#endif
+
+EditTool::EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget) : MapEditorTool(editor, Edit, tool_button), renderables(editor->getMap()), symbol_widget(symbol_widget)
 {
 	dragging = false;
 	hover_point = -2;
 	text_editor = NULL;
+	
+	control_pressed = false;
+	space_pressed = false;
 
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-hollow.png"), 1, 1);
@@ -50,6 +64,7 @@ EditTool::EditTool(MapEditorController* editor, QAction* tool_button): MapEditor
 void EditTool::init()
 {
 	connect(editor->getMap(), SIGNAL(selectedObjectsChanged()), this, SLOT(selectedObjectsChanged()));
+	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
 	selectedObjectsChanged();
 }
 EditTool::~EditTool()
@@ -63,6 +78,14 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 {
 	if (!(event->buttons() & Qt::LeftButton))
 		return false;
+	
+	dragging = false;
+	box_selection = false;
+	no_more_effect_on_click = false;
+	click_pos = event->pos();
+	click_pos_map = map_coord;
+	cur_pos = event->pos();
+	cur_pos_map = map_coord;
 	
 	updateHoverPoint(widget->mapToViewport(map_coord), widget);
 	
@@ -79,6 +102,7 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 		{
 			PathObject* path = reinterpret_cast<PathObject*>(single_selected_object);
 			
+			// Check if clicked on a bezier curve handle
 			int num_coords = path->getCoordinateCount();
 			if (hover_point >= 1 && path->getCoordinate(hover_point - 1).isCurveStart() &&
 				((hover_point >= 4 && path->getCoordinate(hover_point - 4).isCurveStart()) ||
@@ -97,6 +121,32 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 		
 			if (opposite_curve_handle_index >= 0)
 				opposite_curve_handle_dist = path->getCoordinate(opposite_curve_handle_index).lengthTo(path->getCoordinate(curve_anchor_index));
+			else if (event->modifiers() & Qt::ControlModifier)
+			{
+				// Clicked on a regular path point while holding Ctrl -> delete the point
+				if (path->calcNumRegularPoints() <= 2 || (!(path->getSymbol()->getContainedTypes() & Symbol::Line) && path->getCoordinateCount() <= 3))
+				{
+					// Delete the object
+					deleteSelectedObjects();
+					no_more_effect_on_click = true;
+					return true;
+				}
+				else
+				{
+					ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(editor->getMap());	// TODO: use optimized undo step
+					Object* undo_duplicate = path->duplicate();
+					undo_duplicate->setMap(editor->getMap());
+					undo_step->addObject(path, undo_duplicate);
+					editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
+					
+					path->deleteCoordinate(hover_point, true);
+					path->update(true);
+					updateHoverPoint(widget->mapToViewport(map_coord), widget);
+					updateDirtyRect();
+					no_more_effect_on_click = true;
+					return true;
+				}
+			}
 		}
 	}
 	else if (hover_point == -2)
@@ -130,12 +180,34 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 		}
 	}
 	
-	click_pos = event->pos();
-	click_pos_map = map_coord;
-	cur_pos = event->pos();
-	cur_pos_map = map_coord;
-	dragging = false;
-	box_selection = false;
+	if (single_object_selected && single_selected_object->getType() == Object::Path && hover_point < 0 && event->modifiers() & control_point_modifier)
+	{
+		// Add new point to path
+		PathObject* path = reinterpret_cast<PathObject*>(single_selected_object);
+		
+		float distance_sq;
+		PathCoord path_coord;
+		path->calcClosestPointOnPath(map_coord, distance_sq, path_coord);
+		
+		float click_tolerance_map_sq = widget->getMapView()->pixelToLength(click_tolerance);
+		click_tolerance_map_sq = click_tolerance_map_sq * click_tolerance_map_sq;
+		
+		if (distance_sq <= click_tolerance_map_sq)
+		{
+			startEditing();
+			dragging = true;	// necessary to prevent second call to startEditing()
+			hover_point = path->subdivide(path_coord.index, path_coord.param);
+			if (space_pressed)
+			{
+				MapCoord point = path->getCoordinate(hover_point);
+				point.setDashPoint(true);
+				path->setCoordinate(hover_point, point);
+			}
+			opposite_curve_handle_index = -1;
+			updatePreviewObjects();
+		}
+	}
+	
 	return true;
 }
 bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -157,6 +229,8 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 	}
 	else // if (mouse_down)
 	{
+		if (no_more_effect_on_click)
+			return true;
 		if (text_editor && hover_point == -2)
 			return text_editor->mouseMoveEvent(event, map_coord, widget);
 		
@@ -200,6 +274,11 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 	
 	Map* map = editor->getMap();
 	
+	if (no_more_effect_on_click)
+	{
+		no_more_effect_on_click = false;
+		return true;	
+	}
 	if (text_editor && hover_point == -2)
 	{
 		if (text_editor->mouseReleaseEvent(event, map_coord, widget))
@@ -207,13 +286,6 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 		else
 			finishEditing();
 	}
-
-	// Mac convention for selecting multiple items is the command key (In Qt the command key is ControlModifier)
-	#ifdef Q_WS_MAC
-		Qt::KeyboardModifier select_modifier = Qt::ControlModifier;
-	#else
-		Qt::KeyboardModifier select_modifier = Qt::ShiftModifier;
-	#endif
 
 	if (dragging)
 	{
@@ -231,7 +303,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 			std::vector<Object*> objects;
 			map->findObjectsAtBox(click_pos_map, cur_pos_map, objects);
 			
-			if (!(event->modifiers() & select_modifier))
+			if (!(event->modifiers() & selection_modifier))
 			{
 				if (map->getNumSelectedObjects() > 0)
 					selection_changed = true;
@@ -241,7 +313,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 			int size = objects.size();
 			for (int i = 0; i < size; ++i)
 			{
-				if (!(event->modifiers() & select_modifier))
+				if (!(event->modifiers() & selection_modifier))
 					map->addObjectToSelection(objects[i], i == size - 1);
 				else
 					map->toggleObjectSelection(objects[i], i == size - 1);
@@ -270,7 +342,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 			map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(1.5f * MapEditorTool::click_tolerance), true, objects);
 		
 		// Selection logic, trying to select the most relevant object(s)
-		if (!(event->modifiers() & select_modifier) || map->getNumSelectedObjects() == 0)
+		if (!(event->modifiers() & selection_modifier) || map->getNumSelectedObjects() == 0)
 		{
 			if (objects.empty())
 			{
@@ -533,12 +605,18 @@ bool EditTool::keyPressEvent(QKeyEvent* event)
 
 	if (num_selected_objects > 0 && event->key() == delete_key)
 		deleteSelectedObjects();
-
 	else if (event->key() == Qt::Key_Tab)
 	{
 		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(editor->getSymbolWidget()->getSingleSelectedSymbol());
 		if (draw_tool)
 			editor->setTool(draw_tool);
+	}
+	else if (event->key() == Qt::Key_Space)
+		space_pressed = true;
+	else if (event->key() == control_point_key)
+	{
+		control_pressed = true;
+		updateStatusText();
 	}
 	else
 		return false;
@@ -550,7 +628,22 @@ bool EditTool::keyReleaseEvent(QKeyEvent* event)
 	if (text_editor)
 		return text_editor->keyReleaseEvent(event);
 	
+	if (event->key() == Qt::Key_Space)
+		space_pressed = false;
+	else if (event->key() == control_point_key)
+	{
+		control_pressed = false;
+		updateStatusText();
+	}
+	
 	return false;
+}
+void EditTool::focusOutEvent(QFocusEvent* event)
+{
+	// Deactivate all modifiers - not always correct, but should be wrong only in very unusual cases and better than leaving the modifiers on forever
+	control_pressed = false;
+	space_pressed = false;
+	updateStatusText();
 }
 
 void EditTool::draw(QPainter* painter, MapWidget* widget)
@@ -611,6 +704,15 @@ void EditTool::selectedObjectsChanged()
 	updateDirtyRect();
 	calculateBoxTextHandles();
 }
+void EditTool::selectedSymbolsChanged()
+{
+	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
+	if (symbol && editor->getMap()->getNumSelectedObjects() == 0)
+	{
+		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(symbol);
+		editor->setTool(draw_tool);
+	}
+}
 void EditTool::textSelectionChanged(bool text_change)
 {
 	updatePreviewObjects();
@@ -620,7 +722,21 @@ void EditTool::updateStatusText()
 {
 	QString str = tr("<b>Click</b> to select an object, <b>Drag</b> for box selection, <b>Shift</b> to toggle selection");
 	if (editor->getMap()->getNumSelectedObjects() > 0)
+	{
 		str += tr(", <b>Del</b> to delete");
+		
+		if (editor->getMap()->getNumSelectedObjects() == 1)
+		{
+			Object* single_selected_object = *editor->getMap()->selectedObjectsBegin();
+			if (single_selected_object->getType() == Object::Path)
+			{
+				if (control_pressed)
+					str = tr("<b>Ctrl+Click</b> on point to delete it, on path to add a new point, with <b>Space</b> to make it a dash point");
+				else
+					str += tr("; Try <u>Ctrl</u>");
+			}
+		}
+	}
 	setStatusBarText(str);
 }
 

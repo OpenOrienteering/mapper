@@ -176,9 +176,9 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 			{
 				// Remove preview
 				int last = preview_path->getCoordinateCount() - 1;
-				preview_path->deleteCoordinate(last);
-				preview_path->deleteCoordinate(last-1);
-				preview_path->deleteCoordinate(last-2);
+				preview_path->deleteCoordinate(last, false);
+				preview_path->deleteCoordinate(last-1, false);
+				preview_path->deleteCoordinate(last-2, false);
 				
 				MapCoord coord = preview_path->getCoordinate(last-3);
 				coord.setCurveStart(false);
@@ -376,7 +376,7 @@ void DrawPathTool::undoLastPoint()
 	}
 	
 	int last = preview_path->getCoordinateCount() - 1;
-	preview_path->deleteCoordinate(last);
+	preview_path->deleteCoordinate(last, false);
 	
 	if (last >= 3 && preview_path->getCoordinate(last - 3).isCurveStart())
 	{
@@ -388,8 +388,8 @@ void DrawPathTool::undoLastPoint()
 		previous_pos_map = MapCoordF(first);
 		previous_drag_map = MapCoordF((first.xd() + second.xd()) / 2, (first.yd() + second.yd()) / 2);
 		
-		preview_path->deleteCoordinate(last - 1);
-		preview_path->deleteCoordinate(last - 2);
+		preview_path->deleteCoordinate(last - 1, false);
+		preview_path->deleteCoordinate(last - 2, false);
 		
 		first.setCurveStart(false);
 		preview_path->setCoordinate(last - 3, first);
@@ -399,7 +399,7 @@ void DrawPathTool::undoLastPoint()
 		previous_point_is_curve_point = false;
 		
 		if (path_has_preview_point)
-			preview_path->deleteCoordinate(last - 1);
+			preview_path->deleteCoordinate(last - 1, false);
 	}
 	
 	path_has_preview_point = false;
@@ -439,7 +439,7 @@ void DrawPathTool::finishDrawing()
 	// Remove last point if closed and first and last points are equal, or if the last point was just a preview
 	if ((preview_path->isPathClosed() && preview_path->getCoordinate(0).isPositionEqualTo(preview_path->getCoordinate(preview_path->getCoordinateCount() - 1))) ||
 		(path_has_preview_point && !dragging))
-		preview_path->deleteCoordinate(preview_path->getCoordinateCount() - 1);
+		preview_path->deleteCoordinate(preview_path->getCoordinateCount() - 1, false);
 	
 	renderables.removeRenderablesOfObject(preview_path, false);
 	
@@ -634,7 +634,7 @@ void DrawPathTool::selectedSymbolsChanged()
 	if (symbol == NULL || ((symbol->getType() & (Symbol::Line | Symbol::Area | Symbol::Combined)) == 0))
 	{
 		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(symbol);
-		editor->setTool(draw_tool);	
+		editor->setTool(draw_tool);
 		return;
 	}
 
