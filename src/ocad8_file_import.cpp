@@ -6,6 +6,7 @@
 #include "symbol_point.h"
 #include "symbol_line.h"
 #include "symbol_area.h"
+#include "symbol_text.h"
 
 OCAD8FileImport::OCAD8FileImport(Map *map, MapView *view) : map(map), view(view), file(NULL)
 {
@@ -84,11 +85,11 @@ void OCAD8FileImport::loadFrom(const char *filename) throw (std::exception)
                 {
                     symbol = importAreaSymbol((OCADAreaSymbol *)ocad_symbol);
                 }
-                /*
                 else if (ocad_symbol->type == OCAD_TEXT_SYMBOL)
                 {
                     symbol = importTextSymbol((OCADTextSymbol *)ocad_symbol);
                 }
+                /*
                 else if (ocad_symbol->type == OCAD_RECT_SYMBOL)
                 {
                     symbol = importRectSymbol((OCADRectSymbol *)ocad_symbol);
@@ -292,6 +293,65 @@ Symbol *OCAD8FileImport::importAreaSymbol(const OCADAreaSymbol *ocad_symbol)
     return symbol;
 }
 
+Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
+{
+    TextSymbol *symbol = new TextSymbol();
+    fillCommonSymbolFields(symbol, (OCADSymbol *)ocad_symbol);
+
+    symbol->font_family = str1(ocad_symbol->font); // FIXME: mapping?
+    symbol->color = color_index[ocad_symbol->color];
+    symbol->ascent_size = (int)round((0.1 * ocad_symbol->dpts) * 1.49 * 1000);
+    symbol->bold = (ocad_symbol->bold >= 700) ? true : false;
+    symbol->italic = (ocad_symbol->italic) ? true : false;
+    symbol->underline = (ocad_symbol->under) ? true : false;
+    symbol->line_spacing = 0.01f * ocad_symbol->lspace;
+
+    //qDebug() << "Convert"<<ocad_symbol->dpts<<"decipoints to"<<symbol->ascent_size<<"um";
+
+    if (ocad_symbol->bold != 400 && ocad_symbol->bold != 700)
+    {
+        warn.push_back(QString(QObject::tr("During import of text symbol %1: ignoring custom weight (%2)"))
+                       .arg(ocad_symbol->number).arg(ocad_symbol->bold));
+    }
+    if (ocad_symbol->under)
+    {
+        warn.push_back(QString(QObject::tr("During import of text symbol %1: ignoring custom underline color, width, and positioning"))
+                       .arg(ocad_symbol->number));
+    }
+    if (ocad_symbol->cspace != 0)
+    {
+        warn.push_back(QString(QObject::tr("During import of text symbol %1: ignoring custom character spacing (%2%)"))
+                       .arg(ocad_symbol->number).arg(ocad_symbol->cspace));
+    }
+    if (ocad_symbol->wspace != 100)
+    {
+        warn.push_back(QString(QObject::tr("During import of text symbol %1: ignoring custom word spacing (%2%)"))
+                       .arg(ocad_symbol->number).arg(ocad_symbol->wspace));
+    }
+    if (ocad_symbol->pspace != 0)
+    {
+        warn.push_back(QString(QObject::tr("During import of text symbol %1: ignoring custom paragraph spacing (%2%)"))
+                       .arg(ocad_symbol->number).arg(ocad_symbol->pspace));
+    }
+    if (ocad_symbol->indent1 != 0 || ocad_symbol->indent2 != 0)
+    {
+        warn.push_back(QString(QObject::tr("During import of text symbol %1: ignoring custom indents (%2/%3)"))
+                       .arg(ocad_symbol->number).arg(ocad_symbol->indent1).arg(ocad_symbol->indent2));
+    }
+    if (ocad_symbol->ntabs > 0)
+    {
+        warn.push_back(QString(QObject::tr("During import of text symbol %1: ignoring custom tabs"))
+                       .arg(ocad_symbol->number));
+    }
+    if (ocad_symbol->fmode != 0)
+    {
+        warn.push_back(QString(QObject::tr("During import of text symbol %1: ignoring text framing (mode %2)"))
+                       .arg(ocad_symbol->number).arg(ocad_symbol->fmode));
+    }
+
+    return symbol;
+}
+
 PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
 {
     PointSymbol *symbol = new PointSymbol();
@@ -300,7 +360,8 @@ PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
     while (p < end) {
         OCADSymbolElement *elt = (OCADSymbolElement *)p;
         int element_index = symbol->getNumElements();
-        if (elt->type == OCAD_DOT_ELEMENT) {
+        if (elt->type == OCAD_DOT_ELEMENT)
+        {
             PointSymbol* element_symbol = new PointSymbol();
             element_symbol->inner_color = color_index[elt->color];
             element_symbol->inner_radius = (int)convertPosition(elt->diameter) / 2;
@@ -311,7 +372,8 @@ PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
             element_object->coords.resize(1);
             symbol->addElement(element_index, element_object, element_symbol);
         }
-        else if (elt->type == OCAD_CIRCLE_ELEMENT) {
+        else if (elt->type == OCAD_CIRCLE_ELEMENT)
+        {
             PointSymbol* element_symbol = new PointSymbol();
             element_symbol->inner_color = NULL;
             element_symbol->inner_radius = (int)convertPosition(elt->diameter) / 2;
@@ -322,7 +384,8 @@ PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
             element_object->coords.resize(1);
             symbol->addElement(element_index, element_object, element_symbol);
         }
-        else if (elt->type == OCAD_LINE_ELEMENT) {
+        else if (elt->type == OCAD_LINE_ELEMENT)
+        {
             LineSymbol* element_symbol = new LineSymbol();
             element_symbol->line_width = convertPosition(elt->width);
             element_symbol->color = color_index[elt->color];
@@ -330,7 +393,8 @@ PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
             fillPathCoords(element_object, elt->npts, elt->pts);
             symbol->addElement(element_index, element_object, element_symbol);
         }
-        else if (elt->type == OCAD_AREA_ELEMENT) {
+        else if (elt->type == OCAD_AREA_ELEMENT)
+        {
             AreaSymbol* element_symbol = new AreaSymbol();
             element_symbol->color = color_index[elt->color];
             PathObject* element_object = new PathObject(element_symbol);
@@ -364,44 +428,60 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
     }
 
     Symbol *symbol = symbol_index[ocad_object->symbol];
-    Object *object = NULL;
     if (symbol->getType() == Symbol::Point)
     {
         PointObject *p = new PointObject();
-        // extra properties: rotation
         p->symbol = symbol;
+
+        // extra properties: rotation
         p->setRotation(convertRotation(ocad_object->angle));
-        object = p;
+
+        // only 1 coordinate is allowed, enforce it even if the OCAD object claims more.
+        fillPathCoords(p, 1, (OCADPoint *)ocad_object->pts);
+        p->map = map;
+        p->output_dirty = true;
+        return p;
     }
     else if (symbol->getType() == Symbol::Text)
     {
         TextObject *t = new TextObject();
         t->symbol = symbol;
+
         // extra properties: rotation, horizontalAlignment, verticalAlignment, text
         t->setRotation(convertRotation(ocad_object->angle));
-        t->setHorizontalAlignment(TextObject::AlignLeft); // FIXME - correct?
-        t->setVerticalAlignment(TextObject::AlignBaseline); // FIXME - correct?
-        // (res1 == 1) is used in OCAD 8 to indicate wide text (although this is not documented)
+
         const char *text_ptr = (const char *)(ocad_object->pts + ocad_object->npts);
-        t->setText((ocad_object->res1 != 0) ? str2(text_ptr) : str1(text_ptr));
-        object = t;
+        size_t text_len = sizeof(OCADPoint) * ocad_object->ntext;
+        // (type |= 0x100) is used in OCAD 8 to indicate wide text (although this is not documented)
+        if ((ocad_object->type) & 0x100) t->setText(zstr2(text_ptr, text_len));
+        else t->setText(zstr1(text_ptr, text_len));
+
+        // Text objects need special path translation
+        if (!fillTextPathCoords(t, ocad_object->npts, (OCADPoint *)ocad_object->pts))
+        {
+            warn.push_back(QString(QObject::tr("Not importing text symbol, couldn't figure out path' (npts=%1): %2"))
+                           .arg(ocad_object->npts).arg(t->getText()));
+            delete t;
+            return NULL;
+        }
+        t->path_closed = false;
+        t->map = map;
+        t->output_dirty = true;
+        return t;
     }
-    else {
+    else if (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area) {
         PathObject *p = new PathObject();
         p->symbol = symbol;
-        // nothing extra for these
-        object = p;
+
+        // Normal path
+        fillPathCoords(p, ocad_object->npts, (OCADPoint *)ocad_object->pts);
+        p->path_closed = false;
+        p->map = map;
+        p->output_dirty = true;
+        return p;
     }
 
-    if (object == NULL) return NULL;
-
-    object->path_closed = false;
-    fillPathCoords(object, ocad_object->npts, (OCADPoint *)ocad_object->pts);
-    object->output_dirty = true;
-    object->map = map;
-
-    return object;
-
+    return NULL;
 }
 
 /** Translates the OCAD path given in the last two arguments into an Object.
@@ -424,6 +504,43 @@ void OCAD8FileImport::fillPathCoords(Object *object, s16 npts, OCADPoint *pts)
     }
 }
 
+/** Translates an OCAD text object path into a Mapper text object specifier, if possible.
+ *  If successful, sets either 1 or 2 coordinates in the text object and returns true.
+ *  If the OCAD path was not importable, leaves the TextObject alone and returns false.
+ */
+bool OCAD8FileImport::fillTextPathCoords(TextObject *object, s16 npts, OCADPoint *pts)
+{
+    // text objects either have 1 point (free anchor) or 2 (midpoint/size)
+    // OCAD appears to always have 5 points (anchor on left edge, then 4 corner coordinates going clockwise from anchor).
+    if (npts != 5) return false;
+    s32 buf[3];
+    ocad_point(buf, &(pts[0])); // anchor point
+    s32 x0 = buf[0], y0 = buf[1];
+    ocad_point(buf, &(pts[1])); // bottom left point
+    s32 x1 = buf[0], y1 = buf[1];
+    ocad_point(buf, &(pts[2])); // bottom right point
+    s32 x2 = buf[0], y2 = buf[1];
+    ocad_point(buf, &(pts[3])); // top right point
+    s32 x3 = buf[0], y3 = buf[1];
+    ocad_point(buf, &(pts[4])); // top left point
+    s32 x4 = buf[0], y4 = buf[1];
+    qDebug() << "text path"<<x0<<y0<<x1<<y1<<x2<<y2<<x3<<y3<<x4<<y4;
+    if (x3 <= x0 || y3 <= y0)
+    {
+        return false;
+    }
+
+    object->setHorizontalAlignment(TextObject::AlignLeft);
+    object->setVerticalAlignment(TextObject::AlignBaseline);
+    object->coords.resize(2);
+    object->coords[0].setRawX(convertPosition((x0 + x2) / 2));
+    object->coords[0].setRawY(-convertPosition((y0 + y2) / 2));
+    object->coords[1].setRawX(convertPosition(x2 - x0));
+    object->coords[1].setRawY(convertPosition(y0 - y2));
+
+    return true;
+}
+
 /** Converts a single-byte-per-character, length-payload string to a QString.
  *
  *  The byte sequence will be: LEN C0 C1 C2 C3...
@@ -437,17 +554,35 @@ QString OCAD8FileImport::str1(const char *p) {
     return encoding_1byte->toUnicode((p + 1), len);
 }
 
-/** Converts a two-byte-per-character, length-payload string to a QString.
+/** Converts a single-byte-per-character, zero-terminated string to a QString.
  *
- *  The byte sequence will be: LEN L0 H0 L1 H1 L2 H2...
- *
- *  Obviously this will only hold up to 255 characters. By default, we interpret the
- *  bytes using UTF-16LE, as that's the most likely candidate for OCAD files in the
- *  wild.
+ *  The byte sequence will be: C0 C1 C2 C3 ... 00. n describes the maximum
+ *  length (in bytes) that will be scanned for a zero terminator; if none is found,
+ *  the string will be truncated at that location.
  */
-QString OCAD8FileImport::str2(const char *p) {
-    int len = *((unsigned char *)p);
-    return encoding_2byte->toUnicode((p + 1), len);
+QString OCAD8FileImport::zstr1(const char *p, size_t n) {
+    size_t i = 0;
+    for (; i < n; i++) {
+        if (p[i] == 0) break;
+    }
+    return encoding_1byte->toUnicode(p, i);
+}
+
+/** Converts a two-byte-per-character, zero-terminated string to a QString. By default,
+ *  we interpret the bytes using UTF-16LE, as that's the most likely candidate for
+ *  OCAD files in the wild.
+ *
+ *  The byte sequence will be: L0 H0 L1 H1 L2 H2... 00 00. n describes the maximum
+ *  length (in bytes) that will be scanned for a zero terminator; if none is found,
+ *  the string will be truncated at that location.
+ */
+QString OCAD8FileImport::zstr2(const char *p, size_t n) {
+    const u16 *q = (const u16 *)p;
+    size_t i = 0;
+    for (; i < n; i++) {
+        if (q[i] == 0) break;
+    }
+    return encoding_2byte->toUnicode(p, i * 2);
 }
 
 float OCAD8FileImport::convertRotation(int angle) {
@@ -457,13 +592,13 @@ float OCAD8FileImport::convertRotation(int angle) {
     // So until that's fixed, we keep a between 0 and PI
     float a = (M_PI / 180) *  (0.1f * angle);
     while (a < 0) a += 2 * M_PI;
-    if (a < 0 || a > M_PI) qDebug() << "Found angle" << a;
+    //if (a < 0 || a > M_PI) qDebug() << "Found angle" << a;
     return a;
 }
 
 qint64 OCAD8FileImport::convertPosition(int position) {
-    // OCAD uses tenths of a millimeter.
+    // OCAD uses hundredths of a millimeter.
     // oo-mapper uses 1/1000 mm
-    return ((qint64)position) * 100;
+    return ((qint64)position) * 10;
 }
 

@@ -216,18 +216,41 @@ struct _OCADLineSymbol {
 	OCADSymbol_COMMON
 	u16 color;
 	u16 width;
-	word ends;
-	s16 sdist;
-	s16 edist;
-	s16 len;
-	s16 elen;
-	s16 gap;
-	s16 gap2;
-	s16 egap;
-	s16 msym;
-	s16 nsym;
-	s16 dsym;
-	
+    word ends;  // true if "round line ends" is checked
+    s16 bdist;  // distance from begin
+    s16 edist;  // distance to end
+    s16 len;    // main length A
+    s16 elen;   // end length B
+    s16 gap;    // main gap C
+    s16 gap2;   // 2ndy gap D
+    s16 egap;   // end gap E
+    s16 smin;   // minimum symbols (one less than displayed number)
+    s16 snum;   // number of symbols
+    s16 sdist;  // symbol distance
+    word dmode; // double line mode
+    word dflags;// bit 0="fill"
+    s16 dcolor; // main color
+    s16 lcolor; // left color
+    s16 rcolor; // right color
+    s16 dwidth; // main width
+    s16 lwidth; // left width
+    s16 rwidth; // right width
+    s16 dlen;   // dashed/distance a
+    s16 dgap;   // dashed/gap
+    s16 dres[3];
+    word tmode; // taper mode: 0=off 1=towards end 2=towards both
+    s16 tlast;  // taper last symbol
+    s16 tres;
+    s16 fcolor; // color of framing line
+    s16 fwidth; // width of framing line
+    s16 fstyle; // 0=flat/bevel 1=round/round 4=flat/miter
+    s16 smnpts; // main symbol point count
+    s16 ssnpts; // secondary symbol
+    s16 scnpts; // corner symbol
+    s16 sbnpts; // begin symbol
+    s16 senpts; // end symbol
+    s16 res4;
+    OCADPoint pts[1]; // symbols
 } __attribute__ ((__packed__))
 OCADLineSymbol;
 
@@ -252,8 +275,67 @@ struct _OCADAreaSymbol {
 	s16 pres;
 	s16 npts;
     OCADPoint pts[1];
-}
+} __attribute__ ((__packed__))
 OCADAreaSymbol;
+
+
+typedef
+struct _OCADTextSymbol {
+    OCADSymbol_COMMON
+    str font[32];
+    s16 color;
+    s16 dpts;       // in decipoints
+    s16 bold;       // as used in Windows GDI, 400=normal, 700=bold
+    wbool italic;
+    s16 cspace;     // character spacing
+    s16 wspace;     // word spacing
+    s16 halign;     // left, center, right, justified = 0-3
+    s16 lspace;     // line spacing
+    s16 pspace;     // paragraph spacing
+    s16 indent1;    // first indent
+    s16 indent2;    // subsequent indents
+    s16 ntabs;      // number of tabs
+    s32 tab[32];    // tab positions
+    wbool under;    // underline on
+    s16 ucolor;     // underline color
+    s16 uwidth;     // underline width
+    s16 udist;      // unerline distance from (baseline?)
+    s16 res4;
+    s16 fmode;      // framing mode 0=none 1=with font 2=with line
+    str ffont[32];
+    s16 fcolor;
+    s16 fdpts;      // in decipoints
+    s16 fbold;
+    wbool fitalic;
+    s16 fdx;        // horizontal offset
+    s16 fdy;        // vertical offset
+} __attribute__ ((__packed__))
+OCADTextSymbol;
+
+
+typedef
+struct _OCADRectSymbol {
+    OCADSymbol_COMMON
+    s16 color;
+    s16 width;
+    s16 corner;
+    word flags;     // 1=grid on, 2=numbered from bottom
+    s16 cwidth;     // if grid on, cell width
+    s16 cheight;    // and cell height
+    s16 gcolor;     // grid line color
+    s16 gwidth;     // grid line width
+    s16 gcells;     // unnumbered cells ??
+    str gtext[4];   // text in unnumbered cells
+    s16 resgrid;
+    str resfont[32];
+    s16 rescolor;
+    s16 ressize;
+    s16 resbold;
+    wbool resitalic;
+    s16 resdx;
+    s16 resdy;
+} __attribute__ ((__packed__))
+OCADRectSymbol;
 
 
 typedef
