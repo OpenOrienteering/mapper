@@ -91,7 +91,7 @@ bool DrawTextTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	}
 	else // if (mouse_down)
 	{
-		if (!dragging && (event->pos() - click_pos).manhattanLength() >= 1)
+		if (!dragging && (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance())
 		{
 			// Start dragging
 			dragging = true;

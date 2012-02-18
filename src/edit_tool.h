@@ -52,7 +52,6 @@ public:
     virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	static QCursor* cursor;
-	static QImage* point_handles;
 	
 	static const Qt::KeyboardModifiers selection_modifier;
 	static const Qt::KeyboardModifiers control_point_modifier;

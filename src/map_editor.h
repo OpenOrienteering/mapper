@@ -124,6 +124,7 @@ public slots:
 	void switchSymbolClicked();
 	void fillBorderClicked();
 	void switchDashesClicked();
+	void rotateClicked(bool checked);
 	
 	void paintOnTemplateClicked(bool checked);
 	void paintOnTemplateSelectClicked();
@@ -187,6 +188,7 @@ private:
 	QAction* switch_symbol_act;
 	QAction* fill_border_act;
 	QAction* switch_dashes_act;
+	QAction* rotate_act;
 	
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;
@@ -278,14 +280,23 @@ public:
 	inline Type getType() const {return type;}
 	inline QAction* getAction() const {return tool_button;}
 	
+	static void loadPointHandles();
+	
 	static const int click_tolerance;
 	static const QRgb inactive_color;
 	static const QRgb active_color;
 	static const QRgb selection_color;
+	static QImage* point_handles;
 	
 protected:
 	/// Can be called by subclasses to display help text in the status bar
 	void setStatusBarText(const QString& text);
+	
+	// Helper methods for editing the selected objects with preview
+	void startEditingSelection(RenderableVector& old_renderables, std::vector<Object*>* undo_duplicates = NULL);
+	void finishEditingSelection(RenderableContainer& renderables, RenderableVector& old_renderables, bool create_undo_step, std::vector<Object*>* undo_duplicates = NULL, bool delete_objects = false);
+	void updateSelectionEditPreview(RenderableContainer& renderables);
+	void deleteOldSelectionRenderables(RenderableVector& old_renderables, bool set_area_dirty);
 	
 	QAction* tool_button;
 	Type type;

@@ -39,6 +39,7 @@
 #include "draw_text.h"
 #include "edit_tool.h"
 #include "util.h"
+#include "tool_rotate.h"
 
 // ### MapEditorController ###
 
@@ -304,6 +305,7 @@ void MapEditorController::assignKeyboardShortcuts()
     findAction("drawpoint")->setShortcut(QKeySequence("S"));
     findAction("drawpath")->setShortcut(QKeySequence("P"));
     findAction("drawtext")->setShortcut(QKeySequence("T"));
+	findAction("rotateobjects")->setShortcut(QKeySequence("R"));
 }
 
 void MapEditorController::createMenuAndToolbars()
@@ -317,6 +319,8 @@ void MapEditorController::createMenuAndToolbars()
     QAction* paste_act = newAction("paste", "&Paste", this, SLOT(paste()), "paste");
     QAction* zoom_in_act = newAction("zoomin", "Zoom in", this, SLOT(zoomIn()), "view-zoom-in.png"); // F7
     QAction* zoom_out_act = newAction("zoomout", "Zoom out", this, SLOT(zoomOut()), "view-zoom-out.png"); // F8
+	QAction* fullscreen_act = newAction("fullscreen", "Toggle fullscreen mode", window, SLOT(toggleFullscreenMode()));
+	QAction* custom_zoom_act = newAction("setzoom", "Set custom zoom factor...", this, SLOT(setCustomZoomFactorClicked()));
     symbol_window_act = newCheckAction("symbolwindow", "Symbol window", this, SLOT(showSymbolWindow(bool)), "window-new.png", "Show/Hide the symbol window");
     color_window_act = newCheckAction("colorwindow", "Color window", this, SLOT(showColorWindow(bool)), "window-new.png", "Show/Hide the color window");
     QAction *load_symbols_from_act = newAction("loadsymbols", "Load symbols from...", this, SLOT(loadSymbolsFromClicked()), NULL, "Replace the symbols with those from another map file");
@@ -337,8 +341,7 @@ void MapEditorController::createMenuAndToolbars()
     switch_symbol_act = newAction("switchsymbol", "Switch symbol", this, SLOT(switchSymbolClicked()), "tool-switch-symbol.png");
     fill_border_act = newAction("fillborder", "Fill / Create border", this, SLOT(fillBorderClicked()), "tool-fill-border.png");
     switch_dashes_act = newAction("switchdashes", "Switch dash direction", this, SLOT(switchDashesClicked()), "tool-switch-dashes"); // Ctrl+D
-    QAction* fullscreen_act = newAction("fullscreen", "Toggle fullscreen mode", window, SLOT(toggleFullscreenMode()));
-    QAction* custom_zoom_act = newAction("setzoom", "Set custom zoom factor...", this, SLOT(setCustomZoomFactorClicked()));
+	rotate_act = newCheckAction("rotateobjects", "Rotate object(s)", this, SLOT(rotateClicked(bool)), "tool-rotate.png");
 
     // Refactored so we can do custom key bindings in the future
     assignKeyboardShortcuts();
@@ -376,6 +379,7 @@ void MapEditorController::createMenuAndToolbars()
     tools_menu->addAction(switch_symbol_act);
     tools_menu->addAction(fill_border_act);
     tools_menu->addAction(switch_dashes_act);
+	tools_menu->addAction(rotate_act);
 	
 	// Symbols menu
     QMenu* symbols_menu = window->menuBar()->addMenu(tr("Sy&mbols"));
@@ -448,6 +452,7 @@ void MapEditorController::createMenuAndToolbars()
     toolbar_editing->addAction(switch_symbol_act);
 	toolbar_editing->addAction(fill_border_act);
     toolbar_editing->addAction(switch_dashes_act);
+	toolbar_editing->addAction(rotate_act);
 #endif
 
 }
@@ -714,6 +719,8 @@ void MapEditorController::selectedObjectsChanged()
 	duplicate_act->setStatusTip(tr("Duplicate the selected object(s).") + (duplicate_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
 	switch_dashes_act->setEnabled(have_line);
 	switch_dashes_act->setStatusTip(tr("Switch the direction of symbols on line objects.") + (switch_dashes_act->isEnabled() ? "" : (" " + tr("Select at least one line object to activate this tool."))));
+	rotate_act->setEnabled(have_selection);
+	duplicate_act->setStatusTip(tr("Rotate the selected object(s).") + (rotate_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
 	
 	selectedSymbolsOrObjectsChanged();
 }
@@ -858,6 +865,10 @@ void MapEditorController::switchDashesClicked()
 	map->setObjectsDirty();
 	map->objectUndoManager().addNewUndoStep(undo_step);
 }
+void MapEditorController::rotateClicked(bool checked)
+{
+	setTool(checked ? new RotateTool(this, rotate_act) : NULL);
+}
 
 void MapEditorController::paintOnTemplateClicked(bool checked)
 {
@@ -991,6 +1002,7 @@ const int MapEditorTool::click_tolerance = 5;
 const QRgb MapEditorTool::inactive_color = qRgb(0, 0, 255);
 const QRgb MapEditorTool::active_color = qRgb(255, 150, 0);
 const QRgb MapEditorTool::selection_color = qRgb(210, 0, 229);
+QImage* MapEditorTool::point_handles = NULL;
 
 MapEditorTool::MapEditorTool(MapEditorController* editor, Type type, QAction* tool_button): QObject(NULL), tool_button(tool_button), type(type), editor(editor)
 {
@@ -1001,9 +1013,89 @@ MapEditorTool::~MapEditorTool()
 		tool_button->setChecked(false);
 }
 
+void MapEditorTool::loadPointHandles()
+{
+	if (!point_handles)
+		point_handles = new QImage(":/images/point-handles.png");
+}
+
 void MapEditorTool::setStatusBarText(const QString& text)
 {
 	editor->getWindow()->setStatusBarText(text);
+}
+
+void MapEditorTool::startEditingSelection(RenderableVector& old_renderables, std::vector<Object*>* undo_duplicates)
+{
+	Map* map = editor->getMap();
+	
+	// Temporarily take the edited objects out of the map so their map renderables are not updated, and make duplicates of them before for the edit step
+	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		if (undo_duplicates)
+			undo_duplicates->push_back((*it)->duplicate());
+		
+		(*it)->setMap(NULL);
+		
+		// Cache old renderables until the object is inserted into the map again
+		old_renderables.reserve(old_renderables.size() + (*it)->getNumRenderables());
+		RenderableVector::const_iterator rit_end = (*it)->endRenderables();
+		for (RenderableVector::const_iterator rit = (*it)->beginRenderables(); rit != rit_end; ++rit)
+			old_renderables.push_back(*rit);
+		(*it)->takeRenderables();
+	}
+	
+	editor->setEditingInProgress(true);
+}
+void MapEditorTool::finishEditingSelection(RenderableContainer& renderables, RenderableVector& old_renderables, bool create_undo_step, std::vector<Object*>* undo_duplicates, bool delete_objects)
+{
+	ReplaceObjectsUndoStep* undo_step = create_undo_step ? new ReplaceObjectsUndoStep(editor->getMap()) : NULL;
+	
+	int i = 0;
+	Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		if (!delete_objects)
+		{
+			(*it)->setMap(editor->getMap());
+			(*it)->update(true);
+		}
+		
+		if (create_undo_step)
+			undo_step->addObject(*it, undo_duplicates->at(i));
+		else
+			delete undo_duplicates->at(i);
+		++i;
+	}
+	renderables.clear();
+	deleteOldSelectionRenderables(old_renderables, true);
+	
+	undo_duplicates->clear();
+	if (create_undo_step)
+		editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
+	
+	editor->setEditingInProgress(false);
+}
+void MapEditorTool::updateSelectionEditPreview(RenderableContainer& renderables)
+{
+	Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		renderables.removeRenderablesOfObject(*it, false);
+		(*it)->update(true);
+		renderables.insertRenderablesOfObject(*it);
+	}
+}
+void MapEditorTool::deleteOldSelectionRenderables(RenderableVector& old_renderables, bool set_area_dirty)
+{
+	int size = old_renderables.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (set_area_dirty)
+			editor->getMap()->setObjectAreaDirty(old_renderables[i]->getExtent());
+		delete old_renderables[i];
+	}
+	old_renderables.clear();
 }
 
 #include "map_editor.moc"

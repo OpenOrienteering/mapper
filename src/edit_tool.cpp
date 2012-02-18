@@ -34,7 +34,6 @@
 #include "symbol_text.h"
 
 QCursor* EditTool::cursor = NULL;
-QImage* EditTool::point_handles = NULL;
 
 // Mac convention for selecting multiple items is the command key (In Qt the command key is ControlModifier)
 #ifdef Q_WS_MAC
@@ -58,8 +57,7 @@ EditTool::EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidg
 
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-hollow.png"), 1, 1);
-	if (!point_handles)
-		point_handles = new QImage(":/images/point-handles.png");
+	loadPointHandles();
 }
 void EditTool::init()
 {
@@ -71,7 +69,7 @@ EditTool::~EditTool()
 {
 	if (text_editor)
 		delete text_editor;
-	deleteOldRenderables();
+	deleteOldSelectionRenderables(old_renderables, false);
 }
 
 bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -234,7 +232,7 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 		if (text_editor && hover_point == -2)
 			return text_editor->mouseMoveEvent(event, map_coord, widget);
 		
-		if (!dragging && (event->pos() - click_pos).manhattanLength() >= 1)
+		if (!dragging && (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance())
 		{
 			// Start dragging
 			if (hover_point >= -1)
@@ -421,13 +419,6 @@ bool EditTool::sortObjects(const std::pair<int, Object*>& a, const std::pair<int
 bool EditTool::selectionInfosEqual(const SelectionInfoVector& a, const SelectionInfoVector& b)
 {
 	return a.size() == b.size() && std::equal(a.begin(), a.end(), b.begin());
-}
-void EditTool::deleteOldRenderables()
-{
-	int size = old_renderables.size();
-	for (int i = 0; i < size; ++i)
-		delete old_renderables[i];
-	old_renderables.clear();
 }
 
 int EditTool::findHoverPoint(QPointF cursor, Object* object, MapWidget* widget)
@@ -742,17 +733,9 @@ void EditTool::updateStatusText()
 
 void EditTool::updatePreviewObjects()
 {
-	Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
-	{
-		renderables.removeRenderablesOfObject(*it, false);
-		(*it)->update(true);
-		renderables.insertRenderablesOfObject(*it);
-	}
-	
+	updateSelectionEditPreview(renderables);
 	updateDirtyRect();
 }
-
 void EditTool::updateDirtyRect()
 {
 	selection_extent = QRectF();
@@ -910,28 +893,10 @@ bool EditTool::hoveringOverSingleText(MapCoordF cursor_pos_map)
 
 void EditTool::startEditing()
 {
-	Map* map = editor->getMap();
-	
-	// Temporarily take the edited objects out of the map so their map renderables are not updated, and make duplicates of them before for the edit step
-	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
-	{
-		undo_duplicates.push_back((*it)->duplicate());
-		
-		(*it)->setMap(NULL);
-		
-		// Cache old renderables until the object is inserted into the map again
-		old_renderables.reserve(old_renderables.size() + (*it)->getNumRenderables());
-		RenderableVector::const_iterator rit_end = (*it)->endRenderables();
-		for (RenderableVector::const_iterator rit = (*it)->beginRenderables(); rit != rit_end; ++rit)
-			old_renderables.push_back(*rit);
-		(*it)->takeRenderables();
-	}
+	startEditingSelection(old_renderables, &undo_duplicates);
 	
 	// Save original extent to be able to mark it as dirty later
 	original_selection_extent = selection_extent;
-	
-	editor->setEditingInProgress(true);
 }
 void EditTool::finishEditing()
 {
@@ -957,38 +922,14 @@ void EditTool::finishEditing()
 			create_undo_step = false;
 	}
 	
-	ReplaceObjectsUndoStep* undo_step = create_undo_step ? new ReplaceObjectsUndoStep(map) : NULL;
-	
-	int i = 0;
-	Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
-	{
-		if (!delete_objects)
-		{
-			(*it)->setMap(map);
-			(*it)->update(true);
-		}
-		
-		if (create_undo_step)
-			undo_step->addObject(*it, undo_duplicates[i]);
-		else
-			delete undo_duplicates[i];
-		++i;
-	}
-	renderables.clear();
-	deleteOldRenderables();
+	finishEditingSelection(renderables, old_renderables, create_undo_step, &undo_duplicates, delete_objects);
 	
 	map->setObjectAreaDirty(original_selection_extent);
 	updateDirtyRect();
 	map->setObjectsDirty();
 	
-	undo_duplicates.clear();
-	if (create_undo_step)
-		map->objectUndoManager().addNewUndoStep(undo_step);
 	if (delete_objects)
 		deleteSelectedObjects();
-	
-	editor->setEditingInProgress(false);
 }
 void EditTool::deleteSelectedObjects()
 {

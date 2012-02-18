@@ -69,6 +69,9 @@ public:
 	/// Scales all coordinates, with the origin as scaling center
 	void scale(double factor);
 	
+	/// Rotates the whole object
+	void rotateAround(MapCoordF center, double angle);
+	
 	/// Reverses the object's coordinates, resulting in switching the dash direction for line symbols
 	void reverse();
 	
