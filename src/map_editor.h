@@ -135,8 +135,8 @@ public slots:
 private:
 	void setMap(Map* map, bool create_new_map_view);
 	
-    QAction *newAction(const char *id, const char *text, QObject *receiver, const char *slot, const char *icon = NULL, const char *tip = NULL);
-    QAction *newCheckAction(const char *id, const char *text, QObject *receiver, const char *slot, const char *icon = NULL, const char *tip = NULL);
+    QAction *newAction(const char *id, const QString &tr_text, QObject *receiver, const char *slot, const char *icon = NULL, const QString &tr_tip = QString::null);
+    QAction *newCheckAction(const char *id, const QString &tr_text, QObject *receiver, const char *slot, const char *icon = NULL, const QString &tr_tip = QString::null);
     QAction *findAction(const char *id);
     void assignKeyboardShortcuts();
     void createMenuAndToolbars();
