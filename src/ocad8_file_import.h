@@ -32,11 +32,13 @@ protected:
     Symbol *importAreaSymbol(const OCADAreaSymbol *ocad_symbol);
     //Symbol *importTextSymbol(const OCADTextSymbol *ocad_symbol);
     //Symbol *importRectSymbol(const OCADRectSymbol *ocad_symbol);
-
-    void fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol);
-    PointSymbol *importPointSymbolFromElements(s16 npts, OCADPoint* pts); // used for area patterns
+    PointSymbol *importPattern(s16 npts, OCADPoint *pts); // used for area patterns
 
     Object *importObject(const OCADObject *ocad_object);
+
+    // Some helper functions that are used in multiple places
+    void fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol);
+    void fillPathCoords(Object *object, s16 npts, OCADPoint *pts);
 
 private:
     /// A list of import warnings

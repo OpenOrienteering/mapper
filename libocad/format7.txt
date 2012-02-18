@@ -1,0 +1,1043 @@
+File format OCAD 6/7 (with preliminary information about OCAD 8)
+====================
+
+Version 14.2.01
+
+General
+-------
+
+This is a description of the file format of OCAD 6 and OCAD 7 files. The
+The OCAD 6 file format is completely different from the format of
+OCAD 5 by the following reasons:
+
+- Coordinates are 32-bit. This allow larger maps.
+- The format is designed that objects or symbols can be
+  appended at the end of the file. This was not possible in
+  OCAD 5 where the entire file had to be rewritten when appending
+  an object.
+
+The OCAD 7 format is very similar to the OCAD 6 format. The main
+difference is in the file header (section mark is 7 and version
+is 7). For the new OCAD 7 features reserved bytes and bits have
+been used. The symbol structures have the same size. However the
+setup structure became bigger.
+Here is a list of changes:
+- TCord: one bit used for dash points in the y-coordinate
+- File Header: section mark is 7, version is 7
+- TColorSep: CMYK value for the color separation
+  (reserved in OCAD 6)
+- TLineSym: new variables Tool, FrColor, FrWidth, FrStyle
+  (reserved in OCAD 6)
+- TLTextSym: new variables Tool, FrWidth (reserved in OCAD 6)
+- TAreaSym: new variable Tool (reserved in OCAD 6)
+- TTextSym: new variable FrWidth (reserved in OCAD 6)
+- TStp: new varialbles RealWorldCord, FileName, HatchAreas,
+    HideTemp, TempMode, TempColor
+
+The OCAD 8 format is still under development. However here are the
+main changes. Note that there may be more changes during the
+beta test. 
+- File Header: section mark is 2 for normal files and 3 for
+  course setting files, version is 8
+- File Header: start of the first short index block. The short
+  index blocks contains all data about course setting, database
+  connection, templates (no longer in Stp) and some setup
+  parameters. The description of the short index blocks does
+  not yet exist.
+- TIndex: Len now gives the number of coordinate pairs (nItem+nText)
+  The maximum number or coordinate pairs has been increased
+  to 32768. The length of an object in the file is now 32 + 8*Len.
+- TElement: Poly is now array[0..32767] of TCord.
+
+
+Be aware that this is an internal format and may change in future
+versions. Instead of using the file format consider using one
+of the export formats which are more constant and easier to
+read:
+
+- EPS (or AI in OCAD 7) for rendering the map in other systems.
+- DXF for transferring the map information to GIS systems.
+
+Data types used
+---------------
+
+OCAD is written in 32-bit Delphi and this description uses the
+names for the data types as they appear in Delphi. However the
+same data types are available in other development systems
+like C++.
+
+longint       32-bit signed integer
+SmallInt      16-bit signed integer
+WordBool      16-bit boolean
+String[x]     Pascal-style string. The first byte contains
+              the number of characters followed by the characters.
+              The string is not zero-terminated. The maximum
+              number of characters is x. It occupies
+              x + 1 bytes in the file.
+Double        64-bit floating point number
+TCord         A special data type used for all coordinates.
+              It is defined as
+
+              TCord = record x, y: longint; end;
+
+              The lowest 8 Bits are used to mark special points:
+              Marks for the x-coordinate:
+                1: this point is the first curve point
+                2: this point is the second curve point
+                4: for double lines: there is no left line
+                   between this point and the next point
+              Marks for y-coordinate:
+                1: this point is a corner point
+                2: this point is the first point of a hole in
+                   an area
+                4: for double lines: there is no right line
+                   between this point and the next point
+                8: OCAD 7 only: this point is a dash point
+              The upper 24 bits contain the coordinate value
+              measured in units of 0.01 mm
+
+Note: all file positions are in bytes starting from the
+beginning of the file.
+
+File header
+-----------
+OCAD files start with a file header:
+
+  TFileHeader = record
+    OCADMark: SmallInt;        {3245 (hex 0cad)}
+    SectionMark: SmallInt;     {OCAD 6: 0
+                                OCAD 7: 7
+                                OCAD 8: 2 for normal files
+                                        3 for course setting files}
+    Version: SmallInt;         {6 for OCAD 6, 7 for OCAD 7, 8 for OCAD 8}
+    Subversion: SmallInt;      {number of subversion (0 for 6.00,
+                               1 for 6.01 etc.)}
+    FirstSymBlk: longint;      {file position of the first symbol
+                               block}
+    FirstIdxBlk: longint;      {file position of the first index
+                               block}
+    SetupPos: longint;         {file position of the setup record }
+    SetupSize: longint;        {size (in bytes) of the setup record}
+    InfoPos: longint;          {file position of the file
+                               information. The file information is
+                               stored as a zero-terminated string with
+                               up to 32767 characters + terminating
+                               zero}
+    InfoSize: longint;         {size (in bytes) of the file
+                               information}
+    FirstShIndexBlk: longint;  {OCAD 8 only. This description does not
+                               yet exist}
+    Reserved2: longint;
+    Reserved3: longint;
+    Reserved4: longint;
+  end;
+
+The file header is followed by the Symbol Header:
+
+  TSymHeader = record
+    nColors: SmallInt;         {Number of colors defined}
+    nColorSep: SmallInt;       {Number or color separations
+                               defined}
+    CyanFreq: SmallInt;        {Halftone frequency of the
+                               Cyan color separation. This
+                               is 10 times the value entered
+                               in the CMYK Separations dialog
+                               box.}
+    CyanAng: SmallInt;         {Halftone angle of the cyan
+                               color separation. This is 10 times
+                               the value entered in the CMYK
+                               separations dialog box.}
+    MagentaFreq: SmallInt;     {dito for magenta}
+    MagentaAng: SmallInt;      {dito for magenta}
+    YellowFreq: SmallInt;      {dito for yellow}
+    YellowAng: SmallInt;       {dito for yellow}
+    BlackFreq: SmallInt;       {dito for black}
+    BlackAng: SmallInt;        {dito for black}
+    Res1: SmallInt;
+    Res2: SmallInt;
+    aColorInfo: array [0..255] of TColorInfo;
+                               {the TColorInfo structure is
+                               explained below}
+    aColorSep: array [0..31] of TColorSep;
+                               {the TColorSep structure is
+                               explained below. Note that only
+                               24 color separations are allowed.
+                               The rest is reserved for future
+                               use.}
+  end;
+
+The TColorInfo structure is defined as follows:
+
+  TColorInfo = record
+    ColorNum: SmallInt;        {Color number. This number is
+                               used in the symbols when
+                               referring a color.}
+    Reserved: SmallInt;
+    Color: TCmyk;              {Color value. The structure
+                               is explained below.}
+    ColorName: string[31];     {Description of the color}
+    SepPercentage: array [0..31] of byte;
+                               {Definition how the color
+                               appears in the different spot
+                               color separations.
+                                 0..200: 2 times the separation
+                                   percentage as it appears
+                                   in the Color dialog box (to
+                                   allow half percents)
+                                 255: the color does not
+                                   appear in the corresponding
+                                   color separation (empty field
+                                   in the color dialog box)}
+  end;
+
+Colors are defined as CMYK values:
+
+  TCmyk = record
+    cyan: byte;                {2 times the cyan value as it
+                               appears in the Define Color dialog
+                               box (to allow half percents)}
+    magenta: byte;             {dito for magenta}
+    yellow: byte;              {dito for yellow}
+    black: byte;               {dito for black}
+  end;
+
+Spot color separations are defined as TColorSep structures. This
+structure contains only general information about the color
+separation. How the a specific color is rendered in
+a color separation is defined in the TColorInfo structure.
+
+  TColorSep = record
+    SepName: string[15];       {Name of the color separation}
+    Color: TCmyk;              {0 in OCAD 6, CMYK value of
+                               the separation in OCAD 7.
+                               This value is only used in
+                               the AI (Adobe Illustrator) export}
+    RasterFreq: SmallInt;      {10 times the halfton frequency
+                               as it appears in the Color
+                               Separation dialog box.}
+    RasterAngle: SmallInt;     {10 times the halftone angle
+                               as it appears in the Color
+                               Separation dialog box.}
+  end;
+
+Symbol blocks
+-------------
+The file contains one or more symbols blocks. Each symbol block
+lists the file positions of up to 256 symbols. The position of
+the first symbol block is defined by the value FirstSymBlk in
+the file header.
+
+  TSymbolBlock = record
+    NextBlock: longint;        {file position of the next symbol
+                               block. 0 if this is the last
+                               symbol block.}
+    FilePos: array[0..255] of longint;
+                               {file position of up to 256
+                               symbols. 0 if there is no symbol
+                               for this index.}
+  end;
+
+Symbols
+-------
+The different types of symbols are defined in different
+structures. There is an abstract type TBaseSym, which
+contains the fields common to all symbols types.
+It is used for programming reasons, but does not exist
+in real OCAD files.
+
+  TBaseSym = record
+    Size: SmallInt;            {Size of the symbol in bytes. This
+                               depends on the type and the
+                               number of subsymbols.}
+    Sym: SmallInt;             {Symbol number. This is 10 times
+                               the value which appears on the
+                               screen (1010 for 101.0)}
+    Otp: SmallInt;             {Object type
+                                 1: Point symbol
+                                 2: Line symbol or Line text
+                                    symbol
+                                 3: Area symbol
+                                 4: Text symbol
+                                 5: Rectangle symbol}
+    SymTp: SmallInt;           {Symbol type
+                                 1: for Line text and text
+                                    symbols
+                                 0: for all other symbols}
+    Extent: SmallInt;          {Extent how much the rendered
+                               symbols can reach outside the
+                               coordinates of an object with
+                               this symbol.
+                               For a point object it tells
+                               how far away from the coordinates
+                               of the object anything of the
+                               point symbol can appear.}
+    Selected: boolean;         {Symbol is selected in the symbol
+                               box}
+    Status: byte;              {Status of the symbol
+                                 0: Normal
+                                 1: Protected
+                                 2: Hidden}
+    Res2: SmallInt;
+    Res3: SmallInt;
+    FilePos: longint;          {File position, not used in the
+                               file, only when loaded in
+                               memory. Value in the file is
+                               not defined.}
+    Cols: TColors;             {Set of the colors used in this
+                               symbol. TColors is an array of
+                               32 bytes, where each bit
+                               represents 1 of the 256 colors.
+                                 TColors = set of 0..255;
+                               The color with the number 0 in
+                               the color table appears as the
+                               lowest bit in the first byte of
+                               the structure.}
+    Description: string [31];  {The description of the symbol}
+    IconBits: array[0..263] of byte;
+                               {The bits of the icon in the
+                               symbols box. Each pixel of the
+                               icon is stored as 4 bits. The bits
+                               are stored like the bits in a
+                               Device Independent Bit Map (DIB).
+                               The size of the bitmap is 22 by
+                               22 pixels. Note that each line
+                               has 12 bytes, because in a DIB
+                               the size of each line must be
+                               a multiple of 4 bytes.}
+  end;
+
+Points symbols are stored with this structure:
+
+  TPointSym = record
+    Size: SmallInt;            {size of this structure including
+                               the objects following this
+                               structure}
+    Sym: SmallInt;             {see TBaseSym}
+    Otp: SmallInt;             {see TBaseSym}
+    SymTp: SmallInt;           {see TBaseSym}
+    Extent: SmallInt;          {see TBaseSym}
+    Status: SmallInt;          {see TBaseSym}
+    Res2: SmallInt;
+    Res3: SmallInt;
+    FilePos: longint;          {see TBaseSym}
+    Cols: TColors;             {see TBaseSym}
+    Description: string [31];  {see TBaseSym}
+    IconBits: array[0..263] of byte;
+                               {see TBaseSym}
+    DataSize: SmallInt;        {number of coordinates (each 8 bytes)
+                               which follow this structure,
+                               each object header counts as
+                               2 Coordinates (16 bytes).
+                               The maximum value is 512}
+    Reserved: SmallInt;
+  end;
+
+After this structure follow the objects which build that point
+symbol. These objects are stored in the following structure.
+Note that these objects are stored in a different way than
+ordinary map objects.
+
+  TSymElt = record
+    stType: SmallInt;          {type of the object
+                                 1: line
+                                 2: area
+                                 3: circle
+                                 4: dot (filled circle)}
+    stFlags: word;             {Flags
+                                 1: line with round ends}
+    stColor: SmallInt;         {color of the object. This is the
+                               number which appears in the Colors
+                               dialog box}
+    stLineWidth: SmallInt;     {line width for lines and circles
+                               unit 0.01 mm}
+    stDiameter: SmallInt;      {diameter for circles and dots. The
+                               line width is included in this
+                               dimension for circles. Unit 0.01 mm}
+    stnPoly: SmallInt;         {number of coordinates}
+    stRes1: SmallInt;
+    stRes2: SmallInt;
+    stPoly: array[0..511] of TCord;
+                               {coordinates of the object}
+  end;
+
+If there are several objects, they just follow each other (only
+the coordinates used are stored). To determine the number of
+objects the DataSize variable must be used.
+
+Line symbols are stored in the following structure. In the
+explanation the terms used in the Line Symbol dialog box are
+shown.
+
+  TLineSym = record
+    Size: SmallInt;            {size of this structure including
+                               the objects following this
+                               structure}
+    Sym: SmallInt;             {see TBaseSym}
+    Otp: SmallInt;             {2}
+    SymTp: SmallInt;           {0}
+    Extent: SmallInt;          {see TBaseSym}
+    Status: SmallInt;          {see TBaseSym}
+    Tool: SmallInt;            {OCAD 6: reserved
+                               OCAD 7: Preferred drawing tool
+                                 0: off
+                                 1: Curve mode
+                                 2: Ellipse mode
+                                 3: Circle mode
+                                 4: Rectangular mode
+                                 5: Straight line mode
+                                 6: Freehand mode}
+    Res3: SmallInt;
+    FilePos: longint;          {see TBaseSym}
+    Cols: TColors;             {see TBaseSym}
+    Description: string [31];  {see TBaseSym}
+    IconBits: array[0..263] of byte;
+                               {see TBaseSym}
+    LineColor: SmallInt;       {Line color}
+    LineWidth: SmallInt;       {Line width}
+    LineEnds: word;            {true if Round line ends is checked}
+    DistFromStart: SmallInt;   {Distance from start}
+    DistToEnd: SmallInt;       {Distance to the end}
+    MainLength: SmallInt;      {Main length a}
+    EndLength: SmallInt;       {End length b}
+    MainGap: SmallInt;         {Main gap C}
+    SecGap: SmallInt;          {Gap D}
+    EndGap: SmallInt;          {Gap E}
+    MinSym: SmallInt;          {-1: at least 0 gaps/symbols
+                                0: at least 1 gap/symbol
+                                1: at least 2 gaps/symbols
+                                etc.
+                                for OCAD 6 only the values 0 and 1 are
+                                allowed}
+    nPrimSym: SmallInt;        {No. of symbols}
+    PrimSymDist: SmallInt;     {Distance}
+    DblMode: word;             {Mode (Double line page)}
+    DblFlags: word;            {low order bit is set if
+                               Fill is checked}
+    DblFillColor: SmallInt;    {Fill color}
+    DblLeftColor: SmallInt;    {Left line/Color}
+    DblRightColor: SmallInt;   {Right line/Color}
+    DblWidth: SmallInt;        {Width}
+    DblLeftWidth: SmallInt;    {Left line/Line width}
+    DblRightWidth: SmallInt;   {Right line/Line width}
+    DblLength: SmallInt;       {Dashed/Distance a}
+    DblGap: SmallInt;          {Dashed/Gap}
+    DblRes: array[0..2] of SmallInt;
+    DecMode: word;             {Decrease mode
+                                 0: off
+                                 1: decreasing towards the end
+                                 2: decreasing towards both ends}
+    DecLast: SmallInt;         {Last symbol}
+    DecRes: SmallInt;          {Reserved}
+    FrColor: SmallInt;         {OCAD 6: reserved
+                               OCAD 7: color of the framing line}
+    FrWidth: SmallInt;         {OCAD 6: reserved
+                               OCAD 7: Line width of the framing line}
+    FrStyle: SmallInt;         {OCAD 6: reserved
+                               OCAD 7: Line style of the framing line
+                                 0: flat cap/bevel join
+                                 1: round cap/round join
+                                 4: flat cap/miter join}
+    PrimDSize: SmallInt;       {number or coordinates (8 bytes)
+                               for the Main symbol A which
+                               follow this structure
+                               Each symbol header counts as
+                               2 coordinates (16 bytes).
+                               The maximum value is 512.}
+    SecDSize: SmallInt;        {number or coordinates (8 bytes)
+                               for the Secondary symbol which
+                               follow the Main symbol A
+                               Each symbol header counts as
+                               2 coordinates (16 bytes).
+                               The maximum value is 512.}
+    CornerDSize: SmallInt;     {number or coordinates (8 bytes)
+                               for the Corner symbol which
+                               follow the Secondary symbol
+                               Each symbol header counts as
+                               2 coordinates (16 bytes).
+                               The maximum value is 512.}
+    StartDSize: SmallInt;      {number or coordinates (8 bytes)
+                               for the Start symbol C which
+                               follow the Corner symbol
+                               Each symbol header counts as
+                               2 coordinates (16 bytes).
+                               The maximum value is 512.}
+    EndDSize: SmallInt;        {number or coordinates (8 bytes)
+                               for the End symbol D which
+                               follow the Start symbol C
+                               Each symbol header counts as
+                               2 coordinates (16 bytes).
+                               The maximum value is 512.}
+    Reserved: SmallInt;
+  end;
+
+Line Text symbols are stored in the following structure. In the
+explanation the terms used in the Line Text Symbol dialog box are
+shown. The unit of all dimensions is 0.01 mm, except for the
+font sizes which are measured in 0.1 typographical points.
+
+  TLTextSym = record
+    Size: SmallInt;            {size of this structure}
+    Sym: SmallInt;             {see TBaseSym}
+    Otp: SmallInt;             {2}
+    SymTp: SmallInt;           {1}
+    Extent: SmallInt;          {see TBaseSym}
+    Status: SmallInt;          {see TBaseSym}
+    Tool: SmallInt;            {OCAD 6: reserved
+                               OCAD 7: Preferred drawing tool
+                                 0: off
+                                 1: Curve mode
+                                 2: Ellipse mode
+                                 3: Circle mode
+                                 4: Rectangular mode
+                                 5: Straight line mode
+                                 6: Freehand mode}
+    FrWidth: SmallInt;         {OCAD 6: reserved
+                               OCAD 7: Framing width
+                               sorry, this had to be squeezed
+                               in here}
+    FilePos: longint;          {see TBaseSym}
+    Cols: TColors;             {see TBaseSym}
+    Description: string [31];  {see TBaseSym}
+    IconBits: array[0..263] of byte;
+                               {see TBaseSym}
+    FontName: string[31];      {TrueType font}
+    FontColor: SmallInt;       {Color}
+    FontSize: SmallInt;        {10 times the value entered in Size}
+    Weight: SmallInt;          {Bold as used in the Windows GDI
+                                 400: normal
+                                 700: bold}
+    Italic: wordbool;          {true if Italic is checked}
+    CharSpace: SmallInt;       {Char. spacing}
+    WordSpace: SmallInt;       {Word spacing}
+    Alignment: SmallInt;       {Alignment
+                                 0: Left
+                                 1: Center
+                                 2: Right
+                                 3: All line}
+    FrMode: SmallInt;          {Framing mode
+                                 0: no framing
+                                 1: framing with a framing font
+                                 2: OCAD 7 only: framing with a line}
+                               {Note this feature is called
+                               "Second font" in OCAD 6 but
+                               "Framing" in OCAD 7}
+    FrName: string[31];        {TrueType font (Second/Framing font)}
+    FrColor: SmallInt;         {Color (Second/Framing font)}
+    FrSize: SmallInt;          {Size (Second/Framing font)}
+    FrWeight: SmallInt;        {Bold (Second/Framing font)
+                               as used in the Windows GDI
+                                 400: normal
+                                 700: bold}
+    FrItalic: wordbool;        {true if Italic is checked
+                               (Second/Framing font)}
+    FrOfX: SmallInt;           {Horizontal offset}
+    FrOfY: SmallInt;           {Vertical offset}
+  end;
+
+Area symbols are stored in the following structure. In the
+explanation the terms used in the Area Symbol dialog box are
+shown. The unit of all dimensions is 0.01 mm.
+
+  TAreaSym = record
+    Size: SmallInt;            {size of this structure including
+                               the objects following this
+                               structure}
+    Sym: SmallInt;             {see TBaseSym}
+    Otp: SmallInt;             {3}
+    SymTp: SmallInt;           {0}
+    Extent: SmallInt;          {see TBaseSym}
+    Status: SmallInt;          {see TBaseSym}
+    Tool: SmallInt;            {OCAD 6: reserved
+                               OCAD 7: Preferred drawing tool
+                                 0: off
+                                 1: Curve mode
+                                 2: Ellipse mode
+                                 3: Circle mode
+                                 4: Rectangular mode
+                                 5: Straight line mode
+                                 6: Freehand mode}
+    Res3: SmallInt;
+    FilePos: longint;          {see TBaseSym}
+    Cols: TColors;             {see TBaseSym}
+    Description: string[31];   {see TBaseSym}
+    IconBits: array[0..263] of byte;
+                               {see TBaseSym}
+    Flags: word;
+    FillOn: wordbool;          {true if Fill background is
+                               checked}
+    FillColor: SmallInt;       {Fill color}
+    HatchMode: SmallInt;       {Hatch mode
+                                 0: None
+                                 1: Single hatch
+                                 2: Cross hatch}
+    HatchColor: SmallInt;      {Color (Hatch page)}
+    HatchLineWidth: SmallInt;  {Line width}
+    HatchDist: SmallInt;       {Distance}
+    HatchAngle1: SmallInt;     {Angle 1}
+    HatchAngle2: SmallInt;     {Angle 2}
+    HatchRes: SmallInt;
+    StructMode: SmallInt;      {Structure
+                                 0: None
+                                 1: aligned rows
+                                 2: shifted rows}
+    StructWidth: SmallInt;     {Width}
+    StructHeight: SmallInt;    {Height}
+    StructAngle: SmallInt;     {Angle}
+    StructRes: SmallInt;
+    DataSize: SmallInt;        {number of coordinates (each 8 bytes)
+                               which follow this structure,
+                               each object header counts as
+                               2 Coordinates (16 bytes).
+                               The maximum value is 512.}
+  end;
+
+Text symbols are stored in the following structure. In the
+explanation the terms used in the Text Symbol dialog box are
+shown. The unit of all dimensions is 0.01 mm, except for the
+font sizes which are measured in 0.1 typographical points.
+
+  TTextSym = record
+    Size: SmallInt;            {size of this structure}
+    Sym: SmallInt;             {see TBaseSym}
+    Otp: SmallInt;             {4}
+    SymTp: SmallInt;           {1}
+    Extent: SmallInt;          {0}
+    Status: SmallInt;          {see TBaseSym}
+    Res2: SmallInt;
+    FrWidth: SmallInt;         {OCAD 6: reserved
+                               OCAD 7: Framing width
+                               sorry, this had to be squeezed
+                               in here}
+    FilePos: longint;          {see TBaseSym}
+    Cols: TColors;             {see TBaseSym}
+    Description: string [31];  {see TBaseSym}
+    IconBits: array[0..263] of byte;
+                               {see TBaseSym}
+    FontName: string[31];      {TrueType font}
+    FontColor: SmallInt;       {Color}
+    FontSize: SmallInt;        {10 times the size in pt}
+    Weight: SmallInt;          {Bold as used in the Windows GDI
+                                 400: normal
+                                 700: bold}
+    Italic: wordbool;          {true if Italic checked}
+    CharSpace: SmallInt;       {Char. spacing}
+    WordSpace: SmallInt;       {Word spacing}
+    Alignment: SmallInt;       {Alignment
+                                 0: Left
+                                 1: Center
+                                 2: Right
+                                 3: Justified}
+    LineSpace: SmallInt;       {Line spacing}
+    ParaSpace: SmallInt;       {Space after Paragraph}
+    IndentFirst: SmallInt;     {Indent first line}
+    IndentOther: SmallInt;     {Indent other lines}
+    nTabs: SmallInt;           {number of Tabulators}
+    Tabs: array[0..31] of longint;
+                               {Tabulators}
+    LBOn: wordbool;            {true if Line below On is checked}
+    LBColor: SmallInt;         {Line color (Line below)}
+    LBWidth: SmallInt;         {Line width (Line below)}
+    LBDist: SmallInt;          {Distance from text}
+    Res4: SmallInt;
+    FrMode: SmallInt;          {Framing mode
+                                 0: no framing
+                                 1: framing with a framing font
+                                 2: OCAD 7 only: framing with a line}
+                               {Note this feature is called
+                               "Second font" in OCAD 6 but
+                               "Framing" in OCAD 7}
+    FrName: string[31];        {TrueType font (Second/Framing font)}
+    FrColor: SmallInt;         {Color (Second/Framing font)}
+    FrSize: SmallInt;          {Size (Second/Framing font)}
+    FrWeight: SmallInt;        {Bold (Second/Framing font)
+                                 400: normal
+                                 700: bold}
+    FrItalic: wordbool;        {true if Second/Framing font Italic
+                               is checked}
+    FrOfX: SmallInt;           {Horizontal offset}
+    FrOfY: SmallInt;           {Vertical offset}
+  end;
+
+Rectangle symbols are stored in the following structure. In the
+explanation the terms used in the Rectangle Symbol dialog box are
+shown. The unit of all dimensions is 0.01 mm.
+
+  TRectSym = record
+    Size: SmallInt;            {size of this structure}
+    Sym: SmallInt;             {see TBaseSym}
+    Otp: SmallInt;             {5}
+    SymTp: SmallInt;           {0}
+    Extent: SmallInt;          {see TBaseSym}
+    Status: SmallInt;          {see TBaseSym}
+    Res2: SmallInt;
+    Res3: SmallInt;
+    FilePos: longint;          {see TBaseSym}
+    Cols: TColors;             {see TBaseSym}
+    Description: string [31];  {see TBaseSym}
+    IconBits: array[0..263] of byte;
+                               {see TBaseSym}
+    LineColor: SmallInt;       {Line color}
+    LineWidth: SmallInt;       {Line width}
+    Radius: SmallInt;          {Corner radius}
+    GridFlags: word;           {Flags
+                                 1: Grid On
+                                 2: Numbered from the bottom}
+    CellWidth: SmallInt;       {Cell width}
+    CellHeight: SmallInt;      {Cell height}
+    ResGridLineColor: SmallInt;
+    ResGridLineWidth: SmallInt;
+    UnnumCells: SmallInt;      {Unnumbered Cells}
+    UnnumText: string[3];      {Text in unnumbered Cells}
+    GridRes2: SmallInt;
+    ResFontName: string[31];
+    ResFontColor: SmallInt;
+    ResFontSize: SmallInt;
+    ResWeight: SmallInt;
+    ResItalic: wordbool;
+    ResOfsX: SmallInt;
+    ResOfsY: SmallInt;
+  end;
+
+Example for reading the symbols
+-------------------------------
+
+The following is a simple Delphi program to read all symbol
+numbers and descriptions.
+
+procedure ReadAllSym(const FileName: string);
+var
+  f: file;
+  FileHeader: TFileHeader;
+  SymbolBlock: TSymbolBlock;
+  BaseSym: TBaseSym;
+begin
+  AssignFile(f, FileName);
+  ResetFile(f);
+  BlockRead(f, FileHeader, sizeof(TFileHeader));
+  SymbolBlock.NextBlock := FileHeader.FirstSymBlk;
+  while SymbolBlock.NextBlock > 0 do
+  begin
+    Seek(f, SymbolBlock.NextBlock);
+    BlockRead(f, SymbolBlock, sizeof(TSymbolBlock));
+    i := 0;
+    while (i < 256) and (SymbolBlock.FilePos[i] > 0) do
+    begin
+      Seek(f, SymbolBlock.FilePos[i]);
+      BlockRead(f, BaseSym, sizeof(TBaseSym));
+
+      {read Sym and Description from TBaseSym}
+
+      inc(i);
+    end;
+  end;
+  CloseFile(f);
+end;
+
+Index Block
+-----------
+Each Index block contains the file position of 256 objects. In
+addition it contains the symbol number and the extent (where on
+the map the object is located) of each object.
+
+  TIndexBlock = record
+    NextBlock: longint;        {file position of the next block
+                               0 if this is the last block}
+    IndexArr: array[0..255] of TIndex;
+                               {TIndex as defined below}
+  end;
+
+The position of the first index block is in the field FirstIdxBlk
+of the file header.
+
+  TIndex = record
+    LowerLeft: TCord;          {lower left corner of
+                               a rectangle covering the
+                               entire object. All flag bits
+                               are set to 0}
+    UpperRight: TCord;         {upper right corner of
+                               a rectangle covering the
+                               entire object. All flag bits
+                               are set to 0}
+    Pos: longint;              {file position of the object}
+    Len: word;                 {OCAD 6 and 7: size of the object in the file in bytes
+                               OCAD 8: number of coordinate pairs, the size of the
+                               object in the file is then calculated by: 32 + 8*Len
+                               Note: this is reserved space in the file, the effective
+                               length of the object may be shorter}
+    Sym: SmallInt;             {10 times the symbol number
+                               Deleted objects are marked with Sym=0}
+  end;
+
+For calculating LowerLeft and UpperRight the value Extent from
+the corresponding symbol is added/subtracted to the outermost
+coordinates of the object. The rectangle covers everything
+which appears from the object.
+
+Objects
+-------
+Objects are stored as a TElement structure.
+
+  TElement = record
+    Sym: SmallInt;             {10 times the symbol number}
+    Otp: SmallInt;             {object type
+                                 1: point object
+                                 2: line or line text object
+                                 3: area object
+                                 4: unformatted text object
+                                 5: formatted text object
+                                    or rectangle object}
+    nItem: SmallInt;           {number of coordinates in the
+                               Poly array}
+    nText: SmallInt;           {number or coordinates in the
+                               Poly array used for storing text
+                               nText is > 0 for
+                                 - line text objects
+                                 - unformatted text objects
+                                 - formatted text objects
+                               for all other objects it is 0}
+    Ang: SmallInt;             {Angle, unit is 0.1 degrees
+                               used for
+                                 - point object
+                                 - area objects with structure
+                                 - unformatted and formatted
+                                   text objects
+                                 - rectangle objects}
+    Res1: SmallInt;
+    ResHeight: longint;        {reserved for future use to
+                               store a height information}
+    ResId: string[15];         {reserved for future use to
+                               contain an ID for the connection
+                               to a database}
+    Poly: array[0..1999] of TCord; {OCAD 8: array[0..32767]    
+                               coordinates of the object
+                               followed by a zero-terminated
+                               string if nText > 0
+                               TCord is explained at the beginning
+                               of this description}
+  end;
+
+Limits for nItem and nText in OCAD 6 and 7:
+  nItem + nText <= 2000
+  nText <= 1024 (8191 characters + terminating zero)
+  The number of bytes of an object (as used in the TIndex
+  structure) can be calculated as
+    Index.Len := 32 + 8 * nItem + 8 * nText;
+
+Limits for nItem and nText in OCAD 8:
+  nItem + nText <= 32768
+  nText <= 1024 (8191 characters + terminating zero)
+  Index.Len := nItem+nText
+
+Example for reading all objects
+-------------------------------
+
+The following is a simple Delphi program to read all objects.
+
+procedure ReadAllObjects(const FileName: string);
+var
+  l: integer;
+  f: file;
+  FileHeader: TFileHeader;
+  IndexBlock: TIndexBlock;
+  Element: TElement; {"object" is a reserved word in Delphi}
+begin
+  AssignFile(f, FileName);
+  ResetFile(f);
+  BlockRead(f, FileHeader, sizeof(TFileHeader));
+  IndexBlock.NextBlock := FileHeader.FirstIdxBlk;
+  while IndexBlock.NextBlock > 0 do
+  begin
+    Seek(f, IndexBlock.NextBlock);
+    BlockRead(f, IndexBlock, sizeof(TIndexBlock));
+    for i := 0 to 255 do
+      if (IndexBlock.IndexArr[i].Sym <> 0) {Sym is 0 for deleted
+                                           objects}
+        and (IndexBlock.IndexArr[i].Len > 32) then
+      begin
+        Seek(f, IndexBlock.IndexArr[i].Pos);
+        l := IndexBlock.IndexArr[i].Len; {convert to 32 bits}
+        if FileHeader.Version = 8 then BlockRead(f, Element, 32+8*l))
+        else BlockRead(f, Element, l);
+
+        {do something with the object}
+
+      end;
+  end;
+  CloseFile(f);
+end;
+
+When appending objects check for
+  IndexBlock.IndexArr[i].Len = 0
+to see if there are any unused positions in this block. If all
+positions are used, append a new block at the end of the file.
+
+Setup
+-----
+The Setup structure contains miscellanous information about
+the map. The file position of the Setup structure is given
+in the field SetupPos in the file header. SetupSize gives
+the size of the Setup structure in the file. SetupSize is
+provided because additional fields may be added to this structure.
+You may encounter files (created with a beta version) that
+have a smaller size than defined below. Therefore when reading
+the Setup structure
+  - set the entire structure in memory to 0
+  - read SetupSize bytes (but not more than sizeof(TSetup))
+    from the file to the structure
+If you want to save a Setup structure which is larger than
+SetupSize in the FileHeader you have to append it at the end
+of the file and adjust SetupPos and SetupSize.
+
+  TStp = record
+    Offset: TCord;             {Coordinate of the center
+                               of the screen when the file was
+                               last saved. All flag bits
+                               are set to 0}
+    rGridDist: double;         {Grid distance for paper
+                               paper coordinates in mm}
+    WorkMode: SmallInt;        {Mode when last the file was
+                               last saved
+                                 5: freehand
+                                 6: straight
+                                 7: rectangular
+                                 8: circle
+                                 9: ellipse
+                                 10: curve
+                                 11: edit point
+                                 12: edit object}
+    LineMode: SmallInt;        {drawing mode when the file was
+                               last saved
+                                 5: freehand
+                                 6: straight
+                                 7: rectangular
+                                 8: circle
+                                 9: ellipse
+                                 10: curve}
+    EditMode: SmallInt;        {edit mode when the file was
+                               last saved
+                                 11: edit point
+                                 12: edit object}
+    ActSym: SmallInt;          {selected symbol the file was
+                               last saved}
+    MapScale: double;          {Map scale}
+    RealWorldOfsX: double;     {Horizontal offset of real
+                               world coordinates in meters}
+    RealWorldOfsY: double;     {Vertical offset of real
+                               world coordinates in meters}
+    RealWorldAngle: double;    {Angle of real world coordinates
+                               in degrees}
+    RealWorldGrid: double;     {Grid distance of real world
+                               coordinates in meters}
+    GpsAngle: double;          {Angle of the GPS adjustment as
+                               displayed in the Adjust GPS
+                               dialog box}
+    aGpsAdjust: array[0..11] of TGpsAdjPoint;
+                               {GPS adjustment points, this
+                               structure is defined below}
+    nGpsAdjust: longint;       {number of GPS adjustment points}
+    DraftScaleX: double;       {Horizontal draft scale, not used in OCAD 8}
+    DraftScaleY: double;       {Vertical draft scale, not uses in OCAD 8}
+    TempOffset: TCord;         {Template offset. This defines
+                               the coordinates where the center
+                               of the template is displayed, not used in OCAD 8}
+    TemplateFileName: string[255];
+                               {file name of the template, not used in OCAD 8}
+    TemplateEnabled: wordbool; {true if a template is opened, not used in OCAD 8}
+    TempResol: SmallInt;       {resolution of the template file
+                               in DPI, not used in OCAD 8}
+    rTempAng: double;          {Angle of the adjusted template, 
+                               not used in OCAD 8}
+    Reserved: TCord;
+    Reserved: double;
+    PrLowerLeft: TCord;        {lower left corner of the print
+                               window. All Flag bits are set
+                               to 0}
+    PrUpperRight: TCord;       {upper right corner of the print
+                               window. All Flag bits are set
+                               to 0}
+    PrGrid: wordbool;          {true if Print grid is activated
+                               in the Print dialog box}
+    PrGridColor: SmallInt;     {Grid color selected in the
+                               Print dialog box}
+    PrOverlapX: SmallInt;      {Horizontal overlap as defined
+                               in the Print Window dialog box
+                               unit is 0.01 mm}
+    PrOverlapY: SmallInt;      {Vertical overlap as defined
+                               in the Print Window dialog box
+                               unit is 0.01 mm}
+    PrintScale: double;        {Print scale}
+    PrIntensity: SmallInt;     {Intensity as defined in the
+                               Printing Options dialog box}
+    PrLineWidth: SmallInt;     {Line Width as defined in the
+                               Printing Options dialog box}
+    PrReserved: wordbool;
+    PrStdFonts: wordbool;      {true if Standard fonts as
+                               PostScript fonts is activated
+                               in the EPS Properties dialog
+                               box}
+    PrReserved2: wordbool;
+    PrReserved3: wordbool;
+    PartialLowerLeft: TCord;   {lower left corner of Export
+                               Partial map window. All flag bits
+                               are set to 0}
+    PartialUpperRight: TCord;  {upper right corner of the Export
+                               Partial map window. All flag bits
+                               are set to 0}
+    Zoom: double;              {Zoom magnification as it appears
+                               in the View menu and in the
+                               status bar}
+    ZoomHist: array[0..8] of TZoomRec;
+                               {Last 8 Zoom magnification for use
+                               in the Zoom out command. TZoomRec
+                               is explained below.}
+    nZoomHist: longint;        {number of magnificiations in
+                               ZoomHist}
+
+                               {OCAD 6: the setup ends here
+                               the following fields exist
+                               in OCAD 7 only}
+
+    RealWorldCord: wordbool;   {true if real world coordinates
+                               are to be displayed}
+    FileName: ShortString;     {used internally in temporary files.
+                               The name of the original file
+                               is stored here}
+    HatchAreas: wordbool;      {true if Hatch areas is active}
+    DimTemp: wordbool;         {true if Dim template is active}
+    HideTemp: wordbool;        {true if Hide template is active}
+    TempMode: SmallInt;        {template mode
+                                 0: in the background
+                                 1: above a color}
+    TempColor: SmallInt;       {the color if template mode is 1}
+  end;
+
+TGPSAdjustPoint is used for storing the GPS adjustment points.
+
+  TGpsAdjPoint = record
+    lpMap: TCord;              {Point on the map. All flag bits
+                               are set to 0}
+    Lat: double;               {Latitude reported by the GPS
+                               receiver in this point (degrees)}
+    Long: double;              {Longitude reported by the GPS
+                               receiver in this point (degrees)}
+    Name: string[15];          {name of the adjustment point as
+                               it appears in the Adjust GPS dialog
+                               box}
+  end;
+
+TZoomRec is used for storing a magnification together with the
+corresponding offset.
+
+  TZoomRec = record
+    Zoom: double;              {Zoom magnification as it appears
+                               in the View menu and in the
+                               status bar}
+    Offset: TCord;             {Coordinate of the center of
+                               the screen. All flag bits are
+                               set to 0}
+  end;
+
+
+
+
+

@@ -1,4 +1,5 @@
 #include <QDebug>
+#include <QDateTime>
 
 #include "ocad8_file_import.h"
 #include "map_color.h"
@@ -19,6 +20,9 @@ OCAD8FileImport::~OCAD8FileImport()
 
 void OCAD8FileImport::loadFrom(const char *filename) throw (std::exception)
 {
+    qint64 start = QDateTime::currentMSecsSinceEpoch();
+    int symbol_count = 0, object_count = 0;
+
     int err = ocad_file_open(&file, filename);
     qDebug() << "open ocad file" << err;
     if (err != 0) throw std::exception();
@@ -95,6 +99,7 @@ void OCAD8FileImport::loadFrom(const char *filename) throw (std::exception)
                 {
                     map->symbols.push_back(symbol);
                     symbol_index[ocad_symbol->number] = symbol;
+                    symbol_count++;
                 }
                 else
                 {
@@ -118,7 +123,10 @@ void OCAD8FileImport::loadFrom(const char *filename) throw (std::exception)
             if (ocad_obj != NULL)
             {
                 Object *object = importObject(ocad_obj);
-                if (object != NULL) layer->objects.push_back(object);
+                if (object != NULL) {
+                    layer->objects.push_back(object);
+                    object_count++;
+                }
             }
         }
     }
@@ -175,6 +183,9 @@ void OCAD8FileImport::loadFrom(const char *filename) throw (std::exception)
 
 
     ocad_file_close(file);
+
+    qint64 elapsed = QDateTime::currentMSecsSinceEpoch() - start;
+    qDebug() << "OCAD map imported: "<<symbol_count<<"symbols and"<<object_count<<"objects in"<<elapsed<<"milliseconds";
 }
 
 void OCAD8FileImport::setStringEncodings(const char *narrow, const char *wide) {
@@ -184,7 +195,10 @@ void OCAD8FileImport::setStringEncodings(const char *narrow, const char *wide) {
 
 Symbol *OCAD8FileImport::importPointSymbol(const OCADPointSymbol *ocad_symbol)
 {
-    return NULL;
+    PointSymbol *symbol = importPattern(ocad_symbol->ngrp, (OCADPoint *)ocad_symbol->pts);
+    fillCommonSymbolFields(symbol, (OCADSymbol *)ocad_symbol);
+
+    return symbol;
 }
 
 Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
@@ -243,31 +257,89 @@ Symbol *OCAD8FileImport::importAreaSymbol(const OCADAreaSymbol *ocad_symbol)
         }
     }
 
-    // Pattern
-    /*
     if (ocad_symbol->pmode > 0)
     {
+        // OCAD 8 has a "staggered" pattern mode, where successive rows are shifted width/2 relative
+        // to each other. We need to simulate this in Mapper with two overlapping patterns, each with
+        // twice the height. The second is then offset by width/2, height/2.
+        qint64 spacing = convertPosition(ocad_symbol->pheight);
+        if (ocad_symbol->pmode == 2) spacing *= 2;
         int n = symbol->patterns.size(); symbol->patterns.resize(n + 1); pat = &(symbol->patterns[n]);
         pat->type = AreaSymbol::FillPattern::PointPattern;
         pat->angle = convertRotation(ocad_symbol->pangle);
         pat->rotatable = true;
-        pat->line_spacing = convertPosition(ocad_symbol->pheight);
-        pat->line_offset = 0;
         pat->point_distance = convertPosition(ocad_symbol->pwidth);
-        pat->offset_along_line = (ocad_symbol->pmode == 2) ? 0.5 * pat->point_distance : 0; // staggered or aligned
+        pat->line_spacing = spacing;
+        pat->line_offset = 0;
+        pat->offset_along_line = 0;
         // FIXME: somebody needs to own this symbol and be responsible for deleting it
         // Right now it looks like a potential memory leak
-        pat->point = importPointSymbolFromElements(ocad_symbol->npts, ocad_symbol->pts);
+        pat->point = importPattern(ocad_symbol->npts, (OCADPoint *)ocad_symbol->pts);
+        if (ocad_symbol->pmode == 2)
+        {
+            int n = symbol->patterns.size(); symbol->patterns.resize(n + 1); pat = &(symbol->patterns[n]);
+            pat->type = AreaSymbol::FillPattern::PointPattern;
+            pat->angle = convertRotation(ocad_symbol->pangle);
+            pat->rotatable = true;
+            pat->point_distance = convertPosition(ocad_symbol->pwidth);
+            pat->line_spacing = spacing;
+            pat->line_offset = pat->line_spacing / 2;
+            pat->offset_along_line = pat->point_distance / 2;
+            pat->point = importPattern(ocad_symbol->npts, (OCADPoint *)ocad_symbol->pts);
+        }
     }
-    */
 
     return symbol;
 }
 
-PointSymbol *OCAD8FileImport::importPointSymbolFromElements(s16 npts, OCADPoint* pts)
+PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
 {
-    //ocad_symbol_element_iterate(npts, pts, callback, this);
-    return NULL;
+    PointSymbol *symbol = new PointSymbol();
+    symbol->rotatable = true; // FIXME: by default for now, where is the "Align to north" checkbox in the OCAD file?
+    OCADPoint *p = pts, *end = pts + npts;
+    while (p < end) {
+        OCADSymbolElement *elt = (OCADSymbolElement *)p;
+        int element_index = symbol->getNumElements();
+        if (elt->type == OCAD_DOT_ELEMENT) {
+            PointSymbol* element_symbol = new PointSymbol();
+            element_symbol->inner_color = color_index[elt->color];
+            element_symbol->inner_radius = (int)convertPosition(elt->diameter) / 2;
+            element_symbol->outer_color = NULL;
+            element_symbol->outer_width = 0;
+            element_symbol->rotatable = false;
+            PointObject* element_object = new PointObject(element_symbol);
+            element_object->coords.resize(1);
+            symbol->addElement(element_index, element_object, element_symbol);
+        }
+        else if (elt->type == OCAD_CIRCLE_ELEMENT) {
+            PointSymbol* element_symbol = new PointSymbol();
+            element_symbol->inner_color = NULL;
+            element_symbol->inner_radius = (int)convertPosition(elt->diameter) / 2;
+            element_symbol->outer_color = color_index[elt->color];
+            element_symbol->outer_width = (int)convertPosition(elt->width);
+            element_symbol->rotatable = false;
+            PointObject* element_object = new PointObject(element_symbol);
+            element_object->coords.resize(1);
+            symbol->addElement(element_index, element_object, element_symbol);
+        }
+        else if (elt->type == OCAD_LINE_ELEMENT) {
+            LineSymbol* element_symbol = new LineSymbol();
+            element_symbol->line_width = convertPosition(elt->width);
+            element_symbol->color = color_index[elt->color];
+            PathObject* element_object = new PathObject(element_symbol);
+            fillPathCoords(element_object, elt->npts, elt->pts);
+            symbol->addElement(element_index, element_object, element_symbol);
+        }
+        else if (elt->type == OCAD_AREA_ELEMENT) {
+            AreaSymbol* element_symbol = new AreaSymbol();
+            element_symbol->color = color_index[elt->color];
+            PathObject* element_object = new PathObject(element_symbol);
+            fillPathCoords(element_object, elt->npts, elt->pts);
+            symbol->addElement(element_index, element_object, element_symbol);
+        }
+        p += (2 + elt->npts);
+    }
+    return symbol;
 }
 
 
@@ -297,12 +369,14 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
     {
         PointObject *p = new PointObject();
         // extra properties: rotation
+        p->symbol = symbol;
         p->setRotation(convertRotation(ocad_object->angle));
         object = p;
     }
     else if (symbol->getType() == Symbol::Text)
     {
         TextObject *t = new TextObject();
+        t->symbol = symbol;
         // extra properties: rotation, horizontalAlignment, verticalAlignment, text
         t->setRotation(convertRotation(ocad_object->angle));
         t->setHorizontalAlignment(TextObject::AlignLeft); // FIXME - correct?
@@ -314,18 +388,30 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
     }
     else {
         PathObject *p = new PathObject();
+        p->symbol = symbol;
         // nothing extra for these
         object = p;
     }
 
     if (object == NULL) return NULL;
 
-    object->symbol = symbol;
     object->path_closed = false;
-    object->coords.resize(ocad_object->npts);
+    fillPathCoords(object, ocad_object->npts, (OCADPoint *)ocad_object->pts);
+    object->output_dirty = true;
+    object->map = map;
+
+    return object;
+
+}
+
+/** Translates the OCAD path given in the last two arguments into an Object.
+ */
+void OCAD8FileImport::fillPathCoords(Object *object, s16 npts, OCADPoint *pts)
+{
+    object->coords.resize(npts);
     s32 buf[3];
-    for (int i = 0; i < ocad_object->npts; i++) {
-        ocad_point(buf, &(ocad_object->pts[i]));
+    for (int i = 0; i < npts; i++) {
+        ocad_point(buf, &(pts[i]));
         MapCoord &coord = object->coords[i];
         coord.setRawX(convertPosition(buf[0]));
         // Y-axis is flipped
@@ -336,11 +422,6 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
         if (buf[2] & (PY_DASH << 8)) coord.setDashPoint(true);
         //if (buf[2] & (PY_HOLE << 8)) coord.setHolePoint(true);
     }
-    object->output_dirty = true;
-    object->map = map;
-
-    return object;
-
 }
 
 /** Converts a single-byte-per-character, length-payload string to a QString.
@@ -366,7 +447,7 @@ QString OCAD8FileImport::str1(const char *p) {
  */
 QString OCAD8FileImport::str2(const char *p) {
     int len = *((unsigned char *)p);
-    return encoding_1byte->toUnicode((p + 1), len);
+    return encoding_2byte->toUnicode((p + 1), len);
 }
 
 float OCAD8FileImport::convertRotation(int angle) {
