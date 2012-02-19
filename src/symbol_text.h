@@ -42,6 +42,7 @@ class TextSymbol : public Symbol
 {
 friend class TextSymbolSettings;
 friend class PointSymbolEditorWidget;
+friend class OCAD8FileImport;
 public:
 	TextSymbol();
 	virtual ~TextSymbol();

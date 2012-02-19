@@ -8,7 +8,7 @@ DEPENDPATH += . src
 INCLUDEPATH += . src
 
 # Needed for QtSingleApplication
-QT += network
+QT += network xml
 
 # Needed when compiling pure C code
 QMAKE_CFLAGS += -std=c99
@@ -58,7 +58,9 @@ HEADERS += src/color_dock_widget.h \
            qtsingleapplication/qtlocalpeer.h \
            qtsingleapplication/qtsingleapplication.h \
            libocad/libocad.h \
-    src/ocad8_file_import.h
+    src/ocad8_file_import.h \
+    src/import_export.h \
+    src/xml_import_export.h
 SOURCES += src/color_dock_widget.cpp \
            src/draw_path.cpp \
            src/draw_point.cpp \
@@ -111,7 +113,8 @@ SOURCES += src/color_dock_widget.cpp \
            libocad/symbol.c \
            libocad/object.c \
            libocad/template.c \
-    src/ocad8_file_import.cpp
+    src/ocad8_file_import.cpp \
+    src/xml_import_export.cpp
 RESOURCES += resources.qrc
 
 OTHER_FILES += \

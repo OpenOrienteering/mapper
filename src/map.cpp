@@ -37,6 +37,7 @@
 #include "symbol.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
+
 #include "ocad8_file_import.h"
 
 MapLayer::MapLayer(const QString& name, Map* map) : name(name), map(map)
@@ -525,8 +526,13 @@ bool Map::loadFromOCAD78(const QString &path, MapEditorController *map_editor)
     MapView *view = new MapView(this);
     map_editor->main_view = view;
 
-    OCAD8FileImport importer(this, view);
-    importer.loadFrom(path.toLocal8Bit().constData());
+    OCAD8FileImport importer(path, this, view);
+    importer.doImport();
+    if (!importer.actions().empty())
+    {
+        // TODO: prompt the user to resolve the action items. All-in-one dialog.
+    }
+    importer.finishImport();
 
     if (!importer.warnings().empty())
     {

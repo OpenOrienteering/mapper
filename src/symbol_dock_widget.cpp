@@ -37,9 +37,11 @@
 static bool Compare_symbolByNumber(Symbol *s1, Symbol *s2) {
     int n1 = s1->number_components, n2 = s2->number_components;
     for (int i = 0; i < n1 && i < n2; i++) {
-        if (s1->getNumberComponent(i) < s2->getNumberComponent(i)) return true;
+        if (s1->getNumberComponent(i) < s2->getNumberComponent(i)) return true;  // s1 < s2
+        if (s1->getNumberComponent(i) > s2->getNumberComponent(i)) return false; // s1 > s2
+        // if s1 == s2, loop to the next component
     }
-    return false;
+    return false; // s1 == s2
 }
 
 

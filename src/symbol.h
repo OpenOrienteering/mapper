@@ -40,6 +40,7 @@ class Object;
 class Symbol
 {
 friend class OCAD8FileImport;
+friend class XMLImportExport;
 public:
 	enum Type
 	{
@@ -98,7 +99,7 @@ public:
 	inline const QString& getName() const {return name;}
 	inline void setName(const QString& new_name) {name = new_name;}
 	
-	QString getNumberAsString();
+    QString getNumberAsString() const;
 	inline int getNumberComponent(int i) const {assert(i >= 0 && i < number_components); return number[i];}
 	inline void setNumberComponent(int i, int new_number) {assert(i >= 0 && i < number_components); number[i] = new_number;}
 	

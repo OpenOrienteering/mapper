@@ -259,20 +259,20 @@ void MapEditorController::attach(MainWindow* window)
 	}
 }
 
-QAction *MapEditorController::newAction(const char *id, const char *text, QObject *receiver, const char *slot, const char *icon, const char *tip)
+QAction *MapEditorController::newAction(const char *id, const QString &tr_text, QObject *receiver, const char *slot, const char *icon, const QString &tr_tip)
 {
-    QAction *action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), QObject::tr(text), this);
-    if (tip) action->setStatusTip(QObject::tr(tip));
+    QAction *action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, this);
+    if (!tr_tip.isEmpty()) action->setStatusTip(tr_tip);
     if (receiver) QObject::connect(action, SIGNAL(triggered()), receiver, slot);
     actionsById[id] = action;
     return action;
 }
 
-QAction *MapEditorController::newCheckAction(const char *id, const char *text, QObject *receiver, const char *slot, const char *icon, const char *tip)
+QAction *MapEditorController::newCheckAction(const char *id, const QString &tr_text, QObject *receiver, const char *slot, const char *icon, const QString &tr_tip)
 {
-    QAction *action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), QObject::tr(text), this);
+    QAction *action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, this);
     action->setCheckable(true);
-    if (tip) action->setStatusTip(QObject::tr(tip));
+    if (!tr_tip.isEmpty()) action->setStatusTip(tr_tip);
     if (receiver) QObject::connect(action, SIGNAL(triggered(bool)), receiver, slot);
     actionsById[id] = action;
     return action;
@@ -313,38 +313,38 @@ void MapEditorController::assignKeyboardShortcuts()
 void MapEditorController::createMenuAndToolbars()
 {
     // Define all the actions, saving them into variables as necessary. Can also get them by ID.
-    print_act = newAction("print", "Print...", this, SLOT(printClicked()), "print.png");
-    undo_act = newAction("undo", "Undo", this, SLOT(undo()), "undo.png", "Undo the last step");
-    redo_act = newAction("redo", "Redo", this, SLOT(redo()), "redo.png", "Redo the last step");
-    QAction* cut_act = newAction("cut", "Cu&t", this, SLOT(cut()), "cut.png");
-    QAction* copy_act = newAction("copy", "C&opy", this, SLOT(copy()), "copy.png");
-    QAction* paste_act = newAction("paste", "&Paste", this, SLOT(paste()), "paste");
-    QAction* zoom_in_act = newAction("zoomin", "Zoom in", this, SLOT(zoomIn()), "view-zoom-in.png"); // F7
-    QAction* zoom_out_act = newAction("zoomout", "Zoom out", this, SLOT(zoomOut()), "view-zoom-out.png"); // F8
-	QAction* fullscreen_act = newAction("fullscreen", "Toggle fullscreen mode", window, SLOT(toggleFullscreenMode()));
-	QAction* custom_zoom_act = newAction("setzoom", "Set custom zoom factor...", this, SLOT(setCustomZoomFactorClicked()));
-    symbol_window_act = newCheckAction("symbolwindow", "Symbol window", this, SLOT(showSymbolWindow(bool)), "window-new.png", "Show/Hide the symbol window");
-    color_window_act = newCheckAction("colorwindow", "Color window", this, SLOT(showColorWindow(bool)), "window-new.png", "Show/Hide the color window");
-    QAction *load_symbols_from_act = newAction("loadsymbols", "Load symbols from...", this, SLOT(loadSymbolsFromClicked()), NULL, "Replace the symbols with those from another map file");
-    QAction *load_colors_from_act = newAction("loadcolors", "Load colors from...", this, SLOT(loadColorsFromClicked()), NULL, "Replace the colors with those from another map file");
-    QAction *scale_all_symbols_act = newAction("scaleall", "Scale all symbols...", this, SLOT(scaleAllSymbolsClicked()), NULL, "Scale the whole symbol set");
-    QAction *scale_map_act = newAction("scalemap", "Change map scale...", this, SLOT(scaleMapClicked()), NULL, "Change the map scale and adjust map objects and symbol sizes");
-    template_window_act = newCheckAction("templatewindow", "Template setup window", this, SLOT(showTemplateWindow(bool)), "window-new", "Show/Hide the template window");
-    //QAction* template_config_window_act = newCheckAction("templateconfigwindow", "Template configurations window", this, SLOT(showTemplateConfigurationsWindow(bool)), "window-new", "Show/Hide the template configurations window");
-    //QAction* template_visibilities_window_act = newCheckAction("templatevisibilitieswindow", "Template visibilities window", this, SLOT(showTemplateVisbilitiesWindow(bool)), "window-new", "Show/Hide the template visibilities window");
-    QAction* open_template_act = newAction("opentemplate", "Open template...", this, SLOT(openTemplateClicked()));
-    QAction* edit_gps_projection_parameters_act = newAction("gpsproj", "Edit projection parameters...", this, SLOT(editGPSProjectionParameters()));
-    QAction* show_all_act = newAction("showall", "Show whole map", this, SLOT(showWholeMap()), "view-show-all.png");
-    edit_tool_act = newCheckAction("editobjects", "Edit objects", this, SLOT(editToolClicked(bool)), "tool-edit.png");
-    draw_point_act = newCheckAction("drawpoint", "Set point objects", this, SLOT(drawPointClicked(bool)), "draw-point.png");
-    draw_path_act = newCheckAction("drawpath", "Draw paths", this, SLOT(drawPathClicked(bool)), "draw-path.png");
-    draw_text_act = newCheckAction("drawtext", "Write text", this, SLOT(drawTextClicked(bool)), "draw-text.png");
-    duplicate_act = newAction("duplicate", "Duplicate", this, SLOT(duplicateClicked()), "tool-duplicate.png"); // D
-    switch_symbol_act = newAction("switchsymbol", "Switch symbol", this, SLOT(switchSymbolClicked()), "tool-switch-symbol.png");
-    fill_border_act = newAction("fillborder", "Fill / Create border", this, SLOT(fillBorderClicked()), "tool-fill-border.png");
-    switch_dashes_act = newAction("switchdashes", "Switch dash direction", this, SLOT(switchDashesClicked()), "tool-switch-dashes"); // Ctrl+D
-	connect_paths_act = newAction("connectpaths", "Connect paths", this, SLOT(connectPathsClicked()), "tool-connect-paths.png");
-	rotate_act = newCheckAction("rotateobjects", "Rotate object(s)", this, SLOT(rotateClicked(bool)), "tool-rotate.png");
+    print_act = newAction("print", tr("Print..."), this, SLOT(printClicked()), "print.png");
+    undo_act = newAction("undo", tr("Undo"), this, SLOT(undo()), "undo.png", tr("Undo the last step"));
+    redo_act = newAction("redo", tr("Redo"), this, SLOT(redo()), "redo.png", tr("Redo the last step"));
+    /*QAction* cut_act = */newAction("cut", tr("Cu&t"), this, SLOT(cut()), "cut.png");
+    /*QAction* copy_act = */newAction("copy", tr("C&opy"), this, SLOT(copy()), "copy.png");
+    /*QAction* paste_act = */newAction("paste", tr("&Paste"), this, SLOT(paste()), "paste");
+    QAction* zoom_in_act = newAction("zoomin", tr("Zoom in"), this, SLOT(zoomIn()), "view-zoom-in.png"); // F7
+    QAction* zoom_out_act = newAction("zoomout", tr("Zoom out"), this, SLOT(zoomOut()), "view-zoom-out.png"); // F8
+    QAction* fullscreen_act = newAction("fullscreen", tr("Toggle fullscreen mode"), window, SLOT(toggleFullscreenMode()));
+    QAction* custom_zoom_act = newAction("setzoom", tr("Set custom zoom factor..."), this, SLOT(setCustomZoomFactorClicked()));
+    symbol_window_act = newCheckAction("symbolwindow", tr("Symbol window"), this, SLOT(showSymbolWindow(bool)), "window-new.png", tr("Show/Hide the symbol window"));
+    color_window_act = newCheckAction("colorwindow", tr("Color window"), this, SLOT(showColorWindow(bool)), "window-new.png", tr("Show/Hide the color window"));
+    /*QAction *load_symbols_from_act = */newAction("loadsymbols", tr("Load symbols from..."), this, SLOT(loadSymbolsFromClicked()), NULL, tr("Replace the symbols with those from another map file"));
+    /*QAction *load_colors_from_act = */newAction("loadcolors", tr("Load colors from..."), this, SLOT(loadColorsFromClicked()), NULL, tr("Replace the colors with those from another map file"));
+    QAction *scale_all_symbols_act = newAction("scaleall", tr("Scale all symbols..."), this, SLOT(scaleAllSymbolsClicked()), NULL, tr("Scale the whole symbol set"));
+    QAction *scale_map_act = newAction("scalemap", tr("Change map scale..."), this, SLOT(scaleMapClicked()), NULL, tr("Change the map scale and adjust map objects and symbol sizes"));
+    template_window_act = newCheckAction("templatewindow", tr("Template setup window"), this, SLOT(showTemplateWindow(bool)), "window-new", tr("Show/Hide the template window"));
+    //QAction* template_config_window_act = newCheckAction("templateconfigwindow", tr("Template configurations window"), this, SLOT(showTemplateConfigurationsWindow(bool)), "window-new", tr("Show/Hide the template configurations window"));
+    //QAction* template_visibilities_window_act = newCheckAction("templatevisibilitieswindow", tr("Template visibilities window"), this, SLOT(showTemplateVisbilitiesWindow(bool)), "window-new", tr("Show/Hide the template visibilities window"));
+    QAction* open_template_act = newAction("opentemplate", tr("Open template..."), this, SLOT(openTemplateClicked()));
+    QAction* edit_gps_projection_parameters_act = newAction("gpsproj", tr("Edit projection parameters..."), this, SLOT(editGPSProjectionParameters()));
+    QAction* show_all_act = newAction("showall", tr("Show whole map"), this, SLOT(showWholeMap()), "view-show-all.png");
+    edit_tool_act = newCheckAction("editobjects", tr("Edit objects"), this, SLOT(editToolClicked(bool)), "tool-edit.png");
+    draw_point_act = newCheckAction("drawpoint", tr("Set point objects"), this, SLOT(drawPointClicked(bool)), "draw-point.png");
+    draw_path_act = newCheckAction("drawpath", tr("Draw paths"), this, SLOT(drawPathClicked(bool)), "draw-path.png");
+    draw_text_act = newCheckAction("drawtext", tr("Write text"), this, SLOT(drawTextClicked(bool)), "draw-text.png");
+    duplicate_act = newAction("duplicate", tr("Duplicate"), this, SLOT(duplicateClicked()), "tool-duplicate.png"); // D
+    switch_symbol_act = newAction("switchsymbol", tr("Switch symbol"), this, SLOT(switchSymbolClicked()), "tool-switch-symbol.png");
+    fill_border_act = newAction("fillborder", tr("Fill / Create border"), this, SLOT(fillBorderClicked()), "tool-fill-border.png");
+    switch_dashes_act = newAction("switchdashes", tr("Switch dash direction"), this, SLOT(switchDashesClicked()), "tool-switch-dashes"); // Ctrl+D
+	connect_paths_act = newAction("connectpaths", tr("Connect paths"), this, SLOT(connectPathsClicked()), "tool-connect-paths.png");
+    rotate_act = newCheckAction("rotateobjects", tr("Rotate object(s)"), this, SLOT(rotateClicked(bool)), "tool-rotate.png");
 
     // Refactored so we can do custom key bindings in the future
     assignKeyboardShortcuts();

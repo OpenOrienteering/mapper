@@ -88,10 +88,10 @@ public:
 	inline void setCapStyle(CapStyle style) {cap_style = style;}
 	inline JoinStyle getJoinStyle() const {return join_style;}
 	inline void setJoinStyle(JoinStyle style) {join_style = style;}
-	inline PointSymbol* getStartSymbol() {return start_symbol;}
-	inline PointSymbol* getMidSymbol() {return mid_symbol;}
-	inline PointSymbol* getEndSymbol() {return end_symbol;}
-	inline PointSymbol* getDashSymbol() {return dash_symbol;}
+    inline PointSymbol* getStartSymbol() const {return start_symbol;}
+    inline PointSymbol* getMidSymbol() const {return mid_symbol;}
+    inline PointSymbol* getEndSymbol() const {return end_symbol;}
+    inline PointSymbol* getDashSymbol() const {return dash_symbol;}
 	inline bool hasBorder() const {return have_border_lines;}
 	inline int getBorderLineWidth() const {return border_width;}
 	inline MapColor* getBorderColor() const {return border_color;}

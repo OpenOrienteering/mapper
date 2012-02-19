@@ -87,6 +87,7 @@ set(Mapper_SRCS
  src/gps_track.cpp 
 
  src/ocad8_file_import.cpp
+ src/xml_import_export.cpp
 )
 qt4_automoc(${Mapper_SRCS})
 
@@ -112,4 +113,5 @@ target_link_libraries(Mapper
  ${QT_QTCORE_LIBRARY}
  ${QT_QTGUI_LIBRARY}
  ${QT_QTNETWORK_LIBRARY}
+ ${QT_QTXML_LIBRARY}
 )

@@ -3,53 +3,48 @@
 
 #include <QTextCodec>
 
-#include "map.h"
-#include "symbol.h"
-#include "object.h"
 #include "../libocad/libocad.h"
 
-class OCAD8FileImport
+#include "import_export.h"
+#include "symbol.h"
+#include "object.h"
+
+class OCAD8FileImport : public Importer
 {
 public:
-    OCAD8FileImport(Map *map, MapView *view);
+    OCAD8FileImport(const QString &path, Map *map, MapView *view);
     ~OCAD8FileImport();
 
-    void loadFrom(const char *filename) throw (std::exception);
-    void saveTo(const char *filename) throw (std::exception);
-
-    inline const std::vector<QString> &warnings() { return warn; }
+    void doImport() throw (ImportExportException);
 
     void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
 
 protected:
-    QString str1(const char *p);
-    QString str2(const char *p);
-    float convertRotation(int angle);
-    qint64 convertPosition(int position);
-
+    // Symbol import
     Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);
     Symbol *importLineSymbol(const OCADLineSymbol *ocad_symbol);
     Symbol *importAreaSymbol(const OCADAreaSymbol *ocad_symbol);
-    //Symbol *importTextSymbol(const OCADTextSymbol *ocad_symbol);
+    Symbol *importTextSymbol(const OCADTextSymbol *ocad_symbol);
     //Symbol *importRectSymbol(const OCADRectSymbol *ocad_symbol);
-    PointSymbol *importPattern(s16 npts, OCADPoint *pts); // used for area patterns
 
+    // Object import
     Object *importObject(const OCADObject *ocad_object);
 
     // Some helper functions that are used in multiple places
+    PointSymbol *importPattern(s16 npts, OCADPoint *pts);
     void fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol);
     void fillPathCoords(Object *object, s16 npts, OCADPoint *pts);
+    bool fillTextPathCoords(TextObject *object, s16 npts, OCADPoint *pts);
+
+    // Unit conversion functions
+    QString convertPascalString(const char *p);
+    QString convertCString(const char *p, size_t n);
+    QString convertWideCString(const char *p, size_t n);
+    float convertRotation(int angle);
+    void convertPoint(MapCoord &c, int ocad_x, int ocad_y);
+    qint64 convertSize(int ocad_size);
 
 private:
-    /// A list of import warnings
-    std::vector<QString> warn;
-
-    /// The Map to populate
-    Map *map;
-
-    /// The MapView to populate
-    MapView *view;
-
     /// Handle to the open OCAD file
     OCADFile *file;
 
@@ -65,6 +60,8 @@ private:
     /// maps OCAD symbol number to oo-mapper symbol object
     QHash<int, Symbol *> symbol_index;
 
+    /// Offset between OCAD map origin and Mapper map origin (in Mapper coordinates)
+    qint64 offset_x, offset_y;
 
 };
 
