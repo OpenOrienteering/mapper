@@ -1,6 +1,7 @@
 #include <QDebug>
 #include <QDateTime>
 
+#include "import_export.h"
 #include "ocad8_file_import.h"
 #include "map_color.h"
 #include "symbol_point.h"
@@ -8,7 +9,7 @@
 #include "symbol_area.h"
 #include "symbol_text.h"
 
-OCAD8FileImport::OCAD8FileImport(Map *map, MapView *view) : map(map), view(view), file(NULL)
+OCAD8FileImport::OCAD8FileImport(const QString &path, Map *map, MapView *view) : Importer(path, map, view), file(NULL)
 {
     ocad_init();
     encoding_1byte = QTextCodec::codecForName("Windows-1252");
@@ -21,16 +22,17 @@ OCAD8FileImport::~OCAD8FileImport()
     ocad_shutdown();
 }
 
-void OCAD8FileImport::loadFrom(const char *filename) throw (std::exception)
+void OCAD8FileImport::doImport() throw (ImportExportException)
 {
     qint64 start = QDateTime::currentMSecsSinceEpoch();
     int symbol_count = 0, object_count = 0;
 
+    const char *filename = path.toLocal8Bit().constData();
     int err = ocad_file_open(&file, filename);
-    qDebug() << "open ocad file" << err;
-    if (err != 0) throw std::exception();
+    //qDebug() << "open ocad file" << err;
+    if (err != 0) throw ImportExportException();
 
-    qDebug() << "file version is " << file->header->major << ", type is "
+    qDebug() << "file version is" << file->header->major << ", type is"
              << ((file->header->ftype == 2) ? "normal" : "other");
     qDebug() << "map scale is" << file->setup->scale;
 
@@ -44,11 +46,13 @@ void OCAD8FileImport::loadFrom(const char *filename) throw (std::exception)
     // Load colors
     int num_colors = ocad_color_count(file);
 
-    map->color_set->colors.resize(num_colors);
     for (int i = 0; i < num_colors; i++)
     {
         OCADColor *ocad_color = ocad_color_at(file, i);
         //qDebug() << clr->cyan << clr->magenta << clr->yellow << clr->black << clr->number << str1(clr->name);
+
+        QString name = convertPascalString(ocad_color->name);
+        if (name.isEmpty()) continue;
 
         MapColor* color = new MapColor();
         color->priority = i;
@@ -59,10 +63,10 @@ void OCAD8FileImport::loadFrom(const char *filename) throw (std::exception)
         color->y = 0.005f * ocad_color->yellow;
         color->k = 0.005f * ocad_color->black;
         color->opacity = 1.0f;
-        color->name = convertPascalString(ocad_color->name);
+        color->name = name;
         color->updateFromCMYK();
 
-        map->color_set->colors[i] = color;
+        map->color_set->colors.push_back(color);
         color_index[ocad_color->number] = color;
     }
 
@@ -106,8 +110,9 @@ void OCAD8FileImport::loadFrom(const char *filename) throw (std::exception)
                 }
                 else
                 {
-                    warn.push_back(QString(QObject::tr("Unable to import symbol \"%3\" (%1.%2)"))
-                                   .arg(ocad_symbol->number / 10).arg(ocad_symbol->number % 10).arg(convertPascalString(ocad_symbol->name)));
+                    addWarning(QObject::tr("Unable to import symbol \"%3\" (%1.%2)")
+                               .arg(ocad_symbol->number / 10).arg(ocad_symbol->number % 10)
+                               .arg(convertPascalString(ocad_symbol->name)));
                 }
             }
         }
@@ -157,7 +162,7 @@ void OCAD8FileImport::loadFrom(const char *filename) throw (std::exception)
                 }
                 else
                 {
-                    warn.push_back(QObject::tr("Unable to import template: %1").arg(templ->str));
+                    addWarning(QObject::tr("Unable to import template: %1").arg(templ->str));
 
                 }
             }
@@ -198,7 +203,7 @@ void OCAD8FileImport::loadFrom(const char *filename) throw (std::exception)
     ocad_file_close(file);
 
     qint64 elapsed = QDateTime::currentMSecsSinceEpoch() - start;
-    qDebug() << "OCAD map imported: "<<symbol_count<<"symbols and"<<object_count<<"objects in"<<elapsed<<"milliseconds";
+    qDebug() << "OCAD map imported:"<<symbol_count<<"symbols and"<<object_count<<"objects in"<<elapsed<<"milliseconds";
 }
 
 void OCAD8FileImport::setStringEncodings(const char *narrow, const char *wide) {
@@ -329,42 +334,42 @@ Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
 
     if (ocad_symbol->bold != 400 && ocad_symbol->bold != 700)
     {
-        warn.push_back(QString(QObject::tr("During import of text symbol %1: ignoring custom weight (%2)"))
+        addWarning(QObject::tr("During import of text symbol %1: ignoring custom weight (%2)")
                        .arg(ocad_symbol->number).arg(ocad_symbol->bold));
     }
     if (ocad_symbol->under)
     {
-        warn.push_back(QString(QObject::tr("During import of text symbol %1: ignoring custom underline color, width, and positioning"))
+        addWarning(QObject::tr("During import of text symbol %1: ignoring custom underline color, width, and positioning")
                        .arg(ocad_symbol->number));
     }
     if (ocad_symbol->cspace != 0)
     {
-        warn.push_back(QString(QObject::tr("During import of text symbol %1: ignoring custom character spacing (%2%)"))
+        addWarning(QObject::tr("During import of text symbol %1: ignoring custom character spacing (%2%)")
                        .arg(ocad_symbol->number).arg(ocad_symbol->cspace));
     }
     if (ocad_symbol->wspace != 100)
     {
-        warn.push_back(QString(QObject::tr("During import of text symbol %1: ignoring custom word spacing (%2%)"))
+        addWarning(QObject::tr("During import of text symbol %1: ignoring custom word spacing (%2%)")
                        .arg(ocad_symbol->number).arg(ocad_symbol->wspace));
     }
     if (ocad_symbol->pspace != 0)
     {
-        warn.push_back(QString(QObject::tr("During import of text symbol %1: ignoring custom paragraph spacing (%2%)"))
+        addWarning(QObject::tr("During import of text symbol %1: ignoring custom paragraph spacing (%2%)")
                        .arg(ocad_symbol->number).arg(ocad_symbol->pspace));
     }
     if (ocad_symbol->indent1 != 0 || ocad_symbol->indent2 != 0)
     {
-        warn.push_back(QString(QObject::tr("During import of text symbol %1: ignoring custom indents (%2/%3)"))
+        addWarning(QObject::tr("During import of text symbol %1: ignoring custom indents (%2/%3)")
                        .arg(ocad_symbol->number).arg(ocad_symbol->indent1).arg(ocad_symbol->indent2));
     }
     if (ocad_symbol->ntabs > 0)
     {
-        warn.push_back(QString(QObject::tr("During import of text symbol %1: ignoring custom tabs"))
+        addWarning(QObject::tr("During import of text symbol %1: ignoring custom tabs")
                        .arg(ocad_symbol->number));
     }
     if (ocad_symbol->fmode != 0)
     {
-        warn.push_back(QString(QObject::tr("During import of text symbol %1: ignoring text framing (mode %2)"))
+        addWarning(QObject::tr("During import of text symbol %1: ignoring text framing (mode %2)")
                        .arg(ocad_symbol->number).arg(ocad_symbol->fmode));
     }
 
@@ -442,7 +447,7 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
 {
     if (!symbol_index.contains(ocad_object->symbol))
     {
-        warn.push_back(QObject::tr("Unable to load object"));
+        addWarning(QObject::tr("Unable to load object"));
         return NULL;
     }
 
@@ -478,7 +483,7 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
         // Text objects need special path translation
         if (!fillTextPathCoords(t, ocad_object->npts, (OCADPoint *)ocad_object->pts))
         {
-            warn.push_back(QString(QObject::tr("Not importing text symbol, couldn't figure out path' (npts=%1): %2"))
+            addWarning(QObject::tr("Not importing text symbol, couldn't figure out path' (npts=%1): %2")
                            .arg(ocad_object->npts).arg(t->getText()));
             delete t;
             return NULL;
@@ -541,8 +546,8 @@ bool OCAD8FileImport::fillTextPathCoords(TextObject *object, s16 npts, OCADPoint
     s32 x3 = buf[0], y3 = buf[1];
     ocad_point(buf, &(pts[4])); // top left point
     s32 x4 = buf[0], y4 = buf[1];
-    qDebug() << "text path"<<x0<<y0<<x1<<y1<<x2<<y2<<x3<<y3<<x4<<y4;
-    if (x3 <= x0 || y3 <= y0)
+    //qDebug() << "text path"<<x0<<y0<<x1<<y1<<x2<<y2<<x3<<y3<<x4<<y4;
+    if (x2 <= x0 || y0 <= y2)
     {
         return false;
     }

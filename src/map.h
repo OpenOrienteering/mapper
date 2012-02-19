@@ -96,6 +96,7 @@ class Map : public QObject
 Q_OBJECT
 friend class RenderableContainer;
 friend class OCAD8FileImport;
+friend class XMLImportExport;
 public:
 	typedef QSet<Object*> ObjectSelection;
 	

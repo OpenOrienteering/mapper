@@ -165,7 +165,7 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	return icon;
 }
 
-QString Symbol::getNumberAsString()
+QString Symbol::getNumberAsString() const
 {
 	QString str = "";
 	for (int i = 0; i < number_components; ++i)

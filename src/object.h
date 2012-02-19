@@ -38,6 +38,7 @@ class Map;
 class Object
 {
 friend class OCAD8FileImport;
+friend class XMLImportExport;
 public:
 	enum Type
 	{

@@ -3,21 +3,19 @@
 
 #include <QTextCodec>
 
-#include "map.h"
-#include "symbol.h"
-#include "object.h"
 #include "../libocad/libocad.h"
 
-class OCAD8FileImport
+#include "import_export.h"
+#include "symbol.h"
+#include "object.h"
+
+class OCAD8FileImport : public Importer
 {
 public:
-    OCAD8FileImport(Map *map, MapView *view);
+    OCAD8FileImport(const QString &path, Map *map, MapView *view);
     ~OCAD8FileImport();
 
-    void loadFrom(const char *filename) throw (std::exception);
-    void saveTo(const char *filename) throw (std::exception);
-
-    inline const std::vector<QString> &warnings() { return warn; }
+    void doImport() throw (ImportExportException);
 
     void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
 
@@ -47,15 +45,6 @@ protected:
     qint64 convertSize(int ocad_size);
 
 private:
-    /// A list of import warnings
-    std::vector<QString> warn;
-
-    /// The Map to populate
-    Map *map;
-
-    /// The MapView to populate
-    MapView *view;
-
     /// Handle to the open OCAD file
     OCADFile *file;
 

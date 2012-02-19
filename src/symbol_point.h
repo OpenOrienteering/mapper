@@ -40,6 +40,7 @@ class PointSymbol : public Symbol
 friend class PointSymbolSettings;
 friend class PointSymbolEditorWidget;
 friend class OCAD8FileImport;
+friend class XMLImportExport;
 public:
 	/// Constructs an empty point symbol
 	PointSymbol();
