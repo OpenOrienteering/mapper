@@ -39,7 +39,6 @@
 #include "symbol_line.h"
 
 #include "ocad8_file_import.h"
-#include "xml_import_export.h"
 
 MapLayer::MapLayer(const QString& name, Map* map) : name(name), map(map)
 {
@@ -541,8 +540,6 @@ bool Map::loadFromOCAD78(const QString &path, MapEditorController *map_editor)
             qDebug() << *it;
         }
     }
-
-    XMLImportExport(path, this, view).doExport();
 
     return true;
 }
