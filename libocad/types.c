@@ -1,6 +1,14 @@
+#include <stdlib.h>
 #include <string.h>
 
 #include "libocad.h"
+
+char *my_strdup(const char *s) {
+	int size = strlen(s) + 1;
+	char *p = malloc(size);
+	if (p) { memcpy(p, s, size); }
+	return p;
+}
 
 const s32 *ocad_point(s32 *buf, const OCADPoint *pt) {
 	buf[0] = pt->x >> 8;

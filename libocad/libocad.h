@@ -30,8 +30,8 @@ extern "C" {
 #include "array.h"
 #include "geometry.h"
 
-// Some definitions to fix up compilation under MinGW
-char *strdup(const char *);
+// Use a custom strdup implementation to prevent portability problems
+char *my_strdup(const char *s);
 
 #ifndef _WIN32
 // Some definitions to fix up compilation under POSIX

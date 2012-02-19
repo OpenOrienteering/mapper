@@ -130,7 +130,7 @@ int ocad_file_open(OCADFile **pfile, const char *filename) {
 		if (file == NULL) return -1;
 	}
 	memset(file, 0, sizeof(OCADFile));
-	file->filename = (const char *)strdup(filename);
+	file->filename = (const char *)my_strdup(filename);
 	file->fd = open(file->filename, O_RDONLY | O_BINARY);
 	if (file->fd <= 0) { err = -2; goto ocad_file_open_1; }
 	struct stat fs;

@@ -10,7 +10,7 @@ int ocad_to_background(OCADBackground *bg, OCADTemplate *templ) {
 	if (p == NULL) return -1;
 	int sz = p - templ->str;
 	memcpy(tmp, templ->str, sz); tmp[sz] = 0;
-	bg->filename = (char *)strdup(tmp);
+	bg->filename = (char *)my_strdup(tmp);
 	if (10 == sscanf(p, F_TEMPL,
 		&(bg->s), &(bg->trnx), &(bg->trny), &(bg->angle), &(bg->sclx), &(bg->scly),
 		&(bg->dimming), &(bg->p), (int *)&(bg->transparent), &(bg->o))) {
