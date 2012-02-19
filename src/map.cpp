@@ -21,6 +21,7 @@
 #include "map.h"
 
 #include <assert.h>
+#include <algorithm>
 
 #include <QMessageBox>
 #include <QFile>
