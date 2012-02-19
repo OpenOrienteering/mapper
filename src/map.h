@@ -232,6 +232,7 @@ public:
 	bool isObjectSelected(Object* object);
 	bool toggleObjectSelection(Object* object, bool emit_selection_changed);	// returns true if the object was selected, false if deselected
 	void clearObjectSelection(bool emit_selection_changed);
+	void emitSelectionChanged();
 	
 	// Other settings
 	

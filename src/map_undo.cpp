@@ -55,6 +55,13 @@ bool MapUndoStep::load(QFile* file, int version)
 	return true;
 }
 
+void MapUndoStep::getAffectedOutcome(std::vector< Object* >& out) const
+{
+	out.resize(affected_objects.size());
+	for (int i = 0; i < (int)affected_objects.size(); ++i)
+		out[i] = map->getLayer(layer)->getObject(affected_objects[i]);
+}
+
 // ### ObjectContainingUndoStep ###
 
 ObjectContainingUndoStep::ObjectContainingUndoStep(Map* map, Type type) : MapUndoStep(map, type)
@@ -195,19 +202,27 @@ UndoStep* AddObjectsUndoStep::undo()
 {
 	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
 	
-	// Make sure to delete the objects in the right order so the other objects' indices stay valid
-	std::sort(affected_objects.begin(), affected_objects.end(), std::less<int>());
+	// Make sure to add the objects in the right order so the other objects' indices stay valid
+	std::vector< std::pair<int, int> > order;	// index into affected_objects & objects, object index
+	order.resize(affected_objects.size());
+	for (int i = 0; i < (int)affected_objects.size(); ++i)
+		order[i] = std::pair<int, int>(i, affected_objects[i]);
+	std::sort(order.begin(), order.end(), sortOrder);
 	
 	MapLayer* layer = map->getLayer(this->layer);
 	int size = (int)objects.size();
 	for (int i = 0; i < size; ++i)
 	{
-		undo_step->addObject(affected_objects[i]);
-		layer->addObject(objects[i],  affected_objects[i]);
+		undo_step->addObject(affected_objects[order[i].first]);
+		layer->addObject(objects[order[i].first], order[i].second);
 	}
 	
 	objects.clear();
 	return undo_step;
+}
+bool AddObjectsUndoStep::sortOrder(const std::pair< int, int >& a, const std::pair< int, int >& b)
+{
+	return a.second < b.second;
 }
 
 // ### SwitchSymbolUndoStep ###

@@ -410,6 +410,17 @@ void Object::setPathClosed(bool value)
 		setOutputDirty();
 	}
 }
+void Object::connectPathEnds()
+{
+	if (isPathClosed())
+		return;
+	
+	coords[0].setRawX(qRound64((coords[coords.size() - 1].rawX() + coords[0].rawX()) / 2));
+	coords[0].setRawY(qRound64((coords[coords.size() - 1].rawY() + coords[0].rawY()) / 2));
+	coords[coords.size() - 1] = coords[0];
+	path_closed = true;
+	setOutputDirty();
+}
 
 bool Object::setSymbol(Symbol* new_symbol, bool no_checks)
 {
@@ -575,6 +586,80 @@ int PathObject::subdivide(int index, float param)
 		addCoordinate(index + 1, (MapCoordF(coords[index]) + (MapCoordF(coords[index+1]) - MapCoordF(coords[index])) * param).toMapCoord());
 		return index + 1;
 	}
+}
+
+bool PathObject::canBeConnected(PathObject* other, double connect_threshold_sq)
+{
+	if (isPathClosed() || other->isPathClosed())
+		return false;
+	
+	if (coords[0].lengthSquaredTo(other->coords[0]) <= connect_threshold_sq)
+		return true;
+	else if (coords[0].lengthSquaredTo(other->coords[other->getCoordinateCount() - 1]) <= connect_threshold_sq)
+		return true;
+	else if (coords[getCoordinateCount() - 1].lengthSquaredTo(other->coords[0]) <= connect_threshold_sq)
+		return true;
+	else if (coords[getCoordinateCount() - 1].lengthSquaredTo(other->coords[other->getCoordinateCount() - 1]) <= connect_threshold_sq)
+		return true;
+	
+	return false;
+}
+bool PathObject::connectIfClose(PathObject* other, double connect_threshold_sq)
+{
+	if (isPathClosed() || other->isPathClosed())
+		return false;
+	
+	if (coords[0].lengthSquaredTo(other->coords[0]) <= connect_threshold_sq)
+	{
+		other->reverse();
+		appendPath(other, true);
+	}
+	else if (coords[0].lengthSquaredTo(other->coords[other->getCoordinateCount() - 1]) <= connect_threshold_sq)
+		appendPath(other, true);
+	else if (coords[getCoordinateCount() - 1].lengthSquaredTo(other->coords[0]) <= connect_threshold_sq)
+		appendPath(other, false);
+	else if (coords[getCoordinateCount() - 1].lengthSquaredTo(other->coords[other->getCoordinateCount() - 1]) <= connect_threshold_sq)
+	{
+		other->reverse();
+		appendPath(other, false);
+	}
+	else
+		return false;
+	
+	if (coords[0].lengthSquaredTo(coords[getCoordinateCount() - 1]) <= connect_threshold_sq)
+		connectPathEnds();
+	
+	return true;
+}
+void PathObject::appendPath(PathObject* other, bool prepend)
+{
+	assert(!isPathClosed() && !other->isPathClosed());
+	int coords_size = coords.size();
+	int other_coords_size = (int)other->coords.size();
+	
+	coords.resize(coords_size + other_coords_size - 1);
+	if (prepend)
+	{
+		for (int i = coords_size + other_coords_size - 2; i > other_coords_size - 2; --i)
+			coords[i] = coords[i - (other_coords_size - 1)];
+		
+		coords[other_coords_size - 1].setRawX(qRound64((coords[other_coords_size - 1].rawX() + other->coords[other_coords_size - 1].rawX()) / 2));
+		coords[other_coords_size - 1].setRawY(qRound64((coords[other_coords_size - 1].rawY() + other->coords[other_coords_size - 1].rawY()) / 2));
+		
+		for (int i = 0; i < other_coords_size - 1; ++i)
+			coords[i] = other->coords[i];
+	}
+	else
+	{
+		MapCoord coord = other->coords[0];	// take flags from first coord of path to append
+		coord.setRawX(qRound64((coords[coords_size - 1].rawX() + other->coords[0].rawX()) / 2));
+		coord.setRawY(qRound64((coords[coords_size - 1].rawY() + other->coords[0].rawY()) / 2));
+		coords[coords_size - 1] = coord;
+		
+		for (int i = 1; i < other_coords_size; ++i)
+			coords[coords_size + i - 1] = other->coords[i];
+	}
+	setOutputDirty();
 }
 
 void PathObject::setCoordinate(int pos, MapCoord c)

@@ -46,7 +46,8 @@ public:
 		DeleteObjectsUndoStepType = 1,
 		AddObjectsUndoStepType = 2,
 		SwitchSymbolUndoStepType = 3,
-		SwitchDashesUndoStepType = 4
+		SwitchDashesUndoStepType = 4,
+		CombinedUndoStepType = 5
 	};
 	
 	UndoStep(Type type);
@@ -61,7 +62,7 @@ public:
 	/// Returns if the step can still be undone. This must be true after generating the step
 	/// (otherwise it would not make sense to generate it) but can change to false if an object the step depends on,
 	/// which is not tracked by the undo system, is deleted. Example: changing a map object's symbol to a different one, then deleting the first one.
-	inline bool isValid() const {return valid;}
+	virtual bool isValid() const {return valid;}
 	
 	inline Type getType() const {return type;}
 	
@@ -70,6 +71,28 @@ public:
 protected:
 	bool valid;
 	Type type;
+};
+
+class CombinedUndoStep : public UndoStep
+{
+Q_OBJECT
+public:
+    CombinedUndoStep(void* owner);
+	virtual ~CombinedUndoStep();
+	
+	inline int getNumSubSteps() const {return (int)steps.size();}
+	inline void addSubStep(UndoStep* step) {steps.push_back(step);}
+	inline UndoStep* getSubStep(int i) {return steps[i];}
+	
+    virtual UndoStep* undo();
+    virtual void save(QFile* file);
+	virtual bool load(QFile* file, int version);
+	
+    virtual bool isValid() const;
+	
+protected:
+	std::vector<UndoStep*> steps;
+	void* owner;
 };
 
 class UndoManager : public QObject

@@ -295,16 +295,18 @@ void MapEditorController::assignKeyboardShortcuts()
     findAction("paste")->setShortcut(QKeySequence::Paste);
 
     // Custom keyboard shortcuts
-    findAction("zoomin")->setShortcut(QKeySequence("F7"));
-    findAction("zoomout")->setShortcut(QKeySequence("F8"));
-    findAction("fullscreen")->setShortcut(QKeySequence("F11"));
+	findAction("zoomin")->setShortcut(QKeySequence("F7"));
+	findAction("zoomout")->setShortcut(QKeySequence("F8"));
+	findAction("fullscreen")->setShortcut(QKeySequence("F11"));
+	
+	findAction("editobjects")->setShortcut(QKeySequence("E"));
+	findAction("drawpoint")->setShortcut(QKeySequence("S"));
+	findAction("drawpath")->setShortcut(QKeySequence("P"));
+	findAction("drawtext")->setShortcut(QKeySequence("T"));
+	
     findAction("duplicate")->setShortcut(QKeySequence("D"));
     findAction("switchdashes")->setShortcut(QKeySequence("Ctrl+D"));
-
-    findAction("editobjects")->setShortcut(QKeySequence("E"));
-    findAction("drawpoint")->setShortcut(QKeySequence("S"));
-    findAction("drawpath")->setShortcut(QKeySequence("P"));
-    findAction("drawtext")->setShortcut(QKeySequence("T"));
+	findAction("connectpaths")->setShortcut(QKeySequence("C"));
 	findAction("rotateobjects")->setShortcut(QKeySequence("R"));
 }
 
@@ -341,6 +343,7 @@ void MapEditorController::createMenuAndToolbars()
     switch_symbol_act = newAction("switchsymbol", "Switch symbol", this, SLOT(switchSymbolClicked()), "tool-switch-symbol.png");
     fill_border_act = newAction("fillborder", "Fill / Create border", this, SLOT(fillBorderClicked()), "tool-fill-border.png");
     switch_dashes_act = newAction("switchdashes", "Switch dash direction", this, SLOT(switchDashesClicked()), "tool-switch-dashes"); // Ctrl+D
+	connect_paths_act = newAction("connectpaths", "Connect paths", this, SLOT(connectPathsClicked()), "tool-connect-paths.png");
 	rotate_act = newCheckAction("rotateobjects", "Rotate object(s)", this, SLOT(rotateClicked(bool)), "tool-rotate.png");
 
     // Refactored so we can do custom key bindings in the future
@@ -379,6 +382,7 @@ void MapEditorController::createMenuAndToolbars()
     tools_menu->addAction(switch_symbol_act);
     tools_menu->addAction(fill_border_act);
     tools_menu->addAction(switch_dashes_act);
+	tools_menu->addAction(connect_paths_act);
 	tools_menu->addAction(rotate_act);
 	
 	// Symbols menu
@@ -452,6 +456,7 @@ void MapEditorController::createMenuAndToolbars()
     toolbar_editing->addAction(switch_symbol_act);
 	toolbar_editing->addAction(fill_border_act);
     toolbar_editing->addAction(switch_dashes_act);
+	toolbar_editing->addAction(connect_paths_act);
 	toolbar_editing->addAction(rotate_act);
 #endif
 
@@ -515,10 +520,36 @@ void MapEditorController::redo()
 }
 void MapEditorController::doUndo(bool redo)
 {
-	MapUndoStep* step = reinterpret_cast<MapUndoStep*>(redo ? map->objectUndoManager().getLastRedoStep() : map->objectUndoManager().getLastUndoStep());
-	MapLayer* affected_layer = map->getLayer(step->getLayer());
-	std::vector<int> affected_objects;
-	step->getAffectedOutcome(affected_objects);
+	UndoStep* generic_step = redo ? map->objectUndoManager().getLastRedoStep() : map->objectUndoManager().getLastUndoStep();
+	MapLayer* affected_layer = NULL;
+	std::vector<Object*> affected_objects;
+	
+	if (generic_step->getType() == UndoStep::CombinedUndoStepType)
+	{
+		CombinedUndoStep* combined_step = reinterpret_cast<CombinedUndoStep*>(generic_step);
+		std::set<Object*> affected_objects_set;
+		for (int i = 0; i < combined_step->getNumSubSteps(); ++i)
+		{
+			std::vector<Object*> affected_objects_temp;
+			MapUndoStep* map_step = reinterpret_cast<MapUndoStep*>(combined_step->getSubStep(i));
+			if (!affected_layer)
+				affected_layer = map->getLayer(map_step->getLayer());
+			else
+				assert(affected_layer == map->getLayer(map_step->getLayer()));
+			map_step->getAffectedOutcome(affected_objects_temp);
+			
+			for (int o = 0; o < (int)affected_objects_temp.size(); ++o)
+				affected_objects_set.insert(affected_objects_temp[o]);	// NOTE: This does only work as long as there is no combined step which combines editing objects with deleting them later
+		}
+		for (std::set<Object*>::const_iterator it = affected_objects_set.begin(); it != affected_objects_set.end(); ++it)
+			affected_objects.push_back(*it);
+	}
+	else
+	{
+		MapUndoStep* map_step = reinterpret_cast<MapUndoStep*>(generic_step);
+		affected_layer = map->getLayer(map_step->getLayer());
+		map_step->getAffectedOutcome(affected_objects);
+	}
 	
 	bool in_saved_state, done;
 	if (redo)
@@ -542,9 +573,8 @@ void MapEditorController::doUndo(bool redo)
 	QRectF object_rect;
 	for (int i = 0; i < (int)affected_objects.size(); ++i)
 	{
-		Object* object = affected_layer->getObject(affected_objects[i]);
-		rectIncludeSafe(object_rect, object->getExtent());
-		map->addObjectToSelection(object, i == (int)affected_objects.size() - 1);
+		rectIncludeSafe(object_rect, affected_objects[i]->getExtent());
+		map->addObjectToSelection(affected_objects[i], i == (int)affected_objects.size() - 1);
 	}
 	if (object_rect.isValid())
 		map_widget->ensureVisibilityOfRect(object_rect);
@@ -719,8 +749,10 @@ void MapEditorController::selectedObjectsChanged()
 	duplicate_act->setStatusTip(tr("Duplicate the selected object(s).") + (duplicate_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
 	switch_dashes_act->setEnabled(have_line);
 	switch_dashes_act->setStatusTip(tr("Switch the direction of symbols on line objects.") + (switch_dashes_act->isEnabled() ? "" : (" " + tr("Select at least one line object to activate this tool."))));
+	connect_paths_act->setEnabled(have_line);
+	connect_paths_act->setStatusTip(tr("Connect endpoints of paths which are close together.") + (connect_paths_act->isEnabled() ? "" : (" " + tr("Select at least one line object to activate this tool."))));
 	rotate_act->setEnabled(have_selection);
-	duplicate_act->setStatusTip(tr("Rotate the selected object(s).") + (rotate_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
+	rotate_act->setStatusTip(tr("Rotate the selected object(s).") + (rotate_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
 	
 	selectedSymbolsOrObjectsChanged();
 }
@@ -864,6 +896,117 @@ void MapEditorController::switchDashesClicked()
 	
 	map->setObjectsDirty();
 	map->objectUndoManager().addNewUndoStep(undo_step);
+}
+void MapEditorController::connectPathsClicked()
+{
+	std::vector<Object*> objects;
+	std::vector<Object*> undo_objects;
+	std::vector<Object*> deleted_objects;
+	
+	const float close_distance_sq = 0.35 * 0.35;	// TODO: Should this depend on the width of the lines? But how to determine a sensible width for lines consisting only of objects?
+	
+	// Collect all objects in question
+	objects.reserve(map->getNumSelectedObjects());
+	undo_objects.reserve(map->getNumSelectedObjects());
+	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		if ((*it)->getSymbol()->getContainedTypes() & Symbol::Line && (*it)->getType() == Object::Path)
+		{
+			objects.push_back(*it);
+			undo_objects.push_back(NULL);
+		}
+	}
+	
+	AddObjectsUndoStep* add_step = NULL;
+	MapLayer* layer = map->getCurrentLayer();
+	
+	// Process all objects
+	// TODO: This does not handle hole points ... yet? But this is unnecessary for now.
+	for (int i = 0; i < (int)objects.size(); ++i)
+	{
+		Object* a = objects[i];
+		
+		// Close the path?
+		if (!a->isPathClosed() && a->getCoordinate(0).lengthSquaredTo(a->getCoordinate(a->getCoordinateCount() - 1)) <= close_distance_sq)
+		{
+			undo_objects[i] = a->duplicate();
+			a->connectPathEnds();
+			a->update(true);
+		}
+		if (a->isPathClosed())
+			continue;
+		
+		// Check for other endpoints which are close enough together to be closed
+		for (int k = i + 1; k < (int)objects.size(); ++k)
+		{
+			Object* b = objects[k];
+			if (b->isPathClosed() || b->getSymbol() != a->getSymbol())
+				continue;
+			
+			PathObject* path_a = reinterpret_cast<PathObject*>(a);
+			PathObject* path_b = reinterpret_cast<PathObject*>(b);
+			if (path_a->canBeConnected(path_b, close_distance_sq))
+			{
+				// Duplicate a if necessary and append b to a
+				if (!undo_objects[i])
+					undo_objects[i] = a->duplicate();
+				Object* b_duplicate = b->duplicate();
+				assert(path_a->connectIfClose(path_b, close_distance_sq));
+				
+				// Create an add step for b
+				int b_index = layer->findObjectIndex(b);
+				deleted_objects.push_back(b);
+				if (!add_step)
+					add_step = new AddObjectsUndoStep(map);
+				b_duplicate->setMap(map);
+				add_step->addObject(b_index, b_duplicate);
+				
+				// Delete b from the active list
+				objects.erase(objects.begin() + k);
+				undo_objects.erase(undo_objects.begin() + k);
+				k = i;	// have to check other objects again
+			}
+		}
+	}
+	
+	// Create undo step?
+	ReplaceObjectsUndoStep* replace_step = NULL;
+	for (int i = 0; i < (int)undo_objects.size(); ++i)
+	{
+		if (undo_objects[i])
+		{
+			// The object was changed, update the new version
+			objects[i]->update(true);
+			
+			// Add the old version to the undo step
+			undo_objects[i]->setMap(map);
+			if (!replace_step)
+				replace_step = new ReplaceObjectsUndoStep(map);
+			replace_step->addObject(layer->findObjectIndex(objects[i]), undo_objects[i]);
+		}
+	}
+	
+	if (add_step)
+	{
+		for (int i = 0; i < (int)deleted_objects.size(); ++i)
+		{
+			map->removeObjectFromSelection(deleted_objects[i], false);
+			map->getCurrentLayer()->deleteObject(deleted_objects[i], false);
+		}
+	}
+	
+	if (add_step || replace_step)
+	{
+		CombinedUndoStep* undo_step = new CombinedUndoStep((void*)map);
+		if (add_step)
+			undo_step->addSubStep(add_step);
+		if (replace_step)
+			undo_step->addSubStep(replace_step);
+		map->objectUndoManager().addNewUndoStep(undo_step);
+	}
+	
+	map->emitSelectionChanged();
 }
 void MapEditorController::rotateClicked(bool checked)
 {

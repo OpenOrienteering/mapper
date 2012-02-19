@@ -898,6 +898,10 @@ void Map::clearObjectSelection(bool emit_selection_changed)
 	if (emit_selection_changed)
 		emit(selectedObjectsChanged());
 }
+void Map::emitSelectionChanged()
+{
+	emit(selectedObjectsChanged());
+}
 
 void Map::addMapWidget(MapWidget* widget)
 {

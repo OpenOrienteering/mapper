@@ -124,6 +124,7 @@ public slots:
 	void switchSymbolClicked();
 	void fillBorderClicked();
 	void switchDashesClicked();
+	void connectPathsClicked();
 	void rotateClicked(bool checked);
 	
 	void paintOnTemplateClicked(bool checked);
@@ -188,6 +189,7 @@ private:
 	QAction* switch_symbol_act;
 	QAction* fill_border_act;
 	QAction* switch_dashes_act;
+	QAction* connect_paths_act;
 	QAction* rotate_act;
 	
 	QAction* paint_on_template_act;

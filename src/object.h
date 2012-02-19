@@ -102,6 +102,7 @@ public:
 	
 	void setPathClosed(bool value = true);
 	inline bool isPathClosed() const {return path_closed;}
+	void connectPathEnds();	// like setPathClosed(true), but merges start and end point at their center
 	
 	/// Changes the object's symbol, returns if successful. Some conversions are impossible, for example point to line.
 	/// Normally, this method checks if the types of the old and the new symbol are compatible. If the old symbol pointer
@@ -142,12 +143,17 @@ public:
 	
 	int calcNumRegularPoints();
 	void calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq, PathCoord& out_path_coord);
-	int subdivide(int index, float param);	// returns the index of the added point
+	int subdivide(int index, float param);									// returns the index of the added point
+	bool canBeConnected(PathObject* other, double connect_threshold_sq);	// returns if connectIfClose() would do something
+	bool connectIfClose(PathObject* other, double connect_threshold_sq);	// returns if the objects were connected (if so, you can delete the other object). If one of the paths has to be reversed, it is done for the "other" path.
 	
 	void setCoordinate(int pos, MapCoord c);
 	void addCoordinate(int pos, MapCoord c);
 	void addCoordinate(MapCoord c);
 	void deleteCoordinate(int pos, bool adjust_other_coords);	// adjust_other_coords does not work if deleting bezier curve handles!
+	
+protected:
+	void appendPath(PathObject* other, bool prepend);
 };
 
 /// Object type which can only be used for point symbols, and is also the only object which can be used with them
