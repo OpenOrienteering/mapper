@@ -138,6 +138,7 @@ public:
 	TextObjectAlignmentDockWidget(TextObject* object, int horz_default, int vert_default, TextObjectEditorHelper* text_editor, QWidget* parent);
     virtual QSize sizeHint() const {return QSize(10, 10);}
     
+    virtual bool event(QEvent* event);
     virtual void keyPressEvent(QKeyEvent* event);
     virtual void keyReleaseEvent(QKeyEvent* event);
 	

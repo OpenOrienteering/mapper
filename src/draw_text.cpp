@@ -326,6 +326,7 @@ TextObjectEditorHelper::TextObjectEditorHelper(TextObject* object, MapEditorCont
 	original_cursor_retrieved = false;
 	
 	editor->setEditingInProgress(true);
+	editor->getWindow()->setShortcutsEnabled(false);
 	
 	// Show dock in floating state
 	dock_widget = new TextObjectAlignmentDockWidget(object, (int)object->getHorizontalAlignment(), (int)object->getVerticalAlignment(), this, editor->getWindow());
@@ -335,11 +336,11 @@ TextObjectEditorHelper::TextObjectEditorHelper(TextObject* object, MapEditorCont
 	dock_widget->setGeometry(editor->getWindow()->geometry().left() + 40, editor->getWindow()->geometry().top() + 100, dock_widget->width(), dock_widget->height());
 	connect(dock_widget, SIGNAL(alignmentChanged(int,int)), this, SLOT(alignmentChanged(int,int)));
 	
-	// HACK to set the focus to an application widget again after it seems to get completely lost by adding the dock widget (on X11, at least)
+	// HACK to set the focus to an map widget again after it seems to get completely lost by adding the dock widget (on X11, at least)
 	timer = new QTimer();
 	timer->setSingleShot(true);
 	connect(timer, SIGNAL(timeout()), this, SLOT(setFocus()));
-	timer->start(10);
+	timer->start(20);
 }
 TextObjectEditorHelper::~TextObjectEditorHelper()
 {
@@ -347,10 +348,12 @@ TextObjectEditorHelper::~TextObjectEditorHelper()
 	delete dock_widget;
 	
 	editor->setEditingInProgress(false);
+	editor->getWindow()->setShortcutsEnabled(true);
 }
 void TextObjectEditorHelper::setFocus()
 {
 	editor->getWindow()->activateWindow();
+	editor->getWindow()->setFocus();
 	delete timer;
 	timer = NULL;
 }
@@ -717,6 +720,13 @@ TextObjectAlignmentDockWidget::TextObjectAlignmentDockWidget(TextObject* object,
 		vert_mapper->setMapping(vert_buttons[i], i);
 		connect(vert_buttons[i], SIGNAL(clicked()), vert_mapper, SLOT(map()));
 	}
+}
+bool TextObjectAlignmentDockWidget::event(QEvent* event)
+{
+	if (event->type() == QEvent::ShortcutOverride)
+		event->accept();
+	
+	return QDockWidget::event(event);
 }
 void TextObjectAlignmentDockWidget::keyPressEvent(QKeyEvent* event)
 {

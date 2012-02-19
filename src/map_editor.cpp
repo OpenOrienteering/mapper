@@ -474,14 +474,6 @@ void MapEditorController::detach()
 void MapEditorController::keyPressEvent(QKeyEvent* event)
 {
     map_widget->keyPressed(event);
-	if (event->isAccepted())
-		return;
-	
-	if (event->key() == Qt::Key_D && duplicate_act->isEnabled())
-	{
-		duplicateClicked();
-		event->accept();
-	}
 }
 void MapEditorController::keyReleaseEvent(QKeyEvent* event)
 {
@@ -498,7 +490,7 @@ void MapEditorController::printClicked()
 	}
 	else
 	{
-		print_dock_widget = new EditorDockWidget(tr("Print or Export"), print_act, window);
+		print_dock_widget = new EditorDockWidget(tr("Print or Export"), print_act, this, window);
 		print_widget = new PrintWidget(map, window, main_view, this, print_dock_widget);
 		print_dock_widget->setChild(print_widget);
 		
@@ -617,7 +609,7 @@ void MapEditorController::showSymbolWindow(bool show)
 		symbol_dock_widget->setVisible(!symbol_dock_widget->isVisible());
 	else
 	{
-		symbol_dock_widget = new EditorDockWidget(tr("Symbols"), symbol_window_act, window);
+		symbol_dock_widget = new EditorDockWidget(tr("Symbols"), symbol_window_act, this, window);
 		symbol_widget = new SymbolWidget(map, symbol_dock_widget);
 		connect(window, SIGNAL(keyPressed(QKeyEvent*)), symbol_widget, SLOT(keyPressed(QKeyEvent*)));
 		connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*,Symbol*)));	// NOTE: adjust setMap() if changing this!
@@ -636,7 +628,7 @@ void MapEditorController::showColorWindow(bool show)
 		color_dock_widget->setVisible(!color_dock_widget->isVisible());
 	else
 	{
-		color_dock_widget = new EditorDockWidget(tr("Colors"), color_window_act, window);
+		color_dock_widget = new EditorDockWidget(tr("Colors"), color_window_act, this, window);
 		color_dock_widget->setChild(new ColorWidget(map, color_dock_widget));
 		window->addDockWidget(Qt::LeftDockWidgetArea, color_dock_widget, Qt::Vertical);
 	}
@@ -673,7 +665,7 @@ void MapEditorController::showTemplateWindow(bool show)
 		template_dock_widget->setVisible(!template_dock_widget->isVisible());
 	else
 	{
-		template_dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, window);
+		template_dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, this, window);
 		template_dock_widget->setChild(new TemplateWidget(map, main_view, this, template_dock_widget));
 		window->addDockWidget(Qt::RightDockWidgetArea, template_dock_widget, Qt::Vertical);
 	}
@@ -691,7 +683,7 @@ void MapEditorController::openTemplateClicked()
 	}
 	else
 	{
-		template_dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, window);
+		template_dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, this, window);
 		template_dock_widget->setChild(new TemplateWidget(map, main_view, this, template_dock_widget));
 		window->addDockWidget(Qt::RightDockWidgetArea, template_dock_widget, Qt::Vertical);
 	}
@@ -1123,13 +1115,19 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 
 // ### EditorDockWidget ###
 
-EditorDockWidget::EditorDockWidget(const QString title, QAction* action, QWidget* parent): QDockWidget(title, parent), action(action)
+EditorDockWidget::EditorDockWidget(const QString title, QAction* action, MapEditorController* editor, QWidget* parent): QDockWidget(title, parent), action(action), editor(editor)
 {
 }
 void EditorDockWidget::setChild(EditorDockWidgetChild* child)
 {
 	this->child = child;
 	setWidget(child);
+}
+bool EditorDockWidget::event(QEvent* event)
+{
+	if (event->type() == QEvent::ShortcutOverride && editor->getWindow()->areShortcutsDisabled())
+		event->accept();
+    return QDockWidget::event(event);
 }
 void EditorDockWidget::closeEvent(QCloseEvent* event)
 {

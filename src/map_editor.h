@@ -211,14 +211,16 @@ class EditorDockWidget : public QDockWidget
 {
 Q_OBJECT
 public:
-	EditorDockWidget(const QString title, QAction* action, QWidget* parent = NULL);
+	EditorDockWidget(const QString title, QAction* action, MapEditorController* editor, QWidget* parent = NULL);
 	void setChild(EditorDockWidgetChild* child);
+    virtual bool event(QEvent* event);
     virtual void closeEvent(QCloseEvent* event);
 signals:
 	void closed();
 private:
 	QAction* action;
 	EditorDockWidgetChild* child;
+	MapEditorController* editor;
 };
 
 /// Represents a type of editing activity, e.g. georeferencing. Only one activity can be active at a time.

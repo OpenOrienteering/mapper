@@ -88,6 +88,10 @@ public:
 	/// Sets the text in the status bar, which stays there as long as the current tool is active
 	void setStatusBarText(const QString& text);
 	
+	/// Disable shortcuts; useful for the text input
+	inline void setShortcutsEnabled(bool enable) {disable_shortcuts = !enable;}
+	inline bool areShortcutsDisabled() const {return disable_shortcuts;}
+	
 	// Getters to make it possible to extend the file menu before close_act
 	inline QMenu* getFileMenu() const {return file_menu;}
 	inline QAction* getCloseAct() const {return close_act;}
@@ -115,6 +119,7 @@ signals:
 	void keyReleased(QKeyEvent* event);
 	
 protected:
+	virtual bool event(QEvent* event);
 	virtual void closeEvent(QCloseEvent *event);
     virtual void keyPressEvent(QKeyEvent* event);
     virtual void keyReleaseEvent(QKeyEvent* event);
@@ -142,6 +147,7 @@ private:
 	/// The active controller
 	MainWindowController* controller;
 	bool show_menu;
+	bool disable_shortcuts;
 	
 	QMenu* file_menu;
 	QAction* save_act;

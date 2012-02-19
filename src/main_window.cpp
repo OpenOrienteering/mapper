@@ -49,6 +49,7 @@ MainWindow::MainWindow(bool as_main_window)
 	has_unsaved_changes = false;
 	has_opened_file = false;
 	this->show_menu = as_main_window;
+	disable_shortcuts = false;
 	setCurrentFile("");
 	
 	setWindowIcon(QIcon(":/images/control.png"));
@@ -84,6 +85,7 @@ void MainWindow::setController(MainWindowController* new_controller)
 	
 	has_opened_file = false;
 	has_unsaved_changes = false;
+	disable_shortcuts = false;
 	setCurrentFile("");
 	
 	if (show_menu)
@@ -220,6 +222,13 @@ void MainWindow::setStatusBarText(const QString& text)
 	status_label->setText(text);
 }
 
+bool MainWindow::event(QEvent* event)
+{
+	if (event->type() == QEvent::ShortcutOverride && disable_shortcuts)
+		event->accept();
+	
+	return QMainWindow::event(event);
+}
 void MainWindow::closeEvent(QCloseEvent* event)
 {
 	if (showSaveOnCloseDialog())

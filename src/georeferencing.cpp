@@ -208,6 +208,12 @@ bool GeoreferencingActivity::calculateGeoreferencing(Template* temp, Template::T
 GeoreferencingDockWidget::GeoreferencingDockWidget(const QString title, MapEditorController* controller, QWidget* parent): QDockWidget(title, parent), controller(controller)
 {
 }
+bool GeoreferencingDockWidget::event(QEvent* event)
+{
+	if (event->type() == QEvent::ShortcutOverride && controller->getWindow()->areShortcutsDisabled())
+		event->accept();
+    return QDockWidget::event(event);
+}
 void GeoreferencingDockWidget::closeEvent(QCloseEvent* event)
 {
 	emit(closed());
