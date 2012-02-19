@@ -373,7 +373,7 @@ OCADObjectIndex;
 
 typedef
 struct _OCADTemplate {
-    char *str;
+    char str[1];  // zero terminated
 } __attribute__ ((__packed__))
 OCADTemplate;
 

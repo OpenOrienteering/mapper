@@ -39,11 +39,12 @@ protected:
     bool fillTextPathCoords(TextObject *object, s16 npts, OCADPoint *pts);
 
     // Unit conversion functions
-    QString str1(const char *p);
-    QString zstr1(const char *p, size_t n);
-    QString zstr2(const char *p, size_t n);
+    QString convertPascalString(const char *p);
+    QString convertCString(const char *p, size_t n);
+    QString convertWideCString(const char *p, size_t n);
     float convertRotation(int angle);
-    qint64 convertPosition(int position);
+    void convertPoint(MapCoord &c, int ocad_x, int ocad_y);
+    qint64 convertSize(int ocad_size);
 
 private:
     /// A list of import warnings
@@ -70,6 +71,8 @@ private:
     /// maps OCAD symbol number to oo-mapper symbol object
     QHash<int, Symbol *> symbol_index;
 
+    /// Offset between OCAD map origin and Mapper map origin (in Mapper coordinates)
+    qint64 offset_x, offset_y;
 
 };
 
