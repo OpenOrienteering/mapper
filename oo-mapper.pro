@@ -61,7 +61,10 @@ HEADERS += src/color_dock_widget.h \
            src/util.h \
            qtsingleapplication/qtlocalpeer.h \
            qtsingleapplication/qtsingleapplication.h \
-           libocad/libocad.h
+           libocad/libocad.h \
+           libocad/array.h \
+           libocad/geometry.h \
+           libocad/types.h
 SOURCES += src/color_dock_widget.cpp \
            src/draw_path.cpp \
            src/draw_point.cpp \
@@ -121,7 +124,8 @@ SOURCES += src/color_dock_widget.cpp \
 RESOURCES += resources.qrc
 
 OTHER_FILES += \
-    CMakeLists.txt
+    CMakeLists.txt \
+    Doxyfile
 
 
 
