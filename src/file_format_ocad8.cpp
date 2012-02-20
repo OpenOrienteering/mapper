@@ -1,13 +1,30 @@
 #include <QDebug>
 #include <QDateTime>
 
-#include "import_export.h"
-#include "ocad8_file_import.h"
+#include "file_format_ocad8.h"
 #include "map_color.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
 #include "symbol_area.h"
 #include "symbol_text.h"
+
+
+bool OCAD8FileFormat::understands(const unsigned char *buffer, size_t sz) const
+{
+    // The first two bytes of the file must be AD 0C.
+    if (sz >= 2 && buffer[0] == 0xAD && buffer[1] == 0x0C) return true;
+    return false;
+}
+
+Importer *OCAD8FileFormat::createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
+{
+    return new OCAD8FileImport(path, map, view);
+}
+
+
+
+// Mapper assumes approx. 100 dpi, but OCAD uses a different value.
+const float OCAD8FileImport::ocad_pt_in_mm = 25.4f / 83;
 
 OCAD8FileImport::OCAD8FileImport(const QString &path, Map *map, MapView *view) : Importer(path, map, view), file(NULL)
 {
@@ -22,7 +39,7 @@ OCAD8FileImport::~OCAD8FileImport()
     ocad_shutdown();
 }
 
-void OCAD8FileImport::doImport() throw (ImportExportException)
+void OCAD8FileImport::doImport() throw (FormatException)
 {
     qint64 start = QDateTime::currentMSecsSinceEpoch();
     int symbol_count = 0, object_count = 0;
@@ -30,7 +47,7 @@ void OCAD8FileImport::doImport() throw (ImportExportException)
 	QByteArray filename = path.toLocal8Bit().constData();
     int err = ocad_file_open(&file, filename);
     //qDebug() << "open ocad file" << err;
-    if (err != 0) throw ImportExportException();
+    if (err != 0) throw FormatException(QObject::tr("Could not open file: libocad returned %1").arg(err));
 
     qDebug() << "file version is" << file->header->major << ", type is"
              << ((file->header->ftype == 2) ? "normal" : "other");
@@ -322,9 +339,9 @@ Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
     TextSymbol *symbol = new TextSymbol();
     fillCommonSymbolFields(symbol, (OCADSymbol *)ocad_symbol);
 
-    symbol->font_family = convertPascalString(ocad_symbol->font); // FIXME: mapping?
+    symbol->font_family = convertPascalString(ocad_symbol->font); // FIXME: font mapping?
     symbol->color = color_index[ocad_symbol->color];
-    symbol->ascent_size = (int)round((0.1 * ocad_symbol->dpts) * 1.49 * 1000);
+    symbol->ascent_size = (int)round((0.1 * ocad_symbol->dpts) * ocad_pt_in_mm * 1000);
     symbol->bold = (ocad_symbol->bold >= 700) ? true : false;
     symbol->italic = (ocad_symbol->italic) ? true : false;
     symbol->underline = (ocad_symbol->under) ? true : false;
@@ -372,6 +389,8 @@ Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
         addWarning(QObject::tr("During import of text symbol %1: ignoring text framing (mode %2)")
                        .arg(ocad_symbol->number).arg(ocad_symbol->fmode));
     }
+
+    symbol->updateQFont();
 
     return symbol;
 }
@@ -538,14 +557,14 @@ bool OCAD8FileImport::fillTextPathCoords(TextObject *object, s16 npts, OCADPoint
     s32 buf[3];
     ocad_point(buf, &(pts[0])); // anchor point
     s32 x0 = buf[0], y0 = buf[1];
-    ocad_point(buf, &(pts[1])); // bottom left point
-    s32 x1 = buf[0], y1 = buf[1];
+    /*ocad_point(buf, &(pts[1])); // bottom left point
+    s32 x1 = buf[0], y1 = buf[1]; */
     ocad_point(buf, &(pts[2])); // bottom right point
     s32 x2 = buf[0], y2 = buf[1];
-    ocad_point(buf, &(pts[3])); // top right point
+    /*ocad_point(buf, &(pts[3])); // top right point
     s32 x3 = buf[0], y3 = buf[1];
     ocad_point(buf, &(pts[4])); // top left point
-    s32 x4 = buf[0], y4 = buf[1];
+    s32 x4 = buf[0], y4 = buf[1];*/
     //qDebug() << "text path"<<x0<<y0<<x1<<y1<<x2<<y2<<x3<<y3<<x4<<y4;
     if (x2 <= x0 || y0 <= y2)
     {

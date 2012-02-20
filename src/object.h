@@ -55,7 +55,7 @@ public:
 	virtual Object* duplicate() = 0;
 	
 	/// Returns the object type determined by the subclass
-	inline Type getType() {return type;}
+    inline Type getType() const {return type;}
 	
 	void save(QFile* file);
 	void load(QFile* file, int version, Map* map);

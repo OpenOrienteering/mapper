@@ -159,7 +159,7 @@ void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
 bool MapEditorController::save(const QString& path)
 {
 	if (map)
-		return map->saveTo(path, this);
+        return map->saveTo(path, this);
 	else
 		return false;
 }
@@ -178,18 +178,6 @@ bool MapEditorController::load(const QString& path)
 	}
 	
 	return result;
-}
-
-void MapEditorController::saveWidgetsAndViews(QFile* file)
-{
-	// TODO: currently, this just saves/loads the main view
-	
-	main_view->save(file);
-}
-void MapEditorController::loadWidgetsAndViews(QFile* file)
-{
-	main_view = new MapView(map);
-	main_view->load(file);
 }
 
 void MapEditorController::attach(MainWindow* window)

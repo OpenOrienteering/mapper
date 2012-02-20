@@ -19,6 +19,10 @@ HEADERS += src/color_dock_widget.h \
            src/draw_point.h \
            src/draw_text.h \
            src/edit_tool.h \
+           src/file_format.h \
+           src/file_format_native.h \
+           src/file_format_ocad8.h \
+           src/file_format_xml.h \
            src/georeferencing.h \
            src/global.h \
            src/gps_coordinates.h \
@@ -57,15 +61,16 @@ HEADERS += src/color_dock_widget.h \
            src/util.h \
            qtsingleapplication/qtlocalpeer.h \
            qtsingleapplication/qtsingleapplication.h \
-           libocad/libocad.h \
-    src/ocad8_file_import.h \
-    src/import_export.h \
-    src/xml_import_export.h
+           libocad/libocad.h
 SOURCES += src/color_dock_widget.cpp \
            src/draw_path.cpp \
            src/draw_point.cpp \
            src/draw_text.cpp \
            src/edit_tool.cpp \
+           src/file_format.cpp \
+           src/file_format_native.cpp \
+           src/file_format_ocad8.cpp \
+           src/file_format_xml.cpp \
            src/georeferencing.cpp \
            src/gps_coordinates.cpp \
            src/gps_track.cpp \
@@ -112,9 +117,7 @@ SOURCES += src/color_dock_widget.cpp \
            libocad/color.c \
            libocad/symbol.c \
            libocad/object.c \
-           libocad/template.c \
-    src/ocad8_file_import.cpp \
-    src/xml_import_export.cpp
+           libocad/template.c
 RESOURCES += resources.qrc
 
 OTHER_FILES += \

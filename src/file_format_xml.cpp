@@ -3,7 +3,7 @@
 #include <QFile>
 #include <QStringBuilder>
 
-#include "xml_import_export.h"
+#include "file_format_xml.h"
 #include "map_color.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
@@ -60,43 +60,60 @@ XMLBuilder &XMLBuilder::sub(const QString &name, const QString &value, const QSt
 
 
 
+bool XMLFileFormat::understands(const unsigned char *buffer, size_t sz) const
+{
+    // The first six bytes of the file must be '<?xml '
+    static const char *magic = "<?xml ";
+    if (sz >= 6 && memcmp(buffer, magic, 6) == 0) return true;
+    return false;
+}
+
+Exporter *XMLFileFormat::createExporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
+{
+    return new XMLFileExporter(path, map, view);
+}
+
+
+
+
 
 #define NS_V1 "http://oo-mapper.com/oo-mapper/v1"
 
-XMLImportExport::XMLImportExport(const QString &path, Map *map, MapView *view)
+XMLFileExporter::XMLFileExporter(const QString &path, Map *map, MapView *view)
     : Exporter(path, map, view), builder("document", NS_V1)
 {
 
 }
 
-void XMLImportExport::doExport() throw (ImportExportException)
+void XMLFileExporter::doExport() throw (FormatException)
 {
     builder.down("map");
 
     builder.down("colors");
-    for (uint i = 0; i < map->color_set->colors.size(); i++)
+    for (int i = 0; i < map->getNumColors(); i++)
     {
-        const MapColor *color = map->color_set->colors[i];
+        const MapColor *color = map->getColor(i);
         builder.down("color")
                 .attr("cmyk", QString("%1,%2,%3,%4").arg(color->c).arg(color->m).arg(color->y).arg(color->k))
                 .attr("priority", color->priority)
                 .attr("opacity", color->opacity)
                 .sub("name", color->name)
                 .up();
+        color_index[color] = i;
     }
     builder.up();
 
     builder.down("symbols");
-    for (uint i = 0; i < map->symbols.size(); i++)
+    for (int i = 0; i < map->getNumSymbols(); i++)
     {
-        exportSymbol(map->symbols[i]);
+        exportSymbol(map->getSymbol(i));
     }
     builder.up();
 
     builder.down("layers");
-    for (uint i = 0; i < map->layers.size(); i++)
+    for (int i = 0; i < map->getNumLayers(); i++)
     {
-        MapLayer *layer = map->layers[i];
+        MapLayer *layer = map->getLayer(i);
         builder.down("layer").sub("name", layer->getName());
         for (int j = 0; j < layer->getNumObjects(); j++)
         {
@@ -110,7 +127,7 @@ void XMLImportExport::doExport() throw (ImportExportException)
     builder.up();
     builder.down("view").up();
 
-    QFile f("/Users/pcurtis/Documents/workspace/oo-mapper/omap.xml");
+    QFile f(path);
     if (f.open(QIODevice::ReadWrite))
     {
         f.write(builder.document().toString().toUtf8());
@@ -119,29 +136,29 @@ void XMLImportExport::doExport() throw (ImportExportException)
 
 }
 
-void XMLImportExport::exportSymbol(const Symbol *symbol, bool anonymous)
+void XMLFileExporter::exportSymbol(const Symbol *symbol, bool anonymous)
 {
-    if (symbol->type == Symbol::Point)
+    if (symbol->getType() == Symbol::Point)
     {
         const PointSymbol *s = reinterpret_cast<const PointSymbol *>(symbol);
-        builder.down("point-symbol").attr("rotatable", s->rotatable);
-        if (s->inner_color)
+        builder.down("point-symbol").attr("rotatable", s->isRotatable());
+        if (s->getInnerColor())
         {
-            builder.attr("radius", s->inner_radius).attr("fill", s->inner_color->priority);
+            builder.attr("radius", s->getInnerRadius()).attr("fill", color_index[s->getInnerColor()]);
         }
-        if (s->outer_color)
+        if (s->getOuterColor())
         {
-            builder.attr("border", s->outer_width).attr("stroke", s->outer_color->priority);
+            builder.attr("border", s->getOuterWidth()).attr("stroke", color_index[s->getOuterColor()]);
         }
-        for (uint i = 0; i < s->symbols.size(); i++)
+        for (int i = 0; i < s->getNumElements(); i++)
         {
             builder.down("element");
-            exportSymbol(s->symbols[i], true);
-            exportObject(s->objects[i], false);
+            exportSymbol(s->getElementSymbol(i), true);
+            exportObject(s->getElementObject(i), false);
             builder.up();
         }
     }
-    else if (symbol->type == Symbol::Line)
+    else if (symbol->getType() == Symbol::Line)
     {
         const LineSymbol *s = reinterpret_cast<const LineSymbol *>(symbol);
         builder.down("line-symbol")
@@ -200,14 +217,14 @@ void XMLImportExport::exportSymbol(const Symbol *symbol, bool anonymous)
     builder.up();
 }
 
-void XMLImportExport::exportObject(const Object *object, bool reference_symbol)
+void XMLFileExporter::exportObject(const Object *object, bool reference_symbol)
 {
-    if (object->type == Object::Point)
+    if (object->getType() == Object::Point)
     {
         const PointObject *o = reinterpret_cast<const PointObject *>(object);
         builder.down("point-object").attr("rotation", o->getRotation());
     }
-    else if (object->type == Object::Text)
+    else if (object->getType() == Object::Text)
     {
         const TextObject *t = reinterpret_cast<const TextObject *>(object);
         builder.down("text-object")
@@ -225,15 +242,15 @@ void XMLImportExport::exportObject(const Object *object, bool reference_symbol)
     {
         builder.attr("symbol", object->getSymbol()->getNumberAsString());
     }
-    builder.attr("path", makePath(object)).attr("closed", object->path_closed).up();
+    builder.attr("path", makePath(object)).attr("closed", object->isPathClosed()).up();
 }
 
-QString XMLImportExport::makePath(const Object *object) const
+QString XMLFileExporter::makePath(const Object *object) const
 {
     QString d ="";
-    for (uint i = 0; i < object->coords.size(); i++)
+    for (int i = 0; i < object->getCoordinateCount(); i++)
     {
-        const MapCoord &coord = object->coords[i];
+        const MapCoord &coord = object->getCoordinate(i);
         if (!d.isEmpty()) d = d % " ";
         d = d % QString("%1,%2").arg(coord.internalX()).arg(coord.internalY());
     }

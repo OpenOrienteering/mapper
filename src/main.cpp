@@ -25,8 +25,17 @@
 #include "main_window.h"
 #include "main_window_home_screen.h"
 
+#include "file_format_native.h"
+#include "file_format_ocad8.h"
+#include "file_format_xml.h"
+
 int main(int argc, char** argv)
 {
+    // Register the supported file formats
+    FileFormats.registerFormat(new NativeFileFormat());
+    FileFormats.registerFormat(new XMLFileFormat());
+    FileFormats.registerFormat(new OCAD8FileFormat());
+
     // Create single-instance application.
     // Use "oo-mapper" instead of the executable as identifier, in case we launch from different paths.
     QtSingleApplication qapp("oo-mapper", argc, argv);

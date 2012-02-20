@@ -29,6 +29,7 @@
 #include "map.h"
 #include "map_dialog_new.h"
 #include "map_editor.h"
+#include "file_format.h"
 
 // ### MainWindowController ###
 
@@ -377,13 +378,32 @@ void MainWindow::showNewMapWizard()
 }
 void MainWindow::showOpenDialog()
 {
-	// TODO: save directory
-	QString path = QFileDialog::getOpenFileName(this, tr("Open file ..."), QString(), tr("Maps (*.omap *.ocd);;All files (*.*)"));
-	path = QFileInfo(path).canonicalFilePath();
+    // Get the saved directory to start in, defaulting to the user's home directory.
+    QSettings settings;
+    QString open_directory = settings.value("openFileDirectory", QDir::homePath()).toString();
+
+    // Build the list of supported file extensions based on the file format registry
+    QString extensions;
+    Q_FOREACH(const Format *format, FileFormats.formats())
+    {
+        if (format->supportsImport())
+        {
+            extensions = extensions % QString("%1 (*.%2);;").arg(format->description()).arg(format->fileExtension());
+        }
+    }
+    extensions = extensions % tr("All files") % " (*.*)";
+
+    QString path = QFileDialog::getOpenFileName(this, tr("Open file ..."), open_directory, extensions);
+    QFileInfo info(path);
+    path = info.canonicalFilePath();
+    open_directory = info.canonicalPath();
 	
 	if (path.isEmpty())
 		return;
-	
+
+    // Save the directory the user is in
+    settings.setValue("openFileDirectory", open_directory);
+
 	openPath(path);
 }
 bool MainWindow::openPath(QString path)
@@ -471,15 +491,66 @@ bool MainWindow::saveAs()
 {
 	if (!controller)
 		return false;
+
+    // Get the saved directory to start in, defaulting to the user's home directory.
+    QSettings settings;
+    QString save_directory = settings.value("saveFileDirectory", QDir::homePath()).toString();
 	
-	QString path = QFileDialog::getSaveFileName(this, tr("Save file ..."), QString(), tr("Maps (*.omap *.ocd);;All files (*.*)"));
-	if (path.isEmpty())
-		return false;
-	if (!path.endsWith(".omap", Qt::CaseInsensitive))
-		path.append(".omap");
-	
+    // Build the list of supported file extensions based on the file format registry
+    QString extensions;
+    std::vector<QString> format_ids;
+    Q_FOREACH(const Format *format, FileFormats.formats())
+    {
+        if (format->supportsExport())
+        {
+            if (!extensions.isEmpty()) extensions = extensions % ";;";
+            extensions = extensions % QString("%1 (*.%2)").arg(format->description()).arg(format->fileExtension());
+            format_ids.push_back(format->id());
+        }
+    }
+
+    QFileDialog dialog(this, tr("Save file ..."), save_directory, extensions);
+    dialog.setAcceptMode(QFileDialog::AcceptSave);
+    dialog.setFileMode(QFileDialog::AnyFile);
+    int result = dialog.exec();
+
+    // Save the directory the user is in
+    settings.setValue("saveFileDirectory", dialog.directory().canonicalPath());
+
+    QStringList paths = dialog.selectedFiles();
+    if (result != QDialog::Accepted || paths.isEmpty())
+    {
+        return false;
+    }
+
+    // This is a little clumsy, going from the selected filter back to the format ID.
+    // But it's better than trying to parse the filter string.
+    QString format_id = FileFormats.defaultFormat();
+    QString selected_filter = dialog.selectedFilter();
+    QStringList available_filters = dialog.filters();
+    for (int i = 0; i < available_filters.size(); i++)
+    {
+        if (available_filters[i] == selected_filter)
+        {
+            format_id = format_ids[i];
+            break;
+        }
+    }
+
+    // Ensure the provided filename has the correct file extension.
+    // Among other things, this will ensure that FileFormats.formatForFilename()
+    // returns the same thing the user selected in the dialog.
+    QString path = paths[0];
+    const Format *format = FileFormats.findFormat(format_id);
+    QString selected_extension = "." % format->fileExtension();
+    if (!path.endsWith(selected_extension, Qt::CaseInsensitive))
+    {
+        path = path % selected_extension;
+    }
+
 	setCurrentFile(path);
-	return save();
+
+    return save();
 	//assert(current_path == QFileInfo(current_path).canonicalFilePath());
 }
 

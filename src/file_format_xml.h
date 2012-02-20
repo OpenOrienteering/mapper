@@ -3,7 +3,7 @@
 
 #include <QDomDocument>
 
-#include "import_export.h"
+#include "file_format.h"
 
 /** Provides the Builder pattern for a DOM tree.
  */
@@ -29,13 +29,23 @@ private:
 };
 
 
-class XMLImportExport : public Exporter
+class XMLFileFormat : public Format
 {
 public:
-    XMLImportExport(const QString &path, Map *map, MapView *view);
-    ~XMLImportExport() {}
+    XMLFileFormat() : Format("XML", QObject::tr("Open Orienteering Mapper XML"), "xml", false, true) {}
 
-    void doExport() throw (ImportExportException);
+    bool understands(const unsigned char *buffer, size_t sz) const;
+    Exporter *createExporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
+};
+
+
+class XMLFileExporter : public Exporter
+{
+public:
+    XMLFileExporter(const QString &path, Map *map, MapView *view);
+    ~XMLFileExporter() {}
+
+    void doExport() throw (FormatException);
 
 protected:
     void exportSymbol(const Symbol *symbol, bool anonymous = false);
@@ -44,6 +54,8 @@ protected:
 
 private:
     XMLBuilder builder;
+
+    QHash<const MapColor *, int> color_index;
 
 };
 

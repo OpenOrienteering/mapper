@@ -139,9 +139,17 @@ Object* PointSymbol::getElementObject(int pos)
 {
 	return objects[pos];
 }
+const Object* PointSymbol::getElementObject(int pos) const
+{
+    return objects[pos];
+}
 Symbol* PointSymbol::getElementSymbol(int pos)
 {
 	return symbols[pos];
+}
+const Symbol* PointSymbol::getElementSymbol(int pos) const
+{
+    return symbols[pos];
 }
 void PointSymbol::deleteElement(int pos)
 {

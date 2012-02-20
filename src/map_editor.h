@@ -70,11 +70,8 @@ public:
 	inline MapWidget* getMainWidget() const {return map_widget;}
 	inline SymbolWidget* getSymbolWidget() const {return symbol_widget;}
 	
-	virtual bool save(const QString& path);
+    virtual bool save(const QString& path);
 	virtual bool load(const QString& path);
-	
-	void saveWidgetsAndViews(QFile* file);
-	void loadWidgetsAndViews(QFile* file);
 	
     virtual void attach(MainWindow* window);
     virtual void detach();

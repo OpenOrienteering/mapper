@@ -96,7 +96,9 @@ class Map : public QObject
 Q_OBJECT
 friend class RenderableContainer;
 friend class OCAD8FileImport;
-friend class XMLImportExport;
+friend class XMLFileImport;
+friend class NativeFileImport;
+friend class NativeFileExport;
 public:
 	typedef QSet<Object*> ObjectSelection;
 	
@@ -105,7 +107,7 @@ public:
 	~Map();
 	
 	/// Attempts to save the map to the given file. If a MapEditorController is given, the widget positions and MapViews stored in the map file are also updated.
-	bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
+    bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
 	/// Attempts to load the map from the specified path. Returns true on success.
 	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL);
 
@@ -258,12 +260,6 @@ public:
 	static LineSymbol* getCoveringWhiteLine() {return covering_white_line;}
 	static LineSymbol* getCoveringRedLine() {return covering_red_line;}
 	
-protected:
-    /// Attempts to load an OCAD 7/8 map from the specified file. Returns true on success.
-    bool loadFromOCAD78(const QString &path, MapEditorController* map_editor = NULL);
-    /// Attempts to load a map in native file format from the specified file. Returns true on success.
-    bool loadFromNative(const QString &path, MapEditorController* map_editor = NULL);
-
 signals:
 	void gotUnsavedChanges();
 	
@@ -358,8 +354,6 @@ private:
 	static LineSymbol* covering_white_line;
 	static LineSymbol* covering_red_line;
 	
-	static const int least_supported_file_format_version;
-	static const int current_file_format_version;
 };
 
 /// Contains all visibility information for a template. This is stored in the MapViews

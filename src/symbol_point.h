@@ -57,8 +57,10 @@ public:
 	int getNumElements() const;
 	void addElement(int pos, Object* object, Symbol* symbol);
 	Object* getElementObject(int pos);
-	Symbol* getElementSymbol(int pos);
-	void deleteElement(int pos);
+    const Object* getElementObject(int pos) const;
+    Symbol* getElementSymbol(int pos);
+    const Symbol* getElementSymbol(int pos) const;
+    void deleteElement(int pos);
 	
 	/// Returns true if the point contains no elements and does not create renderables itself
 	bool isEmpty() const;

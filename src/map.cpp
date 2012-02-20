@@ -39,7 +39,7 @@
 #include "symbol_point.h"
 #include "symbol_line.h"
 
-#include "ocad8_file_import.h"
+#include "file_format_ocad8.h"
 
 MapLayer::MapLayer(const QString& name, Map* map) : name(name), map(map)
 {
@@ -290,9 +290,6 @@ MapColor Map::covering_red;
 LineSymbol* Map::covering_white_line;
 LineSymbol* Map::covering_red_line;
 
-const int Map::least_supported_file_format_version = 0;
-const int Map::current_file_format_version = 8;
-
 Map::Map() : renderables(this), selection_renderables(this)
 {
 	if (!static_initialized)
@@ -345,114 +342,40 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 {
 	assert(map_editor && "Preserving the widget&view information without retrieving it from a MapEditorController is not implemented yet!");
 	
-	QFile file(path);
-	if (!file.open(QIODevice::WriteOnly))
-	{
-		QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\nfor writing.").arg(path));
-		return false;
-	}
-	
-	// Basic stuff
-	const char FILE_TYPE_ID[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
-	file.write(FILE_TYPE_ID, 4);
-	file.write((const char*)&current_file_format_version, sizeof(int));
-	
-	file.write((const char*)&scale_denominator, sizeof(int));
-	
-	file.write((const char*)&gps_projection_params_set, sizeof(bool));
-	file.write((const char*)gps_projection_parameters, sizeof(GPSProjectionParameters));
-	
-	file.write((const char*)&print_params_set, sizeof(bool));
-	if (print_params_set)
-	{
-		file.write((const char*)&print_orientation, sizeof(int));
-		file.write((const char*)&print_format, sizeof(int));
-		file.write((const char*)&print_dpi, sizeof(float));
-		file.write((const char*)&print_show_templates, sizeof(bool));
-		file.write((const char*)&print_center, sizeof(bool));
-		file.write((const char*)&print_area_left, sizeof(float));
-		file.write((const char*)&print_area_top, sizeof(float));
-		file.write((const char*)&print_area_width, sizeof(float));
-		file.write((const char*)&print_area_height, sizeof(float));
-	}
-	
-	// Write colors
-	int num_colors = (int)color_set->colors.size();
-	file.write((const char*)&num_colors, sizeof(int));
-	
-	for (int i = 0; i < num_colors; ++i)
-	{
-		MapColor* color = color_set->colors[i];
-		
-		file.write((const char*)&color->priority, sizeof(int));
-		file.write((const char*)&color->c, sizeof(float));
-		file.write((const char*)&color->m, sizeof(float));
-		file.write((const char*)&color->y, sizeof(float));
-		file.write((const char*)&color->k, sizeof(float));
-		file.write((const char*)&color->opacity, sizeof(float));
-		
-		saveString(&file, color->name);
-	}
-	
-	// Write symbols
-	int num_symbols = getNumSymbols();
-	file.write((const char*)&num_symbols, sizeof(int));
-	
-	for (int i = 0; i < num_symbols; ++i)
-	{
-		Symbol* symbol = getSymbol(i);
-		
-		int type = static_cast<int>(symbol->getType());
-		file.write((const char*)&type, sizeof(int));
-		symbol->save(&file, this);
-	}
-	
-	// Write templates
-	file.write((const char*)&first_front_template, sizeof(int));
-	
-	int num_templates = getNumTemplates();
-	file.write((const char*)&num_templates, sizeof(int));
-	
-	for (int i = 0; i < num_templates; ++i)
-	{
-		Template* temp = getTemplate(i);
-		
-		saveString(&file, temp->getTemplatePath());
-		
-		temp->saveTemplateParameters(&file);	// save transformation etc.
-		if (temp->hasUnsavedChanges())
-		{
-			// Save the template itself (e.g. image, gpx file, etc.)
-			temp->saveTemplateFile();
-			temp->setHasUnsavedChanges(false);
-		}
-	}
-	
-	// Write widgets and views; TODO: currently, this just writes the view of widgets[0] ...
-	if (map_editor)
-		map_editor->saveWidgetsAndViews(&file);
-	else
-	{
-		// TODO
-	}
-	
-	// Write undo steps
-	object_undo_manager.save(&file);
-	
-	// Write layers
-	file.write((const char*)&current_layer_index, sizeof(int));
-	
-	int num_layers = getNumLayers();
-	file.write((const char*)&num_layers, sizeof(int));
-	
-	for (int i = 0; i < num_layers; ++i)
-	{
-		MapLayer* layer = getLayer(i);
-		layer->save(&file, this);
-	}
-	
-	file.close();
-	
+    const Format *format = FileFormats.findFormatForFilename(path);
+    if (!format) format = FileFormats.findFormat(FileFormats.defaultFormat());
+
+    if (!format || !format->supportsExport())
+    {
+        QMessageBox::warning(NULL, tr("Error"), tr("Unable to find an exporter for file named \"%1\".").arg(path));
+        return false;
+    }
+
+    Exporter *exporter = NULL;
+    // Wrap everything in a try block, so we can gracefully recover if the importer balks.
+    try {
+        // Create an importer instance for this file and map.
+        exporter = format->createExporter(path, this, map_editor->main_view);
+
+        // Run the first pass.
+        exporter->doExport();
+
+        // Display any warnings.
+        if (!exporter->warnings().empty())
+        {
+            // FIXME: do this in a message box
+            for (std::vector<QString>::const_iterator it = exporter->warnings().begin(); it != exporter->warnings().end(); ++it) {
+                qDebug() << *it;
+            }
+        }
+    }
+    catch (std::exception &e)
+    {
+        qDebug() << "Exception:" << e.what();
+    }
+    if (exporter) delete exporter;
+
+
 	colors_dirty = false;
 	symbols_dirty = false;
 	templates_dirty = false;
@@ -465,6 +388,10 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 }
 bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 {
+    MapView *view = new MapView(this);
+    map_editor->main_view = view;
+
+    // Ensure the file exists and is readable.
 	QFile file(path);
 	if (!file.open(QIODevice::ReadOnly))
 	{
@@ -472,38 +399,57 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 		return false;
 	}
 
-	char buffer[256];
-    file.read(buffer, 8);
+    // Read a block at the beginning of the file, that we can use for magic number checking.
+    unsigned char buffer[256];
+    size_t total_read = file.read((char *)buffer, 256);
     file.close();
 
-    bool ok = false;
-    const unsigned char FILE_TYPE_ID[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
-    const unsigned char OCAD_MAGIC[2] = { 0xAD, 0x0C }; // "0x0CAD"
-    if (memcmp(buffer, FILE_TYPE_ID, 4) != 0)
+    bool import_complete = false;
+    Q_FOREACH(const Format *format, FileFormats.formats())
     {
-        if (memcmp(buffer, OCAD_MAGIC, 2) != 0)
+        // If the format supports import, and thinks it can understand the file header, then proceed.
+        if (format->supportsImport() && format->understands(buffer, total_read))
         {
-            // fall through
-        }
-        else
-        {
-            int ocad_major = buffer[4];
-            if (ocad_major == 7 || ocad_major == 8)
-            {
-                clear();
-                ok = loadFromOCAD78(path, map_editor);
+            Importer *importer = NULL;
+            // Wrap everything in a try block, so we can gracefully recover if the importer balks.
+            try {
+                // Create an importer instance for this file and map.
+                importer = format->createImporter(path, this, view);
+
+                // Run the first pass.
+                importer->doImport();
+
+                // Are there any actions the user must take to complete the import?
+                if (!importer->actions().empty())
+                {
+                    // TODO: prompt the user to resolve the action items. All-in-one dialog.
+                }
+
+                // Finish the import.
+                importer->finishImport();
+
+                // Display any warnings.
+                if (!importer->warnings().empty())
+                {
+                    // FIXME: do this in a message box
+                    for (std::vector<QString>::const_iterator it = importer->warnings().begin(); it != importer->warnings().end(); ++it) {
+                        qDebug() << *it;
+                    }
+                }
+
+                import_complete = true;
             }
+            catch (std::exception &e)
+            {
+                qDebug() << "Exception:" << e.what();
+            }
+            if (importer) delete importer;
         }
-    }
-    else
-    {
-        clear();
-        ok = loadFromNative(path, map_editor);
+        // If the last importer finished successfully
+        if (import_complete) break;
     }
 
-
-
-    if (!ok)
+    if (!import_complete)
     {
         QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\n\nInvalid file type.").arg(path));
         return false;
@@ -519,184 +465,6 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
         }
     }
 
-    return true;
-}
-
-bool Map::loadFromOCAD78(const QString &path, MapEditorController *map_editor)
-{
-    MapView *view = new MapView(this);
-    map_editor->main_view = view;
-
-    OCAD8FileImport importer(path, this, view);
-    importer.doImport();
-    if (!importer.actions().empty())
-    {
-        // TODO: prompt the user to resolve the action items. All-in-one dialog.
-    }
-    importer.finishImport();
-
-    if (!importer.warnings().empty())
-    {
-        for (std::vector<QString>::const_iterator it = importer.warnings().begin(); it != importer.warnings().end(); ++it) {
-            qDebug() << *it;
-        }
-    }
-
-    return true;
-}
-
-bool Map::loadFromNative(const QString &path, MapEditorController* map_editor)
-{
-    QFile file(path);
-    if (!file.open(QIODevice::ReadOnly))
-    {
-        QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\nfor reading.").arg(path));
-        return false;
-    }
-    // note: ~QFile() will close the file when this method returns and the variable goes out of scope.
-
-    char buffer[256];
-    file.read(buffer, 4); // read the magic
-    // TODO: should we assert? this shouldn't be called except from loadTo(), where it's already been checked...
-
-	int version;
-	file.read((char*)&version, sizeof(int));
-	if (version < 0)
-        QMessageBox::warning(NULL, tr("Warning"), tr("Problem while opening file:\n%1\n\nInvalid file format version.").arg(file.fileName()));
-	else if (version < least_supported_file_format_version)
-	{
-        QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nUnsupported file format version. Please use an older program version to load and update the file.").arg(file.fileName()));
-		return false;
-	}
-	else if (version > current_file_format_version)
-	{
-        QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nFile format version too high. Please update to a newer program version to load this file.").arg(file.fileName()));
-		return false;
-	}
-	
-	file.read((char*)&scale_denominator, sizeof(int));
-	
-	file.read((char*)&gps_projection_params_set, sizeof(bool));
-	file.read((char*)gps_projection_parameters, sizeof(GPSProjectionParameters));
-	
-	if (version >= 6)
-	{
-		file.read((char*)&print_params_set, sizeof(bool));
-		if (print_params_set)
-		{
-			file.read((char*)&print_orientation, sizeof(int));
-			file.read((char*)&print_format, sizeof(int));
-			file.read((char*)&print_dpi, sizeof(float));
-			file.read((char*)&print_show_templates, sizeof(bool));
-			file.read((char*)&print_center, sizeof(bool));
-			file.read((char*)&print_area_left, sizeof(float));
-			file.read((char*)&print_area_top, sizeof(float));
-			file.read((char*)&print_area_width, sizeof(float));
-			file.read((char*)&print_area_height, sizeof(float));
-		}
-	}
-	
-	// Load colors
-	int num_colors;
-	file.read((char*)&num_colors, sizeof(int));
-	color_set->colors.resize(num_colors);
-	
-	for (int i = 0; i < num_colors; ++i)
-	{
-		MapColor* color = new MapColor();
-		
-		file.read((char*)&color->priority, sizeof(int));
-		file.read((char*)&color->c, sizeof(float));
-		file.read((char*)&color->m, sizeof(float));
-		file.read((char*)&color->y, sizeof(float));
-		file.read((char*)&color->k, sizeof(float));
-		file.read((char*)&color->opacity, sizeof(float));
-		color->updateFromCMYK();
-		
-		loadString(&file, color->name);
-		
-		color_set->colors[i] = color;
-	}
-	
-	// Load symbols
-	int num_symbols;
-	file.read((char*)&num_symbols, sizeof(int));
-	symbols.resize(num_symbols);
-	
-	for (int i = 0; i < num_symbols; ++i)
-	{
-		int symbol_type;
-		file.read((char*)&symbol_type, sizeof(int));
-		
-		Symbol* symbol = Symbol::getSymbolForType(static_cast<Symbol::Type>(symbol_type));
-		if (!symbol)
-			return false;
-		
-		if (!symbol->load(&file, version, this))
-		{
-            QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError while loading a symbol.").arg(file.fileName()));
-			return false;
-		}
-		symbols[i] = symbol;
-	}
-	
-	// Load templates
-	file.read((char*)&first_front_template, sizeof(int));
-	
-	int num_templates;
-	file.read((char*)&num_templates, sizeof(int));
-	templates.resize(num_templates);
-	
-	for (int i = 0; i < num_templates; ++i)
-	{
-		QString path;
-		loadString(&file, path);
-		
-		Template* temp = Template::templateForFile(path, this);
-		temp->loadTemplateParameters(&file);
-		
-		templates[i] = temp;
-	}
-	
-	// Restore widgets and views
-	if (map_editor)
-		map_editor->loadWidgetsAndViews(&file);
-	else
-	{
-		// TODO: HACK
-		MapView* main_view = new MapView(this);
-		main_view->load(&file);
-		delete main_view;
-	}
-	
-	// Load undo steps
-	if (version >= 7)
-	{
-		if (!object_undo_manager.load(&file, version))
-			return false;
-	}
-	
-	// Load layers
-	file.read((char*)&current_layer_index, sizeof(int));
-	
-	int num_layers;
-	if (file.read((char*)&num_layers, sizeof(int)) < (int)sizeof(int))
-		return false;
-	layers.resize(num_layers);
-	
-	for (int i = 0; i < num_layers; ++i)
-	{
-		MapLayer* layer = new MapLayer("", this);
-		if (i == current_layer_index)
-			current_layer = layer;
-		if (!layer->load(&file, version, this))
-		{
-            QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError while loading a layer.").arg(file.fileName()));
-			return false;
-		}
-		layers[i] = layer;
-	}
-	
     return true;
 }
 

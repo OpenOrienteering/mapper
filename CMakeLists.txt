@@ -86,8 +86,10 @@ set(Mapper_SRCS
  src/gps_coordinates.cpp
  src/gps_track.cpp 
 
- src/ocad8_file_import.cpp
- src/xml_import_export.cpp
+ src/file_format.cpp
+ src/file_format_native.cpp
+ src/file_format_ocad8.cpp
+ src/file_format_xml.cpp
 )
 qt4_automoc(${Mapper_SRCS})
 
