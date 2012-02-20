@@ -72,7 +72,7 @@ class Format
 public:
     /** Creates a new file format with the given parameters. Don't use a leading dot on the file extension.
      */
-    Format(const QString &id, const QString &description, const QString &file_extension, bool supportsImport = true, bool supportsExport = true);
+    Format(const QString &id, const QString &description, const QString &file_extension, bool supportsImport = true, bool supportsExport = true, bool export_lossy = true);
 
     virtual ~Format() {}
 
@@ -112,6 +112,12 @@ public:
      */
     virtual Importer *createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
 
+    /** Returns true if an exporter for this file format is potentially lossy, i.e., if the exported
+     *  file cannot fully represent all aspects of the internal OO map objects. This flag is used by
+     *  the application to warn the user before saving to a lossy file type.
+     */
+    inline bool isExportLossy() const { return export_lossy; }
+
     /** Creates an Exporter that will save the given map and view into a file at the given path.
      *  The caller can then call doExport() in the returned object to start the export process. The caller
      *  is responsible for deleting the Exporter when it's finished.
@@ -126,6 +132,7 @@ private:
     QString file_extension;
     bool supports_import;
     bool supports_export;
+    bool export_lossy;
 
 };
 
@@ -208,7 +215,6 @@ public:
      *  through setOption() - then a FormatException will be thrown.
      */
     QVariant option(const QString &name) const throw (FormatException);
-
 
 protected:
     /** Adds an import/export warning to the current list of warnings. The provided message

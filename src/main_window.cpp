@@ -482,6 +482,15 @@ bool MainWindow::save()
 		return false;
 	if (current_path.isEmpty())
 		return saveAs();
+
+    const Format *format = FileFormats.findFormatForFilename(current_path);
+    if (format->isExportLossy())
+    {
+        QString message = tr("This map is being saved as a \"%1\" file. Information may be lost.\n\nPress Yes to save in this format.\nPress No to choose a different format.").arg(format->description());
+        int result = QMessageBox::warning(this, tr("Warning"), message, QMessageBox::Yes, QMessageBox::No);
+        if (result != QMessageBox::Yes)
+            return saveAs();
+    }
 	
 	if (controller->save(current_path))
 		setHasUnsavedChanges(false);

@@ -21,9 +21,9 @@
 
 #include <QFileInfo>
 
-Format::Format(const QString &id, const QString &description, const QString &file_extension, bool supportsImport, bool supportsExport)
+Format::Format(const QString &id, const QString &description, const QString &file_extension, bool supportsImport, bool supportsExport, bool export_lossy)
     : format_id(id), format_description(description), file_extension(file_extension),
-      supports_import(supportsImport), supports_export(supportsExport)
+      supports_import(supportsImport), supports_export(supportsExport), export_lossy(export_lossy)
 {
 }
 
