@@ -238,11 +238,11 @@ void MainWindow::setStatusBarText(const QString& text)
 
 void MainWindow::closeFile()
 {
-	if (num_windows == 1)
-		setController(new HomeScreenController());
-	else 
+	if (num_windows > 1)
 		close();
-}	
+	else if (showSaveOnCloseDialog())
+		setController(new HomeScreenController());
+}
 
 bool MainWindow::event(QEvent* event)
 {
