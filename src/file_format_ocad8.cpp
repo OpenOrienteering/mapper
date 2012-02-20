@@ -438,7 +438,7 @@ PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
         {
             PointSymbol* element_symbol = new PointSymbol();
             element_symbol->inner_color = NULL;
-            element_symbol->inner_radius = (int)convertSize(elt->diameter) / 2;
+			element_symbol->inner_radius = (int)convertSize(elt->diameter) / 2 - (int)convertSize(elt->width);
             element_symbol->outer_color = color_index[elt->color];
             element_symbol->outer_width = (int)convertSize(elt->width);
             element_symbol->rotatable = false;
