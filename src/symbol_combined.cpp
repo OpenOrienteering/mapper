@@ -100,7 +100,10 @@ Symbol::Type CombinedSymbol::getContainedTypes()
 	
 	int size = (int)parts.size();
 	for (int i = 0; i < size; ++i)
-		type |= parts[i]->getContainedTypes();
+	{
+		if (parts[i])
+			type |= parts[i]->getContainedTypes();
+	}
 	
 	return (Type)type;
 }
