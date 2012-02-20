@@ -59,6 +59,14 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	current_tool = NULL;
 	override_tool = NULL;
 	last_painted_on_template = NULL;
+	
+	toolbar_view = NULL;
+	toolbar_drawing = NULL;
+	toolbar_editing = NULL;
+	print_dock_widget = NULL;
+	color_dock_widget = NULL;
+	symbol_dock_widget = NULL;
+	template_dock_widget = NULL;
 
     actionsById[""] = new QAction(this); // dummy action
 }
