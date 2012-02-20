@@ -44,12 +44,12 @@ typedef char str;
 #define PX_CTL1 0x1
 #define PX_CTL2 0x2
 #define PX_LEFT 0x4
-#define PX_CORNER 0x8
 
 // Flags in Y coordinate
-#define PY_HOLE 0x1
-#define PY_DASH 0x2
+#define PY_CORNER 0x1
+#define PY_HOLE 0x2
 #define PY_RIGHT 0x4
+#define PY_DASH 0x8
 
 #define OCAD_MAX_OBJECT_PTS 32767
 

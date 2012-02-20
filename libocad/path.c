@@ -111,7 +111,7 @@ static int ocad_path_to_internal(IntPath *path, u32 npts, const OCADPoint *pts) 
 		path->y[i] = (y >> 8);
 		u8 f = 0;
 		if (x & (PX_CTL1 | PX_CTL2)) f |= F_PATH_CONTROL;
-		if (x & PX_CORNER) f |= F_PATH_CORNER;
+        if (y & PY_CORNER) f |= F_PATH_CORNER;
 		if (y & PY_DASH) f |= F_PATH_DASH;
 		if (y & PY_HOLE) f |= F_PATH_HOLE;
 		// F_PATH_NO_STROKE isn't used except for left and right paths on a line object

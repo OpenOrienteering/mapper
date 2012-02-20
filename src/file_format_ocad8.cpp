@@ -552,7 +552,8 @@ void OCAD8FileImport::fillPathCoords(Object *object, s16 npts, OCADPoint *pts)
 {
     object->coords.resize(npts);
     s32 buf[3];
-    for (int i = 0; i < npts; i++) {
+    for (int i = 0; i < npts; i++)
+    {
         ocad_point(buf, &(pts[i]));
         MapCoord &coord = object->coords[i];
         convertPoint(coord, buf[0], buf[1]);
@@ -560,7 +561,7 @@ void OCAD8FileImport::fillPathCoords(Object *object, s16 npts, OCADPoint *pts)
         // CurveStart needs to be applied to the main point though, not the control point
         if (buf[2] & PX_CTL1 && i > 0) object->coords[i-1].setCurveStart(true);
         if (buf[2] & (PY_DASH << 8)) coord.setDashPoint(true);
-        //if (buf[2] & (PY_HOLE << 8)) coord.setHolePoint(true);
+        if (buf[2] & (PY_HOLE << 8)) coord.setHolePoint(true);
     }
 }
 
