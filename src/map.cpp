@@ -389,7 +389,6 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 {
     MapView *view = new MapView(this);
-    map_editor->main_view = view;
 
     // Ensure the file exists and is readable.
 	QFile file(path);
@@ -448,6 +447,11 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
         // If the last importer finished successfully
         if (import_complete) break;
     }
+    
+    if (map_editor)
+		map_editor->main_view = view;
+	else
+		delete view;	// TODO: HACK. Better not create the view at all in this case!
 
     if (!import_complete)
     {

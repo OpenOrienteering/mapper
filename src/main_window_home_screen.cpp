@@ -39,6 +39,7 @@ void HomeScreenController::attach(MainWindow* window)
 	this->window = window;
 	widget = new HomeScreenWidget(this);
 	window->setCentralWidget(widget);
+	window->setStatusBarText("");
 }
 void HomeScreenController::detach()
 {

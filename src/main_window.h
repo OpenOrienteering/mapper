@@ -104,6 +104,7 @@ public slots:
 	void updateRecentFileActions(bool show);
 	bool save();
 	bool saveAs();
+	void closeFile();
 	
 	void toggleFullscreenMode();
 	
@@ -164,6 +165,9 @@ private:
 	bool has_opened_file;
 	/// If this window has an opened file: does this file have unsaved changes?
 	bool has_unsaved_changes;
+
+	/// Number of active main windows. The last window shall not close on File > Close.
+	static int num_windows;
 };
 
 #endif

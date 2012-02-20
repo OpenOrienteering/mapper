@@ -44,8 +44,11 @@ MainWindowController* MainWindowController::controllerForFile(const QString& fil
 
 // ### MainWindow ###
 
+int MainWindow::num_windows = 0;
+
 MainWindow::MainWindow(bool as_main_window)
 {
+	num_windows++;
 	controller = NULL;
 	has_unsaved_changes = false;
 	has_opened_file = false;
@@ -70,6 +73,7 @@ MainWindow::~MainWindow()
 		controller->detach();
 		delete controller;
 	}
+	num_windows--;
 }
 
 void MainWindow::setController(MainWindowController* new_controller)
@@ -131,9 +135,14 @@ void MainWindow::createFileMenu()
 	
 	close_act = new QAction(tr("Close"), this);
 	close_act->setShortcut(tr("Ctrl+W"));
-	close_act->setStatusTip(tr("Close this window"));
-	connect(close_act, SIGNAL(triggered()), this, SLOT(close()));
+	close_act->setStatusTip(tr("Close this file"));
+	connect(close_act, SIGNAL(triggered()), this, SLOT(closeFile()));
 	
+	QAction* exit_act = new QAction(tr("E&xit"), this);
+	exit_act->setShortcuts(QKeySequence::Quit);
+	exit_act->setStatusTip(tr("Exit the application"));
+	connect(exit_act, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
+
 	file_menu = menuBar()->addMenu(tr("&File"));
 	file_menu->addAction(new_act);
 	file_menu->addAction(open_act);
@@ -141,9 +150,11 @@ void MainWindow::createFileMenu()
 	file_menu->addAction(save_as_act);
 	file_menu->addSeparator();
 	file_menu->addAction(close_act);
+	file_menu->addAction(exit_act);
 	
-	save_act->setVisible(false);
-	save_as_act->setVisible(false);
+	save_act->setEnabled(false);
+	save_as_act->setEnabled(false);
+	close_act->setEnabled(false);
 	updateRecentFileActions(false);
 }
 void MainWindow::createHelpMenu()
@@ -201,13 +212,15 @@ void MainWindow::setHasOpenedFile(bool value)
 {
 	if (value && !has_opened_file)
 	{
-		save_act->setVisible(true);
-		save_as_act->setVisible(true);
+		save_act->setEnabled(true);
+		save_as_act->setEnabled(true);
+		close_act->setEnabled(true);
 	}
 	else if (!value && has_opened_file)
 	{
-		save_act->setVisible(false);
-		save_as_act->setVisible(false);
+		save_act->setEnabled(false);
+		save_as_act->setEnabled(false);
+		close_act->setEnabled(false);
 	}
 	has_opened_file = value;
 	updateWindowTitle();
@@ -222,6 +235,14 @@ void MainWindow::setStatusBarText(const QString& text)
 {
 	status_label->setText(text);
 }
+
+void MainWindow::closeFile()
+{
+	if (num_windows == 1)
+		setController(new HomeScreenController());
+	else 
+		close();
+}	
 
 bool MainWindow::event(QEvent* event)
 {

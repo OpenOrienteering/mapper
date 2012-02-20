@@ -194,6 +194,10 @@ private:
 	
 	QLabel* statusbar_zoom_label;
 	QLabel* statusbar_cursorpos_label;
+	
+	QToolBar* toolbar_view;
+	QToolBar* toolbar_drawing;
+	QToolBar* toolbar_editing;
 };
 
 class EditorDockWidgetChild : public QWidget

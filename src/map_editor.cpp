@@ -64,6 +64,13 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 }
 MapEditorController::~MapEditorController()
 {
+	delete toolbar_view;
+	delete toolbar_drawing;
+	delete toolbar_editing;
+	delete print_dock_widget;
+	delete color_dock_widget;
+	delete symbol_dock_widget;
+	delete template_dock_widget;
 	delete current_tool;
 	delete override_tool;
 	delete editor_activity;
@@ -175,6 +182,7 @@ bool MapEditorController::load(const QString& path)
 	{
 		delete map;
 		map = NULL;
+		main_view = NULL;
 	}
 	
 	return result;
@@ -410,11 +418,11 @@ void MapEditorController::createMenuAndToolbars()
     // actions made it into the menu system where I could use them.
 
     // View toolbar
-    QToolBar* toolbar_view = window->addToolBar("View");
+    toolbar_view = window->addToolBar("View");
     toolbar_view->addAction(show_all_act);
 
 	// Drawing toolbar
-	QToolBar* toolbar_drawing = window->addToolBar(tr("Drawing"));
+	toolbar_drawing = window->addToolBar(tr("Drawing"));
 	toolbar_drawing->addAction(edit_tool_act);
     toolbar_drawing->addAction(draw_point_act);
 	toolbar_drawing->addAction(draw_path_act);
@@ -439,7 +447,7 @@ void MapEditorController::createMenuAndToolbars()
 	connect(paint_on_template_menu, SIGNAL(triggered(QAction*)), this, SLOT(paintOnTemplateSelectClicked()));
 	
 	// Editing toolbar
-	QToolBar* toolbar_editing = window->addToolBar(tr("Editing"));
+	toolbar_editing = window->addToolBar(tr("Editing"));
     toolbar_editing->addAction(duplicate_act);
     toolbar_editing->addAction(switch_symbol_act);
 	toolbar_editing->addAction(fill_border_act);
