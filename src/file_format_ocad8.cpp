@@ -283,6 +283,8 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
     // Create point symbols along line; middle ("normal") dash, corners, start, and end.
     OCADPoint * symbolptr = (OCADPoint *)ocad_symbol->pts;
     symbol->mid_symbol = importPattern( ocad_symbol->smnpts, symbolptr);
+    symbol->mid_symbols_per_spot = ocad_symbol->snum;
+    symbol->mid_symbol_distance = convertSize(ocad_symbol->sdist);
     symbolptr += ocad_symbol->smnpts;
     if( ocad_symbol->ssnpts > 0 )
     {
@@ -291,7 +293,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
     }
     if( ocad_symbol->scnpts > 0 )
     {
-        // don't do corners
+        //symbol->corner_symbol = importPattern( ocad_symbol->scnpts, symbolptr);
         symbolptr += ocad_symbol->scnpts; 
     }
     if( ocad_symbol->sbnpts > 0 )
