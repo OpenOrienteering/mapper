@@ -93,6 +93,11 @@ set(Mapper_SRCS
 )
 qt4_automoc(${Mapper_SRCS})
 
+set(Mapper_TRANS
+ translations/Mapper_de.ts
+)
+qt4_add_translation(Mapper_QM ${Mapper_TRANS})
+
 SET(Mapper_RESOURCES resources.qrc)
 qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
@@ -102,11 +107,13 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 	add_executable(Mapper
 		MACOSX_BUNDLE
 		${Mapper_SRCS}
+		${Mapper_QM}
 		${Mapper_RESOURCES_RCC}
 	)
 else(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 	add_executable(Mapper
 		${Mapper_SRCS}
+		${Mapper_QM}
 		${Mapper_RESOURCES_RCC}
 	)
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")

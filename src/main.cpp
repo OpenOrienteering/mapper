@@ -21,6 +21,8 @@
 #include "../qtsingleapplication/qtsingleapplication.h"
 #include <QMessageBox>
 #include <QDebug>
+#include <QLocale>
+#include <QTranslator>
 
 #include "main_window.h"
 #include "main_window_home_screen.h"
@@ -50,6 +52,12 @@ int main(int argc, char** argv)
 	// Set settings defaults
 	QCoreApplication::setOrganizationName("Thomas Schoeps");
 	QCoreApplication::setApplicationName("OpenOrienteering");
+	
+	// Localization
+	QString locale = QLocale::system().name();
+	QTranslator translator;
+	translator.load(QString("Mapper_") + locale);
+	qapp.installTranslator(&translator);
 	
 	// Create first main window - if a program parameter is specified, open the file
 	first_window = new MainWindow(true);
