@@ -79,6 +79,7 @@ public:
 signals:
 	void pathOpened(QString path);
 	void newClicked();
+	void openClicked();
 	
 public slots:
 	void openDoc();
