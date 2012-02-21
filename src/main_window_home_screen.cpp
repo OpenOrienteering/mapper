@@ -76,6 +76,7 @@ HomeScreenWidget::HomeScreenWidget(HomeScreenController* controller, QWidget* pa
 	setAutoFillBackground(false);
 	
 	connect(maps_widget, SIGNAL(newClicked()), controller->getWindow(), SLOT(showNewMapWizard()));
+	connect(maps_widget, SIGNAL(openClicked()), controller->getWindow(), SLOT(showOpenDialog()));
 	connect(maps_widget, SIGNAL(pathOpened(QString)), controller->getWindow(), SLOT(openPath(QString)));
 	
 	connect(other_widget, SIGNAL(settingsClicked()), controller->getWindow(), SLOT(showSettings()));
@@ -165,14 +166,7 @@ void DocumentSelectionWidget::newDoc()
 }
 void DocumentSelectionWidget::openDoc()
 {
-	// TODO: save directory
-	QString path = QFileDialog::getOpenFileName(this, open_title_text, QString(), open_filter_text);
-	path = QFileInfo(path).canonicalFilePath();
-	
-	if (path.isEmpty())
-		return;
-	
-	emit(pathOpened(path));
+	emit(openClicked());
 }
 
 void DocumentSelectionWidget::updateRecentFiles()

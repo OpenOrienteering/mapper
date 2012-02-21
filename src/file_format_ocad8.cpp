@@ -317,8 +317,10 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
         if (ocad_symbol->dflags & 1)
         {
             // Double line fill: overwrite anything in the "main" line, even if it exists
+            // FIXME: if a main line exists, it is drawn by OCAD in addition to the other line -> use CombinedSymbol
             symbol->line_width = convertSize(ocad_symbol->dwidth);
             symbol->color = convertColor(ocad_symbol->dcolor);
+			symbol->dashed = false;
         }
 
         // Border color and width - currently we don't support different values on left and right side,
@@ -338,11 +340,12 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
                        .arg(ocad_symbol->number).arg(ocad_symbol->lwidth).arg(ocad_symbol->rwidth).arg(border_width));
         }
         symbol->border_width = convertSize(border_width);
-        symbol->border_shift = 0;
+		symbol->border_shift = symbol->border_width / 2;
 
         // And finally, the border may be dashed
         if (ocad_symbol->dgap > 0)
         {
+			symbol->dashed_border = true;
             symbol->border_dash_length = convertSize(ocad_symbol->dlen);
             symbol->border_break_length = convertSize(ocad_symbol->dgap);
         }
