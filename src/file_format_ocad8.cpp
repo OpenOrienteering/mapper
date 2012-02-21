@@ -260,9 +260,11 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
     LineSymbol *symbol = new LineSymbol();
     fillCommonSymbolFields(symbol, (OCADSymbol *)ocad_symbol);
 
+    symbol->minimum_length = 0; // OCAD 8 does not store min length
+
+    // Basic line options
     symbol->line_width = convertSize(ocad_symbol->width);
-    symbol->color = color_index[ocad_symbol->color];
-    symbol->minimum_length = 0; // FIXME
+    symbol->color = convertColor(ocad_symbol->color);
     // FIXME: are the cap mappings correct?
     // FIXME: where is "pointed ends" in OCAD?
     if (ocad_symbol->ends == 0) symbol->cap_style = LineSymbol::FlatCap;
@@ -270,14 +272,95 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
     else if (ocad_symbol->ends == 2) symbol->cap_style = LineSymbol::SquareCap;
     // FIXME: are the join mappings correct?
 
-    // FIXME: Do everything else
+    // Handle the dash pattern
     if( ocad_symbol->gap > 0 || ocad_symbol->gap2 > 0 )
     {
         //dashed
         symbol->dashed = true;
         symbol->dash_length = convertSize(ocad_symbol->len);
+        symbol->break_length = convertSize(ocad_symbol->gap);
+        //symbol->dashes_in_group = 0;
+        //symbol->in_group_break_len = 0;
+        //symbol->half_outer_dashes = 0;
+    } 
+    else
+    {
+        symbol->segment_length = convertSize(ocad_symbol->len);
+        symbol->end_length = convertSize(ocad_symbol->elen); // FIXME?
+    }
+    
+    // Create point symbols along line; middle ("normal") dash, corners, start, and end.
+    OCADPoint * symbolptr = (OCADPoint *)ocad_symbol->pts;
+    symbol->mid_symbol = importPattern( ocad_symbol->smnpts, symbolptr);
+    symbolptr += ocad_symbol->smnpts;
+    if( ocad_symbol->ssnpts > 0 )
+    {
+        symbol->dash_symbol = importPattern( ocad_symbol->ssnpts, symbolptr);
+        symbolptr += ocad_symbol->ssnpts;
+    }
+    if( ocad_symbol->scnpts > 0 )
+    {
+        // don't do corners
+        symbolptr += ocad_symbol->scnpts; 
+    }
+    if( ocad_symbol->sbnpts > 0 )
+    {
+        symbol->start_symbol = importPattern( ocad_symbol->sbnpts, symbolptr);
+        symbolptr += ocad_symbol->sbnpts;
+    }
+    if( ocad_symbol->senpts > 0 )
+    {
+        symbol->end_symbol = importPattern( ocad_symbol->senpts, symbolptr);
+    }
+    // FIXME: not really sure how this translates... need test cases
+    symbol->minimum_mid_symbol_count = 1 + ocad_symbol->smin;
+    symbol->minimum_mid_symbol_count_when_closed = 1 + ocad_symbol->smin;
+    symbol->show_at_least_one_symbol = (ocad_symbol->smin >= 0);
+
+    // Double lines
+    if (ocad_symbol->dmode > 0)
+    {
+        symbol->have_border_lines = true;
+        if (ocad_symbol->dflags & 1)
+        {
+            // Double line fill: overwrite anything in the "main" line, even if it exists
+            symbol->line_width = convertSize(ocad_symbol->dwidth);
+            symbol->color = convertColor(ocad_symbol->dcolor);
+        }
+
+        // Border color and width - currently we don't support different values on left and right side,
+        // although that seems easy enough to implement in the future. Import with a warning.
+        s16 border_color = ocad_symbol->lcolor;
+        if (border_color != ocad_symbol->rcolor)
+        {
+            addWarning(QObject::tr("In symbol %1, left and right borders are different colors (%2 and %3). Using %4.")
+                       .arg(ocad_symbol->number).arg(ocad_symbol->lcolor).arg(ocad_symbol->rcolor).arg(border_color));
+        }
+        symbol->border_color = convertColor(border_color);
+
+        s16 border_width = ocad_symbol->lwidth;
+        if (border_width != ocad_symbol->rwidth)
+        {
+            addWarning(QObject::tr("In symbol %1, left and right borders are different width (%2 and %3). Using %4.")
+                       .arg(ocad_symbol->number).arg(ocad_symbol->lwidth).arg(ocad_symbol->rwidth).arg(border_width));
+        }
+        symbol->border_width = convertSize(border_width);
+        symbol->border_shift = 0;
+
+        // And finally, the border may be dashed
+        if (ocad_symbol->dgap > 0)
+        {
+            symbol->border_dash_length = convertSize(ocad_symbol->dlen);
+            symbol->border_break_length = convertSize(ocad_symbol->dgap);
+        }
     }
 
+    // TODO: taper fields (tmode and tlast)
+
+    if (ocad_symbol->fwidth > 0)
+    {
+        addWarning(QObject::tr("In symbol %1, ignoring framing line.").arg(ocad_symbol->number));
+    }
 
     return symbol;
 }
@@ -289,7 +372,7 @@ Symbol *OCAD8FileImport::importAreaSymbol(const OCADAreaSymbol *ocad_symbol)
 
     // Basic area symbol fields: minimum_area, color
     symbol->minimum_area = 0;
-    symbol->color = ocad_symbol->fill ? color_index[ocad_symbol->color] : NULL;
+    symbol->color = ocad_symbol->fill ? convertColor(ocad_symbol->color) : NULL;
     symbol->patterns.clear();
     AreaSymbol::FillPattern *pat = NULL;
 
@@ -302,7 +385,7 @@ Symbol *OCAD8FileImport::importAreaSymbol(const OCADAreaSymbol *ocad_symbol)
         pat->rotatable = true;
         pat->line_spacing = convertSize(ocad_symbol->hdist + ocad_symbol->hwidth);
         pat->line_offset = 0;
-        pat->line_color = color_index[ocad_symbol->hcolor];
+        pat->line_color = convertColor(ocad_symbol->hcolor);
         pat->line_width = convertSize(ocad_symbol->hwidth);
         if (ocad_symbol->hmode == 2)
         {
@@ -313,7 +396,7 @@ Symbol *OCAD8FileImport::importAreaSymbol(const OCADAreaSymbol *ocad_symbol)
             pat->rotatable = true;
             pat->line_spacing = convertSize(ocad_symbol->hdist);
             pat->line_offset = 0;
-            pat->line_color = color_index[ocad_symbol->hcolor];
+            pat->line_color = convertColor(ocad_symbol->hcolor);
             pat->line_width = convertSize(ocad_symbol->hwidth);
         }
     }
@@ -359,7 +442,7 @@ Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
     fillCommonSymbolFields(symbol, (OCADSymbol *)ocad_symbol);
 
     symbol->font_family = convertPascalString(ocad_symbol->font); // FIXME: font mapping?
-    symbol->color = color_index[ocad_symbol->color];
+    symbol->color = convertColor(ocad_symbol->color);
     symbol->ascent_size = (int)round((0.1 * ocad_symbol->dpts) * ocad_pt_in_mm * 1000);
     symbol->bold = (ocad_symbol->bold >= 700) ? true : false;
     symbol->italic = (ocad_symbol->italic) ? true : false;
@@ -425,7 +508,7 @@ PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
         if (elt->type == OCAD_DOT_ELEMENT)
         {
             PointSymbol* element_symbol = new PointSymbol();
-            element_symbol->inner_color = color_index[elt->color];
+            element_symbol->inner_color = convertColor(elt->color);
             element_symbol->inner_radius = (int)convertSize(elt->diameter) / 2;
             element_symbol->outer_color = NULL;
             element_symbol->outer_width = 0;
@@ -439,7 +522,7 @@ PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
             PointSymbol* element_symbol = new PointSymbol();
             element_symbol->inner_color = NULL;
 			element_symbol->inner_radius = (int)convertSize(elt->diameter) / 2 - (int)convertSize(elt->width);
-            element_symbol->outer_color = color_index[elt->color];
+            element_symbol->outer_color = convertColor(elt->color);
             element_symbol->outer_width = (int)convertSize(elt->width);
             element_symbol->rotatable = false;
             PointObject* element_object = new PointObject(element_symbol);
@@ -450,7 +533,7 @@ PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
         {
             LineSymbol* element_symbol = new LineSymbol();
             element_symbol->line_width = convertSize(elt->width);
-            element_symbol->color = color_index[elt->color];
+            element_symbol->color = convertColor(elt->color);
             PathObject* element_object = new PathObject(element_symbol);
             fillPathCoords(element_object, elt->npts, elt->pts);
             symbol->addElement(element_index, element_object, element_symbol);
@@ -458,7 +541,7 @@ PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
         else if (elt->type == OCAD_AREA_ELEMENT)
         {
             AreaSymbol* element_symbol = new AreaSymbol();
-            element_symbol->color = color_index[elt->color];
+            element_symbol->color = convertColor(elt->color);
             PathObject* element_object = new PathObject(element_symbol);
             fillPathCoords(element_object, elt->npts, elt->pts);
             symbol->addElement(element_index, element_object, element_symbol);
@@ -669,5 +752,9 @@ qint64 OCAD8FileImport::convertSize(int ocad_size) {
     // OCAD uses hundredths of a millimeter.
     // oo-mapper uses 1/1000 mm
     return ((qint64)ocad_size) * 10;
+}
+
+MapColor *OCAD8FileImport::convertColor(int color) {
+    return color_index[color];
 }
 

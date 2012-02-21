@@ -28,8 +28,6 @@
 #include "symbol.h"
 #include "object.h"
 
-
-
 class OCAD8FileFormat : public Format
 {
 public:
@@ -76,6 +74,7 @@ protected:
     float convertRotation(int angle);
     void convertPoint(MapCoord &c, int ocad_x, int ocad_y);
     qint64 convertSize(int ocad_size);
+    MapColor *convertColor(int color);
 
 private:
     /// Handle to the open OCAD file
