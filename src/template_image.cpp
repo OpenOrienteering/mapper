@@ -81,6 +81,8 @@ void TemplateImage::drawTemplate(QPainter* painter, QRectF& clip_rect, double sc
 }
 QRectF TemplateImage::getExtent()
 {
+    // If the image is invalid, the extent is an empty rectangle.
+    if (!image) return QRectF();
 	return QRectF(-image->width() * 0.5, -image->height() * 0.5, image->width(), image->height());
 }
 

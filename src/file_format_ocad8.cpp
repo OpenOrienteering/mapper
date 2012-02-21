@@ -26,6 +26,7 @@
 #include "symbol_line.h"
 #include "symbol_area.h"
 #include "symbol_text.h"
+#include "template_image.h"
 
 
 bool OCAD8FileFormat::understands(const unsigned char *buffer, size_t sz) const
@@ -187,20 +188,10 @@ void OCAD8FileImport::doImport() throw (FormatException)
         for (int i = 0; i < 256; i++)
         {
             OCADTemplateEntry *entry = ocad_template_entry_at(file, idx, i);
-            if (entry->size > 0)
+            if (entry->type != 0 && entry->size > 0)
             {
-                OCADTemplate *templ = ocad_template(file, entry);
-                qDebug() << "Template: "<<templ->str;
-                OCADBackground background;
-                if (ocad_to_background(&background, templ) == 0)
-                {
-                    qDebug() << "Found background" << background.filename;
-                }
-                else
-                {
-                    addWarning(QObject::tr("Unable to import template: %1").arg(templ->str));
-
-                }
+                Template *templ = importTemplate(entry);
+                if (templ) map->templates.push_back(templ);
             }
         }
     }
@@ -627,6 +618,66 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
     }
 
     return NULL;
+}
+
+Template *OCAD8FileImport::importTemplate(OCADTemplateEntry *entry)
+{
+    OCADTemplate *ocad_templ = ocad_template(file, entry);
+    if (entry->type == 8)
+    {
+        OCADBackground background;
+        if (ocad_to_background(&background, ocad_templ) == 0)
+        {
+            return importRasterTemplate(background);
+        }
+        else
+        {
+            addWarning(QObject::tr("Unable to import template: %1").arg(ocad_templ->str));
+        }
+    }
+    else
+    {
+        addWarning(QObject::tr("Ignoring template of type: %1 (%2)").arg(entry->type).arg(ocad_templ->str));
+    }
+    return NULL;
+}
+
+Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background)
+{
+    QString filename(background.filename); // FIXME: use platform char encoding?
+    if (isRasterImageFile(filename))
+    {
+        TemplateImage *templ = new TemplateImage(filename, map);
+        MapCoord c;
+        convertPoint(c, background.trnx, background.trny);
+        templ->setTemplateX(c.rawX());
+        templ->setTemplateY(c.rawY());
+        // This seems to be measured in degrees. Plus there's wacky values like -359.7.
+        templ->setTemplateRotation(M_PI / 180 * background.angle);
+        templ->setTemplateScaleX(background.sclx);
+        templ->setTemplateScaleY(background.scly);
+        // FIXME: import template view parameters: background.dimming and background.transparent
+        return templ;
+    }
+    else
+    {
+        addWarning(QObject::tr("Unable to import template: background \"%1\" doesn't seem to be a raster image").arg(filename));
+    }
+    return NULL;
+}
+
+bool OCAD8FileImport::isRasterImageFile(const QString &filename) const
+{
+    // FIXME: see if we can drive this from the format list support by QImageReader instead.
+    // That way it automatically adapts to the system on which it's run.
+    if (filename.endsWith(".jpg", Qt::CaseInsensitive)) return true;
+    if (filename.endsWith(".jpeg", Qt::CaseInsensitive)) return true;
+    if (filename.endsWith(".png", Qt::CaseInsensitive)) return true;
+    if (filename.endsWith(".gif", Qt::CaseInsensitive)) return true;
+    if (filename.endsWith(".tif", Qt::CaseInsensitive)) return true;
+    if (filename.endsWith(".tiff", Qt::CaseInsensitive)) return true;
+    if (filename.endsWith(".bmp", Qt::CaseInsensitive)) return true;
+    return false;
 }
 
 /** Translates the OCAD path given in the last two arguments into an Object.
