@@ -64,8 +64,10 @@ OCADObjectEntry *ocad_object_entry_new(OCADFile *pfile, u32 npts) {
 	if (!pfile->header) return NULL;
 	if (npts == 0) return NULL;
 	OCADObjectEntry *empty = NULL; // holder for first empty (npts=0) index entry, if needed
-	for (OCADObjectIndex *idx = ocad_objidx_first(pfile); idx != NULL; idx = ocad_objidx_next(pfile, idx)) {
-		for (int i = 0; i < 256; i++) {
+	OCADObjectIndex *idx;
+	for (idx = ocad_objidx_first(pfile); idx != NULL; idx = ocad_objidx_next(pfile, idx)) {
+		int i;
+		for (i = 0; i < 256; i++) {
 			OCADObjectEntry *entry = &(idx->entry[i]);
 			if (entry->symbol == 0) {
 				if (entry->npts == 0 && !empty) empty = entry;
@@ -113,8 +115,10 @@ int ocad_object_remove(OCADFile *pfile, OCADObjectEntry *entry) {
 }
 
 bool ocad_object_entry_iterate(OCADFile *pfile, OCADObjectEntryCallback callback, void *param) {
-	for (OCADObjectIndex *idx = ocad_objidx_first(pfile); idx != NULL; idx = ocad_objidx_next(pfile, idx)) {
-		for (int i = 0; i < 256; i++) {
+	OCADObjectIndex *idx;
+	for (idx = ocad_objidx_first(pfile); idx != NULL; idx = ocad_objidx_next(pfile, idx)) {
+		int i;
+		for (i = 0; i < 256; i++) {
 			OCADObjectEntry *entry = ocad_object_entry_at(pfile, idx, i);
 			if (entry != NULL && entry->ptr && entry->symbol) {
 				if (!callback(param, pfile, entry)) return FALSE;
@@ -142,8 +146,10 @@ OCADObject *ocad_object(OCADFile *pfile, OCADObjectEntry *entry) {
 }
 
 bool ocad_object_iterate(OCADFile *pfile, OCADObjectCallback callback, void *param) {
-	for (OCADObjectIndex *idx = ocad_objidx_first(pfile); idx != NULL; idx = ocad_objidx_next(pfile, idx)) {
-		for (int i = 0; i < 256; i++) {
+	OCADObjectIndex *idx;
+	for (idx = ocad_objidx_first(pfile); idx != NULL; idx = ocad_objidx_next(pfile, idx)) {
+		int i;
+		for (i = 0; i < 256; i++) {
 			OCADObject *obj = ocad_object_at(pfile, idx, i);
 			if (obj != NULL) {
 				if (!callback(param, pfile, obj)) return FALSE;

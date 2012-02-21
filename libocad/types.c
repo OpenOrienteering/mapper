@@ -64,14 +64,16 @@ const char *ocad_str2(char **pbuf, const str *ostr) {
 
 void ocad_to_real(s32 *from, double *to, u32 count) {
 	u32 n = count * 2;
-	for (u32 i = 0; i < n; i += 2) {
+	u32 i;
+	for (i = 0; i < n; i += 2) {
 		double x = from[i], y = from[i + 1];
 		to[i] = x; to[i + 1] = y;
 	}
 }
 
 void dump_bytes(u8 *base, u32 size) {
-	for (u32 i = 0; i < size; i++) {
+	u32 i;
+	for (i = 0; i < size; i++) {
 		if (i % 16 == 0) fprintf(stderr, "%06x:", i);
 		fprintf(stderr, " %02x", base[i]);
 		if (i %16 == 15) fprintf(stderr, "\n");

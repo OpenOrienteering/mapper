@@ -70,7 +70,8 @@ static s64 ocad_internal_path_area(IntPath *path, u32 start, u32 count) {
 	s64 a = 0LL;
 	u32 last = start + count - 1;
 	s32 lx = path->x[start + count - 1], ly = path->y[last];
-	for (int i = 0; i < count; i++) {
+	int i;
+	for (i = 0; i < count; i++) {
 		s32 x = path->x[start + i], y = path->y[start + i];
 		a = a + lx * y - ly * x;
 		lx = x; ly = y;
@@ -105,7 +106,8 @@ static void ocad_internal_path_reverse(IntPath *path, u32 start, u32 count) {
 static int ocad_path_to_internal(IntPath *path, u32 npts, const OCADPoint *pts) {
 #define F_PATH_HOLE 0x80 // not publically accessible, temporary and will be removed before the method returns
 	path->count = npts;
-	for (u32 i = 0; i < npts; i++) {
+	u32 i;
+	for (i = 0; i < npts; i++) {
 		s32 x = pts[i].x, y = pts[i].y;
 		path->x[i] = (x >> 8);
 		path->y[i] = (y >> 8);
@@ -122,20 +124,21 @@ static int ocad_path_to_internal(IntPath *path, u32 npts, const OCADPoint *pts) 
 	// same, then E/O would fail to make it a hole.
 	u32 hole_idx = 0;
 	s8 sign = 0;
-	for (u32 i = 0; i < npts; i++) {
-		if (path->f[i] & F_PATH_HOLE) {
-			path->f[i] &= ~F_PATH_HOLE;
+	u32 j;
+	for (j = 0; j < npts; j++) {
+		if (path->f[j] & F_PATH_HOLE) {
+			path->f[j] &= ~F_PATH_HOLE;
 			if (hole_idx == 0) {
 				// This is the main part of the path; find its area
-				sign = ocad_internal_path_area_sign(path, 0, i);
+				sign = ocad_internal_path_area_sign(path, 0, j);
 			}
 			else {
 				// We've reached the end of a hole segment
-				s8 hole_sign = ocad_internal_path_area_sign(path, hole_idx, i - hole_idx);
-				if (sign == hole_sign) ocad_internal_path_reverse(path, hole_idx, i - hole_idx);
+				s8 hole_sign = ocad_internal_path_area_sign(path, hole_idx, j - hole_idx);
+				if (sign == hole_sign) ocad_internal_path_reverse(path, hole_idx, j - hole_idx);
 			}
-			hole_idx = i;
-			path->f[i] |= F_PATH_MOVE;
+			hole_idx = j;
+			path->f[j] |= F_PATH_MOVE;
 		}
 	}
 	return 0;
@@ -145,8 +148,8 @@ static int ocad_path_to_internal(IntPath *path, u32 npts, const OCADPoint *pts) 
  *  the user_object, the segment type, and the segment endpoint.
  */
 static bool ocad_internal_path_iterate(IntPath *path, IntPathCallback callback, void *user_object) {
-	s32 pt[6]; int n = 0; bool first = TRUE;
-	for (u32 i = 0; i < path->count; i++) {
+	s32 pt[6]; int n = 0; bool first = TRUE; u32 i;
+	for (i = 0; i < path->count; i++) {
 		pt[n++] = path->x[i];
 		pt[n++] = path->y[i];
 		if (path->f[i] & F_PATH_CONTROL) continue;
@@ -178,7 +181,8 @@ s64 ocad_path_area(s32 *path, u32 start, u32 count) {
 	s32 *p = path + 3 * (start + count - 1);
 	s32 lx = p[0], ly = p[1];
 	p = path + 3 * start;
-	for (int i = 0; i < count; i++) {
+	int i;
+	for (i = 0; i < count; i++) {
 		s32 x = p[0], y = p[1];
 		a = a + lx * y - ly * x;
 		lx = x; ly = y; p += 3;
@@ -194,7 +198,8 @@ s64 ocad_path_area(s32 *path, u32 start, u32 count) {
 void ocad_path_map(const Transform *matrix, const OCADPoint *pts, OCADPoint *opts, u32 npts) {
 	double p[2];
 	const OCADPoint *pt = pts;
-	for (u32 i = 0; i < npts; i++) {
+	u32 i;
+	for (i = 0; i < npts; i++) {
 		p[0] = pt->x >> 8;
 		p[1] = pt->y >> 8;
 		matrix_map(matrix, p, p, 1);
@@ -236,7 +241,8 @@ bool ocad_path_bounds_rect(OCADRect *rect, u32 npts, const OCADPoint *pts) {
 bool ocad_path_bounds(s32 *rect, u32 npts, const OCADPoint *pts) {
 	if (npts == 0) return FALSE;
 	int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
-	for (u32 i = 0; i < npts; i++) {
+	u32 i;
+	for (i = 0; i < npts; i++) {
 		int x = pts[i].x >> 8, y = pts[i].y >> 8;
 		if (i == 0) {
 			x1 = x2 = x;

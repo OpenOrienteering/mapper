@@ -78,8 +78,10 @@ OCADTemplateEntry *ocad_template_entry_at(OCADFile *pfile, OCADTemplateIndex *cu
 OCADTemplateEntry *ocad_template_entry_new(OCADFile *pfile, u32 size) {
 	if (!pfile->header) return NULL;
 	OCADTemplateEntry *empty = NULL; // holder for first empty (size=0) index entry, if needed
-	for (OCADTemplateIndex *idx = ocad_template_index_first(pfile); idx != NULL; idx = ocad_template_index_next(pfile, idx)) {
-		for (int i = 0; i < 256; i++) {
+	OCADTemplateIndex *idx;
+	for (idx = ocad_template_index_first(pfile); idx != NULL; idx = ocad_template_index_next(pfile, idx)) {
+		int i;
+		for (i = 0; i < 256; i++) {
 			OCADTemplateEntry *entry = &(idx->entry[i]);
 			if (entry->type == 0) {
 				if (entry->size == 0 && !empty) empty = entry;
@@ -101,8 +103,10 @@ int ocad_template_remove(OCADFile *pfile, OCADTemplateEntry *entry) {
 }
 
 bool ocad_template_entry_iterate(OCADFile *pfile, OCADTemplateEntryCallback callback, void *param) {
-	for (OCADTemplateIndex *idx = ocad_template_index_first(pfile); idx != NULL; idx = ocad_template_index_next(pfile, idx)) {
-		for (int i = 0; i < 256; i++) {
+	OCADTemplateIndex *idx;
+	for (idx = ocad_template_index_first(pfile); idx != NULL; idx = ocad_template_index_next(pfile, idx)) {
+		int i;
+		for (i = 0; i < 256; i++) {
 			OCADTemplateEntry *entry = &(idx->entry[i]);
 			if (entry->type != 0) {
 				if (!callback(param, pfile, entry)) return FALSE;

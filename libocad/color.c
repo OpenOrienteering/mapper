@@ -45,7 +45,8 @@ OCADColor *ocad_color_at(OCADFile *pfile, int index) {
 
 OCADColor *ocad_color(OCADFile *pfile, u8 number) {
 	if (!pfile->header) return NULL;
-	for (int i = 0; i < pfile->header->ncolors; i++) {
+	int i;
+	for (i = 0; i < pfile->header->ncolors; i++) {
 		if (pfile->colors[i].number == number) return (pfile->colors + i);
 	}
 	return NULL;

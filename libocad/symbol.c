@@ -36,8 +36,10 @@ OCADSymbolIndex *ocad_symidx_next(OCADFile *pfile, OCADSymbolIndex *current) {
 int ocad_symbol_count(OCADFile *pfile) {
 	if (!pfile || !pfile->header) return -1;
 	int count = 0;
-	for (OCADSymbolIndex *idx = ocad_symidx_first(pfile); idx != NULL; idx = ocad_symidx_next(pfile, idx)) {
-		for (int i = 0; i < 256; i++) {
+	OCADSymbolIndex *idx;
+	for (idx = ocad_symidx_first(pfile); idx != NULL; idx = ocad_symidx_next(pfile, idx)) {
+		int i;
+		for (i = 0; i < 256; i++) {
 			OCADSymbol *sym = ocad_symbol_at(pfile, idx, i);
 			if (sym != NULL) count++;
 		}
@@ -54,8 +56,10 @@ OCADSymbol *ocad_symbol_at(OCADFile *pfile, OCADSymbolIndex *current, int index)
 }
 
 OCADSymbol *ocad_symbol(OCADFile *pfile, word number) {
-	for (OCADSymbolIndex *idx = ocad_symidx_first(pfile); idx != NULL; idx = ocad_symidx_next(pfile, idx)) {
-		for (int i = 0; i < 256; i++) {
+	OCADSymbolIndex *idx;
+	for (idx = ocad_symidx_first(pfile); idx != NULL; idx = ocad_symidx_next(pfile, idx)) {
+		int i;
+		for (i = 0; i < 256; i++) {
 			OCADSymbol *sym = ocad_symbol_at(pfile, idx, i);
 			if (sym != NULL && sym->number == number) return sym;
 		}
@@ -64,8 +68,10 @@ OCADSymbol *ocad_symbol(OCADFile *pfile, word number) {
 }
 
 bool ocad_symbol_iterate(OCADFile *pfile, OCADSymbolCallback callback, void *param) {
-	for (OCADSymbolIndex *idx = ocad_symidx_first(pfile); idx != NULL; idx = ocad_symidx_next(pfile, idx)) {
-		for (int i = 0; i < 256; i++) {
+	OCADSymbolIndex *idx;
+	for (idx = ocad_symidx_first(pfile); idx != NULL; idx = ocad_symidx_next(pfile, idx)) {
+		int i;
+		for (i = 0; i < 256; i++) {
 			OCADSymbol *sym = ocad_symbol_at(pfile, idx, i);
 			if (sym != NULL) {
 				if (!callback(param, pfile, sym)) return FALSE;

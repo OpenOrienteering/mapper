@@ -99,14 +99,16 @@ void matrix_scale(Transform *matrix, double sx, double sy) {
 void matrix_map(const Transform *matrix, const double *pts, double *opts, int count) {
 	int n = 2 * count;
 	if (opts > pts) {
-		for (int i = n - 2; i >= 0; i -= 2) {
+		int i;
+		for (i = n - 2; i >= 0; i -= 2) {
 			double x = pts[i], y = pts[i + 1];
 			opts[i] = matrix->m00 * x + matrix->m01 * y + matrix->m02;
 			opts[i + 1] = matrix->m10 * x + matrix->m11 * y + matrix->m12;
 		}
 	}
 	else {
-		for (int i = 0; i < n; i += 2) {
+		int i;
+		for (i = 0; i < n; i += 2) {
 			double x = pts[i], y = pts[i + 1];
 			opts[i] = matrix->m00 * x + matrix->m01 * y + matrix->m02;
 			opts[i + 1] = matrix->m10 * x + matrix->m11 * y + matrix->m12;
