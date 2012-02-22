@@ -512,13 +512,14 @@ PointSymbolEditorWidget* SymbolSettingDialog::createPointSymbolEditor(MapEditorC
 	else if (symbol->getType() == Symbol::Line)
 	{
 		LineSymbol* line = reinterpret_cast<LineSymbol*>(symbol);
-		line->ensurePointSymbols(tr("Start symbol"), tr("Mid symbol"), tr("End symbol"), tr("Dash symbol"));
+        line->ensurePointSymbols(tr("Start symbol"), tr("Mid symbol"), tr("End symbol"), tr("Dash symbol"), tr("Corner symbol"));
 		std::vector<PointSymbol*> point_vector;
 		point_vector.push_back(line->getStartSymbol());
 		point_vector.push_back(line->getMidSymbol());
 		point_vector.push_back(line->getEndSymbol());
 		point_vector.push_back(line->getDashSymbol());
-		PointSymbolEditorWidget* point_editor = new PointSymbolEditorWidget(preview_map, controller, point_vector, 16, this);
+        point_vector.push_back(line->getCornerSymbol());
+        PointSymbolEditorWidget* point_editor = new PointSymbolEditorWidget(preview_map, controller, point_vector, 16, this);
 		connect(point_editor, SIGNAL(symbolEdited()), this, SLOT(createPreviewMap()));
 		return point_editor;
 	}

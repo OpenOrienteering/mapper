@@ -178,11 +178,11 @@ void OCAD8FileImport::doImport() throw (FormatException)
     map->layers.resize(1);
     map->layers[0] = layer;
     map->current_layer_index = 0;
-    map->current_layer = layer; // FIXME: should current_layer and current_layer_index be separate?
+    map->current_layer = layer;
 
     // Load templates
     map->templates.clear();
-    map->first_front_template = 0; // FIXME? Guessing this is the right value if there are no templates.
+    map->first_front_template = 0;
     for (OCADTemplateIndex *idx = ocad_template_index_first(file); idx != NULL; idx = ocad_template_index_next(file, idx))
     {
         for (int i = 0; i < 256; i++)
@@ -262,6 +262,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
     else if (ocad_symbol->ends == 1) symbol->cap_style = LineSymbol::RoundCap;
     else if (ocad_symbol->ends == 2) symbol->cap_style = LineSymbol::SquareCap;
     // FIXME: are the join mappings correct?
+    symbol->join_style = LineSymbol::BevelJoin;
 
     // Handle the dash pattern
     if( ocad_symbol->gap > 0 || ocad_symbol->gap2 > 0 )
@@ -277,15 +278,18 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
     else
     {
         symbol->segment_length = convertSize(ocad_symbol->len);
-        symbol->end_length = convertSize(ocad_symbol->elen); // FIXME?
+        symbol->end_length = convertSize(ocad_symbol->elen);
     }
     
     // Create point symbols along line; middle ("normal") dash, corners, start, and end.
-    OCADPoint * symbolptr = (OCADPoint *)ocad_symbol->pts;
-    symbol->mid_symbol = importPattern( ocad_symbol->smnpts, symbolptr);
     symbol->mid_symbols_per_spot = ocad_symbol->snum;
     symbol->mid_symbol_distance = convertSize(ocad_symbol->sdist);
-    symbolptr += ocad_symbol->smnpts;
+    OCADPoint * symbolptr = (OCADPoint *)ocad_symbol->pts;
+    if (ocad_symbol->smnpts > 0)
+    {
+        symbol->mid_symbol = importPattern( ocad_symbol->smnpts, symbolptr);
+        symbolptr += ocad_symbol->smnpts;
+    }
     if( ocad_symbol->ssnpts > 0 )
     {
         symbol->dash_symbol = importPattern( ocad_symbol->ssnpts, symbolptr);
@@ -293,7 +297,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
     }
     if( ocad_symbol->scnpts > 0 )
     {
-        //symbol->corner_symbol = importPattern( ocad_symbol->scnpts, symbolptr);
+        symbol->corner_symbol = importPattern( ocad_symbol->scnpts, symbolptr);
         symbolptr += ocad_symbol->scnpts; 
     }
     if( ocad_symbol->sbnpts > 0 )
@@ -310,17 +314,57 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
     symbol->minimum_mid_symbol_count_when_closed = 1 + ocad_symbol->smin;
     symbol->show_at_least_one_symbol = (ocad_symbol->smin >= 0);
 
+    // TODO: taper fields (tmode and tlast)
+
+    if (ocad_symbol->fwidth > 0)
+    {
+        addWarning(QObject::tr("In symbol %1, ignoring framing line.").arg(ocad_symbol->number));
+    }
+
+    // Now look to see if there is a double line.
+    Symbol *double_line_symbol = importDoubleLineSymbol(ocad_symbol);
+    if (double_line_symbol)
+    {
+        // Yes, there is, so see if the first line is trivial and we can simply replace it with the double line
+        if (isMainLineTrivial(symbol))
+        {
+            return double_line_symbol;
+        }
+
+        // Otherwise, merge the two into a combined symbol
+        std::vector<Symbol *> subsymbols;
+        subsymbols.push_back(symbol);
+        subsymbols.push_back(double_line_symbol);
+        CombinedSymbol *combined_symbol =  new CombinedSymbol();
+        fillCommonSymbolFields(combined_symbol, (OCADSymbol *)ocad_symbol);
+        fillCombinedSymbol(combined_symbol, subsymbols);
+        return combined_symbol;
+    }
+
+
+    return symbol;
+}
+
+Symbol *OCAD8FileImport::importDoubleLineSymbol(const OCADLineSymbol *ocad_symbol)
+{
     // Double lines
+    LineSymbol *symbol = NULL;
+
     if (ocad_symbol->dmode > 0)
     {
+        symbol = new LineSymbol();
+        fillCommonSymbolFields(symbol, (OCADSymbol *)ocad_symbol);
+
+        symbol->line_width = convertSize(ocad_symbol->dwidth);
         symbol->have_border_lines = true;
+        symbol->dashed = false;
+
         if (ocad_symbol->dflags & 1)
         {
+
             // Double line fill: overwrite anything in the "main" line, even if it exists
             // FIXME: if a main line exists, it is drawn by OCAD in addition to the other line -> use CombinedSymbol
-            symbol->line_width = convertSize(ocad_symbol->dwidth);
             symbol->color = convertColor(ocad_symbol->dcolor);
-			symbol->dashed = false;
         }
 
         // Border color and width - currently we don't support different values on left and right side,
@@ -340,22 +384,15 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
                        .arg(ocad_symbol->number).arg(ocad_symbol->lwidth).arg(ocad_symbol->rwidth).arg(border_width));
         }
         symbol->border_width = convertSize(border_width);
-		symbol->border_shift = symbol->border_width / 2;
+        symbol->border_shift = 0;
 
         // And finally, the border may be dashed
         if (ocad_symbol->dgap > 0)
         {
-			symbol->dashed_border = true;
+            symbol->dashed_border = true;
             symbol->border_dash_length = convertSize(ocad_symbol->dlen);
             symbol->border_break_length = convertSize(ocad_symbol->dgap);
         }
-    }
-
-    // TODO: taper fields (tmode and tlast)
-
-    if (ocad_symbol->fwidth > 0)
-    {
-        addWarning(QObject::tr("In symbol %1, ignoring framing line.").arg(ocad_symbol->number));
     }
 
     return symbol;
@@ -560,6 +597,36 @@ void OCAD8FileImport::fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *o
     //symbol->map = map;
 }
 
+bool OCAD8FileImport::isMainLineTrivial(const LineSymbol *symbol)
+{
+    if (symbol->line_width > 0 && symbol->color != NULL) return false;
+    if (symbol->start_symbol || symbol->end_symbol || symbol->mid_symbol) return false;
+    if (symbol->dash_symbol || symbol->corner_symbol) return false;
+    // FIXME: is this a complete assessment of a "trivial" main line?
+    return true;
+}
+
+void OCAD8FileImport::fillCombinedSymbol(CombinedSymbol *combined_symbol, const std::vector<Symbol *> &symbols)
+{
+    int num_symbols = symbols.size();
+    combined_symbol->temp_part_indices.resize(num_symbols);
+
+    // Add .1, .2, .3 etc to subsymbol identifiers, and add them to the map
+    int counter = 1;
+    for (int i = 0; i < num_symbols; i++)
+    {
+        Symbol *symbol = symbols[i];
+        symbol->setNumberComponent(2, counter);
+        symbol->setName(QObject::tr("%1 part %2").arg(symbol->getName()).arg(counter));
+        map->symbols.push_back(symbol);
+        counter++;
+
+        // Give the combined symbol references to the subsymbol indexes
+        combined_symbol->temp_part_indices[i] = map->symbols.size() - 1;
+    }
+    // CombinedSymbol::loadFinished will load in the correct references
+}
+
 Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
 {
     if (!symbol_index.contains(ocad_object->symbol))
@@ -630,6 +697,7 @@ Template *OCAD8FileImport::importTemplate(OCADTemplateEntry *entry)
     OCADTemplate *ocad_templ = ocad_template(file, entry);
     if (entry->type == 8)
     {
+        qDebug() << ocad_templ->str;
         OCADBackground background;
         if (ocad_to_background(&background, ocad_templ) == 0)
         {
@@ -661,7 +729,12 @@ Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background
         templ->setTemplateRotation(M_PI / 180 * background.angle);
         templ->setTemplateScaleX(background.sclx);
         templ->setTemplateScaleY(background.scly);
-        // FIXME: import template view parameters: background.dimming and background.transparent
+
+        assert(map == view->getMap());
+        TemplateVisibility *templ_view = view->getTemplateVisibility(templ);
+        if (background.transparent)
+            templ_view->opacity = 1.0 - 0.01 * background.dimming;
+        templ_view->visible = (background.s != 0) ? true : false;
         return templ;
     }
     else
@@ -786,7 +859,6 @@ QString OCAD8FileImport::convertWideCString(const char *p, size_t n) {
 
 float OCAD8FileImport::convertRotation(int angle) {
     // OCAD uses tenths of a degree, counterclockwise
-    // FIXME: oo-mapper uses a real number of degrees, counterclockwise
     // BUG: if sin(rotation) is < 0 for a hatched area pattern, the pattern's createRenderables() will go into an infinite loop.
     // So until that's fixed, we keep a between 0 and PI
     float a = (M_PI / 180) *  (0.1f * angle);

@@ -45,6 +45,7 @@ LineSymbol::LineSymbol() : Symbol(Symbol::Line)
 	mid_symbol = NULL;
 	end_symbol = NULL;
 	dash_symbol = NULL;
+    corner_symbol = NULL;
 	
 	dashed = false;
 	
@@ -77,6 +78,7 @@ LineSymbol::~LineSymbol()
 	delete mid_symbol;
 	delete end_symbol;
 	delete dash_symbol;
+    delete corner_symbol;
 }
 Symbol* LineSymbol::duplicate()
 {
@@ -92,6 +94,7 @@ Symbol* LineSymbol::duplicate()
 	new_line->mid_symbol = mid_symbol ? reinterpret_cast<PointSymbol*>(mid_symbol->duplicate()) : NULL;
 	new_line->end_symbol = end_symbol ? reinterpret_cast<PointSymbol*>(end_symbol->duplicate()) : NULL;
 	new_line->dash_symbol = dash_symbol ? reinterpret_cast<PointSymbol*>(dash_symbol->duplicate()) : NULL;
+    new_line->corner_symbol = corner_symbol ? reinterpret_cast<PointSymbol*>(corner_symbol->duplicate()) : NULL;
 	new_line->dashed = dashed;
 	new_line->segment_length = segment_length;
 	new_line->end_length = end_length;
@@ -165,7 +168,11 @@ void LineSymbol::createRenderables(bool path_closed, const MapCoordVector& flags
 	// Dash symbols?
 	if (dash_symbol && !dash_symbol->isEmpty())
 		createDashSymbolRenderables(path_closed, flags, coords, output);
-	
+
+    // Corner symbols?
+    if (corner_symbol && !corner_symbol->isEmpty())
+        createCornerSymbolRenderables(path_closed, flags, coords, output);
+
 	// The line itself
 	MapCoordVector processed_flags;
 	MapCoordVectorF processed_coords;
@@ -671,6 +678,45 @@ void LineSymbol::createDashSymbolRenderables(bool path_closed, const MapCoordVec
 		dash_symbol->createRenderablesScaled(&point_object, point_object.getRawCoordinateVector(), point_coord, false, output, scaling);
 	}
 }
+void LineSymbol::createCornerSymbolRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
+{
+    PointObject point_object(corner_symbol);
+    MapCoordVectorF point_coord;
+    point_coord.push_back(MapCoordF(0, 0));
+
+    int size = (int)coords.size();
+    for (int i = 0; i < size; ++i)
+    {
+        // Bezier control points aren't eligible
+        if (i >= 2 && flags[i-2].isCurveStart()) continue;
+        if (i >= 1 && flags[i-1].isCurveStart()) continue;
+
+        // FIXME: Should every non-control point be considered a corner point, or only those with a sufficient "bend"?
+        // The following logic should prevent corner symbols from being drawn when segments are in the same direction.
+        // If that's what we want...
+        /*
+        if (i > 0)
+        {
+            bool ok_back, ok_forward;
+            MapCoordF back_tangent = PathCoord::calculateTangent(coords, i, false, ok_back);
+            MapCoordF forward_tangent = PathCoord::calculateTangent(coords, i, true, ok_forward);
+            if (!ok_back || !ok_forward) continue;
+            back_tangent.normalize();
+            forward_tangent.normalize();
+            double dot = back_tangent.dot(forward_tangent);
+            if (dot < -0.9) continue; // almost 180 degress; roughly similar to the default miter limit
+            if (dot > 0.999) continue; // very close to 0 degrees
+        }
+        */
+
+        float scaling;
+        MapCoordF right = PathCoord::calculateRightVector(flags, coords, path_closed, i, &scaling);
+
+        point_object.setRotation(atan2(right.getX(), right.getY()));
+        point_coord[0] = coords[i];
+        corner_symbol->createRenderablesScaled(&point_object, point_object.getRawCoordinateVector(), point_coord, false, output, scaling);
+    }
+}
 void LineSymbol::createDottedRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
 {
 	PointObject point_object(mid_symbol);
@@ -1008,6 +1054,11 @@ void LineSymbol::colorDeleted(Map* map, int pos, MapColor* color)
 		dash_symbol->colorDeleted(map, pos, color);
 		have_changes = true;
 	}
+    if (corner_symbol && corner_symbol->containsColor(color))
+    {
+        corner_symbol->colorDeleted(map, pos, color);
+        have_changes = true;
+    }
     if (color == this->color)
 	{
 		this->color = NULL;
@@ -1026,9 +1077,11 @@ bool LineSymbol::containsColor(MapColor* color)
 		return true;
 	if (end_symbol && end_symbol->containsColor(color))
 		return true;
-	if (dash_symbol && dash_symbol->containsColor(color))
+    if (dash_symbol && dash_symbol->containsColor(color))
 		return true;
-	return false;
+    if (corner_symbol && corner_symbol->containsColor(color))
+        return true;
+    return false;
 }
 
 void LineSymbol::scale(double factor)
@@ -1046,6 +1099,8 @@ void LineSymbol::scale(double factor)
 		end_symbol->scale(factor);
 	if (dash_symbol)
 		dash_symbol->scale(factor);
+    if (corner_symbol)
+        corner_symbol->scale(factor);
 
 	segment_length = qRound(factor * segment_length);
 	end_length = qRound(factor * end_length);
@@ -1063,7 +1118,7 @@ void LineSymbol::scale(double factor)
 	border_break_length = qRound(factor * border_break_length);
 }
 
-void LineSymbol::ensurePointSymbols(const QString& start_name, const QString& mid_name, const QString& end_name, const QString& dash_name)
+void LineSymbol::ensurePointSymbols(const QString& start_name, const QString& mid_name, const QString& end_name, const QString& dash_name, const QString &corner_name)
 {
 	if (!start_symbol)
 	{
@@ -1089,6 +1144,12 @@ void LineSymbol::ensurePointSymbols(const QString& start_name, const QString& mi
 		dash_symbol->setName(dash_name);
 		dash_symbol->setRotatable(true);
 	}
+    if (!corner_symbol)
+    {
+        corner_symbol = new PointSymbol();
+        corner_symbol->setName(dash_name);
+        corner_symbol->setRotatable(true);
+    }
 }
 void LineSymbol::cleanupPointSymbols()
 {
@@ -1112,6 +1173,11 @@ void LineSymbol::cleanupPointSymbols()
 		delete dash_symbol;
 		dash_symbol = NULL;
 	}
+    if (corner_symbol->isEmpty())
+    {
+        delete corner_symbol;
+        corner_symbol = NULL;
+    }
 }
 
 void LineSymbol::saveImpl(QFile* file, Map* map)

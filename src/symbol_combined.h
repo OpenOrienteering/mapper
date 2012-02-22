@@ -37,6 +37,7 @@ class CombinedSymbol : public Symbol
 {
 friend class CombinedSymbolSettings;
 friend class PointSymbolEditorWidget;
+friend class OCAD8FileImport;
 public:
 	CombinedSymbol();
 	virtual ~CombinedSymbol();
@@ -53,17 +54,17 @@ public:
 	virtual bool loadFinished(Map* map);
 	
 	// Getters / Setter
-	inline int getNumParts() const {return (int)parts.size();}
-	inline void setNumParts(int num) {parts.resize(num);}
+    inline int getNumParts() const {return (int)parts.size();}
+    inline void setNumParts(int num) {parts.resize(num);}
 	
-	inline Symbol* getPart(int i) const {return parts[i];}
-	inline void setPart(int i, Symbol* symbol) {parts[i] = symbol;}
+    inline Symbol* getPart(int i) const {return parts[i];}
+    inline void setPart(int i, Symbol* symbol) {parts[i] = symbol;}
 	
 protected:
 	virtual void saveImpl(QFile* file, Map* map);
 	virtual bool loadImpl(QFile* file, int version, Map* map);
 	
-	std::vector<Symbol*> parts;
+    std::vector<Symbol*> parts;
 	std::vector<int> temp_part_indices;	// temporary vector of the indices of the 'parts' symbols, used just for loading
 };
 

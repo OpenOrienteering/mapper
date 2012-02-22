@@ -84,6 +84,8 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
     context_menu->addAction(tr("Invert selection"), this, SLOT(invertSelection()));
     context_menu->addSeparator();
     context_menu->addAction(tr("Sort by number"), this, SLOT(sortByNumber()));
+    // text will be filled in by updateContextMenuState()
+    select_objects_action = context_menu->addAction("", parent, SLOT(emitSelectObjectsClicked()));
 
 	connect(map, SIGNAL(colorDeleted(int,MapColor*)), this, SLOT(update()));
 }
@@ -386,21 +388,7 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 	
 	if (event->button() == Qt::RightButton)
 	{
-		bool have_selection = getNumSelectedSymbols() > 0;
-		bool single_selection = getNumSelectedSymbols() == 1 && current_symbol_index >= 0;
-		Symbol* single_symbol = getSingleSelectedSymbol();
-		
-		bool single_symbol_compatible;
-		bool single_symbol_different;
-		map->getSelectionToSymbolCompatibility(single_symbol, single_symbol_compatible, single_symbol_different);
-		
-		edit_action->setEnabled(single_selection);
-		scale_action->setEnabled(single_selection);
-		switch_symbol_action->setEnabled(single_symbol_compatible && single_symbol_different);
-		fill_border_action->setEnabled(single_symbol_compatible && single_symbol_different);
-		duplicate_action->setEnabled(single_selection);
-		delete_action->setEnabled(have_selection);
-		
+        updateContextMenuState();
 		context_menu->popup(event->globalPos());
 		event->accept();
 	}
@@ -637,6 +625,30 @@ void SymbolRenderWidget::sortByNumber()
 
     update();
 }
+void SymbolRenderWidget::updateContextMenuState()
+{
+    bool have_selection = getNumSelectedSymbols() > 0;
+    bool single_selection = getNumSelectedSymbols() == 1 && current_symbol_index >= 0;
+    Symbol* single_symbol = getSingleSelectedSymbol();
+
+    bool single_symbol_compatible;
+    bool single_symbol_different;
+    map->getSelectionToSymbolCompatibility(single_symbol, single_symbol_compatible, single_symbol_different);
+
+    edit_action->setEnabled(single_selection);
+    scale_action->setEnabled(single_selection);
+    switch_symbol_action->setEnabled(single_symbol_compatible && single_symbol_different);
+    fill_border_action->setEnabled(single_symbol_compatible && single_symbol_different);
+    duplicate_action->setEnabled(single_selection);
+    delete_action->setEnabled(have_selection);
+
+    if (single_selection)
+        select_objects_action->setText(tr("Select all objects with symbol \"%1\"").arg(single_symbol->getName()));
+    else
+        select_objects_action->setText(tr("Select all objects with selected symbols"));
+    select_objects_action->setEnabled(have_selection && false); // not implemented
+}
+
 bool SymbolRenderWidget::newSymbol(Symbol* new_symbol)
 {
 	SymbolSettingDialog dialog(new_symbol, NULL, map, this);

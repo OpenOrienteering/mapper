@@ -469,6 +469,11 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
         }
     }
 
+
+    Exporter *exporter = FileFormats.findFormat("XML")->createExporter("tmp.xml", this, view);
+    exporter->doExport();
+    delete exporter;
+
     return true;
 }
 

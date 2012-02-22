@@ -28,6 +28,7 @@
 #include "symbol_line.h"
 #include "symbol_area.h"
 #include "symbol_text.h"
+#include "symbol_combined.h"
 #include "object.h"
 
 
@@ -184,7 +185,6 @@ void XMLFileExporter::exportSymbol(const Symbol *symbol, bool anonymous)
                 .attr("width", s->getLineWidth())
                 .attr("cap", s->getCapStyle())
                 .attr("join", s->getJoinStyle());
-                //.attr("min-length", s->minimum_length);
         /*
         if (s->getCapStyle() == LineSymbol::PointedCap)
         {
@@ -192,32 +192,48 @@ void XMLFileExporter::exportSymbol(const Symbol *symbol, bool anonymous)
         }
         */
 
+        if (s->getBorderLineWidth() > 0)
+        {
+            builder.attr("border-color", color_index[s->getBorderColor()])
+                    .attr("border-width", s->getBorderLineWidth())
+                    .attr("border-shift", s->getBorderShift());
+        }
+
         if (s->getStartSymbol())
         {
             builder.down("start-symbol");
-            exportSymbol(s->getStartSymbol());
+            exportSymbol(s->getStartSymbol(), true);
             builder.up();
         }
         if (s->getMidSymbol())
         {
             builder.down("mid-symbol");
-            exportSymbol(s->getMidSymbol());
+            exportSymbol(s->getMidSymbol(), true);
             builder.up();
         }
         if (s->getEndSymbol())
         {
             builder.down("end-symbol");
-            exportSymbol(s->getEndSymbol());
+            exportSymbol(s->getEndSymbol(), true);
             builder.up();
         }
         if (s->getDashSymbol())
         {
             builder.down("dash-symbol");
-            exportSymbol(s->getDashSymbol());
+            exportSymbol(s->getDashSymbol(), true);
             builder.up();
         }
 
 
+    }
+    else if (symbol->getType() == Symbol::Combined)
+    {
+        builder.down("combined-symbol");
+        const CombinedSymbol *s = reinterpret_cast<const CombinedSymbol *>(symbol);
+        for (int i = 0; i < s->getNumParts(); i++)
+        {
+            exportSymbol(s->getPart(i), true);
+        }
     }
     else
     {
@@ -261,7 +277,9 @@ void XMLFileExporter::exportObject(const Object *object, bool reference_symbol)
     {
         builder.attr("symbol", object->getSymbol()->getNumberAsString());
     }
-    builder.attr("path", makePath(object)).attr("closed", object->isPathClosed()).up();
+    builder.attr("path", makePath(object));
+    if (object->isPathClosed()) builder.attr("closed", true);
+    builder.up();
 }
 
 QString XMLFileExporter::makePath(const Object *object) const

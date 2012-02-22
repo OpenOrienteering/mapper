@@ -55,6 +55,10 @@ public:
 	/// Returns the single "current" symbol (the symbol which was clicked last). Can be -1 if no symbol selected
 	inline int currentSymbolIndex() const {return current_symbol_index;}
 	
+protected:
+    // Used to update actions in the context menu
+    void updateContextMenuState();
+
 protected slots:
 	void newPointSymbol();
 	void newLineSymbol();
@@ -68,7 +72,7 @@ protected slots:
 	void selectAll();
 	void invertSelection();
     void sortByNumber();
-	
+
 	void setScroll(int new_scroll);
 	
 protected:
@@ -89,6 +93,7 @@ protected:
 	QAction* fill_border_action;
 	QAction* duplicate_action;
 	QAction* delete_action;
+    QAction* select_objects_action;
 	
 	Map* map;
 	
@@ -134,7 +139,7 @@ public:
 	void adjustSize(int width = -1, int height = -1);
     virtual QSize sizeHint() const;
 	
-	inline void emitSelectedSymbolsChanged() {emit selectedSymbolsChanged();}
+    inline void emitSelectedSymbolsChanged() {emit selectedSymbolsChanged();}
 	inline SymbolRenderWidget* getRenderWidget() const {return render_widget;}
 	
 public slots:
@@ -143,13 +148,15 @@ public slots:
 	
 	void emitSwitchSymbolClicked() {emit switchSymbolClicked();}
 	void emitFillBorderClicked() {emit fillBorderClicked();}
+    void emitSelectObjectsClicked() {emit selectObjectsClicked(); }
 	
 signals:
 	void selectedSymbolsChanged();
-	
-	void switchSymbolClicked();
+
+    void switchSymbolClicked();
 	void fillBorderClicked();
-	
+    void selectObjectsClicked();
+
 protected:
     virtual void resizeEvent(QResizeEvent* event);
 	
