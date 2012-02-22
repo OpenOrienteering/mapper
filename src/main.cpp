@@ -56,7 +56,7 @@ int main(int argc, char** argv)
 	// Localization
 	QString locale = QLocale::system().name();
 	QTranslator translator;
-	translator.load(QString("Mapper_") + locale);
+	translator.load(QString("Mapper_") + locale, QString(":/translations"));
 	qapp.installTranslator(&translator);
 	
 	// Create first main window
