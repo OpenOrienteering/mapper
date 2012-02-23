@@ -56,21 +56,18 @@ int main(int argc, char** argv)
 	// Localization
 	QString locale = QLocale::system().name();
 	QTranslator translator;
-	translator.load(QString("Mapper_") + locale);
+	translator.load(QString("Mapper_") + locale, QString(":/translations"));
 	qapp.installTranslator(&translator);
 	
-	// Create first main window - if a program parameter is specified, open the file
+	// Create first main window
 	first_window = new MainWindow(true);
-	if (argc > 1)
+	first_window->setController(new HomeScreenController());
+	
+	// Treat all program parameters as files to be opened
+	for (int i = 1; i <= argc; i++)
 	{
-		if (!first_window->openPath(argv[1]))
-		{
-			QMessageBox::warning(NULL, MainWindow::tr("Error"), MainWindow::tr("Cannot open file:\n%1\n\nFile format not recognized."));
-			first_window->setController(new HomeScreenController());
-		}
+		first_window->openPath(argv[i]);
 	}
-	else
-		first_window->setController(new HomeScreenController());
 
     // If we need to respond to a second app launch, do so, but also accept a file open request.
     qapp.setActivationWindow(first_window);
