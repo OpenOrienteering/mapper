@@ -265,14 +265,18 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
     symbol->join_style = LineSymbol::BevelJoin;
 
     // Handle the dash pattern
-    if( ocad_symbol->gap > 0 || ocad_symbol->gap2 > 0 )
+    if (ocad_symbol->gap > 0 || ocad_symbol->gap2 > 0)
     {
         //dashed
         symbol->dashed = true;
         symbol->dash_length = convertSize(ocad_symbol->len);
         symbol->break_length = convertSize(ocad_symbol->gap);
-        //symbol->dashes_in_group = 0;
-        //symbol->in_group_break_len = 0;
+        if (ocad_symbol->gap2 > 0)
+        {
+            symbol->dashes_in_group = 2;
+            symbol->in_group_break_length = convertSize(ocad_symbol->gap2);
+        }
+        // FIXME
         //symbol->half_outer_dashes = 0;
     } 
     else
@@ -288,26 +292,36 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
     if (ocad_symbol->smnpts > 0)
     {
         symbol->mid_symbol = importPattern( ocad_symbol->smnpts, symbolptr);
+        symbol->mid_symbol->setName(QObject::tr("Mid symbol"));
         symbolptr += ocad_symbol->smnpts;
     }
     if( ocad_symbol->ssnpts > 0 )
     {
         symbol->dash_symbol = importPattern( ocad_symbol->ssnpts, symbolptr);
+        symbol->dash_symbol->setName(QObject::tr("Dash symbol"));
         symbolptr += ocad_symbol->ssnpts;
     }
     if( ocad_symbol->scnpts > 0 )
     {
-        symbol->corner_symbol = importPattern( ocad_symbol->scnpts, symbolptr);
+        if (symbol->dash_symbol)
+        {
+            addWarning(QObject::tr("Symbol %1 has both dash and corner symbols; using corner symbol").arg(ocad_symbol->number));
+            delete symbol->dash_symbol;
+;       }
+        symbol->dash_symbol = importPattern( ocad_symbol->scnpts, symbolptr);
+        symbol->dash_symbol->setName(QObject::tr("Dash symbol"));
         symbolptr += ocad_symbol->scnpts; 
     }
     if( ocad_symbol->sbnpts > 0 )
     {
         symbol->start_symbol = importPattern( ocad_symbol->sbnpts, symbolptr);
+        symbol->start_symbol->setName(QObject::tr("Start symbol"));
         symbolptr += ocad_symbol->sbnpts;
     }
     if( ocad_symbol->senpts > 0 )
     {
         symbol->end_symbol = importPattern( ocad_symbol->senpts, symbolptr);
+        symbol->end_symbol->setName(QObject::tr("End symbol"));
     }
     // FIXME: not really sure how this translates... need test cases
     symbol->minimum_mid_symbol_count = 1 + ocad_symbol->smin;
@@ -601,7 +615,7 @@ bool OCAD8FileImport::isMainLineTrivial(const LineSymbol *symbol)
 {
     if (symbol->line_width > 0 && symbol->color != NULL) return false;
     if (symbol->start_symbol || symbol->end_symbol || symbol->mid_symbol) return false;
-    if (symbol->dash_symbol || symbol->corner_symbol) return false;
+    if (symbol->dash_symbol) return false;
     // FIXME: is this a complete assessment of a "trivial" main line?
     return true;
 }
@@ -635,6 +649,7 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
         return NULL;
     }
 
+    Object *object = NULL;
     Symbol *symbol = symbol_index[ocad_object->symbol];
     if (symbol->getType() == Symbol::Point)
     {
@@ -646,9 +661,7 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
 
         // only 1 coordinate is allowed, enforce it even if the OCAD object claims more.
         fillPathCoords(p, 1, (OCADPoint *)ocad_object->pts);
-        p->map = map;
-        p->output_dirty = true;
-        return p;
+        object = p;
     }
     else if (symbol->getType() == Symbol::Text)
     {
@@ -673,9 +686,7 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
             return NULL;
         }
         t->path_closed = false;
-        t->map = map;
-        t->output_dirty = true;
-        return t;
+        object = t;
     }
     else if (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area) {
         PathObject *p = new PathObject();
@@ -684,12 +695,16 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
         // Normal path
         fillPathCoords(p, ocad_object->npts, (OCADPoint *)ocad_object->pts);
         p->path_closed = false;
-        p->map = map;
-        p->output_dirty = true;
-        return p;
+        object = p;
     }
 
-    return NULL;
+    if (object == NULL) return NULL;
+
+    // Set some common fields
+    object->map = map;
+    object->output_dirty = true;
+
+    return object;
 }
 
 Template *OCAD8FileImport::importTemplate(OCADTemplateEntry *entry)
@@ -772,6 +787,7 @@ void OCAD8FileImport::fillPathCoords(Object *object, s16 npts, OCADPoint *pts)
         // We can support CurveStart, HolePoint, DashPoint.
         // CurveStart needs to be applied to the main point though, not the control point
         if (buf[2] & PX_CTL1 && i > 0) object->coords[i-1].setCurveStart(true);
+        // And dash points are automatic for certain symbols.
         if (buf[2] & (PY_DASH << 8)) coord.setDashPoint(true);
         if (buf[2] & (PY_HOLE << 8)) coord.setHolePoint(true);
     }

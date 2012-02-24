@@ -20,6 +20,8 @@
 #ifndef OCAD8_FILE_IMPORT_H
 #define OCAD8_FILE_IMPORT_H
 
+#include <set>
+
 #include <QTextCodec>
 
 #include "../libocad/libocad.h"

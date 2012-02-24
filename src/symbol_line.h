@@ -70,7 +70,7 @@ public:
     virtual void scale(double factor);
 	
 	/// Creates empty point symbols for contained NULL symbols with the given names
-    void ensurePointSymbols(const QString& start_name, const QString& mid_name, const QString& end_name, const QString& dash_name, const QString& corner_name);
+    void ensurePointSymbols(const QString& start_name, const QString& mid_name, const QString& end_name, const QString& dash_name);
 	/// Deletes unused point symbols and sets them to NULL
 	void cleanupPointSymbols();
 	
@@ -92,7 +92,6 @@ public:
     inline PointSymbol* getMidSymbol() const {return mid_symbol;}
     inline PointSymbol* getEndSymbol() const {return end_symbol;}
     inline PointSymbol* getDashSymbol() const {return dash_symbol;}
-    inline PointSymbol* getCornerSymbol() const {return corner_symbol;}
     inline bool hasBorder() const {return have_border_lines;}
 	inline int getBorderLineWidth() const {return border_width;}
 	inline MapColor* getBorderColor() const {return border_color;}
@@ -111,7 +110,6 @@ protected:
 							  float start, float end, int& cur_line_coord, bool is_end, RenderableVector& output);
 	void processDashedLine(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, MapCoordVector& out_flags, MapCoordVectorF& out_coords, RenderableVector& output);
 	void createDashSymbolRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
-    void createCornerSymbolRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
     void createDottedRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
 	
 	void calculateCoordinatesForRange(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
@@ -134,9 +132,8 @@ protected:
 	PointSymbol* start_symbol;
 	PointSymbol* mid_symbol;
 	PointSymbol* end_symbol;
-	PointSymbol* dash_symbol;
-    PointSymbol* corner_symbol;
-	
+    PointSymbol* dash_symbol;
+
 	int mid_symbols_per_spot;
 	int mid_symbol_distance;
 	
