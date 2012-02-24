@@ -60,7 +60,7 @@ HomeScreenWidget::HomeScreenWidget(HomeScreenController* controller, QWidget* pa
 	title_label->setAlignment(Qt::AlignCenter);
 	
 	maps_widget = new DocumentSelectionWidget(tr("Maps"), tr("Create a new map ..."), tr("Open map ..."), tr("Recent maps"),
-																	   tr("Open Map ..."), tr("Maps (*.omap *.ocd);;All files (*.*)"));
+																	   tr("Open map ..."), tr("Maps (*.omap *.ocd);;All files (*.*)"));
 	HomeScreenTipOfTheDayWidget* tips_widget = new HomeScreenTipOfTheDayWidget(controller);
 	HomeScreenOtherWidget* other_widget = new HomeScreenOtherWidget();
 	
@@ -325,7 +325,7 @@ HomeScreenOtherWidget::HomeScreenOtherWidget(QWidget* parent) : QWidget(parent)
 {
 	QCommandLinkButton* settings_button = new QCommandLinkButton(tr("Settings"));
 	settings_button->setIcon(QIcon(":/images/settings.png"));
-	QCommandLinkButton* about_button = new QCommandLinkButton(tr("About"));
+	QCommandLinkButton* about_button = new QCommandLinkButton(tr("About %1").arg(APP_NAME));
 	about_button->setIcon(QIcon(":/images/about.png"));
 	QCommandLinkButton* help_button = new QCommandLinkButton(tr("Help"));
 	help_button->setIcon(QIcon(":/images/help.png"));

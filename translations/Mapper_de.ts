@@ -142,12 +142,12 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="54"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Neu</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="55"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Löschen</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="56"/>
@@ -167,12 +167,12 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="59"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Hilfe</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="171"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestätigung</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="171"/>
@@ -187,7 +187,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="265"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="265"/>
@@ -222,11 +222,13 @@
     <name>DocumentSelectionWidget</name>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="133"/>
+        <location filename="../src/main_window_home_screen.cpp~" line="133"/>
         <source>Clear list</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste leeren</translation>
     </message>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="181"/>
+        <location filename="../src/main_window_home_screen.cpp~" line="181"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -319,12 +321,12 @@
     <message>
         <location filename="../src/gps_coordinates.cpp" line="238"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../src/gps_coordinates.cpp" line="239"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -337,7 +339,7 @@
     <message>
         <location filename="../src/georeferencing.cpp" line="158"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../src/georeferencing.cpp" line="158"/>
@@ -389,7 +391,7 @@
     <message>
         <location filename="../src/georeferencing.cpp" line="239"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Löschen</translation>
     </message>
     <message>
         <location filename="../src/georeferencing.cpp" line="246"/>
@@ -414,7 +416,7 @@
     <message>
         <location filename="../src/georeferencing.cpp" line="246"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../src/georeferencing.cpp" line="257"/>
@@ -445,17 +447,24 @@
     <name>HomeScreenOtherWidget</name>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="326"/>
+        <location filename="../src/main_window_home_screen.cpp~" line="326"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="328"/>
+        <location filename="../src/main_window_home_screen.cpp~" line="328"/>
+        <source>About %1</source>
+        <translation>Über %1</translation>
+    </message>
+    <message>
         <source>About</source>
         <translatorcomment>&quot;Über&quot; scheint zu kurz. Alternative: Über OpenOrienteering Mapper</translatorcomment>
-        <translation>Über dieses Progamm</translation>
+        <translation type="obsolete">Über dieses Progamm</translation>
     </message>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="330"/>
+        <location filename="../src/main_window_home_screen.cpp~" line="330"/>
         <source>Help</source>
         <translation>Hilfe</translation>
     </message>
@@ -464,16 +473,19 @@
     <name>HomeScreenTipOfTheDayWidget</name>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="233"/>
+        <location filename="../src/main_window_home_screen.cpp~" line="233"/>
         <source>Tip of the day</source>
         <translation>Tipp des Tages</translation>
     </message>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="243"/>
+        <location filename="../src/main_window_home_screen.cpp~" line="243"/>
         <source>Previous</source>
         <translation>Vorheriger</translation>
     </message>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="244"/>
+        <location filename="../src/main_window_home_screen.cpp~" line="244"/>
         <source>Next</source>
         <translation>Nächster</translation>
     </message>
@@ -482,34 +494,40 @@
     <name>HomeScreenWidget</name>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="62"/>
+        <location filename="../src/main_window_home_screen.cpp~" line="62"/>
         <source>Maps</source>
         <translation>Karten</translation>
     </message>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="62"/>
+        <location filename="../src/main_window_home_screen.cpp~" line="62"/>
         <source>Create a new map ...</source>
         <translation>Neue Karte erstellen...</translation>
     </message>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="62"/>
+        <location filename="../src/main_window_home_screen.cpp" line="63"/>
+        <location filename="../src/main_window_home_screen.cpp~" line="62"/>
+        <location filename="../src/main_window_home_screen.cpp~" line="63"/>
         <source>Open map ...</source>
         <translation>Karte öffnen...</translation>
     </message>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="62"/>
+        <location filename="../src/main_window_home_screen.cpp~" line="62"/>
         <source>Recent maps</source>
-        <translation>Zuletzt bearbeitete Karten</translation>
+        <translation>Zuletzt geöffnet</translation>
     </message>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="63"/>
         <source>Open Map ...</source>
-        <translatorcomment>Geringfügige Variante eines anderen Originals</translatorcomment>
-        <translation>Karte öffnen...</translation>
+        <translatorcomment>FIXME: Geringfügige Variante eines anderen Originals</translatorcomment>
+        <translation type="obsolete">Karte öffnen...</translation>
     </message>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="63"/>
+        <location filename="../src/main_window_home_screen.cpp~" line="63"/>
         <source>Maps (*.omap *.ocd);;All files (*.*)</source>
-        <translatorcomment>evt. obsolet</translatorcomment>
+        <translatorcomment>FIXME: evt. obsolet</translatorcomment>
         <translation></translation>
     </message>
 </context>
@@ -705,16 +723,18 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/main.cpp" line="60"/>
         <location filename="../src/main_window.cpp" line="447"/>
         <location filename="../src/main_window.cpp" line="598"/>
         <location filename="../src/main_window.cpp" line="628"/>
+        <location filename="../src/main_window.cpp~" line="447"/>
+        <location filename="../src/main_window.cpp~" line="598"/>
+        <location filename="../src/main_window.cpp~" line="628"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="60"/>
         <location filename="../src/main_window.cpp" line="447"/>
+        <location filename="../src/main_window.cpp~" line="447"/>
         <source>Cannot open file:
 %1
 
@@ -723,130 +743,183 @@ File format not recognized.</source>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="107"/>
+        <location filename="../src/main_window.cpp~" line="107"/>
         <source>&amp;New</source>
         <translation>&amp;Neu</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="109"/>
+        <location filename="../src/main_window.cpp~" line="109"/>
         <source>Create a new map</source>
         <translation>Eine neue Karte erstellen</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="112"/>
+        <location filename="../src/main_window.cpp~" line="112"/>
         <source>&amp;Open...</source>
-        <translation>Öffnen...</translation>
+        <translation>Ö&amp;ffnen...</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="114"/>
+        <location filename="../src/main_window.cpp~" line="114"/>
         <source>Open an existing file</source>
         <translation>Eine vorhandene Datei öffnen</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="117"/>
+        <location filename="../src/main_window.cpp~" line="117"/>
         <source>Open &amp;recent</source>
         <translation>Zu&amp;letzt bearbeitet</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="128"/>
         <source>&amp;Save...</source>
         <translatorcomment>Original sollte &quot;&amp;Save&quot; heißen</translatorcomment>
+        <translation type="obsolete">&amp;Speichern</translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="128"/>
+        <location filename="../src/main_window.cpp~" line="128"/>
+        <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="132"/>
+        <location filename="../src/main_window.cpp~" line="132"/>
         <source>Save &amp;as...</source>
         <translation>Speichern &amp;unter...</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="136"/>
+        <location filename="../src/main_window.cpp~" line="136"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="137"/>
+        <location filename="../src/main_window.cpp~" line="137"/>
         <source>Ctrl+W</source>
         <translatorcomment>Werden Shortcuts auf diesem Weg übersetzt?</translatorcomment>
         <translation></translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="138"/>
+        <location filename="../src/main_window.cpp~" line="138"/>
         <source>Close this file</source>
         <translation>Diese Datei schließen</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="141"/>
+        <location filename="../src/main_window.cpp~" line="141"/>
         <source>E&amp;xit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="143"/>
+        <location filename="../src/main_window.cpp~" line="143"/>
         <source>Exit the application</source>
         <translatorcomment>Ausführlicher</translatorcomment>
         <translation>Die Anwendung beenden und alle Fenster schließen</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="146"/>
+        <location filename="../src/main_window.cpp~" line="146"/>
         <source>&amp;File</source>
         <translation>&amp;Datei</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="163"/>
+        <location filename="../src/main_window.cpp~" line="163"/>
         <source>Open &amp;Manual</source>
         <translatorcomment>Kürzer</translatorcomment>
         <translation>&amp;Handbuch</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="164"/>
+        <location filename="../src/main_window.cpp~" line="164"/>
         <source>Show the help file for this application</source>
         <translation>Die Dokumentation zu diesem Programm anzeigen</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="167"/>
+        <location filename="../src/main_window.cpp~" line="167"/>
+        <source>&amp;About %1</source>
+        <translation>&amp;Über %1</translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="172"/>
+        <location filename="../src/main_window.cpp~" line="172"/>
+        <source>Show information about Qt</source>
+        <translation>Informationen über Qt anzeigen</translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="291"/>
+        <location filename="../src/main_window.cpp~" line="291"/>
+        <source>The file has been modified.
+Do you want to save your changes?</source>
+        <translation>Die Datei wurde geändert.\nMöchten Sie die Änderungen speichern?</translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="417"/>
+        <location filename="../src/main_window.cpp~" line="417"/>
+        <source>Open file</source>
+        <translation>Datei öffnen</translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="611"/>
+        <location filename="../src/main_window.cpp~" line="611"/>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
         <source>&amp;About</source>
         <translatorcomment>Ausführlicher</translatorcomment>
-        <translation>Über dieses Programm</translation>
+        <translation type="obsolete">Über &amp;OpenOrienteering</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="168"/>
+        <location filename="../src/main_window.cpp~" line="168"/>
         <source>Show information about this application</source>
         <translation>Informationen über dieses Programm anzeigen</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="171"/>
         <source>About &amp;Qt</source>
-        <translation>Über Qt</translation>
+        <translation>Über &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="172"/>
         <source>Show information about QT</source>
         <translatorcomment>Typo im Original</translatorcomment>
-        <translation>Informationen über Qt anzeigen</translation>
+        <translation type="obsolete">Informationen über Qt anzeigen</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="175"/>
+        <location filename="../src/main_window.cpp~" line="175"/>
         <source>&amp;Help</source>
         <translation>&amp;Hilfe</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="291"/>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translatorcomment>&quot;Dokument&quot; in diesem Programm untypisch, besser Datei oder Karte.</translatorcomment>
-        <translation>Das Dokument wurde geändert.\nMöchten Sie die Änderungen speichern?</translation>
+        <translation type="obsolete">Das Dokument wurde geändert.\nMöchten Sie die Änderungen speichern?</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="354"/>
+        <location filename="../src/main_window.cpp~" line="354"/>
         <source>Unsaved file</source>
         <translation>Ungespeicherte Datei</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="384"/>
         <location filename="../src/main_window.cpp" line="511"/>
+        <location filename="../src/main_window.cpp~" line="384"/>
+        <location filename="../src/main_window.cpp~" line="511"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="384"/>
+        <location filename="../src/main_window.cpp~" line="384"/>
         <source>The selected map scale is 1:%1, but the selected symbol file has a scale of 1:%2! Is the file in the wrong folder?
 
 The new map&apos;s scale will be 1:%3.</source>
@@ -857,22 +930,24 @@ Die neue Karten wird mit dem Maßstab 1:%3 angelegt.</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="415"/>
+        <location filename="../src/main_window.cpp~" line="415"/>
         <source>All files</source>
         <translation>Alle Dateien</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="417"/>
         <source>Open file ...</source>
-        <translation>Datei öffnen...</translation>
+        <translation type="obsolete">Datei öffnen...</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="485"/>
+        <location filename="../src/main_window.cpp~" line="485"/>
         <source>&amp;%1 %2</source>
         <translatorcomment>Nicht zu übersetzen</translatorcomment>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="510"/>
+        <location filename="../src/main_window.cpp~" line="510"/>
         <source>This map is being saved as a &quot;%1&quot; file. Information may be lost.
 
 Press Yes to save in this format.
@@ -884,27 +959,31 @@ Wählen Sie Nein, um ein anderes Dateiformat zu auszusuchen.</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="542"/>
+        <location filename="../src/main_window.cpp~" line="542"/>
         <source>Save file ...</source>
         <translation>Datei speichern...</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="598"/>
+        <location filename="../src/main_window.cpp~" line="598"/>
         <source>Sorry, settings are not implemented yet!</source>
         <translation>Leider sind noch keine Einstellungen implementiert.</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="603"/>
+        <location filename="../src/main_window.cpp~" line="171"/>
+        <location filename="../src/main_window.cpp~" line="603"/>
         <source>About %1</source>
         <translation>Über %1</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="611"/>
         <source>Ok</source>
         <translatorcomment>Original-Schreibweise prüfen</translatorcomment>
-        <translation>OK</translation>
+        <translation type="obsolete">OK</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="628"/>
+        <location filename="../src/main_window.cpp~" line="628"/>
         <source>Sorry, help is not implemented yet!</source>
         <translation>Leider ist noch keine Hilfe implementiert.</translation>
     </message>
@@ -922,7 +1001,7 @@ Wählen Sie Nein, um ein anderes Dateiformat zu auszusuchen.</translation>
         <location filename="../src/map.cpp" line="458"/>
         <location filename="../src/map.cpp" line="467"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="350"/>
@@ -1413,7 +1492,7 @@ The available symbol sets depend on the selected scale.</source>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="41"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="42"/>
@@ -1436,12 +1515,12 @@ The available symbol sets depend on the selected scale.</source>
     <message>
         <location filename="../src/paint_on_template.cpp" line="203"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../src/paint_on_template.cpp" line="204"/>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeichnen</translation>
     </message>
 </context>
 <context>
@@ -1749,7 +1828,7 @@ The available symbol sets depend on the selected scale.</source>
         <location filename="../src/print_dock_widget.cpp" line="503"/>
         <location filename="../src/print_dock_widget.cpp" line="589"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../src/print_dock_widget.cpp" line="503"/>
@@ -2060,7 +2139,7 @@ for writing.</source>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="42"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="43"/>
@@ -2126,7 +2205,7 @@ for writing.</source>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="77"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Löschen</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="78"/>
@@ -2171,7 +2250,7 @@ for writing.</source>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="581"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bestätigung</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="581"/>
@@ -2209,12 +2288,12 @@ for writing.</source>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="63"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="64"/>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="104"/>
@@ -2303,7 +2382,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_image.cpp" line="60"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Warnung</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="60"/>
@@ -2343,12 +2422,12 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_image.cpp" line="201"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="202"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffnen</translation>
     </message>
 </context>
 <context>
@@ -2398,7 +2477,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_dock_widget.cpp" line="68"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Löschen</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="69"/>
@@ -2418,7 +2497,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/template_dock_widget.cpp" line="72"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hilfe</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="88"/>
@@ -2477,7 +2556,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <location filename="../src/template_dock_widget.cpp" line="446"/>
         <location filename="../src/template_dock_widget.cpp" line="676"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="195"/>
