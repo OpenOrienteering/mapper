@@ -28,6 +28,9 @@
 #include "symbol_text.h"
 #include "template_image.h"
 
+#if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
+#define QDateTime::currentMSecsSinceEpoch() 1000 * QDateTime::currentDateTime().toTime_t()
+#endif
 
 bool OCAD8FileFormat::understands(const unsigned char *buffer, size_t sz) const
 {
