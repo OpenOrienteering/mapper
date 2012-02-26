@@ -28,7 +28,7 @@
 #include "template.h"
 
 #if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
-#define Qt::MiddleButton Qt::MidButton
+#define MiddleButton MidButton
 #endif
 
 MapWidget::MapWidget(bool show_help, bool use_antialiasing, QWidget* parent) : QWidget(parent), show_help(show_help), use_antialiasing(use_antialiasing)
