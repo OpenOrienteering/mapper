@@ -125,7 +125,7 @@ void MainWindow::createFileMenu()
 	// TODO: importAct? Or better in the map menu?
 	// NOTE: if you insert something between open_recent_menu and save_act, adjust updateRecentFileActions()!
 	
-	save_act = new QAction(QIcon(":/images/save.png"), tr("&Save..."), this);
+	save_act = new QAction(QIcon(":/images/save.png"), tr("&Save"), this);
 	save_act->setShortcuts(QKeySequence::Save);
 	connect(save_act, SIGNAL(triggered()), this, SLOT(save()));
 	
@@ -164,12 +164,12 @@ void MainWindow::createHelpMenu()
 	manualAct->setStatusTip(tr("Show the help file for this application"));
 	connect(manualAct, SIGNAL(triggered()), this, SLOT(showHelp()));
 	
-	QAction* aboutAct = new QAction(tr("&About"), this);
+	QAction* aboutAct = new QAction(tr("&About %1").arg(APP_NAME), this);
 	aboutAct->setStatusTip(tr("Show information about this application"));
 	connect(aboutAct, SIGNAL(triggered()), this, SLOT(showAbout()));
 	
 	QAction* aboutQtAct = new QAction(tr("About &Qt"), this);
-	aboutQtAct->setStatusTip(tr("Show information about QT"));
+	aboutQtAct->setStatusTip(tr("Show information about Qt"));
 	connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 	
 	QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
@@ -288,7 +288,7 @@ bool MainWindow::showSaveOnCloseDialog()
 	{
 		QMessageBox::StandardButton ret;
 		ret = QMessageBox::warning(this, APP_NAME,
-								   tr("The document has been modified.\n"
+								   tr("The file has been modified.\n"
 		                           "Do you want to save your changes?"),
 								   QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
 
@@ -414,7 +414,7 @@ void MainWindow::showOpenDialog()
     }
     extensions = extensions % tr("All files") % " (*.*)";
 
-    QString path = QFileDialog::getOpenFileName(this, tr("Open file ..."), open_directory, extensions);
+    QString path = QFileDialog::getOpenFileName(this, tr("Open file"), open_directory, extensions);
     QFileInfo info(path);
     path = info.canonicalFilePath();
     open_directory = info.canonicalPath();
@@ -608,7 +608,7 @@ void MainWindow::showAbout()
 									 "This program comes with ABSOLUTELY NO WARRANTY;<br/>"
 									 "This is free software, and you are welcome to redistribute it<br/>"
 									 "under certain conditions; see the file COPYING for details.");
-	QPushButton* about_ok = new QPushButton(tr("Ok"));
+	QPushButton* about_ok = new QPushButton(tr("OK"));
 	
 	QGridLayout* layout = new QGridLayout();
 	layout->addWidget(about_label, 0, 0, 1, 2);
