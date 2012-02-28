@@ -77,10 +77,11 @@ set(Mapper_SRCS
  src/georeferencing.cpp
  src/paint_on_template.cpp
 
- src/edit_tool.cpp
+ src/tool_edit.cpp
  src/draw_point.cpp
  src/draw_path.cpp
  src/draw_text.cpp
+ src/tool_cut.cpp
  src/tool_rotate.cpp
 
  src/gps_coordinates.cpp

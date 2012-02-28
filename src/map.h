@@ -200,7 +200,7 @@ public:
 	
 	int getNumObjects();
 	int addObject(Object* object, int layer_index = -1);						// returns the index of the added object in the layer
-	void deleteObject(Object* object, bool remove_only);						// remove_only will remove the object from the map, but not call "delete object";
+	void deleteObject(Object* object, bool remove_only);						// remove_only will remove the object from the map, but not call "delete object"; be sure to call removeObjectFromSelection() if necessary
 	void setObjectsDirty();
 	
 	void setObjectAreaDirty(QRectF map_coords_rect);

@@ -122,6 +122,7 @@ public slots:
 	void fillBorderClicked();
 	void switchDashesClicked();
 	void connectPathsClicked();
+	void cutClicked(bool checked);
 	void rotateClicked(bool checked);
 	
 	void paintOnTemplateClicked(bool checked);
@@ -187,6 +188,7 @@ private:
 	QAction* fill_border_act;
 	QAction* switch_dashes_act;
 	QAction* connect_paths_act;
+	QAction* cut_act;
 	QAction* rotate_act;
 	
 	QAction* paint_on_template_act;
@@ -294,6 +296,16 @@ public:
 	static QImage* point_handles;
 	
 protected:
+	/// The numbers correspond to the position in point-handles.png
+	enum PointHandleType
+	{
+		StartHandle = 0,
+		EndHandle = 1,
+		NormalHandle = 2,
+		CurveHandle = 3,
+		DashHandle = 4
+	};
+	
 	/// Can be called by subclasses to display help text in the status bar
 	void setStatusBarText(const QString& text);
 	
@@ -302,6 +314,16 @@ protected:
 	void finishEditingSelection(RenderableContainer& renderables, RenderableVector& old_renderables, bool create_undo_step, std::vector<Object*>* undo_duplicates = NULL, bool delete_objects = false);
 	void updateSelectionEditPreview(RenderableContainer& renderables);
 	void deleteOldSelectionRenderables(RenderableVector& old_renderables, bool set_area_dirty);
+	
+	// Helper methods for object handles
+	void includeControlPointRect(QRectF& rect, Object* object, QPointF* box_text_handles);
+	void drawPointHandles(int hover_point, QPainter* painter, Object* object, MapWidget* widget);
+	void drawPointHandle(QPainter* painter, QPointF point, PointHandleType type, bool active);
+	void drawCurveHandleLine(QPainter* painter, QPointF point, QPointF curve_handle, bool active);
+	bool calculateBoxTextHandles(QPointF* out);
+	
+	int findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QPointF* box_text_handles, QRectF* selection_extent, MapWidget* widget);
+	inline float distanceSquared(const QPointF& a, const QPointF& b) {float dx = b.x() - a.x(); float dy = b.y() - a.y(); return dx*dx + dy*dy;}
 	
 	QAction* tool_button;
 	Type type;

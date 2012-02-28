@@ -18,7 +18,7 @@
  */
 
 
-#include "edit_tool.h"
+#include "tool_edit.h"
 
 #include <algorithm>
 
@@ -421,165 +421,6 @@ bool EditTool::selectionInfosEqual(const SelectionInfoVector& a, const Selection
 	return a.size() == b.size() && std::equal(a.begin(), a.end(), b.begin());
 }
 
-int EditTool::findHoverPoint(QPointF cursor, Object* object, MapWidget* widget)
-{
-	const float click_tolerance_squared = click_tolerance * click_tolerance;
-	
-	// Check object
-	if (object)
-	{
-		if (object->getType() == Object::Point)
-		{
-			PointObject* point = reinterpret_cast<PointObject*>(object);
-			if (distanceSquared(widget->mapToViewport(point->getPosition()), cursor) <= click_tolerance_squared)
-				return 0;
-		}
-		else if (object->getType() == Object::Text)
-		{
-			if (text_editor)
-				return -2;
-			
-			TextObject* text = reinterpret_cast<TextObject*>(object);
-			if (text->hasSingleAnchor() && distanceSquared(widget->mapToViewport(text->getAnchorPosition()), cursor) <= click_tolerance_squared)
-				return 0;
-			else if (!text->hasSingleAnchor())
-			{
-				for (int i = 0; i < 4; ++i)
-				{
-					if (distanceSquared(widget->mapToViewport(box_text_handles[i]), cursor) <= click_tolerance_squared)
-						return i;
-				}
-			}
-		}
-		else if (object->getType() == Object::Path)
-		{
-			PathObject* path = reinterpret_cast<PathObject*>(object);
-			int size = path->getCoordinateCount();
-			
-			for (int i = 0; i < size; ++i)
-			{
-				if (distanceSquared(widget->mapToViewport(path->getCoordinate(i)), cursor) <= click_tolerance_squared)
-					return i;
-			}
-		}
-	}
-	
-	// Check bounding box
-	QRectF selection_extent_viewport = widget->mapToViewport(selection_extent);
-	if (cursor.x() < selection_extent_viewport.left() - click_tolerance) return -2;
-	if (cursor.y() < selection_extent_viewport.top() - click_tolerance) return -2;
-	if (cursor.x() > selection_extent_viewport.right() + click_tolerance) return -2;
-	if (cursor.y() > selection_extent_viewport.bottom() + click_tolerance) return -2;
-	if (cursor.x() > selection_extent_viewport.left() + click_tolerance &&
-		cursor.y() > selection_extent_viewport.top() + click_tolerance &&
-		cursor.x() < selection_extent_viewport.right() - click_tolerance &&
-		cursor.y() < selection_extent_viewport.bottom() - click_tolerance) return -2;
-	return -1;
-}
-void EditTool::drawPointHandles(QPainter* painter, Object* object, MapWidget* widget)
-{
-	if (object->getType() == Object::Point)
-	{
-		PointObject* point = reinterpret_cast<PointObject*>(object);
-		drawPointHandle(painter, widget->mapToViewport(point->getPosition()), NormalHandle, hover_point == 0);
-	}
-	else if (object->getType() == Object::Text)
-	{
-		TextObject* text = reinterpret_cast<TextObject*>(object);
-		if (text->hasSingleAnchor())
-			drawPointHandle(painter, widget->mapToViewport(text->getAnchorPosition()), NormalHandle, hover_point == 0);
-		else
-		{
-			for (int i = 0; i < 4; ++i)
-				drawPointHandle(painter, widget->mapToViewport(box_text_handles[i]), NormalHandle, hover_point == i);
-		}
-	}
-	else if (object->getType() == Object::Path)
-	{
-		PathObject* path = reinterpret_cast<PathObject*>(object);
-		int size = path->getCoordinateCount();
-		
-		bool have_curve = path->isPathClosed() && size >= 3 && path->getCoordinate(size - 3).isCurveStart();
-		painter->setBrush(Qt::NoBrush);
-		
-		for (int i = 0; i < size; ++i)
-		{
-			MapCoord coord = path->getCoordinate(i);
-			QPointF point = widget->mapToViewport(coord);
-			
-			if (have_curve)
-			{
-				int curve_index = (i == 0) ? (size - 1) : (i - 1);
-				QPointF curve_handle = widget->mapToViewport(path->getCoordinate(curve_index));
-				drawCurveHandleLine(painter, point, curve_handle, hover_point == i);
-				drawPointHandle(painter, curve_handle, CurveHandle, hover_point == i || hover_point == curve_index);
-				have_curve = false;
-			}
-			
-			/*if ((i == 0 && !path->isPathClosed()) || (i >= 1 && path->getCoordinate(i-1).isHolePoint()))
-				drawPointHandle(painter, point, StartHandle, widget);
-			else if ((i == size - 1 && !path->isPathClosed()) || coord.isHolePoint())
-				drawPointHandle(painter, point, EndHandle, widget);
-			else*/
-				drawPointHandle(painter, point, coord.isDashPoint() ? DashHandle : NormalHandle, hover_point == i);
-			
-			if (coord.isCurveStart())
-			{
-				QPointF curve_handle = widget->mapToViewport(path->getCoordinate(i+1));
-				drawCurveHandleLine(painter, point, curve_handle, hover_point == i);
-				drawPointHandle(painter, curve_handle, CurveHandle, hover_point == i || hover_point == i + 1);
-				i += 2;
-				have_curve = true;
-			}
-		}
-	}
-	else
-		assert(false);
-}
-void EditTool::drawPointHandle(QPainter* painter, QPointF point, EditTool::PointHandleType type, bool active)
-{
-	painter->drawImage(qRound(point.x()) - 5, qRound(point.y()) - 5, *point_handles, (int)type * 11, active ? 11 : 0, 11, 11);
-}
-void EditTool::drawCurveHandleLine(QPainter* painter, QPointF point, QPointF curve_handle, bool active)
-{
-	const float handle_radius = 3;
-	painter->setPen(active ? active_color : inactive_color);
-	
-	QPointF to_handle = curve_handle - point;
-	float to_handle_len = to_handle.x()*to_handle.x() + to_handle.y()*to_handle.y();
-	if (to_handle_len > 0.00001f)
-	{
-		to_handle_len = sqrt(to_handle_len);
-		QPointF change = to_handle * (handle_radius / to_handle_len);
-		
-		point += change;
-		curve_handle -= change;
-	}
-	
-	painter->drawLine(point, curve_handle);
-}
-void EditTool::calculateBoxTextHandles()
-{
-	Map* map = editor->getMap();
-	Object* single_selected_object = (map->getNumSelectedObjects() == 1) ? *map->selectedObjectsBegin() : NULL;
-	if (single_selected_object && single_selected_object->getType() == Object::Text)
-	{
-		TextObject* text_object = reinterpret_cast<TextObject*>(single_selected_object);
-		if (!text_object->hasSingleAnchor())
-		{
-			TextObject* text_object = reinterpret_cast<TextObject*>(*editor->getMap()->selectedObjectsBegin());
-			
-			QTransform transform;
-			transform.rotate(-text_object->getRotation() * 180 / M_PI);
-			box_text_handles[0] = transform.map(QPointF(text_object->getBoxWidth() / 2, -text_object->getBoxHeight() / 2)) + text_object->getAnchorPosition().toQPointF();
-			box_text_handles[1] = transform.map(QPointF(text_object->getBoxWidth() / 2, text_object->getBoxHeight() / 2)) + text_object->getAnchorPosition().toQPointF();
-			box_text_handles[2] = transform.map(QPointF(-text_object->getBoxWidth() / 2, text_object->getBoxHeight() / 2)) + text_object->getAnchorPosition().toQPointF();
-			box_text_handles[3] = transform.map(QPointF(-text_object->getBoxWidth() / 2, -text_object->getBoxHeight() / 2)) + text_object->getAnchorPosition().toQPointF();
-			updateDirtyRect();
-		}
-	}
-}
-
 bool EditTool::keyPressEvent(QKeyEvent* event)
 {
 	if (text_editor)
@@ -658,7 +499,7 @@ void EditTool::draw(QPainter* painter, MapWidget* widget)
 			if (num_selected_objects == 1)
 			{
 				Object* selection = *editor->getMap()->selectedObjectsBegin();
-				drawPointHandles(painter, selection, widget);
+				drawPointHandles(hover_point, painter, selection, widget);
 			}
 		}
 	}
@@ -693,7 +534,8 @@ void EditTool::selectedObjectsChanged()
 {
 	updateStatusText();
 	updateDirtyRect();
-	calculateBoxTextHandles();
+	if (calculateBoxTextHandles(box_text_handles))
+		updateDirtyRect();
 }
 void EditTool::selectedSymbolsChanged()
 {
@@ -745,24 +587,10 @@ void EditTool::updateDirtyRect()
 	bool single_object_selected = editor->getMap()->getNumSelectedObjects() == 1;
 	
 	// For selected paths, include the control points
-	Object* object = *editor->getMap()->selectedObjectsBegin();
-	if (single_object_selected && object->getType() == Object::Path)
+	if (single_object_selected)
 	{
-		PathObject* path = reinterpret_cast<PathObject*>(object);
-		int size = path->getCoordinateCount();
-		for (int i = 0; i < size; ++i)
-			rectInclude(rect, path->getCoordinate(i).toQPointF());
-	}
-	else if (single_object_selected && object->getType() == Object::Text)
-	{
-		TextObject* text_object = reinterpret_cast<TextObject*>(object);
-		if (text_object->hasSingleAnchor())
-			rectInclude(rect, MapCoordF(text_object->getAnchorPosition()));
-		else
-		{
-			for (int i = 0; i < 4; ++i)
-				rectInclude(rect, box_text_handles[i]);
-		}
+		Object* object = *editor->getMap()->selectedObjectsBegin();
+		includeControlPointRect(rect, object, box_text_handles);
 	}
 	
 	// Text selection
@@ -784,7 +612,9 @@ void EditTool::updateDirtyRect()
 
 void EditTool::updateHoverPoint(QPointF point, MapWidget* widget)
 {
-	int new_hover_point = findHoverPoint(point, (editor->getMap()->getNumSelectedObjects() == 1) ? *editor->getMap()->selectedObjectsBegin() : NULL, widget);
+	int new_hover_point = findHoverPoint(point, (editor->getMap()->getNumSelectedObjects() == 1) ? *editor->getMap()->selectedObjectsBegin() : NULL, true, box_text_handles, &selection_extent, widget);
+	if (text_editor)
+		new_hover_point = -2;
 	if (new_hover_point != hover_point)
 	{
 		updateDirtyRect();
@@ -820,7 +650,8 @@ void EditTool::updateDragging(QPoint cursor_pos, MapWidget* widget)
 		
 		text_object->move(delta_x / 2, delta_y / 2);
 		text_object->setBox(text_object->getAnchorPosition(), new_box_width, new_box_height);
-		calculateBoxTextHandles();
+		if (calculateBoxTextHandles(box_text_handles))
+			updateDirtyRect();
 	}
 	else if (hover_point == -1 || (map->getNumSelectedObjects() == 1 &&
 		(first_selected_object_type == Object::Point || first_selected_object_type == Object::Text)))
@@ -949,4 +780,4 @@ void EditTool::deleteSelectedObjects()
 	editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
 }
 
-#include "edit_tool.moc"
+#include "tool_edit.moc"

@@ -40,7 +40,7 @@ struct PathCoord
 	
 	static void calculatePathCoords(const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords);
 	static bool getNextPathPart(const MapCoordVector& flags, const MapCoordVectorF& coords, int& part_start, int& part_end, PathCoordVector* path_coords, bool break_at_dash_points, bool append_path_coords);
-
+	static PathCoord findPathCoordForCoorinate(const PathCoordVector* path_coords, int index);
 	
 	static void calculatePositionAt(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& path_coords, float length, int& line_coord_search_start, MapCoordF* out_pos, MapCoordF* out_right_vector);
 	static MapCoordF calculateRightVector(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, int i, float* scaling);

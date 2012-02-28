@@ -84,6 +84,19 @@ bool PathCoord::getNextPathPart(const MapCoordVector& flags, const MapCoordVecto
 	part_end = size - 1;
 	return true;
 }
+PathCoord PathCoord::findPathCoordForCoorinate(const PathCoordVector* path_coords, int index)
+{
+	int path_coords_size = path_coords->size();
+	for (int i = 0; i < path_coords_size; ++i)
+	{
+		if (path_coords->at(i).param == 0 && index == path_coords->at(i).index)
+			return path_coords->at(i);
+		else if (path_coords->at(i).param == 1 && (i == path_coords_size - 1 || (i < path_coords_size - 1 && index == path_coords->at(i+1).index)))
+			return path_coords->at(i);
+	}
+	assert(false);
+	return path_coords->at(0);
+}
 void PathCoord::curveToPathCoordRec(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, PathCoordVector* path_coords, float p0, float p1)
 {
 	float outer_len = c0.lengthTo(c1) + c1.lengthTo(c2) + c2.lengthTo(c3);

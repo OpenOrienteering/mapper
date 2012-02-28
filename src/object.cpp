@@ -456,6 +456,13 @@ PathObject::PathObject(Symbol* symbol) : Object(Object::Path, symbol)
 {
 	assert(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
 }
+PathObject::PathObject(Symbol* symbol, const MapCoordVector& coords, Map* map) : Object(Object::Path, symbol)
+{
+	assert(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
+	this->coords = coords;
+	if (map)
+		setMap(map);
+}
 Object* PathObject::duplicate()
 {
 	PathObject* new_path = new PathObject(symbol);
@@ -660,6 +667,246 @@ void PathObject::appendPath(PathObject* other, bool prepend)
 			coords[coords_size + i - 1] = other->coords[i];
 	}
 	setOutputDirty();
+}
+
+void PathObject::splitAt(const PathCoord& split_pos, Object*& out1, Object*& out2)
+{
+	out1 = NULL;
+	out2 = NULL;
+	
+	if (path_closed)
+	{
+		PathObject* path1 = new PathObject(symbol, coords, map);	// This automatically leads to an open path ...
+		MapCoord last_coord = coords[0];
+		last_coord.setCurveStart(false);
+		path1->setCoordinate(coords.size() - 1, last_coord);		// ... but it has to be ensured that the last coordinate is not a curve start point
+		out1 = path1;
+		
+		if (split_pos.clen == 0 || split_pos.clen == path_coords[path_coords.size() - 1].clen)
+			return;
+		
+		PathObject* temp_path = new PathObject(symbol, path1->coords, NULL);
+		path1->changePathBounds(split_pos.clen, path_coords[path_coords.size() - 1].clen);
+		temp_path->changePathBounds(0, split_pos.clen);
+		path1->appendPath(temp_path, false);
+		delete temp_path;
+		return;
+	}
+	
+	if (split_pos.clen == 0)
+	{
+		if (calcNumRegularPoints() > 2)
+		{
+			PathObject* path1 = new PathObject(symbol, coords, map);
+			out1 = path1;
+			
+			if (coords[0].isCurveStart())
+			{
+				path1->deleteCoordinate(2, false);
+				path1->deleteCoordinate(1, false);
+				path1->deleteCoordinate(0, false);
+			}
+			else
+				path1->deleteCoordinate(0, false);
+		}
+	}
+	else if (split_pos.clen == path_coords[path_coords.size() - 1].clen)
+	{
+		if (calcNumRegularPoints() > 2)
+		{
+			PathObject* path1 = new PathObject(symbol, coords, map);
+			out1 = path1;
+			
+			if (coords.size() >= 4 && coords[coords.size() - 3].isCurveStart())
+			{
+				path1->deleteCoordinate(coords.size() - 1, false);
+				path1->deleteCoordinate(coords.size() - 1, false);
+				path1->deleteCoordinate(coords.size() - 1, false);
+				coords[coords.size() - 1].setCurveStart(false);
+			}
+			else
+				path1->deleteCoordinate(coords.size() - 1, false);
+		}
+	}
+	else
+	{
+		PathObject* path1 = new PathObject(symbol, coords, map);
+		out1 = path1;
+		PathObject* path2 = new PathObject(symbol, coords, map);
+		out2 = path2;
+		
+		path1->changePathBounds(0, split_pos.clen);
+		path2->changePathBounds(split_pos.clen, path_coords[path_coords.size() - 1].clen);
+	}
+}
+void PathObject::changePathBounds(double start_len, double end_len)
+{
+	update();
+	int coords_size = coords.size();
+	MapCoordVectorF coordsF;
+	for (int i = 0; i < coords_size; ++i)
+		coordsF.push_back(MapCoordF(coords[i]));
+	MapCoordVector out_coords;
+	out_coords.reserve(coords.size() + 2);
+	MapCoordVectorF out_coordsF;
+	out_coordsF.reserve(coords.size() + 2);
+	
+	int cur_path_coord = 1;
+	int path_coords_size = (int)path_coords.size();
+	while (cur_path_coord < path_coords_size - 1 && path_coords[cur_path_coord].clen < start_len)
+		++cur_path_coord;
+	
+	// Start position
+	int start_bezier_index = -1;		// if the range starts at a bezier curve, this is the curve's index, otherwise -1
+	float start_bezier_split_param;	// the parameter value where the split of the curve for the range start was made
+	MapCoordF o3, o4;					// temporary bezier control points
+	if (coords[path_coords[cur_path_coord].index].isCurveStart())
+	{
+		int index = path_coords[cur_path_coord].index;
+		float factor = (start_len - path_coords[cur_path_coord-1].clen) / (path_coords[cur_path_coord].clen - path_coords[cur_path_coord-1].clen);
+		assert(factor >= 0 && factor <= 1.001f);
+		if (factor > 1)
+			factor = 1;
+		float prev_param = (path_coords[cur_path_coord-1].index == path_coords[cur_path_coord].index) ? path_coords[cur_path_coord-1].param : 0;
+		assert(prev_param <= path_coords[cur_path_coord].param);
+		float p = prev_param + (path_coords[cur_path_coord].param - prev_param) * factor;
+		assert(p >= 0 && p <= 1);
+		
+		MapCoordF o0, o1;
+		out_coordsF.push_back(MapCoordF(0, 0));
+		PathCoord::splitBezierCurve(coordsF[index], coordsF[index+1], coordsF[index+2], (index < (int)coordsF.size() - 3) ? coordsF[index+3] : coordsF[0], p, o0, o1, out_coordsF[out_coordsF.size() - 1], o3, o4);
+		MapCoord flag = out_coordsF[out_coordsF.size() - 1].toMapCoord();
+		flag.setCurveStart(true);
+		out_coords.push_back(flag);
+		
+		start_bezier_split_param = p;
+		start_bezier_index = index;
+	}
+	else
+	{
+		out_coordsF.push_back(MapCoordF(0, 0));
+		PathCoord::calculatePositionAt(coords, coordsF, path_coords, start_len, cur_path_coord, &out_coordsF[out_coordsF.size() - 1], NULL);
+		out_coords.push_back(out_coordsF[out_coordsF.size() - 1].toMapCoord());
+	}
+	
+	int current_index = path_coords[cur_path_coord].index;
+	if (start_len == path_coords[cur_path_coord].clen && path_coords[cur_path_coord].param == 1)
+	{
+		if (coords[current_index].isCurveStart())
+			current_index += 3;
+		else
+			++current_index;
+		out_coords[out_coords.size() - 1].setFlags(coords[current_index].getFlags());
+	}
+	else if (start_len == path_coords[cur_path_coord - 1].clen && path_coords[cur_path_coord - 1].param == 0)
+		out_coords[out_coords.size() - 1].setFlags(coords[current_index].getFlags());
+	
+	// End position
+	advanceCoordinateRangeTo(coords, coordsF, path_coords, cur_path_coord, current_index, end_len, start_bezier_index, out_coords, out_coordsF, o3, o4);
+	if (current_index < coords_size - 1)
+	{
+		out_coordsF.push_back(MapCoordF(0, 0));
+		if (coords[current_index].isCurveStart())
+		{
+			int index = path_coords[cur_path_coord].index;
+			float factor = (end_len - path_coords[cur_path_coord-1].clen) / (path_coords[cur_path_coord].clen - path_coords[cur_path_coord-1].clen);
+			assert(factor >= 0 && factor <= 1.001f);
+			if (factor > 1)
+				factor = 1;
+			float prev_param = (path_coords[cur_path_coord-1].index == path_coords[cur_path_coord].index) ? path_coords[cur_path_coord-1].param : 0;
+			assert(prev_param <= path_coords[cur_path_coord].param);
+			float p = prev_param + (path_coords[cur_path_coord].param - prev_param) * factor;
+			assert(p >= 0 && p <= 1);
+			
+			out_coordsF.push_back(MapCoordF(0, 0));
+			out_coordsF.push_back(MapCoordF(0, 0));
+			MapCoordF unused, unused2;
+			
+			if (start_bezier_index == current_index)
+			{
+				// The dash end is in the same curve as the start, need to make a second split with the correct parameter
+				p = (p - start_bezier_split_param) / (1 - start_bezier_split_param);
+				assert(p >= 0 && p <= 1);
+				
+				PathCoord::splitBezierCurve(out_coordsF[out_coordsF.size() - 4], o3, o4, (index < (int)coordsF.size() - 3) ? coordsF[index+3] : coordsF[0],
+											p, out_coordsF[out_coordsF.size() - 3], out_coordsF[out_coordsF.size() - 2],
+											out_coordsF[out_coordsF.size() - 1], unused, unused2);
+			}
+			else
+			{
+				PathCoord::splitBezierCurve(coordsF[index], coordsF[index+1], coordsF[index+2], (index < (int)coordsF.size() - 3) ? coordsF[index+3] : coordsF[0],
+											p, out_coordsF[out_coordsF.size() - 3], out_coordsF[out_coordsF.size() - 2],
+											out_coordsF[out_coordsF.size() - 1], unused, unused2);
+			}
+			
+			out_coords.push_back(out_coordsF[out_coordsF.size() - 3].toMapCoord());
+			out_coords.push_back(out_coordsF[out_coordsF.size() - 2].toMapCoord());
+			out_coords.push_back(out_coordsF[out_coordsF.size() - 1].toMapCoord());
+		}
+		else
+		{
+			PathCoord::calculatePositionAt(coords, coordsF, path_coords, end_len, cur_path_coord, &out_coordsF[out_coordsF.size() - 1], NULL);
+			out_coords.push_back(out_coordsF[out_coordsF.size() - 1].toMapCoord());
+		}
+	}
+	
+	if (end_len == path_coords[cur_path_coord].clen && path_coords[cur_path_coord].param == 0)
+		out_coords[out_coords.size() - 1].setFlags(coords[current_index].getFlags());
+	if (end_len == path_coords[cur_path_coord].clen && path_coords[cur_path_coord].param == 1)
+	{
+		if (coords[current_index].isCurveStart())
+			current_index += 3;
+		else
+			++current_index;
+		out_coords[out_coords.size() - 1].setFlags(coords[current_index].getFlags());
+	}
+	out_coords[out_coords.size() - 1].setCurveStart(false);
+	
+	coords = out_coords;
+	setOutputDirty();
+}
+void PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords, int& cur_line_coord, int& current_index, float cur_length,
+									 int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, const MapCoordF& o3, const MapCoordF& o4)
+{
+	assert(cur_length <= line_coords[line_coords.size() - 1].clen);
+	int line_coords_size = (int)line_coords.size();
+	while (cur_length > line_coords[cur_line_coord].clen || cur_length < line_coords[cur_line_coord - 1].clen)
+	{
+		++cur_line_coord;
+		if (cur_line_coord == line_coords_size)
+			cur_line_coord = 1;
+		if (line_coords[cur_line_coord].index != current_index)
+		{
+			if (current_index == start_bezier_index)
+			{
+				out_flags.push_back(o3.toMapCoord());
+				out_coords.push_back(o3);
+				out_flags.push_back(o4.toMapCoord());
+				out_coords.push_back(o4);
+				out_flags.push_back(flags[current_index + 3]);
+				out_coords.push_back(coords[current_index + 3]);
+				
+				current_index += 3;
+				if (current_index == (int)coords.size() - 1 && path_closed)
+					current_index = 0;
+				assert(current_index == line_coords[cur_line_coord].index);
+			}
+			else
+			{
+				//assert((!flags[current_index].isCurveStart() && current_index + 1 == line_coords[cur_line_coord].index) ||
+				//       (flags[current_index].isCurveStart() && current_index + 3 == line_coords[cur_line_coord].index) ||
+				//       (flags[current_index+1].isHolePoint() && current_index + 2 == line_coords[cur_line_coord].index));
+				do
+				{
+					++current_index;
+					if (current_index == (int)coords.size() - 1 && path_closed)
+						current_index = 0;
+					out_flags.push_back(flags[current_index]);
+					out_coords.push_back(coords[current_index]);
+				} while (current_index < line_coords[cur_line_coord].index);
+			}
+		}
+	}	
 }
 
 void PathObject::setCoordinate(int pos, MapCoord c)

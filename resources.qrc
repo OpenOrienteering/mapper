@@ -8,6 +8,7 @@
   <file>images/control.png</file>
   <file>images/copy.png</file>
   <file>images/cursor-crosshair.png</file>
+  <file>images/cursor-cut.png</file>
   <file>images/cursor-delete.png</file>
   <file>images/cursor-draw-path.png</file>
   <file>images/cursor-draw-point.png</file>
@@ -49,6 +50,7 @@
   <file>images/text-align-bottom.png</file>
   <file>images/title.png</file>
   <file>images/tool-connect-paths.png</file>
+  <file>images/tool-cut.png</file>
   <file>images/tool-duplicate.png</file>
   <file>images/tool-edit.png</file>
   <file>images/tool-fill-border.png</file>

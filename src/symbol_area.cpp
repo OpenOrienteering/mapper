@@ -690,7 +690,7 @@ void AreaSymbolSettings::fillTypeChanged(int index)
 	{
 		// Changing to point, clear line settings and create point
 		fill->line_color = NULL;
-		fill->line_width = NULL;
+		fill->line_width = 0;
 		fill->point = new PointSymbol();
 		point_editor->addSymbol(fill->point);
 	}

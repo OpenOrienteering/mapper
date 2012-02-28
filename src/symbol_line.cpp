@@ -543,7 +543,7 @@ void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags
 	out_flags.reserve(4 * coords.size());
 	out_coords.reserve(4 * coords.size());
 	
-	bool dash_point_before = false;
+	//bool dash_point_before = false;
 	float cur_length = 0;
 	float old_length = 0;	// length from line part(s) before dash point(s) which is not accounted for yet
 	int first_line_coord = 0;
@@ -621,7 +621,7 @@ void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags
 											  cur_line_coord, out_flags, out_coords, true, !is_half_dash, output);
 						cur_length += old_length + cur_dash_length;
 						old_length = 0;
-						dash_point_before = false;
+						//dash_point_before = false;
 						
 						if (dash < dashes_in_group - 1)
 							cur_length += in_group_break_length_f;
@@ -646,7 +646,7 @@ void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags
 		
 		cur_length = line_coords[line_coords_size - 1].clen - old_length;
 		
-		dash_point_before = ends_with_dashpoint;
+		//dash_point_before = ends_with_dashpoint;
 		first_line_coord = line_coords_size - 1;
 	}
 }

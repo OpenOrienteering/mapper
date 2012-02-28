@@ -140,6 +140,7 @@ class PathObject : public Object
 {
 public:
 	PathObject(Symbol* symbol = NULL);
+	PathObject(Symbol* symbol, const MapCoordVector& coords, Map* map = 0);
     virtual Object* duplicate();
 	
 	int calcNumRegularPoints();
@@ -147,6 +148,8 @@ public:
 	int subdivide(int index, float param);									// returns the index of the added point
 	bool canBeConnected(PathObject* other, double connect_threshold_sq);	// returns if connectIfClose() would do something
 	bool connectIfClose(PathObject* other, double connect_threshold_sq);	// returns if the objects were connected (if so, you can delete the other object). If one of the paths has to be reversed, it is done for the "other" path.
+	void splitAt(const PathCoord& split_pos, Object*& out1, Object*& out2);
+	void changePathBounds(double start_len, double end_len);
 	
 	void setCoordinate(int pos, MapCoord c);
 	void addCoordinate(int pos, MapCoord c);
@@ -155,6 +158,8 @@ public:
 	
 protected:
 	void appendPath(PathObject* other, bool prepend);
+	void advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords, int& cur_line_coord, int& current_index, float cur_length,
+								   int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, const MapCoordF& o3, const MapCoordF& o4);
 };
 
 /// Object type which can only be used for point symbols, and is also the only object which can be used with them
