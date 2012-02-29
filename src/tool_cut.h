@@ -24,6 +24,8 @@
 #include "map_editor.h"
 #include "object.h"
 
+class DrawPathTool;
+
 /// Tool to cut objects into smaller pieces
 class CutTool : public MapEditorTool
 {
@@ -38,6 +40,12 @@ public:
     virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
     virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual void leaveEvent(QEvent* event);
+	
+	virtual bool keyPressEvent(QKeyEvent* event);
+	virtual bool keyReleaseEvent(QKeyEvent* event);
+	virtual void focusOutEvent(QFocusEvent* event);
 	
     virtual void draw(QPainter* painter, MapWidget* widget);
 	
@@ -45,15 +53,20 @@ public:
 	
 public slots:
 	void selectedObjectsChanged();
+	void pathDirtyRectChanged(const QRectF& rect);
+	void pathAborted();
+	void pathFinished(PathObject* split_path);
 	
 protected:
 	void updateStatusText();
 	void updatePreviewObjects();
 	void deletePreviewPath();
-	void updateDirtyRect();
+	void updateDirtyRect(const QRectF* path_rect = NULL);
 	void updateDragging(MapCoordF cursor_pos_map, MapWidget* widget);
 	void updateHoverPoint(QPointF cursor_pos_screen, MapWidget* widget);
 	bool findEditPoint(PathCoord& out_edit_point, Object*& out_edit_object, MapCoordF cursor_pos_map, int with_type, int without_type, MapWidget* widget);
+	
+	void startCuttingArea(const PathCoord& coord, MapWidget* widget);
 	
 	// Mouse handling
 	QPoint click_pos;
@@ -66,11 +79,16 @@ protected:
 	Object* hover_object;
 	Object* edit_object;
 	
-	// for removing segments from lines
+	// For removing segments from lines
 	float drag_start_len;
 	float drag_end_len;
 	bool drag_forward;		// true if [drag_start_len; drag_end_len] is the drag range, else [drag_end_len; drag_start_len]
 	bool dragging_on_line;
+	
+	// For cutting areas
+	bool cutting_area;
+	DrawPathTool* path_tool;
+	MapWidget* edit_widget;
 	
 	// Preview objects for dragging
 	PathObject* preview_path;

@@ -258,7 +258,7 @@ void Object::reverse()
 	for (int c = 0; c < coords_size; ++c)
 	{
 		MapCoord coord = coords[c];
-		if (c < coords_size  / 2)
+		if (c < coords_size / 2)
 		{
 			coords[c] = coords[coords_size - 1 - c];
 			coords[coords_size - 1 - c] = coord;

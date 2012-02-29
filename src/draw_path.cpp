@@ -34,18 +34,21 @@
 
 QCursor* DrawPathTool::cursor = NULL;
 
-DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget): MapEditorTool(editor, Other, tool_button), renderables(editor->getMap()), symbol_widget(symbol_widget)
+DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget, bool allow_closing_paths)
+ : MapEditorTool(editor, Other, tool_button), renderables(editor->getMap()), symbol_widget(symbol_widget), allow_closing_paths(allow_closing_paths)
 {
 	dragging = false;
 	draw_in_progress = false;
 	preview_points_shown = false;
 	path_combination = NULL;
 	preview_path = NULL;
-	
+	last_used_symbol = NULL;
+	is_helper_tool = symbol_widget == NULL;
 	space_pressed = false;
 	
 	selectedSymbolsChanged();
-	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
+	if (symbol_widget)
+		connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
 	connect(editor->getMap(), SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(symbolChanged(int,Symbol*,Symbol*)));
 	connect(editor->getMap(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
 	
@@ -79,13 +82,14 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 		if (!draw_in_progress)
 		{
 			// Start a new path
-			drawing_symbol = symbol_widget->getSingleSelectedSymbol();
+			drawing_symbol = is_helper_tool ? NULL : symbol_widget->getSingleSelectedSymbol();
 			if (!path_combination)
 				path_combination = new CombinedSymbol();
-			path_combination->setNumParts(3);
-			path_combination->setPart(0, drawing_symbol);
-			path_combination->setPart(1, Map::getCoveringWhiteLine());
-			path_combination->setPart(2, Map::getCoveringRedLine());
+			path_combination->setNumParts(is_helper_tool ? 2 : 3);
+			path_combination->setPart(0, Map::getCoveringWhiteLine());
+			path_combination->setPart(1, Map::getCoveringRedLine());
+			if (drawing_symbol)
+				path_combination->setPart(2, drawing_symbol);
 			preview_path = new PathObject(path_combination);
 			
 			path_has_preview_point = false;
@@ -269,7 +273,7 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 			abortDrawing();
 		else if (event->key() == Qt::Key_Backspace)
 			undoLastPoint();
-		else if (event->key() == Qt::Key_Return)
+		else if (event->key() == Qt::Key_Return && allow_closing_paths)
 		{
 			closeDrawing();
 			finishDrawing();
@@ -432,7 +436,7 @@ void DrawPathTool::closeDrawing()
 void DrawPathTool::finishDrawing()
 {
 	// Does the symbols contain only areas? If so, auto-close the path if not done yet
-	bool contains_only_areas = (drawing_symbol->getContainedTypes() & ~(Symbol::Area | Symbol::Combined)) == 0;
+	bool contains_only_areas = !is_helper_tool && (drawing_symbol->getContainedTypes() & ~(Symbol::Area | Symbol::Combined)) == 0;
 	if (!preview_path->isPathClosed() && contains_only_areas)
 		preview_path->setPathClosed(true);
 	
@@ -444,8 +448,11 @@ void DrawPathTool::finishDrawing()
 	renderables.removeRenderablesOfObject(preview_path, false);
 	
 	if (preview_path->getCoordinateCount() < (contains_only_areas ? 3 : 2))
+	{
 		delete preview_path;
-	else
+		preview_path = NULL;
+	}
+	else if (!is_helper_tool)
 	{
 		preview_path->setSymbol(drawing_symbol, true);
 		int index = editor->getMap()->addObject(preview_path);
@@ -458,12 +465,27 @@ void DrawPathTool::finishDrawing()
 	}
 	editor->getMap()->clearDrawingBoundingBox();
 	
-	preview_path = NULL;
 	dragging = false;
 	draw_in_progress = false;
 	
 	updateStatusText();
 	editor->setEditingInProgress(false);
+	
+	if (is_helper_tool)
+	{
+		if (preview_path)
+		{
+			// Ugly HACK to make it possible to delete this tool as response to pathFinished
+			PathObject* temp_path = preview_path;
+			preview_path = NULL;
+			emit(pathFinished(temp_path));
+			delete temp_path;
+		}
+		else
+			emit(pathAborted());
+	}
+	else
+		preview_path = NULL;
 }
 void DrawPathTool::abortDrawing()
 {
@@ -477,6 +499,8 @@ void DrawPathTool::abortDrawing()
 	
 	updateStatusText();
 	editor->setEditingInProgress(false);
+	
+	emit(pathAborted());
 }
 
 void DrawPathTool::setDirtyRect(MapCoordF mouse_pos)
@@ -495,10 +519,15 @@ void DrawPathTool::setDirtyRect(MapCoordF mouse_pos)
 	}
 	includePreviewRects(rect);
 	
-	if (rect.isValid())
-		editor->getMap()->setDrawingBoundingBox(rect, dragging ? 1 : 0, true);
+	if (is_helper_tool)
+		emit(dirtyRectChanged(rect));
 	else
-		editor->getMap()->clearDrawingBoundingBox();
+	{
+		if (rect.isValid())
+			editor->getMap()->setDrawingBoundingBox(rect, dragging ? 1 : 0, true);
+		else
+			editor->getMap()->clearDrawingBoundingBox();
+	}
 }
 void DrawPathTool::includePreviewRects(QRectF& rect)
 {
@@ -521,6 +550,9 @@ float DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map)
 }
 void DrawPathTool::updateStatusText()
 {
+	if (is_helper_tool)
+		return;
+	
 	QString text = "";
 	if (space_pressed)
 		text += tr("<b>Dash points on.</b> ");
@@ -627,6 +659,8 @@ void DrawPathTool::addPreviewSymbols(Symbol* symbol)
 
 void DrawPathTool::selectedSymbolsChanged()
 {
+	if (is_helper_tool)
+		return;
 	if (draw_in_progress)
 		abortDrawing();
 	

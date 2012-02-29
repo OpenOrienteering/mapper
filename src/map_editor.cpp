@@ -141,7 +141,7 @@ MapEditorTool* MapEditorController::getDefaultDrawToolForSymbol(Symbol* symbol)
 	else if (symbol->getType() == Symbol::Point)
 		return new DrawPointTool(this, draw_point_act, symbol_widget);
 	else if (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined)
-		return new DrawPathTool(this, draw_path_act, symbol_widget);
+		return new DrawPathTool(this, draw_path_act, symbol_widget, true);
 	else if (symbol->getType() == Symbol::Text)
 		return new DrawTextTool(this, draw_text_act, symbol_widget);
 	else
@@ -803,7 +803,7 @@ void MapEditorController::drawPointClicked(bool checked)
 }
 void MapEditorController::drawPathClicked(bool checked)
 {
-	setTool(checked ? new DrawPathTool(this, draw_path_act, symbol_widget) : NULL);
+	setTool(checked ? new DrawPathTool(this, draw_path_act, symbol_widget, true) : NULL);
 }
 void MapEditorController::drawTextClicked(bool checked)
 {
