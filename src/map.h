@@ -43,6 +43,7 @@ struct MapColor;
 class MapWidget;
 class MapView;
 class Symbol;
+class CombinedSymbol;
 class Template;
 class Object;
 class MapEditorController;
@@ -259,6 +260,7 @@ public:
 	static MapColor* getCoveringRed() {return &covering_red;}
 	static LineSymbol* getCoveringWhiteLine() {return covering_white_line;}
 	static LineSymbol* getCoveringRedLine() {return covering_red_line;}
+	static CombinedSymbol* getCoveringCombinedLine() {return covering_combined_line;}
 	
 signals:
 	void gotUnsavedChanges();
@@ -353,7 +355,7 @@ private:
 	static MapColor covering_red;
 	static LineSymbol* covering_white_line;
 	static LineSymbol* covering_red_line;
-	
+	static CombinedSymbol* covering_combined_line;
 };
 
 /// Contains all visibility information for a template. This is stored in the MapViews

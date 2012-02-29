@@ -741,6 +741,9 @@ void PathObject::splitAt(const PathCoord& split_pos, Object*& out1, Object*& out
 }
 void PathObject::changePathBounds(double start_len, double end_len)
 {
+	if (start_len == end_len)
+		return;
+	
 	update();
 	int coords_size = coords.size();
 	MapCoordVectorF coordsF;
@@ -750,6 +753,9 @@ void PathObject::changePathBounds(double start_len, double end_len)
 	out_coords.reserve(coords.size() + 2);
 	MapCoordVectorF out_coordsF;
 	out_coordsF.reserve(coords.size() + 2);
+	
+	if (end_len == 0)
+		end_len = path_coords[path_coords.size() - 1].clen;
 	
 	int cur_path_coord = 1;
 	int path_coords_size = (int)path_coords.size();
@@ -796,13 +802,17 @@ void PathObject::changePathBounds(double start_len, double end_len)
 			current_index += 3;
 		else
 			++current_index;
+		if (current_index >= coords_size)
+			current_index = 0;
 		out_coords[out_coords.size() - 1].setFlags(coords[current_index].getFlags());
+		++cur_path_coord;
 	}
 	else if (start_len == path_coords[cur_path_coord - 1].clen && path_coords[cur_path_coord - 1].param == 0)
 		out_coords[out_coords.size() - 1].setFlags(coords[current_index].getFlags());
 	
 	// End position
-	advanceCoordinateRangeTo(coords, coordsF, path_coords, cur_path_coord, current_index, end_len, start_bezier_index, out_coords, out_coordsF, o3, o4);
+	bool enforce_wrap = (end_len <= path_coords[cur_path_coord].clen && end_len < start_len);
+	advanceCoordinateRangeTo(coords, coordsF, path_coords, cur_path_coord, current_index, end_len, enforce_wrap, start_bezier_index, out_coords, out_coordsF, o3, o4);
 	if (current_index < coords_size - 1)
 	{
 		out_coordsF.push_back(MapCoordF(0, 0));
@@ -822,7 +832,7 @@ void PathObject::changePathBounds(double start_len, double end_len)
 			out_coordsF.push_back(MapCoordF(0, 0));
 			MapCoordF unused, unused2;
 			
-			if (start_bezier_index == current_index)
+			if (start_bezier_index == current_index && !enforce_wrap)
 			{
 				// The dash end is in the same curve as the start, need to make a second split with the correct parameter
 				p = (p - start_bezier_split_param) / (1 - start_bezier_split_param);
@@ -863,21 +873,26 @@ void PathObject::changePathBounds(double start_len, double end_len)
 	out_coords[out_coords.size() - 1].setCurveStart(false);
 	
 	coords = out_coords;
+	path_closed = false;
 	setOutputDirty();
 }
-void PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords, int& cur_line_coord, int& current_index, float cur_length,
-									 int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, const MapCoordF& o3, const MapCoordF& o4)
+void PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords, int& cur_path_coord, int& current_index, float cur_length,
+										  bool enforce_wrap, int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, const MapCoordF& o3, const MapCoordF& o4)
 {
 	assert(cur_length <= line_coords[line_coords.size() - 1].clen);
 	int line_coords_size = (int)line_coords.size();
-	while (cur_length > line_coords[cur_line_coord].clen || cur_length < line_coords[cur_line_coord - 1].clen)
+	bool have_to_wrap = enforce_wrap;
+	while (cur_length > line_coords[cur_path_coord].clen || cur_length < line_coords[cur_path_coord - 1].clen || have_to_wrap)
 	{
-		++cur_line_coord;
-		if (cur_line_coord == line_coords_size)
-			cur_line_coord = 1;
-		if (line_coords[cur_line_coord].index != current_index)
+		++cur_path_coord;
+		if (cur_path_coord == line_coords_size)
 		{
-			if (current_index == start_bezier_index)
+			cur_path_coord = 1;
+			assert(path_closed);
+		}
+		if (line_coords[cur_path_coord].index != current_index)
+		{
+			if (current_index == start_bezier_index && !(enforce_wrap && !have_to_wrap))
 			{
 				out_flags.push_back(o3.toMapCoord());
 				out_coords.push_back(o3);
@@ -887,9 +902,9 @@ void PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 				out_coords.push_back(coords[current_index + 3]);
 				
 				current_index += 3;
-				if (current_index == (int)coords.size() - 1 && path_closed)
+				if (current_index >= (int)coords.size() - 1 && path_closed)
 					current_index = 0;
-				assert(current_index == line_coords[cur_line_coord].index);
+				assert(current_index == line_coords[cur_path_coord].index);
 			}
 			else
 			{
@@ -899,12 +914,14 @@ void PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 				do
 				{
 					++current_index;
-					if (current_index == (int)coords.size() - 1 && path_closed)
+					if (current_index >= (int)coords.size() - 1 && path_closed)
 						current_index = 0;
 					out_flags.push_back(flags[current_index]);
 					out_coords.push_back(coords[current_index]);
-				} while (current_index < line_coords[cur_line_coord].index);
+				} while (current_index != line_coords[cur_path_coord].index);
 			}
+			
+			have_to_wrap = false;
 		}
 	}	
 }

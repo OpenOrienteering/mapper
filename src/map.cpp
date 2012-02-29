@@ -38,7 +38,7 @@
 #include "symbol.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
-
+#include "symbol_combined.h"
 #include "file_format_ocad8.h"
 
 MapLayer::MapLayer(const QString& name, Map* map) : name(name), map(map)
@@ -289,6 +289,7 @@ MapColor Map::covering_white;
 MapColor Map::covering_red;
 LineSymbol* Map::covering_white_line;
 LineSymbol* Map::covering_red_line;
+CombinedSymbol* Map::covering_combined_line;
 
 Map::Map() : renderables(this), selection_renderables(this)
 {
@@ -880,6 +881,11 @@ void Map::initStatic()
 	covering_red_line = new LineSymbol();
 	covering_red_line->setColor(&covering_red);
 	covering_red_line->setLineWidth(0.1);
+	
+	covering_combined_line = new CombinedSymbol();
+	covering_combined_line->setNumParts(2);
+	covering_combined_line->setPart(0, covering_white_line);
+	covering_combined_line->setPart(1, covering_red_line);
 }
 
 void Map::addSymbol(Symbol* symbol, int pos)

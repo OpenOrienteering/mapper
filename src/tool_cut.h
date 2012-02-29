@@ -49,9 +49,11 @@ public slots:
 protected:
 	void updateStatusText();
 	void updatePreviewObjects();
+	void deletePreviewPath();
 	void updateDirtyRect();
-	void updateDragging(MapCoordF cursor_pos_map);
+	void updateDragging(MapCoordF cursor_pos_map, MapWidget* widget);
 	void updateHoverPoint(QPointF cursor_pos_screen, MapWidget* widget);
+	bool findEditPoint(PathCoord& out_edit_point, Object*& out_edit_object, MapCoordF cursor_pos_map, int with_type, int without_type, MapWidget* widget);
 	
 	// Mouse handling
 	QPoint click_pos;
@@ -62,7 +64,16 @@ protected:
 	
 	int hover_point;
 	Object* hover_object;
+	Object* edit_object;
 	
+	// for removing segments from lines
+	float drag_start_len;
+	float drag_end_len;
+	bool drag_forward;		// true if [drag_start_len; drag_end_len] is the drag range, else [drag_end_len; drag_start_len]
+	bool dragging_on_line;
+	
+	// Preview objects for dragging
+	PathObject* preview_path;
 	RenderableContainer renderables;
 };
 

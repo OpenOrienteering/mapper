@@ -313,6 +313,7 @@ void MapEditorController::assignKeyboardShortcuts()
     findAction("switchdashes")->setShortcut(QKeySequence("Ctrl+D"));
 	findAction("connectpaths")->setShortcut(QKeySequence("C"));
 	findAction("rotateobjects")->setShortcut(QKeySequence("R"));
+	findAction("cutobject")->setShortcut(QKeySequence("K"));
 }
 
 void MapEditorController::createMenuAndToolbars()

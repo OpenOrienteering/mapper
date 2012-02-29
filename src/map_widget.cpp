@@ -65,6 +65,7 @@ MapWidget::~MapWidget()
 	
 	delete below_template_cache;
 	delete above_template_cache;
+	delete map_cache;
 }
 
 void MapWidget::setMapView(MapView* view)
