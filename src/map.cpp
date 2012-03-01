@@ -300,7 +300,6 @@ Map::Map() : renderables(this), selection_renderables(this)
 	
 	layers.push_back(new MapLayer(tr("default layer"), this));
 	current_layer_index = 0;
-	current_layer = layers[current_layer_index];
 	
 	color_set = new MapColorSet();
 	
@@ -493,7 +492,6 @@ void Map::clear()
 	for (int i = 0; i < size; ++i)
 		delete layers[i];
 	layers.clear();
-	current_layer = NULL;
 	current_layer_index = -1;
 	
 	widgets.clear();
@@ -1137,11 +1135,11 @@ void Map::setObjectAreaDirty(QRectF map_coords_rect)
 }
 void Map::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, SelectionInfoVector& out)
 {
-	current_layer->findObjectsAt(coord, tolerance, extended_selection, out);
+	getCurrentLayer()->findObjectsAt(coord, tolerance, extended_selection, out);
 }
 void Map::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vector< Object* >& out)
 {
-	current_layer->findObjectsAtBox(corner1, corner2, out);
+	getCurrentLayer()->findObjectsAtBox(corner1, corner2, out);
 }
 
 void Map::scaleAllObjects(double factor)

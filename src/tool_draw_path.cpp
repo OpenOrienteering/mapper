@@ -18,7 +18,7 @@
  */
 
 
-#include "draw_path.h"
+#include "tool_draw_path.h"
 
 #include <QtGui>
 
@@ -694,4 +694,4 @@ void DrawPathTool::symbolDeleted(int pos, Symbol* old_symbol)
 		editor->setEditTool();
 }
 
-#include "draw_path.moc"
+#include "tool_draw_path.moc"

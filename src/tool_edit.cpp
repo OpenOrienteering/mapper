@@ -30,7 +30,7 @@
 #include "map_widget.h"
 #include "map_undo.h"
 #include "symbol_dock_widget.h"
-#include "draw_text.h"
+#include "tool_draw_text.h"
 #include "symbol_text.h"
 
 QCursor* EditTool::cursor = NULL;

@@ -196,8 +196,6 @@ void NativeFileImport::doImport() throw (FormatException)
     for (int i = 0; i < num_layers; ++i)
     {
         MapLayer* layer = new MapLayer("", map);
-        if (i == map->current_layer_index)
-            map->current_layer = layer;
         if (!layer->load(&file, version, map))
         {
             throw FormatException(QObject::tr("Problem while opening file:\n%1\n\nError while loading layer %2.").arg(file.fileName()).arg(i+1));

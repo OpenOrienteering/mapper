@@ -18,7 +18,7 @@
  */
 
 
-#include "draw_text.h"
+#include "tool_draw_text.h"
 
 #include <QApplication>
 #include <QClipboard>
@@ -796,4 +796,4 @@ void TextObjectAlignmentDockWidget::emitAlignmentChanged()
 	emit(alignmentChanged((int)horz_array[horz_index], (int)vert_array[vert_index]));
 }
 
-#include "draw_text.moc"
+#include "tool_draw_text.moc"

@@ -18,7 +18,7 @@
  */
 
 
-#include "draw_point.h"
+#include "tool_draw_point.h"
 
 #include <QtGui>
 
@@ -231,4 +231,4 @@ void DrawPointTool::symbolDeleted(int pos, Symbol* old_symbol)
 		editor->setEditTool();
 }
 
-#include "draw_point.moc"
+#include "tool_draw_point.moc"

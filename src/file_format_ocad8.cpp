@@ -181,11 +181,10 @@ void OCAD8FileImport::doImport() throw (FormatException)
     map->layers.resize(1);
     map->layers[0] = layer;
     map->current_layer_index = 0;
-    map->current_layer = layer; // FIXME: should current_layer and current_layer_index be separate?
 
     // Load templates
     map->templates.clear();
-    map->first_front_template = 0; // FIXME? Guessing this is the right value if there are no templates.
+    map->first_front_template = 0;
     for (OCADTemplateIndex *idx = ocad_template_index_first(file); idx != NULL; idx = ocad_template_index_next(file, idx))
     {
         for (int i = 0; i < 256; i++)

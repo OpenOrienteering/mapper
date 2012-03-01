@@ -78,9 +78,9 @@ set(Mapper_SRCS
  src/paint_on_template.cpp
 
  src/tool_edit.cpp
- src/draw_point.cpp
- src/draw_path.cpp
- src/draw_text.cpp
+ src/tool_draw_point.cpp
+ src/tool_draw_path.cpp
+ src/tool_draw_text.cpp
  src/tool_cut.cpp
  src/tool_rotate.cpp
 

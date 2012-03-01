@@ -195,7 +195,7 @@ public:
 	
 	inline int getNumLayers() const {return (int)layers.size();}
 	inline MapLayer* getLayer(int i) const {return layers[i];}
-	inline MapLayer* getCurrentLayer() const {return current_layer;}
+	inline MapLayer* getCurrentLayer() const {return (current_layer_index < 0) ? NULL : layers[current_layer_index];}
 	inline int getCurrentLayerIndex() const {return current_layer_index;}
 	// TODO: Layer management
 	
@@ -319,7 +319,6 @@ private:
 	LayerVector layers;
 	ObjectSelection object_selection;
 	UndoManager object_undo_manager;
-	MapLayer* current_layer;
 	int current_layer_index;
 	WidgetVector widgets;
 	ViewVector views;

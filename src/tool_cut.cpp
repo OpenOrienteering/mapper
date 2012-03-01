@@ -29,7 +29,7 @@
 #include "symbol.h"
 #include "symbol_combined.h"
 #include "map_undo.h"
-#include "draw_path.h"
+#include "tool_draw_path.h"
 
 QCursor* CutTool::cursor = NULL;
 
