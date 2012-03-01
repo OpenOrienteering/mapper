@@ -152,10 +152,17 @@ void PathCoord::calculatePositionAt(const MapCoordVector& flags, const MapCoordV
 			continue;
 		int index = path_coords[i].index;
 		
-		if (flags[index].isCurveStart())
+		if (0 == path_coords[i].clen - path_coords[i-1].clen)
+		{
+			// Zero-length segment
+			out_pos->setX(path_coords[i].pos.getX());
+			out_pos->setY(path_coords[i].pos.getY());
+		}
+		else if (flags[index].isCurveStart())
 		{
 			float factor = (length - path_coords[i-1].clen) / (path_coords[i].clen - path_coords[i-1].clen);
-			assert(factor >= 0 && factor <= 1.001f);
+			assert(factor >= 0.0);
+			assert(factor <= 1.001f);
 			if (factor > 1)
 				factor = 1;
 			float prev_param = (path_coords[i-1].index == path_coords[i].index) ? path_coords[i-1].param : 0;
@@ -178,7 +185,8 @@ void PathCoord::calculatePositionAt(const MapCoordVector& flags, const MapCoordV
 		else
 		{
 			float factor = (length - path_coords[i-1].clen) / (path_coords[i].clen - path_coords[i-1].clen);
-			assert(factor >= 0 && factor <= 1.001f);
+			assert(factor >= 0.0);
+			assert(factor <= 1.001f);
 			if (factor > 1)
 				factor = 1;
 			MapCoordF to_next(path_coords[i].pos.getX() - path_coords[i-1].pos.getX(), path_coords[i].pos.getY() - path_coords[i-1].pos.getY());
