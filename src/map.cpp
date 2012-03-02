@@ -1515,7 +1515,22 @@ bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF curso
 			set_to_limit = true;
 		}
 		
+		MapCoordF mouse_pos_map;
+		MapCoordF mouse_pos_to_view_center;
+		if (preserve_cursor_pos)
+		{
+			mouse_pos_map = viewToMapF(cursor_pos_view);
+			mouse_pos_to_view_center = MapCoordF(getPositionX()/1000.0 - mouse_pos_map.getX(), getPositionY()/1000.0 - mouse_pos_map.getY());
+			mouse_pos_to_view_center = MapCoordF(mouse_pos_to_view_center.getX() * 1 / zoom_factor, mouse_pos_to_view_center.getY() * 1 / zoom_factor);
+		}
+		
 		setZoom(set_to_limit ? zoom_out_limit : (getZoom() * zoom_factor));
+		
+		if (preserve_cursor_pos)
+		{
+			setPositionX(qRound64(1000 * (mouse_pos_map.getX() + mouse_pos_to_view_center.getX())));
+			setPositionY(qRound64(1000 * (mouse_pos_map.getY() + mouse_pos_to_view_center.getY())));
+		}
 	}
 	return true;
 }
