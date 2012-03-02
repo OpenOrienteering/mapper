@@ -741,14 +741,14 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/main_window.cpp" line="447"/>
-        <location filename="../src/main_window.cpp" line="598"/>
-        <location filename="../src/main_window.cpp" line="628"/>
+        <location filename="../src/main_window.cpp" line="449"/>
+        <location filename="../src/main_window.cpp" line="600"/>
+        <location filename="../src/main_window.cpp" line="630"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="447"/>
+        <location filename="../src/main_window.cpp" line="449"/>
         <source>Cannot open file:
 %1
 
@@ -855,12 +855,17 @@ Do you want to save your changes?</source>
         <translation>Die Datei wurde geändert.\nMöchten Sie die Änderungen speichern?</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="417"/>
+        <location filename="../src/main_window.cpp" line="416"/>
+        <source>All maps</source>
+        <translation>Alle Karten</translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="419"/>
         <source>Open file</source>
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="611"/>
+        <location filename="../src/main_window.cpp" line="613"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -902,7 +907,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="384"/>
-        <location filename="../src/main_window.cpp" line="511"/>
+        <location filename="../src/main_window.cpp" line="513"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
@@ -917,7 +922,7 @@ The new map&apos;s scale will be 1:%3.</source>
 Die neue Karten wird mit dem Maßstab 1:%3 angelegt.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="415"/>
+        <location filename="../src/main_window.cpp" line="417"/>
         <source>All files</source>
         <translation>Alle Dateien</translation>
     </message>
@@ -926,13 +931,13 @@ Die neue Karten wird mit dem Maßstab 1:%3 angelegt.</translation>
         <translation type="obsolete">Datei öffnen...</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="485"/>
+        <location filename="../src/main_window.cpp" line="487"/>
         <source>&amp;%1 %2</source>
         <translatorcomment>Nicht zu übersetzen</translatorcomment>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="510"/>
+        <location filename="../src/main_window.cpp" line="512"/>
         <source>This map is being saved as a &quot;%1&quot; file. Information may be lost.
 
 Press Yes to save in this format.
@@ -943,22 +948,22 @@ Wählen Sie Ja, um die Datei in diesem Format zu speichern.\n
 Wählen Sie Nein, um ein anderes Dateiformat zu auszusuchen.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="542"/>
+        <location filename="../src/main_window.cpp" line="544"/>
         <source>Save file ...</source>
         <translation>Datei speichern...</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="598"/>
+        <location filename="../src/main_window.cpp" line="600"/>
         <source>Sorry, settings are not implemented yet!</source>
         <translation>Leider sind noch keine Einstellungen implementiert.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="603"/>
+        <location filename="../src/main_window.cpp" line="605"/>
         <source>About %1</source>
         <translation>Über %1</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="628"/>
+        <location filename="../src/main_window.cpp" line="630"/>
         <source>Sorry, help is not implemented yet!</source>
         <translation>Leider ist noch keine Hilfe implementiert.</translation>
     </message>

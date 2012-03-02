@@ -399,31 +399,33 @@ void MainWindow::showNewMapWizard()
 }
 void MainWindow::showOpenDialog()
 {
-    // Get the saved directory to start in, defaulting to the user's home directory.
-    QSettings settings;
-    QString open_directory = settings.value("openFileDirectory", QDir::homePath()).toString();
+	// Get the saved directory to start in, defaulting to the user's home directory.
+	QSettings settings;
+	QString open_directory = settings.value("openFileDirectory", QDir::homePath()).toString();
 
-    // Build the list of supported file extensions based on the file format registry
-    QString extensions;
-    Q_FOREACH(const Format *format, FileFormats.formats())
-    {
-        if (format->supportsImport())
-        {
-            extensions = extensions % QString("%1 (*.%2);;").arg(format->description()).arg(format->fileExtension());
-        }
-    }
-    extensions = extensions % tr("All files") % " (*.*)";
+	// Build the list of supported file extensions based on the file format registry
+	QString all_maps, extensions;
+	Q_FOREACH(const Format *format, FileFormats.formats())
+	{
+		if (format->supportsImport())
+		{
+			all_maps = all_maps % QString("*.%1 ").arg(format->fileExtension());
+			extensions = extensions % QString("%1 (*.%2);;").arg(format->description()).arg(format->fileExtension());
+		}
+	}
+	all_maps = QString("%1 (*.%2);;").arg(tr("All maps")).arg(all_maps.trimmed());
+	extensions = all_maps % extensions % tr("All files") % " (*.*)";
 
-    QString path = QFileDialog::getOpenFileName(this, tr("Open file"), open_directory, extensions);
-    QFileInfo info(path);
-    path = info.canonicalFilePath();
-    open_directory = info.canonicalPath();
+	QString path = QFileDialog::getOpenFileName(this, tr("Open file"), open_directory, extensions);
+	QFileInfo info(path);
+	path = info.canonicalFilePath();
+	open_directory = info.canonicalPath();
 	
 	if (path.isEmpty())
 		return;
 
-    // Save the directory the user is in
-    settings.setValue("openFileDirectory", open_directory);
+	// Save the directory the user is in
+	settings.setValue("openFileDirectory", open_directory);
 
 	openPath(path);
 }
