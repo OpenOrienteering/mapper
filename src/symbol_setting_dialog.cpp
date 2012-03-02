@@ -61,7 +61,7 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Symbol* in_map_symbol, 
 	helper_symbol_check->setChecked(symbol->isHelperSymbol());
 	
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	ok_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("Ok"));
+	ok_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("OK"));
 	ok_button->setDefault(true);
 	
 	preview_map = new Map();

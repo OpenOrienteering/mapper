@@ -33,11 +33,6 @@
 
 int main(int argc, char** argv)
 {
-    // Register the supported file formats
-    FileFormats.registerFormat(new NativeFileFormat());
-    FileFormats.registerFormat(new XMLFileFormat());
-    FileFormats.registerFormat(new OCAD8FileFormat());
-
     // Create single-instance application.
     // Use "oo-mapper" instead of the executable as identifier, in case we launch from different paths.
     QtSingleApplication qapp("oo-mapper", argc, argv);
@@ -59,6 +54,11 @@ int main(int argc, char** argv)
 	translator.load(QString("Mapper_") + locale, QString(":/translations"));
 	qapp.installTranslator(&translator);
 	
+    // Register the supported file formats
+    FileFormats.registerFormat(new NativeFileFormat());
+    FileFormats.registerFormat(new XMLFileFormat());
+    FileFormats.registerFormat(new OCAD8FileFormat());
+
 	// Create first main window
 	first_window = new MainWindow(true);
 	first_window->setController(new HomeScreenController());
