@@ -413,7 +413,7 @@ void MainWindow::showOpenDialog()
 			extensions = extensions % QString("%1 (*.%2);;").arg(format->description()).arg(format->fileExtension());
 		}
 	}
-	all_maps = QString("%1 (*.%2);;").arg(tr("All maps")).arg(all_maps.trimmed());
+	all_maps = QString("%1 (%2);;").arg(tr("All maps")).arg(all_maps.trimmed());
 	extensions = all_maps % extensions % tr("All files") % " (*.*)";
 
 	QString path = QFileDialog::getOpenFileName(this, tr("Open file"), open_directory, extensions);
