@@ -19,6 +19,7 @@
 
 #include "file_format.h"
 
+#include <cassert>
 #include <QFileInfo>
 
 Format::Format(const QString &id, const QString &description, const QString &file_extension, bool supportsImport, bool supportsExport, bool export_lossy)
@@ -48,6 +49,8 @@ void FormatRegistry::registerFormat(Format *format)
 {
     fmts.push_back(format);
     if (fmts.size() == 1) default_format_id = format->id();
+	assert(findFormatForFilename("filename."+format->fileExtension()) == format);
+	assert(findFormatByFilter(format->filter()) == format);
 }
 
 const Format *FormatRegistry::findFormat(const QString &id) const
