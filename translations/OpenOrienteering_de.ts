@@ -741,19 +741,23 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/main_window.cpp" line="449"/>
-        <location filename="../src/main_window.cpp" line="600"/>
-        <location filename="../src/main_window.cpp" line="630"/>
+        <location filename="../src/main_window.cpp" line="457"/>
+        <location filename="../src/main_window.cpp" line="577"/>
+        <location filename="../src/main_window.cpp" line="608"/>
+        <location filename="../src/main_window.cpp" line="638"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="449"/>
+        <location filename="../src/main_window.cpp" line="457"/>
         <source>Cannot open file:
 %1
 
 File format not recognized.</source>
-        <translation>Kann Datei nicht öffnen:\n%1\n\nUnbekanntes Dateiformat.</translation>
+        <translation>Kann Datei nicht öffnen:
+%1
+
+Unbekanntes Dateiformat.</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="107"/>
@@ -849,23 +853,44 @@ File format not recognized.</source>
         <translation>Informationen über Qt anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="291"/>
+        <location filename="../src/main_window.cpp" line="293"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
-        <translation>Die Datei wurde geändert.\nMöchten Sie die Änderungen speichern?</translation>
+        <translation>Die Datei wurde geändert.
+Möchten Sie die Änderungen speichern?</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="416"/>
+        <location filename="../src/main_window.cpp" line="427"/>
         <source>All maps</source>
         <translation>Alle Karten</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="419"/>
+        <location filename="../src/main_window.cpp" line="431"/>
         <source>Open file</source>
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="613"/>
+        <location filename="../src/main_window.cpp" line="570"/>
+        <source>Save file</source>
+        <translation>Datei speichern</translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="578"/>
+        <source>File could not be saved:</source>
+        <translation>Datei konnte nicht gespeichert werden:</translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="579"/>
+        <source>There was a problem in determining the file format.</source>
+        <translation>Beim Ermitteln des Dateiformat ist ein Problem aufgetreten.</translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="580"/>
+        <source>Please report this as a bug.</source>
+        <translation>Bitte melden Sie das als Programmfehler.</translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="621"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -898,31 +923,32 @@ Do you want to save your changes?</source>
         <source>The document has been modified.
 Do you want to save your changes?</source>
         <translatorcomment>&quot;Dokument&quot; in diesem Programm untypisch, besser Datei oder Karte.</translatorcomment>
-        <translation type="obsolete">Das Dokument wurde geändert.\nMöchten Sie die Änderungen speichern?</translation>
+        <translation type="obsolete">Das Dokument wurde geändert.
+Möchten Sie die Änderungen speichern?</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="354"/>
+        <location filename="../src/main_window.cpp" line="356"/>
         <source>Unsaved file</source>
         <translation>Ungespeicherte Datei</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="384"/>
-        <location filename="../src/main_window.cpp" line="513"/>
+        <location filename="../src/main_window.cpp" line="386"/>
+        <location filename="../src/main_window.cpp" line="528"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="384"/>
+        <location filename="../src/main_window.cpp" line="386"/>
         <source>The selected map scale is 1:%1, but the selected symbol file has a scale of 1:%2! Is the file in the wrong folder?
 
 The new map&apos;s scale will be 1:%3.</source>
         <translatorcomment>Frei übersetzt, Original diskutabel.</translatorcomment>
-        <translation>Der ausgewählte Maßstab ist 1:%1, aber der ausgewählte Symbolsatz hat den Maßstab 1:%2. Möglicherweise wurde der Symbolsatz im falschen Ordner abgelegt.\n
-\n
+        <translation>Der ausgewählte Maßstab ist 1:%1, aber der ausgewählte Symbolsatz hat den Maßstab 1:%2. Möglicherweise wurde der Symbolsatz im falschen Ordner abgelegt.
+
 Die neue Karten wird mit dem Maßstab 1:%3 angelegt.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="417"/>
+        <location filename="../src/main_window.cpp" line="429"/>
         <source>All files</source>
         <translation>Alle Dateien</translation>
     </message>
@@ -931,39 +957,38 @@ Die neue Karten wird mit dem Maßstab 1:%3 angelegt.</translation>
         <translation type="obsolete">Datei öffnen...</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="487"/>
+        <location filename="../src/main_window.cpp" line="495"/>
         <source>&amp;%1 %2</source>
         <translatorcomment>Nicht zu übersetzen</translatorcomment>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="512"/>
+        <location filename="../src/main_window.cpp" line="527"/>
         <source>This map is being saved as a &quot;%1&quot; file. Information may be lost.
 
 Press Yes to save in this format.
 Press No to choose a different format.</source>
-        <translation>Die Karte wird als %1-Datei gespeichert. Bei diesem Dateiformat können Informationen verlorengehen.\n
-\n
-Wählen Sie Ja, um die Datei in diesem Format zu speichern.\n
+        <translation>Die Karte wird als %1-Datei gespeichert. Bei diesem Dateiformat können Informationen verlorengehen.
+
+Wählen Sie Ja, um die Datei in diesem Format zu speichern.
 Wählen Sie Nein, um ein anderes Dateiformat zu auszusuchen.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="544"/>
         <source>Save file ...</source>
-        <translation>Datei speichern...</translation>
+        <translation type="obsolete">Datei speichern...</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="600"/>
+        <location filename="../src/main_window.cpp" line="608"/>
         <source>Sorry, settings are not implemented yet!</source>
         <translation>Leider sind noch keine Einstellungen implementiert.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="605"/>
+        <location filename="../src/main_window.cpp" line="613"/>
         <source>About %1</source>
         <translation>Über %1</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="630"/>
+        <location filename="../src/main_window.cpp" line="638"/>
         <source>Sorry, help is not implemented yet!</source>
         <translation>Leider ist noch keine Hilfe implementiert.</translation>
     </message>
@@ -973,7 +998,7 @@ Wählen Sie Nein, um ein anderes Dateiformat zu auszusuchen.</translation>
     <message>
         <location filename="../src/map.cpp" line="301"/>
         <source>default layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardebene</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="351"/>
@@ -2633,7 +2658,7 @@ Failed to load template. Does the file exist and is it valid?</source>
         <location filename="../src/template_dock_widget.cpp" line="676"/>
         <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
         <translatorcomment>verkürzt</translatorcomment>
-        <translation>Diese Datei passt nicht zur Vorlage.</translation>
+        <translation>Diese Datei passt nicht zur Vorlage. Datei im richtigen Format ausgewählt?</translation>
     </message>
 </context>
 <context>
