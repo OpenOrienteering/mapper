@@ -6,6 +6,8 @@ LANGUAGES="de"
 
 cd $(dirname "$0") || exit 1
 
+lupdate ${SOURCES} -ts ${APPNAME}_template.ts
+
 cat >../translations.qrc <<QRC_HEADER
 <!DOCTYPE RCC><RCC version="1.0">
  <qresource>
