@@ -125,3 +125,6 @@ target_link_libraries(Mapper
  ${QT_QTNETWORK_LIBRARY}
  ${QT_QTXML_LIBRARY}
 )
+
+include(CPackaging.cmake)
+
