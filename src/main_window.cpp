@@ -35,8 +35,8 @@
 
 MainWindowController* MainWindowController::controllerForFile(const QString& filename)
 {
-	// Check file extension and return fitting controller
-	if (filename.endsWith(".omap", Qt::CaseInsensitive) || filename.endsWith(".ocd", Qt::CaseInsensitive))
+	const Format* format = FileFormats.findFormatForFilename(filename);
+	if (format != NULL && format->supportsImport()) 
 		return new MapEditorController(MapEditorController::MapEditor);
 	
 	return NULL;
@@ -131,7 +131,7 @@ void MainWindow::createFileMenu()
 	
 	save_as_act = new QAction(tr("Save &as..."), this);
 	save_as_act->setShortcuts(QKeySequence::SaveAs);
-	connect(save_as_act, SIGNAL(triggered()), this, SLOT(saveAs()));
+	connect(save_as_act, SIGNAL(triggered()), this, SLOT(showSaveAsDialog()));
 	
 	close_act = new QAction(tr("Close"), this);
 	close_act->setShortcut(tr("Ctrl+W"));
@@ -181,24 +181,26 @@ void MainWindow::createHelpMenu()
 
 void MainWindow::setCurrentFile(const QString& path)
 {
-	current_path = path;
+	QFileInfo info(path);
+	current_path = info.canonicalFilePath();
 	updateWindowTitle();
 	
-	if (path.isEmpty())
+	if (current_path.isEmpty())
 		return;
 	
-	// Update recent file lists
 	QSettings settings;
 	
+	// Update least recently used directory
+	QString open_directory = info.canonicalPath();
+	settings.setValue("openFileDirectory", open_directory);
+
+	// Update recent file lists
 	QStringList files = settings.value("recentFileList").toStringList();
-	if (!files.isEmpty() && files.first() == path)
-		return;
-	
-	files.removeAll(path);
-	files.prepend(path);
+	if (!files.isEmpty())
+		files.removeAll(current_path);
+	files.prepend(current_path);
 	while (files.size() > max_recent_files)
 		files.removeLast();
-	
 	settings.setValue("recentFileList", files);
 	
 	foreach (QWidget* widget, QApplication::topLevelWidgets())
@@ -429,17 +431,13 @@ void MainWindow::showOpenDialog()
 	QString path = QFileDialog::getOpenFileName(this, tr("Open file"), open_directory, filters);
 	QFileInfo info(path);
 	path = info.canonicalFilePath();
-	open_directory = info.canonicalPath();
 	
 	if (path.isEmpty())
 		return;
 
-	// Save the directory the user is in
-	settings.setValue("openFileDirectory", open_directory);
-
 	openPath(path);
 }
-bool MainWindow::openPath(QString path)
+bool MainWindow::openPath(const QString &path)
 {
     // Empty path does nothing. This also helps with the single instance application code.
     if (path.isEmpty()) return true;
@@ -509,34 +507,51 @@ void MainWindow::updateRecentFileActions(bool show)
 	if (controller)
 		controller->recentFilesUpdated();
 }
+
 bool MainWindow::save()
 {
-	if (!controller)
-		return false;
-	if (current_path.isEmpty())
-		return saveAs();
-
-    const Format *format = FileFormats.findFormatForFilename(current_path);
-    if (format->isExportLossy())
-    {
-        QString message = tr("This map is being saved as a \"%1\" file. Information may be lost.\n\nPress Yes to save in this format.\nPress No to choose a different format.").arg(format->description());
-        int result = QMessageBox::warning(this, tr("Warning"), message, QMessageBox::Yes, QMessageBox::No);
-        if (result != QMessageBox::Yes)
-            return saveAs();
-    }
-	
-	if (controller->save(current_path))
-		setHasUnsavedChanges(false);
-	return true;
+	return savePath(current_path);
 }
-bool MainWindow::saveAs()
+
+bool MainWindow::savePath(const QString &path)
 {
 	if (!controller)
 		return false;
 
-	// Get the saved directory to start in, defaulting to the user's home directory.
-	QSettings settings;
-	QString save_directory = settings.value("saveFileDirectory", QDir::homePath()).toString();
+	if (path.isEmpty())
+		return showSaveAsDialog();
+
+	const Format *format = FileFormats.findFormatForFilename(path);
+	if (format->isExportLossy())
+	{
+		QString message = tr("This map is being saved as a \"%1\" file. Information may be lost.\n\nPress Yes to save in this format.\nPress No to choose a different format.").arg(format->description());
+		int result = QMessageBox::warning(this, tr("Warning"), message, QMessageBox::Yes, QMessageBox::No);
+		if (result != QMessageBox::Yes)
+			return showSaveAsDialog();
+	}
+  
+	if (!controller->save(path))
+		return false;
+
+	setCurrentFile(path);
+	setHasUnsavedChanges(false);
+	return true;
+}
+
+bool MainWindow::showSaveAsDialog()
+{
+	if (!controller)
+		return false;
+
+	// Try current directory first
+	QFileInfo current(current_path);
+	QString save_directory = current.canonicalPath();
+	if (save_directory.isEmpty())
+	{
+		// revert to least recently used directory or home directory.
+		QSettings settings;
+		save_directory = settings.value("openFileDirectory", QDir::homePath()).toString();
+	}
 	
 	// Build the list of supported file filters based on the file format registry
 	QString filters;
@@ -572,24 +587,11 @@ bool MainWindow::saveAs()
 	QString selected_extension = "." % format->fileExtension();
 	if (!path.endsWith(selected_extension, Qt::CaseInsensitive))
 	{
-		path = path % selected_extension;
+		path.append(selected_extension);
 	}
 	assert(FileFormats.findFormatForFilename(path) == format);
 
-	setCurrentFile(path);
-
-	if (! save())
-		return false;
-
-	QFileInfo info(path);
-	path = info.canonicalFilePath();
-	save_directory = info.canonicalPath();
-	// Save the directory the user is in
-	settings.setValue("saveFileDirectory", save_directory);
-
-	return true;
-
-	//assert(current_path == QFileInfo(current_path).canonicalFilePath());
+	return savePath(path);
 }
 
 void MainWindow::toggleFullscreenMode()
@@ -635,7 +637,7 @@ void MainWindow::showHelp()
 	// TODO
 	QMessageBox::information(this, tr("Error"), tr("Sorry, help is not implemented yet!"));
 }
-void MainWindow::linkClicked(QString link)
+void MainWindow::linkClicked(const QString &link)
 {
 	QDesktopServices::openUrl(link);
 }
