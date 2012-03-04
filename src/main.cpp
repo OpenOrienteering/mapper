@@ -51,7 +51,7 @@ int main(int argc, char** argv)
 	// Localization
 	QString locale = QLocale::system().name();
 	QTranslator translator;
-	translator.load(QString("Mapper_") + locale, QString(":/translations"));
+	translator.load(locale, QString(":/translations"));
 	qapp.installTranslator(&translator);
 	
     // Register the supported file formats

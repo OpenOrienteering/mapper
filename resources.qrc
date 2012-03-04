@@ -64,7 +64,5 @@
   <file>images/window-new.png</file>
 
   <file>etc/tipoftheday.txt</file>
-
-  <file alias="translations/Mapper_de.qm">build/Mapper_de.qm</file>
  </qresource>
 </RCC>

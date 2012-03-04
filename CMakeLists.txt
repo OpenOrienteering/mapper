@@ -95,11 +95,11 @@ set(Mapper_SRCS
 qt4_automoc(${Mapper_SRCS})
 
 set(Mapper_TRANS
- translations/Mapper_de.ts
+ translations/OpenOrienteering_de.ts
 )
 qt4_add_translation(Mapper_QM ${Mapper_TRANS})
 
-SET(Mapper_RESOURCES resources.qrc)
+SET(Mapper_RESOURCES resources.qrc translations.qrc)
 qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
