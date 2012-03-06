@@ -65,82 +65,86 @@ void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool forc
 	bool no_initial_clip = initial_clip.isEmpty();
 	
 	painter->save();
-	Renderables::const_iterator it_end = renderables.end();
-	for (Renderables::const_iterator it = renderables.begin(); it != it_end; ++it)
+	Renderables::const_reverse_iterator outer_it_end = renderables.rend();
+	for (Renderables::const_reverse_iterator outer_it = renderables.rbegin(); outer_it != outer_it_end; ++outer_it)
 	{
-		const RenderStates& new_states = (*it).first;
-		Renderable* renderable = (*it).second;
-		
-		// Bounds check
-		const QRectF& extent = renderable->getExtent();
-		if (extent.right() < bounding_box.x())	continue;
-		if (extent.bottom() < bounding_box.y())	continue;
-		if (extent.x() > bounding_box.right())	continue;
-		if (extent.y() > bounding_box.bottom())	continue;
-		
-		// Change render states?
-		if (states != new_states)
+		RenderableContainerVector::const_iterator it_end = outer_it->second.end();
+		for (RenderableContainerVector::const_iterator it = outer_it->second.begin(); it != it_end; ++it)
 		{
-			MapColor* color;
-			float pen_width;
+			const RenderStates& new_states = (*it).first;
+			Renderable* renderable = (*it).second;
 			
-			if (new_states.color_priority > MapColor::Reserved)
+			// Bounds check
+			const QRectF& extent = renderable->getExtent();
+			if (extent.right() < bounding_box.x())	continue;
+			if (extent.bottom() < bounding_box.y())	continue;
+			if (extent.x() > bounding_box.right())	continue;
+			if (extent.y() > bounding_box.bottom())	continue;
+			
+			// Change render states?
+			if (states != new_states)
 			{
-				pen_width = new_states.pen_width;
-				color = colors[new_states.color_priority];
-			}
-			else
-			{
-				painter->setRenderHint(QPainter::Antialiasing, true);	// this is not undone here anywhere as it should apply to all special symbols and these are always painted last
-				pen_width = new_states.pen_width / scaling;
+				MapColor* color;
+				float pen_width;
 				
-				if (new_states.color_priority == MapColor::CoveringWhite)
-					color = Map::getCoveringWhite();
-				else if (new_states.color_priority == MapColor::CoveringRed)
-					color = Map::getCoveringRed();
-				else
-					assert(!"Invalid special color!");
-			}
-			
-			if (new_states.mode == RenderStates::PenOnly)
-			{
-				bool pen_too_small = (force_min_size && pen_width * scaling <= 1.0f);
-				painter->setPen(QPen(highlighted ? getHighlightedColor(color->color) : color->color, pen_too_small ? 0 : pen_width));
-				
-				painter->setBrush(QBrush(Qt::NoBrush));
-			}
-			else if (new_states.mode == RenderStates::BrushOnly)
-			{
-				QBrush brush(highlighted ? getHighlightedColor(color->color) : color->color);
-				
-				painter->setPen(QPen(Qt::NoPen));
-				painter->setBrush(brush);
-			}
-			
-			painter->setOpacity(qMin(1.0f, opacity_factor * color->opacity));
-			
-			if (states.clip_path != new_states.clip_path)
-			{
-				if (no_initial_clip)
+				if (new_states.color_priority > MapColor::Reserved)
 				{
-					if (new_states.clip_path)
-						painter->setClipPath(*new_states.clip_path, Qt::ReplaceClip);
+					pen_width = new_states.pen_width;
+					color = colors[new_states.color_priority];
+				}
+				else
+				{
+					painter->setRenderHint(QPainter::Antialiasing, true);	// this is not undone here anywhere as it should apply to all special symbols and these are always painted last
+					pen_width = new_states.pen_width / scaling;
+					
+					if (new_states.color_priority == MapColor::CoveringWhite)
+						color = Map::getCoveringWhite();
+					else if (new_states.color_priority == MapColor::CoveringRed)
+						color = Map::getCoveringRed();
 					else
-						painter->setClipPath(initial_clip, Qt::NoClip);
+						assert(!"Invalid special color!");
 				}
-				else
+				
+				if (new_states.mode == RenderStates::PenOnly)
 				{
-					painter->setClipPath(initial_clip, Qt::ReplaceClip);
-					if (new_states.clip_path)
-						painter->setClipPath(*new_states.clip_path, Qt::IntersectClip);
+					bool pen_too_small = (force_min_size && pen_width * scaling <= 1.0f);
+					painter->setPen(QPen(highlighted ? getHighlightedColor(color->color) : color->color, pen_too_small ? 0 : pen_width));
+					
+					painter->setBrush(QBrush(Qt::NoBrush));
 				}
+				else if (new_states.mode == RenderStates::BrushOnly)
+				{
+					QBrush brush(highlighted ? getHighlightedColor(color->color) : color->color);
+					
+					painter->setPen(QPen(Qt::NoPen));
+					painter->setBrush(brush);
+				}
+				
+				painter->setOpacity(qMin(1.0f, opacity_factor * color->opacity));
+				
+				if (states.clip_path != new_states.clip_path)
+				{
+					if (no_initial_clip)
+					{
+						if (new_states.clip_path)
+							painter->setClipPath(*new_states.clip_path, Qt::ReplaceClip);
+						else
+							painter->setClipPath(initial_clip, Qt::NoClip);
+					}
+					else
+					{
+						painter->setClipPath(initial_clip, Qt::ReplaceClip);
+						if (new_states.clip_path)
+							painter->setClipPath(*new_states.clip_path, Qt::IntersectClip);
+					}
+				}
+				
+				states = new_states;
 			}
 			
-			states = new_states;
+			// Render the renderable
+			renderable->render(*painter, force_min_size, scaling);
 		}
-		
-		// Render the renderable
-		renderable->render(*painter, force_min_size, scaling);
 	}
 	painter->restore();
 }
@@ -155,15 +159,38 @@ void RenderableContainer::insertRenderablesOfObject(Object* object)
 		renderable->getRenderStates(render_states);
 		
 		if (render_states.color_priority != MapColor::Reserved)
-			renderables.insert(Renderables::value_type(render_states, renderable));	
+		{
+			renderables[render_states.color_priority].push_back(std::make_pair(render_states, renderable));
+			//renderables.insert(Renderables::value_type(render_states, renderable));
+		}
 	}
 }
 void RenderableContainer::removeRenderablesOfObject(Object* object, bool mark_area_as_dirty)
 {
 	Renderables::iterator itend = renderables.end();
-	for (Renderables::iterator it = renderables.begin(); it != itend; )
+	for (Renderables::iterator it = renderables.begin(); it != itend; ++it)
 	{
-		if ((*it).second->getCreator() == object)
+		for (int i = (int)it->second.size() - 1; i >= 0; --i)
+		{
+			if (it->second.at(i).second->getCreator() != object)
+				continue;
+			
+			// NOTE: this assumes that renderables by one object are at continuous indices
+			int k = i;
+			if (mark_area_as_dirty)
+				map->setObjectAreaDirty(it->second.at(i).second->getExtent());
+			while (k > 0 && it->second.at(k - 1).second->getCreator() == object)
+			{
+				--k;
+				if (mark_area_as_dirty)
+					map->setObjectAreaDirty(it->second.at(k).second->getExtent());
+			}
+			
+			it->second.erase(it->second.begin() + k, it->second.begin() + (i + 1));
+			break;
+		}
+		
+		/*if ((*it).second->getCreator() == object)
 		{
 			if (mark_area_as_dirty)
 				map->setObjectAreaDirty((*it).second->getExtent());
@@ -172,7 +199,7 @@ void RenderableContainer::removeRenderablesOfObject(Object* object, bool mark_ar
 			renderables.erase(todelete);
 		}
 		else
-			++it;
+			++it;*/
 	}
 }
 

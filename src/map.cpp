@@ -103,14 +103,14 @@ void MapLayer::setObject(Object* object, int pos, bool delete_old)
 	
 	objects[pos] = object;
 	object->setMap(map);
-	object->update(true);
+	object->update(true, false);
 	map->setObjectsDirty();
 }
 void MapLayer::addObject(Object* object, int pos)
 {
 	objects.insert(objects.begin() + pos, object);
 	object->setMap(map);
-	object->update(true);
+	object->update(true, false);
 	map->setObjectsDirty();
 	
 	if (map->getNumObjects() == 1)

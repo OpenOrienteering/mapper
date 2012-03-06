@@ -139,7 +139,9 @@ public:
 	inline bool isEmpty() const {return renderables.empty();}
 	
 private:
-	typedef std::multimap<RenderStates, Renderable*> Renderables;
+	//typedef std::multimap<RenderStates, Renderable*> Renderables;
+	typedef std::vector<std::pair<RenderStates, Renderable*> > RenderableContainerVector;
+	typedef std::map< int, RenderableContainerVector > Renderables;
 	
 	QColor getHighlightedColor(const QColor& original);
 	

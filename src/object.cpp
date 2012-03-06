@@ -138,12 +138,12 @@ void Object::load(QFile* file, int version, Map* map)
 	output_dirty = true;
 }
 
-bool Object::update(bool force)
+bool Object::update(bool force, bool remove_old_renderables)
 {
 	if (!force && !output_dirty)
 		return false;
 	
-	if (map)
+	if (map && remove_old_renderables)
 		map->removeRenderablesOfObject(this, false);
 	clearOutput();
 	
