@@ -109,7 +109,7 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	if (type == Point)
 	{
 		PointObject* point = new PointObject(this);
-		point->setPosition(MapCoord(0, 0));
+		point->setPosition(0, 0);
 		object = point;
 	}
 	else if (type == Line)
@@ -131,7 +131,7 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	else if (type == Text)
 	{
 		TextObject* text = new TextObject(this);
-		text->setAnchorPosition(MapCoord(0, 0));
+		text->setAnchorPosition(0, 0);
 		text->setHorizontalAlignment(TextObject::AlignHCenter);
 		text->setVerticalAlignment(TextObject::AlignVCenter);
 		text->setText("A");
@@ -142,7 +142,7 @@ QImage* Symbol::getIcon(Map* map, bool update)
 		PathObject* path = new PathObject(this);
 		for (int i = 0; i < 5; ++i)
 			path->addCoordinate(i, MapCoord(sin(2*M_PI * i/5.0) * max_icon_mm_half, -cos(2*M_PI * i/5.0) * max_icon_mm_half));
-		path->setPathClosed(true);
+		path->getPart(0).setClosed(true);
 		object = path;
 	}
 	else

@@ -258,11 +258,6 @@ void CircleRenderable::render(QPainter& painter, bool force_min_size, float scal
 
 LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector& path_coords, bool closed) : Renderable()
 {
-    /*
-    for (int i = 0; i < coords.size(); i++) fprintf(stderr, "%x,%x   ", coords[i].internalX(), coords[i].internalY());
-    fprintf(stderr, "\n\n");
-    */
-
 	assert(transformed_coords.size() == coords.size());
 	color_priority = symbol->getColor()->priority;
 	line_width = 0.001f * symbol->getLineWidth();
@@ -320,7 +315,7 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 		if (coords[i].isHolePoint())
 			hole = true;
 		
-		if ((i < size - 1 || closed) && !hole)
+		if ((i < size - 1 && !hole) || (i == size - 1 && closed))
 			extentIncludeJoin(i, half_line_width, symbol, transformed_coords, coords, closed);
 		else
 			extentIncludeCap(i, half_line_width, true, symbol, transformed_coords, coords, closed);
@@ -438,37 +433,36 @@ AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transf
 	path.moveTo(transformed_coords[0].toQPointF());
 	
 	// Coords 1 to size - 1
+	bool have_hole = false;
 	int size = (int)coords.size();
 	for (int i = 1; i < size; ++i)
 	{
-		if (coords[i-1].isCurveStart())
-		{
-			if (i == size - 2)
-			{
-				assert(i < size - 1);
-				path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[0].toQPointF());
-				++i;
-			}
-			else
-			{
-				assert(i < size - 2);
-				path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
-				i += 2;
-			}
-		}
-		else if (coords[i].isHolePoint())
+		if (have_hole)
 		{
 			path.closeSubpath();
 			path.moveTo(transformed_coords[i].toQPointF());
+			
+			have_hole = false;
+			continue;
+		}
+		
+		if (coords[i-1].isCurveStart())
+		{
+			assert(i < size - 2);
+			path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
+			i += 2;
 		}
 		else
 			path.lineTo(transformed_coords[i].toQPointF());
+		
+		if (coords[i].isHolePoint())
+			have_hole = true;
 	}
 	
 	// Close path
 	path.closeSubpath();
 	
-	//if (disableHoles)
+	//if (disable_holes)
 	//	path.setFillRule(Qt::WindingFill);
 	
 	// Get extent

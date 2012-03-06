@@ -124,7 +124,7 @@ bool DrawTextTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 		double width = qAbs(cur_pos_map.getX() - click_pos_map.getX());
 		double height = qAbs(cur_pos_map.getY() - click_pos_map.getY());
 		MapCoordF midpoint = MapCoordF(0.5f * (cur_pos_map.getX() + click_pos_map.getX()), 0.5f * (cur_pos_map.getY() + click_pos_map.getY()));
-		preview_text->setBox(midpoint.toMapCoord(), width, height);
+		preview_text->setBox(midpoint.getIntX(), midpoint.getIntY(), width, height);
 		
 		dragging = false;
 		updateDirtyRect();
@@ -289,7 +289,7 @@ void DrawTextTool::setPreviewLetter()
 		preview_text->setText(tr("A"));
 	}
 	
-	preview_text->setAnchorPosition(cur_pos_map.toMapCoord());
+	preview_text->setAnchorPosition(cur_pos_map);
 	updatePreviewObject();
 }
 void DrawTextTool::finishEditing()

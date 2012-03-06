@@ -59,7 +59,7 @@ Symbol* TextSymbol::duplicate()
 	return new_text;
 }
 
-void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output)
+void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
 {
 	// This method always creates at least one LineInfo, which makes the implementation of TextObjectEditorHelper easier
 	

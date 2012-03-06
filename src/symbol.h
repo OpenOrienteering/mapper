@@ -75,8 +75,8 @@ public:
 	virtual bool loadFinished(Map* map) {return true;}
 	
 	/// Creates renderables to display one specific instance of this symbol defined by the given object and coordinates
-	/// (NOTE: do not use the object's coordinates as the given coordinates can be an updated, transformed version of them!)
-	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output) = 0;
+	/// (NOTE: methods which implement this should use the given coordinates instead of the object's coordinates, as those can be an updated, transformed version of the object's coords!)
+	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output) = 0;
 	
 	/// Called by the map in which the symbol is to notify it of a color being deleted (pointer becomes invalid, indices change)
 	virtual void colorDeleted(Map* map, int pos, MapColor* color) {}

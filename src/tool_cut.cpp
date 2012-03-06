@@ -100,10 +100,11 @@ bool CutTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget*
 			editor->setEditingInProgress(true);
 			
 			PathCoord split_pos;
-			if (findEditPoint(split_pos, edit_object, map_coord, (int)Symbol::Line, (int)Symbol::Area, widget))
+			if (findEditPoint(split_pos, edit_object, click_pos_map, (int)Symbol::Line, (int)Symbol::Area, widget))
 			{
 				drag_start_len = split_pos.clen;
 				drag_end_len = drag_start_len;
+				drag_part_index = edit_object->findPartIndexForIndex(split_pos.index);
 				drag_forward = true;
 				dragging_on_line = true;
 			}
@@ -134,14 +135,14 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 				MapLayer* layer = map->getCurrentLayer();
 				PathObject* split_object = reinterpret_cast<PathObject*>(edit_object);
 				
-				if (split_object->isPathClosed())
+				if (split_object->getPart(drag_part_index).isClosed())
 				{
 					Object* undo_duplicate = split_object->duplicate();
 					
 					if (!drag_forward)
-						split_object->changePathBounds(drag_start_len, drag_end_len);
+						split_object->changePathBounds(drag_part_index, drag_start_len, drag_end_len);
 					else
-						split_object->changePathBounds(drag_end_len, drag_start_len);
+						split_object->changePathBounds(drag_part_index, drag_end_len, drag_start_len);
 					
 					ReplaceObjectsUndoStep* replace_step = new ReplaceObjectsUndoStep(map);
 					replace_step->addObject(layer->findObjectIndex(split_object), undo_duplicate);
@@ -167,7 +168,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 						if (min_cut_pos > 0)
 						{
 							PathObject* part1 = reinterpret_cast<PathObject*>(split_object->duplicate());
-							part1->changePathBounds(0, min_cut_pos);
+							part1->changePathBounds(drag_part_index, 0, min_cut_pos);
 							map->addObject(part1);
 							delete_step->addObject(layer->findObjectIndex(part1));
 							map->addObjectToSelection(part1, !(max_cut_pos < path_len));
@@ -175,7 +176,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 						if (max_cut_pos < path_len)
 						{
 							PathObject* part2 = reinterpret_cast<PathObject*>(split_object->duplicate());
-							part2->changePathBounds(max_cut_pos, path_len);
+							part2->changePathBounds(drag_part_index, max_cut_pos, path_len);
 							map->addObject(part2);
 							delete_step->addObject(layer->findObjectIndex(part2));
 							map->addObjectToSelection(part2, true);
@@ -188,7 +189,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 					}
 				}
 				
-				
+				map->setObjectsDirty();
 			}
 			
 			deletePreviewPath();
@@ -208,15 +209,21 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 			
 			MapLayer* layer = map->getCurrentLayer();
 			AddObjectsUndoStep* add_step = new AddObjectsUndoStep(map);
-			DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
 			
 			Object* out1 = NULL;
 			Object* out2 = NULL;
 			split_object->splitAt(split_pos, out1, out2);
 			
 			add_step->addObject(layer->findObjectIndex(split_object), split_object);
-			map->removeObjectFromSelection(split_object, false);
 			map->deleteObject(split_object, true);
+			map->removeObjectFromSelection(split_object, false);
+			if (!out1 && !out2)
+			{
+				map->objectUndoManager().addNewUndoStep(add_step);
+				map->emitSelectionChanged();
+				return true;
+			}
+			
 			if (out1)
 			{
 				map->addObject(out1);
@@ -227,6 +234,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 				map->addObject(out2);
 				map->addObjectToSelection(out2, true);
 			}
+			DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
 			if (out1)
 				delete_step->addObject(layer->findObjectIndex(out1));
 			if (out2)
@@ -336,13 +344,16 @@ void CutTool::updateDragging(MapCoordF cursor_pos_map, MapWidget* widget)
 		else
 			path_coord = PathCoord::findPathCoordForCoorinate(&path->getPathCoordinateVector(), hover_point);
 		
+		if (edit_object->findPartIndexForIndex(path_coord.index) != drag_part_index)
+			return;	// dragging on a different part
+		
 		//float click_tolerance_map = 0.001 * widget->getMapView()->pixelToLength(click_tolerance);
 		//if (distance_sq <= click_tolerance_map*click_tolerance_map)
 		{
 			float new_drag_end_len = path_coord.clen;
-			float path_length = path->getPathCoordinateVector().at(path->getPathCoordinateVector().size() - 1).clen;
+			float path_length = path->getPathCoordinateVector().at(path->getPart(drag_part_index).path_coord_end_index).clen;
 			bool delta_forward; 
-			if (path->isPathClosed())
+			if (path->getPart(drag_part_index).isClosed())
 			{
 				delta_forward = fmod(new_drag_end_len - drag_end_len + path_length, path_length) >= 0 &&
 								 fmod(new_drag_end_len - drag_end_len + path_length, path_length) < 0.5f * path_length;
@@ -391,7 +402,7 @@ void CutTool::updateHoverPoint(QPointF cursor_pos_screen, MapWidget* widget)
 		hover_object = NULL;
 	}
 }
-bool CutTool::findEditPoint(PathCoord& out_edit_point, Object*& out_edit_object, MapCoordF cursor_pos_map, int with_type, int without_type, MapWidget* widget)
+bool CutTool::findEditPoint(PathCoord& out_edit_point, PathObject*& out_edit_object, MapCoordF cursor_pos_map, int with_type, int without_type, MapWidget* widget)
 {
 	Map* map = editor->getMap();
 	
@@ -443,10 +454,14 @@ void CutTool::updatePreviewObjects()
 	
 	preview_path = reinterpret_cast<PathObject*>(edit_object->duplicate());
 	preview_path->setSymbol(Map::getCoveringCombinedLine(), false);
+	for (int i = preview_path->getNumParts() - 1; i > drag_part_index; --i)
+		preview_path->deletePart(i);
+	for (int i = drag_part_index - 1; i >= 0; --i)
+		preview_path->deletePart(i);
 	if (drag_forward)
-		preview_path->changePathBounds(drag_start_len, drag_end_len);
+		preview_path->changePathBounds(0, drag_start_len, drag_end_len);
 	else
-		preview_path->changePathBounds(drag_end_len, drag_start_len);
+		preview_path->changePathBounds(0, drag_end_len, drag_start_len);
 	
 	preview_path->update(true);
 	renderables.insertRenderablesOfObject(preview_path);
@@ -464,7 +479,23 @@ void CutTool::deletePreviewPath()
 }
 void CutTool::selectedObjectsChanged()
 {
-	updateDirtyRect();
+	Map* map = editor->getMap();
+	bool have_line_or_area = false;
+	
+	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		if ((*it)->getSymbol()->getContainedTypes() & (Symbol::Line | Symbol::Area))
+		{
+			have_line_or_area = true;
+			break;
+		}
+	}
+	
+	if (!have_line_or_area)
+		editor->setEditTool();
+	else
+		updateDirtyRect();
 }
 void CutTool::pathDirtyRectChanged(const QRectF& rect)
 {
@@ -497,6 +528,12 @@ void CutTool::pathFinished(PathObject* split_path)
 		pathAborted();
 		return;
 	}
+	else if (drag_part_index != edited_path->findPartIndexForIndex(end_path_coord.index))
+	{
+		QMessageBox::warning(editor->getWindow(), tr("Error"), tr("Start and end of the split line are at different parts of the object!"));
+		pathAborted();
+		return;
+	}
 	else if (drag_start_len == end_path_coord.clen)
 	{
 		QMessageBox::warning(editor->getWindow(), tr("Error"), tr("Start and end of the split line are at the same position!"));
@@ -504,7 +541,8 @@ void CutTool::pathFinished(PathObject* split_path)
 		return;
 	}
 	
-	split_path->setPathClosed(false);
+	assert(split_path->getNumParts() == 1);
+	split_path->getPart(0).setClosed(false);
 	split_path->setCoordinate(split_path->getCoordinateCount() - 1, end_path_coord.pos.toMapCoord());
 	
 	// Do the splitting
@@ -518,52 +556,74 @@ void CutTool::pathFinished(PathObject* split_path)
 	
 	DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
 	
-	PathObject* parts[2];
-	if (edited_path->isPathClosed())
+	PathObject* holes = NULL; // if the edited path contains holes, these are saved in this temporary object
+	if (edited_path->getNumParts() > 1)
 	{
-		parts[0] = reinterpret_cast<PathObject*>(edited_path->duplicate());
-		parts[0]->changePathBounds(drag_start_len, end_path_coord.clen);
-		parts[0]->connectIfClose(split_path, split_threshold);
+		holes = reinterpret_cast<PathObject*>(edited_path->duplicate());
+		holes->deletePart(0);
+	}
+	
+	PathObject* parts[2];
+	if (edited_path->getPart(drag_part_index).isClosed())
+	{
+		parts[0] = edited_path->duplicateFirstPart();
+		parts[0]->changePathBounds(drag_part_index, drag_start_len, end_path_coord.clen);
+		assert(parts[0]->connectIfClose(split_path, split_threshold));
 
-		parts[1] = reinterpret_cast<PathObject*>(edited_path->duplicate());
-		parts[1]->changePathBounds(end_path_coord.clen, drag_start_len);
-		parts[1]->connectIfClose(split_path, split_threshold);
+		parts[1] = edited_path->duplicateFirstPart();
+		parts[1]->changePathBounds(drag_part_index, end_path_coord.clen, drag_start_len);
+		assert(parts[1]->connectIfClose(split_path, split_threshold));
 	}
 	else
 	{
 		float min_cut_pos = qMin(drag_start_len, end_path_coord.clen);
 		float max_cut_pos = qMax(drag_start_len, end_path_coord.clen);
-		float path_len = edited_path->getPathCoordinateVector().at(edited_path->getPathCoordinateVector().size() - 1).clen;
+		float path_len = edited_path->getPathCoordinateVector().at(edited_path->getPart(drag_part_index).path_coord_end_index).clen;
 		if (min_cut_pos <= 0 && max_cut_pos >= path_len)
 		{
-			parts[0] = reinterpret_cast<PathObject*>(edited_path->duplicate());
+			parts[0] = edited_path->duplicateFirstPart();
+			assert(parts[0]->connectIfClose(split_path, split_threshold));
+			
 			parts[1] = reinterpret_cast<PathObject*>(split_path->duplicate());
+			parts[1]->setSymbol(edited_path->getSymbol(), false);
 		}
 		else if (min_cut_pos <= 0 || max_cut_pos >= path_len)
 		{
 			float cut_pos = (min_cut_pos <= 0) ? max_cut_pos : min_cut_pos;
 			
-			parts[0] = reinterpret_cast<PathObject*>(edited_path->duplicate());
-			parts[0]->changePathBounds(0, cut_pos);
-			parts[0]->connectIfClose(split_path, split_threshold);
+			parts[0] = edited_path->duplicateFirstPart();
+			parts[0]->changePathBounds(drag_part_index, 0, cut_pos);
+			assert(parts[0]->connectIfClose(split_path, split_threshold));
 			
-			parts[1] = reinterpret_cast<PathObject*>(edited_path->duplicate());
-			parts[1]->changePathBounds(cut_pos, path_len);
-			parts[1]->connectIfClose(split_path, split_threshold);
+			parts[1] = edited_path->duplicateFirstPart();
+			parts[1]->changePathBounds(drag_part_index, cut_pos, path_len);
+			assert(parts[1]->connectIfClose(split_path, split_threshold));
 		}
 		else
 		{
-			parts[0] = reinterpret_cast<PathObject*>(edited_path->duplicate());
-			parts[0]->changePathBounds(min_cut_pos, max_cut_pos);
-			parts[0]->connectIfClose(split_path, split_threshold);
+			parts[0] = edited_path->duplicateFirstPart();
+			parts[0]->changePathBounds(drag_part_index, min_cut_pos, max_cut_pos);
+			assert(parts[0]->connectIfClose(split_path, split_threshold));
 			
-			parts[1] = reinterpret_cast<PathObject*>(edited_path->duplicate());
-			parts[1]->changePathBounds(0, min_cut_pos);
-			parts[1]->connectIfClose(split_path, split_threshold);
-			PathObject* temp_path = reinterpret_cast<PathObject*>(edited_path->duplicate());
-			temp_path->changePathBounds(max_cut_pos, path_len);
-			parts[1]->connectIfClose(temp_path, split_threshold);
+			parts[1] = edited_path->duplicateFirstPart();
+			parts[1]->changePathBounds(drag_part_index, 0, min_cut_pos);
+			assert(parts[1]->connectIfClose(split_path, split_threshold));
+			PathObject* temp_path = edited_path->duplicateFirstPart();
+			temp_path->changePathBounds(drag_part_index, max_cut_pos, path_len);
+			assert(parts[1]->connectIfClose(temp_path, split_threshold));
 			delete temp_path;
+		}
+	}
+	
+	// If the object had holes, check into which parts they go
+	if (holes)
+	{
+		int num_holes = holes->getNumParts();
+		for (int i = 0; i < num_holes; ++i)
+		{
+			int part_index = (parts[0]->isPointOnPath(MapCoordF(holes->getCoordinate(holes->getPart(i).start_index)), 0) != Symbol::NoSymbol) ? 0 : 1;
+			parts[part_index]->getCoordinate(parts[part_index]->getCoordinateCount() - 1).setHolePoint(true);
+			parts[part_index]->appendPathPart(holes, i);
 		}
 	}
 	
@@ -588,6 +648,12 @@ void CutTool::updateStatusText()
 
 void CutTool::startCuttingArea(const PathCoord& coord, MapWidget* widget)
 {
+	drag_part_index = edit_object->findPartIndexForIndex(coord.index);
+	if (drag_part_index > 0)
+	{
+		QMessageBox::warning(editor->getWindow(), tr("Error"), tr("Splitting holes of area objects is not supported yet!"));
+		return;
+	}
 	cutting_area = true;
 	drag_start_len = coord.clen;
 	edit_widget = widget;

@@ -319,7 +319,7 @@ UndoStep* SwitchDashesUndoStep::undo()
 	int size = (int)affected_objects.size();
 	for (int i = 0; i < size; ++i)
 	{
-		Object* object = layer->getObject(affected_objects[i]);
+		PathObject* object = reinterpret_cast<PathObject*>(layer->getObject(affected_objects[i]));
 		object->reverse();
 		object->update(true);
 		

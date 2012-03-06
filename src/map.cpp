@@ -397,6 +397,9 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 		QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\nfor reading.").arg(path));
 		return false;
 	}
+	
+	// Delete previous objects
+	clear();
 
     // Read a block at the beginning of the file, that we can use for magic number checking.
     unsigned char buffer[256];

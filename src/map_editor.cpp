@@ -40,6 +40,7 @@
 #include "tool_edit.h"
 #include "util.h"
 #include "tool_cut.h"
+#include "tool_cut_hole.h"
 #include "tool_rotate.h"
 
 // ### MapEditorController ###
@@ -314,6 +315,7 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("connectpaths")->setShortcut(QKeySequence("C"));
 	findAction("rotateobjects")->setShortcut(QKeySequence("R"));
 	findAction("cutobject")->setShortcut(QKeySequence("K"));
+	findAction("cuthole")->setShortcut(QKeySequence("H"));
 }
 
 void MapEditorController::createMenuAndToolbars()
@@ -350,7 +352,8 @@ void MapEditorController::createMenuAndToolbars()
     fill_border_act = newAction("fillborder", tr("Fill / Create border"), this, SLOT(fillBorderClicked()), "tool-fill-border.png");
     switch_dashes_act = newAction("switchdashes", tr("Switch dash direction"), this, SLOT(switchDashesClicked()), "tool-switch-dashes"); // Ctrl+D
 	connect_paths_act = newAction("connectpaths", tr("Connect paths"), this, SLOT(connectPathsClicked()), "tool-connect-paths.png");
-	cut_act = newCheckAction("cutobject", tr("Cut object"), this, SLOT(cutClicked(bool)), "tool-cut.png");
+	cut_tool_act = newCheckAction("cutobject", tr("Cut object"), this, SLOT(cutClicked(bool)), "tool-cut.png");
+	cut_hole_act = newCheckAction("cuthole", tr("Cut holes"), this, SLOT(cutHoleClicked(bool)), "tool-cut-hole.png");
     rotate_act = newCheckAction("rotateobjects", tr("Rotate object(s)"), this, SLOT(rotateClicked(bool)), "tool-rotate.png");
 
     // Refactored so we can do custom key bindings in the future
@@ -390,7 +393,8 @@ void MapEditorController::createMenuAndToolbars()
     tools_menu->addAction(fill_border_act);
     tools_menu->addAction(switch_dashes_act);
 	tools_menu->addAction(connect_paths_act);
-	tools_menu->addAction(cut_act);
+	tools_menu->addAction(cut_tool_act);
+	tools_menu->addAction(cut_hole_act);
 	tools_menu->addAction(rotate_act);
 	
 	// Symbols menu
@@ -465,7 +469,8 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_editing->addAction(fill_border_act);
     toolbar_editing->addAction(switch_dashes_act);
 	toolbar_editing->addAction(connect_paths_act);
-	toolbar_editing->addAction(cut_act);
+	toolbar_editing->addAction(cut_tool_act);
+	toolbar_editing->addAction(cut_hole_act);
 	toolbar_editing->addAction(rotate_act);
 #endif
 
@@ -734,6 +739,7 @@ void MapEditorController::selectedObjectsChanged()
 		return;
 	
 	bool have_selection = map->getNumSelectedObjects() > 0;
+	bool single_object_selected = map->getNumSelectedObjects() == 1;
 	bool have_line = false;
 	bool have_area = false;
 	
@@ -752,8 +758,10 @@ void MapEditorController::selectedObjectsChanged()
 	switch_dashes_act->setStatusTip(tr("Switch the direction of symbols on line objects.") + (switch_dashes_act->isEnabled() ? "" : (" " + tr("Select at least one line object to activate this tool."))));
 	connect_paths_act->setEnabled(have_line);
 	connect_paths_act->setStatusTip(tr("Connect endpoints of paths which are close together.") + (connect_paths_act->isEnabled() ? "" : (" " + tr("Select at least one line object to activate this tool."))));
-	cut_act->setEnabled(have_area || have_line);
-	cut_act->setStatusTip(tr("Cut the selected object(s) into smaller parts.") + (cut_act->isEnabled() ? "" : (" " + tr("Select at least one line or area object to activate this tool."))));
+	cut_tool_act->setEnabled(have_area || have_line);
+	cut_tool_act->setStatusTip(tr("Cut the selected object(s) into smaller parts.") + (cut_tool_act->isEnabled() ? "" : (" " + tr("Select at least one line or area object to activate this tool."))));
+	cut_hole_act->setEnabled(single_object_selected && have_area);
+	cut_hole_act->setStatusTip(tr("Cut a hole into the selected area object.") + (cut_hole_act->isEnabled() ? "" : (" " + tr("Select a single area object to activate this tool."))));
 	rotate_act->setEnabled(have_selection);
 	rotate_act->setStatusTip(tr("Rotate the selected object(s).") + (rotate_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
 	
@@ -890,7 +898,8 @@ void MapEditorController::switchDashesClicked()
 	{
 		if ((*it)->getSymbol()->getContainedTypes() & Symbol::Line)
 		{
-			(*it)->reverse();
+			PathObject* path = reinterpret_cast<PathObject*>(*it);
+			path->reverse();
 			(*it)->update(true);
 			
 			undo_step->addObject(layer->findObjectIndex(*it));
@@ -925,49 +934,63 @@ void MapEditorController::connectPathsClicked()
 	MapLayer* layer = map->getCurrentLayer();
 	
 	// Process all objects
-	// TODO: This does not handle hole points ... yet? But this is unnecessary for now.
 	for (int i = 0; i < (int)objects.size(); ++i)
 	{
-		Object* a = objects[i];
+		PathObject* a = reinterpret_cast<PathObject*>(objects[i]);
+		a->update(false);
 		
-		// Close the path?
-		if (!a->isPathClosed() && a->getCoordinate(0).lengthSquaredTo(a->getCoordinate(a->getCoordinateCount() - 1)) <= close_distance_sq)
+		// Loop over all parts and check if they should be closed
+		int num_parts = a->getNumParts();
+		bool all_paths_closed = true;
+		for (int part_index = 0; part_index < num_parts; ++part_index)
 		{
-			undo_objects[i] = a->duplicate();
-			a->connectPathEnds();
-			a->update(true);
+			PathObject::PathPart& part = a->getPart(part_index);
+			if (!part.isClosed())
+			{
+				if (a->getCoordinate(part.start_index).lengthSquaredTo(a->getCoordinate(part.end_index)) <= close_distance_sq)
+				{
+					undo_objects[i] = a->duplicate();
+					part.connectEnds();
+				}
+				else
+					all_paths_closed = false;
+			}
 		}
-		if (a->isPathClosed())
+		if (all_paths_closed)
 			continue;
 		
 		// Check for other endpoints which are close enough together to be closed
 		for (int k = i + 1; k < (int)objects.size(); ++k)
 		{
-			Object* b = objects[k];
-			if (b->isPathClosed() || b->getSymbol() != a->getSymbol())
+			PathObject* b = reinterpret_cast<PathObject*>(objects[k]);
+			if (b->getSymbol() != a->getSymbol())
 				continue;
 			
-			PathObject* path_a = reinterpret_cast<PathObject*>(a);
-			PathObject* path_b = reinterpret_cast<PathObject*>(b);
-			if (path_a->canBeConnected(path_b, close_distance_sq))
+			if (a->canBeConnected(b, close_distance_sq))
 			{
-				// Duplicate a if necessary and append b to a
+				// Duplicate objects if necessary and append b to a
 				if (!undo_objects[i])
 					undo_objects[i] = a->duplicate();
-				Object* b_duplicate = b->duplicate();
-				assert(path_a->connectIfClose(path_b, close_distance_sq));
+				if (!undo_objects[k])
+					undo_objects[k] = b->duplicate();
+				assert(a->connectIfClose(b, close_distance_sq));
 				
-				// Create an add step for b
-				int b_index = layer->findObjectIndex(b);
-				deleted_objects.push_back(b);
-				if (!add_step)
-					add_step = new AddObjectsUndoStep(map);
-				b_duplicate->setMap(map);
-				add_step->addObject(b_index, b_duplicate);
+				// Were all parts of b deleted?
+				//if (b->getNumParts() == 0)
+				//{
+					// Create an add step for b
+					int b_index = layer->findObjectIndex(b);
+					deleted_objects.push_back(b);
+					if (!add_step)
+						add_step = new AddObjectsUndoStep(map);
+					add_step->addObject(b_index, undo_objects[k]);
+					undo_objects[k] = NULL;
+					
+					// Delete b from the active list
+					objects.erase(objects.begin() + k);
+					undo_objects.erase(undo_objects.begin() + k);
+				//}
 				
-				// Delete b from the active list
-				objects.erase(objects.begin() + k);
-				undo_objects.erase(undo_objects.begin() + k);
 				k = i;	// have to check other objects again
 			}
 		}
@@ -983,7 +1006,6 @@ void MapEditorController::connectPathsClicked()
 			objects[i]->update(true);
 			
 			// Add the old version to the undo step
-			undo_objects[i]->setMap(map);
 			if (!replace_step)
 				replace_step = new ReplaceObjectsUndoStep(map);
 			replace_step->addObject(layer->findObjectIndex(objects[i]), undo_objects[i]);
@@ -1013,7 +1035,11 @@ void MapEditorController::connectPathsClicked()
 }
 void MapEditorController::cutClicked(bool checked)
 {
-	setTool(checked ? new CutTool(this, cut_act) : NULL);
+	setTool(checked ? new CutTool(this, cut_tool_act) : NULL);
+}
+void MapEditorController::cutHoleClicked(bool checked)
+{
+	setTool(checked ? new CutHoleTool(this, cut_hole_act) : NULL);
 }
 void MapEditorController::rotateClicked(bool checked)
 {
@@ -1267,7 +1293,7 @@ void MapEditorTool::includeControlPointRect(QRectF& rect, Object* object, QPoint
 	{
 		TextObject* text_object = reinterpret_cast<TextObject*>(object);
 		if (text_object->hasSingleAnchor())
-			rectInclude(rect, MapCoordF(text_object->getAnchorPosition()));
+			rectInclude(rect, text_object->getAnchorCoordF());
 		else
 		{
 			for (int i = 0; i < 4; ++i)
@@ -1280,13 +1306,13 @@ void MapEditorTool::drawPointHandles(int hover_point, QPainter* painter, Object*
 	if (object->getType() == Object::Point)
 	{
 		PointObject* point = reinterpret_cast<PointObject*>(object);
-		drawPointHandle(painter, widget->mapToViewport(point->getPosition()), NormalHandle, hover_point == 0);
+		drawPointHandle(painter, widget->mapToViewport(point->getCoordF()), NormalHandle, hover_point == 0);
 	}
 	else if (object->getType() == Object::Text)
 	{
 		TextObject* text = reinterpret_cast<TextObject*>(object);
 		if (text->hasSingleAnchor())
-			drawPointHandle(painter, widget->mapToViewport(text->getAnchorPosition()), NormalHandle, hover_point == 0);
+			drawPointHandle(painter, widget->mapToViewport(text->getAnchorCoordF()), NormalHandle, hover_point == 0);
 		else
 		{
 			QPointF box_text_handles[4];
@@ -1297,40 +1323,47 @@ void MapEditorTool::drawPointHandles(int hover_point, QPainter* painter, Object*
 	}
 	else if (object->getType() == Object::Path)
 	{
+		painter->setBrush(Qt::NoBrush); // for handle lines
+		
 		PathObject* path = reinterpret_cast<PathObject*>(object);
-		int size = path->getCoordinateCount();
 		
-		bool have_curve = path->isPathClosed() && size >= 3 && path->getCoordinate(size - 3).isCurveStart();
-		painter->setBrush(Qt::NoBrush);
-		
-		for (int i = 0; i < size; ++i)
+		int num_parts = path->getNumParts();
+		for (int part_index = 0; part_index < num_parts; ++part_index)
 		{
-			MapCoord coord = path->getCoordinate(i);
-			QPointF point = widget->mapToViewport(coord);
+			PathObject::PathPart& part = path->getPart(part_index);
+			bool have_curve = part.isClosed() && part.getNumCoords() > 3 && path->getCoordinate(part.end_index - 3).isCurveStart();
 			
-			if (have_curve)
+			for (int i = part.start_index; i <= part.end_index; ++i)
 			{
-				int curve_index = (i == 0) ? (size - 1) : (i - 1);
-				QPointF curve_handle = widget->mapToViewport(path->getCoordinate(curve_index));
-				drawCurveHandleLine(painter, point, curve_handle, hover_point == i);
-				drawPointHandle(painter, curve_handle, CurveHandle, hover_point == i || hover_point == curve_index);
-				have_curve = false;
-			}
-			
-			/*if ((i == 0 && !path->isPathClosed()) || (i >= 1 && path->getCoordinate(i-1).isHolePoint()))
-				drawPointHandle(painter, point, StartHandle, widget);
-			else if ((i == size - 1 && !path->isPathClosed()) || coord.isHolePoint())
-				drawPointHandle(painter, point, EndHandle, widget);
-			else*/
-				drawPointHandle(painter, point, coord.isDashPoint() ? DashHandle : NormalHandle, hover_point == i);
-			
-			if (coord.isCurveStart())
-			{
-				QPointF curve_handle = widget->mapToViewport(path->getCoordinate(i+1));
-				drawCurveHandleLine(painter, point, curve_handle, hover_point == i);
-				drawPointHandle(painter, curve_handle, CurveHandle, hover_point == i || hover_point == i + 1);
-				i += 2;
-				have_curve = true;
+				MapCoord coord = path->getCoordinate(i);
+				if (coord.isClosePoint())
+					continue;
+				QPointF point = widget->mapToViewport(coord);
+				
+				if (have_curve)
+				{
+					int curve_index = (i == part.start_index) ? (part.end_index - 1) : (i - 1);
+					QPointF curve_handle = widget->mapToViewport(path->getCoordinate(curve_index));
+					drawCurveHandleLine(painter, point, curve_handle, hover_point == i);
+					drawPointHandle(painter, curve_handle, CurveHandle, hover_point == i || hover_point == curve_index);
+					have_curve = false;
+				}
+				
+				/*if ((i == part.start_index && !part->isClosed()) || (i > part.start_index && path->getCoordinate(part.end_index-1).isHolePoint()))
+					drawPointHandle(painter, point, StartHandle, widget);
+				else if ((i == part.end_index - 1 && !part->isClosed()) || coord.isHolePoint())
+					drawPointHandle(painter, point, EndHandle, widget);
+				else*/
+					drawPointHandle(painter, point, coord.isDashPoint() ? DashHandle : NormalHandle, hover_point == i);
+				
+				if (coord.isCurveStart())
+				{
+					QPointF curve_handle = widget->mapToViewport(path->getCoordinate(i+1));
+					drawCurveHandleLine(painter, point, curve_handle, hover_point == i);
+					drawPointHandle(painter, curve_handle, CurveHandle, hover_point == i || hover_point == i + 1);
+					i += 2;
+					have_curve = true;
+				}
 			}
 		}
 	}
@@ -1372,10 +1405,10 @@ bool MapEditorTool::calculateBoxTextHandles(QPointF* out)
 			
 			QTransform transform;
 			transform.rotate(-text_object->getRotation() * 180 / M_PI);
-			out[0] = transform.map(QPointF(text_object->getBoxWidth() / 2, -text_object->getBoxHeight() / 2)) + text_object->getAnchorPosition().toQPointF();
-			out[1] = transform.map(QPointF(text_object->getBoxWidth() / 2, text_object->getBoxHeight() / 2)) + text_object->getAnchorPosition().toQPointF();
-			out[2] = transform.map(QPointF(-text_object->getBoxWidth() / 2, text_object->getBoxHeight() / 2)) + text_object->getAnchorPosition().toQPointF();
-			out[3] = transform.map(QPointF(-text_object->getBoxWidth() / 2, -text_object->getBoxHeight() / 2)) + text_object->getAnchorPosition().toQPointF();
+			out[0] = transform.map(QPointF(text_object->getBoxWidth() / 2, -text_object->getBoxHeight() / 2)) + text_object->getAnchorCoordF().toQPointF();
+			out[1] = transform.map(QPointF(text_object->getBoxWidth() / 2, text_object->getBoxHeight() / 2)) + text_object->getAnchorCoordF().toQPointF();
+			out[2] = transform.map(QPointF(-text_object->getBoxWidth() / 2, text_object->getBoxHeight() / 2)) + text_object->getAnchorCoordF().toQPointF();
+			out[3] = transform.map(QPointF(-text_object->getBoxWidth() / 2, -text_object->getBoxHeight() / 2)) + text_object->getAnchorCoordF().toQPointF();
 			return true;
 		}
 	}
@@ -1392,13 +1425,13 @@ int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_c
 		if (object->getType() == Object::Point)
 		{
 			PointObject* point = reinterpret_cast<PointObject*>(object);
-			if (distanceSquared(widget->mapToViewport(point->getPosition()), cursor) <= click_tolerance_squared)
+			if (distanceSquared(widget->mapToViewport(point->getCoordF()), cursor) <= click_tolerance_squared)
 				return 0;
 		}
 		else if (object->getType() == Object::Text)
 		{
 			TextObject* text = reinterpret_cast<TextObject*>(object);
-			if (text->hasSingleAnchor() && distanceSquared(widget->mapToViewport(text->getAnchorPosition()), cursor) <= click_tolerance_squared)
+			if (text->hasSingleAnchor() && distanceSquared(widget->mapToViewport(text->getAnchorCoordF()), cursor) <= click_tolerance_squared)
 				return 0;
 			else if (!text->hasSingleAnchor())
 			{
@@ -1414,12 +1447,13 @@ int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_c
 			PathObject* path = reinterpret_cast<PathObject*>(object);
 			int size = path->getCoordinateCount();
 			
-			for (int i = 0; i < size; ++i)
+			for (int i = size - 1; i >= 0; --i)
 			{
-				if (distanceSquared(widget->mapToViewport(path->getCoordinate(i)), cursor) <= click_tolerance_squared)
+				if (!path->getCoordinate(i).isClosePoint() &&
+					distanceSquared(widget->mapToViewport(path->getCoordinate(i)), cursor) <= click_tolerance_squared)
 					return i;
-				if (!include_curve_handles && path->getCoordinate(i).isCurveStart())
-					i += 2;
+				if (!include_curve_handles && i >= 3 && path->getCoordinate(i - 3).isCurveStart())
+					i -= 2;
 			}
 		}
 	}

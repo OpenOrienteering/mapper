@@ -142,7 +142,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 			{
 				if (preview_points_shown)
 					renderables.removeRenderablesOfObject(preview_points[i], false);
-				preview_points[i]->setPosition(map_coord.toMapCoord());
+				preview_points[i]->setPosition(map_coord);
 				preview_points[i]->update(true);
 				renderables.insertRenderablesOfObject(preview_points[i]);
 			}
@@ -267,8 +267,10 @@ void DrawPathTool::leaveEvent(QEvent* event)
 
 bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 {
+	bool key_handled = false;
 	if (draw_in_progress)
 	{
+		key_handled = true;
 		if (event->key() == Qt::Key_Escape)
 			abortDrawing();
 		else if (event->key() == Qt::Key_Backspace)
@@ -278,6 +280,8 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 			closeDrawing();
 			finishDrawing();
 		}
+		else
+			key_handled = false;
 	}
 	if (event->key() == Qt::Key_Tab)
 		editor->setEditTool();
@@ -287,7 +291,7 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 		updateStatusText();
 	}
 	else
-		return false;
+		return key_handled;
 	
 	return true;
 }
@@ -345,9 +349,7 @@ void DrawPathTool::createPreviewCurve(MapCoord position, float direction)
 	if (!path_has_preview_point)
 	{
 		int last = preview_path->getCoordinateCount() - 1;
-		MapCoord coord = preview_path->getCoordinate(last);
-		coord.setCurveStart(true);
-		preview_path->setCoordinate(last, coord);
+		(preview_path->getCoordinate(last)).setCurveStart(true);
 		
 		preview_path->addCoordinate(MapCoord(0, 0));
 		preview_path->addCoordinate(MapCoord(0, 0));
@@ -373,7 +375,7 @@ void DrawPathTool::createPreviewCurve(MapCoord position, float direction)
 }
 void DrawPathTool::undoLastPoint()
 {
-	if (preview_path->getCoordinateCount() <= 1)
+	if (preview_path->getCoordinateCount() <= (preview_path->getPart(0).isClosed() ? 2 : 1))
 	{
 		abortDrawing();
 		return;
@@ -431,19 +433,19 @@ void DrawPathTool::closeDrawing()
 		path_has_preview_point = false;
 	}
 	
-	preview_path->setPathClosed(true);
+	if (preview_path->getNumParts() > 0)
+		preview_path->getPart(0).setClosed(true);
 }
 void DrawPathTool::finishDrawing()
 {
 	// Does the symbols contain only areas? If so, auto-close the path if not done yet
 	bool contains_only_areas = !is_helper_tool && (drawing_symbol->getContainedTypes() & ~(Symbol::Area | Symbol::Combined)) == 0;
-	if (!preview_path->isPathClosed() && contains_only_areas)
-		preview_path->setPathClosed(true);
+	if (contains_only_areas && preview_path->getNumParts() > 0)
+		preview_path->getPart(0).setClosed(true);
 	
 	// Remove last point if closed and first and last points are equal, or if the last point was just a preview
-	if ((preview_path->isPathClosed() && preview_path->getCoordinate(0).isPositionEqualTo(preview_path->getCoordinate(preview_path->getCoordinateCount() - 1))) ||
-		(path_has_preview_point && !dragging))
-		preview_path->deleteCoordinate(preview_path->getCoordinateCount() - 1, false);
+	if (path_has_preview_point && !dragging)
+		preview_path->deleteCoordinate(preview_path->getCoordinateCount() - (preview_path->getPart(0).isClosed() ? 2 : 1), false);
 	
 	renderables.removeRenderablesOfObject(preview_path, false);
 	

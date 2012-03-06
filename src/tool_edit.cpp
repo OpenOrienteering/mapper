@@ -74,7 +74,7 @@ EditTool::~EditTool()
 
 bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (!(event->buttons() & Qt::LeftButton))
+	if (!(event->button() == Qt::LeftButton))
 		return false;
 	
 	dragging = false;
@@ -99,22 +99,25 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 		if (single_object_selected && single_selected_object->getType() == Object::Path)
 		{
 			PathObject* path = reinterpret_cast<PathObject*>(single_selected_object);
+			int hover_point_part_index = path->findPartIndexForIndex(hover_point);
+			PathObject::PathPart& hover_point_part = path->getPart(hover_point_part_index);
 			
 			// Check if clicked on a bezier curve handle
-			int num_coords = path->getCoordinateCount();
-			if (hover_point >= 1 && path->getCoordinate(hover_point - 1).isCurveStart() &&
-				((hover_point >= 4 && path->getCoordinate(hover_point - 4).isCurveStart()) ||
-				 (hover_point <= 3 && path->isPathClosed() && path->getCoordinate((hover_point - 4 + 2*num_coords) % num_coords).isCurveStart())))
+			int hover_point_plus_1 = path->shiftedCoordIndex(hover_point, 1, hover_point_part);
+			int hover_point_minus_1 = path->shiftedCoordIndex(hover_point, -1, hover_point_part);
+			int hover_point_minus_2 = path->shiftedCoordIndex(hover_point, -2, hover_point_part);
+			int hover_point_minus_4 = path->shiftedCoordIndex(hover_point, -4, hover_point_part);
+			if (hover_point_minus_1 >= 0 && path->getCoordinate(hover_point_minus_1).isCurveStart() &&
+				hover_point_minus_4 >= 0 && path->getCoordinate(hover_point_minus_4).isCurveStart())
 			{
-				opposite_curve_handle_index = (hover_point - 2 + num_coords) % num_coords;
-				curve_anchor_index = (hover_point - 1 + num_coords) % num_coords;
+				opposite_curve_handle_index = hover_point_minus_2;
+				curve_anchor_index = hover_point_minus_1;
 			}
-			else if (hover_point >= 2 && path->getCoordinate(hover_point - 2).isCurveStart() &&
-				((hover_point < num_coords - 1 && path->getCoordinate(hover_point + 1).isCurveStart()) ||
-				 (hover_point == num_coords - 1 && path->isPathClosed() && path->getCoordinate(0).isCurveStart())))
+			else if (hover_point_minus_2 >= 0 && path->getCoordinate(hover_point_minus_2).isCurveStart() &&
+				     hover_point_plus_1 >= 0 && path->getCoordinate(hover_point_plus_1).isCurveStart())
 			{
-				opposite_curve_handle_index = (hover_point + 2) % num_coords;
-				curve_anchor_index = (hover_point + 1) % num_coords;
+				opposite_curve_handle_index = path->shiftedCoordIndex(hover_point, 2, hover_point_part);
+				curve_anchor_index = hover_point_plus_1;
 			}
 		
 			if (opposite_curve_handle_index >= 0)
@@ -122,10 +125,24 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 			else if (event->modifiers() & Qt::ControlModifier)
 			{
 				// Clicked on a regular path point while holding Ctrl -> delete the point
-				if (path->calcNumRegularPoints() <= 2 || (!(path->getSymbol()->getContainedTypes() & Symbol::Line) && path->getCoordinateCount() <= 3))
+				if (hover_point_part.calcNumRegularPoints() <= 2 || (!(path->getSymbol()->getContainedTypes() & Symbol::Line) && hover_point_part.getNumCoords() <= 3))
 				{
-					// Delete the object
-					deleteSelectedObjects();
+					// Delete the part and maybe object
+					if (path->getNumParts() == 1)
+						deleteSelectedObjects();
+					else
+					{
+						ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(editor->getMap());
+						Object* undo_duplicate = path->duplicate();
+						undo_duplicate->setMap(editor->getMap());
+						undo_step->addObject(path, undo_duplicate);
+						editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
+						
+						path->deletePart(hover_point_part_index);
+						path->update(true);
+						updateHoverPoint(widget->mapToViewport(map_coord), widget);
+						updateDirtyRect();
+					}
 					no_more_effect_on_click = true;
 					return true;
 				}
@@ -212,7 +229,7 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 {
 	bool mouse_down = event->buttons() & Qt::LeftButton;
 	
-	if (!mouse_down)
+	if (!mouse_down && !dragging)
 	{
 		if (text_editor)
 			return text_editor->mouseMoveEvent(event, map_coord, widget);
@@ -649,7 +666,7 @@ void EditTool::updateDragging(QPoint cursor_pos, MapWidget* widget)
 		double new_box_height = qMax(text_symbol->getFontSize() / 2, text_object->getBoxHeight() + 0.001 * y_sign * delta_point.y());
 		
 		text_object->move(delta_x / 2, delta_y / 2);
-		text_object->setBox(text_object->getAnchorPosition(), new_box_width, new_box_height);
+		text_object->setBox(text_object->getAnchorCoordF().getIntX(), text_object->getAnchorCoordF().getIntY(), new_box_width, new_box_height);
 		if (calculateBoxTextHandles(box_text_handles))
 			updateDirtyRect();
 	}
@@ -682,10 +699,11 @@ void EditTool::updateDragging(QPoint cursor_pos, MapWidget* widget)
 			control.setRawY(control.rawY() + delta_y);
 			path->setCoordinate(hover_point + 1, control);
 		}
-		if ((hover_point >= 3 && path->getCoordinate(hover_point - 3).isCurveStart()) ||
-			(hover_point == 0 && path->isPathClosed() && path->getCoordinate(path->getCoordinateCount() - 3).isCurveStart()))
+		
+		int hover_point_minus_3 = path->shiftedCoordIndex(hover_point, -3, path->findPartForIndex(hover_point));
+		if (hover_point_minus_3 >= 0 && path->getCoordinate(hover_point_minus_3).isCurveStart())
 		{
-			int index = (hover_point == 0) ? (path->getCoordinateCount() - 1) : (hover_point - 1);
+			int index = path->shiftedCoordIndex(hover_point, -1, path->findPartForIndex(hover_point));
 			MapCoord control = path->getCoordinate(index);
 			control.setRawX(control.rawX() + delta_x);
 			control.setRawY(control.rawY() + delta_y);

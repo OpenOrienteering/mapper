@@ -35,7 +35,7 @@ void PathCoord::calculatePathCoords(const MapCoordVector& flags, const MapCoordV
 bool PathCoord::getNextPathPart(const MapCoordVector& flags, const MapCoordVectorF& coords, int& part_start, int& part_end, PathCoordVector* path_coords, bool break_at_dash_points, bool append_path_coords)
 {
 	int size = (int)coords.size();
-	if (part_end == size - 1)
+	if (part_end >= size - 1)
 		return false;
 	if (!append_path_coords)
 		path_coords->clear();
@@ -244,7 +244,7 @@ MapCoordF PathCoord::calculateRightVector(const MapCoordVector& flags, const Map
 {
 	bool ok;
 	
-	if ((i == 0 && !path_closed) || (i > 0 && flags[i-1].isHolePoint()))
+	if ((i == 0 && !path_closed)) // || (i > 0 && flags[i-1].isHolePoint()))
 	{
 		if (scaling)
 			*scaling = 1;
@@ -253,7 +253,7 @@ MapCoordF PathCoord::calculateRightVector(const MapCoordVector& flags, const Map
 		right.normalize();
 		return right;
 	}
-	else if ((i == (int)coords.size() - 1 && !path_closed) || flags[i].isHolePoint())
+	else if ((i == (int)coords.size() - 1 && !path_closed)) // || flags[i].isHolePoint())
 	{
 		if (scaling)
 			*scaling = 1;

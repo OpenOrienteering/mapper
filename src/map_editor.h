@@ -123,6 +123,7 @@ public slots:
 	void switchDashesClicked();
 	void connectPathsClicked();
 	void cutClicked(bool checked);
+	void cutHoleClicked(bool checked);
 	void rotateClicked(bool checked);
 	
 	void paintOnTemplateClicked(bool checked);
@@ -188,7 +189,8 @@ private:
 	QAction* fill_border_act;
 	QAction* switch_dashes_act;
 	QAction* connect_paths_act;
-	QAction* cut_act;
+	QAction* cut_tool_act;
+	QAction* cut_hole_act;
 	QAction* rotate_act;
 	
 	QAction* paint_on_template_act;

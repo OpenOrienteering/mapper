@@ -87,7 +87,7 @@ bool DrawPointTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 			}
 		}
 		
-		preview_object->setPosition(map_coord.toMapCoord());
+		preview_object->setPosition(map_coord);
 		if (point->isRotatable())
 			preview_object->setRotation(0);
 		preview_object->update(true);
@@ -128,7 +128,7 @@ bool DrawPointTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, M
 	
 	PointSymbol* symbol = reinterpret_cast<PointSymbol*>(symbol_widget->getSingleSelectedSymbol());
 	PointObject* point = new PointObject(symbol);
-	point->setPosition(click_pos_map.toMapCoord());
+	point->setPosition(click_pos_map);
 	if (symbol->isRotatable())
 		point->setRotation(calculateRotation(event->pos(), map_coord));
 	int index = map->addObject(point);

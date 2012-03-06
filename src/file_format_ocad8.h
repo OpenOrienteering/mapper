@@ -69,7 +69,7 @@ protected:
     // Some helper functions that are used in multiple places
     PointSymbol *importPattern(s16 npts, OCADPoint *pts);
     void fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol);
-    void fillPathCoords(Object *object, s16 npts, OCADPoint *pts);
+    void fillPathCoords(Object *object, bool is_area, s16 npts, OCADPoint *pts);
     bool fillTextPathCoords(TextObject *object, s16 npts, OCADPoint *pts);
     bool isRasterImageFile(const QString &filename) const;
 

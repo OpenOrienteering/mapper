@@ -32,7 +32,6 @@
 Object::Object(Object::Type type, Symbol* symbol) : type(type), symbol(symbol), map(NULL)
 {
 	output_dirty = true;
-	path_closed = false;
 	extent = QRectF();
 }
 Object::~Object()
@@ -52,8 +51,6 @@ void Object::save(QFile* file)
 	int num_coords = (int)coords.size();
 	file->write((const char*)&num_coords, sizeof(int));
 	file->write((const char*)&coords[0], num_coords * sizeof(MapCoord));
-	
-	file->write((const char*)&path_closed, sizeof(bool));
 	
 	// Central handling of sub-types here to avoid virtual methods
 	if (type == Point)
@@ -92,7 +89,13 @@ void Object::load(QFile* file, int version, Map* map)
 	coords.resize(num_coords);
 	file->read((char*)&coords[0], num_coords * sizeof(MapCoord));
 	
-	file->read((char*)&path_closed, sizeof(bool));
+	if (version <= 8)
+	{
+		bool path_closed;
+		file->read((char*)&path_closed, sizeof(bool));
+		if (path_closed)
+			coords[coords.size() - 1].setClosePoint(true);
+	}
 	
 	if (version >= 8)
 	{
@@ -126,6 +129,12 @@ void Object::load(QFile* file, int version, Map* map)
 		}
 	}
 	
+	if (type == Path)
+	{
+		PathObject* path = reinterpret_cast<PathObject*>(this);
+		path->recalculateParts();
+	}
+	
 	output_dirty = true;
 }
 
@@ -146,12 +155,14 @@ bool Object::update(bool force)
 		coordsF[i] = MapCoordF(coords[i].xd(), coords[i].yd());
 	
 	// If the symbol contains a line or area symbol, calculate path coordinates
-	path_coords.clear();
 	if (symbol->getContainedTypes() & (Symbol::Area | Symbol::Line))
-		PathCoord::calculatePathCoords(coords, coordsF, &path_coords);
+	{
+		PathObject* path = reinterpret_cast<PathObject*>(this);
+		path->updatePathCoords(coordsF);
+	}
 	
 	// Create renderables
-	symbol->createRenderables(this, coords, coordsF, path_closed, output);
+	symbol->createRenderables(this, coords, coordsF, output);
 	
 	// Calculate extent and set this object as creator of the renderables
 	extent = QRectF();
@@ -252,42 +263,12 @@ void Object::rotateAround(MapCoordF center, double angle)
 	}
 }
 
-void Object::reverse()
-{
-	int coords_size = coords.size();
-	for (int c = 0; c < coords_size; ++c)
-	{
-		MapCoord coord = coords[c];
-		if (c < coords_size / 2)
-		{
-			coords[c] = coords[coords_size - 1 - c];
-			coords[coords_size - 1 - c] = coord;
-		}
-		
-		if (!(c == 0 && path_closed) && coords[c].isCurveStart())
-		{
-			assert(c >= 3);
-			coords[c - 3].setCurveStart(true);
-			if (!(c == coords_size - 1 && path_closed))
-				coords[c].setCurveStart(false);
-		}
-		else if (coords[c].isHolePoint())
-		{
-			assert(c >= 1);
-			coords[c - 3].setHolePoint(true);
-			coords[c].setHolePoint(false);
-		}
-	}
-	
-	setOutputDirty();
-}
-
 int Object::isPointOnObject(MapCoordF coord, float tolerance, bool extended_selection)
 {
 	Symbol::Type type = symbol->getType();
 	Symbol::Type contained_types = symbol->getContainedTypes();
 	
-	// Special case for points
+	// Points
 	if (type == Symbol::Point)
 	{
 		if (!extended_selection)
@@ -303,70 +284,18 @@ int Object::isPointOnObject(MapCoordF coord, float tolerance, bool extended_sele
 	if (coord.getX() > extent.right() + extent_extension) return Symbol::NoSymbol;
 	if (coord.getY() > extent.bottom() + extent_extension) return Symbol::NoSymbol;
 	
-	// Special case for texts
 	if (type == Symbol::Text)
 	{
+		// Texts
 		TextObject* text_object = reinterpret_cast<TextObject*>(this);
 		return (text_object->calcTextPositionAt(coord, true) != -1) ? Symbol::Text : Symbol::NoSymbol;
 	}
-
-	int coords_size = (int)coords.size();
-
-	// Check for line selection
-	if (contained_types & Symbol::Line)
+	else
 	{
-		update(false);
-		int size = (int)path_coords.size();
-		for (int i = 0; i < size - 1; ++i)
-		{
-			assert(path_coords[i].index < coords_size);
-			if (coords[path_coords[i].index].isHolePoint())
-				continue;
-			
-			MapCoordF to_coord = MapCoordF(coord.getX() - path_coords[i].pos.getX(), coord.getY() - path_coords[i].pos.getY());
-			MapCoordF to_next = MapCoordF(path_coords[i+1].pos.getX() - path_coords[i].pos.getX(), path_coords[i+1].pos.getY() - path_coords[i].pos.getY());
-			MapCoordF tangent = to_next;
-			tangent.normalize();
-			
-			float dist_along_line = to_coord.dot(tangent);
-			if (dist_along_line < -tolerance)
-				continue;
-			else if (dist_along_line < 0 && to_coord.lengthSquared() <= tolerance*tolerance)
-				return Symbol::Line;
-			
-			float line_length = path_coords[i+1].clen - path_coords[i].clen;
-			if (dist_along_line > line_length + tolerance)
-				continue;
-			else if (dist_along_line > line_length && coord.lengthToSquared(path_coords[i+1].pos) <= tolerance*tolerance)
-				return Symbol::Line;
-			
-			MapCoordF right = tangent;
-			right.perpRight();
-			
-			float dist_from_line = qAbs(right.dot(to_coord));
-			if (dist_from_line <= tolerance)
-				return Symbol::Line;
-		}
+		// Path objects
+		PathObject* path = reinterpret_cast<PathObject*>(this);
+		return path->isPointOnPath(coord, tolerance);
 	}
-	
-	// Check for area selection
-	if (contained_types & Symbol::Area)
-	{
-		bool inside = false;
-		int size = (int)path_coords.size();
-		int i, j;
-		for (i = 0, j = size - 1; i < size; j = i++)
-		{
-			if ( ((path_coords[i].pos.getY() > coord.getY()) != (path_coords[j].pos.getY() > coord.getY())) &&
-				(coord.getX() < (path_coords[j].pos.getX() - path_coords[i].pos.getX()) *
-				 (coord.getY() - path_coords[i].pos.getY()) / (path_coords[j].pos.getY() - path_coords[i].pos.getY()) + path_coords[i].pos.getX()) )
-				inside = !inside;
-		}
-		if (inside)
-			return Symbol::Area;
-	}
-	
-	return Symbol::NoSymbol;
 }
 bool Object::isPathPointInBox(QRectF box)
 {
@@ -389,37 +318,6 @@ bool Object::isPathPointInBox(QRectF box)
 void Object::takeRenderables()
 {
 	output.clear();
-}
-
-void Object::setPathClosed(bool value)
-{
-	if (!path_closed && value)
-	{
-		if (!coords.empty())
-			coords.push_back(coords[0]);
-		
-		path_closed = true;
-		setOutputDirty();
-	}
-	else if (path_closed && !value)
-	{
-		if (!coords.empty())
-			coords.pop_back();
-		
-		path_closed = false;
-		setOutputDirty();
-	}
-}
-void Object::connectPathEnds()
-{
-	if (isPathClosed())
-		return;
-	
-	coords[0].setRawX(qRound64((coords[coords.size() - 1].rawX() + coords[0].rawX()) / 2));
-	coords[0].setRawY(qRound64((coords[coords.size() - 1].rawY() + coords[0].rawY()) / 2));
-	coords[coords.size() - 1] = coords[0];
-	path_closed = true;
-	setOutputDirty();
 }
 
 bool Object::setSymbol(Symbol* new_symbol, bool no_checks)
@@ -450,6 +348,49 @@ Object* Object::getObjectForType(Object::Type type, Symbol* symbol)
 	}
 }
 
+// ### PathObject::PathPart ###
+
+void PathObject::PathPart::setClosed(bool closed)
+{
+	if (!isClosed() && closed)
+	{
+		if (getNumCoords() == 1 || path->coords[start_index].rawX() != path->coords[end_index].rawX() || path->coords[start_index].rawY() != path->coords[end_index].rawY())
+			path->addCoordinate(end_index + 1, path->coords[start_index]);
+		path->setClosingPoint(end_index, path->coords[start_index]);
+		
+		path->setOutputDirty();
+	}
+	else if (isClosed() && !closed)
+	{
+		path->coords[end_index].setClosePoint(false);
+		
+		path->setOutputDirty();
+	}
+}
+void PathObject::PathPart::connectEnds()
+{
+	if (isClosed())
+		return;
+	
+	path->coords[start_index].setRawX(qRound64((path->coords[end_index].rawX() + path->coords[start_index].rawX()) / 2));
+	path->coords[start_index].setRawY(qRound64((path->coords[end_index].rawY() + path->coords[start_index].rawY()) / 2));
+	path->setClosingPoint(end_index, path->coords[start_index]);
+	path->setOutputDirty();
+}
+int PathObject::PathPart::calcNumRegularPoints()
+{
+	int num_regular_points = 0;
+	for (int i = start_index; i <= end_index; ++i)
+	{
+		++num_regular_points;
+		if (path->coords[i].isCurveStart())
+			i += 2;
+	}
+	if (isClosed())
+		--num_regular_points;
+	return num_regular_points;
+}
+
 // ### PathObject ###
 
 PathObject::PathObject(Symbol* symbol) : Object(Object::Path, symbol)
@@ -460,6 +401,7 @@ PathObject::PathObject(Symbol* symbol, const MapCoordVector& coords, Map* map) :
 {
 	assert(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
 	this->coords = coords;
+	recalculateParts();
 	if (map)
 		setMap(map);
 }
@@ -467,24 +409,84 @@ Object* PathObject::duplicate()
 {
 	PathObject* new_path = new PathObject(symbol);
 	new_path->coords = coords;
-	new_path->path_closed = path_closed;
+	new_path->parts = parts;
+	int parts_size = parts.size();
+	for (int i = 0; i < parts_size; ++i)
+		new_path->parts[i].path = new_path;
+	return new_path;
+}
+PathObject* PathObject::duplicateFirstPart()
+{
+	PathObject* new_path = new PathObject(symbol);
+	new_path->coords.assign(coords.begin() + parts[0].start_index, coords.begin() + (parts[0].end_index + 1));
+	new_path->parts.push_back(parts[0]);
+	new_path->parts[0].path = new_path;
 	return new_path;
 }
 
-int PathObject::calcNumRegularPoints()
+MapCoord& PathObject::shiftedCoord(int base_index, int offset, PathObject::PathPart& part)
 {
-	int num_regular_points = 0;
-	int size = (int)coords.size();
-	for (int i = 0; i < size; ++i)
-	{
-		++num_regular_points;
-		if (coords[i].isCurveStart())
-			i += 2;
-	}
-	if (path_closed)
-		--num_regular_points;
-	return num_regular_points;
+	int index = shiftedCoordIndex(base_index, offset, part);
+	assert(index >= 0);
+	return coords[index];
 }
+int PathObject::shiftedCoordIndex(int base_index, int offset, PathObject::PathPart& part)
+{
+	if (part.isClosed())
+	{
+		if (offset >= part.getNumCoords() - 1)
+			return -1;
+		return ((base_index + offset - part.start_index + (part.getNumCoords() - 1)) % (part.getNumCoords() - 1)) + part.start_index;
+	}
+	else
+	{
+		base_index += offset;
+		return (base_index < 0 || base_index > part.end_index) ? -1 : base_index;
+	}
+}
+PathObject::PathPart& PathObject::findPartForIndex(int coords_index)
+{
+	int num_parts = (int)parts.size();
+	for (int i = 0; i < num_parts; ++i)
+	{
+		if (coords_index >= parts[i].start_index && coords_index <= parts[i].end_index)
+			return parts[i];
+	}
+	assert(false);
+	return parts[0];
+}
+int PathObject::findPartIndexForIndex(int coords_index)
+{
+	int num_parts = (int)parts.size();
+	for (int i = 0; i < num_parts; ++i)
+	{
+		if (coords_index >= parts[i].start_index && coords_index <= parts[i].end_index)
+			return i;
+	}
+	assert(false);
+	return 0;
+}
+void PathObject::deletePart(int part_index)
+{
+	coords.erase(coords.begin() + parts[part_index].start_index, coords.begin() + (parts[part_index].end_index + 1));
+	int num_part_coords = parts[part_index].end_index - parts[part_index].start_index + 1;
+	parts.erase(parts.begin() + part_index);
+	for (int i = part_index; i < (int)parts.size(); ++i)
+	{
+		parts[i].start_index -= num_part_coords;
+		parts[i].end_index -= num_part_coords;
+	}
+}
+void PathObject::partSizeChanged(int part_index, int change)
+{
+	parts[part_index].end_index += change;
+	for (int i = part_index + 1; i < (int)parts.size(); ++i)
+	{
+		parts[i].start_index += change;
+		parts[i].end_index += change;
+	}
+}
+
 void PathObject::calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq, PathCoord& out_path_coord)
 {
 	update(false);
@@ -597,76 +599,124 @@ int PathObject::subdivide(int index, float param)
 
 bool PathObject::canBeConnected(PathObject* other, double connect_threshold_sq)
 {
-	if (isPathClosed() || other->isPathClosed())
-		return false;
-	
-	if (coords[0].lengthSquaredTo(other->coords[0]) <= connect_threshold_sq)
-		return true;
-	else if (coords[0].lengthSquaredTo(other->coords[other->getCoordinateCount() - 1]) <= connect_threshold_sq)
-		return true;
-	else if (coords[getCoordinateCount() - 1].lengthSquaredTo(other->coords[0]) <= connect_threshold_sq)
-		return true;
-	else if (coords[getCoordinateCount() - 1].lengthSquaredTo(other->coords[other->getCoordinateCount() - 1]) <= connect_threshold_sq)
-		return true;
+	int num_parts = getNumParts();
+	for (int i = 0; i < num_parts; ++i)
+	{
+		if (parts[i].isClosed())
+			continue;
+		
+		int num_other_parts = other->getNumParts();
+		for (int k = 0; k < num_other_parts; ++k)
+		{
+			if (other->parts[k].isClosed())
+				continue;
+			
+			if (coords[parts[i].start_index].lengthSquaredTo(other->coords[other->parts[k].start_index]) <= connect_threshold_sq)
+				return true;
+			else if (coords[parts[i].start_index].lengthSquaredTo(other->coords[other->parts[k].end_index]) <= connect_threshold_sq)
+				return true;
+			else if (coords[parts[i].end_index].lengthSquaredTo(other->coords[other->parts[k].start_index]) <= connect_threshold_sq)
+				return true;
+			else if (coords[parts[i].end_index].lengthSquaredTo(other->coords[other->parts[k].end_index]) <= connect_threshold_sq)
+				return true;
+		}
+	}
 	
 	return false;
 }
 bool PathObject::connectIfClose(PathObject* other, double connect_threshold_sq)
 {
-	if (isPathClosed() || other->isPathClosed())
-		return false;
+	bool did_connect_path = false;
 	
-	if (coords[0].lengthSquaredTo(other->coords[0]) <= connect_threshold_sq)
+	int num_parts = getNumParts();
+	int num_other_parts = other->getNumParts();
+	std::vector<bool> other_parts;	// Which parts have not been connected to this part yet?
+	other_parts.assign(num_other_parts, true);
+	for (int i = 0; i < num_parts; ++i)
 	{
-		other->reverse();
-		appendPath(other, true);
+		if (parts[i].isClosed())
+			continue;
+		
+		for (int k = 0; k < num_other_parts; ++k)
+		{
+			if (!other_parts[k] || other->parts[k].isClosed())
+				continue;
+	
+			if (coords[parts[i].start_index].lengthSquaredTo(other->coords[other->parts[k].start_index]) <= connect_threshold_sq)
+			{
+				other->reversePart(k);
+				connectPathParts(i, other, k, true);
+			}
+			else if (coords[parts[i].start_index].lengthSquaredTo(other->coords[other->parts[k].end_index]) <= connect_threshold_sq)
+				connectPathParts(i, other, k, true);
+			else if (coords[parts[i].end_index].lengthSquaredTo(other->coords[other->parts[k].start_index]) <= connect_threshold_sq)
+				connectPathParts(i, other, k, false);
+			else if (coords[parts[i].end_index].lengthSquaredTo(other->coords[other->parts[k].end_index]) <= connect_threshold_sq)
+			{
+				other->reversePart(k);
+				connectPathParts(i, other, k, false);
+			}
+			else
+				continue;
+			
+			if (coords[parts[i].start_index].lengthSquaredTo(coords[parts[i].end_index]) <= connect_threshold_sq)
+				parts[i].connectEnds();
+			
+			did_connect_path = true;
+			
+			other_parts[k] = false;
+		}
 	}
-	else if (coords[0].lengthSquaredTo(other->coords[other->getCoordinateCount() - 1]) <= connect_threshold_sq)
-		appendPath(other, true);
-	else if (coords[getCoordinateCount() - 1].lengthSquaredTo(other->coords[0]) <= connect_threshold_sq)
-		appendPath(other, false);
-	else if (coords[getCoordinateCount() - 1].lengthSquaredTo(other->coords[other->getCoordinateCount() - 1]) <= connect_threshold_sq)
+	
+	if (did_connect_path)
 	{
-		other->reverse();
-		appendPath(other, false);
+		// Copy over all remaining parts of the other object
+		getCoordinate(getCoordinateCount() - 1).setHolePoint(true);
+		for (int i = 0; i < num_other_parts; ++i)
+		{
+			if (other_parts[i])
+				appendPathPart(other, i);
+		}
 	}
-	else
-		return false;
 	
-	if (coords[0].lengthSquaredTo(coords[getCoordinateCount() - 1]) <= connect_threshold_sq)
-		connectPathEnds();
-	
-	return true;
+	return did_connect_path;
 }
-void PathObject::appendPath(PathObject* other, bool prepend)
+void PathObject::connectPathParts(int part_index, PathObject* other, int other_part_index, bool prepend)
 {
-	assert(!isPathClosed() && !other->isPathClosed());
-	int coords_size = coords.size();
-	int other_coords_size = (int)other->coords.size();
+	PathPart& part = parts[part_index];
+	PathPart& other_part = other->parts[other_part_index];
+	assert(!part.isClosed() && !other_part.isClosed());
 	
-	coords.resize(coords_size + other_coords_size - 1);
+	int other_part_size = other_part.getNumCoords();
+	coords.resize(coords.size() + other_part_size - 1);
+	
 	if (prepend)
 	{
-		for (int i = coords_size + other_coords_size - 2; i > other_coords_size - 2; --i)
-			coords[i] = coords[i - (other_coords_size - 1)];
+		for (int i = (int)coords.size() - 1; i >= part.start_index + (other_part_size - 1); --i)
+			coords[i] = coords[i - (other_part_size - 1)];
 		
-		coords[other_coords_size - 1].setRawX(qRound64((coords[other_coords_size - 1].rawX() + other->coords[other_coords_size - 1].rawX()) / 2));
-		coords[other_coords_size - 1].setRawY(qRound64((coords[other_coords_size - 1].rawY() + other->coords[other_coords_size - 1].rawY()) / 2));
+		coords[part.start_index + other_part_size - 1].setRawX(qRound64((coords[part.start_index].rawX() + other->coords[other_part.end_index].rawX()) / 2));
+		coords[part.start_index + other_part_size - 1].setRawY(qRound64((coords[part.start_index].rawY() + other->coords[other_part.end_index].rawY()) / 2));
+		coords[part.start_index + other_part_size - 1].setHolePoint(false);
+		coords[part.start_index + other_part_size - 1].setClosePoint(false);
 		
-		for (int i = 0; i < other_coords_size - 1; ++i)
-			coords[i] = other->coords[i];
+		for (int i = part.start_index; i < part.start_index + other_part_size - 1; ++i)
+			coords[i] = other->coords[i - part.start_index + other_part.start_index];
 	}
 	else
 	{
-		MapCoord coord = other->coords[0];	// take flags from first coord of path to append
-		coord.setRawX(qRound64((coords[coords_size - 1].rawX() + other->coords[0].rawX()) / 2));
-		coord.setRawY(qRound64((coords[coords_size - 1].rawY() + other->coords[0].rawY()) / 2));
-		coords[coords_size - 1] = coord;
+		MapCoord coord = other->coords[other_part.start_index];	// take flags from first coord of path to append
+		coord.setRawX(qRound64((coords[part.end_index].rawX() + coord.rawX()) / 2));
+		coord.setRawY(qRound64((coords[part.end_index].rawY() + coord.rawY()) / 2));
+		coords[part.end_index] = coord;
 		
-		for (int i = 1; i < other_coords_size; ++i)
-			coords[coords_size + i - 1] = other->coords[i];
+		for (int i = (int)coords.size() - 1; i > part.end_index + (other_part_size - 1); --i)
+			coords[i] = coords[i - (other_part_size - 1)];
+		for (int i = part.end_index + 1; i <= part.end_index + (other_part_size - 1); ++i)
+			coords[i] = other->coords[i - part.end_index + other_part.start_index];
 	}
-	setOutputDirty();
+	
+	partSizeChanged(part_index, other_part_size - 1);
 }
 
 void PathObject::splitAt(const PathCoord& split_pos, Object*& out1, Object*& out2)
@@ -674,58 +724,56 @@ void PathObject::splitAt(const PathCoord& split_pos, Object*& out1, Object*& out
 	out1 = NULL;
 	out2 = NULL;
 	
-	if (path_closed)
+	int part_index = findPartIndexForIndex(split_pos.index);
+	PathPart& part = parts[part_index];
+	if (part.isClosed())
 	{
-		PathObject* path1 = new PathObject(symbol, coords, map);	// This automatically leads to an open path ...
-		MapCoord last_coord = coords[0];
-		last_coord.setCurveStart(false);
-		path1->setCoordinate(coords.size() - 1, last_coord);		// ... but it has to be ensured that the last coordinate is not a curve start point
+		PathObject* path1 = new PathObject(symbol, coords, map);
 		out1 = path1;
 		
-		if (split_pos.clen == 0 || split_pos.clen == path_coords[path_coords.size() - 1].clen)
+		if (split_pos.clen == path_coords[part.path_coord_start_index].clen || split_pos.clen == path_coords[part.path_coord_end_index].clen)
+		{
+			(path1->parts[part_index]).setClosed(false);
 			return;
+		}
 		
-		PathObject* temp_path = new PathObject(symbol, path1->coords, NULL);
-		path1->changePathBounds(split_pos.clen, path_coords[path_coords.size() - 1].clen);
-		temp_path->changePathBounds(0, split_pos.clen);
-		path1->appendPath(temp_path, false);
-		delete temp_path;
+		path1->changePathBounds(part_index, split_pos.clen, split_pos.clen);
 		return;
 	}
 	
-	if (split_pos.clen == 0)
+	if (split_pos.clen == path_coords[part.path_coord_start_index].clen)
 	{
-		if (calcNumRegularPoints() > 2)
+		if (part.calcNumRegularPoints() > 2)
 		{
 			PathObject* path1 = new PathObject(symbol, coords, map);
 			out1 = path1;
 			
-			if (coords[0].isCurveStart())
+			if (coords[part.start_index].isCurveStart())
 			{
-				path1->deleteCoordinate(2, false);
-				path1->deleteCoordinate(1, false);
-				path1->deleteCoordinate(0, false);
+				path1->deleteCoordinate(part.start_index + 2, false);
+				path1->deleteCoordinate(part.start_index + 1, false);
+				path1->deleteCoordinate(part.start_index + 0, false);
 			}
 			else
-				path1->deleteCoordinate(0, false);
+				path1->deleteCoordinate(part.start_index + 0, false);
 		}
 	}
-	else if (split_pos.clen == path_coords[path_coords.size() - 1].clen)
+	else if (split_pos.clen == path_coords[part.path_coord_end_index].clen)
 	{
-		if (calcNumRegularPoints() > 2)
+		if (part.calcNumRegularPoints() > 2)
 		{
 			PathObject* path1 = new PathObject(symbol, coords, map);
 			out1 = path1;
 			
-			if (coords.size() >= 4 && coords[coords.size() - 3].isCurveStart())
+			if (part.getNumCoords() >= 4 && coords[part.end_index - 3].isCurveStart())
 			{
-				path1->deleteCoordinate(coords.size() - 1, false);
-				path1->deleteCoordinate(coords.size() - 1, false);
-				path1->deleteCoordinate(coords.size() - 1, false);
-				coords[coords.size() - 1].setCurveStart(false);
+				path1->deleteCoordinate(path1->parts[part_index].end_index, false);
+				path1->deleteCoordinate(path1->parts[part_index].end_index, false);
+				path1->deleteCoordinate(path1->parts[part_index].end_index, false);
+				coords[path1->parts[part_index].end_index].setCurveStart(false);
 			}
 			else
-				path1->deleteCoordinate(coords.size() - 1, false);
+				path1->deleteCoordinate(path1->parts[part_index].end_index, false);
 		}
 	}
 	else
@@ -735,38 +783,53 @@ void PathObject::splitAt(const PathCoord& split_pos, Object*& out1, Object*& out
 		PathObject* path2 = new PathObject(symbol, coords, map);
 		out2 = path2;
 		
-		path1->changePathBounds(0, split_pos.clen);
-		path2->changePathBounds(split_pos.clen, path_coords[path_coords.size() - 1].clen);
+		path1->changePathBounds(part_index, path_coords[part.path_coord_start_index].clen, split_pos.clen);
+		path2->changePathBounds(part_index, split_pos.clen, path_coords[part.path_coord_end_index].clen);
 	}
 }
-void PathObject::changePathBounds(double start_len, double end_len)
+void PathObject::changePathBounds(int part_index, double start_len, double end_len)
 {
-	if (start_len == end_len)
-		return;
+	//if (start_len == end_len)
+	//	return;
 	
 	update();
-	int coords_size = coords.size();
+	PathPart& part = parts[part_index];
+	int part_size = part.end_index - part.start_index + 1;
+	
+	MapCoordVector* p_coords = &coords;
+	MapCoordVector temp_coords;
+	if (getNumParts() > 1)
+	{
+		// TODO: optimize this HACK-ed case
+		temp_coords.resize(part_size);
+		for (int i = 0; i < part_size; ++i)
+			temp_coords[i] = coords[part.start_index + i];
+		
+		p_coords = &temp_coords;
+	}
+	
 	MapCoordVectorF coordsF;
-	for (int i = 0; i < coords_size; ++i)
-		coordsF.push_back(MapCoordF(coords[i]));
+	coordsF.resize(part_size);
+	for (int i = 0; i < part_size; ++i)
+		coordsF[i] = MapCoordF(coords[part.start_index + i]);
+	
 	MapCoordVector out_coords;
-	out_coords.reserve(coords.size() + 2);
+	out_coords.reserve(part_size + 2);
 	MapCoordVectorF out_coordsF;
-	out_coordsF.reserve(coords.size() + 2);
+	out_coordsF.reserve(part_size + 2);
 	
 	if (end_len == 0)
-		end_len = path_coords[path_coords.size() - 1].clen;
+		end_len = path_coords[part.path_coord_end_index].clen;
 	
-	int cur_path_coord = 1;
-	int path_coords_size = (int)path_coords.size();
-	while (cur_path_coord < path_coords_size - 1 && path_coords[cur_path_coord].clen < start_len)
+	int cur_path_coord = part.path_coord_start_index + 1;
+	while (cur_path_coord < part.path_coord_end_index && path_coords[cur_path_coord].clen < start_len)
 		++cur_path_coord;
 	
 	// Start position
 	int start_bezier_index = -1;		// if the range starts at a bezier curve, this is the curve's index, otherwise -1
 	float start_bezier_split_param;	// the parameter value where the split of the curve for the range start was made
 	MapCoordF o3, o4;					// temporary bezier control points
-	if (coords[path_coords[cur_path_coord].index].isCurveStart())
+	if (p_coords->at(path_coords[cur_path_coord].index).isCurveStart())
 	{
 		int index = path_coords[cur_path_coord].index;
 		float factor = (start_len - path_coords[cur_path_coord-1].clen) / (path_coords[cur_path_coord].clen - path_coords[cur_path_coord-1].clen);
@@ -791,34 +854,40 @@ void PathObject::changePathBounds(double start_len, double end_len)
 	else
 	{
 		out_coordsF.push_back(MapCoordF(0, 0));
-		PathCoord::calculatePositionAt(coords, coordsF, path_coords, start_len, cur_path_coord, &out_coordsF[out_coordsF.size() - 1], NULL);
+		PathCoord::calculatePositionAt(*p_coords, coordsF, path_coords, start_len, cur_path_coord, &out_coordsF[out_coordsF.size() - 1], NULL);
 		out_coords.push_back(out_coordsF[out_coordsF.size() - 1].toMapCoord());
 	}
 	
 	int current_index = path_coords[cur_path_coord].index;
 	if (start_len == path_coords[cur_path_coord].clen && path_coords[cur_path_coord].param == 1)
 	{
-		if (coords[current_index].isCurveStart())
+		if (p_coords->at(current_index).isCurveStart())
 			current_index += 3;
 		else
 			++current_index;
-		if (current_index >= coords_size)
+		if (current_index > part.end_index)
 			current_index = 0;
-		out_coords[out_coords.size() - 1].setFlags(coords[current_index].getFlags());
+		out_coords[out_coords.size() - 1].setFlags(p_coords->at(current_index).getFlags());
+		out_coords[out_coords.size() - 1].setHolePoint(false);
+		out_coords[out_coords.size() - 1].setClosePoint(false);
 		++cur_path_coord;
 	}
 	else if (start_len == path_coords[cur_path_coord - 1].clen && path_coords[cur_path_coord - 1].param == 0)
-		out_coords[out_coords.size() - 1].setFlags(coords[current_index].getFlags());
+	{
+		out_coords[out_coords.size() - 1].setFlags(p_coords->at(current_index).getFlags());
+		out_coords[out_coords.size() - 1].setHolePoint(false);
+		out_coords[out_coords.size() - 1].setClosePoint(false);
+	}
 	
 	// End position
-	bool enforce_wrap = (end_len <= path_coords[cur_path_coord].clen && end_len < start_len);
-	advanceCoordinateRangeTo(coords, coordsF, path_coords, cur_path_coord, current_index, end_len, enforce_wrap, start_bezier_index, out_coords, out_coordsF, o3, o4);
-	if (current_index < coords_size - 1)
+	bool enforce_wrap = (end_len <= path_coords[cur_path_coord].clen && end_len <= start_len);
+	advanceCoordinateRangeTo(*p_coords, coordsF, path_coords, cur_path_coord, current_index, end_len, enforce_wrap, start_bezier_index, out_coords, out_coordsF, o3, o4);
+	if (current_index < part.end_index)
 	{
 		out_coordsF.push_back(MapCoordF(0, 0));
-		if (coords[current_index].isCurveStart())
+		if (p_coords->at(current_index).isCurveStart())
 		{
-			int index = path_coords[cur_path_coord].index;
+			int index = path_coords[cur_path_coord].index - part.start_index;
 			float factor = (end_len - path_coords[cur_path_coord-1].clen) / (path_coords[cur_path_coord].clen - path_coords[cur_path_coord-1].clen);
 			assert(factor >= 0 && factor <= 1.001f);
 			if (factor > 1)
@@ -855,56 +924,74 @@ void PathObject::changePathBounds(double start_len, double end_len)
 		}
 		else
 		{
-			PathCoord::calculatePositionAt(coords, coordsF, path_coords, end_len, cur_path_coord, &out_coordsF[out_coordsF.size() - 1], NULL);
+			PathCoord::calculatePositionAt(*p_coords, coordsF, path_coords, end_len, cur_path_coord, &out_coordsF[out_coordsF.size() - 1], NULL);
 			out_coords.push_back(out_coordsF[out_coordsF.size() - 1].toMapCoord());
 		}
 	}
 	
 	if (end_len == path_coords[cur_path_coord].clen && path_coords[cur_path_coord].param == 0)
-		out_coords[out_coords.size() - 1].setFlags(coords[current_index].getFlags());
+	{
+		out_coords[out_coords.size() - 1].setFlags(p_coords->at(current_index).getFlags());
+		out_coords[out_coords.size() - 1].setClosePoint(false);
+	}
 	if (end_len == path_coords[cur_path_coord].clen && path_coords[cur_path_coord].param == 1)
 	{
-		if (coords[current_index].isCurveStart())
+		if (p_coords->at(current_index).isCurveStart())
 			current_index += 3;
 		else
 			++current_index;
-		out_coords[out_coords.size() - 1].setFlags(coords[current_index].getFlags());
+		out_coords[out_coords.size() - 1].setFlags(p_coords->at(current_index).getFlags());
+		out_coords[out_coords.size() - 1].setClosePoint(false);
 	}
-	out_coords[out_coords.size() - 1].setCurveStart(false);
 	
-	coords = out_coords;
-	path_closed = false;
+	out_coords[out_coords.size() - 1].setCurveStart(false);
+	out_coords[out_coords.size() - 1].setHolePoint(true);
+	
+	if ((int)out_coords.size() > part_size)
+		coords.insert(coords.begin() + part.start_index, (int)out_coords.size() - part_size, MapCoord());
+	else if ((int)out_coords.size() < part_size)
+		coords.erase(coords.begin() + part.start_index, coords.begin() + (part.start_index + part_size - (int)out_coords.size()));
+	
+	for (int i = part.start_index; i < part.start_index + (int)out_coords.size(); ++i)
+		coords[i] = out_coords[i - part.start_index];
+	//partSizeChanged(part_index, out_coords.size() - part_size);
+	recalculateParts();
 	setOutputDirty();
 }
-void PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords, int& cur_path_coord, int& current_index, float cur_length,
+void PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& path_coords, int& cur_path_coord, int& current_index, float cur_length,
 										  bool enforce_wrap, int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, const MapCoordF& o3, const MapCoordF& o4)
 {
-	assert(cur_length <= line_coords[line_coords.size() - 1].clen);
-	int line_coords_size = (int)line_coords.size();
+	PathPart& part = findPartForIndex(path_coords[cur_path_coord].index);
+	
+	int path_coords_size = (int)path_coords.size();
 	bool have_to_wrap = enforce_wrap;
-	while (cur_length > line_coords[cur_path_coord].clen || cur_length < line_coords[cur_path_coord - 1].clen || have_to_wrap)
+	while (cur_length > path_coords[cur_path_coord].clen || cur_length < path_coords[cur_path_coord - 1].clen || have_to_wrap)
 	{
 		++cur_path_coord;
-		if (cur_path_coord == line_coords_size)
-		{
-			cur_path_coord = 1;
-			assert(path_closed);
-		}
-		if (line_coords[cur_path_coord].index != current_index)
+		if (cur_path_coord > part.path_coord_end_index || flags[path_coords[cur_path_coord].index - part.start_index].isClosePoint())
+			cur_path_coord = part.path_coord_start_index + 1;
+		assert(cur_path_coord < path_coords_size);
+		
+		int index = path_coords[cur_path_coord].index - part.start_index;
+		
+		if (index != current_index)
 		{
 			if (current_index == start_bezier_index && !(enforce_wrap && !have_to_wrap))
 			{
+				current_index += 3;
+				assert(current_index <= part.end_index);
+				if (flags[current_index].isClosePoint())
+					current_index = 0;
+				assert(current_index == index);
+				
 				out_flags.push_back(o3.toMapCoord());
 				out_coords.push_back(o3);
 				out_flags.push_back(o4.toMapCoord());
 				out_coords.push_back(o4);
-				out_flags.push_back(flags[current_index + 3]);
-				out_coords.push_back(coords[current_index + 3]);
-				
-				current_index += 3;
-				if (current_index >= (int)coords.size() - 1 && path_closed)
-					current_index = 0;
-				assert(current_index == line_coords[cur_path_coord].index);
+				out_flags.push_back(flags[current_index]);
+				out_flags[out_flags.size() - 1].setClosePoint(false);
+				out_flags[out_flags.size() - 1].setHolePoint(false);
+				out_coords.push_back(coords[current_index]);
 			}
 			else
 			{
@@ -914,11 +1001,14 @@ void PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 				do
 				{
 					++current_index;
-					if (current_index >= (int)coords.size() - 1 && path_closed)
+					assert(current_index <= part.end_index);
+					if (flags[current_index].isClosePoint())
 						current_index = 0;
 					out_flags.push_back(flags[current_index]);
+					out_flags[out_flags.size() - 1].setClosePoint(false);
+					out_flags[out_flags.size() - 1].setHolePoint(false);
 					out_coords.push_back(coords[current_index]);
-				} while (current_index != line_coords[cur_path_coord].index);
+				} while (current_index != index);
 			}
 			
 			have_to_wrap = false;
@@ -926,41 +1016,211 @@ void PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 	}	
 }
 
+void PathObject::appendPath(PathObject* other)
+{
+	int coords_size = coords.size();
+	int other_coords_size = (int)other->coords.size();
+	
+	coords.resize(coords_size + other_coords_size);
+	
+	for (int i = 0; i < other_coords_size; ++i)
+		coords[coords_size + i] = other->coords[i];
+	
+	recalculateParts();
+	setOutputDirty();
+}
+void PathObject::appendPathPart(PathObject* other, int part_index)
+{
+	int coords_size = coords.size();
+	PathPart& part = other->getPart(part_index);
+	
+	coords.resize(coords_size + part.getNumCoords());
+	
+	for (int i = 0; i < part.getNumCoords(); ++i)
+		coords[coords_size + i] = other->coords[part.start_index + i];
+	
+	recalculateParts();
+	setOutputDirty();
+}
+
+void PathObject::reverse()
+{
+	int parts_size = parts.size();
+	for (int i = 0; i < parts_size; ++i)
+		reversePart(i);
+}
+
+void PathObject::reversePart(int part_index)
+{
+	PathPart& part = parts[part_index];
+	
+	bool set_last_hole_point = false;
+	int half = (part.end_index + part.start_index + 1) / 2;
+	for (int c = part.start_index; c <= part.end_index; ++c)
+	{
+		MapCoord coord = coords[c];
+		if (c < half)
+		{
+			int mirror_index = part.end_index - (c - part.start_index);
+			coords[c] = coords[mirror_index];
+			coords[mirror_index] = coord;
+		}
+		
+		if (!(c == part.start_index && part.isClosed()) && coords[c].isCurveStart())
+		{
+			assert((c - part.start_index) >= 3);
+			coords[c - 3].setCurveStart(true);
+			if (!(c == part.end_index && part.isClosed()))
+				coords[c].setCurveStart(false);
+		}
+		else if (coords[c].isHolePoint())
+		{
+			coords[c].setHolePoint(false);
+			if (c >= part.start_index + 1)
+				coords[c - 1].setHolePoint(true);
+			else
+				set_last_hole_point = true;
+		}
+	}
+	
+	if (coords[part.start_index].isClosePoint())
+	{
+		coords[part.start_index].setClosePoint(false);
+		coords[part.end_index].setClosePoint(true);
+	}
+	if (set_last_hole_point)
+		coords[part.end_index].setHolePoint(true);
+	
+	setOutputDirty();
+}
+
+int PathObject::isPointOnPath(MapCoordF coord, float tolerance)
+{
+	Symbol::Type contained_types = symbol->getContainedTypes();
+	int coords_size = (int)coords.size();
+	
+	if (contained_types & Symbol::Line)
+	{
+		update(false);
+		int size = (int)path_coords.size();
+		for (int i = 0; i < size - 1; ++i)
+		{
+			assert(path_coords[i].index < coords_size);
+			if (coords[path_coords[i].index].isHolePoint())
+				continue;
+			
+			MapCoordF to_coord = MapCoordF(coord.getX() - path_coords[i].pos.getX(), coord.getY() - path_coords[i].pos.getY());
+			MapCoordF to_next = MapCoordF(path_coords[i+1].pos.getX() - path_coords[i].pos.getX(), path_coords[i+1].pos.getY() - path_coords[i].pos.getY());
+			MapCoordF tangent = to_next;
+			tangent.normalize();
+			
+			float dist_along_line = to_coord.dot(tangent);
+			if (dist_along_line < -tolerance)
+				continue;
+			else if (dist_along_line < 0 && to_coord.lengthSquared() <= tolerance*tolerance)
+				return Symbol::Line;
+			
+			float line_length = path_coords[i+1].clen - path_coords[i].clen;
+			if (dist_along_line > line_length + tolerance)
+				continue;
+			else if (dist_along_line > line_length && coord.lengthToSquared(path_coords[i+1].pos) <= tolerance*tolerance)
+				return Symbol::Line;
+			
+			MapCoordF right = tangent;
+			right.perpRight();
+			
+			float dist_from_line = qAbs(right.dot(to_coord));
+			if (dist_from_line <= tolerance)
+				return Symbol::Line;
+		}
+	}
+	
+	// Check for area selection
+	if (contained_types & Symbol::Area)
+	{
+		update(false);
+		bool inside = false;
+		int size = (int)path_coords.size();
+		int i, j;
+		for (i = 0, j = size - 1; i < size; j = i++)
+		{
+			if ( ((path_coords[i].pos.getY() > coord.getY()) != (path_coords[j].pos.getY() > coord.getY())) &&
+				 (coord.getX() < (path_coords[j].pos.getX() - path_coords[i].pos.getX()) *
+				 (coord.getY() - path_coords[i].pos.getY()) / (path_coords[j].pos.getY() - path_coords[i].pos.getY()) + path_coords[i].pos.getX()) )
+				inside = !inside;
+		}
+		if (inside)
+			return Symbol::Area;
+	}
+	
+	return Symbol::NoSymbol;
+}
+
 void PathObject::setCoordinate(int pos, MapCoord c)
 {
 	assert(pos >= 0 && pos < getCoordinateCount());
-	coords[pos] = c;
 	
-	if (path_closed && pos == 0)
-		coords[coords.size() - 1] = c;
+	PathPart& part = findPartForIndex(pos);
+	if (part.isClosed() && pos == part.end_index)
+		pos = part.start_index;
+	coords[pos] = c;
+	if (part.isClosed() && pos == part.start_index)
+		setClosingPoint(part.end_index, c);
+	
+	setOutputDirty();
 }
 void PathObject::addCoordinate(int pos, MapCoord c)
 {
 	assert(pos >= 0 && pos <= getCoordinateCount());
+	int part_index = coords.empty() ? -1 : findPartIndexForIndex(qMin(pos, (int)coords.size() - 1));
 	coords.insert(coords.begin() + pos, c);
 	
-	if (path_closed)
+	if (part_index >= 0)
 	{
-		if (coords.size() == 1)
-			coords.push_back(coords[0]);
-		else if (pos == 0)
-			coords[coords.size() - 1] = c;
+		++parts[part_index].end_index;
+		for (int i = part_index + 1; i < (int)parts.size(); ++i)
+		{
+			++parts[i].start_index;
+			++parts[i].end_index;
+		}
+		
+		if (parts[part_index].isClosed() && parts[part_index].start_index == pos)
+			setClosingPoint(parts[part_index].end_index, c);
 	}
+	else
+	{
+		PathPart part;
+		part.start_index = 0;
+		part.end_index = 0;
+		part.path = this;
+		parts.push_back(part);
+	}
+	
+	setOutputDirty();
 }
 void PathObject::addCoordinate(MapCoord c)
 {
-	if (path_closed)
+	if (!parts.empty() && parts[parts.size() - 1].isClosed())
 	{
-		if (coords.empty())
-		{
-			coords.push_back(c);
-			coords.push_back(c);
-		}
-		else
-			coords.insert(coords.begin() + (coords.size() - 1), c);
+		coords.insert(coords.begin() + (coords.size() - 1), c);
+		++parts[parts.size() - 1].end_index;
 	}
 	else
+	{
 		coords.push_back(c);
+		if (parts.empty())
+		{
+			PathPart part;
+			part.start_index = 0;
+			part.end_index = 0;
+			part.path = this;
+			parts.push_back(part);
+		}
+		else
+			++parts[parts.size() - 1].end_index;
+	}
+	
+	setOutputDirty();
 }
 void PathObject::deleteCoordinate(int pos, bool adjust_other_coords)
 {
@@ -968,26 +1228,38 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords)
 	MapCoord old_coord = coords[pos];
 	coords.erase(coords.begin() + pos);
 	
-	if (path_closed)
+	int part_index = findPartIndexForIndex(pos);
+	PathPart& part = parts[part_index];
+	partSizeChanged(part_index, -1);
+	
+	if (parts[part_index].isClosed())
 	{
-		if (coords.size() == 1)
-			coords.clear();
-		else if (pos == 0)
-			coords[coords.size() - 1] = coords[0];
+		if (parts[part_index].end_index - parts[part_index].start_index == 0)
+		{
+			deletePart(part_index);
+			return;
+		}
+		else if (pos == parts[part_index].start_index)
+			setClosingPoint(parts[part_index].end_index, coords[parts[part_index].start_index]);
+	}
+	else if (parts[part_index].end_index - parts[part_index].start_index == -1)
+	{
+		deletePart(part_index);
+		return;
 	}
 	
-	if (adjust_other_coords && coords.size() >= 2)
+	if (adjust_other_coords && part.getNumCoords() >= 2)
 	{
 		// Deleting points at line ends
-		if (!path_closed)
+		if (!part.isClosed())
 		{
-			if (pos == 0 && old_coord.isCurveStart())
+			if (pos == part.start_index && old_coord.isCurveStart())
 			{
-				deleteCoordinate(1, false);
-				deleteCoordinate(0, false);
+				deleteCoordinate(part.start_index + 1, false);
+				deleteCoordinate(part.start_index, false);
 				return;
 			}
-			else if (pos == getCoordinateCount() && pos >= 3 && coords[pos - 3].isCurveStart())
+			else if (pos == part.end_index + 1 && pos >= part.start_index + 3 && coords[pos - 3].isCurveStart())
 			{
 				deleteCoordinate(pos - 1, false);
 				deleteCoordinate(pos - 2, false);
@@ -997,65 +1269,30 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords)
 		}
 		
 		// Too few points for a closed path? Open the path
-		if (path_closed && coords.size() < 4)
-			setPathClosed(false);
+		if (part.isClosed() && part.getNumCoords() < 4)
+		{
+			part.setClosed(false);
+			deleteCoordinate(part.end_index, false);
+			getCoordinate(part.end_index).setHolePoint(true);
+		}
 		
-		int coord_count = getCoordinateCount();
 		if (old_coord.isHolePoint())
-			coords[(pos - 1 + coord_count) % coord_count].setHolePoint(true);
+			shiftedCoord(pos, -1, part).setHolePoint(true);
 		if (old_coord.isCurveStart())
 		{
-			if ((pos >= 3 && coords[pos - 3].isCurveStart()) || (path_closed && getCoordinateCount() >= 3 && coords[(pos - 3 + coord_count) % coord_count].isCurveStart()))
+			if ((pos - part.start_index >= 3 && coords[pos - 3].isCurveStart()) || (part.isClosed() && part.getNumCoords() >= 4 && shiftedCoord(pos, -3, part).isCurveStart()))
 			{
 				// Bezier curves on both sides. Merge curves to one and adjust handle positions to preserve the original shape somewhat (of course, in general it is impossible to do this)
-				MapCoord& p0 = coords[(pos - 3 + coord_count) % coord_count];
-				MapCoord& p1 = coords[(pos - 2 + coord_count) % coord_count];
-				MapCoord& p2 = coords[(pos - 1 + coord_count) % coord_count];
+				MapCoord& p0 = shiftedCoord(pos, -3, part);
+				MapCoord& p1 = shiftedCoord(pos, -2, part);
+				MapCoord& p2 = shiftedCoord(pos, -1, part);
 				MapCoord& q0 = old_coord;
 				MapCoord& q1 = coords[pos];
 				MapCoord& q2 = coords[pos + 1];
 				MapCoord& q3 = coords[pos + 2];
 				
-				// Trying to invert the de Casteljau subdivision, bad results
-				/*float t;
-				if (p2.xd() - q1.xd() == 0)
-				{
-					if (q1.yd() - p2.yd() == 0)
-						t = 0.5;
-					else
-						t = (q0.yd() - p2.yd())/(q1.yd() - p2.yd());
-				}
-				else if (q1.yd() - p2.yd() == 0)
-					t = (q0.xd() - p2.xd())/(q1.xd() - p2.xd());
-				else
-					t = (p2.xd() - q0.xd())/(2*(p2.xd() - q1.xd())) + (p2.yd() - q0.yd())/(2*(p2.yd() - q1.yd()));
-				
-				MapCoord r1 = MapCoord((p1.xd() - p0.xd()*(1-t))/t , (p1.yd() - p0.yd()*(1-t))/t);
-				MapCoord r2 = MapCoord((q2.xd() - q3.xd()*t)/(1-t), (q2.yd() - q3.yd()*t)/(1-t));*/
-				
-				/*
-				// Least squares curve fitting with projection of resulting handles onto original end point tangents
-				MapCoord r1 = MapCoord( (7*p1.xd())/8 - (35*p0.xd())/48 + (7*p2.xd())/8 + (7*q0.xd())/12 - (3*q1.xd())/8 - q2.xd()/2 + (13*q3.xd())/48,
-										(7*p1.yd())/8 - (35*p0.yd())/48 + (7*p2.yd())/8 + (7*q0.yd())/12 - (3*q1.yd())/8 - q2.yd()/2 + (13*q3.yd())/48 );
-				MapCoord r2 = MapCoord( (13*p0.xd())/48 - p1.xd()/2 - (3*p2.xd())/8 + (7*q0.xd())/12 + (7*q1.xd())/8 + (7*q2.xd())/8 - (35*q3.xd())/48,
-										(13*p0.yd())/48 - p1.yd()/2 - (3*p2.yd())/8 + (7*q0.yd())/12 + (7*q1.yd())/8 + (7*q2.yd())/8 - (35*q3.yd())/48 );
-				
-				MapCoordF right = MapCoordF(p1) - MapCoordF(p0);
-				right.perpRight();
-				right.normalize();
-				MapCoordF p0r1 = MapCoordF(r1) - MapCoordF(p0);
-				float right_amount = right.dot(p0r1);
-				r1 = MapCoord(r1.xd() - right_amount * right.getX(), r1.yd() - right_amount * right.getY());
-				
-				right = MapCoordF(q3) - MapCoordF(q2);
-				right.perpRight();
-				right.normalize();
-				MapCoordF q3r2 = MapCoordF(r2) - MapCoordF(q3);
-				right_amount = right.dot(q3r2);
-				r2 = MapCoord(r2.xd() - right_amount * right.getX(), r2.yd() - right_amount * right.getY());*/
-				
 				// Least squares curve fitting with the constraint that handles are on the same line as before.
-				// The weighting is only a heuristic but seems to work ok.
+				// The weighting for x / y is only a heuristic but seems to work ok.
 				// TODO: Should the resulting factors be bounded (not -> infinite, how to better deal with negative factors)?
 				/*
 				Matlab:
@@ -1096,25 +1333,80 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords)
 				
 				deleteCoordinate(pos + 1, false);
 				deleteCoordinate(pos, false);
-				coord_count -= 2;
-				coords[(pos - 2 + coord_count) % coord_count] = r1;
-				coords[(pos - 1 + coord_count) % coord_count] = r2;
+				shiftedCoord(pos, -2, part) = r1;
+				shiftedCoord(pos, -1, part) = r2;
 			}
 			else
 			{
-				coords[(pos - 1 + coord_count) % coord_count].setCurveStart(true);
-				if (path_closed && pos == 0)
+				shiftedCoord(pos, -1, part).setCurveStart(true);
+				if (part.isClosed() && pos == 0)
 				{
 					// Zero is at the wrong position - can't start on a bezier curve handle! Switch the handles over to the end of the path
-					coords[coords.size() - 1] = coords[0];
-					coords.push_back(coords[1]);
-					coords.erase(coords.begin() + 1);
-					coords.erase(coords.begin());
-					coords.push_back(coords[0]);
+					coords[part.end_index] = coords[part.start_index];
+					coords.insert(coords.begin() + (part.end_index + 1), coords[part.start_index + 1]);
+					coords.erase(coords.begin() + part.start_index, coords.begin() + (part.start_index + 2));
+					coords.insert(coords.begin() + part.end_index, coords[part.start_index]);
+					setClosingPoint(part.end_index, coords[part.start_index]);
 				}
 			}
 		}
 	}
+	
+	setOutputDirty();
+}
+
+void PathObject::updatePathCoords(MapCoordVectorF& float_coords)
+{
+	path_coords.clear();
+	
+	int part_index = 0;
+	int part_start = 0;
+	int part_end = 0;
+	int path_coord_start = 0;
+	while (PathCoord::getNextPathPart(coords, float_coords, part_start, part_end, &path_coords, false, true))
+	{
+		assert(parts[part_index].start_index == part_start);
+		assert(parts[part_index].end_index == part_end);
+		parts[part_index].path_coord_start_index = path_coord_start;
+		parts[part_index].path_coord_end_index = path_coords.size() - 1;
+		path_coord_start = parts[part_index].path_coord_end_index + 1;
+		
+		++part_index;
+	}
+}
+
+void PathObject::recalculateParts()
+{
+	parts.clear();
+	
+	int start = 0;
+	int coords_size = coords.size();
+	for (int i = 0; i < coords_size - 1; ++i)
+	{
+		if (coords[i].isHolePoint())
+		{
+			PathPart part;
+			part.start_index = start;
+			part.end_index = i;
+			part.path = this;
+			parts.push_back(part);
+			start = i + 1;
+			++i;	// assume that there are never two hole points in a row
+		}
+	}
+	
+	PathPart part;
+	part.start_index = start;
+	part.end_index = coords_size - 1;
+	part.path = this;
+	parts.push_back(part);
+}
+void PathObject::setClosingPoint(int index, MapCoord coord)
+{
+	coord.setCurveStart(false);
+	coord.setHolePoint(true);
+	coord.setClosePoint(true);
+	coords[index] = coord;
 }
 
 // ### PointObject ###
@@ -1129,20 +1421,30 @@ Object* PointObject::duplicate()
 {
 	PointObject* new_point = new PointObject(symbol);
 	new_point->coords = coords;
-	new_point->path_closed = path_closed;
-	
 	new_point->rotation = rotation;
 	return new_point;
 }
 
-void PointObject::setPosition(MapCoord position)
+void PointObject::setPosition(qint64 x, qint64 y)
 {
-	coords[0] = position;
+	coords[0].setRawX(x);
+	coords[0].setRawY(y);
 	setOutputDirty();
 }
-MapCoord PointObject::getPosition()
+void PointObject::setPosition(MapCoordF coord)
 {
-	return coords[0];
+	coords[0].setX(coord.getX());
+	coords[0].setY(coord.getY());
+	setOutputDirty();
+}
+void PointObject::getPosition(qint64& x, qint64& y) const
+{
+	x = coords[0].rawX();
+	y = coords[0].rawY();
+}
+MapCoordF PointObject::getCoordF() const
+{
+	return MapCoordF(coords[0]);
 }
 void PointObject::setRotation(float new_rotation)
 {
@@ -1168,7 +1470,6 @@ Object* TextObject::duplicate()
 {
 	TextObject* new_text = new TextObject(symbol);
 	new_text->coords = coords;
-	new_text->path_closed = path_closed;
 	
 	new_text->text = text;
 	new_text->h_align = h_align;
@@ -1177,20 +1478,34 @@ Object* TextObject::duplicate()
 	return new_text;
 }
 
-void TextObject::setAnchorPosition(MapCoord position)
+void TextObject::setAnchorPosition(qint64 x, qint64 y)
 {
 	coords.resize(1);
-	coords[0] = position;
+	coords[0].setRawX(x);
+	coords[0].setRawY(y);
 	setOutputDirty();
 }
-MapCoord TextObject::getAnchorPosition()
+void TextObject::setAnchorPosition(MapCoordF coord)
 {
-	return coords[0];
+	coords.resize(1);
+	coords[0].setX(coord.getX());
+	coords[0].setY(coord.getY());
+	setOutputDirty();
 }
-void TextObject::setBox(MapCoord midpoint, double width, double height)
+void TextObject::getAnchorPosition(qint64& x, qint64& y) const
+{
+	x = coords[0].rawX();
+	y = coords[0].rawY();
+}
+MapCoordF TextObject::getAnchorCoordF() const
+{
+	return MapCoordF(coords[0]);
+}
+void TextObject::setBox(qint64 mid_x, qint64 mid_y, double width, double height)
 {
 	coords.resize(2);
-	coords[0] = midpoint;
+	coords[0].setRawX(mid_x);
+	coords[0].setRawY(mid_y);
 	coords[1] = MapCoord(width, height);
 	setOutputDirty();
 }
