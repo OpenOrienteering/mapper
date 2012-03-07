@@ -136,6 +136,7 @@ void Object::load(QFile* file, int version, Map* map)
 	}
 	
 	output_dirty = true;
+	update(true, false);
 }
 
 bool Object::update(bool force, bool remove_old_renderables)

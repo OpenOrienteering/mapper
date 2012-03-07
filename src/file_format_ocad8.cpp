@@ -47,7 +47,7 @@ Importer *OCAD8FileFormat::createImporter(const QString &path, Map *map, MapView
 
 
 // Mapper assumes approx. 100 dpi, but OCAD uses a different value.
-const float OCAD8FileImport::ocad_pt_in_mm = 25.4f / 83;
+const float OCAD8FileImport::ocad_pt_in_mm = 0.259868554842f;
 
 OCAD8FileImport::OCAD8FileImport(const QString &path, Map *map, MapView *view) : Importer(path, map, view), file(NULL)
 {
@@ -161,23 +161,24 @@ void OCAD8FileImport::doImport() throw (FormatException)
     // Load objects
 
     // Place all objects into a single OCAD import layer
-    MapLayer* layer = new MapLayer(QObject::tr("OCAD import layer"), map);
-    for (OCADObjectIndex *idx = ocad_objidx_first(file); idx != NULL; idx = ocad_objidx_next(file, idx))
-    {
-        for (int i = 0; i < 256; i++)
-        {
-            OCADObjectEntry *entry = ocad_object_entry_at(file, idx, i);
-            OCADObject *ocad_obj = ocad_object(file, entry);
-            if (ocad_obj != NULL)
-            {
-                Object *object = importObject(ocad_obj);
-                if (object != NULL) {
-                    layer->objects.push_back(object);
-                    object_count++;
-                }
-            }
-        }
-    }
+	MapLayer* layer = new MapLayer(QObject::tr("OCAD import layer"), map);
+	for (OCADObjectIndex *idx = ocad_objidx_first(file); idx != NULL; idx = ocad_objidx_next(file, idx))
+	{
+		for (int i = 0; i < 256; i++)
+		{
+			OCADObjectEntry *entry = ocad_object_entry_at(file, idx, i);
+			OCADObject *ocad_obj = ocad_object(file, entry);
+			if (ocad_obj != NULL)
+			{
+				Object *object = importObject(ocad_obj);
+				if (object != NULL) {
+					layer->objects.push_back(object);
+					object->update(true, false);
+					object_count++;
+				}
+			}
+		}
+	}
     map->layers.resize(1);
     map->layers[0] = layer;
     map->current_layer_index = 0;
