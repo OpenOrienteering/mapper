@@ -1466,6 +1466,7 @@ TextObject::TextObject(Symbol* symbol): Object(Object::Text, symbol)
 	v_align = AlignVCenter;
 	rotation = 0;
 }
+
 Object* TextObject::duplicate()
 {
 	TextObject* new_text = new TextObject(symbol);
@@ -1540,6 +1541,7 @@ QTransform TextObject::calcMapToTextTransform()
 void TextObject::setText(const QString& text)
 {
 	this->text = text;
+	this->text.remove(QChar('\r'));
 	setOutputDirty();
 }
 
@@ -1562,43 +1564,166 @@ void TextObject::setRotation(float new_rotation)
 
 int TextObject::calcTextPositionAt(MapCoordF coord, bool find_line_only)
 {
-	TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);
-	QFontMetricsF metrics(text_symbol->getQFont());
+	return calcTextPositionAt(calcMapToTextTransform().map(coord.toQPointF()), find_line_only);
+}
 	
-	QTransform transform = calcMapToTextTransform();
-	QPointF point = transform.map(coord.toQPointF());
-	
+int TextObject::calcTextPositionAt(QPointF point, bool find_line_only)
+{
 	for (int line = 0; line < getNumLineInfos(); ++line)
 	{
 		TextObjectLineInfo* line_info = getLineInfo(line);
-		if (line_info->line_y - metrics.ascent() > point.y())
+		if (line_info->line_y - line_info->ascent > point.y())
 			return -1;	// NOTE: Only true as long as every line has a bigger or equal y value than the line before
 		
 		if (point.x() < line_info->line_x - MapEditorTool::click_tolerance) continue;
-		if (point.y() > line_info->line_y + metrics.descent()) continue;
-		if (point.x() > line_info->line_x + metrics.width(line_info->text) + MapEditorTool::click_tolerance) continue;
+		if (point.y() > line_info->line_y + line_info->descent) continue;
+		if (point.x() > line_info->line_x + line_info->width + MapEditorTool::click_tolerance) continue;
 		
 		// Position in the line rect.
 		if (find_line_only)
 			return line;
 		else
-			return line_info->start_index + findLetterPosition(line_info, point, metrics);
+			return line_info->getCharacterIndex(point);
 	}
 	return -1;
 }
-int TextObject::findLetterPosition(TextObjectLineInfo* line_info, QPointF point, const QFontMetricsF& metrics)
+
+int TextObject::findLineForIndex(int index)
+{
+	int line_num = 0;
+	for (int line = 1; line < getNumLineInfos(); ++line)
+	{
+		TextObjectLineInfo* line_info = getLineInfo(line);
+		if (index < line_info->start_index)
+			break;
+		line_num = line;
+	}
+	return line_num;
+}
+
+TextObjectLineInfo* TextObject::findLineInfoForIndex(int index)
+{
+	TextObjectLineInfo* line_info = getLineInfo(0);
+	for (int line = 1; line < getNumLineInfos(); ++line)
+	{
+		TextObjectLineInfo* next_line_info = getLineInfo(line);
+		if (index < next_line_info->start_index)
+			break;
+		line_info = next_line_info;
+	}
+	return line_info;
+}
+
+void TextObject::prepareLineInfos(bool word_wrap, double max_width)
+{
+	TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);
+	QFontMetricsF metrics = text_symbol->getFontMetrics();
+	double line_spacing = text_symbol->getLineSpacing() * metrics.lineSpacing();
+	
+	int text_end = text.length();
+	const QChar   line_break('\n');
+	const QRegExp part_break("[\n\t]");
+	const QRegExp word_break(word_wrap ? "[\n\t ]" : "[\n\t]");
+	
+	line_infos.clear();
+	int line_num = 0;
+	double line_y = 0.0;
+	int pos = 0;
+	while(pos <= text_end) 
+	{
+		// Initialize input line
+		double line_width = 0.0;
+		int line_start = pos;
+		int line_end = text.indexOf(line_break, line_start);
+		if (line_end == -1)
+			line_end = text_end;
+
+		std::vector<TextObjectPartInfo> part_infos;
+		
+		double part_x = 0.0;
+		while (pos <= line_end)
+		{
+			// Initialize part 
+			int part_start = pos;
+			int part_end = text.indexOf(part_break, pos);
+			if (part_end == -1)
+				part_end = text_end;
+			
+			QString part = text.mid(part_start, part_end - part_start);
+			double part_width = metrics.width(part);
+			
+			bool last_part = false;
+			if (word_wrap)
+			{
+				// shrink overflowing part to maximum possible size
+				while (part_x + part_width > max_width && part_end > 0)
+				{
+					last_part = true;
+					int new_part_end =  text.lastIndexOf(word_break, part_end - 1);
+					if (new_part_end < part_start)
+					{
+						// part won't fit
+						if (part_start == line_start)
+						{
+							// Never wrap first part of input line
+							break;
+						}
+						else
+						{
+							// terminate current input line with empty part
+							part_end = part_start;
+							part = "";
+							part_width = 0.0;
+							break;
+						}
+					}
+					part_end = new_part_end;
+					part = text.mid(part_start, part_end - part_start);
+					part_width = metrics.width(part);
+				}
+			}
+			if (last_part)
+				line_end = part_end;
+				
+			// Add the current part
+			part_infos.push_back(TextObjectPartInfo(part, part_start, part_end, part_x, metrics.width(part), metrics));
+			line_width = part_x + part_width;
+			
+			// Advance to next part
+			pos = part_end + 1;
+			part_x = text_symbol->getNextTab(part_x + part_width);
+			if (word_wrap && part_x >= max_width)
+				// terminate current input line
+				break; 
+		}
+		
+		line_infos.push_back(TextObjectLineInfo(line_start, line_end, 0.0, line_y, line_width, metrics.ascent(), metrics.descent(), part_infos));
+
+		// Advance to next line
+		line_y += line_spacing;
+		line_num++;
+		pos = line_end + 1;
+	}
+}
+
+float TextObjectPartInfo::getX(int pos) const
+{
+	return part_x + metrics.width(text.left(pos - start_index));
+}
+
+int TextObjectPartInfo::getCharacterIndex(const QPointF& point) const
 {
 	int left = 0;
-	int right = line_info->text.length();
+	int right = text.length();
 	while (right != left)	
 	{
 		int middle = (left + right) / 2;
-		float x = line_info->line_x + metrics.width(line_info->text.left(middle));
+		float x = part_x + metrics.width(text.left(middle));
 		if (point.x() >= x)
 		{
 			if (middle >= right)
 				return right;
-			float next = line_info->line_x + metrics.width(line_info->text.left(middle + 1));
+			float next = part_x + metrics.width(text.left(middle + 1));
 			if (point.x() < next)
 				if (point.x() < (x + next) / 2)
 					return middle;
@@ -1611,7 +1736,7 @@ int TextObject::findLetterPosition(TextObjectLineInfo* line_info, QPointF point,
 		{
 			if (middle <= 0)
 				return 0;
-			float prev = line_info->line_x + metrics.width(line_info->text.left(middle - 1));
+			float prev = part_x + metrics.width(text.left(middle - 1));
 			if (point.x() > prev)
 				if (point.x() > (x + prev) / 2)
 					return middle;
@@ -1623,13 +1748,47 @@ int TextObject::findLetterPosition(TextObjectLineInfo* line_info, QPointF point,
 	}
 	return right;
 }
-TextObjectLineInfo* TextObject::findLineInfoForIndex(int index)
+
+float TextObjectLineInfo::getX(int pos) const
 {
-	for (int line = 0; line < getNumLineInfos() - 1; ++line)
+	if (pos == 0)
+		return line_x;
+	
+	pos += start_index;
+	int num_parts = part_infos.size();
+	int i = 0;
+	for ( ; i < num_parts; i++)
 	{
-		TextObjectLineInfo* line_info = getLineInfo(line);
-		if (index <= line_info->end_index + (text[line_info->start_index] == '\n' ? 0 : 1))
-			return line_info;
+		const TextObjectPartInfo& part(part_infos.at(i));
+		if (pos <= part.end_index)
+			return part.getX(pos);
 	}
-	return getLineInfo(getNumLineInfos() - 1);
+	
+	return line_x + width;
+}
+
+int TextObjectLineInfo::getCharacterIndex(const QPointF& point) const
+{
+// TODO: evaluate std::vector<TextObjectPartInfo>::iterator it;
+	int num_parts = part_infos.size();
+	for (int i=0; i < num_parts; i++)
+	{
+		if (part_infos.at(i).part_x > point.x())
+		{
+			if (i==0)
+				// before first part
+				return start_index;
+			else if (part_infos.at(i-1).part_x + part_infos.at(i-1).width < point.x())
+			{
+				// between parts
+				return (point.x() - (part_infos.at(i-1).part_x + part_infos.at(i-1).width) < part_infos.at(i).part_x - point.x())
+				  ? part_infos.at(i-1).end_index
+				  : part_infos.at(i).start_index;
+			}
+			else
+				// inside part
+				return part_infos.at(i-1).start_index + part_infos.at(i-1).getCharacterIndex(point);
+		}
+	}
+	return part_infos.back().start_index + part_infos.at(num_parts-1).getCharacterIndex(point);
 }

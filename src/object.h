@@ -236,18 +236,60 @@ private:
 	float rotation;	// 0 to 2*M_PI
 };
 
-struct TextObjectLineInfo
+struct TextObjectPartInfo
 {
-	QString text;			// substring shown in this line
+	QString text;			// substring shown in this part
 	int start_index;		// line start character index in original string
 	int end_index;
-	QRectF bounding_box;	// in text transformation
-	double line_x;			// left endpoint of the baseline of this line of text in text coordinates
-	double line_y;
+	double part_x;			// left endpoint of the baseline of this part of text in text coordinates
+	double width;
+	QFontMetricsF metrics;
 	
-	inline TextObjectLineInfo(const QString& text, int start_index, int end_index, const QRectF& bounding_box, double line_x, double line_y)
-	 : text(text), start_index(start_index), end_index(end_index), bounding_box(bounding_box), line_x(line_x), line_y(line_y) {}
+	inline TextObjectPartInfo(const QString& text, int start_index, int end_index, double part_x, double width, const QFontMetricsF& metrics)
+	 : text(text), start_index(start_index), end_index(end_index), part_x(part_x), width(width), metrics(metrics) {}
+	
+	/* Get the horizontal position of a particular character in a part.
+	 * @param pos the index of the character, relative to start_index
+	 * @ret   the character's horizontal position
+	 */
+	float getX(int pos) const;
+	
+	/* Get the index of the character in the original string that is pointed to by a point
+	 */
+	 int getCharacterIndex(const QPointF& point) const;
 };
+
+typedef std::vector<TextObjectPartInfo> PartInfoContainer;
+
+struct TextObjectLineInfo
+{
+	int start_index;		// line start character index in original string
+	int end_index;			// line end character index in original string
+	double line_x;			// left endpoint of the baseline of this line of text in text coordinates
+	double line_y;			// vertical position of the baseline of this line of text in text coordinates
+	double width;			// total width of the text in this line
+	double ascent;			// 
+	double descent;			// 
+	PartInfoContainer part_infos; // the distinct parts of the line
+	
+	inline TextObjectLineInfo(int start_index, int end_index, double line_x, double line_y, double width, double ascent, double descent, PartInfoContainer& part_infos)
+	 : start_index(start_index), end_index(end_index), line_x(line_x), line_y(line_y), width(width), ascent(ascent), descent(descent), part_infos(part_infos) {
+	   assert(start_index == part_infos.front().start_index);
+	   assert(end_index == part_infos.back().end_index);
+	}
+	
+	/* Get the horizontal position of a particular character in a line.
+	 * @param pos the index of the character, relative to start_index
+	 * @ret   the character's horizontal position
+	 */
+	float getX(int pos) const;
+	
+	/* Get the index of the character in the original string that is pointed to by a point
+	 */
+	int getCharacterIndex(const QPointF& point) const;
+};
+
+typedef std::vector<TextObjectLineInfo> LineInfoContainer;
 
 /// Object type which can only be used for text symbols.
 /// Contains either 1 coordinate (single anchor point) or 2 coordinates (word wrap box: midpoint coordinate and width/height in second coordinate)
@@ -298,12 +340,13 @@ public:
 	
 	inline int getNumLineInfos() const {return (int)line_infos.size();}
 	inline TextObjectLineInfo* getLineInfo(int i) {return &line_infos[i];}
-	inline void clearLineInfos() {line_infos.clear();}
-	inline void addLineInfo(TextObjectLineInfo line_info) {line_infos.push_back(line_info);}
 	
+	int calcTextPositionAt(QPointF coord, bool find_line_only);	    // returns -1 if the coordinate is not at a text position
 	int calcTextPositionAt(MapCoordF coord, bool find_line_only);	// returns -1 if the coordinate is not at a text position
-	int findLetterPosition(TextObjectLineInfo* line_info, QPointF point, const QFontMetricsF& metrics);
+	int findLineForIndex(int index);
 	TextObjectLineInfo* findLineInfoForIndex(int index);
+	
+	void prepareLineInfos(bool word_wrap, double max_width);
 	
 private:
 	QString text;
@@ -312,7 +355,7 @@ private:
 	float rotation;	// 0 to 2*M_PI
 	
 	/// when renderables are generated for this object by a call to update(), this is filled with information about the generated lines
-	std::vector<TextObjectLineInfo> line_infos;
+	LineInfoContainer line_infos;
 };
 
 #endif

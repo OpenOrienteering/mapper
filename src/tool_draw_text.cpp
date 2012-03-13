@@ -423,6 +423,8 @@ bool TextObjectEditorHelper::mouseReleaseEvent(QMouseEvent* event, MapCoordF map
 
 bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 {
+// FIXME: add Escape
+// FIXME: repair weird Shift+Left/Right - needs some cursor position
 	if (event->key() == Qt::Key_Backspace)
 	{
 		QString text = object->getText();
@@ -491,6 +493,40 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 			selection_start = selection_end;
 		emit(selectionChanged(false));
 	}
+	else if (event->key() == Qt::Key_Up)
+	{
+		int line_num = object->findLineForIndex(selection_start);
+		TextObjectLineInfo* line_info = object->getLineInfo(line_num);
+		if (line_info->start_index == 0)
+			return true;
+		
+		double x = line_info->getX(selection_start - line_info->start_index);
+		TextObjectLineInfo* prev_line_info = object->getLineInfo(line_num-1);
+		double y = prev_line_info->line_y;
+		x = qMax( prev_line_info->line_x, qMin(x, prev_line_info->line_x + prev_line_info->width));
+		
+		selection_start = object->calcTextPositionAt(QPointF(x,y), false);
+		if (!(event->modifiers() & Qt::ShiftModifier))
+			selection_end = selection_start;
+		emit(selectionChanged(false));
+	}
+	else if (event->key() == Qt::Key_Down)
+	{
+		int line_num = object->findLineForIndex(selection_end);
+		TextObjectLineInfo* line_info = object->getLineInfo(line_num);
+		if (line_info->end_index >= object->getText().length())
+			return true;
+		
+		double x = line_info->getX(selection_end - line_info->start_index);
+		TextObjectLineInfo* next_line_info = object->getLineInfo(line_num+1);
+		double y = next_line_info->line_y;
+		x = qMax( next_line_info->line_x, qMin(x, next_line_info->line_x + next_line_info->width));
+		
+		selection_end = object->calcTextPositionAt(QPointF(x,y), false);
+		if (!(event->modifiers() & Qt::ShiftModifier))
+			selection_start = selection_end;
+		emit(selectionChanged(false));
+	}
 	else if (event->key() == Qt::Key_Home)
 	{
 		int destination = (event->modifiers() & Qt::ControlModifier) ? 0 : (object->findLineInfoForIndex(selection_start)->start_index);
@@ -515,11 +551,7 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 		if (event->modifiers() & Qt::ControlModifier)
 			destination = object->getText().length();
 		else
-		{
-			TextObjectLineInfo* line_info = object->findLineInfoForIndex(selection_start);
-			bool empty_line = (object->getText()[line_info->start_index] == '\n');
-			destination = line_info->end_index + (empty_line ? 0 : 1);
-		}
+			destination = object->findLineInfoForIndex(selection_start)->end_index;
 		
 		if (event->modifiers() & Qt::ShiftModifier)
 		{
@@ -555,14 +587,17 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 		if (mime_data->hasText())
 			insertText(clipboard->text());
 	}
+	else if (event->key() == Qt::Key_Tab)
+		insertText("\t");
 	else if (event->key() == Qt::Key_Return)
 		insertText("\n");
-	else if (!event->text().isEmpty())
+	else if (!event->text().isEmpty() && event->text()[0].isPrint() )
 		insertText(event->text());
 	else
 		return false;
 	return true;
 }
+
 bool TextObjectEditorHelper::keyReleaseEvent(QKeyEvent* event)
 {
 	// Nothing ... yet?
@@ -577,24 +612,17 @@ void TextObjectEditorHelper::draw(QPainter* painter, MapWidget* widget)
 	painter->setOpacity(0.55f);
 	painter->setTransform(object->calcTextToMapTransform(), true);
 	
-	TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(object->getSymbol());
-	QFontMetricsF metrics(text_symbol->getQFont());
-	
 	QRectF selection_rect;
 	int line = 0;
-	while (getNextLinesSelectionRect(metrics, line, selection_rect))
+	while (getNextLinesSelectionRect(line, selection_rect))
 		painter->drawRect(selection_rect);
 }
 void TextObjectEditorHelper::includeDirtyRect(QRectF& rect)
 {
-	TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(object->getSymbol());
-	QFontMetricsF metrics(text_symbol->getQFont());
-	
 	QTransform transform = object->calcTextToMapTransform();
-	
 	QRectF selection_rect;
 	int line = 0;
-	while (getNextLinesSelectionRect(metrics, line, selection_rect))
+	while (getNextLinesSelectionRect(line, selection_rect))
 		rectIncludeSafe(rect, transform.mapRect(selection_rect));
 }
 
@@ -631,7 +659,7 @@ void TextObjectEditorHelper::updateDragging(MapCoordF map_coord)
 		}
 	}
 }
-bool TextObjectEditorHelper::getNextLinesSelectionRect(const QFontMetricsF& metrics, int& line, QRectF& out)
+bool TextObjectEditorHelper::getNextLinesSelectionRect(int& line, QRectF& out)
 {
 	for (; line < object->getNumLineInfos(); ++line)
 	{
@@ -642,22 +670,25 @@ bool TextObjectEditorHelper::getNextLinesSelectionRect(const QFontMetricsF& metr
 			break;
 		
 		int start_index = qMax(0, selection_start - line_info->start_index);
-		int end_index = qMax(0, qMin(line_info->text.length(), selection_end - line_info->start_index));
+		int end_index = qMax(0, qMin(line_info->end_index, selection_end) - line_info->start_index);
 		
 		float left, right;
 		if (start_index == end_index)
 		{
-			left = metrics.width(line_info->text.left(start_index));
-			right = left + 0.05f * metrics.height();
+			// the regular cursor
+// FIXME: force minimum visible size 
+			float delta = 0.045f * line_info->ascent;
+			left = line_info->getX(start_index) - delta;
+			right = left + delta + delta;
 		}
 		else
 		{
-			left = metrics.width(line_info->text.left(start_index));
-			right = metrics.width(line_info->text.left(end_index));
+			left = line_info->getX(start_index);
+			right = line_info->getX(end_index);
 		}
 		
 		++line;
-		out = QRectF(line_info->line_x + left, line_info->line_y - metrics.ascent(), right - left, metrics.height());
+		out = QRectF(left, line_info->line_y - line_info->ascent, right - left, line_info->ascent + line_info->descent);
 		return true;
 	}
 	return false;

@@ -579,6 +579,76 @@ TextRenderable::TextRenderable(TextSymbol* symbol, double line_x, double line_y,
 	
 	assert(extent.right() < 999999);	// assert if bogus values are returned
 }
+
+TextRenderable::TextRenderable(TextSymbol* symbol, TextObjectLineInfo* line_info, double anchor_x, double anchor_y, double rotation)
+{
+	const QFont& font(symbol->getQFont());
+	const QFontMetricsF& metrics(symbol->getFontMetrics());
+	color_priority = symbol->getColor()->priority;
+	this->anchor_x = anchor_x;
+	this->anchor_y = anchor_y;
+	this->rotation = rotation;
+	scale_factor = symbol->getFontSize() / TextSymbol::internal_point_size;
+	
+	path.setFillRule(Qt::WindingFill);	// Otherwise, when text and an underline intersect, holes appear
+	
+	double line_y = line_info->line_y;
+
+	double underline_x0 = 0.0;
+	double underline_y0 = line_info->line_y + metrics.underlinePos();
+	double underline_y1 = underline_y0 + metrics.lineWidth();
+	
+	int num_parts = line_info->part_infos.size();
+	for (int i=0; i < num_parts; i++)
+	{
+		TextObjectPartInfo& part(line_info->part_infos.at(i));
+		if (font.underline())
+		{
+			if (i > 0)
+			{
+				// draw underline for gap between parts as rectangle
+				// TODO: watch out for inconsistency between text and gap underline
+				path.moveTo(underline_x0, underline_y0);
+				path.lineTo(part.part_x,  underline_y0);
+				path.lineTo(part.part_x,  underline_y1);
+				path.lineTo(underline_x0, underline_y1);
+				path.closeSubpath();
+			}
+			underline_x0 = part.part_x;
+		}
+		path.addText(part.part_x, line_y, font, part.text);
+	}
+	
+	// Get extent
+	extent = path.controlPointRect();
+	extent = QRectF(scale_factor * extent.left(), scale_factor * extent.top(), scale_factor * extent.width(), scale_factor * extent.height());
+	if (rotation != 0)
+	{
+		float rcos = cos(-rotation);
+		float rsin = sin(-rotation);
+		
+		std::vector<QPointF> extent_corners;
+		extent_corners.push_back(extent.topLeft());
+		extent_corners.push_back(extent.topRight());
+		extent_corners.push_back(extent.bottomRight());
+		extent_corners.push_back(extent.bottomLeft());
+		
+		for (int i = 0; i < 4; ++i)
+		{
+			float x = extent_corners[i].x() * rcos - extent_corners[i].y() * rsin;
+			float y = extent_corners[i].y() * rcos + extent_corners[i].x() * rsin;
+			
+			if (i == 0)
+				extent = QRectF(x, y, 0, 0);
+			else
+				rectInclude(extent, QPointF(x, y));
+		}
+	}
+	extent = QRectF(extent.left() + anchor_x, extent.top() + anchor_y, extent.width(), extent.height());
+	
+	assert(extent.right() < 999999);	// assert if bogus values are returned
+}
+
 TextRenderable::TextRenderable(const TextRenderable& other) : Renderable(other)
 {
 	path = other.path;

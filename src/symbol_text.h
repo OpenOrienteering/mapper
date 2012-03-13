@@ -65,6 +65,9 @@ public:
 	inline bool isUnderlined() const {return underline;}
 	inline float getLineSpacing() const {return line_spacing;}
 	inline const QFont& getQFont() const {return qfont;}
+	inline const QFontMetricsF& getFontMetrics() const { return metrics; }
+	
+	double getNextTab(double pos) const;
 	
 	static const float pt_in_mm;	// 1 pt in mm
 	static const float internal_point_size;
@@ -73,10 +76,8 @@ protected:
 	virtual void saveImpl(QFile* file, Map* map);
 	virtual bool loadImpl(QFile* file, int version, Map* map);
 	
-	bool getNextLine(const QString& text, int& pos, QString& out_line, bool word_wrap, double max_width, const QFontMetricsF& metrics);
-	bool isSpace(QChar c);
-	
 	QFont qfont;
+	QFontMetricsF metrics;
 	
 	MapColor* color;
 	QString font_family;
@@ -85,6 +86,8 @@ protected:
 	bool italic;
 	bool underline;
 	float line_spacing;		// as factor of original line spacing
+	
+	double em;
 };
 
 class TextSymbolSettings : public QGroupBox
