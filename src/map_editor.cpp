@@ -42,6 +42,7 @@
 #include "tool_cut.h"
 #include "tool_cut_hole.h"
 #include "tool_rotate.h"
+#include "object_text.h"
 
 // ### MapEditorController ###
 

@@ -26,7 +26,7 @@
 #include "symbol_setting_dialog.h"
 #include "map_color.h"
 #include "util.h"
-#include "object.h"
+#include "object_text.h"
 
 const float TextSymbol::pt_in_mm = 0.2526f;
 const float TextSymbol::internal_point_size = 64;

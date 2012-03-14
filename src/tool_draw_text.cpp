@@ -29,7 +29,7 @@
 #include "symbol_dock_widget.h"
 #include "symbol.h"
 #include "util.h"
-#include "object.h"
+#include "object_text.h"
 #include "symbol_text.h"
 
 QCursor* DrawTextTool::cursor = NULL;

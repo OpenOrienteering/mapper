@@ -29,6 +29,8 @@
 #include "object.h"
 #include "template.h"
 
+class TextObject;
+
 class OCAD8FileFormat : public Format
 {
 public:
