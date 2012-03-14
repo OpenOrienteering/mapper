@@ -29,6 +29,7 @@
 #include "symbol_area.h"
 #include "symbol_text.h"
 #include "object.h"
+#include "object_text.h"
 
 
 XMLBuilder::XMLBuilder(const QString &rootElement, const QString &rootNamespace)

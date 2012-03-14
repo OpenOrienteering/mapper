@@ -27,6 +27,7 @@
 #include "symbol_area.h"
 #include "symbol_text.h"
 #include "template_image.h"
+#include "object_text.h"
 
 #if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
 #define currentMSecsSinceEpoch() currentDateTime().toTime_t() * 1000

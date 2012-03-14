@@ -25,6 +25,7 @@
 
 #include "util.h"
 #include "object.h"
+#include "object_text.h"
 #include "symbol_line.h"
 #include "symbol_point.h"
 #include "symbol_area.h"
