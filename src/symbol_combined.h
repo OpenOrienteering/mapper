@@ -43,7 +43,7 @@ public:
 	virtual ~CombinedSymbol();
     virtual Symbol* duplicate();
 	
-	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output);
+	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
     virtual bool containsColor(MapColor* color);
     virtual bool symbolChanged(Symbol* old_symbol, Symbol* new_symbol);

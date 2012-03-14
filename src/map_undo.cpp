@@ -79,6 +79,7 @@ ObjectContainingUndoStep::~ObjectContainingUndoStep()
 void ObjectContainingUndoStep::addObject(int existing_index, Object* object)
 {
 	affected_objects.push_back(existing_index);
+	object->setMap(map); // this is necessary so the object will find the symbols and colors it references when the undo step is saved
 	objects.push_back(object);
 }
 void ObjectContainingUndoStep::addObject(Object* existing, Object* object)
@@ -318,7 +319,7 @@ UndoStep* SwitchDashesUndoStep::undo()
 	int size = (int)affected_objects.size();
 	for (int i = 0; i < size; ++i)
 	{
-		Object* object = layer->getObject(affected_objects[i]);
+		PathObject* object = reinterpret_cast<PathObject*>(layer->getObject(affected_objects[i]));
 		object->reverse();
 		object->update(true);
 		

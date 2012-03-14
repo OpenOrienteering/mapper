@@ -43,6 +43,7 @@ struct MapColor;
 class MapWidget;
 class MapView;
 class Symbol;
+class CombinedSymbol;
 class Template;
 class Object;
 class MapEditorController;
@@ -194,13 +195,13 @@ public:
 	
 	inline int getNumLayers() const {return (int)layers.size();}
 	inline MapLayer* getLayer(int i) const {return layers[i];}
-	inline MapLayer* getCurrentLayer() const {return current_layer;}
+	inline MapLayer* getCurrentLayer() const {return (current_layer_index < 0) ? NULL : layers[current_layer_index];}
 	inline int getCurrentLayerIndex() const {return current_layer_index;}
 	// TODO: Layer management
 	
 	int getNumObjects();
 	int addObject(Object* object, int layer_index = -1);						// returns the index of the added object in the layer
-	void deleteObject(Object* object, bool remove_only);						// remove_only will remove the object from the map, but not call "delete object";
+	void deleteObject(Object* object, bool remove_only);						// remove_only will remove the object from the map, but not call "delete object"; be sure to call removeObjectFromSelection() if necessary
 	void setObjectsDirty();
 	
 	void setObjectAreaDirty(QRectF map_coords_rect);
@@ -259,6 +260,7 @@ public:
 	static MapColor* getCoveringRed() {return &covering_red;}
 	static LineSymbol* getCoveringWhiteLine() {return covering_white_line;}
 	static LineSymbol* getCoveringRedLine() {return covering_red_line;}
+	static CombinedSymbol* getCoveringCombinedLine() {return covering_combined_line;}
 	
 signals:
 	void gotUnsavedChanges();
@@ -317,7 +319,6 @@ private:
 	LayerVector layers;
 	ObjectSelection object_selection;
 	UndoManager object_undo_manager;
-	MapLayer* current_layer;
 	int current_layer_index;
 	WidgetVector widgets;
 	ViewVector views;
@@ -353,7 +354,7 @@ private:
 	static MapColor covering_red;
 	static LineSymbol* covering_white_line;
 	static LineSymbol* covering_red_line;
-	
+	static CombinedSymbol* covering_combined_line;
 };
 
 /// Contains all visibility information for a template. This is stored in the MapViews

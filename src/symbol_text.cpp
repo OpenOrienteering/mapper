@@ -31,7 +31,7 @@
 const float TextSymbol::pt_in_mm = 0.2526f;
 const float TextSymbol::internal_point_size = 64;
 
-TextSymbol::TextSymbol() : Symbol(Symbol::Text)
+TextSymbol::TextSymbol() : Symbol(Symbol::Text), metrics(QFont())
 {
 	color = NULL;
 	font_family = "Arial";
@@ -59,18 +59,14 @@ Symbol* TextSymbol::duplicate()
 	return new_text;
 }
 
-void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output)
+void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
 {
 	// This method always creates at least one LineInfo, which makes the implementation of TextObjectEditorHelper easier
 	
 	TextObject* text_object = reinterpret_cast<TextObject*>(object);
-	text_object->clearLineInfos();
 	
 	if (!color)
 		return;
-	
-	QFontMetricsF metrics(qfont);
-	const QString& text = text_object->getText();
 	
 	bool use_box = false;
 	double anchor_x = coords[0].getX();
@@ -88,6 +84,8 @@ void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 	box_width *= scaling;
 	box_height *= scaling;
 	
+	text_object->prepareLineInfos(use_box, box_width);
+	
 	// Calculate the start y coordinate at the text baseline in a coordinate system with origin at anchor_y
 	double start_y = 0;
 	TextObject::VerticalAlignment v_align = text_object->getVerticalAlignment();
@@ -100,19 +98,7 @@ void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 	}
 	else if (v_align == TextObject::AlignBottom || v_align == TextObject::AlignVCenter)
 	{
-		int num_lines;
-		if (use_box)
-		{
-			// Determine height while respecting word wrap
-			num_lines = 0;
-			int pos = -1;
-			QString line;
-			while (getNextLine(text, pos, line, use_box, box_width, metrics))
-				++num_lines;
-		}
-		else
-			num_lines = text.count('\n') + 1;
-		
+		int num_lines = text_object->getNumLineInfos();
 		double height = metrics.ascent() + (num_lines - 1) * (line_spacing * metrics.lineSpacing());
 		
 		if (v_align == TextObject::AlignVCenter)
@@ -122,7 +108,7 @@ void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 	}
 	
 	// Calculate the start x coordinate
-	double start_x = 0;
+	double start_x = 0.0;
 	TextObject::HorizontalAlignment h_align = text_object->getHorizontalAlignment();
 	if (use_box)
 	{
@@ -133,28 +119,32 @@ void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 	}
 	
 	// Create a renderable for every line
-	int pos = -1;
-	QString line;
-	double line_y = start_y;
-	while (getNextLine(text, pos, line, use_box, box_width, metrics))
+	int num_lines = text_object->getNumLineInfos();
+	for (int i = 0; i < num_lines; i++)
 	{
+		TextObjectLineInfo* line_info = text_object->getLineInfo(i);
+
+		line_info->line_y += start_y;
+
 		double line_x = start_x;
-		QRectF bounding_rect = metrics.boundingRect(line);
-		double line_width = metrics.width(line);
 		if (h_align != TextObject::AlignLeft)
 		{
 			if (h_align == TextObject::AlignHCenter)
-				line_x -= 0.5 * line_width;
+				line_x -= 0.5 * line_info->width;
 			else
-				line_x -= line_width;
+				line_x -= line_info->width;
 		}
+		line_info->line_x += line_x;
 		
-		output.push_back(new TextRenderable(this, line_x, line_y, anchor_x, anchor_y, text_object->getRotation(), line, qfont));
-		text_object->addLineInfo(TextObjectLineInfo(line, pos - line.length(), pos - qMin(1, line.length()), bounding_rect, line_x, line_y));
-		
-		line_y += line_spacing * metrics.lineSpacing();
+		int num_parts = line_info->part_infos.size();
+		for (int j = 0; j < num_parts; j++)
+		{
+			line_info->part_infos.at(j).part_x += line_x;
+		}
+		output.push_back(new TextRenderable(this, line_info, anchor_x, anchor_y, text_object->getRotation()));
 	}
 }
+
 void TextSymbol::colorDeleted(Map* map, int pos, MapColor* color)
 {
 	if (color == this->color)
@@ -188,6 +178,9 @@ void TextSymbol::updateQFont()
 	#endif
 	
 	qfont.setStyleStrategy(QFont::ForceOutline);
+
+	metrics = QFontMetricsF(qfont);
+	em = metrics.width("m");
 }
 
 void TextSymbol::saveImpl(QFile* file, Map* map)
@@ -217,52 +210,13 @@ bool TextSymbol::loadImpl(QFile* file, int version, Map* map)
 	return true;
 }
 
-bool TextSymbol::getNextLine(const QString& text, int& pos, QString& out_line, bool word_wrap, double max_width, const QFontMetricsF& metrics)
+double TextSymbol::getNextTab(double pos) const
 {
-	out_line = QString();
-	
-	int size = text.length();
-	if (pos >= size)
-		return false;
-	
-	if (word_wrap)
-	{
-		int last_space = -1;
-		int start = pos + 1;
-		do
-		{
-			++pos;
-			if (pos >= size || text[pos] == '\n')
-				break;
-			out_line += text[pos];
-			
-			if (!isSpace(text[pos]) && last_space >= 0 && metrics.boundingRect(out_line).width() > max_width)
-			{
-				// Break text at last space
-				pos = last_space;
-				out_line = text.mid(start, pos - start);
-				return true;
-			}
-			else if (isSpace(text[pos]))
-				last_space = pos;
-		} while (true);
-	}
-	else
-	{
-		int start = pos + 1;
-		do
-			++pos;
-		while (pos < size && text[pos] != '\n');
-		
-		out_line = text.mid(start, pos - start);
-	}
-	if (out_line.endsWith('\r'))
-		out_line.chop(1);
-	return true;
-}
-bool TextSymbol::isSpace(QChar c)
-{
-	return c == ' ' || c == '\t';
+	const double delta = em * 8.0;
+	double next_tab = (floor(pos / delta) + 1.0) * delta;
+	if (next_tab <= pos)
+		next_tab += em * 8.0;
+ 	return next_tab;
 }
 
 // ### TextSymbolSettings ###

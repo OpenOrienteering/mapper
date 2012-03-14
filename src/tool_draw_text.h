@@ -117,7 +117,7 @@ signals:
 private:
 	void insertText(QString text);
 	void updateDragging(MapCoordF map_coord);
-	bool getNextLinesSelectionRect(const QFontMetricsF& metrics, int& line, QRectF& out);
+	bool getNextLinesSelectionRect(int& line, QRectF& out);
 	
 	bool dragging;
 	int click_position;

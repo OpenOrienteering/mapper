@@ -63,16 +63,6 @@ public slots:
 	void textSelectionChanged(bool text_change);
 	
 protected:
-	/// The numbers correspond to the position in point-handles.png
-	enum PointHandleType
-	{
-		StartHandle = 0,
-		EndHandle = 1,
-		NormalHandle = 2,
-		CurveHandle = 3,
-		DashHandle = 4
-	};
-	
 	void updateStatusText();
 	void updatePreviewObjects();
 	void updateDirtyRect();
@@ -87,13 +77,6 @@ protected:
 	static bool sortObjects(const std::pair<int, Object*>& a, const std::pair<int, Object*>& b);
 	bool selectionInfosEqual(const SelectionInfoVector& a, const SelectionInfoVector& b);
 	void deleteOldRenderables();
-	
-	int findHoverPoint(QPointF cursor, Object* object, MapWidget* widget);
-	inline float distanceSquared(const QPointF& a, const QPointF& b) {float dx = b.x() - a.x(); float dy = b.y() - a.y(); return dx*dx + dy*dy;}
-	void drawPointHandles(QPainter* painter, Object* object, MapWidget* widget);
-	void drawPointHandle(QPainter* painter, QPointF point, PointHandleType type, bool active);
-	void drawCurveHandleLine(QPainter* painter, QPointF point, QPointF curve_handle, bool active);
-	void calculateBoxTextHandles();
 	
 	// Mouse handling
 	QPoint click_pos;

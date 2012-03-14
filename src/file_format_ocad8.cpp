@@ -47,7 +47,7 @@ Importer *OCAD8FileFormat::createImporter(const QString &path, Map *map, MapView
 
 
 // Mapper assumes approx. 100 dpi, but OCAD uses a different value.
-const float OCAD8FileImport::ocad_pt_in_mm = 25.4f / 83;
+const float OCAD8FileImport::ocad_pt_in_mm = 0.259868554842f;
 
 OCAD8FileImport::OCAD8FileImport(const QString &path, Map *map, MapView *view) : Importer(path, map, view), file(NULL)
 {
@@ -161,23 +161,24 @@ void OCAD8FileImport::doImport() throw (FormatException)
     // Load objects
 
     // Place all objects into a single OCAD import layer
-    MapLayer* layer = new MapLayer(QObject::tr("OCAD import layer"), map);
-    for (OCADObjectIndex *idx = ocad_objidx_first(file); idx != NULL; idx = ocad_objidx_next(file, idx))
-    {
-        for (int i = 0; i < 256; i++)
-        {
-            OCADObjectEntry *entry = ocad_object_entry_at(file, idx, i);
-            OCADObject *ocad_obj = ocad_object(file, entry);
-            if (ocad_obj != NULL)
-            {
-                Object *object = importObject(ocad_obj);
-                if (object != NULL) {
-                    layer->objects.push_back(object);
-                    object_count++;
-                }
-            }
-        }
-    }
+	MapLayer* layer = new MapLayer(QObject::tr("OCAD import layer"), map);
+	for (OCADObjectIndex *idx = ocad_objidx_first(file); idx != NULL; idx = ocad_objidx_next(file, idx))
+	{
+		for (int i = 0; i < 256; i++)
+		{
+			OCADObjectEntry *entry = ocad_object_entry_at(file, idx, i);
+			OCADObject *ocad_obj = ocad_object(file, entry);
+			if (ocad_obj != NULL)
+			{
+				Object *object = importObject(ocad_obj);
+				if (object != NULL) {
+					layer->objects.push_back(object);
+					object->update(true, false);
+					object_count++;
+				}
+			}
+		}
+	}
     map->layers.resize(1);
     map->layers[0] = layer;
     map->current_layer_index = 0;
@@ -585,7 +586,8 @@ PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
             element_symbol->line_width = convertSize(elt->width);
             element_symbol->color = convertColor(elt->color);
             PathObject* element_object = new PathObject(element_symbol);
-            fillPathCoords(element_object, elt->npts, elt->pts);
+            fillPathCoords(element_object, false, elt->npts, elt->pts);
+			element_object->recalculateParts();
             symbol->addElement(element_index, element_object, element_symbol);
         }
         else if (elt->type == OCAD_AREA_ELEMENT)
@@ -593,7 +595,8 @@ PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
             AreaSymbol* element_symbol = new AreaSymbol();
             element_symbol->color = convertColor(elt->color);
             PathObject* element_object = new PathObject(element_symbol);
-            fillPathCoords(element_object, elt->npts, elt->pts);
+            fillPathCoords(element_object, true, elt->npts, elt->pts);
+			element_object->recalculateParts();
             symbol->addElement(element_index, element_object, element_symbol);
         }
         p += (2 + elt->npts);
@@ -699,6 +702,7 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
         fillPathCoords(p, ocad_object->npts, (OCADPoint *)ocad_object->pts);
         p->path_closed = false;
         object = p;
+        return p;
     }
 
     if (object == NULL) return NULL;
@@ -778,7 +782,7 @@ bool OCAD8FileImport::isRasterImageFile(const QString &filename) const
 
 /** Translates the OCAD path given in the last two arguments into an Object.
  */
-void OCAD8FileImport::fillPathCoords(Object *object, s16 npts, OCADPoint *pts)
+void OCAD8FileImport::fillPathCoords(Object *object, bool is_area, s16 npts, OCADPoint *pts)
 {
     object->coords.resize(npts);
     s32 buf[3];
@@ -788,12 +792,35 @@ void OCAD8FileImport::fillPathCoords(Object *object, s16 npts, OCADPoint *pts)
         MapCoord &coord = object->coords[i];
         convertPoint(coord, buf[0], buf[1]);
         // We can support CurveStart, HolePoint, DashPoint.
-        // CurveStart needs to be applied to the main point though, not the control point
+        // CurveStart needs to be applied to the main point though, not the control point, and
+		// hole points need to bet set as the last point of a part of an area object instead of the first point of the next part
         if (buf[2] & PX_CTL1 && i > 0) object->coords[i-1].setCurveStart(true);
         // And dash points are automatic for certain symbols.
         if (buf[2] & (PY_DASH << 8)) coord.setDashPoint(true);
-        if (buf[2] & (PY_HOLE << 8)) coord.setHolePoint(true);
+        if (buf[2] & (PY_HOLE << 8))
+		{
+			if (is_area)
+				object->coords[i-1].setHolePoint(true);
+			else
+				coord.setHolePoint(true);
+		}
     }
+    
+    // For path objects, create closed parts where the position of the last point is equal to that of the first point
+    if (object->getType() == Object::Path)
+	{
+		int start = 0;
+		for (int i = 0; i < (int)object->coords.size(); ++i)
+		{
+			if (!object->coords[i].isHolePoint() && i < (int)object->coords.size() - 1)
+				continue;
+			
+			if (object->coords[i].isPositionEqualTo(object->coords[start]))
+				object->coords[i].setClosePoint(true);
+			
+			start = i + 1;
+		}
+	}
 }
 
 /** Translates an OCAD text object path into a Mapper text object specifier, if possible.

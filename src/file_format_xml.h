@@ -69,7 +69,7 @@ public:
 protected:
     void exportSymbol(const Symbol *symbol, bool anonymous = false);
     void exportObject(const Object *object, bool symbol_reference = true);
-    QString makePath(const Object *object) const;
+    QString makePath(const Object* object) const;
 
 private:
     XMLBuilder builder;

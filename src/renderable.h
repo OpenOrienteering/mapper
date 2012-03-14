@@ -39,6 +39,7 @@ class PointSymbol;
 class LineSymbol;
 class AreaSymbol;
 class TextSymbol;
+class TextObjectLineInfo;
 
 /// Contains state information about the painter which must be set when rendering a Renderable. Used to order the Renderables by color and minimize state changes
 struct RenderStates
@@ -139,7 +140,9 @@ public:
 	inline bool isEmpty() const {return renderables.empty();}
 	
 private:
-	typedef std::multimap<RenderStates, Renderable*> Renderables;
+	//typedef std::multimap<RenderStates, Renderable*> Renderables;
+	typedef std::vector<std::pair<RenderStates, Renderable*> > RenderableContainerVector;
+	typedef std::map< int, RenderableContainerVector > Renderables;
 	
 	QColor getHighlightedColor(const QColor& original);
 	
@@ -209,6 +212,7 @@ class TextRenderable : public Renderable
 {
 public:
 	TextRenderable(TextSymbol* symbol, double line_x, double line_y, double anchor_x, double anchor_y, double rotation, const QString& line, const QFont& font);
+	TextRenderable(TextSymbol* symbol, TextObjectLineInfo* line_info, double anchor_x, double anchor_y, double rotation);
 	TextRenderable(const TextRenderable& other);
 	virtual void render(QPainter& painter, bool force_min_size, float scaling);
 	virtual void getRenderStates(RenderStates& out);

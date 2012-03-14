@@ -285,9 +285,10 @@ void XMLFileExporter::exportObject(const Object *object, bool reference_symbol)
 QString XMLFileExporter::makePath(const Object *object) const
 {
     QString d ="";
-    for (int i = 0; i < object->getCoordinateCount(); i++)
+	const MapCoordVector& coords = object->getRawCoordinateVector();
+	for (int i = 0; i < (int)coords.size(); i++)
     {
-        const MapCoord &coord = object->getCoordinate(i);
+        const MapCoord &coord = coords[i];
         if (!d.isEmpty()) d = d % " ";
         d = d % QString("%1,%2").arg(coord.internalX()).arg(coord.internalY());
     }

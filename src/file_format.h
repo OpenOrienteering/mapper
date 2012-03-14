@@ -80,13 +80,17 @@ public:
      */
     const QString &id() const { return format_id; }
 
-    /** Returns a human-readable description of the file format.
+    /** Returns a short human-readable description of the file format.
      */
     const QString &description() const { return format_description; }
 
     /** Returns the file extension used by this file format.
      */
     const QString &fileExtension() const { return file_extension; }
+
+    /** Returns the filter that represents this format in file dialogs.
+     */
+    const QString &filter() const { return format_filter; }
 
     /** Returns true if this file format supports importing a map from its associated file type.
      */
@@ -130,6 +134,7 @@ private:
     QString format_id;
     QString format_description;
     QString file_extension;
+    QString format_filter;
     bool supports_import;
     bool supports_export;
     bool export_lossy;
@@ -157,6 +162,11 @@ public:
      *  is found.
      */
     const Format *findFormat(const QString &id) const;
+
+    /** Finds a file format which implements the given filter, or returns NULL if no 
+	 * format is found.
+     */
+    const Format *findFormatByFilter(const QString &filter) const;
 
     /** Finds a file format whose file extension matches the fie extension of the given
      *  path, or returns NULL if no matching format is found.

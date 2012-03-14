@@ -33,7 +33,7 @@ class DrawPathTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
+	DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget, bool allow_closing_paths);
 	virtual ~DrawPathTool();
 	
     virtual void init();
@@ -52,6 +52,11 @@ public:
     virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	static QCursor* cursor;
+	
+signals:
+	void dirtyRectChanged(const QRectF& rect);
+	void pathAborted();
+	void pathFinished(PathObject* path);
 	
 protected slots:
 	void selectedSymbolsChanged();
@@ -104,6 +109,9 @@ protected:
 	Symbol* last_used_symbol;
 	RenderableContainer renderables;
 	SymbolWidget* symbol_widget;
+	
+	bool allow_closing_paths;
+	bool is_helper_tool;
 };
 
 #endif

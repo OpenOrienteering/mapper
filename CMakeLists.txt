@@ -77,10 +77,12 @@ set(Mapper_SRCS
  src/georeferencing.cpp
  src/paint_on_template.cpp
 
- src/edit_tool.cpp
- src/draw_point.cpp
- src/draw_path.cpp
- src/draw_text.cpp
+ src/tool_edit.cpp
+ src/tool_draw_point.cpp
+ src/tool_draw_path.cpp
+ src/tool_draw_text.cpp
+ src/tool_cut.cpp
+ src/tool_cut_hole.cpp
  src/tool_rotate.cpp
 
  src/gps_coordinates.cpp
@@ -94,11 +96,11 @@ set(Mapper_SRCS
 qt4_automoc(${Mapper_SRCS})
 
 set(Mapper_TRANS
- translations/Mapper_de.ts
+ translations/OpenOrienteering_de.ts
 )
 qt4_add_translation(Mapper_QM ${Mapper_TRANS})
 
-SET(Mapper_RESOURCES resources.qrc)
+SET(Mapper_RESOURCES resources.qrc translations.qrc)
 qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
@@ -124,3 +126,6 @@ target_link_libraries(Mapper
  ${QT_QTNETWORK_LIBRARY}
  ${QT_QTXML_LIBRARY}
 )
+
+include(CPackaging.cmake)
+

@@ -38,7 +38,7 @@
 #include "symbol.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
-
+#include "symbol_combined.h"
 #include "file_format_ocad8.h"
 
 MapLayer::MapLayer(const QString& name, Map* map) : name(name), map(map)
@@ -103,14 +103,14 @@ void MapLayer::setObject(Object* object, int pos, bool delete_old)
 	
 	objects[pos] = object;
 	object->setMap(map);
-	object->update(true);
+	object->update(true, false);
 	map->setObjectsDirty();
 }
 void MapLayer::addObject(Object* object, int pos)
 {
 	objects.insert(objects.begin() + pos, object);
 	object->setMap(map);
-	object->update(true);
+	object->update(true, false);
 	map->setObjectsDirty();
 	
 	if (map->getNumObjects() == 1)
@@ -289,6 +289,7 @@ MapColor Map::covering_white;
 MapColor Map::covering_red;
 LineSymbol* Map::covering_white_line;
 LineSymbol* Map::covering_red_line;
+CombinedSymbol* Map::covering_combined_line;
 
 Map::Map() : renderables(this), selection_renderables(this)
 {
@@ -299,7 +300,6 @@ Map::Map() : renderables(this), selection_renderables(this)
 	
 	layers.push_back(new MapLayer(tr("default layer"), this));
 	current_layer_index = 0;
-	current_layer = layers[current_layer_index];
 	
 	color_set = new MapColorSet();
 	
@@ -397,6 +397,9 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
 		QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\nfor reading.").arg(path));
 		return false;
 	}
+	
+	// Delete previous objects
+	clear();
 
     // Read a block at the beginning of the file, that we can use for magic number checking.
     unsigned char buffer[256];
@@ -497,7 +500,6 @@ void Map::clear()
 	for (int i = 0; i < size; ++i)
 		delete layers[i];
 	layers.clear();
-	current_layer = NULL;
 	current_layer_index = -1;
 	
 	widgets.clear();
@@ -885,6 +887,11 @@ void Map::initStatic()
 	covering_red_line = new LineSymbol();
 	covering_red_line->setColor(&covering_red);
 	covering_red_line->setLineWidth(0.1);
+	
+	covering_combined_line = new CombinedSymbol();
+	covering_combined_line->setNumParts(2);
+	covering_combined_line->setPart(0, covering_white_line);
+	covering_combined_line->setPart(1, covering_red_line);
 }
 
 void Map::addSymbol(Symbol* symbol, int pos)
@@ -1136,11 +1143,11 @@ void Map::setObjectAreaDirty(QRectF map_coords_rect)
 }
 void Map::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, SelectionInfoVector& out)
 {
-	current_layer->findObjectsAt(coord, tolerance, extended_selection, out);
+	getCurrentLayer()->findObjectsAt(coord, tolerance, extended_selection, out);
 }
 void Map::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vector< Object* >& out)
 {
-	current_layer->findObjectsAtBox(corner1, corner2, out);
+	getCurrentLayer()->findObjectsAtBox(corner1, corner2, out);
 }
 
 void Map::scaleAllObjects(double factor)
@@ -1514,7 +1521,22 @@ bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF curso
 			set_to_limit = true;
 		}
 		
+		MapCoordF mouse_pos_map;
+		MapCoordF mouse_pos_to_view_center;
+		if (preserve_cursor_pos)
+		{
+			mouse_pos_map = viewToMapF(cursor_pos_view);
+			mouse_pos_to_view_center = MapCoordF(getPositionX()/1000.0 - mouse_pos_map.getX(), getPositionY()/1000.0 - mouse_pos_map.getY());
+			mouse_pos_to_view_center = MapCoordF(mouse_pos_to_view_center.getX() * 1 / zoom_factor, mouse_pos_to_view_center.getY() * 1 / zoom_factor);
+		}
+		
 		setZoom(set_to_limit ? zoom_out_limit : (getZoom() * zoom_factor));
+		
+		if (preserve_cursor_pos)
+		{
+			setPositionX(qRound64(1000 * (mouse_pos_map.getX() + mouse_pos_to_view_center.getX())));
+			setPositionY(qRound64(1000 * (mouse_pos_map.getY() + mouse_pos_to_view_center.getY())));
+		}
 	}
 	return true;
 }

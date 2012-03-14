@@ -27,7 +27,7 @@
 #include "util.h"
 
 const int NativeFileFormat::least_supported_file_format_version = 0;
-const int NativeFileFormat::current_file_format_version = 8;
+const int NativeFileFormat::current_file_format_version = 9;
 const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 
 bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
@@ -196,8 +196,6 @@ void NativeFileImport::doImport() throw (FormatException)
     for (int i = 0; i < num_layers; ++i)
     {
         MapLayer* layer = new MapLayer("", map);
-        if (i == map->current_layer_index)
-            map->current_layer = layer;
         if (!layer->load(&file, version, map))
         {
             throw FormatException(QObject::tr("Problem while opening file:\n%1\n\nError while loading layer %2.").arg(file.fileName()).arg(i+1));

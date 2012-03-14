@@ -53,6 +53,9 @@ public:
 	inline qint64 rawY() const {return y >> 4;}
     inline qint64 internalX() const {return x;}
     inline qint64 internalY() const {return y;}
+    
+    inline int getFlags() const {return (x & 15) | ((y & 15) << 4);}
+    inline void setFlags(int flags) {x = (x & ~15) | (flags & 15); y = (y & ~15) | ((flags >> 4) & 15);}
 
 	inline double lengthSquaredTo(const MapCoord& other)
 	{
@@ -73,13 +76,17 @@ public:
 	inline bool isCurveStart() const {return x & 1;}
 	inline void setCurveStart(bool value) {x = (x & (~1)) | (value ? 1 : 0);}
 	
-	// Is this the first point of a hole in an area or the start of a hole for a line?
+	// Is this the start of a hole for a line?
 	inline bool isHolePoint() const {return y & 1;}
 	inline void setHolePoint(bool value) {y = (y & (~1)) | (value ? 1 : 0);}
 	
 	// Should a dash of a line be placed here?
 	inline bool isDashPoint() const {return y & 2;}
 	inline void setDashPoint(bool value) {y = (y & (~2)) | (value ? 2 : 0);}
+	
+	// Is this the last point of a closed path, which is at the same position as the first point? This is set in addition to isHolePoint().
+	inline bool isClosePoint() const {return x & 2;}
+	inline void setClosePoint(bool value) {x = (x & (~2)) | (value ? 2 : 0);}
 	
 	inline MapCoord& operator= (const MapCoord& other)
 	{
@@ -198,10 +205,14 @@ public:
 	inline MapCoordF(const MapCoordF& copy) {x = copy.x; y = copy.y;}
 	
     inline void setX(double x) {this->x = x;};
-	double getX() const {return x;}
-	
 	inline void setY(double y) {this->y = y;};
+	inline void setIntX(qint64 x) {this->x = 0.001 * x;}
+	inline void setIntY(qint64 y) {this->y = 0.001 * y;}
+	
+	double getX() const {return x;}
 	double getY() const {return y;}
+	qint64 getIntX() const {return qRound64(1000 * x);}
+	qint64 getIntY() const {return qRound64(1000 * y);}
 	
 	inline void normalize()
 	{
