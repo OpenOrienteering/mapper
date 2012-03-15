@@ -24,26 +24,23 @@
 #include "symbol_text.h"
 #include "map_editor.h"
 
-float TextObjectPartInfo::getX(int pos) const
-{
-	return part_x + metrics.width(text.left(pos - start_index));
-}
+// ### TextObjectPartInfo ###
 
-int TextObjectPartInfo::getCharacterIndex(const QPointF& point) const
+int TextObjectPartInfo::getIndex(double pos_x) const
 {
 	int left = 0;
-	int right = text.length();
+	int right = part_text.length();
 	while (right != left)	
 	{
 		int middle = (left + right) / 2;
-		float x = part_x + metrics.width(text.left(middle));
-		if (point.x() >= x)
+		double x = part_x + metrics.width(part_text.left(middle));
+		if (pos_x >= x)
 		{
 			if (middle >= right)
 				return right;
-			float next = part_x + metrics.width(text.left(middle + 1));
-			if (point.x() < next)
-				if (point.x() < (x + next) / 2)
+			double next = part_x + metrics.width(part_text.left(middle + 1));
+			if (pos_x < next)
+				if (pos_x < (x + next) / 2)
 					return middle;
 				else
 					return middle + 1;
@@ -54,9 +51,9 @@ int TextObjectPartInfo::getCharacterIndex(const QPointF& point) const
 		{
 			if (middle <= 0)
 				return 0;
-			float prev = part_x + metrics.width(text.left(middle - 1));
-			if (point.x() > prev)
-				if (point.x() > (x + prev) / 2)
+			double prev = part_x + metrics.width(part_text.left(middle - 1));
+			if (pos_x > prev)
+				if (pos_x > (x + prev) / 2)
 					return middle;
 				else
 					return middle - 1;
@@ -67,48 +64,49 @@ int TextObjectPartInfo::getCharacterIndex(const QPointF& point) const
 	return right;
 }
 
-float TextObjectLineInfo::getX(int pos) const
+// ### TextObjectLineInfo ###
+
+double TextObjectLineInfo::getX(int index) const
 {
-	if (pos == 0)
+	if (index == start_index)
 		return line_x;
 	
-	pos += start_index;
 	int num_parts = part_infos.size();
 	int i = 0;
 	for ( ; i < num_parts; i++)
 	{
 		const TextObjectPartInfo& part(part_infos.at(i));
-		if (pos <= part.end_index)
-			return part.getX(pos);
+		if (index <= part.end_index)
+			return part.getX(index);
 	}
 	
 	return line_x + width;
 }
 
-int TextObjectLineInfo::getCharacterIndex(const QPointF& point) const
+int TextObjectLineInfo::getIndex(double pos_x) const
 {
 // TODO: evaluate std::vector<TextObjectPartInfo>::iterator it;
 	int num_parts = part_infos.size();
 	for (int i=0; i < num_parts; i++)
 	{
-		if (part_infos.at(i).part_x > point.x())
+		if (part_infos.at(i).part_x > pos_x)
 		{
 			if (i==0)
 				// before first part
 				return start_index;
-			else if (part_infos.at(i-1).part_x + part_infos.at(i-1).width < point.x())
+			else if (part_infos.at(i-1).part_x + part_infos.at(i-1).width < pos_x)
 			{
 				// between parts
-				return (point.x() - (part_infos.at(i-1).part_x + part_infos.at(i-1).width) < part_infos.at(i).part_x - point.x())
+				return (pos_x - (part_infos.at(i-1).part_x + part_infos.at(i-1).width) < part_infos.at(i).part_x - pos_x)
 				  ? part_infos.at(i-1).end_index
 				  : part_infos.at(i).start_index;
 			}
 			else
 				// inside part
-				return part_infos.at(i-1).start_index + part_infos.at(i-1).getCharacterIndex(point);
+				return part_infos.at(i-1).start_index + part_infos.at(i-1).getIndex(pos_x);
 		}
 	}
-	return part_infos.back().start_index + part_infos.at(num_parts-1).getCharacterIndex(point);
+	return part_infos.back().start_index + part_infos.at(num_parts-1).getIndex(pos_x);
 }
 
 // ### TextObject ###
@@ -132,6 +130,7 @@ Object* TextObject::duplicate()
 	new_text->h_align = h_align;
 	new_text->v_align = v_align;
 	new_text->rotation = rotation;
+	new_text->line_infos = line_infos;
 	return new_text;
 }
 
@@ -142,6 +141,7 @@ void TextObject::setAnchorPosition(qint64 x, qint64 y)
 	coords[0].setRawY(y);
 	setOutputDirty();
 }
+
 void TextObject::setAnchorPosition(MapCoordF coord)
 {
 	coords.resize(1);
@@ -149,15 +149,20 @@ void TextObject::setAnchorPosition(MapCoordF coord)
 	coords[0].setY(coord.getY());
 	setOutputDirty();
 }
+
+/*
 void TextObject::getAnchorPosition(qint64& x, qint64& y) const
 {
 	x = coords[0].rawX();
 	y = coords[0].rawY();
 }
+*/
+
 MapCoordF TextObject::getAnchorCoordF() const
 {
 	return MapCoordF(coords[0]);
 }
+
 void TextObject::setBox(qint64 mid_x, qint64 mid_y, double width, double height)
 {
 	coords.resize(2);
@@ -167,7 +172,7 @@ void TextObject::setBox(qint64 mid_x, qint64 mid_y, double width, double height)
 	setOutputDirty();
 }
 
-QTransform TextObject::calcTextToMapTransform()
+QTransform TextObject::calcTextToMapTransform() const
 {
 	TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);
 	
@@ -180,7 +185,8 @@ QTransform TextObject::calcTextToMapTransform()
 	
 	return transform;
 }
-QTransform TextObject::calcMapToTextTransform()
+
+QTransform TextObject::calcMapToTextTransform() const
 {
 	TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);
 	
@@ -206,6 +212,7 @@ void TextObject::setHorizontalAlignment(TextObject::HorizontalAlignment h_align)
 	this->h_align = h_align;
 	setOutputDirty();
 }
+
 void TextObject::setVerticalAlignment(TextObject::VerticalAlignment v_align)
 {
 	this->v_align = v_align;
@@ -227,7 +234,7 @@ int TextObject::calcTextPositionAt(MapCoordF coord, bool find_line_only)
 // FIXME actually this is two functions, selected by parameter find_line_only; make two functions or return TextObjectLineInfo reference
 int TextObject::calcTextPositionAt(QPointF point, bool find_line_only)
 {
-	for (int line = 0; line < getNumLineInfos(); ++line)
+	for (int line = 0; line < getNumLines(); ++line)
 	{
 		TextObjectLineInfo* line_info = getLineInfo(line);
 		if (line_info->line_y - line_info->ascent > point.y())
@@ -241,7 +248,7 @@ int TextObject::calcTextPositionAt(QPointF point, bool find_line_only)
 		if (find_line_only)
 			return line;
 		else
-			return line_info->getCharacterIndex(point);
+			return line_info->getIndex(point.x());
 	}
 	return -1;
 }
@@ -249,7 +256,7 @@ int TextObject::calcTextPositionAt(QPointF point, bool find_line_only)
 int TextObject::findLineForIndex(int index)
 {
 	int line_num = 0;
-	for (int line = 1; line < getNumLineInfos(); ++line)
+	for (int line = 1; line < getNumLines(); ++line)
 	{
 		TextObjectLineInfo* line_info = getLineInfo(line);
 		if (index < line_info->start_index)
@@ -259,24 +266,31 @@ int TextObject::findLineForIndex(int index)
 	return line_num;
 }
 
-TextObjectLineInfo* TextObject::findLineInfoForIndex(int index)
+const TextObjectLineInfo& TextObject::findLineInfoForIndex(int index)
 {
 	TextObjectLineInfo* line_info = getLineInfo(0);
-	for (int line = 1; line < getNumLineInfos(); ++line)
+	for (int line = 1; line < getNumLines(); ++line)
 	{
 		TextObjectLineInfo* next_line_info = getLineInfo(line);
 		if (index < next_line_info->start_index)
 			break;
 		line_info = next_line_info;
 	}
-	return line_info;
+	return *line_info;
 }
 
-void TextObject::prepareLineInfos(bool word_wrap, double max_width)
+void TextObject::prepareLineInfos()
 {
 	TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);
+	
 	QFontMetricsF metrics = text_symbol->getFontMetrics();
 	double line_spacing = text_symbol->getLineSpacing() * metrics.lineSpacing();
+	double ascent = metrics.ascent();
+	
+	bool word_wrap = ! hasSingleAnchor();
+	double scaling = text_symbol->calculateInternalScaling();
+	double box_width  = word_wrap ? (scaling * getBoxWidth())  : 0.0;
+	double box_height = word_wrap ? (scaling * getBoxHeight()) : 0.0;
 	
 	int text_end = text.length();
 	const QChar   line_break('\n');
@@ -284,10 +298,26 @@ void TextObject::prepareLineInfos(bool word_wrap, double max_width)
 	const QRegExp word_break(word_wrap ? "[\n\t ]" : "[\n\t]");
 	
 	line_infos.clear();
-	int line_num = 0;
+	
+	// Initialize offsets
+	
+	double line_x = 0.0;
+	if (h_align == TextObject::AlignLeft)
+		line_x -= 0.5 * box_width;
+	else if (h_align == TextObject::AlignRight)
+		line_x += 0.5 * box_width;
+
 	double line_y = 0.0;
+	if (v_align == TextObject::AlignTop || v_align == TextObject::AlignBaseline)
+		line_y += -0.5 * box_height;
+	if (v_align != TextObject::AlignBaseline)
+		line_y += ascent;
+	
+	// Determine lines and parts
+	
+	int line_num = 0;
 	int pos = 0;
-	while(pos <= text_end) 
+	while (pos <= text_end) 
 	{
 		// Initialize input line
 		double line_width = 0.0;
@@ -298,7 +328,7 @@ void TextObject::prepareLineInfos(bool word_wrap, double max_width)
 
 		std::vector<TextObjectPartInfo> part_infos;
 		
-		double part_x = 0.0;
+		double part_x = line_x;
 		while (pos <= line_end)
 		{
 			// Initialize part 
@@ -310,13 +340,11 @@ void TextObject::prepareLineInfos(bool word_wrap, double max_width)
 			QString part = text.mid(part_start, part_end - part_start);
 			double part_width = metrics.width(part);
 			
-			bool last_part = false;
 			if (word_wrap)
 			{
 				// shrink overflowing part to maximum possible size
-				while (part_x + part_width > max_width && part_end > 0)
+				while (part_x + part_width > box_width && part_end > 0)
 				{
-					last_part = true;
 					int new_part_end =  text.lastIndexOf(word_break, part_end - 1);
 					if (new_part_end < part_start)
 					{
@@ -340,26 +368,63 @@ void TextObject::prepareLineInfos(bool word_wrap, double max_width)
 					part_width = metrics.width(part);
 				}
 			}
-			if (last_part)
-				line_end = part_end;
 				
 			// Add the current part
 			part_infos.push_back(TextObjectPartInfo(part, part_start, part_end, part_x, metrics.width(part), metrics));
-			line_width = part_x + part_width;
 			
 			// Advance to next part
 			pos = part_end + 1;
 			part_x = text_symbol->getNextTab(part_x + part_width);
-			if (word_wrap && part_x >= max_width)
+			if (word_wrap && part_x >= box_width)
 				// terminate current input line
 				break; 
 		}
-		
-		line_infos.push_back(TextObjectLineInfo(line_start, line_end, 0.0, line_y, line_width, metrics.ascent(), metrics.descent(), part_infos));
+		TextObjectPartInfo& last_part_info = part_infos.back();
+		line_end   = last_part_info.end_index;
+		line_width = last_part_info.part_x + last_part_info.width - line_x;
+		line_infos.push_back(TextObjectLineInfo(line_start, line_end, line_x, line_y, line_width, metrics.ascent(), metrics.descent(), part_infos));
 
 		// Advance to next line
 		line_y += line_spacing;
 		line_num++;
 		pos = line_end + 1;
+	}
+	
+	// Update the line and part offset for every other alignment than top-left or baseline-left
+	
+	double delta_y = 0.0;
+	if (v_align == TextObject::AlignBottom || v_align == TextObject::AlignVCenter)
+	{
+		int num_lines = getNumLines();
+		double height = ascent + (num_lines - 1) * line_spacing;
+		
+		if (v_align == TextObject::AlignVCenter)
+			delta_y = -0.5 * height;
+		else if (v_align == TextObject::AlignBottom)
+			delta_y = -height + 0.5 * box_height;
+	}
+	
+	if (delta_y != 0.0 || h_align != TextObject::AlignLeft)
+	{
+		int num_lines = getNumLines();
+		for (int i = 0; i < num_lines; i++)
+		{
+			TextObjectLineInfo* line_info = getLineInfo(i);
+			
+			double delta_x = 0.0;
+			if (h_align == TextObject::AlignHCenter)
+				delta_x = -0.5 * line_info->width;
+			else if (h_align == TextObject::AlignRight)
+				delta_x -= line_info->width;
+			
+			line_info->line_x += delta_x;
+			line_info->line_y += delta_y;
+			
+			int num_parts = line_info->part_infos.size();
+			for (int j = 0; j < num_parts; j++)
+			{
+				line_info->part_infos.at(j).part_x += delta_x;
+			}
+		}
 	}
 }
