@@ -87,7 +87,7 @@ protected:
 	bool underline;
 	float line_spacing;		// as factor of original line spacing
 	
-	double em;
+	double tab_interval;		/// default tab interval length in text coordinates
 };
 
 class TextSymbolSettings : public QGroupBox
