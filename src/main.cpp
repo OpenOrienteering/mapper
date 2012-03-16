@@ -19,8 +19,7 @@
 
 
 #include "../qtsingleapplication/qtsingleapplication.h"
-#include <QMessageBox>
-#include <QDebug>
+#include <QLibraryInfo>
 #include <QLocale>
 #include <QTranslator>
 
@@ -50,6 +49,9 @@ int main(int argc, char** argv)
 	
 	// Localization
 	QString locale = QLocale::system().name();
+	QTranslator qtTranslator;
+	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+	qapp.installTranslator(&qtTranslator);
 	QTranslator translator;
 	translator.load(locale, QString(":/translations"));
 	qapp.installTranslator(&translator);
