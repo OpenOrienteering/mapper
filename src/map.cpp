@@ -194,11 +194,11 @@ void MapLayer::scaleAllObjects(double factor)
 	
 	forceUpdateOfAllObjects();
 }
-void MapLayer::updateAllObjects()
+void MapLayer::updateAllObjects(bool remove_old_renderables)
 {
 	int size = objects.size();
 	for (int i = size - 1; i >= 0; --i)
-		objects[i]->update(true);
+		objects[i]->update(true, remove_old_renderables);
 }
 void MapLayer::updateAllObjectsWithSymbol(Symbol* symbol)
 {
@@ -471,6 +471,8 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
             return false;
         }
     }
+    // Update all objects without trying to remove their renderables first, this gives a significant speedup when loading large files
+    updateAllObjects(false);
 
     return true;
 }
@@ -1151,11 +1153,11 @@ void Map::scaleAllObjects(double factor)
 	for (int i = 0; i < size; ++i)
 		layers[i]->scaleAllObjects(factor);
 }
-void Map::updateAllObjects()
+void Map::updateAllObjects(bool remove_old_renderables)
 {
 	int size = layers.size();
 	for (int i = 0; i < size; ++i)
-		layers[i]->updateAllObjects();
+		layers[i]->updateAllObjects(remove_old_renderables);
 }
 void Map::updateAllObjectsWithSymbol(Symbol* symbol)
 {

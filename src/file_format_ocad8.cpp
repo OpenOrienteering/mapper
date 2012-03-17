@@ -173,7 +173,6 @@ void OCAD8FileImport::doImport() throw (FormatException)
 				Object *object = importObject(ocad_obj);
 				if (object != NULL) {
 					layer->objects.push_back(object);
-					object->update(true, false);
 					object_count++;
 				}
 			}
