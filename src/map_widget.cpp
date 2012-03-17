@@ -768,7 +768,7 @@ void MapWidget::updateMapCache(bool use_background)
 	
 	Map* map = view->getMap();
 	QRectF map_view_rect = view->calculateViewedRect(viewportToView(map_cache_dirty_rect));
-	map->draw(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor());
+	map->draw(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor(), true);
 	
 	// Finish drawing
 	painter.end();

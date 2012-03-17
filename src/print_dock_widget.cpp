@@ -256,7 +256,7 @@ void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& p
 	
 	if (show_templates_check->isChecked())
 		map->drawTemplates(&painter, map_extent, 0, map->getFirstFrontTemplate() - 1, false, QRect(0, 0, paint_device->width(), paint_device->height()), NULL, main_view);
-	map->draw(&painter, map_extent, false, scale);
+	map->draw(&painter, map_extent, false, scale, false);
 	if (show_templates_check->isChecked())
 		map->drawTemplates(&painter, map_extent, map->getFirstFrontTemplate(), map->getNumTemplates() - 1, false, QRect(0, 0, paint_device->width(), paint_device->height()), NULL, main_view);
 	

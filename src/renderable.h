@@ -132,7 +132,7 @@ class RenderableContainer
 public:
 	RenderableContainer(Map* map);
 	
-	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, float opacity_factor = 1.0f, bool highlighted = false);
+	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity_factor = 1.0f, bool highlighted = false);
 	
 	void removeRenderablesOfObject(Object* object, bool mark_area_as_dirty);	// NOTE: does not delete the renderables, just removes them from display
 	void insertRenderablesOfObject(Object* object);

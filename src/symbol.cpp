@@ -159,7 +159,7 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	
 	painter.translate(0.5f * (icon_size-1), 0.5f * (icon_size-1));
 	view.applyTransform(&painter);
-	icon_map.draw(&painter, QRectF(-10000, -10000, 20000, 20000), false, view.calculateFinalZoomFactor());
+	icon_map.draw(&painter, QRectF(-10000, -10000, 20000, 20000), false, view.calculateFinalZoomFactor(), true);
 	
 	painter.end();
 	

@@ -52,7 +52,7 @@ RenderableContainer::RenderableContainer(Map* map) : map(map)
 {
 }
 
-void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, float opacity_factor, bool highlighted)
+void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity_factor, bool highlighted)
 {
 	Map::ColorVector& colors = map->color_set->colors;
 	
@@ -81,6 +81,10 @@ void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool forc
 			if (extent.bottom() < bounding_box.y())	continue;
 			if (extent.x() > bounding_box.right())	continue;
 			if (extent.y() > bounding_box.bottom())	continue;
+			
+			// Settings check
+			if (!show_helper_symbols && renderable->getCreator()->getSymbol()->isHelperSymbol())
+				continue;
 			
 			// Change render states?
 			if (states != new_states)
