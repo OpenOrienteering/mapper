@@ -143,24 +143,30 @@ bool MapLayer::deleteObject(Object* object, bool remove_only)
 	return false;
 }
 
-void MapLayer::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, SelectionInfoVector& out)
+void MapLayer::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, SelectionInfoVector& out)
 {
 	int size = objects.size();
 	for (int i = 0; i < size; ++i)
 	{
+		if (!include_hidden_objects && objects[i]->getSymbol()->isHidden())
+			continue;
+		
 		objects[i]->update();
 		int selected_type = objects[i]->isPointOnObject(coord, tolerance, extended_selection);
 		if (selected_type != (int)Symbol::NoSymbol)
 			out.push_back(std::pair<int, Object*>(selected_type, objects[i]));
 	}
 }
-void MapLayer::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vector< Object* >& out)
+void MapLayer::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, std::vector< Object* >& out)
 {
 	QRectF rect = QRectF(corner1.toQPointF(), corner2.toQPointF());
 	
 	int size = objects.size();
 	for (int i = 0; i < size; ++i)
 	{
+		if (!include_hidden_objects && objects[i]->getSymbol()->isHidden())
+			continue;
+		
 		objects[i]->update();
 		if (rect.intersects(objects[i]->getExtent()) && objects[i]->isPathPointInBox(rect))
 			out.push_back(objects[i]);
@@ -656,6 +662,23 @@ void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
 	if (emit_selection_changed)
 		emit(selectedObjectsChanged());
 }
+void Map::removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed)
+{
+	ObjectSelection::iterator it_end = object_selection.end();
+	for (ObjectSelection::iterator it = object_selection.begin(); it != it_end; )
+	{
+		if ((*it)->getSymbol() != symbol)
+		{
+			++it;
+			continue;
+		}
+		
+		removeSelectionRenderables(*it);
+		it = object_selection.erase(it);
+	}
+	if (emit_selection_changed)
+		emit(selectedObjectsChanged());
+}
 bool Map::isObjectSelected(Object* object)
 {
 	return object_selection.contains(object);
@@ -1138,13 +1161,13 @@ void Map::setObjectAreaDirty(QRectF map_coords_rect)
 	for (int i = 0; i < (int)widgets.size(); ++i)
 		widgets[i]->markObjectAreaDirty(map_coords_rect);
 }
-void Map::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, SelectionInfoVector& out)
+void Map::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, SelectionInfoVector& out)
 {
-	getCurrentLayer()->findObjectsAt(coord, tolerance, extended_selection, out);
+	getCurrentLayer()->findObjectsAt(coord, tolerance, extended_selection, include_hidden_objects, out);
 }
-void Map::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vector< Object* >& out)
+void Map::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, std::vector< Object* >& out)
 {
-	getCurrentLayer()->findObjectsAtBox(corner1, corner2, out);
+	getCurrentLayer()->findObjectsAtBox(corner1, corner2, include_hidden_objects, out);
 }
 
 void Map::scaleAllObjects(double factor)

@@ -73,8 +73,8 @@ public:
 	void deleteObject(int pos, bool remove_only);
 	bool deleteObject(Object* object, bool remove_only);	// returns if the object was found
 	
-	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, SelectionInfoVector& out);
-	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vector<Object*>& out);
+	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, SelectionInfoVector& out);
+	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, std::vector<Object*>& out);
 	
 	QRectF calculateExtent();
 	void scaleAllObjects(double factor);
@@ -205,8 +205,8 @@ public:
 	void setObjectsDirty();
 	
 	void setObjectAreaDirty(QRectF map_coords_rect);
-	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, SelectionInfoVector& out);
-	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vector<Object*>& out);
+	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, SelectionInfoVector& out);
+	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, std::vector<Object*>& out);
 	
 	void scaleAllObjects(double factor);
 	void updateAllObjects(bool remove_old_renderables = true);
@@ -233,6 +233,7 @@ public:
 	
 	void addObjectToSelection(Object* object, bool emit_selection_changed);
 	void removeObjectFromSelection(Object* object, bool emit_selection_changed);
+	void removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed);	// removes all objects with this symbol
 	bool isObjectSelected(Object* object);
 	bool toggleObjectSelection(Object* object, bool emit_selection_changed);	// returns true if the object was selected, false if deselected
 	void clearObjectSelection(bool emit_selection_changed);

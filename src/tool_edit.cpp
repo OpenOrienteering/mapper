@@ -317,7 +317,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 			bool selection_changed = false;
 			
 			std::vector<Object*> objects;
-			map->findObjectsAtBox(click_pos_map, cur_pos_map, objects);
+			map->findObjectsAtBox(click_pos_map, cur_pos_map, false, objects);
 			
 			if (!(event->modifiers() & selection_modifier))
 			{
@@ -353,9 +353,9 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 		
 		// Clicked - get objects below cursor
 		SelectionInfoVector objects;
-		map->findObjectsAt(map_coord, 0.001f *widget->getMapView()->pixelToLength(MapEditorTool::click_tolerance), false, objects);
+		map->findObjectsAt(map_coord, 0.001f *widget->getMapView()->pixelToLength(MapEditorTool::click_tolerance), false, false, objects);
 		if (objects.empty())
-			map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(1.5f * MapEditorTool::click_tolerance), true, objects);
+			map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(1.5f * MapEditorTool::click_tolerance), true, false, objects);
 		
 		// Selection logic, trying to select the most relevant object(s)
 		if (!(event->modifiers() & selection_modifier) || map->getNumSelectedObjects() == 0)
