@@ -109,6 +109,12 @@ public:
 	inline bool isHelperSymbol() const {return is_helper_symbol;}
 	inline void setIsHelperSymbol(bool value) {is_helper_symbol = value;}
 	
+	inline bool isHidden() const {return is_hidden;}
+	inline void setHidden(bool value) {is_hidden = value;}
+	
+	inline bool isProtected() const {return is_protected;}
+	inline void setProtected(bool value) {is_protected = value;}
+	
 	// Static
 	static Symbol* getSymbolForType(Type type);
 	
@@ -129,6 +135,8 @@ protected:
 	int number[number_components];
 	QString description;
 	bool is_helper_symbol;
+	bool is_hidden;
+	bool is_protected;
 	QImage* icon;
 };
 

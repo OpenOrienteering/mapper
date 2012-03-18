@@ -213,10 +213,12 @@ float DrawPointTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map
 void DrawPointTool::selectedSymbolsChanged()
 {
 	Symbol* single_selected_symbol = symbol_widget->getSingleSelectedSymbol();
-	if (single_selected_symbol == NULL || single_selected_symbol->getType() != Symbol::Point)
+	if (single_selected_symbol == NULL || single_selected_symbol->getType() != Symbol::Point || single_selected_symbol->isHidden())
 	{
-		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(single_selected_symbol);
-		editor->setTool(draw_tool);	
+		if (single_selected_symbol->isHidden())
+			editor->setEditTool();
+		else
+			editor->setTool(editor->getDefaultDrawToolForSymbol(single_selected_symbol));
 	}
 	else
 		last_used_symbol = single_selected_symbol;

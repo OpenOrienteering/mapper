@@ -667,10 +667,12 @@ void DrawPathTool::selectedSymbolsChanged()
 		abortDrawing();
 	
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
-	if (symbol == NULL || ((symbol->getType() & (Symbol::Line | Symbol::Area | Symbol::Combined)) == 0))
+	if (symbol == NULL || ((symbol->getType() & (Symbol::Line | Symbol::Area | Symbol::Combined)) == 0) || symbol->isHidden())
 	{
-		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(symbol);
-		editor->setTool(draw_tool);
+		if (symbol->isHidden())
+			editor->setEditTool();
+		else
+			editor->setTool(editor->getDefaultDrawToolForSymbol(symbol));
 		return;
 	}
 

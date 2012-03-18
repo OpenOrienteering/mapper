@@ -83,7 +83,10 @@ void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool forc
 			if (extent.y() > bounding_box.bottom())	continue;
 			
 			// Settings check
-			if (!show_helper_symbols && renderable->getCreator()->getSymbol()->isHelperSymbol())
+			Symbol* symbol = renderable->getCreator()->getSymbol();
+			if (!show_helper_symbols && symbol->isHelperSymbol())
+				continue;
+			if (symbol->isHidden())
 				continue;
 			
 			// Change render states?
