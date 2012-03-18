@@ -145,6 +145,8 @@ void OCAD8FileImport::doImport() throw (FormatException)
 
                 if (symbol)
                 {
+					if (ocad_symbol->status & 1)
+						symbol->setProtected(true);
 					if (ocad_symbol->status & 2)
 						symbol->setHidden(true);
                     map->symbols.push_back(symbol);

@@ -32,7 +32,7 @@
 #include "symbol_text.h"
 #include "symbol_combined.h"
 
-Symbol::Symbol(Type type) : type(type), name(""), description(""), is_helper_symbol(false), is_hidden(false), icon(NULL)
+Symbol::Symbol(Type type) : type(type), name(""), description(""), is_helper_symbol(false), is_hidden(false), is_protected(false), icon(NULL)
 {
 	for (int i = 0; i < number_components; ++i)
 		number[i] = -1;
@@ -62,6 +62,7 @@ void Symbol::save(QFile* file, Map* map)
 	saveString(file, description);
 	file->write((const char*)&is_helper_symbol, sizeof(bool));
 	file->write((const char*)&is_hidden, sizeof(bool));
+	file->write((const char*)&is_protected, sizeof(bool));
 	
 	saveImpl(file, map);
 }
@@ -74,6 +75,8 @@ bool Symbol::load(QFile* file, int version, Map* map)
 	file->read((char*)&is_helper_symbol, sizeof(bool));
 	if (version >= 10)
 		file->read((char*)&is_hidden, sizeof(bool));
+	if (version >= 11)
+		file->read((char*)&is_protected, sizeof(bool));
 	
 	return loadImpl(file, version, map);
 }

@@ -317,7 +317,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 			bool selection_changed = false;
 			
 			std::vector<Object*> objects;
-			map->findObjectsAtBox(click_pos_map, cur_pos_map, false, objects);
+			map->findObjectsAtBox(click_pos_map, cur_pos_map, false, false, objects);
 			
 			if (!(event->modifiers() & selection_modifier))
 			{
@@ -353,9 +353,9 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 		
 		// Clicked - get objects below cursor
 		SelectionInfoVector objects;
-		map->findObjectsAt(map_coord, 0.001f *widget->getMapView()->pixelToLength(MapEditorTool::click_tolerance), false, false, objects);
+		map->findObjectsAt(map_coord, 0.001f *widget->getMapView()->pixelToLength(MapEditorTool::click_tolerance), false, false, false, objects);
 		if (objects.empty())
-			map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(1.5f * MapEditorTool::click_tolerance), true, false, objects);
+			map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(1.5f * MapEditorTool::click_tolerance), true, false, false, objects);
 		
 		// Selection logic, trying to select the most relevant object(s)
 		if (!(event->modifiers() & selection_modifier) || map->getNumSelectedObjects() == 0)
@@ -558,7 +558,7 @@ void EditTool::selectedObjectsChanged()
 void EditTool::selectedSymbolsChanged()
 {
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
-	if (symbol && editor->getMap()->getNumSelectedObjects() == 0)
+	if (symbol && editor->getMap()->getNumSelectedObjects() == 0 && !symbol->isHidden() && !symbol->isProtected())
 	{
 		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(symbol);
 		editor->setTool(draw_tool);

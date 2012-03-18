@@ -79,8 +79,11 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	context_menu->addSeparator();
 	switch_symbol_action = context_menu->addAction(tr("Switch symbol of selected object(s)"), parent, SLOT(emitSwitchSymbolClicked()));
 	fill_border_action = context_menu->addAction(tr("Fill / Create border for selected object(s)"), parent, SLOT(emitFillBorderClicked()));
+	context_menu->addSeparator();
 	hide_action = context_menu->addAction(tr("Hide objects with this symbol"), this, SLOT(setSelectedSymbolVisibility(bool)));
 	hide_action->setCheckable(true);
+	protect_action = context_menu->addAction(tr("Protect objects with this symbol"), this, SLOT(setSelectedSymbolProtection(bool)));
+	protect_action->setCheckable(true);
 	context_menu->addSeparator();
     context_menu->addAction(tr("Select all"), this, SLOT(selectAll()));
     context_menu->addAction(tr("Invert selection"), this, SLOT(invertSelection()));
@@ -309,17 +312,17 @@ void SymbolRenderWidget::paintEvent(QPaintEvent* event)
 			painter.setPen(Qt::gray);
 		}
 		
-		if (map->getSymbol(i)->isHidden())
+		if (map->getSymbol(i)->isHidden() || map->getSymbol(i)->isProtected())
 		{
 			QPen pen(Qt::white);
 			pen.setWidth(3);
 			painter.setPen(pen);
 			painter.drawLine(corner + QPoint(1, 1), corner + QPoint(Symbol::icon_size - 2, Symbol::icon_size - 2));
-			painter.drawLine(corner + QPoint(Symbol::icon_size - 2, 1), corner + QPoint(1, Symbol::icon_size - 2));
+			painter.drawLine(corner + QPoint(Symbol::icon_size - 3, 1), corner + QPoint(1, Symbol::icon_size - 3));
 			
-			painter.setPen(QPen(Qt::red));
+			painter.setPen(QPen(map->getSymbol(i)->isHidden() ? Qt::red : Qt::blue));
 			painter.drawLine(corner + QPoint(0, 0), corner + QPoint(Symbol::icon_size - 2, Symbol::icon_size - 2));
-			painter.drawLine(corner + QPoint(Symbol::icon_size - 2, 1), corner + QPoint(1, Symbol::icon_size - 2));
+			painter.drawLine(corner + QPoint(Symbol::icon_size - 2, 0), corner + QPoint(0, Symbol::icon_size - 2));
 			
 			painter.setPen(Qt::gray);
 		}
@@ -407,13 +410,15 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 		bool single_selection = getNumSelectedSymbols() == 1 && current_symbol_index >= 0;
 		Symbol* single_symbol = getSingleSelectedSymbol();
 		bool all_symbols_hidden = have_selection;
+		bool all_symbols_protected = have_selection;
 		for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
 		{
 			if (!map->getSymbol(*it)->isHidden())
-			{
 				all_symbols_hidden = false;
+			if (!map->getSymbol(*it)->isProtected())
+				all_symbols_protected = false;
+			if (!all_symbols_hidden && !all_symbols_protected)
 				break;
-			}
 		}
 		
 		bool single_symbol_compatible;
@@ -426,6 +431,8 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 		fill_border_action->setEnabled(single_symbol_compatible && single_symbol_different);
 		hide_action->setEnabled(have_selection);
 		hide_action->setChecked(all_symbols_hidden);
+		protect_action->setEnabled(have_selection);
+		protect_action->setChecked(all_symbols_protected);
 		duplicate_action->setEnabled(single_selection);
 		delete_action->setEnabled(have_selection);
 		
@@ -630,6 +637,7 @@ void SymbolRenderWidget::duplicateSymbol()
 }
 void SymbolRenderWidget::setSelectedSymbolVisibility(bool checked)
 {
+	bool selection_changed = false;
 	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
 	{
 		Symbol* symbol = map->getSymbol(*it);
@@ -638,13 +646,33 @@ void SymbolRenderWidget::setSelectedSymbolVisibility(bool checked)
 			symbol->setHidden(checked);
 			updateIcon(*it);
 			if (checked)
-				map->removeSymbolFromSelection(symbol, false);
+				selection_changed |= map->removeSymbolFromSelection(symbol, false);
 		}
 	}
-	if (checked)
+	if (selection_changed)
 		map->emitSelectionChanged();
 	map->updateAllMapWidgets();
 	map->setSymbolsDirty();
+	symbol_widget->emitSelectedSymbolsChanged();
+}
+void SymbolRenderWidget::setSelectedSymbolProtection(bool checked)
+{
+	bool selection_changed = false;
+	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	{
+		Symbol* symbol = map->getSymbol(*it);
+		if (symbol->isProtected() != checked)
+		{
+			symbol->setProtected(checked);
+			updateIcon(*it);
+			if (checked)
+				selection_changed |= map->removeSymbolFromSelection(symbol, false);
+		}
+	}
+	if (selection_changed)
+		map->emitSelectionChanged();
+	map->setSymbolsDirty();
+	symbol_widget->emitSelectedSymbolsChanged();
 }
 void SymbolRenderWidget::selectAll()
 {

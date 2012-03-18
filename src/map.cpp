@@ -143,12 +143,14 @@ bool MapLayer::deleteObject(Object* object, bool remove_only)
 	return false;
 }
 
-void MapLayer::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, SelectionInfoVector& out)
+void MapLayer::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out)
 {
 	int size = objects.size();
 	for (int i = 0; i < size; ++i)
 	{
 		if (!include_hidden_objects && objects[i]->getSymbol()->isHidden())
+			continue;
+		if (!include_protected_objects && objects[i]->getSymbol()->isProtected())
 			continue;
 		
 		objects[i]->update();
@@ -157,7 +159,7 @@ void MapLayer::findObjectsAt(MapCoordF coord, float tolerance, bool extended_sel
 			out.push_back(std::pair<int, Object*>(selected_type, objects[i]));
 	}
 }
-void MapLayer::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, std::vector< Object* >& out)
+void MapLayer::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector< Object* >& out)
 {
 	QRectF rect = QRectF(corner1.toQPointF(), corner2.toQPointF());
 	
@@ -165,6 +167,8 @@ void MapLayer::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool inclu
 	for (int i = 0; i < size; ++i)
 	{
 		if (!include_hidden_objects && objects[i]->getSymbol()->isHidden())
+			continue;
+		if (!include_protected_objects && objects[i]->getSymbol()->isProtected())
 			continue;
 		
 		objects[i]->update();
@@ -662,8 +666,9 @@ void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
 	if (emit_selection_changed)
 		emit(selectedObjectsChanged());
 }
-void Map::removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed)
+bool Map::removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed)
 {
+	bool removed_at_least_one_object = false;
 	ObjectSelection::iterator it_end = object_selection.end();
 	for (ObjectSelection::iterator it = object_selection.begin(); it != it_end; )
 	{
@@ -673,11 +678,13 @@ void Map::removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed)
 			continue;
 		}
 		
+		removed_at_least_one_object = true;
 		removeSelectionRenderables(*it);
 		it = object_selection.erase(it);
 	}
-	if (emit_selection_changed)
+	if (emit_selection_changed && removed_at_least_one_object)
 		emit(selectedObjectsChanged());
+	return removed_at_least_one_object;
 }
 bool Map::isObjectSelected(Object* object)
 {
@@ -1161,13 +1168,13 @@ void Map::setObjectAreaDirty(QRectF map_coords_rect)
 	for (int i = 0; i < (int)widgets.size(); ++i)
 		widgets[i]->markObjectAreaDirty(map_coords_rect);
 }
-void Map::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, SelectionInfoVector& out)
+void Map::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out)
 {
-	getCurrentLayer()->findObjectsAt(coord, tolerance, extended_selection, include_hidden_objects, out);
+	getCurrentLayer()->findObjectsAt(coord, tolerance, extended_selection, include_hidden_objects, include_protected_objects, out);
 }
-void Map::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, std::vector< Object* >& out)
+void Map::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector< Object* >& out)
 {
-	getCurrentLayer()->findObjectsAtBox(corner1, corner2, include_hidden_objects, out);
+	getCurrentLayer()->findObjectsAtBox(corner1, corner2, include_hidden_objects, include_protected_objects, out);
 }
 
 void Map::scaleAllObjects(double factor)

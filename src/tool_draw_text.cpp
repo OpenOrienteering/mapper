@@ -204,13 +204,15 @@ void DrawTextTool::draw(QPainter* painter, MapWidget* widget)
 void DrawTextTool::selectedSymbolsChanged()
 {
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
-	if (symbol == NULL || symbol->getType() != Symbol::Text)
+	if (symbol == NULL || symbol->getType() != Symbol::Text || symbol->isHidden())
 	{
 		if (text_editor)
 			finishEditing();
 		
-		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(symbol);
-		editor->setTool(draw_tool);	
+		if (symbol->isHidden())
+			editor->setEditTool();
+		else
+			editor->setTool(editor->getDefaultDrawToolForSymbol(symbol));
 		return;
 	}
 	
