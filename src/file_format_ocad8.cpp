@@ -249,6 +249,7 @@ Symbol *OCAD8FileImport::importPointSymbol(const OCADPointSymbol *ocad_symbol)
 {
     PointSymbol *symbol = importPattern(ocad_symbol->ngrp, (OCADPoint *)ocad_symbol->pts);
     fillCommonSymbolFields(symbol, (OCADSymbol *)ocad_symbol);
+	symbol->setRotatable(ocad_symbol->subtype & 0x100);
 
     return symbol;
 }
@@ -503,7 +504,7 @@ Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
 PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
 {
     PointSymbol *symbol = new PointSymbol();
-    symbol->rotatable = true; // FIXME: by default for now, where is the "Align to north" checkbox in the OCAD file?
+    symbol->rotatable = true;
     OCADPoint *p = pts, *end = pts + npts;
     while (p < end) {
         OCADSymbolElement *elt = (OCADSymbolElement *)p;
@@ -584,7 +585,11 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
         p->symbol = symbol;
 
         // extra properties: rotation
-        p->setRotation(convertRotation(ocad_object->angle));
+		PointSymbol* point_symbol = reinterpret_cast<PointSymbol*>(symbol);
+		if (point_symbol->isRotatable())
+			p->setRotation(convertRotation(ocad_object->angle));
+		else if (ocad_object->angle != 0)
+			addWarning(QObject::tr("An object with non-rotatable symbol '%1' has a non-zero rotation").arg(symbol->getName()));
 
         // only 1 coordinate is allowed, enforce it even if the OCAD object claims more.
         fillPathCoords(p, false, 1, (OCADPoint *)ocad_object->pts);
