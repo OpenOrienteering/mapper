@@ -20,15 +20,18 @@
 
 #include "map_dialog_new.h"
 
-#include "assert.h"
+#include <cassert>
 
 #include <QtGui>
+#include <QDir>
+#include <QSettings>
+#include <QCoreApplication>
 
 NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
 	setWindowTitle(tr("Create new map"));
 	
-	QLabel* desc_label = new QLabel(tr("Choose the scale and symbol set for your new map here.\nThe available symbol sets depend on the selected scale."));
+	QLabel* desc_label = new QLabel(tr("Choose the scale and symbol set for the new map.\nThe available symbol sets depend on the selected scale."));
 	
 	QLabel* scale_label = new QLabel(tr("Scale:  1 : "));
 	scale_combo = new QComboBox();
@@ -63,10 +66,14 @@ NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMe
 	setLayout(layout);
 	
 	loadSymbolSetMap();
-	for (std::map<int, QStringList>::iterator it = symbol_set_map.begin(); it != symbol_set_map.end(); ++it)
+	for (SymbolSetMap::iterator it = symbol_set_map.begin(); it != symbol_set_map.end(); ++it)
 		scale_combo->addItem(QString::number(it->first));
 	
-	const QString default_scale = "10000";
+	QSettings settings;
+	settings.beginGroup("NewMapDialog");
+	const QString default_scale = settings.value("DefaultScale", "10000").toString();
+	settings.endGroup();
+	
 	scale_combo->setEditText(default_scale);
 	connect(scale_combo, SIGNAL(editTextChanged(QString)), this, SLOT(scaleChanged(QString)));
 	connect(symbol_set_list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(symbolSetDoubleClicked(QListWidgetItem*)));
@@ -75,91 +82,155 @@ NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMe
 	scaleChanged(default_scale);
 }
 
-int NewMapDialog::getSelectedScale()
+int NewMapDialog::getSelectedScale() const
 {
 	return scale_combo->currentText().toInt();
 }
-QString NewMapDialog::getSelectedSymbolSetPath()
+
+QString NewMapDialog::getSelectedSymbolSetPath() const
 {
-	const QString dir_name = "my symbol sets";
 	QListWidgetItem* item = symbol_set_list->currentItem();
-	if (!item)
+	if (! item || ! item->data(Qt::UserRole).isValid())
 	{
+		// FIXME: add proper error handling for release builds, or remove.
 		assert(false);
 		return "";
 	}
+
+	return item->data(Qt::UserRole).toString();
+}
+
+void NewMapDialog::accept()
+{
+	QSettings settings;
+	settings.beginGroup("NewMapDialog");
+	settings.setValue("DefaultScale", getSelectedScale());
+	settings.endGroup();
 	
-	if (item->data(Qt::UserRole).isValid())
-		return "";
-	else
-		return dir_name + "/" + QString::number(getSelectedScale()) + "/" + item->text() + ".omap";
+	QDialog::accept();
 }
 
 void NewMapDialog::scaleChanged(QString new_text)
 {
-	if (new_text.isEmpty())
+	int scale = new_text.toInt();
+	if (scale == 0)
 	{
 		create_button->setEnabled(false);
 		symbol_set_list->setEnabled(false);
 		return;
 	}
 	
-	bool ok = false;
-	int scale = new_text.toInt(&ok);
-	create_button->setEnabled(ok);
-	symbol_set_list->setEnabled(ok);
+	create_button->setEnabled(true);
+	symbol_set_list->setEnabled(true);
+	symbol_set_list->clear();
+		
+	QListWidgetItem* item = new QListWidgetItem(tr("Empty symbol set"));
+	item->setData(Qt::UserRole, "");
+	item->setIcon(QIcon(":/images/new.png"));
+	symbol_set_list->addItem(item);
 	
-	if (ok)
-	{
-		symbol_set_list->clear();
-		
-		QListWidgetItem* item = new QListWidgetItem(tr("(empty symbol set)"));
-		item->setData(Qt::UserRole, qVariantFromValue<void*>(NULL));
-		symbol_set_list->addItem(item);
-		
-		std::map<int, QStringList>::iterator it = symbol_set_map.find(scale);
-		if (it != symbol_set_map.end())
-			symbol_set_list->addItems(it->second);
-		
-		symbol_set_list->setCurrentRow(0);
-	}
+	QIcon control(":/images/control.png");
+	SymbolSetMap::iterator it = symbol_set_map.find(scale);
+	if (it != symbol_set_map.end())
+		foreach (const QFileInfo& symbol_set, it->second)
+		{
+			item = new QListWidgetItem(symbol_set.completeBaseName());
+			item->setData(Qt::UserRole, symbol_set.canonicalFilePath());
+			item->setIcon(control);
+			symbol_set_list->addItem(item);
+		}
+	
+	load_from_file = new QListWidgetItem(tr("Load symbol set from a file..."));
+	load_from_file->setData(Qt::UserRole, qVariantFromValue<void*>(NULL));
+	load_from_file->setIcon(QIcon(":/images/open.png"));
+	symbol_set_list->addItem(load_from_file);
+	
+	symbol_set_list->setCurrentRow(0);
 }
+
 void NewMapDialog::symbolSetDoubleClicked(QListWidgetItem* item)
 {
 	symbol_set_list->setCurrentItem(item);
-	accept();
+	if (item == load_from_file)
+		showFileDialog();
+	else
+		accept();
 }
+
 void NewMapDialog::createClicked()
 {
+	QListWidgetItem* item = symbol_set_list->currentItem();
+	if (item == load_from_file)
+		showFileDialog();
+	else
+		accept();
+}
+
+void NewMapDialog::showFileDialog()
+{
+	// Get the saved directory to start in, defaulting to the user's home directory.
+	QString open_directory = QSettings().value("openFileDirectory", QDir::homePath()).toString();
+	
+	QString filters = 
+	  tr("OpenOrienteering symbol sets")  % " (*.omap);;" %
+	  tr("All files") % " (*.*)";
+	  
+	QString path = QFileDialog::getOpenFileName(this, tr("Load symbol set from a file..."), open_directory, filters);
+	path = QFileInfo(path).canonicalFilePath();
+	if (path.isEmpty())
+		return;
+	
+	load_from_file->setData(Qt::UserRole, path);
 	accept();
 }
 
 void NewMapDialog::loadSymbolSetMap()
 {
-	const QString dir_name = "my symbol sets";
-	QDir dir(dir_name);
-	if (!dir.exists())
-	{
-		QDir().mkdir(dir_name);
-		dir = QDir(dir_name);
-	}
+	QString app_dir = QCoreApplication::applicationDirPath();
 	
-	QStringList my_scales = dir.entryList(QDir::Dirs | QDir::Hidden | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDir::NoSort);
+	// FIXME: How to translate directory name "my symbol sets"?
 	
-	for (int i = 0; i < my_scales.size(); ++i)
+	// #1: symbol sets from HOME/my symbol sets
+	QDir symbol_set_dir(QDir::homePath() % "/my symbol sets");
+	if (symbol_set_dir.exists())
+		loadSymbolSetDir(symbol_set_dir);
+	
+	// #2: symbol sets from APPDIR/my symbol sets
+	symbol_set_dir.cd(app_dir % "/my symbol sets");
+	if (symbol_set_dir.exists())
+		loadSymbolSetDir(symbol_set_dir);
+	
+#ifndef WIN32
+	// #3: symbol sets from /usr/share et al. if executable is in /usr/bin
+	symbol_set_dir.cd(app_dir % "/../share/openorienteering-mapper/symbol sets");
+	if (symbol_set_dir.exists())
+		loadSymbolSetDir(symbol_set_dir);
+#endif
+}
+
+void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
+{
+	QStringList subdirs = symbol_set_dir.entryList(QDir::Dirs | QDir::Hidden | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDir::NoSort);
+	foreach (const QString dir_name, subdirs)
 	{
-		bool ok = false;
-		int scale = my_scales.at(i).toInt(&ok);
-		if (!ok)
+		int scale = dir_name.toInt();
+		if (scale == 0)
+		{
+			qDebug() << dir_name % ": not a valid map scale denominator.";
 			continue;
+		}
 		
-		QDir subdir = QDir(dir_name + "/" + my_scales.at(i));
+		QDir subdir(symbol_set_dir);
+		if (! subdir.cd(dir_name))
+		{
+			qDebug() << dir_name % ": cannot access this directory.";
+			continue;
+		}
 		
 		QStringList symbol_set_filters;
 		symbol_set_filters << "*.omap";
-		QStringList symbol_set_files = subdir.entryList(QDir::Files | QDir::Hidden | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDir::Name);
-		for (int k = 0; k < symbol_set_files.size(); ++k)
-			symbol_set_files[k] = symbol_set_files[k].left(symbol_set_files[k].size() - 5);
+		subdir.setNameFilters(symbol_set_filters);
+		QFileInfoList symbol_set_files = subdir.entryInfoList(QDir::Files | QDir::Hidden | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDir::Name);
 		symbol_set_map.insert(std::make_pair(scale, symbol_set_files));
 	}
 }
