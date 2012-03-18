@@ -511,7 +511,7 @@ void LineSymbol::createPointedLineCap(const MapCoordVector& flags, const MapCoor
 	MapCoord curve_start;
 	curve_start.setCurveStart(true);
 	MapCoord no_flag;
-	for (int i = (int)cap_coords_left.size() - (is_end ? 2 : 1); i >= (is_end ? 0 : 1); --i)
+	for (int i = (int)cap_coords_left.size() - (is_end ? 2 : 1); i >= 0; --i)
 	{
 		if (i >= 3 && cap_flags[i - 3].isCurveStart())
 		{
