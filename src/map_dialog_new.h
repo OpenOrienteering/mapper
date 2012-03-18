@@ -24,34 +24,76 @@
 #include <map>
 
 #include <QDialog>
+#include <QString>
+#include <QFileInfo>
 
 QT_BEGIN_NAMESPACE
 class QComboBox;
 class QListWidget;
 class QListWidgetItem;
+class QCheckBox;
 QT_END_NAMESPACE
 
 class NewMapDialog : public QDialog
 {
 Q_OBJECT
 public:
+	/** Constructs a dialog for scale and symbol set of a new map. */
 	NewMapDialog(QWidget* parent = NULL);
 	
-	int getSelectedScale();
-	QString getSelectedSymbolSetPath();
+	/** Get the denominator of the chosen map scale.
+	 *  For a scale of 1:10000, this function returns 10000.
+	 */
+	int getSelectedScale() const;
+	
+	/** Get the full path of the selected symbol set.
+	 *  Returns an empty string if the map shall be created with an empty symbol set. 
+	 */
+	QString getSelectedSymbolSetPath() const;
 	
 public slots:
-	void createClicked();
-    void scaleChanged(QString new_text);
-    void symbolSetDoubleClicked(QListWidgetItem* item);
+	/** Updates the list of symbol sets for the chosen map scale [denominator]. */
+	void updateSymbolSetList();
 	
-private:
+	/** Accepts a selected symbol set, or triggers the file dialog. */
+	void symbolSetDoubleClicked(QListWidgetItem* item);
+	
+	/** Accepts the selected symbol set, or triggers the file dialog. */
+	void createClicked();
+	
+	/** Hides the dialog and accepts the input. */
+	void accept();
+	
+protected:
+	/** A type for mapping map scales to lists of symbol sets. */
+	typedef std::map<QString, QFileInfoList> SymbolSetMap;
+	
+	/** Loads all available symbol. */
 	void loadSymbolSetMap();
 	
-	std::map<int, QStringList> symbol_set_map;	// scale to vector of symbol set names; TODO: store that globally / dir watcher
+	/** Adds the symbol sets from a particular base directory. */
+	void loadSymbolSetDir(const QDir& symbol_set_dir);
 	
+	/** Open a dialog for loading a symbol set from a file. */
+	void showFileDialog();
+	
+private:
+	/** A mapping from map scales to lists of matching symbol set. */
+	SymbolSetMap symbol_set_map;	// scale to vector of symbol set names; TODO: store that globally / dir watcher
+	
+	/** The map scale input widget. */
 	QComboBox* scale_combo;
+	
+	/** The symbol set selection widget. */
 	QListWidget* symbol_set_list;
+	
+	/** The list item for loading a symbol set from a file. */
+	QListWidgetItem* load_from_file;
+	
+	/** This check box controls whether only matching or all symbol sets are displayed. */
+	QCheckBox* symbol_set_matching;
+	
+	/** The button for accepting the selected map scale and symbol set. */
 	QPushButton* create_button;
 };
 
