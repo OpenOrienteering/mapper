@@ -26,6 +26,7 @@
 #include "symbol_line.h"
 #include "symbol_area.h"
 #include "symbol_text.h"
+#include "symbol_combined.h"
 #include "template_image.h"
 #include "object_text.h"
 
@@ -145,13 +146,23 @@ void OCAD8FileImport::doImport() throw (FormatException)
 
                 if (symbol)
                 {
-					if (ocad_symbol->status & 1)
-						symbol->setProtected(true);
-					if (ocad_symbol->status & 2)
-						symbol->setHidden(true);
                     map->symbols.push_back(symbol);
                     symbol_index[ocad_symbol->number] = symbol;
                     symbol_count++;
+					
+					// For combined symbols, also add their parts
+					// FIXME: implement private parts for combined symbols instead
+					if (symbol->getType() == Symbol::Combined)
+					{
+						CombinedSymbol* combined_symbol = reinterpret_cast<CombinedSymbol*>(symbol);
+						for (int i = 0; i < combined_symbol->getNumParts(); ++i)
+						{
+							Symbol* part = combined_symbol->getPart(i);
+							part->setNumberComponent(2, i+1);
+							map->symbols.push_back(part);
+							symbol_count++; // FIXME?
+						}
+					}
                 }
                 else
                 {
@@ -249,114 +260,178 @@ Symbol *OCAD8FileImport::importPointSymbol(const OCADPointSymbol *ocad_symbol)
 {
     PointSymbol *symbol = importPattern(ocad_symbol->ngrp, (OCADPoint *)ocad_symbol->pts);
     fillCommonSymbolFields(symbol, (OCADSymbol *)ocad_symbol);
+	symbol->setRotatable(ocad_symbol->subtype & 0x100);
 
     return symbol;
 }
 
 Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 {
-    LineSymbol *symbol = new LineSymbol();
-    fillCommonSymbolFields(symbol, (OCADSymbol *)ocad_symbol);
+	// Import a main line?
+	LineSymbol *main_line = NULL;
+	if (ocad_symbol->dmode == 0 || ocad_symbol->width > 0)
+	{
+		main_line = new LineSymbol();
+		fillCommonSymbolFields(main_line, (OCADSymbol *)ocad_symbol);
 
-    symbol->minimum_length = 0; // OCAD 8 does not store min length
+		main_line->minimum_length = 0; // OCAD 8 does not store min length
 
-    // Basic line options
-    symbol->line_width = convertSize(ocad_symbol->width);
-    symbol->color = convertColor(ocad_symbol->color);
-    // FIXME: are the cap mappings correct?
-    // FIXME: where is "pointed ends" in OCAD?
-    if (ocad_symbol->ends == 0) symbol->cap_style = LineSymbol::FlatCap;
-    else if (ocad_symbol->ends == 1) symbol->cap_style = LineSymbol::RoundCap;
-    else if (ocad_symbol->ends == 2) symbol->cap_style = LineSymbol::SquareCap;
-    // FIXME: are the join mappings correct?
+		// Basic line options
+		main_line->line_width = convertSize(ocad_symbol->width);
+		main_line->color = convertColor(ocad_symbol->color);
+		
+		// Cap and join styles
+		if (ocad_symbol->ends == 0)
+		{
+			main_line->cap_style = LineSymbol::FlatCap;
+			main_line->join_style = LineSymbol::BevelJoin;
+		}
+		else if (ocad_symbol->ends == 1)
+		{
+			main_line->cap_style = LineSymbol::RoundCap;
+			main_line->join_style = LineSymbol::RoundJoin;
+		}
+		else if (ocad_symbol->ends == 2)
+		{
+			main_line->cap_style = LineSymbol::PointedCap;
+			main_line->join_style = LineSymbol::BevelJoin;
+		}
+		else if (ocad_symbol->ends == 3)
+		{
+			main_line->cap_style = LineSymbol::PointedCap;
+			main_line->join_style = LineSymbol::RoundJoin;
+		}
+		else if (ocad_symbol->ends == 4)
+		{
+			main_line->cap_style = LineSymbol::FlatCap;
+			main_line->join_style = LineSymbol::MiterJoin;
+		}
+		else if (ocad_symbol->ends == 6)
+		{
+			main_line->cap_style = LineSymbol::PointedCap;
+			main_line->join_style = LineSymbol::MiterJoin;
+		}
 
-    // Handle the dash pattern
-    if( ocad_symbol->gap > 0 || ocad_symbol->gap2 > 0 )
-    {
-        //dashed
-        symbol->dashed = true;
-        symbol->dash_length = convertSize(ocad_symbol->len);
-        symbol->break_length = convertSize(ocad_symbol->gap);
-        //symbol->dashes_in_group = 0;
-        //symbol->in_group_break_len = 0;
-        //symbol->half_outer_dashes = 0;
-    } 
-    else
-    {
-        symbol->segment_length = convertSize(ocad_symbol->len);
-        symbol->end_length = convertSize(ocad_symbol->elen); // FIXME?
-    }
+		if (main_line->cap_style == LineSymbol::PointedCap)
+		{
+			if (ocad_symbol->bdist != ocad_symbol->edist)
+				addWarning(QObject::tr("In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.")
+				.arg(ocad_symbol->number).arg(ocad_symbol->bdist).arg(ocad_symbol->edist).arg((ocad_symbol->bdist + ocad_symbol->edist) / 2));
+			main_line->pointed_cap_length = convertSize((ocad_symbol->bdist + ocad_symbol->edist) / 2); // FIXME: Different lengths for start and end length of pointed line ends are not supported yet, so take the average
+			main_line->join_style = LineSymbol::RoundJoin;	// NOTE: while the setting may be different (see what is set in the first place), OCAD always draws round joins if the line cap is pointed!
+		}
+		
+		// Handle the dash pattern
+		if( ocad_symbol->gap > 0 || ocad_symbol->gap2 > 0 )
+		{
+			//dashed
+			main_line->dashed = true;
+			if (ocad_symbol->len != ocad_symbol->elen)
+				addWarning(QObject::tr("In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.")
+				.arg(ocad_symbol->number).arg(ocad_symbol->len).arg(ocad_symbol->elen).arg(ocad_symbol->len));
+			main_line->dash_length = convertSize(ocad_symbol->len);
+			main_line->break_length = convertSize(ocad_symbol->gap);
+			
+			if (ocad_symbol->gap2 > 0)
+			{
+				main_line->dashes_in_group = 2;
+				if (ocad_symbol->gap2 != ocad_symbol->egap)
+					addWarning(QObject::tr("In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.")
+					.arg(ocad_symbol->number).arg(ocad_symbol->gap2).arg(ocad_symbol->egap).arg(ocad_symbol->gap2));
+				main_line->in_group_break_length = convertSize(ocad_symbol->gap2);
+				main_line->dash_length = (main_line->dash_length - main_line->in_group_break_length) / 2;
+			}
+		} 
+		else
+		{
+			main_line->segment_length = convertSize(ocad_symbol->len);
+			main_line->end_length = convertSize(ocad_symbol->elen);
+		}
+	}
+	
+	// Import a 'double' line?
+	LineSymbol *double_line = NULL;
+	if (ocad_symbol->dmode != 0)
+	{
+		double_line = new LineSymbol();
+		fillCommonSymbolFields(double_line, (OCADSymbol *)ocad_symbol);
+		
+		double_line->line_width = convertSize(ocad_symbol->dwidth);
+		if (ocad_symbol->dflags & 1)
+			double_line->color = convertColor(ocad_symbol->dcolor);
+		else
+			double_line->color = NULL;
+		
+		double_line->cap_style = LineSymbol::FlatCap;
+		double_line->join_style = LineSymbol::MiterJoin;
+		
+		// Border lines
+		if (ocad_symbol->lwidth > 0 || ocad_symbol->rwidth > 0)
+		{
+			double_line->have_border_lines = true;
+			
+			// Border color and width - currently we don't support different values on left and right side,
+			// although that seems easy enough to implement in the future. Import with a warning.
+			s16 border_color = ocad_symbol->lcolor;
+			if (border_color != ocad_symbol->rcolor)
+			{
+				addWarning(QObject::tr("In symbol %1, left and right borders are different colors (%2 and %3). Using %4.")
+				.arg(ocad_symbol->number).arg(ocad_symbol->lcolor).arg(ocad_symbol->rcolor).arg(border_color));
+			}
+			double_line->border_color = convertColor(border_color);
+			
+			s16 border_width = ocad_symbol->lwidth;
+			if (border_width != ocad_symbol->rwidth)
+			{
+				addWarning(QObject::tr("In symbol %1, left and right borders are different width (%2 and %3). Using %4.")
+				.arg(ocad_symbol->number).arg(ocad_symbol->lwidth).arg(ocad_symbol->rwidth).arg(border_width));
+			}
+			double_line->border_width = convertSize(border_width);
+			double_line->border_shift = double_line->border_width / 2;
+			
+			// And finally, the border may be dashed
+			if (ocad_symbol->dgap > 0 && ocad_symbol->dmode > 1)
+			{
+				double_line->dashed_border = true;
+				double_line->border_dash_length = convertSize(ocad_symbol->dlen);
+				double_line->border_break_length = convertSize(ocad_symbol->dgap);
+				
+				if (ocad_symbol->dmode == 2)
+					addWarning(QObject::tr("In line symbol %1, ignoring that only the left border line should be dashed").arg(ocad_symbol->number));
+			}
+		}
+	}
     
     // Create point symbols along line; middle ("normal") dash, corners, start, and end.
+    LineSymbol* symbol_line = main_line ? main_line : double_line;	// Find the line to attach the symbols to
     OCADPoint * symbolptr = (OCADPoint *)ocad_symbol->pts;
-    symbol->mid_symbol = importPattern( ocad_symbol->smnpts, symbolptr);
-    symbol->mid_symbols_per_spot = ocad_symbol->snum;
-    symbol->mid_symbol_distance = convertSize(ocad_symbol->sdist);
+	symbol_line->mid_symbol = importPattern( ocad_symbol->smnpts, symbolptr);
+	symbol_line->mid_symbols_per_spot = ocad_symbol->snum;
+	symbol_line->mid_symbol_distance = convertSize(ocad_symbol->sdist);
     symbolptr += ocad_symbol->smnpts;
     if( ocad_symbol->ssnpts > 0 )
     {
-        symbol->dash_symbol = importPattern( ocad_symbol->ssnpts, symbolptr);
+		//symbol_line->dash_symbol = importPattern( ocad_symbol->ssnpts, symbolptr);
         symbolptr += ocad_symbol->ssnpts;
     }
     if( ocad_symbol->scnpts > 0 )
     {
-        //symbol->corner_symbol = importPattern( ocad_symbol->scnpts, symbolptr);
+		symbol_line->dash_symbol = importPattern( ocad_symbol->scnpts, symbolptr);
         symbolptr += ocad_symbol->scnpts; 
     }
     if( ocad_symbol->sbnpts > 0 )
     {
-        symbol->start_symbol = importPattern( ocad_symbol->sbnpts, symbolptr);
+		symbol_line->start_symbol = importPattern( ocad_symbol->sbnpts, symbolptr);
         symbolptr += ocad_symbol->sbnpts;
     }
     if( ocad_symbol->senpts > 0 )
     {
-        symbol->end_symbol = importPattern( ocad_symbol->senpts, symbolptr);
+		symbol_line->end_symbol = importPattern( ocad_symbol->senpts, symbolptr);
     }
     // FIXME: not really sure how this translates... need test cases
-    symbol->minimum_mid_symbol_count = 1 + ocad_symbol->smin;
-    symbol->minimum_mid_symbol_count_when_closed = 1 + ocad_symbol->smin;
-    symbol->show_at_least_one_symbol = (ocad_symbol->smin >= 0);
-
-    // Double lines
-    if (ocad_symbol->dmode > 0)
-    {
-        symbol->have_border_lines = true;
-        if (ocad_symbol->dflags & 1)
-        {
-            // Double line fill: overwrite anything in the "main" line, even if it exists
-            // FIXME: if a main line exists, it is drawn by OCAD in addition to the other line -> use CombinedSymbol
-            symbol->line_width = convertSize(ocad_symbol->dwidth);
-            symbol->color = convertColor(ocad_symbol->dcolor);
-			symbol->dashed = false;
-        }
-
-        // Border color and width - currently we don't support different values on left and right side,
-        // although that seems easy enough to implement in the future. Import with a warning.
-        s16 border_color = ocad_symbol->lcolor;
-        if (border_color != ocad_symbol->rcolor)
-        {
-            addWarning(QObject::tr("In symbol %1, left and right borders are different colors (%2 and %3). Using %4.")
-                       .arg(ocad_symbol->number).arg(ocad_symbol->lcolor).arg(ocad_symbol->rcolor).arg(border_color));
-        }
-        symbol->border_color = convertColor(border_color);
-
-        s16 border_width = ocad_symbol->lwidth;
-        if (border_width != ocad_symbol->rwidth)
-        {
-            addWarning(QObject::tr("In symbol %1, left and right borders are different width (%2 and %3). Using %4.")
-                       .arg(ocad_symbol->number).arg(ocad_symbol->lwidth).arg(ocad_symbol->rwidth).arg(border_width));
-        }
-        symbol->border_width = convertSize(border_width);
-		symbol->border_shift = symbol->border_width / 2;
-
-        // And finally, the border may be dashed
-        if (ocad_symbol->dgap > 0)
-        {
-			symbol->dashed_border = true;
-            symbol->border_dash_length = convertSize(ocad_symbol->dlen);
-            symbol->border_break_length = convertSize(ocad_symbol->dgap);
-        }
-    }
+    symbol_line->minimum_mid_symbol_count = 0; //1 + ocad_symbol->smin;
+	symbol_line->minimum_mid_symbol_count_when_closed = 0; //1 + ocad_symbol->smin;
+	symbol_line->show_at_least_one_symbol = false; // NOTE: this works in a different way than OCAD's 'at least X symbols' setting
 
     // TODO: taper fields (tmode and tlast)
 
@@ -364,8 +439,27 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
     {
         addWarning(QObject::tr("In symbol %1, ignoring framing line.").arg(ocad_symbol->number));
     }
-
-    return symbol;
+    
+    if (main_line == NULL)
+		return double_line;
+	else if (double_line == NULL)
+		return main_line;
+	else
+	{
+		CombinedSymbol* full_line = new CombinedSymbol();
+		fillCommonSymbolFields(full_line, (OCADSymbol *)ocad_symbol);
+		full_line->setNumParts(2);
+		full_line->setPart(0, main_line);
+		full_line->setPart(1, double_line);
+		
+		// Don't let parts be affected by possible settings for the combined symbol
+		main_line->setHidden(false);
+		main_line->setProtected(false);
+		double_line->setHidden(false);
+		double_line->setProtected(false);
+		
+		return full_line;
+	}
 }
 
 Symbol *OCAD8FileImport::importAreaSymbol(const OCADAreaSymbol *ocad_symbol)
@@ -503,34 +597,41 @@ Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
 PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
 {
     PointSymbol *symbol = new PointSymbol();
-    symbol->rotatable = true; // FIXME: by default for now, where is the "Align to north" checkbox in the OCAD file?
+    symbol->rotatable = true;
     OCADPoint *p = pts, *end = pts + npts;
     while (p < end) {
         OCADSymbolElement *elt = (OCADSymbolElement *)p;
         int element_index = symbol->getNumElements();
+		bool multiple_elements = p + (2 + elt->npts) < end || p > pts;
         if (elt->type == OCAD_DOT_ELEMENT)
         {
-            PointSymbol* element_symbol = new PointSymbol();
-            element_symbol->inner_color = convertColor(elt->color);
-            element_symbol->inner_radius = (int)convertSize(elt->diameter) / 2;
-            element_symbol->outer_color = NULL;
-            element_symbol->outer_width = 0;
-            element_symbol->rotatable = false;
-            PointObject* element_object = new PointObject(element_symbol);
-            element_object->coords.resize(1);
-            symbol->addElement(element_index, element_object, element_symbol);
+			PointSymbol* element_symbol = multiple_elements ? (new PointSymbol()) : symbol;
+			element_symbol->inner_color = convertColor(elt->color);
+			element_symbol->inner_radius = (int)convertSize(elt->diameter) / 2;
+			element_symbol->outer_color = NULL;
+			element_symbol->outer_width = 0;
+			if (multiple_elements)
+			{
+				element_symbol->rotatable = false;
+				PointObject* element_object = new PointObject(element_symbol);
+				element_object->coords.resize(1);
+				symbol->addElement(element_index, element_object, element_symbol);
+			}
         }
         else if (elt->type == OCAD_CIRCLE_ELEMENT)
         {
-            PointSymbol* element_symbol = new PointSymbol();
+			PointSymbol* element_symbol = (multiple_elements) ? (new PointSymbol()) : symbol;
             element_symbol->inner_color = NULL;
 			element_symbol->inner_radius = (int)convertSize(elt->diameter) / 2 - (int)convertSize(elt->width);
             element_symbol->outer_color = convertColor(elt->color);
             element_symbol->outer_width = (int)convertSize(elt->width);
-            element_symbol->rotatable = false;
-            PointObject* element_object = new PointObject(element_symbol);
-            element_object->coords.resize(1);
-            symbol->addElement(element_index, element_object, element_symbol);
+			if (multiple_elements)
+			{
+				element_symbol->rotatable = false;
+				PointObject* element_object = new PointObject(element_symbol);
+				element_object->coords.resize(1);
+				symbol->addElement(element_index, element_object, element_symbol);
+			}
         }
         else if (elt->type == OCAD_LINE_ELEMENT)
         {
@@ -559,14 +660,17 @@ PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
 
 void OCAD8FileImport::fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol)
 {
-    // common fields are name, number, description, helper_symbol
+    // common fields are name, number, description, helper_symbol, hidden/protected status
     symbol->name = convertPascalString(ocad_symbol->name);
     symbol->number[0] = ocad_symbol->number / 10;
     symbol->number[1] = ocad_symbol->number % 10;
     symbol->number[2] = -1;
     symbol->description = symbol->name;
     symbol->is_helper_symbol = false; // no such thing in OCAD
-    //symbol->map = map;
+    if (ocad_symbol->status & 1)
+		symbol->setProtected(true);
+	if (ocad_symbol->status & 2)
+		symbol->setHidden(true);
 }
 
 Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
@@ -584,7 +688,11 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
         p->symbol = symbol;
 
         // extra properties: rotation
-        p->setRotation(convertRotation(ocad_object->angle));
+		PointSymbol* point_symbol = reinterpret_cast<PointSymbol*>(symbol);
+		if (point_symbol->isRotatable())
+			p->setRotation(convertRotation(ocad_object->angle));
+		else if (ocad_object->angle != 0)
+			addWarning(QObject::tr("An object with non-rotatable symbol '%1' has a non-zero rotation").arg(symbol->getName()));
 
         // only 1 coordinate is allowed, enforce it even if the OCAD object claims more.
         fillPathCoords(p, false, 1, (OCADPoint *)ocad_object->pts);
@@ -618,7 +726,7 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
         t->output_dirty = true;
         return t;
     }
-    else if (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area) {
+    else if (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined) {
         PathObject *p = new PathObject();
         p->symbol = symbol;
 
@@ -708,7 +816,7 @@ void OCAD8FileImport::fillPathCoords(Object *object, bool is_area, s16 npts, OCA
         // CurveStart needs to be applied to the main point though, not the control point, and
 		// hole points need to bet set as the last point of a part of an area object instead of the first point of the next part
         if (buf[2] & PX_CTL1 && i > 0) object->coords[i-1].setCurveStart(true);
-        if (buf[2] & (PY_DASH << 8)) coord.setDashPoint(true);
+		if ((buf[2] & (PY_DASH << 8)) || (buf[2] & (PY_CORNER << 8))) coord.setDashPoint(true);
         if (buf[2] & (PY_HOLE << 8))
 		{
 			if (is_area)

@@ -439,7 +439,7 @@ void DrawPathTool::closeDrawing()
 void DrawPathTool::finishDrawing()
 {
 	// Does the symbols contain only areas? If so, auto-close the path if not done yet
-	bool contains_only_areas = !is_helper_tool && (drawing_symbol->getContainedTypes() & ~(Symbol::Area | Symbol::Combined)) == 0;
+	bool contains_only_areas = !is_helper_tool && (drawing_symbol->getContainedTypes() & ~(Symbol::Area | Symbol::Combined)) == 0 && (drawing_symbol->getContainedTypes() & Symbol::Area);
 	if (contains_only_areas && preview_path->getNumParts() > 0)
 		preview_path->getPart(0).setClosed(true);
 	
@@ -655,7 +655,10 @@ void DrawPathTool::addPreviewSymbols(Symbol* symbol)
 		
 		int size = combined->getNumParts();
 		for (int i = 0; i < size; ++i)
-			addPreviewSymbols(combined->getPart(i));
+		{
+			if (combined->getPart(i))
+				addPreviewSymbols(combined->getPart(i));
+		}
 	}
 }
 

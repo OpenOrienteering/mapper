@@ -466,7 +466,7 @@ void SymbolRenderWidget::leaveEvent(QEvent* event)
 }
 void SymbolRenderWidget::wheelEvent(QWheelEvent* event)
 {
-	if (scroll_bar)
+	if (scroll_bar && scroll_bar->isEnabled())
 	{
 		scroll_bar->event(event);
 		mouseMove(event->x(), event->y());
@@ -737,6 +737,7 @@ SymbolWidget::SymbolWidget(Map* map, QWidget* parent): EditorDockWidgetChild(par
 	no_resize_handling = false;
 	
 	scroll_bar = new QScrollBar();
+	scroll_bar->setEnabled(false);
 	scroll_bar->hide();
 	scroll_bar->setOrientation(Qt::Vertical);
 	scroll_bar->setSingleStep(Symbol::icon_size);

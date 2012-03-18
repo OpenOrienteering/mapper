@@ -511,7 +511,7 @@ void LineSymbol::createPointedLineCap(const MapCoordVector& flags, const MapCoor
 	MapCoord curve_start;
 	curve_start.setCurveStart(true);
 	MapCoord no_flag;
-	for (int i = (int)cap_coords_left.size() - (is_end ? 2 : 1); i >= (is_end ? 0 : 1); --i)
+	for (int i = (int)cap_coords_left.size() - (is_end ? 2 : 1); i >= 0; --i)
 	{
 		if (i >= 3 && cap_flags[i - 3].isCurveStart())
 		{
@@ -1087,27 +1087,27 @@ void LineSymbol::ensurePointSymbols(const QString& start_name, const QString& mi
 	if (!start_symbol)
 	{
 		start_symbol = new PointSymbol();
-		start_symbol->setName(start_name);
 		start_symbol->setRotatable(true);
 	}
+	start_symbol->setName(start_name);
 	if (!mid_symbol)
 	{
 		mid_symbol = new PointSymbol();
-		mid_symbol->setName(mid_name);
 		mid_symbol->setRotatable(true);
 	}
+	mid_symbol->setName(mid_name);
 	if (!end_symbol)
 	{
 		end_symbol = new PointSymbol();
-		end_symbol->setName(end_name);
 		end_symbol->setRotatable(true);
 	}
+	end_symbol->setName(end_name);
 	if (!dash_symbol)
 	{
 		dash_symbol = new PointSymbol();
-		dash_symbol->setName(dash_name);
 		dash_symbol->setRotatable(true);
 	}
+	dash_symbol->setName(dash_name);
 }
 void LineSymbol::cleanupPointSymbols()
 {

@@ -136,6 +136,8 @@ bool CombinedSymbol::loadImpl(QFile* file, int version, Map* map)
 bool CombinedSymbol::loadFinished(Map* map)
 {
 	int size = (int)temp_part_indices.size();
+	if (size == 0)
+		return true;
 	parts.resize(size);
 	for (int i = 0; i < size; ++i)
 	{
