@@ -31,7 +31,7 @@ NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMe
 {
 	setWindowTitle(tr("Create new map"));
 	
-	QLabel* desc_label = new QLabel(tr("Choose the scale and symbol set for the new map.\nThe available symbol sets depend on the selected scale."));
+	QLabel* desc_label = new QLabel(tr("Choose the scale and symbol set for the new map."));
 	
 	QLabel* scale_label = new QLabel(tr("Scale:  1 : "));
 	scale_combo = new QComboBox();
@@ -40,6 +40,8 @@ NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMe
 	
 	QLabel* symbol_set_label = new QLabel(tr("Symbol sets:"));
 	symbol_set_list = new QListWidget();
+	
+	symbol_set_matching = new QCheckBox(tr("Only show symbol sets matching the selected scale"));
 	
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
 	create_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("Create"));
@@ -61,25 +63,30 @@ NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMe
 	layout->addLayout(scale_layout);
 	layout->addWidget(symbol_set_label);
 	layout->addWidget(symbol_set_list);
+	layout->addWidget(symbol_set_matching);
 	layout->addSpacing(16);
 	layout->addLayout(buttons_layout);
 	setLayout(layout);
 	
 	loadSymbolSetMap();
 	for (SymbolSetMap::iterator it = symbol_set_map.begin(); it != symbol_set_map.end(); ++it)
-		scale_combo->addItem(QString::number(it->first));
+		if (it->first.toInt() != 0)
+			scale_combo->addItem(it->first);
 	
 	QSettings settings;
 	settings.beginGroup("NewMapDialog");
 	const QString default_scale = settings.value("DefaultScale", "10000").toString();
+	const bool matching = settings.value("OnlyMatchingSymbolSets", "true").toBool();
 	settings.endGroup();
 	
 	scale_combo->setEditText(default_scale);
-	connect(scale_combo, SIGNAL(editTextChanged(QString)), this, SLOT(scaleChanged(QString)));
+	symbol_set_matching->setChecked(matching);
+	connect(scale_combo, SIGNAL(editTextChanged(QString)), this, SLOT(updateSymbolSetList()));
 	connect(symbol_set_list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(symbolSetDoubleClicked(QListWidgetItem*)));
+	connect(symbol_set_matching, SIGNAL(stateChanged(int)), this, SLOT(updateSymbolSetList()));
 	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
 	connect(create_button, SIGNAL(clicked(bool)), this, SLOT(createClicked()));
-	scaleChanged(default_scale);
+	updateSymbolSetList();
 }
 
 int NewMapDialog::getSelectedScale() const
@@ -105,15 +112,16 @@ void NewMapDialog::accept()
 	QSettings settings;
 	settings.beginGroup("NewMapDialog");
 	settings.setValue("DefaultScale", getSelectedScale());
+	settings.setValue("OnlyMatchingSymbolSets", symbol_set_matching->isChecked());
 	settings.endGroup();
 	
 	QDialog::accept();
 }
 
-void NewMapDialog::scaleChanged(QString new_text)
+void NewMapDialog::updateSymbolSetList()
 {
-	int scale = new_text.toInt();
-	if (scale == 0)
+	QString scale = scale_combo->currentText();
+	if (scale.toInt() == 0)
 	{
 		create_button->setEnabled(false);
 		symbol_set_list->setEnabled(false);
@@ -132,6 +140,7 @@ void NewMapDialog::scaleChanged(QString new_text)
 	QIcon control(":/images/control.png");
 	SymbolSetMap::iterator it = symbol_set_map.find(scale);
 	if (it != symbol_set_map.end())
+	{
 		foreach (const QFileInfo& symbol_set, it->second)
 		{
 			item = new QListWidgetItem(symbol_set.completeBaseName());
@@ -139,6 +148,27 @@ void NewMapDialog::scaleChanged(QString new_text)
 			item->setIcon(control);
 			symbol_set_list->addItem(item);
 		}
+	}
+	
+	if (! symbol_set_matching->isChecked())
+	{
+		for (it = symbol_set_map.begin(); it != symbol_set_map.end(); ++it )
+		{
+			if (it->first == scale) 
+				continue;
+			
+			bool is_scale = (it->first.toInt() > 0);
+			QString remark = " (" % QString(is_scale ? ("1 : ") : "") % it->first % ")";
+			
+			foreach (const QFileInfo& symbol_set, it->second)
+			{
+				item = new QListWidgetItem(symbol_set.completeBaseName() % remark);
+				item->setData(Qt::UserRole, symbol_set.canonicalFilePath());
+				item->setIcon(control);
+				symbol_set_list->addItem(item);
+			}
+		}
+	}
 	
 	load_from_file = new QListWidgetItem(tr("Load symbol set from a file..."));
 	load_from_file->setData(Qt::UserRole, qVariantFromValue<void*>(NULL));
@@ -216,8 +246,7 @@ void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 		int scale = dir_name.toInt();
 		if (scale == 0)
 		{
-			qDebug() << dir_name % ": not a valid map scale denominator.";
-			continue;
+			qDebug() << dir_name % ": not a valid map scale denominator, using it as group name.";
 		}
 		
 		QDir subdir(symbol_set_dir);
@@ -231,7 +260,7 @@ void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 		symbol_set_filters << "*.omap";
 		subdir.setNameFilters(symbol_set_filters);
 		QFileInfoList symbol_set_files = subdir.entryInfoList(QDir::Files | QDir::Hidden | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDir::Name);
-		symbol_set_map.insert(std::make_pair(scale, symbol_set_files));
+		symbol_set_map.insert(std::make_pair(dir_name, symbol_set_files));
 	}
 }
 

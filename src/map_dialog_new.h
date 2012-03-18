@@ -31,6 +31,7 @@ QT_BEGIN_NAMESPACE
 class QComboBox;
 class QListWidget;
 class QListWidgetItem;
+class QCheckBox;
 QT_END_NAMESPACE
 
 class NewMapDialog : public QDialog
@@ -52,7 +53,7 @@ public:
 	
 public slots:
 	/** Updates the list of symbol sets for the chosen map scale [denominator]. */
-	void scaleChanged(QString new_text);
+	void updateSymbolSetList();
 	
 	/** Accepts a selected symbol set, or triggers the file dialog. */
 	void symbolSetDoubleClicked(QListWidgetItem* item);
@@ -65,7 +66,7 @@ public slots:
 	
 protected:
 	/** A type for mapping map scales to lists of symbol sets. */
-	typedef std::map<int, QFileInfoList> SymbolSetMap;
+	typedef std::map<QString, QFileInfoList> SymbolSetMap;
 	
 	/** Loads all available symbol. */
 	void loadSymbolSetMap();
@@ -88,6 +89,9 @@ private:
 	
 	/** The list item for loading a symbol set from a file. */
 	QListWidgetItem* load_from_file;
+	
+	/** This check box controls whether only matching or all symbol sets are displayed. */
+	QCheckBox* symbol_set_matching;
 	
 	/** The button for accepting the selected map scale and symbol set. */
 	QPushButton* create_button;
