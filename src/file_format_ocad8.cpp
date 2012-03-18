@@ -509,29 +509,36 @@ PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
     while (p < end) {
         OCADSymbolElement *elt = (OCADSymbolElement *)p;
         int element_index = symbol->getNumElements();
+		bool multiple_elements = p + (2 + elt->npts) < end || p > pts;
         if (elt->type == OCAD_DOT_ELEMENT)
         {
-            PointSymbol* element_symbol = new PointSymbol();
-            element_symbol->inner_color = convertColor(elt->color);
-            element_symbol->inner_radius = (int)convertSize(elt->diameter) / 2;
-            element_symbol->outer_color = NULL;
-            element_symbol->outer_width = 0;
-            element_symbol->rotatable = false;
-            PointObject* element_object = new PointObject(element_symbol);
-            element_object->coords.resize(1);
-            symbol->addElement(element_index, element_object, element_symbol);
+			PointSymbol* element_symbol = multiple_elements ? (new PointSymbol()) : symbol;
+			element_symbol->inner_color = convertColor(elt->color);
+			element_symbol->inner_radius = (int)convertSize(elt->diameter) / 2;
+			element_symbol->outer_color = NULL;
+			element_symbol->outer_width = 0;
+			if (multiple_elements)
+			{
+				element_symbol->rotatable = false;
+				PointObject* element_object = new PointObject(element_symbol);
+				element_object->coords.resize(1);
+				symbol->addElement(element_index, element_object, element_symbol);
+			}
         }
         else if (elt->type == OCAD_CIRCLE_ELEMENT)
         {
-            PointSymbol* element_symbol = new PointSymbol();
+			PointSymbol* element_symbol = (multiple_elements) ? (new PointSymbol()) : symbol;
             element_symbol->inner_color = NULL;
 			element_symbol->inner_radius = (int)convertSize(elt->diameter) / 2 - (int)convertSize(elt->width);
             element_symbol->outer_color = convertColor(elt->color);
             element_symbol->outer_width = (int)convertSize(elt->width);
-            element_symbol->rotatable = false;
-            PointObject* element_object = new PointObject(element_symbol);
-            element_object->coords.resize(1);
-            symbol->addElement(element_index, element_object, element_symbol);
+			if (multiple_elements)
+			{
+				element_symbol->rotatable = false;
+				PointObject* element_object = new PointObject(element_symbol);
+				element_object->coords.resize(1);
+				symbol->addElement(element_index, element_object, element_symbol);
+			}
         }
         else if (elt->type == OCAD_LINE_ELEMENT)
         {

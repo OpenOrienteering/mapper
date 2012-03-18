@@ -1087,27 +1087,27 @@ void LineSymbol::ensurePointSymbols(const QString& start_name, const QString& mi
 	if (!start_symbol)
 	{
 		start_symbol = new PointSymbol();
-		start_symbol->setName(start_name);
 		start_symbol->setRotatable(true);
 	}
+	start_symbol->setName(start_name);
 	if (!mid_symbol)
 	{
 		mid_symbol = new PointSymbol();
-		mid_symbol->setName(mid_name);
 		mid_symbol->setRotatable(true);
 	}
+	mid_symbol->setName(mid_name);
 	if (!end_symbol)
 	{
 		end_symbol = new PointSymbol();
-		end_symbol->setName(end_name);
 		end_symbol->setRotatable(true);
 	}
+	end_symbol->setName(end_name);
 	if (!dash_symbol)
 	{
 		dash_symbol = new PointSymbol();
-		dash_symbol->setName(dash_name);
 		dash_symbol->setRotatable(true);
 	}
+	dash_symbol->setName(dash_name);
 }
 void LineSymbol::cleanupPointSymbols()
 {
