@@ -194,7 +194,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="265"/>
         <source>Please enter a valid number from 0 to 255, or specify a percentage from 0 to 100!</source>
-        <translation>Geben Sie eine Zahl zwischen 0 und 255 oder einen Prozentwert zwischen 0 und 100%%.</translation>
+        <translation type="unfinished">Geben Sie eine Zahl zwischen 0 und 255 oder einen Prozentwert zwischen 0 und 100%% ein.</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="341"/>
@@ -272,19 +272,13 @@
         <source>Clear list</source>
         <translation>Liste leeren</translation>
     </message>
-    <message>
-        <location filename="../src/main_window_home_screen.cpp" line="181"/>
-        <source>%1</source>
-        <translatorcomment>FIXME: Remove tr</translatorcomment>
-        <translation></translation>
-    </message>
 </context>
 <context>
     <name>DrawPathTool</name>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="560"/>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation>&lt;b&gt;Strichelungspunkte aktiv.&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Strichelungspunkte aktiv.&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="563"/>
@@ -334,7 +328,7 @@
     <message>
         <location filename="../src/tool_edit.cpp" line="585"/>
         <source>&lt;b&gt;Ctrl+Click&lt;/b&gt; on point to delete it, on path to add a new point, with &lt;b&gt;Space&lt;/b&gt; to make it a dash point</source>
-        <translation>&lt;b&gt;Ctrl+Mausklick&lt;/b&gt; auf einem Punkts, um ihn zu löschen; auf einem Pfad, um einen Punkt einzufügen, mit &lt;b&gt;Leertaste&lt;/b&gt;, um einen Strichelungspunkt anzulegen</translation>
+        <translation>&lt;b&gt;Ctrl+Mausklick&lt;/b&gt; auf einen Punkt, um ihn zu löschen; auf einem Pfad, um einen Punkt einzufügen, mit &lt;b&gt;Leertaste&lt;/b&gt;, um einen Strichelungspunkt anzulegen</translation>
     </message>
     <message>
         <location filename="../src/tool_edit.cpp" line="587"/>
@@ -391,8 +385,7 @@
     <message>
         <location filename="../src/georeferencing.cpp" line="158"/>
         <source>Failed to calculate georeferencing!</source>
-        <translatorcomment>Translation simplified</translatorcomment>
-        <translation>Georeferenzierung fehlgeschlagen!</translation>
+        <translation>Berechnung der Georeferenzierung fehlgeschlagen!</translation>
     </message>
 </context>
 <context>
@@ -614,7 +607,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="1277"/>
         <source>pointed</source>
-        <translation type="unfinished"></translation>
+        <translation>spitz</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1280"/>
@@ -1006,7 +999,7 @@ Press No to choose a different format.</source>
         <translation>Die Karte wird als %1-Datei gespeichert. Bei diesem Dateiformat können Informationen verlorengehen.
 
 Wählen Sie Ja, um die Datei in diesem Format zu speichern.
-Wählen Sie Nein, um ein anderes Dateiformat zu auszusuchen.</translation>
+Wählen Sie Nein, um ein anderes Dateiformat auszusuchen.</translation>
     </message>
     <message>
         <source>Save file ...</source>
@@ -2158,17 +2151,17 @@ libocad-Fehler %1</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="327"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation type="unfinished"></translation>
+        <translation>Im gestrichelten Liniensymbol %1 sind die Längen für die spitzen Enden am Anfang und Ende verschieden (%2 and %3). Verwende %4.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="339"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation type="unfinished"></translation>
+        <translation>Im gestrichelten Liniensymbol %1 sind die Haupt- und Endlänge verschieden (%2 and %3). Verwende %4.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="348"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
-        <translation type="unfinished"></translation>
+        <translation>Im gestrichelten Liniensymbol %1 sind die Unterbrüche D und E verschieden (%2 and %3). Verwende %4.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="387"/>
@@ -2183,7 +2176,7 @@ libocad-Fehler %1</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="409"/>
         <source>In line symbol %1, ignoring that only the left border line should be dashed</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignoriere, dass bei Symbol %1 nur die linke Randlinie gestrichelt sein soll</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="449"/>
@@ -2237,8 +2230,8 @@ libocad-Fehler %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="704"/>
-        <source>An object with non-rotatable symbol &apos;%1&apos; has a non-zero rotation</source>
-        <translation type="unfinished"></translation>
+        <source>An object with the symbol &apos;%1&apos;, which is oriented to north, is rotated. Ignoring the rotation</source>
+        <translation>Ein Objekt mit dem nach Norden ausgerichteten Symbol &apos;%1&apos; ist gedreht. Ignoriere die Drehung</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="729"/>
@@ -2787,7 +2780,7 @@ Vorlage konnte nicht geladen werden. Existiert diese Datei?</translation>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="421"/>
         <source>Please enter a valid number from 0 to 1, or specify a percentage from 0 to 100!</source>
-        <translation>Geben Sie eine Zahl zwischen 0 und 1 oder einen Prozentwert zwischen 0 und 100%%.</translation>
+        <translation>Geben Sie eine Zahl zwischen 0 und 1 oder einen Prozentwert zwischen 0 und 100%% ein.</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="446"/>

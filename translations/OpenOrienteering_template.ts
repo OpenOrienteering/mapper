@@ -269,11 +269,6 @@
         <source>Clear list</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../src/main_window_home_screen.cpp" line="181"/>
-        <source>%1</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>DrawPathTool</name>
@@ -2101,7 +2096,7 @@ for writing.</source>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="704"/>
-        <source>An object with non-rotatable symbol &apos;%1&apos; has a non-zero rotation</source>
+        <source>An object with the symbol &apos;%1&apos;, which is oriented to north, is rotated. Ignoring the rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
