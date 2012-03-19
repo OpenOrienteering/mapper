@@ -205,18 +205,18 @@
 <context>
     <name>CombinedSymbolSettings</name>
     <message>
-        <location filename="../src/symbol_combined.cpp" line="155"/>
+        <location filename="../src/symbol_combined.cpp" line="157"/>
         <source>Combination settings</source>
         <translatorcomment>Replace original with &quot;Composition&quot;</translatorcomment>
         <translation>Zusammensetzung</translation>
     </message>
     <message>
-        <location filename="../src/symbol_combined.cpp" line="160"/>
+        <location filename="../src/symbol_combined.cpp" line="162"/>
         <source>Symbol count:</source>
         <translation>Anzahl der Symbole:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_combined.cpp" line="174"/>
+        <location filename="../src/symbol_combined.cpp" line="176"/>
         <source>Symbol %1:</source>
         <translation>Symbol %1:</translation>
     </message>
@@ -334,7 +334,7 @@
     <message>
         <location filename="../src/tool_edit.cpp" line="585"/>
         <source>&lt;b&gt;Ctrl+Click&lt;/b&gt; on point to delete it, on path to add a new point, with &lt;b&gt;Space&lt;/b&gt; to make it a dash point</source>
-        <translation>&lt;b&gt;Ctrl+Mausklick&lt;/b&gt; auf einem Punkts, um ihn zu löschen; auf einem Pfad, um einen Punkt einzufügen, mit &lt;b&gt;Leertaste&lt;/b&gt;, um einen Strichelungspunkt anzulegen.</translation>
+        <translation>&lt;b&gt;Ctrl+Mausklick&lt;/b&gt; auf einem Punkts, um ihn zu löschen; auf einem Pfad, um einen Punkt einzufügen, mit &lt;b&gt;Leertaste&lt;/b&gt;, um einen Strichelungspunkt anzulegen</translation>
     </message>
     <message>
         <location filename="../src/tool_edit.cpp" line="587"/>
@@ -762,15 +762,15 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/main_window.cpp" line="457"/>
-        <location filename="../src/main_window.cpp" line="577"/>
-        <location filename="../src/main_window.cpp" line="608"/>
-        <location filename="../src/main_window.cpp" line="638"/>
+        <location filename="../src/main_window.cpp" line="460"/>
+        <location filename="../src/main_window.cpp" line="580"/>
+        <location filename="../src/main_window.cpp" line="611"/>
+        <location filename="../src/main_window.cpp" line="641"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="457"/>
+        <location filename="../src/main_window.cpp" line="460"/>
         <source>Cannot open file:
 %1
 
@@ -881,37 +881,52 @@ Do you want to save your changes?</source>
 Möchten Sie die Änderungen speichern?</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="427"/>
+        <location filename="../src/main_window.cpp" line="384"/>
+        <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
+
+Do you want to scale the symbols to the selected scale?</source>
+        <translation>Der neue Maßstab ist 1:%1, aber der ausgewählte Symbolsatz hat den Maßstab 1:%2.
+
+Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
+    </message>
+    <message>
+        <source>The selected map scale is 1:%1, but the selected symbol file has a scale of 1:%2! Do you want to scale the symbols to the selected scale?</source>
+        <translation type="obsolete">Der neue Maßstab ist 1:%1, aber der ausgewählte Symbolsatz hat den Maßstab 1:%2.
+
+Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="430"/>
         <source>All maps</source>
         <translation>Alle Karten</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="431"/>
+        <location filename="../src/main_window.cpp" line="434"/>
         <source>Open file</source>
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="570"/>
+        <location filename="../src/main_window.cpp" line="573"/>
         <source>Save file</source>
         <translation>Datei speichern</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="578"/>
+        <location filename="../src/main_window.cpp" line="581"/>
         <source>File could not be saved:</source>
         <translation>Datei konnte nicht gespeichert werden:</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="579"/>
+        <location filename="../src/main_window.cpp" line="582"/>
         <source>There was a problem in determining the file format.</source>
         <translation>Beim Ermitteln des Dateiformat ist ein Problem aufgetreten.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="580"/>
+        <location filename="../src/main_window.cpp" line="583"/>
         <source>Please report this as a bug.</source>
         <translation>Bitte melden Sie das als Programmfehler.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="621"/>
+        <location filename="../src/main_window.cpp" line="624"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -953,23 +968,22 @@ Möchten Sie die Änderungen speichern?</translation>
         <translation>Ungespeicherte Datei</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="386"/>
-        <location filename="../src/main_window.cpp" line="528"/>
+        <location filename="../src/main_window.cpp" line="384"/>
+        <location filename="../src/main_window.cpp" line="531"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="386"/>
         <source>The selected map scale is 1:%1, but the selected symbol file has a scale of 1:%2! Is the file in the wrong folder?
 
 The new map&apos;s scale will be 1:%3.</source>
         <translatorcomment>Frei übersetzt, Original diskutabel.</translatorcomment>
-        <translation>Der ausgewählte Maßstab ist 1:%1, aber der ausgewählte Symbolsatz hat den Maßstab 1:%2. Möglicherweise wurde der Symbolsatz im falschen Ordner abgelegt.
+        <translation type="obsolete">Der ausgewählte Maßstab ist 1:%1, aber der ausgewählte Symbolsatz hat den Maßstab 1:%2. Möglicherweise wurde der Symbolsatz im falschen Ordner abgelegt.
 
 Die neue Karten wird mit dem Maßstab 1:%3 angelegt.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="429"/>
+        <location filename="../src/main_window.cpp" line="432"/>
         <source>All files</source>
         <translation>Alle Dateien</translation>
     </message>
@@ -978,13 +992,13 @@ Die neue Karten wird mit dem Maßstab 1:%3 angelegt.</translation>
         <translation type="obsolete">Datei öffnen...</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="495"/>
+        <location filename="../src/main_window.cpp" line="498"/>
         <source>&amp;%1 %2</source>
         <translatorcomment>Nicht zu übersetzen</translatorcomment>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="527"/>
+        <location filename="../src/main_window.cpp" line="530"/>
         <source>This map is being saved as a &quot;%1&quot; file. Information may be lost.
 
 Press Yes to save in this format.
@@ -999,19 +1013,19 @@ Wählen Sie Nein, um ein anderes Dateiformat zu auszusuchen.</translation>
         <translation type="obsolete">Datei speichern...</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="608"/>
+        <location filename="../src/main_window.cpp" line="611"/>
         <source>Sorry, settings are not implemented yet!</source>
-        <translation>Leider sind noch keine Einstellungen implementiert.</translation>
+        <translation>Leider sind noch keine Einstellungen implementiert!</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="613"/>
+        <location filename="../src/main_window.cpp" line="616"/>
         <source>About %1</source>
         <translation>Über %1</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="638"/>
+        <location filename="../src/main_window.cpp" line="641"/>
         <source>Sorry, help is not implemented yet!</source>
-        <translation>Leider ist noch keine Hilfe implementiert.</translation>
+        <translation>Leider ist noch keine Hilfe implementiert!</translation>
     </message>
 </context>
 <context>
@@ -1032,7 +1046,7 @@ Wählen Sie Nein, um ein anderes Dateiformat zu auszusuchen.</translation>
     <message>
         <location filename="../src/map.cpp" line="360"/>
         <source>Unable to find an exporter for file named &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern im Format &quot;%1&quot; nicht unterstützt.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="407"/>
@@ -1549,7 +1563,7 @@ Vorlage -&gt; Vorlage öffnen...</translation>
 <context>
     <name>NewMapDialog</name>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="32"/>
+        <location filename="../src/map_dialog_new.cpp" line="34"/>
         <source>Create new map</source>
         <translation>Neue Karte erstellen</translation>
     </message>
@@ -1560,54 +1574,58 @@ The available symbol sets depend on the selected scale.</source>
 Die verfügbaren Symbolsätze hängen vom gewählten Maßstab ab.</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="34"/>
+        <location filename="../src/map_dialog_new.cpp" line="36"/>
         <source>Choose the scale and symbol set for the new map.</source>
         <translation>Maßstab und Symbolsatz der neuen Karte wählen.</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="36"/>
+        <location filename="../src/map_dialog_new.cpp" line="38"/>
         <source>Scale:  1 : </source>
         <translatorcomment>Check spaces.</translatorcomment>
         <translation>Maßstab:  1 : </translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="41"/>
+        <location filename="../src/map_dialog_new.cpp" line="43"/>
         <source>Symbol sets:</source>
         <translation>Symbolsätze:</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="44"/>
+        <location filename="../src/map_dialog_new.cpp" line="46"/>
         <source>Only show symbol sets matching the selected scale</source>
         <translation>Nur zum Maßstab passende Symbolsätze zeigen</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="46"/>
+        <location filename="../src/map_dialog_new.cpp" line="48"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="47"/>
+        <location filename="../src/map_dialog_new.cpp" line="49"/>
         <source>Create</source>
         <translation>Erstellen</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="135"/>
+        <location filename="../src/map_dialog_new.cpp" line="137"/>
         <source>Empty symbol set</source>
         <translation>Leerer Symbolsatz</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="173"/>
-        <location filename="../src/map_dialog_new.cpp" line="208"/>
+        <location filename="../src/map_dialog_new.cpp" line="175"/>
+        <location filename="../src/map_dialog_new.cpp" line="229"/>
         <source>Load symbol set from a file...</source>
         <translation>Symbolsatz von Datei laden...</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="205"/>
-        <source>OpenOrienteering symbol sets</source>
-        <translation>OpenOrienteering-Symbolsätze</translation>
+        <location filename="../src/map_dialog_new.cpp" line="225"/>
+        <source>All symbol set files</source>
+        <translation>Alle Symbolsatz-Dateien</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_new.cpp" line="206"/>
+        <source>OpenOrienteering symbol sets</source>
+        <translation type="obsolete">OpenOrienteering-Symbolsätze</translation>
+    </message>
+    <message>
+        <location filename="../src/map_dialog_new.cpp" line="227"/>
         <source>All files</source>
         <translation>Alle Dateien</translation>
     </message>
@@ -1881,7 +1899,7 @@ Die verfügbaren Symbolsätze hängen vom gewählten Maßstab ab.</translation>
     <message>
         <location filename="../src/print_dock_widget.cpp" line="88"/>
         <source>Copies:</source>
-        <translation>Kopien</translation>
+        <translation>Kopien:</translation>
     </message>
     <message>
         <location filename="../src/print_dock_widget.cpp" line="92"/>
@@ -2081,7 +2099,7 @@ Error while loading a symbol.</source>
 Fehler beim Laden eines Symbols.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.cpp" line="182"/>
+        <location filename="../src/file_format_native.cpp" line="184"/>
         <source>Problem while opening file:
 %1
 
@@ -2090,7 +2108,7 @@ Error while loading undo steps.</source>
 Fehler beim Laden der-Rückgängig-Historie.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.cpp" line="192"/>
+        <location filename="../src/file_format_native.cpp" line="194"/>
         <source>Problem while opening file:
 %1
 
@@ -2099,7 +2117,7 @@ Error while reading layer count.</source>
 Fehler beim Lesen der Ebenenanzahl.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.cpp" line="201"/>
+        <location filename="../src/file_format_native.cpp" line="203"/>
         <source>Problem while opening file:
 %1
 
@@ -2108,7 +2126,13 @@ Error while loading layer %2.</source>
 Fehler beim Laden der Ebene %2.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.cpp" line="224"/>
+        <location filename="../src/file_format_native.cpp" line="210"/>
+        <location filename="../src/file_format_ocad8.cpp" line="251"/>
+        <source>default</source>
+        <translation>Standard</translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_native.cpp" line="234"/>
         <source>Cannot open file:
 %1
 for writing.</source>
@@ -2116,98 +2140,123 @@ for writing.</source>
 Kann Datei nicht zum Schreiben öffnen.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="74"/>
+        <location filename="../src/file_format_ocad8.cpp" line="75"/>
         <source>Could not open file: libocad returned %1</source>
         <translation>Kann Datei nicht öffnen:
 libocad-Fehler %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="158"/>
+        <location filename="../src/file_format_ocad8.cpp" line="169"/>
         <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation>Kann Symbol %1.%2 &quot;%3&quot; nicht importieren.</translation>
+        <translation>Kann Symbol %1.%2 &quot;%3&quot; nicht importieren</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="169"/>
+        <location filename="../src/file_format_ocad8.cpp" line="182"/>
         <source>OCAD import layer</source>
         <translation>OCAD-Import-Ebene</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="338"/>
+        <location filename="../src/file_format_ocad8.cpp" line="327"/>
+        <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="339"/>
+        <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="348"/>
+        <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="387"/>
         <source>In symbol %1, left and right borders are different colors (%2 and %3). Using %4.</source>
         <translation>Bei Symbol %1 haben linker und rechter Rand verschiedene Farben (%2 bzw. %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="346"/>
+        <location filename="../src/file_format_ocad8.cpp" line="395"/>
         <source>In symbol %1, left and right borders are different width (%2 and %3). Using %4.</source>
         <translation>Bei Symbol %1 haben linker und rechter Rand verschiedene Breiten (%2 bzw. %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="365"/>
+        <location filename="../src/file_format_ocad8.cpp" line="409"/>
+        <source>In line symbol %1, ignoring that only the left border line should be dashed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="449"/>
         <source>In symbol %1, ignoring framing line.</source>
         <translation>Ignoriere Rahmen bei Symbol %1.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="459"/>
+        <location filename="../src/file_format_ocad8.cpp" line="562"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
         <translation>Ignoriere Höhe (%2) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="464"/>
+        <location filename="../src/file_format_ocad8.cpp" line="567"/>
         <source>During import of text symbol %1: ignoring custom underline color, width, and positioning</source>
         <translation>Ignoriere Unterstreichungsfarbe, -breite und -position bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="469"/>
+        <location filename="../src/file_format_ocad8.cpp" line="572"/>
         <source>During import of text symbol %1: ignoring custom character spacing (%2%)</source>
         <translation>Ignoriere Zeichenabstand (%2%) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="474"/>
+        <location filename="../src/file_format_ocad8.cpp" line="577"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
         <translation>Ignoriere Wordabstand (%2%) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="479"/>
+        <location filename="../src/file_format_ocad8.cpp" line="582"/>
         <source>During import of text symbol %1: ignoring custom paragraph spacing (%2%)</source>
         <translation>Ignoriere Absatzabstand (%2%) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="484"/>
+        <location filename="../src/file_format_ocad8.cpp" line="587"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
         <translation>Ignoriere Enrückung (%2/%3) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="489"/>
+        <location filename="../src/file_format_ocad8.cpp" line="592"/>
         <source>During import of text symbol %1: ignoring custom tabs</source>
         <translation>Ignoriere Tabulatorweiten bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="494"/>
+        <location filename="../src/file_format_ocad8.cpp" line="597"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
         <translation>Ignoriere Textrahmen (Modus %2) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="576"/>
+        <location filename="../src/file_format_ocad8.cpp" line="689"/>
         <source>Unable to load object</source>
         <translation>Kann Objekt nicht Laden</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="612"/>
+        <location filename="../src/file_format_ocad8.cpp" line="704"/>
+        <source>An object with non-rotatable symbol &apos;%1&apos; has a non-zero rotation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="729"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation>Textsymbol nicht importiert: Konnte Pfad nicht ermitteln (npts=%1): %2</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="648"/>
+        <location filename="../src/file_format_ocad8.cpp" line="765"/>
         <source>Unable to import template: %1</source>
         <translation>Kann Vorlage nicht importieren: %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="653"/>
+        <location filename="../src/file_format_ocad8.cpp" line="770"/>
         <source>Ignoring template of type: %1 (%2)</source>
         <translation>Ignoriere Vorlage vom Typ %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="677"/>
+        <location filename="../src/file_format_ocad8.cpp" line="794"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
         <translation>Kann Vorlage nicht importieren: Hintegrund &quot;%1&quot; scheint kein Rasterbild zu sein</translation>
     </message>
@@ -2215,7 +2264,7 @@ libocad-Fehler %1</translation>
         <location filename="../src/file_format_ocad8.h" line="37"/>
         <source>OCAD Versions 7, 8</source>
         <translatorcomment>verkürzt</translatorcomment>
-        <translation>OCAD-7/8-Karten</translation>
+        <translation>OCAD Version 7/8</translation>
     </message>
     <message>
         <source>OpenOrienteering Map</source>
@@ -2227,9 +2276,13 @@ libocad-Fehler %1</translation>
         <translation>OpenOrienteering-XML-Karten</translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.h" line="33"/>
         <source>OpenOrienteering maps</source>
-        <translation>OpenOrienteering-Karten</translation>
+        <translation type="obsolete">OpenOrienteering-Karten</translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_native.h" line="33"/>
+        <source>OpenOrienteering Mapper</source>
+        <translation>OpenOrienteering Mapper</translation>
     </message>
 </context>
 <context>
@@ -2524,7 +2577,7 @@ verwahrlosten Taxi quer durch Bayern
 <context>
     <name>SymbolToolTip</name>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="851"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="852"/>
         <source>No description!</source>
         <translation>Keine Beschreibung!</translation>
     </message>

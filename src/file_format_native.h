@@ -30,7 +30,7 @@ class NativeFileFormat : public Format
 public:
     /** Creates a new file format representing the native type.
      */
-    NativeFileFormat() : Format("native", QObject::tr("OpenOrienteering maps"), "omap", true, true, false) {}
+    NativeFileFormat() : Format("native", QObject::tr("OpenOrienteering Mapper"), "omap", true, true, false) {}
 
     /** Returns true if the file starts with the magic byte sequence "OMAP" (0x4f 0x4d 0x41 0x50).
      */
