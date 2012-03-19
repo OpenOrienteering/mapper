@@ -27,6 +27,8 @@
 #include <QSettings>
 #include <QCoreApplication>
 
+#include "file_format.h"
+
 NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
 	setWindowTitle(tr("Create new map"));
@@ -201,10 +203,29 @@ void NewMapDialog::showFileDialog()
 	// Get the saved directory to start in, defaulting to the user's home directory.
 	QString open_directory = QSettings().value("openFileDirectory", QDir::homePath()).toString();
 	
-	QString filters = 
-	  tr("OpenOrienteering symbol sets")  % " (*.omap);;" %
+	// Build the list of supported file filters based on the file format registry
+	QString filters, extensions;
+	Q_FOREACH(const Format *format, FileFormats.formats())
+	{
+		if (format->supportsImport())
+		{
+			if (filters.isEmpty())
+			{
+				filters    = format->filter();
+				extensions = "*." % format->fileExtension();
+			}
+			else
+			{
+				filters    = filters    % ";;"  % format->filter();
+				extensions = extensions % " *." % format->fileExtension();
+			}
+		}
+	}
+	filters = 
+	  tr("All symbol set files")  % " (" % extensions % ");;" %
+	  filters         % ";;" %
 	  tr("All files") % " (*.*)";
-	  
+
 	QString path = QFileDialog::getOpenFileName(this, tr("Load symbol set from a file..."), open_directory, filters);
 	path = QFileInfo(path).canonicalFilePath();
 	if (path.isEmpty())
