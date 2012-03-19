@@ -380,7 +380,7 @@ void MapWidget::updateCursorposLabel(MapCoordF pos)
 	if (!cursorpos_label)
 		return;
 	
-	cursorpos_label->setText(QString::number(pos.getX(), 'f', 2) + " " + QString::number(pos.getY(), 'f', 2));
+	cursorpos_label->setText(QString::number(pos.getX(), 'f', 2) + " " + QString::number(-pos.getY(), 'f', 2));
 }
 
 QSize MapWidget::sizeHint() const

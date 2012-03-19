@@ -624,7 +624,7 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 				if (column == 0)
 					coord.setX(new_value);
 				else
-					coord.setY(new_value);
+					coord.setY(-new_value);
 				point->setPosition(coord);
 			}
 			else
@@ -635,7 +635,7 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 				if (column == 0)
 					path->getCoordinate(row).setX(new_value);
 				else
-					path->getCoordinate(row).setY(new_value);
+					path->getCoordinate(row).setY(-new_value);
 			}
 			
 			getMidpointObject()->update(true);
@@ -647,12 +647,12 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 			if (object->getType() == Object::Point)
 			{
 				PointObject* point = reinterpret_cast<PointObject*>(object);
-				coords_table->item(row, column)->setText(QString::number((column == 0) ? point->getCoordF().getX() : point->getCoordF().getY()));
+				coords_table->item(row, column)->setText(QString::number((column == 0) ? point->getCoordF().getX() : (-point->getCoordF().getY())));
 			}
 			else if (object->getType() == Object::Path)
 			{
 				PathObject* path = reinterpret_cast<PathObject*>(object);
-				coords_table->item(row, column)->setText(QString::number((column == 0) ? path->getCoordinate(row).xd() : path->getCoordinate(row).yd()));
+				coords_table->item(row, column)->setText(QString::number((column == 0) ? path->getCoordinate(row).xd() : (-path->getCoordinate(row).yd())));
 			}
 			react_to_changes = true;
 		}
@@ -796,7 +796,7 @@ void PointSymbolEditorWidget::updateCoordsRow(int row)
 		coordF = MapCoordF(reinterpret_cast<PathObject*>(object)->getCoordinate(row));
 	
 	coords_table->item(row, 0)->setText(QString::number(coordF.getX()));
-	coords_table->item(row, 1)->setText(QString::number(coordF.getY()));
+	coords_table->item(row, 1)->setText(QString::number(-coordF.getY()));
 	
 	if (object->getType() == Object::Path)
 	{
