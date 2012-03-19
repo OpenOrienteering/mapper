@@ -229,7 +229,7 @@ public:
 	void getSelectionToSymbolCompatibility(Symbol* symbol, bool& out_compatible, bool& out_different);
 	
 	void includeSelectionRect(QRectF& rect); // enlarges rect to cover the selected objects
-	void drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, RenderableContainer* replacement_renderables = NULL);
+	void drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, RenderableContainer* replacement_renderables = NULL, bool draw_normal = false);
 	
 	void addObjectToSelection(Object* object, bool emit_selection_changed);
 	void removeObjectFromSelection(Object* object, bool emit_selection_changed);

@@ -634,9 +634,9 @@ void Map::includeSelectionRect(QRectF& rect)
 		++it;
 	}
 }
-void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, RenderableContainer* replacement_renderables)
+void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, RenderableContainer* replacement_renderables, bool draw_normal)
 {
-	const float selection_opacity_factor = 0.35f;
+	const float selection_opacity_factor = draw_normal ? 1 : 0.35f;
 	
 	MapView* view = widget->getMapView();
 	
@@ -646,7 +646,7 @@ void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widge
 	
 	if (!replacement_renderables)
 		replacement_renderables = &selection_renderables;
-	replacement_renderables->draw(painter, view->calculateViewedRect(widget->viewportToView(widget->rect())), force_min_size, view->calculateFinalZoomFactor(), true, selection_opacity_factor, true);
+	replacement_renderables->draw(painter, view->calculateViewedRect(widget->viewportToView(widget->rect())), force_min_size, view->calculateFinalZoomFactor(), true, selection_opacity_factor, !draw_normal);
 	
 	painter->restore();
 }

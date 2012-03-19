@@ -49,7 +49,7 @@ Importer *OCAD8FileFormat::createImporter(const QString &path, Map *map, MapView
 
 
 // Mapper assumes approx. 100 dpi, but OCAD uses a different value.
-const float OCAD8FileImport::ocad_pt_in_mm = 0.259868554842f;
+const float OCAD8FileImport::ocad_pt_in_mm = 0.26f;
 
 OCAD8FileImport::OCAD8FileImport(const QString &path, Map *map, MapView *view) : Importer(path, map, view), file(NULL)
 {
@@ -554,6 +554,20 @@ Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
     symbol->italic = (ocad_symbol->italic) ? true : false;
     symbol->underline = (ocad_symbol->under) ? true : false;
     symbol->line_spacing = 0.01f * ocad_symbol->lspace;
+	
+	int halign = (int)TextObject::AlignHCenter;
+	if (ocad_symbol->halign == 0)
+		halign = (int)TextObject::AlignLeft;
+	else if (ocad_symbol->halign == 1)
+		halign = (int)TextObject::AlignHCenter;
+	else if (ocad_symbol->halign == 2)
+		halign = (int)TextObject::AlignRight;
+	else if (ocad_symbol->halign == 3)
+	{
+		// TODO: implement justified alignment
+		addWarning(QObject::tr("During import of text symbol %1: ignoring justified alignment").arg(ocad_symbol->number));
+	}
+	text_halign_map[symbol] = halign;
 
     //qDebug() << "Convert"<<ocad_symbol->dpts<<"decipoints to"<<symbol->ascent_size<<"um";
 
@@ -716,6 +730,8 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
 
         // extra properties: rotation, horizontalAlignment, verticalAlignment, text
         t->setRotation(convertRotation(ocad_object->angle));
+		t->setHorizontalAlignment((TextObject::HorizontalAlignment)text_halign_map.value(symbol));
+		t->setVerticalAlignment(TextObject::AlignBaseline);
 
         const char *text_ptr = (const char *)(ocad_object->pts + ocad_object->npts);
         size_t text_len = sizeof(OCADPoint) * ocad_object->ntext;
@@ -724,7 +740,7 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
         else t->setText(convertCString(text_ptr, text_len));
 
         // Text objects need special path translation
-        if (!fillTextPathCoords(t, ocad_object->npts, (OCADPoint *)ocad_object->pts))
+        if (!fillTextPathCoords(t, reinterpret_cast<TextSymbol*>(symbol), ocad_object->npts, (OCADPoint *)ocad_object->pts))
         {
             addWarning(QObject::tr("Not importing text symbol, couldn't figure out path' (npts=%1): %2")
                            .arg(ocad_object->npts).arg(t->getText()));
@@ -856,34 +872,55 @@ void OCAD8FileImport::fillPathCoords(Object *object, bool is_area, s16 npts, OCA
  *  If successful, sets either 1 or 2 coordinates in the text object and returns true.
  *  If the OCAD path was not importable, leaves the TextObject alone and returns false.
  */
-bool OCAD8FileImport::fillTextPathCoords(TextObject *object, s16 npts, OCADPoint *pts)
+bool OCAD8FileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, s16 npts, OCADPoint *pts)
 {
     // text objects either have 1 point (free anchor) or 2 (midpoint/size)
-    // OCAD appears to always have 5 points (anchor on left edge, then 4 corner coordinates going clockwise from anchor).
-    if (npts != 5) return false;
-    s32 buf[3];
-    ocad_point(buf, &(pts[0])); // anchor point
-    s32 x0 = buf[0], y0 = buf[1];
-    /*ocad_point(buf, &(pts[1])); // bottom left point
-    s32 x1 = buf[0], y1 = buf[1]; */
-    ocad_point(buf, &(pts[2])); // bottom right point
-    s32 x2 = buf[0], y2 = buf[1];
-    /*ocad_point(buf, &(pts[3])); // top right point
-    s32 x3 = buf[0], y3 = buf[1];
-    ocad_point(buf, &(pts[4])); // top left point
-    s32 x4 = buf[0], y4 = buf[1];*/
-    //qDebug() << "text path"<<x0<<y0<<x1<<y1<<x2<<y2<<x3<<y3<<x4<<y4;
-    if (x2 <= x0 || y0 <= y2)
-    {
-        return false;
-    }
+    // OCAD appears to always have 5 or 4 points (possible single anchor, then 4 corner coordinates going clockwise from anchor).
+    if (npts == 0) return false;
+	
+	if (npts == 4)
+	{
+		// Box text
+		s32 buf[3];
+		ocad_point(buf, &(pts[3]));
+		MapCoord top_left;
+		convertPoint(top_left, buf[0], buf[1]);
+		ocad_point(buf, &(pts[0]));
+		MapCoord bottom_left;
+		convertPoint(bottom_left, buf[0], buf[1]);
+		ocad_point(buf, &(pts[2]));
+		MapCoord top_right;
+		convertPoint(top_right, buf[0], buf[1]);
+		
+		// According to Purple Pen source code: OCAD adds an extra internal leading (incorrectly).
+		QFontMetricsF metrics = symbol->getFontMetrics();
+		double top_adjust = (metrics.descent()) / symbol->calculateInternalScaling();
+		
+		MapCoordF adjust_vector = MapCoordF(top_adjust * sin(object->getRotation()), top_adjust * cos(object->getRotation()));
+		top_left = MapCoord(top_left.xd() + adjust_vector.getX(), top_left.yd() + adjust_vector.getY());
+		bottom_left = MapCoord(bottom_left.xd() + adjust_vector.getX(), bottom_left.yd() + adjust_vector.getY());
+		top_right = MapCoord(top_right.xd() + adjust_vector.getX(), top_right.yd() + adjust_vector.getY());
+		
+		object->setBox((bottom_left.rawX() + top_right.rawX()) / 2, (bottom_left.rawY() + top_right.rawY()) / 2,
+					   top_left.lengthTo(top_right), top_left.lengthTo(bottom_left));
 
-    object->setHorizontalAlignment(TextObject::AlignLeft);
-    object->setVerticalAlignment(TextObject::AlignBaseline);
-    object->coords.resize(2);
-    convertPoint(object->coords[0], (x0 + x2) / 2, (y0 + y2) / 2);
-    object->coords[1].setRawX(convertSize(x2 - x0));
-    object->coords[1].setRawY(convertSize(y0 - y2));
+		object->setVerticalAlignment(TextObject::AlignTop);
+	}
+	else
+	{
+		// Single anchor text
+		if (npts != 5)
+			addWarning(QObject::tr("Trying to import a text object with unknown coordinate format"));
+		
+		s32 buf[3];
+		ocad_point(buf, &(pts[0])); // anchor point
+		
+		MapCoord coord;
+		convertPoint(coord, buf[0], buf[1]);
+		object->setAnchorPosition(coord.rawX(), coord.rawY());
+		
+		object->setVerticalAlignment(TextObject::AlignBaseline);
+	}
 
     return true;
 }

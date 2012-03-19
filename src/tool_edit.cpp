@@ -501,7 +501,7 @@ void EditTool::draw(QPainter* painter, MapWidget* widget)
 	int num_selected_objects = editor->getMap()->getNumSelectedObjects();
 	if (num_selected_objects > 0)
 	{
-		editor->getMap()->drawSelection(painter, true, widget, renderables.isEmpty() ? NULL : &renderables);
+		editor->getMap()->drawSelection(painter, true, widget, renderables.isEmpty() ? NULL : &renderables, text_editor != NULL);
 		
 		if (!text_editor)
 		{
@@ -668,8 +668,6 @@ void EditTool::updateDragging(QPoint cursor_pos, MapWidget* widget)
 		
 		text_object->move(delta_x / 2, delta_y / 2);
 		text_object->setBox(text_object->getAnchorCoordF().getIntX(), text_object->getAnchorCoordF().getIntY(), new_box_width, new_box_height);
-		if (calculateBoxTextHandles(box_text_handles))
-			updateDirtyRect();
 	}
 	else if (hover_point == -1 || (map->getNumSelectedObjects() == 1 &&
 		(first_selected_object_type == Object::Point || first_selected_object_type == Object::Text)))
@@ -724,6 +722,9 @@ void EditTool::updateDragging(QPoint cursor_pos, MapWidget* widget)
 			path->setCoordinate(opposite_curve_handle_index, control);
 		}
 	}
+	
+	if (calculateBoxTextHandles(box_text_handles))
+		updateDirtyRect();
 }
 
 bool EditTool::hoveringOverSingleText(MapCoordF cursor_pos_map)

@@ -155,6 +155,11 @@ bool DrawTextTool::keyPressEvent(QKeyEvent* event)
 		if (text_editor->keyPressEvent(event))
 			return true;
 	}
+	else if (event->key() == Qt::Key_Tab)
+	{
+		editor->setEditTool();
+		return true;
+	}
 	
 	return false;
 }

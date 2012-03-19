@@ -72,7 +72,7 @@ protected:
     PointSymbol *importPattern(s16 npts, OCADPoint *pts);
     void fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol);
     void fillPathCoords(Object *object, bool is_area, s16 npts, OCADPoint *pts);
-    bool fillTextPathCoords(TextObject *object, s16 npts, OCADPoint *pts);
+	bool fillTextPathCoords(TextObject *object, TextSymbol *symbol, s16 npts, OCADPoint *pts);
     bool isRasterImageFile(const QString &filename) const;
 
     // Unit conversion functions
@@ -99,6 +99,9 @@ private:
 
     /// maps OCAD symbol number to oo-mapper symbol object
     QHash<int, Symbol *> symbol_index;
+	
+	/// maps OO Mapper text symbol pointer to OCAD text symbol horizontal alignment (stored in objects instead of symbols in OO Mapper)
+	QHash<Symbol*, int> text_halign_map;
 
     /// Offset between OCAD map origin and Mapper map origin (in Mapper coordinates)
     qint64 offset_x, offset_y;
