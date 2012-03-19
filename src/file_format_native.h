@@ -74,7 +74,7 @@ public:
 
     /** Imports a native file.
      */
-    void doImport() throw (FormatException);
+	void doImport(bool load_symbols_only) throw (FormatException);
 };
 
 

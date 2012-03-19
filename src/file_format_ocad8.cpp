@@ -64,7 +64,7 @@ OCAD8FileImport::~OCAD8FileImport()
     ocad_shutdown();
 }
 
-void OCAD8FileImport::doImport() throw (FormatException)
+void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 {
     qint64 start = QDateTime::currentMSecsSinceEpoch();
     int symbol_count = 0, object_count = 0;
@@ -174,76 +174,85 @@ void OCAD8FileImport::doImport() throw (FormatException)
         }
     }
 
-    // Load objects
-
-    // Place all objects into a single OCAD import layer
-	MapLayer* layer = new MapLayer(QObject::tr("OCAD import layer"), map);
-	for (OCADObjectIndex *idx = ocad_objidx_first(file); idx != NULL; idx = ocad_objidx_next(file, idx))
+    if (!load_symbols_only)
 	{
-		for (int i = 0; i < 256; i++)
+		// Load objects
+
+		// Place all objects into a single OCAD import layer
+		MapLayer* layer = new MapLayer(QObject::tr("OCAD import layer"), map);
+		for (OCADObjectIndex *idx = ocad_objidx_first(file); idx != NULL; idx = ocad_objidx_next(file, idx))
 		{
-			OCADObjectEntry *entry = ocad_object_entry_at(file, idx, i);
-			OCADObject *ocad_obj = ocad_object(file, entry);
-			if (ocad_obj != NULL)
+			for (int i = 0; i < 256; i++)
 			{
-				Object *object = importObject(ocad_obj);
-				if (object != NULL) {
-					layer->objects.push_back(object);
-					object_count++;
+				OCADObjectEntry *entry = ocad_object_entry_at(file, idx, i);
+				OCADObject *ocad_obj = ocad_object(file, entry);
+				if (ocad_obj != NULL)
+				{
+					Object *object = importObject(ocad_obj);
+					if (object != NULL) {
+						layer->objects.push_back(object);
+						object_count++;
+					}
 				}
 			}
 		}
+		map->layers.resize(1);
+		map->layers[0] = layer;
+		map->current_layer_index = 0;
+
+		// Load templates
+		map->templates.clear();
+		map->first_front_template = 0;
+		for (OCADTemplateIndex *idx = ocad_template_index_first(file); idx != NULL; idx = ocad_template_index_next(file, idx))
+		{
+			for (int i = 0; i < 256; i++)
+			{
+				OCADTemplateEntry *entry = ocad_template_entry_at(file, idx, i);
+				if (entry->type != 0 && entry->size > 0)
+				{
+					Template *templ = importTemplate(entry);
+					if (templ) map->templates.push_back(templ);
+				}
+			}
+		}
+
+		// TODO: Fill this->view with relevant fields from OCAD file
+		/*
+			file->read((char*)&zoom, sizeof(double));
+			file->read((char*)&rotation, sizeof(double));
+			file->read((char*)&position_x, sizeof(qint64));
+			file->read((char*)&position_y, sizeof(qint64));
+			file->read((char*)&view_x, sizeof(int));
+			file->read((char*)&view_y, sizeof(int));
+			file->read((char*)&drag_offset, sizeof(QPoint));
+			update();
+
+			int num_template_visibilities;
+			file->read((char*)&num_template_visibilities, sizeof(int));
+
+			for (int i = 0; i < num_template_visibilities; ++i)
+			{
+				int pos;
+				file->read((char*)&pos, sizeof(int));
+
+				TemplateVisibility* vis = getTemplateVisibility(map->getTemplate(pos));
+				file->read((char*)&vis->visible, sizeof(bool));
+				file->read((char*)&vis->opacity, sizeof(float));
+			}
+
+			map_editor->main_view = view;
+		}
+		*/
+
+		// Undo steps are not supported in OCAD
 	}
-    map->layers.resize(1);
-    map->layers[0] = layer;
-    map->current_layer_index = 0;
-
-    // Load templates
-    map->templates.clear();
-    map->first_front_template = 0;
-    for (OCADTemplateIndex *idx = ocad_template_index_first(file); idx != NULL; idx = ocad_template_index_next(file, idx))
-    {
-        for (int i = 0; i < 256; i++)
-        {
-            OCADTemplateEntry *entry = ocad_template_entry_at(file, idx, i);
-            if (entry->type != 0 && entry->size > 0)
-            {
-                Template *templ = importTemplate(entry);
-                if (templ) map->templates.push_back(templ);
-            }
-        }
-    }
-
-    // TODO: Fill this->view with relevant fields from OCAD file
-    /*
-        file->read((char*)&zoom, sizeof(double));
-        file->read((char*)&rotation, sizeof(double));
-        file->read((char*)&position_x, sizeof(qint64));
-        file->read((char*)&position_y, sizeof(qint64));
-        file->read((char*)&view_x, sizeof(int));
-        file->read((char*)&view_y, sizeof(int));
-        file->read((char*)&drag_offset, sizeof(QPoint));
-        update();
-
-        int num_template_visibilities;
-        file->read((char*)&num_template_visibilities, sizeof(int));
-
-        for (int i = 0; i < num_template_visibilities; ++i)
-        {
-            int pos;
-            file->read((char*)&pos, sizeof(int));
-
-            TemplateVisibility* vis = getTemplateVisibility(map->getTemplate(pos));
-            file->read((char*)&vis->visible, sizeof(bool));
-            file->read((char*)&vis->opacity, sizeof(float));
-        }
-
-        map_editor->main_view = view;
-    }
-    */
-
-    // Undo steps are not supported in OCAD
-
+	else
+	{
+		MapLayer* layer = new MapLayer(QObject::tr("default"), map);
+		map->layers.resize(1);
+		map->layers[0] = layer;
+		map->current_layer_index = 0;
+	}
 
     ocad_file_close(file);
 

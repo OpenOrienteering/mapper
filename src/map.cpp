@@ -396,7 +396,7 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 	
 	return true;
 }
-bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
+bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool load_symbols_only)
 {
     MapView *view = new MapView(this);
 
@@ -429,7 +429,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
                 importer = format->createImporter(path, this, view);
 
                 // Run the first pass.
-                importer->doImport();
+                importer->doImport(load_symbols_only);
 
                 // Are there any actions the user must take to complete the import?
                 if (!importer->actions().empty())

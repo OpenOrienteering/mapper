@@ -110,7 +110,7 @@ public:
 	/// Attempts to save the map to the given file. If a MapEditorController is given, the widget positions and MapViews stored in the map file are also updated.
     bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
 	/// Attempts to load the map from the specified path. Returns true on success.
-	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL);
+	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL, bool load_symbols_only = false);
 
 	/// Deletes all map data
 	void clear();

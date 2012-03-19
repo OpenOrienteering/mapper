@@ -47,7 +47,7 @@ public:
     OCAD8FileImport(const QString &path, Map *map, MapView *view);
     ~OCAD8FileImport();
 
-    void doImport() throw (FormatException);
+	void doImport(bool load_symbols_only) throw (FormatException);
 
     void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
 
