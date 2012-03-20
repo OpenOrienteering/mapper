@@ -49,7 +49,7 @@ Importer *OCAD8FileFormat::createImporter(const QString &path, Map *map, MapView
 
 
 // Mapper assumes approx. 100 dpi, but OCAD uses a different value.
-const float OCAD8FileImport::ocad_pt_in_mm = 0.26f;
+const float OCAD8FileImport::ocad_pt_in_mm = 0.265f; // FIXME: this value has been found by experimentation, what is it exactly?
 
 OCAD8FileImport::OCAD8FileImport(const QString &path, Map *map, MapView *view) : Importer(path, map, view), file(NULL)
 {
@@ -553,7 +553,7 @@ Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
     symbol->bold = (ocad_symbol->bold >= 700) ? true : false;
     symbol->italic = (ocad_symbol->italic) ? true : false;
     symbol->underline = (ocad_symbol->under) ? true : false;
-    symbol->line_spacing = 0.01f * ocad_symbol->lspace;
+	symbol->kerning = false;
 	
 	int halign = (int)TextObject::AlignHCenter;
 	if (ocad_symbol->halign == 0)
@@ -613,6 +613,11 @@ Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
     }
 
     symbol->updateQFont();
+	
+	// Calculate line spacing
+	double font_em_size = calculateFontEMSize(symbol);
+	double absolute_line_spacing = font_em_size * 0.01 * ocad_symbol->lspace;
+	symbol->line_spacing = absolute_line_spacing / (symbol->getFontMetrics().lineSpacing() / symbol->calculateInternalScaling());
 
     return symbol;
 }
@@ -893,8 +898,9 @@ bool OCAD8FileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol,
 		convertPoint(top_right, buf[0], buf[1]);
 		
 		// According to Purple Pen source code: OCAD adds an extra internal leading (incorrectly).
+		double font_em_size = calculateFontEMSize(symbol);
 		QFontMetricsF metrics = symbol->getFontMetrics();
-		double top_adjust = (metrics.descent()) / symbol->calculateInternalScaling();
+		double top_adjust = -font_em_size + (metrics.ascent() + metrics.descent()) / symbol->calculateInternalScaling();
 		
 		MapCoordF adjust_vector = MapCoordF(top_adjust * sin(object->getRotation()), top_adjust * cos(object->getRotation()));
 		top_left = MapCoord(top_left.xd() + adjust_vector.getX(), top_left.yd() + adjust_vector.getY());
@@ -999,3 +1005,6 @@ MapColor *OCAD8FileImport::convertColor(int color) {
     return color_index[color];
 }
 
+double OCAD8FileImport::calculateFontEMSize(TextSymbol* symbol) {
+	return (symbol->ascent_size / (1000 * 0.1 * ocad_pt_in_mm)) / 720.0 * 25.4;
+}

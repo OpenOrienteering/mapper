@@ -468,7 +468,7 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 		object->setText(text);
 		emit(selectionChanged(true));
 	}
-	else if (event->key() == Qt::Key_Left)
+	else if (event->matches(QKeySequence::MoveToPreviousChar) || event->matches(QKeySequence::SelectPreviousChar))
 	{
 		if (selection_start == 0)
 		{
@@ -480,11 +480,11 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 			return true;
 		}
 		--selection_start;
-		if (!(event->modifiers() & Qt::ShiftModifier))
+		if (!event->matches(QKeySequence::SelectPreviousChar))
 			selection_end = selection_start;
 		emit(selectionChanged(false));
 	}
-	else if (event->key() == Qt::Key_Right)
+	else if (event->matches(QKeySequence::MoveToNextChar) || event->matches(QKeySequence::SelectNextChar))
 	{
 		if (selection_end == object->getText().length())
 		{
@@ -496,11 +496,11 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 			return true;
 		}
 		++selection_end;
-		if (!(event->modifiers() & Qt::ShiftModifier))
+		if (!event->matches(QKeySequence::SelectNextChar))
 			selection_start = selection_end;
 		emit(selectionChanged(false));
 	}
-	else if (event->key() == Qt::Key_Up)
+	else if (event->matches(QKeySequence::MoveToPreviousLine) || event->matches(QKeySequence::SelectPreviousLine))
 	{
 		int line_num = object->findLineForIndex(selection_start);
 		TextObjectLineInfo* line_info = object->getLineInfo(line_num);
@@ -513,11 +513,11 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 		x = qMax( prev_line_info->line_x, qMin(x, prev_line_info->line_x + prev_line_info->width));
 		
 		selection_start = object->calcTextPositionAt(QPointF(x,y), false);
-		if (!(event->modifiers() & Qt::ShiftModifier))
+		if (!event->matches(QKeySequence::SelectPreviousLine))
 			selection_end = selection_start;
 		emit(selectionChanged(false));
 	}
-	else if (event->key() == Qt::Key_Down)
+	else if (event->matches(QKeySequence::MoveToNextLine) || event->matches(QKeySequence::SelectNextLine))
 	{
 		int line_num = object->findLineForIndex(selection_end);
 		TextObjectLineInfo* line_info = object->getLineInfo(line_num);
@@ -530,14 +530,16 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 		x = qMax( next_line_info->line_x, qMin(x, next_line_info->line_x + next_line_info->width));
 		
 		selection_end = object->calcTextPositionAt(QPointF(x,y), false);
-		if (!(event->modifiers() & Qt::ShiftModifier))
+		if (!event->matches(QKeySequence::SelectNextLine))
 			selection_start = selection_end;
 		emit(selectionChanged(false));
 	}
-	else if (event->key() == Qt::Key_Home)
+	else if (event->matches(QKeySequence::MoveToStartOfLine) || event->matches(QKeySequence::SelectStartOfLine) ||
+		     event->matches(QKeySequence::MoveToStartOfDocument) || event->matches(QKeySequence::SelectStartOfDocument))
 	{
-		int destination = (event->modifiers() & Qt::ControlModifier) ? 0 : (object->findLineInfoForIndex(selection_start).start_index);
-		if (event->modifiers() & Qt::ShiftModifier)
+		int destination = (event->matches(QKeySequence::MoveToStartOfDocument) || event->matches(QKeySequence::SelectStartOfDocument)) ?
+		                      0 : (object->findLineInfoForIndex(selection_start).start_index);
+		if (event->matches(QKeySequence::SelectStartOfLine) || event->matches(QKeySequence::SelectStartOfDocument))
 		{
 			if (selection_start == destination)
 				return true;
@@ -552,15 +554,16 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 		}
 		emit(selectionChanged(false));
 	}
-	else if (event->key() == Qt::Key_End)
+	else if (event->matches(QKeySequence::MoveToEndOfLine) || event->matches(QKeySequence::SelectEndOfLine) ||
+		     event->matches(QKeySequence::MoveToEndOfDocument) || event->matches(QKeySequence::SelectEndOfDocument))
 	{
 		int destination;
-		if (event->modifiers() & Qt::ControlModifier)
+		if (event->matches(QKeySequence::MoveToEndOfDocument) || event->matches(QKeySequence::SelectEndOfDocument))
 			destination = object->getText().length();
 		else
 			destination = object->findLineInfoForIndex(selection_start).end_index;
 		
-		if (event->modifiers() & Qt::ShiftModifier)
+		if (event->matches(QKeySequence::SelectEndOfLine) || event->matches(QKeySequence::SelectEndOfDocument))
 		{
 			if (selection_end == destination)
 				return true;
@@ -573,6 +576,14 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 			selection_start = destination;
 			selection_end = destination;
 		}
+		emit(selectionChanged(false));
+	}
+	else if (event->matches(QKeySequence::SelectAll))
+	{
+		if (selection_start == 0 && selection_end == object->getText().length())
+			return true;
+		selection_start = 0;
+		selection_end = object->getText().length();
 		emit(selectionChanged(false));
 	}
 	else if (event->matches(QKeySequence::Copy) || event->matches(QKeySequence::Cut))

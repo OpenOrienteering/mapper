@@ -64,6 +64,7 @@ public:
 	inline bool isItalic() const {return italic;}
 	inline bool isUnderlined() const {return underline;}
 	inline float getLineSpacing() const {return line_spacing;}
+	inline bool usesKerning() const {return kerning;}
 	inline const QFont& getQFont() const {return qfont;}
 	inline const QFontMetricsF& getFontMetrics() const { return metrics; }
 	
@@ -86,6 +87,7 @@ protected:
 	bool italic;
 	bool underline;
 	float line_spacing;		// as factor of original line spacing
+	bool kerning;
 	
 	double tab_interval;		/// default tab interval length in text coordinates
 };
@@ -118,6 +120,7 @@ private:
 	QCheckBox* italic_check;
 	QCheckBox* underline_check;
 	QLineEdit* line_spacing_edit;
+	QCheckBox* kerning_check;
 };
 
 #endif

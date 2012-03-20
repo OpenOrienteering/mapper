@@ -40,6 +40,7 @@ TextSymbol::TextSymbol() : Symbol(Symbol::Text), metrics(QFont())
 	italic = false;
 	underline = false;
 	line_spacing = 1;
+	kerning = true;
 }
 TextSymbol::~TextSymbol()
 {
@@ -55,6 +56,7 @@ Symbol* TextSymbol::duplicate()
 	new_text->italic = italic;
 	new_text->underline = underline;
 	new_text->line_spacing = line_spacing;
+	new_text->kerning = kerning;
 	new_text->updateQFont();
 	return new_text;
 }
@@ -104,6 +106,7 @@ void TextSymbol::updateQFont()
 	#if (QT_VERSION >= 0x040800)
 	qfont.setHintingPreference(QFont::PreferNoHinting);
 	#endif
+	qfont.setKerning(kerning);
 	
 	qfont.setStyleStrategy(QFont::ForceOutline);
 
@@ -121,6 +124,7 @@ void TextSymbol::saveImpl(QFile* file, Map* map)
 	file->write((const char*)&italic, sizeof(bool));
 	file->write((const char*)&underline, sizeof(bool));
 	file->write((const char*)&line_spacing, sizeof(float));
+	file->write((const char*)&kerning, sizeof(bool));
 }
 bool TextSymbol::loadImpl(QFile* file, int version, Map* map)
 {
@@ -133,6 +137,8 @@ bool TextSymbol::loadImpl(QFile* file, int version, Map* map)
 	file->read((char*)&italic, sizeof(bool));
 	file->read((char*)&underline, sizeof(bool));
 	file->read((char*)&line_spacing, sizeof(float));
+	if (version >= 12)
+		file->read((char*)&kerning, sizeof(bool));
 	
 	updateQFont();
 	return true;
@@ -185,6 +191,9 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, Map* map, SymbolSetti
 	line_spacing_edit->setValidator(new DoubleValidator(0, 999999, line_spacing_edit));
 	QLabel* line_spacing_label_2 = new QLabel("%");
 	
+	kerning_check = new QCheckBox(tr("use kerning"));
+	kerning_check->setChecked(symbol->kerning);
+	
 	QHBoxLayout* line_spacing_layout = new QHBoxLayout();
 	line_spacing_layout->setMargin(0);
 	line_spacing_layout->setSpacing(0);
@@ -211,6 +220,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, Map* map, SymbolSetti
 	layout->addWidget(italic_check);
 	layout->addWidget(underline_check);
 	layout->addLayout(lower_layout);
+	layout->addWidget(kerning_check);
 	setLayout(layout);
 	
 	connect(font_edit, SIGNAL(currentFontChanged(QFont)), this, SLOT(fontChanged(QFont)));
@@ -222,6 +232,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, Map* map, SymbolSetti
 	connect(italic_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
 	connect(underline_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
 	connect(line_spacing_edit, SIGNAL(textEdited(QString)), this, SLOT(lineSpacingChanged(QString)));
+	connect(kerning_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
 }
 
 void TextSymbolSettings::fontChanged(QFont font)
@@ -268,6 +279,7 @@ void TextSymbolSettings::checkToggled(bool checked)
 	symbol->bold = bold_check->isChecked();
 	symbol->italic = italic_check->isChecked();
 	symbol->underline = underline_check->isChecked();
+	symbol->kerning = kerning_check->isChecked();
 	symbol->updateQFont();
 	dialog->updatePreview();
 }
