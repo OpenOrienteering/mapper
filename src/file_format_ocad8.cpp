@@ -554,6 +554,7 @@ Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
     symbol->italic = (ocad_symbol->italic) ? true : false;
     symbol->underline = (ocad_symbol->under) ? true : false;
     symbol->line_spacing = 0.01f * ocad_symbol->lspace;
+	symbol->kerning = false;
 	
 	int halign = (int)TextObject::AlignHCenter;
 	if (ocad_symbol->halign == 0)
