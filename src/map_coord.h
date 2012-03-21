@@ -202,6 +202,7 @@ public:
 	inline MapCoordF() {}
 	inline MapCoordF(double x, double y) {setX(x); setY(y);}
 	inline explicit MapCoordF(MapCoord coord) {setX(coord.xd()); setY(coord.yd());}
+	inline explicit MapCoordF(QPointF point) {setX(point.x()); setY(point.y());}
 	inline MapCoordF(const MapCoordF& copy) {x = copy.x; y = copy.y;}
 	
     inline void setX(double x) {this->x = x;};

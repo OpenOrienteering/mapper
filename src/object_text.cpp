@@ -283,12 +283,13 @@ void TextObject::prepareLineInfos()
 {
 	TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);
 	
+	double scaling = text_symbol->calculateInternalScaling();
 	QFontMetricsF metrics = text_symbol->getFontMetrics();
 	double line_spacing = text_symbol->getLineSpacing() * metrics.lineSpacing();
+	double paragraph_spacing = scaling * text_symbol->getParagraphSpacing() + (text_symbol->hasLineBelow() ? (scaling * (text_symbol->getLineBelowDistance() + text_symbol->getLineBelowWidth())) : 0);
 	double ascent = metrics.ascent();
 	
 	bool word_wrap = ! hasSingleAnchor();
-	double scaling = text_symbol->calculateInternalScaling();
 	double box_width  = word_wrap ? (scaling * getBoxWidth())  : 0.0;
 	double box_height = word_wrap ? (scaling * getBoxHeight()) : 0.0;
 	
@@ -315,6 +316,7 @@ void TextObject::prepareLineInfos()
 	
 	// Determine lines and parts
 	
+	int num_paragraphs = 0;
 	int line_num = 0;
 	int pos = 0;
 	while (pos <= text_end) 
@@ -325,6 +327,7 @@ void TextObject::prepareLineInfos()
 		int line_end = text.indexOf(line_break, line_start);
 		if (line_end == -1)
 			line_end = text_end;
+		bool paragraph_end = true;
 
 		std::vector<TextObjectPartInfo> part_infos;
 		
@@ -374,18 +377,26 @@ void TextObject::prepareLineInfos()
 			
 			// Advance to next part
 			pos = part_end + 1;
-			part_x = text_symbol->getNextTab(part_x + part_width);
+			part_x = line_x + text_symbol->getNextTab(part_x + part_width - line_x);
 			if (word_wrap && part_x >= box_width)
+			{
 				// terminate current input line
+				paragraph_end = false;
 				break; 
+			}
 		}
 		TextObjectPartInfo& last_part_info = part_infos.back();
 		line_end   = last_part_info.end_index;
 		line_width = last_part_info.part_x + last_part_info.width - line_x;
-		line_infos.push_back(TextObjectLineInfo(line_start, line_end, line_x, line_y, line_width, metrics.ascent(), metrics.descent(), part_infos));
+		line_infos.push_back(TextObjectLineInfo(line_start, line_end, paragraph_end, line_x, line_y, line_width, metrics.ascent(), metrics.descent(), part_infos));
 
 		// Advance to next line
 		line_y += line_spacing;
+		if (paragraph_end)
+		{
+			line_y += paragraph_spacing;
+			num_paragraphs++;
+		}
 		line_num++;
 		pos = line_end + 1;
 	}
@@ -396,7 +407,7 @@ void TextObject::prepareLineInfos()
 	if (v_align == TextObject::AlignBottom || v_align == TextObject::AlignVCenter)
 	{
 		int num_lines = getNumLines();
-		double height = ascent + (num_lines - 1) * line_spacing;
+		double height = ascent + (num_lines - 1) * line_spacing + (num_paragraphs - 1) * paragraph_spacing;
 		
 		if (v_align == TextObject::AlignVCenter)
 			delta_y = -0.5 * height;

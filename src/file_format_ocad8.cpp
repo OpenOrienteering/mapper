@@ -48,8 +48,6 @@ Importer *OCAD8FileFormat::createImporter(const QString &path, Map *map, MapView
 
 
 
-// Mapper assumes approx. 100 dpi, but OCAD uses a different value.
-const float OCAD8FileImport::ocad_pt_in_mm = 0.265f; // FIXME: this value has been found by experimentation, what is it exactly?
 
 OCAD8FileImport::OCAD8FileImport(const QString &path, Map *map, MapView *view) : Importer(path, map, view), file(NULL)
 {
@@ -66,7 +64,7 @@ OCAD8FileImport::~OCAD8FileImport()
 
 void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 {
-    qint64 start = QDateTime::currentMSecsSinceEpoch();
+    //qint64 start = QDateTime::currentMSecsSinceEpoch();
     int symbol_count = 0, object_count = 0;
 
 	QByteArray filename = path.toLocal8Bit().constData();
@@ -74,9 +72,9 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
     //qDebug() << "open ocad file" << err;
     if (err != 0) throw FormatException(QObject::tr("Could not open file: libocad returned %1").arg(err));
 
-    qDebug() << "file version is" << file->header->major << ", type is"
-             << ((file->header->ftype == 2) ? "normal" : "other");
-    qDebug() << "map scale is" << file->setup->scale;
+    //qDebug() << "file version is" << file->header->major << ", type is"
+    //         << ((file->header->ftype == 2) ? "normal" : "other");
+    //qDebug() << "map scale is" << file->setup->scale;
 
     map->scale_denominator = file->setup->scale;
 
@@ -256,8 +254,8 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 
     ocad_file_close(file);
 
-    qint64 elapsed = QDateTime::currentMSecsSinceEpoch() - start;
-    qDebug() << "OCAD map imported:"<<symbol_count<<"symbols and"<<object_count<<"objects in"<<elapsed<<"milliseconds";
+    //qint64 elapsed = QDateTime::currentMSecsSinceEpoch() - start;
+    //qDebug() << "OCAD map imported:"<<symbol_count<<"symbols and"<<object_count<<"objects in"<<elapsed<<"milliseconds";
 }
 
 void OCAD8FileImport::setStringEncodings(const char *narrow, const char *wide) {
@@ -549,11 +547,21 @@ Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
 
     symbol->font_family = convertPascalString(ocad_symbol->font); // FIXME: font mapping?
     symbol->color = convertColor(ocad_symbol->color);
-    symbol->ascent_size = (int)round((0.1 * ocad_symbol->dpts) * ocad_pt_in_mm * 1000);
-    symbol->bold = (ocad_symbol->bold >= 700) ? true : false;
+	double d_font_size = (0.1 * ocad_symbol->dpts) / 72.0 * 25.4;
+	symbol->font_size = qRound(1000 * d_font_size);
+    symbol->bold = (ocad_symbol->bold >= 550) ? true : false;
     symbol->italic = (ocad_symbol->italic) ? true : false;
-    symbol->underline = (ocad_symbol->under) ? true : false;
+    symbol->underline = false;
+	symbol->paragraph_spacing = convertSize(ocad_symbol->pspace);
+	symbol->character_spacing = ocad_symbol->cspace / 100.0;
 	symbol->kerning = false;
+	symbol->line_below = ocad_symbol->under;
+	symbol->line_below_color = convertColor(ocad_symbol->ucolor);
+	symbol->line_below_width = convertSize(ocad_symbol->uwidth);
+	symbol->line_below_distance = convertSize(ocad_symbol->udist);
+	symbol->custom_tabs.resize(ocad_symbol->ntabs);
+	for (int i = 0; i < ocad_symbol->ntabs; ++i)
+		symbol->custom_tabs[i] = convertSize(ocad_symbol->tab[i]);
 	
 	int halign = (int)TextObject::AlignHCenter;
 	if (ocad_symbol->halign == 0)
@@ -569,42 +577,25 @@ Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
 	}
 	text_halign_map[symbol] = halign;
 
-    //qDebug() << "Convert"<<ocad_symbol->dpts<<"decipoints to"<<symbol->ascent_size<<"um";
-
     if (ocad_symbol->bold != 400 && ocad_symbol->bold != 700)
     {
         addWarning(QObject::tr("During import of text symbol %1: ignoring custom weight (%2)")
                        .arg(ocad_symbol->number).arg(ocad_symbol->bold));
     }
-    if (ocad_symbol->under)
-    {
-        addWarning(QObject::tr("During import of text symbol %1: ignoring custom underline color, width, and positioning")
-                       .arg(ocad_symbol->number));
-    }
     if (ocad_symbol->cspace != 0)
-    {
-        addWarning(QObject::tr("During import of text symbol %1: ignoring custom character spacing (%2%)")
-                       .arg(ocad_symbol->number).arg(ocad_symbol->cspace));
-    }
+	{
+		addWarning(QObject::tr("During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD's behavior yet")
+		.arg(ocad_symbol->number));
+	}
     if (ocad_symbol->wspace != 100)
     {
         addWarning(QObject::tr("During import of text symbol %1: ignoring custom word spacing (%2%)")
                        .arg(ocad_symbol->number).arg(ocad_symbol->wspace));
     }
-    if (ocad_symbol->pspace != 0)
-    {
-        addWarning(QObject::tr("During import of text symbol %1: ignoring custom paragraph spacing (%2%)")
-                       .arg(ocad_symbol->number).arg(ocad_symbol->pspace));
-    }
     if (ocad_symbol->indent1 != 0 || ocad_symbol->indent2 != 0)
     {
         addWarning(QObject::tr("During import of text symbol %1: ignoring custom indents (%2/%3)")
                        .arg(ocad_symbol->number).arg(ocad_symbol->indent1).arg(ocad_symbol->indent2));
-    }
-    if (ocad_symbol->ntabs > 0)
-    {
-        addWarning(QObject::tr("During import of text symbol %1: ignoring custom tabs")
-                       .arg(ocad_symbol->number));
     }
     if (ocad_symbol->fmode != 0)
     {
@@ -614,9 +605,8 @@ Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
 
     symbol->updateQFont();
 	
-	// Calculate line spacing
-	double font_em_size = calculateFontEMSize(symbol);
-	double absolute_line_spacing = font_em_size * 0.01 * ocad_symbol->lspace;
+	// Convert line spacing
+	double absolute_line_spacing = d_font_size * 0.01 * ocad_symbol->lspace;
 	symbol->line_spacing = absolute_line_spacing / (symbol->getFontMetrics().lineSpacing() / symbol->calculateInternalScaling());
 
     return symbol;
@@ -898,9 +888,8 @@ bool OCAD8FileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol,
 		convertPoint(top_right, buf[0], buf[1]);
 		
 		// According to Purple Pen source code: OCAD adds an extra internal leading (incorrectly).
-		double font_em_size = calculateFontEMSize(symbol);
 		QFontMetricsF metrics = symbol->getFontMetrics();
-		double top_adjust = -font_em_size + (metrics.ascent() + metrics.descent()) / symbol->calculateInternalScaling();
+		double top_adjust = -symbol->getFontSize() + (metrics.ascent() + metrics.descent() + 0.5) / symbol->calculateInternalScaling();
 		
 		MapCoordF adjust_vector = MapCoordF(top_adjust * sin(object->getRotation()), top_adjust * cos(object->getRotation()));
 		top_left = MapCoord(top_left.xd() + adjust_vector.getX(), top_left.yd() + adjust_vector.getY());
@@ -1003,8 +992,4 @@ qint64 OCAD8FileImport::convertSize(int ocad_size) {
 
 MapColor *OCAD8FileImport::convertColor(int color) {
     return color_index[color];
-}
-
-double OCAD8FileImport::calculateFontEMSize(TextSymbol* symbol) {
-	return (symbol->ascent_size / (1000 * 0.1 * ocad_pt_in_mm)) / 720.0 * 25.4;
 }

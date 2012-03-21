@@ -81,6 +81,7 @@ struct TextObjectLineInfo
 
 	int start_index;		/// The index of the part's first character in the original string
 	int end_index;			/// The index of the part's last character in the original string
+	bool paragraph_end;		/// Is this line the end of a paragraph?
 	double line_x;			/// The left endpoint of the baseline of this line in text coordinates
 	double line_y;			/// The vertical position of the baseline of this line in text coordinates
 	double width;			/// The total width of the text in this line
@@ -92,8 +93,8 @@ struct TextObjectLineInfo
 	 *  All information must be supplied as parameters.
 	 *  (Assumes that the values have been precalculated in a layout algorithm.)
 	 */
-	inline TextObjectLineInfo(int start_index, int end_index, double line_x, double line_y, double width, double ascent, double descent, PartInfoContainer& part_infos)
-	 : start_index(start_index), end_index(end_index), line_x(line_x), line_y(line_y), width(width), ascent(ascent), descent(descent), part_infos(part_infos) {}
+	inline TextObjectLineInfo(int start_index, int end_index, bool paragraph_end, double line_x, double line_y, double width, double ascent, double descent, PartInfoContainer& part_infos)
+	 : start_index(start_index), end_index(end_index), paragraph_end(paragraph_end), line_x(line_x), line_y(line_y), width(width), ascent(ascent), descent(descent), part_infos(part_infos) {}
 	
 	/** Get the horizontal position of a particular character in a line.
 	 *  @param index the index of the character in the original string
