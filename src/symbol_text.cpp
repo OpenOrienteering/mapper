@@ -114,11 +114,7 @@ void TextSymbol::createLineBelowRenderables(Object* object, RenderableVector& ou
 		else
 		{
 			double box_width = text_object->getBoxWidth() * scale_factor;
-			line_below_x0 = 0;
-			if (text_object->getHorizontalAlignment() == TextObject::AlignLeft)
-				line_below_x0 -= 0.5 * box_width;
-			else if (text_object->getHorizontalAlignment() == TextObject::AlignRight)
-				line_below_x0 += 0.5 * box_width;
+			line_below_x0 = -0.5 * box_width;
 			line_below_x1 = line_below_x0 + box_width;
 		}
 		double line_below_y0 = line_info->line_y + getLineBelowDistance() * scale_factor;

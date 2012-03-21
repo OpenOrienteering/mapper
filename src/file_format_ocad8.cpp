@@ -944,6 +944,12 @@ QString OCAD8FileImport::convertCString(const char *p, size_t n) {
     for (; i < n; i++) {
         if (p[i] == 0) break;
     }
+    if (n >= 2 && p[0] == '\r' && p[1] == '\n')
+	{
+		// Remove "\r\n" at the beginning of texts, somehow OCAD seems to add this sometimes but ignores it
+		p += 2;
+		i -= 2;
+	}
     return encoding_1byte->toUnicode(p, i);
 }
 
@@ -961,6 +967,12 @@ QString OCAD8FileImport::convertWideCString(const char *p, size_t n) {
     for (; i < n; i++) {
         if (q[i] == 0) break;
     }
+    if (n >= 4 && p[0] == '\r' && p[2] == '\n')
+	{
+		// Remove "\r\n" at the beginning of texts, somehow OCAD seems to add this sometimes but ignores it
+		p += 4;
+		i -= 2;
+	}
     return encoding_2byte->toUnicode(p, i * 2);
 }
 

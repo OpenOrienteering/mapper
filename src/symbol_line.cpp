@@ -430,7 +430,7 @@ void LineSymbol::createPointedLineCap(const MapCoordVector& flags, const MapCoor
 	{
 		float dist_from_start = is_end ? (end - cap_lengths[i]) : (cap_lengths[i] - start);
 		float factor = dist_from_start / cap_length;
-		assert(factor >= -0.001f && factor <= 1.001f);
+		assert(factor >= -0.001f && factor <= 1.01f);
 		
 		MapCoordF right_vector;
 		float scaling;
@@ -840,7 +840,7 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 	{
 		int index = line_coords[cur_line_coord].index;
 		float factor = (start - line_coords[cur_line_coord-1].clen) / (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen);
-		assert(factor >= 0 && factor <= 1.001f);
+		assert(factor >= 0 && factor <= 1.01f);
 		if (factor > 1)
 			factor = 1;
 		float prev_param = (line_coords[cur_line_coord-1].index == line_coords[cur_line_coord].index) ? line_coords[cur_line_coord-1].param : 0;
@@ -912,7 +912,7 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 	{
 		int index = line_coords[cur_line_coord].index;
 		float factor = (end - line_coords[cur_line_coord-1].clen) / (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen);
-		assert(factor >= 0 && factor <= 1.001f);
+		assert(factor >= 0 && factor <= 1.01f);
 		if (factor > 1)
 			factor = 1;
 		float prev_param = (line_coords[cur_line_coord-1].index == line_coords[cur_line_coord].index) ? line_coords[cur_line_coord-1].param : 0;
