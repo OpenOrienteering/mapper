@@ -387,20 +387,20 @@
 <context>
     <name>GeoreferencingAddTool</name>
     <message>
-        <location filename="../src/georeferencing.cpp" line="549"/>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set the source position of the pass point</source>
+        <location filename="../src/georeferencing.cpp" line="558"/>
+        <source>&lt;b&gt;Click&lt;/b&gt; to set the template position of the pass point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="564"/>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set the destination position of the pass point, &lt;b&gt;Esc&lt;/b&gt; to abort</source>
+        <location filename="../src/georeferencing.cpp" line="573"/>
+        <source>&lt;b&gt;Click&lt;/b&gt; to set the map position of the pass point, &lt;b&gt;Esc&lt;/b&gt; to abort</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>GeoreferencingDeleteTool</name>
     <message>
-        <location filename="../src/georeferencing.cpp" line="765"/>
+        <location filename="../src/georeferencing.cpp" line="774"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to delete pass points</source>
         <translation type="unfinished"></translation>
     </message>
@@ -408,7 +408,7 @@
 <context>
     <name>GeoreferencingMoveTool</name>
     <message>
-        <location filename="../src/georeferencing.cpp" line="645"/>
+        <location filename="../src/georeferencing.cpp" line="654"/>
         <source>&lt;b&gt;Drag&lt;/b&gt; to move pass points</source>
         <translation type="unfinished"></translation>
     </message>
@@ -417,57 +417,62 @@
     <name>GeoreferencingWidget</name>
     <message>
         <location filename="../src/georeferencing.cpp" line="231"/>
-        <source>New point</source>
+        <source>Pass points:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="235"/>
+        <location filename="../src/georeferencing.cpp" line="233"/>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/georeferencing.cpp" line="237"/>
         <source>Move</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="239"/>
+        <location filename="../src/georeferencing.cpp" line="241"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="246"/>
+        <location filename="../src/georeferencing.cpp" line="248"/>
         <source>Template X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="246"/>
+        <location filename="../src/georeferencing.cpp" line="248"/>
         <source>Template Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="246"/>
+        <location filename="../src/georeferencing.cpp" line="248"/>
         <source>Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="246"/>
+        <location filename="../src/georeferencing.cpp" line="248"/>
         <source>Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="246"/>
+        <location filename="../src/georeferencing.cpp" line="248"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="257"/>
-        <source>Apply transformation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/georeferencing.cpp" line="259"/>
-        <source>Clear points &amp;&amp; apply</source>
+        <source>Apply pass points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="260"/>
-        <source>Clear points &amp;&amp; revert</source>
+        <location filename="../src/georeferencing.cpp" line="261"/>
+        <source>Apply &amp;&amp; clear all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/georeferencing.cpp" line="262"/>
+        <source>Clear all</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

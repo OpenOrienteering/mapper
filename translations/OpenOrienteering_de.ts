@@ -391,20 +391,28 @@
 <context>
     <name>GeoreferencingAddTool</name>
     <message>
-        <location filename="../src/georeferencing.cpp" line="549"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the source position of the pass point</source>
-        <translation>&lt;b&gt;Mausklick&lt;/b&gt;, um die Ausgangsposition des Referenzpunkts festzulegen</translation>
+        <translation type="obsolete">&lt;b&gt;Mausklick&lt;/b&gt;, um die Ausgangsposition des Referenzpunkts festzulegen</translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="564"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the destination position of the pass point, &lt;b&gt;Esc&lt;/b&gt; to abort</source>
-        <translation>&lt;b&gt;Mausklick&lt;/b&gt;, um die Zielposition des Referenzpunkts festzulegen, &lt;b&gt;Esc&lt;/b&gt; zum Abbrechen</translation>
+        <translation type="obsolete">&lt;b&gt;Mausklick&lt;/b&gt;, um die Zielposition des Referenzpunkts festzulegen, &lt;b&gt;Esc&lt;/b&gt; zum Abbrechen</translation>
+    </message>
+    <message>
+        <location filename="../src/georeferencing.cpp" line="558"/>
+        <source>&lt;b&gt;Click&lt;/b&gt; to set the template position of the pass point</source>
+        <translation>&lt;b&gt;Mausklick&lt;/b&gt;, um die Position des Referenzpunkts auf der Vorlage festzulegen</translation>
+    </message>
+    <message>
+        <location filename="../src/georeferencing.cpp" line="573"/>
+        <source>&lt;b&gt;Click&lt;/b&gt; to set the map position of the pass point, &lt;b&gt;Esc&lt;/b&gt; to abort</source>
+        <translation>&lt;b&gt;Mausklick&lt;/b&gt;, um die Position des Referenzpunkts auf der Karte festzulegen, &lt;b&gt;Esc&lt;/b&gt; zum Abbrechen</translation>
     </message>
 </context>
 <context>
     <name>GeoreferencingDeleteTool</name>
     <message>
-        <location filename="../src/georeferencing.cpp" line="765"/>
+        <location filename="../src/georeferencing.cpp" line="774"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to delete pass points</source>
         <translation>&lt;b&gt;Mausklick&lt;/b&gt; zum Löschen von Referenzpunkten</translation>
     </message>
@@ -412,7 +420,7 @@
 <context>
     <name>GeoreferencingMoveTool</name>
     <message>
-        <location filename="../src/georeferencing.cpp" line="645"/>
+        <location filename="../src/georeferencing.cpp" line="654"/>
         <source>&lt;b&gt;Drag&lt;/b&gt; to move pass points</source>
         <translation>&lt;b&gt;Ziehen&lt;/b&gt; zum Verschieben von Referenzpunkten</translation>
     </message>
@@ -420,59 +428,80 @@
 <context>
     <name>GeoreferencingWidget</name>
     <message>
-        <location filename="../src/georeferencing.cpp" line="231"/>
         <source>New point</source>
-        <translation>Neuer Punkt</translation>
+        <translation type="obsolete">Neuer Punkt</translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="235"/>
+        <location filename="../src/georeferencing.cpp" line="231"/>
+        <source>Pass points:</source>
+        <translation>Referenzpunkte:</translation>
+    </message>
+    <message>
+        <location filename="../src/georeferencing.cpp" line="233"/>
+        <source>New</source>
+        <translation>Neu</translation>
+    </message>
+    <message>
+        <location filename="../src/georeferencing.cpp" line="237"/>
         <source>Move</source>
         <translation>Verschieben</translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="239"/>
+        <location filename="../src/georeferencing.cpp" line="241"/>
         <source>Delete</source>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="246"/>
+        <location filename="../src/georeferencing.cpp" line="248"/>
         <source>Template X</source>
         <translation>Vorlagen-X</translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="246"/>
+        <location filename="../src/georeferencing.cpp" line="248"/>
         <source>Template Y</source>
         <translation>Vorlagen-Y</translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="246"/>
+        <location filename="../src/georeferencing.cpp" line="248"/>
         <source>Map X</source>
         <translation>Karten-X</translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="246"/>
+        <location filename="../src/georeferencing.cpp" line="248"/>
         <source>Map Y</source>
         <translation>Karten-Y</translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="246"/>
+        <location filename="../src/georeferencing.cpp" line="248"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="257"/>
-        <source>Apply transformation</source>
-        <translation>Transformation anwenden</translation>
-    </message>
-    <message>
         <location filename="../src/georeferencing.cpp" line="259"/>
-        <source>Clear points &amp;&amp; apply</source>
-        <translation>Punkte löschen und anwenden</translation>
+        <source>Apply pass points</source>
+        <translation>Referenzpunkte anwenden</translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="260"/>
+        <location filename="../src/georeferencing.cpp" line="261"/>
+        <source>Apply &amp;&amp; clear all</source>
+        <translation>Anwenden &amp;&amp; alle löschen</translation>
+    </message>
+    <message>
+        <location filename="../src/georeferencing.cpp" line="262"/>
+        <source>Clear all</source>
+        <translation>Alle löschen</translation>
+    </message>
+    <message>
+        <source>Apply transformation</source>
+        <translation type="obsolete">Transformation anwenden</translation>
+    </message>
+    <message>
+        <source>Clear points &amp;&amp; apply</source>
+        <translation type="obsolete">Punkte löschen und anwenden</translation>
+    </message>
+    <message>
         <source>Clear points &amp;&amp; revert</source>
-        <translation>Punkte löschen &amp;&amp; zurücksetzen</translation>
+        <translation type="obsolete">Punkte löschen &amp;&amp; zurücksetzen</translation>
     </message>
 </context>
 <context>
@@ -1078,7 +1107,7 @@ Fehler beim Verarbeiten der Symbole.</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="255"/>
         <source>One or more templates could not be loaded. Use the Templates -&gt; Template setup window to resolve the issue(s) by clicking on the red template file name(s).</source>
-        <translation>Eine oder mehrere Vorlagen konnten nicht geladen werden. Bearbeiten Sie die rot markierten Dateinamen unter Vorlagen -&gt; Vorlagen einrichten, um das Problem zu lösen.</translation>
+        <translation>Eine oder mehrere Vorlagen konnten nicht geladen werden. Bearbeiten Sie die rot markierten Dateinamen unter Vorlagen -&gt; Vorlagen verwalten, um das Problem zu lösen.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="325"/>
@@ -1204,7 +1233,7 @@ Fehler beim Verarbeiten der Symbole.</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="341"/>
         <source>Template setup window</source>
-        <translation>Vorlagen einrichten</translation>
+        <translation>Vorlagen verwalten</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="341"/>
@@ -1546,11 +1575,11 @@ in die Symbolleiste und wählen Sie
 Start drawing or load a base map.
 To load a base map, click
 Templates -&gt; Open template...</source>
-        <translation>Bereit zum Zeichnen.
+        <translation type="unfinished">Bereit zum Zeichnen.
 
 Beginnen Sie zu zeichnen, oder laden Sie eine Vorlage.
 Um eine Vorlage zu laden, klicken Sie
-Vorlage -&gt; Vorlage öffnen...</translation>
+Vorlagen -&gt; Vorlage öffnen...</translation>
     </message>
 </context>
 <context>
@@ -2606,7 +2635,7 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
     <message>
         <location filename="../src/template_image.cpp" line="168"/>
         <source>Open image template</source>
-        <translation>Vorlage öffnen</translation>
+        <translation>Vorlagenbild öffnen</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="170"/>
@@ -2712,7 +2741,7 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
     <message>
         <location filename="../src/template_dock_widget.cpp" line="88"/>
         <source>Selected template(s)</source>
-        <translation>Vorlagen auswählen</translation>
+        <translation>Ausgewählte Vorlage(n)</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="90"/>
