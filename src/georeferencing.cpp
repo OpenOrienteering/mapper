@@ -370,12 +370,10 @@ void GeoreferencingWidget::updateActions()
 		if (move_act->isChecked())
 		{
 			move_act->setChecked(false);
-			moveClicked(false);
 		}
 		if (delete_act->isChecked())
 		{
 			delete_act->setChecked(false);
-			deleteClicked(false);
 		}
 	}
 }
