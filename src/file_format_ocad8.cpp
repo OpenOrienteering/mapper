@@ -756,7 +756,13 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapLayer* l
 		if (point_symbol->isRotatable())
 			p->setRotation(convertRotation(ocad_object->angle));
 		else if (ocad_object->angle != 0)
-			addWarning(QObject::tr("An object with the symbol '%1', which is oriented to north, is rotated. Ignoring the rotation").arg(symbol->getName()));
+		{
+			if (!point_symbol->isSymmetrical())
+			{
+				point_symbol->setRotatable(true);
+				p->setRotation(convertRotation(ocad_object->angle));
+			}
+		}
 
         // only 1 coordinate is allowed, enforce it even if the OCAD object claims more.
         fillPathCoords(p, false, 1, (OCADPoint *)ocad_object->pts);

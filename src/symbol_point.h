@@ -65,6 +65,9 @@ public:
 	/// Returns true if the point contains no elements and does not create renderables itself
 	bool isEmpty() const;
 	
+	/// Checks if the contained elements are rotationally symmetrical around the origin (this means, only point elements at (0,0) are allowed)
+	bool isSymmetrical() const;
+	
 	// Getters / Setters
 	inline bool isRotatable() const {return rotatable;}
 	inline void setRotatable(bool enable) {rotatable = enable;}
