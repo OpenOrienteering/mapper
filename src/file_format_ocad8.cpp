@@ -89,10 +89,6 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
     for (int i = 0; i < num_colors; i++)
     {
         OCADColor *ocad_color = ocad_color_at(file, i);
-        //qDebug() << clr->cyan << clr->magenta << clr->yellow << clr->black << clr->number << str1(clr->name);
-
-        QString name = convertPascalString(ocad_color->name);
-        if (name.isEmpty()) continue;
 
         MapColor* color = new MapColor();
         color->priority = i;
@@ -103,7 +99,7 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
         color->y = 0.005f * ocad_color->yellow;
         color->k = 0.005f * ocad_color->black;
         color->opacity = 1.0f;
-        color->name = name;
+		color->name = convertPascalString(ocad_color->name);
         color->updateFromCMYK();
 
         map->color_set->colors.push_back(color);
@@ -1181,5 +1177,6 @@ qint64 OCAD8FileImport::convertSize(int ocad_size) {
 }
 
 MapColor *OCAD8FileImport::convertColor(int color) {
+	assert(color_index.contains(color));
     return color_index[color];
 }
