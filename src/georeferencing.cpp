@@ -367,8 +367,16 @@ void GeoreferencingWidget::updateActions()
 	delete_act->setEnabled(has_georeferencing);
 	if (! has_georeferencing)
 	{
-		move_act->setChecked(false);
-		delete_act->setChecked(false);
+		if (move_act->isChecked())
+		{
+			move_act->setChecked(false);
+			moveClicked(false);
+		}
+		if (delete_act->isChecked())
+		{
+			delete_act->setChecked(false);
+			deleteClicked(false);
+		}
 	}
 }
 
