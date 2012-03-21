@@ -363,7 +363,15 @@ void GeoreferencingWidget::updateActions()
 	
 	clear_and_apply_button->setEnabled(has_georeferencing);
 	clear_and_revert_button->setEnabled(has_georeferencing);
+	move_act->setEnabled(has_georeferencing);
+	delete_act->setEnabled(has_georeferencing);
+	if (! has_georeferencing)
+	{
+		move_act->setChecked(false);
+		delete_act->setChecked(false);
+	}
 }
+
 void GeoreferencingWidget::newClicked(bool checked)
 {
 	controller->setTool(checked ? (new GeoreferencingAddTool(controller, new_act, this)) : NULL);
