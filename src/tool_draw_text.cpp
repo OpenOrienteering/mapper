@@ -430,7 +430,6 @@ bool TextObjectEditorHelper::mouseReleaseEvent(QMouseEvent* event, MapCoordF map
 
 bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 {
-// FIXME: add Escape
 // FIXME: repair weird Shift+Left/Right - needs some cursor position
 	if (event->key() == Qt::Key_Backspace)
 	{
