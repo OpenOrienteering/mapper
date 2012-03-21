@@ -839,7 +839,7 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 	if (flags[line_coords[cur_line_coord].index].isCurveStart())
 	{
 		int index = line_coords[cur_line_coord].index;
-		float factor = (start - line_coords[cur_line_coord-1].clen) / (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen);
+		float factor = (start - line_coords[cur_line_coord-1].clen) / qMax(1e-7f, (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen));
 		assert(factor >= 0 && factor <= 1.01f);
 		if (factor > 1)
 			factor = 1;
@@ -911,7 +911,7 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 	if (flags[current_index].isCurveStart())
 	{
 		int index = line_coords[cur_line_coord].index;
-		float factor = (end - line_coords[cur_line_coord-1].clen) / (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen);
+		float factor = (end - line_coords[cur_line_coord-1].clen) / qMax(1e-7f, (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen));
 		assert(factor >= 0 && factor <= 1.01f);
 		if (factor > 1)
 			factor = 1;

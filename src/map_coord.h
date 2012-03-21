@@ -286,6 +286,12 @@ public:
 	{
 		return MapCoord(x, y);
 	}
+	MapCoord toCurveStartMapCoord() const
+	{
+		MapCoord coord = MapCoord(x, y);
+		coord.setCurveStart(true);
+		return coord;
+	}
 	
 	inline MapCoordF& operator= (const MapCoordF& other)
 	{

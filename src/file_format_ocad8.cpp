@@ -29,6 +29,7 @@
 #include "symbol_combined.h"
 #include "template_image.h"
 #include "object_text.h"
+#include "util.h"
 
 #if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
 #define currentMSecsSinceEpoch() currentDateTime().toTime_t() * 1000
@@ -65,7 +66,6 @@ OCAD8FileImport::~OCAD8FileImport()
 void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 {
     //qint64 start = QDateTime::currentMSecsSinceEpoch();
-    int symbol_count = 0, object_count = 0;
 
 	QByteArray filename = path.toLocal8Bit().constData();
     int err = ocad_file_open(&file, filename);
@@ -135,18 +135,23 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
                 {
                     symbol = importTextSymbol((OCADTextSymbol *)ocad_symbol);
                 }
-                /*
                 else if (ocad_symbol->type == OCAD_RECT_SYMBOL)
                 {
-                    symbol = importRectSymbol((OCADRectSymbol *)ocad_symbol);
+					RectangleInfo* rect = importRectSymbol((OCADRectSymbol *)ocad_symbol);
+					map->symbols.push_back(rect->border_line);
+					if (rect->has_grid)
+					{
+						map->symbols.push_back(rect->inner_line);
+						map->symbols.push_back(rect->text);
+					}
+					continue;
                 }
-                */
+                
 
                 if (symbol)
                 {
                     map->symbols.push_back(symbol);
                     symbol_index[ocad_symbol->number] = symbol;
-                    symbol_count++;
 					
 					// For combined symbols, also add their parts
 					// FIXME: implement private parts for combined symbols instead
@@ -158,7 +163,6 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 							Symbol* part = combined_symbol->getPart(i);
 							part->setNumberComponent(2, i+1);
 							map->symbols.push_back(part);
-							symbol_count++; // FIXME?
 						}
 					}
                 }
@@ -186,10 +190,9 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 				OCADObject *ocad_obj = ocad_object(file, entry);
 				if (ocad_obj != NULL)
 				{
-					Object *object = importObject(ocad_obj);
+					Object *object = importObject(ocad_obj, layer);
 					if (object != NULL) {
 						layer->objects.push_back(object);
-						object_count++;
 					}
 				}
 			}
@@ -255,7 +258,7 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
     ocad_file_close(file);
 
     //qint64 elapsed = QDateTime::currentMSecsSinceEpoch() - start;
-    //qDebug() << "OCAD map imported:"<<symbol_count<<"symbols and"<<object_count<<"objects in"<<elapsed<<"milliseconds";
+	//qDebug() << "OCAD map imported:"<<map->getNumSymbols()<<"symbols and"<<map->getNumObjects()<<"objects in"<<elapsed<<"milliseconds";
 }
 
 void OCAD8FileImport::setStringEncodings(const char *narrow, const char *wide) {
@@ -611,6 +614,44 @@ Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
 
     return symbol;
 }
+OCAD8FileImport::RectangleInfo* OCAD8FileImport::importRectSymbol(const OCADRectSymbol* ocad_symbol)
+{
+	RectangleInfo rect;
+	rect.border_line = new LineSymbol();
+	fillCommonSymbolFields(rect.border_line, (OCADSymbol *)ocad_symbol);
+	rect.border_line->line_width = convertSize(ocad_symbol->width);
+	rect.border_line->color = convertColor(ocad_symbol->color);
+	rect.border_line->cap_style = LineSymbol::FlatCap;
+	rect.border_line->join_style = LineSymbol::RoundJoin;
+	rect.corner_radius = 0.001 * convertSize(ocad_symbol->corner);
+	rect.has_grid = ocad_symbol->flags & 1;
+	
+	if (rect.has_grid)
+	{
+		rect.inner_line = new LineSymbol();
+		fillCommonSymbolFields(rect.inner_line, (OCADSymbol *)ocad_symbol);
+		rect.inner_line->setNumberComponent(2, 1);
+		rect.inner_line->line_width = qRound(1000 * 0.15);
+		rect.inner_line->color = rect.border_line->color;
+		
+		rect.text = new TextSymbol();
+		fillCommonSymbolFields(rect.text, (OCADSymbol *)ocad_symbol);
+		rect.text->setNumberComponent(2, 2);
+		rect.text->font_family = "Arial";
+		rect.text->font_size = qRound(1000 * (15 / 72.0 * 25.4));
+		rect.text->color = rect.border_line->color;
+		rect.text->bold = true;
+		rect.text->updateQFont();
+		
+		rect.number_from_bottom = ocad_symbol->flags & 2;
+		rect.cell_width = 0.001 * convertSize(ocad_symbol->cwidth);
+		rect.cell_height = 0.001 * convertSize(ocad_symbol->cheight);
+		rect.unnumbered_cells = ocad_symbol->gcells;
+		rect.unnumbered_text = convertPascalString(ocad_symbol->gtext);
+	}
+	
+	return &rectangle_info.insert(ocad_symbol->number, rect).value();
+}
 
 PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
 {
@@ -691,12 +732,21 @@ void OCAD8FileImport::fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *o
 		symbol->setHidden(true);
 }
 
-Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
+Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapLayer* layer)
 {
     if (!symbol_index.contains(ocad_object->symbol))
     {
-        addWarning(QObject::tr("Unable to load object"));
-        return NULL;
+		if (!rectangle_info.contains(ocad_object->symbol))
+		{
+			addWarning(QObject::tr("Unable to load object"));
+			return NULL;
+		}
+		else
+		{
+			if (!importRectangleObject(ocad_object, layer, rectangle_info[ocad_object->symbol]))
+				addWarning(QObject::tr("Unable to import rectangle object"));
+			return NULL;
+		}
     }
 
     Symbol *symbol = symbol_index[ocad_object->symbol];
@@ -714,14 +764,12 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
 
         // only 1 coordinate is allowed, enforce it even if the OCAD object claims more.
         fillPathCoords(p, false, 1, (OCADPoint *)ocad_object->pts);
-        p->map = map;
-        p->output_dirty = true;
+        p->setMap(map);
         return p;
     }
     else if (symbol->getType() == Symbol::Text)
     {
-        TextObject *t = new TextObject();
-        t->symbol = symbol;
+		TextObject *t = new TextObject(symbol);
 
         // extra properties: rotation, horizontalAlignment, verticalAlignment, text
         t->setRotation(convertRotation(ocad_object->angle));
@@ -742,23 +790,153 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
             delete t;
             return NULL;
         }
-        t->map = map;
-        t->output_dirty = true;
+        t->setMap(map);
         return t;
     }
     else if (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined) {
-        PathObject *p = new PathObject();
-        p->symbol = symbol;
+		PathObject *p = new PathObject(symbol);
 
-        // Normal path
+		// Normal path
 		fillPathCoords(p, symbol->getType() == Symbol::Area, ocad_object->npts, (OCADPoint *)ocad_object->pts);
 		p->recalculateParts();
-        p->map = map;
-        p->output_dirty = true;
-        return p;
+		p->setMap(map);
+		return p;
     }
 
     return NULL;
+}
+
+bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapLayer* layer, const OCAD8FileImport::RectangleInfo& rect)
+{
+	if (ocad_object->npts != 4)
+		return false;
+	
+	// Convert corner points
+	s32 buf[3];
+	ocad_point(buf, &(ocad_object->pts[3]));
+	MapCoord top_left;
+	convertPoint(top_left, buf[0], buf[1]);
+	ocad_point(buf, &(ocad_object->pts[0]));
+	MapCoord bottom_left;
+	convertPoint(bottom_left, buf[0], buf[1]);
+	ocad_point(buf, &(ocad_object->pts[2]));
+	MapCoord top_right;
+	convertPoint(top_right, buf[0], buf[1]);
+	ocad_point(buf, &(ocad_object->pts[1]));
+	MapCoord bottom_right;
+	convertPoint(bottom_right, buf[0], buf[1]);
+	
+	MapCoordF top_left_f = MapCoordF(top_left);
+	MapCoordF top_right_f = MapCoordF(top_right);
+	MapCoordF bottom_left_f = MapCoordF(bottom_left);
+	MapCoordF bottom_right_f = MapCoordF(bottom_right);
+	MapCoordF right = MapCoordF(top_right.xd() - top_left.xd(), top_right.yd() - top_left.yd());
+	double angle = right.getAngle();
+	MapCoordF down = MapCoordF(bottom_left.xd() - top_left.xd(), bottom_left.yd() - top_left.yd());
+	right.normalize();
+	down.normalize();
+	
+	// Create border line
+	MapCoordVector coords;
+	if (rect.corner_radius == 0)
+	{
+		coords.push_back(top_left);
+		coords.push_back(top_right);
+		coords.push_back(bottom_right);
+		coords.push_back(bottom_left);
+	}
+	else
+	{
+		double handle_radius = (1 - BEZIER_KAPPA) * rect.corner_radius;
+		coords.push_back((top_right_f - right * rect.corner_radius).toCurveStartMapCoord());
+		coords.push_back((top_right_f - right * handle_radius).toMapCoord());
+		coords.push_back((top_right_f + down * handle_radius).toMapCoord());
+		coords.push_back((top_right_f + down * rect.corner_radius).toMapCoord());
+		coords.push_back((bottom_right_f - down * rect.corner_radius).toCurveStartMapCoord());
+		coords.push_back((bottom_right_f - down * handle_radius).toMapCoord());
+		coords.push_back((bottom_right_f - right * handle_radius).toMapCoord());
+		coords.push_back((bottom_right_f - right * rect.corner_radius).toMapCoord());
+		coords.push_back((bottom_left_f + right * rect.corner_radius).toCurveStartMapCoord());
+		coords.push_back((bottom_left_f + right * handle_radius).toMapCoord());
+		coords.push_back((bottom_left_f - down * handle_radius).toMapCoord());
+		coords.push_back((bottom_left_f - down * rect.corner_radius).toMapCoord());
+		coords.push_back((top_left_f + down * rect.corner_radius).toCurveStartMapCoord());
+		coords.push_back((top_left_f + down * handle_radius).toMapCoord());
+		coords.push_back((top_left_f + right * handle_radius).toMapCoord());
+		coords.push_back((top_left_f + right * rect.corner_radius).toMapCoord());
+	}
+	PathObject *border_path = new PathObject(rect.border_line, coords, map);
+	border_path->getPart(0).setClosed(true);
+	layer->objects.push_back(border_path);
+	
+	if (rect.has_grid && rect.cell_width > 0 && rect.cell_height > 0)
+	{
+		// Calculate grid sizes
+		double width = top_left.lengthTo(top_right);
+		double height = top_left.lengthTo(bottom_left);
+		int num_cells_x = qMax(1, qRound(width / rect.cell_width));
+		int num_cells_y = qMax(1, qRound(height / rect.cell_height));
+		
+		float cell_width = width / num_cells_x;
+		float cell_height = height / num_cells_y;
+		
+		// Create grid lines
+		coords.resize(2);
+		for (int x = 1; x < num_cells_x; ++x)
+		{
+			coords[0] = (top_left_f + x * cell_width * right).toMapCoord();
+			coords[1] = (bottom_left_f + x * cell_width * right).toMapCoord();
+			
+			PathObject *path = new PathObject(rect.inner_line, coords, map);
+			layer->objects.push_back(path);
+		}
+		for (int y = 1; y < num_cells_y; ++y)
+		{
+			coords[0] = (top_left_f + y * cell_height * down).toMapCoord();
+			coords[1] = (top_right_f + y * cell_height * down).toMapCoord();
+			
+			PathObject *path = new PathObject(rect.inner_line, coords, map);
+			layer->objects.push_back(path);
+		}
+		
+		// Create grid text
+		if (height >= rect.cell_height / 2)
+		{
+			for (int y = 0; y < num_cells_y; ++y) 
+			{
+				for (int x = 0; x < num_cells_x; ++x)
+				{
+					int cell_num;
+					QString cell_text;
+					
+					if (rect.number_from_bottom)
+						cell_num = y * num_cells_x + x + 1;
+					else
+						cell_num = (num_cells_y - 1 - y) * num_cells_x + x + 1;
+					
+					if (cell_num > num_cells_x * num_cells_y - rect.unnumbered_cells)
+						cell_text = rect.unnumbered_text;
+					else
+						cell_text = QString::number(cell_num);
+					
+					TextObject* object = new TextObject(rect.text);
+					object->setMap(map);
+					object->setText(cell_text);
+					object->setRotation(-angle);
+					object->setHorizontalAlignment(TextObject::AlignLeft);
+					object->setVerticalAlignment(TextObject::AlignTop);
+					double position_x = (x + 0.07f) * cell_width;
+					double position_y = (y + 0.04f) * cell_height + rect.text->getFontMetrics().ascent() / rect.text->calculateInternalScaling() - rect.text->getFontSize();
+					object->setAnchorPosition(top_left_f + position_x * right + position_y * down);
+					layer->objects.push_back(object);
+					
+					//pts[0].Y -= rectinfo.gridText.FontAscent - rectinfo.gridText.FontEmHeight;
+				}
+			}
+		}
+	}
+	
+	return true;
 }
 
 Template *OCAD8FileImport::importTemplate(OCADTemplateEntry *entry)

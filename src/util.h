@@ -30,6 +30,8 @@ QT_BEGIN_NAMESPACE
 class QFile;
 QT_END_NAMESPACE
 
+#define BEZIER_KAPPA 0.5522847498
+
 /// Double validator for line edit widgets
 class DoubleValidator : public QDoubleValidator
 {

@@ -43,6 +43,24 @@ public:
 
 class OCAD8FileImport : public Importer
 {
+private:
+	/// Information about an OCAD rectangle symbol
+	struct RectangleInfo
+	{
+		LineSymbol* border_line;
+		double corner_radius;
+		bool has_grid;
+		
+		// Only valid if has_grid is true
+		LineSymbol* inner_line;
+		TextSymbol* text;
+		bool number_from_bottom;
+		double cell_width;
+		double cell_height;
+		int unnumbered_cells;
+		QString unnumbered_text;
+	};
+	
 public:
     OCAD8FileImport(const QString &path, Map *map, MapView *view);
     ~OCAD8FileImport();
@@ -59,10 +77,11 @@ protected:
     Symbol *importLineSymbol(const OCADLineSymbol *ocad_symbol);
     Symbol *importAreaSymbol(const OCADAreaSymbol *ocad_symbol);
     Symbol *importTextSymbol(const OCADTextSymbol *ocad_symbol);
-    //Symbol *importRectSymbol(const OCADRectSymbol *ocad_symbol);
+    RectangleInfo *importRectSymbol(const OCADRectSymbol *ocad_symbol);
 
     // Object import
-    Object *importObject(const OCADObject *ocad_object);
+    Object *importObject(const OCADObject *ocad_object, MapLayer* layer);
+	bool importRectangleObject(const OCADObject* ocad_object, MapLayer* layer, const RectangleInfo& rect);
 
     // Template import
     Template *importTemplate(OCADTemplateEntry *entry);
@@ -102,6 +121,9 @@ private:
 	
 	/// maps OO Mapper text symbol pointer to OCAD text symbol horizontal alignment (stored in objects instead of symbols in OO Mapper)
 	QHash<Symbol*, int> text_halign_map;
+	
+	/// maps OCAD symbol number to rectangle information struct
+	QHash<int, RectangleInfo> rectangle_info;
 
     /// Offset between OCAD map origin and Mapper map origin (in Mapper coordinates)
     qint64 offset_x, offset_y;
