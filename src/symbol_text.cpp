@@ -249,11 +249,17 @@ double TextSymbol::getNextTab(double pos) const
 			if (0.001 * custom_tabs[i] > map_pos)
 				return scaling * 0.001 * custom_tabs[i];
 		}
+		
+		// After the given positions, OCAD repeats the distance between the last two tab positions
+		double custom_tab_interval = (custom_tabs.size() > 1) ?
+									   (custom_tabs[custom_tabs.size() - 1] - custom_tabs[custom_tabs.size() - 2]) :
+									   custom_tabs[0];
+		custom_tab_interval *= 0.001;
+		return scaling * (0.001 * custom_tabs[custom_tabs.size() - 1] + (floor((map_pos - 0.001 * custom_tabs[custom_tabs.size() - 1]) / custom_tab_interval) + 1.0) * custom_tab_interval);
 	}
 	
 	double next_tab = (floor(pos / tab_interval) + 1.0) * tab_interval;
-	if (next_tab <= pos)
-		next_tab += tab_interval;
+	assert(next_tab > pos);
  	return next_tab;
 }
 
