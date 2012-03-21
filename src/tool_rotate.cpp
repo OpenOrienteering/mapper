@@ -98,7 +98,6 @@ bool RotateTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 		updateDragging(map_coord);
 		finishEditingSelection(renderables, old_renderables, true, &undo_duplicates);
 		
-		rotation_center_set = false;
 		updateDirtyRect();
 		updateStatusText();
 	}
