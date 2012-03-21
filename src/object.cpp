@@ -1122,6 +1122,8 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance)
 				return Symbol::Line;
 			
 			float line_length = path_coords[i+1].clen - path_coords[i].clen;
+			if (line_length < 1e-7)
+				continue;
 			if (dist_along_line > line_length + tolerance)
 				continue;
 			else if (dist_along_line > line_length && coord.lengthToSquared(path_coords[i+1].pos) <= tolerance*tolerance)
