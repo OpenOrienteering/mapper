@@ -44,8 +44,8 @@ public:
 	
 	inline void setX(double x) {this->x = (qRound64(x * 1000) << 4) | (this->x & 15);}
 	inline void setY(double y) {this->y = (qRound64(y * 1000) << 4) | (this->y & 15);}
-	inline void setRawX(qint64 x) {this->x = (x << 4) | (this->x & 15);}
-	inline void setRawY(qint64 y) {this->y = (y << 4) | (this->y & 15);}
+	inline void setRawX(qint64 new_x) {this->x = (new_x << 4) | (this->x & 15);}
+	inline void setRawY(qint64 new_y) {this->y = (new_y << 4) | (this->y & 15);}
 	
 	inline double xd() const {return (x >> 4) / 1000.0;}
 	inline double yd() const {return (y >> 4) / 1000.0;}

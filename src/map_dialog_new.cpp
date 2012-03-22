@@ -241,18 +241,23 @@ void NewMapDialog::loadSymbolSetMap()
 	
 	// FIXME: How to translate directory name "my symbol sets"?
 	
-	// #1: symbol sets from HOME/my symbol sets
-	QDir symbol_set_dir(QDir::homePath() % "/my symbol sets");
+	// symbol sets from HOME/my symbol sets
+	QDir symbol_set_dir(QDir::homePath() % QDir::toNativeSeparators("/my symbol sets"));
 	if (symbol_set_dir.exists())
 		loadSymbolSetDir(symbol_set_dir);
 	
-	// #2: symbol sets from APPDIR/my symbol sets
-	symbol_set_dir.cd(app_dir % "/my symbol sets");
+	// symbol sets from APPDIR/my symbol sets
+	symbol_set_dir = QDir(app_dir % QDir::toNativeSeparators("/my symbol sets"));
 	if (symbol_set_dir.exists())
 		loadSymbolSetDir(symbol_set_dir);
+
+	// symbol sets from WORKINGDIR/my symbol sets
+	QDir working_symbol_set_dir = QDir("my symbol sets");
+	if (working_symbol_set_dir.canonicalPath() != symbol_set_dir.canonicalPath() && working_symbol_set_dir.exists())
+		loadSymbolSetDir(working_symbol_set_dir);
 	
 #ifndef WIN32
-	// #3: symbol sets from /usr/share et al. if executable is in /usr/bin
+	// symbol sets from /usr/share et al. if executable is in /usr/bin
 	symbol_set_dir.cd(app_dir % "/../share/openorienteering-mapper/symbol sets");
 	if (symbol_set_dir.exists())
 		loadSymbolSetDir(symbol_set_dir);

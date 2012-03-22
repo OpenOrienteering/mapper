@@ -672,7 +672,8 @@ void Map::addObjectToSelection(Object* object, bool emit_selection_changed)
 }
 void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
 {
-	assert(object_selection.remove(object) && "Map::removeObjectFromSelection: object was not selected!");
+	bool removed = object_selection.remove(object);
+	assert(removed && "Map::removeObjectFromSelection: object was not selected!");
 	removeSelectionRenderables(object);
 	if (emit_selection_changed)
 		emit(selectedObjectsChanged());
