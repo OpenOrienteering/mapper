@@ -28,13 +28,14 @@ class CombinedSymbol;
 class PointObject;
 class PathObject;
 class Symbol;
+class TextObjectEditorHelper;
 
 /// Tool to draw point objects
 class EditTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	EditTool(MapEditorController* editor, QAction* tool_button);
+	EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
 	virtual ~EditTool();
 	
     virtual void init();
@@ -46,41 +47,36 @@ public:
 	
     virtual bool keyPressEvent(QKeyEvent* event);
     virtual bool keyReleaseEvent(QKeyEvent* event);
+    virtual void focusOutEvent(QFocusEvent* event);
 	
     virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	static QCursor* cursor;
-	static QImage* point_handles;
+	
+	static const Qt::KeyboardModifiers selection_modifier;
+	static const Qt::KeyboardModifiers control_point_modifier;
+	static const Qt::Key control_point_key;
 	
 public slots:
 	void selectedObjectsChanged();
+	void selectedSymbolsChanged();
+	void textSelectionChanged(bool text_change);
 	
 protected:
-	/// The numbers correspond to the position in point-handles.png
-	enum PointHandleType
-	{
-		StartHandle = 0,
-		EndHandle = 1,
-		NormalHandle = 2,
-		CurveHandle = 3,
-		DashHandle = 4
-	};
-	
 	void updateStatusText();
 	void updatePreviewObjects();
 	void updateDirtyRect();
 	void updateHoverPoint(QPointF point, MapWidget* widget);
 	void updateDragging(QPoint cursor_pos, MapWidget* widget);
+	bool hoveringOverSingleText(MapCoordF cursor_pos_map);
+	
+	void startEditing();
+	void finishEditing();
+	void deleteSelectedObjects();
 	
 	static bool sortObjects(const std::pair<int, Object*>& a, const std::pair<int, Object*>& b);
 	bool selectionInfosEqual(const SelectionInfoVector& a, const SelectionInfoVector& b);
 	void deleteOldRenderables();
-	
-	int findHoverPoint(QPointF cursor, Object* object, MapWidget* widget);
-	inline float distanceSquared(const QPointF& a, const QPointF& b) {float dx = b.x() - a.x(); float dy = b.y() - a.y(); return dx*dx + dy*dy;}
-	void drawPointHandles(QPainter* painter, Object* object, MapWidget* widget);
-	void drawPointHandle(QPainter* painter, QPointF point, PointHandleType type, bool active);
-	void drawCurveHandleLine(QPainter* painter, QPointF point, QPointF curve_handle, bool active);
 	
 	// Mouse handling
 	QPoint click_pos;
@@ -89,6 +85,10 @@ protected:
 	MapCoordF cur_pos_map;
 	bool dragging;
 	bool box_selection;
+	bool no_more_effect_on_click;
+	
+	bool control_pressed;
+	bool space_pressed;
 	
 	// Information about the selection
 	QRectF selection_extent;
@@ -99,6 +99,12 @@ protected:
 	int curve_anchor_index;				// if moving a curve handle, this is the index of the point between the handle and its opposite handle, if that exists
 	std::vector<Object*> undo_duplicates;
 	
+	TextObjectEditorHelper* text_editor;
+	QString old_text;					// to prevent creating an undo step if text edit mode is entered and left, but no text was changed
+	int old_horz_alignment;
+	int old_vert_alignment;
+	QPointF box_text_handles[4];
+	
 	// Information about the last click
 	SelectionInfoVector last_results;
 	SelectionInfoVector last_results_ordered;
@@ -106,6 +112,7 @@ protected:
 	
 	RenderableVector old_renderables;
 	RenderableContainer renderables;
+	SymbolWidget* symbol_widget;
 };
 
 #endif

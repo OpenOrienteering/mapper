@@ -1,0 +1,8 @@
+.DS_Store
+*.kdev4
+*~
+Makefile
+bin/Mapper
+bin/*.omap
+bin/*.ocd
+build/

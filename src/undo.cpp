@@ -44,9 +44,62 @@ UndoStep* UndoStep::getUndoStepForType(UndoStep::Type type, void* owner)
 		return new SwitchSymbolUndoStep(reinterpret_cast<Map*>(owner));
 	else if (type == SwitchDashesUndoStepType)
 		return new SwitchDashesUndoStep(reinterpret_cast<Map*>(owner));
+	else if (type == CombinedUndoStepType)
+		return new CombinedUndoStep(owner);
 	
 	assert(false);
 	return NULL;
+}
+
+// ### CombinedUndoStep ###
+
+CombinedUndoStep::CombinedUndoStep(void* owner) : UndoStep(CombinedUndoStepType), owner(owner)
+{
+}
+CombinedUndoStep::~CombinedUndoStep()
+{
+	for (int i = 0; i < (int)steps.size(); ++i)
+		delete steps[i];
+}
+
+UndoStep* CombinedUndoStep::undo()
+{
+	CombinedUndoStep* undo_step = new CombinedUndoStep(owner);
+	undo_step->steps.reserve(steps.size());
+	for (int i = 0; i < (int)steps.size(); ++i)
+		undo_step->steps.insert(undo_step->steps.begin(), steps[i]->undo());
+	return undo_step;
+}
+void CombinedUndoStep::save(QFile* file)
+{
+	int size = (int)steps.size();
+	file->write((const char*)&size, sizeof(int));
+	for (int i = 0; i < (int)steps.size(); ++i)
+	{
+		int type = (int)steps[i]->getType();
+		file->write((char*)&type, sizeof(int));
+		steps[i]->save(file);
+	}
+}
+bool CombinedUndoStep::load(QFile* file, int version)
+{
+	int size;
+	file->read((char*)&size, sizeof(int));
+	steps.resize(size);
+	for (int i = 0; i < (int)steps.size(); ++i)
+	{
+		int type;
+		file->read((char*)&type, sizeof(int));
+		steps[i] = UndoStep::getUndoStepForType((UndoStep::Type)type, owner);
+		if (!steps[i]->load(file, version))
+			return false;
+	}
+	return true;
+}
+
+bool CombinedUndoStep::isValid() const
+{
+    return UndoStep::isValid();
 }
 
 // ### UndoManager ###
@@ -93,20 +146,20 @@ void UndoManager::saveSteps(std::deque< UndoStep* >& steps, QFile* file)
 		steps[i]->save(file);
 	}
 }
-bool UndoManager::load(QFile* file)
+bool UndoManager::load(QFile* file, int version)
 {
 	clearUndoSteps();
 	clearRedoSteps();
 	
-	if (!loadSteps(undo_steps, file))
+	if (!loadSteps(undo_steps, file, version))
 		return false;
-	if (!loadSteps(redo_steps, file))
+	if (!loadSteps(redo_steps, file, version))
 		return false;
 	saved_step_index = 0;
 	loaded_step_index = 0;
 	return true;
 }
-bool UndoManager::loadSteps(std::deque< UndoStep* >& steps, QFile* file)
+bool UndoManager::loadSteps(std::deque< UndoStep* >& steps, QFile* file, int version)
 {
 	int size;
 	file->read((char*)&size, sizeof(int));
@@ -116,7 +169,7 @@ bool UndoManager::loadSteps(std::deque< UndoStep* >& steps, QFile* file)
 		int type;
 		file->read((char*)&type, sizeof(int));
 		steps[i] = UndoStep::getUndoStepForType((UndoStep::Type)type, owner);
-		if (!steps[i]->load(file))
+		if (!steps[i]->load(file, version))
 			return false;
 	}
 	return true;

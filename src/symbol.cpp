@@ -25,13 +25,14 @@
 
 #include "util.h"
 #include "object.h"
+#include "object_text.h"
 #include "symbol_line.h"
 #include "symbol_point.h"
 #include "symbol_area.h"
 #include "symbol_text.h"
 #include "symbol_combined.h"
 
-Symbol::Symbol(Type type) : type(type), name(""), description(""), is_helper_symbol(false), icon(NULL)
+Symbol::Symbol(Type type) : type(type), name(""), description(""), is_helper_symbol(false), is_hidden(false), is_protected(false), icon(NULL)
 {
 	for (int i = 0; i < number_components; ++i)
 		number[i] = -1;
@@ -60,6 +61,8 @@ void Symbol::save(QFile* file, Map* map)
 		file->write((const char*)&number[i], sizeof(int));
 	saveString(file, description);
 	file->write((const char*)&is_helper_symbol, sizeof(bool));
+	file->write((const char*)&is_hidden, sizeof(bool));
+	file->write((const char*)&is_protected, sizeof(bool));
 	
 	saveImpl(file, map);
 }
@@ -70,6 +73,10 @@ bool Symbol::load(QFile* file, int version, Map* map)
 		file->read((char*)&number[i], sizeof(int));
 	loadString(file, description);
 	file->read((char*)&is_helper_symbol, sizeof(bool));
+	if (version >= 10)
+		file->read((char*)&is_hidden, sizeof(bool));
+	if (version >= 11)
+		file->read((char*)&is_protected, sizeof(bool));
 	
 	return loadImpl(file, version, map);
 }
@@ -109,7 +116,7 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	if (type == Point)
 	{
 		PointObject* point = new PointObject(this);
-		point->setPosition(MapCoord(0, 0));
+		point->setPosition(0, 0);
 		object = point;
 	}
 	else if (type == Line)
@@ -131,7 +138,7 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	else if (type == Text)
 	{
 		TextObject* text = new TextObject(this);
-		text->setAnchorPosition(MapCoord(0, 0));
+		text->setAnchorPosition(0, 0);
 		text->setHorizontalAlignment(TextObject::AlignHCenter);
 		text->setVerticalAlignment(TextObject::AlignVCenter);
 		text->setText("A");
@@ -142,7 +149,7 @@ QImage* Symbol::getIcon(Map* map, bool update)
 		PathObject* path = new PathObject(this);
 		for (int i = 0; i < 5; ++i)
 			path->addCoordinate(i, MapCoord(sin(2*M_PI * i/5.0) * max_icon_mm_half, -cos(2*M_PI * i/5.0) * max_icon_mm_half));
-		path->setPathClosed(true);
+		path->getPart(0).setClosed(true);
 		object = path;
 	}
 	else
@@ -158,14 +165,14 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	
 	painter.translate(0.5f * (icon_size-1), 0.5f * (icon_size-1));
 	view.applyTransform(&painter);
-	icon_map.draw(&painter, QRectF(-10000, -10000, 20000, 20000), false, view.calculateFinalZoomFactor());
+	icon_map.draw(&painter, QRectF(-10000, -10000, 20000, 20000), false, view.calculateFinalZoomFactor(), true);
 	
 	painter.end();
 	
 	return icon;
 }
 
-QString Symbol::getNumberAsString()
+QString Symbol::getNumberAsString() const
 {
 	QString str = "";
 	for (int i = 0; i < number_components; ++i)
@@ -206,6 +213,7 @@ void Symbol::duplicateImplCommon(Symbol* other)
 		number[i] = other->number[i];
 	description = other->description;
 	is_helper_symbol = other->is_helper_symbol;
+	is_hidden = other->is_hidden;
 	if (other->icon)
 		icon = new QImage(*other->icon);
 	else

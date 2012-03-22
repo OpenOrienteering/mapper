@@ -24,6 +24,7 @@
 
 #include "map.h"
 #include "object.h"
+#include "object_text.h"
 #include "symbol.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
@@ -61,7 +62,7 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Symbol* in_map_symbol, 
 	helper_symbol_check->setChecked(symbol->isHelperSymbol());
 	
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	ok_button = new QPushButton(QIcon("images/arrow-right.png"), tr("Ok"));
+	ok_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("OK"));
 	ok_button->setDefault(true);
 	
 	preview_map = new Map();
@@ -479,7 +480,7 @@ void SymbolSettingDialog::createPreviewMap()
 		const QString string = tr("The quick brown fox\ntakes the routechoice\nto jump over the lazy dog\n1234567890");
 		
 		TextObject* object = new TextObject(text_symbol);
-		object->setAnchorPosition(MapCoord(0, 0));
+		object->setAnchorPosition(0, 0);
 		object->setText(string);
 		object->setHorizontalAlignment(TextObject::AlignHCenter);
 		object->setVerticalAlignment(TextObject::AlignVCenter);
@@ -494,7 +495,7 @@ void SymbolSettingDialog::createPreviewMap()
 		PathObject* path = new PathObject(symbol);
 		for (int i = 0; i < 5; ++i)
 			path->addCoordinate(i, MapCoord(sin(2*M_PI * i/5.0) * radius, -cos(2*M_PI * i/5.0) * radius));
-		path->setPathClosed(true);
+		path->getPart(0).setClosed(true);
 		preview_map->addObject(path);
 		
 		preview_objects.push_back(path);

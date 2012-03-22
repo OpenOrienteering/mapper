@@ -39,6 +39,7 @@ void HomeScreenController::attach(MainWindow* window)
 	this->window = window;
 	widget = new HomeScreenWidget(this);
 	window->setCentralWidget(widget);
+	window->setStatusBarText("");
 }
 void HomeScreenController::detach()
 {
@@ -55,11 +56,11 @@ void HomeScreenController::recentFilesUpdated()
 
 HomeScreenWidget::HomeScreenWidget(HomeScreenController* controller, QWidget* parent) : QWidget(parent), controller(controller)
 {
-	QLabel* title_label = new QLabel(QString("<img src=\"images/title.png\"/>"));	// <br/>") + APP_VERSION
+	QLabel* title_label = new QLabel(QString("<img src=\":/images/title.png\"/>"));	// <br/>") + APP_VERSION
 	title_label->setAlignment(Qt::AlignCenter);
 	
 	maps_widget = new DocumentSelectionWidget(tr("Maps"), tr("Create a new map ..."), tr("Open map ..."), tr("Recent maps"),
-																	   tr("Open Map ..."), tr("Maps (*.omap *.ocd);;All files (*.*)"));
+																	   tr("Open map ..."), tr("Maps (*.omap *.ocd);;All files (*.*)"));
 	HomeScreenTipOfTheDayWidget* tips_widget = new HomeScreenTipOfTheDayWidget(controller);
 	HomeScreenOtherWidget* other_widget = new HomeScreenOtherWidget();
 	
@@ -75,6 +76,7 @@ HomeScreenWidget::HomeScreenWidget(HomeScreenController* controller, QWidget* pa
 	setAutoFillBackground(false);
 	
 	connect(maps_widget, SIGNAL(newClicked()), controller->getWindow(), SLOT(showNewMapWizard()));
+	connect(maps_widget, SIGNAL(openClicked()), controller->getWindow(), SLOT(showOpenDialog()));
 	connect(maps_widget, SIGNAL(pathOpened(QString)), controller->getWindow(), SLOT(openPath(QString)));
 	
 	connect(other_widget, SIGNAL(settingsClicked()), controller->getWindow(), SLOT(showSettings()));
@@ -114,9 +116,9 @@ DocumentSelectionWidget::DocumentSelectionWidget(const QString& title, const QSt
 	title_label->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 	
 	QCommandLinkButton* new_button = new QCommandLinkButton(new_text);
-	new_button->setIcon(QIcon("images/new.png"));
+	new_button->setIcon(QIcon(":/images/new.png"));
 	QCommandLinkButton* open_button = new QCommandLinkButton(open_text);
-	open_button->setIcon(QIcon("images/open.png"));
+	open_button->setIcon(QIcon(":/images/open.png"));
 	
 	QFont button_font = new_button->font();
 	button_font.setPointSize((int)(1.5 * button_font.pointSize()));
@@ -164,14 +166,7 @@ void DocumentSelectionWidget::newDoc()
 }
 void DocumentSelectionWidget::openDoc()
 {
-	// TODO: save directory
-	QString path = QFileDialog::getOpenFileName(this, open_title_text, QString(), open_filter_text);
-	path = QFileInfo(path).canonicalFilePath();
-	
-	if (path.isEmpty())
-		return;
-	
-	emit(pathOpened(path));
+	emit(openClicked());
 }
 
 void DocumentSelectionWidget::updateRecentFiles()
@@ -183,7 +178,7 @@ void DocumentSelectionWidget::updateRecentFiles()
 	
 	int num_recent_files = files.size();
 	for (int i = 0; i < num_recent_files; ++i) {
-		QString text = tr("%1").arg(QFileInfo(files[i]).fileName());
+		QString text = QString("%1").arg(QFileInfo(files[i]).fileName());
 		
 		QListWidgetItem* new_item = new QListWidgetItem(text);
 		new_item->setData(Qt::UserRole, files[i]);
@@ -245,8 +240,8 @@ HomeScreenTipOfTheDayWidget::HomeScreenTipOfTheDayWidget(HomeScreenController* c
 	tip_label = new QLabel(getNextTip());
 	tip_label->setWordWrap(true);
 	
-	QPushButton* previous_button = new QPushButton(QIcon("images/arrow-left.png"), tr("Previous"));
-	QPushButton* next_button = new QPushButton(QIcon("images/arrow-right.png"), tr("Next"));
+	QPushButton* previous_button = new QPushButton(QIcon(":/images/arrow-left.png"), tr("Previous"));
+	QPushButton* next_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("Next"));
 	
 	QHBoxLayout* buttons_layout = new QHBoxLayout();
 	buttons_layout->addWidget(previous_button);
@@ -294,7 +289,7 @@ void HomeScreenTipOfTheDayWidget::linkClicked(QString link)
 
 QString HomeScreenTipOfTheDayWidget::getNextTip(int direction)
 {
-	QFile file("etc/tipoftheday.txt");
+	QFile file(":/etc/tipoftheday.txt");
 	if (!file.open(QIODevice::ReadOnly))
 		return "";
 	
@@ -329,11 +324,11 @@ QString HomeScreenTipOfTheDayWidget::getNextTip(int direction)
 HomeScreenOtherWidget::HomeScreenOtherWidget(QWidget* parent) : QWidget(parent)
 {
 	QCommandLinkButton* settings_button = new QCommandLinkButton(tr("Settings"));
-	settings_button->setIcon(QIcon("images/settings.png"));
-	QCommandLinkButton* about_button = new QCommandLinkButton(tr("About"));
-	about_button->setIcon(QIcon("images/about.png"));
+	settings_button->setIcon(QIcon(":/images/settings.png"));
+	QCommandLinkButton* about_button = new QCommandLinkButton(tr("About %1").arg(APP_NAME));
+	about_button->setIcon(QIcon(":/images/about.png"));
 	QCommandLinkButton* help_button = new QCommandLinkButton(tr("Help"));
-	help_button->setIcon(QIcon("images/help.png"));
+	help_button->setIcon(QIcon(":/images/help.png"));
 	
 	QFont button_font = settings_button->font();
 	button_font.setPointSize((int)(1.5 * button_font.pointSize()));

@@ -208,6 +208,12 @@ bool GeoreferencingActivity::calculateGeoreferencing(Template* temp, Template::T
 GeoreferencingDockWidget::GeoreferencingDockWidget(const QString title, MapEditorController* controller, QWidget* parent): QDockWidget(title, parent), controller(controller)
 {
 }
+bool GeoreferencingDockWidget::event(QEvent* event)
+{
+	if (event->type() == QEvent::ShortcutOverride && controller->getWindow()->areShortcutsDisabled())
+		event->accept();
+    return QDockWidget::event(event);
+}
 void GeoreferencingDockWidget::closeEvent(QCloseEvent* event)
 {
 	emit(closed());
@@ -222,15 +228,17 @@ GeoreferencingWidget::GeoreferencingWidget(Template* temp, MapEditorController* 
 	toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	toolbar->setFloatable(false);
 	
-	new_act = new QAction(QIcon("images/cursor-georeferencing-add.png"), tr("New point"), this);
+	QLabel* passpoint_label = new QLabel(tr("Pass points:"));
+	
+	new_act = new QAction(QIcon(":/images/cursor-georeferencing-add.png"), tr("New"), this);
 	new_act->setCheckable(true);
 	toolbar->addAction(new_act);
 
-	move_act = new QAction(QIcon("images/move.png"), tr("Move"), this);
+	move_act = new QAction(QIcon(":/images/move.png"), tr("Move"), this);
 	move_act->setCheckable(true);
 	toolbar->addAction(move_act);
 	
-	delete_act = new QAction(QIcon("images/delete.png"), tr("Delete"), this);
+	delete_act = new QAction(QIcon(":/images/delete.png"), tr("Delete"), this);
 	delete_act->setCheckable(true);
 	toolbar->addAction(delete_act);
 	
@@ -248,17 +256,24 @@ GeoreferencingWidget::GeoreferencingWidget(Template* temp, MapEditorController* 
 	for (int i = 0; i < temp->getNumPassPoints(); ++i)
 		addRow(i);
 	
-	apply_check = new QCheckBox(tr("Apply transformation"));
+	apply_check = new QCheckBox(tr("Apply pass points"));
 	apply_check->setChecked(temp->isGeoreferencingApplied());
-	clear_and_apply_button = new QPushButton(tr("Clear points && apply"));
-	clear_and_revert_button = new QPushButton(tr("Clear points && revert"));
+	clear_and_apply_button = new QPushButton(tr("Apply && clear all"));
+	clear_and_revert_button = new QPushButton(tr("Clear all"));
+	
+	QHBoxLayout* buttons_layout = new QHBoxLayout();
+	buttons_layout->addWidget(clear_and_revert_button);
+	buttons_layout->addStretch(1);
+	buttons_layout->addWidget(clear_and_apply_button);
+
 	
 	QVBoxLayout* layout = new QVBoxLayout();
+	layout->addWidget(passpoint_label);
 	layout->addWidget(toolbar);
 	layout->addWidget(table, 1);
 	layout->addWidget(apply_check);
-	layout->addWidget(clear_and_apply_button);
-	layout->addWidget(clear_and_revert_button);
+	layout->addSpacing(16);
+	layout->addLayout(buttons_layout);
 	setLayout(layout);
 	
 	updateActions();
@@ -348,7 +363,21 @@ void GeoreferencingWidget::updateActions()
 	
 	clear_and_apply_button->setEnabled(has_georeferencing);
 	clear_and_revert_button->setEnabled(has_georeferencing);
+	move_act->setEnabled(has_georeferencing);
+	delete_act->setEnabled(has_georeferencing);
+	if (! has_georeferencing)
+	{
+		if (move_act->isChecked())
+		{
+			move_act->setChecked(false);
+		}
+		if (delete_act->isChecked())
+		{
+			delete_act->setChecked(false);
+		}
+	}
 }
+
 void GeoreferencingWidget::newClicked(bool checked)
 {
 	controller->setTool(checked ? (new GeoreferencingAddTool(controller, new_act, this)) : NULL);
@@ -535,12 +564,12 @@ GeoreferencingAddTool::GeoreferencingAddTool(MapEditorController* editor, QActio
 	first_point_set = false;
 	
 	if (!cursor)
-		cursor = new QCursor(QPixmap("images/cursor-georeferencing-add.png"), 11, 11);
+		cursor = new QCursor(QPixmap(":/images/cursor-georeferencing-add.png"), 11, 11);
 }
 void GeoreferencingAddTool::init()
 {
 	// NOTE: this is called by other methods to set this text again. Change that behavior if adding stuff here
-	setStatusBarText(tr("<b>Click</b> to set the source position of the pass point"));
+	setStatusBarText(tr("<b>Click</b> to set the template position of the pass point"));
 }
 
 bool GeoreferencingAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -555,7 +584,7 @@ bool GeoreferencingAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_co
 		first_point_set = true;
 		setDirtyRect(map_coord);
 		
-		setStatusBarText(tr("<b>Click</b> to set the destination position of the pass point, <b>Esc</b> to abort"));
+		setStatusBarText(tr("<b>Click</b> to set the map position of the pass point, <b>Esc</b> to abort"));
 	}
 	else
 	{
@@ -630,8 +659,8 @@ GeoreferencingMoveTool::GeoreferencingMoveTool(MapEditorController* editor, QAct
 	
 	if (!cursor)
 	{
-		cursor = new QCursor(QPixmap("images/cursor-georeferencing-move.png"), 1, 1);
-		cursor_invisible = new QCursor(QPixmap("images/cursor-invisible.png"), 0, 0);
+		cursor = new QCursor(QPixmap(":/images/cursor-georeferencing-move.png"), 1, 1);
+		cursor_invisible = new QCursor(QPixmap(":/images/cursor-invisible.png"), 0, 0);
 	}
 }
 void GeoreferencingMoveTool::init()
@@ -752,7 +781,7 @@ QCursor* GeoreferencingDeleteTool::cursor = NULL;
 GeoreferencingDeleteTool::GeoreferencingDeleteTool(MapEditorController* editor, QAction* tool_button, GeoreferencingWidget* widget): GeoreferencingEditTool(editor, tool_button, widget)
 {
 	if (!cursor)
-		cursor = new QCursor(QPixmap("images/cursor-delete.png"), 1, 1);
+		cursor = new QCursor(QPixmap(":/images/cursor-delete.png"), 1, 1);
 }
 void GeoreferencingDeleteTool::init()
 {

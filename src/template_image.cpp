@@ -81,6 +81,8 @@ void TemplateImage::drawTemplate(QPainter* painter, QRectF& clip_rect, double sc
 }
 QRectF TemplateImage::getExtent()
 {
+    // If the image is invalid, the extent is an empty rectangle.
+    if (!image) return QRectF();
 	return QRectF(-image->width() * 0.5, -image->height() * 0.5, image->width(), image->height());
 }
 
@@ -197,7 +199,7 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(QWidget* parent) : QDialog(pare
 	scale_layout->addStretch(1);
 	
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	open_button = new QPushButton(QIcon("images/arrow-right.png"), tr("Open"));
+	open_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("Open"));
 	open_button->setDefault(true);
 	
 	QHBoxLayout* buttons_layout = new QHBoxLayout();

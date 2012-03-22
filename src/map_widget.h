@@ -47,6 +47,8 @@ public:
 	void setTool(MapEditorTool* tool);
 	void setActivity(MapEditorActivity* activity);
 	
+	void applyMapTransform(QPainter* painter);
+	
 	/// Map viewport (GUI) coordinates to view coordinates or the other way round
 	QRectF viewportToView(const QRect& input);
 	QPointF viewportToView(QPoint input);
@@ -129,6 +131,10 @@ private:
 	void zoomDirtyRect(QRectF& dirty_rect, qreal zoom_factor);
 	void moveDirtyRect(QRect& dirty_rect, qreal x, qreal y);
 	void moveDirtyRect(QRectF& dirty_rect, qreal x, qreal y);
+	
+	void startPanning(QPoint cursor_pos);
+	void finishPanning(QPoint cursor_pos);
+	void moveMap(int steps_x, int steps_y);
 	
 	void showHelpMessage(QPainter* painter, const QString& text);
 	

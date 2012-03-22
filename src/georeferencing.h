@@ -68,6 +68,7 @@ class GeoreferencingDockWidget : public QDockWidget
 Q_OBJECT
 public:
 	GeoreferencingDockWidget(const QString title, MapEditorController* controller, QWidget* parent = 0);
+    virtual bool event(QEvent* event);
 	virtual void closeEvent(QCloseEvent* event);
 	
 signals:

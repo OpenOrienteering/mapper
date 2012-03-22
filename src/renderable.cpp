@@ -17,12 +17,14 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include "renderable.h"
+
+#include <qmath.h>
 
 #include "map.h"
 #include "map_color.h"
 #include "object.h"
+#include "object_text.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
 #include "symbol_area.h"
@@ -50,7 +52,7 @@ RenderableContainer::RenderableContainer(Map* map) : map(map)
 {
 }
 
-void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, float opacity_factor, bool highlighted)
+void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity_factor, bool highlighted)
 {
 	Map::ColorVector& colors = map->color_set->colors;
 	
@@ -64,82 +66,93 @@ void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool forc
 	bool no_initial_clip = initial_clip.isEmpty();
 	
 	painter->save();
-	Renderables::const_iterator it_end = renderables.end();
-	for (Renderables::const_iterator it = renderables.begin(); it != it_end; ++it)
+	Renderables::const_reverse_iterator outer_it_end = renderables.rend();
+	for (Renderables::const_reverse_iterator outer_it = renderables.rbegin(); outer_it != outer_it_end; ++outer_it)
 	{
-		const RenderStates& new_states = (*it).first;
-		Renderable* renderable = (*it).second;
-		
-		// Bounds check
-		const QRectF& extent = renderable->getExtent();
-		if (extent.right() < bounding_box.x())	continue;
-		if (extent.bottom() < bounding_box.y())	continue;
-		if (extent.x() > bounding_box.right())	continue;
-		if (extent.y() > bounding_box.bottom())	continue;
-		
-		// Change render states?
-		if (states != new_states)
+		RenderableContainerVector::const_iterator it_end = outer_it->second.end();
+		for (RenderableContainerVector::const_iterator it = outer_it->second.begin(); it != it_end; ++it)
 		{
-			MapColor* color;
-			float pen_width;
+			const RenderStates& new_states = (*it).first;
+			Renderable* renderable = (*it).second;
 			
-			if (new_states.color_priority > MapColor::Reserved)
+			// Bounds check
+			const QRectF& extent = renderable->getExtent();
+			if (extent.right() < bounding_box.x())	continue;
+			if (extent.bottom() < bounding_box.y())	continue;
+			if (extent.x() > bounding_box.right())	continue;
+			if (extent.y() > bounding_box.bottom())	continue;
+			
+			// Settings check
+			Symbol* symbol = renderable->getCreator()->getSymbol();
+			if (!show_helper_symbols && symbol->isHelperSymbol())
+				continue;
+			if (symbol->isHidden())
+				continue;
+			
+			// Change render states?
+			if (states != new_states)
 			{
-				pen_width = new_states.pen_width;
-				color = colors[new_states.color_priority];
-			}
-			else
-			{
-				painter->setRenderHint(QPainter::Antialiasing, true);	// this is not undone here anywhere as it should apply to all special symbols and these are always painted last
-				pen_width = new_states.pen_width / scaling;
+				MapColor* color;
+				float pen_width;
 				
-				if (new_states.color_priority == MapColor::CoveringWhite)
-					color = Map::getCoveringWhite();
-				else if (new_states.color_priority == MapColor::CoveringRed)
-					color = Map::getCoveringRed();
-				else
-					assert(!"Invalid special color!");
-			}
-			
-			if (new_states.mode == RenderStates::PenOnly)
-			{
-				bool pen_too_small = (force_min_size && pen_width * scaling <= 1.0f);
-				painter->setPen(QPen(highlighted ? getHighlightedColor(color->color) : color->color, pen_too_small ? 0 : pen_width));
-				
-				painter->setBrush(QBrush(Qt::NoBrush));
-			}
-			else if (new_states.mode == RenderStates::BrushOnly)
-			{
-				QBrush brush(highlighted ? getHighlightedColor(color->color) : color->color);
-				
-				painter->setPen(QPen(Qt::NoPen));
-				painter->setBrush(brush);
-			}
-			
-			painter->setOpacity(qMin(1.0f, opacity_factor * color->opacity));
-			
-			if (states.clip_path != new_states.clip_path)
-			{
-				if (no_initial_clip)
+				if (new_states.color_priority > MapColor::Reserved)
 				{
-					if (new_states.clip_path)
-						painter->setClipPath(*new_states.clip_path, Qt::ReplaceClip);
+					pen_width = new_states.pen_width;
+					color = colors[new_states.color_priority];
+				}
+				else
+				{
+					painter->setRenderHint(QPainter::Antialiasing, true);	// this is not undone here anywhere as it should apply to all special symbols and these are always painted last
+					pen_width = new_states.pen_width / scaling;
+					
+					if (new_states.color_priority == MapColor::CoveringWhite)
+						color = Map::getCoveringWhite();
+					else if (new_states.color_priority == MapColor::CoveringRed)
+						color = Map::getCoveringRed();
 					else
-						painter->setClipPath(initial_clip, Qt::NoClip);
+						assert(!"Invalid special color!");
 				}
-				else
+				
+				if (new_states.mode == RenderStates::PenOnly)
 				{
-					painter->setClipPath(initial_clip, Qt::ReplaceClip);
-					if (new_states.clip_path)
-						painter->setClipPath(*new_states.clip_path, Qt::IntersectClip);
+					bool pen_too_small = (force_min_size && pen_width * scaling <= 1.0f);
+					painter->setPen(QPen(highlighted ? getHighlightedColor(color->color) : color->color, pen_too_small ? 0 : pen_width));
+					
+					painter->setBrush(QBrush(Qt::NoBrush));
 				}
+				else if (new_states.mode == RenderStates::BrushOnly)
+				{
+					QBrush brush(highlighted ? getHighlightedColor(color->color) : color->color);
+					
+					painter->setPen(QPen(Qt::NoPen));
+					painter->setBrush(brush);
+				}
+				
+				painter->setOpacity(qMin(1.0f, opacity_factor * color->opacity));
+				
+				if (states.clip_path != new_states.clip_path)
+				{
+					if (no_initial_clip)
+					{
+						if (new_states.clip_path)
+							painter->setClipPath(*new_states.clip_path, Qt::ReplaceClip);
+						else
+							painter->setClipPath(initial_clip, Qt::NoClip);
+					}
+					else
+					{
+						painter->setClipPath(initial_clip, Qt::ReplaceClip);
+						if (new_states.clip_path)
+							painter->setClipPath(*new_states.clip_path, Qt::IntersectClip);
+					}
+				}
+				
+				states = new_states;
 			}
 			
-			states = new_states;
+			// Render the renderable
+			renderable->render(*painter, force_min_size, scaling);
 		}
-		
-		// Render the renderable
-		renderable->render(*painter, force_min_size, scaling);
 	}
 	painter->restore();
 }
@@ -154,15 +167,38 @@ void RenderableContainer::insertRenderablesOfObject(Object* object)
 		renderable->getRenderStates(render_states);
 		
 		if (render_states.color_priority != MapColor::Reserved)
-			renderables.insert(Renderables::value_type(render_states, renderable));	
+		{
+			renderables[render_states.color_priority].push_back(std::make_pair(render_states, renderable));
+			//renderables.insert(Renderables::value_type(render_states, renderable));
+		}
 	}
 }
 void RenderableContainer::removeRenderablesOfObject(Object* object, bool mark_area_as_dirty)
 {
 	Renderables::iterator itend = renderables.end();
-	for (Renderables::iterator it = renderables.begin(); it != itend; )
+	for (Renderables::iterator it = renderables.begin(); it != itend; ++it)
 	{
-		if ((*it).second->getCreator() == object)
+		for (int i = (int)it->second.size() - 1; i >= 0; --i)
+		{
+			if (it->second.at(i).second->getCreator() != object)
+				continue;
+			
+			// NOTE: this assumes that renderables by one object are at continuous indices
+			int k = i;
+			if (mark_area_as_dirty)
+				map->setObjectAreaDirty(it->second.at(i).second->getExtent());
+			while (k > 0 && it->second.at(k - 1).second->getCreator() == object)
+			{
+				--k;
+				if (mark_area_as_dirty)
+					map->setObjectAreaDirty(it->second.at(k).second->getExtent());
+			}
+			
+			it->second.erase(it->second.begin() + k, it->second.begin() + (i + 1));
+			break;
+		}
+		
+		/*if ((*it).second->getCreator() == object)
 		{
 			if (mark_area_as_dirty)
 				map->setObjectAreaDirty((*it).second->getExtent());
@@ -171,7 +207,7 @@ void RenderableContainer::removeRenderablesOfObject(Object* object, bool mark_ar
 			renderables.erase(todelete);
 		}
 		else
-			++it;
+			++it;*/
 	}
 }
 
@@ -304,7 +340,7 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 		
 		if (coords[i-1].isCurveStart())
 		{
-			assert(i < size - 2);
+            assert(i < size - 2);
 			path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
 			i += 2;
 		}
@@ -314,7 +350,7 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 		if (coords[i].isHolePoint())
 			hole = true;
 		
-		if ((i < size - 1 || closed) && !hole)
+		if ((i < size - 1 && !hole) || (i == size - 1 && closed))
 			extentIncludeJoin(i, half_line_width, symbol, transformed_coords, coords, closed);
 		else
 			extentIncludeCap(i, half_line_width, true, symbol, transformed_coords, coords, closed);
@@ -432,37 +468,36 @@ AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transf
 	path.moveTo(transformed_coords[0].toQPointF());
 	
 	// Coords 1 to size - 1
+	bool have_hole = false;
 	int size = (int)coords.size();
 	for (int i = 1; i < size; ++i)
 	{
-		if (coords[i-1].isCurveStart())
-		{
-			if (i == size - 2)
-			{
-				assert(i < size - 1);
-				path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[0].toQPointF());
-				++i;
-			}
-			else
-			{
-				assert(i < size - 2);
-				path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
-				i += 2;
-			}
-		}
-		else if (coords[i].isHolePoint())
+		if (have_hole)
 		{
 			path.closeSubpath();
 			path.moveTo(transformed_coords[i].toQPointF());
+			
+			have_hole = false;
+			continue;
+		}
+		
+		if (coords[i-1].isCurveStart())
+		{
+			assert(i < size - 2);
+			path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
+			i += 2;
 		}
 		else
 			path.lineTo(transformed_coords[i].toQPointF());
+		
+		if (coords[i].isHolePoint())
+			have_hole = true;
 	}
 	
 	// Close path
 	path.closeSubpath();
 	
-	//if (disableHoles)
+	//if (disable_holes)
 	//	path.setFillRule(Qt::WindingFill);
 	
 	// Get extent
@@ -523,7 +558,6 @@ TextRenderable::TextRenderable(TextSymbol* symbol, double line_x, double line_y,
 	else*/
 		path.addText(line_x, line_y, font, line);
 	
-	// Get extent
 	extent = path.controlPointRect();
 	extent = QRectF(scale_factor * extent.left(), scale_factor * extent.top(), scale_factor * extent.width(), scale_factor * extent.height());
 	if (rotation != 0)
@@ -552,6 +586,81 @@ TextRenderable::TextRenderable(TextSymbol* symbol, double line_x, double line_y,
 	
 	assert(extent.right() < 999999);	// assert if bogus values are returned
 }
+
+TextRenderable::TextRenderable(TextSymbol* symbol, TextObject* text_object, double anchor_x, double anchor_y)
+{
+	const QFont& font(symbol->getQFont());
+	const QFontMetricsF& metrics(symbol->getFontMetrics());
+	color_priority = symbol->getColor()->priority;
+	this->anchor_x = anchor_x;
+	this->anchor_y = anchor_y;
+	this->rotation = text_object->getRotation();
+	scale_factor = symbol->getFontSize() / TextSymbol::internal_point_size;
+	
+	path.setFillRule(Qt::WindingFill);	// Otherwise, when text and an underline intersect, holes appear
+	
+	int num_lines = text_object->getNumLines();
+	for (int i=0; i < num_lines; i++)
+	{
+		const TextObjectLineInfo* line_info = text_object->getLineInfo(i);
+		
+		double line_y = line_info->line_y;
+		
+		double underline_x0 = 0.0;
+		double underline_y0 = line_info->line_y + metrics.underlinePos();
+		double underline_y1 = underline_y0 + metrics.lineWidth();
+		
+		int num_parts = line_info->part_infos.size();
+		for (int j=0; j < num_parts; j++)
+		{
+			const TextObjectPartInfo& part(line_info->part_infos.at(j));
+			if (font.underline())
+			{
+				if (j > 0)
+				{
+					// draw underline for gap between parts as rectangle
+					// TODO: watch out for inconsistency between text and gap underline
+					path.moveTo(underline_x0, underline_y0);
+					path.lineTo(part.part_x,  underline_y0);
+					path.lineTo(part.part_x,  underline_y1);
+					path.lineTo(underline_x0, underline_y1);
+					path.closeSubpath();
+				}
+				underline_x0 = part.part_x;
+			}
+			path.addText(part.part_x, line_y, font, part.part_text);
+		}
+	}
+	
+	extent = path.controlPointRect();
+	extent = QRectF(scale_factor * extent.left(), scale_factor * extent.top(), scale_factor * extent.width(), scale_factor * extent.height());
+	if (rotation != 0)
+	{
+		float rcos = cos(-rotation);
+		float rsin = sin(-rotation);
+		
+		std::vector<QPointF> extent_corners;
+		extent_corners.push_back(extent.topLeft());
+		extent_corners.push_back(extent.topRight());
+		extent_corners.push_back(extent.bottomRight());
+		extent_corners.push_back(extent.bottomLeft());
+		
+		for (int i = 0; i < 4; ++i)
+		{
+			float x = extent_corners[i].x() * rcos - extent_corners[i].y() * rsin;
+			float y = extent_corners[i].y() * rcos + extent_corners[i].x() * rsin;
+			
+			if (i == 0)
+				extent = QRectF(x, y, 0, 0);
+			else
+				rectInclude(extent, QPointF(x, y));
+		}
+	}
+	extent = QRectF(extent.left() + anchor_x, extent.top() + anchor_y, extent.width(), extent.height());
+	
+	assert(extent.right() < 999999);	// assert if bogus values are returned
+}
+
 TextRenderable::TextRenderable(const TextRenderable& other) : Renderable(other)
 {
 	path = other.path;
@@ -560,6 +669,7 @@ TextRenderable::TextRenderable(const TextRenderable& other) : Renderable(other)
 	rotation = other.rotation;
 	scale_factor = other.scale_factor;
 }
+
 void TextRenderable::getRenderStates(RenderStates& out)
 {
 	out.color_priority = color_priority;
@@ -567,6 +677,7 @@ void TextRenderable::getRenderStates(RenderStates& out)
 	out.pen_width = 0;
 	out.clip_path = clip_path;
 }
+
 void TextRenderable::render(QPainter& painter, bool force_min_size, float scaling)
 {
 	// NOTE: mini-optimization to prevent the save-restore for un-rotated texts which could be used when the scale-hack is no longer necessary
@@ -577,7 +688,7 @@ void TextRenderable::render(QPainter& painter, bool force_min_size, float scalin
 		painter.save();
 		painter.translate(anchor_x, anchor_y);
 		if (rotation != 0)
-			painter.rotate(rotation);
+			painter.rotate(-rotation * 180 / M_PI);
 		painter.scale(scale_factor, scale_factor);
 		painter.drawPath(path);
 		painter.restore();

@@ -41,6 +41,7 @@ class AreaSymbol : public Symbol
 {
 friend class AreaSymbolSettings;
 friend class PointSymbolEditorWidget;
+friend class OCAD8FileImport;
 public:
 	struct FillPattern
 	{
@@ -75,7 +76,7 @@ public:
 	virtual ~AreaSymbol();
     virtual Symbol* duplicate();
 	
-	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output);
+	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
     virtual bool containsColor(MapColor* color);
     virtual void scale(double factor);

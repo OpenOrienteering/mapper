@@ -1,3 +1,11 @@
+== General ==
+
+See below for installation instructions for your platform.
+A general warning: do not attempt to use the .pro project directly for compiling because
+this leads to a conflict with a different naming scheme for Qt's moc files than when using cmake.
+Currently, only the cmake toolchain is supported and the .pro file is only useful if you want to use the QtCreator IDE for coding.
+
+
 == Installation on Windows ==
 
 Requirements:

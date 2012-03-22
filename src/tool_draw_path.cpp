@@ -18,7 +18,7 @@
  */
 
 
-#include "draw_path.h"
+#include "tool_draw_path.h"
 
 #include <QtGui>
 
@@ -34,23 +34,26 @@
 
 QCursor* DrawPathTool::cursor = NULL;
 
-DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget): MapEditorTool(editor, Other, tool_button), renderables(editor->getMap()), symbol_widget(symbol_widget)
+DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget, bool allow_closing_paths)
+ : MapEditorTool(editor, Other, tool_button), renderables(editor->getMap()), symbol_widget(symbol_widget), allow_closing_paths(allow_closing_paths)
 {
 	dragging = false;
 	draw_in_progress = false;
 	preview_points_shown = false;
 	path_combination = NULL;
 	preview_path = NULL;
-	
+	last_used_symbol = NULL;
+	is_helper_tool = symbol_widget == NULL;
 	space_pressed = false;
 	
 	selectedSymbolsChanged();
-	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
+	if (symbol_widget)
+		connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
 	connect(editor->getMap(), SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(symbolChanged(int,Symbol*,Symbol*)));
 	connect(editor->getMap(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
 	
 	if (!cursor)
-		cursor = new QCursor(QPixmap("images/cursor-draw-path.png"), 11, 11);
+		cursor = new QCursor(QPixmap(":/images/cursor-draw-path.png"), 11, 11);
 }
 void DrawPathTool::init()
 {
@@ -79,13 +82,14 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 		if (!draw_in_progress)
 		{
 			// Start a new path
-			drawing_symbol = symbol_widget->getSingleSelectedSymbol();
+			drawing_symbol = is_helper_tool ? NULL : symbol_widget->getSingleSelectedSymbol();
 			if (!path_combination)
 				path_combination = new CombinedSymbol();
-			path_combination->setNumParts(3);
-			path_combination->setPart(0, drawing_symbol);
-			path_combination->setPart(1, Map::getCoveringWhiteLine());
-			path_combination->setPart(2, Map::getCoveringRedLine());
+			path_combination->setNumParts(is_helper_tool ? 2 : 3);
+			path_combination->setPart(0, Map::getCoveringWhiteLine());
+			path_combination->setPart(1, Map::getCoveringRedLine());
+			if (drawing_symbol)
+				path_combination->setPart(2, drawing_symbol);
 			preview_path = new PathObject(path_combination);
 			
 			path_has_preview_point = false;
@@ -138,7 +142,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 			{
 				if (preview_points_shown)
 					renderables.removeRenderablesOfObject(preview_points[i], false);
-				preview_points[i]->setPosition(map_coord.toMapCoord());
+				preview_points[i]->setPosition(map_coord);
 				preview_points[i]->update(true);
 				renderables.insertRenderablesOfObject(preview_points[i]);
 			}
@@ -176,9 +180,9 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 			{
 				// Remove preview
 				int last = preview_path->getCoordinateCount() - 1;
-				preview_path->deleteCoordinate(last);
-				preview_path->deleteCoordinate(last-1);
-				preview_path->deleteCoordinate(last-2);
+				preview_path->deleteCoordinate(last, false);
+				preview_path->deleteCoordinate(last-1, false);
+				preview_path->deleteCoordinate(last-2, false);
 				
 				MapCoord coord = preview_path->getCoordinate(last-3);
 				coord.setCurveStart(false);
@@ -263,47 +267,43 @@ void DrawPathTool::leaveEvent(QEvent* event)
 
 bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 {
+	bool key_handled = false;
 	if (draw_in_progress)
 	{
+		key_handled = true;
 		if (event->key() == Qt::Key_Escape)
 			abortDrawing();
 		else if (event->key() == Qt::Key_Backspace)
 			undoLastPoint();
-		else if (event->key() == Qt::Key_Return)
+		else if (event->key() == Qt::Key_Return && allow_closing_paths)
 		{
 			closeDrawing();
 			finishDrawing();
 		}
+		else
+			key_handled = false;
 	}
 	if (event->key() == Qt::Key_Tab)
 		editor->setEditTool();
 	else if (event->key() == Qt::Key_Space)
 	{
-		space_pressed = true;
+		space_pressed = !space_pressed;
 		updateStatusText();
 	}
 	else
-		return false;
+		return key_handled;
 	
 	return true;
 }
 bool DrawPathTool::keyReleaseEvent(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Space)
-	{
-		space_pressed = false;
-		updateStatusText();
-	}
-	else
-		return false;
-	
-	return true;
+	return false;
 }
 void DrawPathTool::focusOutEvent(QFocusEvent* event)
 {
 	// Deactivate all modifiers - not always correct, but should be wrong only in very unusual cases and better than leaving the modifiers on forever
-	space_pressed = false;
-	updateStatusText();
+	//space_pressed = false;
+	//updateStatusText();
 }
 
 void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
@@ -315,7 +315,7 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 						   widget->height() / 2.0 + widget->getMapView()->getDragOffset().y());
 		widget->getMapView()->applyTransform(painter);
 		
-		renderables.draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), 0.5f);
+		renderables.draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, 0.5f);
 		
 		painter->restore();
 	}
@@ -349,9 +349,7 @@ void DrawPathTool::createPreviewCurve(MapCoord position, float direction)
 	if (!path_has_preview_point)
 	{
 		int last = preview_path->getCoordinateCount() - 1;
-		MapCoord coord = preview_path->getCoordinate(last);
-		coord.setCurveStart(true);
-		preview_path->setCoordinate(last, coord);
+		(preview_path->getCoordinate(last)).setCurveStart(true);
 		
 		preview_path->addCoordinate(MapCoord(0, 0));
 		preview_path->addCoordinate(MapCoord(0, 0));
@@ -377,14 +375,14 @@ void DrawPathTool::createPreviewCurve(MapCoord position, float direction)
 }
 void DrawPathTool::undoLastPoint()
 {
-	if (preview_path->getCoordinateCount() <= 1)
+	if (preview_path->getCoordinateCount() <= (preview_path->getPart(0).isClosed() ? 2 : 1))
 	{
 		abortDrawing();
 		return;
 	}
 	
 	int last = preview_path->getCoordinateCount() - 1;
-	preview_path->deleteCoordinate(last);
+	preview_path->deleteCoordinate(last, false);
 	
 	if (last >= 3 && preview_path->getCoordinate(last - 3).isCurveStart())
 	{
@@ -396,8 +394,8 @@ void DrawPathTool::undoLastPoint()
 		previous_pos_map = MapCoordF(first);
 		previous_drag_map = MapCoordF((first.xd() + second.xd()) / 2, (first.yd() + second.yd()) / 2);
 		
-		preview_path->deleteCoordinate(last - 1);
-		preview_path->deleteCoordinate(last - 2);
+		preview_path->deleteCoordinate(last - 1, false);
+		preview_path->deleteCoordinate(last - 2, false);
 		
 		first.setCurveStart(false);
 		preview_path->setCoordinate(last - 3, first);
@@ -407,7 +405,7 @@ void DrawPathTool::undoLastPoint()
 		previous_point_is_curve_point = false;
 		
 		if (path_has_preview_point)
-			preview_path->deleteCoordinate(last - 1);
+			preview_path->deleteCoordinate(last - 1, false);
 	}
 	
 	path_has_preview_point = false;
@@ -435,25 +433,28 @@ void DrawPathTool::closeDrawing()
 		path_has_preview_point = false;
 	}
 	
-	preview_path->setPathClosed(true);
+	if (preview_path->getNumParts() > 0)
+		preview_path->getPart(0).setClosed(true);
 }
 void DrawPathTool::finishDrawing()
 {
 	// Does the symbols contain only areas? If so, auto-close the path if not done yet
-	bool contains_only_areas = (drawing_symbol->getContainedTypes() & ~(Symbol::Area | Symbol::Combined)) == 0;
-	if (!preview_path->isPathClosed() && contains_only_areas)
-		preview_path->setPathClosed(true);
+	bool contains_only_areas = !is_helper_tool && (drawing_symbol->getContainedTypes() & ~(Symbol::Area | Symbol::Combined)) == 0 && (drawing_symbol->getContainedTypes() & Symbol::Area);
+	if (contains_only_areas && preview_path->getNumParts() > 0)
+		preview_path->getPart(0).setClosed(true);
 	
 	// Remove last point if closed and first and last points are equal, or if the last point was just a preview
-	if ((preview_path->isPathClosed() && preview_path->getCoordinate(0).isPositionEqualTo(preview_path->getCoordinate(preview_path->getCoordinateCount() - 1))) ||
-		(path_has_preview_point && !dragging))
-		preview_path->deleteCoordinate(preview_path->getCoordinateCount() - 1);
+	if (path_has_preview_point && !dragging)
+		preview_path->deleteCoordinate(preview_path->getCoordinateCount() - (preview_path->getPart(0).isClosed() ? 2 : 1), false);
 	
 	renderables.removeRenderablesOfObject(preview_path, false);
 	
 	if (preview_path->getCoordinateCount() < (contains_only_areas ? 3 : 2))
+	{
 		delete preview_path;
-	else
+		preview_path = NULL;
+	}
+	else if (!is_helper_tool)
 	{
 		preview_path->setSymbol(drawing_symbol, true);
 		int index = editor->getMap()->addObject(preview_path);
@@ -466,12 +467,27 @@ void DrawPathTool::finishDrawing()
 	}
 	editor->getMap()->clearDrawingBoundingBox();
 	
-	preview_path = NULL;
 	dragging = false;
 	draw_in_progress = false;
 	
 	updateStatusText();
 	editor->setEditingInProgress(false);
+	
+	if (is_helper_tool)
+	{
+		if (preview_path)
+		{
+			// Ugly HACK to make it possible to delete this tool as response to pathFinished
+			PathObject* temp_path = preview_path;
+			preview_path = NULL;
+			emit(pathFinished(temp_path));
+			delete temp_path;
+		}
+		else
+			emit(pathAborted());
+	}
+	else
+		preview_path = NULL;
 }
 void DrawPathTool::abortDrawing()
 {
@@ -485,6 +501,8 @@ void DrawPathTool::abortDrawing()
 	
 	updateStatusText();
 	editor->setEditingInProgress(false);
+	
+	emit(pathAborted());
 }
 
 void DrawPathTool::setDirtyRect(MapCoordF mouse_pos)
@@ -503,10 +521,15 @@ void DrawPathTool::setDirtyRect(MapCoordF mouse_pos)
 	}
 	includePreviewRects(rect);
 	
-	if (rect.isValid())
-		editor->getMap()->setDrawingBoundingBox(rect, dragging ? 1 : 0, true);
+	if (is_helper_tool)
+		emit(dirtyRectChanged(rect));
 	else
-		editor->getMap()->clearDrawingBoundingBox();
+	{
+		if (rect.isValid())
+			editor->getMap()->setDrawingBoundingBox(rect, dragging ? 1 : 0, true);
+		else
+			editor->getMap()->clearDrawingBoundingBox();
+	}
 }
 void DrawPathTool::includePreviewRects(QRectF& rect)
 {
@@ -529,34 +552,24 @@ float DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map)
 }
 void DrawPathTool::updateStatusText()
 {
+	if (is_helper_tool)
+		return;
+	
+	QString text = "";
+	if (space_pressed)
+		text += tr("<b>Dash points on.</b> ");
+	
 	if (!draw_in_progress)
-		setStatusBarText(tr("<b>Click</b> to start a polygonal segment, <b>Drag</b> to start a curve"));
+		text += tr("<b>Click</b> to start a polygonal segment, <b>Drag</b> to start a curve");
 	else
 	{
-		if (space_pressed)
-		{
-			setStatusBarText(tr("<b>Space pressed</b>: set dash points"));
-		}
-		else
-		{
-			setStatusBarText(tr("<b>Click</b> to draw a polygonal segment, <b>Drag</b> to draw a curve, <b>Right or double click</b> to finish the path, "
-								"<b>Return</b> to close the path, <b>Backspace</b> to undo, <b>Esc</b> to abort. Try holding <b>Space</b>"));
-		}
+		text += tr("<b>Click</b> to draw a polygonal segment, <b>Drag</b> to draw a curve, <b>Right or double click</b> to finish the path, "
+					"<b>Return</b> to close the path, <b>Backspace</b> to undo, <b>Esc</b> to abort. Try <b>Space</b>");
 	}
+	
+	setStatusBarText(text);
 }
 
-/*bool DrawPathTool::isLastPointCurveStart()
-{
-	if (!preview_path || !preview_path->getCoordinateCount() > 0)
-		return false;
-	
-	if (!path_has_preview_point && preview_path->getCoordinate(preview_path->getCoordinateCount() - 1).isCurveStart())
-		return true;
-	else if (path_has_preview_point && preview_path->getCoordinateCount() > 3 && preview_path->getCoordinate(preview_path->getCoordinateCount() - 4).isCurveStart())
-		return true;
-	
-	return false;
-}*/
 void DrawPathTool::updatePreviewPath()
 {
 	renderables.removeRenderablesOfObject(preview_path, false);
@@ -642,20 +655,27 @@ void DrawPathTool::addPreviewSymbols(Symbol* symbol)
 		
 		int size = combined->getNumParts();
 		for (int i = 0; i < size; ++i)
-			addPreviewSymbols(combined->getPart(i));
+		{
+			if (combined->getPart(i))
+				addPreviewSymbols(combined->getPart(i));
+		}
 	}
 }
 
 void DrawPathTool::selectedSymbolsChanged()
 {
+	if (is_helper_tool)
+		return;
 	if (draw_in_progress)
 		abortDrawing();
 	
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
-	if (symbol == NULL || ((symbol->getType() & (Symbol::Line | Symbol::Area | Symbol::Combined)) == 0))
+	if (symbol == NULL || ((symbol->getType() & (Symbol::Line | Symbol::Area | Symbol::Combined)) == 0) || symbol->isHidden())
 	{
-		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(symbol);
-		editor->setTool(draw_tool);	
+		if (symbol->isHidden())
+			editor->setEditTool();
+		else
+			editor->setTool(editor->getDefaultDrawToolForSymbol(symbol));
 		return;
 	}
 
@@ -681,4 +701,4 @@ void DrawPathTool::symbolDeleted(int pos, Symbol* old_symbol)
 		editor->setEditTool();
 }
 
-#include "draw_path.moc"
+#include "tool_draw_path.moc"

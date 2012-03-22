@@ -73,7 +73,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 		page_orientation_combo->setCurrentIndex(page_orientation_combo->findData(orientation));
 	else
 	{
-		QRectF map_extent = map->calculateExtent(show_templates_check->isChecked());
+		QRectF map_extent = map->calculateExtent(show_templates_check->isChecked(), main_view);
 		QPrinter::Orientation best_orientation = (map_extent.width() > map_extent.height()) ? QPrinter::Landscape : QPrinter::Portrait;
 		page_orientation_combo->setCurrentIndex(page_orientation_combo->findData((int)best_orientation));
 	}
@@ -218,11 +218,13 @@ void PrintWidget::setPrinterSettings(QPrinter* printer)
 	
 	printer->setDocName(QFileInfo(main_window->getCurrentFilePath()).fileName());
 	printer->setFullPage(true);
-	printer->setOrientation((QPrinter::Orientation)page_orientation_combo->itemData(page_orientation_combo->currentIndex()).toInt());
 	QPrinter::PaperSize paper_size = (QPrinter::PaperSize)page_format_combo->itemData(page_format_combo->currentIndex()).toInt();
-	printer->setPaperSize(paper_size);
+	QPrinter::Orientation orientation = (QPrinter::Orientation)page_orientation_combo->itemData(page_orientation_combo->currentIndex()).toInt();
+	printer->setOrientation((paper_size == QPrinter::Custom) ? QPrinter::Portrait : orientation);
 	if (paper_size == QPrinter::Custom)
 		printer->setPaperSize(QSizeF(print_width, print_height), QPrinter::Millimeter);
+	else
+		printer->setPaperSize(paper_size);
 	printer->setColorMode(QPrinter::Color);
 	if (!exporter)
 	{
@@ -236,7 +238,7 @@ void PrintWidget::setPrinterSettings(QPrinter* printer)
 }
 void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& page_rect, bool white_background)
 {
-	QRectF map_extent = map->calculateExtent(show_templates_check->isChecked());
+	QRectF map_extent = map->calculateExtent(show_templates_check->isChecked(), main_view);
 	
 	QPainter painter;
 	painter.begin(paint_device);
@@ -254,7 +256,7 @@ void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& p
 	
 	if (show_templates_check->isChecked())
 		map->drawTemplates(&painter, map_extent, 0, map->getFirstFrontTemplate() - 1, false, QRect(0, 0, paint_device->width(), paint_device->height()), NULL, main_view);
-	map->draw(&painter, map_extent, false, scale);
+	map->draw(&painter, map_extent, false, scale, false);
 	if (show_templates_check->isChecked())
 		map->drawTemplates(&painter, map_extent, map->getFirstFrontTemplate(), map->getNumTemplates() - 1, false, QRect(0, 0, paint_device->width(), paint_device->height()), NULL, main_view);
 	
@@ -398,7 +400,7 @@ void PrintWidget::centerPrintArea()
 {
 	center_button->setChecked(true);
 	
-	QRectF map_extent = map->calculateExtent(show_templates_check->isChecked());
+	QRectF map_extent = map->calculateExtent(show_templates_check->isChecked(), main_view);
 	if (!map_extent.isValid())
 	{
 		left_edit->setText("0");

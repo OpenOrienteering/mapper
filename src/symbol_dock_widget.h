@@ -65,8 +65,11 @@ protected slots:
 	void scaleSymbol();
 	void deleteSymbols();
 	void duplicateSymbol();
+	void setSelectedSymbolVisibility(bool checked);
+	void setSelectedSymbolProtection(bool checked);
 	void selectAll();
 	void invertSelection();
+    void sortByNumber();
 	
 	void setScroll(int new_scroll);
 	
@@ -86,6 +89,8 @@ protected:
 	QAction* scale_action;
 	QAction* switch_symbol_action;
 	QAction* fill_border_action;
+	QAction* hide_action;
+	QAction* protect_action;
 	QAction* duplicate_action;
 	QAction* delete_action;
 	

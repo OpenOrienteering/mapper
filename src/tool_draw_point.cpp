@@ -18,7 +18,7 @@
  */
 
 
-#include "draw_point.h"
+#include "tool_draw_point.h"
 
 #include <QtGui>
 
@@ -42,7 +42,7 @@ DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button, 
 	connect(editor->getMap(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
 	
 	if (!cursor)
-		cursor = new QCursor(QPixmap("images/cursor-draw-point.png"), 11, 11);
+		cursor = new QCursor(QPixmap(":/images/cursor-draw-point.png"), 11, 11);
 }
 void DrawPointTool::init()
 {
@@ -87,7 +87,7 @@ bool DrawPointTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 			}
 		}
 		
-		preview_object->setPosition(map_coord.toMapCoord());
+		preview_object->setPosition(map_coord);
 		if (point->isRotatable())
 			preview_object->setRotation(0);
 		preview_object->update(true);
@@ -128,7 +128,7 @@ bool DrawPointTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, M
 	
 	PointSymbol* symbol = reinterpret_cast<PointSymbol*>(symbol_widget->getSingleSelectedSymbol());
 	PointObject* point = new PointObject(symbol);
-	point->setPosition(click_pos_map.toMapCoord());
+	point->setPosition(click_pos_map);
 	if (symbol->isRotatable())
 		point->setRotation(calculateRotation(event->pos(), map_coord));
 	int index = map->addObject(point);
@@ -166,7 +166,7 @@ void DrawPointTool::draw(QPainter* painter, MapWidget* widget)
 						   widget->height() / 2.0 + widget->getMapView()->getDragOffset().y());
 		widget->getMapView()->applyTransform(painter);
 		
-		renderables.draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), 0.5f);
+		renderables.draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, 0.5f);
 		
 		painter->restore();
 	}
@@ -213,10 +213,12 @@ float DrawPointTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map
 void DrawPointTool::selectedSymbolsChanged()
 {
 	Symbol* single_selected_symbol = symbol_widget->getSingleSelectedSymbol();
-	if (single_selected_symbol == NULL || single_selected_symbol->getType() != Symbol::Point)
+	if (single_selected_symbol == NULL || single_selected_symbol->getType() != Symbol::Point || single_selected_symbol->isHidden())
 	{
-		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(single_selected_symbol);
-		editor->setTool(draw_tool);	
+		if (single_selected_symbol->isHidden())
+			editor->setEditTool();
+		else
+			editor->setTool(editor->getDefaultDrawToolForSymbol(single_selected_symbol));
 	}
 	else
 		last_used_symbol = single_selected_symbol;
@@ -231,4 +233,4 @@ void DrawPointTool::symbolDeleted(int pos, Symbol* old_symbol)
 		editor->setEditTool();
 }
 
-#include "draw_point.moc"
+#include "tool_draw_point.moc"

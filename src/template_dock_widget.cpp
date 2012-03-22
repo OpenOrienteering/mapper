@@ -54,7 +54,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	
 	QToolButton* new_button = new QToolButton();
 	new_button->setText(tr("Create..."));
-	//new_button->setIcon(QIcon("images/new.png"));	// This aligns the text left which looks strange. Besides, the button is not the most important one, so omitting the icon may be better
+	//new_button->setIcon(QIcon(":/images/new.png"));	// This aligns the text left which looks strange. Besides, the button is not the most important one, so omitting the icon may be better
 	new_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	new_button->setPopupMode(QToolButton::InstantPopup);
 	new_button->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
@@ -64,12 +64,12 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	new_button->setMenu(new_button_menu);
 	new_button->setEnabled(false);	// TODO!
 	
-	QPushButton* open_button = new QPushButton(QIcon("images/open.png"), tr("Open..."));
-	delete_button = new QPushButton(QIcon("images/minus.png"), tr("Delete"));
-	duplicate_button = new QPushButton(QIcon("images/copy.png"), tr("Duplicate"));
-	move_up_button = new QPushButton(QIcon("images/arrow-up.png"), tr("Move Up"));
-	move_down_button = new QPushButton(QIcon("images/arrow-down.png"), tr("Move Down"));
-	QPushButton* help_button = new QPushButton(QIcon("images/help.png"), tr("Help"));
+	QPushButton* open_button = new QPushButton(QIcon(":/images/open.png"), tr("Open..."));
+	delete_button = new QPushButton(QIcon(":/images/minus.png"), tr("Delete"));
+	duplicate_button = new QPushButton(QIcon(":/images/copy.png"), tr("Duplicate"));
+	move_up_button = new QPushButton(QIcon(":/images/arrow-up.png"), tr("Move Up"));
+	move_down_button = new QPushButton(QIcon(":/images/arrow-down.png"), tr("Move Down"));
+	QPushButton* help_button = new QPushButton(QIcon(":/images/help.png"), tr("Help"));
 	help_button->setVisible(false);	// TODO!
 
 	QGridLayout* list_buttons_group_layout = new QGridLayout();
@@ -87,18 +87,18 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	// Active group
 	active_buttons_group = new QGroupBox(tr("Selected template(s)"));
 	
-	move_by_hand_button = new QPushButton(QIcon("images/move.png"), tr("Move by hand"));
+	move_by_hand_button = new QPushButton(QIcon(":/images/move.png"), tr("Move by hand"));
 	move_by_hand_button->setCheckable(true);
-	georeference_button = new QPushButton(QIcon("images/georeferencing.png"), tr("Georeference..."));
+	georeference_button = new QPushButton(QIcon(":/images/georeferencing.png"), tr("Georeference..."));
 	georeference_button->setCheckable(true);
-	group_button = new QPushButton(QIcon("images/group.png"), tr("(Un)group"));
+	group_button = new QPushButton(QIcon(":/images/group.png"), tr("(Un)group"));
 	
 	more_button = new QToolButton();
 	more_button->setText(tr("More..."));
 	more_button->setPopupMode(QToolButton::InstantPopup);
 	more_button->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
 	QMenu* more_button_menu = new QMenu(more_button);
-	more_button_menu->addAction(QIcon("images/window-new.png"), tr("Numeric transformation window"));
+	more_button_menu->addAction(QIcon(":/images/window-new.png"), tr("Numeric transformation window"));
 	more_button_menu->addAction(tr("Set transparent color..."));
 	more_button_menu->addAction(tr("Trace lines..."));
 	more_button->setMenu(more_button_menu);
@@ -184,7 +184,7 @@ void TemplateWidget::addTemplateAt(Template* new_template, int pos)
 Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapView* main_view)
 {
 	// TODO: save directory
-	QString path = QFileDialog::getOpenFileName(dialog_parent, tr("Open image or GPS track ..."), QString(), tr("All files (*.*)"));
+	QString path = QFileDialog::getOpenFileName(dialog_parent, tr("Open image or GPS track ..."), QString(), tr("Template files (*.bmp *.jpg *.jpeg *.gif *.png *.tiff *.gpx);;All files (*.*)"));
 	path = QFileInfo(path).canonicalFilePath();
 	if (path.isEmpty())
 		return NULL;

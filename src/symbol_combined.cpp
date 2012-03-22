@@ -42,13 +42,13 @@ Symbol* CombinedSymbol::duplicate()
 	return new_symbol;
 }
 
-void CombinedSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output)
+void CombinedSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
 {
 	int size = (int)parts.size();
 	for (int i = 0; i < size; ++i)
 	{
 		if (parts[i])
-			parts[i]->createRenderables(object, flags, coords, path_closed, output);
+			parts[i]->createRenderables(object, flags, coords, output);
 	}
 }
 void CombinedSymbol::colorDeleted(Map* map, int pos, MapColor* color)
@@ -100,7 +100,10 @@ Symbol::Type CombinedSymbol::getContainedTypes()
 	
 	int size = (int)parts.size();
 	for (int i = 0; i < size; ++i)
-		type |= parts[i]->getContainedTypes();
+	{
+		if (parts[i])
+			type |= parts[i]->getContainedTypes();
+	}
 	
 	return (Type)type;
 }
@@ -133,6 +136,8 @@ bool CombinedSymbol::loadImpl(QFile* file, int version, Map* map)
 bool CombinedSymbol::loadFinished(Map* map)
 {
 	int size = (int)temp_part_indices.size();
+	if (size == 0)
+		return true;
 	parts.resize(size);
 	for (int i = 0; i < size; ++i)
 	{

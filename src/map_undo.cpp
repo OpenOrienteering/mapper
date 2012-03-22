@@ -20,6 +20,8 @@
 
 #include "map_undo.h"
 
+#include <algorithm>
+
 #include <QFile>
 
 #include "map.h"
@@ -42,7 +44,7 @@ void MapUndoStep::save(QFile* file)
 	for (int i = 0; i < size; ++i)
 		file->write((char*)&affected_objects[i], sizeof(int));
 }
-bool MapUndoStep::load(QFile* file)
+bool MapUndoStep::load(QFile* file, int version)
 {
 	file->read((char*)&layer, sizeof(int));
 	int size;
@@ -51,6 +53,13 @@ bool MapUndoStep::load(QFile* file)
 	for (int i = 0; i < size; ++i)
 		file->read((char*)&affected_objects[i], sizeof(int));
 	return true;
+}
+
+void MapUndoStep::getAffectedOutcome(std::vector< Object* >& out) const
+{
+	out.resize(affected_objects.size());
+	for (int i = 0; i < (int)affected_objects.size(); ++i)
+		out[i] = map->getLayer(layer)->getObject(affected_objects[i]);
 }
 
 // ### ObjectContainingUndoStep ###
@@ -70,6 +79,7 @@ ObjectContainingUndoStep::~ObjectContainingUndoStep()
 void ObjectContainingUndoStep::addObject(int existing_index, Object* object)
 {
 	affected_objects.push_back(existing_index);
+	object->setMap(map); // this is necessary so the object will find the symbols and colors it references when the undo step is saved
 	objects.push_back(object);
 }
 void ObjectContainingUndoStep::addObject(Object* existing, Object* object)
@@ -93,9 +103,9 @@ void ObjectContainingUndoStep::save(QFile* file)
 		objects[i]->save(file);
 	}
 }
-bool ObjectContainingUndoStep::load(QFile* file)
+bool ObjectContainingUndoStep::load(QFile* file, int version)
 {
-	if (!MapUndoStep::load(file))
+	if (!MapUndoStep::load(file, version))
 		return false;
 	
 	int size = (int)affected_objects.size();
@@ -107,7 +117,7 @@ bool ObjectContainingUndoStep::load(QFile* file)
 		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), NULL);
 		if (!objects[i])
 			return false;
-		objects[i]->load(file, map);
+		objects[i]->load(file, version, map);
 	}
 	return true;
 }
@@ -193,19 +203,27 @@ UndoStep* AddObjectsUndoStep::undo()
 {
 	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
 	
-	// Make sure to delete the objects in the right order so the other objects' indices stay valid
-	std::sort(affected_objects.begin(), affected_objects.end(), std::less<int>());
+	// Make sure to add the objects in the right order so the other objects' indices stay valid
+	std::vector< std::pair<int, int> > order;	// index into affected_objects & objects, object index
+	order.resize(affected_objects.size());
+	for (int i = 0; i < (int)affected_objects.size(); ++i)
+		order[i] = std::pair<int, int>(i, affected_objects[i]);
+	std::sort(order.begin(), order.end(), sortOrder);
 	
 	MapLayer* layer = map->getLayer(this->layer);
 	int size = (int)objects.size();
 	for (int i = 0; i < size; ++i)
 	{
-		undo_step->addObject(affected_objects[i]);
-		layer->addObject(objects[i],  affected_objects[i]);
+		undo_step->addObject(affected_objects[order[i].first]);
+		layer->addObject(objects[order[i].first], order[i].second);
 	}
 	
 	objects.clear();
 	return undo_step;
+}
+bool AddObjectsUndoStep::sortOrder(const std::pair< int, int >& a, const std::pair< int, int >& b)
+{
+	return a.second < b.second;
 }
 
 // ### SwitchSymbolUndoStep ###
@@ -246,9 +264,9 @@ void SwitchSymbolUndoStep::save(QFile* file)
 		file->write((char*)&index, sizeof(int));
 	}
 }
-bool SwitchSymbolUndoStep::load(QFile* file)
+bool SwitchSymbolUndoStep::load(QFile* file, int version)
 {
-    if (!MapUndoStep::load(file))
+    if (!MapUndoStep::load(file, version))
 		return false;
 	
 	int size = (int)affected_objects.size();
@@ -301,7 +319,7 @@ UndoStep* SwitchDashesUndoStep::undo()
 	int size = (int)affected_objects.size();
 	for (int i = 0; i < size; ++i)
 	{
-		Object* object = layer->getObject(affected_objects[i]);
+		PathObject* object = reinterpret_cast<PathObject*>(layer->getObject(affected_objects[i]));
 		object->reverse();
 		object->update(true);
 		

@@ -119,6 +119,7 @@ private:
 
 class PrintTool : public MapEditorTool
 {
+Q_OBJECT
 public:
 	PrintTool(MapEditorController* editor, PrintWidget* widget);
 	

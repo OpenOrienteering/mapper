@@ -84,8 +84,6 @@ protected slots:
 private:
 	GPSProjectionParameters params;
 	
-	QLineEdit* a_edit;
-	QLineEdit* b_edit;
 	QLineEdit* lat_edit;
 	QLineEdit* lon_edit;
 	QPushButton* ok_button;

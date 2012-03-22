@@ -43,21 +43,24 @@ struct MapColor;
 class MapWidget;
 class MapView;
 class Symbol;
+class CombinedSymbol;
 class Template;
 class Object;
 class MapEditorController;
+class OCAD8FileImport;
 struct GPSProjectionParameters;
 
 typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
 
 class MapLayer
 {
+friend class OCAD8FileImport;
 public:
 	MapLayer(const QString& name, Map* map);
 	~MapLayer();
 	
 	void save(QFile* file, Map* map);
-	bool load(QFile* file, Map* map);
+	bool load(QFile* file, int version, Map* map);
 	
 	inline const QString& getName() const {return name;}
 	inline void setName(const QString new_name) {name = new_name;}
@@ -70,11 +73,12 @@ public:
 	void deleteObject(int pos, bool remove_only);
 	bool deleteObject(Object* object, bool remove_only);	// returns if the object was found
 	
-	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, SelectionInfoVector& out);
-	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vector<Object*>& out);
+	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
+	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
 	
 	QRectF calculateExtent();
 	void scaleAllObjects(double factor);
+	void updateAllObjects(bool remove_old_renderables = true);
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
 	bool deleteAllObjectsWithSymbol(Symbol* symbol);		// returns if there was an object that was deleted
@@ -92,6 +96,10 @@ class Map : public QObject
 {
 Q_OBJECT
 friend class RenderableContainer;
+friend class OCAD8FileImport;
+friend class XMLFileImport;
+friend class NativeFileImport;
+friend class NativeFileExport;
 public:
 	typedef QSet<Object*> ObjectSelection;
 	
@@ -100,22 +108,22 @@ public:
 	~Map();
 	
 	/// Attempts to save the map to the given file. If a MapEditorController is given, the widget positions and MapViews stored in the map file are also updated.
-	bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
+    bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
 	/// Attempts to load the map from the specified path. Returns true on success.
-	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL);
-	
+	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL, bool load_symbols_only = false);
+
 	/// Deletes all map data
 	void clear();
 	
 	/// Draws the part of the map which is visible in the given bounding box in map coordinates
-	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling);
+	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols);
 	/// Draws the templates first_template until last_template which are visible in the given bouding box. view determines template visibility and can be NULL to show all templates.
 	/// draw_untransformed_parts is only possible with a MapWidget (because of MapWidget::mapToViewport()). Otherwise, set it to NULL.
 	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, bool draw_untransformed_parts, const QRect& untransformed_dirty_rect, MapWidget* widget, MapView* view);
 	/// Updates the renderables and extent of all objects which have been changed. This is automatically called by draw(), you normally do not need it
 	void updateObjects();
 	/// Calculates the extent of all map objects (and possibly templates)
-	QRectF calculateExtent(bool include_templates);
+	QRectF calculateExtent(bool include_templates, MapView* view);
 	
 	/// Must be called to notify the map of new widgets displaying it. Useful to notify the widgets about which parts of the map have changed and need to be redrawn
 	void addMapWidget(MapWidget* widget);
@@ -160,6 +168,7 @@ public:
 	void setSymbol(Symbol* symbol, int pos);
 	void addSymbol(Symbol* symbol, int pos);
 	void moveSymbol(int from, int to);
+    void sortSymbols(bool (*cmp)(Symbol *, Symbol *));
 	void deleteSymbol(int pos);
 	int findSymbolIndex(Symbol* symbol);
 	void setSymbolsDirty();
@@ -186,20 +195,21 @@ public:
 	
 	inline int getNumLayers() const {return (int)layers.size();}
 	inline MapLayer* getLayer(int i) const {return layers[i];}
-	inline MapLayer* getCurrentLayer() const {return current_layer;}
+	inline MapLayer* getCurrentLayer() const {return (current_layer_index < 0) ? NULL : layers[current_layer_index];}
 	inline int getCurrentLayerIndex() const {return current_layer_index;}
 	// TODO: Layer management
 	
 	int getNumObjects();
 	int addObject(Object* object, int layer_index = -1);						// returns the index of the added object in the layer
-	void deleteObject(Object* object, bool remove_only);						// remove_only will remove the object from the map, but not call "delete object";
+	void deleteObject(Object* object, bool remove_only);						// remove_only will remove the object from the map, but not call "delete object"; be sure to call removeObjectFromSelection() if necessary
 	void setObjectsDirty();
 	
 	void setObjectAreaDirty(QRectF map_coords_rect);
-	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, SelectionInfoVector& out);
-	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vector<Object*>& out);
+	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
+	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
 	
 	void scaleAllObjects(double factor);
+	void updateAllObjects(bool remove_old_renderables = true);
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
 	bool deleteAllObjectsWithSymbol(Symbol* symbol);							// returns if there was an object that was deleted
@@ -219,13 +229,15 @@ public:
 	void getSelectionToSymbolCompatibility(Symbol* symbol, bool& out_compatible, bool& out_different);
 	
 	void includeSelectionRect(QRectF& rect); // enlarges rect to cover the selected objects
-	void drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, RenderableContainer* replacement_renderables = NULL);
+	void drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, RenderableContainer* replacement_renderables = NULL, bool draw_normal = false);
 	
 	void addObjectToSelection(Object* object, bool emit_selection_changed);
 	void removeObjectFromSelection(Object* object, bool emit_selection_changed);
+	bool removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed);	// removes all objects with this symbol; returns true if at least one object has been removed
 	bool isObjectSelected(Object* object);
 	bool toggleObjectSelection(Object* object, bool emit_selection_changed);	// returns true if the object was selected, false if deselected
 	void clearObjectSelection(bool emit_selection_changed);
+	void emitSelectionChanged();
 	
 	// Other settings
 	
@@ -249,6 +261,7 @@ public:
 	static MapColor* getCoveringRed() {return &covering_red;}
 	static LineSymbol* getCoveringWhiteLine() {return covering_white_line;}
 	static LineSymbol* getCoveringRedLine() {return covering_red_line;}
+	static CombinedSymbol* getCoveringCombinedLine() {return covering_combined_line;}
 	
 signals:
 	void gotUnsavedChanges();
@@ -307,7 +320,6 @@ private:
 	LayerVector layers;
 	ObjectSelection object_selection;
 	UndoManager object_undo_manager;
-	MapLayer* current_layer;
 	int current_layer_index;
 	WidgetVector widgets;
 	ViewVector views;
@@ -343,9 +355,7 @@ private:
 	static MapColor covering_red;
 	static LineSymbol* covering_white_line;
 	static LineSymbol* covering_red_line;
-	
-	static const int least_supported_file_format_version;
-	static const int current_file_format_version;
+	static CombinedSymbol* covering_combined_line;
 };
 
 /// Contains all visibility information for a template. This is stored in the MapViews
@@ -374,7 +384,7 @@ public:
 	
 	/// Must be called to notify the map view of new widgets displaying it. Useful to notify the widgets which need to be redrawn
 	void addMapWidget(MapWidget* widget);
-	void removeMapWidget(MapWidget* widget);
+    void removeMapWidget(MapWidget* widget);
 	/// Redraws all map widgets completely - that can be slow!
 	void updateAllMapWidgets();
 	
@@ -432,6 +442,9 @@ public:
 	void setDragOffset(QPoint offset);
 	void completeDragging(QPoint offset);
 	
+	// Zooming, returns if the view was zoomed
+	bool zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF cursor_pos_view = QPointF());
+	
 	inline Map* getMap() const {return map;}
 	
 	inline float calculateFinalZoomFactor() {return lengthToPixel(1000);}
@@ -453,6 +466,10 @@ public:
 	bool isTemplateVisible(Template* temp);						// checks if the template is visible without creating a template visibility object if none exists
 	TemplateVisibility* getTemplateVisibility(Template* temp);	// returns the template visibility object, creates one if not there yet with the default settings (invisible)
 	void deleteTemplateVisibility(Template* temp);				// call this when a template is deleted to destroy the template visibility object
+	
+	// Static
+	static const double zoom_in_limit;
+	static const double zoom_out_limit;
 	
 private:
 	typedef std::vector<MapWidget*> WidgetVector;

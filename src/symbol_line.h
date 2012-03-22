@@ -41,6 +41,7 @@ class LineSymbol : public Symbol
 {
 friend class LineSymbolSettings;
 friend class PointSymbolEditorWidget;
+friend class OCAD8FileImport;
 public:
 	enum CapStyle
 	{
@@ -62,7 +63,7 @@ public:
 	virtual ~LineSymbol();
     virtual Symbol* duplicate();
 	
-	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output);
+	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
 	void createRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, RenderableVector& output);
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
     virtual bool containsColor(MapColor* color);
@@ -87,10 +88,10 @@ public:
 	inline void setCapStyle(CapStyle style) {cap_style = style;}
 	inline JoinStyle getJoinStyle() const {return join_style;}
 	inline void setJoinStyle(JoinStyle style) {join_style = style;}
-	inline PointSymbol* getStartSymbol() {return start_symbol;}
-	inline PointSymbol* getMidSymbol() {return mid_symbol;}
-	inline PointSymbol* getEndSymbol() {return end_symbol;}
-	inline PointSymbol* getDashSymbol() {return dash_symbol;}
+    inline PointSymbol* getStartSymbol() const {return start_symbol;}
+    inline PointSymbol* getMidSymbol() const {return mid_symbol;}
+    inline PointSymbol* getEndSymbol() const {return end_symbol;}
+    inline PointSymbol* getDashSymbol() const {return dash_symbol;}
 	inline bool hasBorder() const {return have_border_lines;}
 	inline int getBorderLineWidth() const {return border_width;}
 	inline MapColor* getBorderColor() const {return border_color;}

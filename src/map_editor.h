@@ -42,6 +42,7 @@ class PrintWidget;
 
 class MapEditorController : public MainWindowController
 {
+friend class Map;
 Q_OBJECT
 public:
 	enum OperatingMode
@@ -69,14 +70,14 @@ public:
 	inline MapWidget* getMainWidget() const {return map_widget;}
 	inline SymbolWidget* getSymbolWidget() const {return symbol_widget;}
 	
-	virtual bool save(const QString& path);
+    virtual bool save(const QString& path);
 	virtual bool load(const QString& path);
-	
-	void saveWidgetsAndViews(QFile* file);
-	void loadWidgetsAndViews(QFile* file);
 	
     virtual void attach(MainWindow* window);
     virtual void detach();
+	
+    virtual void keyPressEvent(QKeyEvent* event);
+    virtual void keyReleaseEvent(QKeyEvent* event);
 	
 public slots:
 	void printClicked();
@@ -86,6 +87,10 @@ public slots:
 	void cut();
 	void copy();
 	void paste();
+	
+	void zoomIn();
+	void zoomOut();
+	void setCustomZoomFactorClicked();
 	
 	void showSymbolWindow(bool show);
 	void showColorWindow(bool show);
@@ -105,14 +110,21 @@ public slots:
 	void selectedSymbolsOrObjectsChanged();
 	void undoStepAvailabilityChanged();
 	
+	void showWholeMap();
+	
 	void editToolClicked(bool checked);
 	void drawPointClicked(bool checked);
 	void drawPathClicked(bool checked);
+	void drawTextClicked(bool checked);
 	
 	void duplicateClicked();
 	void switchSymbolClicked();
 	void fillBorderClicked();
 	void switchDashesClicked();
+	void connectPathsClicked();
+	void cutClicked(bool checked);
+	void cutHoleClicked(bool checked);
+	void rotateClicked(bool checked);
 	
 	void paintOnTemplateClicked(bool checked);
 	void paintOnTemplateSelectClicked();
@@ -123,13 +135,17 @@ public slots:
 private:
 	void setMap(Map* map, bool create_new_map_view);
 	
-	void createMenu();
-	void createToolbar();
+    QAction *newAction(const char *id, const QString &tr_text, QObject *receiver, const char *slot, const char *icon = NULL, const QString &tr_tip = QString::null);
+    QAction *newCheckAction(const char *id, const QString &tr_text, QObject *receiver, const char *slot, const char *icon = NULL, const QString &tr_tip = QString::null);
+    QAction *findAction(const char *id);
+    void assignKeyboardShortcuts();
+    void createMenuAndToolbars();
 	
 	void paintOnTemplate(Template* temp);
 	void updatePaintOnTemplateAction();
 	
 	void doUndo(bool redo);
+	void zoom(float steps);
 	
 	Map* map;
 	MapView* main_view;
@@ -142,6 +158,9 @@ private:
 	MapEditorActivity* editor_activity;
 	
 	bool editing_in_progress;
+
+    // Action handling
+    QHash<const char *, QAction *> actionsById;
 	
 	QAction* print_act;
 	EditorDockWidget* print_dock_widget;
@@ -163,17 +182,26 @@ private:
 	QAction* edit_tool_act;
 	QAction* draw_point_act;
 	QAction* draw_path_act;
+	QAction* draw_text_act;
 	
 	QAction* duplicate_act;
 	QAction* switch_symbol_act;
 	QAction* fill_border_act;
 	QAction* switch_dashes_act;
+	QAction* connect_paths_act;
+	QAction* cut_tool_act;
+	QAction* cut_hole_act;
+	QAction* rotate_act;
 	
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;
 	
 	QLabel* statusbar_zoom_label;
 	QLabel* statusbar_cursorpos_label;
+	
+	QToolBar* toolbar_view;
+	QToolBar* toolbar_drawing;
+	QToolBar* toolbar_editing;
 };
 
 class EditorDockWidgetChild : public QWidget
@@ -188,14 +216,16 @@ class EditorDockWidget : public QDockWidget
 {
 Q_OBJECT
 public:
-	EditorDockWidget(const QString title, QAction* action, QWidget* parent = NULL);
+	EditorDockWidget(const QString title, QAction* action, MapEditorController* editor, QWidget* parent = NULL);
 	void setChild(EditorDockWidgetChild* child);
+    virtual bool event(QEvent* event);
     virtual void closeEvent(QCloseEvent* event);
 signals:
 	void closed();
 private:
 	QAction* action;
 	EditorDockWidgetChild* child;
+	MapEditorController* editor;
 };
 
 /// Represents a type of editing activity, e.g. georeferencing. Only one activity can be active at a time.
@@ -259,14 +289,43 @@ public:
 	inline Type getType() const {return type;}
 	inline QAction* getAction() const {return tool_button;}
 	
+	static void loadPointHandles();
+	
 	static const int click_tolerance;
 	static const QRgb inactive_color;
 	static const QRgb active_color;
 	static const QRgb selection_color;
+	static QImage* point_handles;
 	
 protected:
+	/// The numbers correspond to the position in point-handles.png
+	enum PointHandleType
+	{
+		StartHandle = 0,
+		EndHandle = 1,
+		NormalHandle = 2,
+		CurveHandle = 3,
+		DashHandle = 4
+	};
+	
 	/// Can be called by subclasses to display help text in the status bar
 	void setStatusBarText(const QString& text);
+	
+	// Helper methods for editing the selected objects with preview
+	void startEditingSelection(RenderableVector& old_renderables, std::vector<Object*>* undo_duplicates = NULL);
+	void finishEditingSelection(RenderableContainer& renderables, RenderableVector& old_renderables, bool create_undo_step, std::vector<Object*>* undo_duplicates = NULL, bool delete_objects = false);
+	void updateSelectionEditPreview(RenderableContainer& renderables);
+	void deleteOldSelectionRenderables(RenderableVector& old_renderables, bool set_area_dirty);
+	
+	// Helper methods for object handles
+	void includeControlPointRect(QRectF& rect, Object* object, QPointF* box_text_handles);
+	void drawPointHandles(int hover_point, QPainter* painter, Object* object, MapWidget* widget);
+	void drawPointHandle(QPainter* painter, QPointF point, PointHandleType type, bool active);
+	void drawCurveHandleLine(QPainter* painter, QPointF point, QPointF curve_handle, bool active);
+	bool calculateBoxTextHandles(QPointF* out);
+	
+	int findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QPointF* box_text_handles, QRectF* selection_extent, MapWidget* widget);
+	inline float distanceSquared(const QPointF& a, const QPointF& b) {float dx = b.x() - a.x(); float dy = b.y() - a.y(); return dx*dx + dy*dy;}
 	
 	QAction* tool_button;
 	Type type;

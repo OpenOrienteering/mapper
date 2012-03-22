@@ -39,6 +39,8 @@ class Object;
 /// Provides among other things a symbol number consisting of multiple parts, e.g. "2.4.12". Parts which are not set are assigned the value -1.
 class Symbol
 {
+friend class OCAD8FileImport;
+friend class XMLImportExport;
 public:
 	enum Type
 	{
@@ -58,7 +60,7 @@ public:
 	virtual Symbol* duplicate() = 0;
 	
 	/// Returns the type of the symbol
-	inline Type getType() {return type;}
+    inline Type getType() const {return type;}
 	
 	/// Returns the or-ed together bitmask of all symbol types this symbol contains
 	virtual Type getContainedTypes() {return getType();}
@@ -73,8 +75,8 @@ public:
 	virtual bool loadFinished(Map* map) {return true;}
 	
 	/// Creates renderables to display one specific instance of this symbol defined by the given object and coordinates
-	/// (NOTE: do not use the object's coordinates as the given coordinates can be an updated, transformed version of them!)
-	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output) = 0;
+	/// (NOTE: methods which implement this should use the given coordinates instead of the object's coordinates, as those can be an updated, transformed version of the object's coords!)
+	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output) = 0;
 	
 	/// Called by the map in which the symbol is to notify it of a color being deleted (pointer becomes invalid, indices change)
 	virtual void colorDeleted(Map* map, int pos, MapColor* color) {}
@@ -97,7 +99,7 @@ public:
 	inline const QString& getName() const {return name;}
 	inline void setName(const QString& new_name) {name = new_name;}
 	
-	QString getNumberAsString();
+    QString getNumberAsString() const;
 	inline int getNumberComponent(int i) const {assert(i >= 0 && i < number_components); return number[i];}
 	inline void setNumberComponent(int i, int new_number) {assert(i >= 0 && i < number_components); number[i] = new_number;}
 	
@@ -106,6 +108,12 @@ public:
 	
 	inline bool isHelperSymbol() const {return is_helper_symbol;}
 	inline void setIsHelperSymbol(bool value) {is_helper_symbol = value;}
+	
+	inline bool isHidden() const {return is_hidden;}
+	inline void setHidden(bool value) {is_hidden = value;}
+	
+	inline bool isProtected() const {return is_protected;}
+	inline void setProtected(bool value) {is_protected = value;}
 	
 	// Static
 	static Symbol* getSymbolForType(Type type);
@@ -127,6 +135,8 @@ protected:
 	int number[number_components];
 	QString description;
 	bool is_helper_symbol;
+	bool is_hidden;
+	bool is_protected;
 	QImage* icon;
 };
 

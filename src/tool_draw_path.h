@@ -33,7 +33,7 @@ class DrawPathTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
+	DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget, bool allow_closing_paths);
 	virtual ~DrawPathTool();
 	
     virtual void init();
@@ -53,6 +53,11 @@ public:
 	
 	static QCursor* cursor;
 	
+signals:
+	void dirtyRectChanged(const QRectF& rect);
+	void pathAborted();
+	void pathFinished(PathObject* path);
+	
 protected slots:
 	void selectedSymbolsChanged();
 	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
@@ -70,7 +75,6 @@ protected:
 	float calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map);
 	void updateStatusText();
 	
-	//bool isLastPointCurveStart();
 	void updatePreviewPath();
 	
 	void hidePreviewPoints();
@@ -105,6 +109,9 @@ protected:
 	Symbol* last_used_symbol;
 	RenderableContainer renderables;
 	SymbolWidget* symbol_widget;
+	
+	bool allow_closing_paths;
+	bool is_helper_tool;
 };
 
 #endif

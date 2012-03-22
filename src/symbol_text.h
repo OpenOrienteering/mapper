@@ -22,6 +22,7 @@
 #define _OPENORIENTEERING_SYMBOL_TEXT_H_
 
 #include <QGroupBox>
+#include <QDialog>
 
 #include "symbol.h"
 
@@ -30,6 +31,8 @@ class QLineEdit;
 class QFontComboBox;
 class QPushButton;
 class QCheckBox;
+class QListWidget;
+class QLabel;
 QT_END_NAMESPACE
 
 class ColorDropDown;
@@ -41,27 +44,44 @@ class SymbolSettingDialog;
 class TextSymbol : public Symbol
 {
 friend class TextSymbolSettings;
+friend class DetermineFontSizeDialog;
 friend class PointSymbolEditorWidget;
+friend class OCAD8FileImport;
 public:
 	TextSymbol();
 	virtual ~TextSymbol();
     virtual Symbol* duplicate();
 	
-	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output);
+	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
+	void createLineBelowRenderables(Object* object, RenderableVector& output);
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
     virtual bool containsColor(MapColor* color);
     virtual void scale(double factor);
 	
 	void updateQFont();
+	inline double calculateInternalScaling() const {return internal_point_size / (0.001 * font_size);}
 	
 	// Getters
 	inline MapColor* getColor() const {return color;}
 	inline const QString& getFontFamily() const {return font_family;}
-	inline double getFontSize() const {return 0.001 * ascent_size;}
+	inline double getFontSize() const {return 0.001 * font_size;}
 	inline bool isBold() const {return bold;}
 	inline bool isItalic() const {return italic;}
 	inline bool isUnderlined() const {return underline;}
 	inline float getLineSpacing() const {return line_spacing;}
+	inline double getParagraphSpacing() const {return 0.001 * paragraph_spacing;}
+	inline double getCharacterSpacing() const {return 0.001 * character_spacing;}
+	inline bool usesKerning() const {return kerning;}
+	inline bool hasLineBelow() const {return line_below;}
+	inline MapColor* getLineBelowColor() const {return line_below_color;}
+	inline double getLineBelowWidth() const {return 0.001 * line_below_width;}
+	inline double getLineBelowDistance() const {return 0.001 * line_below_distance;}
+	inline int getNumCustomTabs() const {return (int)custom_tabs.size();}
+	inline int getCustomTab(int index) const {return custom_tabs[index];}
+	inline const QFont& getQFont() const {return qfont;}
+	inline const QFontMetricsF& getFontMetrics() const { return metrics; }
+	
+	double getNextTab(double pos) const;
 	
 	static const float pt_in_mm;	// 1 pt in mm
 	static const float internal_point_size;
@@ -70,18 +90,28 @@ protected:
 	virtual void saveImpl(QFile* file, Map* map);
 	virtual bool loadImpl(QFile* file, int version, Map* map);
 	
-	bool getNextLine(const QString& text, int& pos, QString& out_line, bool word_wrap, double max_width, const QFontMetricsF& metrics);
-	bool isSpace(QChar c);
-	
 	QFont qfont;
+	QFontMetricsF metrics;
 	
 	MapColor* color;
 	QString font_family;
-	int ascent_size;		// Font size is defined by ascent height in 1000 * mm
+	int font_size;				// this defines the font size in 1000 mm. How big the letters really are depends on the design of the font though
 	bool bold;
 	bool italic;
 	bool underline;
-	float line_spacing;		// as factor of original line spacing
+	float line_spacing;			// as factor of original line spacing
+	int paragraph_spacing;		// in mm
+	float character_spacing;	// as a factor of the space character width
+	bool kerning;
+	
+	// OCAD compatibility features
+	bool line_below;
+	MapColor* line_below_color;
+	int line_below_width;
+	int line_below_distance;
+	std::vector<int> custom_tabs;
+	
+	double tab_interval;		/// default tab interval length in text coordinates
 };
 
 class TextSymbolSettings : public QGroupBox
@@ -93,11 +123,17 @@ public:
 protected slots:
 	void fontChanged(QFont font);
 	void sizeChanged(QString text);
-	void sizeOptionMMClicked(bool checked);
-	void sizeOptionPTClicked(bool checked);
+	void determineSizeClicked();
 	void colorChanged();
 	void checkToggled(bool checked);
-	void lineSpacingChanged(QString text);
+	void spacingChanged(QString text);
+	
+	void ocadCompatibilityButtonClicked();
+	void lineBelowCheckClicked(bool checked);
+	void lineBelowSettingChanged();
+	void customTabRowChanged(int row);
+	void addCustomTabClicked();
+	void removeCustomTabClicked();
 	
 private:
 	TextSymbol* symbol;
@@ -106,12 +142,45 @@ private:
 	ColorDropDown* color_edit;
 	QFontComboBox* font_edit;
 	QLineEdit* size_edit;
-	QPushButton* size_option_mm;
-	QPushButton* size_option_pt;
+	QPushButton* size_determine_button;
 	QCheckBox* bold_check;
 	QCheckBox* italic_check;
 	QCheckBox* underline_check;
 	QLineEdit* line_spacing_edit;
+	QLineEdit* paragraph_spacing_edit;
+	QLineEdit* character_spacing_edit;
+	QCheckBox* kerning_check;
+	
+	QPushButton* ocad_compat_button;
+	QWidget* ocad_compat_widget;
+	QCheckBox* line_below_check;
+	ColorDropDown* line_below_color_edit;
+	QLabel* line_below_width_label;
+	QLineEdit* line_below_width_edit;
+	QLabel* line_below_distance_label;
+	QLineEdit* line_below_distance_edit;
+	QListWidget* custom_tab_list;
+	QPushButton* custom_tab_add;
+	QPushButton* custom_tab_remove;
+};
+
+class DetermineFontSizeDialog : public QDialog
+{
+Q_OBJECT
+public:
+	DetermineFontSizeDialog(QWidget* parent, TextSymbol* symbol);
+	
+private slots:
+	void okClicked();
+	void characterEdited(QString text);
+	
+private:
+	QLineEdit* character_edit;
+	QLineEdit* size_edit;
+	QPushButton* ok_button;
+	
+	TextSymbol* symbol;
+	public slots:
 };
 
 #endif

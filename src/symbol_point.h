@@ -39,14 +39,16 @@ class PointSymbol : public Symbol
 {
 friend class PointSymbolSettings;
 friend class PointSymbolEditorWidget;
+friend class OCAD8FileImport;
+friend class XMLImportExport;
 public:
 	/// Constructs an empty point symbol
 	PointSymbol();
     virtual ~PointSymbol();
     virtual Symbol* duplicate();
     
-	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output);
-	void createRenderablesScaled(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output, float coord_scale);
+	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
+	void createRenderablesScaled(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output, float coord_scale);
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
     virtual bool containsColor(MapColor* color);
     virtual void scale(double factor);
@@ -55,11 +57,16 @@ public:
 	int getNumElements() const;
 	void addElement(int pos, Object* object, Symbol* symbol);
 	Object* getElementObject(int pos);
-	Symbol* getElementSymbol(int pos);
-	void deleteElement(int pos);
+    const Object* getElementObject(int pos) const;
+    Symbol* getElementSymbol(int pos);
+    const Symbol* getElementSymbol(int pos) const;
+    void deleteElement(int pos);
 	
 	/// Returns true if the point contains no elements and does not create renderables itself
 	bool isEmpty() const;
+	
+	/// Checks if the contained elements are rotationally symmetrical around the origin (this means, only point elements at (0,0) are allowed)
+	bool isSymmetrical() const;
 	
 	// Getters / Setters
 	inline bool isRotatable() const {return rotatable;}

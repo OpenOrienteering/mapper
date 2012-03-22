@@ -32,6 +32,19 @@
 #include "symbol_text.h"
 #include "symbol_combined.h"
 
+
+// STL comparison function for sorting symbols by number
+static bool Compare_symbolByNumber(Symbol *s1, Symbol *s2) {
+    int n1 = s1->number_components, n2 = s2->number_components;
+    for (int i = 0; i < n1 && i < n2; i++) {
+        if (s1->getNumberComponent(i) < s2->getNumberComponent(i)) return true;  // s1 < s2
+        if (s1->getNumberComponent(i) > s2->getNumberComponent(i)) return false; // s1 > s2
+        // if s1 == s2, loop to the next component
+    }
+    return false; // s1 == s2
+}
+
+
 // ### SymbolRenderWidget ###
 
 SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolWidget* parent) : QWidget(parent), scroll_bar(scroll_bar), symbol_widget(parent), map(map)
@@ -60,20 +73,23 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	context_menu->addMenu(new_menu);
 	
 	edit_action = context_menu->addAction(tr("Edit"), this, SLOT(editSymbol()));
-	scale_action = context_menu->addAction(tr("Scale..."), this, SLOT(scaleSymbol()));
+    duplicate_action = context_menu->addAction(tr("Duplicate"), this, SLOT(duplicateSymbol()));
+    delete_action = context_menu->addAction(tr("Delete"), this, SLOT(deleteSymbols()));
+    scale_action = context_menu->addAction(tr("Scale..."), this, SLOT(scaleSymbol()));
 	context_menu->addSeparator();
 	switch_symbol_action = context_menu->addAction(tr("Switch symbol of selected object(s)"), parent, SLOT(emitSwitchSymbolClicked()));
 	fill_border_action = context_menu->addAction(tr("Fill / Create border for selected object(s)"), parent, SLOT(emitFillBorderClicked()));
 	context_menu->addSeparator();
-	duplicate_action = context_menu->addAction(tr("Duplicate"), this, SLOT(duplicateSymbol()));
-	delete_action = context_menu->addAction(tr("Delete"), this, SLOT(deleteSymbols()));
+	hide_action = context_menu->addAction(tr("Hide objects with this symbol"), this, SLOT(setSelectedSymbolVisibility(bool)));
+	hide_action->setCheckable(true);
+	protect_action = context_menu->addAction(tr("Protect objects with this symbol"), this, SLOT(setSelectedSymbolProtection(bool)));
+	protect_action->setCheckable(true);
 	context_menu->addSeparator();
-	
-	QMenu* select_menu = new QMenu(tr("Select"), context_menu);
-	select_menu->addAction(tr("All"), this, SLOT(selectAll()));
-	select_menu->addAction(tr("Invert"), this, SLOT(invertSelection()));
-	context_menu->addMenu(select_menu);
-	
+    context_menu->addAction(tr("Select all"), this, SLOT(selectAll()));
+    context_menu->addAction(tr("Invert selection"), this, SLOT(invertSelection()));
+    context_menu->addSeparator();
+    context_menu->addAction(tr("Sort by number"), this, SLOT(sortByNumber()));
+
 	connect(map, SIGNAL(colorDeleted(int,MapColor*)), this, SLOT(update()));
 }
 
@@ -296,6 +312,21 @@ void SymbolRenderWidget::paintEvent(QPaintEvent* event)
 			painter.setPen(Qt::gray);
 		}
 		
+		if (map->getSymbol(i)->isHidden() || map->getSymbol(i)->isProtected())
+		{
+			QPen pen(Qt::white);
+			pen.setWidth(3);
+			painter.setPen(pen);
+			painter.drawLine(corner + QPoint(1, 1), corner + QPoint(Symbol::icon_size - 2, Symbol::icon_size - 2));
+			painter.drawLine(corner + QPoint(Symbol::icon_size - 3, 1), corner + QPoint(1, Symbol::icon_size - 3));
+			
+			painter.setPen(QPen(map->getSymbol(i)->isHidden() ? Qt::red : Qt::blue));
+			painter.drawLine(corner + QPoint(0, 0), corner + QPoint(Symbol::icon_size - 2, Symbol::icon_size - 2));
+			painter.drawLine(corner + QPoint(Symbol::icon_size - 2, 0), corner + QPoint(0, Symbol::icon_size - 2));
+			
+			painter.setPen(Qt::gray);
+		}
+		
 		painter.drawLine(corner + QPoint(0, Symbol::icon_size - 1), corner + QPoint(Symbol::icon_size - 1, Symbol::icon_size - 1));
 		painter.drawLine(corner + QPoint(Symbol::icon_size - 1, 0), corner + QPoint(Symbol::icon_size - 1, Symbol::icon_size - 2));
 		
@@ -378,6 +409,17 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 		bool have_selection = getNumSelectedSymbols() > 0;
 		bool single_selection = getNumSelectedSymbols() == 1 && current_symbol_index >= 0;
 		Symbol* single_symbol = getSingleSelectedSymbol();
+		bool all_symbols_hidden = have_selection;
+		bool all_symbols_protected = have_selection;
+		for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+		{
+			if (!map->getSymbol(*it)->isHidden())
+				all_symbols_hidden = false;
+			if (!map->getSymbol(*it)->isProtected())
+				all_symbols_protected = false;
+			if (!all_symbols_hidden && !all_symbols_protected)
+				break;
+		}
 		
 		bool single_symbol_compatible;
 		bool single_symbol_different;
@@ -387,6 +429,10 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 		scale_action->setEnabled(single_selection);
 		switch_symbol_action->setEnabled(single_symbol_compatible && single_symbol_different);
 		fill_border_action->setEnabled(single_symbol_compatible && single_symbol_different);
+		hide_action->setEnabled(have_selection);
+		hide_action->setChecked(all_symbols_hidden);
+		protect_action->setEnabled(have_selection);
+		protect_action->setChecked(all_symbols_protected);
 		duplicate_action->setEnabled(single_selection);
 		delete_action->setEnabled(have_selection);
 		
@@ -420,7 +466,7 @@ void SymbolRenderWidget::leaveEvent(QEvent* event)
 }
 void SymbolRenderWidget::wheelEvent(QWheelEvent* event)
 {
-	if (scroll_bar)
+	if (scroll_bar && scroll_bar->isEnabled())
 	{
 		scroll_bar->event(event);
 		mouseMove(event->x(), event->y());
@@ -489,7 +535,15 @@ void SymbolRenderWidget::dropEvent(QDropEvent* event)
 		
 		event->acceptProposedAction();
 		
+        // save selection
+        std::set<Symbol *> sel;
+        for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it) {
+            sel.insert(map->getSymbol(*it));
+        }
+
 		map->moveSymbol(current_symbol_index, pos);
+
+
 		if (pos > current_symbol_index)
 			--pos;
 		current_symbol_index = pos;
@@ -581,6 +635,45 @@ void SymbolRenderWidget::duplicateSymbol()
 	symbol_widget->adjustSize();
 	map->setSymbolsDirty();
 }
+void SymbolRenderWidget::setSelectedSymbolVisibility(bool checked)
+{
+	bool selection_changed = false;
+	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	{
+		Symbol* symbol = map->getSymbol(*it);
+		if (symbol->isHidden() != checked)
+		{
+			symbol->setHidden(checked);
+			updateIcon(*it);
+			if (checked)
+				selection_changed |= map->removeSymbolFromSelection(symbol, false);
+		}
+	}
+	if (selection_changed)
+		map->emitSelectionChanged();
+	map->updateAllMapWidgets();
+	map->setSymbolsDirty();
+	symbol_widget->emitSelectedSymbolsChanged();
+}
+void SymbolRenderWidget::setSelectedSymbolProtection(bool checked)
+{
+	bool selection_changed = false;
+	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	{
+		Symbol* symbol = map->getSymbol(*it);
+		if (symbol->isProtected() != checked)
+		{
+			symbol->setProtected(checked);
+			updateIcon(*it);
+			if (checked)
+				selection_changed |= map->removeSymbolFromSelection(symbol, false);
+		}
+	}
+	if (selection_changed)
+		map->emitSelectionChanged();
+	map->setSymbolsDirty();
+	symbol_widget->emitSelectedSymbolsChanged();
+}
 void SymbolRenderWidget::selectAll()
 {
 	for (int i = 0; i < map->getNumSymbols(); ++i)
@@ -600,7 +693,24 @@ void SymbolRenderWidget::invertSelection()
 	symbol_widget->emitSelectedSymbolsChanged();
 	update();
 }
+void SymbolRenderWidget::sortByNumber()
+{
+    // save selection
+    std::set<Symbol *> sel;
+    for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it) {
+        sel.insert(map->getSymbol(*it));
+    }
 
+    map->sortSymbols(Compare_symbolByNumber);
+
+    //restore selection
+    selected_symbols.clear();
+    for (int i = 0; i < map->getNumSymbols(); i++) {
+        if (sel.find(map->getSymbol(i)) != sel.end()) selected_symbols.insert(i);
+    }
+
+    update();
+}
 bool SymbolRenderWidget::newSymbol(Symbol* new_symbol)
 {
 	SymbolSettingDialog dialog(new_symbol, NULL, map, this);
@@ -627,6 +737,7 @@ SymbolWidget::SymbolWidget(Map* map, QWidget* parent): EditorDockWidgetChild(par
 	no_resize_handling = false;
 	
 	scroll_bar = new QScrollBar();
+	scroll_bar->setEnabled(false);
 	scroll_bar->hide();
 	scroll_bar->setOrientation(Qt::Vertical);
 	scroll_bar->setSingleStep(Symbol::icon_size);

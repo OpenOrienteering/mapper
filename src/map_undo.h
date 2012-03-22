@@ -31,10 +31,10 @@ public:
 	MapUndoStep(Map* map, Type type);
 	
 	virtual void save(QFile* file);
-	virtual bool load(QFile* file);
+	virtual bool load(QFile* file, int version);
 	
 	int getLayer() const {return layer;}
-	virtual void getAffectedOutcome(std::vector<int>& out) const {out = affected_objects;}
+	virtual void getAffectedOutcome(std::vector<Object*>& out) const;
 	
 protected:
 	int layer;
@@ -54,7 +54,9 @@ public:
 	void addObject(Object* existing, Object* object);
 	
 	virtual void save(QFile* file);
-	virtual bool load(QFile* file);
+	virtual bool load(QFile* file, int version);
+	
+	virtual void getAffectedOutcome(std::vector< Object* >& out) const {out = objects;}
 	
 public slots:
 	virtual void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
@@ -82,7 +84,7 @@ public:
 	void addObject(int index);
 	virtual UndoStep* undo();
 	
-    virtual void getAffectedOutcome(std::vector< int >& out) const {}
+    virtual void getAffectedOutcome(std::vector< Object* >& out) const {out.clear();}
 };
 
 class AddObjectsUndoStep : public ObjectContainingUndoStep
@@ -91,6 +93,8 @@ Q_OBJECT
 public:
 	AddObjectsUndoStep(Map* map);
 	virtual UndoStep* undo();
+protected:
+	static bool sortOrder(const std::pair<int, int>& a, const std::pair<int, int>& b);
 };
 
 class SwitchSymbolUndoStep : public MapUndoStep
@@ -103,7 +107,7 @@ public:
 	virtual UndoStep* undo();
 	
 	virtual void save(QFile* file);
-	virtual bool load(QFile* file);
+	virtual bool load(QFile* file, int version);
 	
 public slots:
 	virtual void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);

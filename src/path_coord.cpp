@@ -35,7 +35,7 @@ void PathCoord::calculatePathCoords(const MapCoordVector& flags, const MapCoordV
 bool PathCoord::getNextPathPart(const MapCoordVector& flags, const MapCoordVectorF& coords, int& part_start, int& part_end, PathCoordVector* path_coords, bool break_at_dash_points, bool append_path_coords)
 {
 	int size = (int)coords.size();
-	if (part_end == size - 1)
+	if (part_end >= size - 1)
 		return false;
 	if (!append_path_coords)
 		path_coords->clear();
@@ -83,6 +83,19 @@ bool PathCoord::getNextPathPart(const MapCoordVector& flags, const MapCoordVecto
 	
 	part_end = size - 1;
 	return true;
+}
+PathCoord PathCoord::findPathCoordForCoorinate(const PathCoordVector* path_coords, int index)
+{
+	int path_coords_size = path_coords->size();
+	for (int i = 0; i < path_coords_size; ++i)
+	{
+		if (path_coords->at(i).param == 0 && index == path_coords->at(i).index)
+			return path_coords->at(i);
+		else if (path_coords->at(i).param == 1 && (i == path_coords_size - 1 || (i < path_coords_size - 1 && index == path_coords->at(i+1).index)))
+			return path_coords->at(i);
+	}
+	assert(false);
+	return path_coords->at(0);
 }
 void PathCoord::curveToPathCoordRec(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, PathCoordVector* path_coords, float p0, float p1)
 {
@@ -139,12 +152,20 @@ void PathCoord::calculatePositionAt(const MapCoordVector& flags, const MapCoordV
 			continue;
 		int index = path_coords[i].index;
 		
-		if (flags[index].isCurveStart())
+		if (0 == path_coords[i].clen - path_coords[i-1].clen)
+		{
+			// Zero-length segment
+			out_pos->setX(path_coords[i].pos.getX());
+			out_pos->setY(path_coords[i].pos.getY());
+		}
+		else if (flags[index].isCurveStart())
 		{
 			float factor = (length - path_coords[i-1].clen) / (path_coords[i].clen - path_coords[i-1].clen);
-			assert(factor >= 0 && factor <= 1.001f);
+			assert(factor >= -0.01f && factor <= 1.01f);
 			if (factor > 1)
 				factor = 1;
+			else if (factor < 0)
+				factor = 0;
 			float prev_param = (path_coords[i-1].index == path_coords[i].index) ? path_coords[i-1].param : 0;
 			assert(prev_param <= path_coords[i].param);
 			float p = prev_param + (path_coords[i].param - prev_param) * factor;
@@ -165,9 +186,11 @@ void PathCoord::calculatePositionAt(const MapCoordVector& flags, const MapCoordV
 		else
 		{
 			float factor = (length - path_coords[i-1].clen) / (path_coords[i].clen - path_coords[i-1].clen);
-			assert(factor >= 0 && factor <= 1.001f);
+			assert(factor >= -0.01f && factor <= 1.01f);
 			if (factor > 1)
 				factor = 1;
+			else if (factor < 0)
+				factor = 0;
 			MapCoordF to_next(path_coords[i].pos.getX() - path_coords[i-1].pos.getX(), path_coords[i].pos.getY() - path_coords[i-1].pos.getY());
 			out_pos->setX(path_coords[i-1].pos.getX() + factor * to_next.getX());
 			out_pos->setY(path_coords[i-1].pos.getY() + factor * to_next.getY());
@@ -223,7 +246,7 @@ MapCoordF PathCoord::calculateRightVector(const MapCoordVector& flags, const Map
 {
 	bool ok;
 	
-	if ((i == 0 && !path_closed) || (i > 0 && flags[i-1].isHolePoint()))
+	if ((i == 0 && !path_closed)) // || (i > 0 && flags[i-1].isHolePoint()))
 	{
 		if (scaling)
 			*scaling = 1;
@@ -232,7 +255,7 @@ MapCoordF PathCoord::calculateRightVector(const MapCoordVector& flags, const Map
 		right.normalize();
 		return right;
 	}
-	else if ((i == (int)coords.size() - 1 && !path_closed) || flags[i].isHolePoint())
+	else if ((i == (int)coords.size() - 1 && !path_closed)) // || flags[i].isHolePoint())
 	{
 		if (scaling)
 			*scaling = 1;

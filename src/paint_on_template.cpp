@@ -38,7 +38,7 @@ PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* t
 	connect(editor->getMap(), SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
 	
 	if (!cursor)
-		cursor = new QCursor(QPixmap("images/cursor-paint-on-template.png"), 1, 1);
+		cursor = new QCursor(QPixmap(":/images/cursor-paint-on-template.png"), 1, 1);
 }
 PaintOnTemplateTool::~PaintOnTemplateTool()
 {
@@ -201,7 +201,7 @@ PaintOnTemplateSelectDialog::PaintOnTemplateSelectDialog(Map* map, QWidget* pare
 	}
 	
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	draw_button = new QPushButton(QIcon("images/pencil.png"), tr("Draw"));
+	draw_button = new QPushButton(QIcon(":/images/pencil.png"), tr("Draw"));
 	draw_button->setDefault(true);
 	
 	QHBoxLayout* buttons_layout = new QHBoxLayout();
