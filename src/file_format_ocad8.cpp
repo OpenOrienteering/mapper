@@ -216,25 +216,12 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 			}
 		}
     }
-    map->layers.resize(1);
-    map->layers[0] = layer;
-    map->current_layer_index = 0;
-    map->current_layer = layer;
-
-    // Load templates
-    map->templates.clear();
-    map->first_front_template = 0;
-    for (OCADTemplateIndex *idx = ocad_template_index_first(file); idx != NULL; idx = ocad_template_index_next(file, idx))
+    else
     {
-        for (int i = 0; i < 256; i++)
-        {
-            OCADTemplateEntry *entry = ocad_template_entry_at(file, idx, i);
-            if (entry->type != 0 && entry->size > 0)
-            {
-                Template *templ = importTemplate(entry);
-                if (templ) map->templates.push_back(templ);
-            }
-        }
+        MapLayer* layer = new MapLayer(QObject::tr("default"), map);
+        map->layers.resize(1);
+        map->layers[0] = layer;
+        map->current_layer_index = 0;
     }
 
     // TODO: Fill this->view with relevant fields from OCAD file
@@ -265,14 +252,7 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 		*/
 
 		// Undo steps are not supported in OCAD
-	}
-	else
-	{
-		MapLayer* layer = new MapLayer(QObject::tr("default"), map);
-		map->layers.resize(1);
-		map->layers[0] = layer;
-		map->current_layer_index = 0;
-	}
+
 
     ocad_file_close(file);
 
@@ -771,7 +751,7 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
 			addWarning(QObject::tr("An object with the symbol '%1', which is oriented to north, is rotated. Ignoring the rotation").arg(symbol->getName()));
 
         // only 1 coordinate is allowed, enforce it even if the OCAD object claims more.
-        fillPathCoords(p, 1, (OCADPoint *)ocad_object->pts);
+        fillPathCoords(p, false, 1, (OCADPoint *)ocad_object->pts);
         object = p;
     }
     else if (symbol->getType() == Symbol::Text)
@@ -798,7 +778,6 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
             delete t;
             return NULL;
         }
-        t->path_closed = false;
         object = t;
     }
     else if (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined) {
@@ -806,8 +785,7 @@ Object *OCAD8FileImport::importObject(const OCADObject *ocad_object)
         p->symbol = symbol;
 
         // Normal path
-        fillPathCoords(p, ocad_object->npts, (OCADPoint *)ocad_object->pts);
-        p->path_closed = false;
+        fillPathCoords(p, (symbol->getType() == Symbol::Area), ocad_object->npts, (OCADPoint *)ocad_object->pts);
         object = p;
         return p;
     }

@@ -48,7 +48,7 @@ void CombinedSymbol::createRenderables(Object* object, const MapCoordVector& fla
 	for (int i = 0; i < size; ++i)
 	{
         if (parts[i])
-            parts[i]->createRenderables(object, flags, coords, path_closed, output);
+            parts[i]->createRenderables(object, flags, coords, output);
 	}
 }
 void CombinedSymbol::colorDeleted(Map* map, int pos, MapColor* color)

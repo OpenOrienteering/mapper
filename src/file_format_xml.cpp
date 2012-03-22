@@ -279,7 +279,6 @@ void XMLFileExporter::exportObject(const Object *object, bool reference_symbol)
         builder.attr("symbol", object->getSymbol()->getNumberAsString());
     }
     builder.attr("path", makePath(object));
-    if (object->isPathClosed()) builder.attr("closed", true);
     builder.up();
 }
 
