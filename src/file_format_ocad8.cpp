@@ -325,7 +325,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 		{
 			if (ocad_symbol->bdist != ocad_symbol->edist)
 				addWarning(QObject::tr("In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.")
-				.arg(ocad_symbol->number).arg(ocad_symbol->bdist).arg(ocad_symbol->edist).arg((ocad_symbol->bdist + ocad_symbol->edist) / 2));
+				.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->bdist).arg(ocad_symbol->edist).arg((ocad_symbol->bdist + ocad_symbol->edist) / 2));
 			main_line->pointed_cap_length = convertSize((ocad_symbol->bdist + ocad_symbol->edist) / 2); // FIXME: Different lengths for start and end length of pointed line ends are not supported yet, so take the average
 			main_line->join_style = LineSymbol::RoundJoin;	// NOTE: while the setting may be different (see what is set in the first place), OCAD always draws round joins if the line cap is pointed!
 		}
@@ -333,22 +333,40 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 		// Handle the dash pattern
 		if( ocad_symbol->gap > 0 || ocad_symbol->gap2 > 0 )
 		{
-			//dashed
 			main_line->dashed = true;
-			if (ocad_symbol->len != ocad_symbol->elen)
-				addWarning(QObject::tr("In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.")
-				.arg(ocad_symbol->number).arg(ocad_symbol->len).arg(ocad_symbol->elen).arg(ocad_symbol->len));
-			main_line->dash_length = convertSize(ocad_symbol->len);
-			main_line->break_length = convertSize(ocad_symbol->gap);
 			
-			if (ocad_symbol->gap2 > 0)
+			// Detect special case
+			if (ocad_symbol->gap2 > 0 && ocad_symbol->gap == 0)
 			{
-				main_line->dashes_in_group = 2;
-				if (ocad_symbol->gap2 != ocad_symbol->egap)
-					addWarning(QObject::tr("In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.")
-					.arg(ocad_symbol->number).arg(ocad_symbol->gap2).arg(ocad_symbol->egap).arg(ocad_symbol->gap2));
-				main_line->in_group_break_length = convertSize(ocad_symbol->gap2);
-				main_line->dash_length = (main_line->dash_length - main_line->in_group_break_length) / 2;
+				main_line->dash_length = convertSize(ocad_symbol->len - ocad_symbol->gap2);
+				main_line->break_length = convertSize(ocad_symbol->gap2);
+				if (!(ocad_symbol->elen >= ocad_symbol->len / 2 - 1 && ocad_symbol->elen <= ocad_symbol->len / 2 + 1))
+					addWarning(QObject::tr("In dashed line symbol %1, the end length cannot be imported correctly.").arg(0.1 * ocad_symbol->number));
+				if (ocad_symbol->egap != 0)
+					addWarning(QObject::tr("In dashed line symbol %1, the end gap cannot be imported correctly.").arg(0.1 * ocad_symbol->number));
+			}
+			else
+			{
+				if (ocad_symbol->len != ocad_symbol->elen)
+				{
+					if (ocad_symbol->elen >= ocad_symbol->len / 2 - 1 && ocad_symbol->elen <= ocad_symbol->len / 2 + 1)
+						main_line->half_outer_dashes = true;
+					else
+						addWarning(QObject::tr("In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.")
+						.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->len).arg(ocad_symbol->elen).arg(ocad_symbol->len));
+				}
+				
+				main_line->dash_length = convertSize(ocad_symbol->len);
+				main_line->break_length = convertSize(ocad_symbol->gap);
+				if (ocad_symbol->gap2 > 0)
+				{
+					main_line->dashes_in_group = 2;
+					if (ocad_symbol->gap2 != ocad_symbol->egap)
+						addWarning(QObject::tr("In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.")
+						.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->gap2).arg(ocad_symbol->egap).arg(ocad_symbol->gap2));
+					main_line->in_group_break_length = convertSize(ocad_symbol->gap2);
+					main_line->dash_length = (main_line->dash_length - main_line->in_group_break_length) / 2;
+				}
 			}
 		} 
 		else
@@ -374,6 +392,9 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 		double_line->cap_style = LineSymbol::FlatCap;
 		double_line->join_style = LineSymbol::MiterJoin;
 		
+		double_line->segment_length = convertSize(ocad_symbol->len);
+		double_line->end_length = convertSize(ocad_symbol->elen);
+		
 		// Border lines
 		if (ocad_symbol->lwidth > 0 || ocad_symbol->rwidth > 0)
 		{
@@ -385,7 +406,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 			if (border_color != ocad_symbol->rcolor)
 			{
 				addWarning(QObject::tr("In symbol %1, left and right borders are different colors (%2 and %3). Using %4.")
-				.arg(ocad_symbol->number).arg(ocad_symbol->lcolor).arg(ocad_symbol->rcolor).arg(border_color));
+				.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->lcolor).arg(ocad_symbol->rcolor).arg(border_color));
 			}
 			double_line->border_color = convertColor(border_color);
 			
@@ -393,7 +414,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 			if (border_width != ocad_symbol->rwidth)
 			{
 				addWarning(QObject::tr("In symbol %1, left and right borders are different width (%2 and %3). Using %4.")
-				.arg(ocad_symbol->number).arg(ocad_symbol->lwidth).arg(ocad_symbol->rwidth).arg(border_width));
+				.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->lwidth).arg(ocad_symbol->rwidth).arg(border_width));
 			}
 			double_line->border_width = convertSize(border_width);
 			double_line->border_shift = double_line->border_width / 2;
@@ -406,7 +427,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 				double_line->border_break_length = convertSize(ocad_symbol->dgap);
 				
 				if (ocad_symbol->dmode == 2)
-					addWarning(QObject::tr("In line symbol %1, ignoring that only the left border line should be dashed").arg(ocad_symbol->number));
+					addWarning(QObject::tr("In line symbol %1, ignoring that only the left border line should be dashed").arg(0.1 * ocad_symbol->number));
 			}
 		}
 	}
@@ -446,7 +467,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 
     if (ocad_symbol->fwidth > 0)
     {
-        addWarning(QObject::tr("In symbol %1, ignoring framing line.").arg(ocad_symbol->number));
+        addWarning(QObject::tr("In symbol %1, ignoring framing line.").arg(0.1 * ocad_symbol->number));
     }
     
     if (main_line == NULL)
@@ -575,34 +596,34 @@ Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
 	else if (ocad_symbol->halign == 3)
 	{
 		// TODO: implement justified alignment
-		addWarning(QObject::tr("During import of text symbol %1: ignoring justified alignment").arg(ocad_symbol->number));
+		addWarning(QObject::tr("During import of text symbol %1: ignoring justified alignment").arg(0.1 * ocad_symbol->number));
 	}
 	text_halign_map[symbol] = halign;
 
     if (ocad_symbol->bold != 400 && ocad_symbol->bold != 700)
     {
         addWarning(QObject::tr("During import of text symbol %1: ignoring custom weight (%2)")
-                       .arg(ocad_symbol->number).arg(ocad_symbol->bold));
+                       .arg(0.1 * ocad_symbol->number).arg(ocad_symbol->bold));
     }
     if (ocad_symbol->cspace != 0)
 	{
 		addWarning(QObject::tr("During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD's behavior yet")
-		.arg(ocad_symbol->number));
+		.arg(0.1 * ocad_symbol->number));
 	}
     if (ocad_symbol->wspace != 100)
     {
         addWarning(QObject::tr("During import of text symbol %1: ignoring custom word spacing (%2%)")
-                       .arg(ocad_symbol->number).arg(ocad_symbol->wspace));
+                       .arg(0.1 * ocad_symbol->number).arg(ocad_symbol->wspace));
     }
     if (ocad_symbol->indent1 != 0 || ocad_symbol->indent2 != 0)
     {
         addWarning(QObject::tr("During import of text symbol %1: ignoring custom indents (%2/%3)")
-                       .arg(ocad_symbol->number).arg(ocad_symbol->indent1).arg(ocad_symbol->indent2));
+                       .arg(0.1 * ocad_symbol->number).arg(ocad_symbol->indent1).arg(ocad_symbol->indent2));
     }
     if (ocad_symbol->fmode != 0)
     {
         addWarning(QObject::tr("During import of text symbol %1: ignoring text framing (mode %2)")
-                       .arg(ocad_symbol->number).arg(ocad_symbol->fmode));
+                       .arg(0.1 * ocad_symbol->number).arg(ocad_symbol->fmode));
     }
 
     symbol->updateQFont();
