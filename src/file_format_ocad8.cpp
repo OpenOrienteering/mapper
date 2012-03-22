@@ -19,6 +19,7 @@
 
 #include <QDebug>
 #include <QDateTime>
+#include <qmath.h>
 
 #include "file_format_ocad8.h"
 #include "map_color.h"
@@ -1194,10 +1195,10 @@ float OCAD8FileImport::convertRotation(int angle) {
     // FIXME: oo-mapper uses a real number of degrees, counterclockwise
     // BUG: if sin(rotation) is < 0 for a hatched area pattern, the pattern's createRenderables() will go into an infinite loop.
     // So until that's fixed, we keep a between 0 and PI
-    float a = (M_PI / 180) *  (0.1f * angle);
+    double a = (M_PI / 180) *  (0.1f * angle);
     while (a < 0) a += 2 * M_PI;
     //if (a < 0 || a > M_PI) qDebug() << "Found angle" << a;
-    return a;
+    return (float)a;
 }
 
 void OCAD8FileImport::convertPoint(MapCoord &coord, int ocad_x, int ocad_y)

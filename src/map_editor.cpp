@@ -916,7 +916,7 @@ void MapEditorController::connectPathsClicked()
 	std::vector<Object*> undo_objects;
 	std::vector<Object*> deleted_objects;
 	
-	const float close_distance_sq = 0.35 * 0.35;	// TODO: Should this depend on the width of the lines? But how to determine a sensible width for lines consisting only of objects?
+	const float close_distance_sq = 0.35f * 0.35f;	// TODO: Should this depend on the width of the lines? But how to determine a sensible width for lines consisting only of objects?
 	
 	// Collect all objects in question
 	objects.reserve(map->getNumSelectedObjects());

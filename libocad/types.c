@@ -30,6 +30,14 @@ char *my_strdup(const char *s) {
 	}
 	return p;
 }
+int my_round (double x) {
+	int i = (int) x;
+	if (x >= 0.0) {
+		return ((x-i) >= 0.5) ? (i + 1) : (i);
+	} else {
+		return (-x+i >= 0.5) ? (i - 1) : (i);
+	}
+}
 
 const s32 *ocad_point(s32 *buf, const OCADPoint *pt) {
 	buf[0] = pt->x >> 8;

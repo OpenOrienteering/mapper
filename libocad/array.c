@@ -40,10 +40,12 @@ static int array_realloc(PtrArray *array, int minsize) {
 }
 
 static int array_shift(PtrArray *array, u32 start, u32 count) {
+	u32 size;
+	int ret;
 	if (start < 0) return -2;
 	if (count == 0) return 0;
-	u32 size = array->size;
-	int ret = array_realloc(array, array->size + count);
+	size = array->size;
+	ret = array_realloc(array, array->size + count);
 	if (ret < 0) return ret;
 	memmove(array->data + (start + count), array->data + start, (size - start) * sizeof(void *));
 	array->count += count;
@@ -72,25 +74,28 @@ void *array_get(const PtrArray *array, u32 index) {
 }
 
 void *array_set(PtrArray *array, u32 index, void *value) {
+	void *old_value;
 	if (index < 0 || index >= array->count) return NULL; // out of bounds
 //	int ret = 0;
 //	if ((ret = array_realloc(array, index + 1))) return ret;
-	void *old_value = array->data[index];
+	old_value = array->data[index];
 	array->data[index] = value;
 	return old_value;
 }
 
 void *array_remove(PtrArray *array, u32 index) {
+	void *old_value;
 	if (index < 0 || index >= array->count) return NULL; // out of bounds
-	void *old_value = array->data[index];
+	old_value = array->data[index];
 	array_remove_range(array, index, 1);
 	return old_value;
 }
 
 int array_remove_range(PtrArray *array, u32 start, u32 count) {
+	u32 end;
 	if (start < 0) return ARRAY_INDEX_OUT_OF_BOUNDS;
 	if (count == 0) return ARRAY_OK;
-	u32 end = start + count;
+	end = start + count;
 	if (end > array->count) return ARRAY_INDEX_OUT_OF_BOUNDS;
 	memmove(array->data + start, array->data + end, (array->count - end) * sizeof(void *));
 	array->count -= count;
@@ -102,8 +107,9 @@ int array_add(PtrArray *array, void *value) {
 }
 
 int array_insert(PtrArray *array, u32 index, void *value) {
+	int ret;
 	if (index < 0 || index > array->count) return -2;
-	int ret = array_shift(array, index, 1);
+	ret = array_shift(array, index, 1);
 	if (ret < 0) return ret;
 	array->data[index] = value;
 	return 0;

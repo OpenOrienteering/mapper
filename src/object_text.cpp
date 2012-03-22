@@ -20,6 +20,8 @@
 
 #include "object_text.h"
 
+#include <qmath.h>
+
 #include "symbol.h"
 #include "symbol_text.h"
 #include "map_editor.h"

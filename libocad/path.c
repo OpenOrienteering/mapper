@@ -105,13 +105,17 @@ static void ocad_internal_path_reverse(IntPath *path, u32 start, u32 count) {
  */
 static int ocad_path_to_internal(IntPath *path, u32 npts, const OCADPoint *pts) {
 #define F_PATH_HOLE 0x80 // not publically accessible, temporary and will be removed before the method returns
-	path->count = npts;
 	u32 i;
+	u32 hole_idx;
+	u32 j;
+	s8 sign;
+	path->count = npts;
 	for (i = 0; i < npts; i++) {
+		u8 f;
 		s32 x = pts[i].x, y = pts[i].y;
 		path->x[i] = (x >> 8);
 		path->y[i] = (y >> 8);
-		u8 f = 0;
+		f = 0;
 		if (x & (PX_CTL1 | PX_CTL2)) f |= F_PATH_CONTROL;
         if (y & PY_CORNER) f |= F_PATH_CORNER;
 		if (y & PY_DASH) f |= F_PATH_DASH;
@@ -122,9 +126,8 @@ static int ocad_path_to_internal(IntPath *path, u32 npts, const OCADPoint *pts) 
 	// Check for holes. If we encounter a section of the path with the hole flag,
 	// we need to see if its orientation matches the main segment. If it's the
 	// same, then E/O would fail to make it a hole.
-	u32 hole_idx = 0;
-	s8 sign = 0;
-	u32 j;
+	hole_idx = 0;
+	sign = 0;
 	for (j = 0; j < npts; j++) {
 		if (path->f[j] & F_PATH_HOLE) {
 			path->f[j] &= ~F_PATH_HOLE;
@@ -155,7 +158,7 @@ static bool ocad_internal_path_iterate(IntPath *path, IntPathCallback callback, 
 		if (path->f[i] & F_PATH_CONTROL) continue;
 		if (n == 2) {
 			if (first) callback(user_object, MoveTo, pt); 
-			else callback(user_object, LineTo, pt);
+			else callback(user_object, SegmentLineTo, pt);
 		}
 		else if (n == 6) {
 			if (first) return FALSE; else callback(user_object, CurveTo, pt);
@@ -177,11 +180,11 @@ bool ocad_path_iterate(u32 npts, const OCADPoint *pts, IntPathCallback callback,
 /** Returns the signed area of a subsection of path, in map units.
  */
 s64 ocad_path_area(s32 *path, u32 start, u32 count) {
+	int i;
 	s64 a = 0LL;
 	s32 *p = path + 3 * (start + count - 1);
 	s32 lx = p[0], ly = p[1];
 	p = path + 3 * start;
-	int i;
 	for (i = 0; i < count; i++) {
 		s32 x = p[0], y = p[1];
 		a = a + lx * y - ly * x;
@@ -200,10 +203,12 @@ void ocad_path_map(const Transform *matrix, const OCADPoint *pts, OCADPoint *opt
 	const OCADPoint *pt = pts;
 	u32 i;
 	for (i = 0; i < npts; i++) {
+		int x, y;
 		p[0] = pt->x >> 8;
 		p[1] = pt->y >> 8;
 		matrix_map(matrix, p, p, 1);
-		int x = (int)round(p[0]), y = (int)round(p[1]);
+		x = (int)my_round(p[0]);
+		y = (int)my_round(p[1]);
 		opts[i].x = x << 8 | (pt->x & 0xff);
 		opts[i].y = y << 8 | (pt->y & 0xff);
 		pt++;
@@ -239,9 +244,9 @@ bool ocad_path_bounds_rect(OCADRect *rect, u32 npts, const OCADPoint *pts) {
  *  returned. 
  */
 bool ocad_path_bounds(s32 *rect, u32 npts, const OCADPoint *pts) {
-	if (npts == 0) return FALSE;
 	int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
 	u32 i;
+	if (npts == 0) return FALSE;
 	for (i = 0; i < npts; i++) {
 		int x = pts[i].x >> 8, y = pts[i].y >> 8;
 		if (i == 0) {

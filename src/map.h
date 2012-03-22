@@ -28,6 +28,7 @@
 #include <QHash>
 #include <QSet>
 
+#include "global.h"
 #include "undo.h"
 #include "matrix.h"
 #include "map_coord.h"

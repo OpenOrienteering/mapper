@@ -28,7 +28,7 @@ class QPushButton;
 QT_END_NAMESPACE
 
 class TextObject;
-class TextObjectLineInfo;
+struct TextObjectLineInfo;
 class TextObjectEditorHelper;
 class TextObjectAlignmentDockWidget;
 class Symbol;

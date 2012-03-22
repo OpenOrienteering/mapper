@@ -1520,7 +1520,7 @@ bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF curso
 			return false;
 		
 		bool set_to_limit = false;
-		double zoom_to = pow(2, log2(getZoom()) + num_steps);
+		double zoom_to = pow(2, (log10(getZoom()) / LOG2) + num_steps);
 		double zoom_factor = zoom_to / getZoom();
 		if (getZoom() * zoom_factor > zoom_in_limit)
 		{
@@ -1551,7 +1551,7 @@ bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF curso
 			return false;
 		
 		bool set_to_limit = false;
-		double zoom_to = pow(2, log2(getZoom()) + num_steps);
+		double zoom_to = pow(2, (log10(getZoom()) / LOG2) + num_steps);
 		double zoom_factor = zoom_to / getZoom();
 		if (getZoom() * zoom_factor < zoom_out_limit)
 		{

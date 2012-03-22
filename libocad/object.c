@@ -41,15 +41,17 @@ static bool ocad_object_copy(OCADObject *dest, const OCADObject *src) {
 
 
 OCADObjectIndex *ocad_objidx_first(OCADFile *pfile) {
+	dword offs;
 	if (!pfile->header) return NULL;
-	dword offs = pfile->header->oobjidx;
+	offs = pfile->header->oobjidx;
 	if (offs == 0) return NULL;
 	return (OCADObjectIndex *)(pfile->buffer + offs);
 }
 
 OCADObjectIndex *ocad_objidx_next(OCADFile *pfile, OCADObjectIndex *current) {
+	dword offs;
 	if (!pfile->header || !current) return NULL;
-	dword offs = current->next;
+	offs = current->next;
 	if (offs == 0) return NULL;
 	return (OCADObjectIndex *)(pfile->buffer + offs);
 }
@@ -61,10 +63,11 @@ OCADObjectEntry *ocad_object_entry_at(OCADFile *pfile, OCADObjectIndex *current,
 }
 
 OCADObjectEntry *ocad_object_entry_new(OCADFile *pfile, u32 npts) {
-	if (!pfile->header) return NULL;
-	if (npts == 0) return NULL;
 	OCADObjectEntry *empty = NULL; // holder for first empty (npts=0) index entry, if needed
 	OCADObjectIndex *idx;
+	dword offs;
+	if (!pfile->header) return NULL;
+	if (npts == 0) return NULL;
 	for (idx = ocad_objidx_first(pfile); idx != NULL; idx = ocad_objidx_next(pfile, idx)) {
 		int i;
 		for (i = 0; i < 256; i++) {
@@ -82,7 +85,7 @@ OCADObjectEntry *ocad_object_entry_new(OCADFile *pfile, u32 npts) {
 	}
 
 	// There exists an empty index entry, with symbol=0 and npts=0. We can allocate a new object and fill it
-	dword offs = ocad_alloc_object(npts);
+	offs = ocad_alloc_object(npts);
 	if (offs == 0) return NULL; // no memory
 	empty->ptr = offs;
 	empty->npts = npts;
@@ -92,10 +95,11 @@ OCADObjectEntry *ocad_object_entry_new(OCADFile *pfile, u32 npts) {
 
 void ocad_object_entry_refresh(OCADFile *pfile, OCADObjectEntry *entry, OCADObject *object) {
 	OCADRect *prect = &(entry->rect);
+	OCADSymbol *symbol;
 	if (!ocad_path_bounds_rect(prect, object->npts, object->pts)) {
 		memset(prect, 0, sizeof(OCADRect)); // Object with no points get a zeroed bounds rect
 	}
-	OCADSymbol *symbol = ocad_symbol(pfile, object->symbol);
+	symbol = ocad_symbol(pfile, object->symbol);
 	if (symbol && symbol->extent > 0) {
 		ocad_rect_grow(prect, symbol->extent);
 	}
@@ -104,9 +108,10 @@ void ocad_object_entry_refresh(OCADFile *pfile, OCADObjectEntry *entry, OCADObje
 
 
 int ocad_object_remove(OCADFile *pfile, OCADObjectEntry *entry) {
+	dword offs;
 	if (entry == NULL) return -1;
 	entry->symbol = 0;
-	dword offs = entry->ptr;
+	offs = entry->ptr;
 	if (offs != 0) {
 		OCADObject *obj = (OCADObject *)(pfile->buffer + offs);
 		obj->symbol = 0;
@@ -130,9 +135,10 @@ bool ocad_object_entry_iterate(OCADFile *pfile, OCADObjectEntryCallback callback
 
 OCADObject *ocad_object_at(OCADFile *pfile, OCADObjectIndex *current, int index) {
 	OCADObjectEntry *entry = ocad_object_entry_at(pfile, current, index);
+	dword offs;
 	if (entry == NULL) return NULL;
 	if (entry->symbol == 0) return NULL;
-	dword offs = entry->ptr;
+	offs = entry->ptr;
 	if (offs == 0) return NULL;
 	//fprintf(stderr, "offs=%x\n", offs);
 	return (OCADObject *)(pfile->buffer + offs);
@@ -187,8 +193,9 @@ OCADObject *ocad_object_alloc(const OCADObject *source) {
 
 OCADObject *ocad_object_add(OCADFile *file, const OCADObject *object) {
 	OCADObjectEntry *entry = ocad_object_entry_new(file, object->npts + object->ntext);
+	OCADObject *dest;
 	if (entry == NULL) return NULL;
-	OCADObject *dest = ocad_object(file, entry);
+	dest = ocad_object(file, entry);
 	if (!ocad_object_copy(dest, object)) return NULL;
 	ocad_object_entry_refresh(file, entry, dest);
 	return dest;
