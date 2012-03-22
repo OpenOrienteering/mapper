@@ -357,8 +357,11 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 
     if (!format || !format->supportsExport())
     {
-        QMessageBox::warning(NULL, tr("Error"), tr("Unable to find an exporter for file named \"%1\".").arg(path));
-        return false;
+		if (format)
+			QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").arg(path).arg(format->description()).arg(format->fileExtension()));
+        else
+			QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause the format is unknown.").arg(path));
+		return false;
     }
 
     Exporter *exporter = NULL;
@@ -373,10 +376,13 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
         // Display any warnings.
         if (!exporter->warnings().empty())
         {
-            // FIXME: do this in a message box
+            QString warnings = "";
             for (std::vector<QString>::const_iterator it = exporter->warnings().begin(); it != exporter->warnings().end(); ++it) {
-                qDebug() << *it;
+                if (!warnings.isEmpty())
+					warnings += '\n';
+				warnings += *it;
             }
+            QMessageBox::warning(NULL, tr("Warning"), tr("The map export generated the following warning(s):\n\n%1").arg(warnings));
         }
     }
     catch (std::exception &e)
@@ -444,10 +450,13 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
                 // Display any warnings.
                 if (!importer->warnings().empty())
                 {
-                    // FIXME: do this in a message box
-                    for (std::vector<QString>::const_iterator it = importer->warnings().begin(); it != importer->warnings().end(); ++it) {
-                        qDebug() << *it;
-                    }
+					QString warnings = "";
+					for (std::vector<QString>::const_iterator it = importer->warnings().begin(); it != importer->warnings().end(); ++it) {
+						if (!warnings.isEmpty())
+							warnings += '\n';
+						warnings += *it;
+					}
+					QMessageBox::warning(NULL, tr("Warning"), tr("The map import generated the following warning(s):\n\n%1").arg(warnings));
                 }
 
                 import_complete = true;

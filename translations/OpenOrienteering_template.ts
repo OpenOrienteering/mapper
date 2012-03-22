@@ -1001,32 +1001,62 @@ Press No to choose a different format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="360"/>
-        <location filename="../src/map.cpp" line="407"/>
-        <location filename="../src/map.cpp" line="473"/>
+        <location filename="../src/map.cpp" line="361"/>
+        <location filename="../src/map.cpp" line="363"/>
+        <location filename="../src/map.cpp" line="413"/>
         <location filename="../src/map.cpp" line="482"/>
+        <location filename="../src/map.cpp" line="491"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="360"/>
-        <source>Unable to find an exporter for file named &quot;%1&quot;.</source>
+        <location filename="../src/map.cpp" line="361"/>
+        <source>Cannot export the map as
+&quot;%1&quot;
+because saving as %2 (.%3) is not supported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="407"/>
+        <location filename="../src/map.cpp" line="363"/>
+        <source>Cannot export the map as
+&quot;%1&quot;
+because the format is unknown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/map.cpp" line="385"/>
+        <location filename="../src/map.cpp" line="459"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/map.cpp" line="385"/>
+        <source>The map export generated the following warning(s):
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/map.cpp" line="413"/>
         <source>Cannot open file:
 %1
 for reading.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="420"/>
+        <location filename="../src/map.cpp" line="426"/>
         <source>Invalid file type.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="473"/>
+        <location filename="../src/map.cpp" line="459"/>
+        <source>The map import generated the following warning(s):
+
+%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/map.cpp" line="482"/>
         <source>Cannot open file:
 %1
 
@@ -1034,7 +1064,7 @@ for reading.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="482"/>
+        <location filename="../src/map.cpp" line="491"/>
         <source>Problem while opening file:
 %1
 
@@ -1042,7 +1072,7 @@ Error during symbol post-processing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="798"/>
+        <location filename="../src/map.cpp" line="807"/>
         <source>New color</source>
         <translation type="unfinished"></translation>
     </message>

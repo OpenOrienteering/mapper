@@ -1103,20 +1103,53 @@ Wählen Sie Nein, um ein anderes Dateiformat auszusuchen.</translation>
         <translation>Standardebene</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="360"/>
-        <location filename="../src/map.cpp" line="407"/>
-        <location filename="../src/map.cpp" line="473"/>
+        <location filename="../src/map.cpp" line="361"/>
+        <location filename="../src/map.cpp" line="363"/>
+        <location filename="../src/map.cpp" line="413"/>
         <location filename="../src/map.cpp" line="482"/>
+        <location filename="../src/map.cpp" line="491"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="360"/>
         <source>Unable to find an exporter for file named &quot;%1&quot;.</source>
-        <translation>Speichern im Format &quot;%1&quot; nicht unterstützt.</translation>
+        <translation type="obsolete">Speichern im Format &quot;%1&quot; nicht unterstützt.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="407"/>
+        <location filename="../src/map.cpp" line="361"/>
+        <source>Cannot export the map as
+&quot;%1&quot;
+because saving as %2 (.%3) is not supported.</source>
+        <translation>Kann die Karte nicht als
+&quot;%1&quot;
+exportieren, weil das Speichern als %2 (.%3) nicht unterstützt wird.</translation>
+    </message>
+    <message>
+        <location filename="../src/map.cpp" line="363"/>
+        <source>Cannot export the map as
+&quot;%1&quot;
+because the format is unknown.</source>
+        <translation>Kann die Karte nicht als
+&quot;%1&quot;
+exportieren, weil das Format unbekannt ist.</translation>
+    </message>
+    <message>
+        <location filename="../src/map.cpp" line="385"/>
+        <location filename="../src/map.cpp" line="459"/>
+        <source>Warning</source>
+        <translation>Warnung</translation>
+    </message>
+    <message>
+        <location filename="../src/map.cpp" line="385"/>
+        <source>The map export generated the following warning(s):
+
+%1</source>
+        <translation>Beim Kartenexport traten die folgenden Warnung(en) auf:
+
+%1</translation>
+    </message>
+    <message>
+        <location filename="../src/map.cpp" line="413"/>
         <source>Cannot open file:
 %1
 for reading.</source>
@@ -1124,12 +1157,21 @@ for reading.</source>
 Datei kann nicht zum Lesen geöffnet werden.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="420"/>
+        <location filename="../src/map.cpp" line="426"/>
         <source>Invalid file type.</source>
         <translation>Ungültiger Dateityp.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="473"/>
+        <location filename="../src/map.cpp" line="459"/>
+        <source>The map import generated the following warning(s):
+
+%1</source>
+        <translation>Beim Kartenimport traten die folgenden Warnung(en) auf:
+
+%1</translation>
+    </message>
+    <message>
+        <location filename="../src/map.cpp" line="482"/>
         <source>Cannot open file:
 %1
 
@@ -1148,7 +1190,7 @@ Invalid file type.</source>
 Fehler beim Einlesen.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="482"/>
+        <location filename="../src/map.cpp" line="491"/>
         <source>Problem while opening file:
 %1
 
@@ -1157,7 +1199,7 @@ Error during symbol post-processing.</source>
 Fehler beim Verarbeiten der Symbole.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="798"/>
+        <location filename="../src/map.cpp" line="807"/>
         <source>New color</source>
         <translation>Neue Farbe</translation>
     </message>
