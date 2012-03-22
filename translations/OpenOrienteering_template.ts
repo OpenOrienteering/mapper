@@ -2182,13 +2182,13 @@ for writing.</source>
 <context>
     <name>RotateTool</name>
     <message>
-        <location filename="../src/tool_rotate.cpp" line="163"/>
+        <location filename="../src/tool_rotate.cpp" line="159"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the rotation center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_rotate.cpp" line="165"/>
-        <source>&lt;b&gt;Drag&lt;/b&gt; to rotate the selected object(s)</source>
+        <location filename="../src/tool_rotate.cpp" line="161"/>
+        <source>&lt;b&gt;Click&lt;/b&gt; to set the rotation center, &lt;b&gt;drag&lt;/b&gt; to rotate the selected object(s)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

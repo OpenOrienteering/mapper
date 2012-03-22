@@ -22,7 +22,6 @@
 #define _OPENORIENTEERING_TOOL_ROTATE_H_
 
 #include "map_editor.h"
-#include "object.h"
 
 /// Tool to rotate objects
 class RotateTool : public MapEditorTool
@@ -41,20 +40,16 @@ public:
 	
     virtual void draw(QPainter* painter, MapWidget* widget);
 	
-	static QCursor* cursor;
-	
 protected:
 	void updateStatusText();
 	void updatePreviewObjects();
 	void updateDirtyRect();
-	void updateDragging(MapCoordF cursor_pos_map);
+	void updateDragging(const MapCoordF cursor_pos_map);
+	
+	static QCursor* cursor;
 	
 	// Mouse handling
 	QPoint click_pos;
-	MapCoordF click_pos_map;
-	QPoint cur_pos;
-	MapCoordF cur_pos_map;
-	bool dragging;
 	
 	bool rotation_center_set;
 	MapCoordF rotation_center;

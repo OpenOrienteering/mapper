@@ -2366,14 +2366,18 @@ libocad-Fehler %1</translation>
 <context>
     <name>RotateTool</name>
     <message>
-        <location filename="../src/tool_rotate.cpp" line="163"/>
+        <location filename="../src/tool_rotate.cpp" line="159"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the rotation center</source>
-        <translation>&lt;b&gt;Klicken&lt;/b&gt; um den Rotationspunkt festzulegen</translation>
+        <translation>&lt;b&gt;Klicken&lt;/b&gt;, um den Rotationspunkt festzulegen</translation>
     </message>
     <message>
-        <location filename="../src/tool_rotate.cpp" line="165"/>
+        <location filename="../src/tool_rotate.cpp" line="161"/>
+        <source>&lt;b&gt;Click&lt;/b&gt; to set the rotation center, &lt;b&gt;drag&lt;/b&gt; to rotate the selected object(s)</source>
+        <translation>&lt;b&gt;Klicken&lt;/b&gt;, um den Rotationspunkt festzulegen, &lt;b&gt;Ziehen&lt;/b&gt; zum Rotieren</translation>
+    </message>
+    <message>
         <source>&lt;b&gt;Drag&lt;/b&gt; to rotate the selected object(s)</source>
-        <translation>&lt;b&gt;Ziehen&lt;/b&gt; zum Rotieren</translation>
+        <translation type="obsolete">&lt;b&gt;Ziehen&lt;/b&gt; zum Rotieren</translation>
     </message>
 </context>
 <context>
