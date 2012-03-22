@@ -591,188 +591,188 @@ This dialog allows to choose a font size which results in a given exact height f
 <context>
     <name>LineSymbolSettings</name>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1258"/>
+        <location filename="../src/symbol_line.cpp" line="1262"/>
         <source>Line settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1260"/>
+        <location filename="../src/symbol_line.cpp" line="1264"/>
         <source>Line width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1264"/>
+        <location filename="../src/symbol_line.cpp" line="1268"/>
         <source>Line color:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1267"/>
+        <location filename="../src/symbol_line.cpp" line="1271"/>
         <source>Minimum line length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1272"/>
+        <location filename="../src/symbol_line.cpp" line="1276"/>
         <source>Line cap:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1274"/>
+        <location filename="../src/symbol_line.cpp" line="1278"/>
         <source>flat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1275"/>
-        <location filename="../src/symbol_line.cpp" line="1283"/>
+        <location filename="../src/symbol_line.cpp" line="1279"/>
+        <location filename="../src/symbol_line.cpp" line="1287"/>
         <source>round</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1276"/>
+        <location filename="../src/symbol_line.cpp" line="1280"/>
         <source>square</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1277"/>
+        <location filename="../src/symbol_line.cpp" line="1281"/>
         <source>pointed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1280"/>
+        <location filename="../src/symbol_line.cpp" line="1284"/>
         <source>Line join:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1282"/>
+        <location filename="../src/symbol_line.cpp" line="1286"/>
         <source>miter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1284"/>
+        <location filename="../src/symbol_line.cpp" line="1288"/>
         <source>bevel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1287"/>
+        <location filename="../src/symbol_line.cpp" line="1291"/>
         <source>Cap length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1291"/>
+        <location filename="../src/symbol_line.cpp" line="1295"/>
         <source>Line is dashed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1308"/>
+        <location filename="../src/symbol_line.cpp" line="1312"/>
         <source>Segment length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1312"/>
+        <location filename="../src/symbol_line.cpp" line="1316"/>
         <source>End length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1316"/>
+        <location filename="../src/symbol_line.cpp" line="1320"/>
         <source>Show at least one mid symbol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1319"/>
+        <location filename="../src/symbol_line.cpp" line="1323"/>
         <source>Minimum mid symbol count:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1323"/>
+        <location filename="../src/symbol_line.cpp" line="1327"/>
         <source>Minimum mid symbol count when closed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1344"/>
+        <location filename="../src/symbol_line.cpp" line="1348"/>
         <source>Dash length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1348"/>
+        <location filename="../src/symbol_line.cpp" line="1352"/>
         <source>Break length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1352"/>
+        <location filename="../src/symbol_line.cpp" line="1356"/>
         <source>Dashes grouped together:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1354"/>
+        <location filename="../src/symbol_line.cpp" line="1358"/>
         <source>none</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1355"/>
+        <location filename="../src/symbol_line.cpp" line="1359"/>
         <source>2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1356"/>
+        <location filename="../src/symbol_line.cpp" line="1360"/>
         <source>3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1357"/>
+        <location filename="../src/symbol_line.cpp" line="1361"/>
         <source>4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1360"/>
+        <location filename="../src/symbol_line.cpp" line="1364"/>
         <source>In-group break length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1364"/>
+        <location filename="../src/symbol_line.cpp" line="1368"/>
         <source>Half length of first and last dash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1383"/>
+        <location filename="../src/symbol_line.cpp" line="1387"/>
         <source>Mid symbols per spot:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1387"/>
+        <location filename="../src/symbol_line.cpp" line="1391"/>
         <source>Mid symbol distance:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1401"/>
+        <location filename="../src/symbol_line.cpp" line="1405"/>
         <source>Enable border lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1406"/>
+        <location filename="../src/symbol_line.cpp" line="1410"/>
         <source>Border width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1410"/>
+        <location filename="../src/symbol_line.cpp" line="1414"/>
         <source>Border color:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1413"/>
+        <location filename="../src/symbol_line.cpp" line="1417"/>
         <source>Border shift:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1417"/>
+        <location filename="../src/symbol_line.cpp" line="1421"/>
         <source>Border is dashed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1422"/>
+        <location filename="../src/symbol_line.cpp" line="1426"/>
         <source>Border dash length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1426"/>
+        <location filename="../src/symbol_line.cpp" line="1430"/>
         <source>Border break length:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1749,12 +1749,12 @@ Templates -&gt; Open template...</source>
 <context>
     <name>PointSymbolSettings</name>
     <message>
-        <location filename="../src/symbol_point.cpp" line="283"/>
+        <location filename="../src/symbol_point.cpp" line="296"/>
         <source>Point settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_point.cpp" line="287"/>
+        <location filename="../src/symbol_point.cpp" line="300"/>
         <source>Always oriented to north (not rotatable)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2032,7 +2032,7 @@ Error while loading layer %2.</source>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="210"/>
-        <location filename="../src/file_format_ocad8.cpp" line="252"/>
+        <location filename="../src/file_format_ocad8.cpp" line="248"/>
         <source>default</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2049,117 +2049,117 @@ for writing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="171"/>
+        <location filename="../src/file_format_ocad8.cpp" line="167"/>
         <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="184"/>
+        <location filename="../src/file_format_ocad8.cpp" line="180"/>
         <source>OCAD import layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="328"/>
+        <location filename="../src/file_format_ocad8.cpp" line="324"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="340"/>
+        <location filename="../src/file_format_ocad8.cpp" line="336"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="349"/>
+        <location filename="../src/file_format_ocad8.cpp" line="345"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="388"/>
+        <location filename="../src/file_format_ocad8.cpp" line="384"/>
         <source>In symbol %1, left and right borders are different colors (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="396"/>
+        <location filename="../src/file_format_ocad8.cpp" line="392"/>
         <source>In symbol %1, left and right borders are different width (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="410"/>
+        <location filename="../src/file_format_ocad8.cpp" line="406"/>
         <source>In line symbol %1, ignoring that only the left border line should be dashed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="450"/>
+        <location filename="../src/file_format_ocad8.cpp" line="446"/>
         <source>In symbol %1, ignoring framing line.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="579"/>
+        <location filename="../src/file_format_ocad8.cpp" line="575"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="585"/>
+        <location filename="../src/file_format_ocad8.cpp" line="581"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="590"/>
+        <location filename="../src/file_format_ocad8.cpp" line="586"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="595"/>
+        <location filename="../src/file_format_ocad8.cpp" line="591"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="600"/>
+        <location filename="../src/file_format_ocad8.cpp" line="596"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="605"/>
+        <location filename="../src/file_format_ocad8.cpp" line="601"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="741"/>
+        <location filename="../src/file_format_ocad8.cpp" line="746"/>
         <source>Unable to load object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="747"/>
+        <location filename="../src/file_format_ocad8.cpp" line="752"/>
         <source>Unable to import rectangle object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="763"/>
-        <source>An object with the symbol &apos;%1&apos;, which is oriented to north, is rotated. Ignoring the rotation</source>
+        <location filename="../src/file_format_ocad8.cpp" line="1197"/>
+        <source>Color id not found: %1, ignoring this color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="788"/>
+        <location filename="../src/file_format_ocad8.cpp" line="799"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="954"/>
+        <location filename="../src/file_format_ocad8.cpp" line="965"/>
         <source>Unable to import template: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="959"/>
+        <location filename="../src/file_format_ocad8.cpp" line="970"/>
         <source>Ignoring template of type: %1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="983"/>
+        <location filename="../src/file_format_ocad8.cpp" line="994"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1086"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1097"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation type="unfinished"></translation>
     </message>
