@@ -20,23 +20,25 @@
 #include "libocad.h"
 
 OCADSymbolIndex *ocad_symidx_first(OCADFile *pfile) {
+	dword offs;
 	if (!pfile || !pfile->header) return NULL;
-	dword offs = pfile->header->osymidx;
+	offs = pfile->header->osymidx;
 	if (offs == 0) return NULL;
 	return (OCADSymbolIndex *)(pfile->buffer + offs);
 }
 
 OCADSymbolIndex *ocad_symidx_next(OCADFile *pfile, OCADSymbolIndex *current) {
+	dword offs;
 	if (!pfile || !pfile->header || !current) return NULL;
-	dword offs = current->next;
+	offs = current->next;
 	if (offs == 0) return NULL;
 	return (OCADSymbolIndex *)(pfile->buffer + offs);
 }
 
 int ocad_symbol_count(OCADFile *pfile) {
-	if (!pfile || !pfile->header) return -1;
-	int count = 0;
 	OCADSymbolIndex *idx;
+	int count = 0;
+	if (!pfile || !pfile->header) return -1;
 	for (idx = ocad_symidx_first(pfile); idx != NULL; idx = ocad_symidx_next(pfile, idx)) {
 		int i;
 		for (i = 0; i < 256; i++) {
@@ -48,9 +50,10 @@ int ocad_symbol_count(OCADFile *pfile) {
 }
 
 OCADSymbol *ocad_symbol_at(OCADFile *pfile, OCADSymbolIndex *current, int index) {
+	dword offs;
 	if (!pfile || !pfile->header || !current) return NULL;
 	if (index < 0 || index >= 256) return NULL;
-	dword offs = current->entry[index].ptr;
+	offs = current->entry[index].ptr;
 	if (offs == 0) return NULL;
 	return (OCADSymbol *)(pfile->buffer + offs);
 }

@@ -357,8 +357,11 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 
     if (!format || !format->supportsExport())
     {
-        QMessageBox::warning(NULL, tr("Error"), tr("Unable to find an exporter for file named \"%1\".").arg(path));
-        return false;
+		if (format)
+			QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").arg(path).arg(format->description()).arg(format->fileExtension()));
+        else
+			QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause the format is unknown.").arg(path));
+		return false;
     }
 
     Exporter *exporter = NULL;
@@ -373,10 +376,13 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
         // Display any warnings.
         if (!exporter->warnings().empty())
         {
-            // FIXME: do this in a message box
+            QString warnings = "";
             for (std::vector<QString>::const_iterator it = exporter->warnings().begin(); it != exporter->warnings().end(); ++it) {
-                qDebug() << *it;
+                if (!warnings.isEmpty())
+					warnings += '\n';
+				warnings += *it;
             }
+            QMessageBox::warning(NULL, tr("Warning"), tr("The map export generated the following warning(s):\n\n%1").arg(warnings));
         }
     }
     catch (std::exception &e)
@@ -417,6 +423,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
     file.close();
 
     bool import_complete = false;
+	QString error_msg = tr("Invalid file type.");
     Q_FOREACH(const Format *format, FileFormats.formats())
     {
         // If the format supports import, and thinks it can understand the file header, then proceed.
@@ -443,10 +450,13 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
                 // Display any warnings.
                 if (!importer->warnings().empty())
                 {
-                    // FIXME: do this in a message box
-                    for (std::vector<QString>::const_iterator it = importer->warnings().begin(); it != importer->warnings().end(); ++it) {
-                        qDebug() << *it;
-                    }
+					QString warnings = "";
+					for (std::vector<QString>::const_iterator it = importer->warnings().begin(); it != importer->warnings().end(); ++it) {
+						if (!warnings.isEmpty())
+							warnings += '\n';
+						warnings += *it;
+					}
+					QMessageBox::warning(NULL, tr("Warning"), tr("The map import generated the following warning(s):\n\n%1").arg(warnings));
                 }
 
                 import_complete = true;
@@ -454,6 +464,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
             catch (std::exception &e)
             {
                 qDebug() << "Exception:" << e.what();
+				error_msg = e.what();
             }
             if (importer) delete importer;
         }
@@ -468,7 +479,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 
     if (!import_complete)
     {
-        QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\n\nInvalid file type.").arg(path));
+        QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\n\n%2").arg(path).arg(error_msg));
         return false;
     }
 
@@ -666,7 +677,8 @@ void Map::addObjectToSelection(Object* object, bool emit_selection_changed)
 }
 void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
 {
-	assert(object_selection.remove(object) && "Map::removeObjectFromSelection: object was not selected!");
+	bool removed = object_selection.remove(object);
+	assert(removed && "Map::removeObjectFromSelection: object was not selected!");
 	removeSelectionRenderables(object);
 	if (emit_selection_changed)
 		emit(selectedObjectsChanged());
@@ -1514,7 +1526,7 @@ bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF curso
 			return false;
 		
 		bool set_to_limit = false;
-		double zoom_to = pow(2, log2(getZoom()) + num_steps);
+		double zoom_to = pow(2, (log10(getZoom()) / LOG2) + num_steps);
 		double zoom_factor = zoom_to / getZoom();
 		if (getZoom() * zoom_factor > zoom_in_limit)
 		{
@@ -1545,7 +1557,7 @@ bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF curso
 			return false;
 		
 		bool set_to_limit = false;
-		double zoom_to = pow(2, log2(getZoom()) + num_steps);
+		double zoom_to = pow(2, (log10(getZoom()) / LOG2) + num_steps);
 		double zoom_factor = zoom_to / getZoom();
 		if (getZoom() * zoom_factor < zoom_out_limit)
 		{

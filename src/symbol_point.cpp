@@ -160,6 +160,19 @@ bool PointSymbol::isEmpty() const
 {
 	return getNumElements() == 0 && (inner_color == NULL || inner_radius == 0) && (outer_color == NULL || outer_width == 0);
 }
+bool PointSymbol::isSymmetrical() const
+{
+	int num_elements = (int)objects.size();
+	for (int i = 0; i < num_elements; ++i)
+	{
+		if (symbols[i]->getType() != Symbol::Point)
+			return false;
+		PointObject* point = reinterpret_cast<PointObject*>(objects[i]);
+		if (point->getCoordF() != MapCoordF(0, 0))
+			return false;
+	}
+	return true;
+}
 
 void PointSymbol::colorDeleted(Map* map, int pos, MapColor* color)
 {

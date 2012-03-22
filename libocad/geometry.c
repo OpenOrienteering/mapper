@@ -75,12 +75,15 @@ void matrix_translate(Transform *matrix, double dx, double dy) {
 }
 
 void matrix_rotate(Transform *matrix, double angle) {
+	double a, c, s, n00, n01, n10, n11;
 	if (angle == 0.0) return;
-	double a = M_PI * angle / 180.0, c = cos(a), s = sin(a);
-	double n00 = matrix->m00 * c - matrix->m01 * s;
-	double n01 = matrix->m00 * s + matrix->m01 * c;
-	double n10 = matrix->m10 * c - matrix->m11 * s;
-	double n11 = matrix->m10 * s + matrix->m11 * c;
+	a = M_PI * angle / 180.0;
+	c = cos(a);
+	s = sin(a);
+	n00 = matrix->m00 * c - matrix->m01 * s;
+	n01 = matrix->m00 * s + matrix->m01 * c;
+	n10 = matrix->m10 * c - matrix->m11 * s;
+	n11 = matrix->m10 * s + matrix->m11 * c;
 	matrix->m00 = n00; matrix->m01 = n01;
 	matrix->m10 = n10; matrix->m11 = n11;
 }

@@ -161,10 +161,11 @@ void PathCoord::calculatePositionAt(const MapCoordVector& flags, const MapCoordV
 		else if (flags[index].isCurveStart())
 		{
 			float factor = (length - path_coords[i-1].clen) / (path_coords[i].clen - path_coords[i-1].clen);
-			assert(factor >= 0.0);
-			assert(factor <= 1.001f);
+			assert(factor >= -0.01f && factor <= 1.01f);
 			if (factor > 1)
 				factor = 1;
+			else if (factor < 0)
+				factor = 0;
 			float prev_param = (path_coords[i-1].index == path_coords[i].index) ? path_coords[i-1].param : 0;
 			assert(prev_param <= path_coords[i].param);
 			float p = prev_param + (path_coords[i].param - prev_param) * factor;
@@ -185,10 +186,11 @@ void PathCoord::calculatePositionAt(const MapCoordVector& flags, const MapCoordV
 		else
 		{
 			float factor = (length - path_coords[i-1].clen) / (path_coords[i].clen - path_coords[i-1].clen);
-			assert(factor >= 0.0);
-			assert(factor <= 1.001f);
+			assert(factor >= -0.01f && factor <= 1.01f);
 			if (factor > 1)
 				factor = 1;
+			else if (factor < 0)
+				factor = 0;
 			MapCoordF to_next(path_coords[i].pos.getX() - path_coords[i-1].pos.getX(), path_coords[i].pos.getY() - path_coords[i-1].pos.getY());
 			out_pos->setX(path_coords[i-1].pos.getX() + factor * to_next.getX());
 			out_pos->setY(path_coords[i-1].pos.getY() + factor * to_next.getY());

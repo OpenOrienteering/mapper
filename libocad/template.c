@@ -25,9 +25,10 @@
 
 int ocad_to_background(OCADBackground *bg, OCADTemplate *templ) {
 	char tmp[1024];
+	int sz;
 	char *p = strchr(templ->str, 9);
 	if (p == NULL) return -1;
-	int sz = p - templ->str;
+	sz = p - templ->str;
 	memcpy(tmp, templ->str, sz); tmp[sz] = 0;
 	bg->filename = (char *)my_strdup(tmp);
 	if (10 == sscanf(p, F_TEMPL,
@@ -56,15 +57,17 @@ void ocad_background_to_string(char *buf, int size, OCADBackground *bg) {
 
 
 OCADTemplateIndex *ocad_template_index_first(OCADFile *pfile) {
+	dword offs;
 	if (!pfile->header) return NULL;
-	dword offs = pfile->header->otemplidx;
+	offs = pfile->header->otemplidx;
 	if (offs == 0) return NULL;
 	return (OCADTemplateIndex *)(pfile->buffer + offs);
 }
 
 OCADTemplateIndex *ocad_template_index_next(OCADFile *pfile, OCADTemplateIndex *current) {
+	dword offs;
 	if (!pfile->header || !current) return NULL;
-	dword offs = current->next;
+	offs = current->next;
 	if (offs == 0) return NULL;
 	return (OCADTemplateIndex *)(pfile->buffer + offs);
 }
@@ -76,9 +79,9 @@ OCADTemplateEntry *ocad_template_entry_at(OCADFile *pfile, OCADTemplateIndex *cu
 }
 
 OCADTemplateEntry *ocad_template_entry_new(OCADFile *pfile, u32 size) {
-	if (!pfile->header) return NULL;
 	OCADTemplateEntry *empty = NULL; // holder for first empty (size=0) index entry, if needed
 	OCADTemplateIndex *idx;
+	if (!pfile->header) return NULL;
 	for (idx = ocad_template_index_first(pfile); idx != NULL; idx = ocad_template_index_next(pfile, idx)) {
 		int i;
 		for (i = 0; i < 256; i++) {
@@ -117,9 +120,10 @@ bool ocad_template_entry_iterate(OCADFile *pfile, OCADTemplateEntryCallback call
 }
 
 OCADTemplate *ocad_template_at(OCADFile *pfile, OCADTemplateIndex *current, int index) {
+	dword offs;
 	OCADTemplateEntry *entry = ocad_template_entry_at(pfile, current, index);
 	if (entry == NULL) return NULL;
-	dword offs = entry->ptr;
+	offs = entry->ptr;
 	if (offs == 0) return NULL;
 	return (OCADTemplate *)(pfile->buffer + offs);
 }
@@ -131,10 +135,12 @@ OCADTemplate *ocad_template(OCADFile *pfile, OCADTemplateEntry *entry) {
 }
 
 int ocad_template_add_background(OCADFile *pfile, OCADBackground *bg) {
+	OCADTemplateEntry *entry;
+	OCADTemplate *templ;
 	int size = ocad_template_size_background(bg);
-	OCADTemplateEntry *entry = ocad_template_entry_new(pfile, size);
+	entry = ocad_template_entry_new(pfile, size);
 	if (entry == NULL) return -1;
-	OCADTemplate *templ = ocad_template(pfile, entry);
+	templ = ocad_template(pfile, entry);
 	ocad_background_to_string(templ->str, size, bg);
 	entry->type = 8;
 	entry->res1 = 0;

@@ -23,7 +23,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#ifndef _MSC_VER
 #include <unistd.h>
+#endif
 
 #include "libocad.h"
 
@@ -41,17 +43,20 @@ typedef struct _IndexBuilder {
  *  the new value of the destination pointer.
  */
 static u8 *copy_and_advance(u8 *dest, const void *src, u32 size) {
+	u64 tmp;
+	u8 *end;
 	if (src != NULL) memcpy(dest, src, size);
 	// align to dword
-	u64 tmp = (u64)dest + size + (4 - 1);
+	tmp = (u64)dest + size + (4 - 1);
 	tmp -= tmp % 4;
-	u8 *end = (u8 *)tmp;
+	end = (u8 *)tmp;
 	if (src == NULL) size = 0;
 	memset(dest + size, 0, (end - (dest + size)));
 	return (u8 *)tmp;
 }
 
 static bool ocad_file_compact_symbol_cb(void *param, OCADFile *pfile, OCADSymbol *symbol) {
+	OCADSymbolEntry *entry;
 	IndexBuilder *b = (IndexBuilder *)param;
 	OCADSymbolIndex *idx = (OCADSymbolIndex *)b->idx;
 	if (++b->i == 256) {
@@ -61,7 +66,7 @@ static bool ocad_file_compact_symbol_cb(void *param, OCADFile *pfile, OCADSymbol
 		b->idx = next; b->i = 0;
 		idx = (OCADSymbolIndex *)b->idx;
 	}
-	OCADSymbolEntry *entry = &(idx->entry[b->i]);
+	entry = &(idx->entry[b->i]);
 
 	entry->ptr = (b->p - b->base);
 
@@ -70,6 +75,8 @@ static bool ocad_file_compact_symbol_cb(void *param, OCADFile *pfile, OCADSymbol
 }
 
 static bool ocad_file_compact_object_entry_cb(void *param, OCADFile *pfile, OCADObjectEntry *entry) {
+	OCADObjectEntry *enew;
+	OCADObject *object;
 	IndexBuilder *b = (IndexBuilder *)param;
 	OCADObjectIndex *idx = (OCADObjectIndex *)b->idx;
 	if (++b->i == 256) {
@@ -79,8 +86,8 @@ static bool ocad_file_compact_object_entry_cb(void *param, OCADFile *pfile, OCAD
 		b->idx = next; b->i = 0;
 		idx = (OCADObjectIndex *)b->idx;
 	}
-	OCADObjectEntry *enew = &(idx->entry[b->i]);
-	OCADObject *object = ocad_object(pfile, entry);
+	enew = &(idx->entry[b->i]);
+	object = ocad_object(pfile, entry);
 
 	enew->ptr = (b->p - b->base);
 	enew->npts = object->npts + object->ntext;
@@ -93,6 +100,8 @@ static bool ocad_file_compact_object_entry_cb(void *param, OCADFile *pfile, OCAD
 static bool ocad_file_compact_template_entry_cb(void *param, OCADFile *pfile, OCADTemplateEntry *entry) {
 	IndexBuilder *b = (IndexBuilder *)param;
 	OCADTemplateIndex *idx = (OCADTemplateIndex *)b->idx;
+	OCADTemplateEntry *enew;
+	OCADTemplate *templ;
 	if (++b->i == 256) {
 		u8 *next = b->p;
 		b->p = copy_and_advance(b->p, NULL, sizeof(OCADTemplateIndex));
@@ -100,15 +109,15 @@ static bool ocad_file_compact_template_entry_cb(void *param, OCADFile *pfile, OC
 		b->idx = next; b->i = 0;
 		idx = (OCADTemplateIndex *)b->idx;
 	}
-	OCADTemplateEntry *enew = &(idx->entry[b->i]);
-	OCADTemplate *template = ocad_template(pfile, entry);
+	enew = &(idx->entry[b->i]);
+	templ = ocad_template(pfile, entry);
 
 	// Write a new index entry
 	enew->ptr = (b->p - b->base);
 	enew->size = entry->size;
 	enew->type = entry->type;
 
-	b->p = copy_and_advance(b->p, template, entry->size);
+	b->p = copy_and_advance(b->p, templ, entry->size);
 	return TRUE;
 }
 
@@ -142,7 +151,11 @@ int ocad_shutdown() {
 }
 
 int ocad_file_open(OCADFile **pfile, const char *filename) {
+	struct stat fs;
+	int left;
 	int err = 0;
+	u8 *p;
+	dword offs;
 	OCADFile *file = *pfile;
 	if (file == NULL) {
 		file = (OCADFile *)malloc(sizeof(OCADFile));
@@ -152,7 +165,6 @@ int ocad_file_open(OCADFile **pfile, const char *filename) {
 	file->filename = (const char *)my_strdup(filename);
 	file->fd = open(file->filename, O_RDONLY | O_BINARY);
 	if (file->fd <= 0) { err = -2; goto ocad_file_open_1; }
-	struct stat fs;
 	if (fstat(file->fd, &fs) < 0) { err = -3; goto ocad_file_open_1; }
 	file->size = fs.st_size;
 
@@ -163,7 +175,8 @@ int ocad_file_open(OCADFile **pfile, const char *filename) {
 	file->mapped = FALSE;
 	file->buffer = malloc(file->size);
 	if (file->buffer == NULL) { err = -1; goto ocad_file_open_1; }
-	int left = file->size; u8 *p = file->buffer;
+	left = file->size;
+	p = file->buffer;
 	while (left > 0) {
 		int got = read(file->fd, p, left);
 		if (got <= 0) { fprintf(stderr,"got=%d sz=%d\n",got,file->size);err = -4; goto ocad_file_open_1; }
@@ -173,7 +186,7 @@ int ocad_file_open(OCADFile **pfile, const char *filename) {
 
 	file->header = (OCADFileHeader *)file->buffer;
 	file->colors = (OCADColor *)(file->buffer + 0x48);
-	dword offs = file->header->osetup;
+	offs = file->header->osetup;
 	if (offs > 0) file->setup = (OCADSetup *)(file->buffer + offs);
 
 	*pfile = file;
@@ -212,9 +225,10 @@ int ocad_file_save_as(OCADFile *pfile, const char *filename) {
 	// This behaves the same whether or not the file is memory mapped
 	// It saves to another file, without modifying the filename
 	int err = 0;
+	int got;
 	int fd = open(filename, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0664);
 	if (fd < 0) { err = -2; goto ocad_file_save_as_0; }
-	int got = write(fd, pfile->buffer, pfile->size);
+	got = write(fd, pfile->buffer, pfile->size);
 	if (got != pfile->size) { err = -3; goto ocad_file_save_as_1; }
 
 ocad_file_save_as_1:
@@ -224,17 +238,20 @@ ocad_file_save_as_0:
 }
 
 int ocad_file_compact(OCADFile *pfile) {
+	OCADFile dfile, *pnew;
+	u8 *dest, *p;
+	u32 size;
+	IndexBuilder b;
 	if (!pfile || !pfile->header) return -1; // invalid file
 
 	// compact should always make the file smaller, so the current size should be enough?
-	OCADFile dfile, *pnew = &dfile;
-	u8 *dest = (u8 *)malloc(pfile->size), *p = dest;
+	pnew = &dfile;
+	dest = (u8 *)malloc(pfile->size);
+	p = dest;
 	pnew->buffer = dest;
 	pnew->size = pfile->size; // will change this later...
 	pnew->header = (OCADFileHeader *)dest;
 
-	u32 size;
-	IndexBuilder b;
 	b.base = dest;
 	fprintf(stderr, "Compacting: base=%p\n", dest);
 
@@ -292,11 +309,12 @@ int ocad_export(OCADFile *pfile, void *opts) {
 }
 
 int ocad_export_file(OCADFile *pfile, const char *filename, void *opts) {
+	int ret;
 	OCADExportOptions *options = (OCADExportOptions *)opts;
 	FILE *file = fopen(filename, "wb");
 	if (file == NULL) return -2;
 	options->output = file;
-	int ret = ocad_export(pfile, options);
+	ret = ocad_export(pfile, options);
 	fclose(file);
 	return ret;
 }

@@ -40,7 +40,7 @@ class LineSymbol;
 class AreaSymbol;
 class TextSymbol;
 class TextObject;
-class TextObjectLineInfo;
+struct TextObjectLineInfo;
 
 /// Contains state information about the painter which must be set when rendering a Renderable. Used to order the Renderables by color and minimize state changes
 struct RenderStates

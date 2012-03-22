@@ -107,20 +107,13 @@ qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
-if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-	add_executable(Mapper
-		MACOSX_BUNDLE
-		${Mapper_SRCS}
-		${Mapper_QM}
-		${Mapper_RESOURCES_RCC}
-	)
-else(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-	add_executable(Mapper
-		${Mapper_SRCS}
-		${Mapper_QM}
-		${Mapper_RESOURCES_RCC}
-	)
-endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+add_executable(Mapper
+	WIN32
+	MACOSX_BUNDLE
+	${Mapper_SRCS}
+	${Mapper_QM}
+	${Mapper_RESOURCES_RCC}
+)
 
 target_link_libraries(Mapper
  ${QT_QTCORE_LIBRARY}
@@ -130,4 +123,3 @@ target_link_libraries(Mapper
 )
 
 #include(CPackaging.cmake)
-

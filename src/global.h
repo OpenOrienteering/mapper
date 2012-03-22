@@ -23,3 +23,7 @@
 
 #define QT_USE_FAST_CONCATENATION
 #define QT_USE_FAST_OPERATOR_PLUS
+
+#ifdef _MSC_VER
+	#pragma warning(disable: 4290)	// "C++ exception specification ignored"
+#endif

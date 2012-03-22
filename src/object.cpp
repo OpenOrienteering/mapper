@@ -682,6 +682,7 @@ bool PathObject::connectIfClose(PathObject* other, double connect_threshold_sq)
 	
 	return did_connect_path;
 }
+//#include <QMessageBox>
 void PathObject::connectPathParts(int part_index, PathObject* other, int other_part_index, bool prepend)
 {
 	PathPart& part = parts[part_index];
@@ -696,10 +697,18 @@ void PathObject::connectPathParts(int part_index, PathObject* other, int other_p
 		for (int i = (int)coords.size() - 1; i >= part.start_index + (other_part_size - 1); --i)
 			coords[i] = coords[i - (other_part_size - 1)];
 		
-		coords[part.start_index + other_part_size - 1].setRawX(qRound64((coords[part.start_index].rawX() + other->coords[other_part.end_index].rawX()) / 2));
-		coords[part.start_index + other_part_size - 1].setRawY(qRound64((coords[part.start_index].rawY() + other->coords[other_part.end_index].rawY()) / 2));
-		coords[part.start_index + other_part_size - 1].setHolePoint(false);
-		coords[part.start_index + other_part_size - 1].setClosePoint(false);
+		MapCoord& join_coord = coords[part.start_index + other_part_size - 1];
+
+		
+		//qint64 test = other->coords[other_part.end_index].rawX();
+		//QMessageBox::warning(NULL, "test", QString::number(test));
+		//QMessageBox::warning(NULL, "other->coords[other_part.end_index].rawX()", QString::number(other->coords[other_part.end_index].rawX()));
+
+
+		join_coord.setRawX((join_coord.rawX() + other->coords[other_part.end_index].rawX()) / 2);
+		join_coord.setRawY((join_coord.rawY() + other->coords[other_part.end_index].rawY()) / 2);
+		join_coord.setHolePoint(false);
+		join_coord.setClosePoint(false);
 		
 		for (int i = part.start_index; i < part.start_index + other_part_size - 1; ++i)
 			coords[i] = other->coords[i - part.start_index + other_part.start_index];
@@ -707,8 +716,8 @@ void PathObject::connectPathParts(int part_index, PathObject* other, int other_p
 	else
 	{
 		MapCoord coord = other->coords[other_part.start_index];	// take flags from first coord of path to append
-		coord.setRawX(qRound64((coords[part.end_index].rawX() + coord.rawX()) / 2));
-		coord.setRawY(qRound64((coords[part.end_index].rawY() + coord.rawY()) / 2));
+		coord.setRawX((coords[part.end_index].rawX() + coord.rawX()) / 2);
+		coord.setRawY((coords[part.end_index].rawY() + coord.rawY()) / 2);
 		coords[part.end_index] = coord;
 		
 		for (int i = (int)coords.size() - 1; i > part.end_index + (other_part_size - 1); --i)
@@ -834,9 +843,11 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 	{
 		int index = path_coords[cur_path_coord].index;
 		float factor = (start_len - path_coords[cur_path_coord-1].clen) / (path_coords[cur_path_coord].clen - path_coords[cur_path_coord-1].clen);
-		assert(factor >= 0 && factor <= 1.001f);
+		assert(factor >= -0.01f && factor <= 1.01f);
 		if (factor > 1)
 			factor = 1;
+		else if (factor < 0)
+			factor = 0;
 		float prev_param = (path_coords[cur_path_coord-1].index == path_coords[cur_path_coord].index) ? path_coords[cur_path_coord-1].param : 0;
 		assert(prev_param <= path_coords[cur_path_coord].param);
 		float p = prev_param + (path_coords[cur_path_coord].param - prev_param) * factor;
@@ -890,9 +901,11 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 		{
 			int index = path_coords[cur_path_coord].index - part.start_index;
 			float factor = (end_len - path_coords[cur_path_coord-1].clen) / (path_coords[cur_path_coord].clen - path_coords[cur_path_coord-1].clen);
-			assert(factor >= 0 && factor <= 1.001f);
+			assert(factor >= -0.01f && factor <= 1.01f);
 			if (factor > 1)
 				factor = 1;
+			else if (factor < 0)
+				factor = 0;
 			float prev_param = (path_coords[cur_path_coord-1].index == path_coords[cur_path_coord].index) ? path_coords[cur_path_coord-1].param : 0;
 			assert(prev_param <= path_coords[cur_path_coord].param);
 			float p = prev_param + (path_coords[cur_path_coord].param - prev_param) * factor;
@@ -1122,6 +1135,8 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance)
 				return Symbol::Line;
 			
 			float line_length = path_coords[i+1].clen - path_coords[i].clen;
+			if (line_length < 1e-7)
+				continue;
 			if (dist_along_line > line_length + tolerance)
 				continue;
 			else if (dist_along_line > line_length && coord.lengthToSquared(path_coords[i+1].pos) <= tolerance*tolerance)

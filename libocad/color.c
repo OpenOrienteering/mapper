@@ -29,7 +29,7 @@ static float ocad_color_scale_rgbf(int value) {
 
 static int ocad_color_scale_rgb(int value) {
 	float v = ocad_color_scale_rgbf(value);
-	return (int)round(255 * v);
+	return (int)(255 * v + 0.5);
 }
 
 int ocad_color_count(OCADFile *pfile) {
@@ -44,8 +44,8 @@ OCADColor *ocad_color_at(OCADFile *pfile, int index) {
 }
 
 OCADColor *ocad_color(OCADFile *pfile, u8 number) {
-	if (!pfile->header) return NULL;
 	int i;
+	if (!pfile->header) return NULL;
 	for (i = 0; i < pfile->header->ncolors; i++) {
 		if (pfile->colors[i].number == number) return (pfile->colors + i);
 	}

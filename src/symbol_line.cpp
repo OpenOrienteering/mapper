@@ -430,7 +430,7 @@ void LineSymbol::createPointedLineCap(const MapCoordVector& flags, const MapCoor
 	{
 		float dist_from_start = is_end ? (end - cap_lengths[i]) : (cap_lengths[i] - start);
 		float factor = dist_from_start / cap_length;
-		assert(factor >= -0.001f && factor <= 1.001f);
+		assert(factor >= -0.001f && factor <= 1.01f);
 		
 		MapCoordF right_vector;
 		float scaling;
@@ -849,10 +849,12 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 	if (flags[line_coords[cur_line_coord].index].isCurveStart())
 	{
 		int index = line_coords[cur_line_coord].index;
-		float factor = (start - line_coords[cur_line_coord-1].clen) / (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen);
-		assert(factor >= 0 && factor <= 1.001f);
+		float factor = (start - line_coords[cur_line_coord-1].clen) / qMax(1e-7f, (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen));
+		assert(factor >= -0.01f && factor <= 1.01f);
 		if (factor > 1)
 			factor = 1;
+		else if (factor < 0)
+			factor = 0;
 		float prev_param = (line_coords[cur_line_coord-1].index == line_coords[cur_line_coord].index) ? line_coords[cur_line_coord-1].param : 0;
 		assert(prev_param <= line_coords[cur_line_coord].param);
 		float p = prev_param + (line_coords[cur_line_coord].param - prev_param) * factor;
@@ -921,10 +923,12 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 	if (flags[current_index].isCurveStart())
 	{
 		int index = line_coords[cur_line_coord].index;
-		float factor = (end - line_coords[cur_line_coord-1].clen) / (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen);
-		assert(factor >= 0 && factor <= 1.001f);
+		float factor = (end - line_coords[cur_line_coord-1].clen) / qMax(1e-7f, (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen));
+		assert(factor >= -0.01f && factor <= 1.01f);
 		if (factor > 1)
 			factor = 1;
+		else if (factor < 0)
+			factor = 0;
 		float prev_param = (line_coords[cur_line_coord-1].index == line_coords[cur_line_coord].index) ? line_coords[cur_line_coord-1].param : 0;
 		assert(prev_param <= line_coords[cur_line_coord].param);
 		float p = prev_param + (line_coords[cur_line_coord].param - prev_param) * factor;
