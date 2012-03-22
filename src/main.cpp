@@ -56,6 +56,7 @@ int main(int argc, char** argv)
 #include "Windows.h"
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	return main(0, NULL);
+	QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath() + "/plugins");
+	return main(__argc, __argv);
 }
 #endif
