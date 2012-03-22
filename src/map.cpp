@@ -417,6 +417,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
     file.close();
 
     bool import_complete = false;
+	QString error_msg = tr("Invalid file type.");
     Q_FOREACH(const Format *format, FileFormats.formats())
     {
         // If the format supports import, and thinks it can understand the file header, then proceed.
@@ -454,6 +455,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
             catch (std::exception &e)
             {
                 qDebug() << "Exception:" << e.what();
+				error_msg = e.what();
             }
             if (importer) delete importer;
         }
@@ -468,7 +470,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 
     if (!import_complete)
     {
-        QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\n\nInvalid file type.").arg(path));
+        QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\n\n%2").arg(path).arg(error_msg));
         return false;
     }
 

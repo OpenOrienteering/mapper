@@ -71,6 +71,9 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
     int err = ocad_file_open(&file, filename);
     //qDebug() << "open ocad file" << err;
     if (err != 0) throw FormatException(QObject::tr("Could not open file: libocad returned %1").arg(err));
+	
+	if (file->header->major <= 5 || file->header->major >= 9)
+		throw FormatException(QObject::tr("OCAD files of version %1 cannot be loaded!").arg(file->header->major));
 
     //qDebug() << "file version is" << file->header->major << ", type is"
     //         << ((file->header->ftype == 2) ? "normal" : "other");
