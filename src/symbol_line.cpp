@@ -840,9 +840,11 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 	{
 		int index = line_coords[cur_line_coord].index;
 		float factor = (start - line_coords[cur_line_coord-1].clen) / qMax(1e-7f, (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen));
-		assert(factor >= 0 && factor <= 1.01f);
+		assert(factor >= -0.01f && factor <= 1.01f);
 		if (factor > 1)
 			factor = 1;
+		else if (factor < 0)
+			factor = 0;
 		float prev_param = (line_coords[cur_line_coord-1].index == line_coords[cur_line_coord].index) ? line_coords[cur_line_coord-1].param : 0;
 		assert(prev_param <= line_coords[cur_line_coord].param);
 		float p = prev_param + (line_coords[cur_line_coord].param - prev_param) * factor;
@@ -912,9 +914,11 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 	{
 		int index = line_coords[cur_line_coord].index;
 		float factor = (end - line_coords[cur_line_coord-1].clen) / qMax(1e-7f, (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen));
-		assert(factor >= 0 && factor <= 1.01f);
+		assert(factor >= -0.01f && factor <= 1.01f);
 		if (factor > 1)
 			factor = 1;
+		else if (factor < 0)
+			factor = 0;
 		float prev_param = (line_coords[cur_line_coord-1].index == line_coords[cur_line_coord].index) ? line_coords[cur_line_coord-1].param : 0;
 		assert(prev_param <= line_coords[cur_line_coord].param);
 		float p = prev_param + (line_coords[cur_line_coord].param - prev_param) * factor;

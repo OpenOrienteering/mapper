@@ -834,9 +834,11 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 	{
 		int index = path_coords[cur_path_coord].index;
 		float factor = (start_len - path_coords[cur_path_coord-1].clen) / (path_coords[cur_path_coord].clen - path_coords[cur_path_coord-1].clen);
-		assert(factor >= 0 && factor <= 1.001f);
+		assert(factor >= -0.01f && factor <= 1.01f);
 		if (factor > 1)
 			factor = 1;
+		else if (factor < 0)
+			factor = 0;
 		float prev_param = (path_coords[cur_path_coord-1].index == path_coords[cur_path_coord].index) ? path_coords[cur_path_coord-1].param : 0;
 		assert(prev_param <= path_coords[cur_path_coord].param);
 		float p = prev_param + (path_coords[cur_path_coord].param - prev_param) * factor;
@@ -890,9 +892,11 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 		{
 			int index = path_coords[cur_path_coord].index - part.start_index;
 			float factor = (end_len - path_coords[cur_path_coord-1].clen) / (path_coords[cur_path_coord].clen - path_coords[cur_path_coord-1].clen);
-			assert(factor >= 0 && factor <= 1.001f);
+			assert(factor >= -0.01f && factor <= 1.01f);
 			if (factor > 1)
 				factor = 1;
+			else if (factor < 0)
+				factor = 0;
 			float prev_param = (path_coords[cur_path_coord-1].index == path_coords[cur_path_coord].index) ? path_coords[cur_path_coord-1].param : 0;
 			assert(prev_param <= path_coords[cur_path_coord].param);
 			float p = prev_param + (path_coords[cur_path_coord].param - prev_param) * factor;

@@ -313,7 +313,7 @@ void TextObject::prepareLineInfos()
 	
 	// Determine lines and parts
 	
-	double next_line_x_offset = 0; // to keep indentation after word wrap in a line with tabs
+	//double next_line_x_offset = 0; // to keep indentation after word wrap in a line with tabs
 	int num_paragraphs = 0;
 	int line_num = 0;
 	int line_start = 0;
@@ -327,11 +327,10 @@ void TextObject::prepareLineInfos()
 		bool paragraph_end = true;
 		
 		std::vector<TextObjectPartInfo> part_infos;
-		bool have_nonempty_part = false;
-		
-		double part_x = line_x + next_line_x_offset;
 		
 		int part_start = line_start;
+		double part_x = line_x;
+		
 		while (part_start <= line_end)
 		{
 			// Initialize part (sequence of letters terminated by tab or line break)
@@ -341,8 +340,11 @@ void TextObject::prepareLineInfos()
 			else if (part_end > line_end)
 				part_end = line_end;
 			
+			if (part_start > 0 && text[part_start - 1] == '\t')
+				part_x = line_x + text_symbol->getNextTab(part_x - line_x);
+			
 			QString part = text.mid(part_start, part_end - part_start);
-			double part_width = metrics.width(part);
+			double part_width = metrics.boundingRect(part).width();
 			
 			if (word_wrap)
 			{
@@ -354,10 +356,11 @@ void TextObject::prepareLineInfos()
 					if (new_part_end <= part_start)
 					{
 						// part won't fit
-						if (have_nonempty_part)
+						if (part_start > line_start)
 						{
 							// don't put another part on this line
 							part_end = part_start - 1;
+							paragraph_end = false;
 						}
 						break;
 					}
@@ -376,16 +379,10 @@ void TextObject::prepareLineInfos()
 			
 			// Add the current part
 			part_infos.push_back(TextObjectPartInfo(part, part_start, part_end, part_x, metrics.width(part), metrics));
-			if (!part.isEmpty())
-				have_nonempty_part = true;
 			
 			// Advance to next part position
 			part_start = part_end + 1;
-			if (text[part_end] == '\t')
-			{
-				part_x = line_x + text_symbol->getNextTab(part_x + part_width - line_x);
-				next_line_x_offset = part_x - line_x;
-			}
+			part_x += part_width;
 		}
 		
 		TextObjectPartInfo& last_part_info = part_infos.back();
@@ -394,7 +391,7 @@ void TextObject::prepareLineInfos()
 		
 		// Jump over whitespace after the end of the line and check if it contains a newline character to determine if it is a paragraph end
 		int next_line_start = line_end + 1;
-		while (next_line_start < text.size() && (text[next_line_start] == line_break || text[next_line_start] == part_break || text[next_line_start] == word_break))
+		/*while (next_line_start < text.size() && (text[next_line_start] == line_break || text[next_line_start] == part_break || text[next_line_start] == word_break))
 		{
 			if (text[next_line_start - 1] == line_break)
 			{
@@ -402,7 +399,7 @@ void TextObject::prepareLineInfos()
 				break;
 			}
 			++next_line_start;
-		}
+		}*/
 		
 		line_infos.push_back(TextObjectLineInfo(line_start, line_end, paragraph_end, line_x, line_y, line_width, metrics.ascent(), metrics.descent(), part_infos));
 		
@@ -412,7 +409,6 @@ void TextObject::prepareLineInfos()
 		{
 			line_y += paragraph_spacing;
 			num_paragraphs++;
-			next_line_x_offset = 0;
 		}
 		line_num++;
 		line_start = next_line_start;
