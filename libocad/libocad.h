@@ -47,9 +47,9 @@ int my_round (double x);
 typedef char str;
 
 #ifdef _MSC_VER
-	#define PACK( __Declaration__ ) __pragma( pack(push, 1) ) __Declaration__; __pragma( pack(pop) )
+	#define PACK( __Declaration__ , __Name__ ) __pragma( pack(push, 1) ) __Declaration__ __Name__; __pragma( pack(pop) )
 #elif defined(__GNUC__)
-	#define PACK( __Declaration__ ) __Declaration__ __attribute__((__packed__));
+	#define PACK( __Declaration__ , __Name__ ) __Declaration__ __attribute__((__packed__)) __Name__;
 #endif
 
 
@@ -79,7 +79,7 @@ struct _OCADPoint {
 	s32 x;
 	s32 y;
 }
-OCADPoint)
+, OCADPoint)
 
 
 PACK(typedef
@@ -87,7 +87,7 @@ struct _OCADRect {
 	OCADPoint min;
 	OCADPoint max;
 }
-OCADRect)
+, OCADRect)
 
 
 PACK(typedef
@@ -110,7 +110,7 @@ struct _OCADFileHeader {
 	word res7;
 	u8 res8[20];
 }
-OCADFileHeader)
+, OCADFileHeader)
 
 
 PACK(typedef
@@ -147,14 +147,14 @@ struct _OCADColor {
 	 */
 	u8 spot[32];
 }
-OCADColor)
+, OCADColor)
 
 
 PACK(typedef
 struct _OCADSymbolEntry {
 	dword ptr;
 }
-OCADSymbolEntry)
+, OCADSymbolEntry)
 
 
 PACK(typedef
@@ -162,7 +162,7 @@ struct _OCADSymbolIndex {
 	dword next;
 	OCADSymbolEntry entry[256];
 }
-OCADSymbolIndex)
+, OCADSymbolIndex)
 
 
 #define OCAD_POINT_SYMBOL 1
@@ -204,14 +204,14 @@ struct _OCADSymbolElement {
 	s16 res2;
     OCADPoint pts[1];
 }
-OCADSymbolElement)
+, OCADSymbolElement)
 
 
 PACK(typedef
 struct _OCADSymbol {
 	OCADSymbol_COMMON
 }
-OCADSymbol)
+, OCADSymbol)
 
 
 PACK(typedef
@@ -221,7 +221,7 @@ struct _OCADPointSymbol {
 	s16 res;
     OCADPoint pts[1]; 	// This is really a sequence of variable-length OCADSymbolElements.
 }
-OCADPointSymbol)
+, OCADPointSymbol)
 
 
 PACK(typedef
@@ -265,7 +265,7 @@ struct _OCADLineSymbol {
     s16 res4;
     OCADPoint pts[1]; // symbols
 }
-OCADLineSymbol)
+, OCADLineSymbol)
 
 
 PACK(typedef
@@ -289,7 +289,7 @@ struct _OCADAreaSymbol {
 	s16 npts;
     OCADPoint pts[1];
 }
-OCADAreaSymbol)
+, OCADAreaSymbol)
 
 
 PACK(typedef
@@ -323,7 +323,7 @@ struct _OCADTextSymbol {
     s16 fdx;        // horizontal offset
     s16 fdy;        // vertical offset
 }
-OCADTextSymbol)
+, OCADTextSymbol)
 
 
 PACK(typedef
@@ -348,7 +348,7 @@ struct _OCADRectSymbol {
     s16 resdx;
     s16 resdy;
 }
-OCADRectSymbol)
+, OCADRectSymbol)
 
 
 PACK(typedef
@@ -363,7 +363,7 @@ struct _OCADObject {
 	u8 res3[16];
     OCADPoint pts[1];
 }
-OCADObject)
+, OCADObject)
 
 
 PACK(typedef
@@ -373,7 +373,7 @@ struct _OCADObjectEntry {
 	word npts;
 	word symbol; // symbol number
 }
-OCADObjectEntry)
+, OCADObjectEntry)
 
 
 typedef
@@ -388,7 +388,7 @@ PACK(typedef
 struct _OCADTemplate {
     char str[1];  // zero terminated
 }
-OCADTemplate)
+, OCADTemplate)
 
 
 PACK(typedef
@@ -399,7 +399,7 @@ struct _OCADTemplateEntry {
 	word res1;
 	dword res2;
 }
-OCADTemplateEntry)
+, OCADTemplateEntry)
 
 
 PACK(typedef
@@ -407,7 +407,7 @@ struct _OCADTemplateIndex {
 	dword next;
 	OCADTemplateEntry entry[256];
 }
-OCADTemplateIndex)
+, OCADTemplateIndex)
 
 
 PACK(typedef
@@ -459,7 +459,7 @@ struct _OCADSetup {
     TempColor: SmallInt;       {the color if template mode is 1}
 	*/
 }
-OCADSetup)
+, OCADSetup)
 
 
 typedef

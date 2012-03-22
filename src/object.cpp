@@ -682,7 +682,7 @@ bool PathObject::connectIfClose(PathObject* other, double connect_threshold_sq)
 	
 	return did_connect_path;
 }
-#include <QMessageBox>
+//#include <QMessageBox>
 void PathObject::connectPathParts(int part_index, PathObject* other, int other_part_index, bool prepend)
 {
 	PathPart& part = parts[part_index];
@@ -700,11 +700,9 @@ void PathObject::connectPathParts(int part_index, PathObject* other, int other_p
 		MapCoord& join_coord = coords[part.start_index + other_part_size - 1];
 
 		
-		qint64 test = other->coords[other_part.end_index].rawX();
-		QMessageBox::warning(NULL, "test", QString::number(test));
-		QMessageBox::warning(NULL, "other->coords[other_part.end_index].rawX()", QString::number(other->coords[other_part.end_index].rawX()));
-		if (test != other->coords[other_part.end_index].rawX())
-			QMessageBox::warning(NULL, "!!!", "???");
+		//qint64 test = other->coords[other_part.end_index].rawX();
+		//QMessageBox::warning(NULL, "test", QString::number(test));
+		//QMessageBox::warning(NULL, "other->coords[other_part.end_index].rawX()", QString::number(other->coords[other_part.end_index].rawX()));
 
 
 		join_coord.setRawX((join_coord.rawX() + other->coords[other_part.end_index].rawX()) / 2);
