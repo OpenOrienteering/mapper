@@ -24,6 +24,7 @@
 #include "map.h"
 #include "map_color.h"
 #include "object.h"
+#include "object_text.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
 #include "symbol_area.h"
@@ -51,7 +52,7 @@ RenderableContainer::RenderableContainer(Map* map) : map(map)
 {
 }
 
-void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, float opacity_factor, bool highlighted)
+void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity_factor, bool highlighted)
 {
 	Map::ColorVector& colors = map->color_set->colors;
 	
@@ -80,6 +81,13 @@ void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool forc
 			if (extent.bottom() < bounding_box.y())	continue;
 			if (extent.x() > bounding_box.right())	continue;
 			if (extent.y() > bounding_box.bottom())	continue;
+			
+			// Settings check
+			Symbol* symbol = renderable->getCreator()->getSymbol();
+			if (!show_helper_symbols && symbol->isHelperSymbol())
+				continue;
+			if (symbol->isHidden())
+				continue;
 			
 			// Change render states?
 			if (states != new_states)
@@ -550,7 +558,6 @@ TextRenderable::TextRenderable(TextSymbol* symbol, double line_x, double line_y,
 	else*/
 		path.addText(line_x, line_y, font, line);
 	
-	// Get extent
 	extent = path.controlPointRect();
 	extent = QRectF(scale_factor * extent.left(), scale_factor * extent.top(), scale_factor * extent.width(), scale_factor * extent.height());
 	if (rotation != 0)
@@ -580,46 +587,51 @@ TextRenderable::TextRenderable(TextSymbol* symbol, double line_x, double line_y,
 	assert(extent.right() < 999999);	// assert if bogus values are returned
 }
 
-TextRenderable::TextRenderable(TextSymbol* symbol, TextObjectLineInfo* line_info, double anchor_x, double anchor_y, double rotation)
+TextRenderable::TextRenderable(TextSymbol* symbol, TextObject* text_object, double anchor_x, double anchor_y)
 {
 	const QFont& font(symbol->getQFont());
 	const QFontMetricsF& metrics(symbol->getFontMetrics());
 	color_priority = symbol->getColor()->priority;
 	this->anchor_x = anchor_x;
 	this->anchor_y = anchor_y;
-	this->rotation = rotation;
+	this->rotation = text_object->getRotation();
 	scale_factor = symbol->getFontSize() / TextSymbol::internal_point_size;
 	
 	path.setFillRule(Qt::WindingFill);	// Otherwise, when text and an underline intersect, holes appear
 	
-	double line_y = line_info->line_y;
-
-	double underline_x0 = 0.0;
-	double underline_y0 = line_info->line_y + metrics.underlinePos();
-	double underline_y1 = underline_y0 + metrics.lineWidth();
-	
-	int num_parts = line_info->part_infos.size();
-	for (int i=0; i < num_parts; i++)
+	int num_lines = text_object->getNumLines();
+	for (int i=0; i < num_lines; i++)
 	{
-		TextObjectPartInfo& part(line_info->part_infos.at(i));
-		if (font.underline())
+		const TextObjectLineInfo* line_info = text_object->getLineInfo(i);
+		
+		double line_y = line_info->line_y;
+		
+		double underline_x0 = 0.0;
+		double underline_y0 = line_info->line_y + metrics.underlinePos();
+		double underline_y1 = underline_y0 + metrics.lineWidth();
+		
+		int num_parts = line_info->part_infos.size();
+		for (int j=0; j < num_parts; j++)
 		{
-			if (i > 0)
+			const TextObjectPartInfo& part(line_info->part_infos.at(j));
+			if (font.underline())
 			{
-				// draw underline for gap between parts as rectangle
-				// TODO: watch out for inconsistency between text and gap underline
-				path.moveTo(underline_x0, underline_y0);
-				path.lineTo(part.part_x,  underline_y0);
-				path.lineTo(part.part_x,  underline_y1);
-				path.lineTo(underline_x0, underline_y1);
-				path.closeSubpath();
+				if (j > 0)
+				{
+					// draw underline for gap between parts as rectangle
+					// TODO: watch out for inconsistency between text and gap underline
+					path.moveTo(underline_x0, underline_y0);
+					path.lineTo(part.part_x,  underline_y0);
+					path.lineTo(part.part_x,  underline_y1);
+					path.lineTo(underline_x0, underline_y1);
+					path.closeSubpath();
+				}
+				underline_x0 = part.part_x;
 			}
-			underline_x0 = part.part_x;
+			path.addText(part.part_x, line_y, font, part.part_text);
 		}
-		path.addText(part.part_x, line_y, font, part.text);
 	}
 	
-	// Get extent
 	extent = path.controlPointRect();
 	extent = QRectF(scale_factor * extent.left(), scale_factor * extent.top(), scale_factor * extent.width(), scale_factor * extent.height());
 	if (rotation != 0)
@@ -657,6 +669,7 @@ TextRenderable::TextRenderable(const TextRenderable& other) : Renderable(other)
 	rotation = other.rotation;
 	scale_factor = other.scale_factor;
 }
+
 void TextRenderable::getRenderStates(RenderStates& out)
 {
 	out.color_priority = color_priority;
@@ -664,6 +677,7 @@ void TextRenderable::getRenderStates(RenderStates& out)
 	out.pen_width = 0;
 	out.clip_path = clip_path;
 }
+
 void TextRenderable::render(QPainter& painter, bool force_min_size, float scaling)
 {
 	// NOTE: mini-optimization to prevent the save-restore for un-rotated texts which could be used when the scale-hack is no longer necessary

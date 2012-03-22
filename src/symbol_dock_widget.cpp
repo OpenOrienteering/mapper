@@ -80,6 +80,11 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	switch_symbol_action = context_menu->addAction(tr("Switch symbol of selected object(s)"), parent, SLOT(emitSwitchSymbolClicked()));
 	fill_border_action = context_menu->addAction(tr("Fill / Create border for selected object(s)"), parent, SLOT(emitFillBorderClicked()));
 	context_menu->addSeparator();
+	hide_action = context_menu->addAction(tr("Hide objects with this symbol"), this, SLOT(setSelectedSymbolVisibility(bool)));
+	hide_action->setCheckable(true);
+	protect_action = context_menu->addAction(tr("Protect objects with this symbol"), this, SLOT(setSelectedSymbolProtection(bool)));
+	protect_action->setCheckable(true);
+	context_menu->addSeparator();
     context_menu->addAction(tr("Select all"), this, SLOT(selectAll()));
     context_menu->addAction(tr("Invert selection"), this, SLOT(invertSelection()));
     context_menu->addSeparator();
@@ -309,6 +314,21 @@ void SymbolRenderWidget::paintEvent(QPaintEvent* event)
 			painter.setPen(Qt::gray);
 		}
 		
+		if (map->getSymbol(i)->isHidden() || map->getSymbol(i)->isProtected())
+		{
+			QPen pen(Qt::white);
+			pen.setWidth(3);
+			painter.setPen(pen);
+			painter.drawLine(corner + QPoint(1, 1), corner + QPoint(Symbol::icon_size - 2, Symbol::icon_size - 2));
+			painter.drawLine(corner + QPoint(Symbol::icon_size - 3, 1), corner + QPoint(1, Symbol::icon_size - 3));
+			
+			painter.setPen(QPen(map->getSymbol(i)->isHidden() ? Qt::red : Qt::blue));
+			painter.drawLine(corner + QPoint(0, 0), corner + QPoint(Symbol::icon_size - 2, Symbol::icon_size - 2));
+			painter.drawLine(corner + QPoint(Symbol::icon_size - 2, 0), corner + QPoint(0, Symbol::icon_size - 2));
+			
+			painter.setPen(Qt::gray);
+		}
+		
 		painter.drawLine(corner + QPoint(0, Symbol::icon_size - 1), corner + QPoint(Symbol::icon_size - 1, Symbol::icon_size - 1));
 		painter.drawLine(corner + QPoint(Symbol::icon_size - 1, 0), corner + QPoint(Symbol::icon_size - 1, Symbol::icon_size - 2));
 		
@@ -388,7 +408,36 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 	
 	if (event->button() == Qt::RightButton)
 	{
-        updateContextMenuState();
+        bool have_selection = getNumSelectedSymbols() > 0;
+		bool single_selection = getNumSelectedSymbols() == 1 && current_symbol_index >= 0;
+		Symbol* single_symbol = getSingleSelectedSymbol();
+		bool all_symbols_hidden = have_selection;
+		bool all_symbols_protected = have_selection;
+		for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+		{
+			if (!map->getSymbol(*it)->isHidden())
+				all_symbols_hidden = false;
+			if (!map->getSymbol(*it)->isProtected())
+				all_symbols_protected = false;
+			if (!all_symbols_hidden && !all_symbols_protected)
+				break;
+		}
+		
+		bool single_symbol_compatible;
+		bool single_symbol_different;
+		map->getSelectionToSymbolCompatibility(single_symbol, single_symbol_compatible, single_symbol_different);
+		
+		edit_action->setEnabled(single_selection);
+		scale_action->setEnabled(single_selection);
+		switch_symbol_action->setEnabled(single_symbol_compatible && single_symbol_different);
+		fill_border_action->setEnabled(single_symbol_compatible && single_symbol_different);
+		hide_action->setEnabled(have_selection);
+		hide_action->setChecked(all_symbols_hidden);
+		protect_action->setEnabled(have_selection);
+		protect_action->setChecked(all_symbols_protected);
+		duplicate_action->setEnabled(single_selection);
+		delete_action->setEnabled(have_selection);
+		
 		context_menu->popup(event->globalPos());
 		event->accept();
 	}
@@ -419,7 +468,7 @@ void SymbolRenderWidget::leaveEvent(QEvent* event)
 }
 void SymbolRenderWidget::wheelEvent(QWheelEvent* event)
 {
-	if (scroll_bar)
+	if (scroll_bar && scroll_bar->isEnabled())
 	{
 		scroll_bar->event(event);
 		mouseMove(event->x(), event->y());
@@ -588,6 +637,45 @@ void SymbolRenderWidget::duplicateSymbol()
 	symbol_widget->adjustSize();
 	map->setSymbolsDirty();
 }
+void SymbolRenderWidget::setSelectedSymbolVisibility(bool checked)
+{
+	bool selection_changed = false;
+	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	{
+		Symbol* symbol = map->getSymbol(*it);
+		if (symbol->isHidden() != checked)
+		{
+			symbol->setHidden(checked);
+			updateIcon(*it);
+			if (checked)
+				selection_changed |= map->removeSymbolFromSelection(symbol, false);
+		}
+	}
+	if (selection_changed)
+		map->emitSelectionChanged();
+	map->updateAllMapWidgets();
+	map->setSymbolsDirty();
+	symbol_widget->emitSelectedSymbolsChanged();
+}
+void SymbolRenderWidget::setSelectedSymbolProtection(bool checked)
+{
+	bool selection_changed = false;
+	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	{
+		Symbol* symbol = map->getSymbol(*it);
+		if (symbol->isProtected() != checked)
+		{
+			symbol->setProtected(checked);
+			updateIcon(*it);
+			if (checked)
+				selection_changed |= map->removeSymbolFromSelection(symbol, false);
+		}
+	}
+	if (selection_changed)
+		map->emitSelectionChanged();
+	map->setSymbolsDirty();
+	symbol_widget->emitSelectedSymbolsChanged();
+}
 void SymbolRenderWidget::selectAll()
 {
 	for (int i = 0; i < map->getNumSymbols(); ++i)
@@ -675,6 +763,7 @@ SymbolWidget::SymbolWidget(Map* map, QWidget* parent): EditorDockWidgetChild(par
 	no_resize_handling = false;
 	
 	scroll_bar = new QScrollBar();
+	scroll_bar->setEnabled(false);
 	scroll_bar->hide();
 	scroll_bar->setOrientation(Qt::Vertical);
 	scroll_bar->setSingleStep(Symbol::icon_size);

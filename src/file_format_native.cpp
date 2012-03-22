@@ -27,7 +27,7 @@
 #include "util.h"
 
 const int NativeFileFormat::least_supported_file_format_version = 0;
-const int NativeFileFormat::current_file_format_version = 9;
+const int NativeFileFormat::current_file_format_version = 11;
 const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 
 bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
@@ -57,7 +57,7 @@ NativeFileImport::~NativeFileImport()
 {
 }
 
-void NativeFileImport::doImport() throw (FormatException)
+void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 {
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly))
@@ -153,55 +153,65 @@ void NativeFileImport::doImport() throw (FormatException)
         map->symbols[i] = symbol;
     }
 
-    // Load templates
-    file.read((char*)&map->first_front_template, sizeof(int));
+    if (!load_symbols_only)
+	{
+		// Load templates
+		file.read((char*)&map->first_front_template, sizeof(int));
 
-    int num_templates;
-    file.read((char*)&num_templates, sizeof(int));
-    map->templates.resize(num_templates);
+		int num_templates;
+		file.read((char*)&num_templates, sizeof(int));
+		map->templates.resize(num_templates);
 
-    for (int i = 0; i < num_templates; ++i)
-    {
-        QString path;
-        loadString(&file, path);
+		for (int i = 0; i < num_templates; ++i)
+		{
+			QString path;
+			loadString(&file, path);
 
-        Template* temp = Template::templateForFile(path, map);
-        temp->loadTemplateParameters(&file);
+			Template* temp = Template::templateForFile(path, map);
+			temp->loadTemplateParameters(&file);
 
-        map->templates[i] = temp;
-    }
+			map->templates[i] = temp;
+		}
 
-    // Restore widgets and views
-    view->load(&file);
+		// Restore widgets and views
+		view->load(&file);
 
-    // Load undo steps
-    if (version >= 7)
-    {
-        if (!map->object_undo_manager.load(&file, version))
-        {
-            throw FormatException(QObject::tr("Problem while opening file:\n%1\n\nError while loading undo steps.").arg(file.fileName()));
-        }
-    }
+		// Load undo steps
+		if (version >= 7)
+		{
+			if (!map->object_undo_manager.load(&file, version))
+			{
+				throw FormatException(QObject::tr("Problem while opening file:\n%1\n\nError while loading undo steps.").arg(file.fileName()));
+			}
+		}
 
-    // Load layers
-    file.read((char*)&map->current_layer_index, sizeof(int));
+		// Load layers
+		file.read((char*)&map->current_layer_index, sizeof(int));
 
-    int num_layers;
-    if (file.read((char*)&num_layers, sizeof(int)) < (int)sizeof(int))
-    {
-        throw FormatException(QObject::tr("Problem while opening file:\n%1\n\nError while reading layer count.").arg(file.fileName()));
-    }
-    map->layers.resize(num_layers);
+		int num_layers;
+		if (file.read((char*)&num_layers, sizeof(int)) < (int)sizeof(int))
+		{
+			throw FormatException(QObject::tr("Problem while opening file:\n%1\n\nError while reading layer count.").arg(file.fileName()));
+		}
+		map->layers.resize(num_layers);
 
-    for (int i = 0; i < num_layers; ++i)
-    {
-        MapLayer* layer = new MapLayer("", map);
-        if (!layer->load(&file, version, map))
-        {
-            throw FormatException(QObject::tr("Problem while opening file:\n%1\n\nError while loading layer %2.").arg(file.fileName()).arg(i+1));
-        }
-        map->layers[i] = layer;
-    }
+		for (int i = 0; i < num_layers; ++i)
+		{
+			MapLayer* layer = new MapLayer("", map);
+			if (!layer->load(&file, version, map))
+			{
+				throw FormatException(QObject::tr("Problem while opening file:\n%1\n\nError while loading layer %2.").arg(file.fileName()).arg(i+1));
+			}
+			map->layers[i] = layer;
+		}
+	}
+	else
+	{
+		MapLayer* layer = new MapLayer(QObject::tr("default"), map);
+		map->layers.resize(1);
+		map->layers[0] = layer;
+		map->current_layer_index = 0;
+	}
 }
 
 

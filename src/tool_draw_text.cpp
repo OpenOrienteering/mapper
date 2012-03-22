@@ -29,7 +29,7 @@
 #include "symbol_dock_widget.h"
 #include "symbol.h"
 #include "util.h"
-#include "object.h"
+#include "object_text.h"
 #include "symbol_text.h"
 
 QCursor* DrawTextTool::cursor = NULL;
@@ -155,6 +155,11 @@ bool DrawTextTool::keyPressEvent(QKeyEvent* event)
 		if (text_editor->keyPressEvent(event))
 			return true;
 	}
+	else if (event->key() == Qt::Key_Tab)
+	{
+		editor->setEditTool();
+		return true;
+	}
 	
 	return false;
 }
@@ -177,7 +182,7 @@ void DrawTextTool::draw(QPainter* painter, MapWidget* widget)
 		widget->applyMapTransform(painter);
 		
 		float alpha = text_editor ? 1 : 0.5f;
-		renderables.draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), alpha);
+		renderables.draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, alpha);
 		
 		if (text_editor)
 			text_editor->draw(painter, widget);
@@ -204,13 +209,15 @@ void DrawTextTool::draw(QPainter* painter, MapWidget* widget)
 void DrawTextTool::selectedSymbolsChanged()
 {
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
-	if (symbol == NULL || symbol->getType() != Symbol::Text)
+	if (symbol == NULL || symbol->getType() != Symbol::Text || symbol->isHidden())
 	{
 		if (text_editor)
 			finishEditing();
 		
-		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(symbol);
-		editor->setTool(draw_tool);	
+		if (symbol->isHidden())
+			editor->setEditTool();
+		else
+			editor->setTool(editor->getDefaultDrawToolForSymbol(symbol));
 		return;
 	}
 	
@@ -500,7 +507,7 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 		if (line_info->start_index == 0)
 			return true;
 		
-		double x = line_info->getX(selection_start - line_info->start_index);
+		double x = line_info->getX(selection_start);
 		TextObjectLineInfo* prev_line_info = object->getLineInfo(line_num-1);
 		double y = prev_line_info->line_y;
 		x = qMax( prev_line_info->line_x, qMin(x, prev_line_info->line_x + prev_line_info->width));
@@ -517,7 +524,7 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 		if (line_info->end_index >= object->getText().length())
 			return true;
 		
-		double x = line_info->getX(selection_end - line_info->start_index);
+		double x = line_info->getX(selection_end);
 		TextObjectLineInfo* next_line_info = object->getLineInfo(line_num+1);
 		double y = next_line_info->line_y;
 		x = qMax( next_line_info->line_x, qMin(x, next_line_info->line_x + next_line_info->width));
@@ -529,7 +536,7 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 	}
 	else if (event->key() == Qt::Key_Home)
 	{
-		int destination = (event->modifiers() & Qt::ControlModifier) ? 0 : (object->findLineInfoForIndex(selection_start)->start_index);
+		int destination = (event->modifiers() & Qt::ControlModifier) ? 0 : (object->findLineInfoForIndex(selection_start).start_index);
 		if (event->modifiers() & Qt::ShiftModifier)
 		{
 			if (selection_start == destination)
@@ -551,7 +558,7 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 		if (event->modifiers() & Qt::ControlModifier)
 			destination = object->getText().length();
 		else
-			destination = object->findLineInfoForIndex(selection_start)->end_index;
+			destination = object->findLineInfoForIndex(selection_start).end_index;
 		
 		if (event->modifiers() & Qt::ShiftModifier)
 		{
@@ -661,7 +668,7 @@ void TextObjectEditorHelper::updateDragging(MapCoordF map_coord)
 }
 bool TextObjectEditorHelper::getNextLinesSelectionRect(int& line, QRectF& out)
 {
-	for (; line < object->getNumLineInfos(); ++line)
+	for (; line < object->getNumLines(); ++line)
 	{
 		TextObjectLineInfo* line_info = object->getLineInfo(line);
 		if (line_info->end_index + 1 < selection_start)
@@ -669,8 +676,8 @@ bool TextObjectEditorHelper::getNextLinesSelectionRect(int& line, QRectF& out)
 		if (selection_end < line_info->start_index)
 			break;
 		
-		int start_index = qMax(0, selection_start - line_info->start_index);
-		int end_index = qMax(0, qMin(line_info->end_index, selection_end) - line_info->start_index);
+		int start_index = qMax(selection_start, line_info->start_index);
+		int end_index = qMax(qMin(line_info->end_index, selection_end), line_info->start_index);
 		
 		float left, right;
 		if (start_index == end_index)

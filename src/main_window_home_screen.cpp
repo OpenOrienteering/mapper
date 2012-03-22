@@ -178,7 +178,7 @@ void DocumentSelectionWidget::updateRecentFiles()
 	
 	int num_recent_files = files.size();
 	for (int i = 0; i < num_recent_files; ++i) {
-		QString text = tr("%1").arg(QFileInfo(files[i]).fileName());
+		QString text = QString("%1").arg(QFileInfo(files[i]).fileName());
 		
 		QListWidgetItem* new_item = new QListWidgetItem(text);
 		new_item->setData(Qt::UserRole, files[i]);

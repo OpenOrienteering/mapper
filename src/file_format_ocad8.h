@@ -32,6 +32,8 @@
 #include "object.h"
 #include "template.h"
 
+class TextObject;
+
 class OCAD8FileFormat : public Format
 {
 public:
@@ -48,7 +50,7 @@ public:
     OCAD8FileImport(const QString &path, Map *map, MapView *view);
     ~OCAD8FileImport();
 
-    void doImport() throw (FormatException);
+	void doImport(bool load_symbols_only) throw (FormatException);
 
     void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
 
@@ -75,7 +77,7 @@ protected:
     void fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol);
     void fillCombinedSymbol(CombinedSymbol *symbol, const std::vector<Symbol *> &symbols);
     void fillPathCoords(Object *object, bool is_area, s16 npts, OCADPoint *pts);
-    bool fillTextPathCoords(TextObject *object, s16 npts, OCADPoint *pts);
+	bool fillTextPathCoords(TextObject *object, TextSymbol *symbol, s16 npts, OCADPoint *pts);
     bool isRasterImageFile(const QString &filename) const;
     bool isMainLineTrivial(const LineSymbol *symbol);
 
@@ -104,6 +106,9 @@ private:
 
     /// maps OCAD symbol number to oo-mapper symbol object
     QHash<int, Symbol *> symbol_index;
+	
+	/// maps OO Mapper text symbol pointer to OCAD text symbol horizontal alignment (stored in objects instead of symbols in OO Mapper)
+	QHash<Symbol*, int> text_halign_map;
 
     /// Offset between OCAD map origin and Mapper map origin (in Mapper coordinates)
     qint64 offset_x, offset_y;

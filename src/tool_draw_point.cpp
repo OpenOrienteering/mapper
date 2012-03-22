@@ -166,7 +166,7 @@ void DrawPointTool::draw(QPainter* painter, MapWidget* widget)
 						   widget->height() / 2.0 + widget->getMapView()->getDragOffset().y());
 		widget->getMapView()->applyTransform(painter);
 		
-		renderables.draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), 0.5f);
+		renderables.draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, 0.5f);
 		
 		painter->restore();
 	}
@@ -213,10 +213,12 @@ float DrawPointTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map
 void DrawPointTool::selectedSymbolsChanged()
 {
 	Symbol* single_selected_symbol = symbol_widget->getSingleSelectedSymbol();
-	if (single_selected_symbol == NULL || single_selected_symbol->getType() != Symbol::Point)
+	if (single_selected_symbol == NULL || single_selected_symbol->getType() != Symbol::Point || single_selected_symbol->isHidden())
 	{
-		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(single_selected_symbol);
-		editor->setTool(draw_tool);	
+		if (single_selected_symbol->isHidden())
+			editor->setEditTool();
+		else
+			editor->setTool(editor->getDefaultDrawToolForSymbol(single_selected_symbol));
 	}
 	else
 		last_used_symbol = single_selected_symbol;

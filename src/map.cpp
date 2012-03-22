@@ -143,24 +143,34 @@ bool MapLayer::deleteObject(Object* object, bool remove_only)
 	return false;
 }
 
-void MapLayer::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, SelectionInfoVector& out)
+void MapLayer::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out)
 {
 	int size = objects.size();
 	for (int i = 0; i < size; ++i)
 	{
+		if (!include_hidden_objects && objects[i]->getSymbol()->isHidden())
+			continue;
+		if (!include_protected_objects && objects[i]->getSymbol()->isProtected())
+			continue;
+		
 		objects[i]->update();
 		int selected_type = objects[i]->isPointOnObject(coord, tolerance, extended_selection);
 		if (selected_type != (int)Symbol::NoSymbol)
 			out.push_back(std::pair<int, Object*>(selected_type, objects[i]));
 	}
 }
-void MapLayer::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vector< Object* >& out)
+void MapLayer::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector< Object* >& out)
 {
 	QRectF rect = QRectF(corner1.toQPointF(), corner2.toQPointF());
 	
 	int size = objects.size();
 	for (int i = 0; i < size; ++i)
 	{
+		if (!include_hidden_objects && objects[i]->getSymbol()->isHidden())
+			continue;
+		if (!include_protected_objects && objects[i]->getSymbol()->isProtected())
+			continue;
+		
 		objects[i]->update();
 		if (rect.intersects(objects[i]->getExtent()) && objects[i]->isPathPointInBox(rect))
 			out.push_back(objects[i]);
@@ -194,11 +204,11 @@ void MapLayer::scaleAllObjects(double factor)
 	
 	forceUpdateOfAllObjects();
 }
-void MapLayer::updateAllObjects()
+void MapLayer::updateAllObjects(bool remove_old_renderables)
 {
 	int size = objects.size();
 	for (int i = size - 1; i >= 0; --i)
-		objects[i]->update(true);
+		objects[i]->update(true, remove_old_renderables);
 }
 void MapLayer::updateAllObjectsWithSymbol(Symbol* symbol)
 {
@@ -386,7 +396,7 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 	
 	return true;
 }
-bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
+bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool load_symbols_only)
 {
     MapView *view = new MapView(this);
 
@@ -419,7 +429,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
                 importer = format->createImporter(path, this, view);
 
                 // Run the first pass.
-                importer->doImport();
+                importer->doImport(load_symbols_only);
 
                 // Are there any actions the user must take to complete the import?
                 if (!importer->actions().empty())
@@ -471,6 +481,8 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor)
             return false;
         }
     }
+    // Update all objects without trying to remove their renderables first, this gives a significant speedup when loading large files
+    updateAllObjects(false);
 
 
     Exporter *exporter = FileFormats.findFormat("XML")->createExporter("tmp.xml", this, view);
@@ -515,13 +527,13 @@ void Map::clear()
 	unsaved_changes = false;
 }
 
-void Map::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling)
+void Map::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols)
 {
 	// Update the renderables of all objects marked as dirty
 	updateObjects();
 	
 	// The actual drawing
-	renderables.draw(painter, bounding_box, force_min_size, scaling);
+	renderables.draw(painter, bounding_box, force_min_size, scaling, show_helper_symbols);
 }
 void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, bool draw_untransformed_parts, const QRect& untransformed_dirty_rect, MapWidget* widget, MapView* view)
 {
@@ -627,9 +639,9 @@ void Map::includeSelectionRect(QRectF& rect)
 		++it;
 	}
 }
-void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, RenderableContainer* replacement_renderables)
+void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, RenderableContainer* replacement_renderables, bool draw_normal)
 {
-	const float selection_opacity_factor = 0.35f;
+	const float selection_opacity_factor = draw_normal ? 1 : 0.35f;
 	
 	MapView* view = widget->getMapView();
 	
@@ -639,7 +651,7 @@ void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widge
 	
 	if (!replacement_renderables)
 		replacement_renderables = &selection_renderables;
-	replacement_renderables->draw(painter, view->calculateViewedRect(widget->viewportToView(widget->rect())), force_min_size, view->calculateFinalZoomFactor(), selection_opacity_factor, true);
+	replacement_renderables->draw(painter, view->calculateViewedRect(widget->viewportToView(widget->rect())), force_min_size, view->calculateFinalZoomFactor(), true, selection_opacity_factor, !draw_normal);
 	
 	painter->restore();
 }
@@ -658,6 +670,26 @@ void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
 	removeSelectionRenderables(object);
 	if (emit_selection_changed)
 		emit(selectedObjectsChanged());
+}
+bool Map::removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed)
+{
+	bool removed_at_least_one_object = false;
+	ObjectSelection::iterator it_end = object_selection.end();
+	for (ObjectSelection::iterator it = object_selection.begin(); it != it_end; )
+	{
+		if ((*it)->getSymbol() != symbol)
+		{
+			++it;
+			continue;
+		}
+		
+		removed_at_least_one_object = true;
+		removeSelectionRenderables(*it);
+		it = object_selection.erase(it);
+	}
+	if (emit_selection_changed && removed_at_least_one_object)
+		emit(selectedObjectsChanged());
+	return removed_at_least_one_object;
 }
 bool Map::isObjectSelected(Object* object)
 {
@@ -1141,13 +1173,13 @@ void Map::setObjectAreaDirty(QRectF map_coords_rect)
 	for (int i = 0; i < (int)widgets.size(); ++i)
 		widgets[i]->markObjectAreaDirty(map_coords_rect);
 }
-void Map::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, SelectionInfoVector& out)
+void Map::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out)
 {
-	getCurrentLayer()->findObjectsAt(coord, tolerance, extended_selection, out);
+	getCurrentLayer()->findObjectsAt(coord, tolerance, extended_selection, include_hidden_objects, include_protected_objects, out);
 }
-void Map::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vector< Object* >& out)
+void Map::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector< Object* >& out)
 {
-	getCurrentLayer()->findObjectsAtBox(corner1, corner2, out);
+	getCurrentLayer()->findObjectsAtBox(corner1, corner2, include_hidden_objects, include_protected_objects, out);
 }
 
 void Map::scaleAllObjects(double factor)
@@ -1156,11 +1188,11 @@ void Map::scaleAllObjects(double factor)
 	for (int i = 0; i < size; ++i)
 		layers[i]->scaleAllObjects(factor);
 }
-void Map::updateAllObjects()
+void Map::updateAllObjects(bool remove_old_renderables)
 {
 	int size = layers.size();
 	for (int i = 0; i < size; ++i)
-		layers[i]->updateAllObjects();
+		layers[i]->updateAllObjects(remove_old_renderables);
 }
 void Map::updateAllObjectsWithSymbol(Symbol* symbol)
 {

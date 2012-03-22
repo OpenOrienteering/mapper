@@ -315,7 +315,7 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 						   widget->height() / 2.0 + widget->getMapView()->getDragOffset().y());
 		widget->getMapView()->applyTransform(painter);
 		
-		renderables.draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), 0.5f);
+		renderables.draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, 0.5f);
 		
 		painter->restore();
 	}
@@ -439,7 +439,7 @@ void DrawPathTool::closeDrawing()
 void DrawPathTool::finishDrawing()
 {
 	// Does the symbols contain only areas? If so, auto-close the path if not done yet
-	bool contains_only_areas = !is_helper_tool && (drawing_symbol->getContainedTypes() & ~(Symbol::Area | Symbol::Combined)) == 0;
+	bool contains_only_areas = !is_helper_tool && (drawing_symbol->getContainedTypes() & ~(Symbol::Area | Symbol::Combined)) == 0 && (drawing_symbol->getContainedTypes() & Symbol::Area);
 	if (contains_only_areas && preview_path->getNumParts() > 0)
 		preview_path->getPart(0).setClosed(true);
 	
@@ -655,7 +655,10 @@ void DrawPathTool::addPreviewSymbols(Symbol* symbol)
 		
 		int size = combined->getNumParts();
 		for (int i = 0; i < size; ++i)
-			addPreviewSymbols(combined->getPart(i));
+		{
+			if (combined->getPart(i))
+				addPreviewSymbols(combined->getPart(i));
+		}
 	}
 }
 
@@ -667,10 +670,12 @@ void DrawPathTool::selectedSymbolsChanged()
 		abortDrawing();
 	
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
-	if (symbol == NULL || ((symbol->getType() & (Symbol::Line | Symbol::Area | Symbol::Combined)) == 0))
+	if (symbol == NULL || ((symbol->getType() & (Symbol::Line | Symbol::Area | Symbol::Combined)) == 0) || symbol->isHidden())
 	{
-		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(symbol);
-		editor->setTool(draw_tool);
+		if (symbol->isHidden())
+			editor->setEditTool();
+		else
+			editor->setTool(editor->getDefaultDrawToolForSymbol(symbol));
 		return;
 	}
 

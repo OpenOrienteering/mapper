@@ -135,15 +135,17 @@ bool CombinedSymbol::loadImpl(QFile* file, int version, Map* map)
 }
 bool CombinedSymbol::loadFinished(Map* map)
 {
-    int size = (int)temp_part_indices.size();
-    parts.resize(size);
-    for (int i = 0; i < size; ++i)
-    {
-        int index = temp_part_indices[i];
-        if (index < 0 || index >= map->getNumSymbols())
-            return false;
-        parts[i] = map->getSymbol(index);
-    }
+	int size = (int)temp_part_indices.size();
+	if (size == 0)
+		return true;
+	parts.resize(size);
+	for (int i = 0; i < size; ++i)
+	{
+		int index = temp_part_indices[i];
+		if (index < 0 || index >= map->getNumSymbols())
+			return false;
+		parts[i] = map->getSymbol(index);
+	}
 	temp_part_indices.clear();
 	return true;
 }

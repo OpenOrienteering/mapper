@@ -24,6 +24,7 @@
 
 #include "map.h"
 #include "object.h"
+#include "object_text.h"
 #include "symbol.h"
 #include "symbol_point.h"
 #include "symbol_line.h"

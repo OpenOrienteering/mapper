@@ -27,6 +27,7 @@
 #include "util.h"
 #include "symbol.h"
 #include "object.h"
+#include "object_text.h"
 #include "map_widget.h"
 #include "map_undo.h"
 #include "symbol_dock_widget.h"
@@ -316,7 +317,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 			bool selection_changed = false;
 			
 			std::vector<Object*> objects;
-			map->findObjectsAtBox(click_pos_map, cur_pos_map, objects);
+			map->findObjectsAtBox(click_pos_map, cur_pos_map, false, false, objects);
 			
 			if (!(event->modifiers() & selection_modifier))
 			{
@@ -352,9 +353,9 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 		
 		// Clicked - get objects below cursor
 		SelectionInfoVector objects;
-		map->findObjectsAt(map_coord, 0.001f *widget->getMapView()->pixelToLength(MapEditorTool::click_tolerance), false, objects);
+		map->findObjectsAt(map_coord, 0.001f *widget->getMapView()->pixelToLength(MapEditorTool::click_tolerance), false, false, false, objects);
 		if (objects.empty())
-			map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(1.5f * MapEditorTool::click_tolerance), true, objects);
+			map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(1.5f * MapEditorTool::click_tolerance), true, false, false, objects);
 		
 		// Selection logic, trying to select the most relevant object(s)
 		if (!(event->modifiers() & selection_modifier) || map->getNumSelectedObjects() == 0)
@@ -500,7 +501,7 @@ void EditTool::draw(QPainter* painter, MapWidget* widget)
 	int num_selected_objects = editor->getMap()->getNumSelectedObjects();
 	if (num_selected_objects > 0)
 	{
-		editor->getMap()->drawSelection(painter, true, widget, renderables.isEmpty() ? NULL : &renderables);
+		editor->getMap()->drawSelection(painter, true, widget, renderables.isEmpty() ? NULL : &renderables, text_editor != NULL);
 		
 		if (!text_editor)
 		{
@@ -557,7 +558,7 @@ void EditTool::selectedObjectsChanged()
 void EditTool::selectedSymbolsChanged()
 {
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
-	if (symbol && editor->getMap()->getNumSelectedObjects() == 0)
+	if (symbol && editor->getMap()->getNumSelectedObjects() == 0 && !symbol->isHidden() && !symbol->isProtected())
 	{
 		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(symbol);
 		editor->setTool(draw_tool);
@@ -667,8 +668,6 @@ void EditTool::updateDragging(QPoint cursor_pos, MapWidget* widget)
 		
 		text_object->move(delta_x / 2, delta_y / 2);
 		text_object->setBox(text_object->getAnchorCoordF().getIntX(), text_object->getAnchorCoordF().getIntY(), new_box_width, new_box_height);
-		if (calculateBoxTextHandles(box_text_handles))
-			updateDirtyRect();
 	}
 	else if (hover_point == -1 || (map->getNumSelectedObjects() == 1 &&
 		(first_selected_object_type == Object::Point || first_selected_object_type == Object::Text)))
@@ -723,6 +722,9 @@ void EditTool::updateDragging(QPoint cursor_pos, MapWidget* widget)
 			path->setCoordinate(opposite_curve_handle_index, control);
 		}
 	}
+	
+	if (calculateBoxTextHandles(box_text_handles))
+		updateDirtyRect();
 }
 
 bool EditTool::hoveringOverSingleText(MapCoordF cursor_pos_map)

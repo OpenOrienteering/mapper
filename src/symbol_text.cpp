@@ -26,7 +26,7 @@
 #include "symbol_setting_dialog.h"
 #include "map_color.h"
 #include "util.h"
-#include "object.h"
+#include "object_text.h"
 
 const float TextSymbol::pt_in_mm = 0.2526f;
 const float TextSymbol::internal_point_size = 64;
@@ -61,88 +61,16 @@ Symbol* TextSymbol::duplicate()
 
 void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
 {
-	// This method always creates at least one LineInfo, which makes the implementation of TextObjectEditorHelper easier
-	
 	TextObject* text_object = reinterpret_cast<TextObject*>(object);
 	
 	if (!color)
 		return;
 	
-	bool use_box = false;
 	double anchor_x = coords[0].getX();
 	double anchor_y = coords[0].getY();
-	double box_width = 999999;
-	double box_height = 999999;
-	if (!text_object->hasSingleAnchor())
-	{
-		use_box = true;
-		box_width = text_object->getBoxWidth();
-		box_height = text_object->getBoxHeight();
-	}
 	
-	double scaling = calculateInternalScaling();
-	box_width *= scaling;
-	box_height *= scaling;
-	
-	text_object->prepareLineInfos(use_box, box_width);
-	
-	// Calculate the start y coordinate at the text baseline in a coordinate system with origin at anchor_y
-	double start_y = 0;
-	TextObject::VerticalAlignment v_align = text_object->getVerticalAlignment();
-	if (v_align == TextObject::AlignTop || v_align == TextObject::AlignBaseline)
-	{
-		if (use_box)
-			start_y = -0.5 * box_height;
-		if (v_align == TextObject::AlignTop)
-			start_y += metrics.ascent();
-	}
-	else if (v_align == TextObject::AlignBottom || v_align == TextObject::AlignVCenter)
-	{
-		int num_lines = text_object->getNumLineInfos();
-		double height = metrics.ascent() + (num_lines - 1) * (line_spacing * metrics.lineSpacing());
-		
-		if (v_align == TextObject::AlignVCenter)
-			start_y = -0.5 * height + metrics.ascent();
-		else if (v_align == TextObject::AlignBottom)
-			start_y = -height + metrics.ascent() + (use_box ? 0.5 * box_height : 0);
-	}
-	
-	// Calculate the start x coordinate
-	double start_x = 0.0;
-	TextObject::HorizontalAlignment h_align = text_object->getHorizontalAlignment();
-	if (use_box)
-	{
-		if (h_align == TextObject::AlignLeft)
-			start_x = -0.5 * box_width;
-		else if (h_align == TextObject::AlignRight)
-			start_x = 0.5 * box_width;
-	}
-	
-	// Create a renderable for every line
-	int num_lines = text_object->getNumLineInfos();
-	for (int i = 0; i < num_lines; i++)
-	{
-		TextObjectLineInfo* line_info = text_object->getLineInfo(i);
-
-		line_info->line_y += start_y;
-
-		double line_x = start_x;
-		if (h_align != TextObject::AlignLeft)
-		{
-			if (h_align == TextObject::AlignHCenter)
-				line_x -= 0.5 * line_info->width;
-			else
-				line_x -= line_info->width;
-		}
-		line_info->line_x += line_x;
-		
-		int num_parts = line_info->part_infos.size();
-		for (int j = 0; j < num_parts; j++)
-		{
-			line_info->part_infos.at(j).part_x += line_x;
-		}
-		output.push_back(new TextRenderable(this, line_info, anchor_x, anchor_y, text_object->getRotation()));
-	}
+	text_object->prepareLineInfos();
+	output.push_back(new TextRenderable(this, text_object, anchor_x, anchor_y));
 }
 
 void TextSymbol::colorDeleted(Map* map, int pos, MapColor* color)
@@ -180,7 +108,7 @@ void TextSymbol::updateQFont()
 	qfont.setStyleStrategy(QFont::ForceOutline);
 
 	metrics = QFontMetricsF(qfont);
-	em = metrics.width("m");
+	tab_interval = 8.0 * metrics.averageCharWidth();
 }
 
 void TextSymbol::saveImpl(QFile* file, Map* map)
@@ -212,10 +140,9 @@ bool TextSymbol::loadImpl(QFile* file, int version, Map* map)
 
 double TextSymbol::getNextTab(double pos) const
 {
-	const double delta = em * 8.0;
-	double next_tab = (floor(pos / delta) + 1.0) * delta;
+	double next_tab = (floor(pos / tab_interval) + 1.0) * tab_interval;
 	if (next_tab <= pos)
-		next_tab += em * 8.0;
+		next_tab += tab_interval;
  	return next_tab;
 }
 

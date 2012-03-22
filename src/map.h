@@ -73,12 +73,12 @@ public:
 	void deleteObject(int pos, bool remove_only);
 	bool deleteObject(Object* object, bool remove_only);	// returns if the object was found
 	
-	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, SelectionInfoVector& out);
-	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vector<Object*>& out);
+	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
+	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
 	
 	QRectF calculateExtent();
 	void scaleAllObjects(double factor);
-	void updateAllObjects();
+	void updateAllObjects(bool remove_old_renderables = true);
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
 	bool deleteAllObjectsWithSymbol(Symbol* symbol);		// returns if there was an object that was deleted
@@ -110,13 +110,13 @@ public:
 	/// Attempts to save the map to the given file. If a MapEditorController is given, the widget positions and MapViews stored in the map file are also updated.
     bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
 	/// Attempts to load the map from the specified path. Returns true on success.
-	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL);
+	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL, bool load_symbols_only = false);
 
 	/// Deletes all map data
 	void clear();
 	
 	/// Draws the part of the map which is visible in the given bounding box in map coordinates
-	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling);
+	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols);
 	/// Draws the templates first_template until last_template which are visible in the given bouding box. view determines template visibility and can be NULL to show all templates.
 	/// draw_untransformed_parts is only possible with a MapWidget (because of MapWidget::mapToViewport()). Otherwise, set it to NULL.
 	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, bool draw_untransformed_parts, const QRect& untransformed_dirty_rect, MapWidget* widget, MapView* view);
@@ -205,11 +205,11 @@ public:
 	void setObjectsDirty();
 	
 	void setObjectAreaDirty(QRectF map_coords_rect);
-	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, SelectionInfoVector& out);
-	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, std::vector<Object*>& out);
+	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
+	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
 	
 	void scaleAllObjects(double factor);
-	void updateAllObjects();
+	void updateAllObjects(bool remove_old_renderables = true);
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
 	bool deleteAllObjectsWithSymbol(Symbol* symbol);							// returns if there was an object that was deleted
@@ -229,10 +229,11 @@ public:
 	void getSelectionToSymbolCompatibility(Symbol* symbol, bool& out_compatible, bool& out_different);
 	
 	void includeSelectionRect(QRectF& rect); // enlarges rect to cover the selected objects
-	void drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, RenderableContainer* replacement_renderables = NULL);
+	void drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, RenderableContainer* replacement_renderables = NULL, bool draw_normal = false);
 	
 	void addObjectToSelection(Object* object, bool emit_selection_changed);
 	void removeObjectFromSelection(Object* object, bool emit_selection_changed);
+	bool removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed);	// removes all objects with this symbol; returns true if at least one object has been removed
 	bool isObjectSelected(Object* object);
 	bool toggleObjectSelection(Object* object, bool emit_selection_changed);	// returns true if the object was selected, false if deselected
 	void clearObjectSelection(bool emit_selection_changed);

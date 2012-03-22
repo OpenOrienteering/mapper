@@ -39,6 +39,7 @@ class PointSymbol;
 class LineSymbol;
 class AreaSymbol;
 class TextSymbol;
+class TextObject;
 class TextObjectLineInfo;
 
 /// Contains state information about the painter which must be set when rendering a Renderable. Used to order the Renderables by color and minimize state changes
@@ -131,7 +132,7 @@ class RenderableContainer
 public:
 	RenderableContainer(Map* map);
 	
-	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, float opacity_factor = 1.0f, bool highlighted = false);
+	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity_factor = 1.0f, bool highlighted = false);
 	
 	void removeRenderablesOfObject(Object* object, bool mark_area_as_dirty);	// NOTE: does not delete the renderables, just removes them from display
 	void insertRenderablesOfObject(Object* object);
@@ -212,7 +213,7 @@ class TextRenderable : public Renderable
 {
 public:
 	TextRenderable(TextSymbol* symbol, double line_x, double line_y, double anchor_x, double anchor_y, double rotation, const QString& line, const QFont& font);
-	TextRenderable(TextSymbol* symbol, TextObjectLineInfo* line_info, double anchor_x, double anchor_y, double rotation);
+	TextRenderable(TextSymbol* symbol, TextObject* text_object, double anchor_x, double anchor_y);
 	TextRenderable(const TextRenderable& other);
 	virtual void render(QPainter& painter, bool force_min_size, float scaling);
 	virtual void getRenderStates(RenderStates& out);

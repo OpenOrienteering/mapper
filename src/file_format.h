@@ -296,7 +296,7 @@ public:
      *  generally an Importer should not succeed unless the map is populated sufficiently
      *  to be useful.
      */
-    virtual void doImport() throw (FormatException) = 0;
+	virtual void doImport(bool load_symbols_only) throw (FormatException) = 0;
 
     /** Once all action items are satisfied, this method should be called to complete the
      *  import process. This class defines a default implementation, that does nothing.

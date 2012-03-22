@@ -39,6 +39,7 @@ HEADERS += src/color_dock_widget.h \
            src/map_widget.h \
            src/matrix.h \
            src/object.h \
+           src/object_text.h \
            src/paint_on_template.h \
            src/path_coord.h \
            src/print_dock_widget.h \
@@ -89,6 +90,7 @@ SOURCES += src/color_dock_widget.cpp \
            src/map_widget.cpp \
            src/matrix.cpp \
            src/object.cpp \
+           src/object_text.cpp \
            src/paint_on_template.cpp \
            src/path_coord.cpp \
            src/print_dock_widget.cpp \

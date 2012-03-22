@@ -380,7 +380,7 @@ void MapWidget::updateCursorposLabel(MapCoordF pos)
 	if (!cursorpos_label)
 		return;
 	
-	cursorpos_label->setText(QString::number(pos.getX(), 'f', 2) + " " + QString::number(pos.getY(), 'f', 2));
+	cursorpos_label->setText(QString::number(pos.getX(), 'f', 2) + " " + QString::number(-pos.getY(), 'f', 2));
 }
 
 QSize MapWidget::sizeHint() const
@@ -768,7 +768,7 @@ void MapWidget::updateMapCache(bool use_background)
 	
 	Map* map = view->getMap();
 	QRectF map_view_rect = view->calculateViewedRect(viewportToView(map_cache_dirty_rect));
-	map->draw(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor());
+	map->draw(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor(), true);
 	
 	// Finish drawing
 	painter.end();

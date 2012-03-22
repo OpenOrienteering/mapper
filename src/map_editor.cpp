@@ -42,6 +42,7 @@
 #include "tool_cut.h"
 #include "tool_cut_hole.h"
 #include "tool_rotate.h"
+#include "object_text.h"
 
 // ### MapEditorController ###
 
@@ -724,11 +725,11 @@ void MapEditorController::selectedSymbolsChanged()
 	if (symbol)
 		type = symbol->getType();
 	
-	draw_point_act->setEnabled(type == Symbol::Point);
+	draw_point_act->setEnabled(type == Symbol::Point && !symbol->isHidden());
 	draw_point_act->setStatusTip(tr("Place point objects on the map.") + (draw_point_act->isEnabled() ? "" : (" " + tr("Select a point symbol to be able to use this tool."))));
-	draw_path_act->setEnabled(type == Symbol::Line || type == Symbol::Area || type == Symbol::Combined);
+	draw_path_act->setEnabled((type == Symbol::Line || type == Symbol::Area || type == Symbol::Combined) && !symbol->isHidden());
 	draw_path_act->setStatusTip(tr("Draw polygonal and curved lines.") + (draw_path_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
-	draw_text_act->setEnabled(type == Symbol::Text);
+	draw_text_act->setEnabled(type == Symbol::Text && !symbol->isHidden());
 	draw_text_act->setStatusTip(tr("Write text on the map.") + (draw_text_act->isEnabled() ? "" : (" " + tr("Select a text symbol to be able to use this tool."))));
 	
 	selectedSymbolsOrObjectsChanged();
