@@ -615,12 +615,16 @@ void MainWindow::showAbout()
 	QDialog about_dialog(this);
 	about_dialog.setWindowTitle(tr("About %1").arg(APP_NAME));
 	
-	QLabel* about_label = new QLabel("<a href=\"http://openorienteering.org\"><img src=\":/images/open-orienteering.png\"/></a><br/><br/>"
-									 "OpenOrienteering Mapper<br/>"
+	QLabel* about_label = new QLabel(QString("<a href=\"http://openorienteering.org\"><img src=\":/images/open-orienteering.png\"/></a><br/><br/>"
+									 "OpenOrienteering Mapper %1<br/>"
 									 "Copyright (C) 2012  Thomas Sch&ouml;ps<br/>"
 									 "This program comes with ABSOLUTELY NO WARRANTY;<br/>"
 									 "This is free software, and you are welcome to redistribute it<br/>"
-									 "under certain conditions; see the file COPYING for details.");
+									 "under certain conditions; see the file COPYING for details.<br/><br/>").arg(APP_VERSION)
+									 
+									 % tr("Developers in alphabetical order:<br/>"
+									 "Peter Curtis<br/>Kai Pastor<br/>Russell Porter<br/>Thomas Sch&ouml;ps (project leader)<br/><br/>"
+									 "For patches, thanks to:<br/>Jon Cundill<br/>Aivars Zogla"));
 	QPushButton* about_ok = new QPushButton(tr("OK"));
 	
 	QGridLayout* layout = new QGridLayout();

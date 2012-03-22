@@ -922,7 +922,7 @@ Do you want to scale the symbols to the selected scale?</source>
         <location filename="../src/main_window.cpp" line="460"/>
         <location filename="../src/main_window.cpp" line="580"/>
         <location filename="../src/main_window.cpp" line="611"/>
-        <location filename="../src/main_window.cpp" line="641"/>
+        <location filename="../src/main_window.cpp" line="645"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -978,12 +978,17 @@ Press No to choose a different format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="624"/>
+        <location filename="../src/main_window.cpp" line="625"/>
+        <source>Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For patches, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Aivars Zogla</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="628"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="641"/>
+        <location filename="../src/main_window.cpp" line="645"/>
         <source>Sorry, help is not implemented yet!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -998,8 +1003,8 @@ Press No to choose a different format.</source>
     <message>
         <location filename="../src/map.cpp" line="360"/>
         <location filename="../src/map.cpp" line="407"/>
-        <location filename="../src/map.cpp" line="471"/>
-        <location filename="../src/map.cpp" line="480"/>
+        <location filename="../src/map.cpp" line="473"/>
+        <location filename="../src/map.cpp" line="482"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1016,15 +1021,20 @@ for reading.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="471"/>
-        <source>Cannot open file:
-%1
-
-Invalid file type.</source>
+        <location filename="../src/map.cpp" line="420"/>
+        <source>Invalid file type.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="480"/>
+        <location filename="../src/map.cpp" line="473"/>
+        <source>Cannot open file:
+%1
+
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/map.cpp" line="482"/>
         <source>Problem while opening file:
 %1
 
@@ -1032,7 +1042,7 @@ Error during symbol post-processing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="796"/>
+        <location filename="../src/map.cpp" line="798"/>
         <source>New color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2032,7 +2042,7 @@ Error while loading layer %2.</source>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="210"/>
-        <location filename="../src/file_format_ocad8.cpp" line="248"/>
+        <location filename="../src/file_format_ocad8.cpp" line="251"/>
         <source>default</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2049,117 +2059,122 @@ for writing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="167"/>
+        <location filename="../src/file_format_ocad8.cpp" line="76"/>
+        <source>OCAD files of version %1 cannot be loaded!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="170"/>
         <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="180"/>
+        <location filename="../src/file_format_ocad8.cpp" line="183"/>
         <source>OCAD import layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="324"/>
+        <location filename="../src/file_format_ocad8.cpp" line="327"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="336"/>
+        <location filename="../src/file_format_ocad8.cpp" line="339"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="345"/>
+        <location filename="../src/file_format_ocad8.cpp" line="348"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="384"/>
+        <location filename="../src/file_format_ocad8.cpp" line="387"/>
         <source>In symbol %1, left and right borders are different colors (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="392"/>
+        <location filename="../src/file_format_ocad8.cpp" line="395"/>
         <source>In symbol %1, left and right borders are different width (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="406"/>
+        <location filename="../src/file_format_ocad8.cpp" line="409"/>
         <source>In line symbol %1, ignoring that only the left border line should be dashed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="446"/>
+        <location filename="../src/file_format_ocad8.cpp" line="449"/>
         <source>In symbol %1, ignoring framing line.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="575"/>
+        <location filename="../src/file_format_ocad8.cpp" line="578"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="581"/>
+        <location filename="../src/file_format_ocad8.cpp" line="584"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="586"/>
+        <location filename="../src/file_format_ocad8.cpp" line="589"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="591"/>
+        <location filename="../src/file_format_ocad8.cpp" line="594"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="596"/>
+        <location filename="../src/file_format_ocad8.cpp" line="599"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="601"/>
+        <location filename="../src/file_format_ocad8.cpp" line="604"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="746"/>
+        <location filename="../src/file_format_ocad8.cpp" line="749"/>
         <source>Unable to load object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="752"/>
+        <location filename="../src/file_format_ocad8.cpp" line="755"/>
         <source>Unable to import rectangle object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1197"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1200"/>
         <source>Color id not found: %1, ignoring this color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="799"/>
+        <location filename="../src/file_format_ocad8.cpp" line="802"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="965"/>
+        <location filename="../src/file_format_ocad8.cpp" line="968"/>
         <source>Unable to import template: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="970"/>
+        <location filename="../src/file_format_ocad8.cpp" line="973"/>
         <source>Ignoring template of type: %1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="994"/>
+        <location filename="../src/file_format_ocad8.cpp" line="997"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1097"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1100"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation type="unfinished"></translation>
     </message>
