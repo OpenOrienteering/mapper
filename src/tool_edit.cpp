@@ -442,7 +442,14 @@ bool EditTool::selectionInfosEqual(const SelectionInfoVector& a, const Selection
 bool EditTool::keyPressEvent(QKeyEvent* event)
 {
 	if (text_editor)
+	{
+		if (event->key() == Qt::Key_Escape)
+		{
+			finishEditing(); 
+			return true;
+		}
 		return text_editor->keyPressEvent(event);
+	}
 	
 	int num_selected_objects = editor->getMap()->getNumSelectedObjects();
 	

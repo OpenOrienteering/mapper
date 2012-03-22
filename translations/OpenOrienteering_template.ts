@@ -263,6 +263,45 @@
     </message>
 </context>
 <context>
+    <name>DetermineFontSizeDialog</name>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="545"/>
+        <source>Determine font size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="547"/>
+        <source>How big a letter in a font is depends on the design of the font.
+This dialog allows to choose a font size which results in a given exact height for a specific letter.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="550"/>
+        <source>Letter:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="551"/>
+        <source>A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="554"/>
+        <source>Height:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="558"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="559"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DocumentSelectionWidget</name>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="133"/>
@@ -313,22 +352,22 @@
 <context>
     <name>EditTool</name>
     <message>
-        <location filename="../src/tool_edit.cpp" line="574"/>
+        <location filename="../src/tool_edit.cpp" line="581"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to select an object, &lt;b&gt;Drag&lt;/b&gt; for box selection, &lt;b&gt;Shift&lt;/b&gt; to toggle selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_edit.cpp" line="577"/>
+        <location filename="../src/tool_edit.cpp" line="584"/>
         <source>, &lt;b&gt;Del&lt;/b&gt; to delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_edit.cpp" line="585"/>
+        <location filename="../src/tool_edit.cpp" line="592"/>
         <source>&lt;b&gt;Ctrl+Click&lt;/b&gt; on point to delete it, on path to add a new point, with &lt;b&gt;Space&lt;/b&gt; to make it a dash point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_edit.cpp" line="587"/>
+        <location filename="../src/tool_edit.cpp" line="594"/>
         <source>; Try &lt;u&gt;Ctrl&lt;/u&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -387,12 +426,12 @@
 <context>
     <name>GeoreferencingAddTool</name>
     <message>
-        <location filename="../src/georeferencing.cpp" line="558"/>
+        <location filename="../src/georeferencing.cpp" line="572"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the template position of the pass point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="573"/>
+        <location filename="../src/georeferencing.cpp" line="587"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the map position of the pass point, &lt;b&gt;Esc&lt;/b&gt; to abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -400,7 +439,7 @@
 <context>
     <name>GeoreferencingDeleteTool</name>
     <message>
-        <location filename="../src/georeferencing.cpp" line="774"/>
+        <location filename="../src/georeferencing.cpp" line="788"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to delete pass points</source>
         <translation type="unfinished"></translation>
     </message>
@@ -408,7 +447,7 @@
 <context>
     <name>GeoreferencingMoveTool</name>
     <message>
-        <location filename="../src/georeferencing.cpp" line="654"/>
+        <location filename="../src/georeferencing.cpp" line="668"/>
         <source>&lt;b&gt;Drag&lt;/b&gt; to move pass points</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1993,7 +2032,7 @@ Error while loading layer %2.</source>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="210"/>
-        <location filename="../src/file_format_ocad8.cpp" line="251"/>
+        <location filename="../src/file_format_ocad8.cpp" line="252"/>
         <source>default</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2005,132 +2044,122 @@ for writing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="75"/>
+        <location filename="../src/file_format_ocad8.cpp" line="73"/>
         <source>Could not open file: libocad returned %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="169"/>
+        <location filename="../src/file_format_ocad8.cpp" line="171"/>
         <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="182"/>
+        <location filename="../src/file_format_ocad8.cpp" line="184"/>
         <source>OCAD import layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="327"/>
+        <location filename="../src/file_format_ocad8.cpp" line="328"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="339"/>
+        <location filename="../src/file_format_ocad8.cpp" line="340"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="348"/>
+        <location filename="../src/file_format_ocad8.cpp" line="349"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="387"/>
+        <location filename="../src/file_format_ocad8.cpp" line="388"/>
         <source>In symbol %1, left and right borders are different colors (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="395"/>
+        <location filename="../src/file_format_ocad8.cpp" line="396"/>
         <source>In symbol %1, left and right borders are different width (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="409"/>
+        <location filename="../src/file_format_ocad8.cpp" line="410"/>
         <source>In line symbol %1, ignoring that only the left border line should be dashed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="449"/>
+        <location filename="../src/file_format_ocad8.cpp" line="450"/>
         <source>In symbol %1, ignoring framing line.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="568"/>
+        <location filename="../src/file_format_ocad8.cpp" line="579"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="576"/>
+        <location filename="../src/file_format_ocad8.cpp" line="585"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="581"/>
-        <source>During import of text symbol %1: ignoring custom underline color, width, and positioning</source>
+        <location filename="../src/file_format_ocad8.cpp" line="590"/>
+        <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="586"/>
-        <source>During import of text symbol %1: ignoring custom character spacing (%2%)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/file_format_ocad8.cpp" line="591"/>
+        <location filename="../src/file_format_ocad8.cpp" line="595"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="596"/>
-        <source>During import of text symbol %1: ignoring custom paragraph spacing (%2%)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/file_format_ocad8.cpp" line="601"/>
+        <location filename="../src/file_format_ocad8.cpp" line="600"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="606"/>
-        <source>During import of text symbol %1: ignoring custom tabs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/file_format_ocad8.cpp" line="611"/>
+        <location filename="../src/file_format_ocad8.cpp" line="605"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="708"/>
+        <location filename="../src/file_format_ocad8.cpp" line="741"/>
         <source>Unable to load object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="723"/>
+        <location filename="../src/file_format_ocad8.cpp" line="747"/>
+        <source>Unable to import rectangle object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="763"/>
         <source>An object with the symbol &apos;%1&apos;, which is oriented to north, is rotated. Ignoring the rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="750"/>
+        <location filename="../src/file_format_ocad8.cpp" line="788"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="786"/>
+        <location filename="../src/file_format_ocad8.cpp" line="954"/>
         <source>Unable to import template: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="791"/>
+        <location filename="../src/file_format_ocad8.cpp" line="959"/>
         <source>Ignoring template of type: %1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="815"/>
+        <location filename="../src/file_format_ocad8.cpp" line="983"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="919"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1086"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2153,13 +2182,13 @@ for writing.</source>
 <context>
     <name>RotateTool</name>
     <message>
-        <location filename="../src/tool_rotate.cpp" line="164"/>
+        <location filename="../src/tool_rotate.cpp" line="159"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the rotation center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_rotate.cpp" line="166"/>
-        <source>&lt;b&gt;Drag&lt;/b&gt; to rotate the selected object(s)</source>
+        <location filename="../src/tool_rotate.cpp" line="161"/>
+        <source>&lt;b&gt;Click&lt;/b&gt; to set the rotation center, &lt;b&gt;drag&lt;/b&gt; to rotate the selected object(s)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2667,38 +2696,38 @@ Failed to load template. Does the file exist and is it valid?</source>
 <context>
     <name>TextObjectAlignmentDockWidget</name>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="718"/>
+        <location filename="../src/tool_draw_text.cpp" line="717"/>
         <source>Alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="797"/>
+        <location filename="../src/tool_draw_text.cpp" line="796"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="797"/>
-        <location filename="../src/tool_draw_text.cpp" line="812"/>
+        <location filename="../src/tool_draw_text.cpp" line="796"/>
+        <location filename="../src/tool_draw_text.cpp" line="811"/>
         <source>Center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="797"/>
+        <location filename="../src/tool_draw_text.cpp" line="796"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="812"/>
+        <location filename="../src/tool_draw_text.cpp" line="811"/>
         <source>Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="812"/>
+        <location filename="../src/tool_draw_text.cpp" line="811"/>
         <source>Baseline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_draw_text.cpp" line="812"/>
+        <location filename="../src/tool_draw_text.cpp" line="811"/>
         <source>Bottom</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2706,58 +2735,103 @@ Failed to load template. Does the file exist and is it valid?</source>
 <context>
     <name>TextSymbolSettings</name>
     <message>
-        <location filename="../src/symbol_text.cpp" line="157"/>
+        <location filename="../src/symbol_text.cpp" line="268"/>
         <source>Text settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="159"/>
+        <location filename="../src/symbol_text.cpp" line="270"/>
         <source>Font family:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="163"/>
+        <location filename="../src/symbol_text.cpp" line="274"/>
         <source>Font size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="166"/>
-        <source>mm</source>
+        <location filename="../src/symbol_text.cpp" line="277"/>
+        <source>Determine size...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="167"/>
-        <source>pt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/symbol_text.cpp" line="179"/>
+        <location filename="../src/symbol_text.cpp" line="285"/>
         <source>Text color:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="182"/>
+        <location filename="../src/symbol_text.cpp" line="288"/>
         <source>bold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="184"/>
+        <location filename="../src/symbol_text.cpp" line="290"/>
         <source>italic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="186"/>
+        <location filename="../src/symbol_text.cpp" line="292"/>
         <source>underlined</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="189"/>
+        <location filename="../src/symbol_text.cpp" line="295"/>
         <source>Line spacing:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="194"/>
+        <location filename="../src/symbol_text.cpp" line="300"/>
+        <source>Paragraph spacing [mm]:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="304"/>
+        <source>Character spacing [percentage of space character]:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="309"/>
         <source>use kerning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="312"/>
+        <source>Show OCAD compatibility settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="319"/>
+        <source>Line below paragraphs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="320"/>
+        <source>Enable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="323"/>
+        <source>Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="326"/>
+        <source>Distance from baseline:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="338"/>
+        <source>Custom tabulator positions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="510"/>
+        <source>Add custom tabulator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="510"/>
+        <source>Position [mm]:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
