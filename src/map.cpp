@@ -1535,8 +1535,8 @@ bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF curso
 			set_to_limit = true;
 		}
 		
-		MapCoordF mouse_pos_map;
-		MapCoordF mouse_pos_to_view_center;
+		MapCoordF mouse_pos_map(0, 0);
+		MapCoordF mouse_pos_to_view_center(0, 0);
 		if (preserve_cursor_pos)
 		{
 			mouse_pos_map = viewToMapF(cursor_pos_view);
@@ -1566,8 +1566,8 @@ bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF curso
 			set_to_limit = true;
 		}
 		
-		MapCoordF mouse_pos_map;
-		MapCoordF mouse_pos_to_view_center;
+		MapCoordF mouse_pos_map(0, 0);
+		MapCoordF mouse_pos_to_view_center(0, 0);
 		if (preserve_cursor_pos)
 		{
 			mouse_pos_map = viewToMapF(cursor_pos_view);

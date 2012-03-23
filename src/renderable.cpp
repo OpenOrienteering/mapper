@@ -60,6 +60,7 @@ void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool forc
 	RenderStates states;
 	states.color_priority = -1;
 	states.mode = RenderStates::Reserved;
+	states.pen_width = -1;
 	states.clip_path = NULL;
 	
 	QPainterPath initial_clip = painter->clipPath();
