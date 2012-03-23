@@ -600,7 +600,7 @@ void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags
 			if (!ends_with_dashpoint)
 			{
 				processContinuousLine(path_closed, flags, coords, line_coords, cur_length, cur_length + length + old_length,
-									  (!path_closed && out_flags.empty()) || out_flags[out_flags.size() - 1].isHolePoint(), !(path_closed && part_end == size - 1),
+									  (!path_closed && out_flags.empty()) || (!out_flags.empty() && out_flags[out_flags.size() - 1].isHolePoint()), !(path_closed && part_end == size - 1),
 									  cur_line_coord, out_flags, out_coords, true, old_length == 0 && length >= dash_length_f - switch_deviation, output);
 				cur_length += length + old_length;
 				old_length = 0;
