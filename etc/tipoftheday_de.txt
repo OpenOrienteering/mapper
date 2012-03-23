@@ -1,0 +1,4 @@
+3
+Danke, dass Sie OpenOrienteering Mapper benutzen! Wenn Sie das Programm zum ersten Mal verwenden, sehen Sie die <a href="settings">Einstellungen</a> durch und passen Sie sie an Ihre Vorlieben an. Wenn Sie nach weiteren Hinweisen suchen, können Sie auch die <a href="help">Hilfedatei</a> lesen.
+Drücken Sie beim Bearbeiten einer Karte die Tab-Taste, um schnell zwischen dem Bearbeitungstool und den Zeichentools zu wechseln.
+Dies ist der dritte Tipp des Tages, der jedoch nur ein Platzhalter ist. Wenn Sie einen Tipp wissen, fügen Sie ihn doch hinzu ...
