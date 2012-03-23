@@ -276,7 +276,7 @@
         <location filename="../src/symbol_text.cpp" line="547"/>
         <source>How big a letter in a font is depends on the design of the font.
 This dialog allows to choose a font size which results in a given exact height for a specific letter.</source>
-        <translation>Die Größe eines Zeichen hängt vom Design des Zeichensatzes ab.
+        <translation>Die Größe eines Zeichens hängt vom Design des Zeichensatzes ab.
 Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bestimmten Buchstaben eine definierte Höhe ergibt.</translation>
     </message>
     <message>
@@ -1666,7 +1666,7 @@ to create one.</source>
         <translation>Leerer Symbolsatz
 
 Um Symbole zu definieren,
-klicken SIe mit der rechten Maustaste 
+klicken Sie mit der rechten Maustaste 
 in die Symbolleiste und wählen Sie
 &quot;Neues Symbol&quot;.</translation>
     </message>
@@ -1680,7 +1680,7 @@ Templates -&gt; Open template...</source>
         <translation>Bereit zum Zeichnen.
 
 Beginnen Sie zu zeichnen, oder laden Sie eine Vorlage.
-Um eine Vorlage zu laden, klicken Sie
+Um eine Vorlage zu laden, wählen Sie
 Vorlagen -&gt; Vorlage öffnen...</translation>
     </message>
 </context>
@@ -3067,7 +3067,7 @@ Vorlage konnte nicht geladen werden. Existiert diese Datei?</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="300"/>
         <source>Paragraph spacing [mm]:</source>
-        <translation>Absatz-Abstand [mm]:</translation>
+        <translation>Absatzabstand [mm]:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="304"/>
