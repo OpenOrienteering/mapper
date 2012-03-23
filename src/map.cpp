@@ -382,7 +382,9 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 					warnings += '\n';
 				warnings += *it;
             }
-            QMessageBox::warning(NULL, tr("Warning"), tr("The map export generated the following warning(s):\n\n%1").arg(warnings));
+			QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The map export generated warnings."), QMessageBox::Ok);
+			msgBox.setDetailedText(warnings);
+			msgBox.exec();
         }
     }
     catch (std::exception &e)
@@ -456,7 +458,9 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 							warnings += '\n';
 						warnings += *it;
 					}
-					QMessageBox::warning(NULL, tr("Warning"), tr("The map import generated the following warning(s):\n\n%1").arg(warnings));
+					QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The map import generated warnings."), QMessageBox::Ok);
+					msgBox.setDetailedText(warnings);
+					msgBox.exec();
                 }
 
                 import_complete = true;
