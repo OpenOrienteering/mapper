@@ -102,15 +102,17 @@ void MapLayer::setObject(Object* object, int pos, bool delete_old)
 		delete objects[pos];
 	
 	objects[pos] = object;
+	bool delete_old_renderables = object->getMap() == map;
 	object->setMap(map);
-	object->update(true, false);
+	object->update(true, delete_old_renderables);
 	map->setObjectsDirty();
 }
 void MapLayer::addObject(Object* object, int pos)
 {
 	objects.insert(objects.begin() + pos, object);
+	bool delete_old_renderables = object->getMap() == map;
 	object->setMap(map);
-	object->update(true, false);
+	object->update(true, delete_old_renderables);
 	map->setObjectsDirty();
 	
 	if (map->getNumObjects() == 1)
