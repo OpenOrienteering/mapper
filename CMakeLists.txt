@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.6)
 find_package(Qt4 REQUIRED)
 
 #set(CMAKE_BUILD_TYPE Release)
-set(CMAKE_BUILD_TYPE Debug)
+#set(CMAKE_BUILD_TYPE Debug)
 
 
 if (CMAKE_COMPILER_IS_GNUCXX)
@@ -106,6 +106,15 @@ SET(Mapper_RESOURCES resources.qrc)
 qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+
+IF(MINGW)
+	# resource compilation for MinGW
+	SET(CMAKE_WINDRES windres)
+	ADD_CUSTOM_COMMAND( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/resources.o
+			COMMAND ${CMAKE_WINDRES} -I${CMAKE_SOURCE_DIR} -i${CMAKE_SOURCE_DIR}/resources/resources.rc
+			-o ${CMAKE_CURRENT_BINARY_DIR}/resources.o )
+	SET(Mapper_SRCS ${Mapper_SRCS} ${CMAKE_CURRENT_BINARY_DIR}/resources.o)
+ENDIF(MINGW)
 
 add_executable(Mapper
 	WIN32

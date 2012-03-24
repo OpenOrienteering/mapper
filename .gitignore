@@ -5,4 +5,8 @@ Makefile
 bin/Mapper
 bin/*.omap
 bin/*.ocd
+bin/*.exe
+bin/*.dll
+bin/plugins
+bin/translations
 build/

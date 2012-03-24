@@ -276,7 +276,7 @@
         <location filename="../src/symbol_text.cpp" line="547"/>
         <source>How big a letter in a font is depends on the design of the font.
 This dialog allows to choose a font size which results in a given exact height for a specific letter.</source>
-        <translation>Die Größe eines Zeichen hängt vom Design des Zeichensatzes ab.
+        <translation>Die Größe eines Zeichens hängt vom Design des Zeichensatzes ab.
 Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bestimmten Buchstaben eine definierte Höhe ergibt.</translation>
     </message>
     <message>
@@ -439,12 +439,12 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <translation type="obsolete">&lt;b&gt;Mausklick&lt;/b&gt;, um die Zielposition des Referenzpunkts festzulegen, &lt;b&gt;Esc&lt;/b&gt; zum Abbrechen</translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="572"/>
+        <location filename="../src/georeferencing.cpp" line="574"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the template position of the pass point</source>
         <translation>&lt;b&gt;Mausklick&lt;/b&gt;, um die Position des Referenzpunkts auf der Vorlage festzulegen</translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="587"/>
+        <location filename="../src/georeferencing.cpp" line="589"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the map position of the pass point, &lt;b&gt;Esc&lt;/b&gt; to abort</source>
         <translation>&lt;b&gt;Mausklick&lt;/b&gt;, um die Position des Referenzpunkts auf der Karte festzulegen, &lt;b&gt;Esc&lt;/b&gt; zum Abbrechen</translation>
     </message>
@@ -452,7 +452,7 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
 <context>
     <name>GeoreferencingDeleteTool</name>
     <message>
-        <location filename="../src/georeferencing.cpp" line="788"/>
+        <location filename="../src/georeferencing.cpp" line="790"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to delete pass points</source>
         <translation>&lt;b&gt;Mausklick&lt;/b&gt; zum Löschen von Referenzpunkten</translation>
     </message>
@@ -460,7 +460,7 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
 <context>
     <name>GeoreferencingMoveTool</name>
     <message>
-        <location filename="../src/georeferencing.cpp" line="668"/>
+        <location filename="../src/georeferencing.cpp" line="670"/>
         <source>&lt;b&gt;Drag&lt;/b&gt; to move pass points</source>
         <translation>&lt;b&gt;Ziehen&lt;/b&gt; zum Verschieben von Referenzpunkten</translation>
     </message>
@@ -1105,9 +1105,9 @@ Wählen Sie Nein, um ein anderes Dateiformat auszusuchen.</translation>
     <message>
         <location filename="../src/map.cpp" line="361"/>
         <location filename="../src/map.cpp" line="363"/>
-        <location filename="../src/map.cpp" line="413"/>
-        <location filename="../src/map.cpp" line="482"/>
-        <location filename="../src/map.cpp" line="491"/>
+        <location filename="../src/map.cpp" line="415"/>
+        <location filename="../src/map.cpp" line="486"/>
+        <location filename="../src/map.cpp" line="495"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
@@ -1135,21 +1135,30 @@ exportieren, weil das Format unbekannt ist.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="385"/>
-        <location filename="../src/map.cpp" line="459"/>
+        <location filename="../src/map.cpp" line="461"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="385"/>
+        <source>The map export generated warnings.</source>
+        <translation>Beim Kartenexport sind Warnmeldungen aufgetreten.</translation>
+    </message>
+    <message>
+        <location filename="../src/map.cpp" line="461"/>
+        <source>The map import generated warnings.</source>
+        <translation>Beim Kartenimport sind Warnmeldungen aufgetreten.</translation>
+    </message>
+    <message>
         <source>The map export generated the following warning(s):
 
 %1</source>
-        <translation>Beim Kartenexport traten die folgenden Warnung(en) auf:
+        <translation type="obsolete">Beim Kartenexport traten die folgenden Warnung(en) auf:
 
 %1</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="413"/>
+        <location filename="../src/map.cpp" line="415"/>
         <source>Cannot open file:
 %1
 for reading.</source>
@@ -1157,21 +1166,20 @@ for reading.</source>
 Datei kann nicht zum Lesen geöffnet werden.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="426"/>
+        <location filename="../src/map.cpp" line="428"/>
         <source>Invalid file type.</source>
         <translation>Ungültiger Dateityp.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="459"/>
         <source>The map import generated the following warning(s):
 
 %1</source>
-        <translation>Beim Kartenimport traten die folgenden Warnung(en) auf:
+        <translation type="obsolete">Beim Kartenimport traten die folgenden Warnung(en) auf:
 
 %1</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="482"/>
+        <location filename="../src/map.cpp" line="486"/>
         <source>Cannot open file:
 %1
 
@@ -1190,7 +1198,7 @@ Invalid file type.</source>
 Fehler beim Einlesen.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="491"/>
+        <location filename="../src/map.cpp" line="495"/>
         <source>Problem while opening file:
 %1
 
@@ -1199,7 +1207,7 @@ Error during symbol post-processing.</source>
 Fehler beim Verarbeiten der Symbole.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="807"/>
+        <location filename="../src/map.cpp" line="812"/>
         <source>New color</source>
         <translation>Neue Farbe</translation>
     </message>
@@ -1623,12 +1631,12 @@ Fehler beim Verarbeiten der Symbole.</translation>
         <translation>%1 Objekt(e) dupliziert</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1116"/>
+        <location filename="../src/map_editor.cpp" line="1117"/>
         <source>Paint free-handedly on a template</source>
         <translation>Auf einer Vorlage freihändig Zeichnen</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1118"/>
+        <location filename="../src/map_editor.cpp" line="1119"/>
         <source>Paint free-handedly on a template. Create or load a template which can be drawn onto to activate this button</source>
         <translatorcomment>First part duplicated. Check punctuation.</translatorcomment>
         <translation>Auf einer Vorlage freihändig Zeichnen. Erstellen oder laden Sie eine Vorlage auf die gezeichnet werden kann, um dieses Werkzeug zu verwenden</translation>
@@ -1666,7 +1674,7 @@ to create one.</source>
         <translation>Leerer Symbolsatz
 
 Um Symbole zu definieren,
-klicken SIe mit der rechten Maustaste 
+klicken Sie mit der rechten Maustaste 
 in die Symbolleiste und wählen Sie
 &quot;Neues Symbol&quot;.</translation>
     </message>
@@ -1680,7 +1688,7 @@ Templates -&gt; Open template...</source>
         <translation>Bereit zum Zeichnen.
 
 Beginnen Sie zu zeichnen, oder laden Sie eine Vorlage.
-Um eine Vorlage zu laden, klicken Sie
+Um eine Vorlage zu laden, wählen Sie
 Vorlagen -&gt; Vorlage öffnen...</translation>
     </message>
 </context>
@@ -2251,7 +2259,7 @@ Fehler beim Laden der Ebene %2.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="210"/>
-        <location filename="../src/file_format_ocad8.cpp" line="251"/>
+        <location filename="../src/file_format_ocad8.cpp" line="252"/>
         <source>default</source>
         <translation>Standard</translation>
     </message>
@@ -2264,78 +2272,88 @@ for writing.</source>
 Kann Datei nicht zum Schreiben öffnen.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="73"/>
+        <location filename="../src/file_format_ocad8.cpp" line="74"/>
         <source>Could not open file: libocad returned %1</source>
         <translation>Kann Datei nicht öffnen:
 libocad-Fehler %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="76"/>
+        <location filename="../src/file_format_ocad8.cpp" line="77"/>
         <source>OCAD files of version %1 cannot be loaded!</source>
         <translation>OCAD-Dateien der Version %1 können nicht geladen werden!</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="170"/>
+        <location filename="../src/file_format_ocad8.cpp" line="171"/>
         <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
         <translation>Kann Symbol %1.%2 &quot;%3&quot; nicht importieren</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="183"/>
+        <location filename="../src/file_format_ocad8.cpp" line="184"/>
         <source>OCAD import layer</source>
         <translation>OCAD-Import-Ebene</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="327"/>
+        <location filename="../src/file_format_ocad8.cpp" line="328"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
         <translation>Im gestrichelten Liniensymbol %1 sind die Längen für die spitzen Enden am Anfang und Ende verschieden (%2 and %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="339"/>
+        <location filename="../src/file_format_ocad8.cpp" line="345"/>
+        <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="347"/>
+        <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="356"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
         <translation>Im gestrichelten Liniensymbol %1 sind die Haupt- und Endlänge verschieden (%2 and %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="348"/>
+        <location filename="../src/file_format_ocad8.cpp" line="366"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
         <translation>Im gestrichelten Liniensymbol %1 sind die Unterbrüche D und E verschieden (%2 and %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="387"/>
+        <location filename="../src/file_format_ocad8.cpp" line="409"/>
         <source>In symbol %1, left and right borders are different colors (%2 and %3). Using %4.</source>
         <translation>Bei Symbol %1 haben linker und rechter Rand verschiedene Farben (%2 bzw. %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="395"/>
+        <location filename="../src/file_format_ocad8.cpp" line="417"/>
         <source>In symbol %1, left and right borders are different width (%2 and %3). Using %4.</source>
         <translation>Bei Symbol %1 haben linker und rechter Rand verschiedene Breiten (%2 bzw. %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="409"/>
+        <location filename="../src/file_format_ocad8.cpp" line="431"/>
         <source>In line symbol %1, ignoring that only the left border line should be dashed</source>
         <translation>Ignoriere, dass bei Symbol %1 nur die linke Randlinie gestrichelt sein soll</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="449"/>
+        <location filename="../src/file_format_ocad8.cpp" line="471"/>
         <source>In symbol %1, ignoring framing line.</source>
         <translation>Ignoriere Rahmen bei Symbol %1.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="578"/>
+        <location filename="../src/file_format_ocad8.cpp" line="600"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
         <translation>Ignoriere Ausrichtung bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="584"/>
+        <location filename="../src/file_format_ocad8.cpp" line="606"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
         <translation>Ignoriere Höhe (%2) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="589"/>
+        <location filename="../src/file_format_ocad8.cpp" line="611"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation>Vom Original abweichende Zeichenabstände bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1200"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1222"/>
         <source>Color id not found: %1, ignoring this color</source>
         <translation>Farb-ID nicht gefunden: %1, ignoriere diese Farbe</translation>
     </message>
@@ -2348,7 +2366,7 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ignoriere Zeichenabstand (%2%) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="594"/>
+        <location filename="../src/file_format_ocad8.cpp" line="616"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
         <translation>Ignoriere Wordabstand (%2%) bei Textsymbol %1</translation>
     </message>
@@ -2357,7 +2375,7 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ignoriere Absatzabstand (%2%) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="599"/>
+        <location filename="../src/file_format_ocad8.cpp" line="621"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
         <translation>Ignoriere Enrückung (%2/%3) bei Textsymbol %1</translation>
     </message>
@@ -2366,17 +2384,17 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ignoriere Tabulatorweiten bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="604"/>
+        <location filename="../src/file_format_ocad8.cpp" line="626"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
         <translation>Ignoriere Textrahmen (Modus %2) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="749"/>
+        <location filename="../src/file_format_ocad8.cpp" line="771"/>
         <source>Unable to load object</source>
         <translation>Kann Objekt nicht Laden</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="755"/>
+        <location filename="../src/file_format_ocad8.cpp" line="777"/>
         <source>Unable to import rectangle object</source>
         <translation>Kann Rechtecksobjekt nicht importieren</translation>
     </message>
@@ -2385,27 +2403,27 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ein Objekt mit dem nach Norden ausgerichteten Symbol &apos;%1&apos; ist gedreht. Ignoriere die Drehung</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="802"/>
+        <location filename="../src/file_format_ocad8.cpp" line="824"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation>Textsymbol nicht importiert: Konnte Pfad nicht ermitteln (npts=%1): %2</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="968"/>
+        <location filename="../src/file_format_ocad8.cpp" line="990"/>
         <source>Unable to import template: %1</source>
         <translation>Kann Vorlage nicht importieren: %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="973"/>
+        <location filename="../src/file_format_ocad8.cpp" line="995"/>
         <source>Ignoring template of type: %1 (%2)</source>
         <translation>Ignoriere Vorlage vom Typ %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="997"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1019"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
         <translation>Kann Vorlage nicht importieren: Hintegrund &quot;%1&quot; scheint kein Rasterbild zu sein</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1100"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1122"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation>Versuch, ein Textobjekt mit unbekanntem Koordinatenformat zu importieren</translation>
     </message>
@@ -3067,7 +3085,7 @@ Vorlage konnte nicht geladen werden. Existiert diese Datei?</translation>
     <message>
         <location filename="../src/symbol_text.cpp" line="300"/>
         <source>Paragraph spacing [mm]:</source>
-        <translation>Absatz-Abstand [mm]:</translation>
+        <translation>Absatzabstand [mm]:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="304"/>

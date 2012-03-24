@@ -373,13 +373,8 @@ void PathObject::PathPart::connectEnds()
 	if (isClosed())
 		return;
 	
-#ifdef _MSC_VER
-	path->coords[start_index].setRawX(qRound64((QString::number(path->coords[end_index].rawX()).toDouble() + path->coords[start_index].rawX()) / 2));
-	path->coords[start_index].setRawY(qRound64((QString::number(path->coords[end_index].rawY()).toDouble() + path->coords[start_index].rawY()) / 2));
-#else
 	path->coords[start_index].setRawX(qRound64((path->coords[end_index].rawX() + path->coords[start_index].rawX()) / 2));
 	path->coords[start_index].setRawY(qRound64((path->coords[end_index].rawY() + path->coords[start_index].rawY()) / 2));
-#endif
 	path->setClosingPoint(end_index, path->coords[start_index]);
 	path->setOutputDirty();
 }
@@ -702,13 +697,8 @@ void PathObject::connectPathParts(int part_index, PathObject* other, int other_p
 			coords[i] = coords[i - (other_part_size - 1)];
 		
 		MapCoord& join_coord = coords[part.start_index + other_part_size - 1];
-#ifdef _MSC_VER
-		join_coord.setX((join_coord.xd() + QString::number(other->coords[other_part.end_index].xd()).toDouble()) / 2);
-		join_coord.setY((join_coord.yd() + QString::number(other->coords[other_part.end_index].yd()).toDouble()) / 2);
-#else
 		join_coord.setRawX((join_coord.rawX() + other->coords[other_part.end_index].rawX()) / 2);
 		join_coord.setRawY((join_coord.rawY() + other->coords[other_part.end_index].rawY()) / 2);
-#endif
 		join_coord.setHolePoint(false);
 		join_coord.setClosePoint(false);
 		
@@ -718,13 +708,8 @@ void PathObject::connectPathParts(int part_index, PathObject* other, int other_p
 	else
 	{
 		MapCoord coord = other->coords[other_part.start_index];	// take flags from first coord of path to append
-#ifdef _MSC_VER
-		coord.setX((QString::number(coords[part.end_index].xd()).toDouble() + coord.xd()) / 2);
-		coord.setY((QString::number(coords[part.end_index].yd()).toDouble() + coord.yd()) / 2);
-#else
 		coord.setRawX((coords[part.end_index].rawX() + coord.rawX()) / 2);
 		coord.setRawY((coords[part.end_index].rawY() + coord.rawY()) / 2);
-#endif
 		coords[part.end_index] = coord;
 		
 		for (int i = (int)coords.size() - 1; i > part.end_index + (other_part_size - 1); --i)
@@ -844,7 +829,7 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 	
 	// Start position
 	int start_bezier_index = -1;		// if the range starts at a bezier curve, this is the curve's index, otherwise -1
-	float start_bezier_split_param;	// the parameter value where the split of the curve for the range start was made
+	float start_bezier_split_param = 0;	// the parameter value where the split of the curve for the range start was made
 	MapCoordF o3, o4;					// temporary bezier control points
 	if (p_coords->at(path_coords[cur_path_coord].index).isCurveStart())
 	{

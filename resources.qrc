@@ -66,4 +66,7 @@
 
   <file>etc/tipoftheday.txt</file>
  </qresource>
+ <qresource lang="de">
+  <file alias="etc/tipoftheday.txt">etc/tipoftheday_de.txt</file>
+ </qresource>
 </RCC>

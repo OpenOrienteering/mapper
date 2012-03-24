@@ -47,10 +47,19 @@ int main(int argc, char** argv)
 	QCoreApplication::setOrganizationName("Thomas Schoeps");
 	QCoreApplication::setApplicationName("OpenOrienteering");
 	
+	// Load plugins on Windows
+	#ifdef WIN32
+		qapp.addLibraryPath(QCoreApplication::applicationDirPath() + "/plugins");
+	#endif
+	
 	// Localization
 	QString locale = QLocale::system().name();
 	QTranslator qtTranslator;
-	qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+	#ifdef WIN32
+		qtTranslator.load("qt_" + locale, "translations/");
+	#else
+		qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+	#endif
 	qapp.installTranslator(&qtTranslator);
 	QTranslator translator;
 	translator.load(locale, QString(":/translations"));
@@ -79,11 +88,10 @@ int main(int argc, char** argv)
 	return qapp.exec();
 }
 
-#ifdef WIN32
+#ifdef _MSC_VER
 #include "Windows.h"
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath() + "/plugins");
 	return main(__argc, __argv);
 }
 #endif

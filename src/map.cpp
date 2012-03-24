@@ -102,15 +102,17 @@ void MapLayer::setObject(Object* object, int pos, bool delete_old)
 		delete objects[pos];
 	
 	objects[pos] = object;
+	bool delete_old_renderables = object->getMap() == map;
 	object->setMap(map);
-	object->update(true, false);
+	object->update(true, delete_old_renderables);
 	map->setObjectsDirty();
 }
 void MapLayer::addObject(Object* object, int pos)
 {
 	objects.insert(objects.begin() + pos, object);
+	bool delete_old_renderables = object->getMap() == map;
 	object->setMap(map);
-	object->update(true, false);
+	object->update(true, delete_old_renderables);
 	map->setObjectsDirty();
 	
 	if (map->getNumObjects() == 1)
@@ -382,7 +384,9 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 					warnings += '\n';
 				warnings += *it;
             }
-            QMessageBox::warning(NULL, tr("Warning"), tr("The map export generated the following warning(s):\n\n%1").arg(warnings));
+			QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The map export generated warnings."), QMessageBox::Ok);
+			msgBox.setDetailedText(warnings);
+			msgBox.exec();
         }
     }
     catch (std::exception &e)
@@ -456,7 +460,9 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 							warnings += '\n';
 						warnings += *it;
 					}
-					QMessageBox::warning(NULL, tr("Warning"), tr("The map import generated the following warning(s):\n\n%1").arg(warnings));
+					QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The map import generated warnings."), QMessageBox::Ok);
+					msgBox.setDetailedText(warnings);
+					msgBox.exec();
                 }
 
                 import_complete = true;
@@ -1534,8 +1540,8 @@ bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF curso
 			set_to_limit = true;
 		}
 		
-		MapCoordF mouse_pos_map;
-		MapCoordF mouse_pos_to_view_center;
+		MapCoordF mouse_pos_map(0, 0);
+		MapCoordF mouse_pos_to_view_center(0, 0);
 		if (preserve_cursor_pos)
 		{
 			mouse_pos_map = viewToMapF(cursor_pos_view);
@@ -1565,8 +1571,8 @@ bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF curso
 			set_to_limit = true;
 		}
 		
-		MapCoordF mouse_pos_map;
-		MapCoordF mouse_pos_to_view_center;
+		MapCoordF mouse_pos_map(0, 0);
+		MapCoordF mouse_pos_to_view_center(0, 0);
 		if (preserve_cursor_pos)
 		{
 			mouse_pos_map = viewToMapF(cursor_pos_view);
