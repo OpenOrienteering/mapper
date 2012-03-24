@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=OpenOrienteering Mapper
+Comment=Orienteering map drawing program
+Comment[de]=Programm zum Zeichnen von Orientierungslaufkarten
+Exec=Mapper %F
+Icon=Mapper
+Terminal=false
+Categories=Graphics;Qt;
