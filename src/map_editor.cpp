@@ -356,6 +356,10 @@ void MapEditorController::createMenuAndToolbars()
 	cut_tool_act = newCheckAction("cutobject", tr("Cut object"), this, SLOT(cutClicked(bool)), "tool-cut.png");
 	cut_hole_act = newCheckAction("cuthole", tr("Cut holes"), this, SLOT(cutHoleClicked(bool)), "tool-cut-hole.png");
     rotate_act = newCheckAction("rotateobjects", tr("Rotate object(s)"), this, SLOT(rotateClicked(bool)), "tool-rotate.png");
+    paint_on_template_act = new QAction(QIcon(":/images/pencil.png"), tr("Paint on template"), this);
+    paint_on_template_act->setCheckable(true);
+    updatePaintOnTemplateAction();
+    connect(paint_on_template_act, SIGNAL(triggered(bool)), this, SLOT(paintOnTemplateClicked(bool)));
 
     // Refactored so we can do custom key bindings in the future
     assignKeyboardShortcuts();
@@ -423,19 +427,16 @@ void MapEditorController::createMenuAndToolbars()
 	QMenu* gps_menu = window->menuBar()->addMenu(tr("&GPS"));
 	gps_menu->addAction(edit_gps_projection_parameters_act);
 
-
-
-#ifndef Q_WS_MAC
-    // disable toolbars on OS X for the moment - any call to addToolBar() appears to
-    // torpedo the main window. The app is still running, but the window actually disappears
-    // and all menu items contributed to the menu bar disappear, leaving only the Application
-    // menu, (Quit, Services, etc.)
-
-    // This is the main reason I refactored the action setup; made it easier to ensure all
-    // actions made it into the menu system where I could use them.
+#ifdef Q_WS_MAC
+    // Mac toolbars are still a little screwed up, turns out we have to insert a
+    // "dummy" toolbar first and hide it, then the others show up
+    window->addToolBar(tr("Dummy"))->hide();
+#endif
 
     // View toolbar
-    toolbar_view = window->addToolBar("View");
+    toolbar_view = window->addToolBar(tr("View"));
+    toolbar_view->addAction(zoom_in_act);
+    toolbar_view->addAction(zoom_out_act);
     toolbar_view->addAction(show_all_act);
 
 	// Drawing toolbar
@@ -444,15 +445,7 @@ void MapEditorController::createMenuAndToolbars()
     toolbar_drawing->addAction(draw_point_act);
 	toolbar_drawing->addAction(draw_path_act);
     toolbar_drawing->addAction(draw_text_act);
-
 	toolbar_drawing->addSeparator();
-
-    // Leave this for the time being...
-    paint_on_template_act = new QAction(QIcon(":/images/pencil.png"), tr("Paint on template"), this);
-	paint_on_template_act->setCheckable(true);
-	updatePaintOnTemplateAction();
-	connect(paint_on_template_act, SIGNAL(triggered(bool)), this, SLOT(paintOnTemplateClicked(bool)));
-	
 	QToolButton* paint_on_template_button = new QToolButton();
 	paint_on_template_button->setCheckable(true);
 	paint_on_template_button->setDefaultAction(paint_on_template_act);
@@ -473,7 +466,7 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_editing->addAction(cut_tool_act);
 	toolbar_editing->addAction(cut_hole_act);
 	toolbar_editing->addAction(rotate_act);
-#endif
+
 
 }
 void MapEditorController::detach()
