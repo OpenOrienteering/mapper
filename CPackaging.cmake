@@ -58,6 +58,12 @@ To build a .deb package with proper file ownership, you must run
 		  DIRECTORY "bin/my symbol sets/"
 		  DESTINATION "share/${CPACK_DEBIAN_PACKAGE_NAME}/symbol sets"
 		  FILES_MATCHING PATTERN "*.omap")
+		install(
+		  FILES "debian/Mapper.desktop"
+		  DESTINATION "share/applications")
+		install(
+		  FILES "debian/Mapper.xpm"
+		  DESTINATION "share/pixmaps")
 
 	endif(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
 

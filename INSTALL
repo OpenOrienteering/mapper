@@ -5,6 +5,9 @@ A general warning: do not attempt to use the .pro project directly for compiling
 this leads to a conflict with a different naming scheme for Qt's moc files than when using cmake.
 Currently, only the cmake toolchain is supported and the .pro file is only useful if you want to use the QtCreator IDE for coding.
 
+The program is known to work with Qt 4.6, 4.7 and 4.8 and not to compile with Qt 4.4 or earlier.
+Information about other versions is not available, feel free to give feedback about them.
+
 
 == Compiling on Windows ==
 
@@ -47,9 +50,6 @@ Please also note that
 Requirements:
 Qt, cmake and a C++ compiler.
 
-The program is known to work with Qt 4.7 and 4.8 and not to compile with Qt 4.4 or earlier.
-Information about other versions is not available, feel free to give feedback about them.
-
 Building:
 mkdir build		(the build directory must be named "build"!)
 cd build
@@ -62,3 +62,19 @@ cd ../bin       (if still in the build directory)
 
 The option "-graphicssystem raster" is a Qt option which usually leads to better performance on Linux,
 in case it is not the default yet anyway (like on Windows).
+
+Package management:
+
+If you want to create a release package, enable "set(CMAKE_BUILD_TYPE Release)" in the CMakeList.txt. 
+Than start the build process from a fresh build directory.
+To create the .deb package for your particular distribution, after building call: 
+fakeroot make package
+
+You may list the package contents with:
+dpkg --contents PACKAGENAME.deb
+
+You may install the package with:
+sudo dpkg -i PACKAGENAME.deb
+
+You may later remove the package with:
+sudo dpkg -r openorienteering-mapper
