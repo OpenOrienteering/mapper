@@ -74,6 +74,7 @@ set(Mapper_SRCS
  src/template.cpp
  src/template_image.cpp
  src/template_gps.cpp
+ src/template_map.cpp
  src/template_dock_widget.cpp
  src/georeferencing.cpp
  src/paint_on_template.cpp

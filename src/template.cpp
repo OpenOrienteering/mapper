@@ -29,6 +29,7 @@
 #include "map.h"
 #include "template_image.h"
 #include "template_gps.h"
+#include "template_map.h"
 
 // ### TemplateTransform ###
 
@@ -290,7 +291,7 @@ Template* Template::templateForFile(const QString& path, Map* map)
 		path.endsWith(".tiff", Qt::CaseInsensitive))
 		return new TemplateImage(path, map);
 	else if (path.endsWith(".ocd", Qt::CaseInsensitive) || path.endsWith(".omap", Qt::CaseInsensitive))
-		return NULL;	// TODO
+		return new TemplateMap(path, map);	// TODO
 	else if (path.endsWith(".gpx", Qt::CaseInsensitive))
 		return new TemplateGPS(path, map);	
 	else

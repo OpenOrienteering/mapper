@@ -99,6 +99,8 @@ public:
 	
     virtual QSize sizeHint() const;
 	
+	inline bool usesAntialiasing() { return use_antialiasing; }
+	
 public slots:
 	void keyPressed(QKeyEvent* event);
 	void keyReleased(QKeyEvent* event);

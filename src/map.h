@@ -117,7 +117,7 @@ public:
 	void clear();
 	
 	/// Draws the part of the map which is visible in the given bounding box in map coordinates
-	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols);
+	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity = 1.0);
 	/// Draws the templates first_template until last_template which are visible in the given bouding box. view determines template visibility and can be NULL to show all templates.
 	/// draw_untransformed_parts is only possible with a MapWidget (because of MapWidget::mapToViewport()). Otherwise, set it to NULL.
 	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, bool draw_untransformed_parts, const QRect& untransformed_dirty_rect, MapWidget* widget, MapView* view);
