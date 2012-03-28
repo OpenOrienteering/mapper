@@ -20,15 +20,9 @@
 
 #include "template_map.h"
 
-#include <vector>
-#include <algorithm>
-
 #include <QtGui>
-#include <QDebug>
 
 #include "map_widget.h"
-
-//#include "util.h"
 
 QStringList TemplateMap::locked_maps;
 
@@ -61,21 +55,10 @@ bool TemplateMap::open(QWidget* dialog_parent, MapView* main_view)
 	return true;
 }
 
-void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity) {}
-
-void TemplateMap::drawTemplateUntransformed(QPainter* painter, const QRect& clip_rect, MapWidget* widget)
+void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity)
 {
-	if (widget == NULL)
-		return;
-	
-	painter->save();
-	painter->translate(widget->width() / 2.0, widget->height() / 2.0);
-	widget->getMapView()->applyTransform(painter);
-	bool use_antialiasing = widget->usesAntialiasing();
-	if (use_antialiasing)
-		painter->setRenderHint(QPainter::Antialiasing);
-	template_map->draw(painter, clip_rect, !use_antialiasing, widget->getMapView()->calculateFinalZoomFactor(), false, widget->getMapView()->getTemplateVisibility(this)->opacity);
-	painter->restore();
+	painter->setRenderHint(QPainter::Antialiasing); // TODO: Make antialiasing configurable
+	template_map->draw(painter, clip_rect, false, scale, false, opacity);
 }
 
 QRectF TemplateMap::getExtent()
@@ -84,8 +67,6 @@ QRectF TemplateMap::getExtent()
     if (!template_map) return QRectF();
 	QRectF raw = template_map->getLayer(0)->calculateExtent();
 	return QRectF(mapToTemplateQPoint(MapCoordF(raw.topLeft())), mapToTemplateQPoint(MapCoordF(raw.bottomRight())));
-	return template_map->getLayer(0)->calculateExtent();
-	
 }
 
 bool TemplateMap::changeTemplateFileImpl(const QString& filename)
@@ -111,8 +92,7 @@ bool TemplateMap::changeTemplateFileImpl(const QString& filename)
 		new_template_map->deleteTemplate(i);
 	}
 	
-	if (template_map)
-		delete template_map;
+	delete template_map;
 	
 	template_map = new_template_map;
 	return true;

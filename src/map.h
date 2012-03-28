@@ -433,7 +433,7 @@ public:
 	QRectF calculateViewBoundingBox(QRectF map_rect);
 	
 	/// Applies the view transform to the given painter.
-	/// Note 1: The transform is combined with the painter's existing tranfsorm.
+	/// Note 1: The transform is combined with the painter's existing transform.
 	/// Note 2: If you want to use the transform to draw something, you will probably also want to make sure that
 	///         the view center is in the center of your viewport. Because the view does not know the viewport size,
 	///         it cannot do that. So this offset must be applied before calling this method.
