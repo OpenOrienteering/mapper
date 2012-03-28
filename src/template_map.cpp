@@ -63,10 +63,9 @@ void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scal
 
 QRectF TemplateMap::getExtent()
 {
-    // If the image is invalid, the extent is an empty rectangle.
+    // If the template is invalid, the extent is an empty rectangle.
     if (!template_map) return QRectF();
-	QRectF raw = template_map->getLayer(0)->calculateExtent();
-	return QRectF(mapToTemplateQPoint(MapCoordF(raw.topLeft())), mapToTemplateQPoint(MapCoordF(raw.bottomRight())));
+	return template_map->getLayer(0)->calculateExtent();
 }
 
 bool TemplateMap::changeTemplateFileImpl(const QString& filename)
@@ -87,6 +86,7 @@ bool TemplateMap::changeTemplateFileImpl(const QString& filename)
 	}
 	
 	// remove all template's templates from memory
+	// TODO: prevent loading and/or let user decide
 	for (int i=new_template_map->getNumTemplates()-1; i >= 0; i--)
 	{
 		new_template_map->deleteTemplate(i);

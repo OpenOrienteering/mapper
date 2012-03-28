@@ -563,10 +563,10 @@ void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_templa
 			view_rect = QRectF(-9e42, -9e42, 9e42, 9e42);	// TODO: transform base_view_rect (map coords) using template transform to template coords
 		else
 		{
-			view_rect.setLeft((bounding_box.x() / temp->getTemplateScaleX()) - temp->getTemplateX());
-			view_rect.setTop((bounding_box.y() / temp->getTemplateScaleY()) - temp->getTemplateY());
-			view_rect.setRight((bounding_box.right() / temp->getTemplateScaleX()) - temp->getTemplateX());
-			view_rect.setBottom((bounding_box.bottom() / temp->getTemplateScaleY()) - temp->getTemplateY());
+			view_rect.setLeft((bounding_box.x() / temp->getTemplateScaleX()) - temp->getTemplateX() / 1000.0);
+			view_rect.setTop((bounding_box.y() / temp->getTemplateScaleY()) - temp->getTemplateY() / 1000.0);
+			view_rect.setRight((bounding_box.right() / temp->getTemplateScaleX()) - temp->getTemplateX() / 1000.0);
+			view_rect.setBottom((bounding_box.bottom() / temp->getTemplateScaleY()) - temp->getTemplateY() / 1000.0);
 		}
 		
 		if (really_draw_untransformed_parts)
