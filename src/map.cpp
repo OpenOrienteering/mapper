@@ -674,7 +674,7 @@ void Map::addObjectToSelection(Object* object, bool emit_selection_changed)
 	object_selection.insert(object);
 	addSelectionRenderables(object);
 	if (emit_selection_changed)
-		emit(selectedObjectsChanged());
+		emit(objectSelectionChanged());
 }
 void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
 {
@@ -682,7 +682,7 @@ void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
 	assert(removed && "Map::removeObjectFromSelection: object was not selected!");
 	removeSelectionRenderables(object);
 	if (emit_selection_changed)
-		emit(selectedObjectsChanged());
+		emit(objectSelectionChanged());
 }
 bool Map::removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed)
 {
@@ -701,7 +701,7 @@ bool Map::removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed)
 		it = object_selection.erase(it);
 	}
 	if (emit_selection_changed && removed_at_least_one_object)
-		emit(selectedObjectsChanged());
+		emit(objectSelectionChanged());
 	return removed_at_least_one_object;
 }
 bool Map::isObjectSelected(Object* object)
@@ -727,11 +727,15 @@ void Map::clearObjectSelection(bool emit_selection_changed)
 	object_selection.clear();
 	
 	if (emit_selection_changed)
-		emit(selectedObjectsChanged());
+		emit(objectSelectionChanged());
 }
 void Map::emitSelectionChanged()
 {
-	emit(selectedObjectsChanged());
+	emit(objectSelectionChanged());
+}
+void Map::emitSelectionEdited()
+{
+	emit(selectedObjectEdited());
 }
 
 void Map::addMapWidget(MapWidget* widget)

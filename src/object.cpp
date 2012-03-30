@@ -392,6 +392,23 @@ int PathObject::PathPart::calcNumRegularPoints()
 	return num_regular_points;
 }
 
+double PathObject::PathPart::getLength()
+{
+	return path->path_coords[path_coord_end_index].clen;
+}
+double PathObject::PathPart::calculateArea()
+{
+	double area = 0;
+	int j = path_coord_end_index;  // The last vertex is the 'previous' one to the first
+	
+	for (int i = path_coord_start_index; i <= path_coord_end_index; ++i)
+	{
+		area += (path->path_coords[j].pos.getX() + path->path_coords[i].pos.getX()) * (path->path_coords[j].pos.getY() - path->path_coords[i].pos.getY()); 
+		j = i;  // j is previous vertex to i
+	}
+	return qAbs(area) / 2;
+}
+
 // ### PathObject ###
 
 PathObject::PathObject(Symbol* symbol) : Object(Object::Path, symbol)

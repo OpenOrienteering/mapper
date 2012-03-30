@@ -42,6 +42,7 @@
 #include "tool_cut.h"
 #include "tool_cut_hole.h"
 #include "tool_rotate.h"
+#include "tool_measure.h"
 #include "object_text.h"
 
 // ### MapEditorController ###
@@ -67,6 +68,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	toolbar_drawing = NULL;
 	toolbar_editing = NULL;
 	print_dock_widget = NULL;
+	measure_dock_widget = NULL;
 	color_dock_widget = NULL;
 	symbol_dock_widget = NULL;
 	template_dock_widget = NULL;
@@ -79,6 +81,7 @@ MapEditorController::~MapEditorController()
 	delete toolbar_drawing;
 	delete toolbar_editing;
 	delete print_dock_widget;
+	delete measure_dock_widget;
 	delete color_dock_widget;
 	delete symbol_dock_widget;
 	delete template_dock_widget;
@@ -116,6 +119,8 @@ void MapEditorController::setEditTool()
 }
 void MapEditorController::setOverrideTool(MapEditorTool* new_override_tool)
 {
+	if (override_tool == new_override_tool)
+		return;
 	delete override_tool;
 	map->clearDrawingBoundingBox();
 	window->setStatusBarText("");
@@ -202,6 +207,7 @@ bool MapEditorController::load(const QString& path)
 void MapEditorController::attach(MainWindow* window)
 {
 	print_dock_widget = NULL;
+	measure_dock_widget = NULL;
 	color_dock_widget = NULL;
 	symbol_dock_widget = NULL;
 	template_dock_widget = NULL;
@@ -237,7 +243,7 @@ void MapEditorController::attach(MainWindow* window)
         createMenuAndToolbars();
 	
 	// Update enabled/disabled state for the tools ...
-	selectedObjectsChanged();
+	objectSelectionChanged();
 	// ... and for undo
 	undoStepAvailabilityChanged();
 	
@@ -356,6 +362,7 @@ void MapEditorController::createMenuAndToolbars()
 	cut_tool_act = newCheckAction("cutobject", tr("Cut object"), this, SLOT(cutClicked(bool)), "tool-cut.png");
 	cut_hole_act = newCheckAction("cuthole", tr("Cut holes"), this, SLOT(cutHoleClicked(bool)), "tool-cut-hole.png");
     rotate_act = newCheckAction("rotateobjects", tr("Rotate object(s)"), this, SLOT(rotateClicked(bool)), "tool-rotate.png");
+	measure_act = newCheckAction("measure", tr("Measure lengths and areas"), this, SLOT(measureClicked(bool)), "tool-measure.png");
 
     // Refactored so we can do custom key bindings in the future
     assignKeyboardShortcuts();
@@ -397,6 +404,7 @@ void MapEditorController::createMenuAndToolbars()
 	tools_menu->addAction(cut_tool_act);
 	tools_menu->addAction(cut_hole_act);
 	tools_menu->addAction(rotate_act);
+	tools_menu->addAction(measure_act);
 	
 	// Symbols menu
     QMenu* symbols_menu = window->menuBar()->addMenu(tr("Sy&mbols"));
@@ -473,6 +481,7 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_editing->addAction(cut_tool_act);
 	toolbar_editing->addAction(cut_hole_act);
 	toolbar_editing->addAction(rotate_act);
+	toolbar_editing->addAction(measure_act);
 #endif
 
 }
@@ -497,24 +506,16 @@ void MapEditorController::keyReleaseEvent(QKeyEvent* event)
 
 void MapEditorController::printClicked()
 {
-	if (print_dock_widget)
-	{
-		if (!print_dock_widget->isVisible())
-			print_widget->activate();
-		print_dock_widget->setVisible(!print_dock_widget->isVisible());
-	}
-	else
+	bool created = false;
+	if (!print_dock_widget)
 	{
 		print_dock_widget = new EditorDockWidget(tr("Print or Export"), print_act, this, window);
 		print_widget = new PrintWidget(map, window, main_view, this, print_dock_widget);
 		print_dock_widget->setChild(print_widget);
-		
-		// Show dock in floating state
-		print_dock_widget->setFloating(true);
-		print_dock_widget->show();
-		print_dock_widget->setGeometry(getWindow()->geometry().left() + 40, getWindow()->geometry().top() + 100, print_dock_widget->width(), print_dock_widget->height());
-		//window->addDockWidget(Qt::LeftDockWidgetArea, print_dock_widget, Qt::Vertical);
-	}	
+		created = true;
+	}
+	if (showFloatingDockWidget(print_dock_widget, created) && !created)
+		print_widget->activate();
 }
 
 void MapEditorController::undo()
@@ -734,7 +735,7 @@ void MapEditorController::selectedSymbolsChanged()
 	
 	selectedSymbolsOrObjectsChanged();
 }
-void MapEditorController::selectedObjectsChanged()
+void MapEditorController::objectSelectionChanged()
 {
 	if (mode != MapEditor)
 		return;
@@ -1034,6 +1035,7 @@ void MapEditorController::connectPathsClicked()
 	}
 	
 	map->emitSelectionChanged();
+	map->emitSelectionEdited();
 }
 void MapEditorController::cutClicked(bool checked)
 {
@@ -1046,6 +1048,33 @@ void MapEditorController::cutHoleClicked(bool checked)
 void MapEditorController::rotateClicked(bool checked)
 {
 	setTool(checked ? new RotateTool(this, rotate_act) : NULL);
+}
+void MapEditorController::measureClicked(bool checked)
+{
+	bool new_widget = false;
+	if (!measure_dock_widget)
+	{
+		measure_dock_widget = new EditorDockWidget(tr("Measure"), measure_act, this, window);
+		MeasureWidget* measure_widget = new MeasureWidget(map);
+		measure_dock_widget->setChild(measure_widget);
+		new_widget = true;
+	}
+	showFloatingDockWidget(measure_dock_widget, new_widget);
+}
+
+bool MapEditorController::showFloatingDockWidget(EditorDockWidget* dock_widget, bool new_widget)
+{
+	if (!new_widget)
+	{
+		bool show = !dock_widget->isVisible();
+		dock_widget->setVisible(show);
+		return show;
+	}
+	
+	dock_widget->setFloating(true);
+	dock_widget->show();
+	dock_widget->setGeometry(getWindow()->geometry().left() + 40, getWindow()->geometry().top() + 100, dock_widget->width(), dock_widget->height());
+	return true;
 }
 
 void MapEditorController::paintOnTemplateClicked(bool checked)
@@ -1143,7 +1172,7 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 		main_view = new MapView(map);
 	
 	connect(&map->objectUndoManager(), SIGNAL(undoStepAvailabilityChanged()), this, SLOT(undoStepAvailabilityChanged()));
-	connect(map, SIGNAL(selectedObjectsChanged()), this, SLOT(selectedObjectsChanged()));
+	connect(map, SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	connect(map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
 	connect(map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
 	if (symbol_widget)
@@ -1152,7 +1181,7 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 	if (window)
 	{
 		undoStepAvailabilityChanged();
-		selectedObjectsChanged();
+		objectSelectionChanged();
 	}
 }
 

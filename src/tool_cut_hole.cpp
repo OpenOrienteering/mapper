@@ -42,7 +42,7 @@ CutHoleTool::CutHoleTool(MapEditorController* editor, QAction* tool_button) : Ma
 }
 void CutHoleTool::init()
 {
-	connect(editor->getMap(), SIGNAL(selectedObjectsChanged()), this, SLOT(selectedObjectsChanged()));
+	connect(editor->getMap(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	updateDirtyRect();
     updateStatusText();
 }
@@ -136,7 +136,7 @@ void CutHoleTool::updateDirtyRect(const QRectF* path_rect)
 		editor->getMap()->clearDrawingBoundingBox();
 }
 
-void CutHoleTool::selectedObjectsChanged()
+void CutHoleTool::objectSelectionChanged()
 {
 	Map* map = editor->getMap();
 	if (map->getNumSelectedObjects() != 1 || !((*map->selectedObjectsBegin())->getSymbol()->getContainedTypes() & Symbol::Area))
@@ -177,6 +177,7 @@ void CutHoleTool::pathFinished(PathObject* hole_path)
 	undo_step->addObject(edited_object, undo_duplicate);
 	map->objectUndoManager().addNewUndoStep(undo_step);
 	map->setObjectsDirty();
+	map->emitSelectionEdited();
 	
 	pathAborted();
 }

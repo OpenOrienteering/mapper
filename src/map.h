@@ -240,6 +240,7 @@ public:
 	bool toggleObjectSelection(Object* object, bool emit_selection_changed);	// returns true if the object was selected, false if deselected
 	void clearObjectSelection(bool emit_selection_changed);
 	void emitSelectionChanged();
+	void emitSelectionEdited();
 	
 	// Other settings
 	
@@ -280,7 +281,8 @@ signals:
 	void templateChanged(int pos, Template* temp);
 	void templateDeleted(int pos, Template* old_temp);
 	
-	void selectedObjectsChanged();
+	void objectSelectionChanged();
+	void selectedObjectEdited();
 	void gpsProjectionParametersChanged();
 	
 private:

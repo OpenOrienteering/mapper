@@ -86,6 +86,7 @@ set(Mapper_SRCS
  src/tool_cut.cpp
  src/tool_cut_hole.cpp
  src/tool_rotate.cpp
+ src/tool_measure.cpp
 
  src/gps_coordinates.cpp
  src/gps_track.cpp 

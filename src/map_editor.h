@@ -106,7 +106,7 @@ public slots:
 	void editGPSProjectionParameters();
 	
 	void selectedSymbolsChanged();
-	void selectedObjectsChanged();
+	void objectSelectionChanged();
 	void selectedSymbolsOrObjectsChanged();
 	void undoStepAvailabilityChanged();
 	
@@ -125,6 +125,7 @@ public slots:
 	void cutClicked(bool checked);
 	void cutHoleClicked(bool checked);
 	void rotateClicked(bool checked);
+	void measureClicked(bool checked);
 	
 	void paintOnTemplateClicked(bool checked);
 	void paintOnTemplateSelectClicked();
@@ -141,11 +142,11 @@ private:
     void assignKeyboardShortcuts();
     void createMenuAndToolbars();
 	
+	bool showFloatingDockWidget(EditorDockWidget* dock_widget, bool new_widget);
 	void paintOnTemplate(Template* temp);
 	void updatePaintOnTemplateAction();
 	
 	void doUndo(bool redo);
-	void zoom(float steps);
 	
 	Map* map;
 	MapView* main_view;
@@ -192,6 +193,8 @@ private:
 	QAction* cut_tool_act;
 	QAction* cut_hole_act;
 	QAction* rotate_act;
+	QAction* measure_act;
+	EditorDockWidget* measure_dock_widget;
 	
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;

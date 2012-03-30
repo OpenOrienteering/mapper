@@ -144,6 +144,9 @@ public:
 		void connectEnds();	
 		/// Calculates the number of points, excluding close points and curve handles
 		int calcNumRegularPoints();
+		
+		double getLength();
+		double calculateArea();
 	};
 	
 	PathObject(Symbol* symbol = NULL);
