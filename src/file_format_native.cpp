@@ -193,6 +193,7 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 		{
 			throw FormatException(QObject::tr("Problem while opening file:\n%1\n\nError while reading layer count.").arg(file.fileName()));
 		}
+		delete map->layers[0];
 		map->layers.resize(num_layers);
 
 		for (int i = 0; i < num_layers; ++i)
@@ -204,13 +205,6 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 			}
 			map->layers[i] = layer;
 		}
-	}
-	else
-	{
-		MapLayer* layer = new MapLayer(QObject::tr("default"), map);
-		map->layers.resize(1);
-		map->layers[0] = layer;
-		map->current_layer_index = 0;
 	}
 }
 

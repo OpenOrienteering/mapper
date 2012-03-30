@@ -113,7 +113,7 @@ public:
 	/// Attempts to load the map from the specified path. Returns true on success.
 	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL, bool load_symbols_only = false);
 
-	/// Deletes all map data
+	/// Deletes all map data and resets the map to its initial state containing one default layer
 	void clear();
 	
 	/// Draws the part of the map which is visible in the given bounding box in map coordinates

@@ -197,7 +197,7 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 				}
 			}
 		}
-		map->layers.resize(1);
+		delete map->layers[0];
 		map->layers[0] = layer;
 		map->current_layer_index = 0;
 
@@ -246,13 +246,6 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 		*/
 
 		// Undo steps are not supported in OCAD
-	}
-	else
-	{
-		MapLayer* layer = new MapLayer(QObject::tr("default"), map);
-		map->layers.resize(1);
-		map->layers[0] = layer;
-		map->current_layer_index = 0;
 	}
 
     ocad_file_close(file);

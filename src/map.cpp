@@ -308,24 +308,11 @@ Map::Map() : renderables(this), selection_renderables(this)
 	if (!static_initialized)
 		initStatic();
 	
-	first_front_template = 0;
-	
-	layers.push_back(new MapLayer(tr("default layer"), this));
-	current_layer_index = 0;
-	
-	color_set = new MapColorSet();
-	
+	color_set = NULL;
 	object_undo_manager.setOwner(this);
+	gps_projection_parameters = NULL;
 	
-	print_params_set = false;
-	gps_projection_params_set = false;
-	gps_projection_parameters = new GPSProjectionParameters();
-	
-	colors_dirty = false;
-	symbols_dirty = false;
-	templates_dirty = false;
-	objects_dirty = false;
-	unsaved_changes = false;
+	clear();
 }
 Map::~Map()
 {
@@ -506,7 +493,8 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 
 void Map::clear()
 {
-	color_set->dereference();
+	if (color_set)
+		color_set->dereference();
 	color_set = new MapColorSet();
 	
 	int size = symbols.size();
@@ -524,10 +512,14 @@ void Map::clear()
 	for (int i = 0; i < size; ++i)
 		delete layers[i];
 	layers.clear();
-	current_layer_index = -1;
+	
+	layers.push_back(new MapLayer(tr("default layer"), this));
+	current_layer_index = 0;
 	
 	widgets.clear();
+	object_undo_manager.clear();
 	
+	print_params_set = false;
 	gps_projection_params_set = false;
 	delete gps_projection_parameters;
 	gps_projection_parameters = new GPSProjectionParameters();
