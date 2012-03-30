@@ -43,7 +43,17 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 		have_prev_paper_size = true;
 	}
 	else
+	{
 		have_prev_paper_size = false;
+		
+		// By default, set the print area to the map bbox
+		QRectF map_extent = map->calculateExtent(false, false, main_view);
+		const float default_border_size = 2 * 3;
+		print_width = map_extent.width() + default_border_size;
+		print_height = map_extent.height() + default_border_size;
+		width = print_width;
+		height = print_height;
+	}
 	
 	QLabel* device_label = new QLabel("<b>" + tr("Printer or exporter:") + "</b>");
 	device_combo = new QComboBox();
@@ -73,7 +83,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 		page_orientation_combo->setCurrentIndex(page_orientation_combo->findData(orientation));
 	else
 	{
-		QRectF map_extent = map->calculateExtent(show_templates_check->isChecked(), main_view);
+		QRectF map_extent = map->calculateExtent(false, show_templates_check->isChecked(), main_view);
 		QPrinter::Orientation best_orientation = (map_extent.width() > map_extent.height()) ? QPrinter::Landscape : QPrinter::Portrait;
 		page_orientation_combo->setCurrentIndex(page_orientation_combo->findData((int)best_orientation));
 	}
@@ -97,10 +107,10 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	top_edit = new QLineEdit(params_set ? QString::number(top) : "");
 	top_edit->setValidator(new DoubleValidator(-999999, 999999, top_edit));
 	QLabel* width_label = new QLabel(tr("Width:"));
-	width_edit = new QLineEdit(params_set ? QString::number(width) : "");
+	width_edit = new QLineEdit(QString::number(width));
 	width_edit->setValidator(new DoubleValidator(-999999, 999999, width_edit));
 	QLabel* height_label = new QLabel(tr("Height:"));
-	height_edit = new QLineEdit(params_set ? QString::number(height) : "");
+	height_edit = new QLineEdit(QString::number(height));
 	height_edit->setValidator(new DoubleValidator(-999999, 999999, height_edit));
 	
 	center_button = new QPushButton(tr("Center area on map"));
@@ -238,7 +248,7 @@ void PrintWidget::setPrinterSettings(QPrinter* printer)
 }
 void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& page_rect, bool white_background)
 {
-	QRectF map_extent = map->calculateExtent(show_templates_check->isChecked(), main_view);
+	QRectF map_extent = map->calculateExtent(false, show_templates_check->isChecked(), main_view);
 	
 	QPainter painter;
 	painter.begin(paint_device);
@@ -400,7 +410,7 @@ void PrintWidget::centerPrintArea()
 {
 	center_button->setChecked(true);
 	
-	QRectF map_extent = map->calculateExtent(show_templates_check->isChecked(), main_view);
+	QRectF map_extent = map->calculateExtent(false, show_templates_check->isChecked(), main_view);
 	if (!map_extent.isValid())
 	{
 		left_edit->setText("0");

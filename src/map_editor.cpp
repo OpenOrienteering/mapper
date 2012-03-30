@@ -795,7 +795,7 @@ void MapEditorController::undoStepAvailabilityChanged()
 
 void MapEditorController::showWholeMap()
 {
-	QRectF map_extent = map->calculateExtent(true, main_view);
+	QRectF map_extent = map->calculateExtent(true, true, main_view);
 	map_widget->adjustViewToRect(map_extent);
 }
 

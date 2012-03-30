@@ -77,7 +77,7 @@ public:
 	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
 	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
 	
-	QRectF calculateExtent();
+	QRectF calculateExtent(bool include_helper_symbols);
 	void scaleAllObjects(double factor);
 	void updateAllObjects(bool remove_old_renderables = true);
 	void updateAllObjectsWithSymbol(Symbol* symbol);
@@ -123,8 +123,9 @@ public:
 	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, bool draw_untransformed_parts, const QRect& untransformed_dirty_rect, MapWidget* widget, MapView* view);
 	/// Updates the renderables and extent of all objects which have been changed. This is automatically called by draw(), you normally do not need it
 	void updateObjects();
-	/// Calculates the extent of all map objects (and possibly templates)
-	QRectF calculateExtent(bool include_templates, MapView* view);
+	/// Calculates the extent of all map objects (and possibly templates). If templates should be included, a view can be given to take the template visibilities from.
+	/// view can also be NULL to include all templates.
+	QRectF calculateExtent(bool include_helper_symbols, bool include_templates, MapView* view);
 	
 	/// Must be called to notify the map of new widgets displaying it. Useful to notify the widgets about which parts of the map have changed and need to be redrawn
 	void addMapWidget(MapWidget* widget);

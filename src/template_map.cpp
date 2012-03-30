@@ -65,7 +65,7 @@ QRectF TemplateMap::getExtent()
 {
     // If the template is invalid, the extent is an empty rectangle.
     if (!template_map) return QRectF();
-	return template_map->getLayer(0)->calculateExtent();
+	return template_map->calculateExtent(false, false, NULL);
 }
 
 bool TemplateMap::changeTemplateFileImpl(const QString& filename)

@@ -215,7 +215,7 @@ void DrawPointTool::selectedSymbolsChanged()
 	Symbol* single_selected_symbol = symbol_widget->getSingleSelectedSymbol();
 	if (single_selected_symbol == NULL || single_selected_symbol->getType() != Symbol::Point || single_selected_symbol->isHidden())
 	{
-		if (single_selected_symbol->isHidden())
+		if (single_selected_symbol && single_selected_symbol->isHidden())
 			editor->setEditTool();
 		else
 			editor->setTool(editor->getDefaultDrawToolForSymbol(single_selected_symbol));

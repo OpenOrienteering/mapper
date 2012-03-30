@@ -179,21 +179,29 @@ void MapLayer::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool inclu
 	}
 }
 
-QRectF MapLayer::calculateExtent()
+QRectF MapLayer::calculateExtent(bool include_helper_symbols)
 {
 	QRectF rect;
 	
+	int i = 0;
 	int size = objects.size();
-	if (size > 0)
+	while (size > i && !rect.isValid())
 	{
-		objects[0]->update();
-		rect = objects[0]->getExtent();
+		if ((include_helper_symbols || !objects[i]->getSymbol()->isHelperSymbol()) && !objects[i]->getSymbol()->isHidden())
+		{
+			objects[i]->update();
+			rect = objects[i]->getExtent();
+		}
+		++i;
 	}
 	
-	for (int i = 1; i < size; ++i)
+	for (; i < size; ++i)
 	{
-		objects[i]->update();
-		rectInclude(rect, objects[i]->getExtent());
+		if ((include_helper_symbols || !objects[i]->getSymbol()->isHelperSymbol()) && !objects[i]->getSymbol()->isHidden())
+		{
+			objects[i]->update();
+			rectInclude(rect, objects[i]->getExtent());
+		}
 	}
 	
 	return rect;
@@ -1145,14 +1153,14 @@ void Map::setObjectsDirty()
 	objects_dirty = true;
 }
 
-QRectF Map::calculateExtent(bool include_templates, MapView* view)
+QRectF Map::calculateExtent(bool include_helper_symbols, bool include_templates, MapView* view)
 {
 	QRectF rect;
 	
 	// Objects
 	int size = layers.size();
 	for (int i = 0; i < size; ++i)
-		rectIncludeSafe(rect, layers[i]->calculateExtent());
+		rectIncludeSafe(rect, layers[i]->calculateExtent(include_helper_symbols));
 	
 	// Templates
 	if (include_templates)
