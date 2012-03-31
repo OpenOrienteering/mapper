@@ -37,6 +37,8 @@ TemplateMoveTool::TemplateMoveTool(Template* templ, MapEditorController* editor,
 void TemplateMoveTool::init()
 {
 	setStatusBarText(tr("<b>Drag</b> to move the current template"));
+	
+	connect(editor->getMap(), SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
 }
 
 bool TemplateMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -64,6 +66,12 @@ bool TemplateMoveTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord
 	updateDragging(map_coord);
 	dragging = false;
 	return true;
+}
+
+void TemplateMoveTool::templateDeleted(int index, Template* temp)
+{
+	if (templ == temp)
+		editor->setTool(NULL);
 }
 
 void TemplateMoveTool::updateDragging(MapCoordF mouse_pos_map)

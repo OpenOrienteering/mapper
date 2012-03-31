@@ -32,6 +32,7 @@ GeoreferencingActivity::GeoreferencingActivity(Template* temp, MapEditorControll
 {
 	setActivityObject(temp);
 	connect(controller->getMap(), SIGNAL(templateChanged(int,Template*)), this, SLOT(templateChanged(int,Template*)));
+	connect(controller->getMap(), SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
 }
 GeoreferencingActivity::~GeoreferencingActivity()
 {
@@ -207,7 +208,15 @@ bool GeoreferencingActivity::calculateGeoreferencing(Template* temp, Template::T
 void GeoreferencingActivity::templateChanged(int index, Template* temp)
 {
 	if ((Template*)activity_object == temp)
+	{
 		widget->updateDirtyRect(true);
+		widget->updateAllRows();
+	}
+}
+void GeoreferencingActivity::templateDeleted(int index, Template* temp)
+{
+	if ((Template*)activity_object == temp)
+		controller->setEditorActivity(NULL);
 }
 
 // ### GeoreferencingDockWidget ###
@@ -419,6 +428,9 @@ void GeoreferencingWidget::applyClicked(bool checked)
 	}
 	
 	temp->switchTransforms();
+	react_to_changes = false;
+	controller->getMap()->emitTemplateChanged(temp);
+	react_to_changes = true;
 	updateDirtyRect();
 }
 
@@ -476,6 +488,12 @@ void GeoreferencingWidget::updatePointErrors()
 	}
 	
 	react_to_changes = true;
+}
+void GeoreferencingWidget::updateAllRows()
+{
+	if (!react_to_changes) return;
+	for (int row = 0; row < temp->getNumPassPoints(); ++row)
+		updateRow(row);
 }
 void GeoreferencingWidget::updateRow(int row)
 {

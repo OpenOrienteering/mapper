@@ -30,6 +30,7 @@
 #include "color_dock_widget.h"
 #include "symbol_dock_widget.h"
 #include "template_dock_widget.h"
+#include "template_position_dock_widget.h"
 #include "template.h"
 #include "paint_on_template.h"
 #include "gps_coordinates.h"
@@ -85,6 +86,8 @@ MapEditorController::~MapEditorController()
 	delete color_dock_widget;
 	delete symbol_dock_widget;
 	delete template_dock_widget;
+	for (QHash<Template*, TemplatePositionDockWidget*>::iterator it = template_position_widgets.begin(); it != template_position_widgets.end(); ++it)
+		delete it.value();
 	delete current_tool;
 	delete override_tool;
 	delete editor_activity;
@@ -177,6 +180,22 @@ void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
 		editor_activity->init();
 	
 	map_widget->setActivity(editor_activity);
+}
+
+void MapEditorController::addTemplatePositionDockWidget(Template* temp)
+{
+	assert(!existsTemplatePositionDockWidget(temp));
+	TemplatePositionDockWidget* dock_widget = new TemplatePositionDockWidget(temp, this, window);
+	toggleFloatingDockWidget(dock_widget, true);
+	template_position_widgets.insert(temp, dock_widget);
+}
+void MapEditorController::removeTemplatePositionDockWidget(Template* temp)
+{
+	emit(templatePositionDockWidgetClosed(temp));
+	
+	delete getTemplatePositionDockWidget(temp);
+	int num_deleted = template_position_widgets.remove(temp);
+	assert(num_deleted == 1);
 }
 
 bool MapEditorController::save(const QString& path)
@@ -517,7 +536,7 @@ void MapEditorController::printClicked()
 		print_dock_widget->setChild(print_widget);
 		created = true;
 	}
-	if (showFloatingDockWidget(print_dock_widget, created) && !created)
+	if (toggleFloatingDockWidget(print_dock_widget, created) && !created)
 		print_widget->activate();
 }
 
@@ -1096,10 +1115,10 @@ void MapEditorController::measureClicked(bool checked)
 		measure_dock_widget->setChild(measure_widget);
 		new_widget = true;
 	}
-	showFloatingDockWidget(measure_dock_widget, new_widget);
+	toggleFloatingDockWidget(measure_dock_widget, new_widget);
 }
 
-bool MapEditorController::showFloatingDockWidget(EditorDockWidget* dock_widget, bool new_widget)
+bool MapEditorController::toggleFloatingDockWidget(QDockWidget* dock_widget, bool new_widget)
 {
 	if (!new_widget)
 	{

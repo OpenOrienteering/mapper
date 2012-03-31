@@ -18,35 +18,42 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TEMPLATE_MOVE_TOOL_H_
-#define _OPENORIENTEERING_TEMPLATE_MOVE_TOOL_H_
+#ifndef _OPENORIENTEERING_TEMPLATE_POSITION_DOCK_WIDGET_H_
+#define _OPENORIENTEERING_TEMPLATE_POSITION_DOCK_WIDGET_H_
 
-#include "map_editor.h"
+#include <QDockWidget>
 
-class TemplateMoveTool : public MapEditorTool
+class MapEditorController;
+class QLineEdit;
+class Template;
+class TemplateWidget;
+
+class TemplatePositionDockWidget : public QDockWidget
 {
 Q_OBJECT
 public:
-	TemplateMoveTool(Template* templ, MapEditorController* editor, QAction* action = NULL);
+	TemplatePositionDockWidget(Template* temp, MapEditorController* controller, QWidget* parent = NULL);
 	
-	virtual void init();
-	virtual QCursor* getCursor() {return cursor;}
+	void updateValues();
 	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	
-	static QCursor* cursor;
+	virtual bool event(QEvent* event);
+	virtual void closeEvent(QCloseEvent* event);
 	
 public slots:
+	void templateChanged(int index, Template* temp);
 	void templateDeleted(int index, Template* temp);
+	void valueChanged();
 	
 private:
-	void updateDragging(MapCoordF mouse_pos_map);
+	QLineEdit* x_edit;
+	QLineEdit* y_edit;
+	QLineEdit* scale_x_edit;
+	QLineEdit* scale_y_edit;
+	QLineEdit* rotation_edit;
 	
-	Template* templ;
-	bool dragging;
-	MapCoordF click_pos_map;
+	bool react_to_changes;
+	Template* temp;
+	MapEditorController* controller;
 };
 
 #endif

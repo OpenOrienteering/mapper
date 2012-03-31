@@ -58,6 +58,7 @@ public:
 	
 public slots:
 	void templateChanged(int index, Template* temp);
+	void templateDeleted(int index, Template* temp);
 	
 private:
 	GeoreferencingDockWidget* dock;
@@ -94,6 +95,7 @@ public:
 	void stopGeoreferencing();	// disables the georeferencing tools, if active
 	
 	void updatePointErrors();
+	void updateAllRows();
 	void updateRow(int row);
 	void updateDirtyRect(bool redraw = true);
 	

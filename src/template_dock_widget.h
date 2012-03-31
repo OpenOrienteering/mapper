@@ -72,13 +72,17 @@ protected slots:
 	void moveByHandClicked(bool checked);
 	void georeferenceClicked(bool checked);
 	void georeferencingWindowClosed();
-	void groupClicked();
+	//void groupClicked();
+	void positionClicked(bool checked);
 	void moreActionClicked(QAction* action);
+	
+	void templatePositionDockWidgetClosed(Template* temp);
 	
 private:
 	void addRow(int row);
 	void updateRow(int row);
 	int posFromRow(int row);
+	Template* getCurrentTemplate();
 	
 	void changeTemplateFile(int row);
 	
@@ -95,7 +99,8 @@ private:
 	QAction* move_by_hand_action;
 	QToolButton* move_by_hand_button;
 	QPushButton* georeference_button;
-	QPushButton* group_button;
+	//QPushButton* group_button;
+	QPushButton* position_button;
 	QToolButton* more_button;
 	
 	bool wide_layout;
