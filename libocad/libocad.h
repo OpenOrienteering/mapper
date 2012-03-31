@@ -100,8 +100,8 @@ struct _OCADFileHeader {
 	dword oobjidx;
 	dword osetup;
 	dword ssetup;
-	dword res2;
-	dword res3;
+	dword infopos;
+	dword infosize;
 	dword otemplidx;
 	dword res4;
 	dword res5;

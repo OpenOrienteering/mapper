@@ -27,7 +27,7 @@
 #include "util.h"
 
 const int NativeFileFormat::least_supported_file_format_version = 0;
-const int NativeFileFormat::current_file_format_version = 14;
+const int NativeFileFormat::current_file_format_version = 15;
 const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 
 bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
@@ -86,6 +86,9 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
     }
 
     file.read((char*)&map->scale_denominator, sizeof(int));
+	
+	if (version >= 15)
+		loadString(&file, map->map_notes);
 
     file.read((char*)&map->gps_projection_params_set, sizeof(bool));
     file.read((char*)map->gps_projection_parameters, sizeof(GPSProjectionParameters));
@@ -233,6 +236,8 @@ void NativeFileExport::doExport() throw (FormatException)
     file.write((const char*)&NativeFileFormat::current_file_format_version, sizeof(int));
 
     file.write((const char*)&map->scale_denominator, sizeof(int));
+	
+	saveString(&file, map->map_notes);
 
     file.write((const char*)&map->gps_projection_params_set, sizeof(bool));
     file.write((const char*)map->gps_projection_parameters, sizeof(GPSProjectionParameters));

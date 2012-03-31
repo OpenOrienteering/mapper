@@ -323,6 +323,7 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("rotateobjects")->setShortcut(QKeySequence("R"));
 	findAction("cutobject")->setShortcut(QKeySequence("K"));
 	findAction("cuthole")->setShortcut(QKeySequence("H"));
+	findAction("measure")->setShortcut(QKeySequence("M"));
 }
 
 void MapEditorController::createMenuAndToolbars()
@@ -344,7 +345,8 @@ void MapEditorController::createMenuAndToolbars()
     /*QAction *load_colors_from_act = */newAction("loadcolors", tr("Load colors from..."), this, SLOT(loadColorsFromClicked()), NULL, tr("Replace the colors with those from another map file"));
     QAction *scale_all_symbols_act = newAction("scaleall", tr("Scale all symbols..."), this, SLOT(scaleAllSymbolsClicked()), NULL, tr("Scale the whole symbol set"));
     QAction *scale_map_act = newAction("scalemap", tr("Change map scale..."), this, SLOT(scaleMapClicked()), NULL, tr("Change the map scale and adjust map objects and symbol sizes"));
-    template_window_act = newCheckAction("templatewindow", tr("Template setup window"), this, SLOT(showTemplateWindow(bool)), "window-new", tr("Show/Hide the template window"));
+    QAction *map_notes_act = newAction("mapnotes", tr("Map notes..."), this, SLOT(mapNotesClicked()));
+	template_window_act = newCheckAction("templatewindow", tr("Template setup window"), this, SLOT(showTemplateWindow(bool)), "window-new", tr("Show/Hide the template window"));
     //QAction* template_config_window_act = newCheckAction("templateconfigwindow", tr("Template configurations window"), this, SLOT(showTemplateConfigurationsWindow(bool)), "window-new", tr("Show/Hide the template configurations window"));
     //QAction* template_visibilities_window_act = newCheckAction("templatevisibilitieswindow", tr("Template visibilities window"), this, SLOT(showTemplateVisbilitiesWindow(bool)), "window-new", tr("Show/Hide the template visibilities window"));
     QAction* open_template_act = newAction("opentemplate", tr("Open template..."), this, SLOT(openTemplateClicked()));
@@ -418,6 +420,7 @@ void MapEditorController::createMenuAndToolbars()
 	// Map menu
 	QMenu* map_menu = window->menuBar()->addMenu(tr("M&ap"));
 	map_menu->addAction(scale_map_act);
+	map_menu->addAction(map_notes_act);
 	
 	// Templates menu
 	QMenu* template_menu = window->menuBar()->addMenu(tr("&Templates"));
@@ -673,6 +676,40 @@ void MapEditorController::scaleMapClicked()
 	ScaleMapDialog dialog(window, map);
 	dialog.setWindowModality(Qt::WindowModal);
 	dialog.exec();
+}
+void MapEditorController::mapNotesClicked()
+{
+	QDialog dialog(window, Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
+	dialog.setWindowTitle(tr("Map notes"));
+	dialog.setWindowModality(Qt::WindowModal);
+	
+	QTextEdit* text_edit = new QTextEdit();
+	text_edit->setPlainText(map->getMapNotes());
+	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
+	QPushButton* ok_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("OK"));
+	ok_button->setDefault(true);
+	
+	QHBoxLayout* buttons_layout = new QHBoxLayout();
+	buttons_layout->addWidget(cancel_button);
+	buttons_layout->addStretch(1);
+	buttons_layout->addWidget(ok_button);
+	
+	QVBoxLayout* layout = new QVBoxLayout();
+	layout->addWidget(text_edit);
+	layout->addLayout(buttons_layout);
+	dialog.setLayout(layout);
+	
+	connect(cancel_button, SIGNAL(clicked(bool)), &dialog, SLOT(reject()));
+	connect(ok_button, SIGNAL(clicked(bool)), &dialog, SLOT(accept()));
+	
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		if (text_edit->toPlainText() != map->getMapNotes())
+		{
+			map->setMapNotes(text_edit->toPlainText());
+			map->setHasUnsavedChanges();
+		}
+	}
 }
 
 void MapEditorController::showTemplateWindow(bool show)

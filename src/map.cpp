@@ -527,6 +527,8 @@ void Map::clear()
 	widgets.clear();
 	object_undo_manager.clear();
 	
+	map_notes = "";
+	
 	print_params_set = false;
 	gps_projection_params_set = false;
 	delete gps_projection_parameters;

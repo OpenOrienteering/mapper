@@ -96,8 +96,8 @@ protected:
 
     // Unit conversion functions
     QString convertPascalString(const char *p);
-    QString convertCString(const char *p, size_t n);
-    QString convertWideCString(const char *p, size_t n);
+	QString convertCString(const char *p, size_t n, bool ignore_first_newline);
+	QString convertWideCString(const char *p, size_t n, bool ignore_first_newline);
     float convertRotation(int angle);
     void convertPoint(MapCoord &c, int ocad_x, int ocad_y);
     qint64 convertSize(int ocad_size);

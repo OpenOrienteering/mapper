@@ -247,6 +247,9 @@ public:
 	inline void setScaleDenominator(int value) {scale_denominator = value;}
 	inline int getScaleDenominator() const {return scale_denominator;}
 	
+	inline const QString& getMapNotes() const {return map_notes;}
+	inline void setMapNotes(const QString& text) {map_notes = text;}
+	
 	inline bool areGPSProjectionParametersSet() const {return gps_projection_params_set;}
 	void setGPSProjectionParameters(const GPSProjectionParameters& params);
 	inline const GPSProjectionParameters& getGPSProjectionParameters() const {return *gps_projection_parameters;}
@@ -329,6 +332,8 @@ private:
 	ViewVector views;
 	RenderableContainer renderables;
 	RenderableContainer selection_renderables;
+	
+	QString map_notes;
 	
 	bool gps_projection_params_set;	// have the parameters been set (are they valid)?
 	GPSProjectionParameters* gps_projection_parameters;

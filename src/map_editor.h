@@ -99,6 +99,7 @@ public slots:
 	void scaleAllSymbolsClicked();
 	
 	void scaleMapClicked();
+	void mapNotesClicked();
 	
 	void showTemplateWindow(bool show);
 	void openTemplateClicked();

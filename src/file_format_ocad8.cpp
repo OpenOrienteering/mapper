@@ -82,6 +82,7 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 
     map->scale_denominator = file->setup->scale;
 
+	map->setMapNotes(convertCString((const char*)file->buffer + file->header->infopos, file->header->infosize, false));
 
     // TODO: GPS projection parameters
 
@@ -808,8 +809,8 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapLayer* l
         const char *text_ptr = (const char *)(ocad_object->pts + ocad_object->npts);
         size_t text_len = sizeof(OCADPoint) * ocad_object->ntext;
         // (type |= 0x100) is used in OCAD 8 to indicate wide text (although this is not documented)
-        if ((ocad_object->type) & 0x100) t->setText(convertWideCString(text_ptr, text_len));
-        else t->setText(convertCString(text_ptr, text_len));
+        if ((ocad_object->type) & 0x100) t->setText(convertWideCString(text_ptr, text_len, true));
+        else t->setText(convertCString(text_ptr, text_len, true));
 
         // Text objects need special path translation
         if (!fillTextPathCoords(t, reinterpret_cast<TextSymbol*>(symbol), ocad_object->npts, (OCADPoint *)ocad_object->pts))
@@ -1146,12 +1147,12 @@ QString OCAD8FileImport::convertPascalString(const char *p) {
  *  length (in bytes) that will be scanned for a zero terminator; if none is found,
  *  the string will be truncated at that location.
  */
-QString OCAD8FileImport::convertCString(const char *p, size_t n) {
+QString OCAD8FileImport::convertCString(const char *p, size_t n, bool ignore_first_newline) {
     size_t i = 0;
     for (; i < n; i++) {
         if (p[i] == 0) break;
     }
-    if (n >= 2 && p[0] == '\r' && p[1] == '\n')
+    if (ignore_first_newline && n >= 2 && p[0] == '\r' && p[1] == '\n')
 	{
 		// Remove "\r\n" at the beginning of texts, somehow OCAD seems to add this sometimes but ignores it
 		p += 2;
@@ -1168,13 +1169,13 @@ QString OCAD8FileImport::convertCString(const char *p, size_t n) {
  *  length (in bytes) that will be scanned for a zero terminator; if none is found,
  *  the string will be truncated at that location.
  */
-QString OCAD8FileImport::convertWideCString(const char *p, size_t n) {
+QString OCAD8FileImport::convertWideCString(const char *p, size_t n, bool ignore_first_newline) {
     const u16 *q = (const u16 *)p;
     size_t i = 0;
     for (; i < n; i++) {
         if (q[i] == 0) break;
     }
-    if (n >= 4 && p[0] == '\r' && p[2] == '\n')
+    if (ignore_first_newline && n >= 4 && p[0] == '\r' && p[2] == '\n')
 	{
 		// Remove "\r\n" at the beginning of texts, somehow OCAD seems to add this sometimes but ignores it
 		p += 4;
