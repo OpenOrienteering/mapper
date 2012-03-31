@@ -31,6 +31,7 @@ float GeoreferencingActivity::cross_radius = 4;
 GeoreferencingActivity::GeoreferencingActivity(Template* temp, MapEditorController* controller) : controller(controller)
 {
 	setActivityObject(temp);
+	connect(controller->getMap(), SIGNAL(templateChanged(int,Template*)), this, SLOT(templateChanged(int,Template*)));
 }
 GeoreferencingActivity::~GeoreferencingActivity()
 {
@@ -201,6 +202,12 @@ bool GeoreferencingActivity::calculateGeoreferencing(Template* temp, Template::T
 	}
 	
 	return true;
+}
+
+void GeoreferencingActivity::templateChanged(int index, Template* temp)
+{
+	if ((Template*)activity_object == temp)
+		widget->updateDirtyRect(true);
 }
 
 // ### GeoreferencingDockWidget ###

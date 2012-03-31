@@ -1098,16 +1098,7 @@ void Map::deleteTemplate(int pos)
 }
 void Map::setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border)
 {
-	bool front_cache = false;	// TODO: is there a better way to find out if that is a front or back template?
-	int size = (int)templates.size();
-	for (int i = 0; i < size; ++i)
-	{
-		if (templates[i] == temp)
-		{
-			front_cache = i >= getFirstFrontTemplate();
-			break;
-		}
-	}
+	bool front_cache = findTemplateIndex(temp) >= getFirstFrontTemplate();	// TODO: is there a better way to find out if that is a front or back template?
 	
 	for (int i = 0; i < (int)widgets.size(); ++i)
 		if (widgets[i]->getMapView()->isTemplateVisible(temp))
@@ -1121,10 +1112,25 @@ void Map::setTemplateAreaDirty(int i)
 	
 	templates[i]->setTemplateAreaDirty();
 }
+int Map::findTemplateIndex(Template* temp)
+{
+	int size = (int)templates.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (templates[i] == temp)
+			return i;
+	}
+	assert(false);
+	return -1;
+}
 void Map::setTemplatesDirty()
 {
 	setHasUnsavedChanges();
 	templates_dirty = true;
+}
+void Map::emitTemplateChanged(Template* temp)
+{
+	emit(templateChanged(findTemplateIndex(temp), temp));
 }
 
 int Map::getNumObjects()

@@ -92,7 +92,8 @@ private:
 	QPushButton* move_down_button;
 	
 	QGroupBox* active_buttons_group;
-	QPushButton* move_by_hand_button;
+	QAction* move_by_hand_action;
+	QToolButton* move_by_hand_button;
 	QPushButton* georeference_button;
 	QPushButton* group_button;
 	QToolButton* more_button;

@@ -189,7 +189,9 @@ public:
 	void deleteTemplate(int pos);												// NOTE: adjust first_front_template manually!
 	void setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border);	// marks the respective regions in the template caches as dirty; area is given in map coords (mm). Does nothing if the template is not visible in a widget! So make sure to call this and showing/hiding a template in the correct order!
 	void setTemplateAreaDirty(int i);											// this does nothing for i == -1
+	int findTemplateIndex(Template* temp);
 	void setTemplatesDirty();
+	void emitTemplateChanged(Template* temp);
 	
 	// Objects
 	

@@ -56,6 +56,9 @@ public:
 	
 	static float cross_radius;
 	
+public slots:
+	void templateChanged(int index, Template* temp);
+	
 private:
 	GeoreferencingDockWidget* dock;
 	GeoreferencingWidget* widget;

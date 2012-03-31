@@ -28,6 +28,7 @@
 #include "template.h"
 #include "map_editor.h"
 #include "georeferencing.h"
+#include "template_move_tool.h"
 
 TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent): EditorDockWidgetChild(parent), map(map), main_view(main_view), controller(controller)
 {
@@ -87,8 +88,11 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	// Active group
 	active_buttons_group = new QGroupBox(tr("Selected template(s)"));
 	
-	move_by_hand_button = new QPushButton(QIcon(":/images/move.png"), tr("Move by hand"));
-	move_by_hand_button->setCheckable(true);
+	move_by_hand_action = new QAction(QIcon(":/images/move.png"), tr("Move by hand"), this);
+	move_by_hand_action->setCheckable(true);
+	move_by_hand_button = new QToolButton();
+	move_by_hand_button->setDefaultAction(move_by_hand_action);
+	move_by_hand_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	georeference_button = new QPushButton(QIcon(":/images/georeferencing.png"), tr("Georeference..."));
 	georeference_button->setCheckable(true);
 	group_button = new QPushButton(QIcon(":/images/group.png"), tr("(Un)group"));
@@ -140,7 +144,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	connect(move_down_button, SIGNAL(clicked(bool)), this, SLOT(moveTemplateDown()));
 	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
 	
-	connect(move_by_hand_button, SIGNAL(clicked(bool)), this, SLOT(moveByHandClicked(bool)));
+	connect(move_by_hand_action, SIGNAL(triggered(bool)), this, SLOT(moveByHandClicked(bool)));
 	connect(georeference_button, SIGNAL(clicked(bool)), this, SLOT(georeferenceClicked(bool)));
 	connect(group_button, SIGNAL(clicked(bool)), this, SLOT(groupClicked()));
 	connect(more_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(moreActionClicked(QAction*)));
@@ -484,9 +488,9 @@ void TemplateWidget::selectionChanged(const QItemSelection& selected, const QIte
 	active_buttons_group->setEnabled(enable_active_buttons);
 	if (enable_active_buttons)
 	{
-		// TODO: Implement and enable buttons again
-		move_by_hand_button->setEnabled(false); //!multiple_rows_selected);
+		move_by_hand_button->setEnabled(!multiple_rows_selected);
 		georeference_button->setEnabled(!multiple_rows_selected);
+		// TODO: Implement and enable buttons again
 		group_button->setEnabled(false); //multiple_rows_selected || (!multiple_rows_selected && map->getTemplate(posFromRow(current_row))->getTemplateGroup() >= 0));
 		more_button->setEnabled(false); //!multiple_rows_selected);
 	}
@@ -524,7 +528,9 @@ void TemplateWidget::cellDoubleClick(int row, int column)
 
 void TemplateWidget::moveByHandClicked(bool checked)
 {
-	// TODO
+	Template* temp = map->getTemplate(posFromRow(template_table->currentRow()));
+	assert(temp);
+	controller->setTool(checked ? new TemplateMoveTool(temp, controller, move_by_hand_action) : NULL);
 }
 void TemplateWidget::georeferenceClicked(bool checked)
 {
