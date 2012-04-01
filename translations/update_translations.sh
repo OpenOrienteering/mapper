@@ -2,7 +2,7 @@
 
 APPNAME="OpenOrienteering"
 SOURCES="../src/*.cpp ../src/*.h"
-LANGUAGES="de"
+LANGUAGES="de sv"
 
 cd $(dirname "$0") || exit 1
 
