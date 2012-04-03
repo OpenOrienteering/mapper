@@ -260,6 +260,9 @@ public:
 	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height);
 	void getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& center, float& left, float& top, float& width, float& height);
 	
+	void setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel, double dpi, double scale);
+	void getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel, double& dpi, double& scale);
+	
 	void setHasUnsavedChanges(bool has_unsaved_changes = true);
 	inline bool hasUnsavedChanged() const {return unsaved_changes;}
 	
@@ -350,6 +353,11 @@ private:
 	float print_area_top;
 	float print_area_width;
 	float print_area_height;
+	
+	bool image_template_use_meters_per_pixel;
+	double image_template_meters_per_pixel;
+	double image_template_dpi;
+	double image_template_scale;
 	
 	int scale_denominator;			// this is the number x if the scale is written as 1:x
 	
