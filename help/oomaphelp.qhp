@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <QtHelpProject version="1.0">
+     <namespace>OOMapper.alpha.3.help</namespace>
+     <virtualFolder>oohelpdoc</virtualFolder>
+     <customFilter name="My Application 1.0">
+         <filterAttribute>OOMap</filterAttribute>
+         <filterAttribute>1.0</filterAttribute>
+     </customFilter>
+     <filterSection>
+         <filterAttribute>OOMap</filterAttribute>
+         <filterAttribute>1.0</filterAttribute>
+         <toc>
+             <section title="OOMapper" ref="html/index.html">
+                 <section title="Introduction" ref="html/index.html"/>
+                 <section title="Installation" ref="html/install.html"/>
+                 <section title="Opening" ref="html/opening.html"/>
+                 <section title="Software Settings" ref="html/settings.html"/>
+                 <section title="New Map" ref="html/new_map.html"/>
+                 <section title="Map Screen" ref="html/map_screen.html"/>
+                 <section title="File Menu" ref="html/file_menu.html"/>
+                 <section title="View Menu" ref="html/view_menu.html"/>
+                 <section title="Edit Menu" ref="html/edit_menu.html"/>
+                 <section title="Drawing toolbar" ref="html/drawing_toolbar.html"/>
+                 <section title="Tools Menu" ref="html/tools_menu.html"/>
+                 <section title="Map Menu" ref="html/map_menu.html"/>
+                 <section title="Symbols Menu" ref="html/symbols_menu.html"/>
+                 <section title="Symbols &amp; Colors" ref="html/symbols.html"/>
+                 <section title="Templates Menu" ref="html/template_menu.html"/>
+                 <section title="GPS Menu" ref="html/gps_menu.html"/>
+             </section>
+         </toc>
+         <keywords>
+             <keyword name="Install"  ref="html/install.html"/>
+             <keyword name="New map" ref="html/opening.html"/>
+             <keyword name="File menu" ref="html/opening.html"/>
+             <keyword name="Editing" ref="html/opening.html"/>
+             <keyword name="Map screen" ref="html/opening.html"/>
+             <keyword name="Symbols" ref="html/symbols.html"/>
+             <keyword name="Colors" ref="html/symbols.html#colors"/>
+             <keyword name="Templates" ref="html/template_menu.html"/>
+         </keywords>
+         <files>
+             <file>html/oomap.css</file>
+             <file>html/*.html</file>
+             <file>html/images/*</file>
+         </files>
+     </filterSection>
+ </QtHelpProject>
+
+
+
