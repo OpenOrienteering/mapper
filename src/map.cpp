@@ -655,7 +655,7 @@ void Map::includeSelectionRect(QRectF& rect)
 }
 void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, RenderableContainer* replacement_renderables, bool draw_normal)
 {
-	const float selection_opacity_factor = draw_normal ? 1 : 0.35f;
+	const float selection_opacity_factor = draw_normal ? 1 : 0.4f;
 	
 	MapView* view = widget->getMapView();
 	
