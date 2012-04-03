@@ -79,7 +79,7 @@ public:
 	int isPointOnObject(MapCoordF coord, float tolerance, bool extended_selection);
 	
 	/// Checks if a path point (excluding curve control points) is included in the given box
-	bool isPathPointInBox(QRectF box);
+	bool intersectsBox(QRectF box);
 	
 	/// Take ownership of the renderables
 	void takeRenderables();

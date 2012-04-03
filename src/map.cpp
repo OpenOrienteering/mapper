@@ -174,7 +174,7 @@ void MapLayer::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool inclu
 			continue;
 		
 		objects[i]->update();
-		if (rect.intersects(objects[i]->getExtent()) && objects[i]->isPathPointInBox(rect))
+		if (rect.intersects(objects[i]->getExtent()) && objects[i]->intersectsBox(rect))
 			out.push_back(objects[i]);
 	}
 }
