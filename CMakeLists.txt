@@ -32,7 +32,7 @@ set(Mapper_SRCS
  libocad/setup.c
  libocad/symbol.c
  libocad/object.c
- libocad/template.c
+ libocad/string.c
 
  qtsingleapplication/qtlocalpeer.cpp
  qtsingleapplication/qtsingleapplication.cpp

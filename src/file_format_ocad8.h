@@ -83,8 +83,8 @@ protected:
     Object *importObject(const OCADObject *ocad_object, MapLayer* layer);
 	bool importRectangleObject(const OCADObject* ocad_object, MapLayer* layer, const RectangleInfo& rect);
 
-    // Template import
-    Template *importTemplate(OCADTemplateEntry *entry);
+    // String import
+    void importString(OCADStringEntry *entry);
     Template *importRasterTemplate(const OCADBackground &background);
 
     // Some helper functions that are used in multiple places
@@ -102,6 +102,7 @@ protected:
     void convertPoint(MapCoord &c, int ocad_x, int ocad_y);
     qint64 convertSize(int ocad_size);
     MapColor *convertColor(int color);
+	double convertTemplateScale(double ocad_scale);
 
 private:
     /// Handle to the open OCAD file

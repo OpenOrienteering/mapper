@@ -102,7 +102,7 @@ struct _OCADFileHeader {
 	dword ssetup;
 	dword infopos;
 	dword infosize;
-	dword otemplidx;
+	dword ostringidx;
 	dword res4;
 	dword res5;
 	dword res6;
@@ -385,29 +385,36 @@ OCADObjectIndex;
 
 
 PACK(typedef
-struct _OCADTemplate {
+struct _OCADCString {
     char str[1];  // zero terminated
 }
-, OCADTemplate)
+, OCADCString)
 
 
+/*
+ * FIXME: according to the OCAD 8 format desc, this is:
+    Pos: Cardinal;
+    Len: Cardinal;
+    StType: integer;
+    ObjIndex: integer;
+ */
 PACK(typedef
-struct _OCADTemplateEntry {
+struct _OCADStringEntry {
 	dword ptr;
 	dword size;
 	word type;
 	word res1;
 	dword res2;
 }
-, OCADTemplateEntry)
+, OCADStringEntry)
 
 
 PACK(typedef
-struct _OCADTemplateIndex {
+struct _OCADStringIndex {
 	dword next;
-	OCADTemplateEntry entry[256];
+	OCADStringEntry entry[256];
 }
-, OCADTemplateIndex)
+, OCADStringIndex)
 
 
 PACK(typedef
@@ -551,7 +558,7 @@ typedef bool (*OCADSymbolCallback)(void *, OCADFile *, OCADSymbol *);
 typedef bool (*OCADSymbolElementCallback)(void *, OCADSymbolElement *);
 typedef bool (*OCADObjectCallback)(void *, OCADFile *, OCADObject *);
 typedef bool (*OCADObjectEntryCallback)(void *, OCADFile *, OCADObjectEntry *);
-typedef bool (*OCADTemplateEntryCallback)(void *, OCADFile *, OCADTemplateEntry *);
+typedef bool (*OCADStringEntryCallback)(void *, OCADFile *, OCADStringEntry *);
 
 
 typedef enum _SegmentType { MoveTo, SegmentLineTo, CurveTo, ClosePath } SegmentType;
@@ -650,9 +657,9 @@ bool ocad_rect_grow(OCADRect *prect, s32 amount);
 bool ocad_rect_intersects(const OCADRect *r1, const OCADRect *r2);
 
 
-/** Converts an OCAD template of the correct type into an OCADBackground structure.
+/** Converts an OCAD string of the correct type into an OCADBackground structure.
  */
-int ocad_to_background(OCADBackground *bg, OCADTemplate *templ);
+int ocad_to_background(OCADBackground *bg, OCADCString *templ);
 
 /** Opens a file with the given filename. The file is loaded into memory and is accessible through
  *  the various ocad_file_* methods. The first argument can either be a pointer to a pre-allocated
@@ -694,7 +701,7 @@ int ocad_file_close(OCADFile *pfile);
 
 
 /** Optimizes and repairs an open OCADFile. The file is reordered into Header, Colors, Setup, Symbols,
- *  Objects, and Templates. Entities of the same type are brought together into a contiguous section
+ *  Objects, and Strings. Entities of the same type are brought together into a contiguous section
  *  of file and any free space is compacted. The entity indexes are likewise compacted and cached data
  *  in the entities and index entries is regenerated, as follows:
  *
@@ -927,60 +934,60 @@ OCADObject *ocad_object_alloc(const OCADObject *source);
  */
 OCADObject *ocad_object_add(OCADFile *file, const OCADObject *object);
 
-/** Returns a pointer to the first template index block, or NULL if the file isn't valid. Also returns
+/** Returns a pointer to the first string index block, or NULL if the file isn't valid. Also returns
  *  NULL if the file contains no object.
  */
-OCADTemplateIndex *ocad_template_index_first(OCADFile *pfile);
+OCADStringIndex *ocad_string_index_first(OCADFile *pfile);
 
 
-/** Returns a pointer to the next template index block after the given one, or NULL if there is none.
+/** Returns a pointer to the next string index block after the given one, or NULL if there is none.
  */
-OCADTemplateIndex *ocad_template_index_next(OCADFile *pfile, OCADTemplateIndex *current);
+OCADStringIndex *ocad_string_index_next(OCADFile *pfile, OCADStringIndex *current);
 
 
-/** Returns a pointer to the given template index entry, or NULL if the file isn't valid. Also returns
+/** Returns a pointer to the given string index entry, or NULL if the file isn't valid. Also returns
  *  NULL if the index is out of range, but always returns a valid pointer if the file, index block,
  *  and index are valid.
  */
-OCADTemplateEntry *ocad_template_entry_at(OCADFile *pfile, OCADTemplateIndex *current, int index);
+OCADStringEntry *ocad_string_entry_at(OCADFile *pfile, OCADStringIndex *current, int index);
 
 
-/** Creates a new template entry large enough to fit the specified number of bytes. If there is an
- *  empty template index entry of sufficient size, it will be used; otherwise, a new entry will be
+/** Creates a new string entry large enough to fit the specified number of bytes. If there is an
+ *  empty string index entry of sufficient size, it will be used; otherwise, a new entry will be
  *  allocated. The entry returned will have its ptr and size fields set; the size field may be larger
  *  than the size requested in the parameter. The caller is responsible for copying data into the
- *  actual template (retrieved via ocad_template()). If there is not enough memory to create a new
+ *  actual string (retrieved via ocad_string()). If there is not enough memory to create a new
  *  entry, NULL is returned.
  */
-OCADTemplateEntry *ocad_template_entry_new(OCADFile *pfile, u32 size);
+OCADStringEntry *ocad_string_entry_new(OCADFile *pfile, u32 size);
 
 
-/** Removes the template at the given entry. The template type is set to zero and the entry becomes
- *  eligibile to be returned by ocad_template_entry_new().
+/** Removes the string at the given entry. The string type is set to zero and the entry becomes
+ *  eligibile to be returned by ocad_string_entry_new().
  */
-int ocad_template_remove(OCADFile *pfile, OCADTemplateEntry *entry);
+int ocad_string_remove(OCADFile *pfile, OCADStringEntry *entry);
 
 
-/** Iterates over all template entries in the file.
+/** Iterates over all string entries in the file.
  */
-bool ocad_template_entry_iterate(OCADFile *pfile, OCADTemplateEntryCallback callback, void *param);
+bool ocad_string_entry_iterate(OCADFile *pfile, OCADStringEntryCallback callback, void *param);
 
 
-/** Returns a pointer to the template in the specified location within the index block, or NULL if there
- *  is no such template.
+/** Returns a pointer to the string in the specified location within the index block, or NULL if there
+ *  is no such string.
  */
-OCADTemplate *ocad_template_at(OCADFile *pfile, OCADTemplateIndex *current, int index);
+OCADCString *ocad_string_at(OCADFile *pfile, OCADStringIndex *current, int index);
 
 
-/** Returns a pointer to a template, given a valid pointer to its index entry. Returns NULL if the
+/** Returns a pointer to a string, given a valid pointer to its index entry. Returns NULL if the
  *  file isn't valid or the index entry is empty.
  */
-OCADTemplate *ocad_template(OCADFile *pfile, OCADTemplateEntry *entry);
+OCADCString *ocad_string(OCADFile *pfile, OCADStringEntry *entry);
 
 
 /** Adds a background template to the file.
  */
-int ocad_template_add_background(OCADFile *pfile, OCADBackground *bg);
+int ocad_string_add_background(OCADFile *pfile, OCADBackground *bg);
 
 
 /** Initializes an OCADPaintData object suitable for the given file.
