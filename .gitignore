@@ -10,3 +10,5 @@ bin/*.dll
 bin/plugins
 bin/translations
 build/
+help/*.qhc
+help/*.qch
