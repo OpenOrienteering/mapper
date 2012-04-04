@@ -102,6 +102,7 @@ qt4_automoc(${Mapper_SRCS})
 
 set(Mapper_TRANS
  translations/OpenOrienteering_de.ts
+ translations/OpenOrienteering_sv.ts
 )
 qt4_add_translation(Mapper_QM ${Mapper_TRANS})
 
