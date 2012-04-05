@@ -1392,6 +1392,12 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords)
 	
 	setOutputDirty();
 }
+void PathObject::clearCoordinates()
+{
+	coords.clear();
+	parts.clear();
+	setOutputDirty();
+}
 
 void PathObject::updatePathCoords(MapCoordVectorF& float_coords)
 {

@@ -37,6 +37,7 @@
 #include "symbol.h"
 #include "tool_draw_point.h"
 #include "tool_draw_path.h"
+#include "tool_draw_circle.h"
 #include "tool_draw_text.h"
 #include "tool_edit.h"
 #include "util.h"
@@ -334,6 +335,7 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("editobjects")->setShortcut(QKeySequence("E"));
 	findAction("drawpoint")->setShortcut(QKeySequence("S"));
 	findAction("drawpath")->setShortcut(QKeySequence("P"));
+	findAction("drawcircle")->setShortcut(QKeySequence("O"));
 	findAction("drawtext")->setShortcut(QKeySequence("T"));
 	
     findAction("duplicate")->setShortcut(QKeySequence("D"));
@@ -374,6 +376,7 @@ void MapEditorController::createMenuAndToolbars()
     edit_tool_act = newCheckAction("editobjects", tr("Edit objects"), this, SLOT(editToolClicked(bool)), "tool-edit.png");
     draw_point_act = newCheckAction("drawpoint", tr("Set point objects"), this, SLOT(drawPointClicked(bool)), "draw-point.png");
     draw_path_act = newCheckAction("drawpath", tr("Draw paths"), this, SLOT(drawPathClicked(bool)), "draw-path.png");
+	draw_circle_act = newCheckAction("drawcircle", tr("Draw circles"), this, SLOT(drawCircleClicked(bool)), "draw-circle.png");
     draw_text_act = newCheckAction("drawtext", tr("Write text"), this, SLOT(drawTextClicked(bool)), "draw-text.png");
     duplicate_act = newAction("duplicate", tr("Duplicate"), this, SLOT(duplicateClicked()), "tool-duplicate.png"); // D
     switch_symbol_act = newAction("switchsymbol", tr("Switch symbol"), this, SLOT(switchSymbolClicked()), "tool-switch-symbol.png");
@@ -381,7 +384,10 @@ void MapEditorController::createMenuAndToolbars()
     switch_dashes_act = newAction("switchdashes", tr("Switch dash direction"), this, SLOT(switchDashesClicked()), "tool-switch-dashes"); // Ctrl+D
 	connect_paths_act = newAction("connectpaths", tr("Connect paths"), this, SLOT(connectPathsClicked()), "tool-connect-paths.png");
 	cut_tool_act = newCheckAction("cutobject", tr("Cut object"), this, SLOT(cutClicked(bool)), "tool-cut.png");
-	cut_hole_act = newCheckAction("cuthole", tr("Cut holes"), this, SLOT(cutHoleClicked(bool)), "tool-cut-hole.png");
+	cut_hole_act = newCheckAction("cuthole", tr("Cut free form hole"), this, SLOT(cutHoleClicked(bool)), "tool-cut-hole.png"); // cut hole using a path
+	cut_hole_circle_act = new QAction(QIcon(":/images/tool-cut-hole.png"), tr("Cut round hole"), this);
+	cut_hole_circle_act->setCheckable(true);
+	QObject::connect(cut_hole_circle_act, SIGNAL(triggered(bool)), this, SLOT(cutHoleCircleClicked(bool)));
     rotate_act = newCheckAction("rotateobjects", tr("Rotate object(s)"), this, SLOT(rotateClicked(bool)), "tool-rotate.png");
 	measure_act = newCheckAction("measure", tr("Measure lengths and areas"), this, SLOT(measureClicked(bool)), "tool-measure.png");
 
@@ -416,6 +422,7 @@ void MapEditorController::createMenuAndToolbars()
     tools_menu->addAction(edit_tool_act);
     tools_menu->addAction(draw_point_act);
     tools_menu->addAction(draw_path_act);
+	tools_menu->addAction(draw_circle_act);
     tools_menu->addAction(draw_text_act);
     tools_menu->addAction(duplicate_act);
     tools_menu->addAction(switch_symbol_act);
@@ -423,7 +430,11 @@ void MapEditorController::createMenuAndToolbars()
     tools_menu->addAction(switch_dashes_act);
 	tools_menu->addAction(connect_paths_act);
 	tools_menu->addAction(cut_tool_act);
-	tools_menu->addAction(cut_hole_act);
+	QMenu *cut_hole_menu = new QMenu(tr("Cut hole"));
+	cut_hole_menu->setIcon(QIcon(":/images/tool-cut-hole.png"));
+	cut_hole_menu->addAction(cut_hole_act);
+	cut_hole_menu->addAction(cut_hole_circle_act);
+	tools_menu->addMenu(cut_hole_menu);
 	tools_menu->addAction(rotate_act);
 	tools_menu->addAction(measure_act);
 	
@@ -473,6 +484,7 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_drawing->addAction(edit_tool_act);
     toolbar_drawing->addAction(draw_point_act);
 	toolbar_drawing->addAction(draw_path_act);
+	toolbar_drawing->addAction(draw_circle_act);
     toolbar_drawing->addAction(draw_text_act);
 
 	toolbar_drawing->addSeparator();
@@ -501,7 +513,15 @@ void MapEditorController::createMenuAndToolbars()
     toolbar_editing->addAction(switch_dashes_act);
 	toolbar_editing->addAction(connect_paths_act);
 	toolbar_editing->addAction(cut_tool_act);
-	toolbar_editing->addAction(cut_hole_act);
+	
+	QToolButton* cut_hole_button = new QToolButton();
+	cut_hole_button->setCheckable(true);
+	cut_hole_button->setToolButtonStyle(Qt::ToolButtonIconOnly);
+	cut_hole_button->setDefaultAction(cut_hole_act);
+	cut_hole_button->setPopupMode(QToolButton::MenuButtonPopup);
+	cut_hole_button->setMenu(cut_hole_menu);
+	toolbar_editing->addWidget(cut_hole_button);
+	
 	toolbar_editing->addAction(rotate_act);
 	toolbar_editing->addAction(measure_act);
 #endif
@@ -786,6 +806,8 @@ void MapEditorController::selectedSymbolsChanged()
 	draw_point_act->setStatusTip(tr("Place point objects on the map.") + (draw_point_act->isEnabled() ? "" : (" " + tr("Select a point symbol to be able to use this tool."))));
 	draw_path_act->setEnabled((type == Symbol::Line || type == Symbol::Area || type == Symbol::Combined) && !symbol->isHidden());
 	draw_path_act->setStatusTip(tr("Draw polygonal and curved lines.") + (draw_path_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
+	draw_circle_act->setEnabled(draw_path_act->isEnabled());
+	draw_circle_act->setStatusTip(tr("Draw circles.") + (draw_circle_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
 	draw_text_act->setEnabled(type == Symbol::Text && !symbol->isHidden());
 	draw_text_act->setStatusTip(tr("Write text on the map.") + (draw_text_act->isEnabled() ? "" : (" " + tr("Select a text symbol to be able to use this tool."))));
 	
@@ -870,6 +892,10 @@ void MapEditorController::drawPointClicked(bool checked)
 void MapEditorController::drawPathClicked(bool checked)
 {
 	setTool(checked ? new DrawPathTool(this, draw_path_act, symbol_widget, true) : NULL);
+}
+void MapEditorController::drawCircleClicked(bool checked)
+{
+	setTool(checked ? new DrawCircleTool(this, draw_circle_act, symbol_widget) : NULL);
 }
 void MapEditorController::drawTextClicked(bool checked)
 {
@@ -1099,7 +1125,11 @@ void MapEditorController::cutClicked(bool checked)
 }
 void MapEditorController::cutHoleClicked(bool checked)
 {
-	setTool(checked ? new CutHoleTool(this, cut_hole_act) : NULL);
+	setTool(checked ? new CutHoleTool(this, cut_hole_act, PathObject::Path) : NULL);
+}
+void MapEditorController::cutHoleCircleClicked(bool checked)
+{
+	setTool(checked ? new CutHoleTool(this, cut_hole_circle_act, PathObject::Circle) : NULL);
 }
 void MapEditorController::rotateClicked(bool checked)
 {

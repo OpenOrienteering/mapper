@@ -82,8 +82,10 @@ set(Mapper_SRCS
  src/paint_on_template.cpp
 
  src/tool_edit.cpp
+ src/tool_draw_line_and_area.cpp
  src/tool_draw_point.cpp
  src/tool_draw_path.cpp
+ src/tool_draw_circle.cpp
  src/tool_draw_text.cpp
  src/tool_cut.cpp
  src/tool_cut_hole.cpp

@@ -277,12 +277,23 @@ public:
 		y = sin(new_angle) * len;
 	}
 	
-	/// Get a perpendicular vector pointing to the right
+	/// Replaces this vector with a perpendicular vector pointing to the right
 	inline void perpRight()
 	{
 		double x = getX();
 		setX(-getY());
 		setY(x);
+	}
+	
+	/// Scales the vector to a given length
+	inline void setLength(double length)
+	{
+		double cur_length = sqrt(getX()*getX() + getY()*getY());
+		if (cur_length < 1e-08)
+			return;
+		
+		setX(getX() * length / cur_length);
+		setY(getY() * length / cur_length);
 	}
 	
 	MapCoord toMapCoord() const

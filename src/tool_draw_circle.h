@@ -18,17 +18,17 @@
  */
 
 
-#ifndef _OPENORIENTEERING_DRAW_PATH_H_
-#define _OPENORIENTEERING_DRAW_PATH_H_
+#ifndef _OPENORIENTEERING_DRAW_CIRCLE_H_
+#define _OPENORIENTEERING_DRAW_CIRCLE_H_
 
 #include "tool_draw_line_and_area.h"
 
-/// Tool to draw path objects
-class DrawPathTool : public DrawLineAndAreaTool
+/// Tool to draw circles
+class DrawCircleTool : public DrawLineAndAreaTool
 {
 Q_OBJECT
 public:
-	DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget, bool allow_closing_paths);
+	DrawCircleTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
 	
     virtual void init();
     virtual QCursor* getCursor() {return cursor;}
@@ -36,23 +36,19 @@ public:
     virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
     virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-    virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	
-    virtual bool keyPressEvent(QKeyEvent* event);
+	virtual bool keyPressEvent(QKeyEvent* event);
 	
     virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	static QCursor* cursor;
 	
 protected:
-	void createPreviewCurve(MapCoord position, float direction);
-	void closeDrawing();
 	virtual void finishDrawing();
 	virtual void abortDrawing();
-	void undoLastPoint();
 	
-	void setDirtyRect(MapCoordF mouse_pos);
-	float calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map);
+	void updateCircle();
+	void setDirtyRect();
 	void updateStatusText();
 	
 	QPoint click_pos;
@@ -62,14 +58,7 @@ protected:
 	MapCoordF previous_pos_map;
 	MapCoordF previous_drag_map;
 	bool dragging;
-	
-	bool path_has_preview_point;
-	bool previous_point_is_curve_point;
-	float previous_point_direction;
-	bool create_segment;
-	
-	bool space_pressed;
-	bool allow_closing_paths;
+	bool first_point_set;
 };
 
 #endif
