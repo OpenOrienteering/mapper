@@ -31,6 +31,7 @@
 #include "map_undo.h"
 #include "tool_draw_path.h"
 #include "tool_draw_circle.h"
+#include "tool_draw_rectangle.h"
 
 QCursor* CutHoleTool::cursor = NULL;
 
@@ -66,6 +67,8 @@ bool CutHoleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 		path_tool = new DrawPathTool(editor, NULL, NULL, true);
 	else if (hole_type == PathObject::Circle)
 		path_tool = new DrawCircleTool(editor, NULL, NULL);
+	else if (hole_type == PathObject::Rect)
+		path_tool = new DrawRectangleTool(editor, NULL, NULL);
 	else
 		assert(false);
 	connect(path_tool, SIGNAL(dirtyRectChanged(QRectF)), this, SLOT(pathDirtyRectChanged(QRectF)));
@@ -168,7 +171,7 @@ void CutHoleTool::pathFinished(PathObject* hole_path)
 	
 	// Close the hole path
 	assert(hole_path->getNumParts() == 1);
-	hole_path->getPart(0).setClosed(true);
+	hole_path->getPart(0).setClosed(true, true);
 	
 	// If the edited path does not end with a hole point, change that
 	PathObject* edited_path = reinterpret_cast<PathObject*>(edited_object);

@@ -193,7 +193,8 @@ void DrawLineAndAreaTool::abortDrawing()
 
 void DrawLineAndAreaTool::finishDrawing()
 {
-	renderables.removeRenderablesOfObject(preview_path, false);
+	if (preview_path)
+		renderables.removeRenderablesOfObject(preview_path, false);
 	
 	if (preview_path && !is_helper_tool)
 	{

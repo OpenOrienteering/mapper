@@ -126,6 +126,7 @@ public slots:
 	void drawPointClicked(bool checked);
 	void drawPathClicked(bool checked);
 	void drawCircleClicked(bool checked);
+	void drawRectangleClicked(bool checked);
 	void drawTextClicked(bool checked);
 	
 	void duplicateClicked();
@@ -136,6 +137,7 @@ public slots:
 	void cutClicked(bool checked);
 	void cutHoleClicked(bool checked);
 	void cutHoleCircleClicked(bool checked);
+	void cutHoleRectangleClicked(bool checked);
 	void rotateClicked(bool checked);
 	void measureClicked(bool checked);
 	
@@ -198,6 +200,7 @@ private:
 	QAction* draw_point_act;
 	QAction* draw_path_act;
 	QAction* draw_circle_act;
+	QAction* draw_rectangle_act;
 	QAction* draw_text_act;
 	
 	QAction* duplicate_act;
@@ -206,8 +209,10 @@ private:
 	QAction* switch_dashes_act;
 	QAction* connect_paths_act;
 	QAction* cut_tool_act;
+	QMenu* cut_hole_menu;
 	QAction* cut_hole_act;
 	QAction* cut_hole_circle_act;
+	QAction* cut_hole_rectangle_act;
 	QAction* rotate_act;
 	QAction* measure_act;
 	EditorDockWidget* measure_dock_widget;

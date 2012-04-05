@@ -181,7 +181,7 @@ void DrawCircleTool::updateCircle()
 	preview_path->addCoordinate((click_pos_map - right + across).toCurveStartMapCoord());
 	preview_path->addCoordinate((click_pos_map - right + m_kappa * across).toMapCoord());
 	preview_path->addCoordinate((click_pos_map - kappa * right).toMapCoord());
-	preview_path->getPart(0).setClosed(true);
+	preview_path->getPart(0).setClosed(true, false);
 	
 	updatePreviewPath();
 	setDirtyRect();

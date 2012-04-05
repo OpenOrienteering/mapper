@@ -86,6 +86,7 @@ set(Mapper_SRCS
  src/tool_draw_point.cpp
  src/tool_draw_path.cpp
  src/tool_draw_circle.cpp
+ src/tool_draw_rectangle.cpp
  src/tool_draw_text.cpp
  src/tool_cut.cpp
  src/tool_cut_hole.cpp

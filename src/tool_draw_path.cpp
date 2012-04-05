@@ -366,14 +366,14 @@ void DrawPathTool::closeDrawing()
 	}
 	
 	if (preview_path->getNumParts() > 0)
-		preview_path->getPart(0).setClosed(true);
+		preview_path->getPart(0).setClosed(true, true);
 }
 void DrawPathTool::finishDrawing()
 {
 	// Does the symbols contain only areas? If so, auto-close the path if not done yet
 	bool contains_only_areas = !is_helper_tool && (drawing_symbol->getContainedTypes() & ~(Symbol::Area | Symbol::Combined)) == 0 && (drawing_symbol->getContainedTypes() & Symbol::Area);
 	if (contains_only_areas && preview_path->getNumParts() > 0)
-		preview_path->getPart(0).setClosed(true);
+		preview_path->getPart(0).setClosed(true, true);
 	
 	// Remove last point if closed and first and last points are equal, or if the last point was just a preview
 	if (path_has_preview_point && !dragging)
