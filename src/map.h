@@ -68,6 +68,7 @@ public:
 	
 	inline int getNumObjects() const {return (int)objects.size();}
 	inline Object* getObject(int i) {return objects[i];}
+    inline const Object* getObject(int i) const {return objects[i];}
 	int findObjectIndex(Object* object);					// asserts that the object is contained in the layer
 	void setObject(Object* object, int pos, bool delete_old);
 	void addObject(Object* object, int pos);

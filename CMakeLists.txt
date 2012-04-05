@@ -97,10 +97,10 @@ set(Mapper_SRCS
 )
 qt4_automoc(${Mapper_SRCS})
 
-#set(Mapper_TRANS
-# translations/OpenOrienteering_de.ts
-#)
-#qt4_add_translation(Mapper_QM ${Mapper_TRANS})
+set(Mapper_TRANS
+ translations/OpenOrienteering_de.ts
+)
+qt4_add_translation(Mapper_QM ${Mapper_TRANS})
 
 #SET(Mapper_RESOURCES resources.qrc translations.qrc)
 SET(Mapper_RESOURCES resources.qrc)
@@ -132,4 +132,4 @@ target_link_libraries(Mapper
  ${QT_QTXML_LIBRARY}
 )
 
-#include(CPackaging.cmake)
+include(CPackaging.cmake)

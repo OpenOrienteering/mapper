@@ -23,6 +23,7 @@
 #include <QDomDocument>
 
 #include "file_format.h"
+#include "symbol_area.h"
 
 /** Provides the Builder pattern for a DOM tree.
  */
@@ -54,7 +55,19 @@ public:
     XMLFileFormat() : Format("XML", QObject::tr("OpenOrienteering Mapper XML"), "xml", false, true, true) {}
 
     bool understands(const unsigned char *buffer, size_t sz) const;
+    Importer *createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
     Exporter *createExporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
+};
+
+
+class XMLFileImporter : public Importer
+{
+public:
+    XMLFileImporter(const QString &path, Map *map, MapView *view);
+    ~XMLFileImporter() {}
+
+    void doImport(bool load_symbols_only) throw (FormatException);
+
 };
 
 
@@ -69,6 +82,7 @@ public:
 protected:
     void exportSymbol(const Symbol *symbol, bool anonymous = false);
     void exportObject(const Object *object, bool symbol_reference = true);
+    void exportPattern(const struct AreaSymbol::FillPattern &pattern);
     QString makePath(const Object* object) const;
 
 private:
