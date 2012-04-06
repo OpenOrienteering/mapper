@@ -58,6 +58,7 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 			startDrawing();
 			preview_path->addCoordinate(map_coord.toMapCoord());
 			preview_path->addCoordinate(map_coord.toMapCoord());
+			updateStatusText();
 		}
 		else
 		{
