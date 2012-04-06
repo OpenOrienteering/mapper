@@ -174,26 +174,34 @@ void MapLayer::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool inclu
 			continue;
 		
 		objects[i]->update();
-		if (rect.intersects(objects[i]->getExtent()) && objects[i]->isPathPointInBox(rect))
+		if (rect.intersects(objects[i]->getExtent()) && objects[i]->intersectsBox(rect))
 			out.push_back(objects[i]);
 	}
 }
 
-QRectF MapLayer::calculateExtent()
+QRectF MapLayer::calculateExtent(bool include_helper_symbols)
 {
 	QRectF rect;
 	
+	int i = 0;
 	int size = objects.size();
-	if (size > 0)
+	while (size > i && !rect.isValid())
 	{
-		objects[0]->update();
-		rect = objects[0]->getExtent();
+		if ((include_helper_symbols || !objects[i]->getSymbol()->isHelperSymbol()) && !objects[i]->getSymbol()->isHidden())
+		{
+			objects[i]->update();
+			rect = objects[i]->getExtent();
+		}
+		++i;
 	}
 	
-	for (int i = 1; i < size; ++i)
+	for (; i < size; ++i)
 	{
-		objects[i]->update();
-		rectInclude(rect, objects[i]->getExtent());
+		if ((include_helper_symbols || !objects[i]->getSymbol()->isHelperSymbol()) && !objects[i]->getSymbol()->isHidden())
+		{
+			objects[i]->update();
+			rectInclude(rect, objects[i]->getExtent());
+		}
 	}
 	
 	return rect;
@@ -308,24 +316,11 @@ Map::Map() : renderables(this), selection_renderables(this)
 	if (!static_initialized)
 		initStatic();
 	
-	first_front_template = 0;
-	
-	layers.push_back(new MapLayer(tr("default layer"), this));
-	current_layer_index = 0;
-	
-	color_set = new MapColorSet();
-	
+	color_set = NULL;
 	object_undo_manager.setOwner(this);
+	gps_projection_parameters = NULL;
 	
-	print_params_set = false;
-	gps_projection_params_set = false;
-	gps_projection_parameters = new GPSProjectionParameters();
-	
-	colors_dirty = false;
-	symbols_dirty = false;
-	templates_dirty = false;
-	objects_dirty = false;
-	unsaved_changes = false;
+	clear();
 }
 Map::~Map()
 {
@@ -511,7 +506,8 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 
 void Map::clear()
 {
-	color_set->dereference();
+	if (color_set)
+		color_set->dereference();
 	color_set = new MapColorSet();
 	
 	int size = symbols.size();
@@ -529,10 +525,20 @@ void Map::clear()
 	for (int i = 0; i < size; ++i)
 		delete layers[i];
 	layers.clear();
-	current_layer_index = -1;
+	
+	layers.push_back(new MapLayer(tr("default layer"), this));
+	current_layer_index = 0;
 	
 	widgets.clear();
+	object_undo_manager.clear();
 	
+	map_notes = "";
+	
+	print_params_set = false;
+	image_template_use_meters_per_pixel = true;
+	image_template_meters_per_pixel = 0;
+	image_template_dpi = 0;
+	image_template_scale = 0;
 	gps_projection_params_set = false;
 	delete gps_projection_parameters;
 	gps_projection_parameters = new GPSProjectionParameters();
@@ -568,10 +574,10 @@ void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_templa
 			view_rect = QRectF(-9e42, -9e42, 9e42, 9e42);	// TODO: transform base_view_rect (map coords) using template transform to template coords
 		else
 		{
-			view_rect.setLeft((bounding_box.x() / temp->getTemplateScaleX()) - temp->getTemplateX());
-			view_rect.setTop((bounding_box.y() / temp->getTemplateScaleY()) - temp->getTemplateY());
-			view_rect.setRight((bounding_box.right() / temp->getTemplateScaleX()) - temp->getTemplateX());
-			view_rect.setBottom((bounding_box.bottom() / temp->getTemplateScaleY()) - temp->getTemplateY());
+			view_rect.setLeft((bounding_box.x() / temp->getTemplateScaleX()) - temp->getTemplateX() / 1000.0);
+			view_rect.setTop((bounding_box.y() / temp->getTemplateScaleY()) - temp->getTemplateY() / 1000.0);
+			view_rect.setRight((bounding_box.right() / temp->getTemplateScaleX()) - temp->getTemplateX() / 1000.0);
+			view_rect.setBottom((bounding_box.bottom() / temp->getTemplateScaleY()) - temp->getTemplateY() / 1000.0);
 		}
 		
 		if (really_draw_untransformed_parts)
@@ -658,7 +664,7 @@ void Map::includeSelectionRect(QRectF& rect)
 }
 void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, RenderableContainer* replacement_renderables, bool draw_normal)
 {
-	const float selection_opacity_factor = draw_normal ? 1 : 0.35f;
+	const float selection_opacity_factor = draw_normal ? 1 : 0.4f;
 	
 	MapView* view = widget->getMapView();
 	
@@ -679,7 +685,7 @@ void Map::addObjectToSelection(Object* object, bool emit_selection_changed)
 	object_selection.insert(object);
 	addSelectionRenderables(object);
 	if (emit_selection_changed)
-		emit(selectedObjectsChanged());
+		emit(objectSelectionChanged());
 }
 void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
 {
@@ -687,7 +693,7 @@ void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
 	assert(removed && "Map::removeObjectFromSelection: object was not selected!");
 	removeSelectionRenderables(object);
 	if (emit_selection_changed)
-		emit(selectedObjectsChanged());
+		emit(objectSelectionChanged());
 }
 bool Map::removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed)
 {
@@ -706,7 +712,7 @@ bool Map::removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed)
 		it = object_selection.erase(it);
 	}
 	if (emit_selection_changed && removed_at_least_one_object)
-		emit(selectedObjectsChanged());
+		emit(objectSelectionChanged());
 	return removed_at_least_one_object;
 }
 bool Map::isObjectSelected(Object* object)
@@ -732,11 +738,15 @@ void Map::clearObjectSelection(bool emit_selection_changed)
 	object_selection.clear();
 	
 	if (emit_selection_changed)
-		emit(selectedObjectsChanged());
+		emit(objectSelectionChanged());
 }
 void Map::emitSelectionChanged()
 {
-	emit(selectedObjectsChanged());
+	emit(objectSelectionChanged());
+}
+void Map::emitSelectionEdited()
+{
+	emit(selectedObjectEdited());
 }
 
 void Map::addMapWidget(MapWidget* widget)
@@ -1097,16 +1107,7 @@ void Map::deleteTemplate(int pos)
 }
 void Map::setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border)
 {
-	bool front_cache = false;	// TODO: is there a better way to find out if that is a front or back template?
-	int size = (int)templates.size();
-	for (int i = 0; i < size; ++i)
-	{
-		if (templates[i] == temp)
-		{
-			front_cache = i >= getFirstFrontTemplate();
-			break;
-		}
-	}
+	bool front_cache = findTemplateIndex(temp) >= getFirstFrontTemplate();	// TODO: is there a better way to find out if that is a front or back template?
 	
 	for (int i = 0; i < (int)widgets.size(); ++i)
 		if (widgets[i]->getMapView()->isTemplateVisible(temp))
@@ -1120,10 +1121,25 @@ void Map::setTemplateAreaDirty(int i)
 	
 	templates[i]->setTemplateAreaDirty();
 }
+int Map::findTemplateIndex(Template* temp)
+{
+	int size = (int)templates.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (templates[i] == temp)
+			return i;
+	}
+	assert(false);
+	return -1;
+}
 void Map::setTemplatesDirty()
 {
 	setHasUnsavedChanges();
 	templates_dirty = true;
+}
+void Map::emitTemplateChanged(Template* temp)
+{
+	emit(templateChanged(findTemplateIndex(temp), temp));
 }
 
 int Map::getNumObjects()
@@ -1158,14 +1174,14 @@ void Map::setObjectsDirty()
 	objects_dirty = true;
 }
 
-QRectF Map::calculateExtent(bool include_templates, MapView* view)
+QRectF Map::calculateExtent(bool include_helper_symbols, bool include_templates, MapView* view)
 {
 	QRectF rect;
 	
 	// Objects
 	int size = layers.size();
 	for (int i = 0; i < size; ++i)
-		rectIncludeSafe(rect, layers[i]->calculateExtent());
+		rectIncludeSafe(rect, layers[i]->calculateExtent(include_helper_symbols));
 	
 	// Templates
 	if (include_templates)
@@ -1288,6 +1304,21 @@ void Map::getPrintParameters(int& orientation, int& format, float& dpi, bool& sh
 	top = print_area_top;
 	width = print_area_width;
 	height = print_area_height;
+}
+
+void Map::setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel, double dpi, double scale)
+{
+	image_template_use_meters_per_pixel = use_meters_per_pixel;
+	image_template_meters_per_pixel = meters_per_pixel;
+	image_template_dpi = dpi;
+	image_template_scale = scale;
+}
+void Map::getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel, double& dpi, double& scale)
+{
+	use_meters_per_pixel = image_template_use_meters_per_pixel;
+	meters_per_pixel = image_template_meters_per_pixel;
+	dpi = image_template_dpi;
+	scale = image_template_scale;
 }
 
 void Map::setHasUnsavedChanges(bool has_unsaved_changes)

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<QHelpCollectionProject version="1.0">
+	<docFiles>
+		<generate>
+			<file>
+				<input>oomaphelp.qhp</input>
+				<output>help/oomaphelp.qch</output>
+			</file>
+		</generate>
+		<register>
+			<file>help/oomaphelp.qch</file>
+		</register>
+	</docFiles>
+</QHelpCollectionProject>

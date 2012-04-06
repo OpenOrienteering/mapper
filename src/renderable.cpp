@@ -220,12 +220,17 @@ void RenderableContainer::clear()
 QColor RenderableContainer::getHighlightedColor(const QColor& original)
 {
 	const int highlight_alpha = 255;
-	const float factor = 0.3f;
 	
 	if (original.value() > 127)
+	{
+		const float factor = 0.35f;
 		return QColor(factor * original.red(), factor * original.green(), factor * original.blue(), highlight_alpha);
+	}
 	else
-		return QColor((1 - factor) * 255 + factor * original.red(), (1 - factor) * 255 + factor * original.green(), (1 - factor) * 255 + factor * original.blue(), highlight_alpha);
+	{
+		const float factor = 0.15f;
+		return QColor(255 - factor * (255 - original.red()), 255 - factor * (255 - original.green()), 255 - factor * (255 - original.blue()), highlight_alpha);
+	}
 }
 
 // ### DotRenderable ###

@@ -90,10 +90,12 @@ bool XMLFileFormat::understands(const unsigned char *buffer, size_t sz) const
 }
 
 
+/*
 Importer *XMLFileFormat::createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
 {
     return new XMLFileImporter(path, map, view);
 }
+*/
 
 Exporter *XMLFileFormat::createExporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
 {
@@ -102,11 +104,13 @@ Exporter *XMLFileFormat::createExporter(const QString &path, Map *map, MapView *
 
 #define NS_V1 "http://oo-mapper.com/oo-mapper/v1"
 
+/*
 XMLFileImporter::XMLFileImporter(const QString &path, Map *map, MapView *view)
     : Importer(path, map, view), reader("document", NS_V1)
 {
 
 }
+
 
 void XMLFileImporter::doExport() throw (FormatException)
 {
@@ -133,7 +137,7 @@ void XMLFileImporter::doExport() throw (FormatException)
     }
     reader.up();
 }
-
+*/
 
 
 XMLFileExporter::XMLFileExporter(const QString &path, Map *map, MapView *view)
@@ -367,6 +371,11 @@ void XMLFileExporter::exportObject(const Object *object, bool reference_symbol)
     }
     builder.attr("path", makePath(object));
     builder.up();
+}
+
+void XMLFileExporter::exportPattern(const struct AreaSymbol::FillPattern &pattern)
+{
+    // FIXME
 }
 
 QString XMLFileExporter::makePath(const Object *object) const

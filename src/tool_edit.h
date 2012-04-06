@@ -58,7 +58,7 @@ public:
 	static const Qt::Key control_point_key;
 	
 public slots:
-	void selectedObjectsChanged();
+	void objectSelectionChanged();
 	void selectedSymbolsChanged();
 	void textSelectionChanged(bool text_change);
 	

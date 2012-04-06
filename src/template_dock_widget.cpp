@@ -28,6 +28,8 @@
 #include "template.h"
 #include "map_editor.h"
 #include "georeferencing.h"
+#include "template_move_tool.h"
+#include "template_position_dock_widget.h"
 
 TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent): EditorDockWidgetChild(parent), map(map), main_view(main_view), controller(controller)
 {
@@ -87,11 +89,16 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	// Active group
 	active_buttons_group = new QGroupBox(tr("Selected template(s)"));
 	
-	move_by_hand_button = new QPushButton(QIcon(":/images/move.png"), tr("Move by hand"));
-	move_by_hand_button->setCheckable(true);
+	move_by_hand_action = new QAction(QIcon(":/images/move.png"), tr("Move by hand"), this);
+	move_by_hand_action->setCheckable(true);
+	move_by_hand_button = new QToolButton();
+	move_by_hand_button->setDefaultAction(move_by_hand_action);
+	move_by_hand_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	georeference_button = new QPushButton(QIcon(":/images/georeferencing.png"), tr("Georeference..."));
 	georeference_button->setCheckable(true);
-	group_button = new QPushButton(QIcon(":/images/group.png"), tr("(Un)group"));
+	//group_button = new QPushButton(QIcon(":/images/group.png"), tr("(Un)group"));
+	position_button = new QPushButton(tr("Positioning..."));
+	position_button->setCheckable(true);
 	
 	more_button = new QToolButton();
 	more_button->setText(tr("More..."));
@@ -107,7 +114,8 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	active_buttons_group_layout->setMargin(0);
 	active_buttons_group_layout->addWidget(move_by_hand_button, 0, 0);
 	active_buttons_group_layout->addWidget(georeference_button, 0, 1);
-	active_buttons_group_layout->addWidget(group_button, 1, 0);
+	//active_buttons_group_layout->addWidget(group_button, 1, 0);
+	active_buttons_group_layout->addWidget(position_button, 1, 0);
 	active_buttons_group_layout->addWidget(more_button, 1, 1);
 	active_buttons_group->setLayout(active_buttons_group_layout);
 	
@@ -140,10 +148,13 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	connect(move_down_button, SIGNAL(clicked(bool)), this, SLOT(moveTemplateDown()));
 	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
 	
-	connect(move_by_hand_button, SIGNAL(clicked(bool)), this, SLOT(moveByHandClicked(bool)));
+	connect(move_by_hand_action, SIGNAL(triggered(bool)), this, SLOT(moveByHandClicked(bool)));
 	connect(georeference_button, SIGNAL(clicked(bool)), this, SLOT(georeferenceClicked(bool)));
-	connect(group_button, SIGNAL(clicked(bool)), this, SLOT(groupClicked()));
+	//connect(group_button, SIGNAL(clicked(bool)), this, SLOT(groupClicked()));
+	connect(position_button, SIGNAL(clicked(bool)), this, SLOT(positionClicked(bool)));
 	connect(more_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(moreActionClicked(QAction*)));
+	
+	connect(controller, SIGNAL(templatePositionDockWidgetClosed(Template*)), this, SLOT(templatePositionDockWidgetClosed(Template*)));
 }
 TemplateWidget::~TemplateWidget()
 {
@@ -484,17 +495,24 @@ void TemplateWidget::selectionChanged(const QItemSelection& selected, const QIte
 	active_buttons_group->setEnabled(enable_active_buttons);
 	if (enable_active_buttons)
 	{
-		// TODO: Implement and enable buttons again
-		move_by_hand_button->setEnabled(false); //!multiple_rows_selected);
+		move_by_hand_button->setEnabled(!multiple_rows_selected);
 		georeference_button->setEnabled(!multiple_rows_selected);
-		group_button->setEnabled(false); //multiple_rows_selected || (!multiple_rows_selected && map->getTemplate(posFromRow(current_row))->getTemplateGroup() >= 0));
-		more_button->setEnabled(false); //!multiple_rows_selected);
+		// TODO: Implement and enable buttons again
+		//group_button->setEnabled(false); //multiple_rows_selected || (!multiple_rows_selected && map->getTemplate(posFromRow(current_row))->getTemplateGroup() >= 0));
+		position_button->setEnabled(!multiple_rows_selected);
+		more_button->setEnabled(false); // !multiple_rows_selected);
 	}
 	
 	if (multiple_rows_selected)
+	{
 		georeference_button->setChecked(false);
+		position_button->setChecked(false);
+	}
 	else
+	{
 		georeference_button->setChecked(temp && controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == (void*)temp);
+		position_button->setChecked(temp && controller->existsTemplatePositionDockWidget(temp));
+	}
 }
 void TemplateWidget::currentCellChange(int current_row, int current_column, int previous_row, int previous_column)
 {
@@ -524,13 +542,16 @@ void TemplateWidget::cellDoubleClick(int row, int column)
 
 void TemplateWidget::moveByHandClicked(bool checked)
 {
-	// TODO
+	Template* temp = getCurrentTemplate();
+	assert(temp);
+	controller->setTool(checked ? new TemplateMoveTool(temp, controller, move_by_hand_action) : NULL);
 }
 void TemplateWidget::georeferenceClicked(bool checked)
 {
 	if (checked)
 	{
-		Template* temp = map->getTemplate(posFromRow(template_table->currentRow()));
+		Template* temp = getCurrentTemplate();
+		assert(temp);
 		GeoreferencingActivity* activity = new GeoreferencingActivity(temp, controller);
 		controller->setEditorActivity(activity);
 		connect(activity->getDockWidget(), SIGNAL(closed()), this, SLOT(georeferencingWindowClosed()));
@@ -542,24 +563,38 @@ void TemplateWidget::georeferenceClicked(bool checked)
 }
 void TemplateWidget::georeferencingWindowClosed()
 {
-	int current_row = template_table->currentRow();
-	if (current_row < 0)
+	Template* current_template = getCurrentTemplate();
+	if (!current_template)
 		return;
-	int pos = posFromRow(current_row);
-	if (pos < 0)
-		return;
-	Template* current_template = map->getTemplate(pos);
 	
 	if (controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == (void*)current_template)
 		georeference_button->setChecked(false);
 }
-void TemplateWidget::groupClicked()
+/*void TemplateWidget::groupClicked()
 {
 	// TODO
+}*/
+void TemplateWidget::positionClicked(bool checked)
+{
+	Template* temp = getCurrentTemplate();
+	if (!temp)
+		return;
+	
+	if (controller->existsTemplatePositionDockWidget(temp))
+		controller->removeTemplatePositionDockWidget(temp);
+	else
+		controller->addTemplatePositionDockWidget(temp);
 }
 void TemplateWidget::moreActionClicked(QAction* action)
 {
 	// TODO
+}
+
+void TemplateWidget::templatePositionDockWidgetClosed(Template* temp)
+{
+	Template* current_temp = getCurrentTemplate();
+	if (current_temp == temp)
+		position_button->setChecked(false);
 }
 
 void TemplateWidget::addRow(int row)
@@ -657,6 +692,16 @@ int TemplateWidget::posFromRow(int row)
 		return pos - 1;
 	else
 		return pos;
+}
+Template* TemplateWidget::getCurrentTemplate()
+{
+	int current_row = template_table->currentRow();
+	if (current_row < 0)
+		return NULL;
+	int pos = posFromRow(current_row);
+	if (pos < 0)
+		return NULL;
+	return map->getTemplate(pos);
 }
 
 void TemplateWidget::changeTemplateFile(int row)

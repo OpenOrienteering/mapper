@@ -30,6 +30,7 @@
 #include "color_dock_widget.h"
 #include "symbol_dock_widget.h"
 #include "template_dock_widget.h"
+#include "template_position_dock_widget.h"
 #include "template.h"
 #include "paint_on_template.h"
 #include "gps_coordinates.h"
@@ -42,6 +43,7 @@
 #include "tool_cut.h"
 #include "tool_cut_hole.h"
 #include "tool_rotate.h"
+#include "tool_measure.h"
 #include "object_text.h"
 
 // ### MapEditorController ###
@@ -67,6 +69,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	toolbar_drawing = NULL;
 	toolbar_editing = NULL;
 	print_dock_widget = NULL;
+	measure_dock_widget = NULL;
 	color_dock_widget = NULL;
 	symbol_dock_widget = NULL;
 	template_dock_widget = NULL;
@@ -79,9 +82,12 @@ MapEditorController::~MapEditorController()
 	delete toolbar_drawing;
 	delete toolbar_editing;
 	delete print_dock_widget;
+	delete measure_dock_widget;
 	delete color_dock_widget;
 	delete symbol_dock_widget;
 	delete template_dock_widget;
+	for (QHash<Template*, TemplatePositionDockWidget*>::iterator it = template_position_widgets.begin(); it != template_position_widgets.end(); ++it)
+		delete it.value();
 	delete current_tool;
 	delete override_tool;
 	delete editor_activity;
@@ -116,6 +122,8 @@ void MapEditorController::setEditTool()
 }
 void MapEditorController::setOverrideTool(MapEditorTool* new_override_tool)
 {
+	if (override_tool == new_override_tool)
+		return;
 	delete override_tool;
 	map->clearDrawingBoundingBox();
 	window->setStatusBarText("");
@@ -174,6 +182,22 @@ void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
 	map_widget->setActivity(editor_activity);
 }
 
+void MapEditorController::addTemplatePositionDockWidget(Template* temp)
+{
+	assert(!existsTemplatePositionDockWidget(temp));
+	TemplatePositionDockWidget* dock_widget = new TemplatePositionDockWidget(temp, this, window);
+	toggleFloatingDockWidget(dock_widget, true);
+	template_position_widgets.insert(temp, dock_widget);
+}
+void MapEditorController::removeTemplatePositionDockWidget(Template* temp)
+{
+	emit(templatePositionDockWidgetClosed(temp));
+	
+	delete getTemplatePositionDockWidget(temp);
+	int num_deleted = template_position_widgets.remove(temp);
+	assert(num_deleted == 1);
+}
+
 bool MapEditorController::save(const QString& path)
 {
 	if (map)
@@ -202,6 +226,7 @@ bool MapEditorController::load(const QString& path)
 void MapEditorController::attach(MainWindow* window)
 {
 	print_dock_widget = NULL;
+	measure_dock_widget = NULL;
 	color_dock_widget = NULL;
 	symbol_dock_widget = NULL;
 	template_dock_widget = NULL;
@@ -237,7 +262,7 @@ void MapEditorController::attach(MainWindow* window)
         createMenuAndToolbars();
 	
 	// Update enabled/disabled state for the tools ...
-	selectedObjectsChanged();
+	objectSelectionChanged();
 	// ... and for undo
 	undoStepAvailabilityChanged();
 	
@@ -317,6 +342,7 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("rotateobjects")->setShortcut(QKeySequence("R"));
 	findAction("cutobject")->setShortcut(QKeySequence("K"));
 	findAction("cuthole")->setShortcut(QKeySequence("H"));
+	findAction("measure")->setShortcut(QKeySequence("M"));
 }
 
 void MapEditorController::createMenuAndToolbars()
@@ -338,7 +364,8 @@ void MapEditorController::createMenuAndToolbars()
     /*QAction *load_colors_from_act = */newAction("loadcolors", tr("Load colors from..."), this, SLOT(loadColorsFromClicked()), NULL, tr("Replace the colors with those from another map file"));
     QAction *scale_all_symbols_act = newAction("scaleall", tr("Scale all symbols..."), this, SLOT(scaleAllSymbolsClicked()), NULL, tr("Scale the whole symbol set"));
     QAction *scale_map_act = newAction("scalemap", tr("Change map scale..."), this, SLOT(scaleMapClicked()), NULL, tr("Change the map scale and adjust map objects and symbol sizes"));
-    template_window_act = newCheckAction("templatewindow", tr("Template setup window"), this, SLOT(showTemplateWindow(bool)), "window-new", tr("Show/Hide the template window"));
+    QAction *map_notes_act = newAction("mapnotes", tr("Map notes..."), this, SLOT(mapNotesClicked()));
+	template_window_act = newCheckAction("templatewindow", tr("Template setup window"), this, SLOT(showTemplateWindow(bool)), "window-new", tr("Show/Hide the template window"));
     //QAction* template_config_window_act = newCheckAction("templateconfigwindow", tr("Template configurations window"), this, SLOT(showTemplateConfigurationsWindow(bool)), "window-new", tr("Show/Hide the template configurations window"));
     //QAction* template_visibilities_window_act = newCheckAction("templatevisibilitieswindow", tr("Template visibilities window"), this, SLOT(showTemplateVisbilitiesWindow(bool)), "window-new", tr("Show/Hide the template visibilities window"));
     QAction* open_template_act = newAction("opentemplate", tr("Open template..."), this, SLOT(openTemplateClicked()));
@@ -360,6 +387,7 @@ void MapEditorController::createMenuAndToolbars()
     paint_on_template_act->setCheckable(true);
     updatePaintOnTemplateAction();
     connect(paint_on_template_act, SIGNAL(triggered(bool)), this, SLOT(paintOnTemplateClicked(bool)));
+	measure_act = newCheckAction("measure", tr("Measure lengths and areas"), this, SLOT(measureClicked(bool)), "tool-measure.png");
 
     // Refactored so we can do custom key bindings in the future
     assignKeyboardShortcuts();
@@ -401,6 +429,7 @@ void MapEditorController::createMenuAndToolbars()
 	tools_menu->addAction(cut_tool_act);
 	tools_menu->addAction(cut_hole_act);
 	tools_menu->addAction(rotate_act);
+	tools_menu->addAction(measure_act);
 	
 	// Symbols menu
     QMenu* symbols_menu = window->menuBar()->addMenu(tr("Sy&mbols"));
@@ -414,6 +443,7 @@ void MapEditorController::createMenuAndToolbars()
 	// Map menu
 	QMenu* map_menu = window->menuBar()->addMenu(tr("M&ap"));
 	map_menu->addAction(scale_map_act);
+	map_menu->addAction(map_notes_act);
 	
 	// Templates menu
 	QMenu* template_menu = window->menuBar()->addMenu(tr("&Templates"));
@@ -431,7 +461,6 @@ void MapEditorController::createMenuAndToolbars()
     // Mac toolbars are still a little screwed up, turns out we have to insert a
     // "dummy" toolbar first and hide it, then the others show up
     window->addToolBar(tr("Dummy"))->hide();
-#endif
 
     // View toolbar
     toolbar_view = window->addToolBar(tr("View"));
@@ -466,7 +495,8 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_editing->addAction(cut_tool_act);
 	toolbar_editing->addAction(cut_hole_act);
 	toolbar_editing->addAction(rotate_act);
-
+	toolbar_editing->addAction(measure_act);
+#endif
 
 }
 void MapEditorController::detach()
@@ -490,24 +520,16 @@ void MapEditorController::keyReleaseEvent(QKeyEvent* event)
 
 void MapEditorController::printClicked()
 {
-	if (print_dock_widget)
-	{
-		if (!print_dock_widget->isVisible())
-			print_widget->activate();
-		print_dock_widget->setVisible(!print_dock_widget->isVisible());
-	}
-	else
+	bool created = false;
+	if (!print_dock_widget)
 	{
 		print_dock_widget = new EditorDockWidget(tr("Print or Export"), print_act, this, window);
 		print_widget = new PrintWidget(map, window, main_view, this, print_dock_widget);
 		print_dock_widget->setChild(print_widget);
-		
-		// Show dock in floating state
-		print_dock_widget->setFloating(true);
-		print_dock_widget->show();
-		print_dock_widget->setGeometry(getWindow()->geometry().left() + 40, getWindow()->geometry().top() + 100, print_dock_widget->width(), print_dock_widget->height());
-		//window->addDockWidget(Qt::LeftDockWidgetArea, print_dock_widget, Qt::Vertical);
-	}	
+		created = true;
+	}
+	if (toggleFloatingDockWidget(print_dock_widget, created) && !created)
+		print_widget->activate();
 }
 
 void MapEditorController::undo()
@@ -666,6 +688,40 @@ void MapEditorController::scaleMapClicked()
 	dialog.setWindowModality(Qt::WindowModal);
 	dialog.exec();
 }
+void MapEditorController::mapNotesClicked()
+{
+	QDialog dialog(window, Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
+	dialog.setWindowTitle(tr("Map notes"));
+	dialog.setWindowModality(Qt::WindowModal);
+	
+	QTextEdit* text_edit = new QTextEdit();
+	text_edit->setPlainText(map->getMapNotes());
+	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
+	QPushButton* ok_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("OK"));
+	ok_button->setDefault(true);
+	
+	QHBoxLayout* buttons_layout = new QHBoxLayout();
+	buttons_layout->addWidget(cancel_button);
+	buttons_layout->addStretch(1);
+	buttons_layout->addWidget(ok_button);
+	
+	QVBoxLayout* layout = new QVBoxLayout();
+	layout->addWidget(text_edit);
+	layout->addLayout(buttons_layout);
+	dialog.setLayout(layout);
+	
+	connect(cancel_button, SIGNAL(clicked(bool)), &dialog, SLOT(reject()));
+	connect(ok_button, SIGNAL(clicked(bool)), &dialog, SLOT(accept()));
+	
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		if (text_edit->toPlainText() != map->getMapNotes())
+		{
+			map->setMapNotes(text_edit->toPlainText());
+			map->setHasUnsavedChanges();
+		}
+	}
+}
 
 void MapEditorController::showTemplateWindow(bool show)
 {
@@ -727,7 +783,7 @@ void MapEditorController::selectedSymbolsChanged()
 	
 	selectedSymbolsOrObjectsChanged();
 }
-void MapEditorController::selectedObjectsChanged()
+void MapEditorController::objectSelectionChanged()
 {
 	if (mode != MapEditor)
 		return;
@@ -788,7 +844,7 @@ void MapEditorController::undoStepAvailabilityChanged()
 
 void MapEditorController::showWholeMap()
 {
-	QRectF map_extent = map->calculateExtent(true, main_view);
+	QRectF map_extent = map->calculateExtent(true, true, main_view);
 	map_widget->adjustViewToRect(map_extent);
 }
 
@@ -1027,6 +1083,7 @@ void MapEditorController::connectPathsClicked()
 	}
 	
 	map->emitSelectionChanged();
+	map->emitSelectionEdited();
 }
 void MapEditorController::cutClicked(bool checked)
 {
@@ -1039,6 +1096,33 @@ void MapEditorController::cutHoleClicked(bool checked)
 void MapEditorController::rotateClicked(bool checked)
 {
 	setTool(checked ? new RotateTool(this, rotate_act) : NULL);
+}
+void MapEditorController::measureClicked(bool checked)
+{
+	bool new_widget = false;
+	if (!measure_dock_widget)
+	{
+		measure_dock_widget = new EditorDockWidget(tr("Measure"), measure_act, this, window);
+		MeasureWidget* measure_widget = new MeasureWidget(map);
+		measure_dock_widget->setChild(measure_widget);
+		new_widget = true;
+	}
+	toggleFloatingDockWidget(measure_dock_widget, new_widget);
+}
+
+bool MapEditorController::toggleFloatingDockWidget(QDockWidget* dock_widget, bool new_widget)
+{
+	if (!new_widget)
+	{
+		bool show = !dock_widget->isVisible();
+		dock_widget->setVisible(show);
+		return show;
+	}
+	
+	dock_widget->setFloating(true);
+	dock_widget->show();
+	dock_widget->setGeometry(getWindow()->geometry().left() + 40, getWindow()->geometry().top() + 100, dock_widget->width(), dock_widget->height());
+	return true;
 }
 
 void MapEditorController::paintOnTemplateClicked(bool checked)
@@ -1136,7 +1220,7 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 		main_view = new MapView(map);
 	
 	connect(&map->objectUndoManager(), SIGNAL(undoStepAvailabilityChanged()), this, SLOT(undoStepAvailabilityChanged()));
-	connect(map, SIGNAL(selectedObjectsChanged()), this, SLOT(selectedObjectsChanged()));
+	connect(map, SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	connect(map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
 	connect(map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
 	if (symbol_widget)
@@ -1145,7 +1229,7 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 	if (window)
 	{
 		undoStepAvailabilityChanged();
-		selectedObjectsChanged();
+		objectSelectionChanged();
 	}
 }
 

@@ -214,7 +214,7 @@ void DrawTextTool::selectedSymbolsChanged()
 		if (text_editor)
 			finishEditing();
 		
-		if (symbol->isHidden())
+		if (symbol && symbol->isHidden())
 			editor->setEditTool();
 		else
 			editor->setTool(editor->getDefaultDrawToolForSymbol(symbol));

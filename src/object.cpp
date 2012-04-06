@@ -298,21 +298,34 @@ int Object::isPointOnObject(MapCoordF coord, float tolerance, bool extended_sele
 		return path->isPointOnPath(coord, tolerance);
 	}
 }
-bool Object::isPathPointInBox(QRectF box)
+bool Object::intersectsBox(QRectF box)
 {
-	int size = coords.size();
-	
 	if (type == Text)
 		return extent.intersects(box);
-	
-	for (int i = 0; i < size; ++i)
+	else if (type == Point)
+		return box.contains(coords[0].toQPointF());
+	else if (type == Path)
 	{
-		if (box.contains(coords[i].toQPointF()))
-			return true;
+		PathObject* path = reinterpret_cast<PathObject*>(this);
+		const PathCoordVector& path_coords = path->getPathCoordinateVector();
 		
-		if (coords[i].isCurveStart())
-			i += 2;
+		// Check path coords for an intersection with box
+		int size = (int)path_coords.size();
+		for (int i = 1; i < size; ++i)
+		{
+			if (path_coords[i].clen < path_coords[i-1].clen)
+				continue;
+			if (lineIntersectsRect(box, path_coords[i].pos.toQPointF(), path_coords[i-1].pos.toQPointF()))
+				return true;
+		}
+		
+		// If this is an area, additionally check if the area contains the box
+		if (getSymbol()->getContainedTypes() & Symbol::Area)
+			return isPointOnObject(MapCoordF(box.center()), 0, false);
 	}
+	else
+		assert(false);
+	
 	return false;
 }
 
@@ -390,6 +403,23 @@ int PathObject::PathPart::calcNumRegularPoints()
 	if (isClosed())
 		--num_regular_points;
 	return num_regular_points;
+}
+
+double PathObject::PathPart::getLength()
+{
+	return path->path_coords[path_coord_end_index].clen;
+}
+double PathObject::PathPart::calculateArea()
+{
+	double area = 0;
+	int j = path_coord_end_index;  // The last vertex is the 'previous' one to the first
+	
+	for (int i = path_coord_start_index; i <= path_coord_end_index; ++i)
+	{
+		area += (path->path_coords[j].pos.getX() + path->path_coords[i].pos.getX()) * (path->path_coords[j].pos.getY() - path->path_coords[i].pos.getY()); 
+		j = i;  // j is previous vertex to i
+	}
+	return qAbs(area) / 2;
 }
 
 // ### PathObject ###
@@ -1105,7 +1135,7 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance)
 	Symbol::Type contained_types = symbol->getContainedTypes();
 	int coords_size = (int)coords.size();
 	
-	if (contained_types & Symbol::Line)
+	if (contained_types & Symbol::Line && tolerance > 0)
 	{
 		update(false);
 		int size = (int)path_coords.size();

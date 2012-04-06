@@ -55,11 +55,11 @@ public:
     XMLFileFormat() : Format("XML", QObject::tr("OpenOrienteering Mapper XML"), "xml", false, true, true) {}
 
     bool understands(const unsigned char *buffer, size_t sz) const;
-    Importer *createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
+    //Importer *createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
     Exporter *createExporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
 };
 
-
+/*
 class XMLFileImporter : public Importer
 {
 public:
@@ -69,6 +69,7 @@ public:
     void doImport(bool load_symbols_only) throw (FormatException);
 
 };
+*/
 
 
 class XMLFileExporter : public Exporter

@@ -1,0 +1,101 @@
+ /* 
+Stylesheet for OOMapper
+Revised by Peter Hoban  April 1, 2012
+ */
+
+body {
+  font-family: helvetica, sans-serif;
+  background: #FFFF99;  /* A light yellow color similar to the parchment .jpg */
+  color: blue    /* Default text color */
+}
+
+h1 {
+  color: #b0a0a0;
+  background: transparent;
+  font-weight: bold;
+  font-family: serif;
+  text-align: left;
+  position:relative;
+  top:-11px;  
+}
+
+h2, h3 {
+  color: #000099;
+  background: transparent;
+  font-weight: bold;
+  margin-left: 3mm;
+}
+
+/* set the appearance of labels */
+h4, .label {
+  font-size: 12pt;     /* small and bold */
+  font-weight: 700;
+  font-style: italic;
+  text-align: left;
+  margin-left: 3mm;    /* set the label outstanding left */
+  margin-bottom: 0em; 
+  margin-top: 0em; 
+}
+
+.indent {
+position:relative;
+left:150px;
+}
+
+/* set the appearance of the text */
+p, li  {
+  font-size: 10pt;
+  text-align: left;
+  margin-left: 10mm;    /* leaves the label outstanding */
+  margin-right: 3mm;
+  margin-top: 0em; 
+}
+
+/* set the position of Headers in table*/
+td  {
+vertical-align:top;
+}
+
+/* set the position of top line back key*/
+.right {
+  float: right;
+}
+
+/* set the position of large images */
+img {
+  margin-left: 10mm;
+}
+
+/* set the position of small images */
+.small {
+  margin: 0px 2mm 2mm 2mm;
+  float: left;
+}
+
+.smalltext {
+  font-size: 8pt;
+}
+
+/* set the appearance of a text box */
+.box {
+width: 300px;
+border: 3px; 
+border-color: #CCC;
+border-width: 2 2px;
+border-style: solid;
+color: #222222;
+float: left; 
+padding: 1em;
+margin: 0em 1.5em 0em 0em;
+}
+
+/* Set a header inside the box */
+.box h4  {
+color: #102222;
+font-size: 11px;
+line-height: 1.3em;
+margin: 0em;
+padding: 0em;
+background-color: #AAAAAA; 
+}
+

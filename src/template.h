@@ -53,7 +53,7 @@ public:
 		qint64 template_y;
 		double template_scale_x;
 		double template_scale_y;
-		double template_rotation;	// 0 - 2*M_PI
+		double template_rotation;	// in radians
 	};
 	struct PassPoint
 	{

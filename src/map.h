@@ -78,7 +78,7 @@ public:
 	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
 	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
 	
-	QRectF calculateExtent();
+	QRectF calculateExtent(bool include_helper_symbols);
 	void scaleAllObjects(double factor);
 	void updateAllObjects(bool remove_old_renderables = true);
 	void updateAllObjectsWithSymbol(Symbol* symbol);
@@ -114,7 +114,7 @@ public:
 	/// Attempts to load the map from the specified path. Returns true on success.
 	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL, bool load_symbols_only = false);
 
-	/// Deletes all map data
+	/// Deletes all map data and resets the map to its initial state containing one default layer
 	void clear();
 	
 	/// Draws the part of the map which is visible in the given bounding box in map coordinates
@@ -124,8 +124,9 @@ public:
 	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, bool draw_untransformed_parts, const QRect& untransformed_dirty_rect, MapWidget* widget, MapView* view);
 	/// Updates the renderables and extent of all objects which have been changed. This is automatically called by draw(), you normally do not need it
 	void updateObjects();
-	/// Calculates the extent of all map objects (and possibly templates)
-	QRectF calculateExtent(bool include_templates, MapView* view);
+	/// Calculates the extent of all map objects (and possibly templates). If templates should be included, a view can be given to take the template visibilities from.
+	/// view can also be NULL to include all templates.
+	QRectF calculateExtent(bool include_helper_symbols, bool include_templates, MapView* view);
 	
 	/// Must be called to notify the map of new widgets displaying it. Useful to notify the widgets about which parts of the map have changed and need to be redrawn
 	void addMapWidget(MapWidget* widget);
@@ -189,7 +190,9 @@ public:
 	void deleteTemplate(int pos);												// NOTE: adjust first_front_template manually!
 	void setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border);	// marks the respective regions in the template caches as dirty; area is given in map coords (mm). Does nothing if the template is not visible in a widget! So make sure to call this and showing/hiding a template in the correct order!
 	void setTemplateAreaDirty(int i);											// this does nothing for i == -1
+	int findTemplateIndex(Template* temp);
 	void setTemplatesDirty();
+	void emitTemplateChanged(Template* temp);
 	
 	// Objects
 	
@@ -240,11 +243,15 @@ public:
 	bool toggleObjectSelection(Object* object, bool emit_selection_changed);	// returns true if the object was selected, false if deselected
 	void clearObjectSelection(bool emit_selection_changed);
 	void emitSelectionChanged();
+	void emitSelectionEdited();
 	
 	// Other settings
 	
 	inline void setScaleDenominator(int value) {scale_denominator = value;}
 	inline int getScaleDenominator() const {return scale_denominator;}
+	
+	inline const QString& getMapNotes() const {return map_notes;}
+	inline void setMapNotes(const QString& text) {map_notes = text;}
 	
 	inline bool areGPSProjectionParametersSet() const {return gps_projection_params_set;}
 	void setGPSProjectionParameters(const GPSProjectionParameters& params);
@@ -253,6 +260,9 @@ public:
 	inline bool arePrintParametersSet() const {return print_params_set;}
 	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height);
 	void getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& center, float& left, float& top, float& width, float& height);
+	
+	void setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel, double dpi, double scale);
+	void getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel, double& dpi, double& scale);
 	
 	void setHasUnsavedChanges(bool has_unsaved_changes = true);
 	inline bool hasUnsavedChanged() const {return unsaved_changes;}
@@ -280,7 +290,8 @@ signals:
 	void templateChanged(int pos, Template* temp);
 	void templateDeleted(int pos, Template* old_temp);
 	
-	void selectedObjectsChanged();
+	void objectSelectionChanged();
+	void selectedObjectEdited();
 	void gpsProjectionParametersChanged();
 	
 private:
@@ -328,6 +339,8 @@ private:
 	RenderableContainer renderables;
 	RenderableContainer selection_renderables;
 	
+	QString map_notes;
+	
 	bool gps_projection_params_set;	// have the parameters been set (are they valid)?
 	GPSProjectionParameters* gps_projection_parameters;
 	
@@ -341,6 +354,11 @@ private:
 	float print_area_top;
 	float print_area_width;
 	float print_area_height;
+	
+	bool image_template_use_meters_per_pixel;
+	double image_template_meters_per_pixel;
+	double image_template_dpi;
+	double image_template_scale;
 	
 	int scale_denominator;			// this is the number x if the scale is written as 1:x
 	
@@ -434,7 +452,7 @@ public:
 	QRectF calculateViewBoundingBox(QRectF map_rect);
 	
 	/// Applies the view transform to the given painter.
-	/// Note 1: The transform is combined with the painter's existing tranfsorm.
+	/// Note 1: The transform is combined with the painter's existing transform.
 	/// Note 2: If you want to use the transform to draw something, you will probably also want to make sure that
 	///         the view center is in the center of your viewport. Because the view does not know the viewport size,
 	///         it cannot do that. So this offset must be applied before calling this method.

@@ -46,7 +46,7 @@ CutTool::CutTool(MapEditorController* editor, QAction* tool_button) : MapEditorT
 }
 void CutTool::init()
 {
-	connect(editor->getMap(), SIGNAL(selectedObjectsChanged()), this, SLOT(selectedObjectsChanged()));
+	connect(editor->getMap(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	updateDirtyRect();
     updateStatusText();
 }
@@ -190,6 +190,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 				}
 				
 				map->setObjectsDirty();
+				map->emitSelectionEdited();
 			}
 			
 			deletePreviewPath();
@@ -221,6 +222,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 			{
 				map->objectUndoManager().addNewUndoStep(add_step);
 				map->emitSelectionChanged();
+				map->emitSelectionEdited();
 				return true;
 			}
 			
@@ -250,6 +252,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 			map->objectUndoManager().addNewUndoStep(undo_step);
 			
 			updateDirtyRect();
+			map->emitSelectionEdited();
 		}
 	}
 	
@@ -477,7 +480,7 @@ void CutTool::deletePreviewPath()
 		preview_path = NULL;
 	}
 }
-void CutTool::selectedObjectsChanged()
+void CutTool::objectSelectionChanged()
 {
 	Map* map = editor->getMap();
 	bool have_line_or_area = false;

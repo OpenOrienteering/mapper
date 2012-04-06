@@ -672,7 +672,7 @@ void DrawPathTool::selectedSymbolsChanged()
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
 	if (symbol == NULL || ((symbol->getType() & (Symbol::Line | Symbol::Area | Symbol::Combined)) == 0) || symbol->isHidden())
 	{
-		if (symbol->isHidden())
+		if (symbol && symbol->isHidden())
 			editor->setEditTool();
 		else
 			editor->setTool(editor->getDefaultDrawToolForSymbol(symbol));

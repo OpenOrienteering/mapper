@@ -38,7 +38,6 @@ public:
 	
 	virtual bool open(QWidget* dialog_parent, MapView* main_view);
 	virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity);
-	virtual void drawTemplateUntransformed(QPainter* painter, const QRect& clip_rect, MapWidget* widget);
 	virtual QRectF getExtent();
 	virtual bool canBeDrawnOnto() {return false;}
 	

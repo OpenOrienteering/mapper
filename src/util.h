@@ -50,6 +50,9 @@ void rectIncludeSafe(QRectF& rect, QPointF point); // checks if rect is invalid
 void rectInclude(QRectF& rect, const QRectF& other_rect); // does not work if rect is invalid
 void rectIncludeSafe(QRectF& rect, const QRectF& other_rect); // checks if rect is invalid
 
+/// Checks for line - rect intersection
+bool lineIntersectsRect(const QRectF& rect, const QPointF& p1, const QPointF& p2);
+
 /// Helper functions to save a string to a file and load it again
 void saveString(QFile* file, const QString& str);
 void loadString(QFile* file, QString& str);

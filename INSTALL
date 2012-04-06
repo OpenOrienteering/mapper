@@ -14,7 +14,7 @@ Information about other versions is not available, feel free to give feedback ab
 Requirements:
 Qt, cmake and a C++ compiler (preferably MinGW, Visual C++ may also work).
 
-The easiest way to get Qt is to intall the Qt SDK. The program is known to work with Qt version 4.8.
+The easiest way to get Qt is to intall the Qt SDK.
 If you do not have a C++ compiler yet, you can also install MinGW with the QtSDK installer. Note that you
 may have to add the mingw / mingw32 bin directories to your PATH environment variable manually if you choose to do this.
 
@@ -51,7 +51,7 @@ Requirements:
 Qt, cmake and a C++ compiler.
 
 Building:
-mkdir build		(the build directory must be named "build"!)
+mkdir build     (the build directory must be named "build"!)
 cd build
 cmake ../
 make -jX        (where X is the number of threads for building)
@@ -66,7 +66,7 @@ in case it is not the default yet anyway (like on Windows).
 Package management:
 
 If you want to create a release package, enable "set(CMAKE_BUILD_TYPE Release)" in the CMakeList.txt. 
-Than start the build process from a fresh build directory.
+Then start the build process from a fresh build directory.
 To create the .deb package for your particular distribution, after building call: 
 fakeroot make package
 

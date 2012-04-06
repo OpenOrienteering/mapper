@@ -215,6 +215,9 @@ public:
 	qint64 getIntX() const {return qRound64(1000 * x);}
 	qint64 getIntY() const {return qRound64(1000 * y);}
 	
+	inline void move(double dx, double dy) {x += dx; y += dy;}
+	inline void moveInt(qint64 dx, qint64 dy) {x += 0.001 * dx; y += 0.001 * dy;}
+	
 	inline void normalize()
 	{
 		double length = sqrt(getX()*getX() + getY()*getY());

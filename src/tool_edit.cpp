@@ -62,9 +62,9 @@ EditTool::EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidg
 }
 void EditTool::init()
 {
-	connect(editor->getMap(), SIGNAL(selectedObjectsChanged()), this, SLOT(selectedObjectsChanged()));
+	connect(editor->getMap(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
-	selectedObjectsChanged();
+	objectSelectionChanged();
 }
 EditTool::~EditTool()
 {
@@ -555,7 +555,7 @@ void EditTool::draw(QPainter* painter, MapWidget* widget)
 	}
 }
 
-void EditTool::selectedObjectsChanged()
+void EditTool::objectSelectionChanged()
 {
 	updateStatusText();
 	updateDirtyRect();
@@ -785,6 +785,8 @@ void EditTool::finishEditing()
 	map->setObjectAreaDirty(original_selection_extent);
 	updateDirtyRect();
 	map->setObjectsDirty();
+	
+	map->emitSelectionEdited();
 	
 	if (delete_objects)
 		deleteSelectedObjects();

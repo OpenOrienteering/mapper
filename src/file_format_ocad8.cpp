@@ -17,11 +17,13 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "file_format_ocad8.h"
+
 #include <QDebug>
 #include <QDateTime>
 #include <qmath.h>
+#include <QImageReader>
 
-#include "file_format_ocad8.h"
 #include "map_color.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
@@ -82,6 +84,7 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 
     map->scale_denominator = file->setup->scale;
 
+	map->setMapNotes(convertCString((const char*)file->buffer + file->header->infopos, file->header->infosize, false));
 
     // TODO: GPS projection parameters
 
@@ -197,53 +200,43 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 				}
 			}
 		}
-		map->layers.resize(1);
+		delete map->layers[0];
 		map->layers[0] = layer;
 		map->current_layer_index = 0;
 
 		// Load templates
 		map->templates.clear();
-		map->first_front_template = 0;
-		for (OCADTemplateIndex *idx = ocad_template_index_first(file); idx != NULL; idx = ocad_template_index_next(file, idx))
+		for (OCADStringIndex *idx = ocad_string_index_first(file); idx != NULL; idx = ocad_string_index_next(file, idx))
 		{
 			for (int i = 0; i < 256; i++)
 			{
-				OCADTemplateEntry *entry = ocad_template_entry_at(file, idx, i);
+				OCADStringEntry *entry = ocad_string_entry_at(file, idx, i);
 				if (entry->type != 0 && entry->size > 0)
-				{
-					Template *templ = importTemplate(entry);
-					if (templ) map->templates.push_back(templ);
-				}
+					importString(entry);
 			}
 		}
-    }
-    else
-    {
-        MapLayer* layer = new MapLayer(QObject::tr("default"), map);
-        map->layers.resize(1);
-        map->layers[0] = layer;
-        map->current_layer_index = 0;
-    }
+		map->first_front_template = map->templates.size(); // Templates in front of the map are not supported by OCD
 
-    // TODO: Fill this->view with relevant fields from OCAD file
-    /*
-        file->read((char*)&zoom, sizeof(double));
-        file->read((char*)&rotation, sizeof(double));
-        file->read((char*)&position_x, sizeof(qint64));
-        file->read((char*)&position_y, sizeof(qint64));
-        file->read((char*)&view_x, sizeof(int));
-        file->read((char*)&view_y, sizeof(int));
-        file->read((char*)&drag_offset, sizeof(QPoint));
-        update();
+		// TODO: Fill this->view with relevant fields from OCD file
+		/*
+			file->read((char*)&zoom, sizeof(double));
+			file->read((char*)&rotation, sizeof(double));
+			file->read((char*)&position_x, sizeof(qint64));
+			file->read((char*)&position_y, sizeof(qint64));
+			file->read((char*)&view_x, sizeof(int));
+			file->read((char*)&view_y, sizeof(int));
+			file->read((char*)&drag_offset, sizeof(QPoint));
+			update();
 
-        int num_template_visibilities;
-        file->read((char*)&num_template_visibilities, sizeof(int));
+			int num_template_visibilities;
+			file->read((char*)&num_template_visibilities, sizeof(int));
 
-        for (int i = 0; i < num_template_visibilities; ++i)
-        {
-            int pos;
-            file->read((char*)&pos, sizeof(int));
-				TemplateVisibility* vis = getTemplateVisibility(map->getTemplate(pos));
+			for (int i = 0; i < num_template_visibilities; ++i)
+			{
+				int pos;
+				file->read((char*)&pos, sizeof(int));
+
+                TemplateVisibility* vis = getTemplateVisibility(map->getTemplate(pos));
 				file->read((char*)&vis->visible, sizeof(bool));
 				file->read((char*)&vis->opacity, sizeof(float));
 			}
@@ -253,7 +246,7 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 		*/
 
 		// Undo steps are not supported in OCAD
-
+    }
 
     ocad_file_close(file);
 
@@ -818,8 +811,8 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapLayer* l
         const char *text_ptr = (const char *)(ocad_object->pts + ocad_object->npts);
         size_t text_len = sizeof(OCADPoint) * ocad_object->ntext;
         // (type |= 0x100) is used in OCAD 8 to indicate wide text (although this is not documented)
-        if ((ocad_object->type) & 0x100) t->setText(convertWideCString(text_ptr, text_len));
-        else t->setText(convertCString(text_ptr, text_len));
+        if ((ocad_object->type) & 0x100) t->setText(convertWideCString(text_ptr, text_len, true));
+        else t->setText(convertCString(text_ptr, text_len, true));
 
         // Text objects need special path translation
         if (!fillTextPathCoords(t, reinterpret_cast<TextSymbol*>(symbol), ocad_object->npts, (OCADPoint *)ocad_object->pts))
@@ -984,27 +977,28 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapLa
 	return true;
 }
 
-Template *OCAD8FileImport::importTemplate(OCADTemplateEntry *entry)
+void OCAD8FileImport::importString(OCADStringEntry *entry)
 {
-    OCADTemplate *ocad_templ = ocad_template(file, entry);
+    OCADCString *ocad_str = ocad_string(file, entry);
     if (entry->type == 8)
     {
-        qDebug() << ocad_templ->str;
+		// Template
         OCADBackground background;
-        if (ocad_to_background(&background, ocad_templ) == 0)
+		if (ocad_to_background(&background, ocad_str) == 0)
         {
-            return importRasterTemplate(background);
+            Template* templ = importRasterTemplate(background);
+			if (templ)
+			{
+				map->templates.push_back(templ);
+				view->getTemplateVisibility(templ)->visible = true;
+			}
         }
         else
-        {
-            addWarning(QObject::tr("Unable to import template: %1").arg(ocad_templ->str));
-        }
+			addWarning(QObject::tr("Unable to import template: %1").arg(ocad_str->str));
     }
-    else
-    {
-        addWarning(QObject::tr("Ignoring template of type: %1 (%2)").arg(entry->type).arg(ocad_templ->str));
-    }
-    return NULL;
+    // FIXME: parse more types of strings, maybe the print parameters?
+    
+    return;
 }
 
 Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background)
@@ -1019,14 +1013,9 @@ Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background
         templ->setTemplateY(c.rawY());
         // This seems to be measured in degrees. Plus there's wacky values like -359.7.
         templ->setTemplateRotation(M_PI / 180 * background.angle);
-        templ->setTemplateScaleX(background.sclx);
-        templ->setTemplateScaleY(background.scly);
-
-        assert(map == view->getMap());
-        TemplateVisibility *templ_view = view->getTemplateVisibility(templ);
-        if (background.transparent)
-            templ_view->opacity = 1.0 - 0.01 * background.dimming;
-        templ_view->visible = (background.s != 0) ? true : false;
+        templ->setTemplateScaleX(convertTemplateScale(background.sclx));
+        templ->setTemplateScaleY(convertTemplateScale(background.scly));
+        // FIXME: import template view parameters: background.dimming and background.transparent
         return templ;
     }
     else
@@ -1038,16 +1027,11 @@ Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background
 
 bool OCAD8FileImport::isRasterImageFile(const QString &filename) const
 {
-    // FIXME: see if we can drive this from the format list support by QImageReader instead.
-    // That way it automatically adapts to the system on which it's run.
-    if (filename.endsWith(".jpg", Qt::CaseInsensitive)) return true;
-    if (filename.endsWith(".jpeg", Qt::CaseInsensitive)) return true;
-    if (filename.endsWith(".png", Qt::CaseInsensitive)) return true;
-    if (filename.endsWith(".gif", Qt::CaseInsensitive)) return true;
-    if (filename.endsWith(".tif", Qt::CaseInsensitive)) return true;
-    if (filename.endsWith(".tiff", Qt::CaseInsensitive)) return true;
-    if (filename.endsWith(".bmp", Qt::CaseInsensitive)) return true;
-    return false;
+    int dot_pos = filename.lastIndexOf('.');
+	if (dot_pos < 0)
+		return false;
+	QString extension = filename.right(filename.length() - dot_pos - 1).toLower();
+    return QImageReader::supportedImageFormats().contains(extension.toAscii());
 }
 
 /** Translates the OCAD path given in the last two arguments into an Object.
@@ -1168,12 +1152,12 @@ QString OCAD8FileImport::convertPascalString(const char *p) {
  *  length (in bytes) that will be scanned for a zero terminator; if none is found,
  *  the string will be truncated at that location.
  */
-QString OCAD8FileImport::convertCString(const char *p, size_t n) {
+QString OCAD8FileImport::convertCString(const char *p, size_t n, bool ignore_first_newline) {
     size_t i = 0;
     for (; i < n; i++) {
         if (p[i] == 0) break;
     }
-    if (n >= 2 && p[0] == '\r' && p[1] == '\n')
+    if (ignore_first_newline && n >= 2 && p[0] == '\r' && p[1] == '\n')
 	{
 		// Remove "\r\n" at the beginning of texts, somehow OCAD seems to add this sometimes but ignores it
 		p += 2;
@@ -1190,13 +1174,13 @@ QString OCAD8FileImport::convertCString(const char *p, size_t n) {
  *  length (in bytes) that will be scanned for a zero terminator; if none is found,
  *  the string will be truncated at that location.
  */
-QString OCAD8FileImport::convertWideCString(const char *p, size_t n) {
+QString OCAD8FileImport::convertWideCString(const char *p, size_t n, bool ignore_first_newline) {
     const u16 *q = (const u16 *)p;
     size_t i = 0;
     for (; i < n; i++) {
         if (q[i] == 0) break;
     }
-    if (n >= 4 && p[0] == '\r' && p[2] == '\n')
+    if (ignore_first_newline && n >= 4 && p[0] == '\r' && p[2] == '\n')
 	{
 		// Remove "\r\n" at the beginning of texts, somehow OCAD seems to add this sometimes but ignores it
 		p += 4;
@@ -1238,4 +1222,10 @@ MapColor *OCAD8FileImport::convertColor(int color) {
 	}
 	else
 		return color_index[color];
+}
+
+double OCAD8FileImport::convertTemplateScale(double ocad_scale)
+{
+	double mpd = ocad_scale * 0.00001;			// meters(on map) per pixel
+	return mpd * map->getScaleDenominator();	// meters(in reality) per pixel
 }

@@ -52,7 +52,7 @@ public:
 	static QCursor* cursor;
 	
 public slots:
-	void selectedObjectsChanged();
+	void objectSelectionChanged();
 	void pathDirtyRectChanged(const QRectF& rect);
 	void pathAborted();
 	void pathFinished(PathObject* hole_path);

@@ -97,27 +97,27 @@ static bool ocad_file_compact_object_entry_cb(void *param, OCADFile *pfile, OCAD
 	return TRUE;
 }
 
-static bool ocad_file_compact_template_entry_cb(void *param, OCADFile *pfile, OCADTemplateEntry *entry) {
+static bool ocad_file_compact_string_entry_cb(void *param, OCADFile *pfile, OCADStringEntry *entry) {
 	IndexBuilder *b = (IndexBuilder *)param;
-	OCADTemplateIndex *idx = (OCADTemplateIndex *)b->idx;
-	OCADTemplateEntry *enew;
-	OCADTemplate *templ;
+	OCADStringIndex *idx = (OCADStringIndex *)b->idx;
+	OCADStringEntry *enew;
+	OCADCString *str;
 	if (++b->i == 256) {
 		u8 *next = b->p;
-		b->p = copy_and_advance(b->p, NULL, sizeof(OCADTemplateIndex));
+		b->p = copy_and_advance(b->p, NULL, sizeof(OCADStringIndex));
 		if (idx) idx->next = (next - b->base); else *(b->pfirst) = (next - b->base);
 		b->idx = next; b->i = 0;
-		idx = (OCADTemplateIndex *)b->idx;
+		idx = (OCADStringIndex *)b->idx;
 	}
 	enew = &(idx->entry[b->i]);
-	templ = ocad_template(pfile, entry);
+	str = ocad_string(pfile, entry);
 
 	// Write a new index entry
 	enew->ptr = (b->p - b->base);
 	enew->size = entry->size;
 	enew->type = entry->type;
 
-	b->p = copy_and_advance(b->p, templ, entry->size);
+	b->p = copy_and_advance(b->p, str, entry->size);
 	return TRUE;
 }
 
@@ -284,9 +284,9 @@ int ocad_file_compact(OCADFile *pfile) {
 	ocad_object_entry_iterate(pfile, ocad_file_compact_object_entry_cb, &b);
 	fprintf(stderr, "Compacting: copied objects, p=%p\n", b.p);
 
-	// Copy the templates
-	b.pfirst = &(pnew->header->otemplidx); b.idx = NULL; b.i = 255;
-	ocad_template_entry_iterate(pfile, ocad_file_compact_template_entry_cb, &b);
+	// Copy the strings
+	b.pfirst = &(pnew->header->ostringidx); b.idx = NULL; b.i = 255;
+	ocad_string_entry_iterate(pfile, ocad_file_compact_string_entry_cb, &b);
 	fprintf(stderr, "Compacting: copied template, p=%p\n", b.p);
 
 	// We're done!

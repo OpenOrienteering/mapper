@@ -209,13 +209,13 @@ public:
 		for (int i = 1; i < n; ++i)
 		{
 			// Pivot search
-			if (a.get(i - 1, i - 1) <= 0.001)
+			if (true) //a.get(i - 1, i - 1) <= 0.001)
 			{
-				double highest = a.get(i - 1, i - 1);
+				double highest = qAbs(a.get(i - 1, i - 1));
 				int highest_pos = i - 1;
 				for (int k = i; k < n; ++k)
 				{
-					double v = a.get(k, i - 1);
+					double v = qAbs(a.get(k, i - 1));
 					if (v > highest)
 					{
 						highest = v;

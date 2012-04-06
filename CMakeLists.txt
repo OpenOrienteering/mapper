@@ -32,7 +32,7 @@ set(Mapper_SRCS
  libocad/setup.c
  libocad/symbol.c
  libocad/object.c
- libocad/template.c
+ libocad/string.c
 
  qtsingleapplication/qtlocalpeer.cpp
  qtsingleapplication/qtsingleapplication.cpp
@@ -76,6 +76,8 @@ set(Mapper_SRCS
  src/template_gps.cpp
  src/template_map.cpp
  src/template_dock_widget.cpp
+ src/template_position_dock_widget.cpp
+ src/template_move_tool.cpp
  src/georeferencing.cpp
  src/paint_on_template.cpp
 
@@ -86,6 +88,7 @@ set(Mapper_SRCS
  src/tool_cut.cpp
  src/tool_cut_hole.cpp
  src/tool_rotate.cpp
+ src/tool_measure.cpp
 
  src/gps_coordinates.cpp
  src/gps_track.cpp 
@@ -99,6 +102,7 @@ qt4_automoc(${Mapper_SRCS})
 
 set(Mapper_TRANS
  translations/OpenOrienteering_de.ts
+ translations/OpenOrienteering_sv.ts
 )
 qt4_add_translation(Mapper_QM ${Mapper_TRANS})
 
