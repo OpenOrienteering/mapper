@@ -43,6 +43,7 @@
 			 <file>help/html/oomap.css</file>
              <file>help/html/*.html</file>
              <file>help/html/images/*</file>
+			 <file>images/*</file>
          </files>
      </filterSection>
  </QtHelpProject>
