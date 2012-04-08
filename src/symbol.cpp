@@ -149,7 +149,7 @@ QImage* Symbol::getIcon(Map* map, bool update)
 		PathObject* path = new PathObject(this);
 		for (int i = 0; i < 5; ++i)
 			path->addCoordinate(i, MapCoord(sin(2*M_PI * i/5.0) * max_icon_mm_half, -cos(2*M_PI * i/5.0) * max_icon_mm_half));
-		path->getPart(0).setClosed(true);
+		path->getPart(0).setClosed(true, false);
 		object = path;
 	}
 	else

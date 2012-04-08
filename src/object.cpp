@@ -364,11 +364,12 @@ Object* Object::getObjectForType(Object::Type type, Symbol* symbol)
 
 // ### PathObject::PathPart ###
 
-void PathObject::PathPart::setClosed(bool closed)
+void PathObject::PathPart::setClosed(bool closed, bool may_use_existing_close_point)
 {
 	if (!isClosed() && closed)
 	{
-		if (getNumCoords() == 1 || path->coords[start_index].rawX() != path->coords[end_index].rawX() || path->coords[start_index].rawY() != path->coords[end_index].rawY())
+		if (getNumCoords() == 1 || !may_use_existing_close_point ||
+			path->coords[start_index].rawX() != path->coords[end_index].rawX() || path->coords[start_index].rawY() != path->coords[end_index].rawY())
 			path->addCoordinate(end_index + 1, path->coords[start_index]);
 		path->setClosingPoint(end_index, path->coords[start_index]);
 		
@@ -1390,6 +1391,12 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords)
 		}
 	}
 	
+	setOutputDirty();
+}
+void PathObject::clearCoordinates()
+{
+	coords.clear();
+	parts.clear();
 	setOutputDirty();
 }
 

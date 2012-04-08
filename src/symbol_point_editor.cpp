@@ -357,7 +357,7 @@ bool PointSymbolEditorWidget::addCoordinate(MapCoordF new_coord)
 	if (path->getCoordinateCount() == 1)
 	{
 		if (object->getSymbol()->getType() == Symbol::Area)
-			path->getPart(0).setClosed(true);
+			path->getPart(0).setClosed(true, false);
 	}
 	
 	updateCoordsTable();
@@ -582,7 +582,7 @@ void PointSymbolEditorWidget::lineClosedClicked(bool checked)
 	if (!checked && path->getCoordinateCount() >= 4 && path->getCoordinate(path->getCoordinateCount() - 4).isCurveStart())
 		path->getCoordinate(path->getCoordinateCount() - 4).setCurveStart(false);
 	assert(path->getNumParts() > 0);
-	path->getPart(0).setClosed(checked);
+	path->getPart(0).setClosed(checked, true);
 	if (!checked)
 		path->deleteCoordinate(path->getCoordinateCount() - 1, false);
 	

@@ -495,7 +495,7 @@ void SymbolSettingDialog::createPreviewMap()
 		PathObject* path = new PathObject(symbol);
 		for (int i = 0; i < 5; ++i)
 			path->addCoordinate(i, MapCoord(sin(2*M_PI * i/5.0) * radius, -cos(2*M_PI * i/5.0) * radius));
-		path->getPart(0).setClosed(true);
+		path->getPart(0).setClosed(true, false);
 		preview_map->addObject(path);
 		
 		preview_objects.push_back(path);
