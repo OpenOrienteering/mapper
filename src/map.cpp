@@ -524,6 +524,9 @@ void Map::clear()
 	layers.push_back(new MapLayer(tr("default layer"), this));
 	current_layer_index = 0;
 	
+	object_selection.clear();
+	first_selected_object = NULL;
+	
 	widgets.clear();
 	object_undo_manager.clear();
 	
@@ -679,6 +682,8 @@ void Map::addObjectToSelection(Object* object, bool emit_selection_changed)
 	assert(!isObjectSelected(object));
 	object_selection.insert(object);
 	addSelectionRenderables(object);
+	if (!first_selected_object)
+		first_selected_object = object;
 	if (emit_selection_changed)
 		emit(objectSelectionChanged());
 }
@@ -687,6 +692,8 @@ void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
 	bool removed = object_selection.remove(object);
 	assert(removed && "Map::removeObjectFromSelection: object was not selected!");
 	removeSelectionRenderables(object);
+	if (first_selected_object == object)
+		first_selected_object = object_selection.isEmpty() ? NULL : *object_selection.begin();
 	if (emit_selection_changed)
 		emit(objectSelectionChanged());
 }
@@ -704,7 +711,10 @@ bool Map::removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed)
 		
 		removed_at_least_one_object = true;
 		removeSelectionRenderables(*it);
+		Object* removed_object = *it;
 		it = object_selection.erase(it);
+		if (first_selected_object == removed_object)
+			first_selected_object = object_selection.isEmpty() ? NULL : *object_selection.begin();
 	}
 	if (emit_selection_changed && removed_at_least_one_object)
 		emit(objectSelectionChanged());
@@ -731,6 +741,7 @@ void Map::clearObjectSelection(bool emit_selection_changed)
 {
 	selection_renderables.clear();
 	object_selection.clear();
+	first_selected_object = NULL;
 	
 	if (emit_selection_changed)
 		emit(objectSelectionChanged());

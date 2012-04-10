@@ -229,7 +229,17 @@ public:
 	inline ObjectSelection::const_iterator selectedObjectsBegin() {return object_selection.constBegin();}
 	inline ObjectSelection::const_iterator selectedObjectsEnd() {return object_selection.constEnd();}
 	
-	/// Returns if 1) all selected objects are compatible to the given symbol and 2) at least one of the selected objects' symbols is different to the given symbol
+	/** Returns the object in the selection which was selected first by the user.
+	 *  If she later deselects it while other objects are still selected or if the selection is done as box selection,
+	 *  this "first" selected object is just a more or less random object from the selection.
+	 */
+	inline Object* getFirstSelectedObject() const {return first_selected_object;}
+	
+	/** Checks the selected objects for compatibiliy with the given symbol.
+	 * @param symbol the symbol to check compatibiliy for
+	 * @param out_compatible returns if all selected objects are compatible to the given symbol
+	 * @param out_different returns if at least one of the selected objects' symbols is different to the given symbol
+	 */
 	void getSelectionToSymbolCompatibility(Symbol* symbol, bool& out_compatible, bool& out_different);
 	
 	void includeSelectionRect(QRectF& rect); // enlarges rect to cover the selected objects
@@ -331,6 +341,7 @@ private:
 	int first_front_template;		// index of the first template in templates which should be drawn in front of the map
 	LayerVector layers;
 	ObjectSelection object_selection;
+	Object* first_selected_object;
 	UndoManager object_undo_manager;
 	int current_layer_index;
 	WidgetVector widgets;

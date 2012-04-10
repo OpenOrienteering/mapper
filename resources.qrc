@@ -53,6 +53,10 @@
   <file>images/text-align-baseline.png</file>
   <file>images/text-align-bottom.png</file>
   <file>images/title.png</file>
+  <file>images/tool-boolean-difference.png</file>
+  <file>images/tool-boolean-intersection.png</file>
+  <file>images/tool-boolean-union.png</file>
+  <file>images/tool-boolean-xor.png</file>
   <file>images/tool-connect-paths.png</file>
   <file>images/tool-cut.png</file>
   <file>images/tool-cut-hole.png</file>

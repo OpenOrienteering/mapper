@@ -370,7 +370,17 @@ void PathObject::PathPart::setClosed(bool closed, bool may_use_existing_close_po
 	{
 		if (getNumCoords() == 1 || !may_use_existing_close_point ||
 			path->coords[start_index].rawX() != path->coords[end_index].rawX() || path->coords[start_index].rawY() != path->coords[end_index].rawY())
-			path->addCoordinate(end_index + 1, path->coords[start_index]);
+		{
+			path->coords.insert(path->coords.begin() + (end_index + 1), path->coords[start_index]);
+			++end_index;
+			
+			int part_index = this - &path->parts[0];
+			for (int i = part_index + 1; i < (int)path->parts.size(); ++i)
+			{
+				++path->parts[i].start_index;
+				++path->parts[i].end_index;
+			}
+		}
 		path->setClosingPoint(end_index, path->coords[start_index]);
 		
 		path->setOutputDirty();
@@ -1237,9 +1247,9 @@ void PathObject::addCoordinate(int pos, MapCoord c)
 	
 	setOutputDirty();
 }
-void PathObject::addCoordinate(MapCoord c)
+void PathObject::addCoordinate(MapCoord c, bool start_new_part)
 {
-	if (!parts.empty() && parts[parts.size() - 1].isClosed())
+	if (!start_new_part && !parts.empty() && parts[parts.size() - 1].isClosed())
 	{
 		coords.insert(coords.begin() + (coords.size() - 1), c);
 		++parts[parts.size() - 1].end_index;
@@ -1247,11 +1257,13 @@ void PathObject::addCoordinate(MapCoord c)
 	else
 	{
 		coords.push_back(c);
-		if (parts.empty())
+		if (start_new_part || parts.empty())
 		{
+			if (!parts.empty())
+				assert(parts[parts.size() - 1].isClosed());
 			PathPart part;
-			part.start_index = 0;
-			part.end_index = 0;
+			part.start_index = (int)coords.size() - 1;
+			part.end_index = (int)coords.size() - 1;
 			part.path = this;
 			parts.push_back(part);
 		}

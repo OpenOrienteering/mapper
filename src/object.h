@@ -168,7 +168,7 @@ public:
 	inline MapCoord& getCoordinate(int pos) {return coords[pos];}
 	void setCoordinate(int pos, MapCoord c);
 	void addCoordinate(int pos, MapCoord c);
-	void addCoordinate(MapCoord c);
+	void addCoordinate(MapCoord c, bool start_new_part = false);
 	void deleteCoordinate(int pos, bool adjust_other_coords);	// adjust_other_coords does not work if deleting bezier curve handles!
 	void clearCoordinates();
 	

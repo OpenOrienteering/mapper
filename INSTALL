@@ -12,11 +12,17 @@ Information about other versions is not available, feel free to give feedback ab
 == Compiling on Windows ==
 
 Requirements:
-Qt, cmake and a C++ compiler (preferably MinGW, Visual C++ may also work).
+- A C++ compiler (preferably MinGW, Visual C++ may also work).
+- CMake
+- Qt
+- Clipper: http://www.angusj.com/delphi/clipper.php
 
 The easiest way to get Qt is to intall the Qt SDK.
 If you do not have a C++ compiler yet, you can also install MinGW with the QtSDK installer. Note that you
 may have to add the mingw / mingw32 bin directories to your PATH environment variable manually if you choose to do this.
+
+There is no guide for the installation of Clipper on Windows yet.
+If you use MinGW, it is probably very similar to Linux.
 
 When all requirements are installed, run cmake and point it to the directory in which
 CMakeLists.txt (and the file you are reading now) are in.
@@ -47,23 +53,41 @@ Please also note that
 
 == Compiling on Linux ==
 
-Requirements:
-Qt, cmake and a C++ compiler.
+* Requirements:
+- A C++ compiler (g++)
+- CMake
+- Qt
+- Clipper: http://www.angusj.com/delphi/clipper.php
 
-Building:
+* Installing Clipper:
+First download and extract the latest release from here:
+http://sourceforge.net/projects/polyclipping/files/
+
+Then I had to make a little change to the cpp/CMakeLists.txt file to get the installation working: change the line
+INSTALL (FILES cpp/clipper.hpp DESTINATION include/polyclipping)
+to
+INSTALL (FILES clipper.hpp DESTINATION include/polyclipping)
+
+Finally do the following in the directory one above the directory containing the CMakeLists.txt:
+cmake cpp
+make
+sudo make install
+
+* Building OpenOrienteering Mapper:
+Run the following in the project's root directory:
 mkdir build     (the build directory must be named "build"!)
 cd build
 cmake ../
 make -jX        (where X is the number of threads for building)
 
-Running:
+* Running:
 cd ../bin       (if still in the build directory)
 ./Mapper -graphicssystem raster
 
 The option "-graphicssystem raster" is a Qt option which usually leads to better performance on Linux,
 in case it is not the default yet anyway (like on Windows).
 
-Package management:
+* Package management:
 
 If you want to create a release package, enable "set(CMAKE_BUILD_TYPE Release)" in the CMakeList.txt. 
 Then start the build process from a fresh build directory.

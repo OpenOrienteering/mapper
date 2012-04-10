@@ -92,6 +92,7 @@ set(Mapper_SRCS
  src/tool_cut_hole.cpp
  src/tool_rotate.cpp
  src/tool_measure.cpp
+ src/tool_boolean.cpp
 
  src/gps_coordinates.cpp
  src/gps_track.cpp 
@@ -136,6 +137,7 @@ target_link_libraries(Mapper
  ${QT_QTGUI_LIBRARY}
  ${QT_QTNETWORK_LIBRARY}
  ${QT_QTXML_LIBRARY}
+ polyclipping
 )
 
 include(CPackaging.cmake)

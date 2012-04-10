@@ -133,8 +133,8 @@ signals:
 private:
 	void addUndoStep(UndoStep* step);
 	void addRedoStep(UndoStep* step);
-	void clearUndoSteps();
-	void clearRedoSteps();
+	bool clearUndoSteps();	// returns if at least one step was deleted
+	bool clearRedoSteps();	// returns if at least one step was deleted
 	void saveSteps(std::deque<UndoStep*>& steps, QFile* file);
 	bool loadSteps(std::deque< UndoStep* >& steps, QFile* file, int version);
 	

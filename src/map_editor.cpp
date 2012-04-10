@@ -46,6 +46,7 @@
 #include "tool_cut_hole.h"
 #include "tool_rotate.h"
 #include "tool_measure.h"
+#include "tool_boolean.h"
 #include "object_text.h"
 
 // ### MapEditorController ###
@@ -70,6 +71,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	toolbar_view = NULL;
 	toolbar_drawing = NULL;
 	toolbar_editing = NULL;
+	toolbar_advanced_editing = NULL;
 	print_dock_widget = NULL;
 	measure_dock_widget = NULL;
 	color_dock_widget = NULL;
@@ -83,6 +85,7 @@ MapEditorController::~MapEditorController()
 	delete toolbar_view;
 	delete toolbar_drawing;
 	delete toolbar_editing;
+	delete toolbar_advanced_editing;
 	delete print_dock_widget;
 	delete measure_dock_widget;
 	delete color_dock_widget;
@@ -347,6 +350,7 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("cutobject")->setShortcut(QKeySequence("K"));
 	findAction("cuthole")->setShortcut(QKeySequence("H"));
 	findAction("measure")->setShortcut(QKeySequence("M"));
+	findAction("booleanunion")->setShortcut(QKeySequence("U"));
 }
 
 void MapEditorController::createMenuAndToolbars()
@@ -396,7 +400,11 @@ void MapEditorController::createMenuAndToolbars()
 	QObject::connect(cut_hole_rectangle_act, SIGNAL(triggered(bool)), this, SLOT(cutHoleRectangleClicked(bool)));
     rotate_act = newCheckAction("rotateobjects", tr("Rotate object(s)"), this, SLOT(rotateClicked(bool)), "tool-rotate.png");
 	measure_act = newCheckAction("measure", tr("Measure lengths and areas"), this, SLOT(measureClicked(bool)), "tool-measure.png");
-
+	boolean_union_act = newAction("booleanunion", tr("Unify areas"), this, SLOT(booleanUnionClicked()), "tool-boolean-union.png");
+	boolean_intersection_act = newAction("booleanintersection", tr("Intersect areas"), this, SLOT(booleanIntersectionClicked()), "tool-boolean-intersection.png");
+	boolean_difference_act = newAction("booleandifference", tr("Area difference"), this, SLOT(booleanDifferenceClicked()), "tool-boolean-difference.png");
+	boolean_xor_act = newAction("booleanxor", tr("Area XOr"), this, SLOT(booleanXOrClicked()), "tool-boolean-xor.png");
+	
     // Refactored so we can do custom key bindings in the future
     assignKeyboardShortcuts();
 
@@ -436,6 +444,10 @@ void MapEditorController::createMenuAndToolbars()
     tools_menu->addAction(fill_border_act);
     tools_menu->addAction(switch_dashes_act);
 	tools_menu->addAction(connect_paths_act);
+	tools_menu->addAction(boolean_union_act);
+	tools_menu->addAction(boolean_intersection_act);
+	tools_menu->addAction(boolean_difference_act);
+	tools_menu->addAction(boolean_xor_act);
 	tools_menu->addAction(cut_tool_act);
 	cut_hole_menu = new QMenu(tr("Cut hole"));
 	cut_hole_menu->setIcon(QIcon(":/images/tool-cut-hole.png"));
@@ -522,6 +534,7 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_editing->addAction(fill_border_act);
     toolbar_editing->addAction(switch_dashes_act);
 	toolbar_editing->addAction(connect_paths_act);
+	toolbar_editing->addAction(boolean_union_act);
 	toolbar_editing->addAction(cut_tool_act);
 	
 	QToolButton* cut_hole_button = new QToolButton();
@@ -534,6 +547,12 @@ void MapEditorController::createMenuAndToolbars()
 	
 	toolbar_editing->addAction(rotate_act);
 	toolbar_editing->addAction(measure_act);
+	
+	// Advanced editing toolbar
+	toolbar_advanced_editing = window->addToolBar(tr("Advanced editing"));
+	toolbar_advanced_editing->addAction(boolean_intersection_act);
+	toolbar_advanced_editing->addAction(boolean_difference_act);
+	toolbar_advanced_editing->addAction(boolean_xor_act);
 #endif
 
 }
@@ -834,14 +853,45 @@ void MapEditorController::objectSelectionChanged()
 	bool single_object_selected = map->getNumSelectedObjects() == 1;
 	bool have_line = false;
 	bool have_area = false;
+	int num_selected_areas = 0;
+	bool have_two_same_symbol_areas = false;
+	bool uniform_symbol_selected = true;
+	Symbol* uniform_symbol = NULL;
 	
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 	{
-		if ((*it)->getSymbol()->getContainedTypes() & Symbol::Line)
+		Symbol* symbol = (*it)->getSymbol();
+		
+		if (uniform_symbol_selected)
+		{
+			if (!uniform_symbol)
+				uniform_symbol = symbol;
+			else if (uniform_symbol != symbol)
+			{
+				uniform_symbol = NULL;
+				uniform_symbol_selected = false;
+			}
+		}
+		
+		if (symbol->getContainedTypes() & Symbol::Line)
 			have_line = true;
-		if ((*it)->getSymbol()->getContainedTypes() & Symbol::Area)
+		if (symbol->getContainedTypes() & Symbol::Area)
+		{
 			have_area = true;
+			++num_selected_areas;
+			if (!have_two_same_symbol_areas)
+			{
+				for (Map::ObjectSelection::const_iterator it2 = map->selectedObjectsBegin(); it2 != it; ++it2)
+				{
+					if ((*it2)->getSymbol() == symbol)
+					{
+						have_two_same_symbol_areas = true;
+						break;
+					}
+				}
+			}
+		}
 	}
 	
 	duplicate_act->setEnabled(have_selection);
@@ -861,6 +911,14 @@ void MapEditorController::objectSelectionChanged()
 	cut_hole_menu->setEnabled(cut_hole_act->isEnabled());
 	rotate_act->setEnabled(have_selection);
 	rotate_act->setStatusTip(tr("Rotate the selected object(s).") + (rotate_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
+	boolean_union_act->setEnabled(have_two_same_symbol_areas);
+	boolean_union_act->setStatusTip(tr("Unify overlapping areas.") + (boolean_union_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
+	boolean_intersection_act->setEnabled(have_two_same_symbol_areas && uniform_symbol_selected);
+	boolean_intersection_act->setStatusTip(tr("Intersect the first selected area object with all other selected overlapping areas.") + (boolean_intersection_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
+	boolean_difference_act->setEnabled(num_selected_areas >= 2);
+	boolean_difference_act->setStatusTip(tr("Subtract all other selected area objects from the first selected area object.") + (boolean_difference_act->isEnabled() ? "" : (" " + tr("Select at least two area objects to activate this tool."))));
+	boolean_xor_act->setEnabled(have_two_same_symbol_areas && uniform_symbol_selected);
+	boolean_xor_act->setStatusTip(tr("Calculate nonoverlapping parts of areas.") + (boolean_xor_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
 	
 	selectedSymbolsOrObjectsChanged();
 }
@@ -1171,6 +1229,30 @@ void MapEditorController::measureClicked(bool checked)
 		new_widget = true;
 	}
 	toggleFloatingDockWidget(measure_dock_widget, new_widget);
+}
+void MapEditorController::booleanUnionClicked()
+{
+	BooleanTool tool(map);
+	if (!tool.execute(BooleanTool::Union))
+		QMessageBox::warning(window, QObject::tr("Error"), QObject::tr("Unification failed."));
+}
+void MapEditorController::booleanIntersectionClicked()
+{
+	BooleanTool tool(map);
+	if (!tool.execute(BooleanTool::Intersection))
+		QMessageBox::warning(window, QObject::tr("Error"), QObject::tr("Intersection failed."));
+}
+void MapEditorController::booleanDifferenceClicked()
+{
+	BooleanTool tool(map);
+	if (!tool.execute(BooleanTool::Difference))
+		QMessageBox::warning(window, QObject::tr("Error"), QObject::tr("Difference failed."));
+}
+void MapEditorController::booleanXOrClicked()
+{
+	BooleanTool tool(map);
+	if (!tool.execute(BooleanTool::XOr))
+		QMessageBox::warning(window, QObject::tr("Error"), QObject::tr("XOr failed."));
 }
 
 bool MapEditorController::toggleFloatingDockWidget(QDockWidget* dock_widget, bool new_widget)
