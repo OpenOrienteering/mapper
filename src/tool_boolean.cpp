@@ -20,6 +20,8 @@
 
 #include "tool_boolean.h"
 
+#include <algorithm>
+
 #include "symbol.h"
 #include "object.h"
 #include "map_undo.h"
