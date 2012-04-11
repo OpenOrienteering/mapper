@@ -716,7 +716,7 @@ void MapEditorController::showColorWindow(bool show)
 	else
 	{
 		color_dock_widget = new EditorDockWidget(tr("Colors"), color_window_act, this, window);
-		color_dock_widget->setChild(new ColorWidget(map, color_dock_widget));
+		color_dock_widget->setChild(new ColorWidget(map, window, color_dock_widget));
 		window->addDockWidget(Qt::LeftDockWidgetArea, color_dock_widget, Qt::Vertical);
 	}
 }

@@ -38,7 +38,7 @@ class ColorWidget : public EditorDockWidgetChild
 {
 Q_OBJECT
 public:
-	ColorWidget(Map* map, QWidget* parent = NULL);
+	ColorWidget(Map* map, MainWindow* window, QWidget* parent = NULL);
     virtual ~ColorWidget();
 	
     virtual QSize sizeHint() const;
@@ -76,6 +76,7 @@ private:
 	QPushButton* move_down_button;
 	
 	Map* map;
+	MainWindow* window;
 	bool react_to_changes;
 };
 

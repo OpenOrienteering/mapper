@@ -27,7 +27,7 @@
 #include "map.h"
 #include "map_color.h"
 
-ColorWidget::ColorWidget(Map* map, QWidget* parent): EditorDockWidgetChild(parent), map(map)
+ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent): EditorDockWidgetChild(parent), map(map), window(window)
 {
 	react_to_changes = true;
 	
@@ -231,7 +231,7 @@ void ColorWidget::moveColorDown()
 }
 void ColorWidget::showHelp()
 {
-	// TODO: show color widget help page
+	window->showHelp("symbols.html", "colors");
 }
 
 void ColorWidget::cellChange(int row, int column)
@@ -262,7 +262,7 @@ void ColorWidget::cellChange(int row, int column)
 		
 		if (!ok)
 		{
-			QMessageBox::warning(window(), tr("Error"), tr("Please enter a valid number from 0 to 255, or specify a percentage from 0 to 100!"));
+			QMessageBox::warning(window, tr("Error"), tr("Please enter a valid number from 0 to 255, or specify a percentage from 0 to 100!"));
 		
 			if (column == 2)		color_table->item(row, column)->setText(QString::number(color->c * 100) + "%");
 			else if (column == 3)	color_table->item(row, column)->setText(QString::number(color->m * 100) + "%");
@@ -313,7 +313,7 @@ void ColorWidget::cellDoubleClick(int row, int column)
 	{
 		MapColor* color = map->getColor(row);
 		
-		QColor newColor = QColorDialog::getColor(color->color, window());
+		QColor newColor = QColorDialog::getColor(color->color, window);
 		if (newColor.isValid())
 		{
 			color->color = newColor;

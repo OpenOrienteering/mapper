@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
  <QtHelpProject version="1.0">
-     <namespace>OOMapper.alpha.3.help</namespace>
+     <namespace>openorienteering.mapper.help</namespace>
      <virtualFolder>oohelpdoc</virtualFolder>
      <customFilter name="My Application 1.0">
          <filterAttribute>OOMap</filterAttribute>

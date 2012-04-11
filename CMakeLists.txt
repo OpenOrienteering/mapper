@@ -1,3 +1,5 @@
+include(AddFileDependencies)
+
 project(Mapper)
 cmake_minimum_required(VERSION 2.6)
 find_package(Qt4 REQUIRED)
@@ -114,25 +116,37 @@ set(Mapper_TRANS
 )
 qt4_add_translation(Mapper_QM ${Mapper_TRANS})
 
-SET(Mapper_RESOURCES resources.qrc translations.qrc)
+set(Mapper_RESOURCES resources.qrc translations.qrc)
 qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
-IF(MINGW)
+set(Mapper_HELP_DIR ${PROJECT_SOURCE_DIR}/bin/help)
+set(Mapper_HELP_COLLECTION ${Mapper_HELP_DIR}/oomaphelpcollection.qhc)
+file(GLOB Mapper_HELP_EN ${Mapper_HELP_DIR}/html_en)
+add_custom_command( 
+	OUTPUT    ${Mapper_HELP_COLLECTION}
+	COMMAND   qcollectiongenerator
+	ARGS      ${PROJECT_SOURCE_DIR}/oomaphelpcollection.qhcp -o ${Mapper_HELP_COLLECTION}
+	DEPENDS   ${PROJECT_SOURCE_DIR}/oomaphelpcollection.qhcp ${PROJECT_SOURCE_DIR}/oomaphelp.qhp ${Mapper_HELP_EN}
+	COMMENT   "Compile help collection file"
+)
+
+if(MINGW)
 	# resource compilation for MinGW
-	SET(CMAKE_WINDRES windres)
-	ADD_CUSTOM_COMMAND( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/resources.o
+	set(CMAKE_WINDRES windres)
+	add_custom_command( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/resources.o
 			COMMAND ${CMAKE_WINDRES} -I${CMAKE_SOURCE_DIR} -i${CMAKE_SOURCE_DIR}/resources/resources.rc
 			-o ${CMAKE_CURRENT_BINARY_DIR}/resources.o )
-	SET(Mapper_SRCS ${Mapper_SRCS} ${CMAKE_CURRENT_BINARY_DIR}/resources.o)
-ENDIF(MINGW)
+	set(Mapper_SRCS ${Mapper_SRCS} ${CMAKE_CURRENT_BINARY_DIR}/resources.o)
+endif(MINGW)
 
 add_executable(Mapper
 	WIN32
 	MACOSX_BUNDLE
 	${Mapper_SRCS}
 	${Mapper_QM}
+	${Mapper_HELP_COLLECTION}
 	${Mapper_RESOURCES_RCC}
 )
 

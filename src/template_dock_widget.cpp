@@ -72,7 +72,6 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	move_up_button = new QPushButton(QIcon(":/images/arrow-up.png"), tr("Move Up"));
 	move_down_button = new QPushButton(QIcon(":/images/arrow-down.png"), tr("Move Down"));
 	QPushButton* help_button = new QPushButton(QIcon(":/images/help.png"), tr("Help"));
-	help_button->setVisible(false);	// TODO!
 
 	QGridLayout* list_buttons_group_layout = new QGridLayout();
 	list_buttons_group_layout->setMargin(0);
@@ -386,7 +385,7 @@ void TemplateWidget::moveTemplateDown()
 }
 void TemplateWidget::showHelp()
 {
-	// TODO: show template widget help page
+	controller->getWindow()->showHelp("template_menu.html");
 }
 
 void TemplateWidget::cellChange(int row, int column)

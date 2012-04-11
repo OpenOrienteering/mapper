@@ -650,10 +650,52 @@ void MainWindow::showAbout()
 	about_dialog.setWindowModality(Qt::WindowModal);
 	about_dialog.exec();
 }
-void MainWindow::showHelp()
+void MainWindow::showHelp(QString filename, QString fragment)
 {
-	// TODO
-	QMessageBox::information(this, tr("Error"), tr("Sorry, help is not implemented yet!"));
+	static QProcess* process = NULL;
+	
+	if (!process || process->state() == QProcess::NotRunning)
+	{
+		// Try to find the help file directory
+		QDir help_dir = QDir("help");
+		if (!help_dir.exists())
+		{
+			QString app_dir = QCoreApplication::applicationDirPath();
+			help_dir = QDir(app_dir % "/../share/openorienteering-mapper/help");
+			if (!help_dir.exists())
+			{
+				QMessageBox::warning(this, tr("Error"), tr("Failed to locate the help files."));
+				return;
+			}
+		}
+		
+		// Try to start the Qt Assistant process
+		if (process)
+			delete process;
+		process = new QProcess();
+		QStringList args;
+		args << QLatin1String("-collectionFile")
+			 << help_dir.absoluteFilePath("oomaphelpcollection.qhc").toLatin1()
+			 << QLatin1String("-showUrl")
+			 << makeHelpUrl(filename, fragment)
+			 << QLatin1String("-enableRemoteControl");
+		process->start(QLatin1String("assistant"), args);
+		if (!process->waitForStarted())
+		{
+			QMessageBox::warning(this, tr("Error"), tr("Failed to start the help browser."));
+			return;
+		}
+	}
+	else
+	{
+		QByteArray command;
+		command.append("setSource " + makeHelpUrl(filename, fragment) + "\n");
+		process->write(command);
+	}
+}
+QString MainWindow::makeHelpUrl(QString filename, QString fragment)
+{
+	return "qthelp://openorienteering.mapper.help/oohelpdoc/help/html_en/" + filename + (fragment.isEmpty() ? "" : ("#" + fragment));
 }
 void MainWindow::linkClicked(const QString &link)
 {
