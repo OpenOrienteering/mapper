@@ -5,7 +5,6 @@ set(CLIPPER_REPO "http://polyclipping.svn.sourceforge.net/viewvc/polyclipping/tr
 set(CLIPPER_FILES
   README
   License.txt
-  LIC
   cpp/clipper.cpp
   cpp/clipper.hpp
 )
