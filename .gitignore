@@ -12,3 +12,4 @@ bin/translations
 build/
 help/*.qhc
 help/*.qch
+3rd-party/clipper

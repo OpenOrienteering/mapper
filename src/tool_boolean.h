@@ -24,8 +24,8 @@
 #include <vector>
 
 #include <QHash>
-#include <polyclipping/clipper.hpp>
 
+#include "../3rd-party/clipper/cpp/clipper.hpp"
 #include "object.h"
 
 class Symbol;

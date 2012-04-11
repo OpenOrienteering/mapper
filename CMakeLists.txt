@@ -2,6 +2,8 @@ project(Mapper)
 cmake_minimum_required(VERSION 2.6)
 find_package(Qt4 REQUIRED)
 
+include(3rd-party/clipper.cmake)
+
 #set(CMAKE_BUILD_TYPE Release)
 #set(CMAKE_BUILD_TYPE Debug)
 
@@ -36,6 +38,8 @@ set(Mapper_SRCS
 
  qtsingleapplication/qtlocalpeer.cpp
  qtsingleapplication/qtsingleapplication.cpp
+
+ 3rd-party/clipper/cpp/clipper.cpp
 
  src/main.cpp
  src/util.cpp
@@ -137,7 +141,6 @@ target_link_libraries(Mapper
  ${QT_QTGUI_LIBRARY}
  ${QT_QTNETWORK_LIBRARY}
  ${QT_QTXML_LIBRARY}
- polyclipping
 )
 
 include(CPackaging.cmake)
