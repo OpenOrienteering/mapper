@@ -56,7 +56,6 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	
 	QToolButton* new_button = new QToolButton();
 	new_button->setText(tr("Create..."));
-	//new_button->setIcon(QIcon(":/images/new.png"));	// This aligns the text left which looks strange. Besides, the button is not the most important one, so omitting the icon may be better
 	new_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	new_button->setPopupMode(QToolButton::InstantPopup);
 	new_button->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
