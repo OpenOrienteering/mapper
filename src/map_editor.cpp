@@ -22,18 +22,19 @@
 
 #include <QtGui>
 
+#include "util.h"
 #include "map.h"
 #include "map_widget.h"
 #include "map_undo.h"
 #include "map_dialog_scale.h"
+#include "georeferencing.h"
 #include "print_dock_widget.h"
 #include "color_dock_widget.h"
 #include "symbol_dock_widget.h"
 #include "template_dock_widget.h"
 #include "template_position_dock_widget.h"
 #include "template.h"
-#include "paint_on_template.h"
-#include "gps_coordinates.h"
+#include "template_tool_paint.h"
 #include "symbol.h"
 #include "tool_draw_point.h"
 #include "tool_draw_path.h"
@@ -41,7 +42,6 @@
 #include "tool_draw_rectangle.h"
 #include "tool_draw_text.h"
 #include "tool_edit.h"
-#include "util.h"
 #include "tool_cut.h"
 #include "tool_cut_hole.h"
 #include "tool_rotate.h"
@@ -377,7 +377,7 @@ void MapEditorController::createMenuAndToolbars()
     //QAction* template_config_window_act = newCheckAction("templateconfigwindow", tr("Template configurations window"), this, SLOT(showTemplateConfigurationsWindow(bool)), "window-new", tr("Show/Hide the template configurations window"));
     //QAction* template_visibilities_window_act = newCheckAction("templatevisibilitieswindow", tr("Template visibilities window"), this, SLOT(showTemplateVisbilitiesWindow(bool)), "window-new", tr("Show/Hide the template visibilities window"));
     QAction* open_template_act = newAction("opentemplate", tr("Open template..."), this, SLOT(openTemplateClicked()));
-    QAction* edit_gps_projection_parameters_act = newAction("gpsproj", tr("Edit projection parameters..."), this, SLOT(editGPSProjectionParameters()));
+    QAction* edit_georeferencing_act = newAction("georef", tr("Edit georeferencing..."), this, SLOT(editGeoreferencing()));
     QAction* show_all_act = newAction("showall", tr("Show whole map"), this, SLOT(showWholeMap()), "view-show-all.png");
     edit_tool_act = newCheckAction("editobjects", tr("Edit objects"), this, SLOT(editToolClicked(bool)), "tool-edit.png");
     draw_point_act = newCheckAction("drawpoint", tr("Set point objects"), this, SLOT(drawPointClicked(bool)), "draw-point.png");
@@ -469,6 +469,7 @@ void MapEditorController::createMenuAndToolbars()
 	
 	// Map menu
 	QMenu* map_menu = window->menuBar()->addMenu(tr("M&ap"));
+	map_menu->addAction(edit_georeferencing_act);
 	map_menu->addAction(scale_map_act);
 	map_menu->addAction(map_notes_act);
 	
@@ -480,10 +481,6 @@ void MapEditorController::createMenuAndToolbars()
 	template_menu->addSeparator();
 	template_menu->addAction(open_template_act);
 	
-	// GPS menu
-	QMenu* gps_menu = window->menuBar()->addMenu(tr("&GPS"));
-	gps_menu->addAction(edit_gps_projection_parameters_act);
-
 
 
 #ifndef Q_WS_MAC
@@ -814,9 +811,9 @@ void MapEditorController::openTemplateClicked()
 	template_widget->addTemplateAt(new_template, -1);
 }
 
-void MapEditorController::editGPSProjectionParameters()
+void MapEditorController::editGeoreferencing()
 {
-	GPSProjectionParametersDialog dialog(window, &map->getGPSProjectionParameters());
+	GeoreferencingDialog dialog(window, &map->getGPSProjectionParameters());
 	dialog.setWindowModality(Qt::WindowModal);
 	if (dialog.exec() == QDialog::Rejected)
 		return;

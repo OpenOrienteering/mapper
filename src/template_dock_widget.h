@@ -70,8 +70,8 @@ protected slots:
 	void cellDoubleClick(int row, int column);
 	
 	void moveByHandClicked(bool checked);
-	void georeferenceClicked(bool checked);
-	void georeferencingWindowClosed();
+	void adjustClicked(bool checked);
+	void adjustWindowClosed();
 	//void groupClicked();
 	void positionClicked(bool checked);
 	void moreActionClicked(QAction* action);
@@ -98,7 +98,7 @@ private:
 	QGroupBox* active_buttons_group;
 	QAction* move_by_hand_action;
 	QToolButton* move_by_hand_button;
-	QPushButton* georeference_button;
+	QPushButton* adjust_button;
 	//QPushButton* group_button;
 	QPushButton* position_button;
 	QToolButton* more_button;

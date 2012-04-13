@@ -27,8 +27,8 @@
 #include "map.h"
 #include "template.h"
 #include "map_editor.h"
-#include "georeferencing.h"
-#include "template_move_tool.h"
+#include "template_adjust.h"
+#include "template_tool_move.h"
 #include "template_position_dock_widget.h"
 
 TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent): EditorDockWidgetChild(parent), map(map), main_view(main_view), controller(controller)
@@ -92,9 +92,10 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	move_by_hand_action->setCheckable(true);
 	move_by_hand_button = new QToolButton();
 	move_by_hand_button->setDefaultAction(move_by_hand_action);
-	move_by_hand_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	georeference_button = new QPushButton(QIcon(":/images/georeferencing.png"), tr("Georeference..."));
-	georeference_button->setCheckable(true);
+	move_by_hand_button->setToolButtonStyle(Qt::ToolButtonTextOnly);
+	move_by_hand_button->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
+	adjust_button = new QPushButton(QIcon(":/images/georeferencing.png"), tr("Adjust..."));
+	adjust_button->setCheckable(true);
 	//group_button = new QPushButton(QIcon(":/images/group.png"), tr("(Un)group"));
 	position_button = new QPushButton(tr("Positioning..."));
 	position_button->setCheckable(true);
@@ -112,7 +113,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	QGridLayout* active_buttons_group_layout = new QGridLayout();
 	active_buttons_group_layout->setMargin(0);
 	active_buttons_group_layout->addWidget(move_by_hand_button, 0, 0);
-	active_buttons_group_layout->addWidget(georeference_button, 0, 1);
+	active_buttons_group_layout->addWidget(adjust_button, 0, 1);
 	//active_buttons_group_layout->addWidget(group_button, 1, 0);
 	active_buttons_group_layout->addWidget(position_button, 1, 0);
 	active_buttons_group_layout->addWidget(more_button, 1, 1);
@@ -148,7 +149,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
 	
 	connect(move_by_hand_action, SIGNAL(triggered(bool)), this, SLOT(moveByHandClicked(bool)));
-	connect(georeference_button, SIGNAL(clicked(bool)), this, SLOT(georeferenceClicked(bool)));
+	connect(adjust_button, SIGNAL(clicked(bool)), this, SLOT(adjustClicked(bool)));
 	//connect(group_button, SIGNAL(clicked(bool)), this, SLOT(groupClicked()));
 	connect(position_button, SIGNAL(clicked(bool)), this, SLOT(positionClicked(bool)));
 	connect(more_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(moreActionClicked(QAction*)));
@@ -495,7 +496,7 @@ void TemplateWidget::selectionChanged(const QItemSelection& selected, const QIte
 	if (enable_active_buttons)
 	{
 		move_by_hand_button->setEnabled(!multiple_rows_selected);
-		georeference_button->setEnabled(!multiple_rows_selected);
+		adjust_button->setEnabled(!multiple_rows_selected);
 		// TODO: Implement and enable buttons again
 		//group_button->setEnabled(false); //multiple_rows_selected || (!multiple_rows_selected && map->getTemplate(posFromRow(current_row))->getTemplateGroup() >= 0));
 		position_button->setEnabled(!multiple_rows_selected);
@@ -504,12 +505,12 @@ void TemplateWidget::selectionChanged(const QItemSelection& selected, const QIte
 	
 	if (multiple_rows_selected)
 	{
-		georeference_button->setChecked(false);
+		adjust_button->setChecked(false);
 		position_button->setChecked(false);
 	}
 	else
 	{
-		georeference_button->setChecked(temp && controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == (void*)temp);
+		adjust_button->setChecked(temp && controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == (void*)temp);
 		position_button->setChecked(temp && controller->existsTemplatePositionDockWidget(temp));
 	}
 }
@@ -545,29 +546,29 @@ void TemplateWidget::moveByHandClicked(bool checked)
 	assert(temp);
 	controller->setTool(checked ? new TemplateMoveTool(temp, controller, move_by_hand_action) : NULL);
 }
-void TemplateWidget::georeferenceClicked(bool checked)
+void TemplateWidget::adjustClicked(bool checked)
 {
 	if (checked)
 	{
 		Template* temp = getCurrentTemplate();
 		assert(temp);
-		GeoreferencingActivity* activity = new GeoreferencingActivity(temp, controller);
+		TemplateAdjustActivity* activity = new TemplateAdjustActivity(temp, controller);
 		controller->setEditorActivity(activity);
-		connect(activity->getDockWidget(), SIGNAL(closed()), this, SLOT(georeferencingWindowClosed()));
+		connect(activity->getDockWidget(), SIGNAL(closed()), this, SLOT(adjustWindowClosed()));
 	}
 	else
 	{
 		controller->setEditorActivity(NULL);	// TODO: default activity?!
 	}
 }
-void TemplateWidget::georeferencingWindowClosed()
+void TemplateWidget::adjustWindowClosed()
 {
 	Template* current_template = getCurrentTemplate();
 	if (!current_template)
 		return;
 	
 	if (controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == (void*)current_template)
-		georeference_button->setChecked(false);
+		adjust_button->setChecked(false);
 }
 /*void TemplateWidget::groupClicked()
 {

@@ -113,7 +113,7 @@ public slots:
 	void showTemplateWindow(bool show);
 	void openTemplateClicked();
 	
-	void editGPSProjectionParameters();
+	void editGeoreferencing();
 	
 	void selectedSymbolsChanged();
 	void objectSelectionChanged();

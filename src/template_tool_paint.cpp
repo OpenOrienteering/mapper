@@ -18,7 +18,7 @@
  */
 
 
-#include "paint_on_template.h"
+#include "template_tool_paint.h"
 
 #include <QtGui>
 
@@ -230,4 +230,4 @@ void PaintOnTemplateSelectDialog::currentTemplateChanged(QListWidgetItem* curren
 		selection = reinterpret_cast<Template*>(current->data(Qt::UserRole).value<void*>());
 }
 
-#include "paint_on_template.moc"
+#include "template_tool_paint.moc"
