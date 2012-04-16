@@ -127,7 +127,9 @@ bool DrawCircleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, 
 
 bool DrawCircleTool::keyPressEvent(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Tab)
+	if (event->key() == Qt::Key_Escape)
+		abortDrawing();
+	else if (event->key() == Qt::Key_Tab)
 	{
 		editor->setEditTool();
 		return true;
@@ -151,6 +153,7 @@ void DrawCircleTool::finishDrawing()
 void DrawCircleTool::abortDrawing()
 {
 	dragging = false;
+	first_point_set = false;
 	updateStatusText();
 	
 	DrawLineAndAreaTool::abortDrawing();
@@ -203,7 +206,7 @@ void DrawCircleTool::setDirtyRect()
 }
 void DrawCircleTool::updateStatusText()
 {
-	setStatusBarText(tr("<b>Click</b> or <b>Drag</b> to draw a circle"));
+	setStatusBarText(tr("<b>Click</b> or <b>Drag</b> to draw a circle, <b>Esc</b> to abort"));
 }
 
 #include "tool_draw_circle.moc"
