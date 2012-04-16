@@ -60,13 +60,15 @@ protected:
 	MapCoordF click_pos_map;
 	QPoint cur_pos;
 	MapCoordF cur_pos_map;
+	bool dragging;
+	bool draw_dash_points;
+	
 	bool second_point_set;
 	bool third_point_set;
 	MapCoordF forward_vector;
 	MapCoordF close_vector;
 	bool new_corner_needed;
 	bool delete_start_point;
-	bool dragging;
 };
 
 #endif
