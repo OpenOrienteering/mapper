@@ -42,8 +42,10 @@ void DrawRectangleTool::init()
 
 bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (event->buttons() & Qt::LeftButton)
+	if (event->button() == Qt::LeftButton)
 	{
+		dragging = false;
+		mouse_press_pos = event->pos();
 		cur_pos = event->pos();
 		cur_pos_map = map_coord;
 		
@@ -94,7 +96,7 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 			new_corner_needed = true;
 		}
 	}
-	else if (event->buttons() & Qt::RightButton && draw_in_progress)
+	else if (event->button() == Qt::RightButton && draw_in_progress)
 	{
 		if (!third_point_set)
 			abortDrawing();
@@ -118,6 +120,8 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 }
 bool DrawRectangleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	bool mouse_down = event->buttons() & Qt::LeftButton;
+	
 	if (!draw_in_progress)
 	{
 		setPreviewPointsPosition(map_coord);
@@ -130,6 +134,12 @@ bool DrawRectangleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, 
 		cur_pos = event->pos();
 		cur_pos_map = map_coord;
 		
+		if (mouse_down && !dragging && (event->pos() - mouse_press_pos).manhattanLength() >= QApplication::startDragDistance())
+		{
+			// Start dragging
+			dragging = true;
+		}
+		
 		updatePreview();
 	}
 
@@ -137,7 +147,13 @@ bool DrawRectangleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, 
 }
 bool DrawRectangleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	return false;
+	if ((event->button() == Qt::LeftButton) && dragging)
+	{
+		dragging = false;
+		return mousePressEvent(event, map_coord, widget);
+	}
+	else
+		return false;
 }
 bool DrawRectangleTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {

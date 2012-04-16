@@ -55,6 +55,7 @@ protected:
 	void setDirtyRect();
 	void updateStatusText();
 	
+	QPoint mouse_press_pos;
 	QPoint click_pos;
 	MapCoordF click_pos_map;
 	QPoint cur_pos;
@@ -65,6 +66,7 @@ protected:
 	MapCoordF close_vector;
 	bool new_corner_needed;
 	bool delete_start_point;
+	bool dragging;
 };
 
 #endif
