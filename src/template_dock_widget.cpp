@@ -33,6 +33,7 @@
 
 TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent): EditorDockWidgetChild(parent), map(map), main_view(main_view), controller(controller)
 {
+	this->setWhatsThis("<a href=\"template_menu.html\">See more</a>");
 	react_to_changes = true;
 	
 	// Template table

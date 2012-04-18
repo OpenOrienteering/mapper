@@ -33,6 +33,7 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent): EditorD
 	
 	// Color table
 	color_table = new QTableWidget(map->getNumColors(), 10);
+	color_table->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
 	color_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
 	color_table->setHorizontalHeaderLabels(QStringList() << "" << tr("Name") << tr("C") << tr("M") << tr("Y") << tr("K") << tr("Opacity") << tr("R") << tr("G") << tr("B"));
 	color_table->verticalHeader()->setVisible(false);
@@ -52,10 +53,15 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent): EditorD
 	buttons_group = new QWidget();
 	
 	QPushButton* new_button = new QPushButton(QIcon(":/images/plus.png"), tr("New"));
+	new_button->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
 	delete_button = new QPushButton(QIcon(":/images/minus.png"), tr("Delete"));
+	delete_button->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
 	duplicate_button = new QPushButton(QIcon(":/images/copy.png"), tr("Duplicate"));
+	duplicate_button->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
 	move_up_button = new QPushButton(QIcon(":/images/arrow-up.png"), tr("Move Up"));
+	move_up_button->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
 	move_down_button = new QPushButton(QIcon(":/images/arrow-down.png"), tr("Move Down"));
+	move_down_button->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
 	QPushButton* help_button = new QPushButton(QIcon(":/images/help.png"), tr("Help"));
 
 	QGridLayout* buttons_group_layout = new QGridLayout();

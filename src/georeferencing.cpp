@@ -33,8 +33,10 @@ GeoreferencingDialog::GeoreferencingDialog(QWidget* parent, const GPSProjectionP
 	projection_label->setAlignment(Qt::AlignCenter);
 	QLabel* lat_label = new QLabel(tr("Origin latitude:"));
 	lat_edit = new QLineEdit(QString::number(params.center_latitude * 180 / M_PI, 'f', 12));
+	lat_edit->setWhatsThis("<a href=\"gps_menu.html\">See more</a>");
 	QLabel* lon_label = new QLabel(tr("Origin longitude:"));
 	lon_edit = new QLineEdit(QString::number(params.center_longitude * 180 / M_PI, 'f', 12));
+	lon_edit->setWhatsThis("<a href=\"gps_menu.html\">See more</a>");
 	
 	QGridLayout* edit_layout = new QGridLayout();
 	edit_layout->addWidget(projection_label, 0, 0, 1, 2);
