@@ -45,7 +45,7 @@ bool OCAD8FileFormat::understands(const unsigned char *buffer, size_t sz) const
     return false;
 }
 
-Importer *OCAD8FileFormat::createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
+Importer *OCAD8FileFormat::createImporter(const QString &path, Map *map, MapView *view, MapEditorController* controller) const throw (FormatException)
 {
     return new OCAD8FileImport(path, map, view);
 }

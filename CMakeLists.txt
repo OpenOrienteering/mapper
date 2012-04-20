@@ -24,7 +24,7 @@ else (CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
 endif (CMAKE_COMPILER_IS_GNUCXX)
 
-include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} src)
 
 set(Mapper_SRCS
  libocad/types.c
@@ -109,6 +109,8 @@ set(Mapper_SRCS
  src/file_format_native.cpp
  src/file_format_ocad8.cpp
  src/file_format_xml.cpp
+
+ src/dxfparser.cpp
 )
 qt4_automoc(${Mapper_SRCS})
 

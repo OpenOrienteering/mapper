@@ -50,7 +50,7 @@ public:
 	
 	void addTemplateAt(Template* new_template, int pos);
 	
-	static Template* showOpenTemplateDialog(QWidget* dialog_parent, MapView* main_view);
+	static Template* showOpenTemplateDialog(QWidget* dialog_parent, MapView* main_view, MapEditorController* controller);
 	
 protected:
 	virtual void resizeEvent(QResizeEvent* event);

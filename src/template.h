@@ -200,7 +200,7 @@ public:
 	inline Map* getMap() const {return map;}
 	
 	/// Tries to find a matching template subclass for the given path by looking at the file extension
-	static Template* templateForFile(const QString& path, Map* map);
+	static Template* templateForFile(const QString& path, Map* map, MapEditorController *controller);
 	
 protected:
 	/// Must be implemented to draw the polyline given by the points onto the template if canBeDrawnOnto() returns true

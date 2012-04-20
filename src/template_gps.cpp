@@ -21,13 +21,15 @@
 #include "template_gps.h"
 
 #include <QPainter>
+#include <QMessageBox>
 
 #include "map_widget.h"
+#include "map_editor.h"
 #include "georeferencing.h"
 
-TemplateGPS::TemplateGPS(const QString& filename, Map* map) : Template(filename, map)
+TemplateGPS::TemplateGPS(const QString& filename, Map* map, MapEditorController *controller) : Template(filename, map), controller(controller)
 {
-	if (!track.loadFrom(filename, false))
+	if (!track.loadFrom(filename, false, controller))
 		return;
 	
 	if (map->areGPSProjectionParametersSet())
@@ -187,6 +189,29 @@ double TemplateGPS::getTemplateFinalScaleY() const
 	return cur_trans.template_scale_y * 1000 / map->getScaleDenominator();
 }
 
+bool TemplateGPS::import(MapEditorController *controller){
+	int res = QMessageBox::question(controller->getWindow(), tr("Question"), tr("Should waypoints be treated as tracks?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+	if(res == QMessageBox::Yes){
+		for(int i = 0; i < track.getNumWaypoints(); i++)
+			controller->placePoint(track.getWaypoint(i).map_coord);
+	}
+	else{
+		if(!controller->startNewPath())
+			return false;
+		for(int i = 0; i < track.getNumWaypoints(); i++)
+			controller->addWayPoint(track.getWaypoint(i).map_coord.toMapCoord());
+		controller->endPath();
+	}
+	for(int i = 0; i < track.getNumSegments(); i++){
+		if(!controller->startNewPath())
+			return false;
+		for(int j = 0; j < track.getSegmentPointCount(i); j++)
+			controller->addWayPoint(track.getSegmentPoint(i, j).map_coord.toMapCoord());
+		controller->endPath();
+	}
+	return true;
+}
+
 void TemplateGPS::gpsProjectionParametersChanged()
 {
 	track.changeProjectionParams(map->getGPSProjectionParameters());
@@ -198,7 +223,7 @@ void TemplateGPS::calculateExtent()
 }
 bool TemplateGPS::changeTemplateFileImpl(const QString& filename)
 {
-	if (!track.loadFrom(filename, false))
+	if (!track.loadFrom(filename, false, controller))
 		return false;
 	track.changeProjectionParams(map->getGPSProjectionParameters());
 	calculateExtent();

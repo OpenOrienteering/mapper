@@ -284,7 +284,7 @@ void Template::setOtherTransform(const Template::TemplateTransform& transform)
 	other_trans = transform;
 }
 
-Template* Template::templateForFile(const QString& path, Map* map)
+Template* Template::templateForFile(const QString& path, Map* map, MapEditorController* controller)
 {
 	if (path.endsWith(".png", Qt::CaseInsensitive) || path.endsWith(".bmp", Qt::CaseInsensitive) || path.endsWith(".jpg", Qt::CaseInsensitive) ||
 		path.endsWith(".gif", Qt::CaseInsensitive) || path.endsWith(".jpeg", Qt::CaseInsensitive) || path.endsWith(".tif", Qt::CaseInsensitive) ||
@@ -292,8 +292,8 @@ Template* Template::templateForFile(const QString& path, Map* map)
 		return new TemplateImage(path, map);
 	else if (path.endsWith(".ocd", Qt::CaseInsensitive) || path.endsWith(".omap", Qt::CaseInsensitive))
 		return new TemplateMap(path, map);	// TODO
-	else if (path.endsWith(".gpx", Qt::CaseInsensitive))
-		return new TemplateGPS(path, map);	
+	else if (path.endsWith(".gpx", Qt::CaseInsensitive) || path.endsWith(".dxf", Qt::CaseInsensitive))
+		return new TemplateGPS(path, map, controller);
 	else
 		return NULL;
 }

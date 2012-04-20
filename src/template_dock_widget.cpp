@@ -192,15 +192,15 @@ void TemplateWidget::addTemplateAt(Template* new_template, int pos)
 	
 	map->setTemplatesDirty();	// TODO: redraw map widget(s)
 }
-Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapView* main_view)
+Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapView* main_view, MapEditorController* controller)
 {
 	// TODO: save directory
-	QString path = QFileDialog::getOpenFileName(dialog_parent, tr("Open image or GPS track ..."), QString(), QString("%1 (*.omap *.ocd *.bmp *.jpg *.jpeg *.gif *.png *.tiff *.gpx);;%2 (*.*)").arg(tr("Template files")).arg(tr("All files")));
+	QString path = QFileDialog::getOpenFileName(dialog_parent, tr("Open image or GPS track ..."), QString(), QString("%1 (*.omap *.ocd *.bmp *.jpg *.jpeg *.gif *.png *.tiff *.gpx *.dxf);;%2 (*.*)").arg(tr("Template files")).arg(tr("All files")));
 	path = QFileInfo(path).canonicalFilePath();
 	if (path.isEmpty())
 		return NULL;
-	
-	Template* new_temp = Template::templateForFile(path, main_view->getMap());
+
+	Template* new_temp = Template::templateForFile(path, main_view->getMap(), controller);
 	if (!new_temp)
 	{
 		QMessageBox::warning(dialog_parent, tr("Error"), tr("Cannot open template:\n%1\n\nFile format not recognized.").arg(path));
@@ -274,7 +274,7 @@ void TemplateWidget::newTemplate(QAction* action)
 }
 void TemplateWidget::openTemplate()
 {
-	Template* new_template = showOpenTemplateDialog(window(), main_view);
+	Template* new_template = showOpenTemplateDialog(window(), main_view, controller);
 	if (!new_template)
 		return;
 	

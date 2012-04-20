@@ -281,7 +281,7 @@ void MapLayer::forceUpdateOfAllObjects(Symbol* with_symbol)
 
 // ### MapColorSet ###
 
-Map::MapColorSet::MapColorSet()
+Map::MapColorSet::MapColorSet(QObject *parent) : QObject(parent)
 {
 	ref_count = 1;
 }
@@ -297,8 +297,7 @@ void Map::MapColorSet::dereference()
 		int size = colors.size();
 		for (int i = 0; i < size; ++i)
 			delete colors[i];
-		
-		delete this;
+		this->deleteLater();
 	}
 }
 
@@ -307,8 +306,11 @@ void Map::MapColorSet::dereference()
 bool Map::static_initialized = false;
 MapColor Map::covering_white;
 MapColor Map::covering_red;
+MapColor Map::gps_track;
 LineSymbol* Map::covering_white_line;
 LineSymbol* Map::covering_red_line;
+LineSymbol* Map::gps_dummy_line;
+PointSymbol* Map::gps_dummy_point;
 CombinedSymbol* Map::covering_combined_line;
 
 Map::Map() : renderables(this), selection_renderables(this)
@@ -432,7 +434,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
             // Wrap everything in a try block, so we can gracefully recover if the importer balks.
             try {
                 // Create an importer instance for this file and map.
-                importer = format->createImporter(path, this, view);
+				importer = format->createImporter(path, this, view, map_editor);
 
                 // Run the first pass.
                 importer->doImport(load_symbols_only);
@@ -493,6 +495,13 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
             return false;
         }
     }
+
+	if(load_symbols_only){
+		color_set->colors.push_back(getGpsTrack());
+		symbols.push_back(getGpsDummyLine());
+		symbols.push_back(getGpsDummyPoint());
+	}
+
     // Update all objects without trying to remove their renderables first, this gives a significant speedup when loading large files
     updateAllObjects(false);
 
@@ -503,7 +512,7 @@ void Map::clear()
 {
 	if (color_set)
 		color_set->dereference();
-	color_set = new MapColorSet();
+	color_set = new MapColorSet(this);
 	
 	int size = symbols.size();
 	for (int i = 0; i < size; ++i)
@@ -953,6 +962,26 @@ void Map::initStatic()
 	covering_red_line = new LineSymbol();
 	covering_red_line->setColor(&covering_red);
 	covering_red_line->setLineWidth(0.1);
+
+
+	gps_dummy_line = new LineSymbol();
+	gps_dummy_line->setColor(&gps_track);
+	gps_dummy_line->setLineWidth(0.3);
+	gps_dummy_line->setIsHelperSymbol(true);
+	gps_dummy_line->setName("Dummy point");
+	gps_dummy_line->setDescription("Dummy point");
+	gps_dummy_line->setNumberComponent(0, 4);
+
+	gps_dummy_point = new PointSymbol();
+	gps_dummy_point->setInnerRadius(0);
+	gps_dummy_point->setOuterWidth(1);
+	gps_dummy_point->setOuterColor(&gps_track);
+	gps_dummy_point->setInnerColor(&gps_track);
+	gps_dummy_point->setIsHelperSymbol(true);
+	gps_dummy_point->setRotatable(true);
+	gps_dummy_point->setName("Dummy point");
+	gps_dummy_point->setDescription("Dummy point");
+	gps_dummy_point->setNumberComponent(0, 5);
 	
 	covering_combined_line = new CombinedSymbol();
 	covering_combined_line->setNumParts(2);

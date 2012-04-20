@@ -40,6 +40,8 @@ class EditorDockWidget;
 class SymbolWidget;
 class PrintWidget;
 class TemplatePositionDockWidget;
+class GpsWidget;
+class PathObject;
 
 class MapEditorController : public MainWindowController
 {
@@ -150,6 +152,16 @@ public slots:
 	
 	void templateAdded(int pos, Template* temp);
 	void templateDeleted(int pos, Template* temp);
+
+	bool startNewPath();
+	void addWayPoint(MapCoord point);
+	void endPath();
+	bool placePoint(MapCoordF point, float rotation = 0);
+	void updatePreview();
+	void importDXF(QString fileName);
+	void importDXF();
+	void importGPX(QString fileName);
+	void importGPX();
 	
 signals:
 	void templatePositionDockWidgetClosed(Template* temp);
@@ -235,6 +247,9 @@ private:
 	QToolBar* toolbar_drawing;
 	QToolBar* toolbar_editing;
 	QToolBar* toolbar_advanced_editing;
+
+	bool drawing;
+	PathObject* pathPreview;
 	
 	QHash<Template*, TemplatePositionDockWidget*> template_position_widgets;
 };
@@ -253,6 +268,7 @@ Q_OBJECT
 public:
 	EditorDockWidget(const QString title, QAction* action, MapEditorController* editor, QWidget* parent = NULL);
 	void setChild(EditorDockWidgetChild* child);
+	EditorDockWidgetChild* getChild(){ return child; }
     virtual bool event(QEvent* event);
     virtual void closeEvent(QCloseEvent* event);
 signals:

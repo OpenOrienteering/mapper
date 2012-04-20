@@ -38,7 +38,7 @@ public:
 
     /** Creates an importer for this file type.
      */
-    Importer *createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
+	Importer *createImporter(const QString &path, Map *map, MapView *view, MapEditorController* controller) const throw (FormatException);
 
     /** Creates an exporter for this file type.
      */
@@ -66,7 +66,7 @@ class NativeFileImport : public Importer
 public:
     /** Creates a new native file importer.
      */
-    NativeFileImport(const QString &path, Map *map, MapView *view);
+	NativeFileImport(const QString &path, Map *map, MapView *view, MapEditorController *controller);
 
     /** Destroys this importer.
      */
@@ -75,6 +75,9 @@ public:
     /** Imports a native file.
      */
 	void doImport(bool load_symbols_only) throw (FormatException);
+
+private:
+	MapEditorController *controller;
 };
 
 

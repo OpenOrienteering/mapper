@@ -37,9 +37,9 @@ bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
     return false;
 }
 
-Importer *NativeFileFormat::createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
+Importer *NativeFileFormat::createImporter(const QString &path, Map *map, MapView *view, MapEditorController* controller) const throw (FormatException)
 {
-    return new NativeFileImport(path, map, view);
+	return new NativeFileImport(path, map, view, controller);
 }
 
 Exporter *NativeFileFormat::createExporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
@@ -49,7 +49,7 @@ Exporter *NativeFileFormat::createExporter(const QString &path, Map *map, MapVie
 
 
 
-NativeFileImport::NativeFileImport(const QString &path, Map *map, MapView *view) : Importer(path, map, view)
+NativeFileImport::NativeFileImport(const QString &path, Map *map, MapView *view, MapEditorController *controller) : Importer(path, map, view), controller(controller)
 {
 }
 
@@ -178,7 +178,7 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 			QString path;
 			loadString(&file, path);
 
-			Template* temp = Template::templateForFile(path, map);
+			Template* temp = Template::templateForFile(path, map, controller);
 			temp->loadTemplateParameters(&file);
 
 			map->templates[i] = temp;
