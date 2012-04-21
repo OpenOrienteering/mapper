@@ -250,6 +250,8 @@ private:
 	
 	void createFileMenu();
 	void createHelpMenu();
+
+	bool eventFilter(QObject* object, QEvent* event);
 	
 	static MainWindow* findMainWindow(const QString& file_name);
 	

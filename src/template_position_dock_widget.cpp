@@ -120,7 +120,7 @@ void TemplatePositionDockWidget::valueChanged()
 	{
 		Template::PassPoint* point = temp->getPassPoint(i);
 		
-		if (temp->isGeoreferencingApplied())
+		if (temp->isAdjustmentApplied())
 		{
 			point->dest_coords_map = temp->mapToTemplate(point->dest_coords_map);
 			point->calculated_coords_map = temp->mapToTemplate(point->calculated_coords_map);
@@ -147,7 +147,7 @@ void TemplatePositionDockWidget::valueChanged()
 	{
 		Template::PassPoint* point = temp->getPassPoint(i);
 		
-		if (temp->isGeoreferencingApplied())
+		if (temp->isAdjustmentApplied())
 		{
 			point->dest_coords_map = temp->templateToMap(point->dest_coords_map);
 			point->calculated_coords_map = temp->templateToMap(point->calculated_coords_map);

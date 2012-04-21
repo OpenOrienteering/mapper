@@ -68,6 +68,7 @@ public:
 	
 protected slots:
 	void radioClicked();
+	void setOpenEnabled();
 	void doAccept();
 	
 private:

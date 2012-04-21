@@ -55,10 +55,14 @@ protected:
 	void setDirtyRect();
 	void updateStatusText();
 	
+	QPoint mouse_press_pos;
 	QPoint click_pos;
 	MapCoordF click_pos_map;
 	QPoint cur_pos;
 	MapCoordF cur_pos_map;
+	bool dragging;
+	bool draw_dash_points;
+	
 	bool second_point_set;
 	bool third_point_set;
 	MapCoordF forward_vector;

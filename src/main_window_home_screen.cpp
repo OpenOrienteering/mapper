@@ -116,8 +116,10 @@ DocumentSelectionWidget::DocumentSelectionWidget(const QString& title, const QSt
 	title_label->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 	
 	QCommandLinkButton* new_button = new QCommandLinkButton(new_text);
+	new_button->setWhatsThis("<a href=\"new_map.html\">See more</a>");
 	new_button->setIcon(QIcon(":/images/new.png"));
 	QCommandLinkButton* open_button = new QCommandLinkButton(open_text);
+	open_button->setWhatsThis("<a href=\"map_screen.html\">See more</a>");
 	open_button->setIcon(QIcon(":/images/open.png"));
 	
 	QFont button_font = new_button->font();
@@ -127,10 +129,12 @@ DocumentSelectionWidget::DocumentSelectionWidget(const QString& title, const QSt
 	
 	QLabel* recent_label = new QLabel(recent_text);
 	recent_docs_list = new QListWidget();
+	recent_docs_list->setWhatsThis("<a href=\"opening.html\">See more</a>");
 	recent_docs_list->setCursor(Qt::PointingHandCursor);
 	updateRecentFiles();
 	
 	QPushButton* clear_list_button = new QPushButton(tr("Clear list"));
+	clear_list_button->setWhatsThis("<a href=\"opening.html\">See more</a>");
 	
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget(title_label);

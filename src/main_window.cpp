@@ -65,6 +65,8 @@ MainWindow::MainWindow(bool as_main_window)
 	
 	if (as_main_window)
 		loadWindowSettings();
+
+	this->installEventFilter(this);
 }
 MainWindow::~MainWindow()
 {
@@ -107,14 +109,17 @@ void MainWindow::createFileMenu()
 	QAction* new_act = new QAction(QIcon(":/images/new.png"), tr("&New"), this);
 	new_act->setShortcuts(QKeySequence::New);
 	new_act->setStatusTip(tr("Create a new map"));
+	new_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(new_act, SIGNAL(triggered()), this, SLOT(showNewMapWizard()));
 	
 	QAction* open_act = new QAction(QIcon(":/images/open.png"), tr("&Open..."), this);
 	open_act->setShortcuts(QKeySequence::Open);
 	open_act->setStatusTip(tr("Open an existing file"));
+	open_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(open_act, SIGNAL(triggered()), this, SLOT(showOpenDialog()));
 	
 	open_recent_menu = new QMenu(tr("Open &recent"), this);
+	open_recent_menu->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	for (int i = 0; i < max_recent_files; ++i)
 	{
 		recent_file_act[i] = new QAction(this);
@@ -127,23 +132,28 @@ void MainWindow::createFileMenu()
 	
 	save_act = new QAction(QIcon(":/images/save.png"), tr("&Save"), this);
 	save_act->setShortcuts(QKeySequence::Save);
+	save_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(save_act, SIGNAL(triggered()), this, SLOT(save()));
 	
 	save_as_act = new QAction(tr("Save &as..."), this);
 	save_as_act->setShortcuts(QKeySequence::SaveAs);
+	save_as_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(save_as_act, SIGNAL(triggered()), this, SLOT(showSaveAsDialog()));
 	
 	close_act = new QAction(tr("Close"), this);
 	close_act->setShortcut(tr("Ctrl+W"));
 	close_act->setStatusTip(tr("Close this file"));
+	close_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(close_act, SIGNAL(triggered()), this, SLOT(closeFile()));
 	
 	QAction* exit_act = new QAction(tr("E&xit"), this);
 	exit_act->setShortcuts(QKeySequence::Quit);
 	exit_act->setStatusTip(tr("Exit the application"));
+	close_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(exit_act, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
 
 	file_menu = menuBar()->addMenu(tr("&File"));
+	file_menu->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	file_menu->addAction(new_act);
 	file_menu->addAction(open_act);
 	file_menu->addAction(save_act);
@@ -174,6 +184,7 @@ void MainWindow::createHelpMenu()
 	
 	QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
 	helpMenu->addAction(manualAct);
+	helpMenu->addAction(QWhatsThis::createAction(this));
 	helpMenu->addSeparator();
 	helpMenu->addAction(aboutAct);
 	helpMenu->addAction(aboutQtAct);
@@ -700,6 +711,21 @@ QString MainWindow::makeHelpUrl(QString filename, QString fragment)
 void MainWindow::linkClicked(const QString &link)
 {
 	QDesktopServices::openUrl(link);
+}
+
+bool MainWindow::eventFilter(QObject *object, QEvent *event){
+	Q_UNUSED(object)
+	if(event->type() == QEvent::WhatsThisClicked){
+		QWhatsThisClickedEvent* e = static_cast<QWhatsThisClickedEvent*>(event);
+		QStringList parts = e->href().split("#");
+		if(parts.size() == 0)
+			this->showHelp();
+		else if(parts.size() == 1)
+			this->showHelp(parts.at(0));
+		else if(parts.size() == 2)
+			this->showHelp(parts.at(0), parts.at(1));
+	}
+	return false;
 }
 
 void MainWindow::gotUnsavedChanges()

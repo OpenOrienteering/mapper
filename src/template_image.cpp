@@ -223,6 +223,9 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(Map* map, QWidget* parent) : QD
 	layout->addLayout(buttons_layout);
 	setLayout(layout);
 	
+	connect(mpp_edit, SIGNAL(textEdited(QString)), this, SLOT(setOpenEnabled()));
+	connect(dpi_edit, SIGNAL(textEdited(QString)), this, SLOT(setOpenEnabled()));
+	connect(scale_edit, SIGNAL(textEdited(QString)), this, SLOT(setOpenEnabled()));
 	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
 	connect(open_button, SIGNAL(clicked(bool)), this, SLOT(doAccept()));
 	connect(mpp_radio, SIGNAL(clicked(bool)), this, SLOT(radioClicked()));
@@ -249,6 +252,14 @@ void TemplateImageOpenDialog::radioClicked()
 	dpi_edit->setEnabled(!mpp_checked);
 	scale_edit->setEnabled(!mpp_checked);
 	mpp_edit->setEnabled(mpp_checked);
+	setOpenEnabled();
+}
+void TemplateImageOpenDialog::setOpenEnabled()
+{
+	if (mpp_radio->isChecked())
+		open_button->setEnabled(!mpp_edit->text().isEmpty());
+	else
+		open_button->setEnabled(!scale_edit->text().isEmpty() && !dpi_edit->text().isEmpty());
 }
 void TemplateImageOpenDialog::doAccept()
 {

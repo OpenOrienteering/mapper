@@ -59,6 +59,7 @@ set(Mapper_SRCS
  src/map_undo.cpp
  src/map_dialog_new.cpp
  src/map_dialog_scale.cpp
+ src/georeferencing.cpp
 
  src/map_color.cpp
  src/color_dock_widget.cpp
@@ -84,9 +85,9 @@ set(Mapper_SRCS
  src/template_map.cpp
  src/template_dock_widget.cpp
  src/template_position_dock_widget.cpp
- src/template_move_tool.cpp
- src/georeferencing.cpp
- src/paint_on_template.cpp
+ src/template_adjust.cpp
+ src/template_tool_move.cpp
+ src/template_tool_paint.cpp
 
  src/tool_edit.cpp
  src/tool_draw_line_and_area.cpp
@@ -114,6 +115,7 @@ qt4_automoc(${Mapper_SRCS})
 set(Mapper_TRANS
  translations/OpenOrienteering_de.ts
  translations/OpenOrienteering_sv.ts
+ translations/OpenOrienteering_uk.ts
 )
 qt4_add_translation(Mapper_QM ${Mapper_TRANS})
 
