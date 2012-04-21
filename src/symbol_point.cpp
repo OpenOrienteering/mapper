@@ -26,6 +26,8 @@
 #include "util.h"
 #include "map_color.h"
 #include "symbol_setting_dialog.h"
+#include "symbol_properties_widget.h"
+#include "symbol_point_editor.h"
 #include "object.h"
 
 PointSymbol::PointSymbol() : Symbol(Symbol::Point)
@@ -45,7 +47,7 @@ PointSymbol::~PointSymbol()
 		delete symbols[i];
 	}
 }
-Symbol* PointSymbol::duplicate()
+Symbol* PointSymbol::duplicate() const
 {
 	PointSymbol* new_point = new PointSymbol();
 	new_point->duplicateImplCommon(this);
@@ -291,26 +293,38 @@ bool PointSymbol::loadImpl(QFile* file, int version, Map* map)
 	return true;
 }
 
+SymbolPropertiesWidget* PointSymbol::createPropertiesWidget(SymbolSettingDialog* dialog)
+{
+	return new PointSymbolSettings(this, dialog);
+}
+
+
 // ### PointSymbolSettings ###
 
-PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, Map* map, SymbolSettingDialog* parent) : QGroupBox(tr("Point settings"), parent), dialog(parent)
+PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialog* dialog)
+: SymbolPropertiesWidget(symbol, dialog), symbol(symbol)
 {
-	this->symbol = symbol;
+	QCheckBox* oriented_to_north = new QCheckBox(tr("Always oriented to north (not rotatable)"));
+	oriented_to_north->setChecked(!symbol->rotatable);
+	connect(oriented_to_north, SIGNAL(clicked(bool)), this, SLOT(orientedToNorthClicked(bool)));
 	
-	oriented_to_north_check = new QCheckBox(tr("Always oriented to north (not rotatable)"));
-	oriented_to_north_check->setChecked(!symbol->rotatable);
+	PointSymbolEditorWidget* symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), symbol, 0);
+	connect(symbol_editor, SIGNAL(symbolEdited()), this, SIGNAL(appearanceModified()) );
 	
 	QVBoxLayout* layout = new QVBoxLayout();
-	layout->addWidget(oriented_to_north_check);
-	layout->setAlignment(oriented_to_north_check, Qt::AlignLeft);
+	layout->addWidget(oriented_to_north);
+	layout->setAlignment(oriented_to_north, Qt::AlignLeft);
+	layout->addWidget(symbol_editor);
 	
-	setLayout(layout);
-	
-	connect(oriented_to_north_check, SIGNAL(clicked(bool)), this, SLOT(orientedToNorthClicked(bool)));
+	QWidget* point_tab = new QWidget();
+	point_tab->setLayout(layout);
+	addPropertiesGroup(tr("Point symbol"), point_tab);
 }
+
 void PointSymbolSettings::orientedToNorthClicked(bool checked)
 {
 	symbol->rotatable = !checked;
+	dialog->updatePreview();
 }
 
 #include "symbol_point.moc"

@@ -78,7 +78,7 @@ LineSymbol::~LineSymbol()
 	delete end_symbol;
 	delete dash_symbol;
 }
-Symbol* LineSymbol::duplicate()
+Symbol* LineSymbol::duplicate() const
 {
 	LineSymbol* new_line = new LineSymbol();
 	new_line->duplicateImplCommon(this);
@@ -1115,22 +1115,22 @@ void LineSymbol::ensurePointSymbols(const QString& start_name, const QString& mi
 }
 void LineSymbol::cleanupPointSymbols()
 {
-	if (start_symbol->isEmpty())
+	if (start_symbol != NULL && start_symbol->isEmpty())
 	{
 		delete start_symbol;
 		start_symbol = NULL;
 	}
-	if (mid_symbol->isEmpty())
+	if (mid_symbol != NULL && mid_symbol->isEmpty())
 	{
 		delete mid_symbol;
 		mid_symbol = NULL;
 	}
-	if (end_symbol->isEmpty())
+	if (end_symbol != NULL && end_symbol->isEmpty())
 	{
 		delete end_symbol;
 		end_symbol = NULL;
 	}
-	if (dash_symbol->isEmpty())
+	if (dash_symbol != NULL && dash_symbol->isEmpty())
 	{
 		delete dash_symbol;
 		dash_symbol = NULL;
@@ -1257,10 +1257,21 @@ bool LineSymbol::loadImpl(QFile* file, int version, Map* map)
 	return true;
 }
 
+SymbolPropertiesWidget* LineSymbol::createPropertiesWidget(SymbolSettingDialog* dialog)
+{
+	return new LineSymbolSettings(this, dialog);
+}
+
+
 // ### LineSymbolSettings ###
 
-LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbolEditorWidget* point_editor, SymbolSettingDialog* parent) : QGroupBox(tr("Line settings"), parent), symbol(symbol), dialog(parent)
+LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* dialog)
+: SymbolPropertiesWidget(symbol, dialog), symbol(symbol), dialog(dialog)
 {
+	Map* map = dialog->getPreviewMap();
+	
+	symbol->ensurePointSymbols(tr("Start symbol"), tr("Mid symbol"), tr("End symbol"), tr("Dash symbol"));
+	
 	QLabel* width_label = new QLabel(tr("Line width:"));
 	width_edit = new QLineEdit(QString::number(0.001f * symbol->getLineWidth()));
 	width_edit->setValidator(new DoubleValidator(0, 999999, width_edit));
@@ -1455,7 +1466,10 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbol
 	border_layout->addWidget(border_dash_widget, 4, 0, 1, 2);
 	border_widget->setLayout(border_layout);
 	
+	QWidget* line_tab = new QWidget();
 	QGridLayout* layout = new QGridLayout();
+	line_tab->setLayout(layout);
+	
 	layout->setVerticalSpacing(0);
 	layout->setHorizontalSpacing(5);
 	layout->addWidget(width_label, 0, 0);
@@ -1470,11 +1484,23 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbol
 	layout->addWidget(mid_symbol_widget, 6, 0, 1, 2);
 	layout->addWidget(border_check, 7, 0, 1, 2);
 	layout->addWidget(border_widget, 8, 0, 1, 2);
-	setLayout(layout);
 	
 	updateWidgets(false);
 	
-	connect(point_editor, SIGNAL(symbolEdited()), this, SLOT(pointSymbolEdited()));
+	addPropertiesGroup(tr("Line settings"), line_tab);
+	
+	PointSymbolEditorWidget* point_symbol_editor = 0;
+	MapEditorController* controller = dialog->getPreviewController();
+	
+	QList<PointSymbol*> point_symbols;
+	point_symbols << symbol->getStartSymbol() << symbol->getMidSymbol() << symbol->getEndSymbol() << symbol->getDashSymbol();
+	Q_FOREACH(PointSymbol* point_symbol, point_symbols)
+	{
+		point_symbol_editor = new PointSymbolEditorWidget(controller, point_symbol, 16);
+		addPropertiesGroup(point_symbol->getName(), point_symbol_editor);
+		connect(point_symbol_editor, SIGNAL(symbolEdited()), this, SLOT(pointSymbolEdited()));
+	}
+	
 	connect(width_edit, SIGNAL(textEdited(QString)), this, SLOT(widthChanged(QString)));
 	connect(color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChanged()));
 	connect(minimum_length_edit, SIGNAL(textEdited(QString)), this, SLOT(minimumDimensionsEdited(QString)));
@@ -1502,6 +1528,12 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbol
 	connect(border_dash_length_edit, SIGNAL(textEdited(QString)), this, SLOT(borderDashesChanged(QString)));
 	connect(border_break_length_edit, SIGNAL(textEdited(QString)), this, SLOT(borderDashesChanged(QString)));
 }
+
+LineSymbolSettings::~LineSymbolSettings()
+{
+	symbol->cleanupPointSymbols();
+}
+
 
 void LineSymbolSettings::pointSymbolEdited()
 {
@@ -1717,6 +1749,9 @@ void LineSymbolSettings::updateWidgets(bool show)
 		border_dash_widget->setVisible(symbol->dashed_border);
 	else if (!symbol->dashed_border)
 		border_dash_widget->hide();
+	
+	if (show)
+		dialog->updatePreview();
 }
 
 #include "symbol_line.moc"

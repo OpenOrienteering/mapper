@@ -22,6 +22,7 @@
 
 #include <algorithm>
 
+#include "map.h"
 #include "symbol.h"
 #include "object.h"
 #include "map_undo.h"

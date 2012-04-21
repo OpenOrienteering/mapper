@@ -47,17 +47,17 @@ class PointSymbolEditorWidget : public QWidget
 Q_OBJECT
 friend class PointSymbolEditorActivity;
 public:
-	PointSymbolEditorWidget(Map* map, MapEditorController* controller, std::vector< PointSymbol* > symbols, float offset_y = 0, QWidget* parent = 0);
+	PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, float offset_y = 0, QWidget* parent = 0);
 	
-	/// Add or remove symbols from the list of editable symbols
-	void addSymbol(PointSymbol* symbol);
-	void removeSymbol(PointSymbol* symbol);
-	
-	void setCurrentSymbol(PointSymbol* symbol);
-	void updateSymbolNames();
+    virtual ~PointSymbolEditorWidget();
 	
 	bool changeCurrentCoordinate(MapCoordF new_coord);	// returns if successful
 	bool addCoordinate(MapCoordF new_coord);				// returns if successful
+	
+	void activate();
+	void deactivate();
+	
+	virtual void setVisible(bool visible);
 	
 signals:
 	void symbolEdited();
@@ -65,7 +65,6 @@ signals:
 private slots:
 	void updateElementList();
 	
-	void currentSymbolChanged(int index);
 	void elementChanged(int row);
 	
 	void addPointClicked();
@@ -113,9 +112,7 @@ private:
 	Object* getCurrentElementObject();
 	Object* getMidpointObject();
 	
-	std::vector< SymbolInfo > symbol_info;
-	QLabel* current_symbol_label;
-	QComboBox* current_symbol_combo;
+	SymbolInfo symbol_info;
 	PointSymbol* current_symbol;
 	
 	QListWidget* element_list;
@@ -145,6 +142,7 @@ private:
 	float offset_y;
 	PointSymbolEditorActivity* activity;
 	Map* map;
+	MapEditorController* controller;
 };
 
 class PointSymbolEditorTool : public MapEditorTool

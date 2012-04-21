@@ -23,6 +23,7 @@
 #include <QtGui>
 #include <QFile>
 
+#include "map.h"
 #include "symbol_setting_dialog.h"
 #include "map_color.h"
 #include "util.h"
@@ -51,7 +52,7 @@ TextSymbol::TextSymbol() : Symbol(Symbol::Text), metrics(QFont())
 TextSymbol::~TextSymbol()
 {
 }
-Symbol* TextSymbol::duplicate()
+Symbol* TextSymbol::duplicate() const
 {
 	TextSymbol* new_text = new TextSymbol();
 	new_text->duplicateImplCommon(this);
@@ -263,10 +264,19 @@ double TextSymbol::getNextTab(double pos) const
  	return next_tab;
 }
 
+SymbolPropertiesWidget* TextSymbol::createPropertiesWidget(SymbolSettingDialog* dialog)
+{
+	return new TextSymbolSettings(this, dialog);
+}
+
+
 // ### TextSymbolSettings ###
 
-TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, Map* map, SymbolSettingDialog* parent): QGroupBox(tr("Text settings"), parent), symbol(symbol), dialog(parent)
+TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* dialog)
+: SymbolPropertiesWidget(symbol, dialog), symbol(symbol), dialog(dialog)
 {
+	Map* map = dialog->getPreviewMap();
+	
 	QLabel* font_label = new QLabel(tr("Font family:"));
 	font_edit = new QFontComboBox();
 	font_edit->setCurrentFont(QFont(symbol->font_family));
@@ -311,10 +321,6 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, Map* map, SymbolSetti
 	
 	ocad_compat_button = new QPushButton(tr("Show OCAD compatibility settings"));
 	ocad_compat_widget = new QWidget();
-	if (symbol->line_below || symbol->getNumCustomTabs() > 0)
-		ocad_compat_button->hide();
-	else
-		ocad_compat_widget->hide();
 	
 	QLabel* line_below_label = new QLabel("<br/><b>" + tr("Line below paragraphs") + "</b>");
 	line_below_check = new QCheckBox(tr("Enable"));
@@ -404,8 +410,10 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, Map* map, SymbolSetti
 	layout->addLayout(lower_layout);
 	layout->addWidget(kerning_check);
 	layout->addWidget(ocad_compat_button);
-	layout->addWidget(ocad_compat_widget);
-	setLayout(layout);
+	
+	QWidget* text_tab = new QWidget();
+	text_tab->setLayout(layout);
+	addPropertiesGroup(tr("Text settings"), text_tab);
 	
 	connect(font_edit, SIGNAL(currentFontChanged(QFont)), this, SLOT(fontChanged(QFont)));
 	connect(size_edit, SIGNAL(textEdited(QString)), this, SLOT(sizeChanged(QString)));
@@ -426,6 +434,14 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, Map* map, SymbolSetti
 	connect(custom_tab_list, SIGNAL(currentRowChanged(int)), this, SLOT(customTabRowChanged(int)));
 	connect(custom_tab_add, SIGNAL(clicked(bool)), this, SLOT(addCustomTabClicked()));
 	connect(custom_tab_remove, SIGNAL(clicked(bool)), this, SLOT(removeCustomTabClicked()));
+	
+	if (symbol->line_below || symbol->getNumCustomTabs() > 0)
+		ocadCompatibilityButtonClicked();
+}
+
+TextSymbolSettings::~TextSymbolSettings()
+{
+	delete ocad_compat_widget;
 }
 
 void TextSymbolSettings::fontChanged(QFont font)
@@ -478,8 +494,10 @@ void TextSymbolSettings::spacingChanged(QString text)
 void TextSymbolSettings::ocadCompatibilityButtonClicked()
 {
 	ocad_compat_button->hide();
-	ocad_compat_widget->show();
+	addPropertiesGroup(tr("OCAD compatibility"), ocad_compat_widget);
+	ocad_compat_widget = NULL; // deleted by dialog
 }
+
 void TextSymbolSettings::lineBelowCheckClicked(bool checked)
 {
 	symbol->line_below = checked;

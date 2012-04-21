@@ -66,6 +66,7 @@ set(Mapper_SRCS
  src/symbol.cpp
  src/symbol_dock_widget.cpp
  src/symbol_setting_dialog.cpp
+ src/symbol_properties_widget.cpp
  src/symbol_point_editor.cpp
  src/symbol_point.cpp
  src/symbol_line.cpp

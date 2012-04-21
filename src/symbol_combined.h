@@ -24,6 +24,8 @@
 #include <QGroupBox>
 
 #include "symbol.h"
+#include "symbol_properties_widget.h"
+
 
 QT_BEGIN_NAMESPACE
 class QComboBox;
@@ -40,13 +42,13 @@ friend class PointSymbolEditorWidget;
 public:
 	CombinedSymbol();
 	virtual ~CombinedSymbol();
-    virtual Symbol* duplicate();
+    virtual Symbol* duplicate() const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
     virtual bool containsColor(MapColor* color);
     virtual bool symbolChanged(Symbol* old_symbol, Symbol* new_symbol);
-	bool containsSymbol(Symbol* symbol);
+	bool containsSymbol(const Symbol* symbol) const;
     virtual void scale(double factor);
 	virtual Type getContainedTypes();
 	
@@ -59,6 +61,8 @@ public:
 	inline Symbol* getPart(int i) const {return parts[i];}
 	inline void setPart(int i, Symbol* symbol) {parts[i] = symbol;}
 	
+	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
+	
 protected:
 	virtual void saveImpl(QFile* file, Map* map);
 	virtual bool loadImpl(QFile* file, int version, Map* map);
@@ -67,11 +71,11 @@ protected:
 	std::vector<int> temp_part_indices;	// temporary vector of the indices of the 'parts' symbols, used just for loading
 };
 
-class CombinedSymbolSettings : public QGroupBox
+class CombinedSymbolSettings : public SymbolPropertiesWidget
 {
 Q_OBJECT
 public:
-	CombinedSymbolSettings(CombinedSymbol* symbol, CombinedSymbol* in_map_symbol, Map* map, SymbolSettingDialog* parent);
+	CombinedSymbolSettings(CombinedSymbol* symbol, SymbolSettingDialog* dialog);
     virtual ~CombinedSymbolSettings();
 	
 	static const int max_count;	// maximum number of symbols in a combined symbol
@@ -82,7 +86,7 @@ protected slots:
 	
 private:
 	CombinedSymbol* symbol;
-	SymbolSettingDialog* dialog;
+//	SymbolSettingDialog* dialog;
 	
 	QComboBox* number_edit;
 	QLabel** symbol_labels;

@@ -24,6 +24,7 @@
 #include <qmath.h>
 
 #include "util.h"
+#include "map.h"
 #include "object.h"
 #include "object_text.h"
 #include "symbol_line.h"
@@ -31,6 +32,8 @@
 #include "symbol_area.h"
 #include "symbol_text.h"
 #include "symbol_combined.h"
+#include "symbol_properties_widget.h"
+#include "symbol_setting_dialog.h"
 
 Symbol::Symbol(Type type) : type(type), name(""), description(""), is_helper_symbol(false), is_hidden(false), is_protected(false), icon(NULL)
 {
@@ -205,7 +208,7 @@ Symbol* Symbol::getSymbolForType(Symbol::Type type)
 	}
 }
 
-void Symbol::duplicateImplCommon(Symbol* other)
+void Symbol::duplicateImplCommon(const Symbol* other)
 {
 	type = other->type;
 	name = other->name;
@@ -220,9 +223,15 @@ void Symbol::duplicateImplCommon(Symbol* other)
 		icon = NULL;
 }
 
+SymbolPropertiesWidget* Symbol::createPropertiesWidget(SymbolSettingDialog* dialog)
+{
+	return new SymbolPropertiesWidget(this, dialog);
+}
+
+
 // ### SymbolDropDown ###
 
-SymbolDropDown::SymbolDropDown(Map* map, int filter, Symbol* initial_symbol, Symbol* excluded_symbol, QWidget* parent): QComboBox(), map(map)
+SymbolDropDown::SymbolDropDown(Map* map, int filter, Symbol* initial_symbol, const Symbol* excluded_symbol, QWidget* parent): QComboBox()
 {
 	addItem(tr("- none -"), qVariantFromValue<void*>(NULL));
 	
@@ -245,10 +254,12 @@ SymbolDropDown::SymbolDropDown(Map* map, int filter, Symbol* initial_symbol, Sym
 	}
 	setSymbol(initial_symbol);
 }
-Symbol* SymbolDropDown::symbol()
+
+Symbol* SymbolDropDown::symbol() const
 {
 	return reinterpret_cast<Symbol*>(itemData(currentIndex()).value<void*>());
 }
+
 void SymbolDropDown::setSymbol(Symbol* symbol)
 {
 	setCurrentIndex(findData(qVariantFromValue<void*>(symbol)));

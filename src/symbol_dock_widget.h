@@ -99,7 +99,7 @@ protected:
 	void selectSingleSymbol(int i);
 	bool isSymbolSelected(int i);
 	
-	bool newSymbol(Symbol* new_symbol);
+	bool newSymbol(Symbol* prototype);
 	
 	void mouseMove(int x, int y);
 	int getSymbolIndexAt(int x, int y);

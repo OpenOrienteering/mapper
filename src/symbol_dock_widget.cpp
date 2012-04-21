@@ -576,19 +576,15 @@ void SymbolRenderWidget::editSymbol()
 {
 	assert(current_symbol_index >= 0);
 	
-	Symbol* in_map_symbol = map->getSymbol(current_symbol_index);
-	Symbol* edit_symbol = in_map_symbol->duplicate();
-
-	SymbolSettingDialog dialog(edit_symbol, in_map_symbol, map, this);
+	Symbol* symbol = map->getSymbol(current_symbol_index);
+	SymbolSettingDialog dialog(symbol, map, this);
 	dialog.setWindowModality(Qt::WindowModal);
-	if (dialog.exec() == QDialog::Rejected)
+	if (dialog.exec() == QDialog::Accepted)
 	{
-		delete edit_symbol;
-		return;
+		symbol = dialog.getEditedSymbol()->duplicate();
+//		symbol->getIcon(map, true);
+		map->setSymbol(symbol, current_symbol_index);
 	}
-	
-	edit_symbol->getIcon(map, true);
-	map->setSymbol(edit_symbol, current_symbol_index);
 }
 void SymbolRenderWidget::scaleSymbol()
 {
@@ -711,16 +707,15 @@ void SymbolRenderWidget::sortByNumber()
 
     update();
 }
-bool SymbolRenderWidget::newSymbol(Symbol* new_symbol)
+bool SymbolRenderWidget::newSymbol(Symbol* prototype)
 {
-	SymbolSettingDialog dialog(new_symbol, NULL, map, this);
+	SymbolSettingDialog dialog(prototype, map, this);
 	dialog.setWindowModality(Qt::WindowModal);
+	delete prototype;
 	if (dialog.exec() == QDialog::Rejected)
-	{
-		delete new_symbol;
 		return false;
-	}
 	
+	Symbol* new_symbol = dialog.getEditedSymbol()->duplicate();
 	int pos = currentSymbolIndex();
 	map->addSymbol(new_symbol, (pos >= 0) ? pos : map->getNumSymbols());
 	selectSingleSymbol(pos);

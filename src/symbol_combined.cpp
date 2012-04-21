@@ -23,7 +23,9 @@
 #include <QtGui>
 #include <QFile>
 
+#include "map.h"
 #include "symbol_setting_dialog.h"
+#include "symbol_properties_widget.h"
 
 CombinedSymbol::CombinedSymbol() : Symbol(Symbol::Combined)
 {
@@ -31,10 +33,12 @@ CombinedSymbol::CombinedSymbol() : Symbol(Symbol::Combined)
 	parts[0] = NULL;
 	parts[1] = NULL;
 }
+
 CombinedSymbol::~CombinedSymbol()
 {
 }
-Symbol* CombinedSymbol::duplicate()
+
+Symbol* CombinedSymbol::duplicate() const
 {
 	CombinedSymbol* new_symbol = new CombinedSymbol();
 	new_symbol->duplicateImplCommon(this);
@@ -51,15 +55,18 @@ void CombinedSymbol::createRenderables(Object* object, const MapCoordVector& fla
 			parts[i]->createRenderables(object, flags, coords, output);
 	}
 }
+
 void CombinedSymbol::colorDeleted(Map* map, int pos, MapColor* color)
 {
 	// Do nothing. The parts are assumed to be ordinary symbols, so they will get this call independently
 }
+
 bool CombinedSymbol::containsColor(MapColor* color)
 {
 	// Do nothing. The parts are assumed to be ordinary symbols, so they will get this call independently
 	return false;
 }
+
 bool CombinedSymbol::symbolChanged(Symbol* old_symbol, Symbol* new_symbol)
 {
 	bool have_symbol = false;
@@ -74,7 +81,8 @@ bool CombinedSymbol::symbolChanged(Symbol* old_symbol, Symbol* new_symbol)
 	}
 	return have_symbol;
 }
-bool CombinedSymbol::containsSymbol(Symbol* symbol)
+
+bool CombinedSymbol::containsSymbol(const Symbol* symbol) const
 {
 	int size = (int)parts.size();
 	for (int i = 0; i < size; ++i)
@@ -90,10 +98,12 @@ bool CombinedSymbol::containsSymbol(Symbol* symbol)
 	}
 	return false;
 }
+
 void CombinedSymbol::scale(double factor)
 {
 	// Do nothing. The parts are assumed to be ordinary symbols, so they will get this call independently
 }
+
 Symbol::Type CombinedSymbol::getContainedTypes()
 {
 	int type = (int)getType();
@@ -119,6 +129,7 @@ void CombinedSymbol::saveImpl(QFile* file, Map* map)
 		file->write((const char*)&temp, sizeof(int));
 	}
 }
+
 bool CombinedSymbol::loadImpl(QFile* file, int version, Map* map)
 {
 	int size;
@@ -133,6 +144,7 @@ bool CombinedSymbol::loadImpl(QFile* file, int version, Map* map)
 	}
 	return true;
 }
+
 bool CombinedSymbol::loadFinished(Map* map)
 {
 	int size = (int)temp_part_indices.size();
@@ -150,13 +162,24 @@ bool CombinedSymbol::loadFinished(Map* map)
 	return true;
 }
 
+SymbolPropertiesWidget* CombinedSymbol::createPropertiesWidget(SymbolSettingDialog* dialog)
+{
+	return new CombinedSymbolSettings(this, dialog);
+}
+
+
 // ### CombinedSymbolSettings ###
 
 const int CombinedSymbolSettings::max_count = 5;
 
-CombinedSymbolSettings::CombinedSymbolSettings(CombinedSymbol* symbol, CombinedSymbol* in_map_symbol, Map* map, SymbolSettingDialog* parent): QGroupBox(tr("Combination settings"), parent), symbol(symbol), dialog(parent)
+CombinedSymbolSettings::CombinedSymbolSettings(CombinedSymbol* symbol, SymbolSettingDialog* dialog) 
+ : SymbolPropertiesWidget(symbol, dialog), symbol(symbol)
 {
+	const CombinedSymbol* source_symbol = static_cast<const CombinedSymbol*>(dialog->getSourceSymbol());
+	Map* source_map = dialog->getSourceMap();
+	
 	react_to_changes = true;
+	
 	QGridLayout* layout = new QGridLayout();
 	
 	QLabel* number_label = new QLabel(tr("Symbol count:"));
@@ -174,7 +197,7 @@ CombinedSymbolSettings::CombinedSymbolSettings(CombinedSymbol* symbol, CombinedS
 	for (int i = 0; i < max_count; ++i)
 	{
 		symbol_labels[i] = new QLabel(tr("Symbol %1:").arg(i+1));
-		symbol_edits[i] = new SymbolDropDown(map, Symbol::Line | Symbol::Area | Symbol::Combined, ((int)symbol->parts.size() > i) ? symbol->parts[i] : NULL, in_map_symbol);
+		symbol_edits[i] = new SymbolDropDown(source_map, Symbol::Line | Symbol::Area | Symbol::Combined, ((int)symbol->parts.size() > i) ? symbol->parts[i] : NULL, source_symbol);
 		
 		layout->addWidget(symbol_labels[i], i+1, 0);
 		layout->addWidget(symbol_edits[i], i+1, 1);
@@ -187,8 +210,11 @@ CombinedSymbolSettings::CombinedSymbolSettings(CombinedSymbol* symbol, CombinedS
 		}
 	}
 	
-	setLayout(layout);
+	QWidget* widget = new QWidget;
+	widget->setLayout(layout);
+	addPropertiesGroup(tr("Combination settings"), widget);
 }
+
 CombinedSymbolSettings::~CombinedSymbolSettings()
 {
 	delete[] symbol_labels;
@@ -214,9 +240,9 @@ void CombinedSymbolSettings::numberChanged(int index)
 			react_to_changes = true;
 		}
 	}
-	
 	dialog->updatePreview();
 }
+
 void CombinedSymbolSettings::symbolChanged(int index)
 {
 	if (!react_to_changes)

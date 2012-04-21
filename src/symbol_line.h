@@ -25,6 +25,7 @@
 
 #include "symbol.h"
 #include "path_coord.h"
+#include "symbol_properties_widget.h"
 
 QT_BEGIN_NAMESPACE
 class QLineEdit;
@@ -61,7 +62,7 @@ public:
 	/// Constructs an empty point symbol
 	LineSymbol();
 	virtual ~LineSymbol();
-    virtual Symbol* duplicate();
+    virtual Symbol* duplicate() const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
 	void createRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, RenderableVector& output);
@@ -96,6 +97,8 @@ public:
 	inline int getBorderLineWidth() const {return border_width;}
 	inline MapColor* getBorderColor() const {return border_color;}
 	inline int getBorderShift() const {return border_shift;}
+	
+	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
 	
 protected:
 	virtual void saveImpl(QFile* file, Map* map);
@@ -161,11 +164,12 @@ protected:
 	int border_break_length;
 };
 
-class LineSymbolSettings : public QGroupBox
+class LineSymbolSettings : public SymbolPropertiesWidget
 {
 Q_OBJECT
 public:
-	LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbolEditorWidget* point_editor, SymbolSettingDialog* parent);
+	LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* dialog);
+    virtual ~LineSymbolSettings();
 	
 protected slots:
 	void pointSymbolEdited();

@@ -20,15 +20,17 @@
 
 #include "symbol_area.h"
 
+#include <cassert>
 #include <QtGui>
 #include <QFile>
 
-#include "map_color.h"
-#include "object.h"
-#include "symbol_setting_dialog.h"
 #include "util.h"
+#include "map_color.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
+#include "object.h"
+#include "symbol_setting_dialog.h"
+#include "symbol_properties_widget.h"
 #include "symbol_point_editor.h"
 
 // ### FillPattern ###
@@ -316,6 +318,7 @@ AreaSymbol::AreaSymbol() : Symbol(Symbol::Area)
 	color = NULL;
 	minimum_area = 0;
 }
+
 AreaSymbol::~AreaSymbol()
 {
 	for (int i = 0; i < (int)patterns.size(); ++i)
@@ -324,7 +327,8 @@ AreaSymbol::~AreaSymbol()
 			delete patterns[i].point;
 	}
 }
-Symbol* AreaSymbol::duplicate()
+
+Symbol* AreaSymbol::duplicate() const
 {
 	AreaSymbol* new_area = new AreaSymbol();
 	new_area->duplicateImplCommon(this);
@@ -436,11 +440,22 @@ bool AreaSymbol::loadImpl(QFile* file, int version, Map* map)
 	return true;
 }
 
+SymbolPropertiesWidget* AreaSymbol::createPropertiesWidget(SymbolSettingDialog* dialog)
+{
+	return new AreaSymbolSettings(this, dialog);
+}
+
+
 // ### AreaSymbolSettings ###
 
-AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSettingDialog* parent, PointSymbolEditorWidget* point_editor)
- : QGroupBox(tr("Area settings"), parent), symbol(symbol), dialog(parent), point_editor(point_editor)
+AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* dialog)
+ : SymbolPropertiesWidget(symbol, dialog), symbol(symbol)
 {
+	map = dialog->getPreviewMap();
+	controller = dialog->getPreviewController();
+	
+	updatePatternNames(false);
+	
 	react_to_changes = true;
 	
 	QLabel* color_label = new QLabel(tr("Area color:"));
@@ -455,10 +470,10 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSetti
 	delete_fill_button = new QPushButton(QIcon(":/images/minus.png"), "");
 	
 	fill_pattern_widget = new QWidget();
-	QLabel* fill_number_label = new QLabel(tr("Pattern number:"));
+	QLabel* fill_number_label = new QLabel(tr("Pattern:"));
 	fill_number_combo = new QComboBox();
 	for (int i = 0; i < (int)symbol->patterns.size(); ++i)
-		fill_number_combo->addItem(QString::number(i+1), QVariant(i));
+		fill_number_combo->addItem(symbol->patterns[i].name, QVariant(i));
 	if (fill_number_combo->count() > 0)
 		fill_number_combo->setCurrentIndex(0);
 	QLabel* fill_type_label = new QLabel(tr("Type:"));
@@ -534,9 +549,22 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSetti
 	layout->addLayout(top_layout);
 	layout->addLayout(buttons_layout);
 	layout->addWidget(fill_pattern_widget);
-	setLayout(layout);
+	
+	QWidget* area_tab = new QWidget();
+	area_tab->setLayout(layout);
+	addPropertiesGroup(tr("Area settings"), area_tab);
 	
 	updateFillWidgets(false);
+	
+	for (int i = 0; i < symbol->getNumFillPatterns(); ++i)
+	{
+		if (symbol->getFillPattern(i).type == AreaSymbol::FillPattern::PointPattern)
+		{
+			PointSymbolEditorWidget* editor = new PointSymbolEditorWidget(controller, symbol->getFillPattern(i).point, 16);
+			connect(editor, SIGNAL(symbolEdited()), this, SIGNAL(appearanceModified()) );
+			addPropertiesGroup(symbol->getFillPattern(i).name, editor); 	
+		}
+	}
 	
 	connect(color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChanged()));
 	connect(minimum_area_edit, SIGNAL(textEdited(QString)), this, SLOT(minimumDimensionsChanged(QString)));
@@ -554,15 +582,34 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSetti
 	connect(fill_linewidth_edit, SIGNAL(textEdited(QString)), this, SLOT(fillLinewidthChanged(QString)));
 	connect(fill_pointdist_edit, SIGNAL(textEdited(QString)), this, SLOT(fillPointdistChanged(QString)));
 }
-void AreaSymbolSettings::updatePointSymbolNames()
+
+void AreaSymbolSettings::updatePatternNames(bool update_ui)
 {
 	for (int i = 0; i < (int)symbol->patterns.size(); ++i)
 	{
 		if (symbol->patterns[i].type == AreaSymbol::FillPattern::PointPattern)
-			symbol->patterns[i].point->setName(QString::number(i+1));
+		{
+			QString name = tr("Point pattern %1").arg(i+1);
+			if (update_ui)
+			{
+				renamePropertiesGroup(symbol->patterns[i].name, name);
+				fill_number_combo->setItemText(i, name);
+			}
+			symbol->patterns[i].name = name;
+			symbol->patterns[i].point->setName(name);
+		}
+		else
+		{
+			QString name = tr("Line pattern %1").arg(i+1);
+			symbol->patterns[i].name = name;
+			if (update_ui)
+			{
+				fill_number_combo->setItemText(i, name);
+			}
+		}
 	}
-	point_editor->updateSymbolNames();
 }
+
 void AreaSymbolSettings::updateFillWidgets(bool show)
 {
 	int index = fill_number_combo->currentIndex();
@@ -620,7 +667,6 @@ void AreaSymbolSettings::updateFillWidgets(bool show)
 
 		fill_offset_along_line_edit->setText(QString::number(0.001 * fill->offset_along_line));
 		fill_pointdist_edit->setText(QString::number(0.001 * fill->point_distance));
-		point_editor->setCurrentSymbol(fill->point);
 	}
 	react_to_changes = true;
 }
@@ -630,61 +676,70 @@ void AreaSymbolSettings::colorChanged()
 	symbol->color = color_edit->color();
 	dialog->updatePreview();
 }
+
 void AreaSymbolSettings::minimumDimensionsChanged(QString text)
 {
 	symbol->minimum_area = qRound(1000 * minimum_area_edit->text().toFloat());
 }
+
 void AreaSymbolSettings::addFillClicked()
 {
 	int index = fill_number_combo->currentIndex() + 1;
 	if (index < 0)
 		index = symbol->patterns.size();
 	symbol->patterns.insert(symbol->patterns.begin() + index, AreaSymbol::FillPattern());
+	updatePatternNames();
 	
-	fill_number_combo->insertItem(index, QString::number(index + 1), QVariant(index));
+	fill_number_combo->insertItem(index, symbol->patterns[index].name, QVariant(index));
+	assert(int(symbol->patterns.size()) == fill_number_combo->count());
 	for (int i = index + 1; i < fill_number_combo->count(); ++i)
-		fill_number_combo->setItemText(i, QString::number(i+1));
-	fill_number_combo->setCurrentIndex(index);
-	
-	updatePointSymbolNames();
+		fill_number_combo->setItemText(i, symbol->patterns[i].name);
+
 	dialog->updatePreview();
+	
+	fill_number_combo->setCurrentIndex(index);
 }
+
 void AreaSymbolSettings::deleteFillClicked()
 {
 	int index = fill_number_combo->currentIndex();
 	assert(index >= 0);
 	
-	if (symbol->patterns[index].type == AreaSymbol::FillPattern::PointPattern)
+	AreaSymbol::FillPattern& fill = symbol->patterns[index];
+	if (fill.type == AreaSymbol::FillPattern::PointPattern)
 	{
-		point_editor->removeSymbol(symbol->patterns[index].point);
-		delete symbol->patterns[index].point;
+		removePropertiesGroup(fill.name);
+		delete fill.point;
+		fill.point = NULL;
 	}
 	symbol->patterns.erase(symbol->patterns.begin() + index);
 	
 	fill_number_combo->removeItem(index);
-	for (int i = index; i < fill_number_combo->count(); ++i)
-		fill_number_combo->setItemText(i, QString::number(i-1));
-	
-	updatePointSymbolNames();
+	updatePatternNames();
+	updateFillWidgets(true);
 	dialog->updatePreview();
 }
+
 void AreaSymbolSettings::fillNumberChanged(int index)
 {
 	if (!react_to_changes) return;
 	updateFillWidgets(true);
 }
+
 void AreaSymbolSettings::fillTypeChanged(int index)
 {
 	if (!react_to_changes) return;
+	
 	AreaSymbol::FillPattern* fill = &symbol->patterns[fill_number_combo->currentIndex()];
 	fill->type = static_cast<AreaSymbol::FillPattern::Type>(fill_type_combo->itemData(index).toInt());
 	if (fill->type == AreaSymbol::FillPattern::LinePattern)
 	{
 		// Changing to line, clear point settings
-		point_editor->removeSymbol(fill->point);
+		removePropertiesGroup(fill->name);
 		delete fill->point;
 		fill->point = NULL;
 		fill->point_distance = 0;
+		updatePatternNames();
 	}
 	else
 	{
@@ -692,12 +747,24 @@ void AreaSymbolSettings::fillTypeChanged(int index)
 		fill->line_color = NULL;
 		fill->line_width = 0;
 		fill->point = new PointSymbol();
-		point_editor->addSymbol(fill->point);
+		updatePatternNames();
+		fill_number_combo->setItemText(fill_number_combo->currentIndex(), fill->name); // FIXME: renumber only following items
+		PointSymbolEditorWidget* editor = new PointSymbolEditorWidget(controller, fill->point, 16);
+		connect(editor, SIGNAL(symbolEdited()), this, SIGNAL(appearanceModified()) );
+		if (fill_number_combo->currentIndex() == int(symbol->patterns.size()) - 1)
+		{
+			addPropertiesGroup(fill->name, editor); 	
+		}
+		else
+		{
+			int group_index = indexOfPropertiesGroup(symbol->patterns[fill_number_combo->currentIndex()+1].name);
+			insertPropertiesGroup(group_index, fill->name, editor);
+		}
 	}
-	updatePointSymbolNames();
 	updateFillWidgets(true);
 	dialog->updatePreview();
 }
+
 void AreaSymbolSettings::fillAngleChanged(QString text)
 {
 	if (!react_to_changes) return;
@@ -705,12 +772,14 @@ void AreaSymbolSettings::fillAngleChanged(QString text)
 	fill->angle = text.toFloat() * (2*M_PI) / 360.0;
 	dialog->updatePreview();
 }
+
 void AreaSymbolSettings::fillRotatableClicked(bool checked)
 {
 	if (!react_to_changes) return;
 	AreaSymbol::FillPattern* fill = &symbol->patterns[fill_number_combo->currentIndex()];
 	fill->rotatable = checked;
 }
+
 void AreaSymbolSettings::fillSpacingChanged(QString text)
 {
 	if (!react_to_changes) return;
@@ -718,6 +787,7 @@ void AreaSymbolSettings::fillSpacingChanged(QString text)
 	fill->line_spacing = qRound(1000 * text.toFloat());
 	dialog->updatePreview();
 }
+
 void AreaSymbolSettings::fillLineOffsetChanged(QString text)
 {
 	if (!react_to_changes) return;
@@ -725,6 +795,7 @@ void AreaSymbolSettings::fillLineOffsetChanged(QString text)
 	fill->line_offset = qRound(1000 * text.toFloat());
 	dialog->updatePreview();
 }
+
 void AreaSymbolSettings::fillOffsetAlongLineChanged(QString text)
 {
 	if (!react_to_changes) return;
@@ -742,6 +813,7 @@ void AreaSymbolSettings::fillColorChanged()
 	fill->line_color = fill_color_edit->color();
 	dialog->updatePreview();
 }
+
 void AreaSymbolSettings::fillLinewidthChanged(QString text)
 {
 	if (!react_to_changes) return;
@@ -750,6 +822,7 @@ void AreaSymbolSettings::fillLinewidthChanged(QString text)
 	fill->line_width = qRound(1000 * text.toFloat());
 	dialog->updatePreview();
 }
+
 void AreaSymbolSettings::fillPointdistChanged(QString text)
 {
 	if (!react_to_changes) return;

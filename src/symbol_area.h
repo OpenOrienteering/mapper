@@ -21,21 +21,21 @@
 #ifndef _OPENORIENTEERING_SYMBOL_AREA_H_
 #define _OPENORIENTEERING_SYMBOL_AREA_H_
 
-#include <QGroupBox>
-
 #include "symbol.h"
+#include "symbol_properties_widget.h"
 
-QT_BEGIN_NAMESPACE
 class QPushButton;
 class QLabel;
 class QCheckBox;
-QT_END_NAMESPACE
 
 class ColorDropDown;
 class SymbolSettingDialog;
 class PointSymbolEditorWidget;
 class PathObject;
 class PointObject;
+class SymbolPropertiesWidget;
+class SymbolSettingDialog;
+class MapEditorController;
 
 class AreaSymbol : public Symbol
 {
@@ -64,6 +64,8 @@ public:
 		int point_distance;		// point distance if type == PointPattern
 		PointSymbol* point;		// contained point symbol if type == PointPattern
 		
+		QString name;			// a display name (transient)
+		
 		FillPattern();
 		void save(QFile* file, Map* map);
 		bool load(QFile* file, int version, Map* map);
@@ -74,7 +76,7 @@ public:
 	
 	AreaSymbol();
 	virtual ~AreaSymbol();
-    virtual Symbol* duplicate();
+    virtual Symbol* duplicate() const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
@@ -88,6 +90,8 @@ public:
 	inline int getNumFillPatterns() const {return (int)patterns.size();}
 	inline FillPattern& getFillPattern(int i) {return patterns[i];}
 	
+	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
+	
 protected:
 	virtual void saveImpl(QFile* file, Map* map);
 	virtual bool loadImpl(QFile* file, int version, Map* map);
@@ -97,11 +101,11 @@ protected:
 	std::vector<FillPattern> patterns;
 };
 
-class AreaSymbolSettings : public QGroupBox
+class AreaSymbolSettings : public SymbolPropertiesWidget
 {
 Q_OBJECT
 public:
-	AreaSymbolSettings(AreaSymbol* symbol, Map* map, SymbolSettingDialog* parent, PointSymbolEditorWidget* point_editor);
+	AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* dialog);
 	
 protected slots:
 	void colorChanged();
@@ -120,12 +124,12 @@ protected slots:
 	void fillPointdistChanged(QString text);
 	
 private:
-	void updatePointSymbolNames();
+	void updatePatternNames(bool update_ui = true);
 	void updateFillWidgets(bool show);
 	
 	AreaSymbol* symbol;
-	SymbolSettingDialog* dialog;
-	PointSymbolEditorWidget* point_editor;
+	Map* map;
+	MapEditorController* controller;
 	
 	ColorDropDown* color_edit;
 	QLineEdit* minimum_area_edit;
