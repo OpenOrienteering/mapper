@@ -47,15 +47,14 @@ class PointSymbolEditorWidget : public QWidget
 Q_OBJECT
 friend class PointSymbolEditorActivity;
 public:
-	PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, float offset_y = 0, QWidget* parent = 0);
+	PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, float offset_y = 0, bool permanent_preview = false, QWidget* parent = 0);
 	
     virtual ~PointSymbolEditorWidget();
 	
 	bool changeCurrentCoordinate(MapCoordF new_coord);	// returns if successful
 	bool addCoordinate(MapCoordF new_coord);				// returns if successful
 	
-	void activate();
-	void deactivate();
+	void setEditorActive(bool active);
 	
 	virtual void setVisible(bool visible);
 	
@@ -143,6 +142,7 @@ private:
 	PointSymbolEditorActivity* activity;
 	Map* map;
 	MapEditorController* controller;
+	bool permanent_preview;
 };
 
 class PointSymbolEditorTool : public MapEditorTool

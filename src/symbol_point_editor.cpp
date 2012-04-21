@@ -32,8 +32,8 @@
 #include "util.h"
 #include "map_widget.h"
 
-PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, float offset_y, QWidget* parent)
- : QWidget(parent), offset_y(offset_y), controller(controller)
+PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, float offset_y, bool permanent_preview, QWidget* parent)
+ : QWidget(parent), offset_y(offset_y), controller(controller), permanent_preview(permanent_preview)
 {
 	react_to_changes = true;
 	
@@ -41,6 +41,11 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	
 	current_symbol = symbol;
 	symbol_info.midpoint_object = NULL;
+	if (permanent_preview)
+	{
+		symbol_info.midpoint_object = new PointObject(current_symbol);
+		map->addObject(symbol_info.midpoint_object);
+	}
 	
 	QLabel* elements_label = new QLabel(tr("Elements:"));
 	element_list = new QListWidget();
@@ -220,46 +225,48 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	connect(add_coord_button, SIGNAL(clicked(bool)), this, SLOT(addCoordClicked()));
 	connect(delete_coord_button, SIGNAL(clicked(bool)), this, SLOT(deleteCoordClicked()));
 	connect(center_coords_button, SIGNAL(clicked(bool)), this, SLOT(centerCoordsClicked()));
-	
-	//activate();
 }
 
 PointSymbolEditorWidget::~PointSymbolEditorWidget()
 {
 	if (isVisible())
-		deactivate();
-}
-
-void PointSymbolEditorWidget::activate()
-{
-	symbol_info.midpoint_object = new PointObject(current_symbol);
-	map->addObject(symbol_info.midpoint_object);
-	elementChanged(0);
-	controller->setTool(new PointSymbolEditorTool(controller, this));
-	activity = new PointSymbolEditorActivity(map, this);
-	controller->setEditorActivity(activity);
-	updateSymbolPositions();
-}
-
-void PointSymbolEditorWidget::deactivate()
-{
-	elementChanged(-1);
-	controller->setTool(NULL);
-	controller->setEditorActivity(NULL);
-	if (symbol_info.midpoint_object != NULL)
-	{
+		setEditorActive(false);
+	if (permanent_preview)
 		map->deleteObject(symbol_info.midpoint_object, false);
-		symbol_info.midpoint_object = NULL;
+}
+
+void PointSymbolEditorWidget::setEditorActive(bool active)
+{
+	if (active)
+	{
+		if (!permanent_preview)
+		{
+			symbol_info.midpoint_object = new PointObject(current_symbol);
+			map->addObject(symbol_info.midpoint_object);
+		}
+		elementChanged(0);
+		controller->setTool(new PointSymbolEditorTool(controller, this));
+		activity = new PointSymbolEditorActivity(map, this);
+		controller->setEditorActivity(activity);
+		updateSymbolPositions();
+	}
+	else
+	{
+		elementChanged(-1);
+		controller->setTool(NULL);
+		controller->setEditorActivity(NULL);
+		if (!permanent_preview && symbol_info.midpoint_object != NULL)
+		{
+			map->deleteObject(symbol_info.midpoint_object, false);
+			symbol_info.midpoint_object = NULL;
+		}
 	}
 }
 
 void PointSymbolEditorWidget::setVisible(bool visible)
 {
-	if (visible)
-		activate();
-	else
-		deactivate();
-    QWidget::setVisible(visible);
+	setEditorActive(visible);
+	QWidget::setVisible(visible);
 }
 
 

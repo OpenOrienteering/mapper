@@ -308,7 +308,7 @@ PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialo
 	oriented_to_north->setChecked(!symbol->rotatable);
 	connect(oriented_to_north, SIGNAL(clicked(bool)), this, SLOT(orientedToNorthClicked(bool)));
 	
-	PointSymbolEditorWidget* symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), symbol, 0);
+	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), symbol, 0, true);
 	connect(symbol_editor, SIGNAL(symbolEdited()), dialog, SLOT(updatePreview()) );
 	
 	QVBoxLayout* layout = new QVBoxLayout();
@@ -316,9 +316,11 @@ PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialo
 	layout->setAlignment(oriented_to_north, Qt::AlignLeft);
 	layout->addWidget(symbol_editor);
 	
-	QWidget* point_tab = new QWidget();
+	point_tab = new QWidget();
 	point_tab->setLayout(layout);
 	addPropertiesGroup(tr("Point symbol"), point_tab);
+	
+	connect(this, SIGNAL(currentChanged(int)), this, SLOT(tab_changed(int)));
 }
 
 void PointSymbolSettings::orientedToNorthClicked(bool checked)
@@ -326,5 +328,11 @@ void PointSymbolSettings::orientedToNorthClicked(bool checked)
 	symbol->rotatable = !checked;
 	dialog->updatePreview();
 }
+
+void PointSymbolSettings::tab_changed(int index)
+{
+	symbol_editor->setEditorActive( currentWidget()==point_tab );
+}
+
 
 #include "symbol_point.moc"

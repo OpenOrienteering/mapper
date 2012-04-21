@@ -21,21 +21,17 @@
 #ifndef _OPENORIENTEERING_SYMBOL_POINT_H_
 #define _OPENORIENTEERING_SYMBOL_POINT_H_
 
-#include <QGroupBox>
-
 #include "symbol.h"
 #include "symbol_properties_widget.h"
 
-QT_BEGIN_NAMESPACE
-class QLineEdit;
-class QCheckBox;
-QT_END_NAMESPACE
+class QWidget;
 
 class Map;
 struct MapColor;
-class SymbolSettingDialog;
-class ColorDropDown;
 class MapEditorController;
+class SymbolSettingDialog;
+class PointSymbolEditorWidget;
+class ColorDropDown;
 
 class PointSymbol : public Symbol
 {
@@ -109,9 +105,12 @@ public:
 	
 public slots:
 	void orientedToNorthClicked(bool checked);
+	void tab_changed(int index);
 	
 private:
 	PointSymbol* symbol;
+	PointSymbolEditorWidget* symbol_editor;
+	QWidget* point_tab;
 };
 
 #endif
