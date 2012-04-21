@@ -561,7 +561,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 		if (symbol->getFillPattern(i).type == AreaSymbol::FillPattern::PointPattern)
 		{
 			PointSymbolEditorWidget* editor = new PointSymbolEditorWidget(controller, symbol->getFillPattern(i).point, 16);
-			connect(editor, SIGNAL(symbolEdited()), dialog, SIGNAL(updatePreview()) );
+			connect(editor, SIGNAL(symbolEdited()), dialog, SLOT(updatePreview()) );
 			addPropertiesGroup(symbol->getFillPattern(i).name, editor); 	
 		}
 	}
@@ -750,7 +750,7 @@ void AreaSymbolSettings::fillTypeChanged(int index)
 		updatePatternNames();
 		fill_number_combo->setItemText(fill_number_combo->currentIndex(), fill->name); // FIXME: renumber only following items
 		PointSymbolEditorWidget* editor = new PointSymbolEditorWidget(controller, fill->point, 16);
-		connect(editor, SIGNAL(symbolEdited()), dialog, SIGNAL(updatePreview()) );
+		connect(editor, SIGNAL(symbolEdited()), dialog, SLOT(updatePreview()) );
 		if (fill_number_combo->currentIndex() == int(symbol->patterns.size()) - 1)
 		{
 			addPropertiesGroup(fill->name, editor); 	
