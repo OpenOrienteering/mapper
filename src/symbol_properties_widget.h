@@ -59,13 +59,6 @@ public:
 	/** Get the edited symbol */
 	inline Symbol* getSymbol() { return symbol; }
 	
-signals:
-	/** Emitted when general properties of the symbol changed */
-	//void generalModified();
-	
-	/** Emitted when appearance properties of the symbol changed */
-	//void appearanceModified();
-	
 protected slots:
 	void numberChanged(QString text);
 	void nameChanged(QString text);
