@@ -320,7 +320,7 @@ PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialo
 	point_tab->setLayout(layout);
 	addPropertiesGroup(tr("Point symbol"), point_tab);
 	
-	connect(this, SIGNAL(currentChanged(int)), this, SLOT(tab_changed(int)));
+	connect(this, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
 }
 
 void PointSymbolSettings::orientedToNorthClicked(bool checked)
@@ -329,7 +329,7 @@ void PointSymbolSettings::orientedToNorthClicked(bool checked)
 	dialog->updatePreview();
 }
 
-void PointSymbolSettings::tab_changed(int index)
+void PointSymbolSettings::tabChanged(int index)
 {
 	symbol_editor->setEditorActive( currentWidget()==point_tab );
 }

@@ -105,7 +105,7 @@ public:
 	
 public slots:
 	void orientedToNorthClicked(bool checked);
-	void tab_changed(int index);
+	void tabChanged(int index);
 	
 private:
 	PointSymbol* symbol;

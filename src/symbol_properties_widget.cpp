@@ -87,10 +87,6 @@ SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDial
 
 SymbolPropertiesWidget::~SymbolPropertiesWidget()
 {
-//	while (count() > 0)
-	{
-//FIXME		removePropertiesGroup(0);
-	}
 }
 
 void SymbolPropertiesWidget::addPropertiesGroup(const QString& name, QWidget* widget)
