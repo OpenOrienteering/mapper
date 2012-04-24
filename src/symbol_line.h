@@ -161,15 +161,29 @@ protected:
 	int border_break_length;
 };
 
+
+
 class LineSymbolSettings : public SymbolPropertiesWidget
 {
 Q_OBJECT
 public:
 	LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* dialog);
-    virtual ~LineSymbolSettings();
+	virtual ~LineSymbolSettings();
+	
+protected:
+	/** Ensure that a particular widget is visible in the scoll area. */
+	void ensureWidgetVisible(QWidget* widget);
+	
+	/** Adjust the visibility and enabled state of all UI parts.
+	 *  There is a large number of dependencies between different elements
+	 *  of the line settings. This method handles them all.
+	 */
+	void updateWidgets();
 	
 protected slots:
+	/** Notify this settings widget that one of the symbols has been modified */
 	void pointSymbolEdited();
+	
 	void widthChanged(QString text);
 	void colorChanged();
 	void minimumDimensionsEdited(QString text);
@@ -194,9 +208,13 @@ protected slots:
 	void borderDashedClicked(bool checked);
 	void borderDashesChanged(QString text);
 	
-private:
-	void updateWidgets();
+private slots:
+	/** Ensure that a predetermined widget is visible in the scoll area.
+	 *  The widget is set in advance by ensureWidgetVisible(QWidget* widget).
+	 */
+	void ensureWidgetVisible();
 	
+private:
 	LineSymbol* symbol;
 	SymbolSettingDialog* dialog;
 	
@@ -248,6 +266,7 @@ private:
 	QLineEdit* border_break_length_edit;
 	
 	QScrollArea* scroll_area;
+	QWidget* widget_to_ensure_visible;
 };
 
 #endif
