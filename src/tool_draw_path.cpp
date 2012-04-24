@@ -381,6 +381,7 @@ void DrawPathTool::finishDrawing()
 	
 	if (preview_path->getCoordinateCount() < (contains_only_areas ? 3 : 2))
 	{
+		renderables.removeRenderablesOfObject(preview_path, false);
 		delete preview_path;
 		preview_path = NULL;
 	}
