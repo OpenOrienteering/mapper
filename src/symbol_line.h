@@ -21,17 +21,14 @@
 #ifndef _OPENORIENTEERING_SYMBOL_LINE_H_
 #define _OPENORIENTEERING_SYMBOL_LINE_H_
 
-#include <QGroupBox>
-
 #include "symbol.h"
 #include "path_coord.h"
 #include "symbol_properties_widget.h"
 
-QT_BEGIN_NAMESPACE
 class QLineEdit;
 class QLabel;
 class QCheckBox;
-QT_END_NAMESPACE
+class QScrollArea;
 
 class ColorDropDown;
 class SymbolSettingDialog;
@@ -198,7 +195,7 @@ protected slots:
 	void borderDashesChanged(QString text);
 	
 private:
-	void updateWidgets(bool show = true);
+	void updateWidgets();
 	
 	LineSymbol* symbol;
 	SymbolSettingDialog* dialog;
@@ -208,7 +205,7 @@ private:
 	QLineEdit* minimum_length_edit;
 	
 	// enabled if line_width > 0 && color != NULL
-	QWidget* line_settings_widget;
+	QList<QWidget *> line_settings_list;
 	QComboBox* line_cap_combo;
 	QComboBox* line_join_combo;
 	QLabel* pointed_cap_length_label;
@@ -216,7 +213,7 @@ private:
 	QCheckBox* dashed_check;
 	
 	// dashed == false && mid_symbol
-	QWidget* undashed_widget;
+	QList<QWidget *> undashed_widget_list;
 	QLineEdit* segment_length_edit;
 	QLineEdit* end_length_edit;
 	QCheckBox* show_at_least_one_symbol_check;
@@ -224,7 +221,7 @@ private:
 	QLineEdit* minimum_mid_symbol_count_when_closed_edit;
 	
 	// dashed == true
-	QWidget* dashed_widget;
+	QList<QWidget *> dashed_widget_list;
 	QLineEdit* dash_length_edit;
 	QLineEdit* break_length_edit;
 	QComboBox* dash_group_combo;
@@ -233,21 +230,24 @@ private:
 	QCheckBox* half_outer_dashes_check;
 	
 	// mid_symbol
-	QWidget* mid_symbol_widget;
+	QList<QWidget *> mid_symbol_widget_list;
 	QLineEdit* mid_symbol_per_spot_edit;
 	QLabel* mid_symbol_distance_label;
 	QLineEdit* mid_symbol_distance_edit;
 	
 	// enabled if line_width > 0
-	QWidget* border_widget;
+	QList<QWidget *> border_widget_list;
 	QCheckBox* border_check;
 	QLineEdit* border_width_edit;
 	ColorDropDown* border_color_edit;
 	QLineEdit* border_shift_edit;
 	QCheckBox* border_dashed_check;
-	QWidget* border_dash_widget;
+	
+	QList<QWidget *> border_dash_widget_list;
 	QLineEdit* border_dash_length_edit;
 	QLineEdit* border_break_length_edit;
+	
+	QScrollArea* scroll_area;
 };
 
 #endif
