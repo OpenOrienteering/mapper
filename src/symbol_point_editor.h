@@ -22,9 +22,9 @@
 #define _OPENORIENTEERING_SYMBOL_POINT_EDITOR_H_
 
 #include <QWidget>
+
 #include "map_editor.h"
 
-QT_BEGIN_NAMESPACE
 class QComboBox;
 class QListWidget;
 class QPushButton;
@@ -32,7 +32,6 @@ class QStackedWidget;
 class QLineEdit;
 class QTableWidget;
 class QCheckBox;
-QT_END_NAMESPACE
 
 class PointSymbolEditorActivity;
 class PointObject;
@@ -49,10 +48,10 @@ friend class PointSymbolEditorActivity;
 public:
 	PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, float offset_y = 0, bool permanent_preview = false, QWidget* parent = 0);
 	
-    virtual ~PointSymbolEditorWidget();
+	virtual ~PointSymbolEditorWidget();
 	
-	bool changeCurrentCoordinate(MapCoordF new_coord);	// returns if successful
-	bool addCoordinate(MapCoordF new_coord);				// returns if successful
+	bool changeCurrentCoordinate(MapCoordF new_coord);	// returns true if successful
+	bool addCoordinate(MapCoordF new_coord);			// returns true if successful
 	
 	void setEditorActive(bool active);
 	
@@ -91,28 +90,20 @@ private slots:
 	void centerCoordsClicked();
 	
 private:
-	struct SymbolInfo
-	{
-		double origin_x;
-		double origin_y;
-		PointObject* midpoint_object;
-	};
-	
-	void updateSymbolPositions();
 	void updateCoordsTable();
 	void addCoordsRow(int row);
 	void updateCoordsRow(int row);
 	void updateDeleteCoordButton();
 	
 	void insertElement(Object* object, Symbol* symbol);
-	QString getLabelForSymbol(Symbol* symbol);
+	QString getLabelForSymbol(Symbol* symbol) const;
 	
 	Symbol* getCurrentElementSymbol();
 	Object* getCurrentElementObject();
-	Object* getMidpointObject();
 	
-	SymbolInfo symbol_info;
-	PointSymbol* current_symbol;
+	PointSymbol* const symbol;
+	PointObject* midpoint_object;
+	const MapCoordF object_origin_coord;
 	
 	QListWidget* element_list;
 	QPushButton* delete_element_button;
@@ -138,43 +129,53 @@ private:
 	QPushButton* center_coords_button;
 	
 	bool react_to_changes;
-	float offset_y;
+	const float offset_y;
 	PointSymbolEditorActivity* activity;
 	Map* map;
 	MapEditorController* controller;
-	bool permanent_preview;
+	const bool permanent_preview;
 };
 
+
+
+/** PointSymbolEditorActivity allows to add or modify coordinates of point symbol elements
+ *  by clicking in the map.
+ */
 class PointSymbolEditorTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	PointSymbolEditorTool(MapEditorController* editor, PointSymbolEditorWidget* widget);
+	PointSymbolEditorTool(MapEditorController* editor, PointSymbolEditorWidget* symbol_editor);
 	
-    virtual void init();
-    virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-    virtual QCursor* getCursor() {return cursor;};
-	
-	static QCursor* cursor;
+	virtual void init();
+	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* map_widget);
+	virtual QCursor* getCursor() { return cursor; }; // FIXME: const candidate
 	
 private:
-	PointSymbolEditorWidget* widget;
+	PointSymbolEditorWidget* const symbol_editor;
+	
+	static QCursor* cursor;
 };
 
+
+
+/** PointSymbolEditorActivity draws a small cross in the origin of the map coordinate system.
+ *  FIXME: This cross may cover the symbol at small scales.
+ */
 class PointSymbolEditorActivity : public MapEditorActivity
 {
 public:
-	PointSymbolEditorActivity(Map* map, PointSymbolEditorWidget* widget);
+	PointSymbolEditorActivity(Map* map, PointSymbolEditorWidget* symbol_editor);
 	
-    virtual void init();
+	virtual void init();
 	void update();
-    virtual void draw(QPainter* painter, MapWidget* widget);
+	virtual void draw(QPainter* painter, MapWidget* map_widget);
 	
 private:
-	Map* map;
-	PointSymbolEditorWidget* widget;
+	Map* const map;
+	PointSymbolEditorWidget* const symbol_editor;
 	
-	static const int cross_radius;
+	static const int cross_radius; // NOTE: This could be a configuration option.
 };
 
 #endif
