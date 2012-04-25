@@ -1598,6 +1598,7 @@ LineSymbolSettings::~LineSymbolSettings()
 
 void LineSymbolSettings::pointSymbolEdited()
 {
+	dialog->updatePreview();
 	updateWidgets();
 }
 
