@@ -25,13 +25,14 @@
 
 #include "map_editor.h"
 
+class QCheckBox;
 class QComboBox;
+class QLabel;
+class QLineEdit;
 class QListWidget;
 class QPushButton;
 class QStackedWidget;
-class QLineEdit;
 class QTableWidget;
-class QCheckBox;
 
 class PointSymbolEditorActivity;
 class PointObject;
@@ -123,6 +124,7 @@ private:
 	
 	ColorDropDown* area_color_edit;
 	
+	QLabel* coords_label;
 	QTableWidget* coords_table;
 	QPushButton* add_coord_button;
 	QPushButton* delete_coord_button;

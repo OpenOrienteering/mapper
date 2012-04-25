@@ -47,7 +47,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 		map->addObject(midpoint_object);
 	}
 	
-	QLabel* elements_label = new QLabel(tr("Elements:"));
+	QLabel* elements_label = new QLabel(QString("<b>%1</b>").arg(tr("Elements:")));
 	element_list = new QListWidget();
 	updateElementList();
 	
@@ -68,7 +68,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	
 	element_properties_widget = new QStackedWidget();
 	
-	// Point
+	// Point (circle)
 	QWidget* point_properties = new QWidget();
 	QLabel* point_inner_radius_label = new QLabel(tr("Diameter <b>a</b>:"));
 	point_inner_radius_edit = new QLineEdit();
@@ -88,15 +88,19 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	explanation_label->setPixmap(QPixmap(":/images/symbol_point_explanation.png"));
 	
 	QGridLayout* point_layout = new QGridLayout();
+	point_layout->setContentsMargins(0, 0, 0, 0);
 	point_layout->addWidget(point_inner_radius_label, 0, 0);
 	point_layout->addWidget(point_inner_radius_edit, 0, 1);
 	point_layout->addWidget(point_inner_color_label, 1, 0);
 	point_layout->addWidget(point_inner_color_edit, 1, 1);
-	point_layout->addWidget(point_outer_width_label, 2, 0);
-	point_layout->addWidget(point_outer_width_edit, 2, 1);
-	point_layout->addWidget(point_outer_color_label, 3, 0);
-	point_layout->addWidget(point_outer_color_edit, 3, 1);
-	point_layout->addWidget(explanation_label, 0, 2, 4, 1);
+	point_layout->addWidget(new QWidget(), 2, 0, 1, -1);
+	point_layout->addWidget(point_outer_width_label, 3, 0);
+	point_layout->addWidget(point_outer_width_edit, 3, 1);
+	point_layout->addWidget(point_outer_color_label, 4, 0);
+	point_layout->addWidget(point_outer_color_edit, 4, 1);
+	point_layout->addWidget(explanation_label, 0, 2, 5, 1);
+	point_layout->setRowStretch(6, 1);
+	point_layout->setColumnStretch(1,1);
 	point_properties->setLayout(point_layout);
 	element_properties_widget->addWidget(point_properties);
 	
@@ -125,6 +129,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	line_closed_check = new QCheckBox(tr("Line closed"));
 	
 	QGridLayout* line_layout = new QGridLayout();
+	line_layout->setContentsMargins(0, 0, 0, 0);
 	line_layout->addWidget(line_width_label, 0, 0);
 	line_layout->addWidget(line_width_edit, 0, 1);
 	line_layout->addWidget(line_color_label, 1, 0);
@@ -134,6 +139,8 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	line_layout->addWidget(line_join_label, 3, 0);
 	line_layout->addWidget(line_join_edit, 3, 1);
 	line_layout->addWidget(line_closed_check, 4, 0, 1, 2);
+	line_layout->setRowStretch(5, 1);
+	line_layout->setColumnStretch(1,1);
 	line_properties->setLayout(line_layout);
 	element_properties_widget->addWidget(line_properties);
 	
@@ -143,14 +150,16 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	area_color_edit = new ColorDropDown(map);
 	
 	QGridLayout* area_layout = new QGridLayout();
+	area_layout->setContentsMargins(0, 0, 0, 0);
 	area_layout->addWidget(area_color_label, 0, 0);
 	area_layout->addWidget(area_color_edit, 0, 1);
 	area_layout->setRowStretch(1, 1);
+	area_layout->setColumnStretch(1,1);
 	area_properties->setLayout(area_layout);
 	element_properties_widget->addWidget(area_properties);
 	
 	// Coordinates
-	QLabel* coordinates_label = new QLabel(tr("Coordinates:"));
+	coords_label = new QLabel(tr("Coordinates:"));
 	
 	coords_table = new QTableWidget(0, 3);
 	coords_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
@@ -179,7 +188,6 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	element_buttons_layout->addWidget(delete_element_button);
 	element_buttons_layout->addStretch(1);
 	left_layout->addLayout(element_buttons_layout);
-	left_layout->addSpacing(16);
 	
 	QBoxLayout* right_layout = new QVBoxLayout();
 	right_layout->setMargin(0);
@@ -188,7 +196,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	right_layout->addWidget(element_properties_widget);
 	right_layout->addSpacing(16);
 	
-	right_layout->addWidget(coordinates_label);
+	right_layout->addWidget(coords_label);
 	right_layout->addWidget(coords_table);
 	QHBoxLayout* coords_buttons_layout = new QHBoxLayout();
 	coords_buttons_layout->addWidget(add_coord_button);
@@ -354,7 +362,8 @@ void PointSymbolEditorWidget::updateElementList()
 
 void PointSymbolEditorWidget::elementChanged(int row)
 {
-	bool enable = row >= 0;
+	bool enable = row > 0;
+	coords_label->setEnabled(enable);
 	coords_table->setEnabled(enable);
 	add_coord_button->setEnabled(enable);
 	delete_coord_button->setEnabled(enable);
