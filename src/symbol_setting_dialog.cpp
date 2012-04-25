@@ -182,7 +182,7 @@ void SymbolSettingDialog::updatePreview()
 
 void SymbolSettingDialog::loadTemplateClicked()
 {
-	Template* temp = TemplateWidget::showOpenTemplateDialog(this, preview_map_view, qobject_cast<MapEditorController*>(preview_widget->getController()));
+	Template* temp = TemplateWidget::showOpenTemplateDialog(this, preview_map_view);
 	if (!temp)
 		return;
 	

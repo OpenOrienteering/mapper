@@ -104,7 +104,7 @@ public:
 	/** Change the controller to new_controller.
 	 */
 	void setController(MainWindowController* new_controller);
-	MainWindowController* getController(){ return controller; }
+	inline MainWindowController* getController() const {return controller;}
 	
 	/** Returns the canonical path of the currently open file or 
 	 *  an empty string if no file is open.

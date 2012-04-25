@@ -280,12 +280,12 @@ public:
 	
 	static MapColor* getCoveringWhite() {return &covering_white;}
 	static MapColor* getCoveringRed() {return &covering_red;}
-	static MapColor* getGpsTrack() {return &gps_track;}
+	static MapColor* getUndefinedColor() {return &undefined_symbol_color;}
 	static LineSymbol* getCoveringWhiteLine() {return covering_white_line;}
 	static LineSymbol* getCoveringRedLine() {return covering_red_line;}
-	static LineSymbol* getGpsDummyLine() {return gps_dummy_line;}
-	static PointSymbol* getGpsDummyPoint() {return gps_dummy_point;}
 	static CombinedSymbol* getCoveringCombinedLine() {return covering_combined_line;}
+	static LineSymbol* getUndefinedLine() {return undefined_line;}
+	static PointSymbol* getUndefinedPoint() {return undefined_point;}
 	
 signals:
 	void gotUnsavedChanges();
@@ -350,11 +350,7 @@ private:
 	int current_layer_index;
 	WidgetVector widgets;
 	ViewVector views;
-
-public:
 	RenderableContainer renderables;
-
-private:
 	RenderableContainer selection_renderables;
 	
 	QString map_notes;
@@ -391,11 +387,11 @@ private:
 	static bool static_initialized;
 	static MapColor covering_white;
 	static MapColor covering_red;
-	static MapColor gps_track;
+	static MapColor undefined_symbol_color;
 	static LineSymbol* covering_white_line;
 	static LineSymbol* covering_red_line;
-	static LineSymbol* gps_dummy_line;
-	static PointSymbol* gps_dummy_point;
+	static LineSymbol* undefined_line;
+	static PointSymbol* undefined_point;
 	static CombinedSymbol* covering_combined_line;
 };
 

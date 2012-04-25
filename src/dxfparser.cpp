@@ -1,6 +1,23 @@
+/*
+ *    Copyright 2012 Jan Dalheimer
+ *    
+ *    This file is part of OpenOrienteering.
+ * 
+ *    OpenOrienteering is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ * 
+ *    OpenOrienteering is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ * 
+ *    You should have received a copy of the GNU General Public License
+ *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "dxfparser.h"
-#include <QtCore>
-#include <QtGui>
 
 #define PARSE_COMMON(p) do{ \
 if(line1 == "8") \
@@ -425,7 +442,7 @@ void DXFParser::parseArc(QIODevice *d, QList<path_t> *p){
 			path.startAngle = line2.toDouble();
 		if(line1 == "51")
 			path.endAngle = line2.toDouble();
-		qDebug() << "start: " << path.startAngle <<" stop "<< path.endAngle << " radius " << path.radius;
+		//qDebug() << "start: " << path.startAngle <<" stop "<< path.endAngle << " radius " << path.radius;
 	}while(true);
 	path.coords.append(co);
 	p->append(path);

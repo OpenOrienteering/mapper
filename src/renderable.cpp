@@ -110,6 +110,8 @@ void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool forc
 						color = Map::getCoveringWhite();
 					else if (new_states.color_priority == MapColor::CoveringRed)
 						color = Map::getCoveringRed();
+					else if (new_states.color_priority == MapColor::Undefined)
+						color = Map::getUndefinedColor();
 					else
 						assert(!"Invalid special color!");
 				}

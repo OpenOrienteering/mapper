@@ -26,6 +26,7 @@
 #include "util.h"
 #include "symbol.h"
 #include "symbol_point.h"
+#include "symbol_line.h"
 #include "symbol_text.h"
 #include "map_editor.h"
 #include "object_text.h"
@@ -84,6 +85,10 @@ void Object::load(QFile* file, int version, Map* map)
 	file->read((char*)&symbol_index, sizeof(int));
 	if (symbol_index >= 0)
 		symbol = map->getSymbol(symbol_index);
+	else if (symbol_index == -2)
+		symbol = map->getUndefinedPoint();
+	else if (symbol_index == -3)
+		symbol = map->getUndefinedLine();
 	
 	int num_coords;
 	file->read((char*)&num_coords, sizeof(int));

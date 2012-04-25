@@ -24,14 +24,15 @@
 #include "template.h"
 #include "gps_track.h"
 
-class MapEditorController;
+class PathObject;
+class PointObject;
 
-/// A GPS track + waypoints used as template
+/// A GPS track + waypoints used as template; TODO: rename to TemplateTrack
 class TemplateGPS : public Template
 {
 Q_OBJECT
 public:
-	TemplateGPS(const QString& filename, Map* map, MapEditorController *controller);
+	TemplateGPS(const QString& filename, Map* map);
 	TemplateGPS(const TemplateGPS& other);
     virtual ~TemplateGPS();
     virtual Template* duplicate();
@@ -45,8 +46,10 @@ public:
 	
     virtual double getTemplateFinalScaleX() const;
     virtual double getTemplateFinalScaleY() const;
-
-	bool import(MapEditorController *controller);
+	
+	/** Import the track as map object(s).
+	 */
+	bool import(QWidget* dialog_parent = NULL);
 	
 public slots:
 	void gpsProjectionParametersChanged();
@@ -55,8 +58,11 @@ protected:
 	void calculateExtent();
 	virtual bool changeTemplateFileImpl(const QString& filename);
 	
+	PathObject* importPathStart();
+	void importPathEnd(PathObject* path);
+	PointObject* importWaypoint(const MapCoordF& position);
+	
 	GPSTrack track;
-	MapEditorController *controller;
 };
 
 #endif

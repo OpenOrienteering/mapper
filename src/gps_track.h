@@ -28,7 +28,6 @@
 
 QT_BEGIN_NAMESPACE
 class QXmlStreamWriter;
-class QFile;
 QT_END_NAMESPACE
 
 class MapEditorController;
@@ -46,7 +45,6 @@ struct GPSPoint
 	
 	GPSPoint(GPSCoordinate coord = GPSCoordinate(), QDateTime datetime = QDateTime(), float elevation = -9999, int num_satellites = -1, float hDOP = -1);
 	void save(QXmlStreamWriter* stream);
-	void saveDXF(QFile *file);
 };
 
 class GPSTrack
@@ -62,7 +60,7 @@ public:
 	void clear();
 	
 	/// Attempts to load the track from the given file. If you choose not to project_point, you have to call changeProjectionParams() afterwards.
-	bool loadFrom(const QString& path, bool project_points, MapEditorController *controller);
+	bool loadFrom(const QString& path, bool project_points, QWidget* dialog_parent = NULL);
 	/// Attempts to save the track to the given file
 	bool saveTo(const QString& path);
 	

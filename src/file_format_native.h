@@ -28,33 +28,33 @@
 class NativeFileFormat : public Format
 {
 public:
-    /** Creates a new file format representing the native type.
-     */
-    NativeFileFormat() : Format("native", QObject::tr("OpenOrienteering Mapper"), "omap", true, true, false) {}
+	/** Creates a new file format representing the native type.
+	 */
+	NativeFileFormat() : Format("native", QObject::tr("OpenOrienteering Mapper"), "omap", true, true, false) {}
 
-    /** Returns true if the file starts with the magic byte sequence "OMAP" (0x4f 0x4d 0x41 0x50).
-     */
-    bool understands(const unsigned char *buffer, size_t sz) const;
+	/** Returns true if the file starts with the magic byte sequence "OMAP" (0x4f 0x4d 0x41 0x50).
+	 */
+	bool understands(const unsigned char *buffer, size_t sz) const;
 
-    /** Creates an importer for this file type.
-     */
-	Importer *createImporter(const QString &path, Map *map, MapView *view, MapEditorController* controller) const throw (FormatException);
+	/** Creates an importer for this file type.
+	 */
+	Importer *createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
 
-    /** Creates an exporter for this file type.
-     */
-    Exporter *createExporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
+	/** Creates an exporter for this file type.
+	 */
+	Exporter *createExporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
 
-    /** Constant describing the earliest OMAP version supported by this file format.
-     */
-    static const int least_supported_file_format_version;
+	/** Constant describing the earliest OMAP version supported by this file format.
+	 */
+	static const int least_supported_file_format_version;
 
-    /** Constant describing the current OMAP version used by this file format for saving.
-     */
-    static const int current_file_format_version;
+	/** Constant describing the current OMAP version used by this file format for saving.
+	 */
+	static const int current_file_format_version;
 
-    /** The file magic: "OMAP"
-     */
-    static const char magic_bytes[4];
+	/** The file magic: "OMAP"
+	 */
+	static const char magic_bytes[4];
 };
 
 
@@ -64,20 +64,17 @@ public:
 class NativeFileImport : public Importer
 {
 public:
-    /** Creates a new native file importer.
-     */
-	NativeFileImport(const QString &path, Map *map, MapView *view, MapEditorController *controller);
+	/** Creates a new native file importer.
+	 */
+	NativeFileImport(const QString &path, Map *map, MapView *view);
 
-    /** Destroys this importer.
-     */
-    ~NativeFileImport();
+	/** Destroys this importer.
+	 */
+	~NativeFileImport();
 
-    /** Imports a native file.
-     */
+	/** Imports a native file.
+	 */
 	void doImport(bool load_symbols_only) throw (FormatException);
-
-private:
-	MapEditorController *controller;
 };
 
 
@@ -87,17 +84,17 @@ private:
 class NativeFileExport : public Exporter
 {
 public:
-    /** Creates a new native file exporter.
-     */
-    NativeFileExport(const QString &path, Map *map, MapView *view);
+	/** Creates a new native file exporter.
+	 */
+	NativeFileExport(const QString &path, Map *map, MapView *view);
 
-    /** Destroys this importer.
-     */
-    ~NativeFileExport();
+	/** Destroys this importer.
+	 */
+	~NativeFileExport();
 
-    /** Exports a native file.
-     */
-    void doExport() throw (FormatException);
+	/** Exports a native file.
+	 */
+	void doExport() throw (FormatException);
 };
 
 #endif // NATIVE_FILE_FORMAT_H

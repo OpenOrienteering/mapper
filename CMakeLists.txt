@@ -24,7 +24,7 @@ else (CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
 endif (CMAKE_COMPILER_IS_GNUCXX)
 
-include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} src)
+include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR})
 
 set(Mapper_SRCS
  libocad/types.c
@@ -103,14 +103,13 @@ set(Mapper_SRCS
  src/tool_boolean.cpp
 
  src/gps_coordinates.cpp
- src/gps_track.cpp 
+ src/gps_track.cpp
+ src/dxfparser.cpp
 
  src/file_format.cpp
  src/file_format_native.cpp
  src/file_format_ocad8.cpp
  src/file_format_xml.cpp
-
- src/dxfparser.cpp
 )
 qt4_automoc(${Mapper_SRCS})
 

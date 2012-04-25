@@ -32,12 +32,11 @@
 #include "color_dock_widget.h"
 #include "symbol_dock_widget.h"
 #include "template_dock_widget.h"
-#include "template_gps.h"
 #include "template_position_dock_widget.h"
 #include "template.h"
+#include "template_gps.h"
 #include "template_tool_paint.h"
 #include "symbol.h"
-#include "symbol_point.h"
 #include "tool_draw_point.h"
 #include "tool_draw_path.h"
 #include "tool_draw_circle.h"
@@ -50,8 +49,6 @@
 #include "tool_measure.h"
 #include "tool_boolean.h"
 #include "object_text.h"
-#include "dxfparser.h"
-#include "gps_track.h"
 
 // ### MapEditorController ###
 
@@ -81,9 +78,6 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	color_dock_widget = NULL;
 	symbol_dock_widget = NULL;
 	template_dock_widget = NULL;
-
-	drawing = false;
-	pathPreview = 0;
 
     actionsById[""] = new QAction(this); // dummy action
 }
@@ -443,8 +437,7 @@ void MapEditorController::createMenuAndToolbars()
 	boolean_intersection_act = newAction("booleanintersection", tr("Intersect areas"), this, SLOT(booleanIntersectionClicked()), "tool-boolean-intersection.png");
 	boolean_difference_act = newAction("booleandifference", tr("Area difference"), this, SLOT(booleanDifferenceClicked()), "tool-boolean-difference.png");
 	boolean_xor_act = newAction("booleanxor", tr("Area XOr"), this, SLOT(booleanXOrClicked()), "tool-boolean-xor.png");
-	QAction *importGpx = newAction("importgpx", tr("GPX"), this, SLOT(importGPX()));
-	QAction *importDxf = newAction("importdxf", tr("DXF"), this, SLOT(importDXF()));
+	QAction *import_act = newAction("import", tr("Import"), this, SLOT(importClicked()));
 	
     // Refactored so we can do custom key bindings in the future
     assignKeyboardShortcuts();
@@ -453,9 +446,8 @@ void MapEditorController::createMenuAndToolbars()
 	QMenu* file_menu = window->getFileMenu();
 	file_menu->insertAction(window->getCloseAct(), print_act);
 	file_menu->insertSeparator(window->getCloseAct());
-	QAction* import_menu = file_menu->insertMenu(print_act, new QMenu(tr("Import"), window));
+	file_menu->insertAction(print_act, import_act);
 	file_menu->insertSeparator(print_act);
-	import_menu->menu()->addActions(QList<QAction*>() << importGpx << importDxf);
 		
     // Edit menu
 	QMenu* edit_menu = window->menuBar()->addMenu(tr("&Edit"));
@@ -840,7 +832,7 @@ void MapEditorController::showTemplateWindow(bool show)
 }
 void MapEditorController::openTemplateClicked()
 {
-	Template* new_template = TemplateWidget::showOpenTemplateDialog(window, main_view, this);
+	Template* new_template = TemplateWidget::showOpenTemplateDialog(window, main_view);
 	if (!new_template)
 		return;
 	
@@ -1744,85 +1736,38 @@ int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_c
 	return -1;
 }
 
-bool MapEditorController::startNewPath(){
-	if(drawing)
-		return false;
-	if(this->getSymbolWidget()->getSingleSelectedSymbol() == 0){
-		QMessageBox::warning(window, tr("Error"), tr("Please select a symbol of type Line or Area"));
-		return false;
-	}
-	if(this->getSymbolWidget()->getSingleSelectedSymbol()->getType() != Symbol::Line &&
-	   this->getSymbolWidget()->getSingleSelectedSymbol()->getType() != Symbol::Area){
-		QMessageBox::warning(window, tr("Error"), tr("Please select a symbol of type Line or Area"));
-		return false;
-	}
-	pathPreview = new PathObject(this->getSymbolWidget()->getSingleSelectedSymbol());
-	drawing = true;
-	return true;
+void MapEditorController::importDXF(QString filename)
+{
+	TemplateGPS temp(filename, map);
+	if (!temp.open(window, main_view))
+		return;
+	temp.import(window);
 }
-void MapEditorController::addWayPoint(MapCoord point){
-	if(drawing && pathPreview != 0){
-		pathPreview->addCoordinate(point);
-		this->updatePreview();
-	}
-}
-void MapEditorController::endPath(){
-	if(drawing && pathPreview != 0){
-		drawing = false;
-		map->removeRenderablesOfObject(pathPreview, false);
-		map->addObject(pathPreview, map->getCurrentLayerIndex());
-		map->clearObjectSelection(false);
-		map->addObjectToSelection(pathPreview, true);
-	}
-}
-bool MapEditorController::placePoint(MapCoordF point, float rotation){
-	if(this->getSymbolWidget()->getSingleSelectedSymbol() == 0){
-		QMessageBox::warning(window, tr("Error"), tr("Please select a symbol of type point"));
-		return false;
-	}
-	if(this->getSymbolWidget()->getSingleSelectedSymbol()->getType() != Symbol::Point){
-		QMessageBox::warning(window, tr("Error"), tr("Please select a symbol of type Point"));
-		return false;
-	}
-	PointObject *obj = new PointObject;
-	obj->setSymbol(map->getGpsDummyPoint(), false);
-	obj->setRotation(rotation);
-	obj->setPosition(point);
-	map->clearObjectSelection(false);
-	map->addObjectToSelection(obj, true);
-	map->addObject(obj);
-	return true;
-}
-void MapEditorController::updatePreview(){
-	if(pathPreview){
-		map->removeRenderablesOfObject(pathPreview, false);
-		pathPreview->update(true);
-		map->insertRenderablesOfObject(pathPreview);
-	}
+void MapEditorController::importClicked()
+{
+	QSettings settings;
+	QString import_directory = settings.value("importFileDirectory", QDir::homePath()).toString();
+	
+	QString filename = QFileDialog::getOpenFileName(window, tr("Import DXF or GPX file"), import_directory, QString("%1 (*.gpx *.dxf);;%2 (*.*)").arg(tr("Importable files")).arg(tr("All files")));
+	if (filename.isEmpty() || filename.isNull())
+		return;
+	
+	settings.setValue("importFileDirectory", QFileInfo(filename).canonicalPath());
+	
+	if (filename.endsWith(".dxf", Qt::CaseInsensitive))
+		importDXF(filename);
+	else if (filename.endsWith(".gpx", Qt::CaseInsensitive))
+		importGPX(filename);
+	else
+		QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected file because its file format is not supported."));
 }
 
-void MapEditorController::importDXF(QString fileName){
-	TemplateGPS temp(fileName, map, this);
-	temp.open(window, main_view);
-	temp.import(this);
-}
-void MapEditorController::importDXF(){
-	QString fileName = QFileDialog::getOpenFileName(window, tr("Import DXF file"), QDir::homePath(), tr("DXF files (*.dxf)"));
-	if(fileName.isEmpty() || fileName.isNull())
+void MapEditorController::importGPX(QString filename)
+{
+	TemplateGPS temp(filename, map);
+	if (!temp.open(window, main_view))
 		return;
-	importDXF(fileName);
-}
-
-void MapEditorController::importGPX(QString fileName){
-	TemplateGPS temp(fileName, map, this);
-	temp.open(window, main_view);
-	temp.import(this);
-}
-void MapEditorController::importGPX(){
-	QString fileName = QFileDialog::getOpenFileName(window, tr("Import GPX file"), QDir::homePath(), tr("GPX files (*.gpx)"));
-	if(fileName.isEmpty() || fileName.isNull())
-		return;
-	importGPX(fileName);
+	temp.import(window);
 }
 
 #include "map_editor.moc"

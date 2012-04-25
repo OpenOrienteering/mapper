@@ -37,7 +37,7 @@ public:
     OCAD8FileFormat() : Format("OCAD78", QObject::tr("OCAD Versions 7, 8"), "ocd", true, false, true) {}
 
     bool understands(const unsigned char *buffer, size_t sz) const;
-	Importer *createImporter(const QString &path, Map *map, MapView *view, MapEditorController* controller = 0) const throw (FormatException);
+	Importer *createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
 };
 
 

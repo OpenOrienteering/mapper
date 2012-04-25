@@ -34,7 +34,7 @@ bool Format::understands(const unsigned char *buffer, size_t sz) const
     return false;
 }
 
-Importer *Format::createImporter(const QString &path, Map *map, MapView *view, MapEditorController* controller) const throw (FormatException)
+Importer *Format::createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
 {
     throw FormatException(QString("Format (%1) does not support import").arg(description()));
 }

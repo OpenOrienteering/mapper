@@ -306,11 +306,11 @@ void Map::MapColorSet::dereference()
 bool Map::static_initialized = false;
 MapColor Map::covering_white;
 MapColor Map::covering_red;
-MapColor Map::gps_track;
+MapColor Map::undefined_symbol_color;
 LineSymbol* Map::covering_white_line;
 LineSymbol* Map::covering_red_line;
-LineSymbol* Map::gps_dummy_line;
-PointSymbol* Map::gps_dummy_point;
+LineSymbol* Map::undefined_line;
+PointSymbol* Map::undefined_point;
 CombinedSymbol* Map::covering_combined_line;
 
 Map::Map() : renderables(this), selection_renderables(this)
@@ -405,9 +405,9 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 }
 bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool load_symbols_only)
 {
-    MapView *view = new MapView(this);
+	MapView *view = new MapView(this);
 
-    // Ensure the file exists and is readable.
+	// Ensure the file exists and is readable.
 	QFile file(path);
 	if (!file.open(QIODevice::ReadOnly))
 	{
@@ -418,39 +418,39 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 	// Delete previous objects
 	clear();
 
-    // Read a block at the beginning of the file, that we can use for magic number checking.
-    unsigned char buffer[256];
-    size_t total_read = file.read((char *)buffer, 256);
-    file.close();
+	// Read a block at the beginning of the file, that we can use for magic number checking.
+	unsigned char buffer[256];
+	size_t total_read = file.read((char *)buffer, 256);
+	file.close();
 
-    bool import_complete = false;
+	bool import_complete = false;
 	QString error_msg = tr("Invalid file type.");
-    Q_FOREACH(const Format *format, FileFormats.formats())
-    {
-        // If the format supports import, and thinks it can understand the file header, then proceed.
-        if (format->supportsImport() && format->understands(buffer, total_read))
-        {
-            Importer *importer = NULL;
-            // Wrap everything in a try block, so we can gracefully recover if the importer balks.
-            try {
-                // Create an importer instance for this file and map.
-				importer = format->createImporter(path, this, view, map_editor);
+	Q_FOREACH(const Format *format, FileFormats.formats())
+	{
+		// If the format supports import, and thinks it can understand the file header, then proceed.
+		if (format->supportsImport() && format->understands(buffer, total_read))
+		{
+			Importer *importer = NULL;
+			// Wrap everything in a try block, so we can gracefully recover if the importer balks.
+			try {
+				// Create an importer instance for this file and map.
+				importer = format->createImporter(path, this, view);
 
-                // Run the first pass.
-                importer->doImport(load_symbols_only);
+				// Run the first pass.
+				importer->doImport(load_symbols_only);
 
-                // Are there any actions the user must take to complete the import?
-                if (!importer->actions().empty())
-                {
-                    // TODO: prompt the user to resolve the action items. All-in-one dialog.
-                }
+				// Are there any actions the user must take to complete the import?
+				if (!importer->actions().empty())
+				{
+					// TODO: prompt the user to resolve the action items. All-in-one dialog.
+				}
 
-                // Finish the import.
-                importer->finishImport();
+				// Finish the import.
+				importer->finishImport();
 
-                // Display any warnings.
-                if (!importer->warnings().empty())
-                {
+				// Display any warnings.
+				if (!importer->warnings().empty())
+				{
 					QString warnings = "";
 					for (std::vector<QString>::const_iterator it = importer->warnings().begin(); it != importer->warnings().end(); ++it) {
 						if (!warnings.isEmpty())
@@ -460,52 +460,46 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 					QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The map import generated warnings."), QMessageBox::Ok);
 					msgBox.setDetailedText(warnings);
 					msgBox.exec();
-                }
+				}
 
-                import_complete = true;
-            }
-            catch (std::exception &e)
-            {
-                qDebug() << "Exception:" << e.what();
+				import_complete = true;
+			}
+			catch (std::exception &e)
+			{
+				qDebug() << "Exception:" << e.what();
 				error_msg = e.what();
-            }
-            if (importer) delete importer;
-        }
-        // If the last importer finished successfully
-        if (import_complete) break;
-    }
-    
-    if (map_editor)
+			}
+			if (importer) delete importer;
+		}
+		// If the last importer finished successfully
+		if (import_complete) break;
+	}
+	
+	if (map_editor)
 		map_editor->main_view = view;
 	else
 		delete view;	// TODO: HACK. Better not create the view at all in this case!
 
-    if (!import_complete)
-    {
-        QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\n\n%2").arg(path).arg(error_msg));
-        return false;
-    }
-
-    // Post processing
-    for (unsigned int i = 0; i < symbols.size(); ++i)
-    {
-        if (!symbols[i]->loadFinished(this))
-        {
-            QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError during symbol post-processing.").arg(path));
-            return false;
-        }
-    }
-
-	if(load_symbols_only){
-		color_set->colors.push_back(getGpsTrack());
-		symbols.push_back(getGpsDummyLine());
-		symbols.push_back(getGpsDummyPoint());
+	if (!import_complete)
+	{
+		QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\n\n%2").arg(path).arg(error_msg));
+		return false;
 	}
 
-    // Update all objects without trying to remove their renderables first, this gives a significant speedup when loading large files
-    updateAllObjects(false);
+	// Post processing
+	for (unsigned int i = 0; i < symbols.size(); ++i)
+	{
+		if (!symbols[i]->loadFinished(this))
+		{
+			QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError during symbol post-processing.").arg(path));
+			return false;
+		}
+	}
 
-    return true;
+	// Update all objects without trying to remove their renderables first, this gives a significant speedup when loading large files
+	updateAllObjects(false);
+
+	return true;
 }
 
 void Map::clear()
@@ -941,6 +935,7 @@ void Map::initStatic()
 {
 	static_initialized = true;
 	
+	// Covering colors and symbols
 	covering_white.opacity = 1000;	// HACK: (almost) always opaque, even if multiplied by opacity factors
 	covering_white.r = 1;
 	covering_white.g = 1;
@@ -962,31 +957,29 @@ void Map::initStatic()
 	covering_red_line = new LineSymbol();
 	covering_red_line->setColor(&covering_red);
 	covering_red_line->setLineWidth(0.1);
-
-
-	gps_dummy_line = new LineSymbol();
-	gps_dummy_line->setColor(&gps_track);
-	gps_dummy_line->setLineWidth(0.3);
-	gps_dummy_line->setIsHelperSymbol(true);
-	gps_dummy_line->setName("Dummy point");
-	gps_dummy_line->setDescription("Dummy point");
-	gps_dummy_line->setNumberComponent(0, 4);
-
-	gps_dummy_point = new PointSymbol();
-	gps_dummy_point->setInnerRadius(0);
-	gps_dummy_point->setOuterWidth(1);
-	gps_dummy_point->setOuterColor(&gps_track);
-	gps_dummy_point->setInnerColor(&gps_track);
-	gps_dummy_point->setIsHelperSymbol(true);
-	gps_dummy_point->setRotatable(true);
-	gps_dummy_point->setName("Dummy point");
-	gps_dummy_point->setDescription("Dummy point");
-	gps_dummy_point->setNumberComponent(0, 5);
 	
 	covering_combined_line = new CombinedSymbol();
 	covering_combined_line->setNumParts(2);
 	covering_combined_line->setPart(0, covering_white_line);
 	covering_combined_line->setPart(1, covering_red_line);
+	
+	// Undefined symbols
+	undefined_symbol_color.opacity = 1;
+	undefined_symbol_color.r = 0.5f;
+	undefined_symbol_color.g = 0.5f;
+	undefined_symbol_color.b = 0.5f;
+	undefined_symbol_color.updateFromRGB();
+	undefined_symbol_color.priority = MapColor::Undefined;
+	
+	undefined_line = new LineSymbol();
+	undefined_line->setColor(&undefined_symbol_color);
+	undefined_line->setLineWidth(1);
+	undefined_line->setIsHelperSymbol(true);
+
+	undefined_point = new PointSymbol();
+	undefined_point->setInnerRadius(100);
+	undefined_point->setInnerColor(&undefined_symbol_color);
+	undefined_point->setIsHelperSymbol(true);
 }
 
 void Map::addSymbol(Symbol* symbol, int pos)
@@ -1072,6 +1065,12 @@ int Map::findSymbolIndex(Symbol* symbol)
 		if (symbols[i] == symbol)
 			return i;
 	}
+	
+	if (symbol == undefined_point)
+		return -2;
+	else if (symbol == undefined_line)
+		return -3;
+	
 	assert(false);
 	return -1;
 }

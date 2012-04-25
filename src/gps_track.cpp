@@ -24,10 +24,12 @@
 #include <QFile>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
+#include <QMessageBox>
+#include <QInputDialog> // TODO: get rid of this
 
 #include "global.h"
 #include "dxfparser.h"
-#include "map_editor.h"
+
 GPSPoint::GPSPoint(GPSCoordinate coord, QDateTime datetime, float elevation, int num_satellites, float hDOP)
 {
 	gps_coord = coord;
@@ -49,9 +51,6 @@ void GPSPoint::save(QXmlStreamWriter* stream)
 		stream->writeTextElement("sat", QString::number(num_satellites));
 	if (hDOP >= 0)
 		stream->writeTextElement("hdop", QString::number(hDOP, 'f', 3));
-}
-void GPSPoint::saveDXF(QFile *file){
-
 }
 
 // ### GPSTrack ###
@@ -86,7 +85,7 @@ void GPSTrack::clear()
 	current_segment_finished = true;
 }
 
-bool GPSTrack::loadFrom(const QString& path, bool project_points, MapEditorController *controller)
+bool GPSTrack::loadFrom(const QString& path, bool project_points, QWidget* dialog_parent)
 {
 	QFile file(path);
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -144,19 +143,17 @@ bool GPSTrack::loadFrom(const QString& path, bool project_points, MapEditorContr
 		parser->setData(&file);
 		QString result = parser->parse();
 		if(!result.isEmpty()){
-			QMessageBox::critical(controller->getWindow(), QObject::tr("Error reading"), QObject::tr("There was an error reading the DXF file %1:\n\n%1").arg(file.fileName(), result));
+			QMessageBox::critical(dialog_parent, QObject::tr("Error reading"), QObject::tr("There was an error reading the DXF file %1:\n\n%1").arg(file.fileName(), result));
 			delete parser;
 			return false;
 		}
 		QList<path_t> paths = parser->getData();
-		QRectF size = parser->getSize();
+		//QRectF size = parser->getSize();
 		delete parser;
-		int res = QMessageBox::question(controller->getWindow(), QObject::tr("Question"), QObject::tr("Are the coordinates in the DXF file in degrees?"), QMessageBox::Yes|QMessageBox::No);
-		bool degrees = false;
-		if(res == QMessageBox::Yes)
-			degrees = true;
-		qreal val1 = QInputDialog::getDouble(controller->getWindow(), QObject::tr("Scale value"), QObject::tr("Choose a value to scale latitude coordinates by. A value of 1 does nothing, over one scales up and under one scales down."), 1, 0.000000001, 100000000, 10);
-		qreal val2 = QInputDialog::getDouble(controller->getWindow(), QObject::tr("Scale value"), QObject::tr("Choose a value to scale longitude coordinates by. A value of 1 does nothing, over one scales up and under one scales down."), val1, 0.000000001, 100000000, 10);
+		int res = QMessageBox::question(dialog_parent, QObject::tr("Question"), QObject::tr("Are the coordinates in the DXF file in degrees?"), QMessageBox::Yes|QMessageBox::No);
+		bool degrees = (res == QMessageBox::Yes);
+		qreal val1 = QInputDialog::getDouble(dialog_parent, QObject::tr("Scale value"), QObject::tr("Choose a value to scale latitude coordinates by. A value of 1 does nothing, over one scales up and under one scales down."), 1, 0.000000001, 100000000, 10);
+		qreal val2 = QInputDialog::getDouble(dialog_parent, QObject::tr("Scale value"), QObject::tr("Choose a value to scale longitude coordinates by. A value of 1 does nothing, over one scales up and under one scales down."), val1, 0.000000001, 100000000, 10);
 		foreach(path_t path, paths){
 			if(path.type == POINT){
 				if(path.coords.size() < 1)
