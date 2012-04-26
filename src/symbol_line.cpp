@@ -1435,11 +1435,11 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	layout->addWidget(mid_symbol_distance_edit, row, col, 1, -1);
 	
 	
-	QLabel* segment_length_label = new QLabel(tr("Segment length:"));
+	QLabel* segment_length_label = new QLabel(tr("Distance between spots:"));
 	segment_length_edit = new QLineEdit(QString::number(0.001 * symbol->segment_length));
 	segment_length_edit->setValidator(new DoubleValidator(0, 999999, segment_length_edit));
 	
-	QLabel* end_length_label = new QLabel(tr("End length:"));
+	QLabel* end_length_label = new QLabel(tr("Distance from line end:"));
 	end_length_edit = new QLineEdit(QString::number(0.001 * symbol->end_length));
 	end_length_edit->setValidator(new DoubleValidator(0, 999999, end_length_edit));
 	
@@ -1810,7 +1810,7 @@ void LineSymbolSettings::updateWidgets()
 		Q_FOREACH(QWidget* undashed_widget, undashed_widget_list)
 		{
 			undashed_widget->setVisible(true);
-			undashed_widget->setEnabled(line_active && !symbol->mid_symbol->isEmpty());
+			undashed_widget->setEnabled(!symbol->mid_symbol->isEmpty());
 		}
 		show_at_least_one_symbol_check->setEnabled(show_at_least_one_symbol_check->isEnabled() && symbol->end_length > 0);
 		Q_FOREACH(QWidget* dashed_widget, dashed_widget_list)
