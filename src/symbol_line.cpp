@@ -1541,14 +1541,13 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	
 	updateWidgets();
 	
-	QSize min_size = line_tab->size();
-	min_size.setHeight(0);
+	const int line_tab_width = line_tab->sizeHint().width();
 	
 	scroll_area = new QScrollArea();
 	scroll_area->setWidget(line_tab);
 	scroll_area->setWidgetResizable(true);
 	scroll_area->setFrameShape(QFrame::NoFrame);
-	scroll_area->setMinimumSize(min_size);
+	scroll_area->setMinimumWidth(line_tab_width + scroll_area->verticalScrollBar()->sizeHint().width());
 	addPropertiesGroup(tr("Line settings"), scroll_area);
 	
 	PointSymbolEditorWidget* point_symbol_editor = 0;
