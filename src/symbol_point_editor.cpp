@@ -254,14 +254,12 @@ void PointSymbolEditorWidget::setEditorActive(bool active)
 			map->addObject(midpoint_object);
 		}
 		midpoint_object->update(true);
-		elementChanged(0);
 		controller->setTool(new PointSymbolEditorTool(controller, this));
 		activity = new PointSymbolEditorActivity(map, this);
 		controller->setEditorActivity(activity);
 	}
 	else
 	{
-		elementChanged(-1);
 		controller->setTool(NULL);
 		controller->setEditorActivity(NULL);
 		if (!permanent_preview && midpoint_object != NULL)
