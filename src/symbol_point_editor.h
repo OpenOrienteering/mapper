@@ -42,34 +42,49 @@ class Symbol;
 class Object;
 class Map;
 
+/** A Widget for editing point symbol definitions */
 class PointSymbolEditorWidget : public QWidget
 {
 Q_OBJECT
 friend class PointSymbolEditorActivity;
 public:
+	/** Construct a new widget.
+	 * @param controller The controller of the preview map
+	 * @param symbol The point symbol to be edited
+	 * @param offset_y The vertical offset of the point symbol preview/editor from the origin
+	 * @param permanent_preview A flag indicating wheter the preview shall be visible even if the editor is not visible
+	 */
 	PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, float offset_y = 0, bool permanent_preview = false, QWidget* parent = 0);
 	
 	virtual ~PointSymbolEditorWidget();
 	
-	bool changeCurrentCoordinate(MapCoordF new_coord);	// returns true if successful
-	bool addCoordinate(MapCoordF new_coord);			// returns true if successful
+	/** Add a coordinate to the current element.
+	 *  @return true if successful
+	 */
+	bool addCoordinate(MapCoordF new_coord);
 	
+	/** Change the current coordinate of the current element.
+	 *  @return true if successful
+	 */
+	bool changeCurrentCoordinate(MapCoordF new_coord);
+	
+	/** Activate the editor in the map preview. */
 	void setEditorActive(bool active);
 	
+	/** Request to hide or show the editor. */
 	virtual void setVisible(bool visible);
 	
 signals:
+	/** This signal gets emitted whenever the symbol appearance is modified. */
 	void symbolEdited();
 	
 private slots:
-	void updateElementList();
-	
-	void elementChanged(int row);
+	void changeElement(int row);
 	
 	void addPointClicked();
 	void addLineClicked();
 	void addAreaClicked();
-	void deleteElementClicked();
+	void deleteCurrentElement();
 	
 	void pointInnerRadiusChanged(QString text);
 	void pointInnerColorChanged();
@@ -84,20 +99,20 @@ private slots:
 	
 	void areaColorChanged();
 	
-	void currentCoordChanged();
+	void updateDeleteCoordButton();
 	void coordinateChanged(int row, int column);
 	void addCoordClicked();
 	void deleteCoordClicked();
 	void centerCoordsClicked();
 	
 private:
+	void initElementList();
 	void updateCoordsTable();
 	void addCoordsRow(int row);
 	void updateCoordsRow(int row);
-	void updateDeleteCoordButton();
 	
 	void insertElement(Object* object, Symbol* symbol);
-	QString getLabelForSymbol(Symbol* symbol) const;
+	QString getLabelForSymbol(const Symbol* symbol) const;
 	
 	Symbol* getCurrentElementSymbol();
 	Object* getCurrentElementObject();
@@ -111,17 +126,20 @@ private:
 	
 	QStackedWidget* element_properties_widget;
 	
+	QWidget* point_properties;
 	QLineEdit* point_inner_radius_edit;
 	ColorDropDown* point_inner_color_edit;
 	QLineEdit* point_outer_width_edit;
 	ColorDropDown* point_outer_color_edit;
 	
+	QWidget* line_properties;
 	QLineEdit* line_width_edit;
 	ColorDropDown* line_color_edit;
 	QComboBox* line_cap_edit;
 	QComboBox* line_join_edit;
 	QCheckBox* line_closed_check;
 	
+	QWidget* area_properties;
 	ColorDropDown* area_color_edit;
 	
 	QLabel* coords_label;
@@ -130,7 +148,6 @@ private:
 	QPushButton* delete_coord_button;
 	QPushButton* center_coords_button;
 	
-	bool react_to_changes;
 	const float offset_y;
 	PointSymbolEditorActivity* activity;
 	Map* map;
