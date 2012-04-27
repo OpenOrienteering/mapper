@@ -247,6 +247,7 @@ void MainWindow::setHasUnsavedChanges(bool value)
 void MainWindow::setStatusBarText(const QString& text)
 {
 	status_label->setText(text);
+	status_label->setToolTip(text);
 }
 
 void MainWindow::closeFile()
