@@ -34,10 +34,8 @@
 #include "map_coord.h"
 #include "renderable.h"
 
-QT_BEGIN_NAMESPACE
 class QFile;
 class QPainter;
-QT_END_NAMESPACE
 
 class Map;
 struct MapColor;
@@ -50,6 +48,7 @@ class Object;
 class MapEditorController;
 class OCAD8FileImport;
 struct GPSProjectionParameters;
+class CartesianGeoreferencing;
 
 typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
 
@@ -266,6 +265,10 @@ public:
 	void setGPSProjectionParameters(const GPSProjectionParameters& params);
 	inline const GPSProjectionParameters& getGPSProjectionParameters() const {return *gps_projection_parameters;}
 	
+//	inline const bool isGeoreferenced() {return georeferencing->isDefined();}
+	void setGeoreferencing(const CartesianGeoreferencing& georeferencing);
+	inline const CartesianGeoreferencing& getGeoreferencing() const {return *georeferencing;}
+	
 	inline bool arePrintParametersSet() const {return print_params_set;}
 	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height);
 	void getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& center, float& left, float& top, float& width, float& height);
@@ -357,6 +360,7 @@ private:
 	
 	bool gps_projection_params_set;	// have the parameters been set (are they valid)?
 	GPSProjectionParameters* gps_projection_parameters;
+	CartesianGeoreferencing* georeferencing;
 	
 	bool print_params_set;			// have the parameters been set (are they valid)?
 	int print_orientation;			// QPrinter::Orientation

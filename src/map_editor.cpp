@@ -249,7 +249,7 @@ void MapEditorController::attach(MainWindow* window)
 	statusbar_zoom_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	statusbar_cursorpos_label = new QLabel();
 	statusbar_cursorpos_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-	statusbar_cursorpos_label->setFixedWidth(100);
+	statusbar_cursorpos_label->setFixedWidth(150);
 	statusbar_cursorpos_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	window->statusBar()->addPermanentWidget(statusbar_zoom_label);
 	window->statusBar()->addPermanentWidget(statusbar_cursorpos_label);
@@ -855,12 +855,14 @@ void MapEditorController::openTemplateClicked()
 
 void MapEditorController::editGeoreferencing()
 {
-	GeoreferencingDialog dialog(window, &map->getGPSProjectionParameters());
+	GeoreferencingDialog dialog(window, *map, &map->getGPSProjectionParameters());
 	dialog.setWindowModality(Qt::WindowModal);
 	if (dialog.exec() == QDialog::Rejected)
 		return;
 	
 	map->setGPSProjectionParameters(dialog.getParameters());
+	if (dialog.getGeoreferencing().isDefined())
+		map->setGeoreferencing(dialog.getGeoreferencing());
 }
 
 void MapEditorController::selectedSymbolsChanged()

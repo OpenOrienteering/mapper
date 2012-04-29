@@ -99,7 +99,7 @@ bool TemplateGPS::open(QWidget* dialog_parent, MapView* main_view)
 		params.center_longitude = (num_samples > 0) ? (avg_longitude / num_samples) : 0;
 		
 		// Show the parameter dialog
-		GeoreferencingDialog dialog(dialog_parent, &params);
+		GeoreferencingDialog dialog(dialog_parent, *map, &params);
 		dialog.setWindowModality(Qt::WindowModal);
 		if (dialog.exec() == QDialog::Rejected)
 			return false;

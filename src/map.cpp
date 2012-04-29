@@ -40,6 +40,7 @@
 #include "symbol_line.h"
 #include "symbol_combined.h"
 #include "file_format_ocad8.h"
+#include "georeferencing.h"
 
 MapLayer::MapLayer(const QString& name, Map* map) : name(name), map(map)
 {
@@ -321,6 +322,7 @@ Map::Map() : renderables(this), selection_renderables(this)
 	color_set = NULL;
 	object_undo_manager.setOwner(this);
 	gps_projection_parameters = NULL;
+	georeferencing = new CartesianGeoreferencing(*this);
 	
 	clear();
 }
@@ -345,6 +347,7 @@ Map::~Map()
 	color_set->dereference();
 	
 	delete gps_projection_parameters;
+	delete georeferencing;
 }
 
 bool Map::saveTo(const QString& path, MapEditorController* map_editor)
@@ -1307,6 +1310,12 @@ void Map::setGPSProjectionParameters(const GPSProjectionParameters& params)
 	emit(gpsProjectionParametersChanged());
 	
 	setHasUnsavedChanges();
+}
+
+void Map::setGeoreferencing(const CartesianGeoreferencing& georeferencing)
+{
+	delete this->georeferencing;
+	this->georeferencing = new CartesianGeoreferencing(georeferencing);
 }
 
 void Map::setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height)

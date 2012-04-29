@@ -26,6 +26,7 @@
 #include "map.h"
 #include "map_editor.h"
 #include "template.h"
+#include "georeferencing.h"
 
 #if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
 #define MiddleButton MidButton
@@ -380,7 +381,20 @@ void MapWidget::updateCursorposLabel(MapCoordF pos)
 	if (!cursorpos_label)
 		return;
 	
-	cursorpos_label->setText(QString::number(pos.getX(), 'f', 2) + " " + QString::number(-pos.getY(), 'f', 2));
+	const CartesianGeoreferencing  &georef = view->getMap()->getGeoreferencing();
+	if (georef.isDefined())
+	{
+		QPointF geo_point(georef.toGeoCoords(pos));
+		cursorpos_label->setText( QString("(m) %1 %2").
+		  arg(QString::number(geo_point.x(), 'f', 1)).
+		  arg(QString::number(geo_point.y(), 'f', 1)) );
+	}
+	else
+	{
+		cursorpos_label->setText( QString("(mm) %1 %2").
+		  arg(QString::number(pos.getX(), 'f', 2)).
+		  arg(QString::number(-pos.getY(), 'f', 2)) );
+	}
 }
 
 QSize MapWidget::sizeHint() const
