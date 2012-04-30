@@ -30,6 +30,7 @@
 #include "map_dialog_new.h"
 #include "map_editor.h"
 #include "file_format.h"
+#include "settings_dialog.h"
 
 // ### MainWindowController ###
 
@@ -126,8 +127,7 @@ void MainWindow::createFileMenu()
 		connect(recent_file_act[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
 	}
 	open_recent_menu_inserted = false;
-	
-	// TODO: importAct? Or better in the map menu?
+
 	// NOTE: if you insert something between open_recent_menu and save_act, adjust updateRecentFileActions()!
 	
 	save_act = new QAction(QIcon(":/images/save.png"), tr("&Save"), this);
@@ -619,8 +619,9 @@ void MainWindow::toggleFullscreenMode()
 
 void MainWindow::showSettings()
 {
-	// TODO
-	QMessageBox::information(this, tr("Error"), tr("Sorry, settings are not implemented yet!"));
+	SettingsDialog *dialog = new SettingsDialog(this);
+	dialog->exec();
+	delete dialog;
 }
 void MainWindow::showAbout()
 {

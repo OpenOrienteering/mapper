@@ -192,7 +192,6 @@ public slots:
 	void toggleFullscreenMode();
 	
 	/** Show the settings dialog.
-	 *  TODO.
 	 */
 	void showSettings();
 	
