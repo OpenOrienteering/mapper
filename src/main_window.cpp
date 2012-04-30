@@ -661,24 +661,42 @@ void MainWindow::showAbout()
 	about_dialog.setWindowModality(Qt::WindowModal);
 	about_dialog.exec();
 }
+
+
+template <class T>
+static const bool findFirstExistingItem(const QList<T> &list, T &which)
+{
+    Q_FOREACH(const T &item, list)
+    {
+        qDebug() << "Looking for" << item;
+        if (item.exists())
+        {
+            which = item;
+            return true;
+        }
+    }
+    return false;
+}
+
 void MainWindow::showHelp(QString filename, QString fragment)
 {
 	static QProcess* process = NULL;
 	
+    QString app_dir = QCoreApplication::applicationDirPath();
+    QList<QDir> help_locations;
+    help_locations
+          << QDir("help")
+          << QDir(app_dir % "/../share/openorienteering-mapper/help")
+          << QDir(app_dir % "/../../../../help");
+
+    QDir help_dir;
 	if (!process || process->state() == QProcess::NotRunning)
 	{
-		// Try to find the help file directory
-		QDir help_dir = QDir("help");
-		if (!help_dir.exists())
-		{
-			QString app_dir = QCoreApplication::applicationDirPath();
-			help_dir = QDir(app_dir % "/../share/openorienteering-mapper/help");
-			if (!help_dir.exists())
-			{
-				QMessageBox::warning(this, tr("Error"), tr("Failed to locate the help files."));
-				return;
-			}
-		}
+        if (!findFirstExistingItem(help_locations, help_dir))
+        {
+            QMessageBox::warning(this, tr("Error"), tr("Failed to locate the help files."));
+            return;
+        }
 		
 		// Try to start the Qt Assistant process
 		if (process)
@@ -690,6 +708,7 @@ void MainWindow::showHelp(QString filename, QString fragment)
 			 << QLatin1String("-showUrl")
 			 << makeHelpUrl(filename, fragment)
 			 << QLatin1String("-enableRemoteControl");
+
 		process->start(QLatin1String("assistant"), args);
 		if (!process->waitForStarted())
 		{
