@@ -31,6 +31,7 @@
 
 NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
+	this->setWhatsThis("<a href=\"new_map.html\">See more</a>");
 	setWindowTitle(tr("Create new map"));
 	
 	QLabel* desc_label = new QLabel(tr("Choose the scale and symbol set for the new map."));

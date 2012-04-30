@@ -18,7 +18,7 @@
  */
 
 
-#include "template_move_tool.h"
+#include "template_tool_move.h"
 
 #include <QMouseEvent>
 
@@ -89,7 +89,7 @@ void TemplateMoveTool::updateDragging(MapCoordF mouse_pos_map)
 	{
 		Template::PassPoint* point = templ->getPassPoint(i);
 		
-		if (templ->isGeoreferencingApplied())
+		if (templ->isAdjustmentApplied())
 		{
 			point->dest_coords_map.moveInt(dx, dy);
 			point->calculated_coords_map.moveInt(dx, dy);
@@ -102,4 +102,4 @@ void TemplateMoveTool::updateDragging(MapCoordF mouse_pos_map)
 	editor->getMap()->emitTemplateChanged(templ);
 }
 
-#include "template_move_tool.moc"
+#include "template_tool_move.moc"

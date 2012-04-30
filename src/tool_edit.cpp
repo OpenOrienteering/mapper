@@ -280,6 +280,8 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 	// NOTE: This must be after the rest of the processing
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
+	if (dragging && !box_selection)
+		updateStatusText();
 	
 	return true;
 }
@@ -343,6 +345,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 		}
 		
 		dragging = false;
+		updateStatusText();
 	}
 	else
 	{
@@ -578,6 +581,14 @@ void EditTool::textSelectionChanged(bool text_change)
 
 void EditTool::updateStatusText()
 {
+	if (dragging && !box_selection)
+	{
+		MapCoordF drag_vector = cur_pos_map - click_pos_map;
+		setStatusBarText(tr("<b>Coordinate offset [mm]:</b> %1, %2  <b>Distance [m]:</b> %3")
+						  .arg(drag_vector.getX(), 0, 'f', 1).arg(-drag_vector.getY(), 0, 'f', 1).arg(0.001 * editor->getMap()->getScaleDenominator() * drag_vector.length(), 0, 'f', 1));
+		return;
+	}
+	
 	QString str = tr("<b>Click</b> to select an object, <b>Drag</b> for box selection, <b>Shift</b> to toggle selection");
 	if (editor->getMap()->getNumSelectedObjects() > 0)
 	{

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
  <QtHelpProject version="1.0">
-     <namespace>OOMapper.alpha.3.help</namespace>
+     <namespace>openorienteering.mapper.help</namespace>
      <virtualFolder>oohelpdoc</virtualFolder>
      <customFilter name="My Application 1.0">
          <filterAttribute>OOMap</filterAttribute>
@@ -10,39 +10,39 @@
          <filterAttribute>OOMap</filterAttribute>
          <filterAttribute>1.0</filterAttribute>
          <toc>
-             <section title="OOMapper" ref="help/html/index.html">
-                 <section title="Introduction" ref="help/html/index.html"/>
-                 <section title="Installation" ref="help/html/install.html"/>
-                 <section title="Opening" ref="help/html/opening.html"/>
-                 <section title="Software Settings" ref="help/html/settings.html"/>
-                 <section title="New Map" ref="help/html/new_map.html"/>
-                 <section title="Map Screen" ref="help/html/map_screen.html"/>
-                 <section title="File Menu" ref="help/html/file_menu.html"/>
-                 <section title="View Menu" ref="help/html/view_menu.html"/>
-                 <section title="Edit Menu" ref="help/html/edit_menu.html"/>
-                 <section title="Drawing toolbar" ref="help/html/drawing_toolbar.html"/>
-                 <section title="Tools Menu" ref="help/html/tools_menu.html"/>
-                 <section title="Map Menu" ref="help/html/map_menu.html"/>
-                 <section title="Symbols Menu" ref="help/html/symbols_menu.html"/>
-                 <section title="Symbols &amp; Colors" ref="help/html/symbols.html"/>
-                 <section title="Templates Menu" ref="help/html/template_menu.html"/>
-                 <section title="GPS Menu" ref="help/html/gps_menu.html"/>
+             <section title="OOMapper" ref="help/html_en/index.html">
+                 <section title="Introduction" ref="help/html_en/index.html"/>
+                 <section title="Installation" ref="help/html_en/install.html"/>
+                 <section title="Opening" ref="help/html_en/opening.html"/>
+                 <section title="Software Settings" ref="help/html_en/settings.html"/>
+                 <section title="New Map" ref="help/html_en/new_map.html"/>
+                 <section title="Map Screen" ref="help/html_en/map_screen.html"/>
+                 <section title="File Menu" ref="help/html_en/file_menu.html"/>
+                 <section title="View Menu" ref="help/html_en/view_menu.html"/>
+                 <section title="Edit Menu" ref="help/html_en/edit_menu.html"/>
+                 <section title="Drawing toolbar" ref="help/html_en/drawing_toolbar.html"/>
+                 <section title="Tools Menu" ref="help/html_en/tools_menu.html"/>
+                 <section title="Map Menu" ref="help/html_en/map_menu.html"/>
+                 <section title="Symbols Menu" ref="help/html_en/symbols_menu.html"/>
+                 <section title="Symbols &amp; Colors" ref="help/html_en/symbols.html"/>
+                 <section title="Templates Menu" ref="help/html_en/template_menu.html"/>
+                 <section title="GPS Menu" ref="help/html_en/gps_menu.html"/>
              </section>
          </toc>
          <keywords>
-             <keyword name="Install"  ref="help/html/install.html"/>
-             <keyword name="New map" ref="help/html/opening.html"/>
-             <keyword name="File menu" ref="help/html/opening.html"/>
-             <keyword name="Editing" ref="help/html/opening.html"/>
-             <keyword name="Map screen" ref="help/html/opening.html"/>
-             <keyword name="Symbols" ref="help/html/symbols.html"/>
-             <keyword name="Colors" ref="help/html/symbols.html#colors"/>
-             <keyword name="Templates" ref="help/html/template_menu.html"/>
+             <keyword name="Install"  ref="help/html_en/install.html"/>
+             <keyword name="New map" ref="help/html_en/opening.html"/>
+             <keyword name="File menu" ref="help/html_en/opening.html"/>
+             <keyword name="Editing" ref="help/html_en/opening.html"/>
+             <keyword name="Map screen" ref="help/html_en/opening.html"/>
+             <keyword name="Symbols" ref="help/html_en/symbols.html"/>
+             <keyword name="Colors" ref="help/html_en/symbols.html#colors"/>
+             <keyword name="Templates" ref="help/html_en/template_menu.html"/>
          </keywords>
          <files>
-			 <file>help/html/oomap.css</file>
-             <file>help/html/*.html</file>
-             <file>help/html/images/*</file>
+			 <file>help/html_en/oomap.css</file>
+             <file>help/html_en/*.html</file>
+             <file>help/html_en/images/*</file>
 			 <file>images/*</file>
          </files>
      </filterSection>

@@ -1,0 +1,5 @@
+# Generated help files will be placed here.
+# Ignore everything in this directory
+*
+# Except this file
+!.gitignore

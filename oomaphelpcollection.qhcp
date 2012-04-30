@@ -4,11 +4,11 @@
 		<generate>
 			<file>
 				<input>oomaphelp.qhp</input>
-				<output>help/oomaphelp.qch</output>
+				<output>bin/help/oomaphelp.qch</output>
 			</file>
 		</generate>
 		<register>
-			<file>help/oomaphelp.qch</file>
+			<file>bin/help/oomaphelp.qch</file>
 		</register>
 	</docFiles>
 </QHelpCollectionProject>

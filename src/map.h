@@ -230,7 +230,17 @@ public:
 	inline ObjectSelection::const_iterator selectedObjectsBegin() {return object_selection.constBegin();}
 	inline ObjectSelection::const_iterator selectedObjectsEnd() {return object_selection.constEnd();}
 	
-	/// Returns if 1) all selected objects are compatible to the given symbol and 2) at least one of the selected objects' symbols is different to the given symbol
+	/** Returns the object in the selection which was selected first by the user.
+	 *  If she later deselects it while other objects are still selected or if the selection is done as box selection,
+	 *  this "first" selected object is just a more or less random object from the selection.
+	 */
+	inline Object* getFirstSelectedObject() const {return first_selected_object;}
+	
+	/** Checks the selected objects for compatibiliy with the given symbol.
+	 * @param symbol the symbol to check compatibiliy for
+	 * @param out_compatible returns if all selected objects are compatible to the given symbol
+	 * @param out_different returns if at least one of the selected objects' symbols is different to the given symbol
+	 */
 	void getSelectionToSymbolCompatibility(Symbol* symbol, bool& out_compatible, bool& out_different);
 	
 	void includeSelectionRect(QRectF& rect); // enlarges rect to cover the selected objects
@@ -332,6 +342,7 @@ private:
 	int first_front_template;		// index of the first template in templates which should be drawn in front of the map
 	LayerVector layers;
 	ObjectSelection object_selection;
+	Object* first_selected_object;
 	UndoManager object_undo_manager;
 	int current_layer_index;
 	WidgetVector widgets;
@@ -482,6 +493,9 @@ public:
 	inline void setViewY(int value) {view_y = value; update();}
 	inline QPoint getDragOffset() const {return drag_offset;}
 	
+    // Map visibility
+    TemplateVisibility* getMapVisibility();
+
 	// Template visibilities
 	bool isTemplateVisible(Template* temp);						// checks if the template is visible without creating a template visibility object if none exists
 	TemplateVisibility* getTemplateVisibility(Template* temp);	// returns the template visibility object, creates one if not there yet with the default settings (invisible)
@@ -509,6 +523,7 @@ private:
 	Matrix view_to_map;
 	Matrix map_to_view;
 	
+    TemplateVisibility *map_visibility;
 	QHash<Template*, TemplateVisibility*> template_visibilities;
 	
 	WidgetVector widgets;

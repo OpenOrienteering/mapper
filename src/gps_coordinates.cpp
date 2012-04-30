@@ -20,7 +20,7 @@
 
 #include "gps_coordinates.h"
 
-#include <QtGui>
+#include <QString>
 
 GPSProjectionParameters::GPSProjectionParameters()
 {
@@ -209,71 +209,3 @@ bool GPSCoordinate::fromString(QString str)
 	longitude = temp_longitude * M_PI / 180;
 	return true;
 }
-
-// ### GPSProjectionParametersDialog ###
-
-GPSProjectionParametersDialog::GPSProjectionParametersDialog(QWidget* parent, const GPSProjectionParameters* initial_values) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
-{
-	setWindowTitle(tr("GPS coordinates projection parameters"));
-	
-	if (initial_values)
-		params = *initial_values;
-	
-	QLabel* projection_label = new QLabel(tr("Orthographic projection:"));
-	projection_label->setAlignment(Qt::AlignCenter);
-	QLabel* lat_label = new QLabel(tr("Origin latitude <b>phi 0</b>:"));
-	lat_edit = new QLineEdit(QString::number(params.center_latitude * 180 / M_PI, 'f', 12));
-	QLabel* lon_label = new QLabel(tr("Origin longitude <b>lambda 0</b>:"));
-	lon_edit = new QLineEdit(QString::number(params.center_longitude * 180 / M_PI, 'f', 12));
-	
-	QGridLayout* edit_layout = new QGridLayout();
-	edit_layout->addWidget(projection_label, 0, 0, 1, 2);
-	edit_layout->addWidget(lat_label, 1, 0);
-	edit_layout->addWidget(lat_edit, 1, 1);
-	edit_layout->addWidget(lon_label, 2, 0);
-	edit_layout->addWidget(lon_edit, 2, 1);
-	
-	edit_layout->setRowStretch(7, 1);
-	
-	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	ok_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("OK"));
-	ok_button->setDefault(true);
-	
-	QHBoxLayout* buttons_layout = new QHBoxLayout();
-	buttons_layout->addWidget(cancel_button);
-	buttons_layout->addStretch(1);
-	buttons_layout->addWidget(ok_button);
-	
-	QVBoxLayout* layout = new QVBoxLayout();
-	layout->addLayout(edit_layout);
-	layout->addSpacing(16);
-	layout->addLayout(buttons_layout);
-	setLayout(layout);
-	
-	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
-	connect(ok_button, SIGNAL(clicked(bool)), this, SLOT(accept()));
-	connect(lat_edit, SIGNAL(textChanged(QString)), this, SLOT(editChanged()));
-	connect(lon_edit, SIGNAL(textChanged(QString)), this, SLOT(editChanged()));
-}
-void GPSProjectionParametersDialog::editChanged()
-{
-	bool ok = false;
-	
-	params.center_latitude = lat_edit->text().toDouble(&ok) * M_PI / 180;
-	if (!ok)
-	{
-		ok_button->setEnabled(false);
-		return;
-	}
-	
-	params.center_longitude = lon_edit->text().toDouble(&ok) * M_PI / 180;
-	if (!ok)
-	{
-		ok_button->setEnabled(false);
-		return;
-	}
-	
-	ok_button->setEnabled(true);
-}
-
-#include "gps_coordinates.moc"

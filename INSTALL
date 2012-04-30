@@ -9,10 +9,24 @@ The program is known to work with Qt 4.6, 4.7 and 4.8 and not to compile with Qt
 Information about other versions is not available, feel free to give feedback about them.
 
 
+== Clipper Library ==
+
+The program uses parts of the clipper code library from 
+http://www.angusj.com/delphi/clipper.php which is released under the terms of
+the Boost Software License, Version 1.0. The required files are downloaded to 
+3rd-party/clipper if missing during build configuration. 
+
+To use a particular revision of the library, remove the 3rd-party/clipper 
+directory and adjust the CLIPPER_REVISION variable in 3rd-party/clipper.cmake 
+before next build.
+
+
 == Compiling on Windows ==
 
 Requirements:
-Qt, cmake and a C++ compiler (preferably MinGW, Visual C++ may also work).
+- A C++ compiler (preferably MinGW, Visual C++ may also work).
+- CMake
+- Qt
 
 The easiest way to get Qt is to intall the Qt SDK.
 If you do not have a C++ compiler yet, you can also install MinGW with the QtSDK installer. Note that you
@@ -47,23 +61,26 @@ Please also note that
 
 == Compiling on Linux ==
 
-Requirements:
-Qt, cmake and a C++ compiler.
+* Requirements:
+- A C++ compiler (g++)
+- CMake
+- Qt
 
-Building:
+* Building OpenOrienteering Mapper:
+Run the following in the project's root directory:
 mkdir build     (the build directory must be named "build"!)
 cd build
 cmake ../
 make -jX        (where X is the number of threads for building)
 
-Running:
+* Running:
 cd ../bin       (if still in the build directory)
 ./Mapper -graphicssystem raster
 
 The option "-graphicssystem raster" is a Qt option which usually leads to better performance on Linux,
 in case it is not the default yet anyway (like on Windows).
 
-Package management:
+* Package management:
 
 If you want to create a release package, enable "set(CMAKE_BUILD_TYPE Release)" in the CMakeList.txt. 
 Then start the build process from a fresh build directory.

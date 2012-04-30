@@ -113,7 +113,7 @@ public slots:
 	void showTemplateWindow(bool show);
 	void openTemplateClicked();
 	
-	void editGPSProjectionParameters();
+	void editGeoreferencing();
 	
 	void selectedSymbolsChanged();
 	void objectSelectionChanged();
@@ -140,6 +140,10 @@ public slots:
 	void cutHoleRectangleClicked(bool checked);
 	void rotateClicked(bool checked);
 	void measureClicked(bool checked);
+	void booleanUnionClicked();
+	void booleanIntersectionClicked();
+	void booleanDifferenceClicked();
+	void booleanXOrClicked();
 	
 	void paintOnTemplateClicked(bool checked);
 	void paintOnTemplateSelectClicked();
@@ -216,6 +220,11 @@ private:
 	QAction* rotate_act;
 	QAction* measure_act;
 	EditorDockWidget* measure_dock_widget;
+	QAction* boolean_union_act;
+	QAction* boolean_intersection_act;
+	QAction* boolean_difference_act;
+	QAction* boolean_xor_act;
+    QAction *change_symbol_select_act;
 	
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;
@@ -226,6 +235,7 @@ private:
 	QToolBar* toolbar_view;
 	QToolBar* toolbar_drawing;
 	QToolBar* toolbar_editing;
+	QToolBar* toolbar_advanced_editing;
 	
 	QHash<Template*, TemplatePositionDockWidget*> template_position_widgets;
 };

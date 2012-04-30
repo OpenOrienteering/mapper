@@ -25,14 +25,9 @@
 #ifndef _OPENORIENTEERING_GPS_COORDINATES_H_
 #define _OPENORIENTEERING_GPS_COORDINATES_H_
 
-#include <QDialog>
 #include <qmath.h>
 
-#include "map.h"
-
-QT_BEGIN_NAMESPACE
-class QLineEdit;
-QT_END_NAMESPACE
+#include "map_coord.h"
 
 /// Parameters for an ellipsoid and an orthographic projection of ellipsoid coordinates to 2D map (template) coordinates
 struct GPSProjectionParameters
@@ -68,25 +63,6 @@ public:
 																													
 	inline double getLatitudeInDegrees() {return latitude * 180 / M_PI;}
 	inline double getLongitudeInDegrees() {return longitude * 180 / M_PI;}
-};
-
-class GPSProjectionParametersDialog : public QDialog
-{
-Q_OBJECT
-public:
-	GPSProjectionParametersDialog(QWidget* parent, const GPSProjectionParameters* initial_values = NULL);
-	
-	inline const GPSProjectionParameters& getParameters() const {return params;}
-	
-protected slots:
-	void editChanged();
-	
-private:
-	GPSProjectionParameters params;
-	
-	QLineEdit* lat_edit;
-	QLineEdit* lon_edit;
-	QPushButton* ok_button;
 };
 
 #endif

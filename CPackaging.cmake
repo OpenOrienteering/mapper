@@ -59,6 +59,10 @@ To build a .deb package with proper file ownership, you must run
 		  DESTINATION "share/${CPACK_DEBIAN_PACKAGE_NAME}/symbol sets"
 		  FILES_MATCHING PATTERN "*.omap")
 		install(
+		  DIRECTORY "bin/help/"
+		  DESTINATION "share/${CPACK_DEBIAN_PACKAGE_NAME}/help"
+		  FILES_MATCHING PATTERN "*.qch" PATTERN "*.qhc")
+		install(
 		  FILES "debian/Mapper.desktop"
 		  DESTINATION "share/applications")
 		install(

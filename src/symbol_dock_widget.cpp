@@ -776,11 +776,12 @@ SymbolWidget::SymbolWidget(Map* map, QWidget* parent): EditorDockWidgetChild(par
 	preferred_size = settings.value("size", QSize(200, 500)).toSize();
 	settings.endGroup();
 	
+    qDebug() << "loaded preferred size for symbol widget at"<<preferred_size;
 	// Create layout
 	layout = new QHBoxLayout();
 	layout->setMargin(0);
 	layout->setSpacing(0);
-	layout->addWidget(render_widget, 1);
+    layout->addWidget(render_widget);
 	layout->addWidget(scroll_bar);
 	setLayout(layout);
 }
@@ -790,6 +791,7 @@ SymbolWidget::~SymbolWidget()
 	QSettings settings;
 	settings.beginGroup("SymbolWidget");
 	settings.setValue("size", size());
+    qDebug() << "saved preferred size for symbol widget at"<<size();
 	settings.endGroup();
 }
 QSize SymbolWidget::sizeHint() const
@@ -805,7 +807,11 @@ int SymbolWidget::getNumSelectedSymbols()
 {
 	return render_widget->getNumSelectedSymbols();
 }
-
+void SymbolWidget::selectSingleSymbol(Symbol *symbol)
+{
+    int index = map->findSymbolIndex(symbol);
+    if (index >= 0) render_widget->selectSingleSymbol(index);
+}
 void SymbolWidget::adjustSize(int width, int height)
 {
 	if (width < 0) width = this->width();

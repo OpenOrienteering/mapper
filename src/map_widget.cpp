@@ -57,6 +57,7 @@ MapWidget::MapWidget(bool show_help, bool use_antialiasing, QWidget* parent) : Q
 	setAutoFillBackground(false);
 	setMouseTracking(true);
 	setFocusPolicy(Qt::ClickFocus);
+    setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
 }
 MapWidget::~MapWidget()
 {
@@ -466,6 +467,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		bool above_template_visible = containsVisibleTemplate(view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1);
 		if (above_template_visible && above_template_cache_dirty_rect.isValid())
 			updateTemplateCache(above_template_cache, above_template_cache_dirty_rect, view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1, false);
+        bool map_visible = view->getMapVisibility()->visible;
 		
 		if (map_cache_dirty_rect.isValid())
 			updateMapCache(false);
@@ -478,8 +480,21 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		else
 			painter.fillRect(QRect(drag_offset.x(), drag_offset.y(), width(), height()), Qt::white);	// TODO: It's not as easy as that, see above.
 		
-		if (map_cache)
-			painter.drawImage(drag_offset, *map_cache, rect());
+        if (map_cache && map_visible)
+        {
+            float map_opacity = view->getMapVisibility()->opacity;
+            if (map_opacity < 1.0)
+            {
+                painter.save();
+                painter.setOpacity(map_opacity);
+                painter.drawImage(drag_offset, *map_cache, rect());
+                painter.restore();
+            }
+            else
+            {
+                painter.drawImage(drag_offset, *map_cache, rect());
+            }
+        }
 		
 		if (above_template_visible && above_template_cache && view->getMap()->getNumTemplates() - view->getMap()->getFirstFrontTemplate() > 0)
 			painter.drawImage(drag_offset, *above_template_cache, rect());
@@ -736,7 +751,7 @@ void MapWidget::updateMapCache(bool use_background)
 	if (!map_cache)
 	{
 		// Lazy allocation of cache image
-		map_cache = new QImage(size(), QImage::Format_ARGB32_Premultiplied);
+        map_cache = new QImage(size(), QImage::Format_ARGB32_Premultiplied);
 		map_cache_dirty_rect = rect();
 	}
 	
@@ -761,15 +776,14 @@ void MapWidget::updateMapCache(bool use_background)
 	
 	if (use_antialiasing)
 		painter.setRenderHint(QPainter::Antialiasing);
-	
-	// Draw map
-	painter.translate(width() / 2.0, height() / 2.0);
-	view->applyTransform(&painter);
-	
+		
 	Map* map = view->getMap();
 	QRectF map_view_rect = view->calculateViewedRect(viewportToView(map_cache_dirty_rect));
-	map->draw(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor(), true);
-	
+
+    painter.translate(width() / 2.0, height() / 2.0);
+    view->applyTransform(&painter);
+    map->draw(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor(), true);
+
 	// Finish drawing
 	painter.end();
 	

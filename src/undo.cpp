@@ -177,7 +177,7 @@ bool UndoManager::loadSteps(std::deque< UndoStep* >& steps, QFile* file, int ver
 
 void UndoManager::addNewUndoStep(UndoStep* step)
 {
-	clearRedoSteps();
+	bool deleted = clearRedoSteps();
 	addUndoStep(step);
 	
 	if (saved_step_index > 0)
@@ -190,7 +190,7 @@ void UndoManager::addNewUndoStep(UndoStep* step)
 	else
 		--loaded_step_index;
 	
-	if (undo_steps.size() == 1)
+	if (undo_steps.size() == 1 || deleted)
 		emit(undoStepAvailabilityChanged());
 }
 
@@ -299,19 +299,21 @@ void UndoManager::addRedoStep(UndoStep* step)
 	}
 }
 
-void UndoManager::clearUndoSteps()
+bool UndoManager::clearUndoSteps()
 {
 	int size = (int)undo_steps.size();
 	for (int i = 0; i < size; ++i)
 		delete undo_steps[i];
 	undo_steps.clear();
+	return size > 0;
 }
-void UndoManager::clearRedoSteps()
+bool UndoManager::clearRedoSteps()
 {
 	int size = (int)redo_steps.size();
 	for (int i = 0; i < size; ++i)
 		delete redo_steps[i];
 	redo_steps.clear();
+	return size > 0;
 }
 
 #include "undo.moc"

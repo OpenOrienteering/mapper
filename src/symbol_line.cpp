@@ -594,7 +594,7 @@ void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags
 		float switch_deviation = 0.2f * ((dashes_in_group*dash_length_f + break_length_f + (dashes_in_group-1)*in_group_break_length_f)) / dashes_in_group;
 		float minimum_optimum_length = (2*dashes_in_group*dash_length_f + break_length_f + 2*(dashes_in_group-1)*in_group_break_length_f);
 		float minimum_optimum_num_dashes = 2*dashes_in_group - (half_first_dash ? 0.5f : 0) - (half_last_dash ? 0.5f : 0);
-		if (lower_dashgroup_count <= 1 && length < minimum_optimum_length - minimum_optimum_num_dashes * switch_deviation)
+		if (length <= 0.0 || (lower_dashgroup_count <= 1 && length < minimum_optimum_length - minimum_optimum_num_dashes * switch_deviation))
 		{
 			// Line part too short for dashes, use just one continuous line for it
 			if (!ends_with_dashpoint)
