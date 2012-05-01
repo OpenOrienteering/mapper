@@ -100,6 +100,7 @@ public:
     virtual QSize sizeHint() const;
 	
 	inline bool usesAntialiasing() { return use_antialiasing; }
+	void setUsesAntialiasing(bool use_antialiasing){ this->use_antialiasing = use_antialiasing; }
 	
 public slots:
 	void keyPressed(QKeyEvent* event);

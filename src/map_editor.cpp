@@ -254,8 +254,9 @@ void MapEditorController::attach(MainWindow* window)
 	window->statusBar()->addPermanentWidget(statusbar_zoom_label);
 	window->statusBar()->addPermanentWidget(statusbar_cursorpos_label);
 	
+	QSettings settings;
 	// Create map widget
-	map_widget = new MapWidget(mode == MapEditor, true); //mode == SymbolEditor);	TODO: Make antialiasing configurable
+	map_widget = new MapWidget(mode == MapEditor, settings.value("MapDisplay/antialiasing", QVariant(true)).toBool()); //mode == SymbolEditor);
 	connect(window, SIGNAL(keyPressed(QKeyEvent*)), map_widget, SLOT(keyPressed(QKeyEvent*)));
 	connect(window, SIGNAL(keyReleased(QKeyEvent*)), map_widget, SLOT(keyReleased(QKeyEvent*)));
 	map_widget->setMapView(main_view);

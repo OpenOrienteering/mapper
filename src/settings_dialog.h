@@ -23,7 +23,7 @@ protected:
 	MainWindow* main_window;
 
 	//The changes to be done when accepted
-	QList<QPair<QString, QVariant> > changes;
+	QHash<QString, QVariant> changes;
 };
 
 class SettingsDialog : public QDialog
@@ -41,16 +41,18 @@ private slots:
 	void buttonPressed(QAbstractButton*);
 };
 
-class SizePage : public SettingsPage
+class RenderPage : public SettingsPage
 {
 	Q_OBJECT
 public:
-	SizePage(MainWindow* main_window, QWidget* parent = 0);
+	RenderPage(MainWindow* main_window, QWidget* parent = 0);
 
 	virtual void cancel(){ changes.clear(); }
-	virtual QString title(){ return QString("Sizes"); }
+	virtual QString title(){ return QString("Map Display"); }
+	virtual void apply();
 private slots:
-	void clear();
+	void antialiasingClicked();
+	void noantialiasingClicked();
 };
 
 #endif

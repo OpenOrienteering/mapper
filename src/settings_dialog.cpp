@@ -10,39 +10,51 @@
 #include <QDebug>
 #include <QDialogButtonBox>
 #include <QMessageBox>
+#include <QRadioButton>
+#include "map_editor.h"
+#include "map_widget.h"
 #include "main_window.h"
 
 void SettingsPage::apply(){
 	QSettings settings;
 	for(int i = 0; i < changes.size(); i++){
-		QPair<QString, QVariant> pair = changes.at(i);
-		settings.setValue(pair.first, pair.second);
+		settings.setValue(changes.keys().at(i), changes.values().at(i));
 	}
 }
 
 ////////////////////////////
 
-SizePage::SizePage(MainWindow* main_window, QWidget* parent) : SettingsPage(main_window, parent){
+RenderPage::RenderPage(MainWindow* main_window, QWidget* parent) : SettingsPage(main_window, parent){
 	QHBoxLayout *l = new QHBoxLayout;
 	this->setLayout(l);
-	QPushButton *clear = new QPushButton(tr("Reset window size parameters"), this);
-	l->addWidget(clear);
-	connect(clear, SIGNAL(clicked()), this, SLOT(clear()));
+	QRadioButton *antialiasing = new QRadioButton(tr("Enable Antialiasing"), this);
+	QRadioButton *noantialiasing = new QRadioButton(tr("Disable Antialiasing"), this);
+	l->addWidget(antialiasing);
+	l->addWidget(noantialiasing);
+
+	QSettings current;
+	if(current.value("MapDisplay/antialiasing", QVariant(true)).toBool())
+		antialiasing->click();
+	else
+		noantialiasing->click();
+
+	connect(antialiasing, SIGNAL(clicked()), this, SLOT(antialiasingClicked()));
+	connect(noantialiasing, SIGNAL(clicked()), this, SLOT(noantialiasingClicked()));
 }
 
-void SizePage::clear(){
-	int res = QMessageBox::question(this, tr("Confirm"), tr("This action will reset all window size parameters. Continue?"),
-									QMessageBox::Yes | QMessageBox::No);
-	if(res == QMessageBox::Yes){
-		QSettings settings;
-		settings.remove("ColorWidget/size");
-		settings.remove("MainWindow/size");
-		settings.remove("MainWindow/pos");
-		settings.remove("MainWindow/maximized");
-		settings.remove("SymbolWidget/size");
-		settings.remove("TemplateWidget/size");
-		QMessageBox::information(this, tr("Information"), tr("You will have to restart OpenOrienteering Mapper for changes to take effect"));
-	}
+void RenderPage::antialiasingClicked(){
+	changes.insert("MapDisplay/antialiasing", true);
+}
+void RenderPage::noantialiasingClicked(){
+	changes.insert("MapDisplay/antialiasing", false);
+}
+
+void RenderPage::apply(){
+	SettingsPage::apply();
+	QSettings settings;
+	bool use = settings.value("MapDisplay/antialiasing", QVariant(true)).toBool();
+	if(qobject_cast<MapEditorController*>(main_window->getController()))
+		qobject_cast<MapEditorController*>(main_window->getController())->getMainWidget()->setUsesAntialiasing(use);
 }
 
 ////////////////////////////
@@ -66,7 +78,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 		return;
 	}
 
-	pages.append(new SizePage(main_window, this));
+	pages.append(new RenderPage(main_window, this));
 	tabWidget->addTab(pages.last(), pages.last()->title());
 }
 
