@@ -354,48 +354,78 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 {
 	assert(map_editor && "Preserving the widget&view information without retrieving it from a MapEditorController is not implemented yet!");
 	
-    const Format *format = FileFormats.findFormatForFilename(path);
-    if (!format) format = FileFormats.findFormat(FileFormats.defaultFormat());
-
-    if (!format || !format->supportsExport())
-    {
+	const Format *format = FileFormats.findFormatForFilename(path);
+	if (!format) format = FileFormats.findFormat(FileFormats.defaultFormat());
+	
+	if (!format || !format->supportsExport())
+	{
 		if (format)
 			QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").arg(path).arg(format->description()).arg(format->fileExtension()));
-        else
+		else
 			QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause the format is unknown.").arg(path));
 		return false;
-    }
-
-    Exporter *exporter = NULL;
-    // Wrap everything in a try block, so we can gracefully recover if the importer balks.
-    try {
-        // Create an importer instance for this file and map.
-        exporter = format->createExporter(path, this, map_editor->main_view);
-
-        // Run the first pass.
-        exporter->doExport();
-
-        // Display any warnings.
-        if (!exporter->warnings().empty())
-        {
-            QString warnings = "";
-            for (std::vector<QString>::const_iterator it = exporter->warnings().begin(); it != exporter->warnings().end(); ++it) {
-                if (!warnings.isEmpty())
+	}
+	
+	// If the given file exists already, instead of overwriting the old file directly which
+	// could lead to data loss if the program crashes while exporting, find a free temporary
+	// filename, export to this path first and copy this over the old file on success.
+	QString temp_path;
+	if (QFile::exists(path))
+	{
+		int num_attempts = 0;
+		const int max_attempts = 100;
+		do
+		{
+			temp_path = path + ".";
+			for (int i = 0; i < 6; ++i)
+				temp_path += 'A' + (qrand() % ('Z' - 'A' + 1));
+			++num_attempts;
+		} while (num_attempts < max_attempts && QFile::exists(temp_path));
+		if (num_attempts == max_attempts && QFile::exists(temp_path))
+			temp_path = QString();
+	}
+	
+	Exporter *exporter = NULL;
+	// Wrap everything in a try block, so we can gracefully recover if the exporter balks.
+	try {
+		// Create an importer instance for this file and map.
+		exporter = format->createExporter(temp_path.isEmpty() ? path : temp_path, this, map_editor->main_view);
+		
+		// Run the first pass.
+		exporter->doExport();
+		
+		// Display any warnings.
+		if (!exporter->warnings().empty())
+		{
+			QString warnings = "";
+			for (std::vector<QString>::const_iterator it = exporter->warnings().begin(); it != exporter->warnings().end(); ++it) {
+				if (!warnings.isEmpty())
 					warnings += '\n';
 				warnings += *it;
-            }
+			}
 			QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The map export generated warnings."), QMessageBox::Ok);
 			msgBox.setDetailedText(warnings);
 			msgBox.exec();
-        }
-    }
-    catch (std::exception &e)
-    {
-        qDebug() << "Exception:" << e.what();
-    }
-    if (exporter) delete exporter;
-
-
+		}
+	}
+	catch (std::exception &e)
+	{
+		QMessageBox::warning(NULL, tr("Error"), tr("Internal error while saving:\n%1").arg(e.what()));
+		if (temp_path.isEmpty())
+			QFile::remove(path);
+		else
+			QFile::remove(temp_path);
+		return false;
+	}
+	if (exporter) delete exporter;
+	
+	if (!temp_path.isEmpty())
+	{
+		QFile::remove(path);
+		QFile::rename(temp_path, path);
+	}
+	
+	
 	colors_dirty = false;
 	symbols_dirty = false;
 	templates_dirty = false;
