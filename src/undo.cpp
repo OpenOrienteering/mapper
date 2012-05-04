@@ -99,7 +99,12 @@ bool CombinedUndoStep::load(QFile* file, int version)
 
 bool CombinedUndoStep::isValid() const
 {
-    return UndoStep::isValid();
+	for (int i = 0; i < (int)steps.size(); ++i)
+	{
+		if (!steps[i]->isValid())
+			return false;
+	}
+	return true;
 }
 
 // ### UndoManager ###
@@ -123,6 +128,7 @@ void UndoManager::save(QFile* file)
 void UndoManager::saveSteps(std::deque< UndoStep* >& steps, QFile* file)
 {
 	// Delete all invalid steps so we do not have to deal with them
+	bool step_deleted = false;
 	int size = (int)steps.size();
 	for (int i = size - 1; i >= 0; --i)
 	{
@@ -135,6 +141,7 @@ void UndoManager::saveSteps(std::deque< UndoStep* >& steps, QFile* file)
 			steps.pop_front();
 		}
 		size = (int)steps.size();
+		step_deleted = true;
 		break;
 	}
 	
@@ -145,6 +152,9 @@ void UndoManager::saveSteps(std::deque< UndoStep* >& steps, QFile* file)
 		file->write((char*)&type, sizeof(int));
 		steps[i]->save(file);
 	}
+	
+	if (step_deleted)
+		emit undoStepAvailabilityChanged();
 }
 bool UndoManager::load(QFile* file, int version)
 {

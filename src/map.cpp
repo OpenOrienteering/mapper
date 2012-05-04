@@ -1309,6 +1309,10 @@ void Map::changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol)
 }
 bool Map::deleteAllObjectsWithSymbol(Symbol* symbol)
 {
+	// Remove objects from selection
+	removeSymbolFromSelection(symbol, true);
+	
+	// Delete objects from map
 	bool object_deleted = false;
 	int size = layers.size();
 	for (int i = 0; i < size; ++i)

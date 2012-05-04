@@ -638,6 +638,14 @@ void MapEditorController::redo()
 }
 void MapEditorController::doUndo(bool redo)
 {
+	if ((!redo && map->objectUndoManager().getNumUndoSteps() == 0) ||
+		(redo && map->objectUndoManager().getNumRedoSteps() == 0))
+	{
+		// This should not happen as the action should be deactivated in this case!
+		QMessageBox::critical(window, tr("Error"), tr("No undo steps available."));
+		return;
+	}
+	
 	UndoStep* generic_step = redo ? map->objectUndoManager().getLastRedoStep() : map->objectUndoManager().getLastUndoStep();
 	MapLayer* affected_layer = NULL;
 	std::vector<Object*> affected_objects;
