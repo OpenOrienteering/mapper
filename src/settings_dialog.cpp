@@ -30,6 +30,11 @@
 #include <QDialogButtonBox>
 #include <QMessageBox>
 #include <QRadioButton>
+#include <QCheckBox>
+#include <QApplication>
+#include <QDesktopWidget>
+#include <QSpinBox>
+#include <QGroupBox>
 #include "map_editor.h"
 #include "map_widget.h"
 #include "main_window.h"
@@ -43,37 +48,49 @@ void SettingsPage::apply(){
 
 ////////////////////////////
 
-RenderPage::RenderPage(MainWindow* main_window, QWidget* parent) : SettingsPage(main_window, parent){
-	QHBoxLayout *l = new QHBoxLayout;
+EditorPage::EditorPage(MainWindow* main_window, QWidget* parent) : SettingsPage(main_window, parent){
+	QVBoxLayout *l = new QVBoxLayout;
 	this->setLayout(l);
-	QRadioButton *antialiasing = new QRadioButton(tr("Enable Antialiasing"), this);
-	QRadioButton *noantialiasing = new QRadioButton(tr("Disable Antialiasing"), this);
+	QCheckBox *antialiasing = new QCheckBox(tr("Enable Antialiasing"), this);
 	l->addWidget(antialiasing);
-	l->addWidget(noantialiasing);
+	QSpinBox *tolerance = new QSpinBox(this);
+	tolerance->setMinimum(1);
+	tolerance->setMaximum(50);
+	l->addWidget(tolerance);
 
 	QSettings current;
 	if(current.value("MapDisplay/antialiasing", QVariant(true)).toBool())
-		antialiasing->click();
+		antialiasing->setChecked(true);
 	else
-		noantialiasing->click();
+		antialiasing->setChecked(false);
+	tolerance->setValue(current.value("MapEditor/click_tolerance", QVariant(5)).toInt());
 
-	connect(antialiasing, SIGNAL(clicked()), this, SLOT(antialiasingClicked()));
-	connect(noantialiasing, SIGNAL(clicked()), this, SLOT(noantialiasingClicked()));
+	connect(antialiasing, SIGNAL(toggled(bool)), this, SLOT(antialiasingClicked(bool)));
+	connect(tolerance, SIGNAL(valueChanged(int)), this, SLOT(toleranceValueChanged(int)));
 }
 
-void RenderPage::antialiasingClicked(){
-	changes.insert("MapDisplay/antialiasing", true);
-}
-void RenderPage::noantialiasingClicked(){
-	changes.insert("MapDisplay/antialiasing", false);
+void EditorPage::antialiasingClicked(bool res){
+	changes.insert("MapDisplay/antialiasing", res);
 }
 
-void RenderPage::apply(){
+void EditorPage::toleranceValueChanged(int val){
+	changes.insert("MapEditor/click_tolerance", QVariant(val));
+}
+
+void EditorPage::apply(){
 	SettingsPage::apply();
 	QSettings settings;
 	bool use = settings.value("MapDisplay/antialiasing", QVariant(true)).toBool();
-	if(qobject_cast<MapEditorController*>(main_window->getController()))
-		qobject_cast<MapEditorController*>(main_window->getController())->getMainWidget()->setUsesAntialiasing(use);
+	MapEditorTool::setToolClickTolerance(settings.value("MapEditor/click_tolerance", QVariant(5)).toInt());
+	foreach (QWidget *widget, qApp->topLevelWidgets())
+	{
+		MainWindow* other = qobject_cast<MainWindow*>(widget);
+		if(!other)
+			continue;
+		if(qobject_cast<MapEditorController*>(other->getController())){
+			qobject_cast<MapEditorController*>(other->getController())->getMainWidget()->setUsesAntialiasing(use);
+		}
+	}
 }
 
 ////////////////////////////
@@ -97,7 +114,7 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
 		return;
 	}
 
-	pages.append(new RenderPage(main_window, this));
+	pages.append(new EditorPage(main_window, this));
 	tabWidget->addTab(pages.last(), pages.last()->title());
 }
 

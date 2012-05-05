@@ -286,6 +286,8 @@ void MapEditorController::attach(MainWindow* window)
 	if (has_invalid_template)
 		window->setStatusBarText("<font color=\"#c00\">" + tr("One or more templates could not be loaded. Use the Templates -> Template setup window to resolve the issue(s) by clicking on the red template file name(s).") + "</font>");
 
+	MapEditorTool::setToolClickTolerance(settings.value("MapEditor/click_tolerance", QVariant(5)).toInt());
+
 	// Show the symbol window
 	if (mode == MapEditor)
 		symbol_window_act->trigger();
@@ -1454,7 +1456,7 @@ void EditorDockWidget::closeEvent(QCloseEvent* event)
 
 // ### MapEditorTool ###
 
-const int MapEditorTool::click_tolerance = 5;
+int MapEditorTool::click_tolerance = 5;
 const QRgb MapEditorTool::inactive_color = qRgb(0, 0, 255);
 const QRgb MapEditorTool::active_color = qRgb(255, 150, 0);
 const QRgb MapEditorTool::selection_color = qRgb(210, 0, 229);

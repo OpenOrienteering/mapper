@@ -60,18 +60,18 @@ private slots:
 	void buttonPressed(QAbstractButton*);
 };
 
-class RenderPage : public SettingsPage
+class EditorPage : public SettingsPage
 {
 	Q_OBJECT
 public:
-	RenderPage(MainWindow* main_window, QWidget* parent = 0);
+	EditorPage(MainWindow* main_window, QWidget* parent = 0);
 
 	virtual void cancel(){ changes.clear(); }
-	virtual QString title(){ return QString("Map Display"); }
+	virtual QString title(){ return QString("Editor Settings"); }
 	virtual void apply();
 private slots:
-	void antialiasingClicked();
-	void noantialiasingClicked();
+	void antialiasingClicked(bool);
+	void toleranceValueChanged(int);
 };
 
 #endif
