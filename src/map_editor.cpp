@@ -28,6 +28,7 @@
 #include "map_undo.h"
 #include "map_dialog_scale.h"
 #include "georeferencing.h"
+#include "georeferencing_dialog.h"
 #include "print_dock_widget.h"
 #include "color_dock_widget.h"
 #include "symbol_dock_widget.h"
@@ -284,16 +285,23 @@ void MapEditorController::attach(MainWindow* window)
 	}
 	if (has_invalid_template)
 		window->setStatusBarText("<font color=\"#c00\">" + tr("One or more templates could not be loaded. Use the Templates -> Template setup window to resolve the issue(s) by clicking on the red template file name(s).") + "</font>");
-
-	// Show the symbol window
-	if (mode == MapEditor)
-		symbol_window_act->trigger();
 	
-	// Auto-select the edit tool
 	if (mode == MapEditor)
 	{
+		// Show the symbol window
+		symbol_window_act->trigger();
+		
+		// Auto-select the edit tool
 		edit_tool_act->setChecked(true);
 		setEditTool();
+		
+		// Set the coordinates display mode
+		coordsDisplayChanged();
+	}
+	else
+	{
+		// Set the coordinates display mode
+		map_widget->setCoordsDisplay(MapWidget::MAP_COORDS);
 	}
 }
 
@@ -439,6 +447,36 @@ void MapEditorController::createMenuAndToolbars()
 	boolean_xor_act = newAction("booleanxor", tr("Area XOr"), this, SLOT(booleanXOrClicked()), "tool-boolean-xor.png");
 	QAction *import_act = newAction("import", tr("Import"), this, SLOT(importClicked()));
 	
+	map_coordinates_act = new QAction(tr("Map coordinates"), this);
+	map_coordinates_act->setCheckable(true);
+	projected_coordinates_act = new QAction(tr("Projected coordinates"), this);
+	projected_coordinates_act->setCheckable(true);
+	geographic_coordinates_act = new QAction(tr("Latitude/Longitude (Dec)"), this);
+	geographic_coordinates_act->setCheckable(true);
+	geographic_coordinates_dms_act = new QAction(tr("Latitude/Longitude (DMS)"), this);
+	geographic_coordinates_dms_act->setCheckable(true);
+	QActionGroup* coordinates_group = new QActionGroup(this);
+	coordinates_group->addAction(map_coordinates_act);
+	coordinates_group->addAction(projected_coordinates_act);
+	coordinates_group->addAction(geographic_coordinates_act);
+	coordinates_group->addAction(geographic_coordinates_dms_act);
+	QObject::connect(coordinates_group, SIGNAL(triggered(QAction*)), this, SLOT(coordsDisplayChanged()));
+	map_coordinates_act->setChecked(true);
+	QObject::connect(&map->getGeoreferencing(), SIGNAL(projectionChanged()), this, SLOT(projectionChanged()));
+	projectionChanged();
+	
+	statusbar_cursorpos_label->setContextMenuPolicy(Qt::ActionsContextMenu);
+	statusbar_cursorpos_label->addAction(map_coordinates_act);
+	statusbar_cursorpos_label->addAction(projected_coordinates_act);
+	statusbar_cursorpos_label->addAction(geographic_coordinates_act);
+	statusbar_cursorpos_label->addAction(geographic_coordinates_dms_act);
+	
+	QMenu* coordinates_menu = new QMenu(tr("Display coordinates as..."));
+	coordinates_menu->addAction(map_coordinates_act);
+	coordinates_menu->addAction(projected_coordinates_act);
+	coordinates_menu->addAction(geographic_coordinates_act);
+	coordinates_menu->addAction(geographic_coordinates_dms_act);
+	
     // Refactored so we can do custom key bindings in the future
     assignKeyboardShortcuts();
 
@@ -466,6 +504,8 @@ void MapEditorController::createMenuAndToolbars()
 	view_menu->addAction(zoom_out_act);
     view_menu->addAction(show_all_act);
     view_menu->addAction(custom_zoom_act);
+    view_menu->addSeparator();
+	view_menu->addMenu(coordinates_menu);
     view_menu->addSeparator();
     view_menu->addAction(fullscreen_act);
 
@@ -737,6 +777,35 @@ void MapEditorController::setCustomZoomFactorClicked()
 	main_view->setZoom(factor);
 }
 
+void MapEditorController::coordsDisplayChanged()
+{
+	if (geographic_coordinates_dms_act->isChecked())
+		map_widget->setCoordsDisplay(MapWidget::GEOGRAPHIC_COORDS_DMS);
+	else if (geographic_coordinates_act->isChecked())
+		map_widget->setCoordsDisplay(MapWidget::GEOGRAPHIC_COORDS);
+	else if (projected_coordinates_act->isChecked())
+		map_widget->setCoordsDisplay(MapWidget::PROJECTED_COORDS);	
+	else
+		map_widget->setCoordsDisplay(MapWidget::MAP_COORDS);
+}
+
+void MapEditorController::projectionChanged()
+{
+	const Georeferencing& geo(map->getGeoreferencing());
+	if (geo.isLocal())
+	{
+		projected_coordinates_act->setText(tr("Local coordinates"));
+		geographic_coordinates_act->setEnabled(false);
+		geographic_coordinates_dms_act->setEnabled(false);
+	}
+	else
+	{
+		projected_coordinates_act->setText(geo.getProjectedCRS());
+		geographic_coordinates_act->setEnabled(true);
+		geographic_coordinates_dms_act->setEnabled(true);
+	}
+}
+
 void MapEditorController::showSymbolWindow(bool show)
 {
 	if (symbol_dock_widget)
@@ -865,12 +934,7 @@ void MapEditorController::editGeoreferencing()
 {
 	GeoreferencingDialog dialog(window, *map, &map->getGPSProjectionParameters());
 	dialog.setWindowModality(Qt::WindowModal);
-	if (dialog.exec() == QDialog::Rejected)
-		return;
-	
-	map->setGPSProjectionParameters(dialog.getParameters());
-	if (dialog.getGeoreferencing().isDefined())
-		map->setGeoreferencing(dialog.getGeoreferencing());
+	dialog.exec();
 }
 
 void MapEditorController::selectedSymbolsChanged()

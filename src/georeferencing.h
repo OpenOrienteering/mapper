@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012 Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -21,95 +21,224 @@
 #ifndef _OPENORIENTEERING_GEOREFERENCING_H_
 #define _OPENORIENTEERING_GEOREFERENCING_H_
 
-#include <QDialog>
+#include <QPointF>
+#include <QString>
+#include <QTransform>
 
-#include "gps_coordinates.h"
+#include "map_coord.h"
 
-class QLineEdit;
-class QPushButton;
+class QDebug;
 
-class Map;
-
-/** A class for georeferencing a map in cartesian coordinates */
-class CartesianGeoreferencing
-{
-public:
-	/** Construct an undefined georeferencing for a particular map */
-	CartesianGeoreferencing(const Map& map);
-	/** Construct a georeferencing for a defined origin and (optional) declination */
-	CartesianGeoreferencing(const Map& map, double easting, double northing, double declination = 0.0);
-	/** Construct a georeferencing which is a copy of an existing georeferencing */
-	CartesianGeoreferencing(const CartesianGeoreferencing& georeferencing);
-	/** Cleanup memory allocated by the georeferencing */
-	~CartesianGeoreferencing();
-	
-	/** Returns true if easting and northing have been defined for this georeferencing.
-	 *  You must not use a georeferencing for any transformation before it is defined. */
-	inline bool isDefined() const { return paperToGeo != NULL; }
-	
-	/** Get the easting of the map origin point */
-	inline double getEasting() const { return easting; }
-	/** Get the northing of the map origin point */
-	inline double getNorthing() const { return northing; }
-	/** Get the declination of the map */
-	inline double getDeclination() const { return declination; }
-	/** Set easting and northing of the map origin point.
-	 *  The declination is not modified. (The declination defaults to zero. */
-	void set(double easting, double northing);
-	/** Set easting and northing of the map origin point and the declination of the map */
-	void set(double easting, double northing, double declination);
-	/** Set the declination of the map */
-	void setDeclination(double declination);
-	
-	/** Transform map (paper) coordinates to geographic coordinates */
-	QPointF toGeoCoords(const MapCoord& paper_coords) const;
-	/** Transform map (paper) coordinates to geographic coordinates */
-	QPointF toGeoCoords(const MapCoordF& paper_coords) const;
-	/** Transform geographic coordinates to map (paper) coordinates */
-	MapCoord toPaperCoords(const QPointF& geo_coords) const;
-	
-protected:
-	/** Update the stored transforms from the current easting/northing/declination */
-	void updateTransforms();
-	
-private:
-	const Map& map;
-	double easting;
-	double northing;
-	double declination;
-	
-	QTransform* paperToGeo;
-	QTransform* geoToPaper;
-};
+typedef void* projPJ;
 
 
-class GeoreferencingDialog : public QDialog
+/**
+ * A Georeferencing defineds a mapping from "map coordinates" (as measured on 
+ * paper) and coordinates in the real world. It provides functions for 
+ * converting coordinates from one coordinate system to another.
+ *
+ * Conversions between map coordinates and "projected coordinates" (flat metric
+ * coordinates in a projected coordinate reference system) are made as affine 
+ * transformation based on the map scale, the grivation and a defined 
+ * reference point.
+ * 
+ * Conversions between projected coordinates and geographic coordinates (here:
+ * latitude/longitude for the WGS84 datum) are made based on a specification
+ * of the coordinate reference system of the projected coordinates. The actual
+ * geographic transformation is done by the PROJ.4 library for geographic 
+ * projections. 
+ *
+ * If no (valid) specification is given, the projected coordinates are regarded
+ * as local coordinates. Local coordinates cannot be converted to other 
+ * geographic coordinate systems. The georeferencing is "local".
+ * 
+ * Conversions between "map coordinates" and "geographic coordinates" use the
+ * projected coordinates as intermediate step.
+ */
+class Georeferencing : public QObject
 {
 Q_OBJECT
+friend QDebug operator<<(QDebug dbg, const Georeferencing& georef);
+
 public:
-	GeoreferencingDialog(QWidget* parent, const Map& map, const GPSProjectionParameters* initial_values = NULL);
+	/** 
+	 * Construct a local georeferencing for a particular map
+	 */
+	Georeferencing();
 	
-	inline const GPSProjectionParameters& getParameters() const {return params;}
-	inline const CartesianGeoreferencing& getGeoreferencing() const {return *cartesian; }
+	/** 
+	 * Construct a georeferencing which is a copy of an existing georeferencing 
+	 */
+	Georeferencing(const Georeferencing& georeferencing);
 	
-protected slots:
-	void editChanged();
+	/** 
+	 * Cleanup memory allocated by the georeferencing 
+	 */
+	~Georeferencing();
 	
-	void cartesianChanged();
+	
+	/**
+	 * Assign the properties of another Georeferencing to this one.
+	 */
+	Georeferencing& operator=(const Georeferencing& other);
+	
+	
+	/** 
+	 * Returns true if this georeferencing is local.
+	 * 
+	 * A georeferencing is local if no (valid) coordinate system specification
+	 * is given for the projected coordinates. Local georeferencing cannot 
+	 * convert coordinates from and to geographic coordinate systems.
+	 */
+	inline bool isLocal() const { return projected_crs == NULL; }
+	
+	
+	/**
+	 * Get the map scale denominator
+	 */
+	inline int getScaleDenominator() const { return scale_denominator; }
+	
+	/**
+	 * Set the map scale denominator
+	 */
+	void setScaleDenominator(int value);
+	
+	
+	/**
+	 * Get the grivation.
+	 * 
+	 * @see setGrivation()
+	 */
+	inline double getGrivation() const { return grivation; }
+	
+	/**
+	 * Set the grivation.
+	 * 
+	 * Grivation is the angle between map north and grid north. In the context
+	 * of OpenOrienteering Mapper, it is the angle between the y axes of map 
+	 * coordinates and projected coordinates.
+	 */
+	void setGrivation(double grivation);
+	
+	
+	/**
+	 * Define the projected coordinates of the reference point
+	 */
+	inline QPointF getProjectedRefPoint() const { return projected_ref_point; };
+	
+	/**
+	 * Define the projected coordinates of the reference point
+	 */
+	void setProjectedRefPoint(QPointF point);
+	
+	
+	/** 
+	 * Get the name (ID) of the coordinate reference system (CRS) of the projected coordinates
+	 */
+	QString getProjectedCRS() const { return projected_crs_id; }
+	
+	/** 
+	 * Get the specification of the coordinate reference system (CRS) of the projected coordinates
+	 * @return a PROJ.4 specification of the CRS
+	 */
+	QString getProjectedCRSSpec() const { return projected_crs_spec; }
+	
+	/** Set the coordinate reference system (CRS) of the projected coordinates 
+	 * @param spec the PROJ.4 specification of the CRS
+	 * @return true if the specification is valid, false otherwise 
+	 */
+	bool setProjectedCRS(const QString& id, const QString& spec);
+	
+	
+	/** 
+	 * Transform map (paper) coordinates to projected coordinates 
+	 */
+	QPointF toProjectedCoords(const MapCoord& map_coords) const;
+	
+	/**
+	 * Transform map (paper) coordinates to projected coordinates 
+	 */
+	QPointF toProjectedCoords(const MapCoordF& map_coords) const;
+	
+	/**
+	 * Transform projected coordinates to map (paper) coordinates 
+	 */
+	MapCoord toMapCoords(const QPointF& projected_coords) const;
+	
+	
+	/**
+	 * Transform map (paper) coordinates to geographic coordinates (lat/lon) 
+	 */
+	QPointF toGeographicCoords(const MapCoordF& map_coords, bool* ok = NULL) const;
+	
+	/**
+	 * Transform CRS coordinates to geographic coordinates (lat/lon) 
+	 */
+	QPointF toGeographicCoords(const QPointF& projected_coords, bool* ok = NULL) const;
+	
+	/**
+	 * Transform geographic coordinates (lat/lon) to CRS coordinates 
+	 */
+	QPointF toProjectedCoords(const QPointF& lat_lon, bool* ok = NULL) const;
+	
+	
+	/**
+	 * Convert a value from radians to degrees
+	 */
+	double radToDeg(double val) const;
+	
+	/**
+	 * Convert a value from radians to a D°M'S" string
+	 */
+	QString radToDMS(double val) const;
+	
+	
+signals:
+	/**
+	 * Indicates a change to the transformation rules between map coordinates
+	 * and projected coordinates
+	 */
+	void transformationChanged();
+	/**
+	 * Indicates a change to the projection rules between geographic coordinates
+	 * and projected coordinates. This signal is also emitted when the 
+	 * georeferencing becomes local.
+	 */
+	void projectionChanged();
+	
+	
+protected:
+	/**
+	 * Update the transformation parameters between map coordinates and 
+	 * projected coordinates from the current projected reference point 
+	 * coordinates, the grivation and the scale.
+	 */
+	void updateTransformation();
+	
 	
 private:
-	GPSProjectionParameters params;
+	double scale_denominator;
+	double grivation;
 	
-	CartesianGeoreferencing* cartesian;
+	QPointF projected_ref_point;
 	
-	QLineEdit* lat_edit;
-	QLineEdit* lon_edit;
-	QLineEdit* datum_edit;
-	QLineEdit* zone_edit;
-	QLineEdit* easting_edit;
-	QLineEdit* northing_edit;
-	QLineEdit* declination_edit;
-	QPushButton* ok_button;
+	QTransform from_projected;
+	QTransform to_projected;
+	
+	QString projected_crs_id;
+	QString projected_crs_spec;
+	projPJ projected_crs;
+	
+	projPJ geographic_crs;
+	
+	static const QString geographic_crs_spec;
 };
+
+/**
+ * Dump a Georeferencing to the debug output
+ * 
+ * Note that this requires a *reference*, not a pointer.
+ */
+QDebug operator<<(QDebug dbg, const Georeferencing &georef);
 
 #endif

@@ -60,6 +60,7 @@ set(Mapper_SRCS
  src/map_dialog_new.cpp
  src/map_dialog_scale.cpp
  src/georeferencing.cpp
+ src/georeferencing_dialog.cpp
 
  src/map_color.cpp
  src/color_dock_widget.cpp
@@ -159,6 +160,7 @@ target_link_libraries(Mapper
  ${QT_QTGUI_LIBRARY}
  ${QT_QTNETWORK_LIBRARY}
  ${QT_QTXML_LIBRARY}
+ proj
 )
 
 include(CPackaging.cmake)

@@ -48,7 +48,7 @@ class Object;
 class MapEditorController;
 class OCAD8FileImport;
 struct GPSProjectionParameters;
-class CartesianGeoreferencing;
+class Georeferencing;
 
 typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
 
@@ -255,7 +255,7 @@ public:
 	
 	// Other settings
 	
-	inline void setScaleDenominator(int value) {scale_denominator = value;}
+	void setScaleDenominator(int value);
 	inline int getScaleDenominator() const {return scale_denominator;}
 	
 	inline const QString& getMapNotes() const {return map_notes;}
@@ -265,9 +265,8 @@ public:
 	void setGPSProjectionParameters(const GPSProjectionParameters& params);
 	inline const GPSProjectionParameters& getGPSProjectionParameters() const {return *gps_projection_parameters;}
 	
-//	inline const bool isGeoreferenced() {return georeferencing->isDefined();}
-	void setGeoreferencing(const CartesianGeoreferencing& georeferencing);
-	inline const CartesianGeoreferencing& getGeoreferencing() const {return *georeferencing;}
+	void setGeoreferencing(const Georeferencing& georeferencing);
+	inline const Georeferencing& getGeoreferencing() const {return *georeferencing;}
 	
 	inline bool arePrintParametersSet() const {return print_params_set;}
 	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height);
@@ -360,7 +359,7 @@ private:
 	
 	bool gps_projection_params_set;	// have the parameters been set (are they valid)?
 	GPSProjectionParameters* gps_projection_parameters;
-	CartesianGeoreferencing* georeferencing;
+	Georeferencing* georeferencing;
 	
 	bool print_params_set;			// have the parameters been set (are they valid)?
 	int print_orientation;			// QPrinter::Orientation

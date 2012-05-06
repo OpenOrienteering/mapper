@@ -74,7 +74,11 @@
   <file>images/window-new.png</file>
 
   <file>etc/tipoftheday.txt</file>
+  
+  <file>3rd-party/clipper/License.txt</file>
+  <file>3rd-party/proj/COPYING</file>
  </qresource>
+ 
  <qresource lang="de">
   <file alias="etc/tipoftheday.txt">etc/tipoftheday_de.txt</file>
  </qresource>

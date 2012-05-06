@@ -49,6 +49,7 @@ MapWidget::MapWidget(bool show_help, bool use_antialiasing, QWidget* parent) : Q
 	activity_dirty_rect_new_border = -1;
 	zoom_label = NULL;
 	cursorpos_label = NULL;
+	coords_type = MAP_COORDS;
 	
 	below_template_cache_dirty_rect = rect();
 	above_template_cache_dirty_rect = rect();
@@ -376,24 +377,60 @@ void MapWidget::updateZoomLabel()
 	
 	zoom_label->setText(tr("Zoom: %1x").arg(view->getZoom(), 0, 'g', 3));
 }
+
+void MapWidget::setCoordsDisplay(CoordsType type)
+{
+	coords_type = type;
+	updateCursorposLabel(last_cursor_pos);
+}
+
+
 void MapWidget::updateCursorposLabel(MapCoordF pos)
 {
+	last_cursor_pos = pos;
+	
 	if (!cursorpos_label)
 		return;
 	
-	const CartesianGeoreferencing  &georef = view->getMap()->getGeoreferencing();
-	if (georef.isDefined())
+	if (coords_type == MAP_COORDS)
 	{
-		QPointF geo_point(georef.toGeoCoords(pos));
-		cursorpos_label->setText( QString("(m) %1 %2").
-		  arg(QString::number(geo_point.x(), 'f', 1)).
-		  arg(QString::number(geo_point.y(), 'f', 1)) );
+		cursorpos_label->setText( QString("%1 %2 (mm)").
+		  arg(locale().toString(pos.getX(), 'f', 2)).
+		  arg(locale().toString(-pos.getY(), 'f', 2)) );
 	}
 	else
 	{
-		cursorpos_label->setText( QString("(mm) %1 %2").
-		  arg(QString::number(pos.getX(), 'f', 2)).
-		  arg(QString::number(-pos.getY(), 'f', 2)) );
+		const Georeferencing& georef = view->getMap()->getGeoreferencing();
+		bool ok = true;
+		if (coords_type == PROJECTED_COORDS)
+		{
+			QPointF projected_point(georef.toProjectedCoords(pos));
+			cursorpos_label->setText( QString("%1 %2 (m)").
+			arg(QString::number(projected_point.x(), 'f', 0)).
+			arg(QString::number(projected_point.y(), 'f', 0)) ); 
+		}
+		else if (coords_type == GEOGRAPHIC_COORDS)
+		{
+			QPointF geo_point(georef.toGeographicCoords(pos, &ok));
+			cursorpos_label->setText( QString::fromUtf8("%1° %2°").
+			arg(locale().toString(georef.radToDeg(geo_point.y()), 'f', 6)).
+			arg(locale().toString(georef.radToDeg(geo_point.x()), 'f', 6)) ); 
+		}
+		else if (coords_type == GEOGRAPHIC_COORDS_DMS)
+		{
+			QPointF geo_point(georef.toGeographicCoords(pos, &ok));
+			cursorpos_label->setText( QString::fromUtf8("%1 %2").
+			arg(georef.radToDMS(geo_point.y())).
+			arg(georef.radToDMS(geo_point.x())) ); 
+		}
+		else
+		{
+			// shall never happen
+			ok = false;
+		}
+		
+		if (!ok)
+			cursorpos_label->setText(tr("Error"));
 	}
 }
 

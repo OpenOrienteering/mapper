@@ -101,6 +101,8 @@ public slots:
 	void zoomOut();
 	void setCustomZoomFactorClicked();
 	
+	void coordsDisplayChanged();
+	
 	void showSymbolWindow(bool show);
 	void showColorWindow(bool show);
 	void loadSymbolsFromClicked();
@@ -158,6 +160,9 @@ public slots:
 signals:
 	void templatePositionDockWidgetClosed(Template* temp);
 	
+protected slots:
+	void projectionChanged();
+	
 private:
 	void setMap(Map* map, bool create_new_map_view);
 	
@@ -193,6 +198,11 @@ private:
 	
 	QAction* undo_act;
 	QAction* redo_act;
+	
+	QAction* map_coordinates_act;
+	QAction* projected_coordinates_act;
+	QAction* geographic_coordinates_act;
+	QAction* geographic_coordinates_dms_act;
 	
 	QAction* color_window_act;
 	EditorDockWidget* color_dock_widget;

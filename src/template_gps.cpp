@@ -28,7 +28,7 @@
 #include "object.h"
 #include "symbol_line.h"
 #include "symbol_point.h"
-#include "georeferencing.h"
+#include "georeferencing_dialog.h"
 
 TemplateGPS::TemplateGPS(const QString& filename, Map* map) : Template(filename, map)
 {
@@ -104,7 +104,6 @@ bool TemplateGPS::open(QWidget* dialog_parent, MapView* main_view)
 		if (dialog.exec() == QDialog::Rejected)
 			return false;
 		
-		map->setGPSProjectionParameters(dialog.getParameters());	// this will call the according slot of this object to adjust the track
 		calculateExtent();
 	}
 	

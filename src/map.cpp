@@ -322,7 +322,7 @@ Map::Map() : renderables(this), selection_renderables(this)
 	color_set = NULL;
 	object_undo_manager.setOwner(this);
 	gps_projection_parameters = NULL;
-	georeferencing = new CartesianGeoreferencing(*this);
+	georeferencing = new Georeferencing();
 	
 	clear();
 }
@@ -349,6 +349,13 @@ Map::~Map()
 	delete gps_projection_parameters;
 	delete georeferencing;
 }
+
+void Map::setScaleDenominator(int value)
+{
+	scale_denominator = value;
+	georeferencing->setScaleDenominator(value);
+}
+
 
 bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 {
@@ -507,6 +514,8 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 		// If the last importer finished successfully
 		if (import_complete) break;
 	}
+	
+	georeferencing->setScaleDenominator(scale_denominator);
 	
 	if (map_editor)
 		map_editor->main_view = view;
@@ -1346,10 +1355,9 @@ void Map::setGPSProjectionParameters(const GPSProjectionParameters& params)
 	setHasUnsavedChanges();
 }
 
-void Map::setGeoreferencing(const CartesianGeoreferencing& georeferencing)
+void Map::setGeoreferencing(const Georeferencing& georeferencing)
 {
-	delete this->georeferencing;
-	this->georeferencing = new CartesianGeoreferencing(georeferencing);
+	*this->georeferencing = georeferencing;
 }
 
 void Map::setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height)
