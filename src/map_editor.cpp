@@ -792,15 +792,14 @@ void MapEditorController::coordsDisplayChanged()
 void MapEditorController::projectionChanged()
 {
 	const Georeferencing& geo(map->getGeoreferencing());
+	projected_coordinates_act->setText(geo.getProjectedCRS());
 	if (geo.isLocal())
 	{
-		projected_coordinates_act->setText(tr("Local coordinates"));
 		geographic_coordinates_act->setEnabled(false);
 		geographic_coordinates_dms_act->setEnabled(false);
 	}
 	else
 	{
-		projected_coordinates_act->setText(geo.getProjectedCRS());
 		geographic_coordinates_act->setEnabled(true);
 		geographic_coordinates_dms_act->setEnabled(true);
 	}
