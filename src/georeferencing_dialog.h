@@ -57,6 +57,8 @@ public:
 	void updateLatLon();
 	
 public slots:
+	/// Reset the inputs to the initial state
+	void reset();
 	/// Push the changes to the map and indicate success to the caller.
 	void accept();
 	
@@ -97,6 +99,7 @@ private:
 	
 	QLabel* link_label;
 	
+	QPushButton* reset_button;
 	QPushButton* ok_button;
 };
 

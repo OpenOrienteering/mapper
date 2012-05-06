@@ -98,12 +98,14 @@ GeoreferencingDialog::GeoreferencingDialog(QWidget* parent, Map& map, const GPSP
 	updateLatLon();
 	
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
+	reset_button = new QPushButton(tr("Reset"));
+	reset_button->setEnabled(false);
 	ok_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("OK"));
 	ok_button->setDefault(true);
-	QHBoxLayout* buttons_layout = new QHBoxLayout();
-	buttons_layout->addWidget(cancel_button);
-	buttons_layout->addStretch(1);
-	buttons_layout->addWidget(ok_button);
+	QDialogButtonBox* buttons_box = new QDialogButtonBox(Qt::Horizontal);
+	buttons_box->addButton(cancel_button, QDialogButtonBox::RejectRole);
+	buttons_box->addButton(reset_button, QDialogButtonBox::ResetRole);
+	buttons_box->addButton(ok_button, QDialogButtonBox::AcceptRole);
 	
 	QFormLayout* edit_layout = new QFormLayout;
 	
@@ -130,7 +132,7 @@ GeoreferencingDialog::GeoreferencingDialog(QWidget* parent, Map& map, const GPSP
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addLayout(edit_layout);
 	layout->addStretch();
-	layout->addLayout(buttons_layout);
+	layout->addWidget(buttons_box);
 	
 	setLayout(layout);
 	
@@ -143,14 +145,14 @@ GeoreferencingDialog::GeoreferencingDialog(QWidget* parent, Map& map, const GPSP
 	connect(lat_edit, SIGNAL(valueChanged(double)), this, SLOT(latLonChanged()));
 	connect(lon_edit, SIGNAL(valueChanged(double)), this, SLOT(latLonChanged()));
 	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
+	connect(reset_button, SIGNAL(clicked(bool)), this, SLOT(reset()));
 	connect(ok_button, SIGNAL(clicked(bool)), this, SLOT(accept()));
-	
-//	crsChanged();
 }
 
 void GeoreferencingDialog::setRefPoint(MapCoord coords)
 {
 	// TODO
+	reset_button->setEnabled(true);
 }
 
 void GeoreferencingDialog::updateCRS()
@@ -244,6 +246,7 @@ void GeoreferencingDialog::updateLatLon()
 void GeoreferencingDialog::grivationChanged(double value)
 {
 	georef->setGrivation(value);
+	reset_button->setEnabled(true);
 }
 
 void GeoreferencingDialog::crsChanged()
@@ -290,6 +293,7 @@ void GeoreferencingDialog::crsChanged()
 	if (crs_ok && (!crs_was_local || (lat_edit->cleanText().length() > 0 && lon_edit->cleanText().length() > 0)))
 		latLonChanged();
 	updateLatLon();
+	reset_button->setEnabled(true);
 }
 
 void GeoreferencingDialog::latLonChanged()
@@ -308,27 +312,39 @@ void GeoreferencingDialog::latLonChanged()
 		georef->setProjectedRefPoint(easting_northing);
 		updateEastingNorthing();
 	}
+	reset_button->setEnabled(true);
 }
 
 void GeoreferencingDialog::eastingNorthingChanged()
 {
-	double easting = easting_edit->value();
-	double northing = northing_edit->value();
-	georef->setProjectedRefPoint(QPointF(easting, northing));
+	QPointF easting_northing(easting_edit->value(), northing_edit->value());
+	georef->setProjectedRefPoint(easting_northing);
 	
 	bool ok;
-	QPointF lat_lon = georef->toGeographicCoords(MapCoordF(0,0), &ok);
+	QPointF lat_lon = georef->toGeographicCoords(easting_northing, &ok);
 	if (ok)
 	{
 		params.center_latitude = lat_lon.y();
 		params.center_longitude = lat_lon.x();
 		updateLatLon();
 	}
+	reset_button->setEnabled(true);
 }
 
 void GeoreferencingDialog::selectRefPoint()
 {
 	// TODO
+}
+
+void GeoreferencingDialog::reset()
+{
+	*georef = map.getGeoreferencing();
+	grivation_edit->setValue(georef->getGrivation());
+	updateCRS();
+	updateZone();
+	updateEastingNorthing();
+	updateLatLon();
+	reset_button->setEnabled(false);
 }
 
 void GeoreferencingDialog::accept()
