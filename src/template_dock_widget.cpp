@@ -50,10 +50,10 @@ static bool parseOpacityEntry(QString &text, float &fvalue)
     else
         value = str.toFloat(&ok);
 
-    if (!ok || fvalue < 0 || fvalue > 1)
+    if (!ok || value < 0 || value > 1)
         return false;
 
-    text = QString("%1%").arg(100.0f * fvalue);
+    text = QString("%1%").arg(100.0f * value);
     fvalue = value;
     return true;
 }
