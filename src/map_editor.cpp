@@ -581,6 +581,7 @@ void MapEditorController::createMenuAndToolbars()
     // Mac toolbars are still a little screwed up, turns out we have to insert a
     // "dummy" toolbar first and hide it, then the others show up
     window->addToolBar(tr("Dummy"))->hide();
+#endif
 
     // View toolbar
     toolbar_view = window->addToolBar(tr("View"));
@@ -634,7 +635,6 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_advanced_editing->addAction(boolean_intersection_act);
 	toolbar_advanced_editing->addAction(boolean_difference_act);
 	toolbar_advanced_editing->addAction(boolean_xor_act);
-#endif
 
 }
 void MapEditorController::detach()
