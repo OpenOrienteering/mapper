@@ -29,9 +29,18 @@
 
 #include "map_coord.h"
 
+class QDebug;
+
+class Georeferencing;
+
 /// Parameters for an ellipsoid and an orthographic projection of ellipsoid coordinates to 2D map (template) coordinates
+/// @deprecated
 struct GPSProjectionParameters
 {
+friend class LatLon;
+friend class NativeFileImport;
+friend class NativeFileExport;
+private:
 	/// Call update after changing these parameters!
 	double a;					// ellipsoidal semi-major axis
 	double b;					// ellipsoidal semi-minor axis
@@ -46,23 +55,39 @@ struct GPSProjectionParameters
 	void update();
 };
 
-class GPSCoordinate
+class LatLon
 {
 public:
 	/// Coordinates in radiant; TODO: give origin and range in comments
 	double latitude;	// Phi
 	double longitude;	// Lambda
 	
-	GPSCoordinate();
-	GPSCoordinate(double latitude, double longitude, bool given_in_degrees);
-	GPSCoordinate(MapCoordF map_coord, const GPSProjectionParameters& params);
+	LatLon();
+	LatLon(double latitude, double longitude, bool given_in_degrees = false);
 	
-	MapCoordF toMapCoordF(const GPSProjectionParameters& params);
+	/// Coordinates in degree
+	inline double getLatitudeInDegrees() const  { return latitude * 180.0 / M_PI; }
+	inline double getLongitudeInDegrees() const { return longitude * 180.0 / M_PI; }
+	
+private:
+	/// @deprecated
+	LatLon(MapCoordF map_coord, const GPSProjectionParameters& params);
+	
+	/// @deprecated
+	MapCoordF toMapCoordF(const Georeferencing& georef) const;
+	
+	/// @deprecated
+	MapCoordF toMapCoordF(const GPSProjectionParameters& params) const;
+	/// @deprecated
 	void toCartesianCoordinates(const GPSProjectionParameters& params, double height, double& x, double& y, double& z);
 	bool fromString(QString str);	// for example "53°48'33.82"N  2°07'46.38"E" or "N 48° 31.732 E 012° 08.422" or "48.52887 12.14037"
-																													
-	inline double getLatitudeInDegrees() {return latitude * 180 / M_PI;}
-	inline double getLongitudeInDegrees() {return longitude * 180 / M_PI;}
 };
+
+/**
+ * Dump a LatLon to the debug output
+ * 
+ * Note that this requires a *reference*, not a pointer.
+ */
+QDebug operator<<(QDebug dbg, const LatLon &lat_lon);
 
 #endif

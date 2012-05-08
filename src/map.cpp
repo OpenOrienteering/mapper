@@ -321,7 +321,6 @@ Map::Map() : renderables(this), selection_renderables(this)
 	
 	color_set = NULL;
 	object_undo_manager.setOwner(this);
-	gps_projection_parameters = NULL;
 	georeferencing = new Georeferencing();
 	
 	clear();
@@ -346,7 +345,6 @@ Map::~Map()
 	
 	color_set->dereference();
 	
-	delete gps_projection_parameters;
 	delete georeferencing;
 }
 
@@ -582,9 +580,6 @@ void Map::clear()
 	image_template_meters_per_pixel = 0;
 	image_template_dpi = 0;
 	image_template_scale = 0;
-	gps_projection_params_set = false;
-	delete gps_projection_parameters;
-	gps_projection_parameters = new GPSProjectionParameters();
 	
 	colors_dirty = false;
 	symbols_dirty = false;
@@ -1345,19 +1340,10 @@ void Map::forceUpdateOfAllObjects(Symbol* with_symbol)
 		layers[i]->forceUpdateOfAllObjects(with_symbol);
 }
 
-void Map::setGPSProjectionParameters(const GPSProjectionParameters& params)
-{
-	*gps_projection_parameters = params;
-	gps_projection_parameters->update();
-	gps_projection_params_set = true;
-	emit(gpsProjectionParametersChanged());
-	
-	setHasUnsavedChanges();
-}
-
 void Map::setGeoreferencing(const Georeferencing& georeferencing)
 {
 	*this->georeferencing = georeferencing;
+	setHasUnsavedChanges();
 }
 
 void Map::setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height)

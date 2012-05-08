@@ -24,18 +24,17 @@
 #include <QString>
 #include <QDate>
 
+#include "georeferencing.h"
 #include "gps_coordinates.h"
 
-QT_BEGIN_NAMESPACE
 class QXmlStreamWriter;
-QT_END_NAMESPACE
 
 class MapEditorController;
 
 /// A point in a GPS track or a GPS waypoint, which stores position on ellipsoid and map and more attributes (e.g. number of satellites)
 struct GPSPoint
 {
-	GPSCoordinate gps_coord;
+	LatLon gps_coord;
 	MapCoordF map_coord;
 	
 	QDateTime datetime;		// QDateTime() if invalid
@@ -43,8 +42,8 @@ struct GPSPoint
 	int num_satellites;		// -1 if invalid
 	float hDOP;				// -1 if invalid
 	
-	GPSPoint(GPSCoordinate coord = GPSCoordinate(), QDateTime datetime = QDateTime(), float elevation = -9999, int num_satellites = -1, float hDOP = -1);
-	void save(QXmlStreamWriter* stream);
+	GPSPoint(LatLon coord = LatLon(), QDateTime datetime = QDateTime(), float elevation = -9999, int num_satellites = -1, float hDOP = -1);
+	void save(QXmlStreamWriter* stream) const;
 };
 
 class GPSTrack
@@ -52,7 +51,7 @@ class GPSTrack
 public:
 	/// Constructs an empty GPS track
 	GPSTrack();
-	GPSTrack(const GPSProjectionParameters& params);
+	GPSTrack(const Georeferencing& Georeferencing);
 	/// Duplicates a track
 	GPSTrack(const GPSTrack& other);
 	
@@ -62,7 +61,7 @@ public:
 	/// Attempts to load the track from the given file. If you choose not to project_point, you have to call changeProjectionParams() afterwards.
 	bool loadFrom(const QString& path, bool project_points, QWidget* dialog_parent = NULL);
 	/// Attempts to save the track to the given file
-	bool saveTo(const QString& path);
+	bool saveTo(const QString& path) const;
 	
 	// Modifiers
 	void appendTrackPoint(GPSPoint& point);	// also converts the point's gps coords to map coords
@@ -70,16 +69,16 @@ public:
 	
 	void appendWaypoint(GPSPoint& point, const QString& name);	// also converts the point's gps coords to map coords
 	
-	void changeProjectionParams(const GPSProjectionParameters& new_params);
+	void changeGeoreferencing(const Georeferencing& new_georef);
 	
 	// Getters
-	int getNumSegments();
-	int getSegmentPointCount(int segment_number);
-	GPSPoint& getSegmentPoint(int segment_number, int point_number);
+	int getNumSegments() const;
+	int getSegmentPointCount(int segment_number) const;
+	const GPSPoint& getSegmentPoint(int segment_number, int point_number) const;
 	
-	int getNumWaypoints();
-	GPSPoint& getWaypoint(int number);
-	const QString& getWaypointName(int number);
+	int getNumWaypoints() const;
+	const GPSPoint& getWaypoint(int number) const;
+	const QString& getWaypointName(int number) const;
 	
 private:
 	std::vector<GPSPoint> waypoints;
@@ -90,7 +89,7 @@ private:
 	
 	bool current_segment_finished;
 	
-	GPSProjectionParameters params;
+	Georeferencing georef;
 };
 
 #endif

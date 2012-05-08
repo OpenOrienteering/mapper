@@ -31,13 +31,11 @@
 
 #define HEADLINE(text) new QLabel(QString("<b>") % text % "</b>")
 
-GeoreferencingDialog::GeoreferencingDialog(QWidget* parent, Map& map, const GPSProjectionParameters* initial_values)
+GeoreferencingDialog::GeoreferencingDialog(QWidget* parent, Map& map, const Georeferencing* initial)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
 {
-	georef = new Georeferencing(map.getGeoreferencing());
-	
-	if (initial_values)
-		params = *initial_values;
+	// A working copy of the current or given initial Georeferencing
+	georef = new Georeferencing(initial == NULL ? map.getGeoreferencing() : *initial);
 	
 	setWindowTitle(tr("Map Georeferencing"));
 	
@@ -185,8 +183,9 @@ void GeoreferencingDialog::updateZone()
 		if (crs_spec_template.startsWith("+proj=utm") && zone_edit->text().isEmpty() && !zone_edit->isModified())
 		{
 			// FIXME: adjust for non-standard UTM zones (e.g. Norway)
-			QString zone = QString::number(int(floor(params.center_longitude * 180 / M_PI) + 180) / 6 % 60 + 1, 'f', 0);
-			zone.append((params.center_latitude >= 0.0) ? " N" : " S");
+			const LatLon ref_point(georef->getGeographicRefPoint());
+			QString zone = QString::number(int(floor(ref_point.longitude * 180 / M_PI) + 180) / 6 % 60 + 1, 'f', 0);
+			zone.append((ref_point.latitude >= 0.0) ? " N" : " S");
 			zone_edit->setText(zone);
 		}
 		zone_edit->blockSignals(false);
@@ -213,8 +212,9 @@ void GeoreferencingDialog::updateLatLon()
 {
 	// NOTE: There might be lat/lon already saved in the file
 	//       even when the (new) Georeferencing is "local".
-	double latitude = params.center_latitude * 180.0 / M_PI;
-	double longitude = params.center_longitude * 180.0 / M_PI;
+	const LatLon ref_point(georef->getGeographicRefPoint());
+	double latitude = ref_point.latitude * 180.0 / M_PI;
+	double longitude = ref_point.longitude * 180.0 / M_PI;
 	
 	lat_edit->blockSignals(true);
 	lon_edit->blockSignals(true);
@@ -300,18 +300,11 @@ void GeoreferencingDialog::latLonChanged()
 {
 	double latitude = lat_edit->value() * M_PI / 180;
 	double longitude = lon_edit->value() * M_PI / 180;
-	params.center_latitude = latitude;
-	params.center_longitude = longitude;
+	georef->setGeographicRefPoint(LatLon(latitude, longitude));
 	
+	updateEastingNorthing();
 	updateZone();
 	
-	bool ok;
-	QPointF easting_northing = georef->toProjectedCoords(QPointF(longitude, latitude), &ok);
-	if (ok)
-	{
-		georef->setProjectedRefPoint(easting_northing);
-		updateEastingNorthing();
-	}
 	reset_button->setEnabled(true);
 }
 
@@ -320,14 +313,7 @@ void GeoreferencingDialog::eastingNorthingChanged()
 	QPointF easting_northing(easting_edit->value(), northing_edit->value());
 	georef->setProjectedRefPoint(easting_northing);
 	
-	bool ok;
-	QPointF lat_lon = georef->toGeographicCoords(easting_northing, &ok);
-	if (ok)
-	{
-		params.center_latitude = lat_lon.y();
-		params.center_longitude = lat_lon.x();
-		updateLatLon();
-	}
+	updateLatLon();
 	reset_button->setEnabled(true);
 }
 
@@ -349,7 +335,6 @@ void GeoreferencingDialog::reset()
 
 void GeoreferencingDialog::accept()
 {
-	map.setGPSProjectionParameters(params);
 	map.setGeoreferencing(*georef);
 	QDialog::accept();
 }

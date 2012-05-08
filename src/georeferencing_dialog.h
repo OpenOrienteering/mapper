@@ -42,7 +42,7 @@ class GeoreferencingDialog : public QDialog
 Q_OBJECT
 public:
 	/// Construct a new Georeferencing for the given map and initial values
-	GeoreferencingDialog(QWidget* parent, Map& map, const GPSProjectionParameters* initial_values = 0);
+	GeoreferencingDialog(QWidget* parent, Map& map, const Georeferencing* initial = NULL);
 	
 	/// TODO: Set the map coordinates of the reference point
 	void setRefPoint(MapCoord coords);
@@ -76,9 +76,6 @@ protected slots:
 	
 private:
 	Map& map;
-	
-	/// @deprecated
-	GPSProjectionParameters params;
 	
 	Georeferencing* georef;
 	QString crs_spec_template;

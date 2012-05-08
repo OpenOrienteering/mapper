@@ -385,7 +385,7 @@ void MapWidget::setCoordsDisplay(CoordsType type)
 }
 
 
-void MapWidget::updateCursorposLabel(MapCoordF pos)
+void MapWidget::updateCursorposLabel(const MapCoordF pos)
 {
 	last_cursor_pos = pos;
 	
@@ -404,24 +404,30 @@ void MapWidget::updateCursorposLabel(MapCoordF pos)
 		bool ok = true;
 		if (coords_type == PROJECTED_COORDS)
 		{
-			QPointF projected_point(georef.toProjectedCoords(pos));
-			cursorpos_label->setText( QString("%1 %2 (m)").
-			arg(QString::number(projected_point.x(), 'f', 0)).
-			arg(QString::number(projected_point.y(), 'f', 0)) ); 
+			const QPointF projected_point(georef.toProjectedCoords(pos));
+			cursorpos_label->setText(
+			  QString("%1 %2 (m)").
+			  arg(QString::number(projected_point.x(), 'f', 0)).
+			  arg(QString::number(projected_point.y(), 'f', 0))
+			); 
 		}
 		else if (coords_type == GEOGRAPHIC_COORDS)
 		{
-			QPointF geo_point(georef.toGeographicCoords(pos, &ok));
-			cursorpos_label->setText( QString::fromUtf8("%1° %2°").
-			arg(locale().toString(georef.radToDeg(geo_point.y()), 'f', 6)).
-			arg(locale().toString(georef.radToDeg(geo_point.x()), 'f', 6)) ); 
+			const LatLon lat_lon(georef.toGeographicCoords(pos, &ok));
+			cursorpos_label->setText(
+			  QString::fromUtf8("%1° %2°").
+			  arg(locale().toString(georef.radToDeg(lat_lon.latitude), 'f', 6)).
+			  arg(locale().toString(georef.radToDeg(lat_lon.longitude), 'f', 6))
+			); 
 		}
 		else if (coords_type == GEOGRAPHIC_COORDS_DMS)
 		{
-			QPointF geo_point(georef.toGeographicCoords(pos, &ok));
-			cursorpos_label->setText( QString::fromUtf8("%1 %2").
-			arg(georef.radToDMS(geo_point.y())).
-			arg(georef.radToDMS(geo_point.x())) ); 
+			const LatLon lat_lon(georef.toGeographicCoords(pos, &ok));
+			cursorpos_label->setText(
+			  QString::fromUtf8("%1 %2").
+			  arg(georef.radToDMS(lat_lon.latitude)).
+			  arg(georef.radToDMS(lat_lon.longitude))
+			); 
 		}
 		else
 		{

@@ -148,7 +148,7 @@ private:
 	void showHelpMessage(QPainter* painter, const QString& text);
 	
 	void updateZoomLabel();
-	void updateCursorposLabel(MapCoordF pos);
+	void updateCursorposLabel(const MapCoordF pos);
 	
 	MapView* view;
 	MapEditorTool* tool;

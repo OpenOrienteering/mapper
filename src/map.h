@@ -47,7 +47,6 @@ class Template;
 class Object;
 class MapEditorController;
 class OCAD8FileImport;
-struct GPSProjectionParameters;
 class Georeferencing;
 
 typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
@@ -261,10 +260,6 @@ public:
 	inline const QString& getMapNotes() const {return map_notes;}
 	inline void setMapNotes(const QString& text) {map_notes = text;}
 	
-	inline bool areGPSProjectionParametersSet() const {return gps_projection_params_set;}
-	void setGPSProjectionParameters(const GPSProjectionParameters& params);
-	inline const GPSProjectionParameters& getGPSProjectionParameters() const {return *gps_projection_parameters;}
-	
 	void setGeoreferencing(const Georeferencing& georeferencing);
 	inline const Georeferencing& getGeoreferencing() const {return *georeferencing;}
 	
@@ -306,7 +301,6 @@ signals:
 	
 	void objectSelectionChanged();
 	void selectedObjectEdited();
-	void gpsProjectionParametersChanged();
 	
 private:
 	typedef std::vector<MapColor*> ColorVector;
@@ -357,8 +351,6 @@ private:
 	
 	QString map_notes;
 	
-	bool gps_projection_params_set;	// have the parameters been set (are they valid)?
-	GPSProjectionParameters* gps_projection_parameters;
 	Georeferencing* georeferencing;
 	
 	bool print_params_set;			// have the parameters been set (are they valid)?

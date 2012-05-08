@@ -931,7 +931,7 @@ void MapEditorController::openTemplateClicked()
 
 void MapEditorController::editGeoreferencing()
 {
-	GeoreferencingDialog dialog(window, *map, &map->getGPSProjectionParameters());
+	GeoreferencingDialog dialog(window, *map);
 	dialog.setWindowModality(Qt::WindowModal);
 	dialog.exec();
 }

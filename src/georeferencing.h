@@ -25,6 +25,7 @@
 #include <QString>
 #include <QTransform>
 
+#include "gps_coordinates.h"  // import LatLon, TODO: move to this file.
 #include "map_coord.h"
 
 class QDebug;
@@ -33,7 +34,7 @@ typedef void* projPJ;
 
 
 /**
- * A Georeferencing defineds a mapping from "map coordinates" (as measured on 
+ * A Georeferencing defines a mapping between "map coordinates" (as measured on
  * paper) and coordinates in the real world. It provides functions for 
  * converting coordinates from one coordinate system to another.
  *
@@ -122,12 +123,15 @@ public:
 	
 	
 	/**
-	 * Define the projected coordinates of the reference point
+	 * Get the projected coordinates of the reference point
 	 */
 	inline QPointF getProjectedRefPoint() const { return projected_ref_point; };
 	
 	/**
-	 * Define the projected coordinates of the reference point
+	 * Define the projected coordinates of the reference point.
+	 * 
+	 * This will also update the geographic coordinates of the reference point
+	 * if a conversion is possible.
 	 */
 	void setProjectedRefPoint(QPointF point);
 	
@@ -150,6 +154,20 @@ public:
 	bool setProjectedCRS(const QString& id, const QString& spec);
 	
 	
+	/**
+	 * Get the geographic coordinates of the reference point
+	 */
+	inline LatLon getGeographicRefPoint() const { return geographic_ref_point; };
+	
+	/**
+	 * Define the geographic coordinates of the reference point.
+	 * 
+	 * This will also update the projected coordinates of the reference point
+	 * if a conversion is possible.
+	 */
+	void setGeographicRefPoint(LatLon lat_lon);
+	
+	
 	/** 
 	 * Transform map (paper) coordinates to projected coordinates 
 	 */
@@ -165,32 +183,47 @@ public:
 	 */
 	MapCoord toMapCoords(const QPointF& projected_coords) const;
 	
+	/**
+	 * Transform projected coordinates to map (paper) coordinates 
+	 */
+	MapCoordF toMapCoordF(const QPointF& projected_coords) const;
+	
 	
 	/**
 	 * Transform map (paper) coordinates to geographic coordinates (lat/lon) 
 	 */
-	QPointF toGeographicCoords(const MapCoordF& map_coords, bool* ok = NULL) const;
+	LatLon toGeographicCoords(const MapCoordF& map_coords, bool* ok = 0) const;
 	
 	/**
 	 * Transform CRS coordinates to geographic coordinates (lat/lon) 
 	 */
-	QPointF toGeographicCoords(const QPointF& projected_coords, bool* ok = NULL) const;
+	LatLon toGeographicCoords(const QPointF& projected_coords, bool* ok = 0) const;
 	
 	/**
 	 * Transform geographic coordinates (lat/lon) to CRS coordinates 
 	 */
-	QPointF toProjectedCoords(const QPointF& lat_lon, bool* ok = NULL) const;
+	QPointF toProjectedCoords(const LatLon& lat_lon, bool* ok = 0) const;
+	
+	/**
+	 * Transform geographic coordinates (lat/lon) to map coordinates 
+	 */
+	MapCoord toMapCoords(const LatLon& lat_lon, bool* ok = NULL) const;
+	
+	/**
+	 * Transform geographic coordinates (lat/lon) to map coordinates 
+	 */
+	MapCoordF toMapCoordF(const LatLon& lat_lon, bool* ok = NULL) const;
 	
 	
 	/**
 	 * Convert a value from radians to degrees
 	 */
-	double radToDeg(double val) const;
+	static double radToDeg(double val);
 	
 	/**
 	 * Convert a value from radians to a D°M'S" string
 	 */
-	QString radToDMS(double val) const;
+	static QString radToDMS(double val);
 	
 	
 signals:
@@ -228,6 +261,8 @@ private:
 	QString projected_crs_id;
 	QString projected_crs_spec;
 	projPJ projected_crs;
+	
+	LatLon geographic_ref_point;
 	
 	projPJ geographic_crs;
 	

@@ -30,7 +30,7 @@
 const QString Georeferencing::geographic_crs_spec("+proj=latlong +datum=WGS84");
 
 Georeferencing::Georeferencing()
-: scale_denominator(0), grivation(0.0), projected_ref_point(0, 0)
+: scale_denominator(0), grivation(0.0), projected_ref_point(0, 0), geographic_ref_point(0, 0)
 {
 	updateTransformation();
 	
@@ -44,7 +44,8 @@ Georeferencing::Georeferencing(const Georeferencing& other)
   grivation(other.grivation),
   projected_ref_point(other.projected_ref_point),
   projected_crs_id(other.projected_crs_id),
-  projected_crs_spec(other.projected_crs_spec)
+  projected_crs_spec(other.projected_crs_spec),
+  geographic_ref_point(other.geographic_ref_point)
 {
 	updateTransformation();
 	
@@ -71,6 +72,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	projected_ref_point = other.projected_ref_point;
 	projected_crs_id    = other.projected_crs_id;
 	projected_crs_spec  = other.projected_crs_spec;
+	geographic_ref_point= other.geographic_ref_point;
 	
 	if (projected_crs != NULL)
 		pj_free(projected_crs);
@@ -97,7 +99,22 @@ void Georeferencing::setGrivation(double value)
 void Georeferencing::setProjectedRefPoint(QPointF point)
 {
 	projected_ref_point = point;
+	bool ok;
+	LatLon new_geo_ref = toGeographicCoords(point, &ok);
+	if (ok)
+		geographic_ref_point = new_geo_ref;
 	updateTransformation();
+}
+
+void Georeferencing::setGeographicRefPoint(LatLon lat_lon)
+{
+	bool ok;
+	QPointF new_projected_ref = toProjectedCoords(lat_lon, &ok);
+	if (ok)
+		projected_ref_point = new_projected_ref;
+	geographic_ref_point = lat_lon;
+	if (ok)
+		updateTransformation();
 }
 
 void Georeferencing::updateTransformation()
@@ -108,7 +125,7 @@ void Georeferencing::updateTransformation()
 	to_projected.rotate(-grivation);
 	to_projected.scale(scale, -scale);
 	
-	from_projected = to_projected.inverted(); // FIXME: not tested
+	from_projected = to_projected.inverted();
 	
 	emit transformationChanged();
 }
@@ -138,48 +155,63 @@ QPointF Georeferencing::toProjectedCoords(const MapCoordF& map_coords) const
 
 MapCoord Georeferencing::toMapCoords(const QPointF& projected_coords) const
 {
-	return MapCoordF(from_projected.map(projected_coords)).toMapCoord(); // FIXME: not tested
+	return MapCoordF(from_projected.map(projected_coords)).toMapCoord();
 }
 
-QPointF Georeferencing::toGeographicCoords(const MapCoordF& map_coords, bool* ok) const
+MapCoordF Georeferencing::toMapCoordF(const QPointF& projected_coords) const
+{
+	return MapCoordF(from_projected.map(projected_coords));
+}
+
+LatLon Georeferencing::toGeographicCoords(const MapCoordF& map_coords, bool* ok) const
 {
 	return toGeographicCoords(toProjectedCoords(map_coords), ok);
 }
 
-QPointF Georeferencing::toGeographicCoords(const QPointF& projected_coords, bool* ok) const
+LatLon Georeferencing::toGeographicCoords(const QPointF& projected_coords, bool* ok) const
 {
 	if (ok != NULL)
 		*ok = false;
 
-	double x = projected_coords.x(), y = projected_coords.y();
+	double easting = projected_coords.x(), northing = projected_coords.y();
 	if (projected_crs && geographic_crs) {
-		int ret = pj_transform(projected_crs, geographic_crs, 1, 1, &x, &y, NULL);
+		int ret = pj_transform(projected_crs, geographic_crs, 1, 1, &easting, &northing, NULL);
 		if (ok != NULL) 
 			*ok = (ret == 0);
 	}
-	return QPointF(x, y);
+	return LatLon(northing, easting);
 }
 
-QPointF Georeferencing::toProjectedCoords(const QPointF& lat_lon, bool* ok) const
+QPointF Georeferencing::toProjectedCoords(const LatLon& lat_lon, bool* ok) const
 {
 	if (ok != NULL)
 		*ok = false;
 	
-	double lat = lat_lon.x(), lon = lat_lon.y();
+	double easting = lat_lon.longitude, northing = lat_lon.latitude;
 	if (projected_crs && geographic_crs) {
-		int ret = pj_transform(geographic_crs, projected_crs, 1, 1, &lat, &lon, NULL);
+		int ret = pj_transform(geographic_crs, projected_crs, 1, 1, &easting, &northing, NULL);
 		if (ok != NULL) 
 			*ok = (ret == 0);
 	}
-	return QPointF(lat, lon);
+	return QPointF(easting, northing);
 }
 
-double Georeferencing::radToDeg(double val) const
+MapCoord Georeferencing::toMapCoords(const LatLon& lat_lon, bool* ok) const
+{
+	return toMapCoords(toProjectedCoords(lat_lon, ok));
+}
+
+MapCoordF Georeferencing::toMapCoordF(const LatLon& lat_lon, bool* ok) const
+{
+	return toMapCoordF(toProjectedCoords(lat_lon, ok));
+}
+
+double Georeferencing::radToDeg(double val)
 {
 	return RAD_TO_DEG * val;
 }
 
-QString Georeferencing::radToDMS(double val) const
+QString Georeferencing::radToDMS(double val)
 {
 	qint64 tmp = RAD_TO_DEG * val * 360000;
 	int csec = tmp % 6000;

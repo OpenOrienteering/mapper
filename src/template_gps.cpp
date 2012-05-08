@@ -30,25 +30,32 @@
 #include "symbol_point.h"
 #include "georeferencing_dialog.h"
 
-TemplateGPS::TemplateGPS(const QString& filename, Map* map) : Template(filename, map)
+TemplateGPS::TemplateGPS(const QString& filename, Map* map)
+: Template(filename, map)
 {
 	if (!track.loadFrom(filename, false))
 		return;
-	
-	if (map->areGPSProjectionParametersSet())
-	{
-		track.changeProjectionParams(map->getGPSProjectionParameters());
+
+	const Georeferencing& georef = map->getGeoreferencing();
+	track.changeGeoreferencing(georef); // TODO: check if this can be moved to inititalization
+	if (!georef.isLocal())
 		calculateExtent();
-	}
 	
-	connect(map, SIGNAL(gpsProjectionParametersChanged()), this, SLOT(gpsProjectionParametersChanged()));
+	connect(&georef, SIGNAL(projectionChanged()), this, SLOT(updateGeoreferencing()));
+	connect(&georef, SIGNAL(transformationChanged()), this, SLOT(updateGeoreferencing()));
 	
 	template_valid = true;
 }
+
 TemplateGPS::TemplateGPS(const TemplateGPS& other) : Template(other)
 {
 	track = GPSTrack(other.track);
+
+	const Georeferencing& georef = map->getGeoreferencing();
+	connect(&georef, SIGNAL(projectionChanged()), this, SLOT(updateGeoreferencing()));
+	connect(&georef, SIGNAL(transformationChanged()), this, SLOT(updateGeoreferencing()));
 }
+
 TemplateGPS::~TemplateGPS()
 {
 }
@@ -67,7 +74,7 @@ bool TemplateGPS::saveTemplateFile()
 bool TemplateGPS::open(QWidget* dialog_parent, MapView* main_view)
 {
 	// If the transformation parameters were not set yet, it must be done now
-	if (!map->areGPSProjectionParametersSet())
+	if (map->getGeoreferencing().isLocal())
 	{
 		// Set default for plane center as some average of the track coordinates
 		double avg_latitude = 0;
@@ -77,7 +84,7 @@ bool TemplateGPS::open(QWidget* dialog_parent, MapView* main_view)
 		int size = track.getNumWaypoints();
 		for (int i = 0; i < size; ++i)
 		{
-			GPSPoint& point = track.getWaypoint(i);
+			const GPSPoint& point = track.getWaypoint(i);
 			avg_latitude += point.gps_coord.latitude;
 			avg_longitude += point.gps_coord.longitude;
 			++num_samples;
@@ -87,19 +94,21 @@ bool TemplateGPS::open(QWidget* dialog_parent, MapView* main_view)
 			size = track.getSegmentPointCount(i);
 			for (int k = 0; k < size; ++k)
 			{
-				GPSPoint& point = track.getSegmentPoint(i, k);
+				const GPSPoint& point = track.getSegmentPoint(i, k);
 				avg_latitude += point.gps_coord.latitude;
 				avg_longitude += point.gps_coord.longitude;
 				++num_samples;
 			}
 		}
 		
-		GPSProjectionParameters params = map->getGPSProjectionParameters();
-		params.center_latitude = (num_samples > 0) ? (avg_latitude / num_samples) : 0;
-		params.center_longitude = (num_samples > 0) ? (avg_longitude / num_samples) : 0;
+		double center_latitude = (num_samples > 0) ? (avg_latitude / num_samples) : 0;
+		double center_longitude = (num_samples > 0) ? (avg_longitude / num_samples) : 0;
+		
+		Georeferencing georef(map->getGeoreferencing());
+		georef.setGeographicRefPoint(LatLon(center_latitude, center_longitude));
 		
 		// Show the parameter dialog
-		GeoreferencingDialog dialog(dialog_parent, *map, &params);
+		GeoreferencingDialog dialog(dialog_parent, *map, &georef);
 		dialog.setWindowModality(Qt::WindowModal);
 		if (dialog.exec() == QDialog::Rejected)
 			return false;
@@ -122,6 +131,7 @@ bool TemplateGPS::open(QWidget* dialog_parent, MapView* main_view)
 	updateTransformationMatrices();
 	return true;
 }
+
 void TemplateGPS::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity)
 {
 	// Tracks
@@ -135,7 +145,7 @@ void TemplateGPS::drawTemplate(QPainter* painter, QRectF& clip_rect, double scal
 		int size = track.getSegmentPointCount(i);
 		for (int k = 0; k < size; ++k)
 		{
-			GPSPoint& point = track.getSegmentPoint(i, k);
+			const GPSPoint& point = track.getSegmentPoint(i, k);
 			
 			if (k > 0)
 				path.lineTo(point.map_coord.getX(), point.map_coord.getY());
@@ -145,6 +155,7 @@ void TemplateGPS::drawTemplate(QPainter* painter, QRectF& clip_rect, double scal
 		painter->drawPath(path);
 	}
 }
+
 void TemplateGPS::drawTemplateUntransformed(QPainter* painter, const QRect& clip_rect, MapWidget* widget)
 {
 	// Waypoints
@@ -156,7 +167,7 @@ void TemplateGPS::drawTemplateUntransformed(QPainter* painter, const QRect& clip
 	int size = track.getNumWaypoints();
 	for (int i = 0; i < size; ++i)
 	{
-		GPSPoint& point = track.getWaypoint(i);
+		const GPSPoint& point = track.getWaypoint(i);
 		const QString& point_name = track.getWaypointName(i);
 		
 		QPointF viewport_coord = widget->mapToViewport(templateToMap(point.map_coord));
@@ -177,18 +188,10 @@ void TemplateGPS::drawTemplateUntransformed(QPainter* painter, const QRect& clip
 	
 	painter->setRenderHint(QPainter::Antialiasing, false);
 }
+
 QRectF TemplateGPS::getExtent()
 {
 	return QRectF(-100000, -100000, 200000, 200000);	// "everything": 200x200km around the origin
-}
-
-double TemplateGPS::getTemplateFinalScaleX() const
-{
-	return cur_trans.template_scale_x * 1000 / map->getScaleDenominator();
-}
-double TemplateGPS::getTemplateFinalScaleY() const
-{
-	return cur_trans.template_scale_y * 1000 / map->getScaleDenominator();
 }
 
 PathObject* TemplateGPS::importPathStart()
@@ -197,11 +200,13 @@ PathObject* TemplateGPS::importPathStart()
 	path->setSymbol(map->getUndefinedLine(), true);
 	return path;
 }
+
 void TemplateGPS::importPathEnd(PathObject* path)
 {
 	map->addObject(path);
 	map->addObjectToSelection(path, false);
 }
+
 PointObject* TemplateGPS::importWaypoint(const MapCoordF& position)
 {
 	PointObject* point = new PointObject(map->getUndefinedPoint());
@@ -210,6 +215,7 @@ PointObject* TemplateGPS::importWaypoint(const MapCoordF& position)
 	map->addObjectToSelection(point, false);
 	return point;
 }
+
 bool TemplateGPS::import(QWidget* dialog_parent)
 {
 	if (track.getNumWaypoints() == 0 && track.getNumSegments() == 0)
@@ -262,9 +268,10 @@ bool TemplateGPS::import(QWidget* dialog_parent)
 	return true;
 }
 
-void TemplateGPS::gpsProjectionParametersChanged()
+void TemplateGPS::updateGeoreferencing()
 {
-	track.changeProjectionParams(map->getGPSProjectionParameters());
+	track.changeGeoreferencing(map->getGeoreferencing());
+	// TODO: redraw template
 }
 
 void TemplateGPS::calculateExtent()
@@ -275,7 +282,7 @@ bool TemplateGPS::changeTemplateFileImpl(const QString& filename)
 {
 	if (!track.loadFrom(filename, false))
 		return false;
-	track.changeProjectionParams(map->getGPSProjectionParameters());
+	track.changeGeoreferencing(map->getGeoreferencing());
 	calculateExtent();
 	return true;
 }

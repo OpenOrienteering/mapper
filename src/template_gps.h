@@ -34,25 +34,23 @@ Q_OBJECT
 public:
 	TemplateGPS(const QString& filename, Map* map);
 	TemplateGPS(const TemplateGPS& other);
-    virtual ~TemplateGPS();
-    virtual Template* duplicate();
+	virtual ~TemplateGPS();
+	virtual Template* duplicate();
 	virtual const QString getTemplateType() {return "TemplateGPS";}
-    virtual bool saveTemplateFile();
+	virtual bool saveTemplateFile();
 	
-    virtual bool open(QWidget* dialog_parent, MapView* main_view);
-    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity);
-    virtual void drawTemplateUntransformed(QPainter* painter, const QRect& clip_rect, MapWidget* widget);
-    virtual QRectF getExtent();
+	virtual bool open(QWidget* dialog_parent, MapView* main_view);
+	virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity);
+	virtual void drawTemplateUntransformed(QPainter* painter, const QRect& clip_rect, MapWidget* widget);
+	virtual QRectF getExtent();
 	
-    virtual double getTemplateFinalScaleX() const;
-    virtual double getTemplateFinalScaleY() const;
 	
 	/** Import the track as map object(s).
 	 */
 	bool import(QWidget* dialog_parent = NULL);
 	
 public slots:
-	void gpsProjectionParametersChanged();
+	void updateGeoreferencing();
 	
 protected:
 	void calculateExtent();
