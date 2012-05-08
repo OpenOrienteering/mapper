@@ -38,29 +38,26 @@
 #include "template_dock_widget.h"
 #include "symbol_point_editor.h"
 #include "symbol_combined.h"
+#include "symbol_properties_widget.h"
 
-SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Symbol* in_map_symbol, Map* map, QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
+SymbolSettingDialog::SymbolSettingDialog(Symbol* map_symbol, Map* map, QWidget* parent)
+: QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), source_symbol(map_symbol)
 {
+	setWindowTitle(tr("Symbol settings"));
 	setSizeGripEnabled(true);
-	this->symbol = symbol;
 	
-	QGroupBox* general_group = new QGroupBox(tr("General"));
+	this->symbol = map_symbol->duplicate();
+	this->source_map = map;
 	
-	QLabel* number_label = new QLabel(tr("Number:"));
-	number_edit = new QLineEdit*[Symbol::number_components];
-	for (int i = 0; i < Symbol::number_components; ++i)
-	{
-		number_edit[i] = new QLineEdit((symbol->getNumberComponent(i) < 0) ? "" : QString::number(symbol->getNumberComponent(i)));
-		number_edit[i]->setMaximumWidth(60);
-		number_edit[i]->setValidator(new QIntValidator(0, 99999, number_edit[i]));
-	}
-	QLabel* name_label = new QLabel(tr("Name:"));
-	name_edit = new QLineEdit(symbol->getName());
-	QLabel* description_label = new QLabel(tr("Description:"));
-	description_edit = new QTextEdit(symbol->getDescription());
-	helper_symbol_check = new QCheckBox(tr("Helper symbol (not shown in finished map)"));
-	helper_symbol_check->setChecked(symbol->isHelperSymbol());
+	symbol_icon_label = new QLabel();
+	symbol_icon_label->setPixmap(QPixmap::fromImage(*symbol->getIcon(source_map)));
 	
+	symbol_text_label = new QLabel();
+	QFont symbol_text_label_font = symbol_text_label->font();
+	symbol_text_label_font.setBold(true);
+	symbol_text_label->setFont(symbol_text_label_font);
+	updateSymbolLabel();
+
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
 	ok_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("OK"));
 	ok_button->setDefault(true);
@@ -72,9 +69,9 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Symbol* in_map_symbol, 
 	createPreviewMap();
 	
 	preview_widget = new MainWindow(false);
-	MapEditorController* controller = new MapEditorController(MapEditorController::SymbolEditor, preview_map);
-	preview_widget->setController(controller);
-	preview_map_view = controller->getMainWidget()->getMapView();
+	preview_controller = new MapEditorController(MapEditorController::SymbolEditor, preview_map);
+	preview_widget->setController(preview_controller);
+	preview_map_view = preview_controller->getMainWidget()->getMapView();
 	float zoom_factor = 1;
 	if (symbol->getType() == Symbol::Point)
 		zoom_factor = 8;
@@ -82,24 +79,9 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Symbol* in_map_symbol, 
 		zoom_factor = 2;
 	preview_map_view->setZoom(zoom_factor * preview_map_view->getZoom());
 	
-	PointSymbolEditorWidget* point_symbol_editor = createPointSymbolEditor(controller);
+	properties_widget = symbol->createPropertiesWidget(this);
 	
-	QWidget* type_specific_settings;
-	Symbol::Type type = symbol->getType();
-	if (type == Symbol::Point)
-		type_specific_settings = new PointSymbolSettings(reinterpret_cast<PointSymbol*>(symbol), map, this);
-	else if (type == Symbol::Line)
-		type_specific_settings = new LineSymbolSettings(reinterpret_cast<LineSymbol*>(symbol), map, point_symbol_editor, this);
-	else if (type == Symbol::Area)
-		type_specific_settings = new AreaSymbolSettings(reinterpret_cast<AreaSymbol*>(symbol), map, this, point_symbol_editor);
-	else if (type == Symbol::Text)
-		type_specific_settings = new TextSymbolSettings(reinterpret_cast<TextSymbol*>(symbol), map, this);
-	else if (type == Symbol::Combined)
-		type_specific_settings = new CombinedSymbolSettings(reinterpret_cast<CombinedSymbol*>(symbol), reinterpret_cast<CombinedSymbol*>(in_map_symbol), map, this);
-	else
-		assert(false);
-	
-	QVBoxLayout* middle_layout = NULL;
+	QVBoxLayout* preview_layout = NULL;
 	if (symbol->getType() == Symbol::Point)
 	{
 		QLabel* template_label = new QLabel(tr("<b>Template</b>: "));
@@ -124,9 +106,10 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Symbol* in_map_symbol, 
 		template_layout->addWidget(load_template_button);
 		template_layout->addWidget(center_template_button);
 		
-		middle_layout = new QVBoxLayout();
-		middle_layout->addWidget(preview_widget);
-		middle_layout->addLayout(template_layout);
+		preview_layout = new QVBoxLayout();
+		preview_layout->setContentsMargins(0, 0, 0, 0);
+		preview_layout->addLayout(template_layout);
+		preview_layout->addWidget(preview_widget);
 		
 		connect(load_template_button, SIGNAL(clicked(bool)), this, SLOT(loadTemplateClicked()));
 	}
@@ -136,106 +119,65 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* symbol, Symbol* in_map_symbol, 
 		center_template_button = NULL;
 	}
 	
-	QHBoxLayout* number_layout = new QHBoxLayout();
-	number_layout->addWidget(number_label);
-	for (int i = 0; i < Symbol::number_components; ++i)
-	{
-		number_layout->addWidget(number_edit[i]);
-		if (i < Symbol::number_components - 1)
-			number_layout->addWidget(new QLabel("."));
-	}
-	number_layout->addStretch(1);
-	
-	QHBoxLayout* name_layout = new QHBoxLayout();
-	name_layout->addWidget(name_label);
-	name_layout->addWidget(name_edit, 1);
-	
 	QHBoxLayout* buttons_layout = new QHBoxLayout();
+	buttons_layout->setContentsMargins(0, 0, 0, 0);
 	buttons_layout->addWidget(cancel_button);
 	buttons_layout->addStretch(1);
 	buttons_layout->addWidget(ok_button);
 	
-	QVBoxLayout* general_layout = new QVBoxLayout();
-	general_layout->addLayout(number_layout);
-	general_layout->addLayout(name_layout);
-	general_layout->addWidget(description_label);
-	general_layout->addWidget(description_edit);
-	general_layout->addWidget(helper_symbol_check);
-	general_group->setLayout(general_layout);
+	QGridLayout* left_layout = new QGridLayout();
+	left_layout->setColumnStretch(6,1);
 	
-	QVBoxLayout* left_layout = new QVBoxLayout();
-	left_layout->addWidget(general_group);
-	left_layout->addWidget(type_specific_settings);
-	left_layout->addLayout(buttons_layout);
+	int row = 0, col = 0;
+	left_layout->addWidget(symbol_icon_label, row, col++);
+	left_layout->addWidget(symbol_text_label, row, col++, 1, 6);
 	
-	QHBoxLayout* layout = new QHBoxLayout();
-	layout->addLayout(left_layout);
-	if (middle_layout)
-		layout->addLayout(middle_layout);
+	row++; col = 0;
+	left_layout->addWidget(properties_widget, row, col, 1, 7);
+	
+	row++; col = 0;
+	left_layout->addLayout(buttons_layout, row, col, 1, 7);
+	
+	QSplitter* splitter = new QSplitter();
+	QWidget* left = new QWidget();
+	left->setLayout(left_layout);
+	left->layout();
+	splitter->addWidget(left);
+	splitter->setCollapsible(0, false);
+	if (preview_layout != NULL)
+	{
+		QWidget* right = new QWidget();
+		right->setLayout(preview_layout);
+		splitter->addWidget(right);
+	}
 	else
-		layout->addWidget(preview_widget, 1);
-	if (point_symbol_editor)
-		layout->addWidget(point_symbol_editor);
+		splitter->addWidget(preview_widget);
+	splitter->setCollapsible(1, true);
+	
+	QBoxLayout* layout = new QHBoxLayout();
+	layout->setContentsMargins(0, 0, 0, 0);
+	layout->addWidget(splitter);
 	setLayout(layout);
 	
-	for (int i = 0; i < Symbol::number_components; ++i)
-		connect(number_edit[i], SIGNAL(textEdited(QString)), this, SLOT(numberChanged(QString)));
-	connect(name_edit, SIGNAL(textEdited(QString)), this, SLOT(nameChanged(QString)));
-	connect(description_edit, SIGNAL(textChanged()), this, SLOT(descriptionChanged()));
-	connect(helper_symbol_check, SIGNAL(clicked(bool)), this, SLOT(helperSymbolClicked(bool)));
-	
 	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
-	connect(ok_button, SIGNAL(clicked(bool)), this, SLOT(okClicked()));
+	connect(ok_button, SIGNAL(clicked(bool)), this, SLOT(accept()));
 	
-	updateNumberEdits();
 	updateOkButton();
-	updateWindowTitle();
 }
+
 SymbolSettingDialog::~SymbolSettingDialog()
 {
-	delete[] number_edit;
+	delete properties_widget; // must be deleted before the symbol!
+	delete symbol;
 }
 
 void SymbolSettingDialog::updatePreview()
 {
-	createPreviewMap();
+	symbol_icon_label->setPixmap(QPixmap::fromImage(*symbol->getIcon(source_map, true)));
 	
 	for (int l = 0; l < preview_map->getNumLayers(); ++l)
 		for (int i = 0; i < preview_map->getLayer(l)->getNumObjects(); ++i)
 			preview_map->getLayer(l)->getObject(i)->update(true);
-}
-
-void SymbolSettingDialog::numberChanged(QString text)
-{
-	bool is_valid = true;
-	for (int i = 0; i < Symbol::number_components; ++i)
-	{
-		QString number_text = number_edit[i]->text();
-		if (is_valid && !number_text.isEmpty())
-			symbol->setNumberComponent(i, number_text.toInt());
-		else
-		{
-			symbol->setNumberComponent(i, -1);
-			is_valid = false;
-		}
-	}
-	
-	updateNumberEdits();
-	updateOkButton();
-}
-void SymbolSettingDialog::nameChanged(QString text)
-{
-	symbol->setName(text);
-	updateOkButton();
-	updateWindowTitle();
-}
-void SymbolSettingDialog::descriptionChanged()
-{
-	symbol->setDescription(description_edit->toPlainText());
-}
-void SymbolSettingDialog::helperSymbolClicked(bool checked)
-{
-	symbol->setIsHelperSymbol(checked);
 }
 
 void SymbolSettingDialog::loadTemplateClicked()
@@ -262,6 +204,7 @@ void SymbolSettingDialog::loadTemplateClicked()
 	template_file_label->setText(temp->getTemplateFilename());
 	center_template_button->setEnabled(temp->getTemplateType().compare("TemplateImage") == 0);
 }
+
 void SymbolSettingDialog::centerTemplateBBox()
 {
 	assert(preview_map->getNumTemplates() == 1);
@@ -276,6 +219,7 @@ void SymbolSettingDialog::centerTemplateBBox()
 	temp->setTemplateY(temp->getTemplateY() - qRound64(1000 * map_center_current.getY()));
 	preview_map->setTemplateAreaDirty(0);
 }
+
 void SymbolSettingDialog::centerTemplateGravity()
 {
 	assert(preview_map->getNumTemplates() == 1);
@@ -293,20 +237,10 @@ void SymbolSettingDialog::centerTemplateGravity()
 	preview_map->setTemplateAreaDirty(0);
 }
 
-void SymbolSettingDialog::okClicked()
-{
-	// If editing a line symbol, strip unnecessary point symbols
-	if (symbol->getType() == Symbol::Line)
-	{
-		LineSymbol* line = reinterpret_cast<LineSymbol*>(symbol);
-		line->cleanupPointSymbols();
-	}
-
-	accept();
-}
-
 void SymbolSettingDialog::createPreviewMap()
 {
+	symbol_icon_label->setPixmap(QPixmap::fromImage(*symbol->getIcon(source_map)));
+	
 	for (int i = 0; i < (int)preview_objects.size(); ++i)
 		preview_map->deleteObject(preview_objects[i], false);
 	preview_objects.clear();
@@ -501,68 +435,28 @@ void SymbolSettingDialog::createPreviewMap()
 		preview_objects.push_back(path);
 	}
 }
-PointSymbolEditorWidget* SymbolSettingDialog::createPointSymbolEditor(MapEditorController* controller)
-{
-	if (symbol->getType() == Symbol::Point)
-	{
-		PointSymbol* point = reinterpret_cast<PointSymbol*>(symbol);
-		std::vector<PointSymbol*> point_vector;
-		point_vector.push_back(point);
-		return new PointSymbolEditorWidget(preview_map, controller, point_vector, 0, this);
-	}
-	else if (symbol->getType() == Symbol::Line)
-	{
-		LineSymbol* line = reinterpret_cast<LineSymbol*>(symbol);
-        line->ensurePointSymbols(tr("Start symbol"), tr("Mid symbol"), tr("End symbol"), tr("Dash symbol"));
-		std::vector<PointSymbol*> point_vector;
-		point_vector.push_back(line->getStartSymbol());
-		point_vector.push_back(line->getMidSymbol());
-		point_vector.push_back(line->getEndSymbol());
-		point_vector.push_back(line->getDashSymbol());
-        PointSymbolEditorWidget* point_editor = new PointSymbolEditorWidget(preview_map, controller, point_vector, 16, this);
-		connect(point_editor, SIGNAL(symbolEdited()), this, SLOT(createPreviewMap()));
-		return point_editor;
-	}
-	else if (symbol->getType() == Symbol::Area)
-	{
-		AreaSymbol* area = reinterpret_cast<AreaSymbol*>(symbol);
-		std::vector<PointSymbol*> point_vector;
-		for (int i = 0; i < area->getNumFillPatterns(); ++i)
-		{
-			if (area->getFillPattern(i).type == AreaSymbol::FillPattern::PointPattern)
-				point_vector.push_back(area->getFillPattern(i).point);
-		}
-		PointSymbolEditorWidget* point_editor = new PointSymbolEditorWidget(preview_map, controller, point_vector, 16, this);
-		connect(point_editor, SIGNAL(symbolEdited()), this, SLOT(createPreviewMap()));
-		return point_editor;
-	}
-	else if (symbol->getType() == Symbol::Text || symbol->getType() == Symbol::Combined)
-		return NULL;
-	
-	assert(false);
-	return NULL;
-}
 
-void SymbolSettingDialog::updateNumberEdits()
-{
-	bool enable = true;
-	for (int i = 0; i < Symbol::number_components; ++i)
-	{
-		number_edit[i]->setEnabled(enable);
-		if (enable && number_edit[i]->text().isEmpty())
-			enable = false;
-	}
-}
 void SymbolSettingDialog::updateOkButton()
 {
-	ok_button->setEnabled(!number_edit[0]->text().isEmpty() && !name_edit->text().isEmpty());
+	ok_button->setEnabled(symbol->getNumberComponent(0)>=0 && !symbol->getName().isEmpty());
 }
-void SymbolSettingDialog::updateWindowTitle()
+
+void SymbolSettingDialog::generalModified()
 {
-	if (symbol->getName().isEmpty())
-		setWindowTitle(tr("Symbol settings - Please enter a symbol name!"));
-	else
-		setWindowTitle(tr("Symbol settings for %1").arg(symbol->getName()));
+	updateSymbolLabel();
+	updateOkButton();
 }
+
+void SymbolSettingDialog::updateSymbolLabel()
+{
+	QString number = symbol->getNumberAsString();
+	if (number.isEmpty())
+		number = "???";
+	QString name = symbol->getName();
+	if (name.isEmpty())
+		name = "- unnamed -";
+	symbol_text_label->setText(number % "  " % name);
+}
+
 
 #include "symbol_setting_dialog.moc"

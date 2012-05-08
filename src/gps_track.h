@@ -30,6 +30,8 @@ QT_BEGIN_NAMESPACE
 class QXmlStreamWriter;
 QT_END_NAMESPACE
 
+class MapEditorController;
+
 /// A point in a GPS track or a GPS waypoint, which stores position on ellipsoid and map and more attributes (e.g. number of satellites)
 struct GPSPoint
 {
@@ -58,7 +60,7 @@ public:
 	void clear();
 	
 	/// Attempts to load the track from the given file. If you choose not to project_point, you have to call changeProjectionParams() afterwards.
-	bool loadFrom(const QString& path, bool project_points);
+	bool loadFrom(const QString& path, bool project_points, QWidget* dialog_parent = NULL);
 	/// Attempts to save the track to the given file
 	bool saveTo(const QString& path);
 	

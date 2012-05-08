@@ -39,7 +39,7 @@ bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
 
 Importer *NativeFileFormat::createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
 {
-    return new NativeFileImport(path, map, view);
+	return new NativeFileImport(path, map, view);
 }
 
 Exporter *NativeFileFormat::createExporter(const QString &path, Map *map, MapView *view) const throw (FormatException)

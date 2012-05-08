@@ -23,13 +23,12 @@
 
 #include <QDialog>
 
-QT_BEGIN_NAMESPACE
 class QLineEdit;
 class QTextEdit;
 class QCheckBox;
 class QLabel;
 class QToolButton;
-QT_END_NAMESPACE
+class QTabWidget;
 
 class Map;
 class MapView;
@@ -37,55 +36,69 @@ class Symbol;
 class MainWindow;
 class PointSymbol;
 class PointSymbolEditorWidget;
+class SymbolPropertiesWidget;
 class MapEditorController;
 class Object;
 
+/** A dialog for editing symbol properties 
+ */
 class SymbolSettingDialog : public QDialog
 {
 Q_OBJECT
 public:
-	SymbolSettingDialog(Symbol* symbol, Symbol* in_map_symbol, Map* map, QWidget* parent);
-    virtual ~SymbolSettingDialog();
+	/** Construct a new dialog for a given symbol and map. */
+	SymbolSettingDialog(Symbol* map_symbol, Map* map, QWidget* parent);
 	
+	/** Destruct the dialog and cleanup temporary objects. */
+	virtual ~SymbolSettingDialog();
+	
+	/** Get the edited object. The caller can duplicate it for later user. */
+	inline const Symbol* getEditedSymbol() const { return symbol; }
+	
+	inline const Symbol* getSourceSymbol() const { return source_symbol; }
+	
+	inline Map* getSourceMap() { return source_map; }
+	
+	inline Map* getPreviewMap() { return preview_map; }
+	
+	inline MapEditorController* getPreviewController() { return preview_controller; }
+	
+public slots:
+	void generalModified();
+	
+	/** Update the symbol preview */
 	void updatePreview();
 	
 protected slots:
-	void createPreviewMap();
-	
-	void numberChanged(QString text);
-	void nameChanged(QString text);
-	void descriptionChanged();
-	void helperSymbolClicked(bool checked);
-	
 	void loadTemplateClicked();
 	void centerTemplateBBox();
 	void centerTemplateGravity();
 	
-	void okClicked();
-	
 private:
-	PointSymbolEditorWidget* createPointSymbolEditor(MapEditorController* controller);
+	void createPreviewMap();
 	
-	void updateNumberEdits();
 	void updateOkButton();
-	void updateWindowTitle();
+	void updateSymbolLabel();
 	
+	Map* source_map;
+	Symbol* source_symbol;
+
 	Symbol* symbol;
-	
-	QLineEdit** number_edit;
-	QLineEdit* name_edit;
-	QTextEdit* description_edit;
-	QCheckBox* helper_symbol_check;
-	
-	MainWindow* preview_widget;
 	Map* preview_map;
+	MainWindow* preview_widget;
 	MapView* preview_map_view;
+	MapEditorController* preview_controller;
 	std::vector<Object*> preview_objects;
 	
 	QLabel* template_file_label;
 	QToolButton* center_template_button;
 	
 	QPushButton* ok_button;
+	
+	QLabel* symbol_icon_label;
+	QLabel* symbol_text_label;
+	
+	SymbolPropertiesWidget* properties_widget;
 };
 
 #endif

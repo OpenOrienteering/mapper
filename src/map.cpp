@@ -40,6 +40,7 @@
 #include "symbol_line.h"
 #include "symbol_combined.h"
 #include "file_format_ocad8.h"
+#include "georeferencing.h"
 
 MapLayer::MapLayer(const QString& name, Map* map) : name(name), map(map)
 {
@@ -281,7 +282,7 @@ void MapLayer::forceUpdateOfAllObjects(Symbol* with_symbol)
 
 // ### MapColorSet ###
 
-Map::MapColorSet::MapColorSet()
+Map::MapColorSet::MapColorSet(QObject *parent) : QObject(parent)
 {
 	ref_count = 1;
 }
@@ -297,8 +298,7 @@ void Map::MapColorSet::dereference()
 		int size = colors.size();
 		for (int i = 0; i < size; ++i)
 			delete colors[i];
-		
-		delete this;
+		this->deleteLater();
 	}
 }
 
@@ -307,8 +307,11 @@ void Map::MapColorSet::dereference()
 bool Map::static_initialized = false;
 MapColor Map::covering_white;
 MapColor Map::covering_red;
+MapColor Map::undefined_symbol_color;
 LineSymbol* Map::covering_white_line;
 LineSymbol* Map::covering_red_line;
+LineSymbol* Map::undefined_line;
+PointSymbol* Map::undefined_point;
 CombinedSymbol* Map::covering_combined_line;
 
 Map::Map() : renderables(this), selection_renderables(this)
@@ -319,6 +322,7 @@ Map::Map() : renderables(this), selection_renderables(this)
 	color_set = NULL;
 	object_undo_manager.setOwner(this);
 	gps_projection_parameters = NULL;
+	georeferencing = new Georeferencing();
 	
 	clear();
 }
@@ -343,54 +347,92 @@ Map::~Map()
 	color_set->dereference();
 	
 	delete gps_projection_parameters;
+	delete georeferencing;
 }
+
+void Map::setScaleDenominator(int value)
+{
+	scale_denominator = value;
+	georeferencing->setScaleDenominator(value);
+}
+
 
 bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 {
 	assert(map_editor && "Preserving the widget&view information without retrieving it from a MapEditorController is not implemented yet!");
 	
-    const Format *format = FileFormats.findFormatForFilename(path);
-    if (!format) format = FileFormats.findFormat(FileFormats.defaultFormat());
-
-    if (!format || !format->supportsExport())
-    {
+	const Format *format = FileFormats.findFormatForFilename(path);
+	if (!format) format = FileFormats.findFormat(FileFormats.defaultFormat());
+	
+	if (!format || !format->supportsExport())
+	{
 		if (format)
 			QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").arg(path).arg(format->description()).arg(format->fileExtension()));
-        else
+		else
 			QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause the format is unknown.").arg(path));
 		return false;
-    }
-
-    Exporter *exporter = NULL;
-    // Wrap everything in a try block, so we can gracefully recover if the importer balks.
-    try {
-        // Create an importer instance for this file and map.
-        exporter = format->createExporter(path, this, map_editor->main_view);
-
-        // Run the first pass.
-        exporter->doExport();
-
-        // Display any warnings.
-        if (!exporter->warnings().empty())
-        {
-            QString warnings = "";
-            for (std::vector<QString>::const_iterator it = exporter->warnings().begin(); it != exporter->warnings().end(); ++it) {
-                if (!warnings.isEmpty())
+	}
+	
+	// If the given file exists already, instead of overwriting the old file directly which
+	// could lead to data loss if the program crashes while exporting, find a free temporary
+	// filename, export to this path first and copy this over the old file on success.
+	QString temp_path;
+	if (QFile::exists(path))
+	{
+		int num_attempts = 0;
+		const int max_attempts = 100;
+		do
+		{
+			temp_path = path + ".";
+			for (int i = 0; i < 6; ++i)
+				temp_path += 'A' + (qrand() % ('Z' - 'A' + 1));
+			++num_attempts;
+		} while (num_attempts < max_attempts && QFile::exists(temp_path));
+		if (num_attempts == max_attempts && QFile::exists(temp_path))
+			temp_path = QString();
+	}
+	
+	Exporter *exporter = NULL;
+	// Wrap everything in a try block, so we can gracefully recover if the exporter balks.
+	try {
+		// Create an importer instance for this file and map.
+		exporter = format->createExporter(temp_path.isEmpty() ? path : temp_path, this, map_editor->main_view);
+		
+		// Run the first pass.
+		exporter->doExport();
+		
+		// Display any warnings.
+		if (!exporter->warnings().empty())
+		{
+			QString warnings = "";
+			for (std::vector<QString>::const_iterator it = exporter->warnings().begin(); it != exporter->warnings().end(); ++it) {
+				if (!warnings.isEmpty())
 					warnings += '\n';
 				warnings += *it;
-            }
+			}
 			QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The map export generated warnings."), QMessageBox::Ok);
 			msgBox.setDetailedText(warnings);
 			msgBox.exec();
-        }
-    }
-    catch (std::exception &e)
-    {
-        qDebug() << "Exception:" << e.what();
-    }
-    if (exporter) delete exporter;
-
-
+		}
+	}
+	catch (std::exception &e)
+	{
+		QMessageBox::warning(NULL, tr("Error"), tr("Internal error while saving:\n%1").arg(e.what()));
+		if (temp_path.isEmpty())
+			QFile::remove(path);
+		else
+			QFile::remove(temp_path);
+		return false;
+	}
+	if (exporter) delete exporter;
+	
+	if (!temp_path.isEmpty())
+	{
+		QFile::remove(path);
+		QFile::rename(temp_path, path);
+	}
+	
+	
 	colors_dirty = false;
 	symbols_dirty = false;
 	templates_dirty = false;
@@ -403,9 +445,9 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 }
 bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool load_symbols_only)
 {
-    MapView *view = new MapView(this);
+	MapView *view = new MapView(this);
 
-    // Ensure the file exists and is readable.
+	// Ensure the file exists and is readable.
 	QFile file(path);
 	if (!file.open(QIODevice::ReadOnly))
 	{
@@ -416,39 +458,39 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 	// Delete previous objects
 	clear();
 
-    // Read a block at the beginning of the file, that we can use for magic number checking.
-    unsigned char buffer[256];
-    size_t total_read = file.read((char *)buffer, 256);
-    file.close();
+	// Read a block at the beginning of the file, that we can use for magic number checking.
+	unsigned char buffer[256];
+	size_t total_read = file.read((char *)buffer, 256);
+	file.close();
 
-    bool import_complete = false;
+	bool import_complete = false;
 	QString error_msg = tr("Invalid file type.");
-    Q_FOREACH(const Format *format, FileFormats.formats())
-    {
-        // If the format supports import, and thinks it can understand the file header, then proceed.
-        if (format->supportsImport() && format->understands(buffer, total_read))
-        {
-            Importer *importer = NULL;
-            // Wrap everything in a try block, so we can gracefully recover if the importer balks.
-            try {
-                // Create an importer instance for this file and map.
-                importer = format->createImporter(path, this, view);
+	Q_FOREACH(const Format *format, FileFormats.formats())
+	{
+		// If the format supports import, and thinks it can understand the file header, then proceed.
+		if (format->supportsImport() && format->understands(buffer, total_read))
+		{
+			Importer *importer = NULL;
+			// Wrap everything in a try block, so we can gracefully recover if the importer balks.
+			try {
+				// Create an importer instance for this file and map.
+				importer = format->createImporter(path, this, view);
 
-                // Run the first pass.
-                importer->doImport(load_symbols_only);
+				// Run the first pass.
+				importer->doImport(load_symbols_only);
 
-                // Are there any actions the user must take to complete the import?
-                if (!importer->actions().empty())
-                {
-                    // TODO: prompt the user to resolve the action items. All-in-one dialog.
-                }
+				// Are there any actions the user must take to complete the import?
+				if (!importer->actions().empty())
+				{
+					// TODO: prompt the user to resolve the action items. All-in-one dialog.
+				}
 
-                // Finish the import.
-                importer->finishImport();
+				// Finish the import.
+				importer->finishImport();
 
-                // Display any warnings.
-                if (!importer->warnings().empty())
-                {
+				// Display any warnings.
+				if (!importer->warnings().empty())
+				{
 					QString warnings = "";
 					for (std::vector<QString>::const_iterator it = importer->warnings().begin(); it != importer->warnings().end(); ++it) {
 						if (!warnings.isEmpty())
@@ -458,57 +500,55 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 					QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The map import generated warnings."), QMessageBox::Ok);
 					msgBox.setDetailedText(warnings);
 					msgBox.exec();
-                }
+				}
 
-                import_complete = true;
-            }
-            catch (std::exception &e)
-            {
-                qDebug() << "Exception:" << e.what();
+				import_complete = true;
+			}
+			catch (std::exception &e)
+			{
+				qDebug() << "Exception:" << e.what();
 				error_msg = e.what();
-            }
-            if (importer) delete importer;
-        }
-        // If the last importer finished successfully
-        if (import_complete) break;
-    }
-    
-    if (map_editor)
+			}
+			if (importer) delete importer;
+		}
+		// If the last importer finished successfully
+		if (import_complete) break;
+	}
+	
+	georeferencing->setScaleDenominator(scale_denominator);
+	
+	if (map_editor)
 		map_editor->main_view = view;
 	else
 		delete view;	// TODO: HACK. Better not create the view at all in this case!
 
-    if (!import_complete)
-    {
-        QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\n\n%2").arg(path).arg(error_msg));
-        return false;
-    }
+	if (!import_complete)
+	{
+		QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\n\n%2").arg(path).arg(error_msg));
+		return false;
+	}
 
-    // Post processing
-    for (unsigned int i = 0; i < symbols.size(); ++i)
-    {
-        if (!symbols[i]->loadFinished(this))
-        {
-            QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError during symbol post-processing.").arg(path));
-            return false;
-        }
-    }
-    // Update all objects without trying to remove their renderables first, this gives a significant speedup when loading large files
-    updateAllObjects(false);
+	// Post processing
+	for (unsigned int i = 0; i < symbols.size(); ++i)
+	{
+		if (!symbols[i]->loadFinished(this))
+		{
+			QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError during symbol post-processing.").arg(path));
+			return false;
+		}
+	}
 
+	// Update all objects without trying to remove their renderables first, this gives a significant speedup when loading large files
+	updateAllObjects(false);
 
-    Exporter *exporter = FileFormats.findFormat("XML")->createExporter("tmp.xml", this, view);
-    exporter->doExport();
-    delete exporter;
-
-    return true;
+	return true;
 }
 
 void Map::clear()
 {
 	if (color_set)
 		color_set->dereference();
-	color_set = new MapColorSet();
+	color_set = new MapColorSet(this);
 	
 	int size = symbols.size();
 	for (int i = 0; i < size; ++i)
@@ -937,6 +977,7 @@ void Map::initStatic()
 {
 	static_initialized = true;
 	
+	// Covering colors and symbols
 	covering_white.opacity = 1000;	// HACK: (almost) always opaque, even if multiplied by opacity factors
 	covering_white.r = 1;
 	covering_white.g = 1;
@@ -963,6 +1004,24 @@ void Map::initStatic()
 	covering_combined_line->setNumParts(2);
 	covering_combined_line->setPart(0, covering_white_line);
 	covering_combined_line->setPart(1, covering_red_line);
+	
+	// Undefined symbols
+	undefined_symbol_color.opacity = 1;
+	undefined_symbol_color.r = 0.5f;
+	undefined_symbol_color.g = 0.5f;
+	undefined_symbol_color.b = 0.5f;
+	undefined_symbol_color.updateFromRGB();
+	undefined_symbol_color.priority = MapColor::Undefined;
+	
+	undefined_line = new LineSymbol();
+	undefined_line->setColor(&undefined_symbol_color);
+	undefined_line->setLineWidth(1);
+	undefined_line->setIsHelperSymbol(true);
+
+	undefined_point = new PointSymbol();
+	undefined_point->setInnerRadius(100);
+	undefined_point->setInnerColor(&undefined_symbol_color);
+	undefined_point->setIsHelperSymbol(true);
 }
 
 void Map::addSymbol(Symbol* symbol, int pos)
@@ -1050,6 +1109,12 @@ int Map::findSymbolIndex(Symbol* symbol)
 		if (symbols[i] == symbol)
 			return i;
 	}
+	
+	if (symbol == undefined_point)
+		return -2;
+	else if (symbol == undefined_line)
+		return -3;
+	
 	assert(false);
 	return -1;
 }
@@ -1255,6 +1320,10 @@ void Map::changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol)
 }
 bool Map::deleteAllObjectsWithSymbol(Symbol* symbol)
 {
+	// Remove objects from selection
+	removeSymbolFromSelection(symbol, true);
+	
+	// Delete objects from map
 	bool object_deleted = false;
 	int size = layers.size();
 	for (int i = 0; i < size; ++i)
@@ -1286,6 +1355,11 @@ void Map::setGPSProjectionParameters(const GPSProjectionParameters& params)
 	emit(gpsProjectionParametersChanged());
 	
 	setHasUnsavedChanges();
+}
+
+void Map::setGeoreferencing(const Georeferencing& georeferencing)
+{
+	*this->georeferencing = georeferencing;
 }
 
 void Map::setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height)

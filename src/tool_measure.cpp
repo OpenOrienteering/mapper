@@ -52,7 +52,7 @@ void MeasureWidget::objectSelectionChanged()
 	QString text = "";
 	
 	if (map->getNumSelectedObjects() == 0)
-		text = "<b>" + tr("No objects selected.") + "</b>";
+		text = "<b>" + tr("No objects selected.<br/>Draw or select a path<br/>to measure it.") + "</b>";
 	else if (map->getNumSelectedObjects() > 1)
 		text = tr("%1 objects selected.").arg("<b>" + QString::number(map->getNumSelectedObjects()) + "</b>");
 	else

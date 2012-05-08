@@ -24,6 +24,7 @@ HEADERS += src/color_dock_widget.h \
            src/file_format_ocad8.h \
            src/file_format_xml.h \
            src/georeferencing.h \
+           src/georeferencing_dialog.h \
            src/global.h \
            src/gps_coordinates.h \
            src/gps_track.h \
@@ -76,6 +77,7 @@ SOURCES += src/color_dock_widget.cpp \
            src/file_format_ocad8.cpp \
            src/file_format_xml.cpp \
            src/georeferencing.cpp \
+           src/georeferencing_dialog.cpp \
            src/gps_coordinates.cpp \
            src/gps_track.cpp \
            src/main.cpp \
@@ -127,6 +129,7 @@ RESOURCES += resources.qrc
 
 OTHER_FILES += \
     CMakeLists.txt \
+    3rd-party/clipper.cmake \
     Doxyfile
 
 

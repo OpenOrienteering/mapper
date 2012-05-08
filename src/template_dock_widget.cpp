@@ -221,11 +221,15 @@ void TemplateWidget::addTemplateAt(Template* new_template, int pos)
 }
 Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapView* main_view)
 {
-	// TODO: save directory
-	QString path = QFileDialog::getOpenFileName(dialog_parent, tr("Open image or GPS track ..."), QString(), QString("%1 (*.omap *.ocd *.bmp *.jpg *.jpeg *.gif *.png *.tiff *.gpx);;%2 (*.*)").arg(tr("Template files")).arg(tr("All files")));
+	QSettings settings;
+	QString template_directory = settings.value("templateFileDirectory", QDir::homePath()).toString();
+	
+	QString path = QFileDialog::getOpenFileName(dialog_parent, tr("Open image, GPS track or DXF file"), template_directory, QString("%1 (*.omap *.ocd *.bmp *.jpg *.jpeg *.gif *.png *.tif *.tiff *.gpx *.dxf);;%2 (*.*)").arg(tr("Template files")).arg(tr("All files")));
 	path = QFileInfo(path).canonicalFilePath();
 	if (path.isEmpty())
 		return NULL;
+	
+	settings.setValue("templateFileDirectory", QFileInfo(path).canonicalPath());
 	
 	Template* new_temp = Template::templateForFile(path, main_view->getMap());
 	if (!new_temp)

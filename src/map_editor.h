@@ -101,6 +101,8 @@ public slots:
 	void zoomOut();
 	void setCustomZoomFactorClicked();
 	
+	void coordsDisplayChanged();
+	
 	void showSymbolWindow(bool show);
 	void showColorWindow(bool show);
 	void loadSymbolsFromClicked();
@@ -150,9 +152,16 @@ public slots:
 	
 	void templateAdded(int pos, Template* temp);
 	void templateDeleted(int pos, Template* temp);
+
+	void importDXF(QString filename);
+	void importGPX(QString filename);
+	void importClicked();
 	
 signals:
 	void templatePositionDockWidgetClosed(Template* temp);
+	
+protected slots:
+	void projectionChanged();
 	
 private:
 	void setMap(Map* map, bool create_new_map_view);
@@ -189,6 +198,11 @@ private:
 	
 	QAction* undo_act;
 	QAction* redo_act;
+	
+	QAction* map_coordinates_act;
+	QAction* projected_coordinates_act;
+	QAction* geographic_coordinates_act;
+	QAction* geographic_coordinates_dms_act;
 	
 	QAction* color_window_act;
 	EditorDockWidget* color_dock_widget;
@@ -254,6 +268,7 @@ Q_OBJECT
 public:
 	EditorDockWidget(const QString title, QAction* action, MapEditorController* editor, QWidget* parent = NULL);
 	void setChild(EditorDockWidgetChild* child);
+	inline EditorDockWidgetChild* getChild() const {return child;}
     virtual bool event(QEvent* event);
     virtual void closeEvent(QCloseEvent* event);
 signals:

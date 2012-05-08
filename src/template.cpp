@@ -292,8 +292,8 @@ Template* Template::templateForFile(const QString& path, Map* map)
 		return new TemplateImage(path, map);
 	else if (path.endsWith(".ocd", Qt::CaseInsensitive) || path.endsWith(".omap", Qt::CaseInsensitive))
 		return new TemplateMap(path, map);	// TODO
-	else if (path.endsWith(".gpx", Qt::CaseInsensitive))
-		return new TemplateGPS(path, map);	
+	else if (path.endsWith(".gpx", Qt::CaseInsensitive) || path.endsWith(".dxf", Qt::CaseInsensitive))
+		return new TemplateGPS(path, map);
 	else
 		return NULL;
 }

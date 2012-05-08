@@ -28,12 +28,14 @@
 #include "map_undo.h"
 #include "map_dialog_scale.h"
 #include "georeferencing.h"
+#include "georeferencing_dialog.h"
 #include "print_dock_widget.h"
 #include "color_dock_widget.h"
 #include "symbol_dock_widget.h"
 #include "template_dock_widget.h"
 #include "template_position_dock_widget.h"
 #include "template.h"
+#include "template_gps.h"
 #include "template_tool_paint.h"
 #include "symbol.h"
 #include "tool_draw_point.h"
@@ -248,7 +250,7 @@ void MapEditorController::attach(MainWindow* window)
 	statusbar_zoom_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	statusbar_cursorpos_label = new QLabel();
 	statusbar_cursorpos_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-	statusbar_cursorpos_label->setFixedWidth(100);
+	statusbar_cursorpos_label->setFixedWidth(150);
 	statusbar_cursorpos_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	window->statusBar()->addPermanentWidget(statusbar_zoom_label);
 	window->statusBar()->addPermanentWidget(statusbar_cursorpos_label);
@@ -283,16 +285,23 @@ void MapEditorController::attach(MainWindow* window)
 	}
 	if (has_invalid_template)
 		window->setStatusBarText("<font color=\"#c00\">" + tr("One or more templates could not be loaded. Use the Templates -> Template setup window to resolve the issue(s) by clicking on the red template file name(s).") + "</font>");
-
-	// Show the symbol window
-	if (mode == MapEditor)
-		symbol_window_act->trigger();
 	
-	// Auto-select the edit tool
 	if (mode == MapEditor)
 	{
+		// Show the symbol window
+		symbol_window_act->trigger();
+		
+		// Auto-select the edit tool
 		edit_tool_act->setChecked(true);
 		setEditTool();
+		
+		// Set the coordinates display mode
+		coordsDisplayChanged();
+	}
+	else
+	{
+		// Set the coordinates display mode
+		map_widget->setCoordsDisplay(MapWidget::MAP_COORDS);
 	}
 }
 
@@ -446,6 +455,38 @@ void MapEditorController::createMenuAndToolbars()
     updatePaintOnTemplateAction();
     connect(paint_on_template_act, SIGNAL(triggered(bool)), this, SLOT(paintOnTemplateClicked(bool)));
 
+	QAction *import_act = newAction("import", tr("Import"), this, SLOT(importClicked()));
+	
+	map_coordinates_act = new QAction(tr("Map coordinates"), this);
+	map_coordinates_act->setCheckable(true);
+	projected_coordinates_act = new QAction(tr("Projected coordinates"), this);
+	projected_coordinates_act->setCheckable(true);
+	geographic_coordinates_act = new QAction(tr("Latitude/Longitude (Dec)"), this);
+	geographic_coordinates_act->setCheckable(true);
+	geographic_coordinates_dms_act = new QAction(tr("Latitude/Longitude (DMS)"), this);
+	geographic_coordinates_dms_act->setCheckable(true);
+	QActionGroup* coordinates_group = new QActionGroup(this);
+	coordinates_group->addAction(map_coordinates_act);
+	coordinates_group->addAction(projected_coordinates_act);
+	coordinates_group->addAction(geographic_coordinates_act);
+	coordinates_group->addAction(geographic_coordinates_dms_act);
+	QObject::connect(coordinates_group, SIGNAL(triggered(QAction*)), this, SLOT(coordsDisplayChanged()));
+	map_coordinates_act->setChecked(true);
+	QObject::connect(&map->getGeoreferencing(), SIGNAL(projectionChanged()), this, SLOT(projectionChanged()));
+	projectionChanged();
+	
+	statusbar_cursorpos_label->setContextMenuPolicy(Qt::ActionsContextMenu);
+	statusbar_cursorpos_label->addAction(map_coordinates_act);
+	statusbar_cursorpos_label->addAction(projected_coordinates_act);
+	statusbar_cursorpos_label->addAction(geographic_coordinates_act);
+	statusbar_cursorpos_label->addAction(geographic_coordinates_dms_act);
+	
+	QMenu* coordinates_menu = new QMenu(tr("Display coordinates as..."));
+	coordinates_menu->addAction(map_coordinates_act);
+	coordinates_menu->addAction(projected_coordinates_act);
+	coordinates_menu->addAction(geographic_coordinates_act);
+	coordinates_menu->addAction(geographic_coordinates_dms_act);
+	
     // Refactored so we can do custom key bindings in the future
     assignKeyboardShortcuts();
 
@@ -453,6 +494,8 @@ void MapEditorController::createMenuAndToolbars()
 	QMenu* file_menu = window->getFileMenu();
 	file_menu->insertAction(window->getCloseAct(), print_act);
 	file_menu->insertSeparator(window->getCloseAct());
+	file_menu->insertAction(print_act, import_act);
+	file_menu->insertSeparator(print_act);
 		
     // Edit menu
 	QMenu* edit_menu = window->menuBar()->addMenu(tr("&Edit"));
@@ -471,6 +514,8 @@ void MapEditorController::createMenuAndToolbars()
 	view_menu->addAction(zoom_out_act);
     view_menu->addAction(show_all_act);
     view_menu->addAction(custom_zoom_act);
+    view_menu->addSeparator();
+	view_menu->addMenu(coordinates_menu);
     view_menu->addSeparator();
     view_menu->addAction(fullscreen_act);
     view_menu->addSeparator();
@@ -635,6 +680,14 @@ void MapEditorController::redo()
 }
 void MapEditorController::doUndo(bool redo)
 {
+	if ((!redo && map->objectUndoManager().getNumUndoSteps() == 0) ||
+		(redo && map->objectUndoManager().getNumRedoSteps() == 0))
+	{
+		// This should not happen as the action should be deactivated in this case!
+		QMessageBox::critical(window, tr("Error"), tr("No undo steps available."));
+		return;
+	}
+	
 	UndoStep* generic_step = redo ? map->objectUndoManager().getLastRedoStep() : map->objectUndoManager().getLastUndoStep();
 	MapLayer* affected_layer = NULL;
 	std::vector<Object*> affected_objects;
@@ -724,6 +777,34 @@ void MapEditorController::setCustomZoomFactorClicked()
 		return;
 	
 	main_view->setZoom(factor);
+}
+
+void MapEditorController::coordsDisplayChanged()
+{
+	if (geographic_coordinates_dms_act->isChecked())
+		map_widget->setCoordsDisplay(MapWidget::GEOGRAPHIC_COORDS_DMS);
+	else if (geographic_coordinates_act->isChecked())
+		map_widget->setCoordsDisplay(MapWidget::GEOGRAPHIC_COORDS);
+	else if (projected_coordinates_act->isChecked())
+		map_widget->setCoordsDisplay(MapWidget::PROJECTED_COORDS);	
+	else
+		map_widget->setCoordsDisplay(MapWidget::MAP_COORDS);
+}
+
+void MapEditorController::projectionChanged()
+{
+	const Georeferencing& geo(map->getGeoreferencing());
+	projected_coordinates_act->setText(geo.getProjectedCRS());
+	if (geo.isLocal())
+	{
+		geographic_coordinates_act->setEnabled(false);
+		geographic_coordinates_dms_act->setEnabled(false);
+	}
+	else
+	{
+		geographic_coordinates_act->setEnabled(true);
+		geographic_coordinates_dms_act->setEnabled(true);
+	}
 }
 
 void MapEditorController::showSymbolWindow(bool show)
@@ -852,12 +933,9 @@ void MapEditorController::openTemplateClicked()
 
 void MapEditorController::editGeoreferencing()
 {
-	GeoreferencingDialog dialog(window, &map->getGPSProjectionParameters());
+	GeoreferencingDialog dialog(window, *map, &map->getGPSProjectionParameters());
 	dialog.setWindowModality(Qt::WindowModal);
-	if (dialog.exec() == QDialog::Rejected)
-		return;
-	
-	map->setGPSProjectionParameters(dialog.getParameters());
+	dialog.exec();
 }
 
 void MapEditorController::selectedSymbolsChanged()
@@ -1736,6 +1814,40 @@ int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_c
 		cursor.x() < selection_extent_viewport.right() - click_tolerance &&
 		cursor.y() < selection_extent_viewport.bottom() - click_tolerance) return -2;
 	return -1;
+}
+
+void MapEditorController::importDXF(QString filename)
+{
+	TemplateGPS temp(filename, map);
+	if (!temp.open(window, main_view))
+		return;
+	temp.import(window);
+}
+void MapEditorController::importClicked()
+{
+	QSettings settings;
+	QString import_directory = settings.value("importFileDirectory", QDir::homePath()).toString();
+	
+	QString filename = QFileDialog::getOpenFileName(window, tr("Import DXF or GPX file"), import_directory, QString("%1 (*.gpx *.dxf);;%2 (*.*)").arg(tr("Importable files")).arg(tr("All files")));
+	if (filename.isEmpty() || filename.isNull())
+		return;
+	
+	settings.setValue("importFileDirectory", QFileInfo(filename).canonicalPath());
+	
+	if (filename.endsWith(".dxf", Qt::CaseInsensitive))
+		importDXF(filename);
+	else if (filename.endsWith(".gpx", Qt::CaseInsensitive))
+		importGPX(filename);
+	else
+		QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected file because its file format is not supported."));
+}
+
+void MapEditorController::importGPX(QString filename)
+{
+	TemplateGPS temp(filename, map);
+	if (!temp.open(window, main_view))
+		return;
+	temp.import(window);
 }
 
 #include "map_editor.moc"

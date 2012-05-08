@@ -31,8 +31,9 @@ struct MapColor
 {
 	enum SpecialPriorities
 	{
-		CoveringRed = -3,
-		CoveringWhite = -2,		// used for tool helper line colors	
+		CoveringRed = -1005,
+		CoveringWhite = -1000,	// used for tool helper line colors	
+		Undefined = -500,
 		Reserved = -1			// used to mark renderables which should not be inserted into the map
 	};
 	

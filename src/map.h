@@ -34,10 +34,8 @@
 #include "map_coord.h"
 #include "renderable.h"
 
-QT_BEGIN_NAMESPACE
 class QFile;
 class QPainter;
-QT_END_NAMESPACE
 
 class Map;
 struct MapColor;
@@ -50,6 +48,7 @@ class Object;
 class MapEditorController;
 class OCAD8FileImport;
 struct GPSProjectionParameters;
+class Georeferencing;
 
 typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
 
@@ -257,7 +256,7 @@ public:
 	
 	// Other settings
 	
-	inline void setScaleDenominator(int value) {scale_denominator = value;}
+	void setScaleDenominator(int value);
 	inline int getScaleDenominator() const {return scale_denominator;}
 	
 	inline const QString& getMapNotes() const {return map_notes;}
@@ -266,6 +265,9 @@ public:
 	inline bool areGPSProjectionParametersSet() const {return gps_projection_params_set;}
 	void setGPSProjectionParameters(const GPSProjectionParameters& params);
 	inline const GPSProjectionParameters& getGPSProjectionParameters() const {return *gps_projection_parameters;}
+	
+	void setGeoreferencing(const Georeferencing& georeferencing);
+	inline const Georeferencing& getGeoreferencing() const {return *georeferencing;}
 	
 	inline bool arePrintParametersSet() const {return print_params_set;}
 	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height);
@@ -281,9 +283,12 @@ public:
 	
 	static MapColor* getCoveringWhite() {return &covering_white;}
 	static MapColor* getCoveringRed() {return &covering_red;}
+	static MapColor* getUndefinedColor() {return &undefined_symbol_color;}
 	static LineSymbol* getCoveringWhiteLine() {return covering_white_line;}
 	static LineSymbol* getCoveringRedLine() {return covering_red_line;}
 	static CombinedSymbol* getCoveringCombinedLine() {return covering_combined_line;}
+	static LineSymbol* getUndefinedLine() {return undefined_line;}
+	static PointSymbol* getUndefinedPoint() {return undefined_point;}
 	
 signals:
 	void gotUnsavedChanges();
@@ -312,11 +317,12 @@ private:
 	typedef std::vector<MapWidget*> WidgetVector;
 	typedef std::vector<MapView*> ViewVector;
 	
-	struct MapColorSet
+	class MapColorSet : public QObject
 	{
+	public:
 		ColorVector colors;
 		
-		MapColorSet();
+		MapColorSet(QObject *parent = 0);
 		void addReference();
 		void dereference();
 		
@@ -354,6 +360,7 @@ private:
 	
 	bool gps_projection_params_set;	// have the parameters been set (are they valid)?
 	GPSProjectionParameters* gps_projection_parameters;
+	Georeferencing* georeferencing;
 	
 	bool print_params_set;			// have the parameters been set (are they valid)?
 	int print_orientation;			// QPrinter::Orientation
@@ -384,8 +391,11 @@ private:
 	static bool static_initialized;
 	static MapColor covering_white;
 	static MapColor covering_red;
+	static MapColor undefined_symbol_color;
 	static LineSymbol* covering_white_line;
 	static LineSymbol* covering_red_line;
+	static LineSymbol* undefined_line;
+	static PointSymbol* undefined_point;
 	static CombinedSymbol* covering_combined_line;
 };
 

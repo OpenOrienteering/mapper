@@ -9,7 +9,6 @@ include(3rd-party/clipper.cmake)
 #set(CMAKE_BUILD_TYPE Release)
 #set(CMAKE_BUILD_TYPE Debug)
 
-
 if (CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS "-Wno-long-long -Wno-deprecated -Wall -pedantic")
 	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
@@ -24,7 +23,11 @@ else (CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
 endif (CMAKE_COMPILER_IS_GNUCXX)
 
-include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR})
+set(OPT_INCLUDES "/opt/local/include")
+set(OPT_LIBRARIES "/opt/local/lib")
+
+include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${OPT_INCLUDES})
+link_directories(${OPT_LIBRARIES})
 
 set(Mapper_SRCS
  libocad/types.c
@@ -60,6 +63,7 @@ set(Mapper_SRCS
  src/map_dialog_new.cpp
  src/map_dialog_scale.cpp
  src/georeferencing.cpp
+ src/georeferencing_dialog.cpp
 
  src/map_color.cpp
  src/color_dock_widget.cpp
@@ -67,6 +71,7 @@ set(Mapper_SRCS
  src/symbol.cpp
  src/symbol_dock_widget.cpp
  src/symbol_setting_dialog.cpp
+ src/symbol_properties_widget.cpp
  src/symbol_point_editor.cpp
  src/symbol_point.cpp
  src/symbol_line.cpp
@@ -102,7 +107,8 @@ set(Mapper_SRCS
  src/tool_boolean.cpp
 
  src/gps_coordinates.cpp
- src/gps_track.cpp 
+ src/gps_track.cpp
+ src/dxfparser.cpp
 
  src/file_format.cpp
  src/file_format_native.cpp
@@ -114,11 +120,11 @@ qt4_automoc(${Mapper_SRCS})
 set(Mapper_TRANS
  translations/OpenOrienteering_de.ts
  translations/OpenOrienteering_sv.ts
+ translations/OpenOrienteering_uk.ts
 )
 qt4_add_translation(Mapper_QM ${Mapper_TRANS})
 
-#set(Mapper_RESOURCES resources.qrc translations.qrc)
-set(Mapper_RESOURCES resources.qrc)
+set(Mapper_RESOURCES resources.qrc translations.qrc)
 qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
@@ -157,6 +163,7 @@ target_link_libraries(Mapper
  ${QT_QTGUI_LIBRARY}
  ${QT_QTNETWORK_LIBRARY}
  ${QT_QTXML_LIBRARY}
+ proj
 )
 
 include(CPackaging.cmake)

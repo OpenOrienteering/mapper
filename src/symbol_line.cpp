@@ -78,7 +78,8 @@ LineSymbol::~LineSymbol()
 	delete end_symbol;
 	delete dash_symbol;
 }
-Symbol* LineSymbol::duplicate()
+
+Symbol* LineSymbol::duplicate() const
 {
 	LineSymbol* new_line = new LineSymbol();
 	new_line->duplicateImplCommon(this);
@@ -138,6 +139,7 @@ void LineSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 		}
 	}
 }
+
 void LineSymbol::createRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, RenderableVector& output)
 {
 	// TODO: Optimization: Use pre-supplied path_coords in more places
@@ -238,6 +240,7 @@ void LineSymbol::createRenderables(bool path_closed, const MapCoordVector& flags
 			createBorderLines(processed_flags, processed_coords, path_closed, output);
 	}
 }
+
 void LineSymbol::createBorderLines(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output)
 {
 	LineSymbol border_symbol;
@@ -273,6 +276,7 @@ void LineSymbol::createBorderLines(const MapCoordVector& flags, const MapCoordVe
 		border_symbol.createRenderables(path_closed, border_flags, border_coords, NULL, output);
 	}
 }
+
 void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, float shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords)
 {
 	const float curve_threshold = 0.03f;	// TODO: decrease for export/print?
@@ -366,6 +370,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 		}
 	}
 }
+
 void LineSymbol::processContinuousLine(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
 									   float start, float end, bool has_start, bool has_end, int& cur_line_coord,
 									   MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, bool include_first_point, bool set_mid_symbols, RenderableVector& output)
@@ -405,6 +410,7 @@ void LineSymbol::processContinuousLine(bool path_closed, const MapCoordVector& f
 	if (has_end && !processed_flags.empty())
 		processed_flags[processed_flags.size() - 1].setHolePoint(true);
 }
+
 void LineSymbol::createPointedLineCap(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
 									  float start, float end, int& cur_line_coord, bool is_end, RenderableVector& output)
 {
@@ -543,6 +549,7 @@ void LineSymbol::createPointedLineCap(const MapCoordVector& flags, const MapCoor
 	assert(cap_coords.size() >= 3 && cap_coords.size() == cap_flags.size());
 	output.push_back(new AreaRenderable(&area_symbol, cap_coords, cap_flags, NULL));
 }
+
 void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, MapCoordVector& out_flags, MapCoordVectorF& out_coords, RenderableVector& output)
 {
 	int size = (int)coords.size();
@@ -669,6 +676,7 @@ void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags
 		first_line_coord = line_coords_size - 1;
 	}
 }
+
 void LineSymbol::createDashSymbolRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
 {
 	PointObject point_object(dash_symbol);
@@ -700,6 +708,7 @@ void LineSymbol::createDashSymbolRenderables(bool path_closed, const MapCoordVec
 		dash_symbol->createRenderablesScaled(&point_object, point_object.getRawCoordinateVector(), point_coord, output, scaling);
 	}
 }
+
 void LineSymbol::createDottedRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
 {
 	PointObject point_object(mid_symbol);
@@ -973,6 +982,7 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 			out_lengths->push_back(end);
 	}
 }
+
 void LineSymbol::advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords, int& cur_line_coord, int& current_index, float cur_length,
 									 int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, std::vector<float>* out_lengths, const MapCoordF& o3, const MapCoordF& o4)
 {
@@ -1049,6 +1059,7 @@ void LineSymbol::colorDeleted(Map* map, int pos, MapColor* color)
 	if (have_changes)
 		getIcon(map, true);
 }
+
 bool LineSymbol::containsColor(MapColor* color)
 {
 	if (color == this->color)
@@ -1123,24 +1134,25 @@ void LineSymbol::ensurePointSymbols(const QString& start_name, const QString& mi
 	}
 	dash_symbol->setName(dash_name);
 }
+
 void LineSymbol::cleanupPointSymbols()
 {
-	if (start_symbol->isEmpty())
+	if (start_symbol != NULL && start_symbol->isEmpty())
 	{
 		delete start_symbol;
 		start_symbol = NULL;
 	}
-	if (mid_symbol->isEmpty())
+	if (mid_symbol != NULL && mid_symbol->isEmpty())
 	{
 		delete mid_symbol;
 		mid_symbol = NULL;
 	}
-	if (end_symbol->isEmpty())
+	if (end_symbol != NULL && end_symbol->isEmpty())
 	{
 		delete end_symbol;
 		end_symbol = NULL;
 	}
-	if (dash_symbol->isEmpty())
+	if (dash_symbol != NULL && dash_symbol->isEmpty())
 	{
 		delete dash_symbol;
 		dash_symbol = NULL;
@@ -1196,6 +1208,7 @@ void LineSymbol::saveImpl(QFile* file, Map* map)
 	file->write((const char*)&border_dash_length, sizeof(int));
 	file->write((const char*)&border_break_length, sizeof(int));
 }
+
 bool LineSymbol::loadImpl(QFile* file, int version, Map* map)
 {
 	file->read((char*)&line_width, sizeof(int));
@@ -1267,10 +1280,26 @@ bool LineSymbol::loadImpl(QFile* file, int version, Map* map)
 	return true;
 }
 
+SymbolPropertiesWidget* LineSymbol::createPropertiesWidget(SymbolSettingDialog* dialog)
+{
+	return new LineSymbolSettings(this, dialog);
+}
+
+
 // ### LineSymbolSettings ###
 
-LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbolEditorWidget* point_editor, SymbolSettingDialog* parent) : QGroupBox(tr("Line settings"), parent), symbol(symbol), dialog(parent)
+LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* dialog)
+: SymbolPropertiesWidget(symbol, dialog), symbol(symbol), dialog(dialog)
 {
+	Map* map = dialog->getPreviewMap();
+	
+	symbol->ensurePointSymbols(tr("Start symbol"), tr("Mid symbol"), tr("End symbol"), tr("Dash symbol"));
+	
+	QWidget* line_tab = new QWidget();
+	QGridLayout* layout = new QGridLayout();
+	layout->setColumnStretch(1, 1);
+	line_tab->setLayout(layout);
+	
 	QLabel* width_label = new QLabel(tr("Line width:"));
 	width_edit = new QLineEdit(QString::number(0.001f * symbol->getLineWidth()));
 	width_edit->setValidator(new DoubleValidator(0, 999999, width_edit));
@@ -1278,11 +1307,19 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbol
 	QLabel* color_label = new QLabel(tr("Line color:"));
 	color_edit = new ColorDropDown(map, symbol->getColor());
 	
+	int row = 0, col = 0;
+	layout->addWidget(width_label, row, col++);
+	layout->addWidget(width_edit,  row, col);
+	
+	row++; col = 0;
+	layout->addWidget(color_label, row, col++);
+	layout->addWidget(color_edit,  row, col, 1, -1);
+	
+	
 	QLabel* minimum_length_label = new QLabel(tr("Minimum line length:"));
 	minimum_length_edit = new QLineEdit(QString::number(0.001f * symbol->minimum_length));
 	minimum_length_edit->setValidator(new DoubleValidator(0, 999999, minimum_length_edit));
 	
-	line_settings_widget = new QWidget();
 	QLabel* line_cap_label = new QLabel(tr("Line cap:"));
 	line_cap_combo = new QComboBox();
 	line_cap_combo->addItem(tr("flat"), QVariant(LineSymbol::FlatCap));
@@ -1291,6 +1328,10 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbol
 	line_cap_combo->addItem(tr("pointed"), QVariant(LineSymbol::PointedCap));
 	line_cap_combo->setCurrentIndex(line_cap_combo->findData(symbol->cap_style));
 	
+	pointed_cap_length_label = new QLabel(tr("Cap length:"));
+	pointed_cap_length_edit = new QLineEdit(QString::number(0.001 * symbol->pointed_cap_length));
+	pointed_cap_length_edit->setValidator(new DoubleValidator(0, 999999, pointed_cap_length_edit));
+	
 	QLabel* line_join_label = new QLabel(tr("Line join:"));
 	line_join_combo = new QComboBox();
 	line_join_combo->addItem(tr("miter"), QVariant(LineSymbol::MiterJoin));
@@ -1298,62 +1339,39 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbol
 	line_join_combo->addItem(tr("bevel"), QVariant(LineSymbol::BevelJoin));
 	line_join_combo->setCurrentIndex(line_join_combo->findData(symbol->join_style));
 	
-	pointed_cap_length_label = new QLabel(tr("Cap length:"));
-	pointed_cap_length_edit = new QLineEdit(QString::number(0.001 * symbol->pointed_cap_length));
-	pointed_cap_length_edit->setValidator(new DoubleValidator(0, 999999, pointed_cap_length_edit));
-	
 	dashed_check = new QCheckBox(tr("Line is dashed"));
 	dashed_check->setChecked(symbol->dashed);
 	
-	QGridLayout* line_settings_layout = new QGridLayout();
-	line_settings_layout->setMargin(0);
-	line_settings_layout->setVerticalSpacing(0);
-	line_settings_layout->setHorizontalSpacing(5);
-	line_settings_layout->addWidget(line_cap_label, 0, 0);
-	line_settings_layout->addWidget(line_cap_combo, 0, 1);
-	line_settings_layout->addWidget(line_join_label, 1, 0);
-	line_settings_layout->addWidget(line_join_combo, 1, 1);
-	line_settings_layout->addWidget(pointed_cap_length_label, 2, 0);
-	line_settings_layout->addWidget(pointed_cap_length_edit, 2, 1);
-	line_settings_layout->addWidget(dashed_check, 3, 0, 1, 2);
-	line_settings_widget->setLayout(line_settings_layout);
+	border_check = new QCheckBox(tr("Enable border lines"));
+	border_check->setChecked(symbol->have_border_lines);
 	
-	undashed_widget = new QWidget();
-	QLabel* segment_length_label = new QLabel(tr("Segment length:"));
-	segment_length_edit = new QLineEdit(QString::number(0.001 * symbol->segment_length));
-	segment_length_edit->setValidator(new DoubleValidator(0, 999999, segment_length_edit));
+	line_settings_list 
+	  << minimum_length_label << minimum_length_edit
+	  << line_cap_label << line_cap_combo 
+	  << line_join_label << line_join_combo
+	  << pointed_cap_length_label << pointed_cap_length_edit
+	  << dashed_check
+	  << border_check;
 	
-	QLabel* end_length_label = new QLabel(tr("End length:"));
-	end_length_edit = new QLineEdit(QString::number(0.001 * symbol->end_length));
-	end_length_edit->setValidator(new DoubleValidator(0, 999999, end_length_edit));
+	row++; col = 0;
+	layout->addWidget(minimum_length_label, row, col++);
+	layout->addWidget(minimum_length_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(line_cap_label, row, col++);
+	layout->addWidget(line_cap_combo, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(pointed_cap_length_label, row, col++);
+	layout->addWidget(pointed_cap_length_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(line_join_label, row, col++);
+	layout->addWidget(line_join_combo, row, col, 1, -1);
 	
-	show_at_least_one_symbol_check = new QCheckBox(tr("Show at least one mid symbol"));
-	show_at_least_one_symbol_check->setChecked(symbol->show_at_least_one_symbol);
-	
-	QLabel* minimum_mid_symbol_count_label = new QLabel(tr("Minimum mid symbol count:"));
-	minimum_mid_symbol_count_edit = new QLineEdit(QString::number(0.001f * symbol->minimum_mid_symbol_count));
-	minimum_mid_symbol_count_edit->setValidator(new DoubleValidator(0, 999999, minimum_mid_symbol_count_edit));
-	
-	QLabel* minimum_mid_symbol_count_when_closed_label = new QLabel(tr("Minimum mid symbol count when closed:"));
-	minimum_mid_symbol_count_when_closed_edit = new QLineEdit(QString::number(0.001f * symbol->minimum_mid_symbol_count_when_closed));
-	minimum_mid_symbol_count_when_closed_edit->setValidator(new DoubleValidator(0, 999999, minimum_mid_symbol_count_when_closed_edit));
-	
-	QGridLayout* undashed_layout = new QGridLayout();
-	undashed_layout->setMargin(0);
-	undashed_layout->setVerticalSpacing(0);
-	undashed_layout->setHorizontalSpacing(2);
-	undashed_layout->addWidget(segment_length_label, 0, 0);
-	undashed_layout->addWidget(segment_length_edit, 0, 1);
-	undashed_layout->addWidget(end_length_label, 1, 0);
-	undashed_layout->addWidget(end_length_edit, 1, 1);
-	undashed_layout->addWidget(show_at_least_one_symbol_check, 2, 0, 1, 2);
-	undashed_layout->addWidget(minimum_mid_symbol_count_label, 3, 0);
-	undashed_layout->addWidget(minimum_mid_symbol_count_edit, 3, 1);
-	undashed_layout->addWidget(minimum_mid_symbol_count_when_closed_label, 4, 0);
-	undashed_layout->addWidget(minimum_mid_symbol_count_when_closed_edit, 4, 1);
-	undashed_widget->setLayout(undashed_layout);
-	
-	dashed_widget = new QWidget();
+	row++; col = 0;
+	layout->addWidget(new QWidget(), row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(new QLabel(QString("<b>%1</b>").arg(tr("Dashed line"))), row, col++, 1, -1);
+	row++; col = 0;
+	layout->addWidget(dashed_check, row, col, 1, -1);
 	
 	QLabel* dash_length_label = new QLabel(tr("Dash length:"));
 	dash_length_edit = new QLineEdit(QString::number(0.001 * symbol->dash_length));
@@ -1378,22 +1396,35 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbol
 	half_outer_dashes_check = new QCheckBox(tr("Half length of first and last dash"));
 	half_outer_dashes_check->setChecked(symbol->half_outer_dashes);
 	
-	QGridLayout* dashed_layout = new QGridLayout();
-	dashed_layout->setMargin(0);
-	dashed_layout->setVerticalSpacing(0);
-	dashed_layout->setHorizontalSpacing(5);
-	dashed_layout->addWidget(dash_length_label, 0, 0);
-	dashed_layout->addWidget(dash_length_edit, 0, 1);
-	dashed_layout->addWidget(break_length_label, 1, 0);
-	dashed_layout->addWidget(break_length_edit, 1, 1);
-	dashed_layout->addWidget(dash_group_label, 2, 0);
-	dashed_layout->addWidget(dash_group_combo, 2, 1);
-	dashed_layout->addWidget(in_group_break_length_label, 3, 0);
-	dashed_layout->addWidget(in_group_break_length_edit, 3, 1);
-	dashed_layout->addWidget(half_outer_dashes_check, 4, 0, 1, 2);
-	dashed_widget->setLayout(dashed_layout);
+	dashed_widget_list
+	  << dash_length_label << dash_length_edit
+	  << break_length_label << break_length_edit
+	  << dash_group_label << dash_group_combo
+	  << in_group_break_length_label << in_group_break_length_edit
+	  << half_outer_dashes_check;
 	
-	mid_symbol_widget = new QWidget();
+	row++; col = 0;
+	layout->addWidget(dash_length_label, row, col++);
+	layout->addWidget(dash_length_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(break_length_label, row, col++);
+	layout->addWidget(break_length_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(dash_group_label, row, col++);
+	layout->addWidget(dash_group_combo, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(in_group_break_length_label, row, col++);
+	layout->addWidget(in_group_break_length_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(half_outer_dashes_check, row, col, 1, -1);
+	
+	
+	row++; col = 0;
+	layout->addWidget(new QWidget(), row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(new QLabel(QString("<b>%1</b>").arg(tr("Mid symbols"))), row, col, 1, -1);
+	
+	
 	QLabel* mid_symbol_per_spot_label = new QLabel(tr("Mid symbols per spot:"));
 	mid_symbol_per_spot_edit = new QLineEdit(QString::number(symbol->mid_symbols_per_spot));
 	mid_symbol_per_spot_edit->setValidator(new QIntValidator(1, 99, mid_symbol_per_spot_edit));
@@ -1402,20 +1433,67 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbol
 	mid_symbol_distance_edit = new QLineEdit(QString::number(0.001 * symbol->mid_symbol_distance));
 	mid_symbol_distance_edit->setValidator(new DoubleValidator(0, 999999, mid_symbol_distance_edit));
 	
-	QGridLayout* mid_symbol_layout = new QGridLayout();
-	mid_symbol_layout->setMargin(0);
-	mid_symbol_layout->setVerticalSpacing(0);
-	mid_symbol_layout->setHorizontalSpacing(5);
-	mid_symbol_layout->addWidget(mid_symbol_per_spot_label, 0, 0);
-	mid_symbol_layout->addWidget(mid_symbol_per_spot_edit, 0, 1);
-	mid_symbol_layout->addWidget(mid_symbol_distance_label, 1, 0);
-	mid_symbol_layout->addWidget(mid_symbol_distance_edit, 1, 1);
-	mid_symbol_widget->setLayout(mid_symbol_layout);
+	mid_symbol_widget_list
+	  << mid_symbol_per_spot_label << mid_symbol_per_spot_edit
+	  << mid_symbol_distance_label << mid_symbol_distance_edit;
 	
-	border_check = new QCheckBox(tr("Enable border lines"));
-	border_check->setChecked(symbol->have_border_lines);
+	row++; col = 0;
+	layout->addWidget(mid_symbol_per_spot_label, row, col++);
+	layout->addWidget(mid_symbol_per_spot_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(mid_symbol_distance_label, row, col++);
+	layout->addWidget(mid_symbol_distance_edit, row, col, 1, -1);
 	
-	border_widget = new QWidget();
+	
+	QLabel* segment_length_label = new QLabel(tr("Distance between spots:"));
+	segment_length_edit = new QLineEdit(QString::number(0.001 * symbol->segment_length));
+	segment_length_edit->setValidator(new DoubleValidator(0, 999999, segment_length_edit));
+	
+	QLabel* end_length_label = new QLabel(tr("Distance from line end:"));
+	end_length_edit = new QLineEdit(QString::number(0.001 * symbol->end_length));
+	end_length_edit->setValidator(new DoubleValidator(0, 999999, end_length_edit));
+	
+	show_at_least_one_symbol_check = new QCheckBox(tr("Show at least one mid symbol"));
+	show_at_least_one_symbol_check->setChecked(symbol->show_at_least_one_symbol);
+	
+	QLabel* minimum_mid_symbol_count_label = new QLabel(tr("Minimum mid symbol count:"));
+	minimum_mid_symbol_count_edit = new QLineEdit(QString::number(0.001f * symbol->minimum_mid_symbol_count));
+	minimum_mid_symbol_count_edit->setValidator(new DoubleValidator(0, 999999, minimum_mid_symbol_count_edit));
+	
+	QLabel* minimum_mid_symbol_count_when_closed_label = new QLabel(tr("Minimum mid symbol count when closed:"));
+	minimum_mid_symbol_count_when_closed_edit = new QLineEdit(QString::number(0.001f * symbol->minimum_mid_symbol_count_when_closed));
+	minimum_mid_symbol_count_when_closed_edit->setValidator(new DoubleValidator(0, 999999, minimum_mid_symbol_count_when_closed_edit));
+	
+	undashed_widget_list
+	  << segment_length_label << segment_length_edit
+	  << end_length_label << end_length_edit
+	  << show_at_least_one_symbol_check
+	  << minimum_mid_symbol_count_label << minimum_mid_symbol_count_edit
+	  << minimum_mid_symbol_count_when_closed_label << minimum_mid_symbol_count_when_closed_edit;
+	
+	row++; col = 0;
+	layout->addWidget(segment_length_label, row, col++);
+	layout->addWidget(segment_length_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(end_length_label, row, col++);
+	layout->addWidget(end_length_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(show_at_least_one_symbol_check, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(minimum_mid_symbol_count_label, row, col++);
+	layout->addWidget(minimum_mid_symbol_count_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(minimum_mid_symbol_count_when_closed_label, row, col++);
+	layout->addWidget(minimum_mid_symbol_count_when_closed_edit, row, col, 1, -1);
+	
+	
+	
+	row++; col = 0;
+	layout->addWidget(new QWidget(), row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(new QLabel(QString("<b>%1</b>").arg(tr("Border"))), row, col++, 1, -1);
+	row++; col = 0;
+	layout->addWidget(border_check, row, col, 1, -1);
 	
 	QLabel* border_width_label = new QLabel(tr("Border width:"));
 	border_width_edit = new QLineEdit(QString::number(0.001f * symbol->border_width));
@@ -1431,7 +1509,23 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbol
 	border_dashed_check = new QCheckBox(tr("Border is dashed"));
 	border_dashed_check->setChecked(symbol->dashed_border);
 	
-	border_dash_widget = new QWidget();
+	border_widget_list
+	  << border_width_label << border_width_edit
+	  << border_color_label << border_color_edit
+	  << border_shift_label << border_shift_edit
+	  << border_dashed_check;
+	
+	row++; col = 0;
+	layout->addWidget(border_width_label, row, col++);
+	layout->addWidget(border_width_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(border_color_label, row, col++);
+	layout->addWidget(border_color_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(border_shift_label, row, col++);
+	layout->addWidget(border_shift_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(border_dashed_check, row, col, 1, -1);
 	
 	QLabel* border_dash_length_label = new QLabel(tr("Border dash length:"));
 	border_dash_length_edit = new QLineEdit(QString::number(0.001f * symbol->border_dash_length));
@@ -1440,51 +1534,44 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbol
 	QLabel* border_break_length_label = new QLabel(tr("Border break length:"));
 	border_break_length_edit = new QLineEdit(QString::number(0.001f * symbol->border_break_length));
 	border_break_length_edit->setValidator(new DoubleValidator(0, 999999, border_break_length_edit));
-
-	QGridLayout* border_dash_layout = new QGridLayout();
-	border_dash_layout->setMargin(0);
-	border_dash_layout->setVerticalSpacing(0);
-	border_dash_layout->setHorizontalSpacing(5);
-	border_dash_layout->addWidget(border_dash_length_label, 0, 0);
-	border_dash_layout->addWidget(border_dash_length_edit, 0, 1);
-	border_dash_layout->addWidget(border_break_length_label, 1, 0);
-	border_dash_layout->addWidget(border_break_length_edit, 1, 1);
-	border_dash_widget->setLayout(border_dash_layout);
 	
-	QGridLayout* border_layout = new QGridLayout();
-	border_layout->setMargin(0);
-	border_layout->setVerticalSpacing(0);
-	border_layout->setHorizontalSpacing(5);
-	border_layout->addWidget(border_width_label, 0, 0);
-	border_layout->addWidget(border_width_edit, 0, 1);
-	border_layout->addWidget(border_color_label, 1, 0);
-	border_layout->addWidget(border_color_edit, 1, 1);
-	border_layout->addWidget(border_shift_label, 2, 0);
-	border_layout->addWidget(border_shift_edit, 2, 1);
-	border_layout->addWidget(border_dashed_check, 3, 0, 1, 2);
-	border_layout->addWidget(border_dash_widget, 4, 0, 1, 2);
-	border_widget->setLayout(border_layout);
+	border_dash_widget_list
+	  << border_dash_length_label << border_dash_length_edit
+	  << border_break_length_label << border_break_length_edit;
 	
-	QGridLayout* layout = new QGridLayout();
-	layout->setVerticalSpacing(0);
-	layout->setHorizontalSpacing(5);
-	layout->addWidget(width_label, 0, 0);
-	layout->addWidget(width_edit, 0, 1);
-	layout->addWidget(color_label, 1, 0);
-	layout->addWidget(color_edit, 1, 1);
-	layout->addWidget(minimum_length_label, 2, 0);
-	layout->addWidget(minimum_length_edit, 2, 1);
-	layout->addWidget(line_settings_widget, 3, 0, 1, 2);
-	layout->addWidget(undashed_widget, 4, 0, 1, 2);
-	layout->addWidget(dashed_widget, 5, 0, 1, 2);
-	layout->addWidget(mid_symbol_widget, 6, 0, 1, 2);
-	layout->addWidget(border_check, 7, 0, 1, 2);
-	layout->addWidget(border_widget, 8, 0, 1, 2);
-	setLayout(layout);
+	row++; col = 0;
+	layout->addWidget(border_dash_length_label, row, col++);
+	layout->addWidget(border_dash_length_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(border_break_length_label, row, col++);
+	layout->addWidget(border_break_length_edit, row, col, 1, -1);
 	
-	updateWidgets(false);
+	row++;
+	layout->setRowStretch(row, 1);
 	
-	connect(point_editor, SIGNAL(symbolEdited()), this, SLOT(pointSymbolEdited()));
+	updateWidgets();
+	
+	const int line_tab_width = line_tab->sizeHint().width();
+	
+	scroll_area = new QScrollArea();
+	scroll_area->setWidget(line_tab);
+	scroll_area->setWidgetResizable(true);
+	scroll_area->setFrameShape(QFrame::NoFrame);
+	scroll_area->setMinimumWidth(line_tab_width + scroll_area->verticalScrollBar()->sizeHint().width());
+	addPropertiesGroup(tr("Line settings"), scroll_area);
+	
+	PointSymbolEditorWidget* point_symbol_editor = 0;
+	MapEditorController* controller = dialog->getPreviewController();
+	
+	QList<PointSymbol*> point_symbols;
+	point_symbols << symbol->getStartSymbol() << symbol->getMidSymbol() << symbol->getEndSymbol() << symbol->getDashSymbol();
+	Q_FOREACH(PointSymbol* point_symbol, point_symbols)
+	{
+		point_symbol_editor = new PointSymbolEditorWidget(controller, point_symbol, 16);
+		addPropertiesGroup(point_symbol->getName(), point_symbol_editor);
+		connect(point_symbol_editor, SIGNAL(symbolEdited()), this, SLOT(pointSymbolEdited()));
+	}
+	
 	connect(width_edit, SIGNAL(textEdited(QString)), this, SLOT(widthChanged(QString)));
 	connect(color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChanged()));
 	connect(minimum_length_edit, SIGNAL(textEdited(QString)), this, SLOT(minimumDimensionsEdited(QString)));
@@ -1513,76 +1600,97 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbol
 	connect(border_break_length_edit, SIGNAL(textEdited(QString)), this, SLOT(borderDashesChanged(QString)));
 }
 
+LineSymbolSettings::~LineSymbolSettings()
+{
+	symbol->cleanupPointSymbols();
+}
+
 void LineSymbolSettings::pointSymbolEdited()
 {
+	dialog->updatePreview();
 	updateWidgets();
 }
+
 void LineSymbolSettings::widthChanged(QString text)
 {
 	symbol->line_width = qRound(1000 * text.toFloat());
 	dialog->updatePreview();
 	updateWidgets();
 }
+
 void LineSymbolSettings::colorChanged()
 {
 	symbol->color = color_edit->color();
 	dialog->updatePreview();
 	updateWidgets();
 }
+
 void LineSymbolSettings::minimumDimensionsEdited(QString text)
 {
 	symbol->minimum_length = qRound(1000 * minimum_length_edit->text().toFloat());
 	symbol->minimum_mid_symbol_count = qRound(1000 * minimum_mid_symbol_count_edit->text().toFloat());
 	symbol->minimum_mid_symbol_count_when_closed = qRound(1000 * minimum_mid_symbol_count_when_closed_edit->text().toFloat());
 }
+
 void LineSymbolSettings::lineCapChanged(int index)
 {
 	symbol->cap_style = (LineSymbol::CapStyle)line_cap_combo->itemData(index).toInt();
 	dialog->updatePreview();
 	updateWidgets();
 }
+
 void LineSymbolSettings::lineJoinChanged(int index)
 {
 	symbol->join_style = (LineSymbol::JoinStyle)line_join_combo->itemData(index).toInt();
 	dialog->updatePreview();
 }
+
 void LineSymbolSettings::pointedLineCapLengthChanged(QString text)
 {
 	symbol->pointed_cap_length = qRound(1000 * text.toFloat());
 	dialog->updatePreview();
 }
+
 void LineSymbolSettings::dashedChanged(bool checked)
 {
 	symbol->dashed = checked;
 	dialog->updatePreview();
 	updateWidgets();
+	if (checked)
+		ensureWidgetVisible(half_outer_dashes_check);
 }
+
 void LineSymbolSettings::segmentLengthChanged(QString text)
 {
 	symbol->segment_length = qRound(1000 * text.toFloat());
 	dialog->updatePreview();
 }
+
 void LineSymbolSettings::endLengthChanged(QString text)
 {
 	symbol->end_length = qRound(1000 * text.toFloat());
 	dialog->updatePreview();
 	updateWidgets();
 }
+
 void LineSymbolSettings::showAtLeastOneSymbolChanged(bool checked)
 {
 	symbol->show_at_least_one_symbol = checked;
 	dialog->updatePreview();
 }
+
 void LineSymbolSettings::dashLengthChanged(QString text)
 {
 	symbol->dash_length = qRound(1000 * text.toFloat());
 	dialog->updatePreview();
 }
+
 void LineSymbolSettings::breakLengthChanged(QString text)
 {
 	symbol->break_length = qRound(1000 * text.toFloat());
 	dialog->updatePreview();
 }
+
 void LineSymbolSettings::dashGroupsChanged(int index)
 {
 	symbol->dashes_in_group = dash_group_combo->itemData(index).toInt();
@@ -1594,54 +1702,68 @@ void LineSymbolSettings::dashGroupsChanged(int index)
 	dialog->updatePreview();
 	updateWidgets();
 }
+
 void LineSymbolSettings::inGroupBreakLengthChanged(QString text)
 {
 	symbol->in_group_break_length = qRound(1000 * text.toFloat());
 	dialog->updatePreview();
 }
+
 void LineSymbolSettings::halfOuterDashesChanged(bool checked)
 {
 	symbol->half_outer_dashes = checked;
 	dialog->updatePreview();
 }
+
 void LineSymbolSettings::midSymbolsPerDashChanged(QString text)
 {
 	symbol->mid_symbols_per_spot = qMax(1, text.toInt());
 	dialog->updatePreview();
 	updateWidgets();
 }
+
 void LineSymbolSettings::midSymbolDistanceChanged(QString text)
 {
 	symbol->mid_symbol_distance = qRound(1000 * text.toFloat());
 	dialog->updatePreview();
 }
+
 void LineSymbolSettings::borderCheckClicked(bool checked)
 {
 	symbol->have_border_lines = checked;
 	dialog->updatePreview();
 	updateWidgets();
+	if (checked)
+		ensureWidgetVisible(border_break_length_edit);
 }
+
 void LineSymbolSettings::borderWidthEdited(QString text)
 {
 	symbol->border_width = qRound(1000 * text.toFloat());
 	dialog->updatePreview();
 }
+
 void LineSymbolSettings::borderColorChanged()
 {
 	symbol->border_color = border_color_edit->color();
 	dialog->updatePreview();
 }
+
 void LineSymbolSettings::borderShiftChanged(QString text)
 {
 	symbol->border_shift = qRound(1000 * text.toFloat());
 	dialog->updatePreview();
 }
+
 void LineSymbolSettings::borderDashedClicked(bool checked)
 {
 	symbol->dashed_border = checked;
 	dialog->updatePreview();
 	updateWidgets();
+	if (checked)
+		ensureWidgetVisible(border_break_length_edit);
 }
+
 void LineSymbolSettings::borderDashesChanged(QString text)
 {
 	symbol->border_dash_length = qRound(1000 * border_dash_length_edit->text().toFloat());
@@ -1649,84 +1771,81 @@ void LineSymbolSettings::borderDashesChanged(QString text)
 	dialog->updatePreview();
 }
 
-void LineSymbolSettings::updateWidgets(bool show)
+void LineSymbolSettings::ensureWidgetVisible(QWidget* widget)
 {
-	color_edit->setEnabled(symbol->line_width > 0);
+	widget_to_ensure_visible = widget;
+	QTimer::singleShot(0, this, SLOT(ensureWidgetVisible()));
+}
+
+void LineSymbolSettings::ensureWidgetVisible()
+{
+	scroll_area->ensureWidgetVisible(widget_to_ensure_visible, 5, 5);
+}
+
+void LineSymbolSettings::updateWidgets()
+{
+	const bool symbol_active = symbol->line_width > 0;
+	color_edit->setEnabled(symbol_active);
 	
-	if (show)
-		line_settings_widget->setVisible(symbol->line_width > 0 && symbol->color != NULL);
-	else if (!(symbol->line_width > 0 && symbol->color != NULL))
-		line_settings_widget->hide();
-	
-	if (show)
+	const bool line_active = symbol_active && symbol->color != NULL;
+	Q_FOREACH(QWidget* line_settings_widget, line_settings_list)
 	{
-		pointed_cap_length_label->setVisible(symbol->cap_style == LineSymbol::PointedCap);
-		pointed_cap_length_edit->setVisible(symbol->cap_style == LineSymbol::PointedCap);
+		line_settings_widget->setEnabled(line_active);
 	}
-	else if (!(symbol->cap_style == LineSymbol::PointedCap))
+	if (line_active && symbol->cap_style != LineSymbol::PointedCap)
 	{
-		pointed_cap_length_label->hide();
-		pointed_cap_length_edit->hide();
-	}
-	
-	if (show)
-		undashed_widget->setVisible(!symbol->dashed && !symbol->mid_symbol->isEmpty());
-	else if (!(!symbol->dashed && !symbol->mid_symbol->isEmpty()))
-		undashed_widget->hide();
-	
-	if (show)
-		show_at_least_one_symbol_check->setVisible(symbol->end_length > 0);
-	else if (!(symbol->end_length > 0))
-		show_at_least_one_symbol_check->hide();
-	
-	if (show)
-		dashed_widget->setVisible(symbol->line_width > 0 && symbol->color != NULL && symbol->dashed);
-	else if (!(symbol->line_width > 0 && symbol->color != NULL && symbol->dashed))
-		dashed_widget->hide();
-	
-	if (show)
-	{
-		in_group_break_length_label->setVisible(symbol->dashes_in_group > 1);
-		in_group_break_length_edit->setVisible(symbol->dashes_in_group > 1);
-	}
-	else if (!(symbol->dashes_in_group > 1))
-	{
-		in_group_break_length_label->hide();
-		in_group_break_length_edit->hide();
+		pointed_cap_length_label->setEnabled(false);
+		pointed_cap_length_edit->setEnabled(false);
 	}
 	
-	if (show)
-		half_outer_dashes_check->setVisible(symbol->dashes_in_group == 1);
-	else if (!(symbol->dashes_in_group == 1))
-		half_outer_dashes_check->hide();
-	
-	if (show)
-		mid_symbol_widget->setVisible(!symbol->mid_symbol->isEmpty());
-	else if (!(!symbol->mid_symbol->isEmpty()))
-		mid_symbol_widget->hide();
-	
-	if (show)
+	const bool line_dashed = symbol->dashed;
+	if (line_dashed)
 	{
-		mid_symbol_distance_label->setVisible(symbol->mid_symbols_per_spot > 1);
-		mid_symbol_distance_edit->setVisible(symbol->mid_symbols_per_spot > 1);
+		Q_FOREACH(QWidget* undashed_widget, undashed_widget_list)
+		{
+			undashed_widget->setVisible(false);
+		}
+		Q_FOREACH(QWidget* dashed_widget, dashed_widget_list)
+		{
+			dashed_widget->setVisible(true);
+			dashed_widget->setEnabled(line_active);
+		}
+		in_group_break_length_label->setEnabled(line_active && symbol->dashes_in_group > 1);
+		in_group_break_length_edit->setEnabled(line_active && symbol->dashes_in_group > 1);
+		half_outer_dashes_check->setEnabled(line_active && symbol->dashes_in_group  == 1);
 	}
-	else if (!(symbol->mid_symbols_per_spot > 1))
+	else
 	{
-		mid_symbol_distance_label->hide();
-		mid_symbol_distance_edit->hide();
+		Q_FOREACH(QWidget* undashed_widget, undashed_widget_list)
+		{
+			undashed_widget->setVisible(true);
+			undashed_widget->setEnabled(!symbol->mid_symbol->isEmpty());
+		}
+		show_at_least_one_symbol_check->setEnabled(show_at_least_one_symbol_check->isEnabled() && symbol->end_length > 0);
+		Q_FOREACH(QWidget* dashed_widget, dashed_widget_list)
+		{
+			dashed_widget->setVisible(false);
+		}
 	}
 	
-	border_check->setEnabled(symbol->line_width > 0);
+	Q_FOREACH(QWidget* mid_symbol_widget, mid_symbol_widget_list)
+	{
+		mid_symbol_widget->setEnabled(!symbol->mid_symbol->isEmpty());
+	}
+	mid_symbol_distance_label->setEnabled(mid_symbol_distance_label->isEnabled() && symbol->mid_symbols_per_spot > 1);
+	mid_symbol_distance_edit->setEnabled(mid_symbol_distance_edit->isEnabled() && symbol->mid_symbols_per_spot > 1);
 	
-	if (show)
-		border_widget->setVisible(symbol->have_border_lines);
-	else if (!symbol->have_border_lines)
-		border_widget->hide();
-	
-	if (show)
-		border_dash_widget->setVisible(symbol->dashed_border);
-	else if (!symbol->dashed_border)
-		border_dash_widget->hide();
+	const bool border_active = symbol_active && symbol->have_border_lines;
+	Q_FOREACH(QWidget* border_widget, border_widget_list)
+	{
+		border_widget->setVisible(border_active);
+		border_widget->setEnabled(border_active);
+	}
+	Q_FOREACH(QWidget* border_dash_widget, border_dash_widget_list)
+	{
+		border_dash_widget->setVisible(border_active);
+		border_dash_widget->setEnabled(border_active && symbol->dashed_border);
+	}
 }
 
 #include "symbol_line.moc"

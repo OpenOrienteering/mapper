@@ -21,9 +21,14 @@
 #include "template_gps.h"
 
 #include <QPainter>
+#include <QMessageBox>
 
 #include "map_widget.h"
-#include "georeferencing.h"
+#include "map_undo.h"
+#include "object.h"
+#include "symbol_line.h"
+#include "symbol_point.h"
+#include "georeferencing_dialog.h"
 
 TemplateGPS::TemplateGPS(const QString& filename, Map* map) : Template(filename, map)
 {
@@ -94,12 +99,11 @@ bool TemplateGPS::open(QWidget* dialog_parent, MapView* main_view)
 		params.center_longitude = (num_samples > 0) ? (avg_longitude / num_samples) : 0;
 		
 		// Show the parameter dialog
-		GeoreferencingDialog dialog(dialog_parent, &params);
+		GeoreferencingDialog dialog(dialog_parent, *map, &params);
 		dialog.setWindowModality(Qt::WindowModal);
 		if (dialog.exec() == QDialog::Rejected)
 			return false;
 		
-		map->setGPSProjectionParameters(dialog.getParameters());	// this will call the according slot of this object to adjust the track
 		calculateExtent();
 	}
 	
@@ -185,6 +189,77 @@ double TemplateGPS::getTemplateFinalScaleX() const
 double TemplateGPS::getTemplateFinalScaleY() const
 {
 	return cur_trans.template_scale_y * 1000 / map->getScaleDenominator();
+}
+
+PathObject* TemplateGPS::importPathStart()
+{
+	PathObject* path = new PathObject();
+	path->setSymbol(map->getUndefinedLine(), true);
+	return path;
+}
+void TemplateGPS::importPathEnd(PathObject* path)
+{
+	map->addObject(path);
+	map->addObjectToSelection(path, false);
+}
+PointObject* TemplateGPS::importWaypoint(const MapCoordF& position)
+{
+	PointObject* point = new PointObject(map->getUndefinedPoint());
+	point->setPosition(position);
+	map->addObject(point);
+	map->addObjectToSelection(point, false);
+	return point;
+}
+bool TemplateGPS::import(QWidget* dialog_parent)
+{
+	if (track.getNumWaypoints() == 0 && track.getNumSegments() == 0)
+	{
+		QMessageBox::critical(dialog_parent, tr("Error"), tr("The path is empty, there is nothing to import!"));
+		return false;
+	}
+	
+	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
+	MapLayer* layer = map->getCurrentLayer();
+	std::vector< Object* > result;
+	
+	map->clearObjectSelection(false);
+	
+	if (track.getNumWaypoints() > 0)
+	{
+		int res = QMessageBox::question(dialog_parent, tr("Question"), tr("Should the waypoints be imported as a line going through all points?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+		if (res == QMessageBox::No)
+		{
+			for (int i = 0; i < track.getNumWaypoints(); i++)
+				result.push_back(importWaypoint(templateToMap(track.getWaypoint(i).map_coord)));
+		}
+		else
+		{
+			PathObject* path = importPathStart();
+			for (int i = 0; i < track.getNumWaypoints(); i++)
+				path->addCoordinate(templateToMap(track.getWaypoint(i).map_coord).toMapCoord());
+			importPathEnd(path);
+			result.push_back(path);
+		}
+	}
+	
+	for (int i = 0; i < track.getNumSegments(); i++)
+	{
+		PathObject* path = importPathStart();
+		for (int j = 0; j < track.getSegmentPointCount(i); j++)
+			path->addCoordinate(templateToMap(track.getSegmentPoint(i, j).map_coord).toMapCoord());
+		importPathEnd(path);
+		result.push_back(path);
+	}
+	
+	for (int i = 0; i < (int)result.size(); ++i) // keep as separate loop to get the correct order
+		undo_step->addObject(layer->findObjectIndex(result[i]));
+	
+	map->objectUndoManager().addNewUndoStep(undo_step);
+	
+	map->emitSelectionChanged();
+	map->emitSelectionEdited();		// TODO: is this necessary here?
+	
+	return true;
 }
 
 void TemplateGPS::gpsProjectionParametersChanged()
