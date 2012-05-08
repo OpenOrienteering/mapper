@@ -40,20 +40,8 @@ void GPSProjectionParameters::update()
 	v0 = a / sqrt(1 - e_sq * sin_center_latitude*sin_center_latitude);
 }
 
-LatLon::LatLon()
-{ 
-	latitude = 0;
-	longitude = 0;
-}
 
-LatLon::LatLon(double latitude, double longitude, bool given_in_degrees) : latitude(latitude), longitude(longitude)
-{
-	if (given_in_degrees)
-	{
-		this->latitude = latitude * M_PI / 180;
-		this->longitude = longitude * M_PI / 180;
-	}
-}
+// Legacy "GPS projection" code 
 
 LatLon::LatLon(MapCoordF map_coord, const GPSProjectionParameters& params)
 {
@@ -97,11 +85,6 @@ LatLon::LatLon(MapCoordF map_coord, const GPSProjectionParameters& params)
 		if (qMax(qAbs(d_latitude), qAbs(d_longitude)) < INSIGNIFICANT_CHANGE)
 			break;
 	}
-}
-
-MapCoordF LatLon::toMapCoordF(const Georeferencing& georef) const
-{
-	return MapCoordF(georef.toMapCoords(*this));
 }
 
 MapCoordF LatLon::toMapCoordF(const GPSProjectionParameters& params) const
@@ -219,13 +202,4 @@ bool LatLon::fromString(QString str)
 	latitude = temp_latitude * M_PI / 180;
 	longitude = temp_longitude * M_PI / 180;
 	return true;
-}
-
-QDebug operator<<(QDebug dbg, const LatLon& lat_lon)
-{
-	dbg.space() 
-	  << "LatLon" << lat_lon.latitude << lat_lon.longitude
-	  << "(" << Georeferencing::radToDeg(lat_lon.latitude)
-	  << Georeferencing::radToDeg(lat_lon.longitude) << ")";
-	return dbg.space();
 }

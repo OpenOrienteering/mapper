@@ -25,12 +25,96 @@
 #include <QString>
 #include <QTransform>
 
-#include "gps_coordinates.h"  // import LatLon, TODO: move to this file.
 #include "map_coord.h"
 
 class QDebug;
 
+class GPSProjectionParameters;
 typedef void* projPJ;
+
+/**
+ * LatLon specifies geographic coordinates by latitude and longitude
+ */
+class LatLon
+{
+public:
+	/** 
+	 * Latitude is a geographic coordinate that specifies the north-south
+	 * position (φ, phi). The unit is radiant.
+	 */
+	double latitude;
+	
+	/**
+	 * Longitude is a geographic coordinate that specifies the east-west 
+	 * position (λ, lambda). The unit is radiant.
+	 */
+	double longitude;
+	
+	/**
+	 * Constructs a new LatLon with latitude and longitude set to zero.
+	 */
+	LatLon() : latitude(0.0), longitude(0.0) { };
+	
+	/**
+	 * Constructs a new LatLon for the latitude and longitude.
+	 * If given_in_degrees is true, the parameters' unit is degree, otherwise 
+	 * the unit is radiant.
+	 */
+	LatLon(double latitude, double longitude, bool given_in_degrees = false)
+	: latitude(latitude), longitude(longitude)
+	{
+		if (given_in_degrees)
+		{
+			this->latitude = latitude * M_PI / 180;
+			this->longitude = longitude * M_PI / 180;
+		}
+	}
+	
+	/**
+	 * Return the latitude value in degrees
+	 */
+	inline double getLatitudeInDegrees() const  { return latitude * 180.0 / M_PI; }
+	
+	/**
+	 * Return the longitude value in degrees
+	 */
+	inline double getLongitudeInDegrees() const { return longitude * 180.0 / M_PI; }
+	
+private:
+	/**
+	 * @deprecated GPSProjectionParameters is no longer used.
+	 * This constructor is left for historical reasons.
+	 * Implementation in gps_coordinates.cpp.
+	 */
+	LatLon(MapCoordF map_coord, const GPSProjectionParameters& params);
+	
+	/**
+	 * @deprecated GPSProjectionParameters is no longer used.
+	 * This method is left for historical reasons.
+	 * Implementation in gps_coordinates.cpp.
+	 */
+	MapCoordF toMapCoordF(const GPSProjectionParameters& params) const;
+	/**
+	 * @deprecated GPSProjectionParameters is no longer used.
+	 * This method is left for historical reasons.
+	 * Implementation in gps_coordinates.cpp.
+	 */
+	void toCartesianCoordinates(const GPSProjectionParameters& params, double height, double& x, double& y, double& z);
+	
+	/**
+	 * @deprecated Not used at the moment
+	 * Implementation in gps_coordinates.cpp.
+	 */
+	bool fromString(QString str);	// for example "53°48'33.82"N  2°07'46.38"E" or "N 48° 31.732 E 012° 08.422" or "48.52887 12.14037"
+};
+
+/**
+ * Dump a LatLon to the debug output
+ * 
+ * Note that this requires a *reference*, not a pointer.
+ */
+QDebug operator<<(QDebug dbg, const LatLon &lat_lon);
+
 
 
 /**

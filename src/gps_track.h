@@ -25,7 +25,6 @@
 #include <QDate>
 
 #include "georeferencing.h"
-#include "gps_coordinates.h"
 
 class QXmlStreamWriter;
 

@@ -238,4 +238,14 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 	return dbg.space();
 }
 
+QDebug operator<<(QDebug dbg, const LatLon& lat_lon)
+{
+	dbg.space() 
+	  << "LatLon" << lat_lon.latitude << lat_lon.longitude
+	  << "(" << Georeferencing::radToDeg(lat_lon.latitude)
+	  << Georeferencing::radToDeg(lat_lon.longitude) << ")";
+	return dbg.space();
+}
+
+
 #include "georeferencing.moc"

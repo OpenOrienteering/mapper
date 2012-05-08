@@ -25,8 +25,6 @@
 #include <QLocale>
 #include <QString>
 
-#include "gps_coordinates.h"
-
 class QComboBox;
 class QDoubleSpinBox;
 class QLabel;
@@ -36,6 +34,7 @@ class QSpinBox;
 
 class Georeferencing;
 class Map;
+class MapCoord;
 
 class GeoreferencingDialog : public QDialog
 {
