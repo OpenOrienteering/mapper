@@ -238,6 +238,7 @@ private:
 	QAction* boolean_intersection_act;
 	QAction* boolean_difference_act;
 	QAction* boolean_xor_act;
+    QAction *change_symbol_select_act;
 	
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;

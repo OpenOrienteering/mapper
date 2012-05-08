@@ -28,6 +28,7 @@
 #include "symbol_line.h"
 #include "symbol_area.h"
 #include "symbol_text.h"
+#include "symbol_combined.h"
 #include "object.h"
 #include "object_text.h"
 
@@ -88,16 +89,56 @@ bool XMLFileFormat::understands(const unsigned char *buffer, size_t sz) const
     return false;
 }
 
+
+/*
+Importer *XMLFileFormat::createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
+{
+    return new XMLFileImporter(path, map, view);
+}
+*/
+
 Exporter *XMLFileFormat::createExporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
 {
     return new XMLFileExporter(path, map, view);
 }
 
-
-
-
-
 #define NS_V1 "http://oo-mapper.com/oo-mapper/v1"
+
+/*
+XMLFileImporter::XMLFileImporter(const QString &path, Map *map, MapView *view)
+    : Importer(path, map, view), reader("document", NS_V1)
+{
+
+}
+
+
+void XMLFileImporter::doExport() throw (FormatException)
+{
+    reader.down("map");
+
+    reader.down("colors");
+    Q_FOREACH(reader.all("color"))
+    {
+        MapColor *color = parseColor(reader);
+
+    }
+
+    for (int i = 0; i < map->getNumColors(); i++)
+    {
+
+        const MapColor *color = map->getColor(i);
+        reader.down("color")
+                .attr("cmyk", QString("%1,%2,%3,%4").arg(color->c).arg(color->m).arg(color->y).arg(color->k))
+                .attr("priority", color->priority)
+                .attr("opacity", color->opacity)
+                .sub("name", color->name)
+                .up();
+        color_index[color] = i;
+    }
+    reader.up();
+}
+*/
+
 
 XMLFileExporter::XMLFileExporter(const QString &path, Map *map, MapView *view)
     : Exporter(path, map, view), builder("document", NS_V1)
@@ -133,19 +174,22 @@ void XMLFileExporter::doExport() throw (FormatException)
     builder.down("layers");
     for (int i = 0; i < map->getNumLayers(); i++)
     {
-        MapLayer *layer = map->getLayer(i);
+        const MapLayer *layer = map->getLayer(i);
         builder.down("layer").sub("name", layer->getName());
         for (int j = 0; j < layer->getNumObjects(); j++)
         {
-            const Object *object = layer->getObject(j);
-            exportObject(object);
+            exportObject(layer->getObject(j));
         }
         builder.up();
     }
     builder.up();
 
     builder.up();
-    builder.down("view").up();
+
+    builder.down("view");
+    // TODO: save view parameters
+
+    builder.up();
 
     QFile f(path);
     if (f.open(QIODevice::ReadWrite))
@@ -158,6 +202,18 @@ void XMLFileExporter::doExport() throw (FormatException)
 
 void XMLFileExporter::exportSymbol(const Symbol *symbol, bool anonymous)
 {
+    if (!anonymous)
+    {
+        builder.attr("number", symbol->getNumberAsString())
+                .attr("helper", symbol->isHelperSymbol())
+                .attr("hidden", symbol->isHidden())
+                .attr("protected", symbol->isProtected())
+                .sub("name", symbol->getName())
+                .sub("description", symbol->getDescription());
+
+        // TODO: save icon
+    }
+
     if (symbol->getType() == Symbol::Point)
     {
         const PointSymbol *s = reinterpret_cast<const PointSymbol *>(symbol);
@@ -185,7 +241,6 @@ void XMLFileExporter::exportSymbol(const Symbol *symbol, bool anonymous)
                 .attr("width", s->getLineWidth())
                 .attr("cap", s->getCapStyle())
                 .attr("join", s->getJoinStyle());
-                //.attr("min-length", s->minimum_length);
         /*
         if (s->getCapStyle() == LineSymbol::PointedCap)
         {
@@ -193,45 +248,97 @@ void XMLFileExporter::exportSymbol(const Symbol *symbol, bool anonymous)
         }
         */
 
+        if (s->getBorderLineWidth() > 0)
+        {
+            builder.attr("border-color", color_index[s->getBorderColor()])
+                    .attr("border-width", s->getBorderLineWidth())
+                    .attr("border-shift", s->getBorderShift());
+        }
+
         if (s->getStartSymbol())
         {
             builder.down("start-symbol");
-            exportSymbol(s->getStartSymbol());
+            exportSymbol(s->getStartSymbol(), true);
             builder.up();
         }
         if (s->getMidSymbol())
         {
             builder.down("mid-symbol");
-            exportSymbol(s->getMidSymbol());
+            exportSymbol(s->getMidSymbol(), true);
             builder.up();
         }
         if (s->getEndSymbol())
         {
             builder.down("end-symbol");
-            exportSymbol(s->getEndSymbol());
+            exportSymbol(s->getEndSymbol(), true);
             builder.up();
         }
         if (s->getDashSymbol())
         {
             builder.down("dash-symbol");
-            exportSymbol(s->getDashSymbol());
+            exportSymbol(s->getDashSymbol(), true);
             builder.up();
         }
 
 
     }
+    else if (symbol->getType() == Symbol::Area)
+    {
+        builder.down("area-symbol");
+        const AreaSymbol *s = reinterpret_cast<const AreaSymbol *>(symbol);
+
+        builder.attr("color", color_index[s->getColor()])
+                .attr("min-area", s->getMinimumArea());
+        for (int i = 0; i < s->getNumFillPatterns(); i++)
+        {
+            builder.down("pattern");
+            exportPattern(s->getFillPattern(i));
+            builder.up();
+        }
+        builder.up();
+    }
+    else if (symbol->getType() == Symbol::Text)
+    {
+        builder.down("text-symbol");
+        const TextSymbol *s = reinterpret_cast<const TextSymbol *>(symbol);
+        builder.attr("color", color_index[s->getColor()])
+                .attr("font-family", s->getFontFamily())
+                .attr("font-size", s->getFontSize())
+                .attr("font-weight", s->isBold() ? "bold" : "normal")
+                .attr("font-style", s->isItalic() ? "italic" : "normal")
+                .attr("text-decoration", s->isUnderlined() ? "underline" : "normal")
+                .attr("char-spacing", s->getCharacterSpacing())
+                .attr("line-spacing", s->getLineSpacing())
+                .attr("paragraph-spacing", s->getParagraphSpacing())
+                .attr("font-kerning", s->usesKerning());
+        if (s->hasLineBelow())
+        {
+            builder.down("underline")
+                    .attr("color", color_index[s->getLineBelowColor()])
+                    .attr("width", s->getLineBelowWidth())
+                    .attr("distance", s->getLineBelowDistance())
+                    .up();
+        }
+        for (int i = 0; i < s->getNumCustomTabs(); i++)
+        {
+            int tab = s->getCustomTab(i);
+            builder.down("tab-stop").attr("position", tab).up();
+        }
+        //builder.attr("default-tab", s->tab_interval); // no getter or setter?
+        builder.up();
+    }
+    else if (symbol->getType() == Symbol::Combined)
+    {
+        builder.down("combined-symbol");
+        const CombinedSymbol *s = reinterpret_cast<const CombinedSymbol *>(symbol);
+        for (int i = 0; i < s->getNumParts(); i++)
+        {
+            exportSymbol(s->getPart(i), true);
+        }
+    }
     else
     {
         builder.down("symbol");
-    }
-
-    if (!anonymous)
-    {
-        builder.attr("number", symbol->getNumberAsString())
-                .attr("helper", symbol->isHelperSymbol())
-                .sub("name", symbol->getName())
-                .sub("description", symbol->getDescription());
-        // FIXME: do icon
     }
 
     builder.up();
@@ -262,7 +369,13 @@ void XMLFileExporter::exportObject(const Object *object, bool reference_symbol)
     {
         builder.attr("symbol", object->getSymbol()->getNumberAsString());
     }
-    builder.attr("path", makePath(object)).up();
+    builder.attr("path", makePath(object));
+    builder.up();
+}
+
+void XMLFileExporter::exportPattern(const struct AreaSymbol::FillPattern &pattern)
+{
+    // FIXME
 }
 
 QString XMLFileExporter::makePath(const Object *object) const

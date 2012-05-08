@@ -20,12 +20,15 @@
 #ifndef OCAD8_FILE_IMPORT_H
 #define OCAD8_FILE_IMPORT_H
 
+#include <set>
+
 #include <QTextCodec>
 
 #include "../libocad/libocad.h"
 
 #include "file_format.h"
 #include "symbol.h"
+#include "symbol_combined.h"
 #include "object.h"
 #include "template.h"
 
@@ -75,6 +78,7 @@ protected:
     // Symbol import
     Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);
     Symbol *importLineSymbol(const OCADLineSymbol *ocad_symbol);
+    Symbol *importDoubleLineSymbol(const OCADLineSymbol *ocad_symbol);
     Symbol *importAreaSymbol(const OCADAreaSymbol *ocad_symbol);
     Symbol *importTextSymbol(const OCADTextSymbol *ocad_symbol);
     RectangleInfo *importRectSymbol(const OCADRectSymbol *ocad_symbol);
@@ -90,9 +94,12 @@ protected:
     // Some helper functions that are used in multiple places
     PointSymbol *importPattern(s16 npts, OCADPoint *pts);
     void fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol);
+    void fillCombinedSymbol(CombinedSymbol *symbol, const std::vector<Symbol *> &symbols);
     void fillPathCoords(Object *object, bool is_area, s16 npts, OCADPoint *pts);
 	bool fillTextPathCoords(TextObject *object, TextSymbol *symbol, s16 npts, OCADPoint *pts);
     bool isRasterImageFile(const QString &filename) const;
+    bool isMainLineTrivial(const LineSymbol *symbol);
+
 
     // Unit conversion functions
     QString convertPascalString(const char *p);

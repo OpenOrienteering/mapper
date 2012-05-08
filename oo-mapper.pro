@@ -129,6 +129,7 @@ RESOURCES += resources.qrc
 
 OTHER_FILES += \
     CMakeLists.txt \
+    3rd-party/clipper.cmake \
     Doxyfile
 
 

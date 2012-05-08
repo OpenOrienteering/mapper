@@ -259,6 +259,11 @@ public:
 	{
 		return x * other.x + y * other.y;
 	}
+
+    inline double cross(const MapCoordF& other) const
+    {
+        return x * other.y - y * other.x;
+    }
 	
 	/// Returns the angle of the vector relative to the vector (1, 0) in radians, range [-PI; +PI].
 	/// Vector3(0, 1).getAngle() returns +PI/2, Vector3(0, -1).getAngle() returns -PI/2.

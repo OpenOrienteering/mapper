@@ -1096,6 +1096,8 @@ void Map::deleteSymbol(int pos)
 }
 int Map::findSymbolIndex(Symbol* symbol)
 {
+    if (!symbol)
+        return -1;
 	int size = (int)symbols.size();
 	for (int i = 0; i < size; ++i)
 	{
@@ -1453,9 +1455,10 @@ MapView::MapView(Map* map) : map(map)
 	position_y = 0;
 	view_x = 0;
 	view_y = 0;
-	update();
-	
-	//map->addMapView(this);
+    map_visibility = new TemplateVisibility();
+    map_visibility->visible = true;
+    update();
+    //map->addMapView(this);
 }
 MapView::~MapView()
 {
@@ -1463,6 +1466,7 @@ MapView::~MapView()
 	
 	foreach (TemplateVisibility* vis, template_visibilities)
 		delete vis;
+    delete map_visibility;
 }
 
 void MapView::save(QFile* file)
@@ -1745,6 +1749,11 @@ void MapView::update()
 	
 	// Create view_to_map
 	map_to_view.invert(view_to_map);
+}
+
+TemplateVisibility *MapView::getMapVisibility()
+{
+    return map_visibility;
 }
 
 bool MapView::isTemplateVisible(Template* temp)

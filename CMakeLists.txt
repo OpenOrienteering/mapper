@@ -9,7 +9,6 @@ include(3rd-party/clipper.cmake)
 #set(CMAKE_BUILD_TYPE Release)
 #set(CMAKE_BUILD_TYPE Debug)
 
-
 if (CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS "-Wno-long-long -Wno-deprecated -Wall -pedantic")
 	set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
@@ -24,7 +23,11 @@ else (CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
 endif (CMAKE_COMPILER_IS_GNUCXX)
 
-include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR})
+set(OPT_INCLUDES "/opt/local/include")
+set(OPT_LIBRARIES "/opt/local/lib")
+
+include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${OPT_INCLUDES})
+link_directories(${OPT_LIBRARIES})
 
 set(Mapper_SRCS
  libocad/types.c

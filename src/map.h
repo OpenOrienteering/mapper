@@ -66,6 +66,7 @@ public:
 	
 	inline int getNumObjects() const {return (int)objects.size();}
 	inline Object* getObject(int i) {return objects[i];}
+    inline const Object* getObject(int i) const {return objects[i];}
 	int findObjectIndex(Object* object);					// asserts that the object is contained in the layer
 	void setObject(Object* object, int pos, bool delete_old);
 	void addObject(Object* object, int pos);
@@ -494,6 +495,9 @@ public:
 	inline void setViewY(int value) {view_y = value; update();}
 	inline QPoint getDragOffset() const {return drag_offset;}
 	
+    // Map visibility
+    TemplateVisibility* getMapVisibility();
+
 	// Template visibilities
 	bool isTemplateVisible(Template* temp);						// checks if the template is visible without creating a template visibility object if none exists
 	TemplateVisibility* getTemplateVisibility(Template* temp);	// returns the template visibility object, creates one if not there yet with the default settings (invisible)
@@ -521,6 +525,7 @@ private:
 	Matrix view_to_map;
 	Matrix map_to_view;
 	
+    TemplateVisibility *map_visibility;
 	QHash<Template*, TemplateVisibility*> template_visibilities;
 	
 	WidgetVector widgets;
