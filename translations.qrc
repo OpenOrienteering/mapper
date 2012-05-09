@@ -1,5 +1,7 @@
 <!DOCTYPE RCC><RCC version="1.0">
  <qresource>
   <file alias="translations/de.qm">build/OpenOrienteering_de.qm</file>
+  <file alias="translations/sv.qm">build/OpenOrienteering_sv.qm</file>
+  <file alias="translations/uk.qm">build/OpenOrienteering_uk.qm</file>
  </qresource>
 </RCC>

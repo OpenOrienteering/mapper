@@ -21,19 +21,16 @@
 #ifndef _OPENORIENTEERING_SYMBOL_H_
 #define _OPENORIENTEERING_SYMBOL_H_
 
-#include <assert.h>
-
 #include <QComboBox>
 
-#include "map.h"
 #include "renderable.h"
 
-QT_BEGIN_NAMESPACE
 class QFile;
-QT_END_NAMESPACE
-
 class Map;
+class MapColor;
 class Object;
+class SymbolPropertiesWidget;
+class SymbolSettingDialog;
 
 /// Base class for map symbols.
 /// Provides among other things a symbol number consisting of multiple parts, e.g. "2.4.12". Parts which are not set are assigned the value -1.
@@ -57,7 +54,7 @@ public:
 	/// Constructs an empty symbol
 	Symbol(Type type);
 	virtual ~Symbol();
-	virtual Symbol* duplicate() = 0;
+	virtual Symbol* duplicate() const = 0;
 	
 	/// Returns the type of the symbol
     inline Type getType() const {return type;}
@@ -115,6 +112,8 @@ public:
 	inline bool isProtected() const {return is_protected;}
 	inline void setProtected(bool value) {is_protected = value;}
 	
+	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
+	
 	// Static
 	static Symbol* getSymbolForType(Type type);
 	
@@ -128,7 +127,7 @@ protected:
 	virtual bool loadImpl(QFile* file, int version, Map* map) = 0;
 	
 	/// Duplicates properties which are common for all symbols from other to this object
-	void duplicateImplCommon(Symbol* other);
+	void duplicateImplCommon(const Symbol* other);
 	
 	Type type;
 	QString name;
@@ -145,10 +144,10 @@ class SymbolDropDown : public QComboBox
 Q_OBJECT
 public:
 	/// filter is a bitwise-or combination of the allowed Symbol::Type types.
-	SymbolDropDown(Map* map, int filter, Symbol* initial_symbol = NULL, Symbol* excluded_symbol = NULL, QWidget* parent = NULL);
+	SymbolDropDown(Map* map, int filter, Symbol* initial_symbol = NULL, const Symbol* excluded_symbol = NULL, QWidget* parent = NULL);
 	
 	/// Returns the selected symbol or NULL if no symbol selected
-	Symbol* symbol();
+	Symbol* symbol() const;
 	
 	/// Sets the selection to the given symbol
 	void setSymbol(Symbol* symbol);
@@ -156,8 +155,6 @@ public:
 protected slots:
 	// TODO: react to changes in the map (not important as long as that cannot happen as long as a SymbolDropDown is shown, which is the case currently)
 	
-private:
-	Map* map;
 };
 
 #endif

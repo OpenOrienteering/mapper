@@ -20,6 +20,7 @@
 #include <QFile>
 
 #include "file_format_native.h"
+#include "georeferencing.h"
 #include "gps_coordinates.h"
 #include "map_color.h"
 #include "symbol.h"
@@ -27,7 +28,7 @@
 #include "util.h"
 
 const int NativeFileFormat::least_supported_file_format_version = 0;
-const int NativeFileFormat::current_file_format_version = 14;
+const int NativeFileFormat::current_file_format_version = 16;
 const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 
 bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
@@ -39,7 +40,7 @@ bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
 
 Importer *NativeFileFormat::createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
 {
-    return new NativeFileImport(path, map, view);
+	return new NativeFileImport(path, map, view);
 }
 
 Exporter *NativeFileFormat::createExporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
@@ -86,9 +87,19 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
     }
 
     file.read((char*)&map->scale_denominator, sizeof(int));
+	
+	if (version >= 15)
+		loadString(&file, map->map_notes);
 
-    file.read((char*)&map->gps_projection_params_set, sizeof(bool));
-    file.read((char*)map->gps_projection_parameters, sizeof(GPSProjectionParameters));
+	bool gps_projection_params_set; // obsolete
+	file.read((char*)&gps_projection_params_set, sizeof(bool));
+	GPSProjectionParameters gps_projection_parameters; // obsolete
+	file.read((char*)&gps_projection_parameters, sizeof(GPSProjectionParameters));
+	if (gps_projection_params_set)
+	{
+		LatLon ref_point(gps_projection_parameters.center_latitude, gps_projection_parameters.center_longitude);
+		map->georeferencing->setGeographicRefPoint(ref_point);
+	}
 
     if (version >= 6)
     {
@@ -106,6 +117,14 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
             file.read((char*)&map->print_area_height, sizeof(float));
         }
     }
+    
+    if (version >= 16)
+	{
+		file.read((char*)&map->image_template_use_meters_per_pixel, sizeof(bool));
+		file.read((char*)&map->image_template_meters_per_pixel, sizeof(double));
+		file.read((char*)&map->image_template_dpi, sizeof(double));
+		file.read((char*)&map->image_template_scale, sizeof(double));
+	}
 
     // Load colors
     int num_colors;
@@ -193,6 +212,7 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 		{
 			throw FormatException(QObject::tr("Problem while opening file:\n%1\n\nError while reading layer count.").arg(file.fileName()));
 		}
+		delete map->layers[0];
 		map->layers.resize(num_layers);
 
 		for (int i = 0; i < num_layers; ++i)
@@ -204,13 +224,6 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 			}
 			map->layers[i] = layer;
 		}
-	}
-	else
-	{
-		MapLayer* layer = new MapLayer(QObject::tr("default"), map);
-		map->layers.resize(1);
-		map->layers[0] = layer;
-		map->current_layer_index = 0;
 	}
 }
 
@@ -239,9 +252,19 @@ void NativeFileExport::doExport() throw (FormatException)
     file.write((const char*)&NativeFileFormat::current_file_format_version, sizeof(int));
 
     file.write((const char*)&map->scale_denominator, sizeof(int));
+	
+	saveString(&file, map->map_notes);
 
-    file.write((const char*)&map->gps_projection_params_set, sizeof(bool));
-    file.write((const char*)map->gps_projection_parameters, sizeof(GPSProjectionParameters));
+	bool gps_projection_params_set = !map->getGeoreferencing().isLocal();
+	file.write((const char*)&gps_projection_params_set, sizeof(bool));
+	GPSProjectionParameters  gps_projection_parameters;
+	if (gps_projection_params_set)
+	{
+		LatLon ref_point = map->getGeoreferencing().getGeographicRefPoint();
+		gps_projection_parameters.center_latitude  = ref_point.latitude;
+		gps_projection_parameters.center_longitude = ref_point.longitude;
+	}
+    file.write((const char*)&gps_projection_parameters, sizeof(GPSProjectionParameters));
 
     file.write((const char*)&map->print_params_set, sizeof(bool));
     if (map->print_params_set)
@@ -256,6 +279,11 @@ void NativeFileExport::doExport() throw (FormatException)
         file.write((const char*)&map->print_area_width, sizeof(float));
         file.write((const char*)&map->print_area_height, sizeof(float));
     }
+    
+    file.write((const char*)&map->image_template_use_meters_per_pixel, sizeof(bool));
+	file.write((const char*)&map->image_template_meters_per_pixel, sizeof(double));
+	file.write((const char*)&map->image_template_dpi, sizeof(double));
+	file.write((const char*)&map->image_template_scale, sizeof(double));
 
     // Write colors
     int num_colors = (int)map->color_set->colors.size();

@@ -27,10 +27,40 @@
 #include "map.h"
 #include "template.h"
 #include "map_editor.h"
-#include "georeferencing.h"
+#include "template_adjust.h"
+#include "template_tool_move.h"
+#include "template_position_dock_widget.h"
+
+/** Parses a user-entered opacity value. Values must be strings of the form "F%" where F is any decimal number between 0 and
+ *  100 (inclusive), or "F", where F is any floating-point number between 0.0 and 1.0 (inclusive). Leading and trailing
+ *  whitespace is trimmed. If the value is invalid, the arguments are unchanged and the method returns false.
+ *  If the value is valid, the method updates both the text (to a canonical form) and the float value, and returns true.
+ */
+static bool parseOpacityEntry(QString &text, float &fvalue)
+{
+    bool ok = true;
+    QString str = text.trimmed();
+    float value;
+    if (str.endsWith('%'))
+    {
+        str.chop(1);
+        str = str.trimmed();
+        value = str.toFloat(&ok) / 100.0f;
+    }
+    else
+        value = str.toFloat(&ok);
+
+    if (!ok || value < 0 || value > 1)
+        return false;
+
+    text = QString("%1%").arg(100.0f * value);
+    fvalue = value;
+    return true;
+}
 
 TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent): EditorDockWidgetChild(parent), map(map), main_view(main_view), controller(controller)
 {
+	this->setWhatsThis("<a href=\"template_menu.html\">See more</a>");
 	react_to_changes = true;
 	
 	// Template table
@@ -54,7 +84,6 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	
 	QToolButton* new_button = new QToolButton();
 	new_button->setText(tr("Create..."));
-	//new_button->setIcon(QIcon(":/images/new.png"));	// This aligns the text left which looks strange. Besides, the button is not the most important one, so omitting the icon may be better
 	new_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	new_button->setPopupMode(QToolButton::InstantPopup);
 	new_button->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
@@ -70,7 +99,6 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	move_up_button = new QPushButton(QIcon(":/images/arrow-up.png"), tr("Move Up"));
 	move_down_button = new QPushButton(QIcon(":/images/arrow-down.png"), tr("Move Down"));
 	QPushButton* help_button = new QPushButton(QIcon(":/images/help.png"), tr("Help"));
-	help_button->setVisible(false);	// TODO!
 
 	QGridLayout* list_buttons_group_layout = new QGridLayout();
 	list_buttons_group_layout->setMargin(0);
@@ -87,11 +115,17 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	// Active group
 	active_buttons_group = new QGroupBox(tr("Selected template(s)"));
 	
-	move_by_hand_button = new QPushButton(QIcon(":/images/move.png"), tr("Move by hand"));
-	move_by_hand_button->setCheckable(true);
-	georeference_button = new QPushButton(QIcon(":/images/georeferencing.png"), tr("Georeference..."));
-	georeference_button->setCheckable(true);
-	group_button = new QPushButton(QIcon(":/images/group.png"), tr("(Un)group"));
+	move_by_hand_action = new QAction(QIcon(":/images/move.png"), tr("Move by hand"), this);
+	move_by_hand_action->setCheckable(true);
+	move_by_hand_button = new QToolButton();
+	move_by_hand_button->setDefaultAction(move_by_hand_action);
+	move_by_hand_button->setToolButtonStyle(Qt::ToolButtonTextOnly);
+	move_by_hand_button->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
+	adjust_button = new QPushButton(QIcon(":/images/georeferencing.png"), tr("Adjust..."));
+	adjust_button->setCheckable(true);
+	//group_button = new QPushButton(QIcon(":/images/group.png"), tr("(Un)group"));
+	position_button = new QPushButton(tr("Positioning..."));
+	position_button->setCheckable(true);
 	
 	more_button = new QToolButton();
 	more_button->setText(tr("More..."));
@@ -106,8 +140,9 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	QGridLayout* active_buttons_group_layout = new QGridLayout();
 	active_buttons_group_layout->setMargin(0);
 	active_buttons_group_layout->addWidget(move_by_hand_button, 0, 0);
-	active_buttons_group_layout->addWidget(georeference_button, 0, 1);
-	active_buttons_group_layout->addWidget(group_button, 1, 0);
+	active_buttons_group_layout->addWidget(adjust_button, 0, 1);
+	//active_buttons_group_layout->addWidget(group_button, 1, 0);
+	active_buttons_group_layout->addWidget(position_button, 1, 0);
 	active_buttons_group_layout->addWidget(more_button, 1, 1);
 	active_buttons_group->setLayout(active_buttons_group_layout);
 	
@@ -140,10 +175,13 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	connect(move_down_button, SIGNAL(clicked(bool)), this, SLOT(moveTemplateDown()));
 	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
 	
-	connect(move_by_hand_button, SIGNAL(clicked(bool)), this, SLOT(moveByHandClicked(bool)));
-	connect(georeference_button, SIGNAL(clicked(bool)), this, SLOT(georeferenceClicked(bool)));
-	connect(group_button, SIGNAL(clicked(bool)), this, SLOT(groupClicked()));
+	connect(move_by_hand_action, SIGNAL(triggered(bool)), this, SLOT(moveByHandClicked(bool)));
+	connect(adjust_button, SIGNAL(clicked(bool)), this, SLOT(adjustClicked(bool)));
+	//connect(group_button, SIGNAL(clicked(bool)), this, SLOT(groupClicked()));
+	connect(position_button, SIGNAL(clicked(bool)), this, SLOT(positionClicked(bool)));
 	connect(more_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(moreActionClicked(QAction*)));
+	
+	connect(controller, SIGNAL(templatePositionDockWidgetClosed(Template*)), this, SLOT(templatePositionDockWidgetClosed(Template*)));
 }
 TemplateWidget::~TemplateWidget()
 {
@@ -183,11 +221,15 @@ void TemplateWidget::addTemplateAt(Template* new_template, int pos)
 }
 Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapView* main_view)
 {
-	// TODO: save directory
-	QString path = QFileDialog::getOpenFileName(dialog_parent, tr("Open image or GPS track ..."), QString(), tr("Template files (*.bmp *.jpg *.jpeg *.gif *.png *.tiff *.gpx);;All files (*.*)"));
+	QSettings settings;
+	QString template_directory = settings.value("templateFileDirectory", QDir::homePath()).toString();
+	
+	QString path = QFileDialog::getOpenFileName(dialog_parent, tr("Open image, GPS track or DXF file"), template_directory, QString("%1 (*.omap *.ocd *.bmp *.jpg *.jpeg *.gif *.png *.tif *.tiff *.gpx *.dxf);;%2 (*.*)").arg(tr("Template files")).arg(tr("All files")));
 	path = QFileInfo(path).canonicalFilePath();
 	if (path.isEmpty())
 		return NULL;
+	
+	settings.setValue("templateFileDirectory", QFileInfo(path).canonicalPath());
 	
 	Template* new_temp = Template::templateForFile(path, main_view->getMap());
 	if (!new_temp)
@@ -375,7 +417,7 @@ void TemplateWidget::moveTemplateDown()
 }
 void TemplateWidget::showHelp()
 {
-	// TODO: show template widget help page
+	controller->getWindow()->showHelp("template_menu.html");
 }
 
 void TemplateWidget::cellChange(int row, int column)
@@ -383,75 +425,112 @@ void TemplateWidget::cellChange(int row, int column)
 	if (!react_to_changes)
 		return;
 	
-	int pos = posFromRow(row);
-	Template* temp = (row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
-	if (!temp)
-		return;
-	
-	react_to_changes = false;
-	
-	QString text = template_table->item(row, column)->text().trimmed();
-	TemplateVisibility* vis = main_view->getTemplateVisibility(temp);
-	
-	if (column == 0)
-	{
-		bool visible_new = template_table->item(row, column)->checkState() == Qt::Checked;
-		if (!visible_new)
-			map->setTemplateAreaDirty(pos);
-		
-		vis->visible = visible_new;
-		
-		if (visible_new)
-			map->setTemplateAreaDirty(pos);
-	}
-	else if (column == 1)
-	{
-		bool ok = true;
-		float fvalue;
-		if (text.endsWith('%'))
-		{
-			text.chop(1);
-			fvalue = text.toFloat(&ok) / 100.0f;
-		}
-		else
-			fvalue = text.toFloat(&ok);
-		
-		if (!ok || fvalue < 0 || fvalue > 1)
-		{
-			QMessageBox::warning(window(), tr("Error"), tr("Please enter a valid number from 0 to 1, or specify a percentage from 0 to 100!"));
-			template_table->item(row, column)->setText(QString::number(vis->opacity * 100) + "%");
-		}
-		else
-		{
-			if (fvalue <= 0)
-				map->setTemplateAreaDirty(pos);
-			
-			vis->opacity = fvalue;
-			
-			if (fvalue > 0)
-				map->setTemplateAreaDirty(pos);
-		}
-	}
-	else if (column == 2)
-	{
-		bool ok = true;
-		int ivalue = text.toInt(&ok);
-		
-		if (text.isEmpty())
-		{
-			temp->setTemplateGroup(-1);
-		}
-		else if (!ok)
-		{
-			QMessageBox::warning(window(), tr("Error"), tr("Please enter a valid integer number to set a group or leave the field empty to ungroup the template!"));
-			template_table->item(row, column)->setText(QString::number(temp->getTemplateGroup()));
-		}
-		else
-			temp->setTemplateGroup(ivalue);
-	}
-	
-	react_to_changes = true;
+    int pos = posFromRow(row);
+    if (pos >= 0)
+    {
+        Template* temp = (row >= 0) ? map->getTemplate(pos) : NULL;
+        if (!temp)
+            return;
+
+        TemplateVisibility* vis = main_view->getTemplateVisibility(temp);
+        QString text = template_table->item(row, column)->text().trimmed();
+
+        react_to_changes = false;
+
+        if (column == 0)
+        {
+            bool visible_new = template_table->item(row, column)->checkState() == Qt::Checked;
+            if (!visible_new)
+                map->setTemplateAreaDirty(pos);
+
+            vis->visible = visible_new;
+
+            if (visible_new)
+                map->setTemplateAreaDirty(pos);
+        }
+        else if (column == 1)
+        {
+            float fvalue;
+            if (!parseOpacityEntry(text, fvalue))
+            {
+                QMessageBox::warning(window(), tr("Error"), tr("Please enter a valid number from 0 to 1, or specify a percentage from 0 to 100!"));
+                template_table->item(row, column)->setText(QString::number(vis->opacity * 100) + "%");
+            }
+            else
+            {
+                template_table->item(row, column)->setText(text);
+                if (fvalue <= 0)
+                    map->setTemplateAreaDirty(pos);
+
+                vis->opacity = fvalue;
+
+                if (fvalue > 0)
+                    map->setTemplateAreaDirty(pos);
+            }
+        }
+        else if (column == 2)
+        {
+            bool ok = true;
+            int ivalue = text.toInt(&ok);
+
+            if (text.isEmpty())
+            {
+                temp->setTemplateGroup(-1);
+            }
+            else if (!ok)
+            {
+                QMessageBox::warning(window(), tr("Error"), tr("Please enter a valid integer number to set a group or leave the field empty to ungroup the template!"));
+                template_table->item(row, column)->setText(QString::number(temp->getTemplateGroup()));
+            }
+            else
+                temp->setTemplateGroup(ivalue);
+        }
+
+        react_to_changes = true;
+
+    }
+    else
+    {
+        TemplateVisibility* vis = main_view->getMapVisibility();
+        QString text = template_table->item(row, column)->text().trimmed();
+        QRectF map_bounds = map->calculateExtent(true, false, NULL);
+
+        react_to_changes = false;
+        if (column == 0)
+        {
+            bool visible_new = template_table->item(row, column)->checkState() == Qt::Checked;
+            if (!visible_new)
+                map->setObjectAreaDirty(map_bounds);
+
+            vis->visible = visible_new;
+
+            if (visible_new)
+                map->setObjectAreaDirty(map_bounds);
+        }
+        else if (column == 1)
+        {
+            float fvalue;
+            if (!parseOpacityEntry(text, fvalue))
+            {
+                QMessageBox::warning(window(), tr("Error"), tr("Please enter a valid number from 0 to 1, or specify a percentage from 0 to 100!"));
+                template_table->item(row, column)->setText(QString::number(vis->opacity * 100) + "%");
+            }
+            else
+            {
+                template_table->item(row, column)->setText(text);
+                if (fvalue <= 0)
+                    map->setObjectAreaDirty(map_bounds);
+
+                vis->opacity = fvalue;
+
+                if (fvalue > 0)
+                    map->setObjectAreaDirty(map_bounds);
+            }
+        }
+        react_to_changes = true;
+    }
 }
+
 void TemplateWidget::selectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
 {
 	if (!react_to_changes)
@@ -484,30 +563,37 @@ void TemplateWidget::selectionChanged(const QItemSelection& selected, const QIte
 	active_buttons_group->setEnabled(enable_active_buttons);
 	if (enable_active_buttons)
 	{
+		move_by_hand_button->setEnabled(!multiple_rows_selected);
+		adjust_button->setEnabled(!multiple_rows_selected);
 		// TODO: Implement and enable buttons again
-		move_by_hand_button->setEnabled(false); //!multiple_rows_selected);
-		georeference_button->setEnabled(!multiple_rows_selected);
-		group_button->setEnabled(false); //multiple_rows_selected || (!multiple_rows_selected && map->getTemplate(posFromRow(current_row))->getTemplateGroup() >= 0));
-		more_button->setEnabled(false); //!multiple_rows_selected);
+		//group_button->setEnabled(false); //multiple_rows_selected || (!multiple_rows_selected && map->getTemplate(posFromRow(current_row))->getTemplateGroup() >= 0));
+		position_button->setEnabled(!multiple_rows_selected);
+		more_button->setEnabled(false); // !multiple_rows_selected);
 	}
 	
 	if (multiple_rows_selected)
-		georeference_button->setChecked(false);
+	{
+		adjust_button->setChecked(false);
+		position_button->setChecked(false);
+	}
 	else
-		georeference_button->setChecked(temp && controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == (void*)temp);
+	{
+		adjust_button->setChecked(temp && controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == (void*)temp);
+		position_button->setChecked(temp && controller->existsTemplatePositionDockWidget(temp));
+	}
 }
 void TemplateWidget::currentCellChange(int current_row, int current_column, int previous_row, int previous_column)
 {
 	if (current_column == 3)
 	{
-		int pos = posFromRow(current_row);
-		Template* temp = (current_row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
-		if (!temp)
-			return;
-		
-		if (!temp->isTemplateValid())
-			changeTemplateFile(current_row);
-	}
+        int pos = posFromRow(current_row);
+        Template* temp = (current_row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
+        if (!temp)
+            return;
+
+        if (!temp->isTemplateValid())
+            changeTemplateFile(current_row);
+    }
 }
 void TemplateWidget::cellDoubleClick(int row, int column)
 {
@@ -524,42 +610,59 @@ void TemplateWidget::cellDoubleClick(int row, int column)
 
 void TemplateWidget::moveByHandClicked(bool checked)
 {
-	// TODO
+	Template* temp = getCurrentTemplate();
+	assert(temp);
+	controller->setTool(checked ? new TemplateMoveTool(temp, controller, move_by_hand_action) : NULL);
 }
-void TemplateWidget::georeferenceClicked(bool checked)
+void TemplateWidget::adjustClicked(bool checked)
 {
 	if (checked)
 	{
-		Template* temp = map->getTemplate(posFromRow(template_table->currentRow()));
-		GeoreferencingActivity* activity = new GeoreferencingActivity(temp, controller);
+		Template* temp = getCurrentTemplate();
+		assert(temp);
+		TemplateAdjustActivity* activity = new TemplateAdjustActivity(temp, controller);
 		controller->setEditorActivity(activity);
-		connect(activity->getDockWidget(), SIGNAL(closed()), this, SLOT(georeferencingWindowClosed()));
+		connect(activity->getDockWidget(), SIGNAL(closed()), this, SLOT(adjustWindowClosed()));
 	}
 	else
 	{
 		controller->setEditorActivity(NULL);	// TODO: default activity?!
 	}
 }
-void TemplateWidget::georeferencingWindowClosed()
+void TemplateWidget::adjustWindowClosed()
 {
-	int current_row = template_table->currentRow();
-	if (current_row < 0)
+	Template* current_template = getCurrentTemplate();
+	if (!current_template)
 		return;
-	int pos = posFromRow(current_row);
-	if (pos < 0)
-		return;
-	Template* current_template = map->getTemplate(pos);
 	
 	if (controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == (void*)current_template)
-		georeference_button->setChecked(false);
+		adjust_button->setChecked(false);
 }
-void TemplateWidget::groupClicked()
+/*void TemplateWidget::groupClicked()
 {
 	// TODO
+}*/
+void TemplateWidget::positionClicked(bool checked)
+{
+	Template* temp = getCurrentTemplate();
+	if (!temp)
+		return;
+	
+	if (controller->existsTemplatePositionDockWidget(temp))
+		controller->removeTemplatePositionDockWidget(temp);
+	else
+		controller->addTemplatePositionDockWidget(temp);
 }
 void TemplateWidget::moreActionClicked(QAction* action)
 {
 	// TODO
+}
+
+void TemplateWidget::templatePositionDockWidgetClosed(Template* temp)
+{
+	Template* current_temp = getCurrentTemplate();
+	if (current_temp == temp)
+		position_button->setChecked(false);
 }
 
 void TemplateWidget::addRow(int row)
@@ -608,42 +711,43 @@ void TemplateWidget::updateRow(int row)
 	int pos = posFromRow(row);
 	
 	react_to_changes = false;
-	if (pos < 0)
-	{
-		QTableWidgetItem* new_item = new QTableWidgetItem();
-		template_table->setItem(row, 0, new_item);		// remove the checkbox - is there a better way than replacing the item?
-		for (int i = 0; i < 3; ++i)
-		{
-			QTableWidgetItem* item = template_table->item(row, i);
-			item->setBackgroundColor(qRgb(180, 180, 180));
-			item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-			item->setText("");
-		}
-		template_table->item(row, 3)->setText(tr("- Map -"));
-		template_table->item(row, 3)->setTextColor(QPalette().color(QPalette::Text));
-	}
-	else
-	{
-		template_table->item(row, 0)->setBackgroundColor(Qt::white);	// TODO: might be better to load this from some palette ...
-		template_table->item(row, 0)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-		template_table->item(row, 1)->setBackgroundColor(Qt::white);
-		template_table->item(row, 1)->setFlags(Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-		template_table->item(row, 1)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-		template_table->item(row, 2)->setBackgroundColor(Qt::white);
-		template_table->item(row, 2)->setFlags(Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-		template_table->item(row, 2)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-		
-		Template* temp = map->getTemplate(pos);
-		// TODO: Get visibility values from the MapView of the active MapWidget (instead of always main_view)
-		TemplateVisibility* vis = main_view->getTemplateVisibility(temp);
-		
-		template_table->item(row, 0)->setCheckState(vis->visible ? Qt::Checked : Qt::Unchecked);
-		template_table->item(row, 1)->setText(QString::number(vis->opacity * 100) + "%");
-		template_table->item(row, 2)->setText((temp->getTemplateGroup() < 0) ? "" : QString::number(temp->getTemplateGroup()));
-		template_table->item(row, 3)->setText(temp->getTemplateFilename());
-		
-		template_table->item(row, 3)->setTextColor(temp->isTemplateValid() ? QPalette().color(QPalette::Text) : qRgb(204, 0, 0));
-	}
+
+    template_table->item(row, 0)->setBackgroundColor(Qt::white);	// TODO: might be better to load this from some palette ...
+    template_table->item(row, 0)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+    template_table->item(row, 1)->setBackgroundColor(Qt::white);
+    template_table->item(row, 1)->setFlags(Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+    template_table->item(row, 1)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+    template_table->item(row, 2)->setBackgroundColor(Qt::white);
+    template_table->item(row, 2)->setFlags(Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+    template_table->item(row, 2)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+
+    TemplateVisibility* vis = NULL;
+    int group = -1;
+    QString name;
+    bool valid = true;
+    if (pos >= 0)
+    {
+        Template* temp = map->getTemplate(pos);
+        // TODO: Get visibility values from the MapView of the active MapWidget (instead of always main_view)
+        vis = main_view->getTemplateVisibility(temp);
+        group = temp->getTemplateGroup();
+        name = temp->getTemplateFilename();
+        valid = temp->isTemplateValid();
+    }
+    else
+    {
+        vis = main_view->getMapVisibility();
+        name = tr("- Map -");
+        template_table->item(row, 2)->setBackgroundColor(qRgb(180, 180, 180));
+        template_table->item(row, 2)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+    }
+
+    template_table->item(row, 0)->setCheckState(vis->visible ? Qt::Checked : Qt::Unchecked);
+    template_table->item(row, 1)->setText(QString::number(vis->opacity * 100) + "%");
+    template_table->item(row, 2)->setText((group < 0) ? "" : QString::number(group));
+    template_table->item(row, 3)->setText(name);
+    template_table->item(row, 3)->setTextColor(valid ? QPalette().color(QPalette::Text) : qRgb(204, 0, 0));
+
 	react_to_changes = true;
 }
 int TemplateWidget::posFromRow(int row)
@@ -657,6 +761,16 @@ int TemplateWidget::posFromRow(int row)
 		return pos - 1;
 	else
 		return pos;
+}
+Template* TemplateWidget::getCurrentTemplate()
+{
+	int current_row = template_table->currentRow();
+	if (current_row < 0)
+		return NULL;
+	int pos = posFromRow(current_row);
+	if (pos < 0)
+		return NULL;
+	return map->getTemplate(pos);
 }
 
 void TemplateWidget::changeTemplateFile(int row)

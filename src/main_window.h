@@ -104,6 +104,7 @@ public:
 	/** Change the controller to new_controller.
 	 */
 	void setController(MainWindowController* new_controller);
+	inline MainWindowController* getController() const {return controller;}
 	
 	/** Returns the canonical path of the currently open file or 
 	 *  an empty string if no file is open.
@@ -128,9 +129,9 @@ public:
 	inline void setShortcutsEnabled(bool enable) {disable_shortcuts = !enable;}
 	inline bool areShortcutsDisabled() const {return disable_shortcuts;}
 	
-	// Getters to make it possible to extend the file menu before close_act
+	// Getters to make it possible to extend the file menu
 	inline QMenu* getFileMenu() const {return file_menu;}
-	inline QAction* getCloseAct() const {return close_act;}
+	inline QAction* getFileMenuExtensionAct() const {return settings_act;}
 	
 	/** Save the content of the main window.
 	 *  @param path the path where to save.
@@ -191,7 +192,6 @@ public slots:
 	void toggleFullscreenMode();
 	
 	/** Show the settings dialog.
-	 *  TODO.
 	 */
 	void showSettings();
 	
@@ -199,10 +199,11 @@ public slots:
 	 */
 	void showAbout();
 	
-	/** Show the manual.
-	 * TODO.
+	/** Show the manual in Qt assistant.
+	 *  @param filename the name of the help html file
+	 *  @param fragment the fragment in the specified file to jump to
 	 */
-	void showHelp();
+	void showHelp(QString filename = "index.html", QString fragment = "");
 	
 	/** Open a link.
 	 *  This is called when the user clicks on a link in the UI,
@@ -249,8 +250,12 @@ private:
 	
 	void createFileMenu();
 	void createHelpMenu();
+
+	bool eventFilter(QObject* object, QEvent* event);
 	
 	static MainWindow* findMainWindow(const QString& file_name);
+	
+	static QString makeHelpUrl(QString filename, QString fragment);
 	
 	
 	/// The active controller
@@ -264,6 +269,7 @@ private:
 	QMenu* open_recent_menu;
 	bool open_recent_menu_inserted;
 	QAction* recent_file_act[max_recent_files];
+	QAction* settings_act;
 	QAction* close_act;
 	QLabel* status_label;
 	

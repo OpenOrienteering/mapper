@@ -30,6 +30,7 @@
 #include "symbol_combined.h"
 #include "map_undo.h"
 #include "tool_draw_path.h"
+#include "settings.h"
 
 QCursor* CutTool::cursor = NULL;
 
@@ -46,7 +47,7 @@ CutTool::CutTool(MapEditorController* editor, QAction* tool_button) : MapEditorT
 }
 void CutTool::init()
 {
-	connect(editor->getMap(), SIGNAL(selectedObjectsChanged()), this, SLOT(selectedObjectsChanged()));
+	connect(editor->getMap(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	updateDirtyRect();
     updateStatusText();
 }
@@ -190,6 +191,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 				}
 				
 				map->setObjectsDirty();
+				map->emitSelectionEdited();
 			}
 			
 			deletePreviewPath();
@@ -221,6 +223,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 			{
 				map->objectUndoManager().addNewUndoStep(add_step);
 				map->emitSelectionChanged();
+				map->emitSelectionEdited();
 				return true;
 			}
 			
@@ -250,6 +253,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 			map->objectUndoManager().addNewUndoStep(undo_step);
 			
 			updateDirtyRect();
+			map->emitSelectionEdited();
 		}
 	}
 	
@@ -404,6 +408,7 @@ void CutTool::updateHoverPoint(QPointF cursor_pos_screen, MapWidget* widget)
 }
 bool CutTool::findEditPoint(PathCoord& out_edit_point, PathObject*& out_edit_object, MapCoordF cursor_pos_map, int with_type, int without_type, MapWidget* widget)
 {
+	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
 	Map* map = editor->getMap();
 	
 	out_edit_object = NULL;
@@ -477,7 +482,7 @@ void CutTool::deletePreviewPath()
 		preview_path = NULL;
 	}
 }
-void CutTool::selectedObjectsChanged()
+void CutTool::objectSelectionChanged()
 {
 	Map* map = editor->getMap();
 	bool have_line_or_area = false;
@@ -510,6 +515,7 @@ void CutTool::pathAborted()
 }
 void CutTool::pathFinished(PathObject* split_path)
 {
+	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
 	Map* map = editor->getMap();
 	
 	// Get path endpoint and check if it is on the area boundary

@@ -33,6 +33,7 @@
 #include "symbol_dock_widget.h"
 #include "tool_draw_text.h"
 #include "symbol_text.h"
+#include "settings.h"
 
 QCursor* EditTool::cursor = NULL;
 
@@ -62,9 +63,9 @@ EditTool::EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidg
 }
 void EditTool::init()
 {
-	connect(editor->getMap(), SIGNAL(selectedObjectsChanged()), this, SLOT(selectedObjectsChanged()));
+	connect(editor->getMap(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
-	selectedObjectsChanged();
+	objectSelectionChanged();
 }
 EditTool::~EditTool()
 {
@@ -205,6 +206,7 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 		PathCoord path_coord;
 		path->calcClosestPointOnPath(map_coord, distance_sq, path_coord);
 		
+		int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
 		float click_tolerance_map_sq = widget->getMapView()->pixelToLength(click_tolerance);
 		click_tolerance_map_sq = click_tolerance_map_sq * click_tolerance_map_sq;
 		
@@ -280,6 +282,8 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 	// NOTE: This must be after the rest of the processing
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
+	if (dragging && !box_selection)
+		updateStatusText();
 	
 	return true;
 }
@@ -288,6 +292,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
+	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
 	Map* map = editor->getMap();
 	
 	if (no_more_effect_on_click)
@@ -343,6 +348,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 		}
 		
 		dragging = false;
+		updateStatusText();
 	}
 	else
 	{
@@ -353,9 +359,9 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 		
 		// Clicked - get objects below cursor
 		SelectionInfoVector objects;
-		map->findObjectsAt(map_coord, 0.001f *widget->getMapView()->pixelToLength(MapEditorTool::click_tolerance), false, false, false, objects);
+		map->findObjectsAt(map_coord, 0.001f *widget->getMapView()->pixelToLength(click_tolerance), false, false, false, objects);
 		if (objects.empty())
-			map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(1.5f * MapEditorTool::click_tolerance), true, false, false, objects);
+			map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(1.5f * click_tolerance), true, false, false, objects);
 		
 		// Selection logic, trying to select the most relevant object(s)
 		if (!(event->modifiers() & selection_modifier) || map->getNumSelectedObjects() == 0)
@@ -555,7 +561,7 @@ void EditTool::draw(QPainter* painter, MapWidget* widget)
 	}
 }
 
-void EditTool::selectedObjectsChanged()
+void EditTool::objectSelectionChanged()
 {
 	updateStatusText();
 	updateDirtyRect();
@@ -578,6 +584,14 @@ void EditTool::textSelectionChanged(bool text_change)
 
 void EditTool::updateStatusText()
 {
+	if (dragging && !box_selection)
+	{
+		MapCoordF drag_vector = cur_pos_map - click_pos_map;
+		setStatusBarText(tr("<b>Coordinate offset [mm]:</b> %1, %2  <b>Distance [m]:</b> %3")
+						  .arg(drag_vector.getX(), 0, 'f', 1).arg(-drag_vector.getY(), 0, 'f', 1).arg(0.001 * editor->getMap()->getScaleDenominator() * drag_vector.length(), 0, 'f', 1));
+		return;
+	}
+	
 	QString str = tr("<b>Click</b> to select an object, <b>Drag</b> for box selection, <b>Shift</b> to toggle selection");
 	if (editor->getMap()->getNumSelectedObjects() > 0)
 	{
@@ -785,6 +799,8 @@ void EditTool::finishEditing()
 	map->setObjectAreaDirty(original_selection_extent);
 	updateDirtyRect();
 	map->setObjectsDirty();
+	
+	map->emitSelectionEdited();
 	
 	if (delete_objects)
 		deleteSelectedObjects();

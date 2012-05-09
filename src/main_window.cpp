@@ -24,12 +24,15 @@
 
 #include <QtGui>
 
+#include <proj_api.h>
+
 #include "main_window_home_screen.h"
 #include "global.h"
 #include "map.h"
 #include "map_dialog_new.h"
 #include "map_editor.h"
 #include "file_format.h"
+#include "settings_dialog.h"
 
 // ### MainWindowController ###
 
@@ -65,6 +68,8 @@ MainWindow::MainWindow(bool as_main_window)
 	
 	if (as_main_window)
 		loadWindowSettings();
+
+	this->installEventFilter(this);
 }
 MainWindow::~MainWindow()
 {
@@ -107,47 +112,59 @@ void MainWindow::createFileMenu()
 	QAction* new_act = new QAction(QIcon(":/images/new.png"), tr("&New"), this);
 	new_act->setShortcuts(QKeySequence::New);
 	new_act->setStatusTip(tr("Create a new map"));
+	new_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(new_act, SIGNAL(triggered()), this, SLOT(showNewMapWizard()));
 	
 	QAction* open_act = new QAction(QIcon(":/images/open.png"), tr("&Open..."), this);
 	open_act->setShortcuts(QKeySequence::Open);
 	open_act->setStatusTip(tr("Open an existing file"));
+	open_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(open_act, SIGNAL(triggered()), this, SLOT(showOpenDialog()));
 	
 	open_recent_menu = new QMenu(tr("Open &recent"), this);
+	open_recent_menu->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	for (int i = 0; i < max_recent_files; ++i)
 	{
 		recent_file_act[i] = new QAction(this);
 		connect(recent_file_act[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
 	}
 	open_recent_menu_inserted = false;
-	
-	// TODO: importAct? Or better in the map menu?
+
 	// NOTE: if you insert something between open_recent_menu and save_act, adjust updateRecentFileActions()!
 	
 	save_act = new QAction(QIcon(":/images/save.png"), tr("&Save"), this);
 	save_act->setShortcuts(QKeySequence::Save);
+	save_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(save_act, SIGNAL(triggered()), this, SLOT(save()));
 	
 	save_as_act = new QAction(tr("Save &as..."), this);
 	save_as_act->setShortcuts(QKeySequence::SaveAs);
+	save_as_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(save_as_act, SIGNAL(triggered()), this, SLOT(showSaveAsDialog()));
+	
+	settings_act = new QAction(tr("Settings..."), this);
+	connect(settings_act, SIGNAL(triggered()), this, SLOT(showSettings()));
 	
 	close_act = new QAction(tr("Close"), this);
 	close_act->setShortcut(tr("Ctrl+W"));
 	close_act->setStatusTip(tr("Close this file"));
+	close_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(close_act, SIGNAL(triggered()), this, SLOT(closeFile()));
 	
 	QAction* exit_act = new QAction(tr("E&xit"), this);
 	exit_act->setShortcuts(QKeySequence::Quit);
 	exit_act->setStatusTip(tr("Exit the application"));
+	close_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(exit_act, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
 
 	file_menu = menuBar()->addMenu(tr("&File"));
+	file_menu->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	file_menu->addAction(new_act);
 	file_menu->addAction(open_act);
 	file_menu->addAction(save_act);
 	file_menu->addAction(save_as_act);
+	file_menu->addSeparator();
+	file_menu->addAction(settings_act);
 	file_menu->addSeparator();
 	file_menu->addAction(close_act);
 	file_menu->addAction(exit_act);
@@ -174,6 +191,7 @@ void MainWindow::createHelpMenu()
 	
 	QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
 	helpMenu->addAction(manualAct);
+	helpMenu->addAction(QWhatsThis::createAction(this));
 	helpMenu->addSeparator();
 	helpMenu->addAction(aboutAct);
 	helpMenu->addAction(aboutQtAct);
@@ -236,6 +254,7 @@ void MainWindow::setHasUnsavedChanges(bool value)
 void MainWindow::setStatusBarText(const QString& text)
 {
 	status_label->setText(text);
+	status_label->setToolTip(text);
 }
 
 void MainWindow::closeFile()
@@ -607,13 +626,32 @@ void MainWindow::toggleFullscreenMode()
 
 void MainWindow::showSettings()
 {
-	// TODO
-	QMessageBox::information(this, tr("Error"), tr("Sorry, settings are not implemented yet!"));
+	SettingsDialog dialog(this);
+	dialog.exec();
 }
 void MainWindow::showAbout()
 {
 	QDialog about_dialog(this);
 	about_dialog.setWindowTitle(tr("About %1").arg(APP_NAME));
+	
+	QString clipper_about(tr("This program uses the <b>Clipper library</b> by Angus Johnson.") % "<br/><br/>");
+	QFile clipper_about_file(":/3rd-party/clipper/License.txt");
+	if (clipper_about_file.open(QIODevice::ReadOnly))
+	{
+		clipper_about.append(clipper_about_file.readAll().replace('\n', "<br/>"));
+		clipper_about.append("<br/>");
+	}
+	clipper_about.append(tr("See <a href=\"%1\">%1</a> for more information.").arg("http://www.angusj.com/delphi/clipper.php"));	
+	
+	QString proj_about(tr("This program uses the <b>PROJ.4 Cartographic Projections Library</b> by Frank Warmerdam.") % "<br/>");
+    proj_about.append(pj_get_release()).append("<br/><br/>");
+	QFile proj_about_file(":/3rd-party/proj/COPYING");
+	if (proj_about_file.open(QIODevice::ReadOnly))
+	{
+		proj_about.append(proj_about_file.readAll().replace('\n', "<br/>"));
+		proj_about.append("<br/>");
+	}
+	proj_about.append(tr("See <a href=\"%1\">%1</a> for more information.").arg("http://trac.osgeo.org/proj/"));	
 	
 	QLabel* about_label = new QLabel(QString("<a href=\"http://openorienteering.org\"><img src=\":/images/open-orienteering.png\"/></a><br/><br/>"
 									 "OpenOrienteering Mapper %1<br/>"
@@ -624,12 +662,21 @@ void MainWindow::showAbout()
 									 
 									 % tr("Developers in alphabetical order:<br/>"
 									 "Peter Curtis<br/>Kai Pastor<br/>Russell Porter<br/>Thomas Sch&ouml;ps (project leader)<br/><br/>"
-									 "For patches, thanks to:<br/>Jon Cundill<br/>Aivars Zogla"));
+									 "For patches, thanks to:<br/>Jon Cundill<br/>Aivars Zogla<br/><br/>"
+									 "Additional information:"));
+	QTextEdit* additional_text = new QTextEdit( 
+	  clipper_about % "<br/><br/>" %
+	  QString("_").repeated(80) % "<br/><br/>" %
+	  proj_about 
+	);
+	additional_text->setReadOnly(true);
+	additional_text->setLineWrapMode(QTextEdit::NoWrap);
 	QPushButton* about_ok = new QPushButton(tr("OK"));
 	
 	QGridLayout* layout = new QGridLayout();
 	layout->addWidget(about_label, 0, 0, 1, 2);
-	layout->addWidget(about_ok, 1, 1);
+	layout->addWidget(additional_text, 1, 0, 1, 2);
+	layout->addWidget(about_ok, 2, 1);
 	layout->setColumnStretch(0, 1);
 	about_dialog.setLayout(layout);
 	
@@ -639,14 +686,90 @@ void MainWindow::showAbout()
 	about_dialog.setWindowModality(Qt::WindowModal);
 	about_dialog.exec();
 }
-void MainWindow::showHelp()
+
+
+template <class T>
+static const bool findFirstExistingItem(const QList<T> &list, T &which)
 {
-	// TODO
-	QMessageBox::information(this, tr("Error"), tr("Sorry, help is not implemented yet!"));
+    Q_FOREACH(const T &item, list)
+    {
+        qDebug() << "Looking for" << item;
+        if (item.exists())
+        {
+            which = item;
+            return true;
+        }
+    }
+    return false;
+}
+
+void MainWindow::showHelp(QString filename, QString fragment)
+{
+	static QProcess* process = NULL;
+	
+    QString app_dir = QCoreApplication::applicationDirPath();
+    QList<QDir> help_locations;
+    help_locations
+          << QDir("help")
+          << QDir(app_dir % "/../share/openorienteering-mapper/help")
+          << QDir(app_dir % "/../../../../help");
+
+    QDir help_dir;
+	if (!process || process->state() == QProcess::NotRunning)
+	{
+        if (!findFirstExistingItem(help_locations, help_dir))
+        {
+            QMessageBox::warning(this, tr("Error"), tr("Failed to locate the help files."));
+            return;
+        }
+		
+		// Try to start the Qt Assistant process
+		if (process)
+			delete process;
+		process = new QProcess();
+		QStringList args;
+		args << QLatin1String("-collectionFile")
+			 << help_dir.absoluteFilePath("oomaphelpcollection.qhc").toLatin1()
+			 << QLatin1String("-showUrl")
+			 << makeHelpUrl(filename, fragment)
+			 << QLatin1String("-enableRemoteControl");
+
+		process->start(QLatin1String("assistant"), args);
+		if (!process->waitForStarted())
+		{
+			QMessageBox::warning(this, tr("Error"), tr("Failed to start the help browser."));
+			return;
+		}
+	}
+	else
+	{
+		QByteArray command;
+		command.append("setSource " + makeHelpUrl(filename, fragment) + "\n");
+		process->write(command);
+	}
+}
+QString MainWindow::makeHelpUrl(QString filename, QString fragment)
+{
+	return "qthelp://openorienteering.mapper.help/oohelpdoc/help/html_en/" + filename + (fragment.isEmpty() ? "" : ("#" + fragment));
 }
 void MainWindow::linkClicked(const QString &link)
 {
 	QDesktopServices::openUrl(link);
+}
+
+bool MainWindow::eventFilter(QObject *object, QEvent *event){
+	Q_UNUSED(object)
+	if(event->type() == QEvent::WhatsThisClicked){
+		QWhatsThisClickedEvent* e = static_cast<QWhatsThisClickedEvent*>(event);
+		QStringList parts = e->href().split("#");
+		if(parts.size() == 0)
+			this->showHelp();
+		else if(parts.size() == 1)
+			this->showHelp(parts.at(0));
+		else if(parts.size() == 2)
+			this->showHelp(parts.at(0), parts.at(1));
+	}
+	return false;
 }
 
 void MainWindow::gotUnsavedChanges()

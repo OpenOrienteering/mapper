@@ -24,14 +24,14 @@
 #include "map_editor.h"
 #include "object.h"
 
-class DrawPathTool;
+class DrawLineAndAreaTool;
 
 /// Tool to cut holes into area objects
 class CutHoleTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	CutHoleTool(MapEditorController* editor, QAction* tool_button);
+	CutHoleTool(MapEditorController* editor, QAction* tool_button, PathObject::PartType hole_type);
 	virtual ~CutHoleTool();
 	
     virtual void init();
@@ -52,7 +52,7 @@ public:
 	static QCursor* cursor;
 	
 public slots:
-	void selectedObjectsChanged();
+	void objectSelectionChanged();
 	void pathDirtyRectChanged(const QRectF& rect);
 	void pathAborted();
 	void pathFinished(PathObject* hole_path);
@@ -62,19 +62,9 @@ protected:
 	void updateDirtyRect(const QRectF* path_rect = NULL);
 	void updateDragging(MapCoordF cursor_pos_map, MapWidget* widget);
 	
-	// Mouse handling
-	/*QPoint click_pos;
-	MapCoordF click_pos_map;
-	QPoint cur_pos;
-	MapCoordF cur_pos_map;
-	bool dragging;*/
-	
-	DrawPathTool* path_tool;	// TODO: make it possible to use other draw tools, too (circles or ellipses)
+	PathObject::PartType hole_type;
+	DrawLineAndAreaTool* path_tool;
 	MapWidget* edit_widget;
-	
-	// Preview objects for dragging
-	//PathObject* preview_path;
-	//RenderableContainer renderables;
 };
 
 #endif

@@ -62,23 +62,24 @@ class TemplateImageOpenDialog : public QDialog
 {
 Q_OBJECT
 public:
-	TemplateImageOpenDialog(QWidget* parent);
+	TemplateImageOpenDialog(Map* map, QWidget* parent);
 	
-	inline double getMpp(Map* map) const;
+	inline double getMpp() const;
 	
 protected slots:
-	void mppRadioClicked(bool checked);
-	void dpiRadioClicked(bool checked);
-	void scaleCheckClicked(bool checked);
+	void radioClicked();
+	void setOpenEnabled();
+	void doAccept();
 	
 private:
 	QRadioButton* mpp_radio;
 	QRadioButton* dpi_radio;
-	QCheckBox* scale_check;
 	QLineEdit* mpp_edit;
 	QLineEdit* dpi_edit;
 	QLineEdit* scale_edit;
 	QPushButton* open_button;
+	
+	Map* map;
 };
 
 #endif

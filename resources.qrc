@@ -10,8 +10,10 @@
   <file>images/cursor-crosshair.png</file>
   <file>images/cursor-cut.png</file>
   <file>images/cursor-delete.png</file>
+  <file>images/cursor-draw-circle.png</file>
   <file>images/cursor-draw-path.png</file>
   <file>images/cursor-draw-point.png</file>
+  <file>images/cursor-draw-rectangle.png</file>
   <file>images/cursor-draw-text.png</file>
   <file>images/cursor-georeferencing-add.png</file>
   <file>images/cursor-georeferencing-move.png</file>
@@ -21,8 +23,10 @@
   <file>images/cursor-rotate.png</file>
   <file>images/cut.png</file>
   <file>images/delete.png</file>
+  <file>images/draw-circle.png</file>
   <file>images/draw-path.png</file>
   <file>images/draw-point.png</file>
+  <file>images/draw-rectangle.png</file>
   <file>images/draw-text.png</file>
   <file>images/georeferencing.png</file>
   <file>images/group.png</file>
@@ -49,12 +53,17 @@
   <file>images/text-align-baseline.png</file>
   <file>images/text-align-bottom.png</file>
   <file>images/title.png</file>
+  <file>images/tool-boolean-difference.png</file>
+  <file>images/tool-boolean-intersection.png</file>
+  <file>images/tool-boolean-union.png</file>
+  <file>images/tool-boolean-xor.png</file>
   <file>images/tool-connect-paths.png</file>
   <file>images/tool-cut.png</file>
   <file>images/tool-cut-hole.png</file>
   <file>images/tool-duplicate.png</file>
   <file>images/tool-edit.png</file>
   <file>images/tool-fill-border.png</file>
+  <file>images/tool-measure.png</file>
   <file>images/tool-rotate.png</file>
   <file>images/tool-switch-dashes.png</file>
   <file>images/tool-switch-symbol.png</file>
@@ -65,7 +74,11 @@
   <file>images/window-new.png</file>
 
   <file>etc/tipoftheday.txt</file>
+  
+  <file>3rd-party/clipper/License.txt</file>
+  <file>3rd-party/proj/COPYING</file>
  </qresource>
+ 
  <qresource lang="de">
   <file alias="etc/tipoftheday.txt">etc/tipoftheday_de.txt</file>
  </qresource>

@@ -23,15 +23,18 @@
 #include <assert.h>
 
 #include <QtGui>
+
 #include "map.h"
 #include "map_editor.h"
 #include "template.h"
+#include "georeferencing.h"
+#include "settings.h"
 
 #if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
 #define MiddleButton MidButton
 #endif
 
-MapWidget::MapWidget(bool show_help, bool use_antialiasing, QWidget* parent) : QWidget(parent), show_help(show_help), use_antialiasing(use_antialiasing)
+MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent) : QWidget(parent), show_help(show_help), force_antialiasing(force_antialiasing)
 {
 	view = NULL;
 	tool = NULL;
@@ -48,6 +51,7 @@ MapWidget::MapWidget(bool show_help, bool use_antialiasing, QWidget* parent) : Q
 	activity_dirty_rect_new_border = -1;
 	zoom_label = NULL;
 	cursorpos_label = NULL;
+	coords_type = MAP_COORDS;
 	
 	below_template_cache_dirty_rect = rect();
 	above_template_cache_dirty_rect = rect();
@@ -57,6 +61,7 @@ MapWidget::MapWidget(bool show_help, bool use_antialiasing, QWidget* parent) : Q
 	setAutoFillBackground(false);
 	setMouseTracking(true);
 	setFocusPolicy(Qt::ClickFocus);
+    setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
 }
 MapWidget::~MapWidget()
 {
@@ -375,12 +380,67 @@ void MapWidget::updateZoomLabel()
 	
 	zoom_label->setText(tr("Zoom: %1x").arg(view->getZoom(), 0, 'g', 3));
 }
-void MapWidget::updateCursorposLabel(MapCoordF pos)
+
+void MapWidget::setCoordsDisplay(CoordsType type)
 {
+	coords_type = type;
+	updateCursorposLabel(last_cursor_pos);
+}
+
+
+void MapWidget::updateCursorposLabel(const MapCoordF pos)
+{
+	last_cursor_pos = pos;
+	
 	if (!cursorpos_label)
 		return;
 	
-	cursorpos_label->setText(QString::number(pos.getX(), 'f', 2) + " " + QString::number(-pos.getY(), 'f', 2));
+	if (coords_type == MAP_COORDS)
+	{
+		cursorpos_label->setText( QString("%1 %2 (mm)").
+		  arg(locale().toString(pos.getX(), 'f', 2)).
+		  arg(locale().toString(-pos.getY(), 'f', 2)) );
+	}
+	else
+	{
+		const Georeferencing& georef = view->getMap()->getGeoreferencing();
+		bool ok = true;
+		if (coords_type == PROJECTED_COORDS)
+		{
+			const QPointF projected_point(georef.toProjectedCoords(pos));
+			cursorpos_label->setText(
+			  QString("%1 %2 (m)").
+			  arg(QString::number(projected_point.x(), 'f', 0)).
+			  arg(QString::number(projected_point.y(), 'f', 0))
+			); 
+		}
+		else if (coords_type == GEOGRAPHIC_COORDS)
+		{
+			const LatLon lat_lon(georef.toGeographicCoords(pos, &ok));
+			cursorpos_label->setText(
+			  QString::fromUtf8("%1° %2°").
+			  arg(locale().toString(georef.radToDeg(lat_lon.latitude), 'f', 6)).
+			  arg(locale().toString(georef.radToDeg(lat_lon.longitude), 'f', 6))
+			); 
+		}
+		else if (coords_type == GEOGRAPHIC_COORDS_DMS)
+		{
+			const LatLon lat_lon(georef.toGeographicCoords(pos, &ok));
+			cursorpos_label->setText(
+			  QString::fromUtf8("%1 %2").
+			  arg(georef.radToDMS(lat_lon.latitude)).
+			  arg(georef.radToDMS(lat_lon.longitude))
+			); 
+		}
+		else
+		{
+			// shall never happen
+			ok = false;
+		}
+		
+		if (!ok)
+			cursorpos_label->setText(tr("Error"));
+	}
 }
 
 QSize MapWidget::sizeHint() const
@@ -466,6 +526,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		bool above_template_visible = containsVisibleTemplate(view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1);
 		if (above_template_visible && above_template_cache_dirty_rect.isValid())
 			updateTemplateCache(above_template_cache, above_template_cache_dirty_rect, view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1, false);
+        bool map_visible = view->getMapVisibility()->visible;
 		
 		if (map_cache_dirty_rect.isValid())
 			updateMapCache(false);
@@ -478,8 +539,21 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		else
 			painter.fillRect(QRect(drag_offset.x(), drag_offset.y(), width(), height()), Qt::white);	// TODO: It's not as easy as that, see above.
 		
-		if (map_cache)
-			painter.drawImage(drag_offset, *map_cache, rect());
+        if (map_cache && map_visible)
+        {
+            float map_opacity = view->getMapVisibility()->opacity;
+            if (map_opacity < 1.0)
+            {
+                painter.save();
+                painter.setOpacity(map_opacity);
+                painter.drawImage(drag_offset, *map_cache, rect());
+                painter.restore();
+            }
+            else
+            {
+                painter.drawImage(drag_offset, *map_cache, rect());
+            }
+        }
 		
 		if (above_template_visible && above_template_cache && view->getMap()->getNumTemplates() - view->getMap()->getFirstFrontTemplate() > 0)
 			painter.drawImage(drag_offset, *above_template_cache, rect());
@@ -736,7 +810,7 @@ void MapWidget::updateMapCache(bool use_background)
 	if (!map_cache)
 	{
 		// Lazy allocation of cache image
-		map_cache = new QImage(size(), QImage::Format_ARGB32_Premultiplied);
+        map_cache = new QImage(size(), QImage::Format_ARGB32_Premultiplied);
 		map_cache_dirty_rect = rect();
 	}
 	
@@ -759,17 +833,17 @@ void MapWidget::updateMapCache(bool use_background)
 		painter.setCompositionMode(mode);
 	}
 	
+	bool use_antialiasing = force_antialiasing || Settings::getInstance().getSettingCached(Settings::MapDisplay_Antialiasing).toBool();
 	if (use_antialiasing)
 		painter.setRenderHint(QPainter::Antialiasing);
-	
-	// Draw map
-	painter.translate(width() / 2.0, height() / 2.0);
-	view->applyTransform(&painter);
-	
+		
 	Map* map = view->getMap();
 	QRectF map_view_rect = view->calculateViewedRect(viewportToView(map_cache_dirty_rect));
-	map->draw(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor(), true);
-	
+
+    painter.translate(width() / 2.0, height() / 2.0);
+    view->applyTransform(&painter);
+    map->draw(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor(), true);
+
 	// Finish drawing
 	painter.end();
 	

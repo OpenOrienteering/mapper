@@ -20,7 +20,7 @@
 
 #include "symbol_point_editor.h"
 
-#include <assert.h>
+#include <cassert>
 
 #include <QtGui>
 
@@ -32,28 +32,22 @@
 #include "util.h"
 #include "map_widget.h"
 
-PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* controller, std::vector< PointSymbol* > symbols, float offset_y, QWidget* parent) : QWidget(parent), offset_y(offset_y), map(map)
+PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, float offset_y, bool permanent_preview, QWidget* parent)
+ : QWidget(parent), symbol(symbol), object_origin_coord(0.0f, offset_y), offset_y(offset_y), controller(controller), permanent_preview(permanent_preview)
 {
-	react_to_changes = true;
+	map = controller->getMap();
 	
-	QLabel* editor_label = new QLabel("<b>" + tr("Point editor") + "</b>");
-	
-	symbol_info.resize(symbols.size());
-	for (int i = 0; i < (int)symbols.size(); ++i)
+	midpoint_object = NULL;
+	if (permanent_preview)
 	{
-		symbol_info[i].midpoint_object = new PointObject(symbols[i]);
-		map->addObject(symbol_info[i].midpoint_object);
+		midpoint_object = new PointObject(symbol);
+		midpoint_object->setPosition(object_origin_coord);
+		map->addObject(midpoint_object);
 	}
 	
-	current_symbol_label = new QLabel(tr("Edit:"));
-	current_symbol_combo = new QComboBox();
-	for (int i = 0; i < (int)symbols.size(); ++i)
-		current_symbol_combo->addItem(symbols[i]->getName(), qVariantFromValue<void*>(symbols[i]));
-	current_symbol = NULL;
-	
-	QLabel* elements_label = new QLabel(tr("Elements:"));
+	QLabel* elements_label = new QLabel(QString("<b>%1</b>").arg(tr("Elements:")));
 	element_list = new QListWidget();
-	updateElementList();
+	initElementList();
 	
 	delete_element_button = new QPushButton(QIcon(":/images/minus.png"), "");
 	QToolButton* add_element_button = new QToolButton();
@@ -72,8 +66,8 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	
 	element_properties_widget = new QStackedWidget();
 	
-	// Point
-	QWidget* point_properties = new QWidget();
+	// Point (circle)
+	point_properties = new QWidget();
 	QLabel* point_inner_radius_label = new QLabel(tr("Diameter <b>a</b>:"));
 	point_inner_radius_edit = new QLineEdit();
 	point_inner_radius_edit->setValidator(new DoubleValidator(0, 99999, point_inner_radius_edit));
@@ -92,20 +86,24 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	explanation_label->setPixmap(QPixmap(":/images/symbol_point_explanation.png"));
 	
 	QGridLayout* point_layout = new QGridLayout();
+	point_layout->setContentsMargins(0, 0, 0, 0);
 	point_layout->addWidget(point_inner_radius_label, 0, 0);
 	point_layout->addWidget(point_inner_radius_edit, 0, 1);
 	point_layout->addWidget(point_inner_color_label, 1, 0);
 	point_layout->addWidget(point_inner_color_edit, 1, 1);
-	point_layout->addWidget(point_outer_width_label, 2, 0);
-	point_layout->addWidget(point_outer_width_edit, 2, 1);
-	point_layout->addWidget(point_outer_color_label, 3, 0);
-	point_layout->addWidget(point_outer_color_edit, 3, 1);
-	point_layout->addWidget(explanation_label, 0, 2, 4, 1);
+	point_layout->addWidget(new QWidget(), 2, 0, 1, -1);
+	point_layout->addWidget(point_outer_width_label, 3, 0);
+	point_layout->addWidget(point_outer_width_edit, 3, 1);
+	point_layout->addWidget(point_outer_color_label, 4, 0);
+	point_layout->addWidget(point_outer_color_edit, 4, 1);
+	point_layout->addWidget(explanation_label, 0, 2, 5, 1);
+	point_layout->setRowStretch(6, 1);
+	point_layout->setColumnStretch(1,1);
 	point_properties->setLayout(point_layout);
 	element_properties_widget->addWidget(point_properties);
 	
 	// Line
-	QWidget* line_properties = new QWidget();
+	line_properties = new QWidget();
 	QLabel* line_width_label = new QLabel(tr("Line width:"));
 	line_width_edit = new QLineEdit();
 	line_width_edit->setValidator(new DoubleValidator(0, 99999, line_width_edit));
@@ -129,6 +127,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	line_closed_check = new QCheckBox(tr("Line closed"));
 	
 	QGridLayout* line_layout = new QGridLayout();
+	line_layout->setContentsMargins(0, 0, 0, 0);
 	line_layout->addWidget(line_width_label, 0, 0);
 	line_layout->addWidget(line_width_edit, 0, 1);
 	line_layout->addWidget(line_color_label, 1, 0);
@@ -138,23 +137,27 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	line_layout->addWidget(line_join_label, 3, 0);
 	line_layout->addWidget(line_join_edit, 3, 1);
 	line_layout->addWidget(line_closed_check, 4, 0, 1, 2);
+	line_layout->setRowStretch(5, 1);
+	line_layout->setColumnStretch(1,1);
 	line_properties->setLayout(line_layout);
 	element_properties_widget->addWidget(line_properties);
 	
 	// Area
-	QWidget* area_properties = new QWidget();
+	area_properties = new QWidget();
 	QLabel* area_color_label = new QLabel(tr("Area color:"));
 	area_color_edit = new ColorDropDown(map);
 	
 	QGridLayout* area_layout = new QGridLayout();
+	area_layout->setContentsMargins(0, 0, 0, 0);
 	area_layout->addWidget(area_color_label, 0, 0);
 	area_layout->addWidget(area_color_edit, 0, 1);
 	area_layout->setRowStretch(1, 1);
+	area_layout->setColumnStretch(1,1);
 	area_properties->setLayout(area_layout);
 	element_properties_widget->addWidget(area_properties);
 	
 	// Coordinates
-	QLabel* coordinates_label = new QLabel(tr("Coordinates:"));
+	coords_label = new QLabel(tr("Coordinates:"));
 	
 	coords_table = new QTableWidget(0, 3);
 	coords_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
@@ -173,53 +176,42 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	center_coords_button = new QPushButton(tr("Center by coordinate average"));
 	
 	// Layout
-	QVBoxLayout* layout = new QVBoxLayout();
-	layout->setMargin(0);
+	QBoxLayout* left_layout = new QVBoxLayout();
 	
-	layout->addWidget(editor_label);
-	QHBoxLayout* current_symbol_layout = new QHBoxLayout();
-	current_symbol_layout->addWidget(current_symbol_label);
-	current_symbol_layout->addWidget(current_symbol_combo);
-	layout->addLayout(current_symbol_layout);
-	layout->addSpacing(16);
-	
-	layout->addWidget(elements_label);
-	layout->addWidget(element_list);
+	left_layout->addWidget(elements_label);
+	left_layout->addWidget(element_list);
 	QHBoxLayout* element_buttons_layout = new QHBoxLayout();
 	element_buttons_layout->addStretch(1);
 	element_buttons_layout->addWidget(add_element_button);
 	element_buttons_layout->addWidget(delete_element_button);
 	element_buttons_layout->addStretch(1);
-	layout->addLayout(element_buttons_layout);
-	layout->addSpacing(16);
+	left_layout->addLayout(element_buttons_layout);
 	
-	layout->addWidget(current_element_label);
-	layout->addWidget(element_properties_widget);
-	layout->addSpacing(16);
+	QBoxLayout* right_layout = new QVBoxLayout();
+	right_layout->setMargin(0);
 	
-	layout->addWidget(coordinates_label);
-	layout->addWidget(coords_table);
+	right_layout->addWidget(current_element_label);
+	right_layout->addWidget(element_properties_widget);
+	right_layout->addSpacing(16);
+	
+	right_layout->addWidget(coords_label);
+	right_layout->addWidget(coords_table);
 	QHBoxLayout* coords_buttons_layout = new QHBoxLayout();
 	coords_buttons_layout->addWidget(add_coord_button);
 	coords_buttons_layout->addWidget(delete_coord_button);
 	coords_buttons_layout->addStretch(1);
 	coords_buttons_layout->addWidget(center_coords_button);
-	layout->addLayout(coords_buttons_layout);
+	right_layout->addLayout(coords_buttons_layout);
+	
+	QBoxLayout* layout = new QHBoxLayout;
+	layout->addLayout(left_layout);
+	layout->addSpacing(16);
+	layout->addLayout(right_layout);
 	setLayout(layout);
 	
-	if (symbols.size() <= 1)
-	{
-		current_symbol_label->hide();
-		current_symbol_combo->hide();
-		
-		if (symbols.size() == 0)
-			hide();
-	}
-	
 	// Connections
-	connect(current_symbol_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(currentSymbolChanged(int)));
-	connect(element_list, SIGNAL(currentRowChanged(int)), this, SLOT(elementChanged(int)));
-	connect(delete_element_button, SIGNAL(clicked(bool)), this, SLOT(deleteElementClicked()));
+	connect(element_list, SIGNAL(currentRowChanged(int)), this, SLOT(changeElement(int)));
+	connect(delete_element_button, SIGNAL(clicked(bool)), this, SLOT(deleteCurrentElement()));
 	
 	connect(point_inner_radius_edit, SIGNAL(textEdited(QString)), this, SLOT(pointInnerRadiusChanged(QString)));
 	connect(point_inner_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(pointInnerColorChanged()));
@@ -234,85 +226,67 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(Map* map, MapEditorController* 
 	
 	connect(area_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(areaColorChanged()));
 	
-	connect(coords_table, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentCoordChanged()));
+	connect(coords_table, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(updateDeleteCoordButton()));
 	connect(coords_table, SIGNAL(cellChanged(int,int)), this, SLOT(coordinateChanged(int,int)));
 	connect(add_coord_button, SIGNAL(clicked(bool)), this, SLOT(addCoordClicked()));
 	connect(delete_coord_button, SIGNAL(clicked(bool)), this, SLOT(deleteCoordClicked()));
 	connect(center_coords_button, SIGNAL(clicked(bool)), this, SLOT(centerCoordsClicked()));
-	
-	if (current_symbol_combo->count() > 0)
+}
+
+PointSymbolEditorWidget::~PointSymbolEditorWidget()
+{
+	if (isVisible())
+		setEditorActive(false);
+	if (permanent_preview)
+		map->deleteObject(midpoint_object, false);
+}
+
+void PointSymbolEditorWidget::setEditorActive(bool active)
+{
+	if (active)
 	{
-		current_symbol_combo->setCurrentIndex(0);
-		currentSymbolChanged(current_symbol_combo->currentIndex());
+		if (!permanent_preview)
+		{
+			midpoint_object = new PointObject(symbol);
+			midpoint_object->setPosition(object_origin_coord);
+			map->addObject(midpoint_object);
+		}
+		midpoint_object->update(true);
+		controller->setTool(new PointSymbolEditorTool(controller, this));
+		activity = new PointSymbolEditorActivity(map, this);
+		controller->setEditorActivity(activity);
+		changeElement(element_list->currentRow());
 	}
 	else
 	{
-		if (element_list->count() > 0)
-			element_list->setCurrentRow(0);
-		elementChanged(element_list->currentRow());
+		controller->setTool(NULL);
+		controller->setEditorActivity(NULL);
+		if (!permanent_preview && midpoint_object != NULL)
+		{
+			map->deleteObject(midpoint_object, false);
+			midpoint_object = NULL;
+		}
 	}
-	
-	controller->setTool(new PointSymbolEditorTool(controller, this));
-	activity = new PointSymbolEditorActivity(map, this);
-	controller->setEditorActivity(activity);
-	updateSymbolPositions();
 }
 
-void PointSymbolEditorWidget::addSymbol(PointSymbol* symbol)
+void PointSymbolEditorWidget::setVisible(bool visible)
 {
-	int index = (int)symbol_info.size();
-	symbol_info.insert(symbol_info.begin() + index, SymbolInfo());
-	symbol_info[index].midpoint_object = new PointObject(symbol);
-	map->addObject(symbol_info[index].midpoint_object);
-	current_symbol_combo->insertItem(index, symbol->getName(), qVariantFromValue<void*>(symbol));
-	current_symbol_combo->setCurrentIndex(index);
-	
-	if (current_symbol_combo->count() == 1)
-		show();
-	else if (current_symbol_combo->count() == 2)
-	{
-		current_symbol_combo->show();
-		current_symbol_label->show();
-	}
-	
-	updateSymbolPositions();
-}
-void PointSymbolEditorWidget::removeSymbol(PointSymbol* symbol)
-{
-	int index = current_symbol_combo->findData(qVariantFromValue<void*>(symbol));
-	map->deleteObject(symbol_info[index].midpoint_object, false);
-	symbol_info.erase(symbol_info.begin() + index);
-	current_symbol_combo->removeItem(index);
-	
-	if (current_symbol_combo->count() == 1)
-	{
-		current_symbol_combo->hide();
-		current_symbol_label->hide();
-	}
-	else if (current_symbol_combo->count() == 0)
-		hide();
-	
-	updateSymbolPositions();
-}
-void PointSymbolEditorWidget::setCurrentSymbol(PointSymbol* symbol)
-{
-	current_symbol_combo->setCurrentIndex(current_symbol_combo->findData(qVariantFromValue<void*>(symbol)));
+	setEditorActive(visible);
+	QWidget::setVisible(visible);
 }
 
 bool PointSymbolEditorWidget::changeCurrentCoordinate(MapCoordF new_coord)
 {
 	Object* object = getCurrentElementObject();
-	if (object == getMidpointObject())
+	if (object == midpoint_object)
 		return false;
-	
-	SymbolInfo& info = symbol_info[current_symbol_combo->currentIndex()];
 	
 	if (object->getType() == Object::Point)
 	{
 		PointObject* point = reinterpret_cast<PointObject*>(object);
 		MapCoordF coord = point->getCoordF();
-		coord.setX(new_coord.getX() - info.origin_x);
-		coord.setY(new_coord.getY() - info.origin_y);
+		coord.setX(new_coord.getX());
+		coord.setY(new_coord.getY() - offset_y);
 		point->setPosition(coord.getIntX(), coord.getIntY());
 	}
 	else
@@ -324,20 +298,21 @@ bool PointSymbolEditorWidget::changeCurrentCoordinate(MapCoordF new_coord)
 		PathObject* path = reinterpret_cast<PathObject*>(object);
 		assert(row < path->getCoordinateCount());
 		MapCoord coord = path->getCoordinate(row);
-		coord.setX(new_coord.getX() - info.origin_x);
-		coord.setY(new_coord.getY() - info.origin_y);
+		coord.setX(new_coord.getX());
+		coord.setY(new_coord.getY() - offset_y);
 		path->setCoordinate(row, coord);
 	}
 	
 	updateCoordsTable();
-	getMidpointObject()->update(true);
-	emit(symbolEdited());
+	midpoint_object->update(true);
+	emit symbolEdited();
 	return true;
 }
+
 bool PointSymbolEditorWidget::addCoordinate(MapCoordF new_coord)
 {
 	Object* object = getCurrentElementObject();
-	if (object == getMidpointObject())
+	if (object == midpoint_object)
 		return false;
 	
 	if (object->getType() == Object::Point)
@@ -351,126 +326,98 @@ bool PointSymbolEditorWidget::addCoordinate(MapCoordF new_coord)
 	else
 		++row;
 	
-	SymbolInfo& info = symbol_info[current_symbol_combo->currentIndex()];
-	path->addCoordinate(row, MapCoordF(new_coord.getX() - info.origin_x, new_coord.getY() - info.origin_y).toMapCoord());
+	path->addCoordinate(row, MapCoordF(new_coord.getX(), new_coord.getY() - offset_y).toMapCoord());
 	
 	if (path->getCoordinateCount() == 1)
 	{
 		if (object->getSymbol()->getType() == Symbol::Area)
-			path->getPart(0).setClosed(true);
+			path->getPart(0).setClosed(true, false);
 	}
 	
 	updateCoordsTable();
 	coords_table->setCurrentItem(coords_table->item(row, (coords_table->currentColumn() < 0) ? 0 : coords_table->currentColumn()));
-	getMidpointObject()->update(true);
-	emit(symbolEdited());
+	midpoint_object->update(true);
+	emit symbolEdited();
 	return true;
 }
 
-void PointSymbolEditorWidget::updateSymbolPositions()
-{
-	const float symbol_distance = 10;
-	
-	for (int i = 0; i < (int)symbol_info.size(); ++i)
-	{
-		symbol_info[i].origin_x = -(symbol_distance / 2) * ((int)symbol_info.size() - 1) + symbol_distance * i;
-		symbol_info[i].origin_y = offset_y;
-		
-		symbol_info[i].midpoint_object->setPosition(MapCoordF(symbol_info[i].origin_x, symbol_info[i].origin_y));
-		symbol_info[i].midpoint_object->update(true);
-	}
-	
-	activity->update();
-}
-
-void PointSymbolEditorWidget::updateElementList()
+void PointSymbolEditorWidget::initElementList()
 {
 	element_list->clear();
-	if (!current_symbol)
-		return;
-	
-	element_list->addItem(tr("[Midpoint]"));
-	for (int i = 0; i < current_symbol->getNumElements(); ++i)
+	element_list->addItem(tr("[Midpoint]"));	// NOTE: Is that item needed?
+	for (int i = 0; i < symbol->getNumElements(); ++i)
 	{
-		Symbol* symbol = current_symbol->getElementSymbol(i);
-		element_list->addItem(getLabelForSymbol(symbol));
+		Symbol* element_symbol = symbol->getElementSymbol(i);
+		element_list->addItem(getLabelForSymbol(element_symbol));
 	}
 	element_list->setCurrentRow(0);
 }
-void PointSymbolEditorWidget::updateSymbolNames()
-{
-	for (int i = 0; i < current_symbol_combo->count(); ++i)
-		current_symbol_combo->setItemText(i, symbol_info[i].midpoint_object->getSymbol()->getName());
-}
 
-void PointSymbolEditorWidget::currentSymbolChanged(int index)
+void PointSymbolEditorWidget::changeElement(int row)
 {
-	if (index < 0)
-		current_symbol = NULL;
-	else
-		current_symbol = reinterpret_cast<PointSymbol*>(current_symbol_combo->itemData(index, Qt::UserRole).value<void*>());
-	updateElementList();
-}
-void PointSymbolEditorWidget::elementChanged(int row)
-{
-	bool enable = row >= 0;
-	coords_table->setEnabled(enable);
-	add_coord_button->setEnabled(enable);
-	delete_coord_button->setEnabled(enable);
-	center_coords_button->setEnabled(enable);
-	delete_element_button->setEnabled(enable && row > 0);	// cannot delete first row
+	delete_element_button->setEnabled(row > 0);	// must not remove first row
 	
-	if (row < 0)
-		return;
-	
-	Symbol* symbol = (row == 0) ? current_symbol : current_symbol->getElementSymbol(row - 1);
-	Object* object = getCurrentElementObject();
-	
-	react_to_changes = false;
-	int stack_index;
-	if (symbol->getType() == Symbol::Line)
+	if (row >= 0)
 	{
-		stack_index = 1;
-		LineSymbol* line = reinterpret_cast<LineSymbol*>(symbol);
-		line_width_edit->setText(QString::number(0.001 * line->getLineWidth()));
-		line_color_edit->setColor(line->getColor());
-		line_cap_edit->setCurrentIndex(line_cap_edit->findData(QVariant(line->getCapStyle())));
-		line_join_edit->setCurrentIndex(line_join_edit->findData(QVariant(line->getJoinStyle())));
+		Symbol* element_symbol = getCurrentElementSymbol();
+		Object* object = getCurrentElementObject();
 		
-		PathObject* path = reinterpret_cast<PathObject*>(object);
-		line_closed_check->setChecked(path->isFirstPartClosed());
-		line_closed_check->setEnabled(path->getNumParts() > 0);
+		if (object->getType() == Object::Path)
+		{
+			PathObject* path = reinterpret_cast<PathObject*>(object);
+			if (element_symbol->getType() == Symbol::Line)
+			{
+				LineSymbol* line = reinterpret_cast<LineSymbol*>(element_symbol);
+				line_width_edit->setText(QString::number(0.001 * line->getLineWidth()));
+				line_color_edit->setColor(line->getColor());
+				line_cap_edit->setCurrentIndex(line_cap_edit->findData(QVariant(line->getCapStyle())));
+				line_join_edit->setCurrentIndex(line_join_edit->findData(QVariant(line->getJoinStyle())));
+				
+				line_closed_check->setChecked(path->isFirstPartClosed());
+				line_closed_check->setEnabled(path->getNumParts() > 0);
+				
+				element_properties_widget->setCurrentWidget(line_properties);
+			}
+			else if (element_symbol->getType() == Symbol::Area)
+			{	
+				AreaSymbol* area = reinterpret_cast<AreaSymbol*>(element_symbol);
+				area_color_edit->setColor(area->getColor());
+				
+				element_properties_widget->setCurrentWidget(area_properties);
+			}
+			
+			coords_label->setEnabled(true);
+			coords_table->setEnabled(true);
+			coords_table->setColumnHidden(2, false);
+			add_coord_button->setEnabled(true);
+			center_coords_button->setEnabled(path->getCoordinateCount() > 0);
+		}
+		else
+		{
+			PointSymbol* point = reinterpret_cast<PointSymbol*>(element_symbol);
+			point_inner_radius_edit->setText(QString::number(2 * 0.001 * point->getInnerRadius()));
+			point_inner_color_edit->setColor(point->getInnerColor());
+			point_outer_width_edit->setText(QString::number(0.001 * point->getOuterWidth()));
+			point_outer_color_edit->setColor(point->getOuterColor());
+			
+			element_properties_widget->setCurrentWidget(point_properties);
+			
+			coords_table->setColumnHidden(2, true);
+			coords_label->setEnabled(row > 0);
+			coords_table->setEnabled(row > 0);
+			add_coord_button->setEnabled(false);
+			center_coords_button->setEnabled(row > 0);
+		}
+		
+		coords_table->clearContents();
 	}
-	else if (symbol->getType() == Symbol::Area)
-	{
-		stack_index = 2;
-		AreaSymbol* area = reinterpret_cast<AreaSymbol*>(symbol);
-		area_color_edit->setColor(area->getColor());
-	}
-	else
-	{
-		stack_index = 0;
-		PointSymbol* point = reinterpret_cast<PointSymbol*>(symbol);
-		point_inner_radius_edit->setText(QString::number(2 * 0.001 * point->getInnerRadius()));
-		point_inner_color_edit->setColor(point->getInnerColor());
-		point_outer_width_edit->setText(QString::number(0.001 * point->getOuterWidth()));
-		point_outer_color_edit->setColor(point->getOuterColor());
-	}
-	element_properties_widget->setCurrentIndex(stack_index);
 	
-	coords_table->clearContents();
-	coords_table->setEnabled(row > 0);
-	add_coord_button->setEnabled(symbol->getType() != Symbol::Point);
-	updateDeleteCoordButton();
-	center_coords_button->setEnabled(coords_table->rowCount() > 0);
-	
-	coords_table->setColumnHidden(2, symbol->getType() == Symbol::Point);
 	if (row > 0)
 		updateCoordsTable();
 	else
 		coords_table->setRowCount(0);
 	
-	react_to_changes = true;
+	delete_coord_button->setEnabled(false);
 }
 
 void PointSymbolEditorWidget::addPointClicked()
@@ -480,6 +427,7 @@ void PointSymbolEditorWidget::addPointClicked()
 	
 	insertElement(new_object, new_point);
 }
+
 void PointSymbolEditorWidget::addLineClicked()
 {
 	LineSymbol* new_line = new LineSymbol();
@@ -487,6 +435,7 @@ void PointSymbolEditorWidget::addLineClicked()
 	
 	insertElement(new_object, new_line);
 }
+
 void PointSymbolEditorWidget::addAreaClicked()
 {
 	AreaSymbol* new_area = new AreaSymbol();
@@ -494,87 +443,84 @@ void PointSymbolEditorWidget::addAreaClicked()
 	
 	insertElement(new_object, new_area);
 }
-void PointSymbolEditorWidget::deleteElementClicked()
+
+void PointSymbolEditorWidget::deleteCurrentElement()
 {
 	int row = element_list->currentRow();
 	assert(row > 0);
 	int pos = row - 1;
-	
-	current_symbol->deleteElement(pos);
+	symbol->deleteElement(pos);
 	delete element_list->item(row);
-	
-	getMidpointObject()->update(true);
-	emit(symbolEdited());
+	midpoint_object->update(true);
+	emit symbolEdited();
 }
 
 void PointSymbolEditorWidget::pointInnerRadiusChanged(QString text)
 {
-	if (!react_to_changes) return;
 	PointSymbol* symbol = reinterpret_cast<PointSymbol*>(getCurrentElementSymbol());
 	symbol->inner_radius = qRound(1000 * 0.5 * text.toDouble());
-	getMidpointObject()->update(true);
-	emit(symbolEdited());
+	midpoint_object->update(true);
+	emit symbolEdited();
 }
+
 void PointSymbolEditorWidget::pointInnerColorChanged()
 {
-	if (!react_to_changes) return;
 	PointSymbol* symbol = reinterpret_cast<PointSymbol*>(getCurrentElementSymbol());
 	symbol->inner_color = point_inner_color_edit->color();
-	getMidpointObject()->update(true);
-	emit(symbolEdited());
+	midpoint_object->update(true);
+	emit symbolEdited();
 }
+
 void PointSymbolEditorWidget::pointOuterWidthChanged(QString text)
 {
-	if (!react_to_changes) return;
 	PointSymbol* symbol = reinterpret_cast<PointSymbol*>(getCurrentElementSymbol());
 	symbol->outer_width = qRound(1000 * text.toDouble());
-	getMidpointObject()->update(true);
-	emit(symbolEdited());
+	midpoint_object->update(true);
+	emit symbolEdited();
 }
+
 void PointSymbolEditorWidget::pointOuterColorChanged()
 {
-	if (!react_to_changes) return;
 	PointSymbol* symbol = reinterpret_cast<PointSymbol*>(getCurrentElementSymbol());
 	symbol->outer_color = point_outer_color_edit->color();
-	getMidpointObject()->update(true);
-	emit(symbolEdited());
+	midpoint_object->update(true);
+	emit symbolEdited();
 }
 
 void PointSymbolEditorWidget::lineWidthChanged(QString text)
 {
-	if (!react_to_changes) return;
 	LineSymbol* symbol = reinterpret_cast<LineSymbol*>(getCurrentElementSymbol());
 	symbol->line_width = qRound(1000 * text.toDouble());
-	getMidpointObject()->update(true);
-	emit(symbolEdited());
+	midpoint_object->update(true);
+	emit symbolEdited();
 }
+
 void PointSymbolEditorWidget::lineColorChanged()
 {
-	if (!react_to_changes) return;
 	LineSymbol* symbol = reinterpret_cast<LineSymbol*>(getCurrentElementSymbol());
 	symbol->color = line_color_edit->color();
-	getMidpointObject()->update(true);
-	emit(symbolEdited());
+	midpoint_object->update(true);
+	emit symbolEdited();
 }
+
 void PointSymbolEditorWidget::lineCapChanged(int index)
 {
-	if (!react_to_changes) return;
 	LineSymbol* symbol = reinterpret_cast<LineSymbol*>(getCurrentElementSymbol());
 	symbol->cap_style = static_cast<LineSymbol::CapStyle>(line_cap_edit->itemData(index).toInt());
-	getMidpointObject()->update(true);
-	emit(symbolEdited());
+	midpoint_object->update(true);
+	emit symbolEdited();
 }
+
 void PointSymbolEditorWidget::lineJoinChanged(int index)
 {
-	if (!react_to_changes) return;
 	LineSymbol* symbol = reinterpret_cast<LineSymbol*>(getCurrentElementSymbol());
 	symbol->join_style = static_cast<LineSymbol::JoinStyle>(line_join_edit->itemData(index).toInt());
-	getMidpointObject()->update(true);
-	emit(symbolEdited());
+	midpoint_object->update(true);
+	emit symbolEdited();
 }
+
 void PointSymbolEditorWidget::lineClosedClicked(bool checked)
 {
-	if (!react_to_changes) return;
 	Object* object = getCurrentElementObject();
 	assert(object->getType() == Object::Path);
 	PathObject* path = reinterpret_cast<PathObject*>(object);
@@ -582,32 +528,25 @@ void PointSymbolEditorWidget::lineClosedClicked(bool checked)
 	if (!checked && path->getCoordinateCount() >= 4 && path->getCoordinate(path->getCoordinateCount() - 4).isCurveStart())
 		path->getCoordinate(path->getCoordinateCount() - 4).setCurveStart(false);
 	assert(path->getNumParts() > 0);
-	path->getPart(0).setClosed(checked);
+	path->getPart(0).setClosed(checked, true);
 	if (!checked)
 		path->deleteCoordinate(path->getCoordinateCount() - 1, false);
 	
 	updateCoordsTable();
-	getMidpointObject()->update(true);
-	emit(symbolEdited());
+	midpoint_object->update(true);
+	emit symbolEdited();
 }
 
 void PointSymbolEditorWidget::areaColorChanged()
 {
-	if (!react_to_changes) return;
 	AreaSymbol* symbol = reinterpret_cast<AreaSymbol*>(getCurrentElementSymbol());
 	symbol->color = area_color_edit->color();
-	getMidpointObject()->update(true);
-	emit(symbolEdited());
+	midpoint_object->update(true);
+	emit symbolEdited();
 }
 
-void PointSymbolEditorWidget::currentCoordChanged()
-{
-	updateDeleteCoordButton();
-	center_coords_button->setEnabled(coords_table->rowCount() > 0);
-}
 void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 {
-	if (!react_to_changes) return;
 	Object* object = getCurrentElementObject();
 	
 	if (column < 2)
@@ -638,12 +577,12 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 					path->getCoordinate(row).setY(-new_value);
 			}
 			
-			getMidpointObject()->update(true);
-			emit(symbolEdited());
+			midpoint_object->update(true);
+			emit symbolEdited();
 		}
 		else
 		{
-			react_to_changes = false;
+			coords_table->blockSignals(true);
 			if (object->getType() == Object::Point)
 			{
 				PointObject* point = reinterpret_cast<PointObject*>(object);
@@ -654,7 +593,7 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 				PathObject* path = reinterpret_cast<PathObject*>(object);
 				coords_table->item(row, column)->setText(QString::number((column == 0) ? path->getCoordinate(row).xd() : (-path->getCoordinate(row).yd())));
 			}
-			react_to_changes = true;
+			coords_table->blockSignals(false);
 		}
 	}
 	else
@@ -667,10 +606,11 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 		path->setCoordinate(row, coord);
 		
 		updateCoordsTable();
-		getMidpointObject()->update(true);
-		emit(symbolEdited());
+		midpoint_object->update(true);
+		emit symbolEdited();
 	}
 }
+
 void PointSymbolEditorWidget::addCoordClicked()
 {
 	Object* object = getCurrentElementObject();
@@ -686,6 +626,7 @@ void PointSymbolEditorWidget::addCoordClicked()
 	updateCoordsTable();	// NOTE: incremental updates (to the curve start boxes) would be possible but mean some implementation effort
 	coords_table->setCurrentItem(coords_table->item(row, coords_table->currentColumn()));
 }
+
 void PointSymbolEditorWidget::deleteCoordClicked()
 {
 	Object* object = getCurrentElementObject();
@@ -698,10 +639,11 @@ void PointSymbolEditorWidget::deleteCoordClicked()
 	path->deleteCoordinate(row, false);
 	
 	updateCoordsTable();	// NOTE: incremental updates (to the curve start boxes) would be possible but mean some implementation effort
-	getMidpointObject()->update(true);
-	emit(symbolEdited());
-	updateDeleteCoordButton();
+	center_coords_button->setEnabled(path->getCoordinateCount() > 0);
+	midpoint_object->update(true);
+	emit symbolEdited();
 }
+
 void PointSymbolEditorWidget::centerCoordsClicked()
 {
 	Object* object = getCurrentElementObject();
@@ -731,17 +673,15 @@ void PointSymbolEditorWidget::centerCoordsClicked()
 			path->setCoordinate(i, coord);
 		}
 		
-		updateCoordsTable();
-		getMidpointObject()->update(true);
-		emit(symbolEdited());
 	}
+	
+	updateCoordsTable();
+	midpoint_object->update(true);
+	emit symbolEdited();
 }
 
 void PointSymbolEditorWidget::updateCoordsTable()
 {
-	bool temp = react_to_changes;
-	react_to_changes = false;
-	
 	Object* object = getCurrentElementObject();
 	int num_rows;
 	if (object->getType() == Object::Point)
@@ -761,12 +701,13 @@ void PointSymbolEditorWidget::updateCoordsTable()
 		addCoordsRow(i);
 	
 	center_coords_button->setEnabled(num_rows > 0);
-	
-	react_to_changes = temp;
 }
+
 void PointSymbolEditorWidget::addCoordsRow(int row)
 {
 	coords_table->setRowHeight(row, coords_table->fontMetrics().height() + 2);
+	
+	coords_table->blockSignals(true);
 	
 	for (int c = 0; c < 3; ++c)
 	{
@@ -781,9 +722,11 @@ void PointSymbolEditorWidget::addCoordsRow(int row)
 			coords_table->setItem(row, c, item);
 		}
 	}
-	
 	updateCoordsRow(row);
+	
+	coords_table->blockSignals(false);
 }
+
 void PointSymbolEditorWidget::updateCoordsRow(int row)
 {
 	assert(element_list->currentRow() > 0);
@@ -817,26 +760,42 @@ void PointSymbolEditorWidget::updateCoordsRow(int row)
 		coords_table->setItem(row, 2, new QTableWidgetItem());	// remove checkbox by replacing the item with a new one - is there a better way?
 	coords_table->item(row, 2)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 }
+
 void PointSymbolEditorWidget::updateDeleteCoordButton()
 {
-	Object* object = getCurrentElementObject();
-	delete_coord_button->setEnabled(object->getType() == Object::Path && coords_table->currentRow() >= 0);
+	const bool has_coords = coords_table->rowCount() > 0;
+	const bool is_point = getCurrentElementObject()->getType() == Object::Point;
+	bool part_of_curve = false;
+	
+	if (!is_point)
+	{
+		PathObject* path = reinterpret_cast<PathObject*>(getCurrentElementObject());
+		for (int i = 1; i < 4; i++)
+		{
+			int pos = coords_table->currentRow() - i;
+			if (pos >= 0 && path->getCoordinate(pos).isCurveStart())
+				part_of_curve = true;
+		}
+	}
+
+	delete_coord_button->setEnabled(has_coords && !is_point && !part_of_curve);
 }
 
-void PointSymbolEditorWidget::insertElement(Object* object, Symbol* symbol)
+void PointSymbolEditorWidget::insertElement(Object* object, Symbol* element_symbol)
 {
 	int row = (element_list->currentRow() < 0) ? element_list->count() : (element_list->currentRow() + 1);
 	int pos = row - 1;
-	current_symbol->addElement(pos, object, symbol);
-	element_list->insertItem(row, getLabelForSymbol(symbol));
+	symbol->addElement(pos, object, element_symbol);
+	element_list->insertItem(row, getLabelForSymbol(element_symbol));
 	element_list->setCurrentRow(row);
-	getMidpointObject()->update(true);
-	emit(symbolEdited());
+	midpoint_object->update(true);
+	emit symbolEdited();
 }
-QString PointSymbolEditorWidget::getLabelForSymbol(Symbol* symbol)
+
+QString PointSymbolEditorWidget::getLabelForSymbol(const Symbol* symbol) const
 {
 	if (symbol->getType() == Symbol::Point)
-		return tr("Point");
+		return tr("Point");						// FIXME: This is rather a circle.
 	else if (symbol->getType() == Symbol::Line)
 		return tr("Line");
 	else if (symbol->getType() == Symbol::Area)
@@ -846,100 +805,90 @@ QString PointSymbolEditorWidget::getLabelForSymbol(Symbol* symbol)
 	return tr("Unknown");
 }
 
-Object* PointSymbolEditorWidget::getMidpointObject()
-{
-	if (current_symbol_combo->currentIndex() < 0)
-		return NULL;
-	else
-		return symbol_info[current_symbol_combo->currentIndex()].midpoint_object;
-}
 Object* PointSymbolEditorWidget::getCurrentElementObject()
 {
 	if (element_list->currentRow() > 0)
-		return current_symbol->getElementObject(element_list->currentRow() - 1);
+		return symbol->getElementObject(element_list->currentRow() - 1);
 	else
-		return getMidpointObject();
+		return midpoint_object;
 }
+
 Symbol* PointSymbolEditorWidget::getCurrentElementSymbol()
 {
 	if (element_list->currentRow() > 0)
-		return current_symbol->getElementSymbol(element_list->currentRow() - 1);
+		return symbol->getElementSymbol(element_list->currentRow() - 1);
 	else
-		return current_symbol;
+		return symbol;
 }
+
+
 
 // ### PointSymbolEditorTool ###
 
 QCursor* PointSymbolEditorTool::cursor = NULL;
 
-PointSymbolEditorTool::PointSymbolEditorTool(MapEditorController* editor, PointSymbolEditorWidget* widget): MapEditorTool(editor, Other)
+PointSymbolEditorTool::PointSymbolEditorTool(MapEditorController* editor, PointSymbolEditorWidget* symbol_editor)
+: MapEditorTool(editor, Other), symbol_editor(symbol_editor)
 {
-	this->widget = widget;
-	
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-crosshair.png"), 11, 11);
 }
+
 void PointSymbolEditorTool::init()
 {
-    setStatusBarText(tr("<b>Click</b> to add a coordinate, <b>Ctrl+Click</b> to change the selected coordinate"));
+	setStatusBarText(tr("<b>Click</b> to add a coordinate, <b>Ctrl+Click</b> to change the selected coordinate"));
 }
-bool PointSymbolEditorTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+
+bool PointSymbolEditorTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* map_widget)
 {
 	if (event->button() == Qt::LeftButton)
 	{
 		if (event->modifiers() & Qt::CTRL)
-			this->widget->changeCurrentCoordinate(map_coord);
+			symbol_editor->changeCurrentCoordinate(map_coord);
 		else
-			this->widget->addCoordinate(map_coord);
+			symbol_editor->addCoordinate(map_coord);
 		return true;
 	}
 	return false;
 }
 
+
+
 // ### PointSymbolEditorActivity ###
 
 const int PointSymbolEditorActivity::cross_radius = 5;
 
-PointSymbolEditorActivity::PointSymbolEditorActivity(Map* map, PointSymbolEditorWidget* widget): MapEditorActivity(), map(map), widget(widget)
+PointSymbolEditorActivity::PointSymbolEditorActivity(Map* map, PointSymbolEditorWidget* symbol_editor)
+: MapEditorActivity(), map(map), symbol_editor(symbol_editor)
 {
 }
+
 void PointSymbolEditorActivity::init()
 {
 	update();
 }
+
 void PointSymbolEditorActivity::update()
 {
-	if (widget->symbol_info.size() == 0)
-	{
-		map->clearActivityBoundingBox();
-		return;	
-	}
-	
-	QRectF rect = QRectF(widget->symbol_info[0].origin_x, widget->symbol_info[0].origin_y, 0, 0);
-	for (int i = 1; i < (int)widget->symbol_info.size(); ++i)
-		rectInclude(rect, QPointF(widget->symbol_info[i].origin_x, widget->symbol_info[i].origin_y));
-	
+	QRectF rect = QRectF(0.0, symbol_editor->offset_y, 0.0, 0.0);
 	map->setActivityBoundingBox(rect, cross_radius + 1);
 }
-void PointSymbolEditorActivity::draw(QPainter* painter, MapWidget* widget)
+
+void PointSymbolEditorActivity::draw(QPainter* painter, MapWidget* map_widget)
 {
-    for (int i = 0; i < (int)this->widget->symbol_info.size(); ++i)
-	{
-		PointSymbolEditorWidget::SymbolInfo& info = this->widget->symbol_info[i];
-		QPoint midpoint = widget->mapToViewport(MapCoordF(info.origin_x, info.origin_y)).toPoint();
-		
-		QPen pen = QPen(Qt::white);
-		pen.setWidth(3);
-		painter->setPen(pen);
-		painter->drawLine(midpoint + QPoint(0, -cross_radius), midpoint + QPoint(0, cross_radius));
-		painter->drawLine(midpoint + QPoint(-cross_radius, 0), midpoint + QPoint(cross_radius, 0));
-		
-		pen.setWidth(0);
-		pen.setColor(Qt::black);
-		painter->setPen(pen);
-		painter->drawLine(midpoint + QPoint(0, -cross_radius), midpoint + QPoint(0, cross_radius));
-		painter->drawLine(midpoint + QPoint(-cross_radius, 0), midpoint + QPoint(cross_radius, 0));
-	}
+	QPoint midpoint = map_widget->mapToViewport(symbol_editor->object_origin_coord).toPoint();
+	
+	QPen pen = QPen(Qt::white);
+	pen.setWidth(3);
+	painter->setPen(pen);
+	painter->drawLine(midpoint + QPoint(0, -cross_radius), midpoint + QPoint(0, cross_radius));
+	painter->drawLine(midpoint + QPoint(-cross_radius, 0), midpoint + QPoint(cross_radius, 0));
+	
+	pen.setWidth(0);
+	pen.setColor(Qt::black);
+	painter->setPen(pen);
+	painter->drawLine(midpoint + QPoint(0, -cross_radius), midpoint + QPoint(0, cross_radius));
+	painter->drawLine(midpoint + QPoint(-cross_radius, 0), midpoint + QPoint(cross_radius, 0));
 }
 
 #include "symbol_point_editor.moc"

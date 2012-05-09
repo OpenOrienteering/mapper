@@ -56,6 +56,7 @@ public:
 	void setPrintAreaTop(float value);
 	
 	QRectF getPrintArea();
+    QRectF getPaperArea();
 	
 protected slots:
 	void printMap(QPrinter* printer);
@@ -138,7 +139,8 @@ public:
 	
 private:
 	void updateDragging(MapCoordF mouse_pos_map);
-	
+    void drawBetweenRects(QPainter* painter, const QRect &outer, const QRect &inner) const;
+
 	bool dragging;
 	PrintWidget* widget;
 	MapCoordF click_pos_map;

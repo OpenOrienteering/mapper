@@ -22,27 +22,35 @@
 
 #include <QtGui>
 
+#include "util.h"
 #include "map.h"
 #include "map_widget.h"
 #include "map_undo.h"
 #include "map_dialog_scale.h"
+#include "georeferencing.h"
+#include "georeferencing_dialog.h"
 #include "print_dock_widget.h"
 #include "color_dock_widget.h"
 #include "symbol_dock_widget.h"
 #include "template_dock_widget.h"
+#include "template_position_dock_widget.h"
 #include "template.h"
-#include "paint_on_template.h"
-#include "gps_coordinates.h"
+#include "template_gps.h"
+#include "template_tool_paint.h"
 #include "symbol.h"
 #include "tool_draw_point.h"
 #include "tool_draw_path.h"
+#include "tool_draw_circle.h"
+#include "tool_draw_rectangle.h"
 #include "tool_draw_text.h"
 #include "tool_edit.h"
-#include "util.h"
 #include "tool_cut.h"
 #include "tool_cut_hole.h"
 #include "tool_rotate.h"
+#include "tool_measure.h"
+#include "tool_boolean.h"
 #include "object_text.h"
+#include "settings.h"
 
 // ### MapEditorController ###
 
@@ -66,7 +74,9 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	toolbar_view = NULL;
 	toolbar_drawing = NULL;
 	toolbar_editing = NULL;
+	toolbar_advanced_editing = NULL;
 	print_dock_widget = NULL;
+	measure_dock_widget = NULL;
 	color_dock_widget = NULL;
 	symbol_dock_widget = NULL;
 	template_dock_widget = NULL;
@@ -78,10 +88,14 @@ MapEditorController::~MapEditorController()
 	delete toolbar_view;
 	delete toolbar_drawing;
 	delete toolbar_editing;
+	delete toolbar_advanced_editing;
 	delete print_dock_widget;
+	delete measure_dock_widget;
 	delete color_dock_widget;
 	delete symbol_dock_widget;
 	delete template_dock_widget;
+	for (QHash<Template*, TemplatePositionDockWidget*>::iterator it = template_position_widgets.begin(); it != template_position_widgets.end(); ++it)
+		delete it.value();
 	delete current_tool;
 	delete override_tool;
 	delete editor_activity;
@@ -116,6 +130,8 @@ void MapEditorController::setEditTool()
 }
 void MapEditorController::setOverrideTool(MapEditorTool* new_override_tool)
 {
+	if (override_tool == new_override_tool)
+		return;
 	delete override_tool;
 	map->clearDrawingBoundingBox();
 	window->setStatusBarText("");
@@ -174,6 +190,22 @@ void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
 	map_widget->setActivity(editor_activity);
 }
 
+void MapEditorController::addTemplatePositionDockWidget(Template* temp)
+{
+	assert(!existsTemplatePositionDockWidget(temp));
+	TemplatePositionDockWidget* dock_widget = new TemplatePositionDockWidget(temp, this, window);
+	toggleFloatingDockWidget(dock_widget, true);
+	template_position_widgets.insert(temp, dock_widget);
+}
+void MapEditorController::removeTemplatePositionDockWidget(Template* temp)
+{
+	emit(templatePositionDockWidgetClosed(temp));
+	
+	delete getTemplatePositionDockWidget(temp);
+	int num_deleted = template_position_widgets.remove(temp);
+	assert(num_deleted == 1);
+}
+
 bool MapEditorController::save(const QString& path)
 {
 	if (map)
@@ -202,6 +234,7 @@ bool MapEditorController::load(const QString& path)
 void MapEditorController::attach(MainWindow* window)
 {
 	print_dock_widget = NULL;
+	measure_dock_widget = NULL;
 	color_dock_widget = NULL;
 	symbol_dock_widget = NULL;
 	template_dock_widget = NULL;
@@ -218,13 +251,13 @@ void MapEditorController::attach(MainWindow* window)
 	statusbar_zoom_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	statusbar_cursorpos_label = new QLabel();
 	statusbar_cursorpos_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-	statusbar_cursorpos_label->setFixedWidth(100);
+	statusbar_cursorpos_label->setFixedWidth(150);
 	statusbar_cursorpos_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	window->statusBar()->addPermanentWidget(statusbar_zoom_label);
 	window->statusBar()->addPermanentWidget(statusbar_cursorpos_label);
 	
 	// Create map widget
-	map_widget = new MapWidget(mode == MapEditor, true); //mode == SymbolEditor);	TODO: Make antialiasing configurable
+	map_widget = new MapWidget(mode == MapEditor, mode == SymbolEditor);
 	connect(window, SIGNAL(keyPressed(QKeyEvent*)), map_widget, SLOT(keyPressed(QKeyEvent*)));
 	connect(window, SIGNAL(keyReleased(QKeyEvent*)), map_widget, SLOT(keyReleased(QKeyEvent*)));
 	map_widget->setMapView(main_view);
@@ -232,12 +265,12 @@ void MapEditorController::attach(MainWindow* window)
 	map_widget->setCursorposLabel(statusbar_cursorpos_label);
 	window->setCentralWidget(map_widget);
 	
-    // Create menu and toolbar together, so actions can be inserted into one or both
+	// Create menu and toolbar together, so actions can be inserted into one or both
 	if (mode == MapEditor)
         createMenuAndToolbars();
 	
 	// Update enabled/disabled state for the tools ...
-	selectedObjectsChanged();
+	objectSelectionChanged();
 	// ... and for undo
 	undoStepAvailabilityChanged();
 	
@@ -253,16 +286,23 @@ void MapEditorController::attach(MainWindow* window)
 	}
 	if (has_invalid_template)
 		window->setStatusBarText("<font color=\"#c00\">" + tr("One or more templates could not be loaded. Use the Templates -> Template setup window to resolve the issue(s) by clicking on the red template file name(s).") + "</font>");
-
-	// Show the symbol window
-	if (mode == MapEditor)
-		symbol_window_act->trigger();
 	
-	// Auto-select the edit tool
 	if (mode == MapEditor)
 	{
+		// Show the symbol window
+		symbol_window_act->trigger();
+		
+		// Auto-select the edit tool
 		edit_tool_act->setChecked(true);
 		setEditTool();
+		
+		// Set the coordinates display mode
+		coordsDisplayChanged();
+	}
+	else
+	{
+		// Set the coordinates display mode
+		map_widget->setCoordsDisplay(MapWidget::MAP_COORDS);
 	}
 }
 
@@ -305,11 +345,16 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("zoomin")->setShortcut(QKeySequence("F7"));
 	findAction("zoomout")->setShortcut(QKeySequence("F8"));
 	findAction("fullscreen")->setShortcut(QKeySequence("F11"));
-	
+    color_window_act->setShortcut(QKeySequence("Ctrl+Shift+7"));
+    symbol_window_act->setShortcut(QKeySequence("Ctrl+Shift+8"));
+    template_window_act->setShortcut(QKeySequence("Ctrl+Shift+9"));
+
 	findAction("editobjects")->setShortcut(QKeySequence("E"));
 	findAction("drawpoint")->setShortcut(QKeySequence("S"));
 	findAction("drawpath")->setShortcut(QKeySequence("P"));
-	findAction("drawtext")->setShortcut(QKeySequence("T"));
+	findAction("drawcircle")->setShortcut(QKeySequence("O"));
+	findAction("drawrectangle")->setShortcut(QKeySequence("L"));
+    findAction("drawtext")->setShortcut(QKeySequence("T"));
 	
     findAction("duplicate")->setShortcut(QKeySequence("D"));
     findAction("switchdashes")->setShortcut(QKeySequence("Ctrl+D"));
@@ -317,56 +362,145 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("rotateobjects")->setShortcut(QKeySequence("R"));
 	findAction("cutobject")->setShortcut(QKeySequence("K"));
 	findAction("cuthole")->setShortcut(QKeySequence("H"));
+	findAction("measure")->setShortcut(QKeySequence("M"));
+	findAction("booleanunion")->setShortcut(QKeySequence("U"));
 }
+class Action : public QAction
+{
+protected:
+	void whatsThis();
+};
 
 void MapEditorController::createMenuAndToolbars()
 {
     // Define all the actions, saving them into variables as necessary. Can also get them by ID.
     print_act = newAction("print", tr("Print..."), this, SLOT(printClicked()), "print.png");
+	print_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
     undo_act = newAction("undo", tr("Undo"), this, SLOT(undo()), "undo.png", tr("Undo the last step"));
+	undo_act->setWhatsThis("<a href=\"edit_menu.html\">See more</a>");
     redo_act = newAction("redo", tr("Redo"), this, SLOT(redo()), "redo.png", tr("Redo the last step"));
+	redo_act->setWhatsThis("<a href=\"edit_menu.html\">See more</a>");
     /*QAction* cut_act = */newAction("cut", tr("Cu&t"), this, SLOT(cut()), "cut.png");
     /*QAction* copy_act = */newAction("copy", tr("C&opy"), this, SLOT(copy()), "copy.png");
     /*QAction* paste_act = */newAction("paste", tr("&Paste"), this, SLOT(paste()), "paste");
     QAction* zoom_in_act = newAction("zoomin", tr("Zoom in"), this, SLOT(zoomIn()), "view-zoom-in.png"); // F7
+	zoom_in_act->setWhatsThis("<a href=\"view_menu.html\">See more</a>");
     QAction* zoom_out_act = newAction("zoomout", tr("Zoom out"), this, SLOT(zoomOut()), "view-zoom-out.png"); // F8
+	zoom_out_act->setWhatsThis("<a href=\"view_menu.html\">See more</a>");
     QAction* fullscreen_act = newAction("fullscreen", tr("Toggle fullscreen mode"), window, SLOT(toggleFullscreenMode()));
     QAction* custom_zoom_act = newAction("setzoom", tr("Set custom zoom factor..."), this, SLOT(setCustomZoomFactorClicked()));
     symbol_window_act = newCheckAction("symbolwindow", tr("Symbol window"), this, SLOT(showSymbolWindow(bool)), "window-new.png", tr("Show/Hide the symbol window"));
+	symbol_window_act->setWhatsThis("<a href=\"symbols.html#symbols\">See more</a>");
     color_window_act = newCheckAction("colorwindow", tr("Color window"), this, SLOT(showColorWindow(bool)), "window-new.png", tr("Show/Hide the color window"));
+	color_window_act->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
     /*QAction *load_symbols_from_act = */newAction("loadsymbols", tr("Load symbols from..."), this, SLOT(loadSymbolsFromClicked()), NULL, tr("Replace the symbols with those from another map file"));
     /*QAction *load_colors_from_act = */newAction("loadcolors", tr("Load colors from..."), this, SLOT(loadColorsFromClicked()), NULL, tr("Replace the colors with those from another map file"));
     QAction *scale_all_symbols_act = newAction("scaleall", tr("Scale all symbols..."), this, SLOT(scaleAllSymbolsClicked()), NULL, tr("Scale the whole symbol set"));
+    change_symbol_select_act = newCheckAction("changesym", tr("Change symbol when selecting object"), this, SLOT(changeSymbolWhenSelecting()), NULL, tr("When checked, selecting an object will change the symbol selection"));
     QAction *scale_map_act = newAction("scalemap", tr("Change map scale..."), this, SLOT(scaleMapClicked()), NULL, tr("Change the map scale and adjust map objects and symbol sizes"));
-    template_window_act = newCheckAction("templatewindow", tr("Template setup window"), this, SLOT(showTemplateWindow(bool)), "window-new", tr("Show/Hide the template window"));
+	zoom_out_act->setWhatsThis("<a href=\"map_menu.html\">See more</a>");
+    QAction *map_notes_act = newAction("mapnotes", tr("Map notes..."), this, SLOT(mapNotesClicked()));
+	template_window_act = newCheckAction("templatewindow", tr("Template setup window"), this, SLOT(showTemplateWindow(bool)), "window-new", tr("Show/Hide the template window"));
+	template_window_act->setWhatsThis("<a href=\"template_menu.html\">See more</a>");
     //QAction* template_config_window_act = newCheckAction("templateconfigwindow", tr("Template configurations window"), this, SLOT(showTemplateConfigurationsWindow(bool)), "window-new", tr("Show/Hide the template configurations window"));
     //QAction* template_visibilities_window_act = newCheckAction("templatevisibilitieswindow", tr("Template visibilities window"), this, SLOT(showTemplateVisbilitiesWindow(bool)), "window-new", tr("Show/Hide the template visibilities window"));
     QAction* open_template_act = newAction("opentemplate", tr("Open template..."), this, SLOT(openTemplateClicked()));
-    QAction* edit_gps_projection_parameters_act = newAction("gpsproj", tr("Edit projection parameters..."), this, SLOT(editGPSProjectionParameters()));
+	open_template_act->setWhatsThis("<a href=\"template_menu.html\">See more</a>");
+    QAction* edit_georeferencing_act = newAction("georef", tr("Edit georeferencing..."), this, SLOT(editGeoreferencing()));
     QAction* show_all_act = newAction("showall", tr("Show whole map"), this, SLOT(showWholeMap()), "view-show-all.png");
     edit_tool_act = newCheckAction("editobjects", tr("Edit objects"), this, SLOT(editToolClicked(bool)), "tool-edit.png");
+	edit_tool_act->setWhatsThis("<a href=\"drawing_toolbar.html#selector\">See more</a>");
     draw_point_act = newCheckAction("drawpoint", tr("Set point objects"), this, SLOT(drawPointClicked(bool)), "draw-point.png");
+	draw_point_act->setWhatsThis("<a href=\"drawing_toolbar.html#point\">See more</a>");
     draw_path_act = newCheckAction("drawpath", tr("Draw paths"), this, SLOT(drawPathClicked(bool)), "draw-path.png");
-    draw_text_act = newCheckAction("drawtext", tr("Write text"), this, SLOT(drawTextClicked(bool)), "draw-text.png");
+	draw_path_act->setWhatsThis("<a href=\"drawing_toolbar.html#line\">See more</a>");
+	draw_circle_act = newCheckAction("drawcircle", tr("Draw circles"), this, SLOT(drawCircleClicked(bool)), "draw-circle.png");
+	draw_circle_act->setWhatsThis("<a href=\"drawing_toolbar.html#circle\">See more</a>");
+	draw_rectangle_act = newCheckAction("drawrectangle", tr("Draw rectangles"), this, SLOT(drawRectangleClicked(bool)), "draw-rectangle.png");
+	draw_rectangle_act->setWhatsThis("<a href=\"drawing_toolbar.html#rectangle\">See more</a>");
+	draw_text_act = newCheckAction("drawtext", tr("Write text"), this, SLOT(drawTextClicked(bool)), "draw-text.png");
+	draw_text_act->setWhatsThis("<a href=\"drawing_toolbar.html#text\">See more</a>");
     duplicate_act = newAction("duplicate", tr("Duplicate"), this, SLOT(duplicateClicked()), "tool-duplicate.png"); // D
+	duplicate_act->setWhatsThis("<a href=\"drawing_toolbar.html#duplicate\">See more</a>");
     switch_symbol_act = newAction("switchsymbol", tr("Switch symbol"), this, SLOT(switchSymbolClicked()), "tool-switch-symbol.png");
+	switch_symbol_act->setWhatsThis("<a href=\"drawing_toolbar.html#change\">See more</a>");
     fill_border_act = newAction("fillborder", tr("Fill / Create border"), this, SLOT(fillBorderClicked()), "tool-fill-border.png");
+	fill_border_act->setWhatsThis("<a href=\"drawing_toolbar.html#fill\">See more</a>");
     switch_dashes_act = newAction("switchdashes", tr("Switch dash direction"), this, SLOT(switchDashesClicked()), "tool-switch-dashes"); // Ctrl+D
+	switch_dashes_act->setWhatsThis("<a href=\"drawing_toolbar.html#reverse\">See more</a>");
 	connect_paths_act = newAction("connectpaths", tr("Connect paths"), this, SLOT(connectPathsClicked()), "tool-connect-paths.png");
+	connect_paths_act->setWhatsThis("<a href=\"drawing_toolbar.html#connect\">See more</a>");
 	cut_tool_act = newCheckAction("cutobject", tr("Cut object"), this, SLOT(cutClicked(bool)), "tool-cut.png");
-	cut_hole_act = newCheckAction("cuthole", tr("Cut holes"), this, SLOT(cutHoleClicked(bool)), "tool-cut-hole.png");
+	cut_tool_act->setWhatsThis("<a href=\"drawing_toolbar.html#cut\">See more</a>");
+	cut_hole_act = newCheckAction("cuthole", tr("Cut free form hole"), this, SLOT(cutHoleClicked(bool)), "tool-cut-hole.png"); // cut hole using a path
+	cut_hole_act->setWhatsThis("<a href=\"drawing_toolbar.html#cut_hole\">See more</a>");
+	cut_hole_circle_act = new QAction(QIcon(":/images/tool-cut-hole.png"), tr("Cut round hole"), this);
+	cut_hole_circle_act->setWhatsThis("<a href=\"drawing_toolbar.html#cut_hole_circle\">See more</a>");
+	cut_hole_circle_act->setCheckable(true);
+	QObject::connect(cut_hole_circle_act, SIGNAL(triggered(bool)), this, SLOT(cutHoleCircleClicked(bool)));
+	cut_hole_rectangle_act = new QAction(QIcon(":/images/tool-cut-hole.png"), tr("Cut rectangular hole"), this);
+	cut_hole_rectangle_act->setWhatsThis("<a href=\"drawing_toolbar.html#cut_hole_rectangle\">See more</a>");
+	cut_hole_rectangle_act->setCheckable(true);
+	QObject::connect(cut_hole_rectangle_act, SIGNAL(triggered(bool)), this, SLOT(cutHoleRectangleClicked(bool)));
     rotate_act = newCheckAction("rotateobjects", tr("Rotate object(s)"), this, SLOT(rotateClicked(bool)), "tool-rotate.png");
+	rotate_act->setWhatsThis("<a href=\"drawing_toolbar.html#rotate\">See more</a>");
+	measure_act = newCheckAction("measure", tr("Measure lengths and areas"), this, SLOT(measureClicked(bool)), "tool-measure.png");
+	measure_act->setWhatsThis("<a href=\"drawing_toolbar.html#measure\">See more</a>");
+	boolean_union_act = newAction("booleanunion", tr("Unify areas"), this, SLOT(booleanUnionClicked()), "tool-boolean-union.png");
+	boolean_intersection_act = newAction("booleanintersection", tr("Intersect areas"), this, SLOT(booleanIntersectionClicked()), "tool-boolean-intersection.png");
+	boolean_difference_act = newAction("booleandifference", tr("Area difference"), this, SLOT(booleanDifferenceClicked()), "tool-boolean-difference.png");
+	boolean_xor_act = newAction("booleanxor", tr("Area XOr"), this, SLOT(booleanXOrClicked()), "tool-boolean-xor.png");
 
+    paint_on_template_act = new QAction(QIcon(":/images/pencil.png"), tr("Paint on template"), this);
+    paint_on_template_act->setCheckable(true);
+    updatePaintOnTemplateAction();
+    connect(paint_on_template_act, SIGNAL(triggered(bool)), this, SLOT(paintOnTemplateClicked(bool)));
+
+	QAction *import_act = newAction("import", tr("Import"), this, SLOT(importClicked()));
+	
+	map_coordinates_act = new QAction(tr("Map coordinates"), this);
+	map_coordinates_act->setCheckable(true);
+	projected_coordinates_act = new QAction(tr("Projected coordinates"), this);
+	projected_coordinates_act->setCheckable(true);
+	geographic_coordinates_act = new QAction(tr("Latitude/Longitude (Dec)"), this);
+	geographic_coordinates_act->setCheckable(true);
+	geographic_coordinates_dms_act = new QAction(tr("Latitude/Longitude (DMS)"), this);
+	geographic_coordinates_dms_act->setCheckable(true);
+	QActionGroup* coordinates_group = new QActionGroup(this);
+	coordinates_group->addAction(map_coordinates_act);
+	coordinates_group->addAction(projected_coordinates_act);
+	coordinates_group->addAction(geographic_coordinates_act);
+	coordinates_group->addAction(geographic_coordinates_dms_act);
+	QObject::connect(coordinates_group, SIGNAL(triggered(QAction*)), this, SLOT(coordsDisplayChanged()));
+	map_coordinates_act->setChecked(true);
+	QObject::connect(&map->getGeoreferencing(), SIGNAL(projectionChanged()), this, SLOT(projectionChanged()));
+	projectionChanged();
+	
+	statusbar_cursorpos_label->setContextMenuPolicy(Qt::ActionsContextMenu);
+	statusbar_cursorpos_label->addAction(map_coordinates_act);
+	statusbar_cursorpos_label->addAction(projected_coordinates_act);
+	statusbar_cursorpos_label->addAction(geographic_coordinates_act);
+	statusbar_cursorpos_label->addAction(geographic_coordinates_dms_act);
+	
+	QMenu* coordinates_menu = new QMenu(tr("Display coordinates as..."));
+	coordinates_menu->addAction(map_coordinates_act);
+	coordinates_menu->addAction(projected_coordinates_act);
+	coordinates_menu->addAction(geographic_coordinates_act);
+	coordinates_menu->addAction(geographic_coordinates_dms_act);
+	
     // Refactored so we can do custom key bindings in the future
     assignKeyboardShortcuts();
 
     // Extend file menu
 	QMenu* file_menu = window->getFileMenu();
-	file_menu->insertAction(window->getCloseAct(), print_act);
-	file_menu->insertSeparator(window->getCloseAct());
+	file_menu->insertAction(window->getFileMenuExtensionAct(), print_act);
+	file_menu->insertSeparator(window->getFileMenuExtensionAct());
+	file_menu->insertAction(print_act, import_act);
+	file_menu->insertSeparator(print_act);
 		
     // Edit menu
 	QMenu* edit_menu = window->menuBar()->addMenu(tr("&Edit"));
+	edit_menu->setWhatsThis("<a href=\"edit_menu.html\">See more</a>");
 	edit_menu->addAction(undo_act);
 	edit_menu->addAction(redo_act);
     edit_menu->addSeparator();
@@ -376,66 +510,84 @@ void MapEditorController::createMenuAndToolbars()
 	
 	// View menu
 	QMenu* view_menu = window->menuBar()->addMenu(tr("&View"));
+	view_menu->setWhatsThis("<a href=\"view_menu.html\">See more</a>");
 	view_menu->addAction(zoom_in_act);
 	view_menu->addAction(zoom_out_act);
     view_menu->addAction(show_all_act);
     view_menu->addAction(custom_zoom_act);
     view_menu->addSeparator();
+	view_menu->addMenu(coordinates_menu);
+    view_menu->addSeparator();
     view_menu->addAction(fullscreen_act);
+    view_menu->addSeparator();
+    view_menu->addAction(color_window_act);
+    view_menu->addAction(symbol_window_act);
+    view_menu->addAction(template_window_act);
 
     // Tools menu
     QMenu *tools_menu = window->menuBar()->addMenu(tr("&Tools"));
+	tools_menu->setWhatsThis("<a href=\"tools_menu.html\">See more</a>");
     tools_menu->addAction(edit_tool_act);
     tools_menu->addAction(draw_point_act);
     tools_menu->addAction(draw_path_act);
+	tools_menu->addAction(draw_circle_act);
+	tools_menu->addAction(draw_rectangle_act);
     tools_menu->addAction(draw_text_act);
     tools_menu->addAction(duplicate_act);
     tools_menu->addAction(switch_symbol_act);
     tools_menu->addAction(fill_border_act);
     tools_menu->addAction(switch_dashes_act);
 	tools_menu->addAction(connect_paths_act);
+	tools_menu->addAction(boolean_union_act);
+	tools_menu->addAction(boolean_intersection_act);
+	tools_menu->addAction(boolean_difference_act);
+	tools_menu->addAction(boolean_xor_act);
 	tools_menu->addAction(cut_tool_act);
-	tools_menu->addAction(cut_hole_act);
+	cut_hole_menu = new QMenu(tr("Cut hole"));
+	cut_hole_menu->setIcon(QIcon(":/images/tool-cut-hole.png"));
+	cut_hole_menu->addAction(cut_hole_act);
+	cut_hole_menu->addAction(cut_hole_circle_act);
+	cut_hole_menu->addAction(cut_hole_rectangle_act);
+	tools_menu->addMenu(cut_hole_menu);
 	tools_menu->addAction(rotate_act);
-	
-	// Symbols menu
-    QMenu* symbols_menu = window->menuBar()->addMenu(tr("Sy&mbols"));
-    symbols_menu->addAction(symbol_window_act);
-	symbols_menu->addAction(color_window_act);
-	symbols_menu->addSeparator();
-	/*symbols_menu->addAction(load_symbols_from_act);
-	symbols_menu->addAction(load_colors_from_act);*/
-	symbols_menu->addAction(scale_all_symbols_act);
-	
+	tools_menu->addAction(measure_act);
+		
 	// Map menu
 	QMenu* map_menu = window->menuBar()->addMenu(tr("M&ap"));
+	map_menu->setWhatsThis("<a href=\"map_menu.html\">See more</a>");
+	map_menu->addAction(edit_georeferencing_act);
 	map_menu->addAction(scale_map_act);
+	map_menu->addAction(map_notes_act);
 	
+    // Symbols menu
+    QMenu* symbols_menu = window->menuBar()->addMenu(tr("Sy&mbols"));
+    symbols_menu->setWhatsThis("<a href=\"sumbols_menu.html\">See more</a>");
+    /*symbols_menu->addAction(load_symbols_from_act);
+    symbols_menu->addAction(load_colors_from_act);*/
+    symbols_menu->addAction(scale_all_symbols_act);
+    symbols_menu->addAction(change_symbol_select_act);
+
 	// Templates menu
 	QMenu* template_menu = window->menuBar()->addMenu(tr("&Templates"));
-	template_menu->addAction(template_window_act);
+	template_menu->setWhatsThis("<a href=\"template_menu.html\">See more</a>");
 	/*template_menu->addAction(template_config_window_act);
 	template_menu->addAction(template_visibilities_window_act);*/
-	template_menu->addSeparator();
 	template_menu->addAction(open_template_act);
 	
 	// GPS menu
 	QMenu* gps_menu = window->menuBar()->addMenu(tr("&GPS"));
-	gps_menu->addAction(edit_gps_projection_parameters_act);
+    //gps_menu->addAction(edit_gps_projection_parameters_act);
 
-
-
-#ifndef Q_WS_MAC
-    // disable toolbars on OS X for the moment - any call to addToolBar() appears to
-    // torpedo the main window. The app is still running, but the window actually disappears
-    // and all menu items contributed to the menu bar disappear, leaving only the Application
-    // menu, (Quit, Services, etc.)
-
-    // This is the main reason I refactored the action setup; made it easier to ensure all
-    // actions made it into the menu system where I could use them.
+#ifdef Q_WS_MAC
+    // Mac toolbars are still a little screwed up, turns out we have to insert a
+    // "dummy" toolbar first and hide it, then the others show up
+    window->addToolBar(tr("Dummy"))->hide();
+#endif
 
     // View toolbar
-    toolbar_view = window->addToolBar("View");
+    toolbar_view = window->addToolBar(tr("View"));
+    toolbar_view->addAction(zoom_in_act);
+    toolbar_view->addAction(zoom_out_act);
     toolbar_view->addAction(show_all_act);
 
 	// Drawing toolbar
@@ -443,17 +595,12 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_drawing->addAction(edit_tool_act);
     toolbar_drawing->addAction(draw_point_act);
 	toolbar_drawing->addAction(draw_path_act);
+	toolbar_drawing->addAction(draw_circle_act);
+	toolbar_drawing->addAction(draw_rectangle_act);
     toolbar_drawing->addAction(draw_text_act);
-
 	toolbar_drawing->addSeparator();
 
-    // Leave this for the time being...
-    paint_on_template_act = new QAction(QIcon(":/images/pencil.png"), tr("Paint on template"), this);
-	paint_on_template_act->setCheckable(true);
-	updatePaintOnTemplateAction();
-	connect(paint_on_template_act, SIGNAL(triggered(bool)), this, SLOT(paintOnTemplateClicked(bool)));
-	
-	QToolButton* paint_on_template_button = new QToolButton();
+    QToolButton* paint_on_template_button = new QToolButton();
 	paint_on_template_button->setCheckable(true);
 	paint_on_template_button->setDefaultAction(paint_on_template_act);
 	paint_on_template_button->setPopupMode(QToolButton::MenuButtonPopup);
@@ -470,10 +617,25 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_editing->addAction(fill_border_act);
     toolbar_editing->addAction(switch_dashes_act);
 	toolbar_editing->addAction(connect_paths_act);
+	toolbar_editing->addAction(boolean_union_act);
 	toolbar_editing->addAction(cut_tool_act);
-	toolbar_editing->addAction(cut_hole_act);
+	
+	QToolButton* cut_hole_button = new QToolButton();
+	cut_hole_button->setCheckable(true);
+	cut_hole_button->setToolButtonStyle(Qt::ToolButtonIconOnly);
+	cut_hole_button->setDefaultAction(cut_hole_act);
+	cut_hole_button->setPopupMode(QToolButton::MenuButtonPopup);
+	cut_hole_button->setMenu(cut_hole_menu);
+	toolbar_editing->addWidget(cut_hole_button);
+	
 	toolbar_editing->addAction(rotate_act);
-#endif
+	toolbar_editing->addAction(measure_act);
+	
+	// Advanced editing toolbar
+	toolbar_advanced_editing = window->addToolBar(tr("Advanced editing"));
+	toolbar_advanced_editing->addAction(boolean_intersection_act);
+	toolbar_advanced_editing->addAction(boolean_difference_act);
+	toolbar_advanced_editing->addAction(boolean_xor_act);
 
 }
 void MapEditorController::detach()
@@ -497,24 +659,16 @@ void MapEditorController::keyReleaseEvent(QKeyEvent* event)
 
 void MapEditorController::printClicked()
 {
-	if (print_dock_widget)
-	{
-		if (!print_dock_widget->isVisible())
-			print_widget->activate();
-		print_dock_widget->setVisible(!print_dock_widget->isVisible());
-	}
-	else
+	bool created = false;
+	if (!print_dock_widget)
 	{
 		print_dock_widget = new EditorDockWidget(tr("Print or Export"), print_act, this, window);
 		print_widget = new PrintWidget(map, window, main_view, this, print_dock_widget);
 		print_dock_widget->setChild(print_widget);
-		
-		// Show dock in floating state
-		print_dock_widget->setFloating(true);
-		print_dock_widget->show();
-		print_dock_widget->setGeometry(getWindow()->geometry().left() + 40, getWindow()->geometry().top() + 100, print_dock_widget->width(), print_dock_widget->height());
-		//window->addDockWidget(Qt::LeftDockWidgetArea, print_dock_widget, Qt::Vertical);
-	}	
+		created = true;
+	}
+	if (toggleFloatingDockWidget(print_dock_widget, created) && !created)
+		print_widget->activate();
 }
 
 void MapEditorController::undo()
@@ -527,6 +681,14 @@ void MapEditorController::redo()
 }
 void MapEditorController::doUndo(bool redo)
 {
+	if ((!redo && map->objectUndoManager().getNumUndoSteps() == 0) ||
+		(redo && map->objectUndoManager().getNumRedoSteps() == 0))
+	{
+		// This should not happen as the action should be deactivated in this case!
+		QMessageBox::critical(window, tr("Error"), tr("No undo steps available."));
+		return;
+	}
+	
 	UndoStep* generic_step = redo ? map->objectUndoManager().getLastRedoStep() : map->objectUndoManager().getLastUndoStep();
 	MapLayer* affected_layer = NULL;
 	std::vector<Object*> affected_objects;
@@ -618,6 +780,34 @@ void MapEditorController::setCustomZoomFactorClicked()
 	main_view->setZoom(factor);
 }
 
+void MapEditorController::coordsDisplayChanged()
+{
+	if (geographic_coordinates_dms_act->isChecked())
+		map_widget->setCoordsDisplay(MapWidget::GEOGRAPHIC_COORDS_DMS);
+	else if (geographic_coordinates_act->isChecked())
+		map_widget->setCoordsDisplay(MapWidget::GEOGRAPHIC_COORDS);
+	else if (projected_coordinates_act->isChecked())
+		map_widget->setCoordsDisplay(MapWidget::PROJECTED_COORDS);	
+	else
+		map_widget->setCoordsDisplay(MapWidget::MAP_COORDS);
+}
+
+void MapEditorController::projectionChanged()
+{
+	const Georeferencing& geo(map->getGeoreferencing());
+	projected_coordinates_act->setText(geo.getProjectedCRS());
+	if (geo.isLocal())
+	{
+		geographic_coordinates_act->setEnabled(false);
+		geographic_coordinates_dms_act->setEnabled(false);
+	}
+	else
+	{
+		geographic_coordinates_act->setEnabled(true);
+		geographic_coordinates_dms_act->setEnabled(true);
+	}
+}
+
 void MapEditorController::showSymbolWindow(bool show)
 {
 	if (symbol_dock_widget)
@@ -644,7 +834,7 @@ void MapEditorController::showColorWindow(bool show)
 	else
 	{
 		color_dock_widget = new EditorDockWidget(tr("Colors"), color_window_act, this, window);
-		color_dock_widget->setChild(new ColorWidget(map, color_dock_widget));
+		color_dock_widget->setChild(new ColorWidget(map, window, color_dock_widget));
 		window->addDockWidget(Qt::LeftDockWidgetArea, color_dock_widget, Qt::Vertical);
 	}
 }
@@ -672,6 +862,40 @@ void MapEditorController::scaleMapClicked()
 	ScaleMapDialog dialog(window, map);
 	dialog.setWindowModality(Qt::WindowModal);
 	dialog.exec();
+}
+void MapEditorController::mapNotesClicked()
+{
+	QDialog dialog(window, Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
+	dialog.setWindowTitle(tr("Map notes"));
+	dialog.setWindowModality(Qt::WindowModal);
+	
+	QTextEdit* text_edit = new QTextEdit();
+	text_edit->setPlainText(map->getMapNotes());
+	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
+	QPushButton* ok_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("OK"));
+	ok_button->setDefault(true);
+	
+	QHBoxLayout* buttons_layout = new QHBoxLayout();
+	buttons_layout->addWidget(cancel_button);
+	buttons_layout->addStretch(1);
+	buttons_layout->addWidget(ok_button);
+	
+	QVBoxLayout* layout = new QVBoxLayout();
+	layout->addWidget(text_edit);
+	layout->addLayout(buttons_layout);
+	dialog.setLayout(layout);
+	
+	connect(cancel_button, SIGNAL(clicked(bool)), &dialog, SLOT(reject()));
+	connect(ok_button, SIGNAL(clicked(bool)), &dialog, SLOT(accept()));
+	
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		if (text_edit->toPlainText() != map->getMapNotes())
+		{
+			map->setMapNotes(text_edit->toPlainText());
+			map->setHasUnsavedChanges();
+		}
+	}
 }
 
 void MapEditorController::showTemplateWindow(bool show)
@@ -708,14 +932,11 @@ void MapEditorController::openTemplateClicked()
 	template_widget->addTemplateAt(new_template, -1);
 }
 
-void MapEditorController::editGPSProjectionParameters()
+void MapEditorController::editGeoreferencing()
 {
-	GPSProjectionParametersDialog dialog(window, &map->getGPSProjectionParameters());
+	GeoreferencingDialog dialog(window, *map);
 	dialog.setWindowModality(Qt::WindowModal);
-	if (dialog.exec() == QDialog::Rejected)
-		return;
-	
-	map->setGPSProjectionParameters(dialog.getParameters());
+	dialog.exec();
 }
 
 void MapEditorController::selectedSymbolsChanged()
@@ -729,12 +950,16 @@ void MapEditorController::selectedSymbolsChanged()
 	draw_point_act->setStatusTip(tr("Place point objects on the map.") + (draw_point_act->isEnabled() ? "" : (" " + tr("Select a point symbol to be able to use this tool."))));
 	draw_path_act->setEnabled((type == Symbol::Line || type == Symbol::Area || type == Symbol::Combined) && !symbol->isHidden());
 	draw_path_act->setStatusTip(tr("Draw polygonal and curved lines.") + (draw_path_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
+	draw_circle_act->setEnabled(draw_path_act->isEnabled());
+	draw_circle_act->setStatusTip(tr("Draw circles.") + (draw_circle_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
+	draw_rectangle_act->setEnabled(draw_path_act->isEnabled());
+	draw_rectangle_act->setStatusTip(tr("Draw rectangles.") + (draw_rectangle_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
 	draw_text_act->setEnabled(type == Symbol::Text && !symbol->isHidden());
 	draw_text_act->setStatusTip(tr("Write text on the map.") + (draw_text_act->isEnabled() ? "" : (" " + tr("Select a text symbol to be able to use this tool."))));
 	
 	selectedSymbolsOrObjectsChanged();
 }
-void MapEditorController::selectedObjectsChanged()
+void MapEditorController::objectSelectionChanged()
 {
 	if (mode != MapEditor)
 		return;
@@ -743,14 +968,45 @@ void MapEditorController::selectedObjectsChanged()
 	bool single_object_selected = map->getNumSelectedObjects() == 1;
 	bool have_line = false;
 	bool have_area = false;
+	int num_selected_areas = 0;
+	bool have_two_same_symbol_areas = false;
+	bool uniform_symbol_selected = true;
+	Symbol* uniform_symbol = NULL;
 	
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 	{
-		if ((*it)->getSymbol()->getContainedTypes() & Symbol::Line)
+		Symbol* symbol = (*it)->getSymbol();
+		
+		if (uniform_symbol_selected)
+		{
+			if (!uniform_symbol)
+				uniform_symbol = symbol;
+			else if (uniform_symbol != symbol)
+			{
+				uniform_symbol = NULL;
+				uniform_symbol_selected = false;
+			}
+		}
+		
+		if (symbol->getContainedTypes() & Symbol::Line)
 			have_line = true;
-		if ((*it)->getSymbol()->getContainedTypes() & Symbol::Area)
+		if (symbol->getContainedTypes() & Symbol::Area)
+		{
 			have_area = true;
+			++num_selected_areas;
+			if (!have_two_same_symbol_areas)
+			{
+				for (Map::ObjectSelection::const_iterator it2 = map->selectedObjectsBegin(); it2 != it; ++it2)
+				{
+					if ((*it2)->getSymbol() == symbol)
+					{
+						have_two_same_symbol_areas = true;
+						break;
+					}
+				}
+			}
+		}
 	}
 	
 	duplicate_act->setEnabled(have_selection);
@@ -763,9 +1019,27 @@ void MapEditorController::selectedObjectsChanged()
 	cut_tool_act->setStatusTip(tr("Cut the selected object(s) into smaller parts.") + (cut_tool_act->isEnabled() ? "" : (" " + tr("Select at least one line or area object to activate this tool."))));
 	cut_hole_act->setEnabled(single_object_selected && have_area);
 	cut_hole_act->setStatusTip(tr("Cut a hole into the selected area object.") + (cut_hole_act->isEnabled() ? "" : (" " + tr("Select a single area object to activate this tool."))));
+	cut_hole_circle_act->setEnabled(cut_hole_act->isEnabled());
+	cut_hole_circle_act->setStatusTip(cut_hole_act->statusTip());
+	cut_hole_rectangle_act->setEnabled(cut_hole_act->isEnabled());
+	cut_hole_rectangle_act->setStatusTip(cut_hole_act->statusTip());
+	cut_hole_menu->setEnabled(cut_hole_act->isEnabled());
 	rotate_act->setEnabled(have_selection);
 	rotate_act->setStatusTip(tr("Rotate the selected object(s).") + (rotate_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
-	
+	boolean_union_act->setEnabled(have_two_same_symbol_areas);
+	boolean_union_act->setStatusTip(tr("Unify overlapping areas.") + (boolean_union_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
+	boolean_intersection_act->setEnabled(have_two_same_symbol_areas && uniform_symbol_selected);
+	boolean_intersection_act->setStatusTip(tr("Intersect the first selected area object with all other selected overlapping areas.") + (boolean_intersection_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
+	boolean_difference_act->setEnabled(num_selected_areas >= 2);
+	boolean_difference_act->setStatusTip(tr("Subtract all other selected area objects from the first selected area object.") + (boolean_difference_act->isEnabled() ? "" : (" " + tr("Select at least two area objects to activate this tool."))));
+	boolean_xor_act->setEnabled(have_two_same_symbol_areas && uniform_symbol_selected);
+	boolean_xor_act->setStatusTip(tr("Calculate nonoverlapping parts of areas.") + (boolean_xor_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
+
+    if (change_symbol_select_act->isChecked() && uniform_symbol_selected)
+    {
+        symbol_widget->selectSingleSymbol(uniform_symbol);
+    }
+
 	selectedSymbolsOrObjectsChanged();
 }
 void MapEditorController::selectedSymbolsOrObjectsChanged()
@@ -795,7 +1069,7 @@ void MapEditorController::undoStepAvailabilityChanged()
 
 void MapEditorController::showWholeMap()
 {
-	QRectF map_extent = map->calculateExtent(true, main_view);
+	QRectF map_extent = map->calculateExtent(true, true, main_view);
 	map_widget->adjustViewToRect(map_extent);
 }
 
@@ -813,6 +1087,14 @@ void MapEditorController::drawPointClicked(bool checked)
 void MapEditorController::drawPathClicked(bool checked)
 {
 	setTool(checked ? new DrawPathTool(this, draw_path_act, symbol_widget, true) : NULL);
+}
+void MapEditorController::drawCircleClicked(bool checked)
+{
+	setTool(checked ? new DrawCircleTool(this, draw_circle_act, symbol_widget) : NULL);
+}
+void MapEditorController::drawRectangleClicked(bool checked)
+{
+	setTool(checked ? new DrawRectangleTool(this, draw_rectangle_act, symbol_widget) : NULL);
 }
 void MapEditorController::drawTextClicked(bool checked)
 {
@@ -1034,6 +1316,7 @@ void MapEditorController::connectPathsClicked()
 	}
 	
 	map->emitSelectionChanged();
+	map->emitSelectionEdited();
 }
 void MapEditorController::cutClicked(bool checked)
 {
@@ -1041,11 +1324,70 @@ void MapEditorController::cutClicked(bool checked)
 }
 void MapEditorController::cutHoleClicked(bool checked)
 {
-	setTool(checked ? new CutHoleTool(this, cut_hole_act) : NULL);
+	setTool(checked ? new CutHoleTool(this, cut_hole_act, PathObject::Path) : NULL);
+}
+void MapEditorController::cutHoleCircleClicked(bool checked)
+{
+	setTool(checked ? new CutHoleTool(this, cut_hole_circle_act, PathObject::Circle) : NULL);
+}
+void MapEditorController::cutHoleRectangleClicked(bool checked)
+{
+	setTool(checked ? new CutHoleTool(this, cut_hole_rectangle_act, PathObject::Rect) : NULL);
 }
 void MapEditorController::rotateClicked(bool checked)
 {
 	setTool(checked ? new RotateTool(this, rotate_act) : NULL);
+}
+void MapEditorController::measureClicked(bool checked)
+{
+	bool new_widget = false;
+	if (!measure_dock_widget)
+	{
+		measure_dock_widget = new EditorDockWidget(tr("Measure"), measure_act, this, window);
+		MeasureWidget* measure_widget = new MeasureWidget(map);
+		measure_dock_widget->setChild(measure_widget);
+		new_widget = true;
+	}
+	toggleFloatingDockWidget(measure_dock_widget, new_widget);
+}
+void MapEditorController::booleanUnionClicked()
+{
+	BooleanTool tool(map);
+	if (!tool.execute(BooleanTool::Union))
+		QMessageBox::warning(window, QObject::tr("Error"), QObject::tr("Unification failed."));
+}
+void MapEditorController::booleanIntersectionClicked()
+{
+	BooleanTool tool(map);
+	if (!tool.execute(BooleanTool::Intersection))
+		QMessageBox::warning(window, QObject::tr("Error"), QObject::tr("Intersection failed."));
+}
+void MapEditorController::booleanDifferenceClicked()
+{
+	BooleanTool tool(map);
+	if (!tool.execute(BooleanTool::Difference))
+		QMessageBox::warning(window, QObject::tr("Error"), QObject::tr("Difference failed."));
+}
+void MapEditorController::booleanXOrClicked()
+{
+	BooleanTool tool(map);
+	if (!tool.execute(BooleanTool::XOr))
+		QMessageBox::warning(window, QObject::tr("Error"), QObject::tr("XOr failed."));
+}
+
+bool MapEditorController::toggleFloatingDockWidget(QDockWidget* dock_widget, bool new_widget)
+{
+	if (!new_widget)
+	{
+		bool show = !dock_widget->isVisible();
+		dock_widget->setVisible(show);
+		return show;
+	}
+	
+	dock_widget->setFloating(true);
+	dock_widget->show();
+	dock_widget->setGeometry(getWindow()->geometry().left() + 40, getWindow()->geometry().top() + 100, dock_widget->width(), dock_widget->height());
+	return true;
 }
 
 void MapEditorController::paintOnTemplateClicked(bool checked)
@@ -1143,7 +1485,7 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 		main_view = new MapView(map);
 	
 	connect(&map->objectUndoManager(), SIGNAL(undoStepAvailabilityChanged()), this, SLOT(undoStepAvailabilityChanged()));
-	connect(map, SIGNAL(selectedObjectsChanged()), this, SLOT(selectedObjectsChanged()));
+	connect(map, SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	connect(map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
 	connect(map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
 	if (symbol_widget)
@@ -1152,7 +1494,7 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 	if (window)
 	{
 		undoStepAvailabilityChanged();
-		selectedObjectsChanged();
+		objectSelectionChanged();
 	}
 }
 
@@ -1182,7 +1524,6 @@ void EditorDockWidget::closeEvent(QCloseEvent* event)
 
 // ### MapEditorTool ###
 
-const int MapEditorTool::click_tolerance = 5;
 const QRgb MapEditorTool::inactive_color = qRgb(0, 0, 255);
 const QRgb MapEditorTool::active_color = qRgb(255, 150, 0);
 const QRgb MapEditorTool::selection_color = qRgb(210, 0, 229);
@@ -1419,6 +1760,7 @@ bool MapEditorTool::calculateBoxTextHandles(QPointF* out)
 
 int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QPointF* box_text_handles, QRectF* selection_extent, MapWidget* widget)
 {
+	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
 	const float click_tolerance_squared = click_tolerance * click_tolerance;
 	
 	// Check object
@@ -1473,6 +1815,40 @@ int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_c
 		cursor.x() < selection_extent_viewport.right() - click_tolerance &&
 		cursor.y() < selection_extent_viewport.bottom() - click_tolerance) return -2;
 	return -1;
+}
+
+void MapEditorController::importDXF(QString filename)
+{
+	TemplateGPS temp(filename, map);
+	if (!temp.open(window, main_view))
+		return;
+	temp.import(window);
+}
+void MapEditorController::importClicked()
+{
+	QSettings settings;
+	QString import_directory = settings.value("importFileDirectory", QDir::homePath()).toString();
+	
+	QString filename = QFileDialog::getOpenFileName(window, tr("Import DXF or GPX file"), import_directory, QString("%1 (*.gpx *.dxf);;%2 (*.*)").arg(tr("Importable files")).arg(tr("All files")));
+	if (filename.isEmpty() || filename.isNull())
+		return;
+	
+	settings.setValue("importFileDirectory", QFileInfo(filename).canonicalPath());
+	
+	if (filename.endsWith(".dxf", Qt::CaseInsensitive))
+		importDXF(filename);
+	else if (filename.endsWith(".gpx", Qt::CaseInsensitive))
+		importGPX(filename);
+	else
+		QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected file because its file format is not supported."));
+}
+
+void MapEditorController::importGPX(QString filename)
+{
+	TemplateGPS temp(filename, map);
+	if (!temp.open(window, main_view))
+		return;
+	temp.import(window);
 }
 
 #include "map_editor.moc"

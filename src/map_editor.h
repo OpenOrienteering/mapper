@@ -39,6 +39,7 @@ class MapEditorTool;
 class EditorDockWidget;
 class SymbolWidget;
 class PrintWidget;
+class TemplatePositionDockWidget;
 
 class MapEditorController : public MainWindowController
 {
@@ -53,7 +54,7 @@ public:
 	
 	MapEditorController(OperatingMode mode, Map* map = NULL);
 	~MapEditorController();
-	
+
 	void setTool(MapEditorTool* new_tool);
 	void setEditTool();
 	void setOverrideTool(MapEditorTool* new_override_tool);
@@ -63,12 +64,20 @@ public:
 	/// If this is set to true (usually by the current tool), undo/redo is deactivated
 	void setEditingInProgress(bool value);
 	
+	/// Returns true if the widget was shown, false if it was hidden. Set new_widget to true if the widget is new and shown for the first time
+	bool toggleFloatingDockWidget(QDockWidget* dock_widget, bool new_widget);
+	
 	void setEditorActivity(MapEditorActivity* new_activity);
 	inline MapEditorActivity* getEditorActivity() const {return editor_activity;}
 	
 	inline Map* getMap() const {return map;}
 	inline MapWidget* getMainWidget() const {return map_widget;}
 	inline SymbolWidget* getSymbolWidget() const {return symbol_widget;}
+	
+	inline bool existsTemplatePositionDockWidget(Template* temp) const {return template_position_widgets.contains(temp);}
+	inline TemplatePositionDockWidget* getTemplatePositionDockWidget(Template* temp) const {return template_position_widgets.value(temp);}
+	void addTemplatePositionDockWidget(Template* temp);
+	void removeTemplatePositionDockWidget(Template* temp); // should be called by the dock widget if it is closed or the template deleted; deletes the dock widget
 	
     virtual bool save(const QString& path);
 	virtual bool load(const QString& path);
@@ -92,6 +101,8 @@ public slots:
 	void zoomOut();
 	void setCustomZoomFactorClicked();
 	
+	void coordsDisplayChanged();
+	
 	void showSymbolWindow(bool show);
 	void showColorWindow(bool show);
 	void loadSymbolsFromClicked();
@@ -99,14 +110,15 @@ public slots:
 	void scaleAllSymbolsClicked();
 	
 	void scaleMapClicked();
+	void mapNotesClicked();
 	
 	void showTemplateWindow(bool show);
 	void openTemplateClicked();
 	
-	void editGPSProjectionParameters();
+	void editGeoreferencing();
 	
 	void selectedSymbolsChanged();
-	void selectedObjectsChanged();
+	void objectSelectionChanged();
 	void selectedSymbolsOrObjectsChanged();
 	void undoStepAvailabilityChanged();
 	
@@ -115,6 +127,8 @@ public slots:
 	void editToolClicked(bool checked);
 	void drawPointClicked(bool checked);
 	void drawPathClicked(bool checked);
+	void drawCircleClicked(bool checked);
+	void drawRectangleClicked(bool checked);
 	void drawTextClicked(bool checked);
 	
 	void duplicateClicked();
@@ -124,13 +138,30 @@ public slots:
 	void connectPathsClicked();
 	void cutClicked(bool checked);
 	void cutHoleClicked(bool checked);
+	void cutHoleCircleClicked(bool checked);
+	void cutHoleRectangleClicked(bool checked);
 	void rotateClicked(bool checked);
+	void measureClicked(bool checked);
+	void booleanUnionClicked();
+	void booleanIntersectionClicked();
+	void booleanDifferenceClicked();
+	void booleanXOrClicked();
 	
 	void paintOnTemplateClicked(bool checked);
 	void paintOnTemplateSelectClicked();
 	
 	void templateAdded(int pos, Template* temp);
 	void templateDeleted(int pos, Template* temp);
+
+	void importDXF(QString filename);
+	void importGPX(QString filename);
+	void importClicked();
+	
+signals:
+	void templatePositionDockWidgetClosed(Template* temp);
+	
+protected slots:
+	void projectionChanged();
 	
 private:
 	void setMap(Map* map, bool create_new_map_view);
@@ -145,7 +176,6 @@ private:
 	void updatePaintOnTemplateAction();
 	
 	void doUndo(bool redo);
-	void zoom(float steps);
 	
 	Map* map;
 	MapView* main_view;
@@ -169,6 +199,11 @@ private:
 	QAction* undo_act;
 	QAction* redo_act;
 	
+	QAction* map_coordinates_act;
+	QAction* projected_coordinates_act;
+	QAction* geographic_coordinates_act;
+	QAction* geographic_coordinates_dms_act;
+	
 	QAction* color_window_act;
 	EditorDockWidget* color_dock_widget;
 	
@@ -182,6 +217,8 @@ private:
 	QAction* edit_tool_act;
 	QAction* draw_point_act;
 	QAction* draw_path_act;
+	QAction* draw_circle_act;
+	QAction* draw_rectangle_act;
 	QAction* draw_text_act;
 	
 	QAction* duplicate_act;
@@ -190,8 +227,18 @@ private:
 	QAction* switch_dashes_act;
 	QAction* connect_paths_act;
 	QAction* cut_tool_act;
+	QMenu* cut_hole_menu;
 	QAction* cut_hole_act;
+	QAction* cut_hole_circle_act;
+	QAction* cut_hole_rectangle_act;
 	QAction* rotate_act;
+	QAction* measure_act;
+	EditorDockWidget* measure_dock_widget;
+	QAction* boolean_union_act;
+	QAction* boolean_intersection_act;
+	QAction* boolean_difference_act;
+	QAction* boolean_xor_act;
+    QAction *change_symbol_select_act;
 	
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;
@@ -202,6 +249,9 @@ private:
 	QToolBar* toolbar_view;
 	QToolBar* toolbar_drawing;
 	QToolBar* toolbar_editing;
+	QToolBar* toolbar_advanced_editing;
+	
+	QHash<Template*, TemplatePositionDockWidget*> template_position_widgets;
 };
 
 class EditorDockWidgetChild : public QWidget
@@ -218,6 +268,7 @@ Q_OBJECT
 public:
 	EditorDockWidget(const QString title, QAction* action, MapEditorController* editor, QWidget* parent = NULL);
 	void setChild(EditorDockWidgetChild* child);
+	inline EditorDockWidgetChild* getChild() const {return child;}
     virtual bool event(QEvent* event);
     virtual void closeEvent(QCloseEvent* event);
 signals:
@@ -291,7 +342,6 @@ public:
 	
 	static void loadPointHandles();
 	
-	static const int click_tolerance;
 	static const QRgb inactive_color;
 	static const QRgb active_color;
 	static const QRgb selection_color;

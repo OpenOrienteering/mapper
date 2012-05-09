@@ -215,6 +215,9 @@ public:
 	qint64 getIntX() const {return qRound64(1000 * x);}
 	qint64 getIntY() const {return qRound64(1000 * y);}
 	
+	inline void move(double dx, double dy) {x += dx; y += dy;}
+	inline void moveInt(qint64 dx, qint64 dy) {x += 0.001 * dx; y += 0.001 * dy;}
+	
 	inline void normalize()
 	{
 		double length = sqrt(getX()*getX() + getY()*getY());
@@ -256,6 +259,11 @@ public:
 	{
 		return x * other.x + y * other.y;
 	}
+
+    inline double cross(const MapCoordF& other) const
+    {
+        return x * other.y - y * other.x;
+    }
 	
 	/// Returns the angle of the vector relative to the vector (1, 0) in radians, range [-PI; +PI].
 	/// Vector3(0, 1).getAngle() returns +PI/2, Vector3(0, -1).getAngle() returns -PI/2.
@@ -274,12 +282,23 @@ public:
 		y = sin(new_angle) * len;
 	}
 	
-	/// Get a perpendicular vector pointing to the right
+	/// Replaces this vector with a perpendicular vector pointing to the right
 	inline void perpRight()
 	{
 		double x = getX();
 		setX(-getY());
 		setY(x);
+	}
+	
+	/// Scales the vector to a given length
+	inline void setLength(double length)
+	{
+		double cur_length = sqrt(getX()*getX() + getY()*getY());
+		if (cur_length < 1e-08)
+			return;
+		
+		setX(getX() * length / cur_length);
+		setY(getY() * length / cur_length);
 	}
 	
 	MapCoord toMapCoord() const

@@ -20,6 +20,7 @@
 
 #include "tool_rotate.h"
 
+#include <qmath.h>
 #include <QApplication>
 #include <QMouseEvent>
 
@@ -71,6 +72,7 @@ bool RotateTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 		// Start rotating
 		rotating = true;
 		old_rotation = (map_coord - rotation_center).getAngle();
+		original_rotation = old_rotation;
 		startEditingSelection(old_renderables, &undo_duplicates);
 	}
 	return true;
@@ -92,6 +94,7 @@ bool RotateTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 		updateDragging(map_coord);
 		finishEditingSelection(renderables, old_renderables, true, &undo_duplicates);
 		editor->getMap()->setObjectsDirty();
+		editor->getMap()->emitSelectionEdited();
 	}
 	
 	updateDirtyRect();
@@ -144,6 +147,7 @@ void RotateTool::updateDragging(const MapCoordF cursor_pos_map)
 		updatePreviewObjects();
 		
 		old_rotation = rotation;
+		updateStatusText();
 	}
 }
 
@@ -155,7 +159,16 @@ void RotateTool::updatePreviewObjects()
 
 void RotateTool::updateStatusText()
 {
-	if (!rotation_center_set)
+	if (rotating)
+	{
+		double delta_rotation = old_rotation - original_rotation;
+		if (delta_rotation < -M_PI)
+			delta_rotation = delta_rotation + 2*M_PI;
+		else if (delta_rotation > M_PI)
+			delta_rotation = delta_rotation - 2*M_PI;
+		setStatusBarText(tr("<b>Rotation:</b> %1").arg(-delta_rotation * 180 / M_PI, 0, 'f', 1));
+	}
+	else if (!rotation_center_set)
 		setStatusBarText(tr("<b>Click</b> to set the rotation center"));
 	else
 		setStatusBarText(tr("<b>Click</b> to set the rotation center, <b>drag</b> to rotate the selected object(s)"));

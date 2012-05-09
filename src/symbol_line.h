@@ -21,16 +21,14 @@
 #ifndef _OPENORIENTEERING_SYMBOL_LINE_H_
 #define _OPENORIENTEERING_SYMBOL_LINE_H_
 
-#include <QGroupBox>
-
 #include "symbol.h"
 #include "path_coord.h"
+#include "symbol_properties_widget.h"
 
-QT_BEGIN_NAMESPACE
 class QLineEdit;
 class QLabel;
 class QCheckBox;
-QT_END_NAMESPACE
+class QScrollArea;
 
 class ColorDropDown;
 class SymbolSettingDialog;
@@ -61,7 +59,7 @@ public:
 	/// Constructs an empty point symbol
 	LineSymbol();
 	virtual ~LineSymbol();
-    virtual Symbol* duplicate();
+    virtual Symbol* duplicate() const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
 	void createRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, RenderableVector& output);
@@ -70,7 +68,7 @@ public:
     virtual void scale(double factor);
 	
 	/// Creates empty point symbols for contained NULL symbols with the given names
-	void ensurePointSymbols(const QString& start_name, const QString& mid_name, const QString& end_name, const QString& dash_name);
+    void ensurePointSymbols(const QString& start_name, const QString& mid_name, const QString& end_name, const QString& dash_name);
 	/// Deletes unused point symbols and sets them to NULL
 	void cleanupPointSymbols();
 	
@@ -92,10 +90,12 @@ public:
     inline PointSymbol* getMidSymbol() const {return mid_symbol;}
     inline PointSymbol* getEndSymbol() const {return end_symbol;}
     inline PointSymbol* getDashSymbol() const {return dash_symbol;}
-	inline bool hasBorder() const {return have_border_lines;}
+    inline bool hasBorder() const {return have_border_lines;}
 	inline int getBorderLineWidth() const {return border_width;}
 	inline MapColor* getBorderColor() const {return border_color;}
 	inline int getBorderShift() const {return border_shift;}
+	
+	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
 	
 protected:
 	virtual void saveImpl(QFile* file, Map* map);
@@ -110,7 +110,7 @@ protected:
 							  float start, float end, int& cur_line_coord, bool is_end, RenderableVector& output);
 	void processDashedLine(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, MapCoordVector& out_flags, MapCoordVectorF& out_coords, RenderableVector& output);
 	void createDashSymbolRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
-	void createDottedRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
+    void createDottedRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
 	
 	void calculateCoordinatesForRange(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
 									  float start, float end, int& cur_line_coord, bool include_start_coord, MapCoordVector& out_flags, MapCoordVectorF& out_coords,
@@ -132,8 +132,8 @@ protected:
 	PointSymbol* start_symbol;
 	PointSymbol* mid_symbol;
 	PointSymbol* end_symbol;
-	PointSymbol* dash_symbol;
-	
+    PointSymbol* dash_symbol;
+
 	int mid_symbols_per_spot;
 	int mid_symbol_distance;
 	
@@ -161,14 +161,29 @@ protected:
 	int border_break_length;
 };
 
-class LineSymbolSettings : public QGroupBox
+
+
+class LineSymbolSettings : public SymbolPropertiesWidget
 {
 Q_OBJECT
 public:
-	LineSymbolSettings(LineSymbol* symbol, Map* map, PointSymbolEditorWidget* point_editor, SymbolSettingDialog* parent);
+	LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* dialog);
+	virtual ~LineSymbolSettings();
+	
+protected:
+	/** Ensure that a particular widget is visible in the scoll area. */
+	void ensureWidgetVisible(QWidget* widget);
+	
+	/** Adjust the visibility and enabled state of all UI parts.
+	 *  There is a large number of dependencies between different elements
+	 *  of the line settings. This method handles them all.
+	 */
+	void updateWidgets();
 	
 protected slots:
+	/** Notify this settings widget that one of the symbols has been modified */
 	void pointSymbolEdited();
+	
 	void widthChanged(QString text);
 	void colorChanged();
 	void minimumDimensionsEdited(QString text);
@@ -193,9 +208,13 @@ protected slots:
 	void borderDashedClicked(bool checked);
 	void borderDashesChanged(QString text);
 	
-private:
-	void updateWidgets(bool show = true);
+private slots:
+	/** Ensure that a predetermined widget is visible in the scoll area.
+	 *  The widget is set in advance by ensureWidgetVisible(QWidget* widget).
+	 */
+	void ensureWidgetVisible();
 	
+private:
 	LineSymbol* symbol;
 	SymbolSettingDialog* dialog;
 	
@@ -204,7 +223,7 @@ private:
 	QLineEdit* minimum_length_edit;
 	
 	// enabled if line_width > 0 && color != NULL
-	QWidget* line_settings_widget;
+	QList<QWidget *> line_settings_list;
 	QComboBox* line_cap_combo;
 	QComboBox* line_join_combo;
 	QLabel* pointed_cap_length_label;
@@ -212,7 +231,7 @@ private:
 	QCheckBox* dashed_check;
 	
 	// dashed == false && mid_symbol
-	QWidget* undashed_widget;
+	QList<QWidget *> undashed_widget_list;
 	QLineEdit* segment_length_edit;
 	QLineEdit* end_length_edit;
 	QCheckBox* show_at_least_one_symbol_check;
@@ -220,7 +239,7 @@ private:
 	QLineEdit* minimum_mid_symbol_count_when_closed_edit;
 	
 	// dashed == true
-	QWidget* dashed_widget;
+	QList<QWidget *> dashed_widget_list;
 	QLineEdit* dash_length_edit;
 	QLineEdit* break_length_edit;
 	QComboBox* dash_group_combo;
@@ -229,21 +248,25 @@ private:
 	QCheckBox* half_outer_dashes_check;
 	
 	// mid_symbol
-	QWidget* mid_symbol_widget;
+	QList<QWidget *> mid_symbol_widget_list;
 	QLineEdit* mid_symbol_per_spot_edit;
 	QLabel* mid_symbol_distance_label;
 	QLineEdit* mid_symbol_distance_edit;
 	
 	// enabled if line_width > 0
-	QWidget* border_widget;
+	QList<QWidget *> border_widget_list;
 	QCheckBox* border_check;
 	QLineEdit* border_width_edit;
 	ColorDropDown* border_color_edit;
 	QLineEdit* border_shift_edit;
 	QCheckBox* border_dashed_check;
-	QWidget* border_dash_widget;
+	
+	QList<QWidget *> border_dash_widget_list;
 	QLineEdit* border_dash_length_edit;
 	QLineEdit* border_break_length_edit;
+	
+	QScrollArea* scroll_area;
+	QWidget* widget_to_ensure_visible;
 };
 
 #endif

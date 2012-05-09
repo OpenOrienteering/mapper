@@ -27,12 +27,13 @@
 #include "map.h"
 #include "map_color.h"
 
-ColorWidget::ColorWidget(Map* map, QWidget* parent): EditorDockWidgetChild(parent), map(map)
+ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent): EditorDockWidgetChild(parent), map(map), window(window)
 {
 	react_to_changes = true;
 	
 	// Color table
 	color_table = new QTableWidget(map->getNumColors(), 10);
+	color_table->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
 	color_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
 	color_table->setHorizontalHeaderLabels(QStringList() << "" << tr("Name") << tr("C") << tr("M") << tr("Y") << tr("K") << tr("Opacity") << tr("R") << tr("G") << tr("B"));
 	color_table->verticalHeader()->setVisible(false);
@@ -52,10 +53,15 @@ ColorWidget::ColorWidget(Map* map, QWidget* parent): EditorDockWidgetChild(paren
 	buttons_group = new QWidget();
 	
 	QPushButton* new_button = new QPushButton(QIcon(":/images/plus.png"), tr("New"));
+	new_button->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
 	delete_button = new QPushButton(QIcon(":/images/minus.png"), tr("Delete"));
+	delete_button->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
 	duplicate_button = new QPushButton(QIcon(":/images/copy.png"), tr("Duplicate"));
+	duplicate_button->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
 	move_up_button = new QPushButton(QIcon(":/images/arrow-up.png"), tr("Move Up"));
+	move_up_button->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
 	move_down_button = new QPushButton(QIcon(":/images/arrow-down.png"), tr("Move Down"));
+	move_down_button->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
 	QPushButton* help_button = new QPushButton(QIcon(":/images/help.png"), tr("Help"));
 
 	QGridLayout* buttons_group_layout = new QGridLayout();
@@ -231,7 +237,7 @@ void ColorWidget::moveColorDown()
 }
 void ColorWidget::showHelp()
 {
-	// TODO: show color widget help page
+	window->showHelp("symbols.html", "colors");
 }
 
 void ColorWidget::cellChange(int row, int column)
@@ -262,7 +268,7 @@ void ColorWidget::cellChange(int row, int column)
 		
 		if (!ok)
 		{
-			QMessageBox::warning(window(), tr("Error"), tr("Please enter a valid number from 0 to 255, or specify a percentage from 0 to 100!"));
+			QMessageBox::warning(window, tr("Error"), tr("Please enter a valid number from 0 to 255, or specify a percentage from 0 to 100!"));
 		
 			if (column == 2)		color_table->item(row, column)->setText(QString::number(color->c * 100) + "%");
 			else if (column == 3)	color_table->item(row, column)->setText(QString::number(color->m * 100) + "%");
@@ -313,7 +319,7 @@ void ColorWidget::cellDoubleClick(int row, int column)
 	{
 		MapColor* color = map->getColor(row);
 		
-		QColor newColor = QColorDialog::getColor(color->color, window());
+		QColor newColor = QColorDialog::getColor(color->color, window);
 		if (newColor.isValid())
 		{
 			color->color = newColor;

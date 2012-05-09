@@ -1,7 +1,7 @@
-File format OCAD 6/7 (with preliminary information about OCAD 8)
-====================
+File format OCAD 6/7/8
+======================
 
-Version 14.2.01
+Version 25. September 2003
 
 General
 -------
@@ -34,29 +34,26 @@ Here is a list of changes:
 - TStp: new varialbles RealWorldCord, FileName, HatchAreas,
     HideTemp, TempMode, TempColor
 
-The OCAD 8 format is still under development. However here are the
-main changes. Note that there may be more changes during the
-beta test. 
+The OCAD 8 format has some major changes which do not allow to read OCAD 6/7
+files without modifications in the reader program.
 - File Header: section mark is 2 for normal files and 3 for
   course setting files, version is 8
-- File Header: start of the first short index block. The short
-  index blocks contains all data about course setting, database
-  connection, templates (no longer in Stp) and some setup
-  parameters. The description of the short index blocks does
-  not yet exist.
+- The Setup structure has not been expanded. Instead all new parameters are
+  stored in the Parameter Strings. The Parameter Strings contain all data
+  about course setting, database connection, templates (no longer in Stp)
+  and some setup parameters.
 - TIndex: Len now gives the number of coordinate pairs (nItem+nText)
   The maximum number or coordinate pairs has been increased
   to 32768. The length of an object in the file is now 32 + 8*Len.
 - TElement: Poly is now array[0..32767] of TCord.
-
 
 Be aware that this is an internal format and may change in future
 versions. Instead of using the file format consider using one
 of the export formats which are more constant and easier to
 read:
 
-- EPS (or AI in OCAD 7) for rendering the map in other systems.
-- DXF for transferring the map information to GIS systems.
+- EPS or AI for rendering the map in other systems.
+- DXF or Shape for transferring the map information to GIS systems.
 
 Data types used
 ---------------
@@ -125,8 +122,8 @@ OCAD files start with a file header:
                                zero}
     InfoSize: longint;         {size (in bytes) of the file
                                information}
-    FirstShIndexBlk: longint;  {OCAD 8 only. This description does not
-                               yet exist}
+    FirstStIndexBlk: longint;  {OCAD 8 only. file position of the first
+                               string index block}
     Reserved2: longint;
     Reserved3: longint;
     Reserved4: longint;
@@ -259,10 +256,15 @@ in real OCAD files.
                                  3: Area symbol
                                  4: Text symbol
                                  5: Rectangle symbol}
-    SymTp: SmallInt;           {Symbol type
+    SymTp: byte;               {Symbol type
                                  1: for Line text and text
                                     symbols
                                  0: for all other symbols}
+    Flags: byte;               {OCAD 6/7: must be 0
+                                OCAD 8: bit flags
+                                  1: not oriented to north (inverted for
+                                     better compatibility)
+                                  2: Icon is compressed}
     Extent: SmallInt;          {Extent how much the rendered
                                symbols can reach outside the
                                coordinates of an object with
@@ -294,16 +296,10 @@ in real OCAD files.
                                the structure.}
     Description: string [31];  {The description of the symbol}
     IconBits: array[0..263] of byte;
-                               {The bits of the icon in the
-                               symbols box. Each pixel of the
-                               icon is stored as 4 bits. The bits
-                               are stored like the bits in a
-                               Device Independent Bit Map (DIB).
-                               The size of the bitmap is 22 by
-                               22 pixels. Note that each line
-                               has 12 bytes, because in a DIB
-                               the size of each line must be
-                               a multiple of 4 bytes.}
+                               {the icon can be uncompressed (16-bit colors)
+                               or compressed (256 color palette) depending
+                               on the Flags field.
+                               In OCAD 6/7 it is always uncompressed}
   end;
 
 Points symbols are stored with this structure:
@@ -314,9 +310,15 @@ Points symbols are stored with this structure:
                                structure}
     Sym: SmallInt;             {see TBaseSym}
     Otp: SmallInt;             {see TBaseSym}
-    SymTp: SmallInt;           {see TBaseSym}
+    SymTp: byte;               {see TBaseSym}
+    Flags: byte;               {see TBaseSym}
     Extent: SmallInt;          {see TBaseSym}
-    Status: SmallInt;          {see TBaseSym}
+    Selected: boolean;         {Symbol is selected in the symbol
+                               box}
+    Status: byte;              {Status of the symbol
+                                 0: Normal
+                                 1: Protected
+                                 2: Hidden}
     Res2: SmallInt;
     Res3: SmallInt;
     FilePos: longint;          {see TBaseSym}
@@ -374,11 +376,17 @@ shown.
                                structure}
     Sym: SmallInt;             {see TBaseSym}
     Otp: SmallInt;             {2}
-    SymTp: SmallInt;           {0}
+    SymTp: byte;               {0}
+    Flags: byte;               {see TBaseSym}
     Extent: SmallInt;          {see TBaseSym}
-    Status: SmallInt;          {see TBaseSym}
+    Selected: boolean;         {Symbol is selected in the symbol
+                               box}
+    Status: byte;              {Status of the symbol
+                                 0: Normal
+                                 1: Protected
+                                 2: Hidden}
     Tool: SmallInt;            {OCAD 6: reserved
-                               OCAD 7: Preferred drawing tool
+                               OCAD 7/8: Preferred drawing tool
                                  0: off
                                  1: Curve mode
                                  2: Ellipse mode
@@ -429,14 +437,14 @@ shown.
     DecLast: SmallInt;         {Last symbol}
     DecRes: SmallInt;          {Reserved}
     FrColor: SmallInt;         {OCAD 6: reserved
-                               OCAD 7: color of the framing line}
+                                OCAD 7/8: color of the framing line}
     FrWidth: SmallInt;         {OCAD 6: reserved
-                               OCAD 7: Line width of the framing line}
+                                OCAD 7/8: Line width of the framing line}
     FrStyle: SmallInt;         {OCAD 6: reserved
-                               OCAD 7: Line style of the framing line
-                                 0: flat cap/bevel join
-                                 1: round cap/round join
-                                 4: flat cap/miter join}
+                                OCAD 7/8: Line style of the framing line
+                                  0: flat cap/bevel join
+                                  1: round cap/round join
+                                  4: flat cap/miter join}
     PrimDSize: SmallInt;       {number or coordinates (8 bytes)
                                for the Main symbol A which
                                follow this structure
@@ -479,11 +487,17 @@ font sizes which are measured in 0.1 typographical points.
     Size: SmallInt;            {size of this structure}
     Sym: SmallInt;             {see TBaseSym}
     Otp: SmallInt;             {2}
-    SymTp: SmallInt;           {1}
+    SymTp: byte;               {1}
+    Flags: byte;               {see TBaseSym}
     Extent: SmallInt;          {see TBaseSym}
-    Status: SmallInt;          {see TBaseSym}
+    Selected: boolean;         {Symbol is selected in the symbol
+                               box}
+    Status: byte;              {Status of the symbol
+                                 0: Normal
+                                 1: Protected
+                                 2: Hidden}
     Tool: SmallInt;            {OCAD 6: reserved
-                               OCAD 7: Preferred drawing tool
+                               OCAD 7/8: Preferred drawing tool
                                  0: off
                                  1: Curve mode
                                  2: Ellipse mode
@@ -492,9 +506,10 @@ font sizes which are measured in 0.1 typographical points.
                                  5: Straight line mode
                                  6: Freehand mode}
     FrWidth: SmallInt;         {OCAD 6: reserved
-                               OCAD 7: Framing width
-                               sorry, this had to be squeezed
-                               in here}
+                                OCAD 7: Framing width
+                                  sorry, this had to be squeezed
+                                  in here
+                                OCAD 8: not used}
     FilePos: longint;          {see TBaseSym}
     Cols: TColors;             {see TBaseSym}
     Description: string [31];  {see TBaseSym}
@@ -506,7 +521,10 @@ font sizes which are measured in 0.1 typographical points.
     Weight: SmallInt;          {Bold as used in the Windows GDI
                                  400: normal
                                  700: bold}
-    Italic: wordbool;          {true if Italic is checked}
+    Italic: boolean;           {true if Italic is checked}
+    CharSet: byte;             {OCAD 6/7: must be 0
+                               {OCAD 8: CharSet of the text, if the text is
+                                  not Unicode}
     CharSpace: SmallInt;       {Char. spacing}
     WordSpace: SmallInt;       {Word spacing}
     Alignment: SmallInt;       {Alignment
@@ -517,21 +535,27 @@ font sizes which are measured in 0.1 typographical points.
     FrMode: SmallInt;          {Framing mode
                                  0: no framing
                                  1: framing with a framing font
-                                 2: OCAD 7 only: framing with a line}
+                                 2: OCAD 7/8 only: framing with a line}
                                {Note this feature is called
                                "Second font" in OCAD 6 but
                                "Framing" in OCAD 7}
-    FrName: string[31];        {TrueType font (Second/Framing font)}
+    FrName: string[31];        {OCAD 6/7: TrueType font (Second/Framing font)
+                                OCAD 8: not used}
     FrColor: SmallInt;         {Color (Second/Framing font)}
-    FrSize: SmallInt;          {Size (Second/Framing font)}
-    FrWeight: SmallInt;        {Bold (Second/Framing font)
-                               as used in the Windows GDI
-                                 400: normal
-                                 700: bold}
-    FrItalic: wordbool;        {true if Italic is checked
-                               (Second/Framing font)}
-    FrOfX: SmallInt;           {Horizontal offset}
-    FrOfY: SmallInt;           {Vertical offset}
+    FrSize: SmallInt;          {OCAD 6/7: Size (Second/Framing font)
+                                OCAD 8: Framing width}
+    FrWeight: SmallInt;        {OCAD 6/7: Bold (Second/Framing font)
+                                 as used in the Windows GDI
+                                   400: normal
+                                   700: bold
+                                OCAD 8: not used}
+    FrItalic: wordbool;        {OCAD 6/7: true if Italic is checked
+                                 (Second/Framing font)
+                                OCAD 8: not used}
+    FrOfX: SmallInt;           {OCAD 6/7: Horizontal offset
+                                OCAD 8: not used}
+    FrOfY: SmallInt;           {OCAD 6/7: Vertical offset
+                                OCAD 8: not used}
   end;
 
 Area symbols are stored in the following structure. In the
@@ -544,11 +568,17 @@ shown. The unit of all dimensions is 0.01 mm.
                                structure}
     Sym: SmallInt;             {see TBaseSym}
     Otp: SmallInt;             {3}
-    SymTp: SmallInt;           {0}
+    SymTp: byte;               {0}
+    Flags: byte;               {see TBaseSym}
     Extent: SmallInt;          {see TBaseSym}
-    Status: SmallInt;          {see TBaseSym}
+    Selected: boolean;         {Symbol is selected in the symbol
+                               box}
+    Status: byte;              {Status of the symbol
+                                 0: Normal
+                                 1: Protected
+                                 2: Hidden}
     Tool: SmallInt;            {OCAD 6: reserved
-                               OCAD 7: Preferred drawing tool
+                               OCAD 7/8: Preferred drawing tool
                                  0: off
                                  1: Curve mode
                                  2: Ellipse mode
@@ -562,7 +592,7 @@ shown. The unit of all dimensions is 0.01 mm.
     Description: string[31];   {see TBaseSym}
     IconBits: array[0..263] of byte;
                                {see TBaseSym}
-    Flags: word;
+    AreaFlags: word;           {reserved}
     FillOn: wordbool;          {true if Fill background is
                                checked}
     FillColor: SmallInt;       {Fill color}
@@ -600,14 +630,21 @@ font sizes which are measured in 0.1 typographical points.
     Size: SmallInt;            {size of this structure}
     Sym: SmallInt;             {see TBaseSym}
     Otp: SmallInt;             {4}
-    SymTp: SmallInt;           {1}
+    SymTp: byte;               {1}
+    Flags: byte;               {see TBaseSym}
     Extent: SmallInt;          {0}
-    Status: SmallInt;          {see TBaseSym}
+    Selected: boolean;         {Symbol is selected in the symbol
+                               box}
+    Status: byte;              {Status of the symbol
+                                 0: Normal
+                                 1: Protected
+                                 2: Hidden}
     Res2: SmallInt;
     FrWidth: SmallInt;         {OCAD 6: reserved
-                               OCAD 7: Framing width
-                               sorry, this had to be squeezed
-                               in here}
+                                OCAD 7: Framing width
+                                  sorry, this had to be squeezed
+                                  in here
+                                OCAD 8: not used}
     FilePos: longint;          {see TBaseSym}
     Cols: TColors;             {see TBaseSym}
     Description: string [31];  {see TBaseSym}
@@ -619,7 +656,10 @@ font sizes which are measured in 0.1 typographical points.
     Weight: SmallInt;          {Bold as used in the Windows GDI
                                  400: normal
                                  700: bold}
-    Italic: wordbool;          {true if Italic checked}
+    Italic: boolean;           {true if Italic is checked}
+    CharSet: byte;             {OCAD 6/7: must be 0
+                               {OCAD 8: CharSet of the text, if the text is
+                                  not Unicode}
     CharSpace: SmallInt;       {Char. spacing}
     WordSpace: SmallInt;       {Word spacing}
     Alignment: SmallInt;       {Alignment
@@ -642,20 +682,25 @@ font sizes which are measured in 0.1 typographical points.
     FrMode: SmallInt;          {Framing mode
                                  0: no framing
                                  1: framing with a framing font
-                                 2: OCAD 7 only: framing with a line}
+                                 2: OCAD 7/8 only: framing with a line}
                                {Note this feature is called
                                "Second font" in OCAD 6 but
-                               "Framing" in OCAD 7}
-    FrName: string[31];        {TrueType font (Second/Framing font)}
+                               "Framing" in OCAD 7/8}
+    FrName: string[31];        {OCAD 6/7: TrueType font (Second/Framing font)
+                                OCAD 8: not used}
     FrColor: SmallInt;         {Color (Second/Framing font)}
-    FrSize: SmallInt;          {Size (Second/Framing font)}
-    FrWeight: SmallInt;        {Bold (Second/Framing font)
+    FrSize: SmallInt;          {OCAD 6/7: Size (Second/Framing font)
+                                OCAD 8: framing width}
+    FrWeight: SmallInt;        {OCAD 6/7: Bold (Second/Framing font)
                                  400: normal
-                                 700: bold}
+                                 700: bold
+                                OCAD 8: not used}
     FrItalic: wordbool;        {true if Second/Framing font Italic
                                is checked}
-    FrOfX: SmallInt;           {Horizontal offset}
-    FrOfY: SmallInt;           {Vertical offset}
+    FrOfX: SmallInt;           {OCAD 6/7: Horizontal offset
+                                OCAD 8: not used}
+    FrOfY: SmallInt;           {OCAD 6/7: Vertical offset
+                                OCAD 8: not used}
   end;
 
 Rectangle symbols are stored in the following structure. In the
@@ -666,9 +711,15 @@ shown. The unit of all dimensions is 0.01 mm.
     Size: SmallInt;            {size of this structure}
     Sym: SmallInt;             {see TBaseSym}
     Otp: SmallInt;             {5}
-    SymTp: SmallInt;           {0}
+    SymTp: byte;               {0}
+    Flags: byte;               {see TBaseSym}
     Extent: SmallInt;          {see TBaseSym}
-    Status: SmallInt;          {see TBaseSym}
+    Selected: boolean;         {Symbol is selected in the symbol
+                               box}
+    Status: byte;              {Status of the symbol
+                                 0: Normal
+                                 1: Protected
+                                 2: Hidden}
     Res2: SmallInt;
     Res3: SmallInt;
     FilePos: longint;          {see TBaseSym}
@@ -759,11 +810,13 @@ of the file header.
                                entire object. All flag bits
                                are set to 0}
     Pos: longint;              {file position of the object}
-    Len: word;                 {OCAD 6 and 7: size of the object in the file in bytes
-                               OCAD 8: number of coordinate pairs, the size of the
-                               object in the file is then calculated by: 32 + 8*Len
-                               Note: this is reserved space in the file, the effective
-                               length of the object may be shorter}
+    Len: word;                 {OCAD 6 and 7: size of the object in the file
+                                  in bytes
+                               OCAD 8: number of coordinate pairs, the size of
+                                 the object in the file is then calculated by:
+                                    32 + 8*Len
+                               Note: this is reserved space in the file, the
+                                 effective length of the object may be shorter}
     Sym: SmallInt;             {10 times the symbol number
                                Deleted objects are marked with Sym=0}
   end;
@@ -779,16 +832,18 @@ Objects are stored as a TElement structure.
 
   TElement = record
     Sym: SmallInt;             {10 times the symbol number}
-    Otp: SmallInt;             {object type
+    Otp: byte;                 {object type
                                  1: point object
                                  2: line or line text object
                                  3: area object
                                  4: unformatted text object
                                  5: formatted text object
                                     or rectangle object}
+    Unicode: byte;             {OCAD 6/7: must be 0
+                                OCAD 8: 1 if the text is Unicode}
     nItem: SmallInt;           {number of coordinates in the
                                Poly array}
-    nText: SmallInt;           {number or coordinates in the
+    nText: SmallInt;           {number of coordinates in the
                                Poly array used for storing text
                                nText is > 0 for
                                  - line text objects
@@ -805,9 +860,7 @@ Objects are stored as a TElement structure.
     Res1: SmallInt;
     ResHeight: longint;        {reserved for future use to
                                store a height information}
-    ResId: string[15];         {reserved for future use to
-                               contain an ID for the connection
-                               to a database}
+    ResId: string[15];         {reserved}
     Poly: array[0..1999] of TCord; {OCAD 8: array[0..32767]    
                                coordinates of the object
                                followed by a zero-terminated
@@ -971,10 +1024,10 @@ of the file and adjust SetupPos and SetupSize.
     PrLineWidth: SmallInt;     {Line Width as defined in the
                                Printing Options dialog box}
     PrReserved: wordbool;
-    PrStdFonts: wordbool;      {true if Standard fonts as
-                               PostScript fonts is activated
-                               in the EPS Properties dialog
-                               box}
+    PrStdFonts: wordbool;      {OCAD 6: true if Standard fonts as
+                                  PostScript fonts is activated
+                                  in the EPS Properties dialog box
+                                OCAD7/8: not used}
     PrReserved2: wordbool;
     PrReserved3: wordbool;
     PartialLowerLeft: TCord;   {lower left corner of Export
@@ -1037,6 +1090,191 @@ corresponding offset.
                                set to 0}
   end;
 
+Parameter Strings
+-----------------
+
+In OCAD 8 the Parameter Strings have been introduced. They contain additional
+parameters which would have been stored in the Setup structure in earlier
+versions.
+
+They also contain all the information about course setting and database
+connection.
+
+The information about templates are no longer in the Setup structure. Instead
+they are stored now the Parameter Strings.
+
+Similar to the symbols and objects there are String Index Blocks which contain
+the basic information for 256 Parameter Strings and the file position of the
+strings.
+
+TStIndex contains the basic information for 1 string:
+
+  TStIndex = record
+    Pos: Cardinal;             //file position of the string
+    Len: Cardinal;             //length reserved for the string. Note that
+                               //the string is normally shorter than this
+                               //reserved length. The string is null terminated.
+    StType: integer;           //string type. See the list below
+    ObjIndex: integer;         //if the string refers to an object, this
+                               //is the number of the objects. Note that
+                               //the numbering of the objects starts with 1.
+                               //Otherwise this is 0.
+  end;
+
+TStIndexBlk contains the basic information for 256 strings:
+
+  TStIndexBlk = record
+    FilePos: longint;          //file position of the next StIndexBlk
+                               //0 if this is the last StIndexBlk
+    Table: array[0..255] of TStIndex;
+  end;
+
+FirstStIndexBlk in the FileHeader points to the first StIndexBlk.
+
+The strings (null terminated) have the following structure:
+
+- first field: all characters until the first tab (character 9). The first
+    field can be missing (the string starts with a tab).
+- tab (character 9)
+- code: this is the first character after the tab
+- value: all characters until the next tab
+- tab
+- code
+- value
+...
+
+The first group of String Types may have multiple instances of the same type.
+They have to be stored as lists.
+
+  si_CsObject = 1;             //course setting object
+    // First = control code    //e.g. S1, 31
+    // Y = Type (s = start, c = control, m = marked route, f = finish,
+    //           d = control description, n = course name, t = start number)
+    // c = Symbol for field C
+    // d = Symbol for field D
+    // e = Symbol for field E
+    // f = Symbol for field F
+    // g = Symbol for field G
+    // h = Symbol for field H
+    // mf = Funnel tapes
+    // ot = Text control description object
+    // s = Size information
+    // t = Text for text description
+  si_Course = 2;               //course
+    // First = CourseName
+    // C = Climb
+    // E = Extra distance
+    // F = FromNumber (relay)
+    // M = Map file
+    // R = Number of runners
+    // S = Map scale
+    // T = ToNumber (relay)
+    // Y = Course type (s = relay, o = one-man relay)
+    // s = start
+    // c = control
+    // m = marked route
+    // f = finish
+    // l = leg variation starts
+    // b = branch of a leg variation starts
+    // p = end of a leg variation
+    // r = relay variation starts
+    // v = branch of a relay variation starts
+    // q = end of a relay variation
+  si_CsClass = 3;              //class. e.g. H12
+    // First = class name
+    // c = Course name         course assigned to this class
+  si_DataSet = 4;              //dataset
+    // First = dataset name
+    // e = dBase folder
+    // d = ODBC data source
+    // t = table
+    // k = key field
+    // y = symbol field
+    // x = text field
+    // f = size field
+    // l = length unit
+    // a = area unit
+    // c = decimals
+  si_DbObject = 5;             //object linked to a database
+    // d = Dataset
+  si_OimFile = 6;
+  si_PrevObj = 7;              //course object that has been modified
+                               //in preview mode
+    // First = course name
+  si_Template = 8;             //template
+    // a = angle
+    // d = dim
+    // o = render with spot colors
+    // p = assigned to spot color
+    // s = enabled (0 = disabled, 1 = enabled)
+    // t = transparent
+    // x = offset x
+    // y = offset y
+    // u = pixel size x
+    // v = pixel size y
+
+The following string types exist only once in a file:
+
+  si_DisplayPar = 1024;        //display parameters
+    // x = SymBox width        position of the vertical splitter
+    // y = SymBox height       position of the horizontal splitter
+  si_OimPar = 1025;            //OCAD Internet Map parameters
+    //First = OimFileName
+    // a = Anti-Aliasing
+    // b = Show find boxes
+    // d = DatasetSearch
+    // h = Height
+    // l = DatasetLink
+    // m = HTML only
+    // n = NameField
+    // o = Zoom Out button
+    // u = LinkField
+    // w = Width
+    // z = Zoom levels
+  si_PrintPar = 1026;          //Print parameters
+    // b = print black
+    // c = course only on existing maps
+    // m = Mirror
+    // o = HorOfs
+    // p = VerOfs
+    // r = Range (0 entire map, 1 partial map, 2 one page)
+    // s = HorScal
+    // t = VerScal
+  si_CdPrintPar = 1027;        //course description print parameters
+    // t = Title
+    // s = Size
+  si_TemplatePar = 1028;       //template parameters
+    // s = default scale
+  si_EpsPar = 1029;            //EPS export parameters
+    // r = EPS resolution
+  si_ViewPar = 1030;           //view parameters
+    // a = activated spot colors
+    // o = opaque colors
+    // s = spot colors
+    // t = transparent map
+  si_CoursePar = 1031;         //course options
+    // c = print codes
+    // l = distance to connection line
+    // n = distance to number
+    // s = cell size control description
+  si_TiffPar = 1032;           //TIFF export parameters
+    // a = Antialiasing
+    // b = combined spot colors
+    // c = compression (1 = no compression, 5 = LZW)
+    // g = geo-referenced
+    // l = color correction
+    // o = spot color separations
+    // p = partial map
+    // r = resolution
+    // s = pixel size
+    // t = tiles
+  si_TilesPar = 1033;          //parameters for exporting tiles
+    // w = width
+    // h = height
+  si_DbPar = 1034;             //database parameters
+    // d = dataset
+    // l = last code
+    // n = create new record
 
 
 

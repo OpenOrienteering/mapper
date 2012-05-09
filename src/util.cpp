@@ -89,6 +89,52 @@ void rectIncludeSafe(QRectF& rect, const QRectF& other_rect)
 	}
 }
 
+bool lineIntersectsRect(const QRectF& rect, const QPointF& p1, const QPointF& p2)
+{
+	if (rect.contains(p1) || rect.contains(p2))
+		return true;
+	
+	// Left side
+	if ((p1.x() > rect.left()) != (p2.x() > rect.left()))
+	{
+		if ((p2.x() == p1.x()) && !((p1.y() < rect.top() && p2.y() < rect.top()) || (p1.y() > rect.bottom() && p2.y() > rect.bottom())))
+			return true;
+		qreal intersection_y = p1.y() + (p2.y() - p1.y()) * (rect.left() - p1.x()) / (p2.x() - p1.x());
+		if (intersection_y >= rect.top() && intersection_y <= rect.bottom())
+			return true;
+	}
+	// Right side
+	if ((p1.x() > rect.right()) != (p2.x() > rect.right()))
+	{
+		if ((p2.x() == p1.x()) && !((p1.y() < rect.top() && p2.y() < rect.top()) || (p1.y() > rect.bottom() && p2.y() > rect.bottom())))
+			return true;
+		qreal intersection_y = p1.y() + (p2.y() - p1.y()) * (rect.right() - p1.x()) / (p2.x() - p1.x());
+		if (intersection_y >= rect.top() && intersection_y <= rect.bottom())
+			return true;
+	}
+	
+	// Top side
+	if ((p1.y() > rect.top()) != (p2.y() > rect.top()))
+	{
+		if ((p2.y() == p1.y()) && !((p1.x() < rect.left() && p2.x() < rect.left()) || (p1.x() > rect.right() && p2.x() > rect.right())))
+			return true;
+		qreal intersection_x = p1.x() + (p2.x() - p1.x()) * (rect.top() - p1.y()) / (p2.y() - p1.y());
+		if (intersection_x >= rect.left() && intersection_x <= rect.right())
+			return true;
+	}
+	// Bottom side
+	if ((p1.y() > rect.bottom()) != (p2.y() > rect.bottom()))
+	{
+		if ((p2.y() == p1.y()) && !((p1.x() < rect.left() && p2.x() < rect.left()) || (p1.x() > rect.right() && p2.x() > rect.right())))
+			return true;
+		qreal intersection_x = p1.x() + (p2.x() - p1.x()) * (rect.bottom() - p1.y()) / (p2.y() - p1.y());
+		if (intersection_x >= rect.left() && intersection_x <= rect.right())
+			return true;
+	}
+	
+	return false;
+}
+
 void saveString(QFile* file, const QString& str)
 {
 	int length = str.length();

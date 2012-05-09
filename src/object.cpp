@@ -26,6 +26,7 @@
 #include "util.h"
 #include "symbol.h"
 #include "symbol_point.h"
+#include "symbol_line.h"
 #include "symbol_text.h"
 #include "map_editor.h"
 #include "object_text.h"
@@ -84,6 +85,10 @@ void Object::load(QFile* file, int version, Map* map)
 	file->read((char*)&symbol_index, sizeof(int));
 	if (symbol_index >= 0)
 		symbol = map->getSymbol(symbol_index);
+	else if (symbol_index == -2)
+		symbol = map->getUndefinedPoint();
+	else if (symbol_index == -3)
+		symbol = map->getUndefinedLine();
 	
 	int num_coords;
 	file->read((char*)&num_coords, sizeof(int));
@@ -298,21 +303,34 @@ int Object::isPointOnObject(MapCoordF coord, float tolerance, bool extended_sele
 		return path->isPointOnPath(coord, tolerance);
 	}
 }
-bool Object::isPathPointInBox(QRectF box)
+bool Object::intersectsBox(QRectF box)
 {
-	int size = coords.size();
-	
 	if (type == Text)
 		return extent.intersects(box);
-	
-	for (int i = 0; i < size; ++i)
+	else if (type == Point)
+		return box.contains(coords[0].toQPointF());
+	else if (type == Path)
 	{
-		if (box.contains(coords[i].toQPointF()))
-			return true;
+		PathObject* path = reinterpret_cast<PathObject*>(this);
+		const PathCoordVector& path_coords = path->getPathCoordinateVector();
 		
-		if (coords[i].isCurveStart())
-			i += 2;
+		// Check path coords for an intersection with box
+		int size = (int)path_coords.size();
+		for (int i = 1; i < size; ++i)
+		{
+			if (path_coords[i].clen < path_coords[i-1].clen)
+				continue;
+			if (lineIntersectsRect(box, path_coords[i].pos.toQPointF(), path_coords[i-1].pos.toQPointF()))
+				return true;
+		}
+		
+		// If this is an area, additionally check if the area contains the box
+		if (getSymbol()->getContainedTypes() & Symbol::Area)
+			return isPointOnObject(MapCoordF(box.center()), 0, false);
 	}
+	else
+		assert(false);
+	
 	return false;
 }
 
@@ -351,12 +369,23 @@ Object* Object::getObjectForType(Object::Type type, Symbol* symbol)
 
 // ### PathObject::PathPart ###
 
-void PathObject::PathPart::setClosed(bool closed)
+void PathObject::PathPart::setClosed(bool closed, bool may_use_existing_close_point)
 {
 	if (!isClosed() && closed)
 	{
-		if (getNumCoords() == 1 || path->coords[start_index].rawX() != path->coords[end_index].rawX() || path->coords[start_index].rawY() != path->coords[end_index].rawY())
-			path->addCoordinate(end_index + 1, path->coords[start_index]);
+		if (getNumCoords() == 1 || !may_use_existing_close_point ||
+			path->coords[start_index].rawX() != path->coords[end_index].rawX() || path->coords[start_index].rawY() != path->coords[end_index].rawY())
+		{
+			path->coords.insert(path->coords.begin() + (end_index + 1), path->coords[start_index]);
+			++end_index;
+			
+			int part_index = this - &path->parts[0];
+			for (int i = part_index + 1; i < (int)path->parts.size(); ++i)
+			{
+				++path->parts[i].start_index;
+				++path->parts[i].end_index;
+			}
+		}
 		path->setClosingPoint(end_index, path->coords[start_index]);
 		
 		path->setOutputDirty();
@@ -390,6 +419,23 @@ int PathObject::PathPart::calcNumRegularPoints()
 	if (isClosed())
 		--num_regular_points;
 	return num_regular_points;
+}
+
+double PathObject::PathPart::getLength()
+{
+	return path->path_coords[path_coord_end_index].clen;
+}
+double PathObject::PathPart::calculateArea()
+{
+	double area = 0;
+	int j = path_coord_end_index;  // The last vertex is the 'previous' one to the first
+	
+	for (int i = path_coord_start_index; i <= path_coord_end_index; ++i)
+	{
+		area += (path->path_coords[j].pos.getX() + path->path_coords[i].pos.getX()) * (path->path_coords[j].pos.getY() - path->path_coords[i].pos.getY()); 
+		j = i;  // j is previous vertex to i
+	}
+	return qAbs(area) / 2;
 }
 
 // ### PathObject ###
@@ -1105,7 +1151,7 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance)
 	Symbol::Type contained_types = symbol->getContainedTypes();
 	int coords_size = (int)coords.size();
 	
-	if (contained_types & Symbol::Line)
+	if (contained_types & Symbol::Line && tolerance > 0)
 	{
 		update(false);
 		int size = (int)path_coords.size();
@@ -1206,9 +1252,9 @@ void PathObject::addCoordinate(int pos, MapCoord c)
 	
 	setOutputDirty();
 }
-void PathObject::addCoordinate(MapCoord c)
+void PathObject::addCoordinate(MapCoord c, bool start_new_part)
 {
-	if (!parts.empty() && parts[parts.size() - 1].isClosed())
+	if (!start_new_part && !parts.empty() && parts[parts.size() - 1].isClosed())
 	{
 		coords.insert(coords.begin() + (coords.size() - 1), c);
 		++parts[parts.size() - 1].end_index;
@@ -1216,11 +1262,13 @@ void PathObject::addCoordinate(MapCoord c)
 	else
 	{
 		coords.push_back(c);
-		if (parts.empty())
+		if (start_new_part || parts.empty())
 		{
+			if (!parts.empty())
+				assert(parts[parts.size() - 1].isClosed());
 			PathPart part;
-			part.start_index = 0;
-			part.end_index = 0;
+			part.start_index = (int)coords.size() - 1;
+			part.end_index = (int)coords.size() - 1;
 			part.path = this;
 			parts.push_back(part);
 		}
@@ -1360,6 +1408,12 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords)
 		}
 	}
 	
+	setOutputDirty();
+}
+void PathObject::clearCoordinates()
+{
+	coords.clear();
+	parts.clear();
 	setOutputDirty();
 }
 

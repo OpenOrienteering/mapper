@@ -29,6 +29,7 @@
 #include "map.h"
 #include "template_image.h"
 #include "template_gps.h"
+#include "template_map.h"
 
 // ### TemplateTransform ###
 
@@ -88,8 +89,8 @@ Template::Template(const QString& filename, Map* map) : map(map)
 	
 	has_unsaved_changes = false;
 	
-	georeferenced = false;
-	georeferencing_dirty = true;
+	adjusted = false;
+	adjustment_dirty = true;
 	
 	template_group = -1;
 	
@@ -107,8 +108,8 @@ Template::Template(const Template& other)
 	
 	cur_trans = other.cur_trans;
 	other_trans = other.other_trans;
-	georeferenced = other.georeferenced;
-	georeferencing_dirty = other.georeferencing_dirty;
+	adjusted = other.adjusted;
+	adjustment_dirty = other.adjustment_dirty;
 	
 	map_to_template = other.map_to_template;
 	template_to_map = other.template_to_map;
@@ -127,8 +128,8 @@ void Template::saveTemplateParameters(QFile* file)
 	cur_trans.save(file);
 	other_trans.save(file);
 	
-	file->write((const char*)&georeferenced, sizeof(bool));
-	file->write((const char*)&georeferencing_dirty, sizeof(bool));
+	file->write((const char*)&adjusted, sizeof(bool));
+	file->write((const char*)&adjustment_dirty, sizeof(bool));
 	
 	int num_passpoints = (int)passpoints.size();
 	file->write((const char*)&num_passpoints, sizeof(int));
@@ -148,8 +149,8 @@ void Template::loadTemplateParameters(QFile* file)
 	cur_trans.load(file);
 	other_trans.load(file);
 	
-	file->read((char*)&georeferenced, sizeof(bool));
-	file->read((char*)&georeferencing_dirty, sizeof(bool));
+	file->read((char*)&adjusted, sizeof(bool));
+	file->read((char*)&adjustment_dirty, sizeof(bool));
 	
 	int num_passpoints;
 	file->read((char*)&num_passpoints, sizeof(int));
@@ -242,8 +243,8 @@ void Template::deletePassPoint(int pos)
 void Template::clearPassPoints()
 {
 	passpoints.clear();
-	setGeoreferencingDirty(true);
-	georeferenced = false;
+	setAdjustmentDirty(true);
+	adjusted = false;
 }
 
 void Template::switchTransforms()
@@ -256,7 +257,7 @@ void Template::switchTransforms()
 	template_to_map_other = template_to_map;
 	updateTransformationMatrices();
 	
-	georeferenced = !georeferenced;
+	adjusted = !adjusted;
 	setTemplateAreaDirty();
 	map->setTemplatesDirty();
 }
@@ -290,9 +291,9 @@ Template* Template::templateForFile(const QString& path, Map* map)
 		path.endsWith(".tiff", Qt::CaseInsensitive))
 		return new TemplateImage(path, map);
 	else if (path.endsWith(".ocd", Qt::CaseInsensitive) || path.endsWith(".omap", Qt::CaseInsensitive))
-		return NULL;	// TODO
-	else if (path.endsWith(".gpx", Qt::CaseInsensitive))
-		return new TemplateGPS(path, map);	
+		return new TemplateMap(path, map);	// TODO
+	else if (path.endsWith(".gpx", Qt::CaseInsensitive) || path.endsWith(".dxf", Qt::CaseInsensitive))
+		return new TemplateGPS(path, map);
 	else
 		return NULL;
 }

@@ -55,6 +55,7 @@ protected:
 	MapCoordF rotation_center;
 	bool rotating;
 	double old_rotation;
+	double original_rotation;
 	
 	std::vector<Object*> undo_duplicates;
 	RenderableVector old_renderables;

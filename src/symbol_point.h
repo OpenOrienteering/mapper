@@ -21,18 +21,16 @@
 #ifndef _OPENORIENTEERING_SYMBOL_POINT_H_
 #define _OPENORIENTEERING_SYMBOL_POINT_H_
 
-#include <QGroupBox>
-
 #include "symbol.h"
+#include "symbol_properties_widget.h"
 
-QT_BEGIN_NAMESPACE
-class QLineEdit;
-class QCheckBox;
-QT_END_NAMESPACE
+class QWidget;
 
 class Map;
 struct MapColor;
+class MapEditorController;
 class SymbolSettingDialog;
+class PointSymbolEditorWidget;
 class ColorDropDown;
 
 class PointSymbol : public Symbol
@@ -44,23 +42,23 @@ friend class XMLImportExport;
 public:
 	/// Constructs an empty point symbol
 	PointSymbol();
-    virtual ~PointSymbol();
-    virtual Symbol* duplicate();
-    
+	virtual ~PointSymbol();
+	virtual Symbol* duplicate() const;
+	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
 	void createRenderablesScaled(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output, float coord_scale);
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
-    virtual bool containsColor(MapColor* color);
-    virtual void scale(double factor);
+	virtual bool containsColor(MapColor* color);
+	virtual void scale(double factor);
 	
 	// Contained objects and symbols (elements)
 	int getNumElements() const;
 	void addElement(int pos, Object* object, Symbol* symbol);
 	Object* getElementObject(int pos);
-    const Object* getElementObject(int pos) const;
-    Symbol* getElementSymbol(int pos);
-    const Symbol* getElementSymbol(int pos) const;
-    void deleteElement(int pos);
+	const Object* getElementObject(int pos) const;
+	Symbol* getElementSymbol(int pos);
+	const Symbol* getElementSymbol(int pos) const;
+	void deleteElement(int pos);
 	
 	/// Returns true if the point contains no elements and does not create renderables itself
 	bool isEmpty() const;
@@ -80,9 +78,12 @@ public:
 	inline MapColor* getOuterColor() const {return outer_color;}
 	inline void setOuterColor(MapColor* color) {outer_color = color;}
 	
+	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
+	
+	
 protected:
-    virtual void saveImpl(QFile* file, Map* map);
-    virtual bool loadImpl(QFile* file, int version, Map* map);
+	virtual void saveImpl(QFile* file, Map* map);
+	virtual bool loadImpl(QFile* file, int version, Map* map);
 	
 	std::vector<Object*> objects;
 	std::vector<Symbol*> symbols;
@@ -94,20 +95,22 @@ protected:
 	MapColor* outer_color;
 };
 
-class PointSymbolSettings : public QGroupBox
+
+
+class PointSymbolSettings : public SymbolPropertiesWidget
 {
 Q_OBJECT
 public:
-	PointSymbolSettings(PointSymbol* symbol, Map* map, SymbolSettingDialog* parent);
+	PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialog* dialog);
 	
 public slots:
 	void orientedToNorthClicked(bool checked);
+	void tabChanged(int index);
 	
 private:
 	PointSymbol* symbol;
-	SymbolSettingDialog* dialog;
-	
-	QCheckBox* oriented_to_north_check;
+	PointSymbolEditorWidget* symbol_editor;
+	QWidget* point_tab;
 };
 
 #endif

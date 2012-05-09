@@ -89,6 +89,8 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
     context_menu->addAction(tr("Invert selection"), this, SLOT(invertSelection()));
     context_menu->addSeparator();
     context_menu->addAction(tr("Sort by number"), this, SLOT(sortByNumber()));
+    // text will be filled in by updateContextMenuState()
+    select_objects_action = context_menu->addAction("", parent, SLOT(emitSelectObjectsClicked()));
 
 	connect(map, SIGNAL(colorDeleted(int,MapColor*)), this, SLOT(update()));
 }
@@ -406,7 +408,7 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 	
 	if (event->button() == Qt::RightButton)
 	{
-		bool have_selection = getNumSelectedSymbols() > 0;
+        bool have_selection = getNumSelectedSymbols() > 0;
 		bool single_selection = getNumSelectedSymbols() == 1 && current_symbol_index >= 0;
 		Symbol* single_symbol = getSingleSelectedSymbol();
 		bool all_symbols_hidden = have_selection;
@@ -576,19 +578,15 @@ void SymbolRenderWidget::editSymbol()
 {
 	assert(current_symbol_index >= 0);
 	
-	Symbol* in_map_symbol = map->getSymbol(current_symbol_index);
-	Symbol* edit_symbol = in_map_symbol->duplicate();
-
-	SymbolSettingDialog dialog(edit_symbol, in_map_symbol, map, this);
+	Symbol* symbol = map->getSymbol(current_symbol_index);
+	SymbolSettingDialog dialog(symbol, map, this);
 	dialog.setWindowModality(Qt::WindowModal);
-	if (dialog.exec() == QDialog::Rejected)
+	if (dialog.exec() == QDialog::Accepted)
 	{
-		delete edit_symbol;
-		return;
+		symbol = dialog.getEditedSymbol()->duplicate();
+//		symbol->getIcon(map, true);
+		map->setSymbol(symbol, current_symbol_index);
 	}
-	
-	edit_symbol->getIcon(map, true);
-	map->setSymbol(edit_symbol, current_symbol_index);
 }
 void SymbolRenderWidget::scaleSymbol()
 {
@@ -711,16 +709,40 @@ void SymbolRenderWidget::sortByNumber()
 
     update();
 }
-bool SymbolRenderWidget::newSymbol(Symbol* new_symbol)
+
+void SymbolRenderWidget::updateContextMenuState()
 {
-	SymbolSettingDialog dialog(new_symbol, NULL, map, this);
+    bool have_selection = getNumSelectedSymbols() > 0;
+    bool single_selection = getNumSelectedSymbols() == 1 && current_symbol_index >= 0;
+    Symbol* single_symbol = getSingleSelectedSymbol();
+
+    bool single_symbol_compatible;
+    bool single_symbol_different;
+    map->getSelectionToSymbolCompatibility(single_symbol, single_symbol_compatible, single_symbol_different);
+
+    edit_action->setEnabled(single_selection);
+    scale_action->setEnabled(single_selection);
+    switch_symbol_action->setEnabled(single_symbol_compatible && single_symbol_different);
+    fill_border_action->setEnabled(single_symbol_compatible && single_symbol_different);
+    duplicate_action->setEnabled(single_selection);
+    delete_action->setEnabled(have_selection);
+
+    if (single_selection)
+        select_objects_action->setText(tr("Select all objects with symbol \"%1\"").arg(single_symbol->getName()));
+    else
+        select_objects_action->setText(tr("Select all objects with selected symbols"));
+    select_objects_action->setEnabled(have_selection && false); // not implemented
+}
+
+bool SymbolRenderWidget::newSymbol(Symbol* prototype)
+{
+	SymbolSettingDialog dialog(prototype, map, this);
 	dialog.setWindowModality(Qt::WindowModal);
+	delete prototype;
 	if (dialog.exec() == QDialog::Rejected)
-	{
-		delete new_symbol;
 		return false;
-	}
 	
+	Symbol* new_symbol = dialog.getEditedSymbol()->duplicate();
 	int pos = currentSymbolIndex();
 	map->addSymbol(new_symbol, (pos >= 0) ? pos : map->getNumSymbols());
 	selectSingleSymbol(pos);
@@ -750,11 +772,12 @@ SymbolWidget::SymbolWidget(Map* map, QWidget* parent): EditorDockWidgetChild(par
 	preferred_size = settings.value("size", QSize(200, 500)).toSize();
 	settings.endGroup();
 	
+    qDebug() << "loaded preferred size for symbol widget at"<<preferred_size;
 	// Create layout
 	layout = new QHBoxLayout();
 	layout->setMargin(0);
 	layout->setSpacing(0);
-	layout->addWidget(render_widget, 1);
+    layout->addWidget(render_widget);
 	layout->addWidget(scroll_bar);
 	setLayout(layout);
 }
@@ -764,6 +787,7 @@ SymbolWidget::~SymbolWidget()
 	QSettings settings;
 	settings.beginGroup("SymbolWidget");
 	settings.setValue("size", size());
+    qDebug() << "saved preferred size for symbol widget at"<<size();
 	settings.endGroup();
 }
 QSize SymbolWidget::sizeHint() const
@@ -779,7 +803,11 @@ int SymbolWidget::getNumSelectedSymbols()
 {
 	return render_widget->getNumSelectedSymbols();
 }
-
+void SymbolWidget::selectSingleSymbol(Symbol *symbol)
+{
+    int index = map->findSymbolIndex(symbol);
+    if (index >= 0) render_widget->selectSingleSymbol(index);
+}
 void SymbolWidget::adjustSize(int width, int height)
 {
 	if (width < 0) width = this->width();

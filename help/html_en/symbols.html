@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD html 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Open O-Mapper help - Symbols</title>
+<link rev="made" href="mailto:peterhhoban@gmail.com">
+<link rel="stylesheet" href="oomap.css" type="text/css" title="OOMapper stylesheet">
+<script type="text/javascript">
+function goBack()
+  {
+  window.history.back()
+  }
+</script>
+</head>
+<body>
+<p style="text-align: left"><a href="index.html"><button type="button">Home</button></a> &nbsp;  <input type="button" value="Back" onclick="goBack()" /></p>
+
+<img class=small src="../../images/title.png" width="301" border="0" alt="" /><h1> Help</h1>
+<a name="symbols"><h3>Symbols</h3></a>
+<p>Symbols for orienteering maps are prescribed in the ISOM (International Standard for Orienteering Maps) and its brother standards ISSOM (sprint maps) ISMTBOM (MTBO maps) and ISSkiO (ski orienteering maps).</p>
+
+<p>It is very desirable that all orienteering maps should conform to the appropriate standard, and that includes conforming to the standard symbols for the discipline.</p>
+
+<p>A full set of symbols for each standard will be made available with OOMapper, and ideally all maps will be prepared using only the unmodified symbols described in the standards and provided in these symbol sets.  This enables international competitors to receive a locally produced map and find it portrays the terrain in exactly the same way as in their home country.  It also enables local orienteers to become familiar with the mapping conventions that are used for major events elsewhere.  The use of local symbol variations defeats the purpose of mapping standards and confuses visiting competitors.</p>
+
+<h4>Symbols Window</h4>
+
+<p>This area on the right hand side of the OOMapper screen shows all the available symbols in the loaded standard set.  Use the scroll-bar to move the array up and down to reveal symbols not showing.</p>
+
+<p>Each symbol has a text (a part of the standard) describing where and how it may be used.  That text can be made visible in the symbol window by pressing F1 while hovering over the symbol of interest.</p>
+
+<p></p>
+
+<h4>Symbol Editor</h4>
+
+<p>Most orienteering mappers would have no need for this facility.  It is provided for completeness and to permit the software to be used for other non-orienteering applications.</p>
+
+<p>For details of how to use particular features of the editor - watch this space</p>
+
+<a name="colors"><h3>Colors</h3></a>
+<p>The standard colors of orienteering maps are defined in the terms of the Pantone Matching System (PMS) and are intended to describe the exact color of inks to be used in offset printing processes for the production of orienteering maps.</p>
+<p>With the advent of inexpensive ink-jet printers and high quality printing papers it has become possible to print water resistant orienteering maps at very modest cost and with excellent control of the process and the colors used.  In this context there has been considerable discussion about appropriate colors to better enable color blind competitors to discriminate map features and it is possible that some changes may be adopted as a result.</p>
+<h4>Color Window</h4>
+<p>This tool defines colors in terms of the CMYK system or the RGB system.  Default colors for orienteering maps are entered but the colors that are actually printed by a particular printer on a particular paper type can produce a result which is quite different from the PMS color intended.</p>
+<p>The IOF Map Commission has prepared an offset printed paper test sheet (Print Tech Test Sheet - available from your national mapping officer) and as a map file printtech2006.ocd (available as download from http://lazarus.elte.hu/mc/print-tech/printtech2006.pdf ).  The offset printed paper sheet has the currently prescribed colors for the production of maps (Store in a heavy envelope, do not use copies which have been kept loose and may be faded).   The colors for a particular printer and paper may be adjusted using the Color Window so that a better match with the offset printed test sheet is achieved.  The colors yellow (open space on the terrain) and brown (contour lines) are commonly quite divergent from the standard.</p>
+<h3>Color adjustment</h3>
+<ol><li>Scan the IOF offset printed Print Tech page in any scanner and use a color picker to get the CMYK values on screen for each color.  By way of example this scan may yield CMYK values of 000, .800, .991, .569 respectively for 100% brown.</li>
+<li>Load the file printtech2006.ocd file into OOMapper and print the page on your printer.  Take this freshly printed page and scan that print on the same scanner and use the same color picker to get the color values you have in the scan.  An example of this scan for 100% brown may yield CMYK values of 000, .689, .942, .255 respectively.</li>
+<li>The difference between those two sets of values will indicate the adjustments required.  Using the example values the Color Window line for 100% brown should have no adjustment to the cyan field, +.111 to magenta, +.049 to yellow, and +.314 to black.  Those adjustments must be made in the OOMapper Color Window.  Having made similar adjustments for all colors, then run the step 2 print trial again.</li>
+<li>In a perfect world the differences will all reduce to zero.  In practice they may not because of non-linearities in the hardware and colors like brown are poorly defined on the color palette.  Several iterations may be required to get a good match. </li></ol>
+
+<p>The same general approach may be employed but using the RGB color space instead. </p>
+
+<p>When a contour is printed in an area of green on the map the brown of the contour loses contrast and the contour line becomes harder to see.  If the map is offset printed the green is laid down without a gap and the brown is printed over it while the green ink is still wet, with the result that the green and brown blend together where they are coincident.  This creates a segment of line which is somewhat darker than the 100% brown line outside the green and the darker color is noted to be easier to see.  This very desirable result is called an over-printing effect. </p>
+
+<p>The Print Tech Test Sheet is designed to demonstrate beneficial over-printing effects where these are achieved.  Consider the visibility of the wavy contour lines (and blue creek lines) printed against a variety of backgrounds on the lower left of the sheet.</p>
+
+<p></p>
+
+<p></p>
+
+
+
+<p><input type="button" value="Back" onclick="goBack()" /></p>
+<hr width="70%">
+<p><small>Updated on ... April 1, 2012</small></p>
+</body>
+</html>

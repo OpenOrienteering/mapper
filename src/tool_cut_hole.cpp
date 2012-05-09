@@ -30,10 +30,12 @@
 #include "symbol_combined.h"
 #include "map_undo.h"
 #include "tool_draw_path.h"
+#include "tool_draw_circle.h"
+#include "tool_draw_rectangle.h"
 
 QCursor* CutHoleTool::cursor = NULL;
 
-CutHoleTool::CutHoleTool(MapEditorController* editor, QAction* tool_button) : MapEditorTool(editor, Other, tool_button)
+CutHoleTool::CutHoleTool(MapEditorController* editor, QAction* tool_button, PathObject::PartType hole_type) : MapEditorTool(editor, Other, tool_button), hole_type(hole_type)
 {
 	path_tool = NULL;
 	
@@ -42,7 +44,7 @@ CutHoleTool::CutHoleTool(MapEditorController* editor, QAction* tool_button) : Ma
 }
 void CutHoleTool::init()
 {
-	connect(editor->getMap(), SIGNAL(selectedObjectsChanged()), this, SLOT(selectedObjectsChanged()));
+	connect(editor->getMap(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	updateDirtyRect();
     updateStatusText();
 }
@@ -61,7 +63,14 @@ bool CutHoleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	// Start a new hole
 	edit_widget = widget;
 	
-	path_tool = new DrawPathTool(editor, NULL, NULL, true);
+	if (hole_type == PathObject::Path)
+		path_tool = new DrawPathTool(editor, NULL, NULL, true);
+	else if (hole_type == PathObject::Circle)
+		path_tool = new DrawCircleTool(editor, NULL, NULL);
+	else if (hole_type == PathObject::Rect)
+		path_tool = new DrawRectangleTool(editor, NULL, NULL);
+	else
+		assert(false);
 	connect(path_tool, SIGNAL(dirtyRectChanged(QRectF)), this, SLOT(pathDirtyRectChanged(QRectF)));
 	connect(path_tool, SIGNAL(pathAborted()), this, SLOT(pathAborted()));
 	connect(path_tool, SIGNAL(pathFinished(PathObject*)), this, SLOT(pathFinished(PathObject*)));
@@ -136,7 +145,7 @@ void CutHoleTool::updateDirtyRect(const QRectF* path_rect)
 		editor->getMap()->clearDrawingBoundingBox();
 }
 
-void CutHoleTool::selectedObjectsChanged()
+void CutHoleTool::objectSelectionChanged()
 {
 	Map* map = editor->getMap();
 	if (map->getNumSelectedObjects() != 1 || !((*map->selectedObjectsBegin())->getSymbol()->getContainedTypes() & Symbol::Area))
@@ -162,7 +171,7 @@ void CutHoleTool::pathFinished(PathObject* hole_path)
 	
 	// Close the hole path
 	assert(hole_path->getNumParts() == 1);
-	hole_path->getPart(0).setClosed(true);
+	hole_path->getPart(0).setClosed(true, true);
 	
 	// If the edited path does not end with a hole point, change that
 	PathObject* edited_path = reinterpret_cast<PathObject*>(edited_object);
@@ -177,6 +186,7 @@ void CutHoleTool::pathFinished(PathObject* hole_path)
 	undo_step->addObject(edited_object, undo_duplicate);
 	map->objectUndoManager().addNewUndoStep(undo_step);
 	map->setObjectsDirty();
+	map->emitSelectionEdited();
 	
 	pathAborted();
 }

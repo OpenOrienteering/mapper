@@ -21,10 +21,12 @@
 #ifndef _OPENORIENTEERING_SYMBOL_TEXT_H_
 #define _OPENORIENTEERING_SYMBOL_TEXT_H_
 
+#include "symbol.h"
+
 #include <QGroupBox>
 #include <QDialog>
 
-#include "symbol.h"
+#include "symbol_properties_widget.h"
 
 QT_BEGIN_NAMESPACE
 class QLineEdit;
@@ -50,7 +52,7 @@ friend class OCAD8FileImport;
 public:
 	TextSymbol();
 	virtual ~TextSymbol();
-    virtual Symbol* duplicate();
+    virtual Symbol* duplicate() const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
 	void createLineBelowRenderables(Object* object, RenderableVector& output);
@@ -86,6 +88,8 @@ public:
 	static const float pt_in_mm;	// 1 pt in mm
 	static const float internal_point_size;
 	
+	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
+	
 protected:
 	virtual void saveImpl(QFile* file, Map* map);
 	virtual bool loadImpl(QFile* file, int version, Map* map);
@@ -114,11 +118,12 @@ protected:
 	double tab_interval;		/// default tab interval length in text coordinates
 };
 
-class TextSymbolSettings : public QGroupBox
+class TextSymbolSettings : public SymbolPropertiesWidget
 {
 Q_OBJECT
 public:
-	TextSymbolSettings(TextSymbol* symbol, Map* map, SymbolSettingDialog* parent);
+	TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* dialog);
+    virtual ~TextSymbolSettings();
 	
 protected slots:
 	void fontChanged(QFont font);

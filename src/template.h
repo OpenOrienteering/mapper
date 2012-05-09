@@ -53,7 +53,7 @@ public:
 		qint64 template_y;
 		double template_scale_x;
 		double template_scale_y;
-		double template_rotation;	// 0 - 2*M_PI
+		double template_rotation;	// in radians
 	};
 	struct PassPoint
 	{
@@ -77,7 +77,7 @@ public:
 	/// Returns a string which should identify the type of the template uniquely: the class name. Very simple RTTI feature.
 	virtual const QString getTemplateType() = 0;
 	
-	/// Saves parameters such as transformation, georeferencing, etc.
+	/// Saves parameters such as transformation, adjustment, etc.
 	void saveTemplateParameters(QFile* file);
 	void loadTemplateParameters(QFile* file);
 	/// Saves the template itself, returns if successful. This is called when saving the map and the template hasUnsavedChanges() returns true
@@ -146,7 +146,7 @@ public:
 						 template_to_map_other.get(1, 0) * coords.getX() + template_to_map_other.get(1, 1) * coords.getY() + template_to_map_other.get(1, 2));
 	}
 	
-	// Pass points & georeferencing
+	// Pass points & adjustment
 	
 	inline int getNumPassPoints() const {return passpoints.size();}
 	inline PassPoint* getPassPoint(int i) {return &passpoints[i];}
@@ -154,7 +154,7 @@ public:
 	void deletePassPoint(int pos);
 	void clearPassPoints();
 	
-	void switchTransforms();	// change from georeferenced into original state or the other way round
+	void switchTransforms();	// change from adjusted into original state or the other way round
 	void getTransform(TemplateTransform& out);
 	void setTransform(const TemplateTransform& transform);
 	void getOtherTransform(TemplateTransform& out);
@@ -187,9 +187,9 @@ public:
 	inline double getTemplateRotation() const {return cur_trans.template_rotation;}
 	inline void setTemplateRotation(double rotation) {cur_trans.template_rotation = rotation; updateTransformationMatrices();}
 	
-	inline bool isGeoreferencingApplied() const {return georeferenced;}
-	inline bool isGeoreferencingDirty() const {return georeferencing_dirty;}
-	inline void setGeoreferencingDirty(bool value) {georeferencing_dirty = value; if (value) map->setTemplatesDirty();}
+	inline bool isAdjustmentApplied() const {return adjusted;}
+	inline bool isAdjustmentDirty() const {return adjustment_dirty;}
+	inline void setAdjustmentDirty(bool value) {adjustment_dirty = value; if (value) map->setTemplatesDirty();}
 	
 	inline int getTemplateGroup() const {return template_group;}
 	inline void setTemplateGroup(int value) {template_group = value;}
@@ -217,11 +217,11 @@ protected:
 	
 	bool has_unsaved_changes;	// does the template itself (not its transformation) have unsaved changes (e.g. GPS track has changed, image has been painted on)
 	
-	// Transformation parameters & georeferencing; NOTE: call updateTransformationMatrices() after making direct changes to the transforms!
+	// Transformation parameters & adjustment; NOTE: call updateTransformationMatrices() after making direct changes to the transforms!
 	TemplateTransform cur_trans;
 	TemplateTransform other_trans;
-	bool georeferenced;			// if true, cur_trans is the georeferenced transformation, otherwise it is the original one
-	bool georeferencing_dirty;	// if true, the georeferenced transformation has to be recalculated
+	bool adjusted;			// if true, cur_trans is the adjusted transformation, otherwise it is the original one
+	bool adjustment_dirty;	// if true, the adjusted transformation has to be recalculated
 	std::vector< PassPoint > passpoints;
 	
 	// Transformation matrices

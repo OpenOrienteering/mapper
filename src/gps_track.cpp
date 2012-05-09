@@ -24,10 +24,13 @@
 #include <QFile>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
+#include <QMessageBox>
+#include <QInputDialog> // TODO: get rid of this
 
 #include "global.h"
+#include "dxfparser.h"
 
-GPSPoint::GPSPoint(GPSCoordinate coord, QDateTime datetime, float elevation, int num_satellites, float hDOP)
+GPSPoint::GPSPoint(LatLon coord, QDateTime datetime, float elevation, int num_satellites, float hDOP)
 {
 	gps_coord = coord;
 	this->datetime = datetime;
@@ -35,7 +38,7 @@ GPSPoint::GPSPoint(GPSCoordinate coord, QDateTime datetime, float elevation, int
 	this->num_satellites = num_satellites;
 	this->hDOP = hDOP;
 }
-void GPSPoint::save(QXmlStreamWriter* stream)
+void GPSPoint::save(QXmlStreamWriter* stream) const
 {
 	stream->writeAttribute("lat", QString::number(gps_coord.getLatitudeInDegrees(), 'f', 12));
 	stream->writeAttribute("lon", QString::number(gps_coord.getLongitudeInDegrees(), 'f', 12));
@@ -50,16 +53,20 @@ void GPSPoint::save(QXmlStreamWriter* stream)
 		stream->writeTextElement("hdop", QString::number(hDOP, 'f', 3));
 }
 
+
+
 // ### GPSTrack ###
 
 GPSTrack::GPSTrack()
 {
 	current_segment_finished = true;
 }
-GPSTrack::GPSTrack(const GPSProjectionParameters& params) : params(params)
+
+GPSTrack::GPSTrack(const Georeferencing& georef) : georef(georef)
 {
 	current_segment_finished = true;
 }
+
 GPSTrack::GPSTrack(const GPSTrack& other)
 {
 	waypoints = other.waypoints;
@@ -70,7 +77,7 @@ GPSTrack::GPSTrack(const GPSTrack& other)
 	
 	current_segment_finished = other.current_segment_finished;
 	
-	params = other.params;
+	georef = other.georef;
 }
 
 void GPSTrack::clear()
@@ -82,62 +89,103 @@ void GPSTrack::clear()
 	current_segment_finished = true;
 }
 
-bool GPSTrack::loadFrom(const QString& path, bool project_points)
+bool GPSTrack::loadFrom(const QString& path, bool project_points, QWidget* dialog_parent)
 {
 	QFile file(path);
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 		return false;
 	
 	clear();
-	
-	GPSPoint point;
-	QString point_name;
-	
-	QXmlStreamReader stream(&file);
-	while (!stream.atEnd())
-	{
-		stream.readNext();
-		if (stream.tokenType() == QXmlStreamReader::StartElement)
+
+	if(path.endsWith(".gpx", Qt::CaseInsensitive)){
+		GPSPoint point;
+		QString point_name;
+
+		QXmlStreamReader stream(&file);
+		while (!stream.atEnd())
 		{
-			if (stream.name().compare("wpt", Qt::CaseInsensitive) == 0 || stream.name().compare("trkpt", Qt::CaseInsensitive) == 0)
+			stream.readNext();
+			if (stream.tokenType() == QXmlStreamReader::StartElement)
 			{
-				point = GPSPoint(GPSCoordinate(stream.attributes().value("lat").toString().toDouble(),
-											   stream.attributes().value("lon").toString().toDouble(), true));
-				if (project_points)
-					point.map_coord = point.gps_coord.toMapCoordF(params);
-				point_name = "";
+				if (stream.name().compare("wpt", Qt::CaseInsensitive) == 0 || stream.name().compare("trkpt", Qt::CaseInsensitive) == 0)
+				{
+					point = GPSPoint(LatLon(stream.attributes().value("lat").toString().toDouble(),
+												   stream.attributes().value("lon").toString().toDouble(), true));
+					if (project_points)
+						point.map_coord = georef.toMapCoordF(point.gps_coord, NULL); // FIXME: check for errors
+					point_name = "";
+				}
+				else if (stream.name().compare("trkseg", Qt::CaseInsensitive) == 0)
+					segment_starts.push_back(segment_points.size());
+				else if (stream.name().compare("ele", Qt::CaseInsensitive) == 0)
+					point.elevation = stream.readElementText().toFloat();
+				else if (stream.name().compare("time", Qt::CaseInsensitive) == 0)
+					point.datetime = QDateTime::fromString(stream.readElementText(), Qt::ISODate);
+				else if (stream.name().compare("sat", Qt::CaseInsensitive) == 0)
+					point.num_satellites = stream.readElementText().toInt();
+				else if (stream.name().compare("hdop", Qt::CaseInsensitive) == 0)
+					point.hDOP = stream.readElementText().toFloat();
+				else if (stream.name().compare("name", Qt::CaseInsensitive) == 0)
+					point_name = stream.readElementText();
 			}
-			else if (stream.name().compare("trkseg", Qt::CaseInsensitive) == 0)
-				segment_starts.push_back(segment_points.size());
-			else if (stream.name().compare("ele", Qt::CaseInsensitive) == 0)
-				point.elevation = stream.readElementText().toFloat();
-			else if (stream.name().compare("time", Qt::CaseInsensitive) == 0)
-				point.datetime = QDateTime::fromString(stream.readElementText(), Qt::ISODate);
-			else if (stream.name().compare("sat", Qt::CaseInsensitive) == 0)
-				point.num_satellites = stream.readElementText().toInt();
-			else if (stream.name().compare("hdop", Qt::CaseInsensitive) == 0)
-				point.hDOP = stream.readElementText().toFloat();
-			else if (stream.name().compare("name", Qt::CaseInsensitive) == 0)
-				point_name = stream.readElementText();
-		}
-		else if (stream.tokenType() == QXmlStreamReader::EndElement)
-		{
-			if (stream.name().compare("wpt", Qt::CaseInsensitive) == 0)
+			else if (stream.tokenType() == QXmlStreamReader::EndElement)
 			{
-				waypoints.push_back(point);
-				waypoint_names.push_back(point_name);
-			}
-			else if (stream.name().compare("trkpt", Qt::CaseInsensitive) == 0)
-			{
-				segment_points.push_back(point);
+				if (stream.name().compare("wpt", Qt::CaseInsensitive) == 0)
+				{
+					waypoints.push_back(point);
+					waypoint_names.push_back(point_name);
+				}
+				else if (stream.name().compare("trkpt", Qt::CaseInsensitive) == 0)
+				{
+					segment_points.push_back(point);
+				}
 			}
 		}
 	}
-	
+	else if(path.endsWith(".dxf", Qt::CaseInsensitive)){
+		DXFParser *parser = new DXFParser();
+		parser->setData(&file);
+		QString result = parser->parse();
+		if(!result.isEmpty()){
+			QMessageBox::critical(dialog_parent, QObject::tr("Error reading"), QObject::tr("There was an error reading the DXF file %1:\n\n%1").arg(file.fileName(), result));
+			delete parser;
+			return false;
+		}
+		QList<path_t> paths = parser->getData();
+		//QRectF size = parser->getSize();
+		delete parser;
+		int res = QMessageBox::question(dialog_parent, QObject::tr("Question"), QObject::tr("Are the coordinates in the DXF file in degrees?"), QMessageBox::Yes|QMessageBox::No);
+		bool degrees = (res == QMessageBox::Yes);
+		qreal val1 = QInputDialog::getDouble(dialog_parent, QObject::tr("Scale value"), QObject::tr("Choose a value to scale latitude coordinates by. A value of 1 does nothing, over one scales up and under one scales down."), 1, 0.000000001, 100000000, 10);
+		qreal val2 = QInputDialog::getDouble(dialog_parent, QObject::tr("Scale value"), QObject::tr("Choose a value to scale longitude coordinates by. A value of 1 does nothing, over one scales up and under one scales down."), val1, 0.000000001, 100000000, 10);
+		foreach(path_t path, paths){
+			if(path.type == POINT){
+				if(path.coords.size() < 1)
+					continue;
+				GPSPoint point = GPSPoint(LatLon(path.coords.at(0).y*val1, path.coords.at(0).x*val2, degrees));
+				if (project_points)
+					point.map_coord = georef.toMapCoordF(point.gps_coord, NULL); // FIXME: check for errors
+				waypoints.push_back(point);
+				waypoint_names.push_back(path.layer);
+			}
+			if(path.type == LINE){
+				if(path.coords.size() < 1)
+					continue;
+				segment_starts.push_back(segment_points.size());
+				foreach(coordinate_t coord, path.coords){
+					GPSPoint point = GPSPoint(LatLon(coord.y*val1, coord.x*val2, degrees), QDateTime());
+					if (project_points)
+						point.map_coord = georef.toMapCoordF(point.gps_coord, NULL); // FIXME: check for errors
+					segment_points.push_back(point);
+				}
+			}
+		}
+	}
+
 	file.close();
 	return true;
 }
-bool GPSTrack::saveTo(const QString& path)
+bool GPSTrack::saveTo(const QString& path) const
 {
 	QFile file(path);
 	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -153,7 +201,7 @@ bool GPSTrack::saveTo(const QString& path)
 	for (int i = 0; i < size; ++i)
 	{
 		stream.writeStartElement("wpt");
-		GPSPoint& point = getWaypoint(i);
+		const GPSPoint& point = getWaypoint(i);
 		point.save(&stream);
 		stream.writeTextElement("name", waypoint_names[i]);
 		stream.writeEndElement();
@@ -167,7 +215,7 @@ bool GPSTrack::saveTo(const QString& path)
 		for (int k = 0; k < size; ++k)
 		{
 			stream.writeStartElement("trkpt");
-			GPSPoint& point = getSegmentPoint(i, k);
+			const GPSPoint& point = getSegmentPoint(i, k);
 			point.save(&stream);
 			stream.writeEndElement();
 		}
@@ -184,7 +232,7 @@ bool GPSTrack::saveTo(const QString& path)
 
 void GPSTrack::appendTrackPoint(GPSPoint& point)
 {
-	point.map_coord = point.gps_coord.toMapCoordF(params);
+	point.map_coord = georef.toMapCoordF(point.gps_coord, NULL); // FIXME: check for errors
 	segment_points.push_back(point);
 	
 	if (current_segment_finished)
@@ -200,29 +248,30 @@ void GPSTrack::finishCurrentSegment()
 
 void GPSTrack::appendWaypoint(GPSPoint& point, const QString& name)
 {
-	point.map_coord = point.gps_coord.toMapCoordF(params);
+	point.map_coord = georef.toMapCoordF(point.gps_coord, NULL); // FIXME: check for errors
 	waypoints.push_back(point);
 	waypoint_names.push_back(name);
 }
 
-void GPSTrack::changeProjectionParams(const GPSProjectionParameters& new_params)
+void GPSTrack::changeGeoreferencing(const Georeferencing& new_georef)
 {
-	params = new_params;
+	georef = new_georef;
 	
 	int size = waypoints.size();
 	for (int i = 0; i < size; ++i)
-		waypoints[i].map_coord = waypoints[i].gps_coord.toMapCoordF(params);
+		waypoints[i].map_coord = georef.toMapCoordF(waypoints[i].gps_coord, NULL); // FIXME: check for errors
 	
 	size = segment_points.size();
 	for (int i = 0; i < size; ++i)
-		segment_points[i].map_coord = segment_points[i].gps_coord.toMapCoordF(params);
+		segment_points[i].map_coord = georef.toMapCoordF(segment_points[i].gps_coord, NULL); // FIXME: check for errors
 }
 
-int GPSTrack::getNumSegments()
+int GPSTrack::getNumSegments() const
 {
 	return (int)segment_starts.size();
 }
-int GPSTrack::getSegmentPointCount(int segment_number)
+
+int GPSTrack::getSegmentPointCount(int segment_number) const
 {
 	assert(segment_number >= 0 && segment_number < (int)segment_starts.size());
 	if (segment_number == (int)segment_starts.size() - 1)
@@ -230,21 +279,24 @@ int GPSTrack::getSegmentPointCount(int segment_number)
 	else
 		return segment_starts[segment_number + 1] - segment_starts[segment_number];
 }
-GPSPoint& GPSTrack::getSegmentPoint(int segment_number, int point_number)
+
+const GPSPoint& GPSTrack::getSegmentPoint(int segment_number, int point_number) const
 {
 	assert(segment_number >= 0 && segment_number < (int)segment_starts.size());
 	return segment_points[segment_starts[segment_number] + point_number];
 }
 
-int GPSTrack::getNumWaypoints()
+int GPSTrack::getNumWaypoints() const
 {
 	return waypoints.size();
 }
-GPSPoint& GPSTrack::getWaypoint(int number)
+
+const GPSPoint& GPSTrack::getWaypoint(int number) const
 {
 	return waypoints[number];
 }
-const QString& GPSTrack::getWaypointName(int number)
+
+const QString& GPSTrack::getWaypointName(int number) const
 {
 	return waypoint_names[number];
 }

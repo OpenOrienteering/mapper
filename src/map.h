@@ -34,10 +34,8 @@
 #include "map_coord.h"
 #include "renderable.h"
 
-QT_BEGIN_NAMESPACE
 class QFile;
 class QPainter;
-QT_END_NAMESPACE
 
 class Map;
 struct MapColor;
@@ -49,7 +47,7 @@ class Template;
 class Object;
 class MapEditorController;
 class OCAD8FileImport;
-struct GPSProjectionParameters;
+class Georeferencing;
 
 typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
 
@@ -68,6 +66,7 @@ public:
 	
 	inline int getNumObjects() const {return (int)objects.size();}
 	inline Object* getObject(int i) {return objects[i];}
+    inline const Object* getObject(int i) const {return objects[i];}
 	int findObjectIndex(Object* object);					// asserts that the object is contained in the layer
 	void setObject(Object* object, int pos, bool delete_old);
 	void addObject(Object* object, int pos);
@@ -77,7 +76,7 @@ public:
 	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
 	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
 	
-	QRectF calculateExtent();
+	QRectF calculateExtent(bool include_helper_symbols);
 	void scaleAllObjects(double factor);
 	void updateAllObjects(bool remove_old_renderables = true);
 	void updateAllObjectsWithSymbol(Symbol* symbol);
@@ -113,18 +112,19 @@ public:
 	/// Attempts to load the map from the specified path. Returns true on success.
 	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL, bool load_symbols_only = false);
 
-	/// Deletes all map data
+	/// Deletes all map data and resets the map to its initial state containing one default layer
 	void clear();
 	
 	/// Draws the part of the map which is visible in the given bounding box in map coordinates
-	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols);
+	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity = 1.0);
 	/// Draws the templates first_template until last_template which are visible in the given bouding box. view determines template visibility and can be NULL to show all templates.
 	/// draw_untransformed_parts is only possible with a MapWidget (because of MapWidget::mapToViewport()). Otherwise, set it to NULL.
 	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, bool draw_untransformed_parts, const QRect& untransformed_dirty_rect, MapWidget* widget, MapView* view);
 	/// Updates the renderables and extent of all objects which have been changed. This is automatically called by draw(), you normally do not need it
 	void updateObjects();
-	/// Calculates the extent of all map objects (and possibly templates)
-	QRectF calculateExtent(bool include_templates, MapView* view);
+	/// Calculates the extent of all map objects (and possibly templates). If templates should be included, a view can be given to take the template visibilities from.
+	/// view can also be NULL to include all templates.
+	QRectF calculateExtent(bool include_helper_symbols, bool include_templates, MapView* view);
 	
 	/// Must be called to notify the map of new widgets displaying it. Useful to notify the widgets about which parts of the map have changed and need to be redrawn
 	void addMapWidget(MapWidget* widget);
@@ -188,7 +188,9 @@ public:
 	void deleteTemplate(int pos);												// NOTE: adjust first_front_template manually!
 	void setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border);	// marks the respective regions in the template caches as dirty; area is given in map coords (mm). Does nothing if the template is not visible in a widget! So make sure to call this and showing/hiding a template in the correct order!
 	void setTemplateAreaDirty(int i);											// this does nothing for i == -1
+	int findTemplateIndex(Template* temp);
 	void setTemplatesDirty();
+	void emitTemplateChanged(Template* temp);
 	
 	// Objects
 	
@@ -226,7 +228,17 @@ public:
 	inline ObjectSelection::const_iterator selectedObjectsBegin() {return object_selection.constBegin();}
 	inline ObjectSelection::const_iterator selectedObjectsEnd() {return object_selection.constEnd();}
 	
-	/// Returns if 1) all selected objects are compatible to the given symbol and 2) at least one of the selected objects' symbols is different to the given symbol
+	/** Returns the object in the selection which was selected first by the user.
+	 *  If she later deselects it while other objects are still selected or if the selection is done as box selection,
+	 *  this "first" selected object is just a more or less random object from the selection.
+	 */
+	inline Object* getFirstSelectedObject() const {return first_selected_object;}
+	
+	/** Checks the selected objects for compatibiliy with the given symbol.
+	 * @param symbol the symbol to check compatibiliy for
+	 * @param out_compatible returns if all selected objects are compatible to the given symbol
+	 * @param out_different returns if at least one of the selected objects' symbols is different to the given symbol
+	 */
 	void getSelectionToSymbolCompatibility(Symbol* symbol, bool& out_compatible, bool& out_different);
 	
 	void includeSelectionRect(QRectF& rect); // enlarges rect to cover the selected objects
@@ -239,19 +251,25 @@ public:
 	bool toggleObjectSelection(Object* object, bool emit_selection_changed);	// returns true if the object was selected, false if deselected
 	void clearObjectSelection(bool emit_selection_changed);
 	void emitSelectionChanged();
+	void emitSelectionEdited();
 	
 	// Other settings
 	
-	inline void setScaleDenominator(int value) {scale_denominator = value;}
+	void setScaleDenominator(int value);
 	inline int getScaleDenominator() const {return scale_denominator;}
 	
-	inline bool areGPSProjectionParametersSet() const {return gps_projection_params_set;}
-	void setGPSProjectionParameters(const GPSProjectionParameters& params);
-	inline const GPSProjectionParameters& getGPSProjectionParameters() const {return *gps_projection_parameters;}
+	inline const QString& getMapNotes() const {return map_notes;}
+	inline void setMapNotes(const QString& text) {map_notes = text;}
+	
+	void setGeoreferencing(const Georeferencing& georeferencing);
+	inline const Georeferencing& getGeoreferencing() const {return *georeferencing;}
 	
 	inline bool arePrintParametersSet() const {return print_params_set;}
 	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height);
 	void getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& center, float& left, float& top, float& width, float& height);
+	
+	void setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel, double dpi, double scale);
+	void getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel, double& dpi, double& scale);
 	
 	void setHasUnsavedChanges(bool has_unsaved_changes = true);
 	inline bool hasUnsavedChanged() const {return unsaved_changes;}
@@ -260,9 +278,12 @@ public:
 	
 	static MapColor* getCoveringWhite() {return &covering_white;}
 	static MapColor* getCoveringRed() {return &covering_red;}
+	static MapColor* getUndefinedColor() {return &undefined_symbol_color;}
 	static LineSymbol* getCoveringWhiteLine() {return covering_white_line;}
 	static LineSymbol* getCoveringRedLine() {return covering_red_line;}
 	static CombinedSymbol* getCoveringCombinedLine() {return covering_combined_line;}
+	static LineSymbol* getUndefinedLine() {return undefined_line;}
+	static PointSymbol* getUndefinedPoint() {return undefined_point;}
 	
 signals:
 	void gotUnsavedChanges();
@@ -279,8 +300,8 @@ signals:
 	void templateChanged(int pos, Template* temp);
 	void templateDeleted(int pos, Template* old_temp);
 	
-	void selectedObjectsChanged();
-	void gpsProjectionParametersChanged();
+	void objectSelectionChanged();
+	void selectedObjectEdited();
 	
 private:
 	typedef std::vector<MapColor*> ColorVector;
@@ -290,11 +311,12 @@ private:
 	typedef std::vector<MapWidget*> WidgetVector;
 	typedef std::vector<MapView*> ViewVector;
 	
-	struct MapColorSet
+	class MapColorSet : public QObject
 	{
+	public:
 		ColorVector colors;
 		
-		MapColorSet();
+		MapColorSet(QObject *parent = 0);
 		void addReference();
 		void dereference();
 		
@@ -320,6 +342,7 @@ private:
 	int first_front_template;		// index of the first template in templates which should be drawn in front of the map
 	LayerVector layers;
 	ObjectSelection object_selection;
+	Object* first_selected_object;
 	UndoManager object_undo_manager;
 	int current_layer_index;
 	WidgetVector widgets;
@@ -327,8 +350,9 @@ private:
 	RenderableContainer renderables;
 	RenderableContainer selection_renderables;
 	
-	bool gps_projection_params_set;	// have the parameters been set (are they valid)?
-	GPSProjectionParameters* gps_projection_parameters;
+	QString map_notes;
+	
+	Georeferencing* georeferencing;
 	
 	bool print_params_set;			// have the parameters been set (are they valid)?
 	int print_orientation;			// QPrinter::Orientation
@@ -340,6 +364,11 @@ private:
 	float print_area_top;
 	float print_area_width;
 	float print_area_height;
+	
+	bool image_template_use_meters_per_pixel;
+	double image_template_meters_per_pixel;
+	double image_template_dpi;
+	double image_template_scale;
 	
 	int scale_denominator;			// this is the number x if the scale is written as 1:x
 	
@@ -354,8 +383,11 @@ private:
 	static bool static_initialized;
 	static MapColor covering_white;
 	static MapColor covering_red;
+	static MapColor undefined_symbol_color;
 	static LineSymbol* covering_white_line;
 	static LineSymbol* covering_red_line;
+	static LineSymbol* undefined_line;
+	static PointSymbol* undefined_point;
 	static CombinedSymbol* covering_combined_line;
 };
 
@@ -433,7 +465,7 @@ public:
 	QRectF calculateViewBoundingBox(QRectF map_rect);
 	
 	/// Applies the view transform to the given painter.
-	/// Note 1: The transform is combined with the painter's existing tranfsorm.
+	/// Note 1: The transform is combined with the painter's existing transform.
 	/// Note 2: If you want to use the transform to draw something, you will probably also want to make sure that
 	///         the view center is in the center of your viewport. Because the view does not know the viewport size,
 	///         it cannot do that. So this offset must be applied before calling this method.
@@ -463,6 +495,9 @@ public:
 	inline void setViewY(int value) {view_y = value; update();}
 	inline QPoint getDragOffset() const {return drag_offset;}
 	
+    // Map visibility
+    TemplateVisibility* getMapVisibility();
+
 	// Template visibilities
 	bool isTemplateVisible(Template* temp);						// checks if the template is visible without creating a template visibility object if none exists
 	TemplateVisibility* getTemplateVisibility(Template* temp);	// returns the template visibility object, creates one if not there yet with the default settings (invisible)
@@ -490,6 +525,7 @@ private:
 	Matrix view_to_map;
 	Matrix map_to_view;
 	
+    TemplateVisibility *map_visibility;
 	QHash<Template*, TemplateVisibility*> template_visibilities;
 	
 	WidgetVector widgets;

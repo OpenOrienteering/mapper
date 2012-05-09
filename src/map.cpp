@@ -40,6 +40,7 @@
 #include "symbol_line.h"
 #include "symbol_combined.h"
 #include "file_format_ocad8.h"
+#include "georeferencing.h"
 
 MapLayer::MapLayer(const QString& name, Map* map) : name(name), map(map)
 {
@@ -174,26 +175,34 @@ void MapLayer::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool inclu
 			continue;
 		
 		objects[i]->update();
-		if (rect.intersects(objects[i]->getExtent()) && objects[i]->isPathPointInBox(rect))
+		if (rect.intersects(objects[i]->getExtent()) && objects[i]->intersectsBox(rect))
 			out.push_back(objects[i]);
 	}
 }
 
-QRectF MapLayer::calculateExtent()
+QRectF MapLayer::calculateExtent(bool include_helper_symbols)
 {
 	QRectF rect;
 	
+	int i = 0;
 	int size = objects.size();
-	if (size > 0)
+	while (size > i && !rect.isValid())
 	{
-		objects[0]->update();
-		rect = objects[0]->getExtent();
+		if ((include_helper_symbols || !objects[i]->getSymbol()->isHelperSymbol()) && !objects[i]->getSymbol()->isHidden())
+		{
+			objects[i]->update();
+			rect = objects[i]->getExtent();
+		}
+		++i;
 	}
 	
-	for (int i = 1; i < size; ++i)
+	for (; i < size; ++i)
 	{
-		objects[i]->update();
-		rectInclude(rect, objects[i]->getExtent());
+		if ((include_helper_symbols || !objects[i]->getSymbol()->isHelperSymbol()) && !objects[i]->getSymbol()->isHidden())
+		{
+			objects[i]->update();
+			rectInclude(rect, objects[i]->getExtent());
+		}
 	}
 	
 	return rect;
@@ -273,7 +282,7 @@ void MapLayer::forceUpdateOfAllObjects(Symbol* with_symbol)
 
 // ### MapColorSet ###
 
-Map::MapColorSet::MapColorSet()
+Map::MapColorSet::MapColorSet(QObject *parent) : QObject(parent)
 {
 	ref_count = 1;
 }
@@ -289,8 +298,7 @@ void Map::MapColorSet::dereference()
 		int size = colors.size();
 		for (int i = 0; i < size; ++i)
 			delete colors[i];
-		
-		delete this;
+		this->deleteLater();
 	}
 }
 
@@ -299,8 +307,11 @@ void Map::MapColorSet::dereference()
 bool Map::static_initialized = false;
 MapColor Map::covering_white;
 MapColor Map::covering_red;
+MapColor Map::undefined_symbol_color;
 LineSymbol* Map::covering_white_line;
 LineSymbol* Map::covering_red_line;
+LineSymbol* Map::undefined_line;
+PointSymbol* Map::undefined_point;
 CombinedSymbol* Map::covering_combined_line;
 
 Map::Map() : renderables(this), selection_renderables(this)
@@ -308,24 +319,11 @@ Map::Map() : renderables(this), selection_renderables(this)
 	if (!static_initialized)
 		initStatic();
 	
-	first_front_template = 0;
-	
-	layers.push_back(new MapLayer(tr("default layer"), this));
-	current_layer_index = 0;
-	
-	color_set = new MapColorSet();
-	
+	color_set = NULL;
 	object_undo_manager.setOwner(this);
+	georeferencing = new Georeferencing();
 	
-	print_params_set = false;
-	gps_projection_params_set = false;
-	gps_projection_parameters = new GPSProjectionParameters();
-	
-	colors_dirty = false;
-	symbols_dirty = false;
-	templates_dirty = false;
-	objects_dirty = false;
-	unsaved_changes = false;
+	clear();
 }
 Map::~Map()
 {
@@ -347,55 +345,92 @@ Map::~Map()
 	
 	color_set->dereference();
 	
-	delete gps_projection_parameters;
+	delete georeferencing;
 }
+
+void Map::setScaleDenominator(int value)
+{
+	scale_denominator = value;
+	georeferencing->setScaleDenominator(value);
+}
+
 
 bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 {
 	assert(map_editor && "Preserving the widget&view information without retrieving it from a MapEditorController is not implemented yet!");
 	
-    const Format *format = FileFormats.findFormatForFilename(path);
-    if (!format) format = FileFormats.findFormat(FileFormats.defaultFormat());
-
-    if (!format || !format->supportsExport())
-    {
+	const Format *format = FileFormats.findFormatForFilename(path);
+	if (!format) format = FileFormats.findFormat(FileFormats.defaultFormat());
+	
+	if (!format || !format->supportsExport())
+	{
 		if (format)
 			QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").arg(path).arg(format->description()).arg(format->fileExtension()));
-        else
+		else
 			QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause the format is unknown.").arg(path));
 		return false;
-    }
-
-    Exporter *exporter = NULL;
-    // Wrap everything in a try block, so we can gracefully recover if the importer balks.
-    try {
-        // Create an importer instance for this file and map.
-        exporter = format->createExporter(path, this, map_editor->main_view);
-
-        // Run the first pass.
-        exporter->doExport();
-
-        // Display any warnings.
-        if (!exporter->warnings().empty())
-        {
-            QString warnings = "";
-            for (std::vector<QString>::const_iterator it = exporter->warnings().begin(); it != exporter->warnings().end(); ++it) {
-                if (!warnings.isEmpty())
+	}
+	
+	// If the given file exists already, instead of overwriting the old file directly which
+	// could lead to data loss if the program crashes while exporting, find a free temporary
+	// filename, export to this path first and copy this over the old file on success.
+	QString temp_path;
+	if (QFile::exists(path))
+	{
+		int num_attempts = 0;
+		const int max_attempts = 100;
+		do
+		{
+			temp_path = path + ".";
+			for (int i = 0; i < 6; ++i)
+				temp_path += 'A' + (qrand() % ('Z' - 'A' + 1));
+			++num_attempts;
+		} while (num_attempts < max_attempts && QFile::exists(temp_path));
+		if (num_attempts == max_attempts && QFile::exists(temp_path))
+			temp_path = QString();
+	}
+	
+	Exporter *exporter = NULL;
+	// Wrap everything in a try block, so we can gracefully recover if the exporter balks.
+	try {
+		// Create an importer instance for this file and map.
+		exporter = format->createExporter(temp_path.isEmpty() ? path : temp_path, this, map_editor->main_view);
+		
+		// Run the first pass.
+		exporter->doExport();
+		
+		// Display any warnings.
+		if (!exporter->warnings().empty())
+		{
+			QString warnings = "";
+			for (std::vector<QString>::const_iterator it = exporter->warnings().begin(); it != exporter->warnings().end(); ++it) {
+				if (!warnings.isEmpty())
 					warnings += '\n';
 				warnings += *it;
-            }
+			}
 			QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The map export generated warnings."), QMessageBox::Ok);
 			msgBox.setDetailedText(warnings);
 			msgBox.exec();
-        }
-    }
-    catch (std::exception &e)
-    {
-        qDebug() << "Exception:" << e.what();
-    }
-    if (exporter) delete exporter;
-
-
+		}
+	}
+	catch (std::exception &e)
+	{
+		QMessageBox::warning(NULL, tr("Error"), tr("Internal error while saving:\n%1").arg(e.what()));
+		if (temp_path.isEmpty())
+			QFile::remove(path);
+		else
+			QFile::remove(temp_path);
+		return false;
+	}
+	if (exporter) delete exporter;
+	
+	if (!temp_path.isEmpty())
+	{
+		QFile::remove(path);
+		QFile::rename(temp_path, path);
+	}
+	
+	
 	colors_dirty = false;
 	symbols_dirty = false;
 	templates_dirty = false;
@@ -408,9 +443,9 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 }
 bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool load_symbols_only)
 {
-    MapView *view = new MapView(this);
+	MapView *view = new MapView(this);
 
-    // Ensure the file exists and is readable.
+	// Ensure the file exists and is readable.
 	QFile file(path);
 	if (!file.open(QIODevice::ReadOnly))
 	{
@@ -421,39 +456,39 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 	// Delete previous objects
 	clear();
 
-    // Read a block at the beginning of the file, that we can use for magic number checking.
-    unsigned char buffer[256];
-    size_t total_read = file.read((char *)buffer, 256);
-    file.close();
+	// Read a block at the beginning of the file, that we can use for magic number checking.
+	unsigned char buffer[256];
+	size_t total_read = file.read((char *)buffer, 256);
+	file.close();
 
-    bool import_complete = false;
+	bool import_complete = false;
 	QString error_msg = tr("Invalid file type.");
-    Q_FOREACH(const Format *format, FileFormats.formats())
-    {
-        // If the format supports import, and thinks it can understand the file header, then proceed.
-        if (format->supportsImport() && format->understands(buffer, total_read))
-        {
-            Importer *importer = NULL;
-            // Wrap everything in a try block, so we can gracefully recover if the importer balks.
-            try {
-                // Create an importer instance for this file and map.
-                importer = format->createImporter(path, this, view);
+	Q_FOREACH(const Format *format, FileFormats.formats())
+	{
+		// If the format supports import, and thinks it can understand the file header, then proceed.
+		if (format->supportsImport() && format->understands(buffer, total_read))
+		{
+			Importer *importer = NULL;
+			// Wrap everything in a try block, so we can gracefully recover if the importer balks.
+			try {
+				// Create an importer instance for this file and map.
+				importer = format->createImporter(path, this, view);
 
-                // Run the first pass.
-                importer->doImport(load_symbols_only);
+				// Run the first pass.
+				importer->doImport(load_symbols_only);
 
-                // Are there any actions the user must take to complete the import?
-                if (!importer->actions().empty())
-                {
-                    // TODO: prompt the user to resolve the action items. All-in-one dialog.
-                }
+				// Are there any actions the user must take to complete the import?
+				if (!importer->actions().empty())
+				{
+					// TODO: prompt the user to resolve the action items. All-in-one dialog.
+				}
 
-                // Finish the import.
-                importer->finishImport();
+				// Finish the import.
+				importer->finishImport();
 
-                // Display any warnings.
-                if (!importer->warnings().empty())
-                {
+				// Display any warnings.
+				if (!importer->warnings().empty())
+				{
 					QString warnings = "";
 					for (std::vector<QString>::const_iterator it = importer->warnings().begin(); it != importer->warnings().end(); ++it) {
 						if (!warnings.isEmpty())
@@ -463,51 +498,55 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 					QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The map import generated warnings."), QMessageBox::Ok);
 					msgBox.setDetailedText(warnings);
 					msgBox.exec();
-                }
+				}
 
-                import_complete = true;
-            }
-            catch (std::exception &e)
-            {
-                qDebug() << "Exception:" << e.what();
+				import_complete = true;
+			}
+			catch (std::exception &e)
+			{
+				qDebug() << "Exception:" << e.what();
 				error_msg = e.what();
-            }
-            if (importer) delete importer;
-        }
-        // If the last importer finished successfully
-        if (import_complete) break;
-    }
-    
-    if (map_editor)
+			}
+			if (importer) delete importer;
+		}
+		// If the last importer finished successfully
+		if (import_complete) break;
+	}
+	
+	georeferencing->setScaleDenominator(scale_denominator);
+	
+	if (map_editor)
 		map_editor->main_view = view;
 	else
 		delete view;	// TODO: HACK. Better not create the view at all in this case!
 
-    if (!import_complete)
-    {
-        QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\n\n%2").arg(path).arg(error_msg));
-        return false;
-    }
+	if (!import_complete)
+	{
+		QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\n\n%2").arg(path).arg(error_msg));
+		return false;
+	}
 
-    // Post processing
-    for (unsigned int i = 0; i < symbols.size(); ++i)
-    {
-        if (!symbols[i]->loadFinished(this))
-        {
-            QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError during symbol post-processing.").arg(path));
-            return false;
-        }
-    }
-    // Update all objects without trying to remove their renderables first, this gives a significant speedup when loading large files
-    updateAllObjects(false);
+	// Post processing
+	for (unsigned int i = 0; i < symbols.size(); ++i)
+	{
+		if (!symbols[i]->loadFinished(this))
+		{
+			QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError during symbol post-processing.").arg(path));
+			return false;
+		}
+	}
 
-    return true;
+	// Update all objects without trying to remove their renderables first, this gives a significant speedup when loading large files
+	updateAllObjects(false);
+
+	return true;
 }
 
 void Map::clear()
 {
-	color_set->dereference();
-	color_set = new MapColorSet();
+	if (color_set)
+		color_set->dereference();
+	color_set = new MapColorSet(this);
 	
 	int size = symbols.size();
 	for (int i = 0; i < size; ++i)
@@ -524,13 +563,23 @@ void Map::clear()
 	for (int i = 0; i < size; ++i)
 		delete layers[i];
 	layers.clear();
-	current_layer_index = -1;
+	
+	layers.push_back(new MapLayer(tr("default layer"), this));
+	current_layer_index = 0;
+	
+	object_selection.clear();
+	first_selected_object = NULL;
 	
 	widgets.clear();
+	object_undo_manager.clear();
 	
-	gps_projection_params_set = false;
-	delete gps_projection_parameters;
-	gps_projection_parameters = new GPSProjectionParameters();
+	map_notes = "";
+	
+	print_params_set = false;
+	image_template_use_meters_per_pixel = true;
+	image_template_meters_per_pixel = 0;
+	image_template_dpi = 0;
+	image_template_scale = 0;
 	
 	colors_dirty = false;
 	symbols_dirty = false;
@@ -539,13 +588,13 @@ void Map::clear()
 	unsaved_changes = false;
 }
 
-void Map::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols)
+void Map::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity)
 {
 	// Update the renderables of all objects marked as dirty
 	updateObjects();
 	
 	// The actual drawing
-	renderables.draw(painter, bounding_box, force_min_size, scaling, show_helper_symbols);
+	renderables.draw(painter, bounding_box, force_min_size, scaling, show_helper_symbols, opacity);
 }
 void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, bool draw_untransformed_parts, const QRect& untransformed_dirty_rect, MapWidget* widget, MapView* view)
 {
@@ -563,10 +612,10 @@ void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_templa
 			view_rect = QRectF(-9e42, -9e42, 9e42, 9e42);	// TODO: transform base_view_rect (map coords) using template transform to template coords
 		else
 		{
-			view_rect.setLeft((bounding_box.x() / temp->getTemplateScaleX()) - temp->getTemplateX());
-			view_rect.setTop((bounding_box.y() / temp->getTemplateScaleY()) - temp->getTemplateY());
-			view_rect.setRight((bounding_box.right() / temp->getTemplateScaleX()) - temp->getTemplateX());
-			view_rect.setBottom((bounding_box.bottom() / temp->getTemplateScaleY()) - temp->getTemplateY());
+			view_rect.setLeft((bounding_box.x() / temp->getTemplateScaleX()) - temp->getTemplateX() / 1000.0);
+			view_rect.setTop((bounding_box.y() / temp->getTemplateScaleY()) - temp->getTemplateY() / 1000.0);
+			view_rect.setRight((bounding_box.right() / temp->getTemplateScaleX()) - temp->getTemplateX() / 1000.0);
+			view_rect.setBottom((bounding_box.bottom() / temp->getTemplateScaleY()) - temp->getTemplateY() / 1000.0);
 		}
 		
 		if (really_draw_untransformed_parts)
@@ -653,7 +702,7 @@ void Map::includeSelectionRect(QRectF& rect)
 }
 void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, RenderableContainer* replacement_renderables, bool draw_normal)
 {
-	const float selection_opacity_factor = draw_normal ? 1 : 0.35f;
+	const float selection_opacity_factor = draw_normal ? 1 : 0.4f;
 	
 	MapView* view = widget->getMapView();
 	
@@ -673,16 +722,20 @@ void Map::addObjectToSelection(Object* object, bool emit_selection_changed)
 	assert(!isObjectSelected(object));
 	object_selection.insert(object);
 	addSelectionRenderables(object);
+	if (!first_selected_object)
+		first_selected_object = object;
 	if (emit_selection_changed)
-		emit(selectedObjectsChanged());
+		emit(objectSelectionChanged());
 }
 void Map::removeObjectFromSelection(Object* object, bool emit_selection_changed)
 {
 	bool removed = object_selection.remove(object);
 	assert(removed && "Map::removeObjectFromSelection: object was not selected!");
 	removeSelectionRenderables(object);
+	if (first_selected_object == object)
+		first_selected_object = object_selection.isEmpty() ? NULL : *object_selection.begin();
 	if (emit_selection_changed)
-		emit(selectedObjectsChanged());
+		emit(objectSelectionChanged());
 }
 bool Map::removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed)
 {
@@ -698,10 +751,13 @@ bool Map::removeSymbolFromSelection(Symbol* symbol, bool emit_selection_changed)
 		
 		removed_at_least_one_object = true;
 		removeSelectionRenderables(*it);
+		Object* removed_object = *it;
 		it = object_selection.erase(it);
+		if (first_selected_object == removed_object)
+			first_selected_object = object_selection.isEmpty() ? NULL : *object_selection.begin();
 	}
 	if (emit_selection_changed && removed_at_least_one_object)
-		emit(selectedObjectsChanged());
+		emit(objectSelectionChanged());
 	return removed_at_least_one_object;
 }
 bool Map::isObjectSelected(Object* object)
@@ -725,13 +781,18 @@ void Map::clearObjectSelection(bool emit_selection_changed)
 {
 	selection_renderables.clear();
 	object_selection.clear();
+	first_selected_object = NULL;
 	
 	if (emit_selection_changed)
-		emit(selectedObjectsChanged());
+		emit(objectSelectionChanged());
 }
 void Map::emitSelectionChanged()
 {
-	emit(selectedObjectsChanged());
+	emit(objectSelectionChanged());
+}
+void Map::emitSelectionEdited()
+{
+	emit(selectedObjectEdited());
 }
 
 void Map::addMapWidget(MapWidget* widget)
@@ -911,6 +972,7 @@ void Map::initStatic()
 {
 	static_initialized = true;
 	
+	// Covering colors and symbols
 	covering_white.opacity = 1000;	// HACK: (almost) always opaque, even if multiplied by opacity factors
 	covering_white.r = 1;
 	covering_white.g = 1;
@@ -937,6 +999,24 @@ void Map::initStatic()
 	covering_combined_line->setNumParts(2);
 	covering_combined_line->setPart(0, covering_white_line);
 	covering_combined_line->setPart(1, covering_red_line);
+	
+	// Undefined symbols
+	undefined_symbol_color.opacity = 1;
+	undefined_symbol_color.r = 0.5f;
+	undefined_symbol_color.g = 0.5f;
+	undefined_symbol_color.b = 0.5f;
+	undefined_symbol_color.updateFromRGB();
+	undefined_symbol_color.priority = MapColor::Undefined;
+	
+	undefined_line = new LineSymbol();
+	undefined_line->setColor(&undefined_symbol_color);
+	undefined_line->setLineWidth(1);
+	undefined_line->setIsHelperSymbol(true);
+
+	undefined_point = new PointSymbol();
+	undefined_point->setInnerRadius(100);
+	undefined_point->setInnerColor(&undefined_symbol_color);
+	undefined_point->setIsHelperSymbol(true);
 }
 
 void Map::addSymbol(Symbol* symbol, int pos)
@@ -1016,12 +1096,20 @@ void Map::deleteSymbol(int pos)
 }
 int Map::findSymbolIndex(Symbol* symbol)
 {
+    if (!symbol)
+        return -1;
 	int size = (int)symbols.size();
 	for (int i = 0; i < size; ++i)
 	{
 		if (symbols[i] == symbol)
 			return i;
 	}
+	
+	if (symbol == undefined_point)
+		return -2;
+	else if (symbol == undefined_line)
+		return -3;
+	
 	assert(false);
 	return -1;
 }
@@ -1092,16 +1180,7 @@ void Map::deleteTemplate(int pos)
 }
 void Map::setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border)
 {
-	bool front_cache = false;	// TODO: is there a better way to find out if that is a front or back template?
-	int size = (int)templates.size();
-	for (int i = 0; i < size; ++i)
-	{
-		if (templates[i] == temp)
-		{
-			front_cache = i >= getFirstFrontTemplate();
-			break;
-		}
-	}
+	bool front_cache = findTemplateIndex(temp) >= getFirstFrontTemplate();	// TODO: is there a better way to find out if that is a front or back template?
 	
 	for (int i = 0; i < (int)widgets.size(); ++i)
 		if (widgets[i]->getMapView()->isTemplateVisible(temp))
@@ -1115,10 +1194,25 @@ void Map::setTemplateAreaDirty(int i)
 	
 	templates[i]->setTemplateAreaDirty();
 }
+int Map::findTemplateIndex(Template* temp)
+{
+	int size = (int)templates.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (templates[i] == temp)
+			return i;
+	}
+	assert(false);
+	return -1;
+}
 void Map::setTemplatesDirty()
 {
 	setHasUnsavedChanges();
 	templates_dirty = true;
+}
+void Map::emitTemplateChanged(Template* temp)
+{
+	emit(templateChanged(findTemplateIndex(temp), temp));
 }
 
 int Map::getNumObjects()
@@ -1153,14 +1247,14 @@ void Map::setObjectsDirty()
 	objects_dirty = true;
 }
 
-QRectF Map::calculateExtent(bool include_templates, MapView* view)
+QRectF Map::calculateExtent(bool include_helper_symbols, bool include_templates, MapView* view)
 {
 	QRectF rect;
 	
 	// Objects
 	int size = layers.size();
 	for (int i = 0; i < size; ++i)
-		rectIncludeSafe(rect, layers[i]->calculateExtent());
+		rectIncludeSafe(rect, layers[i]->calculateExtent(include_helper_symbols));
 	
 	// Templates
 	if (include_templates)
@@ -1221,6 +1315,10 @@ void Map::changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol)
 }
 bool Map::deleteAllObjectsWithSymbol(Symbol* symbol)
 {
+	// Remove objects from selection
+	removeSymbolFromSelection(symbol, true);
+	
+	// Delete objects from map
 	bool object_deleted = false;
 	int size = layers.size();
 	for (int i = 0; i < size; ++i)
@@ -1244,13 +1342,9 @@ void Map::forceUpdateOfAllObjects(Symbol* with_symbol)
 		layers[i]->forceUpdateOfAllObjects(with_symbol);
 }
 
-void Map::setGPSProjectionParameters(const GPSProjectionParameters& params)
+void Map::setGeoreferencing(const Georeferencing& georeferencing)
 {
-	*gps_projection_parameters = params;
-	gps_projection_parameters->update();
-	gps_projection_params_set = true;
-	emit(gpsProjectionParametersChanged());
-	
+	*this->georeferencing = georeferencing;
 	setHasUnsavedChanges();
 }
 
@@ -1283,6 +1377,21 @@ void Map::getPrintParameters(int& orientation, int& format, float& dpi, bool& sh
 	top = print_area_top;
 	width = print_area_width;
 	height = print_area_height;
+}
+
+void Map::setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel, double dpi, double scale)
+{
+	image_template_use_meters_per_pixel = use_meters_per_pixel;
+	image_template_meters_per_pixel = meters_per_pixel;
+	image_template_dpi = dpi;
+	image_template_scale = scale;
+}
+void Map::getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel, double& dpi, double& scale)
+{
+	use_meters_per_pixel = image_template_use_meters_per_pixel;
+	meters_per_pixel = image_template_meters_per_pixel;
+	dpi = image_template_dpi;
+	scale = image_template_scale;
 }
 
 void Map::setHasUnsavedChanges(bool has_unsaved_changes)
@@ -1346,9 +1455,10 @@ MapView::MapView(Map* map) : map(map)
 	position_y = 0;
 	view_x = 0;
 	view_y = 0;
-	update();
-	
-	//map->addMapView(this);
+    map_visibility = new TemplateVisibility();
+    map_visibility->visible = true;
+    update();
+    //map->addMapView(this);
 }
 MapView::~MapView()
 {
@@ -1356,6 +1466,7 @@ MapView::~MapView()
 	
 	foreach (TemplateVisibility* vis, template_visibilities)
 		delete vis;
+    delete map_visibility;
 }
 
 void MapView::save(QFile* file)
@@ -1638,6 +1749,11 @@ void MapView::update()
 	
 	// Create view_to_map
 	map_to_view.invert(view_to_map);
+}
+
+TemplateVisibility *MapView::getMapVisibility()
+{
+    return map_visibility;
 }
 
 bool MapView::isTemplateVisible(Template* temp)

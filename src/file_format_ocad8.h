@@ -20,12 +20,15 @@
 #ifndef OCAD8_FILE_IMPORT_H
 #define OCAD8_FILE_IMPORT_H
 
+#include <set>
+
 #include <QTextCodec>
 
 #include "../libocad/libocad.h"
 
 #include "file_format.h"
 #include "symbol.h"
+#include "symbol_combined.h"
 #include "object.h"
 #include "template.h"
 
@@ -37,7 +40,7 @@ public:
     OCAD8FileFormat() : Format("OCAD78", QObject::tr("OCAD Versions 7, 8"), "ocd", true, false, true) {}
 
     bool understands(const unsigned char *buffer, size_t sz) const;
-    Importer *createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
+	Importer *createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
 };
 
 
@@ -75,6 +78,7 @@ protected:
     // Symbol import
     Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);
     Symbol *importLineSymbol(const OCADLineSymbol *ocad_symbol);
+    Symbol *importDoubleLineSymbol(const OCADLineSymbol *ocad_symbol);
     Symbol *importAreaSymbol(const OCADAreaSymbol *ocad_symbol);
     Symbol *importTextSymbol(const OCADTextSymbol *ocad_symbol);
     RectangleInfo *importRectSymbol(const OCADRectSymbol *ocad_symbol);
@@ -83,25 +87,29 @@ protected:
     Object *importObject(const OCADObject *ocad_object, MapLayer* layer);
 	bool importRectangleObject(const OCADObject* ocad_object, MapLayer* layer, const RectangleInfo& rect);
 
-    // Template import
-    Template *importTemplate(OCADTemplateEntry *entry);
+    // String import
+    void importString(OCADStringEntry *entry);
     Template *importRasterTemplate(const OCADBackground &background);
 
     // Some helper functions that are used in multiple places
     PointSymbol *importPattern(s16 npts, OCADPoint *pts);
     void fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol);
+    void fillCombinedSymbol(CombinedSymbol *symbol, const std::vector<Symbol *> &symbols);
     void fillPathCoords(Object *object, bool is_area, s16 npts, OCADPoint *pts);
 	bool fillTextPathCoords(TextObject *object, TextSymbol *symbol, s16 npts, OCADPoint *pts);
     bool isRasterImageFile(const QString &filename) const;
+    bool isMainLineTrivial(const LineSymbol *symbol);
+
 
     // Unit conversion functions
     QString convertPascalString(const char *p);
-    QString convertCString(const char *p, size_t n);
-    QString convertWideCString(const char *p, size_t n);
+	QString convertCString(const char *p, size_t n, bool ignore_first_newline);
+	QString convertWideCString(const char *p, size_t n, bool ignore_first_newline);
     float convertRotation(int angle);
     void convertPoint(MapCoord &c, int ocad_x, int ocad_y);
     qint64 convertSize(int ocad_size);
     MapColor *convertColor(int color);
+	double convertTemplateScale(double ocad_scale);
 
 private:
     /// Handle to the open OCAD file

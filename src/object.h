@@ -44,8 +44,6 @@ public:
 	{
 		Point = 0,	// A single coordinate, no futher coordinates can be added
 		Path = 1,	// A dynamic list of coordinates
-		Circle = 2,
-		Rectangle = 3,
 		Text = 4
 	};
 	
@@ -79,7 +77,7 @@ public:
 	int isPointOnObject(MapCoordF coord, float tolerance, bool extended_selection);
 	
 	/// Checks if a path point (excluding curve control points) is included in the given box
-	bool isPathPointInBox(QRectF box);
+	bool intersectsBox(QRectF box);
 	
 	/// Take ownership of the renderables
 	void takeRenderables();
@@ -127,6 +125,15 @@ protected:
 class PathObject : public Object
 {
 public:
+	/// Every PathPart has a type taken from this enum which affects how they can be edited: paths can be edited freely, the other types retain their shape.
+	/// TODO: currently, all parts are implicitly assumed to be of type Path
+	enum PartType
+	{
+		Path = 0,
+		Circle = 1,
+		Rect = 2
+	};
+	
 	/// Helper struct with information about parts of paths. A part is a path segment which is separated from other parts by hole points.
 	struct PathPart
 	{
@@ -138,12 +145,16 @@ public:
 		
 		inline int getNumCoords() const {return end_index - start_index + 1;}
 		inline bool isClosed() const {assert(end_index < (int)path->coords.size()); return path->coords[end_index].isClosePoint();}
-		/// Closes or opens the sub-path
-		void setClosed(bool closed);
+		/// Closes or opens the sub-path.
+		/// If closed == true and may_use_existing_close_point == false, a new point is added as closing point even if its coordinates are identical to the existing last point.
+		void setClosed(bool closed, bool may_use_existing_close_point = false);
 		/// like setClosed(true), but merges start and end point at their center
 		void connectEnds();	
 		/// Calculates the number of points, excluding close points and curve handles
 		int calcNumRegularPoints();
+		
+		double getLength();
+		double calculateArea();
 	};
 	
 	PathObject(Symbol* symbol = NULL);
@@ -157,8 +168,9 @@ public:
 	inline MapCoord& getCoordinate(int pos) {return coords[pos];}
 	void setCoordinate(int pos, MapCoord c);
 	void addCoordinate(int pos, MapCoord c);
-	void addCoordinate(MapCoord c);
+	void addCoordinate(MapCoord c, bool start_new_part = false);
 	void deleteCoordinate(int pos, bool adjust_other_coords);	// adjust_other_coords does not work if deleting bezier curve handles!
+	void clearCoordinates();
 	
 	MapCoord& shiftedCoord(int base_index, int offset, PathPart& part);
 	int shiftedCoordIndex(int base_index, int offset, PathPart& part); // Returns the base_index shifted by offset, correctly handling holes in areas and closed paths. Returns -1 if the index is invalid (happens if going over a path end or after looping around once in a closed path)
@@ -214,8 +226,6 @@ protected:
 	std::vector<PathPart> parts;
 	PathCoordVector path_coords;	// only valid after calling update()
 };
-
-// TODO: circle, ellise and rectangle objects as subclasses of PathObject
 
 /// Object type which can only be used for point symbols, and is also the only object which can be used with them
 class PointObject : public Object

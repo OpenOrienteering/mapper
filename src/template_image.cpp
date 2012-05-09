@@ -59,12 +59,12 @@ bool TemplateImage::open(QWidget* dialog_parent, MapView* main_view)
 	if (getTemplateFilename().endsWith(".gif", Qt::CaseInsensitive))
 		QMessageBox::warning(dialog_parent, tr("Warning"), tr("Loading a GIF image template.\nSaving GIF files is not supported. This means that drawings on this template won't be saved!\nIf you do not intend to draw on this template however, that is no problem."));
 	
-	TemplateImageOpenDialog open_dialog(dialog_parent);
+	TemplateImageOpenDialog open_dialog(map, dialog_parent);
 	open_dialog.setWindowModality(Qt::WindowModal);
 	if (open_dialog.exec() == QDialog::Rejected)
 		return false;
 	
-	cur_trans.template_scale_x = open_dialog.getMpp(map);
+	cur_trans.template_scale_x = open_dialog.getMpp();
 	cur_trans.template_scale_y = cur_trans.template_scale_x;
 	
 	cur_trans.template_x = main_view->getPositionX();
@@ -163,25 +163,33 @@ bool TemplateImage::changeTemplateFileImpl(const QString& filename)
 	}
 }
 
-TemplateImageOpenDialog::TemplateImageOpenDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
+TemplateImageOpenDialog::TemplateImageOpenDialog(Map* map, QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
 {
 	setWindowTitle(tr("Open image template"));
 	
+	bool use_meters_per_pixel;
+	double meters_per_pixel;
+	double dpi;
+	double scale;
+	map->getImageTemplateDefaults(use_meters_per_pixel, meters_per_pixel, dpi, scale);
+	
 	mpp_radio = new QRadioButton(tr("Meters per pixel:"));
-	mpp_edit = new QLineEdit("1");
+	mpp_edit = new QLineEdit((meters_per_pixel > 0) ? QString::number(meters_per_pixel) : "");
 	mpp_edit->setValidator(new DoubleValidator(0, 999999, mpp_edit));
 	
 	dpi_radio = new QRadioButton(tr("Scanned with"));
-	dpi_edit = new QLineEdit("300");
+	dpi_edit = new QLineEdit((dpi > 0) ? QString::number(dpi) : "");
 	dpi_edit->setValidator(new DoubleValidator(1, 999999, dpi_edit));
-	dpi_edit->setEnabled(false);
 	QLabel* dpi_label = new QLabel(tr("dpi"));
 	
-	scale_check = new QCheckBox(tr("Different template scale 1 :"));
-	scale_check->setEnabled(false);
-	scale_edit = new QLineEdit("15000");
+	QLabel* scale_label = new QLabel(tr("Template scale:  1 :"));
+	scale_edit = new QLineEdit((scale > 0) ? QString::number(scale) : "");
 	scale_edit->setValidator(new QIntValidator(1, 999999, scale_edit));
-	scale_edit->setEnabled(false);
+	
+	if (use_meters_per_pixel)
+		mpp_radio->setChecked(true);
+	else
+		dpi_radio->setChecked(true);
 	
 	QHBoxLayout* mpp_layout = new QHBoxLayout();
 	mpp_layout->addWidget(mpp_radio);
@@ -194,7 +202,7 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(QWidget* parent) : QDialog(pare
 	dpi_layout->addStretch(1);
 	QHBoxLayout* scale_layout = new QHBoxLayout();
 	scale_layout->addSpacing(16);
-	scale_layout->addWidget(scale_check);
+	scale_layout->addWidget(scale_label);
 	scale_layout->addWidget(scale_edit);
 	scale_layout->addStretch(1);
 	
@@ -215,48 +223,48 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(QWidget* parent) : QDialog(pare
 	layout->addLayout(buttons_layout);
 	setLayout(layout);
 	
+	connect(mpp_edit, SIGNAL(textEdited(QString)), this, SLOT(setOpenEnabled()));
+	connect(dpi_edit, SIGNAL(textEdited(QString)), this, SLOT(setOpenEnabled()));
+	connect(scale_edit, SIGNAL(textEdited(QString)), this, SLOT(setOpenEnabled()));
 	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
-	connect(open_button, SIGNAL(clicked(bool)), this, SLOT(accept()));
-	connect(mpp_radio, SIGNAL(clicked(bool)), this, SLOT(mppRadioClicked(bool)));
-	connect(dpi_radio, SIGNAL(clicked(bool)), this, SLOT(dpiRadioClicked(bool)));
-	connect(scale_check, SIGNAL(clicked(bool)), this, SLOT(scaleCheckClicked(bool)));
+	connect(open_button, SIGNAL(clicked(bool)), this, SLOT(doAccept()));
+	connect(mpp_radio, SIGNAL(clicked(bool)), this, SLOT(radioClicked()));
+	connect(dpi_radio, SIGNAL(clicked(bool)), this, SLOT(radioClicked()));
 	
-	mpp_radio->setChecked(true);
+	radioClicked();
 }
-double TemplateImageOpenDialog::getMpp(Map* map) const
+double TemplateImageOpenDialog::getMpp() const
 {
 	if (mpp_radio->isChecked())
 		return mpp_edit->text().toDouble();
 	else
 	{
-		double dpi = dpi_edit->text().toDouble();		// dots/pixels per inch(on map)
-		double ipd = 1 / dpi;							// inch(on map) per pixel
-		double mpd = ipd * 0.0254;						// meters(on map) per pixel
-		double mpp;										// meters(in reality) per pixel
-		if (scale_check->isChecked())
-			mpp = mpd * scale_edit->text().toDouble();
-		else
-			mpp = mpd * map->getScaleDenominator();
+		double dpi = dpi_edit->text().toDouble();			// dots/pixels per inch(on map)
+		double ipd = 1 / dpi;								// inch(on map) per pixel
+		double mpd = ipd * 0.0254;							// meters(on map) per pixel	
+		double mpp = mpd * scale_edit->text().toDouble();	// meters(in reality) per pixel
 		return mpp;
 	}
 }
-void TemplateImageOpenDialog::mppRadioClicked(bool checked)
+void TemplateImageOpenDialog::radioClicked()
 {
-	dpi_edit->setEnabled(!checked);
-	scale_check->setEnabled(!checked);
-	scale_edit->setEnabled(!checked && scale_check->isChecked());
-	mpp_edit->setEnabled(checked);
+	bool mpp_checked = mpp_radio->isChecked();
+	dpi_edit->setEnabled(!mpp_checked);
+	scale_edit->setEnabled(!mpp_checked);
+	mpp_edit->setEnabled(mpp_checked);
+	setOpenEnabled();
 }
-void TemplateImageOpenDialog::dpiRadioClicked(bool checked)
+void TemplateImageOpenDialog::setOpenEnabled()
 {
-	dpi_edit->setEnabled(checked);
-	scale_check->setEnabled(checked);
-	scale_edit->setEnabled(checked && scale_check->isChecked());
-	mpp_edit->setEnabled(!checked);
+	if (mpp_radio->isChecked())
+		open_button->setEnabled(!mpp_edit->text().isEmpty());
+	else
+		open_button->setEnabled(!scale_edit->text().isEmpty() && !dpi_edit->text().isEmpty());
 }
-void TemplateImageOpenDialog::scaleCheckClicked(bool checked)
+void TemplateImageOpenDialog::doAccept()
 {
-	scale_edit->setEnabled(checked);
+	map->setImageTemplateDefaults(mpp_radio->isChecked(), mpp_edit->text().toDouble(), dpi_edit->text().toDouble(), scale_edit->text().toDouble());
+	accept();
 }
 
 #include "template_image.moc"
