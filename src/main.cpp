@@ -88,7 +88,7 @@ int main(int argc, char** argv)
 	return qapp.exec();
 }
 
-#ifdef WIN32
+#ifdef _MSC_VER
 #include "Windows.h"
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {

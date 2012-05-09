@@ -833,9 +833,9 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 		++cur_line_coord;
 	
 	// Start position
-	int start_bezier_index = -1;	// if the range starts at a bezier curve, this is the curve's index, otherwise -1
-	float start_bezier_split_param;	// the parameter value where the split of the curve for the range start was made
-	MapCoordF o3, o4;				// temporary bezier control points
+	int start_bezier_index = -1;		// if the range starts at a bezier curve, this is the curve's index, otherwise -1
+	float start_bezier_split_param = 0;	// the parameter value where the split of the curve for the range start was made
+	MapCoordF o3, o4;					// temporary bezier control points
 	if (flags[line_coords[cur_line_coord].index].isCurveStart())
 	{
 		int index = line_coords[cur_line_coord].index;

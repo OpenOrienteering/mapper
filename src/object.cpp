@@ -829,7 +829,7 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 	
 	// Start position
 	int start_bezier_index = -1;		// if the range starts at a bezier curve, this is the curve's index, otherwise -1
-	float start_bezier_split_param;	// the parameter value where the split of the curve for the range start was made
+	float start_bezier_split_param = 0;	// the parameter value where the split of the curve for the range start was made
 	MapCoordF o3, o4;					// temporary bezier control points
 	if (p_coords->at(path_coords[cur_path_coord].index).isCurveStart())
 	{

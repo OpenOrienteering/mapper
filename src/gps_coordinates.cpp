@@ -120,8 +120,8 @@ bool GPSCoordinate::fromString(QString str)
 	// TODO: This cannot handle spaces in some in-between positions, e.g. "S 48° 31' 43.932\" E 12° 8' 25.332\"" or "S 48° 31.732 E 012° 08.422"
 	
 	QString temp = "";
-	double temp_latitude;
-	double temp_longitude;
+	double temp_latitude = 0;
+	double temp_longitude = 0;
 	bool temp_latitude_set = false;
 	
 	QChar letter = 0;

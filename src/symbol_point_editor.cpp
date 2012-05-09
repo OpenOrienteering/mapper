@@ -789,7 +789,7 @@ void PointSymbolEditorWidget::updateCoordsRow(int row)
 	assert(element_list->currentRow() > 0);
 	Object* object = getCurrentElementObject();
 	
-	MapCoordF coordF;
+	MapCoordF coordF(0, 0);
 	if (object->getType() == Object::Point)
 		coordF = reinterpret_cast<PointObject*>(object)->getCoordF();
 	else if (object->getType() == Object::Path)
