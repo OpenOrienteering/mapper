@@ -52,6 +52,7 @@ set(Mapper_SRCS
  src/main_window.cpp
  src/main_window_home_screen.cpp
  src/print_dock_widget.cpp
+ src/settings.cpp
  src/settings_dialog.cpp
 
  src/map.cpp

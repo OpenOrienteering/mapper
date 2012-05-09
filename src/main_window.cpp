@@ -140,6 +140,9 @@ void MainWindow::createFileMenu()
 	save_as_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(save_as_act, SIGNAL(triggered()), this, SLOT(showSaveAsDialog()));
 	
+	settings_act = new QAction(tr("Settings..."), this);
+	connect(settings_act, SIGNAL(triggered()), this, SLOT(showSettings()));
+	
 	close_act = new QAction(tr("Close"), this);
 	close_act->setShortcut(tr("Ctrl+W"));
 	close_act->setStatusTip(tr("Close this file"));
@@ -158,6 +161,8 @@ void MainWindow::createFileMenu()
 	file_menu->addAction(open_act);
 	file_menu->addAction(save_act);
 	file_menu->addAction(save_as_act);
+	file_menu->addSeparator();
+	file_menu->addAction(settings_act);
 	file_menu->addSeparator();
 	file_menu->addAction(close_act);
 	file_menu->addAction(exit_act);
@@ -619,9 +624,8 @@ void MainWindow::toggleFullscreenMode()
 
 void MainWindow::showSettings()
 {
-	SettingsDialog *dialog = new SettingsDialog(this);
-	dialog->exec();
-	delete dialog;
+	SettingsDialog dialog(this);
+	dialog.exec();
 }
 void MainWindow::showAbout()
 {

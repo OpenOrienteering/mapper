@@ -19,122 +19,106 @@
 
 #include "settings_dialog.h"
 
-#include <QHeaderView>
-#include <QEvent>
-#include <QLineEdit>
-#include <QDateTime>
-#include <QDate>
-#include <QTime>
-#include <QHBoxLayout>
-#include <QDebug>
-#include <QDialogButtonBox>
-#include <QMessageBox>
-#include <QRadioButton>
-#include <QCheckBox>
-#include <QApplication>
-#include <QDesktopWidget>
-#include <QSpinBox>
-#include <QGroupBox>
+#include <QtGui>
+
 #include "map_editor.h"
 #include "map_widget.h"
 #include "main_window.h"
+#include "settings.h"
 
-void SettingsPage::apply(){
+void SettingsPage::apply()
+{
 	QSettings settings;
-	for(int i = 0; i < changes.size(); i++){
+	for (int i = 0; i < changes.size(); i++)
 		settings.setValue(changes.keys().at(i), changes.values().at(i));
-	}
 }
 
-////////////////////////////
+// ### EditorPage ###
 
-EditorPage::EditorPage(MainWindow* main_window, QWidget* parent) : SettingsPage(main_window, parent){
-	QVBoxLayout *l = new QVBoxLayout;
-	this->setLayout(l);
-	QCheckBox *antialiasing = new QCheckBox(tr("Enable Antialiasing"), this);
-	l->addWidget(antialiasing);
-	QSpinBox *tolerance = new QSpinBox(this);
+EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
+{
+	QGridLayout* layout = new QGridLayout();
+	this->setLayout(layout);
+	
+	int row = 0;
+	
+	QCheckBox* antialiasing = new QCheckBox(tr("Enable Antialiasing"), this);
+	antialiasing->setToolTip(tr("Antialiasing makes the map look much better, but also slows down the map display"));
+	layout->addWidget(antialiasing, row++, 0, 1, 2);
+	
+	QLabel* tolerance_label = new QLabel(tr("Click tolerance:"));
+	QSpinBox* tolerance = new QSpinBox(this);
 	tolerance->setMinimum(1);
 	tolerance->setMaximum(50);
-	l->addWidget(tolerance);
-
-	QSettings current;
-	if(current.value("MapDisplay/antialiasing", QVariant(true)).toBool())
-		antialiasing->setChecked(true);
-	else
-		antialiasing->setChecked(false);
-	tolerance->setValue(current.value("MapEditor/click_tolerance", QVariant(5)).toInt());
+	layout->addWidget(tolerance_label, row, 0);
+	layout->addWidget(tolerance, row++, 1);
+	
+	antialiasing->setChecked(Settings::getInstance().getSetting(Settings::MapDisplay_Antialiasing).toBool());
+	tolerance->setValue(Settings::getInstance().getSetting(Settings::MapEditor_ClickTolerance).toInt());
+	
+	layout->setRowStretch(row, 1);
 
 	connect(antialiasing, SIGNAL(toggled(bool)), this, SLOT(antialiasingClicked(bool)));
-	connect(tolerance, SIGNAL(valueChanged(int)), this, SLOT(toleranceValueChanged(int)));
+	connect(tolerance, SIGNAL(valueChanged(int)), this, SLOT(toleranceChanged(int)));
 }
 
-void EditorPage::antialiasingClicked(bool res){
-	changes.insert("MapDisplay/antialiasing", res);
-}
-
-void EditorPage::toleranceValueChanged(int val){
-	changes.insert("MapEditor/click_tolerance", QVariant(val));
-}
-
-void EditorPage::apply(){
-	SettingsPage::apply();
-	QSettings settings;
-	bool use = settings.value("MapDisplay/antialiasing", QVariant(true)).toBool();
-	MapEditorTool::setToolClickTolerance(settings.value("MapEditor/click_tolerance", QVariant(5)).toInt());
-	foreach (QWidget *widget, qApp->topLevelWidgets())
-	{
-		MainWindow* other = qobject_cast<MainWindow*>(widget);
-		if(!other)
-			continue;
-		if(qobject_cast<MapEditorController*>(other->getController())){
-			qobject_cast<MapEditorController*>(other->getController())->getMainWidget()->setUsesAntialiasing(use);
-		}
-	}
-}
-
-////////////////////////////
-
-SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent)
+void EditorPage::antialiasingClicked(bool checked)
 {
+	changes.insert(Settings::getInstance().getSettingPath(Settings::MapDisplay_Antialiasing), QVariant(checked));
+}
+
+void EditorPage::toleranceChanged(int value)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_ClickTolerance), QVariant(value));
+}
+
+// ### SettingsDialog ###
+
+SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
+{
+	setWindowTitle(tr("Settings"));
+	QVBoxLayout* layout = new QVBoxLayout();
+	this->setLayout(layout);
+	//this->resize(640, 480);
+	
 	tabWidget = new QTabWidget(this);
-	QVBoxLayout *l = new QVBoxLayout;
-	l->addWidget(tabWidget);
-	this->setLayout(l);
-	this->resize(640, 480);
+	layout->addWidget(tabWidget);
+	
+	button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel,
+								Qt::Horizontal, this);
+	layout->addWidget(button_box);
+	connect(button_box, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonPressed(QAbstractButton*)));
+	
+	// Add all pages
+	addPage(new EditorPage(this));
+}
 
-	dbb = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel,
-												 Qt::Horizontal, this);
-	l->addWidget(dbb);
-	connect(dbb, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonPressed(QAbstractButton*)));
-
-	MainWindow *main_window = qobject_cast<MainWindow*>(parent);
-	if(!main_window){
-		this->reject();
-		return;
-	}
-
-	pages.append(new EditorPage(main_window, this));
+void SettingsDialog::addPage(SettingsPage* page)
+{
+	pages.append(page);
 	tabWidget->addTab(pages.last(), pages.last()->title());
 }
 
-void SettingsDialog::buttonPressed(QAbstractButton *b){
-	QDialogButtonBox::StandardButton button = dbb->standardButton(b);
-	if(button == QDialogButtonBox::Ok){
-		foreach(SettingsPage *page, pages){
+void SettingsDialog::buttonPressed(QAbstractButton* button)
+{
+	QDialogButtonBox::StandardButton id = button_box->standardButton(button);
+	if (id == QDialogButtonBox::Ok)
+	{
+		foreach(SettingsPage* page, pages)
 			page->ok();
-		}
+		Settings::getInstance().applySettings();
 		this->accept();
 	}
-	else if(button == QDialogButtonBox::Apply){
-		foreach(SettingsPage *page, pages){
+	else if (id == QDialogButtonBox::Apply)
+	{
+		foreach(SettingsPage* page, pages)
 			page->apply();
-		}
+		Settings::getInstance().applySettings();
 	}
-	else if(button == QDialogButtonBox::Cancel){
-		foreach(SettingsPage *page, pages){
+	else if (id == QDialogButtonBox::Cancel)
+	{
+		foreach(SettingsPage* page, pages)
 			page->cancel();
-		}
 		this->reject();
 	}
 }

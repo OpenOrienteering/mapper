@@ -25,7 +25,7 @@
 
 #include "main_window.h"
 #include "main_window_home_screen.h"
-
+#include "settings.h"
 #include "file_format_native.h"
 #include "file_format_ocad8.h"
 #include "file_format_xml.h"
@@ -44,6 +44,7 @@ int main(int argc, char** argv)
 	// Set settings defaults
 	QCoreApplication::setOrganizationName("Thomas Schoeps");
 	QCoreApplication::setApplicationName("OpenOrienteering");
+	Settings::getInstance().applySettings();
 	
 #ifdef WIN32
 	// Load plugins on Windows

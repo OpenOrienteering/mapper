@@ -38,7 +38,7 @@ class MapWidget : public QWidget
 Q_OBJECT
 friend class MapView;
 public:
-	MapWidget(bool show_help, bool use_antialiasing, QWidget* parent = NULL);
+	MapWidget(bool show_help, bool force_antialiasing, QWidget* parent = NULL);
 	~MapWidget();
 	
 	void setMapView(MapView* view);
@@ -99,9 +99,6 @@ public:
 	
     virtual QSize sizeHint() const;
 	
-	inline bool usesAntialiasing() { return use_antialiasing; }
-	void setUsesAntialiasing(bool use_antialiasing){ this->use_antialiasing = use_antialiasing; }
-	
 public slots:
 	void keyPressed(QKeyEvent* event);
 	void keyReleased(QKeyEvent* event);
@@ -152,7 +149,7 @@ private:
 	QLabel* cursorpos_label;
 	
 	bool show_help;
-	bool use_antialiasing;
+	bool force_antialiasing;
 	
 	// Panning
 	bool dragging;

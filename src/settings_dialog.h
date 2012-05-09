@@ -17,61 +17,63 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SETTINGS_DIALOG_H
-#define SETTINGS_DIALOG_H
+#ifndef _OPENORIENTEERING_SETTINGS_DIALOG_H_
+#define _OPENORIENTEERING_SETTINGS_DIALOG_H_
 
+#include <QHash>
 #include <QDialog>
-#include <QPushButton>
-#include <QSettings>
-#include <QTableWidget>
+
+QT_BEGIN_NAMESPACE
+class QTabWidget;
+class QAbstractButton;
+QT_END_NAMESPACE
 
 class MainWindow;
 class QDialogButtonBox;
 
 class SettingsPage : public QWidget
 {
-	Q_OBJECT
+Q_OBJECT
 public:
-	SettingsPage(MainWindow* main_window, QWidget* parent = 0) : QWidget(parent), main_window(main_window){}
-	virtual void cancel() = 0;
+	SettingsPage(QWidget* parent = 0) : QWidget(parent) {}
+	virtual void cancel() { changes.clear(); }
 	virtual void apply();
-	virtual void ok(){ this->apply(); }
+	virtual void ok() { this->apply(); }
 	virtual QString title() = 0;
 
 protected:
-	MainWindow* main_window;
-
-	//The changes to be done when accepted
+	// The changes to be done when accepted
 	QHash<QString, QVariant> changes;
 };
 
 class SettingsDialog : public QDialog
 {
-	Q_OBJECT
+Q_OBJECT
 public:
-	SettingsDialog(QWidget *parent = 0);
+	SettingsDialog(QWidget* parent = 0);
 
 private:
-	QTabWidget *tabWidget;
-	QDialogButtonBox *dbb;
+	void addPage(SettingsPage* page);
+	
+	QTabWidget* tabWidget;
+	QDialogButtonBox* button_box;
 	QList<SettingsPage*> pages;
 
 private slots:
-	void buttonPressed(QAbstractButton*);
+	void buttonPressed(QAbstractButton* button);
 };
 
 class EditorPage : public SettingsPage
 {
-	Q_OBJECT
+Q_OBJECT
 public:
-	EditorPage(MainWindow* main_window, QWidget* parent = 0);
+	EditorPage(QWidget* parent = 0);
 
-	virtual void cancel(){ changes.clear(); }
-	virtual QString title(){ return QString("Editor Settings"); }
-	virtual void apply();
+	virtual QString title() { return tr("Editor"); }
+	
 private slots:
-	void antialiasingClicked(bool);
-	void toleranceValueChanged(int);
+	void antialiasingClicked(bool checked);
+	void toleranceChanged(int value);
 };
 
 #endif

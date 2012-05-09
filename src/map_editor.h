@@ -330,11 +330,7 @@ public:
 	inline QAction* getAction() const {return tool_button;}
 	
 	static void loadPointHandles();
-
-	static void setToolClickTolerance(int tolerance){ click_tolerance = tolerance; }
-	static int getToolClickTolerance(){ return click_tolerance; }
 	
-	static int click_tolerance;
 	static const QRgb inactive_color;
 	static const QRgb active_color;
 	static const QRgb selection_color;

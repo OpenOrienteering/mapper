@@ -30,6 +30,7 @@
 #include "symbol_combined.h"
 #include "map_undo.h"
 #include "tool_draw_path.h"
+#include "settings.h"
 
 QCursor* CutTool::cursor = NULL;
 
@@ -407,6 +408,7 @@ void CutTool::updateHoverPoint(QPointF cursor_pos_screen, MapWidget* widget)
 }
 bool CutTool::findEditPoint(PathCoord& out_edit_point, PathObject*& out_edit_object, MapCoordF cursor_pos_map, int with_type, int without_type, MapWidget* widget)
 {
+	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
 	Map* map = editor->getMap();
 	
 	out_edit_object = NULL;
@@ -513,6 +515,7 @@ void CutTool::pathAborted()
 }
 void CutTool::pathFinished(PathObject* split_path)
 {
+	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
 	Map* map = editor->getMap();
 	
 	// Get path endpoint and check if it is on the area boundary

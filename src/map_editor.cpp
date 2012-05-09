@@ -49,6 +49,7 @@
 #include "tool_measure.h"
 #include "tool_boolean.h"
 #include "object_text.h"
+#include "settings.h"
 
 // ### MapEditorController ###
 
@@ -254,9 +255,8 @@ void MapEditorController::attach(MainWindow* window)
 	window->statusBar()->addPermanentWidget(statusbar_zoom_label);
 	window->statusBar()->addPermanentWidget(statusbar_cursorpos_label);
 	
-	QSettings settings;
 	// Create map widget
-	map_widget = new MapWidget(mode == MapEditor, settings.value("MapDisplay/antialiasing", QVariant(true)).toBool()); //mode == SymbolEditor);
+	map_widget = new MapWidget(mode == MapEditor, mode == SymbolEditor);
 	connect(window, SIGNAL(keyPressed(QKeyEvent*)), map_widget, SLOT(keyPressed(QKeyEvent*)));
 	connect(window, SIGNAL(keyReleased(QKeyEvent*)), map_widget, SLOT(keyReleased(QKeyEvent*)));
 	map_widget->setMapView(main_view);
@@ -285,8 +285,6 @@ void MapEditorController::attach(MainWindow* window)
 	}
 	if (has_invalid_template)
 		window->setStatusBarText("<font color=\"#c00\">" + tr("One or more templates could not be loaded. Use the Templates -> Template setup window to resolve the issue(s) by clicking on the red template file name(s).") + "</font>");
-
-	MapEditorTool::setToolClickTolerance(settings.value("MapEditor/click_tolerance", QVariant(5)).toInt());
 
 	// Show the symbol window
 	if (mode == MapEditor)
@@ -447,8 +445,8 @@ void MapEditorController::createMenuAndToolbars()
 
     // Extend file menu
 	QMenu* file_menu = window->getFileMenu();
-	file_menu->insertAction(window->getCloseAct(), print_act);
-	file_menu->insertSeparator(window->getCloseAct());
+	file_menu->insertAction(window->getFileMenuExtensionAct(), print_act);
+	file_menu->insertSeparator(window->getFileMenuExtensionAct());
 	file_menu->insertAction(print_act, import_act);
 	file_menu->insertSeparator(print_act);
 		
@@ -1456,7 +1454,6 @@ void EditorDockWidget::closeEvent(QCloseEvent* event)
 
 // ### MapEditorTool ###
 
-int MapEditorTool::click_tolerance = 5;
 const QRgb MapEditorTool::inactive_color = qRgb(0, 0, 255);
 const QRgb MapEditorTool::active_color = qRgb(255, 150, 0);
 const QRgb MapEditorTool::selection_color = qRgb(210, 0, 229);
@@ -1693,6 +1690,7 @@ bool MapEditorTool::calculateBoxTextHandles(QPointF* out)
 
 int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QPointF* box_text_handles, QRectF* selection_extent, MapWidget* widget)
 {
+	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
 	const float click_tolerance_squared = click_tolerance * click_tolerance;
 	
 	// Check object
