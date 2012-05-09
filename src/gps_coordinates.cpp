@@ -21,6 +21,9 @@
 #include "gps_coordinates.h"
 
 #include <QString>
+#include <QDebug>
+
+#include "georeferencing.h"
 
 GPSProjectionParameters::GPSProjectionParameters()
 {
@@ -37,20 +40,10 @@ void GPSProjectionParameters::update()
 	v0 = a / sqrt(1 - e_sq * sin_center_latitude*sin_center_latitude);
 }
 
-GPSCoordinate::GPSCoordinate()
-{
-	latitude = 0;
-	longitude = 0;
-}
-GPSCoordinate::GPSCoordinate(double latitude, double longitude, bool given_in_degrees) : latitude(latitude), longitude(longitude)
-{
-	if (given_in_degrees)
-	{
-		this->latitude = latitude * M_PI / 180;
-		this->longitude = longitude * M_PI / 180;
-	}
-}
-GPSCoordinate::GPSCoordinate(MapCoordF map_coord, const GPSProjectionParameters& params)
+
+// Legacy "GPS projection" code 
+
+LatLon::LatLon(MapCoordF map_coord, const GPSProjectionParameters& params)
 {
 	const int MAX_ITERATIONS = 20;						// TODO: is that ok?
 	const double INSIGNIFICANT_CHANGE = 0.000000001;	// TODO: is that ok?
@@ -93,7 +86,8 @@ GPSCoordinate::GPSCoordinate(MapCoordF map_coord, const GPSProjectionParameters&
 			break;
 	}
 }
-MapCoordF GPSCoordinate::toMapCoordF(const GPSProjectionParameters& params)
+
+MapCoordF LatLon::toMapCoordF(const GPSProjectionParameters& params) const
 {
 	double sin_l = sin(latitude);
 	double cos_l = cos(latitude);
@@ -105,7 +99,7 @@ MapCoordF GPSCoordinate::toMapCoordF(const GPSProjectionParameters& params)
 					    params.e_sq*(params.v0*params.sin_center_latitude - v*sin_l)*params.cos_center_latitude));
 }
 
-void GPSCoordinate::toCartesianCoordinates(const GPSProjectionParameters& params, double height, double& x, double& y, double& z)
+void LatLon::toCartesianCoordinates(const GPSProjectionParameters& params, double height, double& x, double& y, double& z)
 {
 	double alpha = acos(params.b / params.a);
 	double N = params.a / sqrt(1 - (sin(latitude)*sin(alpha))*(sin(latitude)*sin(alpha)));
@@ -115,7 +109,7 @@ void GPSCoordinate::toCartesianCoordinates(const GPSProjectionParameters& params
 	z = (cos(alpha)*cos(alpha)*N + height)*sin(latitude);
 }
 
-bool GPSCoordinate::fromString(QString str)
+bool LatLon::fromString(QString str)
 {
 	// TODO: This cannot handle spaces in some in-between positions, e.g. "S 48° 31' 43.932\" E 12° 8' 25.332\"" or "S 48° 31.732 E 012° 08.422"
 	

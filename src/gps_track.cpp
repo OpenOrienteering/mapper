@@ -30,7 +30,7 @@
 #include "global.h"
 #include "dxfparser.h"
 
-GPSPoint::GPSPoint(GPSCoordinate coord, QDateTime datetime, float elevation, int num_satellites, float hDOP)
+GPSPoint::GPSPoint(LatLon coord, QDateTime datetime, float elevation, int num_satellites, float hDOP)
 {
 	gps_coord = coord;
 	this->datetime = datetime;
@@ -38,7 +38,7 @@ GPSPoint::GPSPoint(GPSCoordinate coord, QDateTime datetime, float elevation, int
 	this->num_satellites = num_satellites;
 	this->hDOP = hDOP;
 }
-void GPSPoint::save(QXmlStreamWriter* stream)
+void GPSPoint::save(QXmlStreamWriter* stream) const
 {
 	stream->writeAttribute("lat", QString::number(gps_coord.getLatitudeInDegrees(), 'f', 12));
 	stream->writeAttribute("lon", QString::number(gps_coord.getLongitudeInDegrees(), 'f', 12));
@@ -53,16 +53,20 @@ void GPSPoint::save(QXmlStreamWriter* stream)
 		stream->writeTextElement("hdop", QString::number(hDOP, 'f', 3));
 }
 
+
+
 // ### GPSTrack ###
 
 GPSTrack::GPSTrack()
 {
 	current_segment_finished = true;
 }
-GPSTrack::GPSTrack(const GPSProjectionParameters& params) : params(params)
+
+GPSTrack::GPSTrack(const Georeferencing& georef) : georef(georef)
 {
 	current_segment_finished = true;
 }
+
 GPSTrack::GPSTrack(const GPSTrack& other)
 {
 	waypoints = other.waypoints;
@@ -73,7 +77,7 @@ GPSTrack::GPSTrack(const GPSTrack& other)
 	
 	current_segment_finished = other.current_segment_finished;
 	
-	params = other.params;
+	georef = other.georef;
 }
 
 void GPSTrack::clear()
@@ -105,10 +109,10 @@ bool GPSTrack::loadFrom(const QString& path, bool project_points, QWidget* dialo
 			{
 				if (stream.name().compare("wpt", Qt::CaseInsensitive) == 0 || stream.name().compare("trkpt", Qt::CaseInsensitive) == 0)
 				{
-					point = GPSPoint(GPSCoordinate(stream.attributes().value("lat").toString().toDouble(),
+					point = GPSPoint(LatLon(stream.attributes().value("lat").toString().toDouble(),
 												   stream.attributes().value("lon").toString().toDouble(), true));
 					if (project_points)
-						point.map_coord = point.gps_coord.toMapCoordF(params);
+						point.map_coord = georef.toMapCoordF(point.gps_coord, NULL); // FIXME: check for errors
 					point_name = "";
 				}
 				else if (stream.name().compare("trkseg", Qt::CaseInsensitive) == 0)
@@ -158,9 +162,9 @@ bool GPSTrack::loadFrom(const QString& path, bool project_points, QWidget* dialo
 			if(path.type == POINT){
 				if(path.coords.size() < 1)
 					continue;
-				GPSPoint point = GPSPoint(GPSCoordinate(path.coords.at(0).y*val1, path.coords.at(0).x*val2, degrees));
+				GPSPoint point = GPSPoint(LatLon(path.coords.at(0).y*val1, path.coords.at(0).x*val2, degrees));
 				if (project_points)
-					point.map_coord = point.gps_coord.toMapCoordF(params);
+					point.map_coord = georef.toMapCoordF(point.gps_coord, NULL); // FIXME: check for errors
 				waypoints.push_back(point);
 				waypoint_names.push_back(path.layer);
 			}
@@ -169,9 +173,9 @@ bool GPSTrack::loadFrom(const QString& path, bool project_points, QWidget* dialo
 					continue;
 				segment_starts.push_back(segment_points.size());
 				foreach(coordinate_t coord, path.coords){
-					GPSPoint point = GPSPoint(GPSCoordinate(coord.y*val1, coord.x*val2, degrees), QDateTime());
+					GPSPoint point = GPSPoint(LatLon(coord.y*val1, coord.x*val2, degrees), QDateTime());
 					if (project_points)
-						point.map_coord = point.gps_coord.toMapCoordF(params);
+						point.map_coord = georef.toMapCoordF(point.gps_coord, NULL); // FIXME: check for errors
 					segment_points.push_back(point);
 				}
 			}
@@ -181,7 +185,7 @@ bool GPSTrack::loadFrom(const QString& path, bool project_points, QWidget* dialo
 	file.close();
 	return true;
 }
-bool GPSTrack::saveTo(const QString& path)
+bool GPSTrack::saveTo(const QString& path) const
 {
 	QFile file(path);
 	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -197,7 +201,7 @@ bool GPSTrack::saveTo(const QString& path)
 	for (int i = 0; i < size; ++i)
 	{
 		stream.writeStartElement("wpt");
-		GPSPoint& point = getWaypoint(i);
+		const GPSPoint& point = getWaypoint(i);
 		point.save(&stream);
 		stream.writeTextElement("name", waypoint_names[i]);
 		stream.writeEndElement();
@@ -211,7 +215,7 @@ bool GPSTrack::saveTo(const QString& path)
 		for (int k = 0; k < size; ++k)
 		{
 			stream.writeStartElement("trkpt");
-			GPSPoint& point = getSegmentPoint(i, k);
+			const GPSPoint& point = getSegmentPoint(i, k);
 			point.save(&stream);
 			stream.writeEndElement();
 		}
@@ -228,7 +232,7 @@ bool GPSTrack::saveTo(const QString& path)
 
 void GPSTrack::appendTrackPoint(GPSPoint& point)
 {
-	point.map_coord = point.gps_coord.toMapCoordF(params);
+	point.map_coord = georef.toMapCoordF(point.gps_coord, NULL); // FIXME: check for errors
 	segment_points.push_back(point);
 	
 	if (current_segment_finished)
@@ -244,29 +248,30 @@ void GPSTrack::finishCurrentSegment()
 
 void GPSTrack::appendWaypoint(GPSPoint& point, const QString& name)
 {
-	point.map_coord = point.gps_coord.toMapCoordF(params);
+	point.map_coord = georef.toMapCoordF(point.gps_coord, NULL); // FIXME: check for errors
 	waypoints.push_back(point);
 	waypoint_names.push_back(name);
 }
 
-void GPSTrack::changeProjectionParams(const GPSProjectionParameters& new_params)
+void GPSTrack::changeGeoreferencing(const Georeferencing& new_georef)
 {
-	params = new_params;
+	georef = new_georef;
 	
 	int size = waypoints.size();
 	for (int i = 0; i < size; ++i)
-		waypoints[i].map_coord = waypoints[i].gps_coord.toMapCoordF(params);
+		waypoints[i].map_coord = georef.toMapCoordF(waypoints[i].gps_coord, NULL); // FIXME: check for errors
 	
 	size = segment_points.size();
 	for (int i = 0; i < size; ++i)
-		segment_points[i].map_coord = segment_points[i].gps_coord.toMapCoordF(params);
+		segment_points[i].map_coord = georef.toMapCoordF(segment_points[i].gps_coord, NULL); // FIXME: check for errors
 }
 
-int GPSTrack::getNumSegments()
+int GPSTrack::getNumSegments() const
 {
 	return (int)segment_starts.size();
 }
-int GPSTrack::getSegmentPointCount(int segment_number)
+
+int GPSTrack::getSegmentPointCount(int segment_number) const
 {
 	assert(segment_number >= 0 && segment_number < (int)segment_starts.size());
 	if (segment_number == (int)segment_starts.size() - 1)
@@ -274,21 +279,24 @@ int GPSTrack::getSegmentPointCount(int segment_number)
 	else
 		return segment_starts[segment_number + 1] - segment_starts[segment_number];
 }
-GPSPoint& GPSTrack::getSegmentPoint(int segment_number, int point_number)
+
+const GPSPoint& GPSTrack::getSegmentPoint(int segment_number, int point_number) const
 {
 	assert(segment_number >= 0 && segment_number < (int)segment_starts.size());
 	return segment_points[segment_starts[segment_number] + point_number];
 }
 
-int GPSTrack::getNumWaypoints()
+int GPSTrack::getNumWaypoints() const
 {
 	return waypoints.size();
 }
-GPSPoint& GPSTrack::getWaypoint(int number)
+
+const GPSPoint& GPSTrack::getWaypoint(int number) const
 {
 	return waypoints[number];
 }
-const QString& GPSTrack::getWaypointName(int number)
+
+const QString& GPSTrack::getWaypointName(int number) const
 {
 	return waypoint_names[number];
 }

@@ -47,8 +47,7 @@ class Template;
 class Object;
 class MapEditorController;
 class OCAD8FileImport;
-struct GPSProjectionParameters;
-class CartesianGeoreferencing;
+class Georeferencing;
 
 typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
 
@@ -67,6 +66,7 @@ public:
 	
 	inline int getNumObjects() const {return (int)objects.size();}
 	inline Object* getObject(int i) {return objects[i];}
+    inline const Object* getObject(int i) const {return objects[i];}
 	int findObjectIndex(Object* object);					// asserts that the object is contained in the layer
 	void setObject(Object* object, int pos, bool delete_old);
 	void addObject(Object* object, int pos);
@@ -255,19 +255,14 @@ public:
 	
 	// Other settings
 	
-	inline void setScaleDenominator(int value) {scale_denominator = value;}
+	void setScaleDenominator(int value);
 	inline int getScaleDenominator() const {return scale_denominator;}
 	
 	inline const QString& getMapNotes() const {return map_notes;}
 	inline void setMapNotes(const QString& text) {map_notes = text;}
 	
-	inline bool areGPSProjectionParametersSet() const {return gps_projection_params_set;}
-	void setGPSProjectionParameters(const GPSProjectionParameters& params);
-	inline const GPSProjectionParameters& getGPSProjectionParameters() const {return *gps_projection_parameters;}
-	
-//	inline const bool isGeoreferenced() {return georeferencing->isDefined();}
-	void setGeoreferencing(const CartesianGeoreferencing& georeferencing);
-	inline const CartesianGeoreferencing& getGeoreferencing() const {return *georeferencing;}
+	void setGeoreferencing(const Georeferencing& georeferencing);
+	inline const Georeferencing& getGeoreferencing() const {return *georeferencing;}
 	
 	inline bool arePrintParametersSet() const {return print_params_set;}
 	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height);
@@ -307,7 +302,6 @@ signals:
 	
 	void objectSelectionChanged();
 	void selectedObjectEdited();
-	void gpsProjectionParametersChanged();
 	
 private:
 	typedef std::vector<MapColor*> ColorVector;
@@ -358,9 +352,7 @@ private:
 	
 	QString map_notes;
 	
-	bool gps_projection_params_set;	// have the parameters been set (are they valid)?
-	GPSProjectionParameters* gps_projection_parameters;
-	CartesianGeoreferencing* georeferencing;
+	Georeferencing* georeferencing;
 	
 	bool print_params_set;			// have the parameters been set (are they valid)?
 	int print_orientation;			// QPrinter::Orientation
@@ -503,6 +495,9 @@ public:
 	inline void setViewY(int value) {view_y = value; update();}
 	inline QPoint getDragOffset() const {return drag_offset;}
 	
+    // Map visibility
+    TemplateVisibility* getMapVisibility();
+
 	// Template visibilities
 	bool isTemplateVisible(Template* temp);						// checks if the template is visible without creating a template visibility object if none exists
 	TemplateVisibility* getTemplateVisibility(Template* temp);	// returns the template visibility object, creates one if not there yet with the default settings (invisible)
@@ -530,6 +525,7 @@ private:
 	Matrix view_to_map;
 	Matrix map_to_view;
 	
+    TemplateVisibility *map_visibility;
 	QHash<Template*, TemplateVisibility*> template_visibilities;
 	
 	WidgetVector widgets;

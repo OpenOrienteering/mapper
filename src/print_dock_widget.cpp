@@ -57,14 +57,15 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	
 	QLabel* device_label = new QLabel("<b>" + tr("Printer or exporter:") + "</b>");
 	device_combo = new QComboBox();
-	
+
+    device_combo->setMaximumWidth(200);
 	device_combo->addItem(tr("Export to PDF or PS"), QVariant((int)PdfExporter));
 	device_combo->addItem(tr("Export to image"), QVariant((int)ImageExporter));
 	device_combo->insertSeparator(device_combo->count());
 	device_combo->setCurrentIndex(0);
 	
 	printers = QPrinterInfo::availablePrinters();
-	for (int i = 0; i < printers.size(); ++i)
+    for (int i = 0; i < printers.size(); ++i)
 	{
 		device_combo->addItem(printers[i].printerName(), i);
 		if (printers[i].isDefault())
@@ -210,6 +211,11 @@ void PrintWidget::setPrintAreaTop(float value)
 QRectF PrintWidget::getPrintArea()
 {
 	return QRectF(getPrintAreaLeft(), getPrintAreaTop(), print_width, print_height);
+}
+
+QRectF PrintWidget::getPaperArea()
+{
+    return QRectF(0, 0, 8.5*25.4, 11*25.4);
 }
 
 void PrintWidget::printMap(QPrinter* printer)
@@ -649,16 +655,54 @@ bool PrintTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 
 void PrintTool::draw(QPainter* painter, MapWidget* widget)
 {
-	QRect rect = widget->mapToViewport(this->widget->getPrintArea()).toRect();
-	painter->setPen(active_color);
-	painter->drawRect(QRect(rect.topLeft(), rect.bottomRight() - QPoint(1, 1)));
-	painter->setPen(qRgb(255, 255, 255));
-	painter->drawRect(QRect(rect.topLeft() + QPoint(1, 1), rect.bottomRight() - QPoint(2, 2)));
+    /*
+    QRect inner_rect = widget->mapToViewport(this->widget->getPrintArea()).toRect();
+    QRect outer_rect = widget->mapToViewport(this->widget->getPaperArea()).toRect();
+    QRect view_rect = QRect(0, 0, widget->width(), widget->height());
+    painter->setPen(Qt::NoPen);
+    painter->setBrush(QColor(0, 0, 0, 160));
+    drawBetweenRects(painter, view_rect, outer_rect);
+    painter->setBrush(QColor(0, 0, 0, 64));
+    drawBetweenRects(painter, outer_rect, inner_rect);
+    painter->setBrush(QColor(255, 255, 0, 128));
+    painter->drawRect(QRect(outer_rect.topLeft(), outer_rect.bottomRight() - QPoint(1, 1)));
+    painter->setBrush(QColor(0, 255, 0, 128));
+    painter->drawRect(QRect(inner_rect.topLeft(), inner_rect.bottomRight() - QPoint(1, 1)));
+    */
+
+    QRect rect = widget->mapToViewport(this->widget->getPrintArea()).toRect();
+
+    painter->setPen(active_color);
+    painter->drawRect(QRect(rect.topLeft(), rect.bottomRight() - QPoint(1, 1)));
+    painter->setPen(qRgb(255, 255, 255));
+    painter->drawRect(QRect(rect.topLeft() + QPoint(1, 1), rect.bottomRight() - QPoint(2, 2)));
+}
+
+void PrintTool::drawBetweenRects(QPainter* painter, const QRect &outer, const QRect &inner) const {
+    if (outer.isEmpty())
+        return;
+    QRect clipped_inner = outer.intersected(inner);
+    qDebug() << "Draw between "<<outer<<" and "<<inner<<" clipped="<<clipped_inner;
+    if (clipped_inner.isEmpty())
+    {
+        painter->drawRect(outer);
+    }
+    else
+    {
+        if (outer.left() < clipped_inner.left())
+            painter->drawRect(QRect(outer.left(), outer.top(), clipped_inner.left() - outer.left(), outer.height()));
+        if (outer.right() > clipped_inner.right())
+            painter->drawRect(QRect(clipped_inner.right(), outer.top(), outer.right() - clipped_inner.right(), outer.height()));
+        if (outer.top() < clipped_inner.top())
+            painter->drawRect(QRect(clipped_inner.left(), outer.top(), clipped_inner.width(), clipped_inner.top() - outer.top()));
+        if (outer.bottom() > clipped_inner.bottom())
+            painter->drawRect(QRect(clipped_inner.left(), clipped_inner.bottom(), clipped_inner.width(), outer.bottom() - clipped_inner.bottom()));
+    }
 }
 
 void PrintTool::updatePrintArea()
 {
-	editor->getMap()->setDrawingBoundingBox(widget->getPrintArea(), 1);
+    editor->getMap()->setDrawingBoundingBox(widget->getPrintArea(), 1);
 }
 void PrintTool::updateDragging(MapCoordF mouse_pos_map)
 {

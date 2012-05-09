@@ -20,6 +20,7 @@
 #include <QFile>
 
 #include "file_format_native.h"
+#include "georeferencing.h"
 #include "gps_coordinates.h"
 #include "map_color.h"
 #include "symbol.h"
@@ -90,8 +91,15 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 	if (version >= 15)
 		loadString(&file, map->map_notes);
 
-    file.read((char*)&map->gps_projection_params_set, sizeof(bool));
-    file.read((char*)map->gps_projection_parameters, sizeof(GPSProjectionParameters));
+	bool gps_projection_params_set; // obsolete
+	file.read((char*)&gps_projection_params_set, sizeof(bool));
+	GPSProjectionParameters gps_projection_parameters; // obsolete
+	file.read((char*)&gps_projection_parameters, sizeof(GPSProjectionParameters));
+	if (gps_projection_params_set)
+	{
+		LatLon ref_point(gps_projection_parameters.center_latitude, gps_projection_parameters.center_longitude);
+		map->georeferencing->setGeographicRefPoint(ref_point);
+	}
 
     if (version >= 6)
     {
@@ -247,8 +255,16 @@ void NativeFileExport::doExport() throw (FormatException)
 	
 	saveString(&file, map->map_notes);
 
-    file.write((const char*)&map->gps_projection_params_set, sizeof(bool));
-    file.write((const char*)map->gps_projection_parameters, sizeof(GPSProjectionParameters));
+	bool gps_projection_params_set = !map->getGeoreferencing().isLocal();
+	file.write((const char*)&gps_projection_params_set, sizeof(bool));
+	GPSProjectionParameters  gps_projection_parameters;
+	if (gps_projection_params_set)
+	{
+		LatLon ref_point = map->getGeoreferencing().getGeographicRefPoint();
+		gps_projection_parameters.center_latitude  = ref_point.latitude;
+		gps_projection_parameters.center_longitude = ref_point.longitude;
+	}
+    file.write((const char*)&gps_projection_parameters, sizeof(GPSProjectionParameters));
 
     file.write((const char*)&map->print_params_set, sizeof(bool));
     if (map->print_params_set)

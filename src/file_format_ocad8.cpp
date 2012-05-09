@@ -236,7 +236,7 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 				int pos;
 				file->read((char*)&pos, sizeof(int));
 
-				TemplateVisibility* vis = getTemplateVisibility(map->getTemplate(pos));
+                TemplateVisibility* vis = getTemplateVisibility(map->getTemplate(pos));
 				file->read((char*)&vis->visible, sizeof(bool));
 				file->read((char*)&vis->opacity, sizeof(float));
 			}
@@ -246,7 +246,7 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 		*/
 
 		// Undo steps are not supported in OCAD
-	}
+    }
 
     ocad_file_close(file);
 
@@ -441,11 +441,13 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
     if( ocad_symbol->scnpts > 0 )
     {
 		symbol_line->dash_symbol = importPattern( ocad_symbol->scnpts, symbolptr);
+        symbol_line->dash_symbol->setName(QObject::tr("Dash symbol"));
         symbolptr += ocad_symbol->scnpts; 
     }
     if( ocad_symbol->sbnpts > 0 )
     {
 		symbol_line->start_symbol = importPattern( ocad_symbol->sbnpts, symbolptr);
+        symbol_line->start_symbol->setName(QObject::tr("Start symbol"));
         symbolptr += ocad_symbol->sbnpts;
     }
     if( ocad_symbol->senpts > 0 )
@@ -772,6 +774,7 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapLayer* l
 		}
     }
 
+    Object *object = NULL;
     Symbol *symbol = symbol_index[ocad_object->symbol];
     if (symbol->getType() == Symbol::Point)
     {
@@ -832,7 +835,13 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapLayer* l
 		return p;
     }
 
-    return NULL;
+    if (object == NULL) return NULL;
+
+    // Set some common fields
+    object->map = map;
+    object->output_dirty = true;
+
+    return object;
 }
 
 bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapLayer* layer, const OCAD8FileImport::RectangleInfo& rect)
@@ -1182,7 +1191,6 @@ QString OCAD8FileImport::convertWideCString(const char *p, size_t n, bool ignore
 
 float OCAD8FileImport::convertRotation(int angle) {
     // OCAD uses tenths of a degree, counterclockwise
-    // FIXME: oo-mapper uses a real number of degrees, counterclockwise
     // BUG: if sin(rotation) is < 0 for a hatched area pattern, the pattern's createRenderables() will go into an infinite loop.
     // So until that's fixed, we keep a between 0 and PI
     double a = (M_PI / 180) *  (0.1f * angle);

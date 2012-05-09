@@ -321,8 +321,7 @@ Map::Map() : renderables(this), selection_renderables(this)
 	
 	color_set = NULL;
 	object_undo_manager.setOwner(this);
-	gps_projection_parameters = NULL;
-	georeferencing = new CartesianGeoreferencing(*this);
+	georeferencing = new Georeferencing();
 	
 	clear();
 }
@@ -346,9 +345,15 @@ Map::~Map()
 	
 	color_set->dereference();
 	
-	delete gps_projection_parameters;
 	delete georeferencing;
 }
+
+void Map::setScaleDenominator(int value)
+{
+	scale_denominator = value;
+	georeferencing->setScaleDenominator(value);
+}
+
 
 bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 {
@@ -508,6 +513,8 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 		if (import_complete) break;
 	}
 	
+	georeferencing->setScaleDenominator(scale_denominator);
+	
 	if (map_editor)
 		map_editor->main_view = view;
 	else
@@ -573,9 +580,6 @@ void Map::clear()
 	image_template_meters_per_pixel = 0;
 	image_template_dpi = 0;
 	image_template_scale = 0;
-	gps_projection_params_set = false;
-	delete gps_projection_parameters;
-	gps_projection_parameters = new GPSProjectionParameters();
 	
 	colors_dirty = false;
 	symbols_dirty = false;
@@ -1092,6 +1096,8 @@ void Map::deleteSymbol(int pos)
 }
 int Map::findSymbolIndex(Symbol* symbol)
 {
+    if (!symbol)
+        return -1;
 	int size = (int)symbols.size();
 	for (int i = 0; i < size; ++i)
 	{
@@ -1336,20 +1342,10 @@ void Map::forceUpdateOfAllObjects(Symbol* with_symbol)
 		layers[i]->forceUpdateOfAllObjects(with_symbol);
 }
 
-void Map::setGPSProjectionParameters(const GPSProjectionParameters& params)
+void Map::setGeoreferencing(const Georeferencing& georeferencing)
 {
-	*gps_projection_parameters = params;
-	gps_projection_parameters->update();
-	gps_projection_params_set = true;
-	emit(gpsProjectionParametersChanged());
-	
+	*this->georeferencing = georeferencing;
 	setHasUnsavedChanges();
-}
-
-void Map::setGeoreferencing(const CartesianGeoreferencing& georeferencing)
-{
-	delete this->georeferencing;
-	this->georeferencing = new CartesianGeoreferencing(georeferencing);
 }
 
 void Map::setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height)
@@ -1459,9 +1455,10 @@ MapView::MapView(Map* map) : map(map)
 	position_y = 0;
 	view_x = 0;
 	view_y = 0;
-	update();
-	
-	//map->addMapView(this);
+    map_visibility = new TemplateVisibility();
+    map_visibility->visible = true;
+    update();
+    //map->addMapView(this);
 }
 MapView::~MapView()
 {
@@ -1469,6 +1466,7 @@ MapView::~MapView()
 	
 	foreach (TemplateVisibility* vis, template_visibilities)
 		delete vis;
+    delete map_visibility;
 }
 
 void MapView::save(QFile* file)
@@ -1751,6 +1749,11 @@ void MapView::update()
 	
 	// Create view_to_map
 	map_to_view.invert(view_to_map);
+}
+
+TemplateVisibility *MapView::getMapVisibility()
+{
+    return map_visibility;
 }
 
 bool MapView::isTemplateVisible(Template* temp)

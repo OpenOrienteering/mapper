@@ -241,6 +241,7 @@ void NewMapDialog::loadSymbolSetMap()
 	QString app_dir = QCoreApplication::applicationDirPath();
 	
 	// FIXME: How to translate directory name "my symbol sets"?
+    qDebug() << "App dir is" << app_dir;
 	
 	// symbol sets from HOME/my symbol sets
 	QDir symbol_set_dir(QDir::homePath() % QDir::toNativeSeparators("/my symbol sets"));

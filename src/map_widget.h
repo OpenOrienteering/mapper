@@ -25,9 +25,7 @@
 
 #include "map.h"
 
-QT_BEGIN_NAMESPACE
 class QLabel;
-QT_END_NAMESPACE
 
 class MapEditorActivity;
 class MapEditorTool;
@@ -38,6 +36,14 @@ class MapWidget : public QWidget
 Q_OBJECT
 friend class MapView;
 public:
+	enum CoordsType
+	{
+		 MAP_COORDS,
+		 PROJECTED_COORDS,
+		 GEOGRAPHIC_COORDS,
+		 GEOGRAPHIC_COORDS_DMS
+	};
+	
 	MapWidget(bool show_help, bool force_antialiasing, QWidget* parent = NULL);
 	~MapWidget();
 	
@@ -96,6 +102,7 @@ public:
 	// Set the labels where the map widget will display the respective piece of information
 	void setZoomLabel(QLabel* zoom_label);
 	void setCursorposLabel(QLabel* cursorpos_label);
+	void setCoordsDisplay(CoordsType type);
 	
     virtual QSize sizeHint() const;
 	
@@ -139,14 +146,17 @@ private:
 	void showHelpMessage(QPainter* painter, const QString& text);
 	
 	void updateZoomLabel();
-	void updateCursorposLabel(MapCoordF pos);
+	void updateCursorposLabel(const MapCoordF pos);
 	
 	MapView* view;
 	MapEditorTool* tool;
 	MapEditorActivity* activity;
 	
+	CoordsType coords_type;
+	
 	QLabel* zoom_label;
 	QLabel* cursorpos_label;
+	MapCoordF last_cursor_pos;
 	
 	bool show_help;
 	bool force_antialiasing;

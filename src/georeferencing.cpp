@@ -1,5 +1,5 @@
 ﻿/*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012 Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -20,230 +20,231 @@
 
 #include "georeferencing.h"
 
-#include <QtGui>
+#include <cassert>
 
-#include "map.h"
+#include <QLocale>
+#include <QDebug>
 
-CartesianGeoreferencing::CartesianGeoreferencing(const Map& map)
-: map(map), easting(0.0), northing(0.0), declination(0.0)
+#include <proj_api.h>
+
+const QString Georeferencing::geographic_crs_spec("+proj=latlong +datum=WGS84");
+
+Georeferencing::Georeferencing()
+: scale_denominator(0), grivation(0.0), projected_ref_point(0, 0), geographic_ref_point(0, 0)
 {
-	geoToPaper = NULL;
-	paperToGeo = NULL;
+	updateTransformation();
+	
+	projected_crs  = NULL;
+	geographic_crs = pj_init_plus(geographic_crs_spec.toAscii());
+	assert(geographic_crs != NULL);
 }
 
-CartesianGeoreferencing::CartesianGeoreferencing(const Map& map, double easting, double northing, double declination)
-: map(map), easting(easting), northing(northing), declination(declination)
+Georeferencing::Georeferencing(const Georeferencing& other)
+: scale_denominator(other.scale_denominator), 
+  grivation(other.grivation),
+  projected_ref_point(other.projected_ref_point),
+  projected_crs_id(other.projected_crs_id),
+  projected_crs_spec(other.projected_crs_spec),
+  geographic_ref_point(other.geographic_ref_point)
 {
-	geoToPaper = NULL;
-	paperToGeo = NULL;
-	updateTransforms();
+	updateTransformation();
+	
+	projected_crs  = pj_init_plus(projected_crs_spec.toAscii());
+	geographic_crs = pj_init_plus(geographic_crs_spec.toAscii());
+	assert(geographic_crs != NULL);
 }
 
-CartesianGeoreferencing::CartesianGeoreferencing(const CartesianGeoreferencing& georeferencing)
-: map(georeferencing.map), easting(georeferencing.easting), northing(georeferencing.northing), declination(georeferencing.declination)
+Georeferencing::~Georeferencing()
 {
-	geoToPaper = NULL;
-	paperToGeo = NULL;
-	updateTransforms();
+	if (projected_crs != NULL)
+		pj_free(projected_crs);
+	if (geographic_crs != NULL)
+		pj_free(geographic_crs);
 }
 
-CartesianGeoreferencing::~CartesianGeoreferencing()
+Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 {
-	delete geoToPaper;
-	delete paperToGeo;
+	scale_denominator   = other.scale_denominator;
+	grivation           = other.grivation;
+	projected_ref_point = other.projected_ref_point;
+	from_projected      = other.from_projected;
+	to_projected        = other.to_projected;
+	projected_ref_point = other.projected_ref_point;
+	projected_crs_id    = other.projected_crs_id;
+	projected_crs_spec  = other.projected_crs_spec;
+	geographic_ref_point= other.geographic_ref_point;
+	
+	if (projected_crs != NULL)
+		pj_free(projected_crs);
+	projected_crs       = pj_init_plus(projected_crs_spec.toAscii());
+	
+	emit transformationChanged();
+	emit projectionChanged();
+	
+	return *this;
 }
 
-void CartesianGeoreferencing::set(double easting, double northing)
+void Georeferencing::setScaleDenominator(int value)
 {
-	this->easting = easting;
-	this->northing = northing;
-	updateTransforms();
+	scale_denominator = value;
+	updateTransformation();
 }
 
-void CartesianGeoreferencing::set(double easting, double northing, double declination)
+void Georeferencing::setGrivation(double value)
 {
-	this->easting = easting;
-	this->northing = northing;
-	this->declination = declination;
-	updateTransforms();
+	grivation = value;
+	updateTransformation();
 }
 
-void CartesianGeoreferencing::setDeclination(double declination)
+void Georeferencing::setProjectedRefPoint(QPointF point)
 {
-	this->declination = declination;
-	updateTransforms();
+	projected_ref_point = point;
+	bool ok;
+	LatLon new_geo_ref = toGeographicCoords(point, &ok);
+	if (ok)
+		geographic_ref_point = new_geo_ref;
+	updateTransformation();
 }
 
-void CartesianGeoreferencing::updateTransforms()
+void Georeferencing::setGeographicRefPoint(LatLon lat_lon)
 {
-	delete paperToGeo;
-	paperToGeo = new QTransform();
-	double scale = double(map.getScaleDenominator()) / 1000.0;
-	paperToGeo->translate(easting, northing);
-	paperToGeo->rotate(declination);
-	paperToGeo->scale(scale, -scale);
-	
-	delete geoToPaper;
-	geoToPaper = new QTransform(paperToGeo->inverted());
+	bool ok;
+	QPointF new_projected_ref = toProjectedCoords(lat_lon, &ok);
+	if (ok)
+		projected_ref_point = new_projected_ref;
+	geographic_ref_point = lat_lon;
+	if (ok)
+		updateTransformation();
 }
 
-QPointF CartesianGeoreferencing::toGeoCoords(const MapCoord& paper_coords) const
+void Georeferencing::updateTransformation()
 {
-	return paperToGeo->map(paper_coords.toQPointF());
+	to_projected.reset();
+	double scale = double(scale_denominator) / 1000.0;
+	to_projected.translate(projected_ref_point.x(), projected_ref_point.y());
+	to_projected.rotate(-grivation);
+	to_projected.scale(scale, -scale);
+	
+	from_projected = to_projected.inverted();
+	
+	emit transformationChanged();
 }
 
-QPointF CartesianGeoreferencing::toGeoCoords(const MapCoordF& paper_coords) const
+bool Georeferencing::setProjectedCRS(const QString& id, const QString& spec)
 {
-	return paperToGeo->map(paper_coords.toQPointF());
+	if (projected_crs != NULL)
+		pj_free(projected_crs);
+	
+	this->projected_crs_id = id;
+	this->projected_crs_spec = spec;
+	projected_crs = pj_init_plus(projected_crs_spec.toAscii());
+	
+	emit projectionChanged();
+	return projected_crs != NULL;
 }
 
-MapCoord CartesianGeoreferencing::toPaperCoords(const QPointF& geo_coords) const
+QPointF Georeferencing::toProjectedCoords(const MapCoord& map_coords) const
 {
-	return MapCoordF(geoToPaper->map(geo_coords)).toMapCoord(); // FIXME: not tested
+	return to_projected.map(map_coords.toQPointF());
 }
 
-
-
-GeoreferencingDialog::GeoreferencingDialog(QWidget* parent, const Map& map, const GPSProjectionParameters* initial_values) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
+QPointF Georeferencing::toProjectedCoords(const MapCoordF& map_coords) const
 {
-	setWindowTitle(tr("Georeferencing settings"));
-	
-	cartesian = new CartesianGeoreferencing(map);
-	
-	if (initial_values)
-		params = *initial_values;
-	
-	QLabel* projection_label = new QLabel(QString("<b>%1</b>").arg(tr("Latitude/longitude:")));
-	
-	QLabel* lat_label = new QLabel(tr("Origin latitude:"));
-	lat_edit = new QLineEdit(QString::number(params.center_latitude * 180 / M_PI, 'f', 12));
-	lat_edit->setWhatsThis("<a href=\"gps_menu.html\">See more</a>");
-	QLabel* lon_label = new QLabel(tr("Origin longitude:"));
-	lon_edit = new QLineEdit(QString::number(params.center_longitude * 180 / M_PI, 'f', 12));
-	lon_edit->setWhatsThis("<a href=\"gps_menu.html\">See more</a>");
-	
-	QLabel* cartesian_label = new QLabel(QString("<b>%1</b>").arg(tr("Cartesian coordinates:")));
-	QLabel* datum_label = new QLabel(tr("Datum:"));
-	datum_edit = new QLineEdit("not used yet");
-	QLabel* zone_label = new QLabel(tr("Zone:"));
-	zone_edit = new QLineEdit("not used yet");
-	QLabel* easting_label = new QLabel(tr("Origin easting (m):"));
-	easting_edit = new QLineEdit(QString::number(map.getGeoreferencing().getEasting()));
-	easting_edit->setValidator(new QIntValidator());
-	easting_edit->setWhatsThis("<a href=\"gps_menu.html\">See more</a>");
-	QLabel* northing_label = new QLabel(tr("Origin northing (m):"));
-	northing_edit = new QLineEdit(QString::number(map.getGeoreferencing().getNorthing()));
-	northing_edit->setValidator(new QIntValidator());
-	northing_edit->setWhatsThis("<a href=\"gps_menu.html\">See more</a>");
-	
-	QLabel* declination_label = new QLabel(tr("Declination (<sup>0</sup>):"));
-	declination_edit = new QLineEdit(QString::number(map.getGeoreferencing().getDeclination()));
-	declination_edit->setValidator(new QDoubleValidator(-90.0, 90.0, 1));
-	declination_edit->setWhatsThis("<a href=\"gps_menu.html\">See more</a>");
-	
-	QGridLayout* edit_layout = new QGridLayout();
-	int row=0, col=0;
-	edit_layout->addWidget(projection_label, row, col, 1, 2);
-	row++, col=0;
-	edit_layout->addWidget(lat_label, row, col++);
-	edit_layout->addWidget(lat_edit, row, col, 1, -1);
-	row++, col=0;
-	edit_layout->addWidget(lon_label, row, col++);
-	edit_layout->addWidget(lon_edit, row, col, 1, -1);
-	
-	row++, col=0;
-	edit_layout->addWidget(new QWidget(), row, col, 1, -1);
-	edit_layout->setRowStretch(row, 1);
-	
-	row++, col=0;
-	edit_layout->addWidget(cartesian_label, row, col, 1, 2);
-	row++, col=0;
-	edit_layout->addWidget(new QLabel("(Experimental. Input will not be saved to the file!)"), row, col, 1, 2);
-	row++, col=0;
-	edit_layout->addWidget(datum_label, row, col++);
-	edit_layout->addWidget(datum_edit, row, col, 1, -1);
-	row++, col=0;
-	edit_layout->addWidget(zone_label, row, col++);
-	edit_layout->addWidget(zone_edit, row, col, 1, -1);
-	row++, col=0;
-	edit_layout->addWidget(easting_label, row, col++);
-	edit_layout->addWidget(easting_edit, row, col, 1, -1);
-	row++, col=0;
-	edit_layout->addWidget(northing_label, row, col++);
-	edit_layout->addWidget(northing_edit, row, col, 1, -1);
-	
-	row++, col=0;
-	edit_layout->addWidget(new QWidget(), row, col, 1, -1);
-	edit_layout->setRowStretch(row, 1);
-	
-	row++, col=0;
-	edit_layout->addWidget(declination_label, row, col++);
-	edit_layout->addWidget(declination_edit, row, col, 1, -1);
-	
-	row++, col=0;
-	edit_layout->addWidget(new QWidget(), row, col, 1, -1);
-	edit_layout->setRowStretch(row, 1);
-	
-	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	ok_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("OK"));
-	ok_button->setDefault(true);
-	
-	QHBoxLayout* buttons_layout = new QHBoxLayout();
-	buttons_layout->addWidget(cancel_button);
-	buttons_layout->addStretch(1);
-	buttons_layout->addWidget(ok_button);
-	
-	row++, col=0;
-	edit_layout->addLayout(buttons_layout, row, col, 1, -1);
-	setLayout(edit_layout);
-	
-	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
-	connect(ok_button, SIGNAL(clicked(bool)), this, SLOT(accept()));
-	connect(lat_edit, SIGNAL(textChanged(QString)), this, SLOT(editChanged()));
-	connect(lon_edit, SIGNAL(textChanged(QString)), this, SLOT(editChanged()));
-	connect(easting_edit, SIGNAL(textChanged(QString)), this, SLOT(cartesianChanged()));
-	connect(northing_edit, SIGNAL(textChanged(QString)), this, SLOT(cartesianChanged()));
-	connect(declination_edit, SIGNAL(textChanged(QString)), this, SLOT(cartesianChanged()));
-	
-	cartesianChanged();
+	return to_projected.map(map_coords.toQPointF());
 }
 
-void GeoreferencingDialog::editChanged()
+MapCoord Georeferencing::toMapCoords(const QPointF& projected_coords) const
 {
-	bool ok = false;
-	
-	params.center_latitude = lat_edit->text().toDouble(&ok) * M_PI / 180;
-	if (!ok)
-	{
-		ok_button->setEnabled(false);
-		return;
+	return MapCoordF(from_projected.map(projected_coords)).toMapCoord();
+}
+
+MapCoordF Georeferencing::toMapCoordF(const QPointF& projected_coords) const
+{
+	return MapCoordF(from_projected.map(projected_coords));
+}
+
+LatLon Georeferencing::toGeographicCoords(const MapCoordF& map_coords, bool* ok) const
+{
+	return toGeographicCoords(toProjectedCoords(map_coords), ok);
+}
+
+LatLon Georeferencing::toGeographicCoords(const QPointF& projected_coords, bool* ok) const
+{
+	if (ok != NULL)
+		*ok = false;
+
+	double easting = projected_coords.x(), northing = projected_coords.y();
+	if (projected_crs && geographic_crs) {
+		int ret = pj_transform(projected_crs, geographic_crs, 1, 1, &easting, &northing, NULL);
+		if (ok != NULL) 
+			*ok = (ret == 0);
 	}
-	
-	params.center_longitude = lon_edit->text().toDouble(&ok) * M_PI / 180;
-	if (!ok)
-	{
-		ok_button->setEnabled(false);
-		return;
-	}
-	
-	ok_button->setEnabled(true);
+	return LatLon(northing, easting);
 }
 
-void GeoreferencingDialog::cartesianChanged()
+QPointF Georeferencing::toProjectedCoords(const LatLon& lat_lon, bool* ok) const
 {
-	bool easting_ok, northing_ok, declination_ok;
-	double easting = easting_edit->text().toDouble(&easting_ok);
-	double northing = northing_edit->text().toDouble(&northing_ok);
-	double declination = declination_edit->text().toDouble(&declination_ok);
-	if (easting_ok && northing_ok && declination_ok)
-	{
-		ok_button->setEnabled(true);
-		cartesian->set(easting, northing, declination);
+	if (ok != NULL)
+		*ok = false;
+	
+	double easting = lat_lon.longitude, northing = lat_lon.latitude;
+	if (projected_crs && geographic_crs) {
+		int ret = pj_transform(geographic_crs, projected_crs, 1, 1, &easting, &northing, NULL);
+		if (ok != NULL) 
+			*ok = (ret == 0);
 	}
+	return QPointF(easting, northing);
+}
+
+MapCoord Georeferencing::toMapCoords(const LatLon& lat_lon, bool* ok) const
+{
+	return toMapCoords(toProjectedCoords(lat_lon, ok));
+}
+
+MapCoordF Georeferencing::toMapCoordF(const LatLon& lat_lon, bool* ok) const
+{
+	return toMapCoordF(toProjectedCoords(lat_lon, ok));
+}
+
+double Georeferencing::radToDeg(double val)
+{
+	return RAD_TO_DEG * val;
+}
+
+QString Georeferencing::radToDMS(double val)
+{
+	qint64 tmp = RAD_TO_DEG * val * 360000;
+	int csec = tmp % 6000;
+	tmp = tmp / 6000;
+	int min = tmp % 60;
+	int deg = tmp / 60;
+	QString ret = QString::fromUtf8("%1°%2'%3\"").arg(deg).arg(min).arg(QLocale().toString(csec/100.0,'f',2));
+	return ret;
+}
+
+QDebug operator<<(QDebug dbg, const Georeferencing &georef)
+{
+	dbg.nospace() 
+	  << "Georeferencing(1:" << georef.scale_denominator
+	  << " " << georef.grivation
+	  << "deg, " << georef.projected_crs_id
+	  << " (" << georef.projected_crs_spec
+	  << ") " << georef.projected_ref_point.x() << "," << georef.projected_ref_point.y();
+	if (georef.isLocal())
+		dbg.nospace() << ", local)";
 	else
-	{
-		ok_button->setEnabled(false);
-	}
+		dbg.nospace() << ", geographic)";
+	
+	return dbg.space();
+}
+
+QDebug operator<<(QDebug dbg, const LatLon& lat_lon)
+{
+	dbg.space() 
+	  << "LatLon" << lat_lon.latitude << lat_lon.longitude
+	  << "(" << Georeferencing::radToDeg(lat_lon.latitude)
+	  << Georeferencing::radToDeg(lat_lon.longitude) << ")";
+	return dbg.space();
 }
 
 

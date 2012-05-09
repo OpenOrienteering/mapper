@@ -28,6 +28,7 @@
 #include "map_undo.h"
 #include "map_dialog_scale.h"
 #include "georeferencing.h"
+#include "georeferencing_dialog.h"
 #include "print_dock_widget.h"
 #include "color_dock_widget.h"
 #include "symbol_dock_widget.h"
@@ -285,16 +286,23 @@ void MapEditorController::attach(MainWindow* window)
 	}
 	if (has_invalid_template)
 		window->setStatusBarText("<font color=\"#c00\">" + tr("One or more templates could not be loaded. Use the Templates -> Template setup window to resolve the issue(s) by clicking on the red template file name(s).") + "</font>");
-
-	// Show the symbol window
-	if (mode == MapEditor)
-		symbol_window_act->trigger();
 	
-	// Auto-select the edit tool
 	if (mode == MapEditor)
 	{
+		// Show the symbol window
+		symbol_window_act->trigger();
+		
+		// Auto-select the edit tool
 		edit_tool_act->setChecked(true);
 		setEditTool();
+		
+		// Set the coordinates display mode
+		coordsDisplayChanged();
+	}
+	else
+	{
+		// Set the coordinates display mode
+		map_widget->setCoordsDisplay(MapWidget::MAP_COORDS);
 	}
 }
 
@@ -337,13 +345,16 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("zoomin")->setShortcut(QKeySequence("F7"));
 	findAction("zoomout")->setShortcut(QKeySequence("F8"));
 	findAction("fullscreen")->setShortcut(QKeySequence("F11"));
-	
+    color_window_act->setShortcut(QKeySequence("Ctrl+Shift+7"));
+    symbol_window_act->setShortcut(QKeySequence("Ctrl+Shift+8"));
+    template_window_act->setShortcut(QKeySequence("Ctrl+Shift+9"));
+
 	findAction("editobjects")->setShortcut(QKeySequence("E"));
 	findAction("drawpoint")->setShortcut(QKeySequence("S"));
 	findAction("drawpath")->setShortcut(QKeySequence("P"));
 	findAction("drawcircle")->setShortcut(QKeySequence("O"));
 	findAction("drawrectangle")->setShortcut(QKeySequence("L"));
-	findAction("drawtext")->setShortcut(QKeySequence("T"));
+    findAction("drawtext")->setShortcut(QKeySequence("T"));
 	
     findAction("duplicate")->setShortcut(QKeySequence("D"));
     findAction("switchdashes")->setShortcut(QKeySequence("Ctrl+D"));
@@ -385,6 +396,7 @@ void MapEditorController::createMenuAndToolbars()
     /*QAction *load_symbols_from_act = */newAction("loadsymbols", tr("Load symbols from..."), this, SLOT(loadSymbolsFromClicked()), NULL, tr("Replace the symbols with those from another map file"));
     /*QAction *load_colors_from_act = */newAction("loadcolors", tr("Load colors from..."), this, SLOT(loadColorsFromClicked()), NULL, tr("Replace the colors with those from another map file"));
     QAction *scale_all_symbols_act = newAction("scaleall", tr("Scale all symbols..."), this, SLOT(scaleAllSymbolsClicked()), NULL, tr("Scale the whole symbol set"));
+    change_symbol_select_act = newCheckAction("changesym", tr("Change symbol when selecting object"), this, SLOT(changeSymbolWhenSelecting()), NULL, tr("When checked, selecting an object will change the symbol selection"));
     QAction *scale_map_act = newAction("scalemap", tr("Change map scale..."), this, SLOT(scaleMapClicked()), NULL, tr("Change the map scale and adjust map objects and symbol sizes"));
 	zoom_out_act->setWhatsThis("<a href=\"map_menu.html\">See more</a>");
     QAction *map_notes_act = newAction("mapnotes", tr("Map notes..."), this, SLOT(mapNotesClicked()));
@@ -438,7 +450,43 @@ void MapEditorController::createMenuAndToolbars()
 	boolean_intersection_act = newAction("booleanintersection", tr("Intersect areas"), this, SLOT(booleanIntersectionClicked()), "tool-boolean-intersection.png");
 	boolean_difference_act = newAction("booleandifference", tr("Area difference"), this, SLOT(booleanDifferenceClicked()), "tool-boolean-difference.png");
 	boolean_xor_act = newAction("booleanxor", tr("Area XOr"), this, SLOT(booleanXOrClicked()), "tool-boolean-xor.png");
+
+    paint_on_template_act = new QAction(QIcon(":/images/pencil.png"), tr("Paint on template"), this);
+    paint_on_template_act->setCheckable(true);
+    updatePaintOnTemplateAction();
+    connect(paint_on_template_act, SIGNAL(triggered(bool)), this, SLOT(paintOnTemplateClicked(bool)));
+
 	QAction *import_act = newAction("import", tr("Import"), this, SLOT(importClicked()));
+	
+	map_coordinates_act = new QAction(tr("Map coordinates"), this);
+	map_coordinates_act->setCheckable(true);
+	projected_coordinates_act = new QAction(tr("Projected coordinates"), this);
+	projected_coordinates_act->setCheckable(true);
+	geographic_coordinates_act = new QAction(tr("Latitude/Longitude (Dec)"), this);
+	geographic_coordinates_act->setCheckable(true);
+	geographic_coordinates_dms_act = new QAction(tr("Latitude/Longitude (DMS)"), this);
+	geographic_coordinates_dms_act->setCheckable(true);
+	QActionGroup* coordinates_group = new QActionGroup(this);
+	coordinates_group->addAction(map_coordinates_act);
+	coordinates_group->addAction(projected_coordinates_act);
+	coordinates_group->addAction(geographic_coordinates_act);
+	coordinates_group->addAction(geographic_coordinates_dms_act);
+	QObject::connect(coordinates_group, SIGNAL(triggered(QAction*)), this, SLOT(coordsDisplayChanged()));
+	map_coordinates_act->setChecked(true);
+	QObject::connect(&map->getGeoreferencing(), SIGNAL(projectionChanged()), this, SLOT(projectionChanged()));
+	projectionChanged();
+	
+	statusbar_cursorpos_label->setContextMenuPolicy(Qt::ActionsContextMenu);
+	statusbar_cursorpos_label->addAction(map_coordinates_act);
+	statusbar_cursorpos_label->addAction(projected_coordinates_act);
+	statusbar_cursorpos_label->addAction(geographic_coordinates_act);
+	statusbar_cursorpos_label->addAction(geographic_coordinates_dms_act);
+	
+	QMenu* coordinates_menu = new QMenu(tr("Display coordinates as..."));
+	coordinates_menu->addAction(map_coordinates_act);
+	coordinates_menu->addAction(projected_coordinates_act);
+	coordinates_menu->addAction(geographic_coordinates_act);
+	coordinates_menu->addAction(geographic_coordinates_dms_act);
 	
     // Refactored so we can do custom key bindings in the future
     assignKeyboardShortcuts();
@@ -468,7 +516,13 @@ void MapEditorController::createMenuAndToolbars()
     view_menu->addAction(show_all_act);
     view_menu->addAction(custom_zoom_act);
     view_menu->addSeparator();
+	view_menu->addMenu(coordinates_menu);
+    view_menu->addSeparator();
     view_menu->addAction(fullscreen_act);
+    view_menu->addSeparator();
+    view_menu->addAction(color_window_act);
+    view_menu->addAction(symbol_window_act);
+    view_menu->addAction(template_window_act);
 
     // Tools menu
     QMenu *tools_menu = window->menuBar()->addMenu(tr("&Tools"));
@@ -497,17 +551,7 @@ void MapEditorController::createMenuAndToolbars()
 	tools_menu->addMenu(cut_hole_menu);
 	tools_menu->addAction(rotate_act);
 	tools_menu->addAction(measure_act);
-	
-	// Symbols menu
-    QMenu* symbols_menu = window->menuBar()->addMenu(tr("Sy&mbols"));
-	symbols_menu->setWhatsThis("<a href=\"sumbols_menu.html\">See more</a>");
-    symbols_menu->addAction(symbol_window_act);
-	symbols_menu->addAction(color_window_act);
-	symbols_menu->addSeparator();
-	/*symbols_menu->addAction(load_symbols_from_act);
-	symbols_menu->addAction(load_colors_from_act);*/
-	symbols_menu->addAction(scale_all_symbols_act);
-	
+		
 	// Map menu
 	QMenu* map_menu = window->menuBar()->addMenu(tr("M&ap"));
 	map_menu->setWhatsThis("<a href=\"map_menu.html\">See more</a>");
@@ -515,28 +559,35 @@ void MapEditorController::createMenuAndToolbars()
 	map_menu->addAction(scale_map_act);
 	map_menu->addAction(map_notes_act);
 	
+    // Symbols menu
+    QMenu* symbols_menu = window->menuBar()->addMenu(tr("Sy&mbols"));
+    symbols_menu->setWhatsThis("<a href=\"sumbols_menu.html\">See more</a>");
+    /*symbols_menu->addAction(load_symbols_from_act);
+    symbols_menu->addAction(load_colors_from_act);*/
+    symbols_menu->addAction(scale_all_symbols_act);
+    symbols_menu->addAction(change_symbol_select_act);
+
 	// Templates menu
 	QMenu* template_menu = window->menuBar()->addMenu(tr("&Templates"));
 	template_menu->setWhatsThis("<a href=\"template_menu.html\">See more</a>");
-	template_menu->addAction(template_window_act);
 	/*template_menu->addAction(template_config_window_act);
 	template_menu->addAction(template_visibilities_window_act);*/
-	template_menu->addSeparator();
 	template_menu->addAction(open_template_act);
 	
+	// GPS menu
+	QMenu* gps_menu = window->menuBar()->addMenu(tr("&GPS"));
+    //gps_menu->addAction(edit_gps_projection_parameters_act);
 
-
-#ifndef Q_WS_MAC
-    // disable toolbars on OS X for the moment - any call to addToolBar() appears to
-    // torpedo the main window. The app is still running, but the window actually disappears
-    // and all menu items contributed to the menu bar disappear, leaving only the Application
-    // menu, (Quit, Services, etc.)
-
-    // This is the main reason I refactored the action setup; made it easier to ensure all
-    // actions made it into the menu system where I could use them.
+#ifdef Q_WS_MAC
+    // Mac toolbars are still a little screwed up, turns out we have to insert a
+    // "dummy" toolbar first and hide it, then the others show up
+    window->addToolBar(tr("Dummy"))->hide();
+#endif
 
     // View toolbar
-    toolbar_view = window->addToolBar("View");
+    toolbar_view = window->addToolBar(tr("View"));
+    toolbar_view->addAction(zoom_in_act);
+    toolbar_view->addAction(zoom_out_act);
     toolbar_view->addAction(show_all_act);
 
 	// Drawing toolbar
@@ -547,17 +598,9 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_drawing->addAction(draw_circle_act);
 	toolbar_drawing->addAction(draw_rectangle_act);
     toolbar_drawing->addAction(draw_text_act);
-
 	toolbar_drawing->addSeparator();
 
-    // Leave this for the time being...
-	// FIXME: also add this to the tool menu
-    paint_on_template_act = new QAction(QIcon(":/images/pencil.png"), tr("Paint on template"), this);
-	paint_on_template_act->setCheckable(true);
-	updatePaintOnTemplateAction();
-	connect(paint_on_template_act, SIGNAL(triggered(bool)), this, SLOT(paintOnTemplateClicked(bool)));
-	
-	QToolButton* paint_on_template_button = new QToolButton();
+    QToolButton* paint_on_template_button = new QToolButton();
 	paint_on_template_button->setCheckable(true);
 	paint_on_template_button->setDefaultAction(paint_on_template_act);
 	paint_on_template_button->setPopupMode(QToolButton::MenuButtonPopup);
@@ -593,7 +636,6 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_advanced_editing->addAction(boolean_intersection_act);
 	toolbar_advanced_editing->addAction(boolean_difference_act);
 	toolbar_advanced_editing->addAction(boolean_xor_act);
-#endif
 
 }
 void MapEditorController::detach()
@@ -738,6 +780,34 @@ void MapEditorController::setCustomZoomFactorClicked()
 	main_view->setZoom(factor);
 }
 
+void MapEditorController::coordsDisplayChanged()
+{
+	if (geographic_coordinates_dms_act->isChecked())
+		map_widget->setCoordsDisplay(MapWidget::GEOGRAPHIC_COORDS_DMS);
+	else if (geographic_coordinates_act->isChecked())
+		map_widget->setCoordsDisplay(MapWidget::GEOGRAPHIC_COORDS);
+	else if (projected_coordinates_act->isChecked())
+		map_widget->setCoordsDisplay(MapWidget::PROJECTED_COORDS);	
+	else
+		map_widget->setCoordsDisplay(MapWidget::MAP_COORDS);
+}
+
+void MapEditorController::projectionChanged()
+{
+	const Georeferencing& geo(map->getGeoreferencing());
+	projected_coordinates_act->setText(geo.getProjectedCRS());
+	if (geo.isLocal())
+	{
+		geographic_coordinates_act->setEnabled(false);
+		geographic_coordinates_dms_act->setEnabled(false);
+	}
+	else
+	{
+		geographic_coordinates_act->setEnabled(true);
+		geographic_coordinates_dms_act->setEnabled(true);
+	}
+}
+
 void MapEditorController::showSymbolWindow(bool show)
 {
 	if (symbol_dock_widget)
@@ -864,14 +934,9 @@ void MapEditorController::openTemplateClicked()
 
 void MapEditorController::editGeoreferencing()
 {
-	GeoreferencingDialog dialog(window, *map, &map->getGPSProjectionParameters());
+	GeoreferencingDialog dialog(window, *map);
 	dialog.setWindowModality(Qt::WindowModal);
-	if (dialog.exec() == QDialog::Rejected)
-		return;
-	
-	map->setGPSProjectionParameters(dialog.getParameters());
-	if (dialog.getGeoreferencing().isDefined())
-		map->setGeoreferencing(dialog.getGeoreferencing());
+	dialog.exec();
 }
 
 void MapEditorController::selectedSymbolsChanged()
@@ -969,7 +1034,12 @@ void MapEditorController::objectSelectionChanged()
 	boolean_difference_act->setStatusTip(tr("Subtract all other selected area objects from the first selected area object.") + (boolean_difference_act->isEnabled() ? "" : (" " + tr("Select at least two area objects to activate this tool."))));
 	boolean_xor_act->setEnabled(have_two_same_symbol_areas && uniform_symbol_selected);
 	boolean_xor_act->setStatusTip(tr("Calculate nonoverlapping parts of areas.") + (boolean_xor_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
-	
+
+    if (change_symbol_select_act->isChecked() && uniform_symbol_selected)
+    {
+        symbol_widget->selectSingleSymbol(uniform_symbol);
+    }
+
 	selectedSymbolsOrObjectsChanged();
 }
 void MapEditorController::selectedSymbolsOrObjectsChanged()
