@@ -30,7 +30,7 @@
 const QString Georeferencing::geographic_crs_spec("+proj=latlong +datum=WGS84");
 
 Georeferencing::Georeferencing()
-: scale_denominator(0), grivation(0.0), projected_ref_point(0, 0), geographic_ref_point(0, 0)
+: scale_denominator(0), grivation(0.0), map_ref_point(0, 0), projected_ref_point(0, 0), geographic_ref_point(0, 0)
 {
 	updateTransformation();
 	
@@ -42,6 +42,7 @@ Georeferencing::Georeferencing()
 Georeferencing::Georeferencing(const Georeferencing& other)
 : scale_denominator(other.scale_denominator), 
   grivation(other.grivation),
+  map_ref_point(other.map_ref_point),
   projected_ref_point(other.projected_ref_point),
   projected_crs_id(other.projected_crs_id),
   projected_crs_spec(other.projected_crs_spec),
@@ -66,6 +67,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 {
 	scale_denominator   = other.scale_denominator;
 	grivation           = other.grivation;
+	map_ref_point       = other.map_ref_point;
 	projected_ref_point = other.projected_ref_point;
 	from_projected      = other.from_projected;
 	to_projected        = other.to_projected;
@@ -93,6 +95,12 @@ void Georeferencing::setScaleDenominator(int value)
 void Georeferencing::setGrivation(double value)
 {
 	grivation = value;
+	updateTransformation();
+}
+
+void Georeferencing::setMapRefPoint(MapCoord point)
+{
+	map_ref_point = point;
 	updateTransformation();
 }
 
@@ -124,6 +132,7 @@ void Georeferencing::updateTransformation()
 	to_projected.translate(projected_ref_point.x(), projected_ref_point.y());
 	to_projected.rotate(-grivation);
 	to_projected.scale(scale, -scale);
+	to_projected.translate(-map_ref_point.xd(), -map_ref_point.yd());
 	
 	from_projected = to_projected.inverted();
 	

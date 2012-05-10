@@ -22,13 +22,12 @@
 #define _OPENORIENTEERING_MAP_EDITOR_H_
 
 #include <QDockWidget>
+#include <QScopedPointer>
 
 #include "main_window.h"
 #include "map.h"
 
-QT_BEGIN_NAMESPACE
 class QLabel;
-QT_END_NAMESPACE
 
 class Template;
 class MapView;
@@ -40,6 +39,7 @@ class EditorDockWidget;
 class SymbolWidget;
 class PrintWidget;
 class TemplatePositionDockWidget;
+class GeoreferencingDialog;
 
 class MapEditorController : public MainWindowController
 {
@@ -162,6 +162,7 @@ signals:
 	
 protected slots:
 	void projectionChanged();
+	void georeferencingDialogFinished();
 	
 private:
 	void setMap(Map* map, bool create_new_map_view);
@@ -250,6 +251,8 @@ private:
 	QToolBar* toolbar_drawing;
 	QToolBar* toolbar_editing;
 	QToolBar* toolbar_advanced_editing;
+	
+	QScopedPointer<GeoreferencingDialog> georeferencing_dialog;
 	
 	QHash<Template*, TemplatePositionDockWidget*> template_position_widgets;
 };

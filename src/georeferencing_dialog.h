@@ -24,6 +24,10 @@
 #include <QDialog>
 #include <QLocale>
 #include <QString>
+#include <QScopedPointer>
+
+#include "gps_coordinates.h"
+#include "map_editor.h"
 
 class QComboBox;
 class QDoubleSpinBox;
@@ -35,52 +39,148 @@ class QSpinBox;
 class Georeferencing;
 class Map;
 class MapCoord;
+class MapEditorController;
+class GeoreferencingTool;
 
+/**
+ * A GeoreferencingDialog allows the user to adjust the georeferencing properties
+ * of a map.
+ */
 class GeoreferencingDialog : public QDialog
 {
 Q_OBJECT
 public:
-	/// Construct a new Georeferencing for the given map and initial values
-	GeoreferencingDialog(QWidget* parent, Map& map, const Georeferencing* initial = NULL);
+	/**
+	 * Constructs a new georeferencing dialog for the map handled by the given 
+	 * controller. The optional parameter initial allows to override the current 
+	 * properties of the map's georeferencing.
+	 */
+	GeoreferencingDialog(MapEditorController* controller, const Georeferencing* initial = NULL);
 	
-	/// TODO: Set the map coordinates of the reference point
-	void setRefPoint(MapCoord coords);
+	/**
+	 * Constructs a new georeferencing dialog for the given map. The optional 
+	 * parameter initial allows to override the current properties of the map's
+	 * georeferencing. Since the dialog will not know a MapEditorConctroller,
+	 * it will not allow to select a new reference point from the map.
+	 */
+	GeoreferencingDialog(QWidget* parent, Map* map, const Georeferencing* initial = NULL);
 	
-	/// Update the CRS edit from the Georeferencing
-	void updateCRS();
-	/// Update the zone edit. This may enable or disable the input field and set an initial value.
-	void updateZone();
-	/// Update the reference point easting and northing from the Georeferencing
-	void updateEastingNorthing();
-	/// Update latitude and longitude from the GPSProjectionParameters (FIXME: from the Georeferencing)
-	void updateLatLon();
+	/**
+	 * Releases resources.
+	 */
+	virtual ~GeoreferencingDialog();
+	
+	/**
+	 * Shows the dialog as a modal dialog, blocking until it is hidden.
+	 * 
+	 * If the GeoreferencingTool (for selecting the reference point) is active
+	 * it will be destroyed before showing the dialog.
+	 * 
+	 * Note that this function will also return when the dialog is temporary 
+	 * hidden for activating the GeoreferencingTool. The GeoreferencingTool
+	 * takes care of reactivating exec().
+	 */
+	int exec();
 	
 public slots:
-	/// Reset the inputs to the initial state
+	/**
+	 * Sets the map coordinates of the reference point
+	 */
+	void setRefPoint(MapCoord coords);
+	
+	/**
+	 * Notifies the dialog that the active GeoreferencingTool was deleted.
+	 */
+	void toolDeleted();
+	
+	/** 
+	 * Resets all input fields to the values in the map's Georeferencing.
+	 * 
+	 * This will also reset initial values passed to the constructor.
+	 */
 	void reset();
-	/// Push the changes to the map and indicate success to the caller.
+	
+	/** 
+	 * Pushes the changes from the dialog to the map's Georeferencing
+	 * and closes the dialog. The dialog's result is set to QDialog::Accepted,
+	 * and the active exec() function will return.
+	 */
 	void accept();
 	
 protected slots:
-	/// Indicate a change in the grivation input
+	/** 
+	 * Notifies the dialog of a change in the grivation field.
+	 */
 	void grivationChanged(double value);
-	/// TODO: Indicate the wish to select another reference point
+	
+	/**
+	 * Hides the dialog and activates a GeoreferencingTool for selecting
+	 * the reference point on the map.
+	 */
 	void selectRefPoint();
-	/// Indicate a change in the crs input
+	
+	/**
+	 * Notifies the dialog of a change in the crs or zone field.
+	 */
 	void crsChanged();
-	/// Indicate a change in the zone input
+	
+	/** 
+	 * Notifies the dialog of a change in the easting or northing field
+	 * (projected coordinates).
+	 */
 	void eastingNorthingChanged();
-	/// Indicate a change in the lat/lon input
+	
+	/**
+	 * Notifies the dialog of a change in the latitude or longitude field
+	 */
 	void latLonChanged();
 	
+protected:
+	/**
+	 * Dialog initialization common to all constructors.
+	 */
+	void init(const Georeferencing* initial);
+	
+	/** 
+	 * Updates the general field group in the dialog from the underlying Georeferencing. 
+	 */
+	void updateGeneral();
+	
+	/** 
+	 * Updates the CRS field in the dialog from the underlying Georeferencing. 
+	 */
+	void updateCRS();
+	
+	/** 
+	 * Updates the zone field in the dialog from the underlying Georeferencing.  
+	 * 
+	 * This will also show, hide and clear the zone field as neccessary, and 
+	 * try to determine a default value if empty.
+	 */
+	void updateZone();
+	
+	/** 
+	 * Updates the easting and northing fields (projected coordinates) in the 
+	 * dialog from the underlying Georeferencing. 
+	 */
+	void updateEastingNorthing();
+	
+	/** 
+	 * Updates the latitude and longitude fields (geographic coordinates) in the
+	 * dialog from the underlying Georeferencing. 
+	 */
+	void updateLatLon();
+	
 private:
-	Map& map;
-	
-	Georeferencing* georef;
+	/* Internal state */
+	MapEditorController* const controller;
+	Map* const map;
+	QScopedPointer<Georeferencing> georef;
 	QString crs_spec_template;
+	bool tool_active;
 	
-	QLocale locale;
-	
+	/* GUI elements */
+	QLabel* scale_edit;
 	QDoubleSpinBox* grivation_edit;
 	QLabel* ref_point_edit;
 	
@@ -96,7 +196,49 @@ private:
 	QLabel* link_label;
 	
 	QPushButton* reset_button;
-	QPushButton* ok_button;
+};
+
+
+
+/** 
+ * GeoreferencingTool is a helper to the GeoreferencingDialog which allows 
+ * the user to select the position of the reference point on the map 
+ * The GeoreferencingDialog hides when it activates this tool. The tool
+ * takes care of reactivating the dialog.
+ */
+class GeoreferencingTool : public MapEditorTool
+{
+public:
+	/** 
+	 * Constructs a new tool for the given dialog and controller.
+	 */
+	GeoreferencingTool(GeoreferencingDialog* dialog, MapEditorController* controller, QAction* action = NULL);
+	
+	/**
+	 * Notifies the dialog that the tool is deleted.
+	 */
+	virtual ~GeoreferencingTool();
+	
+	/**
+	 * Activates the tool.
+	 */
+	void init();
+	
+	/** 
+	 * Reacts to the user activity by sending the reference point
+	 * coordinates to the dialog and reactivating the dialog.
+	 */
+	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	
+	/**
+	 * Returns the mouse cursor that will be shown when the tool is active.
+	 */
+	QCursor* getCursor() { return cursor; }
+	
+private:
+	GeoreferencingDialog* const dialog;
+	
+	static QCursor* cursor;
 };
 
 #endif
