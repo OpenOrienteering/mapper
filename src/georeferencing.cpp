@@ -34,6 +34,7 @@ Georeferencing::Georeferencing()
 {
 	updateTransformation();
 	
+	projected_crs_id = tr("Local coordinates");
 	projected_crs  = NULL;
 	geographic_crs = pj_init_plus(geographic_crs_spec.toAscii());
 	assert(geographic_crs != NULL);
