@@ -33,6 +33,7 @@
 #include "symbol_dock_widget.h"
 #include "tool_draw_text.h"
 #include "symbol_text.h"
+#include "settings.h"
 
 QCursor* EditTool::cursor = NULL;
 
@@ -205,6 +206,7 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 		PathCoord path_coord;
 		path->calcClosestPointOnPath(map_coord, distance_sq, path_coord);
 		
+		int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
 		float click_tolerance_map_sq = widget->getMapView()->pixelToLength(click_tolerance);
 		click_tolerance_map_sq = click_tolerance_map_sq * click_tolerance_map_sq;
 		
@@ -290,6 +292,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
+	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
 	Map* map = editor->getMap();
 	
 	if (no_more_effect_on_click)
@@ -356,9 +359,9 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 		
 		// Clicked - get objects below cursor
 		SelectionInfoVector objects;
-		map->findObjectsAt(map_coord, 0.001f *widget->getMapView()->pixelToLength(MapEditorTool::click_tolerance), false, false, false, objects);
+		map->findObjectsAt(map_coord, 0.001f *widget->getMapView()->pixelToLength(click_tolerance), false, false, false, objects);
 		if (objects.empty())
-			map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(1.5f * MapEditorTool::click_tolerance), true, false, false, objects);
+			map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(1.5f * click_tolerance), true, false, false, objects);
 		
 		// Selection logic, trying to select the most relevant object(s)
 		if (!(event->modifiers() & selection_modifier) || map->getNumSelectedObjects() == 0)

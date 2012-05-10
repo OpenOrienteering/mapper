@@ -32,6 +32,7 @@
 #include "map_dialog_new.h"
 #include "map_editor.h"
 #include "file_format.h"
+#include "settings_dialog.h"
 
 // ### MainWindowController ###
 
@@ -128,8 +129,7 @@ void MainWindow::createFileMenu()
 		connect(recent_file_act[i], SIGNAL(triggered()), this, SLOT(openRecentFile()));
 	}
 	open_recent_menu_inserted = false;
-	
-	// TODO: importAct? Or better in the map menu?
+
 	// NOTE: if you insert something between open_recent_menu and save_act, adjust updateRecentFileActions()!
 	
 	save_act = new QAction(QIcon(":/images/save.png"), tr("&Save"), this);
@@ -141,6 +141,9 @@ void MainWindow::createFileMenu()
 	save_as_act->setShortcuts(QKeySequence::SaveAs);
 	save_as_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(save_as_act, SIGNAL(triggered()), this, SLOT(showSaveAsDialog()));
+	
+	settings_act = new QAction(tr("Settings..."), this);
+	connect(settings_act, SIGNAL(triggered()), this, SLOT(showSettings()));
 	
 	close_act = new QAction(tr("Close"), this);
 	close_act->setShortcut(tr("Ctrl+W"));
@@ -160,6 +163,8 @@ void MainWindow::createFileMenu()
 	file_menu->addAction(open_act);
 	file_menu->addAction(save_act);
 	file_menu->addAction(save_as_act);
+	file_menu->addSeparator();
+	file_menu->addAction(settings_act);
 	file_menu->addSeparator();
 	file_menu->addAction(close_act);
 	file_menu->addAction(exit_act);
@@ -621,8 +626,8 @@ void MainWindow::toggleFullscreenMode()
 
 void MainWindow::showSettings()
 {
-	// TODO
-	QMessageBox::information(this, tr("Error"), tr("Sorry, settings are not implemented yet!"));
+	SettingsDialog dialog(this);
+	dialog.exec();
 }
 void MainWindow::showAbout()
 {

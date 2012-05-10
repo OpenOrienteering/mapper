@@ -50,6 +50,7 @@
 #include "tool_measure.h"
 #include "tool_boolean.h"
 #include "object_text.h"
+#include "settings.h"
 
 // ### MapEditorController ###
 
@@ -256,7 +257,7 @@ void MapEditorController::attach(MainWindow* window)
 	window->statusBar()->addPermanentWidget(statusbar_cursorpos_label);
 	
 	// Create map widget
-	map_widget = new MapWidget(mode == MapEditor, true); //mode == SymbolEditor);	TODO: Make antialiasing configurable
+	map_widget = new MapWidget(mode == MapEditor, mode == SymbolEditor);
 	connect(window, SIGNAL(keyPressed(QKeyEvent*)), map_widget, SLOT(keyPressed(QKeyEvent*)));
 	connect(window, SIGNAL(keyReleased(QKeyEvent*)), map_widget, SLOT(keyReleased(QKeyEvent*)));
 	map_widget->setMapView(main_view);
@@ -492,8 +493,8 @@ void MapEditorController::createMenuAndToolbars()
 
     // Extend file menu
 	QMenu* file_menu = window->getFileMenu();
-	file_menu->insertAction(window->getCloseAct(), print_act);
-	file_menu->insertSeparator(window->getCloseAct());
+	file_menu->insertAction(window->getFileMenuExtensionAct(), print_act);
+	file_menu->insertSeparator(window->getFileMenuExtensionAct());
 	file_menu->insertAction(print_act, import_act);
 	file_menu->insertSeparator(print_act);
 		
@@ -1042,12 +1043,10 @@ void MapEditorController::objectSelectionChanged()
 	boolean_difference_act->setStatusTip(tr("Subtract all other selected area objects from the first selected area object.") + (boolean_difference_act->isEnabled() ? "" : (" " + tr("Select at least two area objects to activate this tool."))));
 	boolean_xor_act->setEnabled(have_two_same_symbol_areas && uniform_symbol_selected);
 	boolean_xor_act->setStatusTip(tr("Calculate nonoverlapping parts of areas.") + (boolean_xor_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
-
-    if (change_symbol_select_act->isChecked() && uniform_symbol_selected)
-    {
-        symbol_widget->selectSingleSymbol(uniform_symbol);
-    }
-
+	
+	if (change_symbol_select_act->isChecked() && uniform_symbol_selected)
+		symbol_widget->selectSingleSymbol(uniform_symbol);
+	
 	selectedSymbolsOrObjectsChanged();
 }
 void MapEditorController::selectedSymbolsOrObjectsChanged()
@@ -1532,7 +1531,6 @@ void EditorDockWidget::closeEvent(QCloseEvent* event)
 
 // ### MapEditorTool ###
 
-const int MapEditorTool::click_tolerance = 5;
 const QRgb MapEditorTool::inactive_color = qRgb(0, 0, 255);
 const QRgb MapEditorTool::active_color = qRgb(255, 150, 0);
 const QRgb MapEditorTool::selection_color = qRgb(210, 0, 229);
@@ -1769,6 +1767,7 @@ bool MapEditorTool::calculateBoxTextHandles(QPointF* out)
 
 int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QPointF* box_text_handles, QRectF* selection_extent, MapWidget* widget)
 {
+	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
 	const float click_tolerance_squared = click_tolerance * click_tolerance;
 	
 	// Check object

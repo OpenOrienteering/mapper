@@ -44,7 +44,7 @@ public:
 		 GEOGRAPHIC_COORDS_DMS
 	};
 	
-	MapWidget(bool show_help, bool use_antialiasing, QWidget* parent = NULL);
+	MapWidget(bool show_help, bool force_antialiasing, QWidget* parent = NULL);
 	~MapWidget();
 	
 	void setMapView(MapView* view);
@@ -106,8 +106,6 @@ public:
 	
     virtual QSize sizeHint() const;
 	
-	inline bool usesAntialiasing() { return use_antialiasing; }
-	
 public slots:
 	void keyPressed(QKeyEvent* event);
 	void keyReleased(QKeyEvent* event);
@@ -161,7 +159,7 @@ private:
 	MapCoordF last_cursor_pos;
 	
 	bool show_help;
-	bool use_antialiasing;
+	bool force_antialiasing;
 	
 	// Panning
 	bool dragging;

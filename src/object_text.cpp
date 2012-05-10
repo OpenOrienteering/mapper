@@ -24,7 +24,7 @@
 
 #include "symbol.h"
 #include "symbol_text.h"
-#include "map_editor.h"
+#include "settings.h"
 
 // ### TextObjectPartInfo ###
 
@@ -228,20 +228,21 @@ int TextObject::calcTextPositionAt(MapCoordF coord, bool find_line_only)
 {
 	return calcTextPositionAt(calcMapToTextTransform().map(coord.toQPointF()), find_line_only);
 }
-	
-// TODO click_tolerance is the only dependency on MapEditorTool; consider click_tolerance parameter
+
 // FIXME actually this is two functions, selected by parameter find_line_only; make two functions or return TextObjectLineInfo reference
 int TextObject::calcTextPositionAt(QPointF point, bool find_line_only)
 {
+	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
+	
 	for (int line = 0; line < getNumLines(); ++line)
 	{
 		TextObjectLineInfo* line_info = getLineInfo(line);
 		if (line_info->line_y - line_info->ascent > point.y())
 			return -1;	// NOTE: Only true as long as every line has a bigger or equal y value than the line before
 		
-		if (point.x() < line_info->line_x - MapEditorTool::click_tolerance) continue;
+		if (point.x() < line_info->line_x - click_tolerance) continue;
 		if (point.y() > line_info->line_y + line_info->descent) continue;
-		if (point.x() > line_info->line_x + line_info->width + MapEditorTool::click_tolerance) continue;
+		if (point.x() > line_info->line_x + line_info->width + click_tolerance) continue;
 		
 		// Position in the line rect.
 		if (find_line_only)

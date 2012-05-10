@@ -129,9 +129,9 @@ public:
 	inline void setShortcutsEnabled(bool enable) {disable_shortcuts = !enable;}
 	inline bool areShortcutsDisabled() const {return disable_shortcuts;}
 	
-	// Getters to make it possible to extend the file menu before close_act
+	// Getters to make it possible to extend the file menu
 	inline QMenu* getFileMenu() const {return file_menu;}
-	inline QAction* getCloseAct() const {return close_act;}
+	inline QAction* getFileMenuExtensionAct() const {return settings_act;}
 	
 	/** Save the content of the main window.
 	 *  @param path the path where to save.
@@ -192,7 +192,6 @@ public slots:
 	void toggleFullscreenMode();
 	
 	/** Show the settings dialog.
-	 *  TODO.
 	 */
 	void showSettings();
 	
@@ -270,6 +269,7 @@ private:
 	QMenu* open_recent_menu;
 	bool open_recent_menu_inserted;
 	QAction* recent_file_act[max_recent_files];
+	QAction* settings_act;
 	QAction* close_act;
 	QLabel* status_label;
 	

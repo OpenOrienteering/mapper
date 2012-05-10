@@ -54,7 +54,7 @@ public:
 	
 	MapEditorController(OperatingMode mode, Map* map = NULL);
 	~MapEditorController();
-	
+
 	void setTool(MapEditorTool* new_tool);
 	void setEditTool();
 	void setOverrideTool(MapEditorTool* new_override_tool);
@@ -345,7 +345,6 @@ public:
 	
 	static void loadPointHandles();
 	
-	static const int click_tolerance;
 	static const QRgb inactive_color;
 	static const QRgb active_color;
 	static const QRgb selection_color;

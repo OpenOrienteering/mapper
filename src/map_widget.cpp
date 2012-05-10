@@ -23,16 +23,18 @@
 #include <assert.h>
 
 #include <QtGui>
+
 #include "map.h"
 #include "map_editor.h"
 #include "template.h"
 #include "georeferencing.h"
+#include "settings.h"
 
 #if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
 #define MiddleButton MidButton
 #endif
 
-MapWidget::MapWidget(bool show_help, bool use_antialiasing, QWidget* parent) : QWidget(parent), show_help(show_help), use_antialiasing(use_antialiasing)
+MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent) : QWidget(parent), show_help(show_help), force_antialiasing(force_antialiasing)
 {
 	view = NULL;
 	tool = NULL;
@@ -831,6 +833,7 @@ void MapWidget::updateMapCache(bool use_background)
 		painter.setCompositionMode(mode);
 	}
 	
+	bool use_antialiasing = force_antialiasing || Settings::getInstance().getSettingCached(Settings::MapDisplay_Antialiasing).toBool();
 	if (use_antialiasing)
 		painter.setRenderHint(QPainter::Antialiasing);
 		
