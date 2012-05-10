@@ -1034,12 +1034,10 @@ void MapEditorController::objectSelectionChanged()
 	boolean_difference_act->setStatusTip(tr("Subtract all other selected area objects from the first selected area object.") + (boolean_difference_act->isEnabled() ? "" : (" " + tr("Select at least two area objects to activate this tool."))));
 	boolean_xor_act->setEnabled(have_two_same_symbol_areas && uniform_symbol_selected);
 	boolean_xor_act->setStatusTip(tr("Calculate nonoverlapping parts of areas.") + (boolean_xor_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
-
-    if (change_symbol_select_act->isChecked() && uniform_symbol_selected)
-    {
-        symbol_widget->selectSingleSymbol(uniform_symbol);
-    }
-
+	
+	if (change_symbol_select_act->isChecked() && uniform_symbol_selected)
+		symbol_widget->selectSingleSymbol(uniform_symbol);
+	
 	selectedSymbolsOrObjectsChanged();
 }
 void MapEditorController::selectedSymbolsOrObjectsChanged()
