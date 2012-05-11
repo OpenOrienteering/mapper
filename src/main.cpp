@@ -30,6 +30,8 @@
 #include "file_format_ocad8.h"
 #include "file_format_xml.h"
 
+#include <QDebug>
+
 int main(int argc, char** argv)
 {
 	// Create single-instance application.
@@ -52,14 +54,17 @@ int main(int argc, char** argv)
 #endif
 	
 	// Localization
-	QString locale = QLocale::system().name();
-	QTranslator qtTranslator;
+	QString locale = QLocale((QLocale::Language)Settings::getInstance().getSetting(Settings::General_Language).toInt()).name();
+	locale = locale.left(2);
+	if(locale == "en"){
+		QTranslator qtTranslator;
 #ifdef WIN32
-	qtTranslator.load("qt_" + locale, "translations/");
+		qtTranslator.load("qt_" + locale, "translations/");
 #else
-	qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+		qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 #endif
-	qapp.installTranslator(&qtTranslator);
+		qapp.installTranslator(&qtTranslator);
+	}
 	QTranslator translator;
 	translator.load(locale, QString(":/translations"));
 	qapp.installTranslator(&translator);

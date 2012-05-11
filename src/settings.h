@@ -36,7 +36,9 @@ public:
 	enum SettingsEnum
 	{
 		MapDisplay_Antialiasing = 0,
-		MapEditor_ClickTolerance
+		MapEditor_ClickTolerance,
+		MapEditor_ChangeSymbolWhenSelecting,
+		General_Language
 	};
 	
 	/// Retrieve a setting from QSettings without caching

@@ -24,11 +24,14 @@
 
 #include <QVariant>
 #include <QSettings>
+#include <QLocale>
 
 Settings::Settings(): QObject()
 {
 	registerSetting(MapDisplay_Antialiasing, "MapDisplay/antialiasing", true);
 	registerSetting(MapEditor_ClickTolerance, "MapEditor/click_tolerance", 5);
+	registerSetting(MapEditor_ChangeSymbolWhenSelecting, "MapEditor/change_symbol_when_selecting", false);
+	registerSetting(General_Language, "General/language", QVariant((int)QLocale::English));
 }
 void Settings::registerSetting(Settings::SettingsEnum id, const QString& path, const QVariant& default_value)
 {

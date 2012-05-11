@@ -20,6 +20,7 @@
 #include "settings_dialog.h"
 
 #include <QtGui>
+#include <QHash>
 
 #include "map_editor.h"
 #include "map_widget.h"
@@ -29,37 +30,51 @@
 void SettingsPage::apply()
 {
 	QSettings settings;
-	for (int i = 0; i < changes.size(); i++)
+	for (int i = 0; i < changes.size(); i++){
 		settings.setValue(changes.keys().at(i), changes.values().at(i));
+	}
 }
 
 // ### EditorPage ###
 
 EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 {
-	QGridLayout* layout = new QGridLayout();
+	layout = new QGridLayout();
 	this->setLayout(layout);
 	
 	int row = 0;
 	
-	QCheckBox* antialiasing = new QCheckBox(tr("Enable Antialiasing"), this);
+	antialiasing = new QCheckBox(tr("Enable Antialiasing"), this);
 	antialiasing->setToolTip(tr("Antialiasing makes the map look much better, but also slows down the map display"));
 	layout->addWidget(antialiasing, row++, 0, 1, 2);
 	
-	QLabel* tolerance_label = new QLabel(tr("Click tolerance:"));
-	QSpinBox* tolerance = new QSpinBox(this);
+	tolerance_label = new QLabel(tr("Click tolerance:"));
+	tolerance = new QSpinBox(this);
 	tolerance->setMinimum(1);
 	tolerance->setMaximum(50);
 	layout->addWidget(tolerance_label, row, 0);
 	layout->addWidget(tolerance, row++, 1);
+
+	change_symbol = new QCheckBox(tr("Change symbol when selecting object"));
+	layout->addWidget(change_symbol, row++, 0);
 	
 	antialiasing->setChecked(Settings::getInstance().getSetting(Settings::MapDisplay_Antialiasing).toBool());
 	tolerance->setValue(Settings::getInstance().getSetting(Settings::MapEditor_ClickTolerance).toInt());
+	change_symbol->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool());
 	
 	layout->setRowStretch(row, 1);
 
 	connect(antialiasing, SIGNAL(toggled(bool)), this, SLOT(antialiasingClicked(bool)));
 	connect(tolerance, SIGNAL(valueChanged(int)), this, SLOT(toleranceChanged(int)));
+	connect(change_symbol, SIGNAL(clicked()), this, SLOT(changeSymbolClicked(bool)));
+}
+
+EditorPage::~EditorPage()
+{
+	delete antialiasing;
+	delete tolerance_label;
+	delete tolerance;
+	delete change_symbol;
 }
 
 void EditorPage::antialiasingClicked(bool checked)
@@ -72,12 +87,53 @@ void EditorPage::toleranceChanged(int value)
 	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_ClickTolerance), QVariant(value));
 }
 
+void EditorPage::changeSymbolClicked(bool checked)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_ChangeSymbolWhenSelecting), QVariant(checked));
+}
+
+// ### GeneralPage ###
+
+GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
+{
+	languageBox = new QComboBox(this);
+	l = new QVBoxLayout;
+	l->addWidget(languageBox);
+	QDir dir(":/translations");
+	foreach(QString name, dir.entryList(QStringList() << "*.qm", QDir::Files)){
+		name = name.left(name.indexOf(".qm"));
+		name = name.right(2);
+		languageBox->addItem(QLocale::languageToString(QLocale(name).language()), (int)QLocale(name).language());
+	}
+	QLocale::Language currentLanguage = (QLocale::Language)Settings::getInstance().getSetting(Settings::General_Language).toInt();
+	for(int i = 0; i < languageBox->count(); i++){
+		if(QLocale::languageToString(currentLanguage) == languageBox->itemText(i)){
+			languageBox->setCurrentIndex(i);
+			break;
+		}
+	}
+	connect(languageBox, SIGNAL(currentIndexChanged(int)), this, SLOT(languageChanged(int)));
+}
+
+GeneralPage::~GeneralPage()
+{
+	delete languageBox;
+	delete l;
+}
+
+void GeneralPage::languageChanged(int index)
+{
+	Q_UNUSED(index)
+	QLocale l((QLocale::Language)languageBox->itemData(languageBox->currentIndex()).toInt());
+	changes.insert(Settings::getInstance().getSettingPath(Settings::General_Language), QVariant((int)(l.language())));
+}
+
 // ### SettingsDialog ###
 
 SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
 {
 	setWindowTitle(tr("Settings"));
-	QVBoxLayout* layout = new QVBoxLayout();
+	layout = new QVBoxLayout();
 	this->setLayout(layout);
 	//this->resize(640, 480);
 	
@@ -90,7 +146,19 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
 	connect(button_box, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonPressed(QAbstractButton*)));
 	
 	// Add all pages
+	addPage(new GeneralPage(this));
 	addPage(new EditorPage(this));
+}
+
+SettingsDialog::~SettingsDialog()
+{
+	delete tabWidget;
+	delete layout;
+	delete button_box;
+	foreach(SettingsPage* page, pages){
+		pages.removeOne(page);
+		delete page;
+	}
 }
 
 void SettingsDialog::addPage(SettingsPage* page)
