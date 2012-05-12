@@ -681,6 +681,8 @@ void MapWidget::wheelEvent(QWheelEvent* event)
 		if (view)
 		{
 			bool preserve_cursor_pos = (event->modifiers() & Qt::ControlModifier) == 0;
+			if (num_steps < 0 && !Settings::getInstance().getSettingCached(Settings::MapEditor_ZoomOutAwayFromCursor).toBool())
+				preserve_cursor_pos = !preserve_cursor_pos;
 			view->zoomSteps(num_steps, preserve_cursor_pos, viewportToView(event->pos()));
 			
 			// Send a mouse move event to the current tool as zooming out can move the mouse position on the map

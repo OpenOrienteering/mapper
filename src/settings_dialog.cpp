@@ -20,7 +20,6 @@
 #include "settings_dialog.h"
 
 #include <QtGui>
-#include <QHash>
 
 #include "map_editor.h"
 #include "map_widget.h"
@@ -30,102 +29,9 @@
 void SettingsPage::apply()
 {
 	QSettings settings;
-	for (int i = 0; i < changes.size(); i++){
+	for (int i = 0; i < changes.size(); i++)
 		settings.setValue(changes.keys().at(i), changes.values().at(i));
-	}
-}
-
-// ### EditorPage ###
-
-EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
-{
-	layout = new QGridLayout();
-	this->setLayout(layout);
-	
-	int row = 0;
-	
-	antialiasing = new QCheckBox(tr("Enable Antialiasing"), this);
-	antialiasing->setToolTip(tr("Antialiasing makes the map look much better, but also slows down the map display"));
-	layout->addWidget(antialiasing, row++, 0, 1, 2);
-	
-	tolerance_label = new QLabel(tr("Click tolerance:"));
-	tolerance = new QSpinBox(this);
-	tolerance->setMinimum(1);
-	tolerance->setMaximum(50);
-	layout->addWidget(tolerance_label, row, 0);
-	layout->addWidget(tolerance, row++, 1);
-
-	change_symbol = new QCheckBox(tr("Change symbol when selecting object"));
-	layout->addWidget(change_symbol, row++, 0);
-	
-	antialiasing->setChecked(Settings::getInstance().getSetting(Settings::MapDisplay_Antialiasing).toBool());
-	tolerance->setValue(Settings::getInstance().getSetting(Settings::MapEditor_ClickTolerance).toInt());
-	change_symbol->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool());
-	
-	layout->setRowStretch(row, 1);
-
-	connect(antialiasing, SIGNAL(toggled(bool)), this, SLOT(antialiasingClicked(bool)));
-	connect(tolerance, SIGNAL(valueChanged(int)), this, SLOT(toleranceChanged(int)));
-	connect(change_symbol, SIGNAL(clicked()), this, SLOT(changeSymbolClicked(bool)));
-}
-
-EditorPage::~EditorPage()
-{
-	delete antialiasing;
-	delete tolerance_label;
-	delete tolerance;
-	delete change_symbol;
-}
-
-void EditorPage::antialiasingClicked(bool checked)
-{
-	changes.insert(Settings::getInstance().getSettingPath(Settings::MapDisplay_Antialiasing), QVariant(checked));
-}
-
-void EditorPage::toleranceChanged(int value)
-{
-	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_ClickTolerance), QVariant(value));
-}
-
-void EditorPage::changeSymbolClicked(bool checked)
-{
-	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_ChangeSymbolWhenSelecting), QVariant(checked));
-}
-
-// ### GeneralPage ###
-
-GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
-{
-	languageBox = new QComboBox(this);
-	l = new QVBoxLayout;
-	l->addWidget(languageBox);
-	QDir dir(":/translations");
-	foreach(QString name, dir.entryList(QStringList() << "*.qm", QDir::Files)){
-		name = name.left(name.indexOf(".qm"));
-		name = name.right(2);
-		languageBox->addItem(QLocale::languageToString(QLocale(name).language()), (int)QLocale(name).language());
-	}
-	QLocale::Language currentLanguage = (QLocale::Language)Settings::getInstance().getSetting(Settings::General_Language).toInt();
-	for(int i = 0; i < languageBox->count(); i++){
-		if(QLocale::languageToString(currentLanguage) == languageBox->itemText(i)){
-			languageBox->setCurrentIndex(i);
-			break;
-		}
-	}
-	connect(languageBox, SIGNAL(currentIndexChanged(int)), this, SLOT(languageChanged(int)));
-}
-
-GeneralPage::~GeneralPage()
-{
-	delete languageBox;
-	delete l;
-}
-
-void GeneralPage::languageChanged(int index)
-{
-	Q_UNUSED(index)
-	QLocale l((QLocale::Language)languageBox->itemData(languageBox->currentIndex()).toInt());
-	changes.insert(Settings::getInstance().getSettingPath(Settings::General_Language), QVariant((int)(l.language())));
+	changes.clear();
 }
 
 // ### SettingsDialog ###
@@ -133,15 +39,14 @@ void GeneralPage::languageChanged(int index)
 SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
 {
 	setWindowTitle(tr("Settings"));
-	layout = new QVBoxLayout();
+	QVBoxLayout* layout = new QVBoxLayout();
 	this->setLayout(layout);
-	//this->resize(640, 480);
 	
-	tabWidget = new QTabWidget(this);
-	layout->addWidget(tabWidget);
+	tab_widget = new QTabWidget(this);
+	layout->addWidget(tab_widget);
 	
 	button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel,
-								Qt::Horizontal, this);
+									   Qt::Horizontal, this);
 	layout->addWidget(button_box);
 	connect(button_box, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonPressed(QAbstractButton*)));
 	
@@ -150,21 +55,10 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
 	addPage(new EditorPage(this));
 }
 
-SettingsDialog::~SettingsDialog()
-{
-	delete tabWidget;
-	delete layout;
-	delete button_box;
-	foreach(SettingsPage* page, pages){
-		pages.removeOne(page);
-		delete page;
-	}
-}
-
 void SettingsDialog::addPage(SettingsPage* page)
 {
-	pages.append(page);
-	tabWidget->addTab(pages.last(), pages.last()->title());
+	pages.push_back(page);
+	tab_widget->addTab(page, page->title());
 }
 
 void SettingsDialog::buttonPressed(QAbstractButton* button)
@@ -189,6 +83,126 @@ void SettingsDialog::buttonPressed(QAbstractButton* button)
 			page->cancel();
 		this->reject();
 	}
+}
+
+// ### EditorPage ###
+
+EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
+{
+	QGridLayout* layout = new QGridLayout();
+	this->setLayout(layout);
+	
+	int row = 0;
+	
+	QCheckBox* antialiasing = new QCheckBox(tr("High quality map display (antialiasing)"), this);
+	antialiasing->setToolTip(tr("Antialiasing makes the map look much better, but also slows down the map display"));
+	layout->addWidget(antialiasing, row++, 0, 1, 2);
+	
+	QLabel* tolerance_label = new QLabel(tr("Click tolerance:"));
+	QSpinBox* tolerance = new QSpinBox(this);
+	tolerance->setMinimum(1);
+	tolerance->setMaximum(50);
+	layout->addWidget(tolerance_label, row, 0);
+	layout->addWidget(tolerance, row++, 1);
+
+	QCheckBox* select_symbol_of_objects = new QCheckBox(tr("When selecting an object, automatically select its symbol, too"));
+	layout->addWidget(select_symbol_of_objects, row++, 0, 1, 2);
+	
+	QCheckBox* zoom_out_away_from_cursor = new QCheckBox(tr("Zoom away from cursor when zooming out"));
+	layout->addWidget(zoom_out_away_from_cursor, row++, 0, 1, 2);
+	
+	
+	antialiasing->setChecked(Settings::getInstance().getSetting(Settings::MapDisplay_Antialiasing).toBool());
+	tolerance->setValue(Settings::getInstance().getSetting(Settings::MapEditor_ClickTolerance).toInt());
+	select_symbol_of_objects->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool());
+	zoom_out_away_from_cursor->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_ZoomOutAwayFromCursor).toBool());
+	
+	layout->setRowStretch(row, 1);
+
+	connect(antialiasing, SIGNAL(toggled(bool)), this, SLOT(antialiasingClicked(bool)));
+	connect(tolerance, SIGNAL(valueChanged(int)), this, SLOT(toleranceChanged(int)));
+	connect(select_symbol_of_objects, SIGNAL(clicked(bool)), this, SLOT(selectSymbolOfObjectsClicked(bool)));
+	connect(zoom_out_away_from_cursor, SIGNAL(clicked(bool)), this, SLOT(zoomOutAwayFromCursorClicked(bool)));
+}
+
+void EditorPage::antialiasingClicked(bool checked)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::MapDisplay_Antialiasing), QVariant(checked));
+}
+
+void EditorPage::toleranceChanged(int value)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_ClickTolerance), QVariant(value));
+}
+
+void EditorPage::selectSymbolOfObjectsClicked(bool checked)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_ChangeSymbolWhenSelecting), QVariant(checked));
+}
+
+void EditorPage::zoomOutAwayFromCursorClicked(bool checked)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_ZoomOutAwayFromCursor), QVariant(checked));
+}
+
+// ### GeneralPage ###
+
+GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
+{
+	QLabel* language_label = new QLabel(tr("Language:"));
+	language_box = new QComboBox(this);
+	
+	QGridLayout* layout = new QGridLayout();
+	setLayout(layout);
+	
+	layout->addWidget(language_label, 0, 0);
+	layout->addWidget(language_box, 0, 1);
+	layout->setRowStretch(1, 1);
+	
+	// Add translation files as languages to map
+	QMap<QString, int> language_map;
+	
+	QDir dir(":/translations");
+	foreach (QString name, dir.entryList(QStringList() << "*.qm", QDir::Files))
+	{
+		name = name.left(name.indexOf(".qm"));
+		name = name.right(2);
+		QString language_name;
+#if (QT_VERSION >= QT_VERSION_CHECK(4, 8, 0))
+		language_name = QLocale(name).nativeLanguageName();
+#else
+		language_name = QLocale::languageToString(QLocale(name).language());
+#endif
+		language_map.insert(language_name, (int)QLocale(name).language());
+	}
+	
+	// Add default language English to map
+	language_map.insert(QLocale::languageToString(QLocale::English), (int)QLocale::English);
+	
+	// Add sorted languages from map to widget
+	QMap<QString, int>::const_iterator end = language_map.constEnd();
+	for (QMap<QString, int>::const_iterator it = language_map.constBegin(); it != end; ++it)
+		language_box->addItem(it.key(), it.value());
+	
+	// Select current language
+	int index = language_box->findData(Settings::getInstance().getSetting(Settings::General_Language).toInt());
+	language_default_index = (index >= 0) ? index : language_box->findData((int)QLocale::English);
+	language_box->setCurrentIndex(language_default_index);
+	
+	connect(language_box, SIGNAL(currentIndexChanged(int)), this, SLOT(languageChanged(int)));
+}
+
+void GeneralPage::apply()
+{
+	if (language_box->currentIndex() != language_default_index)
+		QMessageBox::information(window(), tr("Notice"), tr("The program must be restarted for the language change to take effect!"));
+	SettingsPage::apply();
+	language_default_index = language_box->currentIndex();
+}
+
+void GeneralPage::languageChanged(int index)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::General_Language), language_box->itemData(index).toInt());
 }
 
 #include "settings_dialog.moc"

@@ -31,7 +31,9 @@ Settings::Settings(): QObject()
 	registerSetting(MapDisplay_Antialiasing, "MapDisplay/antialiasing", true);
 	registerSetting(MapEditor_ClickTolerance, "MapEditor/click_tolerance", 5);
 	registerSetting(MapEditor_ChangeSymbolWhenSelecting, "MapEditor/change_symbol_when_selecting", false);
-	registerSetting(General_Language, "General/language", QVariant((int)QLocale::English));
+	registerSetting(MapEditor_ZoomOutAwayFromCursor, "MapEditor/zoom_out_away_from_cursor", true);
+	
+	registerSetting(General_Language, "General/language", QVariant((int)QLocale::system().language()));
 }
 void Settings::registerSetting(Settings::SettingsEnum id, const QString& path, const QVariant& default_value)
 {
@@ -57,6 +59,8 @@ QVariant Settings::getSettingCached(Settings::SettingsEnum setting)
 
 void Settings::applySettings()
 {
+	QSettings().sync();
+	
 	// Invalidate cache as settings could be changed
 	settings_cache.clear();
 	emit settingsChanged();

@@ -772,7 +772,6 @@ SymbolWidget::SymbolWidget(Map* map, QWidget* parent): EditorDockWidgetChild(par
 	preferred_size = settings.value("size", QSize(200, 500)).toSize();
 	settings.endGroup();
 	
-    qDebug() << "loaded preferred size for symbol widget at"<<preferred_size;
 	// Create layout
 	layout = new QHBoxLayout();
 	layout->setMargin(0);

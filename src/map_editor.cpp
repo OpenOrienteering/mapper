@@ -396,7 +396,6 @@ void MapEditorController::createMenuAndToolbars()
     /*QAction *load_symbols_from_act = */newAction("loadsymbols", tr("Load symbols from..."), this, SLOT(loadSymbolsFromClicked()), NULL, tr("Replace the symbols with those from another map file"));
     /*QAction *load_colors_from_act = */newAction("loadcolors", tr("Load colors from..."), this, SLOT(loadColorsFromClicked()), NULL, tr("Replace the colors with those from another map file"));
     QAction *scale_all_symbols_act = newAction("scaleall", tr("Scale all symbols..."), this, SLOT(scaleAllSymbolsClicked()), NULL, tr("Scale the whole symbol set"));
-    change_symbol_select_act = newCheckAction("changesym", tr("Change symbol when selecting object"), this, SLOT(changeSymbolWhenSelecting()), NULL, tr("When checked, selecting an object will change the symbol selection"));
     QAction *scale_map_act = newAction("scalemap", tr("Change map scale..."), this, SLOT(scaleMapClicked()), NULL, tr("Change the map scale and adjust map objects and symbol sizes"));
 	zoom_out_act->setWhatsThis("<a href=\"map_menu.html\">See more</a>");
     QAction *map_notes_act = newAction("mapnotes", tr("Map notes..."), this, SLOT(mapNotesClicked()));
@@ -565,7 +564,6 @@ void MapEditorController::createMenuAndToolbars()
     /*symbols_menu->addAction(load_symbols_from_act);
     symbols_menu->addAction(load_colors_from_act);*/
     symbols_menu->addAction(scale_all_symbols_act);
-    symbols_menu->addAction(change_symbol_select_act);
 
 	// Templates menu
 	QMenu* template_menu = window->menuBar()->addMenu(tr("&Templates"));
@@ -1035,10 +1033,8 @@ void MapEditorController::objectSelectionChanged()
 	boolean_xor_act->setEnabled(have_two_same_symbol_areas && uniform_symbol_selected);
 	boolean_xor_act->setStatusTip(tr("Calculate nonoverlapping parts of areas.") + (boolean_xor_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
 
-    if (change_symbol_select_act->isChecked() && uniform_symbol_selected)
-    {
-        symbol_widget->selectSingleSymbol(uniform_symbol);
-    }
+	if (symbol_widget && uniform_symbol_selected && Settings::getInstance().getSettingCached(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool())
+		symbol_widget->selectSingleSymbol(uniform_symbol);
 
 	selectedSymbolsOrObjectsChanged();
 }

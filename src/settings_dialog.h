@@ -57,18 +57,16 @@ class SettingsDialog : public QDialog
 Q_OBJECT
 public:
 	SettingsDialog(QWidget* parent = 0);
-	~SettingsDialog();
-
-private:
-	void addPage(SettingsPage* page);
-	
-	QTabWidget* tabWidget;
-	QDialogButtonBox* button_box;
-	QVBoxLayout* layout;
-	QList<SettingsPage*> pages;
 
 private slots:
 	void buttonPressed(QAbstractButton* button);
+
+private:
+	void addPage(SettingsPage* page);
+
+	QTabWidget* tab_widget;
+	QVector<SettingsPage*> pages;
+	QDialogButtonBox* button_box;
 };
 
 class EditorPage : public SettingsPage
@@ -76,21 +74,14 @@ class EditorPage : public SettingsPage
 Q_OBJECT
 public:
 	EditorPage(QWidget* parent = 0);
-	~EditorPage();
 
 	virtual QString title() { return tr("Editor"); }
-	
+
 private slots:
 	void antialiasingClicked(bool checked);
 	void toleranceChanged(int value);
-	void changeSymbolClicked(bool checked);
-
-private:
-	QGridLayout* layout;
-	QCheckBox* antialiasing;
-	QLabel* tolerance_label;
-	QSpinBox* tolerance;
-	QCheckBox* change_symbol;
+	void selectSymbolOfObjectsClicked(bool checked);
+	void zoomOutAwayFromCursorClicked(bool checked);
 };
 
 class GeneralPage : public SettingsPage
@@ -98,16 +89,16 @@ class GeneralPage : public SettingsPage
 Q_OBJECT
 public:
 	GeneralPage(QWidget* parent = 0);
-	~GeneralPage();
 
+	virtual void apply();
 	virtual QString title() { return tr("General"); }
 
 private slots:
 	void languageChanged(int index);
-
+	
 private:
-	QComboBox* languageBox;
-	QVBoxLayout* l;
+	int language_default_index;
+	QComboBox* language_box;
 };
 
 #endif
