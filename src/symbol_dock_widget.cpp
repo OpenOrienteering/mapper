@@ -789,7 +789,6 @@ SymbolWidget::~SymbolWidget()
 	QSettings settings;
 	settings.beginGroup("SymbolWidget");
 	settings.setValue("size", size());
-    qDebug() << "saved preferred size for symbol widget at"<<size();
 	settings.endGroup();
 }
 QSize SymbolWidget::sizeHint() const

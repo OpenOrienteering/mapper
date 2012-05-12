@@ -560,7 +560,10 @@ void MapEditorController::createMenuAndToolbars()
 	
     // Symbols menu
     QMenu* symbols_menu = window->menuBar()->addMenu(tr("Sy&mbols"));
-    symbols_menu->setWhatsThis("<a href=\"sumbols_menu.html\">See more</a>");
+    symbols_menu->setWhatsThis("<a href=\"symbols_menu.html\">See more</a>");
+	symbols_menu->addAction(symbol_window_act);
+	symbols_menu->addAction(color_window_act);
+	symbols_menu->addSeparator();
     /*symbols_menu->addAction(load_symbols_from_act);
     symbols_menu->addAction(load_colors_from_act);*/
     symbols_menu->addAction(scale_all_symbols_act);
@@ -568,13 +571,11 @@ void MapEditorController::createMenuAndToolbars()
 	// Templates menu
 	QMenu* template_menu = window->menuBar()->addMenu(tr("&Templates"));
 	template_menu->setWhatsThis("<a href=\"template_menu.html\">See more</a>");
+	template_menu->addAction(template_window_act);
 	/*template_menu->addAction(template_config_window_act);
 	template_menu->addAction(template_visibilities_window_act);*/
+	template_menu->addSeparator();
 	template_menu->addAction(open_template_act);
-	
-	// GPS menu
-	//QMenu* gps_menu = window->menuBar()->addMenu(tr("&GPS"));
-    //gps_menu->addAction(edit_gps_projection_parameters_act);
 
 #ifdef Q_WS_MAC
     // Mac toolbars are still a little screwed up, turns out we have to insert a
