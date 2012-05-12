@@ -1,4 +1,4 @@
 3
-Thanks for using OpenOrienteering Mapper! If you use the program for the first time, check out the <a href="settings">settings</a> and adjust it to your needs. If you need further advice, you can also read the <a href="help">help</a>.
+<h2>Welcome to OpenOrienteering Mapper!</h2>If this is the first time you use the program, please read this first.<br/><br/>You might want to check out the <a href="settings">settings</a> and adjust the program to your needs. For detailed advice on using Mapper, you can read the <a href="help">help files</a>.<br/><br/><b>Quick start advice</b>:<br/>- Create or load a map using the buttons on the left<br/>- Hold the middle mouse button to drag the map<br/>- Zoom using the mouse wheel, if available<br/>- Read the hints in the status bar at the bottom to learn how the tools work
 While editing a map, press Tab to switch between the edit tool and the drawing tools quickly.
 This is the third tip of the day, but it is only a placeholder! You are invited to write one ...
