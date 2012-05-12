@@ -396,11 +396,7 @@ void MapEditorController::createMenuAndToolbars()
     /*QAction *load_symbols_from_act = */newAction("loadsymbols", tr("Load symbols from..."), this, SLOT(loadSymbolsFromClicked()), NULL, tr("Replace the symbols with those from another map file"));
     /*QAction *load_colors_from_act = */newAction("loadcolors", tr("Load colors from..."), this, SLOT(loadColorsFromClicked()), NULL, tr("Replace the colors with those from another map file"));
     QAction *scale_all_symbols_act = newAction("scaleall", tr("Scale all symbols..."), this, SLOT(scaleAllSymbolsClicked()), NULL, tr("Scale the whole symbol set"));
-<<<<<<< HEAD
-=======
-    change_symbol_select_act = newCheckAction("changesym", tr("Change symbol when selecting object"), this, SLOT(changeSymbolWhenSelecting()), NULL, tr("When checked, selecting an object will change the symbol selection"));
 	QAction* georeferencing_act = newAction("georef", tr("Georeferencing..."), this, SLOT(editGeoreferencing()));
->>>>>>> 9b841f4b872a86495562c97c0391d666948fb590
     QAction *scale_map_act = newAction("scalemap", tr("Change map scale..."), this, SLOT(scaleMapClicked()), NULL, tr("Change the map scale and adjust map objects and symbol sizes"));
 	scale_map_act->setWhatsThis("<a href=\"map_menu.html\">See more</a>");
     QAction *map_notes_act = newAction("mapnotes", tr("Map notes..."), this, SLOT(mapNotesClicked()));
@@ -577,7 +573,7 @@ void MapEditorController::createMenuAndToolbars()
 	template_menu->addAction(open_template_act);
 	
 	// GPS menu
-	QMenu* gps_menu = window->menuBar()->addMenu(tr("&GPS"));
+	//QMenu* gps_menu = window->menuBar()->addMenu(tr("&GPS"));
     //gps_menu->addAction(edit_gps_projection_parameters_act);
 
 #ifdef Q_WS_MAC

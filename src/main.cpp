@@ -52,20 +52,22 @@ int main(int argc, char** argv)
 #endif
 	
 	// Localization
-	QString locale = QLocale((QLocale::Language)Settings::getInstance().getSetting(Settings::General_Language).toInt()).name();
+	QLocale locale = QLocale((QLocale::Language)Settings::getInstance().getSetting(Settings::General_Language).toInt());
+	QLocale::setDefault(locale);
+	QString locale_name = locale.name();
 	
 	// Load Qt translation
 	QTranslator qtTranslator;
 #ifdef WIN32
-	qtTranslator.load("qt_" + locale, "translations/");
+	qtTranslator.load("qt_" + locale_name, "translations/");
 #else
-	qtTranslator.load("qt_" + locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+	qtTranslator.load("qt_" + locale_name, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 #endif
 	qapp.installTranslator(&qtTranslator);
 
 	// Load application translation
 	QTranslator translator;
-	translator.load(locale, QString(":/translations"));
+	translator.load(locale_name, QString(":/translations"));
 	qapp.installTranslator(&translator);
 	
 	// Register the supported file formats
