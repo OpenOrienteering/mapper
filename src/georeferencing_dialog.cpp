@@ -24,37 +24,53 @@
 
 #include <QtGui>
 
-#include <proj_api.h>
-
 #include "georeferencing.h"
 #include "map.h"
+#include "map_editor.h"
 
-#define HEADLINE(text) new QLabel(QString("<b>") % text % "</b>")
+#define HEADLINE(text) QLabel(QString("<b>") % text % "</b>")
 
-GeoreferencingDialog::GeoreferencingDialog(QWidget* parent, Map& map, const Georeferencing* initial)
-: QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
+GeoreferencingDialog::GeoreferencingDialog(MapEditorController* controller, const Georeferencing* initial)
+: QDialog(controller->getWindow(), Qt::WindowSystemMenuHint | Qt::WindowTitleHint),
+  controller(controller), 
+  map(controller->getMap())
 {
+	init(initial);
+}
+
+GeoreferencingDialog::GeoreferencingDialog(QWidget* parent, Map* map, const Georeferencing* initial)
+: QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint),
+  controller(NULL), 
+  map(map)
+{
+	init(initial);
+}
+
+void GeoreferencingDialog::init(const Georeferencing* initial)
+{
+	setWindowModality(Qt::WindowModal);
+	
+	tool_active = false;
+
 	// A working copy of the current or given initial Georeferencing
-	georef = new Georeferencing(initial == NULL ? map.getGeoreferencing() : *initial);
+	georef.reset( new Georeferencing(initial == NULL ? map->getGeoreferencing() : *initial) );
 	
 	setWindowTitle(tr("Map Georeferencing"));
 	
-	QLabel* scale_edit  = new QLabel(QString("1:") % QString::number(map.getScaleDenominator()));
-	
+	scale_edit  = new QLabel();
 	grivation_edit = new QDoubleSpinBox();
 	grivation_edit->setSuffix(QString::fromUtf8(" °"));
-	grivation_edit->setValue(georef->getGrivation());
 	grivation_edit->setDecimals(1);
 	grivation_edit->setSingleStep(0.1);
 	grivation_edit->setRange(-180.0, +180.0);
 	grivation_edit->setWhatsThis("<a href=\"gps_menu.html\">See more</a>");
-	
-	ref_point_edit = new QLabel(tr("Origin"));
+	ref_point_edit = new QLabel();
 	QPushButton* ref_point_button = new QPushButton("&Select...");
-	ref_point_button->setEnabled(false);
+	ref_point_button->setEnabled(controller != NULL);
 	QHBoxLayout* ref_point_layout = new QHBoxLayout();
 	ref_point_layout->addWidget(ref_point_edit, 1);
 	ref_point_layout->addWidget(ref_point_button, 0);
+	updateGeneral();
 	
 	crs_edit = new QComboBox();
 	crs_edit->setEditable(true);
@@ -95,32 +111,28 @@ GeoreferencingDialog::GeoreferencingDialog(QWidget* parent, Map& map, const Geor
 	link_label->setOpenExternalLinks(true);
 	updateLatLon();
 	
-	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	reset_button = new QPushButton(tr("Reset"));
-	reset_button->setEnabled(false);
-	ok_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("OK"));
-	ok_button->setDefault(true);
-	QDialogButtonBox* buttons_box = new QDialogButtonBox(Qt::Horizontal);
-	buttons_box->addButton(cancel_button, QDialogButtonBox::RejectRole);
-	buttons_box->addButton(reset_button, QDialogButtonBox::ResetRole);
-	buttons_box->addButton(ok_button, QDialogButtonBox::AcceptRole);
+	QDialogButtonBox* buttons_box = new QDialogButtonBox(
+	  QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Reset,
+	  Qt::Horizontal);
+	reset_button = buttons_box->button(QDialogButtonBox::Reset);
+	reset_button->setEnabled(initial != NULL);
 	
 	QFormLayout* edit_layout = new QFormLayout;
 	
-	edit_layout->addRow(HEADLINE(tr("General")));
+	edit_layout->addRow(new HEADLINE(tr("General")));
 	edit_layout->addRow(tr("Map scale:"), scale_edit);
 	edit_layout->addRow(tr("&Grivation:"), grivation_edit);
 	edit_layout->addRow(tr("Reference point:"), ref_point_layout);
 	edit_layout->addRow(new QWidget());
 	
-	edit_layout->addRow(HEADLINE(tr("Projected coordinates")));
+	edit_layout->addRow(new HEADLINE(tr("Projected coordinates")));
 	edit_layout->addRow(tr("&Coordinate reference system:"), crs_edit);
 	edit_layout->addRow(tr("&Zone:"), zone_edit);
 	edit_layout->addRow(tr("Reference point &easting:"), easting_edit);
 	edit_layout->addRow(tr("Reference point &northing:"), northing_edit);
 	edit_layout->addRow(new QWidget());
 	
-	edit_layout->addRow(HEADLINE(tr("Geographic coordinates")));
+	edit_layout->addRow(new HEADLINE(tr("Geographic coordinates")));
 	edit_layout->addRow(tr("Datum"), datum_edit);
 	edit_layout->addRow(tr("Reference point &latitude:"), lat_edit);
 	edit_layout->addRow(tr("Reference point longitude:"), lon_edit);
@@ -142,15 +154,38 @@ GeoreferencingDialog::GeoreferencingDialog(QWidget* parent, Map& map, const Geor
 	connect(northing_edit, SIGNAL(valueChanged(double)), this, SLOT(eastingNorthingChanged()));
 	connect(lat_edit, SIGNAL(valueChanged(double)), this, SLOT(latLonChanged()));
 	connect(lon_edit, SIGNAL(valueChanged(double)), this, SLOT(latLonChanged()));
-	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
+	connect(buttons_box, SIGNAL(accepted()), this, SLOT(accept()));
+	connect(buttons_box, SIGNAL(rejected()), this, SLOT(reject()));
 	connect(reset_button, SIGNAL(clicked(bool)), this, SLOT(reset()));
-	connect(ok_button, SIGNAL(clicked(bool)), this, SLOT(accept()));
+}
+
+GeoreferencingDialog::~GeoreferencingDialog()
+{
+	if (tool_active)
+		controller->setTool(NULL);
+}
+
+int GeoreferencingDialog::exec()
+{
+	if (tool_active)
+		controller->setTool(NULL);
+	
+	return QDialog::exec();
 }
 
 void GeoreferencingDialog::setRefPoint(MapCoord coords)
 {
-	// TODO
+	georef->setMapRefPoint(coords);
+	updateGeneral();
 	reset_button->setEnabled(true);
+}
+
+void GeoreferencingDialog::updateGeneral()
+{
+	scale_edit->setText( QString("1:") % QString::number(georef->getScaleDenominator()) );
+	grivation_edit->setValue(georef->getGrivation());
+	const MapCoord& coords(georef->getMapRefPoint());
+	ref_point_edit->setText(tr("%1 %2 (mm)").arg(locale().toString(coords.xd())).arg(locale().toString(coords.yd())));
 }
 
 void GeoreferencingDialog::updateCRS()
@@ -224,10 +259,16 @@ void GeoreferencingDialog::updateLatLon()
 	lon_edit->blockSignals(false);
 	
 	QString osm_link = 
-		QString("http://www.openstreetmap.org/?lat=%1&lon=%2&zoom=18&layers=M").
-		arg(latitude).
-		arg(longitude);
-	link_label->setText(tr("Show reference point in <a href=\"%1\">OpenStreetMap...</a>").arg(osm_link));
+	  QString("http://www.openstreetmap.org/?lat=%1&lon=%2&zoom=18&layers=M").
+	  arg(latitude).arg(longitude);
+	QString worldofo_link =
+	  QString("http://maps.worldofo.com/?zoom=15&lat=%1&lng=%2").
+	  arg(latitude).arg(longitude);
+	link_label->setText(
+	  tr("Show reference point in: <a href=\"%1\">OpenStreetMap</a> | <a href=\"%2\">World of O Maps</a>").
+	  arg(osm_link).
+	  arg(worldofo_link)
+	);
 	
 	if (!georef->isLocal())
 	{
@@ -319,13 +360,23 @@ void GeoreferencingDialog::eastingNorthingChanged()
 
 void GeoreferencingDialog::selectRefPoint()
 {
-	// TODO
+	if (controller != NULL)
+	{
+		controller->setTool(new GeoreferencingTool(this, controller));
+		tool_active = true;
+		hide();
+	}
+}
+
+void GeoreferencingDialog::toolDeleted()
+{
+	tool_active = false;
 }
 
 void GeoreferencingDialog::reset()
 {
-	*georef = map.getGeoreferencing();
-	grivation_edit->setValue(georef->getGrivation());
+	*georef = map->getGeoreferencing();
+	updateGeneral();
 	updateCRS();
 	updateZone();
 	updateEastingNorthing();
@@ -335,9 +386,42 @@ void GeoreferencingDialog::reset()
 
 void GeoreferencingDialog::accept()
 {
-	map.setGeoreferencing(*georef);
+	map->setGeoreferencing(*georef);
 	QDialog::accept();
 }
+
+
+
+// ### GeoreferencingTool ###
+
+GeoreferencingTool::GeoreferencingTool(GeoreferencingDialog* dialog, MapEditorController* controller, QAction* action)
+: MapEditorTool(controller, Other, action), dialog(dialog)
+{
+	if (!cursor)
+		cursor = new QCursor(QPixmap(":/images/cursor-crosshair.png"), 11, 11); // TODO: custom icon
+}
+
+GeoreferencingTool::~GeoreferencingTool()
+{
+	dialog->toolDeleted();
+}
+
+void GeoreferencingTool::init()
+{
+	setStatusBarText(tr("<b>Left click</b> to set the reference point, another button to cancel"));
+}
+
+bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+{
+	if (event->button() == Qt::LeftButton)
+	{
+		dialog->setRefPoint(map_coord.toMapCoord());
+	}
+	QTimer::singleShot(0, dialog, SIGNAL(exec()));
+	return true;
+}
+
+QCursor* GeoreferencingTool::cursor = NULL;
 
 
 

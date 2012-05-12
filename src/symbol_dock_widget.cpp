@@ -130,6 +130,9 @@ void SymbolRenderWidget::setScroll(int new_scroll)
 
 void SymbolRenderWidget::selectSingleSymbol(int i)
 {
+	if (selected_symbols.size() == 1 && *selected_symbols.begin() == i)
+		return;	// Symbol already selected as only selection
+	
 	updateSelectedIcons();
 	selected_symbols.clear();
 	if (i >= 0)

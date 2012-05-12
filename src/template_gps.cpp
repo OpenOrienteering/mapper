@@ -108,8 +108,7 @@ bool TemplateGPS::open(QWidget* dialog_parent, MapView* main_view)
 		georef.setGeographicRefPoint(LatLon(center_latitude, center_longitude));
 		
 		// Show the parameter dialog
-		GeoreferencingDialog dialog(dialog_parent, *map, &georef);
-		dialog.setWindowModality(Qt::WindowModal);
+		GeoreferencingDialog dialog(dialog_parent, map, &georef);
 		if (dialog.exec() == QDialog::Rejected)
 			return false;
 		

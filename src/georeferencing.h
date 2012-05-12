@@ -207,6 +207,19 @@ public:
 	
 	
 	/**
+	 * Get the map coordinates of the reference point
+	 */
+	inline MapCoord getMapRefPoint() const { return map_ref_point; };
+	
+	/**
+	 * Define the map coordinates of the reference point.
+	 * 
+	 * This will <b>not</b> update the map and geographic coordinates of the reference point.
+	 */
+	void setMapRefPoint(MapCoord point);
+	
+	
+	/**
 	 * Get the projected coordinates of the reference point
 	 */
 	inline QPointF getProjectedRefPoint() const { return projected_ref_point; };
@@ -336,6 +349,7 @@ protected:
 private:
 	double scale_denominator;
 	double grivation;
+	MapCoord map_ref_point;
 	
 	QPointF projected_ref_point;
 	

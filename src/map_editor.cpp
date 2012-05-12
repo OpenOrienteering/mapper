@@ -396,8 +396,13 @@ void MapEditorController::createMenuAndToolbars()
     /*QAction *load_symbols_from_act = */newAction("loadsymbols", tr("Load symbols from..."), this, SLOT(loadSymbolsFromClicked()), NULL, tr("Replace the symbols with those from another map file"));
     /*QAction *load_colors_from_act = */newAction("loadcolors", tr("Load colors from..."), this, SLOT(loadColorsFromClicked()), NULL, tr("Replace the colors with those from another map file"));
     QAction *scale_all_symbols_act = newAction("scaleall", tr("Scale all symbols..."), this, SLOT(scaleAllSymbolsClicked()), NULL, tr("Scale the whole symbol set"));
+<<<<<<< HEAD
+=======
+    change_symbol_select_act = newCheckAction("changesym", tr("Change symbol when selecting object"), this, SLOT(changeSymbolWhenSelecting()), NULL, tr("When checked, selecting an object will change the symbol selection"));
+	QAction* georeferencing_act = newAction("georef", tr("Georeferencing..."), this, SLOT(editGeoreferencing()));
+>>>>>>> 9b841f4b872a86495562c97c0391d666948fb590
     QAction *scale_map_act = newAction("scalemap", tr("Change map scale..."), this, SLOT(scaleMapClicked()), NULL, tr("Change the map scale and adjust map objects and symbol sizes"));
-	zoom_out_act->setWhatsThis("<a href=\"map_menu.html\">See more</a>");
+	scale_map_act->setWhatsThis("<a href=\"map_menu.html\">See more</a>");
     QAction *map_notes_act = newAction("mapnotes", tr("Map notes..."), this, SLOT(mapNotesClicked()));
 	template_window_act = newCheckAction("templatewindow", tr("Template setup window"), this, SLOT(showTemplateWindow(bool)), "window-new", tr("Show/Hide the template window"));
 	template_window_act->setWhatsThis("<a href=\"template_menu.html\">See more</a>");
@@ -405,7 +410,6 @@ void MapEditorController::createMenuAndToolbars()
     //QAction* template_visibilities_window_act = newCheckAction("templatevisibilitieswindow", tr("Template visibilities window"), this, SLOT(showTemplateVisbilitiesWindow(bool)), "window-new", tr("Show/Hide the template visibilities window"));
     QAction* open_template_act = newAction("opentemplate", tr("Open template..."), this, SLOT(openTemplateClicked()));
 	open_template_act->setWhatsThis("<a href=\"template_menu.html\">See more</a>");
-    QAction* edit_georeferencing_act = newAction("georef", tr("Edit georeferencing..."), this, SLOT(editGeoreferencing()));
     QAction* show_all_act = newAction("showall", tr("Show whole map"), this, SLOT(showWholeMap()), "view-show-all.png");
     edit_tool_act = newCheckAction("editobjects", tr("Edit objects"), this, SLOT(editToolClicked(bool)), "tool-edit.png");
 	edit_tool_act->setWhatsThis("<a href=\"drawing_toolbar.html#selector\">See more</a>");
@@ -554,7 +558,7 @@ void MapEditorController::createMenuAndToolbars()
 	// Map menu
 	QMenu* map_menu = window->menuBar()->addMenu(tr("M&ap"));
 	map_menu->setWhatsThis("<a href=\"map_menu.html\">See more</a>");
-	map_menu->addAction(edit_georeferencing_act);
+	map_menu->addAction(georeferencing_act);
 	map_menu->addAction(scale_map_act);
 	map_menu->addAction(map_notes_act);
 	
@@ -932,9 +936,18 @@ void MapEditorController::openTemplateClicked()
 
 void MapEditorController::editGeoreferencing()
 {
-	GeoreferencingDialog dialog(window, *map);
-	dialog.setWindowModality(Qt::WindowModal);
-	dialog.exec();
+	if (georeferencing_dialog.isNull())
+	{
+		GeoreferencingDialog* dialog = new GeoreferencingDialog(this); 
+		georeferencing_dialog.reset(dialog);
+		connect(dialog, SIGNAL(finished(int)), this, SLOT(georeferencingDialogFinished()));
+	}
+	georeferencing_dialog->exec();
+}
+
+void MapEditorController::georeferencingDialogFinished()
+{
+	georeferencing_dialog.take()->deleteLater();
 }
 
 void MapEditorController::selectedSymbolsChanged()
