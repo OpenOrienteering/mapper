@@ -143,6 +143,9 @@ QDebug operator<<(QDebug dbg, const LatLon &lat_lon);
 class Georeferencing : public QObject
 {
 Q_OBJECT
+
+friend class NativeFileExport;
+friend class NativeFileImport;
 friend QDebug operator<<(QDebug dbg, const Georeferencing& georef);
 
 public:
@@ -347,7 +350,7 @@ protected:
 	
 	
 private:
-	double scale_denominator;
+	int scale_denominator;
 	double grivation;
 	MapCoord map_ref_point;
 	

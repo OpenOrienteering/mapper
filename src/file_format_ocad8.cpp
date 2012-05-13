@@ -82,7 +82,7 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
     //         << ((file->header->ftype == 2) ? "normal" : "other");
     //qDebug() << "map scale is" << file->setup->scale;
 
-    map->scale_denominator = file->setup->scale;
+    map->setScaleDenominator(file->setup->scale);
 
 	map->setMapNotes(convertCString((const char*)file->buffer + file->header->infopos, file->header->infosize, false));
 

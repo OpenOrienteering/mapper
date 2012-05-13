@@ -256,7 +256,7 @@ public:
 	// Other settings
 	
 	void setScaleDenominator(int value);
-	inline int getScaleDenominator() const {return scale_denominator;}
+	int getScaleDenominator() const;
 	
 	inline const QString& getMapNotes() const {return map_notes;}
 	inline void setMapNotes(const QString& text) {map_notes = text;}
@@ -369,8 +369,6 @@ private:
 	double image_template_meters_per_pixel;
 	double image_template_dpi;
 	double image_template_scale;
-	
-	int scale_denominator;			// this is the number x if the scale is written as 1:x
 	
 	bool colors_dirty;				// are there unsaved changes for the colors?
 	bool symbols_dirty;				//    ... for the symbols?

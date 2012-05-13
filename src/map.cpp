@@ -350,10 +350,13 @@ Map::~Map()
 
 void Map::setScaleDenominator(int value)
 {
-	scale_denominator = value;
 	georeferencing->setScaleDenominator(value);
 }
 
+int Map::getScaleDenominator() const
+{
+	return georeferencing->getScaleDenominator();
+}
 
 bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 {
@@ -512,8 +515,6 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 		// If the last importer finished successfully
 		if (import_complete) break;
 	}
-	
-	georeferencing->setScaleDenominator(scale_denominator);
 	
 	if (map_editor)
 		map_editor->main_view = view;

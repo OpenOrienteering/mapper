@@ -28,7 +28,7 @@
 #include "util.h"
 
 const int NativeFileFormat::least_supported_file_format_version = 0;
-const int NativeFileFormat::current_file_format_version = 16;
+const int NativeFileFormat::current_file_format_version = 17;
 const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 
 bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
@@ -86,19 +86,57 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
         throw FormatException(QObject::tr("Problem while opening file:\n%1\n\nFile format version too high. Please update to a newer program version to load this file.").arg(file.fileName()));
     }
 
-    file.read((char*)&map->scale_denominator, sizeof(int));
-	
-	if (version >= 15)
-		loadString(&file, map->map_notes);
-
-	bool gps_projection_params_set; // obsolete
-	file.read((char*)&gps_projection_params_set, sizeof(bool));
-	GPSProjectionParameters gps_projection_parameters; // obsolete
-	file.read((char*)&gps_projection_parameters, sizeof(GPSProjectionParameters));
-	if (gps_projection_params_set)
+    if (version <= 16)
 	{
-		LatLon ref_point(gps_projection_parameters.center_latitude, gps_projection_parameters.center_longitude);
-		map->georeferencing->setGeographicRefPoint(ref_point);
+		Georeferencing georef;
+		file.read((char*)&georef.scale_denominator, sizeof(int));
+		
+		if (version >= 15)
+			loadString(&file, map->map_notes);
+		
+		bool gps_projection_params_set; // obsolete
+		file.read((char*)&gps_projection_params_set, sizeof(bool));
+		GPSProjectionParameters gps_projection_parameters; // obsolete
+		file.read((char*)&gps_projection_parameters, sizeof(GPSProjectionParameters));
+		if (gps_projection_params_set)
+		{
+			LatLon ref_point(gps_projection_parameters.center_latitude, gps_projection_parameters.center_longitude);
+			georef.setGeographicRefPoint(ref_point);
+		}
+		map->setGeoreferencing(georef);
+	}
+	else if (version >= 17)
+	{
+		if (version >= 15)
+			loadString(&file, map->map_notes);
+		
+		Georeferencing georef;
+		file.read((char*)&georef.scale_denominator, sizeof(int));
+		file.read((char*)&georef.grivation, sizeof(double));
+		double x,y;
+		file.read((char*)&x, sizeof(double));
+		file.read((char*)&y, sizeof(double));
+		georef.setMapRefPoint(MapCoord(x,y));
+		file.read((char*)&x, sizeof(double));
+		file.read((char*)&y, sizeof(double));
+		georef.setProjectedRefPoint(QPointF(x,y));
+		loadString(&file, georef.projected_crs_id);
+		loadString(&file, georef.projected_crs_spec);
+		file.read((char*)&y, sizeof(double));
+		file.read((char*)&x, sizeof(double));
+		georef.setGeographicRefPoint(LatLon(y, x));
+		QString geographic_crs_id, geographic_crs_spec;
+		loadString(&file, geographic_crs_id);   // reserved for geographic crs id
+		loadString(&file, geographic_crs_spec); // reserved for full geographic crs specification
+		if (geographic_crs_spec != Georeferencing::geographic_crs_spec)
+		{
+			addWarning(
+			  QObject::tr("The geographic coordinate reference system of the map was \"%1\". This CRS is not supported. Using \"%2\".").
+			  arg(geographic_crs_spec).
+			  arg(Georeferencing::geographic_crs_spec)
+			);
+		}
+		map->setGeoreferencing(georef);
 	}
 
     if (version >= 6)
@@ -251,21 +289,29 @@ void NativeFileExport::doExport() throw (FormatException)
     file.write(NativeFileFormat::magic_bytes, 4);
     file.write((const char*)&NativeFileFormat::current_file_format_version, sizeof(int));
 
-    file.write((const char*)&map->scale_denominator, sizeof(int));
-	
 	saveString(&file, map->map_notes);
-
-	bool gps_projection_params_set = !map->getGeoreferencing().isLocal();
-	file.write((const char*)&gps_projection_params_set, sizeof(bool));
-	GPSProjectionParameters  gps_projection_parameters;
-	if (gps_projection_params_set)
-	{
-		LatLon ref_point = map->getGeoreferencing().getGeographicRefPoint();
-		gps_projection_parameters.center_latitude  = ref_point.latitude;
-		gps_projection_parameters.center_longitude = ref_point.longitude;
-	}
-    file.write((const char*)&gps_projection_parameters, sizeof(GPSProjectionParameters));
-
+	
+	const Georeferencing& georef = map->getGeoreferencing();
+	file.write((const char*)&georef.scale_denominator, sizeof(int));
+	file.write((const char*)&georef.grivation, sizeof(double));
+	double x,y;
+	x = georef.map_ref_point.xd(); 
+	y = georef.map_ref_point.yd();
+	file.write((const char*)&x, sizeof(double));
+	file.write((const char*)&y, sizeof(double));
+	x = georef.projected_ref_point.x();
+	y = georef.projected_ref_point.y();
+	file.write((const char*)&x, sizeof(double));
+	file.write((const char*)&y, sizeof(double));
+	saveString(&file, georef.projected_crs_id);
+	saveString(&file, georef.projected_crs_spec);
+	y = georef.geographic_ref_point.latitude;
+	x = georef.geographic_ref_point.longitude;
+	file.write((const char*)&y, sizeof(double));
+	file.write((const char*)&x, sizeof(double));
+	saveString(&file, QString("Geographic coordinates")); // reserved for geographic crs parameter or specification id
+	saveString(&file, georef.geographic_crs_spec);
+	
     file.write((const char*)&map->print_params_set, sizeof(bool));
     if (map->print_params_set)
     {
