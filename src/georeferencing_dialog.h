@@ -93,6 +93,11 @@ public slots:
 	 */
 	void toolDeleted();
 	
+	/**
+	 * Opens this dialog's help page.
+	 */
+	void showHelp();
+	
 	/** 
 	 * Resets all input fields to the values in the map's Georeferencing.
 	 * 

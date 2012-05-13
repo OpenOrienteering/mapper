@@ -26,6 +26,7 @@
                  <section title="Symbols Menu" ref="help/html_en/symbols_menu.html"/>
                  <section title="Symbols &amp; Colors" ref="help/html_en/symbols.html"/>
                  <section title="Templates Menu" ref="help/html_en/template_menu.html"/>
+                 <section title="Georeferencing" ref="help/html_en/georeferencing.html"/>
                  <section title="GPS Menu" ref="help/html_en/gps_menu.html"/>
              </section>
          </toc>
@@ -38,6 +39,8 @@
              <keyword name="Symbols" ref="help/html_en/symbols.html"/>
              <keyword name="Colors" ref="help/html_en/symbols.html#colors"/>
              <keyword name="Templates" ref="help/html_en/template_menu.html"/>
+             <keyword name="Georeferencing" ref="help/html_en/georeferencing.html"/>
+             <keyword name="Coordinates" ref="help/html_en/georeferencing.html"/>
          </keywords>
          <files>
 			 <file>help/html_en/oomap.css</file>

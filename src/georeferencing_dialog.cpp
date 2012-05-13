@@ -25,6 +25,7 @@
 #include <QtGui>
 
 #include "georeferencing.h"
+#include "main_window.h"
 #include "map.h"
 #include "map_editor.h"
 
@@ -63,7 +64,6 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	grivation_edit->setDecimals(1);
 	grivation_edit->setSingleStep(0.1);
 	grivation_edit->setRange(-180.0, +180.0);
-	grivation_edit->setWhatsThis("<a href=\"gps_menu.html\">See more</a>");
 	ref_point_edit = new QLabel();
 	QPushButton* ref_point_button = new QPushButton("&Select...");
 	ref_point_button->setEnabled(controller != NULL);
@@ -88,12 +88,10 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	easting_edit->setSuffix(" m");
 	easting_edit->setDecimals(0);
 	easting_edit->setRange(std::numeric_limits<double>::min(), std::numeric_limits<double>::max());
-	easting_edit->setWhatsThis("<a href=\"gps_menu.html\">See more</a>");
 	northing_edit = new QDoubleSpinBox();
 	northing_edit->setSuffix(" m");
 	northing_edit->setDecimals(0);
 	northing_edit->setRange(std::numeric_limits<double>::min(), std::numeric_limits<double>::max());
-	northing_edit->setWhatsThis("<a href=\"gps_menu.html\">See more</a>");
 	updateEastingNorthing();
 	
 	QLabel* datum_edit = new QLabel("WGS84");
@@ -101,21 +99,20 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	lat_edit->setSuffix(QString::fromUtf8(" °"));
 	lat_edit->setDecimals(8);
 	lat_edit->setRange(-90.0, +90.0);
-	lat_edit->setWhatsThis("<a href=\"gps_menu.html\">See more</a>");
 	lon_edit = new QDoubleSpinBox();
 	lon_edit->setSuffix(QString::fromUtf8(" °"));
 	lon_edit->setDecimals(8);
 	lon_edit->setRange(-90.0, +90.0);
-	lon_edit->setWhatsThis("<a href=\"gps_menu.html\">See more</a>");
 	link_label = new QLabel();
 	link_label->setOpenExternalLinks(true);
 	updateLatLon();
 	
 	QDialogButtonBox* buttons_box = new QDialogButtonBox(
-	  QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Reset,
+	  QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Reset | QDialogButtonBox::Help,
 	  Qt::Horizontal);
 	reset_button = buttons_box->button(QDialogButtonBox::Reset);
 	reset_button->setEnabled(initial != NULL);
+	QPushButton* help_button = buttons_box->button(QDialogButtonBox::Help);
 	
 	QFormLayout* edit_layout = new QFormLayout;
 	
@@ -136,12 +133,12 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	edit_layout->addRow(tr("Datum"), datum_edit);
 	edit_layout->addRow(tr("Reference point &latitude:"), lat_edit);
 	edit_layout->addRow(tr("Reference point longitude:"), lon_edit);
-	edit_layout->addRow(link_label);
-	edit_layout->addRow(new QWidget());
+	edit_layout->addRow(tr("Show reference point in:"), link_label);
 	
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addLayout(edit_layout);
 	layout->addStretch();
+	layout->addSpacing(16);
 	layout->addWidget(buttons_box);
 	
 	setLayout(layout);
@@ -157,6 +154,7 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	connect(buttons_box, SIGNAL(accepted()), this, SLOT(accept()));
 	connect(buttons_box, SIGNAL(rejected()), this, SLOT(reject()));
 	connect(reset_button, SIGNAL(clicked(bool)), this, SLOT(reset()));
+	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
 }
 
 GeoreferencingDialog::~GeoreferencingDialog()
@@ -265,7 +263,7 @@ void GeoreferencingDialog::updateLatLon()
 	  QString("http://maps.worldofo.com/?zoom=15&lat=%1&lng=%2").
 	  arg(latitude).arg(longitude);
 	link_label->setText(
-	  tr("Show reference point in: <a href=\"%1\">OpenStreetMap</a> | <a href=\"%2\">World of O Maps</a>").
+	  tr("<a href=\"%1\">OpenStreetMap</a> | <a href=\"%2\">World of O Maps</a>").
 	  arg(osm_link).
 	  arg(worldofo_link)
 	);
@@ -371,6 +369,11 @@ void GeoreferencingDialog::selectRefPoint()
 void GeoreferencingDialog::toolDeleted()
 {
 	tool_active = false;
+}
+
+void GeoreferencingDialog::showHelp()
+{
+	controller->getWindow()->showHelp("georeferencing.html");
 }
 
 void GeoreferencingDialog::reset()
