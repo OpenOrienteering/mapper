@@ -212,16 +212,28 @@ void GeoreferencingDialog::updateZone()
 {
 	if (crs_spec_template.contains("!ZONE!"))
 	{
-		zone_edit->blockSignals(true);
-		if (crs_spec_template.startsWith("+proj=utm") && zone_edit->text().isEmpty() && !zone_edit->isModified())
+		if (!zone_edit->isModified())
 		{
-			// FIXME: adjust for non-standard UTM zones (e.g. Norway)
-			const LatLon ref_point(georef->getGeographicRefPoint());
-			QString zone = QString::number(int(floor(ref_point.longitude * 180 / M_PI) + 180) / 6 % 60 + 1, 'f', 0);
-			zone.append((ref_point.latitude >= 0.0) ? " N" : " S");
-			zone_edit->setText(zone);
+			zone_edit->blockSignals(true);
+			if (crs_spec_template.startsWith("+proj=utm"))
+			{
+				const LatLon ref_point(georef->getGeographicRefPoint());
+				double lat = Georeferencing::radToDeg(ref_point.latitude);
+				if (abs(lat) < 84.0)
+				{
+					double lon = Georeferencing::radToDeg(ref_point.longitude);
+					int zone_no = int(floor(lon) + 180) / 6 % 60 + 1;
+					if (zone_no == 31 && lon >= 3.0 && lat >= 56.0 && lat < 64.0)
+						zone_no = 32; // South Norway
+					else if (lat >= 72.0 && lon >= 3.0 && lon <= 39.0)
+						zone_no = 2 * (int(floor(lon) + 3.0) / 12) + 31; // Svalbard
+					QString zone = QString::number(zone_no);
+					zone.append((ref_point.latitude >= 0.0) ? " N" : " S");
+					zone_edit->setText(zone);
+				}
+			}
+			zone_edit->blockSignals(false);
 		}
-		zone_edit->blockSignals(false);
 		zone_edit->setEnabled(true);
 	}
 	else
