@@ -238,7 +238,10 @@ void DrawTextTool::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol
 void DrawTextTool::symbolDeleted(int pos, Symbol* old_symbol)
 {
 	if (old_symbol == drawing_symbol)
+	{
+		preview_text->setText("");
 		editor->setEditTool();
+	}
 }
 
 void DrawTextTool::selectionChanged(bool text_change)
