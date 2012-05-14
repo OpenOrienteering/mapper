@@ -212,7 +212,6 @@ protected:
 class TextRenderable : public Renderable
 {
 public:
-	TextRenderable(TextSymbol* symbol, double line_x, double line_y, double anchor_x, double anchor_y, double rotation, const QString& line, const QFont& font);
 	TextRenderable(TextSymbol* symbol, TextObject* text_object, double anchor_x, double anchor_y);
 	TextRenderable(const TextRenderable& other);
 	virtual void render(QPainter& painter, bool force_min_size, float scaling);

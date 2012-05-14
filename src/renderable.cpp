@@ -552,49 +552,6 @@ void AreaRenderable::render(QPainter& painter, bool force_min_size, float scalin
 
 // ### TextRenderable ###
 
-TextRenderable::TextRenderable(TextSymbol* symbol, double line_x, double line_y, double anchor_x, double anchor_y, double rotation, const QString& line, const QFont& font) : Renderable()
-{
-	color_priority = symbol->getColor()->priority;
-	this->anchor_x = anchor_x;
-	this->anchor_y = anchor_y;
-	this->rotation = rotation;
-	scale_factor = symbol->getFontSize() / TextSymbol::internal_point_size;
-	
-	path.setFillRule(Qt::WindingFill);	// Otherwise, when text and an underline intersect, holes appear
-	/*if (rotation == 0)
-		path.addText(line_x + anchor_x, line_y + anchor_y, font, line);
-	else*/
-		path.addText(line_x, line_y, font, line);
-	
-	extent = path.controlPointRect();
-	extent = QRectF(scale_factor * extent.left(), scale_factor * extent.top(), scale_factor * extent.width(), scale_factor * extent.height());
-	if (rotation != 0)
-	{
-		float rcos = cos(-rotation);
-		float rsin = sin(-rotation);
-		
-		std::vector<QPointF> extent_corners;
-		extent_corners.push_back(extent.topLeft());
-		extent_corners.push_back(extent.topRight());
-		extent_corners.push_back(extent.bottomRight());
-		extent_corners.push_back(extent.bottomLeft());
-		
-		for (int i = 0; i < 4; ++i)
-		{
-			float x = extent_corners[i].x() * rcos - extent_corners[i].y() * rsin;
-			float y = extent_corners[i].y() * rcos + extent_corners[i].x() * rsin;
-			
-			if (i == 0)
-				extent = QRectF(x, y, 0, 0);
-			else
-				rectInclude(extent, QPointF(x, y));
-		}
-	}
-	extent = QRectF(extent.left() + anchor_x, extent.top() + anchor_y, extent.width(), extent.height());
-	
-	assert(extent.right() < 999999);	// assert if bogus values are returned
-}
-
 TextRenderable::TextRenderable(TextSymbol* symbol, TextObject* text_object, double anchor_x, double anchor_y)
 {
 	const QFont& font(symbol->getQFont());
