@@ -103,7 +103,7 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 			LatLon ref_point(gps_projection_parameters.center_latitude, gps_projection_parameters.center_longitude);
 			georef.setGeographicRefPoint(ref_point);
 		}
-		map->setGeoreferencing(georef);
+		*map->georeferencing = georef;
 	}
 	else if (version >= 17)
 	{
@@ -136,7 +136,7 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 			  arg(Georeferencing::geographic_crs_spec)
 			);
 		}
-		map->setGeoreferencing(georef);
+		*map->georeferencing = georef;
 	}
 
     if (version >= 6)
