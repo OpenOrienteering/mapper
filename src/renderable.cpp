@@ -248,7 +248,7 @@ DotRenderable::DotRenderable(PointSymbol* symbol, MapCoordF coord) : Renderable(
 DotRenderable::DotRenderable(const DotRenderable& other) : Renderable(other)
 {
 }
-void DotRenderable::getRenderStates(RenderStates& out)
+void DotRenderable::getRenderStates(RenderStates& out) const
 {
 	out.color_priority = color_priority;
 	assert(out.color_priority < 3000);
@@ -281,7 +281,7 @@ CircleRenderable::CircleRenderable(const CircleRenderable& other): Renderable(ot
 	rect = other.rect;
 	line_width = other.line_width;
 }
-void CircleRenderable::getRenderStates(RenderStates& out)
+void CircleRenderable::getRenderStates(RenderStates& out) const
 {
 	out.color_priority = color_priority;
 	assert(out.color_priority < 3000);
@@ -437,7 +437,7 @@ LineRenderable::LineRenderable(const LineRenderable& other) : Renderable(other)
 	cap_style = other.cap_style;
 	join_style = other.join_style;
 }
-void LineRenderable::getRenderStates(RenderStates& out)
+void LineRenderable::getRenderStates(RenderStates& out) const
 {
 	out.color_priority = color_priority;
 	out.mode = RenderStates::PenOnly;
@@ -524,7 +524,7 @@ AreaRenderable::AreaRenderable(const AreaRenderable& other) : Renderable(other)
 {
 	path = other.path;
 }
-void AreaRenderable::getRenderStates(RenderStates& out)
+void AreaRenderable::getRenderStates(RenderStates& out) const
 {
 	out.color_priority = color_priority;
 	out.mode = RenderStates::BrushOnly;
@@ -635,7 +635,7 @@ TextRenderable::TextRenderable(const TextRenderable& other) : Renderable(other)
 	scale_factor = other.scale_factor;
 }
 
-void TextRenderable::getRenderStates(RenderStates& out)
+void TextRenderable::getRenderStates(RenderStates& out) const
 {
 	out.color_priority = color_priority;
 	out.mode = RenderStates::BrushOnly;

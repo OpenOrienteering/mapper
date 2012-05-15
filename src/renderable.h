@@ -28,9 +28,7 @@
 #include "map_coord.h"
 #include "path_coord.h"
 
-QT_BEGIN_NAMESPACE
 class QPainterPath;
-QT_END_NAMESPACE
 
 class Map;
 class Object;
@@ -55,7 +53,7 @@ struct RenderStates
 	int color_priority;
 	RenderMode mode;
 	float pen_width;
-	QPainterPath* clip_path;
+	const QPainterPath* clip_path;
 	
 	inline bool operator!= (const RenderStates& other) const
 	{
@@ -107,7 +105,7 @@ public:
 	inline QPainterPath* getClipPath() const {return clip_path;}
 	
 	/// Creates the render state information which must be set when rendering this renderable
-	virtual void getRenderStates(RenderStates& out) = 0;
+	virtual void getRenderStates(RenderStates& out) const = 0;
 	
 	/// Creates a clone of this renderable
 	//virtual Renderable* duplicate() = 0;
@@ -121,7 +119,7 @@ protected:
 	QRectF extent;
 	Object* creator;	// this is useful for the deletion of all renderables created by an object
 	int color_priority;
-	QPainterPath* clip_path;
+	QPainterPath* clip_path; // this is used for elements of area symbols (no memory management here)
 };
 
 typedef std::vector<Renderable*> RenderableVector;
@@ -157,7 +155,7 @@ public:
 	DotRenderable(PointSymbol* symbol, MapCoordF coord);
 	DotRenderable(const DotRenderable& other);
 	virtual void render(QPainter& painter, bool force_min_size, float scaling);
-	virtual void getRenderStates(RenderStates& out);
+	virtual void getRenderStates(RenderStates& out) const;
 	//virtual Renderable* duplicate() {return new DotRenderable(*this);}
 };
 
@@ -167,7 +165,7 @@ public:
 	CircleRenderable(PointSymbol* symbol, MapCoordF coord);
 	CircleRenderable(const CircleRenderable& other);
 	virtual void render(QPainter& painter, bool force_min_size, float scaling);
-	virtual void getRenderStates(RenderStates& out);
+	virtual void getRenderStates(RenderStates& out) const;
 	//virtual Renderable* duplicate() {return new CircleRenderable(*this);}
 	
 protected:
@@ -181,7 +179,7 @@ public:
 	LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector& path_coords, bool closed);
 	LineRenderable(const LineRenderable& other);
 	virtual void render(QPainter& painter, bool force_min_size, float scaling);
-	virtual void getRenderStates(RenderStates& out);
+	virtual void getRenderStates(RenderStates& out) const;
 	//virtual Renderable* duplicate() {return new LineRenderable(*this);}
 	
 protected:
@@ -200,7 +198,7 @@ public:
 	AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector* path_coords);
 	AreaRenderable(const AreaRenderable& other);
 	virtual void render(QPainter& painter, bool force_min_size, float scaling);
-	virtual void getRenderStates(RenderStates& out);
+	virtual void getRenderStates(RenderStates& out) const;
 	//virtual Renderable* duplicate() {return new AreaRenderable(*this);}
 	
 	inline QPainterPath* getPainterPath() {return &path;}
@@ -215,7 +213,7 @@ public:
 	TextRenderable(TextSymbol* symbol, TextObject* text_object, double anchor_x, double anchor_y);
 	TextRenderable(const TextRenderable& other);
 	virtual void render(QPainter& painter, bool force_min_size, float scaling);
-	virtual void getRenderStates(RenderStates& out);
+	virtual void getRenderStates(RenderStates& out) const;
 	//virtual Renderable* duplicate() {return new TextRenderable(*this);}
 	
 protected:
