@@ -32,6 +32,7 @@
 #include "symbol_setting_dialog.h"
 #include "symbol_properties_widget.h"
 #include "symbol_point_editor.h"
+#include "renderable_implementation.h"
 
 // ### FillPattern ###
 

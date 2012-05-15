@@ -21,9 +21,12 @@
 #ifndef _OPENORIENTEERING_SYMBOL_H_
 #define _OPENORIENTEERING_SYMBOL_H_
 
+#include <vector>
+
 #include <QComboBox>
 
-#include "renderable.h"
+#include "map_coord.h"
+#include "path_coord.h"
 
 class QFile;
 class Map;
@@ -31,6 +34,8 @@ class MapColor;
 class Object;
 class SymbolPropertiesWidget;
 class SymbolSettingDialog;
+class Renderable;
+typedef std::vector<Renderable*> RenderableVector;
 
 /// Base class for map symbols.
 /// Provides among other things a symbol number consisting of multiple parts, e.g. "2.4.12". Parts which are not set are assigned the value -1.

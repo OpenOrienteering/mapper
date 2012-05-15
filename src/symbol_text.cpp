@@ -29,6 +29,7 @@
 #include "util.h"
 #include "object_text.h"
 #include "symbol_area.h"
+#include "renderable_implementation.h"
 
 const float TextSymbol::internal_point_size = 256;
 

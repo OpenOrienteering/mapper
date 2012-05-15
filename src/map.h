@@ -27,12 +27,12 @@
 #include <QRect>
 #include <QHash>
 #include <QSet>
+#include <QScopedPointer>
 
 #include "global.h"
 #include "undo.h"
 #include "matrix.h"
 #include "map_coord.h"
-#include "renderable.h"
 
 class QFile;
 class QPainter;
@@ -41,11 +41,15 @@ class Map;
 struct MapColor;
 class MapWidget;
 class MapView;
+class MapEditorController;
 class Symbol;
 class CombinedSymbol;
-class Template;
+class LineSymbol;
+class PointSymbol;
 class Object;
-class MapEditorController;
+class Renderable;
+class RenderableContainer;
+class Template;
 class OCAD8FileImport;
 class Georeferencing;
 
@@ -347,8 +351,8 @@ private:
 	int current_layer_index;
 	WidgetVector widgets;
 	ViewVector views;
-	RenderableContainer renderables;
-	RenderableContainer selection_renderables;
+	QScopedPointer<RenderableContainer> renderables;
+	QScopedPointer<RenderableContainer> selection_renderables;
 	
 	QString map_notes;
 	

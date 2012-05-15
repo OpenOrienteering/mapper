@@ -21,6 +21,8 @@
 #ifndef _OPENORIENTEERING_EDIT_TOOL_H_
 #define _OPENORIENTEERING_EDIT_TOOL_H_
 
+#include <QScopedPointer>
+
 #include "map_editor.h"
 #include "object.h"
 
@@ -29,6 +31,10 @@ class PointObject;
 class PathObject;
 class Symbol;
 class TextObjectEditorHelper;
+class Renderable;
+class RenderableContainer;
+typedef std::vector<Renderable*> RenderableVector;
+
 
 /// Tool to draw point objects
 class EditTool : public MapEditorTool
@@ -112,8 +118,8 @@ protected:
 	SelectionInfoVector last_results_ordered;
 	int next_object_to_select;
 	
-	RenderableVector old_renderables;
-	RenderableContainer renderables;
+	QScopedPointer<RenderableVector> old_renderables;
+	QScopedPointer<RenderableContainer> renderables;
 	SymbolWidget* symbol_widget;
 	
 	bool preview_update_triggered;

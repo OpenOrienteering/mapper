@@ -46,6 +46,7 @@ HEADERS += src/color_dock_widget.h \
            src/print_dock_widget.h \
            src/qbezier_p.h \
            src/renderable.h \
+           src/renderable_implementation.h \
            src/symbol.h \
            src/symbol_area.h \
            src/symbol_combined.h \
@@ -98,6 +99,7 @@ SOURCES += src/color_dock_widget.cpp \
            src/print_dock_widget.cpp \
            src/qbezier.cpp \
            src/renderable.cpp \
+           src/renderable_implementation.cpp \
            src/symbol.cpp \
            src/symbol_area.cpp \
            src/symbol_combined.cpp \

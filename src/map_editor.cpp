@@ -37,6 +37,7 @@
 #include "template.h"
 #include "template_gps.h"
 #include "template_tool_paint.h"
+#include "renderable.h"
 #include "symbol.h"
 #include "tool_draw_point.h"
 #include "tool_draw_path.h"

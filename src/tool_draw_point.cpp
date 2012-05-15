@@ -23,6 +23,7 @@
 #include <QtGui>
 
 #include "util.h"
+#include "renderable.h"
 #include "symbol_dock_widget.h"
 #include "symbol.h"
 #include "object.h"
@@ -32,7 +33,7 @@
 
 QCursor* DrawPointTool::cursor = NULL;
 
-DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget): MapEditorTool(editor, Other, tool_button), renderables(editor->getMap()), symbol_widget(symbol_widget)
+DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget): MapEditorTool(editor, Other, tool_button), renderables(new RenderableContainer(editor->getMap())), symbol_widget(symbol_widget)
 {
 	dragging = false;
 	preview_object = NULL;
@@ -52,7 +53,7 @@ DrawPointTool::~DrawPointTool()
 {
 	if (preview_object)
 	{
-		renderables.removeRenderablesOfObject(preview_object, false);
+		renderables->removeRenderablesOfObject(preview_object, false);
 		delete preview_object;
 	}
 }
@@ -79,7 +80,7 @@ bool DrawPointTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 			preview_object = new PointObject(point);
 		else
 		{
-			renderables.removeRenderablesOfObject(preview_object, false);
+			renderables->removeRenderablesOfObject(preview_object, false);
 			if (preview_object->getSymbol() != point)
 			{
 				bool success = preview_object->setSymbol(point, true);
@@ -91,7 +92,7 @@ bool DrawPointTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 		if (point->isRotatable())
 			preview_object->setRotation(0);
 		preview_object->update(true);
-		renderables.insertRenderablesOfObject(preview_object);
+		renderables->insertRenderablesOfObject(preview_object);
 		setDirtyRect(map_coord);
 		
 		return true;
@@ -108,10 +109,10 @@ bool DrawPointTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 		
 		if (preview_object)
 		{
-			renderables.removeRenderablesOfObject(preview_object, false);
+			renderables->removeRenderablesOfObject(preview_object, false);
 			preview_object->setRotation(calculateRotation(cur_pos, cur_pos_map));
 			preview_object->update(true);
-			renderables.insertRenderablesOfObject(preview_object);
+			renderables->insertRenderablesOfObject(preview_object);
 		}
 		
 		setDirtyRect(map_coord);
@@ -166,7 +167,7 @@ void DrawPointTool::draw(QPainter* painter, MapWidget* widget)
 						   widget->height() / 2.0 + widget->getMapView()->getDragOffset().y());
 		widget->getMapView()->applyTransform(painter);
 		
-		renderables.draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, 0.5f);
+		renderables->draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, 0.5f);
 		
 		painter->restore();
 	}

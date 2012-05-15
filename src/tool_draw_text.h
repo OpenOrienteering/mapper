@@ -23,14 +23,13 @@
 
 #include "map_editor.h"
 
-QT_BEGIN_NAMESPACE
 class QPushButton;
-QT_END_NAMESPACE
 
 class TextObject;
 struct TextObjectLineInfo;
 class TextObjectEditorHelper;
 class TextObjectAlignmentDockWidget;
+class RenderableContainer;
 class Symbol;
 
 /// Tool to draw text objects
@@ -82,7 +81,7 @@ protected:
 	TextObject* preview_text;
 	TextObjectEditorHelper* text_editor;
 	
-	RenderableContainer renderables;
+	QScopedPointer<RenderableContainer> renderables;
 	SymbolWidget* symbol_widget;
 };
 

@@ -23,6 +23,8 @@
 
 #include "map_editor.h"
 
+#include <QScopedPointer>
+
 class PointObject;
 
 /// Tool to draw point objects
@@ -63,7 +65,7 @@ protected:
 	
 	Symbol* last_used_symbol;
 	PointObject* preview_object;
-	RenderableContainer renderables;
+	QScopedPointer<RenderableContainer> renderables;
 	SymbolWidget* symbol_widget;
 };
 

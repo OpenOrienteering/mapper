@@ -30,6 +30,7 @@
 #include "symbol_point_editor.h"
 #include "symbol_point.h"
 #include "symbol_area.h"
+#include "renderable_implementation.h"
 #include "qbezier_p.h"
 
 LineSymbol::LineSymbol() : Symbol(Symbol::Line)

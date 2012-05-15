@@ -21,6 +21,8 @@
 #ifndef _OPENORIENTEERING_MAP_EDITOR_H_
 #define _OPENORIENTEERING_MAP_EDITOR_H_
 
+#include <vector>
+
 #include <QDockWidget>
 #include <QScopedPointer>
 
@@ -40,6 +42,7 @@ class SymbolWidget;
 class PrintWidget;
 class TemplatePositionDockWidget;
 class GeoreferencingDialog;
+typedef std::vector<Renderable*> RenderableVector;
 
 class MapEditorController : public MainWindowController
 {

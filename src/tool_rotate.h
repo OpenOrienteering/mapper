@@ -23,6 +23,14 @@
 
 #include "map_editor.h"
 
+#include <vector>
+
+#include <QScopedPointer>
+
+class Renderable;
+class RenderableContainer;
+typedef std::vector<Renderable*> RenderableVector;
+
 /// Tool to rotate objects
 class RotateTool : public MapEditorTool
 {
@@ -58,8 +66,8 @@ protected:
 	double original_rotation;
 	
 	std::vector<Object*> undo_duplicates;
-	RenderableVector old_renderables;
-	RenderableContainer renderables;
+	QScopedPointer<RenderableVector> old_renderables;
+	QScopedPointer<RenderableContainer> renderables;
 };
 
 #endif

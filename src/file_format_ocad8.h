@@ -33,6 +33,7 @@
 #include "template.h"
 
 class TextObject;
+class TextSymbol;
 
 class OCAD8FileFormat : public Format
 {

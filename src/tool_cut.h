@@ -21,10 +21,13 @@
 #ifndef _OPENORIENTEERING_TOOL_CUT_H_
 #define _OPENORIENTEERING_TOOL_CUT_H_
 
+#include <QScopedPointer>
+
 #include "map_editor.h"
 #include "object.h"
 
 class DrawPathTool;
+class RenderableContainer;
 
 /// Tool to cut objects into smaller pieces
 class CutTool : public MapEditorTool
@@ -93,7 +96,7 @@ protected:
 	
 	// Preview objects for dragging
 	PathObject* preview_path;
-	RenderableContainer renderables;
+	QScopedPointer<RenderableContainer> renderables;
 };
 
 #endif

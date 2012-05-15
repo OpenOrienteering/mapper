@@ -23,14 +23,19 @@
 #include <qmath.h>
 #include <QApplication>
 #include <QMouseEvent>
+#include <QPainter>
 
 #include "map_widget.h"
 #include "object.h"
+#include "renderable.h"
 #include "util.h"
 
 QCursor* RotateTool::cursor = NULL;
 
-RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button) : MapEditorTool(editor, Other, tool_button), renderables(editor->getMap())
+RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button)
+: MapEditorTool(editor, Other, tool_button),
+  old_renderables(new RenderableVector()), 
+  renderables(new RenderableContainer(editor->getMap()))
 {
 	rotation_center_set = false;
 	rotating = false;
@@ -47,7 +52,7 @@ void RotateTool::init()
 
 RotateTool::~RotateTool()
 {
-	deleteOldSelectionRenderables(old_renderables, false);
+	deleteOldSelectionRenderables(*old_renderables, false);
 }
 
 bool RotateTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -73,7 +78,7 @@ bool RotateTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 		rotating = true;
 		old_rotation = (map_coord - rotation_center).getAngle();
 		original_rotation = old_rotation;
-		startEditingSelection(old_renderables, &undo_duplicates);
+		startEditingSelection(*old_renderables, &undo_duplicates);
 	}
 	return true;
 }
@@ -92,7 +97,7 @@ bool RotateTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	{
 		rotating = false;
 		updateDragging(map_coord);
-		finishEditingSelection(renderables, old_renderables, true, &undo_duplicates);
+		finishEditingSelection(*renderables, *old_renderables, true, &undo_duplicates);
 		editor->getMap()->setObjectsDirty();
 		editor->getMap()->emitSelectionEdited();
 	}
@@ -104,7 +109,7 @@ bool RotateTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 
 void RotateTool::draw(QPainter* painter, MapWidget* widget)
 {
-	editor->getMap()->drawSelection(painter, true, widget, renderables.isEmpty() ? NULL : &renderables);
+	editor->getMap()->drawSelection(painter, true, widget, renderables->isEmpty() ? NULL : renderables.data());
 	
 	if (rotation_center_set)
 	{
@@ -153,7 +158,7 @@ void RotateTool::updateDragging(const MapCoordF cursor_pos_map)
 
 void RotateTool::updatePreviewObjects()
 {
-	updateSelectionEditPreview(renderables);
+	updateSelectionEditPreview(*renderables);
 	updateDirtyRect();
 }
 

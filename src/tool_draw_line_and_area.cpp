@@ -20,7 +20,10 @@
 
 #include "tool_draw_line_and_area.h"
 
+#include <QPainter>
+
 #include "util.h"
+#include "renderable.h"
 #include "symbol.h"
 #include "symbol_dock_widget.h"
 #include "symbol_point.h"
@@ -31,7 +34,7 @@
 #include "map_undo.h"
 
 DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : MapEditorTool(editor, Other, tool_button), renderables(editor->getMap()), symbol_widget(symbol_widget)
+ : MapEditorTool(editor, Other, tool_button), renderables(new RenderableContainer(editor->getMap())), symbol_widget(symbol_widget)
 {
 	preview_points_shown = false;
 	draw_in_progress = false;
@@ -108,10 +111,10 @@ void DrawLineAndAreaTool::setPreviewPointsPosition(MapCoordF map_coord)
 	for (int i = 0; i < size; ++i)
 	{
 		if (preview_points_shown)
-			renderables.removeRenderablesOfObject(preview_points[i], false);
+			renderables->removeRenderablesOfObject(preview_points[i], false);
 		preview_points[i]->setPosition(map_coord);
 		preview_points[i]->update(true);
-		renderables.insertRenderablesOfObject(preview_points[i]);
+		renderables->insertRenderablesOfObject(preview_points[i]);
 	}
 	preview_points_shown = true;
 }
@@ -122,7 +125,7 @@ void DrawLineAndAreaTool::hidePreviewPoints()
 	
 	int size = (int)preview_points.size();
 	for (int i = 0; i < size; ++i)
-		renderables.removeRenderablesOfObject(preview_points[i], false);
+		renderables->removeRenderablesOfObject(preview_points[i], false);
 	
 	preview_points_shown = false;
 }
@@ -148,7 +151,7 @@ void DrawLineAndAreaTool::drawPreviewObjects(QPainter* painter, MapWidget* widge
 						   widget->height() / 2.0 + widget->getMapView()->getDragOffset().y());
 		widget->getMapView()->applyTransform(painter);
 		
-		renderables.draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, 0.5f);
+		renderables->draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, 0.5f);
 		
 		painter->restore();
 	}
@@ -172,14 +175,14 @@ void DrawLineAndAreaTool::startDrawing()
 
 void DrawLineAndAreaTool::updatePreviewPath()
 {
-	renderables.removeRenderablesOfObject(preview_path, false);
+	renderables->removeRenderablesOfObject(preview_path, false);
 	preview_path->update(true);
-	renderables.insertRenderablesOfObject(preview_path);
+	renderables->insertRenderablesOfObject(preview_path);
 }
 
 void DrawLineAndAreaTool::abortDrawing()
 {
-	renderables.removeRenderablesOfObject(preview_path, false);
+	renderables->removeRenderablesOfObject(preview_path, false);
 	delete preview_path;
 	editor->getMap()->clearDrawingBoundingBox();
 	
@@ -194,7 +197,7 @@ void DrawLineAndAreaTool::abortDrawing()
 void DrawLineAndAreaTool::finishDrawing()
 {
 	if (preview_path)
-		renderables.removeRenderablesOfObject(preview_path, false);
+		renderables->removeRenderablesOfObject(preview_path, false);
 	
 	if (preview_path && !is_helper_tool)
 	{
@@ -234,7 +237,7 @@ void DrawLineAndAreaTool::deletePreviewObjects()
 	int size = (int)preview_points.size();
 	for (int i = 0; i < size; ++i)
 	{
-		renderables.removeRenderablesOfObject(preview_points[i], false);
+		renderables->removeRenderablesOfObject(preview_points[i], false);
 		delete preview_points[i];
 	}
 	preview_points.clear();
@@ -250,7 +253,7 @@ void DrawLineAndAreaTool::deletePreviewObjects()
 
 	if (preview_path)
 	{
-		renderables.removeRenderablesOfObject(preview_path, false);
+		renderables->removeRenderablesOfObject(preview_path, false);
 		delete preview_path;
 		preview_path = NULL;
 	}

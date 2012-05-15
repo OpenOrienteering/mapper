@@ -30,6 +30,7 @@
 #include "symbol_text.h"
 #include "map_editor.h"
 #include "object_text.h"
+#include "renderable.h"
 
 Object::Object(Object::Type type, Symbol* symbol) : type(type), symbol(symbol), map(NULL)
 {

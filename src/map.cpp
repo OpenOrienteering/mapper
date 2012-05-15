@@ -35,6 +35,7 @@
 #include "template.h"
 #include "gps_coordinates.h"
 #include "object.h"
+#include "renderable.h"
 #include "symbol.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
@@ -314,7 +315,7 @@ LineSymbol* Map::undefined_line;
 PointSymbol* Map::undefined_point;
 CombinedSymbol* Map::covering_combined_line;
 
-Map::Map() : renderables(this), selection_renderables(this)
+Map::Map() : renderables(new RenderableContainer(this)), selection_renderables(new RenderableContainer(this))
 {
 	if (!static_initialized)
 		initStatic();
@@ -595,7 +596,7 @@ void Map::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, floa
 	updateObjects();
 	
 	// The actual drawing
-	renderables.draw(painter, bounding_box, force_min_size, scaling, show_helper_symbols, opacity);
+	renderables->draw(painter, bounding_box, force_min_size, scaling, show_helper_symbols, opacity);
 }
 void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, bool draw_untransformed_parts, const QRect& untransformed_dirty_rect, MapWidget* widget, MapView* view)
 {
@@ -652,13 +653,13 @@ void Map::updateObjects()
 }
 void Map::removeRenderablesOfObject(Object* object, bool mark_area_as_dirty)
 {
-	renderables.removeRenderablesOfObject(object, mark_area_as_dirty);
+	renderables->removeRenderablesOfObject(object, mark_area_as_dirty);
 	if (isObjectSelected(object))
 		removeSelectionRenderables(object);
 }
 void Map::insertRenderablesOfObject(Object* object)
 {
-	renderables.insertRenderablesOfObject(object);
+	renderables->insertRenderablesOfObject(object);
 	if (isObjectSelected(object))
 		addSelectionRenderables(object);
 }
@@ -712,7 +713,7 @@ void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widge
 	view->applyTransform(painter);
 	
 	if (!replacement_renderables)
-		replacement_renderables = &selection_renderables;
+		replacement_renderables = selection_renderables.data();
 	replacement_renderables->draw(painter, view->calculateViewedRect(widget->viewportToView(widget->rect())), force_min_size, view->calculateFinalZoomFactor(), true, selection_opacity_factor, !draw_normal);
 	
 	painter->restore();
@@ -780,7 +781,7 @@ bool Map::toggleObjectSelection(Object* object, bool emit_selection_changed)
 }
 void Map::clearObjectSelection(bool emit_selection_changed)
 {
-	selection_renderables.clear();
+	selection_renderables->clear();
 	object_selection.clear();
 	first_selected_object = NULL;
 	
@@ -957,7 +958,7 @@ void Map::adjustColorPriorities(int first, int last)
 void Map::addSelectionRenderables(Object* object)
 {
 	object->update(false);
-	selection_renderables.insertRenderablesOfObject(object);
+	selection_renderables->insertRenderablesOfObject(object);
 }
 void Map::updateSelectionRenderables(Object* object)
 {
@@ -966,7 +967,7 @@ void Map::updateSelectionRenderables(Object* object)
 }
 void Map::removeSelectionRenderables(Object* object)
 {
-	selection_renderables.removeRenderablesOfObject(object, false);
+	selection_renderables->removeRenderablesOfObject(object, false);
 }
 
 void Map::initStatic()

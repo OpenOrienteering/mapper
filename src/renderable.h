@@ -21,24 +21,22 @@
 #ifndef _OPENORIENTEERING_RENDERABLE_H_
 #define _OPENORIENTEERING_RENDERABLE_H_
 
-#include <QPainter>
-
 #include <map>
+#include <vector>
 
-#include "map_coord.h"
-#include "path_coord.h"
+#include <QRectF>
 
+class QColor;
+class QPainter;
 class QPainterPath;
+class QRect;
 
 class Map;
+class MapCoord;
+class MapCoordF;
+typedef std::vector<MapCoord> MapCoordVector;
+typedef std::vector<MapCoordF> MapCoordVectorF;
 class Object;
-class Symbol;
-class PointSymbol;
-class LineSymbol;
-class AreaSymbol;
-class TextSymbol;
-class TextObject;
-struct TextObjectLineInfo;
 
 /// Contains state information about the painter which must be set when rendering a Renderable. Used to order the Renderables by color and minimize state changes
 struct RenderStates
@@ -147,81 +145,6 @@ private:
 	
 	Renderables renderables;
 	Map* map;
-};
-
-class DotRenderable : public Renderable
-{
-public:
-	DotRenderable(PointSymbol* symbol, MapCoordF coord);
-	DotRenderable(const DotRenderable& other);
-	virtual void render(QPainter& painter, bool force_min_size, float scaling);
-	virtual void getRenderStates(RenderStates& out) const;
-	//virtual Renderable* duplicate() {return new DotRenderable(*this);}
-};
-
-class CircleRenderable : public Renderable
-{
-public:
-	CircleRenderable(PointSymbol* symbol, MapCoordF coord);
-	CircleRenderable(const CircleRenderable& other);
-	virtual void render(QPainter& painter, bool force_min_size, float scaling);
-	virtual void getRenderStates(RenderStates& out) const;
-	//virtual Renderable* duplicate() {return new CircleRenderable(*this);}
-	
-protected:
-	QRectF rect;
-	float line_width;
-};
-
-class LineRenderable : public Renderable
-{
-public:
-	LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector& path_coords, bool closed);
-	LineRenderable(const LineRenderable& other);
-	virtual void render(QPainter& painter, bool force_min_size, float scaling);
-	virtual void getRenderStates(RenderStates& out) const;
-	//virtual Renderable* duplicate() {return new LineRenderable(*this);}
-	
-protected:
-	void extentIncludeCap(int i, float half_line_width, bool end_cap, LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed);
-	void extentIncludeJoin(int i, float half_line_width, LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed);
-	
-	QPainterPath path;
-	float line_width;
-	Qt::PenCapStyle cap_style;
-	Qt::PenJoinStyle join_style;
-};
-
-class AreaRenderable : public Renderable
-{
-public:
-	AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector* path_coords);
-	AreaRenderable(const AreaRenderable& other);
-	virtual void render(QPainter& painter, bool force_min_size, float scaling);
-	virtual void getRenderStates(RenderStates& out) const;
-	//virtual Renderable* duplicate() {return new AreaRenderable(*this);}
-	
-	inline QPainterPath* getPainterPath() {return &path;}
-	
-protected:
-	QPainterPath path;
-};
-
-class TextRenderable : public Renderable
-{
-public:
-	TextRenderable(TextSymbol* symbol, TextObject* text_object, double anchor_x, double anchor_y);
-	TextRenderable(const TextRenderable& other);
-	virtual void render(QPainter& painter, bool force_min_size, float scaling);
-	virtual void getRenderStates(RenderStates& out) const;
-	//virtual Renderable* duplicate() {return new TextRenderable(*this);}
-	
-protected:
-	QPainterPath path;
-	double anchor_x;
-	double anchor_y;
-	double rotation;
-	double scale_factor;
 };
 
 #endif

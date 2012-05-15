@@ -23,9 +23,11 @@
 #include <QApplication>
 #include <QMouseEvent>
 #include <QMessageBox>
+#include <QPainter>
 
 #include "map_widget.h"
 #include "util.h"
+#include "renderable.h"
 #include "symbol.h"
 #include "symbol_combined.h"
 #include "map_undo.h"
@@ -34,7 +36,7 @@
 
 QCursor* CutTool::cursor = NULL;
 
-CutTool::CutTool(MapEditorController* editor, QAction* tool_button) : MapEditorTool(editor, Other, tool_button), renderables(editor->getMap())
+CutTool::CutTool(MapEditorController* editor, QAction* tool_button) : MapEditorTool(editor, Other, tool_button), renderables(new RenderableContainer(editor->getMap()))
 {
 	dragging = false;
 	hover_object = NULL;
@@ -307,7 +309,7 @@ void CutTool::draw(QPainter* painter, MapWidget* widget)
 						   widget->height() / 2.0 + widget->getMapView()->getDragOffset().y());
 		widget->getMapView()->applyTransform(painter);
 		
-		renderables.draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, 0.5f);
+		renderables->draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, 0.5f);
 		
 		painter->restore();
 	}
@@ -469,7 +471,7 @@ void CutTool::updatePreviewObjects()
 		preview_path->changePathBounds(0, drag_end_len, drag_start_len);
 	
 	preview_path->update(true);
-	renderables.insertRenderablesOfObject(preview_path);
+	renderables->insertRenderablesOfObject(preview_path);
 	
 	updateDirtyRect();
 }
@@ -477,7 +479,7 @@ void CutTool::deletePreviewPath()
 {
 	if (preview_path)
 	{
-		renderables.removeRenderablesOfObject(preview_path, false);
+		renderables->removeRenderablesOfObject(preview_path, false);
 		delete preview_path;
 		preview_path = NULL;
 	}

@@ -33,6 +33,8 @@ class SymbolSettingDialog;
 class PointSymbolEditorWidget;
 class PathObject;
 class PointObject;
+class LineSymbol;
+class PointSymbol;
 class SymbolPropertiesWidget;
 class SymbolSettingDialog;
 class MapEditorController;

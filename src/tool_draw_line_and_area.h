@@ -23,9 +23,12 @@
 
 #include "map_editor.h"
 
+#include <QScopedPointer>
+
 class CombinedSymbol;
 class PointObject;
 class PathObject;
+class RenderableContainer;
 class Symbol;
 
 /// Base class for drawing tools for line and area symbols.
@@ -76,7 +79,7 @@ protected:
 	bool draw_in_progress;
 	
 	Symbol* last_used_symbol;
-	RenderableContainer renderables;
+	QScopedPointer<RenderableContainer> renderables;
 	SymbolWidget* symbol_widget;
 	
 	bool is_helper_tool;

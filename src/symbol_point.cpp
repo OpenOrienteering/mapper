@@ -29,6 +29,7 @@
 #include "symbol_properties_widget.h"
 #include "symbol_point_editor.h"
 #include "object.h"
+#include "renderable_implementation.h"
 
 PointSymbol::PointSymbol() : Symbol(Symbol::Point)
 {

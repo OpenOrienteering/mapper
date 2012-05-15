@@ -23,6 +23,7 @@
 #include <QtGui>
 
 #include "util.h"
+#include "renderable.h"
 #include "symbol.h"
 #include "object.h"
 #include "map_widget.h"
@@ -381,7 +382,7 @@ void DrawPathTool::finishDrawing()
 	
 	if (preview_path->getCoordinateCount() < (contains_only_areas ? 3 : 2))
 	{
-		renderables.removeRenderablesOfObject(preview_path, false);
+		renderables->removeRenderablesOfObject(preview_path, false);
 		delete preview_path;
 		preview_path = NULL;
 	}

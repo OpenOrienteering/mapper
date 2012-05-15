@@ -33,6 +33,7 @@
 #include "symbol_dock_widget.h"
 #include "tool_draw_text.h"
 #include "symbol_text.h"
+#include "renderable.h"
 #include "settings.h"
 
 QCursor* EditTool::cursor = NULL;
@@ -48,7 +49,11 @@ const Qt::KeyboardModifiers EditTool::control_point_modifier = Qt::ControlModifi
 const Qt::Key EditTool::control_point_key = Qt::Key_Control;
 #endif
 
-EditTool::EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget) : MapEditorTool(editor, Edit, tool_button), renderables(editor->getMap()), symbol_widget(symbol_widget)
+EditTool::EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
+: MapEditorTool(editor, Edit, tool_button),
+  old_renderables(new RenderableVector()),
+  renderables(new RenderableContainer(editor->getMap())),
+  symbol_widget(symbol_widget)
 {
 	preview_update_triggered = false;
 	dragging = false;
@@ -72,7 +77,7 @@ EditTool::~EditTool()
 {
 	if (text_editor)
 		delete text_editor;
-	deleteOldSelectionRenderables(old_renderables, false);
+	deleteOldSelectionRenderables(*old_renderables, false);
 }
 
 bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -520,7 +525,7 @@ void EditTool::draw(QPainter* painter, MapWidget* widget)
 	int num_selected_objects = editor->getMap()->getNumSelectedObjects();
 	if (num_selected_objects > 0)
 	{
-		editor->getMap()->drawSelection(painter, true, widget, renderables.isEmpty() ? NULL : &renderables, text_editor != NULL);
+		editor->getMap()->drawSelection(painter, true, widget, renderables->isEmpty() ? NULL : renderables.data(), text_editor != NULL);
 		
 		if (!text_editor)
 		{
@@ -621,7 +626,7 @@ void EditTool::updateStatusText()
 void EditTool::updatePreviewObjects()
 {
 	preview_update_triggered = false;
-	updateSelectionEditPreview(renderables);
+	updateSelectionEditPreview(*renderables);
 	updateDirtyRect();
 }
 void EditTool::updateDirtyRect()
@@ -772,7 +777,7 @@ bool EditTool::hoveringOverSingleText(MapCoordF cursor_pos_map)
 
 void EditTool::startEditing()
 {
-	startEditingSelection(old_renderables, &undo_duplicates);
+	startEditingSelection(*old_renderables, &undo_duplicates);
 	
 	// Save original extent to be able to mark it as dirty later
 	original_selection_extent = selection_extent;
@@ -801,7 +806,7 @@ void EditTool::finishEditing()
 			create_undo_step = false;
 	}
 	
-	finishEditingSelection(renderables, old_renderables, create_undo_step, &undo_duplicates, delete_objects);
+	finishEditingSelection(*renderables, *old_renderables, create_undo_step, &undo_duplicates, delete_objects);
 	
 	map->setObjectAreaDirty(original_selection_extent);
 	updateDirtyRect();

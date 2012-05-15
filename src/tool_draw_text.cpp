@@ -26,6 +26,7 @@
 
 #include "map_widget.h"
 #include "map_undo.h"
+#include "renderable.h"
 #include "symbol_dock_widget.h"
 #include "symbol.h"
 #include "util.h"
@@ -34,7 +35,7 @@
 
 QCursor* DrawTextTool::cursor = NULL;
 
-DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget) : MapEditorTool(editor, Other, tool_button), renderables(editor->getMap()), symbol_widget(symbol_widget)
+DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget) : MapEditorTool(editor, Other, tool_button), renderables(new RenderableContainer(editor->getMap())), symbol_widget(symbol_widget)
 {
 	dragging = false;
 	preview_text = NULL;
@@ -182,7 +183,7 @@ void DrawTextTool::draw(QPainter* painter, MapWidget* widget)
 		widget->applyMapTransform(painter);
 		
 		float alpha = text_editor ? 1 : 0.5f;
-		renderables.draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, alpha);
+		renderables->draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, alpha);
 		
 		if (text_editor)
 			text_editor->draw(painter, widget);
@@ -277,16 +278,16 @@ void DrawTextTool::updateStatusText()
 }
 void DrawTextTool::updatePreviewObject()
 {
-	renderables.removeRenderablesOfObject(preview_text, false);
+	renderables->removeRenderablesOfObject(preview_text, false);
 	preview_text->update(true);
-	renderables.insertRenderablesOfObject(preview_text);
+	renderables->insertRenderablesOfObject(preview_text);
 	updateDirtyRect();
 }
 void DrawTextTool::deletePreviewObject()
 {
 	if (preview_text)
 	{
-		renderables.removeRenderablesOfObject(preview_text, false);
+		renderables->removeRenderablesOfObject(preview_text, false);
 		delete preview_text;
 		preview_text = NULL;
 	}
@@ -307,7 +308,7 @@ void DrawTextTool::finishEditing()
 	delete text_editor;
 	text_editor = NULL;
 	
-	renderables.removeRenderablesOfObject(preview_text, false);
+	renderables->removeRenderablesOfObject(preview_text, false);
 	editor->getMap()->clearDrawingBoundingBox();
 	
 	if (preview_text->getText().isEmpty())

@@ -81,6 +81,7 @@ set(Mapper_SRCS
  src/symbol_text.cpp
  src/symbol_combined.cpp
  src/renderable.cpp
+ src/renderable_implementation.cpp
  src/object.cpp
  src/object_text.cpp
  src/path_coord.cpp

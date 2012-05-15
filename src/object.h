@@ -22,17 +22,19 @@
 #define _OPENORIENTEERING_OBJECT_H_
 
 #include <assert.h>
+#include <vector>
+
+#include <QRectF>
 
 #include "map_coord.h"
-#include "renderable.h"
 #include "path_coord.h"
 
-QT_BEGIN_NAMESPACE
 class QFile;
-QT_END_NAMESPACE
 
 class Symbol;
 class Map;
+class Renderable;
+typedef std::vector<Renderable*> RenderableVector;
 
 /// Base class which combines coordinates and a symbol to form an object (in a map or point symbol).
 class Object
