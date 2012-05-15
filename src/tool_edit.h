@@ -24,7 +24,6 @@
 #include <QScopedPointer>
 
 #include "map_editor.h"
-#include "object.h"
 
 class CombinedSymbol;
 class PointObject;

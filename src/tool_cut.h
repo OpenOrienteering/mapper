@@ -24,9 +24,10 @@
 #include <QScopedPointer>
 
 #include "map_editor.h"
-#include "object.h"
 
 class DrawPathTool;
+class PathCoord;
+class PathObject;
 class RenderableContainer;
 
 /// Tool to cut objects into smaller pieces

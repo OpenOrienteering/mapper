@@ -25,6 +25,8 @@
 #include <QImageReader>
 
 #include "map_color.h"
+#include "object.h"
+#include "symbol.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
 #include "symbol_area.h"

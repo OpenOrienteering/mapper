@@ -27,6 +27,7 @@
 
 #include "map_widget.h"
 #include "util.h"
+#include "object.h"
 #include "renderable.h"
 #include "symbol.h"
 #include "symbol_combined.h"

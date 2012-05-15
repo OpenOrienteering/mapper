@@ -27,11 +27,11 @@
 #include "../libocad/libocad.h"
 
 #include "file_format.h"
-#include "symbol.h"
 #include "symbol_combined.h"
-#include "object.h"
 #include "template.h"
 
+class Object;
+class Symbol;
 class TextObject;
 class TextSymbol;
 
