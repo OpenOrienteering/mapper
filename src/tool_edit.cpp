@@ -50,6 +50,7 @@ const Qt::Key EditTool::control_point_key = Qt::Key_Control;
 
 EditTool::EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget) : MapEditorTool(editor, Edit, tool_button), renderables(editor->getMap()), symbol_widget(symbol_widget)
 {
+	preview_update_triggered = false;
 	dragging = false;
 	hover_point = -2;
 	text_editor = NULL;
@@ -268,7 +269,12 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 			if (hover_point >= -1)
 			{
 				updateDragging(event->pos(), widget);
-				updatePreviewObjects();
+				if (!preview_update_triggered)
+				{
+					// Handle screen update asynchronously
+					QTimer::singleShot(10, this, SLOT(updatePreviewObjects()));
+					preview_update_triggered = true;
+				}
 			}
 			else if (box_selection)
 			{
@@ -614,6 +620,7 @@ void EditTool::updateStatusText()
 
 void EditTool::updatePreviewObjects()
 {
+	preview_update_triggered = false;
 	updateSelectionEditPreview(renderables);
 	updateDirtyRect();
 }

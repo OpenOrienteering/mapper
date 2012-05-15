@@ -62,9 +62,11 @@ public slots:
 	void selectedSymbolsChanged();
 	void textSelectionChanged(bool text_change);
 	
+protected slots:
+	void updatePreviewObjects();
+	
 protected:
 	void updateStatusText();
-	void updatePreviewObjects();
 	void updateDirtyRect();
 	void updateHoverPoint(QPointF point, MapWidget* widget);
 	void updateDragging(QPoint cursor_pos, MapWidget* widget);
@@ -113,6 +115,8 @@ protected:
 	RenderableVector old_renderables;
 	RenderableContainer renderables;
 	SymbolWidget* symbol_widget;
+	
+	bool preview_update_triggered;
 };
 
 #endif
