@@ -34,8 +34,6 @@ class QRect;
 class Map;
 class MapCoord;
 class MapCoordF;
-typedef std::vector<MapCoord> MapCoordVector;
-typedef std::vector<MapCoordF> MapCoordVectorF;
 class Object;
 
 /// Contains state information about the painter which must be set when rendering a Renderable. Used to order the Renderables by color and minimize state changes
