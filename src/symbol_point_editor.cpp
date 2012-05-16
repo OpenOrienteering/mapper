@@ -245,7 +245,7 @@ void PointSymbolEditorWidget::setEditorActive(bool active)
 {
 	if (active)
 	{
-		if (!permanent_preview)
+		if (!permanent_preview && midpoint_object == NULL)
 		{
 			midpoint_object = new PointObject(symbol);
 			midpoint_object->setPosition(object_origin_coord);
