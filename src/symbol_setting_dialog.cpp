@@ -40,31 +40,34 @@
 #include "symbol_combined.h"
 #include "symbol_properties_widget.h"
 
-SymbolSettingDialog::SymbolSettingDialog(Symbol* map_symbol, Map* map, QWidget* parent)
-: QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), source_symbol(map_symbol)
+SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map, QWidget* parent)
+: QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), 
+  source_map(source_map),
+  source_symbol(source_symbol)
 {
 	setWindowTitle(tr("Symbol settings"));
 	setSizeGripEnabled(true);
+	symbol_modified = false;
 	
-	this->symbol = map_symbol->duplicate();
-	this->source_map = map;
+	symbol = source_symbol->duplicate();
 	
 	symbol_icon_label = new QLabel();
 	symbol_icon_label->setPixmap(QPixmap::fromImage(*symbol->getIcon(source_map)));
 	
 	symbol_text_label = new QLabel();
-	QFont symbol_text_label_font = symbol_text_label->font();
-	symbol_text_label_font.setBold(true);
-	symbol_text_label->setFont(symbol_text_label_font);
 	updateSymbolLabel();
-
-	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	ok_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("OK"));
-	ok_button->setDefault(true);
+	
+	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok | QDialogButtonBox::Reset | QDialogButtonBox::Help);
+	ok_button = button_box->button(QDialogButtonBox::Ok);
+	reset_button = button_box->button(QDialogButtonBox::Reset);
+	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(button_box, SIGNAL(accepted()), this, SLOT(accept()));
+	connect(reset_button, SIGNAL(clicked(bool)), this, SLOT(reset()));
+	connect(button_box->button(QDialogButtonBox::Help), SIGNAL(clicked(bool)), this, SLOT(showHelp()));
 	
 	preview_map = new Map();
-	preview_map->useColorsFrom(map);
-	preview_map->setScaleDenominator(map->getScaleDenominator());
+	preview_map->useColorsFrom(source_map);
+	preview_map->setScaleDenominator(source_map->getScaleDenominator());
 	
 	createPreviewMap();
 	
@@ -119,39 +122,28 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* map_symbol, Map* map, QWidget* 
 		center_template_button = NULL;
 	}
 	
-	QHBoxLayout* buttons_layout = new QHBoxLayout();
-	buttons_layout->setContentsMargins(0, 0, 0, 0);
-	buttons_layout->addWidget(cancel_button);
-	buttons_layout->addStretch(1);
-	buttons_layout->addWidget(ok_button);
-	
 	QGridLayout* left_layout = new QGridLayout();
-	left_layout->setColumnStretch(6,1);
+	left_layout->addWidget(symbol_icon_label, 0, 0);
+	left_layout->addWidget(symbol_text_label, 0, 1);
+	left_layout->addWidget(properties_widget, 1, 0, 1, 2);
+	left_layout->addWidget(button_box,        2, 0, 1, 2);
+	left_layout->setColumnStretch(1, 1);
 	
-	int row = 0, col = 0;
-	left_layout->addWidget(symbol_icon_label, row, col++);
-	left_layout->addWidget(symbol_text_label, row, col++, 1, 6);
-	
-	row++; col = 0;
-	left_layout->addWidget(properties_widget, row, col, 1, 7);
-	
-	row++; col = 0;
-	left_layout->addLayout(buttons_layout, row, col, 1, 7);
-	
-	QSplitter* splitter = new QSplitter();
 	QWidget* left = new QWidget();
 	left->setLayout(left_layout);
 	left->layout();
-	splitter->addWidget(left);
-	splitter->setCollapsible(0, false);
+	
+	QWidget* right = preview_widget;
 	if (preview_layout != NULL)
 	{
-		QWidget* right = new QWidget();
+		right = new QWidget();
 		right->setLayout(preview_layout);
-		splitter->addWidget(right);
 	}
-	else
-		splitter->addWidget(preview_widget);
+	
+	QSplitter* splitter = new QSplitter();
+	splitter->addWidget(left);
+	splitter->setCollapsible(0, false);
+	splitter->addWidget(right);
 	splitter->setCollapsible(1, true);
 	
 	QBoxLayout* layout = new QHBoxLayout();
@@ -159,10 +151,7 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* map_symbol, Map* map, QWidget* 
 	layout->addWidget(splitter);
 	setLayout(layout);
 	
-	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
-	connect(ok_button, SIGNAL(clicked(bool)), this, SLOT(accept()));
-	
-	updateOkButton();
+	updateButtons();
 }
 
 SymbolSettingDialog::~SymbolSettingDialog()
@@ -174,10 +163,11 @@ SymbolSettingDialog::~SymbolSettingDialog()
 void SymbolSettingDialog::updatePreview()
 {
 	symbol_icon_label->setPixmap(QPixmap::fromImage(*symbol->getIcon(source_map, true)));
-	
 	for (int l = 0; l < preview_map->getNumLayers(); ++l)
 		for (int i = 0; i < preview_map->getLayer(l)->getNumObjects(); ++i)
+		{
 			preview_map->getLayer(l)->getObject(i)->update(true);
+		}
 }
 
 void SymbolSettingDialog::loadTemplateClicked()
@@ -243,6 +233,7 @@ void SymbolSettingDialog::createPreviewMap()
 	
 	for (int i = 0; i < (int)preview_objects.size(); ++i)
 		preview_map->deleteObject(preview_objects[i], false);
+	
 	preview_objects.clear();
 	
 	if (symbol->getType() == Symbol::Line)
@@ -436,15 +427,37 @@ void SymbolSettingDialog::createPreviewMap()
 	}
 }
 
-void SymbolSettingDialog::updateOkButton()
+void SymbolSettingDialog::showHelp()
 {
-	ok_button->setEnabled(symbol->getNumberComponent(0)>=0 && !symbol->getName().isEmpty());
+	QString fragment;
+	if (properties_widget->currentIndex() > 0)
+	{
+		fragment.append("symbol-type-");
+		fragment.append(QString::number(symbol->getType()));
+	}
+	preview_controller->getWindow()->showHelp("symbol_settings.html", fragment);
 }
 
-void SymbolSettingDialog::generalModified()
+void SymbolSettingDialog::reset()
 {
-	updateSymbolLabel();
-	updateOkButton();
+	Symbol* old_symbol = symbol;
+	symbol = source_symbol->duplicate();
+	createPreviewMap();
+	properties_widget->reset(symbol);
+	delete old_symbol;
+	
+	setSymbolModified(false);
+}
+
+void SymbolSettingDialog::setSymbolModified(bool modified)
+{
+	if (symbol_modified != modified);
+	{
+		symbol_modified = modified;
+		updateSymbolLabel();
+		updatePreview();
+		updateButtons();
+	}
 }
 
 void SymbolSettingDialog::updateSymbolLabel()
@@ -455,7 +468,13 @@ void SymbolSettingDialog::updateSymbolLabel()
 	QString name = symbol->getName();
 	if (name.isEmpty())
 		name = "- unnamed -";
-	symbol_text_label->setText(number % "  " % name);
+	symbol_text_label->setText(QString("<b>") % number % "  " % name % "</b>");
+}
+
+void SymbolSettingDialog::updateButtons()
+{
+	ok_button->setEnabled(symbol_modified && symbol->getNumberComponent(0)>=0 && !symbol->getName().isEmpty());
+	reset_button->setEnabled(symbol_modified && properties_widget->isResetSupported());
 }
 
 

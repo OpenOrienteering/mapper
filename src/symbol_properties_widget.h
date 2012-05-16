@@ -59,6 +59,20 @@ public:
 	/** Get the edited symbol */
 	inline Symbol* getSymbol() { return symbol; }
 	
+	QString getHelpSection() const { return QString(); }
+	
+	/** @deprecated Only until reset() is implemented for all symbol types! */
+	virtual bool isResetSupported() { return false; }
+	
+	/**
+	 * Changes the edited symbol and resets the input values.
+	 * When overriding this method, make sure to call SymbolPropertiesWidget::reset().
+	 */
+	virtual void reset(Symbol* symbol);
+	
+signals:
+	void propertiesModified();
+	
 protected slots:
 	void numberChanged(QString text);
 	void nameChanged(QString text);
@@ -66,14 +80,13 @@ protected slots:
 	void helperSymbolChanged(bool checked);
 	
 protected:
-	Symbol* const symbol;
+	Symbol* symbol;
 	SymbolSettingDialog* const dialog;
 	
 	QLineEdit** number_edit;
 	QLineEdit* name_edit;
 	QTextEdit* description_edit;
 	QCheckBox* helper_symbol_check;
-	
 };
 
 #endif // _OPENORIENTEERING_SYMBOL_PROPERTIES_WIDGET_H_

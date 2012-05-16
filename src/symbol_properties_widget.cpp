@@ -25,7 +25,7 @@
 #include "symbol_setting_dialog.h"
 
 SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDialog* dialog)
-: QTabWidget(), symbol(symbol), dialog(dialog)
+: QTabWidget(), dialog(dialog)
 {
 	QWidget* generalTab = new QWidget();
 	
@@ -34,28 +34,25 @@ SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDial
 	
 	QLabel* number_label = new QLabel(tr("Number:"));
 	number_edit = new QLineEdit*[Symbol::number_components];
-	bool number_edit_enabled = true;
 	for (int i = 0; i < Symbol::number_components; ++i)
 	{
-		int number_edit_value = symbol->getNumberComponent(i);
-		number_edit[i] = new QLineEdit((number_edit_enabled && number_edit_value >= 0) ? QString::number(number_edit_value) : "");
-		number_edit[i]->setEnabled(number_edit_enabled);
+		number_edit[i] = new QLineEdit();
 		number_edit[i]->setMaximumWidth(60);
 		number_edit[i]->setValidator(new QIntValidator(0, 99999, number_edit[i]));
-		number_edit_enabled = number_edit_enabled && number_edit_value >= 0;
 	}
 	QLabel* name_label = new QLabel(tr("Name:"));
-	name_edit = new QLineEdit(symbol->getName());
+	name_edit = new QLineEdit();
 	QLabel* description_label = new QLabel(tr("Description:"));
-	description_edit = new QTextEdit(symbol->getDescription());
+	description_edit = new QTextEdit();
 	helper_symbol_check = new QCheckBox(tr("Helper symbol (not shown in finished map)"));
-	helper_symbol_check->setChecked(symbol->isHelperSymbol());
+	SymbolPropertiesWidget::reset(symbol);
 	
 	for (int i = 0; i < Symbol::number_components; ++i)
 		connect(number_edit[i], SIGNAL(textEdited(QString)), this, SLOT(numberChanged(QString)));
 	connect(name_edit, SIGNAL(textEdited(QString)), this, SLOT(nameChanged(QString)));
 	connect(description_edit, SIGNAL(textChanged()), this, SLOT(descriptionChanged()));
 	connect(helper_symbol_check, SIGNAL(clicked(bool)), this, SLOT(helperSymbolChanged(bool)));
+	connect(this, SIGNAL(propertiesModified()), dialog, SLOT(setSymbolModified()));
 	
 	int row = 0, col = 0;
 	// 1st col
@@ -147,25 +144,43 @@ void SymbolPropertiesWidget::numberChanged(QString text)
 		if (i < Symbol::number_components)
 			number_edit[i]->setEnabled(is_valid);
 	}
-	dialog->generalModified();
+	emit propertiesModified();
 }
 
 void SymbolPropertiesWidget::nameChanged(QString text)
 {
 	symbol->setName(text);
-	dialog->generalModified();
+	emit propertiesModified();
 }
 
 void SymbolPropertiesWidget::descriptionChanged()
 {
 	symbol->setDescription(description_edit->toPlainText());
-	dialog->generalModified();
+	emit propertiesModified();
 }
 
 void SymbolPropertiesWidget::helperSymbolChanged(bool checked)
 {
 	symbol->setIsHelperSymbol(checked);
-	dialog->generalModified();
+	emit propertiesModified();
+}
+
+void SymbolPropertiesWidget::reset(Symbol* symbol)
+{
+	this->symbol = symbol;
+	blockSignals(true); // don't send modification signals
+	bool number_edit_enabled = true;
+	for (int i=0; i<Symbol::number_components; i++)
+	{
+		int number_edit_value = symbol->getNumberComponent(i);
+		number_edit[i]->setText((number_edit_enabled && number_edit_value >= 0) ? QString::number(number_edit_value) : "");
+		number_edit[i]->setEnabled(number_edit_enabled);
+		number_edit_enabled = number_edit_enabled && number_edit_value >= 0;
+	}
+	name_edit->setText(symbol->getName());
+	description_edit->setText(symbol->getDescription());
+	helper_symbol_check->setChecked(symbol->isHelperSymbol());
+	blockSignals(false);
 }
 
 #include "symbol_properties_widget.moc"

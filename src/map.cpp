@@ -1241,7 +1241,10 @@ void Map::deleteObject(Object* object, bool remove_only)
 		if (layers[i]->deleteObject(object, remove_only))
 			return;
 	}
-	assert(false);
+	
+	qCritical().nospace() << this << "::deleteObject(" << object << "," << remove_only << "): Object not found. This is a bug.";
+	if (!remove_only)
+		delete object;
 }
 void Map::setObjectsDirty()
 {

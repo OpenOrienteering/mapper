@@ -26,6 +26,7 @@
                  <section title="Symbols Menu" ref="help/html_en/symbols_menu.html"/>
                  <section title="Symbols &amp; Colors" ref="help/html_en/symbols.html"/>
                  <section title="Templates Menu" ref="help/html_en/template_menu.html"/>
+                 <section title="Symbol Settings" ref="help/html_en/symbol_settings.html"/>
                  <section title="Georeferencing" ref="help/html_en/georeferencing.html"/>
                  <section title="GPS Menu" ref="help/html_en/gps_menu.html"/>
              </section>

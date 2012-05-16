@@ -23,65 +23,125 @@
 
 #include <QDialog>
 
-class QLineEdit;
-class QTextEdit;
-class QCheckBox;
 class QLabel;
 class QToolButton;
-class QTabWidget;
 
-class Map;
-class MapView;
-class Symbol;
 class MainWindow;
-class PointSymbol;
-class PointSymbolEditorWidget;
-class SymbolPropertiesWidget;
+class Map;
 class MapEditorController;
+class MapView;
 class Object;
+class Symbol;
+class SymbolPropertiesWidget;
 
-/** A dialog for editing symbol properties 
+/** 
+ * A dialog for editing symbol properties.
+ *
+ * The specific symbol properties must be edited in tabs provided by the symbol. 
  */
 class SymbolSettingDialog : public QDialog
 {
 Q_OBJECT
 public:
-	/** Construct a new dialog for a given symbol and map. */
-	SymbolSettingDialog(Symbol* map_symbol, Map* map, QWidget* parent);
+	/**
+	 * Constructs a new dialog for a given symbol and map. 
+	 */
+	SymbolSettingDialog(Symbol* source_symbol, Map* source_map, QWidget* parent);
 	
-	/** Destruct the dialog and cleanup temporary objects. */
+	/**
+	 * Destructs the dialog and cleans up temporary objects. 
+	 */
 	virtual ~SymbolSettingDialog();
 	
-	/** Get the edited object. The caller can duplicate it for later user. */
+	/**
+	 * Returns the currently edited symbol. The caller can duplicate it for later user. 
+	 */
 	inline const Symbol* getEditedSymbol() const { return symbol; }
 	
+	/**
+	 * Returns the unmodifed symbol which is currently edited.
+	 */
 	inline const Symbol* getSourceSymbol() const { return source_symbol; }
 	
+	/**
+	 * Returns true if the edited symbol has modfications.
+	 */
+	inline bool isSymbolModified() const { return symbol_modified; }
+	
+	/**
+	 * Returns the Map of the unmodified symbol.
+	 */
 	inline Map* getSourceMap() { return source_map; }
 	
+	/**
+	 * Returns the preview map of this dialog.
+	 */
 	inline Map* getPreviewMap() { return preview_map; }
 	
+	/**
+	 * Return the MapEditorController which handles this dialog's preview map.
+	 */
 	inline MapEditorController* getPreviewController() { return preview_controller; }
 	
 public slots:
-	void generalModified();
+	/**
+	 * Shows this dialog's help page.
+	 */
+	void showHelp();
 	
-	/** Update the symbol preview */
-	void updatePreview();
+	/**
+	 * Resets the edited symbol to the state of the unmodified symbol from the map.
+	 */
+	void reset();
 	
-protected slots:
-	void loadTemplateClicked();
-	void centerTemplateBBox();
-	void centerTemplateGravity();
+	/**
+	 * Sets the modification status of the dialog, and triggers a screen update.
+	 */
+	void setSymbolModified(bool modified = true);
 	
-private:
-	void createPreviewMap();
-	
-	void updateOkButton();
+	/** 
+	 * Updates the label which is the headline to the dialog.
+	 */
 	void updateSymbolLabel();
 	
-	Map* source_map;
-	Symbol* source_symbol;
+	/** 
+	 * Updates the preview from the current symbol settings.
+	 */
+	void updatePreview();
+	
+	/**
+	 * Updates the state (enabled/disabled) of the dialog buttons.
+	 */
+	void updateButtons();
+	
+protected slots:
+	/**
+	 * Opens a dialog for loading a template to the preview map.
+	 */
+	void loadTemplateClicked();
+	
+	/**
+	 * Centers the preview map template relative to its bounding box.
+	 */
+	void centerTemplateBBox();
+	
+	/**
+	 * Centers the preview map template relative to its center of gravity,
+	 * leaving out a selected background color.
+	 */
+	void centerTemplateGravity();
+	
+protected:
+	/**
+	 * Populates the preview map for the symbol.
+	 */
+	void createPreviewMap();
+	
+private:
+	bool symbol_modified;
+	
+	Map* const source_map;
+	Symbol* const source_symbol;
 
 	Symbol* symbol;
 	Map* preview_map;
@@ -94,6 +154,7 @@ private:
 	QToolButton* center_template_button;
 	
 	QPushButton* ok_button;
+	QPushButton* reset_button;
 	
 	QLabel* symbol_icon_label;
 	QLabel* symbol_text_label;

@@ -168,20 +168,35 @@ class LineSymbolSettings : public SymbolPropertiesWidget
 Q_OBJECT
 public:
 	LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* dialog);
+	
 	virtual ~LineSymbolSettings();
 	
+	virtual bool isResetSupported() { return true; }
+	
+	virtual void reset(Symbol* symbol);
+	
+	/**
+	 * Updates the content and state of all input fields.
+	 */
+	void updateContents();
+	
 protected:
-	/** Ensure that a particular widget is visible in the scoll area. */
+	/** 
+	 * Ensures that a particular widget is visible in the scoll area. 
+	 */
 	void ensureWidgetVisible(QWidget* widget);
 	
-	/** Adjust the visibility and enabled state of all UI parts.
-	 *  There is a large number of dependencies between different elements
-	 *  of the line settings. This method handles them all.
+	/** 
+	 * Adjusts the visibility and enabled state of all UI parts.
+	 * There is a large number of dependencies between different elements
+	 * of the line settings. This method handles them all.
 	 */
-	void updateWidgets();
+	void updateStates();
 	
 protected slots:
-	/** Notify this settings widget that one of the symbols has been modified */
+	/** 
+	 * Notifies this settings widget that one of the symbols has been modified.
+	 */
 	void pointSymbolEdited();
 	
 	void widthChanged(QString text);

@@ -239,7 +239,7 @@ void CombinedSymbolSettings::numberChanged(int index)
 			react_to_changes = true;
 		}
 	}
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 
 void CombinedSymbolSettings::symbolChanged(int index)
@@ -248,7 +248,7 @@ void CombinedSymbolSettings::symbolChanged(int index)
 		return;
     for (int i = 0; i < symbol->getNumParts(); ++i)
         symbol->setPart(i, symbol_edits[i]->symbol());
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 
 #include "symbol_combined.moc"

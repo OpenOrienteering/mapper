@@ -449,14 +449,14 @@ void TextSymbolSettings::fontChanged(QFont font)
 {
 	symbol->font_family = font.family();
 	symbol->updateQFont();
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 void TextSymbolSettings::sizeChanged(QString text)
 {
 	float new_size = text.toFloat();
 	symbol->font_size = qRound(1000 * new_size);
 	symbol->updateQFont();
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 void TextSymbolSettings::determineSizeClicked()
 {
@@ -465,14 +465,14 @@ void TextSymbolSettings::determineSizeClicked()
 	if (modal_dialog.exec() == QDialog::Accepted)
 	{
 		size_edit->setText(QString::number(0.001 * symbol->font_size));
-		dialog->updatePreview();
+		emit propertiesModified();
 	}
 }
 void TextSymbolSettings::colorChanged()
 {
 	symbol->color = color_edit->color();
 	symbol->updateQFont();
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 void TextSymbolSettings::checkToggled(bool checked)
 {
@@ -481,7 +481,7 @@ void TextSymbolSettings::checkToggled(bool checked)
 	symbol->underline = underline_check->isChecked();
 	symbol->kerning = kerning_check->isChecked();
 	symbol->updateQFont();
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 void TextSymbolSettings::spacingChanged(QString text)
 {
@@ -489,7 +489,7 @@ void TextSymbolSettings::spacingChanged(QString text)
 	symbol->paragraph_spacing = qRound(1000 * paragraph_spacing_edit->text().toFloat());
 	symbol->character_spacing = 0.01f * character_spacing_edit->text().toFloat();
 	symbol->updateQFont();
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 
 void TextSymbolSettings::ocadCompatibilityButtonClicked()
@@ -503,7 +503,7 @@ void TextSymbolSettings::lineBelowCheckClicked(bool checked)
 {
 	symbol->line_below = checked;
 	symbol->updateQFont();
-	dialog->updatePreview();
+	emit propertiesModified();
 	
 	line_below_color_edit->setVisible(checked);
 	line_below_width_label->setVisible(checked);
@@ -517,7 +517,7 @@ void TextSymbolSettings::lineBelowSettingChanged()
 	symbol->line_below_width = qRound(1000 * line_below_width_edit->text().toFloat());
 	symbol->line_below_distance = qRound(1000 * line_below_distance_edit->text().toFloat());
 	symbol->updateQFont();
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 void TextSymbolSettings::customTabRowChanged(int row)
 {

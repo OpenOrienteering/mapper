@@ -562,7 +562,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 		if (symbol->getFillPattern(i).type == AreaSymbol::FillPattern::PointPattern)
 		{
 			PointSymbolEditorWidget* editor = new PointSymbolEditorWidget(controller, symbol->getFillPattern(i).point, 16);
-			connect(editor, SIGNAL(symbolEdited()), dialog, SLOT(updatePreview()) );
+			connect(editor, SIGNAL(symbolEdited()), this, SIGNAL(propertiesModified()) );
 			addPropertiesGroup(symbol->getFillPattern(i).name, editor); 	
 		}
 	}
@@ -675,7 +675,7 @@ void AreaSymbolSettings::updateFillWidgets(bool show)
 void AreaSymbolSettings::colorChanged()
 {
 	symbol->color = color_edit->color();
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 
 void AreaSymbolSettings::minimumDimensionsChanged(QString text)
@@ -696,7 +696,7 @@ void AreaSymbolSettings::addFillClicked()
 	for (int i = index + 1; i < fill_number_combo->count(); ++i)
 		fill_number_combo->setItemText(i, symbol->patterns[i].name);
 
-	dialog->updatePreview();
+	emit propertiesModified();
 	
 	fill_number_combo->setCurrentIndex(index);
 }
@@ -718,7 +718,7 @@ void AreaSymbolSettings::deleteFillClicked()
 	fill_number_combo->removeItem(index);
 	updatePatternNames();
 	updateFillWidgets(true);
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 
 void AreaSymbolSettings::fillNumberChanged(int index)
@@ -751,7 +751,7 @@ void AreaSymbolSettings::fillTypeChanged(int index)
 		updatePatternNames();
 		fill_number_combo->setItemText(fill_number_combo->currentIndex(), fill->name); // FIXME: renumber only following items
 		PointSymbolEditorWidget* editor = new PointSymbolEditorWidget(controller, fill->point, 16);
-		connect(editor, SIGNAL(symbolEdited()), dialog, SLOT(updatePreview()) );
+		connect(editor, SIGNAL(symbolEdited()), this, SIGNAL(propertiesModified()) );
 		if (fill_number_combo->currentIndex() == int(symbol->patterns.size()) - 1)
 		{
 			addPropertiesGroup(fill->name, editor); 	
@@ -763,7 +763,7 @@ void AreaSymbolSettings::fillTypeChanged(int index)
 		}
 	}
 	updateFillWidgets(true);
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 
 void AreaSymbolSettings::fillAngleChanged(QString text)
@@ -771,7 +771,7 @@ void AreaSymbolSettings::fillAngleChanged(QString text)
 	if (!react_to_changes) return;
 	AreaSymbol::FillPattern* fill = &symbol->patterns[fill_number_combo->currentIndex()];
 	fill->angle = text.toFloat() * (2*M_PI) / 360.0;
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 
 void AreaSymbolSettings::fillRotatableClicked(bool checked)
@@ -786,7 +786,7 @@ void AreaSymbolSettings::fillSpacingChanged(QString text)
 	if (!react_to_changes) return;
 	AreaSymbol::FillPattern* fill = &symbol->patterns[fill_number_combo->currentIndex()];
 	fill->line_spacing = qRound(1000 * text.toFloat());
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 
 void AreaSymbolSettings::fillLineOffsetChanged(QString text)
@@ -794,7 +794,7 @@ void AreaSymbolSettings::fillLineOffsetChanged(QString text)
 	if (!react_to_changes) return;
 	AreaSymbol::FillPattern* fill = &symbol->patterns[fill_number_combo->currentIndex()];
 	fill->line_offset = qRound(1000 * text.toFloat());
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 
 void AreaSymbolSettings::fillOffsetAlongLineChanged(QString text)
@@ -803,7 +803,7 @@ void AreaSymbolSettings::fillOffsetAlongLineChanged(QString text)
 	AreaSymbol::FillPattern* fill = &symbol->patterns[fill_number_combo->currentIndex()];
 	assert(fill->type == AreaSymbol::FillPattern::PointPattern);
 	fill->offset_along_line = qRound(1000 * text.toFloat());
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 
 void AreaSymbolSettings::fillColorChanged()
@@ -812,7 +812,7 @@ void AreaSymbolSettings::fillColorChanged()
 	AreaSymbol::FillPattern* fill = &symbol->patterns[fill_number_combo->currentIndex()];
 	assert(fill->type == AreaSymbol::FillPattern::LinePattern);
 	fill->line_color = fill_color_edit->color();
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 
 void AreaSymbolSettings::fillLinewidthChanged(QString text)
@@ -821,7 +821,7 @@ void AreaSymbolSettings::fillLinewidthChanged(QString text)
 	AreaSymbol::FillPattern* fill = &symbol->patterns[fill_number_combo->currentIndex()];
 	assert(fill->type == AreaSymbol::FillPattern::LinePattern);
 	fill->line_width = qRound(1000 * text.toFloat());
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 
 void AreaSymbolSettings::fillPointdistChanged(QString text)
@@ -830,7 +830,7 @@ void AreaSymbolSettings::fillPointdistChanged(QString text)
 	AreaSymbol::FillPattern* fill = &symbol->patterns[fill_number_combo->currentIndex()];
 	assert(fill->type == AreaSymbol::FillPattern::PointPattern);
 	fill->point_distance = qRound(1000 * text.toFloat());
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 
 #include "symbol_area.moc"

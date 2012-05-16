@@ -310,7 +310,7 @@ PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialo
 	connect(oriented_to_north, SIGNAL(clicked(bool)), this, SLOT(orientedToNorthClicked(bool)));
 	
 	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), symbol, 0, true);
-	connect(symbol_editor, SIGNAL(symbolEdited()), dialog, SLOT(updatePreview()) );
+	connect(symbol_editor, SIGNAL(symbolEdited()), this, SIGNAL(propertiesModified()) );
 	
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget(oriented_to_north);
@@ -327,7 +327,7 @@ PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialo
 void PointSymbolSettings::orientedToNorthClicked(bool checked)
 {
 	symbol->rotatable = !checked;
-	dialog->updatePreview();
+	emit propertiesModified();
 }
 
 void PointSymbolSettings::tabChanged(int index)
