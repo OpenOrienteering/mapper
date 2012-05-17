@@ -1351,7 +1351,6 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	  << line_cap_label << line_cap_combo 
 	  << line_join_label << line_join_combo
 	  << pointed_cap_length_label << pointed_cap_length_edit
-	  << dashed_check
 	  << border_check;
 	
 	row++; col = 0;
@@ -1656,9 +1655,14 @@ void LineSymbolSettings::pointedLineCapLengthChanged(QString text)
 void LineSymbolSettings::dashedChanged(bool checked)
 {
 	symbol->dashed = checked;
+	if (symbol->color == NULL)
+	{
+		symbol->break_length = 0;
+		break_length_edit->setText("0");
+	}
 	emit propertiesModified();
 	updateStates();
-	if (checked)
+	if (checked && symbol->color != NULL)
 		ensureWidgetVisible(half_outer_dashes_check);
 }
 
@@ -1800,7 +1804,7 @@ void LineSymbolSettings::updateStates()
 		pointed_cap_length_edit->setEnabled(false);
 	}
 	
-	const bool line_dashed = symbol->dashed;
+	const bool line_dashed = symbol->dashed && symbol->color != NULL;
 	if (line_dashed)
 	{
 		Q_FOREACH(QWidget* undashed_widget, undashed_widget_list)
