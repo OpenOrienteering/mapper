@@ -52,6 +52,7 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	setWindowModality(Qt::WindowModal);
 	
 	tool_active = false;
+	changed_north  = GRIVATION; // TODO: load from/save to file
 	changed_coords = NONE;
 	
 	// A working copy of the current or given initial Georeferencing
@@ -60,6 +61,11 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	setWindowTitle(tr("Map Georeferencing"));
 	
 	scale_edit  = new QLabel();
+	declination_edit = new QDoubleSpinBox();
+	declination_edit->setSuffix(QString::fromUtf8(" °"));
+	declination_edit->setDecimals(1);
+	declination_edit->setSingleStep(0.1);
+	declination_edit->setRange(-180.0, +180.0);
 	grivation_edit = new QDoubleSpinBox();
 	grivation_edit->setSuffix(QString::fromUtf8(" °"));
 	grivation_edit->setDecimals(1);
@@ -71,7 +77,6 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	QHBoxLayout* ref_point_layout = new QHBoxLayout();
 	ref_point_layout->addWidget(ref_point_edit, 1);
 	ref_point_layout->addWidget(ref_point_button, 0);
-	updateGeneral();
 	
 	crs_edit = new QComboBox();
 	crs_edit->setEditable(true);
@@ -80,10 +85,8 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	crs_edit->addItem("UTM", "+proj=utm +zone=!ZONE!");
 	crs_edit->addItem("Gauss-Krueger zone 3, datum: Potsdam", "+proj=tmerc +lat_0=0 +lon_0=9 +k=1.000000 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");
 	crs_edit->addItem(tr("Edit projection parameters..."), "!EDIT!");
-	updateCRS();
 	
 	zone_edit = new QLineEdit();
-	updateZone();
 	
 	easting_edit = new QDoubleSpinBox();
 	easting_edit->setSuffix(" m");
@@ -93,7 +96,8 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	northing_edit->setSuffix(" m");
 	northing_edit->setDecimals(0);
 	northing_edit->setRange(std::numeric_limits<double>::min(), std::numeric_limits<double>::max());
-	updateEastingNorthing();
+	
+	convergence_edit = new QLabel();
 	
 	QLabel* datum_edit = new QLabel("WGS84");
 	lat_edit = new QDoubleSpinBox();
@@ -106,7 +110,6 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	lon_edit->setRange(-90.0, +90.0);
 	link_label = new QLabel();
 	link_label->setOpenExternalLinks(true);
-	updateLatLon();
 	
 	QDialogButtonBox* buttons_box = new QDialogButtonBox(
 	  QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Reset | QDialogButtonBox::Help,
@@ -119,6 +122,7 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	
 	edit_layout->addRow(new HEADLINE(tr("General")));
 	edit_layout->addRow(tr("Map scale:"), scale_edit);
+	edit_layout->addRow(tr("&Declination:"), declination_edit);
 	edit_layout->addRow(tr("&Grivation:"), grivation_edit);
 	edit_layout->addRow(tr("Reference point:"), ref_point_layout);
 	edit_layout->addRow(new QWidget());
@@ -128,6 +132,7 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	edit_layout->addRow(tr("&Zone:"), zone_edit);
 	edit_layout->addRow(tr("Reference point &easting:"), easting_edit);
 	edit_layout->addRow(tr("Reference point &northing:"), northing_edit);
+	edit_layout->addRow(tr("Convergence:"), convergence_edit);
 	edit_layout->addRow(new QWidget());
 	
 	edit_layout->addRow(new HEADLINE(tr("Geographic coordinates")));
@@ -144,6 +149,7 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	
 	setLayout(layout);
 	
+	connect(declination_edit, SIGNAL(valueChanged(double)), this, SLOT(declinationChanged(double)));
 	connect(grivation_edit, SIGNAL(valueChanged(double)), this, SLOT(grivationChanged(double)));
 	connect(ref_point_button, SIGNAL(clicked(bool)), this,SLOT(selectRefPoint()));
 	connect(crs_edit, SIGNAL(editTextChanged(QString)), this, SLOT(crsChanged()));
@@ -156,6 +162,16 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	connect(buttons_box, SIGNAL(rejected()), this, SLOT(reject()));
 	connect(reset_button, SIGNAL(clicked(bool)), this, SLOT(reset()));
 	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
+	
+	changed_coords = NONE;
+	updateGeneral();
+	updateNorth();
+	updateCRS();
+	updateEastingNorthing();
+	updateNorth();
+	updateLatLon();
+	updateZone();
+	reset_button->setEnabled(false);
 }
 
 GeoreferencingDialog::~GeoreferencingDialog()
@@ -182,7 +198,6 @@ void GeoreferencingDialog::setRefPoint(MapCoord coords)
 void GeoreferencingDialog::updateGeneral()
 {
 	scale_edit->setText( QString("1:") % QString::number(georef->getScaleDenominator()) );
-	grivation_edit->setValue(georef->getGrivation());
 	const MapCoord& coords(georef->getMapRefPoint());
 	ref_point_edit->setText(tr("%1 %2 (mm)").arg(locale().toString(coords.xd())).arg(locale().toString(coords.yd())));
 }
@@ -258,6 +273,13 @@ void GeoreferencingDialog::updateEastingNorthing()
 	northing_edit->blockSignals(false);
 }
 
+void GeoreferencingDialog::updateNorth()
+{
+	declination_edit->setValue(georef->getDeclination());
+	grivation_edit->setValue(georef->getGrivation());
+	convergence_edit->setText( locale().toString(georef->getConvergence(), 'f', 1) % QString::fromUtf8(" °") );
+}
+
 void GeoreferencingDialog::updateLatLon()
 {
 	// NOTE: There might be lat/lon already saved in the file
@@ -299,9 +321,19 @@ void GeoreferencingDialog::updateLatLon()
 	}
 }
 
+void GeoreferencingDialog::declinationChanged(double value)
+{
+	georef->setDeclination(value);
+	changed_north = DECLINATION;
+	updateNorth();
+	reset_button->setEnabled(true);
+}
+
 void GeoreferencingDialog::grivationChanged(double value)
 {
 	georef->setGrivation(value);
+	changed_north = GRIVATION;
+	updateNorth();
 	reset_button->setEnabled(true);
 }
 
@@ -366,6 +398,7 @@ void GeoreferencingDialog::latLonChanged()
 	
 	updateZone();
 	updateEastingNorthing();
+	updateNorth();
 	
 	reset_button->setEnabled(true);
 }
@@ -377,6 +410,7 @@ void GeoreferencingDialog::eastingNorthingChanged()
 	changed_coords = PROJECTED;
 	
 	updateLatLon();
+	updateNorth();
 	reset_button->setEnabled(true);
 }
 
@@ -403,8 +437,10 @@ void GeoreferencingDialog::showHelp()
 void GeoreferencingDialog::reset()
 {
 	*georef = map->getGeoreferencing();
+	changed_north  = GRIVATION;
 	changed_coords = NONE;
 	updateGeneral();
+	updateNorth();
 	updateCRS();
 	updateEastingNorthing();
 	updateLatLon();

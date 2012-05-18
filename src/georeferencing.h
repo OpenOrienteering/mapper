@@ -193,6 +193,24 @@ public:
 	
 	
 	/**
+	 * Get the magenetic declination.
+	 * 
+	 * @see setDeclination()
+	 */
+	inline double getDeclination() const { return grivation + getConvergence(); }
+	
+	/**
+	 * Set the magnetic declination.
+	 * 
+	 * Magnetic declination is the angle between magnetic north and true north.
+	 * In the context of OpenOrienteering Mapper, it is the angle between the 
+	 * y axis of map coordinates and the latitude axis of geographic 
+	 * coordinates.
+	 */
+	void setDeclination(double declination);
+	
+	
+	/**
 	 * Get the grivation.
 	 * 
 	 * @see setGrivation()
@@ -202,9 +220,9 @@ public:
 	/**
 	 * Set the grivation.
 	 * 
-	 * Grivation is the angle between map north and grid north. In the context
-	 * of OpenOrienteering Mapper, it is the angle between the y axes of map 
-	 * coordinates and projected coordinates.
+	 * Grivation is the angle between magnetic north and grid north. 
+	 * In the context of OpenOrienteering Mapper, it is the angle between the y
+	 * axes of map coordinates and projected coordinates.
 	 */
 	void setGrivation(double grivation);
 	
@@ -252,6 +270,14 @@ public:
 	 * @return true if the specification is valid, false otherwise 
 	 */
 	bool setProjectedCRS(const QString& id, const QString& spec);
+	
+	/**
+	 * Get the meridian convergence.
+	 * 
+	 * The meridian convergence is the angle between grid north and true north.
+	 * @return zero for a local georeferencing, or a calculated approximation
+	 */
+	double getConvergence() const;
 	
 	
 	/**

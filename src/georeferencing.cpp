@@ -93,6 +93,11 @@ void Georeferencing::setScaleDenominator(int value)
 	updateTransformation();
 }
 
+void Georeferencing::setDeclination(double value)
+{
+	setGrivation(value - getConvergence()); 
+}
+
 void Georeferencing::setGrivation(double value)
 {
 	grivation = value;
@@ -113,6 +118,23 @@ void Georeferencing::setProjectedRefPoint(QPointF point)
 	if (ok)
 		geographic_ref_point = new_geo_ref;
 	updateTransformation();
+}
+
+double Georeferencing::getConvergence() const
+{
+	if (isLocal())
+		return 0.0;
+	
+	const double delta_phi = M_PI / 20000.0;  // roughly 1 km, TODO: replace by literal constant.
+	LatLon geographic_other = geographic_ref_point;
+	geographic_other.latitude += (geographic_other.latitude < 0.0) ? delta_phi : -delta_phi; // 2nd point on the same meridian
+	QPointF projected_other = toProjectedCoords(geographic_other);
+	
+	double denominator = projected_other.y() - projected_ref_point.y();
+	if (fabs(denominator) < 0.00000000001)
+		return 0.0;
+	
+	return RAD_TO_DEG * atan((projected_ref_point.x() - projected_other.x()) / denominator);
 }
 
 void Georeferencing::setGeographicRefPoint(LatLon lat_lon)

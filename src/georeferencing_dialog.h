@@ -114,6 +114,11 @@ public slots:
 	
 protected slots:
 	/** 
+	 * Notifies the dialog of a change in the declination field.
+	 */
+	void declinationChanged(double value);
+	
+	/** 
 	 * Notifies the dialog of a change in the grivation field.
 	 */
 	void grivationChanged(double value);
@@ -166,9 +171,14 @@ protected:
 	
 	/** 
 	 * Updates the easting and northing fields (projected coordinates) in the 
-	 * dialog from the underlying Georeferencing. 
+	 * dialog from the underlying Georeferencing.
 	 */
 	void updateEastingNorthing();
+	
+	/**
+	 * Updates the magnetic convergence field from the underlying Georeferencing.
+	 */
+	void updateNorth();
 	
 	/** 
 	 * Updates the latitude and longitude fields (geographic coordinates) in the
@@ -186,6 +196,7 @@ private:
 	
 	/* GUI elements */
 	QLabel* scale_edit;
+	QDoubleSpinBox* declination_edit;
 	QDoubleSpinBox* grivation_edit;
 	QLabel* ref_point_edit;
 	
@@ -193,6 +204,7 @@ private:
 	QLineEdit* zone_edit;
 	QDoubleSpinBox* easting_edit;
 	QDoubleSpinBox* northing_edit;
+	QLabel* convergence_edit;
 	
 	QComboBox* ll_datum_edit;
 	QDoubleSpinBox* lat_edit;
@@ -202,14 +214,16 @@ private:
 	
 	QPushButton* reset_button;
 	
-	enum CoordType
+	enum ChangeType
 	{
 		NONE,
 		PROJECTED,
-		GEOGRAPHIC
+		GEOGRAPHIC,
+		DECLINATION,
+		GRIVATION
 	};
-	
-	CoordType changed_coords;
+	ChangeType changed_north;  // not used ATM, TODO: review if needed
+	ChangeType changed_coords;
 };
 
 
