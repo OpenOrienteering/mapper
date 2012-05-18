@@ -201,6 +201,15 @@ private:
 	QLabel* link_label;
 	
 	QPushButton* reset_button;
+	
+	enum CoordType
+	{
+		NONE,
+		PROJECTED,
+		GEOGRAPHIC
+	};
+	
+	CoordType changed_coords;
 };
 
 

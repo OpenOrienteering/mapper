@@ -52,7 +52,8 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	setWindowModality(Qt::WindowModal);
 	
 	tool_active = false;
-
+	changed_coords = NONE;
+	
 	// A working copy of the current or given initial Georeferencing
 	georef.reset( new Georeferencing(initial == NULL ? map->getGeoreferencing() : *initial) );
 	
@@ -229,7 +230,11 @@ void GeoreferencingDialog::updateZone()
 						zone_no = 2 * (int(floor(lon) + 3.0) / 12) + 31; // Svalbard
 					QString zone = QString::number(zone_no);
 					zone.append((ref_point.latitude >= 0.0) ? " N" : " S");
-					zone_edit->setText(zone);
+					if (zone != zone_edit->text())
+					{
+						zone_edit->setText(zone);
+						crsChanged();
+					}
 				}
 			}
 			zone_edit->blockSignals(false);
@@ -328,22 +333,27 @@ void GeoreferencingDialog::crsChanged()
 			crs = crs_edit->itemText(index);
 		}
 		
-		updateZone();
 		crs_spec = crs_spec_template;
-		if (crs_spec.contains("!ZONE!"))
-		{
-			QString zone = zone_edit->text();
-			zone.replace(" N", "");
-			zone.replace(" S", " +south");
-			crs_spec.replace("!ZONE!", zone);
-		}
+	}
+	
+	updateZone();
+	if (crs_spec.contains("!ZONE!"))
+	{
+		QString zone = zone_edit->text();
+		zone.replace(" N", "");
+		zone.replace(" S", " +south");
+		crs_spec.replace("!ZONE!", zone);
 	}
 	
 	bool crs_was_local = georef->isLocal();
 	bool crs_ok = georef->setProjectedCRS(crs, crs_spec);
-	if (crs_ok && (!crs_was_local || (lat_edit->cleanText().length() > 0 && lon_edit->cleanText().length() > 0)))
-		latLonChanged();
-	updateLatLon();
+	if (crs_ok)
+	{
+		if (crs_was_local && changed_coords == PROJECTED)
+			eastingNorthingChanged();
+		else
+			latLonChanged();
+	}
 	reset_button->setEnabled(true);
 }
 
@@ -352,9 +362,10 @@ void GeoreferencingDialog::latLonChanged()
 	double latitude = lat_edit->value() * M_PI / 180;
 	double longitude = lon_edit->value() * M_PI / 180;
 	georef->setGeographicRefPoint(LatLon(latitude, longitude));
+	changed_coords = GEOGRAPHIC;
 	
-	updateEastingNorthing();
 	updateZone();
+	updateEastingNorthing();
 	
 	reset_button->setEnabled(true);
 }
@@ -363,6 +374,7 @@ void GeoreferencingDialog::eastingNorthingChanged()
 {
 	QPointF easting_northing(easting_edit->value(), northing_edit->value());
 	georef->setProjectedRefPoint(easting_northing);
+	changed_coords = PROJECTED;
 	
 	updateLatLon();
 	reset_button->setEnabled(true);
@@ -391,11 +403,12 @@ void GeoreferencingDialog::showHelp()
 void GeoreferencingDialog::reset()
 {
 	*georef = map->getGeoreferencing();
+	changed_coords = NONE;
 	updateGeneral();
 	updateCRS();
-	updateZone();
 	updateEastingNorthing();
 	updateLatLon();
+	updateZone();
 	reset_button->setEnabled(false);
 }
 
