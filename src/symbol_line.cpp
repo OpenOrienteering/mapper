@@ -1549,8 +1549,6 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	row++;
 	layout->setRowStretch(row, 1);
 	
-	updateStates();
-	
 	const int line_tab_width = line_tab->sizeHint().width();
 	
 	scroll_area = new QScrollArea();
@@ -1572,6 +1570,8 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 		addPropertiesGroup(point_symbol->getName(), point_symbol_editor);
 		connect(point_symbol_editor, SIGNAL(symbolEdited()), this, SLOT(pointSymbolEdited()));
 	}
+	
+	updateStates();
 	
 	connect(width_edit, SIGNAL(textEdited(QString)), this, SLOT(widthChanged(QString)));
 	connect(color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChanged()));
