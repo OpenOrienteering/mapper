@@ -21,17 +21,32 @@ directory and adjust the CLIPPER_REVISION variable in 3rd-party/clipper.cmake
 before next build.
 
 
+== PROJ.4 Cartographic Projections Library ==
+
+The program uses the PROJ.4 Cartographic Projections Library. The program is
+known to work with release 4.8.0. See the platform specific notes.
+
+
 == Compiling on Windows ==
 
-Requirements:
+* Requirements:
 - A C++ compiler (preferably MinGW, Visual C++ may also work).
 - CMake
 - Qt
+- MSYS 1.0 (for automatic PROJ.4 build)
 
+* PROJ.4 library
+If you have MinGW/MSYS installed in C:/MinGW/msys/1.0, the PROJ.4 library will
+be automatically downloaded and built during OpenOrienteering build. If you
+have MSYS in another path or if you want change the PROJ.4 version, you need to
+modify 3rd-party/proj.cmake.
+
+* Qt
 The easiest way to get Qt is to intall the Qt SDK.
 If you do not have a C++ compiler yet, you can also install MinGW with the QtSDK installer. Note that you
 may have to add the mingw / mingw32 bin directories to your PATH environment variable manually if you choose to do this.
 
+* Building OpenOrienteering Mapper:
 When all requirements are installed, run cmake and point it to the directory in which
 CMakeLists.txt (and the file you are reading now) are in.
 As build directory, you must use a new subdirectory in this folder named "build".
@@ -65,6 +80,11 @@ Please also note that
 - A C++ compiler (g++)
 - CMake
 - Qt
+- PROJ.4 library
+
+* PROJ.4 library
+Make sure that the PROJ.4 library is installed. For a Ubuntu or
+Debian system, install libproj0 and libproj-dev.
 
 * Building OpenOrienteering Mapper:
 Run the following in the project's root directory:
@@ -81,7 +101,6 @@ The option "-graphicssystem raster" is a Qt option which usually leads to better
 in case it is not the default yet anyway (like on Windows).
 
 * Package management:
-
 If you want to create a release package, enable "set(CMAKE_BUILD_TYPE Release)" in the CMakeList.txt. 
 Then start the build process from a fresh build directory.
 To create the .deb package for your particular distribution, after building call: 

@@ -13,3 +13,5 @@ build/
 help/*.qhc
 help/*.qch
 3rd-party/clipper
+3rd-party/proj/*
+!3rd-party/proj/COPYING
