@@ -4,7 +4,10 @@ project(Mapper)
 cmake_minimum_required(VERSION 2.6)
 find_package(Qt4 REQUIRED)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+
 include(3rd-party/clipper.cmake)
+include(3rd-party/proj.cmake)
 
 #set(CMAKE_BUILD_TYPE Release)
 #set(CMAKE_BUILD_TYPE Debug)
@@ -26,8 +29,8 @@ endif (CMAKE_COMPILER_IS_GNUCXX)
 set(OPT_INCLUDES "/opt/local/include")
 set(OPT_LIBRARIES "/opt/local/lib")
 
-include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${OPT_INCLUDES})
-link_directories(${OPT_LIBRARIES})
+include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${PROJ_INCLUDES} ${OPT_INCLUDES})
+link_directories(${PROJ_LIBRARIES} ${OPT_LIBRARIES})
 
 set(Mapper_SRCS
  libocad/types.c
@@ -130,8 +133,6 @@ qt4_add_translation(Mapper_QM ${Mapper_TRANS})
 set(Mapper_RESOURCES resources.qrc translations.qrc)
 qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
-
 set(Mapper_HELP_DIR ${PROJECT_SOURCE_DIR}/bin/help)
 set(Mapper_HELP_COLLECTION ${Mapper_HELP_DIR}/oomaphelpcollection.qhc)
 file(GLOB Mapper_HELP_EN ${Mapper_HELP_DIR}/html_en)
@@ -166,7 +167,7 @@ target_link_libraries(Mapper
  ${QT_QTGUI_LIBRARY}
  ${QT_QTNETWORK_LIBRARY}
  ${QT_QTXML_LIBRARY}
- proj
+ ${PROJ_LIBRARY}
 )
 
 include(CPackaging.cmake)
