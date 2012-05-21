@@ -877,8 +877,20 @@ SymbolToolTip::SymbolToolTip(Symbol* symbol, QRect icon_rect, QWidget* parent) :
 	QLabel* upper_label = new QLabel(symbol->getNumberAsString() + " <b>" + symbol->getName() + "</b>");
 	upper_label->setPalette(text_palette);
 	help_shown = false;
-
-	help_label = new QLabel("<i>" + (symbol->getDescription().isEmpty() ? tr("No description!") : symbol->getDescription()) + "</i>");
+	
+	QString help_text = "<i>";
+	if (symbol->getDescription().isEmpty())
+		help_text += tr("No description!");
+	else
+	{
+		QString html_description = symbol->getDescription();
+		html_description.replace("\n", "<br>");
+		html_description.remove('\r');
+		help_text += html_description;
+	}
+	help_text += "</i>";
+	
+	help_label = new QLabel(help_text);
 	help_label->setPalette(text_palette);
 	//help_label->setMaximumWidth(500);
 	help_label->setWordWrap(true);
