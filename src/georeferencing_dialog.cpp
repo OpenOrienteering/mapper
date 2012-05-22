@@ -109,7 +109,7 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	lon_edit = new QDoubleSpinBox();
 	lon_edit->setSuffix(QString::fromUtf8(" °"));
 	lon_edit->setDecimals(8);
-	lon_edit->setRange(-90.0, +90.0);
+	lon_edit->setRange(-180.0, +180.0);
 	link_label = new QLabel();
 	link_label->setOpenExternalLinks(true);
 	
