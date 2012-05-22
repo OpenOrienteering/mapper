@@ -52,7 +52,6 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	setWindowModality(Qt::WindowModal);
 	
 	tool_active = false;
-	changed_north  = GRIVATION; // TODO: load from/save to file
 	changed_coords = NONE;
 	
 	// A working copy of the current or given initial Georeferencing
@@ -288,9 +287,13 @@ void GeoreferencingDialog::updateEastingNorthing()
 
 void GeoreferencingDialog::updateNorth()
 {
+	declination_edit->blockSignals(true);
+	grivation_edit->blockSignals(true);
 	declination_edit->setValue(georef->getDeclination());
 	grivation_edit->setValue(georef->getGrivation());
 	convergence_edit->setText( locale().toString(georef->getConvergence(), 'f', 1) % QString::fromUtf8(" °") );
+	declination_edit->blockSignals(false);
+	grivation_edit->blockSignals(false);
 }
 
 void GeoreferencingDialog::updateLatLon()
@@ -337,7 +340,6 @@ void GeoreferencingDialog::updateLatLon()
 void GeoreferencingDialog::declinationChanged(double value)
 {
 	georef->setDeclination(value);
-	changed_north = DECLINATION;
 	updateNorth();
 	reset_button->setEnabled(true);
 }
@@ -345,7 +347,6 @@ void GeoreferencingDialog::declinationChanged(double value)
 void GeoreferencingDialog::grivationChanged(double value)
 {
 	georef->setGrivation(value);
-	changed_north = GRIVATION;
 	updateNorth();
 	reset_button->setEnabled(true);
 }
@@ -452,7 +453,6 @@ void GeoreferencingDialog::showHelp()
 void GeoreferencingDialog::reset()
 {
 	*georef = map->getGeoreferencing();
-	changed_north  = GRIVATION;
 	changed_coords = NONE;
 	updateGeneral();
 	updateNorth();

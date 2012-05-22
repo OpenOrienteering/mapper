@@ -28,7 +28,7 @@
 #include "util.h"
 
 const int NativeFileFormat::least_supported_file_format_version = 0;
-const int NativeFileFormat::current_file_format_version = 17;
+const int NativeFileFormat::current_file_format_version = 18;
 const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 
 bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
@@ -107,24 +107,25 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 	}
 	else if (version >= 17)
 	{
-		if (version >= 15)
-			loadString(&file, map->map_notes);
+		loadString(&file, map->map_notes);
 		
 		Georeferencing georef;
 		file.read((char*)&georef.scale_denominator, sizeof(int));
+		if (version >= 18)
+			file.read((char*)&georef.declination, sizeof(double));
 		file.read((char*)&georef.grivation, sizeof(double));
 		double x,y;
 		file.read((char*)&x, sizeof(double));
 		file.read((char*)&y, sizeof(double));
-		georef.setMapRefPoint(MapCoord(x,y));
+		georef.map_ref_point = MapCoord(x,y);
 		file.read((char*)&x, sizeof(double));
 		file.read((char*)&y, sizeof(double));
-		georef.setProjectedRefPoint(QPointF(x,y));
+		georef.projected_ref_point = QPointF(x,y);
 		loadString(&file, georef.projected_crs_id);
 		loadString(&file, georef.projected_crs_spec);
 		file.read((char*)&y, sizeof(double));
 		file.read((char*)&x, sizeof(double));
-		georef.setGeographicRefPoint(LatLon(y, x));
+		georef.geographic_ref_point = LatLon(y, x); 
 		QString geographic_crs_id, geographic_crs_spec;
 		loadString(&file, geographic_crs_id);   // reserved for geographic crs id
 		loadString(&file, geographic_crs_spec); // reserved for full geographic crs specification
@@ -136,6 +137,8 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 			  arg(Georeferencing::geographic_crs_spec)
 			);
 		}
+		if (version <= 17)
+			georef.initDeclination();
 		*map->georeferencing = georef;
 	}
 
@@ -293,6 +296,7 @@ void NativeFileExport::doExport() throw (FormatException)
 	
 	const Georeferencing& georef = map->getGeoreferencing();
 	file.write((const char*)&georef.scale_denominator, sizeof(int));
+	file.write((const char*)&georef.declination, sizeof(double));
 	file.write((const char*)&georef.grivation, sizeof(double));
 	double x,y;
 	x = georef.map_ref_point.xd(); 

@@ -33,7 +33,7 @@ class GPSProjectionParameters;
 typedef void* projPJ;
 
 /**
- * LatLon specifies geographic coordinates by latitude and longitude
+ * LatLon specifies geographic coordinates by latitude and longitude.
  */
 class LatLon
 {
@@ -71,12 +71,12 @@ public:
 	}
 	
 	/**
-	 * Return the latitude value in degrees
+	 * Returns the latitude value in degrees.
 	 */
 	inline double getLatitudeInDegrees() const  { return latitude * 180.0 / M_PI; }
 	
 	/**
-	 * Return the longitude value in degrees
+	 * Returns the longitude value in degrees.
 	 */
 	inline double getLongitudeInDegrees() const { return longitude * 180.0 / M_PI; }
 	
@@ -109,7 +109,7 @@ private:
 };
 
 /**
- * Dump a LatLon to the debug output
+ * Dumps a LatLon to the debug output.
  * 
  * Note that this requires a *reference*, not a pointer.
  */
@@ -150,23 +150,27 @@ friend QDebug operator<<(QDebug dbg, const Georeferencing& georef);
 
 public:
 	/** 
-	 * Construct a local georeferencing for a particular map
+	 * Constructs a local georeferencing.
 	 */
 	Georeferencing();
 	
 	/** 
-	 * Construct a georeferencing which is a copy of an existing georeferencing 
+	 * Constructs a georeferencing which is a copy of an existing georeferencing.
 	 */
 	Georeferencing(const Georeferencing& georeferencing);
 	
 	/** 
-	 * Cleanup memory allocated by the georeferencing 
+	 * Cleans up memory allocated by the georeferencing 
 	 */
 	~Georeferencing();
 	
 	
 	/**
-	 * Assign the properties of another Georeferencing to this one.
+	 * Assigns the properties of another Georeferencing to this one.
+	 * 
+	 * Having this method in a QObject is in contradiction to Qt conventions.
+	 * But we really need to assign properties from one object to another,
+	 * where each object maintains its own identity. 
 	 */
 	Georeferencing& operator=(const Georeferencing& other);
 	
@@ -175,65 +179,69 @@ public:
 	 * Returns true if this georeferencing is local.
 	 * 
 	 * A georeferencing is local if no (valid) coordinate system specification
-	 * is given for the projected coordinates. Local georeferencing cannot 
+	 * is given for the projected coordinates. A local georeferencing cannot 
 	 * convert coordinates from and to geographic coordinate systems.
 	 */
 	inline bool isLocal() const { return projected_crs == NULL; }
 	
 	
 	/**
-	 * Get the map scale denominator
+	 * Returns the map scale denominator.
 	 */
 	inline int getScaleDenominator() const { return scale_denominator; }
 	
 	/**
-	 * Set the map scale denominator
+	 * Sets the map scale denominator.
 	 */
 	void setScaleDenominator(int value);
 	
 	
 	/**
-	 * Get the magenetic declination.
+	 * Returns the magnetic declination.
 	 * 
 	 * @see setDeclination()
 	 */
-	inline double getDeclination() const { return grivation + getConvergence(); }
+	inline double getDeclination() const { return declination; }
 	
 	/**
-	 * Set the magnetic declination.
+	 * Sets the magnetic declination.
 	 * 
 	 * Magnetic declination is the angle between magnetic north and true north.
 	 * In the context of OpenOrienteering Mapper, it is the angle between the 
 	 * y axis of map coordinates and the latitude axis of geographic 
 	 * coordinates.
+	 * 
+	 * This will also affect the grivation value and the transformations.
 	 */
 	void setDeclination(double declination);
 	
 	
 	/**
-	 * Get the grivation.
+	 * Returns the grivation.
 	 * 
 	 * @see setGrivation()
 	 */
 	inline double getGrivation() const { return grivation; }
 	
 	/**
-	 * Set the grivation.
+	 * Sets the grivation.
 	 * 
 	 * Grivation is the angle between magnetic north and grid north. 
 	 * In the context of OpenOrienteering Mapper, it is the angle between the y
 	 * axes of map coordinates and projected coordinates.
+	 * 
+	 * This will also affect the declination value and the transformations.
 	 */
 	void setGrivation(double grivation);
 	
 	
 	/**
-	 * Get the map coordinates of the reference point
+	 * Returns the map coordinates of the reference point.
 	 */
 	inline MapCoord getMapRefPoint() const { return map_ref_point; };
 	
 	/**
-	 * Define the map coordinates of the reference point.
+	 * Defines the map coordinates of the reference point.
 	 * 
 	 * This will <b>not</b> update the map and geographic coordinates of the reference point.
 	 */
@@ -241,102 +249,109 @@ public:
 	
 	
 	/**
-	 * Get the projected coordinates of the reference point
+	 * Returns the projected coordinates of the reference point.
 	 */
 	inline QPointF getProjectedRefPoint() const { return projected_ref_point; };
 	
 	/**
-	 * Define the projected coordinates of the reference point.
+	 * Defines the projected coordinates of the reference point.
 	 * 
-	 * This will also update the geographic coordinates of the reference point
-	 * if a conversion is possible.
+	 * This may trigger changes of the geographic coordinates of the reference
+	 * point, the convergence, the grivation and the transformations.
 	 */
 	void setProjectedRefPoint(QPointF point);
 	
 	
 	/** 
-	 * Get the name (ID) of the coordinate reference system (CRS) of the projected coordinates
+	 * Returns the name (ID) of the coordinate reference system (CRS) of the
+	 * projected coordinates.
 	 */
 	QString getProjectedCRS() const { return projected_crs_id; }
 	
 	/** 
-	 * Get the specification of the coordinate reference system (CRS) of the projected coordinates
+	 * Returns the specification of the coordinate reference system (CRS) of the
+	 * projected coordinates
 	 * @return a PROJ.4 specification of the CRS
 	 */
 	QString getProjectedCRSSpec() const { return projected_crs_spec; }
 	
-	/** Set the coordinate reference system (CRS) of the projected coordinates 
+	/** Sets the coordinate reference system (CRS) of the projected coordinates.
+	 * 
+	 * This may trigger changes of the projected coordinates of the reference
+	 * point, the convergence, the grivation and the transformations.
+	 * 
 	 * @param spec the PROJ.4 specification of the CRS
 	 * @return true if the specification is valid, false otherwise 
 	 */
 	bool setProjectedCRS(const QString& id, const QString& spec);
 	
 	/**
-	 * Get the meridian convergence.
+	 * Calculates the meridian convergence at the reference point.
 	 * 
 	 * The meridian convergence is the angle between grid north and true north.
+	 * 
 	 * @return zero for a local georeferencing, or a calculated approximation
 	 */
 	double getConvergence() const;
 	
 	
 	/**
-	 * Get the geographic coordinates of the reference point
+	 * Returns the geographic coordinates of the reference point.
 	 */
 	inline LatLon getGeographicRefPoint() const { return geographic_ref_point; };
 	
 	/**
-	 * Define the geographic coordinates of the reference point.
+	 * Defines the geographic coordinates of the reference point.
 	 * 
-	 * This will also update the projected coordinates of the reference point
-	 * if a conversion is possible.
+	 * This may trigger changes of the projected coordinates of the reference
+	 * point, the convergence, the grivation and the transformations.
 	 */
 	void setGeographicRefPoint(LatLon lat_lon);
 	
 	
 	/** 
-	 * Transform map (paper) coordinates to projected coordinates 
+	 * Transforms map (paper) coordinates to projected coordinates.
 	 */
 	QPointF toProjectedCoords(const MapCoord& map_coords) const;
 	
 	/**
-	 * Transform map (paper) coordinates to projected coordinates 
+	 * Transforms map (paper) coordinates to projected coordinates.
 	 */
 	QPointF toProjectedCoords(const MapCoordF& map_coords) const;
 	
 	/**
-	 * Transform projected coordinates to map (paper) coordinates 
+	 * Transforms projected coordinates to map (paper) coordinates.
 	 */
 	MapCoord toMapCoords(const QPointF& projected_coords) const;
 	
 	/**
-	 * Transform projected coordinates to map (paper) coordinates 
+	 * Transforms projected coordinates to map (paper) coordinates.
 	 */
 	MapCoordF toMapCoordF(const QPointF& projected_coords) const;
 	
 	
 	/**
-	 * Transform map (paper) coordinates to geographic coordinates (lat/lon) 
+	 * Transforms map (paper) coordinates to geographic coordinates (lat/lon).
 	 */
 	LatLon toGeographicCoords(const MapCoordF& map_coords, bool* ok = 0) const;
 	
 	/**
-	 * Transform CRS coordinates to geographic coordinates (lat/lon) 
+	 * Transforms CRS coordinates to geographic coordinates (lat/lon).
 	 */
 	LatLon toGeographicCoords(const QPointF& projected_coords, bool* ok = 0) const;
 	
 	/**
-	 * Transform geographic coordinates (lat/lon) to CRS coordinates 
+	 * Transforms geographic coordinates (lat/lon) to CRS coordinates.
 	 */
 	QPointF toProjectedCoords(const LatLon& lat_lon, bool* ok = 0) const;
 	
 	/**
-	 * Transform geographic coordinates (lat/lon) to map coordinates 
+	 * Transforms geographic coordinates (lat/lon) to map coordinates.
 	 */
 	MapCoord toMapCoords(const LatLon& lat_lon, bool* ok = NULL) const;
 	
 	/**
-	 * Transform geographic coordinates (lat/lon) to map coordinates 
+	 * Transforms geographic coordinates (lat/lon) to map coordinates.
 	 */
 	MapCoordF toMapCoordF(const LatLon& lat_lon, bool* ok = NULL) const;
 	
@@ -347,22 +362,56 @@ public:
 	QString getErrorText() const;
 	
 	/**
-	 * Convert a value from radians to degrees
+	 * Converts a value from radians to degrees.
 	 */
 	static double radToDeg(double val);
 	
 	/**
-	 * Convert a value from radians to a D°M'S" string
+	 * Converts a value from radians to a D°M'S" string.
 	 */
 	static QString radToDMS(double val);
+	
+	
+	/**
+	 * Updates the transformation parameters between map coordinates and 
+	 * projected coordinates from the current projected reference point 
+	 * coordinates, the grivation and the scale.
+	 */
+	void updateTransformation();
+	
+	/**
+	 * Updates the grivation. 
+	 * 
+	 * The new value is calculated from the declination and the convergence.
+	 * For a local georeferencing, the convergence is zero, and grivation
+	 * is set to the same value as declination.
+	 * 
+	 * If the grivation changes, it is neccessary to call updateTransformation().
+	 * 
+	 * @return true if grivation changed, false otherwise.
+	 */
+	bool updateGrivation();
+	
+	/**
+	 * Initializes the declination.
+	 * 
+	 * The new value is calculated from the grivation and the convergence.
+	 * For a local georeferencing, the convergence is zero, and declination
+	 * is set to the same value as grivation.
+	 * 
+	 * This method intended for import of Version 17 OMAP files. It tries to
+	 * initialize the internal projection first if it is not yet defined.
+	 */
+	void initDeclination();
 	
 	
 signals:
 	/**
 	 * Indicates a change to the transformation rules between map coordinates
-	 * and projected coordinates
+	 * and projected coordinates.
 	 */
 	void transformationChanged();
+	
 	/**
 	 * Indicates a change to the projection rules between geographic coordinates
 	 * and projected coordinates. This signal is also emitted when the 
@@ -371,17 +420,9 @@ signals:
 	void projectionChanged();
 	
 	
-protected:
-	/**
-	 * Update the transformation parameters between map coordinates and 
-	 * projected coordinates from the current projected reference point 
-	 * coordinates, the grivation and the scale.
-	 */
-	void updateTransformation();
-	
-	
 private:
 	int scale_denominator;
+	double declination;
 	double grivation;
 	MapCoord map_ref_point;
 	
@@ -402,7 +443,7 @@ private:
 };
 
 /**
- * Dump a Georeferencing to the debug output
+ * Dumps a Georeferencing to the debug output.
  * 
  * Note that this requires a *reference*, not a pointer.
  */

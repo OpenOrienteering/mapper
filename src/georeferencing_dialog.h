@@ -224,11 +224,8 @@ private:
 	{
 		NONE,
 		PROJECTED,
-		GEOGRAPHIC,
-		DECLINATION,
-		GRIVATION
+		GEOGRAPHIC
 	};
-	ChangeType changed_north;  // not used ATM, TODO: review if needed
 	ChangeType changed_coords;
 };
 

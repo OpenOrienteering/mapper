@@ -30,7 +30,12 @@
 const QString Georeferencing::geographic_crs_spec("+proj=latlong +datum=WGS84");
 
 Georeferencing::Georeferencing()
-: scale_denominator(0), grivation(0.0), map_ref_point(0, 0), projected_ref_point(0, 0), geographic_ref_point(0, 0)
+: scale_denominator(0),
+  declination(0.0),
+  grivation(0.0),
+  map_ref_point(0, 0),
+  projected_ref_point(0, 0),
+  geographic_ref_point(0, 0)
 {
 	updateTransformation();
 	
@@ -41,7 +46,8 @@ Georeferencing::Georeferencing()
 }
 
 Georeferencing::Georeferencing(const Georeferencing& other)
-: scale_denominator(other.scale_denominator), 
+: scale_denominator(other.scale_denominator),
+  declination(other.declination),
   grivation(other.grivation),
   map_ref_point(other.map_ref_point),
   projected_ref_point(other.projected_ref_point),
@@ -67,6 +73,7 @@ Georeferencing::~Georeferencing()
 Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 {
 	scale_denominator   = other.scale_denominator;
+	declination         = other.declination;
 	grivation           = other.grivation;
 	map_ref_point       = other.map_ref_point;
 	projected_ref_point = other.projected_ref_point;
@@ -95,11 +102,14 @@ void Georeferencing::setScaleDenominator(int value)
 
 void Georeferencing::setDeclination(double value)
 {
-	setGrivation(value - getConvergence()); 
+	grivation += value - declination;
+	declination = value;
+	updateTransformation();
 }
 
 void Georeferencing::setGrivation(double value)
 {
+	declination += value - grivation;
 	grivation = value;
 	updateTransformation();
 }
@@ -117,6 +127,7 @@ void Georeferencing::setProjectedRefPoint(QPointF point)
 	LatLon new_geo_ref = toGeographicCoords(point, &ok);
 	if (ok)
 		geographic_ref_point = new_geo_ref;
+	updateGrivation();
 	updateTransformation();
 }
 
@@ -145,11 +156,15 @@ void Georeferencing::setGeographicRefPoint(LatLon lat_lon)
 		projected_ref_point = new_projected_ref;
 	geographic_ref_point = lat_lon;
 	if (ok)
+	{
+		updateGrivation();
 		updateTransformation();
+	}
 }
 
 void Georeferencing::updateTransformation()
 {
+	const QTransform old(to_projected);
 	to_projected.reset();
 	double scale = double(scale_denominator) / 1000.0;
 	to_projected.translate(projected_ref_point.x(), projected_ref_point.y());
@@ -157,9 +172,31 @@ void Georeferencing::updateTransformation()
 	to_projected.scale(scale, -scale);
 	to_projected.translate(-map_ref_point.xd(), -map_ref_point.yd());
 	
-	from_projected = to_projected.inverted();
-	
-	emit transformationChanged();
+	if (old != to_projected)
+	{
+		from_projected = to_projected.inverted();
+		emit transformationChanged();
+	}
+}
+
+bool Georeferencing::updateGrivation()
+{
+	const double old_value = grivation;
+	grivation = declination - getConvergence();
+	return (old_value != grivation);
+}
+
+void Georeferencing::initDeclination()
+{
+	if (isLocal())
+	{
+		// Maybe not yet initialized
+		projected_crs = pj_init_plus(projected_crs_spec.toAscii());
+		if (projected_crs != NULL)
+			emit projectionChanged();
+	}
+
+	declination = grivation + getConvergence();
 }
 
 bool Georeferencing::setProjectedCRS(const QString& id, const QString& spec)
@@ -170,6 +207,8 @@ bool Georeferencing::setProjectedCRS(const QString& id, const QString& spec)
 	this->projected_crs_id = id;
 	this->projected_crs_spec = spec;
 	projected_crs = pj_init_plus(projected_crs_spec.toAscii());
+	if (updateGrivation())
+		updateTransformation();
 	
 	emit projectionChanged();
 	return projected_crs != NULL;
@@ -264,6 +303,7 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 {
 	dbg.nospace() 
 	  << "Georeferencing(1:" << georef.scale_denominator
+	  << " " << georef.declination
 	  << " " << georef.grivation
 	  << "deg, " << georef.projected_crs_id
 	  << " (" << georef.projected_crs_spec
