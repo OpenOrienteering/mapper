@@ -342,6 +342,11 @@ public:
 	
 	
 	/**
+	 * Returns the current error text.
+	 */
+	QString getErrorText() const;
+	
+	/**
 	 * Convert a value from radians to degrees
 	 */
 	static double radToDeg(double val);

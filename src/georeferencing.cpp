@@ -238,6 +238,12 @@ MapCoordF Georeferencing::toMapCoordF(const LatLon& lat_lon, bool* ok) const
 	return toMapCoordF(toProjectedCoords(lat_lon, ok));
 }
 
+QString Georeferencing::getErrorText() const
+{
+	int err_no = *pj_get_errno_ref();
+	return (err_no == 0) ? "" : pj_strerrno(err_no);
+}
+
 double Georeferencing::radToDeg(double val)
 {
 	return RAD_TO_DEG * val;

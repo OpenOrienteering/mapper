@@ -88,6 +88,8 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	
 	zone_edit = new QLineEdit();
 	
+	status_label = new QLabel();
+	
 	easting_edit = new QDoubleSpinBox();
 	easting_edit->setSuffix(" m");
 	easting_edit->setDecimals(0);
@@ -130,6 +132,7 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	edit_layout->addRow(new HEADLINE(tr("Projected coordinates")));
 	edit_layout->addRow(tr("&Coordinate reference system:"), crs_edit);
 	edit_layout->addRow(tr("&Zone:"), zone_edit);
+	edit_layout->addRow(tr("Status:"), status_label);
 	edit_layout->addRow(tr("Reference point &easting:"), easting_edit);
 	edit_layout->addRow(tr("Reference point &northing:"), northing_edit);
 	edit_layout->addRow(tr("Convergence:"), convergence_edit);
@@ -167,6 +170,7 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	updateGeneral();
 	updateNorth();
 	updateCRS();
+	updateStatus();
 	updateEastingNorthing();
 	updateNorth();
 	updateLatLon();
@@ -261,6 +265,15 @@ void GeoreferencingDialog::updateZone()
 		zone_edit->setText("");
 		zone_edit->setEnabled(false);
 	}
+}
+
+void GeoreferencingDialog::updateStatus()
+{
+	QString error = georef->getErrorText();
+	if (error.length() == 0)
+		status_label->setText(tr("valid"));
+	else
+		status_label->setText(QString("<b>") % error % "</b>");
 }
 
 void GeoreferencingDialog::updateEastingNorthing()
@@ -386,6 +399,7 @@ void GeoreferencingDialog::crsChanged()
 		else
 			latLonChanged();
 	}
+	updateStatus();
 	reset_button->setEnabled(true);
 }
 
@@ -399,7 +413,7 @@ void GeoreferencingDialog::latLonChanged()
 	updateZone();
 	updateEastingNorthing();
 	updateNorth();
-	
+	updateStatus();
 	reset_button->setEnabled(true);
 }
 
@@ -411,6 +425,7 @@ void GeoreferencingDialog::eastingNorthingChanged()
 	
 	updateLatLon();
 	updateNorth();
+	updateStatus();
 	reset_button->setEnabled(true);
 }
 
@@ -442,6 +457,7 @@ void GeoreferencingDialog::reset()
 	updateGeneral();
 	updateNorth();
 	updateCRS();
+	updateStatus();
 	updateEastingNorthing();
 	updateLatLon();
 	updateZone();

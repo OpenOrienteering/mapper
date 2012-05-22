@@ -169,6 +169,11 @@ protected:
 	 */
 	void updateZone();
 	
+	/**
+	 * Updates the error status field.
+	 */
+	void updateStatus();
+	
 	/** 
 	 * Updates the easting and northing fields (projected coordinates) in the 
 	 * dialog from the underlying Georeferencing.
@@ -202,6 +207,7 @@ private:
 	
 	QComboBox* crs_edit;
 	QLineEdit* zone_edit;
+	QLabel* status_label;
 	QDoubleSpinBox* easting_edit;
 	QDoubleSpinBox* northing_edit;
 	QLabel* convergence_edit;
