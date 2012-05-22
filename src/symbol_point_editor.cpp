@@ -660,12 +660,15 @@ void PointSymbolEditorWidget::centerCoordsClicked()
 		
 		MapCoordF center = MapCoordF(0, 0);
 		int size = path->getCoordinateCount();
-		assert(size > 0);
-		for (int i = 0; i < size; ++i)
-			center = MapCoordF(center.getX() + path->getCoordinate(i).xd(), center.getY() + path->getCoordinate(i).yd());
-		center = MapCoordF(center.getX() / path->getCoordinateCount(), center.getY() / path->getCoordinateCount());
+		int change_size = path->isFirstPartClosed() ? (size - 1) : size;
 		
-		for (int i = 0; i < size; ++i)
+		assert(change_size > 0);
+		for (int i = 0; i < change_size; ++i)
+			center = MapCoordF(center.getX() + path->getCoordinate(i).xd(), center.getY() + path->getCoordinate(i).yd());
+		center = MapCoordF(center.getX() / change_size, center.getY() / change_size);
+		
+		
+		for (int i = 0; i < change_size; ++i)
 		{
 			MapCoord coord = path->getCoordinate(i);
 			coord.setX(coord.xd() - center.getX());
