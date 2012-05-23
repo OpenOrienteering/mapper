@@ -137,6 +137,7 @@ public slots:
 	void duplicateClicked();
 	void switchSymbolClicked();
 	void fillBorderClicked();
+	void selectObjectsClicked();	// Selects all objects with the selected symbol(s)
 	void switchDashesClicked();
 	void connectPathsClicked();
 	void cutClicked(bool checked);

@@ -79,6 +79,8 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	context_menu->addSeparator();
 	switch_symbol_action = context_menu->addAction(tr("Switch symbol of selected object(s)"), parent, SLOT(emitSwitchSymbolClicked()));
 	fill_border_action = context_menu->addAction(tr("Fill / Create border for selected object(s)"), parent, SLOT(emitFillBorderClicked()));
+	// text will be filled in by updateContextMenuState()
+	select_objects_action = context_menu->addAction("", parent, SLOT(emitSelectObjectsClicked()));
 	context_menu->addSeparator();
 	hide_action = context_menu->addAction(tr("Hide objects with this symbol"), this, SLOT(setSelectedSymbolVisibility(bool)));
 	hide_action->setCheckable(true);
@@ -89,8 +91,6 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
     context_menu->addAction(tr("Invert selection"), this, SLOT(invertSelection()));
     context_menu->addSeparator();
     context_menu->addAction(tr("Sort by number"), this, SLOT(sortByNumber()));
-    // text will be filled in by updateContextMenuState()
-    select_objects_action = context_menu->addAction("", parent, SLOT(emitSelectObjectsClicked()));
 
 	connect(map, SIGNAL(colorDeleted(int,MapColor*)), this, SLOT(update()));
 }
@@ -116,11 +116,15 @@ void SymbolRenderWidget::setScrollBar(QScrollBar* new_scroll_bar)
 		connect(scroll_bar, SIGNAL(valueChanged(int)), this, SLOT(setScroll(int)));
 }
 
-Symbol* SymbolRenderWidget::getSingleSelectedSymbol()
+Symbol* SymbolRenderWidget::getSingleSelectedSymbol() const
 {
 	if (selected_symbols.size() != 1)
 		return NULL;
 	return map->getSymbol(*(selected_symbols.begin()));
+}
+bool SymbolRenderWidget::isSymbolSelected(Symbol* symbol) const
+{
+	return isSymbolSelected(map->findSymbolIndex(symbol));
 }
 
 void SymbolRenderWidget::setScroll(int new_scroll)
@@ -142,11 +146,11 @@ void SymbolRenderWidget::selectSingleSymbol(int i)
 	}
 	symbol_widget->emitSelectedSymbolsChanged();
 }
-bool SymbolRenderWidget::isSymbolSelected(int i)
+bool SymbolRenderWidget::isSymbolSelected(int i) const
 {
 	return selected_symbols.find(i) != selected_symbols.end();
 }
-int SymbolRenderWidget::getNumSelectedSymbols()
+int SymbolRenderWidget::getNumSelectedSymbols() const
 {
 	return (int)selected_symbols.size();
 }
@@ -411,36 +415,7 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 	
 	if (event->button() == Qt::RightButton)
 	{
-        bool have_selection = getNumSelectedSymbols() > 0;
-		bool single_selection = getNumSelectedSymbols() == 1 && current_symbol_index >= 0;
-		Symbol* single_symbol = getSingleSelectedSymbol();
-		bool all_symbols_hidden = have_selection;
-		bool all_symbols_protected = have_selection;
-		for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
-		{
-			if (!map->getSymbol(*it)->isHidden())
-				all_symbols_hidden = false;
-			if (!map->getSymbol(*it)->isProtected())
-				all_symbols_protected = false;
-			if (!all_symbols_hidden && !all_symbols_protected)
-				break;
-		}
-		
-		bool single_symbol_compatible;
-		bool single_symbol_different;
-		map->getSelectionToSymbolCompatibility(single_symbol, single_symbol_compatible, single_symbol_different);
-		
-		edit_action->setEnabled(single_selection);
-		scale_action->setEnabled(single_selection);
-		switch_symbol_action->setEnabled(single_symbol_compatible && single_symbol_different);
-		fill_border_action->setEnabled(single_symbol_compatible && single_symbol_different);
-		hide_action->setEnabled(have_selection);
-		hide_action->setChecked(all_symbols_hidden);
-		protect_action->setEnabled(have_selection);
-		protect_action->setChecked(all_symbols_protected);
-		duplicate_action->setEnabled(single_selection);
-		delete_action->setEnabled(have_selection);
-		
+		updateContextMenuState();
 		context_menu->popup(event->globalPos());
 		event->accept();
 	}
@@ -715,26 +690,41 @@ void SymbolRenderWidget::sortByNumber()
 
 void SymbolRenderWidget::updateContextMenuState()
 {
-    bool have_selection = getNumSelectedSymbols() > 0;
-    bool single_selection = getNumSelectedSymbols() == 1 && current_symbol_index >= 0;
-    Symbol* single_symbol = getSingleSelectedSymbol();
-
-    bool single_symbol_compatible;
-    bool single_symbol_different;
-    map->getSelectionToSymbolCompatibility(single_symbol, single_symbol_compatible, single_symbol_different);
-
-    edit_action->setEnabled(single_selection);
-    scale_action->setEnabled(single_selection);
-    switch_symbol_action->setEnabled(single_symbol_compatible && single_symbol_different);
-    fill_border_action->setEnabled(single_symbol_compatible && single_symbol_different);
-    duplicate_action->setEnabled(single_selection);
-    delete_action->setEnabled(have_selection);
+	bool have_selection = getNumSelectedSymbols() > 0;
+	bool single_selection = getNumSelectedSymbols() == 1 && current_symbol_index >= 0;
+	Symbol* single_symbol = getSingleSelectedSymbol();
+	bool all_symbols_hidden = have_selection;
+	bool all_symbols_protected = have_selection;
+	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	{
+		if (!map->getSymbol(*it)->isHidden())
+			all_symbols_hidden = false;
+		if (!map->getSymbol(*it)->isProtected())
+			all_symbols_protected = false;
+		if (!all_symbols_hidden && !all_symbols_protected)
+			break;
+	}
+	
+	bool single_symbol_compatible;
+	bool single_symbol_different;
+	map->getSelectionToSymbolCompatibility(single_symbol, single_symbol_compatible, single_symbol_different);
+	
+	edit_action->setEnabled(single_selection);
+	scale_action->setEnabled(single_selection);
+	switch_symbol_action->setEnabled(single_symbol_compatible && single_symbol_different);
+	fill_border_action->setEnabled(single_symbol_compatible && single_symbol_different);
+	hide_action->setEnabled(have_selection);
+	hide_action->setChecked(all_symbols_hidden);
+	protect_action->setEnabled(have_selection);
+	protect_action->setChecked(all_symbols_protected);
+	duplicate_action->setEnabled(single_selection);
+	delete_action->setEnabled(have_selection);
 
     if (single_selection)
         select_objects_action->setText(tr("Select all objects with symbol \"%1\"").arg(single_symbol->getName()));
     else
         select_objects_action->setText(tr("Select all objects with selected symbols"));
-    select_objects_action->setEnabled(have_selection && false); // not implemented
+    select_objects_action->setEnabled(have_selection);
 }
 
 bool SymbolRenderWidget::newSymbol(Symbol* prototype)
@@ -796,13 +786,17 @@ QSize SymbolWidget::sizeHint() const
 	return preferred_size;
 }
 
-Symbol* SymbolWidget::getSingleSelectedSymbol()
+Symbol* SymbolWidget::getSingleSelectedSymbol() const
 {
 	return render_widget->getSingleSelectedSymbol();
 }
-int SymbolWidget::getNumSelectedSymbols()
+int SymbolWidget::getNumSelectedSymbols() const
 {
 	return render_widget->getNumSelectedSymbols();
+}
+bool SymbolWidget::isSymbolSelected(Symbol* symbol) const
+{
+	return render_widget->isSymbolSelected(symbol);
 }
 void SymbolWidget::selectSingleSymbol(Symbol *symbol)
 {
