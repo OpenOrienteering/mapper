@@ -84,11 +84,11 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	projected_crs_spec  = other.projected_crs_spec;
 	geographic_ref_point= other.geographic_ref_point;
 	
+	updateTransformation();
+	
 	if (projected_crs != NULL)
 		pj_free(projected_crs);
 	projected_crs       = pj_init_plus(projected_crs_spec.toAscii());
-	
-	emit transformationChanged();
 	emit projectionChanged();
 	
 	return *this;
