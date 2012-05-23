@@ -29,9 +29,9 @@
 
 CombinedSymbol::CombinedSymbol() : Symbol(Symbol::Combined)
 {
-    parts.resize(2);
-    parts[0] = NULL;
-    parts[1] = NULL;
+	parts.resize(2);
+	parts[0] = NULL;
+	parts[1] = NULL;
 }
 
 CombinedSymbol::~CombinedSymbol()
@@ -42,17 +42,17 @@ Symbol* CombinedSymbol::duplicate() const
 {
 	CombinedSymbol* new_symbol = new CombinedSymbol();
 	new_symbol->duplicateImplCommon(this);
-    new_symbol->parts = parts;
+	new_symbol->parts = parts;
 	return new_symbol;
 }
 
 void CombinedSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
 {
-    int size = (int)parts.size();
+	int size = (int)parts.size();
 	for (int i = 0; i < size; ++i)
 	{
-        if (parts[i])
-            parts[i]->createRenderables(object, flags, coords, output);
+		if (parts[i])
+			parts[i]->createRenderables(object, flags, coords, output);
 	}
 }
 
@@ -70,13 +70,13 @@ bool CombinedSymbol::containsColor(MapColor* color)
 bool CombinedSymbol::symbolChanged(Symbol* old_symbol, Symbol* new_symbol)
 {
 	bool have_symbol = false;
-    int size = (int)parts.size();
+	int size = (int)parts.size();
 	for (int i = 0; i < size; ++i)
 	{
-        if (parts[i] == old_symbol)
+		if (parts[i] == old_symbol)
 		{
 			have_symbol = true;
-            parts[i] = new_symbol;
+			parts[i] = new_symbol;
 		}
 	}
 	return have_symbol;
@@ -84,14 +84,14 @@ bool CombinedSymbol::symbolChanged(Symbol* old_symbol, Symbol* new_symbol)
 
 bool CombinedSymbol::containsSymbol(const Symbol* symbol) const
 {
-    int size = (int)parts.size();
+	int size = (int)parts.size();
 	for (int i = 0; i < size; ++i)
 	{
-        if (parts[i] == symbol)
+		if (parts[i] == symbol)
 			return true;
-        if (parts[i]->getType() == Symbol::Combined)	// TODO: see TODO in SymbolDropDown constructor.
+		if (parts[i]->getType() == Symbol::Combined)	// TODO: see TODO in SymbolDropDown constructor.
 		{
-            CombinedSymbol* combined_symbol = reinterpret_cast<CombinedSymbol*>(parts[i]);
+			CombinedSymbol* combined_symbol = reinterpret_cast<CombinedSymbol*>(parts[i]);
 			if (combined_symbol->containsSymbol(symbol))
 				return true;
 		}
@@ -108,11 +108,11 @@ Symbol::Type CombinedSymbol::getContainedTypes()
 {
 	int type = (int)getType();
 	
-    int size = (int)parts.size();
+	int size = (int)parts.size();
 	for (int i = 0; i < size; ++i)
 	{
-        if (parts[i])
-            type |= parts[i]->getContainedTypes();
+		if (parts[i])
+			type |= parts[i]->getContainedTypes();
 	}
 	
 	return (Type)type;
@@ -125,7 +125,7 @@ void CombinedSymbol::saveImpl(QFile* file, Map* map)
 	
 	for (int i = 0; i < size; ++i)
 	{
-        int temp = (parts[i] == NULL) ? -1 : map->findSymbolIndex(parts[i]);
+		int temp = (parts[i] == NULL) ? -1 : map->findSymbolIndex(parts[i]);
 		file->write((const char*)&temp, sizeof(int));
 	}
 }
@@ -185,7 +185,7 @@ CombinedSymbolSettings::CombinedSymbolSettings(CombinedSymbol* symbol, SymbolSet
 	number_edit = new QComboBox();
 	for (int i = 2; i <= max_count; ++i)
 		number_edit->addItem(QString::number(i), QVariant(i));
-    number_edit->setCurrentIndex(number_edit->findData(symbol->getNumParts()));
+	number_edit->setCurrentIndex(number_edit->findData(symbol->getNumParts()));
 	
 	layout->addWidget(number_label, 0, 0);
 	layout->addWidget(number_edit, 0, 1);
@@ -202,7 +202,7 @@ CombinedSymbolSettings::CombinedSymbolSettings(CombinedSymbol* symbol, SymbolSet
 		layout->addWidget(symbol_edits[i], i+1, 1);
 		connect(symbol_edits[i], SIGNAL(currentIndexChanged(int)), this, SLOT(symbolChanged(int)));
 		
-        if (i >= symbol->getNumParts())
+		if (i >= symbol->getNumParts())
 		{
 			symbol_labels[i]->hide();
 			symbol_edits[i]->hide();
@@ -222,9 +222,9 @@ CombinedSymbolSettings::~CombinedSymbolSettings()
 
 void CombinedSymbolSettings::numberChanged(int index)
 {
-    int old_num_items = symbol->getNumParts();
+	int old_num_items = symbol->getNumParts();
 	int num_items = number_edit->itemData(index).toInt();
-    symbol->setNumParts(num_items);
+	symbol->setNumParts(num_items);
 	for (int i = 0; i < max_count; ++i)
 	{
 		symbol_labels[i]->setVisible(i < num_items);
@@ -233,7 +233,7 @@ void CombinedSymbolSettings::numberChanged(int index)
 		if (i >= old_num_items && i < num_items)
 		{
 			// This item appears now
-            symbol->setPart(i, NULL);
+			symbol->setPart(i, NULL);
 			react_to_changes = false;
 			symbol_edits[i]->setSymbol(NULL);
 			react_to_changes = true;
@@ -246,8 +246,8 @@ void CombinedSymbolSettings::symbolChanged(int index)
 {
 	if (!react_to_changes)
 		return;
-    for (int i = 0; i < symbol->getNumParts(); ++i)
-        symbol->setPart(i, symbol_edits[i]->symbol());
+	for (int i = 0; i < symbol->getNumParts(); ++i)
+		symbol->setPart(i, symbol_edits[i]->symbol());
 	emit propertiesModified();
 }
 
