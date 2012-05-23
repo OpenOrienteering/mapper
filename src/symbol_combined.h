@@ -28,6 +28,7 @@
 
 class QComboBox;
 class QLabel;
+class QSpinBox;
 
 class SymbolSettingDialog;
 
@@ -76,17 +77,26 @@ public:
 	CombinedSymbolSettings(CombinedSymbol* symbol, SymbolSettingDialog* dialog);
 	virtual ~CombinedSymbolSettings();
 	
+	virtual bool isResetSupported() { return true; }
+	
+	void reset(Symbol* symbol);
+	
+	/**
+	 * Updates the content and state of all input fields.
+	 */
+	void updateContents();
+	
 	static const int max_count;	// maximum number of symbols in a combined symbol
 	
 protected slots:
-	void numberChanged(int index);
+	void numberChanged(int value);
 	void symbolChanged(int index);
 	
 private:
 	CombinedSymbol* symbol;
 //	SymbolSettingDialog* dialog;
 	
-	QComboBox* number_edit;
+	QSpinBox* number_edit;
 	QLabel** symbol_labels;
 	SymbolDropDown** symbol_edits;
 	bool react_to_changes;
