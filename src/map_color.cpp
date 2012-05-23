@@ -48,16 +48,23 @@ void MapColor::updateFromRGB()
 
 // ### ColorDropDown ###
 
+// allow explicit use of MapColor pointers in QVariant
+Q_DECLARE_METATYPE(MapColor*)
+
 ColorDropDown::ColorDropDown(Map* map, MapColor* initial_color, QWidget* parent) : QComboBox(parent)
 {
-	addItem(tr("- none -"), qVariantFromValue<void*>(NULL));
+	addItem(tr("- none -"), QVariant::fromValue<MapColor*>(NULL));
 	
-	int size = map->getNumColors();
-	for (int i = 0; i < size; ++i)
+	int icon_size = style()->pixelMetric(QStyle::PM_SmallIconSize);
+	QPixmap pixmap(icon_size, icon_size);
+	
+	int num_colors = map->getNumColors();
+	for (int i = 0; i < num_colors; ++i)
 	{
 		MapColor* color = map->getColor(i);
-		addItem(color->name, qVariantFromValue<void*>(color));
-		setItemData(i + 1, color->color, Qt::DecorationRole);
+		pixmap.fill(color->color);
+		addItem(color->name, QVariant::fromValue(color));
+		setItemData(i + 1, pixmap, Qt::DecorationRole);
 	}
 	setColor(initial_color);
 	
@@ -65,24 +72,35 @@ ColorDropDown::ColorDropDown(Map* map, MapColor* initial_color, QWidget* parent)
 	connect(map, SIGNAL(colorChanged(int,MapColor*)), this, SLOT(colorChanged(int,MapColor*)));
 	connect(map, SIGNAL(colorDeleted(int,MapColor*)), this, SLOT(colorDeleted(int,MapColor*)));
 }
+
 MapColor* ColorDropDown::color()
 {
-	return reinterpret_cast<MapColor*>(itemData(currentIndex()).value<void*>());
+	return itemData(currentIndex()).value<MapColor*>();
 }
+
 void ColorDropDown::setColor(MapColor* color)
 {
-	setCurrentIndex(findData(qVariantFromValue<void*>(color)));
+	setCurrentIndex(findData(QVariant::fromValue(color)));
 }
 
 void ColorDropDown::colorAdded(int pos, MapColor* color)
 {
-	insertItem(pos + 1, color->name, qVariantFromValue<void*>(color));
-	setItemData(pos + 1, color->color, Qt::DecorationRole);
+	int icon_size = style()->pixelMetric(QStyle::PM_SmallIconSize);
+	QPixmap pixmap(icon_size, icon_size);
+	pixmap.fill(color->color);
+	insertItem(pos + 1, color->name, QVariant::fromValue(color));
+	setItemData(pos + 1, pixmap, Qt::DecorationRole);
 }
+
 void ColorDropDown::colorChanged(int pos, MapColor* color)
 {
-	setItemData(pos + 1, color->color, Qt::DecorationRole);
+	int icon_size = style()->pixelMetric(QStyle::PM_SmallIconSize);
+	QPixmap pixmap(icon_size, icon_size);
+	pixmap.fill(color->color);
+	setItemText(pos + 1, color->name);
+	setItemData(pos + 1, pixmap, Qt::DecorationRole);
 }
+
 void ColorDropDown::colorDeleted(int pos, MapColor* color)
 {
 	if (currentIndex() == pos + 1)
