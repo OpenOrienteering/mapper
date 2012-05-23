@@ -367,7 +367,7 @@ void AreaSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 void AreaSymbol::colorDeleted(Map* map, int pos, MapColor* color)
 {
 	bool change = false;
-    if (color == this->color)
+	if (color == this->color)
 	{
 		this->color = NULL;
 		change = true;

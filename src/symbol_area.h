@@ -78,22 +78,22 @@ public:
 	
 	AreaSymbol();
 	virtual ~AreaSymbol();
-    virtual Symbol* duplicate() const;
+	virtual Symbol* duplicate() const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
-    virtual bool containsColor(MapColor* color);
-    virtual void scale(double factor);
+	virtual bool containsColor(MapColor* color);
+	virtual void scale(double factor);
 	
 	// Getters / Setters
 	inline MapColor* getColor() const {return color;}
 	inline void setColor(MapColor* color) {this->color = color;}
-    inline int getMinimumArea() const {return minimum_area; }
+	inline int getMinimumArea() const {return minimum_area; }
 	inline int getNumFillPatterns() const {return (int)patterns.size();}
 	inline FillPattern& getFillPattern(int i) {return patterns[i];}
-    inline const FillPattern& getFillPattern(int i) const {return patterns[i];}
+	inline const FillPattern& getFillPattern(int i) const {return patterns[i];}
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
-
+	
 protected:
 	virtual void saveImpl(QFile* file, Map* map);
 	virtual bool loadImpl(QFile* file, int version, Map* map);
