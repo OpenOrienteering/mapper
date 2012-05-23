@@ -42,22 +42,33 @@ have MSYS in another path or if you want change the PROJ.4 version, you need to
 modify 3rd-party/proj.cmake.
 
 * Qt
-The easiest way to get Qt is to intall the Qt SDK.
+The easiest way to get Qt is to intall the Qt SDK. Make sure to select the Qt Assistant for installation,
+as this program is used to display the help files.
 If you do not have a C++ compiler yet, you can also install MinGW with the QtSDK installer. Note that you
 may have to add the mingw / mingw32 bin directories to your PATH environment variable manually if you choose to do this.
+If you get an error saying that qcollectiongenerator cannot be found later in the build process, you also have to add
+the directory containing this program to the PATH.
 
 * Building OpenOrienteering Mapper:
 When all requirements are installed, run cmake and point it to the directory in which
 CMakeLists.txt (and the file you are reading now) are in.
 As build directory, you must use a new subdirectory in this folder named "build".
 
-Then click "Configure" (if you use the CMake GUI). For me, it aborted saying that QMake cannot be found.
-In this case, enter its path in the red line for the "QT_QMAKE_EXECUTABLE" key,
+Then click "Configure" (if you use the CMake GUI). If it aborts, saying that QMake cannot be found,
+enter its path in the red line for the "QT_QMAKE_EXECUTABLE" key,
 for example "C:/QtSDK/Desktop/Qt/4.8.0/mingw/bin/qmake.exe". Click "Configure" again and it should run through.
-Because "Generate" was not enabled yet, I had to click "Configure" a third time and then finally "Generate".
+If "Generate" is not enabled yet, click "Configure" a third time and then finally "Generate".
+If you get an error saying that clipper.cpp/hpp cannot be found, the automatic download of the clipper library failed.
+In this case, you have to download the required files manually from:
+http://polyclipping.svn.sourceforge.net/viewvc/polyclipping/trunk
+Place them in the 3rd-party directory so you get:
+3rd-party/clipper/README
+3rd-party/clipper/License.txt
+3rd-party/clipper/cpp/clipper.cpp
+3rd-party/clipper/cpp/clipper.hpp
 
-This generates the build files in the directory you specified earlier. If you use MinGW, you should be able to
-run "mingw32-make" in this directory now to build the project.
+Now the build files should be generated in the directory you specified earlier. If you use MinGW,
+execute "mingw32-make" from a command prompt in this directory now to build the project.
 
 If you use Visual C++ 2010 instead, a *.sln file is generated in the build directory which should be opened as the next step.
 Five projects should be visible in the Solution Explorer which is by default on the left side. Right click the
@@ -67,11 +78,8 @@ In Debugging, change "Working directory" to the bin subdirectory: "$(ProjectDir)
 If you want to run the Debug version, set the configuration to Debug, go to C/C++ -> Code Generation and
 set "Runtime Library" to "Multi-threaded Debug DLL". If you forget to do that, everything will seem to run well, but you will
 encounter strange crashes for example on QList destructors. You may also want to disable optimizations for the debug version.
-Please also note that
-1. There seemed to be a (compiler?) bug with the 'connect' and 'cut hole' tools
-   caused by compiling with Visual C++ 2010 in Release mode.
-2. The OpenOrienteering developers usually work with gcc, so it is likely that the
-   current git version does not compile with Visual C++ without adjustments.
+Please also note that the OpenOrienteering developers usually work with gcc, so it is likely that the
+current version from git does not compile with Visual C++ without adjustments.
 
 
 == Compiling on Linux ==
@@ -92,6 +100,9 @@ mkdir build     (the build directory must be named "build"!)
 cd build
 cmake ../
 make -jX        (where X is the number of threads for building)
+
+If you get an error saying that qcollectiongenerator cannot be found, add
+the directory containing this program to the search path for executables.
 
 * Running:
 cd ../bin       (if still in the build directory)
