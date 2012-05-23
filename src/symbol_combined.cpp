@@ -177,8 +177,6 @@ CombinedSymbolSettings::CombinedSymbolSettings(CombinedSymbol* symbol, SymbolSet
 	const CombinedSymbol* source_symbol = static_cast<const CombinedSymbol*>(dialog->getSourceSymbol());
 	Map* source_map = dialog->getSourceMap();
 	
-	react_to_changes = true;
-	
 	QFormLayout* layout = new QFormLayout();
 	
 	number_edit = new QSpinBox();
@@ -231,9 +229,9 @@ void CombinedSymbolSettings::numberChanged(int value)
 		{
 			// This item appears now
 			symbol->setPart(i, NULL);
-			react_to_changes = false;
+			symbol_edits[i]->blockSignals(true);
 			symbol_edits[i]->setSymbol(NULL);
-			react_to_changes = true;
+			symbol_edits[i]->blockSignals(false);
 		}
 	}
 	emit propertiesModified();
@@ -241,8 +239,6 @@ void CombinedSymbolSettings::numberChanged(int value)
 
 void CombinedSymbolSettings::symbolChanged(int index)
 {
-	if (!react_to_changes)
-		return;
 	for (int i = 0; i < symbol->getNumParts(); ++i)
 		symbol->setPart(i, symbol_edits[i]->symbol());
 	emit propertiesModified();

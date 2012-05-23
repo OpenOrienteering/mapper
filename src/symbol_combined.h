@@ -99,7 +99,6 @@ private:
 	QSpinBox* number_edit;
 	QLabel** symbol_labels;
 	SymbolDropDown** symbol_edits;
-	bool react_to_changes;
 };
 
 #endif
