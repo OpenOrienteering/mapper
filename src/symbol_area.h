@@ -24,9 +24,13 @@
 #include "symbol.h"
 #include "symbol_properties_widget.h"
 
-class QPushButton;
-class QLabel;
 class QCheckBox;
+class QDoubleSpinBox;
+class QLabel;
+class QListWidget;
+class QPushButton;
+class QSpinBox;
+class QToolButton;
 
 class ColorDropDown;
 class SymbolSettingDialog;
@@ -99,7 +103,7 @@ protected:
 	virtual bool loadImpl(QFile* file, int version, Map* map);
 	
 	MapColor* color;
-	int minimum_area;	// in mm^2
+	int minimum_area;	// in mm^2 // FIXME: unit (factor) wrong
 	std::vector<FillPattern> patterns;
 };
 
@@ -109,53 +113,67 @@ Q_OBJECT
 public:
 	AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* dialog);
 	
+	virtual bool isResetSupported() { return true; }
+	
+	virtual void reset(Symbol* symbol);
+	
+	/**
+	 * Updates the general area fields (not related to patterns)
+	 */
+	void updateAreaGeneral();
+	
+	void addPattern(AreaSymbol::FillPattern::Type type);
+	
+public slots:
+	void selectPattern(int index);
+	void addLinePattern();
+	void addPointPattern();
+	void deleteActivePattern();
+	
+protected:
+	void clearPatterns();
+	void loadPatterns();
+	void updatePatternNames();
+	void updatePatternWidgets();
+	
 protected slots:
 	void colorChanged();
-	void minimumDimensionsChanged(QString text);
-	void addFillClicked();
-	void deleteFillClicked();
-	void fillNumberChanged(int index);
-	void fillTypeChanged(int index);
-	void fillAngleChanged(QString text);
-	void fillRotatableClicked(bool checked);
-	void fillSpacingChanged(QString text);
-	void fillLineOffsetChanged(QString text);
-	void fillOffsetAlongLineChanged(QString text);
-	void fillColorChanged();
-	void fillLinewidthChanged(QString text);
-	void fillPointdistChanged(QString text);
+	void minimumSizeChanged(double value);
+	void patternAngleChanged(double value);
+	void patternRotatableClicked(bool checked);
+	void patternSpacingChanged(double value);
+	void patternLineOffsetChanged(double value);
+	void patternOffsetAlongLineChanged(double value);
+	void patternColorChanged();
+	void patternLineWidthChanged(double value);
+	void patternPointDistChanged(double value);
 	
 private:
-	void updatePatternNames(bool update_ui = true);
-	void updateFillWidgets(bool show);
-	
 	AreaSymbol* symbol;
 	Map* map;
 	MapEditorController* controller;
+	std::vector<AreaSymbol::FillPattern>::iterator active_pattern;
 	
-	ColorDropDown* color_edit;
-	QLineEdit* minimum_area_edit;
-	QPushButton* add_fill_button;
-	QPushButton* delete_fill_button;
+	ColorDropDown*  color_edit;
+	QDoubleSpinBox* minimum_size_edit;
 	
-	QWidget* fill_pattern_widget;
-	QComboBox* fill_number_combo;
-	QComboBox* fill_type_combo;
-	QLineEdit* fill_angle_edit;
-	QCheckBox* fill_rotatable_check;
-	QLineEdit* fill_spacing_edit;
-	QLineEdit* fill_line_offset_edit;
-	QLabel* fill_offset_along_line_label;
-	QLineEdit* fill_offset_along_line_edit;
+	QListWidget*    pattern_list;
+	QToolButton*    add_pattern_button;
+	QPushButton*    del_pattern_button;
 	
-	QLabel* fill_color_label;
-	ColorDropDown* fill_color_edit;
-	QLabel* fill_linewidth_label;
-	QLineEdit* fill_linewidth_edit;
-	QLabel* fill_pointdist_label;
-	QLineEdit* fill_pointdist_edit;
+	QDoubleSpinBox* pattern_angle_edit;
+	QCheckBox*      pattern_rotatable_check;
+	QDoubleSpinBox* pattern_spacing_edit;
+	QDoubleSpinBox* pattern_line_offset_edit;
+	QLabel*         pattern_offset_along_line_label;
+	QDoubleSpinBox* pattern_offset_along_line_edit;
 	
-	bool react_to_changes;
+	QLabel*         pattern_color_label;
+	ColorDropDown*  pattern_color_edit;
+	QLabel*         pattern_linewidth_label;
+	QDoubleSpinBox* pattern_linewidth_edit;
+	QLabel*         pattern_pointdist_label;
+	QDoubleSpinBox* pattern_pointdist_edit;
 };
 
 #endif
