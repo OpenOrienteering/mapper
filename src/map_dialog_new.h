@@ -65,8 +65,22 @@ public slots:
 	void accept();
 	
 protected:
+	struct SymbolSetKeyCompare
+	{
+		bool operator() (const QString& a, const QString& b)
+		{
+			bool ok1, ok2;
+			int a_int = a.toInt(&ok1);
+			int b_int = b.toInt(&ok2);
+			if (ok1 && ok2)
+				return a_int < b_int;
+			else
+				return a.compare(b);
+		}
+	};
+	
 	/** A type for mapping map scales to lists of symbol sets. */
-	typedef std::map<QString, QFileInfoList> SymbolSetMap;
+	typedef std::map<QString, QFileInfoList, SymbolSetKeyCompare> SymbolSetMap;
 	
 	/** Loads all available symbol. */
 	void loadSymbolSetMap();

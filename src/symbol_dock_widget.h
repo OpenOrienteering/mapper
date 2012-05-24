@@ -47,8 +47,9 @@ public:
 	inline bool scrollBarNeeded(int width, int height);
 	void setScrollBar(QScrollBar* new_scroll_bar);
 	
-	int getNumSelectedSymbols();
-	Symbol* getSingleSelectedSymbol();
+	int getNumSelectedSymbols() const;
+	Symbol* getSingleSelectedSymbol() const;
+	bool isSymbolSelected(Symbol* symbol) const;
 	
 	void updateIcon(int i);
 	
@@ -104,7 +105,7 @@ protected:
 	
 	Map* map;
 	
-	bool isSymbolSelected(int i);
+	bool isSymbolSelected(int i) const;
 	
 	bool newSymbol(Symbol* prototype);
 	
@@ -139,8 +140,9 @@ public:
 	virtual ~SymbolWidget();
 	
 	/// Returns the selected symbol IF EXACTLY ONE symbol is selected, otherwise returns NULL
-	Symbol* getSingleSelectedSymbol();
-	int getNumSelectedSymbols();
+	Symbol* getSingleSelectedSymbol() const;
+	int getNumSelectedSymbols() const;
+	bool isSymbolSelected(Symbol* symbol) const;
 
     // Programmatic select of a symbol
     void selectSingleSymbol(Symbol *symbol);

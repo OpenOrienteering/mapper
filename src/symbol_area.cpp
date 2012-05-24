@@ -513,7 +513,8 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	top_layout->addWidget(color_edit, 0, 1);
 	top_layout->addWidget(minimum_area_label, 1, 0);
 	top_layout->addWidget(minimum_area_edit, 1, 1);
-	top_layout->addWidget(fill_pattern_label, 2, 0, 1, 2);
+	top_layout->setRowMinimumHeight(2, 16);
+	top_layout->addWidget(fill_pattern_label, 3, 0, 1, 2);
 	
 	QHBoxLayout* buttons_layout = new QHBoxLayout();
 	buttons_layout->addStretch(1);
@@ -550,6 +551,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	layout->addLayout(top_layout);
 	layout->addLayout(buttons_layout);
 	layout->addWidget(fill_pattern_widget);
+	layout->addStretch(1);
 	
 	QWidget* area_tab = new QWidget();
 	area_tab->setLayout(layout);

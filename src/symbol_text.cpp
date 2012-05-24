@@ -405,12 +405,16 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	layout->setMargin(0);
 	layout->setSpacing(0);
 	layout->addLayout(upper_layout);
+	layout->addSpacing(16);
 	layout->addWidget(bold_check);
 	layout->addWidget(italic_check);
 	layout->addWidget(underline_check);
+	layout->addSpacing(16);
 	layout->addLayout(lower_layout);
 	layout->addWidget(kerning_check);
+	layout->addSpacing(16);
 	layout->addWidget(ocad_compat_button);
+	layout->addStretch(1);
 	
 	QWidget* text_tab = new QWidget();
 	text_tab->setLayout(layout);

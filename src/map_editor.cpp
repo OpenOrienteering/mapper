@@ -823,6 +823,7 @@ void MapEditorController::showSymbolWindow(bool show)
 		
 		connect(symbol_widget, SIGNAL(switchSymbolClicked()), this, SLOT(switchSymbolClicked()));
 		connect(symbol_widget, SIGNAL(fillBorderClicked()), this, SLOT(fillBorderClicked()));
+		connect(symbol_widget, SIGNAL(selectObjectsClicked()), this, SLOT(selectObjectsClicked()));
 		connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
 		selectedSymbolsChanged();
 	}
@@ -1177,6 +1178,25 @@ void MapEditorController::fillBorderClicked()
 		undo_step->addObject(layer->findObjectIndex(new_objects[i]));
 	}
 	map->objectUndoManager().addNewUndoStep(undo_step);
+}
+void MapEditorController::selectObjectsClicked()
+{
+	map->clearObjectSelection(false);
+	
+	MapLayer* layer = map->getCurrentLayer();
+	for (int i = 0, size = map->getNumObjects(); i < size; ++i)
+	{
+		Object* object = layer->getObject(i);
+		if (symbol_widget->isSymbolSelected(object->getSymbol()))
+			map->addObjectToSelection(object, false);
+	}
+	
+	map->emitSelectionChanged();
+	
+	if (map->getNumSelectedObjects() > 0)
+		setEditTool();
+	else
+		QMessageBox::warning(window, QObject::tr("Object selection"), QObject::tr("No objects were selected because there are no objects with the selected symbol(s)"));
 }
 void MapEditorController::switchDashesClicked()
 {
