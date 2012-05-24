@@ -41,7 +41,7 @@ public:
 	  */
 	SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDialog* dialog);
 	
-    virtual ~SymbolPropertiesWidget();
+	virtual ~SymbolPropertiesWidget();
 	
 	/** Add a widget as a named group of properties */
 	void addPropertiesGroup(const QString& name, QWidget* widget);
@@ -49,11 +49,13 @@ public:
 	void insertPropertiesGroup(int index, const QString& name, QWidget* widget);
 	
 	void removePropertiesGroup(int index);
-
+	
 	void removePropertiesGroup(const QString& name);
 	
+	void renamePropertiesGroup(int index, const QString& new_name);
+	
 	void renamePropertiesGroup(const QString& old_name, const QString& new_name);
-
+	
 	int indexOfPropertiesGroup(const QString& name) const;
 	
 	/** Get the edited symbol */

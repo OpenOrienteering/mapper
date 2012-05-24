@@ -109,6 +109,11 @@ void SymbolPropertiesWidget::removePropertiesGroup(const QString& name)
 	removePropertiesGroup(index);
 }
 
+void SymbolPropertiesWidget::renamePropertiesGroup(int index, const QString& new_name)
+{
+	setTabText(index, new_name);
+}
+
 void SymbolPropertiesWidget::renamePropertiesGroup(const QString& old_name, const QString& new_name)
 {
 	int index = indexOfPropertiesGroup(old_name);
