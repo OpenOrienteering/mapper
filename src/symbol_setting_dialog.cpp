@@ -43,7 +43,7 @@
 SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map, QWidget* parent)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), 
   source_map(source_map),
-  source_symbol(source_symbol)
+  source_symbol(source_symbol->duplicate()) // don't rely on external entity
 {
 	setWindowTitle(tr("Symbol settings"));
 	setSizeGripEnabled(true);
@@ -158,6 +158,7 @@ SymbolSettingDialog::~SymbolSettingDialog()
 {
 	delete properties_widget; // must be deleted before the symbol!
 	delete symbol;
+	delete source_symbol;
 }
 
 void SymbolSettingDialog::updatePreview()
