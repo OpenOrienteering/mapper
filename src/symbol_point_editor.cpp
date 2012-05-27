@@ -367,6 +367,12 @@ void PointSymbolEditorWidget::changeElement(int row)
 			PathObject* path = reinterpret_cast<PathObject*>(object);
 			if (element_symbol->getType() == Symbol::Line)
 			{
+				line_width_edit->blockSignals(true);
+				line_color_edit->blockSignals(true);
+				line_cap_edit->blockSignals(true);
+				line_join_edit->blockSignals(true);
+				line_closed_check->blockSignals(true);
+				
 				LineSymbol* line = reinterpret_cast<LineSymbol*>(element_symbol);
 				line_width_edit->setText(QString::number(0.001 * line->getLineWidth()));
 				line_color_edit->setColor(line->getColor());
@@ -376,12 +382,22 @@ void PointSymbolEditorWidget::changeElement(int row)
 				line_closed_check->setChecked(path->isFirstPartClosed());
 				line_closed_check->setEnabled(path->getNumParts() > 0);
 				
+				line_width_edit->blockSignals(false);
+				line_color_edit->blockSignals(false);
+				line_cap_edit->blockSignals(false);
+				line_join_edit->blockSignals(false);
+				line_closed_check->blockSignals(false);
+				
 				element_properties_widget->setCurrentWidget(line_properties);
 			}
 			else if (element_symbol->getType() == Symbol::Area)
-			{	
+			{
+				area_color_edit->blockSignals(true);
+				
 				AreaSymbol* area = reinterpret_cast<AreaSymbol*>(element_symbol);
 				area_color_edit->setColor(area->getColor());
+				
+				area_color_edit->blockSignals(false);
 				
 				element_properties_widget->setCurrentWidget(area_properties);
 			}
@@ -394,11 +410,21 @@ void PointSymbolEditorWidget::changeElement(int row)
 		}
 		else
 		{
+			point_inner_radius_edit->blockSignals(true);
+			point_inner_color_edit->blockSignals(true);
+			point_outer_width_edit->blockSignals(true);
+			point_outer_width_edit->blockSignals(true);
+			
 			PointSymbol* point = reinterpret_cast<PointSymbol*>(element_symbol);
 			point_inner_radius_edit->setText(QString::number(2 * 0.001 * point->getInnerRadius()));
 			point_inner_color_edit->setColor(point->getInnerColor());
 			point_outer_width_edit->setText(QString::number(0.001 * point->getOuterWidth()));
 			point_outer_color_edit->setColor(point->getOuterColor());
+			
+			point_inner_radius_edit->blockSignals(false);
+			point_inner_color_edit->blockSignals(false);
+			point_outer_width_edit->blockSignals(false);
+			point_outer_width_edit->blockSignals(false);
 			
 			element_properties_widget->setCurrentWidget(point_properties);
 			
