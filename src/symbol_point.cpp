@@ -24,6 +24,7 @@
 
 #include "map.h"
 #include "util.h"
+#include "util_gui.h"
 #include "map_color.h"
 #include "symbol_setting_dialog.h"
 #include "symbol_properties_widget.h"
@@ -303,18 +304,19 @@ SymbolPropertiesWidget* PointSymbol::createPropertiesWidget(SymbolSettingDialog*
 // ### PointSymbolSettings ###
 
 PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialog* dialog)
-: SymbolPropertiesWidget(symbol, dialog), symbol(symbol)
+: SymbolPropertiesWidget(symbol, dialog), 
+  symbol(symbol)
 {
-	QCheckBox* oriented_to_north = new QCheckBox(tr("Always oriented to north (not rotatable)"));
+	oriented_to_north = new QCheckBox(tr("Always oriented to north (not rotatable)"));
 	oriented_to_north->setChecked(!symbol->rotatable);
 	connect(oriented_to_north, SIGNAL(clicked(bool)), this, SLOT(orientedToNorthClicked(bool)));
 	
 	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), symbol, 0, true);
 	connect(symbol_editor, SIGNAL(symbolEdited()), this, SIGNAL(propertiesModified()) );
 	
-	QVBoxLayout* layout = new QVBoxLayout();
+	layout = new QVBoxLayout();
 	layout->addWidget(oriented_to_north);
-	layout->setAlignment(oriented_to_north, Qt::AlignLeft);
+	layout->addSpacerItem(Util::SpacerItem::create(this));
 	layout->addWidget(symbol_editor);
 	
 	point_tab = new QWidget();
@@ -322,6 +324,25 @@ PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialo
 	addPropertiesGroup(tr("Point symbol"), point_tab);
 	
 	connect(this, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
+}
+
+void PointSymbolSettings::reset(Symbol* symbol)
+{
+	assert(symbol->getType() == Symbol::Point);
+	
+	SymbolPropertiesWidget::reset(symbol);
+	this->symbol = reinterpret_cast<PointSymbol*>(symbol);
+	
+	oriented_to_north->blockSignals(true);
+	oriented_to_north->setChecked(!this->symbol->rotatable);
+	oriented_to_north->blockSignals(false);
+	
+	layout->removeWidget(symbol_editor);
+	delete(symbol_editor);
+	
+	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), this->symbol, 0, true);
+	connect(symbol_editor, SIGNAL(symbolEdited()), this, SIGNAL(propertiesModified()) );
+	layout->addWidget(symbol_editor);
 }
 
 void PointSymbolSettings::orientedToNorthClicked(bool checked)

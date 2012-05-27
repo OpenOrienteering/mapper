@@ -24,6 +24,8 @@
 #include "symbol.h"
 #include "symbol_properties_widget.h"
 
+class QCheckBox;
+class QVBoxLayout;
 class QWidget;
 
 class Map;
@@ -103,14 +105,21 @@ Q_OBJECT
 public:
 	PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialog* dialog);
 	
+	virtual bool isResetSupported() { return true; }
+	
+	virtual void reset(Symbol* symbol);
+	
 public slots:
 	void orientedToNorthClicked(bool checked);
 	void tabChanged(int index);
 	
 private:
 	PointSymbol* symbol;
+	QCheckBox* oriented_to_north;
 	PointSymbolEditorWidget* symbol_editor;
+	QVBoxLayout* layout;
 	QWidget* point_tab;
+	
 };
 
 #endif
