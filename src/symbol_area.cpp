@@ -24,6 +24,7 @@
 #include <QtGui>
 #include <QFile>
 
+#include "util_gui.h"
 #include "util.h"
 #include "map_color.h"
 #include "symbol_point.h"
@@ -41,14 +42,14 @@ AreaSymbol::FillPattern::FillPattern()
 	type = LinePattern;
 	angle = 0;
 	rotatable = false;
-	line_spacing = 5 * 1000;
+	line_spacing = 5000; // 5 mm
 	line_offset = 0;
 	offset_along_line = 0;
 	
 	line_color = NULL;
-	line_width = 0;
+	line_width = 200; // 0.2 mm
 	
-	point_distance = 0;
+	point_distance = 5000; // 5 mm
 	point = NULL;
 }
 void AreaSymbol::FillPattern::save(QFile* file, Map* map)
@@ -449,21 +450,30 @@ SymbolPropertiesWidget* AreaSymbol::createPropertiesWidget(SymbolSettingDialog* 
 
 // ### AreaSymbolSettings ###
 
-#define HEADLINE(text) QLabel(QString("<b>") % text % "</b>")
-
 AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* dialog)
  : SymbolPropertiesWidget(symbol, dialog), symbol(symbol)
 {
 	map = dialog->getPreviewMap();
 	controller = dialog->getPreviewController();
 	
+	
+	QFormLayout* general_layout = new QFormLayout();
+	
 	color_edit = new ColorDropDown(map);
-	minimum_size_edit = new QDoubleSpinBox();
-	minimum_size_edit->setDecimals(1);
-	minimum_size_edit->setRange(0.0, 999999.9);
-	minimum_size_edit->setSuffix(QString::fromUtf8(" mm²"));
+	general_layout->addRow(tr("Area color:"), color_edit);
+	
+	minimum_size_edit = Util::SpinBox::create(1, 0.0, 999999.9, trUtf8("mm²"));
+	general_layout->addRow(tr("Minimum size:"), minimum_size_edit);
+	
+	general_layout->addItem(Util::SpacerItem::create(this));
+	
+	
+	QVBoxLayout* fill_patterns_list_layout = new QVBoxLayout();
+	
+	fill_patterns_list_layout->addWidget(Util::Headline::create(tr("Fills")), 0);
 	
 	pattern_list = new QListWidget();
+	fill_patterns_list_layout->addWidget(pattern_list, 1);
 	
 	del_pattern_button = new QPushButton(QIcon(":/images/minus.png"), "");
 	add_pattern_button = new QToolButton();
@@ -471,86 +481,120 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	add_pattern_button->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	add_pattern_button->setPopupMode(QToolButton::InstantPopup);
 	add_pattern_button->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
-	add_pattern_button->setMinimumWidth(del_pattern_button->sizeHint().width());
+	add_pattern_button->setMinimumSize(del_pattern_button->sizeHint());
 	QMenu* add_fill_button_menu = new QMenu(add_pattern_button);
-	add_fill_button_menu->addAction(tr("Line pattern"), this, SLOT(addLinePattern()));
-	add_fill_button_menu->addAction(tr("Point pattern"), this, SLOT(addPointPattern()));
+	add_fill_button_menu->addAction(tr("Hatching"), this, SLOT(addLinePattern()));
+	add_fill_button_menu->addAction(tr("Pattern"), this, SLOT(addPointPattern()));
 	add_pattern_button->setMenu(add_fill_button_menu);
-	
-	QLabel* fill_angle_label = new QLabel(tr("Angle:"));
-	pattern_angle_edit = new QDoubleSpinBox();
-	pattern_angle_edit->setDecimals(1);
-	pattern_angle_edit->setRange(0.0, 360.0);
-	pattern_angle_edit->setSuffix(QString::fromUtf8(" °"));
-	pattern_rotatable_check = new QCheckBox(tr("Filling is rotatable by mapper"));
-	QLabel* fill_spacing_label = new QLabel(tr("Distance between center lines:"));
-	pattern_spacing_edit = new QDoubleSpinBox();
-	pattern_spacing_edit->setDecimals(2);
-	pattern_spacing_edit->setRange(0.0, 999999.0);
-	pattern_spacing_edit->setSuffix(" mm");
-	
-	QLabel* fill_line_offset_label = new QLabel(tr("Line offset:"));
-	pattern_line_offset_edit = new QDoubleSpinBox();
-	pattern_line_offset_edit->setDecimals(2);
-	pattern_line_offset_edit->setRange(0.0, 999999.0);
-	pattern_line_offset_edit->setSuffix(" mm");
-	
-	pattern_offset_along_line_label = new QLabel(tr("Offset along line:"));
-	pattern_offset_along_line_edit = new QDoubleSpinBox();
-	pattern_offset_along_line_edit->setDecimals(2);
-	pattern_offset_along_line_edit->setRange(0.0, 999999.0);
-	pattern_offset_along_line_edit->setSuffix(" mm");
-	
-	pattern_color_label = new QLabel(tr("Line color:"));
-	pattern_color_edit = new ColorDropDown(map);
-	pattern_linewidth_label = new QLabel(tr("Line width:"));
-	pattern_linewidth_edit = new QDoubleSpinBox();
-	pattern_linewidth_edit->setDecimals(2);
-	pattern_linewidth_edit->setRange(0.0, 999999.0);
-	pattern_linewidth_edit->setSuffix(" mm");
-	
-	pattern_pointdist_label = new QLabel(tr("Point distance:"));
-	pattern_pointdist_edit = new QDoubleSpinBox();
-	pattern_pointdist_edit->setDecimals(2);
-	pattern_pointdist_edit->setRange(0.0, 999999.0);
-	pattern_pointdist_edit->setSuffix(" mm");
-	
 	
 	QHBoxLayout* buttons_layout = new QHBoxLayout();
 	buttons_layout->addStretch(1);
 	buttons_layout->addWidget(add_pattern_button);
 	buttons_layout->addWidget(del_pattern_button);
 	buttons_layout->addStretch(1);
-	
-	QFormLayout* fill_pattern_layout = new QFormLayout();
-//	fill_pattern_layout->setMargin(0);
-	fill_pattern_layout->addRow(fill_angle_label, pattern_angle_edit);
-	fill_pattern_layout->addRow(pattern_rotatable_check);
-	fill_pattern_layout->addRow(fill_spacing_label, pattern_spacing_edit);
-	fill_pattern_layout->addRow(fill_line_offset_label, pattern_line_offset_edit);
-	fill_pattern_layout->addRow(pattern_offset_along_line_label, pattern_offset_along_line_edit);
-	fill_pattern_layout->addRow(pattern_pointdist_label, pattern_pointdist_edit);
-	fill_pattern_layout->addRow(pattern_linewidth_label, pattern_linewidth_edit);
-	fill_pattern_layout->addRow(pattern_color_label, pattern_color_edit);
-	
-	QVBoxLayout* fill_patterns_list_layout = new QVBoxLayout();
-	fill_patterns_list_layout->addWidget(pattern_list, 1);
 	fill_patterns_list_layout->addLayout(buttons_layout, 0);
 	
-	QWidget* fill_patterns_widget = new QWidget();
+	
+	QFormLayout* fill_pattern_layout = new QFormLayout();
+	
+	pattern_name_edit = new QLabel();
+	fill_pattern_layout->addRow(pattern_name_edit);
+	
+	fill_pattern_layout->addItem(Util::SpacerItem::create(this));
+	
+	
+	/* From here, stacked widgets are used to unify the layout of pattern type dependant fields. */
+	QStackedWidget* single_line_headline = new QStackedWidget();
+	connect(this, SIGNAL(switchPatternEdits(int)), single_line_headline, SLOT(setCurrentIndex(int)));
+	fill_pattern_layout->addRow(single_line_headline);
+	
+	QStackedWidget* single_line_label1 = new QStackedWidget();
+	connect(this, SIGNAL(switchPatternEdits(int)), single_line_label1, SLOT(setCurrentIndex(int)));
+	QStackedWidget* single_line_edit1  = new QStackedWidget();
+	connect(this, SIGNAL(switchPatternEdits(int)), single_line_edit1, SLOT(setCurrentIndex(int)));
+	fill_pattern_layout->addRow(single_line_label1, single_line_edit1);
+	
+	QStackedWidget* single_line_label2 = new QStackedWidget();
+	connect(this, SIGNAL(switchPatternEdits(int)), single_line_label2, SLOT(setCurrentIndex(int)));
+	QStackedWidget* single_line_edit2  = new QStackedWidget();
+	connect(this, SIGNAL(switchPatternEdits(int)), single_line_edit2, SLOT(setCurrentIndex(int)));
+	fill_pattern_layout->addRow(single_line_label2, single_line_edit2);
+	
+	QStackedWidget* single_line_label3 = new QStackedWidget();
+	connect(this, SIGNAL(switchPatternEdits(int)), single_line_label3, SLOT(setCurrentIndex(int)));
+	pattern_line_offset_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
+	fill_pattern_layout->addRow(single_line_label3, pattern_line_offset_edit);
+	
+	fill_pattern_layout->addItem(Util::SpacerItem::create(this));
+	
+	QStackedWidget* parallel_lines_headline = new QStackedWidget();
+	connect(this, SIGNAL(switchPatternEdits(int)), parallel_lines_headline, SLOT(setCurrentIndex(int)));
+	fill_pattern_layout->addRow(parallel_lines_headline);
+	
+	QStackedWidget* parallel_lines_label1 = new QStackedWidget();
+	connect(this, SIGNAL(switchPatternEdits(int)), parallel_lines_label1, SLOT(setCurrentIndex(int)));
+	pattern_spacing_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
+	fill_pattern_layout->addRow(parallel_lines_label1, pattern_spacing_edit);
+	
+	/* Stacked widgets, index 0: line pattern fields */
+	single_line_headline->addWidget(Util::Headline::create(tr("Single line")));
+	
+	QLabel* pattern_linewidth_label = new QLabel(tr("Line width:"));
+	pattern_linewidth_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
+	single_line_label1->addWidget(pattern_linewidth_label);
+	single_line_edit1 ->addWidget(pattern_linewidth_edit);
+	
+	QLabel* pattern_color_label = new QLabel(tr("Line color:"));
+	pattern_color_edit = new ColorDropDown(map);
+	single_line_label2->addWidget(pattern_color_label);
+	single_line_edit2 ->addWidget(pattern_color_edit);
+	
+	single_line_label3->addWidget(new QLabel(tr("Line offset:")));
+	
+	parallel_lines_headline->addWidget(Util::Headline::create(tr("Parallel lines")));
+	
+	parallel_lines_label1->addWidget(new QLabel(tr("Line spacing:")));
+	
+	/* Stacked widgets, index 1: point pattern fields */
+	single_line_headline->addWidget(Util::Headline::create(tr("Single row")));
+	
+	QLabel* pattern_pointdist_label = new QLabel(tr("Pattern interval:"));
+	pattern_pointdist_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
+	single_line_label1->addWidget(pattern_pointdist_label);
+	single_line_edit1 ->addWidget(pattern_pointdist_edit);
+	
+	QLabel* pattern_offset_along_line_label = new QLabel(tr("Pattern offset:"));
+	pattern_offset_along_line_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
+	single_line_label2->addWidget(pattern_offset_along_line_label);
+	single_line_edit2 ->addWidget(pattern_offset_along_line_edit);
+	
+	single_line_label3->addWidget(new QLabel(tr("Row offset:")));
+	
+	parallel_lines_headline->addWidget(Util::Headline::create(tr("Parallel rows")));
+	
+	parallel_lines_label1->addWidget(new QLabel(tr("Row spacing:")));
+	
+	/* General fields again. Not stacked. */
+	fill_pattern_layout->addItem(Util::SpacerItem::create(this));
+	
+	
+	fill_pattern_layout->addRow(Util::Headline::create(tr("Fill rotation")));
+	
+	pattern_angle_edit = Util::SpinBox::create(1, 0.0, 360.0, trUtf8("°"));
+	fill_pattern_layout->addRow(tr("Angle:"), pattern_angle_edit);
+	
+	pattern_rotatable_check = new QCheckBox(tr("adjustable per object"));
+	fill_pattern_layout->addRow("", pattern_rotatable_check);
+	
+	
 	QHBoxLayout* fill_patterns_layout = new QHBoxLayout();
 	fill_patterns_layout->addLayout(fill_patterns_list_layout, 1);
-	fill_patterns_layout->addSpacing(16);
+	fill_patterns_layout->addItem(Util::SpacerItem::create(this));
 	fill_patterns_layout->addLayout(fill_pattern_layout, 3);
-	fill_patterns_widget->setLayout(fill_patterns_layout);
-	fill_patterns_layout->setContentsMargins(0,0,0,0);
 	
-	QFormLayout* layout = new QFormLayout();
-	layout->addRow(tr("Area color:"), color_edit);
-	layout->addRow(tr("Minimum size:"), minimum_size_edit);
-	layout->addRow(new QLabel());
-	layout->addRow(new HEADLINE(tr("Fill patterns")));
-	layout->addRow(fill_patterns_widget);
+	QBoxLayout* layout = new QVBoxLayout();
+	layout->addLayout(general_layout);
+	layout->addLayout(fill_patterns_layout);
 	
 	QWidget* area_tab = new QWidget();
 	area_tab->setLayout(layout);
@@ -634,7 +678,7 @@ void AreaSymbolSettings::updatePatternNames()
 		if (symbol->patterns[i].type == AreaSymbol::FillPattern::PointPattern)
 		{
 			point_pattern_num++;
-			QString name = tr("Point pattern %1").arg(point_pattern_num);
+			QString name = tr("Pattern %1").arg(point_pattern_num);
 			symbol->patterns[i].name = name;
 			symbol->patterns[i].point->setName(name);
 			pattern_list->item(i)->setText(name);
@@ -643,7 +687,7 @@ void AreaSymbolSettings::updatePatternNames()
 		else
 		{
 			line_pattern_num++;
-			QString name = tr("Line pattern %1").arg(line_pattern_num);
+			QString name = tr("Hatching %1").arg(line_pattern_num);
 			symbol->patterns[i].name = name;
 			pattern_list->item(i)->setText(symbol->patterns[i].name);
 		}
@@ -660,6 +704,7 @@ void AreaSymbolSettings::updatePatternWidgets()
 	del_pattern_button->setEnabled(pattern_active);
 	
 	AreaSymbol::FillPattern* pattern = pattern_active ? &*active_pattern : new AreaSymbol::FillPattern();
+	pattern_name_edit->setText(pattern_active ? QString("<b>%1</b>").arg(active_pattern->name) : "");
 	
 	pattern_angle_edit->blockSignals(true);
 	pattern_rotatable_check->blockSignals(true);
@@ -682,46 +727,30 @@ void AreaSymbolSettings::updatePatternWidgets()
 	
 	if (pattern->type == AreaSymbol::FillPattern::LinePattern)
 	{
-		pattern_offset_along_line_label->hide();
-		pattern_offset_along_line_edit->hide();
-		pattern_pointdist_label->hide();
-		pattern_pointdist_edit->hide();
+		emit switchPatternEdits(0);
 		
 		pattern_linewidth_edit->blockSignals(true);
-		pattern_color_edit->blockSignals(true);
-		
-		pattern_linewidth_label->show();
-		pattern_linewidth_edit->show();
 		pattern_linewidth_edit->setValue(0.001 * pattern->line_width);
 		pattern_linewidth_edit->setEnabled(pattern_active);
-		pattern_color_label->show();
-		pattern_color_edit->show();
+		pattern_linewidth_edit->blockSignals(false);
+		
+		pattern_color_edit->blockSignals(true);
 		pattern_color_edit->setColor(pattern->line_color);
 		pattern_color_edit->setEnabled(pattern_active);
-		
-		pattern_linewidth_edit->blockSignals(false);
 		pattern_color_edit->blockSignals(false);
 	}
 	else
 	{
-		pattern_color_label->hide();
-		pattern_color_edit->hide();
-		pattern_linewidth_label->hide();
-		pattern_linewidth_edit->hide();
+		emit switchPatternEdits(1);
 		
 		pattern_offset_along_line_edit->blockSignals(true);
-		pattern_pointdist_edit->blockSignals(true);
-		
-		pattern_offset_along_line_label->show();
-		pattern_offset_along_line_edit->show();
 		pattern_offset_along_line_edit->setValue(0.001 * pattern->offset_along_line);
 		pattern_offset_along_line_edit->setEnabled(pattern_active);
-		pattern_pointdist_label->show();
-		pattern_pointdist_edit->show();
+		pattern_offset_along_line_edit->blockSignals(false);
+		
+		pattern_pointdist_edit->blockSignals(true);
 		pattern_pointdist_edit->setValue(0.001 * pattern->point_distance);
 		pattern_pointdist_edit->setEnabled(pattern_active);
-		
-		pattern_offset_along_line_edit->blockSignals(false);
 		pattern_pointdist_edit->blockSignals(false);
 	}
 	
@@ -758,13 +787,18 @@ void AreaSymbolSettings::addPattern(AreaSymbol::FillPattern::Type type)
 		connect(editor, SIGNAL(symbolEdited()), this, SIGNAL(propertiesModified()) );
 		if (pattern_list->currentRow() == int(symbol->patterns.size()) - 1)
 		{
-			addPropertiesGroup(temp_name, editor); 	
+			addPropertiesGroup(temp_name, editor);
 		}
 		else
 		{
 			int group_index = indexOfPropertiesGroup(symbol->patterns[pattern_list->currentRow()+1].name);
 			insertPropertiesGroup(group_index, temp_name, editor);
 		}
+	}
+	else if (map->getNumColors() > 0)
+	{
+		// Default color for hatching (lines)
+		active_pattern->line_color = map->getColor(0);
 	}
 	updatePatternNames();
 	emit propertiesModified();
@@ -819,7 +853,7 @@ void AreaSymbolSettings::minimumSizeChanged(double value)
 
 void AreaSymbolSettings::patternAngleChanged(double value)
 {
-	active_pattern->angle = value * (2*M_PI) / 360.0;
+	active_pattern->angle = value * M_PI / 180.0;
 	emit propertiesModified();
 }
 

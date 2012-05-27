@@ -124,6 +124,9 @@ public:
 	
 	void addPattern(AreaSymbol::FillPattern::Type type);
 	
+signals:
+	void switchPatternEdits(int layer);
+	
 public slots:
 	void selectPattern(int index);
 	void addLinePattern();
@@ -161,18 +164,15 @@ private:
 	QToolButton*    add_pattern_button;
 	QPushButton*    del_pattern_button;
 	
+	QLabel*         pattern_name_edit;
 	QDoubleSpinBox* pattern_angle_edit;
 	QCheckBox*      pattern_rotatable_check;
 	QDoubleSpinBox* pattern_spacing_edit;
 	QDoubleSpinBox* pattern_line_offset_edit;
-	QLabel*         pattern_offset_along_line_label;
 	QDoubleSpinBox* pattern_offset_along_line_edit;
 	
-	QLabel*         pattern_color_label;
 	ColorDropDown*  pattern_color_edit;
-	QLabel*         pattern_linewidth_label;
 	QDoubleSpinBox* pattern_linewidth_edit;
-	QLabel*         pattern_pointdist_label;
 	QDoubleSpinBox* pattern_pointdist_edit;
 };
 
