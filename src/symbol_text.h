@@ -28,14 +28,13 @@
 
 #include "symbol_properties_widget.h"
 
-QT_BEGIN_NAMESPACE
-class QLineEdit;
-class QFontComboBox;
-class QPushButton;
 class QCheckBox;
-class QListWidget;
+class QDoubleSpinBox;
+class QFontComboBox;
 class QLabel;
-QT_END_NAMESPACE
+class QLineEdit;
+class QListWidget;
+class QPushButton;
 
 class ColorDropDown;
 class SymbolSettingDialog;
@@ -127,11 +126,11 @@ public:
 	
 protected slots:
 	void fontChanged(QFont font);
-	void sizeChanged(QString text);
+	void sizeChanged(double value);
 	void determineSizeClicked();
 	void colorChanged();
 	void checkToggled(bool checked);
-	void spacingChanged(QString text);
+	void spacingChanged(double value);
 	
 	void ocadCompatibilityButtonClicked();
 	void lineBelowCheckClicked(bool checked);
@@ -146,17 +145,17 @@ private:
 	
 	ColorDropDown* color_edit;
 	QFontComboBox* font_edit;
-	QLineEdit* size_edit;
+	QDoubleSpinBox* size_edit;
 	QPushButton* size_determine_button;
 	QCheckBox* bold_check;
 	QCheckBox* italic_check;
 	QCheckBox* underline_check;
-	QLineEdit* line_spacing_edit;
-	QLineEdit* paragraph_spacing_edit;
-	QLineEdit* character_spacing_edit;
+	QDoubleSpinBox* line_spacing_edit;
+	QDoubleSpinBox* paragraph_spacing_edit;
+	QDoubleSpinBox* character_spacing_edit;
 	QCheckBox* kerning_check;
 	
-	QPushButton* ocad_compat_button;
+	QCheckBox* ocad_compat_check;
 	QWidget* ocad_compat_widget;
 	QCheckBox* line_below_check;
 	ColorDropDown* line_below_color_edit;

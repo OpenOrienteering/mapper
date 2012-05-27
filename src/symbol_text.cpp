@@ -24,12 +24,13 @@
 #include <QFile>
 
 #include "map.h"
-#include "symbol_setting_dialog.h"
 #include "map_color.h"
-#include "util.h"
 #include "object_text.h"
-#include "symbol_area.h"
 #include "renderable_implementation.h"
+#include "symbol_area.h"
+#include "symbol_setting_dialog.h"
+#include "util.h"
+#include "util_gui.h"
 
 const float TextSymbol::internal_point_size = 256;
 
@@ -278,49 +279,65 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 {
 	Map* map = dialog->getPreviewMap();
 	
-	QLabel* font_label = new QLabel(tr("Font family:"));
-	font_edit = new QFontComboBox();
-	font_edit->setCurrentFont(QFont(symbol->font_family));
+	QFormLayout* layout = new QFormLayout();
 	
-	QLabel* size_label = new QLabel(tr("Font size:"));
-	size_edit = new QLineEdit(QString::number(0.001 * symbol->font_size));
-	size_edit->setValidator(new DoubleValidator(0, 999999, size_edit));
-	size_determine_button = new QPushButton(tr("Determine size..."));
+	font_edit = new QFontComboBox();
+	layout->addRow(tr("Font family:"), font_edit);
 	
 	QHBoxLayout* size_layout = new QHBoxLayout();
 	size_layout->setMargin(0);
 	size_layout->setSpacing(0);
+	
+	size_edit = Util::SpinBox::create(1, 0.0, 999999.9, tr("mm"));
 	size_layout->addWidget(size_edit);
+	
+	size_determine_button = new QPushButton(tr("Determine size..."));
 	size_layout->addWidget(size_determine_button);
 	
-	QLabel* color_label = new QLabel(tr("Text color:"));
+	layout->addRow(tr("Font size:"), size_layout);
+	
 	color_edit = new ColorDropDown(map, symbol->getColor());
+	layout->addRow(tr("Text color:"), color_edit);
 	
+	QVBoxLayout* text_style_layout = new QVBoxLayout();
 	bold_check = new QCheckBox(tr("bold"));
-	bold_check->setChecked(symbol->bold);
+	text_style_layout->addWidget(bold_check);
 	italic_check = new QCheckBox(tr("italic"));
-	italic_check->setChecked(symbol->italic);
+	text_style_layout->addWidget(italic_check);
 	underline_check = new QCheckBox(tr("underlined"));
+	text_style_layout->addWidget(underline_check);
+	
+	layout->addRow(tr("Text style:"), text_style_layout);
+	
+	layout->addItem(Util::SpacerItem::create(this));
+	
+	line_spacing_edit = Util::SpinBox::create(1, 0.0, 999999.9, tr("%"));
+	layout->addRow(tr("Line spacing:"), line_spacing_edit);
+	
+	paragraph_spacing_edit = Util::SpinBox::create(2, -999999.9, 999999.9, tr("mm"));
+	layout->addRow(tr("Paragraph spacing:"), paragraph_spacing_edit);
+	
+	character_spacing_edit = Util::SpinBox::create(1, -999999.9, 999999.9, tr("%"));
+	layout->addRow(tr("Character spacing:"), character_spacing_edit);
+	
+	kerning_check = new QCheckBox(tr("Kerning"));
+	layout->addRow("", kerning_check);
+	
+	layout->addItem(Util::SpacerItem::create(this));
+	
+	ocad_compat_check = new QCheckBox(tr("OCAD compatibility settings"));
+	layout->addRow(ocad_compat_check);
+	
+	font_edit->setCurrentFont(QFont(symbol->font_family));
+	size_edit->setValue(0.001 * symbol->font_size);
+	bold_check->setChecked(symbol->bold);
+	italic_check->setChecked(symbol->italic);
 	underline_check->setChecked(symbol->underline);
-	
-	QLabel* line_spacing_label = new QLabel(tr("Line spacing:"));
-	line_spacing_edit = new QLineEdit(QString::number(100 * symbol->line_spacing));
-	line_spacing_edit->setValidator(new DoubleValidator(0, 999999, line_spacing_edit));
-	QLabel* line_spacing_label_2 = new QLabel("%");
-	
-	QLabel* paragraph_spacing_label = new QLabel(tr("Paragraph spacing [mm]:"));
-	paragraph_spacing_edit = new QLineEdit(QString::number(0.001 * symbol->paragraph_spacing));
-	paragraph_spacing_edit->setValidator(new DoubleValidator(-999999, 999999, paragraph_spacing_edit));
-	
-	QLabel* character_spacing_label = new QLabel(tr("Character spacing [percentage of space character]:"));
-	character_spacing_edit = new QLineEdit(QString::number(100 * symbol->character_spacing));
-	character_spacing_edit->setValidator(new DoubleValidator(-999999, 999999, character_spacing_edit));
-	QLabel* character_spacing_label_2 = new QLabel("%");
-	
-	kerning_check = new QCheckBox(tr("use kerning"));
+	line_spacing_edit->setValue(100.0 * symbol->line_spacing);
+	paragraph_spacing_edit->setValue(0.001 * symbol->paragraph_spacing);
+	character_spacing_edit->setValue(100 * symbol->character_spacing);
 	kerning_check->setChecked(symbol->kerning);
 	
-	ocad_compat_button = new QPushButton(tr("Show OCAD compatibility settings"));
 	ocad_compat_widget = new QWidget();
 	
 	QLabel* line_below_label = new QLabel("<br/><b>" + tr("Line below paragraphs") + "</b>");
@@ -373,65 +390,22 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	ocad_compat_layout->addLayout(custom_tabs_button_layout);
 	ocad_compat_widget->setLayout(ocad_compat_layout);
 	
-	QHBoxLayout* line_spacing_layout = new QHBoxLayout();
-	line_spacing_layout->setMargin(0);
-	line_spacing_layout->setSpacing(0);
-	line_spacing_layout->addWidget(line_spacing_edit);
-	line_spacing_layout->addWidget(line_spacing_label_2);
-	
-	QHBoxLayout* character_spacing_layout = new QHBoxLayout();
-	character_spacing_layout->setMargin(0);
-	character_spacing_layout->setSpacing(0);
-	character_spacing_layout->addWidget(character_spacing_edit);
-	character_spacing_layout->addWidget(character_spacing_label_2);
-	
-	QGridLayout* upper_layout = new QGridLayout();
-	upper_layout->addWidget(font_label, 0, 0);
-	upper_layout->addWidget(font_edit, 0, 1);
-	upper_layout->addWidget(size_label, 1, 0);
-	upper_layout->addLayout(size_layout, 1, 1);
-	upper_layout->addWidget(color_label, 2, 0);
-	upper_layout->addWidget(color_edit, 2, 1);
-	
-	QGridLayout* lower_layout = new QGridLayout();
-	lower_layout->addWidget(line_spacing_label, 0, 0);
-	lower_layout->addLayout(line_spacing_layout, 0, 1);
-	lower_layout->addWidget(paragraph_spacing_label, 1, 0);
-	lower_layout->addWidget(paragraph_spacing_edit, 1, 1);
-	lower_layout->addWidget(character_spacing_label, 2, 0);
-	lower_layout->addLayout(character_spacing_layout, 2, 1);
-	
-	QVBoxLayout* layout = new QVBoxLayout();
-	layout->setMargin(0);
-	layout->setSpacing(0);
-	layout->addLayout(upper_layout);
-	layout->addSpacing(16);
-	layout->addWidget(bold_check);
-	layout->addWidget(italic_check);
-	layout->addWidget(underline_check);
-	layout->addSpacing(16);
-	layout->addLayout(lower_layout);
-	layout->addWidget(kerning_check);
-	layout->addSpacing(16);
-	layout->addWidget(ocad_compat_button);
-	layout->addStretch(1);
-	
 	QWidget* text_tab = new QWidget();
 	text_tab->setLayout(layout);
 	addPropertiesGroup(tr("Text settings"), text_tab);
 	
 	connect(font_edit, SIGNAL(currentFontChanged(QFont)), this, SLOT(fontChanged(QFont)));
-	connect(size_edit, SIGNAL(textEdited(QString)), this, SLOT(sizeChanged(QString)));
+	connect(size_edit, SIGNAL(valueChanged(double)), this, SLOT(sizeChanged(double)));
 	connect(size_determine_button, SIGNAL(clicked(bool)), this, SLOT(determineSizeClicked()));
 	connect(color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChanged()));
 	connect(bold_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
 	connect(italic_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
 	connect(underline_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
-	connect(line_spacing_edit, SIGNAL(textEdited(QString)), this, SLOT(spacingChanged(QString)));
-	connect(paragraph_spacing_edit, SIGNAL(textEdited(QString)), this, SLOT(spacingChanged(QString)));
-	connect(character_spacing_edit, SIGNAL(textEdited(QString)), this, SLOT(spacingChanged(QString)));
+	connect(line_spacing_edit, SIGNAL(valueChanged(double)), this, SLOT(spacingChanged(double)));
+	connect(paragraph_spacing_edit, SIGNAL(valueChanged(double)), this, SLOT(spacingChanged(double)));
+	connect(character_spacing_edit, SIGNAL(valueChanged(double)), this, SLOT(spacingChanged(double)));
 	connect(kerning_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
-	connect(ocad_compat_button, SIGNAL(clicked(bool)), this, SLOT(ocadCompatibilityButtonClicked()));
+	connect(ocad_compat_check, SIGNAL(clicked(bool)), this, SLOT(ocadCompatibilityButtonClicked()));
 	connect(line_below_check, SIGNAL(clicked(bool)), this, SLOT(lineBelowCheckClicked(bool)));
 	connect(line_below_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(lineBelowSettingChanged()));
 	connect(line_below_width_edit, SIGNAL(textEdited(QString)), this, SLOT(lineBelowSettingChanged()));
@@ -455,10 +429,9 @@ void TextSymbolSettings::fontChanged(QFont font)
 	symbol->updateQFont();
 	emit propertiesModified();
 }
-void TextSymbolSettings::sizeChanged(QString text)
+void TextSymbolSettings::sizeChanged(double value)
 {
-	float new_size = text.toFloat();
-	symbol->font_size = qRound(1000 * new_size);
+	symbol->font_size = qRound(1000 * value);
 	symbol->updateQFont();
 	emit propertiesModified();
 }
@@ -468,7 +441,7 @@ void TextSymbolSettings::determineSizeClicked()
 	modal_dialog.setWindowModality(Qt::WindowModal);
 	if (modal_dialog.exec() == QDialog::Accepted)
 	{
-		size_edit->setText(QString::number(0.001 * symbol->font_size));
+		size_edit->setValue(0.001 * symbol->font_size);
 		emit propertiesModified();
 	}
 }
@@ -487,18 +460,18 @@ void TextSymbolSettings::checkToggled(bool checked)
 	symbol->updateQFont();
 	emit propertiesModified();
 }
-void TextSymbolSettings::spacingChanged(QString text)
+void TextSymbolSettings::spacingChanged(double value)
 {
-	symbol->line_spacing = 0.01f * line_spacing_edit->text().toFloat();
-	symbol->paragraph_spacing = qRound(1000 * paragraph_spacing_edit->text().toFloat());
-	symbol->character_spacing = 0.01f * character_spacing_edit->text().toFloat();
+	symbol->line_spacing = 0.01 * line_spacing_edit->value();
+	symbol->paragraph_spacing = qRound(1000.0 * paragraph_spacing_edit->value());
+	symbol->character_spacing = 0.01f * character_spacing_edit->value();
 	symbol->updateQFont();
 	emit propertiesModified();
 }
 
 void TextSymbolSettings::ocadCompatibilityButtonClicked()
 {
-	ocad_compat_button->hide();
+	ocad_compat_check->setEnabled(false);
 	addPropertiesGroup(tr("OCAD compatibility"), ocad_compat_widget);
 	ocad_compat_widget = NULL; // deleted by dialog
 }
