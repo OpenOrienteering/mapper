@@ -1915,7 +1915,6 @@ void LineSymbolSettings::reset(Symbol* symbol)
 	
 	LineSymbol* old_symbol = this->symbol;
 	this->symbol = reinterpret_cast<LineSymbol*>(symbol);
-	updateContents();
 	
 	PointSymbolEditorWidget* point_symbol_editor = 0;
 	MapEditorController* controller = dialog->getPreviewController();
@@ -1936,6 +1935,7 @@ void LineSymbolSettings::reset(Symbol* symbol)
 		if (index == current)
 			setCurrentIndex(current);
 	}
+	updateContents();
 	setUpdatesEnabled(true);
 	old_symbol->cleanupPointSymbols();
 }
