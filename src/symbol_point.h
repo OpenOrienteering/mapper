@@ -105,8 +105,6 @@ Q_OBJECT
 public:
 	PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialog* dialog);
 	
-	virtual bool isResetSupported() { return true; }
-	
 	virtual void reset(Symbol* symbol);
 	
 public slots:

@@ -63,9 +63,6 @@ public:
 	
 	QString getHelpSection() const { return QString(); }
 	
-	/** @deprecated Only until reset() is implemented for all symbol types! */
-	virtual bool isResetSupported() { return false; }
-	
 	/**
 	 * Changes the edited symbol and resets the input values.
 	 * When overriding this method, make sure to call SymbolPropertiesWidget::reset().

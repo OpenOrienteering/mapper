@@ -113,8 +113,6 @@ Q_OBJECT
 public:
 	AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* dialog);
 	
-	virtual bool isResetSupported() { return true; }
-	
 	virtual void reset(Symbol* symbol);
 	
 	/**

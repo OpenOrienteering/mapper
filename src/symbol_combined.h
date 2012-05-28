@@ -77,8 +77,6 @@ public:
 	CombinedSymbolSettings(CombinedSymbol* symbol, SymbolSettingDialog* dialog);
 	virtual ~CombinedSymbolSettings();
 	
-	virtual bool isResetSupported() { return true; }
-	
 	void reset(Symbol* symbol);
 	
 	/**

@@ -123,8 +123,6 @@ public:
 	TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* dialog);
     virtual ~TextSymbolSettings();
 	
-	virtual bool isResetSupported() { return true; }
-	
 	virtual void reset(Symbol* symbol);
 	
 	void updateGeneralContents();

@@ -171,8 +171,6 @@ public:
 	
 	virtual ~LineSymbolSettings();
 	
-	virtual bool isResetSupported() { return true; }
-	
 	virtual void reset(Symbol* symbol);
 	
 	/**
