@@ -615,6 +615,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	connect(pattern_pointdist_edit, SIGNAL(valueChanged(double)), this, SLOT(patternPointDistChanged(double)));
 	
 	updateAreaGeneral();
+	updatePatternWidgets();
 	loadPatterns();
 }
 
