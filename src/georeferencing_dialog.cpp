@@ -28,8 +28,7 @@
 #include "main_window.h"
 #include "map.h"
 #include "map_editor.h"
-
-#define HEADLINE(text) QLabel(QString("<b>") % text % "</b>")
+#include "util_gui.h"
 
 GeoreferencingDialog::GeoreferencingDialog(MapEditorController* controller, const Georeferencing* initial)
 : QDialog(controller->getWindow(), Qt::WindowSystemMenuHint | Qt::WindowTitleHint),
@@ -60,18 +59,10 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	setWindowTitle(tr("Map Georeferencing"));
 	
 	scale_edit  = new QLabel();
-	declination_edit = new QDoubleSpinBox();
-	declination_edit->setSuffix(QString::fromUtf8(" °"));
-	declination_edit->setDecimals(1);
-	declination_edit->setSingleStep(0.1);
-	declination_edit->setRange(-180.0, +180.0);
-	grivation_edit = new QDoubleSpinBox();
-	grivation_edit->setSuffix(QString::fromUtf8(" °"));
-	grivation_edit->setDecimals(1);
-	grivation_edit->setSingleStep(0.1);
-	grivation_edit->setRange(-180.0, +180.0);
+	declination_edit = Util::SpinBox::create(1, -180.0, +180.0, trUtf8("°"));
+	grivation_edit = Util::SpinBox::create(1, -180.0, +180.0, trUtf8("°"));
 	ref_point_edit = new QLabel();
-	QPushButton* ref_point_button = new QPushButton("&Select...");
+	QPushButton* ref_point_button = new QPushButton(tr("&Select..."));
 	ref_point_button->setEnabled(controller != NULL);
 	QHBoxLayout* ref_point_layout = new QHBoxLayout();
 	ref_point_layout->addWidget(ref_point_edit, 1);
@@ -89,26 +80,14 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	
 	status_label = new QLabel();
 	
-	easting_edit = new QDoubleSpinBox();
-	easting_edit->setSuffix(" m");
-	easting_edit->setDecimals(0);
-	easting_edit->setRange(std::numeric_limits<double>::min(), std::numeric_limits<double>::max());
-	northing_edit = new QDoubleSpinBox();
-	northing_edit->setSuffix(" m");
-	northing_edit->setDecimals(0);
-	northing_edit->setRange(std::numeric_limits<double>::min(), std::numeric_limits<double>::max());
+	easting_edit = Util::SpinBox::create(0, std::numeric_limits<double>::min(), std::numeric_limits<double>::max(), tr("m"));
+	northing_edit = Util::SpinBox::create(0, std::numeric_limits<double>::min(), std::numeric_limits<double>::max(), tr("m"));
 	
 	convergence_edit = new QLabel();
 	
 	QLabel* datum_edit = new QLabel("WGS84");
-	lat_edit = new QDoubleSpinBox();
-	lat_edit->setSuffix(QString::fromUtf8(" °"));
-	lat_edit->setDecimals(8);
-	lat_edit->setRange(-90.0, +90.0);
-	lon_edit = new QDoubleSpinBox();
-	lon_edit->setSuffix(QString::fromUtf8(" °"));
-	lon_edit->setDecimals(8);
-	lon_edit->setRange(-180.0, +180.0);
+	lat_edit = Util::SpinBox::create(8, -90.0, +90.0, trUtf8("°"), 1);
+	lon_edit = Util::SpinBox::create(8, -180.0, +180.0, trUtf8("°"), 1);
 	link_label = new QLabel();
 	link_label->setOpenExternalLinks(true);
 	
@@ -121,23 +100,23 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	
 	QFormLayout* edit_layout = new QFormLayout;
 	
-	edit_layout->addRow(new HEADLINE(tr("General")));
+	edit_layout->addRow(Util::Headline::create(tr("General")));
 	edit_layout->addRow(tr("Map scale:"), scale_edit);
 	edit_layout->addRow(tr("&Declination:"), declination_edit);
 	edit_layout->addRow(tr("&Grivation:"), grivation_edit);
 	edit_layout->addRow(tr("Reference point:"), ref_point_layout);
-	edit_layout->addRow(new QWidget());
+	edit_layout->addItem(Util::SpacerItem::create(this));
 	
-	edit_layout->addRow(new HEADLINE(tr("Projected coordinates")));
+	edit_layout->addRow(Util::Headline::create(tr("Projected coordinates")));
 	edit_layout->addRow(tr("&Coordinate reference system:"), crs_edit);
 	edit_layout->addRow(tr("&Zone:"), zone_edit);
 	edit_layout->addRow(tr("Status:"), status_label);
 	edit_layout->addRow(tr("Reference point &easting:"), easting_edit);
 	edit_layout->addRow(tr("Reference point &northing:"), northing_edit);
 	edit_layout->addRow(tr("Convergence:"), convergence_edit);
-	edit_layout->addRow(new QWidget());
+	edit_layout->addItem(Util::SpacerItem::create(this));
 	
-	edit_layout->addRow(new HEADLINE(tr("Geographic coordinates")));
+	edit_layout->addRow(Util::Headline::create(tr("Geographic coordinates")));
 	edit_layout->addRow(tr("Datum"), datum_edit);
 	edit_layout->addRow(tr("Reference point &latitude:"), lat_edit);
 	edit_layout->addRow(tr("Reference point longitude:"), lon_edit);

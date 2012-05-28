@@ -21,6 +21,8 @@
 #ifndef _OPENORIENTEERING_UTIL_GUI_H_
 #define _OPENORIENTEERING_UTIL_GUI_H_
 
+#include <cmath>
+
 #include <QtGui>
 
 /* A collection of GUI utility functions. */
@@ -78,22 +80,26 @@ namespace Util
 		 * the unit of measurement (optional),
 		 * the step width (of the spinbox buttons), dependent on the number of decimals.
 		 */
-		inline QDoubleSpinBox* create(int decimals, double min, double max, const QString &unit = "")
+		inline QDoubleSpinBox* create(int decimals, double min, double max, const QString &unit = "", double step = 0.0)
 		{
 			QDoubleSpinBox* box = new QDoubleSpinBox();
 			box->setDecimals(decimals);
 			box->setRange(min, max);
-			switch (decimals)
-			{
-				case 3: 	box->setSingleStep(0.01); break;
-				case 2: 	box->setSingleStep(0.1); break;
-				default:	box->setSingleStep(1.0);
-			}
 			if (unit.startsWith(' '))
 				box->setSuffix(unit);
 			else if (unit.length() > 0)
 				box->setSuffix(QString(' ') % unit);
-			
+			if (step > 0.0)
+				box->setSingleStep(step);
+			else
+			{
+				switch (decimals)
+				{
+					case 0: 	box->setSingleStep(1.0); break;
+					case 1: 	box->setSingleStep(0.1); break;
+					default: 	box->setSingleStep(5.0 * pow(10.0, -decimals));
+				}
+			}
 			return box;
 		}
 	}
