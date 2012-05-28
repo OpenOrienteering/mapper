@@ -483,8 +483,8 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	add_pattern_button->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
 	add_pattern_button->setMinimumSize(del_pattern_button->sizeHint());
 	QMenu* add_fill_button_menu = new QMenu(add_pattern_button);
-	add_fill_button_menu->addAction(tr("Hatching"), this, SLOT(addLinePattern()));
-	add_fill_button_menu->addAction(tr("Pattern"), this, SLOT(addPointPattern()));
+	add_fill_button_menu->addAction(tr("Line fill"), this, SLOT(addLinePattern()));
+	add_fill_button_menu->addAction(tr("Pattern fill"), this, SLOT(addPointPattern()));
 	add_pattern_button->setMenu(add_fill_button_menu);
 	
 	QHBoxLayout* buttons_layout = new QHBoxLayout();
@@ -679,7 +679,7 @@ void AreaSymbolSettings::updatePatternNames()
 		if (symbol->patterns[i].type == AreaSymbol::FillPattern::PointPattern)
 		{
 			point_pattern_num++;
-			QString name = tr("Pattern %1").arg(point_pattern_num);
+			QString name = tr("Pattern fill %1").arg(point_pattern_num);
 			symbol->patterns[i].name = name;
 			symbol->patterns[i].point->setName(name);
 			pattern_list->item(i)->setText(name);
@@ -688,7 +688,7 @@ void AreaSymbolSettings::updatePatternNames()
 		else
 		{
 			line_pattern_num++;
-			QString name = tr("Hatching %1").arg(line_pattern_num);
+			QString name = tr("Line fill %1").arg(line_pattern_num);
 			symbol->patterns[i].name = name;
 			pattern_list->item(i)->setText(symbol->patterns[i].name);
 		}
@@ -705,7 +705,7 @@ void AreaSymbolSettings::updatePatternWidgets()
 	del_pattern_button->setEnabled(pattern_active);
 	
 	AreaSymbol::FillPattern* pattern = pattern_active ? &*active_pattern : new AreaSymbol::FillPattern();
-	pattern_name_edit->setText(pattern_active ? QString("<b>%1</b>").arg(active_pattern->name) : "");
+	pattern_name_edit->setText(pattern_active ? QString("<b>%1</b>").arg(active_pattern->name) : tr("No fill selected"));
 	
 	pattern_angle_edit->blockSignals(true);
 	pattern_rotatable_check->blockSignals(true);
@@ -798,7 +798,7 @@ void AreaSymbolSettings::addPattern(AreaSymbol::FillPattern::Type type)
 	}
 	else if (map->getNumColors() > 0)
 	{
-		// Default color for hatching (lines)
+		// Default color for lines
 		active_pattern->line_color = map->getColor(0);
 	}
 	updatePatternNames();
@@ -812,7 +812,7 @@ void AreaSymbolSettings::deleteActivePattern()
 	int index = pattern_list->currentRow();
 	if (index < 0)
 	{
-		qWarning() << "AreaSymbolSettings::deleteActivePattern(): no pattern active.";
+		qWarning() << "AreaSymbolSettings::deleteActivePattern(): no fill selected."; // not translated
 		return;
 	}
 	
