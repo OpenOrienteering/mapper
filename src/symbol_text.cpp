@@ -51,9 +51,11 @@ TextSymbol::TextSymbol() : Symbol(Symbol::Text), metrics(QFont())
 	line_below_width = 0;
 	line_below_distance = 0;
 }
+
 TextSymbol::~TextSymbol()
 {
 }
+
 Symbol* TextSymbol::duplicate() const
 {
 	TextSymbol* new_text = new TextSymbol();
@@ -90,6 +92,7 @@ void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 	if (line_below && line_below_color && line_below_width > 0)
 		createLineBelowRenderables(object, output);
 }
+
 void TextSymbol::createLineBelowRenderables(Object* object, RenderableVector& output)
 {
 	TextObject* text_object = reinterpret_cast<TextObject*>(object);
@@ -150,6 +153,7 @@ void TextSymbol::colorDeleted(Map* map, int pos, MapColor* color)
 		getIcon(map, true);
 	}
 }
+
 bool TextSymbol::containsColor(MapColor* color)
 {
 	return color == this->color;
@@ -206,6 +210,7 @@ void TextSymbol::saveImpl(QFile* file, Map* map)
 	for (int i = 0; i < num_custom_tabs; ++i)
 		file->write((const char*)&custom_tabs[i], sizeof(int));
 }
+
 bool TextSymbol::loadImpl(QFile* file, int version, Map* map)
 {
 	int temp;
@@ -275,11 +280,18 @@ SymbolPropertiesWidget* TextSymbol::createPropertiesWidget(SymbolSettingDialog* 
 // ### TextSymbolSettings ###
 
 TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* dialog)
-: SymbolPropertiesWidget(symbol, dialog), symbol(symbol), dialog(dialog)
+: SymbolPropertiesWidget(symbol, dialog), 
+  symbol(symbol), 
+  dialog(dialog)
 {
 	Map* map = dialog->getPreviewMap();
+	react_to_changes = true;
+	
+	QWidget* text_tab = new QWidget();
+	addPropertiesGroup(tr("Text settings"), text_tab);
 	
 	QFormLayout* layout = new QFormLayout();
+	text_tab->setLayout(layout);
 	
 	font_edit = new QFontComboBox();
 	layout->addRow(tr("Font family:"), font_edit);
@@ -328,71 +340,47 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	ocad_compat_check = new QCheckBox(tr("OCAD compatibility settings"));
 	layout->addRow(ocad_compat_check);
 	
-	font_edit->setCurrentFont(QFont(symbol->font_family));
-	size_edit->setValue(0.001 * symbol->font_size);
-	bold_check->setChecked(symbol->bold);
-	italic_check->setChecked(symbol->italic);
-	underline_check->setChecked(symbol->underline);
-	line_spacing_edit->setValue(100.0 * symbol->line_spacing);
-	paragraph_spacing_edit->setValue(0.001 * symbol->paragraph_spacing);
-	character_spacing_edit->setValue(100 * symbol->character_spacing);
-	kerning_check->setChecked(symbol->kerning);
 	
 	ocad_compat_widget = new QWidget();
+	addPropertiesGroup(tr("OCAD compatibility"), ocad_compat_widget);
 	
-	QLabel* line_below_label = new QLabel("<br/><b>" + tr("Line below paragraphs") + "</b>");
-	line_below_check = new QCheckBox(tr("Enable"));
-	line_below_check->setChecked(symbol->line_below);
-	line_below_color_edit = new ColorDropDown(map, symbol->line_below_color);
-	line_below_width_label = new QLabel(tr("Width:"));
-	line_below_width_edit = new QLineEdit(QString::number(0.001 * symbol->line_below_width));
-	line_below_width_edit->setValidator(new DoubleValidator(0, 999999, line_below_width_edit));
-	line_below_distance_label = new QLabel(tr("Distance from baseline:"));
-	line_below_distance_edit = new QLineEdit(QString::number(0.001 * symbol->line_below_distance));
-	line_below_distance_edit->setValidator(new DoubleValidator(0, 999999, line_below_distance_edit));
-	if (!symbol->line_below)
-	{
-		line_below_color_edit->hide();
-		line_below_width_label->hide();
-		line_below_width_edit->hide();
-		line_below_distance_label->hide();
-		line_below_distance_edit->hide();
-	}
-	
-	QLabel* custom_tabs_label = new QLabel("<br/><b>" + tr("Custom tabulator positions") + "</b>");
-	custom_tab_list = new QListWidget();
-	for (int i = 0; i < symbol->getNumCustomTabs(); ++i)
-		custom_tab_list->addItem(QString::number(0.001 * symbol->getCustomTab(i)));
-	custom_tab_add = new QPushButton(QIcon(":/images/plus.png"), "");
-	custom_tab_remove = new QPushButton(QIcon(":/images/minus.png"), "");
-	customTabRowChanged(custom_tab_list->row(custom_tab_list->currentItem()));
-	
-	QGridLayout* line_below_layout = new QGridLayout();
-	line_below_layout->addWidget(line_below_width_label, 0, 0);
-	line_below_layout->addWidget(line_below_width_edit, 0, 1);
-	line_below_layout->addWidget(line_below_distance_label, 1, 0);
-	line_below_layout->addWidget(line_below_distance_edit, 1, 1);
-	
-	QHBoxLayout* custom_tabs_button_layout = new QHBoxLayout();
-	custom_tabs_button_layout->addWidget(custom_tab_add);
-	custom_tabs_button_layout->addWidget(custom_tab_remove);
-	custom_tabs_button_layout->addSpacing(1);
-	
-	QVBoxLayout* ocad_compat_layout = new QVBoxLayout();
-	ocad_compat_layout->setMargin(0);
-	ocad_compat_layout->setSpacing(0);
-	ocad_compat_layout->addWidget(line_below_label);
-	ocad_compat_layout->addWidget(line_below_check);
-	ocad_compat_layout->addWidget(line_below_color_edit);
-	ocad_compat_layout->addLayout(line_below_layout);
-	ocad_compat_layout->addWidget(custom_tabs_label);
-	ocad_compat_layout->addWidget(custom_tab_list);
-	ocad_compat_layout->addLayout(custom_tabs_button_layout);
+	QFormLayout* ocad_compat_layout = new QFormLayout();
 	ocad_compat_widget->setLayout(ocad_compat_layout);
 	
-	QWidget* text_tab = new QWidget();
-	text_tab->setLayout(layout);
-	addPropertiesGroup(tr("Text settings"), text_tab);
+	ocad_compat_layout->addRow(Util::Headline::create(tr("Line below paragraphs")));
+	
+	line_below_check = new QCheckBox(tr("enabled"));
+	ocad_compat_layout->addRow(line_below_check);
+	
+	line_below_width_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
+	ocad_compat_layout->addRow(tr("Line width:"), line_below_width_edit);
+	
+	line_below_color_edit = new ColorDropDown(map);
+	ocad_compat_layout->addRow(tr("Line color:"), line_below_color_edit);
+	
+	line_below_distance_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
+	ocad_compat_layout->addRow(tr("Distance from baseline:"), line_below_distance_edit);
+	
+	ocad_compat_layout->addItem(Util::SpacerItem::create(this));
+	
+	ocad_compat_layout->addRow(Util::Headline::create(tr("Custom tabulator positions")));
+	
+	custom_tab_list = new QListWidget();
+	ocad_compat_layout->addRow(custom_tab_list);
+	
+	QHBoxLayout* custom_tabs_button_layout = new QHBoxLayout();
+	custom_tab_add = new QPushButton(QIcon(":/images/plus.png"), "");
+	custom_tabs_button_layout->addWidget(custom_tab_add);
+	custom_tab_remove = new QPushButton(QIcon(":/images/minus.png"), "");
+	custom_tabs_button_layout->addWidget(custom_tab_remove);
+	custom_tabs_button_layout->addStretch(1);
+	
+	ocad_compat_layout->addRow(custom_tabs_button_layout);
+	
+	
+	updateGeneralContents();
+	updateCompatibilityContents();
+	
 	
 	connect(font_edit, SIGNAL(currentFontChanged(QFont)), this, SLOT(fontChanged(QFont)));
 	connect(size_edit, SIGNAL(valueChanged(double)), this, SLOT(sizeChanged(double)));
@@ -405,36 +393,41 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	connect(paragraph_spacing_edit, SIGNAL(valueChanged(double)), this, SLOT(spacingChanged(double)));
 	connect(character_spacing_edit, SIGNAL(valueChanged(double)), this, SLOT(spacingChanged(double)));
 	connect(kerning_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
-	connect(ocad_compat_check, SIGNAL(clicked(bool)), this, SLOT(ocadCompatibilityButtonClicked()));
+	connect(ocad_compat_check, SIGNAL(clicked(bool)), this, SLOT(ocadCompatibilityButtonClicked(bool)));
+	
 	connect(line_below_check, SIGNAL(clicked(bool)), this, SLOT(lineBelowCheckClicked(bool)));
 	connect(line_below_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(lineBelowSettingChanged()));
-	connect(line_below_width_edit, SIGNAL(textEdited(QString)), this, SLOT(lineBelowSettingChanged()));
-	connect(line_below_distance_edit, SIGNAL(textEdited(QString)), this, SLOT(lineBelowSettingChanged()));
+	connect(line_below_width_edit, SIGNAL(valueChanged(double)), this, SLOT(lineBelowSettingChanged()));
+	connect(line_below_distance_edit, SIGNAL(valueChanged(double)), this, SLOT(lineBelowSettingChanged()));
 	connect(custom_tab_list, SIGNAL(currentRowChanged(int)), this, SLOT(customTabRowChanged(int)));
 	connect(custom_tab_add, SIGNAL(clicked(bool)), this, SLOT(addCustomTabClicked()));
 	connect(custom_tab_remove, SIGNAL(clicked(bool)), this, SLOT(removeCustomTabClicked()));
-	
-	if (symbol->line_below || symbol->getNumCustomTabs() > 0)
-		ocadCompatibilityButtonClicked();
 }
 
 TextSymbolSettings::~TextSymbolSettings()
 {
-	delete ocad_compat_widget;
 }
 
 void TextSymbolSettings::fontChanged(QFont font)
 {
+	if (!react_to_changes)
+		return;
+	
 	symbol->font_family = font.family();
 	symbol->updateQFont();
 	emit propertiesModified();
 }
+
 void TextSymbolSettings::sizeChanged(double value)
 {
+	if (!react_to_changes)
+		return;
+	
 	symbol->font_size = qRound(1000 * value);
 	symbol->updateQFont();
 	emit propertiesModified();
 }
+
 void TextSymbolSettings::determineSizeClicked()
 {
 	DetermineFontSizeDialog modal_dialog(this, symbol);
@@ -445,14 +438,22 @@ void TextSymbolSettings::determineSizeClicked()
 		emit propertiesModified();
 	}
 }
+
 void TextSymbolSettings::colorChanged()
 {
+	if (!react_to_changes)
+		return;
+	
 	symbol->color = color_edit->color();
 	symbol->updateQFont();
 	emit propertiesModified();
 }
+
 void TextSymbolSettings::checkToggled(bool checked)
 {
+	if (!react_to_changes)
+		return;
+	
 	symbol->bold = bold_check->isChecked();
 	symbol->italic = italic_check->isChecked();
 	symbol->underline = underline_check->isChecked();
@@ -460,8 +461,12 @@ void TextSymbolSettings::checkToggled(bool checked)
 	symbol->updateQFont();
 	emit propertiesModified();
 }
+
 void TextSymbolSettings::spacingChanged(double value)
 {
+	if (!react_to_changes)
+		return;
+	
 	symbol->line_spacing = 0.01 * line_spacing_edit->value();
 	symbol->paragraph_spacing = qRound(1000.0 * paragraph_spacing_edit->value());
 	symbol->character_spacing = 0.01f * character_spacing_edit->value();
@@ -469,41 +474,62 @@ void TextSymbolSettings::spacingChanged(double value)
 	emit propertiesModified();
 }
 
-void TextSymbolSettings::ocadCompatibilityButtonClicked()
+void TextSymbolSettings::ocadCompatibilityButtonClicked(bool checked)
 {
-	ocad_compat_check->setEnabled(false);
-	addPropertiesGroup(tr("OCAD compatibility"), ocad_compat_widget);
-	ocad_compat_widget = NULL; // deleted by dialog
+	if (!react_to_changes)
+		return;
+	
+	setTabEnabled(indexOf(ocad_compat_widget), checked);
+	updateCompatibilityCheckEnabled();
 }
 
 void TextSymbolSettings::lineBelowCheckClicked(bool checked)
 {
+	if (!react_to_changes)
+		return;
+	
 	symbol->line_below = checked;
+	if (checked)
+	{
+		// Set defaults such that the line becomes visible
+		if (symbol->line_below_width == 0)
+			line_below_width_edit->setValue(0.1);
+		if (symbol->line_below_color == NULL)
+			line_below_color_edit->setCurrentIndex(1);
+	}
+	
 	symbol->updateQFont();
 	emit propertiesModified();
 	
-	line_below_color_edit->setVisible(checked);
-	line_below_width_label->setVisible(checked);
-	line_below_width_edit->setVisible(checked);
-	line_below_distance_label->setVisible(checked);
-	line_below_distance_edit->setVisible(checked);
+	line_below_color_edit->setEnabled(checked);
+	line_below_width_edit->setEnabled(checked);
+	line_below_distance_edit->setEnabled(checked);
+	updateCompatibilityCheckEnabled();
 }
+
 void TextSymbolSettings::lineBelowSettingChanged()
 {
+	if (!react_to_changes)
+		return;
+	
 	symbol->line_below_color = line_below_color_edit->color();
-	symbol->line_below_width = qRound(1000 * line_below_width_edit->text().toFloat());
-	symbol->line_below_distance = qRound(1000 * line_below_distance_edit->text().toFloat());
+	symbol->line_below_width = qRound(1000.0 * line_below_width_edit->value());
+	symbol->line_below_distance = qRound(1000.0 * line_below_distance_edit->value());
 	symbol->updateQFont();
 	emit propertiesModified();
+	updateCompatibilityCheckEnabled();
 }
+
 void TextSymbolSettings::customTabRowChanged(int row)
 {
 	custom_tab_remove->setEnabled(row >= 0);
 }
+
 void TextSymbolSettings::addCustomTabClicked()
 {
 	bool ok = false;
-	double position = QInputDialog::getDouble(dialog, tr("Add custom tabulator"), tr("Position [mm]:"), 0, 0, 999999, 3, &ok);
+	// FIXME: Unit of measurement display in unusual way
+	double position = QInputDialog::getDouble(dialog, tr("Add custom tabulator"), QString("%1 (%2)").arg(tr("Position:")).arg(tr("mm")), 0, 0, 999999, 3, &ok);
 	if (ok)
 	{
 		int int_position = qRound(1000 * position);
@@ -520,77 +546,132 @@ void TextSymbolSettings::addCustomTabClicked()
 			}
 		}
 		
-		custom_tab_list->insertItem(row, QString::number(position));
+		custom_tab_list->insertItem(row, locale().toString(position, 'g', 3) % ' ' % tr("mm"));
 		custom_tab_list->setCurrentRow(row);
 		symbol->custom_tabs.insert(symbol->custom_tabs.begin() + row, int_position);
+		emit propertiesModified();
+		updateCompatibilityCheckEnabled();
 	}
 }
+
 void TextSymbolSettings::removeCustomTabClicked()
 {
 	int row = custom_tab_list->row(custom_tab_list->currentItem());
 	delete custom_tab_list->item(row);
 	custom_tab_list->setCurrentRow(row - 1);
 	symbol->custom_tabs.erase(symbol->custom_tabs.begin() + row);
+	emit propertiesModified();
+	updateCompatibilityCheckEnabled();
+}
+
+void TextSymbolSettings::updateGeneralContents()
+{
+	react_to_changes = false;
+	font_edit->setCurrentFont(QFont(symbol->font_family));
+	size_edit->setValue(0.001 * symbol->font_size);
+	bold_check->setChecked(symbol->bold);
+	italic_check->setChecked(symbol->italic);
+	underline_check->setChecked(symbol->underline);
+	line_spacing_edit->setValue(100.0 * symbol->line_spacing);
+	paragraph_spacing_edit->setValue(0.001 * symbol->paragraph_spacing);
+	character_spacing_edit->setValue(100 * symbol->character_spacing);
+	kerning_check->setChecked(symbol->kerning);
+	ocad_compat_check->setChecked(symbol->line_below || symbol->getNumCustomTabs() > 0);
+	react_to_changes = true;
+	
+	ocadCompatibilityButtonClicked(ocad_compat_check->isChecked());
+}
+
+void TextSymbolSettings::updateCompatibilityCheckEnabled()
+{
+	ocad_compat_check->setEnabled(!symbol->line_below && symbol->getNumCustomTabs() == 0);
+}
+
+void TextSymbolSettings::updateCompatibilityContents()
+{
+	react_to_changes = false;
+	line_below_check->setChecked(symbol->line_below);
+	line_below_width_edit->setValue(0.001 * symbol->line_below_width);
+	line_below_color_edit->setColor(symbol->line_below_color);
+	line_below_distance_edit->setValue(0.001 * symbol->line_below_distance);
+	
+	line_below_color_edit->setEnabled(symbol->line_below);
+	line_below_width_edit->setEnabled(symbol->line_below);
+	line_below_distance_edit->setEnabled(symbol->line_below);
+
+	custom_tab_list->clear();
+	for (int i = 0; i < symbol->getNumCustomTabs(); ++i)
+		custom_tab_list->addItem(locale().toString(0.001 * symbol->getCustomTab(i), 'g', 3) % ' ' % tr("mm"));
+	
+	react_to_changes = true;
+}
+
+void TextSymbolSettings::reset(Symbol* symbol)
+{
+	assert(symbol->getType() == Symbol::Text);
+	
+	SymbolPropertiesWidget::reset(symbol);
+	this->symbol = reinterpret_cast<TextSymbol*>(symbol);
+	
+	updateGeneralContents();
+	updateCompatibilityContents();
 }
 
 
 // ### DetermineFontSizeDialog ###
 
-DetermineFontSizeDialog::DetermineFontSizeDialog(QWidget* parent, TextSymbol* symbol) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), symbol(symbol)
+DetermineFontSizeDialog::DetermineFontSizeDialog(QWidget* parent, TextSymbol* symbol) 
+: QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), 
+  symbol(symbol)
 {
 	setWindowTitle(tr("Determine font size"));
 	
-	QLabel* explanation_label = new QLabel(tr("How big a letter in a font is depends on the design of the font.\nThis dialog allows to choose a font size which results in a given exact height for a specific letter."));
-	explanation_label->setWordWrap(true);
+	QFormLayout *form_layout = new QFormLayout();
 	
-	QLabel* character_label = new QLabel(tr("Letter:"));
+	QLabel* explanation_label = new QLabel(tr("This dialog allows to choose a font size which results in a given exact height for a specific letter."));
+	explanation_label->setWordWrap(true);
+	form_layout->addRow(explanation_label);
+	
 	character_edit = new QLineEdit(tr("A"));
 	character_edit->setMaxLength(1);
+	form_layout->addRow(tr("Letter:"), character_edit);
+
+	size_edit = Util::SpinBox::create(1, 0.0, 999999.9, tr("mm"));
+	size_edit->setValue(symbol->getFontSize());
+	form_layout->addRow(tr("Height:"), size_edit);
 	
-	QLabel* size_label = new QLabel(tr("Height:"));
-	size_edit = new QLineEdit(QString::number(symbol->getFontSize()));
-	size_edit->setValidator(new DoubleValidator(0, 999999));
-	
-	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	ok_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("OK"));
-	ok_button->setDefault(true);
-	
-	QHBoxLayout* buttons_layout = new QHBoxLayout();
-	buttons_layout->addWidget(cancel_button);
-	buttons_layout->addStretch(1);
-	buttons_layout->addWidget(ok_button);
-	
-	QGridLayout* settings_layout = new QGridLayout();
-	settings_layout->addWidget(explanation_label, 0, 0, 1, 2);
-	settings_layout->addWidget(character_label, 1, 0);
-	settings_layout->addWidget(character_edit, 1, 1);
-	settings_layout->addWidget(size_label, 2, 0);
-	settings_layout->addWidget(size_edit, 2, 1);
+	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+	ok_button = button_box->button(QDialogButtonBox::Ok);
+	updateOkButton();
 	
 	QVBoxLayout* layout = new QVBoxLayout();
-	layout->addLayout(settings_layout);
-	layout->addSpacing(16);
-	layout->addLayout(buttons_layout);
+	layout->addLayout(form_layout, 1);
+	layout->addItem(Util::SpacerItem::create(this));
+	layout->addWidget(button_box, 0);
+	
 	setLayout(layout);
 	
-	connect(character_edit, SIGNAL(textEdited(QString)), this, SLOT(characterEdited(QString)));
-	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
-	connect(ok_button, SIGNAL(clicked(bool)), this, SLOT(okClicked()));
+	connect(character_edit, SIGNAL(textEdited(QString)), this, SLOT(updateOkButton()));
+	connect(size_edit, SIGNAL(valueChanged(double)), this, SLOT(updateOkButton()));
+	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
+	connect(button_box, SIGNAL(accepted()), this, SLOT(accept()));
 }
-void DetermineFontSizeDialog::characterEdited(QString text)
+
+void DetermineFontSizeDialog::updateOkButton()
 {
-	ok_button->setEnabled(!text.isEmpty());
+	ok_button->setEnabled(!character_edit->text().isEmpty() && size_edit->value() > 0);
 }
-void DetermineFontSizeDialog::okClicked()
+
+void DetermineFontSizeDialog::accept()
 {
 	QChar character = character_edit->text().at(0);
 	double character_internal_height = symbol->getFontMetrics().tightBoundingRect(character).height();
 	double character_height_at_size_one = character_internal_height / TextSymbol::internal_point_size;
-	double desired_height = size_edit->text().toFloat();
+	double desired_height = size_edit->value();
 	
-	symbol->font_size = qRound(1000 * desired_height / character_height_at_size_one);
+	symbol->font_size = qRound(1000.0 * desired_height / character_height_at_size_one);
 	symbol->updateQFont();
-	accept();
+	QDialog::accept();
 }
 
 #include "symbol_text.moc"

@@ -31,7 +31,6 @@
 class QCheckBox;
 class QDoubleSpinBox;
 class QFontComboBox;
-class QLabel;
 class QLineEdit;
 class QListWidget;
 class QPushButton;
@@ -124,6 +123,16 @@ public:
 	TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* dialog);
     virtual ~TextSymbolSettings();
 	
+	virtual bool isResetSupported() { return true; }
+	
+	virtual void reset(Symbol* symbol);
+	
+	void updateGeneralContents();
+	
+	void updateCompatibilityCheckEnabled();
+	
+	void updateCompatibilityContents();
+	
 protected slots:
 	void fontChanged(QFont font);
 	void sizeChanged(double value);
@@ -132,7 +141,7 @@ protected slots:
 	void checkToggled(bool checked);
 	void spacingChanged(double value);
 	
-	void ocadCompatibilityButtonClicked();
+	void ocadCompatibilityButtonClicked(bool checked);
 	void lineBelowCheckClicked(bool checked);
 	void lineBelowSettingChanged();
 	void customTabRowChanged(int row);
@@ -143,29 +152,29 @@ private:
 	TextSymbol* symbol;
 	SymbolSettingDialog* dialog;
 	
-	ColorDropDown* color_edit;
-	QFontComboBox* font_edit;
+	ColorDropDown*  color_edit;
+	QFontComboBox*  font_edit;
 	QDoubleSpinBox* size_edit;
-	QPushButton* size_determine_button;
-	QCheckBox* bold_check;
-	QCheckBox* italic_check;
-	QCheckBox* underline_check;
+	QPushButton*    size_determine_button;
+	QCheckBox*      bold_check;
+	QCheckBox*      italic_check;
+	QCheckBox*      underline_check;
 	QDoubleSpinBox* line_spacing_edit;
 	QDoubleSpinBox* paragraph_spacing_edit;
 	QDoubleSpinBox* character_spacing_edit;
-	QCheckBox* kerning_check;
+	QCheckBox*      kerning_check;
+	QCheckBox*      ocad_compat_check;
 	
-	QCheckBox* ocad_compat_check;
-	QWidget* ocad_compat_widget;
-	QCheckBox* line_below_check;
-	ColorDropDown* line_below_color_edit;
-	QLabel* line_below_width_label;
-	QLineEdit* line_below_width_edit;
-	QLabel* line_below_distance_label;
-	QLineEdit* line_below_distance_edit;
-	QListWidget* custom_tab_list;
-	QPushButton* custom_tab_add;
-	QPushButton* custom_tab_remove;
+	QWidget*        ocad_compat_widget;
+	QCheckBox*      line_below_check;
+	QDoubleSpinBox* line_below_width_edit;
+	ColorDropDown*  line_below_color_edit;
+	QDoubleSpinBox* line_below_distance_edit;
+	QListWidget*    custom_tab_list;
+	QPushButton*    custom_tab_add;
+	QPushButton*    custom_tab_remove;
+	
+	bool react_to_changes;
 };
 
 class DetermineFontSizeDialog : public QDialog
@@ -174,17 +183,16 @@ Q_OBJECT
 public:
 	DetermineFontSizeDialog(QWidget* parent, TextSymbol* symbol);
 	
-private slots:
-	void okClicked();
-	void characterEdited(QString text);
+public slots:
+	virtual void accept();
+	void updateOkButton();
 	
 private:
 	QLineEdit* character_edit;
-	QLineEdit* size_edit;
+	QDoubleSpinBox* size_edit;
 	QPushButton* ok_button;
 	
 	TextSymbol* symbol;
-	public slots:
 };
 
 #endif
