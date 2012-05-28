@@ -23,6 +23,9 @@
 #include <limits>
 
 #include <QtGui>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QXmlStreamReader>
 
 #include "georeferencing.h"
 #include "main_window.h"
@@ -60,6 +63,11 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	
 	scale_edit  = new QLabel();
 	declination_edit = Util::SpinBox::create(1, -180.0, +180.0, trUtf8("°"));
+	declination_button = new QPushButton(tr("Lookup..."));
+	declination_button->setEnabled(!georef->isLocal());
+	QHBoxLayout* declination_layout = new QHBoxLayout();
+	declination_layout->addWidget(declination_edit, 1);
+	declination_layout->addWidget(declination_button, 0);
 	grivation_edit = Util::SpinBox::create(1, -180.0, +180.0, trUtf8("°"));
 	ref_point_edit = new QLabel();
 	QPushButton* ref_point_button = new QPushButton(tr("&Select..."));
@@ -102,8 +110,7 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	
 	edit_layout->addRow(Util::Headline::create(tr("General")));
 	edit_layout->addRow(tr("Map scale:"), scale_edit);
-	edit_layout->addRow(tr("&Declination:"), declination_edit);
-	edit_layout->addRow(tr("&Grivation:"), grivation_edit);
+	edit_layout->addRow(tr("Declination:"), declination_layout); 
 	edit_layout->addRow(tr("Reference point:"), ref_point_layout);
 	edit_layout->addItem(Util::SpacerItem::create(this));
 	
@@ -114,6 +121,7 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	edit_layout->addRow(tr("Reference point &easting:"), easting_edit);
 	edit_layout->addRow(tr("Reference point &northing:"), northing_edit);
 	edit_layout->addRow(tr("Convergence:"), convergence_edit);
+	edit_layout->addRow(tr("&Grivation:"), grivation_edit);
 	edit_layout->addItem(Util::SpacerItem::create(this));
 	
 	edit_layout->addRow(Util::Headline::create(tr("Geographic coordinates")));
@@ -130,6 +138,7 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	
 	setLayout(layout);
 	
+	connect(declination_button, SIGNAL(clicked(bool)), this, SLOT(requestDeclination()));
 	connect(declination_edit, SIGNAL(valueChanged(double)), this, SLOT(declinationChanged(double)));
 	connect(grivation_edit, SIGNAL(valueChanged(double)), this, SLOT(grivationChanged(double)));
 	connect(ref_point_button, SIGNAL(clicked(bool)), this,SLOT(selectRefPoint()));
@@ -307,13 +316,106 @@ void GeoreferencingDialog::updateLatLon()
 		lat_edit->setEnabled(true);
 		lon_edit->setEnabled(true);
 		link_label->setEnabled(true);
+		declination_button->setEnabled(true);
 	}
 	else
 	{
 		lat_edit->setEnabled(false);
 		lon_edit->setEnabled(false);
 		link_label->clear();
+		declination_button->setEnabled(false);
 	}
+}
+
+void GeoreferencingDialog::requestDeclination(bool no_confirm)
+{
+	if (georef->isLocal())
+		return;
+	
+	// TODO: Move to resources or preferences. Assess security risks of url distinction.
+	QString user_url("http://www.ngdc.noaa.gov/geomag-web/");
+	QUrl service_url("http://www.ngdc.noaa.gov/geomag-web/calculators/calculateDeclination");
+	LatLon latlon(georef->getGeographicRefPoint());
+	
+	if (!no_confirm)
+	{
+		int result = QMessageBox::question(this, tr("Online declination lookup"),
+		  trUtf8("The magnetic declination for the reference point %1° %2° will now be retrieved from <a href=\"%3\">%3</a>. Do you want to continue?").
+		    arg(latlon.getLatitudeInDegrees()).arg(latlon.getLongitudeInDegrees()).arg(user_url),
+		  QMessageBox::Yes | QMessageBox::No,
+		  QMessageBox::Yes );
+		if (result != QMessageBox::Yes)
+			return;
+	}
+	
+	declination_button->setEnabled(false);
+	declination_button->setText(tr("Loading..."));
+	
+	QNetworkAccessManager *network = new QNetworkAccessManager(this);
+	connect(network, SIGNAL(finished(QNetworkReply*)), this, SLOT(declinationReplyFinished(QNetworkReply*)));
+	
+	service_url.addQueryItem("lat1", QString::number(latlon.getLatitudeInDegrees()));
+	service_url.addQueryItem("lon1", QString::number(latlon.getLongitudeInDegrees()));
+	service_url.addQueryItem("resultFormat", "xml");
+	network->get(QNetworkRequest(service_url));
+}
+
+void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
+{
+	declination_button->setEnabled(!georef->isLocal());
+	declination_button->setText(tr("Lookup..."));
+	
+	QString error_string;
+	if (reply->error() != QNetworkReply::NoError)
+	{
+		error_string = reply->errorString();
+	}
+	else
+	{
+		QXmlStreamReader xml(reply);	
+		if (xml.readNextStartElement() && xml.name() == "maggridresult")
+		{
+			if (xml.readNextStartElement() && xml.name() == "result")
+			{
+				while (xml.readNextStartElement())
+				{
+					if (xml.name() == "declination")
+					{
+						QString text = xml.readElementText(QXmlStreamReader::IncludeChildElements);
+						bool ok;
+						double declination = text.toDouble(&ok);
+						if (ok)
+						{
+							// success
+							declination_edit->setValue(declination);
+							return;
+						}
+						else 
+						{
+							error_string = tr("Could not parse data.") % ' ';
+						}
+					}
+					xml.skipCurrentElement();
+				}
+			}
+		}
+		else if (xml.readNextStartElement() && xml.name() == "errors")
+		{
+			error_string.append(xml.readElementText(QXmlStreamReader::IncludeChildElements) % ' ');
+		}
+		
+		if (xml.error() != QXmlStreamReader::NoError)
+			error_string.append(xml.errorString());
+		else if (error_string.isEmpty())
+			error_string = tr("Declination value not found.");
+	}
+		
+	int result = QMessageBox::critical(this, tr("Online declination lookup"),
+		tr("The online declination lookup failed:\n%1").arg(error_string),
+		QMessageBox::Retry | QMessageBox::Close,
+		QMessageBox::Close );
+	if (result == QMessageBox::Retry)
+		requestDeclination(true);
 }
 
 void GeoreferencingDialog::declinationChanged(double value)

@@ -35,6 +35,7 @@ class QLabel;
 class QLineEdit;
 class QPushButton;
 class QSpinBox;
+class QNetworkReply;
 
 class Georeferencing;
 class Map;
@@ -82,7 +83,15 @@ public:
 	 */
 	int exec();
 	
+	
 public slots:
+	/**
+	 * Triggers an online request for the magnetic declination.
+	 * 
+	 * @param no_confirm If true, the user will not be asked for confirmation.
+	 */
+	void requestDeclination(bool no_confirm = false);
+	
 	/**
 	 * Sets the map coordinates of the reference point
 	 */
@@ -113,6 +122,11 @@ public slots:
 	void accept();
 	
 protected slots:
+	/**
+	 * Handles replies from the online declination service.
+	 */
+	void declinationReplyFinished(QNetworkReply* reply);
+	
 	/** 
 	 * Notifies the dialog of a change in the declination field.
 	 */
@@ -202,6 +216,7 @@ private:
 	/* GUI elements */
 	QLabel* scale_edit;
 	QDoubleSpinBox* declination_edit;
+	QPushButton* declination_button;
 	QDoubleSpinBox* grivation_edit;
 	QLabel* ref_point_edit;
 	
