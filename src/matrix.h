@@ -21,16 +21,14 @@
 #ifndef _WORDS_MATRIX_H_
 #define _WORDS_MATRIX_H_
 
-#include <string.h>
-#include <assert.h>
-#include <stdio.h>
-#include <math.h>
+#include <cstring>
+#include <cassert>
+#include <cstdio>
+#include <cmath>
 
 #include <QObject>
 
-QT_BEGIN_NAMESPACE
 class QFile;
-QT_END_NAMESPACE
 
 #ifdef _MSC_VER
 	#define isnan _isnan
@@ -190,7 +188,7 @@ public:
 		}
 		result *= a.get(n-1, n-1);
 		
-		if (isnan(result))
+		if (std::isnan(result))
 		{
 			print();
 			assert(false);
