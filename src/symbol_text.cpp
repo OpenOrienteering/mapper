@@ -300,10 +300,17 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	size_layout->setMargin(0);
 	size_layout->setSpacing(0);
 	
-	size_edit = Util::SpinBox::create(1, 0.0, 999999.9, tr("mm"));
+	size_edit = Util::SpinBox::create(1, 0.0, 999999.9);
 	size_layout->addWidget(size_edit);
 	
+	size_unit_combo = new QComboBox();
+	size_unit_combo->addItem(tr("mm"), QVariant((int)SizeInMM));
+	size_unit_combo->addItem(tr("pt"), QVariant((int)SizeInPT));
+	size_unit_combo->setCurrentIndex(0);
+	size_layout->addWidget(size_unit_combo);
+	
 	size_determine_button = new QPushButton(tr("Determine size..."));
+	size_layout->addSpacing(8);
 	size_layout->addWidget(size_determine_button);
 	
 	layout->addRow(tr("Font size:"), size_layout);
@@ -384,6 +391,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	
 	connect(font_edit, SIGNAL(currentFontChanged(QFont)), this, SLOT(fontChanged(QFont)));
 	connect(size_edit, SIGNAL(valueChanged(double)), this, SLOT(sizeChanged(double)));
+	connect(size_unit_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(sizeUnitChanged(int)));
 	connect(size_determine_button, SIGNAL(clicked(bool)), this, SLOT(determineSizeClicked()));
 	connect(color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChanged()));
 	connect(bold_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
@@ -423,9 +431,34 @@ void TextSymbolSettings::sizeChanged(double value)
 	if (!react_to_changes)
 		return;
 	
-	symbol->font_size = qRound(1000 * value);
+	SizeUnit unit = (SizeUnit)size_unit_combo->itemData(size_unit_combo->currentIndex()).toInt();
+	if (unit == SizeInMM)
+		symbol->font_size = qRound(1000 * value);
+	else if (unit == SizeInPT)
+		symbol->font_size = qRound(1000 * value * (1 / 72.0 * 25.4));
+	
 	symbol->updateQFont();
 	emit propertiesModified();
+}
+
+void TextSymbolSettings::sizeUnitChanged(int index)
+{
+	if (!react_to_changes)
+		return;
+	
+	updateSizeEdit();
+}
+
+void TextSymbolSettings::updateSizeEdit()
+{
+	SizeUnit unit = (SizeUnit)size_unit_combo->itemData(size_unit_combo->currentIndex()).toInt();
+	
+	react_to_changes = false;
+	if (unit == SizeInMM)
+		size_edit->setValue(0.001 * symbol->font_size);
+	else if (unit == SizeInPT)
+		size_edit->setValue(0.001 * symbol->font_size / (1 / 72.0 * 25.4));
+	react_to_changes = true;
 }
 
 void TextSymbolSettings::determineSizeClicked()
@@ -434,7 +467,8 @@ void TextSymbolSettings::determineSizeClicked()
 	modal_dialog.setWindowModality(Qt::WindowModal);
 	if (modal_dialog.exec() == QDialog::Accepted)
 	{
-		size_edit->setValue(0.001 * symbol->font_size);
+		updateSizeEdit();
+		symbol->updateQFont();
 		emit propertiesModified();
 	}
 }
@@ -568,7 +602,7 @@ void TextSymbolSettings::updateGeneralContents()
 {
 	react_to_changes = false;
 	font_edit->setCurrentFont(QFont(symbol->font_family));
-	size_edit->setValue(0.001 * symbol->font_size);
+	updateSizeEdit();
 	bold_check->setChecked(symbol->bold);
 	italic_check->setChecked(symbol->italic);
 	underline_check->setChecked(symbol->underline);

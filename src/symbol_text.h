@@ -134,6 +134,8 @@ public:
 protected slots:
 	void fontChanged(QFont font);
 	void sizeChanged(double value);
+	void sizeUnitChanged(int index);
+	void updateSizeEdit();
 	void determineSizeClicked();
 	void colorChanged();
 	void checkToggled(bool checked);
@@ -147,12 +149,19 @@ protected slots:
 	void removeCustomTabClicked();
 	
 private:
+	enum SizeUnit
+	{
+		SizeInMM = 0,
+		SizeInPT
+	};
+	
 	TextSymbol* symbol;
 	SymbolSettingDialog* dialog;
 	
 	ColorDropDown*  color_edit;
 	QFontComboBox*  font_edit;
 	QDoubleSpinBox* size_edit;
+	QComboBox*      size_unit_combo;
 	QPushButton*    size_determine_button;
 	QCheckBox*      bold_check;
 	QCheckBox*      italic_check;
