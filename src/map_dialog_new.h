@@ -72,10 +72,20 @@ protected:
 			bool ok1, ok2;
 			int a_int = a.toInt(&ok1);
 			int b_int = b.toInt(&ok2);
-			if (ok1 && ok2)
-				return a_int < b_int;
+			if (ok1)
+			{
+				if (ok2)
+					return a_int < b_int;
+				else
+					return true;
+			}
 			else
-				return a.compare(b);
+			{
+				if (ok2)
+					return false;
+				else
+					return a.compare(b);
+			}
 		}
 	};
 	
