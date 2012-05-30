@@ -690,18 +690,8 @@ void LineSymbol::createDashSymbolRenderables(bool path_closed, const MapCoordVec
 	int size = (int)coords.size();
 	for (int i = 0; i < size; ++i)
 	{
-        // Not sure if this is what Thomas meant...
-        if (dashed)
-        {
-            // If the symbol is dashed, then only apply the symbol at dash points
-            if (!flags[i].isDashPoint()) continue;
-        }
-        else
-        {
-            // But if the symbol is undashed, it's interpreted as a corner symbol, so apply at all non-control points
-            if (i >= 2 && flags[i - 2].isCurveStart()) continue;
-            if (i >= 1 && flags[i - 1].isCurveStart()) continue;
-        }
+		// Only apply the symbol at dash points
+		if (!flags[i].isDashPoint()) continue;
 		
 		float scaling;
 		MapCoordF right = PathCoord::calculateRightVector(flags, coords, path_closed, i, &scaling);
