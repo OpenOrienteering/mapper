@@ -13,9 +13,9 @@ function goBack()
 </script>
 </head>
 <body>
-<p style="text-align: left"><a href="index.html"><button type="button">Home</button></a> &nbsp;  <input type="button" value="Back" onclick="goBack()" /></p>
+<p style="text-align: left"><a href="map_screen.html"><button type="button">Home</button></a> &nbsp;  <input type="button" value="Back" onclick="goBack()" /></p>
 
-<img class=small src="../../images/title.png" width="301" border="0" alt="" /><h1> Help</h1>
+<img class=small src="../../images/title.png" height="33" width="301" border="0" alt="" /><h1> Help</h1>
 <h3>File menu</h3>
 
 <p>These controls provide standard file management tools.  Keyboard shortcuts are shown thus: Ctrl + N will open a new map file.</p>
@@ -24,15 +24,19 @@ function goBack()
 src="../../images/new.png" width="32" height="32" border="0" alt="" /></td><td width="400">
 <p>This begins the creation of a new blank drawing, commencing with the dialog box to set the scale and the symbol set of a <a href="new_map.html">new map</a>.</p> </td></tr>
 
-<tr><td><h4>Open</h4></td><td><h4>Ctrl + O</h4></td><td><img class=small src="../../images/open.png" width="32" height="32" border="0" alt="" /></td><td><p>Opens a directory to permit opening of an existing map file.  This presently opens only files with the format .omap, or OCADv8.  It is expected that other map formats may become available in the future.</p></td></tr>
+<tr><td><h4>Open</h4></td><td><h4>Ctrl + O</h4></td><td><img class=small src="../../images/open.png" width="32" height="32" border="0" alt="" /></td><td><p>Opens a directory to permit opening of an existing map file.  This presently opens only files with the format .omap, or .ocd (version 8 only).  It is expected that other map formats may become available in the future.</p></td></tr>
 
-<tr><td><h4>Open Recent</h4></td><td><h4> </h4></td><td></td><td><p>This opens a list of recently opened files, recognising that mostly a file to be opened will usually have been previously opened in the recent past.</p></td></tr>
+<tr><td><h4>Open Recent</h4></td><td><h4> </h4></td><td></td><td><p>This opens a list of recently opened files, recognising that a file to be opened will often have been previously opened in the recent past.</p></td></tr>
 
 <tr><td><h4>Save</h4></td><td><h4>Ctrl + S</h4></td><td><img class=small src="../../images/save.png" width="32" height="32" border="0" alt="" /></td><td><p>Saves the currently opened file.  If the file has not been previously saved a directory will open to enable the file to be saved with an appropriate name in a convenient location.</p></td></tr>
 
 <tr><td><h4>Save As</h4></td><td><h4> </h4></td><td></td><td><p>Saves the currently opened drawing as a new file - a directory will open to enable the file to be saved with an appropriate name in a convenient location.</p></td></tr>
 
+<tr><td><h4>Import</h4></td><td><h4> </h4></td><td></td><td><p>Permits the import of maps or data in other formats including .gpx track log files produced by GPS navigators and .dxf (document exchange format) vector files from some graphics software.  Map files of the type .ocd version 8 may be loaded directly.</p></td></tr>
+
 <tr><td><h4>Print</h4></td><td><h4>Ctrl + P</h4></td><td><img class=small src="../../images/print.png" width="32" height="32" border="0" alt="" /></td><td><p>Prints the current map using available printers.  Set the page orientation and size.  The cooordinates of the area to be printed are shown on the print dialog in millimetres and the map screen shows a rectangle on the boundary of the print area.  There is a button at the bottom of the dialog which displays a preview of the map as it will be printed</p></td></tr>
+
+<tr><td><h4>Settings</h4></td><td><h4> </h4></td><td></td><td><p>Help for the <a href="settings.html">settings controls may be found here</a>.</p></td></tr>
 
 <tr><td><h4>Close</h4></td><td><h4>Ctrl + W </h4></td><td></td><td><p>Closes Open O-Mapper, after a file save if required.</p></td></tr>
 
@@ -40,7 +44,7 @@ src="../../images/new.png" width="32" height="32" border="0" alt="" /></td><td w
 
 <table>
 
-<p><input type="button" value="Back" onclick="goBack()" /></p>
+<p style="text-align: left"><a href="map_screen.html"><button type="button">Home</button></a> &nbsp; <input type="button" value="Back" onclick="goBack()"></p>
 <hr width="70%">
 <p><small>Updated on ... April 1, 2012</small></p>
 </body>

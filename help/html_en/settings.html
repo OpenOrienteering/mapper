@@ -13,16 +13,31 @@ function goBack()
 </script>
 </head>
 <body>
-<p style="text-align: left"><a href="index.html"><button type="button">Home</button></a> &nbsp; <input type="button" value="Back" onclick="goBack()" /></p>
+<p style="text-align: left"><a href="map_screen.html"><button type="button">Home</button></a> &nbsp; <input type="button" value="Back" onclick="goBack()" /></p>
 
-<img class=small src="../../images/title.png" width="301" border="0" alt="" /><h1> Help</h1>
+<img class=small src="../../images/title.png" height="33" width="301" border="0" alt="" /><h1> Help</h1>
 
 <h3>Settings</h3>
-<p>These controls will enable some features of the software to be set by you to suit your hardware and application.  These controls are not yet implemented.</p>
-<p>Watch this space</p>
+<p>These controls will enable some features of the software to be set by you to suit your hardware and application.</p>
 
-<p><input type="button" value="Back" onclick="goBack()"></p>
+<h3>General</h3>
+<p>The preferred language for the mapping interface and the help files may be selected here.
+
+<h3>Editor</h3> 
+<a name="antialiasing"><p class="label">High quality map display</p></a>
+<p>Your monitor may provide a better display if this check box is ticked.  If your system is slow unchecking this may help.</p><br clear=all />
+
+<a name="tolerance"><p class="label">Click tolerance</p></a>
+<p>This tolerance is how close you need to be for a cut line point to be on the line.  Set a larger value if you have difficulty making cuts, however some accuracy may be lost. </p><br clear=all />
+
+<a name="selection"><p class="label">Auto select symbol</p></a>
+<p>When this box is checked selection of any item on the map will cause the symbol editor to select the same symbol.  This is often convenient as the symbol window may be left closed (showing more of the map on your screen) and symbols selected by simply clicking another of the same item elsewhere on your map.<br clear=all />
+
+<a name="zoomaway"><p class="label">Zoom to/from cursor</p></a>
+<p>When ticked the zoom function will zoom toward or away from the cursor rather than from the middle of the window when using the scroll wheel.  Using the menu or toolbar zoom tools (or the function keys F7 & F8) will still zoom to/from the middle of the screen.</p><br clear=all />
+
+<p style="text-align: left"><a href="map_screen.html"><button type="button">Home</button></a> &nbsp; <input type="button" value="Back" onclick="goBack()"></p>
 <hr width="70%">
-<p><small>Updated on ... April 1, 2012</small></p>
+<p><small>Updated on ... June 1, 2012</small></p>
 </body>
 </html>
