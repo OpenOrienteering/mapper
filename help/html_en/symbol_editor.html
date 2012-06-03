@@ -22,12 +22,20 @@ function goBack()
 <h4 id="intro">Introduction</h4>
 <p>
 The symbol editor enables any user to create new symbols or to modify any of the symbols provided in the default symbol set.  It should be understood that the default symbol set includes all the symbols permitted by the ISOM and that any new symbols created, or modifications of existing symbols, will be a departure from the international standard.</p>
-<p>There is a temptation to employ a symbol which is used in other local cartography to represent some feature on the basis that everybody who competes in this area is familiar with the notation.  However, any such departure is confusing for a competitor who may be familiar with the international standard but not with your local notation.  Similarly a local competitor may find the standard notation strange when entering international competition. Thus a non-standard notation can be to the disadvantage of both local and visiting competitors.</p>
+<p>There is a temptation to employ a symbol which is used in other local cartography to represent some feature on the basis that everybody who competes in this area is familiar with the notation.  However, any such departure is confusing for a competitor who may be familiar with the international standard but not with your local notation.  Similarly a local competitor may find the conforming notation strange when entering international competition. Thus a non-standard notation can be to the disadvantage of both local and visiting competitors.</p>
 <p>In Open Orienteering Mapper symbols are created only once, the icon on the symbol menu is created automatically from the symbol information.</p>
-<p>The symbol editor is opened by a right-click on any symbol &#8212; the menu offers options to create a new item or to Edit the selected item.</p>
+<h4>Editor</h4>
+<p>The symbol editor is opened by a right-click on any symbol &#8212; the menu offers options to create a new item or to Edit the selected item. If creation of a new symbol is selected the menu presents a choice of a point, line, area, text or a combined symbol.</p>
+<p>In each case the dialog opens with a General page which is the same for all symbols, and that is followed by pages specific to each type of symbol.  The General page is discussed (in the context of line features) <a href="#general">below</a>.</p>
+<p>A <b>Point symbol</b> is a simple feature which may be comprised of circular features, line or area features.  Detail of how to create these may be <a href="#startsymbol">found below</a> (in the context of line features)</p>
+<p>A <b>Line symbol</b> may be comprised of basic line features and also a variety of point features. Details of these are <a href="#startsymbol">found below</a>.</p>
+<p>An <b>Area symbol</b> has an area settings page which provides a colour and a minimum size for the area.  There is also facility to add a line fill (a grid of lines) or pattern fill (an array of dots or other shapes) and the creation and editing of these is the same as for patterns in the context of line features <a href="#startsymbol">found below</a>.</p>
+<p>A <b>Text symbol</b> is used to insert titles, a legend and other notes on the face of the map.  Text size and font may be set using the dialog.  Text size may be approximated as 0.24 times the point size for a typical easy to read font (but some fonts may depart significantly from this rule of thumb).  Thus 6pt font has a letter height of  6*0.24=1.44 mm.  Choosing an uncommon font may create problems for others opening the map on computer systems where this font is not installed.</p>
+<p>A <b>Combined  symbol</b> is made up of two or more other symbol defined in the Symbol window.  The combination settings dialog requires the number of contributing symbols to be fixed and the contributing symbols to be identified (they must already exist).</p>
+
+<h4>Line Editor</h4>
 <p>The editor opens with a dialog panel on the left, and on the right is a graphic showing the appearance of the symbol as it is currently configured, in a variety of lengths and orientations.</p>
 
-<h4 id="general">Features</h4>
 <p>The symbol editor dialog has up to six tabs providing access to pages on which the features of each symbol can be manipulated.</p>
 
 <a name="general"><p class="label">General</p></a>
