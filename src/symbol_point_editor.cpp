@@ -574,6 +574,8 @@ void PointSymbolEditorWidget::areaColorChanged()
 void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 {
 	Object* object = getCurrentElementObject();
+	if (!object || !midpoint_object)
+		return;
 	
 	if (column < 2)
 	{

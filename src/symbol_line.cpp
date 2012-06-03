@@ -1621,6 +1621,7 @@ void LineSymbolSettings::minimumDimensionsEdited(QString text)
 	symbol->minimum_length = qRound(1000 * minimum_length_edit->text().toFloat());
 	symbol->minimum_mid_symbol_count = qRound(1000 * minimum_mid_symbol_count_edit->text().toFloat());
 	symbol->minimum_mid_symbol_count_when_closed = qRound(1000 * minimum_mid_symbol_count_when_closed_edit->text().toFloat());
+	emit propertiesModified();
 }
 
 void LineSymbolSettings::lineCapChanged(int index)
