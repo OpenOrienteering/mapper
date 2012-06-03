@@ -13,9 +13,9 @@ function goBack()
 </script>
 </head>
 <body>
-<p style="text-align: left"><a href="index.html"><button type="button">Home</button></a> &nbsp;  <input type="button" value="Back" onclick="goBack()" /></p>
+<p style="text-align: left"><a href="map_screen.html"><button type="button">Home</button></a> &nbsp;  <input type="button" value="Back" onclick="goBack()" /></p>
 
-<img class=small src="../../images/title.png" width="301" border="0" alt="" /><h1> Help</h1>
+<img class=small src="../../images/title.png" height="33" width="301" border="0" alt="" /><h1> Help</h1>
 <h3>View menu</h3>
 
 <table><tr><td width="180"><h4>Zoom in</h4></td><td width="50"><h4>F7</h4></td><td width="40"><img class=small src="../../images/view-zoom-in.png" width="32" height="32" border="0" alt="" /></td><td width="400">
@@ -30,7 +30,10 @@ function goBack()
 <tr><td><h4>Set Zoom factor</h4></td><td><h4></h4></td><td></td><td>
 <p>Choose your zoom, centred on the present view.</p></td></tr>
 
-<tr><td><h4>Toggle Fullscreen</h4></td><td><h4>F11</h4></td><td></td><td>
+<tr><td colspan="4"><a name="coorddisplay"><h4>Display coordinates as ...</h4></a>
+<p>The coordinates of the cursor on the map are shown in the position box at the bottom right corner of your screen.  Paper coordinates refer to positions on a paper print, from an arbitrary origin (make this the bottom left corner of your page).  If your map has been georeferenced (<a href="map_menu.html#georeference">details here</a>) additional coordinate systems will be available.  UTM coordinates are metres of easting and northing from the origin point for your zone.  Latitude & longitude may be expressed in decimal degrees or in degrees, minutes and seconds.  </p><p>The coordinate system may also be selected by a right-click on the position box at the bottom right corner of your screen which will provide the same choices.</p></td></tr>
+
+<tr><td><a name="fullscreen"><h4>Toggle Fullscreen</h4></td><td><h4>F11</h4></td><td></td><td>
 <p>This toggle control switches the display to full-screen mode and back.</p></td></tr>
 
 </table>
@@ -38,7 +41,7 @@ function goBack()
 <a name="zoom"><h4>Scale and Zoom</h4></a>
 <p>The scale at which the map will be printed was set before drawing started.  The scale at which it appears on the screen is not related to the printing scale.  Zoom in by rolling the middle scroll wheel of your mouse (or repeated F7 keystrokes) to make the image as large as convenient to permit very precise placement and adjustment of features.  The zoom indicator near the bottom right corner of your screen shows approximately the current magnification of your map image.</p>
 
-<p>Sometimes if there appears to be no map image at all, it may be that you are zoomed in so close that the screen is filled with white space.  Zoom out for a broader view - this changes nothing on your map.  As you zoom in, hover the mouse over the feature you wish to see more precisely so that it stays in the visible area.</p>
+<p>Sometimes if there appears to be no map image at all, it may be that you are zoomed in so close that the screen is filled with white space.  Zoom out for a broader view - this changes nothing on your map.  As you zoom in, hover the mouse over the feature you wish to see more precisely so that it stays in the visible area.  (If this does not work check File / Settings / Editing / Zoom to/from cursor, and <a href="settings.html#zoomaway">find help here.</a>)</p>
 
 <p>Move the map image around the window by pick-&-drag with the middle (scroll wheel) mouse button.  Users without a wheel mouse can move the map with the cursor keys.</p>
 
@@ -51,7 +54,7 @@ function goBack()
 
 
 
-<p><input type="button" value="Back" onclick="goBack()" /></p>
+<p style="text-align: left"><a href="map_screen.html"><button type="button">Home</button></a> &nbsp; <input type="button" value="Back" onclick="goBack()"></p>
 <hr width="70%">
 <p><small>Updated on ... April 1, 2012</small></p>
 </body>
