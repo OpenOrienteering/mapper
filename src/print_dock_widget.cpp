@@ -341,18 +341,22 @@ void PrintWidget::currentDeviceChanged()
 		addPaperSize(QPrinter::Folio);
 		addPaperSize(QPrinter::Ledger);
 		addPaperSize(QPrinter::Tabloid);
-		addPaperSize(QPrinter::Custom);
 		have_custom_size = true;
 	}
 	else
 	{
 		foreach (QPrinter::PaperSize size, size_list)
 		{
-			addPaperSize(size);
 			if (size == QPrinter::Custom)
-				have_custom_size = true;
+				have_custom_size = true; // add it once after all other entires
+			else
+				addPaperSize(size);
 		}
 	}
+	
+	if (have_custom_size)
+		addPaperSize(QPrinter::Custom);
+	
 	width_edit->setEnabled(have_custom_size);
 	height_edit->setEnabled(have_custom_size);
 	
