@@ -28,7 +28,7 @@
 class DrawPathTool;
 class PathCoord;
 class PathObject;
-class RenderableContainer;
+class MapRenderables;
 
 /// Tool to cut objects into smaller pieces
 class CutTool : public MapEditorTool
@@ -97,7 +97,7 @@ protected:
 	
 	// Preview objects for dragging
 	PathObject* preview_path;
-	QScopedPointer<RenderableContainer> renderables;
+	QScopedPointer<MapRenderables> renderables;
 };
 
 #endif

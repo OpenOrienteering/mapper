@@ -34,8 +34,8 @@ QCursor* RotateTool::cursor = NULL;
 
 RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button)
 : MapEditorTool(editor, Other, tool_button),
-  old_renderables(new RenderableVector()), 
-  renderables(new RenderableContainer(editor->getMap()))
+  old_renderables(new MapRenderables(editor->getMap())), 
+  renderables(new MapRenderables(editor->getMap()))
 {
 	rotation_center_set = false;
 	rotating = false;

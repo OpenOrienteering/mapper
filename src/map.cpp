@@ -112,9 +112,8 @@ void MapLayer::setObject(Object* object, int pos, bool delete_old)
 void MapLayer::addObject(Object* object, int pos)
 {
 	objects.insert(objects.begin() + pos, object);
-	bool delete_old_renderables = object->getMap() == map;
 	object->setMap(map);
-	object->update(true, delete_old_renderables);
+	object->update(true, true);
 	map->setObjectsDirty();
 	
 	if (map->getNumObjects() == 1)
@@ -220,7 +219,7 @@ void MapLayer::updateAllObjects(bool remove_old_renderables)
 {
 	int size = objects.size();
 	for (int i = size - 1; i >= 0; --i)
-		objects[i]->update(true, remove_old_renderables);
+		objects[i]->update(true, true);
 }
 void MapLayer::updateAllObjectsWithSymbol(Symbol* symbol)
 {
@@ -315,7 +314,7 @@ LineSymbol* Map::undefined_line;
 PointSymbol* Map::undefined_point;
 CombinedSymbol* Map::covering_combined_line;
 
-Map::Map() : renderables(new RenderableContainer(this)), selection_renderables(new RenderableContainer(this))
+Map::Map() : renderables(new MapRenderables(this)), selection_renderables(new MapRenderables(this))
 {
 	if (!static_initialized)
 		initStatic();
@@ -702,7 +701,7 @@ void Map::includeSelectionRect(QRectF& rect)
 		++it;
 	}
 }
-void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, RenderableContainer* replacement_renderables, bool draw_normal)
+void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, MapRenderables* replacement_renderables, bool draw_normal)
 {
 	const float selection_opacity_factor = draw_normal ? 1 : 0.4f;
 	

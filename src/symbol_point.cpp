@@ -74,16 +74,16 @@ Symbol* PointSymbol::duplicate() const
 	return new_point;
 }
 
-void PointSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
+void PointSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
 {
 	createRenderablesScaled(object, flags, coords, output, 1.0f);
 }
-void PointSymbol::createRenderablesScaled(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output, float coord_scale)
+void PointSymbol::createRenderablesScaled(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, float coord_scale)
 {
 	if (inner_color && inner_radius > 0)
-		output.push_back(new DotRenderable(this, coords[0]));
+		output.insertRenderable(new DotRenderable(this, coords[0]));
 	if (outer_color && outer_width > 0)
-		output.push_back(new CircleRenderable(this, coords[0]));
+		output.insertRenderable(new CircleRenderable(this, coords[0]));
 	
 	PointObject* point = reinterpret_cast<PointObject*>(object);
 	float rotation = -point->getRotation();

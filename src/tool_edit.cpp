@@ -51,8 +51,8 @@ const Qt::Key EditTool::control_point_key = Qt::Key_Control;
 
 EditTool::EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
 : MapEditorTool(editor, Edit, tool_button),
-  old_renderables(new RenderableVector()),
-  renderables(new RenderableContainer(editor->getMap())),
+  old_renderables(new MapRenderables(editor->getMap())),
+  renderables(new MapRenderables(editor->getMap())),
   symbol_widget(symbol_widget)
 {
 	preview_update_triggered = false;

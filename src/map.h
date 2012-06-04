@@ -48,7 +48,7 @@ class LineSymbol;
 class PointSymbol;
 class Object;
 class Renderable;
-class RenderableContainer;
+class MapRenderables;
 class Template;
 class OCAD8FileImport;
 class Georeferencing;
@@ -99,7 +99,7 @@ private:
 class Map : public QObject
 {
 Q_OBJECT
-friend class RenderableContainer;
+friend class MapRenderables;
 friend class OCAD8FileImport;
 friend class XMLFileImport;
 friend class NativeFileImport;
@@ -246,7 +246,7 @@ public:
 	void getSelectionToSymbolCompatibility(Symbol* symbol, bool& out_compatible, bool& out_different);
 	
 	void includeSelectionRect(QRectF& rect); // enlarges rect to cover the selected objects
-	void drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, RenderableContainer* replacement_renderables = NULL, bool draw_normal = false);
+	void drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, MapRenderables* replacement_renderables = NULL, bool draw_normal = false);
 	
 	void addObjectToSelection(Object* object, bool emit_selection_changed);
 	void removeObjectFromSelection(Object* object, bool emit_selection_changed);
@@ -351,8 +351,8 @@ private:
 	int current_layer_index;
 	WidgetVector widgets;
 	ViewVector views;
-	QScopedPointer<RenderableContainer> renderables;
-	QScopedPointer<RenderableContainer> selection_renderables;
+	QScopedPointer<MapRenderables> renderables;
+	QScopedPointer<MapRenderables> selection_renderables;
 	
 	QString map_notes;
 	

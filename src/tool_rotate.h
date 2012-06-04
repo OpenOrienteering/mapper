@@ -28,7 +28,7 @@
 #include <QScopedPointer>
 
 class Renderable;
-class RenderableContainer;
+class MapRenderables;
 typedef std::vector<Renderable*> RenderableVector;
 
 /// Tool to rotate objects
@@ -66,8 +66,8 @@ protected:
 	double original_rotation;
 	
 	std::vector<Object*> undo_duplicates;
-	QScopedPointer<RenderableVector> old_renderables;
-	QScopedPointer<RenderableContainer> renderables;
+	QScopedPointer<MapRenderables> old_renderables;
+	QScopedPointer<MapRenderables> renderables;
 };
 
 #endif

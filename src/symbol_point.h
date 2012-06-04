@@ -47,8 +47,8 @@ public:
 	virtual ~PointSymbol();
 	virtual Symbol* duplicate() const;
 	
-	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
-	void createRenderablesScaled(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output, float coord_scale);
+	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
+	void createRenderablesScaled(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, float coord_scale);
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
 	virtual bool containsColor(MapColor* color);
 	virtual void scale(double factor);

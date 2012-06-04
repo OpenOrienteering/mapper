@@ -79,7 +79,7 @@ Symbol* TextSymbol::duplicate() const
 	return new_text;
 }
 
-void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
+void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
 {
 	TextObject* text_object = reinterpret_cast<TextObject*>(object);
 	
@@ -88,12 +88,12 @@ void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 	
 	text_object->prepareLineInfos();
 	if (color)
-		output.push_back(new TextRenderable(this, text_object, anchor_x, anchor_y));
+		output.insertRenderable(new TextRenderable(this, text_object, anchor_x, anchor_y));
 	if (line_below && line_below_color && line_below_width > 0)
 		createLineBelowRenderables(object, output);
 }
 
-void TextSymbol::createLineBelowRenderables(Object* object, RenderableVector& output)
+void TextSymbol::createLineBelowRenderables(Object* object, ObjectRenderables& output)
 {
 	TextObject* text_object = reinterpret_cast<TextObject*>(object);
 	double scale_factor = calculateInternalScaling();
@@ -142,7 +142,7 @@ void TextSymbol::createLineBelowRenderables(Object* object, RenderableVector& ou
 	for (int i = 0; i < (int)line_coords.size(); ++i)
 		line_flags[i] = ((i % 4 == 3) ? hole_flag : no_flags);
 	
-	output.push_back(new AreaRenderable(&area_symbol, line_coords, line_flags, NULL));
+	output.insertRenderable(new AreaRenderable(&area_symbol, line_coords, line_flags, NULL));
 }
 
 void TextSymbol::colorDeleted(Map* map, int pos, MapColor* color)

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps, Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -25,75 +25,183 @@
 #include "map.h"
 #include "map_color.h"
 #include "object.h"
-#include "object_text.h"
-#include "symbol_point.h"
-#include "symbol_line.h"
-#include "symbol_area.h"
-#include "symbol_text.h"
+#include "symbol.h"
 #include "util.h"
+
+// define DEBUG_OPENORIENTEERING_RENDERABLE to find leaking Renderables
+
+#ifdef DEBUG_OPENORIENTEERING_RENDERABLE
+
+#include <QDebug>
+
+qint64 renderable_instance_count = 0;
+
+void debugRenderableCount(qint64 counter)
+{
+	if (counter % 1000 == 0)
+		qDebug() << "Renderable:" << counter << "instances";
+}
+
+#endif
+
 
 Renderable::Renderable()
 {
-	clip_path = NULL;
+#ifdef DEBUG_OPENORIENTEERING_RENDERABLE
+	debugRenderableCount(++renderable_instance_count);
+#endif
 }
+
 Renderable::Renderable(const Renderable& other)
 {
 	extent = other.extent;
-	creator = other.creator;
 	color_priority = other.color_priority;
-	clip_path = other.clip_path;
+#ifdef DEBUG_OPENORIENTEERING_RENDERABLE
+	debugRenderableCount(++renderable_instance_count);
+#endif
 }
+
 Renderable::~Renderable()
 {
+#ifdef DEBUG_OPENORIENTEERING_RENDERABLE
+	debugRenderableCount(--renderable_instance_count);
+#endif
 }
+
+
+// ### RenderableContainerVector ###
+
+SharedRenderables::~SharedRenderables()
+{
+	deleteRenderables();
+}
+
+void SharedRenderables::deleteRenderables()
+{
+	for (iterator renderables = begin(); renderables != end(); ++renderables)
+	{
+		for (RenderableVector::const_iterator renderable = renderables->second.begin(); renderable != renderables->second.end(); ++renderable)
+		{
+			delete *renderable;
+		}
+		renderables->second.clear();
+		if (renderables->first.clip_path != NULL)
+			erase(renderables);
+	}
+}
+
+void SharedRenderables::compact()
+{
+	for (iterator renderables = begin(); renderables != end(); ++renderables)
+	{
+		if (renderables->second.size() == 0)
+		{
+			erase(renderables);
+		}
+	}
+}
+
+
+// ### ObjectRenderables ###
+
+ObjectRenderables::ObjectRenderables(Object* object, QRectF& extent)
+: object(object),
+  extent(extent),
+  clip_path(NULL)
+{
+}
+
+ObjectRenderables::~ObjectRenderables()
+{
+}
+
+void ObjectRenderables::setClipPath(QPainterPath* path)
+{
+	clip_path = path;
+}
+
+void ObjectRenderables::insertRenderable(Renderable* r)
+{
+	RenderStates state(r, clip_path);
+	SharedRenderables::Pointer& container(operator[](state.color_priority));
+	if (!container)
+		container = new SharedRenderables();
+	container->operator[](state).push_back(r);
+	if (extent.isValid())
+		rectInclude(extent, r->getExtent());
+	else
+		extent = r->getExtent();
+}
+
+void ObjectRenderables::clear()
+{
+	for (const_iterator color = begin(); color != end(); ++color)
+	{
+		color->second->clear();
+	}
+}
+
+void ObjectRenderables::takeRenderables()
+{
+	for (iterator color = begin(); color != end(); ++color)
+	{
+		SharedRenderables* new_container = new SharedRenderables();
+		
+		// Pre-allocate as much space as in the original container
+		for (SharedRenderables::const_iterator it = color->second->begin(); it != color->second->end(); ++it)
+		{
+			new_container->operator[](it->first).reserve(it->second.size());
+		}
+		color->second = new_container;
+	}
+}
+
+void ObjectRenderables::deleteRenderables()
+{
+	for (const_iterator color = begin(); color != end(); ++color)
+	{
+		color->second->deleteRenderables();
+	}
+}
+
 
 // ### RenderableContainer ###
 
-RenderableContainer::RenderableContainer(Map* map) : map(map)
+MapRenderables::MapRenderables(Map* map) : map(map)
 {
 }
 
-void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity_factor, bool highlighted)
+void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity_factor, bool highlighted) const
 {
-	Map::ColorVector& colors = map->color_set->colors;
-	
 	// TODO: improve performance by using some spatial acceleration structure?
-	RenderStates states;
-	states.color_priority = -1;
-	states.mode = RenderStates::Reserved;
-	states.pen_width = -1;
-	states.clip_path = NULL;
+	
+	Map::ColorVector& colors = map->color_set->colors;
 	
 	QPainterPath initial_clip = painter->clipPath();
 	bool no_initial_clip = initial_clip.isEmpty();
+	const QPainterPath* current_clip = NULL;
 	
 	painter->save();
-	Renderables::const_reverse_iterator outer_it_end = renderables.rend();
-	for (Renderables::const_reverse_iterator outer_it = renderables.rbegin(); outer_it != outer_it_end; ++outer_it)
+	const_reverse_iterator end_of_colors = rend();
+	for (const_reverse_iterator color = rbegin(); color != end_of_colors; ++color)
 	{
-		RenderableContainerVector::const_iterator it_end = outer_it->second.end();
-		for (RenderableContainerVector::const_iterator it = outer_it->second.begin(); it != it_end; ++it)
+		ObjectRenderablesMap::const_iterator end_of_objects = color->second.end();
+		for (ObjectRenderablesMap::const_iterator object = color->second.begin(); object != end_of_objects; ++object)
 		{
-			const RenderStates& new_states = (*it).first;
-			Renderable* renderable = (*it).second;
-			
-			// Bounds check
-			const QRectF& extent = renderable->getExtent();
-			if (extent.right() < bounding_box.x())	continue;
-			if (extent.bottom() < bounding_box.y())	continue;
-			if (extent.x() > bounding_box.right())	continue;
-			if (extent.y() > bounding_box.bottom())	continue;
-			
 			// Settings check
-			Symbol* symbol = renderable->getCreator()->getSymbol();
+			Symbol* symbol = object->first->getSymbol();
 			if (!show_helper_symbols && symbol->isHelperSymbol())
 				continue;
 			if (symbol->isHidden())
 				continue;
 			
-			// Change render states?
-			if (states != new_states)
+			if (!object->first->getExtent().intersects(bounding_box))
+				continue;
+			
+			SharedRenderables::const_iterator it_end = object->second->end();
+			for (SharedRenderables::const_iterator it = object->second->begin(); it != it_end; ++it)
 			{
+				const RenderStates& new_states = it->first;
 				MapColor* color;
 				float pen_width;
 				
@@ -113,6 +221,8 @@ void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool forc
 						color = Map::getCoveringRed();
 					else if (new_states.color_priority == MapColor::Undefined)
 						color = Map::getUndefinedColor();
+					else if (new_states.color_priority == MapColor::Reserved)
+						continue;
 					else
 						assert(!"Invalid special color!");
 				}
@@ -134,7 +244,7 @@ void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool forc
 				
 				painter->setOpacity(qMin(1.0f, opacity_factor * color->opacity));
 				
-				if (states.clip_path != new_states.clip_path)
+				if (current_clip != new_states.clip_path)
 				{
 					if (no_initial_clip)
 					{
@@ -149,78 +259,89 @@ void RenderableContainer::draw(QPainter* painter, QRectF bounding_box, bool forc
 						if (new_states.clip_path)
 							painter->setClipPath(*new_states.clip_path, Qt::IntersectClip);
 					}
+					current_clip = new_states.clip_path;
 				}
-				
-				states = new_states;
+					
+				RenderableVector::const_iterator r_end = it->second.end();
+				for (RenderableVector::const_iterator renderable = it->second.begin(); renderable != r_end; ++renderable)
+				{
+					// Bounds check
+					const QRectF& extent = (*renderable)->getExtent();
+					// NOTE: !bounding_box.intersects(extent) should be logical equivalent to the following
+					if (extent.right() < bounding_box.x())	continue;
+					if (extent.bottom() < bounding_box.y())	continue;
+					if (extent.x() > bounding_box.right())	continue;
+					if (extent.y() > bounding_box.bottom())	continue;
+					
+					// Render the renderable
+					(*renderable)->render(*painter, force_min_size, scaling);
+				}
 			}
-			
-			// Render the renderable
-			renderable->render(*painter, force_min_size, scaling);
 		}
 	}
 	painter->restore();
 }
 
-void RenderableContainer::insertRenderablesOfObject(Object* object)
+void MapRenderables::insertRenderablesOfObject(const Object* object)
 {
-	RenderableVector::const_iterator it_end = object->endRenderables();
-	for (RenderableVector::const_iterator it = object->beginRenderables(); it != it_end; ++it)
+	ObjectRenderables::const_iterator end_of_colors = object->renderables().end();
+	ObjectRenderables::const_iterator color = object->renderables().begin();
+	for (; color != end_of_colors; ++color)
 	{
-		Renderable* renderable = *it;
-		RenderStates render_states;
-		renderable->getRenderStates(render_states);
-		
-		if (render_states.color_priority != MapColor::Reserved)
-		{
-			renderables[render_states.color_priority].push_back(std::make_pair(render_states, renderable));
-			//renderables.insert(Renderables::value_type(render_states, renderable));
-		}
+		operator[](color->first)[object] = color->second;
 	}
 }
-void RenderableContainer::removeRenderablesOfObject(Object* object, bool mark_area_as_dirty)
+
+void MapRenderables::removeRenderablesOfObject(const Object* object, bool mark_area_as_dirty)
 {
-	Renderables::iterator itend = renderables.end();
-	for (Renderables::iterator it = renderables.begin(); it != itend; ++it)
+	const_iterator end_of_colors = end();
+	for (iterator color = begin(); color != end_of_colors; ++color)
 	{
-		for (int i = (int)it->second.size() - 1; i >= 0; --i)
+		ObjectRenderablesMap::const_iterator end_of_objects = color->second.end();
+		for (ObjectRenderablesMap::iterator obj = color->second.begin(); obj != end_of_objects; ++obj)
 		{
-			if (it->second.at(i).second->getCreator() != object)
+			if (obj->first != object)
 				continue;
 			
-			// NOTE: this assumes that renderables by one object are at continuous indices
-			int k = i;
-			if (mark_area_as_dirty)
-				map->setObjectAreaDirty(it->second.at(i).second->getExtent());
-			while (k > 0 && it->second.at(k - 1).second->getCreator() == object)
+			for (SharedRenderables::const_iterator renderables = obj->second->begin(); renderables != obj->second->end(); ++renderables)
 			{
-				--k;
-				if (mark_area_as_dirty)
-					map->setObjectAreaDirty(it->second.at(k).second->getExtent());
+				for (RenderableVector::const_iterator renderable = renderables->second.begin(); renderable != renderables->second.end(); ++renderable)
+				{
+					if (mark_area_as_dirty)
+						map->setObjectAreaDirty((*renderable)->getExtent());
+				}
 			}
+			color->second.erase(obj);
 			
-			it->second.erase(it->second.begin() + k, it->second.begin() + (i + 1));
 			break;
 		}
-		
-		/*if ((*it).second->getCreator() == object)
-		{
-			if (mark_area_as_dirty)
-				map->setObjectAreaDirty((*it).second->getExtent());
-			Renderables::iterator todelete = it;
-			++it;
-			renderables.erase(todelete);
-		}
-		else
-			++it;*/
 	}
 }
 
-void RenderableContainer::clear()
+void MapRenderables::clear(bool set_area_dirty)
 {
-	renderables.clear();
+	if (set_area_dirty)
+	{
+		const_iterator end_of_colors = end();
+		for (const_iterator color = begin(); color != end_of_colors; ++color)
+		{
+			ObjectRenderablesMap::const_iterator end_of_objects = color->second.end();
+			for (ObjectRenderablesMap::const_iterator object = color->second.begin(); object != end_of_objects; ++object)
+			{
+				for (SharedRenderables::const_iterator renderables = object->second->begin(); renderables != object->second->end(); ++renderables)
+				{
+					for (RenderableVector::const_iterator renderable = renderables->second.begin(); renderable != renderables->second.end(); ++renderable)
+					{
+						map->setObjectAreaDirty((*renderable)->getExtent());
+					}
+				}
+			}
+		}
+	}
+	std::map<int, ObjectRenderablesMap>::clear();
 }
 
-QColor RenderableContainer::getHighlightedColor(const QColor& original)
+QColor MapRenderables::getHighlightedColor(const QColor& original)
 {
 	const int highlight_alpha = 255;
 	

@@ -33,7 +33,7 @@
 
 QCursor* DrawPointTool::cursor = NULL;
 
-DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget): MapEditorTool(editor, Other, tool_button), renderables(new RenderableContainer(editor->getMap())), symbol_widget(symbol_widget)
+DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget): MapEditorTool(editor, Other, tool_button), renderables(new MapRenderables(editor->getMap())), symbol_widget(symbol_widget)
 {
 	dragging = false;
 	preview_object = NULL;

@@ -21,6 +21,8 @@
 #ifndef _OPENORIENTEERING_RENDERABLE_IMPLENTATION_H_
 #define _OPENORIENTEERING_RENDERABLE_IMPLENTATION_H_
 
+#include <vector>
+
 #include <QPainter>
 
 #include <map>
@@ -46,7 +48,7 @@ class DotRenderable : public Renderable
 public:
 	DotRenderable(PointSymbol* symbol, MapCoordF coord);
 	DotRenderable(const DotRenderable& other);
-	virtual void render(QPainter& painter, bool force_min_size, float scaling);
+	virtual void render(QPainter& painter, bool force_min_size, float scaling) const;
 	virtual void getRenderStates(RenderStates& out) const;
 	//virtual Renderable* duplicate() {return new DotRenderable(*this);}
 };
@@ -56,7 +58,7 @@ class CircleRenderable : public Renderable
 public:
 	CircleRenderable(PointSymbol* symbol, MapCoordF coord);
 	CircleRenderable(const CircleRenderable& other);
-	virtual void render(QPainter& painter, bool force_min_size, float scaling);
+	virtual void render(QPainter& painter, bool force_min_size, float scaling) const;
 	virtual void getRenderStates(RenderStates& out) const;
 	//virtual Renderable* duplicate() {return new CircleRenderable(*this);}
 	
@@ -70,7 +72,7 @@ class LineRenderable : public Renderable
 public:
 	LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector& path_coords, bool closed);
 	LineRenderable(const LineRenderable& other);
-	virtual void render(QPainter& painter, bool force_min_size, float scaling);
+	virtual void render(QPainter& painter, bool force_min_size, float scaling) const;
 	virtual void getRenderStates(RenderStates& out) const;
 	//virtual Renderable* duplicate() {return new LineRenderable(*this);}
 	
@@ -89,7 +91,7 @@ class AreaRenderable : public Renderable
 public:
 	AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector* path_coords);
 	AreaRenderable(const AreaRenderable& other);
-	virtual void render(QPainter& painter, bool force_min_size, float scaling);
+	virtual void render(QPainter& painter, bool force_min_size, float scaling) const;
 	virtual void getRenderStates(RenderStates& out) const;
 	//virtual Renderable* duplicate() {return new AreaRenderable(*this);}
 	
@@ -104,7 +106,7 @@ class TextRenderable : public Renderable
 public:
 	TextRenderable(TextSymbol* symbol, TextObject* text_object, double anchor_x, double anchor_y);
 	TextRenderable(const TextRenderable& other);
-	virtual void render(QPainter& painter, bool force_min_size, float scaling);
+	virtual void render(QPainter& painter, bool force_min_size, float scaling) const;
 	virtual void getRenderStates(RenderStates& out) const;
 	//virtual Renderable* duplicate() {return new TextRenderable(*this);}
 	

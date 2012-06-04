@@ -46,7 +46,7 @@ Symbol* CombinedSymbol::duplicate() const
 	return new_symbol;
 }
 
-void CombinedSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
+void CombinedSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
 {
 	int size = (int)parts.size();
 	for (int i = 0; i < size; ++i)

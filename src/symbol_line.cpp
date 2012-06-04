@@ -119,12 +119,12 @@ Symbol* LineSymbol::duplicate() const
 	return new_line;
 }
 
-void LineSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
+void LineSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
 {
 	PathObject* path = reinterpret_cast<PathObject*>(object);
 	int num_parts = path->getNumParts();
 	if (num_parts == 1)
-		createRenderables(path->getPart(0).isClosed(), flags, coords, (PathCoordVector*)&path->getPathCoordinateVector(), output);	
+		createRenderables(object, path->getPart(0).isClosed(), flags, coords, (PathCoordVector*)&path->getPathCoordinateVector(), output);
 	else if (num_parts > 1)
 	{
 		// TODO: optimize, remove the copying
@@ -138,12 +138,12 @@ void LineSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 			part_coords.assign(coords.begin() + part.start_index, coords.begin() + (part.end_index + 1));
 			part_path_coords.assign(path->getPathCoordinateVector().begin() + part.path_coord_start_index,
 									 path->getPathCoordinateVector().begin() + (part.path_coord_end_index + 1));
-			createRenderables(part.isClosed(), part_flags, part_coords, &part_path_coords, output);	
+			createRenderables(object, part.isClosed(), part_flags, part_coords, &part_path_coords, output);
 		}
 	}
 }
 
-void LineSymbol::createRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, RenderableVector& output)
+void LineSymbol::createRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, ObjectRenderables& output)
 {
 	// TODO: Optimization: Use pre-supplied path_coords in more places
 	
@@ -188,8 +188,8 @@ void LineSymbol::createRenderables(bool path_closed, const MapCoordVector& flags
 	
 	// Dash symbols?
 	if (dash_symbol && !dash_symbol->isEmpty())
-		createDashSymbolRenderables(path_closed, flags, coords, output);
-
+		createDashSymbolRenderables(object, path_closed, flags, coords, output);
+	
 	// The line itself
 	MapCoordVector processed_flags;
 	MapCoordVectorF processed_coords;
@@ -200,7 +200,7 @@ void LineSymbol::createRenderables(bool path_closed, const MapCoordVector& flags
 		if (line_width > 0)
 		{
 			if (color && (cap_style != PointedCap || pointed_cap_length == 0) && !have_border_lines)
-				output.push_back(new LineRenderable(this, coords, flags, *path_coords, path_closed));
+				output.insertRenderable(new LineRenderable(this, coords, flags, *path_coords, path_closed));
 			else if (have_border_lines || (cap_style == PointedCap && pointed_cap_length > 0))
 			{
 				int part_start = 0;
@@ -212,7 +212,7 @@ void LineSymbol::createRenderables(bool path_closed, const MapCoordVector& flags
 					bool has_start = !(part_start == 0 && path_closed);
 					bool has_end = !(part_end == (int)flags.size() - 1 && path_closed);
 					
-					processContinuousLine(path_closed, flags, coords, line_coords, 0, line_coords[line_coords.size() - 1].clen,
+					processContinuousLine(object, path_closed, flags, coords, line_coords, 0, line_coords[line_coords.size() - 1].clen,
 										  has_start, has_end, cur_line_coord, processed_flags, processed_coords, true, false, output);
 				}
 			}
@@ -220,13 +220,13 @@ void LineSymbol::createRenderables(bool path_closed, const MapCoordVector& flags
 		
 		// Symbols?
 		if (mid_symbol && !mid_symbol->isEmpty() && segment_length > 0)
-			createDottedRenderables(path_closed, flags, coords, output);
+			createDottedRenderables(object, path_closed, flags, coords, output);
 	}
 	else
 	{
 		// Dashed lines
 		if (dash_length > 0)
-			processDashedLine(path_closed, flags, coords, processed_flags, processed_coords, output);
+			processDashedLine(object, path_closed, flags, coords, processed_flags, processed_coords, output);
 		else
 			return;	// wrong parameter
 	}
@@ -236,15 +236,15 @@ void LineSymbol::createRenderables(bool path_closed, const MapCoordVector& flags
 	{
 		// Create main line renderable
 		if (color)
-			output.push_back(new LineRenderable(this, processed_coords, processed_flags, *path_coords, path_closed));
+			output.insertRenderable(new LineRenderable(this, processed_coords, processed_flags, *path_coords, path_closed));
 		
 		// Border lines?
 		if (create_border)
-			createBorderLines(processed_flags, processed_coords, path_closed, output);
+			createBorderLines(object, processed_flags, processed_coords, path_closed, output);
 	}
 }
 
-void LineSymbol::createBorderLines(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, RenderableVector& output)
+void LineSymbol::createBorderLines(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output)
 {
 	LineSymbol border_symbol;
 	border_symbol.line_width = border_width;
@@ -263,20 +263,20 @@ void LineSymbol::createBorderLines(const MapCoordVector& flags, const MapCoordVe
 		border_symbol.dashed = true;
 		border_symbol.dash_length = border_dash_length;
 		border_symbol.break_length = border_break_length;
-		border_symbol.processDashedLine(path_closed, flags, coords, dashed_flags, dashed_coords, output);
+		border_symbol.processDashedLine(object, path_closed, flags, coords, dashed_flags, dashed_coords, output);
 		border_symbol.dashed = false;	// important, otherwise more dashes might be added by createRenderables()!
 		
 		shiftCoordinates(dashed_flags, dashed_coords, path_closed, shift, border_flags, border_coords);
-		border_symbol.createRenderables(path_closed, border_flags, border_coords, NULL, output);
+		border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
 		shiftCoordinates(dashed_flags, dashed_coords, path_closed, -shift, border_flags, border_coords);
-		border_symbol.createRenderables(path_closed, border_flags, border_coords, NULL, output);
+		border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
 	}
 	else
 	{
 		shiftCoordinates(flags, coords, path_closed, shift, border_flags, border_coords);
-		border_symbol.createRenderables(path_closed, border_flags, border_coords, NULL, output);
+		border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
 		shiftCoordinates(flags, coords, path_closed, -shift, border_flags, border_coords);
-		border_symbol.createRenderables(path_closed, border_flags, border_coords, NULL, output);
+		border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
 	}
 }
 
@@ -374,9 +374,9 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 	}
 }
 
-void LineSymbol::processContinuousLine(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
+void LineSymbol::processContinuousLine(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
 									   float start, float end, bool has_start, bool has_end, int& cur_line_coord,
-									   MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, bool include_first_point, bool set_mid_symbols, RenderableVector& output)
+									   MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, bool include_first_point, bool set_mid_symbols, ObjectRenderables& output)
 {
 	float pointed_cap_length_f = (cap_style == PointedCap) ? (0.001f * pointed_cap_length) : 0;
 	float line_length = end - start;
@@ -395,7 +395,7 @@ void LineSymbol::processContinuousLine(bool path_closed, const MapCoordVector& f
 	if (has_start_cap)
 	{
 		// Create pointed line cap start
-		createPointedLineCap(flags, coords, line_coords, start, start + adapted_cap_length, cur_line_coord, false, output);
+		createPointedLineCap(object, flags, coords, line_coords, start, start + adapted_cap_length, cur_line_coord, false, output);
 	}
 	
 	if (create_line)
@@ -408,14 +408,14 @@ void LineSymbol::processContinuousLine(bool path_closed, const MapCoordVector& f
 	if (has_end_cap)
 	{
 		// Create pointed line cap end
-		createPointedLineCap(flags, coords, line_coords, end - adapted_cap_length, end, cur_line_coord, true, output);
+		createPointedLineCap(object, flags, coords, line_coords, end - adapted_cap_length, end, cur_line_coord, true, output);
 	}
 	if (has_end && !processed_flags.empty())
 		processed_flags[processed_flags.size() - 1].setHolePoint(true);
 }
 
-void LineSymbol::createPointedLineCap(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
-									  float start, float end, int& cur_line_coord, bool is_end, RenderableVector& output)
+void LineSymbol::createPointedLineCap(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
+									  float start, float end, int& cur_line_coord, bool is_end, ObjectRenderables& output)
 {
 	AreaSymbol area_symbol;
 	area_symbol.setColor(color);
@@ -550,10 +550,10 @@ void LineSymbol::createPointedLineCap(const MapCoordVector& flags, const MapCoor
 	
 	// Add renderable
 	assert(cap_coords.size() >= 3 && cap_coords.size() == cap_flags.size());
-	output.push_back(new AreaRenderable(&area_symbol, cap_coords, cap_flags, NULL));
+	output.insertRenderable(new AreaRenderable(&area_symbol, cap_coords, cap_flags, NULL));
 }
 
-void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, MapCoordVector& out_flags, MapCoordVectorF& out_coords, RenderableVector& output)
+void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, MapCoordVector& out_flags, MapCoordVectorF& out_coords, ObjectRenderables& output)
 {
 	int size = (int)coords.size();
 	
@@ -609,7 +609,7 @@ void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags
 			// Line part too short for dashes, use just one continuous line for it
 			if (!ends_with_dashpoint)
 			{
-				processContinuousLine(path_closed, flags, coords, line_coords, cur_length, cur_length + length + old_length,
+				processContinuousLine(object, path_closed, flags, coords, line_coords, cur_length, cur_length + length + old_length,
 									  (!path_closed && out_flags.empty()) || (!out_flags.empty() && out_flags[out_flags.size() - 1].isHolePoint()), !(path_closed && part_end == size - 1),
 									  cur_line_coord, out_flags, out_coords, true, old_length == 0 && length >= dash_length_f - switch_deviation, output);
 				cur_length += length + old_length;
@@ -645,7 +645,7 @@ void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags
 						// The dash has an end if it is not the last dash in a closed path
 						bool has_end = !(dash == dashes_in_group - 1 && dashgroup == num_dashgroups - 1 && path_closed && part_end == size - 1);
 						
-						processContinuousLine(path_closed, flags, coords, line_coords, cur_length, cur_length + old_length + cur_dash_length,
+						processContinuousLine(object, path_closed, flags, coords, line_coords, cur_length, cur_length + old_length + cur_dash_length,
 											  (!path_closed && out_flags.empty()) || (!out_flags.empty() && out_flags[out_flags.size() - 1].isHolePoint()), has_end,
 											  cur_line_coord, out_flags, out_coords, true, !is_half_dash, output);
 						cur_length += old_length + cur_dash_length;
@@ -680,7 +680,7 @@ void LineSymbol::processDashedLine(bool path_closed, const MapCoordVector& flags
 	}
 }
 
-void LineSymbol::createDashSymbolRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
+void LineSymbol::createDashSymbolRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
 {
 	PointObject point_object(dash_symbol);
 	MapCoordVectorF point_coord;
@@ -702,7 +702,7 @@ void LineSymbol::createDashSymbolRenderables(bool path_closed, const MapCoordVec
 	}
 }
 
-void LineSymbol::createDottedRenderables(bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
+void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
 {
 	PointObject point_object(mid_symbol);
 	MapCoordVectorF point_coord;
@@ -837,7 +837,7 @@ void LineSymbol::createDottedRenderables(bool path_closed, const MapCoordVector&
 
 void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
 										float start, float end, int& cur_line_coord, bool include_start_coord, MapCoordVector& out_flags, MapCoordVectorF& out_coords,
-										std::vector<float>* out_lengths, bool set_mid_symbols, RenderableVector& output)
+										std::vector<float>* out_lengths, bool set_mid_symbols, ObjectRenderables& output)
 {
 	assert(cur_line_coord > 0);
 	int line_coords_size = (int)line_coords.size();

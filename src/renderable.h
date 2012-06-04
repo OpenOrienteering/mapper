@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps, Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -17,7 +17,6 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #ifndef _OPENORIENTEERING_RENDERABLE_H_
 #define _OPENORIENTEERING_RENDERABLE_H_
 
@@ -25,18 +24,48 @@
 #include <vector>
 
 #include <QRectF>
+#include <QSharedData>
+#include <QExplicitlySharedDataPointer>
 
 class QColor;
 class QPainter;
 class QPainterPath;
-class QRect;
 
 class Map;
-class MapCoord;
-class MapCoordF;
 class Object;
+class RenderStates;
 
-/// Contains state information about the painter which must be set when rendering a Renderable. Used to order the Renderables by color and minimize state changes
+/**
+ * A Renderable is a graphical map item with a simple shape and a single color.
+ * 
+ * This is the abstract base class.
+ */
+class Renderable
+{
+public:
+	Renderable();
+	Renderable(const Renderable& other);
+	virtual ~Renderable();
+	
+	inline const QRectF& getExtent() const {return extent;}
+	
+	/// Renders the renderable with the given painter
+	virtual void render(QPainter& painter, bool force_min_size, float scaling) const = 0;
+	
+	/// Creates the render state information which must be set when rendering this renderable
+	virtual void getRenderStates(RenderStates& out) const = 0;
+	
+protected:
+	QRectF extent;
+	int color_priority;
+};
+
+/** 
+ * RenderStates contains state information about the painter 
+ * which must be set when rendering a Renderable. 
+ * 
+ * Used to group renderables by common render attributes.
+ */
 struct RenderStates
 {
 	enum RenderMode
@@ -50,6 +79,8 @@ struct RenderStates
 	RenderMode mode;
 	float pen_width;
 	const QPainterPath* clip_path;
+	
+	RenderStates(const Renderable* r, const QPainterPath* path = NULL) : clip_path(path) { r->getRenderStates(*this); };
 	
 	inline bool operator!= (const RenderStates& other) const
 	{
@@ -83,66 +114,86 @@ struct RenderStates
 	}
 };
 
-/// Base class to represent small parts of map objects with a simple shape and just one color
-class Renderable
-{
-public:
-	Renderable();
-	Renderable(const Renderable& other);
-	virtual ~Renderable();
-	
-	inline const QRectF& getExtent() const {return extent;}
-	
-	/// Renders the renderable with the given painter
-	virtual void render(QPainter& painter, bool force_min_size, float scaling) = 0;
-	
-	/// Sets / gets the clip path to use (NULL by default)
-	inline void setClipPath(QPainterPath* new_clip_path) {clip_path = new_clip_path;}
-	inline QPainterPath* getClipPath() const {return clip_path;}
-	
-	/// Creates the render state information which must be set when rendering this renderable
-	virtual void getRenderStates(RenderStates& out) const = 0;
-	
-	/// Creates a clone of this renderable
-	//virtual Renderable* duplicate() = 0;
-	
-	/// Set/Get the object which created this renderable
-	inline void setCreator(Object* creator) {this->creator = creator;}
-	inline Object* getCreator() const {return creator;}
-	
-protected:
-	
-	QRectF extent;
-	Object* creator;	// this is useful for the deletion of all renderables created by an object
-	int color_priority;
-	QPainterPath* clip_path; // this is used for elements of area symbols (no memory management here)
-};
-
+/**
+ * A low-level container for renderables.
+ */
 typedef std::vector<Renderable*> RenderableVector;
 
-/// Container for renderables which sorts them by color priority and renders them
-class RenderableContainer
+/**
+ * A shared high-level container for renderables
+ * grouped by common render attributes.
+ * 
+ * This shared container can be used in different collections. When the last
+ * reference to this container is dropped, it will delete the renderables.
+ */
+class SharedRenderables : public QSharedData, public std::map< RenderStates, RenderableVector >
 {
 public:
-	RenderableContainer(Map* map);
+	typedef QExplicitlySharedDataPointer<SharedRenderables> Pointer;
+	~SharedRenderables();
+	void deleteRenderables();
+	void compact(); // release memory which is occupied by unused RenderStates, FIXME: maybe call this regularly...
+};
+
+/**
+ * A high-level container for all renderables of a single object, 
+ * grouped by color priority and common render attributes.
+ */
+class ObjectRenderables : protected std::map<int, SharedRenderables::Pointer>
+{
+friend class MapRenderables;
+public:
+	ObjectRenderables(Object* object, QRectF& extent);
+	~ObjectRenderables();
 	
-	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity_factor = 1.0f, bool highlighted = false);
+	void insertRenderable(Renderable* r);
 	
-	void removeRenderablesOfObject(Object* object, bool mark_area_as_dirty);	// NOTE: does not delete the renderables, just removes them from display
-	void insertRenderablesOfObject(Object* object);
+	void clear();
+	void deleteRenderables();
+	void takeRenderables();
 	
-    void clear();
-	inline bool isEmpty() const {return renderables.empty();}
+	void setClipPath(QPainterPath* path);
+	
+	const QRectF& getExtent() const { return extent; }
 	
 private:
-	//typedef std::multimap<RenderStates, Renderable*> Renderables;
-	typedef std::vector<std::pair<RenderStates, Renderable*> > RenderableContainerVector;
-	typedef std::map< int, RenderableContainerVector > Renderables;
+	Object* const object;
+	QRectF& extent;
+	QPainterPath* clip_path; // no memory management here!
+};
+
+/**
+ * A low-level container for renderables of multiple objects
+ * grouped by object and common render attributes.
+ * 
+ * This container uses a smart pointer to the renderable collection
+ * of each single object.
+ */
+typedef std::map<const Object*, SharedRenderables::Pointer> ObjectRenderablesMap;
+
+/** 
+ * A high-level container for renderables of multiple objects
+ * grouped by color priority, object and common render attributes.
+ * 
+ * This container is able to draw the renderables.
+ */
+class MapRenderables : protected std::map<int, ObjectRenderablesMap>
+{
+public:
+	MapRenderables(Map* map);
 	
-	QColor getHighlightedColor(const QColor& original);
+	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity_factor = 1.0f, bool highlighted = false) const;
 	
-	Renderables renderables;
-	Map* map;
+	void insertRenderablesOfObject(const Object* object);
+	void removeRenderablesOfObject(const Object* object, bool mark_area_as_dirty);	// NOTE: does not delete the renderables, just removes them from display
+	
+	void clear(bool set_area_dirty = false);
+	inline bool isEmpty() const {return empty();}
+	
+	static QColor getHighlightedColor(const QColor& original);
+	
+private:
+	Map* const map;
 };
 
 #endif

@@ -75,8 +75,8 @@ public:
 		FillPattern();
 		void save(QFile* file, Map* map);
 		bool load(QFile* file, int version, Map* map);
-		void createRenderables(QRectF extent, RenderableVector& output);
-		void createLine(MapCoordVectorF& coords, LineSymbol* line, PathObject* path, PointObject* point_object, RenderableVector& output);
+		void createRenderables(QRectF extent, ObjectRenderables& output);
+		void createLine(MapCoordVectorF& coords, LineSymbol* line, PathObject* path, PointObject* point_object, ObjectRenderables& output);
 		void scale(double factor);
 	};
 	
@@ -84,7 +84,7 @@ public:
 	virtual ~AreaSymbol();
 	virtual Symbol* duplicate() const;
 	
-	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
+	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
 	virtual bool containsColor(MapColor* color);
 	virtual void scale(double factor);

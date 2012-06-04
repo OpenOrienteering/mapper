@@ -50,9 +50,8 @@ void DotRenderable::getRenderStates(RenderStates& out) const
 	assert(out.color_priority < 3000);
 	out.mode = RenderStates::BrushOnly;
 	out.pen_width = 0;
-	out.clip_path = clip_path;
 }
-void DotRenderable::render(QPainter& painter, bool force_min_size, float scaling)
+void DotRenderable::render(QPainter& painter, bool force_min_size, float scaling) const
 {
 	if (force_min_size && extent.width() * scaling < 1.5f)
 		painter.drawEllipse(extent.center(), 0.5f * (1/scaling), 0.5f * (1/scaling));
@@ -83,9 +82,8 @@ void CircleRenderable::getRenderStates(RenderStates& out) const
 	assert(out.color_priority < 3000);
 	out.mode = RenderStates::PenOnly;
 	out.pen_width = line_width;
-	out.clip_path = clip_path;
 }
-void CircleRenderable::render(QPainter& painter, bool force_min_size, float scaling)
+void CircleRenderable::render(QPainter& painter, bool force_min_size, float scaling) const
 {
 	if (force_min_size && rect.width() * scaling < 1.5f)
 		painter.drawEllipse(rect.center(), 0.5f * (1/scaling), 0.5f * (1/scaling));
@@ -238,9 +236,8 @@ void LineRenderable::getRenderStates(RenderStates& out) const
 	out.color_priority = color_priority;
 	out.mode = RenderStates::PenOnly;
 	out.pen_width = line_width;
-	out.clip_path = clip_path;
 }
-void LineRenderable::render(QPainter& painter, bool force_min_size, float scaling)
+void LineRenderable::render(QPainter& painter, bool force_min_size, float scaling) const
 {
 	QPen pen(painter.pen());
 	pen.setCapStyle(cap_style);
@@ -325,9 +322,8 @@ void AreaRenderable::getRenderStates(RenderStates& out) const
 	out.color_priority = color_priority;
 	out.mode = RenderStates::BrushOnly;
 	out.pen_width = 0;
-	out.clip_path = clip_path;
 }
-void AreaRenderable::render(QPainter& painter, bool force_min_size, float scaling)
+void AreaRenderable::render(QPainter& painter, bool force_min_size, float scaling) const
 {
 	painter.drawPath(path);
 	
@@ -436,10 +432,9 @@ void TextRenderable::getRenderStates(RenderStates& out) const
 	out.color_priority = color_priority;
 	out.mode = RenderStates::BrushOnly;
 	out.pen_width = 0;
-	out.clip_path = clip_path;
 }
 
-void TextRenderable::render(QPainter& painter, bool force_min_size, float scaling)
+void TextRenderable::render(QPainter& painter, bool force_min_size, float scaling) const
 {
 	// NOTE: mini-optimization to prevent the save-restore for un-rotated texts which could be used when the scale-hack is no longer necessary
 	/*if (rotation == 0)
@@ -455,3 +450,4 @@ void TextRenderable::render(QPainter& painter, bool force_min_size, float scalin
 		painter.restore();
 	//}
 }
+

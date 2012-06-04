@@ -28,7 +28,7 @@
 class CombinedSymbol;
 class PointObject;
 class PathObject;
-class RenderableContainer;
+class MapRenderables;
 class Symbol;
 
 /// Base class for drawing tools for line and area symbols.
@@ -79,7 +79,7 @@ protected:
 	bool draw_in_progress;
 	
 	Symbol* last_used_symbol;
-	QScopedPointer<RenderableContainer> renderables;
+	QScopedPointer<MapRenderables> renderables;
 	SymbolWidget* symbol_widget;
 	
 	bool is_helper_tool;

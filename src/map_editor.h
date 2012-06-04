@@ -368,10 +368,10 @@ protected:
 	void setStatusBarText(const QString& text);
 	
 	// Helper methods for editing the selected objects with preview
-	void startEditingSelection(RenderableVector& old_renderables, std::vector<Object*>* undo_duplicates = NULL);
-	void finishEditingSelection(RenderableContainer& renderables, RenderableVector& old_renderables, bool create_undo_step, std::vector<Object*>* undo_duplicates = NULL, bool delete_objects = false);
-	void updateSelectionEditPreview(RenderableContainer& renderables);
-	void deleteOldSelectionRenderables(RenderableVector& old_renderables, bool set_area_dirty);
+	void startEditingSelection(MapRenderables& old_renderables, std::vector<Object*>* undo_duplicates = NULL);
+	void finishEditingSelection(MapRenderables& renderables, MapRenderables& old_renderables, bool create_undo_step, std::vector<Object*>* undo_duplicates = NULL, bool delete_objects = false);
+	void updateSelectionEditPreview(MapRenderables& renderables);
+	void deleteOldSelectionRenderables(MapRenderables& old_renderables, bool set_area_dirty);
 	
 	// Helper methods for object handles
 	void includeControlPointRect(QRectF& rect, Object* object, QPointF* box_text_handles);

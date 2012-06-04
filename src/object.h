@@ -21,20 +21,19 @@
 #ifndef _OPENORIENTEERING_OBJECT_H_
 #define _OPENORIENTEERING_OBJECT_H_
 
-#include <assert.h>
+#include <cassert>
 #include <vector>
 
 #include <QRectF>
 
 #include "map_coord.h"
 #include "path_coord.h"
+#include "renderable.h"
 
 class QFile;
 
 class Symbol;
 class Map;
-class Renderable;
-typedef std::vector<Renderable*> RenderableVector;
 
 /// Base class which combines coordinates and a symbol to form an object (in a map or point symbol).
 class Object
@@ -84,10 +83,8 @@ public:
 	/// Take ownership of the renderables
 	void takeRenderables();
 	
-	// Methods to traverse the output
-	inline RenderableVector::const_iterator beginRenderables() const {return output.begin();}
-	inline RenderableVector::const_iterator endRenderables() const {return output.end();}
-	inline int getNumRenderables() const {return (int)output.size();}
+	/// The renderables, read-only
+	inline const ObjectRenderables& renderables() const {return output;}
 	
 	// Getters / Setters
 	inline const MapCoordVector& getRawCoordinateVector() const {return coords;}
@@ -110,17 +107,14 @@ public:
 	static Object* getObjectForType(Type type, Symbol* symbol = NULL);
 	
 protected:
-	/// Removes all output of the object. It will be re-generated the next time update() is called
-	void clearOutput();
-	
 	Type type;
 	Symbol* symbol;
 	MapCoordVector coords;
 	Map* map;
 	
 	bool output_dirty;				// does the output have to be re-generated because of changes?
-	RenderableVector output;		// only valid after calling update()
 	QRectF extent;					// only valid after calling update()
+	ObjectRenderables output;		// only valid after calling update()
 };
 
 /// Object type which can be used for line, area and combined symbols

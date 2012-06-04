@@ -31,7 +31,7 @@ class PathObject;
 class Symbol;
 class TextObjectEditorHelper;
 class Renderable;
-class RenderableContainer;
+class MapRenderables;
 typedef std::vector<Renderable*> RenderableVector;
 
 
@@ -117,8 +117,8 @@ protected:
 	SelectionInfoVector last_results_ordered;
 	int next_object_to_select;
 	
-	QScopedPointer<RenderableVector> old_renderables;
-	QScopedPointer<RenderableContainer> renderables;
+	QScopedPointer<MapRenderables> old_renderables;
+	QScopedPointer<MapRenderables> renderables;
 	SymbolWidget* symbol_widget;
 	
 	bool preview_update_triggered;

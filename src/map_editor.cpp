@@ -1576,7 +1576,7 @@ void MapEditorTool::setStatusBarText(const QString& text)
 	editor->getWindow()->setStatusBarText(text);
 }
 
-void MapEditorTool::startEditingSelection(RenderableVector& old_renderables, std::vector<Object*>* undo_duplicates)
+void MapEditorTool::startEditingSelection(MapRenderables& old_renderables, std::vector< Object* >* undo_duplicates)
 {
 	Map* map = editor->getMap();
 	
@@ -1590,16 +1590,13 @@ void MapEditorTool::startEditingSelection(RenderableVector& old_renderables, std
 		(*it)->setMap(NULL);
 		
 		// Cache old renderables until the object is inserted into the map again
-		old_renderables.reserve(old_renderables.size() + (*it)->getNumRenderables());
-		RenderableVector::const_iterator rit_end = (*it)->endRenderables();
-		for (RenderableVector::const_iterator rit = (*it)->beginRenderables(); rit != rit_end; ++rit)
-			old_renderables.push_back(*rit);
-		(*it)->takeRenderables();
+		old_renderables.insertRenderablesOfObject(*it);
+ 		(*it)->takeRenderables();
 	}
 	
 	editor->setEditingInProgress(true);
 }
-void MapEditorTool::finishEditingSelection(RenderableContainer& renderables, RenderableVector& old_renderables, bool create_undo_step, std::vector<Object*>* undo_duplicates, bool delete_objects)
+void MapEditorTool::finishEditingSelection(MapRenderables& renderables, MapRenderables& old_renderables, bool create_undo_step, std::vector< Object* >* undo_duplicates, bool delete_objects)
 {
 	ReplaceObjectsUndoStep* undo_step = create_undo_step ? new ReplaceObjectsUndoStep(editor->getMap()) : NULL;
 	
@@ -1628,26 +1625,19 @@ void MapEditorTool::finishEditingSelection(RenderableContainer& renderables, Ren
 	
 	editor->setEditingInProgress(false);
 }
-void MapEditorTool::updateSelectionEditPreview(RenderableContainer& renderables)
+void MapEditorTool::updateSelectionEditPreview(MapRenderables& renderables)
 {
 	Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
 	{
-		renderables.removeRenderablesOfObject(*it, false);
 		(*it)->update(true);
+		// NOTE: only necessary because of setMap(NULL) in startEditingSelection(..)
 		renderables.insertRenderablesOfObject(*it);
 	}
 }
-void MapEditorTool::deleteOldSelectionRenderables(RenderableVector& old_renderables, bool set_area_dirty)
+void MapEditorTool::deleteOldSelectionRenderables(MapRenderables& old_renderables, bool set_area_dirty)
 {
-	int size = old_renderables.size();
-	for (int i = 0; i < size; ++i)
-	{
-		if (set_area_dirty)
-			editor->getMap()->setObjectAreaDirty(old_renderables[i]->getExtent());
-		delete old_renderables[i];
-	}
-	old_renderables.clear();
+	old_renderables.clear(set_area_dirty);
 }
 
 void MapEditorTool::includeControlPointRect(QRectF& rect, Object* object, QPointF* box_text_handles)

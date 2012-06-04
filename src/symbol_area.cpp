@@ -115,7 +115,8 @@ bool AreaSymbol::FillPattern::load(QFile* file, int version, Map* map)
 	}
 	return true;
 }
-void AreaSymbol::FillPattern::createRenderables(QRectF extent, RenderableVector& output)
+
+void AreaSymbol::FillPattern::createRenderables(QRectF extent, ObjectRenderables& output)
 {
 	if (line_spacing <= 0)
 		return;
@@ -271,7 +272,8 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, RenderableVector&
 		}
 	}
 }
-void AreaSymbol::FillPattern::createLine(MapCoordVectorF& coords, LineSymbol* line, PathObject* path, PointObject* point_object, RenderableVector& output)
+
+void AreaSymbol::FillPattern::createLine(MapCoordVectorF& coords, LineSymbol* line, PathObject* path, PointObject* point_object, ObjectRenderables& output)
 {
 	if (type == LinePattern)
 		line->createRenderables(path, path->getRawCoordinateVector(), coords, output);
@@ -345,24 +347,23 @@ Symbol* AreaSymbol::duplicate() const
 	return new_area;
 }
 
-void AreaSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output)
+void AreaSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
 {
 	if (coords.size() >= 3)
 	{
 		// The shape output is even created if the area is not filled with a color
 		// because the QPainterPath created by it is needed as clip path for the fill objects
 		PathObject* path = reinterpret_cast<PathObject*>(object);
-		AreaRenderable* clip_path = new AreaRenderable(this, coords, flags, &path->getPathCoordinateVector());
-		output.push_back(clip_path);
-		
+		AreaRenderable* color_fill = new AreaRenderable(this, coords, flags, &path->getPathCoordinateVector());
+		output.insertRenderable(color_fill);
+
+		output.setClipPath(color_fill->getPainterPath());
 		int size = (int)patterns.size();
 		for (int i = 0; i < size; ++i)
 		{
-			size_t o = output.size();
-			patterns[i].createRenderables(clip_path->getExtent(), output);	
-			for (; o < output.size(); ++o)
-				output[o]->setClipPath(clip_path->getPainterPath());
+ 			patterns[i].createRenderables(color_fill->getExtent(), output);
 		}
+		output.setClipPath(NULL);
 	}
 }
 void AreaSymbol::colorDeleted(Map* map, int pos, MapColor* color)

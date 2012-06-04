@@ -65,7 +65,7 @@ protected:
 	
 	Symbol* last_used_symbol;
 	PointObject* preview_object;
-	QScopedPointer<RenderableContainer> renderables;
+	QScopedPointer<MapRenderables> renderables;
 	SymbolWidget* symbol_widget;
 };
 

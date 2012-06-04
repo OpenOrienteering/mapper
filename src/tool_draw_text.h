@@ -29,7 +29,7 @@ class TextObject;
 struct TextObjectLineInfo;
 class TextObjectEditorHelper;
 class TextObjectAlignmentDockWidget;
-class RenderableContainer;
+class MapRenderables;
 class Symbol;
 
 /// Tool to draw text objects
@@ -81,7 +81,7 @@ protected:
 	TextObject* preview_text;
 	TextObjectEditorHelper* text_editor;
 	
-	QScopedPointer<RenderableContainer> renderables;
+	QScopedPointer<MapRenderables> renderables;
 	SymbolWidget* symbol_widget;
 };
 

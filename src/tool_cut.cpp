@@ -37,7 +37,7 @@
 
 QCursor* CutTool::cursor = NULL;
 
-CutTool::CutTool(MapEditorController* editor, QAction* tool_button) : MapEditorTool(editor, Other, tool_button), renderables(new RenderableContainer(editor->getMap()))
+CutTool::CutTool(MapEditorController* editor, QAction* tool_button) : MapEditorTool(editor, Other, tool_button), renderables(new MapRenderables(editor->getMap()))
 {
 	dragging = false;
 	hover_object = NULL;

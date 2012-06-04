@@ -32,16 +32,17 @@
 #include "object_text.h"
 #include "renderable.h"
 
-Object::Object(Object::Type type, Symbol* symbol) : type(type), symbol(symbol), map(NULL)
+Object::Object(Object::Type type, Symbol* symbol)
+: type(type),
+  symbol(symbol),
+  map(NULL),
+  output_dirty(true),
+  extent(),
+  output(this, extent)
 {
-	output_dirty = true;
-	extent = QRectF();
 }
 Object::~Object()
 {
-	int size = (int)output.size();
-	for (int i = 0; i < size; ++i)
-		delete output[i];
 }
 
 void Object::save(QFile* file)
@@ -78,6 +79,7 @@ void Object::save(QFile* file)
 		saveString(file, text->getText());
 	}
 }
+
 void Object::load(QFile* file, int version, Map* map)
 {
 	this->map = map;
@@ -150,9 +152,10 @@ bool Object::update(bool force, bool remove_old_renderables)
 	if (!force && !output_dirty)
 		return false;
 	
-	if (map && remove_old_renderables)
-		map->removeRenderablesOfObject(this, false);
-	clearOutput();
+	if (map && extent.isValid())
+		map->setObjectAreaDirty(extent);
+	
+	output.deleteRenderables();
 	
 	// Calculate float coordinates
 	MapCoordVectorF coordsF;
@@ -169,46 +172,20 @@ bool Object::update(bool force, bool remove_old_renderables)
 	}
 	
 	// Create renderables
-	symbol->createRenderables(this, coords, coordsF, output);
-	
-	// Calculate extent and set this object as creator of the renderables
 	extent = QRectF();
-	RenderableVector::const_iterator end = output.end();
-	for (RenderableVector::const_iterator it = output.begin(); it != end; ++it)
-	{
-		(*it)->setCreator(this);
-		if ((*it)->getClipPath() == NULL)
-		{
-			if (extent.isValid())
-				rectInclude(extent, (*it)->getExtent());
-			else
-				extent = (*it)->getExtent();
-			assert(extent.right() < 999999);	// assert if bogus values are returned
-		}
-	}
-	
+	symbol->createRenderables(this, coords, coordsF, output);
+	assert(extent.right() < 999999);	// assert if bogus values are returned
 	output_dirty = false;
 	
 	if (map)
 	{
-		map->insertRenderablesOfObject(this);
+ 		if (remove_old_renderables)
+			map->insertRenderablesOfObject(this);
 		if (extent.isValid())
 			map->setObjectAreaDirty(extent);
 	}
 	
 	return true;
-}
-void Object::clearOutput()
-{
-	if (map && extent.isValid())
-		map->setObjectAreaDirty(extent);
-	
-	int size = output.size();
-	for (int i = 0; i < size; ++i)
-		delete output[i];
-	
-	output.clear();
-	output_dirty = true;
 }
 
 void Object::move(qint64 dx, qint64 dy)
@@ -337,7 +314,7 @@ bool Object::intersectsBox(QRectF box)
 
 void Object::takeRenderables()
 {
-	output.clear();
+	output.takeRenderables();
 }
 
 bool Object::setSymbol(Symbol* new_symbol, bool no_checks)

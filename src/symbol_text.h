@@ -52,8 +52,8 @@ public:
 	virtual ~TextSymbol();
     virtual Symbol* duplicate() const;
 	
-	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, RenderableVector& output);
-	void createLineBelowRenderables(Object* object, RenderableVector& output);
+	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
+	void createLineBelowRenderables(Object* object, ObjectRenderables& output);
 	virtual void colorDeleted(Map* map, int pos, MapColor* color);
     virtual bool containsColor(MapColor* color);
     virtual void scale(double factor);

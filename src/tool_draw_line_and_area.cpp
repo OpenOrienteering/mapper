@@ -34,7 +34,7 @@
 #include "map_undo.h"
 
 DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : MapEditorTool(editor, Other, tool_button), renderables(new RenderableContainer(editor->getMap())), symbol_widget(symbol_widget)
+ : MapEditorTool(editor, Other, tool_button), renderables(new MapRenderables(editor->getMap())), symbol_widget(symbol_widget)
 {
 	preview_points_shown = false;
 	draw_in_progress = false;
