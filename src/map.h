@@ -169,7 +169,7 @@ public:
 	// Symbols
 	
 	inline int getNumSymbols() const {return (int)symbols.size();}
-	inline Symbol* getSymbol(int i) {return symbols[i];}
+	Symbol* getSymbol(int i) const;
 	void setSymbol(Symbol* symbol, int pos);
 	void addSymbol(Symbol* symbol, int pos);
 	void moveSymbol(int from, int to);
