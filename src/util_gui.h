@@ -71,6 +71,28 @@ namespace Util
 	namespace SpinBox
 	{
 		/**
+		 * Creates and initializes a QSpinBox.
+		 * 
+		 * This method allows to initialize the most frequent options of
+		 * QSpinBox in a single call:
+		 * the lower and upper bound of the valid range,
+		 * the unit of measurement (optional),
+		 * the step width of the spinbox buttons (optional).
+		 */
+		inline QSpinBox* create(int min, int max, const QString &unit = "", int step = 0)
+		{
+			QSpinBox* box = new QSpinBox();
+			box->setRange(min, max);
+			if (unit.startsWith(' '))
+				box->setSuffix(unit);
+			else if (unit.length() > 0)
+				box->setSuffix(QString(' ') % unit);
+			if (step > 0)
+				box->setSingleStep(step);
+			return box;
+		}
+		
+		/**
 		 * Creates and initializes a QDoubleSpinBox.
 		 * 
 		 * This method allows to initialize the most frequent options of
@@ -78,7 +100,8 @@ namespace Util
 		 * the number of decimals,
 		 * the lower and upper bound of the valid range,
 		 * the unit of measurement (optional),
-		 * the step width (of the spinbox buttons), dependent on the number of decimals.
+		 * the step width of the spinbox buttons (optional; dependent on 
+		 * the number of decimals if not specified).
 		 */
 		inline QDoubleSpinBox* create(int decimals, double min, double max, const QString &unit = "", double step = 0.0)
 		{
