@@ -703,16 +703,15 @@ void MainWindow::showAbout()
 template <class T>
 static const bool findFirstExistingItem(const QList<T> &list, T &which)
 {
-    Q_FOREACH(const T &item, list)
-    {
-        qDebug() << "Looking for" << item;
-        if (item.exists())
-        {
-            which = item;
-            return true;
-        }
-    }
-    return false;
+	Q_FOREACH(const T &item, list)
+	{
+		if (item.exists())
+		{
+			which = item;
+			return true;
+		}
+	}
+	return false;
 }
 
 void MainWindow::showHelp(QString filename, QString fragment)
