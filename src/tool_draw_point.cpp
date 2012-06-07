@@ -39,7 +39,6 @@ DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button, 
 	preview_object = NULL;
 	
 	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
-	connect(editor->getMap(), SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(symbolChanged(int,Symbol*,Symbol*)));
 	connect(editor->getMap(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
 	
 	if (!cursor)
@@ -224,10 +223,7 @@ void DrawPointTool::selectedSymbolsChanged()
 	else
 		last_used_symbol = single_selected_symbol;
 }
-void DrawPointTool::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
-{
-	// No need to react here
-}
+
 void DrawPointTool::symbolDeleted(int pos, Symbol* old_symbol)
 {
 	if (last_used_symbol == old_symbol)

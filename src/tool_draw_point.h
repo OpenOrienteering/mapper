@@ -50,7 +50,6 @@ public:
 	
 protected slots:
 	void selectedSymbolsChanged();
-	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
 	void symbolDeleted(int pos, Symbol* old_symbol);
 	
 protected:
