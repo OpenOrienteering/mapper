@@ -282,6 +282,8 @@ public:
 	inline bool areSymbolsDirty() const {return symbols_dirty;}
 	inline bool areTemplatesDirty() const {return templates_dirty;}
 	inline bool areObjectsDirty() const {return objects_dirty;}
+	inline bool isOtherDirty() const {return other_dirty;}
+	void setOtherDirty(bool value = true);
 	
 	// Static
 	
@@ -383,6 +385,7 @@ private:
 	bool symbols_dirty;				//    ... for the symbols?
 	bool templates_dirty;			//    ... for the templates?
 	bool objects_dirty;				//    ... for the objects?
+	bool other_dirty;				//    ... for any other settings?
 	bool unsaved_changes;			// are there unsaved changes for any component?
 	
 	// Static

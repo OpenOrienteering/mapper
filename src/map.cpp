@@ -438,6 +438,7 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 	symbols_dirty = false;
 	templates_dirty = false;
 	objects_dirty = false;
+	other_dirty = false;
 	unsaved_changes = false;
 	
 	objectUndoManager().notifyOfSave();
@@ -586,6 +587,7 @@ void Map::clear()
 	symbols_dirty = false;
 	templates_dirty = false;
 	objects_dirty = false;
+	other_dirty = false;
 	unsaved_changes = false;
 }
 
@@ -1423,6 +1425,7 @@ void Map::setHasUnsavedChanges(bool has_unsaved_changes)
 		symbols_dirty = false;
 		templates_dirty = false;
 		objects_dirty = false;
+		other_dirty = false;
 		unsaved_changes = false;
 	}
 	else
@@ -1433,6 +1436,12 @@ void Map::setHasUnsavedChanges(bool has_unsaved_changes)
 			unsaved_changes = true;
 		}
 	}
+}
+void Map::setOtherDirty(bool value)
+{
+	if (!other_dirty && value)
+		setHasUnsavedChanges();
+	other_dirty = value;
 }
 
 void Map::checkIfFirstColorAdded()
