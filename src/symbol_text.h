@@ -72,6 +72,7 @@ public:
 	inline double getParagraphSpacing() const {return 0.001 * paragraph_spacing;}
 	inline double getCharacterSpacing() const {return 0.001 * character_spacing;}
 	inline bool usesKerning() const {return kerning;}
+	QString getIconText() const; // returns a default text if no custom text is set.
 	inline bool hasLineBelow() const {return line_below;}
 	inline MapColor* getLineBelowColor() const {return line_below_color;}
 	inline double getLineBelowWidth() const {return 0.001 * line_below_width;}
@@ -105,6 +106,7 @@ protected:
 	int paragraph_spacing;		// in mm
 	float character_spacing;	// as a factor of the space character width
 	bool kerning;
+	QString icon_text;			// text to be drawn in the symbol's icon
 	
 	// OCAD compatibility features
 	bool line_below;
@@ -140,6 +142,7 @@ protected slots:
 	void colorChanged();
 	void checkToggled(bool checked);
 	void spacingChanged(double value);
+	void iconTextEdited(const QString& text);
 	
 	void ocadCompatibilityButtonClicked(bool checked);
 	void lineBelowCheckClicked(bool checked);
@@ -170,6 +173,7 @@ private:
 	QDoubleSpinBox* paragraph_spacing_edit;
 	QDoubleSpinBox* character_spacing_edit;
 	QCheckBox*      kerning_check;
+	QLineEdit*      icon_text_edit;
 	QCheckBox*      ocad_compat_check;
 	
 	QWidget*        ocad_compat_widget;

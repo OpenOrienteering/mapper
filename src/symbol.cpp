@@ -145,7 +145,7 @@ QImage* Symbol::getIcon(Map* map, bool update)
 		text->setAnchorPosition(0, 0);
 		text->setHorizontalAlignment(TextObject::AlignHCenter);
 		text->setVerticalAlignment(TextObject::AlignVCenter);
-		text->setText("A");
+		text->setText(dynamic_cast<TextSymbol*>(this)->getIconText());
 		object = text;
 	}
 	else if (type == Combined)

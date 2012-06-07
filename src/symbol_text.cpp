@@ -46,6 +46,7 @@ TextSymbol::TextSymbol() : Symbol(Symbol::Text), metrics(QFont())
 	paragraph_spacing = 0;
 	character_spacing = 0;
 	kerning = true;
+	icon_text = "";
 	line_below = false;
 	line_below_color = NULL;
 	line_below_width = 0;
@@ -70,6 +71,7 @@ Symbol* TextSymbol::duplicate() const
 	new_text->paragraph_spacing = paragraph_spacing;
 	new_text->character_spacing = character_spacing;
 	new_text->kerning = kerning;
+	new_text->icon_text = icon_text;
 	new_text->line_below = line_below;
 	new_text->line_below_color = line_below_color;
 	new_text->line_below_width = line_below_width;
@@ -200,6 +202,7 @@ void TextSymbol::saveImpl(QFile* file, Map* map)
 	file->write((const char*)&paragraph_spacing, sizeof(double));
 	file->write((const char*)&character_spacing, sizeof(double));
 	file->write((const char*)&kerning, sizeof(bool));
+	saveString(file, icon_text);
 	file->write((const char*)&line_below, sizeof(bool));
 	temp = map->findColorIndex(line_below_color);
 	file->write((const char*)&temp, sizeof(int));
@@ -228,6 +231,8 @@ bool TextSymbol::loadImpl(QFile* file, int version, Map* map)
 		file->read((char*)&character_spacing, sizeof(double));
 	if (version >= 12)
 		file->read((char*)&kerning, sizeof(bool));
+	if (version >= 19)
+		loadString(file, icon_text);
 	if (version >= 13)
 	{
 		file->read((char*)&line_below, sizeof(bool));
@@ -244,6 +249,13 @@ bool TextSymbol::loadImpl(QFile* file, int version, Map* map)
 	
 	updateQFont();
 	return true;
+}
+
+QString TextSymbol::getIconText() const
+{
+	if (icon_text.isEmpty())
+		return QObject::tr("A", "First capital letter of the local alphabet");
+	return icon_text;
 }
 
 double TextSymbol::getNextTab(double pos) const
@@ -344,6 +356,12 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	
 	layout->addItem(Util::SpacerItem::create(this));
 	
+	icon_text_edit = new QLineEdit();
+	icon_text_edit->setMaxLength(3);
+	layout->addRow(tr("Symbol icon text:"), icon_text_edit);
+	
+	layout->addItem(Util::SpacerItem::create(this));
+	
 	ocad_compat_check = new QCheckBox(tr("OCAD compatibility settings"));
 	layout->addRow(ocad_compat_check);
 	
@@ -401,6 +419,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	connect(paragraph_spacing_edit, SIGNAL(valueChanged(double)), this, SLOT(spacingChanged(double)));
 	connect(character_spacing_edit, SIGNAL(valueChanged(double)), this, SLOT(spacingChanged(double)));
 	connect(kerning_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
+	connect(icon_text_edit, SIGNAL(textEdited(QString)), this, SLOT(iconTextEdited(QString)));
 	connect(ocad_compat_check, SIGNAL(clicked(bool)), this, SLOT(ocadCompatibilityButtonClicked(bool)));
 	
 	connect(line_below_check, SIGNAL(clicked(bool)), this, SLOT(lineBelowCheckClicked(bool)));
@@ -508,6 +527,15 @@ void TextSymbolSettings::spacingChanged(double value)
 	emit propertiesModified();
 }
 
+void TextSymbolSettings::iconTextEdited(const QString& text)
+{
+	if (!react_to_changes)
+		return;
+	
+	symbol->icon_text = text;
+	emit propertiesModified();
+}
+
 void TextSymbolSettings::ocadCompatibilityButtonClicked(bool checked)
 {
 	if (!react_to_changes)
@@ -610,6 +638,7 @@ void TextSymbolSettings::updateGeneralContents()
 	paragraph_spacing_edit->setValue(0.001 * symbol->paragraph_spacing);
 	character_spacing_edit->setValue(100 * symbol->character_spacing);
 	kerning_check->setChecked(symbol->kerning);
+	icon_text_edit->setText(symbol->getIconText());
 	ocad_compat_check->setChecked(symbol->line_below || symbol->getNumCustomTabs() > 0);
 	react_to_changes = true;
 	
