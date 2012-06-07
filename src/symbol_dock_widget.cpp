@@ -970,6 +970,8 @@ void SymbolToolTip::showTip(QRect rect, Symbol* symbol, QWidget* parent)
 		tooltip_timer = new QTimer();
 		tooltip_timer->setSingleShot(true);
 	}
+	
+	tooltip_timer->disconnect();
 	connect(tooltip_timer, SIGNAL(timeout()), tooltip, SLOT(show()));
 	tooltip_timer->start(delay);
 }
