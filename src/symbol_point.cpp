@@ -178,7 +178,7 @@ bool PointSymbol::isSymmetrical() const
 	return true;
 }
 
-void PointSymbol::colorDeleted(Map* map, int pos, MapColor* color)
+void PointSymbol::colorDeleted(MapColor* color)
 {
 	bool change = false;
 	
@@ -196,12 +196,12 @@ void PointSymbol::colorDeleted(Map* map, int pos, MapColor* color)
 	int num_elements = (int)objects.size();
 	for (int i = 0; i < num_elements; ++i)
 	{
-		symbols[i]->colorDeleted(map, pos, color);
+		symbols[i]->colorDeleted(color);
 		change = true;
 	}
 	
 	if (change)
-		getIcon(map, true);
+		resetIcon();
 }
 bool PointSymbol::containsColor(MapColor* color)
 {
@@ -231,6 +231,8 @@ void PointSymbol::scale(double factor)
 		symbols[i]->scale(factor);
 		objects[i]->scale(factor);
 	}
+	
+	resetIcon();
 }
 
 void PointSymbol::saveImpl(QFile* file, Map* map)

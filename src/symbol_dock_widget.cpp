@@ -579,7 +579,6 @@ void SymbolRenderWidget::scaleSymbol()
 		return;
 	
 	symbol->scale(percent / 100.0);
-	symbol->getIcon(map, true);
 	updateIcon(current_symbol_index);
 	map->changeSymbolForAllObjects(symbol, symbol);	// update the objects
 	

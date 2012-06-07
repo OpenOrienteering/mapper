@@ -870,6 +870,17 @@ void Map::setColor(MapColor* color, int pos)
 	color_set->colors[pos] = color;
 	color->priority = pos;
 	
+	// Regenerate all symbols' icons
+	int size = (int)symbols.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (symbols[i]->containsColor(color))
+		{
+			symbols[i]->resetIcon();
+			emit(symbolIconChanged(i));
+		}
+	}
+	
 	emit(colorChanged(pos, color));
 }
 MapColor* Map::addColor(int pos)
@@ -900,8 +911,7 @@ void Map::addColor(MapColor* color, int pos)
 }
 void Map::deleteColor(int pos)
 {
-	MapColor* temp = color_set->colors[pos];
-	delete color_set->colors[pos];
+	MapColor* color = color_set->colors[pos];
 	color_set->colors.erase(color_set->colors.begin() + pos);
 	adjustColorPriorities(pos, color_set->colors.size() - 1);
 	
@@ -912,9 +922,20 @@ void Map::deleteColor(int pos)
 	}
 	
 	int size = (int)symbols.size();
+	// Treat combined symbols first before their parts
 	for (int i = 0; i < size; ++i)
-		symbols[i]->colorDeleted(this, pos, temp);
-	emit(colorDeleted(pos, temp));
+	{
+		if (symbols[i]->getType() == Symbol::Combined)
+			symbols[i]->colorDeleted(color);
+	}
+	for (int i = 0; i < size; ++i)
+	{
+		if (symbols[i]->getType() != Symbol::Combined)
+			symbols[i]->colorDeleted(color);
+	}
+	emit(colorDeleted(pos, color));
+	
+	delete color;
 }
 int Map::findColorIndex(MapColor* color)
 {
@@ -1065,7 +1086,9 @@ Symbol* Map::getSymbol(int i) const
 
 void Map::setSymbol(Symbol* symbol, int pos)
 {
-	changeSymbolForAllObjects(symbols[pos], symbol);
+	Symbol* old_symbol = symbols[pos];
+	
+	changeSymbolForAllObjects(old_symbol, symbol);
 	
 	int size = (int)symbols.size();
 	for (int i = 0; i < size; ++i)
@@ -1078,12 +1101,10 @@ void Map::setSymbol(Symbol* symbol, int pos)
 	}
 	
 	// Change the symbol
-	Symbol* old_symbol = symbols[pos];
-	delete old_symbol;
 	symbols[pos] = symbol;
-	
 	emit(symbolChanged(pos, symbol, old_symbol));
 	setSymbolsDirty();
+	delete old_symbol;
 }
 void Map::deleteSymbol(int pos)
 {
@@ -1145,10 +1166,7 @@ void Map::scaleAllSymbols(double factor)
 	for (int i = 0; i < size; ++i)
 	{
 		Symbol* symbol = getSymbol(i);
-		
 		symbol->scale(factor);
-		symbol->getIcon(this, true);
-		
 		emit(symbolChanged(i, symbol, symbol));
 	}
 	updateAllObjects();

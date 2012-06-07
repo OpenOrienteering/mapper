@@ -49,7 +49,7 @@ public:
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
 	void createRenderablesScaled(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, float coord_scale);
-	virtual void colorDeleted(Map* map, int pos, MapColor* color);
+	virtual void colorDeleted(MapColor* color);
 	virtual bool containsColor(MapColor* color);
 	virtual void scale(double factor);
 	

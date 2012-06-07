@@ -63,7 +63,7 @@ public:
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
 	void createRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, ObjectRenderables& output);
-	virtual void colorDeleted(Map* map, int pos, MapColor* color);
+	virtual void colorDeleted(MapColor* color);
     virtual bool containsColor(MapColor* color);
     virtual void scale(double factor);
 	

@@ -56,14 +56,22 @@ void CombinedSymbol::createRenderables(Object* object, const MapCoordVector& fla
 	}
 }
 
-void CombinedSymbol::colorDeleted(Map* map, int pos, MapColor* color)
+void CombinedSymbol::colorDeleted(MapColor* color)
 {
-	// Do nothing. The parts are assumed to be ordinary symbols, so they will get this call independently
+	if (containsColor(color))
+		resetIcon();
 }
 
 bool CombinedSymbol::containsColor(MapColor* color)
 {
-	// Do nothing. The parts are assumed to be ordinary symbols, so they will get this call independently
+	int size = (int)parts.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (parts[i]->containsColor(color))
+		{
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -106,7 +114,7 @@ bool CombinedSymbol::containsSymbol(const Symbol* symbol) const
 
 void CombinedSymbol::scale(double factor)
 {
-	// Do nothing. The parts are assumed to be ordinary symbols, so they will get this call independently
+	resetIcon();
 }
 
 Symbol::Type CombinedSymbol::getContainedTypes()

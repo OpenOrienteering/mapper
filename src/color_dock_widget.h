@@ -23,14 +23,10 @@
 
 #include "map_editor.h"
 
-#include <QWidget>
-
-QT_BEGIN_NAMESPACE
-class QGridLayout;
+class QBoxLayout;
 class QPushButton;
 class QTableWidget;
-class QBoxLayout;
-QT_END_NAMESPACE
+class QWidget;
 
 class Map;
 

@@ -54,7 +54,7 @@ public:
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
 	void createLineBelowRenderables(Object* object, ObjectRenderables& output);
-	virtual void colorDeleted(Map* map, int pos, MapColor* color);
+	virtual void colorDeleted(MapColor* color);
     virtual bool containsColor(MapColor* color);
     virtual void scale(double factor);
 	

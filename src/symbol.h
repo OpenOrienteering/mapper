@@ -83,7 +83,7 @@ public:
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) = 0;
 	
 	/// Called by the map in which the symbol is to notify it of a color being deleted (pointer becomes invalid, indices change)
-	virtual void colorDeleted(Map* map, int pos, MapColor* color) {}
+	virtual void colorDeleted(MapColor* color) = 0;
 	
 	/// Must return if the given color is used by this symbol
 	virtual bool containsColor(MapColor* color) = 0;
@@ -98,6 +98,9 @@ public:
 	
 	/// Returns the symbol's icon, creates it if it was not created yet. update == true forces an update of the icon.
 	QImage* getIcon(Map* map, bool update = false);
+	
+	// Clear the symbol's icon. It will be recreated when it is needed.
+	void resetIcon() { delete icon; icon = NULL; }
 	
 	// Getters / Setters
 	inline const QString& getName() const {return name;}

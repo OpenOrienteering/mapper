@@ -1037,27 +1037,27 @@ void LineSymbol::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 	}	
 }
 
-void LineSymbol::colorDeleted(Map* map, int pos, MapColor* color)
+void LineSymbol::colorDeleted(MapColor* color)
 {
 	bool have_changes = false;
 	if (mid_symbol && mid_symbol->containsColor(color))
 	{
-		mid_symbol->colorDeleted(map, pos, color);
+		mid_symbol->colorDeleted(color);
 		have_changes = true;
 	}
 	if (start_symbol && start_symbol->containsColor(color))
 	{
-		start_symbol->colorDeleted(map, pos, color);
+		start_symbol->colorDeleted(color);
 		have_changes = true;
 	}
 	if (end_symbol && end_symbol->containsColor(color))
 	{
-		end_symbol->colorDeleted(map, pos, color);
+		end_symbol->colorDeleted(color);
 		have_changes = true;
 	}
 	if (dash_symbol && dash_symbol->containsColor(color))
 	{
-		dash_symbol->colorDeleted(map, pos, color);
+		dash_symbol->colorDeleted(color);
 		have_changes = true;
 	}
     if (color == this->color)
@@ -1065,13 +1065,18 @@ void LineSymbol::colorDeleted(Map* map, int pos, MapColor* color)
 		this->color = NULL;
 		have_changes = true;
 	}
+	if (color == border_color)
+	{
+		this->border_color = NULL;
+		have_changes = true;
+	}
 	if (have_changes)
-		getIcon(map, true);
+		resetIcon();
 }
 
 bool LineSymbol::containsColor(MapColor* color)
 {
-	if (color == this->color)
+	if (color == this->color || color == border_color)
 		return true;
 	if (mid_symbol && mid_symbol->containsColor(color))
 		return true;
@@ -1114,6 +1119,8 @@ void LineSymbol::scale(double factor)
 	border_shift = qRound(factor * border_shift);
 	border_dash_length = qRound(factor * border_dash_length);
 	border_break_length = qRound(factor * border_break_length);
+	
+	resetIcon();
 }
 
 void LineSymbol::ensurePointSymbols(const QString& start_name, const QString& mid_name, const QString& end_name, const QString& dash_name)

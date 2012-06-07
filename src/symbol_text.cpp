@@ -147,12 +147,12 @@ void TextSymbol::createLineBelowRenderables(Object* object, ObjectRenderables& o
 	output.insertRenderable(new AreaRenderable(&area_symbol, line_coords, line_flags, NULL));
 }
 
-void TextSymbol::colorDeleted(Map* map, int pos, MapColor* color)
+void TextSymbol::colorDeleted(MapColor* color)
 {
 	if (color == this->color)
 	{
 		this->color = NULL;
-		getIcon(map, true);
+		resetIcon();
 	}
 }
 
@@ -166,6 +166,8 @@ void TextSymbol::scale(double factor)
 	font_size = qRound(factor * font_size);
 	
 	updateQFont();
+	
+	resetIcon();
 }
 
 void TextSymbol::updateQFont()

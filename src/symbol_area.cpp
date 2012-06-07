@@ -366,7 +366,7 @@ void AreaSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 		output.setClipPath(NULL);
 	}
 }
-void AreaSymbol::colorDeleted(Map* map, int pos, MapColor* color)
+void AreaSymbol::colorDeleted(MapColor* color)
 {
 	bool change = false;
 	if (color == this->color)
@@ -378,7 +378,7 @@ void AreaSymbol::colorDeleted(Map* map, int pos, MapColor* color)
 	for (int i = 0; i < (int)patterns.size(); ++i)
 	{
 		if (patterns[i].type == FillPattern::PointPattern)
-			patterns[i].point->colorDeleted(map, pos, color);
+			patterns[i].point->colorDeleted(color);
 		else if (patterns[i].line_color == color)
 		{
 			patterns[i].line_color = NULL;
@@ -387,7 +387,7 @@ void AreaSymbol::colorDeleted(Map* map, int pos, MapColor* color)
 	}
 	
 	if (change)
-		getIcon(map, true);
+		resetIcon();
 }
 bool AreaSymbol::containsColor(MapColor* color)
 {
@@ -412,6 +412,8 @@ void AreaSymbol::scale(double factor)
 	int size = (int)patterns.size();
 	for (int i = 0; i < size; ++i)
 		patterns[i].scale(factor);
+	
+	resetIcon();
 }
 
 void AreaSymbol::saveImpl(QFile* file, Map* map)

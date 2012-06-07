@@ -305,6 +305,7 @@ signals:
 	
 	void symbolAdded(int pos, Symbol* symbol);
 	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
+	void symbolIconChanged(int pos);
 	void symbolDeleted(int pos, Symbol* old_symbol);
 	
 	void templateAdded(int pos, Template* temp);

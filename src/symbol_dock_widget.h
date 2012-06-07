@@ -51,14 +51,15 @@ public:
 	Symbol* getSingleSelectedSymbol() const;
 	bool isSymbolSelected(Symbol* symbol) const;
 	
-	void updateIcon(int i);
-	
 	/// Returns the single "current" symbol (the symbol which was clicked last). Can be -1 if no symbol selected
 	inline int currentSymbolIndex() const {return current_symbol_index;}
 
     // This is useful, let's make it public. Does the same thing as a click.
     void selectSingleSymbol(int i);
 
+public slots:
+	void updateIcon(int i);
+	
 protected:
     // Used to update actions in the context menu
     void updateContextMenuState();

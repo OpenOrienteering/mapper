@@ -20,7 +20,7 @@
 
 #include "color_dock_widget.h"
 
-#include <assert.h>
+#include <cassert>
 
 #include <QtGui>
 
@@ -102,6 +102,7 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent): EditorD
 	connect(move_down_button, SIGNAL(clicked(bool)), this, SLOT(moveColorDown()));
 	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
 }
+
 ColorWidget::~ColorWidget()
 {
 	// Save settings
@@ -166,6 +167,7 @@ void ColorWidget::newColor()
 	map->setColorsDirty();
 	map->forceUpdateOfAllObjects();
 }
+
 void ColorWidget::deleteColor()
 {
 	int row = color_table->currentRow();
@@ -185,6 +187,7 @@ void ColorWidget::deleteColor()
 	map->setColorsDirty();
 	map->forceUpdateOfAllObjects();
 }
+
 void ColorWidget::duplicateColor()
 {
 	int row = color_table->currentRow();
@@ -201,6 +204,7 @@ void ColorWidget::duplicateColor()
 	map->setColorsDirty();
 	map->forceUpdateOfAllObjects();
 }
+
 void ColorWidget::moveColorUp()
 {
 	int row = color_table->currentRow();
@@ -218,6 +222,7 @@ void ColorWidget::moveColorUp()
 	map->setColorsDirty();
 	map->forceUpdateOfAllObjects();
 }
+
 void ColorWidget::moveColorDown()
 {
 	int row = color_table->currentRow();
@@ -235,6 +240,7 @@ void ColorWidget::moveColorDown()
 	map->setColorsDirty();
 	map->forceUpdateOfAllObjects();
 }
+
 void ColorWidget::showHelp()
 {
 	window->showHelp("symbols.html", "colors");
@@ -300,9 +306,11 @@ void ColorWidget::cellChange(int row, int column)
 	
 	react_to_changes = true;
 	
+	map->setColor(color, row); // trigger colorChanged signal
 	map->setColorsDirty();
 	map->forceUpdateOfAllObjects();
 }
+
 void ColorWidget::currentCellChange(int current_row, int current_column, int previous_row, int previous_column)
 {
 	if (!react_to_changes)
@@ -313,6 +321,7 @@ void ColorWidget::currentCellChange(int current_row, int current_column, int pre
 	move_up_button->setEnabled(current_row >= 1);
 	move_down_button->setEnabled(current_row < color_table->rowCount() - 1 && current_row != -1);
 }
+
 void ColorWidget::cellDoubleClick(int row, int column)
 {
 	if (column == 0)
@@ -332,6 +341,7 @@ void ColorWidget::cellDoubleClick(int row, int column)
 			
 			updateRow(row);
 			
+			map->setColor(color, row); // trigger colorChanged signal
 			map->setColorsDirty();
 			map->forceUpdateOfAllObjects();
 		}
@@ -354,6 +364,7 @@ void ColorWidget::addRow(int row)
 	
 	updateRow(row);
 }
+
 void ColorWidget::updateRow(int row)
 {
 	react_to_changes = false;
