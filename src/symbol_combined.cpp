@@ -79,6 +79,11 @@ bool CombinedSymbol::symbolChanged(Symbol* old_symbol, Symbol* new_symbol)
 			parts[i] = new_symbol;
 		}
 	}
+	if (have_symbol)
+	{
+		delete icon;
+		icon = NULL;
+	}
 	return have_symbol;
 }
 
