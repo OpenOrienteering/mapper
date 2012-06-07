@@ -59,9 +59,15 @@ public:
 	inline const Symbol* getEditedSymbol() const { return symbol; }
 	
 	/**
-	 * Returns the unmodifed symbol which is currently edited.
+	 * Returns a pointer to the unmodifed symbol which is currently edited.
+	 * Use getUnmodifiedSymbolCopy() instead if you need to access the object!
 	 */
-	inline const Symbol* getSourceSymbol() const { return source_symbol; }
+	inline const Symbol* getUnmodifiedSymbol() const { return source_symbol; }
+	
+	/**
+	 * Returns a pointer to a copy of the unmodifed symbol which is currently edited.
+	 */
+	inline const Symbol* getUnmodifiedSymbolCopy() const { return source_symbol_copy; }
 	
 	/**
 	 * Returns true if the edited symbol has modfications.
@@ -142,6 +148,7 @@ private:
 	
 	Map* const source_map;
 	Symbol* const source_symbol;
+	Symbol* const source_symbol_copy;
 
 	Symbol* symbol;
 	Map* preview_map;

@@ -179,7 +179,7 @@ const int CombinedSymbolSettings::max_count = 5;
 CombinedSymbolSettings::CombinedSymbolSettings(CombinedSymbol* symbol, SymbolSettingDialog* dialog) 
  : SymbolPropertiesWidget(symbol, dialog), symbol(symbol)
 {
-	const CombinedSymbol* source_symbol = static_cast<const CombinedSymbol*>(dialog->getSourceSymbol());
+	const CombinedSymbol* source_symbol = static_cast<const CombinedSymbol*>(dialog->getUnmodifiedSymbol());
 	Map* source_map = dialog->getSourceMap();
 	
 	QFormLayout* layout = new QFormLayout();
