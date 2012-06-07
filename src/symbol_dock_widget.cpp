@@ -304,18 +304,20 @@ void SymbolRenderWidget::paintEvent(QPaintEvent* event)
 		if (i == hover_symbol_index || isSymbolSelected(i))
 		{
 			painter.setPen(Qt::white);
-			painter.drawRect(corner.x() + 1, corner.y() + 1, Symbol::icon_size - 4, Symbol::icon_size - 4);
+			painter.drawRect(corner.x() + 2, corner.y() + 2, Symbol::icon_size - 6, Symbol::icon_size - 6);
 			
 			QPen pen(isSymbolSelected(i) ? qRgb(12, 0, 255) : qRgb(255, 150, 0));
+			pen.setWidth(2);
+			pen.setJoinStyle(Qt::MiterJoin);
 			painter.setPen(pen);
-			painter.drawRect(corner.x() + 0, corner.y() + 0, Symbol::icon_size - 2, Symbol::icon_size - 2);
+			painter.drawRect(QRectF(corner.x() + 0.5f, corner.y() + 0.5f, Symbol::icon_size - 3, Symbol::icon_size - 3));
 			
 			if (i == current_symbol_index && isSymbolSelected(i))
 			{
 				QPen pen(Qt::white);
-				pen.setStyle(Qt::DotLine);
+				pen.setDashPattern(QVector<qreal>() << 2 << 2);
 				painter.setPen(pen);
-				painter.drawRect(corner.x() + 0, corner.y() + 0, Symbol::icon_size - 2, Symbol::icon_size - 2);
+				painter.drawRect(corner.x() + 1, corner.y() + 1, Symbol::icon_size - 4, Symbol::icon_size - 4);
 			}
 			
 			painter.setPen(Qt::gray);
