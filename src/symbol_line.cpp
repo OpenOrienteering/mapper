@@ -464,26 +464,6 @@ void LineSymbol::createPointedLineCap(Object* object, const MapCoordVector& flag
 		cap_coords.push_back(MapCoordF(cap_middle_coords[i].getX() + radius * right_vector.getX(), cap_middle_coords[i].getY() + radius * right_vector.getY()));
 		cap_coords_left.push_back(MapCoordF(cap_middle_coords[i].getX() - radius * right_vector.getX(), cap_middle_coords[i].getY() - radius * right_vector.getY()));
 		
-		// Create small overlap to avoid visual glitches with the on-screen display (should not matter for printing, could probably turn it off for this)
-		if ((is_end && i == 0) || (!is_end && i == cap_size - 1))
-		{
-			const float overlap_factor = 0.005f;
-			
-			bool ok;
-			MapCoordF tangent = PathCoord::calculateTangent(cap_middle_coords, i, !is_end, ok);
-			if (ok)
-			{
-				tangent.normalize();
-				tangent = MapCoordF(tangent.getX() * overlap_factor * sign, tangent.getY() * overlap_factor * sign);
-				
-				MapCoordF& coord = cap_coords[cap_coords.size() - 1];
-				coord = MapCoordF(coord.getX() + tangent.getX(), coord.getY() + tangent.getY());
-				
-				MapCoordF& coord2 = cap_coords_left[cap_coords_left.size() - 1];
-				coord2 = MapCoordF(coord2.getX() + tangent.getX(), coord2.getY() + tangent.getY());
-			}
-		}
-		
 		// Control points for bezier curves
 		if (i >= 3 && cap_flags[i-3].isCurveStart())
 		{
@@ -510,6 +490,42 @@ void LineSymbol::createPointedLineCap(Object* object, const MapCoordVector& flag
 		{
 			if (i < cap_size - 1 && cap_lengths[i] == cap_lengths[i+1])
 				++i;
+		}
+	}
+	
+	// Create small overlap to avoid visual glitches with the on-screen display (should not matter for printing, could probably turn it off for this)
+	const float overlap_length = 0.05f;
+	if (end - start > 4 * overlap_length)
+	{
+		bool ok;
+		int end_pos = is_end ? 0 : (cap_size - 1);
+		int end_cap_pos = is_end ? 0 : (cap_coords.size() - 1);
+		MapCoordF tangent = PathCoord::calculateTangent(cap_middle_coords, end_pos, !is_end, ok);
+		if (ok)
+		{
+			tangent.normalize();
+			tangent = MapCoordF(tangent.getX() * overlap_length * sign, tangent.getY() * overlap_length * sign);
+			MapCoordF right = is_end ? tangent : -tangent;
+			right.perpRight();
+			
+			MapCoordF shifted_coord = cap_coords[end_cap_pos];
+			shifted_coord += tangent + right;
+			
+			MapCoordF shifted_coord_left = cap_coords_left[end_cap_pos];
+			shifted_coord_left += tangent - right;
+			
+			if (is_end)
+			{
+				cap_flags.insert(cap_flags.begin(), MapCoord());
+				cap_coords.insert(cap_coords.begin(), shifted_coord);
+				cap_coords_left.insert(cap_coords_left.begin(), shifted_coord_left);
+			}
+			else
+			{
+				cap_flags.push_back(MapCoord());
+				cap_coords.push_back(shifted_coord);
+				cap_coords_left.push_back(shifted_coord_left);
+			}
 		}
 	}
 	
