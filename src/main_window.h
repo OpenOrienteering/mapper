@@ -279,6 +279,9 @@ private:
 	bool has_opened_file;
 	/// If this window has an opened file: does this file have unsaved changes?
 	bool has_unsaved_changes;
+	
+	/// Was the window maximized before going into fullscreen mode? In this case, we have to show it maximized again when leaving fullscreen mode.
+	bool maximized_before_fullscreen;
 
 	/// Number of active main windows. The last window shall not close on File > Close.
 	static int num_windows;

@@ -58,6 +58,7 @@ MainWindow::MainWindow(bool as_main_window)
 	this->show_menu = as_main_window;
 	disable_shortcuts = false;
 	setCurrentFile("");
+	maximized_before_fullscreen = false;
 	
 	setWindowIcon(QIcon(":/images/control.png"));
 	setAttribute(Qt::WA_DeleteOnClose);
@@ -619,9 +620,20 @@ bool MainWindow::showSaveAsDialog()
 void MainWindow::toggleFullscreenMode()
 {
 	if (isFullScreen())
-		showNormal();
+	{
+		if (maximized_before_fullscreen)
+		{
+			showNormal();
+			showMaximized();
+		}
+		else
+			showNormal();
+	}
 	else
+	{
+		maximized_before_fullscreen = isMaximized();
 		showFullScreen();
+	}
 }
 
 void MainWindow::showSettings()
