@@ -640,7 +640,7 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 			float lower_dashgroup_deviation = (length - (lower_dashgroup_count*dashes_in_group*dash_length_f + (lower_dashgroup_count-1)*break_length_f + lower_dashgroup_count*(dashes_in_group-1)*in_group_break_length_f)) / (lower_dashgroup_count*dashes_in_group);
 			float higher_dashgroup_deviation = (-1) * (length - (higher_dashgroup_count*dashes_in_group*dash_length_f + (higher_dashgroup_count-1)*break_length_f + higher_dashgroup_count*(dashes_in_group-1)*in_group_break_length_f)) / (higher_dashgroup_count*dashes_in_group);
 			if (!half_first_dash && !half_last_dash)
-				assert(lower_dashgroup_deviation >= 0 && higher_dashgroup_deviation >= 0); // TODO; seems to fail as long as halving first/last dashes affects the outermost dash only
+				assert(lower_dashgroup_deviation >= -0.001f && higher_dashgroup_deviation >= -0.001f); // TODO; seems to fail as long as halving first/last dashes affects the outermost dash only
 			int num_dashgroups = (lower_dashgroup_deviation > higher_dashgroup_deviation) ? higher_dashgroup_count : lower_dashgroup_count;
 			assert(num_dashgroups >= 2);
 			

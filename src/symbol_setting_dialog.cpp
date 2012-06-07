@@ -43,7 +43,8 @@
 SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map, QWidget* parent)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), 
   source_map(source_map),
-  source_symbol(source_symbol)
+  source_symbol(source_symbol),
+  source_symbol_copy(source_symbol->duplicate())	// don't rely on external entity
 {
 	setWindowTitle(tr("Symbol settings"));
 	setSizeGripEnabled(true);
@@ -158,6 +159,7 @@ SymbolSettingDialog::~SymbolSettingDialog()
 {
 	delete properties_widget; // must be deleted before the symbol!
 	delete symbol;
+	delete source_symbol_copy;
 }
 
 void SymbolSettingDialog::updatePreview()
@@ -401,7 +403,6 @@ void SymbolSettingDialog::createPreviewMap()
 	{
 		TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(symbol);
 		
-		// TODO: Suggestion for the German translation: "Franz, der OL für die Abkürzung\nvon Oldenbourg hält, jagt im komplett\nverwahrlosten Taxi quer durch Bayern\n1234567890"
 		const QString string = tr("The quick brown fox\ntakes the routechoice\nto jump over the lazy dog\n1234567890");
 		
 		TextObject* object = new TextObject(text_symbol);
@@ -441,7 +442,7 @@ void SymbolSettingDialog::showHelp()
 void SymbolSettingDialog::reset()
 {
 	Symbol* old_symbol = symbol;
-	symbol = source_symbol->duplicate();
+	symbol = source_symbol_copy->duplicate();
 	createPreviewMap();
 	properties_widget->reset(symbol);
 	delete old_symbol;
