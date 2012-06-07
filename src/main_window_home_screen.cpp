@@ -186,6 +186,7 @@ void DocumentSelectionWidget::updateRecentFiles()
 		
 		QListWidgetItem* new_item = new QListWidgetItem(text);
 		new_item->setData(Qt::UserRole, files[i]);
+		new_item->setToolTip(files[i]);
 		recent_docs_list->addItem(new_item);
 	}
 }
