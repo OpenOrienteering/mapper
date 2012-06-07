@@ -24,6 +24,7 @@
 #include "map_editor.h"
 #include "map_widget.h"
 #include "main_window.h"
+#include "util_gui.h"
 #include "settings.h"
 
 void SettingsPage::apply()
@@ -99,9 +100,7 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	layout->addWidget(antialiasing, row++, 0, 1, 2);
 	
 	QLabel* tolerance_label = new QLabel(tr("Click tolerance:"));
-	QSpinBox* tolerance = new QSpinBox(this);
-	tolerance->setMinimum(1);
-	tolerance->setMaximum(50);
+	QSpinBox* tolerance = Util::SpinBox::create(0, 50, tr("pix"));
 	layout->addWidget(tolerance_label, row, 0);
 	layout->addWidget(tolerance, row++, 1);
 
