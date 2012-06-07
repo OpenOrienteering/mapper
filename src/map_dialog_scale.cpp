@@ -81,6 +81,7 @@ void ScaleMapDialog::okClicked()
 		map->scaleAllObjects(factor);
 	
 	map->setScaleDenominator(scale);
+	map->setOtherDirty(true);
 	accept();
 }
 
