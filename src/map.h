@@ -278,6 +278,11 @@ public:
 	void setHasUnsavedChanges(bool has_unsaved_changes = true);
 	inline bool hasUnsavedChanged() const {return unsaved_changes;}
 	
+	inline bool areColorsDirty() const {return colors_dirty;}
+	inline bool areSymbolsDirty() const {return symbols_dirty;}
+	inline bool areTemplatesDirty() const {return templates_dirty;}
+	inline bool areObjectsDirty() const {return objects_dirty;}
+	
 	// Static
 	
 	static MapColor* getCoveringWhite() {return &covering_white;}

@@ -204,12 +204,12 @@ void UndoManager::addNewUndoStep(UndoStep* step)
 		emit(undoStepAvailabilityChanged());
 }
 
-void UndoManager::clear()
+void UndoManager::clear(bool current_state_is_saved)
 {
 	bool have_steps = !undo_steps.empty() || !redo_steps.empty();
 	clearUndoSteps();
 	clearRedoSteps();
-	saved_step_index = -1;
+	saved_step_index = current_state_is_saved ? 0 : (-1);
 	loaded_step_index = -1;
 	if (have_steps)
 		emit(undoStepAvailabilityChanged());

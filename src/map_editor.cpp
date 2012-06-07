@@ -721,7 +721,7 @@ void MapEditorController::doUndo(bool redo)
 	if (!done)
 		return;
 	
-	if (map->hasUnsavedChanged() && in_saved_state)
+	if (map->hasUnsavedChanged() && in_saved_state && !(map->areColorsDirty() || map->areSymbolsDirty() || map->areTemplatesDirty()))
 	{
 		map->setHasUnsavedChanges(false);
 		window->setHasUnsavedChanges(false);

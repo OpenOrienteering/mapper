@@ -111,7 +111,7 @@ public:
 	void addNewUndoStep(UndoStep* step);
 	
 	/// Deletes all undo and redo steps. Can be necessary if changes are made to objects which are not tracked by the undo system but related to it.
-	void clear();
+	void clear(bool current_state_is_saved);
 	
 	/// undo() and redo() return true if, as the result of the action, the file is in the state where it was saved the last time
 	bool undo(QWidget* dialog_parent = NULL, bool* done = NULL);

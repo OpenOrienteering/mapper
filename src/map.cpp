@@ -572,7 +572,7 @@ void Map::clear()
 	first_selected_object = NULL;
 	
 	widgets.clear();
-	object_undo_manager.clear();
+	object_undo_manager.clear(true);
 	
 	map_notes = "";
 	
@@ -1086,7 +1086,7 @@ void Map::setSymbol(Symbol* symbol, int pos)
 void Map::deleteSymbol(int pos)
 {
 	if (deleteAllObjectsWithSymbol(symbols[pos]))
-		object_undo_manager.clear();
+		object_undo_manager.clear(false);
 	
 	int size = (int)symbols.size();
 	for (int i = 0; i < size; ++i)
