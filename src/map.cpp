@@ -1044,6 +1044,23 @@ void Map::sortSymbols(bool (*cmp)(Symbol *, Symbol *)) {
     setSymbolsDirty();
 }
 
+Symbol* Map::getSymbol(int i) const
+{
+	if (i >= 0)
+		return symbols[i];
+	else if (i == -1)
+		return NULL;
+	else if (i == -2)
+		return getUndefinedPoint();
+	else if (i == -3)
+		return getUndefinedLine();
+	else
+	{
+		assert(!"Invalid symbol index given");
+		return getUndefinedLine();
+	}
+}
+
 void Map::setSymbol(Symbol* symbol, int pos)
 {
 	changeSymbolForAllObjects(symbols[pos], symbol);
