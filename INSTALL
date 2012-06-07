@@ -109,7 +109,8 @@ cd ../bin       (if still in the build directory)
 ./Mapper -graphicssystem raster
 
 The option "-graphicssystem raster" is a Qt option which usually leads to better performance on Linux,
-in case it is not the default yet anyway (like on Windows).
+in case it is not the default yet anyway (like on Windows). In addition, using the native graphics system
+can lead to artifacts.
 
 * Package management:
 If you want to create a release package, enable "set(CMAKE_BUILD_TYPE Release)" in the CMakeList.txt. 

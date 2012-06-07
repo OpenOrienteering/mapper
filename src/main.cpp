@@ -32,6 +32,10 @@
 
 int main(int argc, char** argv)
 {
+	// Set the default graphics system to raster. This can be overwritten by the command line option "-graphicssystem".
+	// This must be called before the QApplication constructor is called!
+	QApplication::setGraphicsSystem("raster");
+	
 	// Create single-instance application.
 	// Use "oo-mapper" instead of the executable as identifier, in case we launch from different paths.
 	QtSingleApplication qapp("oo-mapper", argc, argv);
