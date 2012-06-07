@@ -23,6 +23,7 @@
 
 #include <vector>
 
+#include <QAction>
 #include <QDockWidget>
 #include <QScopedPointer>
 
@@ -127,12 +128,12 @@ public slots:
 	
 	void showWholeMap();
 	
-	void editToolClicked(bool checked);
-	void drawPointClicked(bool checked);
-	void drawPathClicked(bool checked);
-	void drawCircleClicked(bool checked);
-	void drawRectangleClicked(bool checked);
-	void drawTextClicked(bool checked);
+	void editToolClicked();
+	void drawPointClicked();
+	void drawPathClicked();
+	void drawCircleClicked();
+	void drawRectangleClicked();
+	void drawTextClicked();
 	
 	void duplicateClicked();
 	void switchSymbolClicked();
@@ -140,11 +141,11 @@ public slots:
 	void selectObjectsClicked();	// Selects all objects with the selected symbol(s)
 	void switchDashesClicked();
 	void connectPathsClicked();
-	void cutClicked(bool checked);
-	void cutHoleClicked(bool checked);
-	void cutHoleCircleClicked(bool checked);
-	void cutHoleRectangleClicked(bool checked);
-	void rotateClicked(bool checked);
+	void cutClicked();
+	void cutHoleClicked();
+	void cutHoleCircleClicked();
+	void cutHoleRectangleClicked();
+	void rotateClicked();
 	void measureClicked(bool checked);
 	void booleanUnionClicked();
 	void booleanIntersectionClicked();
@@ -173,6 +174,7 @@ private:
 	
     QAction *newAction(const char *id, const QString &tr_text, QObject *receiver, const char *slot, const char *icon = NULL, const QString &tr_tip = QString::null);
     QAction *newCheckAction(const char *id, const QString &tr_text, QObject *receiver, const char *slot, const char *icon = NULL, const QString &tr_tip = QString::null);
+	QAction *newToolAction(const char *id, const QString &tr_text, QObject *receiver, const char *slot, const char *icon = NULL, const QString &tr_tip = QString::null);
     QAction *findAction(const char *id);
     void assignKeyboardShortcuts();
     void createMenuAndToolbars();
@@ -386,6 +388,20 @@ protected:
 	QAction* tool_button;
 	Type type;
 	MapEditorController* editor;
+};
+
+/// Helper class which disallows deselecting the checkable action by the user
+class MapEditorToolAction : public QAction
+{
+Q_OBJECT
+public:
+	MapEditorToolAction(const QIcon& icon, const QString& text, QObject* parent);
+	
+signals:
+	void activated();
+	
+private slots:
+	void triggeredImpl(bool checked);
 };
 
 #endif

@@ -398,15 +398,24 @@ void TemplateAdjustWidget::updateActions()
 
 void TemplateAdjustWidget::newClicked(bool checked)
 {
-	controller->setTool(checked ? (new TemplateAdjustAddTool(controller, new_act, this)) : NULL);
+	if (checked)
+		controller->setTool(new TemplateAdjustAddTool(controller, new_act, this));
+	else
+		new_act->setChecked(true);
 }
 void TemplateAdjustWidget::moveClicked(bool checked)
 {
-	controller->setTool(checked ? (new TemplateAdjustMoveTool(controller, move_act, this)) : NULL);
+	if (checked)
+		controller->setTool(new TemplateAdjustMoveTool(controller, move_act, this));
+	else
+		move_act->setChecked(true);
 }
 void TemplateAdjustWidget::deleteClicked(bool checked)
 {
-	controller->setTool(checked ? (new TemplateAdjustDeleteTool(controller, delete_act, this)) : NULL);
+	if (checked)
+		controller->setTool(new TemplateAdjustDeleteTool(controller, delete_act, this));
+	else
+		delete_act->setChecked(true);
 }
 
 void TemplateAdjustWidget::applyClicked(bool checked)

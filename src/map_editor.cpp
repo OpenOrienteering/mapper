@@ -307,18 +307,18 @@ void MapEditorController::attach(MainWindow* window)
 	}
 }
 
-QAction *MapEditorController::newAction(const char *id, const QString &tr_text, QObject *receiver, const char *slot, const char *icon, const QString &tr_tip)
+QAction* MapEditorController::newAction(const char* id, const QString &tr_text, QObject* receiver, const char* slot, const char* icon, const QString &tr_tip)
 {
-    QAction *action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, this);
+    QAction* action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, this);
     if (!tr_tip.isEmpty()) action->setStatusTip(tr_tip);
     if (receiver) QObject::connect(action, SIGNAL(triggered()), receiver, slot);
     actionsById[id] = action;
     return action;
 }
 
-QAction *MapEditorController::newCheckAction(const char *id, const QString &tr_text, QObject *receiver, const char *slot, const char *icon, const QString &tr_tip)
+QAction* MapEditorController::newCheckAction(const char* id, const QString &tr_text, QObject* receiver, const char* slot, const char* icon, const QString &tr_tip)
 {
-    QAction *action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, this);
+    QAction* action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, this);
     action->setCheckable(true);
     if (!tr_tip.isEmpty()) action->setStatusTip(tr_tip);
     if (receiver) QObject::connect(action, SIGNAL(triggered(bool)), receiver, slot);
@@ -326,7 +326,16 @@ QAction *MapEditorController::newCheckAction(const char *id, const QString &tr_t
     return action;
 }
 
-QAction *MapEditorController::findAction(const char *id)
+QAction* MapEditorController::newToolAction(const char* id, const QString &tr_text, QObject* receiver, const char* slot, const char* icon, const QString &tr_tip)
+{
+	QAction* action = new MapEditorToolAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, this);
+	if (!tr_tip.isEmpty()) action->setStatusTip(tr_tip);
+	if (receiver) QObject::connect(action, SIGNAL(activated()), receiver, slot);
+	actionsById[id] = action;
+	return action;
+}
+
+QAction* MapEditorController::findAction(const char* id)
 {
     if (!actionsById.contains(id)) return actionsById[""];
     else return actionsById[id];
@@ -408,17 +417,17 @@ void MapEditorController::createMenuAndToolbars()
     QAction* open_template_act = newAction("opentemplate", tr("Open template..."), this, SLOT(openTemplateClicked()));
 	open_template_act->setWhatsThis("<a href=\"template_menu.html\">See more</a>");
     QAction* show_all_act = newAction("showall", tr("Show whole map"), this, SLOT(showWholeMap()), "view-show-all.png");
-    edit_tool_act = newCheckAction("editobjects", tr("Edit objects"), this, SLOT(editToolClicked(bool)), "tool-edit.png");
+    edit_tool_act = newToolAction("editobjects", tr("Edit objects"), this, SLOT(editToolClicked()), "tool-edit.png");
 	edit_tool_act->setWhatsThis("<a href=\"drawing_toolbar.html#selector\">See more</a>");
-    draw_point_act = newCheckAction("drawpoint", tr("Set point objects"), this, SLOT(drawPointClicked(bool)), "draw-point.png");
+    draw_point_act = newToolAction("drawpoint", tr("Set point objects"), this, SLOT(drawPointClicked()), "draw-point.png");
 	draw_point_act->setWhatsThis("<a href=\"drawing_toolbar.html#point\">See more</a>");
-    draw_path_act = newCheckAction("drawpath", tr("Draw paths"), this, SLOT(drawPathClicked(bool)), "draw-path.png");
+    draw_path_act = newToolAction("drawpath", tr("Draw paths"), this, SLOT(drawPathClicked()), "draw-path.png");
 	draw_path_act->setWhatsThis("<a href=\"drawing_toolbar.html#line\">See more</a>");
-	draw_circle_act = newCheckAction("drawcircle", tr("Draw circles"), this, SLOT(drawCircleClicked(bool)), "draw-circle.png");
+	draw_circle_act = newToolAction("drawcircle", tr("Draw circles"), this, SLOT(drawCircleClicked()), "draw-circle.png");
 	draw_circle_act->setWhatsThis("<a href=\"drawing_toolbar.html#circle\">See more</a>");
-	draw_rectangle_act = newCheckAction("drawrectangle", tr("Draw rectangles"), this, SLOT(drawRectangleClicked(bool)), "draw-rectangle.png");
+	draw_rectangle_act = newToolAction("drawrectangle", tr("Draw rectangles"), this, SLOT(drawRectangleClicked()), "draw-rectangle.png");
 	draw_rectangle_act->setWhatsThis("<a href=\"drawing_toolbar.html#rectangle\">See more</a>");
-	draw_text_act = newCheckAction("drawtext", tr("Write text"), this, SLOT(drawTextClicked(bool)), "draw-text.png");
+	draw_text_act = newToolAction("drawtext", tr("Write text"), this, SLOT(drawTextClicked()), "draw-text.png");
 	draw_text_act->setWhatsThis("<a href=\"drawing_toolbar.html#text\">See more</a>");
     duplicate_act = newAction("duplicate", tr("Duplicate"), this, SLOT(duplicateClicked()), "tool-duplicate.png"); // D
 	duplicate_act->setWhatsThis("<a href=\"drawing_toolbar.html#duplicate\">See more</a>");
@@ -430,19 +439,19 @@ void MapEditorController::createMenuAndToolbars()
 	switch_dashes_act->setWhatsThis("<a href=\"drawing_toolbar.html#reverse\">See more</a>");
 	connect_paths_act = newAction("connectpaths", tr("Connect paths"), this, SLOT(connectPathsClicked()), "tool-connect-paths.png");
 	connect_paths_act->setWhatsThis("<a href=\"drawing_toolbar.html#connect\">See more</a>");
-	cut_tool_act = newCheckAction("cutobject", tr("Cut object"), this, SLOT(cutClicked(bool)), "tool-cut.png");
+	cut_tool_act = newToolAction("cutobject", tr("Cut object"), this, SLOT(cutClicked()), "tool-cut.png");
 	cut_tool_act->setWhatsThis("<a href=\"drawing_toolbar.html#cut\">See more</a>");
-	cut_hole_act = newCheckAction("cuthole", tr("Cut free form hole"), this, SLOT(cutHoleClicked(bool)), "tool-cut-hole.png"); // cut hole using a path
+	cut_hole_act = newToolAction("cuthole", tr("Cut free form hole"), this, SLOT(cutHoleClicked()), "tool-cut-hole.png"); // cut hole using a path
 	cut_hole_act->setWhatsThis("<a href=\"drawing_toolbar.html#cut_hole\">See more</a>");
-	cut_hole_circle_act = new QAction(QIcon(":/images/tool-cut-hole.png"), tr("Cut round hole"), this);
+	cut_hole_circle_act = new MapEditorToolAction(QIcon(":/images/tool-cut-hole.png"), tr("Cut round hole"), this);
 	cut_hole_circle_act->setWhatsThis("<a href=\"drawing_toolbar.html#cut_hole_circle\">See more</a>");
 	cut_hole_circle_act->setCheckable(true);
-	QObject::connect(cut_hole_circle_act, SIGNAL(triggered(bool)), this, SLOT(cutHoleCircleClicked(bool)));
-	cut_hole_rectangle_act = new QAction(QIcon(":/images/tool-cut-hole.png"), tr("Cut rectangular hole"), this);
+	QObject::connect(cut_hole_circle_act, SIGNAL(activated()), this, SLOT(cutHoleCircleClicked()));
+	cut_hole_rectangle_act = new MapEditorToolAction(QIcon(":/images/tool-cut-hole.png"), tr("Cut rectangular hole"), this);
 	cut_hole_rectangle_act->setWhatsThis("<a href=\"drawing_toolbar.html#cut_hole_rectangle\">See more</a>");
 	cut_hole_rectangle_act->setCheckable(true);
-	QObject::connect(cut_hole_rectangle_act, SIGNAL(triggered(bool)), this, SLOT(cutHoleRectangleClicked(bool)));
-    rotate_act = newCheckAction("rotateobjects", tr("Rotate object(s)"), this, SLOT(rotateClicked(bool)), "tool-rotate.png");
+	QObject::connect(cut_hole_rectangle_act, SIGNAL(activated()), this, SLOT(cutHoleRectangleClicked()));
+    rotate_act = newToolAction("rotateobjects", tr("Rotate object(s)"), this, SLOT(rotateClicked()), "tool-rotate.png");
 	rotate_act->setWhatsThis("<a href=\"drawing_toolbar.html#rotate\">See more</a>");
 	measure_act = newCheckAction("measure", tr("Measure lengths and areas"), this, SLOT(measureClicked(bool)), "tool-measure.png");
 	measure_act->setWhatsThis("<a href=\"drawing_toolbar.html#measure\">See more</a>");
@@ -1081,32 +1090,29 @@ void MapEditorController::showWholeMap()
 	map_widget->adjustViewToRect(map_extent);
 }
 
-void MapEditorController::editToolClicked(bool checked)
+void MapEditorController::editToolClicked()
 {
-	if (checked)
-		setEditTool();
-	else
-		setTool(NULL);
+	setEditTool();
 }
-void MapEditorController::drawPointClicked(bool checked)
+void MapEditorController::drawPointClicked()
 {
-	setTool(checked ? new DrawPointTool(this, draw_point_act, symbol_widget) : NULL);
+	setTool(new DrawPointTool(this, draw_point_act, symbol_widget));
 }
-void MapEditorController::drawPathClicked(bool checked)
+void MapEditorController::drawPathClicked()
 {
-	setTool(checked ? new DrawPathTool(this, draw_path_act, symbol_widget, true) : NULL);
+	setTool(new DrawPathTool(this, draw_path_act, symbol_widget, true));
 }
-void MapEditorController::drawCircleClicked(bool checked)
+void MapEditorController::drawCircleClicked()
 {
-	setTool(checked ? new DrawCircleTool(this, draw_circle_act, symbol_widget) : NULL);
+	setTool(new DrawCircleTool(this, draw_circle_act, symbol_widget));
 }
-void MapEditorController::drawRectangleClicked(bool checked)
+void MapEditorController::drawRectangleClicked()
 {
-	setTool(checked ? new DrawRectangleTool(this, draw_rectangle_act, symbol_widget) : NULL);
+	setTool(new DrawRectangleTool(this, draw_rectangle_act, symbol_widget));
 }
-void MapEditorController::drawTextClicked(bool checked)
+void MapEditorController::drawTextClicked()
 {
-	setTool(checked ? new DrawTextTool(this, draw_text_act, symbol_widget) : NULL);
+	setTool(new DrawTextTool(this, draw_text_act, symbol_widget));
 }
 
 void MapEditorController::duplicateClicked()
@@ -1345,25 +1351,25 @@ void MapEditorController::connectPathsClicked()
 	map->emitSelectionChanged();
 	map->emitSelectionEdited();
 }
-void MapEditorController::cutClicked(bool checked)
+void MapEditorController::cutClicked()
 {
-	setTool(checked ? new CutTool(this, cut_tool_act) : NULL);
+	setTool(new CutTool(this, cut_tool_act));
 }
-void MapEditorController::cutHoleClicked(bool checked)
+void MapEditorController::cutHoleClicked()
 {
-	setTool(checked ? new CutHoleTool(this, cut_hole_act, PathObject::Path) : NULL);
+	setTool(new CutHoleTool(this, cut_hole_act, PathObject::Path));
 }
-void MapEditorController::cutHoleCircleClicked(bool checked)
+void MapEditorController::cutHoleCircleClicked()
 {
-	setTool(checked ? new CutHoleTool(this, cut_hole_circle_act, PathObject::Circle) : NULL);
+	setTool(new CutHoleTool(this, cut_hole_circle_act, PathObject::Circle));
 }
-void MapEditorController::cutHoleRectangleClicked(bool checked)
+void MapEditorController::cutHoleRectangleClicked()
 {
-	setTool(checked ? new CutHoleTool(this, cut_hole_rectangle_act, PathObject::Rect) : NULL);
+	setTool(new CutHoleTool(this, cut_hole_rectangle_act, PathObject::Rect));
 }
-void MapEditorController::rotateClicked(bool checked)
+void MapEditorController::rotateClicked()
 {
-	setTool(checked ? new RotateTool(this, rotate_act) : NULL);
+	setTool(new RotateTool(this, rotate_act));
 }
 void MapEditorController::measureClicked(bool checked)
 {
@@ -1866,6 +1872,22 @@ void MapEditorController::importGPX(QString filename)
 	if (!temp.open(window, main_view))
 		return;
 	temp.import(window);
+}
+
+// ### MapEditorToolAction ###
+
+MapEditorToolAction::MapEditorToolAction(const QIcon& icon, const QString& text, QObject* parent)
+ : QAction(icon, text, parent)
+{
+	setCheckable(true);
+	connect(this, SIGNAL(triggered(bool)), this, SLOT(triggeredImpl(bool)));
+}
+void MapEditorToolAction::triggeredImpl(bool checked)
+{
+	if (checked)
+		emit(activated());
+	else
+		setChecked(true);
 }
 
 #include "map_editor.moc"
