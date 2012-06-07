@@ -127,10 +127,13 @@ void ObjectRenderables::insertRenderable(Renderable* r)
 	if (!container)
 		container = new SharedRenderables();
 	container->operator[](state).push_back(r);
-	if (extent.isValid())
-		rectInclude(extent, r->getExtent());
-	else
-		extent = r->getExtent();
+	if (clip_path == NULL)
+	{
+		if (extent.isValid())
+			rectInclude(extent, r->getExtent());
+		else
+			extent = r->getExtent();
+	}
 }
 
 void ObjectRenderables::clear()
