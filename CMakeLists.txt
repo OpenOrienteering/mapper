@@ -40,12 +40,13 @@ set(Mapper_SRCS
  libocad/file.c
  libocad/color.c
  libocad/setup.c
- libocad/symbol.c
- libocad/object.c
+ libocad/ocad_symbol.c
+ libocad/ocad_object.c
  libocad/string.c
 
  qtsingleapplication/qtlocalpeer.cpp
  qtsingleapplication/qtsingleapplication.cpp
+ qtsingleapplication/qtsinglecoreapplication.cpp
 
  3rd-party/clipper/cpp/clipper.cpp
 
@@ -121,7 +122,61 @@ set(Mapper_SRCS
  src/file_format_ocad8.cpp
  src/file_format_xml.cpp
 )
-qt4_automoc(${Mapper_SRCS})
+
+set(Mapper_MOC_INPUT
+ qtsingleapplication/qtlocalpeer.h
+ qtsingleapplication/qtsingleapplication.h
+ qtsingleapplication/qtsinglecoreapplication.h
+
+ src/color_dock_widget.h
+ src/georeferencing.h
+ src/georeferencing_dialog.h
+ src/main_window.h
+ src/main_window_home_screen.h
+ src/map.h
+ src/map_color.h
+ src/map_dialog_new.h
+ src/map_dialog_scale.h
+ src/map_editor.h
+ src/map_undo.h
+ src/map_widget.h
+ src/print_dock_widget.h
+ src/settings.h
+ src/settings_dialog.h
+ src/symbol.h
+ src/symbol_area.h
+ src/symbol_combined.h
+ src/symbol_dock_widget.h
+ src/symbol_line.h
+ src/symbol_point.h
+ src/symbol_point_editor.h
+ src/symbol_properties_widget.h
+ src/symbol_setting_dialog.h
+ src/symbol_text.h
+ src/template.h
+ src/template_adjust.h
+ src/template_dock_widget.h
+ src/template_gps.h
+ src/template_image.h
+ src/template_map.h
+ src/template_position_dock_widget.h
+ src/template_tool_move.h
+ src/template_tool_paint.h
+ src/tool_cut.h
+ src/tool_cut_hole.h
+ src/tool_draw_circle.h
+ src/tool_draw_line_and_area.h
+ src/tool_draw_path.h
+ src/tool_draw_point.h
+ src/tool_draw_rectangle.h
+ src/tool_draw_text.h
+ src/tool_edit.h
+ src/tool_measure.h
+ src/tool_rotate.h
+ src/undo.h
+)
+
+qt4_wrap_cpp(Mapper_MOC ${Mapper_MOC_INPUT})
 
 set(Mapper_TRANS
  translations/OpenOrienteering_de.ts
@@ -157,6 +212,7 @@ add_executable(Mapper
 	WIN32
 	MACOSX_BUNDLE
 	${Mapper_SRCS}
+	${Mapper_MOC}
 	${Mapper_QM}
 	${Mapper_HELP_COLLECTION}
 	${Mapper_RESOURCES_RCC}

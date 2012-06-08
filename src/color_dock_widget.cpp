@@ -387,5 +387,3 @@ void ColorWidget::updateRow(int row)
 	color_table->item(row, 9)->setText(QString::number(color->b * 255));
 	react_to_changes = true;
 }
-
-#include "color_dock_widget.moc"

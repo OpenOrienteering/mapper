@@ -101,5 +101,3 @@ void TemplateMoveTool::updateDragging(MapCoordF mouse_pos_map)
 	editor->getMap()->setTemplatesDirty();
 	editor->getMap()->emitTemplateChanged(templ);
 }
-
-#include "template_tool_move.moc"

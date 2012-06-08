@@ -65,5 +65,3 @@ void Settings::applySettings()
 	settings_cache.clear();
 	emit settingsChanged();
 }
-
-#include "settings.moc"

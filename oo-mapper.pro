@@ -13,12 +13,11 @@ QT += network xml
 # Needed when compiling pure C code
 QMAKE_CFLAGS += -std=c99
 
+QMAKE_LIBS += -lproj
+
 # Input
 HEADERS += src/color_dock_widget.h \
-           src/draw_path.h \
-           src/draw_point.h \
-           src/draw_text.h \
-           src/edit_tool.h \
+           src/dxfparser.h \
            src/file_format.h \
            src/file_format_native.h \
            src/file_format_ocad8.h \
@@ -41,12 +40,13 @@ HEADERS += src/color_dock_widget.h \
            src/matrix.h \
            src/object.h \
            src/object_text.h \
-           src/paint_on_template.h \
            src/path_coord.h \
            src/print_dock_widget.h \
            src/qbezier_p.h \
            src/renderable.h \
            src/renderable_implementation.h \
+           src/settings.h \
+           src/settings_dialog.h \
            src/symbol.h \
            src/symbol_area.h \
            src/symbol_combined.h \
@@ -54,14 +54,33 @@ HEADERS += src/color_dock_widget.h \
            src/symbol_line.h \
            src/symbol_point.h \
            src/symbol_point_editor.h \
+           src/symbol_properties_widget.h \
            src/symbol_setting_dialog.h \
            src/symbol_text.h \
            src/template.h \
+           src/template_adjust.h \
            src/template_dock_widget.h \
            src/template_gps.h \
            src/template_image.h \
+           src/template_map.h \
+           src/template_position_dock_widget.h \
+           src/template_tool_move.h \
+           src/template_tool_paint.h \
+           src/tool_boolean.h \
+           src/tool_cut.h \
+           src/tool_cut_hole.h \
+           src/tool_draw_circle.h \
+           src/tool_draw_line_and_area.h \
+           src/tool_draw_path.h \
+           src/tool_draw_point.h \
+           src/tool_draw_rectangle.h \
+           src/tool_draw_text.h \
+           src/tool_edit.h \
+           src/tool_measure.h \
+           src/tool_rotate.h \
            src/undo.h \
            src/util.h \
+           src/util_gui.h \
            qtsingleapplication/qtlocalpeer.h \
            qtsingleapplication/qtsingleapplication.h \
            libocad/libocad.h \
@@ -69,10 +88,7 @@ HEADERS += src/color_dock_widget.h \
            libocad/geometry.h \
            libocad/types.h
 SOURCES += src/color_dock_widget.cpp \
-           src/draw_path.cpp \
-           src/draw_point.cpp \
-           src/draw_text.cpp \
-           src/edit_tool.cpp \
+           src/dxfparser.cpp \
            src/file_format.cpp \
            src/file_format_native.cpp \
            src/file_format_ocad8.cpp \
@@ -94,12 +110,13 @@ SOURCES += src/color_dock_widget.cpp \
            src/matrix.cpp \
            src/object.cpp \
            src/object_text.cpp \
-           src/paint_on_template.cpp \
            src/path_coord.cpp \
            src/print_dock_widget.cpp \
            src/qbezier.cpp \
            src/renderable.cpp \
            src/renderable_implementation.cpp \
+           src/settings.cpp \
+           src/settings_dialog.cpp \
            src/symbol.cpp \
            src/symbol_area.cpp \
            src/symbol_combined.cpp \
@@ -107,12 +124,30 @@ SOURCES += src/color_dock_widget.cpp \
            src/symbol_line.cpp \
            src/symbol_point.cpp \
            src/symbol_point_editor.cpp \
+           src/symbol_properties_widget.cpp \
            src/symbol_setting_dialog.cpp \
            src/symbol_text.cpp \
            src/template.cpp \
+           src/template_adjust.cpp \
            src/template_dock_widget.cpp \
            src/template_gps.cpp \
            src/template_image.cpp \
+           src/template_map.cpp \
+           src/template_position_dock_widget.cpp \
+           src/template_tool_move.cpp \
+           src/template_tool_paint.cpp \
+           src/tool_boolean.cpp \
+           src/tool_cut.cpp \
+           src/tool_cut_hole.cpp \
+           src/tool_draw_circle.cpp \
+           src/tool_draw_line_and_area.cpp \
+           src/tool_draw_path.cpp \
+           src/tool_draw_point.cpp \
+           src/tool_draw_rectangle.cpp \
+           src/tool_draw_text.cpp \
+           src/tool_edit.cpp \
+           src/tool_measure.cpp \
+           src/tool_rotate.cpp \
            src/undo.cpp \
            src/util.cpp \
            qtsingleapplication/qtlocalpeer.cpp \
@@ -124,10 +159,16 @@ SOURCES += src/color_dock_widget.cpp \
            libocad/file.c \
            libocad/setup.c \
            libocad/color.c \
-           libocad/symbol.c \
-           libocad/object.c \
-           libocad/template.c
-RESOURCES += resources.qrc
+           libocad/ocad_symbol.c \
+           libocad/ocad_object.c \
+           libocad/string.c \
+           3rd-party/clipper/cpp/clipper.cpp \
+           3rd-party/clipper/cpp/clipper.hpp
+RESOURCES += resources.qrc #\
+             #translations.qrc
+#TRANSLATIONS += translations/OpenOrienteering_de.ts \
+#                translations/OpenOrienteering_sv.ts \
+#                translations/OpenOrienteering_uk.ts
 
 OTHER_FILES += \
     CMakeLists.txt \

@@ -107,5 +107,3 @@ void ColorDropDown::colorDeleted(int pos, MapColor* color)
 		setCurrentIndex(0);
 	removeItem(pos + 1);
 }
-
-#include "map_color.moc"

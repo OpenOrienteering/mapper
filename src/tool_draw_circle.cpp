@@ -208,5 +208,3 @@ void DrawCircleTool::updateStatusText()
 {
 	setStatusBarText(tr("<b>Click</b> or <b>Drag</b> to draw a circle, <b>Esc</b> to abort"));
 }
-
-#include "tool_draw_circle.moc"

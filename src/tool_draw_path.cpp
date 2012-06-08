@@ -454,5 +454,3 @@ void DrawPathTool::updateStatusText()
 	
 	setStatusBarText(text);
 }
-
-#include "tool_draw_path.moc"

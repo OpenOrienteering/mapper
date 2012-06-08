@@ -178,5 +178,3 @@ void RotateTool::updateStatusText()
 	else
 		setStatusBarText(tr("<b>Click</b> to set the rotation center, <b>drag</b> to rotate the selected object(s)"));
 }
-
-#include "tool_rotate.moc"

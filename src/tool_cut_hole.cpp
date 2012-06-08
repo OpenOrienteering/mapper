@@ -194,5 +194,3 @@ void CutHoleTool::updateStatusText()
 {
 	setStatusBarText(tr("<b>Click</b> on a line to split it into two, <b>Drag</b> along a line to remove this line part, <b>Click or Drag</b> at an area boundary to start drawing a split line"));
 }
-
-#include "tool_cut_hole.moc"

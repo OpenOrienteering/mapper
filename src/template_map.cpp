@@ -97,5 +97,3 @@ bool TemplateMap::changeTemplateFileImpl(const QString& filename)
 	template_map = new_template_map;
 	return true;
 }
-
-#include "template_map.moc"

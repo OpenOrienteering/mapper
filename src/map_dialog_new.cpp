@@ -290,5 +290,3 @@ void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 		symbol_set_map.insert(std::make_pair(dir_name, symbol_set_files));
 	}
 }
-
-#include "map_dialog_new.moc"

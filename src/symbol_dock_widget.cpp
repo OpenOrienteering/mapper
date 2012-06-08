@@ -997,5 +997,3 @@ Symbol* SymbolToolTip::getCurrentTipSymbol()
 		return NULL;
 	return tooltip->symbol;
 }
-
-#include "symbol_dock_widget.moc"

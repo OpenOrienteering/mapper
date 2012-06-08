@@ -357,6 +357,3 @@ void PointSymbolSettings::tabChanged(int index)
 {
 	symbol_editor->setEditorActive( currentWidget()==point_tab );
 }
-
-
-#include "symbol_point.moc"

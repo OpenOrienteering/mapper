@@ -583,7 +583,3 @@ bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coo
 }
 
 QCursor* GeoreferencingTool::cursor = NULL;
-
-
-
-#include "georeferencing_dialog.moc"

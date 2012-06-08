@@ -198,5 +198,3 @@ void QtLocalPeer::receiveConnection()
     delete socket;
     emit messageReceived(message); //### (might take a long time to return)
 }
-
-#include "qtlocalpeer.moc"

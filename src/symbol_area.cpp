@@ -906,5 +906,3 @@ void AreaSymbolSettings::patternPointDistChanged(double value)
 	active_pattern->point_distance = qRound(1000.0 * value);
 	emit propertiesModified();
 }
-
-#include "symbol_area.moc"

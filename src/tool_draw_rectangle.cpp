@@ -339,5 +339,3 @@ void DrawRectangleTool::updateStatusText()
 	
 	setStatusBarText(text);
 }
-
-#include "tool_draw_rectangle.moc"

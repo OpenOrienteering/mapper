@@ -100,5 +100,3 @@ void MeasureWidget::objectSelectionChanged()
 	
 	label->setText(text);
 }
-
-#include "tool_measure.moc"

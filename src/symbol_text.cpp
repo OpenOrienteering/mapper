@@ -738,5 +738,3 @@ void DetermineFontSizeDialog::accept()
 	symbol->updateQFont();
 	QDialog::accept();
 }
-
-#include "symbol_text.moc"

@@ -1,24 +1,35 @@
 == General ==
 
 See below for build instructions for your platform.
-A general warning: do not attempt to use the .pro project directly for compiling because
-this leads to a conflict with a different naming scheme for Qt's moc files than when using cmake.
-Currently, only the cmake toolchain is supported and the .pro file is only useful if you want to use the QtCreator IDE for coding.
 
 The program is known to work with Qt 4.6, 4.7 and 4.8 and not to compile with Qt 4.4 or earlier.
 Information about other versions is not available, feel free to give feedback about them.
+
+The .pro file does not include the translations yet, so qmake / qt creator is not fully supported.
 
 
 == Clipper Library ==
 
 The program uses parts of the clipper code library from 
 http://www.angusj.com/delphi/clipper.php which is released under the terms of
-the Boost Software License, Version 1.0. The required files are downloaded to 
-3rd-party/clipper if missing during build configuration. 
+the Boost Software License, Version 1.0.
 
+The required files are downloaded to 3rd-party/clipper if missing during build configuration. 
 To use a particular revision of the library, remove the 3rd-party/clipper 
 directory and adjust the CLIPPER_REVISION variable in 3rd-party/clipper.cmake 
 before next build.
+
+If you use qmake / qt creator (instead of cmake), or cmake with Windows and
+get an error about clipper.cpp/hpp not being found in the CMake configure step,
+then you need to download Clipper manually.
+
+In this case, you have to download the required files from:
+http://polyclipping.svn.sourceforge.net/viewvc/polyclipping/trunk
+Place them in the 3rd-party directory so you get:
+3rd-party/clipper/README
+3rd-party/clipper/License.txt
+3rd-party/clipper/cpp/clipper.cpp
+3rd-party/clipper/cpp/clipper.hpp
 
 
 == PROJ.4 Cartographic Projections Library ==
@@ -58,14 +69,6 @@ Then click "Configure" (if you use the CMake GUI). If it aborts, saying that QMa
 enter its path in the red line for the "QT_QMAKE_EXECUTABLE" key,
 for example "C:/QtSDK/Desktop/Qt/4.8.0/mingw/bin/qmake.exe". Click "Configure" again and it should run through.
 If "Generate" is not enabled yet, click "Configure" a third time and then finally "Generate".
-If you get an error saying that clipper.cpp/hpp cannot be found, the automatic download of the clipper library failed.
-In this case, you have to download the required files manually from:
-http://polyclipping.svn.sourceforge.net/viewvc/polyclipping/trunk
-Place them in the 3rd-party directory so you get:
-3rd-party/clipper/README
-3rd-party/clipper/License.txt
-3rd-party/clipper/cpp/clipper.cpp
-3rd-party/clipper/cpp/clipper.hpp
 
 Now the build files should be generated in the directory you specified earlier. If you use MinGW,
 execute "mingw32-make" from a command prompt in this directory now to build the project.

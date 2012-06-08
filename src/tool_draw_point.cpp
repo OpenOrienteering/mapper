@@ -229,5 +229,3 @@ void DrawPointTool::symbolDeleted(int pos, Symbol* old_symbol)
 	if (last_used_symbol == old_symbol)
 		editor->setEditTool();
 }
-
-#include "tool_draw_point.moc"

@@ -849,5 +849,3 @@ bool TemplateAdjustDeleteTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_
 	findHoverPoint(event->pos(), widget);
 	return true;
 }
-
-#include "template_adjust.moc"

@@ -328,5 +328,3 @@ UndoStep* SwitchDashesUndoStep::undo()
 	
 	return undo_step;
 }
-
-#include "map_undo.moc"

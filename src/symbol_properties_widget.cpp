@@ -187,5 +187,3 @@ void SymbolPropertiesWidget::reset(Symbol* symbol)
 	helper_symbol_check->setChecked(symbol->isHelperSymbol());
 	blockSignals(false);
 }
-
-#include "symbol_properties_widget.moc"

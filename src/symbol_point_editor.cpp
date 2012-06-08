@@ -921,5 +921,3 @@ void PointSymbolEditorActivity::draw(QPainter* painter, MapWidget* map_widget)
 	painter->drawLine(midpoint + QPoint(0, -cross_radius), midpoint + QPoint(0, cross_radius));
 	painter->drawLine(midpoint + QPoint(-cross_radius, 0), midpoint + QPoint(cross_radius, 0));
 }
-
-#include "symbol_point_editor.moc"

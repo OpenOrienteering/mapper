@@ -477,6 +477,3 @@ void SymbolSettingDialog::updateButtons()
 	ok_button->setEnabled(symbol_modified && symbol->getNumberComponent(0)>=0 && !symbol->getName().isEmpty());
 	reset_button->setEnabled(symbol_modified);
 }
-
-
-#include "symbol_setting_dialog.moc"

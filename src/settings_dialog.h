@@ -22,6 +22,7 @@
 
 #include <QHash>
 #include <QDialog>
+#include <QVariant>
 
 QT_BEGIN_NAMESPACE
 class QTabWidget;

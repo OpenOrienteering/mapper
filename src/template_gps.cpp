@@ -285,5 +285,3 @@ bool TemplateGPS::changeTemplateFileImpl(const QString& filename)
 	calculateExtent();
 	return true;
 }
-
-#include "template_gps.moc"

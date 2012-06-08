@@ -716,5 +716,3 @@ void PrintTool::updateDragging(MapCoordF mouse_pos_map)
 	
 	updatePrintArea();
 }
-
-#include "print_dock_widget.moc"

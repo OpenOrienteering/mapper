@@ -1875,5 +1875,3 @@ void MapEditorToolAction::triggeredImpl(bool checked)
 	else
 		setChecked(true);
 }
-
-#include "map_editor.moc"

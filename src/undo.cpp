@@ -325,5 +325,3 @@ bool UndoManager::clearRedoSteps()
 	redo_steps.clear();
 	return size > 0;
 }
-
-#include "undo.moc"

@@ -847,5 +847,3 @@ void TextObjectAlignmentDockWidget::emitAlignmentChanged()
 	
 	emit(alignmentChanged((int)horz_array[horz_index], (int)vert_array[vert_index]));
 }
-
-#include "tool_draw_text.moc"

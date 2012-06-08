@@ -305,5 +305,3 @@ void DrawLineAndAreaTool::addPreviewPointSymbols(Symbol* symbol)
 		}
 	}
 }
-
-#include "tool_draw_line_and_area.moc"

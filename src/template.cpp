@@ -318,5 +318,3 @@ void Template::updateTransformationMatrices()
 	
 	template_to_map.invert(map_to_template);
 }
-
-#include "template.moc"

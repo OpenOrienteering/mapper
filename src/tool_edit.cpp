@@ -835,5 +835,3 @@ void EditTool::deleteSelectedObjects()
 	updateStatusText();
 	editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
 }
-
-#include "tool_edit.moc"

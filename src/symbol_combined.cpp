@@ -292,5 +292,3 @@ void CombinedSymbolSettings::updateContents()
 	number_edit->setValue(num_parts);
 	number_edit->blockSignals(false);
 }
-
-#include "symbol_combined.moc"

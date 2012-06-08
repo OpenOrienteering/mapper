@@ -852,5 +852,3 @@ void MapWidget::updateMapCache(bool use_background)
 	map_cache_dirty_rect.setWidth(-1);
 	assert(!map_cache_dirty_rect.isValid());
 }
-
-#include "map_widget.moc"

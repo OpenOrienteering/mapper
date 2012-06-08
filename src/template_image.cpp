@@ -266,5 +266,3 @@ void TemplateImageOpenDialog::doAccept()
 	map->setImageTemplateDefaults(mpp_radio->isChecked(), mpp_edit->text().toDouble(), dpi_edit->text().toDouble(), scale_edit->text().toDouble());
 	accept();
 }
-
-#include "template_image.moc"

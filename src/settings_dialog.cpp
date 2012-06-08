@@ -203,5 +203,3 @@ void GeneralPage::languageChanged(int index)
 {
 	changes.insert(Settings::getInstance().getSettingPath(Settings::General_Language), language_box->itemData(index).toInt());
 }
-
-#include "settings_dialog.moc"

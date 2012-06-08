@@ -787,5 +787,3 @@ void MainWindow::gotUnsavedChanges()
 {
 	setHasUnsavedChanges(true);
 }
-
-#include "main_window.moc"

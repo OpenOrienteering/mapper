@@ -229,5 +229,3 @@ void PaintOnTemplateSelectDialog::currentTemplateChanged(QListWidgetItem* curren
 	if (current)
 		selection = reinterpret_cast<Template*>(current->data(Qt::UserRole).value<void*>());
 }
-
-#include "template_tool_paint.moc"

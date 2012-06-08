@@ -672,5 +672,3 @@ void CutTool::startCuttingArea(const PathCoord& coord, MapWidget* widget)
 	connect(path_tool, SIGNAL(pathAborted()), this, SLOT(pathAborted()));
 	connect(path_tool, SIGNAL(pathFinished(PathObject*)), this, SLOT(pathFinished(PathObject*)));
 }
-
-#include "tool_cut.moc"

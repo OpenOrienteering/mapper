@@ -84,5 +84,3 @@ void ScaleMapDialog::okClicked()
 	map->setOtherDirty(true);
 	accept();
 }
-
-#include "map_dialog_scale.moc"

@@ -165,5 +165,3 @@ void TemplatePositionDockWidget::valueChanged()
 	controller->getMap()->emitTemplateChanged(temp);
 	react_to_changes = true;
 }
-
-#include "template_position_dock_widget.moc"

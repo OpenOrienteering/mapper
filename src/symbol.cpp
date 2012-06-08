@@ -265,5 +265,3 @@ void SymbolDropDown::setSymbol(Symbol* symbol)
 {
 	setCurrentIndex(findData(qVariantFromValue<void*>(symbol)));
 }
-
-#include "symbol.moc"

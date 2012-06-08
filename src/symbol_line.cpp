@@ -1953,6 +1953,3 @@ void LineSymbolSettings::reset(Symbol* symbol)
 	setUpdatesEnabled(true);
 	old_symbol->cleanupPointSymbols();
 }
-
-
-#include "symbol_line.moc"
