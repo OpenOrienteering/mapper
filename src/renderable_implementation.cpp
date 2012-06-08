@@ -117,6 +117,7 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 	int size = (int)coords.size();
 	assert(size >= 2);
 	
+	bool has_curve = false;
 	bool hole = false;
 	QPainterPath first_subpath;
 	
@@ -143,6 +144,7 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 		if (coords[i-1].isCurveStart())
 		{
             assert(i < size - 2);
+			has_curve = true;
 			path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
 			i += 2;
 		}
@@ -166,22 +168,34 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 			path.connectPath(first_subpath);
 	}
 	
+	// If we do not have the path coords, but there was a curve, calculate path coords.
+	const PathCoordVector* used_path_coords = &path_coords;
+	PathCoordVector local_path_coords;
+	if (has_curve && path_coords.empty())
+	{
+		// TODO: This happens for point symbols with curved lines in them.
+		// Maybe precalculate the path coords in such cases (but ONLY for curved lines, for performance and memory)?
+		// -> Need to check when to update the path coords, and where to adjust for the translation & rotation ...
+		PathCoord::calculatePathCoords(coords, transformed_coords, &local_path_coords);
+		used_path_coords = &local_path_coords;
+	}
+	
 	// Extend extent with bezier curve points from the path coords
-	int path_coords_size = path_coords.size();
+	int path_coords_size = used_path_coords->size();
 	for (int i = 1; i < path_coords_size - 1; ++i)
 	{
-		if (path_coords[i].param == 1)
+		if (used_path_coords->at(i).param == 1)
 			continue;
 		
-		MapCoordF to_coord = MapCoordF(path_coords[i].pos.getX() - path_coords[i-1].pos.getX(), path_coords[i].pos.getY() - path_coords[i-1].pos.getY());
-		MapCoordF to_next = MapCoordF(path_coords[i+1].pos.getX() - path_coords[i].pos.getX(), path_coords[i+1].pos.getY() - path_coords[i].pos.getY());
+		MapCoordF to_coord = MapCoordF(used_path_coords->at(i).pos.getX() - used_path_coords->at(i-1).pos.getX(), used_path_coords->at(i).pos.getY() - used_path_coords->at(i-1).pos.getY());
+		MapCoordF to_next = MapCoordF(used_path_coords->at(i+1).pos.getX() - used_path_coords->at(i).pos.getX(), used_path_coords->at(i+1).pos.getY() - used_path_coords->at(i).pos.getY());
 		to_coord.normalize();
 		to_next.normalize();
 		MapCoordF right = MapCoordF(-to_coord.getY() - to_next.getY(), to_next.getX() + to_coord.getX());
 		right.normalize();
 		
-		rectInclude(extent, QPointF(path_coords[i].pos.getX() + half_line_width * right.getX(), path_coords[i].pos.getY() + half_line_width * right.getY()));
-		rectInclude(extent, QPointF(path_coords[i].pos.getX() - half_line_width * right.getX(), path_coords[i].pos.getY() - half_line_width * right.getY()));
+		rectInclude(extent, QPointF(used_path_coords->at(i).pos.getX() + half_line_width * right.getX(), used_path_coords->at(i).pos.getY() + half_line_width * right.getY()));
+		rectInclude(extent, QPointF(used_path_coords->at(i).pos.getX() - half_line_width * right.getX(), used_path_coords->at(i).pos.getY() - half_line_width * right.getY()));
 	}
 	
 	assert(extent.right() < 999999);	// assert if bogus values are returned
