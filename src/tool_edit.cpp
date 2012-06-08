@@ -70,6 +70,7 @@ EditTool::EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidg
 void EditTool::init()
 {
 	connect(editor->getMap(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
+	connect(editor->getMap(), SIGNAL(selectedObjectEdited()), this, SLOT(objectSelectionChanged()));
 	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
 	objectSelectionChanged();
 }
@@ -809,9 +810,9 @@ void EditTool::finishEditing()
 	finishEditingSelection(*renderables, *old_renderables, create_undo_step, &undo_duplicates, delete_objects);
 	
 	map->setObjectAreaDirty(original_selection_extent);
-	updateDirtyRect();
 	map->setObjectsDirty();
 	
+	// updateDirtyRect() included here:
 	map->emitSelectionEdited();
 	
 	if (delete_objects)

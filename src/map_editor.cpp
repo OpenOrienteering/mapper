@@ -1142,6 +1142,7 @@ void MapEditorController::switchSymbolClicked()
 	
 	map->setObjectsDirty();
 	map->objectUndoManager().addNewUndoStep(undo_step);
+	map->emitSelectionEdited();
 }
 void MapEditorController::fillBorderClicked()
 {
@@ -1208,6 +1209,7 @@ void MapEditorController::switchDashesClicked()
 	
 	map->setObjectsDirty();
 	map->objectUndoManager().addNewUndoStep(undo_step);
+	map->emitSelectionEdited();
 }
 void MapEditorController::connectPathsClicked()
 {
