@@ -741,6 +741,10 @@ bool SymbolRenderWidget::newSymbol(Symbol* prototype)
 	map->addSymbol(new_symbol, (pos >= 0) ? pos : map->getNumSymbols());
 	selectSingleSymbol(pos);
 	
+	// Normally selectSingleSymbol() calls this already but here we must do it manually,
+	// as the changing symbol indices can make selectSingleSymbol() think that the selection did not change.
+	symbol_widget->emitSelectedSymbolsChanged();
+	
 	symbol_widget->adjustSize();
 	map->setSymbolsDirty();
 	return true;

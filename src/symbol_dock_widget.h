@@ -54,7 +54,7 @@ public:
 	/// Returns the single "current" symbol (the symbol which was clicked last). Can be -1 if no symbol selected
 	inline int currentSymbolIndex() const {return current_symbol_index;}
 
-    // This is useful, let's make it public. Does the same thing as a click.
+    /// Selects the symbol with the given number. Deselects other symbols, if there was a different selection before.
     void selectSingleSymbol(int i);
 
 public slots:
