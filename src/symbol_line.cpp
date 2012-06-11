@@ -34,6 +34,7 @@
 #include "symbol_area.h"
 #include "renderable_implementation.h"
 #include "qbezier_p.h"
+#include "util_gui.h"
 
 LineSymbol::LineSymbol() : Symbol(Symbol::Line)
 {
@@ -1315,8 +1316,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	line_tab->setLayout(layout);
 	
 	QLabel* width_label = new QLabel(tr("Line width:"));
-	width_edit = new QLineEdit(QString::number(0.001f * symbol->getLineWidth()));
-	width_edit->setValidator(new DoubleValidator(0, 999999, width_edit));
+	width_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
 	
 	QLabel* color_label = new QLabel(tr("Line color:"));
 	color_edit = new ColorDropDown(map, symbol->getColor());
@@ -1331,8 +1331,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	
 	
 	QLabel* minimum_length_label = new QLabel(tr("Minimum line length:"));
-	minimum_length_edit = new QLineEdit(QString::number(0.001f * symbol->minimum_length));
-	minimum_length_edit->setValidator(new DoubleValidator(0, 999999, minimum_length_edit));
+	minimum_length_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
 	
 	QLabel* line_cap_label = new QLabel(tr("Line cap:"));
 	line_cap_combo = new QComboBox();
@@ -1343,8 +1342,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	line_cap_combo->setCurrentIndex(line_cap_combo->findData(symbol->cap_style));
 	
 	pointed_cap_length_label = new QLabel(tr("Cap length:"));
-	pointed_cap_length_edit = new QLineEdit(QString::number(0.001 * symbol->pointed_cap_length));
-	pointed_cap_length_edit->setValidator(new DoubleValidator(0, 999999, pointed_cap_length_edit));
+	pointed_cap_length_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
 	
 	QLabel* line_join_label = new QLabel(tr("Line join:"));
 	line_join_combo = new QComboBox();
@@ -1387,12 +1385,10 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	layout->addWidget(dashed_check, row, col, 1, -1);
 	
 	QLabel* dash_length_label = new QLabel(tr("Dash length:"));
-	dash_length_edit = new QLineEdit(QString::number(0.001 * symbol->dash_length));
-	dash_length_edit->setValidator(new DoubleValidator(0, 999999, dash_length_edit));
+	dash_length_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
 	
 	QLabel* break_length_label = new QLabel(tr("Break length:"));
-	break_length_edit = new QLineEdit(QString::number(0.001 * symbol->break_length));
-	break_length_edit->setValidator(new DoubleValidator(0, 999999, break_length_edit));
+	break_length_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
 	
 	QLabel* dash_group_label = new QLabel(tr("Dashes grouped together:"));
 	dash_group_combo = new QComboBox();
@@ -1403,8 +1399,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	dash_group_combo->setCurrentIndex(dash_group_combo->findData(QVariant(symbol->dashes_in_group)));
 	
 	in_group_break_length_label = new QLabel(tr("In-group break length:"));
-	in_group_break_length_edit = new QLineEdit(QString::number(0.001 * symbol->in_group_break_length));
-	in_group_break_length_edit->setValidator(new DoubleValidator(0, 999999, in_group_break_length_edit));
+	in_group_break_length_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
 	
 	half_outer_dashes_check = new QCheckBox(tr("Half length of first and last dash"));
 	half_outer_dashes_check->setChecked(symbol->half_outer_dashes);
@@ -1439,12 +1434,10 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	
 	
 	QLabel* mid_symbol_per_spot_label = new QLabel(tr("Mid symbols per spot:"));
-	mid_symbol_per_spot_edit = new QLineEdit(QString::number(symbol->mid_symbols_per_spot));
-	mid_symbol_per_spot_edit->setValidator(new QIntValidator(1, 99, mid_symbol_per_spot_edit));
+	mid_symbol_per_spot_edit = Util::SpinBox::create(1, 99);
 	
 	mid_symbol_distance_label = new QLabel(tr("Mid symbol distance:"));
-	mid_symbol_distance_edit = new QLineEdit(QString::number(0.001 * symbol->mid_symbol_distance));
-	mid_symbol_distance_edit->setValidator(new DoubleValidator(0, 999999, mid_symbol_distance_edit));
+	mid_symbol_distance_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
 	
 	mid_symbol_widget_list
 	  << mid_symbol_per_spot_label << mid_symbol_per_spot_edit
@@ -1459,23 +1452,19 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	
 	
 	QLabel* segment_length_label = new QLabel(tr("Distance between spots:"));
-	segment_length_edit = new QLineEdit(QString::number(0.001 * symbol->segment_length));
-	segment_length_edit->setValidator(new DoubleValidator(0, 999999, segment_length_edit));
+	segment_length_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
 	
 	QLabel* end_length_label = new QLabel(tr("Distance from line end:"));
-	end_length_edit = new QLineEdit(QString::number(0.001 * symbol->end_length));
-	end_length_edit->setValidator(new DoubleValidator(0, 999999, end_length_edit));
+	end_length_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
 	
 	show_at_least_one_symbol_check = new QCheckBox(tr("Show at least one mid symbol"));
 	show_at_least_one_symbol_check->setChecked(symbol->show_at_least_one_symbol);
 	
 	QLabel* minimum_mid_symbol_count_label = new QLabel(tr("Minimum mid symbol count:"));
-	minimum_mid_symbol_count_edit = new QLineEdit(QString::number(0.001f * symbol->minimum_mid_symbol_count));
-	minimum_mid_symbol_count_edit->setValidator(new DoubleValidator(0, 999999, minimum_mid_symbol_count_edit));
+	minimum_mid_symbol_count_edit = Util::SpinBox::create(1, 99);
 	
 	QLabel* minimum_mid_symbol_count_when_closed_label = new QLabel(tr("Minimum mid symbol count when closed:"));
-	minimum_mid_symbol_count_when_closed_edit = new QLineEdit(QString::number(0.001f * symbol->minimum_mid_symbol_count_when_closed));
-	minimum_mid_symbol_count_when_closed_edit->setValidator(new DoubleValidator(0, 999999, minimum_mid_symbol_count_when_closed_edit));
+	minimum_mid_symbol_count_when_closed_edit = Util::SpinBox::create(1, 99);
 	
 	undashed_widget_list
 	  << segment_length_label << segment_length_edit
@@ -1509,15 +1498,13 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	layout->addWidget(border_check, row, col, 1, -1);
 	
 	QLabel* border_width_label = new QLabel(tr("Border width:"));
-	border_width_edit = new QLineEdit(QString::number(0.001f * symbol->border_width));
-	border_width_edit->setValidator(new DoubleValidator(0, 999999, border_width_edit));
+	border_width_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
 	
 	QLabel* border_color_label = new QLabel(tr("Border color:"));
 	border_color_edit = new ColorDropDown(map, symbol->border_color);
 	
 	QLabel* border_shift_label = new QLabel(tr("Border shift:"));
-	border_shift_edit = new QLineEdit(QString::number(0.001f * symbol->border_shift));
-	border_shift_edit->setValidator(new DoubleValidator(-999999, 999999, border_shift_edit));
+	border_shift_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
 	
 	border_dashed_check = new QCheckBox(tr("Border is dashed"));
 	border_dashed_check->setChecked(symbol->dashed_border);
@@ -1541,12 +1528,10 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	layout->addWidget(border_dashed_check, row, col, 1, -1);
 	
 	QLabel* border_dash_length_label = new QLabel(tr("Border dash length:"));
-	border_dash_length_edit = new QLineEdit(QString::number(0.001f * symbol->border_dash_length));
-	border_dash_length_edit->setValidator(new DoubleValidator(0, 999999, border_dash_length_edit));
+	border_dash_length_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
 	
 	QLabel* border_break_length_label = new QLabel(tr("Border break length:"));
-	border_break_length_edit = new QLineEdit(QString::number(0.001f * symbol->border_break_length));
-	border_break_length_edit->setValidator(new DoubleValidator(0, 999999, border_break_length_edit));
+	border_break_length_edit = Util::SpinBox::create(2, 0.0f, 999999.9f, tr("mm"));
 	
 	border_dash_widget_list
 	  << border_dash_length_label << border_dash_length_edit
@@ -1585,33 +1570,34 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	}
 	
 	updateStates();
+	updateContents();
 	
-	connect(width_edit, SIGNAL(textEdited(QString)), this, SLOT(widthChanged(QString)));
+	connect(width_edit, SIGNAL(valueChanged(double)), this, SLOT(widthChanged(double)));
 	connect(color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(colorChanged()));
-	connect(minimum_length_edit, SIGNAL(textEdited(QString)), this, SLOT(minimumDimensionsEdited(QString)));
+	connect(minimum_length_edit, SIGNAL(valueChanged(double)), this, SLOT(minimumDimensionsEdited()));
 	connect(line_cap_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(lineCapChanged(int)));
 	connect(line_join_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(lineJoinChanged(int)));
-	connect(pointed_cap_length_edit, SIGNAL(textEdited(QString)), this, SLOT(pointedLineCapLengthChanged(QString)));
+	connect(pointed_cap_length_edit, SIGNAL(valueChanged(double)), this, SLOT(pointedLineCapLengthChanged(double)));
 	connect(dashed_check, SIGNAL(clicked(bool)), this, SLOT(dashedChanged(bool)));
-	connect(segment_length_edit, SIGNAL(textEdited(QString)), this, SLOT(segmentLengthChanged(QString)));
-	connect(end_length_edit, SIGNAL(textEdited(QString)), this, SLOT(endLengthChanged(QString)));
+	connect(segment_length_edit, SIGNAL(valueChanged(double)), this, SLOT(segmentLengthChanged(double)));
+	connect(end_length_edit, SIGNAL(valueChanged(double)), this, SLOT(endLengthChanged(double)));
 	connect(show_at_least_one_symbol_check, SIGNAL(clicked(bool)), this, SLOT(showAtLeastOneSymbolChanged(bool)));
-	connect(minimum_mid_symbol_count_edit, SIGNAL(textEdited(QString)), this, SLOT(minimumDimensionsEdited(QString)));
-	connect(minimum_mid_symbol_count_when_closed_edit, SIGNAL(textEdited(QString)), this, SLOT(minimumDimensionsEdited(QString)));
-	connect(dash_length_edit, SIGNAL(textEdited(QString)), this, SLOT(dashLengthChanged(QString)));
-	connect(break_length_edit, SIGNAL(textEdited(QString)), this, SLOT(breakLengthChanged(QString)));
+	connect(minimum_mid_symbol_count_edit, SIGNAL(valueChanged(int)), this, SLOT(minimumDimensionsEdited()));
+	connect(minimum_mid_symbol_count_when_closed_edit, SIGNAL(valueChanged(int)), this, SLOT(minimumDimensionsEdited()));
+	connect(dash_length_edit, SIGNAL(valueChanged(double)), this, SLOT(dashLengthChanged(double)));
+	connect(break_length_edit, SIGNAL(valueChanged(double)), this, SLOT(breakLengthChanged(double)));
 	connect(dash_group_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(dashGroupsChanged(int)));
-	connect(in_group_break_length_edit, SIGNAL(textEdited(QString)), this, SLOT(inGroupBreakLengthChanged(QString)));
+	connect(in_group_break_length_edit, SIGNAL(valueChanged(double)), this, SLOT(inGroupBreakLengthChanged(double)));
 	connect(half_outer_dashes_check, SIGNAL(clicked(bool)), this, SLOT(halfOuterDashesChanged(bool)));
-	connect(mid_symbol_per_spot_edit, SIGNAL(textEdited(QString)), this, SLOT(midSymbolsPerDashChanged(QString)));
-	connect(mid_symbol_distance_edit, SIGNAL(textEdited(QString)), this, SLOT(midSymbolDistanceChanged(QString)));
+	connect(mid_symbol_per_spot_edit, SIGNAL(valueChanged(int)), this, SLOT(midSymbolsPerDashChanged(int)));
+	connect(mid_symbol_distance_edit, SIGNAL(valueChanged(double)), this, SLOT(midSymbolDistanceChanged(double)));
 	connect(border_check, SIGNAL(clicked(bool)), this, SLOT(borderCheckClicked(bool)));
-	connect(border_width_edit, SIGNAL(textEdited(QString)), this, SLOT(borderWidthEdited(QString)));
+	connect(border_width_edit, SIGNAL(valueChanged(double)), this, SLOT(borderWidthEdited(double)));
 	connect(border_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(borderColorChanged()));
-	connect(border_shift_edit, SIGNAL(textEdited(QString)), this, SLOT(borderShiftChanged(QString)));
+	connect(border_shift_edit, SIGNAL(valueChanged(double)), this, SLOT(borderShiftChanged(double)));
 	connect(border_dashed_check, SIGNAL(clicked(bool)), this, SLOT(borderDashedClicked(bool)));
-	connect(border_dash_length_edit, SIGNAL(textEdited(QString)), this, SLOT(borderDashesChanged(QString)));
-	connect(border_break_length_edit, SIGNAL(textEdited(QString)), this, SLOT(borderDashesChanged(QString)));
+	connect(border_dash_length_edit, SIGNAL(valueChanged(double)), this, SLOT(borderDashesChanged()));
+	connect(border_break_length_edit, SIGNAL(valueChanged(double)), this, SLOT(borderDashesChanged()));
 }
 
 LineSymbolSettings::~LineSymbolSettings()
@@ -1625,9 +1611,9 @@ void LineSymbolSettings::pointSymbolEdited()
 	updateStates();
 }
 
-void LineSymbolSettings::widthChanged(QString text)
+void LineSymbolSettings::widthChanged(double value)
 {
-	symbol->line_width = qRound(1000 * text.toFloat());
+	symbol->line_width = 1000.0 * value;
 	emit propertiesModified();
 	updateStates();
 }
@@ -1639,7 +1625,7 @@ void LineSymbolSettings::colorChanged()
 	updateStates();
 }
 
-void LineSymbolSettings::minimumDimensionsEdited(QString text)
+void LineSymbolSettings::minimumDimensionsEdited()
 {
 	symbol->minimum_length = qRound(1000 * minimum_length_edit->text().toFloat());
 	symbol->minimum_mid_symbol_count = qRound(1000 * minimum_mid_symbol_count_edit->text().toFloat());
@@ -1660,9 +1646,9 @@ void LineSymbolSettings::lineJoinChanged(int index)
 	emit propertiesModified();
 }
 
-void LineSymbolSettings::pointedLineCapLengthChanged(QString text)
+void LineSymbolSettings::pointedLineCapLengthChanged(double value)
 {
-	symbol->pointed_cap_length = qRound(1000 * text.toFloat());
+	symbol->pointed_cap_length = qRound(1000.0 * value);
 	emit propertiesModified();
 }
 
@@ -1672,7 +1658,7 @@ void LineSymbolSettings::dashedChanged(bool checked)
 	if (symbol->color == NULL)
 	{
 		symbol->break_length = 0;
-		break_length_edit->setText("0");
+		break_length_edit->setValue(0);
 	}
 	emit propertiesModified();
 	updateStates();
@@ -1680,15 +1666,15 @@ void LineSymbolSettings::dashedChanged(bool checked)
 		ensureWidgetVisible(half_outer_dashes_check);
 }
 
-void LineSymbolSettings::segmentLengthChanged(QString text)
+void LineSymbolSettings::segmentLengthChanged(double value)
 {
-	symbol->segment_length = qRound(1000 * text.toFloat());
+	symbol->segment_length = qRound(1000.0 * value);
 	emit propertiesModified();
 }
 
-void LineSymbolSettings::endLengthChanged(QString text)
+void LineSymbolSettings::endLengthChanged(double value)
 {
-	symbol->end_length = qRound(1000 * text.toFloat());
+	symbol->end_length = qRound(1000.0 * value);
 	emit propertiesModified();
 	updateStates();
 }
@@ -1699,15 +1685,15 @@ void LineSymbolSettings::showAtLeastOneSymbolChanged(bool checked)
 	emit propertiesModified();
 }
 
-void LineSymbolSettings::dashLengthChanged(QString text)
+void LineSymbolSettings::dashLengthChanged(double value)
 {
-	symbol->dash_length = qRound(1000 * text.toFloat());
+	symbol->dash_length = qRound(1000.0 * value);
 	emit propertiesModified();
 }
 
-void LineSymbolSettings::breakLengthChanged(QString text)
+void LineSymbolSettings::breakLengthChanged(double value)
 {
-	symbol->break_length = qRound(1000 * text.toFloat());
+	symbol->break_length = qRound(1000.0 * value);
 	emit propertiesModified();
 }
 
@@ -1723,9 +1709,9 @@ void LineSymbolSettings::dashGroupsChanged(int index)
 	updateStates();
 }
 
-void LineSymbolSettings::inGroupBreakLengthChanged(QString text)
+void LineSymbolSettings::inGroupBreakLengthChanged(double value)
 {
-	symbol->in_group_break_length = qRound(1000 * text.toFloat());
+	symbol->in_group_break_length = qRound(1000.0 * value);
 	emit propertiesModified();
 }
 
@@ -1735,16 +1721,16 @@ void LineSymbolSettings::halfOuterDashesChanged(bool checked)
 	emit propertiesModified();
 }
 
-void LineSymbolSettings::midSymbolsPerDashChanged(QString text)
+void LineSymbolSettings::midSymbolsPerDashChanged(int value)
 {
-	symbol->mid_symbols_per_spot = qMax(1, text.toInt());
+	symbol->mid_symbols_per_spot = qMax(1, value);
 	emit propertiesModified();
 	updateStates();
 }
 
-void LineSymbolSettings::midSymbolDistanceChanged(QString text)
+void LineSymbolSettings::midSymbolDistanceChanged(double value)
 {
-	symbol->mid_symbol_distance = qRound(1000 * text.toFloat());
+	symbol->mid_symbol_distance = qRound(1000.0 * value);
 	emit propertiesModified();
 }
 
@@ -1757,9 +1743,9 @@ void LineSymbolSettings::borderCheckClicked(bool checked)
 		ensureWidgetVisible(border_break_length_edit);
 }
 
-void LineSymbolSettings::borderWidthEdited(QString text)
+void LineSymbolSettings::borderWidthEdited(double value)
 {
-	symbol->border_width = qRound(1000 * text.toFloat());
+	symbol->border_width = qRound(1000.0 * value);
 	emit propertiesModified();
 }
 
@@ -1769,9 +1755,9 @@ void LineSymbolSettings::borderColorChanged()
 	emit propertiesModified();
 }
 
-void LineSymbolSettings::borderShiftChanged(QString text)
+void LineSymbolSettings::borderShiftChanged(double value)
 {
-	symbol->border_shift = qRound(1000 * text.toFloat());
+	symbol->border_shift = qRound(1000.0 * value);
 	emit propertiesModified();
 }
 
@@ -1784,10 +1770,10 @@ void LineSymbolSettings::borderDashedClicked(bool checked)
 		ensureWidgetVisible(border_break_length_edit);
 }
 
-void LineSymbolSettings::borderDashesChanged(QString text)
+void LineSymbolSettings::borderDashesChanged()
 {
-	symbol->border_dash_length = qRound(1000 * border_dash_length_edit->text().toFloat());
-	symbol->border_break_length = qRound(1000 * border_break_length_edit->text().toFloat());
+	symbol->border_dash_length = qRound(1000.0 * border_dash_length_edit->value());
+	symbol->border_break_length = qRound(1000.0 * border_break_length_edit->value());
 	emit propertiesModified();
 }
 
@@ -1871,38 +1857,38 @@ void LineSymbolSettings::updateStates()
 void LineSymbolSettings::updateContents()
 {
 	blockSignals(true);
-	width_edit->setText(QString::number(0.001f * symbol->getLineWidth()));
+	width_edit->setValue(0.001 * symbol->getLineWidth());
 	color_edit->setColor(symbol->getColor());
 	
-	minimum_length_edit->setText(QString::number(0.001f * symbol->minimum_length));
+	minimum_length_edit->setValue(0.001 * symbol->minimum_length);
 	line_cap_combo->setCurrentIndex(line_cap_combo->findData(symbol->cap_style));
-	pointed_cap_length_edit->setText(QString::number(0.001 * symbol->pointed_cap_length));
+	pointed_cap_length_edit->setValue(0.001 * symbol->pointed_cap_length);
 	line_join_combo->setCurrentIndex(line_join_combo->findData(symbol->join_style));
 	dashed_check->setChecked(symbol->dashed);
 	border_check->setChecked(symbol->have_border_lines);
 	
-	dash_length_edit->setText(QString::number(0.001 * symbol->dash_length));
-	break_length_edit->setText(QString::number(0.001 * symbol->break_length));
+	dash_length_edit->setValue(0.001 * symbol->dash_length);
+	break_length_edit->setValue(0.001 * symbol->break_length);
 	dash_group_combo->setCurrentIndex(dash_group_combo->findData(QVariant(symbol->dashes_in_group)));
-	in_group_break_length_edit->setText(QString::number(0.001 * symbol->in_group_break_length));
+	in_group_break_length_edit->setValue(0.001 * symbol->in_group_break_length);
 	half_outer_dashes_check->setChecked(symbol->half_outer_dashes);
 	
-	mid_symbol_per_spot_edit->setText(QString::number(symbol->mid_symbols_per_spot));
-	mid_symbol_distance_edit->setText(QString::number(0.001 * symbol->mid_symbol_distance));
+	mid_symbol_per_spot_edit->setValue(symbol->mid_symbols_per_spot);
+	mid_symbol_distance_edit->setValue(0.001 * symbol->mid_symbol_distance);
 	
-	segment_length_edit->setText(QString::number(0.001 * symbol->segment_length));
-	end_length_edit->setText(QString::number(0.001 * symbol->end_length));
+	segment_length_edit->setValue(0.001 * symbol->segment_length);
+	end_length_edit->setValue(0.001 * symbol->end_length);
 	show_at_least_one_symbol_check->setChecked(symbol->show_at_least_one_symbol);
-	minimum_mid_symbol_count_edit->setText(QString::number(0.001f * symbol->minimum_mid_symbol_count));
-	minimum_mid_symbol_count_when_closed_edit->setText(QString::number(0.001f * symbol->minimum_mid_symbol_count_when_closed));
+	minimum_mid_symbol_count_edit->setValue(symbol->minimum_mid_symbol_count);
+	minimum_mid_symbol_count_when_closed_edit->setValue(symbol->minimum_mid_symbol_count_when_closed);
 	
-	border_width_edit->setText(QString::number(0.001f * symbol->border_width));
+	border_width_edit->setValue(0.001f * symbol->border_width);
 	border_color_edit->setColor(symbol->border_color);
-	border_shift_edit->setText(QString::number(0.001f * symbol->border_shift));
+	border_shift_edit->setValue(0.001f * symbol->border_shift);
 	border_dashed_check->setChecked(symbol->dashed_border);
 	
-	border_dash_length_edit->setText(QString::number(0.001f * symbol->border_dash_length));
-	border_break_length_edit->setText(QString::number(0.001f * symbol->border_break_length));
+	border_dash_length_edit->setValue(0.001 * symbol->border_dash_length);
+	border_break_length_edit->setValue(0.001 * symbol->border_break_length);
 	
 	blockSignals(false);
 /*	

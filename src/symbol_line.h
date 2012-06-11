@@ -25,10 +25,12 @@
 #include "path_coord.h"
 #include "symbol_properties_widget.h"
 
-class QLineEdit;
-class QLabel;
 class QCheckBox;
+class QDoubleSpinBox;
+class QLabel;
+class QLineEdit;
 class QScrollArea;
+class QSpinBox;
 
 class ColorDropDown;
 class SymbolSettingDialog;
@@ -197,29 +199,29 @@ protected slots:
 	 */
 	void pointSymbolEdited();
 	
-	void widthChanged(QString text);
+	void widthChanged(double value);
 	void colorChanged();
-	void minimumDimensionsEdited(QString text);
+	void minimumDimensionsEdited();
 	void lineCapChanged(int index);
 	void lineJoinChanged(int index);
-	void pointedLineCapLengthChanged(QString text);
+	void pointedLineCapLengthChanged(double value);
 	void dashedChanged(bool checked);
-	void segmentLengthChanged(QString text);
-	void endLengthChanged(QString text);
+	void segmentLengthChanged(double value);
+	void endLengthChanged(double value);
 	void showAtLeastOneSymbolChanged(bool checked);
-	void dashLengthChanged(QString text);
-	void breakLengthChanged(QString text);
+	void dashLengthChanged(double value);
+	void breakLengthChanged(double value);
 	void dashGroupsChanged(int index);
-	void inGroupBreakLengthChanged(QString text);
+	void inGroupBreakLengthChanged(double value);
 	void halfOuterDashesChanged(bool checked);
-	void midSymbolsPerDashChanged(QString text);
-	void midSymbolDistanceChanged(QString text);
+	void midSymbolsPerDashChanged(int value);
+	void midSymbolDistanceChanged(double value);
 	void borderCheckClicked(bool checked);
-	void borderWidthEdited(QString text);
+	void borderWidthEdited(double value);
 	void borderColorChanged();
-	void borderShiftChanged(QString text);
+	void borderShiftChanged(double value);
 	void borderDashedClicked(bool checked);
-	void borderDashesChanged(QString text);
+	void borderDashesChanged();
 	
 private slots:
 	/** Ensure that a predetermined widget is visible in the scoll area.
@@ -231,52 +233,52 @@ private:
 	LineSymbol* symbol;
 	SymbolSettingDialog* dialog;
 	
-	QLineEdit* width_edit;
+	QDoubleSpinBox* width_edit;
 	ColorDropDown* color_edit;
-	QLineEdit* minimum_length_edit;
+	QDoubleSpinBox* minimum_length_edit;
 	
 	// enabled if line_width > 0 && color != NULL
 	QList<QWidget *> line_settings_list;
 	QComboBox* line_cap_combo;
 	QComboBox* line_join_combo;
 	QLabel* pointed_cap_length_label;
-	QLineEdit* pointed_cap_length_edit;
+	QDoubleSpinBox* pointed_cap_length_edit;
 	QCheckBox* dashed_check;
 	
 	// dashed == false && mid_symbol
 	QList<QWidget *> undashed_widget_list;
-	QLineEdit* segment_length_edit;
-	QLineEdit* end_length_edit;
+	QDoubleSpinBox* segment_length_edit;
+	QDoubleSpinBox* end_length_edit;
 	QCheckBox* show_at_least_one_symbol_check;
-	QLineEdit* minimum_mid_symbol_count_edit;
-	QLineEdit* minimum_mid_symbol_count_when_closed_edit;
+	QSpinBox* minimum_mid_symbol_count_edit;
+	QSpinBox* minimum_mid_symbol_count_when_closed_edit;
 	
 	// dashed == true
 	QList<QWidget *> dashed_widget_list;
-	QLineEdit* dash_length_edit;
-	QLineEdit* break_length_edit;
+	QDoubleSpinBox* dash_length_edit;
+	QDoubleSpinBox* break_length_edit;
 	QComboBox* dash_group_combo;
 	QLabel* in_group_break_length_label;
-	QLineEdit* in_group_break_length_edit;
+	QDoubleSpinBox* in_group_break_length_edit;
 	QCheckBox* half_outer_dashes_check;
 	
 	// mid_symbol
 	QList<QWidget *> mid_symbol_widget_list;
-	QLineEdit* mid_symbol_per_spot_edit;
+	QSpinBox* mid_symbol_per_spot_edit;
 	QLabel* mid_symbol_distance_label;
-	QLineEdit* mid_symbol_distance_edit;
+	QDoubleSpinBox* mid_symbol_distance_edit;
 	
 	// enabled if line_width > 0
 	QList<QWidget *> border_widget_list;
 	QCheckBox* border_check;
-	QLineEdit* border_width_edit;
+	QDoubleSpinBox* border_width_edit;
 	ColorDropDown* border_color_edit;
-	QLineEdit* border_shift_edit;
+	QDoubleSpinBox* border_shift_edit;
 	QCheckBox* border_dashed_check;
 	
 	QList<QWidget *> border_dash_widget_list;
-	QLineEdit* border_dash_length_edit;
-	QLineEdit* border_break_length_edit;
+	QDoubleSpinBox* border_dash_length_edit;
+	QDoubleSpinBox* border_break_length_edit;
 	
 	QScrollArea* scroll_area;
 	QWidget* widget_to_ensure_visible;
