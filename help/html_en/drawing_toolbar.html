@@ -33,11 +33,11 @@ function goBack()
 
 <p>If only a single object is selected, the nodes defining this object become visible.  There are different types of nodes:
 <ul><li>A square stands for a normal node</li>
-<li>A diamond depicts a dash point</li>
+<li>A diamond depicts a <a href="#dashpoint">dash point (see below)</a></li>
 <li>A circle depicts a bezier curve handle, defining the tangent of a curve point</li></ul></p>
 
-<a name="edit_nodes"><p class="label">Editing</p></a>
-<p>Individual nodes can be dragged with the mouse to change their position.  To change the tangent direction of a node on a bezier curve click the end of the handle and drag it.  Longer handles have more influence, while shorter handles have only local effect.  Use ctrl-click to add an extra node to an existing line or curve.  To remove a node hover on the node to be removed and ctrl-click. </p>
+<a name="edit_nodes"><p class="label">Editing nodes</p></a>
+<p>Individual nodes can be dragged with the mouse to change their position.  To change the tangent direction of a node on a bezier curve click the end of the handle and drag it.  Longer handles have greater influence, while shorter handles have only local effect.  Use ctrl-click to add an extra node to an existing line or curve.   If a dash-point is required ctrl+click while holding the space bar down. To remove a node hover on the node to be removed and ctrl-click. </p>
 
 <p>When one or more objects are selected, a dashed box is drawn around them.  Hover on the edge of this box and the colour changes.  Click and drag this box to move the selected objects as a whole.  </p><br clear=all />
 
@@ -48,7 +48,9 @@ function goBack()
 <p><img class=small src="../../images/draw-path.png" width="32" height="32" border="0">The path tool draws line objects such as contour lines, buildings (outlines) and roads and area objects such as open land or different vegetation densities.  Choose the symbol for the feature to be inserted by clicking it on the symbol window, then pick the line tool and then pick on the map at the starting point for the line.  At each subsequent click along the line a vertex will be created.  To finish the path double click or right click.</p>
 <p>To create a smooth (Bezier) curve click-&-hold as you draw the mouse away in the continuing direction &#8212; this creates a tangent point with two control handles which may be subsequently used to intuitively refine the shape of the curve.  For straight line segments release the mouse button and pick only at vertices.</p>
 <a name="closedbdy"><p>To draw a closed path (perimeter of an area feature such as a building, parking lot or a lake) press the return key to close the last segment of the path to the starting point.</a> A filled area can be drawn using the path tool having selected an area symbol for the tool to use.</p>
-<p>To remove a misplaced point use the backspace key to undo, or leave it and correct the position using the <a href="#edit_nodes">edit tool</a>.  If the partly drawn line is discovered to be a mistake use the 'escape' key to abort and remove it entirely.</p><br clear=all />
+<p>To remove a misplaced point while drawing a line use the backspace key to undo one step at a time, or leave it and correct the position using the <a href="#edit_nodes">edit tool</a>.  If the partly drawn line is discovered to be a mistake use the 'escape' key to abort and remove it entirely.</p>
+<a name="dashpoint"><p><b>Dash-points</b></p></a>
+<p>Some symbols (eg 516 Power line) require bars at internal nodes (pylons) but perhaps not at the point where the line ends at the edge of the map (no pylon).  The bar will appear at those nodes (called dash-points) along a line for which it is switched on.  Dash-point nodes have a diamond box when the line is selected (ordinary nodes are square).  Drawing of a node as a dash-point is toggled with the space bar &#8212; the dash-point symbol will appear at each node drawn while the helpful tip at the bottom edge shows "<b>Dash points on</b>" &#8212; this switch may be varied from node to node along the line. </p><br clear=all />
 
 <a name="circle"><p class="label">Circle tool</p></a>
 <p><img class=small src="../../images/draw-circle.png" width="32" height="32" border="0">The circle tool can be used to draw round lines and areas. To start drawing a circle, select the circle tool and a symbol of type line or area. Left click on a point on the map where you want the circle to start, move your mouse to the required diameter and then left click again. You can also click-&-hold at the starting point and then release at the end point.</p>
@@ -109,7 +111,7 @@ When this tool is activated, a window appears containing the measurements for th
 
 <p style="text-align: left"><a href="map_screen.html"><button type="button">Home</button></a> &nbsp; <input type="button" value="Back" onclick="goBack()"></p>
 <hr width="70%">
-<p><small>Updated on ... June 1, 2012</small></p>
+<p><small>Updated on ... June 12, 2012</small></p>
 </body>
 </html>
 

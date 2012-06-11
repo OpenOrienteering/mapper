@@ -46,7 +46,7 @@ The symbol editor enables any user to create new symbols or to modify any of the
 <a name="line"><p class="label">Line settings</p></a>
 <p><b>Line width</b> and <b>colour</b> define the basic line characteristics.  Minimum line length function is not yet implemented.   <b>Line cap</b> permits the shape of the end of the line to be specified.  <b>Line join</b> refers to the rendering of vertices where straight line sections join each other.</p>
 
-<p><b>Dashed lines</b> are created by a tick in the dash box, which opens the dash dialog lines.  Typical length of dash and gap may be specified &#8212; these will be rendered with gaps of the specified size and dashes as close as practicable to the specified length (so that there is no fractional dash).  The appearance of lines with regular symbols or breaks may be improved by making the end dash a half length &#8212; a check box provides for this.  Dashes may be grouped together with a specified gap within the groups which is different from the between-group gap length.</p>
+<p><b>Dashed lines</b> are created by a tick in the dash box, which opens the dash dialog lines.  Typical length of dash and gap may be specified &#8212; these will be rendered with gaps of the specified size and dashes as close as practicable to the specified length (so that there is no fractional dash at the end).  The appearance of lines with regular symbols or breaks may be improved by making the end dash a half length &#8212; a check box provides for this.  Dashes may be grouped together with a specified gap within the groups which is different from the between-group gap length.</p>
 
 <p>Many symbols (eg 520 Stone wall) have a <b>repeated feature</b> along the line.  This line feature is invoked by setting a non-zero integer number in the mid-symbol count.  The mid-symbol distance sets the spacing between symbol centres.  The distance between spots refers to the distance between symbol groups; if the mid-symbol distance is too large then the groups may overlap.  The distance from the end is an approximate length of line projecting beyond the last group. A check box to require at least one mid-symbol ensures that the line has at least one symbol but may give confusing results if the line is too short for meaningful rendering.  Setting a minimum mid-symbol count will prevent that but its effect is not yet implemented.  A different mid-symbol minimum may be specified for the boundary line of a closed symbol.</p>
 
@@ -68,12 +68,11 @@ The symbol editor enables any user to create new symbols or to modify any of the
 <p>This symbol appears only at the last-fixed end of the symbol line.  This can be changed for a particular line with the <a href="drawing_toolbar.html#reverse">reversing tool</a>.  The end symbol will appear at the right end of the of the horizontal sample lines in the illustrative graphic to the right of the symbol editor.  The symbol may be made of several elements.  To add an element click the + button at the bottom of the elements list.  An element may be a point (a circular element), a line or an area element.  Other details for these are similar to those for start symbols (above).</p>
 
 <a name="dashsymbol"><p class="label">Dash symbol</p></a>
-<p>This symbol will appear at each node along a line.  The symbol may be made of several elements.  To add an element click the + button at the bottom of the elements list.  An element may be a point (a circular element), a line or an area element.  Other details for these are similar to those for start symbols (above).</p>
-<p>At present the dash symbol also appears at the end of the line (along with the end symbol if that is specified).</p>
+<p>This symbol will appear at switched nodes along a line for which the symbol is active.  The presence (or absence) of the symbol is toggled with the space bar &#8212; the symbol will appear at each node drawn while the helpful tip at the bottom edge shows "<b>Dash points on.</b>" This switch may vary from point to point along the line.   The symbol may be made of several elements.  To add an element click the + button at the bottom of the elements list.  An element may be a point (a circular element), a line or an area element.  Other details for these are similar to those for start symbols (above).</p>
 
 
 <p style="text-align: left"><a href="map_screen.html"><button type="button">Home</button></a> &nbsp; <input type="button" value="Back" onclick="goBack()"></p>
 <hr width="70%">
-<p><small>Updated on June 1, 2012</small></p>
+<p><small>Updated on June 12, 2012</small></p>
 </body>
 </html>
