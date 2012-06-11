@@ -169,7 +169,11 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	
 	painter.translate(0.5f * (icon_size-1), 0.5f * (icon_size-1));
 	view.applyTransform(&painter);
+	
+	bool was_hidden = is_hidden;
+	is_hidden = false; // ensure that an icon is created for hidden symbols.
 	icon_map.draw(&painter, QRectF(-10000, -10000, 20000, 20000), false, view.calculateFinalZoomFactor(), true);
+	is_hidden = was_hidden;
 	
 	painter.end();
 	
