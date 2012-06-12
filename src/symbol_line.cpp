@@ -1627,9 +1627,9 @@ void LineSymbolSettings::colorChanged()
 
 void LineSymbolSettings::minimumDimensionsEdited()
 {
-	symbol->minimum_length = qRound(1000 * minimum_length_edit->text().toFloat());
-	symbol->minimum_mid_symbol_count = qRound(1000 * minimum_mid_symbol_count_edit->text().toFloat());
-	symbol->minimum_mid_symbol_count_when_closed = qRound(1000 * minimum_mid_symbol_count_when_closed_edit->text().toFloat());
+	symbol->minimum_length = qRound(1000.0 * minimum_length_edit->value());
+	symbol->minimum_mid_symbol_count = minimum_mid_symbol_count_edit->value();
+	symbol->minimum_mid_symbol_count_when_closed = minimum_mid_symbol_count_when_closed_edit->value();
 	emit propertiesModified();
 }
 
