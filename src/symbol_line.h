@@ -84,6 +84,8 @@ public:
 	inline void setLineWidth(double width) {line_width = qRound(1000 * width);}
 	inline MapColor* getColor() const {return color;}
 	inline void setColor(MapColor* color) {this->color = color;}
+	inline int getMinimumLength() const {return minimum_length;}
+	inline void setMinimumLength(int length) {this->minimum_length = length;}
 	inline CapStyle getCapStyle() const {return cap_style;}
 	inline void setCapStyle(CapStyle style) {cap_style = style;}
 	inline JoinStyle getJoinStyle() const {return join_style;}
