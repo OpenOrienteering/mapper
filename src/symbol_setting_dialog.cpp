@@ -438,13 +438,13 @@ void SymbolSettingDialog::createPreviewMap()
 
 void SymbolSettingDialog::showHelp()
 {
-	QString fragment;
+	QString fragment = "general";
 	if (properties_widget->currentIndex() > 0)
 	{
-		fragment.append("symbol-type-");
+		fragment = "symbol-type-";
 		fragment.append(QString::number(symbol->getType()));
 	}
-	preview_controller->getWindow()->showHelp("symbol_settings.html", fragment);
+	preview_controller->getWindow()->showHelp("symbol_editor.html", fragment);
 }
 
 void SymbolSettingDialog::reset()
