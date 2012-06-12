@@ -67,7 +67,7 @@ public:
     inline Type getType() const {return type;}
 	
 	/// Returns the or-ed together bitmask of all symbol types this symbol contains
-	virtual Type getContainedTypes() {return getType();}
+	virtual Type getContainedTypes() const {return getType();}
 	
 	/// Can the symbol be applied to the given object?
 	bool isTypeCompatibleTo(Object* object);

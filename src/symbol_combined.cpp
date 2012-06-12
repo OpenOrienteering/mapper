@@ -117,7 +117,7 @@ void CombinedSymbol::scale(double factor)
 	resetIcon();
 }
 
-Symbol::Type CombinedSymbol::getContainedTypes()
+Symbol::Type CombinedSymbol::getContainedTypes() const
 {
 	int type = (int)getType();
 	

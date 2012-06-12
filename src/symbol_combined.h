@@ -49,7 +49,7 @@ public:
 	virtual bool symbolChanged(Symbol* old_symbol, Symbol* new_symbol);
 	bool containsSymbol(const Symbol* symbol) const;
 	virtual void scale(double factor);
-	virtual Type getContainedTypes();
+	virtual Type getContainedTypes() const;
 	
 	virtual bool loadFinished(Map* map);
 	
