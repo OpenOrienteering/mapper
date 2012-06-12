@@ -451,6 +451,7 @@ void SymbolSettingDialog::reset()
 {
 	Symbol* old_symbol = symbol;
 	symbol = source_symbol_copy->duplicate();
+	symbol->setHidden(false);
 	createPreviewMap();
 	properties_widget->reset(symbol);
 	delete old_symbol;
