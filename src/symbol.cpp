@@ -22,6 +22,7 @@
 
 #include <QFile>
 #include <QPainter>
+#include <QStringBuilder>
 #include <qmath.h>
 
 #include "util.h"
@@ -236,9 +237,12 @@ SymbolPropertiesWidget* Symbol::createPropertiesWidget(SymbolSettingDialog* dial
 
 // ### SymbolDropDown ###
 
+// allow explicit use of Symbol pointers in QVariant
+Q_DECLARE_METATYPE(Symbol*)
+
 SymbolDropDown::SymbolDropDown(Map* map, int filter, Symbol* initial_symbol, const Symbol* excluded_symbol, QWidget* parent): QComboBox()
 {
-	addItem(tr("- none -"), qVariantFromValue<void*>(NULL));
+	addItem(tr("- none -"), QVariant::fromValue<Symbol*>(NULL));
 	
 	int size = map->getNumSymbols();
 	for (int i = 0; i < size; ++i)
@@ -255,17 +259,18 @@ SymbolDropDown::SymbolDropDown(Map* map, int filter, Symbol* initial_symbol, con
 				continue;
 		}
 		
-		addItem(QPixmap::fromImage(*symbol->getIcon(map)), symbol->getName(), qVariantFromValue<void*>(symbol));
+		QString symbol_name = symbol->getNumberAsString() % " " % symbol->getName();
+		addItem(QPixmap::fromImage(*symbol->getIcon(map)), symbol_name, QVariant::fromValue<Symbol*>(symbol));
 	}
 	setSymbol(initial_symbol);
 }
 
 Symbol* SymbolDropDown::symbol() const
 {
-	return reinterpret_cast<Symbol*>(itemData(currentIndex()).value<void*>());
+	return itemData(currentIndex()).value<Symbol*>();
 }
 
 void SymbolDropDown::setSymbol(Symbol* symbol)
 {
-	setCurrentIndex(findData(qVariantFromValue<void*>(symbol)));
+	setCurrentIndex(findData(QVariant::fromValue<Symbol*>(symbol)));
 }
