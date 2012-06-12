@@ -54,9 +54,11 @@ public:
 	virtual ~SymbolSettingDialog();
 	
 	/**
-	 * Returns the currently edited symbol. The caller can duplicate it for later user. 
+	 * Returns a copy of the currently edited symbol. 
+	 * 
+	 * The caller is responsible for deleting the returned object.
 	 */
-	inline const Symbol* getEditedSymbol() const { return symbol; }
+	Symbol* getNewSymbol() const;
 	
 	/**
 	 * Returns a pointer to the unmodifed symbol which is currently edited.

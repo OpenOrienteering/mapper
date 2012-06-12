@@ -563,8 +563,7 @@ void SymbolRenderWidget::editSymbol()
 	dialog.setWindowModality(Qt::WindowModal);
 	if (dialog.exec() == QDialog::Accepted)
 	{
-		symbol = dialog.getEditedSymbol()->duplicate();
-//		symbol->getIcon(map, true);
+		symbol = dialog.getNewSymbol();
 		map->setSymbol(symbol, current_symbol_index);
 	}
 }
@@ -736,7 +735,7 @@ bool SymbolRenderWidget::newSymbol(Symbol* prototype)
 	if (dialog.exec() == QDialog::Rejected)
 		return false;
 	
-	Symbol* new_symbol = dialog.getEditedSymbol()->duplicate();
+	Symbol* new_symbol = dialog.getNewSymbol();
 	int pos = currentSymbolIndex();
 	map->addSymbol(new_symbol, (pos >= 0) ? pos : map->getNumSymbols());
 	selectSingleSymbol(pos);

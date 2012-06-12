@@ -51,6 +51,7 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map,
 	symbol_modified = false;
 	
 	symbol = source_symbol->duplicate();
+	symbol->setHidden(false);
 	
 	symbol_icon_label = new QLabel();
 	symbol_icon_label->setPixmap(QPixmap::fromImage(*symbol->getIcon(source_map)));
@@ -160,6 +161,13 @@ SymbolSettingDialog::~SymbolSettingDialog()
 	delete properties_widget; // must be deleted before the symbol!
 	delete symbol;
 	delete source_symbol_copy;
+}
+
+Symbol* SymbolSettingDialog::getNewSymbol() const
+{
+	Symbol* clone = symbol->duplicate();
+	clone->setHidden(source_symbol->isHidden());
+	return clone;
 }
 
 void SymbolSettingDialog::updatePreview()
