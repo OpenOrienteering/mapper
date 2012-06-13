@@ -21,13 +21,13 @@
 #ifndef _OPENORIENTEERING_TOOL_MEASURE_H_
 #define _OPENORIENTEERING_TOOL_MEASURE_H_
 
-#include <QWidget>
+#include <QSize>
 
 #include "map_editor.h"
 
-QT_BEGIN_NAMESPACE
 class QLabel;
-QT_END_NAMESPACE
+class QStackedWidget;
+class QWidget;
 
 class Map;
 
@@ -38,14 +38,24 @@ public:
 	MeasureWidget(Map* map, QWidget* parent = NULL);
 	virtual ~MeasureWidget();
 	
-	//virtual QSize sizeHint() const;
+	virtual QSize sizeHint() const;
 	
 protected slots:
 	void objectSelectionChanged();
 	
 private:
-	QLabel* label;
 	Map* map;
+	
+	QSize preferred_size;
+	
+	QLabel* headline_label;
+	QStackedWidget* length_stack;
+	QLabel* paper_length_label;
+	QLabel* real_length_label;
+	QStackedWidget* area_stack;
+	QLabel* paper_area_label;
+	QLabel* real_area_label;
+	QLabel* warning_label;
 };
 
 #endif
