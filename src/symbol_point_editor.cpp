@@ -24,13 +24,14 @@
 
 #include <QtGui>
 
+#include "map_color.h"
+#include "map_widget.h"
+#include "object.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
 #include "symbol_area.h"
-#include "map_color.h"
-#include "object.h"
 #include "util.h"
-#include "map_widget.h"
+#include "util_gui.h"
 
 PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, float offset_y, bool permanent_preview, QWidget* parent)
  : QWidget(parent), symbol(symbol), object_origin_coord(0.0f, offset_y), offset_y(offset_y), controller(controller), permanent_preview(permanent_preview)
@@ -45,7 +46,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 		map->addObject(midpoint_object);
 	}
 	
-	QLabel* elements_label = new QLabel(QString("<b>%1</b>").arg(tr("Elements:")));
+	QLabel* elements_label = Util::Headline::create(tr("Elements"));
 	element_list = new QListWidget();
 	initElementList();
 	
@@ -55,29 +56,27 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	add_element_button->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	add_element_button->setPopupMode(QToolButton::InstantPopup);
 	add_element_button->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed));
-	add_element_button->setMinimumWidth(delete_element_button->sizeHint().width());
+	add_element_button->setMinimumSize(delete_element_button->sizeHint());
 	QMenu* add_element_button_menu = new QMenu(add_element_button);
 	add_element_button_menu->addAction(tr("Point"), this, SLOT(addPointClicked()));
 	add_element_button_menu->addAction(tr("Line"), this, SLOT(addLineClicked()));
 	add_element_button_menu->addAction(tr("Area"), this, SLOT(addAreaClicked()));
 	add_element_button->setMenu(add_element_button_menu);
 	
-	QLabel* current_element_label = new QLabel("<b>" + tr("Current element") + "</b>");
+	QLabel* current_element_label = Util::Headline::create(tr("Current element"));
 	
 	element_properties_widget = new QStackedWidget();
 	
 	// Point (circle)
 	point_properties = new QWidget();
 	QLabel* point_inner_radius_label = new QLabel(tr("Diameter <b>a</b>:"));
-	point_inner_radius_edit = new QLineEdit();
-	point_inner_radius_edit->setValidator(new DoubleValidator(0, 99999, point_inner_radius_edit));
+	point_inner_radius_edit = Util::SpinBox::create(2, 0.0, 99999.9, tr("mm"));
 	
 	QLabel* point_inner_color_label = new QLabel(tr("Inner color:"));
 	point_inner_color_edit = new ColorDropDown(map);
 	
 	QLabel* point_outer_width_label = new QLabel(tr("Outer width <b>b</b>:"));
-	point_outer_width_edit = new QLineEdit();
-	point_outer_width_edit->setValidator(new DoubleValidator(0, 99999, point_outer_width_edit));
+	point_outer_width_edit = Util::SpinBox::create(2, 0.0, 99999.9, tr("mm"));
 	
 	QLabel* point_outer_color_label = new QLabel(tr("Outer color:"));
 	point_outer_color_edit = new ColorDropDown(map);
@@ -105,8 +104,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	// Line
 	line_properties = new QWidget();
 	QLabel* line_width_label = new QLabel(tr("Line width:"));
-	line_width_edit = new QLineEdit();
-	line_width_edit->setValidator(new DoubleValidator(0, 99999, line_width_edit));
+	line_width_edit = Util::SpinBox::create(2, 0.0, 99999.9, tr("mm"));
 	
 	QLabel* line_color_label = new QLabel(tr("Line color:"));
 	line_color_edit = new ColorDropDown(map);
@@ -213,12 +211,12 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	connect(element_list, SIGNAL(currentRowChanged(int)), this, SLOT(changeElement(int)));
 	connect(delete_element_button, SIGNAL(clicked(bool)), this, SLOT(deleteCurrentElement()));
 	
-	connect(point_inner_radius_edit, SIGNAL(textEdited(QString)), this, SLOT(pointInnerRadiusChanged(QString)));
+	connect(point_inner_radius_edit, SIGNAL(valueChanged(double)), this, SLOT(pointInnerRadiusChanged(double)));
 	connect(point_inner_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(pointInnerColorChanged()));
-	connect(point_outer_width_edit, SIGNAL(textEdited(QString)), this, SLOT(pointOuterWidthChanged(QString)));
+	connect(point_outer_width_edit, SIGNAL(valueChanged(double)), this, SLOT(pointOuterWidthChanged(double)));
 	connect(point_outer_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(pointOuterColorChanged()));
 	
-	connect(line_width_edit, SIGNAL(textEdited(QString)), this, SLOT(lineWidthChanged(QString)));
+	connect(line_width_edit, SIGNAL(valueChanged(double)), this, SLOT(lineWidthChanged(double)));
 	connect(line_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(lineColorChanged()));
 	connect(line_cap_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(lineCapChanged(int)));
 	connect(line_join_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(lineJoinChanged(int)));
@@ -374,7 +372,7 @@ void PointSymbolEditorWidget::changeElement(int row)
 				line_closed_check->blockSignals(true);
 				
 				LineSymbol* line = reinterpret_cast<LineSymbol*>(element_symbol);
-				line_width_edit->setText(QString::number(0.001 * line->getLineWidth()));
+				line_width_edit->setValue(0.001 * line->getLineWidth());
 				line_color_edit->setColor(line->getColor());
 				line_cap_edit->setCurrentIndex(line_cap_edit->findData(QVariant(line->getCapStyle())));
 				line_join_edit->setCurrentIndex(line_join_edit->findData(QVariant(line->getJoinStyle())));
@@ -416,9 +414,9 @@ void PointSymbolEditorWidget::changeElement(int row)
 			point_outer_width_edit->blockSignals(true);
 			
 			PointSymbol* point = reinterpret_cast<PointSymbol*>(element_symbol);
-			point_inner_radius_edit->setText(QString::number(2 * 0.001 * point->getInnerRadius()));
+			point_inner_radius_edit->setValue(2 * 0.001 * point->getInnerRadius());
 			point_inner_color_edit->setColor(point->getInnerColor());
-			point_outer_width_edit->setText(QString::number(0.001 * point->getOuterWidth()));
+			point_outer_width_edit->setValue(0.001 * point->getOuterWidth());
 			point_outer_color_edit->setColor(point->getOuterColor());
 			
 			point_inner_radius_edit->blockSignals(false);
@@ -481,10 +479,10 @@ void PointSymbolEditorWidget::deleteCurrentElement()
 	emit symbolEdited();
 }
 
-void PointSymbolEditorWidget::pointInnerRadiusChanged(QString text)
+void PointSymbolEditorWidget::pointInnerRadiusChanged(double value)
 {
 	PointSymbol* symbol = reinterpret_cast<PointSymbol*>(getCurrentElementSymbol());
-	symbol->inner_radius = qRound(1000 * 0.5 * text.toDouble());
+	symbol->inner_radius = qRound(1000 * 0.5 * value);
 	midpoint_object->update(true);
 	emit symbolEdited();
 }
@@ -497,10 +495,10 @@ void PointSymbolEditorWidget::pointInnerColorChanged()
 	emit symbolEdited();
 }
 
-void PointSymbolEditorWidget::pointOuterWidthChanged(QString text)
+void PointSymbolEditorWidget::pointOuterWidthChanged(double value)
 {
 	PointSymbol* symbol = reinterpret_cast<PointSymbol*>(getCurrentElementSymbol());
-	symbol->outer_width = qRound(1000 * text.toDouble());
+	symbol->outer_width = qRound(1000 * value);
 	midpoint_object->update(true);
 	emit symbolEdited();
 }
@@ -513,10 +511,10 @@ void PointSymbolEditorWidget::pointOuterColorChanged()
 	emit symbolEdited();
 }
 
-void PointSymbolEditorWidget::lineWidthChanged(QString text)
+void PointSymbolEditorWidget::lineWidthChanged(double value)
 {
 	LineSymbol* symbol = reinterpret_cast<LineSymbol*>(getCurrentElementSymbol());
-	symbol->line_width = qRound(1000 * text.toDouble());
+	symbol->line_width = qRound(1000 * value);
 	midpoint_object->update(true);
 	emit symbolEdited();
 }

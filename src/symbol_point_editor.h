@@ -27,10 +27,12 @@
 
 class QCheckBox;
 class QComboBox;
+class QDoubleSpinBox;
 class QLabel;
 class QLineEdit;
 class QListWidget;
 class QPushButton;
+class QSpinBox;
 class QStackedWidget;
 class QTableWidget;
 
@@ -86,12 +88,12 @@ private slots:
 	void addAreaClicked();
 	void deleteCurrentElement();
 	
-	void pointInnerRadiusChanged(QString text);
+	void pointInnerRadiusChanged(double value);
 	void pointInnerColorChanged();
-	void pointOuterWidthChanged(QString text);
+	void pointOuterWidthChanged(double value);
 	void pointOuterColorChanged();
 	
-	void lineWidthChanged(QString text);
+	void lineWidthChanged(double value);
 	void lineColorChanged();
 	void lineCapChanged(int index);
 	void lineJoinChanged(int index);
@@ -127,13 +129,13 @@ private:
 	QStackedWidget* element_properties_widget;
 	
 	QWidget* point_properties;
-	QLineEdit* point_inner_radius_edit;
+	QDoubleSpinBox* point_inner_radius_edit;
 	ColorDropDown* point_inner_color_edit;
-	QLineEdit* point_outer_width_edit;
+	QDoubleSpinBox* point_outer_width_edit;
 	ColorDropDown* point_outer_color_edit;
 	
 	QWidget* line_properties;
-	QLineEdit* line_width_edit;
+	QDoubleSpinBox* line_width_edit;
 	ColorDropDown* line_color_edit;
 	QComboBox* line_cap_edit;
 	QComboBox* line_join_edit;
