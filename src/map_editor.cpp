@@ -1496,7 +1496,8 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 	if (this->map)
 	{
 		map->disconnect(this);
-		map->disconnect(symbol_widget);
+		if (symbol_widget)
+			map->disconnect(symbol_widget);
 	}
 	
 	this->map = map;
