@@ -158,8 +158,7 @@ public slots:
 	void templateAdded(int pos, Template* temp);
 	void templateDeleted(int pos, Template* temp);
 
-	void importDXF(QString filename);
-	void importGPX(QString filename);
+	void importGeoFile(QString filename);
 	void importClicked();
 	
 signals:
