@@ -183,9 +183,10 @@ bool GPSTrack::loadFrom(const QString& path, bool project_points, QWidget* dialo
 	}
 	else if (path.endsWith(".osm", Qt::CaseInsensitive))
 	{
-		// basic OSM file support
-		// reference: http://wiki.openstreetmap.org/wiki/OSM_XML
-		const QString supported_version = "0.5";
+		// Basic OSM file support
+		// Reference: http://wiki.openstreetmap.org/wiki/OSM_XML
+		const double min_supported_version = 0.5;
+		const double max_supported_version = 0.6;
 		QHash<QString, GPSPoint> nodes;
 		int node_problems = 0;
 		
@@ -227,10 +228,15 @@ bool GPSTrack::loadFrom(const QString& path, bool project_points, QWidget* dialo
 				}
 				else if (stream.name() == "osm")
 				{
-					QStringRef osm_version(attributes.value("version"));
-					if (osm_version != supported_version)
+					double osm_version = attributes.value("version").toString().toDouble();
+					if (osm_version < min_supported_version)
 					{
-						QMessageBox::critical(dialog_parent, QObject::tr("Error"), QObject::tr("The OSM file has version %1,\nbut only version %2 is supported.").arg(osm_version.toString(), supported_version));
+						QMessageBox::critical(dialog_parent, QObject::tr("Error"), QObject::tr("The OSM file has version %1.\nThe minimum supported version is %2.").arg(attributes.value("version").toString(), QString::number(min_supported_version, 'g', 1)));
+						return false;
+					}
+					if (osm_version > max_supported_version)
+					{
+						QMessageBox::critical(dialog_parent, QObject::tr("Error"), QObject::tr("The OSM file has version %1.\nThe maximum supported version is %2.").arg(attributes.value("version").toString(), QString::number(min_supported_version, 'g', 1)));
 						return false;
 					}
 				}
