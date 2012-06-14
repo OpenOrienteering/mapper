@@ -199,23 +199,62 @@ bool GPSTrack::loadFrom(const QString& path, bool project_points, QWidget* dialo
 			{
 				if (stream.name() == "node")
 				{
+					if (attributes.value("visible") == "false")
+					{
+						stream.skipCurrentElement();
+						continue;
+					}
+					
 					bool ok = !attributes.value("id").isEmpty();
 					double lat, lon;
 					if (ok) lat = attributes.value("lat").toString().toDouble(&ok);
 					if (ok) lon = attributes.value("lon").toString().toDouble(&ok);
 					if (!ok)
-						node_problems++;
-					else
 					{
-						QString  point_name(attributes.value("id").toString());
-						GPSPoint point(LatLon(lat, lon, true));
-						if (project_points)
-							point.map_coord = georef.toMapCoordF(point.gps_coord, NULL); // FIXME: check for errors
-						nodes.insert(point_name, point);
+						node_problems++;
+						stream.skipCurrentElement();
+						continue;
+					}
+					
+					QString  point_name(attributes.value("id").toString());
+					GPSPoint point(LatLon(lat, lon, true));
+					if (project_points)
+						point.map_coord = georef.toMapCoordF(point.gps_coord, NULL); // FIXME: check for errors
+					nodes.insert(point_name, point);
+					
+					while (!stream.atEnd())
+					{
+						stream.readNext();
+						if (stream.tokenType() == QXmlStreamReader::EndElement && stream.name() == "node")
+							break;
+						if (stream.tokenType() == QXmlStreamReader::StartElement && stream.name() != "tag")
+							continue;
+						
+						if (stream.attributes().value("k") == "ele")
+						{
+							bool ok;
+							double elevation = stream.attributes().value("v").toString().toDouble(&ok);
+							if (ok) nodes[point_name].elevation = elevation;
+						}
+						else if (stream.attributes().value("k") == "name")
+						{
+							QString name = stream.attributes().value("v").toString();
+							if (!name.isEmpty() && !nodes.contains(name)) 
+							{
+								waypoints.push_back(point);
+								waypoint_names.push_back(name);
+							}
+						}
 					}
 				}
 				else if (stream.name() == "way")
 				{
+					if (attributes.value("visible") == "false")
+					{
+						stream.skipCurrentElement();
+						continue;
+					}
+					
 					segment_starts.push_back(segment_points.size());
 				}
 				else if (stream.name() == "nd")
@@ -239,6 +278,10 @@ bool GPSTrack::loadFrom(const QString& path, bool project_points, QWidget* dialo
 						QMessageBox::critical(dialog_parent, QObject::tr("Error"), QObject::tr("The OSM file has version %1.\nThe maximum supported version is %2.").arg(attributes.value("version").toString(), QString::number(min_supported_version, 'g', 1)));
 						return false;
 					}
+				}
+				else
+				{
+					stream.skipCurrentElement();
 				}
 			}
 		}
