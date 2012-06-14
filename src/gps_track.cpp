@@ -22,10 +22,10 @@
 
 #include <QApplication>
 #include <QFile>
+#include <QInputDialog> // TODO: get rid of this
+#include <QMessageBox>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
-#include <QMessageBox>
-#include <QInputDialog> // TODO: get rid of this
 
 #include "global.h"
 #include "dxfparser.h"
@@ -181,6 +181,66 @@ bool GPSTrack::loadFrom(const QString& path, bool project_points, QWidget* dialo
 			}
 		}
 	}
+	else if (path.endsWith(".osm", Qt::CaseInsensitive))
+	{
+		// basic OSM file support
+		// reference: http://wiki.openstreetmap.org/wiki/OSM_XML
+		const QString supported_version = "0.5";
+		QHash<QString, GPSPoint> nodes;
+		int node_problems = 0;
+		
+		QXmlStreamReader stream(&file);
+		while (!stream.atEnd())
+		{
+			stream.readNext();
+			QXmlStreamAttributes attributes(stream.attributes());
+			if (stream.tokenType() == QXmlStreamReader::StartElement)
+			{
+				if (stream.name() == "node")
+				{
+					bool ok = !attributes.value("id").isEmpty();
+					double lat, lon;
+					if (ok) lat = attributes.value("lat").toString().toDouble(&ok);
+					if (ok) lon = attributes.value("lon").toString().toDouble(&ok);
+					if (!ok)
+						node_problems++;
+					else
+					{
+						QString  point_name(attributes.value("id").toString());
+						GPSPoint point(LatLon(lat, lon, true));
+						if (project_points)
+							point.map_coord = georef.toMapCoordF(point.gps_coord, NULL); // FIXME: check for errors
+						nodes.insert(point_name, point);
+					}
+				}
+				else if (stream.name() == "way")
+				{
+					segment_starts.push_back(segment_points.size());
+				}
+				else if (stream.name() == "nd")
+				{
+					QString ref = attributes.value("ref").toString();
+					if (ref.isEmpty() || !nodes.contains(ref))
+						node_problems++;
+					else
+						segment_points.push_back(nodes[ref]);
+				}
+				else if (stream.name() == "osm")
+				{
+					QStringRef osm_version(attributes.value("version"));
+					if (osm_version != supported_version)
+					{
+						QMessageBox::critical(dialog_parent, QObject::tr("Error"), QObject::tr("The OSM file has version %1,\nbut only version %2 is supported.").arg(osm_version.toString(), supported_version));
+						return false;
+					}
+				}
+			}
+		}
+		
+		if (node_problems > 0)
+			QMessageBox::warning(dialog_parent, QObject::tr("Problems"), QObject::tr("%1 nodes could not be processed correctly.").arg(node_problems));
+	}
+
 
 	file.close();
 	return true;
