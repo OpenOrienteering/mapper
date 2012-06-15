@@ -270,7 +270,7 @@ bool TemplateGPS::import(QWidget* dialog_parent)
 void TemplateGPS::updateGeoreferencing()
 {
 	track.changeGeoreferencing(map->getGeoreferencing());
-	// TODO: redraw template
+	map->updateAllMapWidgets();
 }
 
 void TemplateGPS::calculateExtent()

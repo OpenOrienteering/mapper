@@ -449,7 +449,7 @@ void MapEditorController::createMenuAndToolbars()
 	updatePaintOnTemplateAction();
 	connect(paint_on_template_act, SIGNAL(triggered(bool)), this, SLOT(paintOnTemplateClicked(bool)));
 
-	QAction *import_act = newAction("import", tr("Import"), this, SLOT(importClicked()));
+	QAction *import_act = newAction("import", tr("Import..."), this, SLOT(importClicked()));
 
 	map_coordinates_act = new QAction(tr("Map coordinates"), this);
 	map_coordinates_act->setCheckable(true);
@@ -1827,33 +1827,30 @@ int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_c
 	return -1;
 }
 
-void MapEditorController::importDXF(QString filename)
-{
-	TemplateGPS temp(filename, map);
-	if (!temp.open(window, main_view))
-		return;
-	temp.import(window);
-}
 void MapEditorController::importClicked()
 {
 	QSettings settings;
 	QString import_directory = settings.value("importFileDirectory", QDir::homePath()).toString();
 	
-	QString filename = QFileDialog::getOpenFileName(window, tr("Import DXF or GPX file"), import_directory, QString("%1 (*.gpx *.dxf);;%2 (*.*)").arg(tr("Importable files")).arg(tr("All files")));
+	QString filename = QFileDialog::getOpenFileName(window, tr("Import DXF, GPX or OSM file"), import_directory, QString("%1 (*.gpx *.dxf *.osm);;%2 (*.*)").arg(tr("Importable files")).arg(tr("All files")));
 	if (filename.isEmpty() || filename.isNull())
 		return;
 	
 	settings.setValue("importFileDirectory", QFileInfo(filename).canonicalPath());
 	
-	if (filename.endsWith(".dxf", Qt::CaseInsensitive))
-		importDXF(filename);
-	else if (filename.endsWith(".gpx", Qt::CaseInsensitive))
-		importGPX(filename);
+	if ( filename.endsWith(".dxf", Qt::CaseInsensitive) || 
+	     filename.endsWith(".gpx", Qt::CaseInsensitive) ||
+	     filename.endsWith(".osm", Qt::CaseInsensitive) )
+	{
+		importGeoFile(filename);
+	}
 	else
+	{
 		QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected file because its file format is not supported."));
+	}
 }
 
-void MapEditorController::importGPX(QString filename)
+void MapEditorController::importGeoFile(QString filename)
 {
 	TemplateGPS temp(filename, map);
 	if (!temp.open(window, main_view))
