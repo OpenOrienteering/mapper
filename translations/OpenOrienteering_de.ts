@@ -1924,6 +1924,11 @@ Fehler beim Verarbeiten der Symbole.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/map_editor.cpp" line="452"/>
+        <source>Import...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/map_editor.cpp" line="495"/>
         <source>&amp;Edit</source>
         <translation>&amp;Bearbeiten</translation>
@@ -2019,11 +2024,6 @@ Fehler beim Verarbeiten der Symbole.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="452"/>
-        <source>Import</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/map_editor.cpp" line="454"/>
         <source>Map coordinates</source>
         <translation type="unfinished"></translation>
@@ -2086,7 +2086,7 @@ Fehler beim Verarbeiten der Symbole.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="680"/>
-        <location filename="../src/map_editor.cpp" line="1853"/>
+        <location filename="../src/map_editor.cpp" line="1849"/>
         <source>Error</source>
         <translation type="unfinished">Fehler</translation>
     </message>
@@ -2312,22 +2312,22 @@ Fehler beim Verarbeiten der Symbole.</translation>
         <translation>Auf einer Vorlage freihändig Zeichnen. Erstellen oder laden Sie eine Vorlage auf die gezeichnet werden kann, um dieses Werkzeug zu verwenden</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1842"/>
-        <source>Import DXF or GPX file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/map_editor.cpp" line="1842"/>
+        <location filename="../src/map_editor.cpp" line="1835"/>
         <source>Importable files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1842"/>
+        <location filename="../src/map_editor.cpp" line="1835"/>
         <source>All files</source>
         <translation type="unfinished">Alle Dateien</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1853"/>
+        <location filename="../src/map_editor.cpp" line="1835"/>
+        <source>Import DXF, GPX or OSM file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/map_editor.cpp" line="1849"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3307,6 +3307,28 @@ libocad-Fehler %1</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/gps_track.cpp" line="273"/>
+        <source>The OSM file has version %1.
+The minimum supported version is %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gps_track.cpp" line="278"/>
+        <source>The OSM file has version %1.
+The maximum supported version is %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gps_track.cpp" line="290"/>
+        <source>Problems</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gps_track.cpp" line="290"/>
+        <source>%1 nodes could not be processed correctly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/map_editor.cpp" line="1190"/>
         <source>Object selection</source>
         <translation type="unfinished"></translation>
@@ -3317,6 +3339,8 @@ libocad-Fehler %1</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/gps_track.cpp" line="273"/>
+        <location filename="../src/gps_track.cpp" line="278"/>
         <location filename="../src/map_editor.cpp" line="1376"/>
         <location filename="../src/map_editor.cpp" line="1382"/>
         <location filename="../src/map_editor.cpp" line="1388"/>
