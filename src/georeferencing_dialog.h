@@ -254,6 +254,7 @@ private:
  */
 class GeoreferencingTool : public MapEditorTool
 {
+Q_OBJECT
 public:
 	/** 
 	 * Constructs a new tool for the given dialog and controller.
