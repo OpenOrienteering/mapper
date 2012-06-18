@@ -481,7 +481,7 @@
     <message>
         <location filename="../src/settings_dialog.cpp" line="103"/>
         <source>pix</source>
-        <translation>pix</translation>
+        <translation>пік</translation>
     </message>
     <message>
         <location filename="../src/settings_dialog.cpp" line="107"/>
@@ -509,7 +509,7 @@
     <message>
         <location filename="../src/settings_dialog.cpp" line="197"/>
         <source>Notice</source>
-        <translation>Помітка</translation>
+        <translation>Примітка</translation>
     </message>
     <message>
         <location filename="../src/settings_dialog.cpp" line="197"/>
@@ -942,7 +942,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="1401"/>
         <source>In-group break length:</source>
-        <translation>Проміжки у групах:</translation>
+        <translation>Проміжки всередині груп:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1404"/>
@@ -1150,7 +1150,8 @@
         <location filename="../src/main_window.cpp" line="313"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
-        <translation>Цей файл було змінено. Ви хочете зберегти ваші зміни?</translation>
+        <translation>Цей файл було змінено.
+Ви хочете зберегти ваші зміни?</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="376"/>
@@ -1261,9 +1262,9 @@ Press No to choose a different format.</source>
     <message>
         <location filename="../src/main_window.cpp" line="675"/>
         <source>Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For patches, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</source>
-        <translatorcomment>Ukrianian localisations team: Eugeniy Fedirets together with Artem Sokolovsky
+        <translatorcomment>Ukrianian localisations team: Eugeniy Fedirets together with Artem Sokolovsky.
 Artem Sokolovsky (boy 5 years of age!), who insert more then 30 symbols in this translation file, is nephew of Eugeniy Fedirets.
-Українська команда перекладачів: Євгеній Федірець разом з Артем Соколовський
+Українська команда перекладачів: Євгеній Федірець разом з Артем Соколовський.
 Артем Соколовський (5-річний хлопчик!), котрий увів понад 30 символів у цей файл перекладу, є племінником Євгенія Федірця.</translatorcomment>
         <translation>Розробники у абетковому порядку:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (лідер проекту)&lt;br/&gt;&lt;br/&gt;Подяка за патчі:&lt;br/&gt;Jon Cundill&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Українська локалізація:&lt;br/&gt;Artem Sokolovsky (boy 5 years of age!)&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;&lt;br/&gt;Додаткова інформація:</translation>
     </message>
@@ -1438,12 +1439,12 @@ Error during symbol post-processing.</source>
     <message>
         <location filename="../src/map_editor.cpp" line="398"/>
         <source>Zoom in</source>
-        <translation>Збільшити</translation>
+        <translation>Наблизити</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="399"/>
         <source>Zoom out</source>
-        <translation>Зменшити</translation>
+        <translation>Віддалити</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="401"/>
@@ -1696,10 +1697,6 @@ Error during symbol post-processing.</source>
         <translation>Взаємовиключення площ</translation>
     </message>
     <message>
-        <source>Import</source>
-        <translation type="obsolete">Імпорт</translation>
-    </message>
-    <message>
         <location filename="../src/map_editor.cpp" line="454"/>
         <source>Map coordinates</source>
         <translation>Координати на мапі</translation>
@@ -1707,17 +1704,17 @@ Error during symbol post-processing.</source>
     <message>
         <location filename="../src/map_editor.cpp" line="456"/>
         <source>Projected coordinates</source>
-        <translation>Географічні координати</translation>
+        <translation>Проекційні координати</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="458"/>
         <source>Latitude/Longitude (Dec)</source>
-        <translation>Широта/Довгота (Десяткові градуси)</translation>
+        <translation>Широта/Довгота (Дес)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="460"/>
         <source>Latitude/Longitude (DMS)</source>
-        <translation>Широта/Довгота (град° хв′ сек″)</translation>
+        <translation>Широта/Довгота (° ′ ″)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="478"/>
@@ -1984,10 +1981,6 @@ Error during symbol post-processing.</source>
         <translation>Малювати від руки на шаблоні. Створіть чи завантажте шаблон на якому можна малювати щоб використати цей інструмент</translation>
     </message>
     <message>
-        <source>Import DXF or GPX file</source>
-        <translation type="obsolete">Імпорт DXF чи GPX файлу</translation>
-    </message>
-    <message>
         <location filename="../src/map_editor.cpp" line="1835"/>
         <source>Importable files</source>
         <translation>Підтримувані для імпорту</translation>
@@ -2192,7 +2185,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="49"/>
         <source>Cancel</source>
-        <translation>Скасувати</translation>
+        <translation>Відображати лише набори символів для даного масштабу</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="50"/>
@@ -2932,23 +2925,25 @@ for writing.</source>
         <location filename="../src/gps_track.cpp" line="273"/>
         <source>The OSM file has version %1.
 The minimum supported version is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSM файл має версію %1.
+Мінімальна підтримувана версія %2.</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="278"/>
         <source>The OSM file has version %1.
 The maximum supported version is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>OSM файл має версію %1.
+Максимальна підтримувана версія %2.</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="290"/>
         <source>Problems</source>
-        <translation type="unfinished"></translation>
+        <translation>Проблеми</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="290"/>
         <source>%1 nodes could not be processed correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 точок неможливо правильно обробити.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1190"/>
@@ -3271,7 +3266,9 @@ to jump over the lazy dog
 Сів шпак на шпаківню,
 Заспівав шпак півню:
 - Ти не вмієш так як я,
-Так як ти, не вмію я!</translation>
+Так як ти, не вмію я!
+1234567890
+</translation>
     </message>
 </context>
 <context>
