@@ -674,7 +674,7 @@ void MainWindow::showAbout()
 									 
 									 % tr("Developers in alphabetical order:<br/>"
 									 "Peter Curtis<br/>Kai Pastor<br/>Russell Porter<br/>Thomas Sch&ouml;ps (project leader)<br/><br/>"
-									 "For patches, thanks to:<br/>Jon Cundill<br/>Aivars Zogla<br/><br/>"
+									 "For contributions, thanks to:<br/>Jon Cundill<br/>Jan Dalheimer<br/>Eugeniy Fedirets<br/>Peter Hoban<br/>Henrik Johansson<br/>Tojo Masaya<br/>Aivars Zogla<br/><br/>"
 									 "Additional information:"));
 	QTextEdit* additional_text = new QTextEdit( 
 	  clipper_about % "<br/><br/>" %
