@@ -751,7 +751,6 @@ void OCAD8FileImport::fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *o
     symbol->number[0] = ocad_symbol->number / 10;
     symbol->number[1] = ocad_symbol->number % 10;
     symbol->number[2] = -1;
-    symbol->description = symbol->name;
     symbol->is_helper_symbol = false; // no such thing in OCAD
     if (ocad_symbol->status & 1)
 		symbol->setProtected(true);
