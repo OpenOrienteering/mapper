@@ -1461,10 +1461,10 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	show_at_least_one_symbol_check->setChecked(symbol->show_at_least_one_symbol);
 	
 	QLabel* minimum_mid_symbol_count_label = new QLabel(tr("Minimum mid symbol count:"));
-	minimum_mid_symbol_count_edit = Util::SpinBox::create(1, 99);
+	minimum_mid_symbol_count_edit = Util::SpinBox::create(0, 99);
 	
 	QLabel* minimum_mid_symbol_count_when_closed_label = new QLabel(tr("Minimum mid symbol count when closed:"));
-	minimum_mid_symbol_count_when_closed_edit = Util::SpinBox::create(1, 99);
+	minimum_mid_symbol_count_when_closed_edit = Util::SpinBox::create(0, 99);
 	
 	undashed_widget_list
 	  << segment_length_label << segment_length_edit
