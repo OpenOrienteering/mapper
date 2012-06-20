@@ -104,6 +104,7 @@ public:
 	
 	// Getters / Setters
 	inline const QString& getName() const {return name;}
+	QString getPlainTextName() const;
 	inline void setName(const QString& new_name) {name = new_name;}
 	
     QString getNumberAsString() const;

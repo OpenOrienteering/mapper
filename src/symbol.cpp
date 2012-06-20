@@ -23,6 +23,7 @@
 #include <QFile>
 #include <QPainter>
 #include <QStringBuilder>
+#include <QTextDocument>
 #include <qmath.h>
 
 #include "util.h"
@@ -181,6 +182,18 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	return icon;
 }
 
+QString Symbol::getPlainTextName() const
+{
+	if (name.contains('<'))
+	{
+		QTextDocument doc;
+		doc.setHtml(name);
+		return doc.toPlainText();
+	}
+	else
+		return name;
+}
+
 QString Symbol::getNumberAsString() const
 {
 	QString str = "";
@@ -259,7 +272,7 @@ SymbolDropDown::SymbolDropDown(Map* map, int filter, Symbol* initial_symbol, con
 				continue;
 		}
 		
-		QString symbol_name = symbol->getNumberAsString() % " " % symbol->getName();
+		QString symbol_name = symbol->getNumberAsString() % " " % symbol->getPlainTextName();
 		addItem(QPixmap::fromImage(*symbol->getIcon(map)), symbol_name, QVariant::fromValue<Symbol*>(symbol));
 	}
 	setSymbol(initial_symbol);
