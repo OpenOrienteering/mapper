@@ -46,6 +46,15 @@ void MapColor::updateFromRGB()
 	k = rk;
 }
 
+bool MapColor::equals(const MapColor& other, bool compare_priority) const
+{
+	return (name.compare(other.name, Qt::CaseInsensitive) == 0) &&
+		   (!compare_priority || (priority == other.priority)) && 
+		   (c == other.c) && (m == other.m) && (y == other.y) && (k == other.k) &&
+		   (opacity == other.opacity);
+}
+
+
 // ### ColorDropDown ###
 
 // allow explicit use of MapColor pointers in QVariant

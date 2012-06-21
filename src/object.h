@@ -52,6 +52,7 @@ public:
 	Object(Type type, Symbol* symbol = NULL);
 	virtual ~Object();
 	virtual Object* duplicate() = 0;
+	bool equals(Object* other, bool compare_symbol);
 	
 	/// Returns the object type determined by the subclass
     inline Type getType() const {return type;}
@@ -61,7 +62,7 @@ public:
 	
 	/// Checks if the output_dirty flag is set and if yes, regenerates output and extent; returns true if output was previously dirty.
 	/// Use force == true to force a redraw
-	bool update(bool force = false, bool remove_old_renderables = true);
+	bool update(bool force = false, bool insert_new_renderables = true);
 	
 	/// Moves the whole object
 	void move(qint64 dx, qint64 dy);

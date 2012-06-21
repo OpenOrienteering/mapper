@@ -61,7 +61,7 @@ public:
 	/// Constructs an empty point symbol
 	LineSymbol();
 	virtual ~LineSymbol();
-    virtual Symbol* duplicate() const;
+	virtual Symbol* duplicate(const QHash<MapColor*, MapColor*>* color_map = NULL) const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
 	void createRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, ObjectRenderables& output);
@@ -104,6 +104,7 @@ public:
 protected:
 	virtual void saveImpl(QFile* file, Map* map);
 	virtual bool loadImpl(QFile* file, int version, Map* map);
+	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	void createBorderLines(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output);
 	void shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, float shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords);

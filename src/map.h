@@ -77,6 +77,10 @@ public:
 	void deleteObject(int pos, bool remove_only);
 	bool deleteObject(Object* object, bool remove_only);	// returns if the object was found
 	
+	/// Imports the contents of the other layer (which can be from another map) into this layer.
+	/// Uses symbol_map to replace all symbols contained there. No replacement is done for symbols which are not in the map.
+	void importLayer(MapLayer* other, QHash<Symbol*, Symbol*>& symbol_map, bool select_new_objects);
+	
 	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
 	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
 	
@@ -115,6 +119,12 @@ public:
     bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
 	/// Attempts to load the map from the specified path. Returns true on success.
 	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL, bool load_symbols_only = false);
+	/// Imports the other map into this map with the following strategy:
+	///  - if the other map contains objects, import all objects with the minimum amount of colors and symbols needed to display them
+	///  - if the other map does not contain objects, import all symbols with the minimum amount of colors needed to display them
+	///  - if the other map does neither contain objects nor symbols, import all colors
+	/// WARNING: this method potentially changes the 'other' map (rescaling to fit this map's scale)!
+	void importMap(Map* other, QWidget* dialog_parent = NULL);
 
 	/// Deletes all map data and resets the map to its initial state containing one default layer
 	void clear();
@@ -135,6 +145,8 @@ public:
 	void removeMapWidget(MapWidget* widget);
 	/// Redraws all map widgets completely - that can be slow!
 	void updateAllMapWidgets();
+	/// Makes sure that the selected object(s) are visible in all map widgets
+	void ensureVisibilityOfSelectedObjects();
 	
 	/// MapViews register themselves using this method (and deregister using removeMapView()).
 	/// If there are map views left when the map is destructed, it will delete them
@@ -179,12 +191,14 @@ public:
 	void setSymbolsDirty();
 	
 	void scaleAllSymbols(double factor);
+	/// Returns a vector of the same size as the symbol list, where each element is set to true if
+	/// there is at least one object which uses this symbol or a derived (combined) symbol
+	void determineSymbolsInUse(std::vector<bool>& out);
 	
 	// Templates
 	
 	inline int getNumTemplates() const {return templates.size();}
 	inline Template* getTemplate(int i) {return templates[i];}
-	int getTemplateNumber(Template* temp) const;
 	inline void setFirstFrontTemplate(int pos) {first_front_template = pos;}
 	inline int getFirstFrontTemplate() const {return first_front_template;}
 	void setTemplate(Template* temp, int pos);
@@ -196,15 +210,22 @@ public:
 	void setTemplatesDirty();
 	void emitTemplateChanged(Template* temp);
 	
-	// Objects
+	// Layers & Undo
 	
 	inline UndoManager& objectUndoManager() {return object_undo_manager;}
 	
 	inline int getNumLayers() const {return (int)layers.size();}
 	inline MapLayer* getLayer(int i) const {return layers[i];}
-	inline MapLayer* getCurrentLayer() const {return (current_layer_index < 0) ? NULL : layers[current_layer_index];}
-	inline int getCurrentLayerIndex() const {return current_layer_index;}
+	void addLayer(MapLayer* layer, int pos);
+	int findLayerIndex(MapLayer* layer) const;
+	
 	// TODO: Layer management
+	
+	inline MapLayer* getCurrentLayer() const {return (current_layer_index < 0) ? NULL : layers[current_layer_index];}
+	inline void setCurrentLayer(MapLayer* layer) {current_layer_index = findLayerIndex(layer);}
+	inline int getCurrentLayerIndex() const {return current_layer_index;}
+	
+	// Objects
 	
 	int getNumObjects();
 	int addObject(Object* object, int layer_index = -1);						// returns the index of the added object in the layer
@@ -261,6 +282,7 @@ public:
 	
 	void setScaleDenominator(int value);
 	int getScaleDenominator() const;
+	void changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects);
 	
 	inline const QString& getMapNotes() const {return map_notes;}
 	inline void setMapNotes(const QString& text) {map_notes = text;}
@@ -332,6 +354,12 @@ private:
 		void addReference();
 		void dereference();
 		
+		/// Imports the other set into this set, only importing the colors for which filter[color_index] == true and
+		/// returning the map from color indices in other to imported indices. Imported colors are placed above the existing colors.
+		/// If a map is given, the color is properly inserted into the map.
+		void importSet(MapColorSet* other, Map* map = NULL, std::vector<bool>* filter = NULL, QHash<int, int>* out_indexmap = NULL,
+					   QHash<MapColor*, MapColor*>* out_pointermap = NULL);
+		
 	private:
 		int ref_count;
 	};
@@ -341,6 +369,11 @@ private:
 	void checkIfFirstTemplateAdded();
 	
 	void adjustColorPriorities(int first, int last);
+	/// Imports the other symbol set into this set, only importing the symbols for which filter[color_index] == true and
+	/// returning the map from symbol indices in other to imported indices. Imported symbols are placed after the existing symbols.
+	void importSymbols(Map* other, const QHash<MapColor*, MapColor*>& color_map, std::vector<bool>* filter = NULL,
+					   QHash<int, int>* out_indexmap = NULL, QHash<Symbol*, Symbol*>* out_pointermap = NULL);
+	void determineSymbolUseClosure(std::vector< bool >& out);
 	
 	void addSelectionRenderables(Object* object);
 	void updateSelectionRenderables(Object* object);

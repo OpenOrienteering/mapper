@@ -49,20 +49,20 @@ PointSymbol::~PointSymbol()
 		delete symbols[i];
 	}
 }
-Symbol* PointSymbol::duplicate() const
+Symbol* PointSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) const
 {
 	PointSymbol* new_point = new PointSymbol();
 	new_point->duplicateImplCommon(this);
 	
 	new_point->rotatable = rotatable;
 	new_point->inner_radius = inner_radius;
-	new_point->inner_color = inner_color;
+	new_point->inner_color = color_map ? color_map->value(inner_color) : inner_color;
 	new_point->outer_width = outer_width;
-	new_point->outer_color = outer_color;
+	new_point->outer_color = color_map ? color_map->value(outer_color) : outer_color;
 	
 	new_point->symbols.resize(symbols.size());
 	for (int i = 0; i < (int)symbols.size(); ++i)
-		new_point->symbols[i] = symbols[i]->duplicate();
+		new_point->symbols[i] = symbols[i]->duplicate(color_map);
 	
 	new_point->objects.resize(objects.size());
 	for (int i = 0; i < (int)objects.size(); ++i)
@@ -292,6 +292,36 @@ bool PointSymbol::loadImpl(QFile* file, int version, Map* map)
 		if (!objects[i])
 			return false;
 		objects[i]->load(file, version, NULL);
+	}
+	
+	return true;
+}
+
+bool PointSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
+{
+	PointSymbol* point = static_cast<PointSymbol*>(other);
+	
+	if (rotatable != point->rotatable)
+		return false;
+	if (!colorEquals(inner_color, point->inner_color))
+		return false;
+	if (inner_color && inner_radius != point->inner_radius)
+		return false;
+	if (!colorEquals(outer_color, point->outer_color))
+		return false;
+	if (outer_color && outer_width != point->outer_width)
+		return false;
+	
+	if (symbols.size() != point->symbols.size())
+		return false;
+	// TODO: Comparing the contained elements in fixed order does not find every case of identical points symbols
+	// (but at least if the point symbol has not been changed, it is always seen as identical). Could be improved.
+	for (int i = 0, size = (int)objects.size(); i < size; ++i)
+	{
+		if (!symbols[i]->equals(point->symbols[i], case_sensitivity))
+			return false;
+		if (!objects[i]->equals(point->objects[i], false))
+			return false;
 	}
 	
 	return true;

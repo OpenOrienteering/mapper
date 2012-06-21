@@ -83,20 +83,20 @@ LineSymbol::~LineSymbol()
 	delete dash_symbol;
 }
 
-Symbol* LineSymbol::duplicate() const
+Symbol* LineSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) const
 {
 	LineSymbol* new_line = new LineSymbol();
 	new_line->duplicateImplCommon(this);
 	new_line->line_width = line_width;
-	new_line->color = color;
+	new_line->color = color_map ? color_map->value(color) : color;
 	new_line->minimum_length = minimum_length;
 	new_line->cap_style = cap_style;
 	new_line->join_style = join_style;
 	new_line->pointed_cap_length = pointed_cap_length;
-	new_line->start_symbol = start_symbol ? reinterpret_cast<PointSymbol*>(start_symbol->duplicate()) : NULL;
-	new_line->mid_symbol = mid_symbol ? reinterpret_cast<PointSymbol*>(mid_symbol->duplicate()) : NULL;
-	new_line->end_symbol = end_symbol ? reinterpret_cast<PointSymbol*>(end_symbol->duplicate()) : NULL;
-	new_line->dash_symbol = dash_symbol ? reinterpret_cast<PointSymbol*>(dash_symbol->duplicate()) : NULL;
+	new_line->start_symbol = start_symbol ? static_cast<PointSymbol*>(start_symbol->duplicate(color_map)) : NULL;
+	new_line->mid_symbol = mid_symbol ? static_cast<PointSymbol*>(mid_symbol->duplicate(color_map)) : NULL;
+	new_line->end_symbol = end_symbol ? static_cast<PointSymbol*>(end_symbol->duplicate(color_map)) : NULL;
+	new_line->dash_symbol = dash_symbol ? static_cast<PointSymbol*>(dash_symbol->duplicate(color_map)) : NULL;
 	new_line->dashed = dashed;
 	new_line->segment_length = segment_length;
 	new_line->end_length = end_length;
@@ -111,7 +111,7 @@ Symbol* LineSymbol::duplicate() const
 	new_line->mid_symbols_per_spot = mid_symbols_per_spot;
 	new_line->mid_symbol_distance = mid_symbol_distance;
 	new_line->have_border_lines = have_border_lines;
-	new_line->border_color = border_color;
+	new_line->border_color = color_map ? color_map->value(border_color) : border_color;
 	new_line->border_width = border_width;
 	new_line->border_shift = border_shift;
 	new_line->dashed_border = dashed_border;
@@ -1294,6 +1294,103 @@ bool LineSymbol::loadImpl(QFile* file, int version, Map* map)
 	file->read((char*)&dashed_border, sizeof(bool));
 	file->read((char*)&border_dash_length, sizeof(int));
 	file->read((char*)&border_break_length, sizeof(int));
+	return true;
+}
+
+bool LineSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
+{
+	LineSymbol* line = static_cast<LineSymbol*>(other);
+	if (line_width != line->line_width)
+		return false;
+	if (minimum_length != line->minimum_length)
+		return false;
+	if (line_width > 0)
+	{
+		if (!colorEquals(color, line->color))
+			return false;
+		
+		if ((cap_style != line->cap_style) ||
+			(join_style != line->join_style))
+			return false;
+		if (cap_style == PointedCap && (pointed_cap_length != line->pointed_cap_length))
+			return false;
+		
+		if (dashed != line->dashed)
+			return false;
+		if (dashed)
+		{
+			if (dash_length != line->dash_length ||
+				break_length != line->break_length ||
+				dashes_in_group != line->dashes_in_group ||
+				half_outer_dashes != line->half_outer_dashes ||
+				(dashes_in_group > 1 && (in_group_break_length != line->in_group_break_length)))
+				return false;
+		}
+		else
+		{
+			if (segment_length != line->segment_length ||
+				end_length != line->end_length ||
+				(mid_symbol && (show_at_least_one_symbol != line->show_at_least_one_symbol ||
+								minimum_mid_symbol_count != line->minimum_mid_symbol_count ||
+								minimum_mid_symbol_count_when_closed != line->minimum_mid_symbol_count_when_closed)))
+				return false;
+		}
+	}
+
+	if ((start_symbol == NULL && line->start_symbol != NULL) ||
+		(start_symbol != NULL && line->start_symbol == NULL))
+		return false;
+	if (start_symbol && !start_symbol->equals(line->start_symbol))
+		return false;
+	
+	if ((mid_symbol == NULL && line->mid_symbol != NULL) ||
+		(mid_symbol != NULL && line->mid_symbol == NULL))
+		return false;
+	if (mid_symbol && !mid_symbol->equals(line->mid_symbol))
+		return false;
+	
+	if ((end_symbol == NULL && line->end_symbol != NULL) ||
+		(end_symbol != NULL && line->end_symbol == NULL))
+		return false;
+	if (end_symbol && !end_symbol->equals(line->end_symbol))
+		return false;
+	
+	if ((dash_symbol == NULL && line->dash_symbol != NULL) ||
+		(dash_symbol != NULL && line->dash_symbol == NULL))
+		return false;
+	if (dash_symbol && !dash_symbol->equals(line->dash_symbol))
+		return false;
+	
+	if (mid_symbol)
+	{
+		if (mid_symbols_per_spot != line->mid_symbols_per_spot)
+			return false;
+		if (mid_symbol_distance != line->mid_symbol_distance)
+			return false;
+	}
+
+	if (have_border_lines != line->have_border_lines)
+		return false;
+	if (have_border_lines)
+	{
+		if (!colorEquals(border_color, line->border_color))
+			return false;
+		
+		if (border_width != line->border_width)
+			return false;
+		if (border_shift != line->border_shift)
+			return false;
+		if (dashed_border != line->dashed_border)
+			return false;
+		if (dashed_border)
+		{
+			if (border_dash_length != line->border_dash_length)
+				return false;
+			if (border_break_length != line->border_break_length)
+				return false;
+		}
+	}
+	
 	return true;
 }
 

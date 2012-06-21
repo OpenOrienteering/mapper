@@ -736,8 +736,8 @@ bool SymbolRenderWidget::newSymbol(Symbol* prototype)
 		return false;
 	
 	Symbol* new_symbol = dialog.getNewSymbol();
-	int pos = currentSymbolIndex();
-	map->addSymbol(new_symbol, (pos >= 0) ? pos : map->getNumSymbols());
+	int pos = (currentSymbolIndex() >= 0) ? currentSymbolIndex() : map->getNumSymbols();
+	map->addSymbol(new_symbol, pos);
 	selectSingleSymbol(pos);
 	
 	// Normally selectSingleSymbol() calls this already but here we must do it manually,

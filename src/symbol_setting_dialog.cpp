@@ -166,7 +166,7 @@ SymbolSettingDialog::~SymbolSettingDialog()
 Symbol* SymbolSettingDialog::getNewSymbol() const
 {
 	Symbol* clone = symbol->duplicate();
-	clone->setHidden(source_symbol->isHidden());
+	clone->setHidden(source_symbol_copy->isHidden());
 	return clone;
 }
 

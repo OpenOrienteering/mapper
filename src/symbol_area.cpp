@@ -116,6 +116,45 @@ bool AreaSymbol::FillPattern::load(QFile* file, int version, Map* map)
 	return true;
 }
 
+bool AreaSymbol::FillPattern::equals(AreaSymbol::FillPattern& other, Qt::CaseSensitivity case_sensitivity)
+{
+	if (type != other.type)
+		return false;
+	if (angle != other.angle)
+		return false;
+	if (rotatable != other.rotatable)
+		return false;
+	if (line_spacing != other.line_spacing)
+		return false;
+	if (line_offset != other.line_offset)
+		return false;
+	
+	if (type == PointPattern)
+	{
+		if (offset_along_line != other.offset_along_line)
+			return false;
+		if (point_distance != other.point_distance)
+			return false;
+		if ((point == NULL && other.point != NULL) ||
+			(point != NULL && other.point == NULL))
+			return false;
+		if (point && !point->equals(other.point, case_sensitivity))
+			return false;
+	}
+	else if (type == LinePattern)
+	{
+		if (!colorEquals(line_color, other.line_color))
+			return false;
+		if (line_width != other.line_width)
+			return false;
+	}
+	
+	if (name.compare(other.name, case_sensitivity) != 0)
+		return false;
+	
+	return true;
+}
+
 void AreaSymbol::FillPattern::createRenderables(QRectF extent, ObjectRenderables& output)
 {
 	if (line_spacing <= 0)
@@ -332,17 +371,19 @@ AreaSymbol::~AreaSymbol()
 	}
 }
 
-Symbol* AreaSymbol::duplicate() const
+Symbol* AreaSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) const
 {
 	AreaSymbol* new_area = new AreaSymbol();
 	new_area->duplicateImplCommon(this);
-	new_area->color = color;
+	new_area->color = color_map ? color_map->value(color) : color;
 	new_area->minimum_area = minimum_area;
 	new_area->patterns = patterns;
 	for (int i = 0; i < (int)new_area->patterns.size(); ++i)
 	{
 		if (new_area->patterns[i].type == FillPattern::PointPattern)
-			new_area->patterns[i].point = reinterpret_cast<PointSymbol*>(new_area->patterns[i].point->duplicate());
+			new_area->patterns[i].point = reinterpret_cast<PointSymbol*>(new_area->patterns[i].point->duplicate(color_map));
+		else if (new_area->patterns[i].type == FillPattern::LinePattern && color_map)
+			new_area->patterns[i].line_color = color_map->value(new_area->patterns[i].line_color);
 	}
 	return new_area;
 }
@@ -442,6 +483,25 @@ bool AreaSymbol::loadImpl(QFile* file, int version, Map* map)
 		if (!patterns[i].load(file, version, map))
 			return false;
 	
+	return true;
+}
+
+bool AreaSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
+{
+	AreaSymbol* area = static_cast<AreaSymbol*>(other);
+	if (!colorEquals(color, area->color))
+		return false;
+	if (minimum_area != area->minimum_area)
+		return false;
+	
+	// TODO: Fill patterns are only compared in order
+	if (patterns.size() != area->patterns.size())
+		return false;
+	for (size_t i = 0, end = patterns.size(); i < end; ++i)
+	{
+		if (!patterns[i].equals(area->patterns[i], case_sensitivity))
+			return false;
+	}
 	return true;
 }
 

@@ -37,9 +37,6 @@ struct MapColor
 		Reserved = -1			// used to mark renderables which should not be inserted into the map
 	};
 	
-	void updateFromCMYK();
-	void updateFromRGB();
-	
 	QString name;
 	int priority;
 	
@@ -49,6 +46,11 @@ struct MapColor
 	float opacity;
 	
 	QColor color;
+	
+	void updateFromCMYK();
+	void updateFromRGB();
+	
+	bool equals(const MapColor& other, bool compare_priority) const;
 };
 
 class ColorDropDown : public QComboBox

@@ -38,7 +38,7 @@ CombinedSymbol::~CombinedSymbol()
 {
 }
 
-Symbol* CombinedSymbol::duplicate() const
+Symbol* CombinedSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) const
 {
 	CombinedSymbol* new_symbol = new CombinedSymbol();
 	new_symbol->duplicateImplCommon(this);
@@ -154,6 +154,23 @@ bool CombinedSymbol::loadImpl(QFile* file, int version, Map* map)
 		int temp;
 		file->read((char*)&temp, sizeof(int));
 		temp_part_indices[i] = temp;
+	}
+	return true;
+}
+
+bool CombinedSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
+{
+	CombinedSymbol* combination = static_cast<CombinedSymbol*>(other);
+	if (parts.size() != combination->parts.size())
+		return false;
+	// TODO: parts are only compared in order
+	for (size_t i = 0, end = parts.size(); i < end; ++i)
+	{
+		if ((parts[i] == NULL && combination->parts[i] != NULL) ||
+			(parts[i] != NULL && combination->parts[i] == NULL))
+			return false;
+		if (parts[i] && !parts[i]->equals(combination->parts[i], case_sensitivity))
+			return false;
 	}
 	return true;
 }

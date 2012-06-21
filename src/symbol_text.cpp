@@ -57,11 +57,11 @@ TextSymbol::~TextSymbol()
 {
 }
 
-Symbol* TextSymbol::duplicate() const
+Symbol* TextSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) const
 {
 	TextSymbol* new_text = new TextSymbol();
 	new_text->duplicateImplCommon(this);
-	new_text->color = color;
+	new_text->color = color_map ? color_map->value(color) : color;
 	new_text->font_family = font_family;
 	new_text->font_size = font_size;
 	new_text->bold = bold;
@@ -250,6 +250,45 @@ bool TextSymbol::loadImpl(QFile* file, int version, Map* map)
 	}
 	
 	updateQFont();
+	return true;
+}
+
+bool TextSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
+{
+	TextSymbol* text = static_cast<TextSymbol*>(other);
+	
+	if (!colorEquals(color, text->color))
+		return false;
+	if (font_family.compare(text->font_family, Qt::CaseInsensitive) != 0)
+		return false;
+	if (font_size != text->font_size ||
+		bold != text->bold ||
+		italic != text->italic ||
+		underline != text->underline ||
+		line_spacing != text->line_spacing ||
+		paragraph_spacing != text->paragraph_spacing ||
+		character_spacing != text->character_spacing ||
+		kerning != text->kerning ||
+		line_below != text->line_below)
+		return false;
+	if (line_below)
+	{
+		if (!colorEquals(line_below_color, text->line_below_color))
+			return false;
+		if (line_below_width != text->line_below_width ||
+			line_below_distance != text->line_below_distance)
+			return false;
+	}
+	if (tab_interval != text->tab_interval)
+		return false;
+	if (custom_tabs.size() != text->custom_tabs.size())
+		return false;
+	for (size_t i = 0, end = custom_tabs.size(); i < end; ++i)
+	{
+		if (custom_tabs[i] != text->custom_tabs[i])
+			return false;
+	}
+	
 	return true;
 }
 

@@ -50,7 +50,7 @@ friend class OCAD8FileImport;
 public:
 	TextSymbol();
 	virtual ~TextSymbol();
-    virtual Symbol* duplicate() const;
+	virtual Symbol* duplicate(const QHash<MapColor*, MapColor*>* color_map = NULL) const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
 	void createLineBelowRenderables(Object* object, ObjectRenderables& output);
@@ -92,6 +92,7 @@ public:
 protected:
 	virtual void saveImpl(QFile* file, Map* map);
 	virtual bool loadImpl(QFile* file, int version, Map* map);
+	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	QFont qfont;
 	QFontMetricsF metrics;
