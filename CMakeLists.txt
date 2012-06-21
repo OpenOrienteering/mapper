@@ -1,7 +1,7 @@
 include(AddFileDependencies)
 
 project(Mapper)
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
 find_package(Qt4 REQUIRED)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
