@@ -70,7 +70,7 @@ UndoStep* CombinedUndoStep::undo()
 		undo_step->steps.insert(undo_step->steps.begin(), steps[i]->undo());
 	return undo_step;
 }
-void CombinedUndoStep::save(QFile* file)
+void CombinedUndoStep::save(QIODevice* file)
 {
 	int size = (int)steps.size();
 	file->write((const char*)&size, sizeof(int));
@@ -81,7 +81,7 @@ void CombinedUndoStep::save(QFile* file)
 		steps[i]->save(file);
 	}
 }
-bool CombinedUndoStep::load(QFile* file, int version)
+bool CombinedUndoStep::load(QIODevice* file, int version)
 {
 	int size;
 	file->read((char*)&size, sizeof(int));
@@ -120,12 +120,12 @@ UndoManager::~UndoManager()
 	clearRedoSteps();
 }
 
-void UndoManager::save(QFile* file)
+void UndoManager::save(QIODevice* file)
 {
 	saveSteps(undo_steps, file);
 	saveSteps(redo_steps, file);
 }
-void UndoManager::saveSteps(std::deque< UndoStep* >& steps, QFile* file)
+void UndoManager::saveSteps(std::deque< UndoStep* >& steps, QIODevice* file)
 {
 	// Delete all invalid steps so we do not have to deal with them
 	bool step_deleted = false;
@@ -156,7 +156,7 @@ void UndoManager::saveSteps(std::deque< UndoStep* >& steps, QFile* file)
 	if (step_deleted)
 		emit undoStepAvailabilityChanged();
 }
-bool UndoManager::load(QFile* file, int version)
+bool UndoManager::load(QIODevice* file, int version)
 {
 	clearUndoSteps();
 	clearRedoSteps();
@@ -169,7 +169,7 @@ bool UndoManager::load(QFile* file, int version)
 	loaded_step_index = 0;
 	return true;
 }
-bool UndoManager::loadSteps(std::deque< UndoStep* >& steps, QFile* file, int version)
+bool UndoManager::loadSteps(std::deque< UndoStep* >& steps, QIODevice* file, int version)
 {
 	int size;
 	file->read((char*)&size, sizeof(int));

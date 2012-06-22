@@ -21,7 +21,7 @@
 #include "symbol_text.h"
 
 #include <QtGui>
-#include <QFile>
+#include <QIODevice>
 
 #include "map.h"
 #include "map_color.h"
@@ -191,7 +191,7 @@ void TextSymbol::updateQFont()
 	tab_interval = 8.0 * metrics.averageCharWidth();
 }
 
-void TextSymbol::saveImpl(QFile* file, Map* map)
+void TextSymbol::saveImpl(QIODevice* file, Map* map)
 {
 	int temp = map->findColorIndex(color);
 	file->write((const char*)&temp, sizeof(int));
@@ -216,7 +216,7 @@ void TextSymbol::saveImpl(QFile* file, Map* map)
 		file->write((const char*)&custom_tabs[i], sizeof(int));
 }
 
-bool TextSymbol::loadImpl(QFile* file, int version, Map* map)
+bool TextSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	int temp;
 	file->read((char*)&temp, sizeof(int));

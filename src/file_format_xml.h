@@ -56,7 +56,7 @@ public:
 
     bool understands(const unsigned char *buffer, size_t sz) const;
     //Importer *createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
-    Exporter *createExporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
+    Exporter *createExporter(QIODevice* stream, const QString& path, Map *map, MapView *view) const throw (FormatException);
 };
 
 /*
@@ -75,7 +75,7 @@ public:
 class XMLFileExporter : public Exporter
 {
 public:
-    XMLFileExporter(const QString &path, Map *map, MapView *view);
+    XMLFileExporter(QIODevice* stream, Map *map, MapView *view);
     ~XMLFileExporter() {}
 
     void doExport() throw (FormatException);

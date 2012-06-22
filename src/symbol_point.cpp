@@ -235,7 +235,7 @@ void PointSymbol::scale(double factor)
 	resetIcon();
 }
 
-void PointSymbol::saveImpl(QFile* file, Map* map)
+void PointSymbol::saveImpl(QIODevice* file, Map* map)
 {
 	file->write((const char*)&rotatable, sizeof(bool));
 	
@@ -260,7 +260,7 @@ void PointSymbol::saveImpl(QFile* file, Map* map)
 		objects[i]->save(file);
 	}
 }
-bool PointSymbol::loadImpl(QFile* file, int version, Map* map)
+bool PointSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	file->read((char*)&rotatable, sizeof(bool));
 	

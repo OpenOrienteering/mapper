@@ -74,6 +74,8 @@ protected slots:
 	void scaleSymbol();
 	void deleteSymbols();
 	void duplicateSymbol();
+	void copySymbols();
+	void pasteSymbols();
 	void setSelectedSymbolVisibility(bool checked);
 	void setSelectedSymbolProtection(bool checked);
 	void selectAll();
@@ -96,6 +98,8 @@ protected:
 	QMenu* context_menu;
 	QAction* edit_action;
 	QAction* scale_action;
+	QAction* copy_action;
+	QAction* paste_action;
 	QAction* switch_symbol_action;
 	QAction* fill_border_action;
 	QAction* hide_action;
@@ -107,6 +111,7 @@ protected:
 	Map* map;
 	
 	bool isSymbolSelected(int i) const;
+	void getSelectionBitfield(std::vector<bool>& out) const;
 	
 	bool newSymbol(Symbol* prototype);
 	

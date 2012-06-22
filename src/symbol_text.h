@@ -90,8 +90,8 @@ public:
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
 	
 protected:
-	virtual void saveImpl(QFile* file, Map* map);
-	virtual bool loadImpl(QFile* file, int version, Map* map);
+	virtual void saveImpl(QIODevice* file, Map* map);
+	virtual bool loadImpl(QIODevice* file, int version, Map* map);
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	QFont qfont;

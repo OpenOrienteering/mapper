@@ -30,7 +30,7 @@ QT_BEGIN_NAMESPACE
 class QPixmap;
 class QPainter;
 class QLineEdit;
-class QFile;
+class QIODevice;
 QT_END_NAMESPACE
 
 class Map;
@@ -46,8 +46,8 @@ public:
 	{
 		TemplateTransform();
 		
-		void save(QFile* file);
-		void load(QFile* file);
+		void save(QIODevice* file);
+		void load(QIODevice* file);
 		
 		qint64 template_x;			// in 1/1000 mm
 		qint64 template_y;
@@ -57,8 +57,8 @@ public:
 	};
 	struct PassPoint
 	{
-		void save(QFile* file);
-		void load(QFile* file);
+		void save(QIODevice* file);
+		void load(QIODevice* file);
 		
 		MapCoordF src_coords_template;		// start position specified by the user, in template coordinates
 		MapCoordF src_coords_map;			// start position specified by the user
@@ -78,8 +78,8 @@ public:
 	virtual const QString getTemplateType() = 0;
 	
 	/// Saves parameters such as transformation, adjustment, etc.
-	void saveTemplateParameters(QFile* file);
-	void loadTemplateParameters(QFile* file);
+	void saveTemplateParameters(QIODevice* file);
+	void loadTemplateParameters(QIODevice* file);
 	/// Saves the template itself, returns if successful. This is called when saving the map and the template hasUnsavedChanges() returns true
 	virtual bool saveTemplateFile() {return false;}
 	

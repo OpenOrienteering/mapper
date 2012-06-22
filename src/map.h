@@ -34,7 +34,7 @@
 #include "matrix.h"
 #include "map_coord.h"
 
-class QFile;
+class QIODevice;
 class QPainter;
 
 class Map;
@@ -62,8 +62,8 @@ public:
 	MapLayer(const QString& name, Map* map);
 	~MapLayer();
 	
-	void save(QFile* file, Map* map);
-	bool load(QFile* file, int version, Map* map);
+	void save(QIODevice* file, Map* map);
+	bool load(QIODevice* file, int version, Map* map);
 	
 	inline const QString& getName() const {return name;}
 	inline void setName(const QString new_name) {name = new_name;}
@@ -111,6 +111,22 @@ friend class NativeFileExport;
 public:
 	typedef QSet<Object*> ObjectSelection;
 	
+	enum ImportMode
+	{
+		/// Imports all objects with minimal symbol and color dependencies
+		MinimalObjectImport = 0,
+		
+		/// Imports symbols (all, or filtered by the given filter) with minimal color dependencies.
+		/// If a filter is given, symbols blocked by the filter but which are needed by included symbols are included, too.
+		MinimalSymbolImport,
+		
+		/// Imports objects (all, or filtered by the given filter)
+		ColorImport,
+		
+		/// Imports all colors, symbols and objects
+		CompleteImport
+	};
+	
 	/// Creates a new, empty map
 	Map();
 	~Map();
@@ -123,8 +139,8 @@ public:
 	///  - if the other map contains objects, import all objects with the minimum amount of colors and symbols needed to display them
 	///  - if the other map does not contain objects, import all symbols with the minimum amount of colors needed to display them
 	///  - if the other map does neither contain objects nor symbols, import all colors
-	/// WARNING: this method potentially changes the 'other' map (rescaling to fit this map's scale)!
-	void importMap(Map* other, QWidget* dialog_parent = NULL);
+	/// WARNING: this method potentially changes the 'other' map if the scales differ (by rescaling to fit this map's scale)!
+	void importMap(Map* other, ImportMode mode, QWidget* dialog_parent = NULL, std::vector<bool>* filter = NULL, int symbol_insert_pos = -1, bool merge_duplicate_symbols = true);
 
 	/// Deletes all map data and resets the map to its initial state containing one default layer
 	void clear();
@@ -369,11 +385,12 @@ private:
 	void checkIfFirstTemplateAdded();
 	
 	void adjustColorPriorities(int first, int last);
+	void determineColorsInUse(const std::vector< bool >& by_which_symbols, std::vector< bool >& out);
 	/// Imports the other symbol set into this set, only importing the symbols for which filter[color_index] == true and
 	/// returning the map from symbol indices in other to imported indices. Imported symbols are placed after the existing symbols.
-	void importSymbols(Map* other, const QHash<MapColor*, MapColor*>& color_map, std::vector<bool>* filter = NULL,
+	void importSymbols(Map* other, const QHash<MapColor*, MapColor*>& color_map, int insert_pos = -1, bool merge_duplicates = true, std::vector<bool>* filter = NULL,
 					   QHash<int, int>* out_indexmap = NULL, QHash<Symbol*, Symbol*>* out_pointermap = NULL);
-	void determineSymbolUseClosure(std::vector< bool >& out);
+	void determineSymbolUseClosure(std::vector< bool >& symbol_bitfield);
 	
 	void addSelectionRenderables(Object* object);
 	void updateSelectionRenderables(Object* object);
@@ -456,8 +473,8 @@ public:
 	MapView(Map* map);
 	~MapView();
 	
-	void save(QFile* file);
-	void load(QFile* file);
+	void save(QIODevice* file);
+	void load(QIODevice* file);
 	
 	/// Must be called to notify the map view of new widgets displaying it. Useful to notify the widgets which need to be redrawn
 	void addMapWidget(MapWidget* widget);

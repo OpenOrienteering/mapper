@@ -34,12 +34,12 @@ bool Format::understands(const unsigned char *buffer, size_t sz) const
     return false;
 }
 
-Importer *Format::createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
+Importer *Format::createImporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException)
 {
     throw FormatException(QString("Format (%1) does not support import").arg(description()));
 }
 
-Exporter *Format::createExporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
+Exporter *Format::createExporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException)
 {
     throw FormatException(QString("Format (%1) does not support export").arg(description()));
 }

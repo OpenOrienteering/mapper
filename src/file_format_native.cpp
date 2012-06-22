@@ -38,19 +38,19 @@ bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
     return false;
 }
 
-Importer *NativeFileFormat::createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
+Importer *NativeFileFormat::createImporter(QIODevice* stream, const QString& path, Map* map, MapView* view) const throw (FormatException)
 {
-	return new NativeFileImport(path, map, view);
+	return new NativeFileImport(stream, map, view);
 }
 
-Exporter *NativeFileFormat::createExporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
+Exporter *NativeFileFormat::createExporter(QIODevice* stream, const QString& path, Map* map, MapView* view) const throw (FormatException)
 {
-    return new NativeFileExport(path, map, view);
+    return new NativeFileExport(stream, map, view);
 }
 
 
 
-NativeFileImport::NativeFileImport(const QString &path, Map *map, MapView *view) : Importer(path, map, view)
+NativeFileImport::NativeFileImport(QIODevice* stream, Map *map, MapView *view) : Importer(stream, map, view)
 {
 }
 
@@ -60,44 +60,36 @@ NativeFileImport::~NativeFileImport()
 
 void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 {
-    QFile file(path);
-    if (!file.open(QIODevice::ReadOnly))
-    {
-        throw FormatException(QObject::tr("Cannot open file:\n%1\nfor reading.").arg(path));
-    }
-    // note: ~QFile() will close the file when this method returns and the variable goes out of scope.
-
     char buffer[4];
-    file.read(buffer, 4); // read the magic
-    // TODO: should we assert? this shouldn't be called except from loadTo(), where it's already been checked...
+    stream->read(buffer, 4); // read the magic
 
     int version;
-    file.read((char*)&version, sizeof(int));
+    stream->read((char*)&version, sizeof(int));
     if (version < 0)
     {
-        addWarning(QObject::tr("Problem while opening file:\n%1\n\nInvalid file format version.").arg(file.fileName()));
+        addWarning(QObject::tr("Invalid file format version."));
     }
     else if (version < NativeFileFormat::least_supported_file_format_version)
     {
-        throw FormatException(QObject::tr("Problem while opening file:\n%1\n\nUnsupported file format version. Please use an older program version to load and update the file.").arg(file.fileName()));
+        throw FormatException(QObject::tr("Unsupported file format version. Please use an older program version to load and update the stream->"));
     }
     else if (version > NativeFileFormat::current_file_format_version)
     {
-        throw FormatException(QObject::tr("Problem while opening file:\n%1\n\nFile format version too high. Please update to a newer program version to load this file.").arg(file.fileName()));
+        throw FormatException(QObject::tr("File format version too high. Please update to a newer program version to load this stream->"));
     }
 
     if (version <= 16)
 	{
 		Georeferencing georef;
-		file.read((char*)&georef.scale_denominator, sizeof(int));
+		stream->read((char*)&georef.scale_denominator, sizeof(int));
 		
 		if (version >= 15)
-			loadString(&file, map->map_notes);
+			loadString(stream, map->map_notes);
 		
 		bool gps_projection_params_set; // obsolete
-		file.read((char*)&gps_projection_params_set, sizeof(bool));
+		stream->read((char*)&gps_projection_params_set, sizeof(bool));
 		GPSProjectionParameters gps_projection_parameters; // obsolete
-		file.read((char*)&gps_projection_parameters, sizeof(GPSProjectionParameters));
+		stream->read((char*)&gps_projection_parameters, sizeof(GPSProjectionParameters));
 		if (gps_projection_params_set)
 		{
 			LatLon ref_point(gps_projection_parameters.center_latitude, gps_projection_parameters.center_longitude);
@@ -107,28 +99,28 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 	}
 	else if (version >= 17)
 	{
-		loadString(&file, map->map_notes);
+		loadString(stream, map->map_notes);
 		
 		Georeferencing georef;
-		file.read((char*)&georef.scale_denominator, sizeof(int));
+		stream->read((char*)&georef.scale_denominator, sizeof(int));
 		if (version >= 18)
-			file.read((char*)&georef.declination, sizeof(double));
-		file.read((char*)&georef.grivation, sizeof(double));
+			stream->read((char*)&georef.declination, sizeof(double));
+		stream->read((char*)&georef.grivation, sizeof(double));
 		double x,y;
-		file.read((char*)&x, sizeof(double));
-		file.read((char*)&y, sizeof(double));
+		stream->read((char*)&x, sizeof(double));
+		stream->read((char*)&y, sizeof(double));
 		georef.map_ref_point = MapCoord(x,y);
-		file.read((char*)&x, sizeof(double));
-		file.read((char*)&y, sizeof(double));
+		stream->read((char*)&x, sizeof(double));
+		stream->read((char*)&y, sizeof(double));
 		georef.projected_ref_point = QPointF(x,y);
-		loadString(&file, georef.projected_crs_id);
-		loadString(&file, georef.projected_crs_spec);
-		file.read((char*)&y, sizeof(double));
-		file.read((char*)&x, sizeof(double));
+		loadString(stream, georef.projected_crs_id);
+		loadString(stream, georef.projected_crs_spec);
+		stream->read((char*)&y, sizeof(double));
+		stream->read((char*)&x, sizeof(double));
 		georef.geographic_ref_point = LatLon(y, x); 
 		QString geographic_crs_id, geographic_crs_spec;
-		loadString(&file, geographic_crs_id);   // reserved for geographic crs id
-		loadString(&file, geographic_crs_spec); // reserved for full geographic crs specification
+		loadString(stream, geographic_crs_id);   // reserved for geographic crs id
+		loadString(stream, geographic_crs_spec); // reserved for full geographic crs specification
 		if (geographic_crs_spec != Georeferencing::geographic_crs_spec)
 		{
 			addWarning(
@@ -144,71 +136,70 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 
     if (version >= 6)
     {
-        file.read((char*)&map->print_params_set, sizeof(bool));
+        stream->read((char*)&map->print_params_set, sizeof(bool));
         if (map->print_params_set)
         {
-            file.read((char*)&map->print_orientation, sizeof(int));
-            file.read((char*)&map->print_format, sizeof(int));
-            file.read((char*)&map->print_dpi, sizeof(float));
-            file.read((char*)&map->print_show_templates, sizeof(bool));
-            file.read((char*)&map->print_center, sizeof(bool));
-            file.read((char*)&map->print_area_left, sizeof(float));
-            file.read((char*)&map->print_area_top, sizeof(float));
-            file.read((char*)&map->print_area_width, sizeof(float));
-            file.read((char*)&map->print_area_height, sizeof(float));
+            stream->read((char*)&map->print_orientation, sizeof(int));
+            stream->read((char*)&map->print_format, sizeof(int));
+            stream->read((char*)&map->print_dpi, sizeof(float));
+            stream->read((char*)&map->print_show_templates, sizeof(bool));
+            stream->read((char*)&map->print_center, sizeof(bool));
+            stream->read((char*)&map->print_area_left, sizeof(float));
+            stream->read((char*)&map->print_area_top, sizeof(float));
+            stream->read((char*)&map->print_area_width, sizeof(float));
+            stream->read((char*)&map->print_area_height, sizeof(float));
         }
     }
-    
+	
     if (version >= 16)
 	{
-		file.read((char*)&map->image_template_use_meters_per_pixel, sizeof(bool));
-		file.read((char*)&map->image_template_meters_per_pixel, sizeof(double));
-		file.read((char*)&map->image_template_dpi, sizeof(double));
-		file.read((char*)&map->image_template_scale, sizeof(double));
+		stream->read((char*)&map->image_template_use_meters_per_pixel, sizeof(bool));
+		stream->read((char*)&map->image_template_meters_per_pixel, sizeof(double));
+		stream->read((char*)&map->image_template_dpi, sizeof(double));
+		stream->read((char*)&map->image_template_scale, sizeof(double));
 	}
 
     // Load colors
     int num_colors;
-    file.read((char*)&num_colors, sizeof(int));
+    stream->read((char*)&num_colors, sizeof(int));
     map->color_set->colors.resize(num_colors);
 
     for (int i = 0; i < num_colors; ++i)
     {
         MapColor* color = new MapColor();
 
-        file.read((char*)&color->priority, sizeof(int));
-        file.read((char*)&color->c, sizeof(float));
-        file.read((char*)&color->m, sizeof(float));
-        file.read((char*)&color->y, sizeof(float));
-        file.read((char*)&color->k, sizeof(float));
-        file.read((char*)&color->opacity, sizeof(float));
+        stream->read((char*)&color->priority, sizeof(int));
+        stream->read((char*)&color->c, sizeof(float));
+        stream->read((char*)&color->m, sizeof(float));
+        stream->read((char*)&color->y, sizeof(float));
+        stream->read((char*)&color->k, sizeof(float));
+        stream->read((char*)&color->opacity, sizeof(float));
         color->updateFromCMYK();
 
-        loadString(&file, color->name);
+        loadString(stream, color->name);
 
         map->color_set->colors[i] = color;
     }
 
     // Load symbols
     int num_symbols;
-    file.read((char*)&num_symbols, sizeof(int));
+    stream->read((char*)&num_symbols, sizeof(int));
     map->symbols.resize(num_symbols);
 
     for (int i = 0; i < num_symbols; ++i)
     {
         int symbol_type;
-        file.read((char*)&symbol_type, sizeof(int));
+        stream->read((char*)&symbol_type, sizeof(int));
 
         Symbol* symbol = Symbol::getSymbolForType(static_cast<Symbol::Type>(symbol_type));
         if (!symbol)
         {
-            throw FormatException(QObject::tr("Problem while opening file:\n%1\n\nError while loading a symbol with type %2.")
-                                  .arg(file.fileName()).arg(symbol_type));
+            throw FormatException(QObject::tr("Error while loading a symbol with type %2.").arg(symbol_type));
         }
 
-        if (!symbol->load(&file, version, map))
+        if (!symbol->load(stream, version, map))
         {
-            throw FormatException(QObject::tr("Problem while opening file:\n%1\n\nError while loading a symbol.").arg(file.fileName()));
+            throw FormatException(QObject::tr("Error while loading a symbol."));
         }
         map->symbols[i] = symbol;
     }
@@ -216,42 +207,47 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
     if (!load_symbols_only)
 	{
 		// Load templates
-		file.read((char*)&map->first_front_template, sizeof(int));
+		stream->read((char*)&map->first_front_template, sizeof(int));
 
 		int num_templates;
-		file.read((char*)&num_templates, sizeof(int));
+		stream->read((char*)&num_templates, sizeof(int));
 		map->templates.resize(num_templates);
 
 		for (int i = 0; i < num_templates; ++i)
 		{
 			QString path;
-			loadString(&file, path);
+			loadString(stream, path);
 
 			Template* temp = Template::templateForFile(path, map);
-			temp->loadTemplateParameters(&file);
+			temp->loadTemplateParameters(stream);
 
 			map->templates[i] = temp;
 		}
 
 		// Restore widgets and views
-		view->load(&file);
+		if (view)
+			view->load(stream);
+		else
+		{
+			// TODO
+		}
 
 		// Load undo steps
 		if (version >= 7)
 		{
-			if (!map->object_undo_manager.load(&file, version))
+			if (!map->object_undo_manager.load(stream, version))
 			{
-				throw FormatException(QObject::tr("Problem while opening file:\n%1\n\nError while loading undo steps.").arg(file.fileName()));
+				throw FormatException(QObject::tr("Error while loading undo steps."));
 			}
 		}
 
 		// Load layers
-		file.read((char*)&map->current_layer_index, sizeof(int));
+		stream->read((char*)&map->current_layer_index, sizeof(int));
 
 		int num_layers;
-		if (file.read((char*)&num_layers, sizeof(int)) < (int)sizeof(int))
+		if (stream->read((char*)&num_layers, sizeof(int)) < (int)sizeof(int))
 		{
-			throw FormatException(QObject::tr("Problem while opening file:\n%1\n\nError while reading layer count.").arg(file.fileName()));
+			throw FormatException(QObject::tr("Error while reading layer count."));
 		}
 		delete map->layers[0];
 		map->layers.resize(num_layers);
@@ -259,9 +255,9 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 		for (int i = 0; i < num_layers; ++i)
 		{
 			MapLayer* layer = new MapLayer("", map);
-			if (!layer->load(&file, version, map))
+			if (!layer->load(stream, version, map))
 			{
-				throw FormatException(QObject::tr("Problem while opening file:\n%1\n\nError while loading layer %2.").arg(file.fileName()).arg(i+1));
+				throw FormatException(QObject::tr("Error while loading layer %2.").arg(i+1));
 			}
 			map->layers[i] = layer;
 		}
@@ -272,7 +268,7 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 
 
 
-NativeFileExport::NativeFileExport(const QString &path, Map *map, MapView *view) : Exporter(path, map, view)
+NativeFileExport::NativeFileExport(QIODevice* stream, Map *map, MapView *view) : Exporter(stream, map, view)
 {
 }
 
@@ -282,103 +278,97 @@ NativeFileExport::~NativeFileExport()
 
 void NativeFileExport::doExport() throw (FormatException)
 {
-    QFile file(path);
-    if (!file.open(QIODevice::WriteOnly))
-    {
-        throw FormatException(QObject::tr("Cannot open file:\n%1\nfor writing.").arg(path));
-    }
-
     // Basic stuff
-    file.write(NativeFileFormat::magic_bytes, 4);
-    file.write((const char*)&NativeFileFormat::current_file_format_version, sizeof(int));
+    stream->write(NativeFileFormat::magic_bytes, 4);
+    stream->write((const char*)&NativeFileFormat::current_file_format_version, sizeof(int));
 
-	saveString(&file, map->map_notes);
+	saveString(stream, map->map_notes);
 	
 	const Georeferencing& georef = map->getGeoreferencing();
-	file.write((const char*)&georef.scale_denominator, sizeof(int));
-	file.write((const char*)&georef.declination, sizeof(double));
-	file.write((const char*)&georef.grivation, sizeof(double));
+	stream->write((const char*)&georef.scale_denominator, sizeof(int));
+	stream->write((const char*)&georef.declination, sizeof(double));
+	stream->write((const char*)&georef.grivation, sizeof(double));
 	double x,y;
 	x = georef.map_ref_point.xd(); 
 	y = georef.map_ref_point.yd();
-	file.write((const char*)&x, sizeof(double));
-	file.write((const char*)&y, sizeof(double));
+	stream->write((const char*)&x, sizeof(double));
+	stream->write((const char*)&y, sizeof(double));
 	x = georef.projected_ref_point.x();
 	y = georef.projected_ref_point.y();
-	file.write((const char*)&x, sizeof(double));
-	file.write((const char*)&y, sizeof(double));
-	saveString(&file, georef.projected_crs_id);
-	saveString(&file, georef.projected_crs_spec);
+	stream->write((const char*)&x, sizeof(double));
+	stream->write((const char*)&y, sizeof(double));
+	saveString(stream, georef.projected_crs_id);
+	saveString(stream, georef.projected_crs_spec);
 	y = georef.geographic_ref_point.latitude;
 	x = georef.geographic_ref_point.longitude;
-	file.write((const char*)&y, sizeof(double));
-	file.write((const char*)&x, sizeof(double));
-	saveString(&file, QString("Geographic coordinates")); // reserved for geographic crs parameter or specification id
-	saveString(&file, georef.geographic_crs_spec);
+	stream->write((const char*)&y, sizeof(double));
+	stream->write((const char*)&x, sizeof(double));
+	saveString(stream, QString("Geographic coordinates")); // reserved for geographic crs parameter or specification id
+	saveString(stream, georef.geographic_crs_spec);
 	
-    file.write((const char*)&map->print_params_set, sizeof(bool));
+    stream->write((const char*)&map->print_params_set, sizeof(bool));
     if (map->print_params_set)
     {
-        file.write((const char*)&map->print_orientation, sizeof(int));
-        file.write((const char*)&map->print_format, sizeof(int));
-        file.write((const char*)&map->print_dpi, sizeof(float));
-        file.write((const char*)&map->print_show_templates, sizeof(bool));
-        file.write((const char*)&map->print_center, sizeof(bool));
-        file.write((const char*)&map->print_area_left, sizeof(float));
-        file.write((const char*)&map->print_area_top, sizeof(float));
-        file.write((const char*)&map->print_area_width, sizeof(float));
-        file.write((const char*)&map->print_area_height, sizeof(float));
+        stream->write((const char*)&map->print_orientation, sizeof(int));
+        stream->write((const char*)&map->print_format, sizeof(int));
+        stream->write((const char*)&map->print_dpi, sizeof(float));
+        stream->write((const char*)&map->print_show_templates, sizeof(bool));
+        stream->write((const char*)&map->print_center, sizeof(bool));
+        stream->write((const char*)&map->print_area_left, sizeof(float));
+        stream->write((const char*)&map->print_area_top, sizeof(float));
+        stream->write((const char*)&map->print_area_width, sizeof(float));
+        stream->write((const char*)&map->print_area_height, sizeof(float));
     }
     
-    file.write((const char*)&map->image_template_use_meters_per_pixel, sizeof(bool));
-	file.write((const char*)&map->image_template_meters_per_pixel, sizeof(double));
-	file.write((const char*)&map->image_template_dpi, sizeof(double));
-	file.write((const char*)&map->image_template_scale, sizeof(double));
+    stream->write((const char*)&map->image_template_use_meters_per_pixel, sizeof(bool));
+	stream->write((const char*)&map->image_template_meters_per_pixel, sizeof(double));
+	stream->write((const char*)&map->image_template_dpi, sizeof(double));
+	stream->write((const char*)&map->image_template_scale, sizeof(double));
 
     // Write colors
     int num_colors = (int)map->color_set->colors.size();
-    file.write((const char*)&num_colors, sizeof(int));
+    stream->write((const char*)&num_colors, sizeof(int));
 
     for (int i = 0; i < num_colors; ++i)
     {
         MapColor* color = map->color_set->colors[i];
 
-        file.write((const char*)&color->priority, sizeof(int));
-        file.write((const char*)&color->c, sizeof(float));
-        file.write((const char*)&color->m, sizeof(float));
-        file.write((const char*)&color->y, sizeof(float));
-        file.write((const char*)&color->k, sizeof(float));
-        file.write((const char*)&color->opacity, sizeof(float));
+        stream->write((const char*)&color->priority, sizeof(int));
+        stream->write((const char*)&color->c, sizeof(float));
+        stream->write((const char*)&color->m, sizeof(float));
+        stream->write((const char*)&color->y, sizeof(float));
+        stream->write((const char*)&color->k, sizeof(float));
+        stream->write((const char*)&color->opacity, sizeof(float));
 
-        saveString(&file, color->name);
+        saveString(stream, color->name);
     }
 
     // Write symbols
     int num_symbols = map->getNumSymbols();
-    file.write((const char*)&num_symbols, sizeof(int));
+    stream->write((const char*)&num_symbols, sizeof(int));
 
     for (int i = 0; i < num_symbols; ++i)
     {
         Symbol* symbol = map->getSymbol(i);
 
         int type = static_cast<int>(symbol->getType());
-        file.write((const char*)&type, sizeof(int));
-        symbol->save(&file, map);
+        stream->write((const char*)&type, sizeof(int));
+        symbol->save(stream, map);
     }
 
     // Write templates
-    file.write((const char*)&map->first_front_template, sizeof(int));
+    stream->write((const char*)&map->first_front_template, sizeof(int));
 
     int num_templates = map->getNumTemplates();
-    file.write((const char*)&num_templates, sizeof(int));
+    stream->write((const char*)&num_templates, sizeof(int));
 
     for (int i = 0; i < num_templates; ++i)
     {
         Template* temp = map->getTemplate(i);
 
-        saveString(&file, temp->getTemplatePath());
+        saveString(stream, temp->getTemplatePath());
 
-        temp->saveTemplateParameters(&file);	// save transformation etc.
+        temp->saveTemplateParameters(stream);	// save transformation etc.
         if (temp->hasUnsavedChanges())
         {
             // Save the template itself (e.g. image, gpx file, etc.)
@@ -391,7 +381,7 @@ void NativeFileExport::doExport() throw (FormatException)
     if (view)
     {
         // which only does this anyway
-        view->save(&file);
+        view->save(stream);
     }
     else
     {
@@ -399,20 +389,19 @@ void NativeFileExport::doExport() throw (FormatException)
     }
 
     // Write undo steps
-    map->object_undo_manager.save(&file);
+    map->object_undo_manager.save(stream);
 
     // Write layers
-    file.write((const char*)&map->current_layer_index, sizeof(int));
+    stream->write((const char*)&map->current_layer_index, sizeof(int));
 
     int num_layers = map->getNumLayers();
-    file.write((const char*)&num_layers, sizeof(int));
+    stream->write((const char*)&num_layers, sizeof(int));
 
     for (int i = 0; i < num_layers; ++i)
     {
         MapLayer* layer = map->getLayer(i);
-        layer->save(&file, map);
+        layer->save(stream, map);
     }
 
-    file.close();
-
+    stream->close();
 }

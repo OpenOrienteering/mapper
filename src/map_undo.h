@@ -30,8 +30,8 @@ Q_OBJECT
 public:
 	MapUndoStep(Map* map, Type type);
 	
-	virtual void save(QFile* file);
-	virtual bool load(QFile* file, int version);
+	virtual void save(QIODevice* file);
+	virtual bool load(QIODevice* file, int version);
 	
 	int getLayer() const {return layer;}
 	virtual void getAffectedOutcome(std::vector<Object*>& out) const;
@@ -53,8 +53,8 @@ public:
 	void addObject(int existing_index, Object* object);
 	void addObject(Object* existing, Object* object);
 	
-	virtual void save(QFile* file);
-	virtual bool load(QFile* file, int version);
+	virtual void save(QIODevice* file);
+	virtual bool load(QIODevice* file, int version);
 	
 	virtual void getAffectedOutcome(std::vector< Object* >& out) const {out = objects;}
 	
@@ -106,8 +106,8 @@ public:
 	void addObject(int index, Symbol* target_symbol);
 	virtual UndoStep* undo();
 	
-	virtual void save(QFile* file);
-	virtual bool load(QFile* file, int version);
+	virtual void save(QIODevice* file);
+	virtual bool load(QIODevice* file, int version);
 	
 public slots:
 	virtual void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);

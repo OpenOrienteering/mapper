@@ -23,7 +23,7 @@
 #include <cassert>
 
 #include <QtGui>
-#include <QFile>
+#include <QIODevice>
 
 #include "object.h"
 #include "map_color.h"
@@ -1176,7 +1176,7 @@ void LineSymbol::cleanupPointSymbols()
 	}
 }
 
-void LineSymbol::saveImpl(QFile* file, Map* map)
+void LineSymbol::saveImpl(QIODevice* file, Map* map)
 {
 	file->write((const char*)&line_width, sizeof(int));
 	int temp = map->findColorIndex(color);
@@ -1226,7 +1226,7 @@ void LineSymbol::saveImpl(QFile* file, Map* map)
 	file->write((const char*)&border_break_length, sizeof(int));
 }
 
-bool LineSymbol::loadImpl(QFile* file, int version, Map* map)
+bool LineSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	file->read((char*)&line_width, sizeof(int));
 	int temp;

@@ -28,7 +28,7 @@
 
 #include <QObject>
 
-class QFile;
+class QIODevice;
 
 #ifdef _MSC_VER
 	#define isnan _isnan
@@ -56,8 +56,8 @@ public:
 		delete[] d;
 	}
 	
-	void save(QFile* file);
-	void load(QFile* file);
+	void save(QIODevice* file);
+	void load(QIODevice* file);
 	
 	inline int getRows() const {return n;}
 	inline int getCols() const {return m;}

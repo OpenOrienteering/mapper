@@ -113,8 +113,9 @@ public:
      *  is responsible for deleting the Importer when it's finished.
      *
      *  If the Importer could not be created, then this method should throw a FormatException.
+	 *  TODO: get rid of path parameter (currently required for libocad)
      */
-	virtual Importer *createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
+	virtual Importer *createImporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException);
 
     /** Returns true if an exporter for this file format is potentially lossy, i.e., if the exported
      *  file cannot fully represent all aspects of the internal OO map objects. This flag is used by
@@ -127,8 +128,9 @@ public:
      *  is responsible for deleting the Exporter when it's finished.
      *
      *  If the Exporter could not be created, then this method should throw a FormatException.
+	 * *  TODO: get rid of path parameter (currently required for libocad)
      */
-    virtual Exporter *createExporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
+	virtual Exporter *createExporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException);
 
 private:
     QString format_id;
@@ -206,7 +208,7 @@ class ImportExport
 public:
     /** Creates a new importer or exporter with the given file path, map, and view.
      */
-    ImportExport(const QString &path, Map *map, MapView *view) : path(path), map(map), view(view) {}
+	ImportExport(QIODevice* stream, Map *map, MapView *view) : stream(stream), map(map), view(view) {}
 
     /** Destroys an importer or exporter.
      */
@@ -233,8 +235,8 @@ protected:
     inline void addWarning(const QString &str) { warn.push_back(str); }
 
 protected:
-    /// The file path
-    QString path;
+    /// The input / output stream
+    QIODevice* stream;
 
     /// The Map to import or export
     Map *map;
@@ -277,7 +279,7 @@ class Importer : public ImportExport
 public:
     /** Creates a new Importer with the given file path, map, and view.
      */
-    Importer(const QString &path, Map *map, MapView *view) : ImportExport(path, map, view) {}
+	Importer(QIODevice* stream, Map *map, MapView *view) : ImportExport(stream, map, view) {}
 
     /** Destroys this Importer.
      */
@@ -327,7 +329,7 @@ class Exporter : public ImportExport
 public:
     /** Creates a new Importer with the given file path, map, and view.
      */
-    Exporter(const QString &path, Map *map, MapView *view) : ImportExport(path, map, view) {}
+	Exporter(QIODevice* stream, Map *map, MapView *view) : ImportExport(stream, map, view) {}
 
     /** Destroys the current Exporter.
      */

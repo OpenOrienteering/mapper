@@ -27,7 +27,7 @@
 #include <QRectF>
 
 QT_BEGIN_NAMESPACE
-class QFile;
+class QIODevice;
 QT_END_NAMESPACE
 
 #define BEZIER_KAPPA 0.5522847498
@@ -54,7 +54,7 @@ void rectIncludeSafe(QRectF& rect, const QRectF& other_rect); // checks if rect 
 bool lineIntersectsRect(const QRectF& rect, const QPointF& p1, const QPointF& p2);
 
 /// Helper functions to save a string to a file and load it again
-void saveString(QFile* file, const QString& str);
-void loadString(QFile* file, QString& str);
+void saveString(QIODevice* file, const QString& str);
+void loadString(QIODevice* file, QString& str);
 
 #endif

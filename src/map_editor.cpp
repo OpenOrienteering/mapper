@@ -1873,7 +1873,7 @@ bool MapEditorController::importMapFile(const QString& filename)
 		return false;
 	}
 	
-	map->importMap(imported_map, window);
+	map->importMap(imported_map, Map::MinimalObjectImport, window);
 	
 	delete imported_map;
 	return true;
