@@ -28,6 +28,7 @@
 
 #include "util.h"
 #include "map.h"
+#include "map_color.h"
 #include "object.h"
 #include "object_text.h"
 #include "symbol_line.h"
@@ -46,6 +47,31 @@ Symbol::Symbol(Type type) : type(type), name(""), description(""), is_helper_sym
 Symbol::~Symbol()
 {
 	delete icon;
+}
+
+bool Symbol::equals(Symbol* other, Qt::CaseSensitivity case_sensitivity, bool compare_state)
+{
+	if (type != other->type)
+		return false;
+	for (int i = 0; i < number_components; ++i)
+	{
+		if (number[i] != other->number[i])
+			return false;
+		if (number[i] == -1 && other->number[i] == -1)
+			break;
+	}
+	if (is_helper_symbol != other->is_helper_symbol)
+		return false;
+	
+	if (compare_state && (is_hidden != other->is_hidden || is_protected != other->is_protected))
+		return false;
+	
+	if (name.compare(other->name, case_sensitivity) != 0)
+		return false;
+	if (description.compare(other->description, case_sensitivity) != 0)
+		return false;
+	
+	return equalsImpl(other, case_sensitivity);
 }
 
 bool Symbol::isTypeCompatibleTo(Object* object)
@@ -225,6 +251,16 @@ Symbol* Symbol::getSymbolForType(Symbol::Type type)
 		assert(false);
 		return NULL;
 	}
+}
+
+bool Symbol::colorEquals(MapColor* color, MapColor* other)
+{
+	if ((color == NULL && other != NULL) ||
+		(color != NULL && other == NULL))
+		return false;
+	if (color && !color->equals(*other, false))
+		return false;
+	return true;
 }
 
 void Symbol::duplicateImplCommon(const Symbol* other)

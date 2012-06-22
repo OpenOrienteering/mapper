@@ -256,7 +256,7 @@ bool TemplateGPS::import(QWidget* dialog_parent)
 		result.push_back(path);
 	}
 	
-	for (int i = 0; i < (int)result.size(); ++i) // keep as separate loop to get the correct order
+	for (int i = 0; i < (int)result.size(); ++i) // keep as separate loop to get the correct (final) indices
 		undo_step->addObject(layer->findObjectIndex(result[i]));
 	
 	map->objectUndoManager().addNewUndoStep(undo_step);

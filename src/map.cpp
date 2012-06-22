@@ -31,6 +31,7 @@
 #include "map_color.h"
 #include "map_editor.h"
 #include "map_widget.h"
+#include "map_undo.h"
 #include "util.h"
 #include "template.h"
 #include "gps_coordinates.h"
@@ -144,6 +145,43 @@ bool MapLayer::deleteObject(Object* object, bool remove_only)
 		}
 	}
 	return false;
+}
+
+void MapLayer::importLayer(MapLayer* other, QHash<Symbol*, Symbol*>& symbol_map, bool select_new_objects)
+{
+	if (other->getNumObjects() == 0)
+		return;
+	
+	bool first_objects = map->getNumObjects() == 0;
+	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
+	if (select_new_objects)
+		map->clearObjectSelection(false);
+	
+	objects.reserve(objects.size() + other->objects.size());
+	for (size_t i = 0, end = other->objects.size(); i < end; ++i)
+	{
+		Object* new_object = other->objects[i]->duplicate();
+		if (symbol_map.contains(new_object->getSymbol()))
+			new_object->setSymbol(symbol_map.value(new_object->getSymbol()), true);
+		
+		objects.push_back(new_object);
+		new_object->setMap(map);
+		new_object->update(true, true);
+		
+		undo_step->addObject((int)objects.size() - 1);
+		if (select_new_objects)
+			map->addObjectToSelection(new_object, false);
+	}
+	
+	map->objectUndoManager().addNewUndoStep(undo_step);
+	map->setObjectsDirty();
+	if (select_new_objects)
+	{
+		map->emitSelectionChanged();
+		map->emitSelectionEdited();		// TODO: is this necessary here?
+	}
+	if (first_objects)
+		map->updateAllMapWidgets();
 }
 
 void MapLayer::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out)
@@ -302,6 +340,93 @@ void Map::MapColorSet::dereference()
 	}
 }
 
+void Map::MapColorSet::importSet(Map::MapColorSet* other, Map* map, std::vector< bool >* filter, QHash< int, int >* out_indexmap, QHash<MapColor*, MapColor*>* out_pointermap)
+{
+	// Count colors to import
+	size_t import_count;
+	if (filter)
+	{
+		import_count = 0;
+		for (size_t i = 0, end = other->colors.size(); i < end; ++i)
+		{
+			if (filter->at(i))
+				++import_count;
+		}
+	}
+	else
+		import_count = other->colors.size();
+	if (import_count == 0)
+		return;
+	
+	colors.reserve(colors.size() + import_count);
+	
+	// Import colors; go from last to first so they are inserted in the right order
+	bool priorities_changed = false;
+	for (int i = (int)other->colors.size() - 1; i >= 0; --i)
+	{
+		if (filter && !filter->at(i))
+			continue;
+		MapColor* other_color = other->colors.at(i);
+		
+		// Check if color is already present, first with comparing the priority, then without
+		int found_index = -1;
+		for (size_t k = 0, colors_size = colors.size(); k < colors_size; ++k)
+		{
+			if (colors.at(k)->equals(*other_color, true))
+			{
+				found_index = k;
+				break;
+			}
+		}
+		if (found_index == -1)
+		{
+			for (size_t k = 0, colors_size = colors.size(); k < colors_size; ++k)
+			{
+				if (colors.at(k)->equals(*other_color, false))
+				{
+					found_index = k;
+					break;
+				}
+			}
+		}
+		
+		if (found_index >= 0)
+		{
+			if (out_indexmap)
+				out_indexmap->insert(i, found_index);
+			if (out_pointermap)
+				out_pointermap->insert(other_color, colors[found_index]);
+		}
+		else
+		{
+			// Color does not exist in this map yet, add it at the beginning
+			MapColor* new_color = new MapColor(*other_color);
+			if (map)
+				map->addColor(new_color, 0);
+			else
+				colors.insert(colors.begin(), new_color);
+			
+			priorities_changed = true;
+			
+			if (out_indexmap)
+			{
+				QHash<int, int>::iterator it = out_indexmap->begin();
+				while (it != out_indexmap->end())
+				{
+					++it.value();
+					++it;
+				}
+				out_indexmap->insert(i, 0);
+			}
+			if (out_pointermap)
+				out_pointermap->insert(other_color, new_color);
+		}
+	}
+	
+	if (map && priorities_changed)
+		map->forceUpdateOfAllObjects();
+}
+
 // ### Map ###
 
 bool Map::static_initialized = false;
@@ -356,6 +481,22 @@ void Map::setScaleDenominator(int value)
 int Map::getScaleDenominator() const
 {
 	return georeferencing->getScaleDenominator();
+}
+
+void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects)
+{
+	if (new_scale_denominator == getScaleDenominator())
+		return;
+	
+	double factor = getScaleDenominator() / (double)new_scale_denominator;
+	
+	if (scale_symbols)
+		scaleAllSymbols(factor);
+	if (scale_objects)
+		scaleAllObjects(factor);
+	
+	setScaleDenominator(new_scale_denominator);
+	setOtherDirty(true);
 }
 
 bool Map::saveTo(const QString& path, MapEditorController* map_editor)
@@ -542,6 +683,107 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 	updateAllObjects(false);
 
 	return true;
+}
+
+void Map::importMap(Map* other, QWidget* dialog_parent)
+{
+	// Check if there is something to import
+	if (other->getNumColors() == 0)
+	{
+		QMessageBox::critical(dialog_parent, tr("Error"), tr("Nothing to import."));
+		return;
+	}
+	
+	// Check scale
+	if (other->getNumSymbols() > 0 && other->getScaleDenominator() != getScaleDenominator())
+	{
+		int answer = QMessageBox::question(dialog_parent, tr("Question"),
+										   tr("The scale of the imported data is 1:%1 which is different from this map's scale of 1:%2.\n\nRescale the imported data?")
+										   .arg(QLocale().toString(other->getScaleDenominator()))
+										   .arg(QLocale().toString(getScaleDenominator())), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+		if (answer == QMessageBox::Yes)
+			other->changeScale(getScaleDenominator(), true, true);
+	}
+	
+	// TODO: As a special case if both maps are georeferenced, the location of the imported objects could be corrected
+	
+	// Determine which symbols to import
+	std::vector<bool> symbol_filter;
+	symbol_filter.resize(other->getNumSymbols(), true);
+	if (other->getNumObjects() > 0)
+		other->determineSymbolsInUse(symbol_filter);
+	
+	// Determine which colors to import
+	std::vector<bool> color_filter;
+	color_filter.resize(other->getNumColors(), true);
+	if (other->getNumSymbols() > 0)
+	{
+		color_filter.assign(other->getNumColors(), false);
+		for (int c = 0; c < other->getNumColors(); ++c)
+		{
+			for (int s = 0; s < other->getNumSymbols(); ++s)
+			{
+				if (symbol_filter[s] && other->getSymbol(s)->containsColor(other->getColor(c)))
+				{
+					color_filter[c] = true;
+					break;
+				}
+			}
+		}
+	}
+	
+	// Import colors
+	QHash<MapColor*, MapColor*> color_map;
+	color_set->importSet(other->color_set, this, &color_filter, NULL, &color_map);
+	
+	if (other->getNumSymbols() > 0)
+	{
+		// Import symbols
+		QHash<Symbol*, Symbol*> symbol_map;
+		importSymbols(other, color_map, &symbol_filter, NULL, &symbol_map);
+		
+		if (other->getNumObjects() > 0)
+		{
+			// Import layers like this:
+			//  - if the other map has only one layer, import it into the current layer
+			//  - else check if there is already a layer with an equal name for every layer to import and import into this layer if found, else create a new layer
+			for (int layer = 0; layer < other->getNumLayers(); ++layer)
+			{
+				MapLayer* layer_to_import = other->getLayer(layer);
+				MapLayer* dest_layer = NULL;
+				if (other->getNumLayers() == 1)
+					dest_layer = getCurrentLayer();
+				else
+				{
+					for (int check_layer = 0; check_layer < getNumLayers(); ++check_layer)
+					{
+						if (getLayer(check_layer)->getName().compare(other->getLayer(layer)->getName(), Qt::CaseInsensitive) == 0)
+						{
+							dest_layer = getLayer(check_layer);
+							break;
+						}
+					}
+					if (dest_layer == NULL)
+					{
+						// Import as new layer
+						dest_layer = new MapLayer(layer_to_import->getName(), this);
+						addLayer(dest_layer, 0);
+					}
+				}
+				
+				// Temporarily switch the current layer for importing so the undo step gets created for the right layer
+				MapLayer* temp_current_layer = getCurrentLayer();
+				current_layer_index = findLayerIndex(dest_layer);
+				
+				bool select_and_center_objects = dest_layer == temp_current_layer;
+				dest_layer->importLayer(layer_to_import, symbol_map, select_and_center_objects);
+				if (select_and_center_objects)
+					ensureVisibilityOfSelectedObjects();
+				
+				current_layer_index = findLayerIndex(temp_current_layer);
+			}
+		}
+	}
 }
 
 void Map::clear()
@@ -819,6 +1061,16 @@ void Map::updateAllMapWidgets()
 	for (int i = 0; i < (int)widgets.size(); ++i)
 		widgets[i]->updateEverything();
 }
+void Map::ensureVisibilityOfSelectedObjects()
+{
+	if (getNumSelectedObjects() == 0)
+		return;
+	
+	QRectF rect;
+	includeSelectionRect(rect);
+	for (int i = 0; i < (int)widgets.size(); ++i)
+		widgets[i]->ensureVisibilityOfRect(rect);
+}
 
 /*void Map::addMapView(MapView* view)
 {
@@ -898,6 +1150,7 @@ MapColor* Map::addColor(int pos)
 	color_set->colors.insert(color_set->colors.begin() + pos, new_color);
 	adjustColorPriorities(pos + 1, color_set->colors.size() - 1);
 	checkIfFirstColorAdded();
+	setColorsDirty();
 	emit(colorAdded(pos, new_color));
 	return new_color;
 }
@@ -906,6 +1159,7 @@ void Map::addColor(MapColor* color, int pos)
 	color_set->colors.insert(color_set->colors.begin() + pos, color);
 	adjustColorPriorities(pos + 1, color_set->colors.size() - 1);
 	checkIfFirstColorAdded();
+	setColorsDirty();
 	emit(colorAdded(pos, color));
 	color->priority = pos;
 }
@@ -975,6 +1229,64 @@ void Map::adjustColorPriorities(int first, int last)
 	// TODO: delete or update RenderStates with these colors
 	for (int i = first; i <= last; ++i)
 		color_set->colors[i]->priority = i;
+}
+
+void Map::importSymbols(Map* other, const QHash<MapColor*, MapColor*>& color_map, std::vector< bool >* filter, QHash< int, int >* out_indexmap,
+						QHash< Symbol*, Symbol* >* out_pointermap)
+{
+	// We need a pointer map (and keep track of added symbols) to adjust the references of combined symbols
+	std::vector<Symbol*> added_symbols;
+	QHash< Symbol*, Symbol* > local_pointermap;
+	if (!out_pointermap)
+		out_pointermap = &local_pointermap;
+	
+	for (size_t i = 0, end = other->symbols.size(); i < end; ++i)
+	{
+		if (filter && !filter->at(i))
+			continue;
+		Symbol* other_symbol = other->symbols.at(i);
+		
+		// Check if symbol is already present
+		size_t k = 0;
+		size_t symbols_size = symbols.size();
+		for (; k < symbols_size; ++k)
+		{
+			if (symbols[k]->equals(other_symbol, Qt::CaseInsensitive, false))
+			{
+				// Symbol is already present
+				if (out_indexmap)
+					out_indexmap->insert(i, k);
+				if (out_pointermap)
+					out_pointermap->insert(other_symbol, symbols[k]);
+				break;
+			}
+		}
+		
+		if (k >= symbols_size)
+		{
+			// Symbols does not exist in this map yet, add it at the end
+			Symbol* new_symbol = other_symbol->duplicate(&color_map);
+			added_symbols.push_back(new_symbol);
+			int insert_pos = getNumSymbols();
+			addSymbol(new_symbol, insert_pos);
+			
+			if (out_indexmap)
+				out_indexmap->insert(i, insert_pos);
+			if (out_pointermap)
+				out_pointermap->insert(other_symbol, new_symbol);
+		}
+	}
+	
+	// Notify added symbols of other "environment"
+	for (size_t i = 0, end = added_symbols.size(); i < end; ++i)
+	{
+		QHash<Symbol*, Symbol*>::iterator it = out_pointermap->begin();
+		while (it != out_pointermap->end())
+		{
+			added_symbols[i]->symbolChanged(it.key(), it.value());
+			++it;
+		}
+	}
 }
 
 void Map::addSelectionRenderables(Object* object)
@@ -1174,16 +1486,54 @@ void Map::scaleAllSymbols(double factor)
 	setSymbolsDirty();
 }
 
-int Map::getTemplateNumber(Template* temp) const
+void Map::determineSymbolsInUse(std::vector< bool >& out)
 {
-	for (int i = 0; i < (int)templates.size(); ++i)
+	out.assign(symbols.size(), false);
+	for (int l = 0; l < (int)layers.size(); ++l)
 	{
-		if (templates[i] == temp)
-			return i;
+		for (int o = 0; o < layers[l]->getNumObjects(); ++o)
+		{
+			Symbol* symbol = layers[l]->getObject(o)->getSymbol();
+			int index = findSymbolIndex(symbol);
+			if (index >= 0)
+				out[index] = true;
+		}
 	}
-	assert(false);
-	return -1;
+	
+	determineSymbolUseClosure(out);
 }
+
+void Map::determineSymbolUseClosure(std::vector< bool >& out)
+{
+	bool change;
+	do
+	{
+		change = false;
+		
+		for (size_t i = 0, end = out.size(); i < end; ++i)
+		{
+			if (out[i])
+				continue;
+			
+			// Check if this symbol is needed by any included symbol
+			for (size_t k = 0; k < end; ++k)
+			{
+				if (i == k)
+					continue;
+				if (!out[k])
+					continue;
+				if (symbols[k]->containsSymbol(symbols[i]))
+				{
+					out[i] = true;
+					change = true;
+					break;
+				}
+			}
+		}
+		
+	} while (change);
+}
+
 void Map::setTemplate(Template* temp, int pos)
 {
 	templates[pos] = temp;
@@ -1251,6 +1601,26 @@ void Map::setTemplatesDirty()
 void Map::emitTemplateChanged(Template* temp)
 {
 	emit(templateChanged(findTemplateIndex(temp), temp));
+}
+
+void Map::addLayer(MapLayer* layer, int pos)
+{
+	layers.insert(layers.begin() + pos, layer);
+	if (current_layer_index >= pos)
+		++current_layer_index;
+	setOtherDirty(true);
+}
+
+int Map::findLayerIndex(MapLayer* layer) const
+{
+	int size = (int)layers.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (layers[i] == layer)
+			return i;
+	}
+	assert(false);
+	return -1;
 }
 
 int Map::getNumObjects()
@@ -1532,7 +1902,7 @@ void MapView::save(QFile* file)
 	QHash<Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
 	while (it != template_visibilities.constEnd())
 	{
-		int pos = map->getTemplateNumber(it.key());
+		int pos = map->findTemplateIndex(it.key());
 		file->write((const char*)&pos, sizeof(int));
 		
 		file->write((const char*)&it.value()->visible, sizeof(bool));
@@ -1830,3 +2200,4 @@ void MapView::deleteTemplateVisibility(Template* temp)
 	delete template_visibilities.value(temp);
 	template_visibilities.remove(temp);
 }
+

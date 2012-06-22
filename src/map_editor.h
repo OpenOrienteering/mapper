@@ -158,7 +158,8 @@ public slots:
 	void templateAdded(int pos, Template* temp);
 	void templateDeleted(int pos, Template* temp);
 
-	void importGeoFile(QString filename);
+	void importGeoFile(const QString& filename);
+	bool importMapFile(const QString& filename);
 	void importClicked();
 	
 signals:

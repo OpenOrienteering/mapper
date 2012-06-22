@@ -54,6 +54,8 @@ protected slots:
 	void currentCellChange(int current_row, int current_column, int previous_row, int previous_column);
 	void cellDoubleClick(int row, int column);
 	
+	void colorAdded(int index, MapColor* color);
+	
 private:
 	void addRow(int row);
 	void updateRow(int row);

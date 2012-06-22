@@ -45,6 +45,47 @@ Object::~Object()
 {
 }
 
+bool Object::equals(Object* other, bool compare_symbol)
+{
+	if (type != other->type)
+		return false;
+	if (compare_symbol)
+	{
+		if ((symbol == NULL && other->symbol != NULL) ||
+			(symbol != NULL && other->symbol == NULL))
+			return false;
+		if (symbol && !symbol->equals(other->symbol))
+			return false;
+	}
+	
+	if (coords.size() != other->coords.size())
+		return false;
+	for (size_t i = 0, end = coords.size(); i < end; ++i)
+	{
+		if (coords[i] != other->coords[i])
+			return false;
+	}
+	
+	if (type == Point)
+	{
+		PointObject* point_a = static_cast<PointObject*>(this);
+		PointObject* point_b = static_cast<PointObject*>(other);
+		
+		// Make sure that compared values are greater than 1, see qFuzzyCompare
+		float rotation_a = point_a->getRotation();
+		float rotation_b = point_b->getRotation();
+		while (rotation_a < 1)
+		{
+			rotation_a += 100;
+			rotation_b += 100;
+		}
+		if (!qFuzzyCompare(rotation_a, rotation_b))
+			return false;
+	}
+	
+	return true;
+}
+
 void Object::save(QFile* file)
 {
 	int symbol_index = -1;
@@ -144,7 +185,7 @@ void Object::load(QFile* file, int version, Map* map)
 	output_dirty = true;
 }
 
-bool Object::update(bool force, bool remove_old_renderables)
+bool Object::update(bool force, bool insert_new_renderables)
 {
 	if (!force && !output_dirty)
 		return false;
@@ -176,7 +217,7 @@ bool Object::update(bool force, bool remove_old_renderables)
 	
 	if (map)
 	{
- 		if (remove_old_renderables)
+		if (insert_new_renderables)
 			map->insertRenderablesOfObject(this);
 		if (extent.isValid())
 			map->setObjectAreaDirty(extent);

@@ -68,19 +68,6 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 void ScaleMapDialog::okClicked()
 {
 	int scale = scale_edit->text().toInt();
-	if (scale == map->getScaleDenominator())
-	{
-		accept();
-		return;
-	}
-	double factor = map->getScaleDenominator() / (double)scale;
-	
-	if (adjust_symbols_check->isChecked())
-		map->scaleAllSymbols(factor);
-	if (adjust_objects_check->isChecked())
-		map->scaleAllObjects(factor);
-	
-	map->setScaleDenominator(scale);
-	map->setOtherDirty(true);
+	map->changeScale(scale, adjust_symbols_check->isChecked(), adjust_objects_check->isChecked());
 	accept();
 }

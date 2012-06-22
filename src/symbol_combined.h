@@ -41,13 +41,13 @@ friend class OCAD8FileImport;
 public:
 	CombinedSymbol();
 	virtual ~CombinedSymbol();
-	virtual Symbol* duplicate() const;
+	virtual Symbol* duplicate(const QHash<MapColor*, MapColor*>* color_map = NULL) const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
 	virtual void colorDeleted(MapColor* color);
 	virtual bool containsColor(MapColor* color);
 	virtual bool symbolChanged(Symbol* old_symbol, Symbol* new_symbol);
-	bool containsSymbol(const Symbol* symbol) const;
+	virtual bool containsSymbol(const Symbol* symbol) const;
 	virtual void scale(double factor);
 	virtual Type getContainedTypes() const;
 	
@@ -65,6 +65,7 @@ public:
 protected:
 	virtual void saveImpl(QFile* file, Map* map);
 	virtual bool loadImpl(QFile* file, int version, Map* map);
+	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	std::vector<Symbol*> parts;
 	std::vector<int> temp_part_indices;	// temporary vector of the indices of the 'parts' symbols, used just for loading

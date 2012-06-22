@@ -61,7 +61,8 @@ public:
 	/// Constructs an empty symbol
 	Symbol(Type type);
 	virtual ~Symbol();
-	virtual Symbol* duplicate() const = 0;
+	virtual Symbol* duplicate(const QHash<MapColor*, MapColor*>* color_map = NULL) const = 0;
+	bool equals(Symbol* other, Qt::CaseSensitivity case_sensitivity = Qt::CaseSensitive, bool compare_state = false);
 	
 	/// Returns the type of the symbol
     inline Type getType() const {return type;}
@@ -88,10 +89,14 @@ public:
 	/// Must return if the given color is used by this symbol
 	virtual bool containsColor(MapColor* color) = 0;
 	
-	/// Called by the map in which the symbol is to notify it of a symbol being deleted (pointer becomes invalid).
+	/// Called by the map in which the symbol is to notify it of a symbol being changed (pointer becomes invalid).
 	/// If new_symbol == NULL, the symbol is being deleted.
 	/// Must return true if this symbol contained the deleted symbol.
 	virtual bool symbolChanged(Symbol* old_symbol, Symbol* new_symbol) {return false;}
+	
+	/// Must return if the given symbol is referenced by this symbol.
+	/// Should NOT return true if the argument is itself.
+	virtual bool containsSymbol(const Symbol* symbol) const {return false;}
 	
 	/// Scales the whole symbol
 	virtual void scale(double factor) = 0;
@@ -136,6 +141,9 @@ protected:
 	virtual void saveImpl(QFile* file, Map* map) = 0;
 	/// Must be overridden to load type-specific symbol properties. See saveImpl()
 	virtual bool loadImpl(QFile* file, int version, Map* map) = 0;
+	/// Must be overridden to compare symbol-specific attributes.
+	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity) = 0;
+	static bool colorEquals(MapColor* color, MapColor* other);
 	
 	/// Duplicates properties which are common for all symbols from other to this object
 	void duplicateImplCommon(const Symbol* other);

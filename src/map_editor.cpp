@@ -1832,7 +1832,7 @@ void MapEditorController::importClicked()
 	QSettings settings;
 	QString import_directory = settings.value("importFileDirectory", QDir::homePath()).toString();
 	
-	QString filename = QFileDialog::getOpenFileName(window, tr("Import DXF, GPX or OSM file"), import_directory, QString("%1 (*.gpx *.dxf *.osm);;%2 (*.*)").arg(tr("Importable files")).arg(tr("All files")));
+	QString filename = QFileDialog::getOpenFileName(window, tr("Import OMAP, OCD, GPX, OSM or DXF file"), import_directory, QString("%1 (*.omap *.ocd *.gpx *.osm *.dxf);;%2 (*.*)").arg(tr("Importable files")).arg(tr("All files")));
 	if (filename.isEmpty() || filename.isNull())
 		return;
 	
@@ -1844,18 +1844,39 @@ void MapEditorController::importClicked()
 	{
 		importGeoFile(filename);
 	}
+	else if (filename.endsWith(".ocd", Qt::CaseInsensitive) || 
+			 filename.endsWith(".omap", Qt::CaseInsensitive))
+	{
+		importMapFile(filename);
+	}
 	else
 	{
 		QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected file because its file format is not supported."));
 	}
 }
 
-void MapEditorController::importGeoFile(QString filename)
+void MapEditorController::importGeoFile(const QString& filename)
 {
 	TemplateGPS temp(filename, map);
 	if (!temp.open(window, main_view))
 		return;
 	temp.import(window);
+}
+
+bool MapEditorController::importMapFile(const QString& filename)
+{
+	Map* imported_map = new Map();
+	bool result = imported_map->loadFrom(filename);
+	if (!result)
+	{
+		QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected map file because it could not be loaded."));
+		return false;
+	}
+	
+	map->importMap(imported_map, window);
+	
+	delete imported_map;
+	return true;
 }
 
 // ### MapEditorToolAction ###

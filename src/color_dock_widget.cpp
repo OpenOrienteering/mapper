@@ -101,6 +101,8 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent): EditorD
 	connect(move_up_button, SIGNAL(clicked(bool)), this, SLOT(moveColorUp()));
 	connect(move_down_button, SIGNAL(clicked(bool)), this, SLOT(moveColorDown()));
 	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
+	
+	connect(map, SIGNAL(colorAdded(int,MapColor*)), this, SLOT(colorAdded(int,MapColor*)));
 }
 
 ColorWidget::~ColorWidget()
@@ -160,11 +162,6 @@ void ColorWidget::newColor()
 		row = color_table->rowCount();
 	map->addColor(row);
 	
-	color_table->insertRow(row);
-	addRow(row);
-	color_table->setCurrentCell(row, 1);
-	
-	map->setColorsDirty();
 	map->forceUpdateOfAllObjects();
 }
 
@@ -197,11 +194,6 @@ void ColorWidget::duplicateColor()
 	new_color->name = new_color->name + tr(" (Duplicate)");
 	map->addColor(new_color, row);
 	
-	color_table->insertRow(row);
-	addRow(row);
-	color_table->setCurrentCell(row, 1);
-	
-	map->setColorsDirty();
 	map->forceUpdateOfAllObjects();
 }
 
@@ -346,6 +338,13 @@ void ColorWidget::cellDoubleClick(int row, int column)
 			map->forceUpdateOfAllObjects();
 		}
 	}
+}
+
+void ColorWidget::colorAdded(int index, MapColor* color)
+{
+	color_table->insertRow(index);
+	addRow(index);
+	color_table->setCurrentCell(index, 1);
 }
 
 void ColorWidget::addRow(int row)

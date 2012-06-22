@@ -75,6 +75,7 @@ public:
 		FillPattern();
 		void save(QFile* file, Map* map);
 		bool load(QFile* file, int version, Map* map);
+		bool equals(FillPattern& other, Qt::CaseSensitivity case_sensitivity);
 		void createRenderables(QRectF extent, ObjectRenderables& output);
 		void createLine(MapCoordVectorF& coords, LineSymbol* line, PathObject* path, PointObject* point_object, ObjectRenderables& output);
 		void scale(double factor);
@@ -82,7 +83,7 @@ public:
 	
 	AreaSymbol();
 	virtual ~AreaSymbol();
-	virtual Symbol* duplicate() const;
+	virtual Symbol* duplicate(const QHash<MapColor*, MapColor*>* color_map = NULL) const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
 	virtual void colorDeleted(MapColor* color);
@@ -101,6 +102,7 @@ public:
 protected:
 	virtual void saveImpl(QFile* file, Map* map);
 	virtual bool loadImpl(QFile* file, int version, Map* map);
+	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	MapColor* color;
 	int minimum_area;	// in mm^2 // FIXME: unit (factor) wrong
