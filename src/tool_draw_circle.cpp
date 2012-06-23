@@ -32,6 +32,7 @@ DrawCircleTool::DrawCircleTool(MapEditorController* editor, QAction* tool_button
 {
 	dragging = false;
 	first_point_set = false;
+	second_point_set = false;
 	
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-draw-circle.png"), 11, 11);
@@ -54,17 +55,20 @@ bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 		if (!first_point_set && event->buttons() & Qt::LeftButton)
 		{
 			click_pos = event->pos();
-			click_pos_map = map_coord;
+			circle_start_pos_map = map_coord;
+			opposite_pos_map = map_coord;
 			dragging = false;
 			first_point_set = true;
 			
 			if (!draw_in_progress)
 				startDrawing();
 		}
-		else if (first_point_set)
+		else if (first_point_set && !second_point_set)
 		{
-			updateCircle();
-			finishDrawing();
+			click_pos = event->pos();
+			opposite_pos_map = map_coord;
+			dragging = false;
+			second_point_set = true;
 		}
 		else
 			return false;
@@ -87,6 +91,8 @@ bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, Map
 		{
 			cur_pos = event->pos();
 			cur_pos_map = map_coord;
+			if (!second_point_set)
+				opposite_pos_map = map_coord;
 			updateCircle();
 		}
 	}
@@ -96,12 +102,20 @@ bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, Map
 			return false;
 		
 		if ((event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance())
-			dragging = true;
+		{
+			if (!dragging)
+			{
+				dragging = true;
+				updateStatusText();
+			}
+		}
 		
 		if (dragging)
 		{
 			cur_pos = event->pos();
 			cur_pos_map = map_coord;
+			if (!second_point_set)
+				opposite_pos_map = cur_pos_map;
 			updateCircle();
 		}
 	}
@@ -114,10 +128,14 @@ bool DrawCircleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, 
 	if (!draw_in_progress)
 		return false;
 	
-	if (dragging)
+	updateStatusText();
+	
+	if (dragging || second_point_set)
 	{
 		cur_pos = event->pos();
 		cur_pos_map = map_coord;
+		if (dragging && !second_point_set)
+			opposite_pos_map = map_coord;
 		updateCircle();
 		finishDrawing();
 		return true;
@@ -146,6 +164,7 @@ void DrawCircleTool::finishDrawing()
 {
 	dragging = false;
 	first_point_set = false;
+	second_point_set = false;
 	updateStatusText();
 	
 	DrawLineAndAreaTool::finishDrawing();
@@ -154,6 +173,7 @@ void DrawCircleTool::abortDrawing()
 {
 	dragging = false;
 	first_point_set = false;
+	second_point_set = false;
 	updateStatusText();
 	
 	DrawLineAndAreaTool::abortDrawing();
@@ -161,29 +181,41 @@ void DrawCircleTool::abortDrawing()
 
 void DrawCircleTool::updateCircle()
 {
-	float radius = 0.5f * click_pos_map.lengthTo(cur_pos_map);
+	float radius = 0.5f * circle_start_pos_map.lengthTo(opposite_pos_map);
 	float kappa = BEZIER_KAPPA;
 	float m_kappa = 1 - BEZIER_KAPPA;
 	
-	MapCoordF across = cur_pos_map - click_pos_map;
+	MapCoordF across = opposite_pos_map - circle_start_pos_map;
 	across.setLength(radius);
 	MapCoordF right = across;
 	right.perpRight();
-	right.setLength(radius);
+	
+	float right_radius = radius;
+	if (second_point_set && dragging)
+	{
+		if (right.length() < 1e-8)
+			right_radius = 0;
+		else
+		{
+			MapCoordF to_cursor = cur_pos_map - circle_start_pos_map;
+			right_radius = to_cursor.dot(right) / right.length();
+		}
+	}
+	right.setLength(right_radius);
 	
 	preview_path->clearCoordinates();
-	preview_path->addCoordinate(click_pos_map.toCurveStartMapCoord());
-	preview_path->addCoordinate((click_pos_map + kappa * right).toMapCoord());
-	preview_path->addCoordinate((click_pos_map + right + m_kappa * across).toMapCoord());
-	preview_path->addCoordinate((click_pos_map + right + across).toCurveStartMapCoord());
-	preview_path->addCoordinate((click_pos_map + right + (1 + kappa) * across).toMapCoord());
-	preview_path->addCoordinate((click_pos_map + kappa * right + 2 * across).toMapCoord());
-	preview_path->addCoordinate((click_pos_map + 2 * across).toCurveStartMapCoord());
-	preview_path->addCoordinate((click_pos_map - kappa * right + 2 * across).toMapCoord());
-	preview_path->addCoordinate((click_pos_map - right + (1 + kappa) * across).toMapCoord());
-	preview_path->addCoordinate((click_pos_map - right + across).toCurveStartMapCoord());
-	preview_path->addCoordinate((click_pos_map - right + m_kappa * across).toMapCoord());
-	preview_path->addCoordinate((click_pos_map - kappa * right).toMapCoord());
+	preview_path->addCoordinate(circle_start_pos_map.toCurveStartMapCoord());
+	preview_path->addCoordinate((circle_start_pos_map + kappa * right).toMapCoord());
+	preview_path->addCoordinate((circle_start_pos_map + right + m_kappa * across).toMapCoord());
+	preview_path->addCoordinate((circle_start_pos_map + right + across).toCurveStartMapCoord());
+	preview_path->addCoordinate((circle_start_pos_map + right + (1 + kappa) * across).toMapCoord());
+	preview_path->addCoordinate((circle_start_pos_map + kappa * right + 2 * across).toMapCoord());
+	preview_path->addCoordinate((circle_start_pos_map + 2 * across).toCurveStartMapCoord());
+	preview_path->addCoordinate((circle_start_pos_map - kappa * right + 2 * across).toMapCoord());
+	preview_path->addCoordinate((circle_start_pos_map - right + (1 + kappa) * across).toMapCoord());
+	preview_path->addCoordinate((circle_start_pos_map - right + across).toCurveStartMapCoord());
+	preview_path->addCoordinate((circle_start_pos_map - right + m_kappa * across).toMapCoord());
+	preview_path->addCoordinate((circle_start_pos_map - kappa * right).toMapCoord());
 	preview_path->getPart(0).setClosed(true, false);
 	
 	updatePreviewPath();
@@ -206,5 +238,8 @@ void DrawCircleTool::setDirtyRect()
 }
 void DrawCircleTool::updateStatusText()
 {
-	setStatusBarText(tr("<b>Click</b> or <b>Drag</b> to draw a circle, <b>Esc</b> to abort"));
+	if (!first_point_set || (!second_point_set && dragging))
+		setStatusBarText(tr("<b>Click</b> to start a circle or ellipse, <b>Drag</b> to draw a circle"));
+	else
+		setStatusBarText(tr("<b>Click</b> to draw a circle, <b>Drag</b> to draw an ellipse, <b>Esc</b> to abort"));
 }

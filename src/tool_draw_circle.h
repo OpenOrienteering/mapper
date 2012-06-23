@@ -23,7 +23,7 @@
 
 #include "tool_draw_line_and_area.h"
 
-/// Tool to draw circles
+/// Tool to draw circles and ellipses
 class DrawCircleTool : public DrawLineAndAreaTool
 {
 Q_OBJECT
@@ -32,7 +32,7 @@ public:
 	
     virtual void init();
     virtual QCursor* getCursor() {return cursor;}
-    
+	
     virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
     virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
@@ -52,11 +52,13 @@ protected:
 	void updateStatusText();
 	
 	QPoint click_pos;
-	MapCoordF click_pos_map;
+	MapCoordF circle_start_pos_map;
 	QPoint cur_pos;
 	MapCoordF cur_pos_map;
+	MapCoordF opposite_pos_map;		// position on cirlce/ellipse opposite to click_pos_map
 	bool dragging;
 	bool first_point_set;
+	bool second_point_set;
 };
 
 #endif
