@@ -28,7 +28,10 @@
 #include "map_coord.h"
 #include "path_coord.h"
 
-class QFile;
+QT_BEGIN_NAMESPACE
+class QIODevice;
+QT_END_NAMESPACE
+
 class Map;
 class MapColor;
 class Object;
@@ -74,8 +77,8 @@ public:
 	bool isTypeCompatibleTo(Object* object);
 	
 	/// Saving and loading
-	void save(QFile* file, Map* map);
-	bool load(QFile* file, int version, Map* map);
+	void save(QIODevice* file, Map* map);
+	bool load(QIODevice* file, int version, Map* map);
 	/// Called after loading of the map is finished. Can do tasks that need to reference other symbols or map objects.
 	virtual bool loadFinished(Map* map) {return true;}
 	
@@ -138,9 +141,9 @@ public:
 	
 protected:
 	/// Must be overridden to save type-specific symbol properties. The map pointer can be used to get persistent indices to any pointers on map data
-	virtual void saveImpl(QFile* file, Map* map) = 0;
+	virtual void saveImpl(QIODevice* file, Map* map) = 0;
 	/// Must be overridden to load type-specific symbol properties. See saveImpl()
-	virtual bool loadImpl(QFile* file, int version, Map* map) = 0;
+	virtual bool loadImpl(QIODevice* file, int version, Map* map) = 0;
 	/// Must be overridden to compare symbol-specific attributes.
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity) = 0;
 	static bool colorEquals(MapColor* color, MapColor* other);

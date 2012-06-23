@@ -86,7 +86,7 @@ bool Symbol::isTypeCompatibleTo(Object* object)
 	return false;
 }
 
-void Symbol::save(QFile* file, Map* map)
+void Symbol::save(QIODevice* file, Map* map)
 {
 	saveString(file, name);
 	for (int i = 0; i < number_components; ++i)
@@ -98,7 +98,7 @@ void Symbol::save(QFile* file, Map* map)
 	
 	saveImpl(file, map);
 }
-bool Symbol::load(QFile* file, int version, Map* map)
+bool Symbol::load(QIODevice* file, int version, Map* map)
 {
 	loadString(file, name);
 	for (int i = 0; i < number_components; ++i)

@@ -21,7 +21,7 @@
 #include "object.h"
 
 #include <qmath.h>
-#include <QFile>
+#include <QIODevice>
 
 #include "util.h"
 #include "symbol.h"
@@ -86,7 +86,7 @@ bool Object::equals(Object* other, bool compare_symbol)
 	return true;
 }
 
-void Object::save(QFile* file)
+void Object::save(QIODevice* file)
 {
 	int symbol_index = -1;
 	if (map)
@@ -121,7 +121,7 @@ void Object::save(QFile* file)
 	}
 }
 
-void Object::load(QFile* file, int version, Map* map)
+void Object::load(QIODevice* file, int version, Map* map)
 {
 	this->map = map;
 	

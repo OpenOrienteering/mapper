@@ -28,7 +28,7 @@
 #include <vector>
 
 QT_BEGIN_NAMESPACE
-class QFile;
+class QIODevice;
 QT_END_NAMESPACE
 
 class Map;
@@ -56,8 +56,8 @@ public:
 	/// Must undo the action and generate another UndoStep that can redo the action again
 	virtual UndoStep* undo() = 0;
 	
-	virtual void save(QFile* file) = 0;
-	virtual bool load(QFile* file, int version) = 0;
+	virtual void save(QIODevice* file) = 0;
+	virtual bool load(QIODevice* file, int version) = 0;
 	
 	/// Returns if the step can still be undone. This must be true after generating the step
 	/// (otherwise it would not make sense to generate it) but can change to false if an object the step depends on,
@@ -85,8 +85,8 @@ public:
 	inline UndoStep* getSubStep(int i) {return steps[i];}
 	
     virtual UndoStep* undo();
-    virtual void save(QFile* file);
-	virtual bool load(QFile* file, int version);
+    virtual void save(QIODevice* file);
+	virtual bool load(QIODevice* file, int version);
 	
     virtual bool isValid() const;
 	
@@ -104,8 +104,8 @@ public:
 	inline void setOwner(void* owner) {this->owner = owner;}
 	~UndoManager();
 	
-	void save(QFile* file);
-	bool load(QFile* file, int version);
+	void save(QIODevice* file);
+	bool load(QIODevice* file, int version);
 	
 	/// Call this to add a new step resulting from an edit action
 	void addNewUndoStep(UndoStep* step);
@@ -135,8 +135,8 @@ private:
 	void addRedoStep(UndoStep* step);
 	bool clearUndoSteps();	// returns if at least one step was deleted
 	bool clearRedoSteps();	// returns if at least one step was deleted
-	void saveSteps(std::deque<UndoStep*>& steps, QFile* file);
-	bool loadSteps(std::deque< UndoStep* >& steps, QFile* file, int version);
+	void saveSteps(std::deque<UndoStep*>& steps, QIODevice* file);
+	bool loadSteps(std::deque< UndoStep* >& steps, QIODevice* file, int version);
 	
 	int saved_step_index;				// 0 would be the current state, negative indices stand for the undo steps, positive indices for the redo steps
 	int loaded_step_index;				// indexing like for saved_step_index

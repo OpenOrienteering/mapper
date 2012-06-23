@@ -22,7 +22,7 @@
 
 #include <algorithm>
 
-#include <QFile>
+#include <QIODevice>
 
 #include "map.h"
 #include "object.h"
@@ -36,7 +36,7 @@ MapUndoStep::MapUndoStep(Map* map, Type type): UndoStep(type)
 	layer = map->getCurrentLayerIndex();
 }
 
-void MapUndoStep::save(QFile* file)
+void MapUndoStep::save(QIODevice* file)
 {
 	file->write((char*)&layer, sizeof(int));
 	int size = affected_objects.size();
@@ -44,7 +44,7 @@ void MapUndoStep::save(QFile* file)
 	for (int i = 0; i < size; ++i)
 		file->write((char*)&affected_objects[i], sizeof(int));
 }
-bool MapUndoStep::load(QFile* file, int version)
+bool MapUndoStep::load(QIODevice* file, int version)
 {
 	file->read((char*)&layer, sizeof(int));
 	int size;
@@ -89,7 +89,7 @@ void ObjectContainingUndoStep::addObject(Object* existing, Object* object)
 	addObject(index, object);
 }
 
-void ObjectContainingUndoStep::save(QFile* file)
+void ObjectContainingUndoStep::save(QIODevice* file)
 {
 	MapUndoStep::save(file);
 	
@@ -103,7 +103,7 @@ void ObjectContainingUndoStep::save(QFile* file)
 		objects[i]->save(file);
 	}
 }
-bool ObjectContainingUndoStep::load(QFile* file, int version)
+bool ObjectContainingUndoStep::load(QIODevice* file, int version)
 {
 	if (!MapUndoStep::load(file, version))
 		return false;
@@ -253,7 +253,7 @@ UndoStep* SwitchSymbolUndoStep::undo()
 	
 	return undo_step;
 }
-void SwitchSymbolUndoStep::save(QFile* file)
+void SwitchSymbolUndoStep::save(QIODevice* file)
 {
     MapUndoStep::save(file);
 	
@@ -264,7 +264,7 @@ void SwitchSymbolUndoStep::save(QFile* file)
 		file->write((char*)&index, sizeof(int));
 	}
 }
-bool SwitchSymbolUndoStep::load(QFile* file, int version)
+bool SwitchSymbolUndoStep::load(QIODevice* file, int version)
 {
     if (!MapUndoStep::load(file, version))
 		return false;

@@ -53,7 +53,7 @@ MapLayer::~MapLayer()
 	for (int i = 0; i < size; ++i)
 		delete objects[i];
 }
-void MapLayer::save(QFile* file, Map* map)
+void MapLayer::save(QIODevice* file, Map* map)
 {
 	saveString(file, name);
 	
@@ -67,7 +67,7 @@ void MapLayer::save(QFile* file, Map* map)
 		objects[i]->save(file);
 	}
 }
-bool MapLayer::load(QFile* file, int version, Map* map)
+bool MapLayer::load(QIODevice* file, int version, Map* map)
 {
 	loadString(file, name);
 	
@@ -534,14 +534,23 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 			temp_path = QString();
 	}
 	
+	QFile file(temp_path.isEmpty() ? path : temp_path);
+	if (!file.open(QIODevice::WriteOnly))
+	{
+		QMessageBox::warning(NULL, tr("Error"), tr("File does not exist or insufficient permissions to open:\n%1").arg(path));
+		return false;
+	}
+	
 	Exporter *exporter = NULL;
 	// Wrap everything in a try block, so we can gracefully recover if the exporter balks.
 	try {
-		// Create an importer instance for this file and map.
-		exporter = format->createExporter(temp_path.isEmpty() ? path : temp_path, this, map_editor->main_view);
+		// Create an exporter instance for this file and map.
+		exporter = format->createExporter(&file, file.fileName(), this, map_editor->main_view);
 		
 		// Run the first pass.
 		exporter->doExport();
+		
+		file.close();
 		
 		// Display any warnings.
 		if (!exporter->warnings().empty())
@@ -604,7 +613,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 	// Read a block at the beginning of the file, that we can use for magic number checking.
 	unsigned char buffer[256];
 	size_t total_read = file.read((char *)buffer, 256);
-	file.close();
+	file.seek(0);
 
 	bool import_complete = false;
 	QString error_msg = tr("Invalid file type.");
@@ -617,7 +626,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 			// Wrap everything in a try block, so we can gracefully recover if the importer balks.
 			try {
 				// Create an importer instance for this file and map.
-				importer = format->createImporter(path, this, view);
+				importer = format->createImporter(&file, path, this, view);
 
 				// Run the first pass.
 				importer->doImport(load_symbols_only);
@@ -630,6 +639,8 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 
 				// Finish the import.
 				importer->finishImport();
+				
+				file.close();
 
 				// Display any warnings.
 				if (!importer->warnings().empty())
@@ -685,7 +696,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 	return true;
 }
 
-void Map::importMap(Map* other, QWidget* dialog_parent)
+void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::vector<bool>* filter, int symbol_insert_pos, bool merge_duplicate_symbols)
 {
 	// Check if there is something to import
 	if (other->getNumColors() == 0)
@@ -710,37 +721,47 @@ void Map::importMap(Map* other, QWidget* dialog_parent)
 	// Determine which symbols to import
 	std::vector<bool> symbol_filter;
 	symbol_filter.resize(other->getNumSymbols(), true);
-	if (other->getNumObjects() > 0)
-		other->determineSymbolsInUse(symbol_filter);
+	if (mode == MinimalObjectImport)
+	{
+		if (other->getNumObjects() > 0)
+			other->determineSymbolsInUse(symbol_filter);
+	}
+	else if (mode == MinimalSymbolImport && filter)
+	{
+		assert(filter->size() == symbol_filter.size());
+		symbol_filter = *filter;
+		other->determineSymbolUseClosure(symbol_filter);
+	}
 	
 	// Determine which colors to import
 	std::vector<bool> color_filter;
 	color_filter.resize(other->getNumColors(), true);
-	if (other->getNumSymbols() > 0)
+	if (mode == MinimalObjectImport || mode == MinimalSymbolImport)
 	{
-		color_filter.assign(other->getNumColors(), false);
-		for (int c = 0; c < other->getNumColors(); ++c)
-		{
-			for (int s = 0; s < other->getNumSymbols(); ++s)
-			{
-				if (symbol_filter[s] && other->getSymbol(s)->containsColor(other->getColor(c)))
-				{
-					color_filter[c] = true;
-					break;
-				}
-			}
-		}
+		if (other->getNumSymbols() > 0)
+			other->determineColorsInUse(symbol_filter, color_filter);
+	}
+	else if (mode == ColorImport && filter)
+	{
+		assert(filter->size() == color_filter.size());
+		color_filter = *filter;
 	}
 	
 	// Import colors
 	QHash<MapColor*, MapColor*> color_map;
 	color_set->importSet(other->color_set, this, &color_filter, NULL, &color_map);
 	
+	if (mode == ColorImport)
+		return;
+	
 	if (other->getNumSymbols() > 0)
 	{
 		// Import symbols
 		QHash<Symbol*, Symbol*> symbol_map;
-		importSymbols(other, color_map, &symbol_filter, NULL, &symbol_map);
+		importSymbols(other, color_map, symbol_insert_pos, merge_duplicate_symbols, &symbol_filter, NULL, &symbol_map);
+		
+		if (mode == MinimalSymbolImport)
+			return;
 		
 		if (other->getNumObjects() > 0)
 		{
@@ -1231,8 +1252,30 @@ void Map::adjustColorPriorities(int first, int last)
 		color_set->colors[i]->priority = i;
 }
 
-void Map::importSymbols(Map* other, const QHash<MapColor*, MapColor*>& color_map, std::vector< bool >* filter, QHash< int, int >* out_indexmap,
-						QHash< Symbol*, Symbol* >* out_pointermap)
+void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std::vector< bool >& out)
+{
+	if (getNumSymbols() == 0)
+	{
+		out.clear();
+		return;
+	}
+	
+	out.assign(getNumColors(), false);
+	for (int c = 0; c < getNumColors(); ++c)
+	{
+		for (int s = 0; s < getNumSymbols(); ++s)
+		{
+			if (by_which_symbols[s] && getSymbol(s)->containsColor(getColor(c)))
+			{
+				out[c] = true;
+				break;
+			}
+		}
+	}
+}
+
+void Map::importSymbols(Map* other, const QHash<MapColor*, MapColor*>& color_map, int insert_pos, bool merge_duplicates, std::vector< bool >* filter,
+						QHash< int, int >* out_indexmap, QHash< Symbol*, Symbol* >* out_pointermap)
 {
 	// We need a pointer map (and keep track of added symbols) to adjust the references of combined symbols
 	std::vector<Symbol*> added_symbols;
@@ -1245,6 +1288,12 @@ void Map::importSymbols(Map* other, const QHash<MapColor*, MapColor*>& color_map
 		if (filter && !filter->at(i))
 			continue;
 		Symbol* other_symbol = other->symbols.at(i);
+		
+		if (!merge_duplicates)
+		{
+			added_symbols.push_back(other_symbol);
+			continue;
+		}
 		
 		// Check if symbol is already present
 		size_t k = 0;
@@ -1264,17 +1313,27 @@ void Map::importSymbols(Map* other, const QHash<MapColor*, MapColor*>& color_map
 		
 		if (k >= symbols_size)
 		{
-			// Symbols does not exist in this map yet, add it at the end
-			Symbol* new_symbol = other_symbol->duplicate(&color_map);
-			added_symbols.push_back(new_symbol);
-			int insert_pos = getNumSymbols();
-			addSymbol(new_symbol, insert_pos);
-			
-			if (out_indexmap)
-				out_indexmap->insert(i, insert_pos);
-			if (out_pointermap)
-				out_pointermap->insert(other_symbol, new_symbol);
+			// Symbols does not exist in this map yet, mark it to be added
+			added_symbols.push_back(other_symbol);
 		}
+	}
+	
+	// Really add all the added symbols
+	if (insert_pos < 0)
+		insert_pos = getNumSymbols();
+	for (size_t i = 0, end = added_symbols.size(); i < end; ++i)
+	{
+		Symbol* old_symbol = added_symbols[i];
+		Symbol* new_symbol = added_symbols[i]->duplicate(&color_map);
+		added_symbols[i] = new_symbol;
+		
+		addSymbol(new_symbol, insert_pos);
+		++insert_pos;
+		
+		if (out_indexmap)
+			out_indexmap->insert(i, insert_pos);
+		if (out_pointermap)
+			out_pointermap->insert(old_symbol, new_symbol);
 	}
 	
 	// Notify added symbols of other "environment"
@@ -1503,16 +1562,16 @@ void Map::determineSymbolsInUse(std::vector< bool >& out)
 	determineSymbolUseClosure(out);
 }
 
-void Map::determineSymbolUseClosure(std::vector< bool >& out)
+void Map::determineSymbolUseClosure(std::vector< bool >& symbol_bitfield)
 {
 	bool change;
 	do
 	{
 		change = false;
 		
-		for (size_t i = 0, end = out.size(); i < end; ++i)
+		for (size_t i = 0, end = symbol_bitfield.size(); i < end; ++i)
 		{
-			if (out[i])
+			if (symbol_bitfield[i])
 				continue;
 			
 			// Check if this symbol is needed by any included symbol
@@ -1520,11 +1579,11 @@ void Map::determineSymbolUseClosure(std::vector< bool >& out)
 			{
 				if (i == k)
 					continue;
-				if (!out[k])
+				if (!symbol_bitfield[k])
 					continue;
 				if (symbols[k]->containsSymbol(symbols[i]))
 				{
-					out[i] = true;
+					               symbol_bitfield[i] = true;
 					change = true;
 					break;
 				}
@@ -1887,7 +1946,7 @@ MapView::~MapView()
     delete map_visibility;
 }
 
-void MapView::save(QFile* file)
+void MapView::save(QIODevice* file)
 {
 	file->write((const char*)&zoom, sizeof(double));
 	file->write((const char*)&rotation, sizeof(double));
@@ -1911,7 +1970,7 @@ void MapView::save(QFile* file)
 		++it;
 	}
 }
-void MapView::load(QFile* file)
+void MapView::load(QIODevice* file)
 {
 	file->read((char*)&zoom, sizeof(double));
 	file->read((char*)&rotation, sizeof(double));

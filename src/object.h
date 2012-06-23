@@ -30,7 +30,7 @@
 #include "path_coord.h"
 #include "renderable.h"
 
-class QFile;
+class QIODevice;
 
 class Symbol;
 class Map;
@@ -57,8 +57,8 @@ public:
 	/// Returns the object type determined by the subclass
     inline Type getType() const {return type;}
 	
-	void save(QFile* file);
-	void load(QFile* file, int version, Map* map);
+	void save(QIODevice* file);
+	void load(QIODevice* file, int version, Map* map);
 	
 	/// Checks if the output_dirty flag is set and if yes, regenerates output and extent; returns true if output was previously dirty.
 	/// Use force == true to force a redraw

@@ -135,14 +135,14 @@ bool lineIntersectsRect(const QRectF& rect, const QPointF& p1, const QPointF& p2
 	return false;
 }
 
-void saveString(QFile* file, const QString& str)
+void saveString(QIODevice* file, const QString& str)
 {
 	int length = str.length();
 	
 	file->write((const char*)&length, sizeof(int));
 	file->write((const char*)str.constData(), length * sizeof(QChar));
 }
-void loadString(QFile* file, QString& str)
+void loadString(QIODevice* file, QString& str)
 {
 	int length;
 	

@@ -41,7 +41,7 @@ public:
     OCAD8FileFormat() : Format("OCAD78", QObject::tr("OCAD Versions 7, 8"), "ocd", true, false, true) {}
 
     bool understands(const unsigned char *buffer, size_t sz) const;
-	Importer *createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
+	Importer *createImporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException);
 };
 
 
@@ -66,7 +66,7 @@ private:
 	};
 	
 public:
-    OCAD8FileImport(const QString &path, Map *map, MapView *view);
+	OCAD8FileImport(QIODevice* stream, const QString &path, Map *map, MapView *view);
     ~OCAD8FileImport();
 
 	void doImport(bool load_symbols_only) throw (FormatException);
@@ -113,6 +113,9 @@ protected:
 	double convertTemplateScale(double ocad_scale);
 
 private:
+	/// File path
+	QString path;
+	
     /// Handle to the open OCAD file
     OCADFile *file;
 

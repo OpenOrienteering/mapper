@@ -20,15 +20,15 @@
 
 #include "matrix.h"
 
-#include <QFile>
+#include <QIODevice>
 
-void Matrix::save(QFile* file)
+void Matrix::save(QIODevice* file)
 {
 	file->write((const char*)&n, sizeof(int));
 	file->write((const char*)&m, sizeof(int));
 	file->write((const char*)d, n*m * sizeof(double));
 }
-void Matrix::load(QFile* file)
+void Matrix::load(QIODevice* file)
 {
 	int new_n, new_m;
 	file->read((char*)&new_n, sizeof(int));

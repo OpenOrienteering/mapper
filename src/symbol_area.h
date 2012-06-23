@@ -73,8 +73,8 @@ public:
 		QString name;			// a display name (transient)
 		
 		FillPattern();
-		void save(QFile* file, Map* map);
-		bool load(QFile* file, int version, Map* map);
+		void save(QIODevice* file, Map* map);
+		bool load(QIODevice* file, int version, Map* map);
 		bool equals(FillPattern& other, Qt::CaseSensitivity case_sensitivity);
 		void createRenderables(QRectF extent, ObjectRenderables& output);
 		void createLine(MapCoordVectorF& coords, LineSymbol* line, PathObject* path, PointObject* point_object, ObjectRenderables& output);
@@ -100,8 +100,8 @@ public:
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
 	
 protected:
-	virtual void saveImpl(QFile* file, Map* map);
-	virtual bool loadImpl(QFile* file, int version, Map* map);
+	virtual void saveImpl(QIODevice* file, Map* map);
+	virtual bool loadImpl(QIODevice* file, int version, Map* map);
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	MapColor* color;

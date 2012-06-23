@@ -41,7 +41,7 @@ Template::TemplateTransform::TemplateTransform()
 	template_scale_y = 1;
 	template_rotation = 0;
 }
-void Template::TemplateTransform::save(QFile* file)
+void Template::TemplateTransform::save(QIODevice* file)
 {
 	file->write((const char*)&template_x, sizeof(qint64));
 	file->write((const char*)&template_y, sizeof(qint64));
@@ -50,7 +50,7 @@ void Template::TemplateTransform::save(QFile* file)
 	file->write((const char*)&template_scale_y, sizeof(qint64));
 	file->write((const char*)&template_rotation, sizeof(qint64));
 }
-void Template::TemplateTransform::load(QFile* file)
+void Template::TemplateTransform::load(QIODevice* file)
 {
 	file->read((char*)&template_x, sizeof(qint64));
 	file->read((char*)&template_y, sizeof(qint64));
@@ -62,7 +62,7 @@ void Template::TemplateTransform::load(QFile* file)
 
 // ### PassPoint ###
 
-void Template::PassPoint::save(QFile* file)
+void Template::PassPoint::save(QIODevice* file)
 {
 	file->write((const char*)&src_coords_template, sizeof(MapCoordF));
 	file->write((const char*)&src_coords_map, sizeof(MapCoordF));
@@ -70,7 +70,7 @@ void Template::PassPoint::save(QFile* file)
 	file->write((const char*)&calculated_coords_map, sizeof(MapCoordF));
 	file->write((const char*)&error, sizeof(double));
 }
-void Template::PassPoint::load(QFile* file)
+void Template::PassPoint::load(QIODevice* file)
 {
 	file->read((char*)&src_coords_template, sizeof(MapCoordF));
 	file->read((char*)&src_coords_map, sizeof(MapCoordF));
@@ -121,7 +121,7 @@ Template::~Template()
 {	
 }
 
-void Template::saveTemplateParameters(QFile* file)
+void Template::saveTemplateParameters(QIODevice* file)
 {
 	saveString(file, template_file);
 	
@@ -142,7 +142,7 @@ void Template::saveTemplateParameters(QFile* file)
 	
 	file->write((const char*)&template_group, sizeof(int));
 }
-void Template::loadTemplateParameters(QFile* file)
+void Template::loadTemplateParameters(QIODevice* file)
 {
 	loadString(file, template_file);
 	

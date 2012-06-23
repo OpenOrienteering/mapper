@@ -47,15 +47,15 @@ bool OCAD8FileFormat::understands(const unsigned char *buffer, size_t sz) const
     return false;
 }
 
-Importer *OCAD8FileFormat::createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
+Importer *OCAD8FileFormat::createImporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException)
 {
-    return new OCAD8FileImport(path, map, view);
+	return new OCAD8FileImport(stream, path, map, view);
 }
 
 
 
 
-OCAD8FileImport::OCAD8FileImport(const QString &path, Map *map, MapView *view) : Importer(path, map, view), file(NULL)
+OCAD8FileImport::OCAD8FileImport(QIODevice* stream, const QString &path, Map* map, MapView* view) : Importer(stream, map, view), path(path), file(NULL)
 {
     ocad_init();
     encoding_1byte = QTextCodec::codecForName("Windows-1252");
@@ -70,6 +70,7 @@ OCAD8FileImport::~OCAD8FileImport()
 
 void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 {
+	stream->close();	// TODO: use stream instead of libocad's direct file access
     //qint64 start = QDateTime::currentMSecsSinceEpoch();
 
 	QByteArray filename = path.toLocal8Bit().constData();

@@ -22,7 +22,7 @@
 
 #include <cassert>
 #include <QtGui>
-#include <QFile>
+#include <QIODevice>
 
 #include "util_gui.h"
 #include "util.h"
@@ -52,7 +52,7 @@ AreaSymbol::FillPattern::FillPattern()
 	point_distance = 5000; // 5 mm
 	point = NULL;
 }
-void AreaSymbol::FillPattern::save(QFile* file, Map* map)
+void AreaSymbol::FillPattern::save(QIODevice* file, Map* map)
 {
 	qint32 itype = type;
 	file->write((const char*)&itype, sizeof(qint32));
@@ -77,7 +77,7 @@ void AreaSymbol::FillPattern::save(QFile* file, Map* map)
 			point->save(file, map);
 	}
 }
-bool AreaSymbol::FillPattern::load(QFile* file, int version, Map* map)
+bool AreaSymbol::FillPattern::load(QIODevice* file, int version, Map* map)
 {
 	qint32 itype;
 	file->read((char*)&itype, sizeof(qint32));
@@ -457,7 +457,7 @@ void AreaSymbol::scale(double factor)
 	resetIcon();
 }
 
-void AreaSymbol::saveImpl(QFile* file, Map* map)
+void AreaSymbol::saveImpl(QIODevice* file, Map* map)
 {
 	int temp = map->findColorIndex(color);
 	file->write((const char*)&temp, sizeof(int));
@@ -468,7 +468,7 @@ void AreaSymbol::saveImpl(QFile* file, Map* map)
 	for (int i = 0; i < size; ++i)
 		patterns[i].save(file, map);
 }
-bool AreaSymbol::loadImpl(QFile* file, int version, Map* map)
+bool AreaSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	int temp;
 	file->read((char*)&temp, sizeof(int));

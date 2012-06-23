@@ -31,6 +31,7 @@
 #include "symbol_area.h"
 #include "symbol_text.h"
 #include "symbol_combined.h"
+#include "file_format.h"
 
 
 // STL comparison function for sorting symbols by number
@@ -77,14 +78,17 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
     delete_action = context_menu->addAction(tr("Delete"), this, SLOT(deleteSymbols()));
     scale_action = context_menu->addAction(tr("Scale..."), this, SLOT(scaleSymbol()));
 	context_menu->addSeparator();
+	copy_action = context_menu->addAction(tr("Copy"), this, SLOT(copySymbols()));
+	paste_action = context_menu->addAction(tr("Paste"), this, SLOT(pasteSymbols()));
+	context_menu->addSeparator();
 	switch_symbol_action = context_menu->addAction(tr("Switch symbol of selected object(s)"), parent, SLOT(emitSwitchSymbolClicked()));
 	fill_border_action = context_menu->addAction(tr("Fill / Create border for selected object(s)"), parent, SLOT(emitFillBorderClicked()));
 	// text will be filled in by updateContextMenuState()
 	select_objects_action = context_menu->addAction("", parent, SLOT(emitSelectObjectsClicked()));
 	context_menu->addSeparator();
-	hide_action = context_menu->addAction(tr("Hide objects with this symbol"), this, SLOT(setSelectedSymbolVisibility(bool)));
+	hide_action = context_menu->addAction("", this, SLOT(setSelectedSymbolVisibility(bool)));
 	hide_action->setCheckable(true);
-	protect_action = context_menu->addAction(tr("Protect objects with this symbol"), this, SLOT(setSelectedSymbolProtection(bool)));
+	protect_action = context_menu->addAction("", this, SLOT(setSelectedSymbolProtection(bool)));
 	protect_action->setCheckable(true);
 	context_menu->addSeparator();
     context_menu->addAction(tr("Select all"), this, SLOT(selectAll()));
@@ -149,6 +153,12 @@ void SymbolRenderWidget::selectSingleSymbol(int i)
 bool SymbolRenderWidget::isSymbolSelected(int i) const
 {
 	return selected_symbols.find(i) != selected_symbols.end();
+}
+void SymbolRenderWidget::getSelectionBitfield(std::vector< bool >& out) const
+{
+	out.assign(map->getNumSymbols(), false);
+	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+		out[*it] = true;
 }
 int SymbolRenderWidget::getNumSelectedSymbols() const
 {
@@ -380,7 +390,7 @@ void SymbolRenderWidget::mouseMoveEvent(QMouseEvent* event)
 		
 		QByteArray data;
 		data.append((const char*)&current_symbol_index, sizeof(int));
-		mime_data->setData("openorienteering/symbol", data);
+		mime_data->setData("openorienteering/symbol_index", data);
 		drag->setMimeData(mime_data);
 		
 		drag->exec(Qt::MoveAction);
@@ -460,12 +470,12 @@ void SymbolRenderWidget::wheelEvent(QWheelEvent* event)
 
 void SymbolRenderWidget::dragEnterEvent(QDragEnterEvent* event)
 {
-	if (event->mimeData()->hasFormat("openorienteering/symbol"))
+	if (event->mimeData()->hasFormat("openorienteering/symbol_index"))
 		event->acceptProposedAction();
 }
 void SymbolRenderWidget::dragMoveEvent(QDragMoveEvent* event)
 {
-	if (event->mimeData()->hasFormat("openorienteering/symbol"))
+	if (event->mimeData()->hasFormat("openorienteering/symbol_index"))
 	{
 		int row, pos_in_row;
 		if (!getDropPosition(event->pos(), row, pos_in_row))
@@ -611,6 +621,89 @@ void SymbolRenderWidget::duplicateSymbol()
 	symbol_widget->adjustSize();
 	map->setSymbolsDirty();
 }
+
+void SymbolRenderWidget::copySymbols()
+{
+	// Create map containing selected symbols and their color dependencies
+	Map* copy_map = new Map();
+	copy_map->setScaleDenominator(map->getScaleDenominator());
+	
+	std::vector<bool> selection;
+	getSelectionBitfield(selection);
+	copy_map->importMap(map, Map::MinimalSymbolImport, this, &selection);
+	
+	// Save map to memory
+	QBuffer buffer;
+	buffer.open(QIODevice::WriteOnly);
+	Exporter* exporter = NULL;
+	try {
+		const Format* native_format = FileFormats.findFormat("native");
+		exporter = native_format->createExporter(&buffer, "", copy_map, NULL);
+		exporter->doExport();
+		buffer.close();
+	}
+	catch (std::exception &e)
+	{
+		if (exporter)
+			delete exporter;
+		delete copy_map;
+		QMessageBox::warning(NULL, tr("Error"), tr("An internal error occurred, sorry!"));
+		return;
+	}
+	if (exporter)
+		delete exporter;
+	delete copy_map;
+	
+	// Put buffer into clipboard
+	QMimeData* mime_data = new QMimeData();
+	mime_data->setData("openorienteering/symbols", buffer.data());
+	QApplication::clipboard()->setMimeData(mime_data);
+}
+void SymbolRenderWidget::pasteSymbols()
+{
+	if (!QApplication::clipboard()->mimeData()->hasFormat("openorienteering/symbols"))
+	{
+		QMessageBox::warning(NULL, tr("Error"), tr("There are no symbols in clipboard which could be pasted!"));
+		return;
+	}
+	
+	// Get buffer from clipboard
+	QByteArray byte_array = QApplication::clipboard()->mimeData()->data("openorienteering/symbols");
+	QBuffer buffer(&byte_array);
+	buffer.open(QIODevice::ReadOnly);
+	
+	// Create map from buffer
+	Map* paste_map = new Map();
+	
+	Importer* importer = NULL;
+	try {
+		const Format* native_format = FileFormats.findFormat("native");
+		importer = native_format->createImporter(&buffer, "", paste_map, NULL);
+		importer->doImport(false);
+		importer->finishImport();
+		buffer.close();
+		
+		for (int i = 0; i < paste_map->getNumSymbols(); ++i)
+			paste_map->getSymbol(i)->loadFinished(paste_map);
+	}
+	catch (std::exception &e)
+	{
+		if (importer)
+			delete importer;
+		QMessageBox::warning(NULL, tr("Error"), tr("An internal error occurred, sorry!"));
+		return;
+	}
+	if (importer)
+		delete importer;
+	
+	// Import pasted map
+	map->importMap(paste_map, Map::CompleteImport, this, NULL, currentSymbolIndex(), false);
+	delete paste_map;
+	
+	symbol_widget->emitSelectedSymbolsChanged();
+}
+
+
 void SymbolRenderWidget::setSelectedSymbolVisibility(bool checked)
 {
 	bool selection_changed = false;
@@ -711,6 +804,8 @@ void SymbolRenderWidget::updateContextMenuState()
 	
 	edit_action->setEnabled(single_selection);
 	scale_action->setEnabled(single_selection);
+	copy_action->setEnabled(have_selection);
+	paste_action->setEnabled(QApplication::clipboard()->mimeData()->hasFormat("openorienteering/symbols"));
 	switch_symbol_action->setEnabled(single_symbol_compatible && single_symbol_different);
 	fill_border_action->setEnabled(single_symbol_compatible && single_symbol_different);
 	hide_action->setEnabled(have_selection);
@@ -720,10 +815,18 @@ void SymbolRenderWidget::updateContextMenuState()
 	duplicate_action->setEnabled(single_selection);
 	delete_action->setEnabled(have_selection);
 
-    if (single_selection)
-        select_objects_action->setText(tr("Select all objects with symbol \"%1\"").arg(single_symbol->getName()));
-    else
-        select_objects_action->setText(tr("Select all objects with selected symbols"));
+	if (single_selection)
+	{
+		select_objects_action->setText(tr("Select all objects with this symbol"));
+		hide_action->setText(tr("Hide objects with this symbol"));
+		protect_action->setText(tr("Protect objects with this symbol"));
+	}
+	else
+	{
+		select_objects_action->setText(tr("Select all objects with selected symbols"));
+		hide_action->setText(tr("Hide objects with selected symbols"));
+		protect_action->setText(tr("Protect objects with selected symbols"));
+	}
     select_objects_action->setEnabled(have_selection);
 }
 

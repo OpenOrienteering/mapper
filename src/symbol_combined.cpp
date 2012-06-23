@@ -21,7 +21,7 @@
 #include "symbol_combined.h"
 
 #include <QtGui>
-#include <QFile>
+#include <QIODevice>
 
 #include "map.h"
 #include "symbol_setting_dialog.h"
@@ -131,7 +131,7 @@ Symbol::Type CombinedSymbol::getContainedTypes() const
 	return (Type)type;
 }
 
-void CombinedSymbol::saveImpl(QFile* file, Map* map)
+void CombinedSymbol::saveImpl(QIODevice* file, Map* map)
 {
     int size = (int)parts.size();
 	file->write((const char*)&size, sizeof(int));
@@ -143,7 +143,7 @@ void CombinedSymbol::saveImpl(QFile* file, Map* map)
 	}
 }
 
-bool CombinedSymbol::loadImpl(QFile* file, int version, Map* map)
+bool CombinedSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	int size;
 	file->read((char*)&size, sizeof(int));

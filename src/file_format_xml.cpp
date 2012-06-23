@@ -97,9 +97,9 @@ Importer *XMLFileFormat::createImporter(const QString &path, Map *map, MapView *
 }
 */
 
-Exporter *XMLFileFormat::createExporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
+Exporter *XMLFileFormat::createExporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException)
 {
-    return new XMLFileExporter(path, map, view);
+    return new XMLFileExporter(stream, map, view);
 }
 
 #define NS_V1 "http://oo-mapper.com/oo-mapper/v1"
@@ -140,8 +140,8 @@ void XMLFileImporter::doExport() throw (FormatException)
 */
 
 
-XMLFileExporter::XMLFileExporter(const QString &path, Map *map, MapView *view)
-    : Exporter(path, map, view), builder("document", NS_V1)
+XMLFileExporter::XMLFileExporter(QIODevice* stream, Map *map, MapView *view)
+    : Exporter(stream, map, view), builder("document", NS_V1)
 {
 
 }
@@ -191,13 +191,7 @@ void XMLFileExporter::doExport() throw (FormatException)
 
     builder.up();
 
-    QFile f(path);
-    if (f.open(QIODevice::ReadWrite))
-    {
-        f.write(builder.document().toString().toUtf8());
-        f.close();
-    }
-
+	stream->write(builder.document().toString().toUtf8());
 }
 
 void XMLFileExporter::exportSymbol(const Symbol *symbol, bool anonymous)
