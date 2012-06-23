@@ -68,12 +68,35 @@ bool Object::equals(Object* other, bool compare_symbol)
 	
 	if (type == Point)
 	{
-		PointObject* point_a = static_cast<PointObject*>(this);
-		PointObject* point_b = static_cast<PointObject*>(other);
+		PointObject* point_this = static_cast<PointObject*>(this);
+		PointObject* point_other = static_cast<PointObject*>(other);
 		
 		// Make sure that compared values are greater than 1, see qFuzzyCompare
-		float rotation_a = point_a->getRotation();
-		float rotation_b = point_b->getRotation();
+		float rotation_a = point_this->getRotation();
+		float rotation_b = point_other->getRotation();
+		while (rotation_a < 1)
+		{
+			rotation_a += 100;
+			rotation_b += 100;
+		}
+		if (!qFuzzyCompare(rotation_a, rotation_b))
+			return false;
+	}
+	else if (type == Text)
+	{
+		TextObject* text_this = static_cast<TextObject*>(this);
+		TextObject* text_other = static_cast<TextObject*>(other);
+		
+		if (text_this->getText().compare(text_other->getText(), Qt::CaseSensitive) != 0)
+			return false;
+		if (text_this->getHorizontalAlignment() != text_other->getHorizontalAlignment())
+			return false;
+		if (text_this->getVerticalAlignment() != text_other->getVerticalAlignment())
+			return false;
+		
+		// Make sure that compared values are greater than 1, see qFuzzyCompare
+		float rotation_a = text_this->getRotation();
+		float rotation_b = text_other->getRotation();
 		while (rotation_a < 1)
 		{
 			rotation_a += 100;
@@ -84,6 +107,35 @@ bool Object::equals(Object* other, bool compare_symbol)
 	}
 	
 	return true;
+}
+
+Object& Object::operator=(const Object& other)
+{
+	assert(type == other.type);
+	symbol = other.symbol;
+	coords = other.coords;
+	
+	if (type == Point)
+	{
+		PointObject* point_this = static_cast<PointObject*>(this);
+		const PointObject* point_other = static_cast<const PointObject*>(&other);
+		
+		PointSymbol* point_symbol = static_cast<PointSymbol*>(point_this->getSymbol());
+		if (point_symbol && point_symbol->isRotatable())
+			point_this->setRotation(point_other->getRotation());
+	}
+	else if (type == Text)
+	{
+		TextObject* text_this = static_cast<TextObject*>(this);
+		const TextObject* text_other = static_cast<const TextObject*>(&other);
+		
+		text_this->setText(text_other->getText());
+		text_this->setHorizontalAlignment(text_other->getHorizontalAlignment());
+		text_this->setVerticalAlignment(text_other->getVerticalAlignment());
+		text_this->setRotation(text_other->getRotation());
+	}
+	
+	return *this;
 }
 
 void Object::save(QIODevice* file)

@@ -21,6 +21,7 @@
   <file>images/cursor-invisible.png</file>
   <file>images/cursor-paint-on-template.png</file>
   <file>images/cursor-rotate.png</file>
+  <file>images/cursor-scale.png</file>
   <file>images/cut.png</file>
   <file>images/delete.png</file>
   <file>images/draw-circle.png</file>
@@ -65,6 +66,7 @@
   <file>images/tool-fill-border.png</file>
   <file>images/tool-measure.png</file>
   <file>images/tool-rotate.png</file>
+  <file>images/tool-scale.png</file>
   <file>images/tool-switch-dashes.png</file>
   <file>images/tool-switch-symbol.png</file>
   <file>images/undo.png</file>

@@ -48,6 +48,7 @@
 #include "tool_cut.h"
 #include "tool_cut_hole.h"
 #include "tool_rotate.h"
+#include "tool_scale.h"
 #include "tool_measure.h"
 #include "tool_boolean.h"
 #include "object_text.h"
@@ -379,6 +380,7 @@ void MapEditorController::assignKeyboardShortcuts()
     findAction("switchdashes")->setShortcut(QKeySequence("Ctrl+D"));
 	findAction("connectpaths")->setShortcut(QKeySequence("C"));
 	findAction("rotateobjects")->setShortcut(QKeySequence("R"));
+	findAction("scaleobjects")->setShortcut(QKeySequence("Ctrl+S"));
 	findAction("cutobject")->setShortcut(QKeySequence("K"));
 	findAction("cuthole")->setShortcut(QKeySequence("H"));
 	findAction("measure")->setShortcut(QKeySequence("M"));
@@ -444,6 +446,7 @@ void MapEditorController::createMenuAndToolbars()
 	cut_hole_rectangle_act->setCheckable(true);
 	QObject::connect(cut_hole_rectangle_act, SIGNAL(activated()), this, SLOT(cutHoleRectangleClicked()));
 	rotate_act = newToolAction("rotateobjects", tr("Rotate object(s)"), this, SLOT(rotateClicked()), "tool-rotate.png", QString::null, "drawing_toolbar.html#rotate");
+	scale_act = newToolAction("scaleobjects", tr("Scale object(s)"), this, SLOT(scaleClicked()), "tool-scale.png", QString::null, "drawing_toolbar.html#scale");
 	measure_act = newCheckAction("measure", tr("Measure lengths and areas"), this, SLOT(measureClicked(bool)), "tool-measure.png", QString::null, "drawing_toolbar.html#measure");
 	boolean_union_act = newAction("booleanunion", tr("Unify areas"), this, SLOT(booleanUnionClicked()), "tool-boolean-union.png");
 	boolean_intersection_act = newAction("booleanintersection", tr("Intersect areas"), this, SLOT(booleanIntersectionClicked()), "tool-boolean-intersection.png");
@@ -549,6 +552,7 @@ void MapEditorController::createMenuAndToolbars()
 	cut_hole_menu->addAction(cut_hole_rectangle_act);
 	tools_menu->addMenu(cut_hole_menu);
 	tools_menu->addAction(rotate_act);
+	tools_menu->addAction(scale_act);
 	tools_menu->addAction(measure_act);
 		
 	// Map menu
@@ -628,6 +632,7 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_editing->addWidget(cut_hole_button);
 
 	toolbar_editing->addAction(rotate_act);
+	toolbar_editing->addAction(scale_act);
 	toolbar_editing->addAction(measure_act);
 
 	// Advanced editing toolbar
@@ -1121,6 +1126,8 @@ void MapEditorController::objectSelectionChanged()
 	cut_hole_menu->setEnabled(cut_hole_act->isEnabled());
 	rotate_act->setEnabled(have_selection);
 	rotate_act->setStatusTip(tr("Rotate the selected object(s).") + (rotate_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
+	scale_act->setEnabled(have_selection);
+	scale_act->setStatusTip(tr("Scale the selected object(s).") + (scale_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
 	boolean_union_act->setEnabled(have_two_same_symbol_areas);
 	boolean_union_act->setStatusTip(tr("Unify overlapping areas.") + (boolean_union_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
 	boolean_intersection_act->setEnabled(have_two_same_symbol_areas && uniform_symbol_selected);
@@ -1460,6 +1467,10 @@ void MapEditorController::rotateClicked()
 {
 	setTool(new RotateTool(this, rotate_act));
 }
+void MapEditorController::scaleClicked()
+{
+	setTool(new ScaleTool(this, scale_act));
+}
 void MapEditorController::measureClicked(bool checked)
 {
 	bool new_widget = false;
@@ -1691,6 +1702,20 @@ void MapEditorTool::startEditingSelection(MapRenderables& old_renderables, std::
 	}
 	
 	editor->setEditingInProgress(true);
+}
+void MapEditorTool::resetEditedObjects(std::vector< Object* >* undo_duplicates)
+{
+	assert(undo_duplicates);
+	Map* map = editor->getMap();
+	
+	size_t i = 0;
+	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		*(*it) = *undo_duplicates->at(i);
+		(*it)->setMap(NULL);
+		++i;
+	}
 }
 void MapEditorTool::finishEditingSelection(MapRenderables& renderables, MapRenderables& old_renderables, bool create_undo_step, std::vector< Object* >* undo_duplicates, bool delete_objects)
 {

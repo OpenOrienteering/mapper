@@ -53,6 +53,7 @@ public:
 	virtual ~Object();
 	virtual Object* duplicate() = 0;
 	bool equals(Object* other, bool compare_symbol);
+	Object& operator= (const Object& other);
 	
 	/// Returns the object type determined by the subclass
     inline Type getType() const {return type;}

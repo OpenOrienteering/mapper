@@ -110,6 +110,7 @@ set(Mapper_SRCS
  src/tool_cut.cpp
  src/tool_cut_hole.cpp
  src/tool_rotate.cpp
+ src/tool_scale.cpp
  src/tool_measure.cpp
  src/tool_boolean.cpp
 
@@ -173,6 +174,7 @@ set(Mapper_MOC_INPUT
  src/tool_edit.h
  src/tool_measure.h
  src/tool_rotate.h
+ src/tool_scale.h
  src/undo.h
 )
 
