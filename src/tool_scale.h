@@ -18,17 +18,26 @@
  */
 
 
-#ifndef _OPENORIENTEERING_DRAW_CIRCLE_H_
-#define _OPENORIENTEERING_DRAW_CIRCLE_H_
+#ifndef _OPENORIENTEERING_TOOL_SCALE_H_
+#define _OPENORIENTEERING_TOOL_SCALE_H_
 
-#include "tool_draw_line_and_area.h"
+#include "map_editor.h"
 
-/// Tool to draw circles and ellipses
-class DrawCircleTool : public DrawLineAndAreaTool
+#include <vector>
+
+#include <QScopedPointer>
+
+class Renderable;
+class MapRenderables;
+typedef std::vector<Renderable*> RenderableVector;
+
+/// Tool to scale objects
+class ScaleTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	DrawCircleTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
+	ScaleTool(MapEditorController* editor, QAction* tool_button);
+	virtual ~ScaleTool();
 	
     virtual void init();
     virtual QCursor* getCursor() {return cursor;}
@@ -37,28 +46,28 @@ public:
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
     virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	
-	virtual bool keyPressEvent(QKeyEvent* event);
-	
     virtual void draw(QPainter* painter, MapWidget* widget);
+	
+protected:
+	void updateStatusText();
+	void updatePreviewObjects();
+	void updateDirtyRect();
+	void updateDragging(const MapCoordF cursor_pos_map);
 	
 	static QCursor* cursor;
 	
-protected:
-	virtual void finishDrawing();
-	virtual void abortDrawing();
-	
-	void updateCircle();
-	void setDirtyRect();
-	void updateStatusText();
-	
+	// Mouse handling
 	QPoint click_pos;
-	MapCoordF circle_start_pos_map;
-	QPoint cur_pos;
-	MapCoordF cur_pos_map;
-	MapCoordF opposite_pos_map;		// position on cirlce/ellipse opposite to click_pos_map
-	bool dragging;
-	bool first_point_set;
-	bool second_point_set;
+	
+	bool scaling_center_set;
+	MapCoordF scaling_center;
+	bool scaling;
+	double original_scale;
+	double scaling_factor;
+	
+	std::vector<Object*> undo_duplicates;
+	QScopedPointer<MapRenderables> old_renderables;
+	QScopedPointer<MapRenderables> renderables;
 };
 
 #endif

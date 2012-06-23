@@ -18,7 +18,7 @@
  */
 
 
-#include "tool_rotate.h"
+#include "tool_scale.h"
 
 #include <qmath.h>
 #include <QApplication>
@@ -30,42 +30,43 @@
 #include "renderable.h"
 #include "util.h"
 
-QCursor* RotateTool::cursor = NULL;
+QCursor* ScaleTool::cursor = NULL;
 
-RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button)
+ScaleTool::ScaleTool(MapEditorController* editor, QAction* tool_button)
 : MapEditorTool(editor, Other, tool_button),
   old_renderables(new MapRenderables(editor->getMap())), 
   renderables(new MapRenderables(editor->getMap()))
 {
-	rotation_center_set = false;
-	rotating = false;
+	scaling_center_set = false;
+	scaling = false;
+	scaling_factor = 1;
 	
 	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-rotate.png"), 1, 1);
+		cursor = new QCursor(QPixmap(":/images/cursor-scale.png"), 1, 1);
 }
 
-void RotateTool::init()
+void ScaleTool::init()
 {
-	// Set initial rotation center to the center of the bounding box of the selected objects
+	// Set initial scaling center to the center of the bounding box of the selected objects
 	Map* map = editor->getMap();
 	if (map->getNumSelectedObjects() > 0)
 	{
 		QRectF rect;
 		map->includeSelectionRect(rect);
-		rotation_center = MapCoordF(rect.center());
-		rotation_center_set = true;
+		scaling_center = MapCoordF(rect.center());
+		scaling_center_set = true;
 	}
 	
 	updateDirtyRect();
 	updateStatusText();
 }
 
-RotateTool::~RotateTool()
+ScaleTool::~ScaleTool()
 {
 	deleteOldSelectionRenderables(*old_renderables, false);
 }
 
-bool RotateTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool ScaleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (!(event->buttons() & Qt::LeftButton))
 		return false;
@@ -74,38 +75,37 @@ bool RotateTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 	return true;
 }
 
-bool RotateTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool ScaleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (!(event->buttons() & Qt::LeftButton))
 		return false;
 	
-	if (rotating)
+	if (scaling)
 		updateDragging(map_coord);
-	else if ( !rotating && rotation_center_set &&
+	else if ( !scaling && scaling_center_set &&
 	          (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance() )
 	{
-		// Start rotating
-		rotating = true;
-		old_rotation = (map_coord - rotation_center).getAngle();
-		original_rotation = old_rotation;
+		// Start scaling
+		scaling = true;
+		original_scale = (map_coord - scaling_center).length();
 		startEditingSelection(*old_renderables, &undo_duplicates);
 	}
 	return true;
 }
 
-bool RotateTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool ScaleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
-	if (!rotating)
+	if (!scaling)
 	{
-		rotation_center = map_coord;
-		rotation_center_set = true;
+		scaling_center = map_coord;
+		scaling_center_set = true;
 	}
 	else
 	{
-		rotating = false;
+		scaling = false;
 		updateDragging(map_coord);
 		finishEditingSelection(*renderables, *old_renderables, true, &undo_duplicates);
 		editor->getMap()->setObjectsDirty();
@@ -117,30 +117,30 @@ bool RotateTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	return true;
 }
 
-void RotateTool::draw(QPainter* painter, MapWidget* widget)
+void ScaleTool::draw(QPainter* painter, MapWidget* widget)
 {
 	editor->getMap()->drawSelection(painter, true, widget, renderables->isEmpty() ? NULL : renderables.data());
 	
-	if (rotation_center_set)
+	if (scaling_center_set)
 	{
 		painter->setPen(Qt::white);
 		painter->setBrush(Qt::NoBrush);
 		
-		QPoint center = widget->mapToViewport(rotation_center).toPoint();
+		QPoint center = widget->mapToViewport(scaling_center).toPoint();
 		painter->drawEllipse(center, 3, 3);
 		painter->setPen(Qt::black);
 		painter->drawEllipse(center, 4, 4);
 	}
 }
 
-void RotateTool::updateDirtyRect()
+void ScaleTool::updateDirtyRect()
 {
 	QRectF rect;
 	editor->getMap()->includeSelectionRect(rect);
 	
-	if (rotation_center_set)
+	if (scaling_center_set)
 	{
-		rectIncludeSafe(rect, rotation_center.toQPointF());
+		rectIncludeSafe(rect, scaling_center.toQPointF());
 		editor->getMap()->setDrawingBoundingBox(rect, 5, true);
 	}
 	else if (rect.isValid())
@@ -149,42 +149,38 @@ void RotateTool::updateDirtyRect()
 		editor->getMap()->clearDrawingBoundingBox();
 }
 
-void RotateTool::updateDragging(const MapCoordF cursor_pos_map)
+void ScaleTool::updateDragging(const MapCoordF cursor_pos_map)
 {
-	if (rotating)
+	if (scaling)
 	{
-		double rotation = (cursor_pos_map - rotation_center).getAngle();
-		double delta_rotation = rotation - old_rotation;
+		double scaling = (cursor_pos_map - scaling_center).length();
+		scaling_factor = scaling / qMax(1e-7, original_scale);
 		
+		resetEditedObjects(&undo_duplicates);
 		Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
 		for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
-			(*it)->rotateAround(rotation_center, -1.0 * delta_rotation);
+		{
+			(*it)->move(-scaling_center.getIntX(), -scaling_center.getIntY());
+			(*it)->scale(scaling_factor);
+			(*it)->move(scaling_center.getIntX(), scaling_center.getIntY());
+		}
 		updatePreviewObjects();
-		
-		old_rotation = rotation;
 		updateStatusText();
 	}
 }
 
-void RotateTool::updatePreviewObjects()
+void ScaleTool::updatePreviewObjects()
 {
 	updateSelectionEditPreview(*renderables);
 	updateDirtyRect();
 }
 
-void RotateTool::updateStatusText()
+void ScaleTool::updateStatusText()
 {
-	if (rotating)
-	{
-		double delta_rotation = old_rotation - original_rotation;
-		if (delta_rotation < -M_PI)
-			delta_rotation = delta_rotation + 2*M_PI;
-		else if (delta_rotation > M_PI)
-			delta_rotation = delta_rotation - 2*M_PI;
-		setStatusBarText(tr("<b>Rotation:</b> %1").arg(-delta_rotation * 180 / M_PI, 0, 'f', 1));
-	}
-	else if (!rotation_center_set)
-		setStatusBarText(tr("<b>Click</b> to set the rotation center"));
+	if (scaling)
+		setStatusBarText(tr("<b>Scaling:</b> %1%").arg(scaling_factor * 100, 0, 'f', 1));
+	else if (!scaling_center_set)
+		setStatusBarText(tr("<b>Click</b> to set the scaling center"));
 	else
-		setStatusBarText(tr("<b>Click</b> to set the rotation center, <b>drag</b> to rotate the selected object(s)"));
+		setStatusBarText(tr("<b>Click</b> to set the scaling center, <b>drag</b> to scale the selected object(s)"));
 }

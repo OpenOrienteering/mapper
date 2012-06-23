@@ -79,6 +79,7 @@ protected slots:
 	void setSelectedSymbolVisibility(bool checked);
 	void setSelectedSymbolProtection(bool checked);
 	void selectAll();
+	void selectUnused();
 	void invertSelection();
     void sortByNumber();
 
@@ -112,6 +113,7 @@ protected:
 	
 	bool isSymbolSelected(int i) const;
 	void getSelectionBitfield(std::vector<bool>& out) const;
+	void setSelectionBitfield(std::vector<bool>& in);
 	
 	bool newSymbol(Symbol* prototype);
 	

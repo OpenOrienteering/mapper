@@ -26,6 +26,7 @@
 #include <QAction>
 #include <QDockWidget>
 #include <QScopedPointer>
+#include <QClipboard>
 
 #include "main_window.h"
 #include "map.h"
@@ -125,6 +126,8 @@ public slots:
 	void objectSelectionChanged();
 	void selectedSymbolsOrObjectsChanged();
 	void undoStepAvailabilityChanged();
+	void clipboardChanged(QClipboard::Mode mode);
+	void updatePasteAvailability();
 	
 	void showWholeMap();
 	
@@ -146,6 +149,7 @@ public slots:
 	void cutHoleCircleClicked();
 	void cutHoleRectangleClicked();
 	void rotateClicked();
+	void scaleClicked();
 	void measureClicked(bool checked);
 	void booleanUnionClicked();
 	void booleanIntersectionClicked();
@@ -205,6 +209,9 @@ private:
 	
 	QAction* undo_act;
 	QAction* redo_act;
+	QAction* cut_act;
+	QAction* copy_act;
+	QAction* paste_act;
 	
 	QAction* map_coordinates_act;
 	QAction* projected_coordinates_act;
@@ -239,6 +246,7 @@ private:
 	QAction* cut_hole_circle_act;
 	QAction* cut_hole_rectangle_act;
 	QAction* rotate_act;
+	QAction* scale_act;
 	QAction* measure_act;
 	EditorDockWidget* measure_dock_widget;
 	QAction* boolean_union_act;
@@ -371,6 +379,7 @@ protected:
 	
 	// Helper methods for editing the selected objects with preview
 	void startEditingSelection(MapRenderables& old_renderables, std::vector<Object*>* undo_duplicates = NULL);
+	void resetEditedObjects(std::vector<Object*>* undo_duplicates);
 	void finishEditingSelection(MapRenderables& renderables, MapRenderables& old_renderables, bool create_undo_step, std::vector<Object*>* undo_duplicates = NULL, bool delete_objects = false);
 	void updateSelectionEditPreview(MapRenderables& renderables);
 	void deleteOldSelectionRenderables(MapRenderables& old_renderables, bool set_area_dirty);

@@ -78,6 +78,7 @@ HEADERS += src/color_dock_widget.h \
            src/tool_edit.h \
            src/tool_measure.h \
            src/tool_rotate.h \
+           src/tool_scale.h \
            src/undo.h \
            src/util.h \
            src/util_gui.h \
@@ -148,6 +149,7 @@ SOURCES += src/color_dock_widget.cpp \
            src/tool_edit.cpp \
            src/tool_measure.cpp \
            src/tool_rotate.cpp \
+           src/tool_scale.cpp \
            src/undo.cpp \
            src/util.cpp \
            qtsingleapplication/qtlocalpeer.cpp \

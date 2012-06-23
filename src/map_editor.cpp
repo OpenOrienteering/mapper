@@ -48,6 +48,7 @@
 #include "tool_cut.h"
 #include "tool_cut_hole.h"
 #include "tool_rotate.h"
+#include "tool_scale.h"
 #include "tool_measure.h"
 #include "tool_boolean.h"
 #include "object_text.h"
@@ -72,6 +73,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	override_tool = NULL;
 	last_painted_on_template = NULL;
 	
+	paste_act = NULL;
 	toolbar_view = NULL;
 	toolbar_drawing = NULL;
 	toolbar_editing = NULL;
@@ -86,6 +88,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 }
 MapEditorController::~MapEditorController()
 {
+	paste_act = NULL;
 	delete toolbar_view;
 	delete toolbar_drawing;
 	delete toolbar_editing;
@@ -176,6 +179,7 @@ void MapEditorController::setEditingInProgress(bool value)
 		
 		undo_act->setEnabled(!editing_in_progress && map->objectUndoManager().getNumUndoSteps() > 0);
 		redo_act->setEnabled(!editing_in_progress && map->objectUndoManager().getNumRedoSteps() > 0);
+		updatePasteAvailability();
 	}
 }
 
@@ -272,8 +276,11 @@ void MapEditorController::attach(MainWindow* window)
 	
 	// Update enabled/disabled state for the tools ...
 	objectSelectionChanged();
-	// ... and for undo
+	// ... and for undo ...
 	undoStepAvailabilityChanged();
+	// ... and make sure it is kept up to date for copy/paste
+	connect(QApplication::clipboard(), SIGNAL(changed(QClipboard::Mode)), this, SLOT(clipboardChanged(QClipboard::Mode)));
+	clipboardChanged(QClipboard::Clipboard);
 	
 	// Check if there is an invalid template and if so, output a warning
 	bool has_invalid_template = false;
@@ -373,6 +380,7 @@ void MapEditorController::assignKeyboardShortcuts()
     findAction("switchdashes")->setShortcut(QKeySequence("Ctrl+D"));
 	findAction("connectpaths")->setShortcut(QKeySequence("C"));
 	findAction("rotateobjects")->setShortcut(QKeySequence("R"));
+	findAction("scaleobjects")->setShortcut(QKeySequence("Ctrl+S"));
 	findAction("cutobject")->setShortcut(QKeySequence("K"));
 	findAction("cuthole")->setShortcut(QKeySequence("H"));
 	findAction("measure")->setShortcut(QKeySequence("M"));
@@ -391,9 +399,9 @@ void MapEditorController::createMenuAndToolbars()
 
 	undo_act = newAction("undo", tr("Undo"), this, SLOT(undo()), "undo.png", tr("Undo the last step"), "edit_menu.html");
 	redo_act = newAction("redo", tr("Redo"), this, SLOT(redo()), "redo.png", tr("Redo the last step"), "edit_menu.html");
-	/*QAction* cut_act = */newAction("cut", tr("Cu&t"), this, SLOT(cut()), "cut.png");
-	/*QAction* copy_act = */newAction("copy", tr("C&opy"), this, SLOT(copy()), "copy.png");
-	/*QAction* paste_act = */newAction("paste", tr("&Paste"), this, SLOT(paste()), "paste");
+	cut_act = newAction("cut", tr("Cu&t"), this, SLOT(cut()), "cut.png");
+	copy_act = newAction("copy", tr("C&opy"), this, SLOT(copy()), "copy.png");
+	paste_act = newAction("paste", tr("&Paste"), this, SLOT(paste()), "paste");
 
 	QAction* zoom_in_act = newAction("zoomin", tr("Zoom in"), this, SLOT(zoomIn()), "view-zoom-in.png", QString::null, "view_menu.html");
 	QAction* zoom_out_act = newAction("zoomout", tr("Zoom out"), this, SLOT(zoomOut()), "view-zoom-out.png", QString::null, "view_menu.html");
@@ -419,7 +427,7 @@ void MapEditorController::createMenuAndToolbars()
 	edit_tool_act = newToolAction("editobjects", tr("Edit objects"), this, SLOT(editToolClicked()), "tool-edit.png", QString::null, "drawing_toolbar.html#selector");
 	draw_point_act = newToolAction("drawpoint", tr("Set point objects"), this, SLOT(drawPointClicked()), "draw-point.png", QString::null, "drawing_toolbar.html#point");
 	draw_path_act = newToolAction("drawpath", tr("Draw paths"), this, SLOT(drawPathClicked()), "draw-path.png", QString::null, "drawing_toolbar.html#line");
-	draw_circle_act = newToolAction("drawcircle", tr("Draw circles"), this, SLOT(drawCircleClicked()), "draw-circle.png", QString::null, "drawing_toolbar.html#circle");
+	draw_circle_act = newToolAction("drawcircle", tr("Draw circles and ellipses"), this, SLOT(drawCircleClicked()), "draw-circle.png", QString::null, "drawing_toolbar.html#circle");
 	draw_rectangle_act = newToolAction("drawrectangle", tr("Draw rectangles"), this, SLOT(drawRectangleClicked()), "draw-rectangle.png", QString::null, "drawing_toolbar.html#rectangle");
 	draw_text_act = newToolAction("drawtext", tr("Write text"), this, SLOT(drawTextClicked()), "draw-text.png", QString::null, "drawing_toolbar.html#text");
 	duplicate_act = newAction("duplicate", tr("Duplicate"), this, SLOT(duplicateClicked()), "tool-duplicate.png", QString::null, "drawing_toolbar.html#duplicate");
@@ -438,6 +446,7 @@ void MapEditorController::createMenuAndToolbars()
 	cut_hole_rectangle_act->setCheckable(true);
 	QObject::connect(cut_hole_rectangle_act, SIGNAL(activated()), this, SLOT(cutHoleRectangleClicked()));
 	rotate_act = newToolAction("rotateobjects", tr("Rotate object(s)"), this, SLOT(rotateClicked()), "tool-rotate.png", QString::null, "drawing_toolbar.html#rotate");
+	scale_act = newToolAction("scaleobjects", tr("Scale object(s)"), this, SLOT(scaleClicked()), "tool-scale.png", QString::null, "drawing_toolbar.html#scale");
 	measure_act = newCheckAction("measure", tr("Measure lengths and areas"), this, SLOT(measureClicked(bool)), "tool-measure.png", QString::null, "drawing_toolbar.html#measure");
 	boolean_union_act = newAction("booleanunion", tr("Unify areas"), this, SLOT(booleanUnionClicked()), "tool-boolean-union.png");
 	boolean_intersection_act = newAction("booleanintersection", tr("Intersect areas"), this, SLOT(booleanIntersectionClicked()), "tool-boolean-intersection.png");
@@ -497,9 +506,9 @@ void MapEditorController::createMenuAndToolbars()
 	edit_menu->addAction(undo_act);
 	edit_menu->addAction(redo_act);
 	edit_menu->addSeparator();
-	//edit_menu->addAction(cut_act);
-	//edit_menu->addAction(copy_act);
-	//edit_menu->addAction(paste_act);
+	edit_menu->addAction(cut_act);
+	edit_menu->addAction(copy_act);
+	edit_menu->addAction(paste_act);
 
 	// View menu
 	QMenu* view_menu = window->menuBar()->addMenu(tr("&View"));
@@ -543,6 +552,7 @@ void MapEditorController::createMenuAndToolbars()
 	cut_hole_menu->addAction(cut_hole_rectangle_act);
 	tools_menu->addMenu(cut_hole_menu);
 	tools_menu->addAction(rotate_act);
+	tools_menu->addAction(scale_act);
 	tools_menu->addAction(measure_act);
 		
 	// Map menu
@@ -622,6 +632,7 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_editing->addWidget(cut_hole_button);
 
 	toolbar_editing->addAction(rotate_act);
+	toolbar_editing->addAction(scale_act);
 	toolbar_editing->addAction(measure_act);
 
 	// Advanced editing toolbar
@@ -743,15 +754,99 @@ void MapEditorController::doUndo(bool redo)
 
 void MapEditorController::cut()
 {
-	// TODO
+	copy();
+	window->statusBar()->showMessage(tr("Cut %1 object(s)").arg(map->getNumSelectedObjects()), 2000);
+	map->deleteSelectedObjects();
 }
 void MapEditorController::copy()
 {
-	// TODO
+	if (map->getNumSelectedObjects() == 0)
+		return;
+	
+	// Create map containing required objects and their symbol and color dependencies
+	Map* copy_map = new Map();
+	copy_map->setScaleDenominator(map->getScaleDenominator());
+	
+	std::vector<bool> symbol_filter;
+	symbol_filter.assign(map->getNumSymbols(), false);
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(), end = map->selectedObjectsEnd(); it != end; ++it)
+	{
+		int symbol_index = map->findSymbolIndex((*it)->getSymbol());
+		if (symbol_index >= 0)
+			symbol_filter[symbol_index] = true;
+	}
+	
+	// Export symbols and colors into copy_map
+	QHash<Symbol*, Symbol*> symbol_map;
+	copy_map->importMap(map, Map::MinimalSymbolImport, window, &symbol_filter, -1, true, &symbol_map);
+	
+	// Duplicate all selected objects into copy map
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(), end = map->selectedObjectsEnd(); it != end; ++it)
+	{
+		Object* new_object = (*it)->duplicate();
+		if (symbol_map.contains(new_object->getSymbol()))
+			new_object->setSymbol(symbol_map.value(new_object->getSymbol()), true);
+		
+		copy_map->addObject(new_object);
+	}
+	
+	// Save map to memory
+	QBuffer buffer;
+	if (!copy_map->exportToNative(&buffer))
+	{
+		delete copy_map;
+		QMessageBox::warning(NULL, tr("Error"), tr("An internal error occurred, sorry!"));
+		return;
+	}
+	delete copy_map;
+	
+	// Put buffer into clipboard
+	QMimeData* mime_data = new QMimeData();
+	mime_data->setData("openorienteering/objects", buffer.data());
+	QApplication::clipboard()->setMimeData(mime_data);
+	
+	// Show message
+	window->statusBar()->showMessage(tr("Copied %1 object(s)").arg(map->getNumSelectedObjects()), 2000);
 }
 void MapEditorController::paste()
 {
-	// TODO
+	if (editing_in_progress)
+		return;
+	if (!QApplication::clipboard()->mimeData()->hasFormat("openorienteering/objects"))
+	{
+		QMessageBox::warning(NULL, tr("Error"), tr("There are no objects in clipboard which could be pasted!"));
+		return;
+	}
+	
+	// Get buffer from clipboard
+	QByteArray byte_array = QApplication::clipboard()->mimeData()->data("openorienteering/objects");
+	QBuffer buffer(&byte_array);
+	buffer.open(QIODevice::ReadOnly);
+	
+	// Create map from buffer
+	Map* paste_map = new Map();
+	if (!paste_map->importFromNative(&buffer))
+	{
+		QMessageBox::warning(NULL, tr("Error"), tr("An internal error occurred, sorry!"));
+		return;
+	}
+	
+	// Move objects in paste_map so their bounding box center is at this map's viewport center.
+	// This makes the pasted objects appear at the center of the viewport.
+	QRectF paste_extent = paste_map->calculateExtent(true, false, NULL);
+	qint64 dx = main_view->getPositionX() - paste_extent.center().x() * 1000;
+	qint64 dy = main_view->getPositionY() - paste_extent.center().y() * 1000;
+	
+	MapLayer* layer = paste_map->getCurrentLayer();
+	for (int i = 0; i < layer->getNumObjects(); ++i)
+		layer->getObject(i)->move(dx, dy);
+	
+	// Import pasted map
+	map->importMap(paste_map, Map::CompleteImport, window);
+	
+	// Show message
+	window->statusBar()->showMessage(tr("Pasted %1 object(s)").arg(paste_map->getNumObjects()), 2000);
+	delete paste_map;
 }
 
 void MapEditorController::zoomIn()
@@ -954,7 +1049,7 @@ void MapEditorController::selectedSymbolsChanged()
 	draw_path_act->setEnabled((type == Symbol::Line || type == Symbol::Area || type == Symbol::Combined) && !symbol->isHidden());
 	draw_path_act->setStatusTip(tr("Draw polygonal and curved lines.") + (draw_path_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
 	draw_circle_act->setEnabled(draw_path_act->isEnabled());
-	draw_circle_act->setStatusTip(tr("Draw circles.") + (draw_circle_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
+	draw_circle_act->setStatusTip(tr("Draw circles and ellipses.") + (draw_circle_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
 	draw_rectangle_act->setEnabled(draw_path_act->isEnabled());
 	draw_rectangle_act->setStatusTip(tr("Draw rectangles.") + (draw_rectangle_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
 	draw_text_act->setEnabled(type == Symbol::Text && !symbol->isHidden());
@@ -1012,6 +1107,8 @@ void MapEditorController::objectSelectionChanged()
 		}
 	}
 	
+	cut_act->setEnabled(have_selection);
+	copy_act->setEnabled(have_selection);
 	duplicate_act->setEnabled(have_selection);
 	duplicate_act->setStatusTip(tr("Duplicate the selected object(s).") + (duplicate_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
 	switch_dashes_act->setEnabled(have_line);
@@ -1029,6 +1126,8 @@ void MapEditorController::objectSelectionChanged()
 	cut_hole_menu->setEnabled(cut_hole_act->isEnabled());
 	rotate_act->setEnabled(have_selection);
 	rotate_act->setStatusTip(tr("Rotate the selected object(s).") + (rotate_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
+	scale_act->setEnabled(have_selection);
+	scale_act->setStatusTip(tr("Scale the selected object(s).") + (scale_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
 	boolean_union_act->setEnabled(have_two_same_symbol_areas);
 	boolean_union_act->setStatusTip(tr("Unify overlapping areas.") + (boolean_union_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
 	boolean_intersection_act->setEnabled(have_two_same_symbol_areas && uniform_symbol_selected);
@@ -1038,6 +1137,7 @@ void MapEditorController::objectSelectionChanged()
 	boolean_xor_act->setEnabled(have_two_same_symbol_areas && uniform_symbol_selected);
 	boolean_xor_act->setStatusTip(tr("Calculate nonoverlapping parts of areas.") + (boolean_xor_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
 
+	// Automatic symbol selection of selected objects
 	if (symbol_widget && uniform_symbol_selected && Settings::getInstance().getSettingCached(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool())
 		symbol_widget->selectSingleSymbol(uniform_symbol);
 
@@ -1066,6 +1166,16 @@ void MapEditorController::undoStepAvailabilityChanged()
 	
 	undo_act->setEnabled(map->objectUndoManager().getNumUndoSteps() > 0);
 	redo_act->setEnabled(map->objectUndoManager().getNumRedoSteps() > 0);
+}
+void MapEditorController::clipboardChanged(QClipboard::Mode mode)
+{
+	if (mode == QClipboard::Clipboard)
+		updatePasteAvailability();
+}
+void MapEditorController::updatePasteAvailability()
+{
+	if (paste_act)
+		paste_act->setEnabled(QApplication::clipboard()->mimeData()->hasFormat("openorienteering/objects") && !editing_in_progress);
 }
 
 void MapEditorController::showWholeMap()
@@ -1357,6 +1467,10 @@ void MapEditorController::rotateClicked()
 {
 	setTool(new RotateTool(this, rotate_act));
 }
+void MapEditorController::scaleClicked()
+{
+	setTool(new ScaleTool(this, scale_act));
+}
 void MapEditorController::measureClicked(bool checked)
 {
 	bool new_widget = false;
@@ -1588,6 +1702,20 @@ void MapEditorTool::startEditingSelection(MapRenderables& old_renderables, std::
 	}
 	
 	editor->setEditingInProgress(true);
+}
+void MapEditorTool::resetEditedObjects(std::vector< Object* >* undo_duplicates)
+{
+	assert(undo_duplicates);
+	Map* map = editor->getMap();
+	
+	size_t i = 0;
+	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		*(*it) = *undo_duplicates->at(i);
+		(*it)->setMap(NULL);
+		++i;
+	}
 }
 void MapEditorTool::finishEditingSelection(MapRenderables& renderables, MapRenderables& old_renderables, bool create_undo_step, std::vector< Object* >* undo_duplicates, bool delete_objects)
 {

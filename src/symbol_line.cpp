@@ -440,7 +440,8 @@ void LineSymbol::createPointedLineCap(Object* object, const MapCoordVector& flag
 	{
 		float dist_from_start = is_end ? (end - cap_lengths[i]) : (cap_lengths[i] - start);
 		float factor = dist_from_start / cap_length;
-		assert(factor >= -0.001f && factor <= 1.01f);
+		//assert(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
+		factor = qMax(0.0f, qMin(1.0f, factor));
 		
 		MapCoordF right_vector;
 		float scaling;
@@ -647,6 +648,7 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 			
 			int num_half_dashes = 2*num_dashgroups*dashes_in_group - (half_first_dash ? 1 : 0) - (half_last_dash ? 1 : 0);
 			float adapted_dash_length = (length - (num_dashgroups-1)*break_length_f - num_dashgroups*(dashes_in_group-1)*in_group_break_length_f) / (0.5f*num_half_dashes);
+			adapted_dash_length = qMax(adapted_dash_length, 0.0f);	// could be negative for large break lengths
 			
 			for (int dashgroup = 0; dashgroup < num_dashgroups; ++dashgroup)
 			{
@@ -869,7 +871,7 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 	{
 		int index = line_coords[cur_line_coord].index;
 		float factor = (start - line_coords[cur_line_coord-1].clen) / qMax(1e-7f, (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen));
-		assert(factor >= -0.01f && factor <= 1.01f);
+		//assert(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
 		if (factor > 1)
 			factor = 1;
 		else if (factor < 0)
@@ -943,7 +945,7 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 	{
 		int index = line_coords[cur_line_coord].index;
 		float factor = (end - line_coords[cur_line_coord-1].clen) / qMax(1e-7f, (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen));
-		assert(factor >= -0.01f && factor <= 1.01f);
+		//assert(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
 		if (factor > 1)
 			factor = 1;
 		else if (factor < 0)
@@ -969,7 +971,10 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 		{
 			// The dash end is in the same curve as the start, need to make a second split with the correct parameter
 			p = (p - start_bezier_split_param) / (1 - start_bezier_split_param);
-			assert(p >= 0 && p <= 1);
+			if (!(p <= 1))
+				p = 1;
+			else if (!(p >= 0))
+				p = 0;
 			
 			PathCoord::splitBezierCurve(out_coords[out_coords.size() - 4], o3, o4, (index < (int)flags.size() - 3) ? coords[index+3] : coords[0],
 										p, out_coords[out_coords.size() - 3], out_coords[out_coords.size() - 2],

@@ -696,7 +696,8 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 	return true;
 }
 
-void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::vector<bool>* filter, int symbol_insert_pos, bool merge_duplicate_symbols)
+void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::vector<bool>* filter, int symbol_insert_pos,
+					bool merge_duplicate_symbols, QHash<Symbol*, Symbol*>* out_symbol_map)
 {
 	// Check if there is something to import
 	if (other->getNumColors() == 0)
@@ -759,6 +760,8 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 		// Import symbols
 		QHash<Symbol*, Symbol*> symbol_map;
 		importSymbols(other, color_map, symbol_insert_pos, merge_duplicate_symbols, &symbol_filter, NULL, &symbol_map);
+		if (out_symbol_map != NULL)
+			*out_symbol_map = symbol_map;
 		
 		if (mode == MinimalSymbolImport)
 			return;
@@ -805,6 +808,51 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 			}
 		}
 	}
+}
+
+bool Map::exportToNative(QIODevice* stream)
+{
+	stream->open(QIODevice::WriteOnly);
+	Exporter* exporter = NULL;
+	try {
+		const Format* native_format = FileFormats.findFormat("native");
+		exporter = native_format->createExporter(stream, "", this, NULL);
+		exporter->doExport();
+		stream->close();
+	}
+	catch (std::exception &e)
+	{
+		if (exporter)
+			delete exporter;
+		return false;
+	}
+	if (exporter)
+		delete exporter;
+	return true;
+}
+
+bool Map::importFromNative(QIODevice* stream)
+{
+	Importer* importer = NULL;
+	try {
+		const Format* native_format = FileFormats.findFormat("native");
+		importer = native_format->createImporter(stream, "", this, NULL);
+		importer->doImport(false);
+		importer->finishImport();
+		stream->close();
+		
+		for (int i = 0; i < getNumSymbols(); ++i)
+			getSymbol(i)->loadFinished(this);
+	}
+	catch (std::exception &e)
+	{
+		if (importer)
+			delete importer;
+		return false;
+	}
+	if (importer)
+		delete importer;
+	return true;
 }
 
 void Map::clear()
@@ -948,6 +996,23 @@ void Map::getSelectionToSymbolCompatibility(Symbol* symbol, bool& out_compatible
 				out_different = true;
 		}
 	}
+}
+
+void Map::deleteSelectedObjects()
+{
+	AddObjectsUndoStep* undo_step = new AddObjectsUndoStep(this);
+	MapLayer* layer = getCurrentLayer();
+	
+	Map::ObjectSelection::const_iterator it_end = selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = selectedObjectsBegin(); it != it_end; ++it)
+	{
+		int index = layer->findObjectIndex(*it);
+		undo_step->addObject(index, *it);
+	}
+	for (Map::ObjectSelection::const_iterator it = selectedObjectsBegin(); it != it_end; ++it)
+		deleteObject(*it, true);
+	clearObjectSelection(true);
+	objectUndoManager().addNewUndoStep(undo_step);
 }
 
 void Map::includeSelectionRect(QRectF& rect)

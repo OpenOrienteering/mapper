@@ -57,6 +57,11 @@ QVariant Settings::getSettingCached(Settings::SettingsEnum setting)
 	return value;
 }
 
+void Settings::setSettingInCache(Settings::SettingsEnum setting, QVariant value)
+{
+	settings_cache.insert(setting, value);
+}
+
 void Settings::applySettings()
 {
 	QSettings().sync();

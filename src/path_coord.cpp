@@ -161,7 +161,7 @@ void PathCoord::calculatePositionAt(const MapCoordVector& flags, const MapCoordV
 		else if (flags[index].isCurveStart())
 		{
 			float factor = (length - path_coords[i-1].clen) / (path_coords[i].clen - path_coords[i-1].clen);
-			assert(factor >= -0.01f && factor <= 1.01f);
+			//assert(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
 			if (factor > 1)
 				factor = 1;
 			else if (factor < 0)
@@ -186,7 +186,7 @@ void PathCoord::calculatePositionAt(const MapCoordVector& flags, const MapCoordV
 		else
 		{
 			float factor = (length - path_coords[i-1].clen) / (path_coords[i].clen - path_coords[i-1].clen);
-			assert(factor >= -0.01f && factor <= 1.01f);
+			//assert(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
 			if (factor > 1)
 				factor = 1;
 			else if (factor < 0)
