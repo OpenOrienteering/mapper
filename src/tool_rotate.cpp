@@ -46,8 +46,18 @@ RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button)
 
 void RotateTool::init()
 {
+	// Set initial rotation center to the center of the bounding box of the selected objects
+	Map* map = editor->getMap();
+	if (map->getNumSelectedObjects() > 0)
+	{
+		QRectF rect;
+		map->includeSelectionRect(rect);
+		rotation_center = MapCoordF(rect.center());
+		rotation_center_set = true;
+	}
+	
 	updateDirtyRect();
-    updateStatusText();
+	updateStatusText();
 }
 
 RotateTool::~RotateTool()
