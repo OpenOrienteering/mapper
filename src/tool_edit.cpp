@@ -820,18 +820,6 @@ void EditTool::finishEditing()
 }
 void EditTool::deleteSelectedObjects()
 {
-	AddObjectsUndoStep* undo_step = new AddObjectsUndoStep(editor->getMap());
-	MapLayer* layer = editor->getMap()->getCurrentLayer();
-	
-	Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
-	{
-		int index = layer->findObjectIndex(*it);
-		undo_step->addObject(index, *it);
-	}
-	for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
-		editor->getMap()->deleteObject(*it, true);
-	editor->getMap()->clearObjectSelection(true);
+	editor->getMap()->deleteSelectedObjects();
 	updateStatusText();
-	editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
 }

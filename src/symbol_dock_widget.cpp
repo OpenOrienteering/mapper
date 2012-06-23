@@ -634,24 +634,12 @@ void SymbolRenderWidget::copySymbols()
 	
 	// Save map to memory
 	QBuffer buffer;
-	buffer.open(QIODevice::WriteOnly);
-	Exporter* exporter = NULL;
-	try {
-		const Format* native_format = FileFormats.findFormat("native");
-		exporter = native_format->createExporter(&buffer, "", copy_map, NULL);
-		exporter->doExport();
-		buffer.close();
-	}
-	catch (std::exception &e)
+	if (!copy_map->exportToNative(&buffer))
 	{
-		if (exporter)
-			delete exporter;
 		delete copy_map;
 		QMessageBox::warning(NULL, tr("Error"), tr("An internal error occurred, sorry!"));
 		return;
 	}
-	if (exporter)
-		delete exporter;
 	delete copy_map;
 	
 	// Put buffer into clipboard
@@ -674,27 +662,11 @@ void SymbolRenderWidget::pasteSymbols()
 	
 	// Create map from buffer
 	Map* paste_map = new Map();
-	
-	Importer* importer = NULL;
-	try {
-		const Format* native_format = FileFormats.findFormat("native");
-		importer = native_format->createImporter(&buffer, "", paste_map, NULL);
-		importer->doImport(false);
-		importer->finishImport();
-		buffer.close();
-		
-		for (int i = 0; i < paste_map->getNumSymbols(); ++i)
-			paste_map->getSymbol(i)->loadFinished(paste_map);
-	}
-	catch (std::exception &e)
+	if (!paste_map->importFromNative(&buffer))
 	{
-		if (importer)
-			delete importer;
 		QMessageBox::warning(NULL, tr("Error"), tr("An internal error occurred, sorry!"));
 		return;
 	}
-	if (importer)
-		delete importer;
 	
 	// Import pasted map
 	map->importMap(paste_map, Map::CompleteImport, this, NULL, currentSymbolIndex(), false);

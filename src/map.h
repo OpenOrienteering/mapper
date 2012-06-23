@@ -140,8 +140,13 @@ public:
 	///  - if the other map does not contain objects, import all symbols with the minimum amount of colors needed to display them
 	///  - if the other map does neither contain objects nor symbols, import all colors
 	/// WARNING: this method potentially changes the 'other' map if the scales differ (by rescaling to fit this map's scale)!
-	void importMap(Map* other, ImportMode mode, QWidget* dialog_parent = NULL, std::vector<bool>* filter = NULL, int symbol_insert_pos = -1, bool merge_duplicate_symbols = true);
-
+	void importMap(Map* other, ImportMode mode, QWidget* dialog_parent = NULL, std::vector<bool>* filter = NULL, int symbol_insert_pos = -1,
+				   bool merge_duplicate_symbols = true, QHash<Symbol*, Symbol*>* out_symbol_map = NULL);
+	/// Serializes the map directly into the given IO device in native map format. Returns true if successful
+	bool exportToNative(QIODevice* stream);
+	/// Loads the map directly from the given IO device, where the data must be in native map format. Returns true if successful
+	bool importFromNative(QIODevice* stream);
+	
 	/// Deletes all map data and resets the map to its initial state containing one default layer
 	void clear();
 	
@@ -275,12 +280,15 @@ public:
 	 */
 	inline Object* getFirstSelectedObject() const {return first_selected_object;}
 	
-	/** Checks the selected objects for compatibiliy with the given symbol.
-	 * @param symbol the symbol to check compatibiliy for
+	/** Checks the selected objects for compatibility with the given symbol.
+	 * @param symbol the symbol to check compatibility for
 	 * @param out_compatible returns if all selected objects are compatible to the given symbol
 	 * @param out_different returns if at least one of the selected objects' symbols is different to the given symbol
 	 */
 	void getSelectionToSymbolCompatibility(Symbol* symbol, bool& out_compatible, bool& out_different);
+	
+	/// Deletes the selected objects and creates an undo step for this action.
+	void deleteSelectedObjects();
 	
 	void includeSelectionRect(QRectF& rect); // enlarges rect to cover the selected objects
 	void drawSelection(QPainter* painter, bool force_min_size, MapWidget* widget, MapRenderables* replacement_renderables = NULL, bool draw_normal = false);

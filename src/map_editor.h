@@ -26,6 +26,7 @@
 #include <QAction>
 #include <QDockWidget>
 #include <QScopedPointer>
+#include <QClipboard>
 
 #include "main_window.h"
 #include "map.h"
@@ -125,6 +126,8 @@ public slots:
 	void objectSelectionChanged();
 	void selectedSymbolsOrObjectsChanged();
 	void undoStepAvailabilityChanged();
+	void clipboardChanged(QClipboard::Mode mode);
+	void updatePasteAvailability();
 	
 	void showWholeMap();
 	
@@ -205,6 +208,9 @@ private:
 	
 	QAction* undo_act;
 	QAction* redo_act;
+	QAction* cut_act;
+	QAction* copy_act;
+	QAction* paste_act;
 	
 	QAction* map_coordinates_act;
 	QAction* projected_coordinates_act;
