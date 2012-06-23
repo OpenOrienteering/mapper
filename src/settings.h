@@ -48,6 +48,9 @@ public:
 	/// Can be used to cache and retrieve settings which are only changed in the settings dialog (i.e. applySettings() must be called after they are changed)
 	QVariant getSettingCached(SettingsEnum setting);
 	
+	/// Change a setting, but only in the cache. Do not use this if in doubt.
+	void setSettingInCache(Settings::SettingsEnum setting, QVariant value);
+	
 	/// This must be called after the settings have been changed or on application startup.
 	void applySettings();
 	

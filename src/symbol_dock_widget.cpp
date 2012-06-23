@@ -32,6 +32,7 @@
 #include "symbol_text.h"
 #include "symbol_combined.h"
 #include "file_format.h"
+#include "settings.h"
 
 
 // STL comparison function for sorting symbols by number
@@ -91,8 +92,14 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	protect_action = context_menu->addAction("", this, SLOT(setSelectedSymbolProtection(bool)));
 	protect_action->setCheckable(true);
 	context_menu->addSeparator();
-    context_menu->addAction(tr("Select all"), this, SLOT(selectAll()));
-    context_menu->addAction(tr("Invert selection"), this, SLOT(invertSelection()));
+	
+	QMenu* select_menu = new QMenu(tr("Select symbols"), context_menu);
+	select_menu->addAction(tr("All"), this, SLOT(selectAll()));
+	select_menu->addAction(tr("Unused"), this, SLOT(selectUnused()));
+	select_menu->addSeparator();
+	select_menu->addAction(tr("Invert selection"), this, SLOT(invertSelection()));
+	context_menu->addMenu(select_menu);
+	
     context_menu->addSeparator();
     context_menu->addAction(tr("Sort by number"), this, SLOT(sortByNumber()));
 
@@ -148,7 +155,14 @@ void SymbolRenderWidget::selectSingleSymbol(int i)
 		selected_symbols.insert(i);
 		updateIcon(i);
 	}
+	
+	// Deactivate the change symbol on object selection setting temporarily while emitting the selected symbols changes signal.
+	// If not doing this, a currently used tool could catch the signal, finish its editing as the selected symbol has changed,
+	// and the selection of the newly inserted object triggers the selection of a different symbol, leading to bugs.
+	bool change_symbol_setting = Settings::getInstance().getSettingCached(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool();
+	Settings::getInstance().setSettingInCache(Settings::MapEditor_ChangeSymbolWhenSelecting, false);
 	symbol_widget->emitSelectedSymbolsChanged();
+	Settings::getInstance().setSettingInCache(Settings::MapEditor_ChangeSymbolWhenSelecting, change_symbol_setting);
 }
 bool SymbolRenderWidget::isSymbolSelected(int i) const
 {
@@ -159,6 +173,20 @@ void SymbolRenderWidget::getSelectionBitfield(std::vector< bool >& out) const
 	out.assign(map->getNumSymbols(), false);
 	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
 		out[*it] = true;
+}
+void SymbolRenderWidget::setSelectionBitfield(std::vector< bool >& in)
+{
+	updateSelectedIcons();
+	selected_symbols.clear();
+	for (size_t i = 0, end = in.size(); i < end; ++i)
+	{
+		if (in[i])
+		{
+			selected_symbols.insert(i);
+			updateIcon(i);
+		}
+	}
+	symbol_widget->emitSelectedSymbolsChanged();
 }
 int SymbolRenderWidget::getNumSelectedSymbols() const
 {
@@ -721,6 +749,14 @@ void SymbolRenderWidget::selectAll()
 		selected_symbols.insert(i);
 	symbol_widget->emitSelectedSymbolsChanged();
 	update();
+}
+void SymbolRenderWidget::selectUnused()
+{
+	std::vector<bool> bitfield;
+	map->determineSymbolsInUse(bitfield);
+	for (size_t i = 0, end = bitfield.size(); i < end; ++i)
+		bitfield[i] = !bitfield[i];
+	setSelectionBitfield(bitfield);
 }
 void SymbolRenderWidget::invertSelection()
 {

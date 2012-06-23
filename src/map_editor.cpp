@@ -72,6 +72,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	override_tool = NULL;
 	last_painted_on_template = NULL;
 	
+	paste_act = NULL;
 	toolbar_view = NULL;
 	toolbar_drawing = NULL;
 	toolbar_editing = NULL;
@@ -86,6 +87,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 }
 MapEditorController::~MapEditorController()
 {
+	paste_act = NULL;
 	delete toolbar_view;
 	delete toolbar_drawing;
 	delete toolbar_editing;
@@ -1128,6 +1130,7 @@ void MapEditorController::objectSelectionChanged()
 	boolean_xor_act->setEnabled(have_two_same_symbol_areas && uniform_symbol_selected);
 	boolean_xor_act->setStatusTip(tr("Calculate nonoverlapping parts of areas.") + (boolean_xor_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
 
+	// Automatic symbol selection of selected objects
 	if (symbol_widget && uniform_symbol_selected && Settings::getInstance().getSettingCached(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool())
 		symbol_widget->selectSingleSymbol(uniform_symbol);
 
@@ -1159,11 +1162,13 @@ void MapEditorController::undoStepAvailabilityChanged()
 }
 void MapEditorController::clipboardChanged(QClipboard::Mode mode)
 {
-	updatePasteAvailability();
+	if (mode == QClipboard::Clipboard)
+		updatePasteAvailability();
 }
 void MapEditorController::updatePasteAvailability()
 {
-	paste_act->setEnabled(QApplication::clipboard()->mimeData()->hasFormat("openorienteering/objects") && !editing_in_progress);
+	if (paste_act)
+		paste_act->setEnabled(QApplication::clipboard()->mimeData()->hasFormat("openorienteering/objects") && !editing_in_progress);
 }
 
 void MapEditorController::showWholeMap()
