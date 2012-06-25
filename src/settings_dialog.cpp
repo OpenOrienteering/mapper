@@ -175,6 +175,20 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 		language_map.insert(language_name, (int)QLocale(name).language());
 	}
 	
+	dir.cd(QCoreApplication::applicationDirPath() + "/translations");
+	foreach (QString name, dir.entryList(QStringList() << "*.qm", QDir::Files))
+	{
+		name = name.left(name.indexOf(".qm"));
+		name = name.right(2);
+		QString language_name;
+#if (QT_VERSION >= QT_VERSION_CHECK(4, 8, 0))
+		language_name = QLocale(name).nativeLanguageName();
+#else
+		language_name = QLocale::languageToString(QLocale(name).language());
+#endif
+		language_map.insert(language_name, (int)QLocale(name).language());
+	}
+	
 	// Add default language English to map
 	language_map.insert(QLocale::languageToString(QLocale::English), (int)QLocale::English);
 	

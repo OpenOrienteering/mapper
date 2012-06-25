@@ -63,7 +63,6 @@ the directory containing this program to the PATH.
 * Building OpenOrienteering Mapper:
 When all requirements are installed, run cmake and point it to the directory in which
 CMakeLists.txt (and the file you are reading now) are in.
-As build directory, you must use a new subdirectory in this folder named "build".
 
 Then click "Configure" (if you use the CMake GUI). If it aborts, saying that QMake cannot be found,
 enter its path in the red line for the "QT_QMAKE_EXECUTABLE" key,
@@ -99,7 +98,7 @@ Debian system, install libproj0 and libproj-dev.
 
 * Building OpenOrienteering Mapper:
 Run the following in the project's root directory:
-mkdir build     (the build directory must be named "build"!)
+mkdir build     ("build" is just an example.)
 cd build
 cmake ../
 make -jX        (where X is the number of threads for building)

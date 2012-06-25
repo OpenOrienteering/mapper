@@ -186,9 +186,26 @@ set(Mapper_TRANS
  translations/OpenOrienteering_sv.ts
  translations/OpenOrienteering_uk.ts
 )
+set_source_files_properties(${Mapper_TRANS}
+  PROPERTIES OUTPUT_LOCATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/translations
+)
 qt4_add_translation(Mapper_QM ${Mapper_TRANS})
 
-set(Mapper_RESOURCES resources.qrc translations.qrc)
+set(Mapper_RESOURCES resources.qrc)
+if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+	# For MacOS, the translations will go into the "bundle"
+	set(Mapper_TRANS_QRC "${CMAKE_CURRENT_BINARY_DIR}/translations.qrc")
+	file(WRITE "${Mapper_TRANS_QRC}"
+	     "<!DOCTYPE RCC><RCC version=\"1.0\">\n <qresource>\n")
+	foreach(qm_file ${Mapper_QM})
+		get_filename_component(qm_file_name "${qm_file}" NAME)
+		file(APPEND "${Mapper_TRANS_QRC}"
+		     "  <file alias=\"translations/${qm_file_name}\">${qm_file}</file>\n")
+	endforeach(qm_file ${MAPPER_TRANS})
+	file(APPEND "${Mapper_TRANS_QRC}"
+	     " </qresource>\n</RCC>\n")
+	list(APPEND Mapper_RESOURCES resources.qrc "${Mapper_TRANS_QRC}")
+endif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
 qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
 set(Mapper_HELP_DIR ${PROJECT_SOURCE_DIR}/bin/help)

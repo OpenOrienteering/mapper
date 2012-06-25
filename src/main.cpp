@@ -71,7 +71,9 @@ int main(int argc, char** argv)
 
 	// Load application translation
 	QTranslator translator;
-	translator.load(locale_name, QString(":/translations"));
+	QString translation_name = "OpenOrienteering_" + locale_name;
+	if (! translator.load(translation_name, QCoreApplication::applicationDirPath() + "/translations"))
+		translator.load(translation_name, QString(":/translations"));
 	qapp.installTranslator(&translator);
 	
 	// Register the supported file formats
