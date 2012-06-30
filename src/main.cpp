@@ -63,7 +63,7 @@ int main(int argc, char** argv)
 	// Load Qt translation
 	QTranslator qtTranslator;
 #ifdef WIN32
-	qtTranslator.load("qt_" + locale_name, "translations/");
+	qtTranslator.load("qt_" + locale_name, QCoreApplication::applicationDirPath() + "/translations/");
 #else
 	qtTranslator.load("qt_" + locale_name, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
 #endif
@@ -73,6 +73,9 @@ int main(int argc, char** argv)
 	QTranslator translator;
 	QString translation_name = "OpenOrienteering_" + locale_name;
 	if (! translator.load(translation_name, QCoreApplication::applicationDirPath() + "/translations"))
+#ifdef MAPPER_DEBIAN_PACKAGE_NAME
+	  if (! translator.load(translation_name, QString("/usr/share/") + MAPPER_DEBIAN_PACKAGE_NAME + "/translations"))
+#endif
 		translator.load(translation_name, QString(":/translations"));
 	qapp.installTranslator(&translator);
 	

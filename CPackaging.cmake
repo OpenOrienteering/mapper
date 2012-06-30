@@ -38,6 +38,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		  CPACK_PACKAGE_FILE_NAME
 		  ${CPACK_PACKAGE_FILE_NAME})
 		set(CPACK_DEBIAN_PACKAGE_NAME "openorienteering-mapper")
+ 		add_definitions(-DMAPPER_DEBIAN_PACKAGE_NAME="${CPACK_DEBIAN_PACKAGE_NAME}")
 		set(CPACK_DEBIAN_PACKAGE_MAINTAINER
 		   "OpenOrienteering Developers <dg0yt@darc.de>")
 		set(CPACK_DEBIAN_SECTION "graphics")
@@ -58,6 +59,10 @@ To build a .deb package with proper file ownership, you must run
 		  DIRECTORY "bin/my symbol sets/"
 		  DESTINATION "share/${CPACK_DEBIAN_PACKAGE_NAME}/symbol sets"
 		  FILES_MATCHING PATTERN "*.omap")
+		install(
+		  DIRECTORY "bin/translations/"
+		  DESTINATION "share/${CPACK_DEBIAN_PACKAGE_NAME}/translations"
+		  FILES_MATCHING PATTERN "*.qm")
 		install(
 		  DIRECTORY "bin/help/"
 		  DESTINATION "share/${CPACK_DEBIAN_PACKAGE_NAME}/help"
