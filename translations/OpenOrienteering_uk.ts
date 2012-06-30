@@ -365,18 +365,14 @@
 <context>
     <name>DrawCircleTool</name>
     <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; or &lt;b&gt;Drag&lt;/b&gt; to draw a circle, &lt;b&gt;Esc&lt;/b&gt; to abort</source>
-        <translation type="obsolete">&lt;b&gt;Клацніть&lt;/b&gt; або &lt;b&gt;Потягніть&lt;/b&gt; для креслення кола, &lt;b&gt;Esc&lt;/b&gt; для відміни</translation>
-    </message>
-    <message>
         <location filename="../src/tool_draw_circle.cpp" line="242"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to start a circle or ellipse, &lt;b&gt;Drag&lt;/b&gt; to draw a circle</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Клацніть&lt;/b&gt; щоб почати коло або еліпс, &lt;b&gt;Потягніть&lt;/b&gt; для креслення кола</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="244"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to draw a circle, &lt;b&gt;Drag&lt;/b&gt; to draw an ellipse, &lt;b&gt;Esc&lt;/b&gt; to abort</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Клацніть&lt;/b&gt; для креслення кола, &lt;b&gt;Потягніть&lt;/b&gt; для креслення еліпса, &lt;b&gt;Esc&lt;/b&gt; для відміни</translation>
     </message>
 </context>
 <context>
@@ -951,7 +947,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="1503"/>
         <source>In-group break length:</source>
-        <translation>Проміжки всередині груп:</translation>
+        <translation>Внутрішньогрупові проміжки:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1506"/>
@@ -1269,14 +1265,6 @@ Press No to choose a different format.</source>
         <translation>Ця програма використовує &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; від Frank Warmerdam.</translation>
     </message>
     <message>
-        <source>Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For patches, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</source>
-        <translatorcomment>Ukrianian localisations team: Eugeniy Fedirets together with Artem Sokolovsky.
-Artem Sokolovsky (boy 5 years of age!), who insert more then 30 symbols in this translation file, is nephew of Eugeniy Fedirets.
-Українська команда перекладачів: Євгеній Федірець разом з Артем Соколовський.
-Артем Соколовський (5-річний хлопчик!), котрий увів понад 30 символів у цей файл перекладу, є племінником Євгенія Федірця.</translatorcomment>
-        <translation type="obsolete">Розробники у абетковому порядку:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (лідер проекту)&lt;br/&gt;&lt;br/&gt;Подяка за патчі:&lt;br/&gt;Jon Cundill&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Українська локалізація:&lt;br/&gt;Artem Sokolovsky (boy 5 years of age!)&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;&lt;br/&gt;Додаткова інформація:</translation>
-    </message>
-    <message>
         <location filename="../src/main_window.cpp" line="733"/>
         <source>Failed to locate the help files.</source>
         <translation>Не вдається показати файли довідки.</translation>
@@ -1294,7 +1282,11 @@ Artem Sokolovsky (boy 5 years of age!), who insert more then 30 symbols in this 
     <message>
         <location filename="../src/main_window.cpp" line="675"/>
         <source>Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Ukrianian localisations team: Eugeniy Fedirets together with Artem Sokolovsky.
+Artem Sokolovsky (boy 5 years of age!), who insert more then 30 symbols in this translation file, is nephew of Eugeniy Fedirets.
+Українська команда перекладачів: Євгеній Федірець разом з Артем Соколовський.
+Артем Соколовський (5-річний хлопчик!), котрий увів понад 30 символів у цей файл перекладу, є племінником Євгенія Федірця.</translatorcomment>
+        <translation>Розробники у абетковому порядку:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (лідер проекту)&lt;br/&gt;&lt;br/&gt;Подяка за сприяння і участь:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Українська локалізація:&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Artem Sokolovsky (boy 5 years of age!)&lt;br/&gt;&lt;br/&gt;Додаткова інформація:</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="686"/>
@@ -1343,7 +1335,8 @@ because the format is unknown.</source>
         <location filename="../src/map.cpp" line="540"/>
         <source>File does not exist or insufficient permissions to open:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл не існує або недостатньо прав доступу для відкриття:
+%1</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="564"/>
@@ -1407,19 +1400,21 @@ Error during symbol post-processing.</source>
     <message>
         <location filename="../src/map.cpp" line="705"/>
         <source>Nothing to import.</source>
-        <translation type="unfinished"></translation>
+        <translation>Немає чого імпортувати.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="712"/>
         <source>Question</source>
-        <translation type="unfinished">Запитання</translation>
+        <translation>Проблема</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="713"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished"></translation>
+        <translation>Масштаб імпортованих даних 1:%1 що відрізняється від масштабу даної мапи 1:%2.
+
+Перемасштабувати імпортовані дані?</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="1227"/>
@@ -1597,7 +1592,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="430"/>
         <source>Draw circles and ellipses</source>
-        <translation type="unfinished"></translation>
+        <translation>Креслити кола і еліпси</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="432"/>
@@ -1695,10 +1690,6 @@ Rescale the imported data?</source>
         <translation>Геоприв’язка...</translation>
     </message>
     <message>
-        <source>Draw circles</source>
-        <translation type="obsolete">Накреслити круги</translation>
-    </message>
-    <message>
         <location filename="../src/map_editor.cpp" line="431"/>
         <source>Draw rectangles</source>
         <translation>Накреслити прямокутники</translation>
@@ -1721,7 +1712,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="449"/>
         <source>Scale object(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Масштабувати об’єкт(-и)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="451"/>
@@ -1821,28 +1812,28 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="758"/>
         <source>Cut %1 object(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Вирізати %1 об’єкт(-ів)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="798"/>
         <location filename="../src/map_editor.cpp" line="830"/>
         <source>An internal error occurred, sorry!</source>
-        <translation type="unfinished"></translation>
+        <translation>Внутрішня непередбачена помилка, вибачте!</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="809"/>
         <source>Copied %1 object(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Скопійовано %1 об’єкт(-ів)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="817"/>
         <source>There are no objects in clipboard which could be pasted!</source>
-        <translation type="unfinished"></translation>
+        <translation>У буфері обміну немає об’єктів які можна було б вставити!</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="848"/>
         <source>Pasted %1 object(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставлено %1 об’єкт(-ів)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="863"/>
@@ -1852,7 +1843,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="863"/>
         <source>Zoom factor:</source>
-        <translation>Коефіцієнт збільшення:</translation>
+        <translation>Коефіцієнт наближення:</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="904"/>
@@ -1920,21 +1911,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1052"/>
         <source>Draw circles and ellipses.</source>
-        <translation type="unfinished"></translation>
+        <translation>Накреслити кола і еліпси.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1963"/>
         <source>Import OMAP, OCD, GPX, OSM or DXF file</source>
-        <translation type="unfinished"></translation>
+        <translation>Імпорт OMAP, OCD, GPX, OSM чи DXF файлу</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2000"/>
         <source>Cannot import the selected map file because it could not be loaded.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Draw circles.</source>
-        <translation type="obsolete">Накресліть круг.</translation>
+        <translation>Неможливо імпортувати обраний файл мапи бо його неможливо завантажити.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1054"/>
@@ -2007,7 +1994,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1130"/>
         <source>Scale the selected object(s).</source>
-        <translation type="unfinished"></translation>
+        <translation>Масштабувати виділений об’єкт(-и).</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1132"/>
@@ -2086,10 +2073,6 @@ Rescale the imported data?</source>
         <location filename="../src/map_editor.cpp" line="1963"/>
         <source>All files</source>
         <translation>Усі файли</translation>
-    </message>
-    <message>
-        <source>Import DXF, GPX or OSM file</source>
-        <translation type="obsolete">Імпорт DXF, GPX чи OSM файлу</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1982"/>
@@ -2712,57 +2695,19 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>QObject</name>
     <message>
-        <source>Cannot open file:
-%1
-for reading.</source>
-        <translation type="obsolete">Неможливо відкрити файл:
-%1
-для читання.</translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-Invalid file format version.</source>
-        <translation type="obsolete">Проблема в ході відкриття файлу:
-%1
-
-Неправильна версія формату файла.</translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-Unsupported file format version. Please use an older program version to load and update the file.</source>
-        <translation type="obsolete">Проблема в ході відкриття файлу:
-%1
-
-Непідтримувана версія формату файла. Будь-ласка скористайтеся старішою версією програми для завантаження і оновлення файлу.</translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-File format version too high. Please update to a newer program version to load this file.</source>
-        <translation type="obsolete">Проблема в ході відкриття файлу:
-%1
-
-Версія формату файла зависока. Будь-ласка оновіть програму до нової версії для завантаження цього файлу.</translation>
-    </message>
-    <message>
         <location filename="../src/file_format_native.cpp" line="70"/>
         <source>Invalid file format version.</source>
-        <translation type="unfinished"></translation>
+        <translation>Недійсна версія формату файла.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="74"/>
         <source>Unsupported file format version. Please use an older program version to load and update the stream-&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Непідтримувана версія формату файла. Будь-ласка використовуйте старішу версію програми для завантаження і оновіть потік-&gt;</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="78"/>
         <source>File format version too high. Please update to a newer program version to load this stream-&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Версія формату файла зависока. Будь-ласка оновіться до нової версії програми для завантаження цього потоку-&gt;</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="127"/>
@@ -2772,85 +2717,27 @@ File format version too high. Please update to a newer program version to load t
     <message>
         <location filename="../src/file_format_native.cpp" line="197"/>
         <source>Error while loading a symbol with type %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка під час завантаження символу типу %2.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="202"/>
         <source>Error while loading a symbol.</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка під час завантаження символу.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="240"/>
         <source>Error while loading undo steps.</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка під час завантаження попередніх кроків.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="250"/>
         <source>Error while reading layer count.</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка під час читання порядку шарів.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="260"/>
         <source>Error while loading layer %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-Error while loading a symbol with type %2.</source>
-        <translation type="obsolete">Проблема в ході відкриття файлу:
-%1
-
-Помилка під час завантаження символу типу %2.</translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-Error while loading a symbol.</source>
-        <translation type="obsolete">Проблема в ході відкриття файла:
-%1
-
-Помилка під час завантаження символу.</translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-Error while loading undo steps.</source>
-        <translation type="obsolete">Проблема в ході відкриття файла:
-%1
-
-Помилка під час завантаження попередніх кроків.</translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-Error while reading layer count.</source>
-        <translation type="obsolete">Проблема в ході відкриття файла:
-%1
-
-Помилка під час читання кількості шарів.</translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-Error while loading layer %2.</source>
-        <translation type="obsolete">Проблема в ході відкриття файла:
-%1
-
-Помилка під час завантаження шару %2.</translation>
-    </message>
-    <message>
-        <source>Cannot open file:
-%1
-for writing.</source>
-        <translation type="obsolete">Неможливо відкрити файл:
-%1
-для запису.</translation>
+        <translation>Помилка під час завантаження шару %2.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="79"/>
@@ -2875,7 +2762,7 @@ for writing.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="324"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation>У символі %1 штрихової лінії, довжина закінчення для початку і кінця різні (%2 and %3). Використати %4.</translation>
+        <translation>У символі %1 штрихової лінії, довжина закінчення для початку і кінця різні (%2 and %3). Використовується %4.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="341"/>
@@ -3024,7 +2911,7 @@ for writing.</source>
     <message>
         <location filename="../src/gps_track.cpp" line="157"/>
         <source>Question</source>
-        <translation>Запитання</translation>
+        <translation>Проблема</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="157"/>
@@ -3175,17 +3062,17 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/tool_scale.cpp" line="181"/>
         <source>&lt;b&gt;Scaling:&lt;/b&gt; %1%</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Масштабування:&lt;/b&gt; %1%</translation>
     </message>
     <message>
         <location filename="../src/tool_scale.cpp" line="183"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the scaling center</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Клацніть&lt;/b&gt; для встановлення центру масштабування</translation>
     </message>
     <message>
         <location filename="../src/tool_scale.cpp" line="185"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the scaling center, &lt;b&gt;drag&lt;/b&gt; to scale the selected object(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Клацніть&lt;/b&gt; для встановлення центру масштабування, &lt;b&gt;потягніть&lt;/b&gt; щоб масштабувати виділений об’єкт(-и)</translation>
     </message>
 </context>
 <context>
@@ -3292,12 +3179,12 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="82"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Копіювати</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="83"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставити</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="85"/>
@@ -3312,40 +3199,40 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="96"/>
         <source>Select symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Виділити символи</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="97"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Усі</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="98"/>
         <source>Unused</source>
-        <translation type="unfinished"></translation>
+        <translation>Невикористовувані</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="668"/>
         <location filename="../src/symbol_dock_widget.cpp" line="682"/>
         <location filename="../src/symbol_dock_widget.cpp" line="695"/>
         <source>Error</source>
-        <translation type="unfinished">Помилка</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="668"/>
         <location filename="../src/symbol_dock_widget.cpp" line="695"/>
         <source>An internal error occurred, sorry!</source>
-        <translation type="unfinished"></translation>
+        <translation>Внутрішня непередбачена помилка, вибачте!</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="682"/>
         <source>There are no symbols in clipboard which could be pasted!</source>
-        <translation type="unfinished"></translation>
+        <translation>У буфері обміну немає символів які можна було б вставити!</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="828"/>
         <source>Select all objects with this symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Виділити усі об’єкти з цим символом</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="829"/>
@@ -3360,16 +3247,12 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="835"/>
         <source>Hide objects with selected symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>Приховати об’єкти з виділеними символами</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="836"/>
         <source>Protect objects with selected symbols</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select all</source>
-        <translation type="obsolete">Обрати все</translation>
+        <translation>Захистити об’єкти з виділеними символами</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="100"/>
@@ -3400,10 +3283,6 @@ The maximum supported version is %2.</source>
         <location filename="../src/symbol_dock_widget.cpp" line="630"/>
         <source>The map contains objects with the symbol &quot;%1&quot;. Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
         <translation>Мапа містить об&apos;єкти з символом &quot;%1&quot;. Видалення їх призведе до видалення цих об&apos;єктів і очистить історію попередніх кроків! Ви справді хочете цього?</translation>
-    </message>
-    <message>
-        <source>Select all objects with symbol &quot;%1&quot;</source>
-        <translation type="obsolete">Виділити всі об’єкти з символом &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="834"/>
@@ -3604,7 +3483,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_gps.cpp" line="234"/>
         <source>Question</source>
-        <translation>Запитання</translation>
+        <translation>Проблема</translation>
     </message>
     <message>
         <location filename="../src/template_gps.cpp" line="234"/>
@@ -3868,7 +3747,7 @@ Failed to load template. Does the file exist and is it valid?</source>
         <location filename="../src/template_dock_widget.cpp" line="456"/>
         <location filename="../src/template_dock_widget.cpp" line="515"/>
         <source>Please enter a valid number from 0 to 1, or specify a percentage from 0 to 100!</source>
-        <translation>Будь-ласка уведіть дійсне значення від 0 до 1, або вкажіть відсоток від 0 до 100!</translation>
+        <translation>Будь-ласка уведіть дійсне значення від 0 до 1, або вкажіть у відсотках від 0 до 100!</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="482"/>
