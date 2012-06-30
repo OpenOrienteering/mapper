@@ -358,15 +358,17 @@ void AreaRenderable::render(QPainter& painter, bool force_min_size, float scalin
 
 // ### TextRenderable ###
 
-TextRenderable::TextRenderable(TextSymbol* symbol, TextObject* text_object, double anchor_x, double anchor_y)
+TextRenderable::TextRenderable(TextSymbol* symbol, TextObject* text_object, MapColor* color, double anchor_x, double anchor_y, bool framing_line)
 {
 	const QFont& font(symbol->getQFont());
 	const QFontMetricsF& metrics(symbol->getFontMetrics());
-	color_priority = symbol->getColor()->priority;
+	color_priority = color->priority;
 	this->anchor_x = anchor_x;
 	this->anchor_y = anchor_y;
 	this->rotation = text_object->getRotation();
 	scale_factor = symbol->getFontSize() / TextSymbol::internal_point_size;
+	this->framing_line = framing_line;
+	framing_line_width = framing_line ? (2 * 0.001 * symbol->getFramingLineHalfWidth() / scale_factor) : 0;
 	
 	path.setFillRule(Qt::WindingFill);	// Otherwise, when text and an underline intersect, holes appear
 	
@@ -404,7 +406,10 @@ TextRenderable::TextRenderable(TextSymbol* symbol, TextObject* text_object, doub
 	}
 	
 	extent = path.controlPointRect();
-	extent = QRectF(scale_factor * extent.left(), scale_factor * extent.top(), scale_factor * extent.width(), scale_factor * extent.height());
+	extent = QRectF(scale_factor * (extent.left() - 0.5f * framing_line_width),
+					scale_factor * (extent.top() - 0.5f * framing_line_width),
+					scale_factor * (extent.width() + framing_line_width),
+					scale_factor * (extent.height() + framing_line_width));
 	if (rotation != 0)
 	{
 		float rcos = cos(-rotation);
@@ -439,17 +444,34 @@ TextRenderable::TextRenderable(const TextRenderable& other) : Renderable(other)
 	anchor_y = other.anchor_y;
 	rotation = other.rotation;
 	scale_factor = other.scale_factor;
+	framing_line = other.framing_line;
+	framing_line_width = other.framing_line_width;
 }
 
 void TextRenderable::getRenderStates(RenderStates& out) const
 {
 	out.color_priority = color_priority;
-	out.mode = RenderStates::BrushOnly;
-	out.pen_width = 0;
+	if (framing_line)
+	{
+		out.mode = RenderStates::PenOnly;
+		out.pen_width = framing_line_width;
+	}
+	else
+	{
+		out.mode = RenderStates::BrushOnly;
+		out.pen_width = 0;
+	}
 }
 
 void TextRenderable::render(QPainter& painter, bool force_min_size, float scaling) const
 {
+	if (framing_line)
+	{
+		QPen pen(painter.pen());
+		pen.setJoinStyle(Qt::MiterJoin);
+		painter.setPen(pen);
+	}
+	
 	// NOTE: mini-optimization to prevent the save-restore for un-rotated texts which could be used when the scale-hack is no longer necessary
 	/*if (rotation == 0)
 		painter.drawPath(path);

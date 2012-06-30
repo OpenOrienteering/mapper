@@ -619,11 +619,28 @@ Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
         addWarning(QObject::tr("During import of text symbol %1: ignoring custom indents (%2/%3)")
                        .arg(0.1 * ocad_symbol->number).arg(ocad_symbol->indent1).arg(ocad_symbol->indent2));
     }
-    if (ocad_symbol->fmode != 0)
-    {
-        addWarning(QObject::tr("During import of text symbol %1: ignoring text framing (mode %2)")
-                       .arg(0.1 * ocad_symbol->number).arg(ocad_symbol->fmode));
-    }
+	
+	if (ocad_symbol->fmode > 0)
+	{
+		symbol->framing = true;
+		symbol->framing_color = convertColor(ocad_symbol->fcolor);
+		if (ocad_symbol->fmode == 1)
+		{
+			symbol->framing_mode = TextSymbol::ShadowFraming;
+			symbol->framing_shadow_x_offset = convertSize(ocad_symbol->fdx);
+			symbol->framing_shadow_y_offset = -1 * convertSize(ocad_symbol->fdy);
+		}
+		else if (ocad_symbol->fmode == 2)
+		{
+			symbol->framing_mode = TextSymbol::LineFraming;
+			symbol->framing_line_half_width = convertSize(ocad_symbol->fdpts);
+		}
+		else
+		{
+			addWarning(QObject::tr("During import of text symbol %1: ignoring text framing (mode %2)")
+			.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->fmode));
+		}
+	}
 
     symbol->updateQFont();
 	

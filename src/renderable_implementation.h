@@ -34,6 +34,7 @@
 class QPainterPath;
 
 class Map;
+class MapColor;
 class Object;
 class Symbol;
 class PointSymbol;
@@ -104,7 +105,7 @@ protected:
 class TextRenderable : public Renderable
 {
 public:
-	TextRenderable(TextSymbol* symbol, TextObject* text_object, double anchor_x, double anchor_y);
+	TextRenderable(TextSymbol* symbol, TextObject* text_object, MapColor* color, double anchor_x, double anchor_y, bool framing_line = false);
 	TextRenderable(const TextRenderable& other);
 	virtual void render(QPainter& painter, bool force_min_size, float scaling) const;
 	virtual void getRenderStates(RenderStates& out) const;
@@ -116,6 +117,8 @@ protected:
 	double anchor_y;
 	double rotation;
 	double scale_factor;
+	bool framing_line;
+	float framing_line_width;
 };
 
 #endif

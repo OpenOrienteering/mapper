@@ -28,12 +28,15 @@
 
 #include "symbol_properties_widget.h"
 
+QT_BEGIN_NAMESPACE
+class QRadioButton;
 class QCheckBox;
 class QDoubleSpinBox;
 class QFontComboBox;
 class QLineEdit;
 class QListWidget;
 class QPushButton;
+QT_END_NAMESPACE
 
 class ColorDropDown;
 class SymbolSettingDialog;
@@ -48,6 +51,13 @@ friend class DetermineFontSizeDialog;
 friend class PointSymbolEditorWidget;
 friend class OCAD8FileImport;
 public:
+	enum FramingMode
+	{
+		NoFraming = 0,
+		LineFraming = 1,
+		ShadowFraming = 2
+	};
+	
 	TextSymbol();
 	virtual ~TextSymbol();
 	virtual Symbol* duplicate(const QHash<MapColor*, MapColor*>* color_map = NULL) const;
@@ -73,6 +83,12 @@ public:
 	inline double getCharacterSpacing() const {return 0.001 * character_spacing;}
 	inline bool usesKerning() const {return kerning;}
 	QString getIconText() const; // returns a default text if no custom text is set.
+	inline bool usesFraming() const {return framing;}
+	inline MapColor* getFramingColor() const {return framing_color;}
+	inline int getFramingMode() const {return framing_mode;}
+	inline int getFramingLineHalfWidth() const {return framing_line_half_width;}
+	inline int getFramingShadowXOffset() const {return framing_shadow_x_offset;}
+	inline int getFramingShadowYOffset() const {return framing_shadow_y_offset;}
 	inline bool hasLineBelow() const {return line_below;}
 	inline MapColor* getLineBelowColor() const {return line_below_color;}
 	inline double getLineBelowWidth() const {return 0.001 * line_below_width;}
@@ -109,6 +125,13 @@ protected:
 	bool kerning;
 	QString icon_text;			// text to be drawn in the symbol's icon
 	
+	bool framing;
+	MapColor* framing_color;
+	int framing_mode;
+	int framing_line_half_width;
+	int framing_shadow_x_offset;
+	int framing_shadow_y_offset;
+	
 	// OCAD compatibility features
 	bool line_below;
 	MapColor* line_below_color;
@@ -130,6 +153,8 @@ public:
 	
 	void updateGeneralContents();
 	
+	void updateFramingContents();
+	
 	void updateCompatibilityCheckEnabled();
 	
 	void updateCompatibilityContents();
@@ -144,6 +169,11 @@ protected slots:
 	void checkToggled(bool checked);
 	void spacingChanged(double value);
 	void iconTextEdited(const QString& text);
+	
+	void framingCheckClicked(bool checked);
+	void framingColorChanged();
+	void framingModeChanged();
+	void framingSettingChanged();
 	
 	void ocadCompatibilityButtonClicked(bool checked);
 	void lineBelowCheckClicked(bool checked);
@@ -175,7 +205,16 @@ private:
 	QDoubleSpinBox* character_spacing_edit;
 	QCheckBox*      kerning_check;
 	QLineEdit*      icon_text_edit;
+	QCheckBox*      framing_check;
 	QCheckBox*      ocad_compat_check;
+	
+	QWidget*        framing_widget;
+	ColorDropDown*  framing_color_edit;
+	QRadioButton*   framing_line_radio;
+	QDoubleSpinBox* framing_line_half_width_edit;
+	QRadioButton*   framing_shadow_radio;
+	QDoubleSpinBox* framing_shadow_x_offset_edit;
+	QDoubleSpinBox* framing_shadow_y_offset_edit;
 	
 	QWidget*        ocad_compat_widget;
 	QCheckBox*      line_below_check;

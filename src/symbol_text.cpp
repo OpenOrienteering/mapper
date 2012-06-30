@@ -47,6 +47,12 @@ TextSymbol::TextSymbol() : Symbol(Symbol::Text), metrics(QFont())
 	character_spacing = 0;
 	kerning = true;
 	icon_text = "";
+	framing = false;
+	framing_color = NULL;
+	framing_mode = LineFraming;
+	framing_line_half_width = 200;
+	framing_shadow_x_offset = 200;
+	framing_shadow_y_offset = 200;
 	line_below = false;
 	line_below_color = NULL;
 	line_below_width = 0;
@@ -72,6 +78,12 @@ Symbol* TextSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) cons
 	new_text->character_spacing = character_spacing;
 	new_text->kerning = kerning;
 	new_text->icon_text = icon_text;
+	new_text->framing = framing;
+	new_text->framing_color = framing_color;
+	new_text->framing_mode = framing_mode;
+	new_text->framing_line_half_width = framing_line_half_width;
+	new_text->framing_shadow_x_offset = framing_shadow_x_offset;
+	new_text->framing_shadow_y_offset = framing_shadow_y_offset;
 	new_text->line_below = line_below;
 	new_text->line_below_color = line_below_color;
 	new_text->line_below_width = line_below_width;
@@ -90,9 +102,21 @@ void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 	
 	text_object->prepareLineInfos();
 	if (color)
-		output.insertRenderable(new TextRenderable(this, text_object, anchor_x, anchor_y));
+		output.insertRenderable(new TextRenderable(this, text_object, color, anchor_x, anchor_y));
 	if (line_below && line_below_color && line_below_width > 0)
 		createLineBelowRenderables(object, output);
+	
+	if (framing && framing_color != NULL)
+	{
+		if (framing_mode == LineFraming && framing_line_half_width > 0)
+		{
+			output.insertRenderable(new TextRenderable(this, text_object, framing_color, anchor_x, anchor_y, true));
+		}
+		else if (framing_mode == ShadowFraming)
+		{
+			output.insertRenderable(new TextRenderable(this, text_object, framing_color, anchor_x + 0.001 * framing_shadow_x_offset, anchor_y + 0.001 * framing_shadow_y_offset));
+		}
+	}
 }
 
 void TextSymbol::createLineBelowRenderables(Object* object, ObjectRenderables& output)
@@ -154,16 +178,28 @@ void TextSymbol::colorDeleted(MapColor* color)
 		this->color = NULL;
 		resetIcon();
 	}
+	if (color == this->framing_color)
+	{
+		this->framing_color = NULL;
+		resetIcon();
+	}
 }
 
 bool TextSymbol::containsColor(MapColor* color)
 {
-	return color == this->color;
+	if (color == this->color)
+		return true;
+	if (color == this->framing_color)
+		return true;
+	return false;
 }
 
 void TextSymbol::scale(double factor)
 {
 	font_size = qRound(factor * font_size);
+	framing_line_half_width = qRound(factor * framing_line_half_width);
+	framing_shadow_x_offset = qRound(factor * framing_shadow_x_offset);
+	framing_shadow_y_offset = qRound(factor * framing_shadow_y_offset);
 	
 	updateQFont();
 	
@@ -205,6 +241,13 @@ void TextSymbol::saveImpl(QIODevice* file, Map* map)
 	file->write((const char*)&character_spacing, sizeof(double));
 	file->write((const char*)&kerning, sizeof(bool));
 	saveString(file, icon_text);
+	file->write((const char*)&framing, sizeof(bool));
+	temp = map->findColorIndex(framing_color);
+	file->write((const char*)&temp, sizeof(int));
+	file->write((const char*)&framing_mode, sizeof(int));
+	file->write((const char*)&framing_line_half_width, sizeof(int));
+	file->write((const char*)&framing_shadow_x_offset, sizeof(int));
+	file->write((const char*)&framing_shadow_y_offset, sizeof(int));
 	file->write((const char*)&line_below, sizeof(bool));
 	temp = map->findColorIndex(line_below_color);
 	file->write((const char*)&temp, sizeof(int));
@@ -235,6 +278,16 @@ bool TextSymbol::loadImpl(QIODevice* file, int version, Map* map)
 		file->read((char*)&kerning, sizeof(bool));
 	if (version >= 19)
 		loadString(file, icon_text);
+	if (version >= 20)
+	{
+		file->read((char*)&framing, sizeof(bool));
+		file->read((char*)&temp, sizeof(int));
+		framing_color = (temp >= 0) ? map->getColor(temp) : NULL;
+		file->read((char*)&framing_mode, sizeof(int));
+		file->read((char*)&framing_line_half_width, sizeof(int));
+		file->read((char*)&framing_shadow_x_offset, sizeof(int));
+		file->read((char*)&framing_shadow_y_offset, sizeof(int));	
+	}
 	if (version >= 13)
 	{
 		file->read((char*)&line_below, sizeof(bool));
@@ -269,8 +322,18 @@ bool TextSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 		paragraph_spacing != text->paragraph_spacing ||
 		character_spacing != text->character_spacing ||
 		kerning != text->kerning ||
-		line_below != text->line_below)
+		line_below != text->line_below ||
+		framing != text->framing)
 		return false;
+	if (framing)
+	{
+		if (!colorEquals(framing_color, text->framing_color))
+			return false;
+		if (framing_mode != text->framing_mode ||
+			(framing_mode == LineFraming && framing_line_half_width != text->framing_line_half_width) ||
+			(framing_mode == ShadowFraming && (framing_shadow_x_offset != text->framing_shadow_x_offset || framing_shadow_y_offset != text->framing_shadow_y_offset)))
+			return false;
+	}
 	if (line_below)
 	{
 		if (!colorEquals(line_below_color, text->line_below_color))
@@ -403,8 +466,36 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	
 	layout->addItem(Util::SpacerItem::create(this));
 	
+	framing_check = new QCheckBox(tr("Framing"));
+	layout->addRow(framing_check);
+	
 	ocad_compat_check = new QCheckBox(tr("OCAD compatibility settings"));
 	layout->addRow(ocad_compat_check);
+	
+	
+	framing_widget = new QWidget();
+	addPropertiesGroup(tr("Framing"), framing_widget);
+	
+	QFormLayout* framing_layout = new QFormLayout();
+	framing_widget->setLayout(framing_layout);
+	
+	framing_color_edit = new ColorDropDown(map, symbol->getFramingColor());
+	framing_layout->addRow(tr("Framing color:"), framing_color_edit);
+	
+	framing_line_radio = new QRadioButton(tr("Line framing"));
+	framing_layout->addRow(framing_line_radio);
+	
+	framing_line_half_width_edit = Util::SpinBox::create(1, 0.0, 999999.9);
+	framing_layout->addRow(tr("Width:"), framing_line_half_width_edit);
+	
+	framing_shadow_radio = new QRadioButton(tr("Shadow framing"));
+	framing_layout->addRow(framing_shadow_radio);
+	
+	framing_shadow_x_offset_edit = Util::SpinBox::create(1, -999999.9, 999999.9);
+	framing_layout->addRow(tr("Left/Right Offset:"), framing_shadow_x_offset_edit);
+	
+	framing_shadow_y_offset_edit = Util::SpinBox::create(1, -999999.9, 999999.9);
+	framing_layout->addRow(tr("Top/Down Offset:"), framing_shadow_y_offset_edit);
 	
 	
 	ocad_compat_widget = new QWidget();
@@ -445,6 +536,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	
 	
 	updateGeneralContents();
+	updateFramingContents();
 	updateCompatibilityContents();
 	
 	
@@ -461,7 +553,15 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	connect(character_spacing_edit, SIGNAL(valueChanged(double)), this, SLOT(spacingChanged(double)));
 	connect(kerning_check, SIGNAL(clicked(bool)), this, SLOT(checkToggled(bool)));
 	connect(icon_text_edit, SIGNAL(textEdited(QString)), this, SLOT(iconTextEdited(QString)));
+	connect(framing_check, SIGNAL(clicked(bool)), this, SLOT(framingCheckClicked(bool)));
 	connect(ocad_compat_check, SIGNAL(clicked(bool)), this, SLOT(ocadCompatibilityButtonClicked(bool)));
+	
+	connect(framing_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(framingColorChanged()));
+	connect(framing_line_radio, SIGNAL(clicked(bool)), this, SLOT(framingModeChanged()));
+	connect(framing_line_half_width_edit, SIGNAL(valueChanged(double)), this, SLOT(framingSettingChanged()));
+	connect(framing_shadow_radio, SIGNAL(clicked(bool)), this, SLOT(framingModeChanged()));
+	connect(framing_shadow_x_offset_edit, SIGNAL(valueChanged(double)), this, SLOT(framingSettingChanged()));
+	connect(framing_shadow_y_offset_edit, SIGNAL(valueChanged(double)), this, SLOT(framingSettingChanged()));
 	
 	connect(line_below_check, SIGNAL(clicked(bool)), this, SLOT(lineBelowCheckClicked(bool)));
 	connect(line_below_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(lineBelowSettingChanged()));
@@ -577,6 +677,50 @@ void TextSymbolSettings::iconTextEdited(const QString& text)
 	emit propertiesModified();
 }
 
+void TextSymbolSettings::framingColorChanged()
+{
+	if (!react_to_changes)
+		return;
+	
+	symbol->framing_color = framing_color_edit->color();
+	updateFramingContents();
+	emit propertiesModified();
+}
+
+void TextSymbolSettings::framingModeChanged()
+{
+	if (!react_to_changes)
+		return;
+	
+	if (framing_line_radio->isChecked())
+		symbol->framing_mode = TextSymbol::LineFraming;
+	else if (framing_shadow_radio->isChecked())
+		symbol->framing_mode = TextSymbol::ShadowFraming;
+	updateFramingContents();
+	emit propertiesModified();
+}
+
+void TextSymbolSettings::framingSettingChanged()
+{
+	if (!react_to_changes)
+		return;
+	
+	symbol->framing_line_half_width = qRound(1000.0 * framing_line_half_width_edit->value());
+	symbol->framing_shadow_x_offset = qRound(1000.0 * framing_shadow_x_offset_edit->value());
+	symbol->framing_shadow_y_offset = qRound(-1000.0 * framing_shadow_y_offset_edit->value());
+	emit propertiesModified();
+}
+
+void TextSymbolSettings::framingCheckClicked(bool checked)
+{
+	if (!react_to_changes)
+		return;
+	
+	setTabEnabled(indexOf(framing_widget), checked);
+	symbol->framing = checked;
+	emit propertiesModified();
+}
+
 void TextSymbolSettings::ocadCompatibilityButtonClicked(bool checked)
 {
 	if (!react_to_changes)
@@ -672,6 +816,7 @@ void TextSymbolSettings::updateGeneralContents()
 	react_to_changes = false;
 	font_edit->setCurrentFont(QFont(symbol->font_family));
 	updateSizeEdit();
+	color_edit->setColor(symbol->color);
 	bold_check->setChecked(symbol->bold);
 	italic_check->setChecked(symbol->italic);
 	underline_check->setChecked(symbol->underline);
@@ -680,15 +825,47 @@ void TextSymbolSettings::updateGeneralContents()
 	character_spacing_edit->setValue(100 * symbol->character_spacing);
 	kerning_check->setChecked(symbol->kerning);
 	icon_text_edit->setText(symbol->getIconText());
+	framing_check->setChecked(symbol->framing);
 	ocad_compat_check->setChecked(symbol->line_below || symbol->getNumCustomTabs() > 0);
 	react_to_changes = true;
 	
+	framingCheckClicked(framing_check->isChecked());
 	ocadCompatibilityButtonClicked(ocad_compat_check->isChecked());
 }
 
 void TextSymbolSettings::updateCompatibilityCheckEnabled()
 {
 	ocad_compat_check->setEnabled(!symbol->line_below && symbol->getNumCustomTabs() == 0);
+}
+
+void TextSymbolSettings::updateFramingContents()
+{
+	react_to_changes = false;
+	
+	framing_color_edit->setColor(symbol->framing_color);
+	framing_line_radio->setChecked(symbol->framing_mode == TextSymbol::LineFraming);
+	framing_line_half_width_edit->setValue(0.001 * symbol->framing_line_half_width);
+	framing_shadow_radio->setChecked(symbol->framing_mode == TextSymbol::ShadowFraming);
+	framing_shadow_x_offset_edit->setValue(0.001 * symbol->framing_shadow_x_offset);
+	framing_shadow_y_offset_edit->setValue(-0.001 * symbol->framing_shadow_y_offset);
+	
+	
+	framing_line_radio->setEnabled(symbol->framing_color != NULL);
+	framing_shadow_radio->setEnabled(symbol->framing_color != NULL);
+	if (symbol->framing_color == NULL)
+	{
+		framing_line_half_width_edit->setEnabled(false);
+		framing_shadow_x_offset_edit->setEnabled(false);
+		framing_shadow_y_offset_edit->setEnabled(false);
+	}
+	else
+	{
+		framing_line_half_width_edit->setEnabled(symbol->framing_mode == TextSymbol::LineFraming);
+		framing_shadow_x_offset_edit->setEnabled(symbol->framing_mode == TextSymbol::ShadowFraming);
+		framing_shadow_y_offset_edit->setEnabled(symbol->framing_mode == TextSymbol::ShadowFraming);
+	}
+	
+	react_to_changes = true;
 }
 
 void TextSymbolSettings::updateCompatibilityContents()
@@ -718,6 +895,7 @@ void TextSymbolSettings::reset(Symbol* symbol)
 	this->symbol = reinterpret_cast<TextSymbol*>(symbol);
 	
 	updateGeneralContents();
+	updateFramingContents();
 	updateCompatibilityContents();
 }
 
