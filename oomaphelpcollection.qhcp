@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <QHelpCollectionProject version="1.0">
+	<assistant>
+		<applicationIcon>images/mapper-help.png</applicationIcon>
+		<title>OpenOrienteering Mapper Help</title>
+		<homePage>qthelp://openorienteering.mapper.help/oohelpdoc/help/html_en/index.html</homePage>
+	</assistant>
 	<docFiles>
 		<generate>
 			<file>
