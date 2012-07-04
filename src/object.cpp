@@ -407,6 +407,17 @@ void Object::takeRenderables()
 	output.takeRenderables();
 }
 
+void Object::clearRenderables()
+{
+	output.deleteRenderables();
+	extent = QRectF();
+	if (getType() == Object::Path)
+	{
+		PathObject* path = reinterpret_cast<PathObject*>(this);
+		path->clearPathCoordinates();
+	}
+}
+
 bool Object::setSymbol(Symbol* new_symbol, bool no_checks)
 {
 	if (!no_checks && new_symbol)
