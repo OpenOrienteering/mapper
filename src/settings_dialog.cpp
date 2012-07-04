@@ -161,32 +161,29 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	// Add translation files as languages to map
 	QMap<QString, int> language_map;
 	
-	QDir dir(":/translations");
-	foreach (QString name, dir.entryList(QStringList() << "*.qm", QDir::Files))
-	{
-		name = name.left(name.indexOf(".qm"));
-		name = name.right(2);
-		QString language_name;
-#if (QT_VERSION >= QT_VERSION_CHECK(4, 8, 0))
-		language_name = QLocale(name).nativeLanguageName();
-#else
-		language_name = QLocale::languageToString(QLocale(name).language());
+	QStringList translation_dirs;
+	translation_dirs
+	  << (QCoreApplication::applicationDirPath() + "/translations")
+#ifdef MAPPER_DEBIAN_PACKAGE_NAME
+	  << (QString("/usr/share/") + MAPPER_DEBIAN_PACKAGE_NAME + "/translations")
 #endif
-		language_map.insert(language_name, (int)QLocale(name).language());
-	}
-	
-	dir.cd(QCoreApplication::applicationDirPath() + "/translations");
-	foreach (QString name, dir.entryList(QStringList() << "*.qm", QDir::Files))
+	  << ":/translations";
+	  
+	Q_FOREACH(QString translations_path, translation_dirs)
 	{
-		name = name.left(name.indexOf(".qm"));
-		name = name.right(2);
-		QString language_name;
+		QDir dir(translations_path);
+		foreach (QString name, dir.entryList(QStringList() << "*.qm", QDir::Files))
+		{
+			name = name.left(name.indexOf(".qm"));
+			name = name.right(2);
+			QString language_name;
 #if (QT_VERSION >= QT_VERSION_CHECK(4, 8, 0))
-		language_name = QLocale(name).nativeLanguageName();
+			language_name = QLocale(name).nativeLanguageName();
 #else
-		language_name = QLocale::languageToString(QLocale(name).language());
+			language_name = QLocale::languageToString(QLocale(name).language());
 #endif
-		language_map.insert(language_name, (int)QLocale(name).language());
+			language_map.insert(language_name, (int)QLocale(name).language());
+		}
 	}
 	
 	// Add default language English to map

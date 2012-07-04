@@ -38,16 +38,22 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		  CPACK_PACKAGE_FILE_NAME
 		  ${CPACK_PACKAGE_FILE_NAME})
 		set(CPACK_DEBIAN_PACKAGE_NAME "openorienteering-mapper")
+ 		add_definitions(-DMAPPER_DEBIAN_PACKAGE_NAME="${CPACK_DEBIAN_PACKAGE_NAME}")
 		set(CPACK_DEBIAN_PACKAGE_MAINTAINER
 		   "OpenOrienteering Developers <dg0yt@darc.de>")
 		set(CPACK_DEBIAN_SECTION "graphics")
 		set(CPACK_DEBIAN_PACKAGE_HOMEPAGE 
 		  "http://oorienteering.sourceforge.net/")
 		set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS "ON")
-
-		install(CODE "MESSAGE(\"ATTENTION: 
-To build a .deb package with proper file ownership, you must run 
-'fakeroot make package'.\")")
+		
+		unset(FAKEROOT_EXECUTABLE CACHE)
+		find_program(FAKEROOT_EXECUTABLE fakeroot)
+		if(NOT FAKEROOT_EXECUTABLE)
+			install(CODE "MESSAGE(WARNING
+			  \"'fakeroot' not found. To build a DEB package with proper file \"
+			  \"ownership, fakeroot must be installed.\")")
+		endif(NOT FAKEROOT_EXECUTABLE)
+		
 		install(
 		  TARGETS Mapper 
 		  DESTINATION bin)
@@ -59,6 +65,10 @@ To build a .deb package with proper file ownership, you must run
 		  DESTINATION "share/${CPACK_DEBIAN_PACKAGE_NAME}/symbol sets"
 		  FILES_MATCHING PATTERN "*.omap")
 		install(
+		  DIRECTORY "bin/translations/"
+		  DESTINATION "share/${CPACK_DEBIAN_PACKAGE_NAME}/translations"
+		  FILES_MATCHING PATTERN "*.qm")
+		install(
 		  DIRECTORY "bin/help/"
 		  DESTINATION "share/${CPACK_DEBIAN_PACKAGE_NAME}/help"
 		  FILES_MATCHING PATTERN "*.qch" PATTERN "*.qhc")
@@ -68,9 +78,23 @@ To build a .deb package with proper file ownership, you must run
 		install(
 		  FILES "debian/Mapper.xpm"
 		  DESTINATION "share/pixmaps")
-
+		
+		# workaround for https://bugs.launchpad.net/ubuntu/+source/cmake/+bug/972419
+ 		if (CPACK_LSB_RELEASE STREQUAL "precise")
+			install(CODE "MESSAGE(WARNING 
+			  \"Ubuntu 12.04 (${CPACK_LSB_RELEASE}) has a broken DEB package generator \"
+			  \"(cf. https://bugs.launchpad.net/ubuntu/+source/cmake/+bug/972419).\n\"
+			  \"Run 'make package_repair' if the DEB package installation fails with \"
+			  \"the message 'corrupted filesystem tarfile'.\")")
+ 		endif (CPACK_LSB_RELEASE STREQUAL "precise")
+		add_custom_target(package_repair
+		  COMMENT "Rebuilding DEB package"
+		  COMMAND dpkg-deb -R "${CPACK_PACKAGE_FILE_NAME}.deb" "${CPACK_PACKAGE_FILE_NAME}"
+		  COMMAND /usr/bin/fakeroot dpkg-deb -b "${CPACK_PACKAGE_FILE_NAME}"
+		  COMMAND rm -R "${CPACK_PACKAGE_FILE_NAME}")
+	
 	endif(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
-
+	
 	include(CPack)
 
 endif(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
