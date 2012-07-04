@@ -52,7 +52,7 @@ private:
 class XMLFileFormat : public Format
 {
 public:
-    XMLFileFormat() : Format("XML", QObject::tr("OpenOrienteering Mapper XML"), "xml", false, true, true) {}
+    XMLFileFormat() : Format("XML", QObject::tr("OpenOrienteering Mapper XML (export only)"), "xml", false, true, true) {}
 
     bool understands(const unsigned char *buffer, size_t sz) const;
     //Importer *createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
