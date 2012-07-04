@@ -83,6 +83,14 @@ encounter strange crashes for example on QList destructors. You may also want to
 Please also note that the OpenOrienteering developers usually work with gcc, so it is likely that the
 current version from git does not compile with Visual C++ without adjustments.
 
+* Building binary ZIP packages with MinGW
+
+Start the build process from a fresh build directory. To prepare a release 
+package call 
+  cmake -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles" ..
+  mingw32-make package
+
+
 
 == Compiling on Linux ==
 
@@ -114,11 +122,17 @@ The option "-graphicssystem raster" is a Qt option which usually leads to better
 in case it is not the default yet anyway (like on Windows). In addition, using the native graphics system
 can lead to artifacts.
 
-* Package management:
-If you want to create a release package, enable "set(CMAKE_BUILD_TYPE Release)" in the CMakeList.txt. 
-Then start the build process from a fresh build directory.
-To create the .deb package for your particular distribution, after building call: 
-fakeroot make package
+* Building binary DEB packages:
+To create the DEB package for your particular distribution, make sure that 
+fakeroot is installed. Start the build process from a fresh build directory.
+Call:
+  cmake -DCMAKE_BUILD_TYPE=Release ..
+  make package
+
+There is a bug in Ubuntu 12.04 (precise) cmake package which might result in 
+DEB packages which fail to install with the message 'corrupted filesystem 
+tarfile'. You can repair the DEB package by calling:
+  make package_repair
 
 You may list the package contents with:
 dpkg --contents PACKAGENAME.deb
