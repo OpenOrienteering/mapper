@@ -23,10 +23,19 @@
 #include "libocad.h"
 #include "array.h"
 
-static dword ocad_alloc_object(u32 npts) {
-	int size = 0x20 + 8 * npts;
-	size++;
-	return 0; // FIXME
+static dword ocad_alloc_object(OCADFile *pfile, u32 num_coords) {
+	u32 index;
+	OCADObject* object;
+	int size = sizeof(OCADObject) - sizeof(OCADPoint) + 8 * num_coords;
+	
+	if (ocad_file_reserve(pfile, size) == OCAD_OUT_OF_MEMORY)
+		return 0;
+	index = pfile->size;
+	object = (OCADObject*)(pfile->buffer + index);
+	object->npts = num_coords;
+	pfile->size += size;
+	
+	return index;
 }
 
 static bool ocad_object_copy(OCADObject *dest, const OCADObject *src) {
@@ -63,30 +72,41 @@ OCADObjectEntry *ocad_object_entry_at(OCADFile *pfile, OCADObjectIndex *current,
 }
 
 OCADObjectEntry *ocad_object_entry_new(OCADFile *pfile, u32 npts) {
-	OCADObjectEntry *empty = NULL; // holder for first empty (npts=0) index entry, if needed
+	OCADObjectEntry *empty = NULL; 
 	OCADObjectIndex *idx;
 	dword offs;
+	u32 last_idx_offset;
+	u32 empty_offset = 0; // holder for offset of first empty (npts=0) index entry, if needed
+	
 	if (!pfile->header) return NULL;
 	if (npts == 0) return NULL;
 	for (idx = ocad_objidx_first(pfile); idx != NULL; idx = ocad_objidx_next(pfile, idx)) {
 		int i;
+		last_idx_offset = (u8*)idx - pfile->buffer;
 		for (i = 0; i < 256; i++) {
 			OCADObjectEntry *entry = &(idx->entry[i]);
 			if (entry->symbol == 0) {
-				if (entry->npts == 0 && !empty) empty = entry;
+				if (entry->npts == 0 && empty_offset == 0) empty_offset = (u8*)&idx->entry[i] - pfile->buffer;
 				else if (entry->npts >= npts) return entry;
 			}
 		}
 	}
 
-	if (!empty) {
+	if (empty_offset == 0) {
 		// We don't have any empty entries - need to create a new one!
-		return NULL; // FIXME
+		ocad_file_reserve(pfile, sizeof(OCADObjectIndex));
+		idx = (OCADObjectIndex*)(pfile->buffer + last_idx_offset);
+		idx->next = pfile->size;
+		idx = (OCADObjectIndex*)(pfile->buffer + pfile->size);
+		pfile->size += sizeof(OCADObjectIndex);
+		empty_offset = (u8*)&idx->entry[0] - pfile->buffer;
 	}
 
 	// There exists an empty index entry, with symbol=0 and npts=0. We can allocate a new object and fill it
-	offs = ocad_alloc_object(npts);
+	offs = ocad_alloc_object(pfile, npts);
 	if (offs == 0) return NULL; // no memory
+
+	empty = (OCADObjectEntry*)(pfile->buffer + empty_offset);
 	empty->ptr = offs;
 	empty->npts = npts;
 	// symbol, min, and max still need to be updated by the caller!
@@ -191,10 +211,13 @@ OCADObject *ocad_object_alloc(const OCADObject *source) {
 }
 
 
-OCADObject *ocad_object_add(OCADFile *file, const OCADObject *object) {
+OCADObject *ocad_object_add(OCADFile *file, const OCADObject *object, OCADObjectEntry** out_entry) {
 	OCADObjectEntry *entry = ocad_object_entry_new(file, object->npts + object->ntext);
+	if (out_entry)
+		*out_entry = entry;
 	OCADObject *dest;
 	if (entry == NULL) return NULL;
+	entry->symbol = object->symbol;
 	dest = ocad_object(file, entry);
 	if (!ocad_object_copy(dest, object)) return NULL;
 	ocad_object_entry_refresh(file, entry, dest);

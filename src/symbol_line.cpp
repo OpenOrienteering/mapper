@@ -1181,6 +1181,29 @@ void LineSymbol::cleanupPointSymbols()
 	}
 }
 
+void LineSymbol::setStartSymbol(PointSymbol* symbol)
+{
+	replaceSymbol(start_symbol, symbol, QObject::tr("Start symbol"));
+}
+void LineSymbol::setMidSymbol(PointSymbol* symbol)
+{
+	replaceSymbol(mid_symbol, symbol, QObject::tr("Mid symbol"));
+}
+void LineSymbol::setEndSymbol(PointSymbol* symbol)
+{
+	replaceSymbol(end_symbol, symbol, QObject::tr("End symbol"));
+}
+void LineSymbol::setDashSymbol(PointSymbol* symbol)
+{
+	replaceSymbol(dash_symbol, symbol, QObject::tr("Dash symbol"));
+}
+void LineSymbol::replaceSymbol(PointSymbol*& old_symbol, PointSymbol* replace_with, const QString& name)
+{
+	delete old_symbol;
+	old_symbol = replace_with;
+	replace_with->setName(name);
+}
+
 void LineSymbol::saveImpl(QIODevice* file, Map* map)
 {
 	file->write((const char*)&line_width, sizeof(int));

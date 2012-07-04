@@ -78,26 +78,36 @@ SharedRenderables::~SharedRenderables()
 
 void SharedRenderables::deleteRenderables()
 {
-	for (iterator renderables = begin(); renderables != end(); ++renderables)
+	for (iterator renderables = begin(); renderables != end(); )
 	{
 		for (RenderableVector::const_iterator renderable = renderables->second.begin(); renderable != renderables->second.end(); ++renderable)
 		{
 			delete *renderable;
 		}
-		renderables->second.clear();
+		renderables->second.clear();	// TODO: is this necessary?
 		if (renderables->first.clip_path != NULL)
-			erase(renderables);
+		{
+			iterator it = renderables;
+			++renderables;
+			erase(it);
+		}
+		else
+			++renderables;
 	}
 }
 
 void SharedRenderables::compact()
 {
-	for (iterator renderables = begin(); renderables != end(); ++renderables)
+	for (iterator renderables = begin(); renderables != end(); )
 	{
 		if (renderables->second.size() == 0)
 		{
-			erase(renderables);
+			iterator it = renderables;
+			++renderables;
+			erase(it);
 		}
+		else
+			++renderables;
 	}
 }
 

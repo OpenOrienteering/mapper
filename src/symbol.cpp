@@ -119,28 +119,37 @@ QImage* Symbol::getIcon(Map* map, bool update)
 		return icon;
 	delete icon;
 	
+	icon = createIcon(map, icon_size, true, 1);
+	return icon;
+}
+
+QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bottom_right_border)
+{
+	QImage* image;
+	
 	// Create icon map and view
 	Map icon_map;
 	icon_map.useColorsFrom(map);
 	icon_map.setScaleDenominator(map->getScaleDenominator());
 	MapView view(&icon_map);
 	
-	// If the icon is bigger than the rectagle with this zoom factor, it is zoomed out to fit into the rectangle
+	// If the icon is bigger than the rectangle with this zoom factor, it is zoomed out to fit into the rectangle
 	const float best_zoom = 2;
 	view.setZoom(best_zoom);
-	const float max_icon_mm = 0.001f * view.pixelToLength(Symbol::icon_size - 1);
+	const float max_icon_mm = 0.001f * view.pixelToLength(side_length - bottom_right_border);
 	const float max_icon_mm_half = 0.5f * max_icon_mm;
 	
 	// Create image
-	icon = new QImage(icon_size, icon_size, QImage::Format_ARGB32_Premultiplied);
+	image = new QImage(side_length, side_length, QImage::Format_ARGB32_Premultiplied);
 	QPainter painter;
-	painter.begin(icon);
-	painter.setRenderHint(QPainter::Antialiasing);
+	painter.begin(image);
+	if (antialiasing)
+		painter.setRenderHint(QPainter::Antialiasing);
 	
 	// Make background transparent
 	QPainter::CompositionMode mode = painter.compositionMode();
 	painter.setCompositionMode(QPainter::CompositionMode_Clear);
-	painter.fillRect(icon->rect(), Qt::transparent);
+	painter.fillRect(image->rect(), Qt::transparent);
 	painter.setCompositionMode(mode);
 	
 	// Create geometry
@@ -195,7 +204,7 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	if (real_icon_mm_half > max_icon_mm_half)
 		view.setZoom(best_zoom * (max_icon_mm_half / real_icon_mm_half));
 	
-	painter.translate(0.5f * (icon_size-1), 0.5f * (icon_size-1));
+	painter.translate(0.5f * (side_length - bottom_right_border), 0.5f * (side_length - bottom_right_border));
 	view.applyTransform(&painter);
 	
 	bool was_hidden = is_hidden;
@@ -205,7 +214,7 @@ QImage* Symbol::getIcon(Map* map, bool update)
 	
 	painter.end();
 	
-	return icon;
+	return image;
 }
 
 QString Symbol::getPlainTextName() const

@@ -151,6 +151,19 @@ struct _OCADColor {
 
 
 PACK(typedef
+struct _OCADColorSeparation {
+	str sep_name[16];
+	byte cyan;
+	byte magenta;
+	byte yellow;
+	byte black;
+	word raster_freq;
+	word raster_angle;
+}
+, OCADColorSeparation)
+
+
+PACK(typedef
 struct _OCADSymbolEntry {
 	dword ptr;
 }
@@ -175,7 +188,8 @@ struct _OCADSymbolIndex {
 	s16 size; \
 	s16 number; \
 	s16 type; \
-	s16 subtype; \
+	byte subtype; \
+	byte base_flags; \
 	s16 extent; \
 	bool selected; \
 	byte status; \
@@ -299,7 +313,8 @@ struct _OCADTextSymbol {
     s16 color;
     s16 dpts;       // in decipoints
     s16 bold;       // as used in Windows GDI, 400=normal, 700=bold
-    wbool italic;
+    byte italic;
+	byte charset;
     s16 cspace;     // character spacing
     s16 wspace;     // word spacing
     s16 halign;     // left, center, right, justified = 0-3
@@ -354,7 +369,8 @@ struct _OCADRectSymbol {
 PACK(typedef
 struct _OCADObject {
 	s16 symbol; // symbol number
-	s16 type; // symbol type
+	byte type; // object type
+	byte unicode;
 	s16 npts; // number of OCADPoints
 	s16 ntext;
 	s16 angle;
@@ -432,7 +448,7 @@ struct _OCADSetup {
 	double grid;			// in meters
 	double gpsangle;
 	// aGpsAdjust: array[0..11] of TGpsAdjPoint;
-	u8 notused[256+56];		// Contains <=v7 template info
+	u8 notused[12*40+4+8+8+8+256+2+2+8+8+8];		// Contains <=v7 template info
 	// Print information
 	OCADPoint printmin;		// Lower left corner of print window
 	OCADPoint printmax;		// Upper right corner of print window
@@ -474,7 +490,8 @@ struct _OCADFile {
 	const char *filename;	// Filename
 	int fd; 				// File descriptor
 	u8 *buffer;				// Location of the buffer
-	u32 size;				// Size of the buffer
+	u32 size;				// Size of the used part of the buffer
+	u32 reserved_size;		// Complete size of the buffer
 	bool mapped;			// Flag indicating whether the memory is mapped
 
 	OCADFileHeader *header; // Pointer to file header
@@ -661,6 +678,20 @@ bool ocad_rect_intersects(const OCADRect *r1, const OCADRect *r2);
  */
 int ocad_to_background(OCADBackground *bg, OCADCString *templ);
 
+/** Creates a new OCADFile struct in memory. Unused parts of the file buffer are set to zero.
+ * 
+ *  Returns OCAD_OK on success, or OCAD_OUT_OF_MEMORY.
+ */
+int ocad_file_new(OCADFile **pfile);
+
+/** Makes sure that 'amount' number of bytes are reserved in the file's buffer
+ *  in addition to the already used space. Sets newly reserved memory to zero.
+ *  Returns OCAD_OK or OCAD_OUT_OF_MEMORY.
+ * 
+ *  WARNING: be extremely careful with this, as it might invalidate pointers to the buffer!
+ */
+int ocad_file_reserve(OCADFile *file, int amount);
+
 /** Opens a file with the given filename. The file is loaded into memory and is accessible through
  *  the various ocad_file_* methods. The first argument can either be a pointer to a pre-allocated
  *  OCADFile object (e.g., on the stack), or NULL to cause the object to be allocated on the heap.
@@ -792,6 +823,11 @@ OCADSymbolIndex *ocad_symidx_next(OCADFile *pfile, OCADSymbolIndex *current);
 /** Returns the number of symbols defined in the file, or -1 if the file is invalid.
  */
 int ocad_symbol_count(OCADFile *pfile);
+
+
+/** Adds a new symbol with the given size in bytes to the file and returns a pointer to the new symbol.
+ */
+OCADSymbol *ocad_symbol_new(OCADFile *pfile, int size);
 
 
 /** Returns a pointer to the symbol in the specified location within the index block, or NULL if there
@@ -932,7 +968,7 @@ OCADObject *ocad_object_alloc(const OCADObject *source);
  *  The provided object is copied into the file and is left unchanged by this call. A pointer to the new
  *  object is returned, or NULL if the object could not be added.
  */
-OCADObject *ocad_object_add(OCADFile *file, const OCADObject *object);
+OCADObject *ocad_object_add(OCADFile *file, const OCADObject *object, OCADObjectEntry** out_entry);
 
 /** Returns a pointer to the first string index block, or NULL if the file isn't valid. Also returns
  *  NULL if the file contains no object.

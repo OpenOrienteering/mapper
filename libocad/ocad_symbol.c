@@ -49,6 +49,47 @@ int ocad_symbol_count(OCADFile *pfile) {
 	return count;
 }
 
+OCADSymbol *ocad_symbol_new(OCADFile *pfile, int size) {
+	OCADSymbol* new_symbol;
+	OCADSymbolIndex *idx;
+	u32 last_idx_offset;
+	int i;
+	bool found = FALSE;
+	
+	for (idx = ocad_symidx_first(pfile); idx != NULL; idx = ocad_symidx_next(pfile, idx)) {
+		last_idx_offset = (u8*)idx - pfile->buffer;
+		for (i = 0; i < 256; i++) {
+			OCADSymbol *sym = ocad_symbol_at(pfile, idx, i);
+			if (sym == NULL)
+			{
+				found = TRUE;
+				break;
+			}
+		}
+		if (found)
+			break;
+	}
+	
+	if (idx == NULL) {
+		ocad_file_reserve(pfile, sizeof(OCADSymbolIndex) + size);
+		idx = (OCADSymbolIndex*)(pfile->buffer + last_idx_offset);
+		idx->next = pfile->size;
+		idx = (OCADSymbolIndex*)(pfile->buffer + pfile->size);
+		pfile->size += sizeof(OCADSymbolIndex);
+		i = 0;
+	}
+	else {
+		last_idx_offset = (u8*)idx - pfile->buffer;
+		ocad_file_reserve(pfile, size);
+		idx = (OCADSymbolIndex*)(pfile->buffer + last_idx_offset);
+	}
+	
+	new_symbol = (OCADSymbol*)(pfile->buffer + pfile->size);
+	idx->entry[i].ptr = pfile->size;
+	pfile->size += size;
+	return new_symbol;
+}
+
 OCADSymbol *ocad_symbol_at(OCADFile *pfile, OCADSymbolIndex *current, int index) {
 	dword offs;
 	if (!pfile || !pfile->header || !current) return NULL;

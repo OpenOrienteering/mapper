@@ -167,6 +167,7 @@ int ocad_file_open(OCADFile **pfile, const char *filename) {
 	if (file->fd <= 0) { err = -2; goto ocad_file_open_1; }
 	if (fstat(file->fd, &fs) < 0) { err = -3; goto ocad_file_open_1; }
 	file->size = fs.st_size;
+	file->reserved_size = file->size;
 
 #ifdef MMAP_AVAILABLE
 	file->buffer = mmap(NULL, file->size, PROT_READ | PROT_WRITE, 0, file->fd, 0);
@@ -237,6 +238,84 @@ ocad_file_save_as_0:
 	return err;
 }
 
+int ocad_file_new(OCADFile **pfile) {
+	OCADFile *pnew;
+	u8 *dest, *p;
+	u32 size;
+	
+	// Create OCADFile struct
+	pnew = (OCADFile *)malloc(sizeof(OCADFile));
+	if (pnew == NULL) return -1;
+	pnew->filename = NULL;
+	pnew->fd = 0;
+	pnew->mapped = FALSE;
+	
+	// Allocate buffer
+	size = 1024 * 1024;	// start with 1 MiB
+	dest = (u8 *)malloc(size);
+	if (dest == NULL) return -1;
+	memset(dest, 0, size);
+	p = dest;
+	
+	pnew->buffer = dest;
+	pnew->reserved_size = size;
+	
+	// Place header at start
+	pnew->header = (OCADFileHeader *)dest;
+	p += sizeof(OCADFileHeader);
+
+	// Color table
+	pnew->colors = (OCADColor *)p;
+	p += 256 * sizeof(OCADColor);
+	p += 32 * sizeof(OCADColorSeparation);
+	
+	// Setup data
+	pnew->header->osetup = (p - dest);
+	pnew->header->ssetup = sizeof(OCADSetup);	// NOTE: This does not include all possible elements!
+	pnew->setup = (OCADSetup *)p;
+	p += pnew->header->ssetup;
+	
+	// First symbol block
+	pnew->header->osymidx = (p - dest);
+	p += sizeof(OCADSymbolIndex);
+	
+	// First object block
+	pnew->header->oobjidx = (p - dest);
+	p += sizeof(OCADObjectIndex);
+	
+	// String block
+	pnew->header->ostringidx = (p - dest);
+	p += sizeof(OCADStringIndex);
+	
+	// Done
+	pnew->size = (p - dest);
+	*pfile = pnew;
+	return 0;
+}
+
+int ocad_file_reserve(OCADFile *file, int amount) {
+	u32 old_reserved_size = file->reserved_size;
+	if (file->reserved_size - file->size >= amount)
+		return 0;
+	
+	u32 header_offset = (u8*)file->header - file->buffer;
+	u32 colors_offset = (u8*)file->colors - file->buffer;
+	u32 setup_offset = (u8*)file->setup - file->buffer;
+	
+	while (file->reserved_size - file->size < amount) {
+		file->reserved_size *= 2;
+	}
+	file->buffer = realloc(file->buffer, file->reserved_size);
+	
+	file->header = (OCADFileHeader*)(file->buffer + header_offset);
+	file->colors = (OCADColor*)(file->buffer + colors_offset);
+	file->setup = (OCADSetup*)(file->buffer + setup_offset);
+	
+	if (file->buffer == NULL) return -1;
+	memset(file->buffer + old_reserved_size, 0, file->reserved_size - old_reserved_size);
+	return 0;
+}
+
 int ocad_file_compact(OCADFile *pfile) {
 	OCADFile dfile, *pnew;
 	u8 *dest, *p;
@@ -250,6 +329,7 @@ int ocad_file_compact(OCADFile *pfile) {
 	p = dest;
 	pnew->buffer = dest;
 	pnew->size = pfile->size; // will change this later...
+	pnew->reserved_size = pfile->size;
 	pnew->header = (OCADFileHeader *)dest;
 
 	b.base = dest;

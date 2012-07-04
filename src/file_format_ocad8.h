@@ -34,14 +34,18 @@ class Object;
 class Symbol;
 class TextObject;
 class TextSymbol;
+class PointObject;
+class PointSymbol;
+class AreaSymbol;
 
 class OCAD8FileFormat : public Format
 {
 public:
-    OCAD8FileFormat() : Format("OCAD78", QObject::tr("OCAD Versions 7, 8"), "ocd", true, false, true) {}
+	OCAD8FileFormat() : Format("OCAD78", QObject::tr("OCAD Versions 7, 8"), "ocd", true, true, true) {}
 
-    bool understands(const unsigned char *buffer, size_t sz) const;
-	Importer *createImporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException);
+	bool understands(const unsigned char *buffer, size_t sz) const;
+	virtual Importer* createImporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException);
+	virtual Exporter* createExporter(QIODevice* stream, const QString& path, Map* map, MapView* view) const throw (FormatException);
 };
 
 
@@ -79,7 +83,6 @@ protected:
     // Symbol import
     Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);
     Symbol *importLineSymbol(const OCADLineSymbol *ocad_symbol);
-    Symbol *importDoubleLineSymbol(const OCADLineSymbol *ocad_symbol);
     Symbol *importAreaSymbol(const OCADAreaSymbol *ocad_symbol);
     Symbol *importTextSymbol(const OCADTextSymbol *ocad_symbol);
     RectangleInfo *importRectSymbol(const OCADRectSymbol *ocad_symbol);
@@ -95,11 +98,9 @@ protected:
     // Some helper functions that are used in multiple places
     PointSymbol *importPattern(s16 npts, OCADPoint *pts);
     void fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol);
-    void fillCombinedSymbol(CombinedSymbol *symbol, const std::vector<Symbol *> &symbols);
     void fillPathCoords(Object *object, bool is_area, s16 npts, OCADPoint *pts);
 	bool fillTextPathCoords(TextObject *object, TextSymbol *symbol, s16 npts, OCADPoint *pts);
     bool isRasterImageFile(const QString &filename) const;
-    bool isMainLineTrivial(const LineSymbol *symbol);
 
 
     // Unit conversion functions
@@ -139,7 +140,84 @@ private:
 
     /// Offset between OCAD map origin and Mapper map origin (in Mapper coordinates)
     qint64 offset_x, offset_y;
+};
 
+
+class OCAD8FileExport : public Exporter
+{
+public:
+	OCAD8FileExport(QIODevice* stream, Map *map, MapView *view);
+	~OCAD8FileExport();
+	
+	void doExport() throw (FormatException);
+	
+protected:
+	
+	// Symbol export
+	void exportCommonSymbolFields(Symbol* symbol, OCADSymbol* ocad_symbol, int size);
+	int getPatternSize(PointSymbol* point);
+	s16 exportPattern(PointSymbol* point, OCADPoint** buffer);		// returns the number of written coordinates, including the headers
+	s16 exportSubPattern(Object* object, Symbol* symbol, OCADPoint** buffer);
+	
+	s16 exportPointSymbol(PointSymbol* point);
+	s16 exportLineSymbol(LineSymbol* line);
+	s16 exportAreaSymbol(AreaSymbol* area);
+	s16 exportTextSymbol(TextSymbol* text);
+	void setTextSymbolFormatting(OCADTextSymbol* ocad_symbol, TextObject* formatting);
+	std::set<s16> exportCombinedSymbol(CombinedSymbol* combination);
+	
+	// Helper functions
+	/// Returns the number of exported coordinates. If not NULL, the given symbol is used to determine the meaning of dash points.
+	s16 exportCoordinates(const MapCoordVector& coords, OCADPoint** buffer, Symbol* symbol);
+	s16 exportTextCoordinates(TextObject* object, OCADPoint** buffer);
+	int getOcadColor(QRgb rgb);
+	s16 getPointSymbolExtent(PointSymbol* symbol);
+	
+	// Conversion functions
+	void convertPascalString(const QString& text, char* buffer, int buffer_size);
+	void convertCString(const QString& text, unsigned char* buffer, int buffer_size);
+	/// Returns the number of bytes written into buffer
+	int convertWideCString(const QString& text, unsigned char* buffer, int buffer_size);
+	int convertRotation(float angle);
+	OCADPoint convertPoint(qint64 x, qint64 y);
+	/// Attention: this ignores the coordinate flags!
+	OCADPoint convertPoint(const MapCoord& coord);
+	s32 convertSize(qint64 size);
+	s16 convertColor(MapColor* color);
+	
+private:
+	/// Handle to the open OCAD file
+	OCADFile *file;
+	
+	/// Character encoding to use for 1-byte (narrow) strings
+	QTextCodec *encoding_1byte;
+	
+	/// Character encoding to use for 2-byte (wide) strings
+	QTextCodec *encoding_2byte;
+	
+	/// Set of used symbol numbers. Needed to ensure uniqueness of the symbol number as Mapper does not enforce it,
+	/// but the indexing of symbols in OCAD depends on it.
+	std::set<s16> symbol_numbers;
+	
+	/// Maps OO Mapper symbol pointer to a list of OCAD symbol numbers.
+	/// Usually the list contains only one entry, except for combined symbols,
+	/// for which it contains the indices of all basic parts
+	QHash<Symbol*, std::set<s16> > symbol_index;
+	
+	/// In .ocd 8, text alignment needs to be specified in the text symbols instead of objects, so it is possible
+	/// that multiple ocd text symbols have to be created for one native TextSymbol.
+	/// This structure maps text symbols to lists containing information about the already created ocd symbols.
+	/// The TextObject in each pair just gives information about the alignment option used for the symbol indexed by the
+	/// second part of the pair.
+	/// If there is no entry for a TextSymbol in this map yet, no object using this symbol has been encountered yet,
+	/// no no specific formatting was set in the corresponding symbol (which has to be looked up using symbol_index).
+	typedef std::vector< std::pair< TextObject*, s16 > > TextFormatList;
+	QHash<TextSymbol*, TextFormatList > text_format_map;
+	
+	/// Helper object for pattern export
+	PointObject* origin_point_object;
+	
+	void addStringTruncationWarning(const QString& text, int truncation_pos);
 };
 
 #endif // OCAD8_FILE_IMPORT_H

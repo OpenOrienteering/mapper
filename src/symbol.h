@@ -107,6 +107,10 @@ public:
 	/// Returns the symbol's icon, creates it if it was not created yet. update == true forces an update of the icon.
 	QImage* getIcon(Map* map, bool update = false);
 	
+	/// Creates a new image with the given side length and draws the smybol icon onto it.
+	/// Returns an image pointer which you must delete yourself when no longer needed.
+	QImage* createIcon(Map* map, int side_length, bool antialiasing, int bottom_right_border = 0);
+	
 	// Clear the symbol's icon. It will be recreated when it is needed.
 	void resetIcon() { delete icon; icon = NULL; }
 	

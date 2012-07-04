@@ -380,7 +380,7 @@ void MapEditorController::assignKeyboardShortcuts()
     findAction("switchdashes")->setShortcut(QKeySequence("Ctrl+D"));
 	findAction("connectpaths")->setShortcut(QKeySequence("C"));
 	findAction("rotateobjects")->setShortcut(QKeySequence("R"));
-	findAction("scaleobjects")->setShortcut(QKeySequence("Ctrl+S"));
+	findAction("scaleobjects")->setShortcut(QKeySequence("Z"));
 	findAction("cutobject")->setShortcut(QKeySequence("K"));
 	findAction("cuthole")->setShortcut(QKeySequence("H"));
 	findAction("measure")->setShortcut(QKeySequence("M"));

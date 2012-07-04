@@ -52,6 +52,7 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent) :
 	zoom_label = NULL;
 	cursorpos_label = NULL;
 	coords_type = MAP_COORDS;
+	last_cursor_pos = MapCoordF(0, 0);
 	
 	below_template_cache_dirty_rect = rect();
 	above_template_cache_dirty_rect = rect();
@@ -397,9 +398,10 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 	
 	if (coords_type == MAP_COORDS)
 	{
-		cursorpos_label->setText( QString("%1 %2 (mm)").
+		cursorpos_label->setText( QString("%1 %2 (%3)").
 		  arg(locale().toString(pos.getX(), 'f', 2)).
-		  arg(locale().toString(-pos.getY(), 'f', 2)) );
+		  arg(locale().toString(-pos.getY(), 'f', 2)).
+		  arg(tr("mm", "millimeters")));
 	}
 	else
 	{
@@ -409,9 +411,10 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 		{
 			const QPointF projected_point(georef.toProjectedCoords(pos));
 			cursorpos_label->setText(
-			  QString("%1 %2 (m)").
+			  QString("%1 %2 (%3)").
 			  arg(QString::number(projected_point.x(), 'f', 0)).
-			  arg(QString::number(projected_point.y(), 'f', 0))
+			  arg(QString::number(projected_point.y(), 'f', 0)).
+			  arg(tr("m", "meters"))
 			); 
 		}
 		else if (coords_type == GEOGRAPHIC_COORDS)

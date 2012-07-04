@@ -212,9 +212,13 @@ public:
 	void setSymbolsDirty();
 	
 	void scaleAllSymbols(double factor);
+	
 	/// Returns a vector of the same size as the symbol list, where each element is set to true if
 	/// there is at least one object which uses this symbol or a derived (combined) symbol
 	void determineSymbolsInUse(std::vector<bool>& out);
+	
+	/// Adds to the given symbol bitfield all other symbols which are needed to display the symbols indicated by the bitfield.
+	void determineSymbolUseClosure(std::vector< bool >& symbol_bitfield);
 	
 	// Templates
 	
@@ -398,7 +402,6 @@ private:
 	/// returning the map from symbol indices in other to imported indices. Imported symbols are placed after the existing symbols.
 	void importSymbols(Map* other, const QHash<MapColor*, MapColor*>& color_map, int insert_pos = -1, bool merge_duplicates = true, std::vector<bool>* filter = NULL,
 					   QHash<int, int>* out_indexmap = NULL, QHash<Symbol*, Symbol*>* out_pointermap = NULL);
-	void determineSymbolUseClosure(std::vector< bool >& symbol_bitfield);
 	
 	void addSelectionRenderables(Object* object);
 	void updateSelectionRenderables(Object* object);

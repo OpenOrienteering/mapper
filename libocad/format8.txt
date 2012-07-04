@@ -346,7 +346,8 @@ ordinary map objects.
                                  3: circle
                                  4: dot (filled circle)}
     stFlags: word;             {Flags
-                                 1: line with round ends}
+                                 1: line with round ends
+                                 4: line with miter joins}
     stColor: SmallInt;         {color of the object. This is the
                                number which appears in the Colors
                                dialog box}

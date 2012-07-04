@@ -79,7 +79,7 @@ public:
 	/// TODO: Should that better be a line property?
 	static const float miterLimit() {return 1;}
 	
-	// Getters / Setters TODO: complete
+	// Getters / Setters
 	inline int getLineWidth() const {return line_width;}
 	inline void setLineWidth(double width) {line_width = qRound(1000 * width);}
 	inline MapColor* getColor() const {return color;}
@@ -90,14 +90,61 @@ public:
 	inline void setCapStyle(CapStyle style) {cap_style = style;}
 	inline JoinStyle getJoinStyle() const {return join_style;}
 	inline void setJoinStyle(JoinStyle style) {join_style = style;}
-    inline PointSymbol* getStartSymbol() const {return start_symbol;}
-    inline PointSymbol* getMidSymbol() const {return mid_symbol;}
-    inline PointSymbol* getEndSymbol() const {return end_symbol;}
-    inline PointSymbol* getDashSymbol() const {return dash_symbol;}
-    inline bool hasBorder() const {return have_border_lines;}
+	inline int getPointedCapLength() const {return pointed_cap_length;}
+	inline void setPointedCapLength(int value) {pointed_cap_length = value;}
+	inline bool isDashed() const {return dashed;}
+	inline void setDashed(bool value) {dashed = value;}
+	
+	inline PointSymbol* getStartSymbol() const {return start_symbol;}
+	void setStartSymbol(PointSymbol* symbol);
+	inline PointSymbol* getMidSymbol() const {return mid_symbol;}
+	void setMidSymbol(PointSymbol* symbol);
+	inline PointSymbol* getEndSymbol() const {return end_symbol;}
+	void setEndSymbol(PointSymbol* symbol);
+	inline PointSymbol* getDashSymbol() const {return dash_symbol;}
+	void setDashSymbol(PointSymbol* symbol);
+	
+	inline int getMidSymbolsPerSpot() const {return mid_symbols_per_spot;}
+	inline void setMidSymbolsPerSpot(int value) {mid_symbols_per_spot = value;}
+	inline int getMidSymbolDistance() const {return mid_symbol_distance;}
+	inline void setMidSymbolDistance(int value) {mid_symbol_distance = value;}
+	
+	inline int getSegmentLength() const {return segment_length;}
+	inline void setSegmentLength(int value) {segment_length = value;}
+	inline int getEndLength() const {return end_length;}
+	inline void setEndLength(int value) {end_length = value;}
+	inline bool getShowAtLeastOneSymbol() const {return show_at_least_one_symbol;}
+	inline void setShowAtLeastOneSymbol(bool value) {show_at_least_one_symbol = value;}
+	inline int getMinimumMidSymbolCount() const {return minimum_mid_symbol_count;}
+	inline void setMinimumMidSymbolCount(int value) {minimum_mid_symbol_count = value;}
+	inline int getMinimumMidSymbolCountWhenClosed() const {return minimum_mid_symbol_count_when_closed;}
+	inline void setMinimumMidSymbolCountWhenClosed(int value) {minimum_mid_symbol_count_when_closed = value;}
+	
+	inline int getDashLength() const {return dash_length;}
+	inline void setDashLength(int value) {dash_length = value;}
+	inline int getBreakLength() const {return break_length;}
+	inline void setBreakLength(int value) {break_length = value;}
+	inline int getDashesInGroup() const {return dashes_in_group;}
+	inline void setDashesInGroup(int value) {dashes_in_group = value;}
+	inline int getInGroupBreakLength() const {return in_group_break_length;}
+	inline void setInGroupBreakLength(int value) {in_group_break_length = value;}
+	inline bool getHalfOuterDashes() const {return half_outer_dashes;}
+	inline void setHalfOuterDashes(bool value) {half_outer_dashes = value;}
+	
+	inline bool hasBorder() const {return have_border_lines;}
+	inline void setHasBorder(bool value) {have_border_lines = value;}
 	inline int getBorderLineWidth() const {return border_width;}
+	inline void setBorderLineWidth(int value) {border_width = value;}
 	inline MapColor* getBorderColor() const {return border_color;}
+	inline void setBorderColor(MapColor* value) {border_color = value;}
 	inline int getBorderShift() const {return border_shift;}
+	inline void setBorderShift(int value) {border_shift = value;}
+	inline bool isBorderDashed() const {return dashed_border;}
+	inline void setBorderDashed(bool enable) {dashed_border = enable;}
+	inline int getBorderDashLength() const {return border_dash_length;}
+	inline void setBorderDashLength(int value) {border_dash_length = value;}
+	inline int getBorderBreakLength() const {return border_break_length;}
+	inline void setBorderBreakLength(int value) {border_break_length = value;}
 	
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
 	
@@ -122,6 +169,7 @@ protected:
 									  std::vector<float>* out_lengths, bool set_mid_symbols, ObjectRenderables& output);
 	void advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords, int& cur_line_coord, int& current_index, float cur_length,
 								  int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, std::vector<float>* out_lengths, const MapCoordF& o3, const MapCoordF& o4);
+	void replaceSymbol(PointSymbol*& old_symbol, PointSymbol* replace_with, const QString& name);
 	
 	// Base line
 	int line_width;		// in 1/1000 mm
