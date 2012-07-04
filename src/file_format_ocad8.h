@@ -46,6 +46,8 @@ public:
 	bool understands(const unsigned char *buffer, size_t sz) const;
 	virtual Importer* createImporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException);
 	virtual Exporter* createExporter(QIODevice* stream, const QString& path, Map* map, MapView* view) const throw (FormatException);
+	
+	static bool isRasterImageFile(const QString &filename);
 };
 
 
@@ -100,7 +102,6 @@ protected:
     void fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol);
     void fillPathCoords(Object *object, bool is_area, s16 npts, OCADPoint *pts);
 	bool fillTextPathCoords(TextObject *object, TextSymbol *symbol, s16 npts, OCADPoint *pts);
-    bool isRasterImageFile(const QString &filename) const;
 
 
     // Unit conversion functions
@@ -184,6 +185,7 @@ protected:
 	OCADPoint convertPoint(const MapCoord& coord);
 	s32 convertSize(qint64 size);
 	s16 convertColor(MapColor* color);
+	double convertTemplateScale(double mapper_scale);
 	
 private:
 	/// Handle to the open OCAD file

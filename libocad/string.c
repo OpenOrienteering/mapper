@@ -79,25 +79,42 @@ OCADStringEntry *ocad_string_entry_at(OCADFile *pfile, OCADStringIndex *current,
 }
 
 OCADStringEntry *ocad_string_entry_new(OCADFile *pfile, u32 size) {
-	OCADStringEntry *empty = NULL; // holder for first empty (size=0) index entry, if needed
+	OCADStringEntry *empty = NULL;
 	OCADStringIndex *idx;
+	u32 last_idx_offset;
+	u32 empty_offset = 0;	// offset to first empty (size=0) index entry, if needed
+	
 	if (!pfile->header) return NULL;
 	for (idx = ocad_string_index_first(pfile); idx != NULL; idx = ocad_string_index_next(pfile, idx)) {
 		int i;
+		last_idx_offset = (u8*)idx - pfile->buffer;
 		for (i = 0; i < 256; i++) {
 			OCADStringEntry *entry = &(idx->entry[i]);
 			if (entry->type == 0) {
-				if (entry->size == 0 && !empty) empty = entry;
+				if (entry->size == 0 && empty_offset == 0) empty_offset = (u8*)&idx->entry[i] - pfile->buffer;
 				else if (entry->size >= size) return entry;
 			}
 		}
 	}
 
-	if (!empty) {
-			// We don't have any suitable entries, but we do have an empty slot.
-			return NULL; // FIXME
+	if (empty_offset == 0) {
+		// We don't have any empty entries - need to create a new one!
+		ocad_file_reserve(pfile, sizeof(OCADStringIndex));
+		idx = (OCADStringIndex*)(pfile->buffer + last_idx_offset);
+		idx->next = pfile->size;
+		idx = (OCADStringIndex*)(pfile->buffer + pfile->size);
+		pfile->size += sizeof(OCADStringIndex);
+		empty_offset = (u8*)&idx->entry[0] - pfile->buffer;
 	}
-	return NULL;
+	
+	// There exists an empty index entry. We can allocate a new object and fill it
+	ocad_file_reserve(pfile, size);
+	empty = (OCADStringEntry*)(pfile->buffer + empty_offset);
+	empty->size = size;
+	empty->ptr = pfile->size;
+	pfile->size += empty->size;
+	
+	return empty;
 }
 
 int ocad_string_remove(OCADFile *pfile, OCADStringEntry *entry) {

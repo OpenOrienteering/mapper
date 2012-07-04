@@ -57,6 +57,15 @@ Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, const QString& path
     return new OCAD8FileExport(stream, map, view);
 }
 
+bool OCAD8FileFormat::isRasterImageFile(const QString &filename)
+{
+	int dot_pos = filename.lastIndexOf('.');
+	if (dot_pos < 0)
+		return false;
+	QString extension = filename.right(filename.length() - dot_pos - 1).toLower();
+	return QImageReader::supportedImageFormats().contains(extension.toAscii());
+}
+
 
 
 
@@ -1040,7 +1049,7 @@ void OCAD8FileImport::importString(OCADStringEntry *entry)
 Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background)
 {
     QString filename(background.filename); // FIXME: use platform char encoding?
-    if (isRasterImageFile(filename))
+	if (OCAD8FileFormat::isRasterImageFile(filename))
     {
         TemplateImage *templ = new TemplateImage(filename, map);
         MapCoord c;
@@ -1059,15 +1068,6 @@ Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background
         addWarning(QObject::tr("Unable to import template: background \"%1\" doesn't seem to be a raster image").arg(filename));
     }
     return NULL;
-}
-
-bool OCAD8FileImport::isRasterImageFile(const QString &filename) const
-{
-    int dot_pos = filename.lastIndexOf('.');
-	if (dot_pos < 0)
-		return false;
-	QString extension = filename.right(filename.length() - dot_pos - 1).toLower();
-    return QImageReader::supportedImageFormats().contains(extension.toAscii());
 }
 
 /** Translates the OCAD path given in the last two arguments into an Object.
@@ -1410,7 +1410,7 @@ void OCAD8FileExport::doExport() throw (FormatException)
 			if (symbol_index.contains(object->getSymbol()))
 				index_set = symbol_index[object->getSymbol()];
 			else
-				index_set.insert(-1);	// export as undefined symbol; TODO: is this the correct symbol number?
+				index_set.insert(-1);	// export as undefined symbol
 			
 			for (std::set<s16>::const_iterator it = index_set.begin(), end = index_set.end(); it != end; ++it)
 			{
@@ -1502,20 +1502,41 @@ void OCAD8FileExport::doExport() throw (FormatException)
 		}
 	}
 	
-	/*
-		// TODO
-		// Load templates
-		map->templates.clear();
-		for (OCADStringIndex *idx = ocad_string_index_first(file); idx != NULL; idx = ocad_string_index_next(file, idx))
+	// Templates
+	for (int i = map->getNumTemplates() - 1; i >= 0; --i)
+	{
+		Template* temp = map->getTemplate(i);
+		
+		if (temp->getTemplateType() == "TemplateImage")
 		{
-			for (int i = 0; i < 256; i++)
-			{
-				OCADStringEntry *entry = ocad_string_entry_at(file, idx, i);
-				if (entry->type != 0 && entry->size > 0)
-					importString(entry);
-			}
+			// FIXME: export template view parameters
+			
+			double a = temp->getTemplateRotation() * 180 / M_PI;
+			int d = 0;
+			int o = 0;
+			int p = 0;
+			int s = 1;	// enabled
+			int t = 0;
+			OCADPoint pos = convertPoint(temp->getTemplateX(), temp->getTemplateY());
+			int x = pos.x >> 8;
+			int y = pos.y >> 8;
+			double u = convertTemplateScale(temp->getTemplateScaleX());
+			double v = convertTemplateScale(temp->getTemplateScaleY());
+			
+			QString string;
+			string.sprintf("%s\ts%d\tx%d\ty%d\ta%f\tu%f\tv%f\td%d\tp%d\tt%d\to%d",
+				temp->getTemplatePath().toAscii().data(), s, x, y, a, u, v, d, p, t, o
+			);
+			
+			OCADStringEntry* entry = ocad_string_entry_new(file, string.length() + 1);
+			entry->type = 8;
+			convertCString(string, file->buffer + entry->ptr, entry->size);
 		}
-	}*/
+		else
+		{
+			addWarning(QObject::tr("Unable to export template: file type of \"%1\" is not supported yet").arg(temp->getTemplateFilename()));
+		}
+	}
 	
 	stream->write((char*)file->buffer, file->size);
 	
@@ -2305,6 +2326,12 @@ s16 OCAD8FileExport::convertColor(MapColor* color)
 {
 	int index = map->findColorIndex(color);
 	return (index > 0) ? index : 0;
+}
+
+double OCAD8FileExport::convertTemplateScale(double mapper_scale)
+{
+	double mpd = mapper_scale / map->getScaleDenominator();	// meters(on map) per pixel
+	return mpd * 1 / 0.00001;
 }
 
 void OCAD8FileExport::addStringTruncationWarning(const QString& text, int truncation_pos)
