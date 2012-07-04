@@ -1,16 +1,46 @@
-include(AddFileDependencies)
+#
+#    Copyright 2012 Thomas Schöps, Kai Pastor
+#    
+#    This file is part of OpenOrienteering.
+# 
+#    OpenOrienteering is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+# 
+#    OpenOrienteering is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+# 
+#    You should have received a copy of the GNU General Public License
+#    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+ 
+cmake_minimum_required(VERSION 2.8)
 
 project(Mapper)
-cmake_minimum_required(VERSION 2.8)
-find_package(Qt4 REQUIRED)
+
+SET(Mapper_VERSION_MAJOR 0)
+SET(Mapper_VERSION_MINOR 3)
+SET(Mapper_VERSION_PATCH 0)
+
+if(NOT CMAKE_BUILD_TYPE)
+	SET(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING
+	  "Type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
+	  FORCE)
+endif(NOT CMAKE_BUILD_TYPE)
+
+SET(Mapper_VERSION_DISPLAY "${CMAKE_BUILD_TYPE} ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
+
+configure_file(src/global.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/global.h)
+
+find_package(Qt4 4.6 REQUIRED QtCore QtGui QtNetwork QtXml)
+include(${QT_USE_FILE})
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 include(3rd-party/clipper.cmake)
 include(3rd-party/proj.cmake)
-
-#set(CMAKE_BUILD_TYPE Release)
-#set(CMAKE_BUILD_TYPE Debug)
 
 if (CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS "-Wno-long-long -Wno-deprecated -Wall -pedantic")
@@ -180,6 +210,9 @@ set(Mapper_MOC_INPUT
 
 qt4_wrap_cpp(Mapper_MOC ${Mapper_MOC_INPUT})
 
+set_directory_properties(translations
+  CLEAN_NO_CUSTOM 1
+)
 set(Mapper_TRANS
  translations/OpenOrienteering_de.ts
  translations/OpenOrienteering_ja.ts
@@ -189,10 +222,31 @@ set(Mapper_TRANS
 set_source_files_properties(${Mapper_TRANS}
   PROPERTIES OUTPUT_LOCATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/translations
 )
+# 2012-07-04 Kai Pastor:
+# qt4_create_translation uses lupdate in a way that reports 
+# "circular inclusion" and runs virtually forever
+# cf. https://bugreports.qt-project.org/browse/QTBUG-6587
+# Planned workaround: reimplement qt4_create_translation to use the @lst
+# option instead of the -pro option
+# Apart from this, automatic running lupdate is likely to cause git merge 
+# issues for developers.
+#qt4_create_translation(Mapper_QM ${Mapper_TRANS} ${Mapper_SRCS})
 qt4_add_translation(Mapper_QM ${Mapper_TRANS})
+add_custom_target(Mapper_translations
+  DEPENDS ${Mapper_QM}
+)
+
+set(Mapper_TRANS_TEMPLATE
+ translations/OpenOrienteering_template.ts
+)
+qt4_create_translation(Mapper_QM_TEMPLATE src/undo.cpp ${Mapper_TRANS_TEMPLATE})
+add_custom_target(Mapper_translations_template
+#   ALL
+  DEPENDS ${Mapper_TRANS_TEMPLATE}
+)
 
 set(Mapper_RESOURCES resources.qrc)
-if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+if(APPLE)
 	# For MacOS, the translations will go into the "bundle"
 	set(Mapper_TRANS_QRC "${CMAKE_CURRENT_BINARY_DIR}/translations.qrc")
 	file(WRITE "${Mapper_TRANS_QRC}"
@@ -205,18 +259,26 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
 	file(APPEND "${Mapper_TRANS_QRC}"
 	     " </qresource>\n</RCC>\n")
 	list(APPEND Mapper_RESOURCES resources.qrc "${Mapper_TRANS_QRC}")
-endif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+endif(APPLE)
 qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
-set(Mapper_HELP_DIR ${PROJECT_SOURCE_DIR}/bin/help)
+set(Mapper_HELP_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/help)
 set(Mapper_HELP_COLLECTION ${Mapper_HELP_DIR}/oomaphelpcollection.qhc)
-file(GLOB Mapper_HELP_EN ${Mapper_HELP_DIR}/html_en)
+file(GLOB Mapper_HELP_CONTENTS 
+  ${CMAKE_CURRENT_SOURCE_DIR}/images
+  ${CMAKE_CURRENT_SOURCE_DIR}/help/html_en 
+  ${CMAKE_CURRENT_SOURCE_DIR}/help/html_en/images
+)
 add_custom_command( 
 	OUTPUT    ${Mapper_HELP_COLLECTION}
-	COMMAND   qcollectiongenerator
-	ARGS      ${PROJECT_SOURCE_DIR}/oomaphelpcollection.qhcp -o ${Mapper_HELP_COLLECTION}
-	DEPENDS   ${PROJECT_SOURCE_DIR}/oomaphelpcollection.qhcp ${PROJECT_SOURCE_DIR}/oomaphelp.qhp ${Mapper_HELP_EN}
+	COMMAND   ${QT_QCOLLECTIONGENERATOR_EXECUTABLE}
+	ARGS      ${CMAKE_CURRENT_SOURCE_DIR}/oomaphelpcollection.qhcp -o ${Mapper_HELP_COLLECTION}
+	MAIN_DEPENDENCY ${CMAKE_CURRENT_SOURCE_DIR}/oomaphelpcollection.qhcp
+	DEPENDS    oomaphelp.qhp ${Mapper_HELP_FILES}
 	COMMENT   "Compile help collection file"
+)
+add_custom_target(Mapper_help
+  DEPENDS ${Mapper_HELP_COLLECTION}
 )
 
 if(MINGW)
@@ -239,10 +301,7 @@ add_executable(Mapper
 )
 
 target_link_libraries(Mapper
- ${QT_QTCORE_LIBRARY}
- ${QT_QTGUI_LIBRARY}
- ${QT_QTNETWORK_LIBRARY}
- ${QT_QTXML_LIBRARY}
+ ${QT_LIBRARIES}
  ${PROJ_LIBRARY}
 )
 
