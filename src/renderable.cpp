@@ -84,7 +84,7 @@ void SharedRenderables::deleteRenderables()
 		{
 			delete *renderable;
 		}
-		renderables->second.clear();	// TODO: is this necessary?
+		renderables->second.clear();
 		if (renderables->first.clip_path != NULL)
 		{
 			iterator it = renderables;

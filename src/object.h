@@ -85,6 +85,9 @@ public:
 	/// Take ownership of the renderables
 	void takeRenderables();
 	
+	/// Delete the renderables (and extent), undoing update()
+	void clearRenderables();
+	
 	/// The renderables, read-only
 	inline const ObjectRenderables& renderables() const {return output;}
 	
@@ -182,6 +185,7 @@ public:
 	void partSizeChanged(int part_index, int change); // changes the parts[] information about start en
 	
 	inline const PathCoordVector& getPathCoordinateVector() const {return path_coords;}
+	inline void clearPathCoordinates() {path_coords.clear();}
 	
 	// Operations
 	
