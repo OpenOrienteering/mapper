@@ -2234,7 +2234,7 @@ s16 OCAD8FileExport::getPointSymbolExtent(PointSymbol* symbol)
 		Object* object = symbol->getElementObject(i);
 		Symbol* old_symbol = object->getSymbol();
 		object->setSymbol(symbol->getElementSymbol(i), true);
-		object->update(true, false);
+		//object->update(true, false);
 		
 		rectIncludeSafe(extent, symbol->getElementObject(i)->getExtent());
 		
