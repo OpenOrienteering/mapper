@@ -19,6 +19,10 @@
 
 #include "file_format_ocad8.h"
 
+#ifdef __MINGW32__
+extern void *mempcpy (void *dest, const void *src, size_t n);
+#endif
+
 #include <QDebug>
 #include <QDateTime>
 #include <qmath.h>
