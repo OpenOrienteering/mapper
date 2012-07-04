@@ -375,7 +375,7 @@
 <context>
     <name>DetermineFontSizeDialog</name>
     <message>
-        <location filename="../src/symbol_text.cpp" line="731"/>
+        <location filename="../src/symbol_text.cpp" line="909"/>
         <source>Determine font size</source>
         <translation>Schriftgröße bestimmen</translation>
     </message>
@@ -386,27 +386,27 @@ This dialog allows to choose a font size which results in a given exact height f
 Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bestimmten Buchstaben eine definierte Höhe ergibt.</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="741"/>
+        <location filename="../src/symbol_text.cpp" line="919"/>
         <source>Letter:</source>
         <translation>Buchstabe:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="739"/>
+        <location filename="../src/symbol_text.cpp" line="917"/>
         <source>A</source>
         <translation>A</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="735"/>
+        <location filename="../src/symbol_text.cpp" line="913"/>
         <source>This dialog allows to choose a font size which results in a given exact height for a specific letter.</source>
         <translation>DieserDialog ermöglicht es, die Schriftgröße so zu wählen, dass eine bestimmte Buchstabenhöhe erreicht wird.</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="743"/>
+        <location filename="../src/symbol_text.cpp" line="921"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="745"/>
+        <location filename="../src/symbol_text.cpp" line="923"/>
         <source>Height:</source>
         <translation>Höhe:</translation>
     </message>
@@ -606,12 +606,12 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <translation>Sprache:</translation>
     </message>
     <message>
-        <location filename="../src/settings_dialog.cpp" line="211"/>
+        <location filename="../src/settings_dialog.cpp" line="208"/>
         <source>Notice</source>
         <translation>Hinweis</translation>
     </message>
     <message>
-        <location filename="../src/settings_dialog.cpp" line="211"/>
+        <location filename="../src/settings_dialog.cpp" line="208"/>
         <source>The program must be restarted for the language change to take effect!</source>
         <translation>Das Programm muss neu gestartet werden, um die eingestellte Sprache zu verwenden.</translation>
     </message>
@@ -938,7 +938,7 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
 <context>
     <name>Global</name>
     <message>
-        <location filename="../src/global.h" line="21"/>
+        <location filename="../src/global.h" line="22"/>
         <source>OpenOrienteering Mapper</source>
         <translatorcomment>Wird vermutlich nicht übersetzt</translatorcomment>
         <translation>OpenOrienteering Mapper</translation>
@@ -1023,91 +1023,91 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
 <context>
     <name>LineSymbolSettings</name>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1659"/>
+        <location filename="../src/symbol_line.cpp" line="1682"/>
         <source>Line settings</source>
         <translation>Linieneigenschaften</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1420"/>
+        <location filename="../src/symbol_line.cpp" line="1443"/>
         <source>Line width:</source>
         <translation>Linienbreite:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1421"/>
-        <location filename="../src/symbol_line.cpp" line="1436"/>
-        <location filename="../src/symbol_line.cpp" line="1447"/>
-        <location filename="../src/symbol_line.cpp" line="1490"/>
-        <location filename="../src/symbol_line.cpp" line="1493"/>
-        <location filename="../src/symbol_line.cpp" line="1504"/>
-        <location filename="../src/symbol_line.cpp" line="1542"/>
-        <location filename="../src/symbol_line.cpp" line="1557"/>
-        <location filename="../src/symbol_line.cpp" line="1560"/>
-        <location filename="../src/symbol_line.cpp" line="1603"/>
-        <location filename="../src/symbol_line.cpp" line="1609"/>
-        <location filename="../src/symbol_line.cpp" line="1633"/>
-        <location filename="../src/symbol_line.cpp" line="1636"/>
+        <location filename="../src/symbol_line.cpp" line="1444"/>
+        <location filename="../src/symbol_line.cpp" line="1459"/>
+        <location filename="../src/symbol_line.cpp" line="1470"/>
+        <location filename="../src/symbol_line.cpp" line="1513"/>
+        <location filename="../src/symbol_line.cpp" line="1516"/>
+        <location filename="../src/symbol_line.cpp" line="1527"/>
+        <location filename="../src/symbol_line.cpp" line="1565"/>
+        <location filename="../src/symbol_line.cpp" line="1580"/>
+        <location filename="../src/symbol_line.cpp" line="1583"/>
+        <location filename="../src/symbol_line.cpp" line="1626"/>
+        <location filename="../src/symbol_line.cpp" line="1632"/>
+        <location filename="../src/symbol_line.cpp" line="1656"/>
+        <location filename="../src/symbol_line.cpp" line="1659"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1423"/>
+        <location filename="../src/symbol_line.cpp" line="1446"/>
         <source>Line color:</source>
         <translation>Linienfarbe:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1435"/>
+        <location filename="../src/symbol_line.cpp" line="1458"/>
         <source>Minimum line length:</source>
         <translation>Minimale Linienlänge:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1438"/>
+        <location filename="../src/symbol_line.cpp" line="1461"/>
         <source>Line cap:</source>
         <translation>Linienende:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1440"/>
+        <location filename="../src/symbol_line.cpp" line="1463"/>
         <source>flat</source>
         <translation>flach</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1441"/>
-        <location filename="../src/symbol_line.cpp" line="1452"/>
+        <location filename="../src/symbol_line.cpp" line="1464"/>
+        <location filename="../src/symbol_line.cpp" line="1475"/>
         <source>round</source>
         <translatorcomment>Context required: cap vs. join.</translatorcomment>
         <translation>rund</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1442"/>
+        <location filename="../src/symbol_line.cpp" line="1465"/>
         <source>square</source>
         <translation>quadratisch</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1443"/>
+        <location filename="../src/symbol_line.cpp" line="1466"/>
         <source>pointed</source>
         <translation>spitz</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1449"/>
+        <location filename="../src/symbol_line.cpp" line="1472"/>
         <source>Line join:</source>
         <translation>Linienecken:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1451"/>
+        <location filename="../src/symbol_line.cpp" line="1474"/>
         <source>miter</source>
         <translation>spitz</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1453"/>
+        <location filename="../src/symbol_line.cpp" line="1476"/>
         <source>bevel</source>
         <translation>flach</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1446"/>
+        <location filename="../src/symbol_line.cpp" line="1469"/>
         <source>Cap length:</source>
         <translation>Länge des Linienendes:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1456"/>
+        <location filename="../src/symbol_line.cpp" line="1479"/>
         <source>Line is dashed</source>
         <translation>gestrichelte Linie</translation>
     </message>
@@ -1120,158 +1120,158 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <translation type="obsolete">Endstücklänge:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1562"/>
+        <location filename="../src/symbol_line.cpp" line="1585"/>
         <source>Show at least one mid symbol</source>
         <translation>Mindestens ein Mittelsymbol anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1565"/>
+        <location filename="../src/symbol_line.cpp" line="1588"/>
         <source>Minimum mid symbol count:</source>
         <translation>Mindestzahl von Mittelsymbolen:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1568"/>
+        <location filename="../src/symbol_line.cpp" line="1591"/>
         <source>Minimum mid symbol count when closed:</source>
         <translation>Mindestzahl von Mittelsymbolen geschlossener Pfade:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1489"/>
+        <location filename="../src/symbol_line.cpp" line="1512"/>
         <source>Dash length:</source>
         <translation>Länge eines Strichs:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1485"/>
+        <location filename="../src/symbol_line.cpp" line="1508"/>
         <source>Dashed line</source>
         <translation>Gestrichelte Linie</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1492"/>
+        <location filename="../src/symbol_line.cpp" line="1515"/>
         <source>Break length:</source>
         <translation>Länge der Unterbrechung:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1495"/>
+        <location filename="../src/symbol_line.cpp" line="1518"/>
         <source>Dashes grouped together:</source>
         <translation>Strichen gruppieren:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1497"/>
+        <location filename="../src/symbol_line.cpp" line="1520"/>
         <source>none</source>
         <translation>keine</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1498"/>
+        <location filename="../src/symbol_line.cpp" line="1521"/>
         <source>2</source>
         <translation>2</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1499"/>
+        <location filename="../src/symbol_line.cpp" line="1522"/>
         <source>3</source>
         <translation>3</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1500"/>
+        <location filename="../src/symbol_line.cpp" line="1523"/>
         <source>4</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1503"/>
+        <location filename="../src/symbol_line.cpp" line="1526"/>
         <source>In-group break length:</source>
         <translation>Unterbrechungslänge in Gruppen:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1506"/>
+        <location filename="../src/symbol_line.cpp" line="1529"/>
         <source>Half length of first and last dash</source>
         <translation>Halbe Länge des ersten und letzten Strichs</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1535"/>
+        <location filename="../src/symbol_line.cpp" line="1558"/>
         <source>Mid symbols</source>
         <translation>Zwischensymbole</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1538"/>
+        <location filename="../src/symbol_line.cpp" line="1561"/>
         <source>Mid symbols per spot:</source>
         <translatorcomment>Must be improved.</translatorcomment>
         <translation>Mittelsymbole pro Stelle:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1541"/>
+        <location filename="../src/symbol_line.cpp" line="1564"/>
         <source>Mid symbol distance:</source>
         <translation>Abstand der Mittelsymbole:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1664"/>
-        <location filename="../src/symbol_line.cpp" line="2026"/>
+        <location filename="../src/symbol_line.cpp" line="1687"/>
+        <location filename="../src/symbol_line.cpp" line="2049"/>
         <source>Start symbol</source>
         <translation>Anfangssymbol</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1664"/>
-        <location filename="../src/symbol_line.cpp" line="2026"/>
+        <location filename="../src/symbol_line.cpp" line="1687"/>
+        <location filename="../src/symbol_line.cpp" line="2049"/>
         <source>Mid symbol</source>
         <translation>Zwischensymbol</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1664"/>
-        <location filename="../src/symbol_line.cpp" line="2026"/>
+        <location filename="../src/symbol_line.cpp" line="1687"/>
+        <location filename="../src/symbol_line.cpp" line="2049"/>
         <source>End symbol</source>
         <translation>Endsymbol</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1664"/>
-        <location filename="../src/symbol_line.cpp" line="2026"/>
+        <location filename="../src/symbol_line.cpp" line="1687"/>
+        <location filename="../src/symbol_line.cpp" line="2049"/>
         <source>Dash symbol</source>
         <translation>Strichelungssymbol</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1459"/>
+        <location filename="../src/symbol_line.cpp" line="1482"/>
         <source>Enable border lines</source>
         <translation>Randlinien</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1556"/>
+        <location filename="../src/symbol_line.cpp" line="1579"/>
         <source>Distance between spots:</source>
         <translation>Abstand zwischen den Symbolen:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1559"/>
+        <location filename="../src/symbol_line.cpp" line="1582"/>
         <source>Distance from line end:</source>
         <translation>Abstand vom Linienende:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1598"/>
+        <location filename="../src/symbol_line.cpp" line="1621"/>
         <source>Border</source>
         <translation>Rand</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1602"/>
+        <location filename="../src/symbol_line.cpp" line="1625"/>
         <source>Border width:</source>
         <translation>Randbreite:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1605"/>
+        <location filename="../src/symbol_line.cpp" line="1628"/>
         <source>Border color:</source>
         <translation>Randfarbe:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1608"/>
+        <location filename="../src/symbol_line.cpp" line="1631"/>
         <source>Border shift:</source>
         <translatorcomment>Re-check.</translatorcomment>
         <translation>Randverschiebung:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1611"/>
+        <location filename="../src/symbol_line.cpp" line="1634"/>
         <source>Border is dashed</source>
         <translation>Gestrichelter Rand</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1632"/>
+        <location filename="../src/symbol_line.cpp" line="1655"/>
         <source>Border dash length:</source>
         <translation>Randstrichlänge:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1635"/>
+        <location filename="../src/symbol_line.cpp" line="1658"/>
         <source>Border break length:</source>
         <translation>Randunterbrechungslänge:</translation>
     </message>
@@ -1281,8 +1281,8 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
     <message>
         <location filename="../src/main_window.cpp" line="480"/>
         <location filename="../src/main_window.cpp" line="600"/>
-        <location filename="../src/main_window.cpp" line="733"/>
-        <location filename="../src/main_window.cpp" line="751"/>
+        <location filename="../src/main_window.cpp" line="734"/>
+        <location filename="../src/main_window.cpp" line="752"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
@@ -1433,12 +1433,12 @@ Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
         <translation>Entwickler in alphabetischer Reihenfolge:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (Projektleiter)&lt;br/&gt;&lt;br/&gt;Dank für Beiträge an:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Weitere Informationen:</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="733"/>
+        <location filename="../src/main_window.cpp" line="734"/>
         <source>Failed to locate the help files.</source>
         <translation>Die Hilfedateien konnten nicht gefunden werden.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="751"/>
+        <location filename="../src/main_window.cpp" line="752"/>
         <source>Failed to start the help browser.</source>
         <translation>Das Handbuchprogramm konnte nicht gestartet werden.</translation>
     </message>
@@ -2052,17 +2052,17 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="452"/>
         <source>Intersect areas</source>
-        <translation type="unfinished"></translation>
+        <translation>Schnittfläche berechnen</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="453"/>
         <source>Area difference</source>
-        <translation type="unfinished"></translation>
+        <translation>Flächen subtrahieren</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="454"/>
         <source>Area XOr</source>
-        <translation type="unfinished"></translation>
+        <translation>XOr-Operation für Flächen</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="463"/>
@@ -2345,12 +2345,12 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1134"/>
         <source>Intersect the first selected area object with all other selected overlapping areas.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Schnittfläche des zuerst ausgewählten Flächenobjekts mit allen anderen ausgewählten und überlappenden Flächen berechnen.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1136"/>
         <source>Subtract all other selected area objects from the first selected area object.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle anderen ausgewählten Flächenobjekte vom zuerst selektierten Flächenobjekt abziehen.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1136"/>
@@ -2360,7 +2360,7 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1138"/>
         <source>Calculate nonoverlapping parts of areas.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht-überlappende Bereiche von Flächenobjekten berechnen.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1158"/>
@@ -2418,17 +2418,29 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
 <context>
     <name>MapWidget</name>
     <message>
-        <location filename="../src/map_widget.cpp" line="381"/>
+        <location filename="../src/map_widget.cpp" line="382"/>
         <source>Zoom: %1x</source>
         <translation>Zoom: %1x</translation>
     </message>
     <message>
-        <location filename="../src/map_widget.cpp" line="442"/>
+        <location filename="../src/map_widget.cpp" line="404"/>
+        <source>mm</source>
+        <comment>millimeters</comment>
+        <translation>mm</translation>
+    </message>
+    <message>
+        <location filename="../src/map_widget.cpp" line="417"/>
+        <source>m</source>
+        <comment>meters</comment>
+        <translation>m</translation>
+    </message>
+    <message>
+        <location filename="../src/map_widget.cpp" line="445"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/map_widget.cpp" line="514"/>
+        <location filename="../src/map_widget.cpp" line="517"/>
         <source>Empty map!
 
 Start by defining some colors:
@@ -2442,7 +2454,7 @@ Wählen Sie dazu im Menü
 Symbole &gt; Farben.</translation>
     </message>
     <message>
-        <location filename="../src/map_widget.cpp" line="516"/>
+        <location filename="../src/map_widget.cpp" line="519"/>
         <source>No symbols!
 
 Now define some symbols:
@@ -2457,7 +2469,7 @@ in die Symbolleiste und wählen Sie
 &quot;Neues Symbol&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/map_widget.cpp" line="518"/>
+        <location filename="../src/map_widget.cpp" line="521"/>
         <source>Ready to draw!
 
 Start drawing or load a base map.
@@ -2470,10 +2482,11 @@ Um eine Vorlage zu laden, wählen Sie
 Vorlagen -&gt; Vorlage öffnen...</translation>
     </message>
     <message>
-        <location filename="../src/map_widget.cpp" line="518"/>
+        <location filename="../src/map_widget.cpp" line="521"/>
         <source>Hint: Hold the middle mouse button to drag the map,
 zoom using the mouse wheel, if available.</source>
-        <translation>Hinweis: Mit der mittleren Taste kann die Karte gezogen werden. Mit dem Mausrad ist Zoomen möglich.</translation>
+        <translation>Hinweis: Mit der mittleren Taste kann die Karte gezogen werden.
+Mit dem Mausrad ist Zoomen möglich.</translation>
     </message>
 </context>
 <context>
@@ -2546,6 +2559,11 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/tool_measure.cpp" line="157"/>
         <source>mm²</source>
         <translation>mm²</translation>
+    </message>
+    <message>
+        <location filename="../src/tool_measure.cpp" line="159"/>
+        <source>Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such.</source>
+        <translation>Hinweis: die Länge des Umrisses und die Fläche sind nur korrekt, wenn es keine Selbst-Überschneidungen gibt und Löcher als solche verwendet werden.</translation>
     </message>
     <message>
         <location filename="../src/tool_measure.cpp" line="162"/>
@@ -3194,100 +3212,163 @@ for writing.</source>
 Kann Datei nicht zum Schreiben öffnen.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="79"/>
+        <location filename="../src/file_format_ocad8.cpp" line="97"/>
         <source>Could not open file: libocad returned %1</source>
         <translation>Kann Datei nicht öffnen:
 libocad-Fehler %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="82"/>
+        <location filename="../src/file_format_ocad8.cpp" line="100"/>
         <source>OCAD files of version %1 cannot be loaded!</source>
         <translation>OCAD-Dateien der Version %1 können nicht geladen werden!</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="177"/>
+        <location filename="../src/file_format_ocad8.cpp" line="195"/>
         <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
         <translation>Kann Symbol %1.%2 &quot;%3&quot; nicht importieren</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="190"/>
+        <location filename="../src/file_format_ocad8.cpp" line="208"/>
         <source>OCAD import layer</source>
         <translation>OCAD-Import-Ebene</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="324"/>
+        <location filename="../src/file_format_ocad8.cpp" line="345"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
         <translation>Im gestrichelten Liniensymbol %1 sind die Längen für die spitzen Enden am Anfang und Ende verschieden (%2 and %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="341"/>
+        <location filename="../src/file_format_ocad8.cpp" line="362"/>
         <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
         <translation>Die Länge des Endstücks des gestrichelten Liniensymbols %1 kann nicht korrekt importiert werden.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="343"/>
+        <location filename="../src/file_format_ocad8.cpp" line="364"/>
         <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
         <translation>Die Länge der Endunterbrechung des gestrichelten Liniensymbols %1 kann nicht korrekt importiert werden.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="352"/>
+        <location filename="../src/file_format_ocad8.cpp" line="373"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
         <translation>Im gestrichelten Liniensymbol %1 sind die Haupt- und Endlänge verschieden (%2 and %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="362"/>
+        <location filename="../src/file_format_ocad8.cpp" line="383"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
         <translation>Im gestrichelten Liniensymbol %1 sind die Unterbrüche D und E verschieden (%2 and %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="405"/>
+        <location filename="../src/file_format_ocad8.cpp" line="426"/>
         <source>In symbol %1, left and right borders are different colors (%2 and %3). Using %4.</source>
         <translation>Bei Symbol %1 haben linker und rechter Rand verschiedene Farben (%2 bzw. %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="413"/>
+        <location filename="../src/file_format_ocad8.cpp" line="434"/>
         <source>In symbol %1, left and right borders are different width (%2 and %3). Using %4.</source>
         <translation>Bei Symbol %1 haben linker und rechter Rand verschiedene Breiten (%2 bzw. %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="427"/>
+        <location filename="../src/file_format_ocad8.cpp" line="448"/>
         <source>In line symbol %1, ignoring that only the left border line should be dashed</source>
         <translation>Ignoriere, dass bei Symbol %1 nur die linke Randlinie gestrichelt sein soll</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="447"/>
+        <location filename="../src/file_format_ocad8.cpp" line="468"/>
+        <location filename="../src/symbol_line.cpp" line="1198"/>
         <source>Dash symbol</source>
         <translation>Strichelungssymbol</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="453"/>
+        <location filename="../src/file_format_ocad8.cpp" line="474"/>
+        <location filename="../src/symbol_line.cpp" line="1186"/>
         <source>Start symbol</source>
         <translation>Anfangssymbol</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="469"/>
+        <location filename="../src/file_format_ocad8.cpp" line="490"/>
         <source>In symbol %1, ignoring framing line.</source>
         <translation>Ignoriere Rahmen bei Symbol %1.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="598"/>
+        <location filename="../src/file_format_ocad8.cpp" line="619"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
         <translation>Ignoriere Ausrichtung bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="604"/>
+        <location filename="../src/file_format_ocad8.cpp" line="625"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
         <translation>Ignoriere Höhe (%2) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="609"/>
+        <location filename="../src/file_format_ocad8.cpp" line="630"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation>Vom Original abweichende Zeichenabstände bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1222"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1260"/>
         <source>Color id not found: %1, ignoring this color</source>
         <translation>Farb-ID nicht gefunden: %1, ignoriere diese Farbe</translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1292"/>
+        <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
+        <translation>Die Karte enthält mehr als 256 Farben, was von der ocd-Version 8 nicht unterstützt wird.</translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1296"/>
+        <source>Could not create new file: libocad returned %1</source>
+        <translation>Kann Datei nicht erstellen:
+libocad-Fehler %1</translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1541"/>
+        <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
+        <translation>Kann Vorlage nicht exportieren: der Dateityp von &quot;%1&quot; wird noch nicht unterstützt</translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1757"/>
+        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
+        <translation>Im Liniensymbol &quot;%1&quot; kann die Kombination der Linienenden/ecken nicht repräsentiert werden.</translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1781"/>
+        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
+        <translation>Im Liniensymbol &quot;%1&quot; wird die Gruppierung der Strichelungen verworfen.</translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1792"/>
+        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
+        <translation>Im Liniensymbol &quot;%1&quot; wird die Anzahl der Striche in einer Gruppe auf 2 reduziert.</translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1895"/>
+        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
+        <translation>Im Flächensymbol &quot;%1&quot; wird ein Füllmuster verworfen.</translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1945"/>
+        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
+        <translation>Im Flächensymbol &quot;%1&quot; wird ein Punktmuster mit gegeneinander versetzten Reihen angenommen. Dies könnte stimmen, aber auch falsch sein.</translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1984"/>
+        <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
+        <translation>Im Textsymbol &quot;%1&quot; ist der Zeichenabstand geändert. Dies wird von diesem Programm und OCAD verschieden interpretiert</translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1991"/>
+        <source>In text symbol %1: ignoring underlining</source>
+        <translation>Im Textsymbol &quot;%1&quot; wird das Unterstreichen verworfen</translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1993"/>
+        <source>In text symbol %1: ignoring kerning</source>
+        <translation>Im Textsymbol &quot;%1&quot; wird das Kerning verworfen</translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="2346"/>
+        <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
+        <translation>Zeichenkette verkürzt (Abbruchstelle mit drei &apos;|&apos; markiert): %1</translation>
     </message>
     <message>
         <source>During import of text symbol %1: ignoring custom underline color, width, and positioning</source>
@@ -3298,7 +3379,7 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ignoriere Zeichenabstand (%2%) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="614"/>
+        <location filename="../src/file_format_ocad8.cpp" line="635"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
         <translation>Ignoriere Wordabstand (%2%) bei Textsymbol %1</translation>
     </message>
@@ -3307,7 +3388,7 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ignoriere Absatzabstand (%2%) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="619"/>
+        <location filename="../src/file_format_ocad8.cpp" line="640"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
         <translation>Ignoriere Enrückung (%2/%3) bei Textsymbol %1</translation>
     </message>
@@ -3316,17 +3397,17 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ignoriere Tabulatorweiten bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="624"/>
+        <location filename="../src/file_format_ocad8.cpp" line="661"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
         <translation>Ignoriere Textrahmen (Modus %2) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="768"/>
+        <location filename="../src/file_format_ocad8.cpp" line="813"/>
         <source>Unable to load object</source>
         <translation>Kann Objekt nicht Laden</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="774"/>
+        <location filename="../src/file_format_ocad8.cpp" line="820"/>
         <source>Unable to import rectangle object</source>
         <translation>Kann Rechtecksobjekt nicht importieren</translation>
     </message>
@@ -3335,12 +3416,12 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ein Objekt mit dem nach Norden ausgerichteten Symbol &apos;%1&apos; ist gedreht. Ignoriere die Drehung</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="822"/>
+        <location filename="../src/file_format_ocad8.cpp" line="868"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation>Textsymbol nicht importiert: Konnte Pfad nicht ermitteln (npts=%1): %2</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="999"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1046"/>
         <source>Unable to import template: %1</source>
         <translation>Kann Vorlage nicht importieren: %1</translation>
     </message>
@@ -3349,17 +3430,17 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ignoriere Vorlage vom Typ %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1025"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1072"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
         <translation>Kann Vorlage nicht importieren: Hintegrund &quot;%1&quot; scheint kein Rasterbild zu sein</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1123"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1161"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation>Versuch, ein Textobjekt mit unbekanntem Koordinatenformat zu importieren</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.h" line="41"/>
+        <location filename="../src/file_format_ocad8.h" line="44"/>
         <source>OCAD Versions 7, 8</source>
         <translatorcomment>verkürzt</translatorcomment>
         <translation>OCAD Version 7/8</translation>
@@ -3369,9 +3450,8 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">OpenOrienteering Karte</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.h" line="55"/>
         <source>OpenOrienteering Mapper XML</source>
-        <translation>OpenOrienteering-XML-Karten</translation>
+        <translation type="obsolete">OpenOrienteering-XML-Karten</translation>
     </message>
     <message>
         <source>OpenOrienteering maps</source>
@@ -3412,17 +3492,18 @@ libocad-Fehler %1</translation>
         <location filename="../src/gps_track.cpp" line="159"/>
         <location filename="../src/gps_track.cpp" line="160"/>
         <source>Scale value</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalierungsfaktor</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="159"/>
         <source>Choose a value to scale latitude coordinates by. A value of 1 does nothing, over one scales up and under one scales down.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Original schlecht und sollte insgesamt nur ein Dialog sein</translatorcomment>
+        <translation>Wählen Sie einen Skalierungsfaktor für die Breitengrade.</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="160"/>
         <source>Choose a value to scale longitude coordinates by. A value of 1 does nothing, over one scales up and under one scales down.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie einen Skalierungsfaktor für die Längengrade.</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="273"/>
@@ -3476,23 +3557,38 @@ Die höchste unterstütze Version ist %2.</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1496"/>
         <source>Intersection failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Berechnung der Schnittfläche fehlgeschlagen.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1502"/>
         <source>Difference failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Subtraktion fehlgeschlagen.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1508"/>
         <source>XOr failed.</source>
-        <translation type="unfinished"></translation>
+        <translation>XOr-Operation fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="298"/>
+        <location filename="../src/symbol_text.cpp" line="361"/>
         <source>A</source>
         <comment>First capital letter of the local alphabet</comment>
         <translation>A</translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_line.cpp" line="1190"/>
+        <source>Mid symbol</source>
+        <translation>Zwischensymbol</translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_line.cpp" line="1194"/>
+        <source>End symbol</source>
+        <translation>Endsymbol</translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_xml.h" line="55"/>
+        <source>OpenOrienteering Mapper XML (export only)</source>
+        <translation>OpenOrienteering-XML-Karten (nur Export)</translation>
     </message>
 </context>
 <context>
@@ -3582,7 +3678,7 @@ Die höchste unterstütze Version ist %2.</translation>
 <context>
     <name>SymbolDropDown</name>
     <message>
-        <location filename="../src/symbol.cpp" line="294"/>
+        <location filename="../src/symbol.cpp" line="303"/>
         <source>- none -</source>
         <translation>- kein -</translation>
     </message>
@@ -4390,125 +4486,156 @@ Vorlage konnte nicht geladen werden. Existiert diese Datei?</translation>
 <context>
     <name>TextSymbolSettings</name>
     <message>
-        <location filename="../src/symbol_text.cpp" line="344"/>
+        <location filename="../src/symbol_text.cpp" line="407"/>
         <source>Text settings</source>
         <translation>Texteinstellungen</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="350"/>
+        <location filename="../src/symbol_text.cpp" line="413"/>
         <source>Font family:</source>
         <translation>Schriftart:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="369"/>
+        <location filename="../src/symbol_text.cpp" line="432"/>
         <source>Font size:</source>
         <translation>Schriftgröße:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="360"/>
-        <location filename="../src/symbol_text.cpp" line="389"/>
-        <location filename="../src/symbol_text.cpp" line="421"/>
-        <location filename="../src/symbol_text.cpp" line="427"/>
-        <location filename="../src/symbol_text.cpp" line="635"/>
-        <location filename="../src/symbol_text.cpp" line="652"/>
-        <location filename="../src/symbol_text.cpp" line="708"/>
+        <location filename="../src/symbol_text.cpp" line="423"/>
+        <location filename="../src/symbol_text.cpp" line="452"/>
+        <location filename="../src/symbol_text.cpp" line="512"/>
+        <location filename="../src/symbol_text.cpp" line="518"/>
+        <location filename="../src/symbol_text.cpp" line="779"/>
+        <location filename="../src/symbol_text.cpp" line="796"/>
+        <location filename="../src/symbol_text.cpp" line="885"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="361"/>
+        <location filename="../src/symbol_text.cpp" line="424"/>
         <source>pt</source>
         <translation>pt</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="365"/>
+        <location filename="../src/symbol_text.cpp" line="428"/>
         <source>Determine size...</source>
         <translation>Größe bestimmen...</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="372"/>
+        <location filename="../src/symbol_text.cpp" line="435"/>
         <source>Text color:</source>
         <translation>Schriftfarbe:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="375"/>
+        <location filename="../src/symbol_text.cpp" line="438"/>
         <source>bold</source>
         <translation>fett</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="377"/>
+        <location filename="../src/symbol_text.cpp" line="440"/>
         <source>italic</source>
         <translation>kursiv</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="379"/>
+        <location filename="../src/symbol_text.cpp" line="442"/>
         <source>underlined</source>
         <translatorcomment>or &quot;underline&quot;/&quot;unterstreichen&quot;</translatorcomment>
         <translation>unterstrichen</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="382"/>
+        <location filename="../src/symbol_text.cpp" line="445"/>
         <source>Text style:</source>
         <translation>Schriftstil:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="386"/>
-        <location filename="../src/symbol_text.cpp" line="392"/>
+        <location filename="../src/symbol_text.cpp" line="449"/>
+        <location filename="../src/symbol_text.cpp" line="455"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="387"/>
+        <location filename="../src/symbol_text.cpp" line="450"/>
         <source>Line spacing:</source>
         <translation>Zeilenabstand:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="390"/>
+        <location filename="../src/symbol_text.cpp" line="453"/>
         <source>Paragraph spacing:</source>
         <translation>Absatzabstand:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="393"/>
+        <location filename="../src/symbol_text.cpp" line="456"/>
         <source>Character spacing:</source>
         <translation>Zeichenabstand:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="395"/>
+        <location filename="../src/symbol_text.cpp" line="458"/>
         <source>Kerning</source>
         <translation>Kerning</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="402"/>
+        <location filename="../src/symbol_text.cpp" line="465"/>
         <source>Symbol icon text:</source>
         <translation>Piktogrammtext:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="406"/>
+        <location filename="../src/symbol_text.cpp" line="469"/>
+        <location filename="../src/symbol_text.cpp" line="477"/>
+        <source>Framing</source>
+        <translation>Freistellung</translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="472"/>
         <source>OCAD compatibility settings</source>
         <translation>Einstellungen für OCD-Kompatibilität</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="411"/>
+        <location filename="../src/symbol_text.cpp" line="483"/>
+        <source>Framing color:</source>
+        <translation>Farbe:</translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="485"/>
+        <source>Line framing</source>
+        <translation>Linienfreistellung</translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="491"/>
+        <source>Shadow framing</source>
+        <translation>Schattenfreistellung</translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="495"/>
+        <source>Left/Right Offset:</source>
+        <translation>Links/Rechts-Versatz:</translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="498"/>
+        <source>Top/Down Offset:</source>
+        <translation>Oben/Unten-Versatz:</translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="502"/>
         <source>OCAD compatibility</source>
         <translation>OCD-Kompatibilität</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="418"/>
+        <location filename="../src/symbol_text.cpp" line="509"/>
         <source>enabled</source>
         <translation>aktiviert</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="422"/>
+        <location filename="../src/symbol_text.cpp" line="513"/>
         <source>Line width:</source>
         <translation>Linienbreite:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="425"/>
+        <location filename="../src/symbol_text.cpp" line="516"/>
         <source>Line color:</source>
         <translation>Linienfarbe:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="635"/>
+        <location filename="../src/symbol_text.cpp" line="779"/>
         <source>Position:</source>
         <translation>Position:</translation>
     </message>
@@ -4529,7 +4656,7 @@ Vorlage konnte nicht geladen werden. Existiert diese Datei?</translation>
         <translation type="obsolete">OCAD-Kompatibilitätseinstellungen anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="416"/>
+        <location filename="../src/symbol_text.cpp" line="507"/>
         <source>Line below paragraphs</source>
         <translation>Linie unter dem Absatz</translation>
     </message>
@@ -4538,21 +4665,22 @@ Vorlage konnte nicht geladen werden. Existiert diese Datei?</translation>
         <translation type="obsolete">Aktivieren</translation>
     </message>
     <message>
+        <location filename="../src/symbol_text.cpp" line="489"/>
         <source>Width:</source>
-        <translation type="obsolete">Breite:</translation>
+        <translation>Breite:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="428"/>
+        <location filename="../src/symbol_text.cpp" line="519"/>
         <source>Distance from baseline:</source>
         <translation>Abstand zur Grundlinie:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="432"/>
+        <location filename="../src/symbol_text.cpp" line="523"/>
         <source>Custom tabulator positions</source>
         <translation>Benutzerdefinierte Tabulatorpositionen</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="635"/>
+        <location filename="../src/symbol_text.cpp" line="779"/>
         <source>Add custom tabulator</source>
         <translation>Tabulator hinzufügen</translation>
     </message>

@@ -156,7 +156,7 @@ void MeasureWidget::objectSelectionChanged()
 					warning_label->setText("<b>" % tr("This object is too small.") % "</b><br/>" %
 					                       tr("The minimimum area is %1 %2.").arg(locale().toString(static_cast<const AreaSymbol*>(symbol)->getMinimumArea()/1000.0, 'f', 2), trUtf8("mm²")));
 				else
-					warning_label->setText("Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such.");
+					warning_label->setText(tr("Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such."));
 			}
 			else if (symbol->getType() == Symbol::Line && static_cast<const LineSymbol*>(symbol)->getMinimumLength() > 1000*length_mm)
 				warning_label->setText("<b>" % tr("This line is too short.") % "</b><br/>" %

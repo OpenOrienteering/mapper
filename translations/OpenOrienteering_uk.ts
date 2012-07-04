@@ -324,32 +324,32 @@
 <context>
     <name>DetermineFontSizeDialog</name>
     <message>
-        <location filename="../src/symbol_text.cpp" line="731"/>
+        <location filename="../src/symbol_text.cpp" line="909"/>
         <source>Determine font size</source>
         <translation>Встановити розмір шрифту</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="741"/>
+        <location filename="../src/symbol_text.cpp" line="919"/>
         <source>Letter:</source>
         <translation>Літера:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="739"/>
+        <location filename="../src/symbol_text.cpp" line="917"/>
         <source>A</source>
         <translation>A</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="735"/>
+        <location filename="../src/symbol_text.cpp" line="913"/>
         <source>This dialog allows to choose a font size which results in a given exact height for a specific letter.</source>
         <translation>Цей діалог дозволяє встановити розмір шрифту рівний висоті визначеног символу (літери).</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="743"/>
+        <location filename="../src/symbol_text.cpp" line="921"/>
         <source>mm</source>
         <translation>мм</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="745"/>
+        <location filename="../src/symbol_text.cpp" line="923"/>
         <source>Height:</source>
         <translation>Висота:</translation>
     </message>
@@ -512,12 +512,12 @@
         <translation>Мова:</translation>
     </message>
     <message>
-        <location filename="../src/settings_dialog.cpp" line="211"/>
+        <location filename="../src/settings_dialog.cpp" line="208"/>
         <source>Notice</source>
         <translation>Примітка</translation>
     </message>
     <message>
-        <location filename="../src/settings_dialog.cpp" line="211"/>
+        <location filename="../src/settings_dialog.cpp" line="208"/>
         <source>The program must be restarted for the language change to take effect!</source>
         <translation>Потрібно перезапустити прграми щоб зміни вступили в силу!</translation>
     </message>
@@ -729,7 +729,7 @@
 <context>
     <name>Global</name>
     <message>
-        <location filename="../src/global.h" line="21"/>
+        <location filename="../src/global.h" line="22"/>
         <source>OpenOrienteering Mapper</source>
         <translation>OpenOrienteering Mapper</translation>
     </message>
@@ -802,244 +802,244 @@
 <context>
     <name>LineSymbolSettings</name>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1659"/>
+        <location filename="../src/symbol_line.cpp" line="1682"/>
         <source>Line settings</source>
         <translation>Параметри лінії</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1420"/>
+        <location filename="../src/symbol_line.cpp" line="1443"/>
         <source>Line width:</source>
         <translation>Ширина лінії:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1421"/>
-        <location filename="../src/symbol_line.cpp" line="1436"/>
-        <location filename="../src/symbol_line.cpp" line="1447"/>
-        <location filename="../src/symbol_line.cpp" line="1490"/>
-        <location filename="../src/symbol_line.cpp" line="1493"/>
-        <location filename="../src/symbol_line.cpp" line="1504"/>
-        <location filename="../src/symbol_line.cpp" line="1542"/>
-        <location filename="../src/symbol_line.cpp" line="1557"/>
-        <location filename="../src/symbol_line.cpp" line="1560"/>
-        <location filename="../src/symbol_line.cpp" line="1603"/>
-        <location filename="../src/symbol_line.cpp" line="1609"/>
-        <location filename="../src/symbol_line.cpp" line="1633"/>
-        <location filename="../src/symbol_line.cpp" line="1636"/>
+        <location filename="../src/symbol_line.cpp" line="1444"/>
+        <location filename="../src/symbol_line.cpp" line="1459"/>
+        <location filename="../src/symbol_line.cpp" line="1470"/>
+        <location filename="../src/symbol_line.cpp" line="1513"/>
+        <location filename="../src/symbol_line.cpp" line="1516"/>
+        <location filename="../src/symbol_line.cpp" line="1527"/>
+        <location filename="../src/symbol_line.cpp" line="1565"/>
+        <location filename="../src/symbol_line.cpp" line="1580"/>
+        <location filename="../src/symbol_line.cpp" line="1583"/>
+        <location filename="../src/symbol_line.cpp" line="1626"/>
+        <location filename="../src/symbol_line.cpp" line="1632"/>
+        <location filename="../src/symbol_line.cpp" line="1656"/>
+        <location filename="../src/symbol_line.cpp" line="1659"/>
         <source>mm</source>
         <translation>мм</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1423"/>
+        <location filename="../src/symbol_line.cpp" line="1446"/>
         <source>Line color:</source>
         <translation>Колір лінії:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1435"/>
+        <location filename="../src/symbol_line.cpp" line="1458"/>
         <source>Minimum line length:</source>
         <translation>Мінімальна довжина лінії:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1438"/>
+        <location filename="../src/symbol_line.cpp" line="1461"/>
         <source>Line cap:</source>
         <translation>Кінці лінії:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1440"/>
+        <location filename="../src/symbol_line.cpp" line="1463"/>
         <source>flat</source>
         <translation>плоскі</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1441"/>
-        <location filename="../src/symbol_line.cpp" line="1452"/>
+        <location filename="../src/symbol_line.cpp" line="1464"/>
+        <location filename="../src/symbol_line.cpp" line="1475"/>
         <source>round</source>
         <translation>круглі</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1442"/>
+        <location filename="../src/symbol_line.cpp" line="1465"/>
         <source>square</source>
         <translation>квадратні</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1443"/>
+        <location filename="../src/symbol_line.cpp" line="1466"/>
         <source>pointed</source>
         <translation>загострені</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1449"/>
+        <location filename="../src/symbol_line.cpp" line="1472"/>
         <source>Line join:</source>
         <translation>З’єднання відрізків:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1451"/>
+        <location filename="../src/symbol_line.cpp" line="1474"/>
         <source>miter</source>
         <translation>гостре</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1453"/>
+        <location filename="../src/symbol_line.cpp" line="1476"/>
         <source>bevel</source>
         <translation>фасочне</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1446"/>
+        <location filename="../src/symbol_line.cpp" line="1469"/>
         <source>Cap length:</source>
         <translation>Довжина кінців:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1456"/>
+        <location filename="../src/symbol_line.cpp" line="1479"/>
         <source>Line is dashed</source>
         <translation>Штрихова лінія</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1562"/>
+        <location filename="../src/symbol_line.cpp" line="1585"/>
         <source>Show at least one mid symbol</source>
         <translation>Показувати хоч один серединний символ</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1565"/>
+        <location filename="../src/symbol_line.cpp" line="1588"/>
         <source>Minimum mid symbol count:</source>
         <translation>Мінімальна кількість серединних символів:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1568"/>
+        <location filename="../src/symbol_line.cpp" line="1591"/>
         <source>Minimum mid symbol count when closed:</source>
         <translation>Мінімальна кількість серединних символів коли замкнено:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1489"/>
+        <location filename="../src/symbol_line.cpp" line="1512"/>
         <source>Dash length:</source>
         <translation>Довжина штриха:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1485"/>
+        <location filename="../src/symbol_line.cpp" line="1508"/>
         <source>Dashed line</source>
         <translation>Штрихова лінія</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1492"/>
+        <location filename="../src/symbol_line.cpp" line="1515"/>
         <source>Break length:</source>
         <translation>Проміжок:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1495"/>
+        <location filename="../src/symbol_line.cpp" line="1518"/>
         <source>Dashes grouped together:</source>
         <translation>Групування штрихів:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1497"/>
+        <location filename="../src/symbol_line.cpp" line="1520"/>
         <source>none</source>
         <translation>немає</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1498"/>
+        <location filename="../src/symbol_line.cpp" line="1521"/>
         <source>2</source>
         <translation>2</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1499"/>
+        <location filename="../src/symbol_line.cpp" line="1522"/>
         <source>3</source>
         <translation>3</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1500"/>
+        <location filename="../src/symbol_line.cpp" line="1523"/>
         <source>4</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1503"/>
+        <location filename="../src/symbol_line.cpp" line="1526"/>
         <source>In-group break length:</source>
         <translation>Внутрішньогрупові проміжки:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1506"/>
+        <location filename="../src/symbol_line.cpp" line="1529"/>
         <source>Half length of first and last dash</source>
         <translation>По половині перший і останній штрих</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1535"/>
+        <location filename="../src/symbol_line.cpp" line="1558"/>
         <source>Mid symbols</source>
         <translation>Серединні символи</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1538"/>
+        <location filename="../src/symbol_line.cpp" line="1561"/>
         <source>Mid symbols per spot:</source>
         <translation>Серединних символів на точку:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1541"/>
+        <location filename="../src/symbol_line.cpp" line="1564"/>
         <source>Mid symbol distance:</source>
         <translation>Відстань між серединними символами:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1664"/>
-        <location filename="../src/symbol_line.cpp" line="2026"/>
+        <location filename="../src/symbol_line.cpp" line="1687"/>
+        <location filename="../src/symbol_line.cpp" line="2049"/>
         <source>Start symbol</source>
         <translation>Початковий символ</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1664"/>
-        <location filename="../src/symbol_line.cpp" line="2026"/>
+        <location filename="../src/symbol_line.cpp" line="1687"/>
+        <location filename="../src/symbol_line.cpp" line="2049"/>
         <source>Mid symbol</source>
         <translation>Серединний символ</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1664"/>
-        <location filename="../src/symbol_line.cpp" line="2026"/>
+        <location filename="../src/symbol_line.cpp" line="1687"/>
+        <location filename="../src/symbol_line.cpp" line="2049"/>
         <source>End symbol</source>
         <translation>Кінцевий символ</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1664"/>
-        <location filename="../src/symbol_line.cpp" line="2026"/>
+        <location filename="../src/symbol_line.cpp" line="1687"/>
+        <location filename="../src/symbol_line.cpp" line="2049"/>
         <source>Dash symbol</source>
         <translation>Символ штриха</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1459"/>
+        <location filename="../src/symbol_line.cpp" line="1482"/>
         <source>Enable border lines</source>
         <translation>Увімкнено лінії межі</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1556"/>
+        <location filename="../src/symbol_line.cpp" line="1579"/>
         <source>Distance between spots:</source>
         <translation>Відстань між точками:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1559"/>
+        <location filename="../src/symbol_line.cpp" line="1582"/>
         <source>Distance from line end:</source>
         <translation>Відстань від кінця лінії:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1598"/>
+        <location filename="../src/symbol_line.cpp" line="1621"/>
         <source>Border</source>
         <translation>Межа</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1602"/>
+        <location filename="../src/symbol_line.cpp" line="1625"/>
         <source>Border width:</source>
         <translation>Ширина межі:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1605"/>
+        <location filename="../src/symbol_line.cpp" line="1628"/>
         <source>Border color:</source>
         <translation>Колір межі:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1608"/>
+        <location filename="../src/symbol_line.cpp" line="1631"/>
         <source>Border shift:</source>
         <translation>Зміщення межі:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1611"/>
+        <location filename="../src/symbol_line.cpp" line="1634"/>
         <source>Border is dashed</source>
         <translation>Штрихова межа</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1632"/>
+        <location filename="../src/symbol_line.cpp" line="1655"/>
         <source>Border dash length:</source>
         <translation>Довжина штриха межі:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1635"/>
+        <location filename="../src/symbol_line.cpp" line="1658"/>
         <source>Border break length:</source>
         <translation>Проміжки між штрихами межі:</translation>
     </message>
@@ -1196,8 +1196,8 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/main_window.cpp" line="480"/>
         <location filename="../src/main_window.cpp" line="600"/>
-        <location filename="../src/main_window.cpp" line="733"/>
-        <location filename="../src/main_window.cpp" line="751"/>
+        <location filename="../src/main_window.cpp" line="734"/>
+        <location filename="../src/main_window.cpp" line="752"/>
         <source>Error</source>
         <translation>Помилка</translation>
     </message>
@@ -1265,12 +1265,12 @@ Press No to choose a different format.</source>
         <translation>Ця програма використовує &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; від Frank Warmerdam.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="733"/>
+        <location filename="../src/main_window.cpp" line="734"/>
         <source>Failed to locate the help files.</source>
         <translation>Не вдається показати файли довідки.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="751"/>
+        <location filename="../src/main_window.cpp" line="752"/>
         <source>Failed to start the help browser.</source>
         <translation>Не вдається відкрити переглядач довідки.</translation>
     </message>
@@ -2083,17 +2083,29 @@ Rescale the imported data?</source>
 <context>
     <name>MapWidget</name>
     <message>
-        <location filename="../src/map_widget.cpp" line="381"/>
+        <location filename="../src/map_widget.cpp" line="382"/>
         <source>Zoom: %1x</source>
         <translation>Лупа: %1x</translation>
     </message>
     <message>
-        <location filename="../src/map_widget.cpp" line="442"/>
+        <location filename="../src/map_widget.cpp" line="404"/>
+        <source>mm</source>
+        <comment>millimeters</comment>
+        <translation type="unfinished">мм</translation>
+    </message>
+    <message>
+        <location filename="../src/map_widget.cpp" line="417"/>
+        <source>m</source>
+        <comment>meters</comment>
+        <translation type="unfinished">м</translation>
+    </message>
+    <message>
+        <location filename="../src/map_widget.cpp" line="445"/>
         <source>Error</source>
         <translation>Помилка</translation>
     </message>
     <message>
-        <location filename="../src/map_widget.cpp" line="514"/>
+        <location filename="../src/map_widget.cpp" line="517"/>
         <source>Empty map!
 
 Start by defining some colors:
@@ -2108,7 +2120,7 @@ define the colors there.</source>
 визначте тут кольори.</translation>
     </message>
     <message>
-        <location filename="../src/map_widget.cpp" line="516"/>
+        <location filename="../src/map_widget.cpp" line="519"/>
         <source>No symbols!
 
 Now define some symbols:
@@ -2123,7 +2135,7 @@ to create one.</source>
 щоб створити перший.</translation>
     </message>
     <message>
-        <location filename="../src/map_widget.cpp" line="518"/>
+        <location filename="../src/map_widget.cpp" line="521"/>
         <source>Ready to draw!
 
 Start drawing or load a base map.
@@ -2136,7 +2148,7 @@ Templates -&gt; Open template...</source>
 Шаблони -&gt; Відкрити шаблон...</translation>
     </message>
     <message>
-        <location filename="../src/map_widget.cpp" line="518"/>
+        <location filename="../src/map_widget.cpp" line="521"/>
         <source>Hint: Hold the middle mouse button to drag the map,
 zoom using the mouse wheel, if available.</source>
         <translation>Порада: Затисніть середню клавішу миші для переміщення мапи,
@@ -2217,6 +2229,11 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/tool_measure.cpp" line="157"/>
         <source>mm²</source>
         <translation>мм²</translation>
+    </message>
+    <message>
+        <location filename="../src/tool_measure.cpp" line="159"/>
+        <source>Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/tool_measure.cpp" line="162"/>
@@ -2740,154 +2757,215 @@ zoom using the mouse wheel, if available.</source>
         <translation>Помилка під час завантаження шару %2.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="79"/>
+        <location filename="../src/file_format_ocad8.cpp" line="97"/>
         <source>Could not open file: libocad returned %1</source>
         <translation>Неможливо відкрити файл: libocad повернув %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="82"/>
+        <location filename="../src/file_format_ocad8.cpp" line="100"/>
         <source>OCAD files of version %1 cannot be loaded!</source>
         <translation>OCAD файл версії %1 неможе бути завантажений!</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="177"/>
+        <location filename="../src/file_format_ocad8.cpp" line="195"/>
         <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
         <translation>Неможливо імпортувати символ &quot;%3&quot; (%1.%2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="190"/>
+        <location filename="../src/file_format_ocad8.cpp" line="208"/>
         <source>OCAD import layer</source>
         <translation>Шар імпорту OCAD</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="324"/>
+        <location filename="../src/file_format_ocad8.cpp" line="345"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
         <translation>У символі %1 штрихової лінії, довжина закінчення для початку і кінця різні (%2 and %3). Використовується %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="341"/>
+        <location filename="../src/file_format_ocad8.cpp" line="362"/>
         <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
         <translation>У символі %1 штрихової лінії, кінцева довжина неможе бути корректно імпортована.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="343"/>
+        <location filename="../src/file_format_ocad8.cpp" line="364"/>
         <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
         <translation>У символі %1 штрихової лінії, кінцевий проміжок неможе бути корректно імпортований.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="352"/>
+        <location filename="../src/file_format_ocad8.cpp" line="373"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
         <translation>У символі %1 штрихової лінії, головна і кінцева довжина різні (%2 and %3). Використати %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="362"/>
+        <location filename="../src/file_format_ocad8.cpp" line="383"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
         <translation>У символі %1 штрихової лінії, проміжки D та E різні (%2 and %3). Використати %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="405"/>
+        <location filename="../src/file_format_ocad8.cpp" line="426"/>
         <source>In symbol %1, left and right borders are different colors (%2 and %3). Using %4.</source>
         <translation>У символі %1, ліва і права межа різного кольору (%2 and %3). Використати %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="413"/>
+        <location filename="../src/file_format_ocad8.cpp" line="434"/>
         <source>In symbol %1, left and right borders are different width (%2 and %3). Using %4.</source>
         <translation>У символі %1, ліва і права межа різної товщини (%2 and %3). Використати %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="427"/>
+        <location filename="../src/file_format_ocad8.cpp" line="448"/>
         <source>In line symbol %1, ignoring that only the left border line should be dashed</source>
         <translation>У лінійному символі %1, проігноровано що лише ліва межа лінії має бути штриховою</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="447"/>
+        <location filename="../src/file_format_ocad8.cpp" line="468"/>
+        <location filename="../src/symbol_line.cpp" line="1198"/>
         <source>Dash symbol</source>
         <translation>Вузловий символ</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="453"/>
+        <location filename="../src/file_format_ocad8.cpp" line="474"/>
+        <location filename="../src/symbol_line.cpp" line="1186"/>
         <source>Start symbol</source>
         <translation>Початковий символ</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="469"/>
+        <location filename="../src/file_format_ocad8.cpp" line="490"/>
         <source>In symbol %1, ignoring framing line.</source>
         <translation>У символі %1,проігноровано обрамлення.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="598"/>
+        <location filename="../src/file_format_ocad8.cpp" line="619"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
         <translation>Під час імпорту текстового символу %1: проігноровано центрування</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="604"/>
+        <location filename="../src/file_format_ocad8.cpp" line="625"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
         <translation>Під час імпорту текстового символу %1: проігноровано користувацький якір (%2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="609"/>
+        <location filename="../src/file_format_ocad8.cpp" line="630"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation>Під час імпорту текстового символу %1: користувацький міжсимвольний інтервал встановлений так, що реалізувати його подібно до OCAD&apos;у поки що неможливо</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="614"/>
+        <location filename="../src/file_format_ocad8.cpp" line="635"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
         <translation>Під час імпорту текстового символу %1: проігноровано користувацький інтервал між словами (%2%)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="619"/>
+        <location filename="../src/file_format_ocad8.cpp" line="640"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
         <translation>Під час імпорту текстового символу %1: проігноровано користувацькі відступи (%2/%3)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="624"/>
+        <location filename="../src/file_format_ocad8.cpp" line="661"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
         <translation>Під час імпорту текстового символу %1: проігноровано обрамлення тексту (значення %2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="768"/>
+        <location filename="../src/file_format_ocad8.cpp" line="813"/>
         <source>Unable to load object</source>
         <translation>Неможливо завантажити об&apos;єкт</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="774"/>
+        <location filename="../src/file_format_ocad8.cpp" line="820"/>
         <source>Unable to import rectangle object</source>
         <translation>Неможливо імпортувати прямокутний об&apos;єкт</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1222"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1260"/>
         <source>Color id not found: %1, ignoring this color</source>
         <translation>Ідентифікатор кольору не знайдено: %1, проігноровано цей колір</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="822"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1292"/>
+        <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1296"/>
+        <source>Could not create new file: libocad returned %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1541"/>
+        <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1757"/>
+        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1781"/>
+        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1792"/>
+        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1895"/>
+        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1945"/>
+        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1984"/>
+        <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1991"/>
+        <source>In text symbol %1: ignoring underlining</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="1993"/>
+        <source>In text symbol %1: ignoring kerning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="2346"/>
+        <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_ocad8.cpp" line="868"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation>Не імпортовано текстовий символ, невдається відобразити зовнішній шлях&apos; (npts=%1): %2</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="999"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1046"/>
         <source>Unable to import template: %1</source>
         <translation>Неможливо імпортувати шаблон: %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1025"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1072"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
         <translation>Неможливо імпортувати шаблон: фон &quot;%1&quot; не являється растровим зображенням</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1123"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1161"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation>Спроба імпортувати текстовий об&apos;єкт з невідомим форматом координат</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.h" line="41"/>
+        <location filename="../src/file_format_ocad8.h" line="44"/>
         <source>OCAD Versions 7, 8</source>
         <translation>OCAD Версії 7, 8</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.h" line="55"/>
         <source>OpenOrienteering Mapper XML</source>
-        <translation>OpenOrienteering Mapper XML</translation>
+        <translation type="obsolete">OpenOrienteering Mapper XML</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.h" line="33"/>
@@ -2999,11 +3077,26 @@ The maximum supported version is %2.</source>
         <translation>Взаємовиключення невдале.</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="298"/>
+        <location filename="../src/symbol_text.cpp" line="361"/>
         <source>A</source>
         <comment>First capital letter of the local alphabet</comment>
         <translatorcomment>Перша літера локальної абетки (тут: англійська)</translatorcomment>
         <translation>A</translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_line.cpp" line="1190"/>
+        <source>Mid symbol</source>
+        <translation type="unfinished">Серединний символ</translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_line.cpp" line="1194"/>
+        <source>End symbol</source>
+        <translation type="unfinished">Кінцевий символ</translation>
+    </message>
+    <message>
+        <location filename="../src/file_format_xml.h" line="55"/>
+        <source>OpenOrienteering Mapper XML (export only)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3086,7 +3179,7 @@ The maximum supported version is %2.</source>
 <context>
     <name>SymbolDropDown</name>
     <message>
-        <location filename="../src/symbol.cpp" line="294"/>
+        <location filename="../src/symbol.cpp" line="303"/>
         <source>- none -</source>
         <translation>- немає -</translation>
     </message>
@@ -3817,144 +3910,180 @@ Failed to load template. Does the file exist and is it valid?</source>
 <context>
     <name>TextSymbolSettings</name>
     <message>
-        <location filename="../src/symbol_text.cpp" line="344"/>
+        <location filename="../src/symbol_text.cpp" line="407"/>
         <source>Text settings</source>
         <translation>Параметри тексту</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="350"/>
+        <location filename="../src/symbol_text.cpp" line="413"/>
         <source>Font family:</source>
         <translation>Шрифт:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="369"/>
+        <location filename="../src/symbol_text.cpp" line="432"/>
         <source>Font size:</source>
         <translation>Розмір шрифту:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="365"/>
+        <location filename="../src/symbol_text.cpp" line="428"/>
         <source>Determine size...</source>
         <translation>Визначити розмір...</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="360"/>
-        <location filename="../src/symbol_text.cpp" line="389"/>
-        <location filename="../src/symbol_text.cpp" line="421"/>
-        <location filename="../src/symbol_text.cpp" line="427"/>
-        <location filename="../src/symbol_text.cpp" line="635"/>
-        <location filename="../src/symbol_text.cpp" line="652"/>
-        <location filename="../src/symbol_text.cpp" line="708"/>
+        <location filename="../src/symbol_text.cpp" line="423"/>
+        <location filename="../src/symbol_text.cpp" line="452"/>
+        <location filename="../src/symbol_text.cpp" line="512"/>
+        <location filename="../src/symbol_text.cpp" line="518"/>
+        <location filename="../src/symbol_text.cpp" line="779"/>
+        <location filename="../src/symbol_text.cpp" line="796"/>
+        <location filename="../src/symbol_text.cpp" line="885"/>
         <source>mm</source>
         <translation>мм</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="361"/>
+        <location filename="../src/symbol_text.cpp" line="424"/>
         <source>pt</source>
         <translation>пт</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="372"/>
+        <location filename="../src/symbol_text.cpp" line="435"/>
         <source>Text color:</source>
         <translation>Колір тексту:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="375"/>
+        <location filename="../src/symbol_text.cpp" line="438"/>
         <source>bold</source>
         <translation>жирний</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="377"/>
+        <location filename="../src/symbol_text.cpp" line="440"/>
         <source>italic</source>
         <translation>курсив</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="379"/>
+        <location filename="../src/symbol_text.cpp" line="442"/>
         <source>underlined</source>
         <translation>підкреслений</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="382"/>
+        <location filename="../src/symbol_text.cpp" line="445"/>
         <source>Text style:</source>
         <translation>Стиль тексту:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="386"/>
-        <location filename="../src/symbol_text.cpp" line="392"/>
+        <location filename="../src/symbol_text.cpp" line="449"/>
+        <location filename="../src/symbol_text.cpp" line="455"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="387"/>
+        <location filename="../src/symbol_text.cpp" line="450"/>
         <source>Line spacing:</source>
         <translation>Міжрядковий інтервал:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="390"/>
+        <location filename="../src/symbol_text.cpp" line="453"/>
         <source>Paragraph spacing:</source>
         <translation>Перший рядок:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="393"/>
+        <location filename="../src/symbol_text.cpp" line="456"/>
         <source>Character spacing:</source>
         <translation>Міжсимвольний інтервал:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="395"/>
+        <location filename="../src/symbol_text.cpp" line="458"/>
         <source>Kerning</source>
         <translation>Кернінг</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="402"/>
+        <location filename="../src/symbol_text.cpp" line="465"/>
         <source>Symbol icon text:</source>
         <translation>Символ тексту:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="406"/>
+        <location filename="../src/symbol_text.cpp" line="469"/>
+        <location filename="../src/symbol_text.cpp" line="477"/>
+        <source>Framing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="472"/>
         <source>OCAD compatibility settings</source>
         <translation>OCAD сімісні параметри</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="411"/>
+        <location filename="../src/symbol_text.cpp" line="483"/>
+        <source>Framing color:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="485"/>
+        <source>Line framing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="489"/>
+        <source>Width:</source>
+        <translation type="unfinished">Ширина:</translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="491"/>
+        <source>Shadow framing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="495"/>
+        <source>Left/Right Offset:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="498"/>
+        <source>Top/Down Offset:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol_text.cpp" line="502"/>
         <source>OCAD compatibility</source>
         <translation>Налаштування OCAD сімісних параметрів</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="418"/>
+        <location filename="../src/symbol_text.cpp" line="509"/>
         <source>enabled</source>
         <translation>увімкнено</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="422"/>
+        <location filename="../src/symbol_text.cpp" line="513"/>
         <source>Line width:</source>
         <translation>Ширина лінії:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="425"/>
+        <location filename="../src/symbol_text.cpp" line="516"/>
         <source>Line color:</source>
         <translation>Колір лінії:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="635"/>
+        <location filename="../src/symbol_text.cpp" line="779"/>
         <source>Position:</source>
         <translation>Позиція:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="416"/>
+        <location filename="../src/symbol_text.cpp" line="507"/>
         <source>Line below paragraphs</source>
         <translation>Лінія під абзацом</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="428"/>
+        <location filename="../src/symbol_text.cpp" line="519"/>
         <source>Distance from baseline:</source>
         <translation>Відстань від базової лінії:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="432"/>
+        <location filename="../src/symbol_text.cpp" line="523"/>
         <source>Custom tabulator positions</source>
         <translation>Користувацька позиція табулятора</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="635"/>
+        <location filename="../src/symbol_text.cpp" line="779"/>
         <source>Add custom tabulator</source>
         <translation>Додати користувацький табулятор</translation>
     </message>
