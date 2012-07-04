@@ -62,6 +62,15 @@ set(OPT_LIBRARIES "/opt/local/lib")
 include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${PROJ_INCLUDES} ${OPT_INCLUDES})
 link_directories(${PROJ_LIBRARIES} ${OPT_LIBRARIES})
 
+if(NOT Mapper_XML_FORMAT)
+	set(Mapper_XML_FORMAT OFF CACHE BOOL
+	  "Enable the export-only XML format, options are: OFF, ON."
+	  FORCE)
+endif(NOT Mapper_XML_FORMAT)
+if(Mapper_XML_FORMAT)
+	add_definitions(-DWITH_MAPPER_XML_FORMAT)
+endif()
+
 set(Mapper_SRCS
  libocad/types.c
  libocad/array.c

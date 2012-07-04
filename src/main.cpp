@@ -81,7 +81,9 @@ int main(int argc, char** argv)
 	
 	// Register the supported file formats
 	FileFormats.registerFormat(new NativeFileFormat());
+#ifdef WITH_MAPPER_XML_FORMAT
 	FileFormats.registerFormat(new XMLFileFormat());
+#endif
 	FileFormats.registerFormat(new OCAD8FileFormat());
 	
 	// Create first main window
