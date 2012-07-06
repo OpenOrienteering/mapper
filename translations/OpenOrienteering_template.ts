@@ -1261,7 +1261,7 @@ Press No to choose a different format.</source>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="752"/>
-        <source>Failed to start the help browser.</source>
+        <source>Failed to find the help browser (&quot;Qt Assistant&quot;). For Windows, it is available as a separate download. After extracting this archive, copy its contents into the directory containing the Mapper executable, so the Mapper and assistant executables are in the same directory, and try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

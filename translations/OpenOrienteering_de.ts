@@ -463,7 +463,7 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
     <message>
         <location filename="../src/tool_draw_point.cpp" line="49"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set a point object, &lt;b&gt;Drag&lt;/b&gt; to set its rotation if the symbol is rotatable</source>
-        <translation>&lt;b&gt;Mausklick&lt;b&gt; zum Platzieren, &lt;b&gt;Ziehen&lt;/b&gt;, um die Ausrichtung eines drehbaren Symbols zu bestimmen</translation>
+        <translation>&lt;b&gt;Mausklick&lt;/b&gt; zum Platzieren, &lt;b&gt;Ziehen&lt;/b&gt;, um die Ausrichtung eines drehbaren Symbols zu bestimmen</translation>
     </message>
 </context>
 <context>
@@ -1439,8 +1439,12 @@ Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="752"/>
+        <source>Failed to find the help browser (&quot;Qt Assistant&quot;). For Windows, it is available as a separate download. After extracting this archive, copy its contents into the directory containing the Mapper executable, so the Mapper and assistant executables are in the same directory, and try again.</source>
+        <translation>Das Handbuchprogramm (&quot;Qt Assistant&quot;) konnte nicht gefunden werden. Für Windows ist es als separater Download verfügbar. Kopieren Sie nach dem Entpacken des Archivs dessen Inhalt in das Verzeichnis, welches Mapper.exe enthält, so dass assistant.exe und Mapper.exe im selben Vezeichnis sind, und versuchen Sie es erneut.</translation>
+    </message>
+    <message>
         <source>Failed to start the help browser.</source>
-        <translation>Das Handbuchprogramm konnte nicht gestartet werden.</translation>
+        <translation type="obsolete">Das Handbuchprogramm konnte nicht gestartet werden.</translation>
     </message>
     <message>
         <source>The selected map scale is 1:%1, but the selected symbol file has a scale of 1:%2! Do you want to scale the symbols to the selected scale?</source>
@@ -2221,18 +2225,18 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1048"/>
         <source>Place point objects on the map.</source>
-        <translation>Platzieren Sie die Punktobjekte auf der Karte.</translation>
+        <translation>Punktobjekte auf der Karte platzieren.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1048"/>
         <source>Select a point symbol to be able to use this tool.</source>
-        <translation>Wählen Sie ein Punktsymbol, um dieses Werkzeug zu verwenden.</translation>
+        <translation>Wählen Sie ein Punktsymbol, um dieses Werkzeug verwenden zu können.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1050"/>
         <source>Draw polygonal and curved lines.</source>
         <translatorcomment>More information</translatorcomment>
-        <translation>Zeichnen Sie eckige oder gebogene Linien durch Klicken oder Ziehen.</translation>
+        <translation>Eckige oder gebogene Linien durch Klicken oder Ziehen zeichnen.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1050"/>
@@ -2240,7 +2244,7 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <location filename="../src/map_editor.cpp" line="1054"/>
         <source>Select a line, area or combined symbol to be able to use this tool.</source>
         <translatorcomment>Distinction between line and combined symbol probably not relevant here.</translatorcomment>
-        <translation>Wählen Sie ein Linien oder Flächensymbol, um dieses Werkzeug zu verwenden.</translation>
+        <translation>Wählen Sie ein Linien oder Flächensymbol, um dieses Werkzeug verwenden zu können.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1052"/>
@@ -2265,24 +2269,24 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1056"/>
         <source>Write text on the map.</source>
-        <translation>Geben Sie einen Text ein.</translation>
+        <translation>Text auf der Karte platzieren.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1056"/>
         <source>Select a text symbol to be able to use this tool.</source>
-        <translation>Wählen Sie ein Textsymbol, um dieses Werkzeug zu verwenden.</translation>
+        <translation>Wählen Sie ein Textsymbol, um dieses Werkzeug verwenden zu können.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1113"/>
         <source>Duplicate the selected object(s).</source>
-        <translation>Ausgewählte Objekte duplizieren.</translation>
+        <translation>Die ausgewählten Objekte duplizieren.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1113"/>
         <location filename="../src/map_editor.cpp" line="1128"/>
         <location filename="../src/map_editor.cpp" line="1130"/>
         <source>Select at least one object to activate this tool.</source>
-        <translation>Wählen Sie wenigstens ein Objekt, um dieses Werkzeug zu verwenden.</translation>
+        <translation>Wählen Sie wenigstens ein Objekt, um dieses Werkzeug verwenden zu können.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1115"/>
@@ -2293,7 +2297,7 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <location filename="../src/map_editor.cpp" line="1115"/>
         <location filename="../src/map_editor.cpp" line="1117"/>
         <source>Select at least one line object to activate this tool.</source>
-        <translation>Wählen Sie wenigstens ein Linienobjekt, um dieses Werkzeug zu verwenden.</translation>
+        <translation>Wählen Sie wenigstens ein Linienobjekt, um dieses Werkzeug verwenden zu können.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1117"/>
@@ -2308,7 +2312,7 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1119"/>
         <source>Select at least one line or area object to activate this tool.</source>
-        <translation>Wählen Sie wenigstens ein Linien- oder Flächenobjekt, um dieses Werkzeug zu verwenden.</translation>
+        <translation>Wählen Sie wenigstens ein Linien- oder Flächenobjekt, um dieses Werkzeug verwenden zu können.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1121"/>
@@ -2318,12 +2322,12 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1121"/>
         <source>Select a single area object to activate this tool.</source>
-        <translation>Wählen Sie ein einzelnes Flächensymbol, um dieses Werkzeug zu verwenden.</translation>
+        <translation>Wählen Sie ein einzelnes Flächensymbol, um dieses Werkzeug verwenden zu können.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1128"/>
         <source>Rotate the selected object(s).</source>
-        <translation>Die ausgewählten Objekten rotieren.</translation>
+        <translation>Die ausgewählten Objekten drehen.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1130"/>
@@ -2371,7 +2375,7 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <location filename="../src/map_editor.cpp" line="1158"/>
         <location filename="../src/map_editor.cpp" line="1160"/>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
-        <translation>Wählen Sie wenigstens ein Objekt sowie ein geeignetes alternatives Symbol, dieses Werkzeug zu verwenden.</translation>
+        <translation>Wählen Sie wenigstens ein Objekt sowie ein geeignetes alternatives Symbol, dieses Werkzeug verwenden zu können.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1160"/>

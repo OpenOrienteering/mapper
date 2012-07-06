@@ -749,7 +749,7 @@ void MainWindow::showHelp(QString filename, QString fragment)
 		process->start(QLatin1String("assistant"), args);
 		if (!process->waitForStarted())
 		{
-			QMessageBox::warning(this, tr("Error"), tr("Failed to start the help browser."));
+			QMessageBox::warning(this, tr("Error"), tr("Failed to find the help browser (\"Qt Assistant\"). For Windows, it is available as a separate download. After extracting this archive, copy its contents into the directory containing the Mapper executable, so the Mapper and assistant executables are in the same directory, and try again."));
 			return;
 		}
 	}
