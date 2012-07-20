@@ -294,14 +294,15 @@ Symbol *OCAD8FileImport::importPointSymbol(const OCADPointSymbol *ocad_symbol)
 
 Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 {
+	LineSymbol* line_for_borders = NULL;
+	
 	// Import a main line?
 	LineSymbol *main_line = NULL;
 	if (ocad_symbol->dmode == 0 || ocad_symbol->width > 0)
 	{
 		main_line = new LineSymbol();
+		line_for_borders = main_line;
 		fillCommonSymbolFields(main_line, (OCADSymbol *)ocad_symbol);
-
-		main_line->minimum_length = 0; // OCAD 8 does not store min length
 
 		// Basic line options
 		main_line->line_width = convertSize(ocad_symbol->width);
@@ -395,10 +396,12 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 	}
 	
 	// Import a 'double' line?
+	bool has_border_line = ocad_symbol->lwidth > 0 || ocad_symbol->rwidth > 0;
 	LineSymbol *double_line = NULL;
-	if (ocad_symbol->dmode != 0)
+	if (ocad_symbol->dmode != 0 && (ocad_symbol->dflags & 1 || (has_border_line && !line_for_borders)))
 	{
 		double_line = new LineSymbol();
+		line_for_borders = double_line;
 		fillCommonSymbolFields(double_line, (OCADSymbol *)ocad_symbol);
 		
 		double_line->line_width = convertSize(ocad_symbol->dwidth);
@@ -412,46 +415,56 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 		
 		double_line->segment_length = convertSize(ocad_symbol->len);
 		double_line->end_length = convertSize(ocad_symbol->elen);
+	}
+	
+	// Border lines
+	if (has_border_line)
+	{
+		assert(line_for_borders);
+		line_for_borders->have_border_lines = true;
 		
-		// Border lines
-		if (ocad_symbol->lwidth > 0 || ocad_symbol->rwidth > 0)
+		// Border color and width - currently we don't support different values on left and right side,
+		// although that seems easy enough to implement in the future. Import with a warning.
+		s16 border_color = ocad_symbol->lcolor;
+		if (border_color != ocad_symbol->rcolor)
 		{
-			double_line->have_border_lines = true;
+			addWarning(QObject::tr("In symbol %1, left and right borders are different colors (%2 and %3). Using %4.")
+			.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->lcolor).arg(ocad_symbol->rcolor).arg(border_color));
+		}
+		line_for_borders->border_color = convertColor(border_color);
+		
+		s16 border_width = ocad_symbol->lwidth;
+		if (border_width != ocad_symbol->rwidth)
+		{
+			addWarning(QObject::tr("In symbol %1, left and right borders are different width (%2 and %3). Using %4.")
+			.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->lwidth).arg(ocad_symbol->rwidth).arg(border_width));
+		}
+		line_for_borders->border_width = convertSize(border_width);
+		line_for_borders->border_shift = convertSize(border_width) / 2 + (convertSize(ocad_symbol->dwidth) - line_for_borders->line_width) / 2;
+		
+		// And finally, the border may be dashed
+		if (ocad_symbol->dgap > 0 && ocad_symbol->dmode > 1)
+		{
+			line_for_borders->dashed_border = true;
+			line_for_borders->border_dash_length = convertSize(ocad_symbol->dlen);
+			line_for_borders->border_break_length = convertSize(ocad_symbol->dgap);
 			
-			// Border color and width - currently we don't support different values on left and right side,
-			// although that seems easy enough to implement in the future. Import with a warning.
-			s16 border_color = ocad_symbol->lcolor;
-			if (border_color != ocad_symbol->rcolor)
-			{
-				addWarning(QObject::tr("In symbol %1, left and right borders are different colors (%2 and %3). Using %4.")
-				.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->lcolor).arg(ocad_symbol->rcolor).arg(border_color));
-			}
-			double_line->border_color = convertColor(border_color);
-			
-			s16 border_width = ocad_symbol->lwidth;
-			if (border_width != ocad_symbol->rwidth)
-			{
-				addWarning(QObject::tr("In symbol %1, left and right borders are different width (%2 and %3). Using %4.")
-				.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->lwidth).arg(ocad_symbol->rwidth).arg(border_width));
-			}
-			double_line->border_width = convertSize(border_width);
-			double_line->border_shift = double_line->border_width / 2;
-			
-			// And finally, the border may be dashed
-			if (ocad_symbol->dgap > 0 && ocad_symbol->dmode > 1)
-			{
-				double_line->dashed_border = true;
-				double_line->border_dash_length = convertSize(ocad_symbol->dlen);
-				double_line->border_break_length = convertSize(ocad_symbol->dgap);
-				
-				if (ocad_symbol->dmode == 2)
-					addWarning(QObject::tr("In line symbol %1, ignoring that only the left border line should be dashed").arg(0.1 * ocad_symbol->number));
-			}
+			if (ocad_symbol->dmode == 2)
+				addWarning(QObject::tr("In line symbol %1, ignoring that only the left border line should be dashed").arg(0.1 * ocad_symbol->number));
 		}
 	}
-    
+	
     // Create point symbols along line; middle ("normal") dash, corners, start, and end.
     LineSymbol* symbol_line = main_line ? main_line : double_line;	// Find the line to attach the symbols to
+    if (symbol_line == NULL)
+	{
+		main_line = new LineSymbol();
+		symbol_line = main_line;
+		fillCommonSymbolFields(main_line, (OCADSymbol *)ocad_symbol);
+		
+		main_line->segment_length = convertSize(ocad_symbol->len);
+		main_line->end_length = convertSize(ocad_symbol->elen);
+	}
     OCADPoint * symbolptr = (OCADPoint *)ocad_symbol->pts;
 	symbol_line->mid_symbol = importPattern( ocad_symbol->smnpts, symbolptr);
 	symbol_line->mid_symbols_per_spot = ocad_symbol->snum;
