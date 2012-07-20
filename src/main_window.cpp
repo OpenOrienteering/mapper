@@ -139,7 +139,10 @@ void MainWindow::createFileMenu()
 	connect(save_act, SIGNAL(triggered()), this, SLOT(save()));
 	
 	save_as_act = new QAction(tr("Save &as..."), this);
-	save_as_act->setShortcuts(QKeySequence::SaveAs);
+	if (QKeySequence::keyBindings(QKeySequence::SaveAs).empty())
+		save_as_act->setShortcut(tr("Ctrl+Shift+S"));
+	else
+		save_as_act->setShortcuts(QKeySequence::SaveAs);
 	save_as_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(save_as_act, SIGNAL(triggered()), this, SLOT(showSaveAsDialog()));
 	
@@ -147,7 +150,7 @@ void MainWindow::createFileMenu()
 	connect(settings_act, SIGNAL(triggered()), this, SLOT(showSettings()));
 	
 	close_act = new QAction(tr("Close"), this);
-	close_act->setShortcut(tr("Ctrl+W"));
+	close_act->setShortcut(QKeySequence::Close);
 	close_act->setStatusTip(tr("Close this file"));
 	close_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(close_act, SIGNAL(triggered()), this, SLOT(closeFile()));
