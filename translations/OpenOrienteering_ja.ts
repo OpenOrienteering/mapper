@@ -4,126 +4,126 @@
 <context>
     <name>AreaSymbolSettings</name>
     <message utf8="true">
-        <location filename="../src/symbol_area.cpp" line="528"/>
+        <location filename="../src/symbol_area.cpp" line="529"/>
         <source>mm²</source>
         <translation>mm²</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="529"/>
+        <location filename="../src/symbol_area.cpp" line="530"/>
         <source>Minimum size:</source>
         <translation>最小のサイズ:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="536"/>
+        <location filename="../src/symbol_area.cpp" line="537"/>
         <source>Fills</source>
         <translation>フィル</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="549"/>
+        <location filename="../src/symbol_area.cpp" line="550"/>
         <source>Line fill</source>
         <translation>ラインフィル</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="550"/>
+        <location filename="../src/symbol_area.cpp" line="551"/>
         <source>Pattern fill</source>
         <translation>パターンフィル</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="588"/>
-        <location filename="../src/symbol_area.cpp" line="599"/>
-        <location filename="../src/symbol_area.cpp" line="606"/>
-        <location filename="../src/symbol_area.cpp" line="625"/>
-        <location filename="../src/symbol_area.cpp" line="630"/>
+        <location filename="../src/symbol_area.cpp" line="589"/>
+        <location filename="../src/symbol_area.cpp" line="600"/>
+        <location filename="../src/symbol_area.cpp" line="607"/>
+        <location filename="../src/symbol_area.cpp" line="626"/>
+        <location filename="../src/symbol_area.cpp" line="631"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="603"/>
+        <location filename="../src/symbol_area.cpp" line="604"/>
         <source>Single line</source>
         <translation>シングルライン</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="617"/>
+        <location filename="../src/symbol_area.cpp" line="618"/>
         <source>Parallel lines</source>
         <translation>平行線</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="619"/>
+        <location filename="../src/symbol_area.cpp" line="620"/>
         <source>Line spacing:</source>
         <translation>平行線の間隔:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="622"/>
+        <location filename="../src/symbol_area.cpp" line="623"/>
         <source>Single row</source>
         <translation>シングルロウ</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="624"/>
+        <location filename="../src/symbol_area.cpp" line="625"/>
         <source>Pattern interval:</source>
         <translation>パターン間隔:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="629"/>
+        <location filename="../src/symbol_area.cpp" line="630"/>
         <source>Pattern offset:</source>
         <translation>パターンのオフセット:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="634"/>
+        <location filename="../src/symbol_area.cpp" line="635"/>
         <source>Row offset:</source>
         <translation>ロウのオフセット:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="636"/>
+        <location filename="../src/symbol_area.cpp" line="637"/>
         <source>Parallel rows</source>
         <translation>平行ロウ</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="638"/>
+        <location filename="../src/symbol_area.cpp" line="639"/>
         <source>Row spacing:</source>
         <translation>ロウ間隔:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="644"/>
+        <location filename="../src/symbol_area.cpp" line="645"/>
         <source>Fill rotation</source>
         <translation>フィルの回転</translation>
     </message>
     <message utf8="true">
-        <location filename="../src/symbol_area.cpp" line="646"/>
+        <location filename="../src/symbol_area.cpp" line="647"/>
         <source>°</source>
         <translation>°</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="647"/>
+        <location filename="../src/symbol_area.cpp" line="648"/>
         <source>Angle:</source>
         <translation>角度:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="649"/>
+        <location filename="../src/symbol_area.cpp" line="650"/>
         <source>adjustable per object</source>
         <translation>オブジェクトごとに調節可能</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="664"/>
+        <location filename="../src/symbol_area.cpp" line="665"/>
         <source>Area settings</source>
         <translation>エリアの設定</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="745"/>
+        <location filename="../src/symbol_area.cpp" line="746"/>
         <source>Pattern fill %1</source>
         <translation>パターンフィル %1</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="754"/>
+        <location filename="../src/symbol_area.cpp" line="755"/>
         <source>Line fill %1</source>
         <translation>ラインフィル %1</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="771"/>
+        <location filename="../src/symbol_area.cpp" line="772"/>
         <source>No fill selected</source>
         <translation>フィルが選択されていません</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="526"/>
+        <location filename="../src/symbol_area.cpp" line="527"/>
         <source>Area color:</source>
         <translation>エリアの色:</translation>
     </message>
@@ -156,17 +156,17 @@
         <translation type="obsolete">塗りつぶしは回転可能です</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="615"/>
+        <location filename="../src/symbol_area.cpp" line="616"/>
         <source>Line offset:</source>
         <translation>ラインのオフセット:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="610"/>
+        <location filename="../src/symbol_area.cpp" line="611"/>
         <source>Line color:</source>
         <translation>ラインの色:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_area.cpp" line="605"/>
+        <location filename="../src/symbol_area.cpp" line="606"/>
         <source>Line width:</source>
         <translation>ラインの幅:</translation>
     </message>
@@ -553,9 +553,8 @@ This dialog allows to choose a font size which results in a given exact height f
         <translation>カーソル位置でズームアウト</translation>
     </message>
     <message>
-        <location filename="../src/settings_dialog.h" line="79"/>
         <source>Editor</source>
-        <translation>エディタ</translation>
+        <translation type="obsolete">エディタ</translation>
     </message>
 </context>
 <context>
@@ -603,9 +602,8 @@ This dialog allows to choose a font size which results in a given exact height f
         <translation>言語の変更を有効にするにはプログラムを再起動してください！</translation>
     </message>
     <message>
-        <location filename="../src/settings_dialog.h" line="95"/>
         <source>General</source>
-        <translation>一般</translation>
+        <translation type="obsolete">一般</translation>
     </message>
 </context>
 <context>
@@ -901,9 +899,8 @@ This dialog allows to choose a font size which results in a given exact height f
 <context>
     <name>Global</name>
     <message>
-        <location filename="../src/global.h" line="22"/>
         <source>OpenOrienteering Mapper</source>
-        <translation>OpenOrienteering Mapper</translation>
+        <translation type="obsolete">OpenOrienteering Mapper</translation>
     </message>
 </context>
 <context>
@@ -1258,95 +1255,99 @@ This dialog allows to choose a font size which results in a given exact height f
         <translation>名前を付けて保存(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="146"/>
+        <location filename="../src/main_window.cpp" line="143"/>
+        <source>Ctrl+Shift+S</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="149"/>
         <source>Settings...</source>
         <translation>設定...</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="149"/>
+        <location filename="../src/main_window.cpp" line="152"/>
         <source>Close</source>
         <translation>閉じる</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="150"/>
         <source>Ctrl+W</source>
-        <translation>Ctrl+W</translation>
+        <translation type="obsolete">Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="151"/>
+        <location filename="../src/main_window.cpp" line="154"/>
         <source>Close this file</source>
         <translation>ファイルを閉じる</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="155"/>
+        <location filename="../src/main_window.cpp" line="158"/>
         <source>E&amp;xit</source>
         <translation>終了(&amp;X)</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="157"/>
+        <location filename="../src/main_window.cpp" line="160"/>
         <source>Exit the application</source>
         <translation>アプリケーションを終了</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="161"/>
+        <location filename="../src/main_window.cpp" line="164"/>
         <source>&amp;File</source>
         <translation>ファイル(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="181"/>
+        <location filename="../src/main_window.cpp" line="184"/>
         <source>Open &amp;Manual</source>
         <translation>マニュアルを開く(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="182"/>
+        <location filename="../src/main_window.cpp" line="185"/>
         <source>Show the help file for this application</source>
         <translation>このアプリケーションのヘルプファイルを表示</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="185"/>
+        <location filename="../src/main_window.cpp" line="188"/>
         <source>&amp;About %1</source>
         <translation>%1 について(&amp;A) </translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="186"/>
+        <location filename="../src/main_window.cpp" line="189"/>
         <source>Show information about this application</source>
         <translation>このアプリケーションについての情報を表示</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="189"/>
+        <location filename="../src/main_window.cpp" line="192"/>
         <source>About &amp;Qt</source>
         <translation>QT について(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="190"/>
+        <location filename="../src/main_window.cpp" line="193"/>
         <source>Show information about Qt</source>
         <translation>Qtについての情報を表示</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="193"/>
+        <location filename="../src/main_window.cpp" line="196"/>
         <source>&amp;Help</source>
         <translation>ヘルプ(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="313"/>
+        <location filename="../src/main_window.cpp" line="316"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
         <translation>ファイルが変更されています。
 変更を保存しますか?</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="376"/>
+        <location filename="../src/main_window.cpp" line="379"/>
         <source>Unsaved file</source>
         <translation>Unsaved file</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="404"/>
-        <location filename="../src/main_window.cpp" line="551"/>
+        <location filename="../src/main_window.cpp" line="407"/>
+        <location filename="../src/main_window.cpp" line="554"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="404"/>
+        <location filename="../src/main_window.cpp" line="407"/>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
@@ -1354,30 +1355,30 @@ Do you want to scale the symbols to the selected scale?</source>
 記号の縮尺を地図の縮尺に合わせますか?</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="450"/>
+        <location filename="../src/main_window.cpp" line="453"/>
         <source>All maps</source>
         <translation>すべての地図</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="452"/>
+        <location filename="../src/main_window.cpp" line="455"/>
         <source>All files</source>
         <translation>すべてのファイル</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="454"/>
+        <location filename="../src/main_window.cpp" line="457"/>
         <source>Open file</source>
         <translation>ファイルを開く</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="480"/>
-        <location filename="../src/main_window.cpp" line="600"/>
-        <location filename="../src/main_window.cpp" line="734"/>
-        <location filename="../src/main_window.cpp" line="752"/>
+        <location filename="../src/main_window.cpp" line="483"/>
+        <location filename="../src/main_window.cpp" line="603"/>
+        <location filename="../src/main_window.cpp" line="737"/>
+        <location filename="../src/main_window.cpp" line="755"/>
         <source>Error</source>
         <translation>エラー</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="480"/>
+        <location filename="../src/main_window.cpp" line="483"/>
         <source>Cannot open file:
 %1
 
@@ -1388,12 +1389,12 @@ File format not recognized.</source>
 ファイル形式が認識できません。</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="518"/>
+        <location filename="../src/main_window.cpp" line="521"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="550"/>
+        <location filename="../src/main_window.cpp" line="553"/>
         <source>This map is being saved as a &quot;%1&quot; file. Information may be lost.
 
 Press Yes to save in this format.
@@ -1404,66 +1405,70 @@ Yesを押してこの形式で保存します。
 Noを押して形式を変更します。</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="593"/>
+        <location filename="../src/main_window.cpp" line="596"/>
         <source>Save file</source>
         <translation>ファイルを保存</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="601"/>
+        <location filename="../src/main_window.cpp" line="604"/>
         <source>File could not be saved:</source>
         <translation>ファイルを保存することができません:</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="602"/>
+        <location filename="../src/main_window.cpp" line="605"/>
         <source>There was a problem in determining the file format.</source>
         <translation>ファイル形式を決定するときに問題が発生しました。</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="603"/>
+        <location filename="../src/main_window.cpp" line="606"/>
         <source>Please report this as a bug.</source>
         <translation>この問題をバグとして報告してください。</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="649"/>
+        <location filename="../src/main_window.cpp" line="652"/>
         <source>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</source>
         <translation>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="656"/>
-        <location filename="../src/main_window.cpp" line="666"/>
+        <location filename="../src/main_window.cpp" line="659"/>
+        <location filename="../src/main_window.cpp" line="669"/>
         <source>See &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; for more information.</source>
         <translation>See &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; for more information.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="658"/>
+        <location filename="../src/main_window.cpp" line="661"/>
         <source>This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</source>
         <translation>This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="675"/>
+        <location filename="../src/main_window.cpp" line="678"/>
         <source>Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</source>
         <translation>Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="755"/>
+        <source>Failed to find the help browser (&quot;Qt Assistant&quot;). For Windows, it is available as a separate download. After extracting this archive, copy its contents into the directory containing the Mapper executable, so the Mapper and assistant executables are in the same directory, and try again.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For patches, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</source>
         <translation type="obsolete">Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For patches, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="734"/>
+        <location filename="../src/main_window.cpp" line="737"/>
         <source>Failed to locate the help files.</source>
         <translation>ヘルプファイルを探すのに失敗しました。</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="752"/>
         <source>Failed to start the help browser.</source>
-        <translation>ヘルプブラウザの開始に失敗しました。</translation>
+        <translation type="obsolete">ヘルプブラウザの開始に失敗しました。</translation>
     </message>
     <message>
         <source>Sorry, settings are not implemented yet!</source>
         <translation type="obsolete">設定はまだ実装されていません。</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="647"/>
+        <location filename="../src/main_window.cpp" line="650"/>
         <source>About %1</source>
         <translation>%1 について</translation>
     </message>
@@ -1472,7 +1477,7 @@ Noを押して形式を変更します。</translation>
         <translation type="obsolete">デベロッパ(アルファベット順):&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For patches, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Aivars Zogla</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="686"/>
+        <location filename="../src/main_window.cpp" line="689"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -3130,208 +3135,206 @@ for writing.</source>
         <translation>OCADインポートレイヤー</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="345"/>
+        <location filename="../src/file_format_ocad8.cpp" line="346"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
         <translation>破線のライン記号 %1 で、三角のキャップの長さが、始点と終点で異なっています (%2 と %3)。%4 を使用してください。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="362"/>
+        <location filename="../src/file_format_ocad8.cpp" line="363"/>
         <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
         <translation>破線のライン記号 %1 で、末端の長さを正しくインポートできません。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="364"/>
+        <location filename="../src/file_format_ocad8.cpp" line="365"/>
         <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
         <translation>破線のライン記号 %1 で、末端のギャップを正しくインポートできません。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="373"/>
+        <location filename="../src/file_format_ocad8.cpp" line="374"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
         <translation>破線のライン記号 %1 で、本体と末端の長さが異なっています (%2 と %3)。%4 を使用してください。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="383"/>
+        <location filename="../src/file_format_ocad8.cpp" line="384"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
         <translation>破線のライン記号 %1 で、キャップ D と E が異なっています (%2 と %3)。%4 を使用してください。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="426"/>
+        <location filename="../src/file_format_ocad8.cpp" line="431"/>
         <source>In symbol %1, left and right borders are different colors (%2 and %3). Using %4.</source>
         <translation>記号 %1 で、左右の輪郭線の色が異なっています(%2 と %3)。%4 を使用してください。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="434"/>
+        <location filename="../src/file_format_ocad8.cpp" line="439"/>
         <source>In symbol %1, left and right borders are different width (%2 and %3). Using %4.</source>
         <translation>記号 %1 で、左右の輪郭線の幅が異なっています(%2 と %3)。%4 を使用してください。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="448"/>
+        <location filename="../src/file_format_ocad8.cpp" line="453"/>
         <source>In line symbol %1, ignoring that only the left border line should be dashed</source>
         <translation>ライン記号 %1 で、左の輪郭線のみが破線になっているのを無視します</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="468"/>
         <location filename="../src/symbol_line.cpp" line="1198"/>
+        <location filename="../src/file_format_ocad8.cpp" line="481"/>
         <source>Dash symbol</source>
         <translation>ダッシュ記号</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="474"/>
         <location filename="../src/symbol_line.cpp" line="1186"/>
+        <location filename="../src/file_format_ocad8.cpp" line="487"/>
         <source>Start symbol</source>
         <translation>始点の記号</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="490"/>
+        <location filename="../src/file_format_ocad8.cpp" line="503"/>
         <source>In symbol %1, ignoring framing line.</source>
         <translation>記号 %1 で、フレーミングラインを無視します。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="619"/>
+        <location filename="../src/file_format_ocad8.cpp" line="632"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
         <translation>テキスト記号 %1 をインポートする際、テキストの均等割付 (justified alignment) を無視します</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="625"/>
+        <location filename="../src/file_format_ocad8.cpp" line="638"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
         <translation>テキスト記号 %1 をインポートする際、文字の太さ (weight) を無視します (%2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="630"/>
+        <location filename="../src/file_format_ocad8.cpp" line="643"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation>テキスト記号 %1 をインポートする際、カスタムの文字間隔が設定されていますが、この実装はまだ OCAD の動作と一致しません</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="635"/>
+        <location filename="../src/file_format_ocad8.cpp" line="648"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
         <translation>テキスト記号 %1 をインポートする際、カスタムの単語間隔 (%2%) を無視します</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="640"/>
+        <location filename="../src/file_format_ocad8.cpp" line="653"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
         <translation>テキスト記号 %1 をインポートする際、カスタムの字下げ (%2/%3) を無視します</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="661"/>
+        <location filename="../src/file_format_ocad8.cpp" line="674"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
         <translation>テキスト記号 %1 をインポートする際、テキストフレーム (モード %2) を無視します</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="813"/>
+        <location filename="../src/file_format_ocad8.cpp" line="826"/>
         <source>Unable to load object</source>
         <translation>オブジェクトを読み込むことができません</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="820"/>
+        <location filename="../src/file_format_ocad8.cpp" line="833"/>
         <source>Unable to import rectangle object</source>
         <translation>矩形オブジェクトを読み込むことができません</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1260"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1273"/>
         <source>Color id not found: %1, ignoring this color</source>
         <translation>色 ID が見つかりませんでした %1 。この色を無視します</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1292"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1305"/>
         <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1296"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1309"/>
         <source>Could not create new file: libocad returned %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1541"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1554"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1757"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1770"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1781"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1794"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1792"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1805"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1895"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1908"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1945"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1958"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1984"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1997"/>
         <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1991"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2004"/>
         <source>In text symbol %1: ignoring underlining</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1993"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2006"/>
         <source>In text symbol %1: ignoring kerning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2346"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2359"/>
         <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="868"/>
+        <location filename="../src/file_format_ocad8.cpp" line="881"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1046"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1059"/>
         <source>Unable to import template: %1</source>
         <translation>テンプレートをインポートすることができません: %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1072"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1085"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1161"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1174"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.h" line="44"/>
         <source>OCAD Versions 7, 8</source>
-        <translation>OCAD Versions 7, 8</translation>
+        <translation type="obsolete">OCAD Versions 7, 8</translation>
     </message>
     <message>
         <source>OpenOrienteering Mapper XML</source>
         <translation type="obsolete">OpenOrienteering Mapper XML</translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.h" line="33"/>
         <source>OpenOrienteering Mapper</source>
-        <translation>OpenOrienteering Mapper</translation>
+        <translation type="obsolete">OpenOrienteering Mapper</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="150"/>
+        <location filename="../src/gps_track.cpp" line="151"/>
         <source>Error reading</source>
         <translation>読み込みエラー</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="150"/>
+        <location filename="../src/gps_track.cpp" line="151"/>
         <source>There was an error reading the DXF file %1:
 
 %1</source>
@@ -3340,50 +3343,50 @@ for writing.</source>
 %1</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="157"/>
+        <location filename="../src/gps_track.cpp" line="158"/>
         <source>Question</source>
         <translation>質問</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="157"/>
+        <location filename="../src/gps_track.cpp" line="158"/>
         <source>Are the coordinates in the DXF file in degrees?</source>
         <translation>この DXF ファイルでは、座標が角度で表示されていますか?</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="159"/>
         <location filename="../src/gps_track.cpp" line="160"/>
+        <location filename="../src/gps_track.cpp" line="161"/>
         <source>Scale value</source>
         <translation>スケールの値</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="159"/>
+        <location filename="../src/gps_track.cpp" line="160"/>
         <source>Choose a value to scale latitude coordinates by. A value of 1 does nothing, over one scales up and under one scales down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="160"/>
+        <location filename="../src/gps_track.cpp" line="161"/>
         <source>Choose a value to scale longitude coordinates by. A value of 1 does nothing, over one scales up and under one scales down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="273"/>
+        <location filename="../src/gps_track.cpp" line="274"/>
         <source>The OSM file has version %1.
 The minimum supported version is %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="278"/>
+        <location filename="../src/gps_track.cpp" line="279"/>
         <source>The OSM file has version %1.
 The maximum supported version is %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="290"/>
+        <location filename="../src/gps_track.cpp" line="291"/>
         <source>Problems</source>
         <translation>問題</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="290"/>
+        <location filename="../src/gps_track.cpp" line="291"/>
         <source>%1 nodes could not be processed correctly.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3398,12 +3401,12 @@ The maximum supported version is %2.</source>
         <translation>オブジェクトが選択されませんでした。選択中の記号を使用したオブジェクトが地図上にありません</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="273"/>
-        <location filename="../src/gps_track.cpp" line="278"/>
         <location filename="../src/map_editor.cpp" line="1490"/>
         <location filename="../src/map_editor.cpp" line="1496"/>
         <location filename="../src/map_editor.cpp" line="1502"/>
         <location filename="../src/map_editor.cpp" line="1508"/>
+        <location filename="../src/gps_track.cpp" line="274"/>
+        <location filename="../src/gps_track.cpp" line="279"/>
         <source>Error</source>
         <translation>エラー</translation>
     </message>
@@ -3442,11 +3445,6 @@ The maximum supported version is %2.</source>
         <location filename="../src/symbol_line.cpp" line="1194"/>
         <source>End symbol</source>
         <translation type="unfinished">終点の記号</translation>
-    </message>
-    <message>
-        <location filename="../src/file_format_xml.h" line="55"/>
-        <source>OpenOrienteering Mapper XML (export only)</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
