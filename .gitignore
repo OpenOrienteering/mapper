@@ -10,7 +10,7 @@ bin/*.exe
 bin/*.dll
 bin/plugins
 bin/translations
-build/
+build*/
 help/*.qhc
 help/*.qch
 3rd-party/clipper
