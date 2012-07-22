@@ -23,6 +23,7 @@ project(Mapper)
 SET(Mapper_VERSION_MAJOR 0)
 SET(Mapper_VERSION_MINOR 3)
 SET(Mapper_VERSION_PATCH 0)
+SET(Mapper_VERSION_DISPLAY "${CMAKE_BUILD_TYPE} ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
 
 if(NOT CMAKE_BUILD_TYPE)
 	SET(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING
@@ -30,7 +31,26 @@ if(NOT CMAKE_BUILD_TYPE)
 	  FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
-SET(Mapper_VERSION_DISPLAY "${CMAKE_BUILD_TYPE} ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
+if(NOT Mapper_XML_FORMAT)
+	set(Mapper_XML_FORMAT OFF CACHE BOOL
+	  "Enable the unmaintained export-only XML format, options are: OFF, ON."
+	  FORCE)
+endif(NOT Mapper_XML_FORMAT)
+if(Mapper_XML_FORMAT)
+	add_definitions(-DWITH_MAPPER_XML_FORMAT)
+endif()
+
+if(NOT Mapper_TRANSLATIONS_EMBEDDED)
+	if(APPLE)
+		# For MacOS, the translations will go into the "bundle" by default
+		set(Mapper_TRANSLATIONS_EMBEDDED_DEFAULT ON)
+	else(APPLE)
+		set(Mapper_TRANSLATIONS_EMBEDDED_DEFAULT OFF)
+	endif(APPLE)
+	set(Mapper_TRANSLATIONS_EMBEDDED ${Mapper_TRANSLATIONS_EMBEDDED_DEFAULT} CACHE BOOL
+	  "Embed all translations in the program executable, options are: OFF, ON."
+	  FORCE)
+endif(NOT Mapper_TRANSLATIONS_EMBEDDED)
 
 configure_file(src/global.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/global.h)
 
@@ -61,15 +81,6 @@ set(OPT_LIBRARIES "/opt/local/lib")
 
 include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${PROJ_INCLUDES} ${OPT_INCLUDES})
 link_directories(${PROJ_LIBRARIES} ${OPT_LIBRARIES})
-
-if(NOT Mapper_XML_FORMAT)
-	set(Mapper_XML_FORMAT OFF CACHE BOOL
-	  "Enable the export-only XML format, options are: OFF, ON."
-	  FORCE)
-endif(NOT Mapper_XML_FORMAT)
-if(Mapper_XML_FORMAT)
-	add_definitions(-DWITH_MAPPER_XML_FORMAT)
-endif()
 
 set(Mapper_SRCS
  libocad/types.c
@@ -219,9 +230,6 @@ set(Mapper_MOC_INPUT
 
 qt4_wrap_cpp(Mapper_MOC ${Mapper_MOC_INPUT})
 
-set_directory_properties(translations
-  CLEAN_NO_CUSTOM 1
-)
 set(Mapper_TRANS
  translations/OpenOrienteering_de.ts
  translations/OpenOrienteering_ja.ts
@@ -231,44 +239,35 @@ set(Mapper_TRANS
 set_source_files_properties(${Mapper_TRANS}
   PROPERTIES OUTPUT_LOCATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/translations
 )
-# 2012-07-04 Kai Pastor:
-# qt4_create_translation uses lupdate in a way that reports 
-# "circular inclusion" and runs virtually forever
-# cf. https://bugreports.qt-project.org/browse/QTBUG-6587
-# Planned workaround: reimplement qt4_create_translation to use the @lst
-# option instead of the -pro option
-# Apart from this, automatic running lupdate is likely to cause git merge 
-# issues for developers.
-#qt4_create_translation(Mapper_QM ${Mapper_TRANS} ${Mapper_SRCS})
 qt4_add_translation(Mapper_QM ${Mapper_TRANS})
-add_custom_target(Mapper_translations
-  DEPENDS ${Mapper_QM}
-)
 
 set(Mapper_TRANS_TEMPLATE
  translations/OpenOrienteering_template.ts
 )
-qt4_create_translation(Mapper_QM_TEMPLATE src/undo.cpp ${Mapper_TRANS_TEMPLATE})
-add_custom_target(Mapper_translations_template
-#   ALL
-  DEPENDS ${Mapper_TRANS_TEMPLATE}
+include(cmake/Qt4_translations.cmake)
+qt4_translations_sources(
+  ${Mapper_TRANS} ${Mapper_TRANS_TEMPLATE}
+  SOURCES ${Mapper_SRCS}
 )
 
-set(Mapper_RESOURCES resources.qrc)
-if(APPLE)
-	# For MacOS, the translations will go into the "bundle"
+if(Mapper_TRANSLATIONS_EMBEDDED)
 	set(Mapper_TRANS_QRC "${CMAKE_CURRENT_BINARY_DIR}/translations.qrc")
 	file(WRITE "${Mapper_TRANS_QRC}"
-	     "<!DOCTYPE RCC><RCC version=\"1.0\">\n <qresource>\n")
-	foreach(qm_file ${Mapper_QM})
-		get_filename_component(qm_file_name "${qm_file}" NAME)
+	  "<!DOCTYPE RCC><RCC version=\"1.0\">\n <qresource>\n")
+	foreach(_qm_file ${Mapper_QM})
+		get_filename_component(_qm_filename "${_qm_file}" NAME)
 		file(APPEND "${Mapper_TRANS_QRC}"
-		     "  <file alias=\"translations/${qm_file_name}\">${qm_file}</file>\n")
-	endforeach(qm_file ${MAPPER_TRANS})
+		  "  <file alias=\"translations/${_qm_filename}\">${_qm_file}</file>\n")
+	endforeach(_qm_file)
 	file(APPEND "${Mapper_TRANS_QRC}"
-	     " </qresource>\n</RCC>\n")
-	list(APPEND Mapper_RESOURCES resources.qrc "${Mapper_TRANS_QRC}")
-endif(APPLE)
+	  " </qresource>\n</RCC>\n")
+	qt4_add_resources(Mapper_TRANSLATIONS_RCC "${Mapper_TRANS_QRC}" OPTIONS -no-compress)
+endif(Mapper_TRANSLATIONS_EMBEDDED)
+
+# A target which builds all translations.
+add_custom_target(Mapper_translations DEPENDS ${Mapper_QM} ${Mapper_TRANSLATIONS_RCC})
+
+set(Mapper_RESOURCES ${Mapper_RESOURCES} resources.qrc)
 qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
 set(Mapper_HELP_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/help)
@@ -307,6 +306,7 @@ add_executable(Mapper
 	${Mapper_QM}
 	${Mapper_HELP_COLLECTION}
 	${Mapper_RESOURCES_RCC}
+	${Mapper_TRANSLATIONS_RCC}
 )
 
 target_link_libraries(Mapper

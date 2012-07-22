@@ -128,10 +128,12 @@ install(
 install(
   FILES "bin/my symbol sets/15000/ISOM_15000.omap"
   DESTINATION "${MAPPER_DATA_DESTINATION}/symbol sets/15000")
+if(NOT Mapper_TRANSLATIONS_EMBEDDED)
 install(
   DIRECTORY "bin/translations/"
   DESTINATION "${MAPPER_DATA_DESTINATION}/translations"
   FILES_MATCHING PATTERN "*.qm")
+endif(NOT Mapper_TRANSLATIONS_EMBEDDED)
 install(
   FILES "bin/help/oomaphelpcollection.qhc" "bin/help/oomaphelp.qch"
   DESTINATION "${MAPPER_DATA_DESTINATION}/help")
