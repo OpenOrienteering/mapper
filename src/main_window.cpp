@@ -668,17 +668,22 @@ void MainWindow::showAbout()
 	}
 	proj_about.append(tr("See <a href=\"%1\">%1</a> for more information.").arg("http://trac.osgeo.org/proj/"));	
 	
-	QLabel* about_label = new QLabel(QString("<a href=\"http://openorienteering.org\"><img src=\":/images/open-orienteering.png\"/></a><br/><br/>"
-									 "OpenOrienteering Mapper %1<br/>"
-									 "Copyright (C) 2012  Thomas Sch&ouml;ps<br/>"
-									 "This program comes with ABSOLUTELY NO WARRANTY;<br/>"
-									 "This is free software, and you are welcome to redistribute it<br/>"
-									 "under certain conditions; see the file COPYING for details.<br/><br/>").arg(APP_VERSION)
-									 
-									 % tr("Developers in alphabetical order:<br/>"
-									 "Peter Curtis<br/>Kai Pastor<br/>Russell Porter<br/>Thomas Sch&ouml;ps (project leader)<br/><br/>"
-									 "For contributions, thanks to:<br/>Jon Cundill<br/>Jan Dalheimer<br/>Eugeniy Fedirets<br/>Peter Hoban<br/>Henrik Johansson<br/>Tojo Masaya<br/>Christopher Schive<br/>Aivars Zogla<br/><br/>"
-									 "Additional information:"));
+	QLabel* about_label = new QLabel(
+		QString(
+		     "<a href=\"http://openorienteering.org\"><img src=\":/images/open-orienteering.png\"/></a><br/><br/>"
+		     "OpenOrienteering Mapper %1<br/>"
+		     "Copyright (C) 2012  Thomas Sch&ouml;ps<br/>"
+		     "This program comes with ABSOLUTELY NO WARRANTY;<br/>"
+		     "This is free software, and you are welcome to redistribute it<br/>"
+		     "under certain conditions; see the file COPYING for details.<br/><br/>").
+		   arg(APP_VERSION)
+		
+		% tr("Developers in alphabetical order:<br/>%1<br/>"
+		     "For contributions, thanks to:<br/>%2<br/>"
+		     "Additional information:").
+		  arg(QString("Peter Curtis<br/>Kai Pastor<br/>Russell Porter<br/>Thomas Sch&ouml;ps %1<br/>").arg(tr("(project leader)"))).
+		  arg("Jon Cundill<br/>Jan Dalheimer<br/>Eugeniy Fedirets<br/>Peter Hoban<br/>Henrik Johansson<br/>Tojo Masaya<br/>Christopher Schive<br/>Aivars Zogla<br/>")
+		 );
 	QTextEdit* additional_text = new QTextEdit( 
 	  clipper_about % "<br/><br/>" %
 	  QString("_").repeated(80) % "<br/><br/>" %

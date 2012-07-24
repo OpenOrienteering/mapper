@@ -1372,8 +1372,8 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/main_window.cpp" line="483"/>
         <location filename="../src/main_window.cpp" line="603"/>
-        <location filename="../src/main_window.cpp" line="737"/>
-        <location filename="../src/main_window.cpp" line="755"/>
+        <location filename="../src/main_window.cpp" line="742"/>
+        <location filename="../src/main_window.cpp" line="760"/>
         <source>Error</source>
         <translation>エラー</translation>
     </message>
@@ -1441,12 +1441,21 @@ Noを押して形式を変更します。</translation>
         <translation>This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="678"/>
-        <source>Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</source>
-        <translation>Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</translation>
+        <location filename="../src/main_window.cpp" line="681"/>
+        <source>Developers in alphabetical order:&lt;br/&gt;%1&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;%2&lt;br/&gt;Additional information:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="755"/>
+        <location filename="../src/main_window.cpp" line="684"/>
+        <source>(project leader)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</source>
+        <translation type="obsolete">Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="760"/>
         <source>Failed to find the help browser (&quot;Qt Assistant&quot;). For Windows, it is available as a separate download. After extracting this archive, copy its contents into the directory containing the Mapper executable, so the Mapper and assistant executables are in the same directory, and try again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1455,7 +1464,7 @@ Noを押して形式を変更します。</translation>
         <translation type="obsolete">Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For patches, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="737"/>
+        <location filename="../src/main_window.cpp" line="742"/>
         <source>Failed to locate the help files.</source>
         <translation>ヘルプファイルを探すのに失敗しました。</translation>
     </message>
@@ -1477,7 +1486,7 @@ Noを押して形式を変更します。</translation>
         <translation type="obsolete">デベロッパ(アルファベット順):&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For patches, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Aivars Zogla</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="689"/>
+        <location filename="../src/main_window.cpp" line="694"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -3115,204 +3124,204 @@ for writing.</source>
 を書き込むことができません。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="97"/>
+        <location filename="../src/file_format_ocad8.cpp" line="105"/>
         <source>Could not open file: libocad returned %1</source>
         <translation>ファイルを開くことができません: libocadが %1 を返しました</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="100"/>
+        <location filename="../src/file_format_ocad8.cpp" line="108"/>
         <source>OCAD files of version %1 cannot be loaded!</source>
         <translation>OCAD %1 のファイルは読み込むことができません！</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="195"/>
+        <location filename="../src/file_format_ocad8.cpp" line="203"/>
         <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
         <translation>記号 &quot;%3&quot; をインポートできません (%1.%2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="208"/>
+        <location filename="../src/file_format_ocad8.cpp" line="216"/>
         <source>OCAD import layer</source>
         <translation>OCADインポートレイヤー</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="346"/>
+        <location filename="../src/file_format_ocad8.cpp" line="354"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
         <translation>破線のライン記号 %1 で、三角のキャップの長さが、始点と終点で異なっています (%2 と %3)。%4 を使用してください。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="363"/>
+        <location filename="../src/file_format_ocad8.cpp" line="371"/>
         <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
         <translation>破線のライン記号 %1 で、末端の長さを正しくインポートできません。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="365"/>
+        <location filename="../src/file_format_ocad8.cpp" line="373"/>
         <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
         <translation>破線のライン記号 %1 で、末端のギャップを正しくインポートできません。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="374"/>
+        <location filename="../src/file_format_ocad8.cpp" line="382"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
         <translation>破線のライン記号 %1 で、本体と末端の長さが異なっています (%2 と %3)。%4 を使用してください。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="384"/>
+        <location filename="../src/file_format_ocad8.cpp" line="392"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
         <translation>破線のライン記号 %1 で、キャップ D と E が異なっています (%2 と %3)。%4 を使用してください。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="431"/>
+        <location filename="../src/file_format_ocad8.cpp" line="439"/>
         <source>In symbol %1, left and right borders are different colors (%2 and %3). Using %4.</source>
         <translation>記号 %1 で、左右の輪郭線の色が異なっています(%2 と %3)。%4 を使用してください。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="439"/>
+        <location filename="../src/file_format_ocad8.cpp" line="447"/>
         <source>In symbol %1, left and right borders are different width (%2 and %3). Using %4.</source>
         <translation>記号 %1 で、左右の輪郭線の幅が異なっています(%2 と %3)。%4 を使用してください。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="453"/>
+        <location filename="../src/file_format_ocad8.cpp" line="461"/>
         <source>In line symbol %1, ignoring that only the left border line should be dashed</source>
         <translation>ライン記号 %1 で、左の輪郭線のみが破線になっているのを無視します</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1198"/>
-        <location filename="../src/file_format_ocad8.cpp" line="481"/>
+        <location filename="../src/file_format_ocad8.cpp" line="489"/>
         <source>Dash symbol</source>
         <translation>ダッシュ記号</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1186"/>
-        <location filename="../src/file_format_ocad8.cpp" line="487"/>
+        <location filename="../src/file_format_ocad8.cpp" line="495"/>
         <source>Start symbol</source>
         <translation>始点の記号</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="503"/>
+        <location filename="../src/file_format_ocad8.cpp" line="511"/>
         <source>In symbol %1, ignoring framing line.</source>
         <translation>記号 %1 で、フレーミングラインを無視します。</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="632"/>
+        <location filename="../src/file_format_ocad8.cpp" line="640"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
         <translation>テキスト記号 %1 をインポートする際、テキストの均等割付 (justified alignment) を無視します</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="638"/>
+        <location filename="../src/file_format_ocad8.cpp" line="646"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
         <translation>テキスト記号 %1 をインポートする際、文字の太さ (weight) を無視します (%2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="643"/>
+        <location filename="../src/file_format_ocad8.cpp" line="651"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation>テキスト記号 %1 をインポートする際、カスタムの文字間隔が設定されていますが、この実装はまだ OCAD の動作と一致しません</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="648"/>
+        <location filename="../src/file_format_ocad8.cpp" line="656"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
         <translation>テキスト記号 %1 をインポートする際、カスタムの単語間隔 (%2%) を無視します</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="653"/>
+        <location filename="../src/file_format_ocad8.cpp" line="661"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
         <translation>テキスト記号 %1 をインポートする際、カスタムの字下げ (%2/%3) を無視します</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="674"/>
+        <location filename="../src/file_format_ocad8.cpp" line="682"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
         <translation>テキスト記号 %1 をインポートする際、テキストフレーム (モード %2) を無視します</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="826"/>
+        <location filename="../src/file_format_ocad8.cpp" line="834"/>
         <source>Unable to load object</source>
         <translation>オブジェクトを読み込むことができません</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="833"/>
+        <location filename="../src/file_format_ocad8.cpp" line="841"/>
         <source>Unable to import rectangle object</source>
         <translation>矩形オブジェクトを読み込むことができません</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1273"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1281"/>
         <source>Color id not found: %1, ignoring this color</source>
         <translation>色 ID が見つかりませんでした %1 。この色を無視します</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1305"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1313"/>
         <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1309"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1317"/>
         <source>Could not create new file: libocad returned %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1554"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1562"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1770"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1778"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1794"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1802"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1805"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1813"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1908"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1916"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1958"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1966"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1997"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2005"/>
         <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2004"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2012"/>
         <source>In text symbol %1: ignoring underlining</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2006"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2014"/>
         <source>In text symbol %1: ignoring kerning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2359"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2367"/>
         <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="881"/>
+        <location filename="../src/file_format_ocad8.cpp" line="889"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1059"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1067"/>
         <source>Unable to import template: %1</source>
         <translation>テンプレートをインポートすることができません: %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1085"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1093"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1174"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1182"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation type="unfinished"></translation>
     </message>

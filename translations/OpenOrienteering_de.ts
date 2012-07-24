@@ -1278,8 +1278,8 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
     <message>
         <location filename="../src/main_window.cpp" line="483"/>
         <location filename="../src/main_window.cpp" line="603"/>
-        <location filename="../src/main_window.cpp" line="737"/>
-        <location filename="../src/main_window.cpp" line="755"/>
+        <location filename="../src/main_window.cpp" line="742"/>
+        <location filename="../src/main_window.cpp" line="760"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
@@ -1337,7 +1337,7 @@ Unbekanntes Dateiformat.</translation>
     <message>
         <location filename="../src/main_window.cpp" line="143"/>
         <source>Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="149"/>
@@ -1424,17 +1424,30 @@ Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
         <translation>Dieses Programm benutzt die &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; von Frank Warmerdam.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="678"/>
-        <source>Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</source>
-        <translation>Entwickler in alphabetischer Reihenfolge:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (Projektleiter)&lt;br/&gt;&lt;br/&gt;Dank für Beiträge an:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Weitere Informationen:</translation>
+        <location filename="../src/main_window.cpp" line="681"/>
+        <source>Developers in alphabetical order:&lt;br/&gt;%1&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;%2&lt;br/&gt;Additional information:</source>
+        <translation>Entwickler in alphabetischer Reihenfolge:&lt;br/&gt;%1&lt;br/&gt;Dank für Beiträge an:&lt;br/&gt;%2&lt;br/&gt;Weitere Informationen:</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="737"/>
+        <location filename="../src/main_window.cpp" line="684"/>
+        <source>(project leader)</source>
+        <translation type="unfinished">(Projektleiter)</translation>
+    </message>
+    <message>
+        <source>project leader</source>
+        <translation type="obsolete">Projektleiter</translation>
+    </message>
+    <message>
+        <source>Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</source>
+        <translation type="obsolete">Entwickler in alphabetischer Reihenfolge:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (Projektleiter)&lt;br/&gt;&lt;br/&gt;Dank für Beiträge an:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Weitere Informationen:</translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="742"/>
         <source>Failed to locate the help files.</source>
         <translation>Die Hilfedateien konnten nicht gefunden werden.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="755"/>
+        <location filename="../src/main_window.cpp" line="760"/>
         <source>Failed to find the help browser (&quot;Qt Assistant&quot;). For Windows, it is available as a separate download. After extracting this archive, copy its contents into the directory containing the Mapper executable, so the Mapper and assistant executables are in the same directory, and try again.</source>
         <translation>Das Handbuchprogramm (&quot;Qt Assistant&quot;) konnte nicht gefunden werden. Für Windows ist es als separater Download verfügbar. Kopieren Sie nach dem Entpacken des Archivs dessen Inhalt in das Verzeichnis, welches Mapper.exe enthält, so dass assistant.exe und Mapper.exe im selben Vezeichnis sind, und versuchen Sie es erneut.</translation>
     </message>
@@ -1483,7 +1496,7 @@ Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
         <translation type="obsolete">Entwickler in alphabetischer Reihenfolge:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (Projektleiter)&lt;br/&gt;&lt;br/&gt;Danke für Patches an:&lt;br/&gt;Jon Cundill&lt;br/&gt;Aivars Zogla</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="689"/>
+        <location filename="../src/main_window.cpp" line="694"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -3212,161 +3225,161 @@ for writing.</source>
 Kann Datei nicht zum Schreiben öffnen.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="97"/>
+        <location filename="../src/file_format_ocad8.cpp" line="105"/>
         <source>Could not open file: libocad returned %1</source>
         <translation>Kann Datei nicht öffnen:
 libocad-Fehler %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="100"/>
+        <location filename="../src/file_format_ocad8.cpp" line="108"/>
         <source>OCAD files of version %1 cannot be loaded!</source>
         <translation>OCAD-Dateien der Version %1 können nicht geladen werden!</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="195"/>
+        <location filename="../src/file_format_ocad8.cpp" line="203"/>
         <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
         <translation>Kann Symbol %1.%2 &quot;%3&quot; nicht importieren</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="208"/>
+        <location filename="../src/file_format_ocad8.cpp" line="216"/>
         <source>OCAD import layer</source>
         <translation>OCAD-Import-Ebene</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="346"/>
+        <location filename="../src/file_format_ocad8.cpp" line="354"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
         <translation>Im gestrichelten Liniensymbol %1 sind die Längen für die spitzen Enden am Anfang und Ende verschieden (%2 and %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="363"/>
+        <location filename="../src/file_format_ocad8.cpp" line="371"/>
         <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
         <translation>Die Länge des Endstücks des gestrichelten Liniensymbols %1 kann nicht korrekt importiert werden.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="365"/>
+        <location filename="../src/file_format_ocad8.cpp" line="373"/>
         <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
         <translation>Die Länge der Endunterbrechung des gestrichelten Liniensymbols %1 kann nicht korrekt importiert werden.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="374"/>
+        <location filename="../src/file_format_ocad8.cpp" line="382"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
         <translation>Im gestrichelten Liniensymbol %1 sind die Haupt- und Endlänge verschieden (%2 and %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="384"/>
+        <location filename="../src/file_format_ocad8.cpp" line="392"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
         <translation>Im gestrichelten Liniensymbol %1 sind die Unterbrüche D und E verschieden (%2 and %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="431"/>
+        <location filename="../src/file_format_ocad8.cpp" line="439"/>
         <source>In symbol %1, left and right borders are different colors (%2 and %3). Using %4.</source>
         <translation>Bei Symbol %1 haben linker und rechter Rand verschiedene Farben (%2 bzw. %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="439"/>
+        <location filename="../src/file_format_ocad8.cpp" line="447"/>
         <source>In symbol %1, left and right borders are different width (%2 and %3). Using %4.</source>
         <translation>Bei Symbol %1 haben linker und rechter Rand verschiedene Breiten (%2 bzw. %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="453"/>
+        <location filename="../src/file_format_ocad8.cpp" line="461"/>
         <source>In line symbol %1, ignoring that only the left border line should be dashed</source>
         <translation>Ignoriere, dass bei Symbol %1 nur die linke Randlinie gestrichelt sein soll</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1198"/>
-        <location filename="../src/file_format_ocad8.cpp" line="481"/>
+        <location filename="../src/file_format_ocad8.cpp" line="489"/>
         <source>Dash symbol</source>
         <translation>Strichelungssymbol</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1186"/>
-        <location filename="../src/file_format_ocad8.cpp" line="487"/>
+        <location filename="../src/file_format_ocad8.cpp" line="495"/>
         <source>Start symbol</source>
         <translation>Anfangssymbol</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="503"/>
+        <location filename="../src/file_format_ocad8.cpp" line="511"/>
         <source>In symbol %1, ignoring framing line.</source>
         <translation>Ignoriere Rahmen bei Symbol %1.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="632"/>
+        <location filename="../src/file_format_ocad8.cpp" line="640"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
         <translation>Ignoriere Ausrichtung bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="638"/>
+        <location filename="../src/file_format_ocad8.cpp" line="646"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
         <translation>Ignoriere Höhe (%2) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="643"/>
+        <location filename="../src/file_format_ocad8.cpp" line="651"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation>Vom Original abweichende Zeichenabstände bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1273"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1281"/>
         <source>Color id not found: %1, ignoring this color</source>
         <translation>Farb-ID nicht gefunden: %1, ignoriere diese Farbe</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1305"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1313"/>
         <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
         <translation>Die Karte enthält mehr als 256 Farben, was von der ocd-Version 8 nicht unterstützt wird.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1309"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1317"/>
         <source>Could not create new file: libocad returned %1</source>
         <translation>Kann Datei nicht erstellen:
 libocad-Fehler %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1554"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1562"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
         <translation>Kann Vorlage nicht exportieren: der Dateityp von &quot;%1&quot; wird noch nicht unterstützt</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1770"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1778"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation>Im Liniensymbol &quot;%1&quot; kann die Kombination der Linienenden/ecken nicht repräsentiert werden.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1794"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1802"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
         <translation>Im Liniensymbol &quot;%1&quot; wird die Gruppierung der Strichelungen verworfen.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1805"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1813"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
         <translation>Im Liniensymbol &quot;%1&quot; wird die Anzahl der Striche in einer Gruppe auf 2 reduziert.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1908"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1916"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
         <translation>Im Flächensymbol &quot;%1&quot; wird ein Füllmuster verworfen.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1958"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1966"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
         <translation>Im Flächensymbol &quot;%1&quot; wird ein Punktmuster mit gegeneinander versetzten Reihen angenommen. Dies könnte stimmen, aber auch falsch sein.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1997"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2005"/>
         <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation>Im Textsymbol &quot;%1&quot; ist der Zeichenabstand geändert. Dies wird von diesem Programm und OCAD verschieden interpretiert</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2004"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2012"/>
         <source>In text symbol %1: ignoring underlining</source>
         <translation>Im Textsymbol &quot;%1&quot; wird das Unterstreichen verworfen</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2006"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2014"/>
         <source>In text symbol %1: ignoring kerning</source>
         <translation>Im Textsymbol &quot;%1&quot; wird das Kerning verworfen</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2359"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2367"/>
         <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
         <translation>Zeichenkette verkürzt (Abbruchstelle mit drei &apos;|&apos; markiert): %1</translation>
     </message>
@@ -3379,7 +3392,7 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ignoriere Zeichenabstand (%2%) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="648"/>
+        <location filename="../src/file_format_ocad8.cpp" line="656"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
         <translation>Ignoriere Wordabstand (%2%) bei Textsymbol %1</translation>
     </message>
@@ -3388,7 +3401,7 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ignoriere Absatzabstand (%2%) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="653"/>
+        <location filename="../src/file_format_ocad8.cpp" line="661"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
         <translation>Ignoriere Enrückung (%2/%3) bei Textsymbol %1</translation>
     </message>
@@ -3397,17 +3410,17 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ignoriere Tabulatorweiten bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="674"/>
+        <location filename="../src/file_format_ocad8.cpp" line="682"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
         <translation>Ignoriere Textrahmen (Modus %2) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="826"/>
+        <location filename="../src/file_format_ocad8.cpp" line="834"/>
         <source>Unable to load object</source>
         <translation>Kann Objekt nicht Laden</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="833"/>
+        <location filename="../src/file_format_ocad8.cpp" line="841"/>
         <source>Unable to import rectangle object</source>
         <translation>Kann Rechtecksobjekt nicht importieren</translation>
     </message>
@@ -3416,12 +3429,12 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ein Objekt mit dem nach Norden ausgerichteten Symbol &apos;%1&apos; ist gedreht. Ignoriere die Drehung</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="881"/>
+        <location filename="../src/file_format_ocad8.cpp" line="889"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation>Textsymbol nicht importiert: Konnte Pfad nicht ermitteln (npts=%1): %2</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1059"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1067"/>
         <source>Unable to import template: %1</source>
         <translation>Kann Vorlage nicht importieren: %1</translation>
     </message>
@@ -3430,12 +3443,12 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ignoriere Vorlage vom Typ %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1085"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1093"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
         <translation>Kann Vorlage nicht importieren: Hintegrund &quot;%1&quot; scheint kein Rasterbild zu sein</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1174"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1182"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation>Versuch, ein Textobjekt mit unbekanntem Koordinatenformat zu importieren</translation>
     </message>

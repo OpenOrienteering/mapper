@@ -1197,8 +1197,8 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/main_window.cpp" line="483"/>
         <location filename="../src/main_window.cpp" line="603"/>
-        <location filename="../src/main_window.cpp" line="737"/>
-        <location filename="../src/main_window.cpp" line="755"/>
+        <location filename="../src/main_window.cpp" line="742"/>
+        <location filename="../src/main_window.cpp" line="760"/>
         <source>Error</source>
         <translation>Помилка</translation>
     </message>
@@ -1266,12 +1266,22 @@ Press No to choose a different format.</source>
         <translation>Ця програма використовує &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; від Frank Warmerdam.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="737"/>
+        <location filename="../src/main_window.cpp" line="681"/>
+        <source>Developers in alphabetical order:&lt;br/&gt;%1&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;%2&lt;br/&gt;Additional information:</source>
+        <translation>Розробники у абетковому порядку:&lt;br/&gt;%1&lt;br/&gt;Подяка за сприяння і участь:&lt;br/&gt;%2&lt;br/&gt;Українська локалізація:&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Artem Sokolovsky (boy 5 years of age!)&lt;br/&gt;&lt;br/&gt;Додаткова інформація:</translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="684"/>
+        <source>(project leader)</source>
+        <translation>(лідер проекту)</translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="742"/>
         <source>Failed to locate the help files.</source>
         <translation>Не вдається показати файли довідки.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="755"/>
+        <location filename="../src/main_window.cpp" line="760"/>
         <source>Failed to find the help browser (&quot;Qt Assistant&quot;). For Windows, it is available as a separate download. After extracting this archive, copy its contents into the directory containing the Mapper executable, so the Mapper and assistant executables are in the same directory, and try again.</source>
         <translation>Не вдається знайти переглядач довідки (&quot;Qt Assistant&quot;). Для Windows доступне його завантаження окремо.Після розпакування цього архіву, скопіюйте його вміст до теки з виконуваним файлом Mapper, тобто Mapper.exe та assistant.exe знаходитимуться в одній теці, і спробуйе знову.</translation>
     </message>
@@ -1281,16 +1291,15 @@ Press No to choose a different format.</source>
         <translation>Про %1</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="678"/>
         <source>Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</source>
         <translatorcomment>Ukrianian localisations team: Eugeniy Fedirets together with Artem Sokolovsky.
 Artem Sokolovsky (boy 5 years of age!), who insert more then 30 symbols in this translation file, is nephew of Eugeniy Fedirets.
 Українська команда перекладачів: Євгеній Федірець разом з Артем Соколовський.
 Артем Соколовський (5-річний хлопчик!), котрий увів понад 30 символів у цей файл перекладу, є племінником Євгенія Федірця.</translatorcomment>
-        <translation>Розробники у абетковому порядку:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (лідер проекту)&lt;br/&gt;&lt;br/&gt;Подяка за сприяння і участь:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Українська локалізація:&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Artem Sokolovsky (boy 5 years of age!)&lt;br/&gt;&lt;br/&gt;Додаткова інформація:</translation>
+        <translation type="obsolete">Розробники у абетковому порядку:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (лідер проекту)&lt;br/&gt;&lt;br/&gt;Подяка за сприяння і участь:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Українська локалізація:&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Artem Sokolovsky (boy 5 years of age!)&lt;br/&gt;&lt;br/&gt;Додаткова інформація:</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="689"/>
+        <location filename="../src/main_window.cpp" line="694"/>
         <source>OK</source>
         <translation>Гаразд</translation>
     </message>
@@ -2760,204 +2769,204 @@ zoom using the mouse wheel, if available.</source>
         <translation>Помилка під час завантаження шару %2.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="97"/>
+        <location filename="../src/file_format_ocad8.cpp" line="105"/>
         <source>Could not open file: libocad returned %1</source>
         <translation>Неможливо відкрити файл: libocad повернув %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="100"/>
+        <location filename="../src/file_format_ocad8.cpp" line="108"/>
         <source>OCAD files of version %1 cannot be loaded!</source>
         <translation>OCAD файл версії %1 неможе бути завантажений!</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="195"/>
+        <location filename="../src/file_format_ocad8.cpp" line="203"/>
         <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
         <translation>Неможливо імпортувати символ &quot;%3&quot; (%1.%2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="208"/>
+        <location filename="../src/file_format_ocad8.cpp" line="216"/>
         <source>OCAD import layer</source>
         <translation>Шар імпорту OCAD</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="346"/>
+        <location filename="../src/file_format_ocad8.cpp" line="354"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
         <translation>У символі %1 штрихової лінії, довжина закінчення для початку і кінця різні (%2 and %3). Використовується %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="363"/>
+        <location filename="../src/file_format_ocad8.cpp" line="371"/>
         <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
         <translation>У символі %1 штрихової лінії, кінцева довжина неможе бути корректно імпортована.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="365"/>
+        <location filename="../src/file_format_ocad8.cpp" line="373"/>
         <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
         <translation>У символі %1 штрихової лінії, кінцевий проміжок неможе бути корректно імпортований.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="374"/>
+        <location filename="../src/file_format_ocad8.cpp" line="382"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
         <translation>У символі %1 штрихової лінії, головна і кінцева довжина різні (%2 and %3). Використати %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="384"/>
+        <location filename="../src/file_format_ocad8.cpp" line="392"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
         <translation>У символі %1 штрихової лінії, проміжки D та E різні (%2 and %3). Використати %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="431"/>
+        <location filename="../src/file_format_ocad8.cpp" line="439"/>
         <source>In symbol %1, left and right borders are different colors (%2 and %3). Using %4.</source>
         <translation>У символі %1, ліва і права межа різного кольору (%2 and %3). Використати %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="439"/>
+        <location filename="../src/file_format_ocad8.cpp" line="447"/>
         <source>In symbol %1, left and right borders are different width (%2 and %3). Using %4.</source>
         <translation>У символі %1, ліва і права межа різної товщини (%2 and %3). Використати %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="453"/>
+        <location filename="../src/file_format_ocad8.cpp" line="461"/>
         <source>In line symbol %1, ignoring that only the left border line should be dashed</source>
         <translation>У лінійному символі %1, проігноровано що лише ліва межа лінії має бути штриховою</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1198"/>
-        <location filename="../src/file_format_ocad8.cpp" line="481"/>
+        <location filename="../src/file_format_ocad8.cpp" line="489"/>
         <source>Dash symbol</source>
         <translation>Вузловий символ</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1186"/>
-        <location filename="../src/file_format_ocad8.cpp" line="487"/>
+        <location filename="../src/file_format_ocad8.cpp" line="495"/>
         <source>Start symbol</source>
         <translation>Початковий символ</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="503"/>
+        <location filename="../src/file_format_ocad8.cpp" line="511"/>
         <source>In symbol %1, ignoring framing line.</source>
         <translation>У символі %1,проігноровано обрамлення.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="632"/>
+        <location filename="../src/file_format_ocad8.cpp" line="640"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
         <translation>Під час імпорту текстового символу %1: проігноровано центрування</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="638"/>
+        <location filename="../src/file_format_ocad8.cpp" line="646"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
         <translation>Під час імпорту текстового символу %1: проігноровано користувацький якір (%2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="643"/>
+        <location filename="../src/file_format_ocad8.cpp" line="651"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation>Під час імпорту текстового символу %1: користувацький міжсимвольний інтервал встановлений так, що реалізувати його подібно до OCAD&apos;у поки що неможливо</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="648"/>
+        <location filename="../src/file_format_ocad8.cpp" line="656"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
         <translation>Під час імпорту текстового символу %1: проігноровано користувацький інтервал між словами (%2%)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="653"/>
+        <location filename="../src/file_format_ocad8.cpp" line="661"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
         <translation>Під час імпорту текстового символу %1: проігноровано користувацькі відступи (%2/%3)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="674"/>
+        <location filename="../src/file_format_ocad8.cpp" line="682"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
         <translation>Під час імпорту текстового символу %1: проігноровано обрамлення тексту (значення %2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="826"/>
+        <location filename="../src/file_format_ocad8.cpp" line="834"/>
         <source>Unable to load object</source>
         <translation>Неможливо завантажити об&apos;єкт</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="833"/>
+        <location filename="../src/file_format_ocad8.cpp" line="841"/>
         <source>Unable to import rectangle object</source>
         <translation>Неможливо імпортувати прямокутний об&apos;єкт</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1273"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1281"/>
         <source>Color id not found: %1, ignoring this color</source>
         <translation>Ідентифікатор кольору не знайдено: %1, проігноровано цей колір</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1305"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1313"/>
         <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
         <translation>Мапа містить понад 256 кольорів що  не підтримується форматом ocd версії 8.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1309"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1317"/>
         <source>Could not create new file: libocad returned %1</source>
         <translation>Невдається створити новий файл: libocad вернув значення %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1554"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1562"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
         <translation>Неможливо експортувати шаблон: тип файлу &quot;%1&quot; не підтримується поки що</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1770"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1778"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation>У лінійному символі &quot;%1&quot;, неможливо відобразити комбінацію закінчення/з’єднання.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1794"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1802"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
         <translation>У лінійному символі &quot;%1&quot;, не відтворено групування штрихів.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1805"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1813"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
         <translation>У лінійному символі &quot;%1&quot;, кількість штрихів у групі зменшено в 2 рази.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1908"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1916"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
         <translation>У площинному символі &quot;%1&quot;, пропущено заповнення візерунку.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1958"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1966"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
         <translation>У площинному символі &quot;%1&quot;, виявлено &quot;зміщення рядків&quot; точкового візерунку. Це може бути як добре так і погано.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1997"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2005"/>
         <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation>У тексті %1: встановлений міжсимвольний інтервал так, що це неможливо записати у вигляді OCAD поки що</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2004"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2012"/>
         <source>In text symbol %1: ignoring underlining</source>
         <translation>У тексті %1: ігнорується перекреслювання</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2006"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2014"/>
         <source>In text symbol %1: ignoring kerning</source>
         <translation>У тексті %1: ігнорується кернінг</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2359"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2367"/>
         <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
         <translation>Рядок обрізаний (обрізання позначено з допомогою потрійного &apos;|&apos;): %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="881"/>
+        <location filename="../src/file_format_ocad8.cpp" line="889"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation>Не імпортовано текстовий символ, невдається відобразити зовнішній шлях&apos; (npts=%1): %2</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1059"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1067"/>
         <source>Unable to import template: %1</source>
         <translation>Неможливо імпортувати шаблон: %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1085"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1093"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
         <translation>Неможливо імпортувати шаблон: фон &quot;%1&quot; не являється растровим зображенням</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1174"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1182"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation>Спроба імпортувати текстовий об&apos;єкт з невідомим форматом координат</translation>
     </message>
