@@ -19,18 +19,6 @@
 
 #include "file_format_ocad8.h"
 
-/// FIXME: mempcpy is not portable, should be replaced.
-
-#ifdef __MINGW32__
-extern void *mempcpy (void *dest, const void *src, size_t n);
-#endif
-
-#ifdef __APPLE__
-void* mempcpy(void* dst, const void* src, size_t len) {
-  return (char*)memcpy(dst, src, len) + len;
-}
-#endif
-
 #include <QDebug>
 #include <QDateTime>
 #include <qmath.h>
@@ -2296,7 +2284,7 @@ void OCAD8FileExport::convertPascalString(const QString& text, char* buffer, int
 	QByteArray data = encoding_1byte->fromUnicode(text);
 	int min_size = qMin(text.length(), max_size);
 	*((unsigned char *)buffer) = min_size;
-	mempcpy(buffer + 1, data.data(), min_size);
+	memcpy(buffer + 1, data.data(), min_size);
 }
 
 void OCAD8FileExport::convertCString(const QString& text, unsigned char* buffer, int buffer_size)
@@ -2306,7 +2294,7 @@ void OCAD8FileExport::convertCString(const QString& text, unsigned char* buffer,
 	
 	QByteArray data = encoding_1byte->fromUnicode(text);
 	int min_size = qMin(buffer_size - 1, data.length());
-	mempcpy(buffer, data.data(), min_size);
+	memcpy(buffer, data.data(), min_size);
 	buffer[min_size] = 0;
 }
 
@@ -2331,7 +2319,7 @@ int OCAD8FileExport::convertWideCString(const QString& text, unsigned char* buff
 	delete encoder;
 	
 	int min_size = qMin(buffer_size - 2, data.length());
-	mempcpy(buffer, data.data(), min_size);
+	memcpy(buffer, data.data(), min_size);
 	buffer[min_size] = 0;
 	buffer[min_size + 1] = 0;
 	return min_size + 2;
