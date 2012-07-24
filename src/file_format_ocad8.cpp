@@ -1087,6 +1087,20 @@ Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background
     return NULL;
 }
 
+void OCAD8FileImport::setPathHolePoint(Object *object, int i)
+{
+	// Look for curve start points before the current point and apply hole point only if no such point is there.
+	// This prevents hole points in the middle of a curve caused by incorrect map objects.
+	if (i >= 1 && object->coords[i].isCurveStart())
+		; //object->coords[i-1].setHolePoint(true);
+	else if (i >= 2 && object->coords[i-1].isCurveStart())
+		; //object->coords[i-2].setHolePoint(true);
+	else if (i >= 3 && object->coords[i-2].isCurveStart())
+		; //object->coords[i-3].setHolePoint(true);
+	else
+		object->coords[i].setHolePoint(true);
+}
+
 /** Translates the OCAD path given in the last two arguments into an Object.
  */
 void OCAD8FileImport::fillPathCoords(Object *object, bool is_area, s16 npts, OCADPoint *pts)
@@ -1101,15 +1115,12 @@ void OCAD8FileImport::fillPathCoords(Object *object, bool is_area, s16 npts, OCA
         // We can support CurveStart, HolePoint, DashPoint.
         // CurveStart needs to be applied to the main point though, not the control point, and
 		// hole points need to bet set as the last point of a part of an area object instead of the first point of the next part
-        if (buf[2] & PX_CTL1 && i > 0) object->coords[i-1].setCurveStart(true);
-		if ((buf[2] & (PY_DASH << 8)) || (buf[2] & (PY_CORNER << 8))) coord.setDashPoint(true);
-        if (buf[2] & (PY_HOLE << 8))
-		{
-			if (is_area)
-				object->coords[i-1].setHolePoint(true);
-			else
-				coord.setHolePoint(true);
-		}
+		if (buf[2] & PX_CTL1 && i > 0)
+			object->coords[i-1].setCurveStart(true);
+		if ((buf[2] & (PY_DASH << 8)) || (buf[2] & (PY_CORNER << 8)))
+			coord.setDashPoint(true);
+		if (buf[2] & (PY_HOLE << 8))
+			setPathHolePoint(object, is_area ? (i - 1) : i);
     }
     
     // For path objects, create closed parts where the position of the last point is equal to that of the first point

@@ -100,6 +100,7 @@ protected:
     // Some helper functions that are used in multiple places
     PointSymbol *importPattern(s16 npts, OCADPoint *pts);
     void fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol);
+	void setPathHolePoint(Object *object, int i);
     void fillPathCoords(Object *object, bool is_area, s16 npts, OCADPoint *pts);
 	bool fillTextPathCoords(TextObject *object, TextSymbol *symbol, s16 npts, OCADPoint *pts);
 
