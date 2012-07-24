@@ -19,18 +19,6 @@
 
 #include "file_format_ocad8.h"
 
-/// FIXME: mempcpy is not portable, should be replaced.
-
-#ifdef __MINGW32__
-extern void *mempcpy (void *dest, const void *src, size_t n);
-#endif
-
-#ifdef __APPLE__
-void* mempcpy(void* dst, const void* src, size_t len) {
-  return (char*)memcpy(dst, src, len) + len;
-}
-#endif
-
 #include <QDebug>
 #include <QDateTime>
 #include <qmath.h>
@@ -1095,6 +1083,20 @@ Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background
     return NULL;
 }
 
+void OCAD8FileImport::setPathHolePoint(Object *object, int i)
+{
+	// Look for curve start points before the current point and apply hole point only if no such point is there.
+	// This prevents hole points in the middle of a curve caused by incorrect map objects.
+	if (i >= 1 && object->coords[i].isCurveStart())
+		; //object->coords[i-1].setHolePoint(true);
+	else if (i >= 2 && object->coords[i-1].isCurveStart())
+		; //object->coords[i-2].setHolePoint(true);
+	else if (i >= 3 && object->coords[i-2].isCurveStart())
+		; //object->coords[i-3].setHolePoint(true);
+	else
+		object->coords[i].setHolePoint(true);
+}
+
 /** Translates the OCAD path given in the last two arguments into an Object.
  */
 void OCAD8FileImport::fillPathCoords(Object *object, bool is_area, s16 npts, OCADPoint *pts)
@@ -1109,15 +1111,12 @@ void OCAD8FileImport::fillPathCoords(Object *object, bool is_area, s16 npts, OCA
         // We can support CurveStart, HolePoint, DashPoint.
         // CurveStart needs to be applied to the main point though, not the control point, and
 		// hole points need to bet set as the last point of a part of an area object instead of the first point of the next part
-        if (buf[2] & PX_CTL1 && i > 0) object->coords[i-1].setCurveStart(true);
-		if ((buf[2] & (PY_DASH << 8)) || (buf[2] & (PY_CORNER << 8))) coord.setDashPoint(true);
-        if (buf[2] & (PY_HOLE << 8))
-		{
-			if (is_area)
-				object->coords[i-1].setHolePoint(true);
-			else
-				coord.setHolePoint(true);
-		}
+		if (buf[2] & PX_CTL1 && i > 0)
+			object->coords[i-1].setCurveStart(true);
+		if ((buf[2] & (PY_DASH << 8)) || (buf[2] & (PY_CORNER << 8)))
+			coord.setDashPoint(true);
+		if (buf[2] & (PY_HOLE << 8))
+			setPathHolePoint(object, is_area ? (i - 1) : i);
     }
     
     // For path objects, create closed parts where the position of the last point is equal to that of the first point
@@ -2285,7 +2284,7 @@ void OCAD8FileExport::convertPascalString(const QString& text, char* buffer, int
 	QByteArray data = encoding_1byte->fromUnicode(text);
 	int min_size = qMin(text.length(), max_size);
 	*((unsigned char *)buffer) = min_size;
-	mempcpy(buffer + 1, data.data(), min_size);
+	memcpy(buffer + 1, data.data(), min_size);
 }
 
 void OCAD8FileExport::convertCString(const QString& text, unsigned char* buffer, int buffer_size)
@@ -2295,7 +2294,7 @@ void OCAD8FileExport::convertCString(const QString& text, unsigned char* buffer,
 	
 	QByteArray data = encoding_1byte->fromUnicode(text);
 	int min_size = qMin(buffer_size - 1, data.length());
-	mempcpy(buffer, data.data(), min_size);
+	memcpy(buffer, data.data(), min_size);
 	buffer[min_size] = 0;
 }
 
@@ -2320,7 +2319,7 @@ int OCAD8FileExport::convertWideCString(const QString& text, unsigned char* buff
 	delete encoder;
 	
 	int min_size = qMin(buffer_size - 2, data.length());
-	mempcpy(buffer, data.data(), min_size);
+	memcpy(buffer, data.data(), min_size);
 	buffer[min_size] = 0;
 	buffer[min_size + 1] = 0;
 	return min_size + 2;

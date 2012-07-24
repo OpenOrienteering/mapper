@@ -591,7 +591,7 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 	out_coords.reserve(4 * coords.size());
 	
 	//bool dash_point_before = false;
-	float cur_length = 0;
+	double cur_length = 0;
 	float old_length = 0;	// length from line part(s) before dash point(s) which is not accounted for yet
 	int first_line_coord = 0;
 	int cur_line_coord = 1;
