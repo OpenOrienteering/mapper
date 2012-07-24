@@ -315,4 +315,7 @@ target_link_libraries(Mapper
  ${PROJ_LIBRARY}
 )
 
+# FIXME: Packaging for MacOSX needs review on a MacOSX machine
+if(NOT APPLE)
 include(CPackaging.cmake)
+endif()
