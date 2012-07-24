@@ -233,6 +233,7 @@ qt4_wrap_cpp(Mapper_MOC ${Mapper_MOC_INPUT})
 set(Mapper_TRANS
  translations/OpenOrienteering_de.ts
  translations/OpenOrienteering_ja.ts
+ translations/OpenOrienteering_nb.ts
  translations/OpenOrienteering_sv.ts
  translations/OpenOrienteering_uk.ts
 )
@@ -314,4 +315,7 @@ target_link_libraries(Mapper
  ${PROJ_LIBRARY}
 )
 
+# FIXME: Packaging for MacOSX needs review on a MacOSX machine
+if(NOT APPLE)
 include(CPackaging.cmake)
+endif()

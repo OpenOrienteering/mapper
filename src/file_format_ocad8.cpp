@@ -19,8 +19,16 @@
 
 #include "file_format_ocad8.h"
 
+/// FIXME: mempcpy is not portable, should be replaced.
+
 #ifdef __MINGW32__
 extern void *mempcpy (void *dest, const void *src, size_t n);
+#endif
+
+#ifdef __APPLE__
+void* mempcpy(void* dst, const void* src, size_t len) {
+  return (char*)memcpy(dst, src, len) + len;
+}
 #endif
 
 #include <QDebug>
