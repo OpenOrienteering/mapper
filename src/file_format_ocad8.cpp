@@ -2313,8 +2313,14 @@ int OCAD8FileExport::convertWideCString(const QString& text, unsigned char* buff
 	if (2 * (exported_text.length() + 1) > buffer_size)
 		addStringTruncationWarning(exported_text, buffer_size - 1);
 	
+#if QT_VERSION >= 0x040700
 	// Do not add a byte order mark by using QTextCodec::IgnoreHeader
 	QTextEncoder* encoder = encoding_2byte->makeEncoder(QTextCodec::IgnoreHeader);
+#else
+	QTextEncoder* encoder = encoding_2byte->makeEncoder();
+	// Create but ignore the initial byte order mark
+	encoder->fromUnicode("");
+#endif
 	QByteArray data = encoder->fromUnicode(exported_text);
 	delete encoder;
 	
