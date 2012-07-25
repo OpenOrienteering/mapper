@@ -36,6 +36,10 @@ set(CLIPPER_FILES
   cpp/clipper.cpp
   cpp/clipper.hpp
 )
+if(NOT CMAKE_CURRENT_LIST_DIR)
+       # CMAKE_CURRENT_LIST_DIR is not available before cmake 2.8.3
+       get_filename_component(CMAKE_CURRENT_LIST_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+endif()
 set(CLIPPER_DIR "${CMAKE_CURRENT_LIST_DIR}/clipper")
 
 foreach(CLIPPER_FILE ${CLIPPER_FILES})

@@ -18,6 +18,11 @@
  
 set(PROJ_LIBRARY "proj")
 
+if(NOT CMAKE_CURRENT_LIST_DIR)
+       # CMAKE_CURRENT_LIST_DIR is not available before cmake 2.8.3
+       get_filename_component(CMAKE_CURRENT_LIST_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+endif()
+
 if(WIN32)
 	if(NOT PROJ_VERSION)
 		set(PROJ_VERSION 4.8.0 CACHE STRING
