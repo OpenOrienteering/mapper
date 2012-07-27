@@ -274,7 +274,7 @@ qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
 set(Mapper_HELP_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/help)
 set(Mapper_HELP_COLLECTION ${Mapper_HELP_DIR}/oomaphelpcollection.qhc)
-file(GLOB Mapper_HELP_CONTENTS 
+file(GLOB Mapper_HELP_FILES 
   ${CMAKE_CURRENT_SOURCE_DIR}/images
   ${CMAKE_CURRENT_SOURCE_DIR}/help/html_en 
   ${CMAKE_CURRENT_SOURCE_DIR}/help/html_en/images
