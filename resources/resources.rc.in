@@ -1,0 +1,49 @@
+/*
+ *    Copyright 2012 Thomas Schöps, Kai Pastor
+ *    
+ *    This file is part of OpenOrienteering.
+ * 
+ *    OpenOrienteering is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ * 
+ *    OpenOrienteering is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ * 
+ *    You should have received a copy of the GNU General Public License
+ *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+ // Do not edit resources.rc! Edit resources.rc.in instead.
+
+ // Cf. http://msdn.microsoft.com/en-us/library/aa381058%28v=vs.85%29
+
+IDI_ICON1 ICON "control.ico"
+
+1 VERSIONINFO
+FILEVERSION    @Mapper_VERSION_MAJOR@,@Mapper_VERSION_MINOR@,@Mapper_VERSION_PATCH@,0
+PRODUCTVERSION @Mapper_VERSION_MAJOR@,@Mapper_VERSION_MINOR@,@Mapper_VERSION_PATCH@,0
+BEGIN
+	BLOCK "StringFileInfo"
+	BEGIN
+		BLOCK "080904E4"
+		BEGIN
+			VALUE "CompanyName", "OpenOrienteering Developers"
+			VALUE "FileDescription", "Map drawing program from OpenOrienteering"
+			VALUE "FileVersion", "@Mapper_VERSION_MAJOR@.@Mapper_VERSION_MINOR@.@Mapper_VERSION_PATCH@ @CMAKE_BUILD_TYPE@"
+			VALUE "InternalName", "Mapper"
+			VALUE "LegalCopyright", "(C) 2012 OpenOrienteering Developers"
+			VALUE "OriginalFilename", "Mapper.exe"
+			VALUE "ProductName", "OpenOrienteering Mapper"
+			VALUE "ProductVersion", "@Mapper_VERSION_MAJOR@.@Mapper_VERSION_MINOR@.@Mapper_VERSION_PATCH@ @CMAKE_BUILD_TYPE@"
+		END
+	END
+
+	BLOCK "VarFileInfo"
+	BEGIN
+    	VALUE "Translation", 0x809, 1252
+	END
+END

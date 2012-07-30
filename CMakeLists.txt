@@ -318,10 +318,9 @@ if(MINGW)
 	if(NOT CMAKE_RC_COMPILER)
 		set(CMAKE_RC_COMPILER windres)
 	endif()
-	add_custom_command( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/resources.o
-			COMMAND ${CMAKE_RC_COMPILER} -I${CMAKE_SOURCE_DIR} -i${CMAKE_SOURCE_DIR}/resources/resources.rc
-			-o ${CMAKE_CURRENT_BINARY_DIR}/resources.o )
-	set(Mapper_SRCS ${Mapper_SRCS} ${CMAKE_CURRENT_BINARY_DIR}/resources.o)
+	enable_language(RC)
+	configure_file(resources/resources.rc.in ${CMAKE_CURRENT_SOURCE_DIR}/resources/resources.rc)
+	list(APPEND Mapper_SRCS resources/resources.rc)
 endif(MINGW)
 
 add_executable(Mapper
