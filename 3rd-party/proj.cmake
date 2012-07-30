@@ -72,4 +72,6 @@ if(WIN32)
 		)
 		add_dependencies(COPY_PROJ_DLL proj_external )
 	endif(EXISTS "${PROJ_MSYS_BASH}")
+
+	list(APPEND CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS "${PROJ_DIR}/bin/libproj-0.dll")
 endif(WIN32)

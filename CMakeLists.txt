@@ -57,6 +57,28 @@ configure_file(src/global.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/global.h)
 find_package(Qt4 4.6 REQUIRED QtCore QtGui QtNetwork QtXml)
 include(${QT_USE_FILE})
 
+if(CMAKE_CROSSCOMPILING)
+	message("-- Crosscompiling, host: ${CMAKE_HOST_SYSTEM_NAME}, target: ${CMAKE_SYSTEM_NAME}")
+
+	# use host system Qt4 tools when cross-compiling
+	find_program(QT_LUPDATE_EXECUTABLE lupdate)
+	find_program(QT_LRELEASE_EXECUTABLE lrelease)
+	find_program(QT_QCOLLECTIONGENERATOR_EXECUTABLE qcollectiongenerator)
+endif()
+
+if(QT_LUPDATE_EXECUTABLE MATCHES NOTFOUND)
+	message(WARNING "lupdate executable not found. "
+	  "You will not be able to update the translations from the source code.")
+endif()
+
+if(QT_LRELEASE_EXECUTABLE MATCHES NOTFOUND)
+	message(FATAL_ERROR "lrelease executable not found.")
+endif()
+
+if(QT_QCOLLECTIONGENERATOR_EXECUTABLE MATCHES NOTFOUND)
+	message(FATAL_ERROR "qcollectiongenerator executable not found.")
+endif()
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 include(3rd-party/clipper.cmake)
@@ -293,9 +315,11 @@ add_custom_target(Mapper_help
 
 if(MINGW)
 	# resource compilation for MinGW
-	set(CMAKE_WINDRES windres)
+	if(NOT CMAKE_RC_COMPILER)
+		set(CMAKE_RC_COMPILER windres)
+	endif()
 	add_custom_command( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/resources.o
-			COMMAND ${CMAKE_WINDRES} -I${CMAKE_SOURCE_DIR} -i${CMAKE_SOURCE_DIR}/resources/resources.rc
+			COMMAND ${CMAKE_RC_COMPILER} -I${CMAKE_SOURCE_DIR} -i${CMAKE_SOURCE_DIR}/resources/resources.rc
 			-o ${CMAKE_CURRENT_BINARY_DIR}/resources.o )
 	set(Mapper_SRCS ${Mapper_SRCS} ${CMAKE_CURRENT_BINARY_DIR}/resources.o)
 endif(MINGW)

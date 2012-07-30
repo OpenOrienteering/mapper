@@ -139,52 +139,65 @@ install(
   DESTINATION "${MAPPER_DATA_DESTINATION}/help")
 
 if(WIN32)
-	set(MAPPER_LIBS QtCore4 QtGui4 QtNetwork4 QtXml4 CACHE INTERNAL
-	  "Qt-related libraries which need to be deployed to the package")
+	message("-- Checking system files needed for Windows packaging")
+
+	set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP TRUE)
+	include(InstallRequiredSystemLibraries)
+
+	set(MAPPER_LIBS ${PROJ_LIBRARY}-0 QtCore4 QtGui4 QtNetwork4 QtXml4 CACHE INTERNAL
+	  "The libraries which need to be deployed to the package")
 	if(MINGW)
 		list(APPEND MAPPER_LIBS libgcc_s_dw2-1 mingwm10)
 	endif(MINGW)
-		
-	set(MAPPER_LIB_FILES "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/libproj-0.dll" CACHE INTERNAL
-	  "The Proj.4 library which needs to be deployed to the package")
-	foreach(MAPPER_LIBRARY ${MAPPER_LIBS})
-		unset(MAPPER_LIBRARY_PATH CACHE)
-		find_library(MAPPER_LIBRARY_PATH ${MAPPER_LIBRARY})
-		if(NOT MAPPER_LIBRARY_PATH)
-			message(FATAL_ERROR "Library not found: ${MAPPER_LIBRARY}")
-		endif(NOT MAPPER_LIBRARY_PATH)
-		list(APPEND MAPPER_LIB_FILES "${MAPPER_LIBRARY_PATH}")
-	endforeach(MAPPER_LIBRARY)
-	unset(MAPPER_LIBRARY_PATH CACHE)
+	foreach(_mapper_lib ${MAPPER_LIBS})
+		unset(_mapper_lib_path CACHE)
+		find_library(_mapper_lib_path ${_mapper_lib})
+		get_filename_component(_mapper_lib_ext "${_mapper_lib_path}" EXT)
+		if(_mapper_lib_ext STREQUAL ".dll")
+			message("   ${_mapper_lib} DLL - found")
+			list(APPEND CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS "${_mapper_lib_path}")
+		else()
+			message("   ${_mapper_lib} DLL - not found")
+		endif()
+	endforeach(_mapper_lib)
+	unset(_mapper_lib_path CACHE)
 	install(
-	  FILES ${MAPPER_LIB_FILES} 
+	  FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} 
 	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
 	
 	unset(MAPPER_QT_PLUGINS CACHE)
-	foreach(MAPPER_IMAGEFORMAT qgif4 qjpeg4 qmng4 qsvg4 qtga4 qtiff4)
-		unset(MAPPER_PLUGIN_PATH CACHE)
-		find_library(MAPPER_PLUGIN_PATH ${MAPPER_IMAGEFORMAT} PATH_SUFFIXES ../plugins/imageformats)
-		if(NOT MAPPER_PLUGIN_PATH)
-			message(FATAL_ERROR "Plugin not found: ${MAPPER_IMAGEFORMAT}")
-		endif(NOT MAPPER_PLUGIN_PATH)
-		list(APPEND MAPPER_QT_PLUGINS "${MAPPER_PLUGIN_PATH}")
-	endforeach(MAPPER_IMAGEFORMAT)
-	unset(MAPPER_PLUGIN_PATH CACHE)
+	foreach(_qt_imageformat qgif4 qjpeg4 qmng4 qsvg4 qtga4 qtiff4)
+		unset(_qt_plugin_path CACHE)
+		find_library(_qt_plugin_path ${_qt_imageformat} PATH_SUFFIXES ../plugins/imageformats)
+		if(_qt_plugin_path)
+			message("   ${_qt_imageformat} DLL (plugin) - found")
+			list(APPEND MAPPER_QT_PLUGINS "${_qt_plugin_path}")
+		else()
+			message("   ${_qt_imageformat} DLL (plugin) - not found")
+		endif(_qt_plugin_path)
+	endforeach(_qt_imageformat)
+	unset(_qt_plugin_path CACHE)
 	install(
 	  FILES ${MAPPER_QT_PLUGINS} 
 	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}/plugins/imageformats")
 	  
 	unset(MAPPER_QT_TRANSLATIONS CACHE)
-	foreach(MAPPER_QT_TRANSLATION de ja lv nb sv uk)
-		set(MAPPER_QT_TRANSLATION_PATH "${QT_TRANSLATIONS_DIR}/qt_${MAPPER_QT_TRANSLATION}.qm")
-		if(NOT EXISTS "${MAPPER_QT_TRANSLATION_PATH}")
-			message(FATAL_ERROR "Qt translation not found: ${MAPPER_QT_TRANSLATION}")
+	foreach(_mapper_trans ${Mapper_TRANS})
+		get_filename_component(_qt_translation ${_mapper_trans} NAME_WE)
+		string(REPLACE OpenOrienteering qt _qt_translation ${_qt_translation})
+		set(_qt_translation_path "${QT_TRANSLATIONS_DIR}/${_qt_translation}.qm")
+		if(EXISTS "${_qt_translation_path}")
+			message("   ${_qt_translation} translation - found")
+			list(APPEND MAPPER_QT_TRANSLATIONS "${_qt_translation_path}")
+		else()
+			message("   ${_qt_translation} translation - not found")
 		endif()
-		list(APPEND MAPPER_QT_TRANSLATIONS "${MAPPER_QT_TRANSLATION_PATH}")
-	endforeach(MAPPER_QT_TRANSLATION)
+	endforeach(_mapper_trans)
 	install(
 	  FILES ${MAPPER_QT_TRANSLATIONS} 
 	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}/translations")
+
+	message("-- Checking system files needed for Windows packaging - done")
 endif(WIN32)
 
 if(UNIX AND NOT APPLE AND NOT CYGWIN)
