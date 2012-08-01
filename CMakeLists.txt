@@ -93,7 +93,11 @@ endif()
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 include(3rd-party/clipper.cmake)
-include(3rd-party/proj.cmake)
+find_package(Proj QUIET)
+if(NOT PROJ_FOUND)
+	include(3rd-party/proj.cmake)
+endif(NOT PROJ_FOUND)
+find_package(Proj REQUIRED)
 
 if (CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS "-Wno-long-long -Wno-deprecated -Wall -pedantic")
@@ -112,8 +116,8 @@ endif (CMAKE_COMPILER_IS_GNUCXX)
 set(OPT_INCLUDES "/opt/local/include")
 set(OPT_LIBRARIES "/opt/local/lib")
 
-include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${PROJ_INCLUDES} ${OPT_INCLUDES})
-link_directories(${PROJ_LIBRARIES} ${OPT_LIBRARIES})
+include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${PROJ_INCLUDE_DIR} ${OPT_INCLUDES})
+link_directories(${OPT_LIBRARIES})
 
 set(Mapper_SRCS
  libocad/types.c
