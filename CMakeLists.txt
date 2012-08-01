@@ -16,7 +16,9 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+
+# Project declaration
 
 project(Mapper)
 
@@ -24,6 +26,8 @@ SET(Mapper_VERSION_MAJOR 0)
 SET(Mapper_VERSION_MINOR 3)
 SET(Mapper_VERSION_PATCH 0)
 SET(Mapper_VERSION_DISPLAY "${CMAKE_BUILD_TYPE} ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
+
+# Build configuration options
 
 if(NOT CMAKE_BUILD_TYPE)
 	SET(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING
@@ -52,10 +56,17 @@ if(NOT Mapper_TRANSLATIONS_EMBEDDED)
 	  FORCE)
 endif(NOT Mapper_TRANSLATIONS_EMBEDDED)
 
+# Build definitons
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+include(CMake28Quirks)
+
 configure_file(src/global.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/global.h)
 
 find_package(Qt4 4.6 REQUIRED QtCore QtGui QtNetwork QtXml)
 include(${QT_USE_FILE})
+Quirks_Qt4_definitions()
+Quirks_Qt4_lib_dependencies()
 
 if(CMAKE_CROSSCOMPILING)
 	message("-- Crosscompiling, host: ${CMAKE_HOST_SYSTEM_NAME}, target: ${CMAKE_SYSTEM_NAME}")
@@ -268,7 +279,7 @@ qt4_add_translation(Mapper_QM ${Mapper_TRANS})
 set(Mapper_TRANS_TEMPLATE
  translations/OpenOrienteering_template.ts
 )
-include(cmake/Qt4_translations.cmake)
+include(Qt4_translations)
 qt4_translations_sources(
   ${Mapper_TRANS} ${Mapper_TRANS_TEMPLATE}
   SOURCES ${Mapper_SRCS}
@@ -315,10 +326,11 @@ add_custom_target(Mapper_help
 
 if(MINGW)
 	# resource compilation for MinGW
+	enable_language(RC)
 	if(NOT CMAKE_RC_COMPILER)
 		set(CMAKE_RC_COMPILER windres)
 	endif()
-	enable_language(RC)
+	Quirks_CMake_RC_Compiler()
 	configure_file(resources/resources.rc.in ${CMAKE_CURRENT_SOURCE_DIR}/resources/resources.rc)
 	list(APPEND Mapper_SRCS resources/resources.rc)
 endif(MINGW)

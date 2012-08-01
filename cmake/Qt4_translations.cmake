@@ -17,7 +17,7 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
 if(NOT ${QT4_FOUND})
-	find_package(QT4 REQUIRED)
+	find_package(Qt4 QUIET REQUIRED)
 endif()
 
 #
