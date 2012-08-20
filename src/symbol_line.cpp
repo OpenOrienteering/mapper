@@ -117,6 +117,7 @@ Symbol* LineSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) cons
 	new_line->dashed_border = dashed_border;
 	new_line->border_dash_length = border_dash_length;
 	new_line->border_break_length = border_break_length;
+	new_line->cleanupPointSymbols();
 	return new_line;
 }
 
@@ -1727,7 +1728,6 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 
 LineSymbolSettings::~LineSymbolSettings()
 {
-	symbol->cleanupPointSymbols();
 }
 
 void LineSymbolSettings::pointSymbolEdited()
