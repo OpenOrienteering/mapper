@@ -947,7 +947,15 @@ void DetermineFontSizeDialog::updateOkButton()
 void DetermineFontSizeDialog::accept()
 {
 	QChar character = character_edit->text().at(0);
-	double character_internal_height = symbol->getFontMetrics().tightBoundingRect(character).height();
+	
+	// Use a slightly more exact way to find the character height than:
+	// double character_internal_height = symbol->getFontMetrics().tightBoundingRect(character).height();
+	const QFont& font(symbol->getQFont());
+	QPainterPath path;
+	path.addText(0, 0, font, character);
+	QRectF extent = path.boundingRect();
+	double character_internal_height = extent.height();
+	
 	double character_height_at_size_one = character_internal_height / TextSymbol::internal_point_size;
 	double desired_height = size_edit->value();
 	
