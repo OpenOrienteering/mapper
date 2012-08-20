@@ -45,6 +45,7 @@ private:
 	QLineEdit* scale_edit;
 	QCheckBox* adjust_symbols_check;
 	QCheckBox* adjust_objects_check;
+	QCheckBox* adjust_georeferencing_check;
 	QPushButton* ok_button;
 	
 	Map* map;

@@ -483,7 +483,7 @@ int Map::getScaleDenominator() const
 	return georeferencing->getScaleDenominator();
 }
 
-void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects)
+void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects, bool scale_georeferencing)
 {
 	if (new_scale_denominator == getScaleDenominator())
 		return;
@@ -497,6 +497,8 @@ void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_
 		object_undo_manager.clear(false);
 		scaleAllObjects(factor);
 	}
+	if (scale_georeferencing)
+		georeferencing->setMapRefPoint(factor * georeferencing->getMapRefPoint());
 	
 	setScaleDenominator(new_scale_denominator);
 	setOtherDirty(true);
@@ -717,7 +719,7 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 										   .arg(QLocale().toString(other->getScaleDenominator()))
 										   .arg(QLocale().toString(getScaleDenominator())), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 		if (answer == QMessageBox::Yes)
-			other->changeScale(getScaleDenominator(), true, true);
+			other->changeScale(getScaleDenominator(), true, true, true);
 	}
 	
 	// TODO: As a special case if both maps are georeferenced, the location of the imported objects could be corrected
@@ -1897,7 +1899,7 @@ void Map::forceUpdateOfAllObjects(Symbol* with_symbol)
 void Map::setGeoreferencing(const Georeferencing& georeferencing)
 {
 	*this->georeferencing = georeferencing;
-	setHasUnsavedChanges();
+	setOtherDirty(true);
 }
 
 void Map::setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height)

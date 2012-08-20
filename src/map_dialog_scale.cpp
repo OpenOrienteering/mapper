@@ -25,6 +25,7 @@
 #include <QtGui>
 
 #include "map.h"
+#include "georeferencing.h"
 
 ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
 {
@@ -38,6 +39,8 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 	adjust_symbols_check->setChecked(true);
 	adjust_objects_check = new QCheckBox(tr("Scale map object positions"));
 	adjust_objects_check->setChecked(true);
+	adjust_georeferencing_check = new QCheckBox(tr("Adjust georeferencing reference point"));
+	adjust_georeferencing_check->setChecked(true);
 	
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
 	ok_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("Adjust"));
@@ -57,6 +60,7 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 	layout->addLayout(scale_layout);
 	layout->addWidget(adjust_symbols_check);
 	layout->addWidget(adjust_objects_check);
+	layout->addWidget(adjust_georeferencing_check);
 	layout->addSpacing(16);
 	layout->addLayout(buttons_layout);
 	setLayout(layout);
@@ -68,6 +72,6 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 void ScaleMapDialog::okClicked()
 {
 	int scale = scale_edit->text().toInt();
-	map->changeScale(scale, adjust_symbols_check->isChecked(), adjust_objects_check->isChecked());
+	map->changeScale(scale, adjust_symbols_check->isChecked(), adjust_objects_check->isChecked(), adjust_georeferencing_check->isChecked());
 	accept();
 }

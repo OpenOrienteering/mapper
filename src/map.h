@@ -310,7 +310,7 @@ public:
 	
 	void setScaleDenominator(int value);
 	int getScaleDenominator() const;
-	void changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects);
+	void changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects, bool scale_georeferencing);
 	
 	inline const QString& getMapNotes() const {return map_notes;}
 	inline void setMapNotes(const QString& text) {map_notes = text;}
@@ -325,8 +325,13 @@ public:
 	void setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel, double dpi, double scale);
 	void getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel, double& dpi, double& scale);
 	
-	void setHasUnsavedChanges(bool has_unsaved_changes = true);
+	/// Returns whether there are unsaved changes in the map.
+	/// To toggle this state, never use setHasUnsavedChanges() directly unless you know what you are doing,
+	/// instead use setOtherDirty() or set one of the more specific 'dirty' flags.
+	/// This is because a call to setHasUnsavedChanges() alone followed by a map change and an undo would result in no changed flag.
 	inline bool hasUnsavedChanged() const {return unsaved_changes;}
+	/// Do not use this in usual cases, see hasUnsavedChanged().
+	void setHasUnsavedChanges(bool has_unsaved_changes = true);
 	
 	inline bool areColorsDirty() const {return colors_dirty;}
 	inline bool areSymbolsDirty() const {return symbols_dirty;}
