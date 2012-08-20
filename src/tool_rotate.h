@@ -50,6 +50,7 @@ public:
 	
 protected slots:
 	void updateDirtyRect();
+	void objectSelectionChanged();
 	
 protected:
 	void updateStatusText();
