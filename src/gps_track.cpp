@@ -21,7 +21,6 @@
 #include "gps_track.h"
 
 #include <QApplication>
-#include <QHash>
 #include <QFile>
 #include <QHash>
 #include <QInputDialog> // TODO: get rid of this
