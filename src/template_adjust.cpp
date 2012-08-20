@@ -24,6 +24,7 @@
 
 #include "template.h"
 #include "util.h"
+#include "map_editor.h"
 #include "map_widget.h"
 
 float TemplateAdjustActivity::cross_radius = 4;

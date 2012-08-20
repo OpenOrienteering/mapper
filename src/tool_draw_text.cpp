@@ -24,6 +24,7 @@
 #include <QClipboard>
 #include <QtGui>
 
+#include "map_editor.h"
 #include "map_widget.h"
 #include "map_undo.h"
 #include "renderable.h"

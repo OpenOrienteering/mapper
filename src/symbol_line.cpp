@@ -25,6 +25,7 @@
 #include <QtGui>
 #include <QIODevice>
 
+#include "map.h"
 #include "object.h"
 #include "map_color.h"
 #include "util.h"
@@ -168,7 +169,8 @@ void LineSymbol::createRenderables(Object* object, bool path_closed, const MapCo
 		{
 			// NOTE: misuse of the point symbol
 			PointObject point_object(start_symbol);
-			point_object.setRotation(atan2(-tangent.getY(), tangent.getX()));
+			if (point_object.getSymbol()->asPoint()->isRotatable())
+				point_object.setRotation(atan2(-tangent.getY(), tangent.getX()));
 			start_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), coords, output);
 		}
 	}
@@ -181,7 +183,8 @@ void LineSymbol::createRenderables(Object* object, bool path_closed, const MapCo
 		if (ok)
 		{
 			PointObject point_object(end_symbol);
-			point_object.setRotation(atan2(-tangent.getY(), tangent.getX()));
+			if (point_object.getSymbol()->asPoint()->isRotatable())
+				point_object.setRotation(atan2(-tangent.getY(), tangent.getX()));
 			MapCoordVectorF end_coord;
 			end_coord.push_back(coords[last]);
 			end_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), end_coord, output);
@@ -688,7 +691,8 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 		{
 			// Place a mid symbol on the dash point
 			MapCoordF right = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
-			point_object.setRotation(atan2(right.getX(), right.getY()));
+			if (point_object.getSymbol()->asPoint()->isRotatable())
+				point_object.setRotation(atan2(right.getX(), right.getY()));
 			point_coord[0] = coords[part_end];
 			mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 		}
@@ -716,7 +720,8 @@ void LineSymbol::createDashSymbolRenderables(Object* object, bool path_closed, c
 		float scaling;
 		MapCoordF right = PathCoord::calculateRightVector(flags, coords, path_closed, i, &scaling);
 		
-		point_object.setRotation(atan2(right.getX(), right.getY()));
+		if (point_object.getSymbol()->asPoint()->isRotatable())
+			point_object.setRotation(atan2(right.getX(), right.getY()));
 		point_coord[0] = coords[i];
 		dash_symbol->createRenderablesScaled(&point_object, point_object.getRawCoordinateVector(), point_coord, output, scaling);
 	}
@@ -745,7 +750,8 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 			{
 				// Insert point at start coordinate
 				right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_start, NULL);
-				point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+				if (point_object.getSymbol()->asPoint()->isRotatable())
+					point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 				point_coord[0] = coords[part_start];
 				mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 			}
@@ -772,13 +778,15 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 				{
 					// Insert point at start coordinate
 					right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_start, NULL);
-					point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+					if (point_object.getSymbol()->asPoint()->isRotatable())
+						point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 					point_coord[0] = coords[part_start];
 					mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 					
 					// Insert point at end coordinate
 					right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
-					point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+					if (point_object.getSymbol()->asPoint()->isRotatable())
+						point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 					point_coord[0] = coords[part_end];
 					mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 				}
@@ -803,7 +811,8 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 						{
 							double position = adapted_end_length + s * mid_symbol_distance_f + i * (adapted_segment_length + mid_symbols_length);
 							PathCoord::calculatePositionAt(flags, coords, line_coords, position, line_coord_search_start, &point_coord[0], &right_vector);
-							point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+							if (point_object.getSymbol()->asPoint()->isRotatable())
+								point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 							mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 						}
 					}
@@ -833,7 +842,8 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 								break;
 							
 							PathCoord::calculatePositionAt(flags, coords, line_coords, s * mid_symbol_distance_f + i * adapted_segment_length, line_coord_search_start, &point_coord[0], &right_vector);
-							point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+							if (point_object.getSymbol()->asPoint()->isRotatable())
+								point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 							mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 						}
 					}
@@ -845,7 +855,8 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 		{
 			// Insert point at end coordinate
 			right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
-			point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+			if (point_object.getSymbol()->asPoint()->isRotatable())
+				point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 			point_coord[0] = coords[part_end];
 			mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 		}
@@ -929,7 +940,8 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 		{
 			PathCoord::calculatePositionAt(flags, coords, line_coords, mid_position, cur_line_coord, &point_coord[0], &right_vector);
 			
-			point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+			if (point_object.getSymbol()->asPoint()->isRotatable())
+				point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 			mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 			
 			mid_position += 0.001f * mid_symbol_distance;

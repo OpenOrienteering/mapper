@@ -23,7 +23,7 @@
 
 #include <QScopedPointer>
 
-#include "map_editor.h"
+#include "tool.h"
 
 class CombinedSymbol;
 class PointObject;
@@ -32,7 +32,9 @@ class Symbol;
 class TextObjectEditorHelper;
 class Renderable;
 class MapRenderables;
+class SymbolWidget;
 typedef std::vector<Renderable*> RenderableVector;
+typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
 
 
 /// Tool to draw point objects

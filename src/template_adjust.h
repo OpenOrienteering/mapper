@@ -22,8 +22,10 @@
 #define _OPENORIENTEERING_TEMPLATE_ADJUST_H_
 
 #include <QWidget>
+#include <QDockWidget>
 
-#include "map_editor.h"
+#include "tool.h"
+#include "map_editor_activity.h"
 #include "template.h"
 
 QT_BEGIN_NAMESPACE

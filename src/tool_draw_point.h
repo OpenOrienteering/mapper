@@ -21,11 +21,13 @@
 #ifndef _OPENORIENTEERING_DRAW_POINT_H_
 #define _OPENORIENTEERING_DRAW_POINT_H_
 
-#include "map_editor.h"
+#include "tool.h"
 
 #include <QScopedPointer>
 
 class PointObject;
+class Symbol;
+class SymbolWidget;
 
 /// Tool to draw point objects
 class DrawPointTool : public MapEditorTool

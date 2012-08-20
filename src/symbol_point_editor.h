@@ -23,7 +23,8 @@
 
 #include <QWidget>
 
-#include "map_editor.h"
+#include "tool.h"
+#include "map_editor_activity.h"
 
 class QCheckBox;
 class QComboBox;
@@ -81,6 +82,8 @@ signals:
 	void symbolEdited();
 	
 private slots:
+	void orientedToNorthClicked(bool checked);
+	
 	void changeElement(int row);
 	
 	void addPointClicked();
@@ -122,6 +125,8 @@ private:
 	PointSymbol* const symbol;
 	PointObject* midpoint_object;
 	const MapCoordF object_origin_coord;
+	
+	QCheckBox* oriented_to_north;
 	
 	QListWidget* element_list;
 	QPushButton* delete_element_button;

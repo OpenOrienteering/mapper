@@ -21,7 +21,7 @@
 #ifndef _OPENORIENTEERING_DRAW_LINE_AND_AREA_H_
 #define _OPENORIENTEERING_DRAW_LINE_AND_AREA_H_
 
-#include "map_editor.h"
+#include "tool.h"
 
 #include <QScopedPointer>
 
@@ -30,6 +30,8 @@ class PointObject;
 class PathObject;
 class MapRenderables;
 class Symbol;
+class PointSymbol;
+class SymbolWidget;
 
 /// Base class for drawing tools for line and area symbols.
 /// Provides some common functionality like for example displaying the preview objects.

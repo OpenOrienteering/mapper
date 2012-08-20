@@ -25,6 +25,7 @@
 #include <QMessageBox>
 #include <QPainter>
 
+#include "map_editor.h"
 #include "map_widget.h"
 #include "util.h"
 #include "object.h"

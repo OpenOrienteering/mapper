@@ -26,6 +26,8 @@
 
 #include "map.h"
 #include "map_editor.h"
+#include "map_editor_activity.h"
+#include "tool.h"
 #include "template.h"
 #include "georeferencing.h"
 #include "settings.h"

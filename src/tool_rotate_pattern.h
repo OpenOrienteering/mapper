@@ -18,37 +18,36 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TEMPLATE_TOOL_MOVE_H_
-#define _OPENORIENTEERING_TEMPLATE_TOOL_MOVE_H_
+#ifndef _OPENORIENTEERING_TOOL_ROTATE_PATTERN_H_
+#define _OPENORIENTEERING_TOOL_ROTATE_PATTERN_H_
 
 #include "tool.h"
 
-class Template;
+#include <vector>
 
-class TemplateMoveTool : public MapEditorTool
+#include <QScopedPointer>
+
+class Renderable;
+class MapRenderables;
+typedef std::vector<Renderable*> RenderableVector;
+
+/// Tool to rotate patterns of area objects or rotatable point objects
+class RotatePatternTool : public MapEditorToolBase
 {
 Q_OBJECT
 public:
-	TemplateMoveTool(Template* templ, MapEditorController* editor, QAction* action = NULL);
+	RotatePatternTool(MapEditorController* editor, QAction* tool_button);
 	
-	virtual void init();
-	virtual QCursor* getCursor() {return cursor;}
+    virtual void draw(QPainter* painter, MapWidget* widget);
 	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+protected:
+    virtual int updateDirtyRectImpl(QRectF& rect);
+	virtual void updateStatusText();
+    virtual void objectSelectionChangedImpl();
 	
-	static QCursor* cursor;
-	
-public slots:
-	void templateDeleted(int index, Template* temp);
-	
-private:
-	void updateDragging(MapCoordF mouse_pos_map);
-	
-	Template* templ;
-	bool dragging;
-	MapCoordF click_pos_map;
+    virtual void dragStart();
+    virtual void dragMove();
+    virtual void dragFinish();
 };
 
 #endif

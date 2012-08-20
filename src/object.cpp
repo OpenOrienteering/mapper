@@ -82,6 +82,15 @@ bool Object::equals(Object* other, bool compare_symbol)
 		if (!qFuzzyCompare(rotation_a, rotation_b))
 			return false;
 	}
+	else if (type == Path)
+	{
+		PathObject* path_this = static_cast<PathObject*>(this);
+		PathObject* path_other = static_cast<PathObject*>(other);
+		
+		if (path_this->getPatternRotation() != path_other->getPatternRotation() ||
+			path_this->getPatternOrigin() != path_other->getPatternOrigin())
+			return false;
+	}
 	else if (type == Text)
 	{
 		TextObject* text_this = static_cast<TextObject*>(this);
@@ -124,6 +133,14 @@ Object& Object::operator=(const Object& other)
 		if (point_symbol && point_symbol->isRotatable())
 			point_this->setRotation(point_other->getRotation());
 	}
+	else if (type == Path)
+	{
+		PathObject* path_this = static_cast<PathObject*>(this);
+		const PathObject* path_other = static_cast<const PathObject*>(&other);
+		
+		path_this->setPatternRotation(path_other->getPatternRotation());
+		path_this->setPatternOrigin(path_other->getPatternOrigin());
+	}
 	else if (type == Text)
 	{
 		TextObject* text_this = static_cast<TextObject*>(this);
@@ -136,6 +153,22 @@ Object& Object::operator=(const Object& other)
 	}
 	
 	return *this;
+}
+
+PointObject* Object::asPoint()
+{
+	assert(type == Point);
+	return static_cast<PointObject*>(this);
+}
+PathObject* Object::asPath()
+{
+	assert(type == Path);
+	return static_cast<PathObject*>(this);
+}
+TextObject* Object::asText()
+{
+	assert(type == Text);
+	return static_cast<TextObject*>(this);
 }
 
 void Object::save(QIODevice* file)
@@ -159,6 +192,14 @@ void Object::save(QIODevice* file)
 			float rotation = point->getRotation();
 			file->write((const char*)&rotation, sizeof(float));
 		}
+	}
+	else if (type == Path)
+	{
+		PathObject* path = reinterpret_cast<PathObject*>(this);
+		float rotation = path->getPatternRotation();
+		file->write((const char*)&rotation, sizeof(float));
+		MapCoord origin = path->getPatternOrigin();
+		file->write((const char*)&origin, sizeof(MapCoord));
 	}
 	else if (type == Text)
 	{
@@ -207,6 +248,19 @@ void Object::load(QIODevice* file, int version, Map* map)
 				float rotation;
 				file->read((char*)&rotation, sizeof(float));
 				point->setRotation(rotation);
+			}
+		}
+		else if (type == Path)
+		{
+			PathObject* path = reinterpret_cast<PathObject*>(this);
+			if (version >= 21)
+			{
+				float rotation;
+				file->read((char*)&rotation, sizeof(float));
+				path->setPatternRotation(rotation);
+				MapCoord origin;
+				file->read((char*)&origin, sizeof(MapCoord));
+				path->setPatternOrigin(origin);
 			}
 		}
 		else if (type == Text)
@@ -522,10 +576,14 @@ double PathObject::PathPart::calculateArea()
 PathObject::PathObject(Symbol* symbol) : Object(Object::Path, symbol)
 {
 	assert(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
+	pattern_rotation = 0;
+	pattern_origin = MapCoord(0, 0);
 }
 PathObject::PathObject(Symbol* symbol, const MapCoordVector& coords, Map* map) : Object(Object::Path, symbol)
 {
 	assert(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
+	pattern_rotation = 0;
+	pattern_origin = MapCoord(0, 0);
 	this->coords = coords;
 	recalculateParts();
 	if (map)
@@ -534,6 +592,8 @@ PathObject::PathObject(Symbol* symbol, const MapCoordVector& coords, Map* map) :
 Object* PathObject::duplicate()
 {
 	PathObject* new_path = new PathObject(symbol);
+	new_path->pattern_rotation = pattern_rotation;
+	new_path->pattern_origin = pattern_origin;
 	new_path->coords = coords;
 	new_path->parts = parts;
 	int parts_size = parts.size();
@@ -544,6 +604,8 @@ Object* PathObject::duplicate()
 PathObject* PathObject::duplicateFirstPart()
 {
 	PathObject* new_path = new PathObject(symbol);
+	new_path->pattern_rotation = pattern_rotation;
+	new_path->pattern_origin = pattern_origin;
 	new_path->coords.assign(coords.begin() + parts[0].start_index, coords.begin() + (parts[0].end_index + 1));
 	new_path->parts.push_back(parts[0]);
 	new_path->parts[0].path = new_path;

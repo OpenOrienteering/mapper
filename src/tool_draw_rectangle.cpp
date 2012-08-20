@@ -25,6 +25,7 @@
 #include "util.h"
 #include "object.h"
 #include "map_widget.h"
+#include "map_editor.h"
 
 QCursor* DrawRectangleTool::cursor = NULL;
 

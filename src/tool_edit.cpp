@@ -28,6 +28,7 @@
 #include "symbol.h"
 #include "object.h"
 #include "object_text.h"
+#include "map_editor.h"
 #include "map_widget.h"
 #include "map_undo.h"
 #include "symbol_dock_widget.h"

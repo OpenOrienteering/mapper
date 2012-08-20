@@ -35,6 +35,11 @@ QT_END_NAMESPACE
 class Map;
 class MapColor;
 class Object;
+class CombinedSymbol;
+class TextSymbol;
+class AreaSymbol;
+class LineSymbol;
+class PointSymbol;
 class SymbolPropertiesWidget;
 class SymbolSettingDialog;
 class Renderable;
@@ -68,7 +73,18 @@ public:
 	bool equals(Symbol* other, Qt::CaseSensitivity case_sensitivity = Qt::CaseSensitive, bool compare_state = false);
 	
 	/// Returns the type of the symbol
-    inline Type getType() const {return type;}
+	inline Type getType() const {return type;}
+	// Convenience casts with type checking
+	const PointSymbol* asPoint() const;
+	PointSymbol* asPoint();
+	const LineSymbol* asLine() const;
+	LineSymbol* asLine();
+	const AreaSymbol* asArea() const;
+	AreaSymbol* asArea();
+	const TextSymbol* asText() const;
+	TextSymbol* asText();
+	const CombinedSymbol* asCombined() const;
+	CombinedSymbol* asCombined();
 	
 	/// Returns the or-ed together bitmask of all symbol types this symbol contains
 	virtual Type getContainedTypes() const {return getType();}

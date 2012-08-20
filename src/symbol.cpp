@@ -74,6 +74,57 @@ bool Symbol::equals(Symbol* other, Qt::CaseSensitivity case_sensitivity, bool co
 	return equalsImpl(other, case_sensitivity);
 }
 
+const PointSymbol* Symbol::asPoint() const
+{
+	assert(type == Point);
+	return static_cast<const PointSymbol*>(this);
+}
+PointSymbol* Symbol::asPoint()
+{
+	assert(type == Point);
+	return static_cast<PointSymbol*>(this);
+}
+const LineSymbol* Symbol::asLine() const
+{
+	assert(type == Line);
+	return static_cast<const LineSymbol*>(this);
+}
+LineSymbol* Symbol::asLine()
+{
+	assert(type == Line);
+	return static_cast<LineSymbol*>(this);
+}
+const AreaSymbol* Symbol::asArea() const
+{
+	assert(type == Area);
+	return static_cast<const AreaSymbol*>(this);
+}
+AreaSymbol* Symbol::asArea()
+{
+	assert(type == Area);
+	return static_cast<AreaSymbol*>(this);
+}
+const TextSymbol* Symbol::asText() const
+{
+	assert(type == Text);
+	return static_cast<const TextSymbol*>(this);
+}
+TextSymbol* Symbol::asText()
+{
+	assert(type == Text);
+	return static_cast<TextSymbol*>(this);
+}
+const CombinedSymbol* Symbol::asCombined() const
+{
+	assert(type == Combined);
+	return static_cast<const CombinedSymbol*>(this);
+}
+CombinedSymbol* Symbol::asCombined()
+{
+	assert(type == Combined);
+	return static_cast<CombinedSymbol*>(this);
+}
+
 bool Symbol::isTypeCompatibleTo(Object* object)
 {
 	if (type == Point && object->getType() == Object::Point)

@@ -24,6 +24,7 @@
 #include <QtGui>
 #include <QIODevice>
 
+#include "map.h"
 #include "util_gui.h"
 #include "util.h"
 #include "map_color.h"
@@ -109,6 +110,8 @@ bool AreaSymbol::FillPattern::load(QIODevice* file, int version, Map* map)
 			point = new PointSymbol();
 			if (!point->load(file, version, map))
 				return false;
+			if (version < 21)
+				point->setRotatable(true);
 		}
 		else
 			point = NULL;
@@ -155,7 +158,7 @@ bool AreaSymbol::FillPattern::equals(AreaSymbol::FillPattern& other, Qt::CaseSen
 	return true;
 }
 
-void AreaSymbol::FillPattern::createRenderables(QRectF extent, ObjectRenderables& output)
+void AreaSymbol::FillPattern::createRenderables(QRectF extent, float delta_rotation, const MapCoord& pattern_origin, ObjectRenderables& output)
 {
 	if (line_spacing <= 0)
 		return;
@@ -163,12 +166,20 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, ObjectRenderables
 		return;
 	
 	// Make rotation unique
-	double rotation = fmod(1.0 * angle, M_PI);
+	double rotation = angle;
+	if (rotatable)
+		rotation += delta_rotation;
+	rotation = fmod(1.0 * rotation, M_PI);
+	if (rotation < 0)
+		rotation = M_PI + rotation;
+	assert(rotation >= 0 && rotation <= M_PI);
 	
 	// Helpers
 	LineSymbol line;
 	PathObject path(NULL);
 	PointObject point_object(point);
+	if (point && point->isRotatable())
+		point_object.setRotation(delta_rotation);
 	MapCoordVectorF coords;
 	if (type == LinePattern)
 	{
@@ -200,16 +211,33 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, ObjectRenderables
 	extent = QRectF(extent.topLeft() - fill_extent.bottomRight(), extent.bottomRight() - fill_extent.topLeft());
 	
 	// Fill
-	const float offset = 0.001f * line_offset;
+	float delta_line_offset = 0;
+	float delta_along_line_offset = 0;
+	if (rotatable)
+	{
+		MapCoordF line_normal(0, -1);
+		line_normal.rotate(rotation);
+		line_normal.setY(-line_normal.getY());
+		delta_line_offset = line_normal.dot(MapCoordF(pattern_origin));
+		
+		MapCoordF line_tangent(1, 0);
+		line_tangent.rotate(rotation);
+		line_tangent.setY(-line_tangent.getY());
+		delta_along_line_offset = line_tangent.dot(MapCoordF(pattern_origin));
+	}
+	
+	const float offset = 0.001f * line_offset + delta_line_offset;
 	if (qAbs(rotation - M_PI/2) < 0.0001)
 	{
 		// Special case: vertical lines
+		delta_along_line_offset = -delta_along_line_offset;
+		
 		double first = offset + ceil((extent.left() - offset) / (0.001*line_spacing)) * 0.001*line_spacing;
 		for (double cur = first; cur < extent.right(); cur += 0.001*line_spacing)
 		{
 			coords[0] = MapCoordF(cur, extent.top());
 			coords[1] = MapCoordF(cur, extent.bottom());
-			createLine(coords, &line, &path, &point_object, output);
+			createLine(coords, delta_along_line_offset, &line, &path, &point_object, output);
 		}
 	}
 	else if (qAbs(rotation - 0) < 0.0001)
@@ -220,16 +248,18 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, ObjectRenderables
 		{
 			coords[0] = MapCoordF(extent.left(), cur);
 			coords[1] = MapCoordF(extent.right(), cur);
-			createLine(coords, &line, &path, &point_object, output);
+			createLine(coords, delta_along_line_offset, &line, &path, &point_object, output);
 		}
 	}
 	else
 	{
 		// General case
+		if (rotation < M_PI / 2)
+			delta_along_line_offset = -delta_along_line_offset;
+		
 		float xfactor = 1.0f / sin(rotation);
 		float yfactor = 1.0f / cos(rotation);
 		
-		const float offset = 0.001f * line_offset;
 		float dist_x = xfactor * 0.001*line_spacing;
 		float dist_y = yfactor * 0.001*line_spacing;
 		float offset_x = xfactor * offset;
@@ -265,7 +295,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, ObjectRenderables
 				// Create the renderable(s)
 				coords[0] = MapCoordF(start_x, start_y);
 				coords[1] = MapCoordF(end_x, end_y);
-				createLine(coords, &line, &path, &point_object, output);
+				createLine(coords, delta_along_line_offset, &line, &path, &point_object, output);
 				
 				// Move to next position
 				start_x += dist_x;
@@ -302,7 +332,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, ObjectRenderables
 				// Create the renderable(s)
 				coords[0] = MapCoordF(start_x, start_y);
 				coords[1] = MapCoordF(end_x, end_y);
-				createLine(coords, &line, &path, &point_object, output);
+				createLine(coords, delta_along_line_offset, &line, &path, &point_object, output);
 				
 				// Move to next position
 				start_x += dist_x;
@@ -312,7 +342,7 @@ void AreaSymbol::FillPattern::createRenderables(QRectF extent, ObjectRenderables
 	}
 }
 
-void AreaSymbol::FillPattern::createLine(MapCoordVectorF& coords, LineSymbol* line, PathObject* path, PointObject* point_object, ObjectRenderables& output)
+void AreaSymbol::FillPattern::createLine(MapCoordVectorF& coords, float delta_offset, LineSymbol* line, PathObject* path, PointObject* point_object, ObjectRenderables& output)
 {
 	if (type == LinePattern)
 		line->createRenderables(path, path->getRawCoordinateVector(), coords, output);
@@ -323,7 +353,7 @@ void AreaSymbol::FillPattern::createLine(MapCoordVectorF& coords, LineSymbol* li
 		float dir_x = to_end.getX() / length;
 		float dir_y = to_end.getY() / length;
 		
-		float offset = 0.001f * offset_along_line;
+		float offset = 0.001f * offset_along_line + delta_offset;
 		float base_dist = dir_x * coords[0].getX() + dir_y * coords[0].getY();	// distance of coords[0] from the zero line
 		float first = (offset + ceil((base_dist - offset) / (0.001*point_distance)) * 0.001*point_distance) - base_dist;
 		
@@ -381,7 +411,7 @@ Symbol* AreaSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) cons
 	for (int i = 0; i < (int)new_area->patterns.size(); ++i)
 	{
 		if (new_area->patterns[i].type == FillPattern::PointPattern)
-			new_area->patterns[i].point = reinterpret_cast<PointSymbol*>(new_area->patterns[i].point->duplicate(color_map));
+			new_area->patterns[i].point = static_cast<PointSymbol*>(new_area->patterns[i].point->duplicate(color_map));
 		else if (new_area->patterns[i].type == FillPattern::LinePattern && color_map)
 			new_area->patterns[i].line_color = color_map->value(new_area->patterns[i].line_color);
 	}
@@ -394,7 +424,7 @@ void AreaSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 	{
 		// The shape output is even created if the area is not filled with a color
 		// because the QPainterPath created by it is needed as clip path for the fill objects
-		PathObject* path = reinterpret_cast<PathObject*>(object);
+		PathObject* path = static_cast<PathObject*>(object);
 		AreaRenderable* color_fill = new AreaRenderable(this, coords, flags, &path->getPathCoordinateVector());
 		output.insertRenderable(color_fill);
 
@@ -402,9 +432,7 @@ void AreaSymbol::createRenderables(Object* object, const MapCoordVector& flags, 
 		output.setClipPath(color_fill->getPainterPath());
 		int size = (int)patterns.size();
 		for (int i = 0; i < size; ++i)
-		{
- 			patterns[i].createRenderables(color_fill->getExtent(), output);
-		}
+ 			patterns[i].createRenderables(color_fill->getExtent(), path->getPatternRotation(), path->getPatternOrigin(), output);
 		output.setClipPath(old_clip_path);
 	}
 }
@@ -456,6 +484,16 @@ void AreaSymbol::scale(double factor)
 		patterns[i].scale(factor);
 	
 	resetIcon();
+}
+
+bool AreaSymbol::hasRotatableFillPattern() const
+{
+	for (int i = 0, size = (int)patterns.size(); i < size; ++i)
+	{
+		if (patterns[i].rotatable)
+			return true;
+	}
+	return false;
 }
 
 void AreaSymbol::saveImpl(QIODevice* file, Map* map)
@@ -586,7 +624,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	
 	QStackedWidget* single_line_label3 = new QStackedWidget();
 	connect(this, SIGNAL(switchPatternEdits(int)), single_line_label3, SLOT(setCurrentIndex(int)));
-	pattern_line_offset_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
+	pattern_line_offset_edit = Util::SpinBox::create(2, -999999.9, 999999.9, tr("mm"));
 	fill_pattern_layout->addRow(single_line_label3, pattern_line_offset_edit);
 	
 	fill_pattern_layout->addItem(Util::SpacerItem::create(this));
@@ -623,12 +661,12 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	single_line_headline->addWidget(Util::Headline::create(tr("Single row")));
 	
 	QLabel* pattern_pointdist_label = new QLabel(tr("Pattern interval:"));
-	pattern_pointdist_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
+	pattern_pointdist_edit = Util::SpinBox::create(2, 0, 999999.9, tr("mm"));
 	single_line_label1->addWidget(pattern_pointdist_label);
 	single_line_edit1 ->addWidget(pattern_pointdist_edit);
 	
 	QLabel* pattern_offset_along_line_label = new QLabel(tr("Pattern offset:"));
-	pattern_offset_along_line_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
+	pattern_offset_along_line_edit = Util::SpinBox::create(2, -999999.9, 999999.9, tr("mm"));
 	single_line_label2->addWidget(pattern_offset_along_line_label);
 	single_line_edit2 ->addWidget(pattern_offset_along_line_edit);
 	
@@ -848,6 +886,7 @@ void AreaSymbolSettings::addPattern(AreaSymbol::FillPattern::Type type)
 	if (type == AreaSymbol::FillPattern::PointPattern)
 	{
 		active_pattern->point = new PointSymbol();
+		active_pattern->point->setRotatable(true);
 		PointSymbolEditorWidget* editor = new PointSymbolEditorWidget(controller, active_pattern->point, 16);
 		connect(editor, SIGNAL(symbolEdited()), this, SIGNAL(propertiesModified()) );
 		if (pattern_list->currentRow() == int(symbol->patterns.size()) - 1)

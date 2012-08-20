@@ -22,6 +22,7 @@
 
 #include <QMouseEvent>
 
+#include "map_editor.h"
 #include "template.h"
 
 QCursor* TemplateMoveTool::cursor = NULL;

@@ -86,7 +86,7 @@ void PointSymbol::createRenderablesScaled(Object* object, const MapCoordVector& 
 		output.insertRenderable(new CircleRenderable(this, coords[0]));
 	
 	PointObject* point = reinterpret_cast<PointObject*>(object);
-	float rotation = -point->getRotation();
+	float rotation = rotatable ? (-point->getRotation()) : 0;
 	double offset_x = coords[0].getX();
 	double offset_y = coords[0].getY();
 	
@@ -339,16 +339,10 @@ PointSymbolSettings::PointSymbolSettings(PointSymbol* symbol, SymbolSettingDialo
 : SymbolPropertiesWidget(symbol, dialog), 
   symbol(symbol)
 {
-	oriented_to_north = new QCheckBox(tr("Always oriented to north (not rotatable)"));
-	oriented_to_north->setChecked(!symbol->rotatable);
-	connect(oriented_to_north, SIGNAL(clicked(bool)), this, SLOT(orientedToNorthClicked(bool)));
-	
 	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), symbol, 0, true);
 	connect(symbol_editor, SIGNAL(symbolEdited()), this, SIGNAL(propertiesModified()) );
 	
 	layout = new QVBoxLayout();
-	layout->addWidget(oriented_to_north);
-	layout->addSpacerItem(Util::SpacerItem::create(this));
 	layout->addWidget(symbol_editor);
 	
 	point_tab = new QWidget();
@@ -365,22 +359,12 @@ void PointSymbolSettings::reset(Symbol* symbol)
 	SymbolPropertiesWidget::reset(symbol);
 	this->symbol = reinterpret_cast<PointSymbol*>(symbol);
 	
-	oriented_to_north->blockSignals(true);
-	oriented_to_north->setChecked(!this->symbol->rotatable);
-	oriented_to_north->blockSignals(false);
-	
 	layout->removeWidget(symbol_editor);
 	delete(symbol_editor);
 	
 	symbol_editor = new PointSymbolEditorWidget(dialog->getPreviewController(), this->symbol, 0, true);
 	connect(symbol_editor, SIGNAL(symbolEdited()), this, SIGNAL(propertiesModified()) );
 	layout->addWidget(symbol_editor);
-}
-
-void PointSymbolSettings::orientedToNorthClicked(bool checked)
-{
-	symbol->rotatable = !checked;
-	emit propertiesModified();
 }
 
 void PointSymbolSettings::tabChanged(int index)

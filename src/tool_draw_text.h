@@ -21,7 +21,9 @@
 #ifndef _OPENORIENTEERING_DRAW_TEXT_H_
 #define _OPENORIENTEERING_DRAW_TEXT_H_
 
-#include "map_editor.h"
+#include <QDockWidget>
+
+#include "tool.h"
 
 class QPushButton;
 
@@ -31,6 +33,7 @@ class TextObjectEditorHelper;
 class TextObjectAlignmentDockWidget;
 class MapRenderables;
 class Symbol;
+class SymbolWidget;
 
 /// Tool to draw text objects
 class DrawTextTool : public MapEditorTool

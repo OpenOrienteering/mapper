@@ -25,6 +25,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 
+#include "map_editor.h"
 #include "map_widget.h"
 #include "object.h"
 #include "renderable.h"

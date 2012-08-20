@@ -152,6 +152,7 @@ set(Mapper_SRCS
  src/map.cpp
  src/map_widget.cpp
  src/map_editor.cpp
+ src/map_editor_activity.cpp
  src/map_undo.cpp
  src/map_dialog_new.cpp
  src/map_dialog_scale.cpp
@@ -188,6 +189,7 @@ set(Mapper_SRCS
  src/template_tool_move.cpp
  src/template_tool_paint.cpp
 
+ src/tool.cpp
  src/tool_edit.cpp
  src/tool_draw_line_and_area.cpp
  src/tool_draw_point.cpp
@@ -198,6 +200,7 @@ set(Mapper_SRCS
  src/tool_cut.cpp
  src/tool_cut_hole.cpp
  src/tool_rotate.cpp
+ src/tool_rotate_pattern.cpp
  src/tool_scale.cpp
  src/tool_measure.cpp
  src/tool_boolean.cpp
@@ -228,6 +231,7 @@ set(Mapper_MOC_INPUT
  src/map_dialog_scale.h
  src/map_dialog_rotate.h
  src/map_editor.h
+ src/map_editor_activity.h
  src/map_undo.h
  src/map_widget.h
  src/print_dock_widget.h
@@ -252,6 +256,7 @@ set(Mapper_MOC_INPUT
  src/template_position_dock_widget.h
  src/template_tool_move.h
  src/template_tool_paint.h
+ src/tool.h
  src/tool_cut.h
  src/tool_cut_hole.h
  src/tool_draw_circle.h
@@ -263,6 +268,7 @@ set(Mapper_MOC_INPUT
  src/tool_edit.h
  src/tool_measure.h
  src/tool_rotate.h
+ src/tool_rotate_pattern.h
  src/tool_scale.h
  src/undo.h
 )

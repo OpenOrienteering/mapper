@@ -26,6 +26,7 @@
 #include "renderable.h"
 #include "symbol.h"
 #include "object.h"
+#include "map_editor.h"
 #include "map_widget.h"
 
 QCursor* DrawPathTool::cursor = NULL;

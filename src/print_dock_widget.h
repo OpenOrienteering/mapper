@@ -25,6 +25,7 @@
 #include <QPrinterInfo>
 
 #include "map_editor.h"
+#include "tool.h"
 
 QT_BEGIN_NAMESPACE
 class QPushButton;

@@ -24,6 +24,7 @@
 
 #include <QtGui>
 
+#include "map_editor.h"
 #include "map_color.h"
 #include "map_widget.h"
 #include "object.h"
@@ -45,6 +46,9 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 		midpoint_object->setPosition(object_origin_coord);
 		map->addObject(midpoint_object);
 	}
+	
+	oriented_to_north = new QCheckBox(tr("Always oriented to north (not rotatable)"));
+	oriented_to_north->setChecked(!symbol->rotatable);
 	
 	QLabel* elements_label = Util::Headline::create(tr("Elements"));
 	element_list = new QListWidget();
@@ -201,13 +205,20 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	coords_buttons_layout->addWidget(center_coords_button);
 	right_layout->addLayout(coords_buttons_layout);
 	
-	QBoxLayout* layout = new QHBoxLayout;
-	layout->addLayout(left_layout);
-	layout->addSpacing(16);
-	layout->addLayout(right_layout);
+	QBoxLayout* columns_layout = new QHBoxLayout;
+	columns_layout->addLayout(left_layout);
+	columns_layout->addSpacing(16);
+	columns_layout->addLayout(right_layout);
+	
+	QVBoxLayout* layout = new QVBoxLayout();
+	layout->addWidget(oriented_to_north);
+	layout->addSpacerItem(Util::SpacerItem::create(this));
+	layout->addLayout(columns_layout);
 	setLayout(layout);
 	
 	// Connections
+	connect(oriented_to_north, SIGNAL(clicked(bool)), this, SLOT(orientedToNorthClicked(bool)));
+	
 	connect(element_list, SIGNAL(currentRowChanged(int)), this, SLOT(changeElement(int)));
 	connect(delete_element_button, SIGNAL(clicked(bool)), this, SLOT(deleteCurrentElement()));
 	
@@ -349,6 +360,12 @@ void PointSymbolEditorWidget::initElementList()
 		element_list->addItem(getLabelForSymbol(element_symbol));
 	}
 	element_list->setCurrentRow(0);
+}
+
+void PointSymbolEditorWidget::orientedToNorthClicked(bool checked)
+{
+	symbol->rotatable = !checked;
+	emit symbolEdited();
 }
 
 void PointSymbolEditorWidget::changeElement(int row)

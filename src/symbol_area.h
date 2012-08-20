@@ -76,8 +76,8 @@ public:
 		void save(QIODevice* file, Map* map);
 		bool load(QIODevice* file, int version, Map* map);
 		bool equals(FillPattern& other, Qt::CaseSensitivity case_sensitivity);
-		void createRenderables(QRectF extent, ObjectRenderables& output);
-		void createLine(MapCoordVectorF& coords, LineSymbol* line, PathObject* path, PointObject* point_object, ObjectRenderables& output);
+		void createRenderables(QRectF extent, float delta_rotation, const MapCoord& pattern_origin, ObjectRenderables& output);
+		void createLine(MapCoordVectorF& coords, float delta_offset, LineSymbol* line, PathObject* path, PointObject* point_object, ObjectRenderables& output);
 		void scale(double factor);
 	};
 	
@@ -97,6 +97,7 @@ public:
 	inline int getNumFillPatterns() const {return (int)patterns.size();}
 	inline FillPattern& getFillPattern(int i) {return patterns[i];}
 	inline const FillPattern& getFillPattern(int i) const {return patterns[i];}
+	bool hasRotatableFillPattern() const;
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
 	
 protected:

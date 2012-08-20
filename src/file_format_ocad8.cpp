@@ -884,6 +884,8 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapLayer* l
     }
     else if (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined) {
 		PathObject *p = new PathObject(symbol);
+		
+		p->setPatternRotation(convertRotation(ocad_object->angle));
 
 		// Normal path
 		fillPathCoords(p, symbol->getType() == Symbol::Area, ocad_object->npts, (OCADPoint *)ocad_object->pts);
@@ -1419,6 +1421,13 @@ void OCAD8FileExport::doExport() throw (FormatException)
 			{
 				PointObject* point = static_cast<PointObject*>(object);
 				ocad_object->angle = convertRotation(point->getRotation());
+			}
+			else if (object->getType() == Object::Path)
+			{
+				PathObject* path = static_cast<PathObject*>(object);
+				ocad_object->angle = convertRotation(path->getPatternRotation());
+				if (path->getPatternOrigin() != MapCoord(0, 0))
+					addWarning(QObject::tr("Unable to export fill pattern shift for an area object"));
 			}
 			else if (object->getType() == Object::Text)
 			{

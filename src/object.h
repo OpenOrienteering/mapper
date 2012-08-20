@@ -34,6 +34,9 @@ class QIODevice;
 
 class Symbol;
 class Map;
+class PointObject;
+class PathObject;
+class TextObject;
 
 /// Base class which combines coordinates and a symbol to form an object (in a map or point symbol).
 class Object
@@ -57,6 +60,10 @@ public:
 	
 	/// Returns the object type determined by the subclass
     inline Type getType() const {return type;}
+    // Convenience casts with type checking
+    PointObject* asPoint();
+	PathObject* asPath();
+	TextObject* asText();
 	
 	void save(QIODevice* file);
 	void load(QIODevice* file, int version, Map* map);
@@ -164,8 +171,8 @@ public:
 	PathObject* duplicateFirstPart();
 	
 	// Coordinate access methods
-	inline int getCoordinateCount() const {return (int)coords.size();}
 	
+	inline int getCoordinateCount() const {return (int)coords.size();}
 	inline MapCoord& getCoordinate(int pos) {return coords[pos];}
 	void setCoordinate(int pos, MapCoord c);
 	void addCoordinate(int pos, MapCoord c);
@@ -186,6 +193,13 @@ public:
 	
 	inline const PathCoordVector& getPathCoordinateVector() const {return path_coords;}
 	inline void clearPathCoordinates() {path_coords.clear();}
+	
+	// Pattern methods
+	
+	inline float getPatternRotation() const {return pattern_rotation;}
+	inline void setPatternRotation(float rotation) {pattern_rotation = rotation; output_dirty = true;}
+	inline MapCoord getPatternOrigin() const {return pattern_origin;}
+	inline void setPatternOrigin(const MapCoord& origin) {pattern_origin = origin; output_dirty = true;}
 	
 	// Operations
 	
@@ -224,6 +238,9 @@ protected:
 								  bool enforce_wrap, int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, const MapCoordF& o3, const MapCoordF& o4);
 	/// Sets coord as the point which closes a subpath (the normal path or a hole in it).
 	void setClosingPoint(int index, MapCoord coord);
+	
+	float pattern_rotation;
+	MapCoord pattern_origin;
 	
 	std::vector<PathPart> parts;
 	PathCoordVector path_coords;	// only valid after calling update()

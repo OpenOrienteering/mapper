@@ -23,12 +23,15 @@
 
 #include <QDialog>
 
-#include "map_editor.h"
+#include "tool.h"
 
 QT_BEGIN_NAMESPACE
 class QListWidgetItem;
+class QDockWidget;
 QT_END_NAMESPACE
 
+class Map;
+class Template;
 class PaintOnTemplatePaletteWidget;
 
 class PaintOnTemplateTool : public MapEditorTool
