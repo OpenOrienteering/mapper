@@ -493,7 +493,10 @@ void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_
 	if (scale_symbols)
 		scaleAllSymbols(factor);
 	if (scale_objects)
+	{
+		object_undo_manager.clear(false);
 		scaleAllObjects(factor);
+	}
 	
 	setScaleDenominator(new_scale_denominator);
 	setOtherDirty(true);
