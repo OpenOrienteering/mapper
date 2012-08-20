@@ -190,7 +190,7 @@ void GeoreferencingDialog::updateGeneral()
 {
 	scale_edit->setText( QString("1:") % QString::number(georef->getScaleDenominator()) );
 	const MapCoord& coords(georef->getMapRefPoint());
-	ref_point_edit->setText(tr("%1 %2 (mm)").arg(locale().toString(coords.xd())).arg(locale().toString(coords.yd())));
+	ref_point_edit->setText(tr("%1 %2 (mm)").arg(locale().toString(coords.xd())).arg(locale().toString(-coords.yd())));
 }
 
 void GeoreferencingDialog::updateCRS()

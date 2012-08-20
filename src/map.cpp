@@ -27,6 +27,7 @@
 #include <QFile>
 #include <QPainter>
 #include <QDebug>
+#include <qmath.h>
 
 #include "map_color.h"
 #include "map_editor.h"
@@ -250,6 +251,14 @@ void MapLayer::scaleAllObjects(double factor)
 	int size = objects.size();
 	for (int i = size - 1; i >= 0; --i)
 		objects[i]->scale(factor);
+	
+	forceUpdateOfAllObjects();
+}
+void MapLayer::rotateAllObjects(double rotation)
+{
+	int size = objects.size();
+	for (int i = size - 1; i >= 0; --i)
+		objects[i]->rotateAround(MapCoordF(0, 0), rotation);
 	
 	forceUpdateOfAllObjects();
 }
@@ -501,6 +510,28 @@ void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_
 		georeferencing->setMapRefPoint(factor * georeferencing->getMapRefPoint());
 	
 	setScaleDenominator(new_scale_denominator);
+	setOtherDirty(true);
+}
+void Map::rotateMap(double rotation, bool adjust_georeferencing, bool adjust_declination)
+{
+	if (fmod(rotation, 360) == 0)
+		return;
+	
+	object_undo_manager.clear(false);
+	rotateAllObjects(rotation);
+	
+	if (adjust_georeferencing)
+	{
+		MapCoordF reference_point = MapCoordF(georeferencing->getMapRefPoint());
+		reference_point.rotate(-rotation);
+		georeferencing->setMapRefPoint(reference_point.toMapCoord());
+	}
+	if (adjust_declination)
+	{
+		double rotation_degrees = 180 * rotation / M_PI;
+		georeferencing->setDeclination(georeferencing->getDeclination() + rotation_degrees);
+	}
+	
 	setOtherDirty(true);
 }
 
@@ -1848,6 +1879,12 @@ void Map::scaleAllObjects(double factor)
 	int size = layers.size();
 	for (int i = 0; i < size; ++i)
 		layers[i]->scaleAllObjects(factor);
+}
+void Map::rotateAllObjects(double rotation)
+{
+	int size = layers.size();
+	for (int i = 0; i < size; ++i)
+		layers[i]->rotateAllObjects(rotation);
 }
 void Map::updateAllObjects(bool remove_old_renderables)
 {

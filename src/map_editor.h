@@ -115,6 +115,7 @@ public slots:
 	void scaleAllSymbolsClicked();
 	
 	void scaleMapClicked();
+	void rotateMapClicked();
 	void mapNotesClicked();
 	
 	void showTemplateWindow(bool show);

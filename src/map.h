@@ -86,6 +86,7 @@ public:
 	
 	QRectF calculateExtent(bool include_helper_symbols);
 	void scaleAllObjects(double factor);
+	void rotateAllObjects(double rotation);
 	void updateAllObjects(bool remove_old_renderables = true);
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
@@ -262,6 +263,7 @@ public:
 	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
 	
 	void scaleAllObjects(double factor);
+	void rotateAllObjects(double rotation);
 	void updateAllObjects(bool remove_old_renderables = true);
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
@@ -311,6 +313,7 @@ public:
 	void setScaleDenominator(int value);
 	int getScaleDenominator() const;
 	void changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects, bool scale_georeferencing);
+	void rotateMap(double rotation, bool adjust_georeferencing, bool adjust_declination);
 	
 	inline const QString& getMapNotes() const {return map_notes;}
 	inline void setMapNotes(const QString& text) {map_notes = text;}

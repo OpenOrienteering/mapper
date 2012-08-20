@@ -29,6 +29,7 @@
 #include "gps_coordinates.h"
 #include "map_editor.h"
 
+QT_BEGIN_NAMESPACE
 class QComboBox;
 class QDoubleSpinBox;
 class QLabel;
@@ -36,6 +37,7 @@ class QLineEdit;
 class QPushButton;
 class QSpinBox;
 class QNetworkReply;
+QT_END_NAMESPACE
 
 class Georeferencing;
 class Map;

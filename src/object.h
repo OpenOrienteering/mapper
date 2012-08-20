@@ -71,7 +71,7 @@ public:
 	/// Scales all coordinates, with the origin as scaling center
 	void scale(double factor);
 	
-	/// Rotates the whole object
+	/// Rotates the whole object. The angle must be given in radians.
 	void rotateAround(MapCoordF center, double angle);
 	
 	/// Checks if the given coord, with the given tolerance, is on this object; with extended_selection, the coord is on point objects always if it is whithin their extent,

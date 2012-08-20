@@ -34,6 +34,7 @@ HEADERS += src/color_dock_widget.h \
            src/map_coord.h \
            src/map_dialog_new.h \
            src/map_dialog_scale.h \
+           src/map_dialog_rotate.h \
            src/map_editor.h \
            src/map_undo.h \
            src/map_widget.h \

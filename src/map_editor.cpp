@@ -27,6 +27,7 @@
 #include "map_widget.h"
 #include "map_undo.h"
 #include "map_dialog_scale.h"
+#include "map_dialog_rotate.h"
 #include "georeferencing.h"
 #include "georeferencing_dialog.h"
 #include "print_dock_widget.h"
@@ -417,6 +418,7 @@ void MapEditorController::createMenuAndToolbars()
 	QAction *scale_all_symbols_act = newAction("scaleall", tr("Scale all symbols..."), this, SLOT(scaleAllSymbolsClicked()), NULL, tr("Scale the whole symbol set"));
 	QAction* georeferencing_act = newAction("georef", tr("Georeferencing..."), this, SLOT(editGeoreferencing()));
 	QAction *scale_map_act = newAction("scalemap", tr("Change map scale..."), this, SLOT(scaleMapClicked()), NULL, tr("Change the map scale and adjust map objects and symbol sizes"), "map_menu.html");
+	QAction *rotate_map_act = newAction("rotatemap", tr("Rotate map..."), this, SLOT(rotateMapClicked()), NULL, tr("Rotate the whole map"), "map_menu.html");
 	QAction *map_notes_act = newAction("mapnotes", tr("Map notes..."), this, SLOT(mapNotesClicked()));
 	
 	template_window_act = newCheckAction("templatewindow", tr("Template setup window"), this, SLOT(showTemplateWindow(bool)), "window-new", tr("Show/Hide the template window"), "template_menu.html");
@@ -560,6 +562,7 @@ void MapEditorController::createMenuAndToolbars()
 	map_menu->setWhatsThis("<a href=\"map_menu.html\">See more</a>");
 	map_menu->addAction(georeferencing_act);
 	map_menu->addAction(scale_map_act);
+	map_menu->addAction(rotate_map_act);
 	map_menu->addAction(map_notes_act);
 
 	// Symbols menu
@@ -952,6 +955,13 @@ void MapEditorController::scaleMapClicked()
 	dialog.setWindowModality(Qt::WindowModal);
 	dialog.exec();
 }
+void MapEditorController::rotateMapClicked()
+{
+	RotateMapDialog dialog(window, map);
+	dialog.setWindowModality(Qt::WindowModal);
+	dialog.exec();
+}
+
 void MapEditorController::mapNotesClicked()
 {
 	QDialog dialog(window, Qt::WindowSystemMenuHint | Qt::WindowTitleHint);

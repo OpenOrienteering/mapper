@@ -204,7 +204,7 @@ public:
 	inline double getDeclination() const { return declination; }
 	
 	/**
-	 * Sets the magnetic declination.
+	 * Sets the magnetic declination (in degrees).
 	 * 
 	 * Magnetic declination is the angle between magnetic north and true north.
 	 * In the context of OpenOrienteering Mapper, it is the angle between the 
@@ -224,7 +224,7 @@ public:
 	inline double getGrivation() const { return grivation; }
 	
 	/**
-	 * Sets the grivation.
+	 * Sets the grivation (in degrees).
 	 * 
 	 * Grivation is the angle between magnetic north and grid north. 
 	 * In the context of OpenOrienteering Mapper, it is the angle between the y

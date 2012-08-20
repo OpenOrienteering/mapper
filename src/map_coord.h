@@ -274,12 +274,13 @@ public:
 	
 	/// Rotates the vector. Positive values for angle (in radians) result in a counter-clockwise rotation
 	/// in a coordinate system where the x-axis is right and the y-axis is up.
-	inline void rotate(double angle)
+	inline MapCoordF& rotate(double angle)
 	{
 		double new_angle = getAngle() + angle;
 		double len = length();
 		x = cos(new_angle) * len;
 		y = sin(new_angle) * len;
+		return *this;
 	}
 	
 	/// Replaces this vector with a perpendicular vector pointing to the right
