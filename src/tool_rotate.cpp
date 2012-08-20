@@ -56,6 +56,7 @@ void RotateTool::init()
 		rotation_center_set = true;
 	}
 	
+	connect(editor->getMap(), SIGNAL(selectedObjectEdited()), this, SLOT(updateDirtyRect()));
 	updateDirtyRect();
 	updateStatusText();
 }

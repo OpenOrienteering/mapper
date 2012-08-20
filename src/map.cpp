@@ -1524,6 +1524,17 @@ void Map::setSymbol(Symbol* symbol, int pos)
 {
 	Symbol* old_symbol = symbols[pos];
 	
+	// Check if an object with this symbol is selected
+	bool object_with_symbol_selected = false;
+	for (ObjectSelection::iterator it = object_selection.begin(), it_end = object_selection.end(); it != it_end; ++it)
+	{
+		if ((*it)->getSymbol() == old_symbol || (*it)->getSymbol()->containsSymbol(old_symbol))
+		{
+			object_with_symbol_selected = true;
+			break;
+		}
+	}
+	
 	changeSymbolForAllObjects(old_symbol, symbol);
 	
 	int size = (int)symbols.size();
@@ -1541,6 +1552,9 @@ void Map::setSymbol(Symbol* symbol, int pos)
 	emit(symbolChanged(pos, symbol, old_symbol));
 	setSymbolsDirty();
 	delete old_symbol;
+	
+	if (object_with_symbol_selected)
+		emit selectedObjectEdited();
 }
 void Map::deleteSymbol(int pos)
 {
