@@ -757,7 +757,27 @@ void MainWindow::showHelp(QString filename, QString fragment)
 		process->start(QLatin1String("assistant"), args);
 		if (!process->waitForStarted())
 		{
-			QMessageBox::warning(this, tr("Error"), tr("Failed to find the help browser (\"Qt Assistant\"). For Windows, it is available as a separate download. After extracting this archive, copy its contents into the directory containing the Mapper executable, so the Mapper and assistant executables are in the same directory, and try again."));
+			QDialog dialog(this, Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
+			dialog.setWindowTitle(tr("Error"));
+			dialog.setWindowModality(Qt::WindowModal);
+			dialog.resize(500, 200);
+			
+			QLabel* label = new QLabel(tr("<b>%1</b><br/>%2<br/><br/>%3")
+				.arg(tr("Failed to find the help browser (\"Qt Assistant\")."))
+				.arg(tr("For Windows, it is available as %1a separate download%2.", "This refers to the 'Failed to find the help browser' message box. The text between the %1 and %2 marks will link to the downloadable archive.").arg("<a href=\"http://sourceforge.net/projects/oorienteering/files/Mapper/0.3.0/Qt%20Assistant%204.8.1.zip/download\">").arg("</a>"))
+				.arg(tr("After extracting this archive, copy its contents into the directory containing the Mapper executable, so the Mapper and assistant executables are in the same directory, and try again.")));
+			label->setTextInteractionFlags(label->textInteractionFlags() | Qt::LinksAccessibleByMouse);
+			label->setOpenExternalLinks(true);
+			label->setWordWrap(true);
+			QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok, Qt::Horizontal);
+			
+			QVBoxLayout* layout = new QVBoxLayout();
+			layout->addWidget(label);
+			layout->addWidget(button_box);
+			dialog.setLayout(layout);
+			
+			connect(button_box, SIGNAL(accepted()), &dialog, SLOT(accept()));
+			dialog.exec();
 			return;
 		}
 	}
