@@ -727,6 +727,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 						{
 							result_info.type = ObjectPaths;
 							result_info.coord_index = -1;
+							result_info.path_coord = path_coord;
 						}
 					}
 				}
@@ -782,4 +783,76 @@ void SnappingToolHelper::includeDirtyRect(QRectF& rect)
 {
 	if (snapped_type != NoSnapping)
 		rectIncludeSafe(rect, snap_mark.toQPointF());
+}
+
+
+// ### FollowPathToolHelper ###
+
+FollowPathToolHelper::FollowPathToolHelper()
+{
+	path = NULL;
+}
+
+void FollowPathToolHelper::startFollowingFromCoord(PathObject* path, int coord_index)
+{
+	path->update(false);
+	PathCoord path_coord = PathCoord::findPathCoordForCoorinate(&path->getPathCoordinateVector(), coord_index);
+	startFollowingFromPathCoord(path, path_coord);
+}
+void FollowPathToolHelper::startFollowingFromPathCoord(PathObject* path, PathCoord& coord)
+{
+	path->update(false);
+	this->path = path;
+	
+	start_clen = coord.clen;
+	end_clen = start_clen;
+	part_index = path->findPartIndexForIndex(coord.index);
+	drag_forward = true;
+}
+
+bool FollowPathToolHelper::updateFollowing(PathCoord& end_coord, PathObject*& result)
+{
+	if (path->findPartIndexForIndex(end_coord.index) != part_index)
+		return false;	// dragging on a different part
+	
+	// Update end_clen
+	float new_end_clen = end_coord.clen;
+	float path_length = path->getPathCoordinateVector().at(path->getPart(part_index).path_coord_end_index).clen;
+	bool delta_forward; 
+	if (path->getPart(part_index).isClosed())
+	{
+		delta_forward = fmod(new_end_clen - end_clen + path_length, path_length) >= 0 &&
+		fmod(new_end_clen - end_clen + path_length, path_length) < 0.5f * path_length;
+	}
+	else
+		delta_forward = new_end_clen >= end_clen;
+	
+	if (delta_forward && !drag_forward &&
+		fmod(end_clen - start_clen + path_length, path_length) > 0.5f * path_length &&
+		fmod(new_end_clen - start_clen + path_length, path_length) <= 0.5f * path_length)
+		drag_forward = true;
+	else if (!delta_forward && drag_forward &&
+		fmod(end_clen - start_clen + path_length, path_length) <= 0.5f * path_length &&
+		fmod(new_end_clen - start_clen + path_length, path_length) > 0.5f * path_length)
+		drag_forward = false;
+	end_clen = new_end_clen;
+	
+	if (end_clen == start_clen)
+		return false;
+	
+	// Create output path
+	result = path->duplicate()->asPath();
+	for (int i = result->getNumParts() - 1; i > part_index; --i)
+		result->deletePart(i);
+	for (int i = part_index - 1; i >= 0; --i)
+		result->deletePart(i);
+	
+	if (drag_forward)
+		result->changePathBounds(0, start_clen, end_clen);
+	else
+	{
+		result->changePathBounds(0, end_clen, start_clen);
+		result->reverse();
+	}
+	return true;
 }

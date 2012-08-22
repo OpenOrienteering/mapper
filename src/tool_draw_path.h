@@ -91,6 +91,11 @@ protected:
 	
 	bool appending;
 	PathObject* append_to_object;
+	
+	bool following;
+	FollowPathToolHelper follow_helper;
+	PathObject* follow_object;
+	int follow_start_index;
 };
 
 #endif

@@ -28,8 +28,8 @@
 #include <QCursor>
 
 #include "map_coord.h"
+#include "path_coord.h"
 
-class Object;
 QT_BEGIN_NAMESPACE
 class QMouseEvent;
 class QKeyEvent;
@@ -42,6 +42,9 @@ class MapWidget;
 class MapEditorController;
 class TextObject;
 class TextObjectAlignmentDockWidget;
+class Object;
+class PathObject;
+class PathCoord;
 
 /// Helper class to enable text editing using the DrawTextTool and the EditTool
 class TextObjectEditorHelper : public QObject
@@ -186,6 +189,8 @@ public:
 		Object* object;
 		/// Index of the coordinate which was snapped onto if type is ObjectCorners, else -1 (not snapped to a specific coordinate)
 		int coord_index;
+		/// The closest point on the snapped path is returned in path_coord if type == ObjectPaths
+		PathCoord path_coord;
 	};
 	
 	/// Constructs a snapping tool helper. By default it is disabled (filter set to NoSnapping).
@@ -218,6 +223,36 @@ private:
 	MapCoord snap_mark;
 	
 	Map* map;
+};
+
+
+/// Helper class to 'follow' (i.e. extract continuous parts from) path objects
+class FollowPathToolHelper
+{
+public:
+	FollowPathToolHelper();
+	
+	/// Starts following the given object from a coordinate.
+	/// FollowPathToolHelpers can be reused for following different paths.
+	void startFollowingFromCoord(PathObject* path, int coord_index);
+	
+	/// Starts following the given object from an arbitrary position indicated by the path coord.
+	/// The path coord does not need to be from the object's path coord vector.
+	/// FollowPathToolHelpers can be reused for following different paths.
+	void startFollowingFromPathCoord(PathObject* path, PathCoord& coord);
+	
+	/// Updates the process and returns the followed part of the path as a new path object in 'result' (ownership of this object is transferred to the caller!)
+	/// Returns false if the following failed, e.g. because the path coord is on another path part than the beginning or
+	/// path and end are the same.
+	bool updateFollowing(PathCoord& end_coord, PathObject*& result);
+	
+private:
+	PathObject* path;
+	
+	float start_clen;
+	float end_clen;
+	int part_index;
+	bool drag_forward;
 };
 
 #endif

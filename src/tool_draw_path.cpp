@@ -46,6 +46,8 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, Sy
 	connect(&snap_helper, SIGNAL(displayChanged()), this, SLOT(updateDirtyRect()));
 	
 	dragging = false;
+	appending = false;
+	following = false;
 	space_pressed = false;
 	shift_pressed = false;
 	
@@ -68,31 +70,62 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	}
 	else if (event->buttons() & Qt::LeftButton)
 	{
+		dragging = false;
 		bool start_appending = false;
 		if (shift_pressed)
 		{
 			SnappingToolHelper::SnapInfo snap_info;
-			click_pos_map = MapCoordF(snap_helper.snapToObject(map_coord, widget, &snap_info));
+			MapCoord snap_coord = snap_helper.snapToObject(map_coord, widget, &snap_info);
+			click_pos_map = MapCoordF(snap_coord);
 			cur_pos_map = click_pos_map;
 			click_pos = widget->mapToViewport(click_pos_map).toPoint();
 			
-			if (!draw_in_progress && !is_helper_tool &&
-				snap_info.type == SnappingToolHelper::ObjectCorners && snap_info.object->getSymbol() == symbol_widget->getSingleSelectedSymbol() &&
-				(snap_info.coord_index == 0 || snap_info.coord_index == snap_info.object->asPath()->getCoordinateCount() - 1))
+			// Check for following and appending
+			if (!is_helper_tool)
 			{
-				// Appending to another path
-				start_appending = true;
-				append_to_object = snap_info.object->asPath();
-				
-				// Setup angle helper
-				angle_helper->setCenter(click_pos_map);
-				angle_helper->clearAngles();
-				bool ok = false;
-				MapCoordF tangent = PathCoord::calculateTangent(append_to_object->getRawCoordinateVector(), snap_info.coord_index, snap_info.coord_index > 0, ok);
-				if (ok)
+				if (!draw_in_progress &&
+					snap_info.type == SnappingToolHelper::ObjectCorners && snap_info.object->getSymbol() == symbol_widget->getSingleSelectedSymbol() &&
+					(snap_info.coord_index == 0 || snap_info.coord_index == snap_info.object->asPath()->getCoordinateCount() - 1))
 				{
-					angle_helper->addAngle(-tangent.getAngle());
-					angle_helper->addAngle(-tangent.getAngle() + M_PI);
+					// Appending to another path
+					start_appending = true;
+					append_to_object = snap_info.object->asPath();
+					
+					// Setup angle helper
+					angle_helper->setCenter(click_pos_map);
+					angle_helper->clearAngles();
+					bool ok = false;
+					MapCoordF tangent = PathCoord::calculateTangent(append_to_object->getRawCoordinateVector(), snap_info.coord_index, snap_info.coord_index > 0, ok);
+					if (ok)
+					{
+						angle_helper->addAngle(-tangent.getAngle());
+						angle_helper->addAngle(-tangent.getAngle() + M_PI);
+					}
+				}
+				else if (draw_in_progress &&
+						 (snap_info.type == SnappingToolHelper::ObjectCorners || snap_info.type == SnappingToolHelper::ObjectPaths) &&
+						 snap_info.object->getType() == Object::Path)
+				{
+					// Start following another path
+					following = true;
+					follow_object = snap_info.object->asPath();
+					create_segment = false;
+					
+					if (snap_info.type == SnappingToolHelper::ObjectCorners)
+						follow_helper.startFollowingFromCoord(follow_object, snap_info.coord_index);
+					else // if (snap_info.type == SnappingToolHelper::ObjectPaths)
+						follow_helper.startFollowingFromPathCoord(follow_object, snap_info.path_coord);
+					
+					if (path_has_preview_point)
+						preview_path->setCoordinate(preview_path->getCoordinateCount() - 1, snap_coord);
+					else
+						preview_path->addCoordinate(snap_coord);
+					path_has_preview_point = false;
+					previous_point_is_curve_point = false;
+					updatePreviewPath();
+					follow_start_index = preview_path->getCoordinateCount() - 1;
+					
+					return true;
 				}
 			}
 		}
@@ -102,7 +135,6 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 			click_pos_map = map_coord;
 			cur_pos_map = map_coord;
 		}
-		dragging = false;
 		
 		if (!draw_in_progress)
 		{
@@ -176,6 +208,30 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 		if (!draw_in_progress)
 			return false;
 		
+		if (following)
+		{
+			// Update following
+			PathCoord path_coord;
+			float distance_sq;
+			follow_object->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord);
+			PathObject* temp_object;
+			bool success = follow_helper.updateFollowing(path_coord, temp_object);
+			
+			// Append the temporary object to the preview object at follow_start_index
+			for (int i = preview_path->getCoordinateCount() - 1; i >= follow_start_index; --i)
+				preview_path->deleteCoordinate(i, false);
+			if (success)
+			{
+				preview_path->appendPath(temp_object);
+				preview_path->getCoordinate(preview_path->getCoordinateCount() - 1).setHolePoint(false);
+				delete temp_object;
+			}
+			updatePreviewPath();
+			updateDirtyRect();
+			
+			return true;
+		}
+		
 		if ((event->pos() - click_pos).manhattanLength() < QApplication::startDragDistance())
 		{
 			if (path_has_preview_point)
@@ -227,6 +283,11 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	left_mouse_down = false;
 	if (!draw_in_progress)
 		return false;
+	if (following)
+	{
+		following = false;
+		return true;
+	}
 	if (!create_segment)
 		return true;
 	
@@ -330,7 +391,7 @@ bool DrawPathTool::keyReleaseEvent(QKeyEvent* event)
 	else if (event->key() == Qt::Key_Shift)
 	{
 		shift_pressed = false;
-		if (!dragging)
+		if (!dragging && !following)
 		{
 			updateHover();
 			updateDirtyRect();
@@ -447,7 +508,7 @@ void DrawPathTool::createPreviewCurve(MapCoord position, float direction)
 }
 void DrawPathTool::undoLastPoint()
 {
-	if (preview_path->getCoordinateCount() <= (preview_path->getPart(0).isClosed() ? 2 : 1))
+	if (preview_path->getCoordinateCount() <= (preview_path->getPart(0).isClosed() ? 3 : (path_has_preview_point ? 2 : 1)))
 	{
 		abortDrawing();
 		return;
@@ -529,6 +590,7 @@ void DrawPathTool::finishDrawing()
 	}
 	
 	dragging = false;
+	following = false;
 	draw_in_progress = false;
 	updateSnapHelper();
 	updateStatusText();
@@ -538,6 +600,7 @@ void DrawPathTool::finishDrawing()
 void DrawPathTool::abortDrawing()
 {
 	dragging = false;
+	following = false;
 	draw_in_progress = false;
 	updateSnapHelper();
 	updateStatusText();
@@ -643,7 +706,7 @@ void DrawPathTool::updateStatusText()
 	else
 	{
 		if (shift_pressed)
-			text += tr("<u>Shift</u>: snap to existing objects");
+			text += tr("<b>Shift + Click</b> to snap to existing objects, <b>Shift + Drag</b> to follow existing objects");
 		else if (angle_helper->isActive())
 			text += tr("<u>Ctrl</u>: fixed angles");
 		else
