@@ -103,6 +103,11 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	QSpinBox* tolerance = Util::SpinBox::create(0, 50, tr("pix"));
 	layout->addWidget(tolerance_label, row, 0);
 	layout->addWidget(tolerance, row++, 1);
+	
+	QLabel* fixed_angle_stepping_label = new QLabel(tr("Stepping of fixed angle mode (Ctrl):"));
+	QSpinBox* fixed_angle_stepping = Util::SpinBox::create(1, 180, trUtf8("°", "Degree sign for angles"));
+	layout->addWidget(fixed_angle_stepping_label, row, 0);
+	layout->addWidget(fixed_angle_stepping, row++, 1);
 
 	QCheckBox* select_symbol_of_objects = new QCheckBox(tr("When selecting an object, automatically select its symbol, too"));
 	layout->addWidget(select_symbol_of_objects, row++, 0, 1, 2);
@@ -113,6 +118,7 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	
 	antialiasing->setChecked(Settings::getInstance().getSetting(Settings::MapDisplay_Antialiasing).toBool());
 	tolerance->setValue(Settings::getInstance().getSetting(Settings::MapEditor_ClickTolerance).toInt());
+	fixed_angle_stepping->setValue(Settings::getInstance().getSetting(Settings::MapEditor_FixedAngleStepping).toInt());
 	select_symbol_of_objects->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool());
 	zoom_out_away_from_cursor->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_ZoomOutAwayFromCursor).toBool());
 	
@@ -120,6 +126,7 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 
 	connect(antialiasing, SIGNAL(toggled(bool)), this, SLOT(antialiasingClicked(bool)));
 	connect(tolerance, SIGNAL(valueChanged(int)), this, SLOT(toleranceChanged(int)));
+	connect(fixed_angle_stepping, SIGNAL(valueChanged(int)), this, SLOT(fixedAngleSteppingChanged(int)));
 	connect(select_symbol_of_objects, SIGNAL(clicked(bool)), this, SLOT(selectSymbolOfObjectsClicked(bool)));
 	connect(zoom_out_away_from_cursor, SIGNAL(clicked(bool)), this, SLOT(zoomOutAwayFromCursorClicked(bool)));
 }
@@ -132,6 +139,11 @@ void EditorPage::antialiasingClicked(bool checked)
 void EditorPage::toleranceChanged(int value)
 {
 	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_ClickTolerance), QVariant(value));
+}
+
+void EditorPage::fixedAngleSteppingChanged(int value)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_FixedAngleStepping), QVariant(value));
 }
 
 void EditorPage::selectSymbolOfObjectsClicked(bool checked)

@@ -316,12 +316,14 @@ void MapRenderables::removeRenderablesOfObject(const Object* object, bool mark_a
 			if (obj->first != object)
 				continue;
 			
-			for (SharedRenderables::const_iterator renderables = obj->second->begin(); renderables != obj->second->end(); ++renderables)
+			if (mark_area_as_dirty)
 			{
-				for (RenderableVector::const_iterator renderable = renderables->second.begin(); renderable != renderables->second.end(); ++renderable)
+				for (SharedRenderables::const_iterator renderables = obj->second->begin(); renderables != obj->second->end(); ++renderables)
 				{
-					if (mark_area_as_dirty)
+					for (RenderableVector::const_iterator renderable = renderables->second.begin(); renderable != renderables->second.end(); ++renderable)
+					{
 						map->setObjectAreaDirty((*renderable)->getExtent());
+					}
 				}
 			}
 			color->second.erase(obj);

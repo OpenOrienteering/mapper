@@ -44,6 +44,7 @@ struct PathCoord
 	
 	static void calculatePositionAt(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& path_coords, float length, int& line_coord_search_start, MapCoordF* out_pos, MapCoordF* out_right_vector);
 	static MapCoordF calculateRightVector(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, int i, float* scaling);
+	static MapCoordF calculateTangent(const MapCoordVector& coords, int i, bool backward, bool& ok);
 	static MapCoordF calculateTangent(const MapCoordVectorF& coords, int i, bool backward, bool& ok);
 	static void splitBezierCurve(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, float p, MapCoordF& o0, MapCoordF& o1, MapCoordF& o2, MapCoordF& o3, MapCoordF& o4);
 	

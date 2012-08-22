@@ -350,6 +350,7 @@ MapEditorToolBase::~MapEditorToolBase()
 
 void MapEditorToolBase::init()
 {
+	initImpl();
 	connect(editor->getMap(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	connect(editor->getMap(), SIGNAL(selectedObjectEdited()), this, SLOT(updateDirtyRect()));
 	updateDirtyRect();
@@ -360,6 +361,7 @@ bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 {
 	if (!(event->buttons() & Qt::LeftButton))
 		return false;
+	cur_map_widget = widget;
 	
 	click_pos = event->pos();
 	click_pos_map = map_coord;

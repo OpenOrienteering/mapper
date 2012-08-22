@@ -37,6 +37,7 @@ public:
 	{
 		MapDisplay_Antialiasing = 0,
 		MapEditor_ClickTolerance,
+		MapEditor_FixedAngleStepping,
 		MapEditor_ChangeSymbolWhenSelecting,
 		MapEditor_ZoomOutAwayFromCursor,
 		General_Language

@@ -23,6 +23,10 @@
 
 #include "tool_draw_line_and_area.h"
 
+#include <QScopedPointer>
+
+#include "tool_helpers.h"
+
 /// Tool to draw path objects
 class DrawPathTool : public DrawLineAndAreaTool
 {
@@ -39,19 +43,24 @@ public:
     virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	
     virtual bool keyPressEvent(QKeyEvent* event);
+    virtual bool keyReleaseEvent(QKeyEvent* event);
 	
     virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	static QCursor* cursor;
 	
+protected slots:
+	void updateDirtyRect();
+	
 protected:
+	void updateDrawHover();
 	void createPreviewCurve(MapCoord position, float direction);
 	void closeDrawing();
 	virtual void finishDrawing();
 	virtual void abortDrawing();
 	void undoLastPoint();
+	void updateAngleHelper();
 	
-	void setDirtyRect(MapCoordF mouse_pos);
 	float calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map);
 	void updateStatusText();
 	
@@ -70,6 +79,10 @@ protected:
 	
 	bool space_pressed;
 	bool allow_closing_paths;
+	
+	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
+	bool left_mouse_down;
+	MapCoordF constrained_pos_map;
 };
 
 #endif

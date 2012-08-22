@@ -190,6 +190,7 @@ set(Mapper_SRCS
  src/template_tool_paint.cpp
 
  src/tool.cpp
+ src/tool_helpers.cpp
  src/tool_edit.cpp
  src/tool_draw_line_and_area.cpp
  src/tool_draw_point.cpp
@@ -266,6 +267,7 @@ set(Mapper_MOC_INPUT
  src/tool_draw_rectangle.h
  src/tool_draw_text.h
  src/tool_edit.h
+ src/tool_helpers.h
  src/tool_measure.h
  src/tool_rotate.h
  src/tool_rotate_pattern.h

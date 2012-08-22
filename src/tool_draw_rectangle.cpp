@@ -30,9 +30,14 @@
 QCursor* DrawRectangleTool::cursor = NULL;
 
 DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : DrawLineAndAreaTool(editor, tool_button, symbol_widget)
+ : DrawLineAndAreaTool(editor, tool_button, symbol_widget),
+   angle_helper(new ConstrainAngleToolHelper())
 {
 	draw_dash_points = true;
+	
+	angle_helper->addDefaultAnglesDeg(0);
+	angle_helper->setActive(false);
+	connect(angle_helper.data(), SIGNAL(displayChanged()), this, SLOT(updateDirtyRect()));
 	
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-draw-rectangle.png"), 11, 11);
@@ -56,6 +61,8 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 		{
 			click_pos = event->pos();
 			click_pos_map = map_coord;
+			if (angle_helper->isActive())
+				angle_helper->setActive(true, click_pos_map);
 			second_point_set = false;
 			third_point_set = false;
 			new_corner_needed = false;
@@ -75,12 +82,12 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 			{
 				second_point_set = true;
 				
-				close_vector = click_pos_map - cur_pos_map;
+				close_vector = click_pos_map - constrained_pos_map;
 				close_vector.normalize();
 				forward_vector = close_vector;
 				forward_vector.perpRight();
 				preview_path->addCoordinate(map_coord.toMapCoord()); // bring to the correct number of points
-				setDirtyRect();
+				updateDirtyRect();
 			}
 			else
 			{
@@ -130,7 +137,7 @@ bool DrawRectangleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, 
 	if (!draw_in_progress)
 	{
 		setPreviewPointsPosition(map_coord);
-		setDirtyRect();
+		updateDirtyRect();
 	}
 	else
 	{
@@ -183,6 +190,24 @@ bool DrawRectangleTool::keyPressEvent(QKeyEvent* event)
 		draw_dash_points = !draw_dash_points;
 		updateStatusText();
 	}
+	else if (event->key() == Qt::Key_Control)
+	{
+		angle_helper->setActive(true, click_pos_map);
+		if (dragging && draw_in_progress)
+			updatePreview();
+	}
+	else
+		return false;
+	return true;
+}
+bool DrawRectangleTool::keyReleaseEvent(QKeyEvent* event)
+{
+	if (event->key() == Qt::Key_Control)
+	{
+		angle_helper->setActive(false);
+		if (dragging && draw_in_progress)
+			updatePreview();
+	}
 	else
 		return false;
 	return true;
@@ -209,6 +234,8 @@ void DrawRectangleTool::draw(QPainter* painter, MapWidget* widget)
 		painter->drawLine(widget->mapToViewport(cur_pos_map) + helper_cross_radius * close_vector.toQPointF(),
 						  widget->mapToViewport(cur_pos_map) - helper_cross_radius * close_vector.toQPointF());
 	}
+	else if (draw_in_progress && !second_point_set && angle_helper->isActive())
+		angle_helper->draw(painter, widget);
 }
 
 void DrawRectangleTool::finishDrawing()
@@ -265,9 +292,13 @@ void DrawRectangleTool::undoLastPoint()
 
 void DrawRectangleTool::updateRectangle()
 {
+	constrained_pos_map = cur_pos_map;
+	if (!second_point_set)
+		angle_helper->getConstrainedCursorPosMap(cur_pos_map, constrained_pos_map);
+	
 	if (!second_point_set)
 	{
-		MapCoord coord = cur_pos_map.toMapCoord();
+		MapCoord coord = constrained_pos_map.toMapCoord();
 		coord.setDashPoint(draw_dash_points);
 		preview_path->setCoordinate(1, coord);
 	}
@@ -281,7 +312,7 @@ void DrawRectangleTool::updateRectangle()
 			--last_coord;
 		}
 		
-		float forward_dist = forward_vector.dot(cur_pos_map - MapCoordF(preview_path->getCoordinate(last_coord - 2)));
+		float forward_dist = forward_vector.dot(constrained_pos_map - MapCoordF(preview_path->getCoordinate(last_coord - 2)));
 		MapCoord coord = preview_path->getCoordinate(last_coord - 2) + (forward_dist * forward_vector).toMapCoord();
 		coord.setDashPoint(draw_dash_points);
 		preview_path->setCoordinate(last_coord - 1, coord);
@@ -296,7 +327,7 @@ void DrawRectangleTool::updateRectangle()
 	}
 	
 	updatePreviewPath();
-	setDirtyRect();
+	updateDirtyRect();
 }
 void DrawRectangleTool::updatePreview()
 {
@@ -309,7 +340,7 @@ void DrawRectangleTool::updatePreview()
 	
 	updateRectangle();
 }
-void DrawRectangleTool::setDirtyRect()
+void DrawRectangleTool::updateDirtyRect()
 {
 	QRectF rect;
 	includePreviewRects(rect);
@@ -319,7 +350,14 @@ void DrawRectangleTool::setDirtyRect()
 	else
 	{
 		if (rect.isValid())
-			editor->getMap()->setDrawingBoundingBox(rect, (draw_in_progress && second_point_set) ? helper_cross_radius : 0, true); // helper_cross_radius as border is less than ideal but the only way to always ensure visibility of the helper cross at the moment
+		{
+			int pixel_border = 0;
+			if (draw_in_progress && second_point_set)
+				pixel_border = helper_cross_radius;	// helper_cross_radius as border is less than ideal but the only way to always ensure visibility of the helper cross at the moment
+			else if (draw_in_progress && !second_point_set && angle_helper->isActive())
+				pixel_border = angle_helper->getDisplayRadius();
+			editor->getMap()->setDrawingBoundingBox(rect, pixel_border, true);
+		}
 		else
 			editor->getMap()->clearDrawingBoundingBox();
 	}
@@ -332,7 +370,7 @@ void DrawRectangleTool::updateStatusText()
 		text += tr("<b>Dash points on.</b> ");
 	
 	if (!draw_in_progress)
-		text += tr("<b>Click</b> to start drawing a rectangle");
+		text += tr("<b>Click or Drag</b> to start drawing a rectangle  (<u>Ctrl</u> for fixed angles)");
 	else
 		text += tr("<b>Click</b> to set a corner point, <b>Right or double click</b> to finish the rectangle, <b>Backspace</b> to undo, <b>Esc</b> to abort");
 	

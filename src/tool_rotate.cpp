@@ -31,23 +31,18 @@
 #include "renderable.h"
 #include "util.h"
 
-QCursor* RotateTool::cursor = NULL;
-
 RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button)
-: MapEditorTool(editor, Other, tool_button),
-  old_renderables(new MapRenderables(editor->getMap())), 
-  renderables(new MapRenderables(editor->getMap()))
+ : MapEditorToolBase(QCursor(QPixmap(":/images/cursor-rotate.png"), 1, 1), Other, editor, tool_button),
+   angle_helper(new ConstrainAngleToolHelper())
 {
+	angle_helper->setActive(false);
 	rotation_center_set = false;
 	rotating = false;
-	
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-rotate.png"), 1, 1);
 }
 
-void RotateTool::init()
+void RotateTool::initImpl()
 {
-	// Set initial rotation center to the center of the bounding box of the selected objects
+	// Set initial rotation center to the bounding box center of the selected objects
 	Map* map = editor->getMap();
 	if (map->getNumSelectedObjects() > 0)
 	{
@@ -56,115 +51,37 @@ void RotateTool::init()
 		rotation_center = MapCoordF(rect.center());
 		rotation_center_set = true;
 	}
+}
+
+void RotateTool::clickRelease()
+{
+	rotation_center = cur_pos_map;
+	rotation_center_set = true;
 	
-	connect(editor->getMap(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
-	connect(editor->getMap(), SIGNAL(selectedObjectEdited()), this, SLOT(updateDirtyRect()));
 	updateDirtyRect();
 	updateStatusText();
 }
 
-RotateTool::~RotateTool()
+void RotateTool::dragStart()
 {
-	deleteOldSelectionRenderables(*old_renderables, false);
-}
-
-bool RotateTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
-{
-	if (!(event->buttons() & Qt::LeftButton))
-		return false;
-	
-	click_pos = event->pos();
-	return true;
-}
-
-bool RotateTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
-{
-	if (!(event->buttons() & Qt::LeftButton))
-		return false;
-	
-	if (rotating)
-		updateDragging(map_coord);
-	else if ( !rotating && rotation_center_set &&
-	          (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance() )
+	if (!rotating && rotation_center_set)
 	{
 		// Start rotating
 		rotating = true;
-		old_rotation = (map_coord - rotation_center).getAngle();
+		old_rotation = (cur_pos_map - rotation_center).getAngle();
 		original_rotation = old_rotation;
-		startEditingSelection(*old_renderables, &undo_duplicates);
-	}
-	return true;
-}
-
-bool RotateTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
-{
-	if (event->button() != Qt::LeftButton)
-		return false;
-	
-	if (!rotating)
-	{
-		rotation_center = map_coord;
-		rotation_center_set = true;
-	}
-	else
-	{
-		rotating = false;
-		updateDragging(map_coord);
-		finishEditingSelection(*renderables, *old_renderables, true, &undo_duplicates);
-		editor->getMap()->setObjectsDirty();
-		editor->getMap()->emitSelectionEdited();
-	}
-	
-	updateDirtyRect();
-	updateStatusText();
-	return true;
-}
-
-void RotateTool::draw(QPainter* painter, MapWidget* widget)
-{
-	editor->getMap()->drawSelection(painter, true, widget, renderables->isEmpty() ? NULL : renderables.data());
-	
-	if (rotation_center_set)
-	{
-		painter->setPen(Qt::white);
-		painter->setBrush(Qt::NoBrush);
-		
-		QPoint center = widget->mapToViewport(rotation_center).toPoint();
-		painter->drawEllipse(center, 3, 3);
-		painter->setPen(Qt::black);
-		painter->drawEllipse(center, 4, 4);
+		angle_helper->clearAngles();
+		angle_helper->addDefaultAnglesDeg(-original_rotation * 180 / M_PI);
+		startEditing();
 	}
 }
-
-void RotateTool::updateDirtyRect()
-{
-	QRectF rect;
-	editor->getMap()->includeSelectionRect(rect);
-	
-	if (rotation_center_set)
-	{
-		rectIncludeSafe(rect, rotation_center.toQPointF());
-		editor->getMap()->setDrawingBoundingBox(rect, 5, true);
-	}
-	else if (rect.isValid())
-		editor->getMap()->setDrawingBoundingBox(rect, 0, true);
-	else
-		editor->getMap()->clearDrawingBoundingBox();
-}
-
-void RotateTool::objectSelectionChanged()
-{
-	if (editor->getMap()->getNumSelectedObjects() == 0)
-		editor->setEditTool();
-	else
-		updateDirtyRect();
-}
-
-void RotateTool::updateDragging(const MapCoordF cursor_pos_map)
+void RotateTool::dragMove()
 {
 	if (rotating)
 	{
-		double rotation = (cursor_pos_map - rotation_center).getAngle();
+		angle_helper->getConstrainedCursorPositions(cur_pos_map, constrained_pos_map, constrained_pos, cur_map_widget);
+		
+		double rotation = (constrained_pos_map - rotation_center).getAngle();
 		double delta_rotation = rotation - old_rotation;
 		
 		Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
@@ -176,11 +93,75 @@ void RotateTool::updateDragging(const MapCoordF cursor_pos_map)
 		updateStatusText();
 	}
 }
-
-void RotateTool::updatePreviewObjects()
+void RotateTool::dragFinish()
 {
-	updateSelectionEditPreview(*renderables);
-	updateDirtyRect();
+	if (rotating)
+	{
+		rotating = false;
+		finishEditing();
+		updateDirtyRect();
+		updateStatusText();
+	}
+}
+
+void RotateTool::draw(QPainter* painter, MapWidget* widget)
+{
+	MapEditorToolBase::draw(painter, widget);
+	
+	if (rotation_center_set)
+	{
+		painter->setPen(Qt::white);
+		painter->setBrush(Qt::NoBrush);
+		
+		QPoint center = widget->mapToViewport(rotation_center).toPoint();
+		painter->drawEllipse(center, 3, 3);
+		painter->setPen(Qt::black);
+		painter->drawEllipse(center, 4, 4);
+	}
+	
+	if (rotating)
+		angle_helper->draw(painter, widget);
+}
+
+bool RotateTool::keyPressEvent(QKeyEvent* event)
+{
+	if (event->key() == Qt::Key_Control)
+	{
+		angle_helper->setActive(true, rotation_center);
+		if (dragging)
+			dragMove();
+	}
+    return false;
+}
+bool RotateTool::keyReleaseEvent(QKeyEvent* event)
+{
+	if (event->key() == Qt::Key_Control && angle_helper->isActive())
+	{
+		angle_helper->setActive(false);
+		if (dragging)
+			dragMove();
+		return true;
+	}
+	return false;
+}
+
+int RotateTool::updateDirtyRectImpl(QRectF& rect)
+{
+	if (rotation_center_set)
+	{
+		rectIncludeSafe(rect, rotation_center.toQPointF());
+		return qMax(angle_helper->getDisplayRadius(), 5);
+	}
+	else
+		return rect.isValid() ? 0 : -1;
+}
+
+void RotateTool::objectSelectionChangedImpl()
+{
+	if (editor->getMap()->getNumSelectedObjects() == 0)
+		editor->setEditTool();
+	else
+		updateDirtyRect();
 }
 
 void RotateTool::updateStatusText()
@@ -192,7 +173,9 @@ void RotateTool::updateStatusText()
 			delta_rotation = delta_rotation + 2*M_PI;
 		else if (delta_rotation > M_PI)
 			delta_rotation = delta_rotation - 2*M_PI;
-		setStatusBarText(tr("<b>Rotation:</b> %1").arg(-delta_rotation * 180 / M_PI, 0, 'f', 1));
+		setStatusBarText(trUtf8("<b>Rotation:</b> %1°  %2")
+			.arg(-delta_rotation * 180 / M_PI, 0, 'f', 1)
+			.arg(angle_helper->isActive() ? "" : tr("(<u>Ctrl</u> for fixed angles)")));
 	}
 	else if (!rotation_center_set)
 		setStatusBarText(tr("<b>Click</b> to set the rotation center"));

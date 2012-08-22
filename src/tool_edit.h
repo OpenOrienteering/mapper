@@ -24,7 +24,9 @@
 #include <QScopedPointer>
 
 #include "tool.h"
+#include "tool_helpers.h"
 
+class MapWidget;
 class CombinedSymbol;
 class PointObject;
 class PathObject;
@@ -37,7 +39,7 @@ typedef std::vector<Renderable*> RenderableVector;
 typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
 
 
-/// Tool to draw point objects
+/// The standard tool to edit all types of objects
 class EditTool : public MapEditorTool
 {
 Q_OBJECT
@@ -58,6 +60,8 @@ public:
 	
     virtual void draw(QPainter* painter, MapWidget* widget);
 	
+	inline bool hoveringOverFrame() const {return hover_point == -1;}
+	
 	static QCursor* cursor;
 	
 	static const Qt::KeyboardModifiers selection_modifier;
@@ -71,21 +75,21 @@ public slots:
 	
 protected slots:
 	void updatePreviewObjects();
+	void updateDirtyRect();
 	
 protected:
 	void updateStatusText();
-	void updateDirtyRect();
 	void updateHoverPoint(QPointF point, MapWidget* widget);
-	void updateDragging(QPoint cursor_pos, MapWidget* widget);
+	void updateDragging(const MapCoordF& cursor_pos_map);
 	bool hoveringOverSingleText(MapCoordF cursor_pos_map);
 	
 	void startEditing();
 	void finishEditing();
+	void updateAngleHelper(const MapCoordF& cursor_pos);
 	void deleteSelectedObjects();
 	
 	static bool sortObjects(const std::pair<int, Object*>& a, const std::pair<int, Object*>& b);
 	bool selectionInfosEqual(const SelectionInfoVector& a, const SelectionInfoVector& b);
-	void deleteOldRenderables();
 	
 	// Mouse handling
 	QPoint click_pos;
@@ -98,6 +102,10 @@ protected:
 	
 	bool control_pressed;
 	bool space_pressed;
+	
+	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
+	MapCoordF constrained_pos_map;
+	QPointF constrained_pos;
 	
 	// Information about the selection
 	QRectF selection_extent;
@@ -122,6 +130,7 @@ protected:
 	QScopedPointer<MapRenderables> old_renderables;
 	QScopedPointer<MapRenderables> renderables;
 	SymbolWidget* symbol_widget;
+	MapWidget* cur_map_widget;
 	
 	bool preview_update_triggered;
 };

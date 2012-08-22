@@ -81,6 +81,7 @@ public:
 private slots:
 	void antialiasingClicked(bool checked);
 	void toleranceChanged(int value);
+	void fixedAngleSteppingChanged(int value);
 	void selectSymbolOfObjectsClicked(bool checked);
 	void zoomOutAwayFromCursorClicked(bool checked);
 };

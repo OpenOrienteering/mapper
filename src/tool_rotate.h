@@ -22,55 +22,43 @@
 #define _OPENORIENTEERING_TOOL_ROTATE_H_
 
 #include "tool.h"
-
-#include <vector>
+#include "tool_helpers.h"
 
 #include <QScopedPointer>
 
-class Renderable;
-class MapRenderables;
-typedef std::vector<Renderable*> RenderableVector;
-
 /// Tool to rotate objects
-class RotateTool : public MapEditorTool
+class RotateTool : public MapEditorToolBase
 {
 Q_OBJECT
 public:
 	RotateTool(MapEditorController* editor, QAction* tool_button);
-	virtual ~RotateTool();
-	
-    virtual void init();
-    virtual QCursor* getCursor() {return cursor;}
-    
-    virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-    virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	
     virtual void draw(QPainter* painter, MapWidget* widget);
 	
-protected slots:
-	void updateDirtyRect();
-	void objectSelectionChanged();
+    virtual bool keyPressEvent(QKeyEvent* event);
+    virtual bool keyReleaseEvent(QKeyEvent* event);
 	
 protected:
-	void updateStatusText();
-	void updatePreviewObjects();
-	void updateDragging(const MapCoordF cursor_pos_map);
+    virtual void initImpl();
+	virtual int updateDirtyRectImpl(QRectF& rect);
+	virtual void updateStatusText();
+	virtual void objectSelectionChangedImpl();
 	
-	static QCursor* cursor;
+    virtual void clickRelease();
+	virtual void dragStart();
+	virtual void dragMove();
+	virtual void dragFinish();
+	
+	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
+	QPointF constrained_pos;
+	MapCoordF constrained_pos_map;
 	
 	// Mouse handling
-	QPoint click_pos;
-	
 	bool rotation_center_set;
 	MapCoordF rotation_center;
 	bool rotating;
 	double old_rotation;
 	double original_rotation;
-	
-	std::vector<Object*> undo_duplicates;
-	QScopedPointer<MapRenderables> old_renderables;
-	QScopedPointer<MapRenderables> renderables;
 };
 
 #endif

@@ -290,6 +290,39 @@ MapCoordF PathCoord::calculateRightVector(const MapCoordVector& flags, const Map
 	
 	return right;
 }
+MapCoordF PathCoord::calculateTangent(const MapCoordVector& coords, int i, bool backward, bool& ok)
+{
+	// TODO: this is a copy of the code below, only adjusted for MapCoord (without F)
+	
+	ok = true;
+	MapCoordF tangent;
+	if (backward)
+	{
+		//assert(i >= 1);
+		for (int k = i-1; k >= 0; --k)
+		{
+			tangent = MapCoordF(coords[i].xd() - coords[k].xd(), coords[i].yd() - coords[k].yd());
+			if (tangent.lengthSquared() > 0.01f*0.01f)
+				return tangent;
+		}
+		
+		ok = false;
+	}
+	else
+	{
+		int size = (int)coords.size();
+		//assert(i < size - 1);
+		for (int k = i+1; k < size; ++k)
+		{
+			tangent = MapCoordF(coords[k].xd() - coords[i].xd(), coords[k].yd() - coords[i].yd());
+			if (tangent.lengthSquared() > 0.01f*0.01f)
+				return tangent;
+		}
+		
+		ok = false;
+	}
+	return tangent;
+}
 MapCoordF PathCoord::calculateTangent(const MapCoordVectorF& coords, int i, bool backward, bool& ok)
 {
 	// TODO: use this for tangent calculation in LineSymbol or for objects in general

@@ -21,15 +21,10 @@
 #ifndef _OPENORIENTEERING_TOOL_ROTATE_PATTERN_H_
 #define _OPENORIENTEERING_TOOL_ROTATE_PATTERN_H_
 
-#include "tool.h"
-
-#include <vector>
-
 #include <QScopedPointer>
 
-class Renderable;
-class MapRenderables;
-typedef std::vector<Renderable*> RenderableVector;
+#include "tool.h"
+#include "tool_helpers.h"
 
 /// Tool to rotate patterns of area objects or rotatable point objects
 class RotatePatternTool : public MapEditorToolBase
@@ -40,6 +35,9 @@ public:
 	
     virtual void draw(QPainter* painter, MapWidget* widget);
 	
+    virtual bool keyPressEvent(QKeyEvent* event);
+    virtual bool keyReleaseEvent(QKeyEvent* event);
+	
 protected:
     virtual int updateDirtyRectImpl(QRectF& rect);
 	virtual void updateStatusText();
@@ -48,6 +46,10 @@ protected:
     virtual void dragStart();
     virtual void dragMove();
     virtual void dragFinish();
+	
+	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
+	QPointF constrained_pos;
+	MapCoordF constrained_pos_map;
 };
 
 #endif

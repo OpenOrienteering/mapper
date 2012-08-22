@@ -152,6 +152,8 @@ protected:
 	// virtual void draw(QPainter* painter, MapWidget* widget)
 	// The implementation of MapEditorToolBase draws the preview renderables.
 	
+	/// Can do additional initializations at a time where no other tool is active (in contrast to the constructor)
+	virtual void initImpl() {}
 	/// Must include the area of all custom drawings into the rect,
 	/// which aleady contains the area of the selection preview when this method is called.
 	/// Must return the size of the pixel border, or -1 to clear the drawing.
@@ -200,6 +202,9 @@ protected:
 	MapCoordF cur_pos_map;
 	/// Is the left mouse button pressed and has a drag move been started (by moving the mouse a minimum amount of pixels)?
 	bool dragging;
+	
+	/// The map widget in which the tool was last used
+	MapWidget* cur_map_widget;
 	
 private:
 	// Miscellaneous internals
