@@ -174,7 +174,7 @@ void MapEditorTool::drawPointHandles(int hover_point, QPainter* painter, Object*
 		else
 		{
 			QPointF box_text_handles[4];
-			calculateBoxTextHandles(box_text_handles);
+			calculateBoxTextHandles(box_text_handles, object->getMap());
 			for (int i = 0; i < 4; ++i)
 				drawPointHandle(painter, widget->mapToViewport(box_text_handles[i]), NormalHandle, hover_point == i);
 		}
@@ -250,16 +250,15 @@ void MapEditorTool::drawCurveHandleLine(QPainter* painter, QPointF point, QPoint
 	
 	painter->drawLine(point, curve_handle);
 }
-bool MapEditorTool::calculateBoxTextHandles(QPointF* out)
+bool MapEditorTool::calculateBoxTextHandles(QPointF* out, Map* map)
 {
-	Map* map = editor->getMap();
 	Object* single_selected_object = (map->getNumSelectedObjects() == 1) ? *map->selectedObjectsBegin() : NULL;
 	if (single_selected_object && single_selected_object->getType() == Object::Text)
 	{
 		TextObject* text_object = reinterpret_cast<TextObject*>(single_selected_object);
 		if (!text_object->hasSingleAnchor())
 		{
-			TextObject* text_object = reinterpret_cast<TextObject*>(*editor->getMap()->selectedObjectsBegin());
+			TextObject* text_object = reinterpret_cast<TextObject*>(*map->selectedObjectsBegin());
 			
 			QTransform transform;
 			transform.rotate(-text_object->getRotation() * 180 / M_PI);
@@ -337,6 +336,7 @@ int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_c
 MapEditorToolBase::MapEditorToolBase(const QCursor cursor, MapEditorTool::Type type, MapEditorController* editor, QAction* tool_button)
  : MapEditorTool(editor, type, tool_button),
    dragging(false),
+   cur_map_widget(editor->getMainWidget()),
    cursor(cursor),
    editing(false),
    old_renderables(new MapRenderables(editor->getMap())), 

@@ -759,6 +759,35 @@ void PathObject::calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq,
 		}
 	}
 }
+
+void PathObject::calcClosestCoordinate(MapCoordF coord, float& out_distance_sq, int& out_index)
+{
+	update(false);
+	
+	int coords_size = (int)coords.size();
+	if (coords_size == 0)
+	{
+		out_distance_sq = -1;
+		out_index = -1;
+		return;	
+	}
+	
+	out_distance_sq = (coord - MapCoordF(coords[0])).lengthSquared();
+	out_index = 0;
+	for (int i = 1; i < coords_size; ++i)
+	{
+		double length_sq = (coord - MapCoordF(coords[i])).lengthSquared();
+		if (length_sq < out_distance_sq)
+		{
+			out_distance_sq = length_sq;
+			out_index = i;
+		}
+		
+		if (coords[i].isCurveStart())
+			i += 2;
+	}
+}
+
 int PathObject::subdivide(int index, float param)
 {
 	update(false);
@@ -1650,6 +1679,10 @@ void PointObject::getPosition(qint64& x, qint64& y) const
 MapCoordF PointObject::getCoordF() const
 {
 	return MapCoordF(coords[0]);
+}
+MapCoord PointObject::getCoord() const
+{
+	return coords[0];
 }
 void PointObject::setRotation(float new_rotation)
 {

@@ -104,6 +104,11 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	layout->addWidget(tolerance_label, row, 0);
 	layout->addWidget(tolerance, row++, 1);
 	
+	QLabel* snap_distance_label = new QLabel(tr("Snap distance (Shift):"));
+	QSpinBox* snap_distance = Util::SpinBox::create(0, 100, tr("pix"));
+	layout->addWidget(snap_distance_label, row, 0);
+	layout->addWidget(snap_distance, row++, 1);
+	
 	QLabel* fixed_angle_stepping_label = new QLabel(tr("Stepping of fixed angle mode (Ctrl):"));
 	QSpinBox* fixed_angle_stepping = Util::SpinBox::create(1, 180, trUtf8("°", "Degree sign for angles"));
 	layout->addWidget(fixed_angle_stepping_label, row, 0);
@@ -118,6 +123,7 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	
 	antialiasing->setChecked(Settings::getInstance().getSetting(Settings::MapDisplay_Antialiasing).toBool());
 	tolerance->setValue(Settings::getInstance().getSetting(Settings::MapEditor_ClickTolerance).toInt());
+	snap_distance->setValue(Settings::getInstance().getSetting(Settings::MapEditor_SnapDistance).toInt());
 	fixed_angle_stepping->setValue(Settings::getInstance().getSetting(Settings::MapEditor_FixedAngleStepping).toInt());
 	select_symbol_of_objects->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool());
 	zoom_out_away_from_cursor->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_ZoomOutAwayFromCursor).toBool());
@@ -126,6 +132,7 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 
 	connect(antialiasing, SIGNAL(toggled(bool)), this, SLOT(antialiasingClicked(bool)));
 	connect(tolerance, SIGNAL(valueChanged(int)), this, SLOT(toleranceChanged(int)));
+	connect(snap_distance, SIGNAL(valueChanged(int)), this, SLOT(snapDistanceChanged(int)));
 	connect(fixed_angle_stepping, SIGNAL(valueChanged(int)), this, SLOT(fixedAngleSteppingChanged(int)));
 	connect(select_symbol_of_objects, SIGNAL(clicked(bool)), this, SLOT(selectSymbolOfObjectsClicked(bool)));
 	connect(zoom_out_away_from_cursor, SIGNAL(clicked(bool)), this, SLOT(zoomOutAwayFromCursorClicked(bool)));
@@ -139,6 +146,11 @@ void EditorPage::antialiasingClicked(bool checked)
 void EditorPage::toleranceChanged(int value)
 {
 	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_ClickTolerance), QVariant(value));
+}
+
+void EditorPage::snapDistanceChanged(int value)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_SnapDistance), QVariant(value));
 }
 
 void EditorPage::fixedAngleSteppingChanged(int value)

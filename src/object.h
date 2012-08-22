@@ -206,6 +206,8 @@ public:
 	/// Calculates the closest point on the path to the given coordinate, returns the squared distance of these points and PathCoord information for the point on the path.
 	/// This does not have to be an existing path coordinate. This method is usually called to find the position on the path the user clicked on.
 	void calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq, PathCoord& out_path_coord);
+	/// Calculates the closest control point coordinate to the given coordiante, returns the squared distance of these points and the index of the control point.
+	void calcClosestCoordinate(MapCoordF coord, float& out_distance_sq, int& out_index);
 	/// Splits the segment beginning at the coordinate with the given index with the given bezier curve parameter or split ratio. Returns the index of the added point.
 	int subdivide(int index, float param);
 	/// Returns if connectIfClose() would do something with the given parameters
@@ -257,6 +259,7 @@ public:
 	void setPosition(MapCoordF coord);
 	void getPosition(qint64& x, qint64& y) const;
 	MapCoordF getCoordF() const;
+	MapCoord getCoord() const;
 	
 	void setRotation(float new_rotation);
 	inline float getRotation() const {return rotation;}

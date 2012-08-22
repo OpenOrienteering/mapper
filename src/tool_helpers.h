@@ -29,6 +29,7 @@
 
 #include "map_coord.h"
 
+class Object;
 QT_BEGIN_NAMESPACE
 class QMouseEvent;
 class QKeyEvent;
@@ -36,6 +37,7 @@ class QPainter;
 class QTimer;
 QT_END_NAMESPACE
 
+class Map;
 class MapWidget;
 class MapEditorController;
 class TextObject;
@@ -157,6 +159,65 @@ private:
 	
 	bool have_default_angles_only;
 	double default_angles_base;
+};
+
+
+/// Helper class to snap to existing objects or a grid on the map
+class SnappingToolHelper : public QObject
+{
+Q_OBJECT
+public:
+	enum SnapObjects
+	{
+		NoSnapping = 0,
+		ObjectCorners = 1 << 0,
+		ObjectPaths = 1 << 1,
+		GridCorners = 1 << 2,
+		
+		AllTypes = 1 + 2 + 4
+	};
+	
+	/// Information returned from a snap process
+	struct SnapInfo
+	{
+		/// Type of object snapped onto
+		SnapObjects type;
+		/// Object snapped onto, if type is ObjectCorners or ObjectPaths, else NULL
+		Object* object;
+		/// Index of the coordinate which was snapped onto if type is ObjectCorners, else -1 (not snapped to a specific coordinate)
+		int coord_index;
+	};
+	
+	/// Constructs a snapping tool helper. By default it is disabled (filter set to NoSnapping).
+	SnappingToolHelper(Map* map, SnapObjects filter = NoSnapping);
+	
+	/// Constrain the objects to snap onto.
+	void setFilter(SnapObjects filter);
+	SnapObjects getFilter() const;
+	
+	/// Snaps the given position to the closest snapping object, or returns the original position if no snapping object is close enough.
+	/// Internally remembers the position so the next call to draw() will draw the snap mark there.
+	/// If the info parameter is set, information about the object snapped onto is returned there.
+	MapCoord snapToObject(MapCoordF position, MapWidget* widget, SnapInfo* info = NULL);
+	
+	/// Draws the snap mark which was last returned by snapToObject().
+	void draw(QPainter* painter, MapWidget* widget);
+	/// Includes this helper's drawing region in the given rect.
+	void includeDirtyRect(QRectF& rect);
+	/// Returns the radius of the visualization in pixels
+	inline int getDisplayRadius() const {return (snapped_type != NoSnapping) ? 6 : 0;}
+	
+signals:
+	/// Emitted whenever the snap mark changes position
+	void displayChanged() const;
+	
+private:
+	SnapObjects filter;
+	
+	SnapObjects snapped_type;
+	MapCoord snap_mark;
+	
+	Map* map;
 };
 
 #endif

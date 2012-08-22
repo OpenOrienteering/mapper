@@ -39,7 +39,8 @@ DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button, 
  : MapEditorTool(editor, Other, tool_button),
    angle_helper(new ConstrainAngleToolHelper()),
    renderables(new MapRenderables(editor->getMap())),
-   symbol_widget(symbol_widget)
+   symbol_widget(symbol_widget),
+   cur_map_widget(editor->getMainWidget())
 {
 	dragging = false;
 	preview_object = NULL;

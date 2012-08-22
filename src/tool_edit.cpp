@@ -56,7 +56,8 @@ EditTool::EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidg
   angle_helper(new ConstrainAngleToolHelper()),
   old_renderables(new MapRenderables(editor->getMap())),
   renderables(new MapRenderables(editor->getMap())),
-  symbol_widget(symbol_widget)
+  symbol_widget(symbol_widget),
+  cur_map_widget(editor->getMainWidget())
 {
 	preview_update_triggered = false;
 	dragging = false;
@@ -392,7 +393,7 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 		
 		// Clicked - get objects below cursor
 		SelectionInfoVector objects;
-		map->findObjectsAt(map_coord, 0.001f *widget->getMapView()->pixelToLength(click_tolerance), false, false, false, objects);
+		map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(click_tolerance), false, false, false, objects);
 		if (objects.empty())
 			map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(1.5f * click_tolerance), true, false, false, objects);
 		
@@ -612,7 +613,7 @@ void EditTool::objectSelectionChanged()
 {
 	updateStatusText();
 	updateDirtyRect();
-	if (calculateBoxTextHandles(box_text_handles))
+	if (calculateBoxTextHandles(box_text_handles, editor->getMap()))
 		updateDirtyRect();
 }
 void EditTool::selectedSymbolsChanged()
@@ -805,7 +806,7 @@ void EditTool::updateDragging(const MapCoordF& cursor_pos_map)
 		}
 	}
 	
-	if (calculateBoxTextHandles(box_text_handles))
+	if (calculateBoxTextHandles(box_text_handles, map))
 		updateDirtyRect();
 }
 

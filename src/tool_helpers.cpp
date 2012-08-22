@@ -651,3 +651,135 @@ void ConstrainAngleToolHelper::settingsChanged()
 		addDefaultAnglesDeg(default_angles_base);
 	}
 }
+
+
+// ### SnappingToolHelper ###
+
+SnappingToolHelper::SnappingToolHelper(Map* map, SnapObjects filter)
+ : QObject(NULL),
+   filter(filter),
+   snapped_type(NoSnapping),
+   map(map)
+{
+}
+
+void SnappingToolHelper::setFilter(SnapObjects filter)
+{
+	this->filter = filter;
+}
+SnappingToolHelper::SnapObjects SnappingToolHelper::getFilter() const
+{
+	return filter;
+}
+
+MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget, SnapInfo* info)
+{
+	const float snap_distance = 0.001f * widget->getMapView()->pixelToLength(Settings::getInstance().getSettingCached(Settings::MapEditor_SnapDistance).toInt());
+	float closest_distance_sq = snap_distance * snap_distance;
+	MapCoord result_position = position.toMapCoord();
+	SnapInfo result_info;
+	result_info.type = NoSnapping;
+	result_info.object = NULL;
+	result_info.coord_index = -1;
+	
+	if (filter & (ObjectCorners | ObjectPaths))
+	{
+		// Find map objects at the given position
+		SelectionInfoVector objects;
+		map->findObjectsAt(position, snap_distance, false, false, true, objects);
+		
+		// Find closest snap spot from map objects
+		for (SelectionInfoVector::const_iterator it = objects.begin(), end = objects.end(); it != end; ++it)
+		{
+			float distance_sq;
+			Object* object = it->second;
+			if (object->getType() == Object::Point)
+			{
+				PointObject* point = object->asPoint();
+				distance_sq = point->getCoordF().lengthToSquared(position);
+				if (distance_sq < closest_distance_sq)
+				{
+					closest_distance_sq = distance_sq;
+					result_position = point->getCoord();
+					result_info.type = ObjectCorners;
+					result_info.object = object;
+					result_info.coord_index = 0;
+				}
+			}
+			else if (object->getType() == Object::Path)
+			{
+				PathObject* path = object->asPath();
+				if (filter & ObjectPaths)
+				{
+					PathCoord path_coord;
+					path->calcClosestPointOnPath(position, distance_sq, path_coord);
+					if (distance_sq < closest_distance_sq)
+					{
+						closest_distance_sq = distance_sq;
+						result_position = path_coord.pos.toMapCoord();
+						result_info.object = object;
+						if (path_coord.param == 0 || path_coord.param == 1)
+						{
+							result_info.type = ObjectCorners;
+							result_info.coord_index = (path_coord.param == 0) ? path_coord.index : (path_coord.index + 1);
+						}
+						else
+						{
+							result_info.type = ObjectPaths;
+							result_info.coord_index = -1;
+						}
+					}
+				}
+				else
+				{
+					int index;
+					path->calcClosestCoordinate(position, distance_sq, index);
+					if (distance_sq < closest_distance_sq)
+					{
+						closest_distance_sq = distance_sq;
+						result_position = path->getCoordinate(index);
+						result_info.type = ObjectCorners;
+						result_info.object = object;
+						result_info.coord_index = index;
+					}
+				}
+			}
+			else if (object->getType() == Object::Text)
+			{
+				// No snapping to texts
+				continue;
+			}
+		}
+	}
+	
+	// Find closest grid snap position
+	if (filter & GridCorners)
+	{
+		// TODO
+	}
+	
+	// Return
+	if (snap_mark != result_position || snapped_type != result_info.type)
+	{
+		snap_mark = result_position;
+		snapped_type = result_info.type;
+		emit displayChanged();
+	}
+	
+	if (info != NULL)
+		*info = result_info;
+	return result_position;
+}
+void SnappingToolHelper::draw(QPainter* painter, MapWidget* widget)
+{
+	if (snapped_type != NoSnapping)
+	{
+		MapEditorTool::drawPointHandle(painter, widget->mapToViewport(snap_mark),
+									    (snapped_type == ObjectPaths) ? MapEditorTool::NormalHandle : MapEditorTool::EndHandle, false);
+	}
+}
+void SnappingToolHelper::includeDirtyRect(QRectF& rect)
+{
+	if (snapped_type != NoSnapping)
+		rectIncludeSafe(rect, snap_mark.toQPointF());
+}

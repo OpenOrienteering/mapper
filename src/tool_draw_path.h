@@ -21,10 +21,9 @@
 #ifndef _OPENORIENTEERING_DRAW_PATH_H_
 #define _OPENORIENTEERING_DRAW_PATH_H_
 
-#include "tool_draw_line_and_area.h"
-
 #include <QScopedPointer>
 
+#include "tool_draw_line_and_area.h"
 #include "tool_helpers.h"
 
 /// Tool to draw path objects
@@ -53,6 +52,7 @@ protected slots:
 	void updateDirtyRect();
 	
 protected:
+	void updateHover();
 	void updateDrawHover();
 	void createPreviewCurve(MapCoord position, float direction);
 	void closeDrawing();
@@ -60,6 +60,7 @@ protected:
 	virtual void abortDrawing();
 	void undoLastPoint();
 	void updateAngleHelper();
+	void updateSnapHelper();
 	
 	float calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map);
 	void updateStatusText();
@@ -83,6 +84,10 @@ protected:
 	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
 	bool left_mouse_down;
 	MapCoordF constrained_pos_map;
+	
+	SnappingToolHelper snap_helper;
+	bool shift_pressed;
+	MapWidget* cur_map_widget;
 };
 
 #endif

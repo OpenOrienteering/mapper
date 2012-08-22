@@ -33,13 +33,20 @@ QCursor* DrawPathTool::cursor = NULL;
 
 DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget, bool allow_closing_paths)
  : DrawLineAndAreaTool(editor, tool_button, symbol_widget), allow_closing_paths(allow_closing_paths),
-   angle_helper(new ConstrainAngleToolHelper())
+   angle_helper(new ConstrainAngleToolHelper()),
+   snap_helper(editor->getMap())
 {
+	cur_map_widget = editor->getMainWidget();
+	
 	angle_helper->setActive(false);
 	connect(angle_helper.data(), SIGNAL(displayChanged()), this, SLOT(updateDirtyRect()));
 	
+	updateSnapHelper();
+	connect(&snap_helper, SIGNAL(displayChanged()), this, SLOT(updateDirtyRect()));
+	
 	dragging = false;
 	space_pressed = false;
+	shift_pressed = false;
 	
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-draw-path.png"), 11, 11);
@@ -51,6 +58,8 @@ void DrawPathTool::init()
 
 bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	cur_map_widget = widget;
+	
 	if ((event->buttons() & Qt::RightButton) && draw_in_progress)
 	{
 		finishDrawing();
@@ -58,16 +67,26 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	}
 	else if (event->buttons() & Qt::LeftButton)
 	{
-		click_pos = event->pos();
-		click_pos_map = map_coord;
-		cur_pos_map = map_coord;
+		if (shift_pressed)
+		{
+			click_pos_map = MapCoordF(snap_helper.snapToObject(map_coord, widget));
+			cur_pos_map = click_pos_map;
+			click_pos = widget->mapToViewport(click_pos_map).toPoint();
+		}
+		else
+		{
+			click_pos = event->pos();
+			click_pos_map = map_coord;
+			cur_pos_map = map_coord;
+		}
 		dragging = false;
 		
 		if (!draw_in_progress)
 		{
 			// Start a new path
 			startDrawing();
-			angle_helper->setCenter(click_pos_map);			
+			angle_helper->setCenter(click_pos_map);
+			updateSnapHelper();
 			
 			path_has_preview_point = false;
 			previous_point_is_curve_point = false;
@@ -76,7 +95,8 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 		}
 		else
 		{
-			angle_helper->getConstrainedCursorPosMap(click_pos_map, click_pos_map);
+			if (!shift_pressed)
+				angle_helper->getConstrainedCursorPosMap(click_pos_map, click_pos_map);
 			cur_pos_map = click_pos_map;
 		}
 
@@ -124,16 +144,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	
 	if (!mouse_down)
 	{
-		if (!draw_in_progress)
-		{
-			// Show preview objects at this position
-			setPreviewPointsPosition(map_coord);
-			updateDirtyRect();
-		}
-		else // if (draw_in_progress)
-		{
-			updateDrawHover();
-		}
+		updateHover();
 	}
 	else // if (mouse_down)
 	{
@@ -197,7 +208,11 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	if (previous_point_is_curve_point && !dragging)
 	{
 		// The new point has not been added yet
-		MapCoord coord = map_coord.toMapCoord();
+		MapCoord coord;
+		if (shift_pressed)
+			coord = snap_helper.snapToObject(map_coord, widget);
+		else
+			coord = map_coord.toMapCoord();
 		if (space_pressed)
 			coord.setDashPoint(true);
 		preview_path->addCoordinate(coord);
@@ -264,6 +279,16 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 			updateDrawHover();
 		updateStatusText();
 	}
+	else if (event->key() == Qt::Key_Shift)
+	{
+		shift_pressed = true;
+		if (!dragging)
+		{
+			updateHover();
+			updateDirtyRect();
+		}
+		updateStatusText();
+	}
 	else
 		return key_handled;
 	return true;
@@ -275,6 +300,16 @@ bool DrawPathTool::keyReleaseEvent(QKeyEvent* event)
 		angle_helper->setActive(false);
 		if (draw_in_progress && !dragging)
 			updateDrawHover();
+		updateStatusText();
+	}
+	else if (event->key() == Qt::Key_Shift)
+	{
+		shift_pressed = false;
+		if (!dragging)
+		{
+			updateHover();
+			updateDirtyRect();
+		}
 		updateStatusText();
 	}
 	else
@@ -308,13 +343,37 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 			painter->drawLine(widget->mapToViewport(previous_pos_map), widget->mapToViewport(previous_drag_map));
 		}
 		
-		angle_helper->draw(painter, widget);
+		if (!shift_pressed)
+			angle_helper->draw(painter, widget);
+	}
+	
+	if (shift_pressed && !dragging)
+		snap_helper.draw(painter, widget);
+}
+
+void DrawPathTool::updateHover()
+{
+	if (shift_pressed)
+		constrained_pos_map = MapCoordF(snap_helper.snapToObject(cur_pos_map, cur_map_widget));
+	else
+		constrained_pos_map = cur_pos_map;
+	
+	if (!draw_in_progress)
+	{
+		// Show preview objects at this position
+		setPreviewPointsPosition(constrained_pos_map);
+		updateDirtyRect();
+	}
+	else // if (draw_in_progress)
+	{
+		updateDrawHover();
 	}
 }
 
 void DrawPathTool::updateDrawHover()
 {
-	angle_helper->getConstrainedCursorPosMap(cur_pos_map, constrained_pos_map);
+	if (!shift_pressed)
+		angle_helper->getConstrainedCursorPosMap(cur_pos_map, constrained_pos_map);
 	if (!previous_point_is_curve_point && !left_mouse_down && draw_in_progress)
 	{
 		// Show a line to the cursor position as preview
@@ -446,6 +505,7 @@ void DrawPathTool::finishDrawing()
 	
 	dragging = false;
 	draw_in_progress = false;
+	updateSnapHelper();
 	updateStatusText();
 	
 	DrawLineAndAreaTool::finishDrawing();
@@ -454,6 +514,7 @@ void DrawPathTool::abortDrawing()
 {
 	dragging = false;
 	draw_in_progress = false;
+	updateSnapHelper();
 	updateStatusText();
 	
 	DrawLineAndAreaTool::abortDrawing();
@@ -475,6 +536,8 @@ void DrawPathTool::updateDirtyRect()
 	}
 	if (draw_in_progress && !dragging)
 		angle_helper->includeDirtyRect(rect);
+	if (shift_pressed)
+		snap_helper.includeDirtyRect(rect);
 	includePreviewRects(rect);
 	
 	if (is_helper_tool)
@@ -482,7 +545,7 @@ void DrawPathTool::updateDirtyRect()
 	else
 	{
 		if (rect.isValid())
-			editor->getMap()->setDrawingBoundingBox(rect, qMax(dragging ? 1 : 0, angle_helper->getDisplayRadius()), true);
+			editor->getMap()->setDrawingBoundingBox(rect, qMax(qMax(dragging ? 1 : 0, angle_helper->getDisplayRadius()), snap_helper.getDisplayRadius()), true);
 		else
 			editor->getMap()->clearDrawingBoundingBox();
 	}
@@ -525,6 +588,14 @@ void DrawPathTool::updateAngleHelper()
 		angle_helper->addDefaultAnglesDeg(angle * 180 / M_PI);
 }
 
+void DrawPathTool::updateSnapHelper()
+{
+	if (draw_in_progress)
+		snap_helper.setFilter(SnappingToolHelper::AllTypes);
+	else
+		snap_helper.setFilter((SnappingToolHelper::SnapObjects)(SnappingToolHelper::GridCorners | SnappingToolHelper::ObjectCorners));
+}
+
 float DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map)
 {
 	if (dragging && (mouse_pos - click_pos).manhattanLength() >= QApplication::startDragDistance())
@@ -543,14 +614,16 @@ void DrawPathTool::updateStatusText()
 		text += tr("<b>Dash points on.</b> ");
 	
 	if (!draw_in_progress)
-		text += tr("<b>Click</b> to start a polygonal segment, <b>Drag</b> to start a curve");
+		text += tr("<b>Click</b> to start a polygonal segment, <b>Drag</b> to start a curve. Hold <u>Shift</u> to snap to existing objects.");
 	else
 	{
-		if (angle_helper->isActive())
+		if (shift_pressed)
+			text += tr("<u>Shift</u>: snap to existing objects");
+		else if (angle_helper->isActive())
 			text += tr("<u>Ctrl</u>: fixed angles");
 		else
 			text += tr("<b>Click</b> to draw a polygonal segment, <b>Drag</b> to draw a curve, <b>Right or double click</b> to finish the path, "
-					   "<b>Return</b> to close the path, <b>Backspace</b> to undo, <b>Esc</b> to abort. Try <b>Space</b>, <u>Ctrl</u>");
+					   "<b>Return</b> to close the path, <b>Backspace</b> to undo, <b>Esc</b> to abort. Try <b>Space</b>, <u>Shift</u>, <u>Ctrl</u>");
 	}
 	
 	setStatusBarText(text);

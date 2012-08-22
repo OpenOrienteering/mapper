@@ -29,6 +29,7 @@
 
 #include "map_coord.h"
 
+class Map;
 class Object;
 class MapEditorController;
 class MapWidget;
@@ -49,6 +50,16 @@ public:
 	{
 		Other = 0,
 		Edit = 1
+	};
+	
+	/// The numbers correspond to the position in point-handles.png
+	enum PointHandleType
+	{
+		StartHandle = 0,
+		EndHandle = 1,
+		NormalHandle = 2,
+		CurveHandle = 3,
+		DashHandle = 4
 	};
 	
 	MapEditorTool(MapEditorController* editor, Type type, QAction* tool_button = NULL);
@@ -77,7 +88,13 @@ public:
 	inline Type getType() const {return type;}
 	inline QAction* getAction() const {return tool_button;}
 	
+	// Helper methods for object handles
 	static void loadPointHandles();
+	static void drawPointHandles(int hover_point, QPainter* painter, Object* object, MapWidget* widget);
+	static void drawPointHandle(QPainter* painter, QPointF point, PointHandleType type, bool active);
+	static void drawCurveHandleLine(QPainter* painter, QPointF point, QPointF curve_handle, bool active);
+	static void includeControlPointRect(QRectF& rect, Object* object, QPointF* box_text_handles);
+	static bool calculateBoxTextHandles(QPointF* out, Map* map);
 	
 	static const QRgb inactive_color;
 	static const QRgb active_color;
@@ -85,16 +102,6 @@ public:
 	static QImage* point_handles;
 	
 protected:
-	/// The numbers correspond to the position in point-handles.png
-	enum PointHandleType
-	{
-		StartHandle = 0,
-		EndHandle = 1,
-		NormalHandle = 2,
-		CurveHandle = 3,
-		DashHandle = 4
-	};
-	
 	/// Can be called by subclasses to display help text in the status bar
 	void setStatusBarText(const QString& text);
 	
@@ -104,13 +111,6 @@ protected:
 	void finishEditingSelection(MapRenderables& renderables, MapRenderables& old_renderables, bool create_undo_step, std::vector<Object*>* undo_duplicates = NULL, bool delete_objects = false);
 	void updateSelectionEditPreview(MapRenderables& renderables);
 	void deleteOldSelectionRenderables(MapRenderables& old_renderables, bool set_area_dirty);
-	
-	// Helper methods for object handles
-	void includeControlPointRect(QRectF& rect, Object* object, QPointF* box_text_handles);
-	void drawPointHandles(int hover_point, QPainter* painter, Object* object, MapWidget* widget);
-	void drawPointHandle(QPainter* painter, QPointF point, PointHandleType type, bool active);
-	void drawCurveHandleLine(QPainter* painter, QPointF point, QPointF curve_handle, bool active);
-	bool calculateBoxTextHandles(QPointF* out);
 	
 	int findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QPointF* box_text_handles, QRectF* selection_extent, MapWidget* widget);
 	inline float distanceSquared(const QPointF& a, const QPointF& b) {float dx = b.x() - a.x(); float dy = b.y() - a.y(); return dx*dx + dy*dy;}
