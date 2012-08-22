@@ -89,42 +89,14 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 				{
 					// Appending to another path
 					start_appending = true;
-					append_to_object = snap_info.object->asPath();
-					
-					// Setup angle helper
-					angle_helper->setCenter(click_pos_map);
-					angle_helper->clearAngles();
-					bool ok = false;
-					MapCoordF tangent = PathCoord::calculateTangent(append_to_object->getRawCoordinateVector(), snap_info.coord_index, snap_info.coord_index > 0, ok);
-					if (ok)
-					{
-						angle_helper->addAngle(-tangent.getAngle());
-						angle_helper->addAngle(-tangent.getAngle() + M_PI);
-					}
+					startAppending(snap_info);
 				}
 				else if (draw_in_progress &&
 						 (snap_info.type == SnappingToolHelper::ObjectCorners || snap_info.type == SnappingToolHelper::ObjectPaths) &&
 						 snap_info.object->getType() == Object::Path)
 				{
 					// Start following another path
-					following = true;
-					follow_object = snap_info.object->asPath();
-					create_segment = false;
-					
-					if (snap_info.type == SnappingToolHelper::ObjectCorners)
-						follow_helper.startFollowingFromCoord(follow_object, snap_info.coord_index);
-					else // if (snap_info.type == SnappingToolHelper::ObjectPaths)
-						follow_helper.startFollowingFromPathCoord(follow_object, snap_info.path_coord);
-					
-					if (path_has_preview_point)
-						preview_path->setCoordinate(preview_path->getCoordinateCount() - 1, snap_coord);
-					else
-						preview_path->addCoordinate(snap_coord);
-					path_has_preview_point = false;
-					previous_point_is_curve_point = false;
-					updatePreviewPath();
-					follow_start_index = preview_path->getCoordinateCount() - 1;
-					
+					startFollowing(snap_info, snap_coord);
 					return true;
 				}
 			}
@@ -210,25 +182,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 		
 		if (following)
 		{
-			// Update following
-			PathCoord path_coord;
-			float distance_sq;
-			follow_object->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord);
-			PathObject* temp_object;
-			bool success = follow_helper.updateFollowing(path_coord, temp_object);
-			
-			// Append the temporary object to the preview object at follow_start_index
-			for (int i = preview_path->getCoordinateCount() - 1; i >= follow_start_index; --i)
-				preview_path->deleteCoordinate(i, false);
-			if (success)
-			{
-				preview_path->appendPath(temp_object);
-				preview_path->getCoordinate(preview_path->getCoordinateCount() - 1).setHolePoint(false);
-				delete temp_object;
-			}
-			updatePreviewPath();
-			updateDirtyRect();
-			
+			updateFollowing();
 			return true;
 		}
 		
@@ -285,7 +239,7 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 		return false;
 	if (following)
 	{
-		following = false;
+		finishFollowing();
 		return true;
 	}
 	if (!create_segment)
@@ -474,7 +428,12 @@ void DrawPathTool::updateDrawHover()
 		
 		updatePreviewPath();
 		updateDirtyRect();	// TODO: Possible optimization: mark only the last segment as dirty
-	}	
+	}
+	else if (previous_point_is_curve_point && !left_mouse_down && draw_in_progress)
+	{
+		setPreviewPointsPosition(constrained_pos_map, 1);
+		updateDirtyRect();
+	}
 }
 
 void DrawPathTool::createPreviewCurve(MapCoord position, float direction)
@@ -594,6 +553,7 @@ void DrawPathTool::finishDrawing()
 	draw_in_progress = false;
 	updateSnapHelper();
 	updateStatusText();
+	hidePreviewPoints();
 	
 	DrawLineAndAreaTool::finishDrawing(appending ? append_to_object : NULL);
 }
@@ -604,6 +564,7 @@ void DrawPathTool::abortDrawing()
 	draw_in_progress = false;
 	updateSnapHelper();
 	updateStatusText();
+	hidePreviewPoints();
 	
 	DrawLineAndAreaTool::abortDrawing();
 }
@@ -682,6 +643,70 @@ void DrawPathTool::updateSnapHelper()
 		snap_helper.setFilter(SnappingToolHelper::AllTypes);
 	else
 		snap_helper.setFilter((SnappingToolHelper::SnapObjects)(SnappingToolHelper::GridCorners | SnappingToolHelper::ObjectCorners));
+}
+
+void DrawPathTool::startAppending(SnappingToolHelper::SnapInfo& snap_info)
+{
+	append_to_object = snap_info.object->asPath();
+	
+	// Setup angle helper
+	angle_helper->setCenter(click_pos_map);
+	angle_helper->clearAngles();
+	bool ok = false;
+	MapCoordF tangent = PathCoord::calculateTangent(append_to_object->getRawCoordinateVector(), snap_info.coord_index, snap_info.coord_index > 0, ok);
+	if (ok)
+	{
+		angle_helper->addAngle(-tangent.getAngle());
+		angle_helper->addAngle(-tangent.getAngle() + M_PI);
+	}
+}
+
+void DrawPathTool::startFollowing(SnappingToolHelper::SnapInfo& snap_info, const MapCoord& snap_coord)
+{
+	following = true;
+	follow_object = snap_info.object->asPath();
+	create_segment = false;
+	
+	if (snap_info.type == SnappingToolHelper::ObjectCorners)
+		follow_helper.startFollowingFromCoord(follow_object, snap_info.coord_index);
+	else // if (snap_info.type == SnappingToolHelper::ObjectPaths)
+		follow_helper.startFollowingFromPathCoord(follow_object, snap_info.path_coord);
+	
+	if (path_has_preview_point)
+		preview_path->setCoordinate(preview_path->getCoordinateCount() - 1, snap_coord);
+	else
+		preview_path->addCoordinate(snap_coord);
+	path_has_preview_point = false;
+	previous_point_is_curve_point = false;
+	updatePreviewPath();
+	follow_start_index = preview_path->getCoordinateCount() - 1;
+}
+
+void DrawPathTool::updateFollowing()
+{
+	PathCoord path_coord;
+	float distance_sq;
+	follow_object->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord);
+	PathObject* temp_object;
+	bool success = follow_helper.updateFollowing(path_coord, temp_object);
+	
+	// Append the temporary object to the preview object at follow_start_index
+	for (int i = preview_path->getCoordinateCount() - 1; i >= follow_start_index; --i)
+		preview_path->deleteCoordinate(i, false);
+	if (success)
+	{
+		preview_path->appendPath(temp_object);
+		preview_path->getCoordinate(preview_path->getCoordinateCount() - 1).setHolePoint(false);
+		delete temp_object;
+	}
+	updatePreviewPath();
+	hidePreviewPoints();
+	updateDirtyRect();
+}
+
+void DrawPathTool::finishFollowing()
+{
+	following = false;
 }
 
 float DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map)

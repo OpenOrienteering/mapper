@@ -102,20 +102,23 @@ void DrawLineAndAreaTool::createPreviewPoints()
 	
 	// Create objects for the new symbols
 	int size = (int)preview_point_symbols.size();
-	preview_points.resize(size);
-	for (int i = 0; i < size; ++i)
-		preview_points[i] = new PointObject(preview_point_symbols[i]);
+	for (int p = 0; p < 2; ++p)
+	{
+		preview_points[p].resize(size);
+		for (int i = 0; i < size; ++i)
+			preview_points[p][i] = new PointObject(preview_point_symbols[i]);
+	}
 }
-void DrawLineAndAreaTool::setPreviewPointsPosition(MapCoordF map_coord)
+void DrawLineAndAreaTool::setPreviewPointsPosition(MapCoordF map_coord, int index)
 {
-	int size = (int)preview_points.size();
+	int size = (int)preview_points[index].size();
 	for (int i = 0; i < size; ++i)
 	{
 		if (preview_points_shown)
-			renderables->removeRenderablesOfObject(preview_points[i], false);
-		preview_points[i]->setPosition(map_coord);
-		preview_points[i]->update(true);
-		renderables->insertRenderablesOfObject(preview_points[i]);
+			renderables->removeRenderablesOfObject(preview_points[index][i], false);
+		preview_points[index][i]->setPosition(map_coord);
+		preview_points[index][i]->update(true);
+		renderables->insertRenderablesOfObject(preview_points[index][i]);
 	}
 	preview_points_shown = true;
 }
@@ -124,9 +127,12 @@ void DrawLineAndAreaTool::hidePreviewPoints()
 	if (!preview_points_shown)
 		return;
 	
-	int size = (int)preview_points.size();
-	for (int i = 0; i < size; ++i)
-		renderables->removeRenderablesOfObject(preview_points[i], false);
+	for (int p = 0; p < 2; ++p)
+	{
+		int size = (int)preview_points[p].size();
+		for (int i = 0; i < size; ++i)
+			renderables->removeRenderablesOfObject(preview_points[p][i], false);
+	}
 	
 	preview_points_shown = false;
 }
@@ -138,9 +144,12 @@ void DrawLineAndAreaTool::includePreviewRects(QRectF& rect)
 	
 	if (preview_points_shown)
 	{
-		int size = (int)preview_points.size();
-		for (int i = 0; i < size; ++i)
-			rectIncludeSafe(rect, preview_points[i]->getExtent());
+		for (int p = 0; p < 2; ++p)
+		{
+			int size = (int)preview_points[p].size();
+			for (int i = 0; i < size; ++i)
+				rectIncludeSafe(rect, preview_points[p][i]->getExtent());
+		}
 	}
 }
 void DrawLineAndAreaTool::drawPreviewObjects(QPainter* painter, MapWidget* widget)
@@ -257,15 +266,18 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 
 void DrawLineAndAreaTool::deletePreviewObjects()
 {
-	int size = (int)preview_points.size();
-	for (int i = 0; i < size; ++i)
+	for (int p = 0; p < 2; ++p)
 	{
-		renderables->removeRenderablesOfObject(preview_points[i], false);
-		delete preview_points[i];
+		int size = (int)preview_points[p].size();
+		for (int i = 0; i < size; ++i)
+		{
+			renderables->removeRenderablesOfObject(preview_points[p][i], false);
+			delete preview_points[p][i];
+		}
+		preview_points[p].clear();
 	}
-	preview_points.clear();
 	
-	size = (int)preview_point_symbols.size();
+	int size = (int)preview_point_symbols.size();
 	for (int i = 0; i < size; ++i)
 	{
 		if (!preview_point_symbols_external[i])

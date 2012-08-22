@@ -62,6 +62,12 @@ protected:
 	void updateAngleHelper();
 	void updateSnapHelper();
 	
+	void startAppending(SnappingToolHelper::SnapInfo& snap_info);
+	
+	void startFollowing(SnappingToolHelper::SnapInfo& snap_info, const MapCoord& snap_coord);
+	void updateFollowing();
+	void finishFollowing();
+	
 	float calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map);
 	void updateStatusText();
 	

@@ -772,9 +772,10 @@ void PathObject::calcClosestCoordinate(MapCoordF coord, float& out_distance_sq, 
 		return;	
 	}
 	
-	out_distance_sq = (coord - MapCoordF(coords[0])).lengthSquared();
+	// NOTE: do not try to optimize this by starting with index 1, it will overlook curve starts this way
+	out_distance_sq = 999999;
 	out_index = 0;
-	for (int i = 1; i < coords_size; ++i)
+	for (int i = 0; i < coords_size; ++i)
 	{
 		double length_sq = (coord - MapCoordF(coords[i])).lengthSquared();
 		if (length_sq < out_distance_sq)

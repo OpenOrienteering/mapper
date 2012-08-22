@@ -57,7 +57,7 @@ protected slots:
 protected:
 	void createPreviewPoints();
 	void addPreviewPointSymbols(Symbol* symbol);
-	void setPreviewPointsPosition(MapCoordF map_coord);
+	void setPreviewPointsPosition(MapCoordF map_coord, int points_index = 0);
 	void hidePreviewPoints();
 	
 	void startDrawing();
@@ -72,7 +72,7 @@ protected:
 	
 	std::vector<PointSymbol*> preview_point_symbols;
 	std::vector<bool> preview_point_symbols_external;
-	std::vector<PointObject*> preview_points;
+	std::vector<PointObject*> preview_points[2];
 	bool preview_points_shown;
 	
 	CombinedSymbol* path_combination;
