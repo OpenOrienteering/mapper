@@ -63,7 +63,7 @@ protected:
 	void startDrawing();
 	void updatePreviewPath();
 	virtual void abortDrawing();
-	virtual void finishDrawing();
+	virtual void finishDrawing(PathObject* append_to_object = NULL);
 	void deletePreviewObjects();
 	
 	void includePreviewRects(QRectF& rect);

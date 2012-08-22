@@ -88,6 +88,9 @@ protected:
 	SnappingToolHelper snap_helper;
 	bool shift_pressed;
 	MapWidget* cur_map_widget;
+	
+	bool appending;
+	PathObject* append_to_object;
 };
 
 #endif

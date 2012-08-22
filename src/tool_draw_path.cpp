@@ -28,6 +28,7 @@
 #include "object.h"
 #include "map_editor.h"
 #include "map_widget.h"
+#include "symbol_dock_widget.h"
 
 QCursor* DrawPathTool::cursor = NULL;
 
@@ -67,11 +68,33 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	}
 	else if (event->buttons() & Qt::LeftButton)
 	{
+		bool start_appending = false;
 		if (shift_pressed)
 		{
-			click_pos_map = MapCoordF(snap_helper.snapToObject(map_coord, widget));
+			SnappingToolHelper::SnapInfo snap_info;
+			click_pos_map = MapCoordF(snap_helper.snapToObject(map_coord, widget, &snap_info));
 			cur_pos_map = click_pos_map;
 			click_pos = widget->mapToViewport(click_pos_map).toPoint();
+			
+			if (!draw_in_progress && !is_helper_tool &&
+				snap_info.type == SnappingToolHelper::ObjectCorners && snap_info.object->getSymbol() == symbol_widget->getSingleSelectedSymbol() &&
+				(snap_info.coord_index == 0 || snap_info.coord_index == snap_info.object->asPath()->getCoordinateCount() - 1))
+			{
+				// Appending to another path
+				start_appending = true;
+				append_to_object = snap_info.object->asPath();
+				
+				// Setup angle helper
+				angle_helper->setCenter(click_pos_map);
+				angle_helper->clearAngles();
+				bool ok = false;
+				MapCoordF tangent = PathCoord::calculateTangent(append_to_object->getRawCoordinateVector(), snap_info.coord_index, snap_info.coord_index > 0, ok);
+				if (ok)
+				{
+					angle_helper->addAngle(-tangent.getAngle());
+					angle_helper->addAngle(-tangent.getAngle() + M_PI);
+				}
+			}
 		}
 		else
 		{
@@ -90,6 +113,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 			
 			path_has_preview_point = false;
 			previous_point_is_curve_point = false;
+			appending = start_appending;
 			
 			updateStatusText();
 		}
@@ -121,7 +145,8 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 			{
 				preview_path->addCoordinate(coord);
 				updatePreviewPath();
-				updateAngleHelper();
+				if (!start_appending)
+					updateAngleHelper();
 			}
 		}
 		
@@ -508,7 +533,7 @@ void DrawPathTool::finishDrawing()
 	updateSnapHelper();
 	updateStatusText();
 	
-	DrawLineAndAreaTool::finishDrawing();
+	DrawLineAndAreaTool::finishDrawing(appending ? append_to_object : NULL);
 }
 void DrawPathTool::abortDrawing()
 {
@@ -614,7 +639,7 @@ void DrawPathTool::updateStatusText()
 		text += tr("<b>Dash points on.</b> ");
 	
 	if (!draw_in_progress)
-		text += tr("<b>Click</b> to start a polygonal segment, <b>Drag</b> to start a curve. Hold <u>Shift</u> to snap to existing objects.");
+		text += tr("<b>Click</b> to start a polygonal segment, <b>Drag</b> to start a curve. Hold <u>Shift</u> to snap or append to existing objects.");
 	else
 	{
 		if (shift_pressed)

@@ -195,7 +195,7 @@ void DrawLineAndAreaTool::abortDrawing()
 	emit(pathAborted());
 }
 
-void DrawLineAndAreaTool::finishDrawing()
+void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 {
 	if (preview_path)
 		renderables->removeRenderablesOfObject(preview_path, false);
@@ -203,13 +203,35 @@ void DrawLineAndAreaTool::finishDrawing()
 	if (preview_path && !is_helper_tool)
 	{
 		preview_path->setSymbol(drawing_symbol, true);
-		int index = editor->getMap()->addObject(preview_path);
-		editor->getMap()->clearObjectSelection(false);
-		editor->getMap()->addObjectToSelection(preview_path, true);
+
+		bool can_be_appended = false;
+		if (append_to_object)
+			can_be_appended = append_to_object->canBeConnected(preview_path, 0.01*0.01);
 		
-		DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(editor->getMap());
-		undo_step->addObject(index);
-		editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
+		if (can_be_appended)
+		{
+			Object* undo_duplicate = append_to_object->duplicate();
+			append_to_object->connectIfClose(preview_path, 0.01*0.01);
+			delete preview_path;
+			
+			editor->getMap()->clearObjectSelection(false);
+			editor->getMap()->addObjectToSelection(append_to_object, true);
+			
+			MapLayer* cur_layer = editor->getMap()->getCurrentLayer();
+			ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(editor->getMap());
+			undo_step->addObject(cur_layer->findObjectIndex(append_to_object), undo_duplicate);
+			editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
+		}
+		else
+		{
+			int index = editor->getMap()->addObject(preview_path);
+			editor->getMap()->clearObjectSelection(false);
+			editor->getMap()->addObjectToSelection(preview_path, true);
+			
+			DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(editor->getMap());
+			undo_step->addObject(index);
+			editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
+		}
 	}
 	editor->getMap()->clearDrawingBoundingBox();
 	

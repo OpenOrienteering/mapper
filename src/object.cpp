@@ -894,6 +894,8 @@ bool PathObject::connectIfClose(PathObject* other, double connect_threshold_sq)
 			if (other_parts[i])
 				appendPathPart(other, i);
 		}
+		
+		output_dirty = true;
 	}
 	
 	return did_connect_path;
