@@ -640,7 +640,8 @@ void MapWidget::mousePressEvent(QMouseEvent* event)
 	}
 	else if (event->button() == Qt::RightButton)
 	{
-		pie_menu.popup(event->globalPos());
+		if (!pie_menu.isEmpty())
+			pie_menu.popup(event->globalPos());
 	}
 }
 void MapWidget::mouseMoveEvent(QMouseEvent* event)

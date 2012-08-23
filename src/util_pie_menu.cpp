@@ -102,6 +102,16 @@ void PieMenu::clear()
 		update();
 }
 
+bool PieMenu::isEmpty() const
+{
+	for (size_t i = 0, end = actions.size(); i < end; ++i)
+	{
+		if (actions[i] != NULL)
+			return false;
+	}
+	return true;
+}
+
 void PieMenu::popup(const QPoint pos)
 {
 	QPoint cursor_pos = QCursor::pos();
@@ -178,14 +188,14 @@ void PieMenu::paintEvent(QPaintEvent* event)
 	painter.setPen(Qt::NoPen);
 	for (int i = 0, end = (int)actions.size(); i < end; ++i)
 	{
-		bool highlight = actions[i]->isEnabled() && i == hover_item;
+		bool highlight = actions[i] != NULL && actions[i]->isEnabled() && i == hover_item;
 		
 		if (actions[i] == NULL || !actions[i]->isEnabled() || actions[i]->isChecked() || highlight)
 		{
 			// Draw item background
 			if (highlight)
 				painter.setBrush(QBrush(MapEditorTool::active_color));
-			else if (actions[i]->isChecked())
+			else if (actions[i] != NULL && actions[i]->isChecked())
 				painter.setBrush(QBrush(qRgb(240, 240, 240)));
 			else
 				painter.setBrush(Qt::darkGray);

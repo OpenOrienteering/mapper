@@ -40,6 +40,9 @@ public:
 	/// Removes all actions from the menu, but leaves the number of menu items unchanged
 	void clear();
 	
+	/// Returns whether all actions are set to NULL
+	bool isEmpty() const;
+	
 	/// Shows the menu at the given absolute position
 	void popup(const QPoint pos);
 	
