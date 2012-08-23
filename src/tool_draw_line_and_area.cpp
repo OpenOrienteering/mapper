@@ -173,10 +173,10 @@ void DrawLineAndAreaTool::startDrawing()
 	if (!path_combination)
 		path_combination = new CombinedSymbol();
 	path_combination->setNumParts(is_helper_tool ? 2 : 3);
-	path_combination->setPart(0, Map::getCoveringWhiteLine());
-	path_combination->setPart(1, Map::getCoveringRedLine());
+	path_combination->setPart(0, Map::getCoveringWhiteLine(), false);
+	path_combination->setPart(1, Map::getCoveringRedLine(), false);
 	if (drawing_symbol)
-		path_combination->setPart(2, drawing_symbol);
+		path_combination->setPart(2, drawing_symbol, false);
 	preview_path = new PathObject(path_combination);
 	
 	draw_in_progress = true;

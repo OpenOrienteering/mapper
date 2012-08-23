@@ -1493,8 +1493,8 @@ void Map::initStatic()
 	
 	covering_combined_line = new CombinedSymbol();
 	covering_combined_line->setNumParts(2);
-	covering_combined_line->setPart(0, covering_white_line);
-	covering_combined_line->setPart(1, covering_red_line);
+	covering_combined_line->setPart(0, covering_white_line, false);
+	covering_combined_line->setPart(1, covering_red_line, false);
 	
 	// Undefined symbols
 	undefined_symbol_color.opacity = 1;

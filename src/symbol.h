@@ -154,7 +154,13 @@ public:
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
 	
 	// Static
+	
+	/// Returns a newly created symbol of the given type
 	static Symbol* getSymbolForType(Type type);
+	/// Static save function; saves the symbol and its type number
+	static void saveSymbol(Symbol* symobl, QIODevice* stream, Map* map);
+	/// Static read function; reads the type number, creates a symbol of this type and loads it. Returns true if successful.
+	static bool loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* map);
 	
 	static const int number_components = 3;
 	static const int icon_size = 32;
@@ -194,9 +200,20 @@ public:
 	/// Sets the selection to the given symbol
 	void setSymbol(Symbol* symbol);
 	
+	/// Adds a custom text item below the topmost "- none -" which can be identified by the given id.
+	void addCustomItem(const QString& text, int id);
+	
+	/// Returns the id of the current item if it is a custom item, or -1 otherwise
+	int customID() const;
+	
+	/// Sets the selection to the custom item with the given id
+	void setCustomItem(int id);
+	
 protected slots:
 	// TODO: react to changes in the map (not important as long as that cannot happen as long as a SymbolDropDown is shown, which is the case currently)
 	
+private:
+	int num_custom_items;
 };
 
 #endif

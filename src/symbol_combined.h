@@ -26,9 +26,12 @@
 #include "symbol.h"
 #include "symbol_properties_widget.h"
 
+QT_BEGIN_NAMESPACE
 class QComboBox;
 class QLabel;
 class QSpinBox;
+class QPushButton;
+QT_END_NAMESPACE
 
 class SymbolSettingDialog;
 
@@ -55,10 +58,13 @@ public:
 	
 	// Getters / Setter
 	inline int getNumParts() const {return (int)parts.size();}
-	inline void setNumParts(int num) {parts.resize(num);}
+	inline void setNumParts(int num) {parts.resize(num, NULL); private_parts.resize(num, false);}
 	
 	inline Symbol* getPart(int i) const {return parts[i];}
-	inline void setPart(int i, Symbol* symbol) {parts[i] = symbol;}
+	void setPart(int i, Symbol* symbol, bool is_private);
+	
+	inline bool isPartPrivate(int i) const {return private_parts[i];}
+	inline void setPartPrivate(int i, bool set_private) {private_parts[i] = set_private;}
 	
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
 	
@@ -68,6 +74,7 @@ protected:
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	std::vector<Symbol*> parts;
+	std::vector<bool> private_parts;
 	std::vector<int> temp_part_indices;	// temporary vector of the indices of the 'parts' symbols, used just for loading
 };
 
@@ -90,14 +97,15 @@ public:
 protected slots:
 	void numberChanged(int value);
 	void symbolChanged(int index);
+	void editClicked(int index);
 	
 private:
 	CombinedSymbol* symbol;
-//	SymbolSettingDialog* dialog;
 	
 	QSpinBox* number_edit;
 	QLabel** symbol_labels;
 	SymbolDropDown** symbol_edits;
+	QPushButton** edit_buttons;
 };
 
 #endif

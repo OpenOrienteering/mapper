@@ -166,25 +166,12 @@ void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
 					}
 					continue;
                 }
-                
+				
 
-                if (symbol)
-                {
-                    map->symbols.push_back(symbol);
-                    symbol_index[ocad_symbol->number] = symbol;
-					
-					// For combined symbols, also add their parts
-					// FIXME: implement private parts for combined symbols instead
-					if (symbol->getType() == Symbol::Combined)
-					{
-						CombinedSymbol* combined_symbol = reinterpret_cast<CombinedSymbol*>(symbol);
-						for (int i = 0; i < combined_symbol->getNumParts(); ++i)
-						{
-							Symbol* part = combined_symbol->getPart(i);
-							part->setNumberComponent(2, i+1);
-							map->symbols.push_back(part);
-						}
-					}
+				if (symbol)
+				{
+					map->symbols.push_back(symbol);
+					symbol_index[ocad_symbol->number] = symbol;
                 }
                 else
                 {
@@ -508,8 +495,8 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 		CombinedSymbol* full_line = new CombinedSymbol();
 		fillCommonSymbolFields(full_line, (OCADSymbol *)ocad_symbol);
 		full_line->setNumParts(2);
-		full_line->setPart(0, main_line);
-		full_line->setPart(1, double_line);
+		full_line->setPart(0, main_line, true);
+		full_line->setPart(1, double_line, true);
 		
 		// Don't let parts be affected by possible settings for the combined symbol
 		main_line->setHidden(false);
@@ -1372,13 +1359,13 @@ void OCAD8FileExport::doExport() throw (FormatException)
 		
 		s16 index = -1;
 		if (symbol->getType() == Symbol::Point)
-			index = exportPointSymbol(static_cast<PointSymbol*>(symbol));
+			index = exportPointSymbol(symbol->asPoint());
 		else if (symbol->getType() == Symbol::Line)
-			index = exportLineSymbol(static_cast<LineSymbol*>(symbol));
+			index = exportLineSymbol(symbol->asLine());
 		else if (symbol->getType() == Symbol::Area)
-			index = exportAreaSymbol(static_cast<AreaSymbol*>(symbol));
+			index = exportAreaSymbol(symbol->asArea());
 		else if (symbol->getType() == Symbol::Text)
-			index = exportTextSymbol(static_cast<TextSymbol*>(symbol));
+			index = exportTextSymbol(symbol->asText());
 		else if (symbol->getType() == Symbol::Combined)
 			; // This is done as a second pass to ensure that all dependencies are added to the symbol_index
 		else
@@ -1392,10 +1379,10 @@ void OCAD8FileExport::doExport() throw (FormatException)
 		}
 	}
 	
+	// Separate pass for combined symbols
 	for (int i = 0; i < map->getNumSymbols(); ++i)
 	{
 		Symbol* symbol = map->getSymbol(i);
-		
 		if (symbol->getType() == Symbol::Combined)
 			symbol_index.insert(symbol, exportCombinedSymbol(static_cast<CombinedSymbol*>(symbol)));
 	}
@@ -2063,6 +2050,7 @@ void OCAD8FileExport::setTextSymbolFormatting(OCADTextSymbol* ocad_symbol, TextO
 
 std::set< s16 > OCAD8FileExport::exportCombinedSymbol(CombinedSymbol* combination)
 {
+	// Insert public parts
 	std::vector<bool> map_bitfield;
 	map_bitfield.assign(map->getNumSymbols(), false);
 	map_bitfield[map->findSymbolIndex(combination)] = true;
@@ -2077,6 +2065,24 @@ std::set< s16 > OCAD8FileExport::exportCombinedSymbol(CombinedSymbol* combinatio
 			              symbol_index[map->getSymbol(i)].end());
 		}
 	}
+	
+	// Insert private parts
+	for (int i = 0; i < combination->getNumParts(); ++i)
+	{
+		if (combination->isPartPrivate(i))
+		{
+			Symbol* part = combination->getPart(i);
+			int index;
+			if (part->getType() == Symbol::Line)
+				index = exportLineSymbol(part->asLine());
+			else if (part->getType() == Symbol::Area)
+				index = exportAreaSymbol(part->asArea());
+			else
+				assert(false);
+			result.insert(index);
+		}
+	}
+	
 	return result;
 }
 

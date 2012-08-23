@@ -313,6 +313,25 @@ Symbol* Symbol::getSymbolForType(Symbol::Type type)
 	}
 }
 
+void Symbol::saveSymbol(Symbol* symobl, QIODevice* stream, Map* map)
+{
+	int save_type = static_cast<int>(symobl->getType());
+	stream->write((const char*)&save_type, sizeof(int));
+	symobl->save(stream, map);
+}
+
+bool Symbol::loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* map)
+{
+	int save_type;
+	stream->read((char*)&save_type, sizeof(int));
+	symbol = Symbol::getSymbolForType(static_cast<Symbol::Type>(save_type));
+	if (!symbol)
+		return false;
+	if (!symbol->load(stream, version, map))
+		return false;
+	return true;
+}
+
 bool Symbol::colorEquals(MapColor* color, MapColor* other)
 {
 	if ((color == NULL && other != NULL) ||
@@ -351,6 +370,7 @@ Q_DECLARE_METATYPE(Symbol*)
 
 SymbolDropDown::SymbolDropDown(Map* map, int filter, Symbol* initial_symbol, const Symbol* excluded_symbol, QWidget* parent): QComboBox()
 {
+	num_custom_items = 0;
 	addItem(tr("- none -"), QVariant::fromValue<Symbol*>(NULL));
 	
 	int size = map->getNumSymbols();
@@ -376,10 +396,34 @@ SymbolDropDown::SymbolDropDown(Map* map, int filter, Symbol* initial_symbol, con
 
 Symbol* SymbolDropDown::symbol() const
 {
-	return itemData(currentIndex()).value<Symbol*>();
+	QVariant data = itemData(currentIndex());
+	if (data.canConvert<Symbol*>())
+		return data.value<Symbol*>();
+	else
+		return NULL;
 }
 
 void SymbolDropDown::setSymbol(Symbol* symbol)
 {
 	setCurrentIndex(findData(QVariant::fromValue<Symbol*>(symbol)));
+}
+
+void SymbolDropDown::addCustomItem(const QString& text, int id)
+{
+	insertItem(1 + num_custom_items, text, QVariant(id));
+	++num_custom_items;
+}
+
+int SymbolDropDown::customID() const
+{
+	QVariant data = itemData(currentIndex());
+	if (data.canConvert<int>())
+		return data.value<int>();
+	else
+		return -1;
+}
+
+void SymbolDropDown::setCustomItem(int id)
+{
+	setCurrentIndex(findData(QVariant(id)));
 }

@@ -79,13 +79,13 @@ Symbol* TextSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) cons
 	new_text->kerning = kerning;
 	new_text->icon_text = icon_text;
 	new_text->framing = framing;
-	new_text->framing_color = framing_color;
+	new_text->framing_color = color_map ? color_map->value(framing_color) : framing_color;
 	new_text->framing_mode = framing_mode;
 	new_text->framing_line_half_width = framing_line_half_width;
 	new_text->framing_shadow_x_offset = framing_shadow_x_offset;
 	new_text->framing_shadow_y_offset = framing_shadow_y_offset;
 	new_text->line_below = line_below;
-	new_text->line_below_color = line_below_color;
+	new_text->line_below_color = color_map ? color_map->value(line_below_color) : line_below_color;
 	new_text->line_below_width = line_below_width;
 	new_text->line_below_distance = line_below_distance;
 	new_text->custom_tabs = custom_tabs;

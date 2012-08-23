@@ -32,10 +32,16 @@ CombinedSymbol::CombinedSymbol() : Symbol(Symbol::Combined)
 	parts.resize(2);
 	parts[0] = NULL;
 	parts[1] = NULL;
+	private_parts.assign(2, false);
 }
 
 CombinedSymbol::~CombinedSymbol()
 {
+	for (int i = 0, size = (int)parts.size(); i < size; ++i)
+	{
+		if (private_parts[i])
+			delete parts[i];
+	}
 }
 
 Symbol* CombinedSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) const
@@ -43,13 +49,18 @@ Symbol* CombinedSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) 
 	CombinedSymbol* new_symbol = new CombinedSymbol();
 	new_symbol->duplicateImplCommon(this);
 	new_symbol->parts = parts;
+	new_symbol->private_parts = private_parts;
+	for (int i = 0, size = (int)parts.size(); i < size; ++i)
+	{
+		if (private_parts[i])
+			new_symbol->parts[i] = parts[i]->duplicate(color_map);
+	}
 	return new_symbol;
 }
 
 void CombinedSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
 {
-	int size = (int)parts.size();
-	for (int i = 0; i < size; ++i)
+	for (int i = 0, size = (int)parts.size(); i < size; ++i)
 	{
 		if (parts[i])
 			parts[i]->createRenderables(object, flags, coords, output);
@@ -60,12 +71,16 @@ void CombinedSymbol::colorDeleted(MapColor* color)
 {
 	if (containsColor(color))
 		resetIcon();
+	for (int i = 0, size = (int)parts.size(); i < size; ++i)
+	{
+		if (private_parts[i])
+			parts[i]->colorDeleted(color);
+	}
 }
 
 bool CombinedSymbol::containsColor(MapColor* color)
 {
-	int size = (int)parts.size();
-	for (int i = 0; i < size; ++i)
+	for (int i = 0, size = (int)parts.size(); i < size; ++i)
 	{
 		if (parts[i]->containsColor(color))
 		{
@@ -78,8 +93,7 @@ bool CombinedSymbol::containsColor(MapColor* color)
 bool CombinedSymbol::symbolChanged(Symbol* old_symbol, Symbol* new_symbol)
 {
 	bool have_symbol = false;
-	int size = (int)parts.size();
-	for (int i = 0; i < size; ++i)
+	for (int i = 0, size = (int)parts.size(); i < size; ++i)
 	{
 		if (parts[i] == old_symbol)
 		{
@@ -97,11 +111,12 @@ bool CombinedSymbol::symbolChanged(Symbol* old_symbol, Symbol* new_symbol)
 
 bool CombinedSymbol::containsSymbol(const Symbol* symbol) const
 {
-	int size = (int)parts.size();
-	for (int i = 0; i < size; ++i)
+	for (int i = 0, size = (int)parts.size(); i < size; ++i)
 	{
 		if (parts[i] == symbol)
 			return true;
+		else if (parts[i] == NULL)
+			continue;
 		if (parts[i]->getType() == Symbol::Combined)	// TODO: see TODO in SymbolDropDown constructor.
 		{
 			CombinedSymbol* combined_symbol = reinterpret_cast<CombinedSymbol*>(parts[i]);
@@ -114,6 +129,14 @@ bool CombinedSymbol::containsSymbol(const Symbol* symbol) const
 
 void CombinedSymbol::scale(double factor)
 {
+	for (int i = 0, size = (int)parts.size(); i < size; ++i)
+	{
+		if (private_parts[i])
+		{
+			parts[i]->scale(factor);
+		}
+	}
+	
 	resetIcon();
 }
 
@@ -138,8 +161,18 @@ void CombinedSymbol::saveImpl(QIODevice* file, Map* map)
 	
 	for (int i = 0; i < size; ++i)
 	{
-		int temp = (parts[i] == NULL) ? -1 : map->findSymbolIndex(parts[i]);
-		file->write((const char*)&temp, sizeof(int));
+		bool is_private = private_parts[i];
+		file->write((const char*)&is_private, sizeof(bool));
+		
+		if (is_private)
+		{
+			Symbol::saveSymbol(parts[i], file, map);
+		}
+		else
+		{
+			int temp = (parts[i] == NULL) ? -1 : map->findSymbolIndex(parts[i]);
+			file->write((const char*)&temp, sizeof(int));
+		}
 	}
 }
 
@@ -148,12 +181,27 @@ bool CombinedSymbol::loadImpl(QIODevice* file, int version, Map* map)
 	int size;
 	file->read((char*)&size, sizeof(int));
 	temp_part_indices.resize(size);
+	parts.resize(size);
 	
 	for (int i = 0; i < size; ++i)
 	{
-		int temp;
-		file->read((char*)&temp, sizeof(int));
-		temp_part_indices[i] = temp;
+		bool is_private = false;
+		if (version >= 22)
+			file->read((char*)&is_private, sizeof(bool));
+		private_parts[i] = is_private;
+		
+		if (is_private)
+		{
+			if (!Symbol::loadSymbol(parts[i], file, version, map))
+				return false;
+			temp_part_indices[i] = -1;
+		}
+		else
+		{
+			int temp;
+			file->read((char*)&temp, sizeof(int));
+			temp_part_indices[i] = temp;
+		}
 	}
 	return true;
 }
@@ -166,6 +214,8 @@ bool CombinedSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitiv
 	// TODO: parts are only compared in order
 	for (size_t i = 0, end = parts.size(); i < end; ++i)
 	{
+		if (private_parts[i] != combination->private_parts[i])
+			return false;
 		if ((parts[i] == NULL && combination->parts[i] != NULL) ||
 			(parts[i] != NULL && combination->parts[i] == NULL))
 			return false;
@@ -180,16 +230,26 @@ bool CombinedSymbol::loadFinished(Map* map)
 	int size = (int)temp_part_indices.size();
 	if (size == 0)
 		return true;
-	parts.resize(size);
 	for (int i = 0; i < size; ++i)
 	{
 		int index = temp_part_indices[i];
-		if (index < 0 || index >= map->getNumSymbols())
+		if (index < 0)
+			continue;	// part is private and has already been loaded
+		if (index >= map->getNumSymbols())
 			return false;
 		parts[i] = map->getSymbol(index);
 	}
 	temp_part_indices.clear();
 	return true;
+}
+
+void CombinedSymbol::setPart(int i, Symbol* symbol, bool is_private)
+{
+	if (private_parts[i])
+		delete parts[i];
+	
+	parts[i] = symbol;
+	private_parts[i] = (symbol == NULL) ? false : is_private;
 }
 
 SymbolPropertiesWidget* CombinedSymbol::createPropertiesWidget(SymbolSettingDialog* dialog)
@@ -215,19 +275,41 @@ CombinedSymbolSettings::CombinedSymbolSettings(CombinedSymbol* symbol, SymbolSet
 	connect(number_edit, SIGNAL(valueChanged(int)), this, SLOT(numberChanged(int)));
 	layout->addRow(tr("&Number of parts:"), number_edit);
 	
+	QSignalMapper* button_signal_mapper = new QSignalMapper(this);
+	connect(button_signal_mapper, SIGNAL(mapped(int)), this, SLOT(editClicked(int)));
+	QSignalMapper* symbol_signal_mapper = new QSignalMapper(this);
+	connect(symbol_signal_mapper, SIGNAL(mapped(int)), this, SLOT(symbolChanged(int)));
+	
 	symbol_labels = new QLabel*[max_count];
 	symbol_edits = new SymbolDropDown*[max_count];
+	edit_buttons = new QPushButton*[max_count];
 	for (int i = 0; i < max_count; ++i)
 	{
 		symbol_labels[i] = new QLabel(tr("Symbol %1:").arg(i+1));
+		
 		symbol_edits[i] = new SymbolDropDown(source_map, Symbol::Line | Symbol::Area | Symbol::Combined, ((int)symbol->parts.size() > i) ? symbol->parts[i] : NULL, source_symbol);
-		connect(symbol_edits[i], SIGNAL(currentIndexChanged(int)), this, SLOT(symbolChanged(int)));
-		layout->addRow(symbol_labels[i], symbol_edits[i]);
+		symbol_edits[i]->addCustomItem(tr("- Private line symbol -"), 1);
+		symbol_edits[i]->addCustomItem(tr("- Private area symbol -"), 2);
+		if (((int)symbol->parts.size() > i) && symbol->isPartPrivate(i))
+			symbol_edits[i]->setCustomItem((symbol->getPart(i)->getType() == Symbol::Line) ? 1 : 2);
+		connect(symbol_edits[i], SIGNAL(currentIndexChanged(int)), symbol_signal_mapper, SLOT(map()));
+		symbol_signal_mapper->setMapping(symbol_edits[i], i);
+		
+		edit_buttons[i] = new QPushButton(tr("Edit private symbol..."));
+		edit_buttons[i]->setEnabled((int)symbol->parts.size() > i && symbol->private_parts[i]);
+		connect(edit_buttons[i], SIGNAL(clicked()), button_signal_mapper, SLOT(map()));
+		button_signal_mapper->setMapping(edit_buttons[i], i);
+		
+		QHBoxLayout* row_layout = new QHBoxLayout();
+		row_layout->addWidget(symbol_edits[i]);
+		row_layout->addWidget(edit_buttons[i]);
+		layout->addRow(symbol_labels[i], row_layout);
 		
 		if (i >= symbol->getNumParts())
 		{
 			symbol_labels[i]->hide();
 			symbol_edits[i]->hide();
+			edit_buttons[i]->hide();
 		}
 	}
 	
@@ -240,6 +322,7 @@ CombinedSymbolSettings::~CombinedSymbolSettings()
 {
 	delete[] symbol_labels;
 	delete[] symbol_edits;
+	delete[] edit_buttons;
 }
 
 void CombinedSymbolSettings::numberChanged(int value)
@@ -254,14 +337,16 @@ void CombinedSymbolSettings::numberChanged(int value)
 	{
 		symbol_labels[i]->setVisible(i < num_items);
 		symbol_edits[i]->setVisible(i < num_items);
+		edit_buttons[i]->setVisible(i < num_items);
 		
 		if (i >= old_num_items && i < num_items)
 		{
 			// This item appears now
-			symbol->setPart(i, NULL);
+			symbol->setPart(i, NULL, false);
 			symbol_edits[i]->blockSignals(true);
 			symbol_edits[i]->setSymbol(NULL);
 			symbol_edits[i]->blockSignals(false);
+			edit_buttons[i]->setEnabled(symbol->isPartPrivate(i));
 		}
 	}
 	emit propertiesModified();
@@ -269,9 +354,51 @@ void CombinedSymbolSettings::numberChanged(int value)
 
 void CombinedSymbolSettings::symbolChanged(int index)
 {
-	for (int i = 0; i < symbol->getNumParts(); ++i)
-		symbol->setPart(i, symbol_edits[i]->symbol());
+	if (symbol_edits[index]->symbol() != NULL)
+		symbol->setPart(index, symbol_edits[index]->symbol(), false);
+	else if (symbol_edits[index]->customID() > 0)
+	{
+		// Changing to a private symbol
+		Symbol::Type new_symbol_type;
+		if (symbol_edits[index]->customID() == 1)
+			new_symbol_type = Symbol::Line;
+		else // if (symbol_edits[index]->customID() == 2)
+			new_symbol_type = Symbol::Area;
+		
+		Symbol* new_symbol = NULL;
+		if (symbol->getPart(index) != NULL && new_symbol_type == symbol->getPart(index)->getType())
+		{
+			if (QMessageBox::question(this, tr("Change from public to private symbol"),
+				tr("Take the old symbol as template for the private symbol?"), QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
+			{
+				new_symbol = symbol->getPart(index)->duplicate();
+			}
+		}
+		
+		if (new_symbol == NULL)
+			new_symbol = Symbol::getSymbolForType(new_symbol_type);
+		
+		symbol->setPart(index, new_symbol, true);
+		editClicked(index);
+	}
+	else
+		symbol->setPart(index, NULL, false);
+	
+	edit_buttons[index]->setEnabled(symbol->isPartPrivate(index));
 	emit propertiesModified();
+}
+
+void CombinedSymbolSettings::editClicked(int index)
+{
+	Symbol* part = symbol->getPart(index);
+	SymbolSettingDialog sub_dialog(part, dialog->getSourceMap(), this);
+	sub_dialog.setWindowModality(Qt::WindowModal);
+	if (sub_dialog.exec() == QDialog::Accepted)
+	{
+		part = sub_dialog.getNewSymbol();
+		symbol->setPart(index, part, true);
+		emit propertiesModified();
+	}
 }
 
 void CombinedSymbolSettings::reset(Symbol* symbol)
@@ -280,7 +407,7 @@ void CombinedSymbolSettings::reset(Symbol* symbol)
 	
 	SymbolPropertiesWidget::reset(symbol);
 	
-	this->symbol = reinterpret_cast<CombinedSymbol*>(symbol);
+	this->symbol = symbol->asCombined();
 	updateContents();
 }
 
@@ -292,15 +419,21 @@ void CombinedSymbolSettings::updateContents()
 		symbol_edits[i]->blockSignals(true);
 		if (i < num_parts)
 		{
-			symbol_edits[i]->setSymbol(symbol->parts[i]);
+			if (symbol->isPartPrivate(i))
+				symbol_edits[i]->setCustomItem((symbol->getPart(i)->getType() == Symbol::Line) ? 1 : 2);
+			else
+				symbol_edits[i]->setSymbol(symbol->parts[i]);
 			symbol_edits[i]->show();
 			symbol_labels[i]->show();
+			edit_buttons[i]->setEnabled(symbol->isPartPrivate(i));
+			edit_buttons[i]->show();
 		}
 		else
 		{
 			symbol_edits[i]->setSymbol(NULL);
 			symbol_edits[i]->hide();
 			symbol_labels[i]->hide();
+			edit_buttons[i]->hide();
 		}
 		symbol_edits[i]->blockSignals(false);
 	}
