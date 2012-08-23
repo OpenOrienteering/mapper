@@ -211,20 +211,21 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 		point->setPosition(0, 0);
 		object = point;
 	}
-	else if (type == Line)
-	{
-		PathObject* path = new PathObject(this);
-		path->addCoordinate(0, MapCoord(-max_icon_mm_half, 0));
-		path->addCoordinate(1, MapCoord(max_icon_mm_half, 0));
-		object = path;
-	}
-	else if (type == Area)
+	else if (type == Area || (type == Combined && getContainedTypes() & Area))
 	{
 		PathObject* path = new PathObject(this);
 		path->addCoordinate(0, MapCoord(-max_icon_mm_half, -max_icon_mm_half));
 		path->addCoordinate(1, MapCoord(max_icon_mm_half, -max_icon_mm_half));
 		path->addCoordinate(2, MapCoord(max_icon_mm_half, max_icon_mm_half));
 		path->addCoordinate(3, MapCoord(-max_icon_mm_half, max_icon_mm_half));
+		path->getPart(0).setClosed(true, true);
+		object = path;
+	}
+	else if (type == Line || type == Combined)
+	{
+		PathObject* path = new PathObject(this);
+		path->addCoordinate(0, MapCoord(-max_icon_mm_half, 0));
+		path->addCoordinate(1, MapCoord(max_icon_mm_half, 0));
 		object = path;
 	}
 	else if (type == Text)
@@ -236,14 +237,14 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 		text->setText(dynamic_cast<TextSymbol*>(this)->getIconText());
 		object = text;
 	}
-	else if (type == Combined)
+	/*else if (type == Combined)
 	{
 		PathObject* path = new PathObject(this);
 		for (int i = 0; i < 5; ++i)
 			path->addCoordinate(i, MapCoord(sin(2*M_PI * i/5.0) * max_icon_mm_half, -cos(2*M_PI * i/5.0) * max_icon_mm_half));
 		path->getPart(0).setClosed(true, false);
 		object = path;
-	}
+	}*/
 	else
 		assert(false);
 	
