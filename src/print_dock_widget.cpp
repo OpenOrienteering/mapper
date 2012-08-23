@@ -29,6 +29,7 @@
 #include "global.h"
 #include "main_window.h"
 #include "map_widget.h"
+#include "settings.h"
 
 PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, MapEditorController* editor, QWidget* parent) : EditorDockWidgetChild(parent), map(map), main_window(main_window), main_view(main_view), editor(editor)
 {
@@ -220,6 +221,14 @@ void PrintWidget::setPrintAreaTop(float value)
 	center_button->setChecked(false);
 }
 
+void PrintWidget::getMargins(float& top, float& left, float& bottom, float& right)
+{
+	top = margin_top;
+	left = margin_left;
+	bottom = margin_bottom;
+	right = margin_right;
+}
+
 QRectF PrintWidget::getEffectivePrintArea()
 {
 	float scale_factor = calcScaleFactor();
@@ -227,11 +236,6 @@ QRectF PrintWidget::getEffectivePrintArea()
 				  getPrintAreaTop() + (print_height / 2) * (1 - 1 / scale_factor),
 				  print_width / scale_factor,
 				  print_height / scale_factor);
-}
-
-QRectF PrintWidget::getPaperArea()
-{
-    return QRectF(0, 0, 8.5*25.4, 11*25.4);	// TODO
 }
 
 float PrintWidget::calcScaleFactor()
@@ -249,6 +253,12 @@ float PrintWidget::calcScaleFactor()
 		return 1;
 }
 
+bool PrintWidget::exporterSelected()
+{
+	int index = device_combo->itemData(device_combo->currentIndex()).toInt();
+	return index < 0;
+}
+
 void PrintWidget::printMap(QPrinter* printer)
 {
 	// Re-center (necessary for the print preview dialog)
@@ -260,8 +270,7 @@ void PrintWidget::printMap(QPrinter* printer)
 }
 void PrintWidget::setPrinterSettings(QPrinter* printer)
 {
-	int index = device_combo->itemData(device_combo->currentIndex()).toInt();
-	bool exporter = index < 0;
+	bool exporter = exporterSelected();
 	
 	printer->setDocName(QFileInfo(main_window->getCurrentFilePath()).fileName());
 	printer->setFullPage(true);
@@ -419,6 +428,8 @@ void PrintWidget::currentDeviceChanged()
 		page_format_combo->setCurrentIndex(0);
 	
 	updatePrintAreaSize();
+	if (print_tool)
+		print_tool->updatePrintArea();
 	react_to_changes = true;
 }
 void PrintWidget::pageOrientationChanged()
@@ -508,10 +519,18 @@ void PrintWidget::updatePrintAreaSize()
 		printer.setPaperSize(size);
 		printer.setOrientation((QPrinter::Orientation)page_orientation_combo->itemData(page_orientation_combo->currentIndex()).toInt());
 		
+		QRectF paper_rect = printer.paperRect(QPrinter::Millimeter);
+		QRectF page_rect = printer.pageRect(QPrinter::Millimeter);
+		
 		print_width = printer.paperRect(QPrinter::Millimeter).width();
 		width_edit->setText(QString::number(print_width));
 		print_height = printer.paperRect(QPrinter::Millimeter).height();
 		height_edit->setText(QString::number(print_height));
+		
+		margin_top = page_rect.top() - paper_rect.top();
+		margin_left = page_rect.left() - paper_rect.left();
+		margin_right = paper_rect.right() - page_rect.right();
+		margin_bottom = paper_rect.bottom() - page_rect.bottom();
 	}
 }
 
@@ -710,54 +729,69 @@ bool PrintTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 
 void PrintTool::draw(QPainter* painter, MapWidget* widget)
 {
-    /*
-    QRect inner_rect = widget->mapToViewport(this->widget->getPrintArea()).toRect();
-    QRect outer_rect = widget->mapToViewport(this->widget->getPaperArea()).toRect();
-    QRect view_rect = QRect(0, 0, widget->width(), widget->height());
-    painter->setPen(Qt::NoPen);
-    painter->setBrush(QColor(0, 0, 0, 160));
-    drawBetweenRects(painter, view_rect, outer_rect);
-    painter->setBrush(QColor(0, 0, 0, 64));
-    drawBetweenRects(painter, outer_rect, inner_rect);
-    painter->setBrush(QColor(255, 255, 0, 128));
-    painter->drawRect(QRect(outer_rect.topLeft(), outer_rect.bottomRight() - QPoint(1, 1)));
-    painter->setBrush(QColor(0, 255, 0, 128));
-    painter->drawRect(QRect(inner_rect.topLeft(), inner_rect.bottomRight() - QPoint(1, 1)));
-    */
+	QRectF effective_print_area = this->widget->getEffectivePrintArea();
+	QRect outer_rect = widget->mapToViewport(effective_print_area).toRect();
+	QRect view_rect = QRect(0, 0, widget->width(), widget->height());
+	
+	painter->setPen(Qt::NoPen);
+	painter->setBrush(QColor(0, 0, 0, 160));
+	drawBetweenRects(painter, view_rect, outer_rect);
+	
+	if (!this->widget->exporterSelected())
+	{
+		float margin_top, margin_left, margin_bottom, margin_right;
+		this->widget->getMargins(margin_top, margin_left, margin_bottom, margin_right);
+		if (margin_top > 0 || margin_left > 0 || margin_bottom > 0 || margin_right > 0)
+		{
+			QRect inner_rect = widget->mapToViewport(effective_print_area.adjusted(margin_left, margin_top, -margin_right, -margin_bottom)).toRect();
+			
+			painter->setBrush(QColor(0, 0, 0, 64));
+			if (effective_print_area.width() < margin_left + margin_right || effective_print_area.height() < margin_top + margin_bottom)
+				painter->drawRect(outer_rect);
+			else
+				drawBetweenRects(painter, outer_rect, inner_rect);
+		}
+	}
+	
+	/*painter->setBrush(QColor(255, 255, 0, 128));
+	painter->drawRect(QRect(outer_rect.topLeft(), outer_rect.bottomRight() - QPoint(1, 1)));
+	painter->setBrush(QColor(0, 255, 0, 128));
+	painter->drawRect(QRect(inner_rect.topLeft(), inner_rect.bottomRight() - QPoint(1, 1)));*/
+	
+	/*QRect rect = widget->mapToViewport(this->widget->getEffectivePrintArea()).toRect();
 
-    QRect rect = widget->mapToViewport(this->widget->getEffectivePrintArea()).toRect();
-
-    painter->setPen(active_color);
-    painter->drawRect(QRect(rect.topLeft(), rect.bottomRight() - QPoint(1, 1)));
-    painter->setPen(qRgb(255, 255, 255));
-    painter->drawRect(QRect(rect.topLeft() + QPoint(1, 1), rect.bottomRight() - QPoint(2, 2)));
+	painter->setPen(active_color);
+	painter->drawRect(QRect(rect.topLeft(), rect.bottomRight() - QPoint(1, 1)));
+	painter->setPen(qRgb(255, 255, 255));
+	painter->drawRect(QRect(rect.topLeft() + QPoint(1, 1), rect.bottomRight() - QPoint(2, 2)));*/
 }
 
 void PrintTool::drawBetweenRects(QPainter* painter, const QRect &outer, const QRect &inner) const {
-    if (outer.isEmpty())
-        return;
-    QRect clipped_inner = outer.intersected(inner);
-    qDebug() << "Draw between "<<outer<<" and "<<inner<<" clipped="<<clipped_inner;
-    if (clipped_inner.isEmpty())
-    {
-        painter->drawRect(outer);
-    }
-    else
-    {
-        if (outer.left() < clipped_inner.left())
-            painter->drawRect(QRect(outer.left(), outer.top(), clipped_inner.left() - outer.left(), outer.height()));
-        if (outer.right() > clipped_inner.right())
-            painter->drawRect(QRect(clipped_inner.right(), outer.top(), outer.right() - clipped_inner.right(), outer.height()));
-        if (outer.top() < clipped_inner.top())
-            painter->drawRect(QRect(clipped_inner.left(), outer.top(), clipped_inner.width(), clipped_inner.top() - outer.top()));
-        if (outer.bottom() > clipped_inner.bottom())
-            painter->drawRect(QRect(clipped_inner.left(), clipped_inner.bottom(), clipped_inner.width(), outer.bottom() - clipped_inner.bottom()));
-    }
+	if (outer.isEmpty())
+		return;
+	QRect clipped_inner = outer.intersected(inner);
+	if (clipped_inner.isEmpty())
+	{
+		painter->drawRect(outer);
+	}
+	else
+	{
+		if (outer.left() < clipped_inner.left())
+			painter->drawRect(QRect(outer.left(), outer.top(), clipped_inner.left() - outer.left(), outer.height()));
+		if (outer.right() > clipped_inner.right())
+			painter->drawRect(QRect(clipped_inner.left() + clipped_inner.width(), outer.top(), outer.right() - clipped_inner.right(), outer.height()));
+		if (outer.top() < clipped_inner.top())
+			painter->drawRect(QRect(clipped_inner.left(), outer.top(), clipped_inner.width(), clipped_inner.top() - outer.top()));
+		if (outer.bottom() > clipped_inner.bottom())
+			painter->drawRect(QRect(clipped_inner.left(), clipped_inner.bottom(), clipped_inner.width(), outer.top() + outer.height() - clipped_inner.bottom()));
+	}
 }
 
 void PrintTool::updatePrintArea()
 {
-	editor->getMap()->setDrawingBoundingBox(widget->getEffectivePrintArea(), 1);
+	editor->getMap()->setDrawingBoundingBox(QRectF(-1000000, -1000000, 2000000, 2000000), 0);
+	
+	//editor->getMap()->setDrawingBoundingBox(widget->getEffectivePrintArea(), 1);
 }
 void PrintTool::updateDragging(MapCoordF mouse_pos_map)
 {

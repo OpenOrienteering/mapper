@@ -87,6 +87,18 @@ private slots:
 	void zoomOutAwayFromCursorClicked(bool checked);
 };
 
+/*class PrintingPage : public SettingsPage
+{
+Q_OBJECT
+public:
+	PrintingPage(QWidget* parent = 0);
+	
+	virtual QString title() { return tr("Printing"); }
+	
+private slots:
+	
+};*/
+
 class GeneralPage : public SettingsPage
 {
 Q_OBJECT

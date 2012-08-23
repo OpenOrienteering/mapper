@@ -1577,7 +1577,10 @@ bool MapEditorController::toggleFloatingDockWidget(QDockWidget* dock_widget, boo
 	if (!new_widget)
 	{
 		bool show = !dock_widget->isVisible();
-		dock_widget->setVisible(show);
+		if (show)
+			dock_widget->setVisible(show);
+		else
+			dock_widget->close();
 		return show;
 	}
 	

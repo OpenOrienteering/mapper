@@ -56,11 +56,17 @@ public:
 	float getPrintAreaTop();
 	void setPrintAreaTop(float value);
 	
+	/// Returns the printing margins returned by Qt. Only valid if a printer is selected.
+	void getMargins(float& top, float& left, float& bottom, float& right);
+	
+	/// Returns the area of the printed part on the map after applying the scaling from the "print/export in different scale" option
 	QRectF getEffectivePrintArea();
-    QRectF getPaperArea();
 	
 	/// Returns the scaling factor resulting from the "print/export in different scale" option
 	float calcScaleFactor();
+	
+	/// Returns true if an exporter is active (instead of a printer)
+	bool exporterSelected();
 	
 protected slots:
 	void printMap(QPrinter* printer);
@@ -94,6 +100,7 @@ private:
 	
 	float print_width;
 	float print_height;
+	float margin_top, margin_left, margin_bottom, margin_right;
 	
 	bool have_prev_paper_size;
 	int prev_paper_size;

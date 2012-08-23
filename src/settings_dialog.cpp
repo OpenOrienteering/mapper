@@ -54,6 +54,7 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
 	// Add all pages
 	addPage(new GeneralPage(this));
 	addPage(new EditorPage(this));
+	//addPage(new PrintingPage(this));
 }
 
 void SettingsDialog::addPage(SettingsPage* page)
@@ -167,6 +168,27 @@ void EditorPage::zoomOutAwayFromCursorClicked(bool checked)
 {
 	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_ZoomOutAwayFromCursor), QVariant(checked));
 }
+
+// ### PrintingPage ###
+
+/*PrintingPage::PrintingPage(QWidget* parent) : SettingsPage(parent)
+{
+	QGridLayout* layout = new QGridLayout();
+	this->setLayout(layout);
+	
+	int row = 0;
+	
+	QLabel* preview_border_label = new QLabel(tr("Preview border size per side:"));
+	QDoubleSpinBox* preview_border_edit = Util::SpinBox::create(1, 0, 999999, tr("mm", "millimeters"));
+	layout->addWidget(preview_border_label, row, 0);
+	layout->addWidget(preview_border_edit, row++, 1);
+	
+	preview_border_edit->setValue(Settings::getInstance().getSetting(Settings::Printing_PreviewBorder).toDouble());
+	
+	layout->setRowStretch(row, 1);
+	
+	connect(preview_border_edit, SIGNAL(valueChanged(double)), this, SLOT(previewBorderChanged(double)));
+}*/
 
 // ### GeneralPage ###
 
