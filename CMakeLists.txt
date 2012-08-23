@@ -139,6 +139,7 @@ set(Mapper_SRCS
 
  src/main.cpp
  src/util.cpp
+ src/util_pie_menu.cpp
  src/undo.cpp
  src/qbezier.cpp
  src/matrix.cpp
@@ -273,6 +274,7 @@ set(Mapper_MOC_INPUT
  src/tool_rotate_pattern.h
  src/tool_scale.h
  src/undo.h
+ src/util_pie_menu.h
 )
 
 qt4_wrap_cpp(Mapper_MOC ${Mapper_MOC_INPUT})

@@ -36,7 +36,11 @@
 #define MiddleButton MidButton
 #endif
 
-MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent) : QWidget(parent), show_help(show_help), force_antialiasing(force_antialiasing)
+MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
+ : QWidget(parent),
+   show_help(show_help),
+   force_antialiasing(force_antialiasing),
+   pie_menu(this, 8, 24)
 {
 	view = NULL;
 	tool = NULL;
@@ -633,6 +637,10 @@ void MapWidget::mousePressEvent(QMouseEvent* event)
 	{
 		startPanning(event->pos());
 		event->accept();
+	}
+	else if (event->button() == Qt::RightButton)
+	{
+		pie_menu.popup(event->globalPos());
 	}
 }
 void MapWidget::mouseMoveEvent(QMouseEvent* event)

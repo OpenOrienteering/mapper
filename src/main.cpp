@@ -92,7 +92,10 @@ int main(int argc, char** argv)
 	
 	// Treat all program parameters as files to be opened
 	for (int i = 1; i < argc; i++)
-		first_window->openPath(argv[i]);
+	{
+		if (argv[i][0] != '-')
+			first_window->openPath(argv[i]);
+	}
 	
 	// If we need to respond to a second app launch, do so, but also accept a file open request.
 	qapp.setActivationWindow(first_window);

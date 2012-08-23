@@ -24,6 +24,7 @@
 #include <QWidget>
 
 #include "map.h"
+#include "util_pie_menu.h"
 
 class QLabel;
 
@@ -103,6 +104,8 @@ public:
 	void setZoomLabel(QLabel* zoom_label);
 	void setCursorposLabel(QLabel* cursorpos_label);
 	void setCoordsDisplay(CoordsType type);
+	
+	inline PieMenu& getPieMenu() {return pie_menu;}
 	
     virtual QSize sizeHint() const;
 	
@@ -185,6 +188,9 @@ private:
 	QRect activity_dirty_rect_old;
 	QRectF activity_dirty_rect_new;
 	int activity_dirty_rect_new_border;
+	
+	// Right-click menu
+	PieMenu pie_menu;
 };
 
 #endif

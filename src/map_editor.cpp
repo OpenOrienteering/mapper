@@ -278,7 +278,10 @@ void MapEditorController::attach(MainWindow* window)
 	
 	// Create menu and toolbar together, so actions can be inserted into one or both
 	if (mode == MapEditor)
+	{
         createMenuAndToolbars();
+		createPieMenu(&map_widget->getPieMenu());
+	}
 	
 	// Update enabled/disabled state for the tools ...
 	objectSelectionChanged();
@@ -646,6 +649,18 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_advanced_editing->addAction(boolean_intersection_act);
 	toolbar_advanced_editing->addAction(boolean_difference_act);
 	toolbar_advanced_editing->addAction(boolean_xor_act);
+}
+void MapEditorController::createPieMenu(PieMenu* menu)
+{
+	int i = 0;
+	menu->setAction(i++, edit_tool_act);
+	menu->setAction(i++, draw_point_act);
+	menu->setAction(i++, draw_path_act);
+	menu->setAction(i++, draw_rectangle_act);
+	menu->setAction(i++, cut_tool_act);
+	menu->setAction(i++, cut_hole_act);
+	menu->setAction(i++, switch_dashes_act);
+	menu->setAction(i++, connect_paths_act);
 }
 void MapEditorController::detach()
 {

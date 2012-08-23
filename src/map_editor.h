@@ -44,6 +44,7 @@ class SymbolWidget;
 class PrintWidget;
 class TemplatePositionDockWidget;
 class GeoreferencingDialog;
+class PieMenu;
 typedef std::vector<Renderable*> RenderableVector;
 
 class MapEditorController : public MainWindowController
@@ -184,6 +185,7 @@ private:
     QAction* findAction(const char* id);
     void assignKeyboardShortcuts();
     void createMenuAndToolbars();
+	void createPieMenu(PieMenu* menu);
 	
 	void paintOnTemplate(Template* temp);
 	void updatePaintOnTemplateAction();

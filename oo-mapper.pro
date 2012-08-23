@@ -87,6 +87,7 @@ HEADERS += src/color_dock_widget.h \
            src/undo.h \
            src/util.h \
            src/util_gui.h \
+           src/util_pie_menu.h \
            qtsingleapplication/qtlocalpeer.h \
            qtsingleapplication/qtsingleapplication.h \
            libocad/libocad.h \
@@ -162,6 +163,7 @@ SOURCES += src/color_dock_widget.cpp \
            src/tool_scale.cpp \
            src/undo.cpp \
            src/util.cpp \
+           src/util_pie_menu.cpp \
            qtsingleapplication/qtlocalpeer.cpp \
            qtsingleapplication/qtsingleapplication.cpp \
            libocad/types.c \
