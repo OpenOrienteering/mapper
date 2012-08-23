@@ -20,6 +20,8 @@
 
 #include "print_dock_widget.h"
 
+#include <limits>
+
 #include <QtGui>
 
 #include "util.h"
@@ -117,6 +119,12 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	center_button = new QPushButton(tr("Center area on map"));
 	center_button->setCheckable(true);
 	center_button->setChecked(params_set ? center : true);
+	
+	different_scale_check = new QCheckBox("");
+	different_scale_edit = new QLineEdit("", this);
+	different_scale_edit->setEnabled(false);
+	different_scale_edit->setValidator(new QIntValidator(1, std::numeric_limits<int>::max(), different_scale_edit));
+	
 	preview_button = new QPushButton(tr("Preview..."));
 	print_button = new QPushButton("");
 	
@@ -142,9 +150,11 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	layout->addWidget(height_label, 10, 0);
 	layout->addWidget(height_edit, 10, 1);
 	layout->addWidget(center_button, 11, 0, 1, 2);
-	layout->setRowStretch(12, 1);
-	layout->addWidget(preview_button, 13, 0);
-	layout->addWidget(print_button, 13, 1);
+	layout->addWidget(different_scale_check, 12, 0);
+	layout->addWidget(different_scale_edit, 12, 1);
+	layout->setRowStretch(13, 1);
+	layout->addWidget(preview_button, 14, 0);
+	layout->addWidget(print_button, 14, 1);
 	setLayout(layout);
 	
 	connect(device_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(currentDeviceChanged()));
@@ -156,6 +166,8 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(width_edit, SIGNAL(textEdited(QString)), this, SLOT(printAreaSizeChanged()));
 	connect(height_edit, SIGNAL(textEdited(QString)), this, SLOT(printAreaSizeChanged()));
 	connect(center_button, SIGNAL(clicked(bool)), this, SLOT(centerPrintAreaClicked()));
+	connect(different_scale_check, SIGNAL(clicked(bool)), this, SLOT(differentScaleClicked(bool)));
+	connect(different_scale_edit, SIGNAL(textEdited(QString)), this, SLOT(differentScaleEdited(QString)));
 	connect(preview_button, SIGNAL(clicked(bool)), this, SLOT(previewClicked()));
 	connect(print_button, SIGNAL(clicked(bool)), this, SLOT(printClicked()));
 	
@@ -208,14 +220,33 @@ void PrintWidget::setPrintAreaTop(float value)
 	center_button->setChecked(false);
 }
 
-QRectF PrintWidget::getPrintArea()
+QRectF PrintWidget::getEffectivePrintArea()
 {
-	return QRectF(getPrintAreaLeft(), getPrintAreaTop(), print_width, print_height);
+	float scale_factor = calcScaleFactor();
+	return QRectF(getPrintAreaLeft() + (print_width / 2) * (1 - 1 / scale_factor),
+				  getPrintAreaTop() + (print_height / 2) * (1 - 1 / scale_factor),
+				  print_width / scale_factor,
+				  print_height / scale_factor);
 }
 
 QRectF PrintWidget::getPaperArea()
 {
-    return QRectF(0, 0, 8.5*25.4, 11*25.4);
+    return QRectF(0, 0, 8.5*25.4, 11*25.4);	// TODO
+}
+
+float PrintWidget::calcScaleFactor()
+{
+	if (different_scale_check->isChecked())
+	{
+		bool ok = false;
+		int draw_scale_denominator = different_scale_edit->text().toInt(&ok);
+		if (ok)
+			return (map->getScaleDenominator() / (float)draw_scale_denominator);
+		else
+			return 1;
+	}
+	else
+		return 1;
 }
 
 void PrintWidget::printMap(QPrinter* printer)
@@ -265,10 +296,12 @@ void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& p
 		painter.fillRect(QRect(0, 0, paint_device->width(), paint_device->height()), Qt::white);
 	
 	// Need to convert mm to dots
-	float scale = 1/25.4f * dpi;
+	float scale_factor = calcScaleFactor();
+	float scale = (1/25.4f * dpi) * scale_factor;
 	
 	painter.scale(scale, scale);
-	painter.translate(-getPrintAreaLeft(), -getPrintAreaTop());
+	QRectF print_area = getEffectivePrintArea();
+	painter.translate(-print_area.left(), -print_area.top());
 	
 	if (show_templates_check->isChecked())
 		map->drawTemplates(&painter, map_extent, 0, map->getFirstFrontTemplate() - 1, false, QRect(0, 0, paint_device->width(), paint_device->height()), NULL, main_view);
@@ -290,12 +323,18 @@ void PrintWidget::currentDeviceChanged()
 	bool exporter = index < 0;
 	bool image_exporter = index == (int)ImageExporter;
 	
+	// First hide everything, then show selected widgets again. This prevents the widget from resizing.
+	dpi_label->hide();
+	dpi_edit->hide();
+	copies_label->hide();
+	copies_edit->hide();
 	dpi_label->setVisible(image_exporter);
 	dpi_edit->setVisible(image_exporter);
 	copies_label->setVisible(!exporter);
 	copies_edit->setVisible(!exporter);
 	
 	preview_button->setEnabled(!exporter);
+	different_scale_check->setText(exporter ? tr("Export in different scale 1 :") : tr("Print in different scale 1 :"));
 	print_button->setText(exporter ? tr("Export") : tr("Print"));
 	
 	
@@ -305,7 +344,6 @@ void PrintWidget::currentDeviceChanged()
 	page_format_combo->clear();
 	
 	QList<QPrinter::PaperSize> size_list;
-	// NOTE: Using QPrinterInfo::supportedPaperSizes() leads to a crash for me on Windows as soon as the returned QList is destroyed on Qt 4.8. Maybe a QT bug? Disabling it for now.
 	if (!exporter)
 		size_list = printers[index].supportedPaperSizes();
 	
@@ -476,6 +514,19 @@ void PrintWidget::updatePrintAreaSize()
 		height_edit->setText(QString::number(print_height));
 	}
 }
+
+void PrintWidget::differentScaleClicked(bool checked)
+{
+	different_scale_edit->setEnabled(checked);
+	if (print_tool)
+		print_tool->updatePrintArea();
+}
+void PrintWidget::differentScaleEdited(QString text)
+{
+	if (print_tool)
+		print_tool->updatePrintArea();
+}
+
 void PrintWidget::previewClicked()
 {
 	if (checkForEmptyMap())
@@ -674,7 +725,7 @@ void PrintTool::draw(QPainter* painter, MapWidget* widget)
     painter->drawRect(QRect(inner_rect.topLeft(), inner_rect.bottomRight() - QPoint(1, 1)));
     */
 
-    QRect rect = widget->mapToViewport(this->widget->getPrintArea()).toRect();
+    QRect rect = widget->mapToViewport(this->widget->getEffectivePrintArea()).toRect();
 
     painter->setPen(active_color);
     painter->drawRect(QRect(rect.topLeft(), rect.bottomRight() - QPoint(1, 1)));
@@ -706,7 +757,7 @@ void PrintTool::drawBetweenRects(QPainter* painter, const QRect &outer, const QR
 
 void PrintTool::updatePrintArea()
 {
-    editor->getMap()->setDrawingBoundingBox(widget->getPrintArea(), 1);
+	editor->getMap()->setDrawingBoundingBox(widget->getEffectivePrintArea(), 1);
 }
 void PrintTool::updateDragging(MapCoordF mouse_pos_map)
 {

@@ -56,8 +56,11 @@ public:
 	float getPrintAreaTop();
 	void setPrintAreaTop(float value);
 	
-	QRectF getPrintArea();
+	QRectF getEffectivePrintArea();
     QRectF getPaperArea();
+	
+	/// Returns the scaling factor resulting from the "print/export in different scale" option
+	float calcScaleFactor();
 	
 protected slots:
 	void printMap(QPrinter* printer);
@@ -73,6 +76,8 @@ protected slots:
 	void updatePrintAreaSize();
 	void centerPrintArea();
 	void centerPrintAreaClicked();
+	void differentScaleClicked(bool checked);
+	void differentScaleEdited(QString text);
 	void previewClicked();
 	void printClicked();
 	
@@ -106,6 +111,8 @@ private:
 	QLineEdit* width_edit;
 	QLineEdit* height_edit;
 	QPushButton* center_button;
+	QCheckBox* different_scale_check;
+	QLineEdit* different_scale_edit;
 	QPushButton* preview_button;
 	QPushButton* print_button;
 	
