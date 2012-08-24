@@ -158,7 +158,12 @@ if(WIN32)
 		message("   Qt Assistant - not found")
 	endif()
 	mark_as_advanced(QT_QTASSISTANT_EXECUTABLE)
-	
+
+	if(PROJ_BINARY_DIR)
+		install(
+		  DIRECTORY "${PROJ_BINARY_DIR}/../share/proj"
+		  DESTINATION "${MAPPER_DATA_DESTINATION}")
+	endif(PROJ_BINARY_DIR)
 
 	set(MAPPER_LIBS proj-0 QtCore4 QtGui4 QtNetwork4 QtXml4 CACHE INTERNAL
 	  "The libraries which need to be deployed to the package")
