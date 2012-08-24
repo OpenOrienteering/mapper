@@ -139,19 +139,43 @@ install(
   DESTINATION "${MAPPER_DATA_DESTINATION}/help")
 
 if(WIN32)
-	message("-- Checking system files needed for Windows packaging")
+	message("-- Checking extra files needed for Windows packaging")
 
 	set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP TRUE)
 	include(InstallRequiredSystemLibraries)
 
-	set(MAPPER_LIBS ${PROJ_LIBRARY}-0 QtCore4 QtGui4 QtNetwork4 QtXml4 CACHE INTERNAL
+	find_program(QT_QTASSISTANT_EXECUTABLE assistant.exe
+	  DOC "The path of the Qt Assistant executable. Qt Assistant will not be bundled if this path is empty."
+	  HINTS ${QT_BINARY_DIR}
+	  NO_CMAKE_FIND_ROOT_PATH
+	  NO_DEFAULT_PATH)
+	if(QT_QTASSISTANT_EXECUTABLE)
+		message("   Qt Assistant - found")
+		install(
+		  PROGRAMS ${QT_QTASSISTANT_EXECUTABLE}
+		  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
+	else()
+		message("   Qt Assistant - not found")
+	endif()
+	mark_as_advanced(QT_QTASSISTANT_EXECUTABLE)
+	
+
+	set(MAPPER_LIBS proj-0 QtCore4 QtGui4 QtNetwork4 QtXml4 CACHE INTERNAL
 	  "The libraries which need to be deployed to the package")
-	if(MINGW)
+	if(QT_QTASSISTANT_EXECUTABLE)
+		list(APPEND MAPPER_LIBS QtHelp4 QtCLucene4 QtSql4 QtWebKit4)
+	endif(QT_QTASSISTANT_EXECUTABLE)
+	if(TOOLCHAIN_SHARED_LIBS)
+		list(APPEND MAPPER_LIBS ${TOOLCHAIN_SHARED_LIBS})
+	elseif(MINGW)
 		list(APPEND MAPPER_LIBS libgcc_s_dw2-1 mingwm10)
-	endif(MINGW)
+	endif()
 	foreach(_mapper_lib ${MAPPER_LIBS})
 		unset(_mapper_lib_path CACHE)
-		find_library(_mapper_lib_path ${_mapper_lib})
+		find_library(_mapper_lib_path ${_mapper_lib}
+		  HINTS ${PROJ_BINARY_DIR} ${QT_BINARY_DIR}
+		  PATH_SUFFIXES ${TOOLCHAIN_PATH_SUFFIXES}
+		  NO_CMAKE_FIND_ROOT_PATH)
 		get_filename_component(_mapper_lib_ext "${_mapper_lib_path}" EXT)
 		if(_mapper_lib_ext STREQUAL ".dll")
 			message("   ${_mapper_lib} DLL - found")
@@ -165,22 +189,44 @@ if(WIN32)
 	  FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} 
 	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
 	
-	unset(MAPPER_QT_PLUGINS CACHE)
+	unset(MAPPER_QT_IMAGEFORMATS CACHE)
 	foreach(_qt_imageformat qgif4 qjpeg4 qmng4 qsvg4 qtga4 qtiff4)
-		unset(_qt_plugin_path CACHE)
-		find_library(_qt_plugin_path ${_qt_imageformat} PATH_SUFFIXES ../plugins/imageformats)
-		if(_qt_plugin_path)
+		unset(_qt_imageformat_path CACHE)
+		find_library(_qt_imageformat_path ${_qt_imageformat}
+		  HINTS ${QT_BINARY_DIR} NO_CMAKE_FIND_ROOT_PATH
+		  PATH_SUFFIXES ../plugins/imageformats)
+		if(_qt_imageformat_path)
 			message("   ${_qt_imageformat} DLL (plugin) - found")
-			list(APPEND MAPPER_QT_PLUGINS "${_qt_plugin_path}")
+			list(APPEND MAPPER_QT_IMAGEFORMATS "${_qt_imageformat_path}")
 		else()
 			message("   ${_qt_imageformat} DLL (plugin) - not found")
-		endif(_qt_plugin_path)
+		endif(_qt_imageformat_path)
 	endforeach(_qt_imageformat)
-	unset(_qt_plugin_path CACHE)
+	unset(_qt_imageformat_path CACHE)
 	install(
-	  FILES ${MAPPER_QT_PLUGINS} 
+	  FILES ${MAPPER_QT_IMAGEFORMATS} 
 	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}/plugins/imageformats")
-	  
+
+if(QT_QTASSISTANT_EXECUTABLE)
+	unset(MAPPER_QT_SQLDRIVERS CACHE)
+	foreach(_qt_sqldriver qsqlite4)
+		unset(_qt_sqldriver_path CACHE)
+		find_library(_qt_sqldriver_path ${_qt_sqldriver}
+		  HINTS ${QT_BINARY_DIR} NO_CMAKE_FIND_ROOT_PATH
+		  PATH_SUFFIXES ../plugins/sqldrivers)
+		if(_qt_sqldriver_path)
+			message("   ${_qt_sqldriver} DLL (plugin) - found")
+			list(APPEND MAPPER_QT_SQLDRIVERS "${_qt_sqldriver_path}")
+		else()
+			message("   ${_qt_sqldriver} DLL (plugin) - not found")
+		endif(_qt_sqldriver_path)
+	endforeach(_qt_sqldriver)
+	unset(_qt_sqldriver_path CACHE)
+	install(
+	  FILES ${MAPPER_QT_SQLDRIVERS} 
+	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}/plugins/sqldrivers")
+endif(QT_QTASSISTANT_EXECUTABLE)
+
 	unset(MAPPER_QT_TRANSLATIONS CACHE)
 	foreach(_mapper_trans ${Mapper_TRANS})
 		get_filename_component(_qt_translation ${_mapper_trans} NAME_WE)
@@ -192,6 +238,16 @@ if(WIN32)
 		else()
 			message("   ${_qt_translation} translation - not found")
 		endif()
+if(QT_QTASSISTANT_EXECUTABLE)
+		string(REPLACE qt assistant _qt_translation ${_qt_translation})
+		set(_qt_translation_path "${QT_TRANSLATIONS_DIR}/${_qt_translation}.qm")
+		if(EXISTS "${_qt_translation_path}")
+			message("   ${_qt_translation} translation - found")
+			list(APPEND MAPPER_QT_TRANSLATIONS "${_qt_translation_path}")
+		else()
+			message("   ${_qt_translation} translation - not found")
+		endif()
+endif(QT_QTASSISTANT_EXECUTABLE)
 	endforeach(_mapper_trans)
 	install(
 	  FILES ${MAPPER_QT_TRANSLATIONS} 

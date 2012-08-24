@@ -1,0 +1,10 @@
+--- qt-everywhere-opensource-src-4.8.1/translations/translations.pro.orig	2012-07-26 16:26:40.000000000 +0200
++++ qt-everywhere-opensource-src-4.8.1/translations/translations.pro	2012-07-26 16:27:21.000000000 +0200
+@@ -1,6 +1,6 @@
+ TRANSLATIONS = $$files(*.ts)
+ 
+-qtPrepareTool(LRELEASE, lrelease)
++LRELEASE = lrelease
+ qtPrepareTool(LCONVERT, lconvert)
+ qtPrepareTool(LUPDATE, lupdate)
+ LUPDATE += -locations relative -no-ui-lines

@@ -16,7 +16,9 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+
+# Project declaration
 
 project(Mapper)
 
@@ -24,6 +26,8 @@ SET(Mapper_VERSION_MAJOR 0)
 SET(Mapper_VERSION_MINOR 3)
 SET(Mapper_VERSION_PATCH 0)
 SET(Mapper_VERSION_DISPLAY "${CMAKE_BUILD_TYPE} ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
+
+# Build configuration options
 
 if(NOT CMAKE_BUILD_TYPE)
 	SET(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING
@@ -52,10 +56,48 @@ if(NOT Mapper_TRANSLATIONS_EMBEDDED)
 	  FORCE)
 endif(NOT Mapper_TRANSLATIONS_EMBEDDED)
 
-configure_file(src/global.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/global.h)
+option(Mapper_BUILD_PROJ "Build the Proj library from source")
 
-find_package(Qt4 4.6 REQUIRED QtCore QtGui QtNetwork QtXml)
+option(Mapper_BUILD_QT   "Build the Qt library from source")
+
+# Build definitons
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+include(CMake28Quirks)
+
+add_custom_target(Mapper_prerequisites)
+set(Mapper_prerequisites_FOUND TRUE)
+
+if(Mapper_BUILD_PROJ)
+	add_subdirectory(3rd-party/proj)
+	add_dependencies(Mapper_prerequisites Proj)
+	if(NOT PROJ_FOUND)
+		set(Mapper_prerequisites_FOUND FALSE)
+		message("Proj library will be built from source")
+	endif()
+else()
+	find_package(Proj REQUIRED)
+endif()
+
+if(Mapper_BUILD_QT)
+	add_subdirectory(3rd-party/qt4)
+	add_dependencies(Mapper_prerequisites Qt4)
+	if(NOT QT_QMAKE_EXECUTABLE MATCHES NOTFOUND)
+		find_package(Qt4 4.6 COMPONENTS QtCore QtGui QtNetwork QtXml)
+	endif()
+	if(NOT QT4_FOUND)
+		set(Mapper_prerequisites_FOUND FALSE)
+		message("Qt4 library will be built from source")
+	endif()
+else()
+	find_package(Qt4 4.6 REQUIRED QtCore QtGui QtNetwork QtXml)
+endif()
+
+if(Mapper_prerequisites_FOUND)
+
 include(${QT_USE_FILE})
+Quirks_Qt4_definitions()
+Quirks_Qt4_lib_dependencies()
 
 if(CMAKE_CROSSCOMPILING)
 	message("-- Crosscompiling, host: ${CMAKE_HOST_SYSTEM_NAME}, target: ${CMAKE_SYSTEM_NAME}")
@@ -82,7 +124,6 @@ endif()
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 include(3rd-party/clipper.cmake)
-include(3rd-party/proj.cmake)
 
 if (CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS "-Wno-long-long -Wno-deprecated -Wall -pedantic")
@@ -98,11 +139,9 @@ else (CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
 endif (CMAKE_COMPILER_IS_GNUCXX)
 
-set(OPT_INCLUDES "/opt/local/include")
-set(OPT_LIBRARIES "/opt/local/lib")
+include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${PROJ_INCLUDE_DIR})
 
-include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${PROJ_INCLUDES} ${OPT_INCLUDES})
-link_directories(${PROJ_LIBRARIES} ${OPT_LIBRARIES})
+configure_file(src/global.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/global.h)
 
 set(Mapper_SRCS
  libocad/types.c
@@ -268,7 +307,7 @@ qt4_add_translation(Mapper_QM ${Mapper_TRANS})
 set(Mapper_TRANS_TEMPLATE
  translations/OpenOrienteering_template.ts
 )
-include(cmake/Qt4_translations.cmake)
+include(Qt4_translations)
 qt4_translations_sources(
   ${Mapper_TRANS} ${Mapper_TRANS_TEMPLATE}
   SOURCES ${Mapper_SRCS}
@@ -315,13 +354,13 @@ add_custom_target(Mapper_help
 
 if(MINGW)
 	# resource compilation for MinGW
+	enable_language(RC)
 	if(NOT CMAKE_RC_COMPILER)
 		set(CMAKE_RC_COMPILER windres)
 	endif()
-	add_custom_command( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/resources.o
-			COMMAND ${CMAKE_RC_COMPILER} -I${CMAKE_SOURCE_DIR} -i${CMAKE_SOURCE_DIR}/resources/resources.rc
-			-o ${CMAKE_CURRENT_BINARY_DIR}/resources.o )
-	set(Mapper_SRCS ${Mapper_SRCS} ${CMAKE_CURRENT_BINARY_DIR}/resources.o)
+	Quirks_CMake_RC_Compiler()
+	configure_file(resources/resources.rc.in ${CMAKE_CURRENT_SOURCE_DIR}/resources/resources.rc)
+	list(APPEND Mapper_SRCS resources/resources.rc)
 endif(MINGW)
 
 add_executable(Mapper
@@ -340,7 +379,18 @@ target_link_libraries(Mapper
  ${PROJ_LIBRARY}
 )
 
+add_dependencies(Mapper Mapper_prerequisites)
+
 # FIXME: Packaging for MacOSX needs review on a MacOSX machine
 if(NOT APPLE)
 include(CPackaging.cmake)
 endif()
+
+else(Mapper_prerequisites_FOUND)
+
+add_custom_target(Mapper_superbuild ALL "${CMAKE_COMMAND}" .
+  COMMAND "${CMAKE_BUILD_TOOL}"
+)
+add_dependencies(Mapper_superbuild Mapper_prerequisites)
+
+endif(Mapper_prerequisites_FOUND)
