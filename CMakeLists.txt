@@ -24,7 +24,7 @@ project(Mapper)
 
 SET(Mapper_VERSION_MAJOR 0)
 SET(Mapper_VERSION_MINOR 3)
-SET(Mapper_VERSION_PATCH 0)
+SET(Mapper_VERSION_PATCH 1)
 SET(Mapper_VERSION_DISPLAY "${CMAKE_BUILD_TYPE} ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
 
 # Build configuration options
