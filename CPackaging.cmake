@@ -20,13 +20,10 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 
 	include(InstallRequiredSystemLibraries)
 
-	# sources not properly configured
-	set(CPACK_SOURCE_GENERATOR "OFF")
-	
 	# cf. http://www.cmake.org/cmake/help/cmake-2-8-docs.html#module:CPack
 	# cf. http://www.cmake.org/Wiki/CMake:CPackPackageGenerators
 	set(CPACK_PACKAGE_NAME "OpenOrienteering Mapper")
-	set(CPACK_PACKAGE_VENDOR "OpenOrienteering Developers")
+	set(CPACK_PACKAGE_VENDOR "OpenOrienteering")
 	set(CPACK_PACKAGE_VERSION_MAJOR ${Mapper_VERSION_MAJOR})
 	set(CPACK_PACKAGE_VERSION_MINOR ${Mapper_VERSION_MINOR})
 	set(CPACK_PACKAGE_VERSION_PATCH ${Mapper_VERSION_PATCH})
@@ -44,11 +41,22 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/COPYING")
 	set(CPACK_STRIP_FILES "TRUE")
 	
+	set(CPACK_SOURCE_PACKAGE_FILENAME
+	  "openorienteering-mapper_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}-src")
+	set(CPACK_SOURCE_GENERATOR "TGZ")
+	set(CPACK_SOURCE_IGNORE_FILES ".*;/build*")
+	
 	if(WIN32)
 		# Packaging as ZIP archive
-		set(CPACK_GENERATOR "ZIP")
+		set(CPACK_GENERATOR "ZIP" "NSIS")
 		set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 0)
-		set(CPACK_PACKAGING_INSTALL_PREFIX "/Mapper-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}")
+		set(CPACK_INSTALL_DIRECTORY "Mapper-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}")
+		set(CPACK_NSIS_DISPLAY_NAME "OpenOrienteering Mapper ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+		set(CPACK_NSIS_PACKAGE_NAME "OpenOrienteering Mapper")
+		set(CPACK_PACKAGE_EXECUTABLES Mapper "OpenOrienteering Mapper")
+		set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
+		set(CPACK_NSIS_INSTALLED_ICON_NAME /Mapper.exe)
+		set(CPACK_NSIS_URL_INFO_ABOUT "http://oorienteering.sourceforge.net/?cat=3")
 	endif(WIN32)
 	
 	if(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
@@ -71,10 +79,10 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		set(CPACK_DEBIAN_PACKAGE_NAME "openorienteering-mapper")
  		add_definitions(-DMAPPER_DEBIAN_PACKAGE_NAME="${CPACK_DEBIAN_PACKAGE_NAME}")
 		set(CPACK_DEBIAN_PACKAGE_MAINTAINER
-		   "OpenOrienteering Developers <dg0yt@darc.de>")
+		   "Kai Pastor <dg0yt@darc.de>")
 		set(CPACK_DEBIAN_SECTION "graphics")
 		set(CPACK_DEBIAN_PACKAGE_HOMEPAGE 
-		  "http://oorienteering.sourceforge.net/")
+		  "http://oorienteering.sourceforge.net/?cat=3")
 		set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS "ON")
 		set(CPACK_DEBIAN_PACKAGE_RECOMMENDS "qt4-dev-tools")
 		
