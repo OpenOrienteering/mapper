@@ -48,27 +48,38 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	
 	if(WIN32)
 		# Packaging as ZIP archive
-		set(CPACK_GENERATOR "ZIP" "NSIS")
-		set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 0)
-		set(CPACK_INSTALL_DIRECTORY "Mapper-${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}")
-		set(CPACK_NSIS_DISPLAY_NAME "OpenOrienteering Mapper ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
-		set(CPACK_NSIS_PACKAGE_NAME "OpenOrienteering Mapper")
-		set(CPACK_PACKAGE_EXECUTABLES Mapper "OpenOrienteering Mapper")
-		set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
-		set(CPACK_NSIS_INSTALLED_ICON_NAME /Mapper.exe)
-		set(CPACK_NSIS_URL_INFO_ABOUT "http://oorienteering.sourceforge.net/?cat=3")
-		set(_nsis_extra_inst 
-		  ReadEnvStr $1 ComSpec\n
-		  ExecWait '\\\"$1\\\" /C assoc .omap=OpenOrienteering Map' $0\n
-		  ExecWait '\\\"$1\\\" /C ftype OpenOrienteering Map=\\\"$INSTDIR\\\\Mapper.exe\\\" \\\"%1\\\"' $0)
-		string(REPLACE ";" " " _nsis_extra_inst "${_nsis_extra_inst}")
-		set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS ${_nsis_extra_inst})
-		set(_nsis_extra_uninst 
-		  ReadEnvStr $1 ComSpec\n
-		  ExecWait '\\\"$1\\\" /C ftype OpenOrienteering Map= ' $0\n
-		  ExecWait '\\\"$1\\\" /C assoc .omap=' $0)
-		string(REPLACE ";" " " _nsis_extra_uninst "${_nsis_extra_uninst}")
-		set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS ${_nsis_extra_uninst})
+		set(CPACK_GENERATOR "ZIP")
+		#set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 0)
+		set(CPACK_PACKAGE_INSTALL_DIRECTORY "OpenOrienteering Mapper ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+		set(CPACK_PACKAGE_EXECUTABLES "Mapper" "OpenOrienteering Mapper ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+
+		find_program(MAKENSIS_EXECUTABLE "makensis")
+		if(MAKENSIS_EXECUTABLE)
+			list(APPEND CPACK_GENERATOR "NSIS")
+			# The title displayed at the top of the installer
+			set(CPACK_NSIS_PACKAGE_NAME "OpenOrienteering")
+			# The display name string that appears in the Windows Add/Remove Program control panel
+			set(CPACK_NSIS_DISPLAY_NAME "OpenOrienteering Mapper ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+			# NSIS start menu links will point to executables in this directory
+			set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
+			# A path to the executable that contains the uninstaller icon.
+			set(CPACK_NSIS_INSTALLED_ICON_NAME Mapper.exe)
+			# URL to a web site providing more information about your application.
+			set(CPACK_NSIS_URL_INFO_ABOUT "http://oorienteering.sourceforge.net/?cat=3")
+			# Extra NSIS commands that will be added to the install/uninstall sections.
+			set(_nsis_extra_inst 
+			  ReadEnvStr $1 ComSpec\n
+			  ExecWait '\\\"$1\\\" /C assoc .omap=OpenOrienteering Map' $0\n
+			  ExecWait '\\\"$1\\\" /C ftype OpenOrienteering Map=\\\"$INSTDIR\\\\Mapper.exe\\\" \\\"%1\\\"' $0)
+			string(REPLACE ";" " " _nsis_extra_inst "${_nsis_extra_inst}")
+			set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS ${_nsis_extra_inst})
+			set(_nsis_extra_uninst 
+			  ReadEnvStr $1 ComSpec\n
+			  ExecWait '\\\"$1\\\" /C ftype OpenOrienteering Map= ' $0\n
+			  ExecWait '\\\"$1\\\" /C assoc .omap=' $0)
+			string(REPLACE ";" " " _nsis_extra_uninst "${_nsis_extra_uninst}")
+			set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS ${_nsis_extra_uninst})
+		endif(MAKENSIS_EXECUTABLE)
 	endif(WIN32)
 	
 	if(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
@@ -79,12 +90,12 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		  OUTPUT_VARIABLE CPACK_LSB_RELEASE 
 		  OUTPUT_STRIP_TRAILING_WHITESPACE)
 		string(REPLACE 
-		  "x86" 
+		  "Linux-x86" 
 		  "${CPACK_LSB_RELEASE}_i386" 
 		  CPACK_PACKAGE_FILE_NAME
 		  ${CPACK_PACKAGE_FILE_NAME})
 		string(REPLACE 
-		  "x64" 
+		  "Linux-x64" 
 		  "${CPACK_LSB_RELEASE}_amd64" 
 		  CPACK_PACKAGE_FILE_NAME
 		  ${CPACK_PACKAGE_FILE_NAME})
