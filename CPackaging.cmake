@@ -32,8 +32,15 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	set(CPACK_PACKAGE_VERSION_PATCH ${Mapper_VERSION_PATCH})
 	set(CPACK_PACKAGE_DESCRIPTION_SUMMARY 
 	  "Map drawing program from OpenOrienteering")
+	if(CMAKE_SIZEOF_VOID_P EQUAL 4)
+		set(_system_name "${CMAKE_SYSTEM_NAME}-x86")
+	elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
+		set(_system_name "${CMAKE_SYSTEM_NAME}-x64")
+	else()
+		set(_system_name "${CMAKE_SYSTEM_NAME}-unknown")
+	endif()
 	set(CPACK_PACKAGE_FILE_NAME 
-	  "openorienteering-mapper_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}-${CMAKE_SYSTEM_PROCESSOR}")
+	  "openorienteering-mapper_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}-${_system_name}")
 	set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/COPYING")
 	set(CPACK_STRIP_FILES "TRUE")
 	
@@ -51,14 +58,14 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		  COMMAND /usr/bin/lsb_release -sc 
 		  OUTPUT_VARIABLE CPACK_LSB_RELEASE 
 		  OUTPUT_STRIP_TRAILING_WHITESPACE)
-		string(REPLACE
-		  ${CMAKE_SYSTEM_PROCESSOR} 
-		  "${CPACK_LSB_RELEASE}_${CMAKE_SYSTEM_PROCESSOR}" 
+		string(REPLACE 
+		  "x86" 
+		  "${CPACK_LSB_RELEASE}_i386" 
 		  CPACK_PACKAGE_FILE_NAME
 		  ${CPACK_PACKAGE_FILE_NAME})
 		string(REPLACE 
-		  "x86_64" 
-		  "amd64" 
+		  "x64" 
+		  "${CPACK_LSB_RELEASE}_amd64" 
 		  CPACK_PACKAGE_FILE_NAME
 		  ${CPACK_PACKAGE_FILE_NAME})
 		set(CPACK_DEBIAN_PACKAGE_NAME "openorienteering-mapper")
