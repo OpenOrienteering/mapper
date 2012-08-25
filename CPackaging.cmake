@@ -57,6 +57,18 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
 		set(CPACK_NSIS_INSTALLED_ICON_NAME /Mapper.exe)
 		set(CPACK_NSIS_URL_INFO_ABOUT "http://oorienteering.sourceforge.net/?cat=3")
+		set(_nsis_extra_inst 
+		  ReadEnvStr $1 ComSpec\n
+		  ExecWait '\\\"$1\\\" /C assoc .omap=OpenOrienteering Map' $0\n
+		  ExecWait '\\\"$1\\\" /C ftype OpenOrienteering Map=\\\"$INSTDIR\\\\Mapper.exe\\\" \\\"%1\\\"' $0)
+		string(REPLACE ";" " " _nsis_extra_inst "${_nsis_extra_inst}")
+		set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS ${_nsis_extra_inst})
+		set(_nsis_extra_uninst 
+		  ReadEnvStr $1 ComSpec\n
+		  ExecWait '\\\"$1\\\" /C ftype OpenOrienteering Map= ' $0\n
+		  ExecWait '\\\"$1\\\" /C assoc .omap=' $0)
+		string(REPLACE ";" " " _nsis_extra_uninst "${_nsis_extra_uninst}")
+		set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS ${_nsis_extra_uninst})
 	endif(WIN32)
 	
 	if(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
