@@ -292,18 +292,37 @@ MapCoordF PathCoord::calculateRightVector(const MapCoordVector& flags, const Map
 }
 MapCoordF PathCoord::calculateTangent(const MapCoordVector& coords, int i, bool backward, bool& ok)
 {
-	// TODO: this is a copy of the code below, only adjusted for MapCoord (without F)
+	// TODO: this is a copy of the code below, adjusted for MapCoord (without F) and handling of closed paths
 	
 	ok = true;
 	MapCoordF tangent;
 	if (backward)
 	{
 		//assert(i >= 1);
-		for (int k = i-1; k >= 0; --k)
+		int k = i-1;
+		for (; k >= 0; --k)
 		{
+			if (coords[k].isClosePoint())
+				break;
 			tangent = MapCoordF(coords[i].xd() - coords[k].xd(), coords[i].yd() - coords[k].yd());
 			if (tangent.lengthSquared() > 0.01f*0.01f)
 				return tangent;
+		}
+		
+		++k;
+		int size = (int)coords.size();
+		while (k < size && !coords[k].isClosePoint())
+			++k;
+		if (k < size)
+		{
+			// This is a closed part, wrap around
+			--k;
+			for (; k > i; --k)
+			{
+				tangent = MapCoordF(coords[i].xd() - coords[k].xd(), coords[i].yd() - coords[k].yd());
+				if (tangent.lengthSquared() > 0.01f*0.01f)
+					return tangent;
+			}
 		}
 		
 		ok = false;
@@ -312,11 +331,31 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVector& coords, int i, bool 
 	{
 		int size = (int)coords.size();
 		//assert(i < size - 1);
-		for (int k = i+1; k < size; ++k)
+		int k = i+1;
+		for (; k < size; ++k)
 		{
 			tangent = MapCoordF(coords[k].xd() - coords[i].xd(), coords[k].yd() - coords[i].yd());
 			if (tangent.lengthSquared() > 0.01f*0.01f)
 				return tangent;
+			if (coords[k].isClosePoint())
+				break;
+		}
+		
+		if (k >= size)
+			--k;
+		if (coords[k].isClosePoint())
+		{
+			--k;
+			// This is a closed part, wrap around
+			while (k >= 0 && !coords[k].isClosePoint())
+				--k;
+			k += 2;
+			for (; k < i; ++k)
+			{
+				tangent = MapCoordF(coords[k].xd() - coords[i].xd(), coords[k].yd() - coords[i].yd());
+				if (tangent.lengthSquared() > 0.01f*0.01f)
+					return tangent;
+			}
 		}
 		
 		ok = false;
@@ -332,7 +371,8 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVectorF& coords, int i, bool
 	if (backward)
 	{
 		//assert(i >= 1);
-		for (int k = i-1; k >= 0; --k)
+		int k = i-1;
+		for (; k >= 0; --k)
 		{
 			tangent = MapCoordF(coords[i].getX() - coords[k].getX(), coords[i].getY() - coords[k].getY());
 			if (tangent.lengthSquared() > 0.01f*0.01f)
@@ -345,7 +385,8 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVectorF& coords, int i, bool
 	{
 		int size = (int)coords.size();
 		//assert(i < size - 1);
-		for (int k = i+1; k < size; ++k)
+		int k = i+1;
+		for (; k < size; ++k)
 		{
 			tangent = MapCoordF(coords[k].getX() - coords[i].getX(), coords[k].getY() - coords[i].getY());
 			if (tangent.lengthSquared() > 0.01f*0.01f)
