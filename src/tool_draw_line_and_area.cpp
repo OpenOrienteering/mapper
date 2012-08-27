@@ -98,6 +98,7 @@ void DrawLineAndAreaTool::symbolDeleted(int pos, Symbol* old_symbol)
 void DrawLineAndAreaTool::createPreviewPoints()
 {
 	deletePreviewObjects();
+	preview_point_radius = 0;
 	addPreviewPointSymbols(last_used_symbol);
 	
 	// Create objects for the new symbols
@@ -311,6 +312,8 @@ void DrawLineAndAreaTool::addPreviewPointSymbols(Symbol* symbol)
 				preview->setInnerColor(line->getColor());
 				preview_point_symbols.push_back(preview);
 				preview_point_symbols_external.push_back(false);
+				if (preview->getInnerColor() != NULL)
+					preview_point_radius = qMax(preview_point_radius, preview->getInnerRadius());
 			}
 			if (has_border_line)
 			{
@@ -320,12 +323,18 @@ void DrawLineAndAreaTool::addPreviewPointSymbols(Symbol* symbol)
 				preview->setOuterColor(line->getBorderColor());
 				preview_point_symbols.push_back(preview);
 				preview_point_symbols_external.push_back(false);
+				if (preview->getOuterColor() != NULL)
+					preview_point_radius = qMax(preview_point_radius, preview->getInnerRadius() + preview->getOuterWidth());
 			}
 		}
 		else if (line->getMidSymbol() && !line->getMidSymbol()->isEmpty())
 		{
 			preview_point_symbols.push_back(line->getMidSymbol());
 			preview_point_symbols_external.push_back(true);
+			if (line->getMidSymbol()->getOuterColor() != NULL)
+				preview_point_radius = qMax(preview_point_radius, line->getMidSymbol()->getInnerRadius() + line->getMidSymbol()->getOuterWidth());
+			else if (line->getMidSymbol()->getInnerColor() != NULL)
+				preview_point_radius = qMax(preview_point_radius, line->getMidSymbol()->getInnerRadius());
 		}
 	}
 	else if (symbol->getType() == Symbol::Combined)

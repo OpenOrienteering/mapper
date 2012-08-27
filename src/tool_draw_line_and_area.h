@@ -73,6 +73,7 @@ protected:
 	std::vector<PointSymbol*> preview_point_symbols;
 	std::vector<bool> preview_point_symbols_external;
 	std::vector<PointObject*> preview_points[2];
+	int preview_point_radius;
 	bool preview_points_shown;
 	
 	CombinedSymbol* path_combination;

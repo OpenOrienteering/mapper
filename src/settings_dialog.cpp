@@ -121,6 +121,14 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	QCheckBox* zoom_out_away_from_cursor = new QCheckBox(tr("Zoom away from cursor when zooming out"));
 	layout->addWidget(zoom_out_away_from_cursor, row++, 0, 1, 2);
 	
+	QLabel* rectangle_helper_cross_radius_label = new QLabel(tr("Rectangle tool: radius of helper cross:"));
+	QSpinBox* rectangle_helper_cross_radius = Util::SpinBox::create(0, 999999, tr("pix"));
+	layout->addWidget(rectangle_helper_cross_radius_label, row, 0);
+	layout->addWidget(rectangle_helper_cross_radius, row++, 1);
+	
+	QCheckBox* rectangle_preview_line_width = new QCheckBox(tr("Rectangle tool: preview the width of lines with helper cross"));
+	layout->addWidget(rectangle_preview_line_width, row++, 0, 1, 2);
+	
 	
 	antialiasing->setChecked(Settings::getInstance().getSetting(Settings::MapDisplay_Antialiasing).toBool());
 	tolerance->setValue(Settings::getInstance().getSetting(Settings::MapEditor_ClickTolerance).toInt());
@@ -128,6 +136,8 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	fixed_angle_stepping->setValue(Settings::getInstance().getSetting(Settings::MapEditor_FixedAngleStepping).toInt());
 	select_symbol_of_objects->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool());
 	zoom_out_away_from_cursor->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_ZoomOutAwayFromCursor).toBool());
+	rectangle_helper_cross_radius->setValue(Settings::getInstance().getSetting(Settings::RectangleTool_HelperCrossRadius).toInt());
+	rectangle_preview_line_width->setChecked(Settings::getInstance().getSetting(Settings::RectangleTool_PreviewLineWidth).toBool());
 	
 	layout->setRowStretch(row, 1);
 
@@ -137,6 +147,8 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	connect(fixed_angle_stepping, SIGNAL(valueChanged(int)), this, SLOT(fixedAngleSteppingChanged(int)));
 	connect(select_symbol_of_objects, SIGNAL(clicked(bool)), this, SLOT(selectSymbolOfObjectsClicked(bool)));
 	connect(zoom_out_away_from_cursor, SIGNAL(clicked(bool)), this, SLOT(zoomOutAwayFromCursorClicked(bool)));
+	connect(rectangle_helper_cross_radius,  SIGNAL(valueChanged(int)), this, SLOT(rectangleHelperCrossRadiusChanged(int)));
+	connect(rectangle_preview_line_width, SIGNAL(clicked(bool)), this, SLOT(rectanglePreviewLineWidthChanged(bool)));
 }
 
 void EditorPage::antialiasingClicked(bool checked)
@@ -167,6 +179,16 @@ void EditorPage::selectSymbolOfObjectsClicked(bool checked)
 void EditorPage::zoomOutAwayFromCursorClicked(bool checked)
 {
 	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_ZoomOutAwayFromCursor), QVariant(checked));
+}
+
+void EditorPage::rectangleHelperCrossRadiusChanged(int value)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::RectangleTool_HelperCrossRadius), QVariant(value));
+}
+
+void EditorPage::rectanglePreviewLineWidthChanged(bool checked)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::RectangleTool_PreviewLineWidth), QVariant(checked));
 }
 
 // ### PrintingPage ###

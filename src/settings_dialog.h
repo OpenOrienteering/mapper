@@ -85,6 +85,8 @@ private slots:
 	void fixedAngleSteppingChanged(int value);
 	void selectSymbolOfObjectsClicked(bool checked);
 	void zoomOutAwayFromCursorClicked(bool checked);
+	void rectangleHelperCrossRadiusChanged(int value);
+	void rectanglePreviewLineWidthChanged(bool checked);
 };
 
 /*class PrintingPage : public SettingsPage

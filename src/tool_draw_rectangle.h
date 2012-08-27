@@ -48,7 +48,6 @@ public:
 	virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	static QCursor* cursor;
-	static const int helper_cross_radius = 250;
 	
 protected slots:
 	void updateDirtyRect();

@@ -41,6 +41,8 @@ public:
 		MapEditor_FixedAngleStepping,
 		MapEditor_ChangeSymbolWhenSelecting,
 		MapEditor_ZoomOutAwayFromCursor,
+		RectangleTool_HelperCrossRadius,
+		RectangleTool_PreviewLineWidth,
 		General_Language
 	};
 	

@@ -26,6 +26,7 @@
 #include "object.h"
 #include "map_widget.h"
 #include "map_editor.h"
+#include "settings.h"
 
 QCursor* DrawRectangleTool::cursor = NULL;
 
@@ -80,12 +81,10 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 			
 			if (!second_point_set)
 			{
+				if (click_pos_map == constrained_pos_map)
+					return true;
 				second_point_set = true;
 				
-				close_vector = click_pos_map - constrained_pos_map;
-				close_vector.normalize();
-				forward_vector = close_vector;
-				forward_vector.perpRight();
 				preview_path->addCoordinate(map_coord.toMapCoord()); // bring to the correct number of points
 				updateDirtyRect();
 			}
@@ -215,24 +214,42 @@ bool DrawRectangleTool::keyReleaseEvent(QKeyEvent* event)
 
 void DrawRectangleTool::draw(QPainter* painter, MapWidget* widget)
 {
+	const bool use_preview_radius = Settings::getInstance().getSettingCached(Settings::RectangleTool_PreviewLineWidth).toBool();
+	
 	drawPreviewObjects(painter, widget);
 	
-	if (draw_in_progress && second_point_set)
+	if (draw_in_progress)
 	{
+		int helper_cross_radius = Settings::getInstance().getSettingCached(Settings::RectangleTool_HelperCrossRadius).toInt();
 		painter->setRenderHint(QPainter::Antialiasing);
-
-		/*QPen pen(qRgb(255, 255, 255));
-		pen.setWidth(3);
-		painter->setPen(pen);
-		painter->drawLine(widget->mapToViewport(click_pos_map), widget->mapToViewport(cur_pos_map));*/
 		
-		QPen pen(active_color);
-		pen.setStyle(Qt::DashLine);
+		painter->setPen(second_point_set ? inactive_color : active_color);
+		if (preview_point_radius == 0 || !use_preview_radius)
+		{
+			painter->drawLine(widget->mapToViewport(cur_pos_map) + helper_cross_radius * forward_vector.toQPointF(),
+							  widget->mapToViewport(cur_pos_map) - helper_cross_radius * forward_vector.toQPointF());
+		}
+		else
+		{
+			painter->drawLine(widget->mapToViewport(cur_pos_map + 0.001f * preview_point_radius * close_vector) + helper_cross_radius * forward_vector.toQPointF(),
+							  widget->mapToViewport(cur_pos_map + 0.001f * preview_point_radius * close_vector) - helper_cross_radius * forward_vector.toQPointF());
+			painter->drawLine(widget->mapToViewport(cur_pos_map - 0.001f * preview_point_radius * close_vector) + helper_cross_radius * forward_vector.toQPointF(),
+							  widget->mapToViewport(cur_pos_map - 0.001f * preview_point_radius * close_vector) - helper_cross_radius * forward_vector.toQPointF());
+		}
+		
 		painter->setPen(active_color);
-		painter->drawLine(widget->mapToViewport(cur_pos_map) + helper_cross_radius * forward_vector.toQPointF(),
-						  widget->mapToViewport(cur_pos_map) - helper_cross_radius * forward_vector.toQPointF());
-		painter->drawLine(widget->mapToViewport(cur_pos_map) + helper_cross_radius * close_vector.toQPointF(),
-						  widget->mapToViewport(cur_pos_map) - helper_cross_radius * close_vector.toQPointF());
+		if (preview_point_radius == 0 || !use_preview_radius)
+		{
+			painter->drawLine(widget->mapToViewport(cur_pos_map) + helper_cross_radius * close_vector.toQPointF(),
+							  widget->mapToViewport(cur_pos_map) - helper_cross_radius * close_vector.toQPointF());
+		}
+		else
+		{
+			painter->drawLine(widget->mapToViewport(cur_pos_map + 0.001f * preview_point_radius * forward_vector) + helper_cross_radius * close_vector.toQPointF(),
+							  widget->mapToViewport(cur_pos_map + 0.001f * preview_point_radius * forward_vector) - helper_cross_radius * close_vector.toQPointF());
+			painter->drawLine(widget->mapToViewport(cur_pos_map - 0.001f * preview_point_radius * forward_vector) + helper_cross_radius * close_vector.toQPointF(),
+							  widget->mapToViewport(cur_pos_map - 0.001f * preview_point_radius * forward_vector) - helper_cross_radius * close_vector.toQPointF());
+		}
 	}
 	else if (draw_in_progress && !second_point_set && angle_helper->isActive())
 		angle_helper->draw(painter, widget);
@@ -298,6 +315,11 @@ void DrawRectangleTool::updateRectangle()
 	
 	if (!second_point_set)
 	{
+		close_vector = click_pos_map - constrained_pos_map;
+		close_vector.normalize();
+		forward_vector = close_vector;
+		forward_vector.perpRight();
+		
 		MapCoord coord = constrained_pos_map.toMapCoord();
 		coord.setDashPoint(draw_dash_points);
 		preview_path->setCoordinate(1, coord);
@@ -351,11 +373,12 @@ void DrawRectangleTool::updateDirtyRect()
 	{
 		if (rect.isValid())
 		{
+			int helper_cross_radius = Settings::getInstance().getSettingCached(Settings::RectangleTool_HelperCrossRadius).toInt();
 			int pixel_border = 0;
-			if (draw_in_progress && second_point_set)
+			if (draw_in_progress)
 				pixel_border = helper_cross_radius;	// helper_cross_radius as border is less than ideal but the only way to always ensure visibility of the helper cross at the moment
 			else if (draw_in_progress && !second_point_set && angle_helper->isActive())
-				pixel_border = angle_helper->getDisplayRadius();
+				pixel_border = qMax(helper_cross_radius, angle_helper->getDisplayRadius());
 			editor->getMap()->setDrawingBoundingBox(rect, pixel_border, true);
 		}
 		else

@@ -35,6 +35,9 @@ Settings::Settings(): QObject()
 	registerSetting(MapEditor_ChangeSymbolWhenSelecting, "MapEditor/change_symbol_when_selecting", true);
 	registerSetting(MapEditor_ZoomOutAwayFromCursor, "MapEditor/zoom_out_away_from_cursor", true);
 	
+	registerSetting(RectangleTool_HelperCrossRadius, "RectangleTool/helper_cross_radius", 300);
+	registerSetting(RectangleTool_PreviewLineWidth, "RectangleTool/preview_line_with", true);
+	
 	registerSetting(General_Language, "General/language", QVariant((int)QLocale::system().language()));
 }
 void Settings::registerSetting(Settings::SettingsEnum id, const QString& path, const QVariant& default_value)

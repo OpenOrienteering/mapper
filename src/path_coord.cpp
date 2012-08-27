@@ -205,7 +205,7 @@ void PathCoord::calculatePositionAt(const MapCoordVector& flags, const MapCoordV
 		return;
 	}
 	
-	assert(length < path_coords[path_coords.size() - 1].clen + 0.01f);
+	//assert(length < path_coords[path_coords.size() - 1].clen + 0.01f); perhaps same problem as the commented assert above?
 	*out_pos = path_coords[path_coords.size() - 1].pos;
 	if (out_right_vector)
 	{
