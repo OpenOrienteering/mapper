@@ -400,6 +400,9 @@ bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 		// Selection logic, trying to select the most relevant object(s)
 		if (!(event->modifiers() & selection_modifier) || map->getNumSelectedObjects() == 0)
 		{
+			if (hover_point >= -1)
+				return true;	// Clicked a handle or the bounding rect, do nothing
+			
 			if (objects.empty())
 			{
 				// Clicked on empty space, deselect everything
