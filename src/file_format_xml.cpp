@@ -242,11 +242,11 @@ void XMLFileExporter::exportSymbol(const Symbol *symbol, bool anonymous)
         }
         */
 
-        if (s->getBorderLineWidth() > 0)
+        if (s->getBorder().width > 0)
         {
-            builder.attr("border-color", color_index[s->getBorderColor()])
-                    .attr("border-width", s->getBorderLineWidth())
-                    .attr("border-shift", s->getBorderShift());
+            builder.attr("border-color", color_index[s->getBorder().color])
+                    .attr("border-width", s->getBorder().width)
+                    .attr("border-shift", s->getBorder().shift);
         }
 
         if (s->getStartSymbol())

@@ -162,6 +162,9 @@ public:
 	/// Static read function; reads the type number, creates a symbol of this type and loads it. Returns true if successful.
 	static bool loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* map);
 	
+	// TODO: Refactor: move to MapColor
+	static bool colorEquals(MapColor* color, MapColor* other);
+	
 	static const int number_components = 3;
 	static const int icon_size = 32;
 	
@@ -172,7 +175,6 @@ protected:
 	virtual bool loadImpl(QIODevice* file, int version, Map* map) = 0;
 	/// Must be overridden to compare symbol-specific attributes.
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity) = 0;
-	static bool colorEquals(MapColor* color, MapColor* other);
 	
 	/// Duplicates properties which are common for all symbols from other to this object
 	void duplicateImplCommon(const Symbol* other);

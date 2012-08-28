@@ -302,7 +302,7 @@ void DrawLineAndAreaTool::addPreviewPointSymbols(Symbol* symbol)
 		LineSymbol* line = reinterpret_cast<LineSymbol*>(symbol);
 		
 		bool has_main_line = line->getLineWidth() > 0 && line->getColor() != NULL;
-		bool has_border_line = line->hasBorder() && line->getBorderLineWidth() > 0 && line->getBorderColor() != NULL;
+		bool has_border_line = line->hasBorder() && (line->getBorder().isVisible() || line->getRightBorder().isVisible());
 		if (has_main_line || has_border_line)
 		{
 			if (has_main_line)
@@ -317,14 +317,9 @@ void DrawLineAndAreaTool::addPreviewPointSymbols(Symbol* symbol)
 			}
 			if (has_border_line)
 			{
-				PointSymbol* preview = new PointSymbol();
-				preview->setInnerRadius(line->getLineWidth() / 2 - line->getBorderLineWidth() / 2 + line->getBorderShift());
-				preview->setOuterWidth(line->getBorderLineWidth());
-				preview->setOuterColor(line->getBorderColor());
-				preview_point_symbols.push_back(preview);
-				preview_point_symbols_external.push_back(false);
-				if (preview->getOuterColor() != NULL)
-					preview_point_radius = qMax(preview_point_radius, preview->getInnerRadius() + preview->getOuterWidth());
+				addPreviewPointSymbolsForBorder(line, &line->getBorder());
+				if (line->areBordersDifferent())
+					addPreviewPointSymbolsForBorder(line, &line->getRightBorder());
 			}
 		}
 		else if (line->getMidSymbol() && !line->getMidSymbol()->isEmpty())
@@ -348,4 +343,18 @@ void DrawLineAndAreaTool::addPreviewPointSymbols(Symbol* symbol)
 				addPreviewPointSymbols(combined->getPart(i));
 		}
 	}
+}
+
+void DrawLineAndAreaTool::addPreviewPointSymbolsForBorder(LineSymbol* line, LineSymbolBorder* border)
+{
+	if (!border->isVisible())
+		return;
+	PointSymbol* preview = new PointSymbol();
+	preview->setInnerRadius(line->getLineWidth() / 2 - border->width / 2 + border->shift);
+	preview->setOuterWidth(border->width);
+	preview->setOuterColor(border->color);
+	preview_point_symbols.push_back(preview);
+	preview_point_symbols_external.push_back(false);
+	if (preview->getOuterColor() != NULL)
+		preview_point_radius = qMax(preview_point_radius, preview->getInnerRadius() + preview->getOuterWidth());
 }

@@ -32,6 +32,8 @@ class MapRenderables;
 class Symbol;
 class PointSymbol;
 class SymbolWidget;
+class LineSymbol;
+struct LineSymbolBorder;
 
 /// Base class for drawing tools for line and area symbols.
 /// Provides some common functionality like for example displaying the preview objects.
@@ -57,6 +59,7 @@ protected slots:
 protected:
 	void createPreviewPoints();
 	void addPreviewPointSymbols(Symbol* symbol);
+	void addPreviewPointSymbolsForBorder(LineSymbol* line, LineSymbolBorder* border);
 	void setPreviewPointsPosition(MapCoordF map_coord, int points_index = 0);
 	void hidePreviewPoints();
 	

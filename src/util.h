@@ -42,6 +42,9 @@ public:
 	virtual State validate(QString& input, int& pos) const;
 };
 
+/// (Un-)blocks recursively all signals from a QObject and its child-objects.
+void blockSignalsRecursively(QObject* obj, bool block);
+
 /// Enlarges the rect to include the given point
 void rectInclude(QRectF& rect, MapCoordF point); // does not work if rect is invalid
 void rectInclude(QRectF& rect, QPointF point); // does not work if rect is invalid
