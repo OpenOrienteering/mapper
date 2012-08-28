@@ -39,10 +39,10 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	bool params_set = map->arePrintParametersSet();
 	int orientation;
 	float dpi, left, top, width, height;
-	bool show_templates, center;
+	bool show_templates, show_grid, center;
 	if (params_set)
 	{
-		map->getPrintParameters(orientation, prev_paper_size, dpi, show_templates, center, left, top, width, height);
+		map->getPrintParameters(orientation, prev_paper_size, dpi, show_templates, show_grid, center, left, top, width, height);
 		have_prev_paper_size = true;
 	}
 	else
@@ -78,6 +78,10 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	show_templates_check = new QCheckBox(tr("Show templates"));	// this must be created before its value is used to determine the default setting of page_orientation_combo
 	if (params_set)
 		show_templates_check->setChecked(show_templates);
+	
+	show_grid_check = new QCheckBox(tr("Show grid"));
+	if (params_set)
+		show_grid_check->setChecked(show_grid);
 	
 	QLabel* page_orientation_label = new QLabel(tr("Page orientation:"));
 	page_orientation_combo = new QComboBox();
@@ -129,39 +133,57 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	preview_button = new QPushButton(tr("Preview..."));
 	print_button = new QPushButton("");
 	
+	int row = 0;
 	QGridLayout* layout = new QGridLayout();
-	layout->addWidget(device_label, 0, 0);
-	layout->addWidget(device_combo, 0, 1);
-	layout->addWidget(page_orientation_label, 1, 0);
-	layout->addWidget(page_orientation_combo, 1, 1);
-	layout->addWidget(page_format_label, 2, 0);
-	layout->addWidget(page_format_combo, 2, 1);
-	layout->addWidget(dpi_label, 3, 0);
-	layout->addWidget(dpi_edit, 3, 1);
-	layout->addWidget(copies_label, 4, 0);
-	layout->addWidget(copies_edit, 4, 1);
-	layout->addWidget(show_templates_check, 5, 0, 1, 2);
-	layout->addWidget(print_area_label, 6, 0, 1, 2);
-	layout->addWidget(left_label, 7, 0);
-	layout->addWidget(left_edit, 7, 1);
-	layout->addWidget(top_label, 8, 0);
-	layout->addWidget(top_edit, 8, 1);
-	layout->addWidget(width_label, 9, 0);
-	layout->addWidget(width_edit, 9, 1);
-	layout->addWidget(height_label, 10, 0);
-	layout->addWidget(height_edit, 10, 1);
-	layout->addWidget(center_button, 11, 0, 1, 2);
-	layout->addWidget(different_scale_check, 12, 0);
-	layout->addWidget(different_scale_edit, 12, 1);
-	layout->setRowStretch(13, 1);
-	layout->addWidget(preview_button, 14, 0);
-	layout->addWidget(print_button, 14, 1);
+	layout->addWidget(device_label, row, 0);
+	layout->addWidget(device_combo, row, 1);
+	++row;
+	layout->addWidget(page_orientation_label, row, 0);
+	layout->addWidget(page_orientation_combo, row, 1);
+	++row;
+	layout->addWidget(page_format_label, row, 0);
+	layout->addWidget(page_format_combo, row, 1);
+	++row;
+	layout->addWidget(dpi_label, row, 0);
+	layout->addWidget(dpi_edit, row, 1);
+	++row;
+	layout->addWidget(copies_label, row, 0);
+	layout->addWidget(copies_edit, row, 1);
+	++row;
+	layout->addWidget(show_templates_check, row, 0, 1, 2);
+	++row;
+	layout->addWidget(show_grid_check, row, 0, 1, 2);
+	++row;
+	layout->addWidget(print_area_label, row, 0, 1, 2);
+	++row;
+	layout->addWidget(left_label, row, 0);
+	layout->addWidget(left_edit, row, 1);
+	++row;
+	layout->addWidget(top_label, row, 0);
+	layout->addWidget(top_edit, row, 1);
+	++row;
+	layout->addWidget(width_label, row, 0);
+	layout->addWidget(width_edit, row, 1);
+	++row;
+	layout->addWidget(height_label, row, 0);
+	layout->addWidget(height_edit, row, 1);
+	++row;
+	layout->addWidget(center_button, row, 0, 1, 2);
+	++row;
+	layout->addWidget(different_scale_check, row, 0);
+	layout->addWidget(different_scale_edit, row, 1);
+	++row;
+	layout->setRowStretch(row, 1);
+	++row;
+	layout->addWidget(preview_button, row, 0);
+	layout->addWidget(print_button, row, 1);
 	setLayout(layout);
 	
 	connect(device_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(currentDeviceChanged()));
 	connect(page_orientation_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(pageOrientationChanged()));
 	connect(page_format_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(pageFormatChanged()));
 	connect(show_templates_check, SIGNAL(clicked()), this, SLOT(showTemplatesClicked()));
+	connect(show_grid_check, SIGNAL(clicked()), this, SLOT(showGridClicked()));
 	connect(top_edit, SIGNAL(textEdited(QString)), this, SLOT(printAreaPositionChanged()));
 	connect(left_edit, SIGNAL(textEdited(QString)), this, SLOT(printAreaPositionChanged()));
 	connect(width_edit, SIGNAL(textEdited(QString)), this, SLOT(printAreaSizeChanged()));
@@ -197,7 +219,7 @@ void PrintWidget::closed()
 {
 	map->setPrintParameters(page_orientation_combo->itemData(page_orientation_combo->currentIndex()).toInt(),
 							page_format_combo->itemData(page_format_combo->currentIndex()).toInt(),
-							dpi_edit->text().toFloat(), show_templates_check->isChecked(), center_button->isChecked(), getPrintAreaLeft(), getPrintAreaTop(), print_width, print_height);
+							dpi_edit->text().toFloat(), show_templates_check->isChecked(), show_grid_check->isChecked(), center_button->isChecked(), getPrintAreaLeft(), getPrintAreaTop(), print_width, print_height);
 	editor->setOverrideTool(NULL);
 	print_tool = NULL;
 }
@@ -315,6 +337,8 @@ void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& p
 	if (show_templates_check->isChecked())
 		map->drawTemplates(&painter, map_extent, 0, map->getFirstFrontTemplate() - 1, false, QRect(0, 0, paint_device->width(), paint_device->height()), NULL, main_view);
 	map->draw(&painter, map_extent, false, scale, false);
+	if (show_grid_check->isChecked())
+		map->drawGrid(&painter, print_area);
 	if (show_templates_check->isChecked())
 		map->drawTemplates(&painter, map_extent, map->getFirstFrontTemplate(), map->getNumTemplates() - 1, false, QRect(0, 0, paint_device->width(), paint_device->height()), NULL, main_view);
 	
@@ -454,6 +478,10 @@ void PrintWidget::showTemplatesClicked()
 {
 	if (center_button->isChecked())
 		centerPrintArea();
+}
+void PrintWidget::showGridClicked()
+{
+	// nothing yet
 }
 void PrintWidget::printAreaPositionChanged()
 {
@@ -674,7 +702,7 @@ void PrintWidget::addPaperSize(QPrinter::PaperSize size)
 }
 bool PrintWidget::checkForEmptyMap()
 {
-	if (map->getNumObjects() == 0 && (!show_templates_check->isChecked() || map->getNumTemplates() == 0))
+	if (map->getNumObjects() == 0 && (!show_templates_check->isChecked() || map->getNumTemplates() == 0) && !show_grid_check->isChecked())
 	{
 		QMessageBox::warning(this, tr("Error"), tr("The map is empty, there is nothing to print!"));
 		return true;

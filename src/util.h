@@ -23,6 +23,7 @@
 
 #include "map_coord.h"
 
+#include <qmath.h>
 #include <QDoubleValidator>
 #include <QRectF>
 
@@ -61,3 +62,127 @@ void saveString(QIODevice* file, const QString& str);
 void loadString(QIODevice* file, QString& str);
 
 #endif
+
+// TODO: Refactor: put remaining stuff into this namespace, too
+namespace Util
+{
+	/// See Util::gridOperation(). This function handles only parallel lines.
+	template<typename T> void hatchingOperation(QRectF extent, double spacing, double offset, double rotation, T& processor)
+	{
+		// Make rotation unique
+		rotation = fmod(1.0 * rotation, M_PI);
+		if (rotation < 0)
+			rotation = M_PI + rotation;
+		assert(rotation >= 0 && rotation <= M_PI);
+		
+		if (qAbs(rotation - M_PI/2) < 0.0001)
+		{
+			// Special case: vertical lines
+			double first = offset + ceil((extent.left() - offset) / (spacing)) * spacing;
+			for (double cur = first; cur < extent.right(); cur += spacing)
+			{
+				processor.processLine(QPointF(cur, extent.top()), QPointF(cur, extent.bottom()));
+			}
+		}
+		else if (qAbs(rotation - 0) < 0.0001)
+		{
+			// Special case: horizontal lines
+			double first = offset + ceil((extent.top() - offset) / (spacing)) * spacing;
+			for (double cur = first; cur < extent.bottom(); cur += spacing)
+			{
+				processor.processLine(QPointF(extent.left(), cur), QPointF(extent.right(), cur));
+			}
+		}
+		else
+		{
+			// General case
+			double xfactor = 1.0f / sin(rotation);
+			double yfactor = 1.0f / cos(rotation);
+			
+			double dist_x = xfactor * spacing;
+			double dist_y = yfactor * spacing;
+			double offset_x = xfactor * offset;
+			double offset_y = yfactor * offset;
+			
+			if (rotation < M_PI/2)
+			{
+				// Start with the upper left corner
+				offset_x += (-extent.top()) / tan(rotation);
+				offset_y -= extent.left() * tan(rotation);
+				double start_x = offset_x + ceil((extent.x() - offset_x) / dist_x) * dist_x;
+				double start_y = extent.top();
+				double end_x = extent.left();
+				double end_y = offset_y + ceil((extent.y() - offset_y) / dist_y) * dist_y;
+				
+				do
+				{
+					// Correct coordinates
+					if (start_x > extent.right())
+					{
+						start_y += ((start_x - extent.right()) / dist_x) * dist_y;
+						start_x = extent.right();
+					}
+					if (end_y > extent.bottom())
+					{
+						end_x += ((end_y - extent.bottom()) / dist_y) * dist_x;
+						end_y = extent.bottom();
+					}
+					
+					if (start_y > extent.bottom())
+						break;
+					
+					// Process the line
+					processor.processLine(QPointF(start_x, start_y), QPointF(end_x, end_y));
+					
+					// Move to next position
+					start_x += dist_x;
+					end_y += dist_y;
+				} while (true);
+			}
+			else
+			{
+				// Start with left lower corner
+				offset_x += (-extent.bottom()) / tan(rotation);
+				offset_y -= extent.x() * tan(rotation);
+				double start_x = offset_x + ceil((extent.x() - offset_x) / dist_x) * dist_x;
+				double start_y = extent.bottom();
+				double end_x = extent.x();
+				double end_y = offset_y + ceil((extent.bottom() - offset_y) / dist_y) * dist_y;
+				
+				do
+				{
+					// Correct coordinates
+					if (start_x > extent.right())
+					{
+						start_y += ((start_x - extent.right()) / dist_x) * dist_y;
+						start_x = extent.right();
+					}
+					if (end_y < extent.y())
+					{
+						end_x += ((end_y - extent.y()) / dist_y) * dist_x;
+						end_y = extent.y();
+					}
+					
+					if (start_y < extent.y())
+						break;
+					
+					// Process the line
+					processor.processLine(QPointF(start_x, start_y), QPointF(end_x, end_y));
+					
+					// Move to next position
+					start_x += dist_x;
+					end_y += dist_y;
+				} while (true);
+			}
+		}
+	}
+	
+	/// Used to implement arbitrarily rotated grids which are constrained to an axis-aligned bounding box.
+	/// This functions calls processor.processLine(QPointF a, QPointF b) for every line which is calculated to be in the given box.
+	template<typename T> void gridOperation(QRectF extent, double horz_spacing, double vert_spacing,
+											double horz_offset, double vert_offset, double rotation, T& processor)
+	{
+		hatchingOperation(extent, horz_spacing, horz_offset, rotation, processor);
+		hatchingOperation(extent, vert_spacing, vert_offset, rotation + M_PI / 2, processor);
+	}
+}

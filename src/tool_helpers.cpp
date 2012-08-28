@@ -33,6 +33,7 @@
 #include "map_widget.h"
 #include "util.h"
 #include "settings.h"
+#include "map_grid.h"
 
 
 // ### TextObjectEditorHelper ###
@@ -754,9 +755,19 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 	}
 	
 	// Find closest grid snap position
-	if (filter & GridCorners)
+	if ((filter & GridCorners) && widget->getMapView()->isGridVisible() &&
+		map->getGrid().isSnappingEnabled() && map->getGrid().getDisplayMode() == MapGrid::AllLines)
 	{
-		// TODO
+		MapCoordF closest_grid_point = map->getGrid().getClosestPointOnGrid(position, map);
+		float distance_sq = closest_grid_point.lengthToSquared(position);
+		if (distance_sq < closest_distance_sq)
+		{
+			closest_distance_sq = distance_sq;
+			result_position = closest_grid_point.toMapCoord();
+			result_info.type = GridCorners;
+			result_info.object = NULL;
+			result_info.coord_index = -1;
+		}
 	}
 	
 	// Return

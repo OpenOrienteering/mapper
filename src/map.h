@@ -52,6 +52,7 @@ class MapRenderables;
 class Template;
 class OCAD8FileImport;
 class Georeferencing;
+class MapGrid;
 
 typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
 
@@ -153,6 +154,8 @@ public:
 	
 	/// Draws the part of the map which is visible in the given bounding box in map coordinates
 	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity = 1.0);
+	/// Draws the map grid
+	void drawGrid(QPainter* painter, QRectF bounding_box);
 	/// Draws the templates first_template until last_template which are visible in the given bouding box. view determines template visibility and can be NULL to show all templates.
 	/// draw_untransformed_parts is only possible with a MapWidget (because of MapWidget::mapToViewport()). Otherwise, set it to NULL.
 	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, bool draw_untransformed_parts, const QRect& untransformed_dirty_rect, MapWidget* widget, MapView* view);
@@ -321,9 +324,11 @@ public:
 	void setGeoreferencing(const Georeferencing& georeferencing);
 	inline const Georeferencing& getGeoreferencing() const {return *georeferencing;}
 	
+	inline MapGrid& getGrid() {return *grid;}
+	
 	inline bool arePrintParametersSet() const {return print_params_set;}
-	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height);
-	void getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& center, float& left, float& top, float& width, float& height);
+	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool show_grid, bool center, float left, float top, float width, float height);
+	void getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& show_grid, bool& center, float& left, float& top, float& width, float& height);
 	
 	void setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel, double dpi, double scale);
 	void getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel, double& dpi, double& scale);
@@ -438,11 +443,14 @@ private:
 	
 	Georeferencing* georeferencing;
 	
+	MapGrid* grid;
+	
 	bool print_params_set;			// have the parameters been set (are they valid)?
 	int print_orientation;			// QPrinter::Orientation
 	int print_format;				// QPrinter::PaperSize
 	float print_dpi;
 	bool print_show_templates;
+	bool print_show_grid;
 	bool print_center;
 	float print_area_left;
 	float print_area_top;
@@ -487,7 +495,7 @@ struct TemplateVisibility
 	}
 };
 
-/// Stores view position, zoom, rotation and template visibilities to define a view onto a map
+/// Stores view position, zoom, rotation and grid / template visibilities to define a view onto a map
 class MapView
 {
 public:
@@ -496,7 +504,7 @@ public:
 	~MapView();
 	
 	void save(QIODevice* file);
-	void load(QIODevice* file);
+	void load(QIODevice* file, int version);
 	
 	/// Must be called to notify the map view of new widgets displaying it. Useful to notify the widgets which need to be redrawn
 	void addMapWidget(MapWidget* widget);
@@ -583,8 +591,12 @@ public:
 
 	// Template visibilities
 	bool isTemplateVisible(Template* temp);						// checks if the template is visible without creating a template visibility object if none exists
-	TemplateVisibility* getTemplateVisibility(Template* temp);	// returns the template visibility object, creates one if not there yet with the default settings (invisible)
-	void deleteTemplateVisibility(Template* temp);				// call this when a template is deleted to destroy the template visibility object
+	TemplateVisibility* getTemplateVisibility(Template* temp);		// returns the template visibility object, creates one if not there yet with the default settings (invisible)
+	void deleteTemplateVisibility(Template* temp);					// call this when a template is deleted to destroy the template visibility object
+	
+	// Grid visibility
+	inline bool isGridVisible() const {return grid_visible;}
+	inline void setGridVisible(bool visible) {grid_visible = visible;}
 	
 	// Static
 	static const double zoom_in_limit;
@@ -608,8 +620,10 @@ private:
 	Matrix view_to_map;
 	Matrix map_to_view;
 	
-    TemplateVisibility *map_visibility;
+    TemplateVisibility* map_visibility;
 	QHash<Template*, TemplateVisibility*> template_visibilities;
+	
+	bool grid_visible;
 	
 	WidgetVector widgets;
 };

@@ -158,6 +158,7 @@ set(Mapper_SRCS
  src/map_dialog_new.cpp
  src/map_dialog_scale.cpp
  src/map_dialog_rotate.cpp
+ src/map_grid.cpp
  src/georeferencing.cpp
  src/georeferencing_dialog.cpp
 
@@ -234,6 +235,7 @@ set(Mapper_MOC_INPUT
  src/map_dialog_rotate.h
  src/map_editor.h
  src/map_editor_activity.h
+ src/map_grid.h
  src/map_undo.h
  src/map_widget.h
  src/print_dock_widget.h

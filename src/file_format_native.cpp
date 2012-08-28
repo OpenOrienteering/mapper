@@ -23,12 +23,13 @@
 #include "georeferencing.h"
 #include "gps_coordinates.h"
 #include "map_color.h"
+#include "map_grid.h"
 #include "symbol.h"
 #include "template.h"
 #include "util.h"
 
 const int NativeFileFormat::least_supported_file_format_version = 0;
-const int NativeFileFormat::current_file_format_version = 23;
+const int NativeFileFormat::current_file_format_version = 24;
 const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 
 bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
@@ -133,6 +134,9 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 			georef.initDeclination();
 		*map->georeferencing = georef;
 	}
+	
+	if (version >= 24)
+		map->getGrid().load(stream, version);
 
     if (version >= 6)
     {
@@ -143,6 +147,10 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
             stream->read((char*)&map->print_format, sizeof(int));
             stream->read((char*)&map->print_dpi, sizeof(float));
             stream->read((char*)&map->print_show_templates, sizeof(bool));
+			if (version >= 24)
+				stream->read((char*)&map->print_show_grid, sizeof(bool));
+			else
+				map->print_show_grid = false;
             stream->read((char*)&map->print_center, sizeof(bool));
             stream->read((char*)&map->print_area_left, sizeof(float));
             stream->read((char*)&map->print_area_top, sizeof(float));
@@ -226,7 +234,7 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 
 		// Restore widgets and views
 		if (view)
-			view->load(stream);
+			view->load(stream, version);
 		else
 		{
 			// TODO
@@ -306,6 +314,8 @@ void NativeFileExport::doExport() throw (FormatException)
 	saveString(stream, QString("Geographic coordinates")); // reserved for geographic crs parameter or specification id
 	saveString(stream, georef.geographic_crs_spec);
 	
+	map->getGrid().save(stream);
+	
     stream->write((const char*)&map->print_params_set, sizeof(bool));
     if (map->print_params_set)
     {
@@ -313,6 +323,7 @@ void NativeFileExport::doExport() throw (FormatException)
         stream->write((const char*)&map->print_format, sizeof(int));
         stream->write((const char*)&map->print_dpi, sizeof(float));
         stream->write((const char*)&map->print_show_templates, sizeof(bool));
+		stream->write((const char*)&map->print_show_grid, sizeof(bool));
         stream->write((const char*)&map->print_center, sizeof(bool));
         stream->write((const char*)&map->print_area_left, sizeof(float));
         stream->write((const char*)&map->print_area_top, sizeof(float));

@@ -31,6 +31,7 @@
 
 #include "map_color.h"
 #include "map_editor.h"
+#include "map_grid.h"
 #include "map_widget.h"
 #include "map_undo.h"
 #include "util.h"
@@ -456,6 +457,7 @@ Map::Map() : renderables(new MapRenderables(this)), selection_renderables(new Ma
 	color_set = NULL;
 	object_undo_manager.setOwner(this);
 	georeferencing = new Georeferencing();
+	grid = new MapGrid();
 	
 	clear();
 }
@@ -479,6 +481,7 @@ Map::~Map()
 	
 	color_set->dereference();
 	
+	delete grid;
 	delete georeferencing;
 }
 
@@ -945,6 +948,10 @@ void Map::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, floa
 	
 	// The actual drawing
 	renderables->draw(painter, bounding_box, force_min_size, scaling, show_helper_symbols, opacity);
+}
+void Map::drawGrid(QPainter* painter, QRectF bounding_box)
+{
+	grid->draw(painter, bounding_box, this);
 }
 void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, bool draw_untransformed_parts, const QRect& untransformed_dirty_rect, MapWidget* widget, MapView* view)
 {
@@ -1939,7 +1946,7 @@ void Map::setGeoreferencing(const Georeferencing& georeferencing)
 	setOtherDirty(true);
 }
 
-void Map::setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool center, float left, float top, float width, float height)
+void Map::setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool show_grid, bool center, float left, float top, float width, float height)
 {
 	if ((print_orientation != orientation) || (print_format != format) || (print_dpi != dpi) || (print_show_templates != show_templates) ||
 		(print_center != center) || (print_area_left != left) || (print_area_top != top) || (print_area_width != width) || (print_area_height != height))
@@ -1949,6 +1956,7 @@ void Map::setPrintParameters(int orientation, int format, float dpi, bool show_t
 	print_format = format;
 	print_dpi = dpi;
 	print_show_templates = show_templates;
+	print_show_grid = show_grid;
 	print_center = center;
 	print_area_left = left;
 	print_area_top = top;
@@ -1957,12 +1965,13 @@ void Map::setPrintParameters(int orientation, int format, float dpi, bool show_t
 	
 	print_params_set = true;
 }
-void Map::getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& center, float& left, float& top, float& width, float& height)
+void Map::getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& show_grid, bool& center, float& left, float& top, float& width, float& height)
 {
 	orientation = print_orientation;
 	format = print_format;
 	dpi = print_dpi;
 	show_templates = print_show_templates;
+	show_grid = print_show_grid;
 	center = print_center;
 	left = print_area_left;
 	top = print_area_top;
@@ -2055,6 +2064,7 @@ MapView::MapView(Map* map) : map(map)
 	view_y = 0;
     map_visibility = new TemplateVisibility();
     map_visibility->visible = true;
+	grid_visible = false;
     update();
     //map->addMapView(this);
 }
@@ -2090,8 +2100,10 @@ void MapView::save(QIODevice* file)
 		
 		++it;
 	}
+	
+	file->write((const char*)&grid_visible, sizeof(bool));
 }
-void MapView::load(QIODevice* file)
+void MapView::load(QIODevice* file, int version)
 {
 	file->read((char*)&zoom, sizeof(double));
 	file->read((char*)&rotation, sizeof(double));
@@ -2114,6 +2126,9 @@ void MapView::load(QIODevice* file)
 		file->read((char*)&vis->visible, sizeof(bool));
 		file->read((char*)&vis->opacity, sizeof(float));
 	}
+	
+	if (version >= 24)
+		file->read((char*)&grid_visible, sizeof(bool));
 }
 
 void MapView::addMapWidget(MapWidget* widget)

@@ -29,6 +29,7 @@
 #include "map_undo.h"
 #include "map_dialog_scale.h"
 #include "map_dialog_rotate.h"
+#include "map_grid.h"
 #include "georeferencing.h"
 #include "georeferencing_dialog.h"
 #include "print_dock_widget.h"
@@ -284,9 +285,7 @@ void MapEditorController::attach(MainWindow* window)
 	}
 	
 	// Update enabled/disabled state for the tools ...
-	objectSelectionChanged();
-	// ... and for undo ...
-	undoStepAvailabilityChanged();
+	updateWidgets();
 	// ... and make sure it is kept up to date for copy/paste
 	connect(QApplication::clipboard(), SIGNAL(changed(QClipboard::Mode)), this, SLOT(clipboardChanged(QClipboard::Mode)));
 	clipboardChanged(QClipboard::Clipboard);
@@ -371,6 +370,7 @@ void MapEditorController::assignKeyboardShortcuts()
     findAction("paste")->setShortcut(QKeySequence::Paste);
 
     // Custom keyboard shortcuts
+	findAction("showgrid")->setShortcut(QKeySequence("G"));
 	findAction("zoomin")->setShortcut(QKeySequence("F7"));
 	findAction("zoomout")->setShortcut(QKeySequence("F8"));
 	findAction("fullscreen")->setShortcut(QKeySequence("F11"));
@@ -407,6 +407,8 @@ void MapEditorController::createMenuAndToolbars()
 	copy_act = newAction("copy", tr("C&opy"), this, SLOT(copy()), "copy.png");
 	paste_act = newAction("paste", tr("&Paste"), this, SLOT(paste()), "paste");
 
+	show_grid_act = newCheckAction("showgrid", tr("Show grid"), this, SLOT(showGrid()), "grid.png", QString::null, QString::null);	// TODO: link to manual
+	QAction* configure_grid_act = newAction("configuregrid", tr("Configure grid..."), this, SLOT(configureGrid()), "grid.png", QString::null, QString::null);	// TODO: link to manual
 	QAction* zoom_in_act = newAction("zoomin", tr("Zoom in"), this, SLOT(zoomIn()), "view-zoom-in.png", QString::null, "view_menu.html");
 	QAction* zoom_out_act = newAction("zoomout", tr("Zoom out"), this, SLOT(zoomOut()), "view-zoom-out.png", QString::null, "view_menu.html");
 	QAction* show_all_act = newAction("showall", tr("Show whole map"), this, SLOT(showWholeMap()), "view-show-all.png");
@@ -420,8 +422,8 @@ void MapEditorController::createMenuAndToolbars()
 	
 	QAction *scale_all_symbols_act = newAction("scaleall", tr("Scale all symbols..."), this, SLOT(scaleAllSymbolsClicked()), NULL, tr("Scale the whole symbol set"));
 	QAction* georeferencing_act = newAction("georef", tr("Georeferencing..."), this, SLOT(editGeoreferencing()));
-	QAction *scale_map_act = newAction("scalemap", tr("Change map scale..."), this, SLOT(scaleMapClicked()), NULL, tr("Change the map scale and adjust map objects and symbol sizes"), "map_menu.html");
-	QAction *rotate_map_act = newAction("rotatemap", tr("Rotate map..."), this, SLOT(rotateMapClicked()), NULL, tr("Rotate the whole map"), "map_menu.html");
+	QAction *scale_map_act = newAction("scalemap", tr("Change map scale..."), this, SLOT(scaleMapClicked()), "tool-scale.png", tr("Change the map scale and adjust map objects and symbol sizes"), "map_menu.html");
+	QAction *rotate_map_act = newAction("rotatemap", tr("Rotate map..."), this, SLOT(rotateMapClicked()), "tool-rotate.png", tr("Rotate the whole map"), "map_menu.html");
 	QAction *map_notes_act = newAction("mapnotes", tr("Map notes..."), this, SLOT(mapNotesClicked()));
 	
 	template_window_act = newCheckAction("templatewindow", tr("Template setup window"), this, SLOT(showTemplateWindow(bool)), "window-new", tr("Show/Hide the template window"), "template_menu.html");
@@ -566,6 +568,8 @@ void MapEditorController::createMenuAndToolbars()
 	QMenu* map_menu = window->menuBar()->addMenu(tr("M&ap"));
 	map_menu->setWhatsThis("<a href=\"map_menu.html\">See more</a>");
 	map_menu->addAction(georeferencing_act);
+	map_menu->addAction(configure_grid_act);
+	map_menu->addSeparator();
 	map_menu->addAction(scale_map_act);
 	map_menu->addAction(rotate_map_act);
 	map_menu->addAction(map_notes_act);
@@ -597,6 +601,16 @@ void MapEditorController::createMenuAndToolbars()
 
 	// View toolbar
 	toolbar_view = window->addToolBar(tr("View"));
+	QToolButton* grid_button = new QToolButton();
+	grid_button->setCheckable(true);
+	grid_button->setDefaultAction(show_grid_act);
+	grid_button->setPopupMode(QToolButton::MenuButtonPopup);
+	QMenu* grid_menu = new QMenu(grid_button);
+	grid_menu->addAction(tr("Configure grid..."));
+	grid_button->setMenu(grid_menu);
+	connect(grid_menu, SIGNAL(triggered(QAction*)), this, SLOT(configureGrid()));
+	toolbar_view->addWidget(grid_button);
+	toolbar_view->addSeparator();
 	toolbar_view->addAction(zoom_in_act);
 	toolbar_view->addAction(zoom_out_act);
 	toolbar_view->addAction(show_all_act);
@@ -618,8 +632,8 @@ void MapEditorController::createMenuAndToolbars()
 	QMenu* paint_on_template_menu = new QMenu(paint_on_template_button);
 	paint_on_template_menu->addAction(tr("Select template..."));
 	paint_on_template_button->setMenu(paint_on_template_menu);
-	toolbar_drawing->addWidget(paint_on_template_button);
 	connect(paint_on_template_menu, SIGNAL(triggered(QAction*)), this, SLOT(paintOnTemplateSelectClicked()));
+	toolbar_drawing->addWidget(paint_on_template_button);
 
 	// Editing toolbar
 	toolbar_editing = window->addToolBar(tr("Editing"));
@@ -870,6 +884,24 @@ void MapEditorController::paste()
 	delete paste_map;
 }
 
+void MapEditorController::showGrid()
+{
+	main_view->setGridVisible(show_grid_act->isChecked());
+	map->updateAllMapWidgets();
+}
+
+void MapEditorController::configureGrid()
+{
+	ConfigureGridDialog dialog(window, map, main_view);
+	dialog.setWindowModality(Qt::WindowModal);
+	if (dialog.exec() == QDialog::Accepted)
+	{
+		show_grid_act->setChecked(main_view->isGridVisible());
+		map->updateAllMapWidgets();
+		map->setOtherDirty(true);
+	}
+}
+
 void MapEditorController::zoomIn()
 {
 	main_view->zoomSteps(1, false);
@@ -1063,6 +1095,7 @@ void MapEditorController::editGeoreferencing()
 void MapEditorController::georeferencingDialogFinished()
 {
 	georeferencing_dialog.take()->deleteLater();
+	map->updateAllMapWidgets();
 }
 
 void MapEditorController::selectedSymbolsChanged()
@@ -1693,10 +1726,15 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 		connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*,Symbol*)));
 	
 	if (window)
-	{
-		undoStepAvailabilityChanged();
-		objectSelectionChanged();
-	}
+		updateWidgets();
+}
+
+void MapEditorController::updateWidgets()
+{
+	undoStepAvailabilityChanged();
+	objectSelectionChanged();
+	if (main_view && mode == MapEditor)
+		show_grid_act->setChecked(main_view->isGridVisible());
 }
 
 // ### EditorDockWidget ###

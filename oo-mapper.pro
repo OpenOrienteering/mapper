@@ -35,6 +35,7 @@ HEADERS += src/color_dock_widget.h \
            src/map_dialog_new.h \
            src/map_dialog_scale.h \
            src/map_dialog_rotate.h \
+           src/map_grid.h \
            src/map_editor.h \
            src/map_editor_activity.h \
            src/map_undo.h \
@@ -114,6 +115,7 @@ SOURCES += src/color_dock_widget.cpp \
            src/map_dialog_rotate.cpp \
            src/map_editor.cpp \
            src/map_editor_activity.cpp \
+           src/map_grid.cpp \
            src/map_undo.cpp \
            src/map_widget.cpp \
            src/matrix.cpp \

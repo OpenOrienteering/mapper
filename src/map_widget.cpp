@@ -523,7 +523,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		showHelpMessage(&painter, tr("Empty map!\n\nStart by defining some colors:\nSelect Symbols -> Color window to\nopen the color dialog and\ndefine the colors there."));
 	else if (show_help && view && view->getMap()->getNumSymbols() == 0)
 		showHelpMessage(&painter, tr("No symbols!\n\nNow define some symbols:\nRight-click in the symbol bar\nand select \"New symbol\"\nto create one."));
-	else if (show_help && view && view->getMap()->getNumTemplates() == 0 && view->getMap()->getNumObjects() == 0)	// No templates or objects defined?
+	else if (show_help && view && view->getMap()->getNumTemplates() == 0 && view->getMap()->getNumObjects() == 0 && !view->isGridVisible())	// No templates or objects defined?
 		showHelpMessage(&painter, tr("Ready to draw!\n\nStart drawing or load a base map.\nTo load a base map, click\nTemplates -> Open template...") + "\n\n" + tr("Hint: Hold the middle mouse button to drag the map,\nzoom using the mouse wheel, if available."));
 	else if (view)
 	{
@@ -859,6 +859,8 @@ void MapWidget::updateMapCache(bool use_background)
     painter.translate(width() / 2.0, height() / 2.0);
     view->applyTransform(&painter);
     map->draw(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor(), true);
+	if (view->isGridVisible())
+		map->drawGrid(&painter, map_view_rect);
 
 	// Finish drawing
 	painter.end();

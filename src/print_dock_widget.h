@@ -77,6 +77,7 @@ protected slots:
 	void pageOrientationChanged();
 	void pageFormatChanged();
 	void showTemplatesClicked();
+	void showGridClicked();
 	void printAreaPositionChanged();
 	void printAreaSizeChanged();
 	void updatePrintAreaSize();
@@ -113,6 +114,7 @@ private:
 	QLabel* copies_label;
 	QLineEdit* copies_edit;
 	QCheckBox* show_templates_check;
+	QCheckBox* show_grid_check;
 	QLineEdit* left_edit;
 	QLineEdit* top_edit;
 	QLineEdit* width_edit;
