@@ -481,6 +481,8 @@ void GeoreferencingDialog::crsChanged()
 		else
 			latLonChanged();
 	}
+	else
+		updateNorth();
 	updateLatLon();
 	updateStatus();
 	reset_button->setEnabled(true);
