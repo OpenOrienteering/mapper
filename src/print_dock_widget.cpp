@@ -329,7 +329,6 @@ void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& p
 	// Need to convert mm to dots
 	float scale_factor = calcScaleFactor();
 	float scale = (1/25.4f * dpi) * scale_factor;
-	
 	painter.scale(scale, scale);
 	QRectF print_area = getEffectivePrintArea();
 	painter.translate(-print_area.left(), -print_area.top());
@@ -594,6 +593,12 @@ void PrintWidget::printClicked()
 {
 	if (checkForEmptyMap())
 		return;
+	
+	if (map->isAreaHatchingEnabled() || map->isBaselineViewEnabled())
+	{
+		if (QMessageBox::question(this, tr("Warning"), tr("A non-standard view mode is activated. Are you sure to print / export the map like this?"), QMessageBox::Ok | QMessageBox::Cancel) == QMessageBox::Cancel)
+			return;
+	}
 	
 	int index = device_combo->itemData(device_combo->currentIndex()).toInt();
 	

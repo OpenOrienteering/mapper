@@ -91,6 +91,7 @@ public:
 	void createRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, ObjectRenderables& output);
 	virtual void colorDeleted(MapColor* color);
     virtual bool containsColor(MapColor* color);
+    virtual MapColor* getDominantColorGuess();
     virtual void scale(double factor);
 	
 	/// Creates empty point symbols for contained NULL symbols with the given names

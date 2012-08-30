@@ -94,7 +94,7 @@ public:
 	static void drawPointHandle(QPainter* painter, QPointF point, PointHandleType type, bool active);
 	static void drawCurveHandleLine(QPainter* painter, QPointF point, QPointF curve_handle, bool active);
 	static void includeControlPointRect(QRectF& rect, Object* object, QPointF* box_text_handles);
-	static bool calculateBoxTextHandles(QPointF* out, Map* map);
+	static bool calculateSelectedBoxTextHandles(QPointF* out, Map* map);
 	
 	static const QRgb inactive_color;
 	static const QRgb active_color;

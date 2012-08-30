@@ -38,6 +38,7 @@
 #include "template.h"
 #include "gps_coordinates.h"
 #include "object.h"
+#include "object_operations.h"
 #include "renderable.h"
 #include "symbol.h"
 #include "symbol_point.h"
@@ -249,83 +250,31 @@ QRectF MapLayer::calculateExtent(bool include_helper_symbols)
 }
 void MapLayer::scaleAllObjects(double factor)
 {
-	int size = objects.size();
-	for (int i = size - 1; i >= 0; --i)
-		objects[i]->scale(factor);
-	
-	forceUpdateOfAllObjects();
+	operationOnAllObjects(ObjectOp::Scale(factor));
 }
 void MapLayer::rotateAllObjects(double rotation)
 {
-	int size = objects.size();
-	for (int i = size - 1; i >= 0; --i)
-		objects[i]->rotateAround(MapCoordF(0, 0), rotation);
-	
-	forceUpdateOfAllObjects();
+	operationOnAllObjects(ObjectOp::Rotate(rotation));
 }
-void MapLayer::updateAllObjects(bool remove_old_renderables)
+void MapLayer::updateAllObjects()
 {
-	int size = objects.size();
-	for (int i = size - 1; i >= 0; --i)
-		objects[i]->update(true, true);
+	operationOnAllObjects(ObjectOp::Update(true));
 }
 void MapLayer::updateAllObjectsWithSymbol(Symbol* symbol)
 {
-	int size = objects.size();
-	for (int i = size - 1; i >= 0; --i)
-	{
-		if (objects[i]->getSymbol() != symbol)
-			continue;
-		
-		objects[i]->update(true);
-	}
+	operationOnAllObjects(ObjectOp::Update(true), ObjectOp::HasSymbol(symbol));
 }
 void MapLayer::changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol)
 {
-	int size = objects.size();
-	for (int i = size - 1; i >= 0; --i)
-	{
-		if (objects[i]->getSymbol() != old_symbol)
-			continue;
-		
-		if (!objects[i]->setSymbol(new_symbol, false))
-			deleteObject(i, false);
-		else
-			objects[i]->update(true);
-	}
+	operationOnAllObjects(ObjectOp::ChangeSymbol(new_symbol), ObjectOp::HasSymbol(old_symbol));
 }
 bool MapLayer::deleteAllObjectsWithSymbol(Symbol* symbol)
 {
-	bool object_deleted = false;
-	int size = objects.size();
-	for (int i = size - 1; i >= 0; --i)
-	{
-		if (objects[i]->getSymbol() != symbol)
-			continue;
-		
-		deleteObject(i, false);
-		object_deleted = true;
-	}
-	return object_deleted;
+	return operationOnAllObjects(ObjectOp::Delete(), ObjectOp::HasSymbol(symbol)) & ObjectOperationResult::Success;
 }
 bool MapLayer::doObjectsExistWithSymbol(Symbol* symbol)
 {
-	int size = objects.size();
-	for (int i = size - 1; i >= 0; --i)
-	{
-		if (objects[i]->getSymbol() == symbol)
-			return true;
-	}
-	return false;
-}
-void MapLayer::forceUpdateOfAllObjects(Symbol* with_symbol)
-{
-	int size = objects.size();
-	for (int i = size - 1; i >= 0; --i)
-	{
-		if (with_symbol == NULL || objects[i]->getSymbol() == with_symbol)
-			objects[i]->update(true);
-	}
+	return operationOnAllObjects(ObjectOp::NoOp(), ObjectOp::HasSymbol(symbol)) & ObjectOperationResult::Success;
 }
 
 // ### MapColorSet ###
@@ -434,7 +383,7 @@ void Map::MapColorSet::importSet(Map::MapColorSet* other, Map* map, std::vector<
 	}
 	
 	if (map && priorities_changed)
-		map->forceUpdateOfAllObjects();
+		map->updateAllObjects();
 }
 
 // ### Map ###
@@ -458,6 +407,8 @@ Map::Map() : renderables(new MapRenderables(this)), selection_renderables(new Ma
 	object_undo_manager.setOwner(this);
 	georeferencing = new Georeferencing();
 	grid = new MapGrid();
+	area_hatching_enabled = false;
+	baseline_view_enabled = false;
 	
 	clear();
 }
@@ -730,7 +681,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 	}
 
 	// Update all objects without trying to remove their renderables first, this gives a significant speedup when loading large files
-	updateAllObjects(false);
+	updateAllObjects(); // TODO: is the comment above still applicable?
 
 	return true;
 }
@@ -1883,33 +1834,23 @@ void Map::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hi
 
 void Map::scaleAllObjects(double factor)
 {
-	int size = layers.size();
-	for (int i = 0; i < size; ++i)
-		layers[i]->scaleAllObjects(factor);
+	operationOnAllObjects(ObjectOp::Scale(factor));
 }
 void Map::rotateAllObjects(double rotation)
 {
-	int size = layers.size();
-	for (int i = 0; i < size; ++i)
-		layers[i]->rotateAllObjects(rotation);
+	operationOnAllObjects(ObjectOp::Rotate(rotation));
 }
-void Map::updateAllObjects(bool remove_old_renderables)
+void Map::updateAllObjects()
 {
-	int size = layers.size();
-	for (int i = 0; i < size; ++i)
-		layers[i]->updateAllObjects(remove_old_renderables);
+	operationOnAllObjects(ObjectOp::Update(true));
 }
 void Map::updateAllObjectsWithSymbol(Symbol* symbol)
 {
-	int size = layers.size();
-	for (int i = 0; i < size; ++i)
-		layers[i]->updateAllObjectsWithSymbol(symbol);
+	operationOnAllObjects(ObjectOp::Update(true), ObjectOp::HasSymbol(symbol));
 }
 void Map::changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol)
 {
-	int size = layers.size();
-	for (int i = 0; i < size; ++i)
-		layers[i]->changeSymbolForAllObjects(old_symbol, new_symbol);
+	operationOnAllObjects(ObjectOp::ChangeSymbol(new_symbol), ObjectOp::HasSymbol(old_symbol));
 }
 bool Map::deleteAllObjectsWithSymbol(Symbol* symbol)
 {
@@ -1917,27 +1858,11 @@ bool Map::deleteAllObjectsWithSymbol(Symbol* symbol)
 	removeSymbolFromSelection(symbol, true);
 	
 	// Delete objects from map
-	bool object_deleted = false;
-	int size = layers.size();
-	for (int i = 0; i < size; ++i)
-		object_deleted = object_deleted || layers[i]->deleteAllObjectsWithSymbol(symbol);
-	return object_deleted;
+	return operationOnAllObjects(ObjectOp::Delete(), ObjectOp::HasSymbol(symbol)) & ObjectOperationResult::Success;
 }
 bool Map::doObjectsExistWithSymbol(Symbol* symbol)
 {
-	int size = layers.size();
-	for (int i = 0; i < size; ++i)
-	{
-		if (layers[i]->doObjectsExistWithSymbol(symbol))
-			return true;
-	}
-	return false;
-}
-void Map::forceUpdateOfAllObjects(Symbol* with_symbol)
-{
-	int size = layers.size();
-	for (int i = 0; i < size; ++i)
-		layers[i]->forceUpdateOfAllObjects(with_symbol);
+	return operationOnAllObjects(ObjectOp::NoOp(), ObjectOp::HasSymbol(symbol)) & ObjectOperationResult::Success;
 }
 
 void Map::setGeoreferencing(const Georeferencing& georeferencing)

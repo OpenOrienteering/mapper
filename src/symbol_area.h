@@ -86,8 +86,10 @@ public:
 	virtual Symbol* duplicate(const QHash<MapColor*, MapColor*>* color_map = NULL) const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
+	void createRenderablesNormal(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
 	virtual void colorDeleted(MapColor* color);
 	virtual bool containsColor(MapColor* color);
+    virtual MapColor* getDominantColorGuess();
 	virtual void scale(double factor);
 	
 	// Getters / Setters
@@ -95,6 +97,7 @@ public:
 	inline void setColor(MapColor* color) {this->color = color;}
 	inline int getMinimumArea() const {return minimum_area; }
 	inline int getNumFillPatterns() const {return (int)patterns.size();}
+	inline void setNumFillPatterns(int count) {patterns.resize(count);}
 	inline FillPattern& getFillPattern(int i) {return patterns[i];}
 	inline const FillPattern& getFillPattern(int i) const {return patterns[i];}
 	bool hasRotatableFillPattern() const;

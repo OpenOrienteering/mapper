@@ -146,7 +146,12 @@ public:
 	ObjectRenderables(Object* object, QRectF& extent);
 	~ObjectRenderables();
 	
-	void insertRenderable(Renderable* r);
+	inline void insertRenderable(Renderable* r)
+	{
+		RenderStates state(r, clip_path);
+		insertRenderable(r, state);
+	}
+	void insertRenderable(Renderable* r, RenderStates& state);
 	
 	void clear();
 	void deleteRenderables();

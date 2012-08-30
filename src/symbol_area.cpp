@@ -420,21 +420,32 @@ Symbol* AreaSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) cons
 
 void AreaSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
 {
-	if (coords.size() >= 3)
-	{
-		// The shape output is even created if the area is not filled with a color
-		// because the QPainterPath created by it is needed as clip path for the fill objects
-		PathObject* path = static_cast<PathObject*>(object);
-		AreaRenderable* color_fill = new AreaRenderable(this, coords, flags, &path->getPathCoordinateVector());
-		output.insertRenderable(color_fill);
-
-		QPainterPath* old_clip_path = output.getClipPath();
-		output.setClipPath(color_fill->getPainterPath());
-		int size = (int)patterns.size();
-		for (int i = 0; i < size; ++i)
- 			patterns[i].createRenderables(color_fill->getExtent(), path->getPatternRotation(), path->getPatternOrigin(), output);
-		output.setClipPath(old_clip_path);
-	}
+	if (coords.size() < 3)
+		return;
+	
+	Map* map = object->getMap();
+	if (map && map->isAreaHatchingEnabled())
+		Symbol::createBaselineRenderables(object, this, flags, coords, output, true);
+	else
+		createRenderablesNormal(object, flags, coords, output);
+}
+void AreaSymbol::createRenderablesNormal(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
+{
+	if (coords.size() < 3)
+		return;
+	
+	// The shape output is even created if the area is not filled with a color
+	// because the QPainterPath created by it is needed as clip path for the fill objects
+	PathObject* path = static_cast<PathObject*>(object);
+	AreaRenderable* color_fill = new AreaRenderable(this, coords, flags, &path->getPathCoordinateVector());
+	output.insertRenderable(color_fill);
+	
+	QPainterPath* old_clip_path = output.getClipPath();
+	output.setClipPath(color_fill->getPainterPath());
+	int size = (int)patterns.size();
+	for (int i = 0; i < size; ++i)
+		patterns[i].createRenderables(color_fill->getExtent(), path->getPatternRotation(), path->getPatternOrigin(), output);
+	output.setClipPath(old_clip_path);
 }
 void AreaSymbol::colorDeleted(MapColor* color)
 {
@@ -473,6 +484,26 @@ bool AreaSymbol::containsColor(MapColor* color)
 	}
 	
 	return false;
+}
+
+MapColor* AreaSymbol::getDominantColorGuess()
+{
+	if (color)
+		return color;
+	
+	// Hope that the first pattern's color is representative
+	for (int i = 0; i < (int)patterns.size(); ++i)
+	{
+		if (patterns[i].type == FillPattern::PointPattern)
+		{
+			MapColor* dominant_color = patterns[i].point->getDominantColorGuess();
+			if (dominant_color) return dominant_color;
+		}
+		else if (patterns[i].type == FillPattern::LinePattern && patterns[i].line_color)
+			return patterns[i].line_color;
+	}
+	
+	return NULL;
 }
 
 void AreaSymbol::scale(double factor)

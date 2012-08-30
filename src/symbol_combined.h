@@ -49,6 +49,7 @@ public:
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
 	virtual void colorDeleted(MapColor* color);
 	virtual bool containsColor(MapColor* color);
+    virtual MapColor* getDominantColorGuess();
 	virtual bool symbolChanged(Symbol* old_symbol, Symbol* new_symbol);
 	virtual bool containsSymbol(const Symbol* symbol) const;
 	virtual void scale(double factor);

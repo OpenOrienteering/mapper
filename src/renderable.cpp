@@ -130,9 +130,8 @@ void ObjectRenderables::setClipPath(QPainterPath* path)
 	clip_path = path;
 }
 
-void ObjectRenderables::insertRenderable(Renderable* r)
+void ObjectRenderables::insertRenderable(Renderable* r, RenderStates& state)
 {
-	RenderStates state(r, clip_path);
 	SharedRenderables::Pointer& container(operator[](state.color_priority));
 	if (!container)
 		container = new SharedRenderables();
@@ -254,6 +253,15 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 					painter->setPen(QPen(Qt::NoPen));
 					painter->setBrush(brush);
 				}
+				/*else if (new_states.mode == RenderStates::PenAndHatch)	// NOTE: does not work well with printing
+				{
+					bool pen_too_small = (force_min_size && pen_width * scaling <= 1.0f);
+					painter->setPen(QPen(highlighted ? getHighlightedColor(color->color) : color->color, pen_too_small ? 0 : pen_width));
+					QBrush brush(highlighted ? getHighlightedColor(color->color) : color->color);
+					brush.setStyle(Qt::BDiagPattern);
+					brush.setTransform(QTransform().scale(1 / scaling, 1 / scaling));
+					painter->setBrush(brush);
+				}*/
 				
 				painter->setOpacity(qMin(1.0f, opacity_factor * color->opacity));
 				

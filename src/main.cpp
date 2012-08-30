@@ -29,6 +29,7 @@
 #include "file_format_native.h"
 #include "file_format_ocad8.h"
 #include "file_format_xml.h"
+#include "tool.h"
 
 int main(int argc, char** argv)
 {
@@ -85,6 +86,9 @@ int main(int argc, char** argv)
 	FileFormats.registerFormat(new XMLFileFormat());
 #endif
 	FileFormats.registerFormat(new OCAD8FileFormat());
+	
+	// Load resources
+	MapEditorTool::loadPointHandles();
 	
 	// Create first main window
 	MainWindow* first_window = new MainWindow(true);

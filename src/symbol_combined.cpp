@@ -26,6 +26,7 @@
 #include "map.h"
 #include "symbol_setting_dialog.h"
 #include "symbol_properties_widget.h"
+#include "map_color.h"
 
 CombinedSymbol::CombinedSymbol() : Symbol(Symbol::Combined)
 {
@@ -88,6 +89,36 @@ bool CombinedSymbol::containsColor(MapColor* color)
 		}
 	}
 	return false;
+}
+
+MapColor* CombinedSymbol::getDominantColorGuess()
+{
+	// Speculative heuristic. Prefers areas and non-white colors.
+	MapColor* dominant_color = NULL;
+	for (int i = 0, size = (int)parts.size(); i < size; ++i)
+	{
+		if (parts[i]->getContainedTypes() & Symbol::Area)
+		{
+			dominant_color = parts[i]->getDominantColorGuess();
+			if (dominant_color->r != 1 || dominant_color->g != 1 || dominant_color->b != 1)
+				return dominant_color;
+		}
+	}
+	
+	if (dominant_color)
+		return dominant_color;
+	
+	for (int i = 0, size = (int)parts.size(); i < size; ++i)
+	{
+		if (!(parts[i]->getContainedTypes() & Symbol::Area))
+		{
+			dominant_color = parts[i]->getDominantColorGuess();
+			if (dominant_color->r != 1 || dominant_color->g != 1 || dominant_color->b != 1)
+				return dominant_color;
+		}
+	}
+	
+	return dominant_color;
 }
 
 bool CombinedSymbol::symbolChanged(Symbol* old_symbol, Symbol* new_symbol)

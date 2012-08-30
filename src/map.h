@@ -56,6 +56,16 @@ class MapGrid;
 
 typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
 
+struct ObjectOperationResult
+{
+	enum Enum
+	{
+		NoResult = 0,
+		Success = 1 << 0,
+		Abort = 1 << 1
+	};
+};
+
 class MapLayer
 {
 friend class OCAD8FileImport;
@@ -86,14 +96,48 @@ public:
 	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
 	
 	QRectF calculateExtent(bool include_helper_symbols);
+	
+	/// See Map::operationOnAllObjects()
+	template<typename Processor, typename Condition> ObjectOperationResult::Enum operationOnAllObjects(const Processor& processor, const Condition& condition)
+	{
+		int result = ObjectOperationResult::NoResult;
+		int size = (int)objects.size();
+		for (int i = size - 1; i >= 0; --i)
+		{
+			if (!condition(objects[i]))
+				continue;
+			result |= ObjectOperationResult::Success;
+			
+			if (!processor(objects[i], this, i))
+			{
+				result |= ObjectOperationResult::Abort;
+				return (ObjectOperationResult::Enum)result;
+			}
+		}
+		return (ObjectOperationResult::Enum)result;
+	}
+	/// See Map::operationOnAllObjects()
+	template<typename Processor> ObjectOperationResult::Enum operationOnAllObjects(const Processor& processor)
+	{
+		int size = (int)objects.size();
+		int result = size >= 1 ? ObjectOperationResult::Success : ObjectOperationResult::NoResult;
+		for (int i = size - 1; i >= 0; --i)
+		{
+			if (!processor(objects[i], this, i))
+			{
+				result |= ObjectOperationResult::Abort;
+				return (ObjectOperationResult::Enum)result;
+			}
+		}
+		return (ObjectOperationResult::Enum)result;
+	}
 	void scaleAllObjects(double factor);
 	void rotateAllObjects(double rotation);
-	void updateAllObjects(bool remove_old_renderables = true);
+	void updateAllObjects();
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
 	bool deleteAllObjectsWithSymbol(Symbol* symbol);		// returns if there was an object that was deleted
 	bool doObjectsExistWithSymbol(Symbol* symbol);
-	void forceUpdateOfAllObjects(Symbol* with_symbol = NULL);
 	
 private:
 	QString name;
@@ -265,14 +309,41 @@ public:
 	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
 	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
 	
+	/// Goes through all objects and for each object where condition(object) returns true, applies processor(object, map_layer, object_index).
+	/// If processor() returns false, aborts the operation and includes ObjectOperationResult::Aborted in the return value.
+	/// If the operation is performed on any object (i.e. the condition returns true at least once), includes ObjectOperationResult::Success in the return value.
+	template<typename Processor, typename Condition> ObjectOperationResult::Enum operationOnAllObjects(const Processor& processor, const Condition& condition)
+	{
+		int result = ObjectOperationResult::NoResult;
+		int size = layers.size();
+		for (int i = 0; i < size; ++i)
+		{
+			result |= layers[i]->operationOnAllObjects<Processor, Condition>(processor, condition);
+			if (result & ObjectOperationResult::Abort)
+				return (ObjectOperationResult::Enum)result;
+		}
+		return (ObjectOperationResult::Enum)result;
+	}
+	/// Version of operationOnAllObjects() without condition.
+	template<typename Processor> ObjectOperationResult::Enum operationOnAllObjects(const Processor& processor)
+	{
+		int result = ObjectOperationResult::NoResult;
+		int size = layers.size();
+		for (int i = 0; i < size; ++i)
+		{
+			result |= layers[i]->operationOnAllObjects<Processor>(processor);
+			if (result & ObjectOperationResult::Abort)
+				return (ObjectOperationResult::Enum)result;
+		}
+		return (ObjectOperationResult::Enum)result;
+	}
 	void scaleAllObjects(double factor);
 	void rotateAllObjects(double rotation);
-	void updateAllObjects(bool remove_old_renderables = true);
+	void updateAllObjects();
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
 	bool deleteAllObjectsWithSymbol(Symbol* symbol);							// returns if there was an object that was deleted
 	bool doObjectsExistWithSymbol(Symbol* symbol);
-	void forceUpdateOfAllObjects(Symbol* with_symbol = NULL);					// if with_symbol == NULL, all objects are affected
 	
 	void removeRenderablesOfObject(Object* object, bool mark_area_as_dirty);	// NOTE: does not delete the renderables, just removes them from display
 	void insertRenderablesOfObject(Object* object);
@@ -325,6 +396,12 @@ public:
 	inline const Georeferencing& getGeoreferencing() const {return *georeferencing;}
 	
 	inline MapGrid& getGrid() {return *grid;}
+	
+	// TODO: These two options should really be view options, but the current architecture makes it impossible to have different renderables of the same objects in different views,
+	inline bool isAreaHatchingEnabled() const {return area_hatching_enabled;}
+	inline void setAreaHatchingEnabled(bool enabled) {area_hatching_enabled = enabled;}
+	inline bool isBaselineViewEnabled() const {return baseline_view_enabled;}
+	inline void setBaselineViewEnabled(bool enabled) {baseline_view_enabled = enabled;}
 	
 	inline bool arePrintParametersSet() const {return print_params_set;}
 	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool show_grid, bool center, float left, float top, float width, float height);
@@ -444,6 +521,9 @@ private:
 	Georeferencing* georeferencing;
 	
 	MapGrid* grid;
+	
+	bool area_hatching_enabled;
+	bool baseline_view_enabled;
 	
 	bool print_params_set;			// have the parameters been set (are they valid)?
 	int print_orientation;			// QPrinter::Orientation

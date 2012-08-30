@@ -42,6 +42,7 @@ HEADERS += src/color_dock_widget.h \
            src/map_widget.h \
            src/matrix.h \
            src/object.h \
+           src/object_operations.h \
            src/object_text.h \
            src/path_coord.h \
            src/print_dock_widget.h \

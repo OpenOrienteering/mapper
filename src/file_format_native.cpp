@@ -29,7 +29,7 @@
 #include "util.h"
 
 const int NativeFileFormat::least_supported_file_format_version = 0;
-const int NativeFileFormat::current_file_format_version = 24;
+const int NativeFileFormat::current_file_format_version = 25;
 const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 
 bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
@@ -72,11 +72,11 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
     }
     else if (version < NativeFileFormat::least_supported_file_format_version)
     {
-        throw FormatException(QObject::tr("Unsupported file format version. Please use an older program version to load and update the stream->"));
+        throw FormatException(QObject::tr("Unsupported file format version. Please use an older program version to load and update the file."));
     }
     else if (version > NativeFileFormat::current_file_format_version)
     {
-        throw FormatException(QObject::tr("File format version too high. Please update to a newer program version to load this stream->"));
+        throw FormatException(QObject::tr("File format version too high. Please update to a newer program version to load this file."));
     }
 
     if (version <= 16)
@@ -137,6 +137,17 @@ void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
 	
 	if (version >= 24)
 		map->getGrid().load(stream, version);
+	
+	if (version >= 25)
+	{
+		stream->read((char*)&map->area_hatching_enabled, sizeof(bool));
+		stream->read((char*)&map->baseline_view_enabled, sizeof(bool));
+	}
+	else
+	{
+		map->area_hatching_enabled = false;
+		map->baseline_view_enabled = false;
+	}
 
     if (version >= 6)
     {
@@ -315,6 +326,9 @@ void NativeFileExport::doExport() throw (FormatException)
 	saveString(stream, georef.geographic_crs_spec);
 	
 	map->getGrid().save(stream);
+	
+	stream->write((const char*)&map->area_hatching_enabled, sizeof(bool));
+	stream->write((const char*)&map->baseline_view_enabled, sizeof(bool));
 	
     stream->write((const char*)&map->print_params_set, sizeof(bool));
     if (map->print_params_set)

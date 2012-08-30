@@ -51,6 +51,7 @@ public:
 	void createRenderablesScaled(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, float coord_scale);
 	virtual void colorDeleted(MapColor* color);
 	virtual bool containsColor(MapColor* color);
+    virtual MapColor* getDominantColorGuess();
 	virtual void scale(double factor);
 	
 	// Contained objects and symbols (elements)

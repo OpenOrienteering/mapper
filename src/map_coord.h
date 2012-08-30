@@ -42,6 +42,12 @@ public:
 		this->y = qRound64(y * 1000) << 4;
 	}
 	
+	inline explicit MapCoord(QPointF point)
+	{
+		this->x = qRound64(point.x() * 1000) << 4;
+		this->y = qRound64(point.y() * 1000) << 4;
+	}
+	
 	inline void setX(double x) {this->x = (qRound64(x * 1000) << 4) | (this->x & 15);}
 	inline void setY(double y) {this->y = (qRound64(y * 1000) << 4) | (this->y & 15);}
 	inline void setRawX(qint64 new_x) {this->x = (new_x << 4) | (this->x & 15);}
@@ -401,5 +407,13 @@ private:
 
 typedef std::vector<MapCoord> MapCoordVector;
 typedef std::vector<MapCoordF> MapCoordVectorF;
+
+inline void mapCoordVectorToF(const MapCoordVector& coords, MapCoordVectorF& out_coordsF)
+{
+	int size = coords.size();
+	out_coordsF.resize(size);
+	for (int i = 0; i < size; ++i)
+		out_coordsF[i] = MapCoordF(coords[i]);
+}
 
 #endif

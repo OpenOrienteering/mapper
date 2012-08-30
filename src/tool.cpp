@@ -174,7 +174,7 @@ void MapEditorTool::drawPointHandles(int hover_point, QPainter* painter, Object*
 		else
 		{
 			QPointF box_text_handles[4];
-			calculateBoxTextHandles(box_text_handles, object->getMap());
+			calculateSelectedBoxTextHandles(box_text_handles, widget->getMapView()->getMap());	// TODO: object->getMap() has lead to a crash here ...
 			for (int i = 0; i < 4; ++i)
 				drawPointHandle(painter, widget->mapToViewport(box_text_handles[i]), NormalHandle, hover_point == i);
 		}
@@ -250,16 +250,14 @@ void MapEditorTool::drawCurveHandleLine(QPainter* painter, QPointF point, QPoint
 	
 	painter->drawLine(point, curve_handle);
 }
-bool MapEditorTool::calculateBoxTextHandles(QPointF* out, Map* map)
+bool MapEditorTool::calculateSelectedBoxTextHandles(QPointF* out, Map* map)
 {
 	Object* single_selected_object = (map->getNumSelectedObjects() == 1) ? *map->selectedObjectsBegin() : NULL;
 	if (single_selected_object && single_selected_object->getType() == Object::Text)
 	{
-		TextObject* text_object = reinterpret_cast<TextObject*>(single_selected_object);
+		TextObject* text_object = single_selected_object->asText();
 		if (!text_object->hasSingleAnchor())
 		{
-			TextObject* text_object = reinterpret_cast<TextObject*>(*map->selectedObjectsBegin());
-			
 			QTransform transform;
 			transform.rotate(-text_object->getRotation() * 180 / M_PI);
 			out[0] = transform.map(QPointF(text_object->getBoxWidth() / 2, -text_object->getBoxHeight() / 2)) + text_object->getAnchorCoordF().toQPointF();

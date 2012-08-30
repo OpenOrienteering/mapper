@@ -38,6 +38,7 @@
 #include "symbol_combined.h"
 #include "symbol_properties_widget.h"
 #include "symbol_setting_dialog.h"
+#include "renderable_implementation.h"
 
 Symbol::Symbol(Type type) : type(type), name(""), description(""), is_helper_symbol(false), is_hidden(false), is_protected(false), icon(NULL)
 {
@@ -331,6 +332,98 @@ bool Symbol::loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* ma
 	if (!symbol->load(stream, version, map))
 		return false;
 	return true;
+}
+
+void Symbol::createBaselineRenderables(Object* object, Symbol* symbol, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, bool hatch_areas)
+{
+	Symbol::Type type = symbol->getType();
+	MapColor* dominant_color = symbol->getDominantColorGuess();
+	if (dominant_color == NULL)
+		return;
+	
+	if (type == Symbol::Point)
+	{
+		PointSymbol* point = Map::getUndefinedPoint();
+		MapColor* temp_color = point->getInnerColor();
+		point->setInnerColor(dominant_color);
+		
+		point->createRenderables(object, flags, coords, output);
+		
+		point->setInnerColor(temp_color);
+	}
+	else if (type == Text)
+	{
+		// Insert text boundary
+		TextObject* text_object = object->asText();
+		if (text_object->getNumLines() == 0)
+			return;
+		
+		LineSymbol line_symbol;
+		line_symbol.setColor(dominant_color);
+		line_symbol.setLineWidth(0);
+		
+		TextObjectLineInfo* line = text_object->getLineInfo(0);
+		QRectF text_bbox(line->line_x, line->line_y - line->ascent, line->width, line->ascent + line->descent);
+		for (int i = 1; i < text_object->getNumLines(); ++i)
+		{
+			TextObjectLineInfo* line = text_object->getLineInfo(i);
+			rectInclude(text_bbox, QRectF(line->line_x, line->line_y - line->ascent, line->width, line->ascent + line->descent));
+		}
+		
+		QTransform text_to_map = text_object->calcTextToMapTransform();
+		PathObject path;
+		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.topLeft())));
+		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.topRight())));
+		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.bottomRight())));
+		path.addCoordinate(MapCoord(text_to_map.map(text_bbox.bottomLeft())));
+		path.getPart(0).setClosed(true, true);
+		
+		MapCoordVectorF coordsF;
+		mapCoordVectorToF(path.getRawCoordinateVector(), coordsF);
+		
+		PathCoordVector empty_path_coords;
+		LineRenderable* line_renderable = new LineRenderable(&line_symbol, coordsF, path.getRawCoordinateVector(), empty_path_coords, false);
+		output.insertRenderable(line_renderable);
+	}
+	else
+	{
+		// Line or area or combination
+		assert((symbol->getContainedTypes() & ~(Symbol::Line | Symbol::Area | Symbol::Combined)) == 0);
+		PathObject* path = object->asPath();
+		
+		if (hatch_areas && (symbol->getContainedTypes() & Symbol::Area))
+		{
+			// Insert hatched area renderable
+			AreaSymbol area_symbol;
+			
+			area_symbol.setNumFillPatterns(1);
+			AreaSymbol::FillPattern& pattern = area_symbol.getFillPattern(0);
+			pattern.type = AreaSymbol::FillPattern::LinePattern;
+			pattern.angle = 45 * M_PI / 180.0f;
+			pattern.line_spacing = 1000;
+			pattern.line_offset = 0;
+			pattern.line_color = dominant_color;
+			pattern.line_width = 70;
+			
+			area_symbol.createRenderablesNormal(path, flags, coords, output);
+			
+			// Insert boundary line renderable
+			LineSymbol line_symbol;
+			line_symbol.setColor(dominant_color);
+			line_symbol.setLineWidth(0);
+			LineRenderable* line_renderable = new LineRenderable(&line_symbol, coords, flags, path->getPathCoordinateVector(), false);
+			output.insertRenderable(line_renderable);
+		}
+		else
+		{
+			// Insert line renderable
+			LineSymbol line_symbol;
+			line_symbol.setColor(dominant_color);
+			line_symbol.setLineWidth(0);
+			LineRenderable* line_renderable = new LineRenderable(&line_symbol, coords, flags, path->getPathCoordinateVector(), false);
+			output.insertRenderable(line_renderable);
+		}
+	}
 }
 
 bool Symbol::colorEquals(MapColor* color, MapColor* other)

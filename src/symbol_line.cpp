@@ -1230,6 +1230,24 @@ bool LineSymbol::containsColor(MapColor* color)
     return false;
 }
 
+MapColor* LineSymbol::getDominantColorGuess()
+{
+	if (line_width > 0 && color)
+		return color;
+	
+	MapColor* dominant_color = mid_symbol->getDominantColorGuess();
+	if (dominant_color) return dominant_color;
+	
+	dominant_color = start_symbol->getDominantColorGuess();
+	if (dominant_color) return dominant_color;
+	
+	dominant_color = end_symbol->getDominantColorGuess();
+	if (dominant_color) return dominant_color;
+	
+	dominant_color = dash_symbol->getDominantColorGuess();
+	return dominant_color;
+}
+
 void LineSymbol::scale(double factor)
 {
 	line_width = qRound(factor * line_width);

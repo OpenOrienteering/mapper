@@ -66,6 +66,7 @@ public:
 	void createLineBelowRenderables(Object* object, ObjectRenderables& output);
 	virtual void colorDeleted(MapColor* color);
     virtual bool containsColor(MapColor* color);
+    virtual MapColor* getDominantColorGuess();
     virtual void scale(double factor);
 	
 	void updateQFont();

@@ -194,6 +194,15 @@ bool TextSymbol::containsColor(MapColor* color)
 	return false;
 }
 
+MapColor* TextSymbol::getDominantColorGuess()
+{
+	if (color)
+		return color;
+	if (framing_color)
+		return framing_color;
+	return NULL;
+}
+
 void TextSymbol::scale(double factor)
 {
 	font_size = qRound(factor * font_size);

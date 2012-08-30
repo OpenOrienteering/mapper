@@ -220,6 +220,31 @@ bool PointSymbol::containsColor(MapColor* color)
 	return false;
 }
 
+MapColor* PointSymbol::getDominantColorGuess()
+{
+	bool have_inner_color = inner_color && inner_radius > 0;
+	bool have_outer_color = outer_color && outer_width > 0;
+	if (have_inner_color != have_outer_color)
+		return have_inner_color ? inner_color : outer_color;
+	else if (have_inner_color && have_outer_color)
+	{
+		if (inner_color->r == 1 && inner_color->g == 1 && inner_color->b == 1)
+			return outer_color;
+		else if (outer_color->r == 1 && outer_color->g == 1 && outer_color->b == 1)
+			return inner_color;
+		else
+			return (qPow(inner_radius, 2) * M_PI > qPow(inner_radius + outer_width, 2) * M_PI - qPow(inner_radius, 2) * M_PI) ? inner_color : outer_color;
+	}
+	else
+	{
+		// Hope that the first element's color is representative
+		if (symbols.size() > 0)
+			return symbols[0]->getDominantColorGuess();
+		else
+			return NULL;
+	}
+}
+
 void PointSymbol::scale(double factor)
 {
 	inner_radius = qRound(inner_radius * factor);

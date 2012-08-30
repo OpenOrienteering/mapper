@@ -71,7 +71,6 @@ EditTool::EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidg
 
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-hollow.png"), 1, 1);
-	loadPointHandles();
 }
 void EditTool::init()
 {
@@ -616,7 +615,7 @@ void EditTool::objectSelectionChanged()
 {
 	updateStatusText();
 	updateDirtyRect();
-	if (calculateBoxTextHandles(box_text_handles, editor->getMap()))
+	if (calculateSelectedBoxTextHandles(box_text_handles, editor->getMap()))
 		updateDirtyRect();
 }
 void EditTool::selectedSymbolsChanged()
@@ -809,7 +808,7 @@ void EditTool::updateDragging(const MapCoordF& cursor_pos_map)
 		}
 	}
 	
-	if (calculateBoxTextHandles(box_text_handles, map))
+	if (calculateSelectedBoxTextHandles(box_text_handles, map))
 		updateDirtyRect();
 }
 

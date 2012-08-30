@@ -303,10 +303,7 @@ bool Object::update(bool force, bool insert_new_renderables)
 	
 	// Calculate float coordinates
 	MapCoordVectorF coordsF;
-	int size = coords.size();
-	coordsF.resize(size);
-	for (int i = 0; i < size; ++i)
-		coordsF[i] = MapCoordF(coords[i].xd(), coords[i].yd());
+	mapCoordVectorToF(coords, coordsF);
 	
 	// If the symbol contains a line or area symbol, calculate path coordinates
 	if (symbol->getContainedTypes() & (Symbol::Area | Symbol::Line))
@@ -317,7 +314,12 @@ bool Object::update(bool force, bool insert_new_renderables)
 	
 	// Create renderables
 	extent = QRectF();
-	symbol->createRenderables(this, coords, coordsF, output);
+	
+	if (map && map->isBaselineViewEnabled())
+		Symbol::createBaselineRenderables(this, symbol, coords, coordsF, output, map->isAreaHatchingEnabled());
+	else
+		symbol->createRenderables(this, coords, coordsF, output);
+	
 	assert(extent.right() < 999999);	// assert if bogus values are returned
 	output_dirty = false;
 	

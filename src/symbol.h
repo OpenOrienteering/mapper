@@ -108,6 +108,9 @@ public:
 	/// Must return if the given color is used by this symbol
 	virtual bool containsColor(MapColor* color) = 0;
 	
+	/// Returns the dominant color of this symbol, or a guess for this color in case it is impossible to determine it uniquely
+	virtual MapColor* getDominantColorGuess() = 0;
+	
 	/// Called by the map in which the symbol is to notify it of a symbol being changed (pointer becomes invalid).
 	/// If new_symbol == NULL, the symbol is being deleted.
 	/// Must return true if this symbol contained the deleted symbol.
@@ -161,6 +164,8 @@ public:
 	static void saveSymbol(Symbol* symobl, QIODevice* stream, Map* map);
 	/// Static read function; reads the type number, creates a symbol of this type and loads it. Returns true if successful.
 	static bool loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* map);
+	/// Creates "baseline" renderables for an object - symbol combination. These only show the coordinate paths with minimum line width, and optionally a hatching pattern for areas.
+	static void createBaselineRenderables(Object* object, Symbol* symbol, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, bool hatch_areas);
 	
 	// TODO: Refactor: move to MapColor
 	static bool colorEquals(MapColor* color, MapColor* other);

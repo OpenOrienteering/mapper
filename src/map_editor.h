@@ -110,6 +110,9 @@ public slots:
 	void zoomOut();
 	void setCustomZoomFactorClicked();
 	
+	void hatchAreas(bool checked);
+	void baselineView(bool checked);
+	
 	void coordsDisplayChanged();
 	
 	void showSymbolWindow(bool show);
@@ -224,6 +227,8 @@ private:
 	QAction* paste_act;
 	
 	QAction* show_grid_act;
+	QAction* hatch_areas_view_act;
+	QAction* baseline_view_act;
 	
 	QAction* map_coordinates_act;
 	QAction* projected_coordinates_act;
