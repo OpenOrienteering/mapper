@@ -76,8 +76,10 @@ bool TemplateImage::open(QWidget* dialog_parent, MapView* main_view)
 }
 void TemplateImage::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity)
 {
+	painter->setRenderHint(QPainter::SmoothPixmapTransform);
 	painter->setOpacity(opacity);
 	painter->drawImage(QPointF(-image->width() * 0.5, -image->height() * 0.5), *image);
+	painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
 }
 QRectF TemplateImage::getExtent()
 {
