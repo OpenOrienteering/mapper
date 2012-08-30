@@ -41,10 +41,16 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/COPYING")
 	set(CPACK_STRIP_FILES "TRUE")
 	
+	set(CPACK_SOURCE_GENERATOR "OFF"
+	  CACHE STRING "The source package generators (TGZ;ZIP)")
 	set(CPACK_SOURCE_PACKAGE_FILE_NAME
 	  "openorienteering-mapper_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}-src")
-	set(CPACK_SOURCE_GENERATOR "OFF")
-	set(CPACK_SOURCE_IGNORE_FILES "/build*;.*")
+	set(CPACK_SOURCE_IGNORE_FILES 
+	  "${CMAKE_CURRENT_BINARY_DIR}"
+	  "/docs/"
+	  "/[.]git/"
+	  "/3rd-party/clipper/"
+	  ${CPACK_SOURCE_IGNORE_FILES})
 	
 	if(WIN32)
 		# Packaging as ZIP archive

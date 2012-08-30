@@ -230,3 +230,18 @@ make package
 
 as soon as another cmake run could find the required libraries.
 
+
+== Making a source package ==
+
+A git repository snapshot could be made with "git archive ...".
+
+To create a source package with the build system, start with a fresh clone of
+the repository (i.e. no extra files), create a build directory, and specifiy the
+generator when calling cmake. Then build the target package_source.
+
+mkdir build-src
+cd build-src
+cmake .. -DCPACK_SOURCE_GENERATOR=TGZ
+make package_source
+
+
