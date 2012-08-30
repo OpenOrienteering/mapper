@@ -402,7 +402,7 @@ void MapEditorController::assignKeyboardShortcuts()
 void MapEditorController::createMenuAndToolbars()
 {
 	// Define all the actions, saving them into variables as necessary. Can also get them by ID.
-	print_act = newAction("print", tr("Print..."), this, SLOT(printClicked()), "print.png", QString::null, "file_menu.html");
+	print_act = newAction("print", tr("Print / Export..."), this, SLOT(printClicked()), "print.png", QString::null, "file_menu.html");
 
 	undo_act = newAction("undo", tr("Undo"), this, SLOT(undo()), "undo.png", tr("Undo the last step"), "edit_menu.html");
 	redo_act = newAction("redo", tr("Redo"), this, SLOT(redo()), "redo.png", tr("Redo the last step"), "edit_menu.html");
