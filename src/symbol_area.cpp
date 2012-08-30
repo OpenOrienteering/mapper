@@ -477,7 +477,7 @@ bool AreaSymbol::containsColor(MapColor* color)
 	
 	for (int i = 0; i < (int)patterns.size(); ++i)
 	{
-		if (patterns[i].type == FillPattern::PointPattern && patterns[i].point->containsColor(color))
+		if (patterns[i].type == FillPattern::PointPattern && patterns[i].point && patterns[i].point->containsColor(color))
 			return true;
 		else if (patterns[i].type == FillPattern::LinePattern && patterns[i].line_color == color)
 			return true;
@@ -494,7 +494,7 @@ MapColor* AreaSymbol::getDominantColorGuess()
 	// Hope that the first pattern's color is representative
 	for (int i = 0; i < (int)patterns.size(); ++i)
 	{
-		if (patterns[i].type == FillPattern::PointPattern)
+		if (patterns[i].type == FillPattern::PointPattern && patterns[i].point)
 		{
 			MapColor* dominant_color = patterns[i].point->getDominantColorGuess();
 			if (dominant_color) return dominant_color;
