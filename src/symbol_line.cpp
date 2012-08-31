@@ -1235,16 +1235,16 @@ MapColor* LineSymbol::getDominantColorGuess()
 	if (line_width > 0 && color)
 		return color;
 	
-	MapColor* dominant_color = mid_symbol->getDominantColorGuess();
+	MapColor* dominant_color = mid_symbol ? mid_symbol->getDominantColorGuess() : NULL;
 	if (dominant_color) return dominant_color;
 	
-	dominant_color = start_symbol->getDominantColorGuess();
+	dominant_color = start_symbol ? start_symbol->getDominantColorGuess() : NULL;
 	if (dominant_color) return dominant_color;
 	
-	dominant_color = end_symbol->getDominantColorGuess();
+	dominant_color = end_symbol ? end_symbol->getDominantColorGuess() : NULL;
 	if (dominant_color) return dominant_color;
 	
-	dominant_color = dash_symbol->getDominantColorGuess();
+	dominant_color = dash_symbol ? dash_symbol->getDominantColorGuess() : NULL;
 	return dominant_color;
 }
 

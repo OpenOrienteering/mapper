@@ -97,7 +97,7 @@ MapColor* CombinedSymbol::getDominantColorGuess()
 	MapColor* dominant_color = NULL;
 	for (int i = 0, size = (int)parts.size(); i < size; ++i)
 	{
-		if (parts[i]->getContainedTypes() & Symbol::Area)
+		if (parts[i] && parts[i]->getContainedTypes() & Symbol::Area)
 		{
 			dominant_color = parts[i]->getDominantColorGuess();
 			if (dominant_color->r != 1 || dominant_color->g != 1 || dominant_color->b != 1)
@@ -110,7 +110,7 @@ MapColor* CombinedSymbol::getDominantColorGuess()
 	
 	for (int i = 0, size = (int)parts.size(); i < size; ++i)
 	{
-		if (!(parts[i]->getContainedTypes() & Symbol::Area))
+		if (parts[i] && !(parts[i]->getContainedTypes() & Symbol::Area))
 		{
 			dominant_color = parts[i]->getDominantColorGuess();
 			if (dominant_color->r != 1 || dominant_color->g != 1 || dominant_color->b != 1)
