@@ -69,7 +69,7 @@ endif()
 include(ExternalProject)
 ExternalProject_Add(
   Proj
-  DOWNLOAD_DIR ${PROJECT_SOURCE_DIR}
+  DOWNLOAD_DIR ${PROJECT_SOURCE_DIR}/download
   URL "http://download.osgeo.org/proj/proj-${PROJ_VERSION}.tar.gz"
   ${_ep_proj_options}
   CONFIGURE_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/proj-config

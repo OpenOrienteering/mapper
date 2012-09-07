@@ -50,6 +50,8 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	  "/docs/"
 	  "/[.]git/"
 	  "/3rd-party/clipper/"
+	  "/3rd-party/proj/download/"
+	  "/3rd-party/qt4/download/"
 	  ${CPACK_SOURCE_IGNORE_FILES})
 	
 	if(WIN32)
@@ -105,7 +107,6 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		  "${CPACK_LSB_RELEASE}_amd64" 
 		  CPACK_PACKAGE_FILE_NAME
 		  ${CPACK_PACKAGE_FILE_NAME})
-		set(CPACK_DEBIAN_PACKAGE_NAME "openorienteering-mapper")
  		add_definitions(-DMAPPER_DEBIAN_PACKAGE_NAME="${CPACK_DEBIAN_PACKAGE_NAME}")
 		set(CPACK_DEBIAN_PACKAGE_MAINTAINER
 		   "Kai Pastor <dg0yt@darc.de>")
@@ -143,44 +144,6 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	include(CPack)
 	
 endif(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
-
-if(WIN32)
-	set(MAPPER_RUNTIME_DESTINATION .)
-	set(MAPPER_DATA_DESTINATION .)
-	set(MAPPER_ABOUT_DESTINATION "doc")
-else(WIN32)
-	set(MAPPER_RUNTIME_DESTINATION bin)
-	set(MAPPER_DATA_DESTINATION "share/${CPACK_DEBIAN_PACKAGE_NAME}")
-	set(MAPPER_ABOUT_DESTINATION "share/doc/${CPACK_DEBIAN_PACKAGE_NAME}")
-endif(WIN32)
-
-install(
-  TARGETS Mapper
-  RUNTIME DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
-install(
-  FILES COPYING 
-  DESTINATION "${MAPPER_ABOUT_DESTINATION}")
-install(
-  FILES "bin/my symbol sets/4000/ISSOM_4000.omap"
-  DESTINATION "${MAPPER_DATA_DESTINATION}/symbol sets/4000")
-install(
-  FILES "bin/my symbol sets/5000/ISSOM_5000.omap"
-  DESTINATION "${MAPPER_DATA_DESTINATION}/symbol sets/5000")
-install(
-  FILES "bin/my symbol sets/10000/ISOM_10000.omap"
-  DESTINATION "${MAPPER_DATA_DESTINATION}/symbol sets/10000")
-install(
-  FILES "bin/my symbol sets/15000/ISOM_15000.omap"
-  DESTINATION "${MAPPER_DATA_DESTINATION}/symbol sets/15000")
-if(NOT Mapper_TRANSLATIONS_EMBEDDED)
-install(
-  DIRECTORY "bin/translations/"
-  DESTINATION "${MAPPER_DATA_DESTINATION}/translations"
-  FILES_MATCHING PATTERN "*.qm")
-endif(NOT Mapper_TRANSLATIONS_EMBEDDED)
-install(
-  FILES "bin/help/oomaphelpcollection.qhc" "bin/help/oomaphelp.qch"
-  DESTINATION "${MAPPER_DATA_DESTINATION}/help")
 
 if(WIN32)
 	message("-- Checking extra files needed for Windows packaging")
