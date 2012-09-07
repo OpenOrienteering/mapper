@@ -22,6 +22,8 @@
 
 #include <cassert>
 
+#include <QCoreApplication>
+#include <QDir>
 #include <QLocale>
 #include <QDebug>
 
@@ -42,6 +44,18 @@ Georeferencing::Georeferencing()
 	projected_crs_id = tr("Local coordinates");
 	projected_crs  = NULL;
 	geographic_crs = pj_init_plus(geographic_crs_spec.toAscii());
+#ifdef WIN32
+	if (0 != *pj_get_errno_ref())
+	{
+		if (geographic_crs != NULL)
+			pj_free(geographic_crs);
+		QByteArray pj_searchpath = 
+		  QDir::toNativeSeparators(QCoreApplication::applicationDirPath() + "/proj").toAscii();
+		const char * pj_searchpath_list = pj_searchpath.constData();
+		pj_set_searchpath(1, &pj_searchpath_list);
+		geographic_crs = pj_init_plus(geographic_crs_spec.toAscii());
+	}	
+#endif
 	assert(geographic_crs != NULL);
 }
 

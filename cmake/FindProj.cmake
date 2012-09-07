@@ -5,6 +5,8 @@
 # 2012-08-01: Replaced BSD license terms reference with actual terms from the
 #             referenced COPYING-CMAKE-SCRIPTS.
 #          	  --- Kai Pastor <dg0yt@darc.de>
+# 2012-08-07: Use correct case for Proj_FIND_REQUIRED/Proj_FIND_QUIETLY
+#          	  --- Kai Pastor <dg0yt@darc.de>
 
 # Find Proj
 # ~~~~~~~~~
@@ -91,14 +93,14 @@ ENDIF (PROJ_INCLUDE_DIR AND PROJ_LIBRARY)
 
 IF (PROJ_FOUND)
 
-   IF (NOT PROJ_FIND_QUIETLY)
+   IF (NOT Proj_FIND_QUIETLY)
       MESSAGE(STATUS "Found Proj: ${PROJ_LIBRARY}")
-   ENDIF (NOT PROJ_FIND_QUIETLY)
+   ENDIF (NOT Proj_FIND_QUIETLY)
 
 ELSE (PROJ_FOUND)
 
-   IF (PROJ_FIND_REQUIRED)
+   IF (Proj_FIND_REQUIRED)
       MESSAGE(FATAL_ERROR "Could not find Proj")
-   ENDIF (PROJ_FIND_REQUIRED)
+   ENDIF (Proj_FIND_REQUIRED)
 
 ENDIF (PROJ_FOUND)

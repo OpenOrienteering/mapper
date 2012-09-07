@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <QHelpCollectionProject version="1.0">
 	<assistant>
-		<applicationIcon>images/mapper-help.png</applicationIcon>
+		<applicationIcon>@PROJECT_SOURCE_DIR@/images/mapper-help.png</applicationIcon>
 		<title>OpenOrienteering Mapper Help</title>
 		<homePage>qthelp://openorienteering.mapper.help/oohelpdoc/help/html_en/index.html</homePage>
 	</assistant>
 	<docFiles>
 		<generate>
 			<file>
-				<input>oomaphelp.qhp</input>
-				<output>bin/help/oomaphelp.qch</output>
+				<input>@PROJECT_SOURCE_DIR@/oomaphelp.qhp</input>
+				<output>@Mapper_COMPRESSED_HELP@</output>
 			</file>
 		</generate>
 		<register>
-			<file>bin/help/oomaphelp.qch</file>
+			<file>@Mapper_COMPRESSED_HELP@</file>
 		</register>
 	</docFiles>
 </QHelpCollectionProject>

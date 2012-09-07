@@ -170,7 +170,7 @@ sudo dpkg -r openorienteering-mapper
 
 
 
-== Cross-Compiling on Linux or MacOS X for Windows ==
+== Cross-Compiling on Linux or MacOS X for Windows with MXE ==
 
 It is possible to cross-compile from Linux or MacOS X (host system) for Windows
 (target system). 
@@ -198,4 +198,50 @@ and qcollectiongenerator) to process the translations and the help files.
 At the moment, MXE builds only static libraries, and the Qt package does not
 build the Qt Assistant. With some tweaking, it is possible to resolve these
 issues, but this is not covered here.
+
+
+
+== Cross-Compiling on Linux for Windows in General ==
+
+Some linux distributions may offer cross compiler packages based on MinGW or
+MinGW-w64 (for Ubuntu: g++-mingw-w64 et al.). Unlike MXE, these tools do not
+offer packages or scripts to setup the required libraries. The Mapper build
+system can do the neccessary steps.
+
+For MinGW-w64 i686 (32 bit) builds, call
+
+cmake -DCMAKE_TOOLCHAIN_FILE=(path to source)cmake/toolchain/i686-w64-mingw32 \
+  -DMapper_BUILD_PROJ=1 -DMapper_BUILD_QT=1
+
+This will add targets and rules to the build system which download, patch,
+configure and build the proj and Qt libraries with all neccessary components.
+Note that initially there will be no build rules for Mapper and its components
+(and no rules for packaging) because the final configuration can only be done
+when the required libraries are ready. A single call to
+
+make
+
+will trigger a "superbuild" which will re-run cmake and make when the required
+libraries are completed. Note that such a build requires much space (~2 GB,
+mostly for Qt) and time (hours! - consider make -j X).
+Of course you can call
+
+make package
+
+as soon as another cmake run could find the required libraries.
+
+
+== Making a source package ==
+
+A git repository snapshot could be made with "git archive ...".
+
+To create a source package with the build system, start with a fresh clone of
+the repository (i.e. no extra files), create a build directory, and specifiy the
+generator when calling cmake. Then build the target package_source.
+
+mkdir build-src
+cd build-src
+cmake .. -DCPACK_SOURCE_GENERATOR=TGZ
+make package_source
+
 

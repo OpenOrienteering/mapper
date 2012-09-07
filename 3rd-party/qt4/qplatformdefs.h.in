@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012 Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -17,17 +17,4 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Do not edit global.h! Edit global.h.in instead.
-
-#define APP_NAME qApp->translate("Global", QT_TRANSLATE_NOOP("Global", "OpenOrienteering Mapper"))
-#define APP_VERSION "@Mapper_VERSION_DISPLAY@"
-
-#cmakedefine Mapper_TRANSLATIONS_EMBEDDED
-#cmakedefine Mapper_XML_FORMAT
-
-#define QT_USE_FAST_CONCATENATION
-#define QT_USE_FAST_OPERATOR_PLUS
-
-#ifdef _MSC_VER
-	#pragma warning(disable: 4290)	// "C++ exception specification ignored"
-#endif
+#include "../../@QT_PARENT_PLATFORM@/qplatformdefs.h"
