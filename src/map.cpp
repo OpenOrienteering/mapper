@@ -2240,6 +2240,7 @@ bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF curso
 		MapCoordF mouse_pos_to_view_center(0, 0);
 		if (preserve_cursor_pos)
 		{
+			mouse_pos_map = viewToMapF(cursor_pos_view);
 			mouse_pos_to_view_center = MapCoordF(getPositionX()/1000.0 - mouse_pos_map.getX(), getPositionY()/1000.0 - mouse_pos_map.getY());
 			mouse_pos_to_view_center = MapCoordF(mouse_pos_to_view_center.getX() * 1 / zoom_factor, mouse_pos_to_view_center.getY() * 1 / zoom_factor);
 		}
