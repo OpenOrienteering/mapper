@@ -1537,21 +1537,26 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords)
 				>> S = [S.pfactor, S.qfactor]
 				 */
 				
-				float gxweight = qAbs(p0.yd() - q3.yd());
-				float gyweight = qAbs(p0.xd() - q3.xd());
+				float xweight = qAbs(p0.xd() - p1.xd());
+				float yweight = qAbs(p0.yd() - p1.yd());
+				float pfactorx = 0, pfactory = 0;
 				
-				float xweight = gxweight * qAbs(p0.xd() - p1.xd());
-				float yweight = gyweight * qAbs(p0.yd() - p1.yd());
-				float pfactorx = -(42*p1.xd() - 83*p0.xd() + 42*p2.xd() + 28*q0.xd() - 18*q1.xd() - 24*q2.xd() + 13*q3.xd())/(48*(p0.xd() - p1.xd()));
-				float pfactory = -(42*p1.yd() - 83*p0.yd() + 42*p2.yd() + 28*q0.yd() - 18*q1.yd() - 24*q2.yd() + 13*q3.yd())/(48*(p0.yd() - p1.yd()));
+				if (xweight > 0)
+					pfactorx = -(42*p1.xd() - 83*p0.xd() + 42*p2.xd() + 28*q0.xd() - 18*q1.xd() - 24*q2.xd() + 13*q3.xd())/(48*(p0.xd() - p1.xd()));
+				if (yweight > 0)
+					pfactory = -(42*p1.yd() - 83*p0.yd() + 42*p2.yd() + 28*q0.yd() - 18*q1.yd() - 24*q2.yd() + 13*q3.yd())/(48*(p0.yd() - p1.yd()));
 				float pfactor = (xweight * pfactorx + yweight * pfactory) / (xweight + yweight);
 				if (pfactor < 0)
 					pfactor = -pfactor;
 				
-				xweight = gxweight * qAbs(q2.xd() - q3.xd());
-				yweight = gyweight * qAbs(q2.yd() - q3.yd());
-				float qfactorx = (13*p0.xd() - 24*p1.xd() - 18*p2.xd() + 28*q0.xd() + 42*q1.xd() + 42*q2.xd() - 83*q3.xd())/(48*(q2.xd() - q3.xd()));
-				float qfactory = (13*p0.yd() - 24*p1.yd() - 18*p2.yd() + 28*q0.yd() + 42*q1.yd() + 42*q2.yd() - 83*q3.yd())/(48*(q2.yd() - q3.yd()));
+				xweight = qAbs(q2.xd() - q3.xd());
+				yweight = qAbs(q2.yd() - q3.yd());
+				float qfactorx, qfactory;
+				
+				if (xweight > 0)
+					qfactorx = (13*p0.xd() - 24*p1.xd() - 18*p2.xd() + 28*q0.xd() + 42*q1.xd() + 42*q2.xd() - 83*q3.xd())/(48*(q2.xd() - q3.xd()));
+				if (yweight > 0)
+					qfactory = (13*p0.yd() - 24*p1.yd() - 18*p2.yd() + 28*q0.yd() + 42*q1.yd() + 42*q2.yd() - 83*q3.yd())/(48*(q2.yd() - q3.yd()));
 				float qfactor = (xweight * qfactorx + yweight * qfactory) / (xweight + yweight);
 				if (qfactor < 0)
 					qfactor = -qfactor;
