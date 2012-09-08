@@ -246,6 +246,9 @@ public:
 	/// path and end are the same.
 	bool updateFollowing(PathCoord& end_coord, PathObject*& result);
 	
+	/// Returns the index of the path part which is being followed
+	inline int getPartIndex() const {return part_index;}
+	
 private:
 	PathObject* path;
 	

@@ -187,7 +187,7 @@ void MapLayer::importLayer(MapLayer* other, QHash<Symbol*, Symbol*>& symbol_map,
 		map->updateAllMapWidgets();
 }
 
-void MapLayer::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out)
+void MapLayer::findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out)
 {
 	int size = objects.size();
 	for (int i = 0; i < size; ++i)
@@ -198,7 +198,7 @@ void MapLayer::findObjectsAt(MapCoordF coord, float tolerance, bool extended_sel
 			continue;
 		
 		objects[i]->update();
-		int selected_type = objects[i]->isPointOnObject(coord, tolerance, extended_selection);
+		int selected_type = objects[i]->isPointOnObject(coord, tolerance, treat_areas_as_paths, extended_selection);
 		if (selected_type != (int)Symbol::NoSymbol)
 			out.push_back(std::pair<int, Object*>(selected_type, objects[i]));
 	}
@@ -1823,9 +1823,9 @@ void Map::setObjectAreaDirty(QRectF map_coords_rect)
 	for (int i = 0; i < (int)widgets.size(); ++i)
 		widgets[i]->markObjectAreaDirty(map_coords_rect);
 }
-void Map::findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out)
+void Map::findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out)
 {
-	getCurrentLayer()->findObjectsAt(coord, tolerance, extended_selection, include_hidden_objects, include_protected_objects, out);
+	getCurrentLayer()->findObjectsAt(coord, tolerance, treat_areas_as_paths, extended_selection, include_hidden_objects, include_protected_objects, out);
 }
 void Map::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector< Object* >& out)
 {

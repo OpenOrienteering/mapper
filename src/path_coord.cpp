@@ -87,11 +87,11 @@ bool PathCoord::getNextPathPart(const MapCoordVector& flags, const MapCoordVecto
 PathCoord PathCoord::findPathCoordForCoorinate(const PathCoordVector* path_coords, int index)
 {
 	int path_coords_size = path_coords->size();
-	for (int i = 0; i < path_coords_size; ++i)
+	for (int i = path_coords_size - 1; i >= 0; --i)
 	{
 		if (path_coords->at(i).param == 0 && index == path_coords->at(i).index)
 			return path_coords->at(i);
-		else if (path_coords->at(i).param == 1 && (i == path_coords_size - 1 || (i < path_coords_size - 1 && index == path_coords->at(i+1).index)))
+		else if (path_coords->at(i).param == 1 && index > path_coords->at(i).index)
 			return path_coords->at(i);
 	}
 	assert(false);

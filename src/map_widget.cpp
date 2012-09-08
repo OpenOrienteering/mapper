@@ -702,7 +702,7 @@ void MapWidget::wheelEvent(QWheelEvent* event)
 			// Send a mouse move event to the current tool as zooming out can move the mouse position on the map
 			if (tool)
 			{
-				QMouseEvent* mouse_event = new QMouseEvent(QEvent::HoverMove, event->pos(), Qt::NoButton, Qt::NoButton, Qt::NoModifier);
+				QMouseEvent* mouse_event = new QMouseEvent(QEvent::HoverMove, event->pos(), Qt::NoButton, QApplication::mouseButtons(), Qt::NoModifier);
 				tool->mouseMoveEvent(mouse_event, view->viewToMapF(viewportToView(event->pos())), this);
 				delete mouse_event;
 			}

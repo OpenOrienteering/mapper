@@ -92,7 +92,7 @@ public:
 	/// Uses symbol_map to replace all symbols contained there. No replacement is done for symbols which are not in the map.
 	void importLayer(MapLayer* other, QHash<Symbol*, Symbol*>& symbol_map, bool select_new_objects);
 	
-	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
+	void findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
 	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
 	
 	QRectF calculateExtent(bool include_helper_symbols);
@@ -306,7 +306,7 @@ public:
 	void setObjectsDirty();
 	
 	void setObjectAreaDirty(QRectF map_coords_rect);
-	void findObjectsAt(MapCoordF coord, float tolerance, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
+	void findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
 	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
 	
 	/// Goes through all objects and for each object where condition(object) returns true, applies processor(object, map_layer, object_index).

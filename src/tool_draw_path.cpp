@@ -494,10 +494,22 @@ void DrawPathTool::undoLastPoint()
 	}
 	else
 	{
-		previous_point_is_curve_point = false;
-		
+		int curve_test = path_has_preview_point ? 5 : 4;	// "possible_previous_curve_start_offset"
 		if (path_has_preview_point)
 			preview_path->deleteCoordinate(last - 1, false);
+		
+		if (last >= curve_test && preview_path->getCoordinate(last - curve_test).isCurveStart())
+		{
+			MapCoord first = preview_path->getCoordinate(last - curve_test + 2);
+			MapCoord second = preview_path->getCoordinate(last - curve_test + 3);
+			
+			previous_point_is_curve_point = true;
+			previous_point_direction = -atan2(second.xd() - first.xd(), first.yd() - second.yd());
+			previous_pos_map = MapCoordF(second);
+			previous_drag_map = MapCoordF(second.xd() + (second.xd() - first.xd()) / 2, second.yd() + (second.yd() - first.yd()) / 2);
+		}
+		else
+			previous_point_is_curve_point = false;
 	}
 	
 	path_has_preview_point = false;
@@ -686,7 +698,7 @@ void DrawPathTool::updateFollowing()
 {
 	PathCoord path_coord;
 	float distance_sq;
-	follow_object->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord);
+	follow_object->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord, follow_helper.getPartIndex());
 	PathObject* temp_object;
 	bool success = follow_helper.updateFollowing(path_coord, temp_object);
 	
@@ -707,6 +719,21 @@ void DrawPathTool::updateFollowing()
 void DrawPathTool::finishFollowing()
 {
 	following = false;
+	
+	int last = preview_path->getCoordinateCount() - 1;
+	
+	if (preview_path->getCoordinate(last - 3).isCurveStart())
+	{
+		MapCoord first = preview_path->getCoordinate(last - 1);
+		MapCoord second = preview_path->getCoordinate(last);
+		
+		previous_point_is_curve_point = true;
+		previous_point_direction = -atan2(second.xd() - first.xd(), first.yd() - second.yd());
+		previous_pos_map = MapCoordF(second);
+		previous_drag_map = MapCoordF(second.xd() + (second.xd() - first.xd()) / 2, second.yd() + (second.yd() - first.yd()) / 2);
+	}
+	else
+		previous_point_is_curve_point = false;
 }
 
 float DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map)

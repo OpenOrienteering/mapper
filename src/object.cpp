@@ -393,7 +393,7 @@ void Object::rotateAround(MapCoordF center, double angle)
 	}
 }
 
-int Object::isPointOnObject(MapCoordF coord, float tolerance, bool extended_selection)
+int Object::isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection)
 {
 	Symbol::Type type = symbol->getType();
 	Symbol::Type contained_types = symbol->getContainedTypes();
@@ -424,7 +424,7 @@ int Object::isPointOnObject(MapCoordF coord, float tolerance, bool extended_sele
 	{
 		// Path objects
 		PathObject* path = reinterpret_cast<PathObject*>(this);
-		return path->isPointOnPath(coord, tolerance);
+		return path->isPointOnPath(coord, tolerance, treat_areas_as_paths);
 	}
 }
 bool Object::intersectsBox(QRectF box)
@@ -450,7 +450,7 @@ bool Object::intersectsBox(QRectF box)
 		
 		// If this is an area, additionally check if the area contains the box
 		if (getSymbol()->getContainedTypes() & Symbol::Area)
-			return isPointOnObject(MapCoordF(box.center()), 0, false);
+			return isPointOnObject(MapCoordF(box.center()), 0, false, false);
 	}
 	else
 		assert(false);
@@ -677,7 +677,7 @@ void PathObject::partSizeChanged(int part_index, int change)
 	}
 }
 
-void PathObject::calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq, PathCoord& out_path_coord)
+void PathObject::calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq, PathCoord& out_path_coord, int part_index)
 {
 	update(false);
 	
@@ -698,10 +698,15 @@ void PathObject::calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq,
 	}
 	
 	out_distance_sq = 999999;
-	int path_size = (int)path_coords.size();
-	for (int i = 0; i < path_size - 1; ++i)
+	int start = 0, end = (int)path_coords.size();
+	if (part_index >= 0 && part_index < (int)parts.size())
 	{
-		assert(path_coords[i].index < path_size);
+		start = parts[part_index].path_coord_start_index;
+		end = parts[part_index].path_coord_end_index + 1;
+	}
+	for (int i = start; i < end - 1; ++i)
+	{
+		assert(path_coords[i].index < end);
 		if (coords[path_coords[i].index].isHolePoint())
 			continue;
 		
@@ -1041,7 +1046,7 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 	MapCoordVectorF out_coordsF;
 	out_coordsF.reserve(part_size + 2);
 	
-	if (end_len == 0)
+	if (end_len == 0 && part.isClosed())
 		end_len = path_coords[part.path_coord_end_index].clen;
 	
 	int cur_path_coord = part.path_coord_start_index + 1;
@@ -1086,16 +1091,21 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 	int current_index = path_coords[cur_path_coord].index;
 	if (start_len == path_coords[cur_path_coord].clen && path_coords[cur_path_coord].param == 1)
 	{
-		if (p_coords->at(current_index).isCurveStart())
-			current_index += 3;
-		else
-			++current_index;
-		if (current_index > part.end_index)
-			current_index = 0;
-		out_coords[out_coords.size() - 1].setFlags(p_coords->at(current_index).getFlags());
-		out_coords[out_coords.size() - 1].setHolePoint(false);
-		out_coords[out_coords.size() - 1].setClosePoint(false);
-		++cur_path_coord;
+		if (part.isClosed())
+		{
+			if (p_coords->at(current_index).isCurveStart())
+				current_index += 3;
+			else
+				++current_index;
+			if (current_index >= part.end_index)
+				current_index = 0;
+			out_coords[out_coords.size() - 1].setFlags(p_coords->at(current_index).getFlags());
+			out_coords[out_coords.size() - 1].setHolePoint(false);
+			out_coords[out_coords.size() - 1].setClosePoint(false);
+			++cur_path_coord;
+			if (cur_path_coord > part.path_coord_end_index || p_coords->at(path_coords[cur_path_coord].index - part.start_index).isClosePoint())
+				cur_path_coord = part.path_coord_start_index + 1;
+		}
 	}
 	else if (start_len == path_coords[cur_path_coord - 1].clen && path_coords[cur_path_coord - 1].param == 0)
 	{
@@ -1106,7 +1116,7 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 	
 	// End position
 	bool enforce_wrap = (end_len <= path_coords[cur_path_coord].clen && end_len <= start_len);
-	advanceCoordinateRangeTo(*p_coords, coordsF, path_coords, cur_path_coord, current_index, end_len, enforce_wrap, start_bezier_index, out_coords, out_coordsF, o3, o4);
+	bool advanced_current_index = advanceCoordinateRangeTo(*p_coords, coordsF, path_coords, cur_path_coord, current_index, end_len, enforce_wrap, start_bezier_index, out_coords, out_coordsF, o3, o4);
 	if (current_index < part.end_index)
 	{
 		out_coordsF.push_back(MapCoordF(0, 0));
@@ -1128,7 +1138,7 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 			out_coordsF.push_back(MapCoordF(0, 0));
 			MapCoordF unused, unused2;
 			
-			if (start_bezier_index == current_index && !enforce_wrap)
+			if (start_bezier_index == current_index && start_len <= end_len && !advanced_current_index)
 			{
 				// The dash end is in the same curve as the start, need to make a second split with the correct parameter
 				p = (p - start_bezier_split_param) / (1 - start_bezier_split_param);
@@ -1185,11 +1195,12 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 	recalculateParts();
 	setOutputDirty();
 }
-void PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& path_coords, int& cur_path_coord, int& current_index, float cur_length,
+bool PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& path_coords, int& cur_path_coord, int& current_index, float cur_length,
 										  bool enforce_wrap, int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, const MapCoordF& o3, const MapCoordF& o4)
 {
 	PathPart& part = findPartForIndex(path_coords[cur_path_coord].index);
 	
+	bool advanced_current_index = false;
 	int path_coords_size = (int)path_coords.size();
 	bool have_to_wrap = enforce_wrap;
 	while (cur_length > path_coords[cur_path_coord].clen || cur_length < path_coords[cur_path_coord - 1].clen || have_to_wrap)
@@ -1209,7 +1220,8 @@ void PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 				assert(current_index <= part.end_index);
 				if (flags[current_index].isClosePoint())
 					current_index = 0;
-				assert(current_index == index);
+				
+				advanced_current_index = true;
 				
 				out_flags.push_back(o3.toMapCoord());
 				out_coords.push_back(o3);
@@ -1219,6 +1231,16 @@ void PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 				out_flags[out_flags.size() - 1].setClosePoint(false);
 				out_flags[out_flags.size() - 1].setHolePoint(false);
 				out_coords.push_back(coords[current_index]);
+				
+				if (current_index == part.end_index)
+				{
+					current_index = 0;
+					out_flags.push_back(flags[current_index]);
+					out_flags[out_flags.size() - 1].setClosePoint(false);
+					out_flags[out_flags.size() - 1].setHolePoint(false);
+					out_coords.push_back(coords[current_index]);
+				}
+				assert(current_index == index);
 			}
 			else
 			{
@@ -1229,8 +1251,19 @@ void PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 				{
 					++current_index;
 					assert(current_index <= part.end_index);
-					if (flags[current_index].isClosePoint())
+					if (flags[current_index].isClosePoint() || current_index == part.end_index)
+					{
+						if (out_coords[current_index] != out_coords[0])
+						{
+							out_flags.push_back(flags[current_index]);
+							out_flags[out_flags.size() - 1].setClosePoint(false);
+							out_flags[out_flags.size() - 1].setHolePoint(false);
+							out_coords.push_back(coords[current_index]);
+						}
 						current_index = 0;
+					}
+					advanced_current_index = true;
+					
 					out_flags.push_back(flags[current_index]);
 					out_flags[out_flags.size() - 1].setClosePoint(false);
 					out_flags[out_flags.size() - 1].setHolePoint(false);
@@ -1240,7 +1273,8 @@ void PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 			
 			have_to_wrap = false;
 		}
-	}	
+	}
+	return advanced_current_index;
 }
 
 void PathObject::appendPath(PathObject* other)
@@ -1321,12 +1355,12 @@ void PathObject::reversePart(int part_index)
 	setOutputDirty();
 }
 
-int PathObject::isPointOnPath(MapCoordF coord, float tolerance)
+int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas_as_paths)
 {
 	Symbol::Type contained_types = symbol->getContainedTypes();
 	int coords_size = (int)coords.size();
 	
-	if (contained_types & Symbol::Line && tolerance > 0)
+	if ((contained_types & Symbol::Line || treat_areas_as_paths) && tolerance > 0)
 	{
 		update(false);
 		int size = (int)path_coords.size();
@@ -1365,18 +1399,21 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance)
 	}
 	
 	// Check for area selection
-	if (contained_types & Symbol::Area)
+	if ((contained_types & Symbol::Area) && !treat_areas_as_paths)
 	{
 		update(false);
 		bool inside = false;
-		int size = (int)path_coords.size();
-		int i, j;
-		for (i = 0, j = size - 1; i < size; j = i++)
+		for (int part = 0, end = (int)parts.size(); part < end; ++part)
 		{
-			if ( ((path_coords[i].pos.getY() > coord.getY()) != (path_coords[j].pos.getY() > coord.getY())) &&
-				 (coord.getX() < (path_coords[j].pos.getX() - path_coords[i].pos.getX()) *
-				 (coord.getY() - path_coords[i].pos.getY()) / (path_coords[j].pos.getY() - path_coords[i].pos.getY()) + path_coords[i].pos.getX()) )
-				inside = !inside;
+			int size = parts[part].path_coord_end_index + 1;
+			int i, j;
+			for (i = parts[part].path_coord_start_index, j = size - 1; i < size; j = i++)
+			{
+				if ( ((path_coords[i].pos.getY() > coord.getY()) != (path_coords[j].pos.getY() > coord.getY())) &&
+					(coord.getX() < (path_coords[j].pos.getX() - path_coords[i].pos.getX()) *
+					(coord.getY() - path_coords[i].pos.getY()) / (path_coords[j].pos.getY() - path_coords[i].pos.getY()) + path_coords[i].pos.getX()) )
+					inside = !inside;
+			}
 		}
 		if (inside)
 			return Symbol::Area;

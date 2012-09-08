@@ -84,7 +84,7 @@ public:
 	/// Checks if the given coord, with the given tolerance, is on this object; with extended_selection, the coord is on point objects always if it is whithin their extent,
 	/// otherwise it has to be close to their midpoint. Returns a Symbol::Type which specifies on which symbol type the coord is
 	/// (important for combined symbols which can have areas and lines).
-	int isPointOnObject(MapCoordF coord, float tolerance, bool extended_selection);
+	int isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection);
 	
 	/// Checks if a path point (excluding curve control points) is included in the given box
 	bool intersectsBox(QRectF box);
@@ -205,7 +205,8 @@ public:
 	
 	/// Calculates the closest point on the path to the given coordinate, returns the squared distance of these points and PathCoord information for the point on the path.
 	/// This does not have to be an existing path coordinate. This method is usually called to find the position on the path the user clicked on.
-	void calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq, PathCoord& out_path_coord);
+	/// part_index can be set to a valid part index to constrain searching to this specific path part.
+	void calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq, PathCoord& out_path_coord, int part_index = -1);
 	/// Calculates the closest control point coordinate to the given coordiante, returns the squared distance of these points and the index of the control point.
 	void calcClosestCoordinate(MapCoordF coord, float& out_distance_sq, int& out_index);
 	/// Splits the segment beginning at the coordinate with the given index with the given bezier curve parameter or split ratio. Returns the index of the added point.
@@ -227,7 +228,7 @@ public:
 	/// Like reverse(), but only for the given part
 	void reversePart(int part_index);
 	/// See Object::isPointOnObject()
-	int isPointOnPath(MapCoordF coord, float tolerance);
+	int isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas_as_paths);
 	
 	/// Called by Object::update()
 	void updatePathCoords(MapCoordVectorF& float_coords);
@@ -236,7 +237,7 @@ public:
 	
 protected:
 	void connectPathParts(int part_index, PathObject* other, int other_part_index, bool prepend);
-	void advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& path_coords, int& cur_path_coord, int& current_index, float cur_length,
+	bool advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& path_coords, int& cur_path_coord, int& current_index, float cur_length,
 								  bool enforce_wrap, int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, const MapCoordF& o3, const MapCoordF& o4);
 	/// Sets coord as the point which closes a subpath (the normal path or a hole in it).
 	void setClosingPoint(int index, MapCoord coord);
