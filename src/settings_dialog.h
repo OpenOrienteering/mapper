@@ -85,8 +85,16 @@ private slots:
 	void fixedAngleSteppingChanged(int value);
 	void selectSymbolOfObjectsClicked(bool checked);
 	void zoomOutAwayFromCursorClicked(bool checked);
+	
+	void editToolDeleteBezierPointActionChanged(int index);
+	void editToolDeleteBezierPointActionAlternativeChanged(int index);
+	
 	void rectangleHelperCrossRadiusChanged(int value);
 	void rectanglePreviewLineWidthChanged(bool checked);
+	
+private:
+	QComboBox* edit_tool_delete_bezier_point_action;
+	QComboBox* edit_tool_delete_bezier_point_action_alternative;
 };
 
 /*class PrintingPage : public SettingsPage

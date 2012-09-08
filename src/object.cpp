@@ -32,6 +32,7 @@
 #include "object_text.h"
 #include "renderable.h"
 #include "qbezier_p.h"
+#include "settings.h"
 
 Object::Object(Object::Type type, Symbol* symbol)
 : type(type),
@@ -1278,6 +1279,344 @@ bool PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 	return advanced_current_index;
 }
 
+void PathObject::calcBezierPointDeletionRetainingShapeFactors(MapCoord p0, MapCoord p1, MapCoord p2, MapCoord q0, MapCoord q1, MapCoord q2, MapCoord q3, double& out_pfactor, double& out_qfactor)
+{
+	// Heuristic for the split parameter sp (zero to one)
+	QBezierCopy p_curve = QBezierCopy::fromPoints(p0.toQPointF(), p1.toQPointF(), p2.toQPointF(), q0.toQPointF());
+	double p_length = p_curve.length(PathCoord::bezier_error);
+	QBezierCopy q_curve = QBezierCopy::fromPoints(q0.toQPointF(), q1.toQPointF(), q2.toQPointF(), q3.toQPointF());
+	double q_length = q_curve.length(PathCoord::bezier_error);
+	double sp = p_length / (p_length + q_length);
+	
+	// Least squares curve fitting with the constraint that handles are on the same line as before.
+	// To reproduce the formulas, run the following Matlab script:
+	/*
+	 
+	 clear all; close all; clc;
+	 
+	 syms P0x P1x P2x P3x;
+	 syms Q1x Q2x Q3x;
+	 syms P0y P1y P2y P3y;
+	 syms Q1y Q2y Q3y;
+	 
+	 syms u v w;
+	 syms pfactor qfactor;
+	 
+	 Xx = (1-u)^3*P0x+3*(1-u)^2*u*P1x+3*(1-u)*u^2*P2x+u^3*P3x;
+	 Yx = (1-v)^3*P3x+3*(1-v)^2*v*Q1x+3*(1-v)*v^2*Q2x+v^3*Q3x;
+	 Zx = (1-w)^3*P0x+3*(1-w)^2*w*(P0x+pfactor*(P1x-P0x))+3*(1-w)*w^2*(Q3x+qfactor*(Q2x-Q3x))+w^3*Q3x;
+	 
+	 Xy = (1-u)^3*P0y+3*(1-u)^2*u*P1y+3*(1-u)*u^2*P2y+u^3*P3y;
+	 Yy = (1-v)^3*P3y+3*(1-v)^2*v*Q1y+3*(1-v)*v^2*Q2y+v^3*Q3y;
+	 Zy = (1-w)^3*P0y+3*(1-w)^2*w*(P0y+pfactor*(P1y-P0y))+3*(1-w)*w^2*(Q3y+qfactor*(Q2y-Q3y))+w^3*Q3y;
+	 
+	 syms sp;   %split_param
+	 E = int((Zx - subs(Xx, u, w/sp))^2 + (Zy - subs(Xy, u, w/sp))^2, w, 0, sp) + int((Zx - subs(Yx, v, (w - sp) / (1 - sp)))^2 + (Zy - subs(Yy, v, (w - sp) / (1 - sp)))^2, w, sp, 1);
+	 
+	 Epfactor = diff(E, pfactor);
+	 Eqfactor = diff(E, qfactor);
+	 S = solve(Epfactor, Eqfactor, pfactor, qfactor);
+	 S = [S.pfactor, S.qfactor]
+	 
+	 */
+	
+	double P0x = p0.xd(), P1x = p1.xd(), P2x = p2.xd(), P3x = q0.xd();
+	double Q1x = q1.xd(), Q2x = q2.xd(), Q3x = q3.xd();
+	double P0y = p0.yd(), P1y = p1.yd(), P2y = p2.yd(), P3y = q0.yd();
+	double Q1y = q1.yd(), Q2y = q2.yd(), Q3y = q3.yd();
+	
+	out_pfactor = -(126*P0x*pow(Q2x,3.0)*pow(sp,3.0) - 49*pow(P0x,2.0)*pow(Q3x,2.0) - 88*pow(P0x,2.0)*pow(Q2y,2.0) - 88*pow(P0y,2.0)*pow(Q2x,2.0) - 88*pow(P0x,2.0)*pow(Q3y,2.0) - 88*pow(P0y,2.0)*pow(Q3x,2.0) - 49*pow(P0y,2.0)*pow(Q2y,2.0) -
+	49*pow(P0y,2.0)*pow(Q3y,2.0) - 49*pow(P0x,2.0)*pow(Q2x,2.0) + 21*P0x*pow(Q3x,3.0)*pow(sp,2.0) - 84*P0x*pow(Q2x,3.0)*pow(sp,4.0) + 14*P0x*pow(Q3x,3.0)*pow(sp,3.0) - 126*P1x*pow(Q2x,3.0)*pow(sp,3.0) -
+	21*P1x*pow(Q3x,3.0)*pow(sp,2.0) - 21*P0x*pow(Q3x,3.0)*pow(sp,4.0) + 84*P1x*pow(Q2x,3.0)*pow(sp,4.0) - 14*P1x*pow(Q3x,3.0)*pow(sp,3.0) + 21*P1x*pow(Q3x,3.0)*pow(sp,4.0) + 126*P0y*pow(Q2y,3.0)*pow(sp,3.0) +
+	21*P0y*pow(Q3y,3.0)*pow(sp,2.0) - 84*P0y*pow(Q2y,3.0)*pow(sp,4.0) + 14*P0y*pow(Q3y,3.0)*pow(sp,3.0) - 126*P1y*pow(Q2y,3.0)*pow(sp,3.0) - 21*P1y*pow(Q3y,3.0)*pow(sp,2.0) - 21*P0y*pow(Q3y,3.0)*pow(sp,4.0) +
+	84*P1y*pow(Q2y,3.0)*pow(sp,4.0) - 14*P1y*pow(Q3y,3.0)*pow(sp,3.0) + 21*P1y*pow(Q3y,3.0)*pow(sp,4.0) + 84*pow(P0x,2.0)*pow(Q2x,2.0)*pow(sp,2.0) - 77*pow(P0x,2.0)*pow(Q2x,2.0)*pow(sp,3.0) +
+	84*pow(P0x,2.0)*pow(Q3x,2.0)*pow(sp,2.0) - 168*pow(P1x,2.0)*pow(Q2x,2.0)*pow(sp,2.0) + 21*pow(P0x,2.0)*pow(Q2x,2.0)*pow(sp,4.0) - 77*pow(P0x,2.0)*pow(Q3x,2.0)*pow(sp,3.0) + 231*pow(P1x,2.0)*pow(Q2x,2.0)*pow(sp,3.0) -
+	168*pow(P1x,2.0)*pow(Q3x,2.0)*pow(sp,2.0) + 21*pow(P0x,2.0)*pow(Q3x,2.0)*pow(sp,4.0) - 84*pow(P1x,2.0)*pow(Q2x,2.0)*pow(sp,4.0) + 231*pow(P1x,2.0)*pow(Q3x,2.0)*pow(sp,3.0) - 84*pow(P1x,2.0)*pow(Q3x,2.0)*pow(sp,4.0) +
+	84*pow(P0x,2.0)*pow(Q2y,2.0)*pow(sp,2.0) + 84*pow(P0y,2.0)*pow(Q2x,2.0)*pow(sp,2.0) - 56*pow(P0x,2.0)*pow(Q2y,2.0)*pow(sp,3.0) + 84*pow(P0x,2.0)*pow(Q3y,2.0)*pow(sp,2.0) - 168*pow(P1x,2.0)*pow(Q2y,2.0)*pow(sp,2.0) -
+	56*pow(P0y,2.0)*pow(Q2x,2.0)*pow(sp,3.0) + 84*pow(P0y,2.0)*pow(Q3x,2.0)*pow(sp,2.0) - 168*pow(P1y,2.0)*pow(Q2x,2.0)*pow(sp,2.0) + 12*pow(P0x,2.0)*pow(Q2y,2.0)*pow(sp,4.0) - 56*pow(P0x,2.0)*pow(Q3y,2.0)*pow(sp,3.0) +
+	168*pow(P1x,2.0)*pow(Q2y,2.0)*pow(sp,3.0) - 168*pow(P1x,2.0)*pow(Q3y,2.0)*pow(sp,2.0) + 12*pow(P0y,2.0)*pow(Q2x,2.0)*pow(sp,4.0) - 56*pow(P0y,2.0)*pow(Q3x,2.0)*pow(sp,3.0) + 168*pow(P1y,2.0)*pow(Q2x,2.0)*pow(sp,3.0) -
+	168*pow(P1y,2.0)*pow(Q3x,2.0)*pow(sp,2.0) + 12*pow(P0x,2.0)*pow(Q3y,2.0)*pow(sp,4.0) - 48*pow(P1x,2.0)*pow(Q2y,2.0)*pow(sp,4.0) + 168*pow(P1x,2.0)*pow(Q3y,2.0)*pow(sp,3.0) + 12*pow(P0y,2.0)*pow(Q3x,2.0)*pow(sp,4.0) -
+	48*pow(P1y,2.0)*pow(Q2x,2.0)*pow(sp,4.0) + 168*pow(P1y,2.0)*pow(Q3x,2.0)*pow(sp,3.0) - 48*pow(P1x,2.0)*pow(Q3y,2.0)*pow(sp,4.0) - 48*pow(P1y,2.0)*pow(Q3x,2.0)*pow(sp,4.0) + 84*pow(P0y,2.0)*pow(Q2y,2.0)*pow(sp,2.0) -
+	77*pow(P0y,2.0)*pow(Q2y,2.0)*pow(sp,3.0) + 84*pow(P0y,2.0)*pow(Q3y,2.0)*pow(sp,2.0) - 168*pow(P1y,2.0)*pow(Q2y,2.0)*pow(sp,2.0) + 21*pow(P0y,2.0)*pow(Q2y,2.0)*pow(sp,4.0) - 77*pow(P0y,2.0)*pow(Q3y,2.0)*pow(sp,3.0) +
+	231*pow(P1y,2.0)*pow(Q2y,2.0)*pow(sp,3.0) - 168*pow(P1y,2.0)*pow(Q3y,2.0)*pow(sp,2.0) + 21*pow(P0y,2.0)*pow(Q3y,2.0)*pow(sp,4.0) - 84*pow(P1y,2.0)*pow(Q2y,2.0)*pow(sp,4.0) + 231*pow(P1y,2.0)*pow(Q3y,2.0)*pow(sp,3.0) -
+	84*pow(P1y,2.0)*pow(Q3y,2.0)*pow(sp,4.0) + 49*P0x*P1x*pow(Q2x,2.0) + 49*P0x*P1x*pow(Q3x,2.0) + 28*P0x*P3x*pow(Q2x,2.0) + 28*P0x*P3x*pow(Q3x,2.0) - 28*P1x*P3x*pow(Q2x,2.0) - 28*P1x*P3x*pow(Q3x,2.0) + 88*P0x*P1x*pow(Q2y,2.0) +
+	88*P0x*P1x*pow(Q3y,2.0) + 40*P0x*P3x*pow(Q2y,2.0) + 40*P0x*P3x*pow(Q3y,2.0) - 40*P1x*P3x*pow(Q2y,2.0) - 40*P1x*P3x*pow(Q3y,2.0) + 88*P0y*P1y*pow(Q2x,2.0) + 88*P0y*P1y*pow(Q3x,2.0) + 40*P0y*P3y*pow(Q2x,2.0) +
+	40*P0y*P3y*pow(Q3x,2.0) - 40*P1y*P3y*pow(Q2x,2.0) - 40*P1y*P3y*pow(Q3x,2.0) + 49*P0y*P1y*pow(Q2y,2.0) + 49*P0y*P1y*pow(Q3y,2.0) + 28*P0y*P3y*pow(Q2y,2.0) + 28*P0y*P3y*pow(Q3y,2.0) - 28*P1y*P3y*pow(Q2y,2.0) -
+	28*P1y*P3y*pow(Q3y,2.0) + 21*P0x*Q1x*pow(Q2x,2.0) + 21*P0x*Q1x*pow(Q3x,2.0) - 21*P1x*Q1x*pow(Q2x,2.0) - 21*P1x*Q1x*pow(Q3x,2.0) + 98*pow(P0x,2.0)*Q2x*Q3x + 48*P0x*Q1x*pow(Q2y,2.0) + 48*P0x*Q1x*pow(Q3y,2.0) -
+	48*P1x*Q1x*pow(Q2y,2.0) - 48*P1x*Q1x*pow(Q3y,2.0) + 176*pow(P0y,2.0)*Q2x*Q3x + 48*P0y*pow(Q2x,2.0)*Q1y + 48*P0y*pow(Q3x,2.0)*Q1y - 48*P1y*pow(Q2x,2.0)*Q1y - 48*P1y*pow(Q3x,2.0)*Q1y + 176*pow(P0x,2.0)*Q2y*Q3y +
+	21*P0y*Q1y*pow(Q2y,2.0) + 21*P0y*Q1y*pow(Q3y,2.0) - 21*P1y*Q1y*pow(Q2y,2.0) - 21*P1y*Q1y*pow(Q3y,2.0) + 98*pow(P0y,2.0)*Q2y*Q3y - 42*P0x*pow(Q2x,3.0)*sp + 42*P1x*pow(Q2x,3.0)*sp - 42*P0y*pow(Q2y,3.0)*sp +
+	42*P1y*pow(Q2y,3.0)*sp + 84*P0x*P3x*pow(Q2x,2.0)*sp + 84*P0x*P3x*pow(Q3x,2.0)*sp - 84*P1x*P3x*pow(Q2x,2.0)*sp - 84*P1x*P3x*pow(Q3x,2.0)*sp + 120*P0x*P3x*pow(Q2y,2.0)*sp + 120*P0x*P3x*pow(Q3y,2.0)*sp -
+	120*P1x*P3x*pow(Q2y,2.0)*sp - 120*P1x*P3x*pow(Q3y,2.0)*sp + 120*P0y*P3y*pow(Q2x,2.0)*sp + 120*P0y*P3y*pow(Q3x,2.0)*sp - 120*P1y*P3y*pow(Q2x,2.0)*sp - 120*P1y*P3y*pow(Q3x,2.0)*sp + 84*P0y*P3y*pow(Q2y,2.0)*sp +
+	84*P0y*P3y*pow(Q3y,2.0)*sp - 84*P1y*P3y*pow(Q2y,2.0)*sp - 84*P1y*P3y*pow(Q3y,2.0)*sp - 42*P0x*Q1x*pow(Q2x,2.0)*sp - 42*P0x*Q1x*pow(Q3x,2.0)*sp + 42*P1x*Q1x*pow(Q2x,2.0)*sp - 42*P0x*Q2x*pow(Q3x,2.0)*sp +
+	84*P0x*pow(Q2x,2.0)*Q3x*sp + 42*P1x*Q1x*pow(Q3x,2.0)*sp + 42*P1x*Q2x*pow(Q3x,2.0)*sp - 84*P1x*pow(Q2x,2.0)*Q3x*sp - 24*P0x*Q1x*pow(Q2y,2.0)*sp - 24*P0x*Q1x*pow(Q3y,2.0)*sp - 42*P0x*Q2x*pow(Q2y,2.0)*sp +
+	24*P1x*Q1x*pow(Q2y,2.0)*sp - 96*P0x*Q2x*pow(Q3y,2.0)*sp - 54*P0x*Q3x*pow(Q2y,2.0)*sp + 24*P1x*Q1x*pow(Q3y,2.0)*sp + 42*P1x*Q2x*pow(Q2y,2.0)*sp + 96*P1x*Q2x*pow(Q3y,2.0)*sp + 54*P1x*Q3x*pow(Q2y,2.0)*sp -
+	24*P0y*pow(Q2x,2.0)*Q1y*sp - 42*P0y*pow(Q2x,2.0)*Q2y*sp - 24*P0y*pow(Q3x,2.0)*Q1y*sp + 24*P1y*pow(Q2x,2.0)*Q1y*sp - 54*P0y*pow(Q2x,2.0)*Q3y*sp - 96*P0y*pow(Q3x,2.0)*Q2y*sp + 42*P1y*pow(Q2x,2.0)*Q2y*sp +
+	24*P1y*pow(Q3x,2.0)*Q1y*sp + 54*P1y*pow(Q2x,2.0)*Q3y*sp + 96*P1y*pow(Q3x,2.0)*Q2y*sp - 42*P0y*Q1y*pow(Q2y,2.0)*sp - 42*P0y*Q1y*pow(Q3y,2.0)*sp + 42*P1y*Q1y*pow(Q2y,2.0)*sp - 42*P0y*Q2y*pow(Q3y,2.0)*sp +
+	84*P0y*pow(Q2y,2.0)*Q3y*sp + 42*P1y*Q1y*pow(Q3y,2.0)*sp + 42*P1y*Q2y*pow(Q3y,2.0)*sp - 84*P1y*pow(Q2y,2.0)*Q3y*sp + 84*P0x*P1x*pow(Q2x,2.0)*pow(sp,2.0) - 154*P0x*P1x*pow(Q2x,2.0)*pow(sp,3.0) +
+	84*P0x*P1x*pow(Q3x,2.0)*pow(sp,2.0) + 252*P0x*P2x*pow(Q2x,2.0)*pow(sp,2.0) + 63*P0x*P1x*pow(Q2x,2.0)*pow(sp,4.0) - 154*P0x*P1x*pow(Q3x,2.0)*pow(sp,3.0) - 462*P0x*P2x*pow(Q2x,2.0)*pow(sp,3.0) +
+	252*P0x*P2x*pow(Q3x,2.0)*pow(sp,2.0) - 336*P0x*P3x*pow(Q2x,2.0)*pow(sp,2.0) - 252*P1x*P2x*pow(Q2x,2.0)*pow(sp,2.0) + 63*P0x*P1x*pow(Q3x,2.0)*pow(sp,4.0) + 210*P0x*P2x*pow(Q2x,2.0)*pow(sp,4.0) -
+	462*P0x*P2x*pow(Q3x,2.0)*pow(sp,3.0) + 210*P0x*P3x*pow(Q2x,2.0)*pow(sp,3.0) - 336*P0x*P3x*pow(Q3x,2.0)*pow(sp,2.0) + 462*P1x*P2x*pow(Q2x,2.0)*pow(sp,3.0) - 252*P1x*P2x*pow(Q3x,2.0)*pow(sp,2.0) +
+	336*P1x*P3x*pow(Q2x,2.0)*pow(sp,2.0) + 210*P0x*P2x*pow(Q3x,2.0)*pow(sp,4.0) + 210*P0x*P3x*pow(Q3x,2.0)*pow(sp,3.0) - 210*P1x*P2x*pow(Q2x,2.0)*pow(sp,4.0) + 462*P1x*P2x*pow(Q3x,2.0)*pow(sp,3.0) -
+	210*P1x*P3x*pow(Q2x,2.0)*pow(sp,3.0) + 336*P1x*P3x*pow(Q3x,2.0)*pow(sp,2.0) - 210*P1x*P2x*pow(Q3x,2.0)*pow(sp,4.0) - 210*P1x*P3x*pow(Q3x,2.0)*pow(sp,3.0) + 84*P0x*P1x*pow(Q2y,2.0)*pow(sp,2.0) -
+	112*P0x*P1x*pow(Q2y,2.0)*pow(sp,3.0) + 84*P0x*P1x*pow(Q3y,2.0)*pow(sp,2.0) + 252*P0x*P2x*pow(Q2y,2.0)*pow(sp,2.0) + 36*P0x*P1x*pow(Q2y,2.0)*pow(sp,4.0) - 112*P0x*P1x*pow(Q3y,2.0)*pow(sp,3.0) -
+	336*P0x*P2x*pow(Q2y,2.0)*pow(sp,3.0) + 252*P0x*P2x*pow(Q3y,2.0)*pow(sp,2.0) - 264*P0x*P3x*pow(Q2y,2.0)*pow(sp,2.0) - 252*P1x*P2x*pow(Q2y,2.0)*pow(sp,2.0) + 36*P0x*P1x*pow(Q3y,2.0)*pow(sp,4.0) +
+	120*P0x*P2x*pow(Q2y,2.0)*pow(sp,4.0) - 336*P0x*P2x*pow(Q3y,2.0)*pow(sp,3.0) + 120*P0x*P3x*pow(Q2y,2.0)*pow(sp,3.0) - 264*P0x*P3x*pow(Q3y,2.0)*pow(sp,2.0) + 336*P1x*P2x*pow(Q2y,2.0)*pow(sp,3.0) -
+	252*P1x*P2x*pow(Q3y,2.0)*pow(sp,2.0) + 264*P1x*P3x*pow(Q2y,2.0)*pow(sp,2.0) + 120*P0x*P2x*pow(Q3y,2.0)*pow(sp,4.0) + 120*P0x*P3x*pow(Q3y,2.0)*pow(sp,3.0) - 120*P1x*P2x*pow(Q2y,2.0)*pow(sp,4.0) +
+	336*P1x*P2x*pow(Q3y,2.0)*pow(sp,3.0) - 120*P1x*P3x*pow(Q2y,2.0)*pow(sp,3.0) + 264*P1x*P3x*pow(Q3y,2.0)*pow(sp,2.0) - 120*P1x*P2x*pow(Q3y,2.0)*pow(sp,4.0) - 120*P1x*P3x*pow(Q3y,2.0)*pow(sp,3.0) +
+	84*P0y*P1y*pow(Q2x,2.0)*pow(sp,2.0) - 112*P0y*P1y*pow(Q2x,2.0)*pow(sp,3.0) + 84*P0y*P1y*pow(Q3x,2.0)*pow(sp,2.0) + 252*P0y*P2y*pow(Q2x,2.0)*pow(sp,2.0) + 36*P0y*P1y*pow(Q2x,2.0)*pow(sp,4.0) -
+	112*P0y*P1y*pow(Q3x,2.0)*pow(sp,3.0) - 336*P0y*P2y*pow(Q2x,2.0)*pow(sp,3.0) + 252*P0y*P2y*pow(Q3x,2.0)*pow(sp,2.0) - 264*P0y*P3y*pow(Q2x,2.0)*pow(sp,2.0) - 252*P1y*P2y*pow(Q2x,2.0)*pow(sp,2.0) +
+	36*P0y*P1y*pow(Q3x,2.0)*pow(sp,4.0) + 120*P0y*P2y*pow(Q2x,2.0)*pow(sp,4.0) - 336*P0y*P2y*pow(Q3x,2.0)*pow(sp,3.0) + 120*P0y*P3y*pow(Q2x,2.0)*pow(sp,3.0) - 264*P0y*P3y*pow(Q3x,2.0)*pow(sp,2.0) +
+	336*P1y*P2y*pow(Q2x,2.0)*pow(sp,3.0) - 252*P1y*P2y*pow(Q3x,2.0)*pow(sp,2.0) + 264*P1y*P3y*pow(Q2x,2.0)*pow(sp,2.0) + 120*P0y*P2y*pow(Q3x,2.0)*pow(sp,4.0) + 120*P0y*P3y*pow(Q3x,2.0)*pow(sp,3.0) -
+	120*P1y*P2y*pow(Q2x,2.0)*pow(sp,4.0) + 336*P1y*P2y*pow(Q3x,2.0)*pow(sp,3.0) - 120*P1y*P3y*pow(Q2x,2.0)*pow(sp,3.0) + 264*P1y*P3y*pow(Q3x,2.0)*pow(sp,2.0) - 120*P1y*P2y*pow(Q3x,2.0)*pow(sp,4.0) -
+	120*P1y*P3y*pow(Q3x,2.0)*pow(sp,3.0) + 84*P0y*P1y*pow(Q2y,2.0)*pow(sp,2.0) - 154*P0y*P1y*pow(Q2y,2.0)*pow(sp,3.0) + 84*P0y*P1y*pow(Q3y,2.0)*pow(sp,2.0) + 252*P0y*P2y*pow(Q2y,2.0)*pow(sp,2.0) +
+	63*P0y*P1y*pow(Q2y,2.0)*pow(sp,4.0) - 154*P0y*P1y*pow(Q3y,2.0)*pow(sp,3.0) - 462*P0y*P2y*pow(Q2y,2.0)*pow(sp,3.0) + 252*P0y*P2y*pow(Q3y,2.0)*pow(sp,2.0) - 336*P0y*P3y*pow(Q2y,2.0)*pow(sp,2.0) -
+	252*P1y*P2y*pow(Q2y,2.0)*pow(sp,2.0) + 63*P0y*P1y*pow(Q3y,2.0)*pow(sp,4.0) + 210*P0y*P2y*pow(Q2y,2.0)*pow(sp,4.0) - 462*P0y*P2y*pow(Q3y,2.0)*pow(sp,3.0) + 210*P0y*P3y*pow(Q2y,2.0)*pow(sp,3.0) -
+	336*P0y*P3y*pow(Q3y,2.0)*pow(sp,2.0) + 462*P1y*P2y*pow(Q2y,2.0)*pow(sp,3.0) - 252*P1y*P2y*pow(Q3y,2.0)*pow(sp,2.0) + 336*P1y*P3y*pow(Q2y,2.0)*pow(sp,2.0) + 210*P0y*P2y*pow(Q3y,2.0)*pow(sp,4.0) +
+	210*P0y*P3y*pow(Q3y,2.0)*pow(sp,3.0) - 210*P1y*P2y*pow(Q2y,2.0)*pow(sp,4.0) + 462*P1y*P2y*pow(Q3y,2.0)*pow(sp,3.0) - 210*P1y*P3y*pow(Q2y,2.0)*pow(sp,3.0) + 336*P1y*P3y*pow(Q3y,2.0)*pow(sp,2.0) -
+	210*P1y*P2y*pow(Q3y,2.0)*pow(sp,4.0) - 210*P1y*P3y*pow(Q3y,2.0)*pow(sp,3.0) - 189*P0x*Q1x*pow(Q2x,2.0)*pow(sp,2.0) + 420*P0x*Q1x*pow(Q2x,2.0)*pow(sp,3.0) - 189*P0x*Q1x*pow(Q3x,2.0)*pow(sp,2.0) +
+	189*P1x*Q1x*pow(Q2x,2.0)*pow(sp,2.0) - 210*P0x*Q1x*pow(Q2x,2.0)*pow(sp,4.0) + 420*P0x*Q1x*pow(Q3x,2.0)*pow(sp,3.0) - 42*P0x*Q2x*pow(Q3x,2.0)*pow(sp,2.0) + 21*P0x*pow(Q2x,2.0)*Q3x*pow(sp,2.0) -
+	420*P1x*Q1x*pow(Q2x,2.0)*pow(sp,3.0) + 189*P1x*Q1x*pow(Q3x,2.0)*pow(sp,2.0) - 168*pow(P0x,2.0)*Q2x*Q3x*pow(sp,2.0) - 210*P0x*Q1x*pow(Q3x,2.0)*pow(sp,4.0) + 98*P0x*Q2x*pow(Q3x,2.0)*pow(sp,3.0) -
+	238*P0x*pow(Q2x,2.0)*Q3x*pow(sp,3.0) + 210*P1x*Q1x*pow(Q2x,2.0)*pow(sp,4.0) - 420*P1x*Q1x*pow(Q3x,2.0)*pow(sp,3.0) + 42*P1x*Q2x*pow(Q3x,2.0)*pow(sp,2.0) - 21*P1x*pow(Q2x,2.0)*Q3x*pow(sp,2.0) +
+	154*pow(P0x,2.0)*Q2x*Q3x*pow(sp,3.0) + 336*pow(P1x,2.0)*Q2x*Q3x*pow(sp,2.0) - 42*P0x*Q2x*pow(Q3x,2.0)*pow(sp,4.0) + 147*P0x*pow(Q2x,2.0)*Q3x*pow(sp,4.0) + 210*P1x*Q1x*pow(Q3x,2.0)*pow(sp,4.0) -
+	98*P1x*Q2x*pow(Q3x,2.0)*pow(sp,3.0) + 238*P1x*pow(Q2x,2.0)*Q3x*pow(sp,3.0) - 42*pow(P0x,2.0)*Q2x*Q3x*pow(sp,4.0) - 462*pow(P1x,2.0)*Q2x*Q3x*pow(sp,3.0) + 42*P1x*Q2x*pow(Q3x,2.0)*pow(sp,4.0) -
+	147*P1x*pow(Q2x,2.0)*Q3x*pow(sp,4.0) + 168*pow(P1x,2.0)*Q2x*Q3x*pow(sp,4.0) - 216*P0x*Q1x*pow(Q2y,2.0)*pow(sp,2.0) + 312*P0x*Q1x*pow(Q2y,2.0)*pow(sp,3.0) - 216*P0x*Q1x*pow(Q3y,2.0)*pow(sp,2.0) +
+	216*P1x*Q1x*pow(Q2y,2.0)*pow(sp,2.0) - 120*P0x*Q1x*pow(Q2y,2.0)*pow(sp,4.0) + 312*P0x*Q1x*pow(Q3y,2.0)*pow(sp,3.0) + 126*P0x*Q2x*pow(Q2y,2.0)*pow(sp,3.0) - 45*P0x*Q2x*pow(Q3y,2.0)*pow(sp,2.0) -
+	24*P0x*Q3x*pow(Q2y,2.0)*pow(sp,2.0) - 312*P1x*Q1x*pow(Q2y,2.0)*pow(sp,3.0) + 216*P1x*Q1x*pow(Q3y,2.0)*pow(sp,2.0) - 168*pow(P0y,2.0)*Q2x*Q3x*pow(sp,2.0) - 120*P0x*Q1x*pow(Q3y,2.0)*pow(sp,4.0) -
+	84*P0x*Q2x*pow(Q2y,2.0)*pow(sp,4.0) + 114*P0x*Q2x*pow(Q3y,2.0)*pow(sp,3.0) + 2*P0x*Q3x*pow(Q2y,2.0)*pow(sp,3.0) + 21*P0x*Q3x*pow(Q3y,2.0)*pow(sp,2.0) + 120*P1x*Q1x*pow(Q2y,2.0)*pow(sp,4.0) -
+	312*P1x*Q1x*pow(Q3y,2.0)*pow(sp,3.0) - 126*P1x*Q2x*pow(Q2y,2.0)*pow(sp,3.0) + 45*P1x*Q2x*pow(Q3y,2.0)*pow(sp,2.0) + 24*P1x*Q3x*pow(Q2y,2.0)*pow(sp,2.0) + 112*pow(P0y,2.0)*Q2x*Q3x*pow(sp,3.0) +
+	336*pow(P1y,2.0)*Q2x*Q3x*pow(sp,2.0) - 39*P0x*Q2x*pow(Q3y,2.0)*pow(sp,4.0) + 24*P0x*Q3x*pow(Q2y,2.0)*pow(sp,4.0) + 14*P0x*Q3x*pow(Q3y,2.0)*pow(sp,3.0) + 120*P1x*Q1x*pow(Q3y,2.0)*pow(sp,4.0) +
+	84*P1x*Q2x*pow(Q2y,2.0)*pow(sp,4.0) - 114*P1x*Q2x*pow(Q3y,2.0)*pow(sp,3.0) - 2*P1x*Q3x*pow(Q2y,2.0)*pow(sp,3.0) - 21*P1x*Q3x*pow(Q3y,2.0)*pow(sp,2.0) - 24*pow(P0y,2.0)*Q2x*Q3x*pow(sp,4.0) -
+	336*pow(P1y,2.0)*Q2x*Q3x*pow(sp,3.0) - 21*P0x*Q3x*pow(Q3y,2.0)*pow(sp,4.0) + 39*P1x*Q2x*pow(Q3y,2.0)*pow(sp,4.0) - 24*P1x*Q3x*pow(Q2y,2.0)*pow(sp,4.0) - 14*P1x*Q3x*pow(Q3y,2.0)*pow(sp,3.0) +
+	96*pow(P1y,2.0)*Q2x*Q3x*pow(sp,4.0) + 21*P1x*Q3x*pow(Q3y,2.0)*pow(sp,4.0) - 216*P0y*pow(Q2x,2.0)*Q1y*pow(sp,2.0) + 312*P0y*pow(Q2x,2.0)*Q1y*pow(sp,3.0) - 216*P0y*pow(Q3x,2.0)*Q1y*pow(sp,2.0) +
+	216*P1y*pow(Q2x,2.0)*Q1y*pow(sp,2.0) - 120*P0y*pow(Q2x,2.0)*Q1y*pow(sp,4.0) + 126*P0y*pow(Q2x,2.0)*Q2y*pow(sp,3.0) - 24*P0y*pow(Q2x,2.0)*Q3y*pow(sp,2.0) + 312*P0y*pow(Q3x,2.0)*Q1y*pow(sp,3.0) -
+	45*P0y*pow(Q3x,2.0)*Q2y*pow(sp,2.0) - 312*P1y*pow(Q2x,2.0)*Q1y*pow(sp,3.0) + 216*P1y*pow(Q3x,2.0)*Q1y*pow(sp,2.0) - 168*pow(P0x,2.0)*Q2y*Q3y*pow(sp,2.0) - 84*P0y*pow(Q2x,2.0)*Q2y*pow(sp,4.0) +
+	2*P0y*pow(Q2x,2.0)*Q3y*pow(sp,3.0) - 120*P0y*pow(Q3x,2.0)*Q1y*pow(sp,4.0) + 114*P0y*pow(Q3x,2.0)*Q2y*pow(sp,3.0) + 21*P0y*pow(Q3x,2.0)*Q3y*pow(sp,2.0) + 120*P1y*pow(Q2x,2.0)*Q1y*pow(sp,4.0) -
+	126*P1y*pow(Q2x,2.0)*Q2y*pow(sp,3.0) + 24*P1y*pow(Q2x,2.0)*Q3y*pow(sp,2.0) - 312*P1y*pow(Q3x,2.0)*Q1y*pow(sp,3.0) + 45*P1y*pow(Q3x,2.0)*Q2y*pow(sp,2.0) + 112*pow(P0x,2.0)*Q2y*Q3y*pow(sp,3.0) +
+	336*pow(P1x,2.0)*Q2y*Q3y*pow(sp,2.0) + 24*P0y*pow(Q2x,2.0)*Q3y*pow(sp,4.0) - 39*P0y*pow(Q3x,2.0)*Q2y*pow(sp,4.0) + 14*P0y*pow(Q3x,2.0)*Q3y*pow(sp,3.0) + 84*P1y*pow(Q2x,2.0)*Q2y*pow(sp,4.0) -
+	2*P1y*pow(Q2x,2.0)*Q3y*pow(sp,3.0) + 120*P1y*pow(Q3x,2.0)*Q1y*pow(sp,4.0) - 114*P1y*pow(Q3x,2.0)*Q2y*pow(sp,3.0) - 21*P1y*pow(Q3x,2.0)*Q3y*pow(sp,2.0) - 24*pow(P0x,2.0)*Q2y*Q3y*pow(sp,4.0) -
+	336*pow(P1x,2.0)*Q2y*Q3y*pow(sp,3.0) - 21*P0y*pow(Q3x,2.0)*Q3y*pow(sp,4.0) - 24*P1y*pow(Q2x,2.0)*Q3y*pow(sp,4.0) + 39*P1y*pow(Q3x,2.0)*Q2y*pow(sp,4.0) - 14*P1y*pow(Q3x,2.0)*Q3y*pow(sp,3.0) +
+	96*pow(P1x,2.0)*Q2y*Q3y*pow(sp,4.0) + 21*P1y*pow(Q3x,2.0)*Q3y*pow(sp,4.0) - 189*P0y*Q1y*pow(Q2y,2.0)*pow(sp,2.0) + 420*P0y*Q1y*pow(Q2y,2.0)*pow(sp,3.0) - 189*P0y*Q1y*pow(Q3y,2.0)*pow(sp,2.0) +
+	189*P1y*Q1y*pow(Q2y,2.0)*pow(sp,2.0) - 210*P0y*Q1y*pow(Q2y,2.0)*pow(sp,4.0) + 420*P0y*Q1y*pow(Q3y,2.0)*pow(sp,3.0) - 42*P0y*Q2y*pow(Q3y,2.0)*pow(sp,2.0) + 21*P0y*pow(Q2y,2.0)*Q3y*pow(sp,2.0) -
+	420*P1y*Q1y*pow(Q2y,2.0)*pow(sp,3.0) + 189*P1y*Q1y*pow(Q3y,2.0)*pow(sp,2.0) - 168*pow(P0y,2.0)*Q2y*Q3y*pow(sp,2.0) - 210*P0y*Q1y*pow(Q3y,2.0)*pow(sp,4.0) + 98*P0y*Q2y*pow(Q3y,2.0)*pow(sp,3.0) -
+	238*P0y*pow(Q2y,2.0)*Q3y*pow(sp,3.0) + 210*P1y*Q1y*pow(Q2y,2.0)*pow(sp,4.0) - 420*P1y*Q1y*pow(Q3y,2.0)*pow(sp,3.0) + 42*P1y*Q2y*pow(Q3y,2.0)*pow(sp,2.0) - 21*P1y*pow(Q2y,2.0)*Q3y*pow(sp,2.0) +
+	154*pow(P0y,2.0)*Q2y*Q3y*pow(sp,3.0) + 336*pow(P1y,2.0)*Q2y*Q3y*pow(sp,2.0) - 42*P0y*Q2y*pow(Q3y,2.0)*pow(sp,4.0) + 147*P0y*pow(Q2y,2.0)*Q3y*pow(sp,4.0) + 210*P1y*Q1y*pow(Q3y,2.0)*pow(sp,4.0) -
+	98*P1y*Q2y*pow(Q3y,2.0)*pow(sp,3.0) + 238*P1y*pow(Q2y,2.0)*Q3y*pow(sp,3.0) - 42*pow(P0y,2.0)*Q2y*Q3y*pow(sp,4.0) - 462*pow(P1y,2.0)*Q2y*Q3y*pow(sp,3.0) + 42*P1y*Q2y*pow(Q3y,2.0)*pow(sp,4.0) -
+	147*P1y*pow(Q2y,2.0)*Q3y*pow(sp,4.0) + 168*pow(P1y,2.0)*Q2y*Q3y*pow(sp,4.0) - 98*P0x*P1x*Q2x*Q3x - 56*P0x*P3x*Q2x*Q3x + 56*P1x*P3x*Q2x*Q3x + 78*P0x*P0y*Q2x*Q2y - 78*P0x*P0y*Q2x*Q3y - 78*P0x*P0y*Q3x*Q2y -
+	39*P0x*P1y*Q2x*Q2y - 39*P1x*P0y*Q2x*Q2y - 176*P0x*P1x*Q2y*Q3y + 78*P0x*P0y*Q3x*Q3y + 39*P0x*P1y*Q2x*Q3y + 39*P0x*P1y*Q3x*Q2y + 39*P1x*P0y*Q2x*Q3y + 39*P1x*P0y*Q3x*Q2y - 176*P0y*P1y*Q2x*Q3x -
+	39*P0x*P1y*Q3x*Q3y - 12*P0x*P3y*Q2x*Q2y - 39*P1x*P0y*Q3x*Q3y - 12*P3x*P0y*Q2x*Q2y - 80*P0x*P3x*Q2y*Q3y + 12*P0x*P3y*Q2x*Q3y + 12*P0x*P3y*Q3x*Q2y + 12*P1x*P3y*Q2x*Q2y + 12*P3x*P0y*Q2x*Q3y +
+	12*P3x*P0y*Q3x*Q2y + 12*P3x*P1y*Q2x*Q2y - 80*P0y*P3y*Q2x*Q3x - 12*P0x*P3y*Q3x*Q3y + 80*P1x*P3x*Q2y*Q3y - 12*P1x*P3y*Q2x*Q3y - 12*P1x*P3y*Q3x*Q2y - 12*P3x*P0y*Q3x*Q3y - 12*P3x*P1y*Q2x*Q3y -
+	12*P3x*P1y*Q3x*Q2y + 80*P1y*P3y*Q2x*Q3x + 12*P1x*P3y*Q3x*Q3y + 12*P3x*P1y*Q3x*Q3y - 98*P0y*P1y*Q2y*Q3y - 56*P0y*P3y*Q2y*Q3y + 56*P1y*P3y*Q2y*Q3y - 42*P0x*Q1x*Q2x*Q3x + 42*P1x*Q1x*Q2x*Q3x - 27*P0x*Q2x*Q1y*Q2y -
+	27*P0y*Q1x*Q2x*Q2y - 96*P0x*Q1x*Q2y*Q3y + 27*P0x*Q2x*Q1y*Q3y + 27*P0x*Q3x*Q1y*Q2y + 27*P1x*Q2x*Q1y*Q2y + 27*P0y*Q1x*Q2x*Q3y + 27*P0y*Q1x*Q3x*Q2y - 96*P0y*Q2x*Q3x*Q1y + 27*P1y*Q1x*Q2x*Q2y - 27*P0x*Q3x*Q1y*Q3y +
+	96*P1x*Q1x*Q2y*Q3y - 27*P1x*Q2x*Q1y*Q3y - 27*P1x*Q3x*Q1y*Q2y - 27*P0y*Q1x*Q3x*Q3y - 27*P1y*Q1x*Q2x*Q3y - 27*P1y*Q1x*Q3x*Q2y + 96*P1y*Q2x*Q3x*Q1y + 27*P1x*Q3x*Q1y*Q3y + 27*P1y*Q1x*Q3x*Q3y - 42*P0y*Q1y*Q2y*Q3y +
+	42*P1y*Q1y*Q2y*Q3y - 168*P0x*P3x*Q2x*Q3x*sp + 168*P1x*P3x*Q2x*Q3x*sp - 36*P0x*P3y*Q2x*Q2y*sp - 36*P3x*P0y*Q2x*Q2y*sp - 240*P0x*P3x*Q2y*Q3y*sp + 36*P0x*P3y*Q2x*Q3y*sp + 36*P0x*P3y*Q3x*Q2y*sp + 36*P1x*P3y*Q2x*Q2y*sp +
+	36*P3x*P0y*Q2x*Q3y*sp + 36*P3x*P0y*Q3x*Q2y*sp + 36*P3x*P1y*Q2x*Q2y*sp - 240*P0y*P3y*Q2x*Q3x*sp - 36*P0x*P3y*Q3x*Q3y*sp + 240*P1x*P3x*Q2y*Q3y*sp - 36*P1x*P3y*Q2x*Q3y*sp - 36*P1x*P3y*Q3x*Q2y*sp - 36*P3x*P0y*Q3x*Q3y*sp -
+	36*P3x*P1y*Q2x*Q3y*sp - 36*P3x*P1y*Q3x*Q2y*sp + 240*P1y*P3y*Q2x*Q3x*sp + 36*P1x*P3y*Q3x*Q3y*sp + 36*P3x*P1y*Q3x*Q3y*sp - 168*P0y*P3y*Q2y*Q3y*sp + 168*P1y*P3y*Q2y*Q3y*sp + 84*P0x*Q1x*Q2x*Q3x*sp - 84*P1x*Q1x*Q2x*Q3x*sp -
+	18*P0x*Q2x*Q1y*Q2y*sp - 18*P0y*Q1x*Q2x*Q2y*sp + 48*P0x*Q1x*Q2y*Q3y*sp + 18*P0x*Q2x*Q1y*Q3y*sp + 18*P0x*Q3x*Q1y*Q2y*sp + 18*P1x*Q2x*Q1y*Q2y*sp + 18*P0y*Q1x*Q2x*Q3y*sp + 18*P0y*Q1x*Q3x*Q2y*sp + 48*P0y*Q2x*Q3x*Q1y*sp +
+	18*P1y*Q1x*Q2x*Q2y*sp + 138*P0x*Q2x*Q2y*Q3y*sp - 18*P0x*Q3x*Q1y*Q3y*sp - 48*P1x*Q1x*Q2y*Q3y*sp - 18*P1x*Q2x*Q1y*Q3y*sp - 18*P1x*Q3x*Q1y*Q2y*sp - 18*P0y*Q1x*Q3x*Q3y*sp + 138*P0y*Q2x*Q3x*Q2y*sp - 18*P1y*Q1x*Q2x*Q3y*sp -
+	18*P1y*Q1x*Q3x*Q2y*sp - 48*P1y*Q2x*Q3x*Q1y*sp + 54*P0x*Q3x*Q2y*Q3y*sp - 138*P1x*Q2x*Q2y*Q3y*sp + 18*P1x*Q3x*Q1y*Q3y*sp + 54*P0y*Q2x*Q3x*Q3y*sp + 18*P1y*Q1x*Q3x*Q3y*sp - 138*P1y*Q2x*Q3x*Q2y*sp - 54*P1x*Q3x*Q2y*Q3y*sp -
+	54*P1y*Q2x*Q3x*Q3y*sp + 84*P0y*Q1y*Q2y*Q3y*sp - 84*P1y*Q1y*Q2y*Q3y*sp - 168*P0x*P1x*Q2x*Q3x*pow(sp,2.0) + 308*P0x*P1x*Q2x*Q3x*pow(sp,3.0) - 504*P0x*P2x*Q2x*Q3x*pow(sp,2.0) - 126*P0x*P1x*Q2x*Q3x*pow(sp,4.0) +
+	924*P0x*P2x*Q2x*Q3x*pow(sp,3.0) + 672*P0x*P3x*Q2x*Q3x*pow(sp,2.0) + 504*P1x*P2x*Q2x*Q3x*pow(sp,2.0) - 420*P0x*P2x*Q2x*Q3x*pow(sp,4.0) - 420*P0x*P3x*Q2x*Q3x*pow(sp,3.0) - 924*P1x*P2x*Q2x*Q3x*pow(sp,3.0) -
+	672*P1x*P3x*Q2x*Q3x*pow(sp,2.0) + 420*P1x*P2x*Q2x*Q3x*pow(sp,4.0) + 420*P1x*P3x*Q2x*Q3x*pow(sp,3.0) - 42*P0x*P0y*Q2x*Q2y*pow(sp,3.0) - 168*P0x*P1x*Q2y*Q3y*pow(sp,2.0) + 18*P0x*P0y*Q2x*Q2y*pow(sp,4.0) +
+	42*P0x*P0y*Q2x*Q3y*pow(sp,3.0) + 42*P0x*P0y*Q3x*Q2y*pow(sp,3.0) - 42*P0x*P1y*Q2x*Q2y*pow(sp,3.0) - 42*P1x*P0y*Q2x*Q2y*pow(sp,3.0) - 168*P0y*P1y*Q2x*Q3x*pow(sp,2.0) + 224*P0x*P1x*Q2y*Q3y*pow(sp,3.0) -
+	504*P0x*P2x*Q2y*Q3y*pow(sp,2.0) - 18*P0x*P0y*Q2x*Q3y*pow(sp,4.0) - 18*P0x*P0y*Q3x*Q2y*pow(sp,4.0) - 42*P0x*P0y*Q3x*Q3y*pow(sp,3.0) + 27*P0x*P1y*Q2x*Q2y*pow(sp,4.0) + 42*P0x*P1y*Q2x*Q3y*pow(sp,3.0) +
+	42*P0x*P1y*Q3x*Q2y*pow(sp,3.0) - 126*P0x*P2y*Q2x*Q2y*pow(sp,3.0) - 72*P0x*P3y*Q2x*Q2y*pow(sp,2.0) + 27*P1x*P0y*Q2x*Q2y*pow(sp,4.0) + 42*P1x*P0y*Q2x*Q3y*pow(sp,3.0) + 42*P1x*P0y*Q3x*Q2y*pow(sp,3.0) +
+	126*P1x*P1y*Q2x*Q2y*pow(sp,3.0) - 126*P2x*P0y*Q2x*Q2y*pow(sp,3.0) - 72*P3x*P0y*Q2x*Q2y*pow(sp,2.0) + 224*P0y*P1y*Q2x*Q3x*pow(sp,3.0) - 504*P0y*P2y*Q2x*Q3x*pow(sp,2.0) - 72*P0x*P1x*Q2y*Q3y*pow(sp,4.0) +
+	672*P0x*P2x*Q2y*Q3y*pow(sp,3.0) + 528*P0x*P3x*Q2y*Q3y*pow(sp,2.0) + 18*P0x*P0y*Q3x*Q3y*pow(sp,4.0) - 27*P0x*P1y*Q2x*Q3y*pow(sp,4.0) - 27*P0x*P1y*Q3x*Q2y*pow(sp,4.0) - 42*P0x*P1y*Q3x*Q3y*pow(sp,3.0) +
+	90*P0x*P2y*Q2x*Q2y*pow(sp,4.0) + 126*P0x*P2y*Q2x*Q3y*pow(sp,3.0) + 126*P0x*P2y*Q3x*Q2y*pow(sp,3.0) + 90*P0x*P3y*Q2x*Q2y*pow(sp,3.0) + 72*P0x*P3y*Q2x*Q3y*pow(sp,2.0) + 72*P0x*P3y*Q3x*Q2y*pow(sp,2.0) +
+	504*P1x*P2x*Q2y*Q3y*pow(sp,2.0) - 27*P1x*P0y*Q2x*Q3y*pow(sp,4.0) - 27*P1x*P0y*Q3x*Q2y*pow(sp,4.0) - 42*P1x*P0y*Q3x*Q3y*pow(sp,3.0) - 72*P1x*P1y*Q2x*Q2y*pow(sp,4.0) - 126*P1x*P1y*Q2x*Q3y*pow(sp,3.0) -
+	126*P1x*P1y*Q3x*Q2y*pow(sp,3.0) + 126*P1x*P2y*Q2x*Q2y*pow(sp,3.0) + 72*P1x*P3y*Q2x*Q2y*pow(sp,2.0) + 90*P2x*P0y*Q2x*Q2y*pow(sp,4.0) + 126*P2x*P0y*Q2x*Q3y*pow(sp,3.0) + 126*P2x*P0y*Q3x*Q2y*pow(sp,3.0) +
+	126*P2x*P1y*Q2x*Q2y*pow(sp,3.0) + 90*P3x*P0y*Q2x*Q2y*pow(sp,3.0) + 72*P3x*P0y*Q2x*Q3y*pow(sp,2.0) + 72*P3x*P0y*Q3x*Q2y*pow(sp,2.0) + 72*P3x*P1y*Q2x*Q2y*pow(sp,2.0) - 72*P0y*P1y*Q2x*Q3x*pow(sp,4.0) +
+	672*P0y*P2y*Q2x*Q3x*pow(sp,3.0) + 528*P0y*P3y*Q2x*Q3x*pow(sp,2.0) + 504*P1y*P2y*Q2x*Q3x*pow(sp,2.0) - 240*P0x*P2x*Q2y*Q3y*pow(sp,4.0) - 240*P0x*P3x*Q2y*Q3y*pow(sp,3.0) + 27*P0x*P1y*Q3x*Q3y*pow(sp,4.0) -
+	90*P0x*P2y*Q2x*Q3y*pow(sp,4.0) - 90*P0x*P2y*Q3x*Q2y*pow(sp,4.0) - 126*P0x*P2y*Q3x*Q3y*pow(sp,3.0) - 90*P0x*P3y*Q2x*Q3y*pow(sp,3.0) - 90*P0x*P3y*Q3x*Q2y*pow(sp,3.0) - 72*P0x*P3y*Q3x*Q3y*pow(sp,2.0) -
+	672*P1x*P2x*Q2y*Q3y*pow(sp,3.0) - 528*P1x*P3x*Q2y*Q3y*pow(sp,2.0) + 27*P1x*P0y*Q3x*Q3y*pow(sp,4.0) + 72*P1x*P1y*Q2x*Q3y*pow(sp,4.0) + 72*P1x*P1y*Q3x*Q2y*pow(sp,4.0) + 126*P1x*P1y*Q3x*Q3y*pow(sp,3.0) -
+	90*P1x*P2y*Q2x*Q2y*pow(sp,4.0) - 126*P1x*P2y*Q2x*Q3y*pow(sp,3.0) - 126*P1x*P2y*Q3x*Q2y*pow(sp,3.0) - 90*P1x*P3y*Q2x*Q2y*pow(sp,3.0) - 72*P1x*P3y*Q2x*Q3y*pow(sp,2.0) - 72*P1x*P3y*Q3x*Q2y*pow(sp,2.0) -
+	90*P2x*P0y*Q2x*Q3y*pow(sp,4.0) - 90*P2x*P0y*Q3x*Q2y*pow(sp,4.0) - 126*P2x*P0y*Q3x*Q3y*pow(sp,3.0) - 90*P2x*P1y*Q2x*Q2y*pow(sp,4.0) - 126*P2x*P1y*Q2x*Q3y*pow(sp,3.0) - 126*P2x*P1y*Q3x*Q2y*pow(sp,3.0) -
+	90*P3x*P0y*Q2x*Q3y*pow(sp,3.0) - 90*P3x*P0y*Q3x*Q2y*pow(sp,3.0) - 72*P3x*P0y*Q3x*Q3y*pow(sp,2.0) - 90*P3x*P1y*Q2x*Q2y*pow(sp,3.0) - 72*P3x*P1y*Q2x*Q3y*pow(sp,2.0) - 72*P3x*P1y*Q3x*Q2y*pow(sp,2.0) -
+	240*P0y*P2y*Q2x*Q3x*pow(sp,4.0) - 240*P0y*P3y*Q2x*Q3x*pow(sp,3.0) - 672*P1y*P2y*Q2x*Q3x*pow(sp,3.0) - 528*P1y*P3y*Q2x*Q3x*pow(sp,2.0) + 90*P0x*P2y*Q3x*Q3y*pow(sp,4.0) + 90*P0x*P3y*Q3x*Q3y*pow(sp,3.0) +
+	240*P1x*P2x*Q2y*Q3y*pow(sp,4.0) + 240*P1x*P3x*Q2y*Q3y*pow(sp,3.0) - 72*P1x*P1y*Q3x*Q3y*pow(sp,4.0) + 90*P1x*P2y*Q2x*Q3y*pow(sp,4.0) + 90*P1x*P2y*Q3x*Q2y*pow(sp,4.0) + 126*P1x*P2y*Q3x*Q3y*pow(sp,3.0) +
+	90*P1x*P3y*Q2x*Q3y*pow(sp,3.0) + 90*P1x*P3y*Q3x*Q2y*pow(sp,3.0) + 72*P1x*P3y*Q3x*Q3y*pow(sp,2.0) + 90*P2x*P0y*Q3x*Q3y*pow(sp,4.0) + 90*P2x*P1y*Q2x*Q3y*pow(sp,4.0) + 90*P2x*P1y*Q3x*Q2y*pow(sp,4.0) +
+	126*P2x*P1y*Q3x*Q3y*pow(sp,3.0) + 90*P3x*P0y*Q3x*Q3y*pow(sp,3.0) + 90*P3x*P1y*Q2x*Q3y*pow(sp,3.0) + 90*P3x*P1y*Q3x*Q2y*pow(sp,3.0) + 72*P3x*P1y*Q3x*Q3y*pow(sp,2.0) + 240*P1y*P2y*Q2x*Q3x*pow(sp,4.0) +
+	240*P1y*P3y*Q2x*Q3x*pow(sp,3.0) - 90*P1x*P2y*Q3x*Q3y*pow(sp,4.0) - 90*P1x*P3y*Q3x*Q3y*pow(sp,3.0) - 90*P2x*P1y*Q3x*Q3y*pow(sp,4.0) - 90*P3x*P1y*Q3x*Q3y*pow(sp,3.0) - 168*P0y*P1y*Q2y*Q3y*pow(sp,2.0) +
+	308*P0y*P1y*Q2y*Q3y*pow(sp,3.0) - 504*P0y*P2y*Q2y*Q3y*pow(sp,2.0) - 126*P0y*P1y*Q2y*Q3y*pow(sp,4.0) + 924*P0y*P2y*Q2y*Q3y*pow(sp,3.0) + 672*P0y*P3y*Q2y*Q3y*pow(sp,2.0) + 504*P1y*P2y*Q2y*Q3y*pow(sp,2.0) -
+	420*P0y*P2y*Q2y*Q3y*pow(sp,4.0) - 420*P0y*P3y*Q2y*Q3y*pow(sp,3.0) - 924*P1y*P2y*Q2y*Q3y*pow(sp,3.0) - 672*P1y*P3y*Q2y*Q3y*pow(sp,2.0) + 420*P1y*P2y*Q2y*Q3y*pow(sp,4.0) + 420*P1y*P3y*Q2y*Q3y*pow(sp,3.0) +
+	378*P0x*Q1x*Q2x*Q3x*pow(sp,2.0) - 840*P0x*Q1x*Q2x*Q3x*pow(sp,3.0) - 378*P1x*Q1x*Q2x*Q3x*pow(sp,2.0) + 420*P0x*Q1x*Q2x*Q3x*pow(sp,4.0) + 840*P1x*Q1x*Q2x*Q3x*pow(sp,3.0) - 420*P1x*Q1x*Q2x*Q3x*pow(sp,4.0) +
+	27*P0x*Q2x*Q1y*Q2y*pow(sp,2.0) + 27*P0y*Q1x*Q2x*Q2y*pow(sp,2.0) + 432*P0x*Q1x*Q2y*Q3y*pow(sp,2.0) + 108*P0x*Q2x*Q1y*Q2y*pow(sp,3.0) - 27*P0x*Q2x*Q1y*Q3y*pow(sp,2.0) - 27*P0x*Q3x*Q1y*Q2y*pow(sp,2.0) -
+	27*P1x*Q2x*Q1y*Q2y*pow(sp,2.0) + 108*P0y*Q1x*Q2x*Q2y*pow(sp,3.0) - 27*P0y*Q1x*Q2x*Q3y*pow(sp,2.0) - 27*P0y*Q1x*Q3x*Q2y*pow(sp,2.0) + 432*P0y*Q2x*Q3x*Q1y*pow(sp,2.0) - 27*P1y*Q1x*Q2x*Q2y*pow(sp,2.0) -
+	624*P0x*Q1x*Q2y*Q3y*pow(sp,3.0) - 90*P0x*Q2x*Q1y*Q2y*pow(sp,4.0) - 108*P0x*Q2x*Q1y*Q3y*pow(sp,3.0) + 45*P0x*Q2x*Q2y*Q3y*pow(sp,2.0) - 108*P0x*Q3x*Q1y*Q2y*pow(sp,3.0) + 27*P0x*Q3x*Q1y*Q3y*pow(sp,2.0) -
+	432*P1x*Q1x*Q2y*Q3y*pow(sp,2.0) - 108*P1x*Q2x*Q1y*Q2y*pow(sp,3.0) + 27*P1x*Q2x*Q1y*Q3y*pow(sp,2.0) + 27*P1x*Q3x*Q1y*Q2y*pow(sp,2.0) - 90*P0y*Q1x*Q2x*Q2y*pow(sp,4.0) - 108*P0y*Q1x*Q2x*Q3y*pow(sp,3.0) -
+	108*P0y*Q1x*Q3x*Q2y*pow(sp,3.0) + 27*P0y*Q1x*Q3x*Q3y*pow(sp,2.0) - 624*P0y*Q2x*Q3x*Q1y*pow(sp,3.0) + 45*P0y*Q2x*Q3x*Q2y*pow(sp,2.0) - 108*P1y*Q1x*Q2x*Q2y*pow(sp,3.0) + 27*P1y*Q1x*Q2x*Q3y*pow(sp,2.0) +
+	27*P1y*Q1x*Q3x*Q2y*pow(sp,2.0) - 432*P1y*Q2x*Q3x*Q1y*pow(sp,2.0) + 240*P0x*Q1x*Q2y*Q3y*pow(sp,4.0) + 90*P0x*Q2x*Q1y*Q3y*pow(sp,4.0) - 240*P0x*Q2x*Q2y*Q3y*pow(sp,3.0) + 90*P0x*Q3x*Q1y*Q2y*pow(sp,4.0) +
+	108*P0x*Q3x*Q1y*Q3y*pow(sp,3.0) + 3*P0x*Q3x*Q2y*Q3y*pow(sp,2.0) + 624*P1x*Q1x*Q2y*Q3y*pow(sp,3.0) + 90*P1x*Q2x*Q1y*Q2y*pow(sp,4.0) + 108*P1x*Q2x*Q1y*Q3y*pow(sp,3.0) - 45*P1x*Q2x*Q2y*Q3y*pow(sp,2.0) +
+	108*P1x*Q3x*Q1y*Q2y*pow(sp,3.0) - 27*P1x*Q3x*Q1y*Q3y*pow(sp,2.0) + 90*P0y*Q1x*Q2x*Q3y*pow(sp,4.0) + 90*P0y*Q1x*Q3x*Q2y*pow(sp,4.0) + 108*P0y*Q1x*Q3x*Q3y*pow(sp,3.0) + 240*P0y*Q2x*Q3x*Q1y*pow(sp,4.0) -
+	240*P0y*Q2x*Q3x*Q2y*pow(sp,3.0) + 3*P0y*Q2x*Q3x*Q3y*pow(sp,2.0) + 90*P1y*Q1x*Q2x*Q2y*pow(sp,4.0) + 108*P1y*Q1x*Q2x*Q3y*pow(sp,3.0) + 108*P1y*Q1x*Q3x*Q2y*pow(sp,3.0) - 27*P1y*Q1x*Q3x*Q3y*pow(sp,2.0) +
+	624*P1y*Q2x*Q3x*Q1y*pow(sp,3.0) - 45*P1y*Q2x*Q3x*Q2y*pow(sp,2.0) + 123*P0x*Q2x*Q2y*Q3y*pow(sp,4.0) - 90*P0x*Q3x*Q1y*Q3y*pow(sp,4.0) - 16*P0x*Q3x*Q2y*Q3y*pow(sp,3.0) - 240*P1x*Q1x*Q2y*Q3y*pow(sp,4.0) -
+	90*P1x*Q2x*Q1y*Q3y*pow(sp,4.0) + 240*P1x*Q2x*Q2y*Q3y*pow(sp,3.0) - 90*P1x*Q3x*Q1y*Q2y*pow(sp,4.0) - 108*P1x*Q3x*Q1y*Q3y*pow(sp,3.0) - 3*P1x*Q3x*Q2y*Q3y*pow(sp,2.0) - 90*P0y*Q1x*Q3x*Q3y*pow(sp,4.0) +
+	123*P0y*Q2x*Q3x*Q2y*pow(sp,4.0) - 16*P0y*Q2x*Q3x*Q3y*pow(sp,3.0) - 90*P1y*Q1x*Q2x*Q3y*pow(sp,4.0) - 90*P1y*Q1x*Q3x*Q2y*pow(sp,4.0) - 108*P1y*Q1x*Q3x*Q3y*pow(sp,3.0) - 240*P1y*Q2x*Q3x*Q1y*pow(sp,4.0) +
+	240*P1y*Q2x*Q3x*Q2y*pow(sp,3.0) - 3*P1y*Q2x*Q3x*Q3y*pow(sp,2.0) - 3*P0x*Q3x*Q2y*Q3y*pow(sp,4.0) - 123*P1x*Q2x*Q2y*Q3y*pow(sp,4.0) + 90*P1x*Q3x*Q1y*Q3y*pow(sp,4.0) + 16*P1x*Q3x*Q2y*Q3y*pow(sp,3.0) -
+	3*P0y*Q2x*Q3x*Q3y*pow(sp,4.0) + 90*P1y*Q1x*Q3x*Q3y*pow(sp,4.0) - 123*P1y*Q2x*Q3x*Q2y*pow(sp,4.0) + 16*P1y*Q2x*Q3x*Q3y*pow(sp,3.0) + 3*P1x*Q3x*Q2y*Q3y*pow(sp,4.0) + 3*P1y*Q2x*Q3x*Q3y*pow(sp,4.0) +
+	378*P0y*Q1y*Q2y*Q3y*pow(sp,2.0) - 840*P0y*Q1y*Q2y*Q3y*pow(sp,3.0) - 378*P1y*Q1y*Q2y*Q3y*pow(sp,2.0) + 420*P0y*Q1y*Q2y*Q3y*pow(sp,4.0) + 840*P1y*Q1y*Q2y*Q3y*pow(sp,3.0) -
+	420*P1y*Q1y*Q2y*Q3y*pow(sp,4.0))/(3*(7*pow(P0x,2.0)*pow(Q2x,2.0) + 7*pow(P0x,2.0)*pow(Q3x,2.0) + 7*pow(P1x,2.0)*pow(Q2x,2.0) + 7*pow(P1x,2.0)*pow(Q3x,2.0) + 16*pow(P0x,2.0)*pow(Q2y,2.0) +
+	16*pow(P0y,2.0)*pow(Q2x,2.0) + 16*pow(P0x,2.0)*pow(Q3y,2.0) + 16*pow(P1x,2.0)*pow(Q2y,2.0) + 16*pow(P0y,2.0)*pow(Q3x,2.0) + 16*pow(P1y,2.0)*pow(Q2x,2.0) + 16*pow(P1x,2.0)*pow(Q3y,2.0) +
+	16*pow(P1y,2.0)*pow(Q3x,2.0) + 7*pow(P0y,2.0)*pow(Q2y,2.0) + 7*pow(P0y,2.0)*pow(Q3y,2.0) + 7*pow(P1y,2.0)*pow(Q2y,2.0) + 7*pow(P1y,2.0)*pow(Q3y,2.0) - 14*P0x*P1x*pow(Q2x,2.0) - 14*P0x*P1x*pow(Q3x,2.0) -
+	32*P0x*P1x*pow(Q2y,2.0) - 32*P0x*P1x*pow(Q3y,2.0) - 32*P0y*P1y*pow(Q2x,2.0) - 32*P0y*P1y*pow(Q3x,2.0) - 14*P0y*P1y*pow(Q2y,2.0) - 14*P0y*P1y*pow(Q3y,2.0) - 14*pow(P0x,2.0)*Q2x*Q3x - 14*pow(P1x,2.0)*Q2x*Q3x -
+	32*pow(P0y,2.0)*Q2x*Q3x - 32*pow(P1y,2.0)*Q2x*Q3x - 32*pow(P0x,2.0)*Q2y*Q3y - 32*pow(P1x,2.0)*Q2y*Q3y - 14*pow(P0y,2.0)*Q2y*Q3y - 14*pow(P1y,2.0)*Q2y*Q3y + 28*P0x*P1x*Q2x*Q3x - 18*P0x*P0y*Q2x*Q2y + 18*P0x*P0y*Q2x*Q3y +
+	18*P0x*P0y*Q3x*Q2y + 18*P0x*P1y*Q2x*Q2y + 18*P1x*P0y*Q2x*Q2y + 64*P0x*P1x*Q2y*Q3y - 18*P0x*P0y*Q3x*Q3y - 18*P0x*P1y*Q2x*Q3y - 18*P0x*P1y*Q3x*Q2y - 18*P1x*P0y*Q2x*Q3y - 18*P1x*P0y*Q3x*Q2y - 18*P1x*P1y*Q2x*Q2y +
+	64*P0y*P1y*Q2x*Q3x + 18*P0x*P1y*Q3x*Q3y + 18*P1x*P0y*Q3x*Q3y + 18*P1x*P1y*Q2x*Q3y + 18*P1x*P1y*Q3x*Q2y - 18*P1x*P1y*Q3x*Q3y + 28*P0y*P1y*Q2y*Q3y));
+	
+	out_qfactor = (14*pow(P0x,3.0)*Q2x - 14*pow(P0x,3.0)*Q3x + 14*pow(P0y,3.0)*Q2y - 14*pow(P0y,3.0)*Q3y + 21*pow(P0x,2.0)*pow(Q2x,2.0) + 21*pow(P0x,2.0)*pow(Q3x,2.0) + 21*pow(P1x,2.0)*pow(Q2x,2.0) + 21*pow(P1x,2.0)*pow(Q3x,2.0) +
+	48*pow(P0x,2.0)*pow(Q2y,2.0) + 48*pow(P0y,2.0)*pow(Q2x,2.0) + 48*pow(P0x,2.0)*pow(Q3y,2.0) + 48*pow(P1x,2.0)*pow(Q2y,2.0) + 48*pow(P0y,2.0)*pow(Q3x,2.0) + 48*pow(P1y,2.0)*pow(Q2x,2.0) + 48*pow(P1x,2.0)*pow(Q3y,2.0) +
+	48*pow(P1y,2.0)*pow(Q3x,2.0) + 21*pow(P0y,2.0)*pow(Q2y,2.0) + 21*pow(P0y,2.0)*pow(Q3y,2.0) + 21*pow(P1y,2.0)*pow(Q2y,2.0) + 21*pow(P1y,2.0)*pow(Q3y,2.0) + 21*pow(P0x,2.0)*pow(Q2x,2.0)*sp + 21*pow(P0x,2.0)*pow(Q3x,2.0)*sp -
+	63*pow(P0x,3.0)*Q2x*pow(sp,2.0) + 21*pow(P1x,2.0)*pow(Q2x,2.0)*sp + 70*pow(P0x,3.0)*Q2x*pow(sp,3.0) + 63*pow(P0x,3.0)*Q3x*pow(sp,2.0) + 21*pow(P1x,2.0)*pow(Q3x,2.0)*sp - 126*pow(P1x,3.0)*Q2x*pow(sp,2.0) -
+	21*pow(P0x,3.0)*Q2x*pow(sp,4.0) - 70*pow(P0x,3.0)*Q3x*pow(sp,3.0) + 210*pow(P1x,3.0)*Q2x*pow(sp,3.0) + 126*pow(P1x,3.0)*Q3x*pow(sp,2.0) + 21*pow(P0x,3.0)*Q3x*pow(sp,4.0) - 84*pow(P1x,3.0)*Q2x*pow(sp,4.0) -
+	210*pow(P1x,3.0)*Q3x*pow(sp,3.0) + 84*pow(P1x,3.0)*Q3x*pow(sp,4.0) - 24*pow(P0x,2.0)*pow(Q2y,2.0)*sp - 24*pow(P0y,2.0)*pow(Q2x,2.0)*sp + 48*pow(P0x,2.0)*pow(Q3y,2.0)*sp - 24*pow(P1x,2.0)*pow(Q2y,2.0)*sp +
+	48*pow(P0y,2.0)*pow(Q3x,2.0)*sp - 24*pow(P1y,2.0)*pow(Q2x,2.0)*sp + 48*pow(P1x,2.0)*pow(Q3y,2.0)*sp + 48*pow(P1y,2.0)*pow(Q3x,2.0)*sp + 21*pow(P0y,2.0)*pow(Q2y,2.0)*sp + 21*pow(P0y,2.0)*pow(Q3y,2.0)*sp -
+	63*pow(P0y,3.0)*Q2y*pow(sp,2.0) + 21*pow(P1y,2.0)*pow(Q2y,2.0)*sp + 70*pow(P0y,3.0)*Q2y*pow(sp,3.0) + 63*pow(P0y,3.0)*Q3y*pow(sp,2.0) + 21*pow(P1y,2.0)*pow(Q3y,2.0)*sp - 126*pow(P1y,3.0)*Q2y*pow(sp,2.0) -
+	21*pow(P0y,3.0)*Q2y*pow(sp,4.0) - 70*pow(P0y,3.0)*Q3y*pow(sp,3.0) + 210*pow(P1y,3.0)*Q2y*pow(sp,3.0) + 126*pow(P1y,3.0)*Q3y*pow(sp,2.0) + 21*pow(P0y,3.0)*Q3y*pow(sp,4.0) - 84*pow(P1y,3.0)*Q2y*pow(sp,4.0) -
+	210*pow(P1y,3.0)*Q3y*pow(sp,3.0) + 84*pow(P1y,3.0)*Q3y*pow(sp,4.0) - 21*pow(P0x,2.0)*pow(Q2x,2.0)*pow(sp,2.0) - 105*pow(P0x,2.0)*pow(Q2x,2.0)*pow(sp,3.0) + 21*pow(P0x,2.0)*pow(Q3x,2.0)*pow(sp,2.0) -
+	21*pow(P1x,2.0)*pow(Q2x,2.0)*pow(sp,2.0) + 84*pow(P0x,2.0)*pow(Q2x,2.0)*pow(sp,4.0) + 7*pow(P0x,2.0)*pow(Q3x,2.0)*pow(sp,3.0) - 105*pow(P1x,2.0)*pow(Q2x,2.0)*pow(sp,3.0) + 21*pow(P1x,2.0)*pow(Q3x,2.0)*pow(sp,2.0) -
+	21*pow(P0x,2.0)*pow(Q3x,2.0)*pow(sp,4.0) + 84*pow(P1x,2.0)*pow(Q2x,2.0)*pow(sp,4.0) + 7*pow(P1x,2.0)*pow(Q3x,2.0)*pow(sp,3.0) - 21*pow(P1x,2.0)*pow(Q3x,2.0)*pow(sp,4.0) - 48*pow(P0x,2.0)*pow(Q2y,2.0)*pow(sp,2.0) -
+	48*pow(P0y,2.0)*pow(Q2x,2.0)*pow(sp,2.0) - 24*pow(P0x,2.0)*pow(Q2y,2.0)*pow(sp,3.0) + 12*pow(P0x,2.0)*pow(Q3y,2.0)*pow(sp,2.0) - 48*pow(P1x,2.0)*pow(Q2y,2.0)*pow(sp,2.0) - 24*pow(P0y,2.0)*pow(Q2x,2.0)*pow(sp,3.0) +
+	12*pow(P0y,2.0)*pow(Q3x,2.0)*pow(sp,2.0) - 48*pow(P1y,2.0)*pow(Q2x,2.0)*pow(sp,2.0) + 48*pow(P0x,2.0)*pow(Q2y,2.0)*pow(sp,4.0) - 8*pow(P0x,2.0)*pow(Q3y,2.0)*pow(sp,3.0) - 24*pow(P1x,2.0)*pow(Q2y,2.0)*pow(sp,3.0) +
+	12*pow(P1x,2.0)*pow(Q3y,2.0)*pow(sp,2.0) + 48*pow(P0y,2.0)*pow(Q2x,2.0)*pow(sp,4.0) - 8*pow(P0y,2.0)*pow(Q3x,2.0)*pow(sp,3.0) - 24*pow(P1y,2.0)*pow(Q2x,2.0)*pow(sp,3.0) + 12*pow(P1y,2.0)*pow(Q3x,2.0)*pow(sp,2.0) -
+	12*pow(P0x,2.0)*pow(Q3y,2.0)*pow(sp,4.0) + 48*pow(P1x,2.0)*pow(Q2y,2.0)*pow(sp,4.0) - 8*pow(P1x,2.0)*pow(Q3y,2.0)*pow(sp,3.0) - 12*pow(P0y,2.0)*pow(Q3x,2.0)*pow(sp,4.0) + 48*pow(P1y,2.0)*pow(Q2x,2.0)*pow(sp,4.0) -
+	8*pow(P1y,2.0)*pow(Q3x,2.0)*pow(sp,3.0) - 12*pow(P1x,2.0)*pow(Q3y,2.0)*pow(sp,4.0) - 12*pow(P1y,2.0)*pow(Q3x,2.0)*pow(sp,4.0) - 21*pow(P0y,2.0)*pow(Q2y,2.0)*pow(sp,2.0) - 105*pow(P0y,2.0)*pow(Q2y,2.0)*pow(sp,3.0) +
+	21*pow(P0y,2.0)*pow(Q3y,2.0)*pow(sp,2.0) - 21*pow(P1y,2.0)*pow(Q2y,2.0)*pow(sp,2.0) + 84*pow(P0y,2.0)*pow(Q2y,2.0)*pow(sp,4.0) + 7*pow(P0y,2.0)*pow(Q3y,2.0)*pow(sp,3.0) - 105*pow(P1y,2.0)*pow(Q2y,2.0)*pow(sp,3.0) +
+	21*pow(P1y,2.0)*pow(Q3y,2.0)*pow(sp,2.0) - 21*pow(P0y,2.0)*pow(Q3y,2.0)*pow(sp,4.0) + 84*pow(P1y,2.0)*pow(Q2y,2.0)*pow(sp,4.0) + 7*pow(P1y,2.0)*pow(Q3y,2.0)*pow(sp,3.0) - 21*pow(P1y,2.0)*pow(Q3y,2.0)*pow(sp,4.0) -
+	42*P0x*P1x*pow(Q2x,2.0) + 14*P0x*pow(P1x,2.0)*Q2x - 28*pow(P0x,2.0)*P1x*Q2x - 42*P0x*P1x*pow(Q3x,2.0) - 14*P0x*pow(P1x,2.0)*Q3x + 28*pow(P0x,2.0)*P1x*Q3x - 14*pow(P0x,2.0)*P3x*Q2x + 14*pow(P0x,2.0)*P3x*Q3x -
+	14*pow(P1x,2.0)*P3x*Q2x + 14*pow(P1x,2.0)*P3x*Q3x + 14*P0x*pow(P0y,2.0)*Q2x - 96*P0x*P1x*pow(Q2y,2.0) - 14*P0x*pow(P0y,2.0)*Q3x - 52*P0x*pow(P1y,2.0)*Q2x - 66*P1x*pow(P0y,2.0)*Q2x - 96*P0x*P1x*pow(Q3y,2.0) +
+	52*P0x*pow(P1y,2.0)*Q3x + 66*P1x*pow(P0y,2.0)*Q3x + 16*P3x*pow(P0y,2.0)*Q2x - 16*P3x*pow(P0y,2.0)*Q3x + 16*P3x*pow(P1y,2.0)*Q2x - 16*P3x*pow(P1y,2.0)*Q3x + 14*pow(P0x,2.0)*P0y*Q2y - 96*P0y*P1y*pow(Q2x,2.0) -
+	14*pow(P0x,2.0)*P0y*Q3y - 66*pow(P0x,2.0)*P1y*Q2y - 52*pow(P1x,2.0)*P0y*Q2y - 96*P0y*P1y*pow(Q3x,2.0) + 66*pow(P0x,2.0)*P1y*Q3y + 52*pow(P1x,2.0)*P0y*Q3y + 16*pow(P0x,2.0)*P3y*Q2y - 16*pow(P0x,2.0)*P3y*Q3y +
+	16*pow(P1x,2.0)*P3y*Q2y - 16*pow(P1x,2.0)*P3y*Q3y - 42*P0y*P1y*pow(Q2y,2.0) + 14*P0y*pow(P1y,2.0)*Q2y - 28*pow(P0y,2.0)*P1y*Q2y - 42*P0y*P1y*pow(Q3y,2.0) - 14*P0y*pow(P1y,2.0)*Q3y + 28*pow(P0y,2.0)*P1y*Q3y -
+	14*pow(P0y,2.0)*P3y*Q2y + 14*pow(P0y,2.0)*P3y*Q3y - 14*pow(P1y,2.0)*P3y*Q2y + 14*pow(P1y,2.0)*P3y*Q3y - 42*pow(P0x,2.0)*Q2x*Q3x - 42*pow(P1x,2.0)*Q2x*Q3x + 36*pow(P0y,2.0)*Q1x*Q2x - 36*pow(P0y,2.0)*Q1x*Q3x +
+	36*pow(P1y,2.0)*Q1x*Q2x - 96*pow(P0y,2.0)*Q2x*Q3x - 36*pow(P1y,2.0)*Q1x*Q3x - 96*pow(P1y,2.0)*Q2x*Q3x + 36*pow(P0x,2.0)*Q1y*Q2y - 36*pow(P0x,2.0)*Q1y*Q3y + 36*pow(P1x,2.0)*Q1y*Q2y - 96*pow(P0x,2.0)*Q2y*Q3y -
+	36*pow(P1x,2.0)*Q1y*Q3y - 96*pow(P1x,2.0)*Q2y*Q3y - 42*pow(P0y,2.0)*Q2y*Q3y - 42*pow(P1y,2.0)*Q2y*Q3y - 42*P0x*P1x*pow(Q2x,2.0)*sp - 42*P0x*P1x*pow(Q3x,2.0)*sp - 42*pow(P0x,2.0)*P3x*Q2x*sp + 42*pow(P0x,2.0)*P3x*Q3x*sp -
+	42*pow(P1x,2.0)*P3x*Q2x*sp + 42*pow(P1x,2.0)*P3x*Q3x*sp + 48*P0x*P1x*pow(Q2y,2.0)*sp - 96*P0x*P1x*pow(Q3y,2.0)*sp + 48*P3x*pow(P0y,2.0)*Q2x*sp - 48*P3x*pow(P0y,2.0)*Q3x*sp + 48*P3x*pow(P1y,2.0)*Q2x*sp -
+	48*P3x*pow(P1y,2.0)*Q3x*sp + 48*P0y*P1y*pow(Q2x,2.0)*sp - 96*P0y*P1y*pow(Q3x,2.0)*sp + 48*pow(P0x,2.0)*P3y*Q2y*sp - 48*pow(P0x,2.0)*P3y*Q3y*sp + 48*pow(P1x,2.0)*P3y*Q2y*sp - 48*pow(P1x,2.0)*P3y*Q3y*sp -
+	42*P0y*P1y*pow(Q2y,2.0)*sp - 42*P0y*P1y*pow(Q3y,2.0)*sp - 42*pow(P0y,2.0)*P3y*Q2y*sp + 42*pow(P0y,2.0)*P3y*Q3y*sp - 42*pow(P1y,2.0)*P3y*Q2y*sp + 42*pow(P1y,2.0)*P3y*Q3y*sp + 42*pow(P0x,2.0)*Q1x*Q2x*sp -
+	42*pow(P0x,2.0)*Q1x*Q3x*sp + 42*pow(P1x,2.0)*Q1x*Q2x*sp - 42*pow(P0x,2.0)*Q2x*Q3x*sp - 42*pow(P1x,2.0)*Q1x*Q3x*sp - 42*pow(P1x,2.0)*Q2x*Q3x*sp + 24*pow(P0y,2.0)*Q1x*Q2x*sp - 24*pow(P0y,2.0)*Q1x*Q3x*sp +
+	24*pow(P1y,2.0)*Q1x*Q2x*sp - 24*pow(P0y,2.0)*Q2x*Q3x*sp - 24*pow(P1y,2.0)*Q1x*Q3x*sp - 24*pow(P1y,2.0)*Q2x*Q3x*sp + 24*pow(P0x,2.0)*Q1y*Q2y*sp - 24*pow(P0x,2.0)*Q1y*Q3y*sp + 24*pow(P1x,2.0)*Q1y*Q2y*sp -
+	24*pow(P0x,2.0)*Q2y*Q3y*sp - 24*pow(P1x,2.0)*Q1y*Q3y*sp - 24*pow(P1x,2.0)*Q2y*Q3y*sp + 42*pow(P0y,2.0)*Q1y*Q2y*sp - 42*pow(P0y,2.0)*Q1y*Q3y*sp + 42*pow(P1y,2.0)*Q1y*Q2y*sp - 42*pow(P0y,2.0)*Q2y*Q3y*sp -
+	42*pow(P1y,2.0)*Q1y*Q3y*sp - 42*pow(P1y,2.0)*Q2y*Q3y*sp + 42*P0x*P1x*pow(Q2x,2.0)*pow(sp,2.0) + 189*P0x*pow(P1x,2.0)*Q2x*pow(sp,2.0) + 210*P0x*P1x*pow(Q2x,2.0)*pow(sp,3.0) - 42*P0x*P1x*pow(Q3x,2.0)*pow(sp,2.0) -
+	350*P0x*pow(P1x,2.0)*Q2x*pow(sp,3.0) - 189*P0x*pow(P1x,2.0)*Q3x*pow(sp,2.0) + 70*pow(P0x,2.0)*P1x*Q2x*pow(sp,3.0) - 189*pow(P0x,2.0)*P2x*Q2x*pow(sp,2.0) - 168*P0x*P1x*pow(Q2x,2.0)*pow(sp,4.0) -
+	14*P0x*P1x*pow(Q3x,2.0)*pow(sp,3.0) + 147*P0x*pow(P1x,2.0)*Q2x*pow(sp,4.0) + 350*P0x*pow(P1x,2.0)*Q3x*pow(sp,3.0) - 42*pow(P0x,2.0)*P1x*Q2x*pow(sp,4.0) - 70*pow(P0x,2.0)*P1x*Q3x*pow(sp,3.0) +
+	420*pow(P0x,2.0)*P2x*Q2x*pow(sp,3.0) + 189*pow(P0x,2.0)*P2x*Q3x*pow(sp,2.0) + 294*pow(P0x,2.0)*P3x*Q2x*pow(sp,2.0) - 189*pow(P1x,2.0)*P2x*Q2x*pow(sp,2.0) + 42*P0x*P1x*pow(Q3x,2.0)*pow(sp,4.0) -
+	147*P0x*pow(P1x,2.0)*Q3x*pow(sp,4.0) + 42*pow(P0x,2.0)*P1x*Q3x*pow(sp,4.0) - 210*pow(P0x,2.0)*P2x*Q2x*pow(sp,4.0) - 420*pow(P0x,2.0)*P2x*Q3x*pow(sp,3.0) - 210*pow(P0x,2.0)*P3x*Q2x*pow(sp,3.0) -
+	294*pow(P0x,2.0)*P3x*Q3x*pow(sp,2.0) + 420*pow(P1x,2.0)*P2x*Q2x*pow(sp,3.0) + 189*pow(P1x,2.0)*P2x*Q3x*pow(sp,2.0) + 294*pow(P1x,2.0)*P3x*Q2x*pow(sp,2.0) + 210*pow(P0x,2.0)*P2x*Q3x*pow(sp,4.0) +
+	210*pow(P0x,2.0)*P3x*Q3x*pow(sp,3.0) - 210*pow(P1x,2.0)*P2x*Q2x*pow(sp,4.0) - 420*pow(P1x,2.0)*P2x*Q3x*pow(sp,3.0) - 210*pow(P1x,2.0)*P3x*Q2x*pow(sp,3.0) - 294*pow(P1x,2.0)*P3x*Q3x*pow(sp,2.0) +
+	210*pow(P1x,2.0)*P2x*Q3x*pow(sp,4.0) + 210*pow(P1x,2.0)*P3x*Q3x*pow(sp,3.0) - 63*P0x*pow(P0y,2.0)*Q2x*pow(sp,2.0) + 96*P0x*P1x*pow(Q2y,2.0)*pow(sp,2.0) + 70*P0x*pow(P0y,2.0)*Q2x*pow(sp,3.0) +
+	63*P0x*pow(P0y,2.0)*Q3x*pow(sp,2.0) + 126*P0x*pow(P1y,2.0)*Q2x*pow(sp,2.0) + 63*P1x*pow(P0y,2.0)*Q2x*pow(sp,2.0) + 48*P0x*P1x*pow(Q2y,2.0)*pow(sp,3.0) - 24*P0x*P1x*pow(Q3y,2.0)*pow(sp,2.0) -
+	21*P0x*pow(P0y,2.0)*Q2x*pow(sp,4.0) - 70*P0x*pow(P0y,2.0)*Q3x*pow(sp,3.0) - 98*P0x*pow(P1y,2.0)*Q2x*pow(sp,3.0) - 126*P0x*pow(P1y,2.0)*Q3x*pow(sp,2.0) + 42*P1x*pow(P0y,2.0)*Q2x*pow(sp,3.0) -
+	63*P1x*pow(P0y,2.0)*Q3x*pow(sp,2.0) - 126*P1x*pow(P1y,2.0)*Q2x*pow(sp,2.0) - 96*P0x*P1x*pow(Q2y,2.0)*pow(sp,4.0) + 16*P0x*P1x*pow(Q3y,2.0)*pow(sp,3.0) + 21*P0x*pow(P0y,2.0)*Q3x*pow(sp,4.0) +
+	24*P0x*pow(P1y,2.0)*Q2x*pow(sp,4.0) + 98*P0x*pow(P1y,2.0)*Q3x*pow(sp,3.0) - 39*P1x*pow(P0y,2.0)*Q2x*pow(sp,4.0) - 42*P1x*pow(P0y,2.0)*Q3x*pow(sp,3.0) + 210*P1x*pow(P1y,2.0)*Q2x*pow(sp,3.0) +
+	126*P1x*pow(P1y,2.0)*Q3x*pow(sp,2.0) + 168*P2x*pow(P0y,2.0)*Q2x*pow(sp,3.0) + 96*P3x*pow(P0y,2.0)*Q2x*pow(sp,2.0) + 24*P0x*P1x*pow(Q3y,2.0)*pow(sp,4.0) - 24*P0x*pow(P1y,2.0)*Q3x*pow(sp,4.0) +
+	39*P1x*pow(P0y,2.0)*Q3x*pow(sp,4.0) - 84*P1x*pow(P1y,2.0)*Q2x*pow(sp,4.0) - 210*P1x*pow(P1y,2.0)*Q3x*pow(sp,3.0) - 120*P2x*pow(P0y,2.0)*Q2x*pow(sp,4.0) - 168*P2x*pow(P0y,2.0)*Q3x*pow(sp,3.0) +
+	168*P2x*pow(P1y,2.0)*Q2x*pow(sp,3.0) - 120*P3x*pow(P0y,2.0)*Q2x*pow(sp,3.0) - 96*P3x*pow(P0y,2.0)*Q3x*pow(sp,2.0) + 96*P3x*pow(P1y,2.0)*Q2x*pow(sp,2.0) + 84*P1x*pow(P1y,2.0)*Q3x*pow(sp,4.0) +
+	120*P2x*pow(P0y,2.0)*Q3x*pow(sp,4.0) - 120*P2x*pow(P1y,2.0)*Q2x*pow(sp,4.0) - 168*P2x*pow(P1y,2.0)*Q3x*pow(sp,3.0) + 120*P3x*pow(P0y,2.0)*Q3x*pow(sp,3.0) - 120*P3x*pow(P1y,2.0)*Q2x*pow(sp,3.0) -
+	96*P3x*pow(P1y,2.0)*Q3x*pow(sp,2.0) + 120*P2x*pow(P1y,2.0)*Q3x*pow(sp,4.0) + 120*P3x*pow(P1y,2.0)*Q3x*pow(sp,3.0) - 63*pow(P0x,2.0)*P0y*Q2y*pow(sp,2.0) + 96*P0y*P1y*pow(Q2x,2.0)*pow(sp,2.0) +
+	70*pow(P0x,2.0)*P0y*Q2y*pow(sp,3.0) + 63*pow(P0x,2.0)*P0y*Q3y*pow(sp,2.0) + 63*pow(P0x,2.0)*P1y*Q2y*pow(sp,2.0) + 126*pow(P1x,2.0)*P0y*Q2y*pow(sp,2.0) + 48*P0y*P1y*pow(Q2x,2.0)*pow(sp,3.0) -
+	24*P0y*P1y*pow(Q3x,2.0)*pow(sp,2.0) - 21*pow(P0x,2.0)*P0y*Q2y*pow(sp,4.0) - 70*pow(P0x,2.0)*P0y*Q3y*pow(sp,3.0) + 42*pow(P0x,2.0)*P1y*Q2y*pow(sp,3.0) - 63*pow(P0x,2.0)*P1y*Q3y*pow(sp,2.0) -
+	98*pow(P1x,2.0)*P0y*Q2y*pow(sp,3.0) - 126*pow(P1x,2.0)*P0y*Q3y*pow(sp,2.0) - 126*pow(P1x,2.0)*P1y*Q2y*pow(sp,2.0) - 96*P0y*P1y*pow(Q2x,2.0)*pow(sp,4.0) + 16*P0y*P1y*pow(Q3x,2.0)*pow(sp,3.0) +
+	21*pow(P0x,2.0)*P0y*Q3y*pow(sp,4.0) - 39*pow(P0x,2.0)*P1y*Q2y*pow(sp,4.0) - 42*pow(P0x,2.0)*P1y*Q3y*pow(sp,3.0) + 168*pow(P0x,2.0)*P2y*Q2y*pow(sp,3.0) + 96*pow(P0x,2.0)*P3y*Q2y*pow(sp,2.0) +
+	24*pow(P1x,2.0)*P0y*Q2y*pow(sp,4.0) + 98*pow(P1x,2.0)*P0y*Q3y*pow(sp,3.0) + 210*pow(P1x,2.0)*P1y*Q2y*pow(sp,3.0) + 126*pow(P1x,2.0)*P1y*Q3y*pow(sp,2.0) + 24*P0y*P1y*pow(Q3x,2.0)*pow(sp,4.0) +
+	39*pow(P0x,2.0)*P1y*Q3y*pow(sp,4.0) - 120*pow(P0x,2.0)*P2y*Q2y*pow(sp,4.0) - 168*pow(P0x,2.0)*P2y*Q3y*pow(sp,3.0) - 120*pow(P0x,2.0)*P3y*Q2y*pow(sp,3.0) - 96*pow(P0x,2.0)*P3y*Q3y*pow(sp,2.0) -
+	24*pow(P1x,2.0)*P0y*Q3y*pow(sp,4.0) - 84*pow(P1x,2.0)*P1y*Q2y*pow(sp,4.0) - 210*pow(P1x,2.0)*P1y*Q3y*pow(sp,3.0) + 168*pow(P1x,2.0)*P2y*Q2y*pow(sp,3.0) + 96*pow(P1x,2.0)*P3y*Q2y*pow(sp,2.0) +
+	120*pow(P0x,2.0)*P2y*Q3y*pow(sp,4.0) + 120*pow(P0x,2.0)*P3y*Q3y*pow(sp,3.0) + 84*pow(P1x,2.0)*P1y*Q3y*pow(sp,4.0) - 120*pow(P1x,2.0)*P2y*Q2y*pow(sp,4.0) - 168*pow(P1x,2.0)*P2y*Q3y*pow(sp,3.0) -
+	120*pow(P1x,2.0)*P3y*Q2y*pow(sp,3.0) - 96*pow(P1x,2.0)*P3y*Q3y*pow(sp,2.0) + 120*pow(P1x,2.0)*P2y*Q3y*pow(sp,4.0) + 120*pow(P1x,2.0)*P3y*Q3y*pow(sp,3.0) + 42*P0y*P1y*pow(Q2y,2.0)*pow(sp,2.0) +
+	189*P0y*pow(P1y,2.0)*Q2y*pow(sp,2.0) + 210*P0y*P1y*pow(Q2y,2.0)*pow(sp,3.0) - 42*P0y*P1y*pow(Q3y,2.0)*pow(sp,2.0) - 350*P0y*pow(P1y,2.0)*Q2y*pow(sp,3.0) - 189*P0y*pow(P1y,2.0)*Q3y*pow(sp,2.0) +
+	70*pow(P0y,2.0)*P1y*Q2y*pow(sp,3.0) - 189*pow(P0y,2.0)*P2y*Q2y*pow(sp,2.0) - 168*P0y*P1y*pow(Q2y,2.0)*pow(sp,4.0) - 14*P0y*P1y*pow(Q3y,2.0)*pow(sp,3.0) + 147*P0y*pow(P1y,2.0)*Q2y*pow(sp,4.0) +
+	350*P0y*pow(P1y,2.0)*Q3y*pow(sp,3.0) - 42*pow(P0y,2.0)*P1y*Q2y*pow(sp,4.0) - 70*pow(P0y,2.0)*P1y*Q3y*pow(sp,3.0) + 420*pow(P0y,2.0)*P2y*Q2y*pow(sp,3.0) + 189*pow(P0y,2.0)*P2y*Q3y*pow(sp,2.0) +
+	294*pow(P0y,2.0)*P3y*Q2y*pow(sp,2.0) - 189*pow(P1y,2.0)*P2y*Q2y*pow(sp,2.0) + 42*P0y*P1y*pow(Q3y,2.0)*pow(sp,4.0) - 147*P0y*pow(P1y,2.0)*Q3y*pow(sp,4.0) + 42*pow(P0y,2.0)*P1y*Q3y*pow(sp,4.0) -
+	210*pow(P0y,2.0)*P2y*Q2y*pow(sp,4.0) - 420*pow(P0y,2.0)*P2y*Q3y*pow(sp,3.0) - 210*pow(P0y,2.0)*P3y*Q2y*pow(sp,3.0) - 294*pow(P0y,2.0)*P3y*Q3y*pow(sp,2.0) + 420*pow(P1y,2.0)*P2y*Q2y*pow(sp,3.0) +
+	189*pow(P1y,2.0)*P2y*Q3y*pow(sp,2.0) + 294*pow(P1y,2.0)*P3y*Q2y*pow(sp,2.0) + 210*pow(P0y,2.0)*P2y*Q3y*pow(sp,4.0) + 210*pow(P0y,2.0)*P3y*Q3y*pow(sp,3.0) - 210*pow(P1y,2.0)*P2y*Q2y*pow(sp,4.0) -
+	420*pow(P1y,2.0)*P2y*Q3y*pow(sp,3.0) - 210*pow(P1y,2.0)*P3y*Q2y*pow(sp,3.0) - 294*pow(P1y,2.0)*P3y*Q3y*pow(sp,2.0) + 210*pow(P1y,2.0)*P2y*Q3y*pow(sp,4.0) + 210*pow(P1y,2.0)*P3y*Q3y*pow(sp,3.0) +
+	126*pow(P0x,2.0)*Q1x*Q2x*pow(sp,2.0) - 378*pow(P0x,2.0)*Q1x*Q2x*pow(sp,3.0) - 126*pow(P0x,2.0)*Q1x*Q3x*pow(sp,2.0) + 126*pow(P1x,2.0)*Q1x*Q2x*pow(sp,2.0) + 210*pow(P0x,2.0)*Q1x*Q2x*pow(sp,4.0) +
+	378*pow(P0x,2.0)*Q1x*Q3x*pow(sp,3.0) - 378*pow(P1x,2.0)*Q1x*Q2x*pow(sp,3.0) - 126*pow(P1x,2.0)*Q1x*Q3x*pow(sp,2.0) - 210*pow(P0x,2.0)*Q1x*Q3x*pow(sp,4.0) + 98*pow(P0x,2.0)*Q2x*Q3x*pow(sp,3.0) +
+	210*pow(P1x,2.0)*Q1x*Q2x*pow(sp,4.0) + 378*pow(P1x,2.0)*Q1x*Q3x*pow(sp,3.0) - 63*pow(P0x,2.0)*Q2x*Q3x*pow(sp,4.0) - 210*pow(P1x,2.0)*Q1x*Q3x*pow(sp,4.0) + 98*pow(P1x,2.0)*Q2x*Q3x*pow(sp,3.0) -
+	63*pow(P1x,2.0)*Q2x*Q3x*pow(sp,4.0) - 36*pow(P0y,2.0)*Q1x*Q2x*pow(sp,2.0) - 144*pow(P0y,2.0)*Q1x*Q2x*pow(sp,3.0) + 36*pow(P0y,2.0)*Q1x*Q3x*pow(sp,2.0) - 36*pow(P1y,2.0)*Q1x*Q2x*pow(sp,2.0) +
+	120*pow(P0y,2.0)*Q1x*Q2x*pow(sp,4.0) + 144*pow(P0y,2.0)*Q1x*Q3x*pow(sp,3.0) + 36*pow(P0y,2.0)*Q2x*Q3x*pow(sp,2.0) - 144*pow(P1y,2.0)*Q1x*Q2x*pow(sp,3.0) + 36*pow(P1y,2.0)*Q1x*Q3x*pow(sp,2.0) -
+	120*pow(P0y,2.0)*Q1x*Q3x*pow(sp,4.0) + 32*pow(P0y,2.0)*Q2x*Q3x*pow(sp,3.0) + 120*pow(P1y,2.0)*Q1x*Q2x*pow(sp,4.0) + 144*pow(P1y,2.0)*Q1x*Q3x*pow(sp,3.0) + 36*pow(P1y,2.0)*Q2x*Q3x*pow(sp,2.0) -
+	36*pow(P0y,2.0)*Q2x*Q3x*pow(sp,4.0) - 120*pow(P1y,2.0)*Q1x*Q3x*pow(sp,4.0) + 32*pow(P1y,2.0)*Q2x*Q3x*pow(sp,3.0) - 36*pow(P1y,2.0)*Q2x*Q3x*pow(sp,4.0) - 36*pow(P0x,2.0)*Q1y*Q2y*pow(sp,2.0) -
+	144*pow(P0x,2.0)*Q1y*Q2y*pow(sp,3.0) + 36*pow(P0x,2.0)*Q1y*Q3y*pow(sp,2.0) - 36*pow(P1x,2.0)*Q1y*Q2y*pow(sp,2.0) + 120*pow(P0x,2.0)*Q1y*Q2y*pow(sp,4.0) + 144*pow(P0x,2.0)*Q1y*Q3y*pow(sp,3.0) +
+	36*pow(P0x,2.0)*Q2y*Q3y*pow(sp,2.0) - 144*pow(P1x,2.0)*Q1y*Q2y*pow(sp,3.0) + 36*pow(P1x,2.0)*Q1y*Q3y*pow(sp,2.0) - 120*pow(P0x,2.0)*Q1y*Q3y*pow(sp,4.0) + 32*pow(P0x,2.0)*Q2y*Q3y*pow(sp,3.0) +
+	120*pow(P1x,2.0)*Q1y*Q2y*pow(sp,4.0) + 144*pow(P1x,2.0)*Q1y*Q3y*pow(sp,3.0) + 36*pow(P1x,2.0)*Q2y*Q3y*pow(sp,2.0) - 36*pow(P0x,2.0)*Q2y*Q3y*pow(sp,4.0) - 120*pow(P1x,2.0)*Q1y*Q3y*pow(sp,4.0) +
+	32*pow(P1x,2.0)*Q2y*Q3y*pow(sp,3.0) - 36*pow(P1x,2.0)*Q2y*Q3y*pow(sp,4.0) + 126*pow(P0y,2.0)*Q1y*Q2y*pow(sp,2.0) - 378*pow(P0y,2.0)*Q1y*Q2y*pow(sp,3.0) - 126*pow(P0y,2.0)*Q1y*Q3y*pow(sp,2.0) +
+	126*pow(P1y,2.0)*Q1y*Q2y*pow(sp,2.0) + 210*pow(P0y,2.0)*Q1y*Q2y*pow(sp,4.0) + 378*pow(P0y,2.0)*Q1y*Q3y*pow(sp,3.0) - 378*pow(P1y,2.0)*Q1y*Q2y*pow(sp,3.0) - 126*pow(P1y,2.0)*Q1y*Q3y*pow(sp,2.0) -
+	210*pow(P0y,2.0)*Q1y*Q3y*pow(sp,4.0) + 98*pow(P0y,2.0)*Q2y*Q3y*pow(sp,3.0) + 210*pow(P1y,2.0)*Q1y*Q2y*pow(sp,4.0) + 378*pow(P1y,2.0)*Q1y*Q3y*pow(sp,3.0) - 63*pow(P0y,2.0)*Q2y*Q3y*pow(sp,4.0) -
+	210*pow(P1y,2.0)*Q1y*Q3y*pow(sp,4.0) + 98*pow(P1y,2.0)*Q2y*Q3y*pow(sp,3.0) - 63*pow(P1y,2.0)*Q2y*Q3y*pow(sp,4.0) + 28*P0x*P1x*P3x*Q2x - 28*P0x*P1x*P3x*Q3x + 38*P0x*P1x*P0y*Q2y + 38*P0x*P0y*P1y*Q2x -
+	38*P0x*P1x*P0y*Q3y + 66*P0x*P1x*P1y*Q2y - 38*P0x*P0y*P1y*Q3x + 66*P1x*P0y*P1y*Q2x - 66*P0x*P1x*P1y*Q3y - 30*P0x*P3x*P0y*Q2y - 30*P0x*P0y*P3y*Q2x - 66*P1x*P0y*P1y*Q3x - 32*P0x*P1x*P3y*Q2y + 30*P0x*P3x*P0y*Q3y +
+	30*P0x*P3x*P1y*Q2y + 30*P0x*P0y*P3y*Q3x + 30*P0x*P1y*P3y*Q2x + 30*P1x*P3x*P0y*Q2y + 30*P1x*P0y*P3y*Q2x - 32*P3x*P0y*P1y*Q2x + 32*P0x*P1x*P3y*Q3y - 30*P0x*P3x*P1y*Q3y - 30*P0x*P1y*P3y*Q3x - 30*P1x*P3x*P0y*Q3y -
+	30*P1x*P3x*P1y*Q2y - 30*P1x*P0y*P3y*Q3x - 30*P1x*P1y*P3y*Q2x + 32*P3x*P0y*P1y*Q3x + 30*P1x*P3x*P1y*Q3y + 30*P1x*P1y*P3y*Q3x + 28*P0y*P1y*P3y*Q2y - 28*P0y*P1y*P3y*Q3y + 84*P0x*P1x*Q2x*Q3x - 36*P0x*P0y*Q1x*Q2y -
+	36*P0x*P0y*Q2x*Q1y - 72*P0x*P1x*Q1y*Q2y + 36*P0x*P0y*Q1x*Q3y - 54*P0x*P0y*Q2x*Q2y + 36*P0x*P0y*Q3x*Q1y + 36*P0x*P1y*Q1x*Q2y + 36*P0x*P1y*Q2x*Q1y + 36*P1x*P0y*Q1x*Q2y + 36*P1x*P0y*Q2x*Q1y - 72*P0y*P1y*Q1x*Q2x +
+	72*P0x*P1x*Q1y*Q3y + 54*P0x*P0y*Q2x*Q3y + 54*P0x*P0y*Q3x*Q2y - 36*P0x*P1y*Q1x*Q3y + 54*P0x*P1y*Q2x*Q2y - 36*P0x*P1y*Q3x*Q1y - 36*P1x*P0y*Q1x*Q3y + 54*P1x*P0y*Q2x*Q2y - 36*P1x*P0y*Q3x*Q1y - 36*P1x*P1y*Q1x*Q2y -
+	36*P1x*P1y*Q2x*Q1y + 72*P0y*P1y*Q1x*Q3x + 192*P0x*P1x*Q2y*Q3y - 54*P0x*P0y*Q3x*Q3y - 54*P0x*P1y*Q2x*Q3y - 54*P0x*P1y*Q3x*Q2y - 54*P1x*P0y*Q2x*Q3y - 54*P1x*P0y*Q3x*Q2y + 36*P1x*P1y*Q1x*Q3y - 54*P1x*P1y*Q2x*Q2y +
+	36*P1x*P1y*Q3x*Q1y + 192*P0y*P1y*Q2x*Q3x + 54*P0x*P1y*Q3x*Q3y + 54*P1x*P0y*Q3x*Q3y + 54*P1x*P1y*Q2x*Q3y + 54*P1x*P1y*Q3x*Q2y - 54*P1x*P1y*Q3x*Q3y + 84*P0y*P1y*Q2y*Q3y + 84*P0x*P1x*P3x*Q2x*sp - 84*P0x*P1x*P3x*Q3x*sp -
+	90*P0x*P3x*P0y*Q2y*sp - 90*P0x*P0y*P3y*Q2x*sp - 96*P0x*P1x*P3y*Q2y*sp + 90*P0x*P3x*P0y*Q3y*sp + 90*P0x*P3x*P1y*Q2y*sp + 90*P0x*P0y*P3y*Q3x*sp + 90*P0x*P1y*P3y*Q2x*sp + 90*P1x*P3x*P0y*Q2y*sp + 90*P1x*P0y*P3y*Q2x*sp -
+	96*P3x*P0y*P1y*Q2x*sp + 96*P0x*P1x*P3y*Q3y*sp - 90*P0x*P3x*P1y*Q3y*sp - 90*P0x*P1y*P3y*Q3x*sp - 90*P1x*P3x*P0y*Q3y*sp - 90*P1x*P3x*P1y*Q2y*sp - 90*P1x*P0y*P3y*Q3x*sp - 90*P1x*P1y*P3y*Q2x*sp + 96*P3x*P0y*P1y*Q3x*sp +
+	90*P1x*P3x*P1y*Q3y*sp + 90*P1x*P1y*P3y*Q3x*sp + 84*P0y*P1y*P3y*Q2y*sp - 84*P0y*P1y*P3y*Q3y*sp - 84*P0x*P1x*Q1x*Q2x*sp + 84*P0x*P1x*Q1x*Q3x*sp + 84*P0x*P1x*Q2x*Q3x*sp + 18*P0x*P0y*Q1x*Q2y*sp + 18*P0x*P0y*Q2x*Q1y*sp -
+	48*P0x*P1x*Q1y*Q2y*sp - 18*P0x*P0y*Q1x*Q3y*sp + 90*P0x*P0y*Q2x*Q2y*sp - 18*P0x*P0y*Q3x*Q1y*sp - 18*P0x*P1y*Q1x*Q2y*sp - 18*P0x*P1y*Q2x*Q1y*sp - 18*P1x*P0y*Q1x*Q2y*sp - 18*P1x*P0y*Q2x*Q1y*sp - 48*P0y*P1y*Q1x*Q2x*sp +
+	48*P0x*P1x*Q1y*Q3y*sp - 18*P0x*P0y*Q2x*Q3y*sp - 18*P0x*P0y*Q3x*Q2y*sp + 18*P0x*P1y*Q1x*Q3y*sp - 90*P0x*P1y*Q2x*Q2y*sp + 18*P0x*P1y*Q3x*Q1y*sp + 18*P1x*P0y*Q1x*Q3y*sp - 90*P1x*P0y*Q2x*Q2y*sp + 18*P1x*P0y*Q3x*Q1y*sp +
+	18*P1x*P1y*Q1x*Q2y*sp + 18*P1x*P1y*Q2x*Q1y*sp + 48*P0y*P1y*Q1x*Q3x*sp + 48*P0x*P1x*Q2y*Q3y*sp - 54*P0x*P0y*Q3x*Q3y*sp + 18*P0x*P1y*Q2x*Q3y*sp + 18*P0x*P1y*Q3x*Q2y*sp + 18*P1x*P0y*Q2x*Q3y*sp + 18*P1x*P0y*Q3x*Q2y*sp -
+	18*P1x*P1y*Q1x*Q3y*sp + 90*P1x*P1y*Q2x*Q2y*sp - 18*P1x*P1y*Q3x*Q1y*sp + 48*P0y*P1y*Q2x*Q3x*sp + 54*P0x*P1y*Q3x*Q3y*sp + 54*P1x*P0y*Q3x*Q3y*sp - 18*P1x*P1y*Q2x*Q3y*sp - 18*P1x*P1y*Q3x*Q2y*sp - 54*P1x*P1y*Q3x*Q3y*sp -
+	84*P0y*P1y*Q1y*Q2y*sp + 84*P0y*P1y*Q1y*Q3y*sp + 84*P0y*P1y*Q2y*Q3y*sp + 378*P0x*P1x*P2x*Q2x*pow(sp,2.0) - 840*P0x*P1x*P2x*Q2x*pow(sp,3.0) - 378*P0x*P1x*P2x*Q3x*pow(sp,2.0) - 588*P0x*P1x*P3x*Q2x*pow(sp,2.0) +
+	420*P0x*P1x*P2x*Q2x*pow(sp,4.0) + 840*P0x*P1x*P2x*Q3x*pow(sp,3.0) + 420*P0x*P1x*P3x*Q2x*pow(sp,3.0) + 588*P0x*P1x*P3x*Q3x*pow(sp,2.0) - 420*P0x*P1x*P2x*Q3x*pow(sp,4.0) - 420*P0x*P1x*P3x*Q3x*pow(sp,3.0) -
+	63*P0x*P1x*P0y*Q2y*pow(sp,2.0) - 63*P0x*P0y*P1y*Q2x*pow(sp,2.0) + 28*P0x*P1x*P0y*Q2y*pow(sp,3.0) + 63*P0x*P1x*P0y*Q3y*pow(sp,2.0) + 63*P0x*P1x*P1y*Q2y*pow(sp,2.0) - 189*P0x*P2x*P0y*Q2y*pow(sp,2.0) +
+	28*P0x*P0y*P1y*Q2x*pow(sp,3.0) + 63*P0x*P0y*P1y*Q3x*pow(sp,2.0) - 189*P0x*P0y*P2y*Q2x*pow(sp,2.0) + 63*P1x*P0y*P1y*Q2x*pow(sp,2.0) - 3*P0x*P1x*P0y*Q2y*pow(sp,4.0) - 28*P0x*P1x*P0y*Q3y*pow(sp,3.0) -
+	252*P0x*P1x*P1y*Q2y*pow(sp,3.0) - 63*P0x*P1x*P1y*Q3y*pow(sp,2.0) + 252*P0x*P2x*P0y*Q2y*pow(sp,3.0) + 189*P0x*P2x*P0y*Q3y*pow(sp,2.0) + 189*P0x*P2x*P1y*Q2y*pow(sp,2.0) + 198*P0x*P3x*P0y*Q2y*pow(sp,2.0) -
+	3*P0x*P0y*P1y*Q2x*pow(sp,4.0) - 28*P0x*P0y*P1y*Q3x*pow(sp,3.0) + 252*P0x*P0y*P2y*Q2x*pow(sp,3.0) + 189*P0x*P0y*P2y*Q3x*pow(sp,2.0) + 198*P0x*P0y*P3y*Q2x*pow(sp,2.0) + 189*P0x*P1y*P2y*Q2x*pow(sp,2.0) +
+	189*P1x*P2x*P0y*Q2y*pow(sp,2.0) - 252*P1x*P0y*P1y*Q2x*pow(sp,3.0) - 63*P1x*P0y*P1y*Q3x*pow(sp,2.0) + 189*P1x*P0y*P2y*Q2x*pow(sp,2.0) + 3*P0x*P1x*P0y*Q3y*pow(sp,4.0) + 123*P0x*P1x*P1y*Q2y*pow(sp,4.0) +
+	252*P0x*P1x*P1y*Q3y*pow(sp,3.0) - 336*P0x*P1x*P2y*Q2y*pow(sp,3.0) - 192*P0x*P1x*P3y*Q2y*pow(sp,2.0) - 90*P0x*P2x*P0y*Q2y*pow(sp,4.0) - 252*P0x*P2x*P0y*Q3y*pow(sp,3.0) - 252*P0x*P2x*P1y*Q2y*pow(sp,3.0) -
+	189*P0x*P2x*P1y*Q3y*pow(sp,2.0) - 90*P0x*P3x*P0y*Q2y*pow(sp,3.0) - 198*P0x*P3x*P0y*Q3y*pow(sp,2.0) - 198*P0x*P3x*P1y*Q2y*pow(sp,2.0) + 3*P0x*P0y*P1y*Q3x*pow(sp,4.0) - 90*P0x*P0y*P2y*Q2x*pow(sp,4.0) -
+	252*P0x*P0y*P2y*Q3x*pow(sp,3.0) - 90*P0x*P0y*P3y*Q2x*pow(sp,3.0) - 198*P0x*P0y*P3y*Q3x*pow(sp,2.0) - 252*P0x*P1y*P2y*Q2x*pow(sp,3.0) - 189*P0x*P1y*P2y*Q3x*pow(sp,2.0) - 198*P0x*P1y*P3y*Q2x*pow(sp,2.0) -
+	252*P1x*P2x*P0y*Q2y*pow(sp,3.0) - 189*P1x*P2x*P0y*Q3y*pow(sp,2.0) - 189*P1x*P2x*P1y*Q2y*pow(sp,2.0) - 198*P1x*P3x*P0y*Q2y*pow(sp,2.0) + 123*P1x*P0y*P1y*Q2x*pow(sp,4.0) + 252*P1x*P0y*P1y*Q3x*pow(sp,3.0) -
+	252*P1x*P0y*P2y*Q2x*pow(sp,3.0) - 189*P1x*P0y*P2y*Q3x*pow(sp,2.0) - 198*P1x*P0y*P3y*Q2x*pow(sp,2.0) - 189*P1x*P1y*P2y*Q2x*pow(sp,2.0) - 336*P2x*P0y*P1y*Q2x*pow(sp,3.0) - 192*P3x*P0y*P1y*Q2x*pow(sp,2.0) -
+	123*P0x*P1x*P1y*Q3y*pow(sp,4.0) + 240*P0x*P1x*P2y*Q2y*pow(sp,4.0) + 336*P0x*P1x*P2y*Q3y*pow(sp,3.0) + 240*P0x*P1x*P3y*Q2y*pow(sp,3.0) + 192*P0x*P1x*P3y*Q3y*pow(sp,2.0) + 90*P0x*P2x*P0y*Q3y*pow(sp,4.0) +
+	90*P0x*P2x*P1y*Q2y*pow(sp,4.0) + 252*P0x*P2x*P1y*Q3y*pow(sp,3.0) + 90*P0x*P3x*P0y*Q3y*pow(sp,3.0) + 90*P0x*P3x*P1y*Q2y*pow(sp,3.0) + 198*P0x*P3x*P1y*Q3y*pow(sp,2.0) + 90*P0x*P0y*P2y*Q3x*pow(sp,4.0) +
+	90*P0x*P0y*P3y*Q3x*pow(sp,3.0) + 90*P0x*P1y*P2y*Q2x*pow(sp,4.0) + 252*P0x*P1y*P2y*Q3x*pow(sp,3.0) + 90*P0x*P1y*P3y*Q2x*pow(sp,3.0) + 198*P0x*P1y*P3y*Q3x*pow(sp,2.0) + 90*P1x*P2x*P0y*Q2y*pow(sp,4.0) +
+	252*P1x*P2x*P0y*Q3y*pow(sp,3.0) + 252*P1x*P2x*P1y*Q2y*pow(sp,3.0) + 189*P1x*P2x*P1y*Q3y*pow(sp,2.0) + 90*P1x*P3x*P0y*Q2y*pow(sp,3.0) + 198*P1x*P3x*P0y*Q3y*pow(sp,2.0) + 198*P1x*P3x*P1y*Q2y*pow(sp,2.0) -
+	123*P1x*P0y*P1y*Q3x*pow(sp,4.0) + 90*P1x*P0y*P2y*Q2x*pow(sp,4.0) + 252*P1x*P0y*P2y*Q3x*pow(sp,3.0) + 90*P1x*P0y*P3y*Q2x*pow(sp,3.0) + 198*P1x*P0y*P3y*Q3x*pow(sp,2.0) + 252*P1x*P1y*P2y*Q2x*pow(sp,3.0) +
+	189*P1x*P1y*P2y*Q3x*pow(sp,2.0) + 198*P1x*P1y*P3y*Q2x*pow(sp,2.0) + 240*P2x*P0y*P1y*Q2x*pow(sp,4.0) + 336*P2x*P0y*P1y*Q3x*pow(sp,3.0) + 240*P3x*P0y*P1y*Q2x*pow(sp,3.0) + 192*P3x*P0y*P1y*Q3x*pow(sp,2.0) -
+	240*P0x*P1x*P2y*Q3y*pow(sp,4.0) - 240*P0x*P1x*P3y*Q3y*pow(sp,3.0) - 90*P0x*P2x*P1y*Q3y*pow(sp,4.0) - 90*P0x*P3x*P1y*Q3y*pow(sp,3.0) - 90*P0x*P1y*P2y*Q3x*pow(sp,4.0) - 90*P0x*P1y*P3y*Q3x*pow(sp,3.0) -
+	90*P1x*P2x*P0y*Q3y*pow(sp,4.0) - 90*P1x*P2x*P1y*Q2y*pow(sp,4.0) - 252*P1x*P2x*P1y*Q3y*pow(sp,3.0) - 90*P1x*P3x*P0y*Q3y*pow(sp,3.0) - 90*P1x*P3x*P1y*Q2y*pow(sp,3.0) - 198*P1x*P3x*P1y*Q3y*pow(sp,2.0) -
+	90*P1x*P0y*P2y*Q3x*pow(sp,4.0) - 90*P1x*P0y*P3y*Q3x*pow(sp,3.0) - 90*P1x*P1y*P2y*Q2x*pow(sp,4.0) - 252*P1x*P1y*P2y*Q3x*pow(sp,3.0) - 90*P1x*P1y*P3y*Q2x*pow(sp,3.0) - 198*P1x*P1y*P3y*Q3x*pow(sp,2.0) -
+	240*P2x*P0y*P1y*Q3x*pow(sp,4.0) - 240*P3x*P0y*P1y*Q3x*pow(sp,3.0) + 90*P1x*P2x*P1y*Q3y*pow(sp,4.0) + 90*P1x*P3x*P1y*Q3y*pow(sp,3.0) + 90*P1x*P1y*P2y*Q3x*pow(sp,4.0) + 90*P1x*P1y*P3y*Q3x*pow(sp,3.0) +
+	378*P0y*P1y*P2y*Q2y*pow(sp,2.0) - 840*P0y*P1y*P2y*Q2y*pow(sp,3.0) - 378*P0y*P1y*P2y*Q3y*pow(sp,2.0) - 588*P0y*P1y*P3y*Q2y*pow(sp,2.0) + 420*P0y*P1y*P2y*Q2y*pow(sp,4.0) + 840*P0y*P1y*P2y*Q3y*pow(sp,3.0) +
+	420*P0y*P1y*P3y*Q2y*pow(sp,3.0) + 588*P0y*P1y*P3y*Q3y*pow(sp,2.0) - 420*P0y*P1y*P2y*Q3y*pow(sp,4.0) - 420*P0y*P1y*P3y*Q3y*pow(sp,3.0) - 252*P0x*P1x*Q1x*Q2x*pow(sp,2.0) + 756*P0x*P1x*Q1x*Q2x*pow(sp,3.0) +
+	252*P0x*P1x*Q1x*Q3x*pow(sp,2.0) - 420*P0x*P1x*Q1x*Q2x*pow(sp,4.0) - 756*P0x*P1x*Q1x*Q3x*pow(sp,3.0) + 420*P0x*P1x*Q1x*Q3x*pow(sp,4.0) - 196*P0x*P1x*Q2x*Q3x*pow(sp,3.0) + 126*P0x*P1x*Q2x*Q3x*pow(sp,4.0) +
+	162*P0x*P0y*Q1x*Q2y*pow(sp,2.0) + 162*P0x*P0y*Q2x*Q1y*pow(sp,2.0) + 72*P0x*P1x*Q1y*Q2y*pow(sp,2.0) - 234*P0x*P0y*Q1x*Q2y*pow(sp,3.0) - 162*P0x*P0y*Q1x*Q3y*pow(sp,2.0) - 234*P0x*P0y*Q2x*Q1y*pow(sp,3.0) +
+	54*P0x*P0y*Q2x*Q2y*pow(sp,2.0) - 162*P0x*P0y*Q3x*Q1y*pow(sp,2.0) - 162*P0x*P1y*Q1x*Q2y*pow(sp,2.0) - 162*P0x*P1y*Q2x*Q1y*pow(sp,2.0) - 162*P1x*P0y*Q1x*Q2y*pow(sp,2.0) - 162*P1x*P0y*Q2x*Q1y*pow(sp,2.0) +
+	72*P0y*P1y*Q1x*Q2x*pow(sp,2.0) + 288*P0x*P1x*Q1y*Q2y*pow(sp,3.0) - 72*P0x*P1x*Q1y*Q3y*pow(sp,2.0) + 90*P0x*P0y*Q1x*Q2y*pow(sp,4.0) + 234*P0x*P0y*Q1x*Q3y*pow(sp,3.0) + 90*P0x*P0y*Q2x*Q1y*pow(sp,4.0) -
+	162*P0x*P0y*Q2x*Q2y*pow(sp,3.0) - 36*P0x*P0y*Q2x*Q3y*pow(sp,2.0) + 234*P0x*P0y*Q3x*Q1y*pow(sp,3.0) - 36*P0x*P0y*Q3x*Q2y*pow(sp,2.0) + 234*P0x*P1y*Q1x*Q2y*pow(sp,3.0) + 162*P0x*P1y*Q1x*Q3y*pow(sp,2.0) +
+	234*P0x*P1y*Q2x*Q1y*pow(sp,3.0) - 54*P0x*P1y*Q2x*Q2y*pow(sp,2.0) + 162*P0x*P1y*Q3x*Q1y*pow(sp,2.0) + 234*P1x*P0y*Q1x*Q2y*pow(sp,3.0) + 162*P1x*P0y*Q1x*Q3y*pow(sp,2.0) + 234*P1x*P0y*Q2x*Q1y*pow(sp,3.0) -
+	54*P1x*P0y*Q2x*Q2y*pow(sp,2.0) + 162*P1x*P0y*Q3x*Q1y*pow(sp,2.0) + 162*P1x*P1y*Q1x*Q2y*pow(sp,2.0) + 162*P1x*P1y*Q2x*Q1y*pow(sp,2.0) + 288*P0y*P1y*Q1x*Q2x*pow(sp,3.0) - 72*P0y*P1y*Q1x*Q3x*pow(sp,2.0) -
+	240*P0x*P1x*Q1y*Q2y*pow(sp,4.0) - 288*P0x*P1x*Q1y*Q3y*pow(sp,3.0) - 72*P0x*P1x*Q2y*Q3y*pow(sp,2.0) - 90*P0x*P0y*Q1x*Q3y*pow(sp,4.0) + 72*P0x*P0y*Q2x*Q2y*pow(sp,4.0) + 66*P0x*P0y*Q2x*Q3y*pow(sp,3.0) -
+	90*P0x*P0y*Q3x*Q1y*pow(sp,4.0) + 66*P0x*P0y*Q3x*Q2y*pow(sp,3.0) + 18*P0x*P0y*Q3x*Q3y*pow(sp,2.0) - 90*P0x*P1y*Q1x*Q2y*pow(sp,4.0) - 234*P0x*P1y*Q1x*Q3y*pow(sp,3.0) - 90*P0x*P1y*Q2x*Q1y*pow(sp,4.0) +
+	162*P0x*P1y*Q2x*Q2y*pow(sp,3.0) + 36*P0x*P1y*Q2x*Q3y*pow(sp,2.0) - 234*P0x*P1y*Q3x*Q1y*pow(sp,3.0) + 36*P0x*P1y*Q3x*Q2y*pow(sp,2.0) - 90*P1x*P0y*Q1x*Q2y*pow(sp,4.0) - 234*P1x*P0y*Q1x*Q3y*pow(sp,3.0) -
+	90*P1x*P0y*Q2x*Q1y*pow(sp,4.0) + 162*P1x*P0y*Q2x*Q2y*pow(sp,3.0) + 36*P1x*P0y*Q2x*Q3y*pow(sp,2.0) - 234*P1x*P0y*Q3x*Q1y*pow(sp,3.0) + 36*P1x*P0y*Q3x*Q2y*pow(sp,2.0) - 234*P1x*P1y*Q1x*Q2y*pow(sp,3.0) -
+	162*P1x*P1y*Q1x*Q3y*pow(sp,2.0) - 234*P1x*P1y*Q2x*Q1y*pow(sp,3.0) + 54*P1x*P1y*Q2x*Q2y*pow(sp,2.0) - 162*P1x*P1y*Q3x*Q1y*pow(sp,2.0) - 240*P0y*P1y*Q1x*Q2x*pow(sp,4.0) - 288*P0y*P1y*Q1x*Q3x*pow(sp,3.0) -
+	72*P0y*P1y*Q2x*Q3x*pow(sp,2.0) + 240*P0x*P1x*Q1y*Q3y*pow(sp,4.0) - 64*P0x*P1x*Q2y*Q3y*pow(sp,3.0) - 27*P0x*P0y*Q2x*Q3y*pow(sp,4.0) - 27*P0x*P0y*Q3x*Q2y*pow(sp,4.0) + 30*P0x*P0y*Q3x*Q3y*pow(sp,3.0) +
+	90*P0x*P1y*Q1x*Q3y*pow(sp,4.0) - 72*P0x*P1y*Q2x*Q2y*pow(sp,4.0) - 66*P0x*P1y*Q2x*Q3y*pow(sp,3.0) + 90*P0x*P1y*Q3x*Q1y*pow(sp,4.0) - 66*P0x*P1y*Q3x*Q2y*pow(sp,3.0) - 18*P0x*P1y*Q3x*Q3y*pow(sp,2.0) +
+	90*P1x*P0y*Q1x*Q3y*pow(sp,4.0) - 72*P1x*P0y*Q2x*Q2y*pow(sp,4.0) - 66*P1x*P0y*Q2x*Q3y*pow(sp,3.0) + 90*P1x*P0y*Q3x*Q1y*pow(sp,4.0) - 66*P1x*P0y*Q3x*Q2y*pow(sp,3.0) - 18*P1x*P0y*Q3x*Q3y*pow(sp,2.0) +
+	90*P1x*P1y*Q1x*Q2y*pow(sp,4.0) + 234*P1x*P1y*Q1x*Q3y*pow(sp,3.0) + 90*P1x*P1y*Q2x*Q1y*pow(sp,4.0) - 162*P1x*P1y*Q2x*Q2y*pow(sp,3.0) - 36*P1x*P1y*Q2x*Q3y*pow(sp,2.0) + 234*P1x*P1y*Q3x*Q1y*pow(sp,3.0) -
+	36*P1x*P1y*Q3x*Q2y*pow(sp,2.0) + 240*P0y*P1y*Q1x*Q3x*pow(sp,4.0) - 64*P0y*P1y*Q2x*Q3x*pow(sp,3.0) + 72*P0x*P1x*Q2y*Q3y*pow(sp,4.0) - 18*P0x*P0y*Q3x*Q3y*pow(sp,4.0) + 27*P0x*P1y*Q2x*Q3y*pow(sp,4.0) +
+	27*P0x*P1y*Q3x*Q2y*pow(sp,4.0) - 30*P0x*P1y*Q3x*Q3y*pow(sp,3.0) + 27*P1x*P0y*Q2x*Q3y*pow(sp,4.0) + 27*P1x*P0y*Q3x*Q2y*pow(sp,4.0) - 30*P1x*P0y*Q3x*Q3y*pow(sp,3.0) - 90*P1x*P1y*Q1x*Q3y*pow(sp,4.0) +
+	72*P1x*P1y*Q2x*Q2y*pow(sp,4.0) + 66*P1x*P1y*Q2x*Q3y*pow(sp,3.0) - 90*P1x*P1y*Q3x*Q1y*pow(sp,4.0) + 66*P1x*P1y*Q3x*Q2y*pow(sp,3.0) + 18*P1x*P1y*Q3x*Q3y*pow(sp,2.0) + 72*P0y*P1y*Q2x*Q3x*pow(sp,4.0) +
+	18*P0x*P1y*Q3x*Q3y*pow(sp,4.0) + 18*P1x*P0y*Q3x*Q3y*pow(sp,4.0) - 27*P1x*P1y*Q2x*Q3y*pow(sp,4.0) - 27*P1x*P1y*Q3x*Q2y*pow(sp,4.0) + 30*P1x*P1y*Q3x*Q3y*pow(sp,3.0) - 18*P1x*P1y*Q3x*Q3y*pow(sp,4.0) -
+	252*P0y*P1y*Q1y*Q2y*pow(sp,2.0) + 756*P0y*P1y*Q1y*Q2y*pow(sp,3.0) + 252*P0y*P1y*Q1y*Q3y*pow(sp,2.0) - 420*P0y*P1y*Q1y*Q2y*pow(sp,4.0) - 756*P0y*P1y*Q1y*Q3y*pow(sp,3.0) + 420*P0y*P1y*Q1y*Q3y*pow(sp,4.0) -
+	196*P0y*P1y*Q2y*Q3y*pow(sp,3.0) + 126*P0y*P1y*Q2y*Q3y*pow(sp,4.0))/(3*(7*pow(P0x,2.0)*pow(Q2x,2.0) + 7*pow(P0x,2.0)*pow(Q3x,2.0) + 7*pow(P1x,2.0)*pow(Q2x,2.0) + 7*pow(P1x,2.0)*pow(Q3x,2.0) +
+	16*pow(P0x,2.0)*pow(Q2y,2.0) + 16*pow(P0y,2.0)*pow(Q2x,2.0) + 16*pow(P0x,2.0)*pow(Q3y,2.0) + 16*pow(P1x,2.0)*pow(Q2y,2.0) + 16*pow(P0y,2.0)*pow(Q3x,2.0) + 16*pow(P1y,2.0)*pow(Q2x,2.0) + 16*pow(P1x,2.0)*pow(Q3y,2.0) +
+	16*pow(P1y,2.0)*pow(Q3x,2.0) + 7*pow(P0y,2.0)*pow(Q2y,2.0) + 7*pow(P0y,2.0)*pow(Q3y,2.0) + 7*pow(P1y,2.0)*pow(Q2y,2.0) + 7*pow(P1y,2.0)*pow(Q3y,2.0) - 14*P0x*P1x*pow(Q2x,2.0) - 14*P0x*P1x*pow(Q3x,2.0) -
+	32*P0x*P1x*pow(Q2y,2.0) - 32*P0x*P1x*pow(Q3y,2.0) - 32*P0y*P1y*pow(Q2x,2.0) - 32*P0y*P1y*pow(Q3x,2.0) - 14*P0y*P1y*pow(Q2y,2.0) - 14*P0y*P1y*pow(Q3y,2.0) - 14*pow(P0x,2.0)*Q2x*Q3x - 14*pow(P1x,2.0)*Q2x*Q3x -
+	32*pow(P0y,2.0)*Q2x*Q3x - 32*pow(P1y,2.0)*Q2x*Q3x - 32*pow(P0x,2.0)*Q2y*Q3y - 32*pow(P1x,2.0)*Q2y*Q3y - 14*pow(P0y,2.0)*Q2y*Q3y - 14*pow(P1y,2.0)*Q2y*Q3y + 28*P0x*P1x*Q2x*Q3x - 18*P0x*P0y*Q2x*Q2y + 18*P0x*P0y*Q2x*Q3y +
+	18*P0x*P0y*Q3x*Q2y + 18*P0x*P1y*Q2x*Q2y + 18*P1x*P0y*Q2x*Q2y + 64*P0x*P1x*Q2y*Q3y - 18*P0x*P0y*Q3x*Q3y - 18*P0x*P1y*Q2x*Q3y - 18*P0x*P1y*Q3x*Q2y - 18*P1x*P0y*Q2x*Q3y - 18*P1x*P0y*Q3x*Q2y - 18*P1x*P1y*Q2x*Q2y +
+	64*P0y*P1y*Q2x*Q3x + 18*P0x*P1y*Q3x*Q3y + 18*P1x*P0y*Q3x*Q3y + 18*P1x*P1y*Q2x*Q3y + 18*P1x*P1y*Q3x*Q2y - 18*P1x*P1y*Q3x*Q3y + 28*P0y*P1y*Q2y*Q3y));
+	
+	// Just an arbitrary correction heuristic for negative factors ...
+	if (out_pfactor < 0)
+		out_pfactor = -0.1 * out_pfactor;
+	if (out_qfactor < 0)
+		out_qfactor = -0.1 * out_qfactor;
+}
+
 void PathObject::appendPath(PathObject* other)
 {
 	int coords_size = coords.size();
@@ -1491,7 +1830,7 @@ void PathObject::addCoordinate(MapCoord c, bool start_new_part)
 	
 	setOutputDirty();
 }
-void PathObject::deleteCoordinate(int pos, bool adjust_other_coords)
+void PathObject::deleteCoordinate(int pos, bool adjust_other_coords, int delete_bezier_point_action)
 {
 	assert(pos >= 0 && pos < getCoordinateCount());
 	MapCoord old_coord = coords[pos];
@@ -1560,340 +1899,24 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords)
 				MapCoord& q2 = coords[pos + 1];
 				MapCoord& q3 = coords[pos + 2];
 				
-				// Heuristic for the split parameter sp (zero to one)
-				QBezierCopy p_curve = QBezierCopy::fromPoints(p0.toQPointF(), p1.toQPointF(), p2.toQPointF(), q0.toQPointF());
-				double p_length = p_curve.length(PathCoord::bezier_error);
-				QBezierCopy q_curve = QBezierCopy::fromPoints(q0.toQPointF(), q1.toQPointF(), q2.toQPointF(), q3.toQPointF());
-				double q_length = q_curve.length(PathCoord::bezier_error);
-				double sp = p_length / (p_length + q_length);
-				
-				// Least squares curve fitting with the constraint that handles are on the same line as before.
-				// To reproduce the formulas, run the following Matlab script:
-				/*
-				
-				clear all; close all; clc;
-				
-				syms P0x P1x P2x P3x;
-				syms Q1x Q2x Q3x;
-				syms P0y P1y P2y P3y;
-				syms Q1y Q2y Q3y;
-				
-				syms u v w;
-				syms pfactor qfactor;
-				
-				Xx = (1-u)^3*P0x+3*(1-u)^2*u*P1x+3*(1-u)*u^2*P2x+u^3*P3x;
-				Yx = (1-v)^3*P3x+3*(1-v)^2*v*Q1x+3*(1-v)*v^2*Q2x+v^3*Q3x;
-				Zx = (1-w)^3*P0x+3*(1-w)^2*w*(P0x+pfactor*(P1x-P0x))+3*(1-w)*w^2*(Q3x+qfactor*(Q2x-Q3x))+w^3*Q3x;
-				
-				Xy = (1-u)^3*P0y+3*(1-u)^2*u*P1y+3*(1-u)*u^2*P2y+u^3*P3y;
-				Yy = (1-v)^3*P3y+3*(1-v)^2*v*Q1y+3*(1-v)*v^2*Q2y+v^3*Q3y;
-				Zy = (1-w)^3*P0y+3*(1-w)^2*w*(P0y+pfactor*(P1y-P0y))+3*(1-w)*w^2*(Q3y+qfactor*(Q2y-Q3y))+w^3*Q3y;
-				
-				syms sp;   %split_param
-				E = int((Zx - subs(Xx, u, w/sp))^2 + (Zy - subs(Xy, u, w/sp))^2, w, 0, sp) + int((Zx - subs(Yx, v, (w - sp) / (1 - sp)))^2 + (Zy - subs(Yy, v, (w - sp) / (1 - sp)))^2, w, sp, 1);
-				
-				Epfactor = diff(E, pfactor);
-				Eqfactor = diff(E, qfactor);
-				S = solve(Epfactor, Eqfactor, pfactor, qfactor);
-				S = [S.pfactor, S.qfactor]
-				
-				*/
-				
-				double P0x = p0.xd(), P1x = p1.xd(), P2x = p2.xd(), P3x = q0.xd();
-				double Q1x = q1.xd(), Q2x = q2.xd(), Q3x = q3.xd();
-				double P0y = p0.yd(), P1y = p1.yd(), P2y = p2.yd(), P3y = q0.yd();
-				double Q1y = q1.yd(), Q2y = q2.yd(), Q3y = q3.yd();
-				
-				double pfactor = -(126*P0x*pow(Q2x,3.0)*pow(sp,3.0) - 49*pow(P0x,2.0)*pow(Q3x,2.0) - 88*pow(P0x,2.0)*pow(Q2y,2.0) - 88*pow(P0y,2.0)*pow(Q2x,2.0) - 88*pow(P0x,2.0)*pow(Q3y,2.0) - 88*pow(P0y,2.0)*pow(Q3x,2.0) - 49*pow(P0y,2.0)*pow(Q2y,2.0) -
-49*pow(P0y,2.0)*pow(Q3y,2.0) - 49*pow(P0x,2.0)*pow(Q2x,2.0) + 21*P0x*pow(Q3x,3.0)*pow(sp,2.0) - 84*P0x*pow(Q2x,3.0)*pow(sp,4.0) + 14*P0x*pow(Q3x,3.0)*pow(sp,3.0) - 126*P1x*pow(Q2x,3.0)*pow(sp,3.0) -
-21*P1x*pow(Q3x,3.0)*pow(sp,2.0) - 21*P0x*pow(Q3x,3.0)*pow(sp,4.0) + 84*P1x*pow(Q2x,3.0)*pow(sp,4.0) - 14*P1x*pow(Q3x,3.0)*pow(sp,3.0) + 21*P1x*pow(Q3x,3.0)*pow(sp,4.0) + 126*P0y*pow(Q2y,3.0)*pow(sp,3.0) +
-21*P0y*pow(Q3y,3.0)*pow(sp,2.0) - 84*P0y*pow(Q2y,3.0)*pow(sp,4.0) + 14*P0y*pow(Q3y,3.0)*pow(sp,3.0) - 126*P1y*pow(Q2y,3.0)*pow(sp,3.0) - 21*P1y*pow(Q3y,3.0)*pow(sp,2.0) - 21*P0y*pow(Q3y,3.0)*pow(sp,4.0) +
-84*P1y*pow(Q2y,3.0)*pow(sp,4.0) - 14*P1y*pow(Q3y,3.0)*pow(sp,3.0) + 21*P1y*pow(Q3y,3.0)*pow(sp,4.0) + 84*pow(P0x,2.0)*pow(Q2x,2.0)*pow(sp,2.0) - 77*pow(P0x,2.0)*pow(Q2x,2.0)*pow(sp,3.0) +
-84*pow(P0x,2.0)*pow(Q3x,2.0)*pow(sp,2.0) - 168*pow(P1x,2.0)*pow(Q2x,2.0)*pow(sp,2.0) + 21*pow(P0x,2.0)*pow(Q2x,2.0)*pow(sp,4.0) - 77*pow(P0x,2.0)*pow(Q3x,2.0)*pow(sp,3.0) + 231*pow(P1x,2.0)*pow(Q2x,2.0)*pow(sp,3.0) -
-168*pow(P1x,2.0)*pow(Q3x,2.0)*pow(sp,2.0) + 21*pow(P0x,2.0)*pow(Q3x,2.0)*pow(sp,4.0) - 84*pow(P1x,2.0)*pow(Q2x,2.0)*pow(sp,4.0) + 231*pow(P1x,2.0)*pow(Q3x,2.0)*pow(sp,3.0) - 84*pow(P1x,2.0)*pow(Q3x,2.0)*pow(sp,4.0) +
-84*pow(P0x,2.0)*pow(Q2y,2.0)*pow(sp,2.0) + 84*pow(P0y,2.0)*pow(Q2x,2.0)*pow(sp,2.0) - 56*pow(P0x,2.0)*pow(Q2y,2.0)*pow(sp,3.0) + 84*pow(P0x,2.0)*pow(Q3y,2.0)*pow(sp,2.0) - 168*pow(P1x,2.0)*pow(Q2y,2.0)*pow(sp,2.0) -
-56*pow(P0y,2.0)*pow(Q2x,2.0)*pow(sp,3.0) + 84*pow(P0y,2.0)*pow(Q3x,2.0)*pow(sp,2.0) - 168*pow(P1y,2.0)*pow(Q2x,2.0)*pow(sp,2.0) + 12*pow(P0x,2.0)*pow(Q2y,2.0)*pow(sp,4.0) - 56*pow(P0x,2.0)*pow(Q3y,2.0)*pow(sp,3.0) +
-168*pow(P1x,2.0)*pow(Q2y,2.0)*pow(sp,3.0) - 168*pow(P1x,2.0)*pow(Q3y,2.0)*pow(sp,2.0) + 12*pow(P0y,2.0)*pow(Q2x,2.0)*pow(sp,4.0) - 56*pow(P0y,2.0)*pow(Q3x,2.0)*pow(sp,3.0) + 168*pow(P1y,2.0)*pow(Q2x,2.0)*pow(sp,3.0) -
-168*pow(P1y,2.0)*pow(Q3x,2.0)*pow(sp,2.0) + 12*pow(P0x,2.0)*pow(Q3y,2.0)*pow(sp,4.0) - 48*pow(P1x,2.0)*pow(Q2y,2.0)*pow(sp,4.0) + 168*pow(P1x,2.0)*pow(Q3y,2.0)*pow(sp,3.0) + 12*pow(P0y,2.0)*pow(Q3x,2.0)*pow(sp,4.0) -
-48*pow(P1y,2.0)*pow(Q2x,2.0)*pow(sp,4.0) + 168*pow(P1y,2.0)*pow(Q3x,2.0)*pow(sp,3.0) - 48*pow(P1x,2.0)*pow(Q3y,2.0)*pow(sp,4.0) - 48*pow(P1y,2.0)*pow(Q3x,2.0)*pow(sp,4.0) + 84*pow(P0y,2.0)*pow(Q2y,2.0)*pow(sp,2.0) -
-77*pow(P0y,2.0)*pow(Q2y,2.0)*pow(sp,3.0) + 84*pow(P0y,2.0)*pow(Q3y,2.0)*pow(sp,2.0) - 168*pow(P1y,2.0)*pow(Q2y,2.0)*pow(sp,2.0) + 21*pow(P0y,2.0)*pow(Q2y,2.0)*pow(sp,4.0) - 77*pow(P0y,2.0)*pow(Q3y,2.0)*pow(sp,3.0) +
-231*pow(P1y,2.0)*pow(Q2y,2.0)*pow(sp,3.0) - 168*pow(P1y,2.0)*pow(Q3y,2.0)*pow(sp,2.0) + 21*pow(P0y,2.0)*pow(Q3y,2.0)*pow(sp,4.0) - 84*pow(P1y,2.0)*pow(Q2y,2.0)*pow(sp,4.0) + 231*pow(P1y,2.0)*pow(Q3y,2.0)*pow(sp,3.0) -
-84*pow(P1y,2.0)*pow(Q3y,2.0)*pow(sp,4.0) + 49*P0x*P1x*pow(Q2x,2.0) + 49*P0x*P1x*pow(Q3x,2.0) + 28*P0x*P3x*pow(Q2x,2.0) + 28*P0x*P3x*pow(Q3x,2.0) - 28*P1x*P3x*pow(Q2x,2.0) - 28*P1x*P3x*pow(Q3x,2.0) + 88*P0x*P1x*pow(Q2y,2.0) +
-88*P0x*P1x*pow(Q3y,2.0) + 40*P0x*P3x*pow(Q2y,2.0) + 40*P0x*P3x*pow(Q3y,2.0) - 40*P1x*P3x*pow(Q2y,2.0) - 40*P1x*P3x*pow(Q3y,2.0) + 88*P0y*P1y*pow(Q2x,2.0) + 88*P0y*P1y*pow(Q3x,2.0) + 40*P0y*P3y*pow(Q2x,2.0) +
-40*P0y*P3y*pow(Q3x,2.0) - 40*P1y*P3y*pow(Q2x,2.0) - 40*P1y*P3y*pow(Q3x,2.0) + 49*P0y*P1y*pow(Q2y,2.0) + 49*P0y*P1y*pow(Q3y,2.0) + 28*P0y*P3y*pow(Q2y,2.0) + 28*P0y*P3y*pow(Q3y,2.0) - 28*P1y*P3y*pow(Q2y,2.0) -
-28*P1y*P3y*pow(Q3y,2.0) + 21*P0x*Q1x*pow(Q2x,2.0) + 21*P0x*Q1x*pow(Q3x,2.0) - 21*P1x*Q1x*pow(Q2x,2.0) - 21*P1x*Q1x*pow(Q3x,2.0) + 98*pow(P0x,2.0)*Q2x*Q3x + 48*P0x*Q1x*pow(Q2y,2.0) + 48*P0x*Q1x*pow(Q3y,2.0) -
-48*P1x*Q1x*pow(Q2y,2.0) - 48*P1x*Q1x*pow(Q3y,2.0) + 176*pow(P0y,2.0)*Q2x*Q3x + 48*P0y*pow(Q2x,2.0)*Q1y + 48*P0y*pow(Q3x,2.0)*Q1y - 48*P1y*pow(Q2x,2.0)*Q1y - 48*P1y*pow(Q3x,2.0)*Q1y + 176*pow(P0x,2.0)*Q2y*Q3y +
-21*P0y*Q1y*pow(Q2y,2.0) + 21*P0y*Q1y*pow(Q3y,2.0) - 21*P1y*Q1y*pow(Q2y,2.0) - 21*P1y*Q1y*pow(Q3y,2.0) + 98*pow(P0y,2.0)*Q2y*Q3y - 42*P0x*pow(Q2x,3.0)*sp + 42*P1x*pow(Q2x,3.0)*sp - 42*P0y*pow(Q2y,3.0)*sp +
-42*P1y*pow(Q2y,3.0)*sp + 84*P0x*P3x*pow(Q2x,2.0)*sp + 84*P0x*P3x*pow(Q3x,2.0)*sp - 84*P1x*P3x*pow(Q2x,2.0)*sp - 84*P1x*P3x*pow(Q3x,2.0)*sp + 120*P0x*P3x*pow(Q2y,2.0)*sp + 120*P0x*P3x*pow(Q3y,2.0)*sp -
-120*P1x*P3x*pow(Q2y,2.0)*sp - 120*P1x*P3x*pow(Q3y,2.0)*sp + 120*P0y*P3y*pow(Q2x,2.0)*sp + 120*P0y*P3y*pow(Q3x,2.0)*sp - 120*P1y*P3y*pow(Q2x,2.0)*sp - 120*P1y*P3y*pow(Q3x,2.0)*sp + 84*P0y*P3y*pow(Q2y,2.0)*sp +
-84*P0y*P3y*pow(Q3y,2.0)*sp - 84*P1y*P3y*pow(Q2y,2.0)*sp - 84*P1y*P3y*pow(Q3y,2.0)*sp - 42*P0x*Q1x*pow(Q2x,2.0)*sp - 42*P0x*Q1x*pow(Q3x,2.0)*sp + 42*P1x*Q1x*pow(Q2x,2.0)*sp - 42*P0x*Q2x*pow(Q3x,2.0)*sp +
-84*P0x*pow(Q2x,2.0)*Q3x*sp + 42*P1x*Q1x*pow(Q3x,2.0)*sp + 42*P1x*Q2x*pow(Q3x,2.0)*sp - 84*P1x*pow(Q2x,2.0)*Q3x*sp - 24*P0x*Q1x*pow(Q2y,2.0)*sp - 24*P0x*Q1x*pow(Q3y,2.0)*sp - 42*P0x*Q2x*pow(Q2y,2.0)*sp +
-24*P1x*Q1x*pow(Q2y,2.0)*sp - 96*P0x*Q2x*pow(Q3y,2.0)*sp - 54*P0x*Q3x*pow(Q2y,2.0)*sp + 24*P1x*Q1x*pow(Q3y,2.0)*sp + 42*P1x*Q2x*pow(Q2y,2.0)*sp + 96*P1x*Q2x*pow(Q3y,2.0)*sp + 54*P1x*Q3x*pow(Q2y,2.0)*sp -
-24*P0y*pow(Q2x,2.0)*Q1y*sp - 42*P0y*pow(Q2x,2.0)*Q2y*sp - 24*P0y*pow(Q3x,2.0)*Q1y*sp + 24*P1y*pow(Q2x,2.0)*Q1y*sp - 54*P0y*pow(Q2x,2.0)*Q3y*sp - 96*P0y*pow(Q3x,2.0)*Q2y*sp + 42*P1y*pow(Q2x,2.0)*Q2y*sp +
-24*P1y*pow(Q3x,2.0)*Q1y*sp + 54*P1y*pow(Q2x,2.0)*Q3y*sp + 96*P1y*pow(Q3x,2.0)*Q2y*sp - 42*P0y*Q1y*pow(Q2y,2.0)*sp - 42*P0y*Q1y*pow(Q3y,2.0)*sp + 42*P1y*Q1y*pow(Q2y,2.0)*sp - 42*P0y*Q2y*pow(Q3y,2.0)*sp +
-84*P0y*pow(Q2y,2.0)*Q3y*sp + 42*P1y*Q1y*pow(Q3y,2.0)*sp + 42*P1y*Q2y*pow(Q3y,2.0)*sp - 84*P1y*pow(Q2y,2.0)*Q3y*sp + 84*P0x*P1x*pow(Q2x,2.0)*pow(sp,2.0) - 154*P0x*P1x*pow(Q2x,2.0)*pow(sp,3.0) +
-84*P0x*P1x*pow(Q3x,2.0)*pow(sp,2.0) + 252*P0x*P2x*pow(Q2x,2.0)*pow(sp,2.0) + 63*P0x*P1x*pow(Q2x,2.0)*pow(sp,4.0) - 154*P0x*P1x*pow(Q3x,2.0)*pow(sp,3.0) - 462*P0x*P2x*pow(Q2x,2.0)*pow(sp,3.0) +
-252*P0x*P2x*pow(Q3x,2.0)*pow(sp,2.0) - 336*P0x*P3x*pow(Q2x,2.0)*pow(sp,2.0) - 252*P1x*P2x*pow(Q2x,2.0)*pow(sp,2.0) + 63*P0x*P1x*pow(Q3x,2.0)*pow(sp,4.0) + 210*P0x*P2x*pow(Q2x,2.0)*pow(sp,4.0) -
-462*P0x*P2x*pow(Q3x,2.0)*pow(sp,3.0) + 210*P0x*P3x*pow(Q2x,2.0)*pow(sp,3.0) - 336*P0x*P3x*pow(Q3x,2.0)*pow(sp,2.0) + 462*P1x*P2x*pow(Q2x,2.0)*pow(sp,3.0) - 252*P1x*P2x*pow(Q3x,2.0)*pow(sp,2.0) +
-336*P1x*P3x*pow(Q2x,2.0)*pow(sp,2.0) + 210*P0x*P2x*pow(Q3x,2.0)*pow(sp,4.0) + 210*P0x*P3x*pow(Q3x,2.0)*pow(sp,3.0) - 210*P1x*P2x*pow(Q2x,2.0)*pow(sp,4.0) + 462*P1x*P2x*pow(Q3x,2.0)*pow(sp,3.0) -
-210*P1x*P3x*pow(Q2x,2.0)*pow(sp,3.0) + 336*P1x*P3x*pow(Q3x,2.0)*pow(sp,2.0) - 210*P1x*P2x*pow(Q3x,2.0)*pow(sp,4.0) - 210*P1x*P3x*pow(Q3x,2.0)*pow(sp,3.0) + 84*P0x*P1x*pow(Q2y,2.0)*pow(sp,2.0) -
-112*P0x*P1x*pow(Q2y,2.0)*pow(sp,3.0) + 84*P0x*P1x*pow(Q3y,2.0)*pow(sp,2.0) + 252*P0x*P2x*pow(Q2y,2.0)*pow(sp,2.0) + 36*P0x*P1x*pow(Q2y,2.0)*pow(sp,4.0) - 112*P0x*P1x*pow(Q3y,2.0)*pow(sp,3.0) -
-336*P0x*P2x*pow(Q2y,2.0)*pow(sp,3.0) + 252*P0x*P2x*pow(Q3y,2.0)*pow(sp,2.0) - 264*P0x*P3x*pow(Q2y,2.0)*pow(sp,2.0) - 252*P1x*P2x*pow(Q2y,2.0)*pow(sp,2.0) + 36*P0x*P1x*pow(Q3y,2.0)*pow(sp,4.0) +
-120*P0x*P2x*pow(Q2y,2.0)*pow(sp,4.0) - 336*P0x*P2x*pow(Q3y,2.0)*pow(sp,3.0) + 120*P0x*P3x*pow(Q2y,2.0)*pow(sp,3.0) - 264*P0x*P3x*pow(Q3y,2.0)*pow(sp,2.0) + 336*P1x*P2x*pow(Q2y,2.0)*pow(sp,3.0) -
-252*P1x*P2x*pow(Q3y,2.0)*pow(sp,2.0) + 264*P1x*P3x*pow(Q2y,2.0)*pow(sp,2.0) + 120*P0x*P2x*pow(Q3y,2.0)*pow(sp,4.0) + 120*P0x*P3x*pow(Q3y,2.0)*pow(sp,3.0) - 120*P1x*P2x*pow(Q2y,2.0)*pow(sp,4.0) +
-336*P1x*P2x*pow(Q3y,2.0)*pow(sp,3.0) - 120*P1x*P3x*pow(Q2y,2.0)*pow(sp,3.0) + 264*P1x*P3x*pow(Q3y,2.0)*pow(sp,2.0) - 120*P1x*P2x*pow(Q3y,2.0)*pow(sp,4.0) - 120*P1x*P3x*pow(Q3y,2.0)*pow(sp,3.0) +
-84*P0y*P1y*pow(Q2x,2.0)*pow(sp,2.0) - 112*P0y*P1y*pow(Q2x,2.0)*pow(sp,3.0) + 84*P0y*P1y*pow(Q3x,2.0)*pow(sp,2.0) + 252*P0y*P2y*pow(Q2x,2.0)*pow(sp,2.0) + 36*P0y*P1y*pow(Q2x,2.0)*pow(sp,4.0) -
-112*P0y*P1y*pow(Q3x,2.0)*pow(sp,3.0) - 336*P0y*P2y*pow(Q2x,2.0)*pow(sp,3.0) + 252*P0y*P2y*pow(Q3x,2.0)*pow(sp,2.0) - 264*P0y*P3y*pow(Q2x,2.0)*pow(sp,2.0) - 252*P1y*P2y*pow(Q2x,2.0)*pow(sp,2.0) +
-36*P0y*P1y*pow(Q3x,2.0)*pow(sp,4.0) + 120*P0y*P2y*pow(Q2x,2.0)*pow(sp,4.0) - 336*P0y*P2y*pow(Q3x,2.0)*pow(sp,3.0) + 120*P0y*P3y*pow(Q2x,2.0)*pow(sp,3.0) - 264*P0y*P3y*pow(Q3x,2.0)*pow(sp,2.0) +
-336*P1y*P2y*pow(Q2x,2.0)*pow(sp,3.0) - 252*P1y*P2y*pow(Q3x,2.0)*pow(sp,2.0) + 264*P1y*P3y*pow(Q2x,2.0)*pow(sp,2.0) + 120*P0y*P2y*pow(Q3x,2.0)*pow(sp,4.0) + 120*P0y*P3y*pow(Q3x,2.0)*pow(sp,3.0) -
-120*P1y*P2y*pow(Q2x,2.0)*pow(sp,4.0) + 336*P1y*P2y*pow(Q3x,2.0)*pow(sp,3.0) - 120*P1y*P3y*pow(Q2x,2.0)*pow(sp,3.0) + 264*P1y*P3y*pow(Q3x,2.0)*pow(sp,2.0) - 120*P1y*P2y*pow(Q3x,2.0)*pow(sp,4.0) -
-120*P1y*P3y*pow(Q3x,2.0)*pow(sp,3.0) + 84*P0y*P1y*pow(Q2y,2.0)*pow(sp,2.0) - 154*P0y*P1y*pow(Q2y,2.0)*pow(sp,3.0) + 84*P0y*P1y*pow(Q3y,2.0)*pow(sp,2.0) + 252*P0y*P2y*pow(Q2y,2.0)*pow(sp,2.0) +
-63*P0y*P1y*pow(Q2y,2.0)*pow(sp,4.0) - 154*P0y*P1y*pow(Q3y,2.0)*pow(sp,3.0) - 462*P0y*P2y*pow(Q2y,2.0)*pow(sp,3.0) + 252*P0y*P2y*pow(Q3y,2.0)*pow(sp,2.0) - 336*P0y*P3y*pow(Q2y,2.0)*pow(sp,2.0) -
-252*P1y*P2y*pow(Q2y,2.0)*pow(sp,2.0) + 63*P0y*P1y*pow(Q3y,2.0)*pow(sp,4.0) + 210*P0y*P2y*pow(Q2y,2.0)*pow(sp,4.0) - 462*P0y*P2y*pow(Q3y,2.0)*pow(sp,3.0) + 210*P0y*P3y*pow(Q2y,2.0)*pow(sp,3.0) -
-336*P0y*P3y*pow(Q3y,2.0)*pow(sp,2.0) + 462*P1y*P2y*pow(Q2y,2.0)*pow(sp,3.0) - 252*P1y*P2y*pow(Q3y,2.0)*pow(sp,2.0) + 336*P1y*P3y*pow(Q2y,2.0)*pow(sp,2.0) + 210*P0y*P2y*pow(Q3y,2.0)*pow(sp,4.0) +
-210*P0y*P3y*pow(Q3y,2.0)*pow(sp,3.0) - 210*P1y*P2y*pow(Q2y,2.0)*pow(sp,4.0) + 462*P1y*P2y*pow(Q3y,2.0)*pow(sp,3.0) - 210*P1y*P3y*pow(Q2y,2.0)*pow(sp,3.0) + 336*P1y*P3y*pow(Q3y,2.0)*pow(sp,2.0) -
-210*P1y*P2y*pow(Q3y,2.0)*pow(sp,4.0) - 210*P1y*P3y*pow(Q3y,2.0)*pow(sp,3.0) - 189*P0x*Q1x*pow(Q2x,2.0)*pow(sp,2.0) + 420*P0x*Q1x*pow(Q2x,2.0)*pow(sp,3.0) - 189*P0x*Q1x*pow(Q3x,2.0)*pow(sp,2.0) +
-189*P1x*Q1x*pow(Q2x,2.0)*pow(sp,2.0) - 210*P0x*Q1x*pow(Q2x,2.0)*pow(sp,4.0) + 420*P0x*Q1x*pow(Q3x,2.0)*pow(sp,3.0) - 42*P0x*Q2x*pow(Q3x,2.0)*pow(sp,2.0) + 21*P0x*pow(Q2x,2.0)*Q3x*pow(sp,2.0) -
-420*P1x*Q1x*pow(Q2x,2.0)*pow(sp,3.0) + 189*P1x*Q1x*pow(Q3x,2.0)*pow(sp,2.0) - 168*pow(P0x,2.0)*Q2x*Q3x*pow(sp,2.0) - 210*P0x*Q1x*pow(Q3x,2.0)*pow(sp,4.0) + 98*P0x*Q2x*pow(Q3x,2.0)*pow(sp,3.0) -
-238*P0x*pow(Q2x,2.0)*Q3x*pow(sp,3.0) + 210*P1x*Q1x*pow(Q2x,2.0)*pow(sp,4.0) - 420*P1x*Q1x*pow(Q3x,2.0)*pow(sp,3.0) + 42*P1x*Q2x*pow(Q3x,2.0)*pow(sp,2.0) - 21*P1x*pow(Q2x,2.0)*Q3x*pow(sp,2.0) +
-154*pow(P0x,2.0)*Q2x*Q3x*pow(sp,3.0) + 336*pow(P1x,2.0)*Q2x*Q3x*pow(sp,2.0) - 42*P0x*Q2x*pow(Q3x,2.0)*pow(sp,4.0) + 147*P0x*pow(Q2x,2.0)*Q3x*pow(sp,4.0) + 210*P1x*Q1x*pow(Q3x,2.0)*pow(sp,4.0) -
-98*P1x*Q2x*pow(Q3x,2.0)*pow(sp,3.0) + 238*P1x*pow(Q2x,2.0)*Q3x*pow(sp,3.0) - 42*pow(P0x,2.0)*Q2x*Q3x*pow(sp,4.0) - 462*pow(P1x,2.0)*Q2x*Q3x*pow(sp,3.0) + 42*P1x*Q2x*pow(Q3x,2.0)*pow(sp,4.0) -
-147*P1x*pow(Q2x,2.0)*Q3x*pow(sp,4.0) + 168*pow(P1x,2.0)*Q2x*Q3x*pow(sp,4.0) - 216*P0x*Q1x*pow(Q2y,2.0)*pow(sp,2.0) + 312*P0x*Q1x*pow(Q2y,2.0)*pow(sp,3.0) - 216*P0x*Q1x*pow(Q3y,2.0)*pow(sp,2.0) +
-216*P1x*Q1x*pow(Q2y,2.0)*pow(sp,2.0) - 120*P0x*Q1x*pow(Q2y,2.0)*pow(sp,4.0) + 312*P0x*Q1x*pow(Q3y,2.0)*pow(sp,3.0) + 126*P0x*Q2x*pow(Q2y,2.0)*pow(sp,3.0) - 45*P0x*Q2x*pow(Q3y,2.0)*pow(sp,2.0) -
-24*P0x*Q3x*pow(Q2y,2.0)*pow(sp,2.0) - 312*P1x*Q1x*pow(Q2y,2.0)*pow(sp,3.0) + 216*P1x*Q1x*pow(Q3y,2.0)*pow(sp,2.0) - 168*pow(P0y,2.0)*Q2x*Q3x*pow(sp,2.0) - 120*P0x*Q1x*pow(Q3y,2.0)*pow(sp,4.0) -
-84*P0x*Q2x*pow(Q2y,2.0)*pow(sp,4.0) + 114*P0x*Q2x*pow(Q3y,2.0)*pow(sp,3.0) + 2*P0x*Q3x*pow(Q2y,2.0)*pow(sp,3.0) + 21*P0x*Q3x*pow(Q3y,2.0)*pow(sp,2.0) + 120*P1x*Q1x*pow(Q2y,2.0)*pow(sp,4.0) -
-312*P1x*Q1x*pow(Q3y,2.0)*pow(sp,3.0) - 126*P1x*Q2x*pow(Q2y,2.0)*pow(sp,3.0) + 45*P1x*Q2x*pow(Q3y,2.0)*pow(sp,2.0) + 24*P1x*Q3x*pow(Q2y,2.0)*pow(sp,2.0) + 112*pow(P0y,2.0)*Q2x*Q3x*pow(sp,3.0) +
-336*pow(P1y,2.0)*Q2x*Q3x*pow(sp,2.0) - 39*P0x*Q2x*pow(Q3y,2.0)*pow(sp,4.0) + 24*P0x*Q3x*pow(Q2y,2.0)*pow(sp,4.0) + 14*P0x*Q3x*pow(Q3y,2.0)*pow(sp,3.0) + 120*P1x*Q1x*pow(Q3y,2.0)*pow(sp,4.0) +
-84*P1x*Q2x*pow(Q2y,2.0)*pow(sp,4.0) - 114*P1x*Q2x*pow(Q3y,2.0)*pow(sp,3.0) - 2*P1x*Q3x*pow(Q2y,2.0)*pow(sp,3.0) - 21*P1x*Q3x*pow(Q3y,2.0)*pow(sp,2.0) - 24*pow(P0y,2.0)*Q2x*Q3x*pow(sp,4.0) -
-336*pow(P1y,2.0)*Q2x*Q3x*pow(sp,3.0) - 21*P0x*Q3x*pow(Q3y,2.0)*pow(sp,4.0) + 39*P1x*Q2x*pow(Q3y,2.0)*pow(sp,4.0) - 24*P1x*Q3x*pow(Q2y,2.0)*pow(sp,4.0) - 14*P1x*Q3x*pow(Q3y,2.0)*pow(sp,3.0) +
-96*pow(P1y,2.0)*Q2x*Q3x*pow(sp,4.0) + 21*P1x*Q3x*pow(Q3y,2.0)*pow(sp,4.0) - 216*P0y*pow(Q2x,2.0)*Q1y*pow(sp,2.0) + 312*P0y*pow(Q2x,2.0)*Q1y*pow(sp,3.0) - 216*P0y*pow(Q3x,2.0)*Q1y*pow(sp,2.0) +
-216*P1y*pow(Q2x,2.0)*Q1y*pow(sp,2.0) - 120*P0y*pow(Q2x,2.0)*Q1y*pow(sp,4.0) + 126*P0y*pow(Q2x,2.0)*Q2y*pow(sp,3.0) - 24*P0y*pow(Q2x,2.0)*Q3y*pow(sp,2.0) + 312*P0y*pow(Q3x,2.0)*Q1y*pow(sp,3.0) -
-45*P0y*pow(Q3x,2.0)*Q2y*pow(sp,2.0) - 312*P1y*pow(Q2x,2.0)*Q1y*pow(sp,3.0) + 216*P1y*pow(Q3x,2.0)*Q1y*pow(sp,2.0) - 168*pow(P0x,2.0)*Q2y*Q3y*pow(sp,2.0) - 84*P0y*pow(Q2x,2.0)*Q2y*pow(sp,4.0) +
-2*P0y*pow(Q2x,2.0)*Q3y*pow(sp,3.0) - 120*P0y*pow(Q3x,2.0)*Q1y*pow(sp,4.0) + 114*P0y*pow(Q3x,2.0)*Q2y*pow(sp,3.0) + 21*P0y*pow(Q3x,2.0)*Q3y*pow(sp,2.0) + 120*P1y*pow(Q2x,2.0)*Q1y*pow(sp,4.0) -
-126*P1y*pow(Q2x,2.0)*Q2y*pow(sp,3.0) + 24*P1y*pow(Q2x,2.0)*Q3y*pow(sp,2.0) - 312*P1y*pow(Q3x,2.0)*Q1y*pow(sp,3.0) + 45*P1y*pow(Q3x,2.0)*Q2y*pow(sp,2.0) + 112*pow(P0x,2.0)*Q2y*Q3y*pow(sp,3.0) +
-336*pow(P1x,2.0)*Q2y*Q3y*pow(sp,2.0) + 24*P0y*pow(Q2x,2.0)*Q3y*pow(sp,4.0) - 39*P0y*pow(Q3x,2.0)*Q2y*pow(sp,4.0) + 14*P0y*pow(Q3x,2.0)*Q3y*pow(sp,3.0) + 84*P1y*pow(Q2x,2.0)*Q2y*pow(sp,4.0) -
-2*P1y*pow(Q2x,2.0)*Q3y*pow(sp,3.0) + 120*P1y*pow(Q3x,2.0)*Q1y*pow(sp,4.0) - 114*P1y*pow(Q3x,2.0)*Q2y*pow(sp,3.0) - 21*P1y*pow(Q3x,2.0)*Q3y*pow(sp,2.0) - 24*pow(P0x,2.0)*Q2y*Q3y*pow(sp,4.0) -
-336*pow(P1x,2.0)*Q2y*Q3y*pow(sp,3.0) - 21*P0y*pow(Q3x,2.0)*Q3y*pow(sp,4.0) - 24*P1y*pow(Q2x,2.0)*Q3y*pow(sp,4.0) + 39*P1y*pow(Q3x,2.0)*Q2y*pow(sp,4.0) - 14*P1y*pow(Q3x,2.0)*Q3y*pow(sp,3.0) +
-96*pow(P1x,2.0)*Q2y*Q3y*pow(sp,4.0) + 21*P1y*pow(Q3x,2.0)*Q3y*pow(sp,4.0) - 189*P0y*Q1y*pow(Q2y,2.0)*pow(sp,2.0) + 420*P0y*Q1y*pow(Q2y,2.0)*pow(sp,3.0) - 189*P0y*Q1y*pow(Q3y,2.0)*pow(sp,2.0) +
-189*P1y*Q1y*pow(Q2y,2.0)*pow(sp,2.0) - 210*P0y*Q1y*pow(Q2y,2.0)*pow(sp,4.0) + 420*P0y*Q1y*pow(Q3y,2.0)*pow(sp,3.0) - 42*P0y*Q2y*pow(Q3y,2.0)*pow(sp,2.0) + 21*P0y*pow(Q2y,2.0)*Q3y*pow(sp,2.0) -
-420*P1y*Q1y*pow(Q2y,2.0)*pow(sp,3.0) + 189*P1y*Q1y*pow(Q3y,2.0)*pow(sp,2.0) - 168*pow(P0y,2.0)*Q2y*Q3y*pow(sp,2.0) - 210*P0y*Q1y*pow(Q3y,2.0)*pow(sp,4.0) + 98*P0y*Q2y*pow(Q3y,2.0)*pow(sp,3.0) -
-238*P0y*pow(Q2y,2.0)*Q3y*pow(sp,3.0) + 210*P1y*Q1y*pow(Q2y,2.0)*pow(sp,4.0) - 420*P1y*Q1y*pow(Q3y,2.0)*pow(sp,3.0) + 42*P1y*Q2y*pow(Q3y,2.0)*pow(sp,2.0) - 21*P1y*pow(Q2y,2.0)*Q3y*pow(sp,2.0) +
-154*pow(P0y,2.0)*Q2y*Q3y*pow(sp,3.0) + 336*pow(P1y,2.0)*Q2y*Q3y*pow(sp,2.0) - 42*P0y*Q2y*pow(Q3y,2.0)*pow(sp,4.0) + 147*P0y*pow(Q2y,2.0)*Q3y*pow(sp,4.0) + 210*P1y*Q1y*pow(Q3y,2.0)*pow(sp,4.0) -
-98*P1y*Q2y*pow(Q3y,2.0)*pow(sp,3.0) + 238*P1y*pow(Q2y,2.0)*Q3y*pow(sp,3.0) - 42*pow(P0y,2.0)*Q2y*Q3y*pow(sp,4.0) - 462*pow(P1y,2.0)*Q2y*Q3y*pow(sp,3.0) + 42*P1y*Q2y*pow(Q3y,2.0)*pow(sp,4.0) -
-147*P1y*pow(Q2y,2.0)*Q3y*pow(sp,4.0) + 168*pow(P1y,2.0)*Q2y*Q3y*pow(sp,4.0) - 98*P0x*P1x*Q2x*Q3x - 56*P0x*P3x*Q2x*Q3x + 56*P1x*P3x*Q2x*Q3x + 78*P0x*P0y*Q2x*Q2y - 78*P0x*P0y*Q2x*Q3y - 78*P0x*P0y*Q3x*Q2y -
-39*P0x*P1y*Q2x*Q2y - 39*P1x*P0y*Q2x*Q2y - 176*P0x*P1x*Q2y*Q3y + 78*P0x*P0y*Q3x*Q3y + 39*P0x*P1y*Q2x*Q3y + 39*P0x*P1y*Q3x*Q2y + 39*P1x*P0y*Q2x*Q3y + 39*P1x*P0y*Q3x*Q2y - 176*P0y*P1y*Q2x*Q3x -
-39*P0x*P1y*Q3x*Q3y - 12*P0x*P3y*Q2x*Q2y - 39*P1x*P0y*Q3x*Q3y - 12*P3x*P0y*Q2x*Q2y - 80*P0x*P3x*Q2y*Q3y + 12*P0x*P3y*Q2x*Q3y + 12*P0x*P3y*Q3x*Q2y + 12*P1x*P3y*Q2x*Q2y + 12*P3x*P0y*Q2x*Q3y +
-12*P3x*P0y*Q3x*Q2y + 12*P3x*P1y*Q2x*Q2y - 80*P0y*P3y*Q2x*Q3x - 12*P0x*P3y*Q3x*Q3y + 80*P1x*P3x*Q2y*Q3y - 12*P1x*P3y*Q2x*Q3y - 12*P1x*P3y*Q3x*Q2y - 12*P3x*P0y*Q3x*Q3y - 12*P3x*P1y*Q2x*Q3y -
-12*P3x*P1y*Q3x*Q2y + 80*P1y*P3y*Q2x*Q3x + 12*P1x*P3y*Q3x*Q3y + 12*P3x*P1y*Q3x*Q3y - 98*P0y*P1y*Q2y*Q3y - 56*P0y*P3y*Q2y*Q3y + 56*P1y*P3y*Q2y*Q3y - 42*P0x*Q1x*Q2x*Q3x + 42*P1x*Q1x*Q2x*Q3x - 27*P0x*Q2x*Q1y*Q2y -
-27*P0y*Q1x*Q2x*Q2y - 96*P0x*Q1x*Q2y*Q3y + 27*P0x*Q2x*Q1y*Q3y + 27*P0x*Q3x*Q1y*Q2y + 27*P1x*Q2x*Q1y*Q2y + 27*P0y*Q1x*Q2x*Q3y + 27*P0y*Q1x*Q3x*Q2y - 96*P0y*Q2x*Q3x*Q1y + 27*P1y*Q1x*Q2x*Q2y - 27*P0x*Q3x*Q1y*Q3y +
-96*P1x*Q1x*Q2y*Q3y - 27*P1x*Q2x*Q1y*Q3y - 27*P1x*Q3x*Q1y*Q2y - 27*P0y*Q1x*Q3x*Q3y - 27*P1y*Q1x*Q2x*Q3y - 27*P1y*Q1x*Q3x*Q2y + 96*P1y*Q2x*Q3x*Q1y + 27*P1x*Q3x*Q1y*Q3y + 27*P1y*Q1x*Q3x*Q3y - 42*P0y*Q1y*Q2y*Q3y +
-42*P1y*Q1y*Q2y*Q3y - 168*P0x*P3x*Q2x*Q3x*sp + 168*P1x*P3x*Q2x*Q3x*sp - 36*P0x*P3y*Q2x*Q2y*sp - 36*P3x*P0y*Q2x*Q2y*sp - 240*P0x*P3x*Q2y*Q3y*sp + 36*P0x*P3y*Q2x*Q3y*sp + 36*P0x*P3y*Q3x*Q2y*sp + 36*P1x*P3y*Q2x*Q2y*sp +
-36*P3x*P0y*Q2x*Q3y*sp + 36*P3x*P0y*Q3x*Q2y*sp + 36*P3x*P1y*Q2x*Q2y*sp - 240*P0y*P3y*Q2x*Q3x*sp - 36*P0x*P3y*Q3x*Q3y*sp + 240*P1x*P3x*Q2y*Q3y*sp - 36*P1x*P3y*Q2x*Q3y*sp - 36*P1x*P3y*Q3x*Q2y*sp - 36*P3x*P0y*Q3x*Q3y*sp -
-36*P3x*P1y*Q2x*Q3y*sp - 36*P3x*P1y*Q3x*Q2y*sp + 240*P1y*P3y*Q2x*Q3x*sp + 36*P1x*P3y*Q3x*Q3y*sp + 36*P3x*P1y*Q3x*Q3y*sp - 168*P0y*P3y*Q2y*Q3y*sp + 168*P1y*P3y*Q2y*Q3y*sp + 84*P0x*Q1x*Q2x*Q3x*sp - 84*P1x*Q1x*Q2x*Q3x*sp -
-18*P0x*Q2x*Q1y*Q2y*sp - 18*P0y*Q1x*Q2x*Q2y*sp + 48*P0x*Q1x*Q2y*Q3y*sp + 18*P0x*Q2x*Q1y*Q3y*sp + 18*P0x*Q3x*Q1y*Q2y*sp + 18*P1x*Q2x*Q1y*Q2y*sp + 18*P0y*Q1x*Q2x*Q3y*sp + 18*P0y*Q1x*Q3x*Q2y*sp + 48*P0y*Q2x*Q3x*Q1y*sp +
-18*P1y*Q1x*Q2x*Q2y*sp + 138*P0x*Q2x*Q2y*Q3y*sp - 18*P0x*Q3x*Q1y*Q3y*sp - 48*P1x*Q1x*Q2y*Q3y*sp - 18*P1x*Q2x*Q1y*Q3y*sp - 18*P1x*Q3x*Q1y*Q2y*sp - 18*P0y*Q1x*Q3x*Q3y*sp + 138*P0y*Q2x*Q3x*Q2y*sp - 18*P1y*Q1x*Q2x*Q3y*sp -
-18*P1y*Q1x*Q3x*Q2y*sp - 48*P1y*Q2x*Q3x*Q1y*sp + 54*P0x*Q3x*Q2y*Q3y*sp - 138*P1x*Q2x*Q2y*Q3y*sp + 18*P1x*Q3x*Q1y*Q3y*sp + 54*P0y*Q2x*Q3x*Q3y*sp + 18*P1y*Q1x*Q3x*Q3y*sp - 138*P1y*Q2x*Q3x*Q2y*sp - 54*P1x*Q3x*Q2y*Q3y*sp -
-54*P1y*Q2x*Q3x*Q3y*sp + 84*P0y*Q1y*Q2y*Q3y*sp - 84*P1y*Q1y*Q2y*Q3y*sp - 168*P0x*P1x*Q2x*Q3x*pow(sp,2.0) + 308*P0x*P1x*Q2x*Q3x*pow(sp,3.0) - 504*P0x*P2x*Q2x*Q3x*pow(sp,2.0) - 126*P0x*P1x*Q2x*Q3x*pow(sp,4.0) +
-924*P0x*P2x*Q2x*Q3x*pow(sp,3.0) + 672*P0x*P3x*Q2x*Q3x*pow(sp,2.0) + 504*P1x*P2x*Q2x*Q3x*pow(sp,2.0) - 420*P0x*P2x*Q2x*Q3x*pow(sp,4.0) - 420*P0x*P3x*Q2x*Q3x*pow(sp,3.0) - 924*P1x*P2x*Q2x*Q3x*pow(sp,3.0) -
-672*P1x*P3x*Q2x*Q3x*pow(sp,2.0) + 420*P1x*P2x*Q2x*Q3x*pow(sp,4.0) + 420*P1x*P3x*Q2x*Q3x*pow(sp,3.0) - 42*P0x*P0y*Q2x*Q2y*pow(sp,3.0) - 168*P0x*P1x*Q2y*Q3y*pow(sp,2.0) + 18*P0x*P0y*Q2x*Q2y*pow(sp,4.0) +
-42*P0x*P0y*Q2x*Q3y*pow(sp,3.0) + 42*P0x*P0y*Q3x*Q2y*pow(sp,3.0) - 42*P0x*P1y*Q2x*Q2y*pow(sp,3.0) - 42*P1x*P0y*Q2x*Q2y*pow(sp,3.0) - 168*P0y*P1y*Q2x*Q3x*pow(sp,2.0) + 224*P0x*P1x*Q2y*Q3y*pow(sp,3.0) -
-504*P0x*P2x*Q2y*Q3y*pow(sp,2.0) - 18*P0x*P0y*Q2x*Q3y*pow(sp,4.0) - 18*P0x*P0y*Q3x*Q2y*pow(sp,4.0) - 42*P0x*P0y*Q3x*Q3y*pow(sp,3.0) + 27*P0x*P1y*Q2x*Q2y*pow(sp,4.0) + 42*P0x*P1y*Q2x*Q3y*pow(sp,3.0) +
-42*P0x*P1y*Q3x*Q2y*pow(sp,3.0) - 126*P0x*P2y*Q2x*Q2y*pow(sp,3.0) - 72*P0x*P3y*Q2x*Q2y*pow(sp,2.0) + 27*P1x*P0y*Q2x*Q2y*pow(sp,4.0) + 42*P1x*P0y*Q2x*Q3y*pow(sp,3.0) + 42*P1x*P0y*Q3x*Q2y*pow(sp,3.0) +
-126*P1x*P1y*Q2x*Q2y*pow(sp,3.0) - 126*P2x*P0y*Q2x*Q2y*pow(sp,3.0) - 72*P3x*P0y*Q2x*Q2y*pow(sp,2.0) + 224*P0y*P1y*Q2x*Q3x*pow(sp,3.0) - 504*P0y*P2y*Q2x*Q3x*pow(sp,2.0) - 72*P0x*P1x*Q2y*Q3y*pow(sp,4.0) +
-672*P0x*P2x*Q2y*Q3y*pow(sp,3.0) + 528*P0x*P3x*Q2y*Q3y*pow(sp,2.0) + 18*P0x*P0y*Q3x*Q3y*pow(sp,4.0) - 27*P0x*P1y*Q2x*Q3y*pow(sp,4.0) - 27*P0x*P1y*Q3x*Q2y*pow(sp,4.0) - 42*P0x*P1y*Q3x*Q3y*pow(sp,3.0) +
-90*P0x*P2y*Q2x*Q2y*pow(sp,4.0) + 126*P0x*P2y*Q2x*Q3y*pow(sp,3.0) + 126*P0x*P2y*Q3x*Q2y*pow(sp,3.0) + 90*P0x*P3y*Q2x*Q2y*pow(sp,3.0) + 72*P0x*P3y*Q2x*Q3y*pow(sp,2.0) + 72*P0x*P3y*Q3x*Q2y*pow(sp,2.0) +
-504*P1x*P2x*Q2y*Q3y*pow(sp,2.0) - 27*P1x*P0y*Q2x*Q3y*pow(sp,4.0) - 27*P1x*P0y*Q3x*Q2y*pow(sp,4.0) - 42*P1x*P0y*Q3x*Q3y*pow(sp,3.0) - 72*P1x*P1y*Q2x*Q2y*pow(sp,4.0) - 126*P1x*P1y*Q2x*Q3y*pow(sp,3.0) -
-126*P1x*P1y*Q3x*Q2y*pow(sp,3.0) + 126*P1x*P2y*Q2x*Q2y*pow(sp,3.0) + 72*P1x*P3y*Q2x*Q2y*pow(sp,2.0) + 90*P2x*P0y*Q2x*Q2y*pow(sp,4.0) + 126*P2x*P0y*Q2x*Q3y*pow(sp,3.0) + 126*P2x*P0y*Q3x*Q2y*pow(sp,3.0) +
-126*P2x*P1y*Q2x*Q2y*pow(sp,3.0) + 90*P3x*P0y*Q2x*Q2y*pow(sp,3.0) + 72*P3x*P0y*Q2x*Q3y*pow(sp,2.0) + 72*P3x*P0y*Q3x*Q2y*pow(sp,2.0) + 72*P3x*P1y*Q2x*Q2y*pow(sp,2.0) - 72*P0y*P1y*Q2x*Q3x*pow(sp,4.0) +
-672*P0y*P2y*Q2x*Q3x*pow(sp,3.0) + 528*P0y*P3y*Q2x*Q3x*pow(sp,2.0) + 504*P1y*P2y*Q2x*Q3x*pow(sp,2.0) - 240*P0x*P2x*Q2y*Q3y*pow(sp,4.0) - 240*P0x*P3x*Q2y*Q3y*pow(sp,3.0) + 27*P0x*P1y*Q3x*Q3y*pow(sp,4.0) -
-90*P0x*P2y*Q2x*Q3y*pow(sp,4.0) - 90*P0x*P2y*Q3x*Q2y*pow(sp,4.0) - 126*P0x*P2y*Q3x*Q3y*pow(sp,3.0) - 90*P0x*P3y*Q2x*Q3y*pow(sp,3.0) - 90*P0x*P3y*Q3x*Q2y*pow(sp,3.0) - 72*P0x*P3y*Q3x*Q3y*pow(sp,2.0) -
-672*P1x*P2x*Q2y*Q3y*pow(sp,3.0) - 528*P1x*P3x*Q2y*Q3y*pow(sp,2.0) + 27*P1x*P0y*Q3x*Q3y*pow(sp,4.0) + 72*P1x*P1y*Q2x*Q3y*pow(sp,4.0) + 72*P1x*P1y*Q3x*Q2y*pow(sp,4.0) + 126*P1x*P1y*Q3x*Q3y*pow(sp,3.0) -
-90*P1x*P2y*Q2x*Q2y*pow(sp,4.0) - 126*P1x*P2y*Q2x*Q3y*pow(sp,3.0) - 126*P1x*P2y*Q3x*Q2y*pow(sp,3.0) - 90*P1x*P3y*Q2x*Q2y*pow(sp,3.0) - 72*P1x*P3y*Q2x*Q3y*pow(sp,2.0) - 72*P1x*P3y*Q3x*Q2y*pow(sp,2.0) -
-90*P2x*P0y*Q2x*Q3y*pow(sp,4.0) - 90*P2x*P0y*Q3x*Q2y*pow(sp,4.0) - 126*P2x*P0y*Q3x*Q3y*pow(sp,3.0) - 90*P2x*P1y*Q2x*Q2y*pow(sp,4.0) - 126*P2x*P1y*Q2x*Q3y*pow(sp,3.0) - 126*P2x*P1y*Q3x*Q2y*pow(sp,3.0) -
-90*P3x*P0y*Q2x*Q3y*pow(sp,3.0) - 90*P3x*P0y*Q3x*Q2y*pow(sp,3.0) - 72*P3x*P0y*Q3x*Q3y*pow(sp,2.0) - 90*P3x*P1y*Q2x*Q2y*pow(sp,3.0) - 72*P3x*P1y*Q2x*Q3y*pow(sp,2.0) - 72*P3x*P1y*Q3x*Q2y*pow(sp,2.0) -
-240*P0y*P2y*Q2x*Q3x*pow(sp,4.0) - 240*P0y*P3y*Q2x*Q3x*pow(sp,3.0) - 672*P1y*P2y*Q2x*Q3x*pow(sp,3.0) - 528*P1y*P3y*Q2x*Q3x*pow(sp,2.0) + 90*P0x*P2y*Q3x*Q3y*pow(sp,4.0) + 90*P0x*P3y*Q3x*Q3y*pow(sp,3.0) +
-240*P1x*P2x*Q2y*Q3y*pow(sp,4.0) + 240*P1x*P3x*Q2y*Q3y*pow(sp,3.0) - 72*P1x*P1y*Q3x*Q3y*pow(sp,4.0) + 90*P1x*P2y*Q2x*Q3y*pow(sp,4.0) + 90*P1x*P2y*Q3x*Q2y*pow(sp,4.0) + 126*P1x*P2y*Q3x*Q3y*pow(sp,3.0) +
-90*P1x*P3y*Q2x*Q3y*pow(sp,3.0) + 90*P1x*P3y*Q3x*Q2y*pow(sp,3.0) + 72*P1x*P3y*Q3x*Q3y*pow(sp,2.0) + 90*P2x*P0y*Q3x*Q3y*pow(sp,4.0) + 90*P2x*P1y*Q2x*Q3y*pow(sp,4.0) + 90*P2x*P1y*Q3x*Q2y*pow(sp,4.0) +
-126*P2x*P1y*Q3x*Q3y*pow(sp,3.0) + 90*P3x*P0y*Q3x*Q3y*pow(sp,3.0) + 90*P3x*P1y*Q2x*Q3y*pow(sp,3.0) + 90*P3x*P1y*Q3x*Q2y*pow(sp,3.0) + 72*P3x*P1y*Q3x*Q3y*pow(sp,2.0) + 240*P1y*P2y*Q2x*Q3x*pow(sp,4.0) +
-240*P1y*P3y*Q2x*Q3x*pow(sp,3.0) - 90*P1x*P2y*Q3x*Q3y*pow(sp,4.0) - 90*P1x*P3y*Q3x*Q3y*pow(sp,3.0) - 90*P2x*P1y*Q3x*Q3y*pow(sp,4.0) - 90*P3x*P1y*Q3x*Q3y*pow(sp,3.0) - 168*P0y*P1y*Q2y*Q3y*pow(sp,2.0) +
-308*P0y*P1y*Q2y*Q3y*pow(sp,3.0) - 504*P0y*P2y*Q2y*Q3y*pow(sp,2.0) - 126*P0y*P1y*Q2y*Q3y*pow(sp,4.0) + 924*P0y*P2y*Q2y*Q3y*pow(sp,3.0) + 672*P0y*P3y*Q2y*Q3y*pow(sp,2.0) + 504*P1y*P2y*Q2y*Q3y*pow(sp,2.0) -
-420*P0y*P2y*Q2y*Q3y*pow(sp,4.0) - 420*P0y*P3y*Q2y*Q3y*pow(sp,3.0) - 924*P1y*P2y*Q2y*Q3y*pow(sp,3.0) - 672*P1y*P3y*Q2y*Q3y*pow(sp,2.0) + 420*P1y*P2y*Q2y*Q3y*pow(sp,4.0) + 420*P1y*P3y*Q2y*Q3y*pow(sp,3.0) +
-378*P0x*Q1x*Q2x*Q3x*pow(sp,2.0) - 840*P0x*Q1x*Q2x*Q3x*pow(sp,3.0) - 378*P1x*Q1x*Q2x*Q3x*pow(sp,2.0) + 420*P0x*Q1x*Q2x*Q3x*pow(sp,4.0) + 840*P1x*Q1x*Q2x*Q3x*pow(sp,3.0) - 420*P1x*Q1x*Q2x*Q3x*pow(sp,4.0) +
-27*P0x*Q2x*Q1y*Q2y*pow(sp,2.0) + 27*P0y*Q1x*Q2x*Q2y*pow(sp,2.0) + 432*P0x*Q1x*Q2y*Q3y*pow(sp,2.0) + 108*P0x*Q2x*Q1y*Q2y*pow(sp,3.0) - 27*P0x*Q2x*Q1y*Q3y*pow(sp,2.0) - 27*P0x*Q3x*Q1y*Q2y*pow(sp,2.0) -
-27*P1x*Q2x*Q1y*Q2y*pow(sp,2.0) + 108*P0y*Q1x*Q2x*Q2y*pow(sp,3.0) - 27*P0y*Q1x*Q2x*Q3y*pow(sp,2.0) - 27*P0y*Q1x*Q3x*Q2y*pow(sp,2.0) + 432*P0y*Q2x*Q3x*Q1y*pow(sp,2.0) - 27*P1y*Q1x*Q2x*Q2y*pow(sp,2.0) -
-624*P0x*Q1x*Q2y*Q3y*pow(sp,3.0) - 90*P0x*Q2x*Q1y*Q2y*pow(sp,4.0) - 108*P0x*Q2x*Q1y*Q3y*pow(sp,3.0) + 45*P0x*Q2x*Q2y*Q3y*pow(sp,2.0) - 108*P0x*Q3x*Q1y*Q2y*pow(sp,3.0) + 27*P0x*Q3x*Q1y*Q3y*pow(sp,2.0) -
-432*P1x*Q1x*Q2y*Q3y*pow(sp,2.0) - 108*P1x*Q2x*Q1y*Q2y*pow(sp,3.0) + 27*P1x*Q2x*Q1y*Q3y*pow(sp,2.0) + 27*P1x*Q3x*Q1y*Q2y*pow(sp,2.0) - 90*P0y*Q1x*Q2x*Q2y*pow(sp,4.0) - 108*P0y*Q1x*Q2x*Q3y*pow(sp,3.0) -
-108*P0y*Q1x*Q3x*Q2y*pow(sp,3.0) + 27*P0y*Q1x*Q3x*Q3y*pow(sp,2.0) - 624*P0y*Q2x*Q3x*Q1y*pow(sp,3.0) + 45*P0y*Q2x*Q3x*Q2y*pow(sp,2.0) - 108*P1y*Q1x*Q2x*Q2y*pow(sp,3.0) + 27*P1y*Q1x*Q2x*Q3y*pow(sp,2.0) +
-27*P1y*Q1x*Q3x*Q2y*pow(sp,2.0) - 432*P1y*Q2x*Q3x*Q1y*pow(sp,2.0) + 240*P0x*Q1x*Q2y*Q3y*pow(sp,4.0) + 90*P0x*Q2x*Q1y*Q3y*pow(sp,4.0) - 240*P0x*Q2x*Q2y*Q3y*pow(sp,3.0) + 90*P0x*Q3x*Q1y*Q2y*pow(sp,4.0) +
-108*P0x*Q3x*Q1y*Q3y*pow(sp,3.0) + 3*P0x*Q3x*Q2y*Q3y*pow(sp,2.0) + 624*P1x*Q1x*Q2y*Q3y*pow(sp,3.0) + 90*P1x*Q2x*Q1y*Q2y*pow(sp,4.0) + 108*P1x*Q2x*Q1y*Q3y*pow(sp,3.0) - 45*P1x*Q2x*Q2y*Q3y*pow(sp,2.0) +
-108*P1x*Q3x*Q1y*Q2y*pow(sp,3.0) - 27*P1x*Q3x*Q1y*Q3y*pow(sp,2.0) + 90*P0y*Q1x*Q2x*Q3y*pow(sp,4.0) + 90*P0y*Q1x*Q3x*Q2y*pow(sp,4.0) + 108*P0y*Q1x*Q3x*Q3y*pow(sp,3.0) + 240*P0y*Q2x*Q3x*Q1y*pow(sp,4.0) -
-240*P0y*Q2x*Q3x*Q2y*pow(sp,3.0) + 3*P0y*Q2x*Q3x*Q3y*pow(sp,2.0) + 90*P1y*Q1x*Q2x*Q2y*pow(sp,4.0) + 108*P1y*Q1x*Q2x*Q3y*pow(sp,3.0) + 108*P1y*Q1x*Q3x*Q2y*pow(sp,3.0) - 27*P1y*Q1x*Q3x*Q3y*pow(sp,2.0) +
-624*P1y*Q2x*Q3x*Q1y*pow(sp,3.0) - 45*P1y*Q2x*Q3x*Q2y*pow(sp,2.0) + 123*P0x*Q2x*Q2y*Q3y*pow(sp,4.0) - 90*P0x*Q3x*Q1y*Q3y*pow(sp,4.0) - 16*P0x*Q3x*Q2y*Q3y*pow(sp,3.0) - 240*P1x*Q1x*Q2y*Q3y*pow(sp,4.0) -
-90*P1x*Q2x*Q1y*Q3y*pow(sp,4.0) + 240*P1x*Q2x*Q2y*Q3y*pow(sp,3.0) - 90*P1x*Q3x*Q1y*Q2y*pow(sp,4.0) - 108*P1x*Q3x*Q1y*Q3y*pow(sp,3.0) - 3*P1x*Q3x*Q2y*Q3y*pow(sp,2.0) - 90*P0y*Q1x*Q3x*Q3y*pow(sp,4.0) +
-123*P0y*Q2x*Q3x*Q2y*pow(sp,4.0) - 16*P0y*Q2x*Q3x*Q3y*pow(sp,3.0) - 90*P1y*Q1x*Q2x*Q3y*pow(sp,4.0) - 90*P1y*Q1x*Q3x*Q2y*pow(sp,4.0) - 108*P1y*Q1x*Q3x*Q3y*pow(sp,3.0) - 240*P1y*Q2x*Q3x*Q1y*pow(sp,4.0) +
-240*P1y*Q2x*Q3x*Q2y*pow(sp,3.0) - 3*P1y*Q2x*Q3x*Q3y*pow(sp,2.0) - 3*P0x*Q3x*Q2y*Q3y*pow(sp,4.0) - 123*P1x*Q2x*Q2y*Q3y*pow(sp,4.0) + 90*P1x*Q3x*Q1y*Q3y*pow(sp,4.0) + 16*P1x*Q3x*Q2y*Q3y*pow(sp,3.0) -
-3*P0y*Q2x*Q3x*Q3y*pow(sp,4.0) + 90*P1y*Q1x*Q3x*Q3y*pow(sp,4.0) - 123*P1y*Q2x*Q3x*Q2y*pow(sp,4.0) + 16*P1y*Q2x*Q3x*Q3y*pow(sp,3.0) + 3*P1x*Q3x*Q2y*Q3y*pow(sp,4.0) + 3*P1y*Q2x*Q3x*Q3y*pow(sp,4.0) +
-378*P0y*Q1y*Q2y*Q3y*pow(sp,2.0) - 840*P0y*Q1y*Q2y*Q3y*pow(sp,3.0) - 378*P1y*Q1y*Q2y*Q3y*pow(sp,2.0) + 420*P0y*Q1y*Q2y*Q3y*pow(sp,4.0) + 840*P1y*Q1y*Q2y*Q3y*pow(sp,3.0) -
-420*P1y*Q1y*Q2y*Q3y*pow(sp,4.0))/(3*(7*pow(P0x,2.0)*pow(Q2x,2.0) + 7*pow(P0x,2.0)*pow(Q3x,2.0) + 7*pow(P1x,2.0)*pow(Q2x,2.0) + 7*pow(P1x,2.0)*pow(Q3x,2.0) + 16*pow(P0x,2.0)*pow(Q2y,2.0) +
-16*pow(P0y,2.0)*pow(Q2x,2.0) + 16*pow(P0x,2.0)*pow(Q3y,2.0) + 16*pow(P1x,2.0)*pow(Q2y,2.0) + 16*pow(P0y,2.0)*pow(Q3x,2.0) + 16*pow(P1y,2.0)*pow(Q2x,2.0) + 16*pow(P1x,2.0)*pow(Q3y,2.0) +
-16*pow(P1y,2.0)*pow(Q3x,2.0) + 7*pow(P0y,2.0)*pow(Q2y,2.0) + 7*pow(P0y,2.0)*pow(Q3y,2.0) + 7*pow(P1y,2.0)*pow(Q2y,2.0) + 7*pow(P1y,2.0)*pow(Q3y,2.0) - 14*P0x*P1x*pow(Q2x,2.0) - 14*P0x*P1x*pow(Q3x,2.0) -
-32*P0x*P1x*pow(Q2y,2.0) - 32*P0x*P1x*pow(Q3y,2.0) - 32*P0y*P1y*pow(Q2x,2.0) - 32*P0y*P1y*pow(Q3x,2.0) - 14*P0y*P1y*pow(Q2y,2.0) - 14*P0y*P1y*pow(Q3y,2.0) - 14*pow(P0x,2.0)*Q2x*Q3x - 14*pow(P1x,2.0)*Q2x*Q3x -
-32*pow(P0y,2.0)*Q2x*Q3x - 32*pow(P1y,2.0)*Q2x*Q3x - 32*pow(P0x,2.0)*Q2y*Q3y - 32*pow(P1x,2.0)*Q2y*Q3y - 14*pow(P0y,2.0)*Q2y*Q3y - 14*pow(P1y,2.0)*Q2y*Q3y + 28*P0x*P1x*Q2x*Q3x - 18*P0x*P0y*Q2x*Q2y + 18*P0x*P0y*Q2x*Q3y +
-18*P0x*P0y*Q3x*Q2y + 18*P0x*P1y*Q2x*Q2y + 18*P1x*P0y*Q2x*Q2y + 64*P0x*P1x*Q2y*Q3y - 18*P0x*P0y*Q3x*Q3y - 18*P0x*P1y*Q2x*Q3y - 18*P0x*P1y*Q3x*Q2y - 18*P1x*P0y*Q2x*Q3y - 18*P1x*P0y*Q3x*Q2y - 18*P1x*P1y*Q2x*Q2y +
-64*P0y*P1y*Q2x*Q3x + 18*P0x*P1y*Q3x*Q3y + 18*P1x*P0y*Q3x*Q3y + 18*P1x*P1y*Q2x*Q3y + 18*P1x*P1y*Q3x*Q2y - 18*P1x*P1y*Q3x*Q3y + 28*P0y*P1y*Q2y*Q3y));
-
-				double qfactor = (14*pow(P0x,3.0)*Q2x - 14*pow(P0x,3.0)*Q3x + 14*pow(P0y,3.0)*Q2y - 14*pow(P0y,3.0)*Q3y + 21*pow(P0x,2.0)*pow(Q2x,2.0) + 21*pow(P0x,2.0)*pow(Q3x,2.0) + 21*pow(P1x,2.0)*pow(Q2x,2.0) + 21*pow(P1x,2.0)*pow(Q3x,2.0) +
-48*pow(P0x,2.0)*pow(Q2y,2.0) + 48*pow(P0y,2.0)*pow(Q2x,2.0) + 48*pow(P0x,2.0)*pow(Q3y,2.0) + 48*pow(P1x,2.0)*pow(Q2y,2.0) + 48*pow(P0y,2.0)*pow(Q3x,2.0) + 48*pow(P1y,2.0)*pow(Q2x,2.0) + 48*pow(P1x,2.0)*pow(Q3y,2.0) +
-48*pow(P1y,2.0)*pow(Q3x,2.0) + 21*pow(P0y,2.0)*pow(Q2y,2.0) + 21*pow(P0y,2.0)*pow(Q3y,2.0) + 21*pow(P1y,2.0)*pow(Q2y,2.0) + 21*pow(P1y,2.0)*pow(Q3y,2.0) + 21*pow(P0x,2.0)*pow(Q2x,2.0)*sp + 21*pow(P0x,2.0)*pow(Q3x,2.0)*sp -
-63*pow(P0x,3.0)*Q2x*pow(sp,2.0) + 21*pow(P1x,2.0)*pow(Q2x,2.0)*sp + 70*pow(P0x,3.0)*Q2x*pow(sp,3.0) + 63*pow(P0x,3.0)*Q3x*pow(sp,2.0) + 21*pow(P1x,2.0)*pow(Q3x,2.0)*sp - 126*pow(P1x,3.0)*Q2x*pow(sp,2.0) -
-21*pow(P0x,3.0)*Q2x*pow(sp,4.0) - 70*pow(P0x,3.0)*Q3x*pow(sp,3.0) + 210*pow(P1x,3.0)*Q2x*pow(sp,3.0) + 126*pow(P1x,3.0)*Q3x*pow(sp,2.0) + 21*pow(P0x,3.0)*Q3x*pow(sp,4.0) - 84*pow(P1x,3.0)*Q2x*pow(sp,4.0) -
-210*pow(P1x,3.0)*Q3x*pow(sp,3.0) + 84*pow(P1x,3.0)*Q3x*pow(sp,4.0) - 24*pow(P0x,2.0)*pow(Q2y,2.0)*sp - 24*pow(P0y,2.0)*pow(Q2x,2.0)*sp + 48*pow(P0x,2.0)*pow(Q3y,2.0)*sp - 24*pow(P1x,2.0)*pow(Q2y,2.0)*sp +
-48*pow(P0y,2.0)*pow(Q3x,2.0)*sp - 24*pow(P1y,2.0)*pow(Q2x,2.0)*sp + 48*pow(P1x,2.0)*pow(Q3y,2.0)*sp + 48*pow(P1y,2.0)*pow(Q3x,2.0)*sp + 21*pow(P0y,2.0)*pow(Q2y,2.0)*sp + 21*pow(P0y,2.0)*pow(Q3y,2.0)*sp -
-63*pow(P0y,3.0)*Q2y*pow(sp,2.0) + 21*pow(P1y,2.0)*pow(Q2y,2.0)*sp + 70*pow(P0y,3.0)*Q2y*pow(sp,3.0) + 63*pow(P0y,3.0)*Q3y*pow(sp,2.0) + 21*pow(P1y,2.0)*pow(Q3y,2.0)*sp - 126*pow(P1y,3.0)*Q2y*pow(sp,2.0) -
-21*pow(P0y,3.0)*Q2y*pow(sp,4.0) - 70*pow(P0y,3.0)*Q3y*pow(sp,3.0) + 210*pow(P1y,3.0)*Q2y*pow(sp,3.0) + 126*pow(P1y,3.0)*Q3y*pow(sp,2.0) + 21*pow(P0y,3.0)*Q3y*pow(sp,4.0) - 84*pow(P1y,3.0)*Q2y*pow(sp,4.0) -
-210*pow(P1y,3.0)*Q3y*pow(sp,3.0) + 84*pow(P1y,3.0)*Q3y*pow(sp,4.0) - 21*pow(P0x,2.0)*pow(Q2x,2.0)*pow(sp,2.0) - 105*pow(P0x,2.0)*pow(Q2x,2.0)*pow(sp,3.0) + 21*pow(P0x,2.0)*pow(Q3x,2.0)*pow(sp,2.0) -
-21*pow(P1x,2.0)*pow(Q2x,2.0)*pow(sp,2.0) + 84*pow(P0x,2.0)*pow(Q2x,2.0)*pow(sp,4.0) + 7*pow(P0x,2.0)*pow(Q3x,2.0)*pow(sp,3.0) - 105*pow(P1x,2.0)*pow(Q2x,2.0)*pow(sp,3.0) + 21*pow(P1x,2.0)*pow(Q3x,2.0)*pow(sp,2.0) -
-21*pow(P0x,2.0)*pow(Q3x,2.0)*pow(sp,4.0) + 84*pow(P1x,2.0)*pow(Q2x,2.0)*pow(sp,4.0) + 7*pow(P1x,2.0)*pow(Q3x,2.0)*pow(sp,3.0) - 21*pow(P1x,2.0)*pow(Q3x,2.0)*pow(sp,4.0) - 48*pow(P0x,2.0)*pow(Q2y,2.0)*pow(sp,2.0) -
-48*pow(P0y,2.0)*pow(Q2x,2.0)*pow(sp,2.0) - 24*pow(P0x,2.0)*pow(Q2y,2.0)*pow(sp,3.0) + 12*pow(P0x,2.0)*pow(Q3y,2.0)*pow(sp,2.0) - 48*pow(P1x,2.0)*pow(Q2y,2.0)*pow(sp,2.0) - 24*pow(P0y,2.0)*pow(Q2x,2.0)*pow(sp,3.0) +
-12*pow(P0y,2.0)*pow(Q3x,2.0)*pow(sp,2.0) - 48*pow(P1y,2.0)*pow(Q2x,2.0)*pow(sp,2.0) + 48*pow(P0x,2.0)*pow(Q2y,2.0)*pow(sp,4.0) - 8*pow(P0x,2.0)*pow(Q3y,2.0)*pow(sp,3.0) - 24*pow(P1x,2.0)*pow(Q2y,2.0)*pow(sp,3.0) +
-12*pow(P1x,2.0)*pow(Q3y,2.0)*pow(sp,2.0) + 48*pow(P0y,2.0)*pow(Q2x,2.0)*pow(sp,4.0) - 8*pow(P0y,2.0)*pow(Q3x,2.0)*pow(sp,3.0) - 24*pow(P1y,2.0)*pow(Q2x,2.0)*pow(sp,3.0) + 12*pow(P1y,2.0)*pow(Q3x,2.0)*pow(sp,2.0) -
-12*pow(P0x,2.0)*pow(Q3y,2.0)*pow(sp,4.0) + 48*pow(P1x,2.0)*pow(Q2y,2.0)*pow(sp,4.0) - 8*pow(P1x,2.0)*pow(Q3y,2.0)*pow(sp,3.0) - 12*pow(P0y,2.0)*pow(Q3x,2.0)*pow(sp,4.0) + 48*pow(P1y,2.0)*pow(Q2x,2.0)*pow(sp,4.0) -
-8*pow(P1y,2.0)*pow(Q3x,2.0)*pow(sp,3.0) - 12*pow(P1x,2.0)*pow(Q3y,2.0)*pow(sp,4.0) - 12*pow(P1y,2.0)*pow(Q3x,2.0)*pow(sp,4.0) - 21*pow(P0y,2.0)*pow(Q2y,2.0)*pow(sp,2.0) - 105*pow(P0y,2.0)*pow(Q2y,2.0)*pow(sp,3.0) +
-21*pow(P0y,2.0)*pow(Q3y,2.0)*pow(sp,2.0) - 21*pow(P1y,2.0)*pow(Q2y,2.0)*pow(sp,2.0) + 84*pow(P0y,2.0)*pow(Q2y,2.0)*pow(sp,4.0) + 7*pow(P0y,2.0)*pow(Q3y,2.0)*pow(sp,3.0) - 105*pow(P1y,2.0)*pow(Q2y,2.0)*pow(sp,3.0) +
-21*pow(P1y,2.0)*pow(Q3y,2.0)*pow(sp,2.0) - 21*pow(P0y,2.0)*pow(Q3y,2.0)*pow(sp,4.0) + 84*pow(P1y,2.0)*pow(Q2y,2.0)*pow(sp,4.0) + 7*pow(P1y,2.0)*pow(Q3y,2.0)*pow(sp,3.0) - 21*pow(P1y,2.0)*pow(Q3y,2.0)*pow(sp,4.0) -
-42*P0x*P1x*pow(Q2x,2.0) + 14*P0x*pow(P1x,2.0)*Q2x - 28*pow(P0x,2.0)*P1x*Q2x - 42*P0x*P1x*pow(Q3x,2.0) - 14*P0x*pow(P1x,2.0)*Q3x + 28*pow(P0x,2.0)*P1x*Q3x - 14*pow(P0x,2.0)*P3x*Q2x + 14*pow(P0x,2.0)*P3x*Q3x -
-14*pow(P1x,2.0)*P3x*Q2x + 14*pow(P1x,2.0)*P3x*Q3x + 14*P0x*pow(P0y,2.0)*Q2x - 96*P0x*P1x*pow(Q2y,2.0) - 14*P0x*pow(P0y,2.0)*Q3x - 52*P0x*pow(P1y,2.0)*Q2x - 66*P1x*pow(P0y,2.0)*Q2x - 96*P0x*P1x*pow(Q3y,2.0) +
-52*P0x*pow(P1y,2.0)*Q3x + 66*P1x*pow(P0y,2.0)*Q3x + 16*P3x*pow(P0y,2.0)*Q2x - 16*P3x*pow(P0y,2.0)*Q3x + 16*P3x*pow(P1y,2.0)*Q2x - 16*P3x*pow(P1y,2.0)*Q3x + 14*pow(P0x,2.0)*P0y*Q2y - 96*P0y*P1y*pow(Q2x,2.0) -
-14*pow(P0x,2.0)*P0y*Q3y - 66*pow(P0x,2.0)*P1y*Q2y - 52*pow(P1x,2.0)*P0y*Q2y - 96*P0y*P1y*pow(Q3x,2.0) + 66*pow(P0x,2.0)*P1y*Q3y + 52*pow(P1x,2.0)*P0y*Q3y + 16*pow(P0x,2.0)*P3y*Q2y - 16*pow(P0x,2.0)*P3y*Q3y +
-16*pow(P1x,2.0)*P3y*Q2y - 16*pow(P1x,2.0)*P3y*Q3y - 42*P0y*P1y*pow(Q2y,2.0) + 14*P0y*pow(P1y,2.0)*Q2y - 28*pow(P0y,2.0)*P1y*Q2y - 42*P0y*P1y*pow(Q3y,2.0) - 14*P0y*pow(P1y,2.0)*Q3y + 28*pow(P0y,2.0)*P1y*Q3y -
-14*pow(P0y,2.0)*P3y*Q2y + 14*pow(P0y,2.0)*P3y*Q3y - 14*pow(P1y,2.0)*P3y*Q2y + 14*pow(P1y,2.0)*P3y*Q3y - 42*pow(P0x,2.0)*Q2x*Q3x - 42*pow(P1x,2.0)*Q2x*Q3x + 36*pow(P0y,2.0)*Q1x*Q2x - 36*pow(P0y,2.0)*Q1x*Q3x +
-36*pow(P1y,2.0)*Q1x*Q2x - 96*pow(P0y,2.0)*Q2x*Q3x - 36*pow(P1y,2.0)*Q1x*Q3x - 96*pow(P1y,2.0)*Q2x*Q3x + 36*pow(P0x,2.0)*Q1y*Q2y - 36*pow(P0x,2.0)*Q1y*Q3y + 36*pow(P1x,2.0)*Q1y*Q2y - 96*pow(P0x,2.0)*Q2y*Q3y -
-36*pow(P1x,2.0)*Q1y*Q3y - 96*pow(P1x,2.0)*Q2y*Q3y - 42*pow(P0y,2.0)*Q2y*Q3y - 42*pow(P1y,2.0)*Q2y*Q3y - 42*P0x*P1x*pow(Q2x,2.0)*sp - 42*P0x*P1x*pow(Q3x,2.0)*sp - 42*pow(P0x,2.0)*P3x*Q2x*sp + 42*pow(P0x,2.0)*P3x*Q3x*sp -
-42*pow(P1x,2.0)*P3x*Q2x*sp + 42*pow(P1x,2.0)*P3x*Q3x*sp + 48*P0x*P1x*pow(Q2y,2.0)*sp - 96*P0x*P1x*pow(Q3y,2.0)*sp + 48*P3x*pow(P0y,2.0)*Q2x*sp - 48*P3x*pow(P0y,2.0)*Q3x*sp + 48*P3x*pow(P1y,2.0)*Q2x*sp -
-48*P3x*pow(P1y,2.0)*Q3x*sp + 48*P0y*P1y*pow(Q2x,2.0)*sp - 96*P0y*P1y*pow(Q3x,2.0)*sp + 48*pow(P0x,2.0)*P3y*Q2y*sp - 48*pow(P0x,2.0)*P3y*Q3y*sp + 48*pow(P1x,2.0)*P3y*Q2y*sp - 48*pow(P1x,2.0)*P3y*Q3y*sp -
-42*P0y*P1y*pow(Q2y,2.0)*sp - 42*P0y*P1y*pow(Q3y,2.0)*sp - 42*pow(P0y,2.0)*P3y*Q2y*sp + 42*pow(P0y,2.0)*P3y*Q3y*sp - 42*pow(P1y,2.0)*P3y*Q2y*sp + 42*pow(P1y,2.0)*P3y*Q3y*sp + 42*pow(P0x,2.0)*Q1x*Q2x*sp -
-42*pow(P0x,2.0)*Q1x*Q3x*sp + 42*pow(P1x,2.0)*Q1x*Q2x*sp - 42*pow(P0x,2.0)*Q2x*Q3x*sp - 42*pow(P1x,2.0)*Q1x*Q3x*sp - 42*pow(P1x,2.0)*Q2x*Q3x*sp + 24*pow(P0y,2.0)*Q1x*Q2x*sp - 24*pow(P0y,2.0)*Q1x*Q3x*sp +
-24*pow(P1y,2.0)*Q1x*Q2x*sp - 24*pow(P0y,2.0)*Q2x*Q3x*sp - 24*pow(P1y,2.0)*Q1x*Q3x*sp - 24*pow(P1y,2.0)*Q2x*Q3x*sp + 24*pow(P0x,2.0)*Q1y*Q2y*sp - 24*pow(P0x,2.0)*Q1y*Q3y*sp + 24*pow(P1x,2.0)*Q1y*Q2y*sp -
-24*pow(P0x,2.0)*Q2y*Q3y*sp - 24*pow(P1x,2.0)*Q1y*Q3y*sp - 24*pow(P1x,2.0)*Q2y*Q3y*sp + 42*pow(P0y,2.0)*Q1y*Q2y*sp - 42*pow(P0y,2.0)*Q1y*Q3y*sp + 42*pow(P1y,2.0)*Q1y*Q2y*sp - 42*pow(P0y,2.0)*Q2y*Q3y*sp -
-42*pow(P1y,2.0)*Q1y*Q3y*sp - 42*pow(P1y,2.0)*Q2y*Q3y*sp + 42*P0x*P1x*pow(Q2x,2.0)*pow(sp,2.0) + 189*P0x*pow(P1x,2.0)*Q2x*pow(sp,2.0) + 210*P0x*P1x*pow(Q2x,2.0)*pow(sp,3.0) - 42*P0x*P1x*pow(Q3x,2.0)*pow(sp,2.0) -
-350*P0x*pow(P1x,2.0)*Q2x*pow(sp,3.0) - 189*P0x*pow(P1x,2.0)*Q3x*pow(sp,2.0) + 70*pow(P0x,2.0)*P1x*Q2x*pow(sp,3.0) - 189*pow(P0x,2.0)*P2x*Q2x*pow(sp,2.0) - 168*P0x*P1x*pow(Q2x,2.0)*pow(sp,4.0) -
-14*P0x*P1x*pow(Q3x,2.0)*pow(sp,3.0) + 147*P0x*pow(P1x,2.0)*Q2x*pow(sp,4.0) + 350*P0x*pow(P1x,2.0)*Q3x*pow(sp,3.0) - 42*pow(P0x,2.0)*P1x*Q2x*pow(sp,4.0) - 70*pow(P0x,2.0)*P1x*Q3x*pow(sp,3.0) +
-420*pow(P0x,2.0)*P2x*Q2x*pow(sp,3.0) + 189*pow(P0x,2.0)*P2x*Q3x*pow(sp,2.0) + 294*pow(P0x,2.0)*P3x*Q2x*pow(sp,2.0) - 189*pow(P1x,2.0)*P2x*Q2x*pow(sp,2.0) + 42*P0x*P1x*pow(Q3x,2.0)*pow(sp,4.0) -
-147*P0x*pow(P1x,2.0)*Q3x*pow(sp,4.0) + 42*pow(P0x,2.0)*P1x*Q3x*pow(sp,4.0) - 210*pow(P0x,2.0)*P2x*Q2x*pow(sp,4.0) - 420*pow(P0x,2.0)*P2x*Q3x*pow(sp,3.0) - 210*pow(P0x,2.0)*P3x*Q2x*pow(sp,3.0) -
-294*pow(P0x,2.0)*P3x*Q3x*pow(sp,2.0) + 420*pow(P1x,2.0)*P2x*Q2x*pow(sp,3.0) + 189*pow(P1x,2.0)*P2x*Q3x*pow(sp,2.0) + 294*pow(P1x,2.0)*P3x*Q2x*pow(sp,2.0) + 210*pow(P0x,2.0)*P2x*Q3x*pow(sp,4.0) +
-210*pow(P0x,2.0)*P3x*Q3x*pow(sp,3.0) - 210*pow(P1x,2.0)*P2x*Q2x*pow(sp,4.0) - 420*pow(P1x,2.0)*P2x*Q3x*pow(sp,3.0) - 210*pow(P1x,2.0)*P3x*Q2x*pow(sp,3.0) - 294*pow(P1x,2.0)*P3x*Q3x*pow(sp,2.0) +
-210*pow(P1x,2.0)*P2x*Q3x*pow(sp,4.0) + 210*pow(P1x,2.0)*P3x*Q3x*pow(sp,3.0) - 63*P0x*pow(P0y,2.0)*Q2x*pow(sp,2.0) + 96*P0x*P1x*pow(Q2y,2.0)*pow(sp,2.0) + 70*P0x*pow(P0y,2.0)*Q2x*pow(sp,3.0) +
-63*P0x*pow(P0y,2.0)*Q3x*pow(sp,2.0) + 126*P0x*pow(P1y,2.0)*Q2x*pow(sp,2.0) + 63*P1x*pow(P0y,2.0)*Q2x*pow(sp,2.0) + 48*P0x*P1x*pow(Q2y,2.0)*pow(sp,3.0) - 24*P0x*P1x*pow(Q3y,2.0)*pow(sp,2.0) -
-21*P0x*pow(P0y,2.0)*Q2x*pow(sp,4.0) - 70*P0x*pow(P0y,2.0)*Q3x*pow(sp,3.0) - 98*P0x*pow(P1y,2.0)*Q2x*pow(sp,3.0) - 126*P0x*pow(P1y,2.0)*Q3x*pow(sp,2.0) + 42*P1x*pow(P0y,2.0)*Q2x*pow(sp,3.0) -
-63*P1x*pow(P0y,2.0)*Q3x*pow(sp,2.0) - 126*P1x*pow(P1y,2.0)*Q2x*pow(sp,2.0) - 96*P0x*P1x*pow(Q2y,2.0)*pow(sp,4.0) + 16*P0x*P1x*pow(Q3y,2.0)*pow(sp,3.0) + 21*P0x*pow(P0y,2.0)*Q3x*pow(sp,4.0) +
-24*P0x*pow(P1y,2.0)*Q2x*pow(sp,4.0) + 98*P0x*pow(P1y,2.0)*Q3x*pow(sp,3.0) - 39*P1x*pow(P0y,2.0)*Q2x*pow(sp,4.0) - 42*P1x*pow(P0y,2.0)*Q3x*pow(sp,3.0) + 210*P1x*pow(P1y,2.0)*Q2x*pow(sp,3.0) +
-126*P1x*pow(P1y,2.0)*Q3x*pow(sp,2.0) + 168*P2x*pow(P0y,2.0)*Q2x*pow(sp,3.0) + 96*P3x*pow(P0y,2.0)*Q2x*pow(sp,2.0) + 24*P0x*P1x*pow(Q3y,2.0)*pow(sp,4.0) - 24*P0x*pow(P1y,2.0)*Q3x*pow(sp,4.0) +
-39*P1x*pow(P0y,2.0)*Q3x*pow(sp,4.0) - 84*P1x*pow(P1y,2.0)*Q2x*pow(sp,4.0) - 210*P1x*pow(P1y,2.0)*Q3x*pow(sp,3.0) - 120*P2x*pow(P0y,2.0)*Q2x*pow(sp,4.0) - 168*P2x*pow(P0y,2.0)*Q3x*pow(sp,3.0) +
-168*P2x*pow(P1y,2.0)*Q2x*pow(sp,3.0) - 120*P3x*pow(P0y,2.0)*Q2x*pow(sp,3.0) - 96*P3x*pow(P0y,2.0)*Q3x*pow(sp,2.0) + 96*P3x*pow(P1y,2.0)*Q2x*pow(sp,2.0) + 84*P1x*pow(P1y,2.0)*Q3x*pow(sp,4.0) +
-120*P2x*pow(P0y,2.0)*Q3x*pow(sp,4.0) - 120*P2x*pow(P1y,2.0)*Q2x*pow(sp,4.0) - 168*P2x*pow(P1y,2.0)*Q3x*pow(sp,3.0) + 120*P3x*pow(P0y,2.0)*Q3x*pow(sp,3.0) - 120*P3x*pow(P1y,2.0)*Q2x*pow(sp,3.0) -
-96*P3x*pow(P1y,2.0)*Q3x*pow(sp,2.0) + 120*P2x*pow(P1y,2.0)*Q3x*pow(sp,4.0) + 120*P3x*pow(P1y,2.0)*Q3x*pow(sp,3.0) - 63*pow(P0x,2.0)*P0y*Q2y*pow(sp,2.0) + 96*P0y*P1y*pow(Q2x,2.0)*pow(sp,2.0) +
-70*pow(P0x,2.0)*P0y*Q2y*pow(sp,3.0) + 63*pow(P0x,2.0)*P0y*Q3y*pow(sp,2.0) + 63*pow(P0x,2.0)*P1y*Q2y*pow(sp,2.0) + 126*pow(P1x,2.0)*P0y*Q2y*pow(sp,2.0) + 48*P0y*P1y*pow(Q2x,2.0)*pow(sp,3.0) -
-24*P0y*P1y*pow(Q3x,2.0)*pow(sp,2.0) - 21*pow(P0x,2.0)*P0y*Q2y*pow(sp,4.0) - 70*pow(P0x,2.0)*P0y*Q3y*pow(sp,3.0) + 42*pow(P0x,2.0)*P1y*Q2y*pow(sp,3.0) - 63*pow(P0x,2.0)*P1y*Q3y*pow(sp,2.0) -
-98*pow(P1x,2.0)*P0y*Q2y*pow(sp,3.0) - 126*pow(P1x,2.0)*P0y*Q3y*pow(sp,2.0) - 126*pow(P1x,2.0)*P1y*Q2y*pow(sp,2.0) - 96*P0y*P1y*pow(Q2x,2.0)*pow(sp,4.0) + 16*P0y*P1y*pow(Q3x,2.0)*pow(sp,3.0) +
-21*pow(P0x,2.0)*P0y*Q3y*pow(sp,4.0) - 39*pow(P0x,2.0)*P1y*Q2y*pow(sp,4.0) - 42*pow(P0x,2.0)*P1y*Q3y*pow(sp,3.0) + 168*pow(P0x,2.0)*P2y*Q2y*pow(sp,3.0) + 96*pow(P0x,2.0)*P3y*Q2y*pow(sp,2.0) +
-24*pow(P1x,2.0)*P0y*Q2y*pow(sp,4.0) + 98*pow(P1x,2.0)*P0y*Q3y*pow(sp,3.0) + 210*pow(P1x,2.0)*P1y*Q2y*pow(sp,3.0) + 126*pow(P1x,2.0)*P1y*Q3y*pow(sp,2.0) + 24*P0y*P1y*pow(Q3x,2.0)*pow(sp,4.0) +
-39*pow(P0x,2.0)*P1y*Q3y*pow(sp,4.0) - 120*pow(P0x,2.0)*P2y*Q2y*pow(sp,4.0) - 168*pow(P0x,2.0)*P2y*Q3y*pow(sp,3.0) - 120*pow(P0x,2.0)*P3y*Q2y*pow(sp,3.0) - 96*pow(P0x,2.0)*P3y*Q3y*pow(sp,2.0) -
-24*pow(P1x,2.0)*P0y*Q3y*pow(sp,4.0) - 84*pow(P1x,2.0)*P1y*Q2y*pow(sp,4.0) - 210*pow(P1x,2.0)*P1y*Q3y*pow(sp,3.0) + 168*pow(P1x,2.0)*P2y*Q2y*pow(sp,3.0) + 96*pow(P1x,2.0)*P3y*Q2y*pow(sp,2.0) +
-120*pow(P0x,2.0)*P2y*Q3y*pow(sp,4.0) + 120*pow(P0x,2.0)*P3y*Q3y*pow(sp,3.0) + 84*pow(P1x,2.0)*P1y*Q3y*pow(sp,4.0) - 120*pow(P1x,2.0)*P2y*Q2y*pow(sp,4.0) - 168*pow(P1x,2.0)*P2y*Q3y*pow(sp,3.0) -
-120*pow(P1x,2.0)*P3y*Q2y*pow(sp,3.0) - 96*pow(P1x,2.0)*P3y*Q3y*pow(sp,2.0) + 120*pow(P1x,2.0)*P2y*Q3y*pow(sp,4.0) + 120*pow(P1x,2.0)*P3y*Q3y*pow(sp,3.0) + 42*P0y*P1y*pow(Q2y,2.0)*pow(sp,2.0) +
-189*P0y*pow(P1y,2.0)*Q2y*pow(sp,2.0) + 210*P0y*P1y*pow(Q2y,2.0)*pow(sp,3.0) - 42*P0y*P1y*pow(Q3y,2.0)*pow(sp,2.0) - 350*P0y*pow(P1y,2.0)*Q2y*pow(sp,3.0) - 189*P0y*pow(P1y,2.0)*Q3y*pow(sp,2.0) +
-70*pow(P0y,2.0)*P1y*Q2y*pow(sp,3.0) - 189*pow(P0y,2.0)*P2y*Q2y*pow(sp,2.0) - 168*P0y*P1y*pow(Q2y,2.0)*pow(sp,4.0) - 14*P0y*P1y*pow(Q3y,2.0)*pow(sp,3.0) + 147*P0y*pow(P1y,2.0)*Q2y*pow(sp,4.0) +
-350*P0y*pow(P1y,2.0)*Q3y*pow(sp,3.0) - 42*pow(P0y,2.0)*P1y*Q2y*pow(sp,4.0) - 70*pow(P0y,2.0)*P1y*Q3y*pow(sp,3.0) + 420*pow(P0y,2.0)*P2y*Q2y*pow(sp,3.0) + 189*pow(P0y,2.0)*P2y*Q3y*pow(sp,2.0) +
-294*pow(P0y,2.0)*P3y*Q2y*pow(sp,2.0) - 189*pow(P1y,2.0)*P2y*Q2y*pow(sp,2.0) + 42*P0y*P1y*pow(Q3y,2.0)*pow(sp,4.0) - 147*P0y*pow(P1y,2.0)*Q3y*pow(sp,4.0) + 42*pow(P0y,2.0)*P1y*Q3y*pow(sp,4.0) -
-210*pow(P0y,2.0)*P2y*Q2y*pow(sp,4.0) - 420*pow(P0y,2.0)*P2y*Q3y*pow(sp,3.0) - 210*pow(P0y,2.0)*P3y*Q2y*pow(sp,3.0) - 294*pow(P0y,2.0)*P3y*Q3y*pow(sp,2.0) + 420*pow(P1y,2.0)*P2y*Q2y*pow(sp,3.0) +
-189*pow(P1y,2.0)*P2y*Q3y*pow(sp,2.0) + 294*pow(P1y,2.0)*P3y*Q2y*pow(sp,2.0) + 210*pow(P0y,2.0)*P2y*Q3y*pow(sp,4.0) + 210*pow(P0y,2.0)*P3y*Q3y*pow(sp,3.0) - 210*pow(P1y,2.0)*P2y*Q2y*pow(sp,4.0) -
-420*pow(P1y,2.0)*P2y*Q3y*pow(sp,3.0) - 210*pow(P1y,2.0)*P3y*Q2y*pow(sp,3.0) - 294*pow(P1y,2.0)*P3y*Q3y*pow(sp,2.0) + 210*pow(P1y,2.0)*P2y*Q3y*pow(sp,4.0) + 210*pow(P1y,2.0)*P3y*Q3y*pow(sp,3.0) +
-126*pow(P0x,2.0)*Q1x*Q2x*pow(sp,2.0) - 378*pow(P0x,2.0)*Q1x*Q2x*pow(sp,3.0) - 126*pow(P0x,2.0)*Q1x*Q3x*pow(sp,2.0) + 126*pow(P1x,2.0)*Q1x*Q2x*pow(sp,2.0) + 210*pow(P0x,2.0)*Q1x*Q2x*pow(sp,4.0) +
-378*pow(P0x,2.0)*Q1x*Q3x*pow(sp,3.0) - 378*pow(P1x,2.0)*Q1x*Q2x*pow(sp,3.0) - 126*pow(P1x,2.0)*Q1x*Q3x*pow(sp,2.0) - 210*pow(P0x,2.0)*Q1x*Q3x*pow(sp,4.0) + 98*pow(P0x,2.0)*Q2x*Q3x*pow(sp,3.0) +
-210*pow(P1x,2.0)*Q1x*Q2x*pow(sp,4.0) + 378*pow(P1x,2.0)*Q1x*Q3x*pow(sp,3.0) - 63*pow(P0x,2.0)*Q2x*Q3x*pow(sp,4.0) - 210*pow(P1x,2.0)*Q1x*Q3x*pow(sp,4.0) + 98*pow(P1x,2.0)*Q2x*Q3x*pow(sp,3.0) -
-63*pow(P1x,2.0)*Q2x*Q3x*pow(sp,4.0) - 36*pow(P0y,2.0)*Q1x*Q2x*pow(sp,2.0) - 144*pow(P0y,2.0)*Q1x*Q2x*pow(sp,3.0) + 36*pow(P0y,2.0)*Q1x*Q3x*pow(sp,2.0) - 36*pow(P1y,2.0)*Q1x*Q2x*pow(sp,2.0) +
-120*pow(P0y,2.0)*Q1x*Q2x*pow(sp,4.0) + 144*pow(P0y,2.0)*Q1x*Q3x*pow(sp,3.0) + 36*pow(P0y,2.0)*Q2x*Q3x*pow(sp,2.0) - 144*pow(P1y,2.0)*Q1x*Q2x*pow(sp,3.0) + 36*pow(P1y,2.0)*Q1x*Q3x*pow(sp,2.0) -
-120*pow(P0y,2.0)*Q1x*Q3x*pow(sp,4.0) + 32*pow(P0y,2.0)*Q2x*Q3x*pow(sp,3.0) + 120*pow(P1y,2.0)*Q1x*Q2x*pow(sp,4.0) + 144*pow(P1y,2.0)*Q1x*Q3x*pow(sp,3.0) + 36*pow(P1y,2.0)*Q2x*Q3x*pow(sp,2.0) -
-36*pow(P0y,2.0)*Q2x*Q3x*pow(sp,4.0) - 120*pow(P1y,2.0)*Q1x*Q3x*pow(sp,4.0) + 32*pow(P1y,2.0)*Q2x*Q3x*pow(sp,3.0) - 36*pow(P1y,2.0)*Q2x*Q3x*pow(sp,4.0) - 36*pow(P0x,2.0)*Q1y*Q2y*pow(sp,2.0) -
-144*pow(P0x,2.0)*Q1y*Q2y*pow(sp,3.0) + 36*pow(P0x,2.0)*Q1y*Q3y*pow(sp,2.0) - 36*pow(P1x,2.0)*Q1y*Q2y*pow(sp,2.0) + 120*pow(P0x,2.0)*Q1y*Q2y*pow(sp,4.0) + 144*pow(P0x,2.0)*Q1y*Q3y*pow(sp,3.0) +
-36*pow(P0x,2.0)*Q2y*Q3y*pow(sp,2.0) - 144*pow(P1x,2.0)*Q1y*Q2y*pow(sp,3.0) + 36*pow(P1x,2.0)*Q1y*Q3y*pow(sp,2.0) - 120*pow(P0x,2.0)*Q1y*Q3y*pow(sp,4.0) + 32*pow(P0x,2.0)*Q2y*Q3y*pow(sp,3.0) +
-120*pow(P1x,2.0)*Q1y*Q2y*pow(sp,4.0) + 144*pow(P1x,2.0)*Q1y*Q3y*pow(sp,3.0) + 36*pow(P1x,2.0)*Q2y*Q3y*pow(sp,2.0) - 36*pow(P0x,2.0)*Q2y*Q3y*pow(sp,4.0) - 120*pow(P1x,2.0)*Q1y*Q3y*pow(sp,4.0) +
-32*pow(P1x,2.0)*Q2y*Q3y*pow(sp,3.0) - 36*pow(P1x,2.0)*Q2y*Q3y*pow(sp,4.0) + 126*pow(P0y,2.0)*Q1y*Q2y*pow(sp,2.0) - 378*pow(P0y,2.0)*Q1y*Q2y*pow(sp,3.0) - 126*pow(P0y,2.0)*Q1y*Q3y*pow(sp,2.0) +
-126*pow(P1y,2.0)*Q1y*Q2y*pow(sp,2.0) + 210*pow(P0y,2.0)*Q1y*Q2y*pow(sp,4.0) + 378*pow(P0y,2.0)*Q1y*Q3y*pow(sp,3.0) - 378*pow(P1y,2.0)*Q1y*Q2y*pow(sp,3.0) - 126*pow(P1y,2.0)*Q1y*Q3y*pow(sp,2.0) -
-210*pow(P0y,2.0)*Q1y*Q3y*pow(sp,4.0) + 98*pow(P0y,2.0)*Q2y*Q3y*pow(sp,3.0) + 210*pow(P1y,2.0)*Q1y*Q2y*pow(sp,4.0) + 378*pow(P1y,2.0)*Q1y*Q3y*pow(sp,3.0) - 63*pow(P0y,2.0)*Q2y*Q3y*pow(sp,4.0) -
-210*pow(P1y,2.0)*Q1y*Q3y*pow(sp,4.0) + 98*pow(P1y,2.0)*Q2y*Q3y*pow(sp,3.0) - 63*pow(P1y,2.0)*Q2y*Q3y*pow(sp,4.0) + 28*P0x*P1x*P3x*Q2x - 28*P0x*P1x*P3x*Q3x + 38*P0x*P1x*P0y*Q2y + 38*P0x*P0y*P1y*Q2x -
-38*P0x*P1x*P0y*Q3y + 66*P0x*P1x*P1y*Q2y - 38*P0x*P0y*P1y*Q3x + 66*P1x*P0y*P1y*Q2x - 66*P0x*P1x*P1y*Q3y - 30*P0x*P3x*P0y*Q2y - 30*P0x*P0y*P3y*Q2x - 66*P1x*P0y*P1y*Q3x - 32*P0x*P1x*P3y*Q2y + 30*P0x*P3x*P0y*Q3y +
-30*P0x*P3x*P1y*Q2y + 30*P0x*P0y*P3y*Q3x + 30*P0x*P1y*P3y*Q2x + 30*P1x*P3x*P0y*Q2y + 30*P1x*P0y*P3y*Q2x - 32*P3x*P0y*P1y*Q2x + 32*P0x*P1x*P3y*Q3y - 30*P0x*P3x*P1y*Q3y - 30*P0x*P1y*P3y*Q3x - 30*P1x*P3x*P0y*Q3y -
-30*P1x*P3x*P1y*Q2y - 30*P1x*P0y*P3y*Q3x - 30*P1x*P1y*P3y*Q2x + 32*P3x*P0y*P1y*Q3x + 30*P1x*P3x*P1y*Q3y + 30*P1x*P1y*P3y*Q3x + 28*P0y*P1y*P3y*Q2y - 28*P0y*P1y*P3y*Q3y + 84*P0x*P1x*Q2x*Q3x - 36*P0x*P0y*Q1x*Q2y -
-36*P0x*P0y*Q2x*Q1y - 72*P0x*P1x*Q1y*Q2y + 36*P0x*P0y*Q1x*Q3y - 54*P0x*P0y*Q2x*Q2y + 36*P0x*P0y*Q3x*Q1y + 36*P0x*P1y*Q1x*Q2y + 36*P0x*P1y*Q2x*Q1y + 36*P1x*P0y*Q1x*Q2y + 36*P1x*P0y*Q2x*Q1y - 72*P0y*P1y*Q1x*Q2x +
-72*P0x*P1x*Q1y*Q3y + 54*P0x*P0y*Q2x*Q3y + 54*P0x*P0y*Q3x*Q2y - 36*P0x*P1y*Q1x*Q3y + 54*P0x*P1y*Q2x*Q2y - 36*P0x*P1y*Q3x*Q1y - 36*P1x*P0y*Q1x*Q3y + 54*P1x*P0y*Q2x*Q2y - 36*P1x*P0y*Q3x*Q1y - 36*P1x*P1y*Q1x*Q2y -
-36*P1x*P1y*Q2x*Q1y + 72*P0y*P1y*Q1x*Q3x + 192*P0x*P1x*Q2y*Q3y - 54*P0x*P0y*Q3x*Q3y - 54*P0x*P1y*Q2x*Q3y - 54*P0x*P1y*Q3x*Q2y - 54*P1x*P0y*Q2x*Q3y - 54*P1x*P0y*Q3x*Q2y + 36*P1x*P1y*Q1x*Q3y - 54*P1x*P1y*Q2x*Q2y +
-36*P1x*P1y*Q3x*Q1y + 192*P0y*P1y*Q2x*Q3x + 54*P0x*P1y*Q3x*Q3y + 54*P1x*P0y*Q3x*Q3y + 54*P1x*P1y*Q2x*Q3y + 54*P1x*P1y*Q3x*Q2y - 54*P1x*P1y*Q3x*Q3y + 84*P0y*P1y*Q2y*Q3y + 84*P0x*P1x*P3x*Q2x*sp - 84*P0x*P1x*P3x*Q3x*sp -
-90*P0x*P3x*P0y*Q2y*sp - 90*P0x*P0y*P3y*Q2x*sp - 96*P0x*P1x*P3y*Q2y*sp + 90*P0x*P3x*P0y*Q3y*sp + 90*P0x*P3x*P1y*Q2y*sp + 90*P0x*P0y*P3y*Q3x*sp + 90*P0x*P1y*P3y*Q2x*sp + 90*P1x*P3x*P0y*Q2y*sp + 90*P1x*P0y*P3y*Q2x*sp -
-96*P3x*P0y*P1y*Q2x*sp + 96*P0x*P1x*P3y*Q3y*sp - 90*P0x*P3x*P1y*Q3y*sp - 90*P0x*P1y*P3y*Q3x*sp - 90*P1x*P3x*P0y*Q3y*sp - 90*P1x*P3x*P1y*Q2y*sp - 90*P1x*P0y*P3y*Q3x*sp - 90*P1x*P1y*P3y*Q2x*sp + 96*P3x*P0y*P1y*Q3x*sp +
-90*P1x*P3x*P1y*Q3y*sp + 90*P1x*P1y*P3y*Q3x*sp + 84*P0y*P1y*P3y*Q2y*sp - 84*P0y*P1y*P3y*Q3y*sp - 84*P0x*P1x*Q1x*Q2x*sp + 84*P0x*P1x*Q1x*Q3x*sp + 84*P0x*P1x*Q2x*Q3x*sp + 18*P0x*P0y*Q1x*Q2y*sp + 18*P0x*P0y*Q2x*Q1y*sp -
-48*P0x*P1x*Q1y*Q2y*sp - 18*P0x*P0y*Q1x*Q3y*sp + 90*P0x*P0y*Q2x*Q2y*sp - 18*P0x*P0y*Q3x*Q1y*sp - 18*P0x*P1y*Q1x*Q2y*sp - 18*P0x*P1y*Q2x*Q1y*sp - 18*P1x*P0y*Q1x*Q2y*sp - 18*P1x*P0y*Q2x*Q1y*sp - 48*P0y*P1y*Q1x*Q2x*sp +
-48*P0x*P1x*Q1y*Q3y*sp - 18*P0x*P0y*Q2x*Q3y*sp - 18*P0x*P0y*Q3x*Q2y*sp + 18*P0x*P1y*Q1x*Q3y*sp - 90*P0x*P1y*Q2x*Q2y*sp + 18*P0x*P1y*Q3x*Q1y*sp + 18*P1x*P0y*Q1x*Q3y*sp - 90*P1x*P0y*Q2x*Q2y*sp + 18*P1x*P0y*Q3x*Q1y*sp +
-18*P1x*P1y*Q1x*Q2y*sp + 18*P1x*P1y*Q2x*Q1y*sp + 48*P0y*P1y*Q1x*Q3x*sp + 48*P0x*P1x*Q2y*Q3y*sp - 54*P0x*P0y*Q3x*Q3y*sp + 18*P0x*P1y*Q2x*Q3y*sp + 18*P0x*P1y*Q3x*Q2y*sp + 18*P1x*P0y*Q2x*Q3y*sp + 18*P1x*P0y*Q3x*Q2y*sp -
-18*P1x*P1y*Q1x*Q3y*sp + 90*P1x*P1y*Q2x*Q2y*sp - 18*P1x*P1y*Q3x*Q1y*sp + 48*P0y*P1y*Q2x*Q3x*sp + 54*P0x*P1y*Q3x*Q3y*sp + 54*P1x*P0y*Q3x*Q3y*sp - 18*P1x*P1y*Q2x*Q3y*sp - 18*P1x*P1y*Q3x*Q2y*sp - 54*P1x*P1y*Q3x*Q3y*sp -
-84*P0y*P1y*Q1y*Q2y*sp + 84*P0y*P1y*Q1y*Q3y*sp + 84*P0y*P1y*Q2y*Q3y*sp + 378*P0x*P1x*P2x*Q2x*pow(sp,2.0) - 840*P0x*P1x*P2x*Q2x*pow(sp,3.0) - 378*P0x*P1x*P2x*Q3x*pow(sp,2.0) - 588*P0x*P1x*P3x*Q2x*pow(sp,2.0) +
-420*P0x*P1x*P2x*Q2x*pow(sp,4.0) + 840*P0x*P1x*P2x*Q3x*pow(sp,3.0) + 420*P0x*P1x*P3x*Q2x*pow(sp,3.0) + 588*P0x*P1x*P3x*Q3x*pow(sp,2.0) - 420*P0x*P1x*P2x*Q3x*pow(sp,4.0) - 420*P0x*P1x*P3x*Q3x*pow(sp,3.0) -
-63*P0x*P1x*P0y*Q2y*pow(sp,2.0) - 63*P0x*P0y*P1y*Q2x*pow(sp,2.0) + 28*P0x*P1x*P0y*Q2y*pow(sp,3.0) + 63*P0x*P1x*P0y*Q3y*pow(sp,2.0) + 63*P0x*P1x*P1y*Q2y*pow(sp,2.0) - 189*P0x*P2x*P0y*Q2y*pow(sp,2.0) +
-28*P0x*P0y*P1y*Q2x*pow(sp,3.0) + 63*P0x*P0y*P1y*Q3x*pow(sp,2.0) - 189*P0x*P0y*P2y*Q2x*pow(sp,2.0) + 63*P1x*P0y*P1y*Q2x*pow(sp,2.0) - 3*P0x*P1x*P0y*Q2y*pow(sp,4.0) - 28*P0x*P1x*P0y*Q3y*pow(sp,3.0) -
-252*P0x*P1x*P1y*Q2y*pow(sp,3.0) - 63*P0x*P1x*P1y*Q3y*pow(sp,2.0) + 252*P0x*P2x*P0y*Q2y*pow(sp,3.0) + 189*P0x*P2x*P0y*Q3y*pow(sp,2.0) + 189*P0x*P2x*P1y*Q2y*pow(sp,2.0) + 198*P0x*P3x*P0y*Q2y*pow(sp,2.0) -
-3*P0x*P0y*P1y*Q2x*pow(sp,4.0) - 28*P0x*P0y*P1y*Q3x*pow(sp,3.0) + 252*P0x*P0y*P2y*Q2x*pow(sp,3.0) + 189*P0x*P0y*P2y*Q3x*pow(sp,2.0) + 198*P0x*P0y*P3y*Q2x*pow(sp,2.0) + 189*P0x*P1y*P2y*Q2x*pow(sp,2.0) +
-189*P1x*P2x*P0y*Q2y*pow(sp,2.0) - 252*P1x*P0y*P1y*Q2x*pow(sp,3.0) - 63*P1x*P0y*P1y*Q3x*pow(sp,2.0) + 189*P1x*P0y*P2y*Q2x*pow(sp,2.0) + 3*P0x*P1x*P0y*Q3y*pow(sp,4.0) + 123*P0x*P1x*P1y*Q2y*pow(sp,4.0) +
-252*P0x*P1x*P1y*Q3y*pow(sp,3.0) - 336*P0x*P1x*P2y*Q2y*pow(sp,3.0) - 192*P0x*P1x*P3y*Q2y*pow(sp,2.0) - 90*P0x*P2x*P0y*Q2y*pow(sp,4.0) - 252*P0x*P2x*P0y*Q3y*pow(sp,3.0) - 252*P0x*P2x*P1y*Q2y*pow(sp,3.0) -
-189*P0x*P2x*P1y*Q3y*pow(sp,2.0) - 90*P0x*P3x*P0y*Q2y*pow(sp,3.0) - 198*P0x*P3x*P0y*Q3y*pow(sp,2.0) - 198*P0x*P3x*P1y*Q2y*pow(sp,2.0) + 3*P0x*P0y*P1y*Q3x*pow(sp,4.0) - 90*P0x*P0y*P2y*Q2x*pow(sp,4.0) -
-252*P0x*P0y*P2y*Q3x*pow(sp,3.0) - 90*P0x*P0y*P3y*Q2x*pow(sp,3.0) - 198*P0x*P0y*P3y*Q3x*pow(sp,2.0) - 252*P0x*P1y*P2y*Q2x*pow(sp,3.0) - 189*P0x*P1y*P2y*Q3x*pow(sp,2.0) - 198*P0x*P1y*P3y*Q2x*pow(sp,2.0) -
-252*P1x*P2x*P0y*Q2y*pow(sp,3.0) - 189*P1x*P2x*P0y*Q3y*pow(sp,2.0) - 189*P1x*P2x*P1y*Q2y*pow(sp,2.0) - 198*P1x*P3x*P0y*Q2y*pow(sp,2.0) + 123*P1x*P0y*P1y*Q2x*pow(sp,4.0) + 252*P1x*P0y*P1y*Q3x*pow(sp,3.0) -
-252*P1x*P0y*P2y*Q2x*pow(sp,3.0) - 189*P1x*P0y*P2y*Q3x*pow(sp,2.0) - 198*P1x*P0y*P3y*Q2x*pow(sp,2.0) - 189*P1x*P1y*P2y*Q2x*pow(sp,2.0) - 336*P2x*P0y*P1y*Q2x*pow(sp,3.0) - 192*P3x*P0y*P1y*Q2x*pow(sp,2.0) -
-123*P0x*P1x*P1y*Q3y*pow(sp,4.0) + 240*P0x*P1x*P2y*Q2y*pow(sp,4.0) + 336*P0x*P1x*P2y*Q3y*pow(sp,3.0) + 240*P0x*P1x*P3y*Q2y*pow(sp,3.0) + 192*P0x*P1x*P3y*Q3y*pow(sp,2.0) + 90*P0x*P2x*P0y*Q3y*pow(sp,4.0) +
-90*P0x*P2x*P1y*Q2y*pow(sp,4.0) + 252*P0x*P2x*P1y*Q3y*pow(sp,3.0) + 90*P0x*P3x*P0y*Q3y*pow(sp,3.0) + 90*P0x*P3x*P1y*Q2y*pow(sp,3.0) + 198*P0x*P3x*P1y*Q3y*pow(sp,2.0) + 90*P0x*P0y*P2y*Q3x*pow(sp,4.0) +
-90*P0x*P0y*P3y*Q3x*pow(sp,3.0) + 90*P0x*P1y*P2y*Q2x*pow(sp,4.0) + 252*P0x*P1y*P2y*Q3x*pow(sp,3.0) + 90*P0x*P1y*P3y*Q2x*pow(sp,3.0) + 198*P0x*P1y*P3y*Q3x*pow(sp,2.0) + 90*P1x*P2x*P0y*Q2y*pow(sp,4.0) +
-252*P1x*P2x*P0y*Q3y*pow(sp,3.0) + 252*P1x*P2x*P1y*Q2y*pow(sp,3.0) + 189*P1x*P2x*P1y*Q3y*pow(sp,2.0) + 90*P1x*P3x*P0y*Q2y*pow(sp,3.0) + 198*P1x*P3x*P0y*Q3y*pow(sp,2.0) + 198*P1x*P3x*P1y*Q2y*pow(sp,2.0) -
-123*P1x*P0y*P1y*Q3x*pow(sp,4.0) + 90*P1x*P0y*P2y*Q2x*pow(sp,4.0) + 252*P1x*P0y*P2y*Q3x*pow(sp,3.0) + 90*P1x*P0y*P3y*Q2x*pow(sp,3.0) + 198*P1x*P0y*P3y*Q3x*pow(sp,2.0) + 252*P1x*P1y*P2y*Q2x*pow(sp,3.0) +
-189*P1x*P1y*P2y*Q3x*pow(sp,2.0) + 198*P1x*P1y*P3y*Q2x*pow(sp,2.0) + 240*P2x*P0y*P1y*Q2x*pow(sp,4.0) + 336*P2x*P0y*P1y*Q3x*pow(sp,3.0) + 240*P3x*P0y*P1y*Q2x*pow(sp,3.0) + 192*P3x*P0y*P1y*Q3x*pow(sp,2.0) -
-240*P0x*P1x*P2y*Q3y*pow(sp,4.0) - 240*P0x*P1x*P3y*Q3y*pow(sp,3.0) - 90*P0x*P2x*P1y*Q3y*pow(sp,4.0) - 90*P0x*P3x*P1y*Q3y*pow(sp,3.0) - 90*P0x*P1y*P2y*Q3x*pow(sp,4.0) - 90*P0x*P1y*P3y*Q3x*pow(sp,3.0) -
-90*P1x*P2x*P0y*Q3y*pow(sp,4.0) - 90*P1x*P2x*P1y*Q2y*pow(sp,4.0) - 252*P1x*P2x*P1y*Q3y*pow(sp,3.0) - 90*P1x*P3x*P0y*Q3y*pow(sp,3.0) - 90*P1x*P3x*P1y*Q2y*pow(sp,3.0) - 198*P1x*P3x*P1y*Q3y*pow(sp,2.0) -
-90*P1x*P0y*P2y*Q3x*pow(sp,4.0) - 90*P1x*P0y*P3y*Q3x*pow(sp,3.0) - 90*P1x*P1y*P2y*Q2x*pow(sp,4.0) - 252*P1x*P1y*P2y*Q3x*pow(sp,3.0) - 90*P1x*P1y*P3y*Q2x*pow(sp,3.0) - 198*P1x*P1y*P3y*Q3x*pow(sp,2.0) -
-240*P2x*P0y*P1y*Q3x*pow(sp,4.0) - 240*P3x*P0y*P1y*Q3x*pow(sp,3.0) + 90*P1x*P2x*P1y*Q3y*pow(sp,4.0) + 90*P1x*P3x*P1y*Q3y*pow(sp,3.0) + 90*P1x*P1y*P2y*Q3x*pow(sp,4.0) + 90*P1x*P1y*P3y*Q3x*pow(sp,3.0) +
-378*P0y*P1y*P2y*Q2y*pow(sp,2.0) - 840*P0y*P1y*P2y*Q2y*pow(sp,3.0) - 378*P0y*P1y*P2y*Q3y*pow(sp,2.0) - 588*P0y*P1y*P3y*Q2y*pow(sp,2.0) + 420*P0y*P1y*P2y*Q2y*pow(sp,4.0) + 840*P0y*P1y*P2y*Q3y*pow(sp,3.0) +
-420*P0y*P1y*P3y*Q2y*pow(sp,3.0) + 588*P0y*P1y*P3y*Q3y*pow(sp,2.0) - 420*P0y*P1y*P2y*Q3y*pow(sp,4.0) - 420*P0y*P1y*P3y*Q3y*pow(sp,3.0) - 252*P0x*P1x*Q1x*Q2x*pow(sp,2.0) + 756*P0x*P1x*Q1x*Q2x*pow(sp,3.0) +
-252*P0x*P1x*Q1x*Q3x*pow(sp,2.0) - 420*P0x*P1x*Q1x*Q2x*pow(sp,4.0) - 756*P0x*P1x*Q1x*Q3x*pow(sp,3.0) + 420*P0x*P1x*Q1x*Q3x*pow(sp,4.0) - 196*P0x*P1x*Q2x*Q3x*pow(sp,3.0) + 126*P0x*P1x*Q2x*Q3x*pow(sp,4.0) +
-162*P0x*P0y*Q1x*Q2y*pow(sp,2.0) + 162*P0x*P0y*Q2x*Q1y*pow(sp,2.0) + 72*P0x*P1x*Q1y*Q2y*pow(sp,2.0) - 234*P0x*P0y*Q1x*Q2y*pow(sp,3.0) - 162*P0x*P0y*Q1x*Q3y*pow(sp,2.0) - 234*P0x*P0y*Q2x*Q1y*pow(sp,3.0) +
-54*P0x*P0y*Q2x*Q2y*pow(sp,2.0) - 162*P0x*P0y*Q3x*Q1y*pow(sp,2.0) - 162*P0x*P1y*Q1x*Q2y*pow(sp,2.0) - 162*P0x*P1y*Q2x*Q1y*pow(sp,2.0) - 162*P1x*P0y*Q1x*Q2y*pow(sp,2.0) - 162*P1x*P0y*Q2x*Q1y*pow(sp,2.0) +
-72*P0y*P1y*Q1x*Q2x*pow(sp,2.0) + 288*P0x*P1x*Q1y*Q2y*pow(sp,3.0) - 72*P0x*P1x*Q1y*Q3y*pow(sp,2.0) + 90*P0x*P0y*Q1x*Q2y*pow(sp,4.0) + 234*P0x*P0y*Q1x*Q3y*pow(sp,3.0) + 90*P0x*P0y*Q2x*Q1y*pow(sp,4.0) -
-162*P0x*P0y*Q2x*Q2y*pow(sp,3.0) - 36*P0x*P0y*Q2x*Q3y*pow(sp,2.0) + 234*P0x*P0y*Q3x*Q1y*pow(sp,3.0) - 36*P0x*P0y*Q3x*Q2y*pow(sp,2.0) + 234*P0x*P1y*Q1x*Q2y*pow(sp,3.0) + 162*P0x*P1y*Q1x*Q3y*pow(sp,2.0) +
-234*P0x*P1y*Q2x*Q1y*pow(sp,3.0) - 54*P0x*P1y*Q2x*Q2y*pow(sp,2.0) + 162*P0x*P1y*Q3x*Q1y*pow(sp,2.0) + 234*P1x*P0y*Q1x*Q2y*pow(sp,3.0) + 162*P1x*P0y*Q1x*Q3y*pow(sp,2.0) + 234*P1x*P0y*Q2x*Q1y*pow(sp,3.0) -
-54*P1x*P0y*Q2x*Q2y*pow(sp,2.0) + 162*P1x*P0y*Q3x*Q1y*pow(sp,2.0) + 162*P1x*P1y*Q1x*Q2y*pow(sp,2.0) + 162*P1x*P1y*Q2x*Q1y*pow(sp,2.0) + 288*P0y*P1y*Q1x*Q2x*pow(sp,3.0) - 72*P0y*P1y*Q1x*Q3x*pow(sp,2.0) -
-240*P0x*P1x*Q1y*Q2y*pow(sp,4.0) - 288*P0x*P1x*Q1y*Q3y*pow(sp,3.0) - 72*P0x*P1x*Q2y*Q3y*pow(sp,2.0) - 90*P0x*P0y*Q1x*Q3y*pow(sp,4.0) + 72*P0x*P0y*Q2x*Q2y*pow(sp,4.0) + 66*P0x*P0y*Q2x*Q3y*pow(sp,3.0) -
-90*P0x*P0y*Q3x*Q1y*pow(sp,4.0) + 66*P0x*P0y*Q3x*Q2y*pow(sp,3.0) + 18*P0x*P0y*Q3x*Q3y*pow(sp,2.0) - 90*P0x*P1y*Q1x*Q2y*pow(sp,4.0) - 234*P0x*P1y*Q1x*Q3y*pow(sp,3.0) - 90*P0x*P1y*Q2x*Q1y*pow(sp,4.0) +
-162*P0x*P1y*Q2x*Q2y*pow(sp,3.0) + 36*P0x*P1y*Q2x*Q3y*pow(sp,2.0) - 234*P0x*P1y*Q3x*Q1y*pow(sp,3.0) + 36*P0x*P1y*Q3x*Q2y*pow(sp,2.0) - 90*P1x*P0y*Q1x*Q2y*pow(sp,4.0) - 234*P1x*P0y*Q1x*Q3y*pow(sp,3.0) -
-90*P1x*P0y*Q2x*Q1y*pow(sp,4.0) + 162*P1x*P0y*Q2x*Q2y*pow(sp,3.0) + 36*P1x*P0y*Q2x*Q3y*pow(sp,2.0) - 234*P1x*P0y*Q3x*Q1y*pow(sp,3.0) + 36*P1x*P0y*Q3x*Q2y*pow(sp,2.0) - 234*P1x*P1y*Q1x*Q2y*pow(sp,3.0) -
-162*P1x*P1y*Q1x*Q3y*pow(sp,2.0) - 234*P1x*P1y*Q2x*Q1y*pow(sp,3.0) + 54*P1x*P1y*Q2x*Q2y*pow(sp,2.0) - 162*P1x*P1y*Q3x*Q1y*pow(sp,2.0) - 240*P0y*P1y*Q1x*Q2x*pow(sp,4.0) - 288*P0y*P1y*Q1x*Q3x*pow(sp,3.0) -
-72*P0y*P1y*Q2x*Q3x*pow(sp,2.0) + 240*P0x*P1x*Q1y*Q3y*pow(sp,4.0) - 64*P0x*P1x*Q2y*Q3y*pow(sp,3.0) - 27*P0x*P0y*Q2x*Q3y*pow(sp,4.0) - 27*P0x*P0y*Q3x*Q2y*pow(sp,4.0) + 30*P0x*P0y*Q3x*Q3y*pow(sp,3.0) +
-90*P0x*P1y*Q1x*Q3y*pow(sp,4.0) - 72*P0x*P1y*Q2x*Q2y*pow(sp,4.0) - 66*P0x*P1y*Q2x*Q3y*pow(sp,3.0) + 90*P0x*P1y*Q3x*Q1y*pow(sp,4.0) - 66*P0x*P1y*Q3x*Q2y*pow(sp,3.0) - 18*P0x*P1y*Q3x*Q3y*pow(sp,2.0) +
-90*P1x*P0y*Q1x*Q3y*pow(sp,4.0) - 72*P1x*P0y*Q2x*Q2y*pow(sp,4.0) - 66*P1x*P0y*Q2x*Q3y*pow(sp,3.0) + 90*P1x*P0y*Q3x*Q1y*pow(sp,4.0) - 66*P1x*P0y*Q3x*Q2y*pow(sp,3.0) - 18*P1x*P0y*Q3x*Q3y*pow(sp,2.0) +
-90*P1x*P1y*Q1x*Q2y*pow(sp,4.0) + 234*P1x*P1y*Q1x*Q3y*pow(sp,3.0) + 90*P1x*P1y*Q2x*Q1y*pow(sp,4.0) - 162*P1x*P1y*Q2x*Q2y*pow(sp,3.0) - 36*P1x*P1y*Q2x*Q3y*pow(sp,2.0) + 234*P1x*P1y*Q3x*Q1y*pow(sp,3.0) -
-36*P1x*P1y*Q3x*Q2y*pow(sp,2.0) + 240*P0y*P1y*Q1x*Q3x*pow(sp,4.0) - 64*P0y*P1y*Q2x*Q3x*pow(sp,3.0) + 72*P0x*P1x*Q2y*Q3y*pow(sp,4.0) - 18*P0x*P0y*Q3x*Q3y*pow(sp,4.0) + 27*P0x*P1y*Q2x*Q3y*pow(sp,4.0) +
-27*P0x*P1y*Q3x*Q2y*pow(sp,4.0) - 30*P0x*P1y*Q3x*Q3y*pow(sp,3.0) + 27*P1x*P0y*Q2x*Q3y*pow(sp,4.0) + 27*P1x*P0y*Q3x*Q2y*pow(sp,4.0) - 30*P1x*P0y*Q3x*Q3y*pow(sp,3.0) - 90*P1x*P1y*Q1x*Q3y*pow(sp,4.0) +
-72*P1x*P1y*Q2x*Q2y*pow(sp,4.0) + 66*P1x*P1y*Q2x*Q3y*pow(sp,3.0) - 90*P1x*P1y*Q3x*Q1y*pow(sp,4.0) + 66*P1x*P1y*Q3x*Q2y*pow(sp,3.0) + 18*P1x*P1y*Q3x*Q3y*pow(sp,2.0) + 72*P0y*P1y*Q2x*Q3x*pow(sp,4.0) +
-18*P0x*P1y*Q3x*Q3y*pow(sp,4.0) + 18*P1x*P0y*Q3x*Q3y*pow(sp,4.0) - 27*P1x*P1y*Q2x*Q3y*pow(sp,4.0) - 27*P1x*P1y*Q3x*Q2y*pow(sp,4.0) + 30*P1x*P1y*Q3x*Q3y*pow(sp,3.0) - 18*P1x*P1y*Q3x*Q3y*pow(sp,4.0) -
-252*P0y*P1y*Q1y*Q2y*pow(sp,2.0) + 756*P0y*P1y*Q1y*Q2y*pow(sp,3.0) + 252*P0y*P1y*Q1y*Q3y*pow(sp,2.0) - 420*P0y*P1y*Q1y*Q2y*pow(sp,4.0) - 756*P0y*P1y*Q1y*Q3y*pow(sp,3.0) + 420*P0y*P1y*Q1y*Q3y*pow(sp,4.0) -
-196*P0y*P1y*Q2y*Q3y*pow(sp,3.0) + 126*P0y*P1y*Q2y*Q3y*pow(sp,4.0))/(3*(7*pow(P0x,2.0)*pow(Q2x,2.0) + 7*pow(P0x,2.0)*pow(Q3x,2.0) + 7*pow(P1x,2.0)*pow(Q2x,2.0) + 7*pow(P1x,2.0)*pow(Q3x,2.0) +
-16*pow(P0x,2.0)*pow(Q2y,2.0) + 16*pow(P0y,2.0)*pow(Q2x,2.0) + 16*pow(P0x,2.0)*pow(Q3y,2.0) + 16*pow(P1x,2.0)*pow(Q2y,2.0) + 16*pow(P0y,2.0)*pow(Q3x,2.0) + 16*pow(P1y,2.0)*pow(Q2x,2.0) + 16*pow(P1x,2.0)*pow(Q3y,2.0) +
-16*pow(P1y,2.0)*pow(Q3x,2.0) + 7*pow(P0y,2.0)*pow(Q2y,2.0) + 7*pow(P0y,2.0)*pow(Q3y,2.0) + 7*pow(P1y,2.0)*pow(Q2y,2.0) + 7*pow(P1y,2.0)*pow(Q3y,2.0) - 14*P0x*P1x*pow(Q2x,2.0) - 14*P0x*P1x*pow(Q3x,2.0) -
-32*P0x*P1x*pow(Q2y,2.0) - 32*P0x*P1x*pow(Q3y,2.0) - 32*P0y*P1y*pow(Q2x,2.0) - 32*P0y*P1y*pow(Q3x,2.0) - 14*P0y*P1y*pow(Q2y,2.0) - 14*P0y*P1y*pow(Q3y,2.0) - 14*pow(P0x,2.0)*Q2x*Q3x - 14*pow(P1x,2.0)*Q2x*Q3x -
-32*pow(P0y,2.0)*Q2x*Q3x - 32*pow(P1y,2.0)*Q2x*Q3x - 32*pow(P0x,2.0)*Q2y*Q3y - 32*pow(P1x,2.0)*Q2y*Q3y - 14*pow(P0y,2.0)*Q2y*Q3y - 14*pow(P1y,2.0)*Q2y*Q3y + 28*P0x*P1x*Q2x*Q3x - 18*P0x*P0y*Q2x*Q2y + 18*P0x*P0y*Q2x*Q3y +
-18*P0x*P0y*Q3x*Q2y + 18*P0x*P1y*Q2x*Q2y + 18*P1x*P0y*Q2x*Q2y + 64*P0x*P1x*Q2y*Q3y - 18*P0x*P0y*Q3x*Q3y - 18*P0x*P1y*Q2x*Q3y - 18*P0x*P1y*Q3x*Q2y - 18*P1x*P0y*Q2x*Q3y - 18*P1x*P0y*Q3x*Q2y - 18*P1x*P1y*Q2x*Q2y +
-64*P0y*P1y*Q2x*Q3x + 18*P0x*P1y*Q3x*Q3y + 18*P1x*P0y*Q3x*Q3y + 18*P1x*P1y*Q2x*Q3y + 18*P1x*P1y*Q3x*Q2y - 18*P1x*P1y*Q3x*Q3y + 28*P0y*P1y*Q2y*Q3y));
-				
-				// Just an arbitrary correction heuristic for negative factors ...
-				if (pfactor < 0)
-					pfactor = -0.1 * pfactor;
-				if (qfactor < 0)
-					qfactor = -0.1 * qfactor;
+				double pfactor, qfactor;
+				if (delete_bezier_point_action == Settings::DeleteBezierPoint_KeepHandles)
+				{
+					pfactor = 1;
+					qfactor = 1;
+				}
+				else if (delete_bezier_point_action == Settings::DeleteBezierPoint_ResetHandles)
+				{
+					double target_length = 0.4 * p0.lengthTo(q3);
+					pfactor = target_length / qMax(p0.lengthTo(p1), 0.01);
+					qfactor = target_length / qMax(q3.lengthTo(q2), 0.01);
+				}
+				else if (delete_bezier_point_action == Settings::DeleteBezierPoint_RetainExistingShape)
+				{
+					calcBezierPointDeletionRetainingShapeFactors(p0, p1, p2, q0, q1, q2, q3, pfactor, qfactor);
+				}
+				else
+					assert(false);
 				
 				MapCoordF p0p1 = MapCoordF(p1) - MapCoordF(p0);
 				MapCoord r1 = MapCoord(p0.xd() + pfactor * p0p1.getX(), p0.yd() + pfactor * p0p1.getY());

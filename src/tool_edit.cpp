@@ -171,7 +171,12 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 					undo_step->addObject(path, undo_duplicate);
 					editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
 					
-					path->deleteCoordinate(hover_point, true);
+					int delete_bezier_spline_point_setting;
+					if (event->modifiers() & Qt::ShiftModifier)
+						delete_bezier_spline_point_setting = Settings::EditTool_DeleteBezierPointActionAlternative;
+					else
+						delete_bezier_spline_point_setting = Settings::EditTool_DeleteBezierPointAction;
+					path->deleteCoordinate(hover_point, true, Settings::getInstance().getSettingCached((Settings::SettingsEnum)delete_bezier_spline_point_setting).toInt());
 					path->update(true);
 					updateHoverPoint(widget->mapToViewport(map_coord), widget);
 					updateDirtyRect();
@@ -314,7 +319,13 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 	// NOTE: This must be after the rest of the processing
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
-	angle_helper->getConstrainedCursorPositions(cur_pos_map, constrained_pos_map, constrained_pos, widget);
+	if (!box_selection)
+		angle_helper->getConstrainedCursorPositions(cur_pos_map, constrained_pos_map, constrained_pos, widget);
+	else
+	{
+		constrained_pos_map = cur_pos_map;
+		constrained_pos = cur_pos;
+	}
 	if (dragging && !box_selection)
 		updateStatusText();
 	
@@ -724,6 +735,9 @@ void EditTool::updateHoverPoint(QPointF point, MapWidget* widget)
 }
 void EditTool::updateDragging(const MapCoordF& cursor_pos_map)
 {
+	if (box_selection)
+		return;
+	
 	Map* map = editor->getMap();
 	
 	qint64 prev_drag_x = qRound64(1000 * (constrained_pos_map.getX() - click_pos_map.getX()));

@@ -41,9 +41,18 @@ public:
 		MapEditor_FixedAngleStepping,
 		MapEditor_ChangeSymbolWhenSelecting,
 		MapEditor_ZoomOutAwayFromCursor,
+		EditTool_DeleteBezierPointAction,
+		EditTool_DeleteBezierPointActionAlternative,
 		RectangleTool_HelperCrossRadius,
 		RectangleTool_PreviewLineWidth,
 		General_Language
+	};
+	
+	enum DeleteBezierPointAction
+	{
+		DeleteBezierPoint_RetainExistingShape = 0,
+		DeleteBezierPoint_ResetHandles,
+		DeleteBezierPoint_KeepHandles
 	};
 	
 	/// Retrieve a setting from QSettings without caching

@@ -121,12 +121,32 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	QCheckBox* zoom_out_away_from_cursor = new QCheckBox(tr("Zoom away from cursor when zooming out"));
 	layout->addWidget(zoom_out_away_from_cursor, row++, 0, 1, 2);
 	
-	QLabel* rectangle_helper_cross_radius_label = new QLabel(tr("Rectangle tool: radius of helper cross:"));
+	layout->setRowMinimumHeight(row++, 16);
+	layout->addWidget(new QLabel("<b>" % tr("Edit tool:") % "</b>"), row++, 0, 1, 2);
+	
+	edit_tool_delete_bezier_point_action = new QComboBox();
+	edit_tool_delete_bezier_point_action->addItem(tr("Retain old shape"), (int)Settings::DeleteBezierPoint_RetainExistingShape);
+	edit_tool_delete_bezier_point_action->addItem(tr("Reset outer curve handles"), (int)Settings::DeleteBezierPoint_ResetHandles);
+	edit_tool_delete_bezier_point_action->addItem(tr("Keep outer curve handles"), (int)Settings::DeleteBezierPoint_KeepHandles);
+	layout->addWidget(new QLabel(tr("Action on deleting a bezier spline point with Ctrl:")), row, 0);
+	layout->addWidget(edit_tool_delete_bezier_point_action, row++, 1);
+	
+	edit_tool_delete_bezier_point_action_alternative = new QComboBox();
+	edit_tool_delete_bezier_point_action_alternative->addItem(tr("Retain old shape"), (int)Settings::DeleteBezierPoint_RetainExistingShape);
+	edit_tool_delete_bezier_point_action_alternative->addItem(tr("Reset outer curve handles"), (int)Settings::DeleteBezierPoint_ResetHandles);
+	edit_tool_delete_bezier_point_action_alternative->addItem(tr("Keep outer curve handles"), (int)Settings::DeleteBezierPoint_KeepHandles);
+	layout->addWidget(new QLabel(tr("Action on deleting a bezier spline point with Ctrl-Shift:")), row, 0);
+	layout->addWidget(edit_tool_delete_bezier_point_action_alternative, row++, 1);
+	
+	layout->setRowMinimumHeight(row++, 16);
+	layout->addWidget(new QLabel("<b>" % tr("Rectangle tool:") % "</b>"), row++, 0, 1, 2);
+	
+	QLabel* rectangle_helper_cross_radius_label = new QLabel(tr("Radius of helper cross:"));
 	QSpinBox* rectangle_helper_cross_radius = Util::SpinBox::create(0, 999999, tr("pix"));
 	layout->addWidget(rectangle_helper_cross_radius_label, row, 0);
 	layout->addWidget(rectangle_helper_cross_radius, row++, 1);
 	
-	QCheckBox* rectangle_preview_line_width = new QCheckBox(tr("Rectangle tool: preview the width of lines with helper cross"));
+	QCheckBox* rectangle_preview_line_width = new QCheckBox(tr("Preview the width of lines with helper cross"));
 	layout->addWidget(rectangle_preview_line_width, row++, 0, 1, 2);
 	
 	
@@ -136,6 +156,10 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	fixed_angle_stepping->setValue(Settings::getInstance().getSetting(Settings::MapEditor_FixedAngleStepping).toInt());
 	select_symbol_of_objects->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool());
 	zoom_out_away_from_cursor->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_ZoomOutAwayFromCursor).toBool());
+	
+	edit_tool_delete_bezier_point_action->setCurrentIndex(edit_tool_delete_bezier_point_action->findData(Settings::getInstance().getSetting(Settings::EditTool_DeleteBezierPointAction).toInt()));
+	edit_tool_delete_bezier_point_action_alternative->setCurrentIndex(edit_tool_delete_bezier_point_action_alternative->findData(Settings::getInstance().getSetting(Settings::EditTool_DeleteBezierPointActionAlternative).toInt()));
+	
 	rectangle_helper_cross_radius->setValue(Settings::getInstance().getSetting(Settings::RectangleTool_HelperCrossRadius).toInt());
 	rectangle_preview_line_width->setChecked(Settings::getInstance().getSetting(Settings::RectangleTool_PreviewLineWidth).toBool());
 	
@@ -147,6 +171,10 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	connect(fixed_angle_stepping, SIGNAL(valueChanged(int)), this, SLOT(fixedAngleSteppingChanged(int)));
 	connect(select_symbol_of_objects, SIGNAL(clicked(bool)), this, SLOT(selectSymbolOfObjectsClicked(bool)));
 	connect(zoom_out_away_from_cursor, SIGNAL(clicked(bool)), this, SLOT(zoomOutAwayFromCursorClicked(bool)));
+	
+	connect(edit_tool_delete_bezier_point_action, SIGNAL(currentIndexChanged(int)), this, SLOT(editToolDeleteBezierPointActionChanged(int)));
+	connect(edit_tool_delete_bezier_point_action_alternative, SIGNAL(currentIndexChanged(int)), this, SLOT(editToolDeleteBezierPointActionAlternativeChanged(int)));
+	
 	connect(rectangle_helper_cross_radius,  SIGNAL(valueChanged(int)), this, SLOT(rectangleHelperCrossRadiusChanged(int)));
 	connect(rectangle_preview_line_width, SIGNAL(clicked(bool)), this, SLOT(rectanglePreviewLineWidthChanged(bool)));
 }
@@ -179,6 +207,16 @@ void EditorPage::selectSymbolOfObjectsClicked(bool checked)
 void EditorPage::zoomOutAwayFromCursorClicked(bool checked)
 {
 	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_ZoomOutAwayFromCursor), QVariant(checked));
+}
+
+void EditorPage::editToolDeleteBezierPointActionChanged(int index)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::EditTool_DeleteBezierPointAction), edit_tool_delete_bezier_point_action->itemData(index));
+}
+
+void EditorPage::editToolDeleteBezierPointActionAlternativeChanged(int index)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::EditTool_DeleteBezierPointActionAlternative), edit_tool_delete_bezier_point_action_alternative->itemData(index));
 }
 
 void EditorPage::rectangleHelperCrossRadiusChanged(int value)

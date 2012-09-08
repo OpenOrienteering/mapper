@@ -177,7 +177,10 @@ public:
 	void setCoordinate(int pos, MapCoord c);
 	void addCoordinate(int pos, MapCoord c);
 	void addCoordinate(MapCoord c, bool start_new_part = false);
-	void deleteCoordinate(int pos, bool adjust_other_coords);	// adjust_other_coords does not work if deleting bezier curve handles!
+	/// NOTE: adjust_other_coords does not work if deleting bezier curve handles!
+	///       delete_bezier_point_action must be an enum value from Settings::DeleteBezierPointAction if
+	///          deleting points from bezier splines with adjust_other_coords == true.
+	void deleteCoordinate(int pos, bool adjust_other_coords, int delete_bezier_point_action = -1);
 	void clearCoordinates();
 	
 	MapCoord& shiftedCoord(int base_index, int offset, PathPart& part);
@@ -239,6 +242,7 @@ protected:
 	void connectPathParts(int part_index, PathObject* other, int other_part_index, bool prepend);
 	bool advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& path_coords, int& cur_path_coord, int& current_index, float cur_length,
 								  bool enforce_wrap, int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, const MapCoordF& o3, const MapCoordF& o4);
+	void calcBezierPointDeletionRetainingShapeFactors(MapCoord p0, MapCoord p1, MapCoord p2, MapCoord q0, MapCoord q1, MapCoord q2, MapCoord q3, double& out_pfactor, double& out_qfactor);
 	/// Sets coord as the point which closes a subpath (the normal path or a hole in it).
 	void setClosingPoint(int index, MapCoord coord);
 	
