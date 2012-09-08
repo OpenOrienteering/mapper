@@ -57,16 +57,14 @@ and 4.8.0 (from upstream). See the platform specific notes.
 Install a supported version of CMake from http://www.cmake.org/.
 
 * MSYS
-MSYS is used to build the PROJ.4 library.  MSYS is available from
+MSYS is needed to build the PROJ.4 library. MSYS is available from
 http://www.mingw.org/wiki/MSYS. Please read and follow the installation
 instruction from this website. Recommended installation location is C:\MinGW.
 You don't need to install MinGW in this step if you install the Qt SDK.
 
 * PROJ.4 library
-If you have MinGW/MSYS installed in C:/MinGW/msys/1.0, the PROJ.4 library will
-be automatically downloaded and built during cmake build. If you have MSYS in
-another path or if you want change the PROJ.4 version, you need to modify
-3rd-party/proj.cmake.
+In cmake-gui (see below), set "Mapper_BUILD_PROJ" to 1 to have the PROJ.4
+library be downloaded and built as part of the build process. 
 
 * Qt and MinGW
 The easiest way to get Qt is to intall the Qt SDK. Make sure to select the
@@ -93,15 +91,16 @@ Now the build configuration is generated in the working directory, and the
 project is ready for compilation.
 
 If you use MinGW, call "mingw32-make" from the command prompt in this directory
-now to build the project.
+now to build the project. The Mapper.exe will be generated in the build
+directory.
 
+(This paragraphed needs to be reviewed:)
 If you use Visual C++ 2010, a *.sln file is generated in the build directory
 which should be opened as the next step. Five projects should be visible in the
 Solution Explorer which is by default on the left side. Right click the "Mapper"
 project and choose "Set as StartUp project". Right click it again and choose
 "Properties". Change "Configuration" to "All configurations" on the top left.
-In Debugging, change "Working directory" to the bin subdirectory:
-"$(ProjectDir)..\bin" (without the "). If you want to run the Debug version,
+If you want to run the Debug version,
 set the configuration to Debug, go to C/C++ -> Code Generation and set "Runtime
 Library" to "Multi-threaded Debug DLL". If you forget to do that, everything
 will seem to run well, but you will encounter strange crashes for example on
@@ -116,7 +115,7 @@ without adjustments.
 
 Start the build process from a fresh build directory. To prepare a release 
 package call 
-  cmake -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles" ..
+  cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DMapper_BUILD_PROJ=1
   mingw32-make package
 
 
@@ -186,7 +185,7 @@ Add a JOBS=x parameter to use all cores on a x-1 core nachine. (Do not
 use -j unless you know what it means with MXE).
 
 After this, you can configure you a new build directory by
-  cmake PATH_TO_MAPPER_SRC -DCMAKE_TOOLCHAIN_FILE=PATH_TO_MXE/usr/i686-pc-mingw32/share/cmake/mxe-conf.cmake
+  cmake PATH_TO_MAPPER_SRC -DCMAKE_TOOLCHAIN_FILE=PATH_TO_MXE/usr/i686-pc-mingw32/share/cmake/mxe-conf.cmake [OTHER OPTIONS].
 
 The toolchain file passes special parameters to cmake.
 
@@ -210,8 +209,8 @@ system can do the neccessary steps.
 
 For MinGW-w64 i686 (32 bit) builds, call
 
-cmake -DCMAKE_TOOLCHAIN_FILE=(path to source)cmake/toolchain/i686-w64-mingw32 \
-  -DMapper_BUILD_PROJ=1 -DMapper_BUILD_QT=1
+cmake PATH_TO_MAPPER_SRC -DCMAKE_TOOLCHAIN_FILE=(path to source)cmake/toolchain/i686-w64-mingw32 \
+  -DMapper_BUILD_PROJ=1 -DMapper_BUILD_QT=1 [OTHER OPTIONS]
 
 This will add targets and rules to the build system which download, patch,
 configure and build the proj and Qt libraries with all neccessary components.
@@ -228,7 +227,9 @@ Of course you can call
 
 make package
 
-as soon as another cmake run could find the required libraries.
+as soon as another cmake run could find the required libraries. If you have NSIS
+installed, it will generate an NSIS installer in addition to the binary ZIP
+packages.
 
 
 == Making a source package ==
