@@ -22,6 +22,7 @@
 
 #include <assert.h>
 
+#include <QHash>
 #include <QtGui>
 
 #include "map.h"
@@ -33,17 +34,62 @@
 #include "symbol_combined.h"
 #include "file_format.h"
 #include "settings.h"
+#include "map_color.h"
 
 
 // STL comparison function for sorting symbols by number
-static bool Compare_symbolByNumber(Symbol *s1, Symbol *s2) {
-    int n1 = s1->number_components, n2 = s2->number_components;
-    for (int i = 0; i < n1 && i < n2; i++) {
-        if (s1->getNumberComponent(i) < s2->getNumberComponent(i)) return true;  // s1 < s2
-        if (s1->getNumberComponent(i) > s2->getNumberComponent(i)) return false; // s1 > s2
-        // if s1 == s2, loop to the next component
-    }
-    return false; // s1 == s2
+static bool Compare_symbolByNumber(Symbol* s1, Symbol* s2)
+{
+	int n1 = s1->number_components, n2 = s2->number_components;
+	for (int i = 0; i < n1 && i < n2; i++)
+	{
+		if (s1->getNumberComponent(i) < s2->getNumberComponent(i)) return true;  // s1 < s2
+		if (s1->getNumberComponent(i) > s2->getNumberComponent(i)) return false; // s1 > s2
+		// if s1 == s2, loop to the next component
+	}
+	return false; // s1 == s2
+}
+
+struct Compare_symbolByColor
+{
+	bool operator() (Symbol* s1, Symbol* s2)
+	{
+		MapColor* c1 = s1->getDominantColorGuess();
+		MapColor* c2 = s2->getDominantColorGuess();
+		
+		if (c1 && c2)
+			return color_map.value(getColorCode(c1)) < color_map.value(getColorCode(c2));
+		else if (c2)
+			return true;
+		else if (c1)
+			return false;
+		
+		return false; // s1 == s2
+	}
+	
+	static QRgb getColorCode(MapColor* color)
+	{
+		return qRgba(qFloor(255.9 * color->c), qFloor(255.9 * color->m), qFloor(255.9 * color->y), qFloor(255.9 * color->k));
+	}
+	
+	// Maps color code to priority
+	QHash<QRgb, int> color_map;
+};
+
+// STL comparison function for sorting symbols by color priority
+static bool Compare_symbolByColorPriority(Symbol* s1, Symbol* s2)
+{
+	MapColor* c1 = s1->getDominantColorGuess();
+	MapColor* c2 = s2->getDominantColorGuess();
+	
+	if (c1 && c2)
+		return c1->priority < c2->priority;
+	else if (c2)
+		return true;
+	else if (c1)
+		return false;
+	
+	return false; // s1 == s2
 }
 
 
@@ -94,14 +140,17 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	context_menu->addSeparator();
 	
 	QMenu* select_menu = new QMenu(tr("Select symbols"), context_menu);
-	select_menu->addAction(tr("All"), this, SLOT(selectAll()));
-	select_menu->addAction(tr("Unused"), this, SLOT(selectUnused()));
+	select_menu->addAction(tr("Select all"), this, SLOT(selectAll()));
+	select_menu->addAction(tr("Select unused"), this, SLOT(selectUnused()));
 	select_menu->addSeparator();
 	select_menu->addAction(tr("Invert selection"), this, SLOT(invertSelection()));
 	context_menu->addMenu(select_menu);
 	
-    context_menu->addSeparator();
-    context_menu->addAction(tr("Sort by number"), this, SLOT(sortByNumber()));
+	QMenu* sort_menu = new QMenu(tr("Sort symbols"), context_menu);
+	sort_menu->addAction(tr("Sort by number"), this, SLOT(sortByNumber()));
+	sort_menu->addAction(tr("Sort by primary color"), this, SLOT(sortByColor()));
+	sort_menu->addAction(tr("Sort by primary color priority"), this, SLOT(sortByColorPriority()));
+	context_menu->addMenu(sort_menu);
 
 	connect(map, SIGNAL(colorDeleted(int,MapColor*)), this, SLOT(update()));
 }
@@ -770,23 +819,31 @@ void SymbolRenderWidget::invertSelection()
 	symbol_widget->emitSelectedSymbolsChanged();
 	update();
 }
+
 void SymbolRenderWidget::sortByNumber()
 {
-    // save selection
-    std::set<Symbol *> sel;
-    for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it) {
-        sel.insert(map->getSymbol(*it));
-    }
-
-    map->sortSymbols(Compare_symbolByNumber);
-
-    //restore selection
-    selected_symbols.clear();
-    for (int i = 0; i < map->getNumSymbols(); i++) {
-        if (sel.find(map->getSymbol(i)) != sel.end()) selected_symbols.insert(i);
-    }
-
-    update();
+    sort(Compare_symbolByNumber);
+}
+void SymbolRenderWidget::sortByColor()
+{
+	Compare_symbolByColor compare;
+	int next_priority = map->getNumColors() - 1;
+	// Iterating in reverse order so identical colors are at the position where they appear with lowest priority.
+	for (int i = map->getNumColors() - 1; i >= 0; --i)
+	{
+		QRgb color_code = Compare_symbolByColor::getColorCode(map->getColor(i));
+		if (!compare.color_map.contains(color_code))
+		{
+			compare.color_map.insert(color_code, next_priority);
+			--next_priority;
+		}
+	}
+	
+	sort(compare);
+}
+void SymbolRenderWidget::sortByColorPriority()
+{
+	sort(Compare_symbolByColorPriority);
 }
 
 void SymbolRenderWidget::updateContextMenuState()

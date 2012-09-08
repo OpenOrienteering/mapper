@@ -254,7 +254,12 @@ public:
 	void setSymbol(Symbol* symbol, int pos);
 	void addSymbol(Symbol* symbol, int pos);
 	void moveSymbol(int from, int to);
-    void sortSymbols(bool (*cmp)(Symbol *, Symbol *));
+	template<typename T> void sortSymbols(T compare)
+	{
+		std::stable_sort(symbols.begin(), symbols.end(), compare);
+		// TODO: emit(symbolChanged(pos, symbol)); ? s/b same choice as for moveSymbol()
+		setSymbolsDirty();
+	}
 	void deleteSymbol(int pos);
 	int findSymbolIndex(Symbol* symbol);
 	void setSymbolsDirty();

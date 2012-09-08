@@ -1490,13 +1490,6 @@ void Map::moveSymbol(int from, int to)
 	setSymbolsDirty();
 }
 
-void Map::sortSymbols(bool (*cmp)(Symbol *, Symbol *)) {
-    if (!cmp) return;
-    std::stable_sort(symbols.begin(), symbols.end(), cmp);
-    // TODO: emit(symbolChanged(pos, symbol)); ? s/b same choice as for above, in moveSymbol()
-    setSymbolsDirty();
-}
-
 Symbol* Map::getSymbol(int i) const
 {
 	if (i >= 0)

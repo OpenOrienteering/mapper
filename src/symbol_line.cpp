@@ -1232,8 +1232,48 @@ bool LineSymbol::containsColor(MapColor* color)
 
 MapColor* LineSymbol::getDominantColorGuess()
 {
-	if (line_width > 0 && color)
-		return color;
+	bool has_main_line = line_width > 0 && color;
+	bool has_border = hasBorder() && border.width > 0 && border.color;
+	bool has_right_border = hasBorder() && right_border.width > 0 && right_border.color;
+	
+	// Use the color of the thickest line
+	if (has_main_line)
+	{
+		if (has_border)
+		{
+			if (has_right_border)
+			{
+				if (line_width > 2 * border.width)
+					return (line_width > 2 * right_border.width) ? color : right_border.color;
+				else
+					return (border.width > right_border.width) ? border.color : right_border.color;
+			}
+			else
+				return (line_width > 2 * border.width) ? color : border.color;
+		}
+		else
+		{
+			if (has_right_border)
+				return (line_width > 2 * right_border.width) ? color : right_border.color;
+			else
+				return color;
+		}
+	}
+	else
+	{
+		if (has_border)
+		{
+			if (has_right_border)
+				return (border.width > right_border.width) ? border.color : right_border.color;
+			else
+				return border.color;
+		}
+		else
+		{
+			if (has_right_border)
+				return right_border.color;
+		}
+	}
 	
 	MapColor* dominant_color = mid_symbol ? mid_symbol->getDominantColorGuess() : NULL;
 	if (dominant_color) return dominant_color;
@@ -1245,7 +1285,9 @@ MapColor* LineSymbol::getDominantColorGuess()
 	if (dominant_color) return dominant_color;
 	
 	dominant_color = dash_symbol ? dash_symbol->getDominantColorGuess() : NULL;
-	return dominant_color;
+	if (dominant_color) return dominant_color;
+	
+	return NULL;
 }
 
 void LineSymbol::scale(double factor)
