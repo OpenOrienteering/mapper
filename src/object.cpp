@@ -1617,6 +1617,162 @@ void PathObject::calcBezierPointDeletionRetainingShapeFactors(MapCoord p0, MapCo
 		out_qfactor = -0.1 * out_qfactor;
 }
 
+float PathObject::calcBezierPointDeletionRetainingShapeCost(MapCoord p0, MapCoordF p1, MapCoordF p2, MapCoord p3, PathObject* reference)
+{
+	const int num_test_points = 20;
+	QBezierCopy curve = QBezierCopy::fromPoints(p0.toQPointF(), p1.toQPointF(), p2.toQPointF(), p3.toQPointF());
+	
+	float cost = 0;
+	for (int i = 0; i < num_test_points; ++i)
+	{
+		QPointF point = curve.pointAt((i + 1) / (float)(num_test_points + 1));
+		float distance_sq;
+		PathCoord path_coord;
+		reference->calcClosestPointOnPath(MapCoordF(point), distance_sq, path_coord);
+		cost += distance_sq;
+	}
+	// Just some random scaling to pretend that we have 50 sample points
+	return cost * (50 / 20.0f);
+}
+void PathObject::calcBezierPointDeletionRetainingShapeOptimization(MapCoord p0, MapCoord p1, MapCoord p2, MapCoord q0, MapCoord q1, MapCoord q2, MapCoord q3, double& out_pfactor, double& out_qfactor)
+{
+	const float gradient_abort_threshold = 0.05f;	// if the gradient magnitude is lower than this over num_abort_steps step, the optimization is aborted
+	const float decrease_abort_threshold = 0.004f;	// if the cost descrease if lower than this over num_abort_steps step, the optimization is aborted
+	const int num_abort_steps = 2;
+	const double derivative_delta = 0.05;
+	const int num_tested_step_sizes = 5;
+	const int max_num_line_search_iterations = 5;
+	float step_size_stepping_base = 0.001f;
+	
+	PathObject old_curve;
+	old_curve.setSymbol(map->getCoveringRedLine(), true);	// HACK; needed to generate path coords
+	p0.setCurveStart(true);
+	old_curve.addCoordinate(p0);
+	old_curve.addCoordinate(p1);
+	old_curve.addCoordinate(p2);
+	q0.setCurveStart(true);
+	old_curve.addCoordinate(q0);
+	old_curve.addCoordinate(q1);
+	old_curve.addCoordinate(q2);
+	q3.setCurveStart(false);
+	q3.setClosePoint(false);
+	q3.setHolePoint(false);
+	old_curve.addCoordinate(q3);
+	old_curve.update();
+	
+	float cur_cost;
+	int num_no_improvement_iterations = 0;
+	float old_gradient[2];
+	float old_step_dir[2];
+	for (int i = 0; i < 30; ++i)
+	{
+		MapCoordF p_direction = MapCoordF(p1) - MapCoordF(p0);
+		MapCoordF r1 = MapCoordF(p0) + out_pfactor * p_direction;
+		MapCoordF q_direction = MapCoordF(q2) - MapCoordF(q3);
+		MapCoordF r2 = MapCoordF(q3) + out_qfactor * q_direction;
+		
+		// Calculate gradient and cost (if first iteration)
+		if (i == 0)
+			cur_cost = calcBezierPointDeletionRetainingShapeCost(p0, r1, r2, q3, &old_curve);
+		//if (i == 0)
+		//	qDebug() << "\nStart cost: " << cur_cost;
+		
+		float gradient[2];
+		gradient[0] = (calcBezierPointDeletionRetainingShapeCost(p0, r1 + derivative_delta * p_direction, r2, q3, &old_curve) -
+		               calcBezierPointDeletionRetainingShapeCost(p0, r1 - derivative_delta * p_direction, r2, q3, &old_curve)) / (2 * derivative_delta);
+		gradient[1] = (calcBezierPointDeletionRetainingShapeCost(p0, r1, r2 + derivative_delta * q_direction, q3, &old_curve) -
+		               calcBezierPointDeletionRetainingShapeCost(p0, r1, r2 - derivative_delta * q_direction, q3, &old_curve)) / (2 * derivative_delta);
+		
+		// Calculate step direction
+		float step_dir_p;
+		float step_dir_q;
+		float conjugate_gradient_factor = 0;
+		if (i == 0)
+		{
+			// Steepest descent
+			step_dir_p = -gradient[0];
+			step_dir_q = -gradient[1];
+		}
+		else
+		{
+			// Conjugate gradient
+			// Fletcher - Reeves:
+			//conjugate_gradient_factor = (pow(gradient[0], 2.0) + pow(gradient[1], 2.0)) / (pow(old_gradient[0], 2.0) + pow(old_gradient[1], 2.0));
+			// Polak – Ribiere:
+			conjugate_gradient_factor = qMax(0.0, ( gradient[0] * (gradient[0] - old_gradient[0]) + gradient[1] * (gradient[1] - old_gradient[1]) ) /
+			                                      ( pow(old_gradient[0], 2.0) + pow(old_gradient[1], 2.0) ));
+			//qDebug() << "Factor: " << conjugate_gradient_factor;
+			step_dir_p = -gradient[0] + conjugate_gradient_factor * old_step_dir[0];
+			step_dir_q = -gradient[1] + conjugate_gradient_factor * old_step_dir[1];
+		}
+		
+		// Line search in step direction for lowest cost
+		float best_step_size = 0;
+		float best_step_size_cost = cur_cost;
+		int best_step_factor = 0;
+		float adjusted_step_size_stepping_base = step_size_stepping_base;
+		
+		for (int iteration = 0; iteration < max_num_line_search_iterations; ++iteration)
+		{
+			const float step_size_stepping = adjusted_step_size_stepping_base * (out_pfactor + out_qfactor) / 2; // * qSqrt(step_dir_p*step_dir_p + step_dir_q*step_dir_q); // qSqrt(cur_cost);
+			for (int step_test = 1; step_test <= num_tested_step_sizes; ++step_test)
+			{
+				float step_size = step_test * step_size_stepping;
+				float test_p_step = step_size * step_dir_p;
+				float test_q_step = step_size * step_dir_q;
+				
+				MapCoordF test_r1 = r1 + test_p_step * p_direction;
+				MapCoordF test_r2 = r2 + test_q_step * q_direction;
+				float test_cost = calcBezierPointDeletionRetainingShapeCost(p0, test_r1, test_r2, q3, &old_curve);
+				if (test_cost < best_step_size_cost)
+				{
+					best_step_size_cost = test_cost;
+					best_step_size = step_size;
+					best_step_factor = step_test;
+				}
+			}
+			//qDebug() << best_step_factor;
+			if (best_step_factor == num_tested_step_sizes)
+				adjusted_step_size_stepping_base *= num_tested_step_sizes;
+			else if (best_step_factor == 0)
+				adjusted_step_size_stepping_base *= (1 / (float)num_tested_step_sizes);
+			else
+				break;
+			if (iteration < 3)
+				step_size_stepping_base = adjusted_step_size_stepping_base;
+		}
+		if (best_step_factor == 0 && conjugate_gradient_factor == 0)
+			return;
+		
+		// Update optimized parameters and constrain them to non-negative values
+		out_pfactor += best_step_size * step_dir_p;
+		if (out_pfactor < 0)
+			out_pfactor = 0;
+		out_qfactor += best_step_size * step_dir_q;
+		if (out_qfactor < 0)
+			out_qfactor = 0;
+		
+		// Abort if gradient is really low for a number of steps
+		float gradient_magnitude = qSqrt(gradient[0]*gradient[0] + gradient[1]*gradient[1]);
+		//qDebug() << "Gradient magnitude: " << gradient_magnitude;
+		if (gradient_magnitude < gradient_abort_threshold || cur_cost - best_step_size_cost < decrease_abort_threshold)
+		{
+			++num_no_improvement_iterations;
+			if (num_no_improvement_iterations == num_abort_steps)
+				return;
+		}
+		else
+			num_no_improvement_iterations = 0;
+		
+		cur_cost = best_step_size_cost;
+		old_gradient[0] = gradient[0];
+		old_gradient[1] = gradient[1];
+		old_step_dir[0] = step_dir_p;
+		old_step_dir[1] = step_dir_q;
+		//qDebug() << "Cost: " << cur_cost;
+	}
+}
+
 void PathObject::appendPath(PathObject* other)
 {
 	int coords_size = coords.size();
@@ -1914,6 +2070,11 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords, int delete_
 				else if (delete_bezier_point_action == Settings::DeleteBezierPoint_RetainExistingShape)
 				{
 					calcBezierPointDeletionRetainingShapeFactors(p0, p1, p2, q0, q1, q2, q3, pfactor, qfactor);
+					calcBezierPointDeletionRetainingShapeOptimization(p0, p1, p2, q0, q1, q2, q3, pfactor, qfactor);
+					
+					double minimum_length = 0.01 * p0.lengthTo(q3);
+					pfactor = qMax(minimum_length / qMax(p0.lengthTo(p1), 0.01), pfactor);
+					qfactor = qMax(minimum_length / qMax(q3.lengthTo(q2), 0.01), qfactor);
 				}
 				else
 					assert(false);

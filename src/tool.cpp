@@ -303,14 +303,26 @@ int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_c
 			PathObject* path = reinterpret_cast<PathObject*>(object);
 			int size = path->getCoordinateCount();
 			
+			int best_index = -1;
+			float best_dist_sq = click_tolerance_squared;
 			for (int i = size - 1; i >= 0; --i)
 			{
-				if (!path->getCoordinate(i).isClosePoint() &&
-					distanceSquared(widget->mapToViewport(path->getCoordinate(i)), cursor) <= click_tolerance_squared)
-					return i;
+				if (!path->getCoordinate(i).isClosePoint())
+				{
+					float distance_sq = distanceSquared(widget->mapToViewport(path->getCoordinate(i)), cursor);
+					bool is_handle = (i >= 1 && path->getCoordinate(i - 1).isCurveStart()) ||
+					                 (i >= 2 && path->getCoordinate(i - 2).isCurveStart());
+					if (distance_sq < best_dist_sq || (distance_sq == best_dist_sq && is_handle))
+					{
+						best_index = i;
+						best_dist_sq = distance_sq;
+					}
+				}
 				if (!include_curve_handles && i >= 3 && path->getCoordinate(i - 3).isCurveStart())
 					i -= 2;
 			}
+			if (best_index >= 0)
+				return best_index;
 		}
 	}
 	
