@@ -55,18 +55,19 @@ public:
     XMLFileFormat() : Format("XML", QObject::tr("OpenOrienteering Mapper XML (export only)"), "xml", false, true, true) {}
 
     bool understands(const unsigned char *buffer, size_t sz) const;
-    //Importer *createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException);
-    Exporter *createExporter(QIODevice* stream, const QString& path, Map *map, MapView *view) const throw (FormatException);
+	//Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
+    Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
 };
 
 /*
 class XMLFileImporter : public Importer
 {
 public:
-    XMLFileImporter(const QString &path, Map *map, MapView *view);
+	XMLFileImporter(QIODevice* stream, Map *map, MapView *view);
     ~XMLFileImporter() {}
 
-    void doImport(bool load_symbols_only) throw (FormatException);
+protected:
+    void import(bool load_symbols_only) throw (FormatException);
 
 };
 */

@@ -203,6 +203,30 @@ int ocad_file_open_mapped(OCADFile **pfile, const char *filename) {
 	return -10;
 }
 
+int ocad_file_open_memory(OCADFile **pfile, u8* buffer, u32 size) {
+	dword offs;
+	
+	OCADFile *file = *pfile;
+	if (file == NULL) {
+		file = (OCADFile *)malloc(sizeof(OCADFile));
+		if (file == NULL) return -1;
+	}
+	memset(file, 0, sizeof(OCADFile));
+	
+	file->mapped = FALSE;
+	file->size = size;
+	file->buffer = buffer;
+	if (file->buffer == NULL) { return -1; }
+	
+	file->header = (OCADFileHeader *)file->buffer;
+	file->colors = (OCADColor *)(file->buffer + 0x48);
+	offs = file->header->osetup;
+	if (offs > 0) file->setup = (OCADSetup *)(file->buffer + offs);
+	
+	*pfile = file;
+	return 0;
+}
+
 int ocad_file_close(OCADFile *pfile) {
 #ifdef MMAP_AVAILABLE
 	if (pfile->buffer) munmap(pfile->buffer, pfile->size);

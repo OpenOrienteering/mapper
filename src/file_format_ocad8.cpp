@@ -40,19 +40,19 @@
 #define currentMSecsSinceEpoch() currentDateTime().toTime_t() * 1000
 #endif
 
-bool OCAD8FileFormat::understands(const unsigned char *buffer, size_t sz) const
+bool OCAD8FileFormat::understands(const unsigned char* buffer, size_t sz) const
 {
     // The first two bytes of the file must be AD 0C.
     if (sz >= 2 && buffer[0] == 0xAD && buffer[1] == 0x0C) return true;
     return false;
 }
 
-Importer *OCAD8FileFormat::createImporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException)
+Importer* OCAD8FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException)
 {
-	return new OCAD8FileImport(stream, path, map, view);
+	return new OCAD8FileImport(stream, map, view);
 }
 
-Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, const QString& path, Map* map, MapView* view) const throw (FormatException)
+Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FormatException)
 {
     return new OCAD8FileExport(stream, map, view);
 }
@@ -69,7 +69,7 @@ bool OCAD8FileFormat::isRasterImageFile(const QString &filename)
 
 
 
-OCAD8FileImport::OCAD8FileImport(QIODevice* stream, const QString &path, Map* map, MapView* view) : Importer(stream, map, view), path(path), file(NULL)
+OCAD8FileImport::OCAD8FileImport(QIODevice* stream, Map* map, MapView* view) : Importer(stream, map, view), file(NULL)
 {
     ocad_init();
     encoding_1byte = QTextCodec::codecForName("Windows-1252");
@@ -82,14 +82,17 @@ OCAD8FileImport::~OCAD8FileImport()
     ocad_shutdown();
 }
 
-void OCAD8FileImport::doImport(bool load_symbols_only) throw (FormatException)
+void OCAD8FileImport::import(bool load_symbols_only) throw (FormatException)
 {
-	stream->close();	// TODO: use stream instead of libocad's direct file access
     //qint64 start = QDateTime::currentMSecsSinceEpoch();
-
-	QByteArray filename = path.toLocal8Bit().constData();
-    int err = ocad_file_open(&file, filename);
-    //qDebug() << "open ocad file" << err;
+	
+	u32 size = stream->bytesAvailable();
+	u8* buffer = (u8*)malloc(size);
+	if (!buffer)
+		throw FormatException(QObject::tr("Could not allocate buffer."));
+	if (stream->read((char*)buffer, size) != size)
+		throw FormatException(QObject::tr("Could not read file."));
+	int err = ocad_file_open_memory(&file, buffer, size);
     if (err != 0) throw FormatException(QObject::tr("Could not open file: libocad returned %1").arg(err));
 	
 	if (file->header->major <= 5 || file->header->major >= 9)
@@ -1191,7 +1194,6 @@ bool OCAD8FileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol,
 		
 		MapCoordF adjust_vector = MapCoordF(top_adjust * sin(object->getRotation()), top_adjust * cos(object->getRotation()));
 		top_left = MapCoord(top_left.xd() + adjust_vector.getX(), top_left.yd() + adjust_vector.getY());
-		bottom_left = MapCoord(bottom_left.xd() + adjust_vector.getX(), bottom_left.yd() + adjust_vector.getY());
 		top_right = MapCoord(top_right.xd() + adjust_vector.getX(), top_right.yd() + adjust_vector.getY());
 		
 		object->setBox((bottom_left.rawX() + top_right.rawX()) / 2, (bottom_left.rawY() + top_right.rawY()) / 2,
@@ -2227,10 +2229,10 @@ s16 OCAD8FileExport::exportTextCoordinates(TextObject* object, OCADPoint** buffe
 		double internal_scaling = text_symbol->calculateInternalScaling();
 		TextObjectLineInfo* line0 = object->getLineInfo(0);
 		
-		double new_top = line0->line_y - line0->ascent;
+		double new_top = (object->getVerticalAlignment() == TextObject::AlignTop) ? (-object->getBoxHeight() / 2) : ((line0->line_y - line0->ascent) / internal_scaling);
 		// Account for extra internal leading
-		double top_adjust = -text_symbol->getFontSize() * internal_scaling + (metrics.ascent() + metrics.descent() + 0.5);
-		new_top = (new_top - top_adjust) / internal_scaling;
+		double top_adjust = -text_symbol->getFontSize() + (metrics.ascent() + metrics.descent() + 0.5) / internal_scaling;
+		new_top = new_top - top_adjust;
 		
 		QTransform transform;
 		transform.rotate(-object->getRotation() * 180 / M_PI);
@@ -2400,8 +2402,8 @@ int OCAD8FileExport::convertRotation(float angle)
 OCADPoint OCAD8FileExport::convertPoint(qint64 x, qint64 y)
 {
 	OCADPoint result;
-	result.x = (s32)(x / 10) << 8;
-	result.y = (s32)(y / -10) << 8;
+	result.x = (s32)qRound(x / 10.0) << 8;
+	result.y = (s32)qRound(y / -10.0) << 8;
 	return result;
 }
 OCADPoint OCAD8FileExport::convertPoint(const MapCoord& coord)

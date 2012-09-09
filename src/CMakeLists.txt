@@ -20,10 +20,10 @@ include(../3rd-party/clipper.cmake)
 
 configure_file(global.h.in ${CMAKE_CURRENT_SOURCE_DIR}/global.h)
 
-set(Mapper_SRCS
+set(Mapper_Common_SRCS
  ../3rd-party/clipper/cpp/clipper.cpp
 
- main.cpp
+ global.cpp
  util.cpp
  util_pie_menu.cpp
  undo.cpp
@@ -103,7 +103,7 @@ set(Mapper_SRCS
  file_format_ocad8.cpp
 )
 
-set(Mapper_MOC_INPUT
+set(Mapper_Common_MOC_INPUT
  color_dock_widget.h
  georeferencing.h
  georeferencing_dialog.h
@@ -161,37 +161,77 @@ set(Mapper_MOC_INPUT
 )
 
 if(Mapper_XML_FORMAT)
-	list(APPEND Mapper_SRCS file_format_xml.cpp)
+	list(APPEND Mapper_Common_SRCS file_format_xml.cpp)
 endif(Mapper_XML_FORMAT)
 
-qt4_wrap_cpp(Mapper_MOC ${Mapper_MOC_INPUT})
+qt4_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})
 
 # Resources (from project root)
 
 set(Mapper_RESOURCES ${Mapper_RESOURCES} ${PROJECT_SOURCE_DIR}/resources.qrc)
 qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
+# Mapper common
+
+add_library(Mapper_Common STATIC
+	${Mapper_Common_SRCS}
+	${Mapper_Common_MOC}
+)
+target_link_libraries(Mapper_Common
+ ${Mapper_LIBRARIES}
+ ${QT_LIBRARIES}
+ ${PROJ_LIBRARY}
+)
+add_dependencies(Mapper_Common
+  Mapper_prerequisites
+)
+
+qt4_translations_sources(
+  SOURCES ${Mapper_Common_SRCS}
+)
+
+
 # Mapper executable
+
+set(Mapper_SRCS
+ main.cpp
+)
 
 add_executable(Mapper
 	WIN32
 	MACOSX_BUNDLE
 	${Mapper_SRCS}
-	${Mapper_MOC}
 	${Mapper_RESOURCES_RCC}
 )
 target_link_libraries(Mapper
- ${Mapper_LIBRARIES}
- ${QT_LIBRARIES}
- ${PROJ_LIBRARY}
+ Mapper_Common
 )
-add_dependencies(Mapper
-  Mapper_prerequisites
-)
-qt4_translations_sources(
-  SOURCES ${Mapper_SRCS}
-)
+
 install(TARGETS Mapper
   RUNTIME DESTINATION "${MAPPER_RUNTIME_DESTINATION}"
 )
 
+
+# Test executable
+
+set(Mapper_Test_SRCS
+ test.cpp
+)
+
+set(Mapper_Test_MOC_INPUT
+ test.h
+)
+
+qt4_wrap_cpp(Mapper_Test_MOC ${Mapper_Test_MOC_INPUT})
+
+add_executable(Mapper_Test
+	WIN32
+	${Mapper_Test_SRCS}
+	${Mapper_Test_MOC}
+	${Mapper_RESOURCES_RCC}
+)
+add_test(NAME Mapper_Test_General COMMAND $<TARGET_FILE:Mapper_Test>)
+target_link_libraries(Mapper_Test
+ Mapper_Common
+ ${QT_QTTEST_LIBRARY}
+)

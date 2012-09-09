@@ -18,6 +18,7 @@
  */
 
 #include "file_format.h"
+#include "symbol.h"
 
 #include <cassert>
 #include <QFileInfo>
@@ -34,12 +35,12 @@ bool Format::understands(const unsigned char *buffer, size_t sz) const
     return false;
 }
 
-Importer *Format::createImporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException)
+Importer *Format::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException)
 {
     throw FormatException(QString("Format (%1) does not support import").arg(description()));
 }
 
-Exporter *Format::createExporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException)
+Exporter *Format::createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException)
 {
     throw FormatException(QString("Format (%1) does not support export").arg(description()));
 }
@@ -90,3 +91,16 @@ FormatRegistry::~FormatRegistry()
 }
 
 FormatRegistry FileFormats;
+
+
+void Importer::doImport(bool load_symbols_only) throw (FormatException)
+{
+	import(load_symbols_only);
+	
+	// Post processing
+	for (int i = 0; i < map->getNumSymbols(); ++i)
+	{
+		if (!map->getSymbol(i)->loadFinished(map))
+			throw FormatException(QObject::tr("Error during symbol post-processing."));
+	}
+}

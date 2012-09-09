@@ -44,8 +44,8 @@ public:
 	OCAD8FileFormat() : Format("OCAD78", QObject::tr("OCAD Versions 7, 8"), "ocd", true, true, true) {}
 
 	bool understands(const unsigned char *buffer, size_t sz) const;
-	virtual Importer* createImporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException);
-	virtual Exporter* createExporter(QIODevice* stream, const QString& path, Map* map, MapView* view) const throw (FormatException);
+	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
+	virtual Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FormatException);
 	
 	static bool isRasterImageFile(const QString &filename);
 };
@@ -72,16 +72,16 @@ private:
 	};
 	
 public:
-	OCAD8FileImport(QIODevice* stream, const QString &path, Map *map, MapView *view);
+	OCAD8FileImport(QIODevice* stream, Map *map, MapView *view);
     ~OCAD8FileImport();
-
-	void doImport(bool load_symbols_only) throw (FormatException);
 
     void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
 
     static const float ocad_pt_in_mm;
 
 protected:
+	void import(bool load_symbols_only) throw (FormatException);
+	
     // Symbol import
     Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);
     Symbol *importLineSymbol(const OCADLineSymbol *ocad_symbol);
@@ -116,9 +116,6 @@ protected:
 	double convertTemplateScale(double ocad_scale);
 
 private:
-	/// File path
-	QString path;
-	
     /// Handle to the open OCAD file
     OCADFile *file;
 

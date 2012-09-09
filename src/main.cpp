@@ -27,10 +27,6 @@
 #include "main_window.h"
 #include "main_window_home_screen.h"
 #include "settings.h"
-#include "file_format_native.h"
-#include "file_format_ocad8.h"
-#include "file_format_xml.h"
-#include "tool.h"
 
 int main(int argc, char** argv)
 {
@@ -87,15 +83,7 @@ int main(int argc, char** argv)
 #endif
 	qapp.installTranslator(&translator);
 	
-	// Register the supported file formats
-	FileFormats.registerFormat(new NativeFileFormat());
-#ifdef Mapper_XML_FORMAT
-	FileFormats.registerFormat(new XMLFileFormat());
-#endif
-	FileFormats.registerFormat(new OCAD8FileFormat());
-	
-	// Load resources
-	MapEditorTool::loadPointHandles();
+	doStaticInitializations();
 	
 	// Create first main window
 	MainWindow* first_window = new MainWindow(true);

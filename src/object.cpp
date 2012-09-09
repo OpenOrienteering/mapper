@@ -89,8 +89,18 @@ bool Object::equals(Object* other, bool compare_symbol)
 		PathObject* path_this = static_cast<PathObject*>(this);
 		PathObject* path_other = static_cast<PathObject*>(other);
 		
-		if (path_this->getPatternRotation() != path_other->getPatternRotation() ||
-			path_this->getPatternOrigin() != path_other->getPatternOrigin())
+		// Make sure that compared values are greater than 1, see qFuzzyCompare
+		float rotation_a = path_this->getPatternRotation();
+		float rotation_b = path_other->getPatternRotation();
+		while (rotation_a < 1)
+		{
+			rotation_a += 100;
+			rotation_b += 100;
+		}
+		if (!qFuzzyCompare(rotation_a, rotation_b))
+			return false;
+		
+		if (path_this->getPatternOrigin() != path_other->getPatternOrigin())
 			return false;
 	}
 	else if (type == Text)

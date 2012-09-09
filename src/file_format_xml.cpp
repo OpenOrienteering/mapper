@@ -91,13 +91,13 @@ bool XMLFileFormat::understands(const unsigned char *buffer, size_t sz) const
 
 
 /*
-Importer *XMLFileFormat::createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException)
+Importer *XMLFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException)
 {
-    return new XMLFileImporter(path, map, view);
+    return new XMLFileImporter(stream, map, view);
 }
 */
 
-Exporter *XMLFileFormat::createExporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException)
+Exporter *XMLFileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException)
 {
     return new XMLFileExporter(stream, map, view);
 }
@@ -105,8 +105,8 @@ Exporter *XMLFileFormat::createExporter(QIODevice* stream, const QString &path, 
 #define NS_V1 "http://oo-mapper.com/oo-mapper/v1"
 
 /*
-XMLFileImporter::XMLFileImporter(const QString &path, Map *map, MapView *view)
-    : Importer(path, map, view), reader("document", NS_V1)
+XMLFileImporter::XMLFileImporter(QIODevice* stream, Map *map, MapView *view)
+    : Importer(stream, map, view), reader("document", NS_V1)
 {
 
 }

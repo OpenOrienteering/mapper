@@ -550,7 +550,7 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 	// Wrap everything in a try block, so we can gracefully recover if the exporter balks.
 	try {
 		// Create an exporter instance for this file and map.
-		exporter = format->createExporter(&file, file.fileName(), this, map_editor->main_view);
+		exporter = format->createExporter(&file, this, map_editor->main_view);
 		
 		// Run the first pass.
 		exporter->doExport();
@@ -631,7 +631,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 			// Wrap everything in a try block, so we can gracefully recover if the importer balks.
 			try {
 				// Create an importer instance for this file and map.
-				importer = format->createImporter(&file, path, this, view);
+				importer = format->createImporter(&file, this, view);
 
 				// Run the first pass.
 				importer->doImport(load_symbols_only);
@@ -683,16 +683,6 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 	{
 		QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\n\n%2").arg(path).arg(error_msg));
 		return false;
-	}
-
-	// Post processing
-	for (unsigned int i = 0; i < symbols.size(); ++i)
-	{
-		if (!symbols[i]->loadFinished(this))
-		{
-			QMessageBox::warning(NULL, tr("Error"), tr("Problem while opening file:\n%1\n\nError during symbol post-processing.").arg(path));
-			return false;
-		}
 	}
 
 	// Update all objects without trying to remove their renderables first, this gives a significant speedup when loading large files
@@ -821,7 +811,7 @@ bool Map::exportToNative(QIODevice* stream)
 	Exporter* exporter = NULL;
 	try {
 		const Format* native_format = FileFormats.findFormat("native");
-		exporter = native_format->createExporter(stream, "", this, NULL);
+		exporter = native_format->createExporter(stream, this, NULL);
 		exporter->doExport();
 		stream->close();
 	}
@@ -841,13 +831,10 @@ bool Map::importFromNative(QIODevice* stream)
 	Importer* importer = NULL;
 	try {
 		const Format* native_format = FileFormats.findFormat("native");
-		importer = native_format->createImporter(stream, "", this, NULL);
+		importer = native_format->createImporter(stream, this, NULL);
 		importer->doImport(false);
 		importer->finishImport();
 		stream->close();
-		
-		for (int i = 0; i < getNumSymbols(); ++i)
-			getSymbol(i)->loadFinished(this);
 	}
 	catch (std::exception &e)
 	{

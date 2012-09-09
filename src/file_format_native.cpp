@@ -39,12 +39,12 @@ bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
     return false;
 }
 
-Importer *NativeFileFormat::createImporter(QIODevice* stream, const QString& path, Map* map, MapView* view) const throw (FormatException)
+Importer *NativeFileFormat::createImporter(QIODevice* stream, Map* map, MapView* view) const throw (FormatException)
 {
 	return new NativeFileImport(stream, map, view);
 }
 
-Exporter *NativeFileFormat::createExporter(QIODevice* stream, const QString& path, Map* map, MapView* view) const throw (FormatException)
+Exporter *NativeFileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FormatException)
 {
     return new NativeFileExport(stream, map, view);
 }
@@ -59,7 +59,7 @@ NativeFileImport::~NativeFileImport()
 {
 }
 
-void NativeFileImport::doImport(bool load_symbols_only) throw (FormatException)
+void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
 {
     char buffer[4];
     stream->read(buffer, 4); // read the magic
@@ -427,6 +427,4 @@ void NativeFileExport::doExport() throw (FormatException)
         MapLayer* layer = map->getLayer(i);
         layer->save(stream, map);
     }
-
-    stream->close();
 }

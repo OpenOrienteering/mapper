@@ -141,6 +141,7 @@ include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${PROJ_INCLUDE_DI
 
 # Subdirectories
 
+add_subdirectory("test data")
 add_subdirectory("symbol sets")
 add_subdirectory("help")
 add_subdirectory("translations")

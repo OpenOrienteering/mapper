@@ -104,6 +104,7 @@ SOURCES += src/color_dock_widget.cpp \
            src/file_format_xml.cpp \
            src/georeferencing.cpp \
            src/georeferencing_dialog.cpp \
+           src/global.cpp \
            src/gps_coordinates.cpp \
            src/gps_track.cpp \
            src/main.cpp \

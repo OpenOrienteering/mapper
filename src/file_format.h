@@ -57,12 +57,12 @@ private:
  *      MyCustomFileFormat : Format("custom", QObject::tr("Custom file"), "custom", true, true) {
  *      }
  *
- *      Importer *createImporter(const QString &path, Map *map, MapView *view) const throw (FormatException) {
- *          return new CustomImporter(path, map, view);
+ *      Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException) {
+ *          return new CustomImporter(stream, map, view);
  *      }
  *
- *      Exporter *createExporter(const QString &path, Map *map, MapView *view) const throw (FormatException) {
- *          return new CustomExporter(path, map, view);
+ *      Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException) {
+ *          return new CustomExporter(stream, map, view);
  *      }
  *  }
  *  \endcode
@@ -108,14 +108,13 @@ public:
      */
     virtual bool understands(const unsigned char *buffer, size_t sz) const;
 
-    /** Creates an Importer that will read the file at the given path into the given map and view.
+    /** Creates an Importer that will read the file from the given stream into the given map and view.
      *  The caller can then call doImport() in the returned object to start the import process. The caller
      *  is responsible for deleting the Importer when it's finished.
      *
      *  If the Importer could not be created, then this method should throw a FormatException.
-	 *  TODO: get rid of path parameter (currently required for libocad)
      */
-	virtual Importer *createImporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException);
+	virtual Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
 
     /** Returns true if an exporter for this file format is potentially lossy, i.e., if the exported
      *  file cannot fully represent all aspects of the internal OO map objects. This flag is used by
@@ -123,14 +122,13 @@ public:
      */
     inline bool isExportLossy() const { return export_lossy; }
 
-    /** Creates an Exporter that will save the given map and view into a file at the given path.
+    /** Creates an Exporter that will save the given map and view into the given stream.
      *  The caller can then call doExport() in the returned object to start the export process. The caller
      *  is responsible for deleting the Exporter when it's finished.
      *
      *  If the Exporter could not be created, then this method should throw a FormatException.
-	 * *  TODO: get rid of path parameter (currently required for libocad)
      */
-	virtual Exporter *createExporter(QIODevice* stream, const QString &path, Map *map, MapView *view) const throw (FormatException);
+	virtual Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
 
 private:
     QString format_id;
@@ -206,7 +204,7 @@ extern FormatRegistry FileFormats;
 class ImportExport
 {
 public:
-    /** Creates a new importer or exporter with the given file path, map, and view.
+    /** Creates a new importer or exporter with the given input stream, map, and view.
      */
 	ImportExport(QIODevice* stream, Map *map, MapView *view) : stream(stream), map(map), view(view) {}
 
@@ -277,7 +275,7 @@ class ImportAction
 class Importer : public ImportExport
 {
 public:
-    /** Creates a new Importer with the given file path, map, and view.
+    /** Creates a new Importer with the given output stream, map, and view.
      */
 	Importer(QIODevice* stream, Map *map, MapView *view) : ImportExport(stream, map, view) {}
 
@@ -298,7 +296,7 @@ public:
      *  generally an Importer should not succeed unless the map is populated sufficiently
      *  to be useful.
      */
-	virtual void doImport(bool load_symbols_only) throw (FormatException) = 0;
+	void doImport(bool load_symbols_only) throw (FormatException);
 
     /** Once all action items are satisfied, this method should be called to complete the
      *  import process. This class defines a default implementation, that does nothing.
@@ -306,6 +304,10 @@ public:
     virtual void finishImport() throw (FormatException) {}
 
 protected:
+	/** Implementation of doImport().
+	 */
+	virtual void import(bool load_symbols_only) throw (FormatException) = 0;
+	
     /** Adds an action item to the current list.
      */
     inline void addAction(const ImportAction &action) { act.push_back(action); }
@@ -327,7 +329,7 @@ private:
 class Exporter : public ImportExport
 {
 public:
-    /** Creates a new Importer with the given file path, map, and view.
+    /** Creates a new Importer with the given i/o stream, map, and view.
      */
 	Exporter(QIODevice* stream, Map *map, MapView *view) : ImportExport(stream, map, view) {}
 

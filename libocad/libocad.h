@@ -722,6 +722,12 @@ int ocad_file_open(OCADFile **pfile, const char *filename);
 int ocad_file_open_mapped(OCADFile **pfile, const char *filename);
 
 
+/** Behaves exactly like ocad_file_open(), except that the given buffer must contain the map data.
+ *  The buffer must be allocated with malloc(). Ownership of the buffer is transferred to libocad.
+ */
+int ocad_file_open_memory(OCADFile **pfile, u8* buffer, u32 size);
+
+
 /** Closes an open OCADFile. The memory map is cleared, the file is closed, and all memory buffers
  *  used by the object are deallocated. After calling this function, the OCADFile object can be
  *  reused by ocad_file_open() without causing a memory leak.

@@ -1,41 +1,42 @@
 /*
  *    Copyright 2012 Thomas Schöps
- *    
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// Do not edit global.h! Edit global.h.in instead.
 
-#ifndef _OPENORIENTEERING_GLOBAL_H_
-#define _OPENORIENTEERING_GLOBAL_H_
+#ifndef _OPENORIENTEERING_TEST_H_
+#define _OPENORIENTEERING_TEST_H_
 
-#define APP_NAME qApp->translate("Global", QT_TRANSLATE_NOOP("Global", "OpenOrienteering Mapper"))
-#define APP_VERSION "@Mapper_VERSION_DISPLAY@"
+#include <QtTest/QtTest>
 
-#cmakedefine Mapper_TRANSLATIONS_EMBEDDED
-#cmakedefine Mapper_XML_FORMAT
+class Map;
+class Format;
 
-#define QT_USE_FAST_CONCATENATION
-#define QT_USE_FAST_OPERATOR_PLUS
+class TestFileFormats : public QObject
+{
+Q_OBJECT
+private slots:
+	void saveAndLoad_data();
+	void saveAndLoad();
+	
+private:
+	Map* saveAndLoadMap(Map* input, const Format* format);
+	bool compareMaps(Map* a, Map* b, QString& error);
+};
 
-#ifdef _MSC_VER
-	#pragma warning(disable: 4290)	// "C++ exception specification ignored"
-#endif
-
-/// This is called at startup in main() and by the test cases to do the global initializations
-void doStaticInitializations();
 
 #endif
