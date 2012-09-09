@@ -186,6 +186,11 @@ void MapWidget::updateEverythingInRect(const QRect& dirty_rect)
 }
 void MapWidget::moveView(qint64 x, qint64 y)
 {
+	// View moved externally
+	updateEverything();
+}
+void MapWidget::panView(qint64 x, qint64 y)
+{
 	moveDirtyRect(above_template_cache_dirty_rect, -x, -y);
 	moveDirtyRect(below_template_cache_dirty_rect, -x, -y);
 	moveDirtyRect(drawing_dirty_rect_old, -x, -y);
@@ -268,7 +273,7 @@ void MapWidget::setDragOffset(QPoint offset)
 void MapWidget::completeDragging(QPoint offset, qint64 dx, qint64 dy)
 {
 	drag_offset = QPoint(0, 0);
-	moveView(dx, dy);
+	panView(dx, dy);
 }
 
 void MapWidget::ensureVisibilityOfRect(const QRectF& map_rect)

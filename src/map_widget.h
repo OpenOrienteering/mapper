@@ -75,6 +75,7 @@ public:
 	/// View changes
 	void zoom(float factor);	// factor is the ratio of new_zoom / old_zoom
 	void moveView(qint64 x, qint64 y);
+	void panView(qint64 x, qint64 y);
 	
 	void setDragOffset(QPoint offset);
 	void completeDragging(QPoint offset, qint64 dx, qint64 dy);
