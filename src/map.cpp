@@ -221,6 +221,21 @@ void MapLayer::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool inclu
 	}
 }
 
+int MapLayer::countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects)
+{
+	int count = 0;
+	int size = objects.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (objects[i]->getSymbol()->isHidden() && !include_hidden_objects)
+			continue;
+		objects[i]->update();
+		if (objects[i]->getExtent().intersects(map_coord_rect))
+			++count;
+	}
+	return count;
+}
+
 QRectF MapLayer::calculateExtent(bool include_helper_symbols)
 {
 	QRectF rect;
@@ -1825,6 +1840,15 @@ void Map::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hi
 	getCurrentLayer()->findObjectsAtBox(corner1, corner2, include_hidden_objects, include_protected_objects, out);
 }
 
+int Map::countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects)
+{
+	int count = 0;
+	int size = layers.size();
+	for (int i = 0; i < size; ++i)
+		count += layers[i]->countObjectsInRect(map_coord_rect, include_hidden_objects);
+	return count;
+}
+
 void Map::scaleAllObjects(double factor)
 {
 	operationOnAllObjects(ObjectOp::Scale(factor));
@@ -2150,12 +2174,12 @@ void MapView::completeDragging(QPoint offset)
 	qint64 move_x = -pixelToLength(offset.x());
 	qint64 move_y = -pixelToLength(offset.y());
 	
-	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->completeDragging(offset, move_x, move_y);
-	
 	position_x += move_x;
 	position_y += move_y;
 	update();
+	
+	for (int i = 0; i < (int)widgets.size(); ++i)
+		widgets[i]->completeDragging(offset, move_x, move_y);
 }
 
 bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF cursor_pos_view)

@@ -176,17 +176,89 @@ void MapWidget::zoom(float factor)
 	
 	updateEverything();
 }
+void MapWidget::updateEverythingInRect(const QRect& dirty_rect)
+{
+	below_template_cache_dirty_rect = dirty_rect;
+	above_template_cache_dirty_rect = dirty_rect;
+	map_cache_dirty_rect = dirty_rect;
+	updateAllDirtyCaches();
+	update(dirty_rect);
+}
 void MapWidget::moveView(qint64 x, qint64 y)
 {
-	// TODO: more intelligent strategy possible ...
-	// could calculate the view movement in pixels and update dirty rects,
-	// then only draw newly shown parts
-	/*moveDirtyRect(above_template_cache_dirty_rect, -x, -y);
+	moveDirtyRect(above_template_cache_dirty_rect, -x, -y);
 	moveDirtyRect(below_template_cache_dirty_rect, -x, -y);
 	moveDirtyRect(drawing_dirty_rect_old, -x, -y);
-	moveDirtyRect(activity_dirty_rect_old, -x, -y);*/
+	moveDirtyRect(activity_dirty_rect_old, -x, -y);
 	
-	updateEverything();
+	float px = view->lengthToPixel(x);
+	int ix = qRound(px);
+	float py = view->lengthToPixel(y);
+	int iy = qRound(py);
+	float int_deviation = qMax(qAbs(px - ix), qAbs(py - iy));
+	
+	ix = -ix;
+	iy = -iy;
+	
+	// Only do a partial redraw in very specific circumstances where only very few objects are visible because a complete redraw is often faster
+	bool partial_redraw = int_deviation < 0.01 && qAbs(px) < width() / 3.0f && qAbs(py) < height() / 3.0f;
+	if (partial_redraw)
+	{
+		const int visible_objects_threshold = 200;
+		int max_visible_objects = 0;
+		if (ix > 0)
+			max_visible_objects += view->getMap()->countObjectsInRect(view->calculateViewedRect(viewportToView(QRect(0, iy, ix, height() - iy))), false);
+		else if (ix < 0)
+			max_visible_objects += view->getMap()->countObjectsInRect(view->calculateViewedRect(viewportToView(QRect(width() + ix, iy, -ix, height() - iy))), false);
+		
+		if (max_visible_objects < visible_objects_threshold)
+		{
+			if (iy > 0)
+				max_visible_objects += view->getMap()->countObjectsInRect(view->calculateViewedRect(viewportToView(QRect(0, 0, width(), iy))), false);
+			else if (iy < 0)
+				max_visible_objects += view->getMap()->countObjectsInRect(view->calculateViewedRect(viewportToView(QRect(0, height() + iy, width(), -iy))), false);
+			
+			if (max_visible_objects >= visible_objects_threshold)
+				partial_redraw = false;
+		}
+		else
+			partial_redraw = false;
+	}
+	
+	if (partial_redraw)
+	{
+		// Update only the parts of the caches which have changed
+		shiftCache(ix, iy, below_template_cache);
+		shiftCache(ix, iy, above_template_cache);
+		shiftCache(ix, iy, map_cache);
+		
+		if (ix > 0)
+			updateEverythingInRect(QRect(0, iy, ix, height() - iy));
+		else if (ix < 0)
+			updateEverythingInRect(QRect(width() + ix, iy, -ix, height() - iy));
+		
+		if (iy > 0)
+			updateEverythingInRect(QRect(0, 0, width(), iy));
+		else if (iy < 0)
+			updateEverythingInRect(QRect(0, height() + iy, width(), -iy));
+	}
+	else
+	{
+		// Update the whole caches
+		below_template_cache_dirty_rect = rect();
+		above_template_cache_dirty_rect = rect();
+		map_cache_dirty_rect = rect();
+		
+		if (ix > 0)
+			update(QRect(0, iy, ix, height() - iy));
+		else if (ix < 0)
+			update(QRect(width() + ix, iy, -ix, height() - iy));
+		
+		if (iy > 0)
+			update(QRect(0, 0, width(), iy));
+		else if (iy < 0)
+			update(QRect(0, height() + iy, width(), -iy));
+	}
 }
 void MapWidget::setDragOffset(QPoint offset)
 {
@@ -529,26 +601,17 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	{
 		// Update all dirty caches
 		// TODO: It would be an idea to do these updates in a background thread and use the old caches in the meantime
-		bool below_template_visible = containsVisibleTemplate(0, view->getMap()->getFirstFrontTemplate() - 1);
-		if (below_template_visible && below_template_cache_dirty_rect.isValid())
-			updateTemplateCache(below_template_cache, below_template_cache_dirty_rect, 0, view->getMap()->getFirstFrontTemplate() - 1, true);
-		bool above_template_visible = containsVisibleTemplate(view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1);
-		if (above_template_visible && above_template_cache_dirty_rect.isValid())
-			updateTemplateCache(above_template_cache, above_template_cache_dirty_rect, view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1, false);
-        bool map_visible = view->getMapVisibility()->visible;
-		
-		if (map_cache_dirty_rect.isValid())
-			updateMapCache(false);
+		updateAllDirtyCaches();
 		
 		// TODO: Make sure that some cache (below_cache or map_cache) contains the background (white?) or it is drawn here
 		
 		// Draw caches
-		if (below_template_visible && below_template_cache && view->getMap()->getFirstFrontTemplate() > 0)
+		if (isBelowTemplateVisible() && below_template_cache && view->getMap()->getFirstFrontTemplate() > 0)
 			painter.drawImage(drag_offset, *below_template_cache, rect());
 		else
 			painter.fillRect(QRect(drag_offset.x(), drag_offset.y(), width(), height()), Qt::white);	// TODO: It's not as easy as that, see above.
 		
-        if (map_cache && map_visible)
+        if (map_cache && view->getMapVisibility()->visible)
         {
             float map_opacity = view->getMapVisibility()->opacity;
             if (map_opacity < 1.0)
@@ -564,7 +627,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
             }
         }
 		
-		if (above_template_visible && above_template_cache && view->getMap()->getNumTemplates() - view->getMap()->getFirstFrontTemplate() > 0)
+		if (isAboveTemplateVisible() && above_template_cache && view->getMap()->getNumTemplates() - view->getMap()->getFirstFrontTemplate() > 0)
 			painter.drawImage(drag_offset, *above_template_cache, rect());
 	}
 	
@@ -867,4 +930,28 @@ void MapWidget::updateMapCache(bool use_background)
 	
 	map_cache_dirty_rect.setWidth(-1);
 	assert(!map_cache_dirty_rect.isValid());
+}
+
+void MapWidget::updateAllDirtyCaches()
+{
+	if (isBelowTemplateVisible() && below_template_cache_dirty_rect.isValid())
+		updateTemplateCache(below_template_cache, below_template_cache_dirty_rect, 0, view->getMap()->getFirstFrontTemplate() - 1, true);
+	if (isAboveTemplateVisible() && above_template_cache_dirty_rect.isValid())
+		updateTemplateCache(above_template_cache, above_template_cache_dirty_rect, view->getMap()->getFirstFrontTemplate(), view->getMap()->getNumTemplates() - 1, false);
+	
+	if (map_cache_dirty_rect.isValid())
+		updateMapCache(false);
+}
+
+void MapWidget::shiftCache(int sx, int sy, QImage*& cache)
+{
+	if (!cache) return;
+	QImage* new_cache = new QImage(cache->size(), cache->format());
+	QPainter painter;
+	painter.begin(new_cache);
+	painter.setCompositionMode(QPainter::CompositionMode_Source);
+	painter.drawImage(sx, sy, *cache);
+	painter.end();
+	delete cache;
+	cache = new_cache;
 }

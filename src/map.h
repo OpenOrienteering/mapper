@@ -94,6 +94,7 @@ public:
 	
 	void findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
 	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
+	int countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects);
 	
 	QRectF calculateExtent(bool include_helper_symbols);
 	
@@ -313,6 +314,7 @@ public:
 	void setObjectAreaDirty(QRectF map_coords_rect);
 	void findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
 	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
+	int countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects);
 	
 	/// Goes through all objects and for each object where condition(object) returns true, applies processor(object, map_layer, object_index).
 	/// If processor() returns false, aborts the operation and includes ObjectOperationResult::Aborted in the return value.
