@@ -127,7 +127,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	center_button->setChecked(params_set ? center : true);
 	
 	different_scale_check = new QCheckBox("");
-	different_scale_check->setChecked(params_set ? different_scale_enabled : true);
+	different_scale_check->setChecked(params_set ? different_scale_enabled : false);
 	different_scale_edit = new QLineEdit(params_set ? QString::number(different_scale) : "", this);
 	different_scale_edit->setEnabled(different_scale_check->isChecked());
 	different_scale_edit->setValidator(new QIntValidator(1, std::numeric_limits<int>::max(), different_scale_edit));
