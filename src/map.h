@@ -411,8 +411,8 @@ public:
 	inline void setBaselineViewEnabled(bool enabled) {baseline_view_enabled = enabled;}
 	
 	inline bool arePrintParametersSet() const {return print_params_set;}
-	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool show_grid, bool center, float left, float top, float width, float height);
-	void getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& show_grid, bool& center, float& left, float& top, float& width, float& height);
+	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool show_grid, bool center, float left, float top, float width, float height, bool different_scale_enabled, int different_scale);
+	void getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& show_grid, bool& center, float& left, float& top, float& width, float& height, bool& different_scale_enabled, int& different_scale);
 	
 	void setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel, double dpi, double scale);
 	void getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel, double& dpi, double& scale);
@@ -543,6 +543,8 @@ private:
 	float print_area_top;
 	float print_area_width;
 	float print_area_height;
+	bool print_different_scale_enabled;
+	int print_different_scale;
 	
 	bool image_template_use_meters_per_pixel;
 	double image_template_meters_per_pixel;

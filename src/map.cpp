@@ -1875,7 +1875,7 @@ void Map::setGeoreferencing(const Georeferencing& georeferencing)
 	setOtherDirty(true);
 }
 
-void Map::setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool show_grid, bool center, float left, float top, float width, float height)
+void Map::setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool show_grid, bool center, float left, float top, float width, float height, bool different_scale_enabled, int different_scale)
 {
 	if ((print_orientation != orientation) || (print_format != format) || (print_dpi != dpi) || (print_show_templates != show_templates) ||
 		(print_center != center) || (print_area_left != left) || (print_area_top != top) || (print_area_width != width) || (print_area_height != height))
@@ -1891,10 +1891,12 @@ void Map::setPrintParameters(int orientation, int format, float dpi, bool show_t
 	print_area_top = top;
 	print_area_width = width;
 	print_area_height = height;
+	print_different_scale_enabled = different_scale_enabled;
+	print_different_scale = different_scale;
 	
 	print_params_set = true;
 }
-void Map::getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& show_grid, bool& center, float& left, float& top, float& width, float& height)
+void Map::getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& show_grid, bool& center, float& left, float& top, float& width, float& height, bool& different_scale_enabled, int& different_scale)
 {
 	orientation = print_orientation;
 	format = print_format;
@@ -1906,6 +1908,8 @@ void Map::getPrintParameters(int& orientation, int& format, float& dpi, bool& sh
 	top = print_area_top;
 	width = print_area_width;
 	height = print_area_height;
+	different_scale_enabled = print_different_scale_enabled;
+	different_scale = print_different_scale;
 }
 
 void Map::setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel, double dpi, double scale)
@@ -2016,6 +2020,9 @@ void MapView::save(QIODevice* file)
 	file->write((const char*)&view_y, sizeof(int));
 	file->write((const char*)&drag_offset, sizeof(QPoint));
 	
+	file->write((const char*)&map_visibility->visible, sizeof(bool));
+	file->write((const char*)&map_visibility->opacity, sizeof(float));
+	
 	int num_template_visibilities = template_visibilities.size();
 	file->write((const char*)&num_template_visibilities, sizeof(int));
 	QHash<Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
@@ -2042,6 +2049,12 @@ void MapView::load(QIODevice* file, int version)
 	file->read((char*)&view_y, sizeof(int));
 	file->read((char*)&drag_offset, sizeof(QPoint));
 	update();
+	
+	if (version >= 26)
+	{
+		file->read((char*)&map_visibility->visible, sizeof(bool));
+		file->read((char*)&map_visibility->opacity, sizeof(float));
+	}
 	
 	int num_template_visibilities;
 	file->read((char*)&num_template_visibilities, sizeof(int));

@@ -29,7 +29,7 @@
 #include "util.h"
 
 const int NativeFileFormat::least_supported_file_format_version = 0;
-const int NativeFileFormat::current_file_format_version = 25;
+const int NativeFileFormat::current_file_format_version = 26;
 const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 
 bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
@@ -167,6 +167,11 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
             stream->read((char*)&map->print_area_top, sizeof(float));
             stream->read((char*)&map->print_area_width, sizeof(float));
             stream->read((char*)&map->print_area_height, sizeof(float));
+			if (version >= 26)
+			{
+				stream->read((char*)&map->print_different_scale_enabled, sizeof(bool));
+				stream->read((char*)&map->print_different_scale, sizeof(int));
+			}
         }
     }
 	
@@ -343,6 +348,8 @@ void NativeFileExport::doExport() throw (FormatException)
         stream->write((const char*)&map->print_area_top, sizeof(float));
         stream->write((const char*)&map->print_area_width, sizeof(float));
         stream->write((const char*)&map->print_area_height, sizeof(float));
+		stream->write((const char*)&map->print_different_scale_enabled, sizeof(bool));
+		stream->write((const char*)&map->print_different_scale, sizeof(int));
     }
     
     stream->write((const char*)&map->image_template_use_meters_per_pixel, sizeof(bool));

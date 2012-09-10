@@ -39,10 +39,11 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	bool params_set = map->arePrintParametersSet();
 	int orientation;
 	float dpi, left, top, width, height;
-	bool show_templates, show_grid, center;
+	bool show_templates, show_grid, center, different_scale_enabled;
+	int different_scale;
 	if (params_set)
 	{
-		map->getPrintParameters(orientation, prev_paper_size, dpi, show_templates, show_grid, center, left, top, width, height);
+		map->getPrintParameters(orientation, prev_paper_size, dpi, show_templates, show_grid, center, left, top, width, height, different_scale_enabled, different_scale);
 		have_prev_paper_size = true;
 	}
 	else
@@ -126,8 +127,9 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	center_button->setChecked(params_set ? center : true);
 	
 	different_scale_check = new QCheckBox("");
-	different_scale_edit = new QLineEdit("", this);
-	different_scale_edit->setEnabled(false);
+	different_scale_check->setChecked(params_set ? different_scale_enabled : true);
+	different_scale_edit = new QLineEdit(params_set ? QString::number(different_scale) : "", this);
+	different_scale_edit->setEnabled(different_scale_check->isChecked());
 	different_scale_edit->setValidator(new QIntValidator(1, std::numeric_limits<int>::max(), different_scale_edit));
 	
 	preview_button = new QPushButton(tr("Preview..."));
@@ -219,7 +221,9 @@ void PrintWidget::closed()
 {
 	map->setPrintParameters(page_orientation_combo->itemData(page_orientation_combo->currentIndex()).toInt(),
 							page_format_combo->itemData(page_format_combo->currentIndex()).toInt(),
-							dpi_edit->text().toFloat(), show_templates_check->isChecked(), show_grid_check->isChecked(), center_button->isChecked(), getPrintAreaLeft(), getPrintAreaTop(), print_width, print_height);
+							dpi_edit->text().toFloat(), show_templates_check->isChecked(), show_grid_check->isChecked(),
+							center_button->isChecked(), getPrintAreaLeft(), getPrintAreaTop(), print_width, print_height,
+							different_scale_check->isChecked(), qMax(1, different_scale_edit->text().toInt()));
 	editor->setOverrideTool(NULL);
 	print_tool = NULL;
 }
@@ -318,30 +322,96 @@ void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& p
 {
 	QRectF map_extent = map->calculateExtent(false, show_templates_check->isChecked(), main_view);
 	
-	QPainter painter;
-	painter.begin(paint_device);
-	painter.setRenderHint(QPainter::Antialiasing);
-	painter.setRenderHint(QPainter::SmoothPixmapTransform);
+	QPainter device_painter;
+	device_painter.begin(paint_device);
+	device_painter.setRenderHint(QPainter::Antialiasing);
+	device_painter.setRenderHint(QPainter::SmoothPixmapTransform);
+	
+	// If there is anything transparent to draw, use a temporary image which is drawn on the device printer as last step
+	// because painting transparently seems to be unsupported when printing
+	// TODO: This does convert all colors to RGB. Are colors printed as CMYK otherwise?
+	bool have_transparency = main_view->getMapVisibility()->visible && main_view->getMapVisibility()->opacity < 1;
+	for (int i = 0; i < map->getNumTemplates() && !have_transparency; ++i)
+	{
+		TemplateVisibility* visibility = main_view->getTemplateVisibility(map->getTemplate(i));
+		have_transparency = visibility->visible && visibility->opacity < 1;
+	}
+	
+	QPainter* painter = &device_painter;
+	QImage print_buffer;
+	QPainter print_buffer_painter;
+	if (have_transparency)
+	{
+		print_buffer = QImage(paint_device->width(), paint_device->height(), QImage::Format_RGB32);
+		print_buffer_painter.begin(&print_buffer);
+		painter = &print_buffer_painter;
+		white_background = true;
+	}
 	
 	if (white_background)
-		painter.fillRect(QRect(0, 0, paint_device->width(), paint_device->height()), Qt::white);
+		painter->fillRect(QRect(0, 0, paint_device->width(), paint_device->height()), Qt::white);
 	
 	// Need to convert mm to dots
 	float scale_factor = calcScaleFactor();
 	float scale = (1/25.4f * dpi) * scale_factor;
-	painter.scale(scale, scale);
+	painter->scale(scale, scale);
 	QRectF print_area = getEffectivePrintArea();
-	painter.translate(-print_area.left(), -print_area.top());
+	painter->translate(-print_area.left(), -print_area.top());
 	
 	if (show_templates_check->isChecked())
-		map->drawTemplates(&painter, map_extent, 0, map->getFirstFrontTemplate() - 1, false, QRect(0, 0, paint_device->width(), paint_device->height()), NULL, main_view);
-	map->draw(&painter, map_extent, false, scale, false);
+		map->drawTemplates(painter, map_extent, 0, map->getFirstFrontTemplate() - 1, false, QRect(0, 0, paint_device->width(), paint_device->height()), NULL, main_view);
+	if (main_view->getMapVisibility()->visible)
+	{
+		if (main_view->getMapVisibility()->opacity == 1)
+			map->draw(painter, map_extent, false, scale, false);
+		else
+		{
+			// Draw map into a temporary buffer first which is printed with the map's opacity later.
+			// This prevents artifacts with overlapping objects.
+			QImage map_buffer(paint_device->width(), paint_device->height(), QImage::Format_ARGB32_Premultiplied);
+			QPainter buffer_painter;
+			buffer_painter.begin(&map_buffer);
+			
+			// Clear buffer
+			QPainter::CompositionMode mode = buffer_painter.compositionMode();
+			buffer_painter.setCompositionMode(QPainter::CompositionMode_Clear);
+			buffer_painter.fillRect(map_buffer.rect(), Qt::transparent);
+			buffer_painter.setCompositionMode(mode);
+			
+			// Draw map with full opacity
+			buffer_painter.setTransform(painter->transform());
+			map->draw(&buffer_painter, map_extent, false, scale, false);
+			
+			buffer_painter.end();
+			
+			// Print buffer with map opacity
+			painter->save();
+			painter->resetTransform();
+			painter->setOpacity(main_view->getMapVisibility()->opacity);
+			painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
+			painter->drawImage(0, 0, map_buffer);
+			painter->restore();
+		}
+	}
 	if (show_grid_check->isChecked())
-		map->drawGrid(&painter, print_area);
+		map->drawGrid(painter, print_area);
 	if (show_templates_check->isChecked())
-		map->drawTemplates(&painter, map_extent, map->getFirstFrontTemplate(), map->getNumTemplates() - 1, false, QRect(0, 0, paint_device->width(), paint_device->height()), NULL, main_view);
+		map->drawTemplates(painter, map_extent, map->getFirstFrontTemplate(), map->getNumTemplates() - 1, false, QRect(0, 0, paint_device->width(), paint_device->height()), NULL, main_view);
 	
-	painter.end();
+	// If a temporary buffer has been used, paint it on the device printer
+	if (print_buffer_painter.isActive())
+	{
+		print_buffer_painter.end();
+		painter = &device_painter;
+		
+		device_painter.save();
+		device_painter.resetTransform();
+		device_painter.setRenderHint(QPainter::SmoothPixmapTransform, false);
+		device_painter.drawImage(0, 0, print_buffer);
+		device_painter.restore();
+	}
+	
+	painter->end();
 }
 
 void PrintWidget::currentDeviceChanged()
@@ -707,9 +777,11 @@ void PrintWidget::addPaperSize(QPrinter::PaperSize size)
 }
 bool PrintWidget::checkForEmptyMap()
 {
-	if (map->getNumObjects() == 0 && (!show_templates_check->isChecked() || map->getNumTemplates() == 0) && !show_grid_check->isChecked())
+	if ((map->getNumObjects() == 0 || main_view->getMapVisibility()->visible == false || main_view->getMapVisibility()->opacity == 0) &&
+		(!show_templates_check->isChecked() || map->getNumTemplates() == 0) &&
+		!show_grid_check->isChecked())
 	{
-		QMessageBox::warning(this, tr("Error"), tr("The map is empty, there is nothing to print!"));
+		QMessageBox::warning(this, tr("Error"), tr("The print area is empty, so there is nothing to print!"));
 		return true;
 	}
 	return false;
