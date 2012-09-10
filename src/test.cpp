@@ -26,6 +26,8 @@
 #include "symbol.h"
 #include "object.h"
 #include "template.h"
+#include "georeferencing.h"
+#include "map_grid.h"
 
 void TestFileFormats::saveAndLoad_data()
 {
@@ -127,7 +129,84 @@ bool TestFileFormats::compareMaps(Map* a, Map* b, QString& error)
 		return false;
 	}
 	
-	// TODO: print paremeters, georeferencing, etc ...
+	const Georeferencing& a_geo = a->getGeoreferencing();
+	const Georeferencing& b_geo = b->getGeoreferencing();
+	if (a_geo.isLocal() != b_geo.isLocal() ||
+		a_geo.getScaleDenominator() != b_geo.getScaleDenominator() ||
+		a_geo.getDeclination() != b_geo.getDeclination() ||
+		a_geo.getGrivation() != b_geo.getGrivation() ||
+		a_geo.getMapRefPoint() != b_geo.getMapRefPoint() ||
+		a_geo.getProjectedRefPoint() != b_geo.getProjectedRefPoint() ||
+		a_geo.getProjectedCRS() != b_geo.getProjectedCRS() ||
+		a_geo.getProjectedCRSSpec() != b_geo.getProjectedCRSSpec() ||
+		a_geo.getGeographicRefPoint().getLatitudeInDegrees() != b_geo.getGeographicRefPoint().getLatitudeInDegrees() ||
+		a_geo.getGeographicRefPoint().getLongitudeInDegrees() != b_geo.getGeographicRefPoint().getLongitudeInDegrees())
+	{
+		error = "The georeferencing differs.";
+		return false;
+	}
+	
+	MapGrid* a_grid = &a->getGrid();
+	MapGrid* b_grid = &b->getGrid();
+	
+	if (a_grid->isSnappingEnabled() != b_grid->isSnappingEnabled() ||
+		a_grid->getColor() != b_grid->getColor() ||
+		a_grid->getDisplayMode() != b_grid->getDisplayMode() ||
+		a_grid->getAlignment() != b_grid->getAlignment() ||
+		a_grid->getAdditionalRotation() != b_grid->getAdditionalRotation() ||
+		a_grid->getUnit() != b_grid->getUnit() ||
+		a_grid->getHorizontalSpacing() != b_grid->getHorizontalSpacing() ||
+		a_grid->getVerticalSpacing() != b_grid->getVerticalSpacing() ||
+		a_grid->getHorizontalOffset() != b_grid->getHorizontalOffset() ||
+		a_grid->getVerticalOffset() != b_grid->getVerticalOffset())
+	{
+		error = "The map grid differs.";
+		return false;
+	}
+	
+	if (a->isAreaHatchingEnabled() != b->isAreaHatchingEnabled() ||
+		a->isBaselineViewEnabled() != b->isBaselineViewEnabled())
+	{
+		error = "The view mode differs.";
+		return false;
+	}
+	
+	if (a->arePrintParametersSet() != b->arePrintParametersSet())
+	{
+		error = "Print parameters are only set in one of the maps.";
+		return false;
+	}
+	if (a->arePrintParametersSet())
+	{
+		int a_orientation, a_prev_paper_size;
+		float a_dpi, a_left, a_top, a_width, a_height;
+		bool a_show_templates, a_show_grid, a_center, a_different_scale_enabled;
+		int a_different_scale;
+		a->getPrintParameters(a_orientation, a_prev_paper_size, a_dpi, a_show_templates, a_show_grid, a_center, a_left, a_top, a_width, a_height, a_different_scale_enabled, a_different_scale);
+		
+		int b_orientation, b_prev_paper_size;
+		float b_dpi, b_left, b_top, b_width, b_height;
+		bool b_show_templates, b_show_grid, b_center, b_different_scale_enabled;
+		int b_different_scale;
+		b->getPrintParameters(b_orientation, b_prev_paper_size, b_dpi, b_show_templates, b_show_grid, b_center, b_left, b_top, b_width, b_height, b_different_scale_enabled, b_different_scale);
+		
+		if (a_orientation != b_orientation ||
+			a_prev_paper_size != b_prev_paper_size ||
+			a_dpi != b_dpi ||
+			a_left != b_left ||
+			a_top != b_top ||
+			a_width != b_width ||
+			a_height != b_height ||
+			a_show_templates != b_show_templates ||
+			a_show_grid != b_show_grid ||
+			a_center != b_center ||
+			a_different_scale_enabled != b_different_scale_enabled ||
+			a_different_scale != b_different_scale)
+		{
+			error = "Print parameters differ.";
+			return false;
+		}
+	}
 	
 	// Colors
 	if (a->getNumColors() != b->getNumColors())
@@ -167,10 +246,20 @@ bool TestFileFormats::compareMaps(Map* a, Map* b, QString& error)
 		error = "The number of layers differs.";
 		return false;
 	}
+	if (a->getCurrentLayerIndex() != b->getCurrentLayerIndex())
+	{
+		error = "The current layer differs.";
+		return false;
+	}
 	for (int layer = 0; layer < a->getNumLayers(); ++layer)
 	{
 		MapLayer* a_layer = a->getLayer(layer);
 		MapLayer* b_layer = b->getLayer(layer);
+		if (a_layer->getName().compare(b_layer->getName(), Qt::CaseSensitive) != 0)
+		{
+			error = QString("The names of layer #%1 differ (%2 <-> %3).").arg(layer).arg(a_layer->getName()).arg(b_layer->getName());
+			return false;
+		}
 		if (a_layer->getNumObjects() != b_layer->getNumObjects())
 		{
 			error = "The number of objects differs.";
@@ -186,10 +275,46 @@ bool TestFileFormats::compareMaps(Map* a, Map* b, QString& error)
 		}
 	}
 	
+	// Object selection
+	if (a->getNumSelectedObjects() != b->getNumSelectedObjects())
+	{
+		error = "The number of selected objects differs.";
+		return false;
+	}
+	if ((a->getFirstSelectedObject() == NULL && b->getFirstSelectedObject() != NULL) || (a->getFirstSelectedObject() != NULL && b->getFirstSelectedObject() == NULL) ||
+		(a->getFirstSelectedObject() != NULL && b->getFirstSelectedObject() != NULL &&
+		 a->getCurrentLayer()->findObjectIndex(a->getFirstSelectedObject()) != b->getCurrentLayer()->findObjectIndex(b->getFirstSelectedObject())))
+	{
+		error = "The first selected object differs.";
+		return false;
+	}
+	for (QSet< Object* >::const_iterator it = a->selectedObjectsBegin(), end = a->selectedObjectsEnd(); it != end; ++it)
+	{
+		if (!b->isObjectSelected(b->getCurrentLayer()->getObject(a->getCurrentLayer()->findObjectIndex(*it))))
+		{
+			error = "The selected objects differ.";
+			return false;
+		}
+	}
+	
+	// Undo steps
+	// TODO: Currently only the number of steps is compared here.
+	if (a->objectUndoManager().getNumUndoSteps() != b->objectUndoManager().getNumUndoSteps() ||
+		a->objectUndoManager().getNumRedoSteps() != b->objectUndoManager().getNumRedoSteps())
+	{
+		error = "The number of undo / redo steps differs.";
+		return false;
+	}
+	
 	// Templates
 	if (a->getNumTemplates() != b->getNumTemplates())
 	{
 		error = "The number of templates differs.";
+		return false;
+	}
+	if (a->getFirstFrontTemplate() != b->getFirstFrontTemplate())
+	{
+		error = "The division into front / back templates differs.";
 		return false;
 	}
 	for (int i = 0; i < a->getNumTemplates(); ++i)
