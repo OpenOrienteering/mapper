@@ -228,7 +228,6 @@ add_executable(Mapper_Test
 	WIN32
 	${Mapper_Test_SRCS}
 	${Mapper_Test_MOC}
-	${Mapper_RESOURCES_RCC}
 )
 add_test(NAME Mapper_Test_General COMMAND $<TARGET_FILE:Mapper_Test>)
 target_link_libraries(Mapper_Test
