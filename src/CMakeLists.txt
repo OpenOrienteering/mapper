@@ -214,6 +214,11 @@ install(TARGETS Mapper
 
 # Test executable
 
+if(Mapper_USE_QT5)
+	find_package(Qt5Test REQUIRED)
+	set(QT_QTTEST_LIBRARY ${Qt5Test_LIBRARIES})
+endif()
+
 set(Mapper_Test_SRCS
  test.cpp
 )

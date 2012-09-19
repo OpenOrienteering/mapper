@@ -16,6 +16,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
+if(NOT Mapper_USE_QT5)
+
 if(NOT ${QT4_FOUND})
 	find_package(Qt4 QUIET REQUIRED)
 endif()
@@ -153,3 +155,10 @@ macro(QT4_TRANSLATIONS_SOURCES)
 	endforeach()
 endmacro()
 
+else()
+
+macro(QT4_TRANSLATIONS_SOURCES)
+	# TODO for Qt5
+endmacro()
+
+endif(NOT Mapper_USE_QT5)

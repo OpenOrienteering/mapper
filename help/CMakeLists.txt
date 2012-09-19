@@ -16,6 +16,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
+if(NOT Mapper_USE_QT5)
+
 if(QT_QCOLLECTIONGENERATOR_EXECUTABLE MATCHES NOTFOUND)
 	message(FATAL_ERROR "qcollectiongenerator executable not found.")
 endif()
@@ -49,3 +51,4 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/${Mapper_COMPRESSED_HELP}" 
   DESTINATION "${MAPPER_DATA_DESTINATION}/help")
 
+endif()

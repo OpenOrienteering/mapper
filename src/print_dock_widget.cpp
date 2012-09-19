@@ -22,7 +22,12 @@
 
 #include <limits>
 
+#if QT_VERSION < 0x050000
 #include <QtGui>
+#else
+#include <QtWidgets>
+#endif
+#include <QPrintPreviewDialog>
 
 #include "util.h"
 #include "map.h"
@@ -708,7 +713,7 @@ void PrintWidget::printClicked()
 		printer = new QPrinter(QPrinter::HighResolution);
 		
 		if (path.endsWith(".ps", Qt::CaseInsensitive))
-			printer->setOutputFormat(QPrinter::PostScriptFormat);
+;//			printer->setOutputFormat(QPrinter::PostScriptFormat);
 		else
 		{
 			printer->setOutputFormat(QPrinter::PdfFormat);

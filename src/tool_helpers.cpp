@@ -26,6 +26,7 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <QApplication>
+#include <QMimeData>
 
 #include "map_editor.h"
 #include "tool_draw_text.h"

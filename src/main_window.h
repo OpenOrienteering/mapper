@@ -21,7 +21,7 @@
 #ifndef _OPENORIENTEERING_MAIN_WINDOW_H_
 #define _OPENORIENTEERING_MAIN_WINDOW_H_
 
-#include <QtGui/QMainWindow>
+#include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
 class QLabel;
