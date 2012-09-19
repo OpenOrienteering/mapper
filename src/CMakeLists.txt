@@ -176,6 +176,7 @@ qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 add_library(Mapper_Common STATIC
 	${Mapper_Common_SRCS}
 	${Mapper_Common_MOC}
+	${Mapper_RESOURCES_RCC}
 )
 target_link_libraries(Mapper_Common
  ${Mapper_LIBRARIES}
@@ -201,7 +202,6 @@ add_executable(Mapper
 	WIN32
 	MACOSX_BUNDLE
 	${Mapper_SRCS}
-	${Mapper_RESOURCES_RCC}
 )
 target_link_libraries(Mapper
  Mapper_Common
@@ -228,7 +228,6 @@ add_executable(Mapper_Test
 	WIN32
 	${Mapper_Test_SRCS}
 	${Mapper_Test_MOC}
-	${Mapper_RESOURCES_RCC}
 )
 add_test(NAME Mapper_Test_General COMMAND $<TARGET_FILE:Mapper_Test>)
 target_link_libraries(Mapper_Test
