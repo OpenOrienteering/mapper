@@ -68,7 +68,11 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	device_combo = new QComboBox();
 
     device_combo->setMaximumWidth(200);
+#if QT_VERSION < 0x050000
 	device_combo->addItem(tr("Export to PDF or PS"), QVariant((int)PdfExporter));
+#else
+	device_combo->addItem(tr("Export to PDF"), QVariant((int)PdfExporter));
+#endif
 	device_combo->addItem(tr("Export to image"), QVariant((int)ImageExporter));
 	device_combo->insertSeparator(device_combo->count());
 	device_combo->setCurrentIndex(0);
@@ -711,10 +715,12 @@ void PrintWidget::printClicked()
 	if (index == (int)PdfExporter)
 	{
 		printer = new QPrinter(QPrinter::HighResolution);
-		
+
+#if QT_VERSION < 0x050000		
 		if (path.endsWith(".ps", Qt::CaseInsensitive))
-;//			printer->setOutputFormat(QPrinter::PostScriptFormat);
+			printer->setOutputFormat(QPrinter::PostScriptFormat);
 		else
+#endif
 		{
 			printer->setOutputFormat(QPrinter::PdfFormat);
 			if (!path.endsWith(".pdf", Qt::CaseInsensitive))
