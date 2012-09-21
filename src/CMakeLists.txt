@@ -171,8 +171,10 @@ target_link_libraries(Mapper
  ${QT_LIBRARIES}
  ${PROJ_LIBRARY}
 )
-add_dependencies(Mapper
-  Mapper_prerequisites
+
+install(TARGETS Mapper
+  RUNTIME DESTINATION "${MAPPER_RUNTIME_DESTINATION}"
+  BUNDLE DESTINATION "${MAPPER_RUNTIME_DESTINATION}"
 )
 qt4_translations_sources(
   SOURCES ${Mapper_SRCS}
