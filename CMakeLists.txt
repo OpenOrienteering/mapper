@@ -57,6 +57,17 @@ option(Mapper_BUILD_PROJ "Build the Proj library from source")
 
 option(Mapper_BUILD_QT   "Build the Qt library from source")
 
+# FIXME: Packaging for MacOSX needs review on a MacOSX machine
+if(NOT Mapper_BUILD_PACKAGE)
+	if(NOT APPLE)
+		set(Mapper_BUILD_PACKAGE_DEFAULT ON)
+	else()
+		set(Mapper_BUILD_PACKAGE_DEFAULT OFF)
+	endif()
+	set(Mapper_BUILD_PACKAGE ${Mapper_BUILD_PACKAGE_DEFAULT} CACHE STRING 
+	  "Create a 'package' target")
+endif()
+
 # Installation configuration
 
 if(WIN32)
@@ -156,9 +167,8 @@ install(FILES COPYING
 
 add_dependencies(Mapper Mapper_prerequisites)
 
-# FIXME: Packaging for MacOSX needs review on a MacOSX machine
-if(NOT APPLE)
-include(CPackaging.cmake)
+if(Mapper_BUILD_PACKAGE)
+	include(CPackaging.cmake)
 endif()
 
 else(Mapper_prerequisites_FOUND)
