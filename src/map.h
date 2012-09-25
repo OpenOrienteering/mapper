@@ -34,8 +34,12 @@
 #include "matrix.h"
 #include "map_coord.h"
 
+QT_BEGIN_NAMESPACE
 class QIODevice;
 class QPainter;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+QT_END_NAMESPACE
 
 class Map;
 struct MapColor;
@@ -75,6 +79,8 @@ public:
 	
 	void save(QIODevice* file, Map* map);
 	bool load(QIODevice* file, int version, Map* map);
+	void save(QXmlStreamWriter& xml, const Map& map) const;
+	static MapLayer* load(QXmlStreamReader& xml, Map& map);
 	
 	inline const QString& getName() const {return name;}
 	inline void setName(const QString new_name) {name = new_name;}
@@ -155,6 +161,8 @@ friend class OCAD8FileImport;
 friend class XMLFileImport;
 friend class NativeFileImport;
 friend class NativeFileExport;
+friend class XMLFileImporter;
+friend class XMLFileExporter;
 public:
 	typedef QSet<Object*> ObjectSelection;
 	
@@ -237,12 +245,12 @@ public:
 	// Colors
 	
 	inline int getNumColors() const {return (int)color_set->colors.size();}
-	inline MapColor* getColor(int i) {return color_set->colors[i];}
+	inline MapColor* getColor(int i) const {return color_set->colors[i];}
 	void setColor(MapColor* color, int pos);
 	MapColor* addColor(int pos);
 	void addColor(MapColor* color, int pos);
 	void deleteColor(int pos);
-	int findColorIndex(MapColor* color);	// returns -1 if not found
+	int findColorIndex(MapColor* color) const;	// returns -1 if not found
 	void setColorsDirty();
 	
 	void useColorsFrom(Map* map);
@@ -262,7 +270,7 @@ public:
 		setSymbolsDirty();
 	}
 	void deleteSymbol(int pos);
-	int findSymbolIndex(Symbol* symbol);
+	int findSymbolIndex(const Symbol* symbol) const;
 	void setSymbolsDirty();
 	
 	void scaleAllSymbols(double factor);

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Pete Curtis
+ *    Copyright 2012 Pete Curtis, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -17,12 +17,15 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDomImplementation>
 #include <QDebug>
 #include <QFile>
 #include <QStringBuilder>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 #include "file_format_xml.h"
+#include "georeferencing.h"
+
 #include "map_color.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
@@ -33,354 +36,368 @@
 #include "object_text.h"
 
 
-XMLBuilder::XMLBuilder(const QString &rootElement, const QString &rootNamespace)
+// ### XMLFileExporter declaration ###
+
+class XMLFileExporter : public Exporter
 {
-    doc = QDomImplementation().createDocument(rootNamespace, rootElement, QDomDocumentType());
-    current = doc.documentElement();
-}
+public:
+	XMLFileExporter(QIODevice* stream, Map *map, MapView *view);
+	virtual ~XMLFileExporter() {}
+	
+	virtual void doExport() throw (FormatException);
 
-XMLBuilder &XMLBuilder::attr(const QString &name, bool value)
+protected:
+	QXmlStreamWriter xml;
+};
+
+
+// ### XMLFileImporter declaration ###
+
+class XMLFileImporter : public Importer
 {
-    current.setAttribute(name, value ? "true" : "false");
-    return *this;
-}
+public:
+	XMLFileImporter(QIODevice* stream, Map *map, MapView *view);
+	virtual ~XMLFileImporter() {}
 
-template <typename T> XMLBuilder &XMLBuilder::attr(const QString &name, const T &value)
+protected:
+	virtual void import(bool load_symbols_only) throw (FormatException);
+	
+	void addWarningUnsupportedElement();
+	void importGeoreferencing();
+	void importColors();
+	void importSymbols();
+	void importLayers();
+	
+	QXmlStreamReader xml;
+};
+
+
+
+// ### XMLFileFormat definition ###
+
+const int XMLFileFormat::minimum_version = 2;
+const int XMLFileFormat::current_version = 2;
+const QString XMLFileFormat::magic_string = "<?xml ";
+const QString XMLFileFormat::mapper_namespace = "http://oorienteering.sourceforge.net/mapper/xml/v2";
+
+XMLFileFormat::XMLFileFormat()
+: Format("XML", QObject::tr("OpenOrienteering Mapper XML"), "xmap", true, true, true) 
 {
-    current.setAttribute(name, value);
-    return *this;
+	// NOP
 }
-
-XMLBuilder &XMLBuilder::append(const QString &text)
-{
-    QDomNode child = doc.createTextNode(text);
-    current.appendChild(child);
-    return *this;
-}
-
-XMLBuilder &XMLBuilder::down(const QString &name, const QString &ns)
-{
-    QDomElement child = doc.createElementNS(ns, name);
-    current.appendChild(child);
-    current = child;
-    return *this;
-}
-
-XMLBuilder &XMLBuilder::up()
-{
-    current = current.parentNode().toElement();
-    return *this;
-}
-
-XMLBuilder &XMLBuilder::sub(const QString &name, const QString &value, const QString &ns)
-{
-    return down(name, ns).append(value).up();
-}
-
-
-
-
 
 bool XMLFileFormat::understands(const unsigned char *buffer, size_t sz) const
 {
-    // The first six bytes of the file must be '<?xml '
-    static const char *magic = "<?xml ";
-    if (sz >= 6 && memcmp(buffer, magic, 6) == 0) return true;
-    return false;
+	uint len = magic_string.length();
+	if (sz >= len && memcmp(buffer, magic_string.toUtf8().data(), len) == 0) 
+		return true;
+	return false;
 }
 
-
-/*
 Importer *XMLFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException)
 {
-    return new XMLFileImporter(stream, map, view);
+	return new XMLFileImporter(stream, map, view);
 }
-*/
 
 Exporter *XMLFileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException)
 {
-    return new XMLFileExporter(stream, map, view);
-}
-
-#define NS_V1 "http://oo-mapper.com/oo-mapper/v1"
-
-/*
-XMLFileImporter::XMLFileImporter(QIODevice* stream, Map *map, MapView *view)
-    : Importer(stream, map, view), reader("document", NS_V1)
-{
-
+	return new XMLFileExporter(stream, map, view);
 }
 
 
-void XMLFileImporter::doExport() throw (FormatException)
-{
-    reader.down("map");
 
-    reader.down("colors");
-    Q_FOREACH(reader.all("color"))
-    {
-        MapColor *color = parseColor(reader);
-
-    }
-
-    for (int i = 0; i < map->getNumColors(); i++)
-    {
-
-        const MapColor *color = map->getColor(i);
-        reader.down("color")
-                .attr("cmyk", QString("%1,%2,%3,%4").arg(color->c).arg(color->m).arg(color->y).arg(color->k))
-                .attr("priority", color->priority)
-                .attr("opacity", color->opacity)
-                .sub("name", color->name)
-                .up();
-        color_index[color] = i;
-    }
-    reader.up();
-}
-*/
-
+// ### XMLFileExporter definition ###
 
 XMLFileExporter::XMLFileExporter(QIODevice* stream, Map *map, MapView *view)
-    : Exporter(stream, map, view), builder("document", NS_V1)
+: Exporter(stream, map, view),
+  xml(stream)
 {
-
+	xml.setAutoFormatting(true);
 }
 
 void XMLFileExporter::doExport() throw (FormatException)
 {
-    builder.down("map");
-
-    builder.down("colors");
-    for (int i = 0; i < map->getNumColors(); i++)
-    {
-        const MapColor *color = map->getColor(i);
-        builder.down("color")
-                .attr("cmyk", QString("%1,%2,%3,%4").arg(color->c).arg(color->m).arg(color->y).arg(color->k))
-                .attr("priority", color->priority)
-                .attr("opacity", color->opacity)
-                .sub("name", color->name)
-                .up();
-        color_index[color] = i;
-    }
-    builder.up();
-
-    builder.down("symbols");
-    for (int i = 0; i < map->getNumSymbols(); i++)
-    {
-        exportSymbol(map->getSymbol(i));
-    }
-    builder.up();
-
-    builder.down("layers");
-    for (int i = 0; i < map->getNumLayers(); i++)
-    {
-        const MapLayer *layer = map->getLayer(i);
-        builder.down("layer").sub("name", layer->getName());
-        for (int j = 0; j < layer->getNumObjects(); j++)
-        {
-            exportObject(layer->getObject(j));
-        }
-        builder.up();
-    }
-    builder.up();
-
-    builder.up();
-
-    builder.down("view");
-    // TODO: save view parameters
-
-    builder.up();
-
-	stream->write(builder.document().toString().toUtf8());
+	xml.writeDefaultNamespace(XMLFileFormat::mapper_namespace);
+	xml.writeStartDocument();
+	xml.writeStartElement("map");
+	xml.writeAttribute("version", QString::number(XMLFileFormat::current_version));
+	
+	xml.writeTextElement("notes", map->getMapNotes());
+	
+	xml.writeStartElement("georeferencing");
+	const Georeferencing& georef = map->getGeoreferencing();
+	xml.writeTextElement("scale", QString::number(georef.scale_denominator));
+	xml.writeTextElement("declination", QString::number(georef.declination));
+	xml.writeTextElement("grivation", QString::number(georef.grivation));
+	xml.writeEmptyElement("ref_point");
+	xml.writeAttribute("x", QString::number(georef.map_ref_point.xd()));
+	xml.writeAttribute("y", QString::number(georef.map_ref_point.yd()));
+	xml.writeStartElement("projected_crs");
+	xml.writeAttribute("id", georef.projected_crs_id);
+	xml.writeStartElement("spec");
+	xml.writeAttribute("language", "PROJ.4");
+	xml.writeCharacters(georef.projected_crs_spec);
+	xml.writeEndElement(/*spec*/);
+	xml.writeEmptyElement("ref_point");
+	xml.writeAttribute("x", QString::number(georef.projected_ref_point.x()));
+	xml.writeAttribute("y", QString::number(georef.projected_ref_point.y()));
+	xml.writeEndElement(/*projected_crs*/);
+	xml.writeStartElement("geographic_crs");
+	xml.writeAttribute("id", "Geographic coordinates"); // reserved
+	xml.writeStartElement("spec");
+	xml.writeAttribute("language", "PROJ.4");
+	xml.writeCharacters(georef.geographic_crs_spec);
+	xml.writeEndElement(/*spec*/);
+	xml.writeEmptyElement("geographic_ref_point");
+	xml.writeAttribute("lat", QString::number(georef.geographic_ref_point.latitude));
+	xml.writeAttribute("lon", QString::number(georef.geographic_ref_point.longitude));
+	xml.writeEndElement(/*geographic_crs*/);
+	xml.writeEndElement(); // georeferencing
+	
+	xml.writeStartElement("view");
+	xml.writeEmptyElement("grid"); // TODO
+	if (map->area_hatching_enabled)
+		xml.writeEmptyElement("area_hatching_enabled");
+	if (map->baseline_view_enabled)
+		xml.writeEmptyElement("baseline_view_enabled");
+	xml.writeEndElement(/*view*/); 
+	
+	xml.writeStartElement("print");
+	// TODO
+	xml.writeEndElement(/*print*/); 
+	
+	xml.writeStartElement("image_template");
+	// TODO
+	xml.writeEndElement(/*image_template*/); 
+	
+	xml.writeStartElement("colors");
+	int num_colors = (int)map->color_set->colors.size();
+	xml.writeAttribute("number", QString::number(num_colors));
+	for (int i = 0; i < num_colors; ++i)
+	{
+		MapColor* color = map->color_set->colors[i];
+		xml.writeEmptyElement("color");
+		xml.writeAttribute("priority", QString::number(color->priority));
+		xml.writeAttribute("c", QString::number(color->c));
+		xml.writeAttribute("m", QString::number(color->m));
+		xml.writeAttribute("y", QString::number(color->y));
+		xml.writeAttribute("k", QString::number(color->k));
+		xml.writeAttribute("opacity", QString::number(color->opacity));
+		xml.writeAttribute("name", color->name);
+	}
+	xml.writeEndElement(/*colors*/); 
+	
+	xml.writeStartElement("symbols");
+	int num_symbols = map->getNumSymbols();
+	xml.writeAttribute("number", QString::number(num_symbols));
+	for (int i = 0; i < num_symbols; ++i)
+	{
+		map->getSymbol(i)->save(xml, *map);
+	}
+	xml.writeEndElement(/*symbols*/); 
+	
+	xml.writeStartElement("undo");
+	// TODO
+	xml.writeEndElement(/*undo*/); 
+	
+	xml.writeStartElement("layers");
+	int num_layers = map->getNumLayers();
+	xml.writeAttribute("number", QString::number(num_layers));
+	xml.writeAttribute("current",QString::number( map->current_layer_index));
+	for (int i = 0; i < num_layers; ++i)
+		map->getLayer(i)->save(xml, *map);
+	xml.writeEndElement(/*layers*/); 
+	
+	xml.writeEndElement(/*document*/);
+	xml.writeEndDocument();
 }
 
-void XMLFileExporter::exportSymbol(const Symbol *symbol, bool anonymous)
+
+
+// ### XMLFileImporter definition ###
+
+XMLFileImporter::XMLFileImporter(QIODevice* stream, Map *map, MapView *view)
+: Importer(stream, map, view),
+  xml(stream)
 {
-    if (!anonymous)
-    {
-        builder.attr("number", symbol->getNumberAsString())
-                .attr("helper", symbol->isHelperSymbol())
-                .attr("hidden", symbol->isHidden())
-                .attr("protected", symbol->isProtected())
-                .sub("name", symbol->getName())
-                .sub("description", symbol->getDescription());
-
-        // TODO: save icon
-    }
-
-    if (symbol->getType() == Symbol::Point)
-    {
-        const PointSymbol *s = reinterpret_cast<const PointSymbol *>(symbol);
-        builder.down("point-symbol").attr("rotatable", s->isRotatable());
-        if (s->getInnerColor())
-        {
-            builder.attr("radius", s->getInnerRadius()).attr("fill", color_index[s->getInnerColor()]);
-        }
-        if (s->getOuterColor())
-        {
-            builder.attr("border", s->getOuterWidth()).attr("stroke", color_index[s->getOuterColor()]);
-        }
-        for (int i = 0; i < s->getNumElements(); i++)
-        {
-            builder.down("element");
-            exportSymbol(s->getElementSymbol(i), true);
-            exportObject(s->getElementObject(i), false);
-            builder.up();
-        }
-    }
-    else if (symbol->getType() == Symbol::Line)
-    {
-        const LineSymbol *s = reinterpret_cast<const LineSymbol *>(symbol);
-        builder.down("line-symbol")
-                .attr("width", s->getLineWidth())
-                .attr("cap", s->getCapStyle())
-                .attr("join", s->getJoinStyle());
-        /*
-        if (s->getCapStyle() == LineSymbol::PointedCap)
-        {
-            builder.attr("taper-length", s->pointed_cap_length);
-        }
-        */
-
-        if (s->getBorder().width > 0)
-        {
-            builder.attr("border-color", color_index[s->getBorder().color])
-                    .attr("border-width", s->getBorder().width)
-                    .attr("border-shift", s->getBorder().shift);
-        }
-
-        if (s->getStartSymbol())
-        {
-            builder.down("start-symbol");
-            exportSymbol(s->getStartSymbol(), true);
-            builder.up();
-        }
-        if (s->getMidSymbol())
-        {
-            builder.down("mid-symbol");
-            exportSymbol(s->getMidSymbol(), true);
-            builder.up();
-        }
-        if (s->getEndSymbol())
-        {
-            builder.down("end-symbol");
-            exportSymbol(s->getEndSymbol(), true);
-            builder.up();
-        }
-        if (s->getDashSymbol())
-        {
-            builder.down("dash-symbol");
-            exportSymbol(s->getDashSymbol(), true);
-            builder.up();
-        }
-
-
-    }
-    else if (symbol->getType() == Symbol::Area)
-    {
-        builder.down("area-symbol");
-        const AreaSymbol *s = reinterpret_cast<const AreaSymbol *>(symbol);
-
-        builder.attr("color", color_index[s->getColor()])
-                .attr("min-area", s->getMinimumArea());
-        for (int i = 0; i < s->getNumFillPatterns(); i++)
-        {
-            builder.down("pattern");
-            exportPattern(s->getFillPattern(i));
-            builder.up();
-        }
-        builder.up();
-    }
-    else if (symbol->getType() == Symbol::Text)
-    {
-        builder.down("text-symbol");
-        const TextSymbol *s = reinterpret_cast<const TextSymbol *>(symbol);
-        builder.attr("color", color_index[s->getColor()])
-                .attr("font-family", s->getFontFamily())
-                .attr("font-size", s->getFontSize())
-                .attr("font-weight", s->isBold() ? "bold" : "normal")
-                .attr("font-style", s->isItalic() ? "italic" : "normal")
-                .attr("text-decoration", s->isUnderlined() ? "underline" : "normal")
-                .attr("char-spacing", s->getCharacterSpacing())
-                .attr("line-spacing", s->getLineSpacing())
-                .attr("paragraph-spacing", s->getParagraphSpacing())
-                .attr("font-kerning", s->usesKerning());
-        if (s->hasLineBelow())
-        {
-            builder.down("underline")
-                    .attr("color", color_index[s->getLineBelowColor()])
-                    .attr("width", s->getLineBelowWidth())
-                    .attr("distance", s->getLineBelowDistance())
-                    .up();
-        }
-        for (int i = 0; i < s->getNumCustomTabs(); i++)
-        {
-            int tab = s->getCustomTab(i);
-            builder.down("tab-stop").attr("position", tab).up();
-        }
-        //builder.attr("default-tab", s->tab_interval); // no getter or setter?
-        builder.up();
-    }
-    else if (symbol->getType() == Symbol::Combined)
-    {
-        builder.down("combined-symbol");
-        const CombinedSymbol *s = reinterpret_cast<const CombinedSymbol *>(symbol);
-        for (int i = 0; i < s->getNumParts(); i++)
-        {
-            exportSymbol(s->getPart(i), true);
-        }
-    }
-    else
-    {
-        builder.down("symbol");
-    }
-
-    builder.up();
+	//NOP
 }
 
-void XMLFileExporter::exportObject(const Object *object, bool reference_symbol)
+void XMLFileImporter::addWarningUnsupportedElement()
 {
-    if (object->getType() == Object::Point)
-    {
-        const PointObject *o = reinterpret_cast<const PointObject *>(object);
-        builder.down("point-object").attr("rotation", o->getRotation());
-    }
-    else if (object->getType() == Object::Text)
-    {
-        const TextObject *t = reinterpret_cast<const TextObject *>(object);
-        builder.down("text-object")
-                .attr("rotation", t->getRotation())
-                .attr("halign", t->getHorizontalAlignment())
-                .attr("valign", t->getVerticalAlignment())
-                .append(t->getText());
-    }
-    else
-    {
-        builder.down("object");
-    }
-
-    if (reference_symbol)
-    {
-        builder.attr("symbol", object->getSymbol()->getNumberAsString());
-    }
-    builder.attr("path", makePath(object));
-    builder.up();
+	addWarning(QObject::tr("Unsupported element: %1 (line %2 column %3)").
+	  arg(xml.name().toString()).
+	  arg(xml.lineNumber()).
+	  arg(xml.columnNumber())
+	);
 }
 
-void XMLFileExporter::exportPattern(const struct AreaSymbol::FillPattern &pattern)
+void XMLFileImporter::import(bool load_symbols_only) throw (FormatException)
 {
-    // FIXME
+	if (xml.readNextStartElement())
+	{
+		if (xml.name() != "map")
+			xml.raiseError(QObject::tr("Unsupport file format."));
+		else
+		{
+			int version = xml.attributes().value("version").toString().toInt();
+			if (version < 1)
+				xml.raiseError(QObject::tr("Invalid file format version."));
+			else if (version < XMLFileFormat::minimum_version)
+				xml.raiseError(QObject::tr("Unsupported file format version. Please use an older program version to load and update the file."));
+			else if (version > XMLFileFormat::current_version)
+				addWarning(QObject::tr("New file format version detected. Some features will be not be supported by this version of the program."));
+		}
+	}
+	
+	while (xml.readNextStartElement())
+	{
+		const QStringRef name(xml.name());
+		
+		if (name == "georeferencing")
+			importGeoreferencing();
+		else if (name == "colors")
+			importColors();
+		else if (name == "symbols")
+			importSymbols();
+		else if (load_symbols_only)
+			xml.skipCurrentElement();
+		else if (name == "notes")
+			map->setMapNotes(xml.readElementText());
+/*
+		else if (name == "view")
+			xml.skipCurrentElement();
+		else if (name == "print")
+			xml.skipCurrentElement();
+		else if (name == "image_template")
+			xml.skipCurrentElement();
+		else if (name == "undo")
+			xml.skipCurrentElement();
+*/
+		else if (name == "layers")
+			importLayers();
+		else
+		{
+			addWarningUnsupportedElement();
+			xml.skipCurrentElement();
+		}
+	}
+	
+	if (xml.error())
+		throw FormatException(xml.errorString());
 }
 
-QString XMLFileExporter::makePath(const Object *object) const
+void XMLFileImporter::importGeoreferencing()
 {
-    QString d ="";
-	const MapCoordVector& coords = object->getRawCoordinateVector();
-	for (int i = 0; i < (int)coords.size(); i++)
-    {
-        const MapCoord &coord = coords[i];
-        if (!d.isEmpty()) d = d % " ";
-        d = d % QString("%1,%2").arg(coord.internalX()).arg(coord.internalY());
-    }
-    return d;
+	Q_ASSERT(xml.name() == "georeferencing");
+	Georeferencing georef;
+	
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == "scale")
+			georef.scale_denominator = xml.readElementText().toInt();
+		else if (xml.name() == "declination")
+			georef.declination = xml.readElementText().toDouble();
+		else if (xml.name() == "grivation")
+			georef.declination = xml.readElementText().toDouble();
+		else if (xml.name() == "ref_point")
+			xml.skipCurrentElement(); // TODO
+		else if (xml.name() == "projected_crs")
+			xml.skipCurrentElement(); // TODO
+		else if (xml.name() == "geographic_crs")
+			xml.skipCurrentElement(); // TODO
+		else
+			xml.skipCurrentElement(); // unknown
+	}
+	
+	georef.updateTransformation();
+	map->setGeoreferencing(georef);
+}
+
+void XMLFileImporter::importColors()
+{
+	int num_colors = xml.attributes().value("number").toString().toInt();
+	Map::ColorVector& colors(map->color_set->colors);
+	colors.reserve(num_colors % 100); // 100 is not a limit
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == "color")
+		{
+			QXmlStreamAttributes attributes = xml.attributes();
+			MapColor* color = new MapColor();
+			color->name = attributes.value("name").toString();
+			color->priority = attributes.value("priority").toString().toInt();
+			color->c = attributes.value("c").toString().toFloat();
+			color->m = attributes.value("m").toString().toFloat();
+			color->y = attributes.value("y").toString().toFloat();
+			color->k = attributes.value("k").toString().toFloat();
+			color->opacity = attributes.value("opacity").toString().toFloat();
+			color->updateFromCMYK();
+			colors.push_back(color);
+		}
+		else
+			addWarningUnsupportedElement();
+		xml.skipCurrentElement();
+	}
+	
+	if (num_colors > 0 && num_colors != (int)colors.size())
+		addWarning(QObject::tr("Expected %1 colors, found %2.").
+		  arg(num_colors).
+		  arg(colors.size())
+		);
+}
+
+void XMLFileImporter::importSymbols()
+{
+	int num_symbols = xml.attributes().value("number").toString().toInt();
+	map->symbols.reserve(num_symbols % 1000); // 1000 is not a limit
+	
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == "symbol")
+		{
+			map->symbols.push_back(Symbol::load(xml, *map));
+		}
+		else
+		{
+			addWarningUnsupportedElement();
+			xml.skipCurrentElement();
+		}
+	}
+	
+	if (num_symbols > 0 && num_symbols != map->getNumSymbols())
+		addWarning(QObject::tr("Expected %1 symbols, found %2.").
+		  arg(num_symbols).
+		  arg(map->getNumSymbols())
+		);
+}
+
+void XMLFileImporter::importLayers()
+{
+	int num_layers = xml.attributes().value("number").toString().toInt();
+	int current_layer_index = xml.attributes().value("current").toString().toInt();
+	map->layers.clear();
+	map->layers.reserve(num_layers % 20); // 20 is not a limit
+	
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == "layer")
+		{
+			map->layers.push_back(MapLayer::load(xml, *map));
+		}
+		else
+		{
+			addWarningUnsupportedElement();
+			xml.skipCurrentElement();
+		}
+	}
+	
+	if (0 <= current_layer_index && current_layer_index < map->getNumLayers())
+		map->current_layer_index = current_layer_index;
+	
+	if (num_layers > 0 && num_layers != map->getNumLayers())
+		addWarning(QObject::tr("Expected %1 layers, found %2.").
+		  arg(num_layers).
+		  arg(map->getNumLayers())
+		);
 }

@@ -26,11 +26,16 @@
 
 #include <QRectF>
 
+#include "file_format.h"
 #include "map_coord.h"
 #include "path_coord.h"
 #include "renderable.h"
 
+QT_BEGIN_NAMESPACE
 class QIODevice;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+QT_END_NAMESPACE
 
 class Symbol;
 class Map;
@@ -67,6 +72,8 @@ public:
 	
 	void save(QIODevice* file);
 	void load(QIODevice* file, int version, Map* map);
+	void save(QXmlStreamWriter& xml) const;
+	static Object* load(QXmlStreamReader& xml, Map& map) throw (FormatException);
 	
 	/// Checks if the output_dirty flag is set and if yes, regenerates output and extent; returns true if output was previously dirty.
 	/// Use force == true to force a redraw

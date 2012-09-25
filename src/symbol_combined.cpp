@@ -26,6 +26,7 @@
 #include <QtWidgets>
 #endif
 #include <QIODevice>
+#include <QXmlStreamWriter>
 
 #include "map.h"
 #include "symbol_setting_dialog.h"
@@ -191,7 +192,7 @@ Symbol::Type CombinedSymbol::getContainedTypes() const
 
 void CombinedSymbol::saveImpl(QIODevice* file, Map* map)
 {
-    int size = (int)parts.size();
+	int size = (int)parts.size();
 	file->write((const char*)&size, sizeof(int));
 	
 	for (int i = 0; i < size; ++i)
@@ -239,6 +240,64 @@ bool CombinedSymbol::loadImpl(QIODevice* file, int version, Map* map)
 		}
 	}
 	return true;
+}
+
+void CombinedSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
+{
+	xml.writeStartElement("combined_symbol");
+	int num_parts = (int)parts.size();
+	xml.writeAttribute("parts", QString::number(num_parts));
+	for (int i = 0; i < num_parts; ++i)
+	{
+		xml.writeStartElement("part");
+		bool is_private = private_parts[i];
+		if (is_private)
+		{
+			xml.writeAttribute("private", "true");
+			parts[i]->save(xml, map);
+		}
+		else
+		{
+			int temp = (parts[i] == NULL) ? -1 : map.findSymbolIndex(parts[i]);
+			xml.writeAttribute("symbol", QString::number(temp));
+		}
+		xml.writeEndElement(/*part*/);
+	}
+	xml.writeEndElement(/*combined_symbol*/);
+}
+
+bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
+{
+	Q_ASSERT(xml.name() == "combined_symbol");
+	
+	int num_parts = xml.attributes().value("parts").toString().toInt();
+	temp_part_indices.reserve(num_parts % 10); // 10 is not the limit
+	private_parts.reserve(num_parts % 10);
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == "part")
+		{
+			bool is_private = (xml.attributes().value("private") == "true");
+			private_parts.push_back(is_private);
+			if (is_private)
+			{
+				xml.readNextStartElement();
+				parts.push_back(Symbol::load(xml, map));
+				temp_part_indices.push_back(-1);
+			}
+			else
+			{
+				int temp = xml.attributes().value("symbol").toString().toInt();
+				temp_part_indices.push_back(temp);
+				parts.push_back(NULL);
+			}
+			xml.skipCurrentElement();
+		}
+		else
+			xml.skipCurrentElement(); // unknown
+	}
+	
+	return !xml.error();
 }
 
 bool CombinedSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)

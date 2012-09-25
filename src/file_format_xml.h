@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Pete Curtis
+ *    Copyright 2012 Pete Curtis, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -17,81 +17,54 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef XML_IMPORT_EXPORT_H
-#define XML_IMPORT_EXPORT_H
-
-#include <QDomDocument>
+#ifndef FILE_FORMAT_XML_H
+#define FILE_FORMAT_XML_H
 
 #include "file_format.h"
-#include "symbol_area.h"
 
-/** Provides the Builder pattern for a DOM tree.
+/**
+ * Interface for dealing with XML files of maps.
  */
-class XMLBuilder
-{
-public:
-    XMLBuilder(const QString &rootElement, const QString &rootNamespace = QString::null);
-    inline QDomDocument document() const { return doc; }
-
-    XMLBuilder &attr(const QString &name, bool value);
-    template <typename T> XMLBuilder &attr(const QString &name, const T &value);
-
-    XMLBuilder &append(const QString &text);
-
-    XMLBuilder &down(const QString &name, const QString &ns = QString::null);
-    XMLBuilder &up();
-
-    XMLBuilder &sub(const QString &name, const QString &value, const QString &ns = QString::null);
-
-private:
-    QDomDocument doc;
-    QDomElement current;
-};
-
-
 class XMLFileFormat : public Format
 {
 public:
-    XMLFileFormat() : Format("XML", QObject::tr("OpenOrienteering Mapper XML (export only)"), "xml", false, true, true) {}
-
-    bool understands(const unsigned char *buffer, size_t sz) const;
-	//Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
-    Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
+	/**
+	 * Creates a new file format of type XML.
+	 */
+	XMLFileFormat();
+	
+	/**
+	 * Returns true if the file starts with the character sequence "<?xml".
+	 * FIXME: Needs to deal with different encodings. Provide test cases.
+	 */
+	bool understands(const unsigned char *buffer, size_t sz) const;
+	
+	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
+	
+	/**
+	 * Creates an exporter for XML files.
+	 */
+	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
+	
+	/**
+	 * The minimum XML file format version supported by this implementation.
+	 */
+	static const int minimum_version;
+	
+	/**
+	 * The XML file format version created by this implementation.
+	 */
+	static const int current_version;
+	
+	/**
+	 * The characteristic magic string at the beginning of the file
+	 */
+	static const QString magic_string;
+	
+	/**
+	 * The XML namespace of the Mapper XML file format
+	 */
+	static const QString mapper_namespace;
 };
 
-/*
-class XMLFileImporter : public Importer
-{
-public:
-	XMLFileImporter(QIODevice* stream, Map *map, MapView *view);
-    ~XMLFileImporter() {}
-
-protected:
-    void import(bool load_symbols_only) throw (FormatException);
-
-};
-*/
-
-
-class XMLFileExporter : public Exporter
-{
-public:
-    XMLFileExporter(QIODevice* stream, Map *map, MapView *view);
-    ~XMLFileExporter() {}
-
-    void doExport() throw (FormatException);
-
-protected:
-    void exportSymbol(const Symbol *symbol, bool anonymous = false);
-    void exportObject(const Object *object, bool symbol_reference = true);
-    void exportPattern(const struct AreaSymbol::FillPattern &pattern);
-    QString makePath(const Object* object) const;
-
-private:
-    XMLBuilder builder;
-
-    QHash<const MapColor *, int> color_index;
-
-};
-
-#endif // XML_IMPORT_EXPORT_H
+#endif // FILE_FORMAT_XML_H

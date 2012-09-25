@@ -33,6 +33,8 @@ class QLineEdit;
 class QScrollArea;
 class QSpinBox;
 class QGridLayout;
+class QXmlStreamReader;
+class QXmlStreamWriter;
 QT_END_NAMESPACE
 
 class ColorDropDown;
@@ -52,6 +54,8 @@ struct LineSymbolBorder
 	void reset();
 	void save(QIODevice* file, Map* map);
 	bool load(QIODevice* file, int version, Map* map);
+	void save(QXmlStreamWriter& xml, const Map& map) const;
+	bool load(QXmlStreamReader& xml, Map& map);
 	bool equals(const LineSymbolBorder* other) const;
 	void assign(const LineSymbolBorder& other, const QHash<MapColor*, MapColor*>* color_map);
 	
@@ -170,6 +174,8 @@ public:
 protected:
 	virtual void saveImpl(QIODevice* file, Map* map);
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
+	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
+	virtual bool loadImpl(QXmlStreamReader& xml, Map& map);
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	void createBorderLines(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output);

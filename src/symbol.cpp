@@ -20,10 +20,13 @@
 
 #include "symbol.h"
 
+#include <QDebug>
 #include <QFile>
 #include <QPainter>
 #include <QStringBuilder>
 #include <QTextDocument>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 #include <qmath.h>
 
 #include "util.h"
@@ -150,6 +153,7 @@ void Symbol::save(QIODevice* file, Map* map)
 	
 	saveImpl(file, map);
 }
+
 bool Symbol::load(QIODevice* file, int version, Map* map)
 {
 	loadString(file, name);
@@ -163,6 +167,70 @@ bool Symbol::load(QIODevice* file, int version, Map* map)
 		file->read((char*)&is_protected, sizeof(bool));
 	
 	return loadImpl(file, version, map);
+}
+
+void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
+{
+	xml.writeStartElement("symbol");
+	xml.writeAttribute("type", QString::number(type));
+	xml.writeAttribute("id", getNumberAsString());
+	xml.writeAttribute("name", name);
+	if (is_helper_symbol)
+		xml.writeAttribute("is_helper_symbol","true");
+	if (is_hidden)
+		xml.writeAttribute("is_hidden","true");
+	if (is_protected)
+		xml.writeAttribute("is_hidden","true");
+	xml.writeTextElement("description", description);
+	saveImpl(xml, map);
+	xml.writeEndElement(/*symbol*/);
+}
+
+Symbol* Symbol::load(QXmlStreamReader& xml, Map& map) throw (FormatException)
+{
+	Q_ASSERT(xml.name() == "symbol");
+	
+	int symbol_type = xml.attributes().value("type").toString().toInt();
+	Symbol* symbol = Symbol::getSymbolForType(static_cast<Symbol::Type>(symbol_type));
+	if (!symbol)
+		throw FormatException(QObject::tr("Error while loading a symbol of type %1.").arg(symbol_type));
+	
+	QXmlStreamAttributes attributes = xml.attributes();
+	QString id = attributes.value("id").toString();
+	for (int i = 0, index = 0; i < number_components && index >= 0; ++i)
+	{
+		if (index == -1)
+			symbol->number[i] = -1;
+		else
+		{
+			int dot = id.indexOf(".", index+1);
+			int num = id.mid(index, (dot == -1) ? -1 : (dot - index)).toInt();
+			symbol->number[i] = num;
+			index = dot;
+			if (index != -1)
+				index++;
+		}
+	}
+	symbol->name = attributes.value("name").toString();
+	symbol->is_helper_symbol = (attributes.value("is_helper_symbol") == "true");
+	symbol->is_hidden = (attributes.value("is_hidden") == "true");
+	symbol->is_protected = (attributes.value("is_hidden") == "true");
+	
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == "description")
+			symbol->description = xml.readElementText();
+		else
+			symbol->loadImpl(xml, map);
+	}
+	
+	if (xml.error())
+	{
+		delete symbol;
+		throw FormatException(QObject::tr("Error while loading a symbol."));
+	}
+	
+	return symbol;
 }
 
 QImage* Symbol::getIcon(Map* map, bool update)
@@ -315,11 +383,11 @@ Symbol* Symbol::getSymbolForType(Symbol::Type type)
 	}
 }
 
-void Symbol::saveSymbol(Symbol* symobl, QIODevice* stream, Map* map)
+void Symbol::saveSymbol(Symbol* symbol, QIODevice* stream, Map* map)
 {
-	int save_type = static_cast<int>(symobl->getType());
+	int save_type = static_cast<int>(symbol->getType());
 	stream->write((const char*)&save_type, sizeof(int));
-	symobl->save(stream, map);
+	symbol->save(stream, map);
 }
 
 bool Symbol::loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* map)

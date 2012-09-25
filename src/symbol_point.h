@@ -24,9 +24,11 @@
 #include "symbol.h"
 #include "symbol_properties_widget.h"
 
+QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QVBoxLayout;
 class QWidget;
+QT_END_NAMESPACE
 
 class Map;
 struct MapColor;
@@ -87,6 +89,8 @@ public:
 protected:
 	virtual void saveImpl(QIODevice* file, Map* map);
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
+	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
+	virtual bool loadImpl(QXmlStreamReader& xml, Map& map);
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	std::vector<Object*> objects;

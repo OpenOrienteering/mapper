@@ -25,6 +25,7 @@
 #else
 #include <QtWidgets>
 #endif
+#include <QXmlStreamAttributes>
 
 #include "map.h"
 #include "util.h"
@@ -289,6 +290,7 @@ void PointSymbol::saveImpl(QIODevice* file, Map* map)
 		objects[i]->save(file);
 	}
 }
+
 bool PointSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	file->read((char*)&rotatable, sizeof(bool));
@@ -320,10 +322,57 @@ bool PointSymbol::loadImpl(QIODevice* file, int version, Map* map)
 		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), symbols[i]);
 		if (!objects[i])
 			return false;
-		objects[i]->load(file, version, NULL);
+		objects[i]->load(file, version, NULL); // FIXME: check that map = NULL is allowed
 	}
 	
 	return true;
+}
+
+void PointSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
+{
+	xml.writeStartElement("point_symbol");
+	if (rotatable)
+		xml.writeAttribute("rotatable", "true");
+	xml.writeAttribute("inner_radius", QString::number(inner_radius));
+	xml.writeAttribute("inner_color", QString::number(map.findColorIndex(inner_color)));
+	xml.writeAttribute("outer_width", QString::number(outer_width));
+	xml.writeAttribute("outer_color", QString::number(map.findColorIndex(outer_color)));
+	int num_elements = (int)objects.size();
+	xml.writeAttribute("elements", QString::number(num_elements));
+	for (int i = 0; i < num_elements; ++i)
+	{
+		symbols[i]->save(xml, map);
+		objects[i]->save(xml);
+	}
+	xml.writeEndElement(/*point_symbol*/);
+}
+
+bool PointSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
+{
+	Q_ASSERT(xml.name() == "point_symbol");
+	
+	QXmlStreamAttributes attributes(xml.attributes());
+	rotatable = (attributes.value("rotatable") == "true");
+	inner_radius = attributes.value("inner_radius").toString().toInt();
+	int temp = attributes.value("inner_color").toString().toInt();
+	inner_color = (temp >= 0) ? map.getColor(temp) : NULL;
+	outer_width = attributes.value("outer_width").toString().toInt();
+	temp = attributes.value("outer_color").toString().toInt();
+	outer_color = (temp >= 0) ? map.getColor(temp) : NULL;
+	int num_elements = attributes.value("elements").toString().toInt();
+	
+	symbols.reserve(num_elements % 10); // 10 is not a limit
+	objects.reserve(num_elements % 10); // 10 is not a limit
+	for (int i = 0; xml.readNextStartElement(); ++i)
+	{
+		if (xml.name() == "symbol")
+			symbols.push_back(Symbol::load(xml, map));
+		else if (xml.name() == "object")
+			objects.push_back(Object::load(xml, map));
+		else
+			xml.skipCurrentElement(); // unknown element
+	}
+	return !xml.error();
 }
 
 bool PointSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)

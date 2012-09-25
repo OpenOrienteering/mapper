@@ -27,9 +27,12 @@
 
 #include "map_coord.h"
 #include "path_coord.h"
+#include "file_format.h"
 
 QT_BEGIN_NAMESPACE
 class QIODevice;
+class QXmlStreamReader;
+class QXmlStreamWriter;
 QT_END_NAMESPACE
 
 class Map;
@@ -95,6 +98,9 @@ public:
 	/// Saving and loading
 	void save(QIODevice* file, Map* map);
 	bool load(QIODevice* file, int version, Map* map);
+	void save(QXmlStreamWriter& xml, const Map& map) const;
+	static Symbol* load(QXmlStreamReader& xml, Map& map) throw (FormatException);
+	
 	/// Called after loading of the map is finished. Can do tasks that need to reference other symbols or map objects.
 	virtual bool loadFinished(Map* map) {return true;}
 	
@@ -178,6 +184,10 @@ protected:
 	virtual void saveImpl(QIODevice* file, Map* map) = 0;
 	/// Must be overridden to load type-specific symbol properties. See saveImpl()
 	virtual bool loadImpl(QIODevice* file, int version, Map* map) = 0;
+	/// Must be overridden to save type-specific symbol properties. The map pointer can be used to get persistent indices to any pointers on map data
+	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const = 0;
+	/// Must be overridden to load type-specific symbol properties. See saveImpl()
+	virtual bool loadImpl(QXmlStreamReader& xml, Map& map) = 0;
 	/// Must be overridden to compare symbol-specific attributes.
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity) = 0;
 	

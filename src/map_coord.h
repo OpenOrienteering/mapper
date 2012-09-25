@@ -21,11 +21,14 @@
 #ifndef _OPENORIENTEERING_MAP_COORD_H_
 #define _OPENORIENTEERING_MAP_COORD_H_
 
+#include <cassert>
+#include <cmath>
 #include <vector>
-#include <math.h>
-#include <assert.h>
 
 #include <QPointF>
+#include <QString>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 /// Coordinates of a point in a map.
 /// Saved as 64bit integers, where in addition some flags about the type of the point can be stored in the lowest 4 bits.
@@ -193,6 +196,26 @@ public:
 	inline QPointF toQPointF() const
 	{
 		return QPointF(xd(), yd());
+	}
+	
+	void save(QXmlStreamWriter& xml) const
+	{
+		xml.writeStartElement("coord");
+		xml.writeAttribute("x", QString::number(rawX()));
+		xml.writeAttribute("y", QString::number(rawY()));
+		xml.writeAttribute("flags", QString::number(getFlags()));
+		xml.writeEndElement(/*coord*/);
+	}
+	
+	static MapCoord load(QXmlStreamReader& xml)
+	{
+		Q_ASSERT(xml.name() == "coord");
+		MapCoord coord;
+		coord.setRawX(xml.attributes().value("x").toString().toLongLong());
+		coord.setRawY(xml.attributes().value("y").toString().toLongLong());
+		coord.setFlags(xml.attributes().value("flags").toString().toInt());
+		xml.skipCurrentElement();
+		return coord;
 	}
 
 private:

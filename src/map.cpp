@@ -20,14 +20,16 @@
 
 #include "map.h"
 
-#include <assert.h>
+#include <cassert>
 #include <algorithm>
 
-#include <QMessageBox>
-#include <QFile>
-#include <QPainter>
 #include <QDebug>
+#include <QFile>
 #include <qmath.h>
+#include <QMessageBox>
+#include <QPainter>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 #include "map_color.h"
 #include "map_editor.h"
@@ -70,6 +72,7 @@ void MapLayer::save(QIODevice* file, Map* map)
 		objects[i]->save(file);
 	}
 }
+
 bool MapLayer::load(QIODevice* file, int version, Map* map)
 {
 	loadString(file, name);
@@ -88,6 +91,47 @@ bool MapLayer::load(QIODevice* file, int version, Map* map)
 		objects[i]->load(file, version, map);
 	}
 	return true;
+}
+
+void MapLayer::save(QXmlStreamWriter& xml, const Map& map) const
+{
+	xml.writeStartElement("layer");
+	xml.writeAttribute("name", name);
+	
+	xml.writeStartElement("objects");
+	int size = (int)objects.size();
+	xml.writeAttribute("number", QString::number(size));
+	for (int i = 0; i < size; ++i)
+	{
+		objects[i]->save(xml);
+	}
+}
+
+MapLayer* MapLayer::load(QXmlStreamReader& xml, Map& map)
+{
+	Q_ASSERT(xml.name() == "layer");
+	
+	MapLayer* layer = new MapLayer(xml.attributes().value("name").toString(), &map);
+	
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == "objects")
+		{
+			int num_objects = xml.attributes().value("number").toString().toInt();
+			layer->objects.reserve(num_objects % 100000); // 100000 is not a limit
+			while (xml.readNextStartElement())
+			{
+				if (xml.name() == "object")
+					layer->objects.push_back(Object::load(xml,map));
+				else
+					xml.skipCurrentElement(); // unknown
+			}
+		}
+		else
+			xml.skipCurrentElement(); // unknown
+	}
+	
+	return layer;
 }
 
 int MapLayer::findObjectIndex(Object* object)
@@ -1273,7 +1317,7 @@ void Map::deleteColor(int pos)
 	
 	delete color;
 }
-int Map::findColorIndex(MapColor* color)
+int Map::findColorIndex(MapColor* color) const
 {
 	int size = (int)color_set->colors.size();
 	for (int i = 0; i < size; ++i)
@@ -1574,10 +1618,11 @@ void Map::deleteSymbol(int pos)
 	emit(symbolDeleted(pos, temp));
 	setSymbolsDirty();
 }
-int Map::findSymbolIndex(Symbol* symbol)
+
+int Map::findSymbolIndex(const Symbol* symbol) const
 {
-    if (!symbol)
-        return -1;
+	if (!symbol)
+		return -1;
 	int size = (int)symbols.size();
 	for (int i = 0; i < size; ++i)
 	{
@@ -1593,6 +1638,7 @@ int Map::findSymbolIndex(Symbol* symbol)
 	assert(false);
 	return -1;
 }
+
 void Map::setSymbolsDirty()
 {
 	setHasUnsavedChanges();
