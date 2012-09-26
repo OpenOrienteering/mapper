@@ -29,6 +29,8 @@
 #include "georeferencing.h"
 #include "map_grid.h"
 
+// ### TestFileFormats ###
+
 void TestFileFormats::saveAndLoad_data()
 {
 	// Add all file formats which support import and export
@@ -330,6 +332,58 @@ bool TestFileFormats::compareMaps(Map* a, Map* b, QString& error)
 	return true;
 }
 
+// ### TestDuplicateEqual ###
+
+void TestDuplicateEqual::symbols_data()
+{
+	const char* map_filename = "test data/COPY_OF_test_map.omap";
+	QTest::addColumn<QString>("map_filename");
+	QTest::newRow(map_filename) << map_filename;
+}
+void TestDuplicateEqual::symbols()
+{
+	QFETCH(QString, map_filename);
+	Map* map = new Map();
+	map->loadFrom(map_filename);
+	
+	for (int symbol = 0; symbol < map->getNumSymbols(); ++symbol)
+	{
+		Symbol* original = map->getSymbol(symbol);
+		Symbol* duplicate = original->duplicate();
+		QVERIFY(original->equals(duplicate));
+		delete duplicate;
+	}
+	
+	delete map;
+}
+
+void TestDuplicateEqual::objects_data()
+{
+	const char* map_filename = "test data/COPY_OF_test_map.omap";
+	QTest::addColumn<QString>("map_filename");
+	QTest::newRow(map_filename) << map_filename;
+}
+void TestDuplicateEqual::objects()
+{
+	QFETCH(QString, map_filename);
+	Map* map = new Map();
+	map->loadFrom(map_filename);
+	
+	for (int layer_number = 0; layer_number < map->getNumLayers(); ++layer_number)
+	{
+		MapLayer* layer = map->getLayer(layer_number);
+		for (int object = 0; object < layer->getNumObjects(); ++object)
+		{
+			Object* original = layer->getObject(object);
+			Object* duplicate = original->duplicate();
+			QVERIFY(original->equals(duplicate, true));
+			delete duplicate;
+		}
+	}
+	
+	delete map;
+}
+
 
 int main(int argc, char** argv)
 {
@@ -339,6 +393,9 @@ int main(int argc, char** argv)
 	
 	TestFileFormats test1;
 	QTest::qExec(&test1, argc, argv);
+	
+	TestDuplicateEqual test2;
+	QTest::qExec(&test2, argc, argv);
 	
 	return 0;
 }

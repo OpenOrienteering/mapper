@@ -26,6 +26,7 @@
 class Map;
 class Format;
 
+/// Ensures that maps contain the same information before and after saving them and loading them again.
 class TestFileFormats : public QObject
 {
 Q_OBJECT
@@ -36,6 +37,18 @@ private slots:
 private:
 	Map* saveAndLoadMap(Map* input, const Format* format);
 	bool compareMaps(Map* a, Map* b, QString& error);
+};
+
+/// Ensures that duplicates of symbols and objects are equal to their originals.
+class TestDuplicateEqual : public QObject
+{
+Q_OBJECT
+private slots:
+	void symbols_data();
+	void symbols();
+	
+	void objects_data();
+	void objects();
 };
 
 
