@@ -24,7 +24,41 @@
 #include <QtTest/QtTest>
 
 class Map;
+class MainWindow;
+class MapWidget;
+class MapEditorController;
 class Format;
+class LineSymbol;
+class PathObject;
+
+/// Creates a test map and provides pointers to specific map elements.
+/// NOTE: delete the map manually in case its ownership is not transferred to a MapEditorController or similar!
+struct TestMap
+{
+	Map* map;
+	
+	LineSymbol* line_symbol;
+	PathObject* line_object;
+	
+	TestMap();
+	~TestMap();
+};
+
+/// Creates a test map editor and provides related pointers.
+struct TestMapEditor
+{
+	MainWindow* window;
+	MapEditorController* editor;
+	MapWidget* map_widget;
+	
+	TestMapEditor(Map* map);
+	~TestMapEditor();
+	
+	void simulateClick(QPoint pos);
+	void simulateClick(QPointF pos);
+	void simulateDrag(QPoint start_pos, QPoint end_pos);
+	void simulateDrag(QPointF start_pos, QPointF end_pos);
+};
 
 /// Ensures that maps contain the same information before and after saving them and loading them again.
 class TestFileFormats : public QObject
@@ -49,6 +83,14 @@ private slots:
 	
 	void objects_data();
 	void objects();
+};
+
+/// Tests the editing tools
+class TestTools : public QObject
+{
+Q_OBJECT
+private slots:
+	void editTool();
 };
 
 

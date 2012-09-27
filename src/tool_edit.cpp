@@ -277,18 +277,18 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 		if (text_editor && hover_point == -2)
 			return text_editor->mouseMoveEvent(event, map_coord, widget);
 		
-		if (!dragging && (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance())
+		if (!dragging && ((hover_point >= -1) || (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance()))
 		{
 			// Start dragging
 			if (hover_point >= -1)
 			{
 				// Treat this position as click position
-				click_pos = event->pos();
+				/*click_pos = event->pos();
 				click_pos_map = map_coord;
 				cur_pos = click_pos;
 				cur_pos_map = click_pos_map;
 				constrained_pos = cur_pos;
-				constrained_pos_map = cur_pos_map;
+				constrained_pos_map = cur_pos_map;*/
 				
 				startEditing();
 				updateAngleHelper(map_coord);
