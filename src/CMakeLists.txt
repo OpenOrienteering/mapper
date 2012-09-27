@@ -181,6 +181,7 @@ target_link_libraries(Mapper_Common
  ${Mapper_LIBRARIES}
  ${QT_LIBRARIES}
  ${PROJ_LIBRARY}
+ ${Mapper_RESOURCES_RCC}
 )
 add_dependencies(Mapper_Common
   Mapper_prerequisites
@@ -201,7 +202,6 @@ add_executable(Mapper
 	WIN32
 	MACOSX_BUNDLE
 	${Mapper_SRCS}
-	${Mapper_RESOURCES_RCC}
 )
 target_link_libraries(Mapper
  Mapper_Common

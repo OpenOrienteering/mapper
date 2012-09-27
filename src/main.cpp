@@ -43,6 +43,9 @@ int main(int argc, char** argv)
 		return 0;
 	}
 	
+	// Load resources
+	Q_INIT_RESOURCE(resources);
+	
 	// Set settings defaults
 	QCoreApplication::setOrganizationName("Thomas Schoeps");
 	QCoreApplication::setApplicationName("OpenOrienteering");
