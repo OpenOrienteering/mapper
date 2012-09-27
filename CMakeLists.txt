@@ -57,13 +57,7 @@ option(Mapper_BUILD_PROJ "Build the Proj library from source")
 
 option(Mapper_BUILD_QT   "Build the Qt library from source")
 
-# FIXME: Packaging for MacOSX needs review on a MacOSX machine
-if(NOT APPLE)
-	set(Mapper_BUILD_PACKAGE_DEFAULT ON)
-else()
-	set(Mapper_BUILD_PACKAGE_DEFAULT OFF)
-endif()
-set(Mapper_BUILD_PACKAGE ${Mapper_BUILD_PACKAGE_DEFAULT} CACHE BOOL
+set(Mapper_BUILD_PACKAGE ON CACHE BOOL
   "Create a 'package' target")
 
 # Installation configuration
@@ -72,12 +66,16 @@ if(WIN32)
 	set(MAPPER_RUNTIME_DESTINATION .)
 	set(MAPPER_DATA_DESTINATION .)
 	set(MAPPER_ABOUT_DESTINATION "doc")
-else(WIN32)
+elseif(APPLE)
+	set(MAPPER_RUNTIME_DESTINATION .)
+	set(MAPPER_DATA_DESTINATION "Mapper.app/Contents/Resources")
+	set(MAPPER_ABOUT_DESTINATION "Mapper.app/Contents/Resources")
+else()
 	set(CPACK_DEBIAN_PACKAGE_NAME "openorienteering-mapper")
 	set(MAPPER_RUNTIME_DESTINATION bin)
 	set(MAPPER_DATA_DESTINATION "share/${CPACK_DEBIAN_PACKAGE_NAME}")
 	set(MAPPER_ABOUT_DESTINATION "share/doc/${CPACK_DEBIAN_PACKAGE_NAME}")
-endif(WIN32)
+endif()
 
 # Build definitons
 

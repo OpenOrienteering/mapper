@@ -54,6 +54,8 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	  "/3rd-party/qt4/download/"
 	  ${CPACK_SOURCE_IGNORE_FILES})
 	
+	set(MAPPER_MACOS_SUBDIR "")
+
 	if(WIN32)
 		# Packaging as ZIP archive
 		set(CPACK_GENERATOR "ZIP")
@@ -88,9 +90,20 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 			string(REPLACE ";" " " _nsis_extra_uninst "${_nsis_extra_uninst}")
 			set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS ${_nsis_extra_uninst})
 		endif(MAKENSIS_EXECUTABLE)
-	endif(WIN32)
-	
-	if(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
+
+	elseif(APPLE)
+		set(CPACK_GENERATOR "DragNDrop")
+		set(CPACK_PACKAGE_EXECUTABLES "Mapper" "OpenOrienteering Mapper ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+		set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/packaging/macosx/Mapper.icns")
+		set(MAPPER_MACOS_SUBDIR "/Mapper.app/Contents/MacOS")
+
+#		configure_file("${CMAKE_CURRENT_SOURCE_DIR}/packaging/macosx/Info.plist.in" "${CMAKE_CURRENT_BINARY_DIR}/Info.plist")
+#		set(CPACK_BUNDLE_NAME "Mapper")
+#		set(CPACK_BUNDLE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/packaging/macosx/Mapper.icns")
+#		set(CPACK_BUNDLE_PLIST "${CMAKE_CURRENT_BINARY_DIR}/Info.plist")
+#		set(CPACK_BUNDLE_STARTUP_COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/packaging/macosx/Mapper.sh")
+
+	elseif(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
 		# Packaging on Debian or similar
 		set(CPACK_GENERATOR "DEB")
 		execute_process(
@@ -139,19 +152,19 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		  COMMAND /usr/bin/fakeroot dpkg-deb -b "${CPACK_PACKAGE_FILE_NAME}"
 		  COMMAND rm -R "${CPACK_PACKAGE_FILE_NAME}")
 	
-	endif(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
-	
+	endif()
+
 	include(CPack)
 	
 endif(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 
-if(WIN32)
-	message("-- Checking extra files needed for Windows packaging")
+if(WIN32 OR APPLE)
+	message("-- Checking extra files needed for standalone packaging")
 
 	set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP TRUE)
 	include(InstallRequiredSystemLibraries)
 
-	find_program(QT_QTASSISTANT_EXECUTABLE assistant.exe
+	find_program(QT_QTASSISTANT_EXECUTABLE assistant assistant.exe
 	  DOC "The path of the Qt Assistant executable. Qt Assistant will not be bundled if this path is empty."
 	  HINTS ${QT_BINARY_DIR}
 	  NO_CMAKE_FIND_ROOT_PATH
@@ -160,10 +173,12 @@ if(WIN32)
 		message("   Qt Assistant - found")
 		install(
 		  PROGRAMS ${QT_QTASSISTANT_EXECUTABLE}
-		  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
+		  DESTINATION "${MAPPER_RUNTIME_DESTINATION}${MAPPER_MACOS_SUBDIR}")
+		if (NOT APPLE)
 		install(
 		  FILES "3rd-party/qt4/qt.conf"
 		  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
+		endif()
 	else()
 		message("   Qt Assistant - not found")
 	endif()
@@ -174,7 +189,9 @@ if(WIN32)
 		  DIRECTORY "${PROJ_BINARY_DIR}/../share/proj"
 		  DESTINATION "${MAPPER_DATA_DESTINATION}")
 	endif(PROJ_BINARY_DIR)
+endif(WIN32 OR APPLE)
 
+if(WIN32)
 	set(MAPPER_LIBS proj-0 QtCore4 QtGui4 QtNetwork4 QtXml4 CACHE INTERNAL
 	  "The libraries which need to be deployed to the package")
 	if(QT_QTASSISTANT_EXECUTABLE)
@@ -276,7 +293,7 @@ endif(QT_QTASSISTANT_EXECUTABLE)
 	  FILES ${MAPPER_QT_TRANSLATIONS} 
 	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}/translations")
 
-	message("-- Checking system files needed for Windows packaging - done")
+	message("-- Checking system files needed for standalone packaging - done")
 endif(WIN32)
 
 if(UNIX AND NOT APPLE AND NOT CYGWIN)
