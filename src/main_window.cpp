@@ -757,10 +757,14 @@ void MainWindow::showHelp(QString filename, QString fragment)
 			 << makeHelpUrl(filename, fragment)
 			 << QLatin1String("-enableRemoteControl");
 		
+#ifdef Q_WS_MAC
+		process->start(app_dir.absoluteFilePath("assistant"), args);
+#else
 		process->start(QLatin1String("assistant"), args);
+#endif
 		if (!process->waitForStarted())
 		{
-			QMessageBox::warning(this, tr("Error"), tr("Failed to find the help browser (\"Qt Assistant\"). For Windows, it is available as a separate download. After extracting this archive, copy its contents into the directory containing the Mapper executable, so the Mapper and assistant executables are in the same directory, and try again."));
+			QMessageBox::warning(this, tr("Error"), tr("Failed to launch the help browser (\"Qt Assistant\"):\n\n%1").arg(QString(process->readAllStandardError())));
 			return;
 		}
 	}
