@@ -53,15 +53,16 @@ set(Mapper_TRANS_DIR
 
 if(Mapper_TRANSLATIONS_EMBEDDED)
 	set(Mapper_TRANS_QRC "${CMAKE_CURRENT_BINARY_DIR}/translations.qrc")
-	file(WRITE "${Mapper_TRANS_QRC}"
+	file(WRITE "${Mapper_TRANS_QRC}.in"
 	  "<!DOCTYPE RCC><RCC version=\"1.0\">\n <qresource>\n")
 	foreach(_qm_file ${Mapper_QM})
 		get_filename_component(_qm_filename "${_qm_file}" NAME)
-		file(APPEND "${Mapper_TRANS_QRC}"
+		file(APPEND "${Mapper_TRANS_QRC}.in"
 		  "  <file alias=\"translations/${_qm_filename}\">${_qm_file}</file>\n")
 	endforeach(_qm_file)
-	file(APPEND "${Mapper_TRANS_QRC}"
+	file(APPEND "${Mapper_TRANS_QRC}.in"
 	  " </qresource>\n</RCC>\n")
+	execute_process(COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${Mapper_TRANS_QRC}.in" "${Mapper_TRANS_QRC}")
 	qt4_add_resources(Mapper_TRANSLATIONS_RCC "${Mapper_TRANS_QRC}" OPTIONS -no-compress)
 
 	# A library is a top-level target, the generated source file isn't.
