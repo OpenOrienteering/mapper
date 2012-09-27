@@ -269,6 +269,13 @@ void NewMapDialog::loadSymbolSetMap()
 	if (symbol_set_dir.exists())
 		loadSymbolSetDir(symbol_set_dir);
 #endif
+
+#ifdef Q_WS_MAC
+	// symbol sets from Mapper.app/Contents/Resources/symbol sets
+	symbol_set_dir = QDir(app_dir % "/../Resources/symbol sets");
+	if (symbol_set_dir.exists())
+		loadSymbolSetDir(symbol_set_dir);
+#endif
 }
 
 void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)

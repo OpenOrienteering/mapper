@@ -734,6 +734,9 @@ void MainWindow::showHelp(QString filename, QString fragment)
 #ifdef MAPPER_DEBIAN_PACKAGE_NAME
 			<< QDir(QString("/usr/share/") % MAPPER_DEBIAN_PACKAGE_NAME % "/help")
 #endif
+#ifdef Q_WS_MAC
+			<< QDir(app_dir.absoluteFilePath("../Resources/help"))
+#endif
 			<< QDir(":/help");
 		
 		QDir help_dir;
