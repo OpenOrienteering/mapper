@@ -41,8 +41,6 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/COPYING")
 	set(CPACK_STRIP_FILES "TRUE")
 	
-	set(CPACK_SOURCE_GENERATOR "OFF"
-	  CACHE STRING "The source package generators (TGZ;ZIP)")
 	set(CPACK_SOURCE_PACKAGE_FILE_NAME
 	  "openorienteering-mapper_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}-src")
 	set(CPACK_SOURCE_IGNORE_FILES 
@@ -58,14 +56,14 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 
 	if(WIN32)
 		# Packaging as ZIP archive
-		set(CPACK_GENERATOR "ZIP")
+		set(CPACK_GENERATOR_DEFAULT "ZIP")
 		#set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 0)
 		set(CPACK_PACKAGE_INSTALL_DIRECTORY "OpenOrienteering Mapper ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 		set(CPACK_PACKAGE_EXECUTABLES "Mapper" "OpenOrienteering Mapper ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 
 		find_program(MAKENSIS_EXECUTABLE "makensis")
 		if(MAKENSIS_EXECUTABLE)
-			list(APPEND CPACK_GENERATOR "NSIS")
+			list(APPEND CPACK_GENERATOR_DEFAULT "NSIS")
 			# The title displayed at the top of the installer
 			set(CPACK_NSIS_PACKAGE_NAME "OpenOrienteering")
 			# The display name string that appears in the Windows Add/Remove Program control panel
@@ -92,20 +90,14 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		endif(MAKENSIS_EXECUTABLE)
 
 	elseif(APPLE)
-		set(CPACK_GENERATOR "DragNDrop")
+		set(CPACK_GENERATOR_DEFAULT "DragNDrop")
 		set(CPACK_PACKAGE_EXECUTABLES "Mapper" "OpenOrienteering Mapper ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 		set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/packaging/macosx/Mapper.icns")
 		set(MAPPER_MACOS_SUBDIR "/Mapper.app/Contents/MacOS")
 
-#		configure_file("${CMAKE_CURRENT_SOURCE_DIR}/packaging/macosx/Info.plist.in" "${CMAKE_CURRENT_BINARY_DIR}/Info.plist")
-#		set(CPACK_BUNDLE_NAME "Mapper")
-#		set(CPACK_BUNDLE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/packaging/macosx/Mapper.icns")
-#		set(CPACK_BUNDLE_PLIST "${CMAKE_CURRENT_BINARY_DIR}/Info.plist")
-#		set(CPACK_BUNDLE_STARTUP_COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/packaging/macosx/Mapper.sh")
-
 	elseif(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
 		# Packaging on Debian or similar
-		set(CPACK_GENERATOR "DEB")
+		set(CPACK_GENERATOR_DEFAULT "DEB")
 		execute_process(
 		  COMMAND /usr/bin/lsb_release -sc 
 		  OUTPUT_VARIABLE CPACK_LSB_RELEASE 
@@ -154,6 +146,11 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	
 	endif()
 
+	set(CPACK_GENERATOR "${CPACK_GENERATOR_DEFAULT}"
+	  CACHE STRING "The binary package generators (ZIP;DEB;DragNDrop;NSIS)")
+	set(CPACK_SOURCE_GENERATOR "OFF"
+	  CACHE STRING "The source package generators (TGZ;ZIP)")
+	mark_as_advanced(CPACK_GENERATOR CPACK_SOURCE_GENERATOR)
 	include(CPack)
 	
 endif(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
