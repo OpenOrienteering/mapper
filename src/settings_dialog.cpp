@@ -125,6 +125,9 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	QCheckBox* zoom_out_away_from_cursor = new QCheckBox(tr("Zoom away from cursor when zooming out"));
 	layout->addWidget(zoom_out_away_from_cursor, row++, 0, 1, 2);
 	
+	QCheckBox* draw_last_point_on_right_click = new QCheckBox(tr("Drawing tools: set last point on finishing with right click"));
+	layout->addWidget(draw_last_point_on_right_click, row++, 0, 1, 2);
+	
 	layout->setRowMinimumHeight(row++, 16);
 	layout->addWidget(new QLabel("<b>" % tr("Edit tool:") % "</b>"), row++, 0, 1, 2);
 	
@@ -160,6 +163,7 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	fixed_angle_stepping->setValue(Settings::getInstance().getSetting(Settings::MapEditor_FixedAngleStepping).toInt());
 	select_symbol_of_objects->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool());
 	zoom_out_away_from_cursor->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_ZoomOutAwayFromCursor).toBool());
+	draw_last_point_on_right_click->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_DrawLastPointOnRightClick).toBool());
 	
 	edit_tool_delete_bezier_point_action->setCurrentIndex(edit_tool_delete_bezier_point_action->findData(Settings::getInstance().getSetting(Settings::EditTool_DeleteBezierPointAction).toInt()));
 	edit_tool_delete_bezier_point_action_alternative->setCurrentIndex(edit_tool_delete_bezier_point_action_alternative->findData(Settings::getInstance().getSetting(Settings::EditTool_DeleteBezierPointActionAlternative).toInt()));
@@ -175,6 +179,7 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	connect(fixed_angle_stepping, SIGNAL(valueChanged(int)), this, SLOT(fixedAngleSteppingChanged(int)));
 	connect(select_symbol_of_objects, SIGNAL(clicked(bool)), this, SLOT(selectSymbolOfObjectsClicked(bool)));
 	connect(zoom_out_away_from_cursor, SIGNAL(clicked(bool)), this, SLOT(zoomOutAwayFromCursorClicked(bool)));
+	connect(draw_last_point_on_right_click, SIGNAL(clicked(bool)), this, SLOT(drawLastPointOnRightClickClicked(bool)));
 	
 	connect(edit_tool_delete_bezier_point_action, SIGNAL(currentIndexChanged(int)), this, SLOT(editToolDeleteBezierPointActionChanged(int)));
 	connect(edit_tool_delete_bezier_point_action_alternative, SIGNAL(currentIndexChanged(int)), this, SLOT(editToolDeleteBezierPointActionAlternativeChanged(int)));
@@ -211,6 +216,11 @@ void EditorPage::selectSymbolOfObjectsClicked(bool checked)
 void EditorPage::zoomOutAwayFromCursorClicked(bool checked)
 {
 	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_ZoomOutAwayFromCursor), QVariant(checked));
+}
+
+void EditorPage::drawLastPointOnRightClickClicked(bool checked)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_DrawLastPointOnRightClick), QVariant(checked));
 }
 
 void EditorPage::editToolDeleteBezierPointActionChanged(int index)

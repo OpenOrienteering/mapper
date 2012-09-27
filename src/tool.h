@@ -114,6 +114,10 @@ protected:
 	
 	int findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QPointF* box_text_handles, QRectF* selection_extent, MapWidget* widget);
 	inline float distanceSquared(const QPointF& a, const QPointF& b) {float dx = b.x() - a.x(); float dy = b.y() - a.y(); return dx*dx + dy*dy;}
+	/// Checks if a mouse button for drawing is currently held, according to the given event
+	bool drawMouseButtonHeld(QMouseEvent* event);
+	/// Checks if a mouse button for drawing is clicked, according to the given event
+	bool drawMouseButtonClicked(QMouseEvent* event);
 	
 	QAction* tool_button;
 	Type type;

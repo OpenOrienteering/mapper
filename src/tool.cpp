@@ -341,6 +341,28 @@ int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_c
 	return -1;
 }
 
+bool MapEditorTool::drawMouseButtonHeld(QMouseEvent* event)
+{
+	if ((event->buttons() & Qt::LeftButton) ||
+		(Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool() == true &&
+		 event->buttons() & Qt::RightButton))
+	{
+		return true;
+	}
+	return false;
+}
+
+bool MapEditorTool::drawMouseButtonClicked(QMouseEvent* event)
+{
+	if ((event->button() == Qt::LeftButton) ||
+		(Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool() == true &&
+		 event->button() == Qt::RightButton))
+	{
+		return true;
+	}
+	return false;
+}
+
 // ### MapEditorToolBase ###
 
 MapEditorToolBase::MapEditorToolBase(const QCursor cursor, MapEditorTool::Type type, MapEditorController* editor, QAction* tool_button)

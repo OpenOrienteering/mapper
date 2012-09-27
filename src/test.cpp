@@ -500,7 +500,7 @@ void TestTools::editTool()
 	QVERIFY(qAbs(difference.x()) == 0);
 	QVERIFY(qAbs(difference.y()) < 0.1);
 	
-	// CLeanup
+	// Cleanup
 	editor.editor->setTool(NULL);
 }
 

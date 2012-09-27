@@ -41,6 +41,7 @@ public:
 		MapEditor_FixedAngleStepping,
 		MapEditor_ChangeSymbolWhenSelecting,
 		MapEditor_ZoomOutAwayFromCursor,
+		MapEditor_DrawLastPointOnRightClick,
 		EditTool_DeleteBezierPointAction,
 		EditTool_DeleteBezierPointActionAlternative,
 		RectangleTool_HelperCrossRadius,

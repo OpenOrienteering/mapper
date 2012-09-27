@@ -50,10 +50,8 @@ void DrawCircleTool::init()
 
 bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (event->buttons() & (Qt::LeftButton | Qt::RightButton))
+	if ((event->button() == Qt::LeftButton) || (draw_in_progress && drawMouseButtonClicked(event)))
 	{
-		hidePreviewPoints();
-		
 		cur_pos = event->pos();
 		cur_pos_map = map_coord;
 		
@@ -77,13 +75,20 @@ bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 		}
 		else
 			return false;
+		
+		hidePreviewPoints();
+		return true;
+	}
+	else if (event->button() == Qt::RightButton)
+	{
+		abortDrawing();
 		return true;
 	}
 	return false;
 }
 bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	bool mouse_down = event->buttons() & Qt::LeftButton;
+	bool mouse_down = drawMouseButtonHeld(event);
 	
 	if (!mouse_down)
 	{
@@ -128,8 +133,12 @@ bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, Map
 }
 bool DrawCircleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (event->button() != Qt::LeftButton)
+	if (!drawMouseButtonClicked(event))
+	{
+		if (event->button() == Qt::RightButton)
+			abortDrawing();
 		return false;
+	}
 	if (!draw_in_progress)
 		return false;
 	

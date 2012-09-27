@@ -53,6 +53,7 @@ protected slots:
 	void updateDirtyRect();
 	
 protected:
+	void finishRectangleDrawing();
 	virtual void finishDrawing();
 	virtual void abortDrawing();
 	void undoLastPoint();
