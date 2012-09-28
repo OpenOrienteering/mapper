@@ -22,9 +22,10 @@
 
 #include <QtGui>
 
+#include <mapper_config.h> // TODO: Replace APP_NAME by runtime function to remove this dependency
+
 #include "util.h"
 #include "map.h"
-#include "global.h"
 #include "main_window.h"
 #include "map_widget.h"
 

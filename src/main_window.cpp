@@ -26,8 +26,9 @@
 
 #include <proj_api.h>
 
+#include <mapper_config.h> // TODO: Replace APP_NAME by runtime function to remove this dependency
+
 #include "main_window_home_screen.h"
-#include "global.h"
 #include "map.h"
 #include "map_dialog_new.h"
 #include "map_editor.h"

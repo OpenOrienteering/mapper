@@ -18,7 +18,13 @@
 
 include(../3rd-party/clipper.cmake)
 
-configure_file(global.h.in ${CMAKE_CURRENT_SOURCE_DIR}/global.h)
+configure_file(mapper_config.h.in "${CMAKE_CURRENT_BINARY_DIR}/mapper_config.h.tmp")
+add_custom_command(
+  OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/mapper_config.h"
+  COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_CURRENT_BINARY_DIR}/mapper_config.h.tmp" "${CMAKE_CURRENT_BINARY_DIR}/mapper_config.h"
+  DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/mapper_config.h.in"
+  )
+include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 set(Mapper_SRCS
  ../3rd-party/clipper/cpp/clipper.cpp
@@ -162,6 +168,7 @@ qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 add_executable(Mapper
 	WIN32
 	MACOSX_BUNDLE
+	${CMAKE_CURRENT_BINARY_DIR}/mapper_config.h
 	${Mapper_SRCS}
 	${Mapper_MOC}
 	${Mapper_RESOURCES_RCC}

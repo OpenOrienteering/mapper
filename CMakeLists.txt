@@ -35,30 +35,34 @@ if(NOT CMAKE_BUILD_TYPE)
 	  FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
-if(NOT Mapper_XML_FORMAT)
-	set(Mapper_XML_FORMAT OFF CACHE BOOL
-	  "Enable the unmaintained export-only XML format, options are: OFF, ON."
-	  FORCE)
-endif(NOT Mapper_XML_FORMAT)
+option(Mapper_XML_FORMAT "Enable the unmaintained export-only XML format, options are: OFF, ON.")
 
-if(NOT Mapper_TRANSLATIONS_EMBEDDED)
-	if(APPLE)
-		# For MacOS, the translations will go into the "bundle" by default
-		set(Mapper_TRANSLATIONS_EMBEDDED_DEFAULT ON)
-	else(APPLE)
-		set(Mapper_TRANSLATIONS_EMBEDDED_DEFAULT OFF)
-	endif(APPLE)
-	set(Mapper_TRANSLATIONS_EMBEDDED ${Mapper_TRANSLATIONS_EMBEDDED_DEFAULT} CACHE BOOL
-	  "Embed all translations in the program executable, options are: OFF, ON."
-	  FORCE)
-endif(NOT Mapper_TRANSLATIONS_EMBEDDED)
+if(APPLE)
+	set(Mapper_TRANSLATIONS_EMBEDDED_DEFAULT ON)
+else(APPLE)
+	set(Mapper_TRANSLATIONS_EMBEDDED_DEFAULT OFF)
+endif(APPLE)
+
+option(Mapper_TRANSLATIONS_EMBEDDED 
+  "Embed all translations in the program executable" 
+  ${Mapper_TRANSLATIONS_EMBEDDED_DEFAULT})
 
 option(Mapper_BUILD_PROJ "Build the Proj library from source")
 
 option(Mapper_BUILD_QT   "Build the Qt library from source")
 
-set(Mapper_BUILD_PACKAGE ON CACHE BOOL
-  "Create a 'package' target")
+option(Mapper_BUILD_PACKAGE "Create a target for building packages" ON)
+
+if(WIN32 OR APPLE)
+	set(Mapper_PACKAGE_ALL_DEFAULT ON)
+else()
+	set(Mapper_PACKAGE_ALL_DEFAULT OFF)
+endif()
+option(Mapper_PACKAGE_ASSISTANT "Shall the Qt Assistant be included in the package" ${Mapper_PACKAGE_ALL_DEFAULT})
+option(Mapper_PACKAGE_LIBRARIES "Shall all libraries be included in the package" ${Mapper_PACKAGE_ALL_DEFAULT})
+option(Mapper_PACKAGE_TRANSLATIONS "Shall the Qt translations be included in the package" ${Mapper_PACKAGE_LIBRARIES})
+mark_as_advanced(Mapper_BUILD_PACKAGE Mapper_PACKAGE_ASSISTANT Mapper_PACKAGE_LIBRARIES Mapper_PACKAGE_TRANSLATIONS)
+
 
 # Installation configuration
 
@@ -95,7 +99,7 @@ if(Mapper_BUILD_PROJ)
 	add_dependencies(Mapper_prerequisites Proj)
 	if(NOT PROJ_FOUND)
 		set(Mapper_prerequisites_FOUND FALSE)
-		message("Proj library will be built from source")
+		message(STATUS "Proj library will be built from source")
 	endif()
 else()
 	find_package(Proj REQUIRED)
@@ -109,7 +113,7 @@ if(Mapper_BUILD_QT)
 	endif()
 	if(NOT QT4_FOUND)
 		set(Mapper_prerequisites_FOUND FALSE)
-		message("Qt4 library will be built from source")
+		message(STATUS "Qt4 library will be built from source")
 	endif()
 else()
 	find_package(Qt4 4.6 REQUIRED QtCore QtGui QtNetwork QtXml)
@@ -122,7 +126,7 @@ Quirks_Qt4_definitions()
 Quirks_Qt4_lib_dependencies()
 
 if(CMAKE_CROSSCOMPILING)
-	message("-- Crosscompiling, host: ${CMAKE_HOST_SYSTEM_NAME}, target: ${CMAKE_SYSTEM_NAME}")
+	message(STATUS "Crosscompiling, host: ${CMAKE_HOST_SYSTEM_NAME}, target: ${CMAKE_SYSTEM_NAME}")
 
 	# use host system Qt4 tools when cross-compiling
 	find_program(QT_LUPDATE_EXECUTABLE lupdate)
@@ -155,14 +159,13 @@ add_subdirectory("qtsingleapplication")
 add_subdirectory("libocad")
 add_subdirectory("resources")
 add_subdirectory("src")
+if(Mapper_BUILD_PACKAGE)
+	add_subdirectory("packaging")
+endif()
 
 install(FILES COPYING 
   DESTINATION "${MAPPER_ABOUT_DESTINATION}"
 )
-
-if(Mapper_BUILD_PACKAGE)
-	include(CPackaging.cmake)
-endif()
 
 else(Mapper_prerequisites_FOUND)
 
@@ -172,3 +175,4 @@ add_custom_target(Mapper_superbuild ALL "${CMAKE_COMMAND}" .
 add_dependencies(Mapper_superbuild Mapper_prerequisites)
 
 endif(Mapper_prerequisites_FOUND)
+
