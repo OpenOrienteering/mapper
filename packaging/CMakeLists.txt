@@ -42,7 +42,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	set(CPACK_SOURCE_PACKAGE_FILE_NAME
 	  "openorienteering-mapper_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}-src")
 	set(CPACK_SOURCE_IGNORE_FILES 
-	  "${CMAKE_CURRENT_BINARY_DIR}"
+	  "${PROJECT_BINARY_DIR}"
 	  "/docs/"
 	  "/[.]git/"
 	  "/3rd-party/clipper/"
@@ -351,3 +351,16 @@ if(UNIX AND NOT APPLE AND NOT CYGWIN)
 	  DESTINATION "share/pixmaps")
 endif(UNIX AND NOT APPLE AND NOT CYGWIN)
 
+
+# Custom source package target Mapper_Source
+
+set(Mapper_Source_FORMAT tgz CACHE STRING
+  "The archive format for source packages (see `git archive -l` for valid options)")
+
+find_program(GIT_EXECUTABLE git)
+if(GIT_EXECUTABLE)
+	configure_file(Mapper_Source.cmake.in Mapper_Source.cmake @ONLY)
+	add_custom_target(Mapper_Source
+	  COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/Mapper_Source.cmake"
+	)
+endif()
