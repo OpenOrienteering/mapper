@@ -37,23 +37,9 @@ if(NOT CMAKE_BUILD_TYPE)
 	  FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
-if(NOT Mapper_XML_FORMAT)
-	set(Mapper_XML_FORMAT OFF CACHE BOOL
-	  "Enable the unmaintained export-only XML format, options are: OFF, ON."
-	  FORCE)
-endif(NOT Mapper_XML_FORMAT)
+option(Mapper_XML_FORMAT "Enable the OpenOrienteering Mapper XML format" ON)
 
-if(NOT Mapper_TRANSLATIONS_EMBEDDED)
-	if(APPLE)
-		# For MacOS, the translations will go into the "bundle" by default
-		set(Mapper_TRANSLATIONS_EMBEDDED_DEFAULT ON)
-	else(APPLE)
-		set(Mapper_TRANSLATIONS_EMBEDDED_DEFAULT OFF)
-	endif(APPLE)
-	set(Mapper_TRANSLATIONS_EMBEDDED ${Mapper_TRANSLATIONS_EMBEDDED_DEFAULT} CACHE BOOL
-	  "Embed all translations in the program executable, options are: OFF, ON."
-	  FORCE)
-endif(NOT Mapper_TRANSLATIONS_EMBEDDED)
+option(Mapper_TRANSLATIONS_EMBEDDED "Embed all translations in the program executable")
 
 option(Mapper_BUILD_PROJ "Build the Proj library from source")
 
