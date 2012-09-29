@@ -19,11 +19,9 @@
 include(../3rd-party/clipper.cmake)
 
 configure_file(mapper_config.h.in "${CMAKE_CURRENT_BINARY_DIR}/mapper_config.h.tmp")
-add_custom_target(Mapper_config_h
+execute_process(
   COMMAND "${CMAKE_COMMAND}" -E copy_if_different mapper_config.h.tmp mapper_config.h
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-  VERBATIM
-  DEPENDS mapper_config.h.in
 )
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
