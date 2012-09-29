@@ -683,7 +683,7 @@ void MainWindow::showAbout()
 		     "For contributions, thanks to:<br/>%2<br/>"
 		     "Additional information:").
 		  arg(QString("Peter Curtis<br/>Kai Pastor<br/>Russell Porter<br/>Thomas Sch&ouml;ps %1<br/>").arg(tr("(project leader)"))).
-		  arg("Jon Cundill<br/>Jan Dalheimer<br/>Eugeniy Fedirets<br/>Peter Hoban<br/>Henrik Johansson<br/>Tojo Masaya<br/>Christopher Schive<br/>Aivars Zogla<br/>")
+		  arg("Jon Cundill<br/>Jan Dalheimer<br/>Eugeniy Fedirets<br/>Peter Hoban<br/>Henrik Johansson<br/>Oskar Karlin<br/>Tojo Masaya<br/>Christopher Schive<br/>Aivars Zogla<br/>")
 		 );
 	QTextEdit* additional_text = new QTextEdit( 
 	  clipper_about % "<br/><br/>" %
