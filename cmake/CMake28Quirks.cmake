@@ -104,6 +104,9 @@ endmacro(QUIRKS_QT4_LIB_DEPENDENCIES)
 # For CMake<=2.8.7, cf. http://public.kitware.com/Bug/view.php?id=12480
 #
 macro(QUIRKS_CMAKE_RC_COMPILER)
+	if(NOT CMAKE_RC_COMPILER)
+		set(CMAKE_RC_COMPILER windres)
+	endif()
 	if(CMAKE_RC_COMPILER MATCHES "windres")
 		if(NOT CMAKE_RC_OUTPUT_EXTENSION MATCHES ".obj")
 			set(CMAKE_RC_OUTPUT_EXTENSION .obj CACHE INTERNAL "" FORCE)

@@ -202,6 +202,14 @@ qt4_translations_sources(
 set(Mapper_SRCS
  main.cpp
 )
+ 
+if(MINGW)
+	enable_language(RC)
+	Quirks_CMake_RC_Compiler()
+	configure_file(mingw/resources.rc.in ${CMAKE_CURRENT_BINARY_DIR}/resources.rc @ONLY)
+	configure_file(mingw/control.ico     ${CMAKE_CURRENT_BINARY_DIR}/control.ico  COPYONLY)
+	list(APPEND Mapper_SRCS ${CMAKE_CURRENT_BINARY_DIR}/resources.rc)
+endif(MINGW)
 
 add_executable(Mapper
 	WIN32

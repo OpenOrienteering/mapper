@@ -22,9 +22,11 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
 project(Mapper)
 
+# All version components must be integers.
+# We use 99 to mark development builds.
 SET(Mapper_VERSION_MAJOR 0)
 SET(Mapper_VERSION_MINOR 3)
-SET(Mapper_VERSION_PATCH x)
+SET(Mapper_VERSION_PATCH 99)
 SET(Mapper_VERSION_DISPLAY "${CMAKE_BUILD_TYPE} ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
 
 # Build configuration options
@@ -182,7 +184,6 @@ add_subdirectory("help")
 add_subdirectory("translations")
 add_subdirectory("qtsingleapplication")
 add_subdirectory("libocad")
-add_subdirectory("resources")
 add_subdirectory("src")
 if(Mapper_BUILD_PACKAGE)
 	add_subdirectory("packaging")
