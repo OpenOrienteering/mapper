@@ -79,7 +79,7 @@ else()
 	add_custom_target(Mapper_translations ALL DEPENDS ${Mapper_QM})
 
 	install(
-	  FILES ${Mapper_TRANS}
+	  FILES ${Mapper_QM}
 	  DESTINATION "${MAPPER_DATA_DESTINATION}/translations")
 
 endif(Mapper_TRANSLATIONS_EMBEDDED)
