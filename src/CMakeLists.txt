@@ -19,11 +19,12 @@
 include(../3rd-party/clipper.cmake)
 
 configure_file(mapper_config.h.in "${CMAKE_CURRENT_BINARY_DIR}/mapper_config.h.tmp")
-add_custom_command(
-  OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/mapper_config.h"
-  COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${CMAKE_CURRENT_BINARY_DIR}/mapper_config.h.tmp" "${CMAKE_CURRENT_BINARY_DIR}/mapper_config.h"
-  DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/mapper_config.h.in"
-  )
+add_custom_target(Mapper_config_h
+  COMMAND "${CMAKE_COMMAND}" -E copy_if_different mapper_config.h.tmp mapper_config.h
+  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+  VERBATIM
+  DEPENDS mapper_config.h.in
+)
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 set(Mapper_SRCS
@@ -168,7 +169,6 @@ qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 add_executable(Mapper
 	WIN32
 	MACOSX_BUNDLE
-	${CMAKE_CURRENT_BINARY_DIR}/mapper_config.h
 	${Mapper_SRCS}
 	${Mapper_MOC}
 	${Mapper_RESOURCES_RCC}
@@ -178,8 +178,10 @@ target_link_libraries(Mapper
  ${QT_LIBRARIES}
  ${PROJ_LIBRARY}
 )
-
-add_dependencies(Mapper Mapper_prerequisites)
+add_dependencies(Mapper
+  Mapper_prerequisites
+  Mapper_config_h
+)
 
 install(TARGETS Mapper
   RUNTIME DESTINATION "${MAPPER_RUNTIME_DESTINATION}"
