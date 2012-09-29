@@ -164,6 +164,14 @@ qt4_wrap_cpp(Mapper_MOC ${Mapper_MOC_INPUT})
 set(Mapper_RESOURCES ${Mapper_RESOURCES} ${PROJECT_SOURCE_DIR}/resources.qrc)
 qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
+if(MINGW)
+	enable_language(RC)
+	Quirks_CMake_RC_Compiler()
+	configure_file(mingw/resources.rc.in ${CMAKE_CURRENT_BINARY_DIR}/resources.rc @ONLY)
+	configure_file(mingw/control.ico     ${CMAKE_CURRENT_BINARY_DIR}/control.ico  COPYONLY)
+	list(APPEND Mapper_SRCS ${CMAKE_CURRENT_BINARY_DIR}/resources.rc)
+endif(MINGW)
+
 # Mapper executable
 
 add_executable(Mapper
