@@ -422,7 +422,7 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
 <context>
     <name>DocumentSelectionWidget</name>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="136"/>
+        <location filename="../src/main_window_home_screen.cpp" line="137"/>
         <source>Clear list</source>
         <translation>Liste leeren</translation>
     </message>
@@ -622,7 +622,7 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
 <context>
     <name>Georeferencing</name>
     <message>
-        <location filename="../src/georeferencing.cpp" line="42"/>
+        <location filename="../src/georeferencing.cpp" line="44"/>
         <source>Local coordinates</source>
         <translation>Lokale Koordinaten</translation>
     </message>
@@ -861,7 +861,7 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
 <context>
     <name>GeoreferencingTool</name>
     <message>
-        <location filename="../src/georeferencing_dialog.cpp" line="573"/>
+        <location filename="../src/georeferencing_dialog.cpp" line="575"/>
         <source>&lt;b&gt;Left click&lt;/b&gt; to set the reference point, another button to cancel</source>
         <translation>&lt;b&gt;Mausklick&lt;/b&gt; zum Setzen des Referenzpunkts, andere Maustaste zum Abbrechen</translation>
     </message>
@@ -944,12 +944,12 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
 <context>
     <name>HomeScreenOtherWidget</name>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="331"/>
+        <location filename="../src/main_window_home_screen.cpp" line="332"/>
         <source>Settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="333"/>
+        <location filename="../src/main_window_home_screen.cpp" line="334"/>
         <source>About %1</source>
         <translation>Über %1</translation>
     </message>
@@ -959,7 +959,7 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <translation type="obsolete">Über dieses Progamm</translation>
     </message>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="335"/>
+        <location filename="../src/main_window_home_screen.cpp" line="336"/>
         <source>Help</source>
         <translation>Hilfe</translation>
     </message>
@@ -967,17 +967,17 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
 <context>
     <name>HomeScreenTipOfTheDayWidget</name>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="238"/>
+        <location filename="../src/main_window_home_screen.cpp" line="239"/>
         <source>Tip of the day</source>
         <translation>Tipp des Tages</translation>
     </message>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="248"/>
+        <location filename="../src/main_window_home_screen.cpp" line="249"/>
         <source>Previous</source>
         <translation>Vorheriger</translation>
     </message>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="249"/>
+        <location filename="../src/main_window_home_screen.cpp" line="250"/>
         <source>Next</source>
         <translation>Nächster</translation>
     </message>
@@ -985,23 +985,23 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
 <context>
     <name>HomeScreenWidget</name>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="62"/>
+        <location filename="../src/main_window_home_screen.cpp" line="63"/>
         <source>Maps</source>
         <translation>Karten</translation>
     </message>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="62"/>
+        <location filename="../src/main_window_home_screen.cpp" line="63"/>
         <source>Create a new map ...</source>
         <translation>Neue Karte erstellen...</translation>
     </message>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="62"/>
         <location filename="../src/main_window_home_screen.cpp" line="63"/>
+        <location filename="../src/main_window_home_screen.cpp" line="64"/>
         <source>Open map ...</source>
         <translation>Karte öffnen...</translation>
     </message>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="62"/>
+        <location filename="../src/main_window_home_screen.cpp" line="63"/>
         <source>Recent maps</source>
         <translation>Zuletzt geöffnet</translation>
     </message>
@@ -1011,7 +1011,7 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <translation type="obsolete">Karte öffnen...</translation>
     </message>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="63"/>
+        <location filename="../src/main_window_home_screen.cpp" line="64"/>
         <source>Maps (*.omap *.ocd);;All files (*.*)</source>
         <translatorcomment>FIXME: evt. obsolet</translatorcomment>
         <translation></translation>
@@ -1020,91 +1020,91 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
 <context>
     <name>LineSymbolSettings</name>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1682"/>
+        <location filename="../src/symbol_line.cpp" line="1683"/>
         <source>Line settings</source>
         <translation>Linieneigenschaften</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1443"/>
+        <location filename="../src/symbol_line.cpp" line="1444"/>
         <source>Line width:</source>
         <translation>Linienbreite:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1444"/>
-        <location filename="../src/symbol_line.cpp" line="1459"/>
-        <location filename="../src/symbol_line.cpp" line="1470"/>
-        <location filename="../src/symbol_line.cpp" line="1513"/>
-        <location filename="../src/symbol_line.cpp" line="1516"/>
-        <location filename="../src/symbol_line.cpp" line="1527"/>
-        <location filename="../src/symbol_line.cpp" line="1565"/>
-        <location filename="../src/symbol_line.cpp" line="1580"/>
-        <location filename="../src/symbol_line.cpp" line="1583"/>
-        <location filename="../src/symbol_line.cpp" line="1626"/>
-        <location filename="../src/symbol_line.cpp" line="1632"/>
-        <location filename="../src/symbol_line.cpp" line="1656"/>
-        <location filename="../src/symbol_line.cpp" line="1659"/>
+        <location filename="../src/symbol_line.cpp" line="1445"/>
+        <location filename="../src/symbol_line.cpp" line="1460"/>
+        <location filename="../src/symbol_line.cpp" line="1471"/>
+        <location filename="../src/symbol_line.cpp" line="1514"/>
+        <location filename="../src/symbol_line.cpp" line="1517"/>
+        <location filename="../src/symbol_line.cpp" line="1528"/>
+        <location filename="../src/symbol_line.cpp" line="1566"/>
+        <location filename="../src/symbol_line.cpp" line="1581"/>
+        <location filename="../src/symbol_line.cpp" line="1584"/>
+        <location filename="../src/symbol_line.cpp" line="1627"/>
+        <location filename="../src/symbol_line.cpp" line="1633"/>
+        <location filename="../src/symbol_line.cpp" line="1657"/>
+        <location filename="../src/symbol_line.cpp" line="1660"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1446"/>
+        <location filename="../src/symbol_line.cpp" line="1447"/>
         <source>Line color:</source>
         <translation>Linienfarbe:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1458"/>
+        <location filename="../src/symbol_line.cpp" line="1459"/>
         <source>Minimum line length:</source>
         <translation>Minimale Linienlänge:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1461"/>
+        <location filename="../src/symbol_line.cpp" line="1462"/>
         <source>Line cap:</source>
         <translation>Linienende:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1463"/>
+        <location filename="../src/symbol_line.cpp" line="1464"/>
         <source>flat</source>
         <translation>flach</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1464"/>
-        <location filename="../src/symbol_line.cpp" line="1475"/>
+        <location filename="../src/symbol_line.cpp" line="1465"/>
+        <location filename="../src/symbol_line.cpp" line="1476"/>
         <source>round</source>
         <translatorcomment>Context required: cap vs. join.</translatorcomment>
         <translation>rund</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1465"/>
+        <location filename="../src/symbol_line.cpp" line="1466"/>
         <source>square</source>
         <translation>quadratisch</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1466"/>
+        <location filename="../src/symbol_line.cpp" line="1467"/>
         <source>pointed</source>
         <translation>spitz</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1472"/>
+        <location filename="../src/symbol_line.cpp" line="1473"/>
         <source>Line join:</source>
         <translation>Linienecken:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1474"/>
+        <location filename="../src/symbol_line.cpp" line="1475"/>
         <source>miter</source>
         <translation>spitz</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1476"/>
+        <location filename="../src/symbol_line.cpp" line="1477"/>
         <source>bevel</source>
         <translation>flach</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1469"/>
+        <location filename="../src/symbol_line.cpp" line="1470"/>
         <source>Cap length:</source>
         <translation>Länge des Linienendes:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1479"/>
+        <location filename="../src/symbol_line.cpp" line="1480"/>
         <source>Line is dashed</source>
         <translation>gestrichelte Linie</translation>
     </message>
@@ -1117,158 +1117,158 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <translation type="obsolete">Endstücklänge:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1585"/>
+        <location filename="../src/symbol_line.cpp" line="1586"/>
         <source>Show at least one mid symbol</source>
         <translation>Mindestens ein Mittelsymbol anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1588"/>
+        <location filename="../src/symbol_line.cpp" line="1589"/>
         <source>Minimum mid symbol count:</source>
         <translation>Mindestzahl von Mittelsymbolen:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1591"/>
+        <location filename="../src/symbol_line.cpp" line="1592"/>
         <source>Minimum mid symbol count when closed:</source>
         <translation>Mindestzahl von Mittelsymbolen geschlossener Pfade:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1512"/>
+        <location filename="../src/symbol_line.cpp" line="1513"/>
         <source>Dash length:</source>
         <translation>Länge eines Strichs:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1508"/>
+        <location filename="../src/symbol_line.cpp" line="1509"/>
         <source>Dashed line</source>
         <translation>Gestrichelte Linie</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1515"/>
+        <location filename="../src/symbol_line.cpp" line="1516"/>
         <source>Break length:</source>
         <translation>Länge der Unterbrechung:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1518"/>
+        <location filename="../src/symbol_line.cpp" line="1519"/>
         <source>Dashes grouped together:</source>
         <translation>Strichen gruppieren:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1520"/>
+        <location filename="../src/symbol_line.cpp" line="1521"/>
         <source>none</source>
         <translation>keine</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1521"/>
+        <location filename="../src/symbol_line.cpp" line="1522"/>
         <source>2</source>
         <translation>2</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1522"/>
+        <location filename="../src/symbol_line.cpp" line="1523"/>
         <source>3</source>
         <translation>3</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1523"/>
+        <location filename="../src/symbol_line.cpp" line="1524"/>
         <source>4</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1526"/>
+        <location filename="../src/symbol_line.cpp" line="1527"/>
         <source>In-group break length:</source>
         <translation>Unterbrechungslänge in Gruppen:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1529"/>
+        <location filename="../src/symbol_line.cpp" line="1530"/>
         <source>Half length of first and last dash</source>
         <translation>Halbe Länge des ersten und letzten Strichs</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1558"/>
+        <location filename="../src/symbol_line.cpp" line="1559"/>
         <source>Mid symbols</source>
         <translation>Zwischensymbole</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1561"/>
+        <location filename="../src/symbol_line.cpp" line="1562"/>
         <source>Mid symbols per spot:</source>
         <translatorcomment>Must be improved.</translatorcomment>
         <translation>Mittelsymbole pro Stelle:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1564"/>
+        <location filename="../src/symbol_line.cpp" line="1565"/>
         <source>Mid symbol distance:</source>
         <translation>Abstand der Mittelsymbole:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1687"/>
+        <location filename="../src/symbol_line.cpp" line="1688"/>
         <location filename="../src/symbol_line.cpp" line="2049"/>
         <source>Start symbol</source>
         <translation>Anfangssymbol</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1687"/>
+        <location filename="../src/symbol_line.cpp" line="1688"/>
         <location filename="../src/symbol_line.cpp" line="2049"/>
         <source>Mid symbol</source>
         <translation>Zwischensymbol</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1687"/>
+        <location filename="../src/symbol_line.cpp" line="1688"/>
         <location filename="../src/symbol_line.cpp" line="2049"/>
         <source>End symbol</source>
         <translation>Endsymbol</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1687"/>
+        <location filename="../src/symbol_line.cpp" line="1688"/>
         <location filename="../src/symbol_line.cpp" line="2049"/>
         <source>Dash symbol</source>
         <translation>Strichelungssymbol</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1482"/>
+        <location filename="../src/symbol_line.cpp" line="1483"/>
         <source>Enable border lines</source>
         <translation>Randlinien</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1579"/>
+        <location filename="../src/symbol_line.cpp" line="1580"/>
         <source>Distance between spots:</source>
         <translation>Abstand zwischen den Symbolen:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1582"/>
+        <location filename="../src/symbol_line.cpp" line="1583"/>
         <source>Distance from line end:</source>
         <translation>Abstand vom Linienende:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1621"/>
+        <location filename="../src/symbol_line.cpp" line="1622"/>
         <source>Border</source>
         <translation>Rand</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1625"/>
+        <location filename="../src/symbol_line.cpp" line="1626"/>
         <source>Border width:</source>
         <translation>Randbreite:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1628"/>
+        <location filename="../src/symbol_line.cpp" line="1629"/>
         <source>Border color:</source>
         <translation>Randfarbe:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1631"/>
+        <location filename="../src/symbol_line.cpp" line="1632"/>
         <source>Border shift:</source>
         <translatorcomment>Re-check.</translatorcomment>
         <translation>Randverschiebung:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1634"/>
+        <location filename="../src/symbol_line.cpp" line="1635"/>
         <source>Border is dashed</source>
         <translation>Gestrichelter Rand</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1655"/>
+        <location filename="../src/symbol_line.cpp" line="1656"/>
         <source>Border dash length:</source>
         <translation>Randstrichlänge:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1658"/>
+        <location filename="../src/symbol_line.cpp" line="1659"/>
         <source>Border break length:</source>
         <translation>Randunterbrechungslänge:</translation>
     </message>
@@ -1276,15 +1276,15 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/main_window.cpp" line="483"/>
-        <location filename="../src/main_window.cpp" line="603"/>
-        <location filename="../src/main_window.cpp" line="742"/>
-        <location filename="../src/main_window.cpp" line="760"/>
+        <location filename="../src/main_window.cpp" line="484"/>
+        <location filename="../src/main_window.cpp" line="604"/>
+        <location filename="../src/main_window.cpp" line="746"/>
+        <location filename="../src/main_window.cpp" line="768"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="483"/>
+        <location filename="../src/main_window.cpp" line="484"/>
         <source>Cannot open file:
 %1
 
@@ -1295,27 +1295,27 @@ File format not recognized.</source>
 Unbekanntes Dateiformat.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="113"/>
+        <location filename="../src/main_window.cpp" line="114"/>
         <source>&amp;New</source>
         <translation>&amp;Neu</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="115"/>
+        <location filename="../src/main_window.cpp" line="116"/>
         <source>Create a new map</source>
         <translation>Eine neue Karte erstellen</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="119"/>
+        <location filename="../src/main_window.cpp" line="120"/>
         <source>&amp;Open...</source>
         <translation>Ö&amp;ffnen...</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="121"/>
+        <location filename="../src/main_window.cpp" line="122"/>
         <source>Open an existing file</source>
         <translation>Eine vorhandene Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="125"/>
+        <location filename="../src/main_window.cpp" line="126"/>
         <source>Open &amp;recent</source>
         <translation>Zu&amp;letzt bearbeitet</translation>
     </message>
@@ -1325,81 +1325,81 @@ Unbekanntes Dateiformat.</translation>
         <translation type="obsolete">&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="136"/>
+        <location filename="../src/main_window.cpp" line="137"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="141"/>
+        <location filename="../src/main_window.cpp" line="142"/>
         <source>Save &amp;as...</source>
         <translation>Speichern &amp;unter...</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="143"/>
+        <location filename="../src/main_window.cpp" line="144"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="149"/>
+        <location filename="../src/main_window.cpp" line="150"/>
         <source>Settings...</source>
         <translation>Einstellungen...</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="152"/>
+        <location filename="../src/main_window.cpp" line="153"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="154"/>
+        <location filename="../src/main_window.cpp" line="155"/>
         <source>Close this file</source>
         <translation>Diese Datei schließen</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="158"/>
+        <location filename="../src/main_window.cpp" line="159"/>
         <source>E&amp;xit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="160"/>
+        <location filename="../src/main_window.cpp" line="161"/>
         <source>Exit the application</source>
         <translatorcomment>Ausführlicher</translatorcomment>
         <translation>Die Anwendung beenden und alle Fenster schließen</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="164"/>
+        <location filename="../src/main_window.cpp" line="165"/>
         <source>&amp;File</source>
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="184"/>
+        <location filename="../src/main_window.cpp" line="185"/>
         <source>Open &amp;Manual</source>
         <translatorcomment>Kürzer</translatorcomment>
         <translation>&amp;Handbuch</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="185"/>
+        <location filename="../src/main_window.cpp" line="186"/>
         <source>Show the help file for this application</source>
         <translation>Die Dokumentation zu diesem Programm anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="188"/>
+        <location filename="../src/main_window.cpp" line="189"/>
         <source>&amp;About %1</source>
         <translation>&amp;Über %1</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="193"/>
+        <location filename="../src/main_window.cpp" line="194"/>
         <source>Show information about Qt</source>
         <translation>Informationen über Qt anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="316"/>
+        <location filename="../src/main_window.cpp" line="317"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
         <translation>Die Datei wurde geändert.
 Möchten Sie die Änderungen speichern?</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="407"/>
+        <location filename="../src/main_window.cpp" line="408"/>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
@@ -1408,30 +1408,39 @@ Do you want to scale the symbols to the selected scale?</source>
 Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="652"/>
+        <location filename="../src/main_window.cpp" line="653"/>
         <source>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</source>
         <translation>Dieses Programm benutzt die &lt;b&gt;Clipper library&lt;/b&gt; von Angus Johnson.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="659"/>
-        <location filename="../src/main_window.cpp" line="669"/>
+        <location filename="../src/main_window.cpp" line="660"/>
+        <location filename="../src/main_window.cpp" line="670"/>
         <source>See &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; for more information.</source>
         <translation>Mehr Informationen unter &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="661"/>
+        <location filename="../src/main_window.cpp" line="662"/>
         <source>This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</source>
         <translation>Dieses Programm benutzt die &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; von Frank Warmerdam.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="681"/>
+        <location filename="../src/main_window.cpp" line="682"/>
         <source>Developers in alphabetical order:&lt;br/&gt;%1&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;%2&lt;br/&gt;Additional information:</source>
         <translation>Entwickler in alphabetischer Reihenfolge:&lt;br/&gt;%1&lt;br/&gt;Dank für Beiträge an:&lt;br/&gt;%2&lt;br/&gt;Weitere Informationen:</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="684"/>
+        <location filename="../src/main_window.cpp" line="685"/>
         <source>(project leader)</source>
-        <translation type="unfinished">(Projektleiter)</translation>
+        <translation>(Projektleiter)</translation>
+    </message>
+    <message>
+        <location filename="../src/main_window.cpp" line="768"/>
+        <source>Failed to launch the help browser (&quot;Qt Assistant&quot;):
+
+%1</source>
+        <translation>Das Handbuchprogramm (&quot;Qt Assistant&quot;) konnte nicht gestartet werden:
+
+%1</translation>
     </message>
     <message>
         <source>project leader</source>
@@ -1442,14 +1451,13 @@ Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
         <translation type="obsolete">Entwickler in alphabetischer Reihenfolge:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (Projektleiter)&lt;br/&gt;&lt;br/&gt;Dank für Beiträge an:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Weitere Informationen:</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="742"/>
+        <location filename="../src/main_window.cpp" line="746"/>
         <source>Failed to locate the help files.</source>
         <translation>Die Hilfedateien konnten nicht gefunden werden.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="760"/>
         <source>Failed to find the help browser (&quot;Qt Assistant&quot;). For Windows, it is available as a separate download. After extracting this archive, copy its contents into the directory containing the Mapper executable, so the Mapper and assistant executables are in the same directory, and try again.</source>
-        <translation>Das Handbuchprogramm (&quot;Qt Assistant&quot;) konnte nicht gefunden werden. Für Windows ist es als separater Download verfügbar. Kopieren Sie nach dem Entpacken des Archivs dessen Inhalt in das Verzeichnis, welches Mapper.exe enthält, so dass assistant.exe und Mapper.exe im selben Vezeichnis sind, und versuchen Sie es erneut.</translation>
+        <translation type="obsolete">Das Handbuchprogramm (&quot;Qt Assistant&quot;) konnte nicht gefunden werden. Für Windows ist es als separater Download verfügbar. Kopieren Sie nach dem Entpacken des Archivs dessen Inhalt in das Verzeichnis, welches Mapper.exe enthält, so dass assistant.exe und Mapper.exe im selben Vezeichnis sind, und versuchen Sie es erneut.</translation>
     </message>
     <message>
         <source>Failed to start the help browser.</source>
@@ -1462,32 +1470,32 @@ Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
 Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="453"/>
+        <location filename="../src/main_window.cpp" line="454"/>
         <source>All maps</source>
         <translation>Alle Karten</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="457"/>
+        <location filename="../src/main_window.cpp" line="458"/>
         <source>Open file</source>
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="596"/>
+        <location filename="../src/main_window.cpp" line="597"/>
         <source>Save file</source>
         <translation>Datei speichern</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="604"/>
+        <location filename="../src/main_window.cpp" line="605"/>
         <source>File could not be saved:</source>
         <translation>Datei konnte nicht gespeichert werden:</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="605"/>
+        <location filename="../src/main_window.cpp" line="606"/>
         <source>There was a problem in determining the file format.</source>
         <translation>Beim Ermitteln des Dateiformat ist ein Problem aufgetreten.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="606"/>
+        <location filename="../src/main_window.cpp" line="607"/>
         <source>Please report this as a bug.</source>
         <translation>Bitte melden Sie das als Programmfehler.</translation>
     </message>
@@ -1496,7 +1504,7 @@ Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
         <translation type="obsolete">Entwickler in alphabetischer Reihenfolge:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (Projektleiter)&lt;br/&gt;&lt;br/&gt;Danke für Patches an:&lt;br/&gt;Jon Cundill&lt;br/&gt;Aivars Zogla</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="694"/>
+        <location filename="../src/main_window.cpp" line="695"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -1506,12 +1514,12 @@ Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
         <translation type="obsolete">Über &amp;OpenOrienteering</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="189"/>
+        <location filename="../src/main_window.cpp" line="190"/>
         <source>Show information about this application</source>
         <translation>Informationen über dieses Programm anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="192"/>
+        <location filename="../src/main_window.cpp" line="193"/>
         <source>About &amp;Qt</source>
         <translation>Über &amp;Qt</translation>
     </message>
@@ -1521,7 +1529,7 @@ Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
         <translation type="obsolete">Informationen über Qt anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="196"/>
+        <location filename="../src/main_window.cpp" line="197"/>
         <source>&amp;Help</source>
         <translation>&amp;Hilfe</translation>
     </message>
@@ -1533,13 +1541,13 @@ Do you want to save your changes?</source>
 Möchten Sie die Änderungen speichern?</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="379"/>
+        <location filename="../src/main_window.cpp" line="380"/>
         <source>Unsaved file</source>
         <translation>Ungespeicherte Datei</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="407"/>
-        <location filename="../src/main_window.cpp" line="554"/>
+        <location filename="../src/main_window.cpp" line="408"/>
+        <location filename="../src/main_window.cpp" line="555"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
@@ -1553,7 +1561,7 @@ The new map&apos;s scale will be 1:%3.</source>
 Die neue Karten wird mit dem Maßstab 1:%3 angelegt.</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="455"/>
+        <location filename="../src/main_window.cpp" line="456"/>
         <source>All files</source>
         <translation>Alle Dateien</translation>
     </message>
@@ -1562,13 +1570,13 @@ Die neue Karten wird mit dem Maßstab 1:%3 angelegt.</translation>
         <translation type="obsolete">Datei öffnen...</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="521"/>
+        <location filename="../src/main_window.cpp" line="522"/>
         <source>&amp;%1 %2</source>
         <translatorcomment>Nicht zu übersetzen</translatorcomment>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="553"/>
+        <location filename="../src/main_window.cpp" line="554"/>
         <source>This map is being saved as a &quot;%1&quot; file. Information may be lost.
 
 Press Yes to save in this format.
@@ -1587,7 +1595,7 @@ Wählen Sie Nein, um ein anderes Dateiformat auszusuchen.</translation>
         <translation type="obsolete">Leider sind noch keine Einstellungen implementiert!</translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="650"/>
+        <location filename="../src/main_window.cpp" line="651"/>
         <source>About %1</source>
         <translation>Über %1</translation>
     </message>
@@ -1599,19 +1607,19 @@ Wählen Sie Nein, um ein anderes Dateiformat auszusuchen.</translation>
 <context>
     <name>Map</name>
     <message>
-        <location filename="../src/map.cpp" line="880"/>
+        <location filename="../src/map.cpp" line="883"/>
         <source>default layer</source>
         <translation>Standardebene</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="512"/>
-        <location filename="../src/map.cpp" line="514"/>
-        <location filename="../src/map.cpp" line="540"/>
-        <location filename="../src/map.cpp" line="571"/>
-        <location filename="../src/map.cpp" line="606"/>
-        <location filename="../src/map.cpp" line="679"/>
-        <location filename="../src/map.cpp" line="688"/>
-        <location filename="../src/map.cpp" line="705"/>
+        <location filename="../src/map.cpp" line="515"/>
+        <location filename="../src/map.cpp" line="517"/>
+        <location filename="../src/map.cpp" line="543"/>
+        <location filename="../src/map.cpp" line="574"/>
+        <location filename="../src/map.cpp" line="609"/>
+        <location filename="../src/map.cpp" line="682"/>
+        <location filename="../src/map.cpp" line="691"/>
+        <location filename="../src/map.cpp" line="708"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
@@ -1620,7 +1628,7 @@ Wählen Sie Nein, um ein anderes Dateiformat auszusuchen.</translation>
         <translation type="obsolete">Speichern im Format &quot;%1&quot; nicht unterstützt.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="512"/>
+        <location filename="../src/map.cpp" line="515"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
@@ -1629,7 +1637,7 @@ because saving as %2 (.%3) is not supported.</source>
 exportieren, weil das Speichern als %2 (.%3) nicht unterstützt wird.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="514"/>
+        <location filename="../src/map.cpp" line="517"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
@@ -1638,32 +1646,32 @@ because the format is unknown.</source>
 exportieren, weil das Format unbekannt ist.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="540"/>
+        <location filename="../src/map.cpp" line="543"/>
         <source>File does not exist or insufficient permissions to open:
 %1</source>
         <translation>Datei nicht vorhanden oder Berechtigung verweigert:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="564"/>
-        <location filename="../src/map.cpp" line="654"/>
+        <location filename="../src/map.cpp" line="567"/>
+        <location filename="../src/map.cpp" line="657"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="564"/>
+        <location filename="../src/map.cpp" line="567"/>
         <source>The map export generated warnings.</source>
         <translation>Beim Kartenexport sind Warnmeldungen aufgetreten.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="571"/>
+        <location filename="../src/map.cpp" line="574"/>
         <source>Internal error while saving:
 %1</source>
         <translation>Interner Fehler beim Speichern:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="654"/>
+        <location filename="../src/map.cpp" line="657"/>
         <source>The map import generated warnings.</source>
         <translation>Beim Kartenimport sind Warnmeldungen aufgetreten.</translation>
     </message>
@@ -1676,7 +1684,7 @@ exportieren, weil das Format unbekannt ist.</translation>
 %1</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="606"/>
+        <location filename="../src/map.cpp" line="609"/>
         <source>Cannot open file:
 %1
 for reading.</source>
@@ -1684,7 +1692,7 @@ for reading.</source>
 Datei kann nicht zum Lesen geöffnet werden.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="619"/>
+        <location filename="../src/map.cpp" line="622"/>
         <source>Invalid file type.</source>
         <translation>Ungültiger Dateityp.</translation>
     </message>
@@ -1697,7 +1705,7 @@ Datei kann nicht zum Lesen geöffnet werden.</translation>
 %1</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="679"/>
+        <location filename="../src/map.cpp" line="682"/>
         <source>Cannot open file:
 %1
 
@@ -1716,7 +1724,7 @@ Invalid file type.</source>
 Fehler beim Einlesen.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="688"/>
+        <location filename="../src/map.cpp" line="691"/>
         <source>Problem while opening file:
 %1
 
@@ -1725,17 +1733,17 @@ Error during symbol post-processing.</source>
 Fehler beim Verarbeiten der Symbole.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="705"/>
+        <location filename="../src/map.cpp" line="708"/>
         <source>Nothing to import.</source>
         <translation>Nichts zu importieren.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="712"/>
+        <location filename="../src/map.cpp" line="715"/>
         <source>Question</source>
         <translation>Frage</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="713"/>
+        <location filename="../src/map.cpp" line="716"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
@@ -1744,7 +1752,7 @@ Rescale the imported data?</source>
 Importierte Daten auf Kartenmaßstab umrechnen?</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="1227"/>
+        <location filename="../src/map.cpp" line="1230"/>
         <source>New color</source>
         <translation>Neue Farbe</translation>
     </message>
@@ -2893,7 +2901,7 @@ Die verfügbaren Symbolsätze hängen vom gewählten Maßstab ab.</translation>
 <context>
     <name>PrintTool</name>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="629"/>
+        <location filename="../src/print_dock_widget.cpp" line="630"/>
         <source>&lt;b&gt;Drag&lt;/b&gt; to move the print area</source>
         <translation>&lt;b&gt;Ziehen&lt;/b&gt;, um den Druckbereich zu verschieben</translation>
     </message>
@@ -2901,194 +2909,194 @@ Die verfügbaren Symbolsätze hängen vom gewählten Maßstab ab.</translation>
 <context>
     <name>PrintWidget</name>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="58"/>
+        <location filename="../src/print_dock_widget.cpp" line="59"/>
         <source>Printer or exporter:</source>
         <translatorcomment>Check &quot;exporter&quot;</translatorcomment>
         <translation>Drucker oder Exportformat:</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="62"/>
+        <location filename="../src/print_dock_widget.cpp" line="63"/>
         <source>Export to PDF or PS</source>
         <translation>Als PDF oder PS exportieren</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="63"/>
+        <location filename="../src/print_dock_widget.cpp" line="64"/>
         <source>Export to image</source>
         <translation>Als Bild exportieren</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="75"/>
+        <location filename="../src/print_dock_widget.cpp" line="76"/>
         <source>Show templates</source>
         <translation>Vorlagen ausgeben</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="79"/>
+        <location filename="../src/print_dock_widget.cpp" line="80"/>
         <source>Page orientation:</source>
         <translation>Seitenausrichtung:</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="81"/>
+        <location filename="../src/print_dock_widget.cpp" line="82"/>
         <source>Portrait</source>
         <translation>Hochformat</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="82"/>
+        <location filename="../src/print_dock_widget.cpp" line="83"/>
         <source>Landscape</source>
         <translation>Querformat</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="92"/>
+        <location filename="../src/print_dock_widget.cpp" line="93"/>
         <source>Page format:</source>
         <translation>Seitenformat:</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="95"/>
+        <location filename="../src/print_dock_widget.cpp" line="96"/>
         <source>Dots per inch (dpi):</source>
         <translatorcomment>Check original, maybe &quot;Resolution (dpi)&quot;</translatorcomment>
         <translation>Auflösung (dpi):</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="99"/>
+        <location filename="../src/print_dock_widget.cpp" line="100"/>
         <source>Copies:</source>
         <translation>Kopien:</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="103"/>
+        <location filename="../src/print_dock_widget.cpp" line="104"/>
         <source>Print area</source>
         <translation>Druckgebiet</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="104"/>
+        <location filename="../src/print_dock_widget.cpp" line="105"/>
         <source>Left:</source>
         <translation>Links:</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="107"/>
+        <location filename="../src/print_dock_widget.cpp" line="108"/>
         <source>Top:</source>
         <translation>Oben:</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="110"/>
+        <location filename="../src/print_dock_widget.cpp" line="111"/>
         <source>Width:</source>
         <translation>Breite:</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="113"/>
+        <location filename="../src/print_dock_widget.cpp" line="114"/>
         <source>Height:</source>
         <translation>Höhe:</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="117"/>
+        <location filename="../src/print_dock_widget.cpp" line="118"/>
         <source>Center area on map</source>
         <translation>Druckbereich in Karte zentrieren</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="120"/>
+        <location filename="../src/print_dock_widget.cpp" line="121"/>
         <source>Preview...</source>
         <translation>Vorschau...</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="299"/>
+        <location filename="../src/print_dock_widget.cpp" line="300"/>
         <source>Export</source>
         <translation>Exportieren</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="299"/>
+        <location filename="../src/print_dock_widget.cpp" line="300"/>
         <source>Print</source>
         <translation>Drucken</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="505"/>
+        <location filename="../src/print_dock_widget.cpp" line="506"/>
         <source>Export map ...</source>
         <translatorcomment>Check original</translatorcomment>
         <translation>Karte exportieren</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="505"/>
+        <location filename="../src/print_dock_widget.cpp" line="506"/>
         <source>All files (*.*)</source>
         <translation>Alle Dateien (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="523"/>
-        <location filename="../src/print_dock_widget.cpp" line="609"/>
+        <location filename="../src/print_dock_widget.cpp" line="524"/>
+        <location filename="../src/print_dock_widget.cpp" line="610"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="523"/>
+        <location filename="../src/print_dock_widget.cpp" line="524"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
         <translatorcomment>Check original.</translatorcomment>
         <translation>Bild konnte nicht gespeichert werden. Pfad nicht vorhanden oder Berechtigungen unzureichend.</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="527"/>
-        <location filename="../src/print_dock_widget.cpp" line="557"/>
+        <location filename="../src/print_dock_widget.cpp" line="528"/>
+        <location filename="../src/print_dock_widget.cpp" line="558"/>
         <source>Exported successfully to %1</source>
         <translatorcomment>Check original</translatorcomment>
         <translation>Erfolgreich nach %1 exportiert.</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="559"/>
+        <location filename="../src/print_dock_widget.cpp" line="560"/>
         <source>Successfully created print job</source>
         <translation>Druckauftrag erfolgreich erzeugt</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="571"/>
+        <location filename="../src/print_dock_widget.cpp" line="572"/>
         <source>Letter</source>
         <translation>Letter</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="572"/>
+        <location filename="../src/print_dock_widget.cpp" line="573"/>
         <source>Legal</source>
         <translation>Legal</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="573"/>
+        <location filename="../src/print_dock_widget.cpp" line="574"/>
         <source>Executive</source>
         <translation>Executive</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="593"/>
+        <location filename="../src/print_dock_widget.cpp" line="594"/>
         <source>C5E</source>
         <translation>C5E</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="594"/>
+        <location filename="../src/print_dock_widget.cpp" line="595"/>
         <source>Comm10E</source>
         <translation>Comm10E</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="595"/>
+        <location filename="../src/print_dock_widget.cpp" line="596"/>
         <source>DLE</source>
         <translation>DLE</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="596"/>
+        <location filename="../src/print_dock_widget.cpp" line="597"/>
         <source>Folio</source>
         <translation>Folio</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="597"/>
+        <location filename="../src/print_dock_widget.cpp" line="598"/>
         <source>Ledger</source>
         <translation>Ledger</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="598"/>
+        <location filename="../src/print_dock_widget.cpp" line="599"/>
         <source>Tabloid</source>
         <translation>Tabloid</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="599"/>
+        <location filename="../src/print_dock_widget.cpp" line="600"/>
         <source>Custom</source>
         <translation>Benutzerdefiniert</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="600"/>
+        <location filename="../src/print_dock_widget.cpp" line="601"/>
         <source>Unknown</source>
         <translation>Unbekannt</translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="609"/>
+        <location filename="../src/print_dock_widget.cpp" line="610"/>
         <source>The map is empty, there is nothing to print!</source>
         <translation>Die Karte ist leer. Nichts zu drucken.</translation>
     </message>
@@ -3225,161 +3233,161 @@ for writing.</source>
 Kann Datei nicht zum Schreiben öffnen.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="105"/>
+        <location filename="../src/file_format_ocad8.cpp" line="93"/>
         <source>Could not open file: libocad returned %1</source>
         <translation>Kann Datei nicht öffnen:
 libocad-Fehler %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="108"/>
+        <location filename="../src/file_format_ocad8.cpp" line="96"/>
         <source>OCAD files of version %1 cannot be loaded!</source>
         <translation>OCAD-Dateien der Version %1 können nicht geladen werden!</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="203"/>
+        <location filename="../src/file_format_ocad8.cpp" line="191"/>
         <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
         <translation>Kann Symbol %1.%2 &quot;%3&quot; nicht importieren</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="216"/>
+        <location filename="../src/file_format_ocad8.cpp" line="204"/>
         <source>OCAD import layer</source>
         <translation>OCAD-Import-Ebene</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="354"/>
+        <location filename="../src/file_format_ocad8.cpp" line="342"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
         <translation>Im gestrichelten Liniensymbol %1 sind die Längen für die spitzen Enden am Anfang und Ende verschieden (%2 and %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="371"/>
+        <location filename="../src/file_format_ocad8.cpp" line="359"/>
         <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
         <translation>Die Länge des Endstücks des gestrichelten Liniensymbols %1 kann nicht korrekt importiert werden.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="373"/>
+        <location filename="../src/file_format_ocad8.cpp" line="361"/>
         <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
         <translation>Die Länge der Endunterbrechung des gestrichelten Liniensymbols %1 kann nicht korrekt importiert werden.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="382"/>
+        <location filename="../src/file_format_ocad8.cpp" line="370"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
         <translation>Im gestrichelten Liniensymbol %1 sind die Haupt- und Endlänge verschieden (%2 and %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="392"/>
+        <location filename="../src/file_format_ocad8.cpp" line="380"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
         <translation>Im gestrichelten Liniensymbol %1 sind die Unterbrüche D und E verschieden (%2 and %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="439"/>
+        <location filename="../src/file_format_ocad8.cpp" line="427"/>
         <source>In symbol %1, left and right borders are different colors (%2 and %3). Using %4.</source>
         <translation>Bei Symbol %1 haben linker und rechter Rand verschiedene Farben (%2 bzw. %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="447"/>
+        <location filename="../src/file_format_ocad8.cpp" line="435"/>
         <source>In symbol %1, left and right borders are different width (%2 and %3). Using %4.</source>
         <translation>Bei Symbol %1 haben linker und rechter Rand verschiedene Breiten (%2 bzw. %3). Verwende %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="461"/>
+        <location filename="../src/file_format_ocad8.cpp" line="449"/>
         <source>In line symbol %1, ignoring that only the left border line should be dashed</source>
         <translation>Ignoriere, dass bei Symbol %1 nur die linke Randlinie gestrichelt sein soll</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1198"/>
-        <location filename="../src/file_format_ocad8.cpp" line="489"/>
+        <location filename="../src/symbol_line.cpp" line="1199"/>
+        <location filename="../src/file_format_ocad8.cpp" line="477"/>
         <source>Dash symbol</source>
         <translation>Strichelungssymbol</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1186"/>
-        <location filename="../src/file_format_ocad8.cpp" line="495"/>
+        <location filename="../src/symbol_line.cpp" line="1187"/>
+        <location filename="../src/file_format_ocad8.cpp" line="483"/>
         <source>Start symbol</source>
         <translation>Anfangssymbol</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="511"/>
+        <location filename="../src/file_format_ocad8.cpp" line="499"/>
         <source>In symbol %1, ignoring framing line.</source>
         <translation>Ignoriere Rahmen bei Symbol %1.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="640"/>
+        <location filename="../src/file_format_ocad8.cpp" line="628"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
         <translation>Ignoriere Ausrichtung bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="646"/>
+        <location filename="../src/file_format_ocad8.cpp" line="634"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
         <translation>Ignoriere Höhe (%2) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="651"/>
+        <location filename="../src/file_format_ocad8.cpp" line="639"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation>Vom Original abweichende Zeichenabstände bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1281"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1280"/>
         <source>Color id not found: %1, ignoring this color</source>
         <translation>Farb-ID nicht gefunden: %1, ignoriere diese Farbe</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1313"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1312"/>
         <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
         <translation>Die Karte enthält mehr als 256 Farben, was von der ocd-Version 8 nicht unterstützt wird.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1317"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1316"/>
         <source>Could not create new file: libocad returned %1</source>
         <translation>Kann Datei nicht erstellen:
 libocad-Fehler %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1562"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1561"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
         <translation>Kann Vorlage nicht exportieren: der Dateityp von &quot;%1&quot; wird noch nicht unterstützt</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1778"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1777"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation>Im Liniensymbol &quot;%1&quot; kann die Kombination der Linienenden/ecken nicht repräsentiert werden.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1802"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1801"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
         <translation>Im Liniensymbol &quot;%1&quot; wird die Gruppierung der Strichelungen verworfen.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1813"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1812"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
         <translation>Im Liniensymbol &quot;%1&quot; wird die Anzahl der Striche in einer Gruppe auf 2 reduziert.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1916"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1915"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
         <translation>Im Flächensymbol &quot;%1&quot; wird ein Füllmuster verworfen.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1966"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1965"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
         <translation>Im Flächensymbol &quot;%1&quot; wird ein Punktmuster mit gegeneinander versetzten Reihen angenommen. Dies könnte stimmen, aber auch falsch sein.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2005"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2004"/>
         <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation>Im Textsymbol &quot;%1&quot; ist der Zeichenabstand geändert. Dies wird von diesem Programm und OCAD verschieden interpretiert</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2012"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2011"/>
         <source>In text symbol %1: ignoring underlining</source>
         <translation>Im Textsymbol &quot;%1&quot; wird das Unterstreichen verworfen</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2014"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2013"/>
         <source>In text symbol %1: ignoring kerning</source>
         <translation>Im Textsymbol &quot;%1&quot; wird das Kerning verworfen</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2367"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2372"/>
         <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
         <translation>Zeichenkette verkürzt (Abbruchstelle mit drei &apos;|&apos; markiert): %1</translation>
     </message>
@@ -3392,7 +3400,7 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ignoriere Zeichenabstand (%2%) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="656"/>
+        <location filename="../src/file_format_ocad8.cpp" line="644"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
         <translation>Ignoriere Wordabstand (%2%) bei Textsymbol %1</translation>
     </message>
@@ -3401,7 +3409,7 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ignoriere Absatzabstand (%2%) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="661"/>
+        <location filename="../src/file_format_ocad8.cpp" line="649"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
         <translation>Ignoriere Enrückung (%2/%3) bei Textsymbol %1</translation>
     </message>
@@ -3410,17 +3418,17 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ignoriere Tabulatorweiten bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="682"/>
+        <location filename="../src/file_format_ocad8.cpp" line="670"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
         <translation>Ignoriere Textrahmen (Modus %2) bei Textsymbol %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="834"/>
+        <location filename="../src/file_format_ocad8.cpp" line="822"/>
         <source>Unable to load object</source>
         <translation>Kann Objekt nicht Laden</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="841"/>
+        <location filename="../src/file_format_ocad8.cpp" line="829"/>
         <source>Unable to import rectangle object</source>
         <translation>Kann Rechtecksobjekt nicht importieren</translation>
     </message>
@@ -3429,12 +3437,12 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ein Objekt mit dem nach Norden ausgerichteten Symbol &apos;%1&apos; ist gedreht. Ignoriere die Drehung</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="889"/>
+        <location filename="../src/file_format_ocad8.cpp" line="877"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation>Textsymbol nicht importiert: Konnte Pfad nicht ermitteln (npts=%1): %2</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1067"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1055"/>
         <source>Unable to import template: %1</source>
         <translation>Kann Vorlage nicht importieren: %1</translation>
     </message>
@@ -3443,12 +3451,12 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">Ignoriere Vorlage vom Typ %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1093"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1081"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
         <translation>Kann Vorlage nicht importieren: Hintegrund &quot;%1&quot; scheint kein Rasterbild zu sein</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1182"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1181"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation>Versuch, ein Textobjekt mit unbekanntem Koordinatenformat zu importieren</translation>
     </message>
@@ -3474,13 +3482,13 @@ libocad-Fehler %1</translation>
         <translation type="obsolete">OpenOrienteering Mapper</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="151"/>
+        <location filename="../src/gps_track.cpp" line="152"/>
         <source>Error reading</source>
         <translatorcomment>FIXME: change original string</translatorcomment>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="151"/>
+        <location filename="../src/gps_track.cpp" line="152"/>
         <source>There was an error reading the DXF file %1:
 
 %1</source>
@@ -3490,53 +3498,53 @@ libocad-Fehler %1</translation>
 %2</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="158"/>
+        <location filename="../src/gps_track.cpp" line="159"/>
         <source>Question</source>
         <translation>Frage</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="158"/>
+        <location filename="../src/gps_track.cpp" line="159"/>
         <source>Are the coordinates in the DXF file in degrees?</source>
         <translation>Sind die Koordinaten in der DXF-Datei in Grad angegeben?</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="160"/>
         <location filename="../src/gps_track.cpp" line="161"/>
+        <location filename="../src/gps_track.cpp" line="162"/>
         <source>Scale value</source>
         <translation>Skalierungsfaktor</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="160"/>
+        <location filename="../src/gps_track.cpp" line="161"/>
         <source>Choose a value to scale latitude coordinates by. A value of 1 does nothing, over one scales up and under one scales down.</source>
         <translatorcomment>Original schlecht und sollte insgesamt nur ein Dialog sein</translatorcomment>
         <translation>Wählen Sie einen Skalierungsfaktor für die Breitengrade.</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="161"/>
+        <location filename="../src/gps_track.cpp" line="162"/>
         <source>Choose a value to scale longitude coordinates by. A value of 1 does nothing, over one scales up and under one scales down.</source>
         <translation>Wählen Sie einen Skalierungsfaktor für die Längengrade.</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="274"/>
+        <location filename="../src/gps_track.cpp" line="275"/>
         <source>The OSM file has version %1.
 The minimum supported version is %2.</source>
         <translation>Die OSM-Datei hat Version %1.
 Die kleinste unterstütze Version ist %2.</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="279"/>
+        <location filename="../src/gps_track.cpp" line="280"/>
         <source>The OSM file has version %1.
 The maximum supported version is %2.</source>
         <translation>Die OSM-Datei hat Version %1.
 Die höchste unterstütze Version ist %2.</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="291"/>
+        <location filename="../src/gps_track.cpp" line="292"/>
         <source>Problems</source>
         <translation>Probleme</translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="291"/>
+        <location filename="../src/gps_track.cpp" line="292"/>
         <source>%1 nodes could not be processed correctly.</source>
         <translation>%1 Knoten konnten nicht korrekt verarbeitet werden.</translation>
     </message>
@@ -3555,8 +3563,8 @@ Die höchste unterstütze Version ist %2.</translation>
         <location filename="../src/map_editor.cpp" line="1496"/>
         <location filename="../src/map_editor.cpp" line="1502"/>
         <location filename="../src/map_editor.cpp" line="1508"/>
-        <location filename="../src/gps_track.cpp" line="274"/>
-        <location filename="../src/gps_track.cpp" line="279"/>
+        <location filename="../src/gps_track.cpp" line="275"/>
+        <location filename="../src/gps_track.cpp" line="280"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
@@ -3587,12 +3595,12 @@ Die höchste unterstütze Version ist %2.</translation>
         <translation>A</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1190"/>
+        <location filename="../src/symbol_line.cpp" line="1191"/>
         <source>Mid symbol</source>
         <translation>Zwischensymbol</translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1194"/>
+        <location filename="../src/symbol_line.cpp" line="1195"/>
         <source>End symbol</source>
         <translation>Endsymbol</translation>
     </message>
@@ -3604,18 +3612,18 @@ Die höchste unterstütze Version ist %2.</translation>
 <context>
     <name>RotateTool</name>
     <message>
-        <location filename="../src/tool_rotate.cpp" line="184"/>
+        <location filename="../src/tool_rotate.cpp" line="194"/>
         <source>&lt;b&gt;Rotation:&lt;/b&gt; %1</source>
         <translatorcomment>FIXME: Add unit to original string.</translatorcomment>
         <translation>&lt;b&gt;Drehung:&lt;/b&gt; %1°</translation>
     </message>
     <message>
-        <location filename="../src/tool_rotate.cpp" line="187"/>
+        <location filename="../src/tool_rotate.cpp" line="197"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the rotation center</source>
         <translation>&lt;b&gt;Klicken&lt;/b&gt;, um den Rotationspunkt festzulegen</translation>
     </message>
     <message>
-        <location filename="../src/tool_rotate.cpp" line="189"/>
+        <location filename="../src/tool_rotate.cpp" line="199"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the rotation center, &lt;b&gt;drag&lt;/b&gt; to rotate the selected object(s)</source>
         <translation>&lt;b&gt;Klicken&lt;/b&gt;, um den Rotationspunkt festzulegen, &lt;b&gt;Ziehen&lt;/b&gt; zum Rotieren</translation>
     </message>
@@ -3661,18 +3669,18 @@ Die höchste unterstütze Version ist %2.</translation>
 <context>
     <name>ScaleTool</name>
     <message>
-        <location filename="../src/tool_scale.cpp" line="181"/>
+        <location filename="../src/tool_scale.cpp" line="191"/>
         <source>&lt;b&gt;Scaling:&lt;/b&gt; %1%</source>
         <translatorcomment>TODO: Check proper % escaping.</translatorcomment>
         <translation>&lt;b&gt;Skalierung:&lt;/b&gt; %1%</translation>
     </message>
     <message>
-        <location filename="../src/tool_scale.cpp" line="183"/>
+        <location filename="../src/tool_scale.cpp" line="193"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the scaling center</source>
         <translation>&lt;b&gt;Mausklick&lt;/b&gt; zum Setzen des Skalierungursprungs.</translation>
     </message>
     <message>
-        <location filename="../src/tool_scale.cpp" line="185"/>
+        <location filename="../src/tool_scale.cpp" line="195"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the scaling center, &lt;b&gt;drag&lt;/b&gt; to scale the selected object(s)</source>
         <translation>&lt;b&gt;Mausklick&lt;/b&gt; zum Setzen des Skalierungursprungs, &lt;b&gt;Ziehen&lt;/b&gt; zum Skalieren der ausgewählten Objekte</translation>
     </message>
@@ -4170,27 +4178,27 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
 <context>
     <name>TemplateImageOpenDialog</name>
     <message>
-        <location filename="../src/template_image.cpp" line="168"/>
+        <location filename="../src/template_image.cpp" line="170"/>
         <source>Open image template</source>
         <translation>Vorlagenbild öffnen</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="176"/>
+        <location filename="../src/template_image.cpp" line="178"/>
         <source>Meters per pixel:</source>
         <translation>Meter pro Bildpunkt:</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="180"/>
+        <location filename="../src/template_image.cpp" line="182"/>
         <source>Scanned with</source>
         <translation>Gescannt mit</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="183"/>
+        <location filename="../src/template_image.cpp" line="185"/>
         <source>dpi</source>
         <translation>dpi</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="185"/>
+        <location filename="../src/template_image.cpp" line="187"/>
         <source>Template scale:  1 :</source>
         <translation>Vorlagenmaßstab: 1 :</translation>
     </message>
@@ -4199,12 +4207,12 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
         <translation type="obsolete">Abweichender Vorlagenmaßstab 1 :</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="209"/>
+        <location filename="../src/template_image.cpp" line="211"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="210"/>
+        <location filename="../src/template_image.cpp" line="212"/>
         <source>Open</source>
         <translation>Öffnen</translation>
     </message>

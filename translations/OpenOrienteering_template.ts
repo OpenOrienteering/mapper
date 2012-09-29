@@ -357,7 +357,7 @@
 <context>
     <name>DocumentSelectionWidget</name>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="136"/>
+        <location filename="../src/main_window_home_screen.cpp" line="137"/>
         <source>Clear list</source>
         <translation type="unfinished"></translation>
     </message>
@@ -520,7 +520,7 @@
 <context>
     <name>Georeferencing</name>
     <message>
-        <location filename="../src/georeferencing.cpp" line="42"/>
+        <location filename="../src/georeferencing.cpp" line="44"/>
         <source>Local coordinates</source>
         <translation type="unfinished"></translation>
     </message>
@@ -710,7 +710,7 @@
 <context>
     <name>GeoreferencingTool</name>
     <message>
-        <location filename="../src/georeferencing_dialog.cpp" line="573"/>
+        <location filename="../src/georeferencing_dialog.cpp" line="575"/>
         <source>&lt;b&gt;Left click&lt;/b&gt; to set the reference point, another button to cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -718,17 +718,17 @@
 <context>
     <name>HomeScreenOtherWidget</name>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="331"/>
+        <location filename="../src/main_window_home_screen.cpp" line="332"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="333"/>
+        <location filename="../src/main_window_home_screen.cpp" line="334"/>
         <source>About %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="335"/>
+        <location filename="../src/main_window_home_screen.cpp" line="336"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -736,17 +736,17 @@
 <context>
     <name>HomeScreenTipOfTheDayWidget</name>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="238"/>
+        <location filename="../src/main_window_home_screen.cpp" line="239"/>
         <source>Tip of the day</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="248"/>
+        <location filename="../src/main_window_home_screen.cpp" line="249"/>
         <source>Previous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="249"/>
+        <location filename="../src/main_window_home_screen.cpp" line="250"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
@@ -754,28 +754,28 @@
 <context>
     <name>HomeScreenWidget</name>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="62"/>
+        <location filename="../src/main_window_home_screen.cpp" line="63"/>
         <source>Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="62"/>
+        <location filename="../src/main_window_home_screen.cpp" line="63"/>
         <source>Create a new map ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="62"/>
         <location filename="../src/main_window_home_screen.cpp" line="63"/>
+        <location filename="../src/main_window_home_screen.cpp" line="64"/>
         <source>Open map ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="62"/>
+        <location filename="../src/main_window_home_screen.cpp" line="63"/>
         <source>Recent maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window_home_screen.cpp" line="63"/>
+        <location filename="../src/main_window_home_screen.cpp" line="64"/>
         <source>Maps (*.omap *.ocd);;All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -783,244 +783,244 @@
 <context>
     <name>LineSymbolSettings</name>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1682"/>
+        <location filename="../src/symbol_line.cpp" line="1683"/>
         <source>Line settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1443"/>
+        <location filename="../src/symbol_line.cpp" line="1444"/>
         <source>Line width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1444"/>
-        <location filename="../src/symbol_line.cpp" line="1459"/>
-        <location filename="../src/symbol_line.cpp" line="1470"/>
-        <location filename="../src/symbol_line.cpp" line="1513"/>
-        <location filename="../src/symbol_line.cpp" line="1516"/>
-        <location filename="../src/symbol_line.cpp" line="1527"/>
-        <location filename="../src/symbol_line.cpp" line="1565"/>
-        <location filename="../src/symbol_line.cpp" line="1580"/>
-        <location filename="../src/symbol_line.cpp" line="1583"/>
-        <location filename="../src/symbol_line.cpp" line="1626"/>
-        <location filename="../src/symbol_line.cpp" line="1632"/>
-        <location filename="../src/symbol_line.cpp" line="1656"/>
-        <location filename="../src/symbol_line.cpp" line="1659"/>
+        <location filename="../src/symbol_line.cpp" line="1445"/>
+        <location filename="../src/symbol_line.cpp" line="1460"/>
+        <location filename="../src/symbol_line.cpp" line="1471"/>
+        <location filename="../src/symbol_line.cpp" line="1514"/>
+        <location filename="../src/symbol_line.cpp" line="1517"/>
+        <location filename="../src/symbol_line.cpp" line="1528"/>
+        <location filename="../src/symbol_line.cpp" line="1566"/>
+        <location filename="../src/symbol_line.cpp" line="1581"/>
+        <location filename="../src/symbol_line.cpp" line="1584"/>
+        <location filename="../src/symbol_line.cpp" line="1627"/>
+        <location filename="../src/symbol_line.cpp" line="1633"/>
+        <location filename="../src/symbol_line.cpp" line="1657"/>
+        <location filename="../src/symbol_line.cpp" line="1660"/>
         <source>mm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1446"/>
+        <location filename="../src/symbol_line.cpp" line="1447"/>
         <source>Line color:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1458"/>
+        <location filename="../src/symbol_line.cpp" line="1459"/>
         <source>Minimum line length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1461"/>
+        <location filename="../src/symbol_line.cpp" line="1462"/>
         <source>Line cap:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1463"/>
+        <location filename="../src/symbol_line.cpp" line="1464"/>
         <source>flat</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1464"/>
-        <location filename="../src/symbol_line.cpp" line="1475"/>
+        <location filename="../src/symbol_line.cpp" line="1465"/>
+        <location filename="../src/symbol_line.cpp" line="1476"/>
         <source>round</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1465"/>
+        <location filename="../src/symbol_line.cpp" line="1466"/>
         <source>square</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1466"/>
+        <location filename="../src/symbol_line.cpp" line="1467"/>
         <source>pointed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1472"/>
+        <location filename="../src/symbol_line.cpp" line="1473"/>
         <source>Line join:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1474"/>
+        <location filename="../src/symbol_line.cpp" line="1475"/>
         <source>miter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1476"/>
+        <location filename="../src/symbol_line.cpp" line="1477"/>
         <source>bevel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1469"/>
+        <location filename="../src/symbol_line.cpp" line="1470"/>
         <source>Cap length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1479"/>
+        <location filename="../src/symbol_line.cpp" line="1480"/>
         <source>Line is dashed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1585"/>
+        <location filename="../src/symbol_line.cpp" line="1586"/>
         <source>Show at least one mid symbol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1588"/>
+        <location filename="../src/symbol_line.cpp" line="1589"/>
         <source>Minimum mid symbol count:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1591"/>
+        <location filename="../src/symbol_line.cpp" line="1592"/>
         <source>Minimum mid symbol count when closed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1512"/>
+        <location filename="../src/symbol_line.cpp" line="1513"/>
         <source>Dash length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1508"/>
+        <location filename="../src/symbol_line.cpp" line="1509"/>
         <source>Dashed line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1515"/>
+        <location filename="../src/symbol_line.cpp" line="1516"/>
         <source>Break length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1518"/>
+        <location filename="../src/symbol_line.cpp" line="1519"/>
         <source>Dashes grouped together:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1520"/>
+        <location filename="../src/symbol_line.cpp" line="1521"/>
         <source>none</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1521"/>
+        <location filename="../src/symbol_line.cpp" line="1522"/>
         <source>2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1522"/>
+        <location filename="../src/symbol_line.cpp" line="1523"/>
         <source>3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1523"/>
+        <location filename="../src/symbol_line.cpp" line="1524"/>
         <source>4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1526"/>
+        <location filename="../src/symbol_line.cpp" line="1527"/>
         <source>In-group break length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1529"/>
+        <location filename="../src/symbol_line.cpp" line="1530"/>
         <source>Half length of first and last dash</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1558"/>
+        <location filename="../src/symbol_line.cpp" line="1559"/>
         <source>Mid symbols</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1561"/>
+        <location filename="../src/symbol_line.cpp" line="1562"/>
         <source>Mid symbols per spot:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1564"/>
+        <location filename="../src/symbol_line.cpp" line="1565"/>
         <source>Mid symbol distance:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1687"/>
+        <location filename="../src/symbol_line.cpp" line="1688"/>
         <location filename="../src/symbol_line.cpp" line="2049"/>
         <source>Start symbol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1687"/>
+        <location filename="../src/symbol_line.cpp" line="1688"/>
         <location filename="../src/symbol_line.cpp" line="2049"/>
         <source>Mid symbol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1687"/>
+        <location filename="../src/symbol_line.cpp" line="1688"/>
         <location filename="../src/symbol_line.cpp" line="2049"/>
         <source>End symbol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1687"/>
+        <location filename="../src/symbol_line.cpp" line="1688"/>
         <location filename="../src/symbol_line.cpp" line="2049"/>
         <source>Dash symbol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1482"/>
+        <location filename="../src/symbol_line.cpp" line="1483"/>
         <source>Enable border lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1579"/>
+        <location filename="../src/symbol_line.cpp" line="1580"/>
         <source>Distance between spots:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1582"/>
+        <location filename="../src/symbol_line.cpp" line="1583"/>
         <source>Distance from line end:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1621"/>
+        <location filename="../src/symbol_line.cpp" line="1622"/>
         <source>Border</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1625"/>
+        <location filename="../src/symbol_line.cpp" line="1626"/>
         <source>Border width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1628"/>
+        <location filename="../src/symbol_line.cpp" line="1629"/>
         <source>Border color:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1631"/>
+        <location filename="../src/symbol_line.cpp" line="1632"/>
         <source>Border shift:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1634"/>
+        <location filename="../src/symbol_line.cpp" line="1635"/>
         <source>Border is dashed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1655"/>
+        <location filename="../src/symbol_line.cpp" line="1656"/>
         <source>Border dash length:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1658"/>
+        <location filename="../src/symbol_line.cpp" line="1659"/>
         <source>Border break length:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1028,159 +1028,159 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/main_window.cpp" line="113"/>
+        <location filename="../src/main_window.cpp" line="114"/>
         <source>&amp;New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="115"/>
+        <location filename="../src/main_window.cpp" line="116"/>
         <source>Create a new map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="119"/>
+        <location filename="../src/main_window.cpp" line="120"/>
         <source>&amp;Open...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="121"/>
+        <location filename="../src/main_window.cpp" line="122"/>
         <source>Open an existing file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="125"/>
+        <location filename="../src/main_window.cpp" line="126"/>
         <source>Open &amp;recent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="136"/>
+        <location filename="../src/main_window.cpp" line="137"/>
         <source>&amp;Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="141"/>
+        <location filename="../src/main_window.cpp" line="142"/>
         <source>Save &amp;as...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="143"/>
+        <location filename="../src/main_window.cpp" line="144"/>
         <source>Ctrl+Shift+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="149"/>
+        <location filename="../src/main_window.cpp" line="150"/>
         <source>Settings...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="152"/>
+        <location filename="../src/main_window.cpp" line="153"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="154"/>
+        <location filename="../src/main_window.cpp" line="155"/>
         <source>Close this file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="158"/>
+        <location filename="../src/main_window.cpp" line="159"/>
         <source>E&amp;xit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="160"/>
+        <location filename="../src/main_window.cpp" line="161"/>
         <source>Exit the application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="164"/>
+        <location filename="../src/main_window.cpp" line="165"/>
         <source>&amp;File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="184"/>
+        <location filename="../src/main_window.cpp" line="185"/>
         <source>Open &amp;Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="185"/>
+        <location filename="../src/main_window.cpp" line="186"/>
         <source>Show the help file for this application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="188"/>
+        <location filename="../src/main_window.cpp" line="189"/>
         <source>&amp;About %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="189"/>
+        <location filename="../src/main_window.cpp" line="190"/>
         <source>Show information about this application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="192"/>
+        <location filename="../src/main_window.cpp" line="193"/>
         <source>About &amp;Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="193"/>
+        <location filename="../src/main_window.cpp" line="194"/>
         <source>Show information about Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="196"/>
+        <location filename="../src/main_window.cpp" line="197"/>
         <source>&amp;Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="316"/>
+        <location filename="../src/main_window.cpp" line="317"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="379"/>
+        <location filename="../src/main_window.cpp" line="380"/>
         <source>Unsaved file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="407"/>
-        <location filename="../src/main_window.cpp" line="554"/>
+        <location filename="../src/main_window.cpp" line="408"/>
+        <location filename="../src/main_window.cpp" line="555"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="407"/>
+        <location filename="../src/main_window.cpp" line="408"/>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="453"/>
+        <location filename="../src/main_window.cpp" line="454"/>
         <source>All maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="455"/>
+        <location filename="../src/main_window.cpp" line="456"/>
         <source>All files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="457"/>
+        <location filename="../src/main_window.cpp" line="458"/>
         <source>Open file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="483"/>
-        <location filename="../src/main_window.cpp" line="603"/>
-        <location filename="../src/main_window.cpp" line="742"/>
-        <location filename="../src/main_window.cpp" line="760"/>
+        <location filename="../src/main_window.cpp" line="484"/>
+        <location filename="../src/main_window.cpp" line="604"/>
+        <location filename="../src/main_window.cpp" line="746"/>
+        <location filename="../src/main_window.cpp" line="768"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="483"/>
+        <location filename="../src/main_window.cpp" line="484"/>
         <source>Cannot open file:
 %1
 
@@ -1188,12 +1188,12 @@ File format not recognized.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="521"/>
+        <location filename="../src/main_window.cpp" line="522"/>
         <source>&amp;%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="553"/>
+        <location filename="../src/main_window.cpp" line="554"/>
         <source>This map is being saved as a &quot;%1&quot; file. Information may be lost.
 
 Press Yes to save in this format.
@@ -1201,68 +1201,70 @@ Press No to choose a different format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="596"/>
+        <location filename="../src/main_window.cpp" line="597"/>
         <source>Save file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="604"/>
+        <location filename="../src/main_window.cpp" line="605"/>
         <source>File could not be saved:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="605"/>
+        <location filename="../src/main_window.cpp" line="606"/>
         <source>There was a problem in determining the file format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="606"/>
+        <location filename="../src/main_window.cpp" line="607"/>
         <source>Please report this as a bug.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="652"/>
+        <location filename="../src/main_window.cpp" line="653"/>
         <source>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="659"/>
-        <location filename="../src/main_window.cpp" line="669"/>
+        <location filename="../src/main_window.cpp" line="660"/>
+        <location filename="../src/main_window.cpp" line="670"/>
         <source>See &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="661"/>
+        <location filename="../src/main_window.cpp" line="662"/>
         <source>This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="681"/>
+        <location filename="../src/main_window.cpp" line="682"/>
         <source>Developers in alphabetical order:&lt;br/&gt;%1&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;%2&lt;br/&gt;Additional information:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="742"/>
+        <location filename="../src/main_window.cpp" line="746"/>
         <source>Failed to locate the help files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="760"/>
-        <source>Failed to find the help browser (&quot;Qt Assistant&quot;). For Windows, it is available as a separate download. After extracting this archive, copy its contents into the directory containing the Mapper executable, so the Mapper and assistant executables are in the same directory, and try again.</source>
+        <location filename="../src/main_window.cpp" line="768"/>
+        <source>Failed to launch the help browser (&quot;Qt Assistant&quot;):
+
+%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="650"/>
+        <location filename="../src/main_window.cpp" line="651"/>
         <source>About %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="684"/>
+        <location filename="../src/main_window.cpp" line="685"/>
         <source>(project leader)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main_window.cpp" line="694"/>
+        <location filename="../src/main_window.cpp" line="695"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1270,78 +1272,78 @@ Press No to choose a different format.</source>
 <context>
     <name>Map</name>
     <message>
-        <location filename="../src/map.cpp" line="880"/>
+        <location filename="../src/map.cpp" line="883"/>
         <source>default layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="512"/>
-        <location filename="../src/map.cpp" line="514"/>
-        <location filename="../src/map.cpp" line="540"/>
-        <location filename="../src/map.cpp" line="571"/>
-        <location filename="../src/map.cpp" line="606"/>
-        <location filename="../src/map.cpp" line="679"/>
-        <location filename="../src/map.cpp" line="688"/>
-        <location filename="../src/map.cpp" line="705"/>
+        <location filename="../src/map.cpp" line="515"/>
+        <location filename="../src/map.cpp" line="517"/>
+        <location filename="../src/map.cpp" line="543"/>
+        <location filename="../src/map.cpp" line="574"/>
+        <location filename="../src/map.cpp" line="609"/>
+        <location filename="../src/map.cpp" line="682"/>
+        <location filename="../src/map.cpp" line="691"/>
+        <location filename="../src/map.cpp" line="708"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="512"/>
+        <location filename="../src/map.cpp" line="515"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="514"/>
+        <location filename="../src/map.cpp" line="517"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="540"/>
+        <location filename="../src/map.cpp" line="543"/>
         <source>File does not exist or insufficient permissions to open:
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="564"/>
-        <location filename="../src/map.cpp" line="654"/>
+        <location filename="../src/map.cpp" line="567"/>
+        <location filename="../src/map.cpp" line="657"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="564"/>
+        <location filename="../src/map.cpp" line="567"/>
         <source>The map export generated warnings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="571"/>
+        <location filename="../src/map.cpp" line="574"/>
         <source>Internal error while saving:
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="654"/>
+        <location filename="../src/map.cpp" line="657"/>
         <source>The map import generated warnings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="606"/>
+        <location filename="../src/map.cpp" line="609"/>
         <source>Cannot open file:
 %1
 for reading.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="619"/>
+        <location filename="../src/map.cpp" line="622"/>
         <source>Invalid file type.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="679"/>
+        <location filename="../src/map.cpp" line="682"/>
         <source>Cannot open file:
 %1
 
@@ -1349,7 +1351,7 @@ for reading.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="688"/>
+        <location filename="../src/map.cpp" line="691"/>
         <source>Problem while opening file:
 %1
 
@@ -1357,24 +1359,24 @@ Error during symbol post-processing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="705"/>
+        <location filename="../src/map.cpp" line="708"/>
         <source>Nothing to import.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="712"/>
+        <location filename="../src/map.cpp" line="715"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="713"/>
+        <location filename="../src/map.cpp" line="716"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="1227"/>
+        <location filename="../src/map.cpp" line="1230"/>
         <source>New color</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2452,7 +2454,7 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>PrintTool</name>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="629"/>
+        <location filename="../src/print_dock_widget.cpp" line="630"/>
         <source>&lt;b&gt;Drag&lt;/b&gt; to move the print area</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2460,189 +2462,189 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>PrintWidget</name>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="58"/>
+        <location filename="../src/print_dock_widget.cpp" line="59"/>
         <source>Printer or exporter:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="62"/>
+        <location filename="../src/print_dock_widget.cpp" line="63"/>
         <source>Export to PDF or PS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="63"/>
+        <location filename="../src/print_dock_widget.cpp" line="64"/>
         <source>Export to image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="75"/>
+        <location filename="../src/print_dock_widget.cpp" line="76"/>
         <source>Show templates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="79"/>
+        <location filename="../src/print_dock_widget.cpp" line="80"/>
         <source>Page orientation:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="81"/>
+        <location filename="../src/print_dock_widget.cpp" line="82"/>
         <source>Portrait</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="82"/>
+        <location filename="../src/print_dock_widget.cpp" line="83"/>
         <source>Landscape</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="92"/>
+        <location filename="../src/print_dock_widget.cpp" line="93"/>
         <source>Page format:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="95"/>
+        <location filename="../src/print_dock_widget.cpp" line="96"/>
         <source>Dots per inch (dpi):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="99"/>
+        <location filename="../src/print_dock_widget.cpp" line="100"/>
         <source>Copies:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="103"/>
+        <location filename="../src/print_dock_widget.cpp" line="104"/>
         <source>Print area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="104"/>
+        <location filename="../src/print_dock_widget.cpp" line="105"/>
         <source>Left:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="107"/>
+        <location filename="../src/print_dock_widget.cpp" line="108"/>
         <source>Top:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="110"/>
+        <location filename="../src/print_dock_widget.cpp" line="111"/>
         <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="113"/>
+        <location filename="../src/print_dock_widget.cpp" line="114"/>
         <source>Height:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="117"/>
+        <location filename="../src/print_dock_widget.cpp" line="118"/>
         <source>Center area on map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="120"/>
+        <location filename="../src/print_dock_widget.cpp" line="121"/>
         <source>Preview...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="299"/>
+        <location filename="../src/print_dock_widget.cpp" line="300"/>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="299"/>
+        <location filename="../src/print_dock_widget.cpp" line="300"/>
         <source>Print</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="505"/>
+        <location filename="../src/print_dock_widget.cpp" line="506"/>
         <source>Export map ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="505"/>
+        <location filename="../src/print_dock_widget.cpp" line="506"/>
         <source>All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="523"/>
-        <location filename="../src/print_dock_widget.cpp" line="609"/>
+        <location filename="../src/print_dock_widget.cpp" line="524"/>
+        <location filename="../src/print_dock_widget.cpp" line="610"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="523"/>
+        <location filename="../src/print_dock_widget.cpp" line="524"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="527"/>
-        <location filename="../src/print_dock_widget.cpp" line="557"/>
+        <location filename="../src/print_dock_widget.cpp" line="528"/>
+        <location filename="../src/print_dock_widget.cpp" line="558"/>
         <source>Exported successfully to %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="559"/>
+        <location filename="../src/print_dock_widget.cpp" line="560"/>
         <source>Successfully created print job</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="571"/>
+        <location filename="../src/print_dock_widget.cpp" line="572"/>
         <source>Letter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="572"/>
+        <location filename="../src/print_dock_widget.cpp" line="573"/>
         <source>Legal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="573"/>
+        <location filename="../src/print_dock_widget.cpp" line="574"/>
         <source>Executive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="593"/>
+        <location filename="../src/print_dock_widget.cpp" line="594"/>
         <source>C5E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="594"/>
+        <location filename="../src/print_dock_widget.cpp" line="595"/>
         <source>Comm10E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="595"/>
+        <location filename="../src/print_dock_widget.cpp" line="596"/>
         <source>DLE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="596"/>
+        <location filename="../src/print_dock_widget.cpp" line="597"/>
         <source>Folio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="597"/>
+        <location filename="../src/print_dock_widget.cpp" line="598"/>
         <source>Ledger</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="598"/>
+        <location filename="../src/print_dock_widget.cpp" line="599"/>
         <source>Tabloid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="599"/>
+        <location filename="../src/print_dock_widget.cpp" line="600"/>
         <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="600"/>
+        <location filename="../src/print_dock_widget.cpp" line="601"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/print_dock_widget.cpp" line="609"/>
+        <location filename="../src/print_dock_widget.cpp" line="610"/>
         <source>The map is empty, there is nothing to print!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2695,264 +2697,264 @@ zoom using the mouse wheel, if available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="105"/>
+        <location filename="../src/file_format_ocad8.cpp" line="93"/>
         <source>Could not open file: libocad returned %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="108"/>
+        <location filename="../src/file_format_ocad8.cpp" line="96"/>
         <source>OCAD files of version %1 cannot be loaded!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="203"/>
+        <location filename="../src/file_format_ocad8.cpp" line="191"/>
         <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="216"/>
+        <location filename="../src/file_format_ocad8.cpp" line="204"/>
         <source>OCAD import layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="354"/>
+        <location filename="../src/file_format_ocad8.cpp" line="342"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="371"/>
+        <location filename="../src/file_format_ocad8.cpp" line="359"/>
         <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="373"/>
+        <location filename="../src/file_format_ocad8.cpp" line="361"/>
         <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="382"/>
+        <location filename="../src/file_format_ocad8.cpp" line="370"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="392"/>
+        <location filename="../src/file_format_ocad8.cpp" line="380"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="439"/>
+        <location filename="../src/file_format_ocad8.cpp" line="427"/>
         <source>In symbol %1, left and right borders are different colors (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="447"/>
+        <location filename="../src/file_format_ocad8.cpp" line="435"/>
         <source>In symbol %1, left and right borders are different width (%2 and %3). Using %4.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="461"/>
+        <location filename="../src/file_format_ocad8.cpp" line="449"/>
         <source>In line symbol %1, ignoring that only the left border line should be dashed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1198"/>
-        <location filename="../src/file_format_ocad8.cpp" line="489"/>
+        <location filename="../src/symbol_line.cpp" line="1199"/>
+        <location filename="../src/file_format_ocad8.cpp" line="477"/>
         <source>Dash symbol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1186"/>
-        <location filename="../src/file_format_ocad8.cpp" line="495"/>
+        <location filename="../src/symbol_line.cpp" line="1187"/>
+        <location filename="../src/file_format_ocad8.cpp" line="483"/>
         <source>Start symbol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="511"/>
+        <location filename="../src/file_format_ocad8.cpp" line="499"/>
         <source>In symbol %1, ignoring framing line.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="640"/>
+        <location filename="../src/file_format_ocad8.cpp" line="628"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="646"/>
+        <location filename="../src/file_format_ocad8.cpp" line="634"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="651"/>
+        <location filename="../src/file_format_ocad8.cpp" line="639"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="656"/>
+        <location filename="../src/file_format_ocad8.cpp" line="644"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="661"/>
+        <location filename="../src/file_format_ocad8.cpp" line="649"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="682"/>
+        <location filename="../src/file_format_ocad8.cpp" line="670"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="834"/>
+        <location filename="../src/file_format_ocad8.cpp" line="822"/>
         <source>Unable to load object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="841"/>
+        <location filename="../src/file_format_ocad8.cpp" line="829"/>
         <source>Unable to import rectangle object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1281"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1280"/>
         <source>Color id not found: %1, ignoring this color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1313"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1312"/>
         <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1317"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1316"/>
         <source>Could not create new file: libocad returned %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1562"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1561"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1778"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1777"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1802"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1801"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1813"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1812"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1916"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1915"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1966"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1965"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2005"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2004"/>
         <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2012"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2011"/>
         <source>In text symbol %1: ignoring underlining</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2014"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2013"/>
         <source>In text symbol %1: ignoring kerning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2367"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2372"/>
         <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="889"/>
+        <location filename="../src/file_format_ocad8.cpp" line="877"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1067"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1055"/>
         <source>Unable to import template: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1093"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1081"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1182"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1181"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="151"/>
+        <location filename="../src/gps_track.cpp" line="152"/>
         <source>Error reading</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="151"/>
+        <location filename="../src/gps_track.cpp" line="152"/>
         <source>There was an error reading the DXF file %1:
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="158"/>
+        <location filename="../src/gps_track.cpp" line="159"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="158"/>
+        <location filename="../src/gps_track.cpp" line="159"/>
         <source>Are the coordinates in the DXF file in degrees?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="160"/>
         <location filename="../src/gps_track.cpp" line="161"/>
+        <location filename="../src/gps_track.cpp" line="162"/>
         <source>Scale value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="160"/>
+        <location filename="../src/gps_track.cpp" line="161"/>
         <source>Choose a value to scale latitude coordinates by. A value of 1 does nothing, over one scales up and under one scales down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="161"/>
+        <location filename="../src/gps_track.cpp" line="162"/>
         <source>Choose a value to scale longitude coordinates by. A value of 1 does nothing, over one scales up and under one scales down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="274"/>
+        <location filename="../src/gps_track.cpp" line="275"/>
         <source>The OSM file has version %1.
 The minimum supported version is %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="279"/>
+        <location filename="../src/gps_track.cpp" line="280"/>
         <source>The OSM file has version %1.
 The maximum supported version is %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="291"/>
+        <location filename="../src/gps_track.cpp" line="292"/>
         <source>Problems</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gps_track.cpp" line="291"/>
+        <location filename="../src/gps_track.cpp" line="292"/>
         <source>%1 nodes could not be processed correctly.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2971,8 +2973,8 @@ The maximum supported version is %2.</source>
         <location filename="../src/map_editor.cpp" line="1496"/>
         <location filename="../src/map_editor.cpp" line="1502"/>
         <location filename="../src/map_editor.cpp" line="1508"/>
-        <location filename="../src/gps_track.cpp" line="274"/>
-        <location filename="../src/gps_track.cpp" line="279"/>
+        <location filename="../src/gps_track.cpp" line="275"/>
+        <location filename="../src/gps_track.cpp" line="280"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3003,12 +3005,12 @@ The maximum supported version is %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1190"/>
+        <location filename="../src/symbol_line.cpp" line="1191"/>
         <source>Mid symbol</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_line.cpp" line="1194"/>
+        <location filename="../src/symbol_line.cpp" line="1195"/>
         <source>End symbol</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3016,17 +3018,17 @@ The maximum supported version is %2.</source>
 <context>
     <name>RotateTool</name>
     <message>
-        <location filename="../src/tool_rotate.cpp" line="184"/>
+        <location filename="../src/tool_rotate.cpp" line="194"/>
         <source>&lt;b&gt;Rotation:&lt;/b&gt; %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_rotate.cpp" line="187"/>
+        <location filename="../src/tool_rotate.cpp" line="197"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the rotation center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_rotate.cpp" line="189"/>
+        <location filename="../src/tool_rotate.cpp" line="199"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the rotation center, &lt;b&gt;drag&lt;/b&gt; to rotate the selected object(s)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3067,17 +3069,17 @@ The maximum supported version is %2.</source>
 <context>
     <name>ScaleTool</name>
     <message>
-        <location filename="../src/tool_scale.cpp" line="181"/>
+        <location filename="../src/tool_scale.cpp" line="191"/>
         <source>&lt;b&gt;Scaling:&lt;/b&gt; %1%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_scale.cpp" line="183"/>
+        <location filename="../src/tool_scale.cpp" line="193"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the scaling center</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_scale.cpp" line="185"/>
+        <location filename="../src/tool_scale.cpp" line="195"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the scaling center, &lt;b&gt;drag&lt;/b&gt; to scale the selected object(s)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3507,37 +3509,37 @@ If you do not intend to draw on this template however, that is no problem.</sour
 <context>
     <name>TemplateImageOpenDialog</name>
     <message>
-        <location filename="../src/template_image.cpp" line="168"/>
+        <location filename="../src/template_image.cpp" line="170"/>
         <source>Open image template</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="176"/>
+        <location filename="../src/template_image.cpp" line="178"/>
         <source>Meters per pixel:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="180"/>
+        <location filename="../src/template_image.cpp" line="182"/>
         <source>Scanned with</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="183"/>
+        <location filename="../src/template_image.cpp" line="185"/>
         <source>dpi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="185"/>
+        <location filename="../src/template_image.cpp" line="187"/>
         <source>Template scale:  1 :</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="209"/>
+        <location filename="../src/template_image.cpp" line="211"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="210"/>
+        <location filename="../src/template_image.cpp" line="212"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
