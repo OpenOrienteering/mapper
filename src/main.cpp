@@ -23,6 +23,8 @@
 #include <QLocale>
 #include <QTranslator>
 
+#include <mapper_config.h>
+
 #include "global.h"
 #include "main_window.h"
 #include "main_window_home_screen.h"

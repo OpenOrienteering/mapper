@@ -18,7 +18,12 @@
 
 include(../3rd-party/clipper.cmake)
 
-configure_file(global.h.in ${CMAKE_CURRENT_SOURCE_DIR}/global.h)
+configure_file(mapper_config.h.in "${CMAKE_CURRENT_BINARY_DIR}/mapper_config.h.tmp")
+execute_process(
+  COMMAND "${CMAKE_COMMAND}" -E copy_if_different mapper_config.h.tmp mapper_config.h
+  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+)
+include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 set(Mapper_Common_SRCS
  ../3rd-party/clipper/cpp/clipper.cpp

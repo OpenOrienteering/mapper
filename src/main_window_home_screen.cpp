@@ -26,7 +26,7 @@
 #include <QtWidgets>
 #endif
 
-#include "global.h"
+#include <mapper_config.h> // TODO: Replace APP_NAME by runtime function to remove this dependency
 
 // ### HomeScreenController ###
 
