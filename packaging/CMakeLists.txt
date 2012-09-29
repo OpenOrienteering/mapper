@@ -123,7 +123,6 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		  "${CPACK_LSB_RELEASE}_amd64" 
 		  CPACK_PACKAGE_FILE_NAME
 		  ${CPACK_PACKAGE_FILE_NAME})
- 		add_definitions(-DMAPPER_DEBIAN_PACKAGE_NAME="${CPACK_DEBIAN_PACKAGE_NAME}")
 		set(CPACK_DEBIAN_PACKAGE_MAINTAINER
 		   "Kai Pastor <dg0yt@darc.de>")
 		set(CPACK_DEBIAN_SECTION "graphics")

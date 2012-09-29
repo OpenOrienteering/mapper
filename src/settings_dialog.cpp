@@ -25,6 +25,8 @@
 #include <QtWidgets>
 #endif
 
+#include <mapper_config.h>
+
 #include "map_editor.h"
 #include "map_widget.h"
 #include "main_window.h"
