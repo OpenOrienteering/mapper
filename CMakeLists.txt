@@ -39,15 +39,7 @@ endif(NOT CMAKE_BUILD_TYPE)
 
 option(Mapper_XML_FORMAT "Enable the unmaintained export-only XML format, options are: OFF, ON.")
 
-if(APPLE)
-	set(Mapper_TRANSLATIONS_EMBEDDED_DEFAULT ON)
-else(APPLE)
-	set(Mapper_TRANSLATIONS_EMBEDDED_DEFAULT OFF)
-endif(APPLE)
-
-option(Mapper_TRANSLATIONS_EMBEDDED 
-  "Embed all translations in the program executable" 
-  ${Mapper_TRANSLATIONS_EMBEDDED_DEFAULT})
+option(Mapper_TRANSLATIONS_EMBEDDED "Embed all translations in the program executable")
 
 option(Mapper_BUILD_PROJ "Build the Proj library from source")
 
