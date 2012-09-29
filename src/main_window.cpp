@@ -687,7 +687,7 @@ void MainWindow::showAbout()
 		     "For contributions, thanks to:<br/>%2<br/>"
 		     "Additional information:").
 		  arg(QString("Peter Curtis<br/>Kai Pastor<br/>Russell Porter<br/>Thomas Sch&ouml;ps %1<br/>").arg(tr("(project leader)"))).
-		  arg("Jon Cundill<br/>Jan Dalheimer<br/>Eugeniy Fedirets<br/>Peter Hoban<br/>Henrik Johansson<br/>Tojo Masaya<br/>Christopher Schive<br/>Aivars Zogla<br/>")
+		  arg("Jon Cundill<br/>Jan Dalheimer<br/>Eugeniy Fedirets<br/>Peter Hoban<br/>Henrik Johansson<br/>Oskar Karlin<br/>Tojo Masaya<br/>Christopher Schive<br/>Aivars Zogla<br/>")
 		 );
 	QTextEdit* additional_text = new QTextEdit( 
 	  clipper_about % "<br/><br/>" %
@@ -739,6 +739,9 @@ void MainWindow::showHelp(QString filename, QString fragment)
 #ifdef MAPPER_DEBIAN_PACKAGE_NAME
 			<< QDir(QString("/usr/share/") % MAPPER_DEBIAN_PACKAGE_NAME % "/help")
 #endif
+#ifdef Q_WS_MAC
+			<< QDir(app_dir.absoluteFilePath("../Resources/help"))
+#endif
 			<< QDir(":/help");
 		
 		QDir help_dir;
@@ -759,7 +762,11 @@ void MainWindow::showHelp(QString filename, QString fragment)
 			 << makeHelpUrl(filename, fragment)
 			 << QLatin1String("-enableRemoteControl");
 		
+#ifdef Q_WS_MAC
+		process->start(app_dir.absoluteFilePath("assistant"), args);
+#else
 		process->start(QLatin1String("assistant"), args);
+#endif
 		if (!process->waitForStarted())
 		{
 			QDialog dialog(this, Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
@@ -767,12 +774,9 @@ void MainWindow::showHelp(QString filename, QString fragment)
 			dialog.setWindowModality(Qt::WindowModal);
 			dialog.resize(500, 200);
 			
-			QLabel* label = new QLabel(tr("<b>%1</b><br/>%2<br/><br/>%3")
-				.arg(tr("Failed to find the help browser (\"Qt Assistant\")."))
-				.arg(tr("For Windows, it is available as %1a separate download%2.", "This refers to the 'Failed to find the help browser' message box. The text between the %1 and %2 marks will link to the downloadable archive.").arg("<a href=\"http://sourceforge.net/projects/oorienteering/files/Mapper/0.3.0/Qt%20Assistant%204.8.1.zip/download\">").arg("</a>"))
-				.arg(tr("After extracting this archive, copy its contents into the directory containing the Mapper executable, so the Mapper and assistant executables are in the same directory, and try again.")));
-			label->setTextInteractionFlags(label->textInteractionFlags() | Qt::LinksAccessibleByMouse);
-			label->setOpenExternalLinks(true);
+			QLabel* label = new QLabel(QString("<b>%1</b><br/>%2<br/><br/>%3")
+				.arg(tr("Failed to launch the help browser (\"Qt Assistant\")."))
+				.arg(QString(process->readAllStandardError())));
 			label->setWordWrap(true);
 			QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok, Qt::Horizontal);
 			

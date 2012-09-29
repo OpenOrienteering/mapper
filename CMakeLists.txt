@@ -59,14 +59,18 @@ option(Mapper_BUILD_QT   "Build the Qt library from source")
 
 option(Mapper_USE_QT5    "Use Qt library version 5")
 
-# FIXME: Packaging for MacOSX needs review on a MacOSX machine
-if(NOT APPLE)
-	set(Mapper_BUILD_PACKAGE_DEFAULT ON)
+option(Mapper_BUILD_PACKAGE "Create a target for building packages" ON)
+
+if(WIN32 OR APPLE)
+	set(Mapper_PACKAGE_ALL_DEFAULT ON)
 else()
-	set(Mapper_BUILD_PACKAGE_DEFAULT OFF)
+	set(Mapper_PACKAGE_ALL_DEFAULT OFF)
 endif()
-set(Mapper_BUILD_PACKAGE ${Mapper_BUILD_PACKAGE_DEFAULT} CACHE BOOL
-  "Create a 'package' target")
+option(Mapper_PACKAGE_LIBRARIES    "Include all libraries in the packages"   ${Mapper_PACKAGE_ALL_DEFAULT})
+option(Mapper_PACKAGE_TRANSLATIONS "Include Qt translations in the packages" ${Mapper_PACKAGE_ALL_DEFAULT})
+option(Mapper_PACKAGE_ASSISTANT    "Include Qt Assistant in the packages"    ${Mapper_PACKAGE_ALL_DEFAULT})
+mark_as_advanced(Mapper_BUILD_PACKAGE Mapper_PACKAGE_LIBRARIES Mapper_PACKAGE_TRANSLATIONS Mapper_PACKAGE_ASSISTANT)
+
 
 # Installation configuration
 
@@ -74,12 +78,16 @@ if(WIN32)
 	set(MAPPER_RUNTIME_DESTINATION .)
 	set(MAPPER_DATA_DESTINATION .)
 	set(MAPPER_ABOUT_DESTINATION "doc")
-else(WIN32)
+elseif(APPLE)
+	set(MAPPER_RUNTIME_DESTINATION .)
+	set(MAPPER_DATA_DESTINATION "Mapper.app/Contents/Resources")
+	set(MAPPER_ABOUT_DESTINATION "Mapper.app/Contents/Resources")
+else()
 	set(CPACK_DEBIAN_PACKAGE_NAME "openorienteering-mapper")
 	set(MAPPER_RUNTIME_DESTINATION bin)
 	set(MAPPER_DATA_DESTINATION "share/${CPACK_DEBIAN_PACKAGE_NAME}")
 	set(MAPPER_ABOUT_DESTINATION "share/doc/${CPACK_DEBIAN_PACKAGE_NAME}")
-endif(WIN32)
+endif()
 
 # Build definitons
 
@@ -176,14 +184,13 @@ add_subdirectory("qtsingleapplication")
 add_subdirectory("libocad")
 add_subdirectory("resources")
 add_subdirectory("src")
+if(Mapper_BUILD_PACKAGE)
+	add_subdirectory("packaging")
+endif()
 
 install(FILES COPYING 
   DESTINATION "${MAPPER_ABOUT_DESTINATION}"
 )
-
-if(Mapper_BUILD_PACKAGE)
-	include(CPackaging.cmake)
-endif()
 
 else(Mapper_prerequisites_FOUND)
 
@@ -193,3 +200,4 @@ add_custom_target(Mapper_superbuild ALL "${CMAKE_COMMAND}" .
 add_dependencies(Mapper_superbuild Mapper_prerequisites)
 
 endif(Mapper_prerequisites_FOUND)
+

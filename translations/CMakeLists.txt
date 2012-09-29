@@ -55,15 +55,16 @@ set(Mapper_TRANS_DIR
 
 if(Mapper_TRANSLATIONS_EMBEDDED)
 	set(Mapper_TRANS_QRC "${CMAKE_CURRENT_BINARY_DIR}/translations.qrc")
-	file(WRITE "${Mapper_TRANS_QRC}"
+	file(WRITE "${Mapper_TRANS_QRC}.tmp"
 	  "<!DOCTYPE RCC><RCC version=\"1.0\">\n <qresource>\n")
 	foreach(_qm_file ${Mapper_QM})
 		get_filename_component(_qm_filename "${_qm_file}" NAME)
-		file(APPEND "${Mapper_TRANS_QRC}"
+		file(APPEND "${Mapper_TRANS_QRC}.tmp"
 		  "  <file alias=\"translations/${_qm_filename}\">${_qm_file}</file>\n")
 	endforeach(_qm_file)
-	file(APPEND "${Mapper_TRANS_QRC}"
+	file(APPEND "${Mapper_TRANS_QRC}.tmp"
 	  " </qresource>\n</RCC>\n")
+	execute_process(COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${Mapper_TRANS_QRC}.tmp" "${Mapper_TRANS_QRC}")
 	qt4_add_resources(Mapper_TRANSLATIONS_RCC "${Mapper_TRANS_QRC}" OPTIONS -no-compress)
 
 	# A library is a top-level target, the generated source file isn't.
@@ -79,41 +80,9 @@ else()
 	# A target which builds all translations.
 	add_custom_target(Mapper_translations ALL DEPENDS ${Mapper_QM})
 
-if(WIN32)
-	unset(MAPPER_QT_TRANSLATIONS CACHE)
-	foreach(_mapper_trans ${Mapper_TRANS})
-		get_filename_component(_qt_translation ${_mapper_trans} NAME_WE)
-		string(REPLACE OpenOrienteering qt _qt_translation ${_qt_translation})
-		set(_qt_translation_path "${QT_TRANSLATIONS_DIR}/${_qt_translation}.qm")
-		if(EXISTS "${_qt_translation_path}")
-			message("   ${_qt_translation} translation - found")
-			list(APPEND MAPPER_QT_TRANSLATIONS "${_qt_translation_path}")
-		else()
-			message("   ${_qt_translation} translation - not found")
-		endif()
-if(QT_QTASSISTANT_EXECUTABLE)
-		string(REPLACE qt qt_help _qt_translation ${_qt_translation})
-		set(_qt_translation_path "${QT_TRANSLATIONS_DIR}/${_qt_translation}.qm")
-		if(EXISTS "${_qt_translation_path}")
-			message("   ${_qt_translation} translation - found")
-			list(APPEND MAPPER_QT_TRANSLATIONS "${_qt_translation_path}")
-		else()
-			message("   ${_qt_translation} translation - not found")
-		endif()
-		string(REPLACE qt_help assistant _qt_translation ${_qt_translation})
-		set(_qt_translation_path "${QT_TRANSLATIONS_DIR}/${_qt_translation}.qm")
-		if(EXISTS "${_qt_translation_path}")
-			message("   ${_qt_translation} translation - found")
-			list(APPEND MAPPER_QT_TRANSLATIONS "${_qt_translation_path}")
-		else()
-			message("   ${_qt_translation} translation - not found")
-		endif()
-endif(QT_QTASSISTANT_EXECUTABLE)
-	endforeach(_mapper_trans)
-endif(WIN32)
 	install(
-	  FILES ${Mapper_TRANS} ${MAPPER_QT_TRANSLATIONS} 
-	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}/translations")
+	  FILES ${Mapper_TRANS}
+	  DESTINATION "${MAPPER_DATA_DESTINATION}/translations")
 
 endif(Mapper_TRANSLATIONS_EMBEDDED)
 

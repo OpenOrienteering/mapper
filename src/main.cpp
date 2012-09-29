@@ -86,6 +86,10 @@ int main(int argc, char** argv)
 	if (!translation_ok)
 		translation_ok = translator.load(translation_name, QString("/usr/share/") + MAPPER_DEBIAN_PACKAGE_NAME + "/translations");
 #endif
+#ifdef Q_WS_MAC
+	if (!translation_ok)
+		translation_ok = translator.load(translation_name, QCoreApplication::applicationDirPath() + "../Resources/translations");
+#endif
 	qapp.installTranslator(&translator);
 	
 	doStaticInitializations();
