@@ -79,7 +79,7 @@ bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 		hidePreviewPoints();
 		return true;
 	}
-	else if (event->button() == Qt::RightButton)
+	else if (event->button() == Qt::RightButton && draw_in_progress)
 	{
 		abortDrawing();
 		return true;
