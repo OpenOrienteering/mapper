@@ -185,9 +185,13 @@ public:
 	
 	inline MapCoordF mapToTemplate(MapCoordF coords)
 	{
-		assert(!is_georeferenced);
-		return MapCoordF(map_to_template.get(0, 0) * coords.getX() + map_to_template.get(0, 1) * coords.getY() + map_to_template.get(0, 2),
-						 map_to_template.get(1, 0) * coords.getX() + map_to_template.get(1, 1) * coords.getY() + map_to_template.get(1, 2));
+		if (is_georeferenced)
+			return coords;
+		else
+		{
+			return MapCoordF(map_to_template.get(0, 0) * coords.getX() + map_to_template.get(0, 1) * coords.getY() + map_to_template.get(0, 2),
+							 map_to_template.get(1, 0) * coords.getX() + map_to_template.get(1, 1) * coords.getY() + map_to_template.get(1, 2));
+		}
 	}
 	inline MapCoordF mapToTemplateOther(MapCoordF coords)	// normally not needed - this uses the other transformation parameters
 	{
@@ -200,21 +204,33 @@ public:
 	}
 	inline QPointF mapToTemplateQPoint(MapCoordF coords)
 	{
-		assert(!is_georeferenced);
-		return QPointF(map_to_template.get(0, 0) * coords.getX() + map_to_template.get(0, 1) * coords.getY() + map_to_template.get(0, 2),
-					   map_to_template.get(1, 0) * coords.getX() + map_to_template.get(1, 1) * coords.getY() + map_to_template.get(1, 2));
+		if (is_georeferenced)
+			return coords.toQPointF();
+		else
+		{
+			return QPointF(map_to_template.get(0, 0) * coords.getX() + map_to_template.get(0, 1) * coords.getY() + map_to_template.get(0, 2),
+						   map_to_template.get(1, 0) * coords.getX() + map_to_template.get(1, 1) * coords.getY() + map_to_template.get(1, 2));
+		}
 	}
 	inline MapCoordF templateToMap(MapCoordF coords)
 	{
-		assert(!is_georeferenced);
-		return MapCoordF(template_to_map.get(0, 0) * coords.getX() + template_to_map.get(0, 1) * coords.getY() + template_to_map.get(0, 2),
-						 template_to_map.get(1, 0) * coords.getX() + template_to_map.get(1, 1) * coords.getY() + template_to_map.get(1, 2));
+		if (is_georeferenced)
+			return coords;
+		else
+		{
+			return MapCoordF(template_to_map.get(0, 0) * coords.getX() + template_to_map.get(0, 1) * coords.getY() + template_to_map.get(0, 2),
+							 template_to_map.get(1, 0) * coords.getX() + template_to_map.get(1, 1) * coords.getY() + template_to_map.get(1, 2));
+		}
 	}
 	inline MapCoordF templateToMap(QPointF coords)
 	{
-		assert(!is_georeferenced);
-		return MapCoordF(template_to_map.get(0, 0) * coords.x() + template_to_map.get(0, 1) * coords.y() + template_to_map.get(0, 2),
-						 template_to_map.get(1, 0) * coords.x() + template_to_map.get(1, 1) * coords.y() + template_to_map.get(1, 2));
+		if (is_georeferenced)
+			return MapCoordF(coords);
+		else
+		{
+			return MapCoordF(template_to_map.get(0, 0) * coords.x() + template_to_map.get(0, 1) * coords.y() + template_to_map.get(0, 2),
+							 template_to_map.get(1, 0) * coords.x() + template_to_map.get(1, 1) * coords.y() + template_to_map.get(1, 2));
+		}
 	}
 	inline MapCoordF templateToMapOther(MapCoordF coords)	// normally not needed - this uses the other transformation parameters
 	{

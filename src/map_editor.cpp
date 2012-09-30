@@ -1153,7 +1153,9 @@ void MapEditorController::objectSelectionChanged()
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 	{
 		Symbol* symbol = (*it)->getSymbol();
-		symbols_in_selection[map->findSymbolIndex(symbol)] = true;
+		int symbol_index = map->findSymbolIndex(symbol);
+		if (symbol_index >= 0 && symbol_index < (int)symbols_in_selection.size())
+			symbols_in_selection[symbol_index] = true;
 		
 		if (uniform_symbol_selected)
 		{
