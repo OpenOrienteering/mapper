@@ -296,7 +296,7 @@ public:
      *  generally an Importer should not succeed unless the map is populated sufficiently
      *  to be useful.
      */
-	void doImport(bool load_symbols_only) throw (FormatException);
+	void doImport(bool load_symbols_only, QString map_path = QString()) throw (FormatException);
 
     /** Once all action items are satisfied, this method should be called to complete the
      *  import process. This class defines a default implementation, that does nothing.

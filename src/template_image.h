@@ -33,36 +33,42 @@ class TemplateImage : public Template
 {
 Q_OBJECT
 public:
-	TemplateImage(const QString& filename, Map* map);
-	TemplateImage(const TemplateImage& other);
-    virtual ~TemplateImage();
-    virtual Template* duplicate();
+	TemplateImage(const QString& path, Map* map);
+	virtual ~TemplateImage();
 	virtual const QString getTemplateType() {return "TemplateImage";}
-    virtual bool saveTemplateFile();
+
+	virtual bool saveTemplateFile();
+	virtual void saveTypeSpecificTemplateConfiguration(QIODevice* stream);
+	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
+
+	virtual bool loadTemplateFileImpl(bool configuring);
+	virtual bool postLoadConfiguration(QWidget* dialog_parent);
+	virtual void unloadTemplateFileImpl();
 	
-    virtual bool open(QWidget* dialog_parent, MapView* main_view);
-    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity);
-    virtual QRectF getExtent();
+	virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity);
+	virtual QRectF getTemplateExtent();
+    virtual QRectF calculateTemplateBoundingBox();
 	virtual bool canBeDrawnOnto() {return true;}
-	
+
 	/// Calculates the image's center of gravity in template coordinates by iterating over all pixels, leaving out the pixels with background_color.
 	QPointF calcCenterOfGravity(QRgb background_color);
 	
-	virtual double getTemplateFinalScaleX() const;
-	virtual double getTemplateFinalScaleY() const;
+	/// Returns the internal QImage
+	inline QImage* getQImage() const {return image;}
 	
 protected:
-    virtual void drawOntoTemplateImpl(QPointF* points, int num_points, QColor color, float width);
-    virtual bool changeTemplateFileImpl(const QString& filename);
-	
+	virtual Template* duplicateImpl();
+	virtual void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width);
+
 	QImage* image;
 };
-/// Initial setting dialog when opening a raster image as template, asking for the meters per pixel
+
+/// Initial setting dialog when opening a raster image as template, asking for the scale
 class TemplateImageOpenDialog : public QDialog
 {
 Q_OBJECT
 public:
-	TemplateImageOpenDialog(Map* map, QWidget* parent);
+	TemplateImageOpenDialog(TemplateImage* image, QWidget* parent);
 	
 	inline double getMpp() const;
 	
@@ -79,7 +85,7 @@ private:
 	QLineEdit* scale_edit;
 	QPushButton* open_button;
 	
-	Map* map;
+	TemplateImage* image;
 };
 
 #endif

@@ -29,7 +29,7 @@
 #include "util.h"
 
 const int NativeFileFormat::least_supported_file_format_version = 0;
-const int NativeFileFormat::current_file_format_version = 26;
+const int NativeFileFormat::current_file_format_version = 27;
 const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 
 bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
@@ -241,9 +241,14 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
 		{
 			QString path;
 			loadString(stream, path);
-
 			Template* temp = Template::templateForFile(path, map);
-			temp->loadTemplateParameters(stream);
+			if (version >= 27)
+			{
+				loadString(stream, path);
+				temp->setTemplateRelativePath(path);
+			}
+			
+			temp->loadTemplateConfiguration(stream, version);
 
 			map->templates[i] = temp;
 		}
@@ -331,49 +336,49 @@ void NativeFileExport::doExport() throw (FormatException)
 	saveString(stream, georef.geographic_crs_spec);
 	
 	map->getGrid().save(stream);
-	
+
 	stream->write((const char*)&map->area_hatching_enabled, sizeof(bool));
 	stream->write((const char*)&map->baseline_view_enabled, sizeof(bool));
-	
-    stream->write((const char*)&map->print_params_set, sizeof(bool));
-    if (map->print_params_set)
-    {
-        stream->write((const char*)&map->print_orientation, sizeof(int));
-        stream->write((const char*)&map->print_format, sizeof(int));
-        stream->write((const char*)&map->print_dpi, sizeof(float));
-        stream->write((const char*)&map->print_show_templates, sizeof(bool));
+
+	stream->write((const char*)&map->print_params_set, sizeof(bool));
+	if (map->print_params_set)
+	{
+		stream->write((const char*)&map->print_orientation, sizeof(int));
+		stream->write((const char*)&map->print_format, sizeof(int));
+		stream->write((const char*)&map->print_dpi, sizeof(float));
+		stream->write((const char*)&map->print_show_templates, sizeof(bool));
 		stream->write((const char*)&map->print_show_grid, sizeof(bool));
-        stream->write((const char*)&map->print_center, sizeof(bool));
-        stream->write((const char*)&map->print_area_left, sizeof(float));
-        stream->write((const char*)&map->print_area_top, sizeof(float));
-        stream->write((const char*)&map->print_area_width, sizeof(float));
-        stream->write((const char*)&map->print_area_height, sizeof(float));
+		stream->write((const char*)&map->print_center, sizeof(bool));
+		stream->write((const char*)&map->print_area_left, sizeof(float));
+		stream->write((const char*)&map->print_area_top, sizeof(float));
+		stream->write((const char*)&map->print_area_width, sizeof(float));
+		stream->write((const char*)&map->print_area_height, sizeof(float));
 		stream->write((const char*)&map->print_different_scale_enabled, sizeof(bool));
 		stream->write((const char*)&map->print_different_scale, sizeof(int));
-    }
-    
-    stream->write((const char*)&map->image_template_use_meters_per_pixel, sizeof(bool));
+	}
+
+	stream->write((const char*)&map->image_template_use_meters_per_pixel, sizeof(bool));
 	stream->write((const char*)&map->image_template_meters_per_pixel, sizeof(double));
 	stream->write((const char*)&map->image_template_dpi, sizeof(double));
 	stream->write((const char*)&map->image_template_scale, sizeof(double));
 
-    // Write colors
-    int num_colors = (int)map->color_set->colors.size();
-    stream->write((const char*)&num_colors, sizeof(int));
+	// Write colors
+	int num_colors = (int)map->color_set->colors.size();
+	stream->write((const char*)&num_colors, sizeof(int));
 
-    for (int i = 0; i < num_colors; ++i)
-    {
-        MapColor* color = map->color_set->colors[i];
+	for (int i = 0; i < num_colors; ++i)
+	{
+		MapColor* color = map->color_set->colors[i];
 
-        stream->write((const char*)&color->priority, sizeof(int));
-        stream->write((const char*)&color->c, sizeof(float));
-        stream->write((const char*)&color->m, sizeof(float));
-        stream->write((const char*)&color->y, sizeof(float));
-        stream->write((const char*)&color->k, sizeof(float));
-        stream->write((const char*)&color->opacity, sizeof(float));
+		stream->write((const char*)&color->priority, sizeof(int));
+		stream->write((const char*)&color->c, sizeof(float));
+		stream->write((const char*)&color->m, sizeof(float));
+		stream->write((const char*)&color->y, sizeof(float));
+		stream->write((const char*)&color->k, sizeof(float));
+		stream->write((const char*)&color->opacity, sizeof(float));
 
-        saveString(stream, color->name);
-    }
+		saveString(stream, color->name);
+	}
 
     // Write symbols
     int num_symbols = map->getNumSymbols();
@@ -396,17 +401,18 @@ void NativeFileExport::doExport() throw (FormatException)
 
     for (int i = 0; i < num_templates; ++i)
     {
-        Template* temp = map->getTemplate(i);
+		Template* temp = map->getTemplate(i);
 
-        saveString(stream, temp->getTemplatePath());
+		saveString(stream, temp->getTemplatePath());
+		saveString(stream, temp->getTemplateRelativePath());
 
-        temp->saveTemplateParameters(stream);	// save transformation etc.
-        if (temp->hasUnsavedChanges())
-        {
-            // Save the template itself (e.g. image, gpx file, etc.)
-            temp->saveTemplateFile();
-            temp->setHasUnsavedChanges(false);
-        }
+		temp->saveTemplateConfiguration(stream);	// save transformation etc.
+		if (temp->hasUnsavedChanges())
+		{
+			// Save the template itself (e.g. image, gpx file, etc.)
+			temp->saveTemplateFile();
+			temp->setHasUnsavedChanges(false);
+		}
     }
 
     // Write widgets and views; replaces MapEditorController::saveWidgetsAndViews()

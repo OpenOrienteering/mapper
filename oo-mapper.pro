@@ -86,10 +86,12 @@ HEADERS += src/color_dock_widget.h \
            src/tool_rotate.h \
            src/tool_rotate_pattern.h \
            src/tool_scale.h \
+           src/transformation.h \
            src/undo.h \
            src/util.h \
            src/util_gui.h \
            src/util_pie_menu.h \
+           src/util_task_dialog.h \
            qtsingleapplication/qtlocalpeer.h \
            qtsingleapplication/qtsingleapplication.h \
            libocad/libocad.h \
@@ -165,9 +167,11 @@ SOURCES += src/color_dock_widget.cpp \
            src/tool_rotate.cpp \
            src/tool_rotate_pattern.cpp \
            src/tool_scale.cpp \
+           src/transformation.cpp \
            src/undo.cpp \
            src/util.cpp \
            src/util_pie_menu.cpp \
+           src/util_task_dialog.cpp \
            qtsingleapplication/qtlocalpeer.cpp \
            qtsingleapplication/qtsingleapplication.cpp \
            libocad/types.c \

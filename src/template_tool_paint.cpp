@@ -92,7 +92,7 @@ bool PaintOnTemplateTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord
 {
 	if (dragging)
 	{
-		float scale = qMin(temp->getTemplateFinalScaleX(), temp->getTemplateFinalScaleY());
+		float scale = qMin(temp->getTemplateScaleX(), temp->getTemplateScaleY());
 		
 		coords.push_back(map_coord);
 		rectInclude(map_bbox, map_coord.toQPointF());
@@ -125,7 +125,7 @@ bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_co
 
 void PaintOnTemplateTool::draw(QPainter* painter, MapWidget* widget)
 {
-	float scale = qMin(temp->getTemplateFinalScaleX(), temp->getTemplateFinalScaleY());
+	float scale = qMin(temp->getTemplateScaleX(), temp->getTemplateScaleY());
 	
 	QPen pen(erasing ? qRgb(255, 255, 255) : paint_color);
 	pen.setWidthF(widget->getMapView()->lengthToPixel(1000 * scale * (erasing ? erase_width : 1)));

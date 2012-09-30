@@ -88,15 +88,15 @@ void TemplateMoveTool::updateDragging(MapCoordF mouse_pos_map)
 	
 	for (int i = 0; i < templ->getNumPassPoints(); ++i)
 	{
-		Template::PassPoint* point = templ->getPassPoint(i);
+		PassPoint* point = templ->getPassPoint(i);
 		
 		if (templ->isAdjustmentApplied())
 		{
-			point->dest_coords_map.moveInt(dx, dy);
-			point->calculated_coords_map.moveInt(dx, dy);
+			point->dest_coords.moveInt(dx, dy);
+			point->calculated_coords.moveInt(dx, dy);
 		}
 		else
-			point->src_coords_map.moveInt(dx, dy);
+			point->src_coords.moveInt(dx, dy);
 	}
 	
 	editor->getMap()->setTemplatesDirty();

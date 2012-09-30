@@ -96,12 +96,13 @@ private:
 	QPushButton* move_down_button;
 	
 	QGroupBox* active_buttons_group;
+	QPushButton* georef_button;
 	QAction* move_by_hand_action;
 	QToolButton* move_by_hand_button;
 	QPushButton* adjust_button;
 	//QPushButton* group_button;
 	QPushButton* position_button;
-	QToolButton* more_button;
+	//QToolButton* more_button;
 	
 	bool wide_layout;
 	QBoxLayout* layout;

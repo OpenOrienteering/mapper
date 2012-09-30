@@ -34,6 +34,7 @@
 #include "template_adjust.h"
 #include "template_tool_move.h"
 #include "template_position_dock_widget.h"
+#include "georeferencing.h"
 
 /** Parses a user-entered opacity value. Values must be strings of the form "F%" where F is any decimal number between 0 and
  *  100 (inclusive), or "F", where F is any floating-point number between 0.0 and 1.0 (inclusive). Leading and trailing
@@ -117,8 +118,10 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	list_buttons_group->setLayout(list_buttons_group_layout);
 	
 	// Active group
-	active_buttons_group = new QGroupBox(tr("Selected template(s)"));
+	active_buttons_group = new QGroupBox();
 	
+	georef_button = new QPushButton();
+	georef_button->setCheckable(true);
 	move_by_hand_action = new QAction(QIcon(":/images/move.png"), tr("Move by hand"), this);
 	move_by_hand_action->setCheckable(true);
 	move_by_hand_button = new QToolButton();
@@ -131,7 +134,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	position_button = new QPushButton(tr("Positioning..."));
 	position_button->setCheckable(true);
 	
-	more_button = new QToolButton();
+	/*more_button = new QToolButton();
 	more_button->setText(tr("More..."));
 	more_button->setPopupMode(QToolButton::InstantPopup);
 	more_button->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
@@ -139,15 +142,17 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	more_button_menu->addAction(QIcon(":/images/window-new.png"), tr("Numeric transformation window"));
 	more_button_menu->addAction(tr("Set transparent color..."));
 	more_button_menu->addAction(tr("Trace lines..."));
-	more_button->setMenu(more_button_menu);
+	more_button->setMenu(more_button_menu);*/
 	
+	int row = 0;
 	QGridLayout* active_buttons_group_layout = new QGridLayout();
 	active_buttons_group_layout->setMargin(0);
-	active_buttons_group_layout->addWidget(move_by_hand_button, 0, 0);
-	active_buttons_group_layout->addWidget(adjust_button, 0, 1);
-	//active_buttons_group_layout->addWidget(group_button, 1, 0);
-	active_buttons_group_layout->addWidget(position_button, 1, 0);
-	active_buttons_group_layout->addWidget(more_button, 1, 1);
+	active_buttons_group_layout->addWidget(georef_button, row, 0);
+	active_buttons_group_layout->addWidget(adjust_button, row++, 1);
+	active_buttons_group_layout->addWidget(move_by_hand_button, row, 0);
+	active_buttons_group_layout->addWidget(position_button, row++, 1);
+	//active_buttons_group_layout->addWidget(group_button, row++, 0);
+	//active_buttons_group_layout->addWidget(more_button, row++, 1);
 	active_buttons_group->setLayout(active_buttons_group_layout);
 	
 	selectionChanged(QItemSelection(), QItemSelection()); // enable / disable buttons
@@ -183,7 +188,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	connect(adjust_button, SIGNAL(clicked(bool)), this, SLOT(adjustClicked(bool)));
 	//connect(group_button, SIGNAL(clicked(bool)), this, SLOT(groupClicked()));
 	connect(position_button, SIGNAL(clicked(bool)), this, SLOT(positionClicked(bool)));
-	connect(more_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(moreActionClicked(QAction*)));
+	//connect(more_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(moreActionClicked(QAction*)));
 	
 	connect(controller, SIGNAL(templatePositionDockWidgetClosed(Template*)), this, SLOT(templatePositionDockWidgetClosed(Template*)));
 }
@@ -242,17 +247,30 @@ Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapView
 		return NULL;
 	}
 	
-	if (!new_temp->open(dialog_parent, main_view))
+	if (!new_temp->preLoadConfiguration(dialog_parent))
 	{
 		delete new_temp;
 		return NULL;
 	}
 	
-	if (!new_temp->isTemplateValid())
+	if (!new_temp->loadTemplateFile(true))
 	{
 		QMessageBox::warning(dialog_parent, tr("Error"), tr("Cannot open template:\n%1\n\nFailed to load template. Does the file exist and is it valid?").arg(path));
 		delete new_temp;
 		return NULL;
+	}
+	
+	if (!new_temp->postLoadConfiguration(dialog_parent))
+	{
+		delete new_temp;
+		return NULL;
+	}
+	
+	// If the template is not georeferenced, position it at the viewport midpoint
+	if (!new_temp->isTemplateGeoreferenced())
+	{
+		new_temp->setTemplateX(main_view->getPositionX());
+		new_temp->setTemplateY(main_view->getPositionY());
 	}
 	
 	return new_temp;
@@ -563,16 +581,51 @@ void TemplateWidget::selectionChanged(const QItemSelection& selected, const QIte
 	move_up_button->setEnabled(current_row >= 1 && !multiple_rows_selected);
 	move_down_button->setEnabled(current_row < template_table->rowCount() - 1 && current_row != -1 && !multiple_rows_selected);
 	
-	bool enable_active_buttons = current_row >= 0 && !map_row;
+	QString active_group_title;
+	QString georef_text;
+	bool georef_active;
+	if (current_row < 0)
+	{
+		active_group_title = tr("No selection");
+		georef_text = "-";
+		georef_active = false;
+	}
+	else if (multiple_rows_selected)
+	{
+		active_group_title = tr("Multiple templates selected");
+		georef_text = "-";
+		georef_active = false;
+	}
+	else if (map_row)
+	{
+		active_group_title = tr("- Map -");
+		georef_active = !map->getGeoreferencing().isLocal();
+		georef_text = georef_active ? tr("yes") : tr("no");
+	}
+	else
+	{
+		active_group_title = temp->getTemplateFilename();
+		georef_active = temp->isTemplateGeoreferenced();
+		georef_text = georef_active ? tr("yes") : tr("no");
+	}
+	active_buttons_group->setTitle(active_group_title);
+	georef_button->setText(tr("Georeferenced: %1").arg(georef_text));
+	georef_button->setChecked(georef_active);
+	
+	bool enable_active_buttons = current_row >= 0 && !map_row && temp && !multiple_rows_selected;
 	active_buttons_group->setEnabled(enable_active_buttons);
 	if (enable_active_buttons)
 	{
-		move_by_hand_button->setEnabled(!multiple_rows_selected);
-		adjust_button->setEnabled(!multiple_rows_selected);
+		// TODO: enable changing georeferencing state
+		georef_button->setEnabled(false);
+		
+		move_by_hand_button->setEnabled(!temp->isTemplateGeoreferenced());
+		adjust_button->setEnabled(!temp->isTemplateGeoreferenced());
+		position_button->setEnabled(!temp->isTemplateGeoreferenced());
+		
 		// TODO: Implement and enable buttons again
 		//group_button->setEnabled(false); //multiple_rows_selected || (!multiple_rows_selected && map->getTemplate(posFromRow(current_row))->getTemplateGroup() >= 0));
-		position_button->setEnabled(!multiple_rows_selected);
-		more_button->setEnabled(false); // !multiple_rows_selected);
+		//more_button->setEnabled(false); // !multiple_rows_selected);
 	}
 	
 	if (multiple_rows_selected)
@@ -595,7 +648,7 @@ void TemplateWidget::currentCellChange(int current_row, int current_column, int 
         if (!temp)
             return;
 
-        if (!temp->isTemplateValid())
+        if (temp->getTemplateState() == Template::Invalid)
             changeTemplateFile(current_row);
     }
 }
@@ -736,7 +789,7 @@ void TemplateWidget::updateRow(int row)
         vis = main_view->getTemplateVisibility(temp);
         group = temp->getTemplateGroup();
         name = temp->getTemplateFilename();
-        valid = temp->isTemplateValid();
+        valid = temp->getTemplateState() != Template::Invalid;
     }
     else
     {
@@ -788,8 +841,21 @@ void TemplateWidget::changeTemplateFile(int row)
 	Template* temp = (row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
 	assert(temp);
 	
-	if (temp->changeTemplateFile(path))
+	bool need_to_load = temp->getTemplateState() != Template::Loaded;
+	QString old_path = temp->getTemplatePath();
+	temp->switchTemplateFile(path);
+	if (need_to_load)
+		temp->loadTemplateFile(false);
+	
+	if (temp->getTemplateState() == Template::Loaded)
+	{
 		updateRow(row);
+		temp->setTemplateAreaDirty();
+	}
 	else
+	{
 		QMessageBox::warning(this, tr("Error"), tr("Cannot change the template to this file! Is the format of the file correct for this template type?"));
+		// Revert change
+		temp->switchTemplateFile(old_path);
+	}
 }

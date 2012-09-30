@@ -18,10 +18,13 @@
  */
 
 #include "file_format.h"
-#include "symbol.h"
 
 #include <cassert>
+
 #include <QFileInfo>
+
+#include "symbol.h"
+#include "template.h"
 
 Format::Format(const QString &id, const QString &description, const QString &file_extension, bool supportsImport, bool supportsExport, bool export_lossy)
     : format_id(id), format_description(description), file_extension(file_extension),
@@ -93,14 +96,63 @@ FormatRegistry::~FormatRegistry()
 FormatRegistry FileFormats;
 
 
-void Importer::doImport(bool load_symbols_only) throw (FormatException)
+void Importer::doImport(bool load_symbols_only, QString map_path) throw (FormatException)
 {
+	if (!map_path.isEmpty() && !map_path.endsWith('/'))
+		map_path.append('/');
+	
 	import(load_symbols_only);
 	
-	// Post processing
+	// Symbol post processing
 	for (int i = 0; i < map->getNumSymbols(); ++i)
 	{
 		if (!map->getSymbol(i)->loadFinished(map))
 			throw FormatException(QObject::tr("Error during symbol post-processing."));
 	}
+	
+	// Template loading: try to find all template files
+	bool have_lost_template = false;
+	for (int i = 0; i < map->getNumTemplates(); ++i)
+	{
+		Template* temp = map->getTemplate(i);
+		
+		// First try relative path (if this information is available)
+		if (!temp->getTemplateRelativePath().isEmpty() && !map_path.isEmpty())
+		{
+			QString loaded_absolute_path = temp->getTemplatePath();
+			temp->setTemplatePath(map_path + temp->getTemplateRelativePath());
+			temp->loadTemplateFile(false);
+			if (temp->getTemplateState() != Template::Loaded)
+			{
+				// Failure: restore old absolute path
+				temp->setTemplatePath(loaded_absolute_path);
+			}
+		}
+		
+		// Then try absolute path
+		if (temp->getTemplateState() != Template::Loaded)
+			temp->loadTemplateFile(false);
+		
+		// Then try the template filename in the map's directory
+		if (temp->getTemplateState() != Template::Loaded && !map_path.isEmpty())
+		{
+			QString loaded_absolute_path = temp->getTemplatePath();
+			temp->setTemplatePath(map_path + temp->getTemplateFilename());
+			temp->loadTemplateFile(false);
+			if (temp->getTemplateState() != Template::Loaded)
+			{
+				// Failure: restore old absolute path
+				temp->setTemplatePath(loaded_absolute_path);
+			}
+			else
+			{
+				addWarning(QObject::tr("Template \"%1\" has been loaded from the map's directory instead of the relative location to the map file where it was previously.").arg(temp->getTemplateFilename()));
+			}
+		}
+		
+		if (temp->getTemplateState() != Template::Loaded)
+			have_lost_template = true;
+	}
+	if (have_lost_template)
+		addWarning(QObject::tr("At least one template file could not be found. Click the red template name(s) in the Templates -> Template setup window to locate the template file name(s)."));
 }

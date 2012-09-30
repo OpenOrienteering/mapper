@@ -189,7 +189,7 @@ public:
 	/// Attempts to save the map to the given file. If a MapEditorController is given, the widget positions and MapViews stored in the map file are also updated.
     bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
 	/// Attempts to load the map from the specified path. Returns true on success.
-	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL, bool load_symbols_only = false);
+	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL, bool load_symbols_only = false, bool show_error_messages = true);
 	/// Imports the other map into this map with the following strategy:
 	///  - if the other map contains objects, import all objects with the minimum amount of colors and symbols needed to display them
 	///  - if the other map does not contain objects, import all symbols with the minimum amount of colors needed to display them
@@ -209,9 +209,10 @@ public:
 	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity = 1.0);
 	/// Draws the map grid
 	void drawGrid(QPainter* painter, QRectF bounding_box);
-	/// Draws the templates first_template until last_template which are visible in the given bouding box. view determines template visibility and can be NULL to show all templates.
-	/// draw_untransformed_parts is only possible with a MapWidget (because of MapWidget::mapToViewport()). Otherwise, set it to NULL.
-	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, bool draw_untransformed_parts, const QRect& untransformed_dirty_rect, MapWidget* widget, MapView* view);
+	/// Draws the templates first_template until last_template which are visible in the given bouding box.
+	/// view determines template visibility and can be NULL to show all templates.
+	/// The initial transform of the given QPainter must be the map-to-paintdevice transformation.
+	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, MapView* view);
 	/// Updates the renderables and extent of all objects which have been changed. This is automatically called by draw(), you normally do not need it
 	void updateObjects();
 	/// Calculates the extent of all map objects (and possibly templates). If templates should be included, a view can be given to take the template visibilities from.

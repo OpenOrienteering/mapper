@@ -26,9 +26,11 @@ set(Mapper_Common_SRCS
  global.cpp
  util.cpp
  util_pie_menu.cpp
+ util_task_dialog.cpp
  undo.cpp
  qbezier.cpp
  matrix.cpp
+ transformation.cpp
 
  main_window.cpp
  main_window_home_screen.cpp
@@ -158,6 +160,7 @@ set(Mapper_Common_MOC_INPUT
  tool_scale.h
  undo.h
  util_pie_menu.h
+ util_task_dialog.h
 )
 
 if(Mapper_XML_FORMAT)

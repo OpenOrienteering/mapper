@@ -22,6 +22,7 @@
 #include <QDebug>
 #include <QDateTime>
 #include <qmath.h>
+#include <QDir>
 #include <QImageReader>
 
 #include "map_color.h"
@@ -1090,18 +1091,19 @@ void OCAD8FileImport::importString(OCADStringEntry *entry)
 Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background)
 {
     QString filename(background.filename); // FIXME: use platform char encoding?
+	filename = QDir::cleanPath(filename.replace('\\', '/'));
 	if (OCAD8FileFormat::isRasterImageFile(filename))
     {
-        TemplateImage *templ = new TemplateImage(filename, map);
+        TemplateImage* templ = new TemplateImage(filename, map);
         MapCoord c;
         convertPoint(c, background.trnx, background.trny);
         templ->setTemplateX(c.rawX());
         templ->setTemplateY(c.rawY());
-        // This seems to be measured in degrees. Plus there's wacky values like -359.7.
         templ->setTemplateRotation(M_PI / 180 * background.angle);
         templ->setTemplateScaleX(convertTemplateScale(background.sclx));
         templ->setTemplateScaleY(convertTemplateScale(background.scly));
         // FIXME: import template view parameters: background.dimming and background.transparent
+		// TODO: import template visibility
         return templ;
     }
     else
@@ -1313,8 +1315,7 @@ MapColor *OCAD8FileImport::convertColor(int color) {
 
 double OCAD8FileImport::convertTemplateScale(double ocad_scale)
 {
-	double mpd = ocad_scale * 0.00001;			// meters(on map) per pixel
-	return mpd * map->getScaleDenominator();	// meters(in reality) per pixel
+	return ocad_scale * 0.01;	// millimeters(on map) per pixel
 }
 
 
@@ -2424,8 +2425,7 @@ s16 OCAD8FileExport::convertColor(MapColor* color)
 
 double OCAD8FileExport::convertTemplateScale(double mapper_scale)
 {
-	double mpd = mapper_scale / map->getScaleDenominator();	// meters(on map) per pixel
-	return mpd * 1 / 0.00001;
+	return mapper_scale * (1 / 0.01);
 }
 
 void OCAD8FileExport::addStringTruncationWarning(const QString& text, int truncation_pos)

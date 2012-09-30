@@ -26,6 +26,7 @@
 #include <QDebug>
 #include <QFile>
 #include <qmath.h>
+#include <QDir>
 #include <QMessageBox>
 #include <QPainter>
 #include <QXmlStreamReader>
@@ -590,8 +591,15 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 		return false;
 	}
 	
-	Exporter *exporter = NULL;
-	// Wrap everything in a try block, so we can gracefully recover if the exporter balks.
+	// Update the relative paths of the templates
+	QDir map_dir = QFileInfo(path).absoluteDir();
+	for (int i = 0; i < getNumTemplates(); ++i)
+	{
+		Template* temp = getTemplate(i);
+		temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
+	}
+	
+	Exporter* exporter = NULL;
 	try {
 		// Create an exporter instance for this file and map.
 		exporter = format->createExporter(&file, this, map_editor->main_view);
@@ -644,7 +652,7 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 	
 	return true;
 }
-bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool load_symbols_only)
+bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool load_symbols_only, bool show_error_messages)
 {
 	MapView *view = new MapView(this);
 
@@ -652,7 +660,8 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 	QFile file(path);
 	if (!file.open(QIODevice::ReadOnly))
 	{
-		QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\nfor reading.").arg(path));
+		if (show_error_messages)
+			QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\nfor reading.").arg(path));
 		return false;
 	}
 	
@@ -678,7 +687,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 				importer = format->createImporter(&file, this, view);
 
 				// Run the first pass.
-				importer->doImport(load_symbols_only);
+				importer->doImport(load_symbols_only, QFileInfo(path).absolutePath());
 
 				// Are there any actions the user must take to complete the import?
 				if (!importer->actions().empty())
@@ -692,7 +701,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 				file.close();
 
 				// Display any warnings.
-				if (!importer->warnings().empty())
+				if (!importer->warnings().empty() && show_error_messages)
 				{
 					QString warnings = "";
 					for (std::vector<QString>::const_iterator it = importer->warnings().begin(); it != importer->warnings().end(); ++it) {
@@ -725,7 +734,8 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 
 	if (!import_complete)
 	{
-		QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\n\n%2").arg(path).arg(error_msg));
+		if (show_error_messages)
+			QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\n\n%2").arg(path).arg(error_msg));
 		return false;
 	}
 
@@ -950,41 +960,18 @@ void Map::drawGrid(QPainter* painter, QRectF bounding_box)
 {
 	grid->draw(painter, bounding_box, this);
 }
-void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, bool draw_untransformed_parts, const QRect& untransformed_dirty_rect, MapWidget* widget, MapView* view)
+void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, MapView* view)
 {
-	bool really_draw_untransformed_parts = draw_untransformed_parts && widget;
-
 	for (int i = first_template; i <= last_template; ++i)
 	{
 		Template* temp = getTemplate(i);
-		if ((view && !view->isTemplateVisible(temp)) || !temp->isTemplateValid())
+		if ((view && !view->isTemplateVisible(temp)) || (temp->getTemplateState() != Template::Loaded))
 			continue;
 		float scale = (view ? view->getZoom() : 1) * std::max(temp->getTemplateScaleX(), temp->getTemplateScaleY());
 		
-		QRectF view_rect;
-		if (temp->getTemplateRotation() != 0)
-			view_rect = QRectF(-9e42, -9e42, 9e42, 9e42);	// TODO: transform base_view_rect (map coords) using template transform to template coords
-		else
-		{
-			view_rect.setLeft((bounding_box.x() / temp->getTemplateScaleX()) - temp->getTemplateX() / 1000.0);
-			view_rect.setTop((bounding_box.y() / temp->getTemplateScaleY()) - temp->getTemplateY() / 1000.0);
-			view_rect.setRight((bounding_box.right() / temp->getTemplateScaleX()) - temp->getTemplateX() / 1000.0);
-			view_rect.setBottom((bounding_box.bottom() / temp->getTemplateScaleY()) - temp->getTemplateY() / 1000.0);
-		}
-		
-		if (really_draw_untransformed_parts)
-			painter->save();
 		painter->save();
-		temp->applyTemplateTransform(painter);
-		temp->drawTemplate(painter, view_rect, scale, view ? view->getTemplateVisibility(temp)->opacity : 1);
+		temp->drawTemplate(painter, bounding_box, scale, view ? view->getTemplateVisibility(temp)->opacity : 1);
 		painter->restore();
-		
-		if (really_draw_untransformed_parts)
-		{
-			painter->resetMatrix();
-			temp->drawTemplateUntransformed(painter, untransformed_dirty_rect, widget);
-			painter->restore();
-		}
 	}
 }
 void Map::updateObjects()
@@ -1849,11 +1836,8 @@ QRectF Map::calculateExtent(bool include_helper_symbols, bool include_templates,
 			if (view && !view->isTemplateVisible(templates[i]))
 				continue;
 			
-			QRectF template_extent = templates[i]->getExtent();
-			rectInclude(rect, templates[i]->templateToMap(template_extent.topLeft()));
-			rectInclude(rect, templates[i]->templateToMap(template_extent.topRight()));
-			rectInclude(rect, templates[i]->templateToMap(template_extent.bottomRight()));
-			rectInclude(rect, templates[i]->templateToMap(template_extent.bottomLeft()));
+			QRectF template_bbox = templates[i]->calculateTemplateBoundingBox();
+			rectIncludeSafe(rect, template_bbox);
 		}
 	}
 	

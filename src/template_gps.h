@@ -1,18 +1,18 @@
 /*
  *    Copyright 2012 Thomas Schöps
- *    
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -27,40 +27,51 @@
 class PathObject;
 class PointObject;
 
-/// A GPS track + waypoints used as template; TODO: rename to TemplateTrack
-class TemplateGPS : public Template
+/// A template consisting of a set of tracks (polylines) and waypoints
+class TemplateTrack : public Template
 {
 Q_OBJECT
 public:
-	TemplateGPS(const QString& filename, Map* map);
-	TemplateGPS(const TemplateGPS& other);
-	virtual ~TemplateGPS();
-	virtual Template* duplicate();
-	virtual const QString getTemplateType() {return "TemplateGPS";}
+	TemplateTrack(const QString& path, Map* map);
+	virtual ~TemplateTrack();
+	virtual const QString getTemplateType() {return "TemplateTrack";}
+	
 	virtual bool saveTemplateFile();
 	
-	virtual bool open(QWidget* dialog_parent, MapView* main_view);
+	virtual bool loadTemplateFileImpl(bool configuring);
+	virtual bool postLoadConfiguration(QWidget* dialog_parent);
+	virtual void unloadTemplateFileImpl();
+	
 	virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity);
-	virtual void drawTemplateUntransformed(QPainter* painter, const QRect& clip_rect, MapWidget* widget);
-	virtual QRectF getExtent();
+	virtual QRectF getTemplateExtent();
+    virtual QRectF calculateTemplateBoundingBox();
+    virtual int getTemplateBoundingBoxPixelBorder();
 	
 	
-	/** Import the track as map object(s).
-	 */
+	/// Draws all tracks.
+	void drawTracks(QPainter* painter);
+	
+	/// Draws all waypoints. Needs the transformation from map coords to paint device coords.
+	void drawWaypoints(QPainter* painter, QTransform map_to_device);
+	
+	/// Import the track as map object(s), returns true if something has been imported.
+	/// TODO: should this be moved to the Track class?
 	bool import(QWidget* dialog_parent = NULL);
 	
 public slots:
 	void updateGeoreferencing();
 	
 protected:
-	void calculateExtent();
-	virtual bool changeTemplateFileImpl(const QString& filename);
+	virtual Template* duplicateImpl();
+	
+	/// Projects the track in non-georeferenced mode
+	void calculateLocalGeoreferencing();
 	
 	PathObject* importPathStart();
 	void importPathEnd(PathObject* path);
 	PointObject* importWaypoint(const MapCoordF& position);
 	
-	GPSTrack track;
+	Track track;
 };
 
 #endif

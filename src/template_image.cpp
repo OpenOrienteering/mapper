@@ -26,70 +26,110 @@
 #include <QtWidgets>
 #endif
 
+#include "map.h"
 #include "util.h"
 
-TemplateImage::TemplateImage(const QString& filename, Map* map) : Template(filename, map)
+TemplateImage::TemplateImage(const QString& path, Map* map) : Template(path, map)
 {
-	image = new QImage(filename);
-	if (image->isNull())
-	{
-		delete image;
-		image = NULL;
-		return;
-	}
-	
-	template_valid = true;
+	image = NULL;
 }
-TemplateImage::TemplateImage(const TemplateImage& other) : Template(other)
-{
-	image = new QImage(*other.image);
-}
+
 TemplateImage::~TemplateImage()
 {
-	delete image;
+	if (template_state == Loaded)
+		unloadTemplateFile();
 }
-Template* TemplateImage::duplicate()
-{
-	TemplateImage* copy = new TemplateImage(*this);
-	return copy;
-}
+
 bool TemplateImage::saveTemplateFile()
 {
 	return image->save(template_path);
 }
 
-bool TemplateImage::open(QWidget* dialog_parent, MapView* main_view)
+void TemplateImage::saveTypeSpecificTemplateConfiguration(QIODevice* stream)
+{
+    // TODO: save filtering parameter here
+}
+
+bool TemplateImage::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
+{
+	// TODO: load filtering parameter here
+	return true;
+}
+
+bool TemplateImage::loadTemplateFileImpl(bool configuring)
+{
+	image = new QImage(template_path);
+	if (image->isNull())
+	{
+		delete image;
+		image = NULL;
+		return false;
+	}
+	else
+		return true;
+}
+bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent)
 {
 	if (getTemplateFilename().endsWith(".gif", Qt::CaseInsensitive))
 		QMessageBox::warning(dialog_parent, tr("Warning"), tr("Loading a GIF image template.\nSaving GIF files is not supported. This means that drawings on this template won't be saved!\nIf you do not intend to draw on this template however, that is no problem."));
 	
-	TemplateImageOpenDialog open_dialog(map, dialog_parent);
+	TemplateImageOpenDialog open_dialog(this, dialog_parent);
 	open_dialog.setWindowModality(Qt::WindowModal);
 	if (open_dialog.exec() == QDialog::Rejected)
 		return false;
 	
-	cur_trans.template_scale_x = open_dialog.getMpp();
-	cur_trans.template_scale_y = cur_trans.template_scale_x;
+	is_georeferenced = false;	// TODO
 	
-	cur_trans.template_x = main_view->getPositionX();
-	cur_trans.template_y = main_view->getPositionY();
-	
-	updateTransformationMatrices();
+	if (!is_georeferenced)
+	{
+		transform.template_scale_x = open_dialog.getMpp() * 1000.0 / map->getScaleDenominator();
+		transform.template_scale_y = transform.template_scale_x;
+		
+		//transform.template_x = main_view->getPositionX();
+		//transform.template_y = main_view->getPositionY();
+		
+		updateTransformationMatrices();
+	}
 	
 	return true;
 }
+
+void TemplateImage::unloadTemplateFileImpl()
+{
+	delete image;
+	image = NULL;
+}
+
 void TemplateImage::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity)
 {
+	if (!is_georeferenced)
+		applyTemplateTransform(painter);
+	else
+	{
+		// TODO
+	}
+	
 	painter->setRenderHint(QPainter::SmoothPixmapTransform);
 	painter->setOpacity(opacity);
 	painter->drawImage(QPointF(-image->width() * 0.5, -image->height() * 0.5), *image);
 	painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
 }
-QRectF TemplateImage::getExtent()
+QRectF TemplateImage::getTemplateExtent()
 {
     // If the image is invalid, the extent is an empty rectangle.
     if (!image) return QRectF();
 	return QRectF(-image->width() * 0.5, -image->height() * 0.5, image->width(), image->height());
+}
+
+QRectF TemplateImage::calculateTemplateBoundingBox()
+{
+	if (!is_georeferenced)
+		return Template::calculateTemplateBoundingBox();
+	else
+	{
+		// TODO!
+		return QRectF();
+	}
 }
 
 QPointF TemplateImage::calcCenterOfGravity(QRgb background_color)
@@ -119,19 +159,33 @@ QPointF TemplateImage::calcCenterOfGravity(QRgb background_color)
 	return center;
 }
 
-double TemplateImage::getTemplateFinalScaleX() const
+Template* TemplateImage::duplicateImpl()
 {
-	return cur_trans.template_scale_x * 1000 / map->getScaleDenominator();
-}
-double TemplateImage::getTemplateFinalScaleY() const
-{
-	return cur_trans.template_scale_y * 1000 / map->getScaleDenominator();
+	TemplateImage* new_template = new TemplateImage(template_path, map);
+	new_template->image = new QImage(*image);
+	return new_template;
 }
 
-void TemplateImage::drawOntoTemplateImpl(QPointF* points, int num_points, QColor color, float width)
+void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width)
 {
-	for (int i = 0; i < num_points; ++i)
-		points[i] = QPointF(points[i].x() + image->width() * 0.5, points[i].y() + image->height() * 0.5);
+	QPointF* points = new QPointF[num_coords];
+	
+	if (is_georeferenced)
+	{
+		// TODO!
+		return;
+	}
+	else
+	{
+		for (int i = 0; i < num_coords; ++i)
+			points[i] = mapToTemplateQPoint(coords[i]) + QPointF(image->width() * 0.5, image->height() * 0.5);
+	}
+	
+	// This conversion is to prevent a very strange bug where the behavior of the
+	// default QPainter composition mode seems to be incorrect for images which are
+	// loaded from a file without alpha and then painted over with the eraser
+	if (color.alpha() == 0 && image->format() != QImage::Format_ARGB32_Premultiplied)
+		*image = image->convertToFormat(QImage::Format_ARGB32_Premultiplied);
 	
     QPainter painter;
 	painter.begin(image);
@@ -147,37 +201,27 @@ void TemplateImage::drawOntoTemplateImpl(QPointF* points, int num_points, QColor
 	painter.setPen(pen);
 	painter.setRenderHint(QPainter::Antialiasing);
 	
-	painter.drawPolyline(points, num_points);
+	painter.drawPolyline(points, num_coords);
 	
 	painter.end();
 }
-bool TemplateImage::changeTemplateFileImpl(const QString& filename)
-{
-	QImage* new_image = new QImage(filename);
-	if (new_image->isNull())
-	{
-		delete new_image;
-		new_image = NULL;
-		return false;
-	}
-	else
-	{
-		if (image)
-			delete image;
-		image = new_image;
-		return true;
-	}
-}
 
-TemplateImageOpenDialog::TemplateImageOpenDialog(Map* map, QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
+
+// ### TemplateImageOpenDialog ###
+
+TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* image, QWidget* parent)
+ : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), image(image)
 {
-	setWindowTitle(tr("Open image template"));
+	setWindowTitle(tr("Opening %1").arg(image->getTemplateFilename()));
+	
+	QLabel* size_label = new QLabel("<b>" + tr("Image size:") + QString("</b> %1 x %2")
+		.arg(image->getQImage()->width()).arg(image->getQImage()->height()));
 	
 	bool use_meters_per_pixel;
 	double meters_per_pixel;
 	double dpi;
 	double scale;
-	map->getImageTemplateDefaults(use_meters_per_pixel, meters_per_pixel, dpi, scale);
+	image->getMap()->getImageTemplateDefaults(use_meters_per_pixel, meters_per_pixel, dpi, scale);
 	
 	mpp_radio = new QRadioButton(tr("Meters per pixel:"));
 	mpp_edit = new QLineEdit((meters_per_pixel > 0) ? QString::number(meters_per_pixel) : "");
@@ -222,6 +266,8 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(Map* map, QWidget* parent) : QD
 	buttons_layout->addWidget(open_button);
 	
 	QVBoxLayout* layout = new QVBoxLayout();
+	layout->addWidget(size_label);
+	layout->addSpacing(16);
 	layout->addLayout(mpp_layout);
 	layout->addLayout(dpi_layout);
 	layout->addLayout(scale_layout);
@@ -269,6 +315,6 @@ void TemplateImageOpenDialog::setOpenEnabled()
 }
 void TemplateImageOpenDialog::doAccept()
 {
-	map->setImageTemplateDefaults(mpp_radio->isChecked(), mpp_edit->text().toDouble(), dpi_edit->text().toDouble(), scale_edit->text().toDouble());
+	image->getMap()->setImageTemplateDefaults(mpp_radio->isChecked(), mpp_edit->text().toDouble(), dpi_edit->text().toDouble(), scale_edit->text().toDouble());
 	accept();
 }

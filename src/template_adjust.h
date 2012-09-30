@@ -54,7 +54,7 @@ public:
 	
 	static void drawCross(QPainter* painter, QPoint midpoint, QColor color);
 	static int findHoverPoint(Template* temp, QPoint mouse_pos, MapWidget* widget, bool& point_src);
-	static bool calculateTemplateAdjust(Template* temp, Template::TemplateTransform& out, QWidget* dialog_parent);
+	static bool calculateTemplateAdjust(Template* temp, TemplateTransform& out, QWidget* dialog_parent);
 	
 	static float cross_radius;
 	

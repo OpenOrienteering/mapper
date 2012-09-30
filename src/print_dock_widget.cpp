@@ -368,7 +368,7 @@ void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& p
 	painter->translate(-print_area.left(), -print_area.top());
 	
 	if (show_templates_check->isChecked())
-		map->drawTemplates(painter, map_extent, 0, map->getFirstFrontTemplate() - 1, false, QRect(0, 0, paint_device->width(), paint_device->height()), NULL, main_view);
+		map->drawTemplates(painter, map_extent, 0, map->getFirstFrontTemplate() - 1, main_view);
 	if (main_view->getMapVisibility()->visible)
 	{
 		if (main_view->getMapVisibility()->opacity == 1)
@@ -405,7 +405,7 @@ void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& p
 	if (show_grid_check->isChecked())
 		map->drawGrid(painter, print_area);
 	if (show_templates_check->isChecked())
-		map->drawTemplates(painter, map_extent, map->getFirstFrontTemplate(), map->getNumTemplates() - 1, false, QRect(0, 0, paint_device->width(), paint_device->height()), NULL, main_view);
+		map->drawTemplates(painter, map_extent, map->getFirstFrontTemplate(), map->getNumTemplates() - 1, main_view);
 	
 	// If a temporary buffer has been used, paint it on the device printer
 	if (print_buffer_painter.isActive())

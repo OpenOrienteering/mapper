@@ -885,7 +885,7 @@ void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first
 	Map* map = view->getMap();
 	QRectF map_view_rect = view->calculateViewedRect(viewportToView(dirty_rect));
 	
-	map->drawTemplates(&painter, map_view_rect, first_template, last_template, true, dirty_rect, this, view);
+	map->drawTemplates(&painter, map_view_rect, first_template, last_template, view);
 
 	painter.restore();
 	painter.end();

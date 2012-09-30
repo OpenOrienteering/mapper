@@ -214,13 +214,12 @@ void SymbolSettingDialog::centerTemplateBBox()
 	assert(preview_map->getNumTemplates() == 1);
 	Template* temp = preview_map->getTemplate(0);
 	
-	QRectF extent = temp->getExtent();
-	QPointF center = extent.center();
-	MapCoordF map_center_current = temp->templateToMap(center);
+	QRectF bbox = temp->calculateTemplateBoundingBox();
+	QPointF center = bbox.center();
 	
 	preview_map->setTemplateAreaDirty(0);
-	temp->setTemplateX(temp->getTemplateX() - qRound64(1000 * map_center_current.getX()));
-	temp->setTemplateY(temp->getTemplateY() - qRound64(1000 * map_center_current.getY()));
+	temp->setTemplateX(temp->getTemplateX() - qRound64(1000 * center.x()));
+	temp->setTemplateY(temp->getTemplateY() - qRound64(1000 * center.y()));
 	preview_map->setTemplateAreaDirty(0);
 }
 

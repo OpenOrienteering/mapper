@@ -46,6 +46,12 @@ public:
 /// (Un-)blocks recursively all signals from a QObject and its child-objects.
 void blockSignalsRecursively(QObject* obj, bool block);
 
+/// Returns a practically "infinitely" big QRectF
+inline QRectF infinteRectF()
+{
+	return QRectF(-10e10, -10e10, 20e10, 20e10);
+}
+
 /// Enlarges the rect to include the given point
 void rectInclude(QRectF& rect, MapCoordF point); // does not work if rect is invalid
 void rectInclude(QRectF& rect, QPointF point); // does not work if rect is invalid

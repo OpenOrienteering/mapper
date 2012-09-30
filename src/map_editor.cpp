@@ -101,6 +101,9 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 MapEditorController::~MapEditorController()
 {
 	paste_act = NULL;
+	delete current_tool;
+	delete override_tool;
+	delete editor_activity;
 	delete toolbar_view;
 	delete toolbar_drawing;
 	delete toolbar_editing;
@@ -112,9 +115,6 @@ MapEditorController::~MapEditorController()
 	delete template_dock_widget;
 	for (QHash<Template*, TemplatePositionDockWidget*>::iterator it = template_position_widgets.begin(); it != template_position_widgets.end(); ++it)
 		delete it.value();
-	delete current_tool;
-	delete override_tool;
-	delete editor_activity;
 	delete main_view;
 	delete map;
 }
@@ -294,19 +294,6 @@ void MapEditorController::attach(MainWindow* window)
 	// ... and make sure it is kept up to date for copy/paste
 	connect(QApplication::clipboard(), SIGNAL(changed(QClipboard::Mode)), this, SLOT(clipboardChanged(QClipboard::Mode)));
 	clipboardChanged(QClipboard::Clipboard);
-	
-	// Check if there is an invalid template and if so, output a warning
-	bool has_invalid_template = false;
-	for (int i = 0; i < map->getNumTemplates(); ++i)
-	{
-		if (!map->getTemplate(i)->isTemplateValid())
-		{
-			has_invalid_template = true;
-			break;
-		}
-	}
-	if (has_invalid_template)
-		window->setStatusBarText("<font color=\"#c00\">" + tr("One or more templates could not be loaded. Use the Templates -> Template setup window to resolve the issue(s) by clicking on the red template file name(s).") + "</font>");
 	
 	if (mode == MapEditor)
 	{
@@ -1706,7 +1693,8 @@ void MapEditorController::updatePaintOnTemplateAction()
 		int i;
 		for (i = 0; i < map->getNumTemplates(); ++i)
 		{
-			if (map->getTemplate(i)->canBeDrawnOnto() && map->getTemplate(i)->isTemplateValid())
+			// TODO: check for visibility too?!
+			if (map->getTemplate(i)->canBeDrawnOnto() && map->getTemplate(i)->getTemplateState() != Template::Invalid)
 				break;
 		}
 		paint_on_template_act->setEnabled(i != map->getNumTemplates());
@@ -1825,8 +1813,8 @@ void MapEditorController::importClicked()
 
 void MapEditorController::importGeoFile(const QString& filename)
 {
-	TemplateGPS temp(filename, map);
-	if (!temp.open(window, main_view))
+	TemplateTrack temp(filename, map);
+	if (!temp.configureAndLoad(window))
 		return;
 	temp.import(window);
 }
