@@ -23,6 +23,8 @@
 #include <QLocale>
 #include <QTranslator>
 
+#include <mapper_config.h>
+
 #include "global.h"
 #include "main_window.h"
 #include "main_window_home_screen.h"
@@ -78,12 +80,16 @@ int main(int argc, char** argv)
 	Q_INIT_RESOURCE(translations);
 	translation_ok = translator.load(translation_name, QString(":/translations"));
 #endif
-	if (!translation_ok)
-		translation_ok = translator.load(translation_name, QCoreApplication::applicationDirPath() + "/translations");
 #ifdef MAPPER_DEBIAN_PACKAGE_NAME
 	if (!translation_ok)
-		translation_ok = translator.load(translation_name, QString("/usr/share/") + MAPPER_DEBIAN_PACKAGE_NAME + "/translations");
+		translation_ok = translator.load(translation_name, QCoreApplication::applicationDirPath() + "/../share/" + MAPPER_DEBIAN_PACKAGE_NAME + "/translations");
 #endif
+#ifdef Q_WS_MAC
+	if (!translation_ok)
+		translation_ok = translator.load(translation_name, QCoreApplication::applicationDirPath() + "/../Resources/translations");
+#endif
+	if (!translation_ok)
+		translation_ok = translator.load(translation_name, QCoreApplication::applicationDirPath() + "/translations");
 	qapp.installTranslator(&translator);
 	
 	doStaticInitializations();

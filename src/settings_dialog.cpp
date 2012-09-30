@@ -25,6 +25,8 @@
 #include <QtWidgets>
 #endif
 
+#include <mapper_config.h>
+
 #include "map_editor.h"
 #include "map_widget.h"
 #include "main_window.h"
@@ -283,12 +285,17 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	
 	QStringList translation_dirs;
 	translation_dirs
-	  << (QCoreApplication::applicationDirPath() + "/translations")
-#ifdef MAPPER_DEBIAN_PACKAGE_NAME
-	  << (QString("/usr/share/") + MAPPER_DEBIAN_PACKAGE_NAME + "/translations")
+#ifdef Mapper_TRANSLATIONS_EMBEDDED
+	  << ":/translations"
 #endif
-	  << ":/translations";
-	  
+#ifdef MAPPER_DEBIAN_PACKAGE_NAME
+	  << (QCoreApplication::applicationDirPath() + "/../share/" + MAPPER_DEBIAN_PACKAGE_NAME + "/translations")
+#endif
+#ifdef Q_WS_MAC
+	  << (QCoreApplication::applicationDirPath() + "/../Resources/translations")
+#endif
+	  << (QCoreApplication::applicationDirPath() + "/translations");
+
 	Q_FOREACH(QString translations_path, translation_dirs)
 	{
 		QDir dir(translations_path);

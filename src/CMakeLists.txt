@@ -18,7 +18,12 @@
 
 include(../3rd-party/clipper.cmake)
 
-configure_file(global.h.in ${CMAKE_CURRENT_SOURCE_DIR}/global.h)
+configure_file(mapper_config.h.in "${CMAKE_CURRENT_BINARY_DIR}/mapper_config.h.tmp")
+execute_process(
+  COMMAND "${CMAKE_COMMAND}" -E copy_if_different mapper_config.h.tmp mapper_config.h
+  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+)
+include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 set(Mapper_Common_SRCS
  ../3rd-party/clipper/cpp/clipper.cpp
@@ -179,12 +184,12 @@ qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 add_library(Mapper_Common STATIC
 	${Mapper_Common_SRCS}
 	${Mapper_Common_MOC}
+	${Mapper_RESOURCES_RCC}
 )
 target_link_libraries(Mapper_Common
  ${Mapper_LIBRARIES}
  ${QT_LIBRARIES}
  ${PROJ_LIBRARY}
- ${Mapper_RESOURCES_RCC}
 )
 add_dependencies(Mapper_Common
   Mapper_prerequisites
@@ -200,6 +205,14 @@ qt4_translations_sources(
 set(Mapper_SRCS
  main.cpp
 )
+ 
+if(MINGW)
+	enable_language(RC)
+	Quirks_CMake_RC_Compiler()
+	configure_file(mingw/resources.rc.in ${CMAKE_CURRENT_BINARY_DIR}/resources.rc @ONLY)
+	configure_file(mingw/control.ico     ${CMAKE_CURRENT_BINARY_DIR}/control.ico  COPYONLY)
+	list(APPEND Mapper_SRCS ${CMAKE_CURRENT_BINARY_DIR}/resources.rc)
+endif(MINGW)
 
 add_executable(Mapper
 	WIN32
