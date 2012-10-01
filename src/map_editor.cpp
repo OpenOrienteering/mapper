@@ -39,6 +39,7 @@
 #include "print_dock_widget.h"
 #include "color_dock_widget.h"
 #include "symbol_dock_widget.h"
+#include "template_dialog_reopen.h"
 #include "template_dock_widget.h"
 #include "template_position_dock_widget.h"
 #include "template.h"
@@ -86,6 +87,8 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	last_painted_on_template = NULL;
 	
 	paste_act = NULL;
+	reopen_template_act = NULL;
+	
 	toolbar_view = NULL;
 	toolbar_drawing = NULL;
 	toolbar_editing = NULL;
@@ -427,6 +430,7 @@ void MapEditorController::createMenuAndToolbars()
 	//QAction* template_config_window_act = newCheckAction("templateconfigwindow", tr("Template configurations window"), this, SLOT(showTemplateConfigurationsWindow(bool)), "window-new", tr("Show/Hide the template configurations window"));
 	//QAction* template_visibilities_window_act = newCheckAction("templatevisibilitieswindow", tr("Template visibilities window"), this, SLOT(showTemplateVisbilitiesWindow(bool)), "window-new", tr("Show/Hide the template visibilities window"));
 	QAction* open_template_act = newAction("opentemplate", tr("Open template..."), this, SLOT(openTemplateClicked()), NULL, QString::null, "template_menu.html");
+	reopen_template_act = newAction("reopentemplate", tr("Reopen template..."), this, SLOT(reopenTemplateClicked()), NULL, QString::null, "template_menu.html");
 	
 	edit_tool_act = newToolAction("editobjects", tr("Edit objects"), this, SLOT(editToolClicked()), "tool-edit.png", QString::null, "drawing_toolbar.html#selector");
 	draw_point_act = newToolAction("drawpoint", tr("Set point objects"), this, SLOT(drawPointClicked()), "draw-point.png", QString::null, "drawing_toolbar.html#point");
@@ -592,6 +596,7 @@ void MapEditorController::createMenuAndToolbars()
 	template_menu->addAction(template_visibilities_window_act);*/
 	template_menu->addSeparator();
 	template_menu->addAction(open_template_act);
+	template_menu->addAction(reopen_template_act);
 
 #ifdef Q_WS_MAC
 	// Mac toolbars are still a little screwed up, turns out we have to insert a
@@ -1071,6 +1076,7 @@ void MapEditorController::showTemplateWindow(bool show)
 		window->addDockWidget(Qt::RightDockWidgetArea, template_dock_widget, Qt::Vertical);
 	}
 }
+
 void MapEditorController::openTemplateClicked()
 {
 	Template* new_template = TemplateWidget::showOpenTemplateDialog(window, main_view);
@@ -1092,6 +1098,23 @@ void MapEditorController::openTemplateClicked()
 	
 	TemplateWidget* template_widget = reinterpret_cast<TemplateWidget*>(template_dock_widget->widget());
 	template_widget->addTemplateAt(new_template, -1);
+}
+
+void MapEditorController::reopenTemplateClicked()
+{
+	QString map_directory = window->getCurrentFilePath();
+	if (!map_directory.isEmpty())
+		map_directory = QFileInfo(map_directory).canonicalPath();
+	ReopenTemplateDialog* dialog = new ReopenTemplateDialog(window, map, main_view, map_directory); 
+	dialog->setWindowModality(Qt::WindowModal);
+	dialog->exec();
+	delete dialog;
+}
+
+void MapEditorController::closedTemplateAvailabilityChanged()
+{
+	if (reopen_template_act)
+		reopen_template_act->setEnabled(map->getNumClosedTemplates() > 0);
 }
 
 void MapEditorController::editGeoreferencing()
@@ -1738,6 +1761,7 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 	connect(map, SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	connect(map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
 	connect(map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
+	connect(map, SIGNAL(closedTemplateAvailabilityChanged()), this, SLOT(closedTemplateAvailabilityChanged()));
 	if (symbol_widget)
 		connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*,Symbol*)));
 	
@@ -1757,6 +1781,7 @@ void MapEditorController::updateWidgets()
 		{
 			hatch_areas_view_act->setChecked(map->isAreaHatchingEnabled());
 			baseline_view_act->setChecked(map->isBaselineViewEnabled());
+			closedTemplateAvailabilityChanged();
 		}
 	}
 }

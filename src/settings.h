@@ -46,6 +46,7 @@ public:
 		EditTool_DeleteBezierPointActionAlternative,
 		RectangleTool_HelperCrossRadius,
 		RectangleTool_PreviewLineWidth,
+		Templates_KeepSettingsOfClosed,
 		General_Language
 	};
 	

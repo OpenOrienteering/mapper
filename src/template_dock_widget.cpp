@@ -35,6 +35,7 @@
 #include "template_tool_move.h"
 #include "template_position_dock_widget.h"
 #include "georeferencing.h"
+#include "settings.h"
 
 /** Parses a user-entered opacity value. Values must be strings of the form "F%" where F is any decimal number between 0 and
  *  100 (inclusive), or "F", where F is any floating-point number between 0.0 and 1.0 (inclusive). Leading and trailing
@@ -99,7 +100,9 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	new_button->setEnabled(false);	// TODO!
 	
 	QPushButton* open_button = new QPushButton(QIcon(":/images/open.png"), tr("Open..."));
-	delete_button = new QPushButton(QIcon(":/images/minus.png"), tr("Delete"));
+	delete_button = new QPushButton(QIcon(":/images/minus.png"), "");
+	updateDeleteButtonText();
+	connect(&Settings::getInstance(), SIGNAL(settingsChanged()), this, SLOT(updateDeleteButtonText()));
 	duplicate_button = new QPushButton(QIcon(":/images/copy.png"), tr("Duplicate"));
 	move_up_button = new QPushButton(QIcon(":/images/arrow-up.png"), tr("Move Up"));
 	move_down_button = new QPushButton(QIcon(":/images/arrow-down.png"), tr("Move Down"));
@@ -190,6 +193,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	connect(position_button, SIGNAL(clicked(bool)), this, SLOT(positionClicked(bool)));
 	//connect(more_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(moreActionClicked(QAction*)));
 	
+	connect(map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
 	connect(controller, SIGNAL(templatePositionDockWidgetClosed(Template*)), this, SLOT(templatePositionDockWidgetClosed(Template*)));
 }
 TemplateWidget::~TemplateWidget()
@@ -203,11 +207,11 @@ TemplateWidget::~TemplateWidget()
 
 void TemplateWidget::addTemplateAt(Template* new_template, int pos)
 {
-	int row;
+	/*int row;
 	if (pos >= 0)
 		row = template_table->rowCount() - 1 - ((pos >= map->getFirstFrontTemplate()) ? (pos + 1) : pos);
 	else
-		row = template_table->rowCount() - 1 - map->getFirstFrontTemplate();
+		row = template_table->rowCount() - 1 - map->getFirstFrontTemplate();*/
 	
 	if (pos < map->getFirstFrontTemplate())
 		map->setFirstFrontTemplate(map->getFirstFrontTemplate() + 1);
@@ -215,18 +219,10 @@ void TemplateWidget::addTemplateAt(Template* new_template, int pos)
 		pos = map->getFirstFrontTemplate() - 1;
 	
 	// Add template and make it visible in the currently active view; TODO: currently, it is made visible in the main view -> support multiple views
-	map->addTemplate(new_template, pos);
-	TemplateVisibility* vis = main_view->getTemplateVisibility(new_template);
-	vis->visible = true;
-	vis->opacity = 1;
+	map->addTemplate(new_template, pos, main_view);
 	map->setTemplateAreaDirty(pos);
 	
-	++row;	// always insert new row below the selected row
-	template_table->insertRow(row);
-	addRow(row);
-	template_table->setCurrentCell(row, 3);
-	
-	map->setTemplatesDirty();	// TODO: redraw map widget(s)
+	map->setTemplatesDirty();
 }
 Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapView* main_view)
 {
@@ -346,12 +342,17 @@ void TemplateWidget::deleteTemplate()
 	assert(pos >= 0);
 	
 	map->setTemplateAreaDirty(pos);
-	map->deleteTemplate(pos);
+	
+	if (Settings::getInstance().getSettingCached(Settings::Templates_KeepSettingsOfClosed).toBool())
+		map->closeTemplate(pos);
+	else
+		map->deleteTemplate(pos);
+	
 	template_table->removeRow(template_table->currentRow());
 	if (pos < map->getFirstFrontTemplate())
 		map->setFirstFrontTemplate(map->getFirstFrontTemplate() - 1);
 	
-	map->setTemplatesDirty();	// TODO: redraw map widget(s)
+	map->setTemplatesDirty();
 }
 void TemplateWidget::duplicateTemplate()
 {
@@ -665,6 +666,12 @@ void TemplateWidget::cellDoubleClick(int row, int column)
 	}
 }
 
+void TemplateWidget::updateDeleteButtonText()
+{
+	bool keep_transformation_of_closed_templates = Settings::getInstance().getSettingCached(Settings::Templates_KeepSettingsOfClosed).toBool();
+	delete_button->setText(keep_transformation_of_closed_templates ? tr("Close") : tr("Delete"));
+}
+
 void TemplateWidget::moveByHandClicked(bool checked)
 {
 	Template* temp = getCurrentTemplate();
@@ -713,6 +720,14 @@ void TemplateWidget::positionClicked(bool checked)
 void TemplateWidget::moreActionClicked(QAction* action)
 {
 	// TODO
+}
+
+void TemplateWidget::templateAdded(int pos, Template* temp)
+{
+	int row = rowFromPos(pos);
+	template_table->insertRow(row);
+	addRow(row);
+	template_table->setCurrentCell(row, 3);
 }
 
 void TemplateWidget::templatePositionDockWidgetClosed(Template* temp)
@@ -807,6 +822,7 @@ void TemplateWidget::updateRow(int row)
 
 	react_to_changes = true;
 }
+
 int TemplateWidget::posFromRow(int row)
 {
 	int pos = template_table->rowCount() - 1 - row;
@@ -819,6 +835,13 @@ int TemplateWidget::posFromRow(int row)
 	else
 		return pos;
 }
+
+int TemplateWidget::rowFromPos(int pos)
+{
+	assert(pos >= 0);
+	return map->getNumTemplates() - 1 - ((pos >= map->getFirstFrontTemplate()) ? pos : (pos - 1));
+}
+
 Template* TemplateWidget::getCurrentTemplate()
 {
 	int current_row = template_table->currentRow();
@@ -832,30 +855,14 @@ Template* TemplateWidget::getCurrentTemplate()
 
 void TemplateWidget::changeTemplateFile(int row)
 {
-	QString path = QFileDialog::getOpenFileName(this, tr("Find the moved template file"), QString(), tr("All files (*.*)"));
-	path = QFileInfo(path).canonicalFilePath();
-	if (path.isEmpty())
-		return;
-	
 	int pos = posFromRow(row);
 	Template* temp = (row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
 	assert(temp);
 	
-	bool need_to_load = temp->getTemplateState() != Template::Loaded;
-	QString old_path = temp->getTemplatePath();
-	temp->switchTemplateFile(path);
-	if (need_to_load)
-		temp->loadTemplateFile(false);
-	
-	if (temp->getTemplateState() == Template::Loaded)
+	if (temp->execSwitchTemplateFileDialog(this))
 	{
 		updateRow(row);
 		temp->setTemplateAreaDirty();
-	}
-	else
-	{
-		QMessageBox::warning(this, tr("Error"), tr("Cannot change the template to this file! Is the format of the file correct for this template type?"));
-		// Revert change
-		temp->switchTemplateFile(old_path);
+		map->setTemplatesDirty();
 	}
 }

@@ -42,6 +42,8 @@ Settings::Settings(): QObject()
 	registerSetting(RectangleTool_HelperCrossRadius, "RectangleTool/helper_cross_radius", 300);
 	registerSetting(RectangleTool_PreviewLineWidth, "RectangleTool/preview_line_with", true);
 	
+	registerSetting(Templates_KeepSettingsOfClosed, "Templates/keep_settings_of_closed_templates", true);
+	
 	registerSetting(General_Language, "General/language", QVariant((int)QLocale::system().language()));
 }
 void Settings::registerSetting(Settings::SettingsEnum id, const QString& path, const QVariant& default_value)

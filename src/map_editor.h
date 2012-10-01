@@ -44,6 +44,7 @@ class SymbolWidget;
 class PrintWidget;
 class TemplatePositionDockWidget;
 class GeoreferencingDialog;
+class ReopenTemplateDialog;
 class PieMenu;
 typedef std::vector<Renderable*> RenderableVector;
 
@@ -127,6 +128,8 @@ public slots:
 	
 	void showTemplateWindow(bool show);
 	void openTemplateClicked();
+	void reopenTemplateClicked();
+	void closedTemplateAvailabilityChanged();
 	
 	void editGeoreferencing();
 	
@@ -244,6 +247,7 @@ private:
 	
 	QAction* template_window_act;
 	EditorDockWidget* template_dock_widget;
+	QAction* reopen_template_act;
 	
 	QAction* edit_tool_act;
 	QAction* draw_point_act;
@@ -284,6 +288,7 @@ private:
 	QToolBar* toolbar_advanced_editing;
 	
 	QScopedPointer<GeoreferencingDialog> georeferencing_dialog;
+	QScopedPointer<ReopenTemplateDialog> reopen_template_dialog;
 	
 	QHash<Template*, TemplatePositionDockWidget*> template_position_widgets;
 };

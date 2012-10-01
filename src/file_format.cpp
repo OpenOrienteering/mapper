@@ -26,7 +26,7 @@
 #include "symbol.h"
 #include "template.h"
 
-Format::Format(const QString &id, const QString &description, const QString &file_extension, bool supportsImport, bool supportsExport, bool export_lossy)
+Format::Format(const QString& id, const QString& description, const QString& file_extension, bool supportsImport, bool supportsExport, bool export_lossy)
     : format_id(id), format_description(description), file_extension(file_extension),
       format_filter(QString("%1 (*.%2)").arg(description).arg(file_extension)),
       supports_import(supportsImport), supports_export(supportsExport), export_lossy(export_lossy)
@@ -57,7 +57,7 @@ void FormatRegistry::registerFormat(Format *format)
 	assert(findFormatByFilter(format->filter()) == format);
 }
 
-const Format *FormatRegistry::findFormat(const QString &id) const
+const Format *FormatRegistry::findFormat(const QString& id) const
 {
     Q_FOREACH(const Format *format, fmts)
     {
@@ -66,7 +66,7 @@ const Format *FormatRegistry::findFormat(const QString &id) const
     return NULL;
 }
 
-const Format *FormatRegistry::findFormatByFilter(const QString &filter) const
+const Format *FormatRegistry::findFormatByFilter(const QString& filter) const
 {
     Q_FOREACH(const Format *format, fmts)
     {
@@ -75,7 +75,7 @@ const Format *FormatRegistry::findFormatByFilter(const QString &filter) const
     return NULL;
 }
 
-const Format *FormatRegistry::findFormatForFilename(const QString &filename) const
+const Format *FormatRegistry::findFormatForFilename(const QString& filename) const
 {
     QString file_extension = QFileInfo(filename).suffix();
     Q_FOREACH(const Format *format, fmts)
@@ -96,11 +96,8 @@ FormatRegistry::~FormatRegistry()
 FormatRegistry FileFormats;
 
 
-void Importer::doImport(bool load_symbols_only, QString map_path) throw (FormatException)
+void Importer::doImport(bool load_symbols_only, const QString& map_path) throw (FormatException)
 {
-	if (!map_path.isEmpty() && !map_path.endsWith('/'))
-		map_path.append('/');
-	
 	import(load_symbols_only);
 	
 	// Symbol post processing
@@ -116,39 +113,10 @@ void Importer::doImport(bool load_symbols_only, QString map_path) throw (FormatE
 	{
 		Template* temp = map->getTemplate(i);
 		
-		// First try relative path (if this information is available)
-		if (!temp->getTemplateRelativePath().isEmpty() && !map_path.isEmpty())
-		{
-			QString loaded_absolute_path = temp->getTemplatePath();
-			temp->setTemplatePath(map_path + temp->getTemplateRelativePath());
-			temp->loadTemplateFile(false);
-			if (temp->getTemplateState() != Template::Loaded)
-			{
-				// Failure: restore old absolute path
-				temp->setTemplatePath(loaded_absolute_path);
-			}
-		}
-		
-		// Then try absolute path
-		if (temp->getTemplateState() != Template::Loaded)
-			temp->loadTemplateFile(false);
-		
-		// Then try the template filename in the map's directory
-		if (temp->getTemplateState() != Template::Loaded && !map_path.isEmpty())
-		{
-			QString loaded_absolute_path = temp->getTemplatePath();
-			temp->setTemplatePath(map_path + temp->getTemplateFilename());
-			temp->loadTemplateFile(false);
-			if (temp->getTemplateState() != Template::Loaded)
-			{
-				// Failure: restore old absolute path
-				temp->setTemplatePath(loaded_absolute_path);
-			}
-			else
-			{
-				addWarning(QObject::tr("Template \"%1\" has been loaded from the map's directory instead of the relative location to the map file where it was previously.").arg(temp->getTemplateFilename()));
-			}
-		}
+		bool loaded_from_template_dir = false;
+		temp->tryToFindAndReloadTemplateFile(map_path, &loaded_from_template_dir);
+		if (loaded_from_template_dir)
+			addWarning(QObject::tr("Template \"%1\" has been loaded from the map's directory instead of the relative location to the map file where it was previously.").arg(temp->getTemplateFilename()));
 		
 		if (temp->getTemplateState() != Template::Loaded)
 			have_lost_template = true;

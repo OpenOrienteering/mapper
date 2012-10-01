@@ -29,7 +29,7 @@
 #include "util.h"
 
 const int NativeFileFormat::least_supported_file_format_version = 0;
-const int NativeFileFormat::current_file_format_version = 27;
+const int NativeFileFormat::current_file_format_version = 28;
 const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 
 bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
@@ -252,6 +252,26 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
 
 			map->templates[i] = temp;
 		}
+		
+		if (version >= 28)
+		{
+			int num_closed_templates;
+			stream->read((char*)&num_closed_templates, sizeof(int));
+			map->closed_templates.resize(num_closed_templates);
+			
+			for (int i = 0; i < num_closed_templates; ++i)
+			{
+				QString path;
+				loadString(stream, path);
+				Template* temp = Template::templateForFile(path, map);
+				loadString(stream, path);
+				temp->setTemplateRelativePath(path);
+				
+				temp->loadTemplateConfiguration(stream, version);
+				
+				map->closed_templates[i] = temp;
+			}
+		}
 
 		// Restore widgets and views
 		if (view)
@@ -413,9 +433,23 @@ void NativeFileExport::doExport() throw (FormatException)
 			temp->saveTemplateFile();
 			temp->setHasUnsavedChanges(false);
 		}
-    }
+	}
 
-    // Write widgets and views; replaces MapEditorController::saveWidgetsAndViews()
+	// Write closed template settings
+	int num_closed_templates = map->getNumClosedTemplates();
+	stream->write((const char*)&num_closed_templates, sizeof(int));
+	
+	for (int i = 0; i < num_closed_templates; ++i)
+	{
+		Template* temp = map->getClosedTemplate(i);
+		
+		saveString(stream, temp->getTemplatePath());
+		saveString(stream, temp->getTemplateRelativePath());
+		
+		temp->saveTemplateConfiguration(stream);	// save transformation etc.
+	}
+
+	// Write widgets and views; replaces MapEditorController::saveWidgetsAndViews()
     if (view)
     {
         // which only does this anyway

@@ -482,6 +482,10 @@ Map::~Map()
 	for (int i = 0; i < size; ++i)
 		delete templates[i];
 	
+	size = closed_templates.size();
+	for (int i = 0; i < size; ++i)
+		delete closed_templates[i];
+	
 	size = layers.size();
 	for (int i = 0; i < size; ++i)
 		delete layers[i];
@@ -591,12 +595,23 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 		return false;
 	}
 	
-	// Update the relative paths of the templates
+	// Update the relative paths of templates
 	QDir map_dir = QFileInfo(path).absoluteDir();
 	for (int i = 0; i < getNumTemplates(); ++i)
 	{
 		Template* temp = getTemplate(i);
-		temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
+		if (temp->getTemplateState() == Template::Invalid)
+			temp->setTemplateRelativePath("");
+		else
+			temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
+	}
+	for (int i = 0; i < getNumClosedTemplates(); ++i)
+	{
+		Template* temp = getClosedTemplate(i);
+		if (temp->getTemplateState() == Template::Invalid)
+			temp->setTemplateRelativePath("");
+		else
+			temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
 	}
 	
 	Exporter* exporter = NULL;
@@ -1684,7 +1699,7 @@ void Map::determineSymbolUseClosure(std::vector< bool >& symbol_bitfield)
 					continue;
 				if (symbols[k]->containsSymbol(symbols[i]))
 				{
-					               symbol_bitfield[i] = true;
+					symbol_bitfield[i] = true;
 					change = true;
 					break;
 				}
@@ -1699,14 +1714,22 @@ void Map::setTemplate(Template* temp, int pos)
 	templates[pos] = temp;
 	emit(templateChanged(pos, templates[pos]));
 }
-void Map::addTemplate(Template* temp, int pos)
+void Map::addTemplate(Template* temp, int pos, MapView* view)
 {
 	templates.insert(templates.begin() + pos, temp);
 	checkIfFirstTemplateAdded();
 	
+	if (view)
+	{
+		TemplateVisibility* vis = view->getTemplateVisibility(temp);
+		vis->visible = true;
+		vis->opacity = 1;
+	}
+	
 	emit(templateAdded(pos, temp));
 }
-void Map::deleteTemplate(int pos)
+
+void Map::removeTemplate(int pos)
 {
 	TemplateVector::iterator it = templates.begin() + pos;
 	Template* temp = *it;
@@ -1724,6 +1747,12 @@ void Map::deleteTemplate(int pos)
 	}
 	
 	emit(templateDeleted(pos, temp));
+}
+
+void Map::deleteTemplate(int pos)
+{
+	Template* temp = getTemplate(pos);
+	removeTemplate(pos);
 	delete temp;
 }
 void Map::setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border)
@@ -1761,6 +1790,59 @@ void Map::setTemplatesDirty()
 void Map::emitTemplateChanged(Template* temp)
 {
 	emit(templateChanged(findTemplateIndex(temp), temp));
+}
+
+void Map::clearClosedTemplates()
+{
+	if (closed_templates.size() == 0)
+		return;
+	for (int i = 0; i < (int)closed_templates.size(); ++i)
+		delete closed_templates[i];
+	closed_templates.clear();
+	setTemplatesDirty();
+	emit closedTemplateAvailabilityChanged();
+}
+
+void Map::closeTemplate(int i)
+{
+	Template* temp = getTemplate(i);
+	removeTemplate(i);
+	
+	if (temp->getTemplateState() == Template::Loaded)
+		temp->unloadTemplateFile();
+	
+	closed_templates.push_back(temp);
+	setTemplatesDirty();
+	if (closed_templates.size() == 1)
+		emit closedTemplateAvailabilityChanged();
+}
+
+bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, MapView* view, const QString& map_path)
+{
+	Template* temp = closed_templates[i];
+	
+	// Try to find and load the template again
+	if (temp->getTemplateState() != Template::Loaded)
+	{
+		if (!temp->tryToFindAndReloadTemplateFile(map_path))
+		{
+			if (!temp->execSwitchTemplateFileDialog(dialog_parent))
+				return false;
+		}
+	}
+	
+	// If successfully loaded, add to template list again
+	if (temp->getTemplateState() == Template::Loaded)
+	{
+		closed_templates.erase(closed_templates.begin() + i);
+		addTemplate(temp, target_pos, view);
+		temp->setTemplateAreaDirty();
+		setTemplatesDirty();
+		if (closed_templates.size() == 0)
+			emit closedTemplateAvailabilityChanged();
+		return true;
+	}
+	return false;
 }
 
 void Map::addLayer(MapLayer* layer, int pos)

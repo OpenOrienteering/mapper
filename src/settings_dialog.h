@@ -93,6 +93,8 @@ private slots:
 	void rectangleHelperCrossRadiusChanged(int value);
 	void rectanglePreviewLineWidthChanged(bool checked);
 	
+	void keepSettingsOfClosedTemplatesClicked(bool checked);
+	
 private:
 	QComboBox* edit_tool_delete_bezier_point_action;
 	QComboBox* edit_tool_delete_bezier_point_action_alternative;

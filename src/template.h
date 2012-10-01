@@ -103,12 +103,27 @@ public:
 	/// Useful when a template file has been moved.
 	/// If the template is loaded, reloads it using the new file. Otherwise, does nothing else.
 	/// To check for success, try to load the template if not loaded before and check its state.
-	void switchTemplateFile(const QString& filename);
+	void switchTemplateFile(const QString& new_path);
+	
+	/// Shows the dialog to find a moved template. If the user selects a new file,
+	/// tries to switch to the selected template file using switchTemplateFile() and
+	/// by trying to load the new file. Returns true if this succeeds; if not, reverts the
+	/// switch and returns false. Also returns false if the dialog is aborted.
+	bool execSwitchTemplateFileDialog(QWidget* dialog_parent);
 	
 	
 	/// Does preLoadConfiguration(), loadTemplateFile() and postLoadConfiguration() and
 	/// returns if the process was successful
 	bool configureAndLoad(QWidget* dialog_parent);
+	
+	/// Tries to find and (re-)load the template file from the following positions:
+	///  - saved relative position to map file, if available and map_directory is not empty
+	///  - absolute position of template file
+	///  - template filename in map_directory, if map_directory not empty
+	/// Returns true if successful.
+	/// If out_loaded_from_map_dir is given, it is set to true if the template file is successfully
+	/// loaded using the template filename in the map's directory (3rd option).
+	bool tryToFindAndReloadTemplateFile(QString map_directory, bool* out_loaded_from_map_dir = NULL);
 	
 	/// Does the pre-load configuration when the template is opened initially
 	/// (after the user chooses the template file, but before it is loaded).
@@ -132,7 +147,7 @@ public:
 	virtual bool postLoadConfiguration(QWidget* dialog_parent) {return true;}
 	
 	/// Unloads the template file. Can be called if the template state is Loaded.
-	/// Must not be called if the template file is already unloaded.
+	/// Must not be called if the template file is already unloaded, or invalid.
 	void unloadTemplateFile();
 	
 	

@@ -63,6 +63,7 @@ HEADERS += src/color_dock_widget.h \
            src/symbol_text.h \
            src/template.h \
            src/template_adjust.h \
+           src/template_dialog_reopen.h \
            src/template_dock_widget.h \
            src/template_gps.h \
            src/template_image.h \
@@ -144,6 +145,7 @@ SOURCES += src/color_dock_widget.cpp \
            src/symbol_text.cpp \
            src/template.cpp \
            src/template_adjust.cpp \
+           src/template_dialog_reopen.cpp \
            src/template_dock_widget.cpp \
            src/template_gps.cpp \
            src/template_image.cpp \

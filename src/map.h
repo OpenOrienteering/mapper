@@ -283,6 +283,7 @@ public:
 	/// Adds to the given symbol bitfield all other symbols which are needed to display the symbols indicated by the bitfield.
 	void determineSymbolUseClosure(std::vector< bool >& symbol_bitfield);
 	
+	
 	// Templates
 	
 	inline int getNumTemplates() const {return templates.size();}
@@ -290,13 +291,39 @@ public:
 	inline void setFirstFrontTemplate(int pos) {first_front_template = pos;}
 	inline int getFirstFrontTemplate() const {return first_front_template;}
 	void setTemplate(Template* temp, int pos);
-	void addTemplate(Template* temp, int pos);									// NOTE: adjust first_front_template manually!
-	void deleteTemplate(int pos);												// NOTE: adjust first_front_template manually!
+	/// Adds the template at the given position.
+	/// If a view is given, the template is made visible in this view (by default, templates are hidden).
+	/// NOTE: adjust first_front_template manually!
+	void addTemplate(Template* temp, int pos, MapView* view = NULL);
+	/// Removes the template with the given position from the template list,
+	/// but does not delete it.
+	/// NOTE: adjust first_front_template manually!
+	void removeTemplate(int pos);
+	/// Removes the template with the given position from the template list and deletes it.
+	/// NOTE: adjust first_front_template manually!
+	void deleteTemplate(int pos);
 	void setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border);	// marks the respective regions in the template caches as dirty; area is given in map coords (mm). Does nothing if the template is not visible in a widget! So make sure to call this and showing/hiding a template in the correct order!
 	void setTemplateAreaDirty(int i);											// this does nothing for i == -1
 	int findTemplateIndex(Template* temp);
 	void setTemplatesDirty();
 	void emitTemplateChanged(Template* temp);
+	
+	// Closed (unloaded) templates for which only the settings are stored
+	inline int getNumClosedTemplates() {return (int)closed_templates.size();}
+	inline Template* getClosedTemplate(int i) {return closed_templates[i];}
+	void clearClosedTemplates();
+	
+	/// Removes the template with the given index from the normal template list,
+	/// unloads the template file and adds the template to the closed template list
+	/// NOTE: adjust first_front_template manually!
+	void closeTemplate(int i);
+	
+	/// Removes the template with the given index from the closed template list,
+	/// load the template file and adds the template to the normal template list again.
+	/// The template is made visible in the given view.
+	/// NOTE: adjust first_front_template manually before calling this method!
+	bool reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, MapView* view, const QString& map_path = QString());
+	
 	
 	// Layers & Undo
 	
@@ -312,6 +339,7 @@ public:
 	inline MapLayer* getCurrentLayer() const {return (current_layer_index < 0) ? NULL : layers[current_layer_index];}
 	inline void setCurrentLayer(MapLayer* layer) {current_layer_index = findLayerIndex(layer);}
 	inline int getCurrentLayerIndex() const {return current_layer_index;}
+	
 	
 	// Objects
 	
@@ -468,6 +496,9 @@ signals:
 	void templateChanged(int pos, Template* temp);
 	void templateDeleted(int pos, Template* old_temp);
 	
+	/// Emitted when the number of closed templates changes between zero and one.
+	void closedTemplateAvailabilityChanged();
+	
 	void objectSelectionChanged();
 	
 	/// This signal is emitted when at least one of the selected objects is edited in any way.
@@ -521,6 +552,7 @@ private:
 	MapColorSet* color_set;
 	SymbolVector symbols;
 	TemplateVector templates;
+	TemplateVector closed_templates;
 	int first_front_template;		// index of the first template in templates which should be drawn in front of the map
 	LayerVector layers;
 	ObjectSelection object_selection;

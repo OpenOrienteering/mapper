@@ -291,7 +291,8 @@ bool Track::loadFrom(const QString& path, bool project_points, QWidget* dialog_p
 		if (node_problems > 0)
 			QMessageBox::warning(dialog_parent, QObject::tr("Problems"), QObject::tr("%1 nodes could not be processed correctly.").arg(node_problems));
 	}
-
+	else
+		return false;
 
 	file.close();
 	return true;

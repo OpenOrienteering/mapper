@@ -191,7 +191,7 @@ void Template::loadTemplateConfiguration(QIODevice* stream, int version)
 	}
 }
 
-void Template::switchTemplateFile(const QString& filename)
+void Template::switchTemplateFile(const QString& new_path)
 {
 	if (template_state == Loaded)
 	{
@@ -199,15 +199,37 @@ void Template::switchTemplateFile(const QString& filename)
 		unloadTemplateFile();
 	}
 	
-	template_path = filename;
-	template_file = QFileInfo(filename).fileName();
+	template_path = new_path;
+	template_file = QFileInfo(new_path).fileName();
 	template_relative_path = "";
 	
 	if (template_state == Loaded)
 		loadTemplateFile(false);
+}
+
+bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
+{
+	QString path = QFileDialog::getOpenFileName(dialog_parent, tr("Find the moved template file"),
+												 QString(), tr("All files (*.*)"));
+	path = QFileInfo(path).canonicalFilePath();
+	if (path.isEmpty())
+		return false;
 	
-	setTemplateAreaDirty();
-	map->setTemplatesDirty();
+	bool need_to_load = getTemplateState() != Template::Loaded;
+	QString old_path = getTemplatePath();
+	switchTemplateFile(path);
+	if (need_to_load)
+		loadTemplateFile(false);
+	
+	if (getTemplateState() == Template::Loaded)
+		return true;
+	else
+	{
+		QMessageBox::warning(dialog_parent, tr("Error"), tr("Cannot change the template to this file! Is the format of the file correct for this template type?"));
+		// Revert change
+		switchTemplateFile(old_path);
+		return false;
+	}
 }
 
 bool Template::configureAndLoad(QWidget* dialog_parent)
@@ -219,6 +241,54 @@ bool Template::configureAndLoad(QWidget* dialog_parent)
 	if (!postLoadConfiguration(dialog_parent))
 		return false;
 	return true;
+}
+
+bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_loaded_from_map_dir)
+{
+	if (!map_directory.isEmpty() && !map_directory.endsWith('/'))
+		map_directory.append('/');
+	if (out_loaded_from_map_dir)
+		*out_loaded_from_map_dir = false;
+	
+	// First try relative path (if this information is available)
+	if (!getTemplateRelativePath().isEmpty() && !map_directory.isEmpty())
+	{
+		QString old_absolute_path = getTemplatePath();
+		setTemplatePath(map_directory + getTemplateRelativePath());
+		loadTemplateFile(false);
+		if (getTemplateState() == Template::Loaded)
+			return true;
+		else
+		{
+			// Failure: restore old absolute path
+			setTemplatePath(old_absolute_path);
+		}
+	}
+	
+	// Then try absolute path
+	loadTemplateFile(false);
+	if (getTemplateState() == Template::Loaded)
+		return true;
+	
+	// Then try the template filename in the map's directory
+	if (!map_directory.isEmpty())
+	{
+		QString old_absolute_path = getTemplatePath();
+		setTemplatePath(map_directory + getTemplateFilename());
+		loadTemplateFile(false);
+		if (getTemplateState() == Template::Loaded)
+		{
+			if (out_loaded_from_map_dir)
+				*out_loaded_from_map_dir = true;
+			return true;
+		}
+		else
+		{
+			// Failure: restore old absolute path
+			setTemplatePath(old_absolute_path);
+		}
+	}
+	return false;
 }
 
 bool Template::loadTemplateFile(bool configuring)
@@ -240,7 +310,12 @@ bool Template::loadTemplateFile(bool configuring)
 
 void Template::unloadTemplateFile()
 {
-	assert(template_state != Unloaded);
+	assert(template_state == Loaded);
+	if (hasUnsavedChanges())
+	{
+		saveTemplateFile();
+		setHasUnsavedChanges(false);
+	}
 	unloadTemplateFileImpl();
 	template_state = Unloaded;
 	emit templateStateChanged();
