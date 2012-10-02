@@ -22,6 +22,10 @@
 
 #include "file_format.h"
 
+
+
+#define Mapper_XML_OBSOLETE_ELEMENTS
+
 /**
  * Interface for dealing with XML files of maps.
  */

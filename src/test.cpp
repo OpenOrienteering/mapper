@@ -326,37 +326,37 @@ bool TestFileFormats::compareMaps(Map* a, Map* b, QString& error)
 		}
 	}
 	
-	// Layers and objects
-	// TODO: Only a single layer is compared here! Add comparison for layers ...
-	if (a->getNumLayers() != b->getNumLayers())
+	// Parts and objects
+	// TODO: Only a single part is compared here! Add comparison for parts ...
+	if (a->getNumParts() != b->getNumParts())
 	{
-		error = "The number of layers differs.";
+		error = "The number of parts differs.";
 		return false;
 	}
-	if (a->getCurrentLayerIndex() != b->getCurrentLayerIndex())
+	if (a->getCurrentPartIndex() != b->getCurrentPartIndex())
 	{
-		error = "The current layer differs.";
+		error = "The current part differs.";
 		return false;
 	}
-	for (int layer = 0; layer < a->getNumLayers(); ++layer)
+	for (int part = 0; part < a->getNumParts(); ++part)
 	{
-		MapLayer* a_layer = a->getLayer(layer);
-		MapLayer* b_layer = b->getLayer(layer);
-		if (a_layer->getName().compare(b_layer->getName(), Qt::CaseSensitive) != 0)
+		MapPart* a_part = a->getPart(part);
+		MapPart* b_part = b->getPart(part);
+		if (a_part->getName().compare(b_part->getName(), Qt::CaseSensitive) != 0)
 		{
-			error = QString("The names of layer #%1 differ (%2 <-> %3).").arg(layer).arg(a_layer->getName()).arg(b_layer->getName());
+			error = QString("The names of part #%1 differ (%2 <-> %3).").arg(part).arg(a_part->getName()).arg(b_part->getName());
 			return false;
 		}
-		if (a_layer->getNumObjects() != b_layer->getNumObjects())
+		if (a_part->getNumObjects() != b_part->getNumObjects())
 		{
 			error = "The number of objects differs.";
 			return false;
 		}
-		for (int i = 0; i < a_layer->getNumObjects(); ++i)
+		for (int i = 0; i < a_part->getNumObjects(); ++i)
 		{
-			if (!a_layer->getObject(i)->equals(b_layer->getObject(i), true))
+			if (!a_part->getObject(i)->equals(b_part->getObject(i), true))
 			{
-				error = QString("Object #%1 (with symbol %2) in layer #%3 differs.").arg(i).arg(a_layer->getObject(i)->getSymbol()->getName()).arg(layer);
+				error = QString("Object #%1 (with symbol %2) in part #%3 differs.").arg(i).arg(a_part->getObject(i)->getSymbol()->getName()).arg(part);
 				return false;
 			}
 		}
@@ -370,14 +370,14 @@ bool TestFileFormats::compareMaps(Map* a, Map* b, QString& error)
 	}
 	if ((a->getFirstSelectedObject() == NULL && b->getFirstSelectedObject() != NULL) || (a->getFirstSelectedObject() != NULL && b->getFirstSelectedObject() == NULL) ||
 		(a->getFirstSelectedObject() != NULL && b->getFirstSelectedObject() != NULL &&
-		 a->getCurrentLayer()->findObjectIndex(a->getFirstSelectedObject()) != b->getCurrentLayer()->findObjectIndex(b->getFirstSelectedObject())))
+		 a->getCurrentPart()->findObjectIndex(a->getFirstSelectedObject()) != b->getCurrentPart()->findObjectIndex(b->getFirstSelectedObject())))
 	{
 		error = "The first selected object differs.";
 		return false;
 	}
 	for (QSet< Object* >::const_iterator it = a->selectedObjectsBegin(), end = a->selectedObjectsEnd(); it != end; ++it)
 	{
-		if (!b->isObjectSelected(b->getCurrentLayer()->getObject(a->getCurrentLayer()->findObjectIndex(*it))))
+		if (!b->isObjectSelected(b->getCurrentPart()->getObject(a->getCurrentPart()->findObjectIndex(*it))))
 		{
 			error = "The selected objects differ.";
 			return false;
@@ -454,12 +454,12 @@ void TestDuplicateEqual::objects()
 	Map* map = new Map();
 	map->loadFrom(map_filename);
 	
-	for (int layer_number = 0; layer_number < map->getNumLayers(); ++layer_number)
+	for (int part_number = 0; part_number < map->getNumParts(); ++part_number)
 	{
-		MapLayer* layer = map->getLayer(layer_number);
-		for (int object = 0; object < layer->getNumObjects(); ++object)
+		MapPart* part = map->getPart(part_number);
+		for (int object = 0; object < part->getNumObjects(); ++object)
 		{
-			Object* original = layer->getObject(object);
+			Object* original = part->getObject(object);
 			Object* duplicate = original->duplicate();
 			QVERIFY(original->equals(duplicate, true));
 			delete duplicate;

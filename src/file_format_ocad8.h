@@ -90,8 +90,8 @@ protected:
     RectangleInfo *importRectSymbol(const OCADRectSymbol *ocad_symbol);
 
     // Object import
-    Object *importObject(const OCADObject *ocad_object, MapLayer* layer);
-	bool importRectangleObject(const OCADObject* ocad_object, MapLayer* layer, const RectangleInfo& rect);
+    Object *importObject(const OCADObject *ocad_object, MapPart* part);
+	bool importRectangleObject(const OCADObject* ocad_object, MapPart* part, const RectangleInfo& rect);
 
     // String import
     void importString(OCADStringEntry *entry);

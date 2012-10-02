@@ -44,6 +44,7 @@ set(Mapper_Common_SRCS
  settings_dialog.cpp
 
  map.cpp
+ map_part.cpp
  map_widget.cpp
  map_editor.cpp
  map_editor_activity.cpp

@@ -25,7 +25,7 @@
 #include "object.h"
 #include "map.h"
 
-// Object conditions and processors, see methods Map::operationOnAllObjects() and MapLayer::operationOnAllObjects()
+// Object conditions and processors, see methods Map::operationOnAllObjects() and MapPart::operationOnAllObjects()
 namespace ObjectOp
 {
 	// Conditions
@@ -77,7 +77,7 @@ namespace ObjectOp
 	struct Scale
 	{
 		inline Scale(double factor) : factor(factor) {}
-		inline bool operator()(Object* object, MapLayer* layer, int object_index) const
+		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
 			object->scale(factor);
 			object->update(true, true);
@@ -90,7 +90,7 @@ namespace ObjectOp
 	struct Rotate
 	{
 		inline Rotate(double angle) : angle(angle) {}
-		inline bool operator()(Object* object, MapLayer* layer, int object_index) const
+		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
 			object->rotateAround(MapCoordF(0, 0), angle);
 			object->update(true, true);
@@ -103,7 +103,7 @@ namespace ObjectOp
 	struct Update
 	{
 		inline Update(bool force = true) : force(force) {}
-		inline bool operator()(Object* object, MapLayer* layer, int object_index) const
+		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
 			object->update(force, true);
 			return true;
@@ -116,10 +116,10 @@ namespace ObjectOp
 	struct ChangeSymbol
 	{
 		inline ChangeSymbol(Symbol* new_symbol) : new_symbol(new_symbol) {}
-		inline bool operator()(Object* object, MapLayer* layer, int object_index) const
+		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
 			if (!object->setSymbol(new_symbol, false))
-				layer->deleteObject(object_index, false);
+				part->deleteObject(object_index, false);
 			else
 				object->update(true, true);
 			return true;
@@ -131,9 +131,9 @@ namespace ObjectOp
 	struct Delete
 	{
 		inline Delete() {}
-		inline bool operator()(Object* object, MapLayer* layer, int object_index) const
+		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
-			layer->deleteObject(object_index, false);
+			part->deleteObject(object_index, false);
 			return true;
 		}
 	};
@@ -142,7 +142,7 @@ namespace ObjectOp
 	struct NoOp
 	{
 		inline NoOp() {}
-		inline bool operator()(Object* object, MapLayer* layer, int object_index) const
+		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
 			// Abort
 			return false;

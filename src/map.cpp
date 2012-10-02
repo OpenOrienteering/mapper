@@ -35,6 +35,7 @@
 #include "map_color.h"
 #include "map_editor.h"
 #include "map_grid.h"
+#include "map_part.h"
 #include "map_widget.h"
 #include "map_undo.h"
 #include "util.h"
@@ -49,293 +50,6 @@
 #include "symbol_combined.h"
 #include "file_format_ocad8.h"
 #include "georeferencing.h"
-
-MapLayer::MapLayer(const QString& name, Map* map) : name(name), map(map)
-{
-}
-MapLayer::~MapLayer()
-{
-	int size = (int)objects.size();
-	for (int i = 0; i < size; ++i)
-		delete objects[i];
-}
-void MapLayer::save(QIODevice* file, Map* map)
-{
-	saveString(file, name);
-	
-	int size = (int)objects.size();
-	file->write((const char*)&size, sizeof(int));
-	
-	for (int i = 0; i < size; ++i)
-	{
-		int save_type = static_cast<int>(objects[i]->getType());
-		file->write((const char*)&save_type, sizeof(int));
-		objects[i]->save(file);
-	}
-}
-
-bool MapLayer::load(QIODevice* file, int version, Map* map)
-{
-	loadString(file, name);
-	
-	int size;
-	file->read((char*)&size, sizeof(int));
-	objects.resize(size);
-	
-	for (int i = 0; i < size; ++i)
-	{
-		int save_type;
-		file->read((char*)&save_type, sizeof(int));
-		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), NULL);
-		if (!objects[i])
-			return false;
-		objects[i]->load(file, version, map);
-	}
-	return true;
-}
-
-void MapLayer::save(QXmlStreamWriter& xml, const Map& map) const
-{
-	xml.writeStartElement("layer");
-	xml.writeAttribute("name", name);
-	
-	xml.writeStartElement("objects");
-	int size = (int)objects.size();
-	xml.writeAttribute("number", QString::number(size));
-	for (int i = 0; i < size; ++i)
-	{
-		objects[i]->save(xml);
-	}
-}
-
-MapLayer* MapLayer::load(QXmlStreamReader& xml, Map& map)
-{
-	Q_ASSERT(xml.name() == "layer");
-	
-	MapLayer* layer = new MapLayer(xml.attributes().value("name").toString(), &map);
-	
-	while (xml.readNextStartElement())
-	{
-		if (xml.name() == "objects")
-		{
-			int num_objects = xml.attributes().value("number").toString().toInt();
-			layer->objects.reserve(num_objects % 100000); // 100000 is not a limit
-			while (xml.readNextStartElement())
-			{
-				if (xml.name() == "object")
-					layer->objects.push_back(Object::load(xml,map));
-				else
-					xml.skipCurrentElement(); // unknown
-			}
-		}
-		else
-			xml.skipCurrentElement(); // unknown
-	}
-	
-	return layer;
-}
-
-int MapLayer::findObjectIndex(Object* object)
-{
-	int size = objects.size();
-	for (int i = size - 1; i >= 0; --i)
-	{
-		if (objects[i] == object)
-			return i;
-	}
-	assert(false);
-	return -1;
-}
-void MapLayer::setObject(Object* object, int pos, bool delete_old)
-{
-	map->removeRenderablesOfObject(objects[pos], true);
-	if (delete_old)
-		delete objects[pos];
-	
-	objects[pos] = object;
-	bool delete_old_renderables = object->getMap() == map;
-	object->setMap(map);
-	object->update(true, delete_old_renderables);
-	map->setObjectsDirty();
-}
-void MapLayer::addObject(Object* object, int pos)
-{
-	objects.insert(objects.begin() + pos, object);
-	object->setMap(map);
-	object->update(true, true);
-	map->setObjectsDirty();
-	
-	if (map->getNumObjects() == 1)
-		map->updateAllMapWidgets();
-}
-void MapLayer::deleteObject(int pos, bool remove_only)
-{
-	map->removeRenderablesOfObject(objects[pos], true);
-	if (remove_only)
-		objects[pos]->setMap(NULL);
-	else
-		delete objects[pos];
-	objects.erase(objects.begin() + pos);
-	map->setObjectsDirty();
-	
-	if (map->getNumObjects() == 0)
-		map->updateAllMapWidgets();
-}
-bool MapLayer::deleteObject(Object* object, bool remove_only)
-{
-	int size = objects.size();
-	for (int i = size - 1; i >= 0; --i)
-	{
-		if (objects[i] == object)
-		{
-			deleteObject(i, remove_only);
-			return true;
-		}
-	}
-	return false;
-}
-
-void MapLayer::importLayer(MapLayer* other, QHash<Symbol*, Symbol*>& symbol_map, bool select_new_objects)
-{
-	if (other->getNumObjects() == 0)
-		return;
-	
-	bool first_objects = map->getNumObjects() == 0;
-	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
-	if (select_new_objects)
-		map->clearObjectSelection(false);
-	
-	objects.reserve(objects.size() + other->objects.size());
-	for (size_t i = 0, end = other->objects.size(); i < end; ++i)
-	{
-		Object* new_object = other->objects[i]->duplicate();
-		if (symbol_map.contains(new_object->getSymbol()))
-			new_object->setSymbol(symbol_map.value(new_object->getSymbol()), true);
-		
-		objects.push_back(new_object);
-		new_object->setMap(map);
-		new_object->update(true, true);
-		
-		undo_step->addObject((int)objects.size() - 1);
-		if (select_new_objects)
-			map->addObjectToSelection(new_object, false);
-	}
-	
-	map->objectUndoManager().addNewUndoStep(undo_step);
-	map->setObjectsDirty();
-	if (select_new_objects)
-	{
-		map->emitSelectionChanged();
-		map->emitSelectionEdited();		// TODO: is this necessary here?
-	}
-	if (first_objects)
-		map->updateAllMapWidgets();
-}
-
-void MapLayer::findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out)
-{
-	int size = objects.size();
-	for (int i = 0; i < size; ++i)
-	{
-		if (!include_hidden_objects && objects[i]->getSymbol()->isHidden())
-			continue;
-		if (!include_protected_objects && objects[i]->getSymbol()->isProtected())
-			continue;
-		
-		objects[i]->update();
-		int selected_type = objects[i]->isPointOnObject(coord, tolerance, treat_areas_as_paths, extended_selection);
-		if (selected_type != (int)Symbol::NoSymbol)
-			out.push_back(std::pair<int, Object*>(selected_type, objects[i]));
-	}
-}
-void MapLayer::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector< Object* >& out)
-{
-	QRectF rect = QRectF(corner1.toQPointF(), corner2.toQPointF());
-	
-	int size = objects.size();
-	for (int i = 0; i < size; ++i)
-	{
-		if (!include_hidden_objects && objects[i]->getSymbol()->isHidden())
-			continue;
-		if (!include_protected_objects && objects[i]->getSymbol()->isProtected())
-			continue;
-		
-		objects[i]->update();
-		if (rect.intersects(objects[i]->getExtent()) && objects[i]->intersectsBox(rect))
-			out.push_back(objects[i]);
-	}
-}
-
-int MapLayer::countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects)
-{
-	int count = 0;
-	int size = objects.size();
-	for (int i = 0; i < size; ++i)
-	{
-		if (objects[i]->getSymbol()->isHidden() && !include_hidden_objects)
-			continue;
-		objects[i]->update();
-		if (objects[i]->getExtent().intersects(map_coord_rect))
-			++count;
-	}
-	return count;
-}
-
-QRectF MapLayer::calculateExtent(bool include_helper_symbols)
-{
-	QRectF rect;
-	
-	int i = 0;
-	int size = objects.size();
-	while (size > i && !rect.isValid())
-	{
-		if ((include_helper_symbols || !objects[i]->getSymbol()->isHelperSymbol()) && !objects[i]->getSymbol()->isHidden())
-		{
-			objects[i]->update();
-			rect = objects[i]->getExtent();
-		}
-		++i;
-	}
-	
-	for (; i < size; ++i)
-	{
-		if ((include_helper_symbols || !objects[i]->getSymbol()->isHelperSymbol()) && !objects[i]->getSymbol()->isHidden())
-		{
-			objects[i]->update();
-			rectInclude(rect, objects[i]->getExtent());
-		}
-	}
-	
-	return rect;
-}
-void MapLayer::scaleAllObjects(double factor)
-{
-	operationOnAllObjects(ObjectOp::Scale(factor));
-}
-void MapLayer::rotateAllObjects(double rotation)
-{
-	operationOnAllObjects(ObjectOp::Rotate(rotation));
-}
-void MapLayer::updateAllObjects()
-{
-	operationOnAllObjects(ObjectOp::Update(true));
-}
-void MapLayer::updateAllObjectsWithSymbol(Symbol* symbol)
-{
-	operationOnAllObjects(ObjectOp::Update(true), ObjectOp::HasSymbol(symbol));
-}
-void MapLayer::changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol)
-{
-	operationOnAllObjects(ObjectOp::ChangeSymbol(new_symbol), ObjectOp::HasSymbol(old_symbol));
-}
-bool MapLayer::deleteAllObjectsWithSymbol(Symbol* symbol)
-{
-	return operationOnAllObjects(ObjectOp::Delete(), ObjectOp::HasSymbol(symbol)) & ObjectOperationResult::Success;
-}
-bool MapLayer::doObjectsExistWithSymbol(Symbol* symbol)
-{
-	return operationOnAllObjects(ObjectOp::NoOp(), ObjectOp::HasSymbol(symbol)) & ObjectOperationResult::Success;
-}
 
 // ### MapColorSet ###
 
@@ -486,9 +200,9 @@ Map::~Map()
 	for (int i = 0; i < size; ++i)
 		delete closed_templates[i];
 	
-	size = layers.size();
+	size = parts.size();
 	for (int i = 0; i < size; ++i)
-		delete layers[i];
+		delete parts[i];
 	
 	/*size = views.size();
 	for (int i = size; i >= 0; --i)
@@ -832,43 +546,43 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 		
 		if (other->getNumObjects() > 0)
 		{
-			// Import layers like this:
-			//  - if the other map has only one layer, import it into the current layer
-			//  - else check if there is already a layer with an equal name for every layer to import and import into this layer if found, else create a new layer
-			for (int layer = 0; layer < other->getNumLayers(); ++layer)
+			// Import parts like this:
+			//  - if the other map has only one part, import it into the current part
+			//  - else check if there is already a part with an equal name for every part to import and import into this part if found, else create a new part
+			for (int part = 0; part < other->getNumParts(); ++part)
 			{
-				MapLayer* layer_to_import = other->getLayer(layer);
-				MapLayer* dest_layer = NULL;
-				if (other->getNumLayers() == 1)
-					dest_layer = getCurrentLayer();
+				MapPart* part_to_import = other->getPart(part);
+				MapPart* dest_part = NULL;
+				if (other->getNumParts() == 1)
+					dest_part = getCurrentPart();
 				else
 				{
-					for (int check_layer = 0; check_layer < getNumLayers(); ++check_layer)
+					for (int check_part = 0; check_part < getNumParts(); ++check_part)
 					{
-						if (getLayer(check_layer)->getName().compare(other->getLayer(layer)->getName(), Qt::CaseInsensitive) == 0)
+						if (getPart(check_part)->getName().compare(other->getPart(part)->getName(), Qt::CaseInsensitive) == 0)
 						{
-							dest_layer = getLayer(check_layer);
+							dest_part = getPart(check_part);
 							break;
 						}
 					}
-					if (dest_layer == NULL)
+					if (dest_part == NULL)
 					{
-						// Import as new layer
-						dest_layer = new MapLayer(layer_to_import->getName(), this);
-						addLayer(dest_layer, 0);
+						// Import as new part
+						dest_part = new MapPart(part_to_import->getName(), this);
+						addPart(dest_part, 0);
 					}
 				}
 				
-				// Temporarily switch the current layer for importing so the undo step gets created for the right layer
-				MapLayer* temp_current_layer = getCurrentLayer();
-				current_layer_index = findLayerIndex(dest_layer);
+				// Temporarily switch the current part for importing so the undo step gets created for the right part
+				MapPart* temp_current_part = getCurrentPart();
+				current_part_index = findPartIndex(dest_part);
 				
-				bool select_and_center_objects = dest_layer == temp_current_layer;
-				dest_layer->importLayer(layer_to_import, symbol_map, select_and_center_objects);
+				bool select_and_center_objects = dest_part == temp_current_part;
+				dest_part->importPart(part_to_import, symbol_map, select_and_center_objects);
 				if (select_and_center_objects)
 					ensureVisibilityOfSelectedObjects();
 				
-				current_layer_index = findLayerIndex(temp_current_layer);
+				current_part_index = findPartIndex(temp_current_part);
 			}
 		}
 	}
@@ -933,13 +647,13 @@ void Map::clear()
 	templates.clear();
 	first_front_template = 0;
 	
-	size = layers.size();
+	size = parts.size();
 	for (int i = 0; i < size; ++i)
-		delete layers[i];
-	layers.clear();
+		delete parts[i];
+	parts.clear();
 	
-	layers.push_back(new MapLayer(tr("default layer"), this));
-	current_layer_index = 0;
+	parts.push_back(new MapPart(tr("default part"), this));
+	current_part_index = 0;
 	
 	object_selection.clear();
 	first_selected_object = NULL;
@@ -992,14 +706,14 @@ void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_templa
 void Map::updateObjects()
 {
 	// TODO: It maybe would be better if the objects entered themselves into a separate list when they get dirty so not all objects have to be traversed here
-	int size = layers.size();
+	int size = parts.size();
 	for (int l = 0; l < size; ++l)
 	{
-		MapLayer* layer = layers[l];
-		int obj_size = layer->getNumObjects();
+		MapPart* part = parts[l];
+		int obj_size = part->getNumObjects();
 		for (int i = 0; i < obj_size; ++i)
 		{
-			Object* object = layer->getObject(i);
+			Object* object = part->getObject(i);
 			if (!object->update())
 				continue;
 		}
@@ -1043,12 +757,12 @@ void Map::getSelectionToSymbolCompatibility(Symbol* symbol, bool& out_compatible
 void Map::deleteSelectedObjects()
 {
 	AddObjectsUndoStep* undo_step = new AddObjectsUndoStep(this);
-	MapLayer* layer = getCurrentLayer();
+	MapPart* part = getCurrentPart();
 	
 	Map::ObjectSelection::const_iterator it_end = selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = selectedObjectsBegin(); it != it_end; ++it)
 	{
-		int index = layer->findObjectIndex(*it);
+		int index = part->findObjectIndex(*it);
 		undo_step->addObject(index, *it);
 	}
 	for (Map::ObjectSelection::const_iterator it = selectedObjectsBegin(); it != it_end; ++it)
@@ -1664,11 +1378,11 @@ void Map::scaleAllSymbols(double factor)
 void Map::determineSymbolsInUse(std::vector< bool >& out)
 {
 	out.assign(symbols.size(), false);
-	for (int l = 0; l < (int)layers.size(); ++l)
+	for (int l = 0; l < (int)parts.size(); ++l)
 	{
-		for (int o = 0; o < layers[l]->getNumObjects(); ++o)
+		for (int o = 0; o < parts[l]->getNumObjects(); ++o)
 		{
-			Symbol* symbol = layers[l]->getObject(o)->getSymbol();
+			Symbol* symbol = parts[l]->getObject(o)->getSymbol();
 			int index = findSymbolIndex(symbol);
 			if (index >= 0)
 				out[index] = true;
@@ -1766,7 +1480,7 @@ void Map::setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border)
 void Map::setTemplateAreaDirty(int i)
 {
 	if (i == -1)
-		return;	// no assert here as convenience, so setTemplateAreaDirty(-1) can be called without effect for the map layer
+		return;	// no assert here as convenience, so setTemplateAreaDirty(-1) can be called without effect for the map part
 	assert(i >= 0 && i < (int)templates.size());
 	
 	templates[i]->setTemplateAreaDirty();
@@ -1845,20 +1559,20 @@ bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, Ma
 	return false;
 }
 
-void Map::addLayer(MapLayer* layer, int pos)
+void Map::addPart(MapPart* part, int pos)
 {
-	layers.insert(layers.begin() + pos, layer);
-	if (current_layer_index >= pos)
-		++current_layer_index;
+	parts.insert(parts.begin() + pos, part);
+	if (current_part_index >= pos)
+		++current_part_index;
 	setOtherDirty(true);
 }
 
-int Map::findLayerIndex(MapLayer* layer) const
+int Map::findPartIndex(MapPart* part) const
 {
-	int size = (int)layers.size();
+	int size = (int)parts.size();
 	for (int i = 0; i < size; ++i)
 	{
-		if (layers[i] == layer)
+		if (parts[i] == part)
 			return i;
 	}
 	assert(false);
@@ -1868,25 +1582,25 @@ int Map::findLayerIndex(MapLayer* layer) const
 int Map::getNumObjects()
 {
 	int num_objects = 0;
-	int size = layers.size();
+	int size = parts.size();
 	for (int i = 0; i < size; ++i)
-		num_objects += layers[i]->getNumObjects();
+		num_objects += parts[i]->getNumObjects();
 	return num_objects;
 }
-int Map::addObject(Object* object, int layer_index)
+int Map::addObject(Object* object, int part_index)
 {
-	MapLayer* layer = layers[(layer_index < 0) ? current_layer_index : layer_index];
-	int object_index = layer->getNumObjects();
-	layer->addObject(object, object_index);
+	MapPart* part = parts[(part_index < 0) ? current_part_index : part_index];
+	int object_index = part->getNumObjects();
+	part->addObject(object, object_index);
 	
 	return object_index;
 }
 void Map::deleteObject(Object* object, bool remove_only)
 {
-	int size = layers.size();
+	int size = parts.size();
 	for (int i = 0; i < size; ++i)
 	{
-		if (layers[i]->deleteObject(object, remove_only))
+		if (parts[i]->deleteObject(object, remove_only))
 			return;
 	}
 	
@@ -1905,9 +1619,9 @@ QRectF Map::calculateExtent(bool include_helper_symbols, bool include_templates,
 	QRectF rect;
 	
 	// Objects
-	int size = layers.size();
+	int size = parts.size();
 	for (int i = 0; i < size; ++i)
-		rectIncludeSafe(rect, layers[i]->calculateExtent(include_helper_symbols));
+		rectIncludeSafe(rect, parts[i]->calculateExtent(include_helper_symbols));
 	
 	// Templates
 	if (include_templates)
@@ -1932,19 +1646,19 @@ void Map::setObjectAreaDirty(QRectF map_coords_rect)
 }
 void Map::findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out)
 {
-	getCurrentLayer()->findObjectsAt(coord, tolerance, treat_areas_as_paths, extended_selection, include_hidden_objects, include_protected_objects, out);
+	getCurrentPart()->findObjectsAt(coord, tolerance, treat_areas_as_paths, extended_selection, include_hidden_objects, include_protected_objects, out);
 }
 void Map::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector< Object* >& out)
 {
-	getCurrentLayer()->findObjectsAtBox(corner1, corner2, include_hidden_objects, include_protected_objects, out);
+	getCurrentPart()->findObjectsAtBox(corner1, corner2, include_hidden_objects, include_protected_objects, out);
 }
 
 int Map::countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects)
 {
 	int count = 0;
-	int size = layers.size();
+	int size = parts.size();
 	for (int i = 0; i < size; ++i)
-		count += layers[i]->countObjectsInRect(map_coord_rect, include_hidden_objects);
+		count += parts[i]->countObjectsInRect(map_coord_rect, include_hidden_objects);
 	return count;
 }
 

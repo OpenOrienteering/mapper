@@ -33,12 +33,12 @@
 MapUndoStep::MapUndoStep(Map* map, Type type): UndoStep(type)
 {
 	this->map = map;
-	layer = map->getCurrentLayerIndex();
+	part = map->getCurrentPartIndex();
 }
 
 void MapUndoStep::save(QIODevice* file)
 {
-	file->write((char*)&layer, sizeof(int));
+	file->write((char*)&part, sizeof(int));
 	int size = affected_objects.size();
 	file->write((char*)&size, sizeof(int));
 	for (int i = 0; i < size; ++i)
@@ -46,7 +46,7 @@ void MapUndoStep::save(QIODevice* file)
 }
 bool MapUndoStep::load(QIODevice* file, int version)
 {
-	file->read((char*)&layer, sizeof(int));
+	file->read((char*)&part, sizeof(int));
 	int size;
 	file->read((char*)&size, sizeof(int));
 	affected_objects.resize(size);
@@ -59,7 +59,7 @@ void MapUndoStep::getAffectedOutcome(std::vector< Object* >& out) const
 {
 	out.resize(affected_objects.size());
 	for (int i = 0; i < (int)affected_objects.size(); ++i)
-		out[i] = map->getLayer(layer)->getObject(affected_objects[i]);
+		out[i] = map->getPart(part)->getObject(affected_objects[i]);
 }
 
 // ### ObjectContainingUndoStep ###
@@ -84,7 +84,7 @@ void ObjectContainingUndoStep::addObject(int existing_index, Object* object)
 }
 void ObjectContainingUndoStep::addObject(Object* existing, Object* object)
 {
-	int index = map->getCurrentLayer()->findObjectIndex(existing);
+	int index = map->getCurrentPart()->findObjectIndex(existing);
 	assert(index >= 0);
 	addObject(index, object);
 }
@@ -153,12 +153,12 @@ UndoStep* ReplaceObjectsUndoStep::undo()
 {
 	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
 	
-	MapLayer* layer = map->getLayer(this->layer);
+	MapPart* part = map->getPart(this->part);
 	int size = (int)objects.size();
 	for (int i = 0; i < size; ++i)
 	{
-		undo_step->addObject(affected_objects[i], layer->getObject(affected_objects[i]));
-		layer->setObject(objects[i], affected_objects[i], false);
+		undo_step->addObject(affected_objects[i], part->getObject(affected_objects[i]));
+		part->setObject(objects[i], affected_objects[i], false);
 	}
 	
 	objects.clear();
@@ -183,12 +183,12 @@ UndoStep* DeleteObjectsUndoStep::undo()
 	// Make sure to delete the objects in the right order so the other objects' indices stay valid
 	std::sort(affected_objects.begin(), affected_objects.end(), std::greater<int>());
 	
-	MapLayer* layer = map->getLayer(this->layer);
+	MapPart* part = map->getPart(this->part);
 	int size = (int)affected_objects.size();
 	for (int i = 0; i < size; ++i)
 	{
-		undo_step->addObject(affected_objects[i], layer->getObject(affected_objects[i]));
-		layer->deleteObject(affected_objects[i], true);
+		undo_step->addObject(affected_objects[i], part->getObject(affected_objects[i]));
+		part->deleteObject(affected_objects[i], true);
 	}
 	
 	return undo_step;
@@ -210,12 +210,12 @@ UndoStep* AddObjectsUndoStep::undo()
 		order[i] = std::pair<int, int>(i, affected_objects[i]);
 	std::sort(order.begin(), order.end(), sortOrder);
 	
-	MapLayer* layer = map->getLayer(this->layer);
+	MapPart* part = map->getPart(this->part);
 	int size = (int)objects.size();
 	for (int i = 0; i < size; ++i)
 	{
 		undo_step->addObject(affected_objects[order[i].first]);
-		layer->addObject(objects[order[i].first], order[i].second);
+		part->addObject(objects[order[i].first], order[i].second);
 	}
 	
 	objects.clear();
@@ -242,11 +242,11 @@ UndoStep* SwitchSymbolUndoStep::undo()
 {
 	SwitchSymbolUndoStep* undo_step = new SwitchSymbolUndoStep(map);
 	
-	MapLayer* layer = map->getLayer(this->layer);
+	MapPart* part = map->getPart(this->part);
 	int size = (int)affected_objects.size();
 	for (int i = 0; i < size; ++i)
 	{
-		Object* object = layer->getObject(affected_objects[i]);
+		Object* object = part->getObject(affected_objects[i]);
 		undo_step->addObject(affected_objects[i], object->getSymbol());
 		assert(object->setSymbol(target_symbols[i], false));
 	}
@@ -315,11 +315,11 @@ UndoStep* SwitchDashesUndoStep::undo()
 {
 	SwitchDashesUndoStep* undo_step = new SwitchDashesUndoStep(map);
 	
-	MapLayer* layer = map->getLayer(this->layer);
+	MapPart* part = map->getPart(this->part);
 	int size = (int)affected_objects.size();
 	for (int i = 0; i < size; ++i)
 	{
-		PathObject* object = reinterpret_cast<PathObject*>(layer->getObject(affected_objects[i]));
+		PathObject* object = reinterpret_cast<PathObject*>(part->getObject(affected_objects[i]));
 		object->reverse();
 		object->update(true);
 		

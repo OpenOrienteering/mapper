@@ -33,6 +33,7 @@
 #include "undo.h"
 #include "matrix.h"
 #include "map_coord.h"
+#include "map_part.h"
 
 QT_BEGIN_NAMESPACE
 class QIODevice;
@@ -57,100 +58,6 @@ class Template;
 class OCAD8FileImport;
 class Georeferencing;
 class MapGrid;
-
-typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
-
-struct ObjectOperationResult
-{
-	enum Enum
-	{
-		NoResult = 0,
-		Success = 1 << 0,
-		Abort = 1 << 1
-	};
-};
-
-class MapLayer
-{
-friend class OCAD8FileImport;
-public:
-	MapLayer(const QString& name, Map* map);
-	~MapLayer();
-	
-	void save(QIODevice* file, Map* map);
-	bool load(QIODevice* file, int version, Map* map);
-	void save(QXmlStreamWriter& xml, const Map& map) const;
-	static MapLayer* load(QXmlStreamReader& xml, Map& map);
-	
-	inline const QString& getName() const {return name;}
-	inline void setName(const QString new_name) {name = new_name;}
-	
-	inline int getNumObjects() const {return (int)objects.size();}
-	inline Object* getObject(int i) {return objects[i];}
-    inline const Object* getObject(int i) const {return objects[i];}
-	int findObjectIndex(Object* object);					// asserts that the object is contained in the layer
-	void setObject(Object* object, int pos, bool delete_old);
-	void addObject(Object* object, int pos);
-	void deleteObject(int pos, bool remove_only);
-	bool deleteObject(Object* object, bool remove_only);	// returns if the object was found
-	
-	/// Imports the contents of the other layer (which can be from another map) into this layer.
-	/// Uses symbol_map to replace all symbols contained there. No replacement is done for symbols which are not in the map.
-	void importLayer(MapLayer* other, QHash<Symbol*, Symbol*>& symbol_map, bool select_new_objects);
-	
-	void findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection, bool include_hidden_objects, bool include_protected_objects, SelectionInfoVector& out);
-	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
-	int countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects);
-	
-	QRectF calculateExtent(bool include_helper_symbols);
-	
-	/// See Map::operationOnAllObjects()
-	template<typename Processor, typename Condition> ObjectOperationResult::Enum operationOnAllObjects(const Processor& processor, const Condition& condition)
-	{
-		int result = ObjectOperationResult::NoResult;
-		int size = (int)objects.size();
-		for (int i = size - 1; i >= 0; --i)
-		{
-			if (!condition(objects[i]))
-				continue;
-			result |= ObjectOperationResult::Success;
-			
-			if (!processor(objects[i], this, i))
-			{
-				result |= ObjectOperationResult::Abort;
-				return (ObjectOperationResult::Enum)result;
-			}
-		}
-		return (ObjectOperationResult::Enum)result;
-	}
-	/// See Map::operationOnAllObjects()
-	template<typename Processor> ObjectOperationResult::Enum operationOnAllObjects(const Processor& processor)
-	{
-		int size = (int)objects.size();
-		int result = size >= 1 ? ObjectOperationResult::Success : ObjectOperationResult::NoResult;
-		for (int i = size - 1; i >= 0; --i)
-		{
-			if (!processor(objects[i], this, i))
-			{
-				result |= ObjectOperationResult::Abort;
-				return (ObjectOperationResult::Enum)result;
-			}
-		}
-		return (ObjectOperationResult::Enum)result;
-	}
-	void scaleAllObjects(double factor);
-	void rotateAllObjects(double rotation);
-	void updateAllObjects();
-	void updateAllObjectsWithSymbol(Symbol* symbol);
-	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
-	bool deleteAllObjectsWithSymbol(Symbol* symbol);		// returns if there was an object that was deleted
-	bool doObjectsExistWithSymbol(Symbol* symbol);
-	
-private:
-	QString name;
-	std::vector<Object*> objects;	// TODO: this could / should be a spatial representation optimized for quick access
-	Map* map;
-};
 
 /// Central class for an OpenOrienteering map
 class Map : public QObject
@@ -202,7 +109,7 @@ public:
 	/// Loads the map directly from the given IO device, where the data must be in native map format. Returns true if successful
 	bool importFromNative(QIODevice* stream);
 	
-	/// Deletes all map data and resets the map to its initial state containing one default layer
+	/// Deletes all map data and resets the map to its initial state containing one default part
 	void clear();
 	
 	/// Draws the part of the map which is visible in the given bounding box in map coordinates
@@ -325,26 +232,26 @@ public:
 	bool reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, MapView* view, const QString& map_path = QString());
 	
 	
-	// Layers & Undo
+	// Parts & Undo
 	
 	inline UndoManager& objectUndoManager() {return object_undo_manager;}
 	
-	inline int getNumLayers() const {return (int)layers.size();}
-	inline MapLayer* getLayer(int i) const {return layers[i];}
-	void addLayer(MapLayer* layer, int pos);
-	int findLayerIndex(MapLayer* layer) const;
+	inline int getNumParts() const {return (int)parts.size();}
+	inline MapPart* getPart(int i) const {return parts[i];}
+	void addPart(MapPart* part, int pos);
+	int findPartIndex(MapPart* part) const;
 	
-	// TODO: Layer management
+	// TODO: Part management
 	
-	inline MapLayer* getCurrentLayer() const {return (current_layer_index < 0) ? NULL : layers[current_layer_index];}
-	inline void setCurrentLayer(MapLayer* layer) {current_layer_index = findLayerIndex(layer);}
-	inline int getCurrentLayerIndex() const {return current_layer_index;}
+	inline MapPart* getCurrentPart() const {return (current_part_index < 0) ? NULL : parts[current_part_index];}
+	inline void setCurrentPart(MapPart* part) {current_part_index = findPartIndex(part);}
+	inline int getCurrentPartIndex() const {return current_part_index;}
 	
 	
 	// Objects
 	
 	int getNumObjects();
-	int addObject(Object* object, int layer_index = -1);						// returns the index of the added object in the layer
+	int addObject(Object* object, int part_index = -1);						// returns the index of the added object in the part
 	void deleteObject(Object* object, bool remove_only);						// remove_only will remove the object from the map, but not call "delete object"; be sure to call removeObjectFromSelection() if necessary
 	void setObjectsDirty();
 	
@@ -353,16 +260,16 @@ public:
 	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector<Object*>& out);
 	int countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects);
 	
-	/// Goes through all objects and for each object where condition(object) returns true, applies processor(object, map_layer, object_index).
+	/// Goes through all objects and for each object where condition(object) returns true, applies processor(object, map_part, object_index).
 	/// If processor() returns false, aborts the operation and includes ObjectOperationResult::Aborted in the return value.
 	/// If the operation is performed on any object (i.e. the condition returns true at least once), includes ObjectOperationResult::Success in the return value.
 	template<typename Processor, typename Condition> ObjectOperationResult::Enum operationOnAllObjects(const Processor& processor, const Condition& condition)
 	{
 		int result = ObjectOperationResult::NoResult;
-		int size = layers.size();
+		int size = parts.size();
 		for (int i = 0; i < size; ++i)
 		{
-			result |= layers[i]->operationOnAllObjects<Processor, Condition>(processor, condition);
+			result |= parts[i]->operationOnAllObjects<Processor, Condition>(processor, condition);
 			if (result & ObjectOperationResult::Abort)
 				return (ObjectOperationResult::Enum)result;
 		}
@@ -372,10 +279,10 @@ public:
 	template<typename Processor> ObjectOperationResult::Enum operationOnAllObjects(const Processor& processor)
 	{
 		int result = ObjectOperationResult::NoResult;
-		int size = layers.size();
+		int size = parts.size();
 		for (int i = 0; i < size; ++i)
 		{
-			result |= layers[i]->operationOnAllObjects<Processor>(processor);
+			result |= parts[i]->operationOnAllObjects<Processor>(processor);
 			if (result & ObjectOperationResult::Abort)
 				return (ObjectOperationResult::Enum)result;
 		}
@@ -509,7 +416,7 @@ private:
 	typedef std::vector<MapColor*> ColorVector;
 	typedef std::vector<Symbol*> SymbolVector;
 	typedef std::vector<Template*> TemplateVector;
-	typedef std::vector<MapLayer*> LayerVector;
+	typedef std::vector<MapPart*> PartVector;
 	typedef std::vector<MapWidget*> WidgetVector;
 	typedef std::vector<MapView*> ViewVector;
 	
@@ -554,11 +461,11 @@ private:
 	TemplateVector templates;
 	TemplateVector closed_templates;
 	int first_front_template;		// index of the first template in templates which should be drawn in front of the map
-	LayerVector layers;
+	PartVector parts;
 	ObjectSelection object_selection;
 	Object* first_selected_object;
 	UndoManager object_undo_manager;
-	int current_layer_index;
+	int current_part_index;
 	WidgetVector widgets;
 	ViewVector views;
 	QScopedPointer<MapRenderables> renderables;

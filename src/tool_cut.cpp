@@ -137,7 +137,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 		{
 			if (drag_start_len != drag_end_len)
 			{
-				MapLayer* layer = map->getCurrentLayer();
+				MapPart* part = map->getCurrentPart();
 				PathObject* split_object = reinterpret_cast<PathObject*>(edit_object);
 				
 				if (split_object->getPart(drag_part_index).isClosed())
@@ -150,14 +150,14 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 						split_object->changePathBounds(drag_part_index, drag_end_len, drag_start_len);
 					
 					ReplaceObjectsUndoStep* replace_step = new ReplaceObjectsUndoStep(map);
-					replace_step->addObject(layer->findObjectIndex(split_object), undo_duplicate);
+					replace_step->addObject(part->findObjectIndex(split_object), undo_duplicate);
 					map->objectUndoManager().addNewUndoStep(replace_step);
 					split_object->update(); // Make sure that the map display is updated
 				}
 				else
 				{
 					AddObjectsUndoStep* add_step = new AddObjectsUndoStep(map);
-					add_step->addObject(layer->findObjectIndex(split_object), split_object);
+					add_step->addObject(part->findObjectIndex(split_object), split_object);
 					map->removeObjectFromSelection(split_object, false);
 					map->deleteObject(split_object, true);
 					
@@ -175,7 +175,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 							PathObject* part1 = reinterpret_cast<PathObject*>(split_object->duplicate());
 							part1->changePathBounds(drag_part_index, 0, min_cut_pos);
 							map->addObject(part1);
-							delete_step->addObject(layer->findObjectIndex(part1));
+							delete_step->addObject(part->findObjectIndex(part1));
 							map->addObjectToSelection(part1, !(max_cut_pos < path_len));
 						}
 						if (max_cut_pos < path_len)
@@ -183,7 +183,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 							PathObject* part2 = reinterpret_cast<PathObject*>(split_object->duplicate());
 							part2->changePathBounds(drag_part_index, max_cut_pos, path_len);
 							map->addObject(part2);
-							delete_step->addObject(layer->findObjectIndex(part2));
+							delete_step->addObject(part->findObjectIndex(part2));
 							map->addObjectToSelection(part2, true);
 						}
 						
@@ -213,14 +213,14 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 				assert(!"TODO: make this work for non-path objects");
 			split_object = reinterpret_cast<PathObject*>(edit_object);
 			
-			MapLayer* layer = map->getCurrentLayer();
+			MapPart* part = map->getCurrentPart();
 			AddObjectsUndoStep* add_step = new AddObjectsUndoStep(map);
 			
 			Object* out1 = NULL;
 			Object* out2 = NULL;
 			split_object->splitAt(split_pos, out1, out2);
 			
-			add_step->addObject(layer->findObjectIndex(split_object), split_object);
+			add_step->addObject(part->findObjectIndex(split_object), split_object);
 			map->deleteObject(split_object, true);
 			map->removeObjectFromSelection(split_object, false);
 			if (!out1 && !out2)
@@ -243,9 +243,9 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 			}
 			DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
 			if (out1)
-				delete_step->addObject(layer->findObjectIndex(out1));
+				delete_step->addObject(part->findObjectIndex(out1));
 			if (out2)
-				delete_step->addObject(layer->findObjectIndex(out2));
+				delete_step->addObject(part->findObjectIndex(out2));
 			
 			CombinedUndoStep* undo_step = new CombinedUndoStep((void*)map);
 			if (out1 || out2)
@@ -558,9 +558,9 @@ void CutTool::pathFinished(PathObject* split_path)
 	// Do the splitting
 	const double split_threshold = 0.01;
 	
-	MapLayer* layer = map->getCurrentLayer();
+	MapPart* part = map->getCurrentPart();
 	AddObjectsUndoStep* add_step = new AddObjectsUndoStep(map);
-	add_step->addObject(layer->findObjectIndex(edited_path), edited_path);
+	add_step->addObject(part->findObjectIndex(edited_path), edited_path);
 	map->removeObjectFromSelection(edited_path, false);
 	map->deleteObject(edited_path, true);
 	
@@ -640,7 +640,7 @@ void CutTool::pathFinished(PathObject* split_path)
 	for (int i = 0; i < 2; ++i)
 	{
 		map->addObject(parts[i]);
-		delete_step->addObject(layer->findObjectIndex(parts[i]));
+		delete_step->addObject(part->findObjectIndex(parts[i]));
 		map->addObjectToSelection(parts[i], false);
 	}
 	

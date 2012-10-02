@@ -191,8 +191,8 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FormatException)
 	{
 		// Load objects
 
-		// Place all objects into a single OCAD import layer
-		MapLayer* layer = new MapLayer(QObject::tr("OCAD import layer"), map);
+		// Place all objects into a single OCAD import part
+		MapPart* part = new MapPart(QObject::tr("OCAD import layer"), map);
 		for (OCADObjectIndex *idx = ocad_objidx_first(file); idx != NULL; idx = ocad_objidx_next(file, idx))
 		{
 			for (int i = 0; i < 256; i++)
@@ -201,16 +201,16 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FormatException)
 				OCADObject *ocad_obj = ocad_object(file, entry);
 				if (ocad_obj != NULL)
 				{
-					Object *object = importObject(ocad_obj, layer);
+					Object *object = importObject(ocad_obj, part);
 					if (object != NULL) {
-						layer->objects.push_back(object);
+						part->objects.push_back(object);
 					}
 				}
 			}
 		}
-		delete map->layers[0];
-		map->layers[0] = layer;
-		map->current_layer_index = 0;
+		delete map->parts[0];
+		map->parts[0] = part;
+		map->current_part_index = 0;
 
 		// Load templates
 		map->templates.clear();
@@ -833,7 +833,7 @@ void OCAD8FileImport::fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *o
 		symbol->setHidden(true);
 }
 
-Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapLayer* layer)
+Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapPart* part)
 {
 	Symbol* symbol;
     if (!symbol_index.contains(ocad_object->symbol))
@@ -852,7 +852,7 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapLayer* l
 		}
 		else
 		{
-			if (!importRectangleObject(ocad_object, layer, rectangle_info[ocad_object->symbol]))
+			if (!importRectangleObject(ocad_object, part, rectangle_info[ocad_object->symbol]))
 				addWarning(QObject::tr("Unable to import rectangle object"));
 			return NULL;
 		}
@@ -930,7 +930,7 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapLayer* l
     return object;
 }
 
-bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapLayer* layer, const OCAD8FileImport::RectangleInfo& rect)
+bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapPart* part, const OCAD8FileImport::RectangleInfo& rect)
 {
 	if (ocad_object->npts != 4)
 		return false;
@@ -991,7 +991,7 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapLa
 	}
 	PathObject *border_path = new PathObject(rect.border_line, coords, map);
 	border_path->getPart(0).setClosed(true, false);
-	layer->objects.push_back(border_path);
+	part->objects.push_back(border_path);
 	
 	if (rect.has_grid && rect.cell_width > 0 && rect.cell_height > 0)
 	{
@@ -1012,7 +1012,7 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapLa
 			coords[1] = (bottom_left_f + x * cell_width * right).toMapCoord();
 			
 			PathObject *path = new PathObject(rect.inner_line, coords, map);
-			layer->objects.push_back(path);
+			part->objects.push_back(path);
 		}
 		for (int y = 1; y < num_cells_y; ++y)
 		{
@@ -1020,7 +1020,7 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapLa
 			coords[1] = (top_right_f + y * cell_height * down).toMapCoord();
 			
 			PathObject *path = new PathObject(rect.inner_line, coords, map);
-			layer->objects.push_back(path);
+			part->objects.push_back(path);
 		}
 		
 		// Create grid text
@@ -1052,7 +1052,7 @@ bool OCAD8FileImport::importRectangleObject(const OCADObject* ocad_object, MapLa
 					double position_x = (x + 0.07f) * cell_width;
 					double position_y = (y + 0.04f) * cell_height + rect.text->getFontMetrics().ascent() / rect.text->calculateInternalScaling() - rect.text->getFontSize();
 					object->setAnchorPosition(top_left_f + position_x * right + position_y * down);
-					layer->objects.push_back(object);
+					part->objects.push_back(object);
 					
 					//pts[0].Y -= rectinfo.gridText.FontAscent - rectinfo.gridText.FontEmHeight;
 				}
@@ -1428,12 +1428,12 @@ void OCAD8FileExport::doExport() throw (FormatException)
 	
 	// Objects
 	OCADObject* ocad_object = ocad_object_alloc(NULL);
-	for (int l = 0; l < map->getNumLayers(); ++l)
+	for (int l = 0; l < map->getNumParts(); ++l)
 	{
-		for (int o = 0; o < map->getLayer(l)->getNumObjects(); ++o)
+		for (int o = 0; o < map->getPart(l)->getNumObjects(); ++o)
 		{
 			memset(ocad_object, 0, sizeof(OCADObject) - sizeof(OCADPoint) + 8 * (ocad_object->npts + ocad_object->ntext));
-			Object* object = map->getLayer(l)->getObject(o);
+			Object* object = map->getPart(l)->getObject(o);
 			object->update();
 			
 			// Fill some common entries of object struct

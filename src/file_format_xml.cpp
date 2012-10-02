@@ -66,7 +66,7 @@ protected:
 	void importGeoreferencing();
 	void importColors();
 	void importSymbols();
-	void importLayers();
+	void importMapParts();
 	
 	QXmlStreamReader xml;
 };
@@ -200,13 +200,13 @@ void XMLFileExporter::doExport() throw (FormatException)
 	// TODO
 	xml.writeEndElement(/*undo*/); 
 	
-	xml.writeStartElement("layers");
-	int num_layers = map->getNumLayers();
-	xml.writeAttribute("number", QString::number(num_layers));
-	xml.writeAttribute("current",QString::number( map->current_layer_index));
-	for (int i = 0; i < num_layers; ++i)
-		map->getLayer(i)->save(xml, *map);
-	xml.writeEndElement(/*layers*/); 
+	xml.writeStartElement("parts");
+	int num_parts = map->getNumParts();
+	xml.writeAttribute("number", QString::number(num_parts));
+	xml.writeAttribute("current",QString::number( map->current_part_index));
+	for (int i = 0; i < num_parts; ++i)
+		map->getPart(i)->save(xml, *map);
+	xml.writeEndElement(/*parts*/); 
 	
 	xml.writeEndElement(/*document*/);
 	xml.writeEndDocument();
@@ -274,8 +274,12 @@ void XMLFileImporter::import(bool load_symbols_only) throw (FormatException)
 		else if (name == "undo")
 			xml.skipCurrentElement();
 */
+		else if (name == "parts")
+			importMapParts();
+#ifdef Mapper_XML_OBSOLETE_ELEMENTS
 		else if (name == "layers")
-			importLayers();
+			importMapParts();
+#endif
 		else
 		{
 			addWarningUnsupportedElement();
@@ -372,19 +376,25 @@ void XMLFileImporter::importSymbols()
 		);
 }
 
-void XMLFileImporter::importLayers()
+void XMLFileImporter::importMapParts()
 {
-	int num_layers = xml.attributes().value("number").toString().toInt();
-	int current_layer_index = xml.attributes().value("current").toString().toInt();
-	map->layers.clear();
-	map->layers.reserve(num_layers % 20); // 20 is not a limit
+	int num_parts = xml.attributes().value("number").toString().toInt();
+	int current_part_index = xml.attributes().value("current").toString().toInt();
+	map->parts.clear();
+	map->parts.reserve(num_parts % 20); // 20 is not a limit
 	
 	while (xml.readNextStartElement())
 	{
-		if (xml.name() == "layer")
+		if (xml.name() == "part")
 		{
-			map->layers.push_back(MapLayer::load(xml, *map));
+			map->parts.push_back(MapPart::load(xml, *map));
 		}
+#ifndef Mapper_XML_DROP_OBSOLETE_ELEMENTS
+		else if (xml.name() == "layer")
+		{
+			map->parts.push_back(MapPart::load(xml, *map));
+		}
+#endif
 		else
 		{
 			addWarningUnsupportedElement();
@@ -392,12 +402,12 @@ void XMLFileImporter::importLayers()
 		}
 	}
 	
-	if (0 <= current_layer_index && current_layer_index < map->getNumLayers())
-		map->current_layer_index = current_layer_index;
+	if (0 <= current_part_index && current_part_index < map->getNumParts())
+		map->current_part_index = current_part_index;
 	
-	if (num_layers > 0 && num_layers != map->getNumLayers())
-		addWarning(QObject::tr("Expected %1 layers, found %2.").
-		  arg(num_layers).
-		  arg(map->getNumLayers())
+	if (num_parts > 0 && num_parts != map->getNumParts())
+		addWarning(QObject::tr("Expected %1 map parts, found %2.").
+		  arg(num_parts).
+		  arg(map->getNumParts())
 		);
 }

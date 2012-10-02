@@ -290,25 +290,25 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
 			}
 		}
 
-		// Load layers
-		stream->read((char*)&map->current_layer_index, sizeof(int));
+		// Load parts
+		stream->read((char*)&map->current_part_index, sizeof(int));
 
-		int num_layers;
-		if (stream->read((char*)&num_layers, sizeof(int)) < (int)sizeof(int))
+		int num_parts;
+		if (stream->read((char*)&num_parts, sizeof(int)) < (int)sizeof(int))
 		{
-			throw FormatException(QObject::tr("Error while reading layer count."));
+			throw FormatException(QObject::tr("Error while reading map part count."));
 		}
-		delete map->layers[0];
-		map->layers.resize(num_layers);
+		delete map->parts[0];
+		map->parts.resize(num_parts);
 
-		for (int i = 0; i < num_layers; ++i)
+		for (int i = 0; i < num_parts; ++i)
 		{
-			MapLayer* layer = new MapLayer("", map);
-			if (!layer->load(stream, version, map))
+			MapPart* part = new MapPart("", map);
+			if (!part->load(stream, version, map))
 			{
-				throw FormatException(QObject::tr("Error while loading layer %2.").arg(i+1));
+				throw FormatException(QObject::tr("Error while loading map part %2.").arg(i+1));
 			}
-			map->layers[i] = layer;
+			map->parts[i] = part;
 		}
 	}
 }
@@ -463,15 +463,15 @@ void NativeFileExport::doExport() throw (FormatException)
     // Write undo steps
     map->object_undo_manager.save(stream);
 
-    // Write layers
-    stream->write((const char*)&map->current_layer_index, sizeof(int));
+    // Write parts
+    stream->write((const char*)&map->current_part_index, sizeof(int));
 
-    int num_layers = map->getNumLayers();
-    stream->write((const char*)&num_layers, sizeof(int));
+    int num_parts = map->getNumParts();
+    stream->write((const char*)&num_parts, sizeof(int));
 
-    for (int i = 0; i < num_layers; ++i)
+    for (int i = 0; i < num_parts; ++i)
     {
-        MapLayer* layer = map->getLayer(i);
-        layer->save(stream, map);
+        MapPart* part = map->getPart(i);
+        part->save(stream, map);
     }
 }

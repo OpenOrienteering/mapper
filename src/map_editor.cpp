@@ -733,7 +733,7 @@ void MapEditorController::doUndo(bool redo)
 	}
 	
 	UndoStep* generic_step = redo ? map->objectUndoManager().getLastRedoStep() : map->objectUndoManager().getLastUndoStep();
-	MapLayer* affected_layer = NULL;
+	MapPart* affected_part = NULL;
 	std::vector<Object*> affected_objects;
 	
 	if (generic_step->getType() == UndoStep::CombinedUndoStepType)
@@ -744,10 +744,10 @@ void MapEditorController::doUndo(bool redo)
 		{
 			std::vector<Object*> affected_objects_temp;
 			MapUndoStep* map_step = reinterpret_cast<MapUndoStep*>(combined_step->getSubStep(i));
-			if (!affected_layer)
-				affected_layer = map->getLayer(map_step->getLayer());
+			if (!affected_part)
+				affected_part = map->getPart(map_step->getPart());
 			else
-				assert(affected_layer == map->getLayer(map_step->getLayer()));
+				assert(affected_part == map->getPart(map_step->getPart()));
 			map_step->getAffectedOutcome(affected_objects_temp);
 			
 			for (int o = 0; o < (int)affected_objects_temp.size(); ++o)
@@ -759,7 +759,7 @@ void MapEditorController::doUndo(bool redo)
 	else
 	{
 		MapUndoStep* map_step = reinterpret_cast<MapUndoStep*>(generic_step);
-		affected_layer = map->getLayer(map_step->getLayer());
+		affected_part = map->getPart(map_step->getPart());
 		map_step->getAffectedOutcome(affected_objects);
 	}
 	
@@ -877,9 +877,9 @@ void MapEditorController::paste()
 	qint64 dx = main_view->getPositionX() - paste_extent.center().x() * 1000;
 	qint64 dy = main_view->getPositionY() - paste_extent.center().y() * 1000;
 	
-	MapLayer* layer = paste_map->getCurrentLayer();
-	for (int i = 0; i < layer->getNumObjects(); ++i)
-		layer->getObject(i)->move(dx, dy);
+	MapPart* part = paste_map->getCurrentPart();
+	for (int i = 0; i < part->getNumObjects(); ++i)
+		part->getObject(i)->move(dx, dy);
 	
 	// Import pasted map
 	map->importMap(paste_map, Map::CompleteImport, window);
@@ -1354,12 +1354,12 @@ void MapEditorController::duplicateClicked()
 	}
 	
 	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
-	MapLayer* layer = map->getCurrentLayer();
+	MapPart* part = map->getCurrentPart();
 	
 	map->clearObjectSelection(false);
 	for (int i = 0; i < (int)new_objects.size(); ++i)
 	{
-		undo_step->addObject(layer->findObjectIndex(new_objects[i]));
+		undo_step->addObject(part->findObjectIndex(new_objects[i]));
 		map->addObjectToSelection(new_objects[i], i == (int)new_objects.size() - 1);
 	}
 	
@@ -1370,13 +1370,13 @@ void MapEditorController::duplicateClicked()
 void MapEditorController::switchSymbolClicked()
 {
 	SwitchSymbolUndoStep* undo_step = new SwitchSymbolUndoStep(map);
-	MapLayer* layer = map->getCurrentLayer();
+	MapPart* part = map->getCurrentPart();
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
 	
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 	{
-		undo_step->addObject(layer->findObjectIndex(*it), (*it)->getSymbol());
+		undo_step->addObject(part->findObjectIndex(*it), (*it)->getSymbol());
 		(*it)->setSymbol(symbol, true);
 		(*it)->update(true);
 	}
@@ -1392,7 +1392,7 @@ void MapEditorController::fillBorderClicked()
 	new_objects.reserve(map->getNumSelectedObjects());
 	
 	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
-	MapLayer* layer = map->getCurrentLayer();
+	MapPart* part = map->getCurrentPart();
 	
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
@@ -1407,7 +1407,7 @@ void MapEditorController::fillBorderClicked()
 	for (int i = 0; i < (int)new_objects.size(); ++i)
 	{
 		map->addObjectToSelection(new_objects[i], i == (int)new_objects.size() - 1);
-		undo_step->addObject(layer->findObjectIndex(new_objects[i]));
+		undo_step->addObject(part->findObjectIndex(new_objects[i]));
 	}
 	map->objectUndoManager().addNewUndoStep(undo_step);
 }
@@ -1415,10 +1415,10 @@ void MapEditorController::selectObjectsClicked()
 {
 	map->clearObjectSelection(false);
 	
-	MapLayer* layer = map->getCurrentLayer();
+	MapPart* part = map->getCurrentPart();
 	for (int i = 0, size = map->getNumObjects(); i < size; ++i)
 	{
-		Object* object = layer->getObject(i);
+		Object* object = part->getObject(i);
 		if (symbol_widget->isSymbolSelected(object->getSymbol()))
 			map->addObjectToSelection(object, false);
 	}
@@ -1433,7 +1433,7 @@ void MapEditorController::selectObjectsClicked()
 void MapEditorController::switchDashesClicked()
 {
 	SwitchDashesUndoStep* undo_step = new SwitchDashesUndoStep(map);
-	MapLayer* layer = map->getCurrentLayer();
+	MapPart* part = map->getCurrentPart();
 	
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
@@ -1444,7 +1444,7 @@ void MapEditorController::switchDashesClicked()
 			path->reverse();
 			(*it)->update(true);
 			
-			undo_step->addObject(layer->findObjectIndex(*it));
+			undo_step->addObject(part->findObjectIndex(*it));
 		}
 	}
 	
@@ -1474,7 +1474,7 @@ void MapEditorController::connectPathsClicked()
 	}
 	
 	AddObjectsUndoStep* add_step = NULL;
-	MapLayer* layer = map->getCurrentLayer();
+	MapPart* part = map->getCurrentPart();
 	
 	// Process all objects
 	for (int i = 0; i < (int)objects.size(); ++i)
@@ -1523,7 +1523,7 @@ void MapEditorController::connectPathsClicked()
 				//if (b->getNumParts() == 0)
 				//{
 					// Create an add step for b
-					int b_index = layer->findObjectIndex(b);
+					int b_index = part->findObjectIndex(b);
 					deleted_objects.push_back(b);
 					if (!add_step)
 						add_step = new AddObjectsUndoStep(map);
@@ -1552,7 +1552,7 @@ void MapEditorController::connectPathsClicked()
 			// Add the old version to the undo step
 			if (!replace_step)
 				replace_step = new ReplaceObjectsUndoStep(map);
-			replace_step->addObject(layer->findObjectIndex(objects[i]), undo_objects[i]);
+			replace_step->addObject(part->findObjectIndex(objects[i]), undo_objects[i]);
 		}
 	}
 	
@@ -1561,7 +1561,7 @@ void MapEditorController::connectPathsClicked()
 		for (int i = 0; i < (int)deleted_objects.size(); ++i)
 		{
 			map->removeObjectFromSelection(deleted_objects[i], false);
-			map->getCurrentLayer()->deleteObject(deleted_objects[i], false);
+			map->getCurrentPart()->deleteObject(deleted_objects[i], false);
 		}
 	}
 	

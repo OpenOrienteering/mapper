@@ -227,9 +227,9 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 			editor->getMap()->clearObjectSelection(false);
 			editor->getMap()->addObjectToSelection(append_to_object, true);
 			
-			MapLayer* cur_layer = editor->getMap()->getCurrentLayer();
+			MapPart* cur_part = editor->getMap()->getCurrentPart();
 			ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(editor->getMap());
-			undo_step->addObject(cur_layer->findObjectIndex(append_to_object), undo_duplicate);
+			undo_step->addObject(cur_part->findObjectIndex(append_to_object), undo_duplicate);
 			editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
 		}
 		else

@@ -33,11 +33,11 @@ public:
 	virtual void save(QIODevice* file);
 	virtual bool load(QIODevice* file, int version);
 	
-	int getLayer() const {return layer;}
+	int getPart() const {return part;}
 	virtual void getAffectedOutcome(std::vector<Object*>& out) const;
 	
 protected:
-	int layer;
+	int part;
 	std::vector<int> affected_objects;	// indices of the existing objects that are affected
 	Map* map;
 };

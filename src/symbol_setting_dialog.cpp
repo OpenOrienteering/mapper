@@ -177,10 +177,10 @@ Symbol* SymbolSettingDialog::getNewSymbol() const
 void SymbolSettingDialog::updatePreview()
 {
 	symbol_icon_label->setPixmap(QPixmap::fromImage(*symbol->getIcon(source_map, true)));
-	for (int l = 0; l < preview_map->getNumLayers(); ++l)
-		for (int i = 0; i < preview_map->getLayer(l)->getNumObjects(); ++i)
+	for (int l = 0; l < preview_map->getNumParts(); ++l)
+		for (int i = 0; i < preview_map->getPart(l)->getNumObjects(); ++i)
 		{
-			preview_map->getLayer(l)->getObject(i)->update(true);
+			preview_map->getPart(l)->getObject(i)->update(true);
 		}
 }
 

@@ -37,7 +37,7 @@ bool BooleanTool::execute(BooleanTool::Operation op)
 {
 	PathObjects result;
 	AddObjectsUndoStep* add_step = new AddObjectsUndoStep(map);
-	MapLayer* layer = map->getCurrentLayer();
+	MapPart* part = map->getCurrentPart();
 
 	if (op != Difference)
 	{
@@ -112,7 +112,7 @@ bool BooleanTool::execute(BooleanTool::Operation op)
 	for (int i = 0; i < (int)in_objects.size(); ++i)
 	{
 		map->removeObjectFromSelection(in_objects[i], false);
-		map->getCurrentLayer()->deleteObject(in_objects[i], true);
+		map->getCurrentPart()->deleteObject(in_objects[i], true);
 		in_objects[i]->setMap(map); // necessary so objects are saved correctly
 	}
 	
@@ -124,7 +124,7 @@ bool BooleanTool::execute(BooleanTool::Operation op)
 	}
 	DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
 	for (int i = 0; i < (int)result.size(); ++i) // keep as separate loop to get the correct order
-		delete_step->addObject(layer->findObjectIndex(result[i]));
+		delete_step->addObject(part->findObjectIndex(result[i]));
 	
 	CombinedUndoStep* undo_step = new CombinedUndoStep((void*)map);
 	undo_step->addSubStep(delete_step);
