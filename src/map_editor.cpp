@@ -265,15 +265,30 @@ void MapEditorController::attach(MainWindow* window)
 	connect(map, SIGNAL(gotUnsavedChanges()), window, SLOT(gotUnsavedChanges()));
 	
 	// Add zoom / cursor position field to status bar
+	QLabel* statusbar_zoom_icon = new QLabel();
+	statusbar_zoom_icon->setPixmap(QPixmap(":/images/magnifying-glass-12.png"));
+	
 	statusbar_zoom_label = new QLabel();
-	statusbar_zoom_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-	statusbar_zoom_label->setFixedWidth(90);
+	statusbar_zoom_label->setFixedWidth(50);
 	statusbar_zoom_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+	
+	QFrame* statusbar_zoom_frame = new QFrame();
+	statusbar_zoom_frame->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
+	statusbar_zoom_frame->setLineWidth(1);
+	QHBoxLayout* statusbar_zoom_frame_layout = new QHBoxLayout();
+	statusbar_zoom_frame_layout->setMargin(0);
+	statusbar_zoom_frame_layout->setSpacing(0);
+	statusbar_zoom_frame_layout->addWidget(statusbar_zoom_icon);
+	statusbar_zoom_frame_layout->addStretch(1);
+	statusbar_zoom_frame_layout->addWidget(statusbar_zoom_label);
+	statusbar_zoom_frame->setLayout(statusbar_zoom_frame_layout);
+	
 	statusbar_cursorpos_label = new QLabel();
 	statusbar_cursorpos_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 	statusbar_cursorpos_label->setFixedWidth(150);
 	statusbar_cursorpos_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-	window->statusBar()->addPermanentWidget(statusbar_zoom_label);
+	
+	window->statusBar()->addPermanentWidget(statusbar_zoom_frame);
 	window->statusBar()->addPermanentWidget(statusbar_cursorpos_label);
 	
 	// Create map widget

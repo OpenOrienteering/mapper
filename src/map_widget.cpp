@@ -466,7 +466,7 @@ void MapWidget::updateZoomLabel()
 	if (!zoom_label)
 		return;
 	
-	zoom_label->setText(tr("Zoom: %1x").arg(view->getZoom(), 0, 'g', 3));
+	zoom_label->setText(tr("%1x", "Zoom factor").arg(view->getZoom(), 0, 'g', 3));
 }
 
 void MapWidget::setCoordsDisplay(CoordsType type)
