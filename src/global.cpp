@@ -20,6 +20,8 @@
 
 #include "global.h"
 
+#include <mapper_config.h>
+
 #include "file_format_native.h"
 #include "file_format_ocad8.h"
 #include "file_format_xml.h"
@@ -29,9 +31,9 @@ void doStaticInitializations()
 {
 	// Register the supported file formats
 	FileFormats.registerFormat(new NativeFileFormat());
-	#ifdef Mapper_XML_FORMAT
+#ifdef Mapper_XML_FORMAT
 	FileFormats.registerFormat(new XMLFileFormat());
-	#endif
+#endif
 	FileFormats.registerFormat(new OCAD8FileFormat());
 	
 	// Load resources
