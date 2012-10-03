@@ -248,10 +248,6 @@ void XMLFileImporter::import(bool load_symbols_only) throw (FormatException)
 */
 		else if (name == "parts")
 			importMapParts();
-#ifdef Mapper_XML_OBSOLETE_ELEMENTS
-		else if (name == "layers")
-			importMapParts();
-#endif
 		else
 		{
 			addWarningUnsupportedElement();
@@ -342,12 +338,6 @@ void XMLFileImporter::importMapParts()
 		{
 			map->parts.push_back(MapPart::load(xml, *map));
 		}
-#ifndef Mapper_XML_DROP_OBSOLETE_ELEMENTS
-		else if (xml.name() == "layer")
-		{
-			map->parts.push_back(MapPart::load(xml, *map));
-		}
-#endif
 		else
 		{
 			addWarningUnsupportedElement();

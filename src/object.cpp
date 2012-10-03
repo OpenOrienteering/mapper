@@ -355,7 +355,7 @@ void Object::save(QXmlStreamWriter& xml) const
 	xml.writeEndElement(/*object*/);
 }
 
-Object* Object::load(QXmlStreamReader& xml, Map& map) throw (FormatException)
+Object* Object::load(QXmlStreamReader& xml, Map& map, Symbol* symbol) throw (FormatException)
 {
 	Q_ASSERT(xml.name() == "object");
 	
@@ -369,11 +369,15 @@ Object* Object::load(QXmlStreamReader& xml, Map& map) throw (FormatException)
 	QXmlStreamAttributes attributes(xml.attributes());
 	int symbol_index = attributes.value("index").toString().toInt();
 	Symbol* read_symbol = map.getSymbol(symbol_index);
-	if (read_symbol)
-		object->symbol = read_symbol; // FIXME: cannot work for forward references
-	
 	if (symbol_index >= 0 && read_symbol == NULL)
 		qDebug() << " ERROR: Symbol not found for symbol_index" << symbol_index;
+	
+	if (read_symbol && !symbol)
+		object->symbol = read_symbol; // FIXME: cannot work for forward references
+	else if (!read_symbol && symbol)
+		object->symbol = symbol;
+	else
+		throw FormatException(QObject::tr("Conflicting or missing symbol information for object at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
 	
 	if (object_type == Point)
 	{
@@ -382,7 +386,8 @@ Object* Object::load(QXmlStreamReader& xml, Map& map) throw (FormatException)
 		if (point_symbol && point_symbol->isRotatable())
 			point->setRotation(attributes.value("rotation").toString().toFloat());
 		else if (!point_symbol)
-			qDebug() << " WARNING: Point object with undefined symbol, symbol_index:" << symbol_index;
+			qDebug() << " WARNING: Point object with undefined symbol, symbol_index:" << symbol_index
+			         << " " << xml.lineNumber() << ":" << xml.columnNumber();
 	}
 	else if (object_type == Text)
 	{

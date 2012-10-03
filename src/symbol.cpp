@@ -174,14 +174,16 @@ void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeStartElement("symbol");
 	xml.writeAttribute("type", QString::number(type));
 	xml.writeAttribute("id", getNumberAsString());
-	xml.writeAttribute("name", name);
+	if (!name.isEmpty())
+		xml.writeAttribute("name", name);
 	if (is_helper_symbol)
 		xml.writeAttribute("is_helper_symbol","true");
 	if (is_hidden)
 		xml.writeAttribute("is_hidden","true");
 	if (is_protected)
 		xml.writeAttribute("is_hidden","true");
-	xml.writeTextElement("description", description);
+	if (!description.isEmpty())
+		xml.writeTextElement("description", description);
 	saveImpl(xml, map);
 	xml.writeEndElement(/*symbol*/);
 }
@@ -197,18 +199,23 @@ Symbol* Symbol::load(QXmlStreamReader& xml, Map& map) throw (FormatException)
 	
 	QXmlStreamAttributes attributes = xml.attributes();
 	QString id = attributes.value("id").toString();
-	for (int i = 0, index = 0; i < number_components && index >= 0; ++i)
+	if (id.isEmpty())
+		symbol->number[0] = -1;
+	else
 	{
-		if (index == -1)
-			symbol->number[i] = -1;
-		else
+		for (int i = 0, index = 0; i < number_components && index >= 0; ++i)
 		{
-			int dot = id.indexOf(".", index+1);
-			int num = id.mid(index, (dot == -1) ? -1 : (dot - index)).toInt();
-			symbol->number[i] = num;
-			index = dot;
-			if (index != -1)
-				index++;
+			if (index == -1)
+				symbol->number[i] = -1;
+			else
+			{
+				int dot = id.indexOf(".", index+1);
+				int num = id.mid(index, (dot == -1) ? -1 : (dot - index)).toInt();
+				symbol->number[i] = num;
+				index = dot;
+				if (index != -1)
+					index++;
+			}
 		}
 	}
 	symbol->name = attributes.value("name").toString();

@@ -1351,7 +1351,7 @@ int Map::findSymbolIndex(const Symbol* symbol) const
 	else if (symbol == undefined_line)
 		return -3;
 	
-	assert(false);
+	// maybe element of point symbol
 	return -1;
 }
 
