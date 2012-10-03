@@ -26,11 +26,15 @@
 #include <QTransform>
 
 #include "map_coord.h"
+#include "file_format.h"
 
 class QDebug;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+
+typedef void* projPJ;
 
 class GPSProjectionParameters;
-typedef void* projPJ;
 
 /**
  * LatLon specifies geographic coordinates by latitude and longitude.
@@ -165,6 +169,17 @@ public:
 	 * Cleans up memory allocated by the georeferencing 
 	 */
 	~Georeferencing();
+	
+	
+	/** 
+	 * Saves the georeferencing to an XML stream.
+	 */
+	void save(QXmlStreamWriter& xml) const;
+	
+	/**
+	 * Creates a georeferencing from an XML stream.
+	 */
+	void load(QXmlStreamReader& xml) throw (FormatException);
 	
 	
 	/**
