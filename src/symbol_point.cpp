@@ -341,8 +341,10 @@ void PointSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeAttribute("elements", QString::number(num_elements));
 	for (int i = 0; i < num_elements; ++i)
 	{
+		xml.writeStartElement("element");
 		symbols[i]->save(xml, map);
 		objects[i]->save(xml);
+		xml.writeEndElement(/*element*/);
 	}
 	xml.writeEndElement(/*point_symbol*/);
 }
@@ -365,10 +367,18 @@ bool PointSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
 	objects.reserve(num_elements % 10); // 10 is not a limit
 	for (int i = 0; xml.readNextStartElement(); ++i)
 	{
-		if (xml.name() == "symbol")
-			symbols.push_back(Symbol::load(xml, map));
-		else if (xml.name() == "object")
-			objects.push_back(Object::load(xml, map));
+		if (xml.name() == "element")
+		{
+			while (xml.readNextStartElement())
+			{
+				if (xml.name() == "symbol")
+					symbols.push_back(Symbol::load(xml, map));
+				else if (xml.name() == "object")
+					objects.push_back(Object::load(xml, map, symbols.back()));
+				else
+					xml.skipCurrentElement(); // unknown element
+			}
+		}
 		else
 			xml.skipCurrentElement(); // unknown element
 	}
