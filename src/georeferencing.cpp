@@ -139,7 +139,6 @@ void Georeferencing::load(QXmlStreamReader& xml) throw (FormatException)
 	
 	while (xml.readNextStartElement())
 	{
-qDebug() << xml.name();
 		if (xml.name() == "ref_point")
 		{
 			map_ref_point.setX(xml.attributes().value("x").toString().toDouble());

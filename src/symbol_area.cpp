@@ -158,7 +158,7 @@ void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, Map& map)
 	QXmlStreamAttributes attributes = xml.attributes();
 	type = static_cast<Type>(attributes.value("type").toString().toInt());
 	angle = attributes.value("angle").toString().toFloat();
-	rotatable = (attributes.value("rotable") == "true");
+	rotatable = (attributes.value("rotatable") == "true");
 	line_spacing = attributes.value("line_spacing").toString().toInt();
 	line_offset = attributes.value("line_offset").toString().toInt();
 	offset_along_line = attributes.value("offset_along_line").toString().toInt();

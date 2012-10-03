@@ -1593,8 +1593,6 @@ void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 		xml.writeAttribute("half_outer_dashes", "true");
 	xml.writeAttribute("mid_symbols_per_spot", QString::number(mid_symbols_per_spot));
 	xml.writeAttribute("mid_symbol_distance", QString::number(mid_symbol_distance));
-	if (have_border_lines)
-		xml.writeAttribute("have_border_lines", "true");
 	
 	if (start_symbol != NULL)
 	{
@@ -1624,14 +1622,17 @@ void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 		xml.writeEndElement();
 	}
 	
-	xml.writeStartElement("borders");
-	bool are_borders_different = areBordersDifferent();
-	if (are_borders_different)
-		xml.writeAttribute("borders_different", "true");
-	border.save(xml, map);
-	if (are_borders_different)
-		right_border.save(xml, map);
-	xml.writeEndElement(/*borders*/);
+	if (have_border_lines)
+	{
+		xml.writeStartElement("borders");
+		bool are_borders_different = areBordersDifferent();
+		if (are_borders_different)
+			xml.writeAttribute("borders_different", "true");
+		border.save(xml, map);
+		if (are_borders_different)
+			right_border.save(xml, map);
+		xml.writeEndElement(/*borders*/);
+	}
 	
 	xml.writeEndElement(/*line_symbol*/);
 }
@@ -1661,8 +1662,8 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
 	half_outer_dashes = (attributes.value("half_outer_dashes") == "true");
 	mid_symbols_per_spot = attributes.value("mid_symbols_per_spot").toString().toInt();
 	mid_symbol_distance = attributes.value("mid_symbol_distance").toString().toInt();
-	have_border_lines = (attributes.value("have_border_lines") == "true");
 	
+	have_border_lines = false;
 	while (xml.readNextStartElement())
 	{
 		if (xml.name() == "start_symbol")
@@ -1692,6 +1693,7 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
 		else if (xml.name() == "borders")
 		{
 //			bool are_borders_different = (xml.attributes().value("borders_different") == "true");
+			have_border_lines = true;
 			xml.readNextStartElement();
 			border.load(xml, map);
 			if (xml.readNextStartElement())
