@@ -344,30 +344,35 @@ void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 		xml.writeAttribute("kerning", "true");
 	xml.writeEndElement(/*text*/);
 	
-	xml.writeStartElement("framing");
 	if (framing)
-		xml.writeAttribute("enabled", "true");
-	xml.writeAttribute("color", QString::number(map.findColorIndex(framing_color)));
-	xml.writeAttribute("mode", QString::number(framing_mode));
-	xml.writeAttribute("line_half_width", QString::number(framing_line_half_width));
-	xml.writeAttribute("shadow_x_offset", QString::number(framing_shadow_x_offset));
-	xml.writeAttribute("shadow_y_offset", QString::number(framing_shadow_y_offset));
-	xml.writeEndElement(/*framing*/);
+	{
+		xml.writeStartElement("framing");
+		xml.writeAttribute("color", QString::number(map.findColorIndex(framing_color)));
+		xml.writeAttribute("mode", QString::number(framing_mode));
+		xml.writeAttribute("line_half_width", QString::number(framing_line_half_width));
+		xml.writeAttribute("shadow_x_offset", QString::number(framing_shadow_x_offset));
+		xml.writeAttribute("shadow_y_offset", QString::number(framing_shadow_y_offset));
+		xml.writeEndElement(/*framing*/);
+	}
 	
-	xml.writeStartElement("line_below");
 	if (line_below)
-		xml.writeAttribute("enabled", "true");
-	xml.writeAttribute("color", QString::number(map.findColorIndex(line_below_color)));
-	xml.writeAttribute("width", QString::number(line_below_width));
-	xml.writeAttribute("distance", QString::number(line_below_distance));
-	xml.writeEndElement(/*line_below*/);
+	{
+		xml.writeStartElement("line_below");
+		xml.writeAttribute("color", QString::number(map.findColorIndex(line_below_color)));
+		xml.writeAttribute("width", QString::number(line_below_width));
+		xml.writeAttribute("distance", QString::number(line_below_distance));
+		xml.writeEndElement(/*line_below*/);
+	}
 	
-	xml.writeStartElement("tabs");
 	int num_custom_tabs = getNumCustomTabs();
-	xml.writeAttribute("number", QString::number(num_custom_tabs));
-	for (int i = 0; i < num_custom_tabs; ++i)
-		xml.writeTextElement("tab", QString::number(custom_tabs[i]));
-	xml.writeEndElement(/*tabs*/);
+	if (num_custom_tabs > 0)
+	{
+		xml.writeStartElement("tabs");
+		xml.writeAttribute("number", QString::number(num_custom_tabs));
+		for (int i = 0; i < num_custom_tabs; ++i)
+			xml.writeTextElement("tab", QString::number(custom_tabs[i]));
+		xml.writeEndElement(/*tabs*/);
+	}
 	
 	xml.writeEndElement(/*text_symbol*/);
 }
@@ -377,6 +382,9 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
 	Q_ASSERT(xml.name() == "text_symbol");
 	
 	icon_text = xml.attributes().value("icon_text").toString();
+	framing = false;
+	line_below = false;
+	custom_tabs.clear();
 	
 	while (xml.readNextStartElement())
 	{
@@ -402,7 +410,7 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
 		}
 		else if (xml.name() == "framing")
 		{
-			framing = (attributes.value("enabled") == "true");
+			framing = true;
 			int temp = attributes.value("color").toString().toInt();
 			framing_color = (temp >= 0) ? map.getColor(temp) : NULL;
 			framing_mode = attributes.value("mode").toString().toInt();
@@ -413,7 +421,7 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
 		}
 		else if (xml.name() == "line_below")
 		{
-			line_below = (attributes.value("enabled") == "true");
+			line_below = true;
 			int temp = attributes.value("color").toString().toInt();
 			line_below_color = (temp >= 0) ? map.getColor(temp) : NULL;
 			line_below_width = attributes.value("width").toString().toInt();
@@ -422,7 +430,6 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
 		}
 		else if (xml.name() == "tabs")
 		{
-			custom_tabs.clear();
 			int num_custom_tabs = attributes.value("number").toString().toInt();
 			custom_tabs.reserve(num_custom_tabs % 20); // 20 is not the limit
 			while (xml.readNextStartElement())
