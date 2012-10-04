@@ -124,35 +124,7 @@ void XMLFileExporter::doExport() throw (FormatException)
 	
 	xml.writeTextElement("notes", map->getMapNotes());
 	
-	xml.writeStartElement("georeferencing");
-	const Georeferencing& georef = map->getGeoreferencing();
-	xml.writeTextElement("scale", QString::number(georef.scale_denominator));
-	xml.writeTextElement("declination", QString::number(georef.declination));
-	xml.writeTextElement("grivation", QString::number(georef.grivation));
-	xml.writeEmptyElement("ref_point");
-	xml.writeAttribute("x", QString::number(georef.map_ref_point.xd()));
-	xml.writeAttribute("y", QString::number(georef.map_ref_point.yd()));
-	xml.writeStartElement("projected_crs");
-	xml.writeAttribute("id", georef.projected_crs_id);
-	xml.writeStartElement("spec");
-	xml.writeAttribute("language", "PROJ.4");
-	xml.writeCharacters(georef.projected_crs_spec);
-	xml.writeEndElement(/*spec*/);
-	xml.writeEmptyElement("ref_point");
-	xml.writeAttribute("x", QString::number(georef.projected_ref_point.x()));
-	xml.writeAttribute("y", QString::number(georef.projected_ref_point.y()));
-	xml.writeEndElement(/*projected_crs*/);
-	xml.writeStartElement("geographic_crs");
-	xml.writeAttribute("id", "Geographic coordinates"); // reserved
-	xml.writeStartElement("spec");
-	xml.writeAttribute("language", "PROJ.4");
-	xml.writeCharacters(georef.geographic_crs_spec);
-	xml.writeEndElement(/*spec*/);
-	xml.writeEmptyElement("geographic_ref_point");
-	xml.writeAttribute("lat", QString::number(georef.geographic_ref_point.latitude));
-	xml.writeAttribute("lon", QString::number(georef.geographic_ref_point.longitude));
-	xml.writeEndElement(/*geographic_crs*/);
-	xml.writeEndElement(); // georeferencing
+	map->getGeoreferencing().save(xml);
 	
 	xml.writeStartElement("view");
 	xml.writeEmptyElement("grid"); // TODO
@@ -276,10 +248,6 @@ void XMLFileImporter::import(bool load_symbols_only) throw (FormatException)
 */
 		else if (name == "parts")
 			importMapParts();
-#ifdef Mapper_XML_OBSOLETE_ELEMENTS
-		else if (name == "layers")
-			importMapParts();
-#endif
 		else
 		{
 			addWarningUnsupportedElement();
@@ -295,26 +263,7 @@ void XMLFileImporter::importGeoreferencing()
 {
 	Q_ASSERT(xml.name() == "georeferencing");
 	Georeferencing georef;
-	
-	while (xml.readNextStartElement())
-	{
-		if (xml.name() == "scale")
-			georef.scale_denominator = xml.readElementText().toInt();
-		else if (xml.name() == "declination")
-			georef.declination = xml.readElementText().toDouble();
-		else if (xml.name() == "grivation")
-			georef.declination = xml.readElementText().toDouble();
-		else if (xml.name() == "ref_point")
-			xml.skipCurrentElement(); // TODO
-		else if (xml.name() == "projected_crs")
-			xml.skipCurrentElement(); // TODO
-		else if (xml.name() == "geographic_crs")
-			xml.skipCurrentElement(); // TODO
-		else
-			xml.skipCurrentElement(); // unknown
-	}
-	
-	georef.updateTransformation();
+	georef.load(xml);
 	map->setGeoreferencing(georef);
 }
 
@@ -389,12 +338,6 @@ void XMLFileImporter::importMapParts()
 		{
 			map->parts.push_back(MapPart::load(xml, *map));
 		}
-#ifndef Mapper_XML_DROP_OBSOLETE_ELEMENTS
-		else if (xml.name() == "layer")
-		{
-			map->parts.push_back(MapPart::load(xml, *map));
-		}
-#endif
 		else
 		{
 			addWarningUnsupportedElement();

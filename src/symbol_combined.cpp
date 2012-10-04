@@ -272,7 +272,10 @@ bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
 	
 	int num_parts = xml.attributes().value("parts").toString().toInt();
 	temp_part_indices.reserve(num_parts % 10); // 10 is not the limit
+	private_parts.clear();
 	private_parts.reserve(num_parts % 10);
+	parts.clear();
+	parts.reserve(num_parts % 10);
 	while (xml.readNextStartElement())
 	{
 		if (xml.name() == "part")
