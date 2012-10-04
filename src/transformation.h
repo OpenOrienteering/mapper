@@ -56,6 +56,13 @@ public:
 	/// Estimates a similarity transformation based on the contained pass points and
 	/// applies it to the transformation passed in.
 	bool estimateSimilarityTransformation(TemplateTransform* transform);
+	
+	/// Estimates an affine transformation without shearing.
+	bool estimateNonIsometricSimilarityTransform(QTransform* out);
 };
+
+/// Converts a QTranform into a template transform. Takes only affine parts
+/// and removes any shearing.
+void qTransformToTemplateTransform(const QTransform& in, TemplateTransform* out);
 
 #endif

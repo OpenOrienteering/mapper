@@ -268,16 +268,17 @@ void MapEditorController::attach(MainWindow* window)
 	QLabel* statusbar_zoom_icon = new QLabel();
 	statusbar_zoom_icon->setPixmap(QPixmap(":/images/magnifying-glass-12.png"));
 	
-	statusbar_zoom_label = new QLabel();
-	statusbar_zoom_label->setFixedWidth(50);
+	QLabel* statusbar_zoom_label = new QLabel();
+	statusbar_zoom_label->setFixedWidth(51);
 	statusbar_zoom_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	
-	QFrame* statusbar_zoom_frame = new QFrame();
+	statusbar_zoom_frame = new QFrame();
 	statusbar_zoom_frame->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 	statusbar_zoom_frame->setLineWidth(1);
 	QHBoxLayout* statusbar_zoom_frame_layout = new QHBoxLayout();
 	statusbar_zoom_frame_layout->setMargin(0);
 	statusbar_zoom_frame_layout->setSpacing(0);
+	statusbar_zoom_frame_layout->addSpacing(1);
 	statusbar_zoom_frame_layout->addWidget(statusbar_zoom_icon);
 	statusbar_zoom_frame_layout->addStretch(1);
 	statusbar_zoom_frame_layout->addWidget(statusbar_zoom_label);
@@ -285,7 +286,7 @@ void MapEditorController::attach(MainWindow* window)
 	
 	statusbar_cursorpos_label = new QLabel();
 	statusbar_cursorpos_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-	statusbar_cursorpos_label->setFixedWidth(150);
+	statusbar_cursorpos_label->setFixedWidth(160);
 	statusbar_cursorpos_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	
 	window->statusBar()->addPermanentWidget(statusbar_zoom_frame);
@@ -702,7 +703,7 @@ void MapEditorController::detach()
 	window->setCentralWidget(NULL);
 	delete widget;
 	
-	delete statusbar_zoom_label;
+	delete statusbar_zoom_frame;
 	delete statusbar_cursorpos_label;
 }
 

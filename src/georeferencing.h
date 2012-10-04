@@ -359,6 +359,13 @@ public:
 	
 	
 	/**
+	 * Transforms map coordinates from the other georeferencing to
+	 * map coordinates of this georeferencing, if possible. 
+	 */
+	MapCoordF toMapCoordF(Georeferencing* other, const MapCoordF& map_coords, bool* ok = NULL) const;
+	
+	
+	/**
 	 * Returns the current error text.
 	 */
 	QString getErrorText() const;
@@ -405,6 +412,12 @@ public:
 	 * initialize the internal projection first if it is not yet defined.
 	 */
 	void initDeclination();
+	
+	/**
+	 * Sets the transformation matrix from map coordinates to projected
+	 * coordinates directly. 
+	 */
+	void setTransformationDirectly(const QTransform& transform);
 	
 	
 signals:

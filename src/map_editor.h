@@ -31,7 +31,10 @@
 #include "main_window.h"
 #include "map.h"
 
+QT_BEGIN_NAMESPACE
 class QLabel;
+class QFrame;
+QT_END_NAMESPACE
 
 class Template;
 class MapView;
@@ -279,7 +282,7 @@ private:
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;
 	
-	QLabel* statusbar_zoom_label;
+	QFrame* statusbar_zoom_frame;
 	QLabel* statusbar_cursorpos_label;
 	
 	QToolBar* toolbar_view;

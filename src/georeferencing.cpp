@@ -22,6 +22,7 @@
 
 #include <cassert>
 
+#include <qmath.h>
 #include <QCoreApplication>
 #include <QDir>
 #include <QLocale>
@@ -225,6 +226,16 @@ void Georeferencing::initDeclination()
 	declination = grivation + getConvergence();
 }
 
+void Georeferencing::setTransformationDirectly(const QTransform& transform)
+{
+	if (transform != to_projected)
+	{
+		to_projected = transform;
+		from_projected = to_projected.inverted();
+		emit transformationChanged();
+	}
+}
+
 bool Georeferencing::setProjectedCRS(const QString& id, const QString& spec)
 {
 	if (projected_crs != NULL)
@@ -301,6 +312,52 @@ MapCoord Georeferencing::toMapCoords(const LatLon& lat_lon, bool* ok) const
 MapCoordF Georeferencing::toMapCoordF(const LatLon& lat_lon, bool* ok) const
 {
 	return toMapCoordF(toProjectedCoords(lat_lon, ok));
+}
+
+MapCoordF Georeferencing::toMapCoordF(Georeferencing* other, const MapCoordF& map_coords, bool* ok) const
+{
+	if (isLocal() != other->isLocal())
+	{
+		if (ok)
+			*ok = false;
+		return map_coords;
+	}
+	else if (isLocal())
+	{
+		if (ok)
+			*ok = true;
+		return toMapCoordF(other->toProjectedCoords(map_coords));
+	}
+	else
+	{
+		if (ok != NULL)
+			*ok = false;
+		
+		QPointF projected_coords = other->toProjectedCoords(map_coords);
+		double easting = projected_coords.x(), northing = projected_coords.y();
+		if (other->projected_crs_spec.contains("+proj=latlong"))
+		{
+			easting = easting * M_PI / 180.0;
+			northing = northing * M_PI / 180.0;
+		}
+		if (projected_crs && other->projected_crs) {
+			// Direct transformation:
+			//int ret = pj_transform(other->projected_crs, projected_crs, 1, 1, &easting, &northing, NULL);
+			// Use geographic coordinates as intermediate step as direct transformation seems to give wrong results:
+			int ret = pj_transform(other->projected_crs, geographic_crs, 1, 1, &easting, &northing, NULL);
+			ret |= pj_transform(geographic_crs, projected_crs, 1, 1, &easting, &northing, NULL);
+			
+			if (ret != 0)
+			{
+				if (ok != NULL) 
+					*ok = false;
+				return MapCoordF(easting, northing);
+			}
+			if (ok != NULL)
+				*ok = true;
+		}
+		return toMapCoordF(QPointF(easting, northing));
+	}
 }
 
 QString Georeferencing::getErrorText() const
