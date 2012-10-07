@@ -337,8 +337,8 @@ public:
 	
 	void setScaleDenominator(int value);
 	int getScaleDenominator() const;
-	void changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects, bool scale_georeferencing);
-	void rotateMap(double rotation, bool adjust_georeferencing, bool adjust_declination);
+	void changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates);
+	void rotateMap(double rotation, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates);
 	
 	inline const QString& getMapNotes() const {return map_notes;}
 	inline void setMapNotes(const QString& text) {map_notes = text;}

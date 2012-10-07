@@ -187,13 +187,22 @@ public:
 	
 	/// Changes the painter's transformation so it can be used to draw in template coordinates.
 	/// The previous transformation of the painter must be the map transformation.
-	/// NOTE: for non-georeferenced templates only!
+	/// NOTE: for non-georeferenced templates only,
+	/// or if the template transformation has been set by the template nevertheless.
 	void applyTemplateTransform(QPainter* painter);
 	
 	/// Returns the extent of the template in template coordinates.
 	/// The default implementation returns a "very big" rectangle.
 	/// NOTE: for non-georeferenced templates only!
 	virtual QRectF getTemplateExtent();
+	
+	/// Scales the template with the origin as scaling center.
+	/// NOTE: for non-georeferenced templates only!
+	void scaleFromOrigin(double factor);
+	
+	/// Rotates the template around the origin.
+	/// NOTE: for non-georeferenced templates only!
+	void rotateAroundOrigin(double rotation);
 	
 	
 	// Coordinate transformations between template coordinates and map coordinates

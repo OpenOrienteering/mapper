@@ -224,7 +224,7 @@ int Map::getScaleDenominator() const
 	return georeferencing->getScaleDenominator();
 }
 
-void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects, bool scale_georeferencing)
+void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates)
 {
 	if (new_scale_denominator == getScaleDenominator())
 		return;
@@ -240,11 +240,30 @@ void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_
 	}
 	if (scale_georeferencing)
 		georeferencing->setMapRefPoint(factor * georeferencing->getMapRefPoint());
+	if (scale_templates)
+	{
+		for (int i = 0; i < getNumTemplates(); ++i)
+		{
+			Template* temp = getTemplate(i);
+			if (temp->isTemplateGeoreferenced())
+				continue;
+			setTemplateAreaDirty(i);
+			temp->scaleFromOrigin(factor);
+			setTemplateAreaDirty(i);
+		}
+		for (int i = 0; i < getNumClosedTemplates(); ++i)
+		{
+			Template* temp = getClosedTemplate(i);
+			if (temp->isTemplateGeoreferenced())
+				continue;
+			temp->scaleFromOrigin(factor);
+		}
+	}
 	
 	setScaleDenominator(new_scale_denominator);
 	setOtherDirty(true);
 }
-void Map::rotateMap(double rotation, bool adjust_georeferencing, bool adjust_declination)
+void Map::rotateMap(double rotation, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates)
 {
 	if (fmod(rotation, 360) == 0)
 		return;
@@ -262,6 +281,25 @@ void Map::rotateMap(double rotation, bool adjust_georeferencing, bool adjust_dec
 	{
 		double rotation_degrees = 180 * rotation / M_PI;
 		georeferencing->setDeclination(georeferencing->getDeclination() + rotation_degrees);
+	}
+	if (adjust_templates)
+	{
+		for (int i = 0; i < getNumTemplates(); ++i)
+		{
+			Template* temp = getTemplate(i);
+			if (temp->isTemplateGeoreferenced())
+				continue;
+			setTemplateAreaDirty(i);
+			temp->rotateAroundOrigin(rotation);
+			setTemplateAreaDirty(i);
+		}
+		for (int i = 0; i < getNumClosedTemplates(); ++i)
+		{
+			Template* temp = getClosedTemplate(i);
+			if (temp->isTemplateGeoreferenced())
+				continue;
+			temp->rotateAroundOrigin(rotation);
+		}
 	}
 	
 	setOtherDirty(true);
@@ -492,7 +530,7 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 										   .arg(QLocale().toString(other->getScaleDenominator()))
 										   .arg(QLocale().toString(getScaleDenominator())), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 		if (answer == QMessageBox::Yes)
-			other->changeScale(getScaleDenominator(), true, true, true);
+			other->changeScale(getScaleDenominator(), true, true, true, true);
 	}
 	
 	// TODO: As a special case if both maps are georeferenced, the location of the imported objects could be corrected

@@ -334,6 +334,28 @@ QRectF Template::getTemplateExtent()
 	return infinteRectF();
 }
 
+void Template::scaleFromOrigin(double factor)
+{
+	assert(!is_georeferenced);
+	setTemplateX(qRound64(factor * getTemplateX()));
+	setTemplateY(qRound64(factor * getTemplateY()));
+	setTemplateScaleX(factor * getTemplateScaleX());
+	setTemplateScaleY(factor * getTemplateScaleY());
+}
+
+void Template::rotateAroundOrigin(double rotation)
+{
+	assert(!is_georeferenced);
+	
+	setTemplateRotation(getTemplateRotation() + rotation);
+	
+	double sinr = sin(rotation);
+	double cosr = cos(rotation);
+	qint64 temp_x = qRound64(1000.0 * (cosr * (getTemplateX()/1000.0) + sinr * (getTemplateY()/1000.0)));
+	setTemplateY(qRound64(1000.0 * (-sinr * (getTemplateX()/1000.0) + cosr * (getTemplateY()/1000.0))));
+	setTemplateX(temp_x);
+}
+
 void Template::setTemplateAreaDirty()
 {
 	QRectF template_area = calculateTemplateBoundingBox();

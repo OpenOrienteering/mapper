@@ -736,7 +736,8 @@ void ProjectedCRSSelector::crsParamEdited(QString dont_use)
 
 // ### SelectCRSDialog ###
 
-SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, const QString& desc_text)
+SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, bool show_take_from_map,
+								 bool show_geographic, const QString& desc_text)
  : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
 {
 	setWindowModality(Qt::WindowModal);
@@ -746,12 +747,15 @@ SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, const QString& desc_
 	if (!desc_text.isEmpty())
 		desc_label = new QLabel(desc_text);
 	
-	map_radio = new QRadioButton(tr("Same as map's"));
-	map_radio->setChecked(true);
+	map_radio = show_take_from_map ? (new QRadioButton(tr("Same as map's"))) : NULL;
+	if (map_radio)
+		map_radio->setChecked(true);
 	
-	geographic_radio = new QRadioButton(tr("Geographic coordinates (WGS84)"));
+	geographic_radio = show_geographic ? (new QRadioButton(tr("Geographic coordinates (WGS84)"))) : NULL;
 	
 	projected_radio = new QRadioButton(tr("From list"));
+	if (!map_radio)
+		projected_radio->setChecked(true);
 	crs_edit = new ProjectedCRSSelector();
 	
 	spec_radio = new QRadioButton(tr("From specification"));
@@ -763,8 +767,10 @@ SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, const QString& desc_
 	
 	if (map->getGeoreferencing().isLocal())
 	{
-		map_radio->setText(map_radio->text() + " " + tr("(local)"));
-		geographic_radio->setEnabled(false);
+		if (map_radio)
+			map_radio->setText(map_radio->text() + " " + tr("(local)"));
+		if (geographic_radio)
+			geographic_radio->setEnabled(false);
 		projected_radio->setEnabled(false);
 		spec_radio->setEnabled(false);
 		crs_spec_edit->setEnabled(false);
@@ -784,8 +790,10 @@ SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, const QString& desc_
 		layout->addWidget(desc_label);
 		layout->addSpacing(16);
 	}
-	layout->addWidget(map_radio);
-	layout->addWidget(geographic_radio);
+	if (map_radio)
+		layout->addWidget(map_radio);
+	if (geographic_radio)
+		layout->addWidget(geographic_radio);
 	layout->addWidget(projected_radio);
 	layout->addLayout(crs_layout);
 	layout->addWidget(spec_radio);
@@ -795,8 +803,10 @@ SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, const QString& desc_
 	layout->addWidget(button_box);
 	setLayout(layout);
 	
-	connect(map_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
-	connect(geographic_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
+	if (map_radio)
+		connect(map_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
+	if (geographic_radio)
+		connect(geographic_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
 	connect(projected_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
 	connect(spec_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
 	connect(crs_edit, SIGNAL(crsEdited()), this, SLOT(updateWidgets()));
@@ -821,9 +831,9 @@ void SelectCRSDialog::crsSpecEdited(QString text)
 
 void SelectCRSDialog::updateWidgets()
 {
-	if (map_radio->isChecked())
+	if (map_radio && map_radio->isChecked())
 		crs_spec_edit->setText(map->getGeoreferencing().isLocal() ? "" : map->getGeoreferencing().getProjectedCRSSpec());
-	else if (geographic_radio->isChecked())
+	else if (geographic_radio && geographic_radio->isChecked())
 		crs_spec_edit->setText("+proj=latlong +datum=WGS84");
 	else if (projected_radio->isChecked())
 		crs_spec_edit->setText(crs_edit->getSelectedCRSSpec());

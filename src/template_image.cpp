@@ -123,7 +123,7 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent)
 		if (open_dialog.isGeorefRadioChecked() && available_georef == Georeferencing_WorldFile)
 		{
 			// Let user select the coordinate reference system, as this is not specified in world files
-			SelectCRSDialog dialog(map, dialog_parent, tr("Select the coordinate reference system of the coordinates in the world file"));
+			SelectCRSDialog dialog(map, dialog_parent, true, true, tr("Select the coordinate reference system of the coordinates in the world file"));
 			if (dialog.exec() == QDialog::Rejected)
 				continue;
 			temp_crs_spec = dialog.getCRSSpec();

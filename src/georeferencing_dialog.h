@@ -396,7 +396,8 @@ class SelectCRSDialog : public QDialog
 {
 Q_OBJECT
 public:
-	SelectCRSDialog(Map* map, QWidget* parent, const QString& desc_text = QString());
+	SelectCRSDialog(Map* map, QWidget* parent, bool show_take_from_map,
+					bool show_geographic, const QString& desc_text = QString());
 	
 	QString getCRSSpec() const;
 	

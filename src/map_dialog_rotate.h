@@ -43,6 +43,7 @@ private:
 	QDoubleSpinBox* rotation_edit;
 	QCheckBox* adjust_georeferencing_check;
 	QCheckBox* adjust_declination_check;
+	QCheckBox* adjust_templates_check;
 	
 	Map* map;
 };
