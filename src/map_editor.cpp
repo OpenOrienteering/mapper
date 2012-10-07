@@ -386,6 +386,7 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("zoomout")->setShortcut(QKeySequence("F8"));
 	findAction("hatchareasview")->setShortcut(QKeySequence("F2"));
 	findAction("baselineview")->setShortcut(QKeySequence("F3"));
+	findAction("hidealltemplates")->setShortcut(QKeySequence("F10"));
 	findAction("fullscreen")->setShortcut(QKeySequence("F11"));
     color_window_act->setShortcut(QKeySequence("Ctrl+Shift+7"));
     symbol_window_act->setShortcut(QKeySequence("Ctrl+Shift+8"));
@@ -430,7 +431,8 @@ void MapEditorController::createMenuAndToolbars()
 	
 	hatch_areas_view_act = newCheckAction("hatchareasview", tr("Hatch areas"), this, SLOT(hatchAreas(bool)), NULL, QString::null, QString::null);	// TODO: link to manual; icon?
 	baseline_view_act = newCheckAction("baselineview", tr("Baseline view"), this, SLOT(baselineView(bool)), NULL, QString::null, QString::null);	// TODO: link to manual; icon?
-
+	hide_all_templates_act = newCheckAction("hidealltemplates", tr("Hide all templates"), this, SLOT(hideAllTemplates(bool)), NULL, QString::null, QString::null);	// TODO: link to manual 
+	
 	symbol_window_act = newCheckAction("symbolwindow", tr("Symbol window"), this, SLOT(showSymbolWindow(bool)), "window-new.png", tr("Show/Hide the symbol window"), "symbols.html#symbols");
 	color_window_act = newCheckAction("colorwindow", tr("Color window"), this, SLOT(showColorWindow(bool)), "window-new.png", tr("Show/Hide the color window"), "symbols.html#colors");
 	/*QAction *load_symbols_from_act = */newAction("loadsymbols", tr("Load symbols from..."), this, SLOT(loadSymbolsFromClicked()), NULL, tr("Replace the symbols with those from another map file"));
@@ -545,6 +547,7 @@ void MapEditorController::createMenuAndToolbars()
 	view_menu->addSeparator();
 	view_menu->addAction(hatch_areas_view_act);
 	view_menu->addAction(baseline_view_act);
+	view_menu->addAction(hide_all_templates_act);
 	view_menu->addSeparator();
 	view_menu->addMenu(coordinates_menu);
 	view_menu->addSeparator();
@@ -952,6 +955,11 @@ void MapEditorController::baselineView(bool checked)
 {
 	map->setBaselineViewEnabled(checked);
 	map->updateAllObjects();
+}
+
+void MapEditorController::hideAllTemplates(bool checked)
+{
+	main_view->setHideAllTemplates(checked);
 }
 
 void MapEditorController::coordsDisplayChanged()

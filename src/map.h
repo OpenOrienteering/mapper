@@ -627,9 +627,19 @@ public:
     TemplateVisibility* getMapVisibility();
 
 	// Template visibilities
-	bool isTemplateVisible(Template* temp);						// checks if the template is visible without creating a template visibility object if none exists
-	TemplateVisibility* getTemplateVisibility(Template* temp);		// returns the template visibility object, creates one if not there yet with the default settings (invisible)
-	void deleteTemplateVisibility(Template* temp);					// call this when a template is deleted to destroy the template visibility object
+	
+	/// Checks if the template is visible without creating a template visibility object if none exists
+	bool isTemplateVisible(Template* temp);
+	
+	/// Returns the template visibility object, creates one if not there yet with the default settings (invisible)
+	TemplateVisibility* getTemplateVisibility(Template* temp);
+	
+	/// Call this when a template is deleted to destroy the template visibility object
+	void deleteTemplateVisibility(Template* temp);
+	
+	/// Enables or disables hiding all templates in this view
+	void setHideAllTemplates(bool value);
+	inline bool areAllTemplatesHidden() const {return all_templates_hidden;}
 	
 	// Grid visibility
 	inline bool isGridVisible() const {return grid_visible;}
@@ -659,6 +669,7 @@ private:
 	
     TemplateVisibility* map_visibility;
 	QHash<Template*, TemplateVisibility*> template_visibilities;
+	bool all_templates_hidden;
 	
 	bool grid_visible;
 	

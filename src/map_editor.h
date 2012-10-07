@@ -116,6 +116,7 @@ public slots:
 	
 	void hatchAreas(bool checked);
 	void baselineView(bool checked);
+	void hideAllTemplates(bool checked);
 	
 	void coordsDisplayChanged();
 	
@@ -235,6 +236,7 @@ private:
 	QAction* show_grid_act;
 	QAction* hatch_areas_view_act;
 	QAction* baseline_view_act;
+	QAction* hide_all_templates_act;
 	
 	QAction* map_coordinates_act;
 	QAction* projected_coordinates_act;

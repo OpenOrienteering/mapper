@@ -615,7 +615,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		// TODO: Make sure that some cache (below_cache or map_cache) contains the background (white?) or it is drawn here
 		
 		// Draw caches
-		if (isBelowTemplateVisible() && below_template_cache && view->getMap()->getFirstFrontTemplate() > 0)
+		if (!view->areAllTemplatesHidden() && isBelowTemplateVisible() && below_template_cache && view->getMap()->getFirstFrontTemplate() > 0)
 			painter.drawImage(drag_offset, *below_template_cache, rect());
 		else
 			painter.fillRect(QRect(drag_offset.x(), drag_offset.y(), width(), height()), Qt::white);	// TODO: It's not as easy as that, see above.
@@ -636,7 +636,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
             }
         }
 		
-		if (isAboveTemplateVisible() && above_template_cache && view->getMap()->getNumTemplates() - view->getMap()->getFirstFrontTemplate() > 0)
+		if (!view->areAllTemplatesHidden() && isAboveTemplateVisible() && above_template_cache && view->getMap()->getNumTemplates() - view->getMap()->getFirstFrontTemplate() > 0)
 			painter.drawImage(drag_offset, *above_template_cache, rect());
 	}
 	
