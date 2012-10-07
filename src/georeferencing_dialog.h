@@ -387,7 +387,6 @@ private:
 	QSpinBox* param_int_spinbox;
 	
 	QFormLayout* layout;
-	QFormLayout* param_layout;
 };
 
 
@@ -415,6 +414,7 @@ private:
 	QRadioButton* projected_radio;
 	QRadioButton* spec_radio;
 	ProjectedCRSSelector* crs_edit;
+	QFormLayout* crs_spec_layout;
 	QLineEdit* crs_spec_edit;
 	QLabel* status_label;
 	QDialogButtonBox* button_box;

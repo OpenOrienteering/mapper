@@ -681,13 +681,9 @@ ProjectedCRSSelector::ProjectedCRSSelector(QWidget* parent) : QWidget(parent)
 		crs_dropdown->addItem(temp.getId(), qVariantFromValue<void*>(&temp));
 	}
 	
-	layout = new QFormLayout();
-	layout->addRow(tr("&Coordinate reference system:"), crs_dropdown);
-	setLayout(layout);
-	param_layout = NULL;
-	
 	connect(crs_dropdown, SIGNAL(currentIndexChanged(int)), this, SLOT(crsDropdownChanged(int)));
 	
+	layout = NULL;
 	crsDropdownChanged(crs_dropdown->currentIndex());
 }
 
@@ -698,7 +694,7 @@ QString ProjectedCRSSelector::getSelectedCRSSpec()
 	
 	for (int param = 0; param < temp->getNumParams(); ++param)
 	{
-		QWidget* edit_widget = param_layout->itemAt(param, QFormLayout::FieldRole)->widget();
+		QWidget* edit_widget = layout->itemAt(1 + param, QFormLayout::FieldRole)->widget();
 		spec = spec.arg(temp->getParam(param).getValue(edit_widget));
 	}
 	
@@ -707,24 +703,26 @@ QString ProjectedCRSSelector::getSelectedCRSSpec()
 
 void ProjectedCRSSelector::crsDropdownChanged(int index)
 {
-	if (param_layout)
+	if (layout && layout->rowCount() > 1)
 	{
-		for (int i = 2 * param_layout->rowCount() - 1; i >= 0; --i)
-			delete param_layout->takeAt(i)->widget();
-		delete param_layout;
-		param_layout = NULL;
+		for (int i = 2 * layout->rowCount() - 1; i >= 2; --i)
+			delete layout->takeAt(i)->widget();
+		layout->takeAt(1);
+		delete layout->takeAt(0)->widget();
+		delete layout;
+		layout = NULL;
 	}
 	
+	layout = new QFormLayout();
+	layout->addRow(tr("&Coordinate reference system:"), crs_dropdown);
+	
 	CRSTemplate* temp = static_cast<CRSTemplate*>(crs_dropdown->itemData(crs_dropdown->currentIndex()).value<void*>());
-	if (temp->getNumParams() > 0)
+	for (int param = 0; param < temp->getNumParams(); ++param)
 	{
-		param_layout = new QFormLayout();
-		for (int param = 0; param < temp->getNumParams(); ++param)
-		{
-			param_layout->addRow(temp->getParam(param).desc + ":", temp->getParam(param).createEditWidget(this));
-		}
-		layout->addRow(param_layout);
+		layout->addRow(temp->getParam(param).desc + ":", temp->getParam(param).createEditWidget(this));
 	}
+	
+	setLayout(layout);
 	
 	emit crsEdited();
 }
@@ -753,7 +751,7 @@ SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, const QString& desc_
 	
 	geographic_radio = new QRadioButton(tr("Geographic coordinates (WGS84)"));
 	
-	projected_radio = new QRadioButton(tr("Projected coordinates:"));
+	projected_radio = new QRadioButton(tr("From list"));
 	crs_edit = new ProjectedCRSSelector();
 	
 	spec_radio = new QRadioButton(tr("From specification"));
@@ -776,7 +774,7 @@ SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, const QString& desc_
 	crs_layout->addSpacing(16);
 	crs_layout->addWidget(crs_edit);
 	
-	QFormLayout* crs_spec_layout = new QFormLayout();
+	crs_spec_layout = new QFormLayout();
 	crs_spec_layout->addRow(tr("CRS Specification:"), crs_spec_edit);
 	crs_spec_layout->addRow(tr("Status:"), status_label);
 	
@@ -831,6 +829,8 @@ void SelectCRSDialog::updateWidgets()
 		crs_spec_edit->setText(crs_edit->getSelectedCRSSpec());
 	
 	crs_edit->setEnabled(projected_radio->isChecked());
+	crs_spec_layout->itemAt(0, QFormLayout::LabelRole)->widget()->setVisible(spec_radio->isChecked());
+	crs_spec_edit->setVisible(spec_radio->isChecked());
 	
 	// Update status field and enable/disable ok button
 	bool valid;
