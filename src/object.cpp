@@ -658,6 +658,7 @@ void PathObject::PathPart::setClosed(bool closed, bool may_use_existing_close_po
 		if (getNumCoords() == 1 || !may_use_existing_close_point ||
 			path->coords[start_index].rawX() != path->coords[end_index].rawX() || path->coords[start_index].rawY() != path->coords[end_index].rawY())
 		{
+			path->coords[end_index].setHolePoint(false);
 			path->coords.insert(path->coords.begin() + (end_index + 1), path->coords[start_index]);
 			++end_index;
 			

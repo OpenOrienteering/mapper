@@ -116,6 +116,7 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 	if (hover_point >= 0)
 	{
 		opposite_curve_handle_index = -1;
+		curve_anchor_index = -1;
 		
 		if (single_object_selected && single_selected_object->getType() == Object::Path)
 		{
@@ -124,26 +125,29 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 			PathObject::PathPart& hover_point_part = path->getPart(hover_point_part_index);
 			
 			// Check if clicked on a bezier curve handle
-			int hover_point_plus_1 = path->shiftedCoordIndex(hover_point, 1, hover_point_part);
 			int hover_point_minus_1 = path->shiftedCoordIndex(hover_point, -1, hover_point_part);
 			int hover_point_minus_2 = path->shiftedCoordIndex(hover_point, -2, hover_point_part);
-			int hover_point_minus_4 = path->shiftedCoordIndex(hover_point, -4, hover_point_part);
-			if (hover_point_minus_1 >= 0 && path->getCoordinate(hover_point_minus_1).isCurveStart() &&
-				hover_point_minus_4 >= 0 && path->getCoordinate(hover_point_minus_4).isCurveStart())
+			if (hover_point_minus_1 >= 0 && path->getCoordinate(hover_point_minus_1).isCurveStart())
 			{
-				opposite_curve_handle_index = hover_point_minus_2;
+				int hover_point_minus_4 = path->shiftedCoordIndex(hover_point, -4, hover_point_part);
+				if (hover_point_minus_4 >= 0 && path->getCoordinate(hover_point_minus_4).isCurveStart())
+					opposite_curve_handle_index = hover_point_minus_2;
 				curve_anchor_index = hover_point_minus_1;
 			}
-			else if (hover_point_minus_2 >= 0 && path->getCoordinate(hover_point_minus_2).isCurveStart() &&
-				     hover_point_plus_1 >= 0 && path->getCoordinate(hover_point_plus_1).isCurveStart())
+			else if (hover_point_minus_2 >= 0 && path->getCoordinate(hover_point_minus_2).isCurveStart())
 			{
-				opposite_curve_handle_index = path->shiftedCoordIndex(hover_point, 2, hover_point_part);
+				int hover_point_plus_1 = path->shiftedCoordIndex(hover_point, 1, hover_point_part);
+				if (hover_point_plus_1 >= 0 && path->getCoordinate(hover_point_plus_1).isCurveStart())
+					opposite_curve_handle_index = path->shiftedCoordIndex(hover_point, 2, hover_point_part);
 				curve_anchor_index = hover_point_plus_1;
 			}
-		
+			
 			if (opposite_curve_handle_index >= 0)
-				opposite_curve_handle_dist = path->getCoordinate(opposite_curve_handle_index).lengthTo(path->getCoordinate(curve_anchor_index));
-			else if (event->modifiers() & Qt::ControlModifier)
+			{
+				MapCoord& opposite_curve_handle = path->getCoordinate(opposite_curve_handle_index);
+				opposite_curve_handle_dist = opposite_curve_handle.lengthTo(path->getCoordinate(curve_anchor_index));
+			}
+			else if (curve_anchor_index == -1 && event->modifiers() & Qt::ControlModifier)
 			{
 				// Clicked on a regular path point while holding Ctrl -> delete the point
 				if (hover_point_part.calcNumRegularPoints() <= 2 || (!(path->getSymbol()->getContainedTypes() & Symbol::Line) && hover_point_part.getNumCoords() <= 3))
