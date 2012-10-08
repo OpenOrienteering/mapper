@@ -134,3 +134,63 @@ bool PassPointList::estimateSimilarityTransformation(TemplateTransform* transfor
 	
 	return true;
 }
+
+bool PassPointList::estimateNonIsometricSimilarityTransform(QTransform* out)
+{
+	int num_pass_points = (int)size();
+	assert(num_pass_points >= 3);
+	
+	// Create linear equation system and solve using the pseuo inverse
+	Matrix mat(2*num_pass_points, 6);
+	Matrix values(2*num_pass_points, 1);
+	for (int i = 0; i < num_pass_points; ++i)
+	{
+		PassPoint* point = &at(i);
+		mat.set(2*i, 0, point->src_coords.getX());
+		mat.set(2*i, 1, point->src_coords.getY());
+		mat.set(2*i, 2, 1);
+		mat.set(2*i, 3, 0);
+		mat.set(2*i, 4, 0);
+		mat.set(2*i, 5, 0);
+		mat.set(2*i+1, 0, 0);
+		mat.set(2*i+1, 1, 0);
+		mat.set(2*i+1, 2, 0);
+		mat.set(2*i+1, 3, point->src_coords.getX());
+		mat.set(2*i+1, 4, point->src_coords.getY());
+		mat.set(2*i+1, 5, 1);
+		
+		values.set(2*i, 0, point->dest_coords.getX());
+		values.set(2*i+1, 0, point->dest_coords.getY());
+	}
+	
+	Matrix transposed;
+	mat.transpose(transposed);
+	
+	Matrix mat_temp, mat_temp2, pseudo_inverse;
+	transposed.multiply(mat, mat_temp);
+	if (!mat_temp.invert(mat_temp2))
+		return false;
+	mat_temp2.multiply(transposed, pseudo_inverse);
+	
+	// Calculate transformation parameters
+	Matrix output;
+	pseudo_inverse.multiply(values, output);
+	
+	out->setMatrix(
+		output.get(0, 0), output.get(1, 0), output.get(2, 0),
+		output.get(3, 0), output.get(4, 0), output.get(5, 0),
+		0, 0, 1);
+	return true;
+}
+
+
+void qTransformToTemplateTransform(const QTransform& in, TemplateTransform* out)
+{
+	out->template_x = qRound64(1000 * in.m13());
+	out->template_y = qRound64(1000 * in.m23());
+	
+	out->template_rotation = qAtan2(-in.m21(), in.m11());
+	
+	out->template_scale_x = in.m11() / qCos(out->template_rotation);
+	out->template_scale_y = in.m22() / qCos(out->template_rotation);
+}

@@ -31,7 +31,10 @@
 #include "main_window.h"
 #include "map.h"
 
+QT_BEGIN_NAMESPACE
 class QLabel;
+class QFrame;
+QT_END_NAMESPACE
 
 class Template;
 class MapView;
@@ -113,6 +116,7 @@ public slots:
 	
 	void hatchAreas(bool checked);
 	void baselineView(bool checked);
+	void hideAllTemplates(bool checked);
 	
 	void coordsDisplayChanged();
 	
@@ -232,6 +236,7 @@ private:
 	QAction* show_grid_act;
 	QAction* hatch_areas_view_act;
 	QAction* baseline_view_act;
+	QAction* hide_all_templates_act;
 	
 	QAction* map_coordinates_act;
 	QAction* projected_coordinates_act;
@@ -279,7 +284,7 @@ private:
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;
 	
-	QLabel* statusbar_zoom_label;
+	QFrame* statusbar_zoom_frame;
 	QLabel* statusbar_cursorpos_label;
 	
 	QToolBar* toolbar_view;

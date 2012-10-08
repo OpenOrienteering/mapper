@@ -337,8 +337,8 @@ public:
 	
 	void setScaleDenominator(int value);
 	int getScaleDenominator() const;
-	void changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects, bool scale_georeferencing);
-	void rotateMap(double rotation, bool adjust_georeferencing, bool adjust_declination);
+	void changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates);
+	void rotateMap(double rotation, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates);
 	
 	inline const QString& getMapNotes() const {return map_notes;}
 	inline void setMapNotes(const QString& text) {map_notes = text;}
@@ -627,9 +627,19 @@ public:
     TemplateVisibility* getMapVisibility();
 
 	// Template visibilities
-	bool isTemplateVisible(Template* temp);						// checks if the template is visible without creating a template visibility object if none exists
-	TemplateVisibility* getTemplateVisibility(Template* temp);		// returns the template visibility object, creates one if not there yet with the default settings (invisible)
-	void deleteTemplateVisibility(Template* temp);					// call this when a template is deleted to destroy the template visibility object
+	
+	/// Checks if the template is visible without creating a template visibility object if none exists
+	bool isTemplateVisible(Template* temp);
+	
+	/// Returns the template visibility object, creates one if not there yet with the default settings (invisible)
+	TemplateVisibility* getTemplateVisibility(Template* temp);
+	
+	/// Call this when a template is deleted to destroy the template visibility object
+	void deleteTemplateVisibility(Template* temp);
+	
+	/// Enables or disables hiding all templates in this view
+	void setHideAllTemplates(bool value);
+	inline bool areAllTemplatesHidden() const {return all_templates_hidden;}
 	
 	// Grid visibility
 	inline bool isGridVisible() const {return grid_visible;}
@@ -659,6 +669,7 @@ private:
 	
     TemplateVisibility* map_visibility;
 	QHash<Template*, TemplateVisibility*> template_visibilities;
+	bool all_templates_hidden;
 	
 	bool grid_visible;
 	

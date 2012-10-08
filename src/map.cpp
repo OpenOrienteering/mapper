@@ -29,8 +29,6 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QPainter>
-#include <QXmlStreamReader>
-#include <QXmlStreamWriter>
 
 #include "map_color.h"
 #include "map_editor.h"
@@ -224,7 +222,7 @@ int Map::getScaleDenominator() const
 	return georeferencing->getScaleDenominator();
 }
 
-void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects, bool scale_georeferencing)
+void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates)
 {
 	if (new_scale_denominator == getScaleDenominator())
 		return;
@@ -240,11 +238,30 @@ void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_
 	}
 	if (scale_georeferencing)
 		georeferencing->setMapRefPoint(factor * georeferencing->getMapRefPoint());
+	if (scale_templates)
+	{
+		for (int i = 0; i < getNumTemplates(); ++i)
+		{
+			Template* temp = getTemplate(i);
+			if (temp->isTemplateGeoreferenced())
+				continue;
+			setTemplateAreaDirty(i);
+			temp->scaleFromOrigin(factor);
+			setTemplateAreaDirty(i);
+		}
+		for (int i = 0; i < getNumClosedTemplates(); ++i)
+		{
+			Template* temp = getClosedTemplate(i);
+			if (temp->isTemplateGeoreferenced())
+				continue;
+			temp->scaleFromOrigin(factor);
+		}
+	}
 	
 	setScaleDenominator(new_scale_denominator);
 	setOtherDirty(true);
 }
-void Map::rotateMap(double rotation, bool adjust_georeferencing, bool adjust_declination)
+void Map::rotateMap(double rotation, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates)
 {
 	if (fmod(rotation, 360) == 0)
 		return;
@@ -262,6 +279,25 @@ void Map::rotateMap(double rotation, bool adjust_georeferencing, bool adjust_dec
 	{
 		double rotation_degrees = 180 * rotation / M_PI;
 		georeferencing->setDeclination(georeferencing->getDeclination() + rotation_degrees);
+	}
+	if (adjust_templates)
+	{
+		for (int i = 0; i < getNumTemplates(); ++i)
+		{
+			Template* temp = getTemplate(i);
+			if (temp->isTemplateGeoreferenced())
+				continue;
+			setTemplateAreaDirty(i);
+			temp->rotateAroundOrigin(rotation);
+			setTemplateAreaDirty(i);
+		}
+		for (int i = 0; i < getNumClosedTemplates(); ++i)
+		{
+			Template* temp = getClosedTemplate(i);
+			if (temp->isTemplateGeoreferenced())
+				continue;
+			temp->rotateAroundOrigin(rotation);
+		}
 	}
 	
 	setOtherDirty(true);
@@ -492,7 +528,7 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 										   .arg(QLocale().toString(other->getScaleDenominator()))
 										   .arg(QLocale().toString(getScaleDenominator())), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 		if (answer == QMessageBox::Yes)
-			other->changeScale(getScaleDenominator(), true, true, true);
+			other->changeScale(getScaleDenominator(), true, true, true, true);
 	}
 	
 	// TODO: As a special case if both maps are georeferenced, the location of the imported objects could be corrected
@@ -1823,6 +1859,7 @@ MapView::MapView(Map* map) : map(map)
 	view_y = 0;
     map_visibility = new TemplateVisibility();
     map_visibility->visible = true;
+	all_templates_hidden = false;
 	grid_visible = false;
     update();
     //map->addMapView(this);
@@ -1863,6 +1900,8 @@ void MapView::save(QIODevice* file)
 		++it;
 	}
 	
+	file->write((const char*)&all_templates_hidden, sizeof(bool));
+	
 	file->write((const char*)&grid_visible, sizeof(bool));
 }
 void MapView::load(QIODevice* file, int version)
@@ -1894,6 +1933,9 @@ void MapView::load(QIODevice* file, int version)
 		file->read((char*)&vis->visible, sizeof(bool));
 		file->read((char*)&vis->opacity, sizeof(float));
 	}
+	
+	if (version >= 29)
+		file->read((char*)&all_templates_hidden, sizeof(bool));
 	
 	if (version >= 24)
 		file->read((char*)&grid_visible, sizeof(bool));
@@ -2153,6 +2195,7 @@ bool MapView::isTemplateVisible(Template* temp)
 	else
 		return false;
 }
+
 TemplateVisibility* MapView::getTemplateVisibility(Template* temp)
 {
 	if (!template_visibilities.contains(temp))
@@ -2164,9 +2207,15 @@ TemplateVisibility* MapView::getTemplateVisibility(Template* temp)
 	else
 		return template_visibilities.value(temp);
 }
+
 void MapView::deleteTemplateVisibility(Template* temp)
 {
 	delete template_visibilities.value(temp);
 	template_visibilities.remove(temp);
 }
 
+void MapView::setHideAllTemplates(bool value)
+{
+	all_templates_hidden = value;
+	updateAllMapWidgets();
+}

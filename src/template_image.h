@@ -28,11 +28,20 @@ class QCheckBox;
 class QRadioButton;
 QT_END_NAMESPACE
 
+class Georeferencing;
+
 /// A raster image used as template
 class TemplateImage : public Template
 {
 Q_OBJECT
 public:
+	enum GeoreferencingType
+	{
+		Georeferencing_None = 0,
+		Georeferencing_WorldFile,
+		Georeferencing_GeoTiff
+	};
+	
 	TemplateImage(const QString& path, Map* map);
 	virtual ~TemplateImage();
 	virtual const QString getTemplateType() {return "TemplateImage";}
@@ -47,7 +56,6 @@ public:
 	
 	virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity);
 	virtual QRectF getTemplateExtent();
-    virtual QRectF calculateTemplateBoundingBox();
 	virtual bool canBeDrawnOnto() {return true;}
 
 	/// Calculates the image's center of gravity in template coordinates by iterating over all pixels, leaving out the pixels with background_color.
@@ -56,11 +64,41 @@ public:
 	/// Returns the internal QImage
 	inline QImage* getQImage() const {return image;}
 	
+	/// Returns which georeferencing method (if any) is available.
+	/// (This does not mean that the image is in georeferenced mode)
+	inline GeoreferencingType getAvailableGeoreferencing() const {return available_georef;}
+	
+public slots:
+	void updateGeoreferencing();
+	
 protected:
+	struct WorldFile
+	{
+		bool loaded;
+		QTransform pixel_to_world;
+		
+		/// Creates an unloaded world file
+		WorldFile();
+		
+		/// Tries to load the given path as world file.
+		/// Returns true on success and sets loaded to true or false.
+		bool load(const QString& path);
+		
+		/// Tries to find and load a world file for the given image path.
+		bool tryToLoadForImage(const QString image_path);
+	};
+	
 	virtual Template* duplicateImpl();
 	virtual void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width);
+	void calculateGeoreferencing();
+	void updatePosFromGeoreferencing();
 
 	QImage* image;
+	
+	GeoreferencingType available_georef;
+	QScopedPointer<Georeferencing> georef;
+	// Temporary storage for crs spec. Use georef instead.
+	QString temp_crs_spec;
 };
 
 /// Initial setting dialog when opening a raster image as template, asking for the scale
@@ -70,7 +108,8 @@ Q_OBJECT
 public:
 	TemplateImageOpenDialog(TemplateImage* image, QWidget* parent);
 	
-	inline double getMpp() const;
+	double getMpp() const;
+	bool isGeorefRadioChecked() const;
 	
 protected slots:
 	void radioClicked();
@@ -78,6 +117,7 @@ protected slots:
 	void doAccept();
 	
 private:
+	QRadioButton* georef_radio;
 	QRadioButton* mpp_radio;
 	QRadioButton* dpi_radio;
 	QLineEdit* mpp_edit;

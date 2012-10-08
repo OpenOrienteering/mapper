@@ -313,7 +313,7 @@ void Template::unloadTemplateFile()
 	assert(template_state == Loaded);
 	if (hasUnsavedChanges())
 	{
-		saveTemplateFile();
+		// The changes are lost
 		setHasUnsavedChanges(false);
 	}
 	unloadTemplateFileImpl();
@@ -323,7 +323,6 @@ void Template::unloadTemplateFile()
 
 void Template::applyTemplateTransform(QPainter* painter)
 {
-	assert(!is_georeferenced);
 	painter->translate(transform.template_x / 1000.0, transform.template_y / 1000.0);
 	painter->rotate(-transform.template_rotation * (180 / M_PI));
 	painter->scale(transform.template_scale_x, transform.template_scale_y);
@@ -335,6 +334,28 @@ QRectF Template::getTemplateExtent()
 	return infinteRectF();
 }
 
+void Template::scaleFromOrigin(double factor)
+{
+	assert(!is_georeferenced);
+	setTemplateX(qRound64(factor * getTemplateX()));
+	setTemplateY(qRound64(factor * getTemplateY()));
+	setTemplateScaleX(factor * getTemplateScaleX());
+	setTemplateScaleY(factor * getTemplateScaleY());
+}
+
+void Template::rotateAroundOrigin(double rotation)
+{
+	assert(!is_georeferenced);
+	
+	setTemplateRotation(getTemplateRotation() + rotation);
+	
+	double sinr = sin(rotation);
+	double cosr = cos(rotation);
+	qint64 temp_x = qRound64(1000.0 * (cosr * (getTemplateX()/1000.0) + sinr * (getTemplateY()/1000.0)));
+	setTemplateY(qRound64(1000.0 * (-sinr * (getTemplateX()/1000.0) + cosr * (getTemplateY()/1000.0))));
+	setTemplateX(temp_x);
+}
+
 void Template::setTemplateAreaDirty()
 {
 	QRectF template_area = calculateTemplateBoundingBox();
@@ -343,9 +364,6 @@ void Template::setTemplateAreaDirty()
 
 QRectF Template::calculateTemplateBoundingBox()
 {
-	if (is_georeferenced)
-		return infinteRectF();
-	
 	// Create bounding box by calculating the positions of all corners of the transformed extent rect
 	QRectF extent = getTemplateExtent();
 	QRectF bbox;

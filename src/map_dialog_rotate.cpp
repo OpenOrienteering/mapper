@@ -44,6 +44,8 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 	adjust_georeferencing_check->setChecked(true);
 	adjust_declination_check = new QCheckBox(tr("Adjust georeferencing declination"));
 	adjust_declination_check->setChecked(true);
+	adjust_templates_check = new QCheckBox(tr("Rotate non-georeferenced templates"));
+	adjust_templates_check->setChecked(true);
 	
 	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal);
 	
@@ -56,6 +58,7 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 	layout->addLayout(scale_layout);
 	layout->addWidget(adjust_georeferencing_check);
 	layout->addWidget(adjust_declination_check);
+	layout->addWidget(adjust_templates_check);
 	layout->addSpacing(16);
 	layout->addWidget(button_box);
 	setLayout(layout);
@@ -67,6 +70,6 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 void RotateMapDialog::okClicked()
 {
 	double rotation = M_PI * rotation_edit->value() / 180;
-	map->rotateMap(rotation, adjust_georeferencing_check->isChecked(), adjust_declination_check->isChecked());
+	map->rotateMap(rotation, adjust_georeferencing_check->isChecked(), adjust_declination_check->isChecked(), adjust_templates_check->isChecked());
 	accept();
 }

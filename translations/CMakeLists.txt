@@ -34,6 +34,7 @@ endif()
 
 set(Mapper_TRANS
  OpenOrienteering_de.ts
+ OpenOrienteering_fr.ts
  OpenOrienteering_ja.ts
  OpenOrienteering_lv.ts
  OpenOrienteering_nb.ts

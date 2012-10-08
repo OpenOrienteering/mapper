@@ -98,7 +98,7 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent)
 		
 		// Show the parameter dialog
 		GeoreferencingDialog dialog(dialog_parent, map, &georef);
-		if (dialog.exec() == QDialog::Rejected)
+		if (dialog.exec() == QDialog::Rejected || map->getGeoreferencing().isLocal())
 			return false;
 	}
 	if (is_georeferenced)
@@ -321,7 +321,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 
 void TemplateTrack::updateGeoreferencing()
 {
-	if (is_georeferenced)
+	if (is_georeferenced && template_state == Template::Loaded)
 	{
 		track.changeGeoreferencing(map->getGeoreferencing());
 		map->updateAllMapWidgets();
