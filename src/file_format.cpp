@@ -23,6 +23,7 @@
 
 #include <QFileInfo>
 
+#include "map.h"
 #include "symbol.h"
 #include "template.h"
 

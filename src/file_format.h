@@ -20,10 +20,13 @@
 #ifndef IMPORT_EXPORT_H
 #define IMPORT_EXPORT_H
 
+#include <vector>
+
 #include <QHash>
 #include <QVariant>
 
-#include "map.h"
+class Map;
+class MapView;
 
 // Forward declarations
 class Importer;

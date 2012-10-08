@@ -26,6 +26,7 @@
 #include "file_format_xml.h"
 #include "georeferencing.h"
 
+#include "map.h"
 #include "map_color.h"
 #include "symbol_point.h"
 #include "symbol_line.h"

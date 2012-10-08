@@ -25,6 +25,7 @@
 #include <QDir>
 #include <QImageReader>
 
+#include "map.h"
 #include "map_color.h"
 #include "object.h"
 #include "symbol.h"

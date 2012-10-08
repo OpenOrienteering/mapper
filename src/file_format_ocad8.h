@@ -27,6 +27,7 @@
 #include "../libocad/libocad.h"
 
 #include "file_format.h"
+#include "map_part.h"
 #include "symbol_combined.h"
 #include "template.h"
 
