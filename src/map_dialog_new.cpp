@@ -287,11 +287,11 @@ void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 	QStringList subdirs = symbol_set_dir.entryList(QDir::Dirs | QDir::Hidden | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDir::NoSort);
 	foreach (const QString dir_name, subdirs)
 	{
-		int scale = dir_name.toInt();
-		if (scale == 0)
-		{
-			qDebug() << dir_name % ": not a valid map scale denominator, using it as group name.";
-		}
+		//int scale = dir_name.toInt();
+		//if (scale == 0)
+		//{
+		//	qDebug() << dir_name % ": not a valid map scale denominator, using it as group name.";
+		//}
 		
 		QDir subdir(symbol_set_dir);
 		if (! subdir.cd(dir_name))
