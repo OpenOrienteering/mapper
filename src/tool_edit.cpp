@@ -922,11 +922,21 @@ void EditTool::updateAngleHelper(const MapCoordF& cursor_pos)
 		{
 			angle_helper->addAngle(-forward_tangent.getAngle());
 			angle_helper->addAngle(-forward_tangent.getAngle() + M_PI);
+			if (!backward_ok)
+			{
+				angle_helper->addAngle(-forward_tangent.getAngle() + M_PI/2);
+				angle_helper->addAngle(-forward_tangent.getAngle() + 3*M_PI/2);
+			}
 		}
 		if (backward_ok)
 		{
 			angle_helper->addAngle(-backward_tangent.getAngle());
 			angle_helper->addAngle(-backward_tangent.getAngle() + M_PI);
+			if (!forward_ok)
+			{
+				angle_helper->addAngle(-backward_tangent.getAngle() + M_PI/2);
+				angle_helper->addAngle(-backward_tangent.getAngle() + 3*M_PI/2);
+			}
 		}
 		if (forward_ok && backward_ok)
 		{
