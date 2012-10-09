@@ -1393,20 +1393,49 @@ void MapEditorController::duplicateClicked()
 }
 void MapEditorController::switchSymbolClicked()
 {
-	SwitchSymbolUndoStep* undo_step = new SwitchSymbolUndoStep(map);
+	SwitchSymbolUndoStep* switch_step = NULL;
+	ReplaceObjectsUndoStep* replace_step = NULL;
 	MapPart* part = map->getCurrentPart();
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
+	
+	bool close_paths = false;
+	Symbol::Type contained_types = symbol->getContainedTypes();
+	if (contained_types & Symbol::Area && !(contained_types & Symbol::Line))
+		close_paths = true;
+	
+	if (close_paths)
+		replace_step = new ReplaceObjectsUndoStep(map);
+	else
+		switch_step = new SwitchSymbolUndoStep(map);
 	
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 	{
-		undo_step->addObject(part->findObjectIndex(*it), (*it)->getSymbol());
-		(*it)->setSymbol(symbol, true);
-		(*it)->update(true);
+		Object* object = *it;
+		
+		if (close_paths)
+			replace_step->addObject(part->findObjectIndex(object), object->duplicate());
+		else
+			switch_step->addObject(part->findObjectIndex(object), (object)->getSymbol());
+		
+		object->setSymbol(symbol, true);
+		if (close_paths && object->getType() == Object::Path)
+		{
+			PathObject* path_object = object->asPath();
+			for (int path_part = 0; path_part < path_object->getNumParts(); ++path_part)
+			{
+				if (!path_object->getPart(path_part).isClosed())
+					path_object->getPart(path_part).setClosed(true, true);
+			}
+		}
+		object->update(true);
 	}
 	
 	map->setObjectsDirty();
-	map->objectUndoManager().addNewUndoStep(undo_step);
+	if (close_paths)
+		map->objectUndoManager().addNewUndoStep(replace_step);
+	else
+		map->objectUndoManager().addNewUndoStep(switch_step);
 	map->emitSelectionEdited();
 }
 void MapEditorController::fillBorderClicked()

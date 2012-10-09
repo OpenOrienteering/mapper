@@ -117,6 +117,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	context_menu = new QMenu(this);
 	
 	QMenu* new_menu = new QMenu(tr("New symbol"), context_menu);
+	new_menu->setIcon(QIcon(":/images/plus.png"));
 	/*QAction* new_point_action =*/ new_menu->addAction(tr("Point"), this, SLOT(newPointSymbol()));
 	/*QAction* new_line_action =*/ new_menu->addAction(tr("Line"), this, SLOT(newLineSymbol()));
 	/*QAction* new_area_action =*/ new_menu->addAction(tr("Area"), this, SLOT(newAreaSymbol()));
@@ -125,17 +126,17 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	context_menu->addMenu(new_menu);
 	
 	edit_action = context_menu->addAction(tr("Edit"), this, SLOT(editSymbol()));
-    duplicate_action = context_menu->addAction(tr("Duplicate"), this, SLOT(duplicateSymbol()));
-    delete_action = context_menu->addAction(tr("Delete"), this, SLOT(deleteSymbols()));
-    scale_action = context_menu->addAction(tr("Scale..."), this, SLOT(scaleSymbol()));
+	duplicate_action = context_menu->addAction(QIcon(":/images/tool-duplicate.png"), tr("Duplicate"), this, SLOT(duplicateSymbol()));
+	delete_action = context_menu->addAction(QIcon(":/images/minus.png"), tr("Delete"), this, SLOT(deleteSymbols()));
+	scale_action = context_menu->addAction(QIcon(":/images/tool-scale.png"), tr("Scale..."), this, SLOT(scaleSymbol()));
 	context_menu->addSeparator();
-	copy_action = context_menu->addAction(tr("Copy"), this, SLOT(copySymbols()));
-	paste_action = context_menu->addAction(tr("Paste"), this, SLOT(pasteSymbols()));
+	copy_action = context_menu->addAction(QIcon(":/images/copy.png"), tr("Copy"), this, SLOT(copySymbols()));
+	paste_action = context_menu->addAction(QIcon(":/images/paste.png"), tr("Paste"), this, SLOT(pasteSymbols()));
 	context_menu->addSeparator();
-	switch_symbol_action = context_menu->addAction(tr("Switch symbol of selected object(s)"), parent, SLOT(emitSwitchSymbolClicked()));
-	fill_border_action = context_menu->addAction(tr("Fill / Create border for selected object(s)"), parent, SLOT(emitFillBorderClicked()));
+	switch_symbol_action = context_menu->addAction(QIcon(":/images/tool-switch-symbol.png"), tr("Switch symbol of selected object(s)"), parent, SLOT(emitSwitchSymbolClicked()));
+	fill_border_action = context_menu->addAction(QIcon(":/images/tool-fill-border.png"), tr("Fill / Create border for selected object(s)"), parent, SLOT(emitFillBorderClicked()));
 	// text will be filled in by updateContextMenuState()
-	select_objects_action = context_menu->addAction("", parent, SLOT(emitSelectObjectsClicked()));
+	select_objects_action = context_menu->addAction(QIcon(":/images/tool-edit.png"), "", parent, SLOT(emitSelectObjectsClicked()));
 	context_menu->addSeparator();
 	hide_action = context_menu->addAction("", this, SLOT(setSelectedSymbolVisibility(bool)));
 	hide_action->setCheckable(true);
