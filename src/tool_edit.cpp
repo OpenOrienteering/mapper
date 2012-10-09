@@ -596,6 +596,7 @@ void EditTool::focusOutEvent(QFocusEvent* event)
 {
 	// Deactivate all modifiers - not always correct, but should be wrong only in very unusual cases and better than leaving the modifiers on forever
 	control_pressed = false;
+	angle_helper->setActive(false);
 	space_pressed = false;
 	updateStatusText();
 }
