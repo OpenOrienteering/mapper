@@ -295,7 +295,7 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 				constrained_pos_map = cur_pos_map;*/
 				
 				startEditing();
-				updateAngleHelper(map_coord);
+				updateAngleHelper(click_pos_map);
 			}
 			else if (hover_point == -2)
 				box_selection = true;
