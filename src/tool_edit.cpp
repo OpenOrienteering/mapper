@@ -241,7 +241,7 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 			int pos = text_object->calcTextPositionAt(map_coord, false);
 			text_editor->setSelection(pos, pos);
 			
-			updatePreviewObjects();
+			updatePreviewObjects(true);
 		}
 	}
 	
@@ -270,7 +270,7 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 				path->setCoordinate(hover_point, point);
 			}
 			opposite_curve_handle_index = -1;
-			updatePreviewObjects();
+			updatePreviewObjects(true);
 			updateAngleHelper(click_pos_map);
 		}
 	}
@@ -315,6 +315,7 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 				constrained_pos_map = cur_pos_map;*/
 				
 				startEditing();
+				updatePreviewObjects(true);
 				updateAngleHelper(click_pos_map);
 			}
 			else if (hover_point == -2)
@@ -675,7 +676,7 @@ void EditTool::selectedSymbolsChanged()
 }
 void EditTool::textSelectionChanged(bool text_change)
 {
-	updatePreviewObjects();
+	updatePreviewObjects(true);
 }
 
 void EditTool::updateStatusText()
@@ -713,11 +714,14 @@ void EditTool::updateStatusText()
 	setStatusBarText(str);
 }
 
-void EditTool::updatePreviewObjects()
+void EditTool::updatePreviewObjects(bool force)
 {
 	preview_update_triggered = false;
-	updateSelectionEditPreview(*renderables);
-	updateDirtyRect();
+	if (force || !renderables->isEmpty())
+	{
+		updateSelectionEditPreview(*renderables);
+		updateDirtyRect();
+	}
 }
 void EditTool::updateDirtyRect()
 {
