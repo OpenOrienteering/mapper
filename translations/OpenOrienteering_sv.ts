@@ -548,7 +548,7 @@
 <context>
     <name>DetermineFontSizeDialog</name>
     <message>
-        <location filename="../src/symbol_text.cpp" line="1044"/>
+        <location filename="../src/symbol_text.cpp" line="1051"/>
         <source>Determine font size</source>
         <translation>Beräkna teckenstorlek</translation>
     </message>
@@ -559,27 +559,27 @@ This dialog allows to choose a font size which results in a given exact height f
 Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek för ett visst tecken.</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="1054"/>
+        <location filename="../src/symbol_text.cpp" line="1061"/>
         <source>Letter:</source>
         <translation>Tecken:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="1052"/>
+        <location filename="../src/symbol_text.cpp" line="1059"/>
         <source>A</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="1048"/>
+        <location filename="../src/symbol_text.cpp" line="1055"/>
         <source>This dialog allows to choose a font size which results in a given exact height for a specific letter.</source>
         <translation>Här kan du välja en typsnittsstorlek som ger en exakt höjd för ett specifikt tecken.</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="1056"/>
+        <location filename="../src/symbol_text.cpp" line="1063"/>
         <source>mm</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="1058"/>
+        <location filename="../src/symbol_text.cpp" line="1065"/>
         <source>Height:</source>
         <translation>Höjd:</translation>
     </message>
@@ -711,32 +711,32 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <translation type="obsolete">&lt;b&gt;Koordinat-offset [mm]:&lt;/b&gt; %1, %2  &lt;b&gt;Distans [m]:&lt;/b&gt; %3</translation>
     </message>
     <message>
-        <location filename="../src/tool_edit.cpp" line="655"/>
+        <location filename="../src/tool_edit.cpp" line="659"/>
         <source>&lt;b&gt;Coordinate offset [mm]:&lt;/b&gt; %1, %2  &lt;b&gt;Distance [m]:&lt;/b&gt; %3  %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_edit.cpp" line="659"/>
+        <location filename="../src/tool_edit.cpp" line="663"/>
         <source>(&lt;u&gt;Ctrl&lt;/u&gt; for fixed angles)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tool_edit.cpp" line="663"/>
+        <location filename="../src/tool_edit.cpp" line="667"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to select an object, &lt;b&gt;Drag&lt;/b&gt; for box selection, &lt;b&gt;Shift&lt;/b&gt; to toggle selection</source>
         <translation>&lt;b&gt;Klicka&lt;/b&gt; för att välja ett objekt, &lt;b&gt;Dra&lt;/b&gt; för att välja flera, &lt;b&gt;Shift&lt;/b&gt; för att växla markering</translation>
     </message>
     <message>
-        <location filename="../src/tool_edit.cpp" line="666"/>
+        <location filename="../src/tool_edit.cpp" line="670"/>
         <source>, &lt;b&gt;Del&lt;/b&gt; to delete</source>
         <translation>, &lt;b&gt;Del&lt;/b&gt; för att radera</translation>
     </message>
     <message>
-        <location filename="../src/tool_edit.cpp" line="674"/>
+        <location filename="../src/tool_edit.cpp" line="678"/>
         <source>&lt;b&gt;Ctrl+Click&lt;/b&gt; on point to delete it, on path to add a new point, with &lt;b&gt;Space&lt;/b&gt; to make it a dash point</source>
         <translation>&lt;b&gt;Ctrl+klick&lt;/b&gt; på en punkt för att radera den, på en linje för att lägga till en ny punkt, med &lt;b&gt;Space&lt;/b&gt; för att göra den till en styrpunkt</translation>
     </message>
     <message>
-        <location filename="../src/tool_edit.cpp" line="676"/>
+        <location filename="../src/tool_edit.cpp" line="680"/>
         <source>; Try &lt;u&gt;Ctrl&lt;/u&gt;</source>
         <translation>; Prova &lt;u&gt;Ctrl&lt;/u&gt;</translation>
     </message>
@@ -902,7 +902,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
 <context>
     <name>Georeferencing</name>
     <message>
-        <location filename="../src/georeferencing.cpp" line="47"/>
+        <location filename="../src/georeferencing.cpp" line="48"/>
         <source>Local coordinates</source>
         <translation>Lokala koordinater</translation>
     </message>
@@ -1805,18 +1805,18 @@ Tryck Nej för att välja ett annat format.</translation>
         <translation type="obsolete">förvalt lager</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="280"/>
-        <location filename="../src/map.cpp" line="282"/>
-        <location filename="../src/map.cpp" line="308"/>
-        <location filename="../src/map.cpp" line="357"/>
+        <location filename="../src/map.cpp" line="316"/>
+        <location filename="../src/map.cpp" line="318"/>
+        <location filename="../src/map.cpp" line="344"/>
         <location filename="../src/map.cpp" line="393"/>
-        <location filename="../src/map.cpp" line="467"/>
-        <location filename="../src/map.cpp" line="483"/>
+        <location filename="../src/map.cpp" line="429"/>
+        <location filename="../src/map.cpp" line="503"/>
+        <location filename="../src/map.cpp" line="519"/>
         <source>Error</source>
         <translation>Fel</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="280"/>
+        <location filename="../src/map.cpp" line="316"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
@@ -1825,7 +1825,7 @@ because saving as %2 (.%3) is not supported.</source>
 att spara som %2 (.%3) stöds inte.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="282"/>
+        <location filename="../src/map.cpp" line="318"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
@@ -1834,37 +1834,37 @@ because the format is unknown.</source>
 formatet är okänt.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="308"/>
+        <location filename="../src/map.cpp" line="344"/>
         <source>File does not exist or insufficient permissions to open:
 %1</source>
         <translation>Filen finns inte eller så har du inte rättighet att öppna den:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="350"/>
-        <location filename="../src/map.cpp" line="441"/>
+        <location filename="../src/map.cpp" line="386"/>
+        <location filename="../src/map.cpp" line="477"/>
         <source>Warning</source>
         <translation>Varning</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="350"/>
+        <location filename="../src/map.cpp" line="386"/>
         <source>The map export generated warnings.</source>
         <translation>Kartexporten gav varningar.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="357"/>
+        <location filename="../src/map.cpp" line="393"/>
         <source>Internal error while saving:
 %1</source>
         <translation>Internt fel vid sparning:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="441"/>
+        <location filename="../src/map.cpp" line="477"/>
         <source>The map import generated warnings.</source>
         <translation>Kartimporten gav varningar.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="393"/>
+        <location filename="../src/map.cpp" line="429"/>
         <source>Cannot open file:
 %1
 for reading.</source>
@@ -1873,12 +1873,12 @@ for reading.</source>
 för läsning.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="406"/>
+        <location filename="../src/map.cpp" line="442"/>
         <source>Invalid file type.</source>
         <translation>Felaktiv filtyp.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="467"/>
+        <location filename="../src/map.cpp" line="503"/>
         <source>Cannot open file:
 %1
 
@@ -1899,17 +1899,17 @@ Error during symbol post-processing.</source>
 Fel vid bearbetning av symbolerna.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="483"/>
+        <location filename="../src/map.cpp" line="519"/>
         <source>Nothing to import.</source>
         <translation>Inget att importera.</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="490"/>
+        <location filename="../src/map.cpp" line="526"/>
         <source>Question</source>
         <translation>Fråga</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="491"/>
+        <location filename="../src/map.cpp" line="527"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
@@ -1918,12 +1918,12 @@ Rescale the imported data?</source>
 Skala om den importerade datan?</translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="655"/>
+        <location filename="../src/map.cpp" line="691"/>
         <source>default part</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map.cpp" line="983"/>
+        <location filename="../src/map.cpp" line="1019"/>
         <source>New color</source>
         <translation>Ny färg</translation>
     </message>
@@ -1939,138 +1939,138 @@ Skala om den importerade datan?</translation>
         <translation type="obsolete">Skriv ut…</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="401"/>
+        <location filename="../src/map_editor.cpp" line="418"/>
         <source>Undo</source>
         <translation>Ångra</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="401"/>
+        <location filename="../src/map_editor.cpp" line="418"/>
         <source>Undo the last step</source>
         <translation>Ångra senaste steget</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="402"/>
+        <location filename="../src/map_editor.cpp" line="419"/>
         <source>Redo</source>
         <translation>Gör om</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="402"/>
+        <location filename="../src/map_editor.cpp" line="419"/>
         <source>Redo the last step</source>
         <translation>Gör om senaste steget</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="403"/>
+        <location filename="../src/map_editor.cpp" line="420"/>
         <source>Cu&amp;t</source>
         <translation>&amp;Klipp ut</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="404"/>
+        <location filename="../src/map_editor.cpp" line="421"/>
         <source>C&amp;opy</source>
         <translation>K&amp;opiera</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="405"/>
+        <location filename="../src/map_editor.cpp" line="422"/>
         <source>&amp;Paste</source>
         <translation>K&amp;listra in</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="409"/>
+        <location filename="../src/map_editor.cpp" line="426"/>
         <source>Zoom in</source>
         <translation>Zooma in</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="410"/>
+        <location filename="../src/map_editor.cpp" line="427"/>
         <source>Zoom out</source>
         <translation>Zooma ut</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="412"/>
+        <location filename="../src/map_editor.cpp" line="429"/>
         <source>Toggle fullscreen mode</source>
         <translation>Växla helskärmsläge</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="413"/>
+        <location filename="../src/map_editor.cpp" line="430"/>
         <source>Set custom zoom factor...</source>
         <translation>Ställ in egen zoom…</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="418"/>
+        <location filename="../src/map_editor.cpp" line="436"/>
         <source>Symbol window</source>
         <translation>Symbolfönster</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="418"/>
+        <location filename="../src/map_editor.cpp" line="436"/>
         <source>Show/Hide the symbol window</source>
         <translation>Visa/Dölj symbolfönstret</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="419"/>
+        <location filename="../src/map_editor.cpp" line="437"/>
         <source>Color window</source>
         <translation>Färgfönster</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="419"/>
+        <location filename="../src/map_editor.cpp" line="437"/>
         <source>Show/Hide the color window</source>
         <translation>Visa/Dölj färgfönstret</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="420"/>
+        <location filename="../src/map_editor.cpp" line="438"/>
         <source>Load symbols from...</source>
         <translation>Läs in symboler från…</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="420"/>
+        <location filename="../src/map_editor.cpp" line="438"/>
         <source>Replace the symbols with those from another map file</source>
         <translation>Byt ut symboluppsättningen med symboler från en annan kartfil</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="421"/>
+        <location filename="../src/map_editor.cpp" line="439"/>
         <source>Load colors from...</source>
         <translation>Hämta färger från…</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="421"/>
+        <location filename="../src/map_editor.cpp" line="439"/>
         <source>Replace the colors with those from another map file</source>
         <translation>Byt ut färgerna med färger från en annan kartfil</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="423"/>
+        <location filename="../src/map_editor.cpp" line="441"/>
         <source>Scale all symbols...</source>
         <translation>Skala om alla symboler…</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="423"/>
+        <location filename="../src/map_editor.cpp" line="441"/>
         <source>Scale the whole symbol set</source>
         <translation>Skalera om hela symboluppsättningen</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="425"/>
+        <location filename="../src/map_editor.cpp" line="443"/>
         <source>Change map scale...</source>
         <translation>Ändra kartskala…</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="425"/>
+        <location filename="../src/map_editor.cpp" line="443"/>
         <source>Change the map scale and adjust map objects and symbol sizes</source>
         <translation>Ändra kartskalan och justera kartobjekt och symbolstorlekar</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="427"/>
+        <location filename="../src/map_editor.cpp" line="445"/>
         <source>Map notes...</source>
         <translation>Kartnoteringar...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="429"/>
+        <location filename="../src/map_editor.cpp" line="447"/>
         <source>Template setup window</source>
         <translatorcomment>Bakgrundsinställningsfönster för långt</translatorcomment>
         <translation>Bakgrundsinställningar</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="429"/>
+        <location filename="../src/map_editor.cpp" line="447"/>
         <source>Show/Hide the template window</source>
         <translation>Visa/dölj bakgrundsinställningar</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="432"/>
+        <location filename="../src/map_editor.cpp" line="450"/>
         <source>Open template...</source>
         <translation>Öppna bakgrundsbild…</translation>
     </message>
@@ -2079,62 +2079,62 @@ Skala om den importerade datan?</translation>
         <translation type="obsolete">Ändra projektionsparametrar…</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="411"/>
+        <location filename="../src/map_editor.cpp" line="428"/>
         <source>Show whole map</source>
         <translation>Visa hela kartan</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="435"/>
+        <location filename="../src/map_editor.cpp" line="453"/>
         <source>Edit objects</source>
         <translation>Redigera objekt</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="436"/>
+        <location filename="../src/map_editor.cpp" line="454"/>
         <source>Set point objects</source>
         <translation>Sätt punktobjekt</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="437"/>
+        <location filename="../src/map_editor.cpp" line="455"/>
         <source>Draw paths</source>
         <translation>Rita linjer</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="438"/>
+        <location filename="../src/map_editor.cpp" line="456"/>
         <source>Draw circles and ellipses</source>
         <translation>Rita cirklar och ellipser</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="440"/>
+        <location filename="../src/map_editor.cpp" line="458"/>
         <source>Write text</source>
         <translation>Skriv text</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="441"/>
+        <location filename="../src/map_editor.cpp" line="459"/>
         <source>Duplicate</source>
         <translation>Duplicera</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="442"/>
+        <location filename="../src/map_editor.cpp" line="460"/>
         <source>Switch symbol</source>
         <translation>Byt ut symbol</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="443"/>
+        <location filename="../src/map_editor.cpp" line="461"/>
         <source>Fill / Create border</source>
         <translation>Fyll / skapa kantlinje</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="444"/>
+        <location filename="../src/map_editor.cpp" line="462"/>
         <source>Switch dash direction</source>
         <translation>Byt streckningsriktning</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="445"/>
+        <location filename="../src/map_editor.cpp" line="463"/>
         <source>Connect paths</source>
         <translation>Anslut linjer</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="446"/>
+        <location filename="../src/map_editor.cpp" line="464"/>
         <source>Cut object</source>
         <translation>Dela objekt</translation>
     </message>
@@ -2143,508 +2143,513 @@ Skala om den importerade datan?</translation>
         <translation type="obsolete">Gör hål</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="456"/>
+        <location filename="../src/map_editor.cpp" line="474"/>
         <source>Rotate object(s)</source>
         <translation>Rotera objekt</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="459"/>
+        <location filename="../src/map_editor.cpp" line="477"/>
         <source>Measure lengths and areas</source>
         <translation>Mät längd och area</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="470"/>
+        <location filename="../src/map_editor.cpp" line="488"/>
         <source>Import...</source>
         <translation>Importera...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="513"/>
+        <location filename="../src/map_editor.cpp" line="531"/>
         <source>&amp;Edit</source>
         <translation>&amp;Redigera</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="523"/>
+        <location filename="../src/map_editor.cpp" line="541"/>
         <source>&amp;View</source>
         <translation>&amp;Visa</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="542"/>
+        <location filename="../src/map_editor.cpp" line="561"/>
         <source>&amp;Tools</source>
         <translation>V&amp;erktyg</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="582"/>
+        <location filename="../src/map_editor.cpp" line="601"/>
         <source>Sy&amp;mbols</source>
         <translation>&amp;Symboler</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="572"/>
+        <location filename="../src/map_editor.cpp" line="591"/>
         <source>M&amp;ap</source>
         <translation>&amp;Karta</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="592"/>
+        <location filename="../src/map_editor.cpp" line="611"/>
         <source>&amp;Templates</source>
         <translation>&amp;Bakgrundsbilder</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="624"/>
+        <location filename="../src/map_editor.cpp" line="643"/>
         <source>Drawing</source>
         <translation>Ritning</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="465"/>
+        <location filename="../src/map_editor.cpp" line="483"/>
         <source>Paint on template</source>
         <translation>Måla på bakgrundsbild</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="399"/>
+        <location filename="../src/map_editor.cpp" line="416"/>
         <source>Print / Export...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="407"/>
+        <location filename="../src/map_editor.cpp" line="424"/>
         <source>Show grid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="408"/>
-        <location filename="../src/map_editor.cpp" line="614"/>
+        <location filename="../src/map_editor.cpp" line="425"/>
+        <location filename="../src/map_editor.cpp" line="633"/>
         <source>Configure grid...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="415"/>
+        <location filename="../src/map_editor.cpp" line="432"/>
         <source>Hatch areas</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="416"/>
+        <location filename="../src/map_editor.cpp" line="433"/>
         <source>Baseline view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="424"/>
+        <location filename="../src/map_editor.cpp" line="434"/>
+        <source>Hide all templates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/map_editor.cpp" line="442"/>
         <source>Georeferencing...</source>
         <translation>Gereferera...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="426"/>
+        <location filename="../src/map_editor.cpp" line="444"/>
         <source>Rotate map...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="426"/>
+        <location filename="../src/map_editor.cpp" line="444"/>
         <source>Rotate the whole map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="433"/>
+        <location filename="../src/map_editor.cpp" line="451"/>
         <source>Reopen template...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="439"/>
+        <location filename="../src/map_editor.cpp" line="457"/>
         <source>Draw rectangles</source>
         <translation>Rita rektanglar</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="447"/>
+        <location filename="../src/map_editor.cpp" line="465"/>
         <source>Cut free form hole</source>
         <translation>Klipp hål</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="448"/>
+        <location filename="../src/map_editor.cpp" line="466"/>
         <source>Cut round hole</source>
         <translation>Klipp runt hål</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="452"/>
+        <location filename="../src/map_editor.cpp" line="470"/>
         <source>Cut rectangular hole</source>
         <translation>Klipp rektangulärt hål</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="457"/>
+        <location filename="../src/map_editor.cpp" line="475"/>
         <source>Rotate pattern</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="458"/>
+        <location filename="../src/map_editor.cpp" line="476"/>
         <source>Scale object(s)</source>
         <translation>Skala objekt</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="460"/>
+        <location filename="../src/map_editor.cpp" line="478"/>
         <source>Unify areas</source>
         <translation>Sätt ihop ytor</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="461"/>
+        <location filename="../src/map_editor.cpp" line="479"/>
         <source>Intersect areas</source>
         <translation>Dela ytor</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="462"/>
+        <location filename="../src/map_editor.cpp" line="480"/>
         <source>Area difference</source>
         <translation>Area-skillnad</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="463"/>
+        <location filename="../src/map_editor.cpp" line="481"/>
         <source>Area XOr</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="472"/>
+        <location filename="../src/map_editor.cpp" line="490"/>
         <source>Map coordinates</source>
         <translation>Kartkoordinater</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="474"/>
+        <location filename="../src/map_editor.cpp" line="492"/>
         <source>Projected coordinates</source>
         <translation>Projicerade koordinater</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="476"/>
+        <location filename="../src/map_editor.cpp" line="494"/>
         <source>Latitude/Longitude (Dec)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="478"/>
+        <location filename="../src/map_editor.cpp" line="496"/>
         <source>Latitude/Longitude (DMS)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="496"/>
+        <location filename="../src/map_editor.cpp" line="514"/>
         <source>Display coordinates as...</source>
         <translation>Visa koordinater som...</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="560"/>
+        <location filename="../src/map_editor.cpp" line="579"/>
         <source>Cut hole</source>
         <translation>Klipp hål</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="604"/>
+        <location filename="../src/map_editor.cpp" line="623"/>
         <source>Dummy</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="608"/>
+        <location filename="../src/map_editor.cpp" line="627"/>
         <source>View</source>
         <translation>Visa</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="638"/>
+        <location filename="../src/map_editor.cpp" line="657"/>
         <source>Select template...</source>
         <translation>Välj bakgrundsbild…</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="644"/>
+        <location filename="../src/map_editor.cpp" line="663"/>
         <source>Editing</source>
         <translation>Redigering</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="667"/>
+        <location filename="../src/map_editor.cpp" line="686"/>
         <source>Advanced editing</source>
         <translation>Avancerad redigering</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="708"/>
+        <location filename="../src/map_editor.cpp" line="727"/>
         <source>Print or Export</source>
         <translation>Skriv ut eller exportera</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="731"/>
-        <location filename="../src/map_editor.cpp" line="838"/>
+        <location filename="../src/map_editor.cpp" line="750"/>
         <location filename="../src/map_editor.cpp" line="857"/>
-        <location filename="../src/map_editor.cpp" line="870"/>
-        <location filename="../src/map_editor.cpp" line="1837"/>
-        <location filename="../src/map_editor.cpp" line="1855"/>
+        <location filename="../src/map_editor.cpp" line="876"/>
+        <location filename="../src/map_editor.cpp" line="889"/>
+        <location filename="../src/map_editor.cpp" line="1890"/>
+        <location filename="../src/map_editor.cpp" line="1908"/>
         <source>Error</source>
         <translation>Fel</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="731"/>
+        <location filename="../src/map_editor.cpp" line="750"/>
         <source>No undo steps available.</source>
         <translation>Inga ångra-steg tillgängliga.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="798"/>
+        <location filename="../src/map_editor.cpp" line="817"/>
         <source>Cut %1 object(s)</source>
         <translation>Klipp %1 objekt</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="838"/>
-        <location filename="../src/map_editor.cpp" line="870"/>
+        <location filename="../src/map_editor.cpp" line="857"/>
+        <location filename="../src/map_editor.cpp" line="889"/>
         <source>An internal error occurred, sorry!</source>
         <translation>Ett internt fel uppstod, ursäkta!</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="849"/>
+        <location filename="../src/map_editor.cpp" line="868"/>
         <source>Copied %1 object(s)</source>
         <translation>Kopierade %1 objekt</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="857"/>
+        <location filename="../src/map_editor.cpp" line="876"/>
         <source>There are no objects in clipboard which could be pasted!</source>
         <translation>Det finns inga objekt att klistra in!</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="888"/>
+        <location filename="../src/map_editor.cpp" line="907"/>
         <source>Pasted %1 object(s)</source>
         <translation>Klistrade in %1 objekt</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="921"/>
+        <location filename="../src/map_editor.cpp" line="940"/>
         <source>Set custom zoom factor</source>
         <translation>Ställ in egen zoom</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="921"/>
+        <location filename="../src/map_editor.cpp" line="940"/>
         <source>Zoom factor:</source>
         <translation>Zoom:</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="975"/>
+        <location filename="../src/map_editor.cpp" line="999"/>
         <source>Symbols</source>
         <translation>Symboler</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="996"/>
+        <location filename="../src/map_editor.cpp" line="1020"/>
         <source>Colors</source>
         <translation>Färger</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1013"/>
+        <location filename="../src/map_editor.cpp" line="1037"/>
         <source>Scale all symbols</source>
         <translation>Skala om alla symboler</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1013"/>
+        <location filename="../src/map_editor.cpp" line="1037"/>
         <source>Scale to percentage:</source>
         <translation>Skala om till procenttal:</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1036"/>
+        <location filename="../src/map_editor.cpp" line="1060"/>
         <source>Map notes</source>
         <translation>Kartnoteringar</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1041"/>
+        <location filename="../src/map_editor.cpp" line="1065"/>
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1042"/>
+        <location filename="../src/map_editor.cpp" line="1066"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1074"/>
-        <location filename="../src/map_editor.cpp" line="1093"/>
+        <location filename="../src/map_editor.cpp" line="1098"/>
+        <location filename="../src/map_editor.cpp" line="1117"/>
         <source>Templates</source>
         <translation>Bakgrundsbilder</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1145"/>
+        <location filename="../src/map_editor.cpp" line="1169"/>
         <source>Place point objects on the map.</source>
         <translation>Placera punktobjekt på kartan.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1145"/>
+        <location filename="../src/map_editor.cpp" line="1169"/>
         <source>Select a point symbol to be able to use this tool.</source>
         <translation>Välj en punktsymbol för att använda detta verktyg.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1147"/>
+        <location filename="../src/map_editor.cpp" line="1171"/>
         <source>Draw polygonal and curved lines.</source>
         <translation>Rita polygon- och kurvlinjer.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1147"/>
-        <location filename="../src/map_editor.cpp" line="1149"/>
-        <location filename="../src/map_editor.cpp" line="1151"/>
+        <location filename="../src/map_editor.cpp" line="1171"/>
+        <location filename="../src/map_editor.cpp" line="1173"/>
+        <location filename="../src/map_editor.cpp" line="1175"/>
         <source>Select a line, area or combined symbol to be able to use this tool.</source>
         <translation>Välj en linje, yta eller kombinerad symbol för att använda detta verktyg.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1149"/>
+        <location filename="../src/map_editor.cpp" line="1173"/>
         <source>Draw circles and ellipses.</source>
         <translation>Rita cirklar och ellipser.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1259"/>
+        <location filename="../src/map_editor.cpp" line="1283"/>
         <source>Set the direction of area fill patterns or point objects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1259"/>
+        <location filename="../src/map_editor.cpp" line="1283"/>
         <source>Select an area object with rotatable fill pattern or a rotatable point object to activate this tool.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1818"/>
+        <location filename="../src/map_editor.cpp" line="1871"/>
         <source>Import OMAP, OCD, GPX, OSM or DXF file</source>
         <translation>Importera OMAP, OCD, GPX, OSM eller DXF filer</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1855"/>
+        <location filename="../src/map_editor.cpp" line="1908"/>
         <source>Cannot import the selected map file because it could not be loaded.</source>
         <translation>Kan inte importera den valda kartfilen eftersom den inte kan laddas.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1151"/>
+        <location filename="../src/map_editor.cpp" line="1175"/>
         <source>Draw rectangles.</source>
         <translation>Rita rektanglar.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1153"/>
+        <location filename="../src/map_editor.cpp" line="1177"/>
         <source>Write text on the map.</source>
         <translation>Skriv text på kartan.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1153"/>
+        <location filename="../src/map_editor.cpp" line="1177"/>
         <source>Select a text symbol to be able to use this tool.</source>
         <translation>Välj en textsymbol för att använda detta verktyg.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1242"/>
+        <location filename="../src/map_editor.cpp" line="1266"/>
         <source>Duplicate the selected object(s).</source>
         <translation>Duplicerar de valda objekten.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1242"/>
-        <location filename="../src/map_editor.cpp" line="1257"/>
-        <location filename="../src/map_editor.cpp" line="1261"/>
+        <location filename="../src/map_editor.cpp" line="1266"/>
+        <location filename="../src/map_editor.cpp" line="1281"/>
+        <location filename="../src/map_editor.cpp" line="1285"/>
         <source>Select at least one object to activate this tool.</source>
         <translation>Välj minst ett objekt för att använda detta vertyg.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1244"/>
+        <location filename="../src/map_editor.cpp" line="1268"/>
         <source>Switch the direction of symbols on line objects.</source>
         <translation>Byt riktning för symboler på linjeobjekt.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1244"/>
-        <location filename="../src/map_editor.cpp" line="1246"/>
+        <location filename="../src/map_editor.cpp" line="1268"/>
+        <location filename="../src/map_editor.cpp" line="1270"/>
         <source>Select at least one line object to activate this tool.</source>
         <translation>Välj minst ett linjeobjekt för att använda detta verktyg.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1246"/>
+        <location filename="../src/map_editor.cpp" line="1270"/>
         <source>Connect endpoints of paths which are close together.</source>
         <translation>Slå ihop slutpunkter på linjer som är nära varandra.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1248"/>
+        <location filename="../src/map_editor.cpp" line="1272"/>
         <source>Cut the selected object(s) into smaller parts.</source>
         <translation>Delar de valda objekten i mindre bitar.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1248"/>
+        <location filename="../src/map_editor.cpp" line="1272"/>
         <source>Select at least one line or area object to activate this tool.</source>
         <translation>Välj minst en linje eller yta för att använda detta verktyg.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1250"/>
+        <location filename="../src/map_editor.cpp" line="1274"/>
         <source>Cut a hole into the selected area object.</source>
         <translation>Gör ett hål i det valda ytobjektet.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1250"/>
+        <location filename="../src/map_editor.cpp" line="1274"/>
         <source>Select a single area object to activate this tool.</source>
         <translation>Välj ett ytobjekt för att använda detta verktyg.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1257"/>
+        <location filename="../src/map_editor.cpp" line="1281"/>
         <source>Rotate the selected object(s).</source>
         <translation>Rotera valda objekt.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1261"/>
+        <location filename="../src/map_editor.cpp" line="1285"/>
         <source>Scale the selected object(s).</source>
         <translation>Skala de valda objekten.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1263"/>
+        <location filename="../src/map_editor.cpp" line="1287"/>
         <source>Unify overlapping areas.</source>
         <translation>Sätt ihop överlappande ytor.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1263"/>
-        <location filename="../src/map_editor.cpp" line="1265"/>
-        <location filename="../src/map_editor.cpp" line="1269"/>
+        <location filename="../src/map_editor.cpp" line="1287"/>
+        <location filename="../src/map_editor.cpp" line="1289"/>
+        <location filename="../src/map_editor.cpp" line="1293"/>
         <source>Select at least two area objects with the same symbol to activate this tool.</source>
         <translation>Välj minst två ytobjekt med samma symbol för att aktivera detta verktyg.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1265"/>
+        <location filename="../src/map_editor.cpp" line="1289"/>
         <source>Intersect the first selected area object with all other selected overlapping areas.</source>
         <translation>Dela det först valda ytobjektet med alla valda överlappande ytor.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1267"/>
+        <location filename="../src/map_editor.cpp" line="1291"/>
         <source>Subtract all other selected area objects from the first selected area object.</source>
         <translation>Ta bort alla valda ytobjekt från det först valda ytobjektet.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1267"/>
+        <location filename="../src/map_editor.cpp" line="1291"/>
         <source>Select at least two area objects to activate this tool.</source>
         <translation>Välj minst två ytobjekt för att använda detta verktyg.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1269"/>
+        <location filename="../src/map_editor.cpp" line="1293"/>
         <source>Calculate nonoverlapping parts of areas.</source>
         <translation>Beräkna ej överlappande delar av ytor.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1289"/>
+        <location filename="../src/map_editor.cpp" line="1313"/>
         <source>Switches the symbol of the selected object(s) to the selected symbol.</source>
         <translation>Ändrar symbolen på de valda objekten till den valda symbolen.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1289"/>
-        <location filename="../src/map_editor.cpp" line="1291"/>
+        <location filename="../src/map_editor.cpp" line="1313"/>
+        <location filename="../src/map_editor.cpp" line="1315"/>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
         <translation>Välj minst ett objekt och en annan symbol för att använda detta verktyg.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1291"/>
+        <location filename="../src/map_editor.cpp" line="1315"/>
         <source>Fill the selected line(s) or create a border for the selected area(s).</source>
         <translation>Fyller den valda linjen eller skapar en kantlinje för den valda ytan.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1368"/>
+        <location filename="../src/map_editor.cpp" line="1392"/>
         <source>%1 object(s) duplicated</source>
         <translation>%1 objekt duplicerades</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1614"/>
+        <location filename="../src/map_editor.cpp" line="1667"/>
         <source>Measure</source>
         <translation>Mät</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1731"/>
+        <location filename="../src/map_editor.cpp" line="1784"/>
         <source>Paint free-handedly on a template</source>
         <translation>Rita fritt på en bakgrundsbild</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1733"/>
+        <location filename="../src/map_editor.cpp" line="1786"/>
         <source>Paint free-handedly on a template. Create or load a template which can be drawn onto to activate this button</source>
         <translation>Rita fritt på en bakgrundsbild. Skapa eller öppna en bakgrundsbild som går att rita på för att använda detta verktyg</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1818"/>
+        <location filename="../src/map_editor.cpp" line="1871"/>
         <source>Importable files</source>
         <translation>Importerbara filer</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1818"/>
+        <location filename="../src/map_editor.cpp" line="1871"/>
         <source>All files</source>
         <translation>Alla filer</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1837"/>
+        <location filename="../src/map_editor.cpp" line="1890"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
         <translation>Kan inte importera den valda filen eftersom dess filformat inte stöds.</translation>
     </message>
@@ -2653,8 +2658,9 @@ Skala om den importerade datan?</translation>
     <name>MapWidget</name>
     <message>
         <location filename="../src/map_widget.cpp" line="469"/>
-        <source>Zoom: %1x</source>
-        <translation></translation>
+        <source>%1x</source>
+        <comment>Zoom factor</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="491"/>
@@ -3334,6 +3340,14 @@ zooma med scrollhjulet om tillgängligt.</translation>
     </message>
 </context>
 <context>
+    <name>ProjectedCRSSelector</name>
+    <message>
+        <location filename="../src/georeferencing_dialog.cpp" line="717"/>
+        <source>&amp;Coordinate reference system:</source>
+        <translation type="unfinished">&amp;Referenssystem:</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Cannot open file:
@@ -3374,8 +3388,8 @@ File format version too high. Please update to a newer program version to load t
 Filformatsversionen är för hög. Använd en nyare version av programmet för att öppna filen.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.cpp" line="71"/>
-        <location filename="../src/file_format_xml.cpp" line="217"/>
+        <location filename="../src/file_format_native.cpp" line="72"/>
+        <location filename="../src/file_format_xml.cpp" line="219"/>
         <source>Invalid file format version.</source>
         <translation>Felaktig filformatsversion.</translation>
     </message>
@@ -3388,49 +3402,54 @@ Filformatsversionen är för hög. Använd en nyare version av programmet för a
         <translation type="obsolete">Filversionen för hög. Använd en nyare programversion för att läsa denn ström-&gt;</translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.cpp" line="75"/>
-        <location filename="../src/file_format_xml.cpp" line="219"/>
+        <location filename="../src/file_format_native.cpp" line="76"/>
+        <location filename="../src/file_format_xml.cpp" line="221"/>
         <source>Unsupported file format version. Please use an older program version to load and update the file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.cpp" line="79"/>
+        <location filename="../src/file_format_native.cpp" line="80"/>
         <source>File format version too high. Please update to a newer program version to load this file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.cpp" line="128"/>
+        <location filename="../src/file_format_native.cpp" line="129"/>
         <source>The geographic coordinate reference system of the map was &quot;%1&quot;. This CRS is not supported. Using &quot;%2&quot;.</source>
         <translation>Det geografiska koordinatreferenssystemet för kartan var&quot;%1&quot;. Detta system stöds inte. Använder &quot;%2&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.cpp" line="221"/>
+        <location filename="../src/file_format_native.cpp" line="222"/>
         <source>Error while loading a symbol with type %2.</source>
         <translation>Fel vid läsning av en symbol av typ %2.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.cpp" line="299"/>
+        <location filename="../src/file_format_native.cpp" line="300"/>
         <source>Error while reading map part count.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.cpp" line="309"/>
+        <location filename="../src/file_format_native.cpp" line="310"/>
         <source>Error while loading map part %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol.cpp" line="198"/>
-        <source>Error while loading a symbol of type %1.</source>
+        <location filename="../src/symbol.cpp" line="203"/>
+        <source>Error while loading a symbol of type %1 at line %2 column %3.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol.cpp" line="237"/>
-        <location filename="../src/file_format_native.cpp" line="226"/>
+        <location filename="../src/symbol.cpp" line="210"/>
+        <source>Symbol ID &apos;%1&apos; not unique at line %2 column %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/symbol.cpp" line="254"/>
+        <location filename="../src/file_format_native.cpp" line="227"/>
         <source>Error while loading a symbol.</source>
         <translation>Fel vid läsning av en symbol.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_native.cpp" line="289"/>
+        <location filename="../src/file_format_native.cpp" line="290"/>
         <source>Error while loading undo steps.</source>
         <translation>Fel vid läsning av ångra-steg.</translation>
     </message>
@@ -3505,47 +3524,47 @@ for writing.</source>
 for skrivning.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="97"/>
+        <location filename="../src/file_format_ocad8.cpp" line="98"/>
         <source>Could not open file: libocad returned %1</source>
         <translation>Kunde inte öppna filen: libocad säger %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="100"/>
+        <location filename="../src/file_format_ocad8.cpp" line="101"/>
         <source>OCAD files of version %1 cannot be loaded!</source>
         <translation>OCAD-filer av version %1 kan inte öppnas!</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="182"/>
+        <location filename="../src/file_format_ocad8.cpp" line="183"/>
         <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
         <translation>Kunde inte importera symbol &quot;%3&quot; (%1.%2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="195"/>
+        <location filename="../src/file_format_ocad8.cpp" line="196"/>
         <source>OCAD import layer</source>
         <translation>OCAD importlager</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="333"/>
+        <location filename="../src/file_format_ocad8.cpp" line="334"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
         <translation>I streckad-linje-symbolen %1 är längden för spetsiga linjeslut olika (%2 och %3). Använder %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="350"/>
+        <location filename="../src/file_format_ocad8.cpp" line="351"/>
         <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
         <translation>I streckad-linje-symbolen %1 kan inte slutlängden importeras korrekt.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="352"/>
+        <location filename="../src/file_format_ocad8.cpp" line="353"/>
         <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
         <translation>I streckad-linje-symbolen %1 kan inte slut-mellanrumet importeras korrekt.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="361"/>
+        <location filename="../src/file_format_ocad8.cpp" line="362"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
         <translation>I streckad-linje-symbolen %1 är huvud och slutlängden olika (%2 och %3). Använder %4.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="371"/>
+        <location filename="../src/file_format_ocad8.cpp" line="372"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
         <translation>I streckad-linje-symbolen %1 är mellanrummet D och E olika (%2 och %3). Använder %4.</translation>
     </message>
@@ -3563,13 +3582,13 @@ for skrivning.</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1426"/>
-        <location filename="../src/file_format_ocad8.cpp" line="496"/>
+        <location filename="../src/file_format_ocad8.cpp" line="497"/>
         <source>Dash symbol</source>
         <translation>Strecksymbol</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1414"/>
-        <location filename="../src/file_format_ocad8.cpp" line="502"/>
+        <location filename="../src/file_format_ocad8.cpp" line="503"/>
         <source>Start symbol</source>
         <translation>Startsymbol</translation>
     </message>
@@ -3578,137 +3597,137 @@ for skrivning.</translation>
         <translation type="obsolete">I symbol %1, ignorerar ramlinje.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="655"/>
+        <location filename="../src/file_format_ocad8.cpp" line="656"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
         <translation>Vid import av textsymbol %1: ignorerar marginaljustering av texten</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="661"/>
+        <location filename="../src/file_format_ocad8.cpp" line="662"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
         <translation>Vid import av textsymbol %1: ignorerar egen tjocklek (%2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="666"/>
+        <location filename="../src/file_format_ocad8.cpp" line="667"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation>Vid import av textsymbol %1: eget teckenavstånd inställt, implementationen matchar inte OCADs beteende än</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="671"/>
+        <location filename="../src/file_format_ocad8.cpp" line="672"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
         <translation>Vid import av textsymbol %1: ignorerar egeninställt ordavstånd (%2%)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="676"/>
+        <location filename="../src/file_format_ocad8.cpp" line="677"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
         <translation>Vid import av textsymbol %1: ignorerar egeninställda tabbavstånd (%2/%3)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="697"/>
+        <location filename="../src/file_format_ocad8.cpp" line="698"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
         <translation>Vid import av textsymbol %1: ignorerar textram (läge %2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="849"/>
+        <location filename="../src/file_format_ocad8.cpp" line="850"/>
         <source>Unable to load object</source>
         <translation>Kunde inte ladda objekt</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="856"/>
+        <location filename="../src/file_format_ocad8.cpp" line="857"/>
         <source>Unable to import rectangle object</source>
         <translation>Kunde inte läsa rektangelobjekt</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1309"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1310"/>
         <source>Color id not found: %1, ignoring this color</source>
         <translation>Färg-ID gick inte att hitta: %1, ignorerar denna färg</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1340"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1341"/>
         <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
         <translation>Kartan innehåller fler än 256 färger vilket inte stöds av ocd version 8.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1344"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1345"/>
         <source>Could not create new file: libocad returned %1</source>
         <translation>Kunde inte skapa ny fil: libocad svarade %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1456"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1457"/>
         <source>Unable to export fill pattern shift for an area object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1596"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1597"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
         <translation>Kunde inte exportera mall: filtypen &quot;%1&quot; stöds inte än</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1812"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1813"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation>I linjesymbolen &quot;%1&quot;, kan inte visa slut/anslutnings-kombination.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1836"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1837"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
         <translation>I linjesymbolen &quot;%1&quot;, ignorerar streck-grupperingen.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1847"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1848"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
         <translation>I linjesymbolen &quot;%1&quot;, antalet streck i en grupp har minskats till 2.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1903"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1904"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1960"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1961"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
         <translation>I ytsymbolen &quot;%1&quot;, hoppar över ett fyllnadsmönster.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2010"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2011"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
         <translation>I ytsymbolen &quot;%1&quot;, antar ett &quot;bytta rader&quot;-mönster. Det här kan vara rätt eller fel.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2049"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2050"/>
         <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation>I textsymbolen %1: eget symbolutrymme är satt, implementationen matchar inte OCAD:s beteende än</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2056"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2057"/>
         <source>In text symbol %1: ignoring underlining</source>
         <translation>I textsymbolen %1: ignorerar understreck</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2058"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2059"/>
         <source>In text symbol %1: ignoring kerning</source>
         <translation>I textsybolen %1: ignorerar kerning</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="2435"/>
+        <location filename="../src/file_format_ocad8.cpp" line="2436"/>
         <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
         <translation>Sträng trunkerad (trunkering märkt med tre &apos;|&apos;) %1</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="904"/>
+        <location filename="../src/file_format_ocad8.cpp" line="905"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation>Importerar inte textsymbol, kunde inte beräkna bana (npts=%1): %2</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="93"/>
+        <location filename="../src/file_format_ocad8.cpp" line="94"/>
         <source>Could not allocate buffer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="95"/>
+        <location filename="../src/file_format_ocad8.cpp" line="96"/>
         <source>Could not read file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1084"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1085"/>
         <source>Unable to import template: %1</source>
         <translation>Kunde inte importera bakgrundsbild: %1</translation>
     </message>
@@ -3717,12 +3736,12 @@ for skrivning.</translation>
         <translation type="obsolete">Ignorerar bakgrundsbild av typen: %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1111"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1112"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
         <translation>kunde inte importera bakgrundsbild: &quot;%1&quot; verkar inte vara en rasterbild</translation>
     </message>
     <message>
-        <location filename="../src/file_format_ocad8.cpp" line="1210"/>
+        <location filename="../src/file_format_ocad8.cpp" line="1211"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation>Försöker importera textobjekt med okänt koordinatformat</translation>
     </message>
@@ -3795,47 +3814,47 @@ Högsta versionen som stöds är %2.</translation>
         <translation>%1 nod kunde inte bearbetas korrekt.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1431"/>
+        <location filename="../src/map_editor.cpp" line="1484"/>
         <source>Object selection</source>
         <translation>Objektval</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1431"/>
+        <location filename="../src/map_editor.cpp" line="1484"/>
         <source>No objects were selected because there are no objects with the selected symbol(s)</source>
         <translation>Inga objekt valdes eftersom det inte finns några objekt med den valda symbolen</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1625"/>
-        <location filename="../src/map_editor.cpp" line="1631"/>
-        <location filename="../src/map_editor.cpp" line="1637"/>
-        <location filename="../src/map_editor.cpp" line="1643"/>
+        <location filename="../src/map_editor.cpp" line="1678"/>
+        <location filename="../src/map_editor.cpp" line="1684"/>
+        <location filename="../src/map_editor.cpp" line="1690"/>
+        <location filename="../src/map_editor.cpp" line="1696"/>
         <location filename="../src/gps_track.cpp" line="275"/>
         <location filename="../src/gps_track.cpp" line="280"/>
         <source>Error</source>
         <translation>Fel</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1625"/>
+        <location filename="../src/map_editor.cpp" line="1678"/>
         <source>Unification failed.</source>
         <translation>Förening misslyckades.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1631"/>
+        <location filename="../src/map_editor.cpp" line="1684"/>
         <source>Intersection failed.</source>
         <translation>Delning misslyckades.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1637"/>
+        <location filename="../src/map_editor.cpp" line="1690"/>
         <source>Difference failed.</source>
         <translation>Differens misslyckades.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1643"/>
+        <location filename="../src/map_editor.cpp" line="1696"/>
         <source>XOr failed.</source>
         <translation>XOr misslyckades.</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="496"/>
+        <location filename="../src/symbol_text.cpp" line="503"/>
         <source>A</source>
         <comment>First capital letter of the local alphabet</comment>
         <translation></translation>
@@ -3855,79 +3874,104 @@ Högsta versionen som stöds är %2.</translation>
         <translation type="obsolete">OpenOrienteering Mapper XML (endast export)</translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="133"/>
+        <location filename="../src/georeferencing.cpp" line="134"/>
         <source>Map scale specification invalid or missing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="156"/>
-        <location filename="../src/georeferencing.cpp" line="177"/>
+        <location filename="../src/georeferencing.cpp" line="157"/>
+        <location filename="../src/georeferencing.cpp" line="178"/>
         <source>Unknown CRS specification language: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/georeferencing.cpp" line="180"/>
+        <location filename="../src/georeferencing.cpp" line="181"/>
         <source>Unsupported geographic CRS specification: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/object.cpp" line="365"/>
+        <location filename="../src/object.cpp" line="368"/>
         <source>Error while loading an object of type %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/object.cpp" line="380"/>
-        <source>Conflicting or missing symbol information for object at %1:%2.</source>
+        <location filename="../src/object.cpp" line="379"/>
+        <source>Unable to find symbol for object at %1:%2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format.cpp" line="107"/>
+        <location filename="../src/object.cpp" line="389"/>
+        <source>Point object with undefined or wrong symbol at %1:%2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/file_format.cpp" line="108"/>
         <source>Error during symbol post-processing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format.cpp" line="119"/>
+        <location filename="../src/file_format.cpp" line="120"/>
         <source>Template &quot;%1&quot; has been loaded from the map&apos;s directory instead of the relative location to the map file where it was previously.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format.cpp" line="125"/>
+        <location filename="../src/file_format.cpp" line="126"/>
         <source>At least one template file could not be found. Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="84"/>
+        <location filename="../src/file_format_xml.cpp" line="86"/>
         <source>OpenOrienteering Mapper XML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="200"/>
+        <location filename="../src/file_format_xml.cpp" line="202"/>
         <source>Unsupported element: %1 (line %2 column %3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="212"/>
+        <location filename="../src/file_format_xml.cpp" line="214"/>
         <source>Unsupport file format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="221"/>
+        <location filename="../src/file_format_xml.cpp" line="223"/>
         <source>New file format version detected. Some features will be not be supported by this version of the program.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="297"/>
+        <location filename="../src/file_format_xml.cpp" line="299"/>
         <source>Expected %1 colors, found %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="322"/>
+        <location filename="../src/file_format_xml.cpp" line="324"/>
         <source>Expected %1 symbols, found %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="352"/>
+        <location filename="../src/file_format_xml.cpp" line="354"/>
         <source>Expected %1 map parts, found %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/global.cpp" line="44"/>
+        <source>UTM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/global.cpp" line="45"/>
+        <source>UTM Zone (number north/south, e.g. &quot;32 N&quot;, &quot;24 S&quot;)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/global.cpp" line="48"/>
+        <source>Gauss-Krueger, datum: Potsdam</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/global.cpp" line="49"/>
+        <source>Zone number (1 to 119)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3989,6 +4033,11 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="45"/>
         <source>Adjust georeferencing declination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/map_dialog_rotate.cpp" line="47"/>
+        <source>Rotate non-georeferenced templates</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4061,12 +4110,17 @@ Högsta versionen som stöds är %2.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_scale.cpp" line="49"/>
+        <location filename="../src/map_dialog_scale.cpp" line="48"/>
+        <source>Scale non-georeferenced templates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/map_dialog_scale.cpp" line="51"/>
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
     <message>
-        <location filename="../src/map_dialog_scale.cpp" line="50"/>
+        <location filename="../src/map_dialog_scale.cpp" line="52"/>
         <source>Adjust</source>
         <translation>Justera</translation>
     </message>
@@ -4090,6 +4144,54 @@ Högsta versionen som stöds är %2.</translation>
     </message>
 </context>
 <context>
+    <name>SelectCRSDialog</name>
+    <message>
+        <location filename="../src/georeferencing_dialog.cpp" line="744"/>
+        <source>Select coordinate reference system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/georeferencing_dialog.cpp" line="750"/>
+        <source>Same as map&apos;s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/georeferencing_dialog.cpp" line="754"/>
+        <source>Geographic coordinates (WGS84)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/georeferencing_dialog.cpp" line="756"/>
+        <source>From list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/georeferencing_dialog.cpp" line="761"/>
+        <source>From specification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/georeferencing_dialog.cpp" line="771"/>
+        <source>(local)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/georeferencing_dialog.cpp" line="784"/>
+        <source>CRS Specification:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/georeferencing_dialog.cpp" line="785"/>
+        <source>Status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/georeferencing_dialog.cpp" line="860"/>
+        <source>valid</source>
+        <translation type="unfinished">giltig</translation>
+    </message>
+</context>
+<context>
     <name>SettingsDialog</name>
     <message>
         <location filename="../src/settings_dialog.cpp" line="48"/>
@@ -4100,7 +4202,7 @@ Högsta versionen som stöds är %2.</translation>
 <context>
     <name>SymbolDropDown</name>
     <message>
-        <location filename="../src/symbol.cpp" line="543"/>
+        <location filename="../src/symbol.cpp" line="560"/>
         <source>- none -</source>
         <translation>- ingen -</translation>
     </message>
@@ -4146,72 +4248,72 @@ Högsta versionen som stöds är %2.</translation>
         <translation>Ny symbol</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="120"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="121"/>
         <source>Point</source>
         <translation>Punkt</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="121"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="122"/>
         <source>Line</source>
         <translation>Linje</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="122"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="123"/>
         <source>Area</source>
         <translation>Yta</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="123"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="124"/>
         <source>Text</source>
         <translation>Text</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="124"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="125"/>
         <source>Combined</source>
         <translation>Kombinerad</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="127"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="128"/>
         <source>Edit</source>
         <translation>Redigera</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="128"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="129"/>
         <source>Duplicate</source>
         <translation>Duplicera</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="129"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="130"/>
         <source>Delete</source>
         <translation>Ta bort</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="130"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="131"/>
         <source>Scale...</source>
         <translation>Skala…</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="132"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="133"/>
         <source>Copy</source>
         <translation>Kopiera</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="133"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="134"/>
         <source>Paste</source>
         <translation>Klistra in</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="135"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="136"/>
         <source>Switch symbol of selected object(s)</source>
         <translation>Byt symbol på valda objekt</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="136"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="137"/>
         <source>Fill / Create border for selected object(s)</source>
         <translation>Fyll / skapa kantlinje för valda objekt</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="146"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="147"/>
         <source>Select symbols</source>
         <translation>Välj symboler</translation>
     </message>
@@ -4224,105 +4326,105 @@ Högsta versionen som stöds är %2.</translation>
         <translation type="obsolete">Oanvända</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="721"/>
-        <location filename="../src/symbol_dock_widget.cpp" line="735"/>
-        <location filename="../src/symbol_dock_widget.cpp" line="748"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="722"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="736"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="749"/>
         <source>Error</source>
         <translation>Fel</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="721"/>
-        <location filename="../src/symbol_dock_widget.cpp" line="748"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="722"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="749"/>
         <source>An internal error occurred, sorry!</source>
         <translation>Ett internt fel uppstod, ursäkta!</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="735"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="736"/>
         <source>There are no symbols in clipboard which could be pasted!</source>
         <translation>Det finns inga symboler i klippbordet att klistra in!</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="889"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="890"/>
         <source>Select all objects with this symbol</source>
         <translation>Välj alla objekt med denna symbol</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="890"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="891"/>
         <source>Hide objects with this symbol</source>
         <translation>Dölj objekt med denna symbol</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="891"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="892"/>
         <source>Protect objects with this symbol</source>
         <translation>Skydda objekt med denna symbol</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="896"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="897"/>
         <source>Hide objects with selected symbols</source>
         <translation>Dölj objekt med valda symboler</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="897"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="898"/>
         <source>Protect objects with selected symbols</source>
         <translation>Skydda objekt med valda symboler</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="147"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="148"/>
         <source>Select all</source>
         <translation type="unfinished">Välj alla</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="148"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="149"/>
         <source>Select unused</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="150"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="151"/>
         <source>Invert selection</source>
         <translation>Invertera markering</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="153"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="154"/>
         <source>Sort symbols</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="154"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="155"/>
         <source>Sort by number</source>
         <translation>Sortera på nummer</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="155"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="156"/>
         <source>Sort by primary color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="156"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="157"/>
         <source>Sort by primary color priority</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="667"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="668"/>
         <source>Scale symbol %1</source>
         <translation>Skalera symbol %1</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="667"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="668"/>
         <source>Scale to percentage:</source>
         <translation>Skalera till procenttal:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="683"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="684"/>
         <source>Confirmation</source>
         <translation>Bekräftelse</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="683"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="684"/>
         <source>The map contains objects with the symbol &quot;%1&quot;. Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
         <translation>Kartan innehåller objekt med symbolen &quot;%1&quot;. Tar du bort den kommer objekten tas bort och ångra-historiken kommer rensas! Vill du verkligen göra det?</translation>
     </message>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="895"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="896"/>
         <source>Select all objects with selected symbols</source>
         <translation>Välj alla objekt med valda symboler</translation>
     </message>
@@ -4429,7 +4531,7 @@ to jump over the lazy dog
 <context>
     <name>SymbolToolTip</name>
     <message>
-        <location filename="../src/symbol_dock_widget.cpp" line="1053"/>
+        <location filename="../src/symbol_dock_widget.cpp" line="1054"/>
         <source>No description!</source>
         <translation>Ingen beskrivning!</translation>
     </message>
@@ -4589,18 +4691,23 @@ to jump over the lazy dog
 <context>
     <name>TemplateImage</name>
     <message>
-        <location filename="../src/template_image.cpp" line="74"/>
+        <location filename="../src/template_image.cpp" line="106"/>
         <source>Warning</source>
         <translation>Varning</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="74"/>
+        <location filename="../src/template_image.cpp" line="106"/>
         <source>Loading a GIF image template.
 Saving GIF files is not supported. This means that drawings on this template won&apos;t be saved!
 If you do not intend to draw on this template however, that is no problem.</source>
         <translation>Öppnar en GIF-bakgrundsbild.
 Stöd för att spara GIF-filer finns inte. Det du ritar på denna bakgrundsbild kommer inte att sparas!
 Tänker du inte rita på bakgrundsbilden är det inget problem.</translation>
+    </message>
+    <message>
+        <location filename="../src/template_image.cpp" line="126"/>
+        <source>Select the coordinate reference system of the coordinates in the world file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4610,32 +4717,57 @@ Tänker du inte rita på bakgrundsbilden är det inget problem.</translation>
         <translation type="obsolete">Öppna bakgrundsbild</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="215"/>
+        <location filename="../src/template_image.cpp" line="398"/>
         <source>Opening %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="217"/>
+        <location filename="../src/template_image.cpp" line="400"/>
         <source>Image size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="226"/>
+        <location filename="../src/template_image.cpp" line="403"/>
+        <source>Specify how to position or scale the image:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/template_image.cpp" line="413"/>
+        <source>World file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/template_image.cpp" line="415"/>
+        <source>GeoTiff</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/template_image.cpp" line="417"/>
+        <source>no georeferencing information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/template_image.cpp" line="419"/>
+        <source>Georeferenced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/template_image.cpp" line="423"/>
         <source>Meters per pixel:</source>
         <translation>Meter per pixel:</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="230"/>
+        <location filename="../src/template_image.cpp" line="427"/>
         <source>Scanned with</source>
         <translation>Scannad med</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="233"/>
+        <location filename="../src/template_image.cpp" line="430"/>
         <source>dpi</source>
         <translation>dpi</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="235"/>
+        <location filename="../src/template_image.cpp" line="432"/>
         <source>Template scale:  1 :</source>
         <translation>Bakgrundsskala:  1:</translation>
     </message>
@@ -4644,12 +4776,12 @@ Tänker du inte rita på bakgrundsbilden är det inget problem.</translation>
         <translation type="obsolete">Annan skala för bakgrundsbild 1 :</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="259"/>
+        <location filename="../src/template_image.cpp" line="458"/>
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
     <message>
-        <location filename="../src/template_image.cpp" line="260"/>
+        <location filename="../src/template_image.cpp" line="459"/>
         <source>Open</source>
         <translation>Öppna</translation>
     </message>
@@ -5023,155 +5155,155 @@ Kunde inte ladda bakgrundsbild. Existerar filen och är den korrekt?</translatio
 <context>
     <name>TextSymbolSettings</name>
     <message>
-        <location filename="../src/symbol_text.cpp" line="542"/>
+        <location filename="../src/symbol_text.cpp" line="549"/>
         <source>Text settings</source>
         <translation>Textinställningar</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="548"/>
+        <location filename="../src/symbol_text.cpp" line="555"/>
         <source>Font family:</source>
         <translation>Typsnitt:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="567"/>
+        <location filename="../src/symbol_text.cpp" line="574"/>
         <source>Font size:</source>
         <translation>Storlek:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="563"/>
+        <location filename="../src/symbol_text.cpp" line="570"/>
         <source>Determine size...</source>
         <translation>Bestäm storlek…</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="558"/>
-        <location filename="../src/symbol_text.cpp" line="587"/>
-        <location filename="../src/symbol_text.cpp" line="647"/>
-        <location filename="../src/symbol_text.cpp" line="653"/>
-        <location filename="../src/symbol_text.cpp" line="914"/>
-        <location filename="../src/symbol_text.cpp" line="931"/>
-        <location filename="../src/symbol_text.cpp" line="1020"/>
+        <location filename="../src/symbol_text.cpp" line="565"/>
+        <location filename="../src/symbol_text.cpp" line="594"/>
+        <location filename="../src/symbol_text.cpp" line="654"/>
+        <location filename="../src/symbol_text.cpp" line="660"/>
+        <location filename="../src/symbol_text.cpp" line="921"/>
+        <location filename="../src/symbol_text.cpp" line="938"/>
+        <location filename="../src/symbol_text.cpp" line="1027"/>
         <source>mm</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="559"/>
+        <location filename="../src/symbol_text.cpp" line="566"/>
         <source>pt</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="570"/>
+        <location filename="../src/symbol_text.cpp" line="577"/>
         <source>Text color:</source>
         <translation>Färg:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="573"/>
+        <location filename="../src/symbol_text.cpp" line="580"/>
         <source>bold</source>
         <translation>fetstil</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="575"/>
+        <location filename="../src/symbol_text.cpp" line="582"/>
         <source>italic</source>
         <translation>kursiv</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="577"/>
+        <location filename="../src/symbol_text.cpp" line="584"/>
         <source>underlined</source>
         <translation>understreck</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="580"/>
+        <location filename="../src/symbol_text.cpp" line="587"/>
         <source>Text style:</source>
         <translation>Textstil:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="584"/>
-        <location filename="../src/symbol_text.cpp" line="590"/>
+        <location filename="../src/symbol_text.cpp" line="591"/>
+        <location filename="../src/symbol_text.cpp" line="597"/>
         <source>%</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="585"/>
+        <location filename="../src/symbol_text.cpp" line="592"/>
         <source>Line spacing:</source>
         <translation>Linjeavstånd:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="588"/>
+        <location filename="../src/symbol_text.cpp" line="595"/>
         <source>Paragraph spacing:</source>
         <translation>Paragrafavstånd:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="591"/>
+        <location filename="../src/symbol_text.cpp" line="598"/>
         <source>Character spacing:</source>
         <translation>Teckenavstånd:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="593"/>
+        <location filename="../src/symbol_text.cpp" line="600"/>
         <source>Kerning</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="600"/>
+        <location filename="../src/symbol_text.cpp" line="607"/>
         <source>Symbol icon text:</source>
         <translation>Symbol-ikon text:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="604"/>
-        <location filename="../src/symbol_text.cpp" line="612"/>
+        <location filename="../src/symbol_text.cpp" line="611"/>
+        <location filename="../src/symbol_text.cpp" line="619"/>
         <source>Framing</source>
         <translation>Ram</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="607"/>
+        <location filename="../src/symbol_text.cpp" line="614"/>
         <source>OCAD compatibility settings</source>
         <translation>Kompabilitetsinställningar för OCAD</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="618"/>
+        <location filename="../src/symbol_text.cpp" line="625"/>
         <source>Framing color:</source>
         <translation>Ramfärg:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="620"/>
+        <location filename="../src/symbol_text.cpp" line="627"/>
         <source>Line framing</source>
         <translation>Linjeram</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="626"/>
+        <location filename="../src/symbol_text.cpp" line="633"/>
         <source>Shadow framing</source>
         <translation>Skuggram</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="630"/>
+        <location filename="../src/symbol_text.cpp" line="637"/>
         <source>Left/Right Offset:</source>
         <translation>Höger-/vänsterjustering:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="633"/>
+        <location filename="../src/symbol_text.cpp" line="640"/>
         <source>Top/Down Offset:</source>
         <translation>Topp-/bottenjustering:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="637"/>
+        <location filename="../src/symbol_text.cpp" line="644"/>
         <source>OCAD compatibility</source>
         <translation>OCAD-kompabilitet</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="644"/>
+        <location filename="../src/symbol_text.cpp" line="651"/>
         <source>enabled</source>
         <translation>aktiverad</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="648"/>
+        <location filename="../src/symbol_text.cpp" line="655"/>
         <source>Line width:</source>
         <translation>Linjebredd:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="651"/>
+        <location filename="../src/symbol_text.cpp" line="658"/>
         <source>Line color:</source>
         <translation>Linjefärg:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="914"/>
+        <location filename="../src/symbol_text.cpp" line="921"/>
         <source>Position:</source>
         <translation></translation>
     </message>
@@ -5192,7 +5324,7 @@ Kunde inte ladda bakgrundsbild. Existerar filen och är den korrekt?</translatio
         <translation type="obsolete">Visa kompabilitetsinställningar för OCAD</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="642"/>
+        <location filename="../src/symbol_text.cpp" line="649"/>
         <source>Line below paragraphs</source>
         <translation>Linje under stycken</translation>
     </message>
@@ -5201,22 +5333,22 @@ Kunde inte ladda bakgrundsbild. Existerar filen och är den korrekt?</translatio
         <translation type="obsolete">Aktivera</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="624"/>
+        <location filename="../src/symbol_text.cpp" line="631"/>
         <source>Width:</source>
         <translation>Bredd:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="654"/>
+        <location filename="../src/symbol_text.cpp" line="661"/>
         <source>Distance from baseline:</source>
         <translation>Avstånd från baslinje:</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="658"/>
+        <location filename="../src/symbol_text.cpp" line="665"/>
         <source>Custom tabulator positions</source>
         <translation>Egna tabbpositioner</translation>
     </message>
     <message>
-        <location filename="../src/symbol_text.cpp" line="914"/>
+        <location filename="../src/symbol_text.cpp" line="921"/>
         <source>Add custom tabulator</source>
         <translation>Lägg till egen tabbposition</translation>
     </message>
