@@ -151,7 +151,7 @@ void AreaSymbol::FillPattern::save(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*pattern*/);
 }
 
-void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, Map& map)
+void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
 {
 	Q_ASSERT(xml.name() == "pattern");
 	
@@ -176,7 +176,7 @@ void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, Map& map)
 		while (xml.readNextStartElement())
 		{
 			if (xml.name() == "symbol")
-				point = static_cast<PointSymbol*>(Symbol::load(xml, map));
+				point = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
 			else
 				xml.skipCurrentElement();
 		}
@@ -634,7 +634,7 @@ void AreaSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*area_symbol*/);
 }
 
-bool AreaSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
+bool AreaSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
 {
 	Q_ASSERT(xml.name() == "area_symbol");
 	
@@ -648,7 +648,7 @@ bool AreaSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
 	while (xml.readNextStartElement())
 	{
 		patterns.push_back(FillPattern());
-		patterns.back().load(xml, map);
+		patterns.back().load(xml, map, symbol_dict);
 	}
 	
 	return !xml.error();

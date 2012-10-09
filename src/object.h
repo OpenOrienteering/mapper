@@ -30,6 +30,7 @@
 #include "map_coord.h"
 #include "path_coord.h"
 #include "renderable.h"
+#include "symbol.h"
 
 QT_BEGIN_NAMESPACE
 class QIODevice;
@@ -37,7 +38,6 @@ class QXmlStreamReader;
 class QXmlStreamWriter;
 QT_END_NAMESPACE
 
-class Symbol;
 class Map;
 class PointObject;
 class PathObject;
@@ -73,7 +73,7 @@ public:
 	void save(QIODevice* file);
 	void load(QIODevice* file, int version, Map* map);
 	void save(QXmlStreamWriter& xml) const;
-	static Object* load(QXmlStreamReader& xml, Map& map, Symbol* symbol = NULL) throw (FormatException);
+	static Object* load(QXmlStreamReader& xml, Map& map, const SymbolDictionary& symbol_dict, Symbol* symbol = 0) throw (FormatException);
 	
 	/// Checks if the output_dirty flag is set and if yes, regenerates output and extent; returns true if output was previously dirty.
 	/// Use force == true to force a redraw

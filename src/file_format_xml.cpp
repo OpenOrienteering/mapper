@@ -70,6 +70,7 @@ protected:
 	void importMapParts();
 	
 	QXmlStreamReader xml;
+	SymbolDictionary symbol_dict;
 };
 
 
@@ -310,7 +311,7 @@ void XMLFileImporter::importSymbols()
 	{
 		if (xml.name() == "symbol")
 		{
-			map->symbols.push_back(Symbol::load(xml, *map));
+			map->symbols.push_back(Symbol::load(xml, *map, symbol_dict));
 		}
 		else
 		{
@@ -337,7 +338,7 @@ void XMLFileImporter::importMapParts()
 	{
 		if (xml.name() == "part")
 		{
-			map->parts.push_back(MapPart::load(xml, *map));
+			map->parts.push_back(MapPart::load(xml, *map, symbol_dict));
 		}
 		else
 		{

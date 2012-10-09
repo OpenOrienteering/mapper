@@ -266,7 +266,7 @@ void CombinedSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*combined_symbol*/);
 }
 
-bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
+bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
 {
 	Q_ASSERT(xml.name() == "combined_symbol");
 	
@@ -285,7 +285,7 @@ bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
 			if (is_private)
 			{
 				xml.readNextStartElement();
-				parts.push_back(Symbol::load(xml, map));
+				parts.push_back(Symbol::load(xml, map, symbol_dict));
 				temp_part_indices.push_back(-1);
 			}
 			else

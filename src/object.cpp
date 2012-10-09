@@ -310,11 +310,12 @@ void Object::load(QIODevice* file, int version, Map* map)
 void Object::save(QXmlStreamWriter& xml) const
 {
 	xml.writeStartElement("object");
+	xml.writeAttribute("type", QString::number(type));
 	int symbol_index = -1;
 	if (map)
 		symbol_index = map->findSymbolIndex(symbol);
-	xml.writeAttribute("index", QString::number(symbol_index));
-	xml.writeAttribute("type", QString::number(type));
+	if (symbol_index >= 0)
+		xml.writeAttribute("symbol", QString::number(symbol_index));
 	
 	if (type == Point)
 	{
@@ -355,29 +356,28 @@ void Object::save(QXmlStreamWriter& xml) const
 	xml.writeEndElement(/*object*/);
 }
 
-Object* Object::load(QXmlStreamReader& xml, Map& map, Symbol* symbol) throw (FormatException)
+Object* Object::load(QXmlStreamReader& xml, Map& map, const SymbolDictionary& symbol_dict, Symbol* symbol) throw (FormatException)
 {
 	Q_ASSERT(xml.name() == "object");
 	
-	int object_type = xml.attributes().value("type").toString().toInt();
+	QXmlStreamAttributes attributes(xml.attributes());
+	
+	int object_type = attributes.value("type").toString().toInt();
 	Object* object = Object::getObjectForType(static_cast<Object::Type>(object_type));
 	if (!object)
 		throw FormatException(QObject::tr("Error while loading an object of type %1.").arg(object_type));
 	
 	object->map = &map;
 	
-	QXmlStreamAttributes attributes(xml.attributes());
-	int symbol_index = attributes.value("index").toString().toInt();
-	Symbol* read_symbol = map.getSymbol(symbol_index);
-	if (symbol_index >= 0 && read_symbol == NULL)
-		qDebug() << " ERROR: Symbol not found for symbol_index" << symbol_index;
-	
-	if (read_symbol && !symbol)
-		object->symbol = read_symbol; // FIXME: cannot work for forward references
-	else if (!read_symbol && symbol)
+	if (symbol)
 		object->symbol = symbol;
 	else
-		throw FormatException(QObject::tr("Conflicting or missing symbol information for object at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
+	{
+		QString symbol_id = attributes.value("symbol").toString();
+		object->symbol = symbol_dict[symbol_id]; // FIXME: cannot work for forward references
+		if (!object->symbol)
+			throw FormatException(QObject::tr("Unable to find symbol for object at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
+	}
 	
 	if (object_type == Point)
 	{
@@ -386,8 +386,7 @@ Object* Object::load(QXmlStreamReader& xml, Map& map, Symbol* symbol) throw (For
 		if (point_symbol && point_symbol->isRotatable())
 			point->setRotation(attributes.value("rotation").toString().toFloat());
 		else if (!point_symbol)
-			qDebug() << " WARNING: Point object with undefined symbol, symbol_index:" << symbol_index
-			         << " " << xml.lineNumber() << ":" << xml.columnNumber();
+			throw FormatException(QObject::tr("Point object with undefined or wrong symbol at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
 	}
 	else if (object_type == Text)
 	{

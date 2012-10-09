@@ -50,6 +50,10 @@ class MapRenderables;
 class ObjectRenderables;
 typedef std::vector<Renderable*> RenderableVector;
 
+class Symbol;
+typedef QHash<QString, Symbol*> SymbolDictionary;
+
+
 /// Base class for map symbols.
 /// Provides among other things a symbol number consisting of multiple parts, e.g. "2.4.12". Parts which are not set are assigned the value -1.
 class Symbol
@@ -99,7 +103,7 @@ public:
 	void save(QIODevice* file, Map* map);
 	bool load(QIODevice* file, int version, Map* map);
 	void save(QXmlStreamWriter& xml, const Map& map) const;
-	static Symbol* load(QXmlStreamReader& xml, Map& map) throw (FormatException);
+	static Symbol* load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict) throw (FormatException);
 	
 	/// Called after loading of the map is finished. Can do tasks that need to reference other symbols or map objects.
 	virtual bool loadFinished(Map* map) {return true;}
@@ -187,7 +191,7 @@ protected:
 	/// Must be overridden to save type-specific symbol properties. The map pointer can be used to get persistent indices to any pointers on map data
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const = 0;
 	/// Must be overridden to load type-specific symbol properties. See saveImpl()
-	virtual bool loadImpl(QXmlStreamReader& xml, Map& map) = 0;
+	virtual bool loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict) = 0;
 	/// Must be overridden to compare symbol-specific attributes.
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity) = 0;
 	

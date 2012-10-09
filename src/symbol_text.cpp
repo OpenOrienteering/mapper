@@ -377,7 +377,7 @@ void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*text_symbol*/);
 }
 
-bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
+bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
 {
 	Q_ASSERT(xml.name() == "text_symbol");
 	

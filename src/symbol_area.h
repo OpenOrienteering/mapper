@@ -80,7 +80,7 @@ public:
 		void save(QIODevice* file, Map* map);
 		bool load(QIODevice* file, int version, Map* map);
 		void save(QXmlStreamWriter& file, const Map& map) const;
-		void load(QXmlStreamReader& xml, Map& map);
+		void load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
 		bool equals(FillPattern& other, Qt::CaseSensitivity case_sensitivity);
 		void createRenderables(QRectF extent, float delta_rotation, const MapCoord& pattern_origin, ObjectRenderables& output);
 		void createLine(MapCoordVectorF& coords, float delta_offset, LineSymbol* line, PathObject* path, PointObject* point_object, ObjectRenderables& output);
@@ -113,7 +113,7 @@ protected:
 	virtual void saveImpl(QIODevice* file, Map* map);
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
-	virtual bool loadImpl(QXmlStreamReader& xml, Map& map);
+	virtual bool loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	MapColor* color;

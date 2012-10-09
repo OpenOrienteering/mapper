@@ -349,7 +349,7 @@ void PointSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*point_symbol*/);
 }
 
-bool PointSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
+bool PointSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
 {
 	Q_ASSERT(xml.name() == "point_symbol");
 	
@@ -372,9 +372,9 @@ bool PointSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
 			while (xml.readNextStartElement())
 			{
 				if (xml.name() == "symbol")
-					symbols.push_back(Symbol::load(xml, map));
+					symbols.push_back(Symbol::load(xml, map, symbol_dict));
 				else if (xml.name() == "object")
-					objects.push_back(Object::load(xml, map, symbols.back()));
+					objects.push_back(Object::load(xml, map, symbol_dict, symbols.back()));
 				else
 					xml.skipCurrentElement(); // unknown element
 			}

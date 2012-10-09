@@ -20,11 +20,9 @@
 #ifndef FILE_FORMAT_XML_H
 #define FILE_FORMAT_XML_H
 
+#include <QHash>
+
 #include "file_format.h"
-
-
-
-#define Mapper_XML_OBSOLETE_ELEMENTS
 
 /**
  * Interface for dealing with XML files of maps.

@@ -109,13 +109,9 @@ void MapPart::save(QXmlStreamWriter& xml, const Map& map) const
 	}
 }
 
-MapPart* MapPart::load(QXmlStreamReader& xml, Map& map)
+MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
 {
-#ifdef Mapper_XML_OBSOLETE_ELEMENTS
-	Q_ASSERT(xml.name() == "part" || xml.name() == "layer");
-#else
 	Q_ASSERT(xml.name() == "part");
-#endif
 	
 	MapPart* part = new MapPart(xml.attributes().value("name").toString(), &map);
 	
@@ -128,7 +124,7 @@ MapPart* MapPart::load(QXmlStreamReader& xml, Map& map)
 			while (xml.readNextStartElement())
 			{
 				if (xml.name() == "object")
-					part->objects.push_back(Object::load(xml,map));
+					part->objects.push_back(Object::load(xml, map, symbol_dict));
 				else
 					xml.skipCurrentElement(); // unknown
 			}

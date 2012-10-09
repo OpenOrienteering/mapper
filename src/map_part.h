@@ -33,6 +33,7 @@
 #include "undo.h"
 #include "matrix.h"
 #include "map_coord.h"
+#include "symbol.h"
 
 QT_BEGIN_NAMESPACE
 class QIODevice;
@@ -46,7 +47,6 @@ struct MapColor;
 class MapWidget;
 class MapView;
 class MapEditorController;
-class Symbol;
 class CombinedSymbol;
 class LineSymbol;
 class PointSymbol;
@@ -80,7 +80,7 @@ public:
 	void save(QIODevice* file, Map* map);
 	bool load(QIODevice* file, int version, Map* map);
 	void save(QXmlStreamWriter& xml, const Map& map) const;
-	static MapPart* load(QXmlStreamReader& xml, Map& map);
+	static MapPart* load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
 	
 	inline const QString& getName() const {return name;}
 	inline void setName(const QString new_name) {name = new_name;}

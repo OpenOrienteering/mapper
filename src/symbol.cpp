@@ -173,7 +173,12 @@ void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
 {
 	xml.writeStartElement("symbol");
 	xml.writeAttribute("type", QString::number(type));
-	xml.writeAttribute("id", getNumberAsString());
+	int id = map.findSymbolIndex(this);
+	if (id >= 0)
+	{
+		xml.writeAttribute("id", QString::number(id)); // unique if given
+		xml.writeAttribute("code", getNumberAsString()); // not always unique
+	}
 	if (!name.isEmpty())
 		xml.writeAttribute("name", name);
 	if (is_helper_symbol)
@@ -188,33 +193,45 @@ void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*symbol*/);
 }
 
-Symbol* Symbol::load(QXmlStreamReader& xml, Map& map) throw (FormatException)
+Symbol* Symbol::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict) throw (FormatException)
 {
 	Q_ASSERT(xml.name() == "symbol");
 	
 	int symbol_type = xml.attributes().value("type").toString().toInt();
 	Symbol* symbol = Symbol::getSymbolForType(static_cast<Symbol::Type>(symbol_type));
 	if (!symbol)
-		throw FormatException(QObject::tr("Error while loading a symbol of type %1.").arg(symbol_type));
+		throw FormatException(QObject::tr("Error while loading a symbol of type %1 at line %2 column %3.").arg(symbol_type).arg(xml.lineNumber()).arg(xml.columnNumber()));
 	
 	QXmlStreamAttributes attributes = xml.attributes();
-	QString id = attributes.value("id").toString();
-	if (id.isEmpty())
-		symbol->number[0] = -1;
-	else
+	if (attributes.hasAttribute("id"))
 	{
-		for (int i = 0, index = 0; i < number_components && index >= 0; ++i)
+		QString id = attributes.value("id").toString();
+		if (symbol_dict.contains(id)) 
+			throw FormatException(QObject::tr("Symbol ID '%1' not unique at line %2 column %3.").arg(id).arg(xml.lineNumber()).arg(xml.columnNumber()));
+		
+		symbol_dict[id] = symbol;
+		
+		QString code = attributes.value("code").toString();
+		if (code.isEmpty())
+			code = id;
+		
+		if (code.isEmpty())
+			symbol->number[0] = -1;
+		else
 		{
-			if (index == -1)
-				symbol->number[i] = -1;
-			else
+			for (int i = 0, index = 0; i < number_components && index >= 0; ++i)
 			{
-				int dot = id.indexOf(".", index+1);
-				int num = id.mid(index, (dot == -1) ? -1 : (dot - index)).toInt();
-				symbol->number[i] = num;
-				index = dot;
-				if (index != -1)
-					index++;
+				if (index == -1)
+					symbol->number[i] = -1;
+				else
+				{
+					int dot = code.indexOf(".", index+1);
+					int num = code.mid(index, (dot == -1) ? -1 : (dot - index)).toInt();
+					symbol->number[i] = num;
+					index = dot;
+					if (index != -1)
+						index++;
+				}
 			}
 		}
 	}
@@ -228,7 +245,7 @@ Symbol* Symbol::load(QXmlStreamReader& xml, Map& map) throw (FormatException)
 		if (xml.name() == "description")
 			symbol->description = xml.readElementText();
 		else
-			symbol->loadImpl(xml, map);
+			symbol->loadImpl(xml, map, symbol_dict);
 	}
 	
 	if (xml.error())

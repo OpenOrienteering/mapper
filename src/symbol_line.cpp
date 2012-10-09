@@ -1637,7 +1637,7 @@ void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*line_symbol*/);
 }
 
-bool LineSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
+bool LineSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
 {
 	Q_ASSERT(xml.name() == "line_symbol");
 	
@@ -1669,25 +1669,25 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, Map& map)
 		if (xml.name() == "start_symbol")
 		{
 			xml.readNextStartElement();
-			start_symbol = static_cast<PointSymbol*>(Symbol::load(xml, map));
+			start_symbol = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
 			xml.skipCurrentElement();
 		}
 		else if (xml.name() == "mid_symbol")
 		{
 			xml.readNextStartElement();
-			mid_symbol = static_cast<PointSymbol*>(Symbol::load(xml, map));
+			mid_symbol = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
 			xml.skipCurrentElement();
 		}
 		else if (xml.name() == "end_symbol")
 		{
 			xml.readNextStartElement();
-			end_symbol = static_cast<PointSymbol*>(Symbol::load(xml, map));
+			end_symbol = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
 			xml.skipCurrentElement();
 		}
 		else if (xml.name() == "dash_symbol")
 		{
 			xml.readNextStartElement();
-			dash_symbol = static_cast<PointSymbol*>(Symbol::load(xml, map));
+			dash_symbol = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
 			xml.skipCurrentElement();
 		}
 		else if (xml.name() == "borders")
