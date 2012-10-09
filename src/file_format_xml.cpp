@@ -127,7 +127,8 @@ void XMLFileExporter::doExport() throw (FormatException)
 	xml.writeTextElement("notes", map->getMapNotes());
 	
 	map->getGeoreferencing().save(xml);
-	
+
+#ifdef MAPPER_XML_UPCOMING_ELEMENTS
 	xml.writeStartElement("view");
 	xml.writeEmptyElement("grid"); // TODO
 	if (map->area_hatching_enabled)
@@ -143,6 +144,7 @@ void XMLFileExporter::doExport() throw (FormatException)
 	xml.writeStartElement("image_template");
 	// TODO
 	xml.writeEndElement(/*image_template*/); 
+#endif
 	
 	xml.writeStartElement("colors");
 	int num_colors = (int)map->color_set->colors.size();
@@ -170,9 +172,11 @@ void XMLFileExporter::doExport() throw (FormatException)
 	}
 	xml.writeEndElement(/*symbols*/); 
 	
+#ifdef MAPPER_XML_UPCOMING_ELEMENTS
 	xml.writeStartElement("undo");
 	// TODO
 	xml.writeEndElement(/*undo*/); 
+#endif
 	
 	xml.writeStartElement("parts");
 	int num_parts = map->getNumParts();
