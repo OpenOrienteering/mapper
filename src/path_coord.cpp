@@ -24,7 +24,8 @@
 
 #include "symbol_line.h"
 
-const float PathCoord::bezier_error = 0.0005f;
+const float PathCoord::bezier_error = 0.005f;
+const float PathCoord::bezier_segment_maxlen = 1.0f;
 
 void PathCoord::calculatePathCoords(const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords)
 {
@@ -59,9 +60,9 @@ bool PathCoord::getNextPathPart(const MapCoordVector& flags, const MapCoordVecto
 		if (flags[i-1].isCurveStart())
 		{
 			if (i == size - 2)
-				curveToPathCoord(coords[i-1], coords[i], coords[i+1], coords[0], i-1, bezier_error, path_coords);
+				curveToPathCoord(coords[i-1], coords[i], coords[i+1], coords[0], i-1, bezier_error, bezier_segment_maxlen, path_coords);
 			else
-				curveToPathCoord(coords[i-1], coords[i], coords[i+1], coords[i+2], i-1, bezier_error, path_coords);
+				curveToPathCoord(coords[i-1], coords[i], coords[i+1], coords[i+2], i-1, bezier_error, bezier_segment_maxlen, path_coords);
 			i += 2;
 		}
 		else
@@ -97,13 +98,13 @@ PathCoord PathCoord::findPathCoordForCoorinate(const PathCoordVector* path_coord
 	assert(false);
 	return path_coords->at(0);
 }
-void PathCoord::curveToPathCoordRec(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, PathCoordVector* path_coords, float p0, float p1)
+void PathCoord::curveToPathCoordRec(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, float max_segment_len, PathCoordVector* path_coords, float p0, float p1)
 {
 	float outer_len = c0.lengthTo(c1) + c1.lengthTo(c2) + c2.lengthTo(c3);
 	float inner_len = c0.lengthTo(c3);
 	float p_half = 0.5f * (p0 + p1);
 	
-	if (outer_len - inner_len <= max_error)
+	if (outer_len - inner_len <= max_error && inner_len <= max_segment_len)
 	{
 		PathCoord coord;
 		PathCoord& prev = path_coords->at(path_coords->size() - 1);
@@ -126,14 +127,14 @@ void PathCoord::curveToPathCoordRec(MapCoordF c0, MapCoordF c1, MapCoordF c2, Ma
 		MapCoordF c123((c12.getX() + c23.getX()) * 0.5f, (c12.getY() + c23.getY()) * 0.5f);
 		MapCoordF c0123((c012.getX() + c123.getX()) * 0.5f, (c012.getY() + c123.getY()) * 0.5f);
 		
-		curveToPathCoordRec(c0, c01, c012, c0123, coord_index, max_error, path_coords, p0, p_half);
-		curveToPathCoordRec(c0123, c123, c23, c3, coord_index, max_error, path_coords, p_half, p1);
+		curveToPathCoordRec(c0, c01, c012, c0123, coord_index, max_error, max_segment_len, path_coords, p0, p_half);
+		curveToPathCoordRec(c0123, c123, c23, c3, coord_index, max_error, max_segment_len, path_coords, p_half, p1);
 	}
 }
-void PathCoord::curveToPathCoord(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, PathCoordVector* path_coords)
+void PathCoord::curveToPathCoord(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, float max_segment_len, PathCoordVector* path_coords)
 {
 	// Add curve coordinates
-	curveToPathCoordRec(c0, c1, c2, c3, coord_index, max_error, path_coords, 0, 1);
+	curveToPathCoordRec(c0, c1, c2, c3, coord_index, max_error, max_segment_len, path_coords, 0, 1);
 	
 	// Add end point
 	PathCoord end;

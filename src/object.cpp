@@ -853,7 +853,7 @@ void PathObject::calcClosestPointOnPath(MapCoordF coord, float& out_distance_sq,
 	}
 	for (int i = start; i < end - 1; ++i)
 	{
-		assert(path_coords[i].index < end);
+		assert(path_coords[i].index < coords_size);
 		if (coords[path_coords[i].index].isHolePoint())
 			continue;
 		

@@ -37,6 +37,7 @@ struct PathCoord
 	
 	// TODO: make configurable
 	static const float bezier_error;
+	static const float bezier_segment_maxlen;
 	
 	static void calculatePathCoords(const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords);
 	static bool getNextPathPart(const MapCoordVector& flags, const MapCoordVectorF& coords, int& part_start, int& part_end, PathCoordVector* path_coords, bool break_at_dash_points, bool append_path_coords);
@@ -49,8 +50,8 @@ struct PathCoord
 	static void splitBezierCurve(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, float p, MapCoordF& o0, MapCoordF& o1, MapCoordF& o2, MapCoordF& o3, MapCoordF& o4);
 	
 private:
-	static void curveToPathCoordRec(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, PathCoordVector* path_coords, float p0, float p1);
-	static void curveToPathCoord(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, PathCoordVector* path_coords);
+	static void curveToPathCoordRec(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, float max_segment_len, PathCoordVector* path_coords, float p0, float p1);
+	static void curveToPathCoord(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCoordF c3, int coord_index, float max_error, float max_segment_len, PathCoordVector* path_coords);
 };
 
 #endif
