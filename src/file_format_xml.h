@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef FILE_FORMAT_XML_H
-#define FILE_FORMAT_XML_H
+#ifndef _OPENORIENTEERING_FILE_FORMAT_XML_H
+#define _OPENORIENTEERING_FILE_FORMAT_XML_H
 
 #include <QHash>
 
@@ -69,4 +69,4 @@ public:
 	static const QString mapper_namespace;
 };
 
-#endif // FILE_FORMAT_XML_H
+#endif // _OPENORIENTEERING_FILE_FORMAT_XML_H

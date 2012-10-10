@@ -46,6 +46,11 @@ public:
 	virtual ~XMLFileExporter() {}
 	
 	virtual void doExport() throw (FormatException);
+	
+	void exportGeoreferencing();
+	void exportColors();
+	void exportSymbols();
+	void exportMapParts();
 
 protected:
 	QXmlStreamWriter xml;
@@ -126,9 +131,20 @@ void XMLFileExporter::doExport() throw (FormatException)
 	
 	xml.writeTextElement("notes", map->getMapNotes());
 	
-	map->getGeoreferencing().save(xml);
-
+	exportGeoreferencing();
+	exportColors();
+	exportSymbols();
+	exportMapParts();
+	
 #ifdef MAPPER_XML_UPCOMING_ELEMENTS
+	xml.writeStartElement("undo");
+	// TODO
+	xml.writeEndElement(/*undo*/);
+	
+	xml.writeStartElement("image_template");
+	// TODO
+	xml.writeEndElement(/*image_template*/); 
+	
 	xml.writeStartElement("view");
 	xml.writeEmptyElement("grid"); // TODO
 	if (map->area_hatching_enabled)
@@ -140,12 +156,19 @@ void XMLFileExporter::doExport() throw (FormatException)
 	xml.writeStartElement("print");
 	// TODO
 	xml.writeEndElement(/*print*/); 
-	
-	xml.writeStartElement("image_template");
-	// TODO
-	xml.writeEndElement(/*image_template*/); 
 #endif
 	
+	xml.writeEndElement(/*document*/);
+	xml.writeEndDocument();
+}
+
+void XMLFileExporter::exportGeoreferencing()
+{
+	map->getGeoreferencing().save(xml);
+}
+
+void XMLFileExporter::exportColors()
+{
 	xml.writeStartElement("colors");
 	int num_colors = (int)map->color_set->colors.size();
 	xml.writeAttribute("number", QString::number(num_colors));
@@ -162,7 +185,10 @@ void XMLFileExporter::doExport() throw (FormatException)
 		xml.writeAttribute("name", color->name);
 	}
 	xml.writeEndElement(/*colors*/); 
-	
+}
+
+void XMLFileExporter::exportSymbols()
+{
 	xml.writeStartElement("symbols");
 	int num_symbols = map->getNumSymbols();
 	xml.writeAttribute("number", QString::number(num_symbols));
@@ -171,25 +197,18 @@ void XMLFileExporter::doExport() throw (FormatException)
 		map->getSymbol(i)->save(xml, *map);
 	}
 	xml.writeEndElement(/*symbols*/); 
-	
-#ifdef MAPPER_XML_UPCOMING_ELEMENTS
-	xml.writeStartElement("undo");
-	// TODO
-	xml.writeEndElement(/*undo*/); 
-#endif
-	
+}
+
+void XMLFileExporter::exportMapParts()
+{
 	xml.writeStartElement("parts");
 	int num_parts = map->getNumParts();
 	xml.writeAttribute("number", QString::number(num_parts));
-	xml.writeAttribute("current",QString::number( map->current_part_index));
+	xml.writeAttribute("current", QString::number(map->current_part_index));
 	for (int i = 0; i < num_parts; ++i)
 		map->getPart(i)->save(xml, *map);
 	xml.writeEndElement(/*parts*/); 
-	
-	xml.writeEndElement(/*document*/);
-	xml.writeEndDocument();
 }
-
 
 
 // ### XMLFileImporter definition ###
