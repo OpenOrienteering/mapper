@@ -107,6 +107,9 @@ void MapPart::save(QXmlStreamWriter& xml, const Map& map) const
 	{
 		objects[i]->save(xml);
 	}
+	xml.writeEndElement(/*objects*/);
+	
+	xml.writeEndElement(/*part*/);
 }
 
 MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
