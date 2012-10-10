@@ -74,7 +74,7 @@ public slots:
 	void textSelectionChanged(bool text_change);
 	
 protected slots:
-	void updatePreviewObjects();
+	void updatePreviewObjects(bool force = false);
 	void updateDirtyRect();
 	
 protected:

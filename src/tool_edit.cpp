@@ -147,46 +147,66 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 				MapCoord& opposite_curve_handle = path->getCoordinate(opposite_curve_handle_index);
 				opposite_curve_handle_dist = opposite_curve_handle.lengthTo(path->getCoordinate(curve_anchor_index));
 			}
-			else if (curve_anchor_index == -1 && event->modifiers() & Qt::ControlModifier)
+			else if (curve_anchor_index == -1)
 			{
-				// Clicked on a regular path point while holding Ctrl -> delete the point
-				if (hover_point_part.calcNumRegularPoints() <= 2 || (!(path->getSymbol()->getContainedTypes() & Symbol::Line) && hover_point_part.getNumCoords() <= 3))
+				// Clicked on a regular point
+				if (event->modifiers() & Qt::ControlModifier)
 				{
-					// Delete the part and maybe object
-					if (path->getNumParts() == 1)
-						deleteSelectedObjects();
+					// Ctrl held -> delete the point
+					if (hover_point_part.calcNumRegularPoints() <= 2 || (!(path->getSymbol()->getContainedTypes() & Symbol::Line) && hover_point_part.getNumCoords() <= 3))
+					{
+						// Delete the part and maybe object
+						if (path->getNumParts() == 1)
+							deleteSelectedObjects();
+						else
+						{
+							ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(editor->getMap());
+							Object* undo_duplicate = path->duplicate();
+							undo_duplicate->setMap(editor->getMap());
+							undo_step->addObject(path, undo_duplicate);
+							editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
+							
+							path->deletePart(hover_point_part_index);
+							path->update(true);
+							updateHoverPoint(widget->mapToViewport(map_coord), widget);
+							updateDirtyRect();
+						}
+						no_more_effect_on_click = true;
+						return true;
+					}
 					else
 					{
-						ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(editor->getMap());
+						ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(editor->getMap());	// TODO: use optimized undo step
 						Object* undo_duplicate = path->duplicate();
 						undo_duplicate->setMap(editor->getMap());
 						undo_step->addObject(path, undo_duplicate);
 						editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
 						
-						path->deletePart(hover_point_part_index);
+						int delete_bezier_spline_point_setting;
+						if (event->modifiers() & Qt::ShiftModifier)
+							delete_bezier_spline_point_setting = Settings::EditTool_DeleteBezierPointActionAlternative;
+						else
+							delete_bezier_spline_point_setting = Settings::EditTool_DeleteBezierPointAction;
+						path->deleteCoordinate(hover_point, true, Settings::getInstance().getSettingCached((Settings::SettingsEnum)delete_bezier_spline_point_setting).toInt());
 						path->update(true);
 						updateHoverPoint(widget->mapToViewport(map_coord), widget);
 						updateDirtyRect();
+						no_more_effect_on_click = true;
+						return true;
 					}
-					no_more_effect_on_click = true;
-					return true;
 				}
-				else
+				else if (space_pressed)
 				{
+					// Space held -> switch point between dash / normal point
 					ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(editor->getMap());	// TODO: use optimized undo step
 					Object* undo_duplicate = path->duplicate();
 					undo_duplicate->setMap(editor->getMap());
 					undo_step->addObject(path, undo_duplicate);
 					editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
 					
-					int delete_bezier_spline_point_setting;
-					if (event->modifiers() & Qt::ShiftModifier)
-						delete_bezier_spline_point_setting = Settings::EditTool_DeleteBezierPointActionAlternative;
-					else
-						delete_bezier_spline_point_setting = Settings::EditTool_DeleteBezierPointAction;
-					path->deleteCoordinate(hover_point, true, Settings::getInstance().getSettingCached((Settings::SettingsEnum)delete_bezier_spline_point_setting).toInt());
+					MapCoord& hover_coord = path->getCoordinate(hover_point);
+					hover_coord.setDashPoint(!hover_coord.isDashPoint());
 					path->update(true);
-					updateHoverPoint(widget->mapToViewport(map_coord), widget);
 					updateDirtyRect();
 					no_more_effect_on_click = true;
 					return true;
@@ -221,7 +241,7 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 			int pos = text_object->calcTextPositionAt(map_coord, false);
 			text_editor->setSelection(pos, pos);
 			
-			updatePreviewObjects();
+			updatePreviewObjects(true);
 		}
 	}
 	
@@ -250,7 +270,7 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 				path->setCoordinate(hover_point, point);
 			}
 			opposite_curve_handle_index = -1;
-			updatePreviewObjects();
+			updatePreviewObjects(true);
 			updateAngleHelper(click_pos_map);
 		}
 	}
@@ -295,7 +315,8 @@ bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 				constrained_pos_map = cur_pos_map;*/
 				
 				startEditing();
-				updateAngleHelper(map_coord);
+				updatePreviewObjects(true);
+				updateAngleHelper(click_pos_map);
 			}
 			else if (hover_point == -2)
 				box_selection = true;
@@ -530,7 +551,10 @@ bool EditTool::keyPressEvent(QKeyEvent* event)
 			editor->setTool(draw_tool);
 	}
 	else if (event->key() == Qt::Key_Space)
+	{
 		space_pressed = true;
+		updateStatusText();
+	}
 	else if (event->key() == control_point_key)
 	{
 		control_pressed = true;
@@ -552,7 +576,10 @@ bool EditTool::keyReleaseEvent(QKeyEvent* event)
 		return text_editor->keyReleaseEvent(event);
 	
 	if (event->key() == Qt::Key_Space)
+	{
 		space_pressed = false;
+		updateStatusText();
+	}
 	else if (event->key() == control_point_key)
 	{
 		control_pressed = false;
@@ -570,6 +597,7 @@ void EditTool::focusOutEvent(QFocusEvent* event)
 {
 	// Deactivate all modifiers - not always correct, but should be wrong only in very unusual cases and better than leaving the modifiers on forever
 	control_pressed = false;
+	angle_helper->setActive(false);
 	space_pressed = false;
 	updateStatusText();
 }
@@ -648,7 +676,7 @@ void EditTool::selectedSymbolsChanged()
 }
 void EditTool::textSelectionChanged(bool text_change)
 {
-	updatePreviewObjects();
+	updatePreviewObjects(true);
 }
 
 void EditTool::updateStatusText()
@@ -676,19 +704,24 @@ void EditTool::updateStatusText()
 			{
 				if (control_pressed)
 					str = tr("<b>Ctrl+Click</b> on point to delete it, on path to add a new point, with <b>Space</b> to make it a dash point");
+				else if (space_pressed)
+					str = tr("<b>Space+Click</b> on point to switch between dash and normal point");
 				else
-					str += tr("; Try <u>Ctrl</u>");
+					str += tr("; Try <u>Ctrl</u>, <u>Space</u>");
 			}
 		}
 	}
 	setStatusBarText(str);
 }
 
-void EditTool::updatePreviewObjects()
+void EditTool::updatePreviewObjects(bool force)
 {
 	preview_update_triggered = false;
-	updateSelectionEditPreview(*renderables);
-	updateDirtyRect();
+	if (force || !renderables->isEmpty())
+	{
+		updateSelectionEditPreview(*renderables);
+		updateDirtyRect();
+	}
 }
 void EditTool::updateDirtyRect()
 {
