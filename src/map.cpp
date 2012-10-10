@@ -1857,12 +1857,12 @@ MapView::MapView(Map* map) : map(map)
 	position_y = 0;
 	view_x = 0;
 	view_y = 0;
-    map_visibility = new TemplateVisibility();
-    map_visibility->visible = true;
+	map_visibility = new TemplateVisibility();
+	map_visibility->visible = true;
 	all_templates_hidden = false;
 	grid_visible = false;
-    update();
-    //map->addMapView(this);
+	update();
+	//map->addMapView(this);
 }
 MapView::~MapView()
 {
@@ -1870,7 +1870,7 @@ MapView::~MapView()
 	
 	foreach (TemplateVisibility* vis, template_visibilities)
 		delete vis;
-    delete map_visibility;
+	delete map_visibility;
 }
 
 void MapView::save(QIODevice* file)
@@ -2182,7 +2182,7 @@ void MapView::update()
 
 TemplateVisibility *MapView::getMapVisibility()
 {
-    return map_visibility;
+	return map_visibility;
 }
 
 bool MapView::isTemplateVisible(Template* temp)

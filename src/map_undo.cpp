@@ -255,7 +255,7 @@ UndoStep* SwitchSymbolUndoStep::undo()
 }
 void SwitchSymbolUndoStep::save(QIODevice* file)
 {
-    MapUndoStep::save(file);
+	MapUndoStep::save(file);
 	
 	int size = (int)target_symbols.size();
 	for (int i = 0; i < size; ++i)
@@ -266,7 +266,7 @@ void SwitchSymbolUndoStep::save(QIODevice* file)
 }
 bool SwitchSymbolUndoStep::load(QIODevice* file, int version)
 {
-    if (!MapUndoStep::load(file, version))
+	if (!MapUndoStep::load(file, version))
 		return false;
 	
 	int size = (int)affected_objects.size();

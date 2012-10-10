@@ -77,18 +77,18 @@ class CombinedUndoStep : public UndoStep
 {
 Q_OBJECT
 public:
-    CombinedUndoStep(void* owner);
+	CombinedUndoStep(void* owner);
 	virtual ~CombinedUndoStep();
 	
 	inline int getNumSubSteps() const {return (int)steps.size();}
 	inline void addSubStep(UndoStep* step) {steps.push_back(step);}
 	inline UndoStep* getSubStep(int i) {return steps[i];}
 	
-    virtual UndoStep* undo();
-    virtual void save(QIODevice* file);
+	virtual UndoStep* undo();
+	virtual void save(QIODevice* file);
 	virtual bool load(QIODevice* file, int version);
 	
-    virtual bool isValid() const;
+	virtual bool isValid() const;
 	
 protected:
 	std::vector<UndoStep*> steps;

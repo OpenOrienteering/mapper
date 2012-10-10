@@ -72,7 +72,7 @@ class ReplaceObjectsUndoStep : public ObjectContainingUndoStep
 Q_OBJECT
 public:
 	ReplaceObjectsUndoStep(Map* map);
-    virtual UndoStep* undo();
+	virtual UndoStep* undo();
 };
 
 class DeleteObjectsUndoStep : public MapUndoStep
@@ -84,7 +84,7 @@ public:
 	void addObject(int index);
 	virtual UndoStep* undo();
 	
-    virtual void getAffectedOutcome(std::vector< Object* >& out) const {out.clear();}
+	virtual void getAffectedOutcome(std::vector< Object* >& out) const {out.clear();}
 };
 
 class AddObjectsUndoStep : public ObjectContainingUndoStep
