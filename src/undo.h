@@ -23,17 +23,20 @@
 
 #include <QObject>
 
-#include <assert.h>
+#include <cassert>
 #include <deque>
 #include <vector>
 
+#include "symbol.h"
+
 QT_BEGIN_NAMESPACE
 class QIODevice;
+class QXmlStreamReader;
+class QXmlStreamWriter;
 QT_END_NAMESPACE
 
 class Map;
 struct MapColor;
-class Symbol;
 class Object;
 
 class UndoStep : public QObject
@@ -59,6 +62,9 @@ public:
 	virtual void save(QIODevice* file) = 0;
 	virtual bool load(QIODevice* file, int version) = 0;
 	
+	void save(QXmlStreamWriter& xml);
+	static UndoStep* load(QXmlStreamReader& xml, void* owner, SymbolDictionary& symbol_dict);
+	
 	/// Returns if the step can still be undone. This must be true after generating the step
 	/// (otherwise it would not make sense to generate it) but can change to false if an object the step depends on,
 	/// which is not tracked by the undo system, is deleted. Example: changing a map object's symbol to a different one, then deleting the first one.
@@ -69,6 +75,9 @@ public:
 	static UndoStep* getUndoStepForType(Type type, void* owner);
 	
 protected:
+	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	
 	bool valid;
 	Type type;
 };
@@ -91,6 +100,9 @@ public:
 	virtual bool isValid() const;
 	
 protected:
+	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	
 	std::vector<UndoStep*> steps;
 	void* owner;
 };
@@ -106,6 +118,11 @@ public:
 	
 	void save(QIODevice* file);
 	bool load(QIODevice* file, int version);
+	
+	void saveUndo(QXmlStreamWriter& xml);
+	bool loadUndo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	void saveRedo(QXmlStreamWriter& xml);
+	bool loadRedo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
 	
 	/// Call this to add a new step resulting from an edit action
 	void addNewUndoStep(UndoStep* step);
@@ -135,8 +152,11 @@ private:
 	void addRedoStep(UndoStep* step);
 	bool clearUndoSteps();	// returns if at least one step was deleted
 	bool clearRedoSteps();	// returns if at least one step was deleted
+	void validateSteps(std::deque<UndoStep*>& steps);
 	void saveSteps(std::deque<UndoStep*>& steps, QIODevice* file);
 	bool loadSteps(std::deque< UndoStep* >& steps, QIODevice* file, int version);
+	void saveSteps(std::deque< UndoStep* >& steps, QXmlStreamWriter& xml);
+	bool loadSteps(std::deque< UndoStep* >& steps, QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
 	
 	int saved_step_index;				// 0 would be the current state, negative indices stand for the undo steps, positive indices for the redo steps
 	int loaded_step_index;				// indexing like for saved_step_index

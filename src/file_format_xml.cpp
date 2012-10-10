@@ -51,6 +51,8 @@ public:
 	void exportColors();
 	void exportSymbols();
 	void exportMapParts();
+	void exportUndo();
+	void exportRedo();
 
 protected:
 	QXmlStreamWriter xml;
@@ -73,6 +75,8 @@ protected:
 	void importColors();
 	void importSymbols();
 	void importMapParts();
+	void importUndo();
+	void importRedo();
 	
 	QXmlStreamReader xml;
 	SymbolDictionary symbol_dict;
@@ -135,12 +139,10 @@ void XMLFileExporter::doExport() throw (FormatException)
 	exportColors();
 	exportSymbols();
 	exportMapParts();
+	exportUndo();
+	exportRedo();
 	
 #ifdef MAPPER_XML_UPCOMING_ELEMENTS
-	xml.writeStartElement("undo");
-	// TODO
-	xml.writeEndElement(/*undo*/);
-	
 	xml.writeStartElement("image_template");
 	// TODO
 	xml.writeEndElement(/*image_template*/); 
@@ -210,6 +212,17 @@ void XMLFileExporter::exportMapParts()
 	xml.writeEndElement(/*parts*/); 
 }
 
+void XMLFileExporter::exportUndo()
+{
+	map->object_undo_manager.saveUndo(xml);
+}
+
+void XMLFileExporter::exportRedo()
+{
+	map->object_undo_manager.saveRedo(xml);
+}
+
+
 
 // ### XMLFileImporter definition ###
 
@@ -268,11 +281,13 @@ void XMLFileImporter::import(bool load_symbols_only) throw (FormatException)
 			xml.skipCurrentElement();
 		else if (name == "image_template")
 			xml.skipCurrentElement();
-		else if (name == "undo")
-			xml.skipCurrentElement();
 */
 		else if (name == "parts")
 			importMapParts();
+		else if (name == "undo")
+			importUndo();
+		else if (name == "redo")
+			importRedo();
 		else
 		{
 			addWarningUnsupportedElement();
@@ -378,4 +393,14 @@ void XMLFileImporter::importMapParts()
 		  arg(num_parts).
 		  arg(map->getNumParts())
 		);
+}
+
+void XMLFileImporter::importUndo()
+{
+	map->object_undo_manager.loadUndo(xml, symbol_dict);
+}
+
+void XMLFileImporter::importRedo()
+{
+	map->object_undo_manager.loadRedo(xml, symbol_dict);
 }

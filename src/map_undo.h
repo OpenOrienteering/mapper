@@ -37,6 +37,9 @@ public:
 	virtual void getAffectedOutcome(std::vector<Object*>& out) const;
 	
 protected:
+	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	
 	int part;
 	std::vector<int> affected_objects;	// indices of the existing objects that are affected
 	Map* map;
@@ -63,6 +66,9 @@ public slots:
 	virtual void symbolDeleted(int pos, Symbol* old_symbol);
 	
 protected:
+	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	
 	std::vector<Object*> objects;
 };
 
@@ -114,6 +120,9 @@ public slots:
 	virtual void symbolDeleted(int pos, Symbol* old_symbol);
 	
 protected:
+	virtual void saveImpl(QXmlStreamWriter& xml) const;
+	virtual void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	
 	std::vector<Symbol*> target_symbols;
 };
 

@@ -44,6 +44,7 @@ void MapUndoStep::save(QIODevice* file)
 	for (int i = 0; i < size; ++i)
 		file->write((char*)&affected_objects[i], sizeof(int));
 }
+
 bool MapUndoStep::load(QIODevice* file, int version)
 {
 	file->read((char*)&part, sizeof(int));
@@ -53,6 +54,41 @@ bool MapUndoStep::load(QIODevice* file, int version)
 	for (int i = 0; i < size; ++i)
 		file->read((char*)&affected_objects[i], sizeof(int));
 	return true;
+}
+
+void MapUndoStep::saveImpl(QXmlStreamWriter& xml) const
+{
+	UndoStep::saveImpl(xml);
+	
+	xml.writeStartElement("affected_objects");
+	xml.writeAttribute("part", QString::number(part));
+	int size = affected_objects.size();
+	xml.writeAttribute("number", QString::number(size));
+	for (int i = 0; i < size; ++i)
+	{
+		xml.writeEmptyElement("ref");
+		xml.writeAttribute("object", QString::number(affected_objects[i]));
+	}
+	xml.writeEndElement(/*affected_objects*/);
+}
+
+void MapUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
+{
+	if (xml.name() == "affected_objects")
+	{
+		part = xml.attributes().value("part").toString().toInt();
+		int size = xml.attributes().value("number").toString().toInt();
+		affected_objects.reserve(size);
+		while (xml.readNextStartElement())
+		{
+			if (xml.name() == "ref")
+				affected_objects.push_back(xml.attributes().value("object").toString().toInt());
+			
+			xml.skipCurrentElement(); // unknown
+		}
+	}
+	else
+		UndoStep::loadImpl(xml, symbol_dict);
 }
 
 void MapUndoStep::getAffectedOutcome(std::vector< Object* >& out) const
@@ -120,6 +156,39 @@ bool ObjectContainingUndoStep::load(QIODevice* file, int version)
 		objects[i]->load(file, version, map);
 	}
 	return true;
+}
+
+void ObjectContainingUndoStep::saveImpl(QXmlStreamWriter& xml) const
+{
+	MapUndoStep::saveImpl(xml);
+	
+	xml.writeStartElement("contained_objects");
+	int size = (int)objects.size();
+	xml.writeAttribute("number", QString::number(size));
+	for (int i = 0; i < size; ++i)
+	{
+		objects[i]->setMap(map);	// IMPORTANT: only if the object's map pointer is set it will save its symbol index correctly
+		objects[i]->save(xml);
+	}
+	xml.writeEndElement(/*contained_objects*/);
+}
+
+void ObjectContainingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
+{
+	if (xml.name() == "contained_objects")
+	{
+		int size = xml.attributes().value("number").toString().toInt();
+		objects.reserve(size % 1000); // 1000 is not a limit
+		while (xml.readNextStartElement())
+		{
+			if (xml.name() == "object")
+				objects.push_back(Object::load(xml, *map, symbol_dict));
+			else
+				xml.skipCurrentElement(); // unknown
+		}
+	}
+	else
+		MapUndoStep::loadImpl(xml, symbol_dict);
 }
 
 void ObjectContainingUndoStep::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
@@ -278,6 +347,43 @@ bool SwitchSymbolUndoStep::load(QIODevice* file, int version)
 		target_symbols[i] = map->getSymbol(index);
 	}
 	return true;
+}
+
+void SwitchSymbolUndoStep::saveImpl(QXmlStreamWriter& xml) const
+{
+	MapUndoStep::saveImpl(xml);
+	
+	xml.writeStartElement("switch_symbol");
+	int size = (int)target_symbols.size();
+	xml.writeAttribute("number", QString::number(size));
+	for (int i = 0; i < size; ++i)
+	{
+		int index = map->findSymbolIndex(target_symbols[i]);
+		xml.writeEmptyElement("ref");
+		xml.writeAttribute("symbol", QString::number(index));
+	}
+	xml.writeEndElement(/*switch_symbol*/);
+}
+
+void SwitchSymbolUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
+{
+	if (xml.name() == "switch_symbol")
+	{
+		int size = xml.attributes().value("number").toString().toInt();
+		target_symbols.reserve(size % 1000); // 1000 is not a limit
+		while (xml.readNextStartElement())
+		{
+			if (xml.name() == "ref")
+			{
+				QString key = xml.attributes().value("symbol").toString();
+				target_symbols.push_back(symbol_dict[key]);
+			}
+			
+			xml.skipCurrentElement(); // unknown
+		}
+	}
+	else
+		MapUndoStep::loadImpl(xml, symbol_dict);
 }
 
 void SwitchSymbolUndoStep::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)

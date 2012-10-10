@@ -20,7 +20,7 @@
 
 #include "undo.h"
 
-#include <assert.h>
+#include <cassert>
 
 #if QT_VERSION < 0x050000
 #include <QtGui>
@@ -28,12 +28,46 @@
 #include <QtWidgets>
 #endif
 
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
+
 #include "map_undo.h"
 
 // ### UndoStep ###
 
 UndoStep::UndoStep(Type type) : valid(true), type(type)
 {
+}
+
+void UndoStep::save(QXmlStreamWriter& xml)
+{
+	xml.writeStartElement("step");
+	int type = (int)getType();
+	xml.writeAttribute("type", QString::number(type));
+	saveImpl(xml);
+	xml.writeEndElement(/*step*/);
+}
+
+void UndoStep::saveImpl(QXmlStreamWriter& xml) const
+{
+	return;
+}
+
+UndoStep* UndoStep::load(QXmlStreamReader& xml, void* owner, SymbolDictionary& symbol_dict)
+{
+	Q_ASSERT(xml.name() == "step");
+	
+	int type = xml.attributes().value("type").toString().toInt();
+	UndoStep* step = getUndoStepForType((UndoStep::Type)type, owner);
+	while (xml.readNextStartElement())
+		step->loadImpl(xml, symbol_dict);
+	
+	return step;
+}
+
+void UndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
+{
+	xml.skipCurrentElement(); // unknown
 }
 
 UndoStep* UndoStep::getUndoStepForType(UndoStep::Type type, void* owner)
@@ -74,6 +108,7 @@ UndoStep* CombinedUndoStep::undo()
 		undo_step->steps.insert(undo_step->steps.begin(), steps[i]->undo());
 	return undo_step;
 }
+
 void CombinedUndoStep::save(QIODevice* file)
 {
 	int size = (int)steps.size();
@@ -85,6 +120,7 @@ void CombinedUndoStep::save(QIODevice* file)
 		steps[i]->save(file);
 	}
 }
+
 bool CombinedUndoStep::load(QIODevice* file, int version)
 {
 	int size;
@@ -99,6 +135,38 @@ bool CombinedUndoStep::load(QIODevice* file, int version)
 			return false;
 	}
 	return true;
+}
+
+void CombinedUndoStep::saveImpl(QXmlStreamWriter& xml) const
+{
+	UndoStep::saveImpl(xml);
+	
+	xml.writeStartElement("substeps");
+	int size = (int)steps.size();
+	xml.writeAttribute("number", QString::number(size));
+	for (int i = 0; i < size; ++i)
+	{
+		steps[i]->save(xml);
+	}
+	xml.writeEndElement(/*substeps*/);
+}
+
+void CombinedUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
+{
+	if (xml.name() == "substeps")
+	{
+		int size = xml.attributes().value("number").toString().toInt();
+		steps.reserve(size % 100); // 100 is not a limit
+		while (xml.readNextStartElement())
+		{
+			if (xml.name() == "step")
+				steps.push_back(UndoStep::load(xml, owner, symbol_dict));
+			else
+				xml.skipCurrentElement(); // unknown
+		}
+	}
+	else
+		UndoStep::loadImpl(xml, symbol_dict);
 }
 
 bool CombinedUndoStep::isValid() const
@@ -124,12 +192,7 @@ UndoManager::~UndoManager()
 	clearRedoSteps();
 }
 
-void UndoManager::save(QIODevice* file)
-{
-	saveSteps(undo_steps, file);
-	saveSteps(redo_steps, file);
-}
-void UndoManager::saveSteps(std::deque< UndoStep* >& steps, QIODevice* file)
+void UndoManager::validateSteps(std::deque< UndoStep* >& steps)
 {
 	// Delete all invalid steps so we do not have to deal with them
 	bool step_deleted = false;
@@ -144,11 +207,24 @@ void UndoManager::saveSteps(std::deque< UndoStep* >& steps, QIODevice* file)
 			delete steps[0];
 			steps.pop_front();
 		}
-		size = (int)steps.size();
 		step_deleted = true;
 		break;
 	}
 	
+	if (step_deleted)
+		emit undoStepAvailabilityChanged();
+}
+
+void UndoManager::save(QIODevice* file)
+{
+	saveSteps(undo_steps, file);
+	saveSteps(redo_steps, file);
+}
+void UndoManager::saveSteps(std::deque< UndoStep* >& steps, QIODevice* file)
+{
+	validateSteps(steps);
+	
+	int size = (int)steps.size();
 	file->write((char*)&size, sizeof(int));
 	for (int i = 0; i < size; ++i)
 	{
@@ -156,9 +232,6 @@ void UndoManager::saveSteps(std::deque< UndoStep* >& steps, QIODevice* file)
 		file->write((char*)&type, sizeof(int));
 		steps[i]->save(file);
 	}
-	
-	if (step_deleted)
-		emit undoStepAvailabilityChanged();
 }
 bool UndoManager::load(QIODevice* file, int version)
 {
@@ -185,6 +258,60 @@ bool UndoManager::loadSteps(std::deque< UndoStep* >& steps, QIODevice* file, int
 		steps[i] = UndoStep::getUndoStepForType((UndoStep::Type)type, owner);
 		if (!steps[i]->load(file, version))
 			return false;
+	}
+	return true;
+}
+
+void UndoManager::saveUndo(QXmlStreamWriter& xml)
+{
+	xml.writeStartElement("undo");
+	saveSteps(undo_steps, xml);
+	xml.writeEndElement(/*undo*/);
+}
+
+void UndoManager::saveRedo(QXmlStreamWriter& xml)
+{
+	xml.writeStartElement("redo");
+	saveSteps(redo_steps, xml);
+	xml.writeEndElement(/*redo*/);
+}
+
+void UndoManager::saveSteps(std::deque< UndoStep* >& steps, QXmlStreamWriter& xml)
+{
+	validateSteps(steps);
+	
+	int size = (int)steps.size();
+	xml.writeAttribute("number", QString::number(size));
+	for (int i = 0; i < size; ++i)
+		steps[i]->save(xml);
+}
+
+bool UndoManager::loadUndo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
+{
+	Q_ASSERT(xml.name() == "undo");
+	clearUndoSteps();
+	saved_step_index = 0;
+	loaded_step_index = 0;
+	return loadSteps(undo_steps, xml, symbol_dict);
+}
+
+bool UndoManager::loadRedo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
+{
+	Q_ASSERT(xml.name() == "redo");
+	clearRedoSteps();
+	saved_step_index = 0;
+	loaded_step_index = 0;
+	return loadSteps(redo_steps, xml, symbol_dict);
+}
+
+bool UndoManager::loadSteps(std::deque< UndoStep* >& steps, QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
+{
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == "step")
+			steps.push_back(UndoStep::load(xml, owner, symbol_dict));
+		else
+			xml.skipCurrentElement(); // unknown
 	}
 	return true;
 }
