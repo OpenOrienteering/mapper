@@ -48,10 +48,12 @@ QCursor* EditTool::cursor = NULL;
 #ifdef Q_WS_MAC
 const Qt::KeyboardModifiers EditTool::selection_modifier = Qt::ControlModifier;
 const Qt::KeyboardModifiers EditTool::control_point_modifier = Qt::ShiftModifier;
+const Qt::Key EditTool::selection_key = Qt::Key_Control;
 const Qt::Key EditTool::control_point_key = Qt::Key_Shift;
 #else
 const Qt::KeyboardModifiers EditTool::selection_modifier = Qt::ShiftModifier;
 const Qt::KeyboardModifiers EditTool::control_point_modifier = Qt::ControlModifier;
+const Qt::Key EditTool::selection_key = Qt::Key_Shift;
 const Qt::Key EditTool::control_point_key = Qt::Key_Control;
 #endif
 
@@ -69,6 +71,7 @@ EditTool::EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidg
 	text_editor = NULL;
 	
 	control_pressed = false;
+	shift_pressed = false;
 	space_pressed = false;
 	
 	angle_helper->setActive(false);
@@ -146,6 +149,7 @@ bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 			{
 				MapCoord& opposite_curve_handle = path->getCoordinate(opposite_curve_handle_index);
 				opposite_curve_handle_dist = opposite_curve_handle.lengthTo(path->getCoordinate(curve_anchor_index));
+				opposite_curve_handle_original_position = path->getCoordinate(opposite_curve_handle_index);
 			}
 			else if (curve_anchor_index == -1)
 			{
@@ -561,8 +565,21 @@ bool EditTool::keyPressEvent(QKeyEvent* event)
 
 		angle_helper->setActive(true);
 		if (dragging)
+		{
 			updateDragging(cur_pos_map);
+			updatePreviewObjects();
+		}
 		
+		updateStatusText();
+	}
+	else if (event->key() == selection_key)
+	{
+		shift_pressed = true;
+		if (dragging)
+		{
+			updateDragging(cur_pos_map);
+			updatePreviewObjects();
+		}
 		updateStatusText();
 	}
 	else
@@ -586,8 +603,21 @@ bool EditTool::keyReleaseEvent(QKeyEvent* event)
 		
 		angle_helper->setActive(false);
 		if (dragging)
+		{
 			updateDragging(cur_pos_map);
+			updatePreviewObjects();
+		}
 		
+		updateStatusText();
+	}
+	else if (event->key() == selection_key)
+	{
+		shift_pressed = false;
+		if (dragging)
+		{
+			updateDragging(cur_pos_map);
+			updatePreviewObjects();
+		}
 		updateStatusText();
 	}
 	
@@ -598,6 +628,7 @@ void EditTool::focusOutEvent(QFocusEvent* event)
 	// Deactivate all modifiers - not always correct, but should be wrong only in very unusual cases and better than leaving the modifiers on forever
 	control_pressed = false;
 	angle_helper->setActive(false);
+	shift_pressed = false;
 	space_pressed = false;
 	updateStatusText();
 }
@@ -852,14 +883,19 @@ void EditTool::updateDragging(const MapCoordF& cursor_pos_map)
 		// Move opposite curve handles
 		if (opposite_curve_handle_index >= 0)
 		{
-			MapCoord anchor_point = path->getCoordinate(curve_anchor_index);
-			MapCoordF to_hover_point = MapCoordF(coord.xd() - anchor_point.xd(), coord.yd() - anchor_point.yd());
-			to_hover_point.normalize();
-			
-			MapCoord control = path->getCoordinate(opposite_curve_handle_index);
-			control.setX(anchor_point.xd() - opposite_curve_handle_dist * to_hover_point.getX());
-			control.setY(anchor_point.yd() - opposite_curve_handle_dist * to_hover_point.getY());
-			path->setCoordinate(opposite_curve_handle_index, control);
+			if (shift_pressed)
+				path->setCoordinate(opposite_curve_handle_index, opposite_curve_handle_original_position);
+			else
+			{
+				MapCoord anchor_point = path->getCoordinate(curve_anchor_index);
+				MapCoordF to_hover_point = MapCoordF(coord.xd() - anchor_point.xd(), coord.yd() - anchor_point.yd());
+				to_hover_point.normalize();
+				
+				MapCoord control = path->getCoordinate(opposite_curve_handle_index);
+				control.setX(anchor_point.xd() - opposite_curve_handle_dist * to_hover_point.getX());
+				control.setY(anchor_point.yd() - opposite_curve_handle_dist * to_hover_point.getY());
+				path->setCoordinate(opposite_curve_handle_index, control);
+			}
 		}
 	}
 	

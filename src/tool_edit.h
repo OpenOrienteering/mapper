@@ -66,6 +66,7 @@ public:
 	
 	static const Qt::KeyboardModifiers selection_modifier;
 	static const Qt::KeyboardModifiers control_point_modifier;
+	static const Qt::Key selection_key;
 	static const Qt::Key control_point_key;
 	
 public slots:
@@ -101,6 +102,7 @@ protected:
 	bool no_more_effect_on_click;
 	
 	bool control_pressed;
+	bool shift_pressed;
 	bool space_pressed;
 	
 	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
@@ -113,6 +115,7 @@ protected:
 	int hover_point;					// path point index if non-negative; if hovering over the extent rect: -1, if hovering over nothing: -2
 	int opposite_curve_handle_index;	// -1 if no opposite curve handle
 	double opposite_curve_handle_dist;
+	MapCoord opposite_curve_handle_original_position;
 	int curve_anchor_index;				// if moving a curve handle, this is the index of the point between the handle and its opposite handle, if that exists
 	std::vector<Object*> undo_duplicates;
 	
