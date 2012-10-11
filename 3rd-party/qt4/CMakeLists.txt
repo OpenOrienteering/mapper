@@ -24,14 +24,19 @@ cmake_minimum_required(VERSION 2.8)
 # Configuration options
 
 if(NOT QT4_VERSION)
-	set(QT4_VERSION 4.8.1 CACHE STRING
+	set(QT4_VERSION 4.8.3 CACHE STRING
 	  "Version number of the Qt library, minumum recommended value: 4.8.1")
 endif(NOT QT4_VERSION)
 mark_as_advanced(QT4_VERSION)
 
 if(NOT QT4_MD5)
-	set(QT4_MD5 7960ba8e18ca31f0c6e4895a312f92ff CACHE STRING
-	  "MD5 checksum of the Qt library TGZ archive")
+	if(QT4_VERSION STREQUAL 4.8.3)
+		set(QT4_MD5 a663b6c875f8d7caa8ac9c30e4a4ec3b CACHE STRING
+		  "MD5 checksum of the Qt library TGZ archive")
+	elseif(QT4_VERSION STREQUAL 4.8.1)
+		set(QT4_MD5 7960ba8e18ca31f0c6e4895a312f92ff CACHE STRING
+		  "MD5 checksum of the Qt library TGZ archive")
+	endif()
 endif(NOT QT4_MD5)
 mark_as_advanced(QT4_MD5)
 
