@@ -101,7 +101,7 @@ const QString XMLFileFormat::magic_string = "<?xml ";
 const QString XMLFileFormat::mapper_namespace = "http://oorienteering.sourceforge.net/mapper/xml/v2";
 
 XMLFileFormat::XMLFileFormat()
-: Format("XML", QObject::tr("OpenOrienteering Mapper XML"), "xmap", true, true, true) 
+: Format("XML", QObject::tr("OpenOrienteering Mapper XML"), "xmap", true, true, false) 
 {
 	// NOP
 }
