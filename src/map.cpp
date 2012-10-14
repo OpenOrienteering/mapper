@@ -1736,7 +1736,6 @@ bool Map::doObjectsExistWithSymbol(Symbol* symbol)
 void Map::setGeoreferencing(const Georeferencing& georeferencing)
 {
 	*this->georeferencing = georeferencing;
-	setOtherDirty(true);
 }
 
 void Map::setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool show_grid, bool center, float left, float top, float width, float height, bool different_scale_enabled, int different_scale)

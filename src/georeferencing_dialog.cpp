@@ -555,6 +555,7 @@ void GeoreferencingDialog::reset()
 void GeoreferencingDialog::accept()
 {
 	map->setGeoreferencing(*georef);
+	map->setOtherDirty(true);
 	QDialog::accept();
 }
 

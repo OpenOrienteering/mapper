@@ -175,10 +175,8 @@ void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeAttribute("type", QString::number(type));
 	int id = map.findSymbolIndex(this);
 	if (id >= 0)
-	{
 		xml.writeAttribute("id", QString::number(id)); // unique if given
-		xml.writeAttribute("code", getNumberAsString()); // not always unique
-	}
+	xml.writeAttribute("code", getNumberAsString()); // not always unique
 	if (!name.isEmpty())
 		xml.writeAttribute("name", name);
 	if (is_helper_symbol)
@@ -203,6 +201,7 @@ Symbol* Symbol::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_d
 		throw FormatException(QObject::tr("Error while loading a symbol of type %1 at line %2 column %3.").arg(symbol_type).arg(xml.lineNumber()).arg(xml.columnNumber()));
 	
 	QXmlStreamAttributes attributes = xml.attributes();
+	QString code = attributes.value("code").toString();
 	if (attributes.hasAttribute("id"))
 	{
 		QString id = attributes.value("id").toString();
@@ -211,30 +210,30 @@ Symbol* Symbol::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_d
 		
 		symbol_dict[id] = symbol;
 		
-		QString code = attributes.value("code").toString();
 		if (code.isEmpty())
 			code = id;
-		
-		if (code.isEmpty())
-			symbol->number[0] = -1;
-		else
+	}
+	
+	if (code.isEmpty())
+		symbol->number[0] = -1;
+	else
+	{
+		for (int i = 0, index = 0; i < number_components && index >= 0; ++i)
 		{
-			for (int i = 0, index = 0; i < number_components && index >= 0; ++i)
+			if (index == -1)
+				symbol->number[i] = -1;
+			else
 			{
-				if (index == -1)
-					symbol->number[i] = -1;
-				else
-				{
-					int dot = code.indexOf(".", index+1);
-					int num = code.mid(index, (dot == -1) ? -1 : (dot - index)).toInt();
-					symbol->number[i] = num;
-					index = dot;
-					if (index != -1)
-						index++;
-				}
+				int dot = code.indexOf(".", index+1);
+				int num = code.mid(index, (dot == -1) ? -1 : (dot - index)).toInt();
+				symbol->number[i] = num;
+				index = dot;
+				if (index != -1)
+					index++;
 			}
 		}
 	}
+	
 	symbol->name = attributes.value("name").toString();
 	symbol->is_helper_symbol = (attributes.value("is_helper_symbol") == "true");
 	symbol->is_hidden = (attributes.value("is_hidden") == "true");

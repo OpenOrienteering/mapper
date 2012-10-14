@@ -240,7 +240,7 @@ bool TestFileFormats::compareMaps(Map* a, Map* b, QString& error)
 		a_grid->getColor() != b_grid->getColor() ||
 		a_grid->getDisplayMode() != b_grid->getDisplayMode() ||
 		a_grid->getAlignment() != b_grid->getAlignment() ||
-		a_grid->getAdditionalRotation() != b_grid->getAdditionalRotation() ||
+		qAbs(a_grid->getAdditionalRotation() - b_grid->getAdditionalRotation()) > 1e-05 ||
 		a_grid->getUnit() != b_grid->getUnit() ||
 		a_grid->getHorizontalSpacing() != b_grid->getHorizontalSpacing() ||
 		a_grid->getVerticalSpacing() != b_grid->getVerticalSpacing() ||

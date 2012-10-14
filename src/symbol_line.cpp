@@ -1587,6 +1587,7 @@ void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeAttribute("minimum_mid_symbol_count", QString::number(minimum_mid_symbol_count));
 	xml.writeAttribute("minimum_mid_symbol_count_when_closed", QString::number(minimum_mid_symbol_count_when_closed));
 	xml.writeAttribute("dash_length", QString::number(dash_length));
+	xml.writeAttribute("break_length", QString::number(break_length));
 	xml.writeAttribute("dashes_in_group", QString::number(dashes_in_group));
 	xml.writeAttribute("in_group_break_length", QString::number(in_group_break_length));
 	if (half_outer_dashes)
@@ -1657,6 +1658,7 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 	minimum_mid_symbol_count = attributes.value("minimum_mid_symbol_count").toString().toInt();
 	minimum_mid_symbol_count_when_closed = attributes.value("minimum_mid_symbol_count_when_closed").toString().toInt();
 	dash_length = attributes.value("dash_length").toString().toInt();
+	break_length = attributes.value("break_length").toString().toInt();
 	dashes_in_group = attributes.value("dashes_in_group").toString().toInt();
 	in_group_break_length = attributes.value("in_group_break_length").toString().toInt();
 	half_outer_dashes = (attributes.value("half_outer_dashes") == "true");
