@@ -237,7 +237,8 @@ void XMLFileExporter::exportView()
 	
 	map->getGrid().save(xml);
 	
-	view->save(xml);
+	if (view)
+		view->save(xml);
 	
 	xml.writeEndElement(/*view*/);
 }
@@ -484,8 +485,7 @@ void XMLFileImporter::importTemplates()
 			xml.skipCurrentElement();
 	}
 	
-	if (0 <= first_front_template && first_front_template < map->getNumTemplates())
-		map->first_front_template = first_front_template;
+	map->first_front_template = qMax(0, qMin(map->getNumTemplates(), first_front_template));
 }
 
 void XMLFileImporter::importView()

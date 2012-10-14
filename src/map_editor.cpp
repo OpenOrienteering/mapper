@@ -1834,6 +1834,7 @@ void MapEditorController::updateWidgets()
 		{
 			hatch_areas_view_act->setChecked(map->isAreaHatchingEnabled());
 			baseline_view_act->setChecked(map->isBaselineViewEnabled());
+			hide_all_templates_act->setChecked(main_view->areAllTemplatesHidden());
 			closedTemplateAvailabilityChanged();
 		}
 	}

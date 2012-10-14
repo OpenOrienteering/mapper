@@ -187,7 +187,7 @@ bool AreaSymbol::FillPattern::equals(AreaSymbol::FillPattern& other, Qt::CaseSen
 {
 	if (type != other.type)
 		return false;
-	if (angle != other.angle)
+	if (qAbs(angle - other.angle) > 1e-05)
 		return false;
 	if (rotatable != other.rotatable)
 		return false;
