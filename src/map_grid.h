@@ -28,12 +28,14 @@
 #include "map_coord.h"
 
 QT_BEGIN_NAMESPACE
-class QLineEdit;
 class QCheckBox;
-class QDoubleSpinBox;
-class QRadioButton;
 class QComboBox;
+class QDoubleSpinBox;
 class QLabel;
+class QLineEdit;
+class QRadioButton;
+class QXmlStreamReader;
+class QXmlStreamWriter;
 QT_END_NAMESPACE
 
 class Map;
@@ -65,6 +67,9 @@ public:
 	
 	void save(QIODevice* file);
 	void load(QIODevice* file, int version);
+	
+	void save(QXmlStreamWriter& xml);
+	void load(QXmlStreamReader& xml);
 	
 	void draw(QPainter* painter, QRectF bounding_box, Map* map);
 	

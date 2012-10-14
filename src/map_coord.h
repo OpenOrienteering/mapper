@@ -203,7 +203,9 @@ public:
 		xml.writeStartElement("coord");
 		xml.writeAttribute("x", QString::number(rawX()));
 		xml.writeAttribute("y", QString::number(rawY()));
-		xml.writeAttribute("flags", QString::number(getFlags()));
+		int flags = getFlags();
+		if (flags != 0)
+			xml.writeAttribute("flags", QString::number(flags));
 		xml.writeEndElement(/*coord*/);
 	}
 	

@@ -29,10 +29,12 @@
 #include "transformation.h"
 
 QT_BEGIN_NAMESPACE
-class QPixmap;
-class QPainter;
-class QLineEdit;
 class QIODevice;
+class QLineEdit;
+class QPainter;
+class QPixmap;
+class QXmlStreamReader;
+class QXmlStreamWriter;
 QT_END_NAMESPACE
 
 class Map;
@@ -46,6 +48,9 @@ struct TemplateTransform
 	
 	void save(QIODevice* file);
 	void load(QIODevice* file);
+	
+	void save(QXmlStreamWriter& xml, const QString role);
+ 	void load(QXmlStreamReader& xml);
 	
 	/// Position in 1/1000 mm
 	qint64 template_x;
@@ -94,6 +99,9 @@ public:
 	
 	/// Loads template parameters, see saveTemplateConfiguration()
 	void loadTemplateConfiguration(QIODevice* stream, int version);
+	
+	void save(QXmlStreamWriter& xml, bool open);
+	static Template* load(QXmlStreamReader& xml, Map& map, bool& open);
 	
 	/// Saves the template itself, returns true if successful.
 	/// This is called when saving the map and the template's hasUnsavedChanges() returns true
@@ -327,6 +335,9 @@ protected:
 	
 	/// Derived classes must load type specific template parameters here and return true if successful
 	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version) {return true;}
+	
+	/// Derived classes must save type specific template parameters here
+	virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) {}
 	
 	/// Derived classes must load the template file here and return true if successful.
 	/// If configuring is true, a call to postLoadConfiguration() will follow if this returns true.

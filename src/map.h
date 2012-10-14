@@ -543,6 +543,9 @@ public:
 	void save(QIODevice* file);
 	void load(QIODevice* file, int version);
 	
+	void save(QXmlStreamWriter& xml);
+	void load(QXmlStreamReader& xml);
+	
 	/// Must be called to notify the map view of new widgets displaying it. Useful to notify the widgets which need to be redrawn
 	void addMapWidget(MapWidget* widget);
     void removeMapWidget(MapWidget* widget);

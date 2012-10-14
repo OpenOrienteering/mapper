@@ -17,25 +17,28 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "file_format_xml.h"
+
 #include <QDebug>
 #include <QFile>
+#include <QPrinter>
 #include <QStringBuilder>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "file_format_xml.h"
 #include "georeferencing.h"
-
 #include "map.h"
 #include "map_color.h"
+#include "map_grid.h"
+#include "object.h"
+#include "object_text.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
 #include "symbol_area.h"
 #include "symbol_text.h"
 #include "symbol_combined.h"
-#include "object.h"
-#include "object_text.h"
-
+#include "template.h"
+#include "map_grid.h"
 
 // ### XMLFileExporter declaration ###
 
@@ -51,6 +54,9 @@ public:
 	void exportColors();
 	void exportSymbols();
 	void exportMapParts();
+	void exportTemplates();
+	void exportView();
+	void exportPrint();
 	void exportUndo();
 	void exportRedo();
 
@@ -75,6 +81,9 @@ protected:
 	void importColors();
 	void importSymbols();
 	void importMapParts();
+	void importTemplates();
+	void importView();
+	void importPrint();
 	void importUndo();
 	void importRedo();
 	
@@ -139,26 +148,11 @@ void XMLFileExporter::doExport() throw (FormatException)
 	exportColors();
 	exportSymbols();
 	exportMapParts();
+	exportTemplates();
+	exportView();
+	exportPrint();
 	exportUndo();
 	exportRedo();
-	
-#ifdef MAPPER_XML_UPCOMING_ELEMENTS
-	xml.writeStartElement("image_template");
-	// TODO
-	xml.writeEndElement(/*image_template*/); 
-	
-	xml.writeStartElement("view");
-	xml.writeEmptyElement("grid"); // TODO
-	if (map->area_hatching_enabled)
-		xml.writeEmptyElement("area_hatching_enabled");
-	if (map->baseline_view_enabled)
-		xml.writeEmptyElement("baseline_view_enabled");
-	xml.writeEndElement(/*view*/); 
-	
-	xml.writeStartElement("print");
-	// TODO
-	xml.writeEndElement(/*print*/); 
-#endif
 	
 	xml.writeEndElement(/*document*/);
 	xml.writeEndDocument();
@@ -210,6 +204,69 @@ void XMLFileExporter::exportMapParts()
 	for (int i = 0; i < num_parts; ++i)
 		map->getPart(i)->save(xml, *map);
 	xml.writeEndElement(/*parts*/); 
+}
+
+void XMLFileExporter::exportTemplates()
+{
+	xml.writeStartElement("templates");
+	
+	int num_templates = map->getNumTemplates() + map->getNumClosedTemplates();
+	xml.writeAttribute("number", QString::number(num_templates));
+	xml.writeAttribute("first_front_template", QString::number(map->first_front_template));
+	for (int i = 0; i < map->getNumTemplates(); ++i)
+		map->getTemplate(i)->save(xml, true);
+	for (int i = 0; i < map->getNumClosedTemplates(); ++i)
+		map->getClosedTemplate(i)->save(xml, false);
+	
+	xml.writeEmptyElement("defaults");
+	xml.writeAttribute("use_meters_per_pixel", map->image_template_use_meters_per_pixel ? "true" : "false");
+	xml.writeAttribute("meters_per_pixel", QString::number(map->image_template_meters_per_pixel));
+	xml.writeAttribute("dpi", QString::number(map->image_template_dpi));
+	xml.writeAttribute("scale", QString::number(map->image_template_scale));
+	
+	xml.writeEndElement(/*templates*/); 
+}
+
+void XMLFileExporter::exportView()
+{
+	xml.writeStartElement("view");
+	if (map->area_hatching_enabled)
+		xml.writeAttribute("area_hatching_enabled", "true");
+	if (map->baseline_view_enabled)
+		xml.writeAttribute("baseline_view_enabled", "true");
+	
+	map->getGrid().save(xml);
+	
+	view->save(xml);
+	
+	xml.writeEndElement(/*view*/);
+}
+
+void XMLFileExporter::exportPrint()
+{
+	if (map->print_params_set)
+	{
+		xml.writeStartElement("print");
+		xml.writeAttribute("orientation",
+		  (map->print_orientation == QPrinter::Portrait) ? "portrait" : "landscape" );
+		xml.writeAttribute("QPrinter_PaperSize", QString::number(map->print_format)); // FIXME: use readable names
+		xml.writeAttribute("dpi", QString::number(map->print_dpi));
+		if (map->print_show_templates)
+			xml.writeAttribute("templates_visible", "true");
+		if (map->print_show_grid)
+			xml.writeAttribute("grid_visible", "true");
+		if (map->print_center)
+			xml.writeAttribute("center", "true");
+		xml.writeAttribute("area_left", QString::number(map->print_area_left));
+		xml.writeAttribute("area_top", QString::number(map->print_area_top));
+		xml.writeAttribute("area_width", QString::number(map->print_area_width));
+		xml.writeAttribute("area_height", QString::number(map->print_area_height));
+		if (map->print_different_scale_enabled)
+			xml.writeAttribute("alternative_scale_enabled", "true");
+		xml.writeAttribute("alternative_scale", QString::number(map->print_different_scale));
+		
+		xml.writeEndElement(/*print*/);
+    }
 }
 
 void XMLFileExporter::exportUndo()
@@ -274,16 +331,14 @@ void XMLFileImporter::import(bool load_symbols_only) throw (FormatException)
 			xml.skipCurrentElement();
 		else if (name == "notes")
 			map->setMapNotes(xml.readElementText());
-/*
-		else if (name == "view")
-			xml.skipCurrentElement();
-		else if (name == "print")
-			xml.skipCurrentElement();
-		else if (name == "image_template")
-			xml.skipCurrentElement();
-*/
 		else if (name == "parts")
 			importMapParts();
+		else if (name == "templates")
+			importTemplates();
+		else if (name == "view")
+			importView();
+		else if (name == "print")
+			importPrint();
 		else if (name == "undo")
 			importUndo();
 		else if (name == "redo")
@@ -393,6 +448,84 @@ void XMLFileImporter::importMapParts()
 		  arg(num_parts).
 		  arg(map->getNumParts())
 		);
+}
+
+void XMLFileImporter::importTemplates()
+{
+	Q_ASSERT(xml.name() == "templates");
+	
+	int first_front_template = xml.attributes().value("first_front_template").toString().toInt();
+	
+	int num_templates = xml.attributes().value("number").toString().toInt();
+	map->templates.reserve(num_templates % 20); // 20 is not a limit
+	map->closed_templates.reserve(num_templates % 20);
+	
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == "template")
+		{
+			bool opened = true;
+			Template* temp = Template::load(xml, *map, opened);
+			if (opened)
+				map->templates.push_back(temp);
+			else
+				map->closed_templates.push_back(temp);
+		}
+		else if (xml.name() == "defaults")
+		{
+			QXmlStreamAttributes attributes = xml.attributes();
+			map->image_template_use_meters_per_pixel = (attributes.value("use_meters_per_pixel") == "true");
+			map->image_template_meters_per_pixel = attributes.value("meters_per_pixel").toString().toDouble();
+			map->image_template_dpi = attributes.value("dpi").toString().toDouble();
+			map->image_template_scale = attributes.value("scale").toString().toDouble();
+			xml.skipCurrentElement();
+		}
+		else
+			xml.skipCurrentElement();
+	}
+	
+	if (0 <= first_front_template && first_front_template < map->getNumTemplates())
+		map->first_front_template = first_front_template;
+}
+
+void XMLFileImporter::importView()
+{
+	Q_ASSERT(xml.name() == "view");
+	
+	map->area_hatching_enabled = (xml.attributes().value("area_hatching_enabled") == "true");
+	map->baseline_view_enabled = (xml.attributes().value("baseline_view_enabled") == "true");
+	
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == "grid")
+			map->getGrid().load(xml);
+		else if (xml.name() == "map_view")
+			view->load(xml);
+		else
+			xml.skipCurrentElement(); // unsupported
+	}
+}
+
+void XMLFileImporter::importPrint()
+{
+	Q_ASSERT(xml.name() == "print");
+	
+	map->print_params_set = true;
+	QXmlStreamAttributes attributes = xml.attributes();
+	map->print_orientation = 
+	  (attributes.value("orientation") == "portrait") ? QPrinter::Portrait : QPrinter::Landscape;
+	map->print_format = (QPrinter::PaperSize) attributes.value("QPrinter_PaperSize").toString().toInt();
+	map->print_dpi = attributes.value("dpi").toString().toFloat();
+	map->print_show_templates = (attributes.value("templates_visible") == "true");
+	map->print_show_grid = (attributes.value("grid_visible") == "true");
+	map->print_center = (attributes.value("center") == "true");
+	map->print_area_left = attributes.value("area_left").toString().toFloat();
+	map->print_area_top = attributes.value("area_top").toString().toFloat();
+	map->print_area_width = attributes.value("area_width").toString().toFloat();
+	map->print_area_height = attributes.value("area_height").toString().toFloat();
+	map->print_different_scale_enabled = (attributes.value("alternative_scale_enabled") == "true");
+	map->print_different_scale = attributes.value("alternative_scale").toString().toInt();
+    xml.skipCurrentElement();
 }
 
 void XMLFileImporter::importUndo()

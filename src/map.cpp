@@ -24,11 +24,13 @@
 #include <algorithm>
 
 #include <QDebug>
+#include <QDir>
 #include <QFile>
 #include <qmath.h>
-#include <QDir>
 #include <QMessageBox>
 #include <QPainter>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 #include "map_color.h"
 #include "map_editor.h"
@@ -1904,6 +1906,7 @@ void MapView::save(QIODevice* file)
 	
 	file->write((const char*)&grid_visible, sizeof(bool));
 }
+
 void MapView::load(QIODevice* file, int version)
 {
 	file->read((char*)&zoom, sizeof(double));
@@ -1939,6 +1942,103 @@ void MapView::load(QIODevice* file, int version)
 	
 	if (version >= 24)
 		file->read((char*)&grid_visible, sizeof(bool));
+}
+
+void MapView::save(QXmlStreamWriter& xml)
+{
+	xml.writeStartElement("map_view");
+	
+	xml.writeAttribute("zoom", QString::number(zoom));
+	xml.writeAttribute("rotation", QString::number(rotation));
+	xml.writeAttribute("position_x", QString::number(position_x));
+	xml.writeAttribute("position_y", QString::number(position_y));
+	xml.writeAttribute("view_x", QString::number(view_x));
+	xml.writeAttribute("view_y", QString::number(view_y));
+	xml.writeAttribute("drag_offset_x", QString::number(drag_offset.x()));
+	xml.writeAttribute("drag_offset_y", QString::number(drag_offset.y()));
+	if (grid_visible)
+		xml.writeAttribute("grid", "true");
+	
+	xml.writeEmptyElement("map");
+	if (!map_visibility->visible)
+		xml.writeAttribute("visible", "false");
+	xml.writeAttribute("opacity", QString::number(map_visibility->opacity));
+	
+	xml.writeStartElement("templates");
+	int num_template_visibilities = template_visibilities.size();
+	xml.writeAttribute("number", QString::number(num_template_visibilities));
+	if (all_templates_hidden)
+		xml.writeAttribute("hidden", "true");
+	QHash<Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
+	for ( ; it != template_visibilities.constEnd(); ++it)
+	{
+		xml.writeEmptyElement("ref");
+		int pos = map->findTemplateIndex(it.key());
+		xml.writeAttribute("template", QString::number(pos));
+		xml.writeAttribute("visible", (*it)->visible ? "true" : "false");
+		xml.writeAttribute("opacity", QString::number((*it)->opacity));
+	}
+	xml.writeEndElement(/*templates*/);
+	
+	xml.writeEndElement(/*map_view*/); 
+}
+
+void MapView::load(QXmlStreamReader& xml)
+{
+	Q_ASSERT(xml.name() == "map_view");
+	
+	{
+		// keep variable "attributes" local to this block
+		QXmlStreamAttributes attributes = xml.attributes();
+		zoom = attributes.value("zoom").toString().toDouble();
+		if (zoom < 0.001)
+			zoom = 1.0;
+		rotation = attributes.value("rotation").toString().toDouble();
+		position_x = attributes.value("position_x").toString().toLongLong();
+		position_y = attributes.value("position_y").toString().toLongLong();
+		view_x = attributes.value("view_x").toString().toInt();
+		view_y = attributes.value("view_y").toString().toInt();
+		drag_offset.setX(attributes.value("drag_offset_x").toString().toInt());
+		drag_offset.setY(attributes.value("drag_offset_y").toString().toInt());
+		grid_visible = (attributes.value("grid") == "true");
+		update();
+	}
+	
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == "map")
+		{
+			map_visibility->visible = !(xml.attributes().value("visible") == "false");
+			map_visibility->opacity = xml.attributes().value("opacity").toString().toFloat();
+			xml.skipCurrentElement();
+		}
+		else if (xml.name() == "templates")
+		{
+			int num_template_visibilities = xml.attributes().value("number").toString().toInt();
+			template_visibilities.reserve(num_template_visibilities % 20); // 20 is not a limit
+			all_templates_hidden = (xml.attributes().value("hidden") == "true");
+			
+			while (xml.readNextStartElement())
+			{
+				if (xml.name() == "ref")
+				{
+					int pos = xml.attributes().value("template").toString().toInt();
+					if (pos >= 0 && pos < map->getNumTemplates())
+					{
+						TemplateVisibility* vis = getTemplateVisibility(map->getTemplate(pos));
+						vis->visible = !(xml.attributes().value("visible") == "false");
+						vis->opacity = xml.attributes().value("opacity").toString().toFloat();
+					}
+					else
+						qDebug() << QString("Invalid template visibility reference %1 at %2:%3").
+						            arg(pos).arg(xml.lineNumber()).arg(xml.columnNumber());
+				}
+				xml.skipCurrentElement();
+			}
+		}
+		else
+			xml.skipCurrentElement(); // unsupported
+	}
 }
 
 void MapView::addMapWidget(MapWidget* widget)

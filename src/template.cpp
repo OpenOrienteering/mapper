@@ -45,6 +45,7 @@ TemplateTransform::TemplateTransform()
 	template_scale_y = 1;
 	template_rotation = 0;
 }
+
 void TemplateTransform::save(QIODevice* file)
 {
 	file->write((const char*)&template_x, sizeof(qint64));
@@ -54,6 +55,7 @@ void TemplateTransform::save(QIODevice* file)
 	file->write((const char*)&template_scale_y, sizeof(qint64));
 	file->write((const char*)&template_rotation, sizeof(qint64));
 }
+
 void TemplateTransform::load(QIODevice* file)
 {
 	file->read((char*)&template_x, sizeof(qint64));
@@ -63,6 +65,32 @@ void TemplateTransform::load(QIODevice* file)
 	file->read((char*)&template_scale_y, sizeof(qint64));
 	file->read((char*)&template_rotation, sizeof(qint64));
 }
+
+void TemplateTransform::save(QXmlStreamWriter& xml, const QString role)
+{
+	xml.writeStartElement("transformation");
+	xml.writeAttribute("role", role);
+	xml.writeAttribute("x", QString::number(template_x));
+	xml.writeAttribute("y", QString::number(template_y));
+	xml.writeAttribute("scale_x", QString::number(template_scale_x));
+	xml.writeAttribute("scale_y", QString::number(template_scale_y));
+	xml.writeAttribute("rotation", QString::number(template_rotation));
+	xml.writeEndElement(/*transformation*/);
+}
+
+void TemplateTransform::load(QXmlStreamReader& xml)
+{
+	Q_ASSERT(xml.name() == "transformation");
+	
+	template_x = xml.attributes().value("x").toString().toLongLong();
+	template_y = xml.attributes().value("y").toString().toLongLong();
+	template_scale_x = xml.attributes().value("scale_x").toString().toDouble();
+	template_scale_y = xml.attributes().value("scale_y").toString().toDouble();
+	template_rotation = xml.attributes().value("rotation").toString().toDouble();
+	xml.skipCurrentElement();
+}
+
+
 
 // ### Template ###
 
@@ -146,6 +174,7 @@ void Template::saveTemplateConfiguration(QIODevice* stream)
 	
 	saveTypeSpecificTemplateConfiguration(stream);
 }
+
 void Template::loadTemplateConfiguration(QIODevice* stream, int version)
 {
 	loadString(stream, template_file);
@@ -189,6 +218,119 @@ void Template::loadTemplateConfiguration(QIODevice* stream, int version)
 			updateTransformationMatrices();
 		}
 	}
+}
+
+void Template::save(QXmlStreamWriter& xml, bool open)
+{
+	xml.writeStartElement("template");
+	xml.writeAttribute("open", open ? "true" : "false");
+	xml.writeAttribute("name", getTemplateFilename());
+	xml.writeAttribute("path", getTemplatePath());
+	xml.writeAttribute("relpath", getTemplateRelativePath());
+	if (is_georeferenced)
+		xml.writeAttribute("georef", "true");
+	else
+	{
+		xml.writeAttribute("group", QString::number(template_group));
+		
+		xml.writeStartElement("transformations");
+		if (adjusted)
+			xml.writeAttribute("adjusted", "true");
+		if (adjustment_dirty)
+			xml.writeAttribute("adjustment_dirty", "true");
+		int num_passpoints = (int)passpoints.size();
+		xml.writeAttribute("passpoints", QString::number(num_passpoints));
+		
+		transform.save(xml, "active");
+		other_transform.save(xml, "other");
+		
+		for (int i = 0; i < num_passpoints; ++i)
+			passpoints[i].save(xml);
+		
+		map_to_template.save(xml, "map_to_template");
+		template_to_map.save(xml, "template_to_map");
+		template_to_map_other.save(xml, "template_to_map_other");
+		
+		xml.writeEndElement(/*transformations*/);
+	}
+	
+	saveTypeSpecificTemplateConfiguration(xml);
+	
+	if (open && hasUnsavedChanges())
+	{
+		// Save the template itself (e.g. image, gpx file, etc.)
+		saveTemplateFile();
+		setHasUnsavedChanges(false); // TODO: Error handling?
+	}
+	xml.writeEndElement(/*template*/);
+}
+
+Template* Template::load(QXmlStreamReader& xml, Map& map, bool& open)
+{
+	Q_ASSERT(xml.name() == "template");
+	
+	QXmlStreamAttributes attributes = xml.attributes();
+	if (attributes.hasAttribute("open"))
+		open = (attributes.value("open") == "true");
+	
+	QString path = attributes.value("path").toString();
+	Template* temp = templateForFile(path, &map);
+	temp->setTemplateRelativePath(attributes.value("relpath").toString());
+	if (attributes.hasAttribute("name"))
+		temp->template_file = attributes.value("name").toString();
+	temp->is_georeferenced = (attributes.value("georef") == "true");
+	if (temp->is_georeferenced)
+		xml.skipCurrentElement();
+	else
+	{
+		temp->template_group = attributes.value("group").toString().toInt();
+		
+		while (xml.readNextStartElement())
+		{
+			if (xml.name() == "transformations")
+			{
+				temp->adjusted = (xml.attributes().value("adjusted") == "true");
+				temp->adjustment_dirty = (xml.attributes().value("adjustment_dirty") == "true");
+				int num_passpoints = xml.attributes().value("passpoints").toString().toInt();
+Q_ASSERT(temp->passpoints.size() == 0);
+				temp->passpoints.reserve(num_passpoints % 10); // 10 is not a limit
+				
+				while (xml.readNextStartElement())
+				{
+					QStringRef role = xml.attributes().value("role");
+					if (xml.name() == "transformation")
+					{
+						if (role == "active")
+							temp->transform.load(xml);
+						else if (xml.attributes().value("role") == "other")
+							temp->other_transform.load(xml);
+						else
+							xml.skipCurrentElement(); // unsupported
+					}
+					else if (xml.name() == "passpoint")
+					{
+						temp->passpoints.push_back(PassPoint::load(xml));
+					}
+					else if (xml.name() == "matrix")
+					{
+						if (role == "map_to_template")
+							temp->map_to_template.load(xml);
+						else if (role == "template_to_map")
+							temp->template_to_map.load(xml);
+						else if (role == "template_to_map_other")
+							temp->template_to_map_other.load(xml);
+						else
+							xml.skipCurrentElement(); // unsupported
+					}
+					else
+						xml.skipCurrentElement(); // unsupported
+				}
+			}
+			else
+				xml.skipCurrentElement(); // unsupported
+		}
+	}
+	return temp;
 }
 
 void Template::switchTemplateFile(const QString& new_path)

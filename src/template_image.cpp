@@ -25,6 +25,8 @@
 #else
 #include <QtWidgets>
 #endif
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 #include "map.h"
 #include "util.h"
@@ -54,7 +56,7 @@ bool TemplateImage::saveTemplateFile()
 
 void TemplateImage::saveTypeSpecificTemplateConfiguration(QIODevice* stream)
 {
-    if (is_georeferenced)
+	if (is_georeferenced)
 		saveString(stream, temp_crs_spec);
 }
 
@@ -63,6 +65,37 @@ bool TemplateImage::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int
 	if (is_georeferenced)
 	{
 		loadString(stream, temp_crs_spec);
+	}
+	
+	return true;
+}
+
+void TemplateImage::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml)
+{
+	if (is_georeferenced)
+	{
+		// Follow map georeferencing XML structure
+		xml.writeStartElement("crs_spec");
+// TODO: xml.writeAttribute("language", "PROJ.4");
+		xml.writeCharacters(temp_crs_spec);
+		xml.writeEndElement(/*crs_spec*/);
+	}
+}
+
+bool TemplateImage::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
+{
+	if (is_georeferenced)
+	{
+		while (xml.readNextStartElement())
+		{
+			if (xml.name() == "crs_spec")
+			{
+// TODO: check specification language
+				temp_crs_spec = xml.readElementText();
+			}
+			else
+				xml.skipCurrentElement(); // unsupported
+		}
 	}
 	
 	return true;

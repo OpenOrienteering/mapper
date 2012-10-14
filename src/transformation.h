@@ -26,6 +26,8 @@
 QT_BEGIN_NAMESPACE
 class QIODevice;
 class QTransform;
+class QXmlStreamReader;
+class QXmlStreamWriter;
 QT_END_NAMESPACE
 
 class TemplateTransform;
@@ -35,6 +37,9 @@ struct PassPoint
 {
 	void save(QIODevice* file);
 	void load(QIODevice* file, int version);
+	
+	void save(QXmlStreamWriter& xml);
+	static PassPoint load(QXmlStreamReader& xml);
 	
 	/// Start position specified by the user
 	MapCoordF src_coords;

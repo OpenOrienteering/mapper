@@ -26,6 +26,8 @@
 QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QRadioButton;
+class QXmlStreamReader;
+class QXmlStreamWriter;
 QT_END_NAMESPACE
 
 class Georeferencing;
@@ -49,6 +51,8 @@ public:
 	virtual bool saveTemplateFile();
 	virtual void saveTypeSpecificTemplateConfiguration(QIODevice* stream);
 	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
+	virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml);
+	virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml);
 
 	virtual bool loadTemplateFileImpl(bool configuring);
 	virtual bool postLoadConfiguration(QWidget* dialog_parent);

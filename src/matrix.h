@@ -28,7 +28,11 @@
 
 #include <QObject>
 
+QT_BEGIN_NAMESPACE
 class QIODevice;
+class QXmlStreamReader;
+class QXmlStreamWriter;
+QT_END_NAMESPACE
 
 #ifdef _MSC_VER
 	#define isnan _isnan
@@ -58,6 +62,9 @@ public:
 	
 	void save(QIODevice* file);
 	void load(QIODevice* file);
+	
+	void save(QXmlStreamWriter& xml, const QString role);
+ 	void load(QXmlStreamReader& xml);
 	
 	inline int getRows() const {return n;}
 	inline int getCols() const {return m;}

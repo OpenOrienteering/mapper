@@ -22,8 +22,9 @@
 
 #include <qmath.h>
 
-#include "template.h"
+#include "map_coord.h"
 #include "matrix.h"
+#include "template.h"
 
 // ### PassPoint ###
 
@@ -34,6 +35,7 @@ void PassPoint::save(QIODevice* file)
 	file->write((const char*)&calculated_coords, sizeof(MapCoordF));
 	file->write((const char*)&error, sizeof(double));
 }
+
 void PassPoint::load(QIODevice* file, int version)
 {
 	if (version < 27)
@@ -46,6 +48,58 @@ void PassPoint::load(QIODevice* file, int version)
 	file->read((char*)&calculated_coords, sizeof(MapCoordF));
 	file->read((char*)&error, sizeof(double));
 }
+
+void PassPoint::save(QXmlStreamWriter& xml)
+{
+	xml.writeStartElement("passpoint");
+	xml.writeAttribute("error", QString::number(error));
+	
+	xml.writeStartElement("source");
+	src_coords.toMapCoord().save(xml);
+	xml.writeEndElement();
+	
+	xml.writeStartElement("destination");
+	dest_coords.toMapCoord().save(xml);
+	xml.writeEndElement();
+	
+	xml.writeStartElement("calculated");
+	calculated_coords.toMapCoord().save(xml);
+	xml.writeEndElement();
+	
+	xml.writeEndElement(/*passpoint*/);
+}
+
+PassPoint PassPoint::load(QXmlStreamReader& xml)
+{
+	Q_ASSERT(xml.name() == "passpoint");
+	
+	PassPoint p;
+	p.error = xml.attributes().value("error").toString().toDouble();
+	while (xml.readNextStartElement())
+	{
+		QStringRef name = xml.name();
+		MapCoord coord;
+		while (xml.readNextStartElement())
+		{
+			if (xml.name() == "coord")
+			{
+				if (name == "source")
+					p.src_coords = MapCoordF(MapCoord::load(xml));
+				else if (name == "destination")
+					p.dest_coords = MapCoordF(MapCoord::load(xml));
+				else if (name == "calculated")
+					p.calculated_coords = MapCoordF(MapCoord::load(xml));
+				else
+					xml.skipCurrentElement(); // unsupported
+			}
+			else
+				xml.skipCurrentElement(); // unsupported
+		}
+	}
+	return p;
+}
+
+
 
 // ### PassPointList ###
 

@@ -20,8 +20,8 @@
 
 #include "map_grid.h"
 
+#include <cassert>
 #include <limits>
-#include <assert.h>
 
 #if QT_VERSION < 0x050000
 #include <QtGui>
@@ -29,11 +29,13 @@
 #include <QtWidgets>
 #endif
 #include <qmath.h>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
+#include "georeferencing.h"
 #include "map.h"
 #include "util.h"
 #include "util_gui.h"
-#include "georeferencing.h"
 
 // ### MapGrid ###
 
@@ -86,6 +88,39 @@ void MapGrid::load(QIODevice* file, int version)
 	file->read((char*)&vert_spacing, sizeof(double));
 	file->read((char*)&horz_offset, sizeof(double));
 	file->read((char*)&vert_offset, sizeof(double));
+}
+
+void MapGrid::save(QXmlStreamWriter& xml)
+{
+	xml.writeEmptyElement("grid");
+	xml.writeAttribute("color", QColor(color).name());
+	xml.writeAttribute("display", QString::number(display));
+	xml.writeAttribute("alignment", QString::number(alignment));
+	xml.writeAttribute("additional_rotation", QString::number(additional_rotation));
+	xml.writeAttribute("unit", QString::number(unit));
+	xml.writeAttribute("h_spacing", QString::number(horz_spacing));
+	xml.writeAttribute("v_spacing", QString::number(vert_spacing));
+	xml.writeAttribute("h_offset", QString::number(horz_offset));
+	xml.writeAttribute("v_offset", QString::number(vert_offset));
+	xml.writeAttribute("snapping_enabled", snapping_enabled ? "true" : "false");
+}
+
+void MapGrid::load(QXmlStreamReader& xml)
+{
+	Q_ASSERT(xml.name() == "grid");
+	
+	QXmlStreamAttributes attributes = xml.attributes();
+	color = QColor(attributes.value("color").toString()).rgba();
+	display = (MapGrid::DisplayMode) attributes.value("display").toString().toInt();
+	alignment = (MapGrid::Alignment) attributes.value("alignment").toString().toInt();
+	additional_rotation = attributes.value("additional_rotation").toString().toDouble();
+	unit = (MapGrid::Unit) attributes.value("unit").toString().toInt();
+	horz_spacing = attributes.value("h_spacing").toString().toDouble();
+	vert_spacing = attributes.value("v_spacing").toString().toDouble();
+	horz_offset = attributes.value("h_offset").toString().toDouble();
+	vert_offset = attributes.value("v_offset").toString().toDouble();
+	snapping_enabled = (attributes.value("snapping_enabled") == "true");
+	xml.skipCurrentElement();
 }
 
 void MapGrid::draw(QPainter* painter, QRectF bounding_box, Map* map)

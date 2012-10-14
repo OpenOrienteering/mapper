@@ -21,6 +21,7 @@
 #include "matrix.h"
 
 #include <QIODevice>
+#include <QXmlStreamWriter>
 
 void Matrix::save(QIODevice* file)
 {
@@ -28,6 +29,7 @@ void Matrix::save(QIODevice* file)
 	file->write((const char*)&m, sizeof(int));
 	file->write((const char*)d, n*m * sizeof(double));
 }
+
 void Matrix::load(QIODevice* file)
 {
 	int new_n, new_m;
@@ -36,4 +38,40 @@ void Matrix::load(QIODevice* file)
 	
 	setSize(new_n, new_m);
 	file->read((char*)d, n*m * sizeof(double));
+}
+
+void Matrix::save(QXmlStreamWriter& xml, const QString role)
+{
+	xml.writeStartElement("matrix");
+	xml.writeAttribute("role", role);
+	xml.writeAttribute("n", QString::number(n));
+	xml.writeAttribute("m", QString::number(m));
+	int count = n * m;
+	for (int i=0; i<count; i++)
+	{
+		xml.writeStartElement("element");
+		xml.writeAttribute("value", QString::number(d[i]));
+		xml.writeEndElement();
+	}
+	xml.writeEndElement(/*matrix*/);
+}
+
+void Matrix::load(QXmlStreamReader& xml)
+{
+	Q_ASSERT(xml.name() == "matrix");
+	
+	int new_n = xml.attributes().value("n").toString().toInt();
+	int new_m = xml.attributes().value("m").toString().toInt();
+	setSize(new_n, new_m);
+	int count = n*m;
+	int i = 0;
+	while (xml.readNextStartElement())
+	{
+		if (i < count && xml.name() == "element")
+		{
+			d[i] = xml.attributes().value("value").toString().toDouble();
+			i++;
+		}
+		xml.skipCurrentElement();
+	}
 }
