@@ -87,6 +87,9 @@ else()
 
 endif(Mapper_TRANSLATIONS_EMBEDDED)
 
+# For super-builds (e.g. cross-compilation), wait for the Qt build.
+add_dependencies(Mapper_translations Mapper_prerequisites)
+
 
 # A target which updates all translations.
 

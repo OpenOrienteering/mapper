@@ -46,6 +46,9 @@ add_custom_command(
 )
 add_custom_target(Mapper_manual ALL DEPENDS ${Mapper_HELP_COLLECTION})
 
+# For super-builds (e.g. cross-compilation), wait for the Qt build.
+add_dependencies(Mapper_manual Mapper_prerequisites)
+
 install(
   FILES "${CMAKE_CURRENT_BINARY_DIR}/${Mapper_HELP_COLLECTION}" 
         "${CMAKE_CURRENT_BINARY_DIR}/${Mapper_COMPRESSED_HELP}" 
