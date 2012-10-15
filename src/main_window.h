@@ -27,6 +27,18 @@ QT_BEGIN_NAMESPACE
 class QLabel;
 QT_END_NAMESPACE
 
+/// File type enumeration. Currently the program is only used for mapping,
+/// so "Map" is the only element. "Course" or "Event" are possible additions.
+struct FileType
+{
+	enum Enum
+	{
+		Map = 1,
+		
+		All = Map
+	};
+};
+
 class MainWindow;
 
 /** A MainWindowController provides the specific content and 
@@ -137,6 +149,11 @@ public:
 	 *  @param path the path where to save.
 	 */ 
 	bool savePath(const QString &path);
+	
+	/** Shows the open file dialog for the given file type(s) and returns the chosen file
+	 *  or an empty string if the dialog is aborted.
+	 */
+	static QString getOpenFileName(QWidget* parent, const QString& title, FileType::Enum types);
 	
 public slots:
 	/** Show a wizard for creating new maps.

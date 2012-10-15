@@ -24,6 +24,7 @@
 #include <vector>
 
 #include <QComboBox>
+#include <QItemDelegate>
 
 #include "map_coord.h"
 #include "path_coord.h"
@@ -97,7 +98,11 @@ public:
 	virtual Type getContainedTypes() const {return getType();}
 	
 	/// Can the symbol be applied to the given object?
+	/// TODO: refactor: use static areTypesCompatible() instead with the type of the object's symbol
 	bool isTypeCompatibleTo(Object* object);
+	
+	/// Returns if the symbol numbers are identical.
+	bool numberEquals(Symbol* other);
 	
 	/// Saving and loading
 	void save(QIODevice* file, Map* map);
@@ -177,6 +182,12 @@ public:
 	/// Creates "baseline" renderables for an object - symbol combination. These only show the coordinate paths with minimum line width, and optionally a hatching pattern for areas.
 	static void createBaselineRenderables(Object* object, Symbol* symbol, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, bool hatch_areas);
 	
+	/// Returns if the symbol types can be applied to the same object types
+	static bool areTypesCompatible(Type a, Type b);
+	
+	/// Returns a bitmask of all types which can be applied to the same objects as the given type
+	static int getCompatibleTypes(Type type);
+	
 	// TODO: Refactor: move to MapColor
 	static bool colorEquals(MapColor* color, MapColor* other);
 	
@@ -235,6 +246,24 @@ protected slots:
 	
 private:
 	int num_custom_items;
+};
+
+class SymbolDropDownDelegate : public QItemDelegate
+{
+Q_OBJECT
+public:
+	SymbolDropDownDelegate(int symbol_type_filter, QObject* parent = 0);
+	
+	virtual QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	virtual void setEditorData(QWidget* editor, const QModelIndex& index) const;
+	virtual void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const;
+	virtual void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	
+private slots:
+	void emitCommitData();
+	
+private:
+	int symbol_type_filter;
 };
 
 #endif

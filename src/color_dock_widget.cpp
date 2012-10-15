@@ -107,6 +107,7 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent): EditorD
 	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
 	
 	connect(map, SIGNAL(colorAdded(int,MapColor*)), this, SLOT(colorAdded(int,MapColor*)));
+	connect(map, SIGNAL(colorDeleted(int,MapColor*)), this, SLOT(colorDeleted(int,MapColor*)));
 }
 
 ColorWidget::~ColorWidget()
@@ -182,8 +183,6 @@ void ColorWidget::deleteColor()
 	}
 	
 	map->deleteColor(row);
-	color_table->removeRow(row);
-	currentCellChange(color_table->currentRow(), color_table->currentColumn(), -1, -1);
 	
 	map->setColorsDirty();
 	map->updateAllObjects();
@@ -349,6 +348,12 @@ void ColorWidget::colorAdded(int index, MapColor* color)
 	color_table->insertRow(index);
 	addRow(index);
 	color_table->setCurrentCell(index, 1);
+}
+
+void ColorWidget::colorDeleted(int index, MapColor* color)
+{
+	color_table->removeRow(index);
+	currentCellChange(color_table->currentRow(), color_table->currentColumn(), -1, -1);
 }
 
 void ColorWidget::addRow(int row)

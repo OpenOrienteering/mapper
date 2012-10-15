@@ -47,6 +47,7 @@
 #include "template_tool_paint.h"
 #include "renderable.h"
 #include "symbol.h"
+#include "symbol_dialog_replace.h"
 #include "symbol_point.h"
 #include "symbol_area.h"
 #include "tool.h"
@@ -435,8 +436,8 @@ void MapEditorController::createMenuAndToolbars()
 	
 	symbol_window_act = newCheckAction("symbolwindow", tr("Symbol window"), this, SLOT(showSymbolWindow(bool)), "window-new.png", tr("Show/Hide the symbol window"), "symbols.html#symbols");
 	color_window_act = newCheckAction("colorwindow", tr("Color window"), this, SLOT(showColorWindow(bool)), "window-new.png", tr("Show/Hide the color window"), "symbols.html#colors");
-	/*QAction *load_symbols_from_act = */newAction("loadsymbols", tr("Load symbols from..."), this, SLOT(loadSymbolsFromClicked()), NULL, tr("Replace the symbols with those from another map file"));
-	/*QAction *load_colors_from_act = */newAction("loadcolors", tr("Load colors from..."), this, SLOT(loadColorsFromClicked()), NULL, tr("Replace the colors with those from another map file"));
+	QAction* load_symbols_from_act = newAction("loadsymbols", tr("Replace symbol set..."), this, SLOT(loadSymbolsFromClicked()), NULL, tr("Replace the symbols with those from another map file"));
+	/*QAction* load_colors_from_act = newAction("loadcolors", tr("Load colors from..."), this, SLOT(loadColorsFromClicked()), NULL, tr("Replace the colors with those from another map file"));*/
 	
 	QAction *scale_all_symbols_act = newAction("scaleall", tr("Scale all symbols..."), this, SLOT(scaleAllSymbolsClicked()), NULL, tr("Scale the whole symbol set"));
 	QAction* georeferencing_act = newAction("georef", tr("Georeferencing..."), this, SLOT(editGeoreferencing()));
@@ -603,9 +604,9 @@ void MapEditorController::createMenuAndToolbars()
 	symbols_menu->addAction(symbol_window_act);
 	symbols_menu->addAction(color_window_act);
 	symbols_menu->addSeparator();
-	/*symbols_menu->addAction(load_symbols_from_act);
-	symbols_menu->addAction(load_colors_from_act);*/
 	symbols_menu->addAction(scale_all_symbols_act);
+	symbols_menu->addAction(load_symbols_from_act);
+	/*symbols_menu->addAction(load_colors_from_act);*/
 
 	// Templates menu
 	QMenu* template_menu = window->menuBar()->addMenu(tr("&Templates"));
@@ -1025,7 +1026,7 @@ void MapEditorController::showColorWindow(bool show)
 
 void MapEditorController::loadSymbolsFromClicked()
 {
-	// TODO
+	ReplaceSymbolSetDialog::showDialog(window, map);
 }
 void MapEditorController::loadColorsFromClicked()
 {

@@ -54,6 +54,7 @@ HEADERS += src/color_dock_widget.h \
            src/symbol.h \
            src/symbol_area.h \
            src/symbol_combined.h \
+           src/symbol_dialog_replace.h \
            src/symbol_dock_widget.h \
            src/symbol_line.h \
            src/symbol_point.h \
@@ -136,6 +137,7 @@ SOURCES += src/color_dock_widget.cpp \
            src/symbol.cpp \
            src/symbol_area.cpp \
            src/symbol_combined.cpp \
+           src/symbol_dialog_replace.cpp \
            src/symbol_dock_widget.cpp \
            src/symbol_line.cpp \
            src/symbol_point.cpp \

@@ -432,36 +432,7 @@ void MainWindow::showNewMapWizard()
 }
 void MainWindow::showOpenDialog()
 {
-	// Get the saved directory to start in, defaulting to the user's home directory.
-	QSettings settings;
-	QString open_directory = settings.value("openFileDirectory", QDir::homePath()).toString();
-
-	// Build the list of supported file filters based on the file format registry
-	QString filters, extensions;
-	Q_FOREACH(const Format *format, FileFormats.formats())
-	{
-		if (format->supportsImport())
-		{
-			if (filters.isEmpty())
-			{
-				filters    = format->filter();
-				extensions = "*." % format->fileExtension();
-			}
-			else
-			{
-				filters    = filters    % ";;"  % format->filter();
-				extensions = extensions % " *." % format->fileExtension();
-			}
-		}
-	}
-	filters = 
-	  tr("All maps")  % " (" % extensions % ");;" %
-	  filters         % ";;" %
-	  tr("All files") % " (*.*)";
-
-	QString path = QFileDialog::getOpenFileName(this, tr("Open file"), open_directory, filters);
-	QFileInfo info(path);
-	path = info.canonicalFilePath();
+	QString path = getOpenFileName(this, tr("Open file"), FileType::All);
 	
 	if (path.isEmpty())
 		return;
@@ -560,13 +531,52 @@ bool MainWindow::savePath(const QString &path)
 		if (result != QMessageBox::Yes)
 			return showSaveAsDialog();
 	}
-  
+
 	if (!controller->save(path))
 		return false;
 
 	setCurrentFile(path);
 	setHasUnsavedChanges(false);
 	return true;
+}
+
+QString MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileType::Enum types)
+{
+	// Get the saved directory to start in, defaulting to the user's home directory.
+	QSettings settings;
+	QString open_directory = settings.value("openFileDirectory", QDir::homePath()).toString();
+
+	// Build the list of supported file filters based on the file format registry
+	QString filters, extensions;
+	
+	if (types & FileType::Map)
+	{
+		Q_FOREACH(const Format *format, FileFormats.formats())
+		{
+			if (format->supportsImport())
+			{
+				if (filters.isEmpty())
+				{
+					filters    = format->filter();
+					extensions = "*." % format->fileExtension();
+				}
+				else
+				{
+					filters    = filters    % ";;"  % format->filter();
+					extensions = extensions % " *." % format->fileExtension();
+				}
+			}
+		}
+		filters = 
+			tr("All maps")  % " (" % extensions % ");;" %
+			filters         % ";;";
+	}
+	
+	filters += tr("All files") % " (*.*)";
+
+	QString path = QFileDialog::getOpenFileName(parent, title, open_directory, filters);
+	QFileInfo info(path);
+	return info.canonicalFilePath();
 }
 
 bool MainWindow::showSaveAsDialog()

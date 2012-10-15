@@ -61,6 +61,7 @@ set(Mapper_Common_SRCS
 
  symbol.cpp
  symbol_dock_widget.cpp
+ symbol_dialog_replace.cpp
  symbol_setting_dialog.cpp
  symbol_properties_widget.cpp
  symbol_point_editor.cpp
@@ -134,6 +135,7 @@ set(Mapper_Common_MOC_INPUT
  symbol.h
  symbol_area.h
  symbol_combined.h
+ symbol_dialog_replace.h
  symbol_dock_widget.h
  symbol_line.h
  symbol_point.h

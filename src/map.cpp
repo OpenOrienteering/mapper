@@ -93,15 +93,17 @@ void Map::MapColorSet::importSet(Map::MapColorSet* other, Map* map, std::vector<
 	
 	colors.reserve(colors.size() + import_count);
 	
-	// Import colors; go from last to first so they are inserted in the right order
+	// Import colors
+	int start_insertion_index = 0;
 	bool priorities_changed = false;
-	for (int i = (int)other->colors.size() - 1; i >= 0; --i)
+	for (int i = 0; i < (int)other->colors.size(); ++i)
 	{
 		if (filter && !filter->at(i))
 			continue;
 		MapColor* other_color = other->colors.at(i);
 		
 		// Check if color is already present, first with comparing the priority, then without
+		// TODO: priorities are shifted as soon as one new color is inserted, so this breaks
 		int found_index = -1;
 		for (size_t k = 0, colors_size = colors.size(); k < colors_size; ++k)
 		{
@@ -132,12 +134,40 @@ void Map::MapColorSet::importSet(Map::MapColorSet* other, Map* map, std::vector<
 		}
 		else
 		{
-			// Color does not exist in this map yet, add it at the beginning
+			// Color does not exist in this map yet.
+			// Check if the color above in other also exists in this set
+			int found_above_index = -1;
+			if (i > 0)
+			{
+				MapColor* other_color_above = other->colors.at(i - 1);
+				for (size_t k = 0, colors_size = colors.size(); k < colors_size; ++k)
+				{
+					if (colors.at(k)->equals(*other_color_above, false))
+					{
+						found_above_index = k;
+						break;
+					}
+				}
+			}
+			
+			int insertion_index;
+			if (found_above_index >= 0)
+			{
+				// Add it below the same color under which it was before
+				insertion_index = found_above_index + 1;
+			}
+			else
+			{
+				// Add it at the beginning
+				insertion_index = start_insertion_index;
+				++start_insertion_index;
+			}
+			
 			MapColor* new_color = new MapColor(*other_color);
 			if (map)
-				map->addColor(new_color, 0);
+				map->addColor(new_color, insertion_index);
 			else
-				colors.insert(colors.begin(), new_color);
+				colors.insert(colors.begin() + insertion_index, new_color);
 			
 			priorities_changed = true;
 			
@@ -146,10 +176,11 @@ void Map::MapColorSet::importSet(Map::MapColorSet* other, Map* map, std::vector<
 				QHash<int, int>::iterator it = out_indexmap->begin();
 				while (it != out_indexmap->end())
 				{
-					++it.value();
+					if (it.value() >= insertion_index)
+						++it.value();
 					++it;
 				}
-				out_indexmap->insert(i, 0);
+				out_indexmap->insert(i, insertion_index);
 			}
 			if (out_pointermap)
 				out_pointermap->insert(other_color, new_color);

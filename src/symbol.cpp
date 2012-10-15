@@ -141,6 +141,18 @@ bool Symbol::isTypeCompatibleTo(Object* object)
 	return false;
 }
 
+bool Symbol::numberEquals(Symbol* other)
+{
+	for (int i = 0; i < number_components; ++i)
+	{
+		if (number[i] != other->number[i])
+			return false;
+		if (number[i] == -1)
+			return true;
+	}
+	return true;
+}
+
 void Symbol::save(QIODevice* file, Map* map)
 {
 	saveString(file, name);
@@ -517,6 +529,24 @@ void Symbol::createBaselineRenderables(Object* object, Symbol* symbol, const Map
 	}
 }
 
+bool Symbol::areTypesCompatible(Symbol::Type a, Symbol::Type b)
+{
+	return (getCompatibleTypes(a) & b) != 0;
+}
+
+int Symbol::getCompatibleTypes(Symbol::Type type)
+{
+	if (type == Point)
+		return Point;
+	else if (type == Line || type == Area || type == Combined)
+		return Line | Area | Combined;
+	else if (type == Text)
+		return Text;
+	
+	assert(false);
+	return type;
+}
+
 bool Symbol::colorEquals(MapColor* color, MapColor* other)
 {
 	if ((color == NULL && other != NULL) ||
@@ -553,7 +583,8 @@ SymbolPropertiesWidget* Symbol::createPropertiesWidget(SymbolSettingDialog* dial
 // allow explicit use of Symbol pointers in QVariant
 Q_DECLARE_METATYPE(Symbol*)
 
-SymbolDropDown::SymbolDropDown(Map* map, int filter, Symbol* initial_symbol, const Symbol* excluded_symbol, QWidget* parent): QComboBox()
+SymbolDropDown::SymbolDropDown(Map* map, int filter, Symbol* initial_symbol, const Symbol* excluded_symbol, QWidget* parent)
+ : QComboBox(parent)
 {
 	num_custom_items = 0;
 	addItem(tr("- none -"), QVariant::fromValue<Symbol*>(NULL));
@@ -611,4 +642,60 @@ int SymbolDropDown::customID() const
 void SymbolDropDown::setCustomItem(int id)
 {
 	setCurrentIndex(findData(QVariant(id)));
+}
+
+
+// ### SymbolDropDownDelegate ###
+
+SymbolDropDownDelegate::SymbolDropDownDelegate(int symbol_type_filter, QObject* parent)
+ : QItemDelegate(parent), symbol_type_filter(symbol_type_filter)
+{
+}
+
+QWidget* SymbolDropDownDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+	QVariantList list = index.data(Qt::UserRole).toList();
+	SymbolDropDown* widget
+		= new SymbolDropDown(static_cast<Map*>(list.at(0).value<void*>()), symbol_type_filter,
+							  static_cast<Symbol*>(list.at(1).value<void*>()), NULL, parent);
+	
+	connect(widget, SIGNAL(currentIndexChanged(int)), this, SLOT(emitCommitData()));
+	return widget;
+}
+
+void SymbolDropDownDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
+{
+	SymbolDropDown* widget = static_cast<SymbolDropDown*>(editor);
+	Symbol* symbol = static_cast<Symbol*>(index.data(Qt::UserRole).toList().at(1).value<void*>());
+	widget->setSymbol(symbol);
+}
+
+void SymbolDropDownDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
+{
+	SymbolDropDown* widget = static_cast<SymbolDropDown*>(editor);
+	Symbol* symbol = widget->symbol();
+	QVariantList list = index.data(Qt::UserRole).toList();
+	list[1] = qVariantFromValue<void*>(symbol);
+	model->setData(index, list, Qt::UserRole);
+	
+	if (symbol)
+	{
+		model->setData(index, symbol->getNumberAsString() + " " + symbol->getPlainTextName(), Qt::EditRole);
+		model->setData(index, *symbol->getIcon(static_cast<Map*>(list[0].value<void*>())), Qt::DecorationRole);
+	}
+	else
+	{
+		model->setData(index, tr("- None -"), Qt::EditRole);
+		model->setData(index, QVariant(), Qt::DecorationRole);
+	}
+}
+
+void SymbolDropDownDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+	editor->setGeometry(option.rect);
+}
+
+void SymbolDropDownDelegate::emitCommitData()
+{
+	emit commitData(qobject_cast<QWidget*>(sender()));
 }

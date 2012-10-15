@@ -164,6 +164,11 @@ public:
 	void useColorsFrom(Map* map);
 	bool isColorUsedByASymbol(MapColor* color);
 	
+	/// Returns a vector of the same size as the color list, where each element is set to true if
+	/// the color is used by at least one symbol.
+	/// WARNING (FIXME): returns an empty list if the map does not contain symbols
+	void determineColorsInUse(const std::vector< bool >& by_which_symbols, std::vector< bool >& out);
+	
 	// Symbols
 	
 	inline int getNumSymbols() const {return (int)symbols.size();}
@@ -294,6 +299,10 @@ public:
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
 	bool deleteAllObjectsWithSymbol(Symbol* symbol);							// returns if there was an object that was deleted
+	
+	/// Returns if at least one object with the given symbol exists in the map.
+	/// WARNING: Even if no objects exist directly, the symbol could still be required
+	///          by another (combined) symbol used by an object
 	bool doObjectsExistWithSymbol(Symbol* symbol);
 	
 	void removeRenderablesOfObject(Object* object, bool mark_area_as_dirty);	// NOTE: does not delete the renderables, just removes them from display
@@ -429,8 +438,11 @@ private:
 		void addReference();
 		void dereference();
 		
-		/// Imports the other set into this set, only importing the colors for which filter[color_index] == true and
-		/// returning the map from color indices in other to imported indices. Imported colors are placed above the existing colors.
+		/// Imports the other set into this set, only importing the colors for
+		/// which filter[color_index] == true and returning the map
+		/// from color indices in other to imported indices.
+		/// Imported colors are placed below the color they were below before,
+		/// if this color exists in both sets, otherwise above the existing colors.
 		/// If a map is given, the color is properly inserted into the map.
 		void importSet(MapColorSet* other, Map* map = NULL, std::vector<bool>* filter = NULL, QHash<int, int>* out_indexmap = NULL,
 					   QHash<MapColor*, MapColor*>* out_pointermap = NULL);
@@ -444,7 +456,7 @@ private:
 	void checkIfFirstTemplateAdded();
 	
 	void adjustColorPriorities(int first, int last);
-	void determineColorsInUse(const std::vector< bool >& by_which_symbols, std::vector< bool >& out);
+	
 	/// Imports the other symbol set into this set, only importing the symbols for which filter[color_index] == true and
 	/// returning the map from symbol indices in other to imported indices. Imported symbols are placed after the existing symbols.
 	void importSymbols(Map* other, const QHash<MapColor*, MapColor*>& color_map, int insert_pos = -1, bool merge_duplicates = true, std::vector<bool>* filter = NULL,
