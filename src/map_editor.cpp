@@ -623,7 +623,19 @@ void MapEditorController::createMenuAndToolbars()
 	// "dummy" toolbar first and hide it, then the others show up
 	window->addToolBar(tr("Dummy"))->hide();
 #endif
-
+	
+	// Extend and activate general toolbar
+	QToolBar* main_toolbar = window->getGeneralToolBar();
+	main_toolbar->addAction(print_act);
+	main_toolbar->addSeparator();
+	main_toolbar->addAction(cut_act);
+	main_toolbar->addAction(copy_act);
+	main_toolbar->addAction(paste_act);
+	main_toolbar->addSeparator();
+	main_toolbar->addAction(undo_act);
+	main_toolbar->addAction(redo_act);
+	window->addToolBar(main_toolbar);
+	
 	// View toolbar
 	toolbar_view = window->addToolBar(tr("View"));
 	QToolButton* grid_button = new QToolButton();

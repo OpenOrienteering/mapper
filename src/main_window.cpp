@@ -60,10 +60,11 @@ MainWindow::MainWindow(bool as_main_window)
 	controller = NULL;
 	has_unsaved_changes = false;
 	has_opened_file = false;
-	this->show_menu = as_main_window;
+	show_menu = as_main_window;
 	disable_shortcuts = false;
 	setCurrentFile("");
 	maximized_before_fullscreen = false;
+	general_toolbar = NULL;
 	
 	setWindowIcon(QIcon(":/images/control.png"));
 	setAttribute(Qt::WA_DeleteOnClose);
@@ -74,8 +75,8 @@ MainWindow::MainWindow(bool as_main_window)
 	
 	if (as_main_window)
 		loadWindowSettings();
-
-	this->installEventFilter(this);
+	
+	installEventFilter(this);
 }
 MainWindow::~MainWindow()
 {
@@ -83,6 +84,7 @@ MainWindow::~MainWindow()
 	{
 		controller->detach();
 		delete controller;
+		delete general_toolbar;
 	}
 	num_windows--;
 }
@@ -97,6 +99,8 @@ void MainWindow::setController(MainWindowController* new_controller)
 		
 		// Just to make sure ...
 		menuBar()->clear();
+		delete general_toolbar;
+		general_toolbar = NULL;
 	}
 	
 	has_opened_file = false;
@@ -177,6 +181,11 @@ void MainWindow::createFileMenu()
 	file_menu->addSeparator();
 	file_menu->addAction(close_act);
 	file_menu->addAction(exit_act);
+	
+	general_toolbar = new QToolBar(tr("General"));
+	general_toolbar->addAction(new_act);
+	general_toolbar->addAction(open_act);
+	general_toolbar->addAction(save_act);
 	
 	save_act->setEnabled(false);
 	save_as_act->setEnabled(false);

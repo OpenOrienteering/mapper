@@ -145,6 +145,14 @@ public:
 	inline QMenu* getFileMenu() const {return file_menu;}
 	inline QAction* getFileMenuExtensionAct() const {return settings_act;}
 	
+	/**
+	 * Get a general toolbar with standard file actions (new, open, save).
+	 * 
+	 * The MainWindowController is responsible to add it to the main window.
+	 * It will be destroyed (and recreated) when the controller changes.
+	 */
+	inline QToolBar* getGeneralToolBar() const { return general_toolbar; }
+	
 	/** Save the content of the main window.
 	 *  @param path the path where to save.
 	 */ 
@@ -280,6 +288,7 @@ private:
 	bool show_menu;
 	bool disable_shortcuts;
 	
+	QToolBar* general_toolbar;
 	QMenu* file_menu;
 	QAction* save_act;
 	QAction* save_as_act;
