@@ -20,7 +20,7 @@
 
 #include "symbol_dialog_replace.h"
 
-#include "assert.h"
+#include <cassert>
 
 #if QT_VERSION < 0x050000
 #include <QtGui>
@@ -29,8 +29,8 @@
 #endif
 #include <QSet>
 
-#include "map.h"
 #include "main_window.h"
+#include "map.h"
 #include "object.h"
 
 ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map* map, Map* symbol_map)

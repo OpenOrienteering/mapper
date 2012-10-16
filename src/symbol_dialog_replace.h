@@ -27,10 +27,10 @@
 QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QTableWidget;
-class Symbol;
 QT_END_NAMESPACE
 
 class Map;
+class Symbol;
 class SymbolDropDownDelegate;
 
 class ReplaceSymbolSetDialog : public QDialog

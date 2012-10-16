@@ -20,7 +20,7 @@
 
 #include "symbol_dock_widget.h"
 
-#include <assert.h>
+#include <cassert>
 
 #include <QHash>
 #if QT_VERSION < 0x050000

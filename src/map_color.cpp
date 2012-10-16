@@ -20,7 +20,7 @@
 
 #include "map_color.h"
 
-#include <assert.h>
+#include <cassert>
 
 #include "map.h"
 

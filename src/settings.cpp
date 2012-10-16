@@ -20,7 +20,7 @@
 
 #include "settings.h"
 
-#include <assert.h>
+#include <cassert>
 
 #include <QVariant>
 #include <QSettings>

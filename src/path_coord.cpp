@@ -20,7 +20,7 @@
 
 #include "path_coord.h"
 
-#include "assert.h"
+#include <cassert>
 
 #include "symbol_line.h"
 

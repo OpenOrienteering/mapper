@@ -20,7 +20,7 @@
 
 #include "map_widget.h"
 
-#include <assert.h>
+#include <cassert>
 
 #if QT_VERSION < 0x050000
 #include <QtGui>

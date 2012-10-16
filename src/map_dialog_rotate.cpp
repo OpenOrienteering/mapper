@@ -20,7 +20,7 @@
 
 #include "map_dialog_rotate.h"
 
-#include "assert.h"
+#include <cassert>
 
 #if QT_VERSION < 0x050000
 #include <QtGui>
