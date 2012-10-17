@@ -786,27 +786,41 @@ void MainWindow::showHelp(QString filename, QString fragment)
 #else
 		process->start(QLatin1String("assistant"), args);
 #endif
+		// FIXME: Calling waitForStarted() from the main thread might cause the user interface to freeze.
 		if (!process->waitForStarted())
 		{
-			QDialog dialog(this, Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
-			dialog.setWindowTitle(tr("Error"));
-			dialog.setWindowModality(Qt::WindowModal);
-			dialog.resize(500, 200);
+			QMessageBox msg_box;
+			msg_box.setIcon(QMessageBox::Warning);
+			msg_box.setWindowTitle(tr("Error"));
 			
-			QLabel* label = new QLabel(QString("<b>%1</b><br/>%2<br/><br/>%3")
-				.arg(tr("Failed to launch the help browser (\"Qt Assistant\")."))
-				.arg(QString(process->readAllStandardError())));
-			label->setWordWrap(true);
-			QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok, Qt::Horizontal);
+			QString assistant_install_cmd;
+#ifdef MAPPER_DEBIAN_PACKAGE_NAME
+			QDir usr_bin("/usr/bin");
+			if (!usr_bin.exists("assistant") && usr_bin.exists("software-center"))
+				assistant_install_cmd = "/usr/bin/software-center qt4-dev-tools";
+#endif
+			if (!assistant_install_cmd.isEmpty())
+			{
+				msg_box.setText(tr("The help browser (\"Qt Assistant\") is not installed.") + "\n" +
+				                tr("Do you want to install it now?"));
+				msg_box.setStandardButtons(QMessageBox::Cancel);
+				msg_box.addButton(tr("Install..."), QMessageBox::ActionRole);
+			}
+			else
+			{
+				msg_box.setText(tr("Failed to launch the help browser (\"Qt Assistant\")."));
+				msg_box.setStandardButtons(QMessageBox::Ok);
+				QString details = process->readAllStandardError();
+				if (! details.isEmpty())
+					msg_box.setDetailedText(details);
+			}
 			
-			QVBoxLayout* layout = new QVBoxLayout();
-			layout->addWidget(label);
-			layout->addWidget(button_box);
-			dialog.setLayout(layout);
-			
-			connect(button_box, SIGNAL(accepted()), &dialog, SLOT(accept()));
-			dialog.exec();
-			return;
+			int result = msg_box.exec();
+			if ( result != QMessageBox::Ok && result != QMessageBox::Cancel &&
+			     !assistant_install_cmd.isEmpty() )
+			{
+				QProcess::startDetached(assistant_install_cmd);
+			}
 		}
 	}
 	else
