@@ -1457,6 +1457,11 @@ void MapEditorController::fillBorderClicked()
 	std::vector<Object*> new_objects;
 	new_objects.reserve(map->getNumSelectedObjects());
 	
+	bool close_paths = false;
+	Symbol::Type contained_types = symbol->getContainedTypes();
+	if (contained_types & Symbol::Area && !(contained_types & Symbol::Line))
+		close_paths = true;
+	
 	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	
@@ -1465,6 +1470,15 @@ void MapEditorController::fillBorderClicked()
 	{
 		Object* duplicate = (*it)->duplicate();
 		duplicate->setSymbol(symbol, true);
+		if (close_paths && duplicate->getType() == Object::Path)
+		{
+			PathObject* path_object = duplicate->asPath();
+			for (int path_part = 0; path_part < path_object->getNumParts(); ++path_part)
+			{
+				if (!path_object->getPart(path_part).isClosed())
+					path_object->getPart(path_part).setClosed(true, true);
+			}
+		}
 		map->addObject(duplicate);
 		new_objects.push_back(duplicate);
 	}
