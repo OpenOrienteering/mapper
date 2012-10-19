@@ -576,11 +576,11 @@ void CutTool::pathFinished(PathObject* split_path)
 	PathObject* parts[2];
 	if (edited_path->getPart(drag_part_index).isClosed())
 	{
-		parts[0] = edited_path->duplicateFirstPart();
+		parts[0] = edited_path->duplicatePart(0);
 		parts[0]->changePathBounds(drag_part_index, drag_start_len, end_path_coord.clen);
 		assert(parts[0]->connectIfClose(split_path, split_threshold));
 
-		parts[1] = edited_path->duplicateFirstPart();
+		parts[1] = edited_path->duplicatePart(0);
 		parts[1]->changePathBounds(drag_part_index, end_path_coord.clen, drag_start_len);
 		assert(parts[1]->connectIfClose(split_path, split_threshold));
 	}
@@ -591,7 +591,7 @@ void CutTool::pathFinished(PathObject* split_path)
 		float path_len = edited_path->getPathCoordinateVector().at(edited_path->getPart(drag_part_index).path_coord_end_index).clen;
 		if (min_cut_pos <= 0 && max_cut_pos >= path_len)
 		{
-			parts[0] = edited_path->duplicateFirstPart();
+			parts[0] = edited_path->duplicatePart(0);
 			assert(parts[0]->connectIfClose(split_path, split_threshold));
 			
 			parts[1] = reinterpret_cast<PathObject*>(split_path->duplicate());
@@ -601,24 +601,24 @@ void CutTool::pathFinished(PathObject* split_path)
 		{
 			float cut_pos = (min_cut_pos <= 0) ? max_cut_pos : min_cut_pos;
 			
-			parts[0] = edited_path->duplicateFirstPart();
+			parts[0] = edited_path->duplicatePart(0);
 			parts[0]->changePathBounds(drag_part_index, 0, cut_pos);
 			assert(parts[0]->connectIfClose(split_path, split_threshold));
 			
-			parts[1] = edited_path->duplicateFirstPart();
+			parts[1] = edited_path->duplicatePart(0);
 			parts[1]->changePathBounds(drag_part_index, cut_pos, path_len);
 			assert(parts[1]->connectIfClose(split_path, split_threshold));
 		}
 		else
 		{
-			parts[0] = edited_path->duplicateFirstPart();
+			parts[0] = edited_path->duplicatePart(0);
 			parts[0]->changePathBounds(drag_part_index, min_cut_pos, max_cut_pos);
 			assert(parts[0]->connectIfClose(split_path, split_threshold));
 			
-			parts[1] = edited_path->duplicateFirstPart();
+			parts[1] = edited_path->duplicatePart(0);
 			parts[1]->changePathBounds(drag_part_index, 0, min_cut_pos);
 			assert(parts[1]->connectIfClose(split_path, split_threshold));
-			PathObject* temp_path = edited_path->duplicateFirstPart();
+			PathObject* temp_path = edited_path->duplicatePart(0);
 			temp_path->changePathBounds(drag_part_index, max_cut_pos, path_len);
 			assert(parts[1]->connectIfClose(temp_path, split_threshold));
 			delete temp_path;

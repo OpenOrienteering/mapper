@@ -750,14 +750,18 @@ Object* PathObject::duplicate()
 		new_path->parts[i].path = new_path;
 	return new_path;
 }
-PathObject* PathObject::duplicateFirstPart()
+PathObject* PathObject::duplicatePart(int part_index)
 {
 	PathObject* new_path = new PathObject(symbol);
 	new_path->pattern_rotation = pattern_rotation;
 	new_path->pattern_origin = pattern_origin;
-	new_path->coords.assign(coords.begin() + parts[0].start_index, coords.begin() + (parts[0].end_index + 1));
-	new_path->parts.push_back(parts[0]);
+	new_path->coords.assign(coords.begin() + parts[part_index].start_index, coords.begin() + (parts[part_index].end_index + 1));
+	new_path->parts.push_back(parts[part_index]);
 	new_path->parts[0].path = new_path;
+	new_path->parts[0].end_index -= new_path->parts[0].start_index;
+	new_path->parts[0].start_index = 0;
+	new_path->parts[0].path_coord_end_index -= new_path->parts[0].path_coord_start_index;
+	new_path->parts[0].path_coord_start_index = 0;
 	return new_path;
 }
 

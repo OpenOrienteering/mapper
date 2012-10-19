@@ -1408,16 +1408,27 @@ void MapEditorController::switchSymbolClicked()
 {
 	SwitchSymbolUndoStep* switch_step = NULL;
 	ReplaceObjectsUndoStep* replace_step = NULL;
+	AddObjectsUndoStep* add_step = NULL;
+	DeleteObjectsUndoStep* delete_step = NULL;
+	std::vector<Object*> old_objects;
+	std::vector<Object*> new_objects;
 	MapPart* part = map->getCurrentPart();
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
 	
-	bool close_paths = false;
+	bool close_paths = false, split_up = false;
 	Symbol::Type contained_types = symbol->getContainedTypes();
 	if (contained_types & Symbol::Area && !(contained_types & Symbol::Line))
 		close_paths = true;
+	else if (contained_types & Symbol::Line && !(contained_types & Symbol::Area))
+		split_up = true;
 	
 	if (close_paths)
 		replace_step = new ReplaceObjectsUndoStep(map);
+	else if (split_up)
+	{
+		add_step = new AddObjectsUndoStep(map);
+		delete_step = new DeleteObjectsUndoStep(map);
+	}
 	else
 		switch_step = new SwitchSymbolUndoStep(map);
 	
@@ -1428,25 +1439,72 @@ void MapEditorController::switchSymbolClicked()
 		
 		if (close_paths)
 			replace_step->addObject(part->findObjectIndex(object), object->duplicate());
+		else if (split_up)
+		{
+			add_step->addObject(part->findObjectIndex(object), object);
+			old_objects.push_back(object);
+		}
 		else
 			switch_step->addObject(part->findObjectIndex(object), (object)->getSymbol());
 		
-		object->setSymbol(symbol, true);
-		if (close_paths && object->getType() == Object::Path)
+		if (!split_up)
+			object->setSymbol(symbol, true);
+		if (object->getType() == Object::Path)
 		{
 			PathObject* path_object = object->asPath();
-			for (int path_part = 0; path_part < path_object->getNumParts(); ++path_part)
+			if (close_paths)
 			{
-				if (!path_object->getPart(path_part).isClosed())
-					path_object->getPart(path_part).setClosed(true, true);
+				for (int path_part = 0; path_part < path_object->getNumParts(); ++path_part)
+				{
+					if (!path_object->getPart(path_part).isClosed())
+						path_object->getPart(path_part).setClosed(true, true);
+				}
+			}
+			else if (split_up)
+			{
+				for (int path_part = 0; path_part < path_object->getNumParts(); ++path_part)
+				{
+					PathObject* new_object = path_object->duplicatePart(path_part);
+					new_object->setSymbol(symbol, true);
+					new_objects.push_back(new_object);
+				}
 			}
 		}
 		object->update(true);
 	}
 	
+	if (split_up)	
+	{
+		for (size_t i = 0; i < old_objects.size(); ++i)
+		{
+			Object* object = old_objects[i];
+			map->deleteObject(object, true);
+		}
+		for (size_t i = 0; i < new_objects.size(); ++i)
+		{
+			Object* object = new_objects[i];
+			map->addObject(object);
+			map->addObjectToSelection(object, i == new_objects.size() - 1);
+		}
+		// Do not merge this loop into the upper one;
+		// theoretically undo step indices could be wrong this way.
+		for (size_t i = 0; i < new_objects.size(); ++i)
+		{
+			Object* object = new_objects[i];
+			delete_step->addObject(part->findObjectIndex(object));
+		}
+	}
+	
 	map->setObjectsDirty();
 	if (close_paths)
 		map->objectUndoManager().addNewUndoStep(replace_step);
+	else if (split_up)
+	{
+		CombinedUndoStep* combined_step = new CombinedUndoStep((void*)map);
+		combined_step->addSubStep(delete_step);
+		combined_step->addSubStep(add_step);
+		map->objectUndoManager().addNewUndoStep(combined_step);
+	}
 	else
 		map->objectUndoManager().addNewUndoStep(switch_step);
 	map->emitSelectionEdited();
@@ -1457,10 +1515,12 @@ void MapEditorController::fillBorderClicked()
 	std::vector<Object*> new_objects;
 	new_objects.reserve(map->getNumSelectedObjects());
 	
-	bool close_paths = false;
+	bool close_paths = false, split_up = false;
 	Symbol::Type contained_types = symbol->getContainedTypes();
 	if (contained_types & Symbol::Area && !(contained_types & Symbol::Line))
 		close_paths = true;
+	else if (contained_types & Symbol::Line && !(contained_types & Symbol::Area))
+		split_up = true;
 	
 	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
@@ -1468,19 +1528,34 @@ void MapEditorController::fillBorderClicked()
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 	{
-		Object* duplicate = (*it)->duplicate();
-		duplicate->setSymbol(symbol, true);
-		if (close_paths && duplicate->getType() == Object::Path)
+		Object* object = *it;
+		if (split_up && object->getType() == Object::Path)
 		{
-			PathObject* path_object = duplicate->asPath();
+			PathObject* path_object = object->asPath();
 			for (int path_part = 0; path_part < path_object->getNumParts(); ++path_part)
 			{
-				if (!path_object->getPart(path_part).isClosed())
-					path_object->getPart(path_part).setClosed(true, true);
+				PathObject* new_object = path_object->duplicatePart(path_part);
+				new_object->setSymbol(symbol, true);
+				map->addObject(new_object);
+				new_objects.push_back(new_object);
 			}
 		}
-		map->addObject(duplicate);
-		new_objects.push_back(duplicate);
+		else
+		{
+			Object* duplicate = object->duplicate();
+			duplicate->setSymbol(symbol, true);
+			if (close_paths && duplicate->getType() == Object::Path)
+			{
+				PathObject* path_object = duplicate->asPath();
+				for (int path_part = 0; path_part < path_object->getNumParts(); ++path_part)
+				{
+					if (!path_object->getPart(path_part).isClosed())
+						path_object->getPart(path_part).setClosed(true, true);
+				}
+			}
+			map->addObject(duplicate);
+			new_objects.push_back(duplicate);
+		}
 	}
 	
 	map->clearObjectSelection(false);

@@ -175,7 +175,7 @@ public:
 	PathObject(Symbol* symbol = NULL);
 	PathObject(Symbol* symbol, const MapCoordVector& coords, Map* map = 0);
     virtual Object* duplicate();
-	PathObject* duplicateFirstPart();
+	PathObject* duplicatePart(int part_index);
 	
 	// Coordinate access methods
 	
