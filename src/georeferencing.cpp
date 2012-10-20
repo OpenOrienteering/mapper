@@ -217,8 +217,8 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 	xml.writeCharacters(projected_crs_spec);
 	xml.writeEndElement(/*spec*/);
 	xml.writeEmptyElement("ref_point");
-	xml.writeAttribute("x", QString::number(projected_ref_point.x()));
-	xml.writeAttribute("y", QString::number(projected_ref_point.y()));
+	xml.writeAttribute("x", QString::number(projected_ref_point.x(), 'f', 6));
+	xml.writeAttribute("y", QString::number(projected_ref_point.y(), 'f', 6));
 	xml.writeEndElement(/*projected_crs*/);
 	
 	xml.writeStartElement("geographic_crs");
@@ -504,7 +504,7 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 	  << " " << georef.grivation
 	  << "deg, " << georef.projected_crs_id
 	  << " (" << georef.projected_crs_spec
-	  << ") " << georef.projected_ref_point.x() << "," << georef.projected_ref_point.y();
+	  << ") " << QString::number(georef.projected_ref_point.x(), 'f', 8) << "," << QString::number(georef.projected_ref_point.y(), 'f', 8);
 	if (georef.isLocal())
 		dbg.nospace() << ", local)";
 	else
