@@ -554,7 +554,7 @@ int Object::isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_a
 	}
 	
 	// First check using extent
-	float extent_extension = (contained_types & Symbol::Line) ? tolerance : 0;
+	float extent_extension = ((contained_types & Symbol::Line) || treat_areas_as_paths) ? tolerance : 0;
 	if (coord.getX() < extent.left() - extent_extension) return Symbol::NoSymbol;
 	if (coord.getY() < extent.top() - extent_extension) return Symbol::NoSymbol;
 	if (coord.getX() > extent.right() + extent_extension) return Symbol::NoSymbol;

@@ -664,7 +664,10 @@ void DrawPathTool::updateSnapHelper()
 	if (draw_in_progress)
 		snap_helper.setFilter(SnappingToolHelper::AllTypes);
 	else
-		snap_helper.setFilter((SnappingToolHelper::SnapObjects)(SnappingToolHelper::GridCorners | SnappingToolHelper::ObjectCorners));
+	{
+		//snap_helper.setFilter((SnappingToolHelper::SnapObjects)(SnappingToolHelper::GridCorners | SnappingToolHelper::ObjectCorners));
+		snap_helper.setFilter(SnappingToolHelper::AllTypes);
+	}
 }
 
 void DrawPathTool::startAppending(SnappingToolHelper::SnapInfo& snap_info)
