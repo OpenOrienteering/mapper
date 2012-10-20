@@ -214,9 +214,9 @@ void XMLFileExporter::exportTemplates()
 	xml.writeAttribute("number", QString::number(num_templates));
 	xml.writeAttribute("first_front_template", QString::number(map->first_front_template));
 	for (int i = 0; i < map->getNumTemplates(); ++i)
-		map->getTemplate(i)->save(xml, true);
+		map->getTemplate(i)->saveTemplateConfiguration(xml, true);
 	for (int i = 0; i < map->getNumClosedTemplates(); ++i)
-		map->getClosedTemplate(i)->save(xml, false);
+		map->getClosedTemplate(i)->saveTemplateConfiguration(xml, false);
 	
 	xml.writeEmptyElement("defaults");
 	xml.writeAttribute("use_meters_per_pixel", map->image_template_use_meters_per_pixel ? "true" : "false");
@@ -466,7 +466,7 @@ void XMLFileImporter::importTemplates()
 		if (xml.name() == "template")
 		{
 			bool opened = true;
-			Template* temp = Template::load(xml, *map, opened);
+			Template* temp = Template::loadTemplateConfiguration(xml, *map, opened);
 			if (opened)
 				map->templates.push_back(temp);
 			else

@@ -96,12 +96,11 @@ public:
 	/// Saves template parameters such as filename, transformation, adjustment, etc. and
 	/// type-specific parameters (e.g. filtering mode for images)
 	void saveTemplateConfiguration(QIODevice* stream);
+	void saveTemplateConfiguration(QXmlStreamWriter& xml, bool open);
 	
-	/// Loads template parameters, see saveTemplateConfiguration()
-	void loadTemplateConfiguration(QIODevice* stream, int version);
-	
-	void save(QXmlStreamWriter& xml, bool open);
-	static Template* load(QXmlStreamReader& xml, Map& map, bool& open);
+	/// Loads template parameters, see saveTemplateConfiguration(), and returns true if successful
+	bool loadTemplateConfiguration(QIODevice* stream, int version);
+	static Template* loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, bool& open);
 	
 	/// Saves the template itself, returns true if successful.
 	/// This is called when saving the map and the template's hasUnsavedChanges() returns true
@@ -338,6 +337,9 @@ protected:
 	
 	/// Derived classes must save type specific template parameters here
 	virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) {}
+	
+	/// Derived classes must load type specific template parameters here and return true if successful
+	virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) {return true;}
 	
 	/// Derived classes must load the template file here and return true if successful.
 	/// If configuring is true, a call to postLoadConfiguration() will follow if this returns true.

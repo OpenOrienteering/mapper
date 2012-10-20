@@ -175,7 +175,7 @@ void Template::saveTemplateConfiguration(QIODevice* stream)
 	saveTypeSpecificTemplateConfiguration(stream);
 }
 
-void Template::loadTemplateConfiguration(QIODevice* stream, int version)
+bool Template::loadTemplateConfiguration(QIODevice* stream, int version)
 {
 	loadString(stream, template_file);
 	
@@ -206,7 +206,10 @@ void Template::loadTemplateConfiguration(QIODevice* stream, int version)
 	}
 	
 	if (version >= 27)
-		loadTypeSpecificTemplateConfiguration(stream, version);
+	{
+		if (!loadTypeSpecificTemplateConfiguration(stream, version))
+			return false;
+	}
 	else
 	{
 		// Adjust old file format version's templates
@@ -218,9 +221,10 @@ void Template::loadTemplateConfiguration(QIODevice* stream, int version)
 			updateTransformationMatrices();
 		}
 	}
+	return true;
 }
 
-void Template::save(QXmlStreamWriter& xml, bool open)
+void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open)
 {
 	xml.writeStartElement("template");
 	xml.writeAttribute("open", open ? "true" : "false");
@@ -265,7 +269,7 @@ void Template::save(QXmlStreamWriter& xml, bool open)
 	xml.writeEndElement(/*template*/);
 }
 
-Template* Template::load(QXmlStreamReader& xml, Map& map, bool& open)
+Template* Template::loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, bool& open)
 {
 	Q_ASSERT(xml.name() == "template");
 	
@@ -279,9 +283,7 @@ Template* Template::load(QXmlStreamReader& xml, Map& map, bool& open)
 	if (attributes.hasAttribute("name"))
 		temp->template_file = attributes.value("name").toString();
 	temp->is_georeferenced = (attributes.value("georef") == "true");
-	if (temp->is_georeferenced)
-		xml.skipCurrentElement();
-	else
+	if (!temp->is_georeferenced)
 	{
 		temp->template_group = attributes.value("group").toString().toInt();
 		
@@ -330,6 +332,17 @@ Q_ASSERT(temp->passpoints.size() == 0);
 				xml.skipCurrentElement(); // unsupported
 		}
 	}
+	
+	if (!temp->loadTypeSpecificTemplateConfiguration(xml))
+	{
+		delete temp;
+		return NULL;
+	}
+	
+	// Read until end of element
+	while (!xml.isEndElement())
+		xml.readNext();
+	
 	return temp;
 }
 

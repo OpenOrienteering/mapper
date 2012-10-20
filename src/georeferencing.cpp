@@ -228,8 +228,8 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 	xml.writeCharacters(geographic_crs_spec);
 	xml.writeEndElement(/*spec*/);
 	xml.writeEmptyElement("ref_point");
-	xml.writeAttribute("lat", QString::number(geographic_ref_point.latitude));
-	xml.writeAttribute("lon", QString::number(geographic_ref_point.longitude));
+	xml.writeAttribute("lat", QString::number(geographic_ref_point.latitude, 'f', 10));
+	xml.writeAttribute("lon", QString::number(geographic_ref_point.longitude, 'f', 10));
 	xml.writeEndElement(/*geographic_crs*/);
 	xml.writeEndElement(); // georeferencing
 }
