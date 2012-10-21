@@ -401,6 +401,9 @@ void XMLFileImporter::importSymbols()
 	int num_symbols = xml.attributes().value("number").toString().toInt();
 	map->symbols.reserve(num_symbols % 1000); // 1000 is not a limit
 	
+	symbol_dict[QString::number(map->findSymbolIndex(map->getUndefinedPoint()))] = map->getUndefinedPoint();
+	symbol_dict[QString::number(map->findSymbolIndex(map->getUndefinedLine()))] = map->getUndefinedLine();
+	
 	while (xml.readNextStartElement())
 	{
 		if (xml.name() == "symbol")

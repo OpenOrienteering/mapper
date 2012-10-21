@@ -314,7 +314,7 @@ void Object::save(QXmlStreamWriter& xml) const
 	int symbol_index = -1;
 	if (map)
 		symbol_index = map->findSymbolIndex(symbol);
-	if (symbol_index >= 0)
+	if (symbol_index != -1)
 		xml.writeAttribute("symbol", QString::number(symbol_index));
 	
 	if (type == Point)
