@@ -281,6 +281,7 @@ QImage* Symbol::getIcon(Map* map, bool update)
 QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bottom_right_border)
 {
 	QImage* image;
+	Type contained_types = getContainedTypes();
 	
 	// Create icon map and view
 	Map icon_map;
@@ -291,7 +292,14 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 	// If the icon is bigger than the rectangle with this zoom factor, it is zoomed out to fit into the rectangle
 	const float best_zoom = 2;
 	view.setZoom(best_zoom);
-	const float max_icon_mm = 0.001f * view.pixelToLength(side_length - bottom_right_border);
+	int white_border_pixels = 0;
+	if (contained_types & Line || contained_types & Area || type == Combined)
+		white_border_pixels = 0;
+	else if (contained_types & Point || contained_types & Text)
+		white_border_pixels = 2;
+	else
+		assert(false);
+	const float max_icon_mm = 0.001f * view.pixelToLength(side_length - bottom_right_border - white_border_pixels);
 	const float max_icon_mm_half = 0.5f * max_icon_mm;
 	
 	// Create image
@@ -309,6 +317,7 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 	
 	// Create geometry
 	Object* object = NULL;
+	Symbol* icon_symbol = NULL;
 	if (type == Point)
 	{
 		PointObject* point = new PointObject(this);
@@ -327,7 +336,30 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 	}
 	else if (type == Line || type == Combined)
 	{
-		PathObject* path = new PathObject(this);
+		Symbol* symbol_to_use = this;
+		if (type == Line)
+		{
+			// If there are breaks in the line, scale them down so they fit into the icon exactly
+			// TODO: does not work for combined lines yet. Could be done by checking every contained line and scaling the painter horizontally
+			LineSymbol* line = asLine();
+			if (line->isDashed() && line->getBreakLength() > 0)
+			{
+				LineSymbol* icon_line = duplicate()->asLine();
+				
+				float ideal_length = 0.001 * (2 * line->getDashesInGroup() * line->getDashLength() + 2 * (line->getDashesInGroup() - 1) * line->getInGroupBreakLength() + line->getBreakLength());
+				float real_length = max_icon_mm;
+				float factor = qMin(1.0f, real_length / qMax(0.001f, ideal_length));
+				
+				icon_line->setDashLength(factor * icon_line->getDashLength());
+				icon_line->setBreakLength(factor * icon_line->getBreakLength());
+				icon_line->setInGroupBreakLength(factor * icon_line->getInGroupBreakLength());
+				
+				icon_symbol = icon_line;
+				symbol_to_use = icon_symbol;
+			}
+		}
+		
+		PathObject* path = new PathObject(symbol_to_use);
 		path->addCoordinate(0, MapCoord(-max_icon_mm_half, 0));
 		path->addCoordinate(1, MapCoord(max_icon_mm_half, 0));
 		object = path;
@@ -354,9 +386,28 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 	
 	icon_map.addObject(object);
 	
-	qreal real_icon_mm_half = qMax(object->getExtent().right(), object->getExtent().bottom());
-	real_icon_mm_half = qMax(real_icon_mm_half, -object->getExtent().left());
-	real_icon_mm_half = qMax(real_icon_mm_half, -object->getExtent().top());
+	qreal real_icon_mm_half;
+	if (type == Point || type == Text)
+	{
+		// Center on the object's extent center
+		real_icon_mm_half = qMax(object->getExtent().width() / 2.0, object->getExtent().height() / 2.0);
+		view.setPositionX(qRound64(1000 * object->getExtent().center().x()));
+		view.setPositionY(qRound64(1000 * object->getExtent().center().y()));
+	}
+	else if (contained_types & Line && !(contained_types & Area))
+	{
+		// Center horizontally on extent
+		real_icon_mm_half = qMax(object->getExtent().width() / 2.0, object->getExtent().bottom());
+		real_icon_mm_half = qMax(real_icon_mm_half, -object->getExtent().top());
+		view.setPositionX(qRound64(1000 * object->getExtent().center().x()));
+	}
+	else
+	{
+		// Center on coordinate system origin
+		real_icon_mm_half = qMax(object->getExtent().right(), object->getExtent().bottom());
+		real_icon_mm_half = qMax(real_icon_mm_half, -object->getExtent().left());
+		real_icon_mm_half = qMax(real_icon_mm_half, -object->getExtent().top());
+	}
 	if (real_icon_mm_half > max_icon_mm_half)
 		view.setZoom(best_zoom * (max_icon_mm_half / real_icon_mm_half));
 	
@@ -368,6 +419,7 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 	icon_map.draw(&painter, QRectF(-10000, -10000, 20000, 20000), false, view.calculateFinalZoomFactor(), true);
 	is_hidden = was_hidden;
 	
+	delete icon_symbol;
 	painter.end();
 	
 	return image;
