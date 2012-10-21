@@ -1475,6 +1475,7 @@ void MapEditorController::switchSymbolClicked()
 	
 	if (split_up)	
 	{
+		map->clearObjectSelection(false);
 		for (size_t i = 0; i < old_objects.size(); ++i)
 		{
 			Object* object = old_objects[i];
