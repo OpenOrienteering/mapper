@@ -281,7 +281,7 @@ void MapEditorController::attach(MainWindow* window)
 	statusbar_zoom_frame_layout->setSpacing(0);
 	statusbar_zoom_frame_layout->addSpacing(1);
 	statusbar_zoom_frame_layout->addWidget(statusbar_zoom_icon);
-	statusbar_zoom_frame_layout->addStretch(1);
+	//statusbar_zoom_frame_layout->addStretch(1);
 	statusbar_zoom_frame_layout->addWidget(statusbar_zoom_label);
 	statusbar_zoom_frame->setLayout(statusbar_zoom_frame_layout);
 	

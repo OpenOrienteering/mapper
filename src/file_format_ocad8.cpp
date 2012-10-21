@@ -42,6 +42,10 @@
 #define currentMSecsSinceEpoch() currentDateTime().toTime_t() * 1000
 #endif
 
+OCAD8FileFormat::OCAD8FileFormat() : Format("OCAD78", QObject::tr("OCAD Versions 7, 8"), "ocd", true, true, true)
+{
+}
+
 bool OCAD8FileFormat::understands(const unsigned char* buffer, size_t sz) const
 {
     // The first two bytes of the file must be AD 0C.

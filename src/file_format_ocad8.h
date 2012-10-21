@@ -42,7 +42,7 @@ class AreaSymbol;
 class OCAD8FileFormat : public Format
 {
 public:
-	OCAD8FileFormat() : Format("OCAD78", QObject::tr("OCAD Versions 7, 8"), "ocd", true, true, true) {}
+	OCAD8FileFormat();
 
 	bool understands(const unsigned char *buffer, size_t sz) const;
 	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
