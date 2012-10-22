@@ -63,7 +63,7 @@ void MapUndoStep::saveImpl(QXmlStreamWriter& xml) const
 	xml.writeStartElement("affected_objects");
 	xml.writeAttribute("part", QString::number(part));
 	int size = affected_objects.size();
-	xml.writeAttribute("number", QString::number(size));
+	xml.writeAttribute("count", QString::number(size));
 	for (int i = 0; i < size; ++i)
 	{
 		xml.writeEmptyElement("ref");
@@ -77,7 +77,7 @@ void MapUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 	if (xml.name() == "affected_objects")
 	{
 		part = xml.attributes().value("part").toString().toInt();
-		int size = xml.attributes().value("number").toString().toInt();
+		int size = xml.attributes().value("count").toString().toInt();
 		affected_objects.reserve(size);
 		while (xml.readNextStartElement())
 		{
@@ -164,7 +164,7 @@ void ObjectContainingUndoStep::saveImpl(QXmlStreamWriter& xml) const
 	
 	xml.writeStartElement("contained_objects");
 	int size = (int)objects.size();
-	xml.writeAttribute("number", QString::number(size));
+	xml.writeAttribute("count", QString::number(size));
 	for (int i = 0; i < size; ++i)
 	{
 		objects[i]->setMap(map);	// IMPORTANT: only if the object's map pointer is set it will save its symbol index correctly
@@ -177,8 +177,8 @@ void ObjectContainingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary&
 {
 	if (xml.name() == "contained_objects")
 	{
-		int size = xml.attributes().value("number").toString().toInt();
-		objects.reserve(size % 1000); // 1000 is not a limit
+		int size = xml.attributes().value("count").toString().toInt();
+		objects.reserve(qMin(size, 1000)); // 1000 is not a limit
 		while (xml.readNextStartElement())
 		{
 			if (xml.name() == "object")
@@ -355,7 +355,7 @@ void SwitchSymbolUndoStep::saveImpl(QXmlStreamWriter& xml) const
 	
 	xml.writeStartElement("switch_symbol");
 	int size = (int)target_symbols.size();
-	xml.writeAttribute("number", QString::number(size));
+	xml.writeAttribute("count", QString::number(size));
 	for (int i = 0; i < size; ++i)
 	{
 		int index = map->findSymbolIndex(target_symbols[i]);
@@ -369,8 +369,8 @@ void SwitchSymbolUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& sym
 {
 	if (xml.name() == "switch_symbol")
 	{
-		int size = xml.attributes().value("number").toString().toInt();
-		target_symbols.reserve(size % 1000); // 1000 is not a limit
+		int size = xml.attributes().value("count").toString().toInt();
+		target_symbols.reserve(qMin(size, 1000)); // 1000 is not a limit
 		while (xml.readNextStartElement())
 		{
 			if (xml.name() == "ref")

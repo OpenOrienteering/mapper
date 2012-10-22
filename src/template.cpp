@@ -295,7 +295,7 @@ Template* Template::loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, b
 				temp->adjustment_dirty = (xml.attributes().value("adjustment_dirty") == "true");
 				int num_passpoints = xml.attributes().value("passpoints").toString().toInt();
 Q_ASSERT(temp->passpoints.size() == 0);
-				temp->passpoints.reserve(num_passpoints % 10); // 10 is not a limit
+				temp->passpoints.reserve(qMin(num_passpoints, 10)); // 10 is not a limit
 				
 				while (xml.readNextStartElement())
 				{

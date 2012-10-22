@@ -1996,7 +1996,7 @@ void MapView::save(QXmlStreamWriter& xml)
 	
 	xml.writeStartElement("templates");
 	int num_template_visibilities = template_visibilities.size();
-	xml.writeAttribute("number", QString::number(num_template_visibilities));
+	xml.writeAttribute("count", QString::number(num_template_visibilities));
 	if (all_templates_hidden)
 		xml.writeAttribute("hidden", "true");
 	QHash<Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
@@ -2044,8 +2044,8 @@ void MapView::load(QXmlStreamReader& xml)
 		}
 		else if (xml.name() == "templates")
 		{
-			int num_template_visibilities = xml.attributes().value("number").toString().toInt();
-			template_visibilities.reserve(num_template_visibilities % 20); // 20 is not a limit
+			int num_template_visibilities = xml.attributes().value("count").toString().toInt();
+			template_visibilities.reserve(qMin(num_template_visibilities, 20)); // 20 is not a limit
 			all_templates_hidden = (xml.attributes().value("hidden") == "true");
 			
 			while (xml.readNextStartElement())

@@ -102,7 +102,7 @@ void MapPart::save(QXmlStreamWriter& xml, const Map& map) const
 	
 	xml.writeStartElement("objects");
 	int size = (int)objects.size();
-	xml.writeAttribute("number", QString::number(size));
+	xml.writeAttribute("count", QString::number(size));
 	for (int i = 0; i < size; ++i)
 	{
 		objects[i]->save(xml);
@@ -122,8 +122,8 @@ MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol
 	{
 		if (xml.name() == "objects")
 		{
-			int num_objects = xml.attributes().value("number").toString().toInt();
-			part->objects.reserve(num_objects % 100000); // 100000 is not a limit
+			int num_objects = xml.attributes().value("count").toString().toInt();
+			part->objects.reserve(qMin(num_objects, 50000)); // 50000 is not a limit
 			while (xml.readNextStartElement())
 			{
 				if (xml.name() == "object")

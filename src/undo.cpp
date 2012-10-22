@@ -143,7 +143,7 @@ void CombinedUndoStep::saveImpl(QXmlStreamWriter& xml) const
 	
 	xml.writeStartElement("substeps");
 	int size = (int)steps.size();
-	xml.writeAttribute("number", QString::number(size));
+	xml.writeAttribute("count", QString::number(size));
 	for (int i = 0; i < size; ++i)
 	{
 		steps[i]->save(xml);
@@ -155,8 +155,8 @@ void CombinedUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_
 {
 	if (xml.name() == "substeps")
 	{
-		int size = xml.attributes().value("number").toString().toInt();
-		steps.reserve(size % 100); // 100 is not a limit
+		int size = xml.attributes().value("count").toString().toInt();
+		steps.reserve(qMin(size, 10)); // 10 is not a limit
 		while (xml.readNextStartElement())
 		{
 			if (xml.name() == "step")
@@ -281,7 +281,7 @@ void UndoManager::saveSteps(std::deque< UndoStep* >& steps, QXmlStreamWriter& xm
 	validateSteps(steps);
 	
 	int size = (int)steps.size();
-	xml.writeAttribute("number", QString::number(size));
+	xml.writeAttribute("count", QString::number(size));
 	for (int i = 0; i < size; ++i)
 		steps[i]->save(xml);
 }

@@ -334,7 +334,7 @@ void Object::save(QXmlStreamWriter& xml) const
 	
 	xml.writeStartElement("coords");
 	int num_coords = (int)coords.size();
-	xml.writeAttribute("number", QString::number(num_coords));
+	xml.writeAttribute("count", QString::number(num_coords));
 	for (int i = 0; i < num_coords; i++)
 		coords[i].save(xml);
 	xml.writeEndElement(/*coords*/);
@@ -400,9 +400,9 @@ Object* Object::load(QXmlStreamReader& xml, Map& map, const SymbolDictionary& sy
 	{
 		if (xml.name() == "coords")
 		{
-			int num_coords = xml.attributes().value("number").toString().toInt();
+			int num_coords = xml.attributes().value("count").toString().toInt();
 			object->coords.clear();
-			object->coords.reserve(num_coords % 10); // 10 is not a limit
+			object->coords.reserve(qMin(num_coords, 20)); // 20 is not a limit
 			for (int i = 0; xml.readNextStartElement(); i++)
 				object->coords.push_back(MapCoord::load(xml));
 		}

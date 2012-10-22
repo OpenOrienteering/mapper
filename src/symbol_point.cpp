@@ -363,8 +363,8 @@ bool PointSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sy
 	outer_color = (temp >= 0) ? map.getColor(temp) : NULL;
 	int num_elements = attributes.value("elements").toString().toInt();
 	
-	symbols.reserve(num_elements % 10); // 10 is not a limit
-	objects.reserve(num_elements % 10); // 10 is not a limit
+	symbols.reserve(qMin(num_elements, 10)); // 10 is not a limit
+	objects.reserve(qMin(num_elements, 10)); // 10 is not a limit
 	for (int i = 0; xml.readNextStartElement(); ++i)
 	{
 		if (xml.name() == "element")

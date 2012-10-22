@@ -368,7 +368,7 @@ void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	if (num_custom_tabs > 0)
 	{
 		xml.writeStartElement("tabs");
-		xml.writeAttribute("number", QString::number(num_custom_tabs));
+		xml.writeAttribute("count", QString::number(num_custom_tabs));
 		for (int i = 0; i < num_custom_tabs; ++i)
 			xml.writeTextElement("tab", QString::number(custom_tabs[i]));
 		xml.writeEndElement(/*tabs*/);
@@ -430,7 +430,7 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 		}
 		else if (xml.name() == "tabs")
 		{
-			int num_custom_tabs = attributes.value("number").toString().toInt();
+			int num_custom_tabs = attributes.value("count").toString().toInt();
 			custom_tabs.reserve(num_custom_tabs % 20); // 20 is not the limit
 			while (xml.readNextStartElement())
 			{

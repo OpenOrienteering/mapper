@@ -167,7 +167,7 @@ void XMLFileExporter::exportColors()
 {
 	xml.writeStartElement("colors");
 	int num_colors = (int)map->color_set->colors.size();
-	xml.writeAttribute("number", QString::number(num_colors));
+	xml.writeAttribute("count", QString::number(num_colors));
 	for (int i = 0; i < num_colors; ++i)
 	{
 		MapColor* color = map->color_set->colors[i];
@@ -187,7 +187,7 @@ void XMLFileExporter::exportSymbols()
 {
 	xml.writeStartElement("symbols");
 	int num_symbols = map->getNumSymbols();
-	xml.writeAttribute("number", QString::number(num_symbols));
+	xml.writeAttribute("count", QString::number(num_symbols));
 	for (int i = 0; i < num_symbols; ++i)
 	{
 		map->getSymbol(i)->save(xml, *map);
@@ -199,7 +199,7 @@ void XMLFileExporter::exportMapParts()
 {
 	xml.writeStartElement("parts");
 	int num_parts = map->getNumParts();
-	xml.writeAttribute("number", QString::number(num_parts));
+	xml.writeAttribute("count", QString::number(num_parts));
 	xml.writeAttribute("current", QString::number(map->current_part_index));
 	for (int i = 0; i < num_parts; ++i)
 		map->getPart(i)->save(xml, *map);
@@ -211,7 +211,7 @@ void XMLFileExporter::exportTemplates()
 	xml.writeStartElement("templates");
 	
 	int num_templates = map->getNumTemplates() + map->getNumClosedTemplates();
-	xml.writeAttribute("number", QString::number(num_templates));
+	xml.writeAttribute("count", QString::number(num_templates));
 	xml.writeAttribute("first_front_template", QString::number(map->first_front_template));
 	for (int i = 0; i < map->getNumTemplates(); ++i)
 		map->getTemplate(i)->saveTemplateConfiguration(xml, true);
@@ -365,9 +365,9 @@ void XMLFileImporter::importGeoreferencing()
 
 void XMLFileImporter::importColors()
 {
-	int num_colors = xml.attributes().value("number").toString().toInt();
+	int num_colors = xml.attributes().value("count").toString().toInt();
 	Map::ColorVector& colors(map->color_set->colors);
-	colors.reserve(num_colors % 100); // 100 is not a limit
+	colors.reserve(qMin(num_colors, 100)); // 100 is not a limit
 	while (xml.readNextStartElement())
 	{
 		if (xml.name() == "color")
@@ -398,8 +398,8 @@ void XMLFileImporter::importColors()
 
 void XMLFileImporter::importSymbols()
 {
-	int num_symbols = xml.attributes().value("number").toString().toInt();
-	map->symbols.reserve(num_symbols % 1000); // 1000 is not a limit
+	int num_symbols = xml.attributes().value("count").toString().toInt();
+	map->symbols.reserve(qMin(num_symbols, 1000)); // 1000 is not a limit
 	
 	symbol_dict[QString::number(map->findSymbolIndex(map->getUndefinedPoint()))] = map->getUndefinedPoint();
 	symbol_dict[QString::number(map->findSymbolIndex(map->getUndefinedLine()))] = map->getUndefinedLine();
@@ -426,10 +426,10 @@ void XMLFileImporter::importSymbols()
 
 void XMLFileImporter::importMapParts()
 {
-	int num_parts = xml.attributes().value("number").toString().toInt();
+	int num_parts = xml.attributes().value("count").toString().toInt();
 	int current_part_index = xml.attributes().value("current").toString().toInt();
 	map->parts.clear();
-	map->parts.reserve(num_parts % 20); // 20 is not a limit
+	map->parts.reserve(qMin(num_parts, 20)); // 20 is not a limit
 	
 	while (xml.readNextStartElement())
 	{
@@ -460,8 +460,8 @@ void XMLFileImporter::importTemplates()
 	
 	int first_front_template = xml.attributes().value("first_front_template").toString().toInt();
 	
-	int num_templates = xml.attributes().value("number").toString().toInt();
-	map->templates.reserve(num_templates % 20); // 20 is not a limit
+	int num_templates = xml.attributes().value("count").toString().toInt();
+	map->templates.reserve(qMin(num_templates, 20)); // 20 is not a limit
 	map->closed_templates.reserve(num_templates % 20);
 	
 	while (xml.readNextStartElement())
