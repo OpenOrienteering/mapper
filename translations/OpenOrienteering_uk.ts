@@ -704,7 +704,7 @@
         <location filename="../src/settings_dialog.cpp" line="110"/>
         <location filename="../src/settings_dialog.cpp" line="115"/>
         <location filename="../src/settings_dialog.cpp" line="158"/>
-        <source>pix</source>
+        <source>px</source>
         <translation>пік</translation>
     </message>
     <message>
