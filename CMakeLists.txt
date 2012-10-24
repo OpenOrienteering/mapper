@@ -26,7 +26,7 @@ project(Mapper)
 # We use 99 to mark development builds.
 SET(Mapper_VERSION_MAJOR 0)
 SET(Mapper_VERSION_MINOR 4)
-SET(Mapper_VERSION_PATCH 99)
+SET(Mapper_VERSION_PATCH 0)
 SET(Mapper_VERSION_DISPLAY "${CMAKE_BUILD_TYPE} ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
 
 # Build configuration options
