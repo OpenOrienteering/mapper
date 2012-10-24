@@ -107,12 +107,12 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	layout->addWidget(antialiasing, row++, 0, 1, 2);
 	
 	QLabel* tolerance_label = new QLabel(tr("Click tolerance:"));
-	QSpinBox* tolerance = Util::SpinBox::create(0, 50, tr("pix"));
+	QSpinBox* tolerance = Util::SpinBox::create(0, 50, tr("px"));
 	layout->addWidget(tolerance_label, row, 0);
 	layout->addWidget(tolerance, row++, 1);
 	
 	QLabel* snap_distance_label = new QLabel(tr("Snap distance (Shift):"));
-	QSpinBox* snap_distance = Util::SpinBox::create(0, 100, tr("pix"));
+	QSpinBox* snap_distance = Util::SpinBox::create(0, 100, tr("px"));
 	layout->addWidget(snap_distance_label, row, 0);
 	layout->addWidget(snap_distance, row++, 1);
 	
@@ -155,7 +155,7 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	layout->addWidget(new QLabel("<b>" % tr("Rectangle tool:") % "</b>"), row++, 0, 1, 2);
 	
 	QLabel* rectangle_helper_cross_radius_label = new QLabel(tr("Radius of helper cross:"));
-	QSpinBox* rectangle_helper_cross_radius = Util::SpinBox::create(0, 999999, tr("pix"));
+	QSpinBox* rectangle_helper_cross_radius = Util::SpinBox::create(0, 999999, tr("px"));
 	layout->addWidget(rectangle_helper_cross_radius_label, row, 0);
 	layout->addWidget(rectangle_helper_cross_radius, row++, 1);
 	

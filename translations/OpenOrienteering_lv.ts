@@ -704,8 +704,8 @@
         <location filename="../src/settings_dialog.cpp" line="110"/>
         <location filename="../src/settings_dialog.cpp" line="115"/>
         <location filename="../src/settings_dialog.cpp" line="158"/>
-        <source>pix</source>
-        <translation>pix</translation>
+        <source>px</source>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../src/settings_dialog.cpp" line="114"/>
