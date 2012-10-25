@@ -196,7 +196,7 @@ void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
 	if (is_hidden)
 		xml.writeAttribute("is_hidden","true");
 	if (is_protected)
-		xml.writeAttribute("is_hidden","true");
+		xml.writeAttribute("is_protected","true");
 	if (!description.isEmpty())
 		xml.writeTextElement("description", description);
 	saveImpl(xml, map);
@@ -249,7 +249,7 @@ Symbol* Symbol::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_d
 	symbol->name = attributes.value("name").toString();
 	symbol->is_helper_symbol = (attributes.value("is_helper_symbol") == "true");
 	symbol->is_hidden = (attributes.value("is_hidden") == "true");
-	symbol->is_protected = (attributes.value("is_hidden") == "true");
+	symbol->is_protected = (attributes.value("is_protected") == "true");
 	
 	while (xml.readNextStartElement())
 	{
