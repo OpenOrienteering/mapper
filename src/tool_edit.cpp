@@ -96,7 +96,14 @@ EditTool::~EditTool()
 bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (!(event->button() == Qt::LeftButton))
+	{
+		if (event->button() == Qt::RightButton)
+		{
+			dragging = false;
+			box_selection = false;
+		}
 		return false;
+	}
 	
 	cur_map_widget = widget;
 	dragging = false;

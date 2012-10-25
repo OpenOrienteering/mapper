@@ -44,6 +44,10 @@ PieMenu::PieMenu(QWidget* parent, int action_count, int icon_size)
 	setAttribute(Qt::WA_OpaquePaintEvent);
 	setAutoFillBackground(false);
 	setMouseTracking(true);
+	
+#ifdef WIN32
+	setAttribute(Qt::WA_ShowWithoutActivating);
+#endif
 }
 
 void PieMenu::setSize(int action_count)
@@ -130,9 +134,11 @@ void PieMenu::popup(const QPoint pos)
 	
 	setGeometry(pos.x() - total_radius, pos.y() - total_radius, 2 * total_radius, 2 * total_radius);
 	show();
-	activateWindow();
 	
+#ifndef WIN32
+	activateWindow();
 	grabMouse(QCursor(Qt::ArrowCursor));
+#endif
 	mouse_moved = false;
 	click_pos = pos;
 	hover_item = -1;
@@ -146,7 +152,9 @@ void PieMenu::mousePressEvent(QMouseEvent* event)
 		return;
 	}
 	
+#ifndef WIN32
 	releaseMouse();
+#endif
 	
 	findHoverItem(event->pos());
 	if (hover_item >= 0 && actions[hover_item] != NULL && actions[hover_item]->isEnabled())
