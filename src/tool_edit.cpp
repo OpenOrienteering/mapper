@@ -721,12 +721,22 @@ void EditTool::updateStatusText()
 {
 	if (dragging && !box_selection)
 	{
+		QString helper_remarks = "";
+		if (!angle_helper->isActive())
+			helper_remarks += tr("<u>Ctrl</u> for fixed angles");
+		if (!shift_pressed && opposite_curve_handle_index >= 0)
+		{
+			if (!helper_remarks.isEmpty())
+				helper_remarks += ", ";
+			helper_remarks += tr("<u>Shift</u> to keep opposite handle position");
+		}
+		
 		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
 		setStatusBarText(tr("<b>Coordinate offset [mm]:</b> %1, %2  <b>Distance [m]:</b> %3  %4")
 						  .arg(drag_vector.getX(), 0, 'f', 1)
 						  .arg(-drag_vector.getY(), 0, 'f', 1)
 						  .arg(0.001 * editor->getMap()->getScaleDenominator() * drag_vector.length(), 0, 'f', 1)
-						  .arg(angle_helper->isActive() ? "" : tr("(<u>Ctrl</u> for fixed angles)")));
+						  .arg(helper_remarks.isEmpty() ? "" : ("(" + helper_remarks + ")")));
 		return;
 	}
 	
