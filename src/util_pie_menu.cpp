@@ -41,6 +41,7 @@ PieMenu::PieMenu(QWidget* parent, int action_count, int icon_size)
 	inner_radius = qRound(0.5 * icon_size);
 	setSize(action_count);
 	
+	setCursor(QCursor(Qt::ArrowCursor));
 	setAttribute(Qt::WA_OpaquePaintEvent);
 	setAutoFillBackground(false);
 	setMouseTracking(true);
