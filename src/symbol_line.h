@@ -106,6 +106,7 @@ public:
 	/// Returns the limit for miter joins in units of the line width.
 	/// See the Qt docs for QPainter::setMiterJoin().
 	/// TODO: Should that better be a line property?
+// FIXME: shall be 0 for border lines.
 	static const float miterLimit() {return 1;}
 	
 	// Getters / Setters
@@ -179,8 +180,8 @@ protected:
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	void createBorderLines(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output);
-	void createBorderLine(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output, LineSymbolBorder& border, float shift);
-	void shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, float shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords);
+	void createBorderLine(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output, LineSymbolBorder& border, double main_shift);
+	void shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, double main_shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords);
 	void processContinuousLine(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
 							   float start, float end, bool has_start, bool has_end, int& cur_line_coord,
 							   MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, bool include_first_point, bool set_mid_symbols, ObjectRenderables& output);

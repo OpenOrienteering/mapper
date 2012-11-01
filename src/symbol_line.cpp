@@ -32,15 +32,15 @@
 #include <QXmlStreamWriter>
 
 #include "map.h"
-#include "object.h"
 #include "map_color.h"
-#include "util.h"
+#include "object.h"
+#include "qbezier_p.h"
+#include "renderable_implementation.h"
 #include "symbol_setting_dialog.h"
 #include "symbol_point_editor.h"
 #include "symbol_point.h"
 #include "symbol_area.h"
-#include "renderable_implementation.h"
-#include "qbezier_p.h"
+#include "util.h"
 #include "util_gui.h"
 
 // ### LineSymbolBorder ###
@@ -374,7 +374,7 @@ void LineSymbol::createRenderables(Object* object, bool path_closed, const MapCo
 
 void LineSymbol::createBorderLines(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output)
 {
-	float shift = 0.001f * 0.5f * line_width + 0.001f * border.shift;
+	double main_shift = 0.0005 * line_width;
 	
 	if (!areBordersDifferent())
 	{
@@ -382,6 +382,7 @@ void LineSymbol::createBorderLines(Object* object, const MapCoordVector& flags, 
 		MapCoordVectorF border_coords;
 		LineSymbol border_symbol;
 		border.createSymbol(border_symbol);
+		border_symbol.setJoinStyle(join_style == RoundJoin ? RoundJoin : MiterJoin);
 		
 		if (border.dashed && border.dash_length > 0 && border.break_length > 0)
 		{
@@ -391,33 +392,33 @@ void LineSymbol::createBorderLines(Object* object, const MapCoordVector& flags, 
 			border_symbol.processDashedLine(object, path_closed, flags, coords, dashed_flags, dashed_coords, output);
 			border_symbol.dashed = false;	// important, otherwise more dashes might be added by createRenderables()!
 			
-			shiftCoordinates(dashed_flags, dashed_coords, path_closed, shift, border_flags, border_coords);
+			shiftCoordinates(dashed_flags, dashed_coords, path_closed, main_shift, border_flags, border_coords);
 			border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
-			shiftCoordinates(dashed_flags, dashed_coords, path_closed, -shift, border_flags, border_coords);
+			shiftCoordinates(dashed_flags, dashed_coords, path_closed, -main_shift, border_flags, border_coords);
 			border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
 		}
 		else
 		{
-			shiftCoordinates(flags, coords, path_closed, shift, border_flags, border_coords);
+			shiftCoordinates(flags, coords, path_closed, main_shift, border_flags, border_coords);
 			border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
-			shiftCoordinates(flags, coords, path_closed, -shift, border_flags, border_coords);
+			shiftCoordinates(flags, coords, path_closed, -main_shift, border_flags, border_coords);
 			border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
 		}
 	}
 	else
 	{
-		createBorderLine(object, flags, coords, path_closed, output, border, -shift);
-		float shift = 0.001f * 0.5f * line_width + 0.001f * right_border.shift;
-		createBorderLine(object, flags, coords, path_closed, output, right_border, shift);
+		createBorderLine(object, flags, coords, path_closed, output, border, -main_shift);
+		createBorderLine(object, flags, coords, path_closed, output, right_border, main_shift);
 	}
 }
 
-void LineSymbol::createBorderLine(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output, LineSymbolBorder& border, float shift)
+void LineSymbol::createBorderLine(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output, LineSymbolBorder& border, double main_shift)
 {
 	MapCoordVector border_flags;
 	MapCoordVectorF border_coords;
 	LineSymbol border_symbol;
 	border.createSymbol(border_symbol);
+	border_symbol.setJoinStyle(join_style == RoundJoin ? RoundJoin : MiterJoin);
 	
 	if (border.dashed && border.dash_length > 0 && border.break_length > 0)
 	{
@@ -427,21 +428,33 @@ void LineSymbol::createBorderLine(Object* object, const MapCoordVector& flags, c
 		border_symbol.processDashedLine(object, path_closed, flags, coords, dashed_flags, dashed_coords, output);
 		border_symbol.dashed = false;	// important, otherwise more dashes might be added by createRenderables()!
 		
-		shiftCoordinates(dashed_flags, dashed_coords, path_closed, shift, border_flags, border_coords);
+		shiftCoordinates(dashed_flags, dashed_coords, path_closed, main_shift, border_flags, border_coords);
 		border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
 	}
 	else
 	{
-		shiftCoordinates(flags, coords, path_closed, shift, border_flags, border_coords);
+		shiftCoordinates(flags, coords, path_closed, main_shift, border_flags, border_coords);
 		border_symbol.createRenderables(object, path_closed, border_flags, border_coords, NULL, output);
 	}
 }
 
-void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, float shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords)
+void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, double main_shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords)
 {
 	const float curve_threshold = 0.03f;	// TODO: decrease for export/print?
 	const int MAX_OFFSET = 16;
 	QBezierCopy offsetCurves[MAX_OFFSET];
+	
+	double miter_limit = 2.0 * miterLimit(); // needed more than once
+	if (miter_limit <= 0.0)
+		miter_limit = 1.0e6;                 // assert(miter_limit != 0)
+	double miter_reference = 0.0;            // reference value: 
+	if (join_style == MiterJoin)             //  when to bevel MiterJoins
+		miter_reference = cos(atan(4.0 / miter_limit));
+	
+	// sign of shift and main shift indicates left or right border
+	// but u_border_shift is unsigned
+	double u_border_shift = 0.001 * ((main_shift > 0.0 && areBordersDifferent()) ? right_border.shift : border.shift);
+	double shift = main_shift + ((main_shift > 0.0) ? u_border_shift : -u_border_shift);
 	
 	int size = flags.size();
 	out_flags.clear();
@@ -449,84 +462,257 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 	out_flags.reserve(size);
 	out_coords.reserve(size);
 	
-	MapCoord no_flags;
+	const MapCoord no_flags;
 	
+	bool ok_in, ok_out;
+	MapCoordF segment_start, 
+	          right_vector, end_right_vector,
+	          tangent_in, tangent_out, 
+	          middle0, middle1;
+	int last_i = size-1;
 	for (int i = 0; i < size; ++i)
 	{
-		float scaling;
-		MapCoordF right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, i, &scaling);
-		float radius = scaling * shift;
+		tangent_in = PathCoord::calculateIncomingTangent(coords, path_closed, i, ok_in);
+		tangent_in.normalize();
+		tangent_out = PathCoord::calculateOutgoingTangent(coords, path_closed, i, ok_out);
+		tangent_out.normalize();
+		
+		if (!ok_in && !ok_out)
+		{
+			// Rare but existing case.  No valid solution, but
+			// at least we need to output a point to handle the flags correctly.
+			qDebug() << "No valid tangent at" << __FILE__ << __LINE__;
+			segment_start = coords[i];
+		}
+		else if (!path_closed && i == 0)
+		{
+			// Simple start point
+			right_vector = tangent_out;
+			right_vector.perpRight();
+			segment_start = coords[i] + shift * right_vector;
+		}
+		else if (!path_closed && i == last_i)
+		{
+			// Simple end point
+			right_vector = tangent_in;
+			right_vector.perpRight();
+			segment_start = coords[i] + shift * right_vector;
+		}
+		else
+		{
+			// Corner point
+			if (!ok_in)
+				tangent_in = tangent_out;
+			else if (!ok_out)
+				tangent_out = tangent_in;
+			
+			right_vector = tangent_out;
+			right_vector.perpRight();
+			
+			middle0 = MapCoordF(tangent_in.getX() + tangent_out.getX(), tangent_in.getY() + tangent_out.getY());
+			middle0.normalize();
+			double offset;
+				
+			// Determine type of corner (inner vs. outer side of corner)
+			double a = (tangent_out.getX() * tangent_in.getY() - tangent_in.getX() * tangent_out.getY()) * main_shift;
+			if (a > 0.0)
+			{
+				// Outer side of corner
+				
+				if (join_style == BevelJoin || join_style == RoundJoin)
+				{
+					middle1 = MapCoordF(tangent_in.getX() + middle0.getX(), tangent_in.getY() + middle0.getY());
+					middle1.normalize();
+					double phi1 = acos(middle1.getX() * tangent_in.getX() + middle1.getY() * tangent_in.getY());
+					offset = tan(phi1) * u_border_shift;
+					
+					if (i > 0)
+					{
+						// First border corner point
+						end_right_vector = tangent_in;
+						end_right_vector.perpRight();
+						out_flags.push_back(no_flags);
+						out_coords.push_back(coords[i] + shift * end_right_vector + offset * tangent_in);
+						
+						if (join_style == RoundJoin)
+						{
+							// Extra border corner point
+							// TODO: better approximation of round corner / use bezier curve
+							middle0.perpRight();
+							out_flags.push_back(no_flags);
+							out_coords.push_back(coords[i] + shift * middle0);
+						}
+					}
+				}
+				else /* join_style == MiterJoin */
+				{
+					// miter_check has no concrete interpretation, 
+					// but was derived by mathematical simplifications.
+					double miter_check = middle0.getX() * tangent_in.getX() + middle0.getY() * tangent_in.getY();
+					if (miter_check <= miter_reference)
+					{
+						// Two border corner points
+						middle1 = MapCoordF(tangent_in.getX() + middle0.getX(), tangent_in.getY() + middle0.getY());
+						middle1.normalize();
+						double phi1 = acos(middle1.getX() * tangent_in.getX() + middle1.getY() * tangent_in.getY());
+						offset = miter_limit * fabs(main_shift) + tan(phi1) * u_border_shift;
+						
+						if (i > 0)
+						{
+							// First border corner point
+							end_right_vector = tangent_in;
+							end_right_vector.perpRight();
+							out_flags.push_back(no_flags);
+							out_coords.push_back(coords[i] + shift * end_right_vector + offset * tangent_in);
+						}
+					}
+					else
+					{
+						middle0.perpRight();
+						double phi = acos(middle0.getX() * tangent_in.getX() + middle0.getY() * tangent_in.getY());
+						offset = fabs(1.0/tan(phi) * shift);
+					}
+				}
+				
+				// single or second border corner point
+				segment_start = coords[i] + shift * right_vector - offset * tangent_out;
+			}
+			else if (flags[i].isCurveStart() || (i > 2 && flags[i-3].isCurveStart()))
+			{
+				// Inner side of corner (or no corner), and at least one side is bezier
+				// old behaviour
+				right_vector = middle0;
+				right_vector.perpRight();
+				double phi = acos(right_vector.getX() * tangent_in.getX() + right_vector.getY() * tangent_in.getY());
+				double sin_phi = sin(phi);
+				double inset = (sin_phi > (1.0/miter_limit)) ? (1.0 / sin_phi) : miter_limit;
+				segment_start = coords[i] + (shift * inset) * right_vector;
+			}
+			else
+			{
+				// Inner side of corner (or no corner), and not bezier involved
+				
+				// Default solution
+				middle0.perpRight();
+				double phi = acos(middle0.getX() * tangent_in.getX() + middle0.getY() * tangent_in.getY());
+				double tan_phi = tan(phi);
+				offset = -fabs(shift/tan_phi);
+				segment_start = coords[i] + shift * right_vector - offset * tangent_out;
+				
+				// Check critical cases
+				if (tan_phi < 1.0)
+				{
+					a = 0.0; // negative values indicate inappropriate default solution
+					double len_in = coords[i].lengthToSquared(coords[(i - 1) % size]);
+					double len_out = coords[i].lengthToSquared(coords[(i + 1) % size]);
+					if (len_in < len_out)
+					{
+						// Check if default solution is further away than start of incoming border
+						MapCoordF predecessor = coords[(i - 1) % size];
+						MapCoordF pred_right = PathCoord::calculateOutgoingTangent(coords, path_closed, (i - 1) % size, ok_in);
+						pred_right.perpRight();
+						pred_right.normalize();
+						pred_right *= shift;
+						predecessor = predecessor + pred_right - segment_start;
+						a = (pred_right.getX() * predecessor.getY() - pred_right.getY() * predecessor.getX()) * shift;
+					}
+					else
+					{
+						// Check if default solution is further away than end of outgoing border
+						MapCoordF successor = coords[(i + 1) % size];
+						MapCoordF succ_right = PathCoord::calculateIncomingTangent(coords, path_closed, (i + 1) % size, ok_out);
+						succ_right.perpRight();
+						succ_right.normalize();
+						succ_right *= shift;
+						successor = segment_start - successor - succ_right;
+						a = (succ_right.getX() * successor.getY() - succ_right.getY() * successor.getX()) * shift;
+					}
+						
+					if (a < -0.0) 
+					{
+						// Default solution is too far off from main path
+						if (len_in < len_out)
+						{
+							segment_start = coords[i] + shift * right_vector + sqrt(len_in) * tangent_out;
+						}
+						else
+						{
+							right_vector = tangent_in;
+							right_vector.perpRight();
+							segment_start = coords[i] + shift * right_vector - sqrt(len_out) * tangent_in;
+						}
+					}
+#ifdef MAPPER_FILL_MITER_LIMIT_GAP
+					else
+					{
+						// Avoid miter limit effects by extra points
+						// This is be nice for ISOM roads, but not for powerlines...
+						// TODO: add another flag to the signature?
+						out_flags.push_back(no_flags);
+						out_coords.push_back(coords[i] + shift * right_vector - offset * tangent_out);
+						
+						out_flags.push_back(no_flags);
+						out_coords.push_back(out_coords.back() - (shift - main_shift) * qMax(0.0, 1.0 / sin(phi) - miter_limit) * middle0);
+						
+						// single or second border corner point
+						segment_start = coords[i] + shift * right_vector - offset * tangent_out;
+					}
+#endif
+				}
+			}
+		}
+		
+		out_flags.push_back(flags[i]);
+		out_coords.push_back(segment_start);
 		
 		if (flags[i].isCurveStart())
 		{
 			// Use QBezierCopy code to shift the curve, but set start and end point manually to get the correct end points (because of line joins)
 			// TODO: it may be necessary to remove some of the generated curves in the case an outer point is moved inwards
-			QBezierCopy bezier;
-			
-			bool reverse = (-shift < 0);
-			if (!reverse)
-				bezier = QBezierCopy::fromPoints(coords[i].toQPointF(), coords[i+1].toQPointF(), coords[i+2].toQPointF(), coords[(i+3) % size].toQPointF());
-			else
-				bezier = QBezierCopy::fromPoints(coords[(i+3) % size].toQPointF(), coords[i+2].toQPointF(), coords[i+1].toQPointF(), coords[i].toQPointF());
-			
-			int count = bezier.shifted(offsetCurves, MAX_OFFSET, qAbs(shift), curve_threshold);
-			if (count)
+			if (main_shift > 0.0)
 			{
-				out_flags.push_back(no_flags);
-				out_coords.push_back(MapCoordF(coords[i].getX() + radius * right_vector.getX(), coords[i].getY() + radius * right_vector.getY()));
-				
-				if (reverse)
+				QBezierCopy bezier = QBezierCopy::fromPoints(coords[(i+3) % size].toQPointF(), coords[i+2].toQPointF(), coords[i+1].toQPointF(), coords[i].toQPointF());
+				int count = bezier.shifted(offsetCurves, MAX_OFFSET, qAbs(shift), curve_threshold);
+				for (int i = count - 1; i >= 0; --i)
 				{
-					for (int i = count - 1; i >= 0; --i)
+					out_flags[out_flags.size() - 1].setCurveStart(true);
+					
+					out_flags.push_back(no_flags);
+					out_coords.push_back(MapCoordF(offsetCurves[i].pt3().x(), offsetCurves[i].pt3().y()));
+					
+					out_flags.push_back(no_flags);
+					out_coords.push_back(MapCoordF(offsetCurves[i].pt2().x(), offsetCurves[i].pt2().y()));
+					
+					if (i > 0)
 					{
-						out_flags[out_flags.size() - 1].setCurveStart(true);
-						
 						out_flags.push_back(no_flags);
-						out_coords.push_back(MapCoordF(offsetCurves[i].pt3().x(), offsetCurves[i].pt3().y()));
-						
-						out_flags.push_back(no_flags);
-						out_coords.push_back(MapCoordF(offsetCurves[i].pt2().x(), offsetCurves[i].pt2().y()));
-						
-						if (i > 0)
-						{
-							out_flags.push_back(no_flags);
-							out_coords.push_back(MapCoordF(offsetCurves[i].pt1().x(), offsetCurves[i].pt1().y()));
-						}
+						out_coords.push_back(MapCoordF(offsetCurves[i].pt1().x(), offsetCurves[i].pt1().y()));
 					}
 				}
-				else
+			}
+			else
+			{
+				QBezierCopy bezier = QBezierCopy::fromPoints(coords[i].toQPointF(), coords[i+1].toQPointF(), coords[i+2].toQPointF(), coords[(i+3) % size].toQPointF());
+				int count = bezier.shifted(offsetCurves, MAX_OFFSET, qAbs(shift), curve_threshold);
+				for (int i = 0; i < count; ++i)
 				{
-					for (int i = 0; i < count; ++i)
+					out_flags[out_flags.size() - 1].setCurveStart(true);
+					
+					out_flags.push_back(no_flags);
+					out_coords.push_back(MapCoordF(offsetCurves[i].pt2().x(), offsetCurves[i].pt2().y()));
+					
+					out_flags.push_back(no_flags);
+					out_coords.push_back(MapCoordF(offsetCurves[i].pt3().x(), offsetCurves[i].pt3().y()));
+					
+					if (i < count - 1)
 					{
-						out_flags[out_flags.size() - 1].setCurveStart(true);
-						
 						out_flags.push_back(no_flags);
-						out_coords.push_back(MapCoordF(offsetCurves[i].pt2().x(), offsetCurves[i].pt2().y()));
-						
-						out_flags.push_back(no_flags);
-						out_coords.push_back(MapCoordF(offsetCurves[i].pt3().x(), offsetCurves[i].pt3().y()));
-						
-						if (i < count - 1)
-						{
-							out_flags.push_back(no_flags);
-							out_coords.push_back(MapCoordF(offsetCurves[i].pt4().x(), offsetCurves[i].pt4().y()));
-						}
+						out_coords.push_back(MapCoordF(offsetCurves[i].pt4().x(), offsetCurves[i].pt4().y()));
 					}
 				}
-				
-				/*float end_scaling;
-				MapCoordF end_right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, i+3, &end_scaling);
-				float end_radius = end_scaling * shift;
-				out_flags.push_back(no_flags);
-				out_coords.push_back(MapCoordF(coords[i+3].getX() + end_radius * end_right_vector.getX(), coords[i].getY() + end_radius * end_right_vector.getY()));*/
 			}
 			
 			i += 2;
-		}
-		else
-		{
-			out_flags.push_back(flags[i]);
-			out_coords.push_back(MapCoordF(coords[i].getX() + radius * right_vector.getX(), coords[i].getY() + radius * right_vector.getY()));
 		}
 	}
 }
