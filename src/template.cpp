@@ -339,10 +339,6 @@ Q_ASSERT(temp->passpoints.size() == 0);
 		return NULL;
 	}
 	
-	// Read until end of element
-	while (!xml.isEndElement())
-		xml.readNext();
-	
 	return temp;
 }
 

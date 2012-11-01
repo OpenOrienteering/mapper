@@ -339,7 +339,12 @@ protected:
 	virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) {}
 	
 	/// Derived classes must load type specific template parameters here and return true if successful
-	virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) {return true;}
+	virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
+	{
+		while (xml.readNextStartElement())
+			xml.skipCurrentElement();
+		return true;
+	}
 	
 	/// Derived classes must load the template file here and return true if successful.
 	/// If configuring is true, a call to postLoadConfiguration() will follow if this returns true.

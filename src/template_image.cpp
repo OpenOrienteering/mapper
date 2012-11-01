@@ -84,18 +84,15 @@ void TemplateImage::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml)
 
 bool TemplateImage::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 {
-	if (is_georeferenced)
+	while (xml.readNextStartElement())
 	{
-		while (xml.readNextStartElement())
+		if (is_georeferenced && xml.name() == "crs_spec")
 		{
-			if (xml.name() == "crs_spec")
-			{
 // TODO: check specification language
-				temp_crs_spec = xml.readElementText();
-			}
-			else
-				xml.skipCurrentElement(); // unsupported
+			temp_crs_spec = xml.readElementText();
 		}
+		else
+			xml.skipCurrentElement(); // unsupported
 	}
 	
 	return true;
