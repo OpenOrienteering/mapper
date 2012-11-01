@@ -680,12 +680,12 @@
     <message>
         <location filename="../src/tool_edit.cpp" line="746"/>
         <source>&lt;b&gt;Space+Click&lt;/b&gt; on point to switch between dash and normal point</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Tukšumsimbols+Klikšķis&lt;/b&gt; uz punktu, lai pārslēgtos starp mezgla un normālu punktu</translation>
     </message>
     <message>
         <location filename="../src/tool_edit.cpp" line="748"/>
         <source>; Try &lt;u&gt;Ctrl&lt;/u&gt;, &lt;u&gt;Space&lt;/u&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>; Pamēģini &lt;u&gt;Ctrl&lt;/u&gt;, &lt;u&gt;Tukšumsimbolu&lt;/u&gt;</translation>
     </message>
     <message>
         <source>; Try &lt;u&gt;Ctrl&lt;/u&gt;</source>
@@ -1422,7 +1422,7 @@
     <message>
         <location filename="../src/main_window.cpp" line="185"/>
         <source>General</source>
-        <translation type="unfinished">Vispārīgi</translation>
+        <translation>Vispārīgi</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="198"/>
@@ -1590,17 +1590,17 @@ Spied No, lai izvēlētos citu formātu.</translation>
     <message>
         <location filename="../src/main_window.cpp" line="804"/>
         <source>The help browser (&quot;Qt Assistant&quot;) is not installed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nav uzstādīts palīdzības pārlūks (&quot;Qt Assistant&quot;).</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="805"/>
         <source>Do you want to install it now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai vēlies uzstādīt to tagad?</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="807"/>
         <source>Install...</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzstāda...</translation>
     </message>
     <message>
         <location filename="../src/main_window.cpp" line="811"/>
@@ -2047,7 +2047,7 @@ Mainīt importējamo datu mērogu?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="439"/>
         <source>Replace symbol set...</source>
-        <translation type="unfinished"></translation>
+        <translation>Aizvietot simbolu kopu...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="443"/>
@@ -3423,7 +3423,7 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="45"/>
         <source>OCAD Versions 7, 8</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD Versijas 7, 8</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="98"/>
@@ -3710,77 +3710,77 @@ Maksimālā atbalstītā versija ir %2.</translation>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="39"/>
         <source>Replace symbol set</source>
-        <translation type="unfinished"></translation>
+        <translation>Aizvietot simbolu kopu</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="41"/>
         <source>Configure how the symbols should be replaced, and which.</source>
-        <translation type="unfinished"></translation>
+        <translation>Iestatīt, kā un kuri simboli jāaizvieto.</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="43"/>
         <source>Import all new symbols, even if not used as replacement</source>
-        <translation type="unfinished"></translation>
+        <translation>Importēt visus jaunos simbolus, pat ja netiek lietoti kā aizvietotie</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="45"/>
         <source>Delete original symbols which are unused after the replacement</source>
-        <translation type="unfinished"></translation>
+        <translation>Dzēst sākotnējos simbolus, kuri netiek lietoti pēc aizvietošanas</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="47"/>
         <source>Delete unused colors after the replacement</source>
-        <translation type="unfinished"></translation>
+        <translation>Dzēst neizmantotās krāsas pēc aizvietošanas</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="50"/>
         <source>Symbol mapping:</source>
-        <translation type="unfinished"></translation>
+        <translation>Simbolu atbilstība:</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="51"/>
         <source>Match replacement symbols by symbol number</source>
-        <translation type="unfinished"></translation>
+        <translation>Atzīmēt aizvietojamos simbolus ar simbola numuru</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="57"/>
         <source>Original</source>
-        <translation type="unfinished"></translation>
+        <translation>Sākotnējais</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="57"/>
         <source>Replacement</source>
-        <translation type="unfinished"></translation>
+        <translation>Aizvietojums</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="255"/>
         <source>- None -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Nekas -</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="287"/>
         <source>Choose map file to load symbols from</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvēlēties kartes datni, no kuras ielasīt simbolus</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="295"/>
         <source>Error</source>
-        <translation type="unfinished">Kļūda</translation>
+        <translation>Kļūda</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="295"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevar ielasīt kartes datni, atceļam.</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="301"/>
         <source>Warning</source>
-        <translation type="unfinished">Brīdinājums</translation>
+        <translation>Brīdinājums</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="302"/>
         <source>The chosen symbol set has a scale of 1:%1, while the map scale is 1:%2. Do you really want to choose this set?</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvēlētajai simbolu kopai ir mērogs 1:%1, bet kartes mērogs ir 1:%2. Vai tiešām gribi izvēlēties šo kopu?</translation>
     </message>
 </context>
 <context>
@@ -3991,7 +3991,7 @@ Maksimālā atbalstītā versija ir %2.</translation>
     <message>
         <location filename="../src/symbol.cpp" line="740"/>
         <source>- None -</source>
-        <translation type="unfinished"></translation>
+        <translation>-  Nekas -</translation>
     </message>
 </context>
 <context>
