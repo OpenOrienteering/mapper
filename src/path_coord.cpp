@@ -306,7 +306,7 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVector& coords, int i, bool 
 			if (coords[k].isClosePoint())
 				break;
 			tangent = MapCoordF(coords[i].xd() - coords[k].xd(), coords[i].yd() - coords[k].yd());
-			if (tangent.lengthSquared() > 0.01f*0.01f)
+			if (tangent.lengthSquared() > 0.001)
 				return tangent;
 		}
 		
@@ -321,7 +321,7 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVector& coords, int i, bool 
 			for (; k > i; --k)
 			{
 				tangent = MapCoordF(coords[i].xd() - coords[k].xd(), coords[i].yd() - coords[k].yd());
-				if (tangent.lengthSquared() > 0.01f*0.01f)
+				if (tangent.lengthSquared() > 0.001)
 					return tangent;
 			}
 		}
@@ -336,7 +336,7 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVector& coords, int i, bool 
 		for (; k < size; ++k)
 		{
 			tangent = MapCoordF(coords[k].xd() - coords[i].xd(), coords[k].yd() - coords[i].yd());
-			if (tangent.lengthSquared() > 0.01f*0.01f)
+			if (tangent.lengthSquared() > 0.001)
 				return tangent;
 			if (coords[k].isClosePoint())
 				break;
@@ -354,7 +354,7 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVector& coords, int i, bool 
 			for (; k < i; ++k)
 			{
 				tangent = MapCoordF(coords[k].xd() - coords[i].xd(), coords[k].yd() - coords[i].yd());
-				if (tangent.lengthSquared() > 0.01f*0.01f)
+				if (tangent.lengthSquared() > 0.001)
 					return tangent;
 			}
 		}
@@ -376,7 +376,7 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVectorF& coords, int i, bool
 		for (; k >= 0; --k)
 		{
 			tangent = MapCoordF(coords[i].getX() - coords[k].getX(), coords[i].getY() - coords[k].getY());
-			if (tangent.lengthSquared() > 0.01f*0.01f)
+			if (tangent.lengthSquared() > 0.001)
 				return tangent;
 		}
 		
@@ -390,7 +390,7 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVectorF& coords, int i, bool
 		for (; k < size; ++k)
 		{
 			tangent = MapCoordF(coords[k].getX() - coords[i].getX(), coords[k].getY() - coords[i].getY());
-			if (tangent.lengthSquared() > 0.01f*0.01f)
+			if (tangent.lengthSquared() > 0.001)
 				return tangent;
 		}
 		
