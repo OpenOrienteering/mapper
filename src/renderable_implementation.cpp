@@ -98,6 +98,11 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 	assert(transformed_coords.size() == coords.size());
 	color_priority = symbol->getColor()->priority;
 	line_width = 0.001f * symbol->getLineWidth();
+	if (color_priority < 0)
+	{
+		// Helper line
+		line_width = 0;
+	}
 	float half_line_width = 0.5f * line_width;
 	
 	switch (symbol->getCapStyle())
