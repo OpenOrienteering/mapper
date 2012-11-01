@@ -721,37 +721,37 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <translation type="obsolete">&lt;b&gt;Koordinatenversatz [mm]:&lt;/b&gt; %1, %2  &lt;b&gt;Entfernung [m]:&lt;/b&gt; %3</translation>
     </message>
     <message>
-        <location filename="../src/tool_edit.cpp" line="718"/>
+        <location filename="../src/tool_edit.cpp" line="725"/>
         <source>&lt;b&gt;Coordinate offset [mm]:&lt;/b&gt; %1, %2  &lt;b&gt;Distance [m]:&lt;/b&gt; %3  %4</source>
         <translation>&lt;b&gt;Koordinatenversatz [mm]:&lt;/b&gt; %1, %2  &lt;b&gt;Entfernung [m]:&lt;/b&gt; %3  %4</translation>
     </message>
     <message>
-        <location filename="../src/tool_edit.cpp" line="722"/>
+        <location filename="../src/tool_edit.cpp" line="729"/>
         <source>(&lt;u&gt;Ctrl&lt;/u&gt; for fixed angles)</source>
         <translation>(&lt;u&gt;Strg&lt;/u&gt; für eingeschränkte Winkel)</translation>
     </message>
     <message>
-        <location filename="../src/tool_edit.cpp" line="726"/>
+        <location filename="../src/tool_edit.cpp" line="733"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to select an object, &lt;b&gt;Drag&lt;/b&gt; for box selection, &lt;b&gt;Shift&lt;/b&gt; to toggle selection</source>
         <translation>&lt;b&gt;Klicken&lt;/b&gt; um ein Objekt auszuwählen, &lt;b&gt;Ziehen&lt;/b&gt; um einen Bereich zu markieren, &lt;b&gt;Umschalttaste&lt;/b&gt; zum Umkehren der Selektion</translation>
     </message>
     <message>
-        <location filename="../src/tool_edit.cpp" line="729"/>
+        <location filename="../src/tool_edit.cpp" line="736"/>
         <source>, &lt;b&gt;Del&lt;/b&gt; to delete</source>
         <translation>, &lt;b&gt;Entf&lt;/b&gt; zum Löschen</translation>
     </message>
     <message>
-        <location filename="../src/tool_edit.cpp" line="737"/>
+        <location filename="../src/tool_edit.cpp" line="744"/>
         <source>&lt;b&gt;Ctrl+Click&lt;/b&gt; on point to delete it, on path to add a new point, with &lt;b&gt;Space&lt;/b&gt; to make it a dash point</source>
         <translation>&lt;b&gt;Ctrl+Klick&lt;/b&gt; auf einen Punkt, um ihn zu löschen; auf einem Pfad, um einen Punkt einzufügen, mit &lt;b&gt;Leertaste&lt;/b&gt;, um einen Strichelungspunkt anzulegen</translation>
     </message>
     <message>
-        <location filename="../src/tool_edit.cpp" line="739"/>
+        <location filename="../src/tool_edit.cpp" line="746"/>
         <source>&lt;b&gt;Space+Click&lt;/b&gt; on point to switch between dash and normal point</source>
         <translation>&lt;b&gt;Leertaste + Klick&lt;/b&gt; auf einen Punkt, um zwischen Strichelungs- und normalem Punkt umzuschalten</translation>
     </message>
     <message>
-        <location filename="../src/tool_edit.cpp" line="741"/>
+        <location filename="../src/tool_edit.cpp" line="748"/>
         <source>; Try &lt;u&gt;Ctrl&lt;/u&gt;, &lt;u&gt;Space&lt;/u&gt;</source>
         <translation>; Mehr mit &lt;u&gt;Strg&lt;/u&gt;, &lt;u&gt;Leertaste&lt;/u&gt;</translation>
     </message>
@@ -2543,8 +2543,8 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <location filename="../src/map_editor.cpp" line="870"/>
         <location filename="../src/map_editor.cpp" line="889"/>
         <location filename="../src/map_editor.cpp" line="902"/>
-        <location filename="../src/map_editor.cpp" line="1993"/>
-        <location filename="../src/map_editor.cpp" line="2011"/>
+        <location filename="../src/map_editor.cpp" line="1994"/>
+        <location filename="../src/map_editor.cpp" line="2012"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
@@ -2671,12 +2671,12 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <translation>Wählen Sie ein Flächenobjekt mit drehbarem Füllmuster oder ein drehbares Punktobjekt, um dieses Werkzeug verwenden zu können.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1974"/>
+        <location filename="../src/map_editor.cpp" line="1975"/>
         <source>Import OMAP, OCD, GPX, OSM or DXF file</source>
         <translation>OMAP-, OCD-, GPX-, OSM- oder DXF-Datei importieren</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="2011"/>
+        <location filename="../src/map_editor.cpp" line="2012"/>
         <source>Cannot import the selected map file because it could not be loaded.</source>
         <translation>Die ausgewählte Kartendatei konnte nicht geladen und importiert werden.</translation>
     </message>
@@ -2807,33 +2807,33 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <translation>%1 Objekt(e) dupliziert</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1769"/>
+        <location filename="../src/map_editor.cpp" line="1770"/>
         <source>Measure</source>
         <translation>Messen</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1886"/>
+        <location filename="../src/map_editor.cpp" line="1887"/>
         <source>Paint free-handedly on a template</source>
         <translation>Auf einer Vorlage freihändig Zeichnen</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1888"/>
+        <location filename="../src/map_editor.cpp" line="1889"/>
         <source>Paint free-handedly on a template. Create or load a template which can be drawn onto to activate this button</source>
         <translatorcomment>First part duplicated. Check punctuation.</translatorcomment>
         <translation>Auf einer Vorlage freihändig Zeichnen. Erstellen oder laden Sie eine Vorlage auf die gezeichnet werden kann, um dieses Werkzeug zu verwenden</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1974"/>
+        <location filename="../src/map_editor.cpp" line="1975"/>
         <source>Importable files</source>
         <translation>Importierbare Dateien</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1974"/>
+        <location filename="../src/map_editor.cpp" line="1975"/>
         <source>All files</source>
         <translation>Alle Dateien</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1993"/>
+        <location filename="../src/map_editor.cpp" line="1994"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
         <translation>Die ausgewählte Datei konnte nicht importiert werden: unbekanntes Dateiformat.</translation>
     </message>
@@ -3994,12 +3994,12 @@ libocad-Fehler %1</translation>
         <translation>%1 Farben erwartet, %2 gefunden.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="418"/>
+        <location filename="../src/file_format_xml.cpp" line="421"/>
         <source>Expected %1 symbols, found %2.</source>
         <translation>%1 Symbole erwartet, %2 gefunden.</translation>
     </message>
     <message>
-        <location filename="../src/file_format_xml.cpp" line="448"/>
+        <location filename="../src/file_format_xml.cpp" line="451"/>
         <source>Expected %1 map parts, found %2.</source>
         <translation>%1 Kartenteile erwartet, %2 gefunden.</translation>
     </message>
@@ -4079,42 +4079,42 @@ Die höchste unterstütze Version ist %2.</translation>
         <translation>%1 Knoten konnten nicht korrekt verarbeitet werden.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1586"/>
+        <location filename="../src/map_editor.cpp" line="1587"/>
         <source>Object selection</source>
         <translation>Objektauswahl</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1586"/>
+        <location filename="../src/map_editor.cpp" line="1587"/>
         <source>No objects were selected because there are no objects with the selected symbol(s)</source>
         <translation>Es gibt keine Objekte mit dem ausgewählten Symbol.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1780"/>
-        <location filename="../src/map_editor.cpp" line="1786"/>
-        <location filename="../src/map_editor.cpp" line="1792"/>
-        <location filename="../src/map_editor.cpp" line="1798"/>
+        <location filename="../src/map_editor.cpp" line="1781"/>
+        <location filename="../src/map_editor.cpp" line="1787"/>
+        <location filename="../src/map_editor.cpp" line="1793"/>
+        <location filename="../src/map_editor.cpp" line="1799"/>
         <location filename="../src/gps_track.cpp" line="275"/>
         <location filename="../src/gps_track.cpp" line="280"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1780"/>
+        <location filename="../src/map_editor.cpp" line="1781"/>
         <source>Unification failed.</source>
         <translation>Verschmelzen fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1786"/>
+        <location filename="../src/map_editor.cpp" line="1787"/>
         <source>Intersection failed.</source>
         <translation>Berechnung der Schnittfläche fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1792"/>
+        <location filename="../src/map_editor.cpp" line="1793"/>
         <source>Difference failed.</source>
         <translation>Subtraktion fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="../src/map_editor.cpp" line="1798"/>
+        <location filename="../src/map_editor.cpp" line="1799"/>
         <source>XOr failed.</source>
         <translation>XOr-Operation fehlgeschlagen.</translation>
     </message>
@@ -4521,7 +4521,7 @@ Die höchste unterstütze Version ist %2.</translation>
 <context>
     <name>SymbolDropDown</name>
     <message>
-        <location filename="../src/symbol.cpp" line="590"/>
+        <location filename="../src/symbol.cpp" line="642"/>
         <source>- none -</source>
         <translation>- kein -</translation>
     </message>
@@ -4529,7 +4529,7 @@ Die höchste unterstütze Version ist %2.</translation>
 <context>
     <name>SymbolDropDownDelegate</name>
     <message>
-        <location filename="../src/symbol.cpp" line="688"/>
+        <location filename="../src/symbol.cpp" line="740"/>
         <source>- None -</source>
         <translation>- Keines -</translation>
     </message>
