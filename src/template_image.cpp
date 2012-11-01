@@ -42,7 +42,6 @@ TemplateImage::TemplateImage(const QString& path, Map* map) : Template(path, map
 	connect(&georef, SIGNAL(projectionChanged()), this, SLOT(updateGeoreferencing()));
 	connect(&georef, SIGNAL(transformationChanged()), this, SLOT(updateGeoreferencing()));
 }
-
 TemplateImage::~TemplateImage()
 {
 	if (template_state == Loaded)
@@ -84,18 +83,15 @@ void TemplateImage::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml)
 
 bool TemplateImage::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 {
-	if (is_georeferenced)
+	while (xml.readNextStartElement())
 	{
-		while (xml.readNextStartElement())
+		if (is_georeferenced && xml.name() == "crs_spec")
 		{
-			if (xml.name() == "crs_spec")
-			{
-// TODO: check specification language
-				temp_crs_spec = xml.readElementText();
-			}
-			else
-				xml.skipCurrentElement(); // unsupported
+			// TODO: check specification language
+			temp_crs_spec = xml.readElementText();
 		}
+		else
+			xml.skipCurrentElement(); // unsupported
 	}
 	
 	return true;
@@ -133,7 +129,7 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 	
 	return true;
 }
-bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent)
+bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
 {
 	if (getTemplateFilename().endsWith(".gif", Qt::CaseInsensitive))
 		QMessageBox::warning(dialog_parent, tr("Warning"), tr("Loading a GIF image template.\nSaving GIF files is not supported. This means that drawings on this template won't be saved!\nIf you do not intend to draw on this template however, that is no problem."));
@@ -156,7 +152,7 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent)
 		if (open_dialog.isGeorefRadioChecked() && available_georef == Georeferencing_WorldFile)
 		{
 			// Let user select the coordinate reference system, as this is not specified in world files
-			SelectCRSDialog dialog(map, dialog_parent, true, true, tr("Select the coordinate reference system of the coordinates in the world file"));
+			SelectCRSDialog dialog(map, dialog_parent, true, false, true, tr("Select the coordinate reference system of the coordinates in the world file"));
 			if (dialog.exec() == QDialog::Rejected)
 				continue;
 			temp_crs_spec = dialog.getCRSSpec();

@@ -35,7 +35,6 @@ QStringList TemplateMap::locked_maps;
 TemplateMap::TemplateMap(const QString& path, Map* map) : Template(path, map), template_map(NULL)
 {
 }
-
 TemplateMap::~TemplateMap()
 {
 	if (template_state == Loaded)
@@ -70,12 +69,13 @@ bool TemplateMap::loadTemplateFileImpl(bool configuring)
 	return true;
 }
 
-bool TemplateMap::postLoadConfiguration(QWidget* dialog_parent)
+bool TemplateMap::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
 {
 	// TODO: recursive template loading dialog
 	
 	// TODO: it would be possible to load maps as georeferenced if both maps are georeferenced
 	is_georeferenced = false;
+	out_center_in_view = false;
 	
 	return true;
 }

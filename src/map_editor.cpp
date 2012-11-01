@@ -1998,7 +1998,7 @@ void MapEditorController::importClicked()
 void MapEditorController::importGeoFile(const QString& filename)
 {
 	TemplateTrack temp(filename, map);
-	if (!temp.configureAndLoad(window))
+	if (!temp.configureAndLoad(window, main_view))
 		return;
 	temp.import(window);
 }

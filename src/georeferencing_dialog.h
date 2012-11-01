@@ -397,7 +397,7 @@ class SelectCRSDialog : public QDialog
 Q_OBJECT
 public:
 	SelectCRSDialog(Map* map, QWidget* parent, bool show_take_from_map,
-					bool show_geographic, const QString& desc_text = QString());
+					bool show_local, bool show_geographic, const QString& desc_text = QString());
 	
 	QString getCRSSpec() const;
 	
@@ -411,6 +411,7 @@ private:
 	
 	/* GUI elements */
 	QRadioButton* map_radio;
+	QRadioButton* local_radio;
 	QRadioButton* geographic_radio;
 	QRadioButton* projected_radio;
 	QRadioButton* spec_radio;

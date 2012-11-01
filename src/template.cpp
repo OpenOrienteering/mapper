@@ -46,6 +46,7 @@ TemplateTransform::TemplateTransform()
 	template_rotation = 0;
 }
 
+
 void TemplateTransform::save(QIODevice* file)
 {
 	file->write((const char*)&template_x, sizeof(qint64));
@@ -339,10 +340,6 @@ Q_ASSERT(temp->passpoints.size() == 0);
 		return NULL;
 	}
 	
-	// Read until end of element
-	while (!xml.isEndElement())
-		xml.readNext();
-	
 	return temp;
 }
 
@@ -387,14 +384,28 @@ bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
 	}
 }
 
-bool Template::configureAndLoad(QWidget* dialog_parent)
+bool Template::configureAndLoad(QWidget* dialog_parent, MapView* view)
 {
+	bool center_in_view = true;
+	
 	if (!preLoadConfiguration(dialog_parent))
 		return false;
 	if (!loadTemplateFile(true))
 		return false;
-	if (!postLoadConfiguration(dialog_parent))
+	if (!postLoadConfiguration(dialog_parent, center_in_view))
+	{
+		unloadTemplateFile();
 		return false;
+	}
+	
+	// If the template is not georeferenced, position it at the viewport midpoint
+	if (!isTemplateGeoreferenced() && center_in_view)
+	{
+		QPointF center = calculateTemplateBoundingBox().center();
+		setTemplateX(view->getPositionX() - qRound64(1000 * center.x()));
+		setTemplateY(view->getPositionY() - qRound64(1000 * center.y()));
+	}
+	
 	return true;
 }
 

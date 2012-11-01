@@ -430,11 +430,25 @@ MapCoordF Georeferencing::toMapCoordF(const LatLon& lat_lon, bool* ok) const
 
 MapCoordF Georeferencing::toMapCoordF(Georeferencing* other, const MapCoordF& map_coords, bool* ok) const
 {
-	if (isLocal() != other->isLocal())
+	if (other == NULL)
+	{
+		return toMapCoordF(LatLon(map_coords.getY(), map_coords.getX()), ok);
+	}
+	else if (!isLocal() && other->isLocal())
 	{
 		if (ok)
-			*ok = false;
-		return map_coords;
+			*ok = true;
+		MapCoordF result = map_coords + MapCoordF(other->getMapRefPoint());
+		result.setY(-result.getY());
+		return result;
+	}
+	else if (isLocal() && !other->isLocal())
+	{
+		if (ok)
+			*ok = true;
+		MapCoordF result = MapCoordF(getMapRefPoint());
+		result.setY(-result.getY());
+		return result;
 	}
 	else if (isLocal())
 	{
@@ -449,15 +463,11 @@ MapCoordF Georeferencing::toMapCoordF(Georeferencing* other, const MapCoordF& ma
 		
 		QPointF projected_coords = other->toProjectedCoords(map_coords);
 		double easting = projected_coords.x(), northing = projected_coords.y();
-		if (other->projected_crs_spec.contains("+proj=latlong"))
-		{
-			easting = easting * M_PI / 180.0;
-			northing = northing * M_PI / 180.0;
-		}
 		if (projected_crs && other->projected_crs) {
 			// Direct transformation:
 			//int ret = pj_transform(other->projected_crs, projected_crs, 1, 1, &easting, &northing, NULL);
-			// Use geographic coordinates as intermediate step as direct transformation seems to give wrong results:
+			// Use geographic coordinates as intermediate step to enforce
+			// that coordinates are assumed to have WGS84 datum if datum is specified in only one CRS spec:
 			int ret = pj_transform(other->projected_crs, geographic_crs, 1, 1, &easting, &northing, NULL);
 			ret |= pj_transform(geographic_crs, projected_crs, 1, 1, &easting, &northing, NULL);
 			

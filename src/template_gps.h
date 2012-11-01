@@ -24,6 +24,12 @@
 #include "template.h"
 #include "gps_track.h"
 
+QT_BEGIN_NAMESPACE
+class QRadioButton;
+class QDoubleSpinBox;
+class QDialogButtonBox;
+QT_END_NAMESPACE
+
 class PathObject;
 class PointObject;
 
@@ -33,13 +39,13 @@ class TemplateTrack : public Template
 Q_OBJECT
 public:
 	TemplateTrack(const QString& path, Map* map);
-	virtual ~TemplateTrack();
+    virtual ~TemplateTrack();
 	virtual const QString getTemplateType() {return "TemplateTrack";}
 	
 	virtual bool saveTemplateFile();
 	
 	virtual bool loadTemplateFileImpl(bool configuring);
-	virtual bool postLoadConfiguration(QWidget* dialog_parent);
+	virtual bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view);
 	virtual void unloadTemplateFileImpl();
 	
 	virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity);
@@ -63,6 +69,10 @@ public slots:
 	
 protected:
 	virtual Template* duplicateImpl();
+    virtual void saveTypeSpecificTemplateConfiguration(QIODevice* stream);
+    virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
+    virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml);
+    virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml);
 	
 	/// Projects the track in non-georeferenced mode
 	void calculateLocalGeoreferencing();
@@ -71,7 +81,25 @@ protected:
 	void importPathEnd(PathObject* path);
 	PointObject* importWaypoint(const MapCoordF& position);
 	
+	
 	Track track;
+	QString track_crs_spec;
+};
+
+class LocalCRSPositioningDialog : public QDialog
+{
+Q_OBJECT
+public:
+	LocalCRSPositioningDialog(TemplateTrack* temp, QWidget* parent = NULL);
+	
+	double getUnitScale() const;
+	bool centerOnView() const;
+	
+private:
+	QDoubleSpinBox* unit_scale_edit;
+	QRadioButton* original_pos_radio;
+	QRadioButton* view_center_radio;
+	QDialogButtonBox* button_box;
 };
 
 #endif

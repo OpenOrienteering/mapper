@@ -738,7 +738,7 @@ void ProjectedCRSSelector::crsParamEdited(QString dont_use)
 // ### SelectCRSDialog ###
 
 SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, bool show_take_from_map,
-								 bool show_geographic, const QString& desc_text)
+								 bool show_local, bool show_geographic, const QString& desc_text)
  : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
 {
 	setWindowModality(Qt::WindowModal);
@@ -751,6 +751,8 @@ SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, bool show_take_from_
 	map_radio = show_take_from_map ? (new QRadioButton(tr("Same as map's"))) : NULL;
 	if (map_radio)
 		map_radio->setChecked(true);
+	
+	local_radio = show_local ? (new QRadioButton(tr("Local"))) : NULL;
 	
 	geographic_radio = show_geographic ? (new QRadioButton(tr("Geographic coordinates (WGS84)"))) : NULL;
 	
@@ -793,6 +795,8 @@ SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, bool show_take_from_
 	}
 	if (map_radio)
 		layout->addWidget(map_radio);
+	if (local_radio)
+		layout->addWidget(local_radio);
 	if (geographic_radio)
 		layout->addWidget(geographic_radio);
 	layout->addWidget(projected_radio);
@@ -806,6 +810,8 @@ SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, bool show_take_from_
 	
 	if (map_radio)
 		connect(map_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
+	if (local_radio)
+		connect(local_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
 	if (geographic_radio)
 		connect(geographic_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
 	connect(projected_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
@@ -834,6 +840,8 @@ void SelectCRSDialog::updateWidgets()
 {
 	if (map_radio && map_radio->isChecked())
 		crs_spec_edit->setText(map->getGeoreferencing().isLocal() ? "" : map->getGeoreferencing().getProjectedCRSSpec());
+	else if (local_radio && local_radio->isChecked())
+		crs_spec_edit->setText("");
 	else if (geographic_radio && geographic_radio->isChecked())
 		crs_spec_edit->setText("+proj=latlong +datum=WGS84");
 	else if (projected_radio->isChecked())

@@ -26,7 +26,10 @@
 
 #include "georeferencing.h"
 
+QT_BEGIN_NAMESPACE
+class QFile;
 class QXmlStreamWriter;
+QT_END_NAMESPACE
 
 class MapEditorController;
 
@@ -45,15 +48,19 @@ struct TrackPoint
 	void save(QXmlStreamWriter* stream) const;
 };
 
-/// Stores a set of tracks and / or waypoints, e.g. taken from a GPS device
+/// Stores a set of tracks and / or waypoints, e.g. taken from a GPS device.
+/// Can optionally store a track coordinate reference system in track_georef;
+/// if no track CRS is given, assumes that coordinates are geographic WGS84 coordinates
 class Track
 {
 public:
 	/// Constructs an empty track
 	Track();
-	Track(const Georeferencing& Georeferencing);
+	Track(const Georeferencing& map_georef);
 	/// Duplicates a track
 	Track(const Track& other);
+	
+	~Track();
 	
 	/// Deletes all data of the track, except the projection parameters
 	void clear();
@@ -70,7 +77,11 @@ public:
 	
 	void appendWaypoint(TrackPoint& point, const QString& name);	// also converts the point's gps coords to map coords
 	
-	void changeGeoreferencing(const Georeferencing& new_georef);
+	void changeMapGeoreferencing(const Georeferencing& new_georef);
+	
+	/// Sets the track coordinate reference system.
+	/// The Track object takes ownership of the Georeferencing object.
+	void setTrackCRS(Georeferencing* track_crs);
 	
 	// Getters
 	int getNumSegments() const;
@@ -81,10 +92,20 @@ public:
 	const TrackPoint& getWaypoint(int number) const;
 	const QString& getWaypointName(int number) const;
 	
+	bool hasTrackCRS() const {return track_crs != NULL;}
+	Georeferencing* getTrackCRS() const {return track_crs;}
+	
 	/// Averages all track coordinates
 	LatLon calcAveragePosition() const;
 	
 private:
+	bool loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent);
+	bool loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent);
+	bool loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent);
+	
+	void projectPoints();
+	
+	
 	std::vector<TrackPoint> waypoints;
 	std::vector<QString> waypoint_names;
 	
@@ -94,7 +115,8 @@ private:
 	
 	bool current_segment_finished;
 	
-	Georeferencing georef;
+	Georeferencing* track_crs;
+	Georeferencing map_georef;
 };
 
 #endif

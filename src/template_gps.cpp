@@ -21,9 +21,7 @@
 #include "template_gps.h"
 
 #include <qmath.h>
-#include <QPainter>
-#include <QMessageBox>
-#include <QCommandLinkButton>
+#include <QtGui>
 
 #include "map_widget.h"
 #include "map_undo.h"
@@ -33,6 +31,7 @@
 #include "georeferencing_dialog.h"
 #include "util.h"
 #include "util_task_dialog.h"
+#include "util_gui.h"
 
 TemplateTrack::TemplateTrack(const QString& path, Map* map)
  : Template(path, map)
@@ -48,6 +47,46 @@ TemplateTrack::~TemplateTrack()
 		unloadTemplateFile();
 }
 
+void TemplateTrack::saveTypeSpecificTemplateConfiguration(QIODevice* stream)
+{
+	saveString(stream, track_crs_spec);
+}
+bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
+{
+	if (version >= 30)
+		loadString(stream, track_crs_spec);
+	else
+		track_crs_spec = "+proj=latlong +datum=WGS84";
+	return true;
+}
+
+void TemplateTrack::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml)
+{
+	// Follow map georeferencing XML structure
+	xml.writeStartElement("crs_spec");
+	// TODO: xml.writeAttribute("language", "PROJ.4");
+	xml.writeCharacters(track_crs_spec);
+	xml.writeEndElement(/*crs_spec*/);
+}
+bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
+{
+	// set default value
+	track_crs_spec = "+proj=latlong +datum=WGS84";
+	
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == "crs_spec")
+		{
+			// TODO: check specification language
+			track_crs_spec = xml.readElementText();
+		}
+		else
+			xml.skipCurrentElement(); // unsupported
+	}
+	
+	return true;
+}
+
 bool TemplateTrack::saveTemplateFile()
 {
     return track.saveTo(template_path);
@@ -60,33 +99,81 @@ bool TemplateTrack::loadTemplateFileImpl(bool configuring)
 	
 	if (!configuring)
 	{
-		if (is_georeferenced)
-			track.changeGeoreferencing(map->getGeoreferencing());
-		else
+		Georeferencing* track_crs = new Georeferencing();
+		if (!track_crs_spec.isEmpty())
+			track_crs->setProjectedCRS("", track_crs_spec);
+		track_crs->setTransformationDirectly(QTransform());
+		track.setTrackCRS(track_crs);
+		
+		bool crs_is_geographic = track_crs_spec.contains("+proj=latlong"); // TODO: should that be case insensitive?
+		if (!is_georeferenced && crs_is_geographic)
 			calculateLocalGeoreferencing();
+		else
+			track.changeMapGeoreferencing(map->getGeoreferencing());
 	}
 	
 	return true;
 }
 
-bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent)
+bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
 {
-	TaskDialog georef_dialog(dialog_parent, tr("Opening track ..."),
-		tr("Load the track in georeferenced or non-georeferenced mode?"),
-		QDialogButtonBox::Abort);
-	QString georef_text = tr("Positions the track according to the map's georeferencing settings.");
-	if (map->getGeoreferencing().isLocal())
-		georef_text += " " + tr("These are not configured yet, so they will be shown as the next step.");
-	QAbstractButton* georef_button = georef_dialog.addCommandButton(tr("Georeferenced"), georef_text);
-	QAbstractButton* non_georef_button = georef_dialog.addCommandButton(tr("Non-georeferenced"), tr("Projects the track using an orthographic projection with center at the track's coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position."));
+	is_georeferenced = true;
 	
-	georef_dialog.exec();
-	if (georef_dialog.clickedButton() == georef_button)
-		is_georeferenced = true;
-	else if (georef_dialog.clickedButton() == non_georef_button)
+	// If no track CRS is given by the template file, ask the user
+	if (!track.hasTrackCRS())
+	{
+		SelectCRSDialog dialog(map, dialog_parent, true, true, true, tr("Select the coordinate reference system of the track coordinates"));
+		if (dialog.exec() == QDialog::Rejected)
+			return false;
+		
+		Georeferencing* track_crs = new Georeferencing();
+		track_crs_spec = dialog.getCRSSpec();
+		if (!track_crs_spec.isEmpty())
+			track_crs->setProjectedCRS("", track_crs_spec);
+		track_crs->setTransformationDirectly(QTransform());
+		track.setTrackCRS(track_crs);
+	}
+	
+	// If the CRS is geographic, ask if track should be loaded using map georeferencing or ad-hoc georeferencing
+	track_crs_spec = track.getTrackCRS()->getProjectedCRSSpec();
+	bool crs_is_geographic = track_crs_spec.contains("+proj=latlong"); // TODO: should that be case insensitive?
+	if (crs_is_geographic)
+	{
+		TaskDialog georef_dialog(dialog_parent, tr("Opening track ..."),
+			tr("Load the track in georeferenced or non-georeferenced mode?"),
+			QDialogButtonBox::Abort);
+		QString georef_text = tr("Positions the track according to the map's georeferencing settings.");
+		if (map->getGeoreferencing().isLocal())
+			georef_text += " " + tr("These are not configured yet, so they will be shown as the next step.");
+		QAbstractButton* georef_button = georef_dialog.addCommandButton(tr("Georeferenced"), georef_text);
+		QAbstractButton* non_georef_button = georef_dialog.addCommandButton(tr("Non-georeferenced"), tr("Projects the track using an orthographic projection with center at the track's coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position."));
+		
+		georef_dialog.exec();
+		if (georef_dialog.clickedButton() == georef_button)
+			is_georeferenced = true;
+		else if (georef_dialog.clickedButton() == non_georef_button)
+			is_georeferenced = false;
+		else // abort
+			return false;
+	}
+	
+	// If the CRS is local, show positioning dialog
+	if (track_crs_spec.isEmpty())
+	{
 		is_georeferenced = false;
-	else // abort
-		return false;
+		
+		LocalCRSPositioningDialog dialog(this, dialog_parent);
+		if (dialog.exec() == QDialog::Rejected)
+			return false;
+		
+		if (map->getGeoreferencing().isLocal())
+			transform.template_scale_x = dialog.getUnitScale();
+		else
+			transform.template_scale_x = dialog.getUnitScale() / (map->getScaleDenominator() / 1000.0);
+		transform.template_scale_y = transform.template_scale_x;
+		updateTransformationMatrices();
+		out_center_in_view = dialog.centerOnView();
+	}
 	
 	// If the track is loaded as georeferenced and the transformation parameters
 	// were not set yet, it must be done now
@@ -101,13 +188,13 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent)
 		if (dialog.exec() == QDialog::Rejected || map->getGeoreferencing().isLocal())
 			return false;
 	}
-	if (is_georeferenced)
-		track.changeGeoreferencing(map->getGeoreferencing());
 	
 	// If the track is loaded as not georeferenced,
 	// the map coords for the track coordinates have to be calculated
-	if (!is_georeferenced)
+	if (!is_georeferenced && crs_is_geographic)
 		calculateLocalGeoreferencing();
+	else
+		track.changeMapGeoreferencing(map->getGeoreferencing());
 	
 	return true;
 }
@@ -165,12 +252,9 @@ void TemplateTrack::drawWaypoints(QPainter* painter, QTransform map_to_device)
 	painter->setPen(Qt::NoPen);
 	painter->setBrush(QBrush(qRgb(255, 0, 0)));
 	
-	// TEST
-	//if (painter->device()->
 	QFont font = painter->font();
 	font.setPointSizeF(8);
 	painter->setFont(font);
-	// TEST
 	
 	int size = track.getNumWaypoints();
 	for (int i = 0; i < size; ++i)
@@ -323,7 +407,7 @@ void TemplateTrack::updateGeoreferencing()
 {
 	if (is_georeferenced && template_state == Template::Loaded)
 	{
-		track.changeGeoreferencing(map->getGeoreferencing());
+		track.changeMapGeoreferencing(map->getGeoreferencing());
 		map->updateAllMapWidgets();
 	}
 }
@@ -337,5 +421,46 @@ void TemplateTrack::calculateLocalGeoreferencing()
 	georef.setGeographicRefPoint(proj_center);
 	georef.setProjectedCRS("", QString("+proj=ortho +lat_0=%1 +lon_0=%2")
 		.arg(proj_center.latitude * 180 / M_PI).arg(proj_center.longitude * 180 / M_PI));
-	track.changeGeoreferencing(georef);
+	track.changeMapGeoreferencing(georef);
+}
+
+
+LocalCRSPositioningDialog::LocalCRSPositioningDialog(TemplateTrack* temp, QWidget* parent)
+ : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
+{
+	setWindowModality(Qt::WindowModal);
+	setWindowTitle(tr("Track scaling and positioning"));
+	
+	QFormLayout* layout = new QFormLayout();
+	
+	unit_scale_edit = Util::SpinBox::create(6, 0, 1e42, tr("m", "meters"));
+	unit_scale_edit->setValue(1);
+	layout->addRow(tr("One coordinate unit equals:"), unit_scale_edit);
+	
+	original_pos_radio = new QRadioButton(tr("Position track at given coordinates"));
+	layout->addRow(original_pos_radio);
+	
+	view_center_radio = new QRadioButton(tr("Position track at view center"));
+	view_center_radio->setChecked(true);
+	layout->addRow(view_center_radio);
+	
+	layout->addItem(Util::SpacerItem::create(this));
+	
+	button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+	layout->addWidget(button_box);
+	
+	setLayout(layout);
+	
+	connect(button_box, SIGNAL(accepted()), this, SLOT(accept()));
+	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
+}
+
+double LocalCRSPositioningDialog::getUnitScale() const
+{
+	return unit_scale_edit->value();
+}
+
+bool LocalCRSPositioningDialog::centerOnView() const
+{
+	return view_center_radio->isChecked();
 }

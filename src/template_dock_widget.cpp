@@ -256,17 +256,19 @@ Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapView
 		return NULL;
 	}
 	
-	if (!new_temp->postLoadConfiguration(dialog_parent))
+	bool center_in_view = true;
+	if (!new_temp->postLoadConfiguration(dialog_parent, center_in_view))
 	{
 		delete new_temp;
 		return NULL;
 	}
 	
 	// If the template is not georeferenced, position it at the viewport midpoint
-	if (!new_temp->isTemplateGeoreferenced())
+	if (!new_temp->isTemplateGeoreferenced() && center_in_view)
 	{
-		new_temp->setTemplateX(main_view->getPositionX());
-		new_temp->setTemplateY(main_view->getPositionY());
+		QPointF center = new_temp->calculateTemplateBoundingBox().center();
+		new_temp->setTemplateX(main_view->getPositionX() - qRound64(1000 * center.x()));
+		new_temp->setTemplateY(main_view->getPositionY() - qRound64(1000 * center.y()));
 	}
 	
 	return new_temp;

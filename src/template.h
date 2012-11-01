@@ -120,8 +120,9 @@ public:
 	
 	
 	/// Does preLoadConfiguration(), loadTemplateFile() and postLoadConfiguration() and
-	/// returns if the process was successful
-	bool configureAndLoad(QWidget* dialog_parent);
+	/// returns if the process was successful. Pass in the view in which the template
+	/// should be centered, if it is centered.
+	bool configureAndLoad(QWidget* dialog_parent, MapView* view);
 	
 	/// Tries to find and (re-)load the template file from the following positions:
 	///  - saved relative position to map file, if available and map_directory is not empty
@@ -151,7 +152,9 @@ public:
 	/// Does the post-load configuration when the template is opened initially
 	/// (after the chosen template file is loaded).
 	/// If the implementation returns false, loading the template is aborted.
-	virtual bool postLoadConfiguration(QWidget* dialog_parent) {return true;}
+	/// By setting out_center_in_view, the implementation can decide if the template should
+	/// be centered in the active view if it is a non-georeferenced template (on by default).
+	virtual bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) {return true;}
 	
 	/// Unloads the template file. Can be called if the template state is Loaded.
 	/// Must not be called if the template file is already unloaded, or invalid.
@@ -338,8 +341,14 @@ protected:
 	/// Derived classes must save type specific template parameters here
 	virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) {}
 	
-	/// Derived classes must load type specific template parameters here and return true if successful
-	virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) {return true;}
+	/// Derived classes must load type specific template parameters here and return true if successful.
+	/// IMPORTANT: implementations must read until the template's end element.
+	virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
+	{
+		while (xml.readNextStartElement())
+			xml.skipCurrentElement();
+		return true;
+	}
 	
 	/// Derived classes must load the template file here and return true if successful.
 	/// If configuring is true, a call to postLoadConfiguration() will follow if this returns true.
