@@ -91,6 +91,7 @@ private:
 
 	void parseLine(QIODevice *d, QList<path_t> *p);
 	void parsePolyline(QIODevice *d, QList<path_t> *p);
+	void parseLwPolyline(QIODevice* d, QList<path_t> *p);
 	void parseCircle(QIODevice *d, QList<path_t> *p);
 	void parsePoint(QIODevice *d, QList<path_t> *p);
 	void parseVertex(QIODevice *d, QList<path_t> *p);

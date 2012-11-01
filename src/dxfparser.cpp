@@ -92,6 +92,8 @@ QString DXFParser::parse(){
 				parsePolyline(device, &paths);
 				currentSection = POLYLINE;
 			}
+			else if(line1 == "0" && line2 == "LWPOLYLINE")
+				parseLwPolyline(device, &paths);
 			else if(line1 == "0" && line2 == "CIRCLE")
 				parseCircle(device, &paths);
 			else if(line1 == "0" && line2 == "POINT")
@@ -202,6 +204,43 @@ void DXFParser::parsePolyline(QIODevice *d, QList<path_t> *p){
 			vertexMain.thickness = line2.toInt();
 	}while(true);
 	Q_UNUSED(p)
+}
+
+void DXFParser::parseLwPolyline(QIODevice *d, QList<path_t> *p){
+	QString line1;
+	QString line2;
+
+	path_t path;
+	INIT_PATH(path);
+	path.type = LINE;
+	QList<coordinate_t> coordinates;
+	coordinate_t coord;
+	bool haveX = false;
+	bool haveY = false;
+
+	do{
+		if(d->peek(3).trimmed() == "0")
+			break;
+		getLines(line1, line2, d);
+		PARSE_COMMON(path);
+		if(line1 == "39")
+			path.thickness = line2.toInt();
+		else if(line1 == "10"){
+			coord.x = line2.toDouble();
+			haveX = true;
+		}
+		else if(line1 == "20"){
+			coord.y = line2.toDouble();
+			haveY = true;
+		}
+		if(haveX && haveY){
+			coordinates.append(coord);
+			haveX = false;
+			haveY = false;
+		}
+	}while(1);
+	path.coords = coordinates;
+	p->append(path);
 }
 
 void DXFParser::parseCircle(QIODevice *d, QList<path_t> *p){
