@@ -32,6 +32,11 @@ if(QT_LRELEASE_EXECUTABLE MATCHES NOTFOUND)
 	  "Cannot build the translations.")
 endif()
 
+# Qt translations which are not yet available from upstream
+set(Mapper_QT_TRANS
+  qt_lv.ts
+)
+
 set(Mapper_TRANS
  OpenOrienteering_de.ts
  OpenOrienteering_fr.ts
@@ -42,7 +47,7 @@ set(Mapper_TRANS
  OpenOrienteering_uk.ts
  CACHE INTERNAL "Translation files"
 )
-qt4_add_translation(Mapper_QM ${Mapper_TRANS})
+qt4_add_translation(Mapper_QM ${Mapper_TRANS} ${Mapper_QT_TRANS})
 
 set(Mapper_TRANS_TEMPLATE
  OpenOrienteering_template.ts
