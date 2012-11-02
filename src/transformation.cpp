@@ -119,6 +119,36 @@ bool PassPointList::estimateSimilarityTransformation(TemplateTransform* transfor
 	else if (num_pass_points >= 2)
 	{
 		// Create linear equation system and solve using the pseuo inverse
+		
+		// Derivation:
+		// (Attention: not by a mathematician. Please correct any errors.)
+		//
+		// Start by stating that the original coordinates (x, y) multiplied
+		// with the transformation matrix should give the desired coordinates (X, Y):
+		//
+		// | a  b  c|   |x|   |X|
+		// | d  e  f| * |y| = |Y|
+		//              |1|
+		//
+		// The parametrization of the transformation matrix should be simplified because
+		// we want to have isotropic scaling.
+		// With s = scaling, r = rotation and (x, y) = offset, it looks like this:
+		//
+		// | s*cos(r) s*sin(r) x|    | a  b  c|
+		// |-s*sin(r) s*cos(r) y| =: |-b  a  d|
+		// 
+		// With this, reordering the matrices to have the unknowns
+		// in the second matrix results in:
+		// 
+		// | x  y  1  0|   |a|   |X|
+		// | y -x  0  1| * |b| = |Y|
+		//                 |c|
+		//                 |d|
+		//
+		// For every pass point, two rows like this result. The complete, stacked
+		// equation system is then "solved" as good as possible using the
+		// pseudo inverse. Finally, s, r, x and y are recovered from a, b, c and d.
+		
 		Matrix mat(2*num_pass_points, 4);
 		Matrix values(2*num_pass_points, 1);
 		for (int i = 0; i < num_pass_points; ++i)
@@ -195,6 +225,18 @@ bool PassPointList::estimateNonIsometricSimilarityTransform(QTransform* out)
 	assert(num_pass_points >= 3);
 	
 	// Create linear equation system and solve using the pseuo inverse
+	
+	// Derivation: see comment in estimateSimilarityTransformation().
+	// Here, the resulting matrices look a bit different because the constraint
+	// to have isotropic scaling is omitted:
+	//
+	// | x  y  1  0  0  0|   |a|   |X|
+	// | 0  0  0  x  y  1| * |b| = |Y|
+	//                       |c|
+	//                       |d|
+	//                       |e|
+	//                       |f|
+	
 	Matrix mat(2*num_pass_points, 6);
 	Matrix values(2*num_pass_points, 1);
 	for (int i = 0; i < num_pass_points; ++i)
