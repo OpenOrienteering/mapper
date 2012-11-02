@@ -237,6 +237,8 @@ public:
 	void reverse();
 	/// Like reverse(), but only for the given part
 	void reversePart(int part_index);
+	/// Ensures that all parts are closed. Useful for objects with area-only symbols.
+	void closeAllParts();
 	/// See Object::isPointOnObject()
 	int isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas_as_paths);
 	

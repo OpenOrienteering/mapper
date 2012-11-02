@@ -1453,13 +1453,7 @@ void MapEditorController::switchSymbolClicked()
 		{
 			PathObject* path_object = object->asPath();
 			if (close_paths)
-			{
-				for (int path_part = 0; path_part < path_object->getNumParts(); ++path_part)
-				{
-					if (!path_object->getPart(path_part).isClosed())
-						path_object->getPart(path_part).setClosed(true, true);
-				}
-			}
+				path_object->closeAllParts();
 			else if (split_up)
 			{
 				for (int path_part = 0; path_part < path_object->getNumParts(); ++path_part)
@@ -1548,11 +1542,7 @@ void MapEditorController::fillBorderClicked()
 			if (close_paths && duplicate->getType() == Object::Path)
 			{
 				PathObject* path_object = duplicate->asPath();
-				for (int path_part = 0; path_part < path_object->getNumParts(); ++path_part)
-				{
-					if (!path_object->getPart(path_part).isClosed())
-						path_object->getPart(path_part).setClosed(true, true);
-				}
+				path_object->closeAllParts();
 			}
 			map->addObject(duplicate);
 			new_objects.push_back(duplicate);
