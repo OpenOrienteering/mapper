@@ -26,6 +26,7 @@
 #include "map.h"
 #include "symbol.h"
 #include "template.h"
+#include "object.h"
 
 Format::Format(const QString& id, const QString& description, const QString& file_extension, bool supportsImport, bool supportsExport, bool export_lossy)
     : format_id(id), format_description(description), file_extension(file_extension),
@@ -100,6 +101,24 @@ FormatRegistry FileFormats;
 void Importer::doImport(bool load_symbols_only, const QString& map_path) throw (FormatException)
 {
 	import(load_symbols_only);
+	
+	// Object post processing:
+	// Make sure that all area-only path objects are closed
+	for (int p = 0; p < map->getNumParts(); ++p)
+	{
+		MapPart* part = map->getPart(p);
+		for (int o = 0; o < part->getNumObjects(); ++o)
+		{
+			Object* object = part->getObject(o);
+			if (object->getType() == Object::Path)
+			{
+				PathObject* path = object->asPath();
+				Symbol::Type contained_types = path->getSymbol()->getContainedTypes();
+				if (contained_types & Symbol::Area && !(contained_types & Symbol::Line))
+					path->closeAllParts();
+			}
+		}
+	}
 	
 	// Symbol post processing
 	for (int i = 0; i < map->getNumSymbols(); ++i)

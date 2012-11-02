@@ -2000,6 +2000,15 @@ void PathObject::reversePart(int part_index)
 	setOutputDirty();
 }
 
+void PathObject::closeAllParts()
+{
+	for (int path_part = 0; path_part < getNumParts(); ++path_part)
+	{
+		if (!getPart(path_part).isClosed())
+			getPart(path_part).setClosed(true, true);
+	}
+}
+
 int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas_as_paths)
 {
 	Symbol::Type contained_types = symbol->getContainedTypes();
