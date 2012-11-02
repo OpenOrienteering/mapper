@@ -31,6 +31,7 @@
 #include "map_widget.h"
 #include "main_window.h"
 #include "util_gui.h"
+#include "util_translation.h"
 #include "settings.h"
 
 void SettingsPage::apply()
@@ -291,46 +292,11 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	layout->addWidget(language_box, 0, 1);
 	layout->setRowStretch(1, 1);
 	
-	// Add translation files as languages to map
-	QMap<QString, int> language_map;
-	
-	QStringList translation_dirs;
-	translation_dirs
-#ifdef Mapper_TRANSLATIONS_EMBEDDED
-	  << ":/translations"
-#endif
-#ifdef MAPPER_DEBIAN_PACKAGE_NAME
-	  << (QCoreApplication::applicationDirPath() + "/../share/" + MAPPER_DEBIAN_PACKAGE_NAME + "/translations")
-#endif
-#ifdef Q_WS_MAC
-	  << (QCoreApplication::applicationDirPath() + "/../Resources/translations")
-#endif
-	  << (QCoreApplication::applicationDirPath() + "/translations");
-
-	Q_FOREACH(QString translations_path, translation_dirs)
-	{
-		QDir dir(translations_path);
-		foreach (QString name, dir.entryList(QStringList() << "*.qm", QDir::Files))
-		{
-			name = name.left(name.indexOf(".qm"));
-			name = name.right(2);
-			QString language_name;
-#if (QT_VERSION >= QT_VERSION_CHECK(4, 8, 0))
-			language_name = QLocale(name).nativeLanguageName();
-#else
-			language_name = QLocale::languageToString(QLocale(name).language());
-#endif
-			language_map.insert(language_name, (int)QLocale(name).language());
-		}
-	}
-	
-	// Add default language English to map
-	language_map.insert(QLocale::languageToString(QLocale::English), (int)QLocale::English);
-	
-	// Add sorted languages from map to widget
-	QMap<QString, int>::const_iterator end = language_map.constEnd();
-	for (QMap<QString, int>::const_iterator it = language_map.constBegin(); it != end; ++it)
-		language_box->addItem(it.key(), it.value());
+	//  Add the available languages to the widget
+	LanguageCollection language_map = TranslationUtil::getAvailableLanguages();
+	LanguageCollection::const_iterator end = language_map.constEnd();
+	for (LanguageCollection::const_iterator it = language_map.constBegin(); it != end; ++it)
+		language_box->addItem(it.key(), (int)it.value());
 	
 	// Select current language
 	int index = language_box->findData(Settings::getInstance().getSetting(Settings::General_Language).toInt());

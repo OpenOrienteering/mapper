@@ -29,6 +29,7 @@
 #include "main_window.h"
 #include "main_window_home_screen.h"
 #include "settings.h"
+#include "util_translation.h"
 
 int main(int argc, char** argv)
 {
@@ -59,38 +60,11 @@ int main(int argc, char** argv)
 #endif
 	
 	// Localization
-	QLocale locale = QLocale((QLocale::Language)Settings::getInstance().getSetting(Settings::General_Language).toInt());
-	QLocale::setDefault(locale);
-	QString locale_name = locale.name();
-	
-	// Load Qt translation
-	QTranslator qtTranslator;
-#ifdef WIN32
-	qtTranslator.load("qt_" + locale_name, QCoreApplication::applicationDirPath() + "/translations/");
-#else
-	qtTranslator.load("qt_" + locale_name, QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-#endif
-	qapp.installTranslator(&qtTranslator);
-
-	// Load application translation
-	QTranslator translator;
-	QString translation_name = "OpenOrienteering_" + locale_name;
-	bool translation_ok = false;
-#ifdef Mapper_TRANSLATIONS_EMBEDDED
-	Q_INIT_RESOURCE(translations);
-	translation_ok = translator.load(translation_name, QString(":/translations"));
-#endif
-#ifdef MAPPER_DEBIAN_PACKAGE_NAME
-	if (!translation_ok)
-		translation_ok = translator.load(translation_name, QCoreApplication::applicationDirPath() + "/../share/" + MAPPER_DEBIAN_PACKAGE_NAME + "/translations");
-#endif
-#ifdef Q_WS_MAC
-	if (!translation_ok)
-		translation_ok = translator.load(translation_name, QCoreApplication::applicationDirPath() + "/../Resources/translations");
-#endif
-	if (!translation_ok)
-		translation_ok = translator.load(translation_name, QCoreApplication::applicationDirPath() + "/translations");
-	qapp.installTranslator(&translator);
+	QLocale::Language lang = (QLocale::Language)Settings::getInstance().getSetting(Settings::General_Language).toInt();
+	TranslationUtil translation(lang);
+	QLocale::setDefault(translation.getLocale());
+	qapp.installTranslator(&translation.getQtTranslator());
+	qapp.installTranslator(&translation.getAppTranslator());
 	
 	doStaticInitializations();
 	
