@@ -20,6 +20,7 @@
 
 #include "matrix.h"
 
+#include <QDebug>
 #include <QIODevice>
 #include <QXmlStreamWriter>
 
@@ -60,21 +61,24 @@ void Matrix::load(QXmlStreamReader& xml)
 {
 	Q_ASSERT(xml.name() == "matrix");
 	
-	int new_n = xml.attributes().value("n").toString().toInt();
-	int new_m = xml.attributes().value("m").toString().toInt();
+	int new_n = qMax(0, xml.attributes().value("n").toString().toInt());
+	int new_m = qMax(0, xml.attributes().value("m").toString().toInt());
 	setSize(new_n, new_m);
 	int count = n*m;
 	int i = 0;
-	if (count > 0)
+	while (xml.readNextStartElement())
 	{
-		while (xml.readNextStartElement())
+		if (i < count && xml.name() == "element")
 		{
-			if (i < count && xml.name() == "element")
-			{
-				d[i] = xml.attributes().value("value").toString().toDouble();
-				i++;
-			}
-			xml.skipCurrentElement();
+			d[i] = xml.attributes().value("value").toString().toDouble();
+			i++;
 		}
+		xml.skipCurrentElement();
+	}
+	
+	if (i < count)
+	{
+		qDebug() << "Too few elements for a" << new_n << "x" << new_m
+		         << "matrix at line" << xml.lineNumber();
 	}
 }
