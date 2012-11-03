@@ -655,6 +655,11 @@ Template* Template::templateForFile(const QString& path, Map* map)
 		return NULL;
 }
 
+bool Template::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) {
+	xml.skipCurrentElement();
+	return true;
+}
+
 void Template::updateTransformationMatrices()
 {
 	double cosr = cos(-transform.template_rotation);
