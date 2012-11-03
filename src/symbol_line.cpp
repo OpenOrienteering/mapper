@@ -1826,7 +1826,8 @@ void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 
 bool LineSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
 {
-	Q_ASSERT(xml.name() == "line_symbol");
+	if (xml.name() != "line_symbol")
+		return false;
 	
 	QXmlStreamAttributes attributes = xml.attributes();
 	int temp = attributes.value("color").toString().toInt();
@@ -1855,47 +1856,62 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 	while (xml.readNextStartElement())
 	{
 		if (xml.name() == "start_symbol")
-		{
-			xml.readNextStartElement();
-			start_symbol = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
-			xml.skipCurrentElement();
-		}
+			start_symbol = loadPointSymbol(xml, map, symbol_dict);
 		else if (xml.name() == "mid_symbol")
-		{
-			xml.readNextStartElement();
-			mid_symbol = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
-			xml.skipCurrentElement();
-		}
+			mid_symbol = loadPointSymbol(xml, map, symbol_dict);
 		else if (xml.name() == "end_symbol")
-		{
-			xml.readNextStartElement();
-			end_symbol = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
-			xml.skipCurrentElement();
-		}
+			end_symbol = loadPointSymbol(xml, map, symbol_dict);
 		else if (xml.name() == "dash_symbol")
-		{
-			xml.readNextStartElement();
-			dash_symbol = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
-			xml.skipCurrentElement();
-		}
+			dash_symbol = loadPointSymbol(xml, map, symbol_dict);
 		else if (xml.name() == "borders")
 		{
 //			bool are_borders_different = (xml.attributes().value("borders_different") == "true");
-			have_border_lines = true;
-			xml.readNextStartElement();
-			border.load(xml, map);
-			if (xml.readNextStartElement())
+			
+			bool right_border_loaded = false;
+			while (xml.readNextStartElement())
 			{
-				right_border.load(xml, map);
-				xml.skipCurrentElement();
+				if (xml.name() == "border")
+				{
+					if (!have_border_lines)
+					{
+						border.load(xml, map);
+						have_border_lines = true;
+					}
+					else
+					{
+						right_border.load(xml, map);
+						right_border_loaded = true;
+						xml.skipCurrentElement();
+						break;
+					}
+				}
+				else
+					xml.skipCurrentElement();
 			}
-			else
+			
+			if (have_border_lines && !right_border_loaded)
 				right_border.assign(border, NULL);
 		}
 		else
 			xml.skipCurrentElement(); // unknown
 	}
-	return !xml.error();
+	return true;
+}
+
+PointSymbol* LineSymbol::loadPointSymbol(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
+{
+	while (xml.readNextStartElement())
+	{
+		if (xml.name() == "symbol")
+		{
+			PointSymbol* symbol = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict));
+			xml.skipCurrentElement();
+			return symbol;
+		}
+		else
+			xml.skipCurrentElement();
+	}
+	return NULL;
 }
 
 bool LineSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)

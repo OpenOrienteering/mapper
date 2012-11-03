@@ -404,7 +404,12 @@ Object* Object::load(QXmlStreamReader& xml, Map& map, const SymbolDictionary& sy
 			object->coords.clear();
 			object->coords.reserve(qMin(num_coords, 20)); // 20 is not a limit
 			for (int i = 0; xml.readNextStartElement(); i++)
-				object->coords.push_back(MapCoord::load(xml));
+			{
+				if (xml.name() == "coord")
+					object->coords.push_back(MapCoord::load(xml));
+				else
+					xml.skipCurrentElement();
+			}
 		}
 		else if (xml.name() == "pattern" && object_type == Path)
 		{

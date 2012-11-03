@@ -379,7 +379,8 @@ void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 
 bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
 {
-	Q_ASSERT(xml.name() == "text_symbol");
+	if (xml.name() != "text_symbol")
+		return false;
 	
 	icon_text = xml.attributes().value("icon_text").toString();
 	framing = false;
@@ -445,7 +446,7 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 	}
 	
 	updateQFont();
-	return !xml.error();
+	return true;
 }
 
 bool TextSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)

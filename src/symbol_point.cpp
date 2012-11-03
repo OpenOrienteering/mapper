@@ -351,7 +351,8 @@ void PointSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 
 bool PointSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
 {
-	Q_ASSERT(xml.name() == "point_symbol");
+	if (xml.name() != "point_symbol")
+		return false;
 	
 	QXmlStreamAttributes attributes(xml.attributes());
 	rotatable = (attributes.value("rotatable") == "true");
@@ -382,7 +383,7 @@ bool PointSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sy
 		else
 			xml.skipCurrentElement(); // unknown element
 	}
-	return !xml.error();
+	return true;
 }
 
 bool PointSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)

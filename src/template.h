@@ -341,8 +341,11 @@ protected:
 	/// Derived classes must save type specific template parameters here
 	virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) {}
 	
-	/// Derived classes must load type specific template parameters here and return true if successful.
-	/// IMPORTANT: implementations must read until the template's end element.
+	/// Derived classes must load type specific template parameters here and return false
+	/// if a critical error ocurrs and loading must be aborted.
+	/// This method is called for every xml tag under the template tag which is not parsed by
+	/// the base class.
+	/// IMPORTANT: implementations must call xml.skipCurrentElement() if they do not parse it.
 	virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml);
 	
 	/// Derived classes must load the template file here and return true if successful.

@@ -36,6 +36,9 @@
 TemplateTrack::TemplateTrack(const QString& path, Map* map)
  : Template(path, map)
 {
+	// set default value
+	track_crs_spec = "+proj=latlong +datum=WGS84";
+	
 	const Georeferencing& georef = map->getGeoreferencing();
 	connect(&georef, SIGNAL(projectionChanged()), this, SLOT(updateGeoreferencing()));
 	connect(&georef, SIGNAL(transformationChanged()), this, SLOT(updateGeoreferencing()));
@@ -70,19 +73,13 @@ void TemplateTrack::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml)
 }
 bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 {
-	// set default value
-	track_crs_spec = "+proj=latlong +datum=WGS84";
-	
-	while (xml.readNextStartElement())
+	if (xml.name() == "crs_spec")
 	{
-		if (xml.name() == "crs_spec")
-		{
-			// TODO: check specification language
-			track_crs_spec = xml.readElementText();
-		}
-		else
-			xml.skipCurrentElement(); // unsupported
+		// TODO: check specification language
+		track_crs_spec = xml.readElementText();
 	}
+	else
+		xml.skipCurrentElement(); // unsupported
 	
 	return true;
 }
