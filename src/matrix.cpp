@@ -65,16 +65,13 @@ void Matrix::load(QXmlStreamReader& xml)
 	setSize(new_n, new_m);
 	int count = n*m;
 	int i = 0;
-	if (count > 0)
+	while (xml.readNextStartElement())
 	{
-		while (xml.readNextStartElement())
+		if (i < count && xml.name() == "element")
 		{
-			if (i < count && xml.name() == "element")
-			{
-				d[i] = xml.attributes().value("value").toString().toDouble();
-				i++;
-			}
-			xml.skipCurrentElement();
+			d[i] = xml.attributes().value("value").toString().toDouble();
+			i++;
 		}
+		xml.skipCurrentElement();
 	}
 }

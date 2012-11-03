@@ -256,7 +256,10 @@ Symbol* Symbol::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_d
 		if (xml.name() == "description")
 			symbol->description = xml.readElementText();
 		else
-			symbol->loadImpl(xml, map, symbol_dict);
+		{
+			if (!symbol->loadImpl(xml, map, symbol_dict))
+				xml.skipCurrentElement();
+		}
 	}
 	
 	if (xml.error())

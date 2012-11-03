@@ -201,7 +201,8 @@ protected:
 	virtual bool loadImpl(QIODevice* file, int version, Map* map) = 0;
 	/// Must be overridden to save type-specific symbol properties. The map pointer can be used to get persistent indices to any pointers on map data
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const = 0;
-	/// Must be overridden to load type-specific symbol properties. See saveImpl()
+	/// Must be overridden to load type-specific symbol properties. See saveImpl().
+	/// Return false if the current xml tag does not belong to the symbol and should be skipped, true if the element has been read completely.
 	virtual bool loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict) = 0;
 	/// Must be overridden to compare symbol-specific attributes.
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity) = 0;

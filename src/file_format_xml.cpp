@@ -302,6 +302,14 @@ void XMLFileImporter::addWarningUnsupportedElement()
 
 void XMLFileImporter::import(bool load_symbols_only) throw (FormatException)
 {
+	/*while (!xml.atEnd())
+	{
+		if (xml.readNextStartElement())
+			qDebug() << xml.qualifiedName();
+		else
+			qDebug() << "FALSE";
+	}*/
+	
 	if (xml.readNextStartElement())
 	{
 		if (xml.name() != "map")

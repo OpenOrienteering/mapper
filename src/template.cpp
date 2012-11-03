@@ -284,59 +284,63 @@ Template* Template::loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, b
 		temp->template_file = attributes.value("name").toString();
 	temp->is_georeferenced = (attributes.value("georef") == "true");
 	if (!temp->is_georeferenced)
-	{
 		temp->template_group = attributes.value("group").toString().toInt();
 		
-		while (xml.readNextStartElement())
+	while (xml.readNextStartElement())
+	{
+		if (!temp->is_georeferenced && xml.name() == "transformations")
 		{
-			if (xml.name() == "transformations")
-			{
-				temp->adjusted = (xml.attributes().value("adjusted") == "true");
-				temp->adjustment_dirty = (xml.attributes().value("adjustment_dirty") == "true");
-				int num_passpoints = xml.attributes().value("passpoints").toString().toInt();
+			temp->adjusted = (xml.attributes().value("adjusted") == "true");
+			temp->adjustment_dirty = (xml.attributes().value("adjustment_dirty") == "true");
+			int num_passpoints = xml.attributes().value("passpoints").toString().toInt();
 Q_ASSERT(temp->passpoints.size() == 0);
-				temp->passpoints.reserve(qMin(num_passpoints, 10)); // 10 is not a limit
-				
-				while (xml.readNextStartElement())
+			temp->passpoints.reserve(qMin(num_passpoints, 10)); // 10 is not a limit
+			
+			while (xml.readNextStartElement())
+			{
+				QStringRef role = xml.attributes().value("role");
+				if (xml.name() == "transformation")
 				{
-					QStringRef role = xml.attributes().value("role");
-					if (xml.name() == "transformation")
-					{
-						if (role == "active")
-							temp->transform.load(xml);
-						else if (xml.attributes().value("role") == "other")
-							temp->other_transform.load(xml);
-						else
-							xml.skipCurrentElement(); // unsupported
-					}
-					else if (xml.name() == "passpoint")
-					{
-						temp->passpoints.push_back(PassPoint::load(xml));
-					}
-					else if (xml.name() == "matrix")
-					{
-						if (role == "map_to_template")
-							temp->map_to_template.load(xml);
-						else if (role == "template_to_map")
-							temp->template_to_map.load(xml);
-						else if (role == "template_to_map_other")
-							temp->template_to_map_other.load(xml);
-						else
-							xml.skipCurrentElement(); // unsupported
-					}
+					if (role == "active")
+						temp->transform.load(xml);
+					else if (xml.attributes().value("role") == "other")
+						temp->other_transform.load(xml);
 					else
+					{
+						qDebug() << xml.qualifiedName();
 						xml.skipCurrentElement(); // unsupported
+					}
+				}
+				else if (xml.name() == "passpoint")
+				{
+					temp->passpoints.push_back(PassPoint::load(xml));
+				}
+				else if (xml.name() == "matrix")
+				{
+					if (role == "map_to_template")
+						temp->map_to_template.load(xml);
+					else if (role == "template_to_map")
+						temp->template_to_map.load(xml);
+					else if (role == "template_to_map_other")
+						temp->template_to_map_other.load(xml);
+					else
+					{
+						qDebug() << xml.qualifiedName();
+						xml.skipCurrentElement(); // unsupported
+					}
+				}
+				else
+				{
+					qDebug() << xml.qualifiedName();
+					xml.skipCurrentElement(); // unsupported
 				}
 			}
-			else
-				xml.skipCurrentElement(); // unsupported
 		}
-	}
-	
-	if (!temp->loadTypeSpecificTemplateConfiguration(xml))
-	{
-		delete temp;
-		return NULL;
+		else if (!temp->loadTypeSpecificTemplateConfiguration(xml))
+		{
+			delete temp;
+			return NULL;
+		}
 	}
 	
 	return temp;
@@ -638,6 +642,12 @@ Template* Template::templateForFile(const QString& path, Map* map)
 		return new TemplateTrack(path, map);
 	else
 		return NULL;
+}
+
+bool Template::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
+{
+	xml.skipCurrentElement();
+	return true;
 }
 
 void Template::updateTransformationMatrices()

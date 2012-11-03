@@ -153,7 +153,7 @@ void AreaSymbol::FillPattern::save(QXmlStreamWriter& xml, const Map& map) const
 
 void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
 {
-	Q_ASSERT(xml.name() == "pattern");
+	Q_ASSERT (xml.name() == "pattern");
 	
 	QXmlStreamAttributes attributes = xml.attributes();
 	type = static_cast<Type>(attributes.value("type").toString().toInt());
@@ -636,7 +636,8 @@ void AreaSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 
 bool AreaSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
 {
-	Q_ASSERT(xml.name() == "area_symbol");
+	if (xml.name() != "area_symbol")
+		return false;
 	
 	QXmlStreamAttributes attributes = xml.attributes();
 	int temp = attributes.value("inner_color").toString().toInt();
@@ -647,11 +648,16 @@ bool AreaSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 	patterns.reserve(num_patterns % 5); // 5 is not the limit
 	while (xml.readNextStartElement())
 	{
-		patterns.push_back(FillPattern());
-		patterns.back().load(xml, map, symbol_dict);
+		if (xml.name() == "pattern")
+		{
+			patterns.push_back(FillPattern());
+			patterns.back().load(xml, map, symbol_dict);
+		}
+		else
+			xml.skipCurrentElement();
 	}
 	
-	return !xml.error();
+	return true;
 }
 
 bool AreaSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
