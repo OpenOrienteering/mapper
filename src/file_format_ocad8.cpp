@@ -1164,7 +1164,13 @@ void OCAD8FileImport::fillPathCoords(Object *object, bool is_area, s16 npts, OCA
 				continue;
 			
 			if (object->coords[i].isPositionEqualTo(object->coords[start]))
-				object->coords[i].setClosePoint(true);
+			{
+				MapCoord coord = object->coords[start];
+				coord.setCurveStart(false);
+				coord.setHolePoint(true);
+				coord.setClosePoint(true);
+				object->coords[i] = coord;
+			}
 			
 			start = i + 1;
 		}
