@@ -182,7 +182,7 @@ void ObjectContainingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary&
 		while (xml.readNextStartElement())
 		{
 			if (xml.name() == "object")
-				objects.push_back(Object::load(xml, *map, symbol_dict));
+				objects.push_back(Object::load(xml, map, symbol_dict));
 			else
 				xml.skipCurrentElement(); // unknown
 		}

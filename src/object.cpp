@@ -356,7 +356,7 @@ void Object::save(QXmlStreamWriter& xml) const
 	xml.writeEndElement(/*object*/);
 }
 
-Object* Object::load(QXmlStreamReader& xml, Map& map, const SymbolDictionary& symbol_dict, Symbol* symbol) throw (FormatException)
+Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& symbol_dict, Symbol* symbol) throw (FormatException)
 {
 	Q_ASSERT(xml.name() == "object");
 	
@@ -367,7 +367,7 @@ Object* Object::load(QXmlStreamReader& xml, Map& map, const SymbolDictionary& sy
 	if (!object)
 		throw FormatException(QObject::tr("Error while loading an object of type %1.").arg(object_type));
 	
-	object->map = &map;
+	object->map = map;
 	
 	if (symbol)
 		object->symbol = symbol;

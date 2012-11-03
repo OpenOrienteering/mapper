@@ -127,7 +127,7 @@ MapPart* MapPart::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol
 			while (xml.readNextStartElement())
 			{
 				if (xml.name() == "object")
-					part->objects.push_back(Object::load(xml, map, symbol_dict));
+					part->objects.push_back(Object::load(xml, &map, symbol_dict));
 				else
 					xml.skipCurrentElement(); // unknown
 			}

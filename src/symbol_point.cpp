@@ -99,6 +99,10 @@ void PointSymbol::createRenderablesScaled(Object* object, const MapCoordVector& 
 	int size = (int)objects.size();
 	for (int i = 0; i < size; ++i)
 	{
+		// Point symbol elements should not be entered into the map,
+		// otherwise map settings like area hatching affect them
+		assert(objects[i]->getMap() == NULL);
+		
 		const MapCoordVector& object_flags = objects[i]->getRawCoordinateVector();
 		int coords_size = (int)object_flags.size();
 		MapCoordVectorF transformed_coords;
@@ -322,7 +326,7 @@ bool PointSymbol::loadImpl(QIODevice* file, int version, Map* map)
 		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), symbols[i]);
 		if (!objects[i])
 			return false;
-		objects[i]->load(file, version, NULL); // FIXME: check that map = NULL is allowed
+		objects[i]->load(file, version, NULL);
 	}
 	
 	return true;
@@ -375,7 +379,7 @@ bool PointSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sy
 				if (xml.name() == "symbol")
 					symbols.push_back(Symbol::load(xml, map, symbol_dict));
 				else if (xml.name() == "object")
-					objects.push_back(Object::load(xml, map, symbol_dict, symbols.back()));
+					objects.push_back(Object::load(xml, NULL, symbol_dict, symbols.back()));
 				else
 					xml.skipCurrentElement(); // unknown element
 			}
