@@ -485,7 +485,10 @@ void XMLFileImporter::importTemplates()
 			xml.skipCurrentElement();
 		}
 		else
+		{
+			qDebug() << "Unsupported element: " << xml.qualifiedName();
 			xml.skipCurrentElement();
+		}
 	}
 	
 	map->first_front_template = qMax(0, qMin(map->getNumTemplates(), first_front_template));
