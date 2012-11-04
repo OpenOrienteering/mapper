@@ -1071,14 +1071,19 @@ void LineSymbol::createDashSymbolRenderables(Object* object, bool path_closed, c
 void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
 {
 	PointObject point_object(mid_symbol);
+	bool point_object_rotable = point_object.getSymbol()->asPoint()->isRotatable();
 	MapCoordVectorF point_coord;
 	point_coord.push_back(MapCoordF(0, 0));
 	MapCoordF right_vector;
 	
-	float segment_length_f = 0.001f * segment_length;
-	float end_length_f = 0.001f * end_length;
-	float mid_symbol_distance_f = 0.001f * mid_symbol_distance;
-	float mid_symbols_length = (mid_symbols_per_spot - 1)*mid_symbol_distance_f;
+	int mid_symbol_num_gaps       = mid_symbols_per_spot - 1;
+	
+	double segment_length_f       = 0.001 * segment_length;
+	double end_length_f           = 0.001 * end_length;
+	double end_length_twice_f     = 0.002 * end_length;
+	double mid_symbol_distance_f  = 0.001 * mid_symbol_distance;
+	double mid_symbols_length     = mid_symbol_num_gaps * mid_symbol_distance_f;
+	
 	bool is_first_part = true;
 	int part_start = 0;
 	int part_end = 0;
@@ -1091,7 +1096,7 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 			{
 				// Insert point at start coordinate
 				right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_start, NULL);
-				if (point_object.getSymbol()->asPoint()->isRotatable())
+				if (point_object_rotable)
 					point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 				point_coord[0] = coords[part_start];
 				mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
@@ -1100,59 +1105,63 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 			is_first_part = false;
 		}
 		
-		double length = line_coords[line_coords.size() - 1].clen;
-		
-		double segmented_length = length;
-		if (end_length > 0)
-			segmented_length = qMax(0.0, length - 2 * end_length_f);
-		segmented_length -= (mid_symbols_per_spot - 1) * mid_symbol_distance_f;
-		
-		int lower_segment_count = qMax((end_length == 0) ? 1 : 0, qRound(floor(segmented_length / (segment_length_f + (mid_symbols_per_spot - 1) * mid_symbol_distance_f))));
-		int higher_segment_count = qMax((end_length == 0) ? 1 : 0, qRound(ceil(segmented_length / (segment_length_f + (mid_symbols_per_spot - 1) * mid_symbol_distance_f))));
+		// The total length of the current continuous part
+		double length = line_coords.back().clen;
+		// The length which is available for placing mid symbols
+		double segmented_length = qMax(0.0, length - end_length_twice_f) - mid_symbols_length;
+		// The number of segments to be created by mid symbols
+		double segment_count_raw = qMax((end_length == 0) ? 1.0 : 0.0, (segmented_length / (segment_length_f + mid_symbols_length)));
+		int lower_segment_count = (int)floor(segment_count_raw);
+		int higher_segment_count = (int)ceil(segment_count_raw);
 
 		int line_coord_search_start = 0;
 		if (end_length > 0)
 		{
-			if (length <= (mid_symbols_per_spot - 1) * mid_symbol_distance_f)
+			if (length <= mid_symbols_length)
 			{
 				if (show_at_least_one_symbol)
 				{
 					// Insert point at start coordinate
-					right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_start, NULL);
-					if (point_object.getSymbol()->asPoint()->isRotatable())
+					if (point_object_rotable)
+					{
+						right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_start, NULL);
 						point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+					}
 					point_coord[0] = coords[part_start];
 					mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 					
 					// Insert point at end coordinate
-					right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
-					if (point_object.getSymbol()->asPoint()->isRotatable())
+					if (point_object_rotable)
+					{
+						right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
 						point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+					}
 					point_coord[0] = coords[part_end];
 					mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 				}
 			}
 			else
 			{
-				double lower_abs_deviation = qAbs(length - lower_segment_count * segment_length_f - (lower_segment_count+1)*mid_symbols_length - 2 * end_length_f);
-				double higher_abs_deviation = qAbs(length - higher_segment_count * segment_length_f - (higher_segment_count+1)*mid_symbols_length - 2 * end_length_f);
+				double lower_abs_deviation = qAbs(length - lower_segment_count * segment_length_f - (lower_segment_count+1)*mid_symbols_length - end_length_twice_f);
+				double higher_abs_deviation = qAbs(length - higher_segment_count * segment_length_f - (higher_segment_count+1)*mid_symbols_length - end_length_twice_f);
 				int segment_count = (lower_abs_deviation >= higher_abs_deviation) ? higher_segment_count : lower_segment_count;
 				
-				double deviation = (lower_abs_deviation >= higher_abs_deviation) ? (-1 * higher_abs_deviation) : (lower_abs_deviation);
-				double ideal_length = segment_count * segment_length_f + 2 * end_length_f;
+				double deviation = (lower_abs_deviation >= higher_abs_deviation) ? -higher_abs_deviation : lower_abs_deviation;
+				double ideal_length = segment_count * segment_length_f + end_length_twice_f;
 				double adapted_end_length = end_length_f + deviation * (end_length_f / ideal_length);
 				double adapted_segment_length = segment_length_f + deviation * (segment_length_f / ideal_length);
-				assert(qAbs(2*adapted_end_length + segment_count*adapted_segment_length + (segment_count + 1)*mid_symbols_length - length) < 0.001f);
+				assert(qAbs(2*adapted_end_length + segment_count*adapted_segment_length + (segment_count + 1)*mid_symbols_length - length) < 0.001);
 				
-				if (adapted_segment_length >= 0 && (show_at_least_one_symbol || higher_segment_count > 0 || length > 2*end_length_f - 0.5 * (2*end_length_f+segment_length_f+2*mid_symbols_length - (2*end_length_f+mid_symbols_length))))
+				if (adapted_segment_length >= 0 && (show_at_least_one_symbol || higher_segment_count > 0 || length > end_length_twice_f - 0.5 * (segment_length_f + mid_symbols_length)))
 				{
+					adapted_segment_length += mid_symbols_length;
 					for (int i = 0; i < segment_count + 1; ++i)
 					{
+						double base_position = adapted_end_length + i * adapted_segment_length;
 						for (int s = 0; s < mid_symbols_per_spot; ++s)
 						{
-							double position = adapted_end_length + s * mid_symbol_distance_f + i * (adapted_segment_length + mid_symbols_length);
-							PathCoord::calculatePositionAt(flags, coords, line_coords, position, line_coord_search_start, &point_coord[0], &right_vector);
-							if (point_object.getSymbol()->asPoint()->isRotatable())
+							PathCoord::calculatePositionAt(flags, coords, line_coords, base_position + s * mid_symbol_distance_f, line_coord_search_start, &point_coord[0], &right_vector);
+							if (point_object_rotable)
 								point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 							mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 						}
@@ -1174,16 +1183,17 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 				{
 					for (int i = 0; i <= segment_count; ++i)
 					{
+						double base_position = i * adapted_segment_length;
 						for (int s = 0; s < mid_symbols_per_spot; ++s)
 						{
 							// The outermost symbols are handled outside this loop
 							if (i == 0 && s == 0)
 								continue;
-							if (i == segment_count && s == mid_symbols_per_spot - 1)
+							if (i == segment_count && s == mid_symbol_num_gaps)
 								break;
 							
-							PathCoord::calculatePositionAt(flags, coords, line_coords, s * mid_symbol_distance_f + i * adapted_segment_length, line_coord_search_start, &point_coord[0], &right_vector);
-							if (point_object.getSymbol()->asPoint()->isRotatable())
+							PathCoord::calculatePositionAt(flags, coords, line_coords, base_position + s * mid_symbol_distance_f, line_coord_search_start, &point_coord[0], &right_vector);
+							if (point_object_rotable)
 								point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 							mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 						}
@@ -1195,9 +1205,11 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 		if (end_length == 0)
 		{
 			// Insert point at end coordinate
-			right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
 			if (point_object.getSymbol()->asPoint()->isRotatable())
+			{
+				right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
 				point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+			}
 			point_coord[0] = coords[part_end];
 			mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 		}
