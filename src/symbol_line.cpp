@@ -921,6 +921,7 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 	int last_coord = (int)coords.size() - 1;
 	
 	PointObject point_object(mid_symbol);
+	bool point_object_rotatable = mid_symbol ? point_object.getSymbol()->asPoint()->isRotatable() : false;
 	MapCoordVectorF point_coord;
 	point_coord.push_back(MapCoordF(0, 0));
 	MapCoordF right_vector;
@@ -1001,26 +1002,26 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 			
 			for (int dashgroup = 1; dashgroup <= num_dashgroups; ++dashgroup)
 			{
-				for (int dash = 0; dash < dashes_in_group; ++dash)
+				for (int dash = 1; dash <= dashes_in_group; ++dash)
 				{
-					bool is_first_dash = dashgroup == 1 && dash == 0;
-					bool is_half_dash = (is_first_dash && half_first_dash) || (dashgroup == num_dashgroups && dash == dashes_in_group-1 && half_last_dash);
+					bool is_first_dash = dashgroup == 1 && dash == 1;
+					bool is_half_dash = (is_first_dash && half_first_dash) || (dashgroup == num_dashgroups && dash == dashes_in_group && half_last_dash);
 					double cur_dash_length = is_half_dash ? adapted_dash_length / 2 : adapted_dash_length;
 					
 					// Process immediately if this is not the last dash before a dash point
-					if (!(ends_with_dashpoint && dash == dashes_in_group - 1 && dashgroup == num_dashgroups))
+					if (!(ends_with_dashpoint && dash == dashes_in_group && dashgroup == num_dashgroups))
 					{
 						// The dash has an end if it is not the last dash in a closed path
-						bool has_end = !(dash == dashes_in_group - 1 && dashgroup == num_dashgroups && path_closed && part_end == last_coord);
+						bool has_end = !(dash == dashes_in_group && dashgroup == num_dashgroups && path_closed && part_end == last_coord);
 						
 						processContinuousLine(object, path_closed, flags, coords, line_coords, cur_length, cur_length + old_length + cur_dash_length,
-											  (!path_closed && out_flags.empty()) || (!out_flags.empty() && out_flags[out_flags.size() - 1].isHolePoint()), has_end,
+											  (!path_closed && out_flags.empty()) || (!out_flags.empty() && out_flags.back().isHolePoint()), has_end,
 											  cur_line_coord, out_flags, out_coords, true, !is_half_dash, output);
 						cur_length += old_length + cur_dash_length;
 						old_length = 0;
 						//dash_point_before = false;
 						
-						if (dash < dashes_in_group - 1)
+						if (dash < dashes_in_group)
 							cur_length += in_group_break_length_f;
 					}
 					else
@@ -1035,9 +1036,11 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 		if (ends_with_dashpoint && dashes_in_group == 1 && mid_symbol && !mid_symbol->isEmpty())
 		{
 			// Place a mid symbol on the dash point
-			MapCoordF right = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
-			if (point_object.getSymbol()->asPoint()->isRotatable())
+			if (point_object_rotatable)
+			{
+				MapCoordF right = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
 				point_object.setRotation(atan2(right.getX(), right.getY()));
+			}
 			point_coord[0] = coords[part_end];
 			mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 		}
@@ -1074,8 +1077,9 @@ void LineSymbol::createDashSymbolRenderables(Object* object, bool path_closed, c
 
 void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
 {
+	Q_ASSERT(mid_symbol != NULL);
 	PointObject point_object(mid_symbol);
-	bool point_object_rotable = point_object.getSymbol()->asPoint()->isRotatable();
+	bool point_object_rotatable = point_object.getSymbol()->asPoint()->isRotatable();
 	MapCoordVectorF point_coord;
 	point_coord.push_back(MapCoordF(0, 0));
 	MapCoordF right_vector;
@@ -1100,7 +1104,7 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 			{
 				// Insert point at start coordinate
 				right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_start, NULL);
-				if (point_object_rotable)
+				if (point_object_rotatable)
 					point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 				point_coord[0] = coords[part_start];
 				mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
@@ -1126,7 +1130,7 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 				if (show_at_least_one_symbol)
 				{
 					// Insert point at start coordinate
-					if (point_object_rotable)
+					if (point_object_rotatable)
 					{
 						right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_start, NULL);
 						point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
@@ -1135,7 +1139,7 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 					mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 					
 					// Insert point at end coordinate
-					if (point_object_rotable)
+					if (point_object_rotatable)
 					{
 						right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
 						point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
@@ -1165,7 +1169,7 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 						for (int s = 0; s < mid_symbols_per_spot; ++s)
 						{
 							PathCoord::calculatePositionAt(flags, coords, line_coords, base_position + s * mid_symbol_distance_f, line_coord_search_start, &point_coord[0], &right_vector);
-							if (point_object_rotable)
+							if (point_object_rotatable)
 								point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 							mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 						}
@@ -1197,7 +1201,7 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 								break;
 							
 							PathCoord::calculatePositionAt(flags, coords, line_coords, base_position + s * mid_symbol_distance_f, line_coord_search_start, &point_coord[0], &right_vector);
-							if (point_object_rotable)
+							if (point_object_rotatable)
 								point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
 							mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 						}
@@ -1209,7 +1213,7 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 		if (end_length == 0)
 		{
 			// Insert point at end coordinate
-			if (point_object.getSymbol()->asPoint()->isRotatable())
+			if (point_object_rotatable)
 			{
 				right_vector = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
 				point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
