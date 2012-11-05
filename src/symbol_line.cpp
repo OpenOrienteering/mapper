@@ -918,26 +918,30 @@ void LineSymbol::createPointedLineCap(Object* object, const MapCoordVector& flag
 
 void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, MapCoordVector& out_flags, MapCoordVectorF& out_coords, ObjectRenderables& output)
 {
-	int size = (int)coords.size();
+	int last_coord = (int)coords.size() - 1;
 	
 	PointObject point_object(mid_symbol);
 	MapCoordVectorF point_coord;
 	point_coord.push_back(MapCoordF(0, 0));
 	MapCoordF right_vector;
 	
-	float dash_length_f = 0.001f * dash_length;
-	float break_length_f = 0.001f * break_length;
-	float in_group_break_length_f = 0.001f * in_group_break_length;
+	double dash_length_f           = 0.001 * dash_length;
+	double break_length_f          = 0.001 * break_length;
+	double in_group_break_length_f = 0.001 * in_group_break_length;
+	
+	double switch_deviation = 0.2 * ((dashes_in_group*dash_length_f + break_length_f + (dashes_in_group-1)*in_group_break_length_f)) / dashes_in_group;
+	double minimum_optimum_length = (2*dashes_in_group*dash_length_f + break_length_f + 2*(dashes_in_group-1)*in_group_break_length_f);
 	
 	int part_start = 0;
 	int part_end = 0;
 	PathCoordVector line_coords;
-	out_flags.reserve(4 * coords.size());
-	out_coords.reserve(4 * coords.size());
+	std::size_t out_coords_size = 4 * coords.size();
+	out_flags.reserve(out_coords_size);
+	out_coords.reserve(out_coords_size);
 	
 	//bool dash_point_before = false;
-	double cur_length = 0;
-	float old_length = 0;	// length from line part(s) before dash point(s) which is not accounted for yet
+	double cur_length = 0.0;
+	double old_length = 0.0;	// length from line part(s) before dash point(s) which is not accounted for yet
 	int first_line_coord = 0;
 	int cur_line_coord = 1;
 	while (PathCoord::getNextPathPart(flags, coords, part_start, part_end, &line_coords, true, true))
@@ -946,37 +950,37 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 		{
 			++first_line_coord;
 			cur_line_coord = first_line_coord + 1;
-			while (line_coords[cur_line_coord].clen == 0)
+			while (line_coords[cur_line_coord].clen == 0.0f)
 				++cur_line_coord;	// TODO: Debug where double identical line coords with clen == 0 can come from? Happened with pointed line ends + dashed border lines in a closed path
 			cur_length = line_coords[first_line_coord].clen;
 		}
-		int line_coords_size = (int)line_coords.size();
 		
 		bool starts_with_dashpoint = (part_start > 0 && flags[part_start].isDashPoint());
-		bool ends_with_dashpoint = (part_end < size - 1 && flags[part_end].isDashPoint());
+		bool ends_with_dashpoint = (part_end < last_coord && flags[part_end].isDashPoint());
 		bool half_first_dash = (part_start == 0 && (half_outer_dashes || path_closed)) || (starts_with_dashpoint && dashes_in_group == 1);
-		bool half_last_dash = (part_end == size - 1 && (half_outer_dashes || path_closed)) || (ends_with_dashpoint && dashes_in_group == 1);
+		bool half_last_dash = (part_end == last_coord && (half_outer_dashes || path_closed)) || (ends_with_dashpoint && dashes_in_group == 1);
+		int half_first_last_dash = (half_first_dash ? 1 : 0) + (half_last_dash ? 1 : 0);
 		
-		double length = line_coords[line_coords_size - 1].clen - line_coords[first_line_coord].clen;
+		int last_line_coord = (int)line_coords.size() - 1;
+		double length = line_coords[last_line_coord].clen - line_coords[first_line_coord].clen;
 		
-		float num_dashgroups_f = (length + break_length_f - (half_first_dash ? 0.5f*dash_length_f : 0) - (half_last_dash ? 0.5f*dash_length_f : 0)) /
-		(break_length_f + dashes_in_group * dash_length_f + (dashes_in_group-1) * in_group_break_length_f);
-		num_dashgroups_f += (half_first_dash ? 1 : 0) + (half_last_dash ? 1 : 0);
+		double num_dashgroups_f = 
+		  (length + break_length_f - half_first_last_dash * 0.5 * dash_length_f) /
+		  (break_length_f + dashes_in_group * dash_length_f + (dashes_in_group-1) * in_group_break_length_f) +
+		  half_first_last_dash;
 		int lower_dashgroup_count = qRound(floor(num_dashgroups_f));
+		double minimum_optimum_num_dashes = dashes_in_group * 2.0 - half_first_last_dash * 0.5;
 		
-		float switch_deviation = 0.2f * ((dashes_in_group*dash_length_f + break_length_f + (dashes_in_group-1)*in_group_break_length_f)) / dashes_in_group;
-		float minimum_optimum_length = (2*dashes_in_group*dash_length_f + break_length_f + 2*(dashes_in_group-1)*in_group_break_length_f);
-		float minimum_optimum_num_dashes = 2*dashes_in_group - (half_first_dash ? 0.5f : 0) - (half_last_dash ? 0.5f : 0);
 		if (length <= 0.0 || (lower_dashgroup_count <= 1 && length < minimum_optimum_length - minimum_optimum_num_dashes * switch_deviation))
 		{
 			// Line part too short for dashes, use just one continuous line for it
 			if (!ends_with_dashpoint)
 			{
 				processContinuousLine(object, path_closed, flags, coords, line_coords, cur_length, cur_length + length + old_length,
-									  (!path_closed && out_flags.empty()) || (!out_flags.empty() && out_flags[out_flags.size() - 1].isHolePoint()), !(path_closed && part_end == size - 1),
+									  (!path_closed && out_flags.empty()) || (!out_flags.empty() && out_flags.back().isHolePoint()), !(path_closed && part_end == last_coord),
 									  cur_line_coord, out_flags, out_coords, true, old_length == 0 && length >= dash_length_f - switch_deviation, output);
 				cur_length += length + old_length;
-				old_length = 0;
+				old_length = 0.0;
 			}
 			else
 				old_length += length;
@@ -984,30 +988,30 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 		else
 		{
 			int higher_dashgroup_count = qRound(ceil(num_dashgroups_f));
-			float lower_dashgroup_deviation = (length - (lower_dashgroup_count*dashes_in_group*dash_length_f + (lower_dashgroup_count-1)*break_length_f + lower_dashgroup_count*(dashes_in_group-1)*in_group_break_length_f)) / (lower_dashgroup_count*dashes_in_group);
-			float higher_dashgroup_deviation = (-1) * (length - (higher_dashgroup_count*dashes_in_group*dash_length_f + (higher_dashgroup_count-1)*break_length_f + higher_dashgroup_count*(dashes_in_group-1)*in_group_break_length_f)) / (higher_dashgroup_count*dashes_in_group);
+			double lower_dashgroup_deviation = (length - (lower_dashgroup_count*dashes_in_group*dash_length_f + (lower_dashgroup_count-1)*break_length_f + lower_dashgroup_count*(dashes_in_group-1)*in_group_break_length_f)) / (lower_dashgroup_count*dashes_in_group);
+			double higher_dashgroup_deviation = (-1) * (length - (higher_dashgroup_count*dashes_in_group*dash_length_f + (higher_dashgroup_count-1)*break_length_f + higher_dashgroup_count*(dashes_in_group-1)*in_group_break_length_f)) / (higher_dashgroup_count*dashes_in_group);
 			if (!half_first_dash && !half_last_dash)
-				assert(lower_dashgroup_deviation >= -0.001f && higher_dashgroup_deviation >= -0.001f); // TODO; seems to fail as long as halving first/last dashes affects the outermost dash only
+				assert(lower_dashgroup_deviation >= -0.001 && higher_dashgroup_deviation >= -0.001); // TODO; seems to fail as long as halving first/last dashes affects the outermost dash only
 			int num_dashgroups = (lower_dashgroup_deviation > higher_dashgroup_deviation) ? higher_dashgroup_count : lower_dashgroup_count;
 			assert(num_dashgroups >= 2);
 			
-			int num_half_dashes = 2*num_dashgroups*dashes_in_group - (half_first_dash ? 1 : 0) - (half_last_dash ? 1 : 0);
-			float adapted_dash_length = (length - (num_dashgroups-1)*break_length_f - num_dashgroups*(dashes_in_group-1)*in_group_break_length_f) / (0.5f*num_half_dashes);
-			adapted_dash_length = qMax(adapted_dash_length, 0.0f);	// could be negative for large break lengths
+			int num_half_dashes = 2*num_dashgroups*dashes_in_group - half_first_last_dash;
+			double adapted_dash_length = (length - (num_dashgroups-1)*break_length_f - num_dashgroups*(dashes_in_group-1)*in_group_break_length_f) / (0.5*num_half_dashes);
+			adapted_dash_length = qMax(adapted_dash_length, 0.0);	// could be negative for large break lengths
 			
-			for (int dashgroup = 0; dashgroup < num_dashgroups; ++dashgroup)
+			for (int dashgroup = 1; dashgroup <= num_dashgroups; ++dashgroup)
 			{
 				for (int dash = 0; dash < dashes_in_group; ++dash)
 				{
-					bool is_first_dash = dashgroup == 0 && dash == 0;
-					bool is_half_dash = (is_first_dash && half_first_dash) || (dashgroup == num_dashgroups-1 && dash == dashes_in_group-1 && half_last_dash);
-					float cur_dash_length = is_half_dash ? adapted_dash_length / 2 : adapted_dash_length;
+					bool is_first_dash = dashgroup == 1 && dash == 0;
+					bool is_half_dash = (is_first_dash && half_first_dash) || (dashgroup == num_dashgroups && dash == dashes_in_group-1 && half_last_dash);
+					double cur_dash_length = is_half_dash ? adapted_dash_length / 2 : adapted_dash_length;
 					
 					// Process immediately if this is not the last dash before a dash point
-					if (!(ends_with_dashpoint && dash == dashes_in_group - 1 && dashgroup == num_dashgroups - 1))
+					if (!(ends_with_dashpoint && dash == dashes_in_group - 1 && dashgroup == num_dashgroups))
 					{
 						// The dash has an end if it is not the last dash in a closed path
-						bool has_end = !(dash == dashes_in_group - 1 && dashgroup == num_dashgroups - 1 && path_closed && part_end == size - 1);
+						bool has_end = !(dash == dashes_in_group - 1 && dashgroup == num_dashgroups && path_closed && part_end == last_coord);
 						
 						processContinuousLine(object, path_closed, flags, coords, line_coords, cur_length, cur_length + old_length + cur_dash_length,
 											  (!path_closed && out_flags.empty()) || (!out_flags.empty() && out_flags[out_flags.size() - 1].isHolePoint()), has_end,
@@ -1023,7 +1027,7 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 						old_length += cur_dash_length;
 				}
 				
-				if (dashgroup < num_dashgroups - 1)
+				if (dashgroup < num_dashgroups)
 					cur_length += break_length_f;
 			}
 		}
@@ -1038,10 +1042,10 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 			mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
 		}
 		
-		cur_length = line_coords[line_coords_size - 1].clen - old_length;
+		cur_length = line_coords[last_line_coord].clen - old_length;
 		
 		//dash_point_before = ends_with_dashpoint;
-		first_line_coord = line_coords_size - 1;
+		first_line_coord = last_line_coord;
 	}
 }
 
