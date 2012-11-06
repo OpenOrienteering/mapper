@@ -929,6 +929,7 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 	double dash_length_f           = 0.001 * dash_length;
 	double break_length_f          = 0.001 * break_length;
 	double in_group_break_length_f = 0.001 * in_group_break_length;
+	double mid_symbol_distance_f   = 0.001 * mid_symbol_distance;
 	
 	double switch_deviation = 0.2 * ((dashes_in_group*dash_length_f + break_length_f + (dashes_in_group-1)*in_group_break_length_f)) / dashes_in_group;
 	double minimum_optimum_length = (2*dashes_in_group*dash_length_f + break_length_f + 2*(dashes_in_group-1)*in_group_break_length_f);
@@ -940,13 +941,28 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 	out_flags.reserve(out_coords_size);
 	out_coords.reserve(out_coords_size);
 	
-	//bool dash_point_before = false;
+	bool dash_point_incomplete = false;
 	double cur_length = 0.0;
 	double old_length = 0.0;	// length from line part(s) before dash point(s) which is not accounted for yet
 	int first_line_coord = 0;
 	int cur_line_coord = 1;
 	while (PathCoord::getNextPathPart(flags, coords, part_start, part_end, &line_coords, true, true))
 	{
+		if (dash_point_incomplete)
+		{
+			double position = line_coords[first_line_coord].clen + ((mid_symbols_per_spot+1)%2) * 0.5 * mid_symbol_distance_f;
+			int line_coord_search_start = first_line_coord;
+			for (int s = 1; s < mid_symbols_per_spot; s+=2)
+			{
+				PathCoord::calculatePositionAt(flags, coords, line_coords, position, line_coord_search_start, &point_coord[0], &right_vector);
+				if (point_object_rotatable)
+					point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+				mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
+				position += mid_symbol_distance_f;
+			}
+			dash_point_incomplete = false;
+		}
+		
 		if (part_start > 0 && flags[part_start-1].isHolePoint())
 		{
 			++first_line_coord;
@@ -1035,19 +1051,22 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 		
 		if (ends_with_dashpoint && dashes_in_group == 1 && mid_symbol && !mid_symbol->isEmpty())
 		{
-			// Place a mid symbol on the dash point
-			if (point_object_rotatable)
+			double position = line_coords[last_line_coord].clen - (mid_symbols_per_spot-1) * 0.5 * mid_symbol_distance_f;
+			int line_coord_search_start = 0;
+			for (int s = 0; s < mid_symbols_per_spot; s+=2)
 			{
-				MapCoordF right = PathCoord::calculateRightVector(flags, coords, path_closed, part_end, NULL);
-				point_object.setRotation(atan2(right.getX(), right.getY()));
+				PathCoord::calculatePositionAt(flags, coords, line_coords, position, line_coord_search_start, &point_coord[0], &right_vector);
+				if (point_object_rotatable)
+					point_object.setRotation(atan2(right_vector.getX(), right_vector.getY()));
+				mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
+				position += mid_symbol_distance_f;
 			}
-			point_coord[0] = coords[part_end];
-			mid_symbol->createRenderables(&point_object, point_object.getRawCoordinateVector(), point_coord, output);
+			if (mid_symbols_per_spot > 1)
+				dash_point_incomplete = true;
 		}
 		
 		cur_length = line_coords[last_line_coord].clen - old_length;
 		
-		//dash_point_before = ends_with_dashpoint;
 		first_line_coord = last_line_coord;
 	}
 }
