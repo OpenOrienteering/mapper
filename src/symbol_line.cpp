@@ -931,8 +931,11 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 	double in_group_break_length_f = 0.001 * in_group_break_length;
 	double mid_symbol_distance_f   = 0.001 * mid_symbol_distance;
 	
-	double switch_deviation = 0.2 * ((dashes_in_group*dash_length_f + break_length_f + (dashes_in_group-1)*in_group_break_length_f)) / dashes_in_group;
-	double minimum_optimum_length = (2*dashes_in_group*dash_length_f + break_length_f + 2*(dashes_in_group-1)*in_group_break_length_f);
+	double total_in_group_dash_length  = dashes_in_group * dash_length_f;
+	double total_in_group_break_length = (dashes_in_group - 1) * in_group_break_length_f;
+	double total_dash_group_length = total_in_group_dash_length + total_in_group_break_length + break_length_f;
+	double switch_deviation        = 0.2 * total_dash_group_length / dashes_in_group;
+	double minimum_optimum_length  = 2.0 * total_dash_group_length;
 	
 	int part_start = 0;
 	int part_end = 0;
@@ -981,10 +984,10 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 		int last_line_coord = (int)line_coords.size() - 1;
 		double length = line_coords[last_line_coord].clen - line_coords[first_line_coord].clen;
 		
-		double num_dashgroups_f = 
-		  (length + break_length_f - half_first_last_dash * 0.5 * dash_length_f) /
-		  (break_length_f + dashes_in_group * dash_length_f + (dashes_in_group-1) * in_group_break_length_f) +
-		  half_first_last_dash;
+		double length_plus_break = length + break_length_f;
+		
+		double num_dashgroups_f = half_first_last_dash +
+		  (length_plus_break - half_first_last_dash * 0.5 * dash_length_f) / total_dash_group_length;
 		int lower_dashgroup_count = qRound(floor(num_dashgroups_f));
 		double minimum_optimum_num_dashes = dashes_in_group * 2.0 - half_first_last_dash * 0.5;
 		
@@ -1005,15 +1008,14 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 		else
 		{
 			int higher_dashgroup_count = qRound(ceil(num_dashgroups_f));
-			double lower_dashgroup_deviation = (length - (lower_dashgroup_count*dashes_in_group*dash_length_f + (lower_dashgroup_count-1)*break_length_f + lower_dashgroup_count*(dashes_in_group-1)*in_group_break_length_f)) / (lower_dashgroup_count*dashes_in_group);
-			double higher_dashgroup_deviation = (-1) * (length - (higher_dashgroup_count*dashes_in_group*dash_length_f + (higher_dashgroup_count-1)*break_length_f + higher_dashgroup_count*(dashes_in_group-1)*in_group_break_length_f)) / (higher_dashgroup_count*dashes_in_group);
-			if (!half_first_dash && !half_last_dash)
-				assert(lower_dashgroup_deviation >= -0.001 && higher_dashgroup_deviation >= -0.001); // TODO; seems to fail as long as halving first/last dashes affects the outermost dash only
+			double lower_dashgroup_deviation  = (length_plus_break - lower_dashgroup_count * total_dash_group_length)  / lower_dashgroup_count;
+			double higher_dashgroup_deviation = (higher_dashgroup_count * total_dash_group_length - length_plus_break) / higher_dashgroup_count;
+			assert(half_first_dash || half_last_dash || (lower_dashgroup_deviation >= -0.001 && higher_dashgroup_deviation >= -0.001)); // TODO; seems to fail as long as halving first/last dashes affects the outermost dash only
 			int num_dashgroups = (lower_dashgroup_deviation > higher_dashgroup_deviation) ? higher_dashgroup_count : lower_dashgroup_count;
 			assert(num_dashgroups >= 2);
 			
 			int num_half_dashes = 2*num_dashgroups*dashes_in_group - half_first_last_dash;
-			double adapted_dash_length = (length - (num_dashgroups-1)*break_length_f - num_dashgroups*(dashes_in_group-1)*in_group_break_length_f) / (0.5*num_half_dashes);
+			double adapted_dash_length = (length - (num_dashgroups-1) * break_length_f - num_dashgroups * total_in_group_break_length) / (0.5 * num_half_dashes);
 			adapted_dash_length = qMax(adapted_dash_length, 0.0);	// could be negative for large break lengths
 			
 			for (int dashgroup = 1; dashgroup <= num_dashgroups; ++dashgroup)
