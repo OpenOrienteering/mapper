@@ -944,7 +944,7 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 	out_flags.reserve(out_coords_size);
 	out_coords.reserve(out_coords_size);
 	
-	bool dash_point_incomplete = false;
+	bool dash_point_incomplete = path_closed;
 	double cur_length = 0.0;
 	double old_length = 0.0;	// length from line part(s) before dash point(s) which is not accounted for yet
 	int first_line_coord = 0;
@@ -975,8 +975,8 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 			cur_length = line_coords[first_line_coord].clen;
 		}
 		
-		bool starts_with_dashpoint = (part_start > 0 && flags[part_start].isDashPoint());
-		bool ends_with_dashpoint = (part_end < last_coord && flags[part_end].isDashPoint());
+		bool starts_with_dashpoint = (part_start == 0) ? path_closed : flags[part_start].isDashPoint();
+		bool ends_with_dashpoint = (part_end < last_coord) ? flags[part_end].isDashPoint() : path_closed;
 		bool half_first_dash = (part_start == 0 && (half_outer_dashes || path_closed)) || (starts_with_dashpoint && dashes_in_group == 1);
 		bool half_last_dash = (part_end == last_coord && (half_outer_dashes || path_closed)) || (ends_with_dashpoint && dashes_in_group == 1);
 		int half_first_last_dash = (half_first_dash ? 1 : 0) + (half_last_dash ? 1 : 0);
@@ -1027,7 +1027,7 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 					double cur_dash_length = is_half_dash ? adapted_dash_length / 2 : adapted_dash_length;
 					
 					// Process immediately if this is not the last dash before a dash point
-					if (!(ends_with_dashpoint && dash == dashes_in_group && dashgroup == num_dashgroups))
+					if (path_closed || !(ends_with_dashpoint && dash == dashes_in_group && dashgroup == num_dashgroups))
 					{
 						// The dash has an end if it is not the last dash in a closed path
 						bool has_end = !(dash == dashes_in_group && dashgroup == num_dashgroups && path_closed && part_end == last_coord);
