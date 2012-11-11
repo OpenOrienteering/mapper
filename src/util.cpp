@@ -20,7 +20,7 @@
 
 #include "util.h"
 
-#include <QFile>
+#include <QIODevice>
 
 DoubleValidator::DoubleValidator(double bottom, double top, QObject* parent, int decimals) : QDoubleValidator(bottom, top, decimals, parent)
 {

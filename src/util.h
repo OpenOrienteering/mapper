@@ -67,8 +67,6 @@ bool lineIntersectsRect(const QRectF& rect, const QPointF& p1, const QPointF& p2
 void saveString(QIODevice* file, const QString& str);
 void loadString(QIODevice* file, QString& str);
 
-#endif
-
 // TODO: Refactor: put remaining stuff into this namespace, too
 namespace Util
 {
@@ -192,3 +190,5 @@ namespace Util
 		hatchingOperation(extent, vert_spacing, vert_offset, rotation + M_PI / 2, processor);
 	}
 }
+
+#endif
