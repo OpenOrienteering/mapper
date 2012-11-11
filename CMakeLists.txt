@@ -186,6 +186,10 @@ add_subdirectory("src")
 if(Mapper_BUILD_PACKAGE)
 	add_subdirectory("packaging")
 endif()
+if(Mapper_DEVELOPMENT_BUILD AND NOT CROSS_COMPILING)
+	enable_testing()
+	add_subdirectory("test")
+endif()
 
 install(FILES COPYING 
   DESTINATION "${MAPPER_ABOUT_DESTINATION}"
