@@ -27,6 +27,8 @@
 #include <QLibraryInfo>
 #include <QTranslator>
 
+#include "mapper_resource.h"
+
 
 QStringList TranslationUtil::search_path;
 
@@ -74,7 +76,7 @@ LanguageCollection TranslationUtil::getAvailableLanguages()
 	Q_FOREACH(QString translation_dir, search_path)
 	{
 		QDir dir(translation_dir);
-		foreach (QString name, dir.entryList(name_filter, QDir::Files))
+		Q_FOREACH (QString name, dir.entryList(name_filter, QDir::Files))
 		{
 			name.remove(0, app_name.length()+1);
 			name.remove(name.length()-3, 3);
@@ -90,19 +92,7 @@ LanguageCollection TranslationUtil::getAvailableLanguages()
 	return language_map;
 }
 
-
 void TranslationUtil::init_search_path()
 {
-	QString application_dir_path = QCoreApplication::applicationDirPath();
-	search_path
-#ifdef Mapper_TRANSLATIONS_EMBEDDED
-	  << ":/translations"
-#endif
-#ifdef MAPPER_DEBIAN_PACKAGE_NAME
-	  << (application_dir_path + "/../share/" + MAPPER_DEBIAN_PACKAGE_NAME + "/translations")
-#endif
-#ifdef Q_OS_MAC
-	  << (application_dir_path + "/../Resources/translations")
-#endif
-	  << (application_dir_path + "/translations"); /* Windows and development */
+	search_path = MapperResource::getLocations(MapperResource::TRANSLATION);
 }

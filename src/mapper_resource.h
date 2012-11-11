@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps, Kai Pastor
+ *    Copyright 2012 Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -17,23 +17,36 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_MAPPER_CONFIG_H_
-#define _OPENORIENTEERING_MAPPER_CONFIG_H_
 
-#define APP_NAME qApp->translate("Global", QT_TRANSLATE_NOOP("Global", "OpenOrienteering Mapper"))
-#define APP_VERSION "@Mapper_VERSION_DISPLAY@"
+#ifndef _OPENORIENTEERING_MAPPER_RESOURCE_H_
+#define _OPENORIENTEERING_MAPPER_RESOURCE_H_
 
-#cmakedefine Mapper_TRANSLATIONS_EMBEDDED
-#cmakedefine Mapper_XML_FORMAT
-#cmakedefine CPACK_DEBIAN_PACKAGE_NAME
+#include <QStringList>
 
-#ifdef CPACK_DEBIAN_PACKAGE_NAME
-#define MAPPER_DEBIAN_PACKAGE_NAME "@CPACK_DEBIAN_PACKAGE_NAME@"
-#endif
-
-#ifdef MAPPER_DEVELOPMENT_BUILD
-#define MAPPER_DEVELOPMENT_APP_DIR "@CMAKE_CURRENT_BINARY_DIR@"
-#define MAPPER_DEVELOPMENT_RES_DIR "@PROJECT_BINARY_DIR@"
-#endif
+/**
+ * Utility for locating and loading resources.
+ * 
+ * Depending on operating system and build configuration,
+ * resources may be located in a number of different locations.
+ * This interface hides all the complex dependencies.
+ */
+namespace MapperResource
+{
+	/**
+	 * Various types of resources which are used by Mapper.
+	 */
+	enum RESOURCE_TYPE {
+		ASSISTANT,
+		MANUAL,
+		SYMBOLSET,
+		TRANSLATION
+	};
+	
+	/** 
+	 * Get a list of paths where to find particular resources.
+	 * Returns an empty list if no valid path exists.
+	 */
+	QStringList getLocations(MapperResource::RESOURCE_TYPE resource_type);
+}
 
 #endif

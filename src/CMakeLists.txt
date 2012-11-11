@@ -33,6 +33,7 @@ set(Mapper_Common_SRCS
  util_pie_menu.cpp
  util_task_dialog.cpp
  util_translation.cpp
+ mapper_resource.cpp
  undo.cpp
  qbezier.cpp
  matrix.cpp

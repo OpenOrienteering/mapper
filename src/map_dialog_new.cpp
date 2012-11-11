@@ -32,6 +32,7 @@
 #include <QCoreApplication>
 
 #include "file_format.h"
+#include "mapper_resource.h"
 
 NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
@@ -244,48 +245,15 @@ void NewMapDialog::loadSymbolSetMap()
 {
 	QString app_dir = QCoreApplication::applicationDirPath();
 	
-	// FIXME: How to translate directory name "my symbol sets"?
-	// possible Windows solution: desktop.ini
-	
-	// symbol sets from HOME/my symbol sets
-	QDir symbol_set_dir(QDir::homePath() % QDir::toNativeSeparators("/my symbol sets"));
-	if (symbol_set_dir.exists())
+	QStringList locations = MapperResource::getLocations(MapperResource::SYMBOLSET);
+	Q_FOREACH(QString symbol_set_dir, locations)
 		loadSymbolSetDir(symbol_set_dir);
-	
-	// symbol sets from APPDIR/symbol sets
-	symbol_set_dir = QDir(app_dir % QDir::toNativeSeparators("/symbol sets"));
-	if (symbol_set_dir.exists())
-		loadSymbolSetDir(symbol_set_dir);
-	
-	// symbol sets from APPDIR/my symbol sets (deprecated)
-	symbol_set_dir = QDir(app_dir % QDir::toNativeSeparators("/my symbol sets"));
-	if (symbol_set_dir.exists())
-		loadSymbolSetDir(symbol_set_dir);
-	
-	// symbol sets from WORKINGDIR/my symbol sets (deprecated)
-	QDir working_symbol_set_dir = QDir("my symbol sets");
-	if (working_symbol_set_dir.canonicalPath() != symbol_set_dir.canonicalPath() && working_symbol_set_dir.exists())
-		loadSymbolSetDir(working_symbol_set_dir);
-	
-#ifndef WIN32
-	// symbol sets from /usr/share et al. if executable is in /usr/bin
-	symbol_set_dir.cd(app_dir % "/../share/openorienteering-mapper/symbol sets");
-	if (symbol_set_dir.exists())
-		loadSymbolSetDir(symbol_set_dir);
-#endif
-
-#ifdef Q_WS_MAC
-	// symbol sets from Mapper.app/Contents/Resources/symbol sets
-	symbol_set_dir = QDir(app_dir % "/../Resources/symbol sets");
-	if (symbol_set_dir.exists())
-		loadSymbolSetDir(symbol_set_dir);
-#endif
 }
 
 void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 {
 	QStringList subdirs = symbol_set_dir.entryList(QDir::Dirs | QDir::Hidden | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDir::NoSort);
-	foreach (const QString dir_name, subdirs)
+	Q_FOREACH(const QString dir_name, subdirs)
 	{
 		//int scale = dir_name.toInt();
 		//if (scale == 0)

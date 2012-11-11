@@ -36,6 +36,7 @@
 #include "map.h"
 #include "map_dialog_new.h"
 #include "map_editor.h"
+#include "mapper_resource.h"
 #include "file_format.h"
 #include "settings_dialog.h"
 
@@ -732,62 +733,42 @@ void MainWindow::showAbout()
 }
 
 
-template <class T>
-static const bool findFirstExistingItem(const QList<T> &list, T &which)
-{
-	Q_FOREACH(const T &item, list)
-	{
-		if (item.exists())
-		{
-			which = item;
-			return true;
-		}
-	}
-	return false;
-}
-
 void MainWindow::showHelp(QString filename, QString fragment)
 {
-	static QProcess* process = NULL;
-	if (!process || process->state() == QProcess::NotRunning)
+	static QProcess assistant_process;
+	if (assistant_process.state() == QProcess::Running)
 	{
-		QDir app_dir(QCoreApplication::applicationDirPath());
-		QList<QDir> help_locations;
-		help_locations
-			<< QDir(app_dir.absoluteFilePath("help"))
-#ifdef MAPPER_DEBIAN_PACKAGE_NAME
-			<< QDir(QString("/usr/share/") % MAPPER_DEBIAN_PACKAGE_NAME % "/help")
-#endif
-#ifdef Q_WS_MAC
-			<< QDir(app_dir.absoluteFilePath("../Resources/help"))
-#endif
-			<< QDir(":/help");
-		
-		QDir help_dir;
-		if (!findFirstExistingItem(help_locations, help_dir))
+		QString command("setSource " + makeHelpUrl(filename, fragment) + "\n");
+		assistant_process.write(command.toLatin1());
+	}
+	else
+	{
+		QStringList manual_locations = MapperResource::getLocations(MapperResource::MANUAL);
+		if (manual_locations.isEmpty())
 		{
 			QMessageBox::warning(this, tr("Error"), tr("Failed to locate the help files."));
 			return;
 		}
 		
+		QStringList assistant_locations = MapperResource::getLocations(MapperResource::ASSISTANT);
+		if (assistant_locations.isEmpty())
+		{
+			QMessageBox::warning(this, tr("Error"), tr("Failed to locate the help browser (\"Qt Assistant\")."));
+			return;
+		}
+		
 		// Try to start the Qt Assistant process
-		if (process)
-			delete process;
-		process = new QProcess();
 		QStringList args;
 		args << QLatin1String("-collectionFile")
-			 << help_dir.absoluteFilePath("oomaphelpcollection.qhc").toLatin1()
+			 << QDir::toNativeSeparators(manual_locations.first())
 			 << QLatin1String("-showUrl")
 			 << makeHelpUrl(filename, fragment)
 			 << QLatin1String("-enableRemoteControl");
 		
-#ifdef Q_WS_MAC
-		process->start(app_dir.absoluteFilePath("assistant"), args);
-#else
-		process->start(QLatin1String("assistant"), args);
-#endif
+		assistant_process.start(assistant_locations.first(), args);
+		
 		// FIXME: Calling waitForStarted() from the main thread might cause the user interface to freeze.
-		if (!process->waitForStarted())
+		if (!assistant_process.waitForStarted())
 		{
 			QMessageBox msg_box;
 			msg_box.setIcon(QMessageBox::Warning);
@@ -810,7 +791,7 @@ void MainWindow::showHelp(QString filename, QString fragment)
 			{
 				msg_box.setText(tr("Failed to launch the help browser (\"Qt Assistant\")."));
 				msg_box.setStandardButtons(QMessageBox::Ok);
-				QString details = process->readAllStandardError();
+				QString details = assistant_process.readAllStandardError();
 				if (! details.isEmpty())
 					msg_box.setDetailedText(details);
 			}
@@ -823,18 +804,13 @@ void MainWindow::showHelp(QString filename, QString fragment)
 			}
 		}
 	}
-	else
-	{
-		QByteArray command;
-		command.append("setSource " + makeHelpUrl(filename, fragment) + "\n");
-		process->write(command);
-	}
 }
 
 QString MainWindow::makeHelpUrl(QString filename, QString fragment)
 {
 	return "qthelp://openorienteering.mapper.help/oohelpdoc/help/html_en/" + filename + (fragment.isEmpty() ? "" : ("#" + fragment));
 }
+
 void MainWindow::linkClicked(const QString &link)
 {
 	QDesktopServices::openUrl(link);
