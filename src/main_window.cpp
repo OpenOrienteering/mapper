@@ -743,15 +743,15 @@ void MainWindow::showHelp(QString filename, QString fragment)
 	}
 	else
 	{
-		QStringList manual_locations = MapperResource::getLocations(MapperResource::MANUAL);
-		if (manual_locations.isEmpty())
+		QString manual_path = MapperResource::locate(MapperResource::MANUAL);
+		if (manual_path.isEmpty())
 		{
 			QMessageBox::warning(this, tr("Error"), tr("Failed to locate the help files."));
 			return;
 		}
 		
-		QStringList assistant_locations = MapperResource::getLocations(MapperResource::ASSISTANT);
-		if (assistant_locations.isEmpty())
+		QStringList assistant_path = MapperResource::locate(MapperResource::ASSISTANT);
+		if (assistant_path.isEmpty())
 		{
 			QMessageBox::warning(this, tr("Error"), tr("Failed to locate the help browser (\"Qt Assistant\")."));
 			return;
@@ -760,12 +760,12 @@ void MainWindow::showHelp(QString filename, QString fragment)
 		// Try to start the Qt Assistant process
 		QStringList args;
 		args << QLatin1String("-collectionFile")
-			 << QDir::toNativeSeparators(manual_locations.first())
+			 << QDir::toNativeSeparators(manual_path)
 			 << QLatin1String("-showUrl")
 			 << makeHelpUrl(filename, fragment)
 			 << QLatin1String("-enableRemoteControl");
 		
-		assistant_process.start(assistant_locations.first(), args);
+		assistant_process.start(assistant_path, args);
 		
 		// FIXME: Calling waitForStarted() from the main thread might cause the user interface to freeze.
 		if (!assistant_process.waitForStarted())

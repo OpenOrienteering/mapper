@@ -51,7 +51,7 @@ namespace MapperResource
 	
 	/** 
 	 * Get the first instance of a resource. 
-	 * Returns an empty string if the resources is not found.
+	 * Returns an empty string if the resource is not found.
 	 * 
 	 * If the name parameter is given, it is understood as a filename in the 
 	 * resource directory identified by resource_type.
