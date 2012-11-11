@@ -27,7 +27,6 @@ project(Mapper)
 SET(Mapper_VERSION_MAJOR 0)
 SET(Mapper_VERSION_MINOR 4)
 SET(Mapper_VERSION_PATCH 99)
-SET(Mapper_VERSION_DISPLAY "${CMAKE_BUILD_TYPE} ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
 
 # Build configuration options
 
@@ -48,6 +47,14 @@ option(Mapper_BUILD_QT   "Build the Qt library from source")
 option(Mapper_USE_QT5    "Use Qt library version 5")
 
 option(Mapper_BUILD_PACKAGE "Create a target for building packages" ON)
+
+if (NOT CMAKE_BUILD_TYPE MATCHES Release|MinSizeRel)
+	set(Mapper_DEVELOPMENT_BUILD_DEFAULT ON)
+else()
+	set(Mapper_DEVELOPMENT_BUILD_DEFAULT OFF)
+endif()
+option(Mapper_DEVELOPMENT_BUILD "Configure development build (loading resource from the build directory)" ${Mapper_DEVELOPMENT_BUILD_DEFAULT})
+mark_as_advanced(Mapper_DEVELOPMENT_BUILD)
 
 if(WIN32 OR APPLE)
 	set(Mapper_PACKAGE_ALL_DEFAULT ON)
@@ -161,6 +168,16 @@ else (CMAKE_COMPILER_IS_GNUCXX)
 endif (CMAKE_COMPILER_IS_GNUCXX)
 
 include_directories(${QT_INCLUDES} ${CMAKE_CURRENT_BINARY_DIR} ${PROJ_INCLUDE_DIR})
+
+if(Mapper_DEVELOPMENT_BUILD)
+	add_definitions(-DMAPPER_DEVELOPMENT_BUILD)
+endif()
+
+if(Mapper_DEVELOPMENT_BUILD OR NOT CMAKE_BUILD_TYPE MATCHES Release|MinSizeRel)
+	set(Mapper_VERSION_DISPLAY "${CMAKE_BUILD_TYPE} ${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
+else()
+	set(Mapper_VERSION_DISPLAY "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
+endif()
 
 # Subdirectories
 
