@@ -21,7 +21,7 @@
 #ifndef _OPENORIENTEERING_TEST_H_
 #define _OPENORIENTEERING_TEST_H_
 
-#include <QtTest/QtTest>
+#include <QtTest>
 
 class Map;
 class MainWindow;
@@ -65,12 +65,14 @@ class TestFileFormats : public QObject
 {
 Q_OBJECT
 private slots:
+	void initTestCase();
 	void saveAndLoad_data();
 	void saveAndLoad();
 	
 private:
 	Map* saveAndLoadMap(Map* input, const Format* format);
 	bool compareMaps(Map* a, Map* b, QString& error);
+	QString map_filename;
 };
 
 /// Ensures that duplicates of symbols and objects are equal to their originals.
@@ -78,11 +80,15 @@ class TestDuplicateEqual : public QObject
 {
 Q_OBJECT
 private slots:
+	void initTestCase();
 	void symbols_data();
 	void symbols();
 	
 	void objects_data();
 	void objects();
+	
+private:
+	QString map_filename;
 };
 
 /// Tests the editing tools

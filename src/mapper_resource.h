@@ -39,6 +39,7 @@ namespace MapperResource
 		ASSISTANT,
 		MANUAL,
 		SYMBOLSET,
+		TEST_DATA,
 		TRANSLATION
 	};
 	
@@ -47,6 +48,15 @@ namespace MapperResource
 	 * Returns an empty list if no valid path exists.
 	 */
 	QStringList getLocations(MapperResource::RESOURCE_TYPE resource_type);
+	
+	/** 
+	 * Get the first instance of a resource. 
+	 * Returns an empty string if the resources is not found.
+	 * 
+	 * If the name parameter is given, it is understood as a filename in the 
+	 * resource directory identified by resource_type.
+	 */
+	QString locate(MapperResource::RESOURCE_TYPE resource_type, const QString name = "");
 }
 
 #endif

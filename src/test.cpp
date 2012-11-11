@@ -21,6 +21,7 @@
 #include "test.h"
 
 #include "global.h"
+#include "mapper_resource.h"
 #include "file_format.h"
 #include "map_color.h"
 #include "symbol.h"
@@ -116,13 +117,18 @@ void TestMapEditor::simulateDrag(QPointF start_pos, QPointF end_pos)
 
 // ### TestFileFormats ###
 
+void TestFileFormats::initTestCase()
+{
+	map_filename = MapperResource::locate(MapperResource::TEST_DATA, "COPY_OF_test_map.omap");
+	QVERIFY2(!map_filename.isEmpty(), "Unable to locate test map");
+}
+
 void TestFileFormats::saveAndLoad_data()
 {
 	// Add all file formats which support import and export
 	QTest::addColumn<QString>("format_id");
 	QTest::addColumn<QString>("map_filename");
 	
-	const char* map_filename = "test data/COPY_OF_test_map.omap";
 	Q_FOREACH(const Format* format, FileFormats.formats())
 	{
 		if (format->supportsExport() && format->supportsImport())
@@ -419,12 +425,18 @@ bool TestFileFormats::compareMaps(Map* a, Map* b, QString& error)
 
 // ### TestDuplicateEqual ###
 
+void TestDuplicateEqual::initTestCase()
+{
+	map_filename = MapperResource::locate(MapperResource::TEST_DATA, "COPY_OF_test_map.omap");
+	QVERIFY2(!map_filename.isEmpty(), "Unable to locate test map");
+}
+
 void TestDuplicateEqual::symbols_data()
 {
-	const char* map_filename = "test data/COPY_OF_test_map.omap";
 	QTest::addColumn<QString>("map_filename");
-	QTest::newRow(map_filename) << map_filename;
+	QTest::newRow(map_filename.toAscii()) << map_filename;
 }
+
 void TestDuplicateEqual::symbols()
 {
 	QFETCH(QString, map_filename);
@@ -444,10 +456,10 @@ void TestDuplicateEqual::symbols()
 
 void TestDuplicateEqual::objects_data()
 {
-	const char* map_filename = "test data/COPY_OF_test_map.omap";
 	QTest::addColumn<QString>("map_filename");
-	QTest::newRow(map_filename) << map_filename;
+	QTest::newRow(map_filename.toAscii()) << map_filename;
 }
+
 void TestDuplicateEqual::objects()
 {
 	QFETCH(QString, map_filename);

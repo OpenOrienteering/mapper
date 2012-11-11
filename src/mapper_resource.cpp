@@ -71,6 +71,10 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			resource_path = "/symbol sets";
 			break;
 			
+		case TEST_DATA:
+			resource_path = "/test data";
+			break;
+	
 		case TRANSLATION:
 #ifdef Mapper_TRANSLATIONS_EMBEDDED
 			// Always load embedded translations first if enabled
@@ -140,4 +144,20 @@ QStringList MapperResource::getProgramLocations(MapperResource::RESOURCE_TYPE re
 	locations << program_name;
 	
 	return locations;
+}
+
+
+QString MapperResource::locate(MapperResource::RESOURCE_TYPE resource_type, const QString name)
+{
+	QStringList locations = getLocations(resource_type);
+	if (locations.isEmpty())
+		return QString();
+	
+	if (name.isEmpty())
+		return locations.first();
+	
+	if (!QDir(locations.first()).exists(name))
+		return QString();
+	
+	return QDir(locations.first()).absoluteFilePath(name);
 }
