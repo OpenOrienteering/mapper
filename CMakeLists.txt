@@ -89,11 +89,6 @@ endif()
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(CMake28Quirks)
 
-if(NOT CMAKE_RUNTIME_OUTPUT_DIRECTORY)
-	# Collect executables in top-level directory
-	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
-endif()
-
 add_custom_target(Mapper_prerequisites)
 set(Mapper_prerequisites_FOUND TRUE)
 
