@@ -750,7 +750,7 @@ void MainWindow::showHelp(QString filename, QString fragment)
 			return;
 		}
 		
-		QStringList assistant_path = MapperResource::locate(MapperResource::ASSISTANT);
+		QString assistant_path = MapperResource::locate(MapperResource::ASSISTANT);
 		if (assistant_path.isEmpty())
 		{
 			QMessageBox::warning(this, tr("Error"), tr("Failed to locate the help browser (\"Qt Assistant\")."));
