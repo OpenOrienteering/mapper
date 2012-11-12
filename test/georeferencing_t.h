@@ -17,23 +17,58 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_TEST_GEOREFERENCING_H
-#define _OPENORIENTEERING_TEST_GEOREFERENCING_H
+#ifndef _OPENORIENTEERING_GEOREFERENCING_TEST_H
+#define _OPENORIENTEERING_GEOREFERENCING_TEST_H
 
 #include <QObject>
 
 #include "../src/georeferencing.h"
 
 
+/**
+ * Tests the Georeferencing class
+ */
 class GeoreferencingTest: public QObject
 {
 Q_OBJECT
 	
 private slots:
+	/**
+	 * Initializes shared data.
+	 */
+	void initTestCase();
+	
+	/**
+	 * Tests the behaviour for unset projected CRS aka local coordinates.
+	 */
 	void testEmptyProjectedCRS();
 	
+	/**
+	 * Tests whether Georeferencing supports particular projected CRS.
+	 */
+	void testCRS();
+	
+	void testCRS_data();
+	
+	/**
+	 * Tests whether Georeferencing can convert geographic coordinates to
+	 * projected coordinates and vice versa for a collection of known points.
+	 */
+	void testProjection();
+	
+	void testProjection_data();
+	
 private:
+	/**
+	 * Returns the radian value of a value given in degree or degree/minutes/seconds.
+	 */
+	double radFromDeg(double d, double m=0.0, double s=0.0);
+	
 	Georeferencing georef;
+	
+	QString utm32_spec;
+	QString gk2_spec;
+	QString gk3_spec;
 };
 
 #endif
