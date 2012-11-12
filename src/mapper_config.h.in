@@ -23,6 +23,7 @@
 #define APP_NAME qApp->translate("Global", QT_TRANSLATE_NOOP("Global", "OpenOrienteering Mapper"))
 #define APP_VERSION "@Mapper_VERSION_DISPLAY@"
 
+#cmakedefine Mapper_BUILD_PROJ
 #cmakedefine Mapper_TRANSLATIONS_EMBEDDED
 #cmakedefine Mapper_XML_FORMAT
 #cmakedefine CPACK_DEBIAN_PACKAGE_NAME

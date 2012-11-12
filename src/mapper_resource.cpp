@@ -64,6 +64,15 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			resource_path = "/help/oomaphelpcollection.qhc";
 			break;
 			
+		case PROJ_DATA:
+#ifdef Mapper_BUILD_PROJ
+			resource_path = "/proj";
+			break;
+#else
+			// Don't fiddle with proj resource path.
+			return locations;
+#endif
+			
 		case SYMBOLSET:
 			// TODO: Translate directory name "my symbol sets"?
 			//       Possible Windows solution: desktop.ini

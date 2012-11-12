@@ -38,6 +38,7 @@ namespace MapperResource
 	enum RESOURCE_TYPE {
 		ASSISTANT,
 		MANUAL,
+		PROJ_DATA,
 		SYMBOLSET,
 		TEST_DATA,
 		TRANSLATION

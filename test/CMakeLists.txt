@@ -96,7 +96,7 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 
 # Now define the actual unit tests.
-add_unit_test(georeferencing_t ../src/georeferencing)
+add_unit_test(georeferencing_t ../src/georeferencing ../src/mapper_resource)
 
 # and the automated system tests.
 add_system_test(file_format_t)
