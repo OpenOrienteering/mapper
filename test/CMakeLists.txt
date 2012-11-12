@@ -47,6 +47,7 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Now define the actual unit tests.
 add_executable_test(georeferencing_t)
+add_executable_test(file_format_t)
 
 
 # This output will be updated and re-run CTest when something has changed.
