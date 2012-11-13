@@ -46,8 +46,6 @@ option(Mapper_BUILD_QT   "Build the Qt library from source")
 
 option(Mapper_USE_QT5    "Use Qt library version 5")
 
-option(Mapper_BUILD_PACKAGE "Create a target for building packages" ON)
-
 if (NOT CMAKE_BUILD_TYPE MATCHES Release|MinSizeRel)
 	set(Mapper_DEVELOPMENT_BUILD_DEFAULT ON)
 else()
@@ -56,6 +54,11 @@ endif()
 option(Mapper_DEVELOPMENT_BUILD "Configure development build (loading resource from the build directory)" ${Mapper_DEVELOPMENT_BUILD_DEFAULT})
 mark_as_advanced(Mapper_DEVELOPMENT_BUILD)
 
+option(Mapper_AUTORUN_UNIT_TESTS "Run the unit tests as part of the default target"   ON)
+option(Mapper_AUTORUN_SYSTEM_TESTS "Run the system tests as part of the default target" OFF)
+mark_as_advanced(Mapper_AUTORUN_UNIT_TESTS Mapper_AUTORUN_SYSTEM_TESTS)
+
+option(Mapper_BUILD_PACKAGE "Create a target for building packages" ON)
 if(WIN32 OR APPLE)
 	set(Mapper_PACKAGE_ALL_DEFAULT ON)
 else()

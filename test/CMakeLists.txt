@@ -17,10 +17,10 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
 if(Mapper_USE_QT5)
-	find_package(Qt5Test REQUIRED)
+	find_package(Qt5Test QUIET REQUIRED)
 	set(QT_QTTEST_LIBRARY ${Qt5Test_LIBRARIES})
 else()
-	find_package(Qt4 4.6 COMPONENTS QtTest)
+	find_package(Qt4 4.6 QUIET COMPONENTS QtTest)
 endif()
 
 
@@ -44,20 +44,12 @@ macro(add_unit_test testname)
 	qt4_wrap_cpp(TEST_${testname}_MOC ${TEST_${testname}_HDRS})
 	add_executable(${testname} ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC})
 	target_link_libraries(${testname} ${PROJ_LIBRARY} ${QT_QTTEST_LIBRARY} ${QT_LIBRARIES})
-	add_test(${testname} ${testname})
+	add_test(${testname} ${CMAKE_COMMAND} -P ${testname}-RUN.cmake)
 	list(APPEND Mapper_UNIT_TESTS ${testname})
-	add_custom_command(
-	  OUTPUT ${testname}.stamp
-	  DEPENDS ${testname}
-	  COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -R "^${testname}$"
-	  COMMAND ${CMAKE_COMMAND} -E touch ${testname}.stamp
-	  COMMENT "Running unit test ${testname}"
-	  VERBATIM
-	)
-	list(APPEND Mapper_UNIT_TEST_STAMPS ${testname}.stamp)
+	set(TESTNAME ${testname}) # required for configure_file
+	configure_file(TESTNAME-RUN.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${testname}-RUN.cmake @ONLY)
 endmacro(add_unit_test)
 unset(Mapper_UNIT_TESTS)
-unset(Mapper_UNIT_TEST_STAMPS)
 
 
 # This macro defines a system test from a list of source file names 
@@ -79,20 +71,12 @@ macro(add_system_test testname)
 	qt4_wrap_cpp(TEST_${testname}_MOC ${TEST_${testname}_HDRS})
 	add_executable(${testname} ${TEST_${testname}_SRCS} ${TEST_${testname}_MOC})
 	target_link_libraries(${testname} ${QT_QTTEST_LIBRARY} Mapper_Common)
-	add_test(${testname} ${testname})
+	add_test(${testname} ${CMAKE_COMMAND} -P ${testname}-RUN.cmake)
 	list(APPEND Mapper_SYSTEM_TESTS ${testname})
-	add_custom_command(
-	  OUTPUT ${testname}.stamp
-	  DEPENDS ${testname}
-	  COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -R "^${testname}$"
-	  COMMAND ${CMAKE_COMMAND} -E touch ${testname}.stamp
-	  COMMENT "Running system test ${testname}"
-	  VERBATIM
-	)
-	list(APPEND Mapper_SYSTEM_TEST_STAMPS ${testname}.stamp)
+	set(TESTNAME ${testname}) # required for configure_file
+	configure_file(TESTNAME-RUN.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${testname}-RUN.cmake @ONLY)
 endmacro(add_system_test)
 unset(Mapper_SYSTEM_TESTS)
-unset(Mapper_SYSTEM_TEST_STAMPS)
 
 
 # Include generated files (moc ouput, build configuration)
@@ -109,27 +93,38 @@ add_system_test(duplicate_equals_t)
 add_system_test(tools_t)
 
 
-# This top-level target builds and runs all unit tests for modified units and 
-# all system tests.
-# The tests are run by individual targets. This means they may run in parallel.
-# FIXME: Output of parallel tests is confusing. Serialize test execution.
-#        Maybe write and execute a CMake script of modified tests 
-#        when this target is invoked.
+# Collect the AUTORUN_TESTS
+set(Mapper_AUTORUN_TESTS )
+if(Mapper_AUTORUN_UNIT_TESTS)
+	list(APPEND Mapper_AUTORUN_TESTS ${Mapper_UNIT_TESTS})
+endif()
+if(Mapper_AUTORUN_SYSTEM_TESTS)
+	list(APPEND Mapper_AUTORUN_TESTS ${Mapper_SYSTEM_TESTS})
+endif()
+configure_file(AUTORUN_TESTS.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/AUTORUN_TESTS.cmake @ONLY)
+
+
+# This top-level target builds and runs selected test as part the default 
+# "all" target. For a particular test to run, 
+#   a) autorun must be configured for that type of test
+#      (Mapper_AUTORUN_UNIT_TESTS Mapper_AUTORUN_SYSTEM_TESTS), and
+#   b) the test or its dependencies must have been modified.
 #
 add_custom_target(AUTORUN_TESTS
   ALL
-  DEPENDS ${Mapper_UNIT_TEST_STAMPS} ${Mapper_SYSTEM_TEST_STAMPS}
-  COMMENT "All tests finished"
+  DEPENDS ${Mapper_AUTORUN_TESTS}
+  COMMAND ${CMAKE_COMMAND} -P AUTORUN_TESTS.cmake
+  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 
 # This top-level target always runs CTest (i.e. all tests) but
 # unlike the default "test" target, it will
-#   a) generate the test executables if necessary
-#   b) display the output of failed tests.
-# TODO: These test could update the stamp files for successful runs.
+#   a) generate the test executables if necessary,
+#   b) display the output of failed tests,
+#   c) show up in KDevelop's project view.
 #
 add_custom_target(Mapper_Test
-  COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
   DEPENDS ${Mapper_UNIT_TESTS} ${Mapper_SYSTEM_TESTS}
+  COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
 )

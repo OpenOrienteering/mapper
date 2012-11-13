@@ -1,0 +1,32 @@
+#
+#    Copyright 2012 Kai Pastor
+#    
+#    This file is part of OpenOrienteering.
+# 
+#    OpenOrienteering is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+# 
+#    OpenOrienteering is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+# 
+#    You should have received a copy of the GNU General Public License
+#    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+
+# AUTORUN_TESTS.cmake is generated from AUTORUN_TESTS.cmake.in
+
+unset(TESTNAME_PATTERN)
+
+foreach(TESTNAME @Mapper_AUTORUN_TESTS@)
+	if(${TESTNAME} IS_NEWER_THAN ${TESTNAME}-RUN.stamp)
+		list(APPEND TESTNAME_PATTERN "^${TESTNAME}\$")
+	endif()
+endforeach()
+		
+string(REGEX REPLACE ";" "|" TESTNAME_PATTERN "${TESTNAME_PATTERN}")
+if(NOT TESTNAME_PATTERN STREQUAL "")
+  execute_process(COMMAND /usr/bin/ctest --output-on-failure -R "${TESTNAME_PATTERN}")
+endif()
