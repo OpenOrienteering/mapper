@@ -20,11 +20,9 @@
 
 #include "georeferencing.h"
 
-#include <cassert>
-
 #include <qmath.h>
-#include <QDebug>
 #include <QCoreApplication>
+#include <QDebug>
 #include <QDir>
 #include <QLocale>
 #include <QXmlStreamAttributes>
@@ -66,7 +64,7 @@ Georeferencing::Georeferencing()
 				break;
 		}
 	}	
-	assert(geographic_crs != NULL);
+	Q_ASSERT(geographic_crs != NULL);
 }
 
 Georeferencing::Georeferencing(const Georeferencing& other)
@@ -83,7 +81,7 @@ Georeferencing::Georeferencing(const Georeferencing& other)
 	
 	projected_crs  = pj_init_plus(projected_crs_spec.toAscii());
 	geographic_crs = pj_init_plus(geographic_crs_spec.toAscii());
-	assert(geographic_crs != NULL);
+	Q_ASSERT(geographic_crs != NULL);
 }
 
 Georeferencing::~Georeferencing()

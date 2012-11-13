@@ -150,8 +150,6 @@ Q_OBJECT
 
 friend class NativeFileExport;
 friend class NativeFileImport;
-friend class XMLFileExporter;
-friend class XMLFileImporter;
 friend QDebug operator<<(QDebug dbg, const Georeferencing& georef);
 
 public:
