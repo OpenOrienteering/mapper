@@ -186,7 +186,8 @@ qt4_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})
 set(Mapper_RESOURCES ${Mapper_RESOURCES} ${PROJECT_SOURCE_DIR}/resources.qrc)
 qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
-# Mapper common
+# Mapper common: static library of full runtime 
+# (To be used by Mapper executable and by system tests.)
 
 add_library(Mapper_Common STATIC
 	${Mapper_Common_SRCS}
@@ -233,33 +234,4 @@ target_link_libraries(Mapper
 install(TARGETS Mapper
   RUNTIME DESTINATION "${MAPPER_RUNTIME_DESTINATION}"
   BUNDLE DESTINATION "${MAPPER_RUNTIME_DESTINATION}"
-)
-
-
-# Test executable
-
-if(Mapper_USE_QT5)
-	find_package(Qt5Test REQUIRED)
-	set(QT_QTTEST_LIBRARY ${Qt5Test_LIBRARIES})
-endif()
-
-set(Mapper_Test_SRCS
- test.cpp
-)
-
-set(Mapper_Test_MOC_INPUT
- test.h
-)
-
-qt4_wrap_cpp(Mapper_Test_MOC ${Mapper_Test_MOC_INPUT})
-
-add_executable(Mapper_Test
-	WIN32
-	${Mapper_Test_SRCS}
-	${Mapper_Test_MOC}
-)
-add_test(NAME Mapper_Test_General COMMAND $<TARGET_FILE:Mapper_Test>)
-target_link_libraries(Mapper_Test
- Mapper_Common
- ${QT_QTTEST_LIBRARY}
 )

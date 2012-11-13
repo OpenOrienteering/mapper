@@ -19,8 +19,6 @@
 
 #include "georeferencing_t.h"
 
-#include <QtTest>
-
 
 double GeoreferencingTest::radFromDeg(double d, double m, double s)
 {

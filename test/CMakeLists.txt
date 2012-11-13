@@ -16,7 +16,12 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-find_package(Qt4 4.6 COMPONENTS QtTest)
+if(Mapper_USE_QT5)
+	find_package(Qt5Test REQUIRED)
+	set(QT_QTTEST_LIBRARY ${Qt5Test_LIBRARIES})
+else()
+	find_package(Qt4 4.6 COMPONENTS QtTest)
+endif()
 
 
 # This macro defines a unit test from a list of source file names 
@@ -95,16 +100,22 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}/../src")
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 
-# Now define the actual unit tests.
+# Unit tests
 add_unit_test(georeferencing_t ../src/georeferencing ../src/mapper_resource)
 
-# and the automated system tests.
+# System tests
 add_system_test(file_format_t)
+add_system_test(duplicate_equals_t)
+add_system_test(tools_t)
 
 
 # This top-level target builds and runs all unit tests for modified units and 
 # all system tests.
 # The tests are run by individual targets. This means they may run in parallel.
+# FIXME: Output of parallel tests is confusing. Serialize test execution.
+#        Maybe write and execute a CMake script of modified tests 
+#        when this target is invoked.
+#
 add_custom_target(AUTORUN_TESTS
   ALL
   DEPENDS ${Mapper_UNIT_TEST_STAMPS} ${Mapper_SYSTEM_TEST_STAMPS}
@@ -112,11 +123,13 @@ add_custom_target(AUTORUN_TESTS
 )
 
 
-# This top-level target will always run all tests but
-#   a) generate the unit test executables if necessary
-#   b) display the output of failed unit tests.
-# (Both features are missing from the default test target.)
-add_custom_target(RUN_TESTS
+# This top-level target always runs CTest (i.e. all tests) but
+# unlike the default "test" target, it will
+#   a) generate the test executables if necessary
+#   b) display the output of failed tests.
+# TODO: These test could update the stamp files for successful runs.
+#
+add_custom_target(Mapper_Test
   COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
   DEPENDS ${Mapper_UNIT_TESTS} ${Mapper_SYSTEM_TESTS}
 )

@@ -20,13 +20,13 @@
 #ifndef _OPENORIENTEERING_GEOREFERENCING_TEST_H
 #define _OPENORIENTEERING_GEOREFERENCING_TEST_H
 
-#include <QObject>
+#include <QtTest>
 
 #include "../src/georeferencing.h"
 
 
 /**
- * Tests the Georeferencing class
+ * Tests the Georeferencing class.
  */
 class GeoreferencingTest: public QObject
 {

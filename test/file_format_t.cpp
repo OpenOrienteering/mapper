@@ -19,8 +19,6 @@
 
 #include "file_format_t.h"
 
-#include <QtTest>
-
 #include "../src/georeferencing.h"
 #include "../src/global.h"
 #include "../src/map_color.h"
@@ -28,6 +26,7 @@
 #include "../src/mapper_resource.h"
 #include "../src/object.h"
 #include "../src/template.h"
+
 
 void FileFormatTest::initTestCase()
 {

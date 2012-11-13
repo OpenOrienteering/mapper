@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps, Kai Pastor
+ *    Copyright 2012 Thomas Schöps
  *
  *    This file is part of OpenOrienteering.
  *
@@ -17,32 +17,29 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_FILE_FORMAT_T_H
-#define _OPENORIENTEERING_FILE_FORMAT_T_H
+#ifndef _OPENORIENTEERING_DUPLICATE_EQUALS_T_H
+#define _OPENORIENTEERING_DUPLICATE_EQUALS_T_H
 
 #include <QtTest>
 
-#include "../src/map.h"
-#include "../src/file_format.h"
-
 
 /**
- * Tests that maps contain the same information before and after saving them
- * and loading them again.
+ * Test that duplicates of symbols and objects are equal to their originals.
  */
-class FileFormatTest : public QObject
+class DuplicateEqualsTest : public QObject
 {
 Q_OBJECT
-	
 private slots:
 	void initTestCase();
-	void saveAndLoad_data();
-	void saveAndLoad();
+	
+	void symbols();
+	void symbols_data();
+	
+	void objects();
+	void objects_data();
 	
 private:
-	Map* saveAndLoadMap(Map* input, const Format* format);
-	bool compareMaps(Map* a, Map* b, QString& error);
 	QString map_filename;
 };
 
-#endif // _OPENORIENTEERING_FILE_FORMAT_T_H
+#endif
