@@ -179,7 +179,6 @@ endif()
 
 # Subdirectories
 
-add_subdirectory("test data")
 add_subdirectory("symbol sets")
 add_subdirectory("help")
 add_subdirectory("translations")

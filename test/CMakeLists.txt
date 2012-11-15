@@ -16,6 +16,11 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
+
+# Prerequisite
+add_subdirectory(data)
+
+
 if(Mapper_USE_QT5)
 	find_package(Qt5Test QUIET REQUIRED)
 	set(QT_QTTEST_LIBRARY ${Qt5Test_LIBRARIES})

@@ -81,7 +81,7 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			break;
 			
 		case TEST_DATA:
-			resource_path = "/test data";
+			resource_path = "/test/data";
 			break;
 	
 		case TRANSLATION:
