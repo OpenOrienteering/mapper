@@ -650,7 +650,7 @@ Template* Template::templateForFile(const QString& path, Map* map)
 		path.endsWith(".jpeg", Qt::CaseInsensitive) || path.endsWith(".tif", Qt::CaseInsensitive) ||
 		path.endsWith(".tiff", Qt::CaseInsensitive))
 		return new TemplateImage(path, map);
-	else if (path.endsWith(".ocd", Qt::CaseInsensitive) || path.endsWith(".omap", Qt::CaseInsensitive))
+	else if (path.endsWith(".ocd", Qt::CaseInsensitive) || path.endsWith(".omap", Qt::CaseInsensitive) || path.endsWith(".xmap", Qt::CaseInsensitive))
 		return new TemplateMap(path, map);
 	else if (path.endsWith(".gpx", Qt::CaseInsensitive) || path.endsWith(".dxf", Qt::CaseInsensitive) ||
 			 path.endsWith(".osm", Qt::CaseInsensitive))
