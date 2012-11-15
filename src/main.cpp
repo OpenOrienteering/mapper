@@ -69,23 +69,24 @@ int main(int argc, char** argv)
 	doStaticInitializations();
 	
 	// Create first main window
-	MainWindow* first_window = new MainWindow(true);
-	first_window->setController(new HomeScreenController());
+	MainWindow first_window(true);
+	first_window.setAttribute(Qt::WA_DeleteOnClose, false);
+	first_window.setController(new HomeScreenController());
 	
 	// Treat all program parameters as files to be opened
 	for (int i = 1; i < argc; i++)
 	{
 		if (argv[i][0] != '-')
-			first_window->openPath(argv[i]);
+			first_window.openPath(argv[i]);
 	}
 	
 	// If we need to respond to a second app launch, do so, but also accept a file open request.
-	qapp.setActivationWindow(first_window);
-	QObject::connect(&qapp, SIGNAL(messageReceived(const QString&)), first_window, SLOT(openPath(const QString &)));
+	qapp.setActivationWindow(&first_window);
+	QObject::connect(&qapp, SIGNAL(messageReceived(const QString&)), &first_window, SLOT(openPath(const QString &)));
 	
 	// Let application run
-	first_window->show();
-	first_window->raise();
+	first_window.show();
+	first_window.raise();
 	return qapp.exec();
 }
 
