@@ -190,14 +190,9 @@ qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 # (To be used by Mapper executable and by system tests.)
 
 add_library(Mapper_Common STATIC
-	${Mapper_Common_SRCS}
-	${Mapper_Common_MOC}
-	${Mapper_RESOURCES_RCC}
-)
-target_link_libraries(Mapper_Common
- ${Mapper_LIBRARIES}
- ${QT_LIBRARIES}
- ${PROJ_LIBRARY}
+  ${Mapper_Common_SRCS}
+  ${Mapper_Common_MOC}
+  ${Mapper_RESOURCES_RCC}
 )
 add_dependencies(Mapper_Common
   Mapper_prerequisites
@@ -211,7 +206,7 @@ qt4_translations_sources(
 # Mapper executable
 
 set(Mapper_SRCS
- main.cpp
+  main.cpp
 )
  
 if(MINGW)
@@ -223,12 +218,16 @@ if(MINGW)
 endif(MINGW)
 
 add_executable(Mapper
-	WIN32
-	MACOSX_BUNDLE
-	${Mapper_SRCS}
+  WIN32
+  MACOSX_BUNDLE
+  ${Mapper_SRCS}
 )
 target_link_libraries(Mapper
- Mapper_Common
+  Mapper_Common
+  libocad
+  QtSingleApplication
+  ${PROJ_LIBRARY}
+  ${QT_LIBRARIES}
 )
 
 install(TARGETS Mapper

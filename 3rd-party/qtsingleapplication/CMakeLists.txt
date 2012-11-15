@@ -32,8 +32,3 @@ add_library(QtSingleApplication STATIC ${QSINGLEAPP_SRCS} ${QSINGLEAPP_MOC})
 # For super-builds (e.g. cross-compilation), wait for the Qt build.
 add_dependencies(QtSingleApplication Mapper_prerequisites)
 
-set(Mapper_LIBRARIES 
-  QtSingleApplication
-  ${Mapper_LIBRARIES}
-  PARENT_SCOPE)
-

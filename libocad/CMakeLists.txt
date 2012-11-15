@@ -32,8 +32,3 @@ set(LIBOCAD_SRCS
 add_library(libocad STATIC ${LIBOCAD_SRCS})
 set_target_properties(libocad PROPERTIES PREFIX "")
 
-set(Mapper_LIBRARIES 
-  libocad
-  ${Mapper_LIBRARIES}
-  PARENT_SCOPE)
-
