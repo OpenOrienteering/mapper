@@ -17,14 +17,14 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
 set(QSINGLEAPP_SRCS
-  qtlocalpeer.cpp
-  qtsingleapplication.cpp
-  qtsinglecoreapplication.cpp
+  src/qtlocalpeer.cpp
+  src/qtsingleapplication.cpp
+  src/qtsinglecoreapplication.cpp
 )
 set(QSINGLEAPP_MOC_INPUT
- qtlocalpeer.h
- qtsingleapplication.h
- qtsinglecoreapplication.h
+  src/qtlocalpeer.h
+  src/qtsingleapplication.h
+  src/qtsinglecoreapplication.h
 )
 qt4_wrap_cpp(QSINGLEAPP_MOC ${QSINGLEAPP_MOC_INPUT})
 add_library(QtSingleApplication STATIC ${QSINGLEAPP_SRCS} ${QSINGLEAPP_MOC})

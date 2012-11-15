@@ -18,7 +18,7 @@
  */
 
 
-#include "../qtsingleapplication/qtsingleapplication.h"
+#include "../3rd-party/qtsingleapplication/src/qtsingleapplication.h"
 #include <QLibraryInfo>
 #include <QLocale>
 #include <QTranslator>
