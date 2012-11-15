@@ -94,7 +94,9 @@ add_unit_test(georeferencing_t ../src/georeferencing ../src/mapper_resource)
 
 # System tests
 add_system_test(file_format_t)
+add_dependencies(file_format_t Mapper_test_data)
 add_system_test(duplicate_equals_t)
+add_dependencies(file_format_t Mapper_test_data)
 add_system_test(tools_t)
 
 
