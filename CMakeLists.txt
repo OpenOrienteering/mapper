@@ -36,8 +36,6 @@ if(NOT CMAKE_BUILD_TYPE)
 	  FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
-option(Mapper_XML_FORMAT "Enable the OpenOrienteering Mapper XML format" ON)
-
 option(Mapper_TRANSLATIONS_EMBEDDED "Embed all translations in the program executable")
 
 option(Mapper_BUILD_PROJ "Build the Proj library from source")

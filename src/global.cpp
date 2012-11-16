@@ -32,9 +32,7 @@ void doStaticInitializations()
 {
 	// Register the supported file formats
 	FileFormats.registerFormat(new NativeFileFormat());
-#ifdef Mapper_XML_FORMAT
 	FileFormats.registerFormat(new XMLFileFormat());
-#endif
 	FileFormats.registerFormat(new OCAD8FileFormat());
 	
 	// Load resources

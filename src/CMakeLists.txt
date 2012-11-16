@@ -113,6 +113,7 @@ set(Mapper_Common_SRCS
  file_format.cpp
  file_format_native.cpp
  file_format_ocad8.cpp
+ file_format_xml.cpp
 )
 
 set(Mapper_Common_MOC_INPUT
@@ -174,10 +175,6 @@ set(Mapper_Common_MOC_INPUT
  util_pie_menu.h
  util_task_dialog.h
 )
-
-if(Mapper_XML_FORMAT)
-	list(APPEND Mapper_Common_SRCS file_format_xml.cpp)
-endif(Mapper_XML_FORMAT)
 
 qt4_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})
 

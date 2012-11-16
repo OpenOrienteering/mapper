@@ -25,7 +25,6 @@
 
 #cmakedefine Mapper_BUILD_PROJ
 #cmakedefine Mapper_TRANSLATIONS_EMBEDDED
-#cmakedefine Mapper_XML_FORMAT
 #cmakedefine CPACK_DEBIAN_PACKAGE_NAME
 
 #ifdef CPACK_DEBIAN_PACKAGE_NAME
