@@ -25,6 +25,7 @@
 
 QT_BEGIN_NAMESPACE
 class QLabel;
+class QStackedWidget;
 QT_END_NAMESPACE
 
 /// File type enumeration. Currently the program is only used for mapping,
@@ -162,6 +163,16 @@ public:
 	 *  or an empty string if the dialog is aborted.
 	 */
 	static QString getOpenFileName(QWidget* parent, const QString& title, FileType::Enum types);
+	
+	/**
+	 * Sets the MainWindow's effective central widget.
+	 * Any previously set widget will be hidden and scheduled for deletion.
+	 * 
+	 * Hides an implementation in QMainWindow which causes problems with
+	 * dock widgets when switching from home screen widget to map widget.
+	 * NEVER call QMainWindow::setCentralWidget(...) on a MainWindow.
+	 */
+	void setCentralWidget(QWidget* widget);
 	
 public slots:
 	/** Show a wizard for creating new maps.
@@ -311,6 +322,9 @@ private:
 
 	/// Number of active main windows. The last window shall not close on File > Close.
 	static int num_windows;
+	
+	/// The central widget which never changes during a MainWindow's lifecycle
+	QStackedWidget* central_widget;
 };
 
 #endif

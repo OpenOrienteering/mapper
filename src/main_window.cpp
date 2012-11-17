@@ -73,6 +73,9 @@ MainWindow::MainWindow(bool as_main_window)
 	statusBar()->addWidget(status_label, 1);
 	statusBar()->setSizeGripEnabled(as_main_window);
 	
+	central_widget = new QStackedWidget(this);
+	QMainWindow::setCentralWidget(central_widget);
+	
 	if (as_main_window)
 		loadWindowSettings();
 	
@@ -87,6 +90,22 @@ MainWindow::~MainWindow()
 		delete general_toolbar;
 	}
 	num_windows--;
+}
+
+void MainWindow::setCentralWidget(QWidget* widget)
+{
+	if (widget != NULL)
+	{
+		int index = central_widget->addWidget(widget);
+		central_widget->setCurrentIndex(index);
+	}
+	
+	if (central_widget->count() > 1)
+	{
+		QWidget* w = central_widget->widget(0);
+		central_widget->removeWidget(w);
+		w->deleteLater();
+	}
 }
 
 void MainWindow::setController(MainWindowController* new_controller)

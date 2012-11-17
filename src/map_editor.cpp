@@ -215,7 +215,7 @@ void MapEditorController::addTemplatePositionDockWidget(Template* temp)
 {
 	assert(!existsTemplatePositionDockWidget(temp));
 	TemplatePositionDockWidget* dock_widget = new TemplatePositionDockWidget(temp, this, window);
-	toggleFloatingDockWidget(dock_widget, true);
+	addFloatingDockWidget(dock_widget);
 	template_position_widgets.insert(temp, dock_widget);
 }
 void MapEditorController::removeTemplatePositionDockWidget(Template* temp)
@@ -307,10 +307,7 @@ void MapEditorController::attach(MainWindow* window)
 	{
         createMenuAndToolbars();
 		createPieMenu(&map_widget->getPieMenu());
-		
-		QSettings settings;
-		settings.beginGroup(metaObject()->className());
-		window->restoreState(settings.value("state").toByteArray());
+		restoreWindowState();
 	}
 	
 	// Update enabled/disabled state for the tools ...
@@ -723,19 +720,27 @@ void MapEditorController::createPieMenu(PieMenu* menu)
 }
 void MapEditorController::detach()
 {
-	if (mode == MapEditor)
-	{
-		QSettings settings;
-		settings.beginGroup(metaObject()->className());
-		settings.setValue("state", window->saveState());
-	}
+	saveWindowState();
 	
-	QWidget* widget = window->centralWidget();
 	window->setCentralWidget(NULL);
-	delete widget;
+	delete map_widget;
 	
 	delete statusbar_zoom_frame;
 	delete statusbar_cursorpos_label;
+}
+
+void MapEditorController::saveWindowState()
+{
+	QSettings settings;
+	settings.beginGroup(metaObject()->className());
+	settings.setValue("state", window->saveState());
+}
+
+void MapEditorController::restoreWindowState()
+{
+	QSettings settings;
+	settings.beginGroup(metaObject()->className());
+	window->restoreState(settings.value("state").toByteArray());
 }
 
 void MapEditorController::keyPressEvent(QKeyEvent* event)
@@ -749,16 +754,18 @@ void MapEditorController::keyReleaseEvent(QKeyEvent* event)
 
 void MapEditorController::printClicked()
 {
-	bool created = false;
 	if (!print_dock_widget)
 	{
 		print_dock_widget = new EditorDockWidget(tr("Print or Export"), print_act, this, window);
 		print_widget = new PrintWidget(map, window, main_view, this, print_dock_widget);
 		print_dock_widget->setChild(print_widget);
-		created = true;
+		print_dock_widget->setObjectName("Print dock widget");
+		addFloatingDockWidget(print_dock_widget);
 	}
-	if (toggleFloatingDockWidget(print_dock_widget, created) && !created)
-		print_widget->activate();
+	
+	print_widget->activate();
+	print_dock_widget->show();
+	QTimer::singleShot(0, print_dock_widget, SLOT(raise()));
 }
 
 void MapEditorController::undo()
@@ -1020,9 +1027,7 @@ void MapEditorController::projectionChanged()
 
 void MapEditorController::showSymbolWindow(bool show)
 {
-	if (symbol_dock_widget)
-		symbol_dock_widget->setVisible(!symbol_dock_widget->isVisible());
-	else
+	if (!symbol_dock_widget)
 	{
 		symbol_dock_widget = new EditorDockWidget(tr("Symbols"), symbol_window_act, this, window);
 		symbol_widget = new SymbolWidget(map, symbol_dock_widget);
@@ -1030,7 +1035,9 @@ void MapEditorController::showSymbolWindow(bool show)
 		connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*,Symbol*)));	// NOTE: adjust setMap() if changing this!
 		connect(map, SIGNAL(symbolIconChanged(int)), symbol_widget->getRenderWidget(), SLOT(updateIcon(int)));
 		symbol_dock_widget->setChild(symbol_widget);
-		window->addDockWidget(Qt::RightDockWidgetArea, symbol_dock_widget, Qt::Vertical);
+		symbol_dock_widget->setObjectName("Symbol dock widget");
+		if (!window->restoreDockWidget(symbol_dock_widget))
+			window->addDockWidget(Qt::RightDockWidgetArea, symbol_dock_widget, Qt::Vertical);
 		
 		connect(symbol_widget, SIGNAL(switchSymbolClicked()), this, SLOT(switchSymbolClicked()));
 		connect(symbol_widget, SIGNAL(fillBorderClicked()), this, SLOT(fillBorderClicked()));
@@ -1038,17 +1045,26 @@ void MapEditorController::showSymbolWindow(bool show)
 		connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
 		selectedSymbolsChanged();
 	}
+	
+	symbol_dock_widget->setVisible(show);
+	if (show)
+		QTimer::singleShot(0, symbol_dock_widget, SLOT(raise()));
 }
+
 void MapEditorController::showColorWindow(bool show)
 {
-	if (color_dock_widget)
-		color_dock_widget->setVisible(!color_dock_widget->isVisible());
-	else
+	if (!color_dock_widget)
 	{
 		color_dock_widget = new EditorDockWidget(tr("Colors"), color_window_act, this, window);
 		color_dock_widget->setChild(new ColorWidget(map, window, color_dock_widget));
-		window->addDockWidget(Qt::LeftDockWidgetArea, color_dock_widget, Qt::Vertical);
+		color_dock_widget->setObjectName("Color dock widget");
+		if (!window->restoreDockWidget(color_dock_widget))
+			window->addDockWidget(Qt::LeftDockWidgetArea, color_dock_widget, Qt::Vertical);
 	}
+	
+	color_dock_widget->setVisible(show);
+	if (show)
+		QTimer::singleShot(0, color_dock_widget, SLOT(raise()));
 }
 
 void MapEditorController::loadSymbolsFromClicked()
@@ -1119,14 +1135,18 @@ void MapEditorController::mapNotesClicked()
 
 void MapEditorController::showTemplateWindow(bool show)
 {
-	if (template_dock_widget)
-		template_dock_widget->setVisible(!template_dock_widget->isVisible());
-	else
+	if (!template_dock_widget)
 	{
 		template_dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, this, window);
 		template_dock_widget->setChild(new TemplateWidget(map, main_view, this, template_dock_widget));
-		window->addDockWidget(Qt::RightDockWidgetArea, template_dock_widget, Qt::Vertical);
+		template_dock_widget->setObjectName("Templates dock widget");
+		if (!window->restoreDockWidget(template_dock_widget))
+			window->addDockWidget(Qt::RightDockWidgetArea, template_dock_widget, Qt::Vertical);
 	}
+	
+	template_dock_widget->setVisible(show);
+	if (show)
+		QTimer::singleShot(0, template_dock_widget, SLOT(raise()));
 }
 
 void MapEditorController::openTemplateClicked()
@@ -1135,18 +1155,8 @@ void MapEditorController::openTemplateClicked()
 	if (!new_template)
 		return;
 	
-	if (template_dock_widget)
-	{
-		if (!template_dock_widget->isVisible())
-			template_dock_widget->setVisible(true);
-	}
-	else
-	{
-		template_dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, this, window);
-		template_dock_widget->setChild(new TemplateWidget(map, main_view, this, template_dock_widget));
-		window->addDockWidget(Qt::RightDockWidgetArea, template_dock_widget, Qt::Vertical);
-	}
 	template_window_act->setChecked(true);
+	showTemplateWindow(true);
 	
 	TemplateWidget* template_widget = reinterpret_cast<TemplateWidget*>(template_dock_widget->widget());
 	template_widget->addTemplateAt(new_template, -1);
@@ -1769,16 +1779,20 @@ void MapEditorController::scaleClicked()
 }
 void MapEditorController::measureClicked(bool checked)
 {
-	bool new_widget = false;
 	if (!measure_dock_widget)
 	{
 		measure_dock_widget = new EditorDockWidget(tr("Measure"), measure_act, this, window);
 		MeasureWidget* measure_widget = new MeasureWidget(map);
 		measure_dock_widget->setChild(measure_widget);
-		new_widget = true;
+		measure_dock_widget->setObjectName("Measure dock widget");
+		addFloatingDockWidget(measure_dock_widget);
 	}
-	toggleFloatingDockWidget(measure_dock_widget, new_widget);
+	
+	measure_dock_widget->setVisible(checked);
+	if (checked)
+		QTimer::singleShot(0, measure_dock_widget, SLOT(raise()));
 }
+
 void MapEditorController::booleanUnionClicked()
 {
 	BooleanTool tool(map);
@@ -1804,22 +1818,14 @@ void MapEditorController::booleanXOrClicked()
 		QMessageBox::warning(window, QObject::tr("Error"), QObject::tr("XOr failed."));
 }
 
-bool MapEditorController::toggleFloatingDockWidget(QDockWidget* dock_widget, bool new_widget)
+void MapEditorController::addFloatingDockWidget(QDockWidget* dock_widget)
 {
-	if (!new_widget)
+	if (!window->restoreDockWidget(dock_widget))
 	{
-		bool show = !dock_widget->isVisible();
-		if (show)
-			dock_widget->setVisible(show);
-		else
-			dock_widget->close();
-		return show;
+		dock_widget->setFloating(true);
+		dock_widget->move(window->geometry().left() + 40, window->geometry().top() + 100);
+		connect(dock_widget, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), SLOT(saveWindowState()));
 	}
-	
-	dock_widget->setFloating(true);
-	dock_widget->show();
-	dock_widget->setGeometry(getWindow()->geometry().left() + 40, getWindow()->geometry().top() + 100, dock_widget->width(), dock_widget->height());
-	return true;
 }
 
 void MapEditorController::paintOnTemplateClicked(bool checked)
@@ -1952,6 +1958,8 @@ void MapEditorController::updateWidgets()
 
 EditorDockWidget::EditorDockWidget(const QString title, QAction* action, MapEditorController* editor, QWidget* parent): QDockWidget(title, parent), action(action), editor(editor)
 {
+	if (editor)
+		connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), editor, SLOT(saveWindowState()));
 }
 void EditorDockWidget::setChild(EditorDockWidgetChild* child)
 {

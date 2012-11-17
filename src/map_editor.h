@@ -74,8 +74,8 @@ public:
 	/// If this is set to true (usually by the current tool), undo/redo is deactivated
 	void setEditingInProgress(bool value);
 	
-	/// Returns true if the widget was shown, false if it was hidden. Set new_widget to true if the widget is new and shown for the first time
-	bool toggleFloatingDockWidget(QDockWidget* dock_widget, bool new_widget);
+	/// Adds a a floating dock widget to the main window. Adjusts some geometric properties.
+	void addFloatingDockWidget(QDockWidget* dock_widget);
 	
 	void setEditorActivity(MapEditorActivity* new_activity);
 	inline MapEditorActivity* getEditorActivity() const {return editor_activity;}
@@ -181,6 +181,16 @@ public slots:
 	void importGeoFile(const QString& filename);
 	bool importMapFile(const QString& filename);
 	void importClicked();
+	
+	/** 
+	 * Save the current toolbar and dock widget positions
+	 */
+	void saveWindowState();
+	
+	/**
+	 * Restore previously saved toolbar and dock widget positions
+	 */
+	void restoreWindowState();
 	
 signals:
 	void templatePositionDockWidgetClosed(Template* temp);
