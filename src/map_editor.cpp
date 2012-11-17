@@ -307,6 +307,10 @@ void MapEditorController::attach(MainWindow* window)
 	{
         createMenuAndToolbars();
 		createPieMenu(&map_widget->getPieMenu());
+		
+		QSettings settings;
+		settings.beginGroup(metaObject()->className());
+		window->restoreState(settings.value("state").toByteArray());
 	}
 	
 	// Update enabled/disabled state for the tools ...
@@ -638,6 +642,7 @@ void MapEditorController::createMenuAndToolbars()
 	
 	// View toolbar
 	toolbar_view = window->addToolBar(tr("View"));
+	toolbar_view->setObjectName("View toolbar");
 	QToolButton* grid_button = new QToolButton();
 	grid_button->setCheckable(true);
 	grid_button->setDefaultAction(show_grid_act);
@@ -654,6 +659,7 @@ void MapEditorController::createMenuAndToolbars()
 
 	// Drawing toolbar
 	toolbar_drawing = window->addToolBar(tr("Drawing"));
+	toolbar_drawing->setObjectName("Drawing toolbar");
 	toolbar_drawing->addAction(edit_tool_act);
 	toolbar_drawing->addAction(draw_point_act);
 	toolbar_drawing->addAction(draw_path_act);
@@ -674,6 +680,7 @@ void MapEditorController::createMenuAndToolbars()
 
 	// Editing toolbar
 	toolbar_editing = window->addToolBar(tr("Editing"));
+	toolbar_editing->setObjectName("Editing toolbar");
 	toolbar_editing->addAction(duplicate_act);
 	toolbar_editing->addAction(switch_symbol_act);
 	toolbar_editing->addAction(fill_border_act);
@@ -697,6 +704,7 @@ void MapEditorController::createMenuAndToolbars()
 
 	// Advanced editing toolbar
 	toolbar_advanced_editing = window->addToolBar(tr("Advanced editing"));
+	toolbar_advanced_editing->setObjectName("Advanved editing toolbar");
 	toolbar_advanced_editing->addAction(boolean_intersection_act);
 	toolbar_advanced_editing->addAction(boolean_difference_act);
 	toolbar_advanced_editing->addAction(boolean_xor_act);
@@ -715,6 +723,13 @@ void MapEditorController::createPieMenu(PieMenu* menu)
 }
 void MapEditorController::detach()
 {
+	if (mode == MapEditor)
+	{
+		QSettings settings;
+		settings.beginGroup(metaObject()->className());
+		settings.setValue("state", window->saveState());
+	}
+	
 	QWidget* widget = window->centralWidget();
 	window->setCentralWidget(NULL);
 	delete widget;

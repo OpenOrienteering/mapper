@@ -20,8 +20,7 @@
 
 #include "main_window.h"
 
-#include <cassert>
-
+#include <QDebug>
 #if QT_VERSION < 0x050000
 #include <QtGui>
 #else
@@ -184,6 +183,7 @@ void MainWindow::createFileMenu()
 	file_menu->addAction(exit_act);
 	
 	general_toolbar = new QToolBar(tr("General"));
+	general_toolbar->setObjectName("General toolbar");
 	general_toolbar->addAction(new_act);
 	general_toolbar->addAction(open_act);
 	general_toolbar->addAction(save_act);
@@ -640,7 +640,7 @@ bool MainWindow::showSaveAsDialog()
 	{
 		path.append(selected_extension);
 	}
-	assert(FileFormats.findFormatForFilename(path) == format);
+	Q_ASSERT(FileFormats.findFormatForFilename(path) == format);
 
 	return savePath(path);
 }
