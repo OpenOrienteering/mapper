@@ -95,6 +95,7 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent): EditorD
 	resizeEvent(&event);
 	
 	// Connections
+	connect(color_table, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(showEditingInfo(int,int)));
 	connect(color_table, SIGNAL(cellChanged(int,int)), this, SLOT(cellChange(int,int)));
 	connect(color_table, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentCellChange(int,int,int,int)));
 	connect(color_table, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(cellDoubleClick(int,int)));
@@ -241,11 +242,23 @@ void ColorWidget::showHelp()
 	window->showHelp("symbols.html", "colors");
 }
 
+void ColorWidget::showEditingInfo(int row, int column)
+{
+	Q_UNUSED(row);
+	
+	if (column >= 2 && column <= 9)
+		window->statusBar()->showMessage(tr("Enter a number from 0 to 255, or a percentage from 0% to 100%."), 3000);
+	else
+		window->statusBar()->clearMessage();
+}
+
 void ColorWidget::cellChange(int row, int column)
 {
 	if (!react_to_changes)
 		return;
 	react_to_changes = false;
+	
+	window->statusBar()->clearMessage();
 	
 	MapColor* color = map->getColor(row);
 	QString text = color_table->item(row, column)->text().trimmed();
@@ -269,7 +282,7 @@ void ColorWidget::cellChange(int row, int column)
 		
 		if (!ok)
 		{
-			QMessageBox::warning(window, tr("Error"), tr("Please enter a valid number from 0 to 255, or specify a percentage from 0 to 100!"));
+			QMessageBox::warning(window, tr("Error"), tr("Please enter a valid number from 0 to 255, or specify a percentage from 0% to 100%!"));
 		
 			if (column == 2)		color_table->item(row, column)->setText(QString::number(color->c * 100) + "%");
 			else if (column == 3)	color_table->item(row, column)->setText(QString::number(color->m * 100) + "%");
