@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps, Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -23,24 +23,24 @@
 
 #include "map_editor.h"
 
+QT_BEGIN_NAMESPACE
 class QBoxLayout;
 class QPushButton;
 class QTableWidget;
 class QWidget;
+QT_END_NAMESPACE
 
 class Map;
 
 class ColorWidget : public EditorDockWidgetChild
 {
 Q_OBJECT
+
 public:
 	ColorWidget(Map* map, MainWindow* window, QWidget* parent = NULL);
     virtual ~ColorWidget();
 	
     virtual QSize sizeHint() const;
-	
-protected:
-    virtual void resizeEvent(QResizeEvent* event);
 	
 protected slots:
 	void newColor();
@@ -62,14 +62,10 @@ private:
 	void addRow(int row);
 	void updateRow(int row);
 	
-	bool wide_layout;
-	QBoxLayout* layout;
-	
 	// Color list
 	QTableWidget* color_table;
 	
 	// Buttons
-	QWidget* buttons_group;
 	QPushButton* delete_button;
 	QPushButton* duplicate_button;
 	QPushButton* move_up_button;

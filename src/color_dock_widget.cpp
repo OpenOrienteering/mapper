@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps, Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -20,8 +20,6 @@
 
 #include "color_dock_widget.h"
 
-#include <cassert>
-
 #if QT_VERSION < 0x050000
 #include <QtGui>
 #else
@@ -31,7 +29,10 @@
 #include "map.h"
 #include "map_color.h"
 
-ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent): EditorDockWidgetChild(parent), map(map), window(window)
+ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
+: EditorDockWidgetChild(parent), 
+  map(map), 
+  window(window)
 {
 	react_to_changes = true;
 	
@@ -54,7 +55,7 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent): EditorD
 		addRow(i);
 	
 	// Buttons
-	buttons_group = new QWidget();
+	QWidget* buttons_group = new QWidget();
 	
 	QPushButton* new_button = new QPushButton(QIcon(":/images/plus.png"), tr("New"));
 	new_button->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
@@ -82,17 +83,12 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent): EditorD
 	
 	currentCellChange(color_table->currentRow(), 0, 0, 0);	// enable / disable move color buttons
 	
-	// Load settings
-	QSettings settings;
-	settings.beginGroup("ColorWidget");
-	QSize preferred_size = settings.value("size", QSize(200, 500)).toSize();
-	settings.endGroup();
-	
 	// Create main layout
-	wide_layout = false;
-	layout = NULL;
-	QResizeEvent event(preferred_size, preferred_size);
-	resizeEvent(&event);
+	QBoxLayout* layout = new QVBoxLayout();
+	layout->setMargin(0);
+	layout->addWidget(color_table, 1);
+	layout->addWidget(buttons_group);
+	setLayout(layout);
 	
 	// Connections
 	connect(color_table, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(showEditingInfo(int,int)));
@@ -113,52 +109,11 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent): EditorD
 
 ColorWidget::~ColorWidget()
 {
-	// Save settings
-	QSettings settings;
-	settings.beginGroup("ColorWidget");
-	settings.setValue("size", size());
-	settings.endGroup();
 }
 
 QSize ColorWidget::sizeHint() const
 {
     return QSize(450, 300);
-}
-
-void ColorWidget::resizeEvent(QResizeEvent* event)
-{
-	// NOTE: The commented parts change the layout to horizontal if the widget is wider than high, but this leads to "layout jumping" (bad usability)
-	int width = event->size().width();
-	int height = event->size().height();
-	
-	bool change = (layout == NULL);
-	//if ((width >= height && !wide_layout) || (width < height && wide_layout))
-	//	change = true;
-	
-	if (change)
-	{
-		if (layout)
-		{
-			for (int i = layout->count(); i >= 0; --i)
-				layout->removeItem(layout->itemAt(i));
-			delete layout;
-		}
-		
-		//if (width >= height)
-		//	layout = new QHBoxLayout();
-		//else if (width < height)
-			layout = new QVBoxLayout();
-		
-		layout->setMargin(0);
-		layout->addWidget(color_table, 1);
-		layout->addWidget(buttons_group);
-		setLayout(layout);
-		updateGeometry();
-		
-		wide_layout = width > height;
-	}
-	
-    event->accept();
 }
 
 void ColorWidget::newColor()
@@ -174,7 +129,7 @@ void ColorWidget::newColor()
 void ColorWidget::deleteColor()
 {
 	int row = color_table->currentRow();
-	assert(row >= 0);
+	Q_ASSERT(row >= 0);
 	
 	// Show a warning if the color is used
 	if (map->isColorUsedByASymbol(map->getColor(row)))
@@ -192,7 +147,7 @@ void ColorWidget::deleteColor()
 void ColorWidget::duplicateColor()
 {
 	int row = color_table->currentRow();
-	assert(row >= 0);
+	Q_ASSERT(row >= 0);
 	
 	MapColor* new_color = new MapColor(*map->getColor(row));
 	new_color->name = new_color->name + tr(" (Duplicate)");
@@ -204,7 +159,7 @@ void ColorWidget::duplicateColor()
 void ColorWidget::moveColorUp()
 {
 	int row = color_table->currentRow();
-	assert(row >= 1);
+	Q_ASSERT(row >= 1);
 	
 	MapColor* above_color = map->getColor(row - 1);
 	MapColor* cur_color = map->getColor(row);
@@ -222,7 +177,7 @@ void ColorWidget::moveColorUp()
 void ColorWidget::moveColorDown()
 {
 	int row = color_table->currentRow();
-	assert(row < color_table->rowCount() - 1);
+	Q_ASSERT(row < color_table->rowCount() - 1);
 	
 	MapColor* below_color = map->getColor(row + 1);
 	MapColor* cur_color = map->getColor(row);
