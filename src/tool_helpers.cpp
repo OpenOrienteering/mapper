@@ -683,6 +683,10 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 	result_info.type = NoSnapping;
 	result_info.object = NULL;
 	result_info.coord_index = -1;
+	result_info.path_coord.pos = MapCoordF(0, 0);
+	result_info.path_coord.index = -1;
+	result_info.path_coord.clen = -1;
+	result_info.path_coord.param = -1;
 	
 	if (filter & (ObjectCorners | ObjectPaths))
 	{

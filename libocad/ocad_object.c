@@ -75,7 +75,7 @@ OCADObjectEntry *ocad_object_entry_new(OCADFile *pfile, u32 npts) {
 	OCADObjectEntry *empty = NULL; 
 	OCADObjectIndex *idx;
 	dword offs;
-	u32 last_idx_offset;
+	u32 last_idx_offset = 0;
 	u32 empty_offset = 0; // holder for offset of first empty (npts=0) index entry, if needed
 	
 	if (!pfile->header) return NULL;
@@ -94,6 +94,7 @@ OCADObjectEntry *ocad_object_entry_new(OCADFile *pfile, u32 npts) {
 
 	if (empty_offset == 0) {
 		// We don't have any empty entries - need to create a new one!
+		if (last_idx_offset == 0) return NULL; // we don't support adding objects to files without object index block
 		ocad_file_reserve(pfile, sizeof(OCADObjectIndex));
 		idx = (OCADObjectIndex*)(pfile->buffer + last_idx_offset);
 		idx->next = pfile->size;

@@ -52,7 +52,7 @@ int ocad_symbol_count(OCADFile *pfile) {
 OCADSymbol *ocad_symbol_new(OCADFile *pfile, int size) {
 	OCADSymbol* new_symbol;
 	OCADSymbolIndex *idx;
-	u32 last_idx_offset;
+	u32 last_idx_offset = 0;
 	int i;
 	bool found = FALSE;
 	
@@ -71,6 +71,7 @@ OCADSymbol *ocad_symbol_new(OCADFile *pfile, int size) {
 	}
 	
 	if (idx == NULL) {
+		if (last_idx_offset == 0) return NULL; // we don't support adding symbols to files without symbol index block
 		ocad_file_reserve(pfile, sizeof(OCADSymbolIndex) + size);
 		idx = (OCADSymbolIndex*)(pfile->buffer + last_idx_offset);
 		idx->next = pfile->size;

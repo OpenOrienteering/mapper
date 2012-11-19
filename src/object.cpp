@@ -1814,7 +1814,7 @@ void PathObject::calcBezierPointDeletionRetainingShapeOptimization(MapCoord p0, 
 	old_curve.addCoordinate(q3);
 	old_curve.update();
 	
-	float cur_cost;
+	float cur_cost = 0;
 	int num_no_improvement_iterations = 0;
 	float old_gradient[2];
 	float old_step_dir[2];

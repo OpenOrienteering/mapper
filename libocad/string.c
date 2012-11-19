@@ -81,7 +81,7 @@ OCADStringEntry *ocad_string_entry_at(OCADFile *pfile, OCADStringIndex *current,
 OCADStringEntry *ocad_string_entry_new(OCADFile *pfile, u32 size) {
 	OCADStringEntry *empty = NULL;
 	OCADStringIndex *idx;
-	u32 last_idx_offset;
+	u32 last_idx_offset = 0;
 	u32 empty_offset = 0;	// offset to first empty (size=0) index entry, if needed
 	
 	if (!pfile->header) return NULL;
@@ -99,6 +99,7 @@ OCADStringEntry *ocad_string_entry_new(OCADFile *pfile, u32 size) {
 
 	if (empty_offset == 0) {
 		// We don't have any empty entries - need to create a new one!
+		if (last_idx_offset == 0) return NULL; // we don't support adding strings to files without string index block
 		ocad_file_reserve(pfile, sizeof(OCADStringIndex));
 		idx = (OCADStringIndex*)(pfile->buffer + last_idx_offset);
 		idx->next = pfile->size;

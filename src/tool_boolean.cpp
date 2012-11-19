@@ -188,6 +188,7 @@ bool BooleanTool::executeImpl(BooleanTool::Operation op, PathObjects& in_objects
 	else if (op == Intersection) clip_type = ctIntersection;
 	else if (op == Difference) clip_type = ctDifference;
 	else if (op == XOr) clip_type = ctXor;
+	else return false;
 	ExPolygons solution;
 	if (!clipper.Execute(clip_type, solution, pftNonZero, pftNonZero))
 		return false;
