@@ -341,7 +341,7 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="469"/>
         <source>Take the old symbol as template for the private symbol?</source>
-        <translation>Das alte  Symbol als Vorlage für das private Symbol nehmen?</translation>
+        <translation>Das alte Symbol als Vorlage für das private Symbol nehmen?</translation>
     </message>
     <message>
         <source>Symbol count:</source>
