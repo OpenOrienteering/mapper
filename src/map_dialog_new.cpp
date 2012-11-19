@@ -269,8 +269,13 @@ void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 		}
 		
 		QStringList symbol_set_filters;
-		symbol_set_filters << "*.omap";
+		Q_FOREACH(const Format *format, FileFormats.formats())
+		{
+			if (format->supportsImport())
+				symbol_set_filters << ("*." % format->fileExtension());
+		}
 		subdir.setNameFilters(symbol_set_filters);
+		
 		QFileInfoList symbol_set_files = subdir.entryInfoList(QDir::Files | QDir::Hidden | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDir::Name);
 		symbol_set_map.insert(std::make_pair(dir_name, symbol_set_files));
 	}
