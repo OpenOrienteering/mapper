@@ -141,14 +141,30 @@ bool Symbol::isTypeCompatibleTo(Object* object)
 	return false;
 }
 
-bool Symbol::numberEquals(Symbol* other)
+bool Symbol::numberEquals(Symbol* other, bool ignore_trailing_zeros)
 {
-	for (int i = 0; i < number_components; ++i)
+	if (ignore_trailing_zeros)
 	{
-		if (number[i] != other->number[i])
-			return false;
-		if (number[i] == -1)
-			return true;
+		for (int i = 0; i < number_components; ++i)
+		{
+			if (number[i] == -1 && other->number[i] == -1)
+				return true;
+			if ((number[i] == 0 || number[i] == -1) &&
+				(other->number[i] == 0 || other->number[i] == -1))
+				continue;
+			if (number[i] != other->number[i])
+				return false;
+		}
+	}
+	else
+	{
+		for (int i = 0; i < number_components; ++i)
+		{
+			if (number[i] != other->number[i])
+				return false;
+			if (number[i] == -1)
+				return true;
+		}
 	}
 	return true;
 }

@@ -215,16 +215,31 @@ void ReplaceSymbolSetDialog::calculateNumberMatchMapping()
 	for (int i = 0; i < map->getNumSymbols(); ++i)
 	{
 		Symbol* original = map->getSymbol(i);
-		for (int k = 0; k < symbol_map->getNumSymbols(); ++k)
+		Symbol* replacement = findNumberMatch(original, false);
+		if (replacement)
+			mapping.insert(original, replacement);
+		else
 		{
-			Symbol* replacement = symbol_map->getSymbol(k);
-			if (original->numberEquals(replacement) &&
-				Symbol::areTypesCompatible(original->getType(), replacement->getType()))
-			{
+			// No match found. Do second pass which ignores trailing zeros
+			replacement = findNumberMatch(original, true);
+			if (replacement)
 				mapping.insert(original, replacement);
-			}
 		}
 	}
+}
+
+Symbol* ReplaceSymbolSetDialog::findNumberMatch(Symbol* original, bool ignore_trailing_zeros)
+{
+	for (int k = 0; k < symbol_map->getNumSymbols(); ++k)
+	{
+		Symbol* replacement = symbol_map->getSymbol(k);
+		if (original->numberEquals(replacement, ignore_trailing_zeros) &&
+			Symbol::areTypesCompatible(original->getType(), replacement->getType()))
+		{
+			return replacement;
+		}
+	}
+	return NULL;
 }
 
 void ReplaceSymbolSetDialog::updateMappingTable()
