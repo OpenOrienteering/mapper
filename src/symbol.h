@@ -102,7 +102,7 @@ public:
 	bool isTypeCompatibleTo(Object* object);
 	
 	/// Returns if the symbol numbers are identical.
-	bool numberEquals(Symbol* other);
+	bool numberEquals(Symbol* other, bool ignore_trailing_zeros);
 	
 	/// Saving and loading
 	void save(QIODevice* file, Map* map);

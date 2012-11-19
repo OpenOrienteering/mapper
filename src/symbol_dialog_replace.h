@@ -50,6 +50,7 @@ private:
     virtual ~ReplaceSymbolSetDialog();
 	
 	void calculateNumberMatchMapping();
+	Symbol* findNumberMatch(Symbol* original, bool ignore_trailing_zeros);
 	void updateMappingTable();
 	void updateMappingFromTable();
 	
