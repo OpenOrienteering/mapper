@@ -356,6 +356,7 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 	else if (type == Line || type == Combined)
 	{
 		Symbol* symbol_to_use = this;
+		bool show_dash_symbol = false;
 		if (type == Line)
 		{
 			// If there are breaks in the line, scale them down so they fit into the icon exactly
@@ -376,11 +377,21 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 				icon_symbol = icon_line;
 				symbol_to_use = icon_symbol;
 			}
+			else if (line->getDashSymbol() != NULL)
+			{
+				show_dash_symbol = !line->getDashSymbol()->isEmpty();
+			}
 		}
 		
 		PathObject* path = new PathObject(symbol_to_use);
 		path->addCoordinate(0, MapCoord(-max_icon_mm_half, 0));
 		path->addCoordinate(1, MapCoord(max_icon_mm_half, 0));
+		if (show_dash_symbol)
+		{
+			MapCoord dash_coord(0, 0);
+			dash_coord.setDashPoint(true);
+			path->addCoordinate(1, dash_coord);
+		}
 		object = path;
 	}
 	else if (type == Text)
