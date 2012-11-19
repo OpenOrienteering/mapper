@@ -22,16 +22,16 @@
         <color priority="6" c="0.456" m="0" y="0.546" k="0" opacity="1" name="Green 60% above browns"/>
         <color priority="7" c="0.228" m="0" y="0.273" k="0" opacity="1" name="Green 30% above browns"/>
         <color priority="8" c="0" m="0.56" y="1" k="0.18" opacity="1" name="Brown"/>
-        <color priority="9" c="0" m="0.224" y="0.4" k="0.072" opacity="1" name="Brown 40% (20-50% for paved area, non-urban)"/>
-        <color priority="10" c="0" m="0.112" y="0.2" k="0.036" opacity="1" name="Brown 20% (0-30% for paved area, urban)"/>
-        <color priority="11" c="0" m="0" y="0" k="1" opacity="1" name="Black below browns"/>
-        <color priority="12" c="0.87" m="0.18" y="0" k="0" opacity="1" name="Blue"/>
-        <color priority="13" c="0.6525" m="0.135" y="0" k="0" opacity="1" name="Blue 75%"/>
-        <color priority="14" c="0.261" m="0.054" y="0" k="0" opacity="1" name="Blue 30%"/>
-        <color priority="15" c="0" m="0" y="0" k="0.65" opacity="1" name="Black 65% (50-65% for building)"/>
-        <color priority="16" c="0" m="0" y="0" k="0.5" opacity="1" name="Black 50%"/>
-        <color priority="17" c="0" m="0" y="0" k="0.3" opacity="1" name="Black 30%"/>
-        <color priority="18" c="0" m="0" y="0" k="0.2" opacity="1" name="Black 20%"/>
+        <color priority="9" c="0" m="0" y="0" k="0.65" opacity="1" name="Black 65% (50-65% for building)"/>
+        <color priority="10" c="0" m="0" y="0" k="0.5" opacity="1" name="Black 50%"/>
+        <color priority="11" c="0" m="0" y="0" k="0.3" opacity="1" name="Black 30%"/>
+        <color priority="12" c="0" m="0" y="0" k="0.2" opacity="1" name="Black 20%"/>
+        <color priority="13" c="0" m="0.224" y="0.4" k="0.072" opacity="1" name="Brown 40% (20-50% for paved area, non-urban)"/>
+        <color priority="14" c="0" m="0.112" y="0.2" k="0.036" opacity="1" name="Brown 20% (0-30% for paved area, urban)"/>
+        <color priority="15" c="0" m="0" y="0" k="1" opacity="1" name="Black below browns"/>
+        <color priority="16" c="0.87" m="0.18" y="0" k="0" opacity="1" name="Blue"/>
+        <color priority="17" c="0.6525" m="0.135" y="0" k="0" opacity="1" name="Blue 75%"/>
+        <color priority="18" c="0.261" m="0.054" y="0" k="0" opacity="1" name="Blue 30%"/>
         <color priority="19" c="0.38" m="0.27" y="1" k="0" opacity="1" name="Green 50%, Yellow"/>
         <color priority="20" c="0" m="0" y="0" k="0" opacity="1" name="White over Green"/>
         <color priority="21" c="0.76" m="0" y="0.91" k="0.5" opacity="1" name="Green, 50% Black"/>
@@ -549,7 +549,7 @@ with grass, moss or other low vegetation shall be represented according to its
 openness and runnability (401/402/403/404).
 
 Colour: black 20% (min. 60 lines/cm) or grey</description>
-            <area_symbol inner_color="17" min_area="500" patterns="0"/>
+            <area_symbol inner_color="11" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="1" id="35" code="303" name="Waterhole">
             <description>A water-filled pit or an area of water which is too small to be shown to scale. The symbol is orientated to north.
@@ -558,7 +558,7 @@ Colour: blue</description>
             <point_symbol inner_radius="900" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="12" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="16" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="6">
@@ -609,22 +609,22 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable body of water!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
-            <area_symbol inner_color="12" min_area="1000" patterns="0"/>
+            <area_symbol inner_color="16" min_area="1000" patterns="0"/>
         </symbol>
         <symbol type="4" id="40" code="304.4" name="Impassable body of water, fill, 75% blue &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;">
             <description>An area of deep water such as a lake, pond, river or fountain which may constitute a danger to the competitor or has forbidden access. The dark blue colour and the bordering black line indicates that the feature cannot or shall not be crossed. The minimum dimension is 1 mm2.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable body of water!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
-            <area_symbol inner_color="13" min_area="1000" patterns="0"/>
+            <area_symbol inner_color="17" min_area="1000" patterns="0"/>
         </symbol>
         <symbol type="4" id="41" code="305.0.1" name="Passable body of water, fill">
             <description>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water shall be less than 0.5 m deep and runnable. If the body of water is not runnable it shall be represented with the symbol impassable body of water (304.1). If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line. </description>
-            <area_symbol inner_color="14" min_area="1000" patterns="0"/>
+            <area_symbol inner_color="18" min_area="1000" patterns="0"/>
         </symbol>
         <symbol type="2" id="42" code="305.0.2" name="Passable body of water, bank line">
             <description>An area of shallow water such as a pond, river or fountain that can be crossed. The body of water shall be less than 0.5 m deep and runnable. If the body of water is not runnable it shall be represented with the symbol (304.1). If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line.</description>
-            <line_symbol color="12" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="16" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="16" id="43" code="305.1" name="Passable body of water">
             <description>An area of shallow water such as a pond, river or fountain that can be crossed.  The body of water shall be less than 0.5 m deep and runnable. If the body of water is not runnable it shall be represented with the symbol impassable body of water (304.1). If no other line symbol touches the border of the passable body of water, the border shall be represented with a blue line.
@@ -639,13 +639,13 @@ Colour: blue 30% (min. 60 lines/cm), blue.</description>
             <description>A crossable watercourse less than 2 m wide.
 
 Colour: blue</description>
-            <line_symbol color="12" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="16" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="45" code="307" name="Minor watercourse">
             <description>A natural or man-made minor water channel which may contain water only intermittently.
 
 Colour: blue</description>
-            <line_symbol color="12" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1870" break_length="370" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="16" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1870" break_length="370" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="46" code="308" name="Narrow marsh">
             <description>A marsh or trickle of water which is too narrow to be shown with symbol marsh (310).
@@ -654,7 +654,7 @@ Colour: blue</description>
             <line_symbol color="4" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
-                        <point_symbol rotatable="true" inner_radius="185" inner_color="12" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="185" inner_color="16" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
@@ -662,7 +662,7 @@ Colour: blue</description>
         <symbol type="4" id="47" code="309.0.1" name="Impassable marsh, fill">
             <description>This symbol should not be used on its own.</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="0" line_spacing="500" line_offset="0" offset_along_line="0" color="12" line_width="250"/>
+                <pattern type="1" angle="0" line_spacing="500" line_offset="0" offset_along_line="0" color="16" line_width="250"/>
             </area_symbol>
         </symbol>
         <symbol type="2" id="48" code="309.0.2" name="Impassable marsh, border line">
@@ -688,14 +688,14 @@ Minimum: not less than 2 lines .5mm long
 
 Colour: blue</description>
             <area_symbol inner_color="-1" min_area="200" patterns="1">
-                <pattern type="1" angle="0" line_spacing="300" line_offset="0" offset_along_line="0" color="12" line_width="100"/>
+                <pattern type="1" angle="0" line_spacing="300" line_offset="0" offset_along_line="0" color="16" line_width="100"/>
             </area_symbol>
         </symbol>
         <symbol type="1" id="51" code="310.1" name="Marsh, minimum size">
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="12" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="16" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -709,7 +709,7 @@ Colour: blue</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="12" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="16" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -735,7 +735,7 @@ Colour: blue</description>
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="12" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="16" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -755,7 +755,7 @@ Colour: blue</description>
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="12" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="16" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -776,7 +776,7 @@ Colour: blue</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="4">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="12" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="16" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -790,7 +790,7 @@ Colour: blue</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="12" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="16" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -804,7 +804,7 @@ Colour: blue</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="12" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="16" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -818,7 +818,7 @@ Colour: blue</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="12" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="16" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -836,7 +836,7 @@ Colour: blue</description>
             <description>Small well or fountain, which is at least 1 m high or at least 1 m in diameter.
 
 Colour: blue</description>
-            <point_symbol inner_radius="350" inner_color="-1" outer_width="250" outer_color="12" elements="0"/>
+            <point_symbol inner_radius="350" inner_color="-1" outer_width="250" outer_color="16" elements="0"/>
         </symbol>
         <symbol type="1" id="55" code="313" name="Spring">
             <description>The source of a stream with a distinct outflow. This symbol should generally not be used in urban areas. The symbol is orientated to open downstream.
@@ -845,7 +845,7 @@ Colour: blue</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="12" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="16" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="7">
@@ -871,7 +871,7 @@ Colour: blue</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="12" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="16" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -885,7 +885,7 @@ Colour: blue</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="12" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="16" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1166,9 +1166,9 @@ Colour: green</description>
 To improve the legibility of this symbol in non-urban parts of the map, the line width shall, in the non-urban parts of the map, be increased from 0.07 mm to 0.14 mm, and the brown fill-in shall, in the non-urban parts of the map, be drawn darker, so that if (x)% brown is used in urban parts of the map, (x+20)% brown shall be used in the non-urban parts of the map.
 
 Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (min.60lines/cm) (non-urban); the colour and the line width shall be the same as for the symbols paved area (529) and step or edge of paved areas (529.1).</description>
-            <line_symbol color="10" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="14" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <borders>
-                    <border color="11" width="70" shift="35" dashed="true" dash_length="2000" break_length="250"/>
+                    <border color="15" width="70" shift="35" dashed="true" dash_length="2000" break_length="250"/>
                 </borders>
             </line_symbol>
         </symbol>
@@ -1178,9 +1178,9 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
 To improve the legibility of this symbol in non-urban parts of the map, the line width shall, in the non-urban parts of the map, be increased from 0.07 mm to 0.14 mm, and the brown fill-in shall, in the non-urban parts of the map, be drawn darker, so that if (x)% brown is used in urban parts of the map, (x+20)% brown shall be used in the non-urban parts of the map.
 
 Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (min.60lines/cm) (non-urban); the colour and the line width shall be the same as for the symbols paved area (529) and step or edge of paved areas (529.1).</description>
-            <line_symbol color="10" line_width="550" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="14" line_width="550" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <borders>
-                    <border color="11" width="70" shift="35" dashed="true" dash_length="2000" break_length="250"/>
+                    <border color="15" width="70" shift="35" dashed="true" dash_length="2000" break_length="250"/>
                 </borders>
             </line_symbol>
         </symbol>
@@ -1190,9 +1190,9 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
 To improve the legibility of this symbol in non-urban parts of the map, the line width shall, in the non-urban parts of the map, be increased from 0.07 mm to 0.14 mm, and the brown fill-in shall, in the non-urban parts of the map, be drawn darker, so that if (x)% brown is used in urban parts of the map, (x+20)% brown shall be used in the non-urban parts of the map.
 
 Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (min.60lines/cm) (non-urban); the colour and the line width shall be the same as for the symbols paved area (529) and step or edge of paved areas (529.1).</description>
-            <line_symbol color="9" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="13" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <borders>
-                    <border color="11" width="140" shift="70" dashed="true" dash_length="2000" break_length="250"/>
+                    <border color="15" width="140" shift="70" dashed="true" dash_length="2000" break_length="250"/>
                 </borders>
             </line_symbol>
         </symbol>
@@ -1202,9 +1202,9 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
 To improve the legibility of this symbol in non-urban parts of the map, the line width shall, in the non-urban parts of the map, be increased from 0.07 mm to 0.14 mm, and the brown fill-in shall, in the non-urban parts of the map, be drawn darker, so that if (x)% brown is used in urban parts of the map, (x+20)% brown shall be used in the non-urban parts of the map.
 
 Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (min.60lines/cm) (non-urban); the colour and the line width shall be the same as for the symbols paved area (529) and step or edge of paved areas (529.1).</description>
-            <line_symbol color="9" line_width="550" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="13" line_width="550" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <borders>
-                    <border color="11" width="140" shift="70" dashed="true" dash_length="2000" break_length="250"/>
+                    <border color="15" width="140" shift="70" dashed="true" dash_length="2000" break_length="250"/>
                 </borders>
             </line_symbol>
         </symbol>
@@ -1378,7 +1378,7 @@ Colour: black</description>
 Colour: black 50%</description>
             <line_symbol color="-1" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3000" end_length="1500" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <borders>
-                    <border color="16" width="100" shift="0" dash_length="2000" break_length="1000"/>
+                    <border color="10" width="100" shift="0" dash_length="2000" break_length="1000"/>
                 </borders>
             </line_symbol>
         </symbol>
@@ -1492,13 +1492,13 @@ Colour: black.</description>
             <description>A passable wall or retaining wall is a construction made of stone, brick, concrete etc., which can be passed. This symbol is suitable for urban areas. If such a wall is higher than 2 m, it shall be represented with the symbol impassable wall (521.1). Wide walls shall be drawn in plan shape.
 
 Colour: black 50%</description>
-            <line_symbol color="16" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="0" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="10" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="0" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="99" code="519.1.2" name="Passable wall, plan shape">
             <description>A passable wall or retaining wall is a construction made of stone, brick, concrete etc., which can be passed. This symbol is suitable for urban areas. If such a wall is higher than 2 m, it shall be represented with the symbol (521.1). Wide walls shall be drawn in plan shape.
 
 Colour: black 50%</description>
-            <area_symbol inner_color="16" min_area="500" patterns="0"/>
+            <area_symbol inner_color="10" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="2" id="100" code="521.1.1" name="Impassable wall &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;">
             <description>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
@@ -1628,7 +1628,7 @@ Colour: black</description>
         </symbol>
         <symbol type="4" id="105" code="526.1.1" name="Building helper 1">
             <description>Do not use this symbol on its own!</description>
-            <area_symbol inner_color="15" min_area="250" patterns="0"/>
+            <area_symbol inner_color="9" min_area="250" patterns="0"/>
         </symbol>
         <symbol type="2" id="106" code="526.1.2" name="Building helper 2">
             <description>Do not use this symbol on its own!</description>
@@ -1660,7 +1660,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="15" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="9" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="4">
@@ -1695,7 +1695,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         </symbol>
         <symbol type="4" id="109" code="526.0.2" name="Canopy helper 1">
             <description>Do not use this symbol on its own!</description>
-            <area_symbol inner_color="18" min_area="250" patterns="0"/>
+            <area_symbol inner_color="12" min_area="250" patterns="0"/>
         </symbol>
         <symbol type="2" id="110" code="526.2.2" name="Canopy helper 2">
             <description>Do not use this symbol on its own!</description>
@@ -1755,7 +1755,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
 Where a paved road, footpath or track goes through a non-urban area, the brown fill-in shall be drawn darker, so that if (x)% brown is used in urban areas, (x+20)% brown shall be used in the non-urban areas, and the line width of the black outline shall be increased from 0.07 to 0.14 mm. The black border line can be omitted where it is logical (e.g. indistinct/gradual gravel-to-grass transitions).
 
 Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (min.60lines/cm) (non-urban); the colour and the line width shall be the same as for the symbol unpaved footpath or track (506.1).</description>
-            <area_symbol inner_color="10" min_area="500" patterns="0"/>
+            <area_symbol inner_color="14" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="16" id="115" code="529.0.2" name="Paved area with border, urban">
             <description>A paved area is an area with a firm level surfaces such as asphalt, hard gravel, tiles, concrete or the like. It shall be bordered (or framed) by the symbol step or edge of paved area (529.1). Distinct differences within the paved area can be represented with the symbol step or edge of paved area (529.1), if they serve navigation.
@@ -1774,9 +1774,9 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
 Where a paved road, footpath or track goes through a non-urban area, the brown fill-in shall be drawn darker, so that if (x)% brown is used in urban areas, (x+20)% brown shall be used in the non-urban areas, and the line width of the black outline shall be increased from 0.07 to 0.14 mm. The black border line can be omitted where it is logical (e.g. indistinct/gradual gravel-to-grass transitions).
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</description>
-            <line_symbol color="10" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="14" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <borders>
-                    <border color="11" width="70" shift="35" dash_length="2000" break_length="250"/>
+                    <border color="15" width="70" shift="35" dash_length="2000" break_length="250"/>
                 </borders>
             </line_symbol>
         </symbol>
@@ -1786,9 +1786,9 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
 Where a paved road, footpath or track goes through a non-urban area, the brown fill-in shall be drawn darker, so that if (x)% brown is used in urban areas, (x+20)% brown shall be used in the non-urban areas, and the line width of the black outline shall be increased from 0.07 to 0.14 mm. The black border line can be omitted where it is logical (e.g. indistinct/gradual gravel-to-grass transitions).
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</description>
-            <line_symbol color="10" line_width="550" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="14" line_width="550" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <borders>
-                    <border color="11" width="70" shift="35" dash_length="2000" break_length="250"/>
+                    <border color="15" width="70" shift="35" dash_length="2000" break_length="250"/>
                 </borders>
             </line_symbol>
         </symbol>
@@ -1798,9 +1798,9 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
 Where a paved road, footpath or track goes through a non-urban area, the brown fill-in shall be drawn darker, so that if (x)% brown is used in urban areas, (x+20)% brown shall be used in the non-urban areas, and the line width of the black outline shall be increased from 0.07 to 0.14 mm. The black border line can be omitted where it is logical (e.g. indistinct/gradual gravel-to-grass transitions).
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</description>
-            <line_symbol color="10" line_width="700" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="14" line_width="700" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <borders>
-                    <border color="11" width="70" shift="35" dash_length="2000" break_length="250"/>
+                    <border color="15" width="70" shift="35" dash_length="2000" break_length="250"/>
                 </borders>
             </line_symbol>
         </symbol>
@@ -1810,9 +1810,9 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
 Where a paved road, footpath or track goes through a non-urban area, the brown fill-in shall be drawn darker, so that if (x)% brown is used in urban areas, (x+20)% brown shall be used in the non-urban areas, and the line width of the black outline shall be increased from 0.07 to 0.14 mm. The black border line can be omitted where it is logical (e.g. indistinct/gradual gravel-to-grass transitions).
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</description>
-            <line_symbol color="10" line_width="900" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="14" line_width="900" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <borders>
-                    <border color="11" width="70" shift="35" dash_length="2000" break_length="250"/>
+                    <border color="15" width="70" shift="35" dash_length="2000" break_length="250"/>
                 </borders>
             </line_symbol>
         </symbol>
@@ -1822,7 +1822,7 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
 Where a paved road, footpath or track goes through a non-urban area, the brown fill-in shall be drawn darker, so that if (x)% brown is used in urban areas, (x+20)% brown shall be used in the non-urban areas, and the line width of the black outline shall be increased from 0.07 to 0.14 mm. The black border line can be omitted where it is logical (e.g. indistinct/gradual gravel-to-grass transitions).
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</description>
-            <area_symbol inner_color="9" min_area="500" patterns="0"/>
+            <area_symbol inner_color="13" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="16" id="121" code="529.0.8" name="Paved area with border, non-urban">
             <description>A paved area is an area with a firm level surfaces such as asphalt, hard gravel, tiles, concrete or the like. It shall be bordered (or framed) by the symbol step or edge of paved area (529.1). Distinct differences within the paved area can be represented with the symbol step or edge of paved area (529.1), if they serve navigation.
@@ -1841,9 +1841,9 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
 Where a paved road, footpath or track goes through a non-urban area, the brown fill-in shall be drawn darker, so that if (x)% brown is used in urban areas, (x+20)% brown shall be used in the non-urban areas, and the line width of the black outline shall be increased from 0.07 to 0.14 mm. The black border line can be omitted where it is logical (e.g. indistinct/gradual gravel-to-grass transitions).
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</description>
-            <line_symbol color="9" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="13" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <borders>
-                    <border color="11" width="140" shift="70" dash_length="2000" break_length="250"/>
+                    <border color="15" width="140" shift="70" dash_length="2000" break_length="250"/>
                 </borders>
             </line_symbol>
         </symbol>
@@ -1853,9 +1853,9 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
 Where a paved road, footpath or track goes through a non-urban area, the brown fill-in shall be drawn darker, so that if (x)% brown is used in urban areas, (x+20)% brown shall be used in the non-urban areas, and the line width of the black outline shall be increased from 0.07 to 0.14 mm. The black border line can be omitted where it is logical (e.g. indistinct/gradual gravel-to-grass transitions).
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</description>
-            <line_symbol color="9" line_width="550" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="13" line_width="550" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <borders>
-                    <border color="11" width="140" shift="70" dash_length="2000" break_length="250"/>
+                    <border color="15" width="140" shift="70" dash_length="2000" break_length="250"/>
                 </borders>
             </line_symbol>
         </symbol>
@@ -1865,9 +1865,9 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
 Where a paved road, footpath or track goes through a non-urban area, the brown fill-in shall be drawn darker, so that if (x)% brown is used in urban areas, (x+20)% brown shall be used in the non-urban areas, and the line width of the black outline shall be increased from 0.07 to 0.14 mm. The black border line can be omitted where it is logical (e.g. indistinct/gradual gravel-to-grass transitions).
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</description>
-            <line_symbol color="9" line_width="700" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="13" line_width="700" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <borders>
-                    <border color="11" width="140" shift="70" dash_length="2000" break_length="250"/>
+                    <border color="15" width="140" shift="70" dash_length="2000" break_length="250"/>
                 </borders>
             </line_symbol>
         </symbol>
@@ -1877,9 +1877,9 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
 Where a paved road, footpath or track goes through a non-urban area, the brown fill-in shall be drawn darker, so that if (x)% brown is used in urban areas, (x+20)% brown shall be used in the non-urban areas, and the line width of the black outline shall be increased from 0.07 to 0.14 mm. The black border line can be omitted where it is logical (e.g. indistinct/gradual gravel-to-grass transitions).
 
 Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban) (min. 60 lines/cm), black; the colour and the line width shall be the same as for symbol unpaved footpath or track (506.1).</description>
-            <line_symbol color="9" line_width="900" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="13" line_width="900" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <borders>
-                    <border color="11" width="140" shift="70" dash_length="2000" break_length="250"/>
+                    <border color="15" width="140" shift="70" dash_length="2000" break_length="250"/>
                 </borders>
             </line_symbol>
         </symbol>
@@ -2228,7 +2228,7 @@ Colour: black</description>
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.
 
 Colour: blue</description>
-            <line_symbol color="12" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="16" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="142" code="601.0.5" name="Magnetic north line, blue, with arrow">
             <description>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
@@ -2238,13 +2238,13 @@ North lines may be broken where they obscure small features such as boulders, kn
 Colour: blue
 
 &lt;b&gt;Note: this is a non-standard addition to the symbol set.&lt;/b&gt;</description>
-            <line_symbol color="12" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="16" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <end_symbol>
                     <symbol type="1" code="" name="End symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="4" code="">
-                                    <area_symbol inner_color="12" min_area="0" patterns="0"/>
+                                    <area_symbol inner_color="16" min_area="0" patterns="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="5">
@@ -2271,7 +2271,7 @@ North lines may be broken where they obscure small features such as boulders, kn
 
 Colour: blue</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="1.5708" rotatable="true" line_spacing="37500" line_offset="0" offset_along_line="0" color="12" line_width="180"/>
+                <pattern type="1" angle="1.5708" rotatable="true" line_spacing="37500" line_offset="0" offset_along_line="0" color="16" line_width="180"/>
             </area_symbol>
         </symbol>
         <symbol type="1" id="144" code="602" name="Registration mark (Cyan)">
@@ -2283,7 +2283,7 @@ This symbol includes all printed colours - do not place colours as separate symb
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="8">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="12" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="16" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2297,7 +2297,7 @@ This symbol includes all printed colours - do not place colours as separate symb
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="12" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="16" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
