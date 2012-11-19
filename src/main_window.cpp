@@ -325,6 +325,11 @@ bool MainWindow::showSaveOnCloseDialog()
 {
 	if (has_opened_file && has_unsaved_changes)
 	{
+		// Show the window in case it is minimized
+		setWindowState( (windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
+		raise();
+		activateWindow();
+		
 		QMessageBox::StandardButton ret;
 		ret = QMessageBox::warning(this, APP_NAME,
 								   tr("The file has been modified.\n"
