@@ -30,7 +30,7 @@ void GeoreferencingTest::initTestCase()
 {
 	gk2_spec = "+proj=tmerc +lat_0=0 +lon_0=6 +k=1.000000 +x_0=2500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs";
 	gk3_spec = "+proj=tmerc +lat_0=0 +lon_0=9 +k=1.000000 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs";
-	utm32_spec = "+proj=utm +zone=32";
+	utm32_spec = "+proj=utm +zone=32 +datum=WGS84";
 	
 }
 
