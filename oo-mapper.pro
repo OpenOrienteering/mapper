@@ -85,6 +85,7 @@ HEADERS += src/color_dock_widget.h \
            src/tool_edit.h \
            src/tool_helpers.h \
            src/tool_measure.h \
+           src/tool_pan.h \
            src/tool_rotate.h \
            src/tool_rotate_pattern.h \
            src/tool_scale.h \
@@ -168,6 +169,7 @@ SOURCES += src/color_dock_widget.cpp \
            src/tool_edit.cpp \
            src/tool_helpers.cpp \
            src/tool_measure.cpp \
+           src/tool_pan.cpp \
            src/tool_rotate.cpp \
            src/tool_rotate_pattern.cpp \
            src/tool_scale.cpp \

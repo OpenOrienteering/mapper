@@ -67,6 +67,7 @@
 #include "object_text.h"
 #include "settings.h"
 #include "object_operations.h"
+#include "tool_pan.h"
 
 // ### MapEditorController ###
 
@@ -425,6 +426,7 @@ void MapEditorController::createMenuAndToolbars()
 
 	show_grid_act = newCheckAction("showgrid", tr("Show grid"), this, SLOT(showGrid()), "grid.png", QString::null, QString::null);	// TODO: link to manual
 	QAction* configure_grid_act = newAction("configuregrid", tr("Configure grid..."), this, SLOT(configureGrid()), "grid.png", QString::null, QString::null);	// TODO: link to manual
+	pan_act = newCheckAction("panmap", tr("Pan"), this, SLOT(pan()), "move.png", QString::null, "view_menu.html");
 	QAction* zoom_in_act = newAction("zoomin", tr("Zoom in"), this, SLOT(zoomIn()), "view-zoom-in.png", QString::null, "view_menu.html");
 	QAction* zoom_out_act = newAction("zoomout", tr("Zoom out"), this, SLOT(zoomOut()), "view-zoom-out.png", QString::null, "view_menu.html");
 	QAction* show_all_act = newAction("showall", tr("Show whole map"), this, SLOT(showWholeMap()), "view-show-all.png");
@@ -542,6 +544,7 @@ void MapEditorController::createMenuAndToolbars()
 	// View menu
 	QMenu* view_menu = window->menuBar()->addMenu(tr("&View"));
 	view_menu->setWhatsThis("<a href=\"view_menu.html\">See more</a>");
+	view_menu->addAction(pan_act);
 	view_menu->addAction(zoom_in_act);
 	view_menu->addAction(zoom_out_act);
 	view_menu->addAction(show_all_act);
@@ -650,6 +653,7 @@ void MapEditorController::createMenuAndToolbars()
 	connect(grid_menu, SIGNAL(triggered(QAction*)), this, SLOT(configureGrid()));
 	toolbar_view->addWidget(grid_button);
 	toolbar_view->addSeparator();
+	toolbar_view->addAction(pan_act);
 	toolbar_view->addAction(zoom_in_act);
 	toolbar_view->addAction(zoom_out_act);
 	toolbar_view->addAction(show_all_act);
@@ -961,6 +965,10 @@ void MapEditorController::configureGrid()
 	}
 }
 
+void MapEditorController::pan()
+{
+	setTool(new PanTool(this, pan_act));
+}
 void MapEditorController::zoomIn()
 {
 	main_view->zoomSteps(1, false);

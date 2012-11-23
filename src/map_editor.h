@@ -110,6 +110,7 @@ public slots:
 	void showGrid();
 	void configureGrid();
 	
+	void pan();
 	void zoomIn();
 	void zoomOut();
 	void setCustomZoomFactorClicked();
@@ -243,6 +244,7 @@ private:
 	QAction* copy_act;
 	QAction* paste_act;
 	
+	QAction* pan_act;
 	QAction* show_grid_act;
 	QAction* hatch_areas_view_act;
 	QAction* baseline_view_act;
