@@ -1154,7 +1154,7 @@ void PathObject::splitAt(const PathCoord& split_pos, Object*& out1, Object*& out
 				path1->deleteCoordinate(path1->parts[part_index].end_index, false);
 				path1->deleteCoordinate(path1->parts[part_index].end_index, false);
 				path1->deleteCoordinate(path1->parts[part_index].end_index, false);
-				coords[path1->parts[part_index].end_index].setCurveStart(false);
+				path1->coords[path1->parts[part_index].end_index].setCurveStart(false);
 			}
 			else
 				path1->deleteCoordinate(path1->parts[part_index].end_index, false);
@@ -1207,6 +1207,9 @@ void PathObject::changePathBounds(int part_index, double start_len, double end_l
 	
 	int cur_path_coord = part.path_coord_start_index + 1;
 	while (cur_path_coord < part.path_coord_end_index && path_coords[cur_path_coord].clen < start_len)
+		++cur_path_coord;
+	
+	if (path_coords[cur_path_coord].clen == start_len && cur_path_coord < part.path_coord_end_index)
 		++cur_path_coord;
 	
 	// Start position
@@ -1409,7 +1412,7 @@ bool PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 					assert(current_index <= part.end_index);
 					if (flags[current_index].isClosePoint() || current_index == part.end_index)
 					{
-						if (out_coords[current_index] != out_coords[0])
+						if (coords[current_index] != coords[0])
 						{
 							out_flags.push_back(flags[current_index]);
 							out_flags[out_flags.size() - 1].setClosePoint(false);
