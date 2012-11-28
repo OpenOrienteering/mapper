@@ -242,13 +242,13 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 				if (new_states.mode == RenderStates::PenOnly)
 				{
 					bool pen_too_small = (force_min_size && pen_width * scaling <= 1.0f);
-					painter->setPen(QPen(highlighted ? getHighlightedColor(color->color) : color->color, pen_too_small ? 0 : pen_width));
+					painter->setPen(QPen(highlighted ? getHighlightedColor(*color) : *color, pen_too_small ? 0 : pen_width));
 					
 					painter->setBrush(QBrush(Qt::NoBrush));
 				}
 				else if (new_states.mode == RenderStates::BrushOnly)
 				{
-					QBrush brush(highlighted ? getHighlightedColor(color->color) : color->color);
+					QBrush brush(highlighted ? getHighlightedColor(*color) : *color);
 					
 					painter->setPen(QPen(Qt::NoPen));
 					painter->setBrush(brush);
@@ -263,7 +263,7 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 					painter->setBrush(brush);
 				}*/
 				
-				painter->setOpacity(qMin(1.0f, opacity_factor * color->opacity));
+				painter->setOpacity(qMin(1.0f, opacity_factor * color->getOpacity()));
 				
 				if (current_clip != new_states.clip_path)
 				{

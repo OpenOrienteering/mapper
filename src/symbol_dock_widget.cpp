@@ -30,15 +30,15 @@
 #endif
 
 #include "map.h"
-#include "symbol_setting_dialog.h"
-#include "symbol_point.h"
-#include "symbol_line.h"
-#include "symbol_area.h"
-#include "symbol_text.h"
-#include "symbol_combined.h"
+#include "map_color.h"
 #include "file_format.h"
 #include "settings.h"
-#include "map_color.h"
+#include "symbol_area.h"
+#include "symbol_combined.h"
+#include "symbol_line.h"
+#include "symbol_point.h"
+#include "symbol_setting_dialog.h"
+#include "symbol_text.h"
 
 
 // STL comparison function for sorting symbols by number
@@ -62,18 +62,13 @@ struct Compare_symbolByColor
 		MapColor* c2 = s2->getDominantColorGuess();
 		
 		if (c1 && c2)
-			return color_map.value(getColorCode(c1)) < color_map.value(getColorCode(c2));
+			return color_map.value(QRgb(*c1)) < color_map.value(QRgb(*c2));
 		else if (c2)
 			return true;
 		else if (c1)
 			return false;
 		
 		return false; // s1 == s2
-	}
-	
-	static QRgb getColorCode(MapColor* color)
-	{
-		return qRgba(qFloor(255.9 * color->c), qFloor(255.9 * color->m), qFloor(255.9 * color->y), qFloor(255.9 * color->k));
 	}
 	
 	// Maps color code to priority
@@ -87,7 +82,7 @@ static bool Compare_symbolByColorPriority(Symbol* s1, Symbol* s2)
 	MapColor* c2 = s2->getDominantColorGuess();
 	
 	if (c1 && c2)
-		return c1->priority < c2->priority;
+		return c1->comparePriority(*c2);
 	else if (c2)
 		return true;
 	else if (c1)
@@ -836,7 +831,7 @@ void SymbolRenderWidget::sortByColor()
 	// Iterating in reverse order so identical colors are at the position where they appear with lowest priority.
 	for (int i = map->getNumColors() - 1; i >= 0; --i)
 	{
-		QRgb color_code = Compare_symbolByColor::getColorCode(map->getColor(i));
+		QRgb color_code = QRgb(*map->getColor(i));
 		if (!compare.color_map.contains(color_code))
 		{
 			compare.color_map.insert(color_code, next_priority);

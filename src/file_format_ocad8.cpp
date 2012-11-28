@@ -123,17 +123,17 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FormatException)
     {
         OCADColor *ocad_color = ocad_color_at(file, i);
 
-        MapColor* color = new MapColor();
-        color->priority = i;
+        MapColor* color = new MapColor(i);
 
         // OCAD stores CMYK values as integers from 0-200.
-        color->c = 0.005f * ocad_color->cyan;
-        color->m = 0.005f * ocad_color->magenta;
-        color->y = 0.005f * ocad_color->yellow;
-        color->k = 0.005f * ocad_color->black;
-        color->opacity = 1.0f;
-		color->name = convertPascalString(ocad_color->name);
-        color->updateFromCMYK();
+        MapColorCmyk cmyk;
+        cmyk.c = 0.005f * ocad_color->cyan;
+        cmyk.m = 0.005f * ocad_color->magenta;
+        cmyk.y = 0.005f * ocad_color->yellow;
+        cmyk.k = 0.005f * ocad_color->black;
+		color->setCmyk(cmyk);
+        color->setOpacity(1.0f);
+		color->setName(convertPascalString(ocad_color->name));
 
         map->color_set->colors.push_back(color);
         color_index[ocad_color->number] = color;
@@ -1394,11 +1394,13 @@ void OCAD8FileExport::doExport() throw (FormatException)
 		MapColor* color = map->getColor(i);
 		
 		ocad_color->number = i;
-		ocad_color->cyan = qRound(1 / 0.005f * color->c);
-		ocad_color->magenta = qRound(1 / 0.005f * color->m);
-		ocad_color->yellow = qRound(1 / 0.005f * color->y);
-		ocad_color->black = qRound(1 / 0.005f * color->k);
-		convertPascalString(color->name, ocad_color->name, 32);
+		
+		const MapColorCmyk& cmyk = color->getCmyk();
+		ocad_color->cyan = qRound(1 / 0.005f * cmyk.c);
+		ocad_color->magenta = qRound(1 / 0.005f * cmyk.m);
+		ocad_color->yellow = qRound(1 / 0.005f * cmyk.y);
+		ocad_color->black = qRound(1 / 0.005f * cmyk.k);
+		convertPascalString(color->getName(), ocad_color->name, 32);
 		// ocad_color->spot
 	}
 	

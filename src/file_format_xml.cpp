@@ -96,7 +96,7 @@ protected:
 // ### XMLFileFormat definition ###
 
 const int XMLFileFormat::minimum_version = 2;
-const int XMLFileFormat::current_version = 2;
+const int XMLFileFormat::current_version = 3;
 const QString XMLFileFormat::magic_string = "<?xml ";
 const QString XMLFileFormat::mapper_namespace = "http://oorienteering.sourceforge.net/mapper/xml/v2";
 
@@ -171,14 +171,74 @@ void XMLFileExporter::exportColors()
 	for (int i = 0; i < num_colors; ++i)
 	{
 		MapColor* color = map->color_set->colors[i];
-		xml.writeEmptyElement("color");
-		xml.writeAttribute("priority", QString::number(color->priority));
-		xml.writeAttribute("c", QString::number(color->c));
-		xml.writeAttribute("m", QString::number(color->m));
-		xml.writeAttribute("y", QString::number(color->y));
-		xml.writeAttribute("k", QString::number(color->k));
-		xml.writeAttribute("opacity", QString::number(color->opacity));
-		xml.writeAttribute("name", color->name);
+		const MapColorCmyk &cmyk = color->getCmyk();
+		xml.writeStartElement("color");
+		xml.writeAttribute("priority", QString::number(color->getPriority()));
+		xml.writeAttribute("name", color->getName());
+		xml.writeAttribute("c", QString::number(cmyk.c, 'f', 3));
+		xml.writeAttribute("m", QString::number(cmyk.m, 'f', 3));
+		xml.writeAttribute("y", QString::number(cmyk.y, 'f', 3));
+		xml.writeAttribute("k", QString::number(cmyk.k, 'f', 3));
+		xml.writeAttribute("opacity", QString::number(color->getOpacity(), 'f', 3));
+		
+		if (color->getSpotColorMethod() != MapColor::UndefinedMethod)
+		{
+			xml.writeStartElement("spotcolors");
+			if (color->getKnockout())
+				xml.writeAttribute("knockout", "true");
+			SpotColorComponent component;
+			switch(color->getSpotColorMethod())
+			{
+				case MapColor::SpotColor:
+					xml.writeTextElement("namedcolor", color->getSpotColorName());
+					break;
+				case MapColor::CustomColor:
+					Q_FOREACH(component, color->getComponents())
+					{
+						xml.writeStartElement("component");
+						xml.writeAttribute("factor", QString::number(component.factor));
+						xml.writeAttribute("spotcolor", QString::number(component.spot_color->getPriority()));
+						xml.writeEndElement(/*component*/);
+					}
+				default:
+					; // nothing
+			}
+			xml.writeEndElement(/*spotcolors*/);
+		}
+		
+		xml.writeStartElement("cmyk");
+		switch(color->getCmykColorMethod())
+		{
+			case MapColor::SpotColor:
+				xml.writeAttribute("method", "spotcolor");
+				break;
+			case MapColor::RgbColor:
+				xml.writeAttribute("method", "rgb");
+				break;
+			default:
+				xml.writeAttribute("method", "custom");
+		}
+		xml.writeEndElement(/*cmyk*/);
+		
+		xml.writeStartElement("rgb");
+		switch(color->getCmykColorMethod())
+		{
+			case MapColor::SpotColor:
+				xml.writeAttribute("method", "spotcolor");
+				break;
+			case MapColor::CmykColor:
+				xml.writeAttribute("method", "cmyk");
+				break;
+			default:
+				xml.writeAttribute("method", "custom");
+		}
+		const MapColorRgb &rgb = color->getRgb();
+		xml.writeAttribute("r", QString::number(rgb.r, 'f', 3));
+		xml.writeAttribute("g", QString::number(rgb.g, 'f', 3));
+		xml.writeAttribute("b", QString::number(rgb.b, 'f', 3));
+		xml.writeEndElement(/*rgb*/);
+		
+		xml.writeEndElement(/*color*/);
 	}
 	xml.writeEndElement(/*colors*/); 
 }
@@ -371,30 +431,114 @@ void XMLFileImporter::importGeoreferencing()
 	map->setGeoreferencing(georef);
 }
 
+/** Helper for delayed actions */
+struct XMLFileImporterColorBacklogItem
+{
+	MapColor* color; // color which needs updating
+	SpotColorComponents components; // components of the color
+	bool cmyk_from_spot; // determine CMYK from spot
+	bool rgb_from_spot; // determine RGB from spot
+	
+	XMLFileImporterColorBacklogItem(MapColor* color)
+	: color(color), cmyk_from_spot(false), rgb_from_spot(false)
+	{}
+};
+typedef std::vector<XMLFileImporterColorBacklogItem> XMLFileImporterColorBacklog;
+	
+
 void XMLFileImporter::importColors()
 {
 	int num_colors = xml.attributes().value("count").toString().toInt();
 	Map::ColorVector& colors(map->color_set->colors);
 	colors.reserve(qMin(num_colors, 100)); // 100 is not a limit
+	XMLFileImporterColorBacklog backlog;
+	backlog.reserve(colors.size());
 	while (xml.readNextStartElement())
 	{
 		if (xml.name() == "color")
 		{
 			QXmlStreamAttributes attributes = xml.attributes();
-			MapColor* color = new MapColor();
-			color->name = attributes.value("name").toString();
-			color->priority = attributes.value("priority").toString().toInt();
-			color->c = attributes.value("c").toString().toFloat();
-			color->m = attributes.value("m").toString().toFloat();
-			color->y = attributes.value("y").toString().toFloat();
-			color->k = attributes.value("k").toString().toFloat();
-			color->opacity = attributes.value("opacity").toString().toFloat();
-			color->updateFromCMYK();
+			MapColor* color = new MapColor(attributes.value("name").toString(), attributes.value("priority").toString().toInt());
+			if (attributes.hasAttribute("opacity"))
+				color->setOpacity(attributes.value("opacity").toString().toFloat());
+			
+			MapColorCmyk cmyk;
+			cmyk.c = attributes.value("c").toString().toFloat();
+			cmyk.m = attributes.value("m").toString().toFloat();
+			cmyk.y = attributes.value("y").toString().toFloat();
+			cmyk.k = attributes.value("k").toString().toFloat();
+			color->setCmyk(cmyk);
+			
+			SpotColorComponents components;
+			QString cmyk_method;
+			QString rgb_method;
+			MapColorRgb rgb;
+			
+			while(xml.readNextStartElement())
+			{
+				attributes = xml.attributes();
+				if (xml.name() == "spotcolors")
+				{
+					color->setKnockout(attributes.value("knockout").toString() == "true");
+					while(xml.readNextStartElement())
+					{
+						if (xml.name() == "namedcolor")
+						{
+							color->setSpotColorName(xml.readElementText());
+						}
+						else if (xml.name() == "component")
+						{
+							SpotColorComponent component;
+							component.factor = xml.attributes().value("factor").toString().toFloat();
+							// We can't know if the spot color is already loaded. Create a temporary proxy.
+							component.spot_color = new MapColor(xml.attributes().value("spotcolor").toString().toInt());
+							components.push_back(component);
+							xml.skipCurrentElement();
+						}
+						else
+							xml.skipCurrentElement(); // unsupported
+					}
+				}
+				else if (xml.name() == "cmyk")
+				{
+					cmyk_method = attributes.value("method").toString();
+					xml.skipCurrentElement();
+				}
+				else if (xml.name() == "rgb")
+				{
+					rgb_method = attributes.value("method").toString();
+					rgb.r = attributes.value("r").toString().toFloat();
+					rgb.g = attributes.value("g").toString().toFloat();
+					rgb.b = attributes.value("b").toString().toFloat();
+					color->setRgbFromSpotColors();
+					xml.skipCurrentElement();
+				}
+				else
+					xml.skipCurrentElement(); // unsupported
+			}
+			
+			if (!components.empty())
+			{
+				backlog.push_back(XMLFileImporterColorBacklogItem(color));
+				XMLFileImporterColorBacklogItem& item = backlog.back();
+				item.components = components;
+				item.cmyk_from_spot = (cmyk_method == "spotcolor");
+				item.rgb_from_spot = (rgb_method == "spotcolor");
+			}
+			
+			if (cmyk_method == "rgb")
+				color->setCmykFromRgb();
+			
+			if (rgb_method == "cmyk")
+				color->setRgbFromCmyk();
+			
 			colors.push_back(color);
 		}
 		else
+		{
 			addWarningUnsupportedElement();
-		xml.skipCurrentElement();
+			xml.skipCurrentElement();
+		}
 	}
 	
 	if (num_colors > 0 && num_colors != (int)colors.size())
@@ -402,6 +546,39 @@ void XMLFileImporter::importColors()
 		  arg(num_colors).
 		  arg(colors.size())
 		);
+	
+	// All spot colors are loaded at this point.
+	// Now deal with depending color compositions from the backlog.
+	Q_FOREACH(XMLFileImporterColorBacklogItem item, backlog)
+	{
+		// Process the list of spot color components.
+		SpotColorComponents out_components;
+		Q_FOREACH(SpotColorComponent in_component, item.components)
+		{
+			MapColor* out_color = map->getColor(in_component.spot_color->getPriority());
+			if (out_color == NULL || out_color->getSpotColorMethod() != MapColor::SpotColor)
+			{
+				addWarning(QObject::tr("Spot color %1 not found while processing %2 (%3).").
+				  arg(in_component.spot_color->getPriority()).
+				  arg(item.color->getPriority()).
+				  arg(item.color->getName())
+				);
+				continue; // Drop this color, invalid reference
+			}
+			
+			out_components.push_back(in_component);
+			SpotColorComponent& out_component = out_components.back();
+			out_component.spot_color = out_color; // That is the major point!
+			delete in_component.spot_color; // Delete the temporary proxy.
+		}
+		
+		// Update the current color
+		item.color->setSpotColorComposition(out_components);
+		if (item.cmyk_from_spot)
+			item.color->setCmykFromSpotColors();
+		if (item.rgb_from_spot)
+			item.color->setRgbFromSpotColors();
+	}
 }
 
 void XMLFileImporter::importSymbols()

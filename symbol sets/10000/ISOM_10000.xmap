@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map xmlns="http://oorienteering.sourceforge.net/mapper/xml/v2" version="2">
+<map xmlns="http://oorienteering.sourceforge.net/mapper/xml/v2" version="3">
     <notes></notes>
     <georeferencing scale="10000" declination="0" grivation="0">
         <ref_point x="0" y="0"/>
@@ -13,23 +13,120 @@
         </geographic_crs>
     </georeferencing>
     <colors count="17">
-        <color priority="0" c="0" m="0" y="0" k="1" opacity="1" name="Black"/>
-        <color priority="1" c="0" m="0.56" y="1" k="0.18" opacity="1" name="Brown"/>
-        <color priority="2" c="0" m="0.28" y="0.5" k="0.09" opacity="1" name="Brown 50%"/>
-        <color priority="3" c="0" m="0" y="0" k="1" opacity="1" name="Black below browns"/>
-        <color priority="4" c="0.87" m="0.18" y="0" k="0" opacity="1" name="Blue"/>
-        <color priority="5" c="0.435" m="0.09" y="0" k="0" opacity="1" name="Blue 50%"/>
-        <color priority="6" c="0" m="0" y="0" k="0.3" opacity="1" name="Black 30%"/>
-        <color priority="7" c="0.38" m="0.27" y="1" k="0" opacity="1" name="Green 50%, Yellow"/>
-        <color priority="8" c="0" m="0" y="0" k="0" opacity="1" name="White over Green"/>
-        <color priority="9" c="0.76" m="0" y="0.91" k="0" opacity="1" name="Green"/>
-        <color priority="10" c="0.456" m="0" y="0.546" k="0" opacity="1" name="Green 60%"/>
-        <color priority="11" c="0.228" m="0" y="0.273" k="0" opacity="1" name="Green 30%"/>
-        <color priority="12" c="0.76" m="0" y="0.91" k="0" opacity="1" name="Green below light greens"/>
-        <color priority="13" c="0" m="0.27" y="0.79" k="0" opacity="1" name="Yellow"/>
-        <color priority="14" c="0" m="0.135" y="0.395" k="0" opacity="1" name="Yellow 50%"/>
-        <color priority="15" c="0" m="0" y="0" k="0" opacity="1" name="White over Yellow 70%"/>
-        <color priority="16" c="0" m="0.189" y="0.553" k="0" opacity="1" name="Yellow 70%"/>
+        <color priority="0" name="Black" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000">
+            <spotcolors>
+                <namedcolor>BLACK</namedcolor>
+            </spotcolors>
+            <cmyk method="custom"/>
+            <rgb method="custom" r="0.000" g="0.000" b="0.000"/>
+        </color>
+        <color priority="1" name="Brown" c="0.000" m="0.560" y="1.000" k="0.180" opacity="1.000">
+            <spotcolors>
+                <namedcolor>BROWN</namedcolor>
+            </spotcolors>
+            <cmyk method="custom"/>
+            <rgb method="custom" r="0.820" g="0.361" b="0.000"/>
+        </color>
+        <color priority="2" name="Brown 50%" c="0.000" m="0.280" y="0.500" k="0.090" opacity="1.000">
+            <spotcolors>
+                <component factor="0.5" spotcolor="1"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.910" g="0.680" b="0.500"/>
+        </color>
+        <color priority="3" name="Black below browns" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000">
+            <spotcolors>
+                <component factor="1" spotcolor="0"/>
+            </spotcolors>
+            <cmyk method="custom"/>
+            <rgb method="custom" r="0.000" g="0.000" b="0.000"/>
+        </color>
+        <color priority="4" name="Blue" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
+            <spotcolors>
+                <namedcolor>BLUE</namedcolor>
+            </spotcolors>
+            <cmyk method="custom"/>
+            <rgb method="custom" r="0.130" g="0.820" b="1.000"/>
+        </color>
+        <color priority="5" name="Blue 50%" c="0.435" m="0.090" y="0.000" k="0.000" opacity="1.000">
+            <spotcolors>
+                <component factor="0.5" spotcolor="4"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.565" g="0.910" b="1.000"/>
+        </color>
+        <color priority="6" name="Black 30%" c="0.000" m="0.000" y="0.000" k="0.300" opacity="1.000">
+            <spotcolors knockout="true">
+                <component factor="0.3" spotcolor="0"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.700" g="0.700" b="0.700"/>
+        </color>
+        <color priority="7" name="Green 50%, Yellow" c="0.380" m="0.270" y="0.886" k="0.000" opacity="1.000">
+            <spotcolors>
+                <component factor="0.5" spotcolor="9"/>
+                <component factor="1" spotcolor="13"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.620" g="0.730" b="0.114"/>
+        </color>
+        <color priority="8" name="White over Green" c="0.000" m="0.000" y="0.000" k="0.000" opacity="1.000">
+            <cmyk method="custom"/>
+            <rgb method="custom" r="1.000" g="1.000" b="1.000"/>
+        </color>
+        <color priority="9" name="Green" c="0.760" m="0.000" y="0.910" k="0.000" opacity="1.000">
+            <spotcolors>
+                <namedcolor>GREEN</namedcolor>
+            </spotcolors>
+            <cmyk method="custom"/>
+            <rgb method="custom" r="0.240" g="1.000" b="0.090"/>
+        </color>
+        <color priority="10" name="Green 60%" c="0.456" m="0.000" y="0.546" k="0.000" opacity="1.000">
+            <spotcolors>
+                <component factor="0.6" spotcolor="9"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.544" g="1.000" b="0.454"/>
+        </color>
+        <color priority="11" name="Green 30%" c="0.228" m="0.000" y="0.273" k="0.000" opacity="1.000">
+            <spotcolors>
+                <component factor="0.3" spotcolor="9"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.772" g="1.000" b="0.727"/>
+        </color>
+        <color priority="12" name="Green below light greens" c="0.760" m="0.000" y="0.910" k="0.000" opacity="1.000">
+            <spotcolors>
+                <component factor="1" spotcolor="9"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.240" g="1.000" b="0.090"/>
+        </color>
+        <color priority="13" name="Yellow" c="0.000" m="0.270" y="0.790" k="0.000" opacity="1.000">
+            <spotcolors>
+                <namedcolor>YELLOW</namedcolor>
+            </spotcolors>
+            <cmyk method="custom"/>
+            <rgb method="custom" r="1.000" g="0.730" b="0.210"/>
+        </color>
+        <color priority="14" name="Yellow 50%" c="0.000" m="0.135" y="0.395" k="0.000" opacity="1.000">
+            <spotcolors>
+                <component factor="0.5" spotcolor="13"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="1.000" g="0.865" b="0.605"/>
+        </color>
+        <color priority="15" name="White over Yellow 70%" c="0.000" m="0.000" y="0.000" k="0.000" opacity="1.000">
+            <cmyk method="custom"/>
+            <rgb method="custom" r="1.000" g="1.000" b="1.000"/>
+        </color>
+        <color priority="16" name="Yellow 70%" c="0.000" m="0.189" y="0.553" k="0.000" opacity="1.000">
+            <spotcolors>
+                <component factor="0.7" spotcolor="13"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="1.000" g="0.811" b="0.447"/>
+        </color>
     </colors>
     <symbols count="134">
         <symbol type="2" id="0" code="101" name="Contour">

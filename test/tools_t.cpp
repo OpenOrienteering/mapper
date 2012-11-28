@@ -74,13 +74,9 @@ TestMap::TestMap()
 	map = new Map();
 	
 	MapColor* black = new MapColor();
-	black->c = 0;
-	black->m = 0;
-	black->y = 0;
-	black->k = 1;
-	black->opacity = 1;
-	black->name = "black";
-	black->updateFromCMYK();
+	black->setCmyk(MapColorCmyk(0.0f, 0.0f, 0.0f, 1.0f));
+	black->setOpacity(1.0f);
+	black->setName("black");
 	map->addColor(black, 0);
 	
 	line_symbol = new LineSymbol();

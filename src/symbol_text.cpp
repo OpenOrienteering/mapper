@@ -28,13 +28,13 @@
 #include <QIODevice>
 
 #include "map.h"
-#include "map_color.h"
 #include "object_text.h"
 #include "renderable_implementation.h"
 #include "symbol_area.h"
 #include "symbol_setting_dialog.h"
 #include "util.h"
 #include "util_gui.h"
+#include "gui/widgets/color_dropdown.h"
 
 const float TextSymbol::internal_point_size = 256;
 

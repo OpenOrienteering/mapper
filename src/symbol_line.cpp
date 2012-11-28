@@ -32,7 +32,6 @@
 #include <QXmlStreamWriter>
 
 #include "map.h"
-#include "map_color.h"
 #include "object.h"
 #include "qbezier_p.h"
 #include "renderable_implementation.h"
@@ -42,6 +41,8 @@
 #include "symbol_area.h"
 #include "util.h"
 #include "util_gui.h"
+#include "gui/widgets/color_dropdown.h"
+
 
 // ### LineSymbolBorder ###
 

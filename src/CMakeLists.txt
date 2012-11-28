@@ -115,6 +115,10 @@ set(Mapper_Common_SRCS
  file_format_native.cpp
  file_format_ocad8.cpp
  file_format_xml.cpp
+ 
+ gui/color_dialog.cpp
+ 
+ gui/widgets/color_dropdown.cpp
 )
 
 set(Mapper_Common_MOC_INPUT
@@ -124,7 +128,6 @@ set(Mapper_Common_MOC_INPUT
  main_window.h
  main_window_home_screen.h
  map.h
- map_color.h
  map_dialog_new.h
  map_dialog_scale.h
  map_dialog_rotate.h
@@ -176,6 +179,10 @@ set(Mapper_Common_MOC_INPUT
  undo.h
  util_pie_menu.h
  util_task_dialog.h
+ 
+ gui/color_dialog.h
+ 
+ gui/widgets/color_dropdown.h
 )
 
 qt4_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})

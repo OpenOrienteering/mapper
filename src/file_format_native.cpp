@@ -191,17 +191,23 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
 
     for (int i = 0; i < num_colors; ++i)
     {
-        MapColor* color = new MapColor();
+        int priority;
+        stream->read((char*)&priority, sizeof(int));
+        MapColor* color = new MapColor(priority);
 
-        stream->read((char*)&color->priority, sizeof(int));
-        stream->read((char*)&color->c, sizeof(float));
-        stream->read((char*)&color->m, sizeof(float));
-        stream->read((char*)&color->y, sizeof(float));
-        stream->read((char*)&color->k, sizeof(float));
-        stream->read((char*)&color->opacity, sizeof(float));
-        color->updateFromCMYK();
+        MapColorCmyk cmyk;
+        stream->read((char*)&cmyk.c, sizeof(float));
+        stream->read((char*)&cmyk.m, sizeof(float));
+        stream->read((char*)&cmyk.y, sizeof(float));
+        stream->read((char*)&cmyk.k, sizeof(float));
+        color->setCmyk(cmyk);
+        float opacity;
+        stream->read((char*)&opacity, sizeof(float));
+        color->setOpacity(opacity);
 
-        loadString(stream, color->name);
+        QString name;
+        loadString(stream, name);
+        color->setName(name);
 
         map->color_set->colors[i] = color;
     }
@@ -390,15 +396,19 @@ void NativeFileExport::doExport() throw (FormatException)
 	for (int i = 0; i < num_colors; ++i)
 	{
 		MapColor* color = map->color_set->colors[i];
+		
+		int priority = color->getPriority();
+		stream->write((const char*)&priority, sizeof(int));
+		
+		const MapColorCmyk& cmyk = color->getCmyk();
+		stream->write((const char*)&cmyk.c, sizeof(float));
+		stream->write((const char*)&cmyk.m, sizeof(float));
+		stream->write((const char*)&cmyk.y, sizeof(float));
+		stream->write((const char*)&cmyk.k, sizeof(float));
+		float opacity = color->getOpacity();
+		stream->write((const char*)&opacity, sizeof(float));
 
-		stream->write((const char*)&color->priority, sizeof(int));
-		stream->write((const char*)&color->c, sizeof(float));
-		stream->write((const char*)&color->m, sizeof(float));
-		stream->write((const char*)&color->y, sizeof(float));
-		stream->write((const char*)&color->k, sizeof(float));
-		stream->write((const char*)&color->opacity, sizeof(float));
-
-		saveString(stream, color->name);
+		saveString(stream, color->getName());
 	}
 
     // Write symbols

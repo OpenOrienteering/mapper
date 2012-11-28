@@ -237,9 +237,9 @@ MapColor* PointSymbol::getDominantColorGuess()
 		return have_inner_color ? inner_color : outer_color;
 	else if (have_inner_color && have_outer_color)
 	{
-		if (inner_color->r == 1 && inner_color->g == 1 && inner_color->b == 1)
+		if (inner_color->isWhite())
 			return outer_color;
-		else if (outer_color->r == 1 && outer_color->g == 1 && outer_color->b == 1)
+		else if (outer_color->isWhite())
 			return inner_color;
 		else
 			return (qPow(inner_radius, 2) * M_PI > qPow(inner_radius + outer_width, 2) * M_PI - qPow(inner_radius, 2) * M_PI) ? inner_color : outer_color;

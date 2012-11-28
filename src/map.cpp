@@ -194,9 +194,9 @@ void Map::MapColorSet::importSet(Map::MapColorSet* other, Map* map, std::vector<
 // ### Map ###
 
 bool Map::static_initialized = false;
-MapColor Map::covering_white;
-MapColor Map::covering_red;
-MapColor Map::undefined_symbol_color;
+MapColor Map::covering_white(MapColor::CoveringWhite);
+MapColor Map::covering_red(MapColor::CoveringRed);
+MapColor Map::undefined_symbol_color(MapColor::Undefined);
 LineSymbol* Map::covering_white_line;
 LineSymbol* Map::covering_red_line;
 LineSymbol* Map::undefined_line;
@@ -1030,8 +1030,34 @@ void Map::updateDrawing(QRectF map_coords_rect, int pixel_border)
 
 void Map::setColor(MapColor* color, int pos)
 {
+	MapColor* old_color = color_set->colors[pos];
+	
 	color_set->colors[pos] = color;
-	color->priority = pos;
+	color->setPriority(pos);
+	
+	if (color->getSpotColorMethod() == MapColor::SpotColor)
+	{
+		// Update dependent colors
+		Q_FOREACH(MapColor* map_color, color_set->colors)
+		{
+			if (map_color->getSpotColorMethod() != MapColor::CustomColor)
+				continue;
+			
+			Q_FOREACH(SpotColorComponent component, map_color->getComponents())
+			{
+				if (component.spot_color == old_color)
+				{
+					component.spot_color = color;
+					// Assuming each spot color is rarely used more than once per composition
+					if (map_color->getCmykColorMethod() == MapColor::SpotColor)
+						map_color->setCmykFromSpotColors();
+					if (map_color->getRgbColorMethod() == MapColor::SpotColor)
+						map_color->setRgbFromSpotColors();
+					emit colorChanged(map_color->getPriority(), map_color);
+				}
+			}
+		}
+	}
 	
 	// Regenerate all symbols' icons
 	int size = (int)symbols.size();
@@ -1048,15 +1074,7 @@ void Map::setColor(MapColor* color, int pos)
 }
 MapColor* Map::addColor(int pos)
 {
-	MapColor* new_color = new MapColor();
-	new_color->name = tr("New color");
-	new_color->priority = pos;
-	new_color->c = 0;
-	new_color->m = 0;
-	new_color->y = 0;
-	new_color->k = 1;
-	new_color->opacity = 1;
-	new_color->updateFromCMYK();
+	MapColor* new_color = new MapColor(tr("New color"), pos);
 	
 	color_set->colors.insert(color_set->colors.begin() + pos, new_color);
 	adjustColorPriorities(pos + 1, color_set->colors.size() - 1);
@@ -1072,13 +1090,38 @@ void Map::addColor(MapColor* color, int pos)
 	checkIfFirstColorAdded();
 	setColorsDirty();
 	emit(colorAdded(pos, color));
-	color->priority = pos;
+	color->setPriority(pos);
 }
 void Map::deleteColor(int pos)
 {
 	MapColor* color = color_set->colors[pos];
 	color_set->colors.erase(color_set->colors.begin() + pos);
 	adjustColorPriorities(pos, color_set->colors.size() - 1);
+	
+	if (color->getSpotColorMethod() == MapColor::SpotColor)
+	{
+		// Update dependent colors
+		Q_FOREACH(MapColor* map_color, color_set->colors)
+		{
+			if (map_color->getSpotColorMethod() != MapColor::CustomColor)
+				continue;
+			
+			SpotColorComponents out_components = map_color->getComponents();
+			SpotColorComponents::iterator com_it = out_components.begin();
+			while(com_it != out_components.end())
+			{
+				if (com_it->spot_color == color)
+				{
+					com_it = out_components.erase(com_it);
+					// Assuming each spot color is rarely used more than once per composition
+					map_color->setSpotColorComposition(out_components);
+					emit colorChanged(map_color->getPriority(), map_color);
+				}
+				else
+					com_it++;
+			}
+		}
+	}
 	
 	if (getNumColors() == 0)
 	{
@@ -1139,7 +1182,7 @@ void Map::adjustColorPriorities(int first, int last)
 {
 	// TODO: delete or update RenderStates with these colors
 	for (int i = first; i <= last; ++i)
-		color_set->colors[i]->priority = i;
+		color_set->colors[i]->setPriority(i);
 }
 
 void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std::vector< bool >& out)
@@ -1257,21 +1300,6 @@ void Map::initStatic()
 {
 	static_initialized = true;
 	
-	// Covering colors and symbols
-	covering_white.opacity = 1000;	// HACK: (almost) always opaque, even if multiplied by opacity factors
-	covering_white.r = 1;
-	covering_white.g = 1;
-	covering_white.b = 1;
-	covering_white.updateFromRGB();
-	covering_white.priority = MapColor::CoveringWhite;
-	
-	covering_red.opacity = 1000;
-	covering_red.r = 1;
-	covering_red.g = 0;
-	covering_red.b = 0;
-	covering_red.updateFromRGB();
-	covering_red.priority = MapColor::CoveringRed;
-	
 	covering_white_line = new LineSymbol();
 	covering_white_line->setColor(&covering_white);
 	covering_white_line->setLineWidth(3);
@@ -1286,13 +1314,6 @@ void Map::initStatic()
 	covering_combined_line->setPart(1, covering_red_line, false);
 	
 	// Undefined symbols
-	undefined_symbol_color.opacity = 1;
-	undefined_symbol_color.r = 0.5f;
-	undefined_symbol_color.g = 0.5f;
-	undefined_symbol_color.b = 0.5f;
-	undefined_symbol_color.updateFromRGB();
-	undefined_symbol_color.priority = MapColor::Undefined;
-	
 	undefined_line = new LineSymbol();
 	undefined_line->setColor(&undefined_symbol_color);
 	undefined_line->setLineWidth(1);

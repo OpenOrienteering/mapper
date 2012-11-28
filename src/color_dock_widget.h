@@ -21,16 +21,18 @@
 #ifndef _OPENORIENTEERING_COLOR_DOCK_WIDGET_H_
 #define _OPENORIENTEERING_COLOR_DOCK_WIDGET_H_
 
+#if QT_VERSION < 0x050000
+#include <QtGui>
+#else
+#include <QtWidgets>
+#endif
+
 #include "map_editor.h"
 
-QT_BEGIN_NAMESPACE
-class QBoxLayout;
-class QPushButton;
-class QTableWidget;
-class QWidget;
-QT_END_NAMESPACE
-
+class ColorDropDown;
 class Map;
+class MapColor;
+class PaletteColor;
 
 class ColorWidget : public EditorDockWidgetChild
 {
@@ -38,9 +40,7 @@ Q_OBJECT
 
 public:
 	ColorWidget(Map* map, MainWindow* window, QWidget* parent = NULL);
-    virtual ~ColorWidget();
-	
-    virtual QSize sizeHint() const;
+	virtual ~ColorWidget();
 	
 protected slots:
 	void newColor();
@@ -50,13 +50,15 @@ protected slots:
 	void moveColorDown();
 	void showHelp();
 	
-	void showEditingInfo(int row, int column);
 	void cellChange(int row, int column);
 	void currentCellChange(int current_row, int current_column, int previous_row, int previous_column);
 	void cellDoubleClick(int row, int column);
 	
 	void colorAdded(int index, MapColor* color);
 	void colorDeleted(int index, MapColor* color);
+	
+protected:
+	QAbstractButton* newToolButton(const QIcon& icon, const QString& text, QAbstractButton* prototype = NULL);
 	
 private:
 	void addRow(int row);
@@ -66,10 +68,10 @@ private:
 	QTableWidget* color_table;
 	
 	// Buttons
-	QPushButton* delete_button;
-	QPushButton* duplicate_button;
-	QPushButton* move_up_button;
-	QPushButton* move_down_button;
+	QAbstractButton* delete_button;
+	QAbstractButton* duplicate_button;
+	QAbstractButton* move_up_button;
+	QAbstractButton* move_down_button;
 	
 	Map* map;
 	MainWindow* window;

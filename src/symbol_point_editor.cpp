@@ -29,7 +29,6 @@
 #endif
 
 #include "map_editor.h"
-#include "map_color.h"
 #include "map_widget.h"
 #include "object.h"
 #include "symbol_point.h"
@@ -37,6 +36,7 @@
 #include "symbol_area.h"
 #include "util.h"
 #include "util_gui.h"
+#include "gui/widgets/color_dropdown.h"
 
 PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, float offset_y, bool permanent_preview, QWidget* parent)
  : QWidget(parent), symbol(symbol), object_origin_coord(0.0f, offset_y), offset_y(offset_y), controller(controller), permanent_preview(permanent_preview)

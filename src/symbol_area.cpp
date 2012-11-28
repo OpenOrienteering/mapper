@@ -33,7 +33,6 @@
 #include "map.h"
 #include "util_gui.h"
 #include "util.h"
-#include "map_color.h"
 #include "symbol_point.h"
 #include "symbol_line.h"
 #include "object.h"
@@ -41,6 +40,7 @@
 #include "symbol_properties_widget.h"
 #include "symbol_point_editor.h"
 #include "renderable_implementation.h"
+#include "gui/widgets/color_dropdown.h"
 
 // ### FillPattern ###
 

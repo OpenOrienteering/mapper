@@ -105,7 +105,7 @@ MapColor* CombinedSymbol::getDominantColorGuess()
 		if (parts[i] && parts[i]->getContainedTypes() & Symbol::Area)
 		{
 			dominant_color = parts[i]->getDominantColorGuess();
-			if (dominant_color->r != 1 || dominant_color->g != 1 || dominant_color->b != 1)
+			if (! dominant_color->isWhite())
 				return dominant_color;
 		}
 	}
@@ -118,7 +118,7 @@ MapColor* CombinedSymbol::getDominantColorGuess()
 		if (parts[i] && !(parts[i]->getContainedTypes() & Symbol::Area))
 		{
 			dominant_color = parts[i]->getDominantColorGuess();
-			if (dominant_color->r != 1 || dominant_color->g != 1 || dominant_color->b != 1)
+			if (dominant_color->isWhite())
 				return dominant_color;
 		}
 	}

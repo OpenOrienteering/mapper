@@ -35,7 +35,7 @@
 
 DotRenderable::DotRenderable(PointSymbol* symbol, MapCoordF coord) : Renderable()
 {
-	color_priority = symbol->getInnerColor()->priority;
+	color_priority = symbol->getInnerColor()->getPriority();
 	double x = coord.getX();
 	double y = coord.getY();
 	double radius = (0.001 * symbol->getInnerRadius());
@@ -63,7 +63,7 @@ void DotRenderable::render(QPainter& painter, bool force_min_size, float scaling
 
 CircleRenderable::CircleRenderable(PointSymbol* symbol, MapCoordF coord) : Renderable()
 {
-	color_priority = symbol->getOuterColor()->priority;
+	color_priority = symbol->getOuterColor()->getPriority();
 	double x = coord.getX();
 	double y = coord.getY();
 	line_width = 0.001f * symbol->getOuterWidth();
@@ -96,7 +96,7 @@ void CircleRenderable::render(QPainter& painter, bool force_min_size, float scal
 LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector& path_coords, bool closed) : Renderable()
 {
 	assert(transformed_coords.size() == coords.size());
-	color_priority = symbol->getColor()->priority;
+	color_priority = symbol->getColor()->getPriority();
 	line_width = 0.001f * symbol->getLineWidth();
 	if (color_priority < 0)
 	{
@@ -282,7 +282,7 @@ void LineRenderable::render(QPainter& painter, bool force_min_size, float scalin
 AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector* path_coords) : Renderable()
 {
 	assert(transformed_coords.size() >= 3 && transformed_coords.size() == coords.size());
-	color_priority = symbol->getColor() ? symbol->getColor()->priority : MapColor::Reserved;
+	color_priority = symbol->getColor() ? symbol->getColor()->getPriority() : MapColor::Reserved;
 	
 	// Special case: first coord
 	path.moveTo(transformed_coords[0].toQPointF());
@@ -367,7 +367,7 @@ TextRenderable::TextRenderable(TextSymbol* symbol, TextObject* text_object, MapC
 {
 	const QFont& font(symbol->getQFont());
 	const QFontMetricsF& metrics(symbol->getFontMetrics());
-	color_priority = color->priority;
+	color_priority = color->getPriority();
 	this->anchor_x = anchor_x;
 	this->anchor_y = anchor_y;
 	this->rotation = text_object->getRotation();

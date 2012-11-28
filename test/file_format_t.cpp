@@ -224,7 +224,7 @@ bool FileFormatTest::compareMaps(Map* a, Map* b, QString& error)
 	{
 		if (!a->getColor(i)->equals(*b->getColor(i), true))
 		{
-			error = QString("Color #%1 differs.").arg(i);
+			error = QString("Color #%1 (%2) differs.").arg(i).arg(a->getColor(i)->getName());
 			return false;
 		}
 	}
