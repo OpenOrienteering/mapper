@@ -29,11 +29,13 @@
 #endif
 
 #include "map.h"
+#include "map_color.h"
 #include "map_editor.h"
 #include "map_editor_activity.h"
 #include "tool.h"
 #include "template.h"
 #include "georeferencing.h"
+#include "renderable.h"
 #include "settings.h"
 
 #if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
@@ -928,9 +930,17 @@ void MapWidget::updateMapCache(bool use_background)
 	Map* map = view->getMap();
 	QRectF map_view_rect = view->calculateViewedRect(viewportToView(map_cache_dirty_rect));
 
-    painter.translate(width() / 2.0, height() / 2.0);
-    view->applyTransform(&painter);
-    map->draw(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor(), true);
+	if (view->isOverprintingSimulationEnabled())
+	{
+		updateMapCacheOverprintingSimulation(painter, map_view_rect, use_antialiasing);
+	}
+	else
+	{
+		painter.translate(width() / 2.0, height() / 2.0);
+		view->applyTransform(&painter);
+		map->draw(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor(), true);
+	}
+	
 	if (view->isGridVisible())
 		map->drawGrid(&painter, map_view_rect);
 
@@ -939,6 +949,44 @@ void MapWidget::updateMapCache(bool use_background)
 	
 	map_cache_dirty_rect.setWidth(-1);
 	assert(!map_cache_dirty_rect.isValid());
+}
+
+void MapWidget::updateMapCacheOverprintingSimulation(QPainter& painter, QRectF map_view_rect, bool use_antialiasing)
+{
+	painter.save();
+	painter.setCompositionMode(QPainter::CompositionMode_Multiply); // Alternative: CompositionMode_Darken
+	
+	Map* map = view->getMap();
+	float scaling = view->calculateFinalZoomFactor();
+	qreal w = width() / 2.0;
+	qreal h = height() / 2.0;
+	
+	QImage separation(size(), QImage::Format_ARGB32_Premultiplied);
+	
+	for (Map::ColorVector::reverse_iterator map_color = map->color_set->colors.rbegin();
+	     map_color != map->color_set->colors.rend();
+	     map_color++)
+	{
+		if ((*map_color)->getSpotColorMethod() == MapColor::SpotColor)
+		{
+			// Collect all halftones and knockouts of a single color
+			QPainter p(&separation);
+			p.setClipRect(map_cache_dirty_rect);
+			p.setCompositionMode(QPainter::CompositionMode_Clear);
+			p.fillRect(map_cache_dirty_rect, Qt::transparent);
+			if (use_antialiasing)
+				p.setRenderHint(QPainter::Antialiasing);
+			p.translate(w, h);
+			view->applyTransform(&p);
+			p.setCompositionMode(QPainter::CompositionMode_SourceOver);
+			map->renderables->drawColorSeparation(&p, *map_color, map_view_rect, !use_antialiasing, scaling, true);
+			p.end();
+			
+			// draw the separation on the previous ones; CompositionMode_Multiply
+			painter.drawImage(0, 0, separation);
+		}
+	}
+	painter.restore();
 }
 
 void MapWidget::updateAllDirtyCaches()

@@ -436,6 +436,7 @@ void MapEditorController::createMenuAndToolbars()
 	hatch_areas_view_act = newCheckAction("hatchareasview", tr("Hatch areas"), this, SLOT(hatchAreas(bool)), NULL, QString::null, QString::null);	// TODO: link to manual; icon?
 	baseline_view_act = newCheckAction("baselineview", tr("Baseline view"), this, SLOT(baselineView(bool)), NULL, QString::null, QString::null);	// TODO: link to manual; icon?
 	hide_all_templates_act = newCheckAction("hidealltemplates", tr("Hide all templates"), this, SLOT(hideAllTemplates(bool)), NULL, QString::null, QString::null);	// TODO: link to manual 
+	overprinting_simulation_act = newCheckAction("overprintsimulation", tr("Overprinting simulation"), this, SLOT(overprintingSimulation(bool)), NULL, QString::null, QString::null);	// TODO: link to manual 
 	
 	symbol_window_act = newCheckAction("symbolwindow", tr("Symbol window"), this, SLOT(showSymbolWindow(bool)), "window-new.png", tr("Show/Hide the symbol window"), "symbols.html#symbols");
 	color_window_act = newCheckAction("colorwindow", tr("Color window"), this, SLOT(showColorWindow(bool)), "window-new.png", tr("Show/Hide the color window"), "symbols.html#colors");
@@ -553,6 +554,7 @@ void MapEditorController::createMenuAndToolbars()
 	view_menu->addAction(hatch_areas_view_act);
 	view_menu->addAction(baseline_view_act);
 	view_menu->addAction(hide_all_templates_act);
+	view_menu->addAction(overprinting_simulation_act);
 	view_menu->addSeparator();
 	view_menu->addMenu(coordinates_menu);
 	view_menu->addSeparator();
@@ -1003,6 +1005,12 @@ void MapEditorController::baselineView(bool checked)
 void MapEditorController::hideAllTemplates(bool checked)
 {
 	main_view->setHideAllTemplates(checked);
+}
+
+void MapEditorController::overprintingSimulation(bool checked)
+{
+	main_view->setOverprintingSimulationEnabled(checked);
+	map->updateAllObjects();
 }
 
 void MapEditorController::coordsDisplayChanged()

@@ -64,6 +64,7 @@ class Map : public QObject
 {
 Q_OBJECT
 friend class MapRenderables;
+friend class MapWidget; // TODO: expose clean interface
 friend class OCAD8FileImport;
 friend class XMLFileImport;
 friend class NativeFileImport;
@@ -660,6 +661,9 @@ public:
 	inline bool isGridVisible() const {return grid_visible;}
 	inline void setGridVisible(bool visible) {grid_visible = visible;}
 	
+	inline bool isOverprintingSimulationEnabled() const {return overprinting_simulation_enabled;}
+	inline void setOverprintingSimulationEnabled(bool enabled) {overprinting_simulation_enabled = enabled;}
+	
 	// Static
 	static const double zoom_in_limit;
 	static const double zoom_out_limit;
@@ -687,6 +691,8 @@ private:
 	bool all_templates_hidden;
 	
 	bool grid_visible;
+	
+	bool overprinting_simulation_enabled;
 	
 	WidgetVector widgets;
 };

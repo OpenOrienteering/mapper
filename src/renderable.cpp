@@ -19,6 +19,7 @@
 
 #include "renderable.h"
 
+#include <QDebug>
 #include <QPainter>
 #include <qmath.h>
 
@@ -296,6 +297,168 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 					
 					// Render the renderable
 					(*renderable)->render(*painter, force_min_size, scaling);
+				}
+			}
+		}
+	}
+	painter->restore();
+}
+
+void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* spot_color, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity_factor, bool highlighted) const
+{
+	Map::ColorVector& colors = map->color_set->colors;
+	
+	QPainterPath initial_clip = painter->clipPath();
+	bool no_initial_clip = initial_clip.isEmpty();
+	const QPainterPath* current_clip = NULL;
+	
+	painter->save();
+	
+	const_reverse_iterator end_of_colors = rend();
+	for (const_reverse_iterator color = rbegin(); color != end_of_colors; ++color)
+	{
+		ObjectRenderablesMap::const_iterator end_of_objects = color->second.end();
+		for (ObjectRenderablesMap::const_iterator object = color->second.begin(); object != end_of_objects; ++object)
+		{
+			// Settings check
+			Symbol* symbol = object->first->getSymbol();
+			if (!show_helper_symbols && symbol->isHelperSymbol())
+				continue;
+			if (symbol->isHidden())
+				continue;
+			
+			if (!object->first->getExtent().intersects(bounding_box))
+				continue;
+			
+			SharedRenderables::const_iterator it_end = object->second->end();
+			for (SharedRenderables::const_iterator it = object->second->begin(); it != it_end; ++it)
+			{
+				const RenderStates& new_states = it->first;
+				MapColor* map_color;
+				float pen_width;
+				
+				if (new_states.color_priority > MapColor::Reserved)
+				{
+					pen_width = new_states.pen_width;
+					map_color = colors[new_states.color_priority];
+				}
+				else
+				{
+					painter->setRenderHint(QPainter::Antialiasing, true);	// this is not undone here anywhere as it should apply to all special symbols and these are always painted last
+					pen_width = new_states.pen_width / scaling;
+					
+					if (new_states.color_priority == MapColor::CoveringWhite)
+						map_color = Map::getCoveringWhite();
+					else if (new_states.color_priority == MapColor::CoveringRed)
+						map_color = Map::getCoveringRed();
+					else if (new_states.color_priority == MapColor::Undefined)
+						map_color = Map::getUndefinedColor();
+					else if (new_states.color_priority == MapColor::Reserved)
+						continue;
+					else
+						assert(!"Invalid special color!");
+				}
+				
+				SpotColorComponents spot_colors;
+				switch(map_color->getSpotColorMethod())
+				{
+					case MapColor::SpotColor:
+						if (map_color == spot_color) 
+							spot_colors.push_back(SpotColorComponent(map_color,1.0f));
+						if (map_color->getKnockout() && map_color->getPriority() < spot_color->getPriority())
+							spot_colors.push_back(SpotColorComponent(spot_color, 0.0f));  // explicit knockout
+						break;
+					case MapColor::CustomColor:
+					{
+						Q_FOREACH(SpotColorComponent component, map_color->getComponents())
+							if (component.spot_color == spot_color)
+								spot_colors.push_back(component);  // draw with the spot color
+							else if (component.factor < 1.0f && component.spot_color->getPriority() < spot_color->getPriority())
+								// knockout under halftones
+								// FIXME: This is a ISOM/ISSOM rule, move from code to data!
+								spot_colors.push_back(SpotColorComponent(spot_color, 0.0f));
+							else if (map_color->getPriority() < component.spot_color->getPriority())
+								// knockout for out-of-sequence colors
+								spot_colors.push_back(SpotColorComponent(spot_color, 0.0f));
+						break;
+					}
+					default:
+						; // nothing
+				}
+				if (spot_colors.empty())
+					continue;
+				
+				RenderableVector::const_iterator r_end = it->second.end();
+				for (RenderableVector::const_iterator renderable = it->second.begin(); renderable != r_end; ++renderable)
+				{
+					// Bounds check
+					const QRectF& extent = (*renderable)->getExtent();
+					// NOTE: !bounding_box.intersects(extent) should be logical equivalent to the following
+					if (extent.right() < bounding_box.x())	continue;
+					if (extent.bottom() < bounding_box.y())	continue;
+					if (extent.x() > bounding_box.right())	continue;
+					if (extent.y() > bounding_box.bottom())	continue;
+				}
+				
+				Q_FOREACH(SpotColorComponent component, spot_colors)
+				{
+					QColor color = *component.spot_color;
+					if (component.factor < 0.0005f)
+						color = Qt::white;
+					else
+					{
+						qreal c, m, y, k;
+						color.getCmykF(&c, &m, &y, &k);
+						color.setCmykF(c*component.factor,m*component.factor,y*component.factor,k*component.factor,1.0f);
+					}
+					
+					if (new_states.mode == RenderStates::PenOnly)
+					{
+						bool pen_too_small = (force_min_size && pen_width * scaling <= 1.0f);
+						painter->setPen(QPen(highlighted ? getHighlightedColor(color) : color, pen_too_small ? 0 : pen_width));
+						painter->setBrush(QBrush(Qt::NoBrush));
+					}
+					else if (new_states.mode == RenderStates::BrushOnly)
+					{
+						QBrush brush(highlighted ? getHighlightedColor(color) : color);
+						painter->setPen(QPen(Qt::NoPen));
+						painter->setBrush(brush);
+					}
+					
+					painter->setOpacity(qMin(1.0f, opacity_factor * component.spot_color->getOpacity()));
+					
+					if (current_clip != new_states.clip_path)
+					{
+						if (no_initial_clip)
+						{
+							if (new_states.clip_path)
+								painter->setClipPath(*new_states.clip_path, Qt::ReplaceClip);
+							else
+								painter->setClipPath(initial_clip, Qt::NoClip);
+						}
+						else
+						{
+							painter->setClipPath(initial_clip, Qt::ReplaceClip);
+							if (new_states.clip_path)
+								painter->setClipPath(*new_states.clip_path, Qt::IntersectClip);
+						}
+						current_clip = new_states.clip_path;
+					}
+						
+					RenderableVector::const_iterator r_end = it->second.end();
+					for (RenderableVector::const_iterator renderable = it->second.begin(); renderable != r_end; ++renderable)
+					{
+						// Bounds check
+						const QRectF& extent = (*renderable)->getExtent();
+						// NOTE: !bounding_box.intersects(extent) should be logical equivalent to the following
+						if (extent.right() < bounding_box.x())	continue;
+						if (extent.bottom() < bounding_box.y())	continue;
+						if (extent.x() > bounding_box.right())	continue;
+						if (extent.y() > bounding_box.bottom())	continue;
+						
+						// Render the renderable
+						(*renderable)->render(*painter, force_min_size, scaling);
+					}
 				}
 			}
 		}

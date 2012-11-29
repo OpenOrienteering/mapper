@@ -118,6 +118,7 @@ public slots:
 	void hatchAreas(bool checked);
 	void baselineView(bool checked);
 	void hideAllTemplates(bool checked);
+	void overprintingSimulation(bool checked);
 	
 	void coordsDisplayChanged();
 	
@@ -249,6 +250,7 @@ private:
 	QAction* hatch_areas_view_act;
 	QAction* baseline_view_act;
 	QAction* hide_all_templates_act;
+	QAction* overprinting_simulation_act;
 	
 	QAction* map_coordinates_act;
 	QAction* projected_coordinates_act;

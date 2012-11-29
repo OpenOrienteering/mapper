@@ -1914,6 +1914,7 @@ MapView::MapView(Map* map) : map(map)
 	map_visibility->visible = true;
 	all_templates_hidden = false;
 	grid_visible = false;
+	overprinting_simulation_enabled = false;
 	update();
 	//map->addMapView(this);
 }

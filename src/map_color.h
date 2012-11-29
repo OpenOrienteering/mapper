@@ -130,6 +130,14 @@ struct SpotColorComponent
 	 * It is a value in the range [0.0; 1.0].
 	 */
 	float factor;
+	
+	SpotColorComponent()
+	: spot_color(NULL), factor(0.0f)
+	{}
+	
+	SpotColorComponent(MapColor* spot_color, float factor)
+	: spot_color(spot_color), factor(factor)
+	{}
 };
 
 
