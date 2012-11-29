@@ -59,6 +59,7 @@ MapColor::MapColor(int priority)
 			break;
 		case CoveringRed:
 			setRgb(QColor(Qt::red));
+			setCmykFromRgb();
 			opacity = 1000.0f;	// HACK: (almost) always opaque, even if multiplied by opacity factors
 			break;
 		case Undefined:
