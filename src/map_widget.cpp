@@ -972,13 +972,11 @@ void MapWidget::updateMapCacheOverprintingSimulation(QPainter& painter, QRectF m
 			// Collect all halftones and knockouts of a single color
 			QPainter p(&separation);
 			p.setClipRect(map_cache_dirty_rect);
-			p.setCompositionMode(QPainter::CompositionMode_Clear);
-			p.fillRect(map_cache_dirty_rect, Qt::transparent);
+			p.fillRect(map_cache_dirty_rect, Qt::white);
 			if (use_antialiasing)
 				p.setRenderHint(QPainter::Antialiasing);
 			p.translate(w, h);
 			view->applyTransform(&p);
-			p.setCompositionMode(QPainter::CompositionMode_SourceOver);
 			map->renderables->drawColorSeparation(&p, *map_color, map_view_rect, !use_antialiasing, scaling, true);
 			p.end();
 			
