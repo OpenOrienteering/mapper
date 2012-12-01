@@ -197,28 +197,29 @@ void MapEditorTool::drawPointHandles(int hover_point, QPainter* painter, Object*
 				if (coord.isClosePoint())
 					continue;
 				QPointF point = widget->mapToViewport(coord);
+				bool is_active = hover_point == i;
 				
 				if (have_curve)
 				{
 					int curve_index = (i == part.start_index) ? (part.end_index - 1) : (i - 1);
 					QPointF curve_handle = widget->mapToViewport(path->getCoordinate(curve_index));
-					drawCurveHandleLine(painter, point, curve_handle, hover_point == i);
-					drawPointHandle(painter, curve_handle, CurveHandle, hover_point == i || hover_point == curve_index);
+					drawCurveHandleLine(painter, point, curve_handle, is_active);
+					drawPointHandle(painter, curve_handle, CurveHandle, is_active || hover_point == curve_index);
 					have_curve = false;
 				}
 				
-				/*if ((i == part.start_index && !part->isClosed()) || (i > part.start_index && path->getCoordinate(part.end_index-1).isHolePoint()))
-					drawPointHandle(painter, point, StartHandle, widget);
-				else if ((i == part.end_index - 1 && !part->isClosed()) || coord.isHolePoint())
-					drawPointHandle(painter, point, EndHandle, widget);
-				else*/
-					drawPointHandle(painter, point, coord.isDashPoint() ? DashHandle : NormalHandle, hover_point == i);
+				if (i == part.start_index && !part.isClosed()) // || (i > part.start_index && path->getCoordinate(i-1).isHolePoint()))
+					drawPointHandle(painter, point, StartHandle, is_active);
+				else if (i == part.end_index && !part.isClosed()) // || coord.isHolePoint())
+					drawPointHandle(painter, point, EndHandle, is_active);
+				else
+					drawPointHandle(painter, point, coord.isDashPoint() ? DashHandle : NormalHandle, is_active);
 				
 				if (coord.isCurveStart())
 				{
 					QPointF curve_handle = widget->mapToViewport(path->getCoordinate(i+1));
-					drawCurveHandleLine(painter, point, curve_handle, hover_point == i);
-					drawPointHandle(painter, curve_handle, CurveHandle, hover_point == i || hover_point == i + 1);
+					drawCurveHandleLine(painter, point, curve_handle, is_active);
+					drawPointHandle(painter, curve_handle, CurveHandle, is_active || hover_point == i + 1);
 					i += 2;
 					have_curve = true;
 				}
