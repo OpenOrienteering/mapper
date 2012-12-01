@@ -30,6 +30,7 @@
 #include "symbol_area.h"
 #include "symbol_text.h"
 #include "util.h"
+#include "settings.h"
 
 // ### DotRenderable ###
 
@@ -51,7 +52,7 @@ void DotRenderable::getRenderStates(RenderStates& out) const
 	out.mode = RenderStates::BrushOnly;
 	out.pen_width = 0;
 }
-void DotRenderable::render(QPainter& painter, bool force_min_size, float scaling) const
+void DotRenderable::render(QPainter& painter, bool force_min_size, float scaling, bool on_screen) const
 {
 	if (force_min_size && extent.width() * scaling < 1.5f)
 		painter.drawEllipse(extent.center(), 0.5f * (1/scaling), 0.5f * (1/scaling));
@@ -83,7 +84,7 @@ void CircleRenderable::getRenderStates(RenderStates& out) const
 	out.mode = RenderStates::PenOnly;
 	out.pen_width = line_width;
 }
-void CircleRenderable::render(QPainter& painter, bool force_min_size, float scaling) const
+void CircleRenderable::render(QPainter& painter, bool force_min_size, float scaling, bool on_screen) const
 {
 	if (force_min_size && rect.width() * scaling < 1.5f)
 		painter.drawEllipse(rect.center(), 0.5f * (1/scaling), 0.5f * (1/scaling));
@@ -256,7 +257,7 @@ void LineRenderable::getRenderStates(RenderStates& out) const
 	out.mode = RenderStates::PenOnly;
 	out.pen_width = line_width;
 }
-void LineRenderable::render(QPainter& painter, bool force_min_size, float scaling) const
+void LineRenderable::render(QPainter& painter, bool force_min_size, float scaling, bool on_screen) const
 {
 	QPen pen(painter.pen());
 	pen.setCapStyle(cap_style);
@@ -342,7 +343,7 @@ void AreaRenderable::getRenderStates(RenderStates& out) const
 	out.mode = RenderStates::BrushOnly;
 	out.pen_width = 0;
 }
-void AreaRenderable::render(QPainter& painter, bool force_min_size, float scaling) const
+void AreaRenderable::render(QPainter& painter, bool force_min_size, float scaling, bool on_screen) const
 {
 	painter.drawPath(path);
 	
@@ -468,8 +469,13 @@ void TextRenderable::getRenderStates(RenderStates& out) const
 	}
 }
 
-void TextRenderable::render(QPainter& painter, bool force_min_size, float scaling) const
+void TextRenderable::render(QPainter& painter, bool force_min_size, float scaling, bool on_screen) const
 {
+	bool used_antialiasing_before = painter.renderHints() & QPainter::Antialiasing;
+	bool disable_antialiasing = on_screen && !(Settings::getInstance().getSettingCached(Settings::MapDisplay_TextAntialiasing).toBool());
+	if (disable_antialiasing)
+		painter.setRenderHint(QPainter::Antialiasing, false);
+	
 	if (framing_line)
 	{
 		QPen pen(painter.pen());
@@ -477,18 +483,15 @@ void TextRenderable::render(QPainter& painter, bool force_min_size, float scalin
 		painter.setPen(pen);
 	}
 	
-	// NOTE: mini-optimization to prevent the save-restore for un-rotated texts which could be used when the scale-hack is no longer necessary
-	/*if (rotation == 0)
-		painter.drawPath(path);
-	else
-	{*/
-		painter.save();
-		painter.translate(anchor_x, anchor_y);
-		if (rotation != 0)
-			painter.rotate(-rotation * 180 / M_PI);
-		painter.scale(scale_factor, scale_factor);
-		painter.drawPath(path);
-		painter.restore();
-	//}
+	painter.save();
+	painter.translate(anchor_x, anchor_y);
+	if (rotation != 0)
+		painter.rotate(-rotation * 180 / M_PI);
+	painter.scale(scale_factor, scale_factor);
+	painter.drawPath(path);
+	painter.restore();
+	
+	if (disable_antialiasing)
+		painter.setRenderHint(QPainter::Antialiasing, used_antialiasing_before);
 }
 

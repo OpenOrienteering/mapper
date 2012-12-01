@@ -103,9 +103,13 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	
 	int row = 0;
 	
-	QCheckBox* antialiasing = new QCheckBox(tr("High quality map display (antialiasing)"), this);
+	antialiasing = new QCheckBox(tr("High quality map display (antialiasing)"), this);
 	antialiasing->setToolTip(tr("Antialiasing makes the map look much better, but also slows down the map display"));
 	layout->addWidget(antialiasing, row++, 0, 1, 2);
+	
+	text_antialiasing = new QCheckBox(tr("High quality text display in map (antialiasing), slow"), this);
+	text_antialiasing->setToolTip(tr("Antialiasing makes the map look much better, but also slows down the map display"));
+	layout->addWidget(text_antialiasing, row++, 0, 1, 2);
 	
 	QLabel* tolerance_label = new QLabel(tr("Click tolerance:"));
 	QSpinBox* tolerance = Util::SpinBox::create(0, 50, tr("px"));
@@ -165,6 +169,7 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	
 	
 	antialiasing->setChecked(Settings::getInstance().getSetting(Settings::MapDisplay_Antialiasing).toBool());
+	text_antialiasing->setChecked(Settings::getInstance().getSetting(Settings::MapDisplay_TextAntialiasing).toBool());
 	tolerance->setValue(Settings::getInstance().getSetting(Settings::MapEditor_ClickTolerance).toInt());
 	snap_distance->setValue(Settings::getInstance().getSetting(Settings::MapEditor_SnapDistance).toInt());
 	fixed_angle_stepping->setValue(Settings::getInstance().getSetting(Settings::MapEditor_FixedAngleStepping).toInt());
@@ -180,8 +185,11 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	rectangle_preview_line_width->setChecked(Settings::getInstance().getSetting(Settings::RectangleTool_PreviewLineWidth).toBool());
 	
 	layout->setRowStretch(row, 1);
+	
+	updateWidgets();
 
 	connect(antialiasing, SIGNAL(toggled(bool)), this, SLOT(antialiasingClicked(bool)));
+	connect(text_antialiasing, SIGNAL(toggled(bool)), this, SLOT(textAntialiasingClicked(bool)));
 	connect(tolerance, SIGNAL(valueChanged(int)), this, SLOT(toleranceChanged(int)));
 	connect(snap_distance, SIGNAL(valueChanged(int)), this, SLOT(snapDistanceChanged(int)));
 	connect(fixed_angle_stepping, SIGNAL(valueChanged(int)), this, SLOT(fixedAngleSteppingChanged(int)));
@@ -197,9 +205,20 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	connect(rectangle_preview_line_width, SIGNAL(clicked(bool)), this, SLOT(rectanglePreviewLineWidthChanged(bool)));
 }
 
+void EditorPage::updateWidgets()
+{
+	text_antialiasing->setEnabled(antialiasing->isChecked());
+}
+
 void EditorPage::antialiasingClicked(bool checked)
 {
 	changes.insert(Settings::getInstance().getSettingPath(Settings::MapDisplay_Antialiasing), QVariant(checked));
+	updateWidgets();
+}
+
+void EditorPage::textAntialiasingClicked(bool checked)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::MapDisplay_TextAntialiasing), QVariant(checked));
 }
 
 void EditorPage::toleranceChanged(int value)

@@ -51,7 +51,7 @@ public:
 	inline const QRectF& getExtent() const {return extent;}
 	
 	/// Renders the renderable with the given painter
-	virtual void render(QPainter& painter, bool force_min_size, float scaling) const = 0;
+	virtual void render(QPainter& painter, bool force_min_size, float scaling, bool on_screen) const = 0;
 	
 	/// Creates the render state information which must be set when rendering this renderable
 	virtual void getRenderStates(RenderStates& out) const = 0;
@@ -189,8 +189,8 @@ class MapRenderables : protected std::map<int, ObjectRenderablesMap>
 public:
 	MapRenderables(Map* map);
 	
-	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity_factor = 1.0f, bool highlighted = false) const;
-	void drawColorSeparation(QPainter* painter, MapColor* spot_color, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity_factor = 1.0f, bool highlighted = false) const;
+	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor = 1.0f, bool highlighted = false) const;
+	void drawColorSeparation(QPainter* painter, MapColor* spot_color, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor = 1.0f, bool highlighted = false) const;
 	
 	void insertRenderablesOfObject(const Object* object);
 	void removeRenderablesOfObject(const Object* object, bool mark_area_as_dirty);	// NOTE: does not delete the renderables, just removes them from display

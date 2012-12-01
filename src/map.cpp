@@ -746,13 +746,13 @@ void Map::clear()
 	unsaved_changes = false;
 }
 
-void Map::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity)
+void Map::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity)
 {
 	// Update the renderables of all objects marked as dirty
 	updateObjects();
 	
 	// The actual drawing
-	renderables->draw(painter, bounding_box, force_min_size, scaling, show_helper_symbols, opacity);
+	renderables->draw(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, opacity);
 }
 void Map::drawGrid(QPainter* painter, QRectF bounding_box)
 {
@@ -868,7 +868,7 @@ void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widge
 	
 	if (!replacement_renderables)
 		replacement_renderables = selection_renderables.data();
-	replacement_renderables->draw(painter, view->calculateViewedRect(widget->viewportToView(widget->rect())), force_min_size, view->calculateFinalZoomFactor(), true, selection_opacity_factor, !draw_normal);
+	replacement_renderables->draw(painter, view->calculateViewedRect(widget->viewportToView(widget->rect())), force_min_size, view->calculateFinalZoomFactor(), true, true, selection_opacity_factor, !draw_normal);
 	
 	painter->restore();
 }

@@ -938,7 +938,7 @@ void MapWidget::updateMapCache(bool use_background)
 	{
 		painter.translate(width() / 2.0, height() / 2.0);
 		view->applyTransform(&painter);
-		map->draw(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor(), true);
+		map->draw(&painter, map_view_rect, !use_antialiasing, view->calculateFinalZoomFactor(), true, true);
 	}
 	
 	if (view->isGridVisible())
@@ -977,7 +977,7 @@ void MapWidget::updateMapCacheOverprintingSimulation(QPainter& painter, QRectF m
 				p.setRenderHint(QPainter::Antialiasing);
 			p.translate(w, h);
 			view->applyTransform(&p);
-			map->renderables->drawColorSeparation(&p, *map_color, map_view_rect, !use_antialiasing, scaling, true);
+			map->renderables->drawColorSeparation(&p, *map_color, map_view_rect, !use_antialiasing, scaling, true, true);
 			p.end();
 			
 			// draw the separation on the previous ones; CompositionMode_Multiply

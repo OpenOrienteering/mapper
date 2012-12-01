@@ -36,6 +36,7 @@ public:
 	enum SettingsEnum
 	{
 		MapDisplay_Antialiasing = 0,
+		MapDisplay_TextAntialiasing,
 		MapEditor_ClickTolerance,
 		MapEditor_SnapDistance,
 		MapEditor_FixedAngleStepping,

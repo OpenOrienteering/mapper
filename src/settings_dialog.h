@@ -80,6 +80,7 @@ public:
 
 private slots:
 	void antialiasingClicked(bool checked);
+	void textAntialiasingClicked(bool checked);
 	void toleranceChanged(int value);
 	void snapDistanceChanged(int value);
 	void fixedAngleSteppingChanged(int value);
@@ -96,6 +97,10 @@ private slots:
 	void keepSettingsOfClosedTemplatesClicked(bool checked);
 	
 private:
+	void updateWidgets();
+	
+	QCheckBox* antialiasing;
+	QCheckBox* text_antialiasing;
 	QComboBox* edit_tool_delete_bezier_point_action;
 	QComboBox* edit_tool_delete_bezier_point_action_alternative;
 };

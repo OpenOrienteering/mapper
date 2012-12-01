@@ -184,7 +184,7 @@ MapRenderables::MapRenderables(Map* map) : map(map)
 {
 }
 
-void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity_factor, bool highlighted) const
+void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor, bool highlighted) const
 {
 	// TODO: improve performance by using some spatial acceleration structure?
 	
@@ -296,7 +296,7 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 					if (extent.y() > bounding_box.bottom())	continue;
 					
 					// Render the renderable
-					(*renderable)->render(*painter, force_min_size, scaling);
+					(*renderable)->render(*painter, force_min_size, scaling, on_screen);
 				}
 			}
 		}
@@ -304,7 +304,7 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 	painter->restore();
 }
 
-void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* spot_color, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity_factor, bool highlighted) const
+void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* spot_color, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor, bool highlighted) const
 {
 	Map::ColorVector& colors = map->color_set->colors;
 	
@@ -457,7 +457,7 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* spot_color
 						if (extent.y() > bounding_box.bottom())	continue;
 						
 						// Render the renderable
-						(*renderable)->render(*painter, force_min_size, scaling);
+						(*renderable)->render(*painter, force_min_size, scaling, on_screen);
 					}
 				}
 			}

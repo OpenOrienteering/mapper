@@ -446,7 +446,7 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 	
 	bool was_hidden = is_hidden;
 	is_hidden = false; // ensure that an icon is created for hidden symbols.
-	icon_map.draw(&painter, QRectF(-10000, -10000, 20000, 20000), false, view.calculateFinalZoomFactor(), true);
+	icon_map.draw(&painter, QRectF(-10000, -10000, 20000, 20000), false, view.calculateFinalZoomFactor(), false, true);
 	is_hidden = was_hidden;
 	
 	delete icon_symbol;

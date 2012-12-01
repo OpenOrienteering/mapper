@@ -373,7 +373,7 @@ void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& p
 	if (main_view->getMapVisibility()->visible)
 	{
 		if (main_view->getMapVisibility()->opacity == 1)
-			map->draw(painter, map_extent, false, scale, false);
+			map->draw(painter, map_extent, false, scale, false, false);
 		else
 		{
 			// Draw map into a temporary buffer first which is printed with the map's opacity later.
@@ -390,7 +390,7 @@ void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& p
 			
 			// Draw map with full opacity
 			buffer_painter.setTransform(painter->transform());
-			map->draw(&buffer_painter, map_extent, false, scale, false);
+			map->draw(&buffer_painter, map_extent, false, scale, false, false);
 			
 			buffer_painter.end();
 			

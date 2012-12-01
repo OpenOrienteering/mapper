@@ -29,6 +29,7 @@
 Settings::Settings(): QObject()
 {
 	registerSetting(MapDisplay_Antialiasing, "MapDisplay/antialiasing", true);
+	registerSetting(MapDisplay_TextAntialiasing, "MapDisplay/text_antialiasing", false);
 	registerSetting(MapEditor_ClickTolerance, "MapEditor/click_tolerance", 5);
 	registerSetting(MapEditor_SnapDistance, "MapEditor/snap_distance", 20);
 	registerSetting(MapEditor_FixedAngleStepping, "MapEditor/fixed_angle_stepping", 15);

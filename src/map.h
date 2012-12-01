@@ -114,7 +114,7 @@ public:
 	void clear();
 	
 	/// Draws the part of the map which is visible in the given bounding box in map coordinates
-	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity = 1.0);
+	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity = 1.0);
 	/// Draws the map grid
 	void drawGrid(QPainter* painter, QRectF bounding_box);
 	/// Draws the templates first_template until last_template which are visible in the given bouding box.
