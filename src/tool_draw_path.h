@@ -82,6 +82,7 @@ protected:
 	bool path_has_preview_point;
 	bool previous_point_is_curve_point;
 	float previous_point_direction;
+	bool create_spline_corner; // for drawing bezier splines without parallel handles
 	bool create_segment;
 	
 	bool space_pressed;

@@ -193,7 +193,11 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 		
 		if ((event->pos() - click_pos).manhattanLength() < QApplication::startDragDistance())
 		{
-			if (path_has_preview_point)
+			if (create_spline_corner)
+			{
+				create_spline_corner = false;
+			}
+			else if (path_has_preview_point)
 			{
 				// Remove preview
 				int last = preview_path->getCoordinateCount() - 1;
@@ -218,6 +222,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 		
 		// Giving a direction by dragging
 		dragging = true;
+		create_spline_corner = false;
 		create_segment = true;
 		
 		QPointF constrained_pos;
@@ -227,7 +232,18 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 		{
 			hidePreviewPoints();
 			float drag_direction = calculateRotation(constrained_pos.toPoint(), constrained_pos_map);
-			createPreviewCurve(click_pos_map.toMapCoord(), drag_direction);
+			
+			// Add a new node or convert the last node into a corner?
+			if ((widget->mapToViewport(previous_pos_map) - click_pos).manhattanLength() >= QApplication::startDragDistance())
+				createPreviewCurve(click_pos_map.toMapCoord(), drag_direction);
+			else
+			{
+				// TODO?
+				create_spline_corner = true;
+				
+				// This hides the old direction indicator
+				previous_drag_map = previous_pos_map;
+			}
 		}
 		
 		updateDirtyRect();
@@ -252,7 +268,7 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	if (!create_segment)
 		return true;
 	
-	if (previous_point_is_curve_point && !dragging)
+	if (previous_point_is_curve_point && !dragging && !create_spline_corner)
 	{
 		// The new point has not been added yet
 		MapCoord coord;
@@ -280,6 +296,7 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	
 	updateAngleHelper();
 	
+	create_spline_corner - false;
 	path_has_preview_point = false;
 	dragging = false;
 	
