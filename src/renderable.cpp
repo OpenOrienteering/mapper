@@ -304,13 +304,17 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 	painter->restore();
 }
 
-void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* spot_color, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity_factor, bool highlighted) const
+void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation, QRectF bounding_box, bool force_min_size, float scaling, bool show_helper_symbols, float opacity_factor, bool highlighted) const
 {
 	Map::ColorVector& colors = map->color_set->colors;
 	
 	QPainterPath initial_clip = painter->clipPath();
 	bool no_initial_clip = initial_clip.isEmpty();
 	const QPainterPath* current_clip = NULL;
+	
+	// As soon as the spot color is actually used for drawing (i.e. drawing_started = true),
+	// we need to take care of out-of-sequence map colors.
+	bool drawing_started = false;
 	
 	painter->save();
 	
@@ -334,13 +338,13 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* spot_color
 			for (SharedRenderables::const_iterator it = object->second->begin(); it != it_end; ++it)
 			{
 				const RenderStates& new_states = it->first;
-				MapColor* map_color;
+				MapColor* renderables_color;
 				float pen_width;
 				
 				if (new_states.color_priority > MapColor::Reserved)
 				{
 					pen_width = new_states.pen_width;
-					map_color = colors[new_states.color_priority];
+					renderables_color = colors[new_states.color_priority];
 				}
 				else
 				{
@@ -348,11 +352,11 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* spot_color
 					pen_width = new_states.pen_width / scaling;
 					
 					if (new_states.color_priority == MapColor::CoveringWhite)
-						map_color = Map::getCoveringWhite();
+						renderables_color = Map::getCoveringWhite();
 					else if (new_states.color_priority == MapColor::CoveringRed)
-						map_color = Map::getCoveringRed();
+						renderables_color = Map::getCoveringRed();
 					else if (new_states.color_priority == MapColor::Undefined)
-						map_color = Map::getUndefinedColor();
+						renderables_color = Map::getUndefinedColor();
 					else if (new_states.color_priority == MapColor::Reserved)
 						continue;
 					else
@@ -360,26 +364,46 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* spot_color
 				}
 				
 				SpotColorComponents spot_colors;
-				switch(map_color->getSpotColorMethod())
+				switch(renderables_color->getSpotColorMethod())
 				{
 					case MapColor::SpotColor:
-						if (map_color == spot_color) 
-							spot_colors.push_back(SpotColorComponent(map_color,1.0f));
-						if (map_color->getKnockout() && map_color->getPriority() < spot_color->getPriority())
-							spot_colors.push_back(SpotColorComponent(spot_color, 0.0f));  // explicit knockout
+					{
+						if (renderables_color == separation) 
+						{
+							// draw with spot color
+							spot_colors.push_back(SpotColorComponent(renderables_color, 1.0f));
+							if (!drawing_started)
+								drawing_started = true;
+						}
+						else if (renderables_color->getKnockout() && renderables_color->getPriority() < separation->getPriority())
+							// explicit knockout
+							spot_colors.push_back(SpotColorComponent(separation, 0.0f));
 						break;
+					}
 					case MapColor::CustomColor:
 					{
-						Q_FOREACH(SpotColorComponent component, map_color->getComponents())
-							if (component.spot_color == spot_color)
-								spot_colors.push_back(component);  // draw with the spot color
-							else if (component.factor < 1.0f && component.spot_color->getPriority() < spot_color->getPriority())
-								// knockout under halftones
-								// FIXME: This is a ISOM/ISSOM rule, move from code to data!
-								spot_colors.push_back(SpotColorComponent(spot_color, 0.0f));
-							else if (map_color->getPriority() < component.spot_color->getPriority())
+						// First, check if the renderables draw color to this separation
+						Q_FOREACH(SpotColorComponent component, renderables_color->getComponents())
+						{
+							if (component.spot_color == separation)
+							{
+								// The renderables do draw the current spot color
+								spot_colors.push_back(component);
+								if (!drawing_started)
+									drawing_started = (component.factor > 0.0005f);
+							}
+						}
+						if (spot_colors.size() == 0)
+						{
+							// If the renderables do not draw color to this separation,
+							// check if they need a knockout.
+							if (renderables_color->getKnockout() && renderables_color->getPriority() < separation->getPriority())
+								// explicit knockout
+								spot_colors.push_back(SpotColorComponent(separation, 0.0f));
+							else if (drawing_started)
 								// knockout for out-of-sequence colors
-								spot_colors.push_back(SpotColorComponent(spot_color, 0.0f));
+								spot_colors.push_back(SpotColorComponent(separation, 0.0f));
+						}
 						break;
 					}
 					default:
