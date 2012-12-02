@@ -190,6 +190,7 @@ void MapEditorTool::drawPointHandles(int hover_point, QPainter* painter, Object*
 		{
 			PathObject::PathPart& part = path->getPart(part_index);
 			bool have_curve = part.isClosed() && part.getNumCoords() > 3 && path->getCoordinate(part.end_index - 3).isCurveStart();
+			PointHandleType handle_type = NormalHandle;
 			
 			for (int i = part.start_index; i <= part.end_index; ++i)
 			{
@@ -199,26 +200,37 @@ void MapEditorTool::drawPointHandles(int hover_point, QPainter* painter, Object*
 				QPointF point = widget->mapToViewport(coord);
 				bool is_active = hover_point == i;
 				
+				if (i == part.start_index && !part.isClosed()) // || (i > part.start_index && path->getCoordinate(i-1).isHolePoint()))
+					handle_type = StartHandle;
+				else if (i == part.end_index && !part.isClosed()) // || coord.isHolePoint())
+					handle_type = EndHandle;
+				else
+					handle_type = coord.isDashPoint() ? DashHandle : NormalHandle;
+				
+				// Draw incoming curve handle
+				QPointF curve_handle;
 				if (have_curve)
 				{
 					int curve_index = (i == part.start_index) ? (part.end_index - 1) : (i - 1);
-					QPointF curve_handle = widget->mapToViewport(path->getCoordinate(curve_index));
-					drawCurveHandleLine(painter, point, curve_handle, is_active);
+					curve_handle = widget->mapToViewport(path->getCoordinate(curve_index));
+					drawCurveHandleLine(painter, point, handle_type, curve_handle, is_active);
 					drawPointHandle(painter, curve_handle, CurveHandle, is_active || hover_point == curve_index);
 					have_curve = false;
 				}
 				
-				if (i == part.start_index && !part.isClosed()) // || (i > part.start_index && path->getCoordinate(i-1).isHolePoint()))
-					drawPointHandle(painter, point, StartHandle, is_active);
-				else if (i == part.end_index && !part.isClosed()) // || coord.isHolePoint())
-					drawPointHandle(painter, point, EndHandle, is_active);
-				else
-					drawPointHandle(painter, point, coord.isDashPoint() ? DashHandle : NormalHandle, is_active);
-				
+				// Draw outgoing curve handle, first part
 				if (coord.isCurveStart())
 				{
-					QPointF curve_handle = widget->mapToViewport(path->getCoordinate(i+1));
-					drawCurveHandleLine(painter, point, curve_handle, is_active);
+					curve_handle = widget->mapToViewport(path->getCoordinate(i+1));
+					drawCurveHandleLine(painter, point, handle_type, curve_handle, is_active);
+				}
+				
+				// Draw point
+				drawPointHandle(painter, point, handle_type, is_active);
+				
+				// Draw outgoing curve handle, second part
+				if (coord.isCurveStart())
+				{
 					drawPointHandle(painter, curve_handle, CurveHandle, is_active || hover_point == i + 1);
 					i += 2;
 					have_curve = true;
@@ -229,11 +241,11 @@ void MapEditorTool::drawPointHandles(int hover_point, QPainter* painter, Object*
 	else
 		assert(false);
 }
-void MapEditorTool::drawPointHandle(QPainter* painter, QPointF point, MapEditorTool::PointHandleType type, bool active)
+void MapEditorTool::drawPointHandle(QPainter* painter, QPointF point, PointHandleType type, bool active)
 {
 	painter->drawImage(qRound(point.x()) - 5, qRound(point.y()) - 5, *point_handles, (int)type * 11, active ? 11 : 0, 11, 11);
 }
-void MapEditorTool::drawCurveHandleLine(QPainter* painter, QPointF point, QPointF curve_handle, bool active)
+void MapEditorTool::drawCurveHandleLine(QPainter* painter, QPointF point, PointHandleType type, QPointF curve_handle, bool active)
 {
 	const float handle_radius = 3;
 	painter->setPen(active ? active_color : inactive_color);
@@ -243,10 +255,14 @@ void MapEditorTool::drawCurveHandleLine(QPainter* painter, QPointF point, QPoint
 	if (to_handle_len > 0.00001f)
 	{
 		to_handle_len = sqrt(to_handle_len);
-		QPointF change = to_handle * (handle_radius / to_handle_len);
+		if (type == StartHandle)
+			point += 5 / qMax(qAbs(to_handle.x()), qAbs(to_handle.y())) * to_handle;
+		else if (type == DashHandle)
+			point += to_handle * (3 / to_handle_len);
+		else //if (type == NormalHandle)
+			point += 3 / qMax(qAbs(to_handle.x()), qAbs(to_handle.y())) * to_handle;
 		
-		point += change;
-		curve_handle -= change;
+		curve_handle -= to_handle * (handle_radius / to_handle_len);
 	}
 	
 	painter->drawLine(point, curve_handle);

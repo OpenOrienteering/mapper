@@ -92,7 +92,7 @@ public:
 	static void loadPointHandles();
 	static void drawPointHandles(int hover_point, QPainter* painter, Object* object, MapWidget* widget);
 	static void drawPointHandle(QPainter* painter, QPointF point, PointHandleType type, bool active);
-	static void drawCurveHandleLine(QPainter* painter, QPointF point, QPointF curve_handle, bool active);
+	static void drawCurveHandleLine(QPainter* painter, QPointF point, PointHandleType type, QPointF curve_handle, bool active);
 	static void includeControlPointRect(QRectF& rect, Object* object, QPointF* box_text_handles);
 	static bool calculateSelectedBoxTextHandles(QPointF* out, Map* map);
 	
