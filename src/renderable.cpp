@@ -304,13 +304,17 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 	painter->restore();
 }
 
-void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* spot_color, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor, bool highlighted) const
+void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor, bool highlighted) const
 {
 	Map::ColorVector& colors = map->color_set->colors;
 	
 	QPainterPath initial_clip = painter->clipPath();
 	bool no_initial_clip = initial_clip.isEmpty();
 	const QPainterPath* current_clip = NULL;
+	
+	// As soon as the spot color is actually used for drawing (i.e. drawing_started = true),
+	// we need to take care of out-of-sequence map colors.
+	bool drawing_started = false;
 	
 	painter->save();
 	
@@ -334,13 +338,13 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* spot_color
 			for (SharedRenderables::const_iterator it = object->second->begin(); it != it_end; ++it)
 			{
 				const RenderStates& new_states = it->first;
-				MapColor* map_color;
+				MapColor* renderables_color;
 				float pen_width;
 				
 				if (new_states.color_priority > MapColor::Reserved)
 				{
 					pen_width = new_states.pen_width;
-					map_color = colors[new_states.color_priority];
+					renderables_color = colors[new_states.color_priority];
 				}
 				else
 				{
@@ -348,46 +352,110 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* spot_color
 					pen_width = new_states.pen_width / scaling;
 					
 					if (new_states.color_priority == MapColor::CoveringWhite)
-						map_color = Map::getCoveringWhite();
+						renderables_color = Map::getCoveringWhite();
 					else if (new_states.color_priority == MapColor::CoveringRed)
-						map_color = Map::getCoveringRed();
+						renderables_color = Map::getCoveringRed();
 					else if (new_states.color_priority == MapColor::Undefined)
-						map_color = Map::getUndefinedColor();
+						renderables_color = Map::getUndefinedColor();
 					else if (new_states.color_priority == MapColor::Reserved)
 						continue;
 					else
 						assert(!"Invalid special color!");
 				}
 				
-				SpotColorComponents spot_colors;
-				switch(map_color->getSpotColorMethod())
+				SpotColorComponent drawing_color(Map::getUndefinedColor(), 0.0f);
+				switch(renderables_color->getSpotColorMethod())
 				{
 					case MapColor::SpotColor:
-						if (map_color == spot_color) 
-							spot_colors.push_back(SpotColorComponent(map_color,1.0f));
-						if (map_color->getKnockout() && map_color->getPriority() < spot_color->getPriority())
-							spot_colors.push_back(SpotColorComponent(spot_color, 0.0f));  // explicit knockout
+					{
+						if (renderables_color == separation) 
+						{
+							// draw with spot color
+							drawing_color = SpotColorComponent(renderables_color, 1.0f);
+							if (!drawing_started)
+								drawing_started = true;
+						}
+						else if (renderables_color->getKnockout() && renderables_color->getPriority() < separation->getPriority())
+							// explicit knockout
+							drawing_color = SpotColorComponent(separation, 0.0f);
 						break;
+					}
 					case MapColor::CustomColor:
 					{
-						Q_FOREACH(SpotColorComponent component, map_color->getComponents())
-							if (component.spot_color == spot_color)
-								spot_colors.push_back(component);  // draw with the spot color
-							else if (component.factor < 1.0f && component.spot_color->getPriority() < spot_color->getPriority())
-								// knockout under halftones
-								// FIXME: This is a ISOM/ISSOM rule, move from code to data!
-								spot_colors.push_back(SpotColorComponent(spot_color, 0.0f));
-							else if (map_color->getPriority() < component.spot_color->getPriority())
+						// First, check if the renderables draw color to this separation
+						Q_FOREACH(SpotColorComponent component, renderables_color->getComponents())
+						{
+							if (component.spot_color == separation)
+							{
+								// The renderables do draw the current spot color
+								drawing_color = component;
+								if (!drawing_started)
+									drawing_started = (component.factor > 0.0005f);
+							}
+						}
+						if (drawing_color.spot_color->getPriority() == MapColor::Undefined)
+						{
+							// If the renderables do not draw color to this separation,
+							// check if they need a knockout.
+							if (renderables_color->getKnockout() && renderables_color->getPriority() < separation->getPriority())
+								// explicit knockout
+								drawing_color = SpotColorComponent(separation, 0.0f);
+							else if (drawing_started)
 								// knockout for out-of-sequence colors
-								spot_colors.push_back(SpotColorComponent(spot_color, 0.0f));
+								drawing_color = SpotColorComponent(separation, 0.0f);
+						}
 						break;
 					}
 					default:
 						; // nothing
 				}
-				if (spot_colors.empty())
+				if (drawing_color.spot_color->getPriority() == MapColor::Undefined)
 					continue;
 				
+				QColor color = *drawing_color.spot_color;
+				if (drawing_color.factor < 0.0005f)
+					color = Qt::white;
+				else
+				{
+					qreal c, m, y, k;
+					color.getCmykF(&c, &m, &y, &k);
+					color.setCmykF(c*drawing_color.factor,m*drawing_color.factor,y*drawing_color.factor,k*drawing_color.factor,1.0f);
+				}
+				
+				if (new_states.mode == RenderStates::PenOnly)
+				{
+					bool pen_too_small = (force_min_size && pen_width * scaling <= 1.0f);
+					painter->setPen(QPen(highlighted ? getHighlightedColor(color) : color, pen_too_small ? 0 : pen_width));
+					painter->setBrush(QBrush(Qt::NoBrush));
+				}
+				else if (new_states.mode == RenderStates::BrushOnly)
+				{
+					QBrush brush(highlighted ? getHighlightedColor(color) : color);
+					painter->setPen(QPen(Qt::NoPen));
+					painter->setBrush(brush);
+				}
+				
+				// TODO: Check for removal
+				painter->setOpacity(qMin(1.0f, opacity_factor * drawing_color.spot_color->getOpacity()));
+				
+				if (current_clip != new_states.clip_path)
+				{
+					if (no_initial_clip)
+					{
+						if (new_states.clip_path)
+							painter->setClipPath(*new_states.clip_path, Qt::ReplaceClip);
+						else
+							painter->setClipPath(initial_clip, Qt::NoClip);
+					}
+					else
+					{
+						painter->setClipPath(initial_clip, Qt::ReplaceClip);
+						if (new_states.clip_path)
+							painter->setClipPath(*new_states.clip_path, Qt::IntersectClip);
+					}
+					current_clip = new_states.clip_path;
+				}
+					
 				RenderableVector::const_iterator r_end = it->second.end();
 				for (RenderableVector::const_iterator renderable = it->second.begin(); renderable != r_end; ++renderable)
 				{
@@ -398,67 +466,9 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* spot_color
 					if (extent.bottom() < bounding_box.y())	continue;
 					if (extent.x() > bounding_box.right())	continue;
 					if (extent.y() > bounding_box.bottom())	continue;
-				}
-				
-				Q_FOREACH(SpotColorComponent component, spot_colors)
-				{
-					QColor color = *component.spot_color;
-					if (component.factor < 0.0005f)
-						color = Qt::white;
-					else
-					{
-						qreal c, m, y, k;
-						color.getCmykF(&c, &m, &y, &k);
-						color.setCmykF(c*component.factor,m*component.factor,y*component.factor,k*component.factor,1.0f);
-					}
 					
-					if (new_states.mode == RenderStates::PenOnly)
-					{
-						bool pen_too_small = (force_min_size && pen_width * scaling <= 1.0f);
-						painter->setPen(QPen(highlighted ? getHighlightedColor(color) : color, pen_too_small ? 0 : pen_width));
-						painter->setBrush(QBrush(Qt::NoBrush));
-					}
-					else if (new_states.mode == RenderStates::BrushOnly)
-					{
-						QBrush brush(highlighted ? getHighlightedColor(color) : color);
-						painter->setPen(QPen(Qt::NoPen));
-						painter->setBrush(brush);
-					}
-					
-					painter->setOpacity(qMin(1.0f, opacity_factor * component.spot_color->getOpacity()));
-					
-					if (current_clip != new_states.clip_path)
-					{
-						if (no_initial_clip)
-						{
-							if (new_states.clip_path)
-								painter->setClipPath(*new_states.clip_path, Qt::ReplaceClip);
-							else
-								painter->setClipPath(initial_clip, Qt::NoClip);
-						}
-						else
-						{
-							painter->setClipPath(initial_clip, Qt::ReplaceClip);
-							if (new_states.clip_path)
-								painter->setClipPath(*new_states.clip_path, Qt::IntersectClip);
-						}
-						current_clip = new_states.clip_path;
-					}
-						
-					RenderableVector::const_iterator r_end = it->second.end();
-					for (RenderableVector::const_iterator renderable = it->second.begin(); renderable != r_end; ++renderable)
-					{
-						// Bounds check
-						const QRectF& extent = (*renderable)->getExtent();
-						// NOTE: !bounding_box.intersects(extent) should be logical equivalent to the following
-						if (extent.right() < bounding_box.x())	continue;
-						if (extent.bottom() < bounding_box.y())	continue;
-						if (extent.x() > bounding_box.right())	continue;
-						if (extent.y() > bounding_box.bottom())	continue;
-						
-						// Render the renderable
-						(*renderable)->render(*painter, force_min_size, scaling, on_screen);
-					}
+					// Render the renderable
+					(*renderable)->render(*painter, force_min_size, scaling, on_screen);
 				}
 			}
 		}

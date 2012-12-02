@@ -985,6 +985,13 @@ void MapWidget::updateMapCacheOverprintingSimulation(QPainter& painter, QRectF m
 			painter.drawImage(0, 0, separation);
 		}
 	}
+	
+	painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+	painter.translate(w, h);
+	view->applyTransform(&painter);
+	map->renderables->drawColorSeparation(&painter, Map::getCoveringWhite(), map_view_rect, !use_antialiasing, scaling, true, true);
+	map->renderables->drawColorSeparation(&painter, Map::getCoveringRed(), map_view_rect, !use_antialiasing, scaling, true, true);
+	
 	painter.restore();
 }
 

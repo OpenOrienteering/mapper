@@ -14,21 +14,21 @@
     </georeferencing>
     <colors count="17">
         <color priority="0" name="Black" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <namedcolor>BLACK</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="custom" r="0.000" g="0.000" b="0.000"/>
         </color>
         <color priority="1" name="Brown 50%" c="0.000" m="0.280" y="0.500" k="0.090" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.5" spotcolor="3"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.910" g="0.680" b="0.500"/>
         </color>
-        <color priority="2" name="Black below browns" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000">
-            <spotcolors>
+        <color priority="2" name="Black below brown 50%" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000">
+            <spotcolors knockout="true">
                 <component factor="1" spotcolor="0"/>
             </spotcolors>
             <cmyk method="custom"/>
@@ -49,7 +49,7 @@
             <rgb method="custom" r="0.130" g="0.820" b="1.000"/>
         </color>
         <color priority="5" name="Blue 50%" c="0.435" m="0.090" y="0.000" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.5" spotcolor="4"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
@@ -85,14 +85,14 @@
             <rgb method="custom" r="0.240" g="1.000" b="0.090"/>
         </color>
         <color priority="10" name="Green 60%" c="0.456" m="0.000" y="0.546" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.6" spotcolor="9"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.544" g="1.000" b="0.454"/>
         </color>
         <color priority="11" name="Green 30%" c="0.228" m="0.000" y="0.273" k="0.000" opacity="1.000">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.3" spotcolor="9"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
@@ -2225,7 +2225,7 @@ given without the dot.</description>
     </symbols>
     <parts count="1" current="0">
         <part name="default layer">
-            <objects count="22">
+            <objects count="23">
                 <object type="1" symbol="60">
                     <coords count="13">
                         <coord x="-22789" y="-74676" flags="1"/>
@@ -2615,6 +2615,26 @@ given without the dot.</description>
                         <coord x="0" y="0"/>
                     </pattern>
                 </object>
+                <object type="1" symbol="107">
+                    <coords count="13">
+                        <coord x="-19922" y="-77152" flags="1"/>
+                        <coord x="-20407" y="-76512"/>
+                        <coord x="-20281" y="-75601"/>
+                        <coord x="-19640" y="-75117" flags="1"/>
+                        <coord x="-19000" y="-74632"/>
+                        <coord x="-18089" y="-74758"/>
+                        <coord x="-17605" y="-75398" flags="1"/>
+                        <coord x="-17121" y="-76038"/>
+                        <coord x="-17247" y="-76949"/>
+                        <coord x="-17887" y="-77434" flags="1"/>
+                        <coord x="-18527" y="-77918"/>
+                        <coord x="-19438" y="-77792"/>
+                        <coord x="-19922" y="-77152" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
             </objects>
         </part>
     </parts>
@@ -2629,5 +2649,6 @@ given without the dot.</description>
         </map_view>
     </view>
     <print orientation="landscape" QPrinter_PaperSize="0" dpi="600" center="true" area_left="-169.383" area_top="-174.794" area_width="297.032" area_height="209.91" alternative_scale="1"/>
+    <undo count="0"/>
     <redo count="0"/>
 </map>
