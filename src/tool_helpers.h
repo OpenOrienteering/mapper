@@ -205,6 +205,11 @@ public:
 	/// If the info parameter is set, information about the object snapped onto is returned there.
 	MapCoord snapToObject(MapCoordF position, MapWidget* widget, SnapInfo* info = NULL);
 	
+	/// Checks for existing objects in map at position and if one is found,
+	/// returns true and sets related angles in angle_tool.
+	/// Internally remembers the position so the next call to draw() will draw the snap mark there.
+	bool snapToDirection(MapCoordF position, MapWidget* widget, ConstrainAngleToolHelper* angle_tool, MapCoord* out_snap_position = NULL);
+	
 	/// Draws the snap mark which was last returned by snapToObject().
 	void draw(QPainter* painter, MapWidget* widget);
 	/// Includes this helper's drawing region in the given rect.

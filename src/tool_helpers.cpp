@@ -727,7 +727,10 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 						if (path_coord.param == 0 || path_coord.param == 1)
 						{
 							result_info.type = ObjectCorners;
-							result_info.coord_index = (path_coord.param == 0) ? path_coord.index : (path_coord.index + 1);
+							if (path_coord.param == 1)
+								result_info.coord_index = path_coord.index + (path->getRawCoordinateVector().at(path_coord.index).isCurveStart() ? 3 : 1);
+							else
+								result_info.coord_index = path_coord.index;
 						}
 						else
 						{
@@ -787,6 +790,66 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 		*info = result_info;
 	return result_position;
 }
+
+bool SnappingToolHelper::snapToDirection(MapCoordF position, MapWidget* widget, ConstrainAngleToolHelper* angle_tool, MapCoord* out_snap_position)
+{
+	// As getting a direction from the map grid is not supported, remove grid from filter
+	int filter_grid = filter & GridCorners;
+	filter = (SnapObjects)(filter & ~filter_grid);
+	
+	// Snap to position
+	SnapInfo info;
+	MapCoord snap_position = snapToObject(position, widget, &info);
+	if (out_snap_position)
+		*out_snap_position = snap_position;
+	
+	// Add grid to filter again, if it was there originally
+	filter = (SnapObjects)(filter | filter_grid);
+	
+	// Get direction from result
+	if (info.type == NoSnapping)
+		return false;
+	else if (info.type == ObjectCorners)
+	{
+		if (info.object->getType() == Object::Point)
+		{
+			PointObject* point = info.object->asPoint();
+			angle_tool->clearAngles();
+			angle_tool->addAngles(point->getRotation() - M_PI/2, M_PI/2);
+		}
+		else if (info.object->getType() == Object::Path)
+		{
+			PathObject* path = info.object->asPath();
+			angle_tool->clearAngles();
+			bool ok;
+			// Forward tangent
+			MapCoordF tangent = PathCoord::calculateTangent(path->getRawCoordinateVector(), info.coord_index, false, ok);
+			if (ok)
+				angle_tool->addAngles(-tangent.getAngle(), M_PI/2);
+			// Backward tangent
+			tangent = PathCoord::calculateTangent(path->getRawCoordinateVector(), info.coord_index, true, ok);
+			if (ok)
+				angle_tool->addAngles(-tangent.getAngle(), M_PI/2);
+		}
+		else
+			return false;
+	}
+	else if (info.type == ObjectPaths)
+	{
+		PathObject* path = info.object->asPath();
+		angle_tool->clearAngles();
+		MapCoordF pos, right_vector;
+		MapCoordVectorF mapCoordVectorF;
+		mapCoordVectorToF(path->getRawCoordinateVector(), mapCoordVectorF);
+		PathCoord::calculatePositionAt(path->getRawCoordinateVector(), mapCoordVectorF, path->getPathCoordinateVector(),
+			info.path_coord.clen, info.path_coord.index, &pos, &right_vector);
+		angle_tool->addAngles(-right_vector.getAngle(), M_PI/2);
+	}
+	else
+		return false;
+	return true;
+}
+
 void SnappingToolHelper::draw(QPainter* painter, MapWidget* widget)
 {
 	if (snapped_type != NoSnapping)
@@ -795,6 +858,7 @@ void SnappingToolHelper::draw(QPainter* painter, MapWidget* widget)
 									    (snapped_type == ObjectPaths) ? MapEditorTool::NormalHandle : MapEditorTool::EndHandle, false);
 	}
 }
+
 void SnappingToolHelper::includeDirtyRect(QRectF& rect)
 {
 	if (snapped_type != NoSnapping)

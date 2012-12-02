@@ -53,8 +53,11 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, Sy
 	dragging = false;
 	appending = false;
 	following = false;
+	picking_angle = false;
+	picked_angle = false;
 	space_pressed = false;
 	shift_pressed = false;
+	ctrl_pressed = false;
 	
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-draw-path.png"), 11, 11);
@@ -88,13 +91,20 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 			// Check for following and appending
 			if (!is_helper_tool)
 			{
-				if (!draw_in_progress &&
-					snap_info.type == SnappingToolHelper::ObjectCorners && snap_info.object->getSymbol() == symbol_widget->getSingleSelectedSymbol() &&
-					(snap_info.coord_index == 0 || snap_info.coord_index == snap_info.object->asPath()->getCoordinateCount() - 1))
+				if (!draw_in_progress)
 				{
-					// Appending to another path
-					start_appending = true;
-					startAppending(snap_info);
+					if (snap_info.type == SnappingToolHelper::ObjectCorners &&
+						(snap_info.coord_index == 0 || snap_info.coord_index == snap_info.object->asPath()->getCoordinateCount() - 1) &&
+						snap_info.object->getSymbol() == symbol_widget->getSingleSelectedSymbol())
+					{
+						// Appending to another path
+						start_appending = true;
+						startAppending(snap_info);
+					}
+					
+					// Setup angle helper
+					if (snap_helper.snapToDirection(map_coord, widget, angle_helper.data()))
+						picked_angle = true;
 				}
 				else if (draw_in_progress &&
 						 (snap_info.type == SnappingToolHelper::ObjectCorners || snap_info.type == SnappingToolHelper::ObjectPaths) &&
@@ -105,6 +115,13 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 					return true;
 				}
 			}
+		}
+		else if (!draw_in_progress && ctrl_pressed)
+		{
+			// Start picking direction of an existing object
+			picking_angle = true;
+			pickAngle(map_coord, widget);
+			return true;
 		}
 		else
 		{
@@ -138,10 +155,11 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 		if (space_pressed)
 			coord.setDashPoint(true);
 		
+		if (preview_path->getCoordinateCount() > 0 && picked_angle)
+			picked_angle = false;
 		if (previous_point_is_curve_point)
 		{
 			// Do nothing yet, wait until the user drags or releases the mouse button
-			angle_helper->setCenter(click_pos_map);
 		}
 		else if (path_has_preview_point)
 		{
@@ -182,7 +200,12 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	}
 	else // if (mouse_down)
 	{
-		if (!draw_in_progress)
+		if (!draw_in_progress && picking_angle)
+		{
+			pickAngle(map_coord, widget);
+			return true;
+		}
+		else if (!draw_in_progress)
 			return false;
 		
 		if (following)
@@ -191,7 +214,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 			return true;
 		}
 		
-		if ((event->pos() - click_pos).manhattanLength() < QApplication::startDragDistance())
+		if (dragging && (event->pos() - click_pos).manhattanLength() < QApplication::startDragDistance())
 		{
 			if (create_spline_corner)
 			{
@@ -201,13 +224,20 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 			{
 				// Remove preview
 				int last = preview_path->getCoordinateCount() - 1;
-				preview_path->deleteCoordinate(last, false);
-				preview_path->deleteCoordinate(last-1, false);
-				preview_path->deleteCoordinate(last-2, false);
-				
-				MapCoord coord = preview_path->getCoordinate(last-3);
-				coord.setCurveStart(false);
-				preview_path->setCoordinate(last-3, coord);
+				if (last >= 3 && preview_path->getCoordinate(last-3).isCurveStart())
+				{
+					preview_path->deleteCoordinate(last, false);
+					preview_path->deleteCoordinate(last-1, false);
+					preview_path->deleteCoordinate(last-2, false);
+					
+					MapCoord coord = preview_path->getCoordinate(last-3);
+					coord.setCurveStart(false);
+					preview_path->setCoordinate(last-3, coord);
+				}
+				else if (last >= 1)
+				{
+					preview_path->deleteCoordinate(last, false);
+				}
 				
 				path_has_preview_point = false;
 				dragging = false;
@@ -225,6 +255,9 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 		create_spline_corner = false;
 		create_segment = true;
 		
+		if (previous_point_is_curve_point)
+			angle_helper->setCenter(click_pos_map);
+		
 		QPointF constrained_pos;
 		angle_helper->getConstrainedCursorPositions(map_coord, constrained_pos_map, constrained_pos, widget);
 		
@@ -238,9 +271,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 				createPreviewCurve(click_pos_map.toMapCoord(), drag_direction);
 			else
 			{
-				// TODO?
 				create_spline_corner = true;
-				
 				// This hides the old direction indicator
 				previous_drag_map = previous_pos_map;
 			}
@@ -256,7 +287,13 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	if (!drawMouseButtonClicked(event))
 		return false;
 	left_mouse_down = false;
-	if (!draw_in_progress)
+	if (picking_angle)
+	{
+		picking_angle = false;
+		picked_angle = pickAngle(map_coord, widget);
+		return true;
+	}
+	else if (!draw_in_progress)
 		return false;
 	if (following)
 	{
@@ -274,6 +311,12 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 		MapCoord coord;
 		if (shift_pressed)
 			coord = snap_helper.snapToObject(map_coord, widget);
+		else if (angle_helper->isActive())
+		{
+			QPointF constrained_pos;
+			angle_helper->getConstrainedCursorPositions(map_coord, constrained_pos_map, constrained_pos, widget);
+			coord = constrained_pos_map.toMapCoord();
+		}
 		else
 			coord = map_coord.toMapCoord();
 		if (space_pressed)
@@ -341,9 +384,11 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 	}
 	else if (event->key() == Qt::Key_Control)
 	{
+		ctrl_pressed = true;
 		angle_helper->setActive(true);
 		if (draw_in_progress && !dragging)
 			updateDrawHover();
+		picked_angle = false;
 		updateStatusText();
 	}
 	else if (event->key() == Qt::Key_Shift)
@@ -364,7 +409,9 @@ bool DrawPathTool::keyReleaseEvent(QKeyEvent* event)
 {
 	if (event->key() == Qt::Key_Control)
 	{
-		angle_helper->setActive(false);
+		ctrl_pressed = false;
+		if (!picked_angle)
+			angle_helper->setActive(false);
 		if (draw_in_progress && !dragging)
 			updateDrawHover();
 		updateStatusText();
@@ -416,6 +463,12 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 	
 	if (shift_pressed && !dragging)
 		snap_helper.draw(painter, widget);
+	else if (!draw_in_progress && (picking_angle || picked_angle))
+	{
+		if (picking_angle)
+			snap_helper.draw(painter, widget);
+		angle_helper->draw(painter, widget);
+	}
 }
 
 void DrawPathTool::updateHover()
@@ -429,6 +482,8 @@ void DrawPathTool::updateHover()
 	{
 		// Show preview objects at this position
 		setPreviewPointsPosition(constrained_pos_map);
+		if (picked_angle)
+			angle_helper->setCenter(constrained_pos_map);
 		updateDirtyRect();
 	}
 	else // if (draw_in_progress)
@@ -590,6 +645,8 @@ void DrawPathTool::finishDrawing()
 	dragging = false;
 	following = false;
 	draw_in_progress = false;
+	if (!ctrl_pressed)
+		angle_helper->setActive(false);
 	updateSnapHelper();
 	updateStatusText();
 	hidePreviewPoints();
@@ -601,6 +658,8 @@ void DrawPathTool::abortDrawing()
 	dragging = false;
 	following = false;
 	draw_in_progress = false;
+	if (!ctrl_pressed)
+		angle_helper->setActive(false);
 	updateSnapHelper();
 	updateStatusText();
 	hidePreviewPoints();
@@ -622,9 +681,12 @@ void DrawPathTool::updateDirtyRect()
 		rectIncludeSafe(rect, previous_pos_map.toQPointF());
 		rectInclude(rect, previous_drag_map.toQPointF());
 	}
-	if (draw_in_progress && !dragging)
+	if ((draw_in_progress && !dragging) ||
+		(!draw_in_progress && !shift_pressed && ctrl_pressed))
+	{
 		angle_helper->includeDirtyRect(rect);
-	if (shift_pressed)
+	}
+	if (shift_pressed || (!draw_in_progress && ctrl_pressed))
 		snap_helper.includeDirtyRect(rect);
 	includePreviewRects(rect);
 	
@@ -641,8 +703,14 @@ void DrawPathTool::updateDirtyRect()
 
 void DrawPathTool::updateAngleHelper()
 {
-	if (!preview_path)
+	if (picked_angle)
 		return;
+	if (!preview_path)
+	{
+		angle_helper->clearAngles();
+		angle_helper->addDefaultAnglesDeg(0);
+		return;
+	}
 	updatePreviewPath();
 	const MapCoordVector& map_coords = preview_path->getRawCoordinateVector();
 	
@@ -676,6 +744,22 @@ void DrawPathTool::updateAngleHelper()
 		angle_helper->addDefaultAnglesDeg(angle * 180 / M_PI);
 }
 
+bool DrawPathTool::pickAngle(MapCoordF coord, MapWidget* widget)
+{
+	MapCoord snap_position;
+	bool picked = snap_helper.snapToDirection(coord, widget, angle_helper.data(), &snap_position);
+	if (picked)
+		angle_helper->setCenter(MapCoordF(snap_position));
+	else
+	{
+		updateAngleHelper();
+		angle_helper->setCenter(constrained_pos_map);
+	}
+	hidePreviewPoints();
+	updateDirtyRect();
+	return picked;
+}
+
 void DrawPathTool::updateSnapHelper()
 {
 	if (draw_in_progress)
@@ -690,17 +774,6 @@ void DrawPathTool::updateSnapHelper()
 void DrawPathTool::startAppending(SnappingToolHelper::SnapInfo& snap_info)
 {
 	append_to_object = snap_info.object->asPath();
-	
-	// Setup angle helper
-	angle_helper->setCenter(click_pos_map);
-	angle_helper->clearAngles();
-	bool ok = false;
-	MapCoordF tangent = PathCoord::calculateTangent(append_to_object->getRawCoordinateVector(), snap_info.coord_index, snap_info.coord_index > 0, ok);
-	if (ok)
-	{
-		angle_helper->addAngle(-tangent.getAngle());
-		angle_helper->addAngle(-tangent.getAngle() + M_PI);
-	}
 }
 
 void DrawPathTool::startFollowing(SnappingToolHelper::SnapInfo& snap_info, const MapCoord& snap_coord)
@@ -764,6 +837,8 @@ void DrawPathTool::finishFollowing()
 	}
 	else
 		previous_point_is_curve_point = false;
+	
+	updateAngleHelper();
 }
 
 float DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map)
@@ -784,7 +859,14 @@ void DrawPathTool::updateStatusText()
 		text += tr("<b>Dash points on.</b> ");
 	
 	if (!draw_in_progress)
-		text += tr("<b>Click</b> to start a polygonal segment, <b>Drag</b> to start a curve. Hold <u>Shift</u> to snap or append to existing objects.");
+	{
+		if (shift_pressed)
+			text += tr("<u>Shift</u>: snap or append to existing objects");
+		else if (ctrl_pressed)
+			text += tr("<b>Ctrl + Click</b>: pick direction from existing objects");
+		else
+			text += tr("<b>Click</b> to start a polygonal segment, <b>Drag</b> to start a curve. More: <u>Shift</u>, <u>Ctrl</u>");
+	}
 	else
 	{
 		if (shift_pressed)

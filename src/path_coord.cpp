@@ -375,9 +375,9 @@ MapCoordF PathCoord::calculateTangent(const MapCoordVectorF& coords, int i, bool
 	
 	ok = true;
 	if (backward)
-		return calculateIncomingTangent(coords, false, i, ok);
+		return calculateIncomingTangent(coords, false, i, ok); // TODO: correctly set path_closed parameter
 	else
-		return calculateOutgoingTangent(coords, false, i, ok);
+		return calculateOutgoingTangent(coords, false, i, ok); // TODO: correctly set path_closed parameter
 }
 
 MapCoordF PathCoord::calculateIncomingTangent(const MapCoordVectorF& coords, bool path_closed, int i, bool& ok)

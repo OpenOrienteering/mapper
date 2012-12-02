@@ -60,6 +60,7 @@ protected:
 	virtual void abortDrawing();
 	void undoLastPoint();
 	void updateAngleHelper();
+	bool pickAngle(MapCoordF coord, MapWidget* widget);
 	void updateSnapHelper();
 	
 	void startAppending(SnappingToolHelper::SnapInfo& snap_info);
@@ -90,6 +91,9 @@ protected:
 	
 	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
 	bool left_mouse_down;
+	bool ctrl_pressed;
+	bool picking_angle;
+	bool picked_angle;
 	MapCoordF constrained_pos_map;
 	
 	SnappingToolHelper snap_helper;
