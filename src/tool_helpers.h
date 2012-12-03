@@ -165,6 +165,8 @@ private:
 };
 
 
+struct SnappingToolHelperSnapInfo;
+
 /// Helper class to snap to existing objects or a grid on the map
 class SnappingToolHelper : public QObject
 {
@@ -180,19 +182,6 @@ public:
 		AllTypes = 1 + 2 + 4
 	};
 	
-	/// Information returned from a snap process
-	struct SnapInfo
-	{
-		/// Type of object snapped onto
-		SnapObjects type;
-		/// Object snapped onto, if type is ObjectCorners or ObjectPaths, else NULL
-		Object* object;
-		/// Index of the coordinate which was snapped onto if type is ObjectCorners, else -1 (not snapped to a specific coordinate)
-		int coord_index;
-		/// The closest point on the snapped path is returned in path_coord if type == ObjectPaths
-		PathCoord path_coord;
-	};
-	
 	/// Constructs a snapping tool helper. By default it is disabled (filter set to NoSnapping).
 	SnappingToolHelper(Map* map, SnapObjects filter = NoSnapping);
 	
@@ -203,7 +192,7 @@ public:
 	/// Snaps the given position to the closest snapping object, or returns the original position if no snapping object is close enough.
 	/// Internally remembers the position so the next call to draw() will draw the snap mark there.
 	/// If the info parameter is set, information about the object snapped onto is returned there.
-	MapCoord snapToObject(MapCoordF position, MapWidget* widget, SnapInfo* info = NULL);
+	MapCoord snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info = NULL);
 	
 	/// Checks for existing objects in map at position and if one is found,
 	/// returns true and sets related angles in angle_tool.
@@ -228,6 +217,19 @@ private:
 	MapCoord snap_mark;
 	
 	Map* map;
+};
+
+/// Information returned from a snap process from SnappingToolHelper
+struct SnappingToolHelperSnapInfo
+{
+	/// Type of object snapped onto
+	SnappingToolHelper::SnapObjects type;
+	/// Object snapped onto, if type is ObjectCorners or ObjectPaths, else NULL
+	Object* object;
+	/// Index of the coordinate which was snapped onto if type is ObjectCorners, else -1 (not snapped to a specific coordinate)
+	int coord_index;
+	/// The closest point on the snapped path is returned in path_coord if type == ObjectPaths
+	PathCoord path_coord;
 };
 
 

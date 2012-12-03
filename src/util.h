@@ -52,6 +52,12 @@ inline QRectF infinteRectF()
 	return QRectF(-10e10, -10e10, 20e10, 20e10);
 }
 
+/// Like fmod(x, y), but works correctly for negative x
+inline double fmod_pos(double x, double y)
+{
+	return x - y * floor(x / y);
+}
+
 /// Enlarges the rect to include the given point
 void rectInclude(QRectF& rect, MapCoordF point); // does not work if rect is invalid
 void rectInclude(QRectF& rect, QPointF point); // does not work if rect is invalid

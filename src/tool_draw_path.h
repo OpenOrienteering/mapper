@@ -24,7 +24,11 @@
 #include <QScopedPointer>
 
 #include "tool_draw_line_and_area.h"
-#include "tool_helpers.h"
+
+class ConstrainAngleToolHelper;
+class SnappingToolHelper;
+class SnappingToolHelperSnapInfo;
+class FollowPathToolHelper;
 
 /// Tool to draw path objects
 class DrawPathTool : public DrawLineAndAreaTool
@@ -32,6 +36,7 @@ class DrawPathTool : public DrawLineAndAreaTool
 Q_OBJECT
 public:
 	DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget, bool allow_closing_paths);
+    virtual ~DrawPathTool();
 	
     virtual void init();
     virtual QCursor* getCursor() {return cursor;}
@@ -63,9 +68,9 @@ protected:
 	bool pickAngle(MapCoordF coord, MapWidget* widget);
 	void updateSnapHelper();
 	
-	void startAppending(SnappingToolHelper::SnapInfo& snap_info);
+	void startAppending(SnappingToolHelperSnapInfo& snap_info);
 	
-	void startFollowing(SnappingToolHelper::SnapInfo& snap_info, const MapCoord& snap_coord);
+	void startFollowing(SnappingToolHelperSnapInfo& snap_info, const MapCoord& snap_coord);
 	void updateFollowing();
 	void finishFollowing();
 	
@@ -96,7 +101,7 @@ protected:
 	bool picked_angle;
 	MapCoordF constrained_pos_map;
 	
-	SnappingToolHelper snap_helper;
+	QScopedPointer<SnappingToolHelper> snap_helper;
 	bool shift_pressed;
 	MapWidget* cur_map_widget;
 	
@@ -104,7 +109,7 @@ protected:
 	PathObject* append_to_object;
 	
 	bool following;
-	FollowPathToolHelper follow_helper;
+	QScopedPointer<FollowPathToolHelper> follow_helper;
 	PathObject* follow_object;
 	int follow_start_index;
 };

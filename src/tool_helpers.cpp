@@ -674,12 +674,12 @@ SnappingToolHelper::SnapObjects SnappingToolHelper::getFilter() const
 	return filter;
 }
 
-MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget, SnapInfo* info)
+MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info)
 {
 	const float snap_distance = 0.001f * widget->getMapView()->pixelToLength(Settings::getInstance().getSettingCached(Settings::MapEditor_SnapDistance).toInt());
 	float closest_distance_sq = snap_distance * snap_distance;
 	MapCoord result_position = position.toMapCoord();
-	SnapInfo result_info;
+	SnappingToolHelperSnapInfo result_info;
 	result_info.type = NoSnapping;
 	result_info.object = NULL;
 	result_info.coord_index = -1;
@@ -798,7 +798,7 @@ bool SnappingToolHelper::snapToDirection(MapCoordF position, MapWidget* widget, 
 	filter = (SnapObjects)(filter & ~filter_grid);
 	
 	// Snap to position
-	SnapInfo info;
+	SnappingToolHelperSnapInfo info;
 	MapCoord snap_position = snapToObject(position, widget, &info);
 	if (out_snap_position)
 		*out_snap_position = snap_position;

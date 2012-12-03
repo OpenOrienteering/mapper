@@ -25,7 +25,8 @@
 
 #include <QScopedPointer>
 
-#include "tool_helpers.h"
+class ConstrainAngleToolHelper;
+class SnappingToolHelper;
 
 /// Tool to draw rectangles
 class DrawRectangleTool : public DrawLineAndAreaTool
@@ -33,6 +34,7 @@ class DrawRectangleTool : public DrawLineAndAreaTool
 Q_OBJECT
 public:
 	DrawRectangleTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
+    virtual ~DrawRectangleTool();
 	
 	virtual void init();
 	virtual QCursor* getCursor() {return cursor;}
@@ -53,16 +55,17 @@ protected slots:
 	void updateDirtyRect();
 	
 protected:
-	void finishRectangleDrawing();
 	virtual void finishDrawing();
 	virtual void abortDrawing();
 	void undoLastPoint();
+	void pickDirection(MapCoordF coord, MapWidget* widget);
+	bool drawingParallelTo(double angle);
 	
+	void updateCloseVector();
+	void deleteClosePoint();
 	void updateRectangle();
-	void updatePreview();
 	void updateStatusText();
 	
-	QPoint mouse_press_pos;
 	QPoint click_pos;
 	MapCoordF click_pos_map;
 	QPoint cur_pos;
@@ -70,15 +73,20 @@ protected:
 	MapCoordF constrained_pos_map;
 	bool dragging;
 	bool draw_dash_points;
+	bool ctrl_pressed;
+	bool picked_direction;
 	
-	bool second_point_set;
-	bool third_point_set;
+	/// List of angles for first, second, etc. edge.
+	/// Includes the currently edited angle.
+	/// The index of currently edited point in preview_path is angles.size().
+	std::vector< double > angles;
+	/// Vector in forward drawing direction
 	MapCoordF forward_vector;
+	/// Direction from current drawing perpendicular to the start point
 	MapCoordF close_vector;
-	bool new_corner_needed;
-	bool delete_start_point;
 	
 	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
+	QScopedPointer<SnappingToolHelper> snap_helper;
 };
 
 #endif
