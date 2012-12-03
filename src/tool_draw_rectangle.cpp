@@ -304,8 +304,6 @@ bool DrawRectangleTool::keyReleaseEvent(QKeyEvent* event)
 
 void DrawRectangleTool::draw(QPainter* painter, MapWidget* widget)
 {
-	const bool use_preview_radius = Settings::getInstance().getSettingCached(Settings::RectangleTool_PreviewLineWidth).toBool();
-	
 	drawPreviewObjects(painter, widget);
 	
 	if (draw_in_progress)
@@ -323,6 +321,11 @@ void DrawRectangleTool::draw(QPainter* painter, MapWidget* widget)
 		}
 		
 		// Helper cross
+		bool use_preview_radius = Settings::getInstance().getSettingCached(Settings::RectangleTool_PreviewLineWidth).toBool();
+		const double preview_radius_min_pixels = 2.5;
+		if (widget->getMapView()->lengthToPixel(preview_point_radius) < preview_radius_min_pixels)
+			use_preview_radius = false;
+		
 		int helper_cross_radius = Settings::getInstance().getSettingCached(Settings::RectangleTool_HelperCrossRadius).toInt();
 		painter->setRenderHint(QPainter::Antialiasing);
 		
