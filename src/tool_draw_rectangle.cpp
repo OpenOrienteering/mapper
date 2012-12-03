@@ -43,7 +43,9 @@ DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_
    angle_helper(new ConstrainAngleToolHelper()),
    snap_helper(new SnappingToolHelper(editor->getMap()))
 {
+	cur_map_widget = editor->getMainWidget();
 	draw_dash_points = true;
+	shift_pressed = false;
 	ctrl_pressed = false;
 	picked_direction = false;
 	snapped_to_line = false;
@@ -69,20 +71,24 @@ void DrawRectangleTool::init()
 
 bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	cur_map_widget = widget;
 	if (event->button() == Qt::LeftButton || (draw_in_progress && drawMouseButtonClicked(event)))
 	{
 		dragging = false;
 		click_pos = event->pos();
 		click_pos_map = map_coord;
-		cur_pos = click_pos;
+		cur_pos = event->pos();
 		cur_pos_map = click_pos_map;
+		if (shift_pressed)
+			cur_pos_map = MapCoordF(snap_helper->snapToObject(cur_pos_map, widget));
+		constrained_pos_map = cur_pos_map;
 		
 		if (!draw_in_progress)
 		{
 			if (ctrl_pressed)
 			{
 				// Pick direction
-				pickDirection(map_coord, widget);
+				pickDirection(cur_pos_map, widget);
 			}
 			else
 			{
@@ -90,7 +96,7 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 				if (angle_helper->isActive())
 					angle_helper->setCenter(click_pos_map);
 				startDrawing();
-				MapCoord coord = map_coord.toMapCoord();
+				MapCoord coord = cur_pos_map.toMapCoord();
 				coord.setDashPoint(draw_dash_points);
 				preview_path->addCoordinate(coord);
 				preview_path->addCoordinate(coord);
@@ -114,7 +120,7 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 			if (preview_path->getCoordinate(cur_point_index).isPositionEqualTo(preview_path->getCoordinate(cur_point_index - 1)))
 				return true;
 			
-			MapCoord coord = map_coord.toMapCoord();
+			MapCoord coord = cur_pos_map.toMapCoord();
 			coord.setDashPoint(draw_dash_points);
 			preview_path->addCoordinate(coord);
 			if (angles.size() == 1)
@@ -132,7 +138,7 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 	}
 	else if (event->button() == Qt::RightButton && draw_in_progress)
 	{
-		cur_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
+		constrained_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
 		undoLastPoint();
 		if (draw_in_progress)
 			finishDrawing();
@@ -143,44 +149,53 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 }
 bool DrawRectangleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	bool mouse_down = drawMouseButtonHeld(event);
+	cur_pos = event->pos();
+	cur_pos_map = map_coord;
+	constrained_pos_map = cur_pos_map;
+	updateHover(drawMouseButtonHeld(event));
+	return true;
+}
+
+void DrawRectangleTool::updateHover(bool mouse_down)
+{
+	if (shift_pressed)
+		constrained_pos_map = MapCoordF(snap_helper->snapToObject(cur_pos_map, cur_map_widget));
+	else
+		constrained_pos_map = cur_pos_map;
 	
 	if (!draw_in_progress)
 	{
-		setPreviewPointsPosition(map_coord);
+		setPreviewPointsPosition(constrained_pos_map);
 		updateDirtyRect();
 		
 		if (mouse_down && ctrl_pressed)
-			pickDirection(map_coord, widget);
+			pickDirection(constrained_pos_map, cur_map_widget);
 		else if (!mouse_down)
-			angle_helper->setCenter(map_coord);
+			angle_helper->setCenter(constrained_pos_map);
 	}
 	else
 	{
 		hidePreviewPoints();
-		
-		cur_pos = event->pos();
-		cur_pos_map = map_coord;
-		
-		if (mouse_down && !dragging && (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance())
+		if (mouse_down && !dragging && (cur_pos - click_pos).manhattanLength() >= QApplication::startDragDistance())
 		{
 			// Start dragging
 			dragging = true;
 		}
-		
 		updateRectangle();
 	}
-
-	return true;
 }
+
 bool DrawRectangleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
+	if (shift_pressed)
+		cur_pos_map = MapCoordF(snap_helper->snapToObject(cur_pos_map, widget));
+	constrained_pos_map = cur_pos_map;
 	
 	if (ctrl_pressed && event->button() == Qt::LeftButton && !draw_in_progress)
 	{
-		pickDirection(map_coord, widget);
+		pickDirection(cur_pos_map, widget);
 		return true;
 	}
 	
@@ -190,7 +205,7 @@ bool DrawRectangleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 		if (drawMouseButtonClicked(event) && dragging)
 		{
 			dragging = false;
-			result = mousePressEvent(event, map_coord, widget);
+			result = mousePressEvent(event, cur_pos_map, widget);
 		}
 		
 		if (event->button() == Qt::RightButton && Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool())
@@ -247,6 +262,12 @@ bool DrawRectangleTool::keyPressEvent(QKeyEvent* event)
 		}
 		updateStatusText();
 	}
+	else if (event->key() == Qt::Key_Shift)
+	{
+		shift_pressed = true;
+		updateHover(false);
+		updateStatusText();
+	}
 	else
 		return false;
 	return true;
@@ -262,8 +283,18 @@ bool DrawRectangleTool::keyReleaseEvent(QKeyEvent* event)
 			if (dragging && draw_in_progress)
 				updateRectangle();
 		}
+		else if (draw_in_progress && angles.size() > 2)
+		{
+			updateRectangle();
+		}
 		if (picked_direction)
 			picked_direction = false;
+		updateStatusText();
+	}
+	else if (event->key() == Qt::Key_Shift)
+	{
+		shift_pressed = false;
+		updateHover(false);
 		updateStatusText();
 	}
 	else
@@ -328,6 +359,9 @@ void DrawRectangleTool::draw(QPainter* painter, MapWidget* widget)
 	}
 	
 	angle_helper->draw(painter, widget);
+	
+	if (shift_pressed)
+		snap_helper->draw(painter, widget);
 }
 
 void DrawRectangleTool::finishDrawing()
@@ -424,7 +458,7 @@ void DrawRectangleTool::deleteClosePoint()
 
 void DrawRectangleTool::updateRectangle()
 {
-	double angle = angle_helper->getConstrainedCursorPosMap(cur_pos_map, constrained_pos_map);
+	double angle = angle_helper->getConstrainedCursorPosMap(constrained_pos_map, constrained_pos_map);
 	
 	if (angles.size() == 1)
 	{
@@ -529,6 +563,8 @@ void DrawRectangleTool::updateDirtyRect()
 	QRectF rect;
 	includePreviewRects(rect);
 	
+	if (shift_pressed)
+		snap_helper->includeDirtyRect(rect);
 	if (is_helper_tool)
 		emit(dirtyRectChanged(rect));
 	else
@@ -563,10 +599,15 @@ void DrawRectangleTool::updateStatusText()
 			text += tr("<b>Ctrl + Click</b>: pick direction from existing objects");
 			show_dashpoint_text = false;
 		}
+		else if (shift_pressed)
+		{
+			text += tr("<b>Shift</b>: snap to existing objects");
+			show_dashpoint_text = false;
+		}
 		else
 		{
 			text += tr("<b>Click or Drag</b> to start drawing a rectangle");	
-			text_more += tr("(More: <u>Ctrl</u>)");
+			text_more += tr("(More: <u>Ctrl</u>, <u>Shift</u>)");
 		}
 	}
 	else
@@ -579,10 +620,15 @@ void DrawRectangleTool::updateStatusText()
 				text += tr("<u>Ctrl</u>: snap to previous lines");
 			show_dashpoint_text = false;
 		}
+		else if (shift_pressed)
+		{
+			text += tr("<b>Shift</b>: snap to existing objects");
+			show_dashpoint_text = false;
+		}
 		else
 		{
 			text += tr("<b>Click</b> to set a corner point, <b>Right or double click</b> to finish the rectangle, <b>Backspace</b> to undo, <b>Esc</b> to abort");
-			text_more += tr("(More: <u>Ctrl</u>)");
+			text_more += tr("(More: <u>Ctrl</u>, <u>Shift</u>)");
 		}
 	}
 	

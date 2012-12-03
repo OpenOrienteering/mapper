@@ -61,6 +61,7 @@ protected:
 	void pickDirection(MapCoordF coord, MapWidget* widget);
 	bool drawingParallelTo(double angle);
 	
+	void updateHover(bool mouse_down);
 	void updateCloseVector();
 	void deleteClosePoint();
 	void updateRectangle();
@@ -73,6 +74,7 @@ protected:
 	MapCoordF constrained_pos_map;
 	bool dragging;
 	bool draw_dash_points;
+	bool shift_pressed;
 	bool ctrl_pressed;
 	bool picked_direction;
 	bool snapped_to_line;
@@ -90,6 +92,7 @@ protected:
 	
 	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
 	QScopedPointer<SnappingToolHelper> snap_helper;
+	MapWidget* cur_map_widget;
 };
 
 #endif
