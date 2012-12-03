@@ -75,6 +75,9 @@ protected:
 	bool draw_dash_points;
 	bool ctrl_pressed;
 	bool picked_direction;
+	bool snapped_to_line;
+	MapCoord snapped_to_line_a;
+	MapCoord snapped_to_line_b;
 	
 	/// List of angles for first, second, etc. edge.
 	/// Includes the currently edited angle.

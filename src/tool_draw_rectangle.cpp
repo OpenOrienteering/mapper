@@ -20,6 +20,8 @@
 
 #include "tool_draw_rectangle.h"
 
+#include <limits>
+
 #if QT_VERSION < 0x050000
 #include <QtGui>
 #else
@@ -44,6 +46,7 @@ DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_
 	draw_dash_points = true;
 	ctrl_pressed = false;
 	picked_direction = false;
+	snapped_to_line = false;
 	
 	angle_helper->addDefaultAnglesDeg(0);
 	angle_helper->setActive(false);
@@ -237,6 +240,11 @@ bool DrawRectangleTool::keyPressEvent(QKeyEvent* event)
 			if (dragging)
 				updateRectangle();
 		}
+		else if (draw_in_progress && angles.size() > 2)
+		{
+			// Try to snap to existing lines
+			updateRectangle();
+		}
 		updateStatusText();
 	}
 	else
@@ -271,6 +279,19 @@ void DrawRectangleTool::draw(QPainter* painter, MapWidget* widget)
 	
 	if (draw_in_progress)
 	{
+		// Snap line
+		if (snapped_to_line)
+		{
+			// Simple hack to make line extend over the whole screen in most cases
+			const float scale_factor = 100;
+			MapCoord a = snapped_to_line_b + (snapped_to_line_a - snapped_to_line_b) * scale_factor;
+			MapCoord b = snapped_to_line_b - (snapped_to_line_a - snapped_to_line_b) * scale_factor;
+			
+			painter->setPen(selection_color);
+			painter->drawLine(widget->mapToViewport(a), widget->mapToViewport(b));
+		}
+		
+		// Helper cross
 		int helper_cross_radius = Settings::getInstance().getSettingCached(Settings::RectangleTool_HelperCrossRadius).toInt();
 		painter->setRenderHint(QPainter::Antialiasing);
 		
@@ -434,6 +455,59 @@ void DrawRectangleTool::updateRectangle()
 		
 		float forward_dist = forward_vector.dot(constrained_pos_map - MapCoordF(preview_path->getCoordinate(cur_point_index - 1)));
 		MapCoord coord = preview_path->getCoordinate(cur_point_index - 1) + (forward_dist * forward_vector).toMapCoord();
+		
+		snapped_to_line = false;
+		float best_snap_distance_sq = std::numeric_limits<float>::max();
+		if (ctrl_pressed && angles.size() > 2)
+		{
+			// Try to snap to existing lines
+			MapCoord original_coord = coord;
+			for (int i = 0; i < (int)angles.size() - 1; ++i)
+			{
+				MapCoordF direction(100, 0);
+				direction.rotate(-angles[i]);
+				
+				int num_steps;
+				double angle_step, angle_offset = 0;
+				if (i == 0 || qAbs(qAbs(fmod_pos(angles[i], M_PI) - fmod_pos(angles[i-1], M_PI)) - (M_PI / 2)) < 0.1)
+				{
+					num_steps = 2;
+					angle_step = M_PI/2;
+				}
+				else
+				{
+					num_steps = 4;
+					angle_step = M_PI/4;
+				}
+				
+				for (int k = 0; k < num_steps; ++k)
+				{
+					if (qAbs(fmod_pos(angle, M_PI) - fmod_pos(angles[i] - (angle_offset + k * angle_step), M_PI)) < 0.1)
+						continue;
+					
+					MapCoordF rotated_direction = direction;
+					rotated_direction.rotate(angle_offset + k * angle_step);
+					
+					QLineF a(preview_path->getCoordinate(cur_point_index - 1).toQPointF(), (MapCoordF(preview_path->getCoordinate(cur_point_index - 1)) + forward_vector).toQPointF());
+					QLineF b(preview_path->getCoordinate(i).toQPointF(), (MapCoordF(preview_path->getCoordinate(i)) + rotated_direction).toQPointF());
+					QPointF intersection_point;
+					QLineF::IntersectType intersection_type = a.intersect(b, &intersection_point);
+					if (intersection_type == QLineF::NoIntersection)
+						continue;
+					
+					float snap_distance_sq = original_coord.lengthSquaredTo(MapCoord(intersection_point));
+					if (snap_distance_sq > best_snap_distance_sq)
+						continue;
+					
+					best_snap_distance_sq = snap_distance_sq;
+					coord = MapCoord(intersection_point);
+					snapped_to_line_a = coord;
+					snapped_to_line_b = coord + rotated_direction.toMapCoord();
+					snapped_to_line = true;
+				}
+			}
+		}
+		
 		coord.setDashPoint(draw_dash_points);
 		preview_path->setCoordinate(cur_point_index, coord);
 		
@@ -497,9 +571,19 @@ void DrawRectangleTool::updateStatusText()
 	}
 	else
 	{
-		text += tr("<b>Click</b> to set a corner point, <b>Right or double click</b> to finish the rectangle, <b>Backspace</b> to undo, <b>Esc</b> to abort");
-		if (angles.size() == 1)
-			text += ", " + tr("<u>Ctrl</u> for fixed angles");
+		if (ctrl_pressed)
+		{
+			if (angles.size() == 1)
+				text += tr("<u>Ctrl</u>: fixed angles");
+			else
+				text += tr("<u>Ctrl</u>: snap to previous lines");
+			show_dashpoint_text = false;
+		}
+		else
+		{
+			text += tr("<b>Click</b> to set a corner point, <b>Right or double click</b> to finish the rectangle, <b>Backspace</b> to undo, <b>Esc</b> to abort");
+			text_more += tr("(More: <u>Ctrl</u>)");
+		}
 	}
 	
 	if (show_dashpoint_text)
