@@ -150,7 +150,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
  		endif (CPACK_LSB_RELEASE STREQUAL "precise")
 		add_custom_target(package_repair
 		  COMMENT "Rebuilding DEB package"
-		  COMMAND dpkg-deb -R "${CPACK_PACKAGE_FILE_NAME}.deb" "${CPACK_PACKAGE_FILE_NAME}"
+		  COMMAND dpkg-deb -R "${PROJECT_BINARY_DIR}/${CPACK_PACKAGE_FILE_NAME}.deb" "${CPACK_PACKAGE_FILE_NAME}"
 		  COMMAND /usr/bin/fakeroot dpkg-deb -b "${CPACK_PACKAGE_FILE_NAME}"
 		  COMMAND rm -R "${CPACK_PACKAGE_FILE_NAME}")
 	
