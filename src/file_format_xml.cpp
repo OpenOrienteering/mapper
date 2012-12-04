@@ -316,6 +316,8 @@ void XMLFileExporter::exportPrint()
 			xml.writeAttribute("templates_visible", "true");
 		if (map->print_show_grid)
 			xml.writeAttribute("grid_visible", "true");
+		if (map->print_simulate_overprinting)
+			xml.writeAttribute("simulate_overprinting", "true");
 		if (map->print_center)
 			xml.writeAttribute("center", "true");
 		xml.writeAttribute("area_left", QString::number(map->print_area_left));
@@ -709,6 +711,7 @@ void XMLFileImporter::importPrint()
 	map->print_dpi = attributes.value("dpi").toString().toFloat();
 	map->print_show_templates = (attributes.value("templates_visible") == "true");
 	map->print_show_grid = (attributes.value("grid_visible") == "true");
+	map->print_simulate_overprinting = (attributes.value("simulate_overprinting") == "true");
 	map->print_center = (attributes.value("center") == "true");
 	map->print_area_left = attributes.value("area_left").toString().toFloat();
 	map->print_area_top = attributes.value("area_top").toString().toFloat();

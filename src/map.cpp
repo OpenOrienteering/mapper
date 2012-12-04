@@ -733,6 +733,7 @@ void Map::clear()
 	map_notes = "";
 	
 	print_params_set = false;
+	print_simulate_overprinting = false;
 	image_template_use_meters_per_pixel = true;
 	image_template_meters_per_pixel = 0;
 	image_template_dpi = 0;
@@ -1806,9 +1807,10 @@ void Map::setGeoreferencing(const Georeferencing& georeferencing)
 	*this->georeferencing = georeferencing;
 }
 
-void Map::setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool show_grid, bool center, float left, float top, float width, float height, bool different_scale_enabled, int different_scale)
+void Map::setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool show_grid, bool simulate_overprinting, bool center, float left, float top, float width, float height, bool different_scale_enabled, int different_scale)
 {
-	if ((print_orientation != orientation) || (print_format != format) || (print_dpi != dpi) || (print_show_templates != show_templates) ||
+	if ((print_orientation != orientation) || (print_format != format) || (print_dpi != dpi) || 
+		(print_show_templates != show_templates) || (print_show_grid != show_grid) || (print_simulate_overprinting != simulate_overprinting) ||
 		(print_center != center) || (print_area_left != left) || (print_area_top != top) || (print_area_width != width) || (print_area_height != height))
 		setHasUnsavedChanges();
 
@@ -1817,6 +1819,7 @@ void Map::setPrintParameters(int orientation, int format, float dpi, bool show_t
 	print_dpi = dpi;
 	print_show_templates = show_templates;
 	print_show_grid = show_grid;
+	print_simulate_overprinting = simulate_overprinting;
 	print_center = center;
 	print_area_left = left;
 	print_area_top = top;
@@ -1827,13 +1830,14 @@ void Map::setPrintParameters(int orientation, int format, float dpi, bool show_t
 	
 	print_params_set = true;
 }
-void Map::getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& show_grid, bool& center, float& left, float& top, float& width, float& height, bool& different_scale_enabled, int& different_scale)
+void Map::getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& show_grid, bool &simulate_overprinting, bool& center, float& left, float& top, float& width, float& height, bool& different_scale_enabled, int& different_scale)
 {
 	orientation = print_orientation;
 	format = print_format;
 	dpi = print_dpi;
 	show_templates = print_show_templates;
 	show_grid = print_show_grid;
+	simulate_overprinting = print_simulate_overprinting;
 	center = print_center;
 	left = print_area_left;
 	top = print_area_top;

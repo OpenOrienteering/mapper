@@ -186,15 +186,15 @@ bool FileFormatTest::compareMaps(Map* a, Map* b, QString& error)
 	{
 		int a_orientation, a_prev_paper_size;
 		float a_dpi, a_left, a_top, a_width, a_height;
-		bool a_show_templates, a_show_grid, a_center, a_different_scale_enabled;
+		bool a_show_templates, a_show_grid, a_simulate_overprinting, a_center, a_different_scale_enabled;
 		int a_different_scale;
-		a->getPrintParameters(a_orientation, a_prev_paper_size, a_dpi, a_show_templates, a_show_grid, a_center, a_left, a_top, a_width, a_height, a_different_scale_enabled, a_different_scale);
+		a->getPrintParameters(a_orientation, a_prev_paper_size, a_dpi, a_show_templates, a_show_grid, a_simulate_overprinting, a_center, a_left, a_top, a_width, a_height, a_different_scale_enabled, a_different_scale);
 		
 		int b_orientation, b_prev_paper_size;
 		float b_dpi, b_left, b_top, b_width, b_height;
-		bool b_show_templates, b_show_grid, b_center, b_different_scale_enabled;
+		bool b_show_templates, b_show_grid, b_simulate_overprinting, b_center, b_different_scale_enabled;
 		int b_different_scale;
-		b->getPrintParameters(b_orientation, b_prev_paper_size, b_dpi, b_show_templates, b_show_grid, b_center, b_left, b_top, b_width, b_height, b_different_scale_enabled, b_different_scale);
+		b->getPrintParameters(b_orientation, b_prev_paper_size, b_dpi, b_show_templates, b_show_grid, b_simulate_overprinting, b_center, b_left, b_top, b_width, b_height, b_different_scale_enabled, b_different_scale);
 		
 		if (a_orientation != b_orientation ||
 			a_prev_paper_size != b_prev_paper_size ||
@@ -205,6 +205,7 @@ bool FileFormatTest::compareMaps(Map* a, Map* b, QString& error)
 			a_height != b_height ||
 			a_show_templates != b_show_templates ||
 			a_show_grid != b_show_grid ||
+			a_simulate_overprinting != b_simulate_overprinting ||
 			a_center != b_center ||
 			a_different_scale_enabled != b_different_scale_enabled ||
 			a_different_scale != b_different_scale)

@@ -45,11 +45,11 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	bool params_set = map->arePrintParametersSet();
 	int orientation;
 	float dpi, left, top, width, height;
-	bool show_templates, show_grid, center, different_scale_enabled;
+	bool show_templates, show_grid, simulate_overprinting, center, different_scale_enabled;
 	int different_scale;
 	if (params_set)
 	{
-		map->getPrintParameters(orientation, prev_paper_size, dpi, show_templates, show_grid, center, left, top, width, height, different_scale_enabled, different_scale);
+		map->getPrintParameters(orientation, prev_paper_size, dpi, show_templates, show_grid, simulate_overprinting, center, left, top, width, height, different_scale_enabled, different_scale);
 		have_prev_paper_size = true;
 	}
 	else
@@ -93,6 +93,10 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	show_grid_check = new QCheckBox(tr("Show grid"));
 	if (params_set)
 		show_grid_check->setChecked(show_grid);
+	
+	overprinting_check = new QCheckBox(tr("Simulate overprinting"));
+	if (params_set)
+		overprinting_check->setChecked(simulate_overprinting);
 	
 	QLabel* page_orientation_label = new QLabel(tr("Page orientation:"));
 	page_orientation_combo = new QComboBox();
@@ -166,6 +170,8 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	++row;
 	layout->addWidget(show_grid_check, row, 0, 1, 2);
 	++row;
+	layout->addWidget(overprinting_check, row, 0, 1, 2);
+	++row;
 	layout->addWidget(print_area_label, row, 0, 1, 2);
 	++row;
 	layout->addWidget(left_label, row, 0);
@@ -230,8 +236,8 @@ void PrintWidget::activate()
 void PrintWidget::closed()
 {
 	map->setPrintParameters(page_orientation_combo->itemData(page_orientation_combo->currentIndex()).toInt(),
-							page_format_combo->itemData(page_format_combo->currentIndex()).toInt(),
-							dpi_edit->text().toFloat(), show_templates_check->isChecked(), show_grid_check->isChecked(),
+							page_format_combo->itemData(page_format_combo->currentIndex()).toInt(), dpi_edit->text().toFloat(),
+							show_templates_check->isChecked(), show_grid_check->isChecked(), overprinting_check->isChecked(),
 							center_button->isChecked(), getPrintAreaLeft(), getPrintAreaTop(), print_width, print_height,
 							different_scale_check->isChecked(), qMax(1, different_scale_edit->text().toInt()));
 	editor->setOverrideTool(NULL);
@@ -340,6 +346,7 @@ void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& p
 	// If there is anything transparent to draw, use a temporary image which is drawn on the device printer as last step
 	// because painting transparently seems to be unsupported when printing
 	// TODO: This does convert all colors to RGB. Are colors printed as CMYK otherwise?
+	//   Desktop printer drivers use RGB AFAIK. Qt's PDF/PS printing supports RGB only -- Kai
 	bool have_transparency = main_view->getMapVisibility()->visible && main_view->getMapVisibility()->opacity < 1;
 	for (int i = 0; i < map->getNumTemplates() && !have_transparency; ++i)
 	{
@@ -347,10 +354,12 @@ void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& p
 		have_transparency = visibility->visible && visibility->opacity < 1;
 	}
 	
+	bool print_rgb_image = have_transparency || overprinting_check->isChecked();
+	
 	QPainter* painter = &device_painter;
 	QImage print_buffer;
 	QPainter print_buffer_painter;
-	if (have_transparency)
+	if (print_rgb_image)
 	{
 		print_buffer = QImage(paint_device->width(), paint_device->height(), QImage::Format_RGB32);
 		print_buffer_painter.begin(&print_buffer);
@@ -370,9 +379,10 @@ void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& p
 	
 	if (show_templates_check->isChecked())
 		map->drawTemplates(painter, map_extent, 0, map->getFirstFrontTemplate() - 1, main_view);
+	
 	if (main_view->getMapVisibility()->visible)
 	{
-		if (main_view->getMapVisibility()->opacity == 1)
+		if (!print_rgb_image)
 			map->draw(painter, map_extent, false, scale, false, false);
 		else
 		{
@@ -390,7 +400,10 @@ void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& p
 			
 			// Draw map with full opacity
 			buffer_painter.setTransform(painter->transform());
-			map->draw(&buffer_painter, map_extent, false, scale, false, false);
+			if (overprinting_check->isChecked())
+				map->drawOverprintingSimulation(&buffer_painter, map_extent, false, scale, false, false);
+			else
+				map->draw(&buffer_painter, map_extent, false, scale, false, false);
 			
 			buffer_painter.end();
 			
@@ -405,6 +418,7 @@ void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& p
 	}
 	if (show_grid_check->isChecked())
 		map->drawGrid(painter, print_area);
+	
 	if (show_templates_check->isChecked())
 		map->drawTemplates(painter, map_extent, map->getFirstFrontTemplate(), map->getNumTemplates() - 1, main_view);
 	

@@ -369,8 +369,8 @@ public:
 	inline void setBaselineViewEnabled(bool enabled) {baseline_view_enabled = enabled;}
 	
 	inline bool arePrintParametersSet() const {return print_params_set;}
-	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool show_grid, bool center, float left, float top, float width, float height, bool different_scale_enabled, int different_scale);
-	void getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& show_grid, bool& center, float& left, float& top, float& width, float& height, bool& different_scale_enabled, int& different_scale);
+	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool show_grid, bool simulate_overprinting, bool center, float left, float top, float width, float height, bool different_scale_enabled, int different_scale);
+	void getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& show_grid, bool &simulate_overprinting, bool& center, float& left, float& top, float& width, float& height, bool& different_scale_enabled, int& different_scale);
 	
 	void setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel, double dpi, double scale);
 	void getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel, double& dpi, double& scale);
@@ -503,6 +503,7 @@ private:
 	float print_dpi;
 	bool print_show_templates;
 	bool print_show_grid;
+	bool print_simulate_overprinting;
 	bool print_center;
 	float print_area_left;
 	float print_area_top;
