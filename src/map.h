@@ -64,7 +64,6 @@ class Map : public QObject
 {
 Q_OBJECT
 friend class MapRenderables;
-friend class MapWidget; // TODO: expose clean interface
 friend class OCAD8FileImport;
 friend class XMLFileImport;
 friend class NativeFileImport;
@@ -115,6 +114,11 @@ public:
 	
 	/// Draws the part of the map which is visible in the given bounding box in map coordinates
 	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity = 1.0);
+	/// Draws a spot color overprinting simualation for the part of the map which is visible in the given bounding box in map coordinates
+	void drawOverprintingSimulation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity = 1.0);
+	/// Draws a particular spot color for the part of the map which is visible in the given bounding box in map coordinates
+	/// This will not update the renderables of modified objects.
+	void drawColorSeparation(QPainter* painter, MapColor* spot_color, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity = 1.0);
 	/// Draws the map grid
 	void drawGrid(QPainter* painter, QRectF bounding_box);
 	/// Draws the templates first_template until last_template which are visible in the given bouding box.

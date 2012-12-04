@@ -304,6 +304,46 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 	painter->restore();
 }
 
+void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor, bool highlighted) const
+{
+	QTransform t = painter->worldTransform();
+	painter->save();
+	
+	painter->resetTransform();
+	painter->setCompositionMode(QPainter::CompositionMode_Multiply); // Alternative: CompositionMode_Darken
+	
+	float w = painter->device()->width();
+	float h = painter->device()->height();
+	QImage separation(w, h, QImage::Format_ARGB32_Premultiplied);
+	
+	for (Map::ColorVector::reverse_iterator map_color = map->color_set->colors.rbegin();
+	     map_color != map->color_set->colors.rend();
+	     map_color++)
+	{
+		if ((*map_color)->getSpotColorMethod() == MapColor::SpotColor)
+		{
+			separation.fill(QColor(Qt::white).rgba());
+			
+			// Collect all halftones and knockouts of a single color
+			QPainter p(&separation);
+			p.setRenderHints(painter->renderHints());
+			p.setWorldTransform(t, false);
+			map->drawColorSeparation(&p, *map_color, bounding_box, force_min_size, scaling, on_screen, true);
+			p.end();
+			
+			// draw the separation on the previous ones; CompositionMode_Multiply
+			painter->drawImage(0, 0, separation);
+		}
+	}
+	
+	painter->setWorldTransform(t, false);
+	painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
+	map->drawColorSeparation(painter, Map::getCoveringWhite(), bounding_box, force_min_size, scaling, on_screen, true);
+	map->drawColorSeparation(painter, Map::getCoveringRed(), bounding_box, force_min_size, scaling, on_screen, true);
+	
+	painter->restore();
+}
+
 void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor, bool highlighted) const
 {
 	Map::ColorVector& colors = map->color_set->colors;

@@ -136,7 +136,6 @@ private:
 	inline bool isBelowTemplateVisible() {return containsVisibleTemplate(0, view->getMap()->getFirstFrontTemplate() - 1);}
 	void updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first_template, int last_template, bool use_background);
 	void updateMapCache(bool use_background);
-	void updateMapCacheOverprintingSimulation(QPainter& painter, QRectF map_view_rect, bool use_antialiasing);
 	void updateAllDirtyCaches();
 	void shiftCache(int sx, int sy, QImage*& cache);
 	

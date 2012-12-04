@@ -754,6 +754,22 @@ void Map::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, floa
 	// The actual drawing
 	renderables->draw(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, opacity);
 }
+
+void Map::drawOverprintingSimulation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity)
+{
+	// Update the renderables of all objects marked as dirty
+	updateObjects();
+	
+	// The actual drawing
+	renderables->drawOverprintingSimulation(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, opacity);
+}
+
+void Map::drawColorSeparation(QPainter* painter, MapColor* spot_color, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity)
+{
+	// The actual drawing
+	renderables->drawColorSeparation(painter, spot_color, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, opacity);
+}
+
 void Map::drawGrid(QPainter* painter, QRectF bounding_box)
 {
 	grid->draw(painter, bounding_box, this);
