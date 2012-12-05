@@ -110,7 +110,7 @@ private:
 	QComboBox* page_orientation_combo;
 	QComboBox* page_format_combo;
 	QLabel* dpi_label;
-	QLineEdit* dpi_edit;
+	QComboBox* dpi_combo;
 	QLabel* copies_label;
 	QLineEdit* copies_edit;
 	QCheckBox* show_templates_check;

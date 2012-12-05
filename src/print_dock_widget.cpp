@@ -115,8 +115,10 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	page_format_combo = new QComboBox();
 	
 	dpi_label = new QLabel(tr("Dots per inch (dpi):"), this);
-	dpi_edit = new QLineEdit(params_set ? QString::number(dpi) : "600", this);
-	dpi_edit->setValidator(new QIntValidator(1, 999999, dpi_edit));
+	dpi_combo = new QComboBox(this);
+	dpi_combo->setEditable(true);
+	dpi_combo->setValidator(new QIntValidator(30, 9600, dpi_combo));
+	dpi_combo->lineEdit()->setText(params_set ? QString::number(dpi) : "600");
 	
 	copies_label = new QLabel(tr("Copies:"), this);
 	copies_edit = new QLineEdit("1", this);
@@ -161,7 +163,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	layout->addWidget(page_format_combo, row, 1);
 	++row;
 	layout->addWidget(dpi_label, row, 0);
-	layout->addWidget(dpi_edit, row, 1);
+	layout->addWidget(dpi_combo, row, 1);
 	++row;
 	layout->addWidget(copies_label, row, 0);
 	layout->addWidget(copies_edit, row, 1);
@@ -236,7 +238,7 @@ void PrintWidget::activate()
 void PrintWidget::closed()
 {
 	map->setPrintParameters(page_orientation_combo->itemData(page_orientation_combo->currentIndex()).toInt(),
-							page_format_combo->itemData(page_format_combo->currentIndex()).toInt(), dpi_edit->text().toFloat(),
+							page_format_combo->itemData(page_format_combo->currentIndex()).toInt(), dpi_combo->currentText().toFloat(),
 							show_templates_check->isChecked(), show_grid_check->isChecked(), overprinting_check->isChecked(),
 							center_button->isChecked(), getPrintAreaLeft(), getPrintAreaTop(), print_width, print_height,
 							different_scale_check->isChecked(), qMax(1, different_scale_edit->text().toInt()));
@@ -324,6 +326,7 @@ void PrintWidget::setPrinterSettings(QPrinter* printer)
 	else
 		printer->setPaperSize(paper_size);
 	printer->setColorMode(QPrinter::Color);
+	printer->setResolution(dpi_combo->currentText().toFloat());
 	if (!exporter)
 	{
 		int num_copies = qMin(1, copies_edit->text().toInt());
@@ -391,6 +394,7 @@ void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& p
 			QImage map_buffer(paint_device->width(), paint_device->height(), QImage::Format_ARGB32_Premultiplied);
 			QPainter buffer_painter;
 			buffer_painter.begin(&map_buffer);
+			buffer_painter.setRenderHints(painter->renderHints());
 			
 			// Clear buffer
 			QPainter::CompositionMode mode = buffer_painter.compositionMode();
@@ -449,15 +453,34 @@ void PrintWidget::currentDeviceChanged()
 	bool exporter = index < 0;
 	bool image_exporter = index == (int)ImageExporter;
 	
-	// First hide everything, then show selected widgets again. This prevents the widget from resizing.
-	dpi_label->hide();
-	dpi_edit->hide();
-	copies_label->hide();
-	copies_edit->hide();
-	dpi_label->setVisible(image_exporter);
-	dpi_edit->setVisible(image_exporter);
-	copies_label->setVisible(!exporter);
-	copies_edit->setVisible(!exporter);
+	QStringList resolutions;
+	static QStringList default_resolutions = QString("150,300,600,1200").split(",");
+	if (exporter)
+	{
+		resolutions = default_resolutions;
+	}
+	else
+	{
+		QPrinter pr(printers[index], QPrinter::HighResolution);
+		QList<int> supported_resolutions = pr.supportedResolutions();
+		if (supported_resolutions.size() == 1 && supported_resolutions[0] == 72)
+		{
+			// X11/CUPS
+			resolutions = default_resolutions;
+		}
+		else if (supported_resolutions.size() > 0)
+		{
+			Q_FOREACH(int res, pr.supportedResolutions())
+				resolutions << QString::number(res);
+		}
+	}
+	QString dpi_value = dpi_combo->currentText();
+	dpi_combo->clear();
+	dpi_combo->insertItems(0, resolutions);
+	dpi_combo->lineEdit()->setText(dpi_value);
+	
+	copies_label->setEnabled(!exporter);
+	copies_edit->setEnabled(!exporter);
 	
 	preview_button->setEnabled(!exporter);
 	different_scale_check->setText(exporter ? tr("Export in different scale 1 :") : tr("Print in different scale 1 :"));
@@ -710,7 +733,7 @@ void PrintWidget::printClicked()
 			!path.endsWith(".tiff", Qt::CaseInsensitive) && !path.endsWith(".jpeg", Qt::CaseInsensitive))
 			path.append(".png");
 		
-		float dpi = dpi_edit->text().toFloat();
+		float dpi = dpi_combo->currentText().toFloat();
 		float pixel_per_mm = dpi / 25.4f;
 		
 		QImage image(print_width * pixel_per_mm, print_height * pixel_per_mm, QImage::Format_ARGB32_Premultiplied);
