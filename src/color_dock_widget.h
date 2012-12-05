@@ -34,7 +34,7 @@ class Map;
 class MapColor;
 class PaletteColor;
 
-class ColorWidget : public EditorDockWidgetChild
+class ColorWidget : public QWidget
 {
 Q_OBJECT
 

@@ -41,7 +41,7 @@ class Template;
 class MapView;
 class MapEditorController;
 
-class TemplateWidget : public EditorDockWidgetChild
+class TemplateWidget : public QWidget
 {
 Q_OBJECT
 public:

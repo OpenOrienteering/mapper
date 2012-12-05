@@ -26,7 +26,7 @@
 #include "gui/color_dialog.h"
 
 ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
-: EditorDockWidgetChild(parent), 
+: QWidget(parent), 
   map(map), 
   window(window)
 {

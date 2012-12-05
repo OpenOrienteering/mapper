@@ -37,7 +37,12 @@
 #include "map_widget.h"
 #include "settings.h"
 
-PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, MapEditorController* editor, QWidget* parent) : EditorDockWidgetChild(parent), map(map), main_window(main_window), main_view(main_view), editor(editor)
+PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, MapEditorController* editor, QWidget* parent)
+: QWidget(parent), 
+  map(map), 
+  main_window(main_window), 
+  main_view(main_view), 
+  editor(editor)
 {
 	react_to_changes = true;
 	print_tool = NULL;
@@ -215,8 +220,8 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(print_button, SIGNAL(clicked(bool)), this, SLOT(printClicked()));
 	
 	currentDeviceChanged();
-	activate();
 }
+
 PrintWidget::~PrintWidget()
 {
 }
@@ -226,39 +231,49 @@ QSize PrintWidget::sizeHint() const
 	return QSize(200, 300);
 }
 
-void PrintWidget::activate()
+void PrintWidget::setActive(bool state)
 {
-	if (center_button->isChecked())
-		centerPrintArea();
-	
-	if (!print_tool)
-		print_tool = new PrintTool(editor, this);
-	editor->setOverrideTool(print_tool);
+	if (state)
+	{
+		if (center_button->isChecked())
+			centerPrintArea();
+		
+		if (!print_tool)
+			print_tool = new PrintTool(editor, this);
+		editor->setOverrideTool(print_tool);
+	}
+	else
+	{
+		editor->setOverrideTool(NULL);
+		print_tool = NULL;
+	}
 }
-void PrintWidget::closed()
+
+void PrintWidget::savePrinterSettings()
 {
 	map->setPrintParameters(page_orientation_combo->itemData(page_orientation_combo->currentIndex()).toInt(),
 							page_format_combo->itemData(page_format_combo->currentIndex()).toInt(), dpi_combo->currentText().toFloat(),
 							show_templates_check->isChecked(), show_grid_check->isChecked(), overprinting_check->isChecked(),
 							center_button->isChecked(), getPrintAreaLeft(), getPrintAreaTop(), print_width, print_height,
 							different_scale_check->isChecked(), qMax(1, different_scale_edit->text().toInt()));
-	editor->setOverrideTool(NULL);
-	print_tool = NULL;
 }
 
 float PrintWidget::getPrintAreaLeft()
 {
 	return left_edit->text().toFloat();
 }
+
 float PrintWidget::getPrintAreaTop()
 {
 	return top_edit->text().toFloat();
 }
+
 void PrintWidget::setPrintAreaLeft(float value)
 {
 	left_edit->setText(QString::number(value));
 	center_button->setChecked(false);
 }
+
 void PrintWidget::setPrintAreaTop(float value)
 {
 	top_edit->setText(QString::number(value));
@@ -744,7 +759,8 @@ void PrintWidget::printClicked()
 		}
 		
 		main_window->statusBar()->showMessage(tr("Exported successfully to %1").arg(path), 4000);
-		parentWidget()->close();
+		savePrinterSettings();
+		emit finished(0);
 		return;
 	}
 	
@@ -779,7 +795,8 @@ void PrintWidget::printClicked()
 	else
 		main_window->statusBar()->showMessage(tr("Successfully created print job"), 4000);
 	
-	parentWidget()->close();
+	savePrinterSettings();
+	emit finished(0);
 }
 
 void PrintWidget::addPaperSize(QPrinter::PaperSize size)

@@ -40,7 +40,11 @@ class MapView;
 class MainWindow;
 class PrintTool;
 
-class PrintWidget : public EditorDockWidgetChild
+/**
+ * The print widget lets the user adjust methods, devices and parameters
+ * for printing and export.
+ */
+class PrintWidget : public QWidget
 {
 Q_OBJECT
 public:
@@ -48,8 +52,6 @@ public:
 	virtual ~PrintWidget();
 	
 	virtual QSize sizeHint() const;
-	
-	void activate();
 	
 	float getPrintAreaLeft();
 	void setPrintAreaLeft(float value);
@@ -68,10 +70,30 @@ public:
 	/// Returns true if an exporter is active (instead of a printer)
 	bool exporterSelected();
 	
+public slots:
+	/** 
+	 * Sets the active state of the print widget.
+	 * 
+	 * When the widget becomes active, it activates a tool on the map editor
+	 * which allows to move the print area. When the widget becomes inactive,
+	 * the tool is removed.
+	 */
+	void setActive(bool state);
+	
+signals:
+	/**
+	 * This signal is emitted when a print or export job has been started 
+	 * and finished. 
+	 * 
+	 * The signal is not emitted when the widget is hidden 
+	 * (cf. QDialog::finished(int result) ).
+	 */
+	void finished(int result);
+	
 protected slots:
 	void printMap(QPrinter* printer);
 	void setPrinterSettings(QPrinter* printer);
-	void closed();
+	void savePrinterSettings();
 	
 	void currentDeviceChanged();
 	void pageOrientationChanged();
@@ -136,6 +158,9 @@ private:
 	bool react_to_changes;
 };
 
+/**
+ * The PrintTool lets the user move see and move the print area on the map.
+ */
 class PrintTool : public MapEditorTool
 {
 Q_OBJECT

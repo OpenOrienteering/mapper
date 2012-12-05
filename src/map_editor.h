@@ -312,28 +312,16 @@ private:
 	QHash<Template*, TemplatePositionDockWidget*> template_position_widgets;
 };
 
-class EditorDockWidgetChild : public QWidget
-{
-Q_OBJECT
-public:
-	inline EditorDockWidgetChild(QWidget* parent) : QWidget(parent) {}
-	virtual void closed() {}
-};
 /// Custom QDockWidget which unchecks the associated menu action when closed and delivers a notification to its child
 class EditorDockWidget : public QDockWidget
 {
 Q_OBJECT
 public:
 	EditorDockWidget(const QString title, QAction* action, MapEditorController* editor, QWidget* parent = NULL);
-	void setChild(EditorDockWidgetChild* child);
-	inline EditorDockWidgetChild* getChild() const {return child;}
-    virtual bool event(QEvent* event);
-    virtual void closeEvent(QCloseEvent* event);
-signals:
-	void closed();
+	virtual bool event(QEvent* event);
+	virtual void closeEvent(QCloseEvent* event);
 private:
 	QAction* action;
-	EditorDockWidgetChild* child;
 	MapEditorController* editor;
 };
 

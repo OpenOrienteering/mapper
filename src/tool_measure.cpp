@@ -35,7 +35,9 @@
 #include "symbol_area.h"
 #include "symbol_line.h"
 
-MeasureWidget::MeasureWidget(Map* map, QWidget* parent) : EditorDockWidgetChild(parent), map(map)
+MeasureWidget::MeasureWidget(Map* map, QWidget* parent)
+: QWidget(parent),
+  map(map)
 {
 	QSettings settings;
 	settings.beginGroup("MeasureWidget");

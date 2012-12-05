@@ -764,12 +764,14 @@ void MapEditorController::printClicked()
 	{
 		print_dock_widget = new EditorDockWidget(tr("Print or Export"), print_act, this, window);
 		print_widget = new PrintWidget(map, window, main_view, this, print_dock_widget);
-		print_dock_widget->setChild(print_widget);
+		connect(print_dock_widget, SIGNAL(visibilityChanged(bool)), print_widget, SLOT(setActive(bool)));
+		connect(print_widget, SIGNAL(finished(int)), print_dock_widget, SLOT(close()));
+		print_dock_widget->setWidget(print_widget);
 		print_dock_widget->setObjectName("Print dock widget");
-		addFloatingDockWidget(print_dock_widget);
+		if (!window->restoreDockWidget(print_dock_widget))
+			addFloatingDockWidget(print_dock_widget);
 	}
 	
-	print_widget->activate();
 	print_dock_widget->show();
 	QTimer::singleShot(0, print_dock_widget, SLOT(raise()));
 }
@@ -1050,7 +1052,7 @@ void MapEditorController::showSymbolWindow(bool show)
 		connect(window, SIGNAL(keyPressed(QKeyEvent*)), symbol_widget, SLOT(keyPressed(QKeyEvent*)));
 		connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*,Symbol*)));	// NOTE: adjust setMap() if changing this!
 		connect(map, SIGNAL(symbolIconChanged(int)), symbol_widget->getRenderWidget(), SLOT(updateIcon(int)));
-		symbol_dock_widget->setChild(symbol_widget);
+		symbol_dock_widget->setWidget(symbol_widget);
 		symbol_dock_widget->setObjectName("Symbol dock widget");
 		if (!window->restoreDockWidget(symbol_dock_widget))
 			window->addDockWidget(Qt::RightDockWidgetArea, symbol_dock_widget, Qt::Vertical);
@@ -1072,7 +1074,7 @@ void MapEditorController::showColorWindow(bool show)
 	if (!color_dock_widget)
 	{
 		color_dock_widget = new EditorDockWidget(tr("Colors"), color_window_act, this, window);
-		color_dock_widget->setChild(new ColorWidget(map, window, color_dock_widget));
+		color_dock_widget->setWidget(new ColorWidget(map, window, color_dock_widget));
 		color_dock_widget->setObjectName("Color dock widget");
 		if (!window->restoreDockWidget(color_dock_widget))
 			window->addDockWidget(Qt::LeftDockWidgetArea, color_dock_widget, Qt::Vertical);
@@ -1154,7 +1156,7 @@ void MapEditorController::showTemplateWindow(bool show)
 	if (!template_dock_widget)
 	{
 		template_dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, this, window);
-		template_dock_widget->setChild(new TemplateWidget(map, main_view, this, template_dock_widget));
+		template_dock_widget->setWidget(new TemplateWidget(map, main_view, this, template_dock_widget));
 		template_dock_widget->setObjectName("Templates dock widget");
 		if (!window->restoreDockWidget(template_dock_widget))
 			window->addDockWidget(Qt::RightDockWidgetArea, template_dock_widget, Qt::Vertical);
@@ -1799,9 +1801,10 @@ void MapEditorController::measureClicked(bool checked)
 	{
 		measure_dock_widget = new EditorDockWidget(tr("Measure"), measure_act, this, window);
 		MeasureWidget* measure_widget = new MeasureWidget(map);
-		measure_dock_widget->setChild(measure_widget);
+		measure_dock_widget->setWidget(measure_widget);
 		measure_dock_widget->setObjectName("Measure dock widget");
-		addFloatingDockWidget(measure_dock_widget);
+		if (!window->restoreDockWidget(measure_dock_widget))
+			addFloatingDockWidget(measure_dock_widget);
 	}
 	
 	measure_dock_widget->setVisible(checked);
@@ -1977,23 +1980,19 @@ EditorDockWidget::EditorDockWidget(const QString title, QAction* action, MapEdit
 	if (editor)
 		connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), editor, SLOT(saveWindowState()));
 }
-void EditorDockWidget::setChild(EditorDockWidgetChild* child)
-{
-	this->child = child;
-	setWidget(child);
-}
+
 bool EditorDockWidget::event(QEvent* event)
 {
 	if (event->type() == QEvent::ShortcutOverride && editor->getWindow()->areShortcutsDisabled())
 		event->accept();
-    return QDockWidget::event(event);
+	return QDockWidget::event(event);
 }
+
 void EditorDockWidget::closeEvent(QCloseEvent* event)
 {
 	if (action)
 		action->setChecked(false);
-	child->closed();
-    QDockWidget::closeEvent(event);
+	QDockWidget::closeEvent(event);
 }
 
 void MapEditorController::importClicked()
@@ -2056,6 +2055,7 @@ MapEditorToolAction::MapEditorToolAction(const QIcon& icon, const QString& text,
 	setCheckable(true);
 	connect(this, SIGNAL(triggered(bool)), this, SLOT(triggeredImpl(bool)));
 }
+
 void MapEditorToolAction::triggeredImpl(bool checked)
 {
 	if (checked)

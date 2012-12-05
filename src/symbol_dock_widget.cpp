@@ -919,7 +919,9 @@ bool SymbolRenderWidget::newSymbol(Symbol* prototype)
 
 // ### SymbolWidget ###
 
-SymbolWidget::SymbolWidget(Map* map, QWidget* parent): EditorDockWidgetChild(parent), map(map)
+SymbolWidget::SymbolWidget(Map* map, QWidget* parent)
+: QWidget(parent),
+  map(map)
 {
 	no_resize_handling = false;
 	

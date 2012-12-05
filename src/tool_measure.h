@@ -31,7 +31,7 @@ class QWidget;
 
 class Map;
 
-class MeasureWidget : public EditorDockWidgetChild
+class MeasureWidget : public QWidget
 {
 Q_OBJECT
 public:

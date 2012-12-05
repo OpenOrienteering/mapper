@@ -161,7 +161,7 @@ protected:
 };
 
 /// Combines SymbolRenderWidget and a scroll bar to a symbol widget
-class SymbolWidget : public EditorDockWidgetChild
+class SymbolWidget : public QWidget
 {
 Q_OBJECT
 public:
