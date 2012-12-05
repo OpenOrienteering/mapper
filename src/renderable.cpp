@@ -328,7 +328,7 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF boundi
 			QPainter p(&separation);
 			p.setRenderHints(painter->renderHints());
 			p.setWorldTransform(t, false);
-			map->drawColorSeparation(&p, *map_color, bounding_box, force_min_size, scaling, on_screen, true);
+			drawColorSeparation(&p, *map_color, bounding_box, force_min_size, scaling, on_screen, true);
 			p.end();
 			
 			// draw the separation on the previous ones; CompositionMode_Multiply
@@ -338,8 +338,8 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF boundi
 	
 	painter->setWorldTransform(t, false);
 	painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
-	map->drawColorSeparation(painter, Map::getCoveringWhite(), bounding_box, force_min_size, scaling, on_screen, true);
-	map->drawColorSeparation(painter, Map::getCoveringRed(), bounding_box, force_min_size, scaling, on_screen, true);
+	drawColorSeparation(painter, Map::getCoveringWhite(), bounding_box, force_min_size, scaling, on_screen, true);
+	drawColorSeparation(painter, Map::getCoveringRed(), bounding_box, force_min_size, scaling, on_screen, true);
 	
 	painter->restore();
 }
