@@ -449,12 +449,11 @@ void PrintWidget::currentDeviceChanged()
 	react_to_changes = false;
 	
 	int index = device_combo->itemData(device_combo->currentIndex()).toInt();
-	assert(index >= -2 && index < (int)printers.size());
+	Q_ASSERT(index >= -2 && index < (int)printers.size());
 	bool exporter = index < 0;
-	bool image_exporter = index == (int)ImageExporter;
 	
 	QStringList resolutions;
-	static QStringList default_resolutions = QString("150,300,600,1200").split(",");
+	static QStringList default_resolutions(QStringList() << "150" << "300" << "600" << "1200");
 	if (exporter)
 	{
 		resolutions = default_resolutions;
@@ -646,7 +645,7 @@ void PrintWidget::updatePrintAreaSize()
 	int index = page_format_combo->currentIndex();
 	if (index < 0)
 	{
-		assert(false);
+		Q_ASSERT(false);
 		return;
 	}
 	
