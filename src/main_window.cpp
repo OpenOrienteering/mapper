@@ -92,6 +92,12 @@ MainWindow::~MainWindow()
 	num_windows--;
 }
 
+const QString& MainWindow::appName() const
+{
+	static QString app_name(APP_NAME);
+	return app_name;
+}
+
 void MainWindow::setCentralWidget(QWidget* widget)
 {
 	if (widget != NULL)

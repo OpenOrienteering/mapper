@@ -29,8 +29,6 @@
 #endif
 #include <QPrintPreviewDialog>
 
-#include <mapper_config.h> // TODO: Replace APP_NAME by runtime function to remove this dependency
-
 #include "../util.h"
 #include "../map.h"
 #include "../main_window.h"
@@ -794,7 +792,7 @@ void PrintWidget::printClicked()
 				path.append(".pdf");
 		}
 		printer->setOutputFileName(path);
-		printer->setCreator(APP_NAME);
+		printer->setCreator(main_window->appName());
 	}
 	else
 		printer = new QPrinter(printers[index], QPrinter::HighResolution);

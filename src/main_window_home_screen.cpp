@@ -26,7 +26,6 @@
 #include <QtWidgets>
 #endif
 
-#include <mapper_config.h> // TODO: Replace APP_NAME by runtime function to remove this dependency
 
 // ### HomeScreenController ###
 
@@ -67,7 +66,7 @@ HomeScreenWidget::HomeScreenWidget(HomeScreenController* controller, QWidget* pa
 	maps_widget = new DocumentSelectionWidget(tr("Maps"), tr("Create a new map ..."), tr("Open map ..."), tr("Recent maps"),
 																	   tr("Open map ..."), tr("Maps (*.omap *.ocd);;All files (*.*)"));
 	HomeScreenTipOfTheDayWidget* tips_widget = new HomeScreenTipOfTheDayWidget(controller);
-	HomeScreenOtherWidget* other_widget = new HomeScreenOtherWidget();
+	HomeScreenOtherWidget* other_widget = new HomeScreenOtherWidget(controller->getWindow());
 	
 	QGridLayout* layout = new QGridLayout();
 	layout->setSpacing(2 * layout->spacing());
@@ -331,11 +330,11 @@ QString HomeScreenTipOfTheDayWidget::getNextTip(int direction)
 
 // ### HomeScreenOtherWidget ###
 
-HomeScreenOtherWidget::HomeScreenOtherWidget(QWidget* parent) : QWidget(parent)
+HomeScreenOtherWidget::HomeScreenOtherWidget(MainWindow* main_window, QWidget* parent) : QWidget(parent)
 {
 	QCommandLinkButton* settings_button = new QCommandLinkButton(tr("Settings"));
 	settings_button->setIcon(QIcon(":/images/settings.png"));
-	QCommandLinkButton* about_button = new QCommandLinkButton(tr("About %1").arg(APP_NAME));
+	QCommandLinkButton* about_button = new QCommandLinkButton(tr("About %1").arg(main_window->appName()));
 	about_button->setIcon(QIcon(":/images/about.png"));
 	QCommandLinkButton* help_button = new QCommandLinkButton(tr("Help"));
 	help_button->setIcon(QIcon(":/images/help.png"));

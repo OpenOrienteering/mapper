@@ -124,7 +124,7 @@ class HomeScreenOtherWidget : public QWidget
 {
 Q_OBJECT
 public:
-	HomeScreenOtherWidget(QWidget* parent = NULL);
+	HomeScreenOtherWidget(MainWindow* main_window, QWidget* parent = NULL);
 	
 signals:
 	void settingsClicked();

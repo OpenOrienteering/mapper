@@ -114,6 +114,9 @@ public:
 	MainWindow(bool as_main_window = true);
 	virtual ~MainWindow();
 	
+	/** Returns the application's name. */
+	const QString& appName() const;
+	
 	/** Change the controller to new_controller.
 	 */
 	void setController(MainWindowController* new_controller);
