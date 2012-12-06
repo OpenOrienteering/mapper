@@ -18,14 +18,14 @@
  */
 
 
-#ifndef _OPENORIENTEERING_PRINT_DOCK_WIDGET_H_
-#define _OPENORIENTEERING_PRINT_DOCK_WIDGET_H_
+#ifndef _OPENORIENTEERING_PRINT_WIDGET_H_
+#define _OPENORIENTEERING_PRINT_WIDGET_H_
 
 #include <QWidget>
 #include <QPrinterInfo>
 
-#include "map_editor.h"
-#include "tool.h"
+#include "../map_editor.h"
+#include "../tool.h"
 
 QT_BEGIN_NAMESPACE
 class QPushButton;
@@ -156,37 +156,6 @@ private:
 	MapView* main_view;
 	MapEditorController* editor;
 	bool react_to_changes;
-};
-
-/**
- * The PrintTool lets the user move see and move the print area on the map.
- */
-class PrintTool : public MapEditorTool
-{
-Q_OBJECT
-public:
-	PrintTool(MapEditorController* editor, PrintWidget* widget);
-	
-	virtual void init();
-	virtual QCursor* getCursor() {return cursor;}
-	
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	
-    virtual void draw(QPainter* painter, MapWidget* widget);
-	
-	void updatePrintArea();
-	
-	static QCursor* cursor;
-	
-private:
-	void updateDragging(MapCoordF mouse_pos_map);
-    void drawBetweenRects(QPainter* painter, const QRect &outer, const QRect &inner) const;
-
-	bool dragging;
-	PrintWidget* widget;
-	MapCoordF click_pos_map;
 };
 
 #endif

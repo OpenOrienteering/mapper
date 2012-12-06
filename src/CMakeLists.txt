@@ -41,7 +41,6 @@ set(Mapper_Common_SRCS
 
  main_window.cpp
  main_window_home_screen.cpp
- print_dock_widget.cpp
  settings.cpp
  settings_dialog.cpp
 
@@ -117,6 +116,8 @@ set(Mapper_Common_SRCS
  file_format_xml.cpp
  
  gui/color_dialog.cpp
+ gui/print_tool.cpp
+ gui/print_widget.cpp
  
  gui/widgets/color_dropdown.cpp
 )
@@ -136,7 +137,6 @@ set(Mapper_Common_MOC_INPUT
  map_grid.h
  map_undo.h
  map_widget.h
- print_dock_widget.h
  settings.h
  settings_dialog.h
  symbol.h
@@ -181,6 +181,8 @@ set(Mapper_Common_MOC_INPUT
  util_task_dialog.h
  
  gui/color_dialog.h
+ gui/print_tool.h
+ gui/print_widget.h
  
  gui/widgets/color_dropdown.h
 )
