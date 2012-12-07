@@ -31,8 +31,8 @@
 void doStaticInitializations()
 {
 	// Register the supported file formats
-	FileFormats.registerFormat(new NativeFileFormat());
 	FileFormats.registerFormat(new XMLFileFormat());
+	FileFormats.registerFormat(new NativeFileFormat());
 	FileFormats.registerFormat(new OCAD8FileFormat());
 	
 	// Load resources
