@@ -28,7 +28,10 @@
 class PrintWidget;
 
 /**
- * The PrintTool lets the user move see and move the print area on the map.
+ * The PrintTool lets the user see and modify the print area on the map.
+ * 
+ * It interacts with a MapEditorController and a PrintWidget which are set in
+ * the constructor.
  */
 class PrintTool : public MapEditorTool
 {
@@ -37,6 +40,7 @@ public:
 	PrintTool(MapEditorController* editor, PrintWidget* print_widget);
 	
 	virtual void init();
+	
 	virtual QCursor* getCursor();
 	
 	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
@@ -45,11 +49,13 @@ public:
 	
 	virtual void draw(QPainter* painter, MapWidget* widget);
 	
+public slots:
+	/** Updates the print area visualization in the map editors. */
 	void updatePrintArea();
 	
-private:
+protected:
+	/** Moves the print area while dragging. */
 	void updateDragging(MapCoordF mouse_pos_map);
-	void drawBetweenRects(QPainter* painter, const QRect &outer, const QRect &inner) const;
 	
 	PrintWidget* print_widget;
 	bool dragging;

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps, Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -20,13 +20,8 @@
 
 #include "print_tool.h"
 
-// #include <limits>
-
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
-#include <QtWidgets>
-#endif
+#include <QMouseEvent>
+#include <QPainter>
 
 #include "../map_widget.h"
 #include "print_widget.h"
@@ -37,6 +32,8 @@ PrintTool::PrintTool(MapEditorController* editor, PrintWidget* print_widget)
   print_widget(print_widget),
   dragging(false)
 {
+	Q_ASSERT(editor != NULL);
+	Q_ASSERT(print_widget != NULL);
 }
 
 void PrintTool::init()
@@ -47,106 +44,90 @@ void PrintTool::init()
 
 QCursor* PrintTool::getCursor()
 {
-	static QCursor cursor(Qt::SizeAllCursor);
-	return &cursor;
+	static QCursor open_hand_cursor(Qt::OpenHandCursor);
+	static QCursor closed_hand_cursor(Qt::ClosedHandCursor);
+	return dragging ? &closed_hand_cursor : &open_hand_cursor;
 }
 
 bool PrintTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (event->button() != Qt::LeftButton)
-		return false;
+	if (event->button() == Qt::LeftButton)
+	{
+		dragging = true;
+		click_pos_map = map_coord;
+		widget->setCursor(*getCursor());
+		return true;
+	}
 	
-	dragging = true;
-	click_pos_map = map_coord;
-	return true;
+	return false;
 }
 
 bool PrintTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (!(event->buttons() & Qt::LeftButton) || !dragging)
-		return false;
+	if ((event->buttons() & Qt::LeftButton) && dragging)
+	{
+		updateDragging(map_coord);
+		return true;
+	}
 	
-	updateDragging(map_coord);
-	return true;
+	return false;
 }
 
 bool PrintTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (event->button() != Qt::LeftButton)
-		return false;
+	if (event->button() == Qt::LeftButton)
+	{
+		updateDragging(map_coord);
+		dragging = false;
+		widget->setCursor(*getCursor());
+		return true;
+	}
 	
-	updateDragging(map_coord);
-	dragging = false;
-	return true;
+	return false;
 }
 
 void PrintTool::draw(QPainter* painter, MapWidget* widget)
 {
+	QRect view_area = QRect(0, 0, widget->width(), widget->height());
+	
 	QRectF effective_print_area = print_widget->getEffectivePrintArea();
-	QRect outer_rect = widget->mapToViewport(effective_print_area).toRect();
-	QRect view_rect = QRect(0, 0, widget->width(), widget->height());
+	QRect page_area = widget->mapToViewport(effective_print_area).toRect();
 	
-	painter->setPen(Qt::NoPen);
+	// Strongly darken the region outside the page area for printers and export
 	painter->setBrush(QColor(0, 0, 0, 160));
-	drawBetweenRects(painter, view_rect, outer_rect);
+	painter->setPen(Qt::NoPen);
+	QPainterPath outside_path;
+	outside_path.addRect(view_area);
+	outside_path.addRect(view_area.intersected(page_area));
+	painter->drawPath(outside_path);
 	
-	if (!print_widget->exporterSelected())
+	if (!print_widget->exporterSelected() && !page_area.isEmpty())
 	{
+		// Determine printable area (page area minus page margins)
+		QRect printable_area;
 		float margin_top, margin_left, margin_bottom, margin_right;
 		print_widget->getMargins(margin_top, margin_left, margin_bottom, margin_right);
-		if (margin_top > 0 || margin_left > 0 || margin_bottom > 0 || margin_right > 0)
-		{
-			QRect inner_rect = widget->mapToViewport(effective_print_area.adjusted(margin_left, margin_top, -margin_right, -margin_bottom)).toRect();
+		if (effective_print_area.width() > margin_left + margin_right && effective_print_area.height() > margin_top + margin_bottom)
+			// FIXME: This does not take into account whether the map is printed in different scale.
+			printable_area = widget->mapToViewport(effective_print_area.adjusted(margin_left, margin_top, -margin_right, -margin_bottom)).toRect();
 			
+		if (printable_area != page_area)
+		{
+			// Weakly darken the page margins for printers.
 			painter->setBrush(QColor(0, 0, 0, 64));
-			if (effective_print_area.width() < margin_left + margin_right || effective_print_area.height() < margin_top + margin_bottom)
-				painter->drawRect(outer_rect);
-			else
-				drawBetweenRects(painter, outer_rect, inner_rect);
+			QPainterPath margin_path;
+			margin_path.addRect(page_area);
+			margin_path.addRect(page_area.intersected(printable_area));
+			painter->drawPath(margin_path);
 		}
-	}
-	
-	/*painter->setBrush(QColor(255, 255, 0, 128));
-	painter->drawRect(QRect(outer_rect.topLeft(), outer_rect.bottomRight() - QPoint(1, 1)));
-	painter->setBrush(QColor(0, 255, 0, 128));
-	painter->drawRect(QRect(inner_rect.topLeft(), inner_rect.bottomRight() - QPoint(1, 1)));*/
-	
-	/*QRect rect = widget->mapToViewport(this->widget->getEffectivePrintArea()).toRect();
-
-	painter->setPen(active_color);
-	painter->drawRect(QRect(rect.topLeft(), rect.bottomRight() - QPoint(1, 1)));
-	painter->setPen(qRgb(255, 255, 255));
-	painter->drawRect(QRect(rect.topLeft() + QPoint(1, 1), rect.bottomRight() - QPoint(2, 2)));*/
-}
-
-void PrintTool::drawBetweenRects(QPainter* painter, const QRect &outer, const QRect &inner) const
-{
-	if (outer.isEmpty())
-		return;
-	
-	QRect clipped_inner = outer.intersected(inner);
-	if (clipped_inner.isEmpty())
-	{
-		painter->drawRect(outer);
-	}
-	else
-	{
-		if (outer.left() < clipped_inner.left())
-			painter->drawRect(QRect(outer.left(), outer.top(), clipped_inner.left() - outer.left(), outer.height()));
-		if (outer.right() > clipped_inner.right())
-			painter->drawRect(QRect(clipped_inner.left() + clipped_inner.width(), outer.top(), outer.right() - clipped_inner.right(), outer.height()));
-		if (outer.top() < clipped_inner.top())
-			painter->drawRect(QRect(clipped_inner.left(), outer.top(), clipped_inner.width(), clipped_inner.top() - outer.top()));
-		if (outer.bottom() > clipped_inner.bottom())
-			painter->drawRect(QRect(clipped_inner.left(), clipped_inner.bottom(), clipped_inner.width(), outer.top() + outer.height() - clipped_inner.bottom()));
 	}
 }
 
 void PrintTool::updatePrintArea()
 {
+	// The print area visualization is updated by redrawing the whole map.
+	// TODO: Replace with a more explicit way of marking the whole map area as dirty.
 	editor->getMap()->setDrawingBoundingBox(QRectF(-1000000, -1000000, 2000000, 2000000), 0);
-	
-	//editor->getMap()->setDrawingBoundingBox(widget->getEffectivePrintArea(), 1);
 }
 
 void PrintTool::updateDragging(MapCoordF mouse_pos_map)
