@@ -142,11 +142,10 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		
 		# workaround for https://bugs.launchpad.net/ubuntu/+source/cmake/+bug/972419
 		if (CPACK_LSB_RELEASE STREQUAL "precise")
-			install(CODE "MESSAGE(WARNING 
-			  \"Ubuntu 12.04 (${CPACK_LSB_RELEASE}) has a broken DEB package generator \"
+			install(CODE "MESSAGE(\"\n\"
+			  \"Ubuntu 12.04 (${CPACK_LSB_RELEASE}) had got a broken DEB package generator\n\"
 			  \"(cf. https://bugs.launchpad.net/ubuntu/+source/cmake/+bug/972419).\n\"
-			  \"Run 'make package_repair' if the DEB package installation fails with \"
-			  \"the message 'corrupted filesystem tarfile'.\")")
+			  \"Make sure you use cmake package version 2.8.7-0ubuntu5 or later.\n\")")
  		endif (CPACK_LSB_RELEASE STREQUAL "precise")
 		add_custom_target(package_repair
 		  COMMENT "Rebuilding DEB package"
