@@ -1592,7 +1592,7 @@ void Map::setTemplateAreaDirty(int i)
 	
 	templates[i]->setTemplateAreaDirty();
 }
-int Map::findTemplateIndex(Template* temp)
+int Map::findTemplateIndex(const Template* temp) const
 {
 	int size = (int)templates.size();
 	for (int i = 0; i < size; ++i)
@@ -1721,7 +1721,7 @@ void Map::setObjectsDirty()
 	objects_dirty = true;
 }
 
-QRectF Map::calculateExtent(bool include_helper_symbols, bool include_templates, MapView* view)
+QRectF Map::calculateExtent(bool include_helper_symbols, bool include_templates, const MapView* view) const
 {
 	QRectF rect;
 	
@@ -1962,7 +1962,7 @@ void MapView::save(QIODevice* file)
 	
 	int num_template_visibilities = template_visibilities.size();
 	file->write((const char*)&num_template_visibilities, sizeof(int));
-	QHash<Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
+	QHash<const Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
 	while (it != template_visibilities.constEnd())
 	{
 		int pos = map->findTemplateIndex(it.key());
@@ -2041,7 +2041,7 @@ void MapView::save(QXmlStreamWriter& xml)
 	xml.writeAttribute("count", QString::number(num_template_visibilities));
 	if (all_templates_hidden)
 		xml.writeAttribute("hidden", "true");
-	QHash<Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
+	QHash<const Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
 	for ( ; it != template_visibilities.constEnd(); ++it)
 	{
 		xml.writeEmptyElement("ref");
@@ -2357,11 +2357,11 @@ TemplateVisibility *MapView::getMapVisibility()
 	return map_visibility;
 }
 
-bool MapView::isTemplateVisible(Template* temp)
+bool MapView::isTemplateVisible(const Template* temp) const
 {
 	if (template_visibilities.contains(temp))
 	{
-		TemplateVisibility* vis = template_visibilities.value(temp);
+		const TemplateVisibility* vis = template_visibilities.value(temp);
 		return vis->visible && vis->opacity > 0;
 	}
 	else

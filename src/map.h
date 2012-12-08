@@ -127,9 +127,14 @@ public:
 	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, MapView* view);
 	/// Updates the renderables and extent of all objects which have been changed. This is automatically called by draw(), you normally do not need it
 	void updateObjects();
-	/// Calculates the extent of all map objects (and possibly templates). If templates should be included, a view can be given to take the template visibilities from.
-	/// view can also be NULL to include all templates.
-	QRectF calculateExtent(bool include_helper_symbols, bool include_templates, MapView* view);
+	
+	/** 
+	 * Calculates the extent of all map elements. 
+	 * 
+	 * If templates shall be included, view may either be NULL to include all 
+	 * templates, or specify a MapView to take the template visibilities from.
+	 */
+	QRectF calculateExtent(bool include_helper_symbols = false, bool include_templates = false, const MapView* view = NULL) const;
 	
 	/// Must be called to notify the map of new widgets displaying it. Useful to notify the widgets about which parts of the map have changed and need to be redrawn
 	void addMapWidget(MapWidget* widget);
@@ -221,7 +226,7 @@ public:
 	void deleteTemplate(int pos);
 	void setTemplateAreaDirty(Template* temp, QRectF area, int pixel_border);	// marks the respective regions in the template caches as dirty; area is given in map coords (mm). Does nothing if the template is not visible in a widget! So make sure to call this and showing/hiding a template in the correct order!
 	void setTemplateAreaDirty(int i);											// this does nothing for i == -1
-	int findTemplateIndex(Template* temp);
+	int findTemplateIndex(const Template* temp) const;
 	void setTemplatesDirty();
 	void emitTemplateChanged(Template* temp);
 	
@@ -650,7 +655,7 @@ public:
 	// Template visibilities
 	
 	/// Checks if the template is visible without creating a template visibility object if none exists
-	bool isTemplateVisible(Template* temp);
+	bool isTemplateVisible(const Template* temp) const;
 	
 	/// Returns the template visibility object, creates one if not there yet with the default settings (invisible)
 	TemplateVisibility* getTemplateVisibility(Template* temp);
@@ -692,7 +697,7 @@ private:
 	Matrix map_to_view;
 	
     TemplateVisibility* map_visibility;
-	QHash<Template*, TemplateVisibility*> template_visibilities;
+	QHash<const Template*, TemplateVisibility*> template_visibilities;
 	bool all_templates_hidden;
 	
 	bool grid_visible;
