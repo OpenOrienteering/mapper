@@ -104,10 +104,16 @@ public:
 	/// WARNING: this method potentially changes the 'other' map if the scales differ (by rescaling to fit this map's scale)!
 	void importMap(Map* other, ImportMode mode, QWidget* dialog_parent = NULL, std::vector<bool>* filter = NULL, int symbol_insert_pos = -1,
 				   bool merge_duplicate_symbols = true, QHash<Symbol*, Symbol*>* out_symbol_map = NULL);
-	/// Serializes the map directly into the given IO device in native map format. Returns true if successful
-	bool exportToNative(QIODevice* stream);
-	/// Loads the map directly from the given IO device, where the data must be in native map format. Returns true if successful
-	bool importFromNative(QIODevice* stream);
+	
+	/// Serializes the map directly into the given IO device in a known format.
+	/// This can be imported again using importFromIODevice().
+	/// Returns true if successful.
+	bool exportToIODevice(QIODevice* stream);
+	
+	/// Loads the map directly from the given IO device,
+	/// where the data must have been written by exportToIODevice().
+	/// Returns true if successful.
+	bool importFromIODevice(QIODevice* stream);
 	
 	/// Deletes all map data and resets the map to its initial state containing one default part
 	void clear();

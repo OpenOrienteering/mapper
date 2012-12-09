@@ -657,12 +657,12 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 	}
 }
 
-bool Map::exportToNative(QIODevice* stream)
+bool Map::exportToIODevice(QIODevice* stream)
 {
 	stream->open(QIODevice::WriteOnly);
 	Exporter* exporter = NULL;
 	try {
-		const Format* native_format = FileFormats.findFormat("native");
+		const Format* native_format = FileFormats.findFormat("XML");
 		exporter = native_format->createExporter(stream, this, NULL);
 		exporter->doExport();
 		stream->close();
@@ -678,11 +678,11 @@ bool Map::exportToNative(QIODevice* stream)
 	return true;
 }
 
-bool Map::importFromNative(QIODevice* stream)
+bool Map::importFromIODevice(QIODevice* stream)
 {
 	Importer* importer = NULL;
 	try {
-		const Format* native_format = FileFormats.findFormat("native");
+		const Format* native_format = FileFormats.findFormat("XML");
 		importer = native_format->createImporter(stream, this, NULL);
 		importer->doImport(false);
 		importer->finishImport();

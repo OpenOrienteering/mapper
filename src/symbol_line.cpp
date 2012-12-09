@@ -485,7 +485,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 		{
 			// Rare but existing case.  No valid solution, but
 			// at least we need to output a point to handle the flags correctly.
-			qDebug() << "No valid tangent at" << __FILE__ << __LINE__;
+			//qDebug() << "No valid tangent at" << __FILE__ << __LINE__;
 			segment_start = coords_i;
 		}
 		else if (!path_closed && i == 0)
