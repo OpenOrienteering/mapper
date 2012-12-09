@@ -894,7 +894,7 @@ void MapEditorController::copy()
 	
 	// Save map to memory
 	QBuffer buffer;
-	if (!copy_map->exportToNative(&buffer))
+	if (!copy_map->exportToIODevice(&buffer))
 	{
 		delete copy_map;
 		QMessageBox::warning(NULL, tr("Error"), tr("An internal error occurred, sorry!"));
@@ -927,7 +927,7 @@ void MapEditorController::paste()
 	
 	// Create map from buffer
 	Map* paste_map = new Map();
-	if (!paste_map->importFromNative(&buffer))
+	if (!paste_map->importFromIODevice(&buffer))
 	{
 		QMessageBox::warning(NULL, tr("Error"), tr("An internal error occurred, sorry!"));
 		return;
