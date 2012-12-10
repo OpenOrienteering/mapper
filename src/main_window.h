@@ -157,6 +157,13 @@ public:
 	 */
 	inline QToolBar* getGeneralToolBar() const { return general_toolbar; }
 	
+	/** Open the file with the given path after all events have been processed.
+	 *  May open a new main window.
+	 *  If loading is successful, the selected path will become
+	 *  the [new] window's current path.
+	 */
+	void openPathLater(const QString &path);
+	
 	/** Save the content of the main window.
 	 *  @param path the path where to save.
 	 */ 
@@ -260,6 +267,12 @@ signals:
 	void keyPressed(QKeyEvent* event);
 	void keyReleased(QKeyEvent* event);
 	
+protected slots:
+	/**
+	 * Open the files which have been registered by openPathLater().
+	 */
+	void openPathBacklog();
+	
 protected:
 	/** Notify main window of the current path where the content is saved.
 	 *  This will trigger updates to the window title, 
@@ -328,6 +341,9 @@ private:
 	
 	/// The central widget which never changes during a MainWindow's lifecycle
 	QStackedWidget* central_widget;
+	
+	/// A list of paths to be opened later
+	QStringList path_backlog;
 };
 
 #endif

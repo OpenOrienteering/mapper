@@ -140,6 +140,10 @@ DocumentSelectionWidget::DocumentSelectionWidget(const QString& title, const QSt
 	QPushButton* clear_list_button = new QPushButton(tr("Clear list"));
 	clear_list_button->setWhatsThis("<a href=\"opening.html\">See more</a>");
 	
+	QCheckBox* open_mru_file_check = new QCheckBox(tr("Open most recently used file on start"));
+	open_mru_file_check->setWhatsThis("<a href=\"opening.html\">See more</a>");
+	open_mru_file_check->setChecked(QSettings().value("openMRUFile").toBool());
+	
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget(title_label);
 	layout->addSpacing(16);
@@ -149,6 +153,7 @@ DocumentSelectionWidget::DocumentSelectionWidget(const QString& title, const QSt
 	layout->addWidget(recent_label);
 	layout->addWidget(recent_docs_list);
 	layout->addWidget(clear_list_button);
+	layout->addWidget(open_mru_file_check);
 	setLayout(layout);
 	
 	setAutoFillBackground(false);
@@ -157,6 +162,7 @@ DocumentSelectionWidget::DocumentSelectionWidget(const QString& title, const QSt
 	connect(open_button, SIGNAL(clicked(bool)), this, SLOT(openDoc()));
 	connect(recent_docs_list, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(recentFileClicked(QListWidgetItem*)));
 	connect(clear_list_button, SIGNAL(clicked(bool)), this, SLOT(clearListClicked()));
+	connect(open_mru_file_check, SIGNAL(clicked(bool)), this, SLOT(openMRUFileClicked(bool)));
 }
 DocumentSelectionWidget::~DocumentSelectionWidget()
 {
@@ -223,6 +229,12 @@ void DocumentSelectionWidget::clearListClicked()
 		if (main_window)
 			main_window->updateRecentFileActions(true);
 	}
+}
+
+void DocumentSelectionWidget::openMRUFileClicked(bool state)
+{
+	QSettings settings;
+	settings.setValue("openMRUFile", state);
 }
 
 void DocumentSelectionWidget::paintEvent(QPaintEvent* event)

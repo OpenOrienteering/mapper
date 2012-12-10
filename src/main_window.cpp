@@ -519,6 +519,20 @@ bool MainWindow::openPath(const QString &path)
 	open_window->activateWindow();
 	return true;
 }
+
+void MainWindow::openPathLater(const QString& path)
+{
+	path_backlog.push_back(path);
+	QTimer::singleShot(0, this, SLOT(openPathBacklog()));
+}
+
+void MainWindow::openPathBacklog()
+{
+	Q_FOREACH(QString path, path_backlog)
+		openPath(path);
+	path_backlog.clear();
+}
+
 void MainWindow::openRecentFile()
 {
 	QAction *action = qobject_cast<QAction*>(sender());

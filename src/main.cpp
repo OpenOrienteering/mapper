@@ -21,6 +21,7 @@
 #include "../3rd-party/qtsingleapplication/src/qtsingleapplication.h"
 #include <QLibraryInfo>
 #include <QLocale>
+#include <QSettings>
 #include <QTranslator>
 
 #include <mapper_config.h>
@@ -73,11 +74,26 @@ int main(int argc, char** argv)
 	first_window.setAttribute(Qt::WA_DeleteOnClose, false);
 	first_window.setController(new HomeScreenController());
 	
+	// Open given files later, i.e. after the initial home screen has been
+	// displayed. In this way, error messages for missing files will show on 
+	// top of a regular main window (home screen or other file).
+	
 	// Treat all program parameters as files to be opened
 	for (int i = 1; i < argc; i++)
 	{
 		if (argv[i][0] != '-')
-			first_window.openPath(argv[i]);
+			first_window.openPathLater(argv[i]);
+	}
+	// Optionally open most recently used file on startup
+	if (argc <= 1)
+	{
+		QSettings settings;
+		if (settings.value("openMRUFile", QVariant(false)).toBool())
+		{
+			QStringList files = settings.value("recentFileList").toStringList();
+			if (files.size() > 0)
+				first_window.openPathLater(files[0]);
+		}
 	}
 	
 	// If we need to respond to a second app launch, do so, but also accept a file open request.

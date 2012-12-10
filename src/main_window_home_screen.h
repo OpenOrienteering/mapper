@@ -89,6 +89,7 @@ public slots:
 	void recentFileClicked(QListWidgetItem* item);
 	void emitPathOpened();
     void clearListClicked();
+	void openMRUFileClicked(bool state);
 	
 protected:
     virtual void paintEvent(QPaintEvent* event);
