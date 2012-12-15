@@ -183,7 +183,8 @@ void NewMapDialog::updateSymbolSetList()
 	load_from_file->setIcon(QIcon(":/images/open.png"));
 	symbol_set_list->addItem(load_from_file);
 	
-	symbol_set_list->setCurrentRow(0);
+	// Select second row, which usually is the first (and only) symbol set
+	symbol_set_list->setCurrentRow(1);
 }
 
 void NewMapDialog::symbolSetDoubleClicked(QListWidgetItem* item)
