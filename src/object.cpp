@@ -2309,9 +2309,7 @@ void PathObject::recalculateParts()
 	int coords_size = coords.size();
 	for (int i = 0; i < coords_size - 1; ++i)
 	{
-		if (coords[i].isCurveStart())
-			i += 2;
-		else if (coords[i].isHolePoint())
+		if (coords[i].isHolePoint())
 		{
 			PathPart part;
 			part.start_index = start;
@@ -2321,6 +2319,8 @@ void PathObject::recalculateParts()
 			start = i + 1;
 			++i;	// assume that there are never two hole points in a row
 		}
+		else if (coords[i].isCurveStart())
+			i += 2;
 	}
 	
 	PathPart part;
