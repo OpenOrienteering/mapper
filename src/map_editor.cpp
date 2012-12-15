@@ -1647,8 +1647,6 @@ void MapEditorController::connectPathsClicked()
 	std::vector<Object*> undo_objects;
 	std::vector<Object*> deleted_objects;
 	
-	const float close_distance_sq = 0.35f * 0.35f;	// TODO: Should this somehow depend on the width of the lines?
-	
 	// Collect all objects in question
 	objects.reserve(map->getNumSelectedObjects());
 	undo_objects.reserve(map->getNumSelectedObjects());
@@ -1670,6 +1668,12 @@ void MapEditorController::connectPathsClicked()
 	{
 		PathObject* a = reinterpret_cast<PathObject*>(objects[i]);
 		a->update(false);
+		
+		// Choose connection threshold as maximum of 0.35mm, 1.5 * largest line extent, and 6 pixels
+		// TODO: instead of 6 pixels, use a physical size as soon as screen dpi is in the settings
+		float close_distance_sq = qMax(0.35f, 1.5f * a->getSymbol()->calculateLargestLineExtent(map));
+		close_distance_sq = qMax(close_distance_sq, 0.001f * main_view->pixelToLength(6));
+		close_distance_sq = qPow(close_distance_sq, 2);
 		
 		// Loop over all parts and check if they should be closed
 		int num_parts = a->getNumParts();
