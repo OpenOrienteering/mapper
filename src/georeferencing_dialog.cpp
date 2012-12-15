@@ -84,7 +84,7 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	crs_edit->setEditable(true);
 	// TODO: move crs registry out of georeferencing GUI
 	crs_edit->addItem(tr("Local coordinates"), "");
-	crs_edit->addItem("UTM", "+proj=utm +zone=!ZONE!");
+	crs_edit->addItem("UTM", "+proj=utm +datum=WGS84 +zone=!ZONE!");
 	crs_edit->addItem("Gauss-Krueger zone 3, datum: Potsdam", "+proj=tmerc +lat_0=0 +lon_0=9 +k=1.000000 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");
 	crs_edit->addItem(tr("Edit projection parameters..."), "!EDIT!");
 	
