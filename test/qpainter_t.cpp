@@ -118,4 +118,4 @@ QImage QPainterTest::compose(const QImage& source, const QImage& dest, QPainter:
 }
 
 
-QTEST_APPLESS_MAIN(QPainterTest)
+QTEST_MAIN(QPainterTest)
