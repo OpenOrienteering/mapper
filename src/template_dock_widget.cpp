@@ -38,8 +38,7 @@
 #include "settings.h"
 
 /** Parses a user-entered opacity value. Values must be strings of the form "F%" where F is any decimal number between 0 and
- *  100 (inclusive), or "F", where F is any floating-point number between 0.0 and 1.0 (inclusive). Leading and trailing
- *  whitespace is trimmed. If the value is invalid, the arguments are unchanged and the method returns false.
+ *  100 (inclusive). Leading and trailing whitespace is trimmed. If the value is invalid, the arguments are unchanged and the method returns false.
  *  If the value is valid, the method updates both the text (to a canonical form) and the float value, and returns true.
  */
 static bool parseOpacityEntry(QString &text, float &fvalue)
@@ -51,10 +50,8 @@ static bool parseOpacityEntry(QString &text, float &fvalue)
     {
         str.chop(1);
         str = str.trimmed();
-        value = str.toFloat(&ok) / 100.0f;
     }
-    else
-        value = str.toFloat(&ok);
+	value = str.toFloat(&ok) / 100.0f;
 
     if (!ok || value < 0 || value > 1)
         return false;
@@ -482,7 +479,7 @@ void TemplateWidget::cellChange(int row, int column)
             float fvalue;
             if (!parseOpacityEntry(text, fvalue))
             {
-                QMessageBox::warning(window(), tr("Error"), tr("Please enter a valid number from 0 to 1, or specify a percentage from 0 to 100!"));
+                QMessageBox::warning(window(), tr("Error"), tr("Please enter a percentage from 0 to 100!"));
                 template_table->item(row, column)->setText(QString::number(vis->opacity * 100) + "%");
             }
             else
