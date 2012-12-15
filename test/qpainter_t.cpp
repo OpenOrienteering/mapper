@@ -20,6 +20,7 @@
 
 #include "qpainter_t.h"
 
+#include "../src/core/image_transparency_fixup.h"
 
 
 QPainterTest::QPainterTest(QObject* parent)
@@ -76,6 +77,12 @@ void QPainterTest::multiplyComposition()
 	QEXPECT_FAIL("", "CompositionMode_Multiply incorrectly composes full transparency.", Continue);
 	QCOMPARE(compose(trans_img, trans_img, multiply).pixel(0,0), qRgba(0, 0, 0, 0));
 	QCOMPARE(compose(trans_img, trans_img, multiply).pixel(0,0), qRgba(0, 0, 0, 1)); // This should fail!
+	
+	// ImageTransparencyFixup fixes the particular issue.
+	QImage result = compose(trans_img, trans_img, multiply);
+	ImageTransparencyFixup fixup(&result);
+	fixup();
+	QCOMPARE(result.pixel(0,0), qRgba(0, 0, 0, 0)); // Now correct!
 }
 
 void QPainterTest::darkenComposition()
@@ -97,6 +104,12 @@ void QPainterTest::darkenComposition()
 	QEXPECT_FAIL("", "CompositionMode_Darken incorrectly composes full transparency.", Continue);
 	QCOMPARE(compose(trans_img, trans_img, darken).pixel(0,0), qRgba(0, 0, 0, 0));
 	QCOMPARE(compose(trans_img, trans_img, darken).pixel(0,0), qRgba(0, 0, 0, 1)); // This should fail!
+	
+	// ImageTransparencyFixup fixes the particular issue.
+	QImage result = compose(trans_img, trans_img, darken);
+	ImageTransparencyFixup fixup(&result);
+	fixup();
+	QCOMPARE(result.pixel(0,0), qRgba(0, 0, 0, 0)); // Now correct!
 }
 
 template <typename ColorT>
