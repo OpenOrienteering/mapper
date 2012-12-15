@@ -145,8 +145,13 @@ public:
 	/// Returns an image pointer which you must delete yourself when no longer needed.
 	QImage* createIcon(Map* map, int side_length, bool antialiasing, int bottom_right_border = 0);
 	
-	// Clear the symbol's icon. It will be recreated when it is needed.
+	/// Clear the symbol's icon. It will be recreated when it is needed.
 	void resetIcon() { delete icon; icon = NULL; }
+	
+	/// Returns the largest extent (half width) of all line symbols
+	/// which may be included in this symbol.
+	/// TODO: may fit into a subclass "PathSymbol"?
+	virtual float calculateLargestLineExtent(Map* map) {return 0;}
 	
 	// Getters / Setters
 	inline const QString& getName() const {return name;}

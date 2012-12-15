@@ -631,7 +631,7 @@ void CutTool::pathFinished(PathObject* split_path)
 		int num_holes = holes->getNumParts();
 		for (int i = 0; i < num_holes; ++i)
 		{
-			int part_index = (parts[0]->isPointOnPath(MapCoordF(holes->getCoordinate(holes->getPart(i).start_index)), 0, false) != Symbol::NoSymbol) ? 0 : 1;
+			int part_index = (parts[0]->isPointOnPath(MapCoordF(holes->getCoordinate(holes->getPart(i).start_index)), 0, false, false) != Symbol::NoSymbol) ? 0 : 1;
 			parts[part_index]->getCoordinate(parts[part_index]->getCoordinateCount() - 1).setHolePoint(true);
 			parts[part_index]->appendPathPart(holes, i);
 		}

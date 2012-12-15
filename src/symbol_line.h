@@ -103,6 +103,9 @@ public:
 	/// Deletes unused point symbols and sets them to NULL
 	void cleanupPointSymbols();
 	
+	/// Returns the largest extent (half width) of the components of this line.
+	virtual float calculateLargestLineExtent(Map* map);
+	
 	/// Returns the limit for miter joins in units of the line width.
 	/// See the Qt docs for QPainter::setMiterJoin().
 	/// TODO: Should that better be a line property?

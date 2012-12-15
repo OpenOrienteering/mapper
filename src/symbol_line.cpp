@@ -1640,6 +1640,18 @@ void LineSymbol::cleanupPointSymbols()
 	}
 }
 
+float LineSymbol::calculateLargestLineExtent(Map* map)
+{
+	float line_extent_f = 0.001f * 0.5f * asLine()->getLineWidth();
+	float result = line_extent_f;
+	if (asLine()->hasBorder())
+	{
+		result = qMax(result, line_extent_f + 0.001f * (asLine()->getBorder().shift + 0.5f * asLine()->getBorder().width));
+		result = qMax(result, line_extent_f + 0.001f * (asLine()->getRightBorder().shift + 0.5f * asLine()->getRightBorder().width));
+	}
+	return result;
+}
+
 void LineSymbol::setStartSymbol(PointSymbol* symbol)
 {
 	replaceSymbol(start_symbol, symbol, QObject::tr("Start symbol"));

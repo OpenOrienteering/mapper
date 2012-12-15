@@ -341,6 +341,14 @@ bool CombinedSymbol::loadFinished(Map* map)
 	return true;
 }
 
+float CombinedSymbol::calculateLargestLineExtent(Map* map)
+{
+	float result = 0;
+	for (size_t i = 0, end = parts.size(); i < end; ++i)
+		result = qMax(result, parts[i]->calculateLargestLineExtent(map));
+	return result;
+}
+
 void CombinedSymbol::setPart(int i, Symbol* symbol, bool is_private)
 {
 	if (private_parts[i])

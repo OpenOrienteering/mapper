@@ -240,7 +240,7 @@ public:
 	/// Ensures that all parts are closed. Useful for objects with area-only symbols.
 	void closeAllParts();
 	/// See Object::isPointOnObject()
-	int isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas_as_paths);
+	int isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection);
 	
 	/// Called by Object::update()
 	void updatePathCoords(MapCoordVectorF& float_coords);

@@ -59,6 +59,8 @@ public:
 	
 	virtual bool loadFinished(Map* map);
 	
+    virtual float calculateLargestLineExtent(Map* map);
+	
 	// Getters / Setter
 	inline int getNumParts() const {return (int)parts.size();}
 	inline void setNumParts(int num) {parts.resize(num, NULL); private_parts.resize(num, false);}

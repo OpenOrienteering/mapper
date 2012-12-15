@@ -575,7 +575,7 @@ int Object::isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_a
 	{
 		// Path objects
 		PathObject* path = reinterpret_cast<PathObject*>(this);
-		return path->isPointOnPath(coord, tolerance, treat_areas_as_paths);
+		return path->isPointOnPath(coord, tolerance, treat_areas_as_paths, true);
 	}
 }
 bool Object::intersectsBox(QRectF box)
@@ -2017,10 +2017,17 @@ void PathObject::closeAllParts()
 	}
 }
 
-int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas_as_paths)
+int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection)
 {
 	Symbol::Type contained_types = symbol->getContainedTypes();
 	int coords_size = (int)coords.size();
+	
+	float side_tolerance = tolerance;
+	if (extended_selection && map && (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Combined))
+	{
+		// TODO: precalculate largest line extent for all symbols to move it out of this time critical method?
+		side_tolerance = qMax(side_tolerance, symbol->calculateLargestLineExtent(map));
+	}
 	
 	if ((contained_types & Symbol::Line || treat_areas_as_paths) && tolerance > 0)
 	{
@@ -2055,7 +2062,7 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 			right.perpRight();
 			
 			float dist_from_line = qAbs(right.dot(to_coord));
-			if (dist_from_line <= tolerance)
+			if (dist_from_line <= side_tolerance)
 				return Symbol::Line;
 		}
 	}
