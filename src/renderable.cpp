@@ -23,6 +23,7 @@
 #include <QPainter>
 #include <qmath.h>
 
+#include "core/image_transparency_fixup.h"
 #include "map.h"
 #include "map_color.h"
 #include "object.h"
@@ -178,7 +179,8 @@ void ObjectRenderables::deleteRenderables()
 }
 
 
-// ### RenderableContainer ###
+
+// ### MapRenderables ###
 
 MapRenderables::MapRenderables(Map* map) : map(map)
 {
@@ -306,15 +308,18 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 
 void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor, bool highlighted) const
 {
+	// NOTE: painter must be a QPainter on a QImage of Format_ARGB32_Premultiplied.
+	QImage* image = static_cast<QImage*>(painter->device());
+	ImageTransparencyFixup image_fixup(image);
+	
+	QPainter::RenderHints hints = painter->renderHints();
 	QTransform t = painter->worldTransform();
 	painter->save();
 	
 	painter->resetTransform();
 	painter->setCompositionMode(QPainter::CompositionMode_Multiply); // Alternative: CompositionMode_Darken
 	
-	float w = painter->device()->width();
-	float h = painter->device()->height();
-	QImage separation(w, h, QImage::Format_ARGB32_Premultiplied);
+	QImage separation(image->size(), QImage::Format_ARGB32_Premultiplied);
 	
 	for (Map::ColorVector::reverse_iterator map_color = map->color_set->colors.rbegin();
 	     map_color != map->color_set->colors.rend();
@@ -322,17 +327,18 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF boundi
 	{
 		if ((*map_color)->getSpotColorMethod() == MapColor::SpotColor)
 		{
-			separation.fill(QColor(Qt::white).rgba());
+			separation.fill((Qt::GlobalColor)Qt::transparent);
 			
 			// Collect all halftones and knockouts of a single color
 			QPainter p(&separation);
-			p.setRenderHints(painter->renderHints());
+			p.setRenderHints(hints);
 			p.setWorldTransform(t, false);
 			drawColorSeparation(&p, *map_color, bounding_box, force_min_size, scaling, on_screen, true);
 			p.end();
 			
-			// draw the separation on the previous ones; CompositionMode_Multiply
+			// Add this separation to the composition
 			painter->drawImage(0, 0, separation);
+			image_fixup();
 		}
 	}
 	
