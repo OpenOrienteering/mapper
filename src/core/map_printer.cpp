@@ -131,21 +131,32 @@ void MapPrinter::saveParameters() const
 }
 
 // slot
-void MapPrinter::setTarget(const QPrinterInfo* target)
+void MapPrinter::setTarget(const QPrinterInfo* new_target)
 {
-	if (target == NULL)
-		target = target;
-	else if (target == pdfTarget())
-		target = target;
-	else if (target == imageTarget())
-		target = target;
-	else
+	if (new_target != target)
 	{
-		// We don't own this target, so we need to make a copy.
-		target_copy = *target;
-		target = &target_copy;
+		const QPrinterInfo* old_target = target;
+		if (new_target == NULL)
+			target = new_target;
+		else if (new_target == pdfTarget())
+			target = new_target;
+		else if (new_target == imageTarget())
+			target = new_target;
+		else
+		{
+			// We don't own this target, so we need to make a copy.
+			target_copy = *new_target;
+			target = &target_copy;
+		}
+		emit targetChanged(target);
+		
+		if (old_target == imageTarget() || new_target == imageTarget())
+		{
+			// Page margins change
+			updatePaperDimensions();
+			emit pageFormatChanged(page_format);
+		}
 	}
-	emit targetChanged(target);
 }
 
 QPrinter* MapPrinter::makePrinter() const
@@ -167,6 +178,10 @@ QPrinter* MapPrinter::makePrinter() const
 	}
 	printer->setColorMode(QPrinter::Color);
 	printer->setResolution(options.resolution);
+	
+	if (target == imageTarget())
+		printer->setPageMargins(0.0, 0.0, 0.0, 0.0, QPrinter::Millimeter);
+	
 	return printer;
 }
 
@@ -237,25 +252,31 @@ void MapPrinter::setPageOrientation(QPrinter::Orientation orientation)
 
 void MapPrinter::updatePaperDimensions()
 {
-	QPrinter printer(QPrinter::HighResolution);
+	QPrinter* printer = (target==NULL) ? 
+	  new QPrinter(QPrinter::HighResolution) : new QPrinter(*target, QPrinter::HighResolution);
+	  
 	if (page_format.paper_size == QPrinter::Custom)
 	{
-		printer.setPaperSize(page_format.paper_dimensions, QPrinter::Millimeter);
-		page_format.orientation = printer.orientation(); 
+		printer->setPaperSize(page_format.paper_dimensions, QPrinter::Millimeter);
+		page_format.orientation = printer->orientation(); 
 	}
 	else
 	{
-		printer.setPaperSize(page_format.paper_size);
-		printer.setOrientation(page_format.orientation);
+		printer->setPaperSize(page_format.paper_size);
+		printer->setOrientation(page_format.orientation);
 	}
 	
-	page_format.page_rect = printer.paperRect(QPrinter::Millimeter); // temporary
+	page_format.page_rect = printer->paperRect(QPrinter::Millimeter);
 	page_format.paper_dimensions = page_format.page_rect.size();
 	
-	qreal left, top, right, bottom;
-	printer.getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
-	page_format.page_rect.adjust(left, top, -right, -bottom);
+	if (target != imageTarget())
+	{
+		qreal left, top, right, bottom;
+		printer->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
+		page_format.page_rect.adjust(left, top, -right, -bottom);
+	}
 	
+	delete printer;
 	updatePageBreaks();
 }
 
@@ -360,47 +381,47 @@ void MapPrinter::takePrinterSettings(const QPrinter* printer)
 		updatePageBreaks();
 		emit pageFormatChanged(page_format);
 	}
-	
-// 	setResolution((float)printer->resolution());
 }
 
 void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& page_extent, bool white_background) const
 {
 	device_painter->save();
+	
 	device_painter->setRenderHint(QPainter::Antialiasing);
 	device_painter->setRenderHint(QPainter::SmoothPixmapTransform);
 	
-	// If there is anything transparent to draw,
-	// use a temporary image which is drawn on the device printer as last step
-	// because painting transparently seems to be unsupported when printing
-	bool have_transparency = (view != NULL) && view->getMapVisibility()->visible && view->getMapVisibility()->opacity < 1;
+	// Painting transparently is not supported for print devices.
+	// If there are any transparent features, use a temporary image 
+	// which is drawn on the device printer as last step.
+	// If the target is an image, use the temporary image to enforce
+	// the given resolution during preview.
+	bool have_transparency = options.simulate_overprinting || target == imageTarget();
 	if (view != NULL)
 	{
+		have_transparency = view->getMapVisibility()->visible && view->getMapVisibility()->opacity < 1.0f;
 		for (int i = 0; i < map.getNumTemplates() && !have_transparency; ++i)
 		{
 			TemplateVisibility* visibility = view->getTemplateVisibility(map.getTemplate(i));
-			have_transparency = visibility->visible && visibility->opacity < 1;
+			have_transparency = visibility->visible && visibility->opacity < 1.0f;
 		}
 	}
 	
-	bool print_rgb_image = have_transparency || options.simulate_overprinting;
+	// Dots per mm
+	qreal scale = dpi / 25.4;
 	
 	QPainter* painter = device_painter;
 	QImage print_buffer;
-	QPainter print_buffer_painter;
-	if (print_rgb_image)
+	if (have_transparency)
 	{
-		print_buffer = QImage(painter->device()->width(), painter->device()->height(), QImage::Format_RGB32);
-		print_buffer_painter.begin(&print_buffer);
-		painter = &print_buffer_painter;
-		white_background = true;
+		int w = qCeil(device_painter->device()->widthMM() * scale);
+		int h = qCeil(device_painter->device()->heightMM() * scale);
+		print_buffer = QImage(w, h, QImage::Format_RGB32);
+		print_buffer.fill(QColor(Qt::white));
+		painter = new QPainter(&print_buffer);
+		painter->setRenderHints(device_painter->renderHints());
 	}
-	
-	if (white_background)
+	else if (white_background)
 		painter->fillRect(QRect(0, 0, painter->device()->width(), painter->device()->height()), Qt::white);
-	
-	// Convert mm to dots
-	float scale = dpi / 25.4f;
 	
 	// Translate for top left page margin 
 	painter->scale(scale, scale);
@@ -422,28 +443,29 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 	
 	if (view == NULL || view->getMapVisibility()->visible)
 	{
-		if (!print_rgb_image)
-			map.draw(painter, page_extent, false, scale, false, false);
-		else
+		QImage map_buffer;
+		QPainter* map_painter = painter;
+		if (have_transparency)
 		{
 			// Draw map into a temporary buffer first which is printed with the map's opacity later.
 			// This prevents artifacts with overlapping objects.
-			QImage map_buffer(painter->device()->width(), painter->device()->height(), QImage::Format_ARGB32_Premultiplied);
-			QPainter buffer_painter;
-			buffer_painter.begin(&map_buffer);
-			buffer_painter.setRenderHints(painter->renderHints());
+			map_buffer = QImage(print_buffer.size(), QImage::Format_ARGB32_Premultiplied);
+			map_buffer.fill(QColor(Qt::transparent));
 			
-			// Clear buffer
-			buffer_painter.fillRect(map_buffer.rect(), Qt::transparent);
+			map_painter = new QPainter(&map_buffer);
+			map_painter->setRenderHints(painter->renderHints());
+			map_painter->setTransform(painter->transform());
+		}
+		
+		if (options.simulate_overprinting)
+			map.drawOverprintingSimulation(map_painter, page_extent, false, scale, false, false);
+		else
+			map.draw(map_painter, page_extent, false, scale, false, false);
 			
-			// Draw map with full opacity
-			buffer_painter.setTransform(painter->transform());
-			if (options.simulate_overprinting)
-				map.drawOverprintingSimulation(&buffer_painter, page_extent, false, scale, false, false);
-			else
-				map.draw(&buffer_painter, page_extent, false, scale, false, false);
-			
-			buffer_painter.end();
+		if (map_painter != painter)
+		{
+			delete map_painter;
+			map_painter = NULL;
 			
 			// Print buffer with map opacity
 			painter->save();
@@ -455,21 +477,23 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 			painter->restore();
 		}
 	}
+	
 	if (options.show_grid)
 		map.drawGrid(painter, print_area);
 	
 	if (options.show_templates)
 		map.drawTemplates(painter, page_extent, map.getFirstFrontTemplate(), map.getNumTemplates() - 1, view);
 	
-	// If a temporary buffer has been used, paint it on the device printer
-	if (print_buffer_painter.isActive())
+	// If a temporary buffer has been used, paint it on the device painter
+	if (painter != device_painter)
 	{
-		print_buffer_painter.end();
-		painter = device_painter;
+		delete painter; 
+		painter = NULL;
 		
 		device_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
 		device_painter->drawImage(0, 0, print_buffer);
 	}
+	
 	device_painter->restore();
 }
 
@@ -479,21 +503,24 @@ void MapPrinter::printMap(QPrinter* printer)
 	// Printer settings may have been changed by preview or application.
 	// We need to use them for printing.
 	takePrinterSettings(printer);
+	
 	QSizeF extent_size = page_format.page_rect.size() / options.scale_adjustment;
-	QPainter p;
+	QPainter p(printer);
+	bool need_new_page = false;
 	Q_FOREACH(qreal vpos, v_page_pos)
 	{
 		Q_FOREACH(qreal hpos, h_page_pos)
 		{
-			QRectF page_extent = QRectF(QPointF(hpos, vpos), extent_size).intersected(print_area);
 			if (p.isActive())
-				printer->newPage();
-			else
-				p.begin(printer);
+			{
+				if (need_new_page)
+					printer->newPage();
 			
-			drawPage(&p, (float)options.resolution, page_extent, true); // white background required by QPrintPreviewDialog
+				QRectF page_extent = QRectF(QPointF(hpos, vpos), extent_size).intersected(print_area);
+				drawPage(&p, (float)options.resolution, page_extent, false);
+				need_new_page = true;
+			}
 		}
 	}
-	p.end();
 }
 

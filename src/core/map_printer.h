@@ -114,7 +114,7 @@ public:
 public slots:
 	/** Sets the target QPrinterInfo.
 	 *  Ownership is not taken over! Target may even be NULL. */
-	void setTarget(const QPrinterInfo* target);
+	void setTarget(const QPrinterInfo* new_target);
 	
 	/** Sets the map area which is to be printed. */
 	void setPrintArea(const QRectF& area);

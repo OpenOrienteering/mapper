@@ -259,14 +259,7 @@ void PrintWidget::updateTargets()
 void PrintWidget::setTarget(const QPrinterInfo* target)
 {
 	int target_index = printers.size()-1;
-	if (target == NULL) {
-		for (; target_index >= 0; target_index--)
-		{
-			if (printers[target_index].isDefault())
-				break;
-		}
-	}
-	else if (target == MapPrinter::pdfTarget())
+	if (target == MapPrinter::pdfTarget())
 		target_index = PdfExporter;
 	else if (target == MapPrinter::imageTarget())
 		target_index = ImageExporter;
@@ -274,11 +267,23 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 	{
 		for (; target_index >= 0; target_index--)
 		{
-			if (printers[target_index].printerName() == target->printerName())
+			if (target != NULL && printers[target_index].printerName() == target->printerName())
+				break;
+			else if (target == NULL)
 				break;
 		}
 	}
 	target_combo->setCurrentIndex(target_combo->findData(QVariant(target_index)));
+	
+	updatePaperSizes(target);
+	updateResolutions(target);
+	
+	bool supports_pages = (target != MapPrinter::imageTarget());
+	bool supports_copies = (supports_pages && target != NULL && QPrinter(*target).supportsMultipleCopies());
+	copies_edit->setEnabled(supports_copies);
+	layout->labelForField(copies_edit)->setEnabled(supports_copies);
+	
+	print_button->setText(map_printer->isPrinter() ? tr("Print") : tr("Export"));
 }
 
 // slot
@@ -300,14 +305,6 @@ void PrintWidget::targetChanged(int index) const
 		target = &printers[target_index];
 	
 	map_printer->setTarget(target);
-	updatePaperSizes(target);
-	updateResolutions(target);
-	
-	bool supports_pages = (target != MapPrinter::imageTarget());
-	copies_edit->setEnabled(supports_pages);
-	layout->labelForField(copies_edit)->setEnabled(supports_pages);
-	preview_button->setEnabled(supports_pages);
-	print_button->setText(map_printer->isPrinter() ? tr("Print") : tr("Export"));
 }
 
 
@@ -346,9 +343,6 @@ void PrintWidget::updatePaperSizes(const QPrinterInfo* target) const
 		paper_size_combo->setCurrentIndex(qMax(0, paper_size_index));
 		paperSizeChanged(paper_size_combo->currentIndex());
 	}
-	
-	width_edit->setEnabled(have_custom_size);
-	height_edit->setEnabled(have_custom_size);
 }
 
 // slot
@@ -358,8 +352,6 @@ void PrintWidget::setPageFormat(const MapPrinterPageFormat& format)
 	block << paper_size_combo << page_orientation_combo << width_edit << height_edit;
 	paper_size_combo->setCurrentIndex(paper_size_combo->findData(format.paper_size));
 	page_orientation_combo->setCurrentIndex(page_orientation_combo->findData(format.orientation));
-// 	width_edit->setValue(format.paper_dimensions.width());
-// 	height_edit->setValue(format.paper_dimensions.height());
 	applyPrintAreaPolicy();
 }
 
@@ -627,8 +619,11 @@ void PrintWidget::printClicked()
 		int print_width = qRound(map_printer->getPrintArea().width() * pixel_per_mm);
 		int print_height = qRound(map_printer->getPrintArea().height() * pixel_per_mm);
 		QImage image(print_width, print_height, QImage::Format_ARGB32_Premultiplied);
+		int dots_per_meter = qRound(pixel_per_mm * 1000);
+		image.setDotsPerMeterX(dots_per_meter);
+		image.setDotsPerMeterY(dots_per_meter);
 		QPainter p(&image);
-		map_printer->drawPage(&p, map_printer->getOptions().resolution, image.rect(), true);
+		map_printer->drawPage(&p, map_printer->getOptions().resolution, map_printer->getPrintArea(), true);
 		p.end();
 		if (!image.save(path))
 		{
