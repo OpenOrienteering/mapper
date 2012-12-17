@@ -763,6 +763,7 @@ void MapEditorController::printClicked()
 	if (!print_dock_widget)
 	{
 		print_dock_widget = new EditorDockWidget(tr("Print or Export"), print_act, this, window);
+		print_dock_widget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
 		print_widget = new PrintWidget(map, window, main_view, this, print_dock_widget);
 		connect(print_dock_widget, SIGNAL(visibilityChanged(bool)), print_widget, SLOT(setActive(bool)));
 		connect(print_widget, SIGNAL(finished(int)), print_dock_widget, SLOT(close()));

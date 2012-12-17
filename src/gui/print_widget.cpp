@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps, Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -29,200 +29,146 @@
 #endif
 #include <QPrintPreviewDialog>
 
-#include "../util.h"
+#include "../core/map_printer.h"
 #include "../map.h"
 #include "../main_window.h"
 #include "../map_widget.h"
 #include "../settings.h"
+#include "../util.h"
+#include "../util_gui.h"
+#include "../util/scoped_signals_blocker.h"
 #include "print_tool.h"
+
+
+const QString toString(QPrinter::PaperSize size);
+
 
 PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, MapEditorController* editor, QWidget* parent)
 : QWidget(parent), 
   map(map), 
+  map_printer(new MapPrinter(*map)),
   main_window(main_window), 
   main_view(main_view), 
-  editor(editor)
+  editor(editor),
+  print_tool(NULL)
 {
-	react_to_changes = true;
-	print_tool = NULL;
+	layout = new QFormLayout();
 	
-	bool params_set = map->arePrintParametersSet();
-	int orientation;
-	float dpi, left, top, width, height;
-	bool show_templates, show_grid, simulate_overprinting, center, different_scale_enabled;
-	int different_scale;
-	if (params_set)
-	{
-		map->getPrintParameters(orientation, prev_paper_size, dpi, show_templates, show_grid, simulate_overprinting, center, left, top, width, height, different_scale_enabled, different_scale);
-		have_prev_paper_size = true;
-	}
-	else
-	{
-		have_prev_paper_size = false;
-		
-		// By default, set the print area to the map bbox
-		QRectF map_extent = map->calculateExtent(false, false, main_view);
-		const float default_border_size = 2 * 3;
-		print_width = map_extent.width() + default_border_size;
-		print_height = map_extent.height() + default_border_size;
-		width = print_width;
-		height = print_height;
-	}
+	target_combo = new QComboBox();
+	target_combo->setMinimumWidth(1); // Not zero, but not as long as the items
+	layout->addRow(Util::Headline::create(tr("Printer or exporter:")), target_combo);
 	
-	QLabel* device_label = new QLabel("<b>" + tr("Printer or exporter:") + "</b>");
-	device_combo = new QComboBox();
-
-    device_combo->setMaximumWidth(200);
-#if QT_VERSION < 0x050000
-	device_combo->addItem(tr("Export to PDF or PS"), QVariant((int)PdfExporter));
-#else
-	device_combo->addItem(tr("Export to PDF"), QVariant((int)PdfExporter));
-#endif
-	device_combo->addItem(tr("Export to image"), QVariant((int)ImageExporter));
-	device_combo->insertSeparator(device_combo->count());
-	device_combo->setCurrentIndex(0);
+	paper_size_combo = new QComboBox();
+	layout->addRow(tr("Page format:"), paper_size_combo);
 	
-	printers = QPrinterInfo::availablePrinters();
-    for (int i = 0; i < printers.size(); ++i)
-	{
-		device_combo->addItem(printers[i].printerName(), i);
-		if (printers[i].isDefault())
-			device_combo->setCurrentIndex(device_combo->findData(i));
-	}
-	
-	show_templates_check = new QCheckBox(tr("Show templates"));	// this must be created before its value is used to determine the default setting of page_orientation_combo
-	if (params_set)
-		show_templates_check->setChecked(show_templates);
-	
-	show_grid_check = new QCheckBox(tr("Show grid"));
-	if (params_set)
-		show_grid_check->setChecked(show_grid);
-	
-	overprinting_check = new QCheckBox(tr("Simulate overprinting"));
-	if (params_set)
-		overprinting_check->setChecked(simulate_overprinting);
-	
-	QLabel* page_orientation_label = new QLabel(tr("Page orientation:"));
 	page_orientation_combo = new QComboBox();
 	page_orientation_combo->addItem(tr("Portrait"), QPrinter::Portrait);
 	page_orientation_combo->addItem(tr("Landscape"), QPrinter::Landscape);
-	if (params_set)
-		page_orientation_combo->setCurrentIndex(page_orientation_combo->findData(orientation));
-	else
-	{
-		QRectF map_extent = map->calculateExtent(false, show_templates_check->isChecked(), main_view);
-		QPrinter::Orientation best_orientation = (map_extent.width() > map_extent.height()) ? QPrinter::Landscape : QPrinter::Portrait;
-		page_orientation_combo->setCurrentIndex(page_orientation_combo->findData((int)best_orientation));
-	}
+	layout->addRow(tr("Page orientation:"), page_orientation_combo);
 	
-	QLabel* page_format_label = new QLabel(tr("Page format:"));
-	page_format_combo = new QComboBox();
+	copies_edit = Util::SpinBox::create(1, 99999);
+	layout->addRow(tr("Copies:"), copies_edit);
 	
-	dpi_label = new QLabel(tr("Dots per inch (dpi):"), this);
-	dpi_combo = new QComboBox(this);
+	layout->addItem(Util::SpacerItem::create(this));
+	
+	policy_combo = new QComboBox();
+	policy_combo->addItem(tr("Single page"), SinglePage);
+	policy_combo->addItem(tr("Custom area"), CustomArea);
+	layout->addRow(Util::Headline::create(tr("Map area:")), policy_combo); // or print/export area
+	
+	center_check = new QCheckBox(tr("Center page on map"));
+	center_check->setCheckable(true);
+	layout->addRow(center_check);
+	
+	left_edit = Util::SpinBox::create(2, -999999.9, 999999.9, tr("mm"), 1.0);
+	layout->addRow(tr("Left:"), left_edit);
+	
+	top_edit = Util::SpinBox::create(2, -999999.9, 999999.9, tr("mm"), 1.0);
+	layout->addRow(tr("Top:"), top_edit);
+	
+	width_edit = Util::SpinBox::create(2, -999999.9, 999999.9, tr("mm"), 1.0);
+	layout->addRow(tr("Width:"), width_edit);
+	
+	height_edit = Util::SpinBox::create(2, -999999.9, 999999.9, tr("mm"), 1.0);
+	layout->addRow(tr("Height:"), height_edit);
+	
+	layout->addItem(Util::SpacerItem::create(this));
+	
+	layout->addRow(Util::Headline::create(tr("Options")));
+	
+	dpi_combo = new QComboBox();
 	dpi_combo->setEditable(true);
-	dpi_combo->setValidator(new QIntValidator(30, 9600, dpi_combo));
-	dpi_combo->lineEdit()->setText(params_set ? QString::number(dpi) : "600");
+	dpi_combo->setValidator(new QRegExpValidator(QRegExp("^[1-9]\\d{1,4} dpi$|^[1-9]\\d{1,4}$"), dpi_combo));
+	// TODO: Implement spinbox-style " dpi" suffix
+	layout->addRow(tr("Resolution:"), dpi_combo);
 	
-	copies_label = new QLabel(tr("Copies:"), this);
-	copies_edit = new QLineEdit("1", this);
-	copies_edit->setValidator(new QIntValidator(1, 999999, copies_edit));
+	different_scale_check = new QCheckBox(tr("Alternative scale:"));
+	different_scale_edit = Util::SpinBox::create(1, std::numeric_limits<int>::max(), "", 500);
+	different_scale_edit->setPrefix("1 : ");
+	different_scale_edit->setEnabled(false);
+	// TODO: Fix vertical alignment of this row:
+	layout->addRow(different_scale_check, different_scale_edit);
 	
-	QLabel* print_area_label = new QLabel("<b>" + tr("Print area") + "</b>");
-	QLabel* left_label = new QLabel(tr("Left:"));
-	left_edit = new QLineEdit(params_set ? QString::number(left) : "");
-	left_edit->setValidator(new DoubleValidator(-999999, 999999, left_edit));
-	QLabel* top_label = new QLabel(tr("Top:"));
-	top_edit = new QLineEdit(params_set ? QString::number(top) : "");
-	top_edit->setValidator(new DoubleValidator(-999999, 999999, top_edit));
-	QLabel* width_label = new QLabel(tr("Width:"));
-	width_edit = new QLineEdit(QString::number(width));
-	width_edit->setValidator(new DoubleValidator(-999999, 999999, width_edit));
-	QLabel* height_label = new QLabel(tr("Height:"));
-	height_edit = new QLineEdit(QString::number(height));
-	height_edit->setValidator(new DoubleValidator(-999999, 999999, height_edit));
+	show_templates_check = new QCheckBox(tr("Show templates"));	// this must be created before its value is used to determine the default setting of page_orientation_combo
+	layout->addRow(show_templates_check);
 	
-	center_button = new QPushButton(tr("Center area on map"));
-	center_button->setCheckable(true);
-	center_button->setChecked(params_set ? center : true);
+	show_grid_check = new QCheckBox(tr("Show grid"));
+	layout->addRow(show_grid_check);
 	
-	different_scale_check = new QCheckBox("");
-	different_scale_check->setChecked(params_set ? different_scale_enabled : false);
-	different_scale_edit = new QLineEdit(params_set ? QString::number(different_scale) : "", this);
-	different_scale_edit->setEnabled(different_scale_check->isChecked());
-	different_scale_edit->setValidator(new QIntValidator(1, std::numeric_limits<int>::max(), different_scale_edit));
+	overprinting_check = new QCheckBox(tr("Simulate overprinting"));
+	layout->addRow(overprinting_check);
 	
+	layout->addItem(Util::SpacerItem::create(this));
+	
+	QDialogButtonBox* button_box = new QDialogButtonBox();
 	preview_button = new QPushButton(tr("Preview..."));
-	print_button = new QPushButton("");
+	button_box->addButton(preview_button, QDialogButtonBox::ActionRole);
+	print_button = new QPushButton(tr("Print"));
+	button_box->addButton(print_button, QDialogButtonBox::AcceptRole);
+	layout->addRow(button_box);
 	
-	int row = 0;
-	QGridLayout* layout = new QGridLayout();
-	layout->addWidget(device_label, row, 0);
-	layout->addWidget(device_combo, row, 1);
-	++row;
-	layout->addWidget(page_orientation_label, row, 0);
-	layout->addWidget(page_orientation_combo, row, 1);
-	++row;
-	layout->addWidget(page_format_label, row, 0);
-	layout->addWidget(page_format_combo, row, 1);
-	++row;
-	layout->addWidget(dpi_label, row, 0);
-	layout->addWidget(dpi_combo, row, 1);
-	++row;
-	layout->addWidget(copies_label, row, 0);
-	layout->addWidget(copies_edit, row, 1);
-	++row;
-	layout->addWidget(show_templates_check, row, 0, 1, 2);
-	++row;
-	layout->addWidget(show_grid_check, row, 0, 1, 2);
-	++row;
-	layout->addWidget(overprinting_check, row, 0, 1, 2);
-	++row;
-	layout->addWidget(print_area_label, row, 0, 1, 2);
-	++row;
-	layout->addWidget(left_label, row, 0);
-	layout->addWidget(left_edit, row, 1);
-	++row;
-	layout->addWidget(top_label, row, 0);
-	layout->addWidget(top_edit, row, 1);
-	++row;
-	layout->addWidget(width_label, row, 0);
-	layout->addWidget(width_edit, row, 1);
-	++row;
-	layout->addWidget(height_label, row, 0);
-	layout->addWidget(height_edit, row, 1);
-	++row;
-	layout->addWidget(center_button, row, 0, 1, 2);
-	++row;
-	layout->addWidget(different_scale_check, row, 0);
-	layout->addWidget(different_scale_edit, row, 1);
-	++row;
-	layout->setRowStretch(row, 1);
-	++row;
-	layout->addWidget(preview_button, row, 0);
-	layout->addWidget(print_button, row, 1);
 	setLayout(layout);
 	
-	connect(device_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(currentDeviceChanged()));
-	connect(page_orientation_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(pageOrientationChanged()));
-	connect(page_format_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(pageFormatChanged()));
-	connect(show_templates_check, SIGNAL(clicked()), this, SLOT(showTemplatesClicked()));
-	connect(show_grid_check, SIGNAL(clicked()), this, SLOT(showGridClicked()));
-	connect(top_edit, SIGNAL(textEdited(QString)), this, SLOT(printAreaPositionChanged()));
-	connect(left_edit, SIGNAL(textEdited(QString)), this, SLOT(printAreaPositionChanged()));
-	connect(width_edit, SIGNAL(textEdited(QString)), this, SLOT(printAreaSizeChanged()));
-	connect(height_edit, SIGNAL(textEdited(QString)), this, SLOT(printAreaSizeChanged()));
-	connect(center_button, SIGNAL(clicked(bool)), this, SLOT(centerPrintAreaClicked()));
+	connect(target_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(targetChanged(int)));
+	connect(paper_size_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(paperSizeChanged(int)));
+	connect(page_orientation_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(pageOrientationChanged(int)));
+	
+	connect(policy_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(applyPrintAreaPolicy()));
+	connect(center_check, SIGNAL(clicked(bool)), this, SLOT(applyPrintAreaPolicy()));
+	connect(top_edit, SIGNAL(valueChanged(double)), this, SLOT(printAreaMoved()));
+	connect(left_edit, SIGNAL(valueChanged(double)), this, SLOT(printAreaMoved()));
+	connect(width_edit, SIGNAL(valueChanged(double)), this, SLOT(printAreaResized()));
+	connect(height_edit, SIGNAL(valueChanged(double)), this, SLOT(printAreaResized()));
+	
+	connect(dpi_combo->lineEdit(), SIGNAL(editingFinished()), this, SLOT(resolutionEdited()));
 	connect(different_scale_check, SIGNAL(clicked(bool)), this, SLOT(differentScaleClicked(bool)));
-	connect(different_scale_edit, SIGNAL(textEdited(QString)), this, SLOT(differentScaleEdited(QString)));
+	connect(different_scale_edit, SIGNAL(valueChanged(int)), this, SLOT(differentScaleEdited(int)));
+	connect(show_templates_check, SIGNAL(clicked(bool)), this, SLOT(showTemplatesClicked(bool)));
+	connect(show_grid_check, SIGNAL(clicked(bool)), this, SLOT(showGridClicked(bool)));
+	connect(overprinting_check, SIGNAL(clicked(bool)), this, SLOT(overprintingClicked(bool)));
+	
 	connect(preview_button, SIGNAL(clicked(bool)), this, SLOT(previewClicked()));
 	connect(print_button, SIGNAL(clicked(bool)), this, SLOT(printClicked()));
 	
-	currentDeviceChanged();
+	setPageFormat(map_printer->getPageFormat());
+	connect(map_printer, SIGNAL(pageFormatChanged(const MapPrinterPageFormat&)),
+	        this, SLOT(setPageFormat(const MapPrinterPageFormat&)));
+	
+	setOptions(map_printer->getOptions());
+	connect(map_printer, SIGNAL(optionsChanged(const MapPrinterOptions&)), this, SLOT(setOptions(const MapPrinterOptions&)));
+	
+	setPrintArea(map_printer->getPrintArea());
+	connect(map_printer, SIGNAL(printAreaChanged(QRectF)), this, SLOT(setPrintArea(QRectF)));
+	
+// 	setTarget(exporter->getSettings().target);
+	connect(map_printer, SIGNAL(targetChanged(const QPrinterInfo*)), this, SLOT(setTarget(const QPrinterInfo*)));
+	
+	connect(this, SIGNAL(finished(int)), map_printer, SLOT(saveParameters()));
 }
 
 PrintWidget::~PrintWidget()
 {
+	delete map_printer;
 }
 
 QSize PrintWidget::sizeHint() const
@@ -230,15 +176,19 @@ QSize PrintWidget::sizeHint() const
 	return QSize(200, 300);
 }
 
+// slot
 void PrintWidget::setActive(bool state)
 {
 	if (state)
 	{
-		if (center_button->isChecked())
-			centerPrintArea();
+		// Printers may have been added or removed.
+		updateTargets();
+		
+		// The map may have been modified.
+		applyPrintAreaPolicy();
 		
 		if (!print_tool)
-			print_tool = new PrintTool(editor, this);
+			print_tool = new PrintTool(editor, map_printer);
 		editor->setOverrideTool(print_tool);
 	}
 	else
@@ -248,490 +198,405 @@ void PrintWidget::setActive(bool state)
 	}
 }
 
-void PrintWidget::savePrinterSettings()
-{
-	map->setPrintParameters(page_orientation_combo->itemData(page_orientation_combo->currentIndex()).toInt(),
-							page_format_combo->itemData(page_format_combo->currentIndex()).toInt(), dpi_combo->currentText().toFloat(),
-							show_templates_check->isChecked(), show_grid_check->isChecked(), overprinting_check->isChecked(),
-							center_button->isChecked(), getPrintAreaLeft(), getPrintAreaTop(), print_width, print_height,
-							different_scale_check->isChecked(), qMax(1, different_scale_edit->text().toInt()));
-}
 
-float PrintWidget::getPrintAreaLeft()
-{
-	return left_edit->text().toFloat();
-}
 
-float PrintWidget::getPrintAreaTop()
+void PrintWidget::updateTargets()
 {
-	return top_edit->text().toFloat();
-}
-
-void PrintWidget::setPrintAreaLeft(float value)
-{
-	left_edit->setText(QString::number(value));
-	center_button->setChecked(false);
-}
-
-void PrintWidget::setPrintAreaTop(float value)
-{
-	top_edit->setText(QString::number(value));
-	center_button->setChecked(false);
-}
-
-void PrintWidget::getMargins(float& top, float& left, float& bottom, float& right)
-{
-	top = margin_top;
-	left = margin_left;
-	bottom = margin_bottom;
-	right = margin_right;
-}
-
-QRectF PrintWidget::getEffectivePrintArea()
-{
-	float scale_factor = calcScaleFactor();
-	return QRectF(getPrintAreaLeft() + (print_width / 2) * (1 - 1 / scale_factor),
-				  getPrintAreaTop() + (print_height / 2) * (1 - 1 / scale_factor),
-				  print_width / scale_factor,
-				  print_height / scale_factor);
-}
-
-float PrintWidget::calcScaleFactor()
-{
-	if (different_scale_check->isChecked())
+	QVariant current_target = target_combo->itemData(target_combo->currentIndex());
+	const QPrinterInfo* saved_printer = map_printer->getTarget();
+	const QString saved_printer_name = (saved_printer == NULL) ? "" : saved_printer->printerName();
+	int saved_target_index = -1;
+	int default_printer_index = -1;
 	{
-		bool ok = false;
-		int draw_scale_denominator = different_scale_edit->text().toInt(&ok);
-		if (ok)
-			return (map->getScaleDenominator() / (float)draw_scale_denominator);
-		else
-			return 1;
-	}
-	else
-		return 1;
-}
-
-bool PrintWidget::exporterSelected()
-{
-	int index = device_combo->itemData(device_combo->currentIndex()).toInt();
-	return index < 0;
-}
-
-void PrintWidget::printMap(QPrinter* printer)
-{
-	// Re-center (necessary for the print preview dialog)
-	if (center_button->isChecked())
-		centerPrintArea();
-	
-	// Print
-	drawMap(printer, printer->resolution(), printer->paperRect(QPrinter::DevicePixel), false);
-}
-
-void PrintWidget::setPrinterSettings(QPrinter* printer)
-{
-	bool exporter = exporterSelected();
-	
-	printer->setDocName(QFileInfo(main_window->getCurrentFilePath()).fileName());
-	printer->setFullPage(true);
-	QPrinter::PaperSize paper_size = (QPrinter::PaperSize)page_format_combo->itemData(page_format_combo->currentIndex()).toInt();
-	QPrinter::Orientation orientation = (QPrinter::Orientation)page_orientation_combo->itemData(page_orientation_combo->currentIndex()).toInt();
-	printer->setOrientation((paper_size == QPrinter::Custom) ? QPrinter::Portrait : orientation);
-	if (paper_size == QPrinter::Custom)
-		printer->setPaperSize(QSizeF(print_width, print_height), QPrinter::Millimeter);
-	else
-		printer->setPaperSize(paper_size);
-	printer->setColorMode(QPrinter::Color);
-	printer->setResolution(dpi_combo->currentText().toFloat());
-	if (!exporter)
-	{
-		int num_copies = qMin(1, copies_edit->text().toInt());
-		#if (QT_VERSION >= 0x040700)
-		printer->setCopyCount(num_copies);
-		#else
-		printer->setNumCopies(num_copies);
-		#endif
-	}
-}
-
-void PrintWidget::drawMap(QPaintDevice* paint_device, float dpi, const QRectF& page_rect, bool white_background)
-{
-	QRectF map_extent = map->calculateExtent(false, show_templates_check->isChecked(), main_view);
-	
-	QPainter device_painter;
-	device_painter.begin(paint_device);
-	device_painter.setRenderHint(QPainter::Antialiasing);
-	device_painter.setRenderHint(QPainter::SmoothPixmapTransform);
-	
-	// If there is anything transparent to draw, use a temporary image which is drawn on the device printer as last step
-	// because painting transparently seems to be unsupported when printing
-	// TODO: This does convert all colors to RGB. Are colors printed as CMYK otherwise?
-	//   Desktop printer drivers use RGB AFAIK. Qt's PDF/PS printing supports RGB only -- Kai
-	bool have_transparency = main_view->getMapVisibility()->visible && main_view->getMapVisibility()->opacity < 1;
-	for (int i = 0; i < map->getNumTemplates() && !have_transparency; ++i)
-	{
-		TemplateVisibility* visibility = main_view->getTemplateVisibility(map->getTemplate(i));
-		have_transparency = visibility->visible && visibility->opacity < 1;
-	}
-	
-	bool print_rgb_image = have_transparency || overprinting_check->isChecked();
-	
-	QPainter* painter = &device_painter;
-	QImage print_buffer;
-	QPainter print_buffer_painter;
-	if (print_rgb_image)
-	{
-		print_buffer = QImage(paint_device->width(), paint_device->height(), QImage::Format_RGB32);
-		print_buffer_painter.begin(&print_buffer);
-		painter = &print_buffer_painter;
-		white_background = true;
-	}
-	
-	if (white_background)
-		painter->fillRect(QRect(0, 0, paint_device->width(), paint_device->height()), Qt::white);
-	
-	// Need to convert mm to dots
-	float scale_factor = calcScaleFactor();
-	float scale = (1/25.4f * dpi) * scale_factor;
-	painter->scale(scale, scale);
-	QRectF print_area = getEffectivePrintArea();
-	painter->translate(-print_area.left(), -print_area.top());
-	
-	if (show_templates_check->isChecked())
-		map->drawTemplates(painter, map_extent, 0, map->getFirstFrontTemplate() - 1, main_view);
-	
-	if (main_view->getMapVisibility()->visible)
-	{
-		if (!print_rgb_image)
-			map->draw(painter, map_extent, false, scale, false, false);
-		else
-		{
-			// Draw map into a temporary buffer first which is printed with the map's opacity later.
-			// This prevents artifacts with overlapping objects.
-			QImage map_buffer(paint_device->width(), paint_device->height(), QImage::Format_ARGB32_Premultiplied);
-			QPainter buffer_painter;
-			buffer_painter.begin(&map_buffer);
-			buffer_painter.setRenderHints(painter->renderHints());
-			
-			// Clear buffer
-			QPainter::CompositionMode mode = buffer_painter.compositionMode();
-			buffer_painter.setCompositionMode(QPainter::CompositionMode_Clear);
-			buffer_painter.fillRect(map_buffer.rect(), Qt::transparent);
-			buffer_painter.setCompositionMode(mode);
-			
-			// Draw map with full opacity
-			buffer_painter.setTransform(painter->transform());
-			if (overprinting_check->isChecked())
-				map->drawOverprintingSimulation(&buffer_painter, map_extent, false, scale, false, false);
-			else
-				map->draw(&buffer_painter, map_extent, false, scale, false, false);
-			
-			buffer_painter.end();
-			
-			// Print buffer with map opacity
-			painter->save();
-			painter->resetTransform();
-			painter->setOpacity(main_view->getMapVisibility()->opacity);
-			painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
-			painter->drawImage(0, 0, map_buffer);
-			painter->restore();
-		}
-	}
-	if (show_grid_check->isChecked())
-		map->drawGrid(painter, print_area);
-	
-	if (show_templates_check->isChecked())
-		map->drawTemplates(painter, map_extent, map->getFirstFrontTemplate(), map->getNumTemplates() - 1, main_view);
-	
-	// If a temporary buffer has been used, paint it on the device printer
-	if (print_buffer_painter.isActive())
-	{
-		print_buffer_painter.end();
-		painter = &device_painter;
+		ScopedSignalsBlocker block(target_combo);
+		target_combo->clear();
 		
-		device_painter.save();
-		device_painter.resetTransform();
-		device_painter.setRenderHint(QPainter::SmoothPixmapTransform, false);
-		device_painter.drawImage(0, 0, print_buffer);
-		device_painter.restore();
+		// Exporters
+#if QT_VERSION < 0x050000
+		target_combo->addItem(tr("Export to PDF or PS"), QVariant((int)PdfExporter));
+#else
+		target_combo->addItem(tr("Export to PDF"), QVariant((int)PdfExporter));
+#endif
+		target_combo->addItem(tr("Export to image"), QVariant((int)ImageExporter));
+		target_combo->insertSeparator(target_combo->count());
+		target_combo->setCurrentIndex(0);
+		
+		// Printers
+		printers = QPrinterInfo::availablePrinters();
+		for (int i = 0; i < printers.size(); ++i)
+		{
+			if (printers[i].printerName() == saved_printer_name)
+				saved_target_index = target_combo->count();
+			if (printers[i].isDefault())
+				default_printer_index = target_combo->count();
+			target_combo->addItem(printers[i].printerName(), i);
+		}
+		
+		// Restore selected target if possible and exit on success
+		if (current_target.isValid())
+		{
+			int index = target_combo->findData(current_target);
+			if (index >= 0)
+			{
+				target_combo->setCurrentIndex(index);
+				return;
+			}
+		}
+		
+		if (saved_target_index >= 0)
+			// Restore saved target if possible
+			target_combo->setCurrentIndex(saved_target_index);
+		else if (default_printer_index >= 0)
+			// Set default printer as current target
+			target_combo->setCurrentIndex(default_printer_index);
+		
+		// Explicitly invoke signal handler
+		targetChanged(target_combo->currentIndex());
 	}
-	
-	painter->end();
 }
 
-void PrintWidget::currentDeviceChanged()
+// slot
+void PrintWidget::setTarget(const QPrinterInfo* target)
 {
-	if (device_combo->currentIndex() < 0)
+	int target_index = printers.size()-1;
+	if (target == NULL) {
+		for (; target_index >= 0; target_index--)
+		{
+			if (printers[target_index].isDefault())
+				break;
+		}
+	}
+	else if (target == MapPrinter::pdfTarget())
+		target_index = PdfExporter;
+	else if (target == MapPrinter::imageTarget())
+		target_index = ImageExporter;
+	else
+	{
+		for (; target_index >= 0; target_index--)
+		{
+			if (printers[target_index].printerName() == target->printerName())
+				break;
+		}
+	}
+	target_combo->setCurrentIndex(target_combo->findData(QVariant(target_index)));
+}
+
+// slot
+void PrintWidget::targetChanged(int index) const
+{
+	if (index < 0)
 		return;
-	react_to_changes = false;
 	
-	int index = device_combo->itemData(device_combo->currentIndex()).toInt();
-	Q_ASSERT(index >= -2 && index < (int)printers.size());
-	bool exporter = index < 0;
+	int target_index = target_combo->itemData(index).toInt();
+	Q_ASSERT(target_index >= -2);
+	Q_ASSERT(target_index < (int)printers.size());
 	
-	QStringList resolutions;
-	static QStringList default_resolutions(QStringList() << "150" << "300" << "600" << "1200");
-	if (exporter)
-	{
-		resolutions = default_resolutions;
-	}
+	const QPrinterInfo* target = NULL;
+	if (target_index == PdfExporter)
+		target = MapPrinter::pdfTarget();
+	else if (target_index == ImageExporter)
+		target = MapPrinter::imageTarget();
 	else
-	{
-		QPrinter pr(printers[index], QPrinter::HighResolution);
-		QList<int> supported_resolutions = pr.supportedResolutions();
-		if (supported_resolutions.size() == 1 && supported_resolutions[0] == 72)
-		{
-			// X11/CUPS
-			resolutions = default_resolutions;
-		}
-		else if (supported_resolutions.size() > 0)
-		{
-			Q_FOREACH(int res, pr.supportedResolutions())
-				resolutions << QString::number(res);
-		}
-	}
-	QString dpi_value = dpi_combo->currentText();
-	dpi_combo->clear();
-	dpi_combo->insertItems(0, resolutions);
-	dpi_combo->lineEdit()->setText(dpi_value);
+		target = &printers[target_index];
 	
-	copies_label->setEnabled(!exporter);
-	copies_edit->setEnabled(!exporter);
+	map_printer->setTarget(target);
+	updatePaperSizes(target);
+	updateResolutions(target);
 	
-	preview_button->setEnabled(!exporter);
-	different_scale_check->setText(exporter ? tr("Export in different scale 1 :") : tr("Print in different scale 1 :"));
-	print_button->setText(exporter ? tr("Export") : tr("Print"));
-	
-	
-	QString prev_paper_size_name = "";
-	if (page_format_combo->count() > 0)
-		prev_paper_size_name = page_format_combo->itemText(page_format_combo->currentIndex());
-	page_format_combo->clear();
-	
-	QList<QPrinter::PaperSize> size_list;
-	if (!exporter)
-		size_list = printers[index].supportedPaperSizes();
-	
+	bool supports_pages = (target != MapPrinter::imageTarget());
+	copies_edit->setEnabled(supports_pages);
+	layout->labelForField(copies_edit)->setEnabled(supports_pages);
+	preview_button->setEnabled(supports_pages);
+	print_button->setText(map_printer->isPrinter() ? tr("Print") : tr("Export"));
+}
+
+
+
+void PrintWidget::updatePaperSizes(const QPrinterInfo* target) const
+{
+	QString prev_paper_size_name = paper_size_combo->currentText();
 	bool have_custom_size = false;
-	if (size_list.isEmpty())
+	
 	{
-		addPaperSize(QPrinter::A4);
-		addPaperSize(QPrinter::B5);
-		addPaperSize(QPrinter::Letter);
-		addPaperSize(QPrinter::Legal);
-		addPaperSize(QPrinter::Executive);
-		addPaperSize(QPrinter::A0);
-		addPaperSize(QPrinter::A1);
-		addPaperSize(QPrinter::A3);
-		addPaperSize(QPrinter::A5);
-		addPaperSize(QPrinter::A6);
-		addPaperSize(QPrinter::A7);
-		addPaperSize(QPrinter::A8);
-		addPaperSize(QPrinter::A9);
-		addPaperSize(QPrinter::B0);
-		addPaperSize(QPrinter::B1);
-		addPaperSize(QPrinter::B10);
-		addPaperSize(QPrinter::B2);
-		addPaperSize(QPrinter::B3);
-		addPaperSize(QPrinter::B4);
-		addPaperSize(QPrinter::B6);
-		addPaperSize(QPrinter::B7);
-		addPaperSize(QPrinter::B8);
-		addPaperSize(QPrinter::B9);
-		addPaperSize(QPrinter::C5E);
-		addPaperSize(QPrinter::Comm10E);
-		addPaperSize(QPrinter::DLE);
-		addPaperSize(QPrinter::Folio);
-		addPaperSize(QPrinter::Ledger);
-		addPaperSize(QPrinter::Tabloid);
-		have_custom_size = true;
-	}
-	else
-	{
+		ScopedSignalsBlocker block(paper_size_combo);
+		
+		paper_size_combo->clear();
+		QList<QPrinter::PaperSize> size_list;
+		if (target != NULL)
+			size_list = target->supportedPaperSizes();
+		if (size_list.isEmpty())
+			size_list = defaultPaperSizes();
+		
 		foreach (QPrinter::PaperSize size, size_list)
 		{
 			if (size == QPrinter::Custom)
 				have_custom_size = true; // add it once after all other entires
 			else
-				addPaperSize(size);
+				paper_size_combo->addItem(toString(size), size);
 		}
-	}
+		
+		if (have_custom_size)
+			paper_size_combo->addItem(toString(QPrinter::Custom), QPrinter::Custom);
 	
-	if (have_custom_size)
-		addPaperSize(QPrinter::Custom);
+		int paper_size_index = paper_size_combo->findData((int)map_printer->getPageFormat().paper_size);
+		if (!prev_paper_size_name.isEmpty())
+		{
+			paper_size_index = paper_size_combo->findText(prev_paper_size_name);
+		}
+		paper_size_combo->setCurrentIndex(qMax(0, paper_size_index));
+		paperSizeChanged(paper_size_combo->currentIndex());
+	}
 	
 	width_edit->setEnabled(have_custom_size);
 	height_edit->setEnabled(have_custom_size);
-	
-	if (prev_paper_size_name != "")
+}
+
+// slot
+void PrintWidget::setPageFormat(const MapPrinterPageFormat& format)
+{
+	ScopedMultiSignalsBlocker block;
+	block << paper_size_combo << page_orientation_combo << width_edit << height_edit;
+	paper_size_combo->setCurrentIndex(paper_size_combo->findData(format.paper_size));
+	page_orientation_combo->setCurrentIndex(page_orientation_combo->findData(format.orientation));
+// 	width_edit->setValue(format.paper_dimensions.width());
+// 	height_edit->setValue(format.paper_dimensions.height());
+	applyPrintAreaPolicy();
+}
+
+// slot
+void PrintWidget::paperSizeChanged(int index) const
+{
+	if (index >= 0)
 	{
-		int prev_paper_size_index = page_format_combo->findText(prev_paper_size_name);
-		if (prev_paper_size_index >= 0)
-			page_format_combo->setCurrentIndex(prev_paper_size_index);
-		else
-			page_format_combo->setCurrentIndex(0);
+		QPrinter::PaperSize paper_size = (QPrinter::PaperSize)paper_size_combo->itemData(index).toInt();
+		map_printer->setPaperSize(paper_size);
 	}
-	else if (have_prev_paper_size)
+}
+
+// slot
+void PrintWidget::pageOrientationChanged(int index) const
+{
+	if (index >= 0)
 	{
-		have_prev_paper_size = false;
-		int index = page_format_combo->findData(prev_paper_size);
-		if (index >= 0)
-			page_format_combo->setCurrentIndex(index);
-		else
-			page_format_combo->setCurrentIndex(0);
+		QPrinter::Orientation orientation = (QPrinter::Orientation)page_orientation_combo->itemData(index).toInt();
+		map_printer->setPageOrientation(orientation);
+	}
+}
+
+
+
+// slot
+void PrintWidget::applyPrintAreaPolicy() const
+{
+	PrintAreaPolicy policy = (PrintAreaPolicy)policy_combo->itemData(policy_combo->currentIndex()).toInt();
+	if (policy == SinglePage)
+	{
+		center_check->setEnabled(true);
+		QRectF print_area = map_printer->getPrintArea();
+		print_area.setSize(map_printer->getPageFormat().page_rect.size() / map_printer->getScaleAdjustment());
+		if (center_check->isChecked())
+		{
+			centerOnMap(print_area);
+			QRectF map_extent = map->calculateExtent(false, show_templates_check->isChecked(), main_view);
+			print_area.moveLeft(map_extent.left() + 0.5f * map_extent.width() - 0.5f * print_area.width());
+			print_area.moveTop(map_extent.top() + 0.5f * map_extent.height() - 0.5f * print_area.height());
+		}
+		map_printer->setPrintArea(print_area);
 	}
 	else
-		page_format_combo->setCurrentIndex(0);
-	
-	updatePrintAreaSize();
-	if (print_tool)
-		print_tool->updatePrintArea();
-	react_to_changes = true;
+	{
+		center_check->setEnabled(false);
+		center_check->setChecked(false);
+	}
 }
 
-void PrintWidget::pageOrientationChanged()
+void PrintWidget::centerOnMap(QRectF& area) const
 {
-	if (!react_to_changes) return;
-	updatePrintAreaSize();
-	if (center_button->isChecked())
-		centerPrintArea();
-	else
-		print_tool->updatePrintArea();
-}
-
-void PrintWidget::pageFormatChanged()
-{
-	if (!react_to_changes) return;
-	updatePrintAreaSize();
-	if (center_button->isChecked())
-		centerPrintArea();
-	else
-		print_tool->updatePrintArea();
-}
-
-void PrintWidget::showTemplatesClicked()
-{
-	if (center_button->isChecked())
-		centerPrintArea();
-}
-
-void PrintWidget::showGridClicked()
-{
-	// nothing yet
-}
-
-void PrintWidget::printAreaPositionChanged()
-{
-	center_button->setChecked(false);
-	print_tool->updatePrintArea();
-}
-
-void PrintWidget::centerPrintAreaClicked()
-{
-	if (center_button->isChecked())
-		centerPrintArea();
-}
-
-void PrintWidget::centerPrintArea()
-{
-	center_button->setChecked(true);
-	
 	QRectF map_extent = map->calculateExtent(false, show_templates_check->isChecked(), main_view);
-	if (!map_extent.isValid())
-	{
-		left_edit->setText("0");
-		top_edit->setText("0");
-		return;
-	}
-	
-	float left = map_extent.left() + 0.5f * map_extent.width() - 0.5f * print_width;
-	float top = map_extent.top() + 0.5f * map_extent.height() - 0.5f * print_height;
-	left_edit->setText(QString::number(left));
-	top_edit->setText(QString::number(top));
-	
-	if (print_tool)
-		print_tool->updatePrintArea();
+	area.moveLeft(map_extent.center().x() - 0.5f * area.width());
+	area.moveTop(map_extent.center().y() - 0.5f * area.height());
 }
 
-void PrintWidget::printAreaSizeChanged()
+
+
+// slot
+void PrintWidget::setPrintArea(const QRectF& area)
 {
-	if (!react_to_changes) return;
+	ScopedMultiSignalsBlocker block;
+	block << left_edit << top_edit << width_edit << height_edit;
 	
-	page_format_combo->setCurrentIndex(page_format_combo->findData((int)QPrinter::Custom));
-	updatePrintAreaSize();
+	left_edit->setValue(area.left());
+	top_edit->setValue(-area.top()); // Flip sign!
+	width_edit->setValue(area.width());
+	height_edit->setValue(area.height());
 	
-	if (center_button->isChecked())
-		centerPrintArea();
-	else
-		print_tool->updatePrintArea();
+	PrintAreaPolicy policy = (PrintAreaPolicy)policy_combo->itemData(policy_combo->currentIndex()).toInt();
+	if (policy == SinglePage)
+	{
+		if (center_check->isChecked())
+		{
+			QRectF centered_area = map_printer->getPrintArea();
+			centerOnMap(centered_area);
+			if (qAbs(centered_area.left() - area.left()) > 0.005f ||
+				qAbs(centered_area.top() - area.top()) > 0.005f)
+			{
+				// No longer centered.
+				block << center_check;
+				center_check->setChecked(false);
+			}
+		}
+		
+		if (map_printer->getPageFormat().paper_size != QPrinter::Custom)
+		{
+			QSizeF page_dimensions = map_printer->getPageFormat().page_rect.size() / map_printer->getScaleAdjustment();
+			if ( area.width() - page_dimensions.width() > 0.05 || 
+				 area.height() - page_dimensions.height() > 0.05 )
+			{
+				// No longer single page.
+				block << policy_combo;
+				policy_combo->setCurrentIndex(policy_combo->findData(CustomArea));
+				center_check->setChecked(false);
+				center_check->setEnabled(false);
+			}
+		}
+	}
 }
 
-void PrintWidget::updatePrintAreaSize()
+// slot
+void PrintWidget::printAreaMoved()
 {
-	int index = page_format_combo->currentIndex();
-	if (index < 0)
-	{
-		Q_ASSERT(false);
-		return;
-	}
-	
-	QPrinter::PaperSize size = (QPrinter::PaperSize)page_format_combo->itemData(index).toInt();
-	
-	if (size == QPrinter::Custom)
-	{
-		print_width = width_edit->text().toFloat();
-		print_height = height_edit->text().toFloat();
-	}
-	else
-	{
-		QPrinter printer(QPrinter::HighResolution);
-		printer.setPaperSize(size);
-		printer.setOrientation((QPrinter::Orientation)page_orientation_combo->itemData(page_orientation_combo->currentIndex()).toInt());
-		
-		QRectF paper_rect = printer.paperRect(QPrinter::Millimeter);
-		QRectF page_rect = printer.pageRect(QPrinter::Millimeter);
-		
-		print_width = printer.paperRect(QPrinter::Millimeter).width();
-		width_edit->setText(QString::number(print_width));
-		print_height = printer.paperRect(QPrinter::Millimeter).height();
-		height_edit->setText(QString::number(print_height));
-		
-		margin_top = page_rect.top() - paper_rect.top();
-		margin_left = page_rect.left() - paper_rect.left();
-		margin_right = paper_rect.right() - page_rect.right();
-		margin_bottom = paper_rect.bottom() - page_rect.bottom();
-	}
+	QRectF area = map_printer->getPrintArea();
+	area.moveLeft(left_edit->value());
+	area.moveTop(-top_edit->value()); // Flip sign!
+	map_printer->setPrintArea(area);
 }
 
+// slot
+void PrintWidget::printAreaResized()
+{
+	QRectF area = map_printer->getPrintArea();
+	area.setWidth(width_edit->value());
+	area.setHeight(height_edit->value());
+	map_printer->setPrintArea(area);
+}
+
+
+
+// slot
+void PrintWidget::setOptions(const MapPrinterOptions& options)
+{
+	ScopedMultiSignalsBlocker block;
+	block << dpi_combo->lineEdit() << show_templates_check 
+	      << show_grid_check << overprinting_check
+	      << different_scale_check << different_scale_edit;
+	
+	static QString dpi_template("%1 " + tr("dpi"));
+	dpi_combo->setEditText(dpi_template.arg(options.resolution));
+	show_templates_check->setChecked(options.show_templates);
+	show_grid_check->setChecked(options.show_grid);
+	overprinting_check->setChecked(options.simulate_overprinting);
+	different_scale_edit->setValue(options.scale);
+	if (options.scale != map->getScaleDenominator())
+	{
+		different_scale_check->setChecked(true);
+		different_scale_edit->setEnabled(true);
+	}
+	applyPrintAreaPolicy();
+}
+
+void PrintWidget::updateResolutions(const QPrinterInfo* target) const
+{
+	static QList<int> default_resolutions(QList<int>() << 150 << 300 << 600 << 1200);
+	
+	// Numeric resolution list
+	QList<int> supported_resolutions;
+	if (target != NULL)
+	{
+		QPrinter pr(*target, QPrinter::HighResolution);
+		supported_resolutions = pr.supportedResolutions();
+		if (supported_resolutions.size() == 1 && supported_resolutions[0] == 72)
+		{
+			// X11/CUPS
+			supported_resolutions.clear();
+		}
+	}
+	if (supported_resolutions.isEmpty())
+		supported_resolutions = default_resolutions;
+	
+	// Resolution list item with unit "dpi"
+	static QString dpi_template("%1 " + tr("dpi"));
+	QStringList resolutions;
+	Q_FOREACH(int resolution, supported_resolutions)
+		resolutions << dpi_template.arg(resolution);
+	
+	QString dpi_text = dpi_combo->currentText();
+	{
+		ScopedSignalsBlocker block(dpi_combo);
+		dpi_combo->clear();
+		dpi_combo->addItems(resolutions);
+	}
+	dpi_combo->lineEdit()->setText(dpi_text.isEmpty() ? dpi_template.arg(600) : dpi_text);
+}
+
+// slot
+void PrintWidget::resolutionEdited()
+{
+	QString resolution_text = dpi_combo->currentText();
+	int index_of_space = resolution_text.indexOf(" ");
+	int dpi_value = resolution_text.left(index_of_space).toInt();
+	if (dpi_value > 0)
+		map_printer->setResolution(dpi_value);
+}
+
+// slot
 void PrintWidget::differentScaleClicked(bool checked)
 {
+	if (!checked)
+		different_scale_edit->setValue(map->getScaleDenominator());
+	
 	different_scale_edit->setEnabled(checked);
-	if (print_tool)
-		print_tool->updatePrintArea();
 }
 
-void PrintWidget::differentScaleEdited(QString text)
+// slot
+void PrintWidget::differentScaleEdited(int value)
 {
-	if (print_tool)
-		print_tool->updatePrintArea();
+	map_printer->setScale(value);
 }
 
+// slot
+void PrintWidget::showTemplatesClicked(bool checked)
+{
+	map_printer->setPrintTemplates(checked, main_view);
+	applyPrintAreaPolicy();
+}
+
+// slot
+void PrintWidget::showGridClicked(bool checked)
+{
+	map_printer->setPrintGrid(checked);
+}
+
+// slot
+void PrintWidget::overprintingClicked(bool checked)
+{
+	map_printer->setSimulateOverprinting(checked);
+}
+
+// slot
 void PrintWidget::previewClicked()
 {
 	if (checkForEmptyMap())
 		return;
 	
-	int index = device_combo->itemData(device_combo->currentIndex()).toInt();
-	QPrinter printer(printers[index], QPrinter::HighResolution);
-	setPrinterSettings(&printer);
-	
-	QPrintPreviewDialog preview(&printer, this);
-	connect(&preview, SIGNAL(paintRequested(QPrinter*)), this, SLOT(printMap(QPrinter*)));
+	QPrinter* printer = map_printer->makePrinter();
+	QPrintPreviewDialog preview(printer, this);
+	connect(&preview, SIGNAL(paintRequested(QPrinter*)), map_printer, SLOT(printMap(QPrinter*)));
 	preview.exec();
 	
-	page_orientation_combo->setCurrentIndex(page_orientation_combo->findData((int)printer.orientation()));
-	page_format_combo->setCurrentIndex(page_format_combo->findData((int)printer.paperSize()));
+	delete printer;
 }
 
+// slot
 void PrintWidget::printClicked()
 {
 	if (checkForEmptyMap())
@@ -743,27 +608,28 @@ void PrintWidget::printClicked()
 			return;
 	}
 	
-	int index = device_combo->itemData(device_combo->currentIndex()).toInt();
-	
 	QString path;
-	if (index < 0)
+	if (!map_printer->isPrinter())
 	{
 		path = QFileDialog::getSaveFileName(this, tr("Export map ..."), QString(), tr("All files (*.*)"));
 		if (path.isEmpty())
 			return;
 	}
 	
-	if (index == (int)ImageExporter)
+	if (map_printer->getTarget() == MapPrinter::imageTarget())
 	{
 		if (!path.endsWith(".bmp", Qt::CaseInsensitive) && !path.endsWith(".png", Qt::CaseInsensitive) && !path.endsWith(".jpg", Qt::CaseInsensitive) &&
 			!path.endsWith(".tiff", Qt::CaseInsensitive) && !path.endsWith(".jpeg", Qt::CaseInsensitive))
 			path.append(".png");
 		
-		float dpi = dpi_combo->currentText().toFloat();
-		float pixel_per_mm = dpi / 25.4f;
+		qreal pixel_per_mm = map_printer->getOptions().resolution / 25.4;
 		
-		QImage image(print_width * pixel_per_mm, print_height * pixel_per_mm, QImage::Format_ARGB32_Premultiplied);
-		drawMap(&image, dpi, image.rect(), true);
+		int print_width = qRound(map_printer->getPrintArea().width() * pixel_per_mm);
+		int print_height = qRound(map_printer->getPrintArea().height() * pixel_per_mm);
+		QImage image(print_width, print_height, QImage::Format_ARGB32_Premultiplied);
+		QPainter p(&image);
+		map_printer->drawPage(&p, map_printer->getOptions().resolution, image.rect(), true);
+		p.end();
 		if (!image.save(path))
 		{
 			QMessageBox::warning(this, tr("Error"), tr("Failed to save the image. Does the path exist? Do you have sufficient rights?"));
@@ -771,16 +637,14 @@ void PrintWidget::printClicked()
 		}
 		
 		main_window->statusBar()->showMessage(tr("Exported successfully to %1").arg(path), 4000);
-		savePrinterSettings();
 		emit finished(0);
 		return;
 	}
 	
-	QPrinter* printer;
-	if (index == (int)PdfExporter)
+	QPrinter* printer = map_printer->makePrinter();
+	printer->setNumCopies(copies_edit->value());
+	if (map_printer->getTarget() == MapPrinter::pdfTarget())
 	{
-		printer = new QPrinter(QPrinter::HighResolution);
-
 #if QT_VERSION < 0x050000		
 		if (path.endsWith(".ps", Qt::CaseInsensitive))
 			printer->setOutputFormat(QPrinter::PostScriptFormat);
@@ -794,33 +658,67 @@ void PrintWidget::printClicked()
 		printer->setOutputFileName(path);
 		printer->setCreator(main_window->appName());
 	}
-	else
-		printer = new QPrinter(printers[index], QPrinter::HighResolution);
 	
 	// Print the map
-	setPrinterSettings(printer);
-	printMap(printer);
+	map_printer->printMap(printer);
 	delete printer;
 	
-	if (index < 0)
-		main_window->statusBar()->showMessage(tr("Exported successfully to %1").arg(path), 4000);
-	else
+	if (map_printer->isPrinter())
 		main_window->statusBar()->showMessage(tr("Successfully created print job"), 4000);
+	else
+		main_window->statusBar()->showMessage(tr("Exported successfully to %1").arg(path), 4000);
 	
-	savePrinterSettings();
 	emit finished(0);
 }
 
-void PrintWidget::addPaperSize(QPrinter::PaperSize size)
+QList<QPrinter::PaperSize> PrintWidget::defaultPaperSizes() const
+{
+	static QList<QPrinter::PaperSize> default_paper_sizes(QList<QPrinter::PaperSize>()
+	  << QPrinter::A4
+	  << QPrinter::Letter
+	  << QPrinter::Legal
+	  << QPrinter::Executive
+	  << QPrinter::A0
+	  << QPrinter::A1
+	  << QPrinter::A2
+	  << QPrinter::A3
+	  << QPrinter::A5
+	  << QPrinter::A6
+	  << QPrinter::A7
+	  << QPrinter::A8
+	  << QPrinter::A9
+	  << QPrinter::B0
+	  << QPrinter::B1
+	  << QPrinter::B10
+	  << QPrinter::B2
+	  << QPrinter::B3
+	  << QPrinter::B4
+	  << QPrinter::B5
+	  << QPrinter::B6
+	  << QPrinter::B7
+	  << QPrinter::B8
+	  << QPrinter::B9
+	  << QPrinter::C5E
+	  << QPrinter::Comm10E
+	  << QPrinter::DLE
+	  << QPrinter::Folio
+	  << QPrinter::Ledger
+	  << QPrinter::Tabloid
+	  << QPrinter::Custom
+	);
+	return default_paper_sizes;
+}
+
+const QString toString(QPrinter::PaperSize size)
 {
 	QString name;
 	switch (size)
 	{
 	case QPrinter::A4:			name = "A4";			break;
 	case QPrinter::B5:			name = "B5";			break;
-	case QPrinter::Letter:		name = tr("Letter");	break;
-	case QPrinter::Legal:		name = tr("Legal");		break;
-	case QPrinter::Executive:	name = tr("Executive");	break;
+	case QPrinter::Letter:		name = QObject::tr("Letter");	break;
+	case QPrinter::Legal:		name = QObject::tr("Legal");		break;
+	case QPrinter::Executive:	name = QObject::tr("Executive");	break;
 	case QPrinter::A0:			name = "A0";			break;
 	case QPrinter::A1:			name = "A1";			break;
 	case QPrinter::A2:			name = "A2";			break;
@@ -840,26 +738,24 @@ void PrintWidget::addPaperSize(QPrinter::PaperSize size)
 	case QPrinter::B7:			name = "B7";			break;
 	case QPrinter::B8:			name = "B8";			break;
 	case QPrinter::B9:			name = "B9";			break;
-	case QPrinter::C5E:			name = tr("C5E");		break;
-	case QPrinter::Comm10E:		name = tr("Comm10E");	break;
-	case QPrinter::DLE:			name = tr("DLE");		break;
-	case QPrinter::Folio:		name = tr("Folio");		break;
-	case QPrinter::Ledger:		name = tr("Ledger");	break;
-	case QPrinter::Tabloid:		name = tr("Tabloid");	break;
-	case QPrinter::Custom:		name = tr("Custom");	break;
-	default:					name = tr("Unknown");	break;
+	case QPrinter::C5E:			name = QObject::tr("C5E");		break;
+	case QPrinter::Comm10E:		name = QObject::tr("Comm10E");	break;
+	case QPrinter::DLE:			name = QObject::tr("DLE");		break;
+	case QPrinter::Folio:		name = QObject::tr("Folio");		break;
+	case QPrinter::Ledger:		name = QObject::tr("Ledger");	break;
+	case QPrinter::Tabloid:		name = QObject::tr("Tabloid");	break;
+	case QPrinter::Custom:		name = QObject::tr("Custom");	break;
+	default:					name = QObject::tr("Unknown");	break;
 	}
 	
-	page_format_combo->addItem(name, (int)size);
+	return name;
 }
 
 bool PrintWidget::checkForEmptyMap()
 {
-	if ((map->getNumObjects() == 0 || main_view->getMapVisibility()->visible == false || main_view->getMapVisibility()->opacity == 0) &&
-		(!show_templates_check->isChecked() || map->getNumTemplates() == 0) &&
-		!show_grid_check->isChecked())
+	if (map_printer->isOutputEmpty())
 	{
-		QMessageBox::warning(this, tr("Error"), tr("The print area is empty, so there is nothing to print!"));
+		QMessageBox::warning(this, tr("Error"), tr("The map area is empty. Output canceled."));
 		return true;
 	}
 	return false;

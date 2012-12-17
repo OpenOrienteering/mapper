@@ -23,17 +23,22 @@
 #include <QMouseEvent>
 #include <QPainter>
 
+#include "../core/map_printer.h"
 #include "../map_widget.h"
 #include "print_widget.h"
 
 
-PrintTool::PrintTool(MapEditorController* editor, PrintWidget* print_widget)
+PrintTool::PrintTool(MapEditorController* editor, MapPrinter* map_printer)
 : MapEditorTool(editor, Other, NULL),
-  print_widget(print_widget),
+  map_printer(map_printer),
   dragging(false)
 {
 	Q_ASSERT(editor != NULL);
-	Q_ASSERT(print_widget != NULL);
+	Q_ASSERT(map_printer != NULL);
+	
+	connect(map_printer, SIGNAL(printAreaChanged(QRectF)), this, SLOT(updatePrintArea()));
+	connect(map_printer, SIGNAL(pageFormatChanged(MapPrinterPageFormat)), this, SLOT(updatePrintArea()));
+	connect(map_printer, SIGNAL(optionsChanged(MapPrinterOptions)), this, SLOT(updatePrintArea()));
 }
 
 void PrintTool::init()
@@ -89,37 +94,32 @@ bool PrintTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 void PrintTool::draw(QPainter* painter, MapWidget* widget)
 {
 	QRect view_area = QRect(0, 0, widget->width(), widget->height());
+	QRect print_area = widget->mapToViewport(map_printer->getPrintArea()).toRect();
 	
-	QRectF effective_print_area = print_widget->getEffectivePrintArea();
-	QRect page_area = widget->mapToViewport(effective_print_area).toRect();
-	
-	// Strongly darken the region outside the page area for printers and export
+	// Strongly darken the region outside the print area
 	painter->setBrush(QColor(0, 0, 0, 160));
 	painter->setPen(Qt::NoPen);
 	QPainterPath outside_path;
 	outside_path.addRect(view_area);
-	outside_path.addRect(view_area.intersected(page_area));
+	outside_path.addRect(view_area.intersected(print_area));
 	painter->drawPath(outside_path);
-	
-	if (!print_widget->exporterSelected() && !page_area.isEmpty())
+
+	// Draw red lines for page breaks
+	painter->setPen(QColor(255, 0, 0, 160));
+	painter->setBrush(Qt::NoBrush);
+	bool first_item = true;
+	Q_FOREACH(qreal hpos, map_printer->horizontalPagePositions())
 	{
-		// Determine printable area (page area minus page margins)
-		QRect printable_area;
-		float margin_top, margin_left, margin_bottom, margin_right;
-		print_widget->getMargins(margin_top, margin_left, margin_bottom, margin_right);
-		if (effective_print_area.width() > margin_left + margin_right && effective_print_area.height() > margin_top + margin_bottom)
-			// FIXME: This does not take into account whether the map is printed in different scale.
-			printable_area = widget->mapToViewport(effective_print_area.adjusted(margin_left, margin_top, -margin_right, -margin_bottom)).toRect();
-			
-		if (printable_area != page_area)
-		{
-			// Weakly darken the page margins for printers.
-			painter->setBrush(QColor(0, 0, 0, 64));
-			QPainterPath margin_path;
-			margin_path.addRect(page_area);
-			margin_path.addRect(page_area.intersected(printable_area));
-			painter->drawPath(margin_path);
-		}
+		if (first_item) { first_item = false; continue; }
+		QPointF view_pos = widget->mapToViewport(MapCoordF(hpos, 0));
+		painter->drawLine(view_pos.x(), 0, view_pos.x(), widget->height());
+	}
+	first_item = true;
+	Q_FOREACH(qreal vpos, map_printer->verticalPagePositions())
+	{
+		if (first_item) { first_item = false; continue; }
+		QPointF view_pos = widget->mapToViewport(MapCoordF(0, vpos));
+		painter->drawLine(0, view_pos.y(), widget->width(), view_pos.y());
 	}
 }
 
@@ -132,9 +132,9 @@ void PrintTool::updatePrintArea()
 
 void PrintTool::updateDragging(MapCoordF mouse_pos_map)
 {
-	print_widget->setPrintAreaLeft(print_widget->getPrintAreaLeft() + mouse_pos_map.getX() - click_pos_map.getX());
-	print_widget->setPrintAreaTop(print_widget->getPrintAreaTop() + mouse_pos_map.getY() - click_pos_map.getY());
+	QRectF area = map_printer->getPrintArea();
+	area.moveLeft(area.left() + mouse_pos_map.getX() - click_pos_map.getX());
+	area.moveTop(area.top() + mouse_pos_map.getY() - click_pos_map.getY());
+	map_printer->setPrintArea(area);
 	click_pos_map = mouse_pos_map;
-	
-	updatePrintArea();
 }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps, Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -28,47 +28,38 @@
 #include "../tool.h"
 
 QT_BEGIN_NAMESPACE
-class QPushButton;
-class QComboBox;
-class QLineEdit;
-class QLabel;
 class QCheckBox;
+class QComboBox;
+class QDoubleSpinBox;
+class QFormLayout;
+class QLabel;
+class QLineEdit;
+class QPushButton;
+class QSpinBox;
 QT_END_NAMESPACE
 
 class Map;
+class MapPrinter;
+class MapPrinterOptions;
+class MapPrinterPageFormat;
 class MapView;
 class MainWindow;
 class PrintTool;
 
 /**
- * The print widget lets the user adjust methods, devices and parameters
+ * The print widget lets the user adjust targets and parameters
  * for printing and export.
  */
 class PrintWidget : public QWidget
 {
 Q_OBJECT
 public:
+	/** Constructs a new print widget. */
 	PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, MapEditorController* editor, QWidget* parent = NULL);
+	
 	virtual ~PrintWidget();
 	
 	virtual QSize sizeHint() const;
-	
-	float getPrintAreaLeft();
-	void setPrintAreaLeft(float value);
-	float getPrintAreaTop();
-	void setPrintAreaTop(float value);
-	
-	/// Returns the printing margins returned by Qt. Only valid if a printer is selected.
-	void getMargins(float& top, float& left, float& bottom, float& right);
-	
-	/// Returns the area of the printed part on the map after applying the scaling from the "print/export in different scale" option
-	QRectF getEffectivePrintArea();
-	
-	/// Returns the scaling factor resulting from the "print/export in different scale" option
-	float calcScaleFactor();
-	
-	/// Returns true if an exporter is active (instead of a printer)
-	bool exporterSelected();
 	
 public slots:
 	/** 
@@ -79,6 +70,18 @@ public slots:
 	 * the tool is removed.
 	 */
 	void setActive(bool state);
+	
+	/** Sets the widget's (print/export) target. */
+	void setTarget(const QPrinterInfo* target);
+	
+	/** Sets the format of a single page. */
+	void setPageFormat(const MapPrinterPageFormat& format);
+	
+	/** Sets the exported area. */
+	void setPrintArea(const QRectF& area);
+	
+	/** Sets output options: resolution, overprinting. */
+	void setOptions(const MapPrinterOptions& parameters);
 	
 signals:
 	/**
@@ -91,24 +94,72 @@ signals:
 	void finished(int result);
 	
 protected slots:
-	void printMap(QPrinter* printer);
-	void setPrinterSettings(QPrinter* printer);
-	void savePrinterSettings();
+	/** This slot reacts to changes of the target combobox. */
+	void targetChanged(int index) const;
 	
-	void currentDeviceChanged();
-	void pageOrientationChanged();
-	void pageFormatChanged();
-	void showTemplatesClicked();
-	void showGridClicked();
-	void printAreaPositionChanged();
-	void printAreaSizeChanged();
-	void updatePrintAreaSize();
-	void centerPrintArea();
-	void centerPrintAreaClicked();
+	/** This slot reacts to changes of the paper size combobox. */
+	void paperSizeChanged(int index) const;
+	
+	/** This slot reacts to changes of the page orientation combobox. */
+	void pageOrientationChanged(int index) const;
+	
+	/** This slot applies the map area policy to the current area. */
+	void applyPrintAreaPolicy() const;
+	
+	/** This slot reacts to changes of print area position widgets. */
+	void printAreaMoved();
+	
+	/** This slot reacts to changes of print area size widget. */
+	void printAreaResized();
+	
+	/** This slot is called when the resolution widget signals that editing finished. */
+	void resolutionEdited();
+	
+	/** This slot enables the alternative scale widget, or resets it. */
 	void differentScaleClicked(bool checked);
-	void differentScaleEdited(QString text);
+	
+	/** This slot reacts to changes in the alternative scale widget. */
+	void differentScaleEdited(int value);
+	
+	/** This slot reacts to changes of the "Show template" option. */
+	void showTemplatesClicked(bool checked);
+	
+	/** This slot reacts to changes of the "Show grid" option. */
+	void showGridClicked(bool checked);
+	
+	/** This slot reacts to changes of the "Simulate overprinting" option. */
+	void overprintingClicked(bool checked);
+	
 	void previewClicked();
 	void printClicked();
+	
+protected:
+	/** Alternative policies of handling the print area. */
+	enum PrintAreaPolicy
+	{
+		SinglePage         = 2,
+		CustomArea         = 4
+	};
+	
+	/** Re-initializes the list of print/export targets. */
+	void updateTargets();
+	
+	/** Updates the list of paper sizes from the given target. */
+	void updatePaperSizes(const QPrinterInfo* target) const;
+	
+	/** Updates the list of resolutions from the given target. */
+	void updateResolutions(const QPrinterInfo* target) const;
+	
+	/** A list of paper sizes which is used when the target does not specify
+	 *  supported paper sizes. */
+	QList<QPrinter::PaperSize> defaultPaperSizes() const;
+	
+	/** Moves the given rectangle to a position where it is centered on the
+	 *  map for the current output options. */
+	void centerOnMap(QRectF& area) const;
+	
+	/** Shows a warning and returns true if the output would be empty. */
+	bool checkForEmptyMap();
 	
 private:
 	enum Exporters
@@ -117,45 +168,38 @@ private:
 		ImageExporter = -2
 	};
 	
-	void drawMap(QPaintDevice* paint_device, float dpi, const QRectF& page_rect, bool white_background);
-	void addPaperSize(QPrinter::PaperSize size);
-	bool checkForEmptyMap();
+	QFormLayout* layout;
 	
-	float print_width;
-	float print_height;
-	float margin_top, margin_left, margin_bottom, margin_right;
-	
-	bool have_prev_paper_size;
-	int prev_paper_size;
-	
-	QComboBox* device_combo;
+	QComboBox* target_combo;
+	QComboBox* paper_size_combo;
 	QComboBox* page_orientation_combo;
-	QComboBox* page_format_combo;
-	QLabel* dpi_label;
+	QSpinBox* copies_edit;
+	
 	QComboBox* dpi_combo;
-	QLabel* copies_label;
-	QLineEdit* copies_edit;
 	QCheckBox* show_templates_check;
 	QCheckBox* show_grid_check;
 	QCheckBox* overprinting_check;
-	QLineEdit* left_edit;
-	QLineEdit* top_edit;
-	QLineEdit* width_edit;
-	QLineEdit* height_edit;
-	QPushButton* center_button;
 	QCheckBox* different_scale_check;
-	QLineEdit* different_scale_edit;
+	QSpinBox* different_scale_edit;
+	
+	QComboBox* policy_combo;
+	QCheckBox* center_check;
+	QDoubleSpinBox* left_edit;
+	QDoubleSpinBox* top_edit;
+	QDoubleSpinBox* width_edit;
+	QDoubleSpinBox* height_edit;
+	
 	QPushButton* preview_button;
 	QPushButton* print_button;
 	
 	QList<QPrinterInfo> printers;
-	PrintTool* print_tool;
 	
 	Map* map;
+	MapPrinter* map_printer;
 	MainWindow* main_window;
 	MapView* main_view;
 	MapEditorController* editor;
-	bool react_to_changes;
+	PrintTool* print_tool;
 };
 
 #endif

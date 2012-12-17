@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps, Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -25,7 +25,7 @@
 
 #include "../tool.h"
 
-class PrintWidget;
+class MapPrinter;
 
 /**
  * The PrintTool lets the user see and modify the print area on the map.
@@ -37,7 +37,7 @@ class PrintTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	PrintTool(MapEditorController* editor, PrintWidget* print_widget);
+	PrintTool(MapEditorController* editor, MapPrinter* map_printer);
 	
 	virtual void init();
 	
@@ -57,7 +57,7 @@ protected:
 	/** Moves the print area while dragging. */
 	void updateDragging(MapCoordF mouse_pos_map);
 	
-	PrintWidget* print_widget;
+	MapPrinter* map_printer;
 	bool dragging;
 	MapCoordF click_pos_map;
 };

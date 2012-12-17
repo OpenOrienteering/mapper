@@ -115,6 +115,8 @@ set(Mapper_Common_SRCS
  file_format_ocad8.cpp
  file_format_xml.cpp
  
+ core/map_printer.cpp
+ 
  gui/color_dialog.cpp
  gui/print_tool.cpp
  gui/print_widget.cpp
@@ -179,6 +181,8 @@ set(Mapper_Common_MOC_INPUT
  undo.h
  util_pie_menu.h
  util_task_dialog.h
+ 
+ core/map_printer.h
  
  gui/color_dialog.h
  gui/print_tool.h
