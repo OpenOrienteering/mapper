@@ -349,7 +349,7 @@ void PrintWidget::updatePaperSizes(const QPrinterInfo* target) const
 void PrintWidget::setPageFormat(const MapPrinterPageFormat& format)
 {
 	ScopedMultiSignalsBlocker block;
-	block << paper_size_combo << page_orientation_combo << width_edit << height_edit;
+	block << paper_size_combo << page_orientation_combo;
 	paper_size_combo->setCurrentIndex(paper_size_combo->findData(format.paper_size));
 	page_orientation_combo->setCurrentIndex(page_orientation_combo->findData(format.orientation));
 	applyPrintAreaPolicy();
@@ -380,26 +380,16 @@ void PrintWidget::pageOrientationChanged(int index) const
 // slot
 void PrintWidget::applyPrintAreaPolicy() const
 {
+	QRectF print_area = map_printer->getPrintArea();
+	
 	PrintAreaPolicy policy = (PrintAreaPolicy)policy_combo->itemData(policy_combo->currentIndex()).toInt();
 	if (policy == SinglePage)
-	{
-		center_check->setEnabled(true);
-		QRectF print_area = map_printer->getPrintArea();
 		print_area.setSize(map_printer->getPageFormat().page_rect.size() / map_printer->getScaleAdjustment());
-		if (center_check->isChecked())
-		{
-			centerOnMap(print_area);
-			QRectF map_extent = map->calculateExtent(false, show_templates_check->isChecked(), main_view);
-			print_area.moveLeft(map_extent.left() + 0.5f * map_extent.width() - 0.5f * print_area.width());
-			print_area.moveTop(map_extent.top() + 0.5f * map_extent.height() - 0.5f * print_area.height());
-		}
-		map_printer->setPrintArea(print_area);
-	}
-	else
-	{
-		center_check->setEnabled(false);
-		center_check->setChecked(false);
-	}
+	
+	if (center_check->isChecked())
+		centerOnMap(print_area);
+
+	map_printer->setPrintArea(print_area);
 }
 
 void PrintWidget::centerOnMap(QRectF& area) const
@@ -422,33 +412,31 @@ void PrintWidget::setPrintArea(const QRectF& area)
 	width_edit->setValue(area.width());
 	height_edit->setValue(area.height());
 	
+	if (center_check->isChecked())
+	{
+		QRectF centered_area = map_printer->getPrintArea();
+		centerOnMap(centered_area);
+		if (qAbs(centered_area.left() - area.left()) > 0.005f ||
+			qAbs(centered_area.top() - area.top()) > 0.005f)
+		{
+			// No longer centered.
+			center_check->setChecked(false);
+		}
+	}
+	
 	PrintAreaPolicy policy = (PrintAreaPolicy)policy_combo->itemData(policy_combo->currentIndex()).toInt();
 	if (policy == SinglePage)
 	{
-		if (center_check->isChecked())
-		{
-			QRectF centered_area = map_printer->getPrintArea();
-			centerOnMap(centered_area);
-			if (qAbs(centered_area.left() - area.left()) > 0.005f ||
-				qAbs(centered_area.top() - area.top()) > 0.005f)
-			{
-				// No longer centered.
-				block << center_check;
-				center_check->setChecked(false);
-			}
-		}
-		
 		if (map_printer->getPageFormat().paper_size != QPrinter::Custom)
 		{
 			QSizeF page_dimensions = map_printer->getPageFormat().page_rect.size() / map_printer->getScaleAdjustment();
-			if ( area.width() - page_dimensions.width() > 0.05 || 
-				 area.height() - page_dimensions.height() > 0.05 )
+			if ( qAbs(area.width() - page_dimensions.width()) > 0.05 || 
+				 qAbs(area.height() - page_dimensions.height()) > 0.05 )
 			{
 				// No longer single page.
 				block << policy_combo;
 				policy_combo->setCurrentIndex(policy_combo->findData(CustomArea));
 				center_check->setChecked(false);
-				center_check->setEnabled(false);
 			}
 		}
 	}

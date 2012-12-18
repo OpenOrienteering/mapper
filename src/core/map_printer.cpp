@@ -351,13 +351,23 @@ void MapPrinter::updatePageBreaks()
 	
 	h_page_pos.clear();
 	qreal page_width = page_format.page_rect.width() / options.scale_adjustment;
-	for (qreal pos = print_area.left(); pos < print_area.right(); pos += page_width)
-		h_page_pos.push_back(pos);
+	qreal hpos = print_area.left();
+	for (; hpos < print_area.right(); hpos += page_width)
+		h_page_pos.push_back(hpos);
+	// Don' pre-calculate offset to avoid FP precision problems
+	qreal hoffset = 0.5 * (hpos - print_area.right());
+	for (std::vector<qreal>::iterator it=h_page_pos.begin(); it != h_page_pos.end(); ++it)
+		*it -= hoffset;
 	
 	v_page_pos.clear();
 	qreal page_height = page_format.page_rect.height() / options.scale_adjustment;
-	for (qreal pos = print_area.top(); pos < print_area.bottom(); pos += page_height)
-		v_page_pos.push_back(pos);
+	qreal vpos = print_area.top();
+	for (; vpos < print_area.bottom(); vpos += page_height)
+		v_page_pos.push_back(vpos);
+	// Don' pre-calculate offset to avoid FP precision problems
+	qreal voffset = 0.5 * (vpos - print_area.bottom());
+	for (std::vector<qreal>::iterator it=v_page_pos.begin(); it != v_page_pos.end(); ++it)
+		*it -= voffset;
 }
 
 void MapPrinter::takePrinterSettings(const QPrinter* printer)
@@ -436,7 +446,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 	
 	// Translate and clip for margins and print area
 	painter->translate(-page_extent.left(), -page_extent.top());
-	painter->setClipRect(page_extent, Qt::ReplaceClip);
+	painter->setClipRect(page_extent.intersected(print_area), Qt::ReplaceClip);
 	
 	if (options.show_templates)
 		map.drawTemplates(painter, page_extent, 0, map.getFirstFrontTemplate() - 1, view);
@@ -515,8 +525,8 @@ void MapPrinter::printMap(QPrinter* printer)
 			{
 				if (need_new_page)
 					printer->newPage();
-			
-				QRectF page_extent = QRectF(QPointF(hpos, vpos), extent_size).intersected(print_area);
+				
+				QRectF page_extent = QRectF(QPointF(hpos, vpos), extent_size);
 				drawPage(&p, (float)options.resolution, page_extent, false);
 				need_new_page = true;
 			}
