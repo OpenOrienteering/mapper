@@ -31,6 +31,7 @@
 PrintTool::PrintTool(MapEditorController* editor, MapPrinter* map_printer)
 : MapEditorTool(editor, Other, NULL),
   map_printer(map_printer),
+  region(Unknown),
   dragging(false)
 {
 	Q_ASSERT(editor != NULL);
@@ -38,29 +39,33 @@ PrintTool::PrintTool(MapEditorController* editor, MapPrinter* map_printer)
 	
 	connect(map_printer, SIGNAL(printAreaChanged(QRectF)), this, SLOT(updatePrintArea()));
 	connect(map_printer, SIGNAL(pageFormatChanged(MapPrinterPageFormat)), this, SLOT(updatePrintArea()));
+	// Page breaks may change upon scale changes.
 	connect(map_printer, SIGNAL(optionsChanged(MapPrinterOptions)), this, SLOT(updatePrintArea()));
 }
 
 void PrintTool::init()
 {
-	setStatusBarText(tr("<b>Drag</b> to move the print area"));
+	setStatusBarText(tr("<b>Drag</b> to move the print area or its borders."));
 	updatePrintArea();
 }
 
 QCursor* PrintTool::getCursor()
 {
-	static QCursor open_hand_cursor(Qt::OpenHandCursor);
-	static QCursor closed_hand_cursor(Qt::ClosedHandCursor);
-	return dragging ? &closed_hand_cursor : &open_hand_cursor;
+	static QCursor cursor(Qt::ArrowCursor);
+	return &cursor;
 }
 
 bool PrintTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (event->button() == Qt::LeftButton)
+	if (region == Unknown)
+		mouseMoved(map_coord, widget);
+	
+	if (event->button() == Qt::LeftButton && region != Outside)
 	{
 		dragging = true;
 		click_pos_map = map_coord;
-		widget->setCursor(*getCursor());
+		if (region == Inside)
+			widget->setCursor(Qt::ClosedHandCursor);
 		return true;
 	}
 	
@@ -75,16 +80,17 @@ bool PrintTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 		return true;
 	}
 	
+	mouseMoved(map_coord, widget);
 	return false;
 }
 
 bool PrintTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (event->button() == Qt::LeftButton)
+	if (event->button() == Qt::LeftButton && dragging)
 	{
 		updateDragging(map_coord);
 		dragging = false;
-		widget->setCursor(*getCursor());
+		mouseMoved(map_coord, widget);
 		return true;
 	}
 	
@@ -132,9 +138,109 @@ void PrintTool::updatePrintArea()
 
 void PrintTool::updateDragging(MapCoordF mouse_pos_map)
 {
+	QPointF delta = (mouse_pos_map - click_pos_map).toQPointF();
 	QRectF area = map_printer->getPrintArea();
-	area.moveLeft(area.left() + mouse_pos_map.getX() - click_pos_map.getX());
-	area.moveTop(area.top() + mouse_pos_map.getY() - click_pos_map.getY());
-	map_printer->setPrintArea(area);
-	click_pos_map = mouse_pos_map;
+	switch (region)
+	{
+		case Inside:
+			area.moveTopLeft(area.topLeft() + delta);
+			break;
+		case LeftBorder:
+			area.setLeft(area.left() + delta.rx());
+			break;
+		case TopLeftCorner:
+			area.setTopLeft(area.topLeft() + delta);
+			break;
+		case TopBorder:
+			area.setTop(area.top() + delta.ry());
+			break;
+		case TopRightCorner:
+			area.setTopRight(area.topRight() + delta);
+			break;
+		case RightBorder:
+			area.setRight(area.right() + delta.rx());
+			break;
+		case BottomRightCorner:
+			area.setBottomRight(area.bottomRight() + delta);
+			break;
+		case BottomBorder:
+			area.setBottom(area.bottom() + delta.ry());
+			break;
+		case BottomLeftCorner:
+			area.setBottomLeft(area.bottomLeft() + delta);
+			break;
+		case Outside:
+		case Unknown:
+			; // Nothing
+	}
+	
+	if (area.left() < area.right() && area.top() < area.bottom())
+	{
+		map_printer->setPrintArea(area);
+		click_pos_map = mouse_pos_map;
+	}
+}
+
+void PrintTool::mouseMoved(MapCoordF mouse_pos_map, MapWidget* widget)
+{
+	Q_ASSERT(!dragging); // No change while dragging!
+	
+	static const qreal margin_width = 10.0;
+	static const qreal outer_margin = 3.0;
+	
+	QRectF print_area = widget->mapToViewport(map_printer->getPrintArea());
+	print_area.adjust(-outer_margin, -outer_margin, outer_margin, outer_margin);
+	QPointF mouse_pos = widget->mapToViewport(mouse_pos_map);
+	if (!print_area.contains(mouse_pos))
+	{
+		region = Outside;
+	}
+	else
+	{
+		region = Inside;
+		
+		if (mouse_pos.rx() < print_area.left() + margin_width)
+		{
+			region = (InteractionRegion)(region | LeftBorder);
+		}
+		else if (mouse_pos.rx() > print_area.right() - margin_width)
+		{
+			region = (InteractionRegion)(region | RightBorder);
+		}
+		
+		if (mouse_pos.ry() < print_area.top() + margin_width)
+		{
+			region = (InteractionRegion)(region | TopBorder);
+		}
+		else if (mouse_pos.ry() > print_area.bottom() - margin_width)
+		{
+			region = (InteractionRegion)(region | BottomBorder);
+		}
+	}
+	
+	switch (region)
+	{
+		case Inside:
+			widget->setCursor(Qt::OpenHandCursor);
+			break;
+		case LeftBorder:
+		case RightBorder:
+			widget->setCursor(Qt::SizeHorCursor);
+			break;
+		case TopBorder:
+		case BottomBorder:
+			widget->setCursor(Qt::SizeVerCursor);
+			break;
+		case TopLeftCorner:
+		case BottomRightCorner:
+			widget->setCursor(Qt::SizeFDiagCursor);
+			break;
+		case TopRightCorner:
+		case BottomLeftCorner:
+			widget->setCursor(Qt::SizeBDiagCursor);
+			break;
+		case Outside:
+		case Unknown:
+			widget->setCursor(Qt::ArrowCursor);
+	}
 }

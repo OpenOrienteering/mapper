@@ -54,10 +54,29 @@ public slots:
 	void updatePrintArea();
 	
 protected:
-	/** Moves the print area while dragging. */
+	/** Modifies the print area while dragging. */
 	void updateDragging(MapCoordF mouse_pos_map);
 	
+	/** Updates the current interaction region. */
+	void mouseMoved(MapCoordF mouse_pos_map, MapWidget* widget);
+	
+	/** Regions of interaction with the print area. */
+	enum InteractionRegion {
+		Inside            = 0x00,
+		Outside           = 0x01,
+		LeftBorder        = 0x02,
+		TopLeftCorner     = 0x06,
+		TopBorder         = 0x04,
+		TopRightCorner    = 0x0c,
+		RightBorder       = 0x08,
+		BottomRightCorner = 0x18,
+		BottomBorder      = 0x10,
+		BottomLeftCorner  = 0x12,
+		Unknown           = 0xFF
+	};
+	
 	MapPrinter* map_printer;
+	InteractionRegion region;
 	bool dragging;
 	MapCoordF click_pos_map;
 };

@@ -200,7 +200,7 @@ bool MapPrinter::isPrinter() const
 // slot
 void MapPrinter::setPrintArea(const QRectF& area)
 {
-	if (print_area != area)
+	if (print_area != area && area.left() < area.right() && area.top() < area.bottom())
 	{
 		print_area = area;
 		updatePageBreaks();
