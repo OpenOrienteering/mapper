@@ -22,7 +22,6 @@
 
 #include <limits>
 
-#include <QDebug>
 #include <QPainter>
 
 #include "../util.h"
@@ -99,6 +98,12 @@ MapPrinter::MapPrinter(Map& map, QObject* parent)
 			options.scale = qMax(1, different_scale);
 			options.scale_adjustment = map.getScaleDenominator() / (qreal) options.scale;
 		}
+		if (page_format.paper_size == QPrinter::Custom);
+		{
+			// TODO: Save/load custom paper dimensions.
+			page_format.paper_dimensions = print_area.size() * options.scale_adjustment;
+			page_format.page_rect = QRectF(QPointF(0.0, 0.0), page_format.paper_dimensions);
+		}
 	}
 	else
 	{
@@ -168,7 +173,8 @@ QPrinter* MapPrinter::makePrinter() const
 	printer->setFullPage(true);
 	if (page_format.paper_size == QPrinter::Custom)
 	{	
-		printer->setPaperSize(print_area.size(), QPrinter::Millimeter);
+		// TODO: Proper handling of custom paper dimensions.
+		printer->setPaperSize(print_area.size() * options.scale_adjustment, QPrinter::Millimeter);
 		printer->setOrientation(QPrinter::Portrait);
 	}
 	else
@@ -179,7 +185,7 @@ QPrinter* MapPrinter::makePrinter() const
 	printer->setColorMode(QPrinter::Color);
 	printer->setResolution(options.resolution);
 	
-	if (target == imageTarget())
+	if (target == imageTarget() || page_format.paper_size == QPrinter::Custom)
 		printer->setPageMargins(0.0, 0.0, 0.0, 0.0, QPrinter::Millimeter);
 	
 	return printer;
@@ -211,7 +217,9 @@ void MapPrinter::setPrintArea(const QRectF& area)
 // slot
 void MapPrinter::setPaperSize(QPrinter::PaperSize size)
 {
-	if (page_format.paper_size != size)
+	if (page_format.paper_size == QPrinter::Custom)
+		setCustomPaperSize(print_area.size() * options.scale_adjustment);
+	else if (page_format.paper_size != size)
 	{
 		page_format.paper_size = size;
 		updatePaperDimensions();
@@ -222,7 +230,9 @@ void MapPrinter::setPaperSize(QPrinter::PaperSize size)
 // slot
 void MapPrinter::setCustomPaperSize(QSizeF dimensions)
 {
-	if (page_format.paper_size != QPrinter::Custom && page_format.paper_dimensions != dimensions)
+	if ((page_format.paper_size != QPrinter::Custom || 
+	     page_format.paper_dimensions != dimensions) &&
+	     ! dimensions.isEmpty())
 	{
 		page_format.paper_size = QPrinter::Custom;
 		page_format.orientation = QPrinter::Portrait;
@@ -269,7 +279,7 @@ void MapPrinter::updatePaperDimensions()
 	page_format.page_rect = printer->paperRect(QPrinter::Millimeter);
 	page_format.paper_dimensions = page_format.page_rect.size();
 	
-	if (target != imageTarget())
+	if (target != imageTarget() && page_format.paper_size != QPrinter::Custom)
 	{
 		qreal left, top, right, bottom;
 		printer->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
@@ -350,24 +360,32 @@ void MapPrinter::updatePageBreaks()
 	Q_ASSERT(print_area.top() <= print_area.bottom());
 	
 	h_page_pos.clear();
-	qreal page_width = page_format.page_rect.width() / options.scale_adjustment;
 	qreal hpos = print_area.left();
-	for (; hpos < print_area.right(); hpos += page_width)
-		h_page_pos.push_back(hpos);
-	// Don' pre-calculate offset to avoid FP precision problems
-	qreal hoffset = 0.5 * (hpos - print_area.right());
-	for (std::vector<qreal>::iterator it=h_page_pos.begin(); it != h_page_pos.end(); ++it)
-		*it -= hoffset;
+	h_page_pos.push_back(hpos);
+	qreal page_width = page_format.page_rect.width() / options.scale_adjustment;
+	if (page_width >= 0.01)
+	{
+		for (hpos += page_width; hpos < print_area.right(); hpos += page_width)
+			h_page_pos.push_back(hpos);
+		// Don' pre-calculate offset to avoid FP precision problems
+		qreal hoffset = 0.5 * (hpos - print_area.right());
+		for (std::vector<qreal>::iterator it=h_page_pos.begin(); it != h_page_pos.end(); ++it)
+			*it -= hoffset;
+	}
 	
 	v_page_pos.clear();
-	qreal page_height = page_format.page_rect.height() / options.scale_adjustment;
 	qreal vpos = print_area.top();
-	for (; vpos < print_area.bottom(); vpos += page_height)
-		v_page_pos.push_back(vpos);
-	// Don' pre-calculate offset to avoid FP precision problems
-	qreal voffset = 0.5 * (vpos - print_area.bottom());
-	for (std::vector<qreal>::iterator it=v_page_pos.begin(); it != v_page_pos.end(); ++it)
-		*it -= voffset;
+	v_page_pos.push_back(vpos);
+	qreal page_height = page_format.page_rect.height() / options.scale_adjustment;
+	if (page_height >= 0.01)
+	{
+		for (vpos += page_height; vpos < print_area.bottom(); vpos += page_height)
+			v_page_pos.push_back(vpos);
+		// Don' pre-calculate offset to avoid FP precision problems
+		qreal voffset = 0.5 * (vpos - print_area.bottom());
+		for (std::vector<qreal>::iterator it=v_page_pos.begin(); it != v_page_pos.end(); ++it)
+			*it -= voffset;
+	}
 }
 
 void MapPrinter::takePrinterSettings(const QPrinter* printer)
