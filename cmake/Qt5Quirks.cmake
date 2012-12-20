@@ -24,3 +24,7 @@ macro(QT4_ADD_RESOURCES)
 	qt5_add_resources(${ARGV})
 endmacro()
 
+macro(QT4_ADD_TRANSLATION)
+	qt5_add_translation(${ARGV})
+endmacro()
+
