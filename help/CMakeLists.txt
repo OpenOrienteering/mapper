@@ -16,7 +16,20 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-if(NOT Mapper_USE_QT5)
+if(Mapper_USE_QT5)
+	find_package(Qt5Core QUIET REQUIRED)
+	get_target_property(QT5_QMAKE_EXECUTABLE ${Qt5Core_QMAKE_EXECUTABLE} IMPORTED_LOCATION)
+	get_filename_component(QT5_QMAKE_DIR "${QT5_QMAKE_EXECUTABLE}" PATH)
+	find_program(QT_QCOLLECTIONGENERATOR_EXECUTABLE
+	  NAMES qcollectiongenerator
+	  PATHS "${QT5_QMAKE_DIR}"
+	  NO_DEFAULT_PATH
+	  NO_CMAKE_FIND_ROOT_PATH
+	)
+	mark_as_advanced(QT_QCOLLECTIONGENERATOR_EXECUTABLE)
+else()
+	find_package(Qt4 QUIET REQUIRED)
+endif()
 
 if(QT_QCOLLECTIONGENERATOR_EXECUTABLE MATCHES NOTFOUND)
 	message(FATAL_ERROR "qcollectiongenerator executable not found.")
@@ -54,4 +67,3 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/${Mapper_COMPRESSED_HELP}" 
   DESTINATION "${MAPPER_DATA_DESTINATION}/help")
 
-endif()
