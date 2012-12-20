@@ -36,7 +36,7 @@ void DuplicateEqualsTest::initTestCase()
 void DuplicateEqualsTest::symbols_data()
 {
 	QTest::addColumn<QString>("map_filename");
-	QTest::newRow(map_filename.toAscii()) << map_filename;
+	QTest::newRow(map_filename.toLocal8Bit()) << map_filename;
 }
 
 void DuplicateEqualsTest::symbols()
@@ -60,7 +60,7 @@ void DuplicateEqualsTest::symbols()
 void DuplicateEqualsTest::objects_data()
 {
 	QTest::addColumn<QString>("map_filename");
-	QTest::newRow(map_filename.toAscii()) << map_filename;
+	QTest::newRow(map_filename.toLocal8Bit()) << map_filename;
 }
 
 void DuplicateEqualsTest::objects()

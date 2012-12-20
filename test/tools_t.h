@@ -20,7 +20,7 @@
 #ifndef _OPENORIENTEERING_MAP_EDITOR_T_H
 #define _OPENORIENTEERING_MAP_EDITOR_T_H
 
-#include <QtTest>
+#include <QtTest/QtTest>
 
 
 /**

@@ -20,7 +20,7 @@
 #ifndef _OPENORIENTEERING_QPAINTER_T_H
 #define _OPENORIENTEERING_QPAINTER_T_H
 
-#include <QtTest>
+#include <QtTest/QtTest>
 
 #include <QImage>
 #include <QPainter>

@@ -20,7 +20,7 @@
 #ifndef _OPENORIENTEERING_GEOREFERENCING_TEST_H
 #define _OPENORIENTEERING_GEOREFERENCING_TEST_H
 
-#include <QtTest>
+#include <QtTest/QtTest>
 
 #include "../src/georeferencing.h"
 

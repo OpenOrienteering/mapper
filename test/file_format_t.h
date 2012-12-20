@@ -20,7 +20,7 @@
 #ifndef _OPENORIENTEERING_FILE_FORMAT_T_H
 #define _OPENORIENTEERING_FILE_FORMAT_T_H
 
-#include <QtTest>
+#include <QtTest/QtTest>
 
 #include "../src/map.h"
 #include "../src/file_format.h"

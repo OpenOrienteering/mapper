@@ -45,7 +45,7 @@ void FileFormatTest::saveAndLoad_data()
 	Q_FOREACH(const Format* format, FileFormats.formats())
 	{
 		if (format->supportsExport() && format->supportsImport())
-			QTest::newRow(format->id().toAscii()) << format->id() << map_filename;
+			QTest::newRow(format->id().toLocal8Bit()) << format->id() << map_filename;
 	}
 }
 
@@ -80,7 +80,7 @@ void FileFormatTest::saveAndLoad()
 	QString error = "";
 	bool equal = compareMaps(original, new_map, error);
 	if (!equal)
-		QFAIL(QString("Loaded map does not equal saved map, error: %1").arg(error).toAscii());
+		QFAIL(QString("Loaded map does not equal saved map, error: %1").arg(error).toLocal8Bit());
 	
 	delete new_map;
 	delete original;

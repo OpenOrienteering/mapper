@@ -20,7 +20,7 @@
 #ifndef _OPENORIENTEERING_DUPLICATE_EQUALS_T_H
 #define _OPENORIENTEERING_DUPLICATE_EQUALS_T_H
 
-#include <QtTest>
+#include <QtTest/QtTest>
 
 
 /**
