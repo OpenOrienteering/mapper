@@ -45,7 +45,7 @@
 QCursor* EditTool::cursor = NULL;
 
 // Mac convention for selecting multiple items is the command key (In Qt the command key is ControlModifier)
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 const Qt::KeyboardModifiers EditTool::selection_modifier = Qt::ControlModifier;
 const Qt::KeyboardModifiers EditTool::control_point_modifier = Qt::ShiftModifier;
 const Qt::Key EditTool::selection_key = Qt::Key_Control;
@@ -547,7 +547,7 @@ bool EditTool::keyPressEvent(QKeyEvent* event)
 	int num_selected_objects = editor->getMap()->getNumSelectedObjects();
 	
 	// Delete objects if the delete key is pressed, or backspace key on Mac OSX, since that is the convention for Mac apps
-	#ifdef Q_WS_MAC
+	#ifdef Q_OS_MAC
 		Qt::Key delete_key = Qt::Key_Backspace;
 	#else
 		Qt::Key delete_key = Qt::Key_Delete;

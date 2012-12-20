@@ -624,7 +624,7 @@ void MapEditorController::createMenuAndToolbars()
 	template_menu->addAction(open_template_act);
 	template_menu->addAction(reopen_template_act);
 
-#ifdef Q_WS_MAC
+#if defined(Q_WS_MAC) && QT_VERSION < 0x050000
 	// Mac toolbars are still a little screwed up, turns out we have to insert a
 	// "dummy" toolbar first and hide it, then the others show up
 	window->addToolBar(tr("Dummy"))->hide();
