@@ -21,6 +21,7 @@
 #ifndef _OPENORIENTEERING_COLOR_DIALOG_H_
 #define _OPENORIENTEERING_COLOR_DIALOG_H_
 
+#include <qglobal.h>
 #if QT_VERSION < 0x050000
 #include <QtGui>
 #else

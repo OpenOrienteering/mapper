@@ -194,9 +194,15 @@ TemplateAdjustWidget::TemplateAdjustWidget(Template* temp, MapEditorController* 
 	table->verticalHeader()->setVisible(false);
 	
 	QHeaderView* header_view = table->horizontalHeader();
+#if QT_VERSION < 0x050000
 	for (int i = 0; i < 5; ++i)
 		header_view->setResizeMode(i, QHeaderView::ResizeToContents);
 	header_view->setClickable(false);
+#else
+	for (int i = 0; i < 5; ++i)
+		header_view->setSectionResizeMode(i, QHeaderView::ResizeToContents);
+	header_view->setSectionsClickable(false);
+#endif
 	
 	for (int i = 0; i < temp->getNumPassPoints(); ++i)
 		addRow(i);

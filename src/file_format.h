@@ -25,12 +25,12 @@
 #include <QHash>
 #include <QVariant>
 
-class Map;
-class MapView;
+class QIODevice;
 
-// Forward declarations
 class Importer;
 class Exporter;
+class Map;
+class MapView;
 
 /** An exception type thrown by an importer or exporter if it encounters a fatal error.
  */
@@ -117,7 +117,7 @@ public:
      *
      *  If the Importer could not be created, then this method should throw a FormatException.
      */
-	virtual Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
+	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
 
     /** Returns true if an exporter for this file format is potentially lossy, i.e., if the exported
      *  file cannot fully represent all aspects of the internal OO map objects. This flag is used by

@@ -55,9 +55,15 @@ ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map* map, Map* s
 	mapping_table->verticalHeader()->setVisible(false);
 	mapping_table->setColumnCount(2);
 	mapping_table->setHorizontalHeaderLabels(QStringList() << tr("Original") << tr("Replacement"));
+#if QT_VERSION < 0x050000
 	mapping_table->horizontalHeader()->setClickable(false);
 	mapping_table->horizontalHeader()->setResizeMode(0, QHeaderView::Stretch);
 	mapping_table->horizontalHeader()->setResizeMode(1, QHeaderView::Stretch);
+#else
+	mapping_table->horizontalHeader()->setSectionsClickable(false);
+	mapping_table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+	mapping_table->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+#endif
 	
 	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal);
 	

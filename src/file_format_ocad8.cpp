@@ -69,7 +69,7 @@ bool OCAD8FileFormat::isRasterImageFile(const QString &filename)
 	if (dot_pos < 0)
 		return false;
 	QString extension = filename.right(filename.length() - dot_pos - 1).toLower();
-	return QImageReader::supportedImageFormats().contains(extension.toAscii());
+	return QImageReader::supportedImageFormats().contains(extension.toLatin1());
 }
 
 
@@ -1597,7 +1597,7 @@ void OCAD8FileExport::doExport() throw (FormatException)
 			
 			QString string;
 			string.sprintf("%s\ts%d\tx%d\ty%d\ta%f\tu%f\tv%f\td%d\tp%d\tt%d\to%d",
-				temp->getTemplatePath().toAscii().data(), s, x, y, a, u, v, d, p, t, o
+				temp->getTemplatePath().toLatin1().data(), s, x, y, a, u, v, d, p, t, o
 			);
 			
 			OCADStringEntry* entry = ocad_string_entry_new(file, string.length() + 1);

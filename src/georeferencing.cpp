@@ -48,7 +48,7 @@ Georeferencing::Georeferencing()
 	
 	projected_crs_id = tr("Local coordinates");
 	projected_crs  = NULL;
-	geographic_crs = pj_init_plus(geographic_crs_spec.toAscii());
+	geographic_crs = pj_init_plus(geographic_crs_spec.toLatin1());
 	if (0 != *pj_get_errno_ref())
 	{
 		QStringList locations = MapperResource::getLocations(MapperResource::PROJ_DATA);
@@ -56,10 +56,10 @@ Georeferencing::Georeferencing()
 		{
 			if (geographic_crs != NULL)
 				pj_free(geographic_crs);
-			QByteArray pj_searchpath = QDir::toNativeSeparators(location).toAscii();
+			QByteArray pj_searchpath = QDir::toNativeSeparators(location).toLocal8Bit();
 			const char* pj_searchpath_list = pj_searchpath.constData();
 			pj_set_searchpath(1, &pj_searchpath_list);
-			geographic_crs = pj_init_plus(geographic_crs_spec.toAscii());
+			geographic_crs = pj_init_plus(geographic_crs_spec.toLatin1());
 			if (0 == *pj_get_errno_ref())
 				break;
 		}
@@ -79,8 +79,8 @@ Georeferencing::Georeferencing(const Georeferencing& other)
 {
 	updateTransformation();
 	
-	projected_crs  = pj_init_plus(projected_crs_spec.toAscii());
-	geographic_crs = pj_init_plus(geographic_crs_spec.toAscii());
+	projected_crs  = pj_init_plus(projected_crs_spec.toLatin1());
+	geographic_crs = pj_init_plus(geographic_crs_spec.toLatin1());
 	Q_ASSERT(geographic_crs != NULL);
 }
 
@@ -110,7 +110,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	
 	if (projected_crs != NULL)
 		pj_free(projected_crs);
-	projected_crs       = pj_init_plus(projected_crs_spec.toAscii());
+	projected_crs       = pj_init_plus(projected_crs_spec.toLatin1());
 	emit projectionChanged();
 	
 	return *this;
@@ -187,7 +187,7 @@ void Georeferencing::load(QXmlStreamReader& xml) throw (FormatException)
 	}
 	
 	updateTransformation();
-	projected_crs = pj_init_plus(projected_crs_spec.toAscii());
+	projected_crs = pj_init_plus(projected_crs_spec.toLatin1());
 	emit projectionChanged();
 }
 
@@ -324,7 +324,7 @@ void Georeferencing::initDeclination()
 	if (isLocal())
 	{
 		// Maybe not yet initialized
-		projected_crs = pj_init_plus(projected_crs_spec.toAscii());
+		projected_crs = pj_init_plus(projected_crs_spec.toLatin1());
 		if (projected_crs != NULL)
 			emit projectionChanged();
 	}
@@ -349,7 +349,7 @@ bool Georeferencing::setProjectedCRS(const QString& id, const QString& spec)
 	
 	this->projected_crs_id = id;
 	this->projected_crs_spec = spec;
-	projected_crs = pj_init_plus(projected_crs_spec.toAscii());
+	projected_crs = pj_init_plus(projected_crs_spec.toLatin1());
 	if (updateGrivation())
 		updateTransformation();
 	

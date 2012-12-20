@@ -358,9 +358,17 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	QNetworkAccessManager *network = new QNetworkAccessManager(this);
 	connect(network, SIGNAL(finished(QNetworkReply*)), this, SLOT(declinationReplyFinished(QNetworkReply*)));
 	
-	service_url.addQueryItem("lat1", QString::number(latlon.getLatitudeInDegrees()));
-	service_url.addQueryItem("lon1", QString::number(latlon.getLongitudeInDegrees()));
-	service_url.addQueryItem("resultFormat", "xml");
+#if QT_VERSION < 0x050000
+	QUrl& query = service_url;
+#else
+	QUrlQuery query;
+#endif
+	query.addQueryItem("lat1", QString::number(latlon.getLatitudeInDegrees()));
+	query.addQueryItem("lon1", QString::number(latlon.getLongitudeInDegrees()));
+	query.addQueryItem("resultFormat", "xml");
+#if QT_VERSION >= 0x050000
+	service_url.setQuery(query);
+#endif
 	network->get(QNetworkRequest(service_url));
 }
 

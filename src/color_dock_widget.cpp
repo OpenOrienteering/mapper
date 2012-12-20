@@ -70,6 +70,7 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 		addRow(i);
 	
 	QHeaderView* header_view = color_table->horizontalHeader();
+#if QT_VERSION < 0x050000
 	header_view->setResizeMode(QHeaderView::Interactive);
 	header_view->resizeSections(QHeaderView::ResizeToContents);
 	header_view->setResizeMode(0, QHeaderView::Fixed); // Color
@@ -77,6 +78,15 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	header_view->setResizeMode(1, QHeaderView::Stretch); // Name
 	header_view->setResizeMode(5, QHeaderView::Fixed); // Knockout
 	header_view->resizeSection(5, 32);
+#else
+	header_view->setSectionResizeMode(QHeaderView::Interactive);
+	header_view->resizeSections(QHeaderView::ResizeToContents);
+	header_view->setSectionResizeMode(0, QHeaderView::Fixed); // Color
+	header_view->resizeSection(0, 32);
+	header_view->setSectionResizeMode(1, QHeaderView::Stretch); // Name
+	header_view->setSectionResizeMode(5, QHeaderView::Fixed); // Knockout
+	header_view->resizeSection(5, 32);
+#endif
 	
 	currentCellChange(color_table->currentRow(), 0, 0, 0);	// enable / disable move color buttons
 	
