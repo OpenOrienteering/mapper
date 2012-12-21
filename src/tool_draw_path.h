@@ -55,6 +55,7 @@ public:
 	
 protected slots:
 	void updateDirtyRect();
+	virtual void selectedSymbolsChanged();
 	
 protected:
 	void updateHover();
@@ -75,6 +76,7 @@ protected:
 	void finishFollowing();
 	
 	float calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map);
+	void updateDashPointDrawing();
 	void updateStatusText();
 	
 	QPoint click_pos;
@@ -91,7 +93,7 @@ protected:
 	bool create_spline_corner; // for drawing bezier splines without parallel handles
 	bool create_segment;
 	
-	bool space_pressed;
+	bool draw_dash_points;
 	bool allow_closing_paths;
 	
 	QScopedPointer<ConstrainAngleToolHelper> angle_helper;

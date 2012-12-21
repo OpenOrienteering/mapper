@@ -35,6 +35,7 @@
 #include "symbol_dock_widget.h"
 #include "settings.h"
 #include "tool_helpers.h"
+#include "symbol_line.h"
 
 QCursor* DrawPathTool::cursor = NULL;
 
@@ -57,7 +58,7 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, Sy
 	following = false;
 	picking_angle = false;
 	picked_angle = false;
-	space_pressed = false;
+	draw_dash_points = false;
 	shift_pressed = false;
 	ctrl_pressed = false;
 	
@@ -69,6 +70,7 @@ DrawPathTool::~DrawPathTool()
 }
 void DrawPathTool::init()
 {
+	updateDashPointDrawing();
 	updateStatusText();
 }
 
@@ -169,7 +171,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 
 		// Set path point
 		MapCoord coord = click_pos_map.toMapCoord();
-		if (space_pressed)
+		if (draw_dash_points)
 			coord.setDashPoint(true);
 		
 		if (preview_path->getCoordinateCount() > 0 && picked_angle)
@@ -337,7 +339,7 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 		}
 		else
 			coord = map_coord.toMapCoord();
-		if (space_pressed)
+		if (draw_dash_points)
 			coord.setDashPoint(true);
 		preview_path->addCoordinate(coord);
 		updatePreviewPath();
@@ -397,7 +399,7 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 		editor->setEditTool();
 	else if (event->key() == Qt::Key_Space)
 	{
-		space_pressed = !space_pressed;
+		draw_dash_points = !draw_dash_points;
 		updateStatusText();
 	}
 	else if (event->key() == Qt::Key_Control)
@@ -545,7 +547,7 @@ void DrawPathTool::createPreviewCurve(MapCoord position, float direction)
 		
 		preview_path->addCoordinate(MapCoord(0, 0));
 		preview_path->addCoordinate(MapCoord(0, 0));
-		if (space_pressed)
+		if (draw_dash_points)
 			position.setDashPoint(true);
 		preview_path->addCoordinate(position);
 		
@@ -719,6 +721,15 @@ void DrawPathTool::updateDirtyRect()
 	}
 }
 
+void DrawPathTool::selectedSymbolsChanged()
+{
+	if (is_helper_tool)
+		return;
+	DrawLineAndAreaTool::selectedSymbolsChanged();
+	
+	updateDashPointDrawing();
+}
+
 void DrawPathTool::updateAngleHelper()
 {
 	if (picked_angle)
@@ -867,13 +878,27 @@ float DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map)
 		return 0;
 }
 
+void DrawPathTool::updateDashPointDrawing()
+{
+	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
+	if (symbol->getType() == Symbol::Line)
+	{
+		// Auto-activate dash points depending on if the selected symbol has a dash symbol.
+		// TODO: instead of just looking if it is a line symbol with dash points,
+		// could also check for combined symbols containing lines with dash points
+		draw_dash_points = (symbol->asLine()->getDashSymbol() != NULL);
+		
+		updateStatusText();
+	}
+}
+
 void DrawPathTool::updateStatusText()
 {
 	if (is_helper_tool)
 		return;
 	
 	QString text = "";
-	if (space_pressed)
+	if (draw_dash_points)
 		text += tr("<b>Dash points on.</b> ");
 	
 	if (!draw_in_progress)

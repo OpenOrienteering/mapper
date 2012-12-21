@@ -69,7 +69,7 @@ void DrawLineAndAreaTool::selectedSymbolsChanged()
 	if (is_helper_tool)
 		return;
 	if (draw_in_progress)
-		abortDrawing();
+		finishDrawing();
 	
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
 	if (symbol == NULL || ((symbol->getType() & (Symbol::Line | Symbol::Area | Symbol::Combined)) == 0) || symbol->isHidden())
