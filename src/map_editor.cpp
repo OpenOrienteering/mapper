@@ -2005,7 +2005,24 @@ void MapEditorController::importClicked()
 	QSettings settings;
 	QString import_directory = settings.value("importFileDirectory", QDir::homePath()).toString();
 	
-	QString filename = QFileDialog::getOpenFileName(window, tr("Import OMAP, OCD, GPX, OSM or DXF file"), import_directory, QString("%1 (*.omap *.ocd *.gpx *.osm *.dxf);;%2 (*.*)").arg(tr("Importable files")).arg(tr("All files")));
+	QString map_names = "";
+	QString map_extensions = "";
+	Q_FOREACH(const Format *format, FileFormats.formats())
+	{
+		if (!format->supportsImport())
+			continue;
+		
+		if (!map_extensions.isEmpty())
+		{
+			map_names = map_names + ", ";
+			map_extensions = map_extensions + " ";
+		}
+		
+		map_names = map_names + format->fileExtension().toUpper();
+		map_extensions = map_extensions + "*." % format->fileExtension();
+	}
+	
+	QString filename = QFileDialog::getOpenFileName(window, tr("Import %1, GPX, OSM or DXF file").arg(map_names), import_directory, QString("%1 (%2 *.gpx *.osm *.dxf);;%3 (*.*)").arg(tr("Importable files")).arg(map_extensions).arg(tr("All files")));
 	if (filename.isEmpty() || filename.isNull())
 		return;
 	
@@ -2018,7 +2035,8 @@ void MapEditorController::importClicked()
 		importGeoFile(filename);
 	}
 	else if (filename.endsWith(".ocd", Qt::CaseInsensitive) || 
-			 filename.endsWith(".omap", Qt::CaseInsensitive))
+			 filename.endsWith(".omap", Qt::CaseInsensitive) ||
+			 filename.endsWith(".xmap", Qt::CaseInsensitive))
 	{
 		importMapFile(filename);
 	}
