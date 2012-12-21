@@ -78,12 +78,12 @@ fi
   -make tools \
   -nomake examples \
   -nomake tests \
-  -no-rpath \
 
 
 exit
 
 echo <<IGNORED_FROM_QT4
+  -no-rpath \
   -fast \
   -prefix-install \
   -script \
