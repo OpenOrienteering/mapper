@@ -555,6 +555,11 @@ bool EditTool::keyPressEvent(QKeyEvent* event)
 
 	if (num_selected_objects > 0 && event->key() == delete_key)
 		deleteSelectedObjects();
+	else if (num_selected_objects > 0 && event->key() == Qt::Key_Escape)
+	{
+		// Deselect all objects
+		editor->getMap()->clearObjectSelection(true);
+	}
 	else if (event->key() == Qt::Key_Tab)
 	{
 		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(editor->getSymbolWidget()->getSingleSelectedSymbol());
