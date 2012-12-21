@@ -76,9 +76,21 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 {
 	cur_map_widget = widget;
 	
-	if (((event->button() == Qt::RightButton) && draw_in_progress) && !Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool())
+	if (draw_in_progress &&
+		((event->button() == Qt::RightButton) &&
+		!Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool()))
 	{
 		finishDrawing();
+		return true;
+	}
+	else if (draw_in_progress &&
+		((event->button() == Qt::RightButton && event->buttons() & Qt::LeftButton) ||
+		 (event->button() == Qt::LeftButton && event->buttons() & Qt::RightButton)))
+	{
+		if (!previous_point_is_curve_point)
+			undoLastPoint();
+		if (draw_in_progress)
+			finishDrawing();
 		return true;
 	}
 	else if ((event->button() == Qt::LeftButton) || (draw_in_progress && drawMouseButtonClicked(event)))

@@ -36,20 +36,20 @@ class DrawPathTool : public DrawLineAndAreaTool
 Q_OBJECT
 public:
 	DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget, bool allow_closing_paths);
-    virtual ~DrawPathTool();
+	virtual ~DrawPathTool();
 	
-    virtual void init();
-    virtual QCursor* getCursor() {return cursor;}
-    
-    virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual void init();
+	virtual QCursor* getCursor() {return cursor;}
+	
+	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-    virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-    virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	
-    virtual bool keyPressEvent(QKeyEvent* event);
-    virtual bool keyReleaseEvent(QKeyEvent* event);
+	virtual bool keyPressEvent(QKeyEvent* event);
+	virtual bool keyReleaseEvent(QKeyEvent* event);
 	
-    virtual void draw(QPainter* painter, MapWidget* widget);
+	virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	static QCursor* cursor;
 	
