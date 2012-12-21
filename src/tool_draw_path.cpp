@@ -219,7 +219,8 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 			return true;
 		}
 		
-		if (dragging && (event->pos() - click_pos).manhattanLength() < QApplication::startDragDistance())
+		bool drag_distance_reached = (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance();
+		if (dragging && !drag_distance_reached)
 		{
 			if (create_spline_corner)
 			{
@@ -251,38 +252,38 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 				updatePreviewPath();
 				updateDirtyRect();
 			}
-			
-			return true;
 		}
-		
-		// Giving a direction by dragging
-		dragging = true;
-		create_spline_corner = false;
-		create_segment = true;
-		
-		if (previous_point_is_curve_point)
-			angle_helper->setCenter(click_pos_map);
-		
-		QPointF constrained_pos;
-		angle_helper->getConstrainedCursorPositions(map_coord, constrained_pos_map, constrained_pos, widget);
-		
-		if (previous_point_is_curve_point)
+		else if (drag_distance_reached)
 		{
-			hidePreviewPoints();
-			float drag_direction = calculateRotation(constrained_pos.toPoint(), constrained_pos_map);
+			// Giving a direction by dragging
+			dragging = true;
+			create_spline_corner = false;
+			create_segment = true;
 			
-			// Add a new node or convert the last node into a corner?
-			if ((widget->mapToViewport(previous_pos_map) - click_pos).manhattanLength() >= QApplication::startDragDistance())
-				createPreviewCurve(click_pos_map.toMapCoord(), drag_direction);
-			else
+			if (previous_point_is_curve_point)
+				angle_helper->setCenter(click_pos_map);
+			
+			QPointF constrained_pos;
+			angle_helper->getConstrainedCursorPositions(map_coord, constrained_pos_map, constrained_pos, widget);
+			
+			if (previous_point_is_curve_point)
 			{
-				create_spline_corner = true;
-				// This hides the old direction indicator
-				previous_drag_map = previous_pos_map;
+				hidePreviewPoints();
+				float drag_direction = calculateRotation(constrained_pos.toPoint(), constrained_pos_map);
+				
+				// Add a new node or convert the last node into a corner?
+				if ((widget->mapToViewport(previous_pos_map) - click_pos).manhattanLength() >= QApplication::startDragDistance())
+					createPreviewCurve(click_pos_map.toMapCoord(), drag_direction);
+				else
+				{
+					create_spline_corner = true;
+					// This hides the old direction indicator
+					previous_drag_map = previous_pos_map;
+				}
 			}
+			
+			updateDirtyRect();
 		}
-		
-		updateDirtyRect();
 	}
 	
 	return true;
