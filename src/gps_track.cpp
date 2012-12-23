@@ -292,7 +292,9 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 		stream.readNext();
 		if (stream.tokenType() == QXmlStreamReader::StartElement)
 		{
-			if (stream.name().compare("wpt", Qt::CaseInsensitive) == 0 || stream.name().compare("trkpt", Qt::CaseInsensitive) == 0)
+			if (stream.name().compare("wpt", Qt::CaseInsensitive) == 0 ||
+				stream.name().compare("trkpt", Qt::CaseInsensitive) == 0 ||
+				stream.name().compare("rtept", Qt::CaseInsensitive) == 0)
 			{
 				point = TrackPoint(LatLon(stream.attributes().value("lat").toString().toDouble(),
 												stream.attributes().value("lon").toString().toDouble(), true));
@@ -300,8 +302,15 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 					point.map_coord = map_georef.toMapCoordF(track_crs, MapCoordF(point.gps_coord.longitude, point.gps_coord.latitude), NULL); // FIXME: check for errors
 				point_name = "";
 			}
-			else if (stream.name().compare("trkseg", Qt::CaseInsensitive) == 0)
-				segment_starts.push_back(segment_points.size());
+			else if (stream.name().compare("trkseg", Qt::CaseInsensitive) == 0 ||
+				stream.name().compare("rte", Qt::CaseInsensitive) == 0)
+			{
+				if (segment_starts.size() == 0 ||
+					segment_starts.back() < (int)segment_points.size())
+				{
+					segment_starts.push_back(segment_points.size());
+				}
+			}
 			else if (stream.name().compare("ele", Qt::CaseInsensitive) == 0)
 				point.elevation = stream.readElementText().toFloat();
 			else if (stream.name().compare("time", Qt::CaseInsensitive) == 0)
@@ -320,11 +329,18 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 				waypoints.push_back(point);
 				waypoint_names.push_back(point_name);
 			}
-			else if (stream.name().compare("trkpt", Qt::CaseInsensitive) == 0)
+			else if (stream.name().compare("trkpt", Qt::CaseInsensitive) == 0 ||
+				stream.name().compare("rtept", Qt::CaseInsensitive) == 0)
 			{
 				segment_points.push_back(point);
 			}
 		}
+	}
+	
+	if (segment_starts.size() > 0 &&
+		segment_starts.back() == (int)segment_points.size())
+	{
+		segment_starts.pop_back();
 	}
 	
 	return true;
