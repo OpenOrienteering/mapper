@@ -64,7 +64,7 @@ protected:
 	void hidePreviewPoints();
 	
 	void startDrawing();
-	void updatePreviewPath();
+	virtual void updatePreviewPath();
 	virtual void abortDrawing();
 	virtual void finishDrawing(PathObject* append_to_object = NULL);
 	void deletePreviewObjects();

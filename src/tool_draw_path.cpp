@@ -159,8 +159,6 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 			path_has_preview_point = false;
 			previous_point_is_curve_point = false;
 			appending = start_appending;
-			
-			updateStatusText();
 		}
 		else
 		{
@@ -200,6 +198,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 		
 		create_segment = true;
 		updateDirtyRect();
+		updateStatusText();
 		return true;
 	}
 	
@@ -489,6 +488,12 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 			snap_helper->draw(painter, widget);
 		angle_helper->draw(painter, widget);
 	}
+}
+
+void DrawPathTool::updatePreviewPath()
+{
+	DrawLineAndAreaTool::updatePreviewPath();
+	updateStatusText();
 }
 
 void DrawPathTool::updateHover()
@@ -898,6 +903,12 @@ void DrawPathTool::updateStatusText()
 		return;
 	
 	QString text = "";
+	if (draw_in_progress && preview_path && preview_path->getCoordinateCount() >= 2)
+	{
+		//assert(!preview_path->isDirty());
+		float length = 0.001 * map()->getScaleDenominator() * preview_path->getPathCoordinateVector()[preview_path->getPart(0).path_coord_end_index].clen;
+		text += QString("<b>%1:</b> %2 <b>|</b> ").arg("Length [m]").arg(length, 0, 'f', 1);
+	}
 	if (draw_dash_points)
 		text += tr("<b>Dash points on.</b> ");
 	
