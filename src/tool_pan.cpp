@@ -24,12 +24,13 @@
 #include "map_widget.h"
 
 PanTool::PanTool(MapEditorController* editor, QAction* tool_button)
- : MapEditorToolBase(QCursor(Qt::SizeAllCursor), Other, editor, tool_button)
+ : MapEditorToolBase(QCursor(Qt::OpenHandCursor), Other, editor, tool_button)
 {
 }
 
 void PanTool::dragStart()
 {
+	cur_map_widget->setCursor(Qt::ClosedHandCursor);
 }
 void PanTool::dragMove()
 {
@@ -40,6 +41,8 @@ void PanTool::dragFinish()
 {
 	MapView* view = editor->getMainWidget()->getMapView();
 	view->completeDragging(cur_pos - click_pos);
+	
+	cur_map_widget->setCursor(Qt::OpenHandCursor);
 }
 
 void PanTool::updateStatusText()
