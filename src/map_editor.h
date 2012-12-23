@@ -106,6 +106,7 @@ public slots:
 	void cut();
 	void copy();
 	void paste();
+	void clearUndoRedoHistory();
 	
 	void showGrid();
 	void configureGrid();
@@ -245,6 +246,7 @@ private:
 	QAction* cut_act;
 	QAction* copy_act;
 	QAction* paste_act;
+	QAction* clear_undo_redo_history_act;
 	
 	QAction* pan_act;
 	QAction* show_grid_act;

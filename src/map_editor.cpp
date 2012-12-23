@@ -424,6 +424,7 @@ void MapEditorController::createMenuAndToolbars()
 	cut_act = newAction("cut", tr("Cu&t"), this, SLOT(cut()), "cut.png");
 	copy_act = newAction("copy", tr("C&opy"), this, SLOT(copy()), "copy.png");
 	paste_act = newAction("paste", tr("&Paste"), this, SLOT(paste()), "paste");
+	clear_undo_redo_history_act = newAction("clearundoredohistory", tr("Clear undo / redo history"), this, SLOT(clearUndoRedoHistory()), NULL, tr("Clear the undo / redo history to reduce map file size."));
 
 	show_grid_act = newCheckAction("showgrid", tr("Show grid"), this, SLOT(showGrid()), "grid.png", QString::null, QString::null);	// TODO: link to manual
 	QAction* configure_grid_act = newAction("configuregrid", tr("Configure grid..."), this, SLOT(configureGrid()), "grid.png", QString::null, QString::null);	// TODO: link to manual
@@ -543,6 +544,8 @@ void MapEditorController::createMenuAndToolbars()
 	edit_menu->addAction(cut_act);
 	edit_menu->addAction(copy_act);
 	edit_menu->addAction(paste_act);
+	edit_menu->addSeparator();
+	edit_menu->addAction(clear_undo_redo_history_act);
 
 	// View menu
 	QMenu* view_menu = window->menuBar()->addMenu(tr("&View"));
@@ -954,6 +957,12 @@ void MapEditorController::paste()
 	// Show message
 	window->statusBar()->showMessage(tr("Pasted %1 object(s)").arg(paste_map->getNumObjects()), 2000);
 	delete paste_map;
+}
+
+void MapEditorController::clearUndoRedoHistory()
+{
+	map->objectUndoManager().clear(false);
+	map->setOtherDirty();
 }
 
 void MapEditorController::showGrid()
@@ -1382,6 +1391,7 @@ void MapEditorController::undoStepAvailabilityChanged()
 	
 	undo_act->setEnabled(map->objectUndoManager().getNumUndoSteps() > 0);
 	redo_act->setEnabled(map->objectUndoManager().getNumRedoSteps() > 0);
+	clear_undo_redo_history_act->setEnabled(undo_act->isEnabled() || redo_act->isEnabled());
 }
 void MapEditorController::clipboardChanged(QClipboard::Mode mode)
 {

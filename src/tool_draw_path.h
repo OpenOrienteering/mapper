@@ -58,6 +58,7 @@ protected slots:
 	virtual void selectedSymbolsChanged();
 	
 protected:
+    virtual void updatePreviewPath();
 	void updateHover();
 	void updateDrawHover();
 	void createPreviewCurve(MapCoord position, float direction);
