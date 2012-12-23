@@ -19,11 +19,14 @@
 
 #include "tool_edit.h"
 
+#include <limits>
+
 #if QT_VERSION < 0x050000
 #include <QtGui>
 #else
 #include <QtWidgets>
 #endif
+#include <qmath.h>
 
 #include "map.h"
 #include "map_editor.h"
@@ -35,6 +38,7 @@
 #include "tool_helpers.h"
 #include "object_text.h"
 #include "symbol_text.h"
+#include "util.h"
 
 
 ObjectSelector::ObjectSelector(Map* map)
@@ -517,9 +521,121 @@ MapCoordF EditTool::closestPointOnRect(MapCoordF point, const QRectF& rect)
 
 void EditTool::setupAngleHelperFromSelectedObjects()
 {
+	const int max_num_primary_directions = 5;
+	const float angle_window = (2 * M_PI) * 2 / 360.0f;
+	// Amount of all path length which has to be covered by an angle
+	// to be classified as "primary angle"
+	const float path_angle_threshold = 1 / 5.0f;
+	
 	angle_helper->clearAngles();
-	// TODO!
-	angle_helper->addDefaultAnglesDeg(0);
+	
+	std::set< float > primary_directions;
+	for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
+	{
+		Object* object = *it;
+		if (object->getType() == Object::Point)
+			primary_directions.insert(fmod_pos(object->asPoint()->getRotation(), M_PI / 2));
+		else if (object->getType() == Object::Text)
+			primary_directions.insert(fmod_pos(object->asText()->getRotation(), M_PI / 2));
+		else if (object->getType() == Object::Path)
+		{
+			PathObject* path = object->asPath();
+			// Maps angles to the path distance covered by them
+			QMap< float, float > path_directions;
+			
+			// Collect segment directions, only looking at the first part
+			PathObject::PathPart& part = path->getPart(0);
+			float path_length = path->getPathCoordinateVector()[part.path_coord_end_index].clen;
+			for (int c = part.start_index; c < part.end_index; ++c)
+			{
+				if (path->getCoordinate(c).isCurveStart())
+					c += 2;
+				else
+				{
+					MapCoordF segment = MapCoordF(path->getCoordinate(c + 1) - path->getCoordinate(c));
+					float angle = fmod_pos(-1 * segment.getAngle(), M_PI / 2);
+					float length = segment.length();
+					
+					QMap< float, float >::iterator angle_it = path_directions.find(angle);
+					if (angle_it != path_directions.end())
+						angle_it.value() += length;
+					else
+						path_directions.insert(angle, length);
+				}
+			}
+			
+			// Determine primary directions by moving a window over the collected angles
+			// and determining maxima.
+			// The iterators are the next angle which crosses the respective window border.
+			float angle_start = -1 * angle_window;
+			QMap< float, float >::const_iterator start_it = path_directions.constBegin();
+			float angle_end = 0;
+			QMap< float, float >::const_iterator end_it = path_directions.constBegin();
+			
+			bool length_increasing = true;
+			float cur_length = 0;
+			while (start_it != path_directions.constEnd())
+			{
+				float start_dist = start_it.key() - angle_start;
+				float end_dist = (end_it == path_directions.constEnd()) ?
+					std::numeric_limits<float>::max() :
+					(end_it.key() - angle_end);
+				if (start_dist > end_dist)
+				{
+					// A new angle enters the window (at the end)
+					cur_length += end_it.value();
+					length_increasing = true;
+					++end_it;
+					
+					angle_start += end_dist;
+					angle_end += end_dist;
+				}
+				else // if (start_dist <= end_dist)
+				{
+					// An angle leaves the window (at the start)
+					// Check if we had a significant maximum.
+					if (length_increasing &&
+						cur_length / path_length >= path_angle_threshold)
+					{
+						// Find the average angle and inset it
+						float angle = 0;
+						float total_weight = 0;
+						for (QMap< float, float >::const_iterator angle_it = start_it; angle_it != end_it; ++angle_it)
+						{
+							angle += angle_it.key() * angle_it.value();
+							total_weight += angle_it.value();
+						}
+						primary_directions.insert(angle / total_weight);
+					}
+					
+					cur_length -= start_it.value();
+					length_increasing = false;
+					++start_it;
+					
+					angle_start += start_dist;
+					angle_end += start_dist;
+				}
+			}
+		}
+		
+		if ((int)primary_directions.size() > max_num_primary_directions)
+			break;
+	}
+	
+	if ((int)primary_directions.size() > max_num_primary_directions ||
+		primary_directions.size() == 0)
+	{
+		angle_helper->addDefaultAnglesDeg(0);
+	}
+	else
+	{
+		// Add base angles
+		angle_helper->addAngles(0, M_PI / 2);
+		
+		// Add object angles
+		for (std::set< float >::const_iterator it = primary_directions.begin(), end = primary_directions.end(); it != end; ++it)
+			angle_helper->addAngles(*it, M_PI / 2);
+	}
 }
 
 void EditTool::drawBoundingBox(QPainter* painter, MapWidget* widget, const QRectF& bounding_box, const QRgb& color)

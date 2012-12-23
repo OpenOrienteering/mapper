@@ -643,11 +643,15 @@ void EditPointTool::startEditingSetup()
 	{
 		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), it_end = map()->selectedObjectsEnd(); it != it_end; ++it)
 			object_mover->addObject(*it);
+		setupAngleHelperFromSelectedObjects();
 	}
 	else
 	{
 		if (hover_object->getType() == Object::Point)
+		{
 			object_mover->addObject(hover_object);
+			setupAngleHelperFromSelectedObjects();
+		}
 		else if (hover_object->getType() == Object::Path)
 			object_mover->addPoint(hover_object->asPath(), hover_point);
 		else if (hover_object->getType() == Object::Text)
@@ -657,14 +661,15 @@ void EditPointTool::startEditingSetup()
 				object_mover->addObject(hover_object);
 			else
 				object_mover->addTextHandle(text, hover_point);
+			setupAngleHelperFromSelectedObjects();
 		}
 	}
 	
-	// Set up angle tool helper
+	// Set up angle tool helper (for path points)
 	angle_helper->setCenter(click_pos_map);
-	if (hover_point == -1)
-		setupAngleHelperFromSelectedObjects();
-	else
+	if (hover_point >= 0 &&
+		hover_object &&
+		hover_object->getType() == Object::Path)
 	{
 		angle_helper->clearAngles();
 		bool forward_ok = false;
