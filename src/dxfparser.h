@@ -36,7 +36,7 @@ struct coordinate_t
 
 enum type_e
 {
-	CIRCLE, LINE, POINT, TEXT, ARC, UNKNOWN
+	CIRCLE, LINE, SPLINE, POINT, TEXT, ARC, UNKNOWN
 };
 
 struct path_t
@@ -92,6 +92,7 @@ private:
 	void parseLine(QIODevice *d, QList<path_t> *p);
 	void parsePolyline(QIODevice *d, QList<path_t> *p);
 	void parseLwPolyline(QIODevice* d, QList<path_t> *p);
+	void parseSpline(QIODevice* d, QList<path_t> *p);
 	void parseCircle(QIODevice *d, QList<path_t> *p);
 	void parsePoint(QIODevice *d, QList<path_t> *p);
 	void parseVertex(QIODevice *d, QList<path_t> *p);

@@ -35,6 +35,7 @@
 TrackPoint::TrackPoint(LatLon coord, QDateTime datetime, float elevation, int num_satellites, float hDOP)
 {
 	gps_coord = coord;
+	is_curve_start = false;
 	this->datetime = datetime;
 	this->elevation = elevation;
 	this->num_satellites = num_satellites;
@@ -361,17 +362,25 @@ bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent
 			waypoints.push_back(point);
 			waypoint_names.push_back(path.layer);
 		}
-		if (path.type == LINE)
+		if (path.type == LINE ||
+			path.type == SPLINE	)
 		{
 			if (path.coords.size() < 1)
 				continue;
 			segment_starts.push_back(segment_points.size());
+			int i = 0;
 			foreach(coordinate_t coord, path.coords)
 			{
 				TrackPoint point = TrackPoint(LatLon(coord.y, coord.x, degrees), QDateTime());
 				if (project_points)
 					point.map_coord = map_georef.toMapCoordF(track_crs, MapCoordF(point.gps_coord.longitude, point.gps_coord.latitude), NULL); // FIXME: check for errors
+				if (path.type == SPLINE &&
+					i % 3 == 0 &&
+					i < path.coords.size() - 3)
+					point.is_curve_start = true;
+					
 				segment_points.push_back(point);
+				++i;
 			}
 		}
 	}
