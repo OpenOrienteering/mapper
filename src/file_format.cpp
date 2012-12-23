@@ -103,7 +103,8 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path) throw (
 	import(load_symbols_only);
 	
 	// Object post processing:
-	// Make sure that all area-only path objects are closed
+	// - make sure that all area-only path objects are closed
+	// - make sure that there are no special points in wrong places (e.g. curve starts inside curves)
 	for (int p = 0; p < map->getNumParts(); ++p)
 	{
 		MapPart* part = map->getPart(p);
@@ -116,6 +117,30 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path) throw (
 				Symbol::Type contained_types = path->getSymbol()->getContainedTypes();
 				if (contained_types & Symbol::Area && !(contained_types & Symbol::Line))
 					path->closeAllParts();
+				
+				for (int i = 0; i < path->getCoordinateCount(); ++i)
+				{
+					if (!path->getCoordinate(i).isCurveStart())
+						continue;
+					
+					if (i >= path->getCoordinateCount() - 3)
+					{
+						path->getCoordinate(i).setCurveStart(false);
+						continue;
+					}
+					if (path->getCoordinate(i + 1).isClosePoint() || path->getCoordinate(i + 1).isHolePoint() ||
+						path->getCoordinate(i + 2).isClosePoint() || path->getCoordinate(i + 2).isHolePoint())
+					{
+						path->getCoordinate(i).setCurveStart(false);
+						continue;
+					}
+					
+					path->getCoordinate(i + 1).setCurveStart(false);
+					path->getCoordinate(i + 1).setDashPoint(false);
+					path->getCoordinate(i + 2).setCurveStart(false);
+					path->getCoordinate(i + 2).setDashPoint(false);
+					i += 2;
+				}
 			}
 		}
 	}

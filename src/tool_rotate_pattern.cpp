@@ -82,7 +82,7 @@ void RotatePatternTool::dragFinish()
 
 void RotatePatternTool::draw(QPainter* painter, MapWidget* widget)
 {
-	MapEditorToolBase::draw(painter, widget);
+	drawSelectionOrPreviewObjects(painter, widget);
 	
 	if (dragging)
 	{

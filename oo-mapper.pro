@@ -83,6 +83,8 @@ HEADERS += src/color_dock_widget.h \
            src/tool_draw_rectangle.h \
            src/tool_draw_text.h \
            src/tool_edit.h \
+           src/tool_edit_point.h \
+           src/tool_edit_line.h \
            src/tool_helpers.h \
            src/tool_measure.h \
            src/tool_pan.h \
@@ -167,6 +169,8 @@ SOURCES += src/color_dock_widget.cpp \
            src/tool_draw_rectangle.cpp \
            src/tool_draw_text.cpp \
            src/tool_edit.cpp \
+           src/tool_edit_point.cpp \
+           src/tool_edit_line.cpp \
            src/tool_helpers.cpp \
            src/tool_measure.cpp \
            src/tool_pan.cpp \

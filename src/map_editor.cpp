@@ -56,7 +56,8 @@
 #include "tool_draw_circle.h"
 #include "tool_draw_rectangle.h"
 #include "tool_draw_text.h"
-#include "tool_edit.h"
+#include "tool_edit_point.h"
+#include "tool_edit_line.h"
 #include "tool_cut.h"
 #include "tool_cut_hole.h"
 #include "tool_rotate.h"
@@ -146,8 +147,8 @@ void MapEditorController::setTool(MapEditorTool* new_tool)
 }
 void MapEditorController::setEditTool()
 {
-	if (!current_tool || !current_tool->getType() == MapEditorTool::Edit)
-		setTool(new EditTool(this, edit_tool_act, symbol_widget));
+	if (!current_tool || current_tool->getType() != MapEditorTool::EditPoint)
+		setTool(new EditPointTool(this, edit_tool_act, symbol_widget));
 }
 void MapEditorController::setOverrideTool(MapEditorTool* new_override_tool)
 {
@@ -176,7 +177,7 @@ void MapEditorController::setOverrideTool(MapEditorTool* new_override_tool)
 MapEditorTool* MapEditorController::getDefaultDrawToolForSymbol(Symbol* symbol)
 {
 	if (!symbol)
-		return new EditTool(this, edit_tool_act, symbol_widget);
+		return new EditPointTool(this, edit_tool_act, symbol_widget);
 	else if (symbol->getType() == Symbol::Point)
 		return new DrawPointTool(this, draw_point_act, symbol_widget);
 	else if (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined)
@@ -456,6 +457,7 @@ void MapEditorController::createMenuAndToolbars()
 	reopen_template_act = newAction("reopentemplate", tr("Reopen template..."), this, SLOT(reopenTemplateClicked()), NULL, QString::null, "template_menu.html");
 	
 	edit_tool_act = newToolAction("editobjects", tr("Edit objects"), this, SLOT(editToolClicked()), "tool-edit.png", QString::null, "drawing_toolbar.html#selector");
+	edit_line_tool_act = newToolAction("editlines", tr("Edit lines"), this, SLOT(editLineToolClicked()), "tool-edit-line.png", QString::null, "drawing_toolbar.html#selector"); // TODO: adjust help reference
 	draw_point_act = newToolAction("drawpoint", tr("Set point objects"), this, SLOT(drawPointClicked()), "draw-point.png", QString::null, "drawing_toolbar.html#point");
 	draw_path_act = newToolAction("drawpath", tr("Draw paths"), this, SLOT(drawPathClicked()), "draw-path.png", QString::null, "drawing_toolbar.html#line");
 	draw_circle_act = newToolAction("drawcircle", tr("Draw circles and ellipses"), this, SLOT(drawCircleClicked()), "draw-circle.png", QString::null, "drawing_toolbar.html#circle");
@@ -568,6 +570,7 @@ void MapEditorController::createMenuAndToolbars()
 	QMenu *tools_menu = window->menuBar()->addMenu(tr("&Tools"));
 	tools_menu->setWhatsThis("<a href=\"tools_menu.html\">See more</a>");
 	tools_menu->addAction(edit_tool_act);
+	tools_menu->addAction(edit_line_tool_act);
 	tools_menu->addAction(draw_point_act);
 	tools_menu->addAction(draw_path_act);
 	tools_menu->addAction(draw_circle_act);
@@ -664,6 +667,7 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_drawing = window->addToolBar(tr("Drawing"));
 	toolbar_drawing->setObjectName("Drawing toolbar");
 	toolbar_drawing->addAction(edit_tool_act);
+	toolbar_drawing->addAction(edit_line_tool_act);
 	toolbar_drawing->addAction(draw_point_act);
 	toolbar_drawing->addAction(draw_path_act);
 	toolbar_drawing->addAction(draw_circle_act);
@@ -1399,6 +1403,11 @@ void MapEditorController::showWholeMap()
 void MapEditorController::editToolClicked()
 {
 	setEditTool();
+}
+void MapEditorController::editLineToolClicked()
+{
+	if (!current_tool || current_tool->getType() != MapEditorTool::EditLine)
+		setTool(new EditLineTool(this, edit_line_tool_act, symbol_widget));
 }
 void MapEditorController::drawPointClicked()
 {

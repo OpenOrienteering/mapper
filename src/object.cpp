@@ -812,6 +812,19 @@ int PathObject::findPartIndexForIndex(int coords_index)
 	assert(false);
 	return 0;
 }
+
+bool PathObject::isCurveHandle(int coord_index)
+{
+	PathPart& part = findPartForIndex(coord_index);
+	int index_minus_2 = shiftedCoordIndex(coord_index, -2, part);
+	if (getCoordinate(index_minus_2).isCurveStart())
+		return true;
+	int index_minus_1 = shiftedCoordIndex(coord_index, -1, part);
+	if (getCoordinate(index_minus_1).isCurveStart())
+		return true;
+	return false;
+}
+
 void PathObject::deletePart(int part_index)
 {
 	coords.erase(coords.begin() + parts[part_index].start_index, coords.begin() + (parts[part_index].end_index + 1));
