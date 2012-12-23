@@ -31,30 +31,24 @@ SOURCE_DIR=$(pwd)
 # [2] Go to build directory
 cd "@BINARY_DIR@"
 
-# [3] Establish cross-compilation configuration
-PLATFORM="@QT_PLATFORM@"
-if [ -n "$PLATFORM" ]
-then
-	PLATFORM_ARG="-xplatform $PLATFORM"
-	MKSPECS_DIR="@SOURCE_DIR@/mkspecs/$PLATFORM"
-	if [ ! -d "$MKSPECS_DIR" -o -f "$MKSPECS_DIR/GENERATED" ]
-	then
-		mkdir -p "$MKSPECS_DIR"
-		for I in qmake.conf qplatformdefs.h
-		do
-			cp "@CMAKE_CURRENT_BINARY_DIR@/$I.tmp" "$MKSPECS_DIR/$I"
-		done
-		touch "$MKSPECS_DIR/GENERATED"
-	fi
+# [3] Cleanup existing configuration, ignoring errors
+if [ -f qtbase/Makefile ]
+then 
+	make -i -C qtbase confclean
 fi
 
+# [4] Configure
 "$SOURCE_DIR/configure" \
   -opensource \
   -confirm-license \
-  $PLATFORM_ARG \
+  @QT5_PLATFORM@ \
+  -prefix "@QT5_DIR@" \
+  -hostprefix "@QT5_HOST_DIR@" \
   -release \
   -shared \
-  -prefix "@INSTALL_DIR@" \
+  -no-rpath \
+  -gui \
+  -widgets \
   -qt-sql-sqlite \
   -no-sql-db2 \
   -no-sql-ibase \
@@ -69,46 +63,14 @@ fi
   -qt-libjpeg \
   -no-openssl \
   -qt-pcre \
-  -gui \
-  -widgets \
-  -no-dbus \
   -no-directfb \
   -no-linuxfb \
   -make libs \
   -make tools \
   -nomake examples \
   -nomake tests \
-
-
-exit
-
-echo <<IGNORED_FROM_QT4
-  -no-rpath \
-  -fast \
-  -prefix-install \
-  -script \
-  -no-iconv \
-  -no-exceptions \
-  -opengl desktop \
-  -webkit \
   -no-glib \
   -no-gstreamer \
-  -no-phonon \
-  -no-phonon-backend \
-  -accessibility \
-  -no-reduce-exports \
-  -no-rpath \
-  -make translations \
-  -nomake demos \
-  -nomake docs \
-  -no-qt3support \
-  -no-xmlpatterns \
-  -no-multimedia \
   -no-audio-backend \
-  -no-script \
-  -no-scripttools \
-  -no-declarative \
-  -qt-libtiff \
-  -qt-libmng \
-  -v
-IGNORED
+  -no-dbus \
+  -no-feature-dbus

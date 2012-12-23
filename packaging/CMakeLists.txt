@@ -16,8 +16,9 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
-if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
+message(STATUS "Configuring ${PROJECT_NAME} packaging")
 
+if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	# cf. http://www.cmake.org/cmake/help/cmake-2-8-docs.html#module:CPack
 	# cf. http://www.cmake.org/Wiki/CMake:CPackPackageGenerators
 	set(CPACK_PACKAGE_NAME "OpenOrienteering Mapper")
@@ -162,30 +163,29 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	mark_as_advanced(CPACK_GENERATOR CPACK_SOURCE_GENERATOR)
 
 	include(CPack)
-	
+else()
+	message(STATUS "CPack not found, target 'package' will not be available")
 endif(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 
 
 if(Mapper_PACKAGE_ASSISTANT)
-	message(STATUS "Checking for Qt Assistant")
-	find_program(QT_QTASSISTANT_EXECUTABLE assistant${CMAKE_EXECUTABLE_SUFFIX}
-	  DOC "The path of the Qt Assistant executable"
-	  HINTS ${QT_BINARY_DIR}
-	  NO_CMAKE_FIND_ROOT_PATH
-	  NO_DEFAULT_PATH)
 	if(NOT QT_QTASSISTANT_EXECUTABLE)
-		message(FATAL "Checking for Qt Assistant - not found")
+		message(FATAL_ERROR "QT_QTASSISTANT_EXECUTABLE: not found, "
+		  "but required by option Mapper_PACKAGE_ASSISTANT="
+		  ${Mapper_PACKAGE_ASSISTANT})
 	endif()
-	message(STATUS "Checking for Qt Assistant - found: ${QT_QTASSISTANT_EXECUTABLE}")
+	message(STATUS "Qt Assistant - found")
 	install(
 	  PROGRAMS ${QT_QTASSISTANT_EXECUTABLE}
 	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}${MAPPER_MACOS_SUBDIR}")
 	if(WIN32)
+		if(Mapper_USE_QT5)
+			message(AUTHOR_WARNING "qt.conf: TODO for Qt5")
+		endif()
 		install(
 		  FILES "${PROJECT_SOURCE_DIR}/3rd-party/qt4/qt.conf"
 		  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
 	endif()
-	mark_as_advanced(QT_QTASSISTANT_EXECUTABLE)
 endif(Mapper_PACKAGE_ASSISTANT)
 
 
@@ -208,17 +208,45 @@ if(Mapper_PACKAGE_LIBRARIES)
 		set(QT_LIB_SUFFIX 4)
 	endif(WIN32)
 
-	set(MAPPER_LIBS proj${PROJ_LIB_SUFFIX} QtCore${QT_LIB_SUFFIX} QtGui${QT_LIB_SUFFIX} QtNetwork${QT_LIB_SUFFIX} QtXml${QT_LIB_SUFFIX}
+	set(MAPPER_LIBS proj${PROJ_LIB_SUFFIX}
 	  CACHE INTERNAL "The dynamic libraries which need to be deployed")
-	set(MAPPER_PLUGINS_IMAGEFORMATS qgif${QT_LIB_SUFFIX} qjpeg${QT_LIB_SUFFIX} qmng${QT_LIB_SUFFIX} qsvg${QT_LIB_SUFFIX} qtga${QT_LIB_SUFFIX} qtiff${QT_LIB_SUFFIX}
-	  CACHE INTERNAL "The image format plugins which need to be deployed")
-	set(MAPPER_PLUGINS_SQLDRIVERS ""
-	  CACHE INTERNAL "The sql driver plugins which need to be deployed")
-
-	if(Mapper_PACKAGE_ASSISTANT)
-		list(APPEND MAPPER_LIBS QtHelp${QT_LIB_SUFFIX} QtCLucene${QT_LIB_SUFFIX} QtSql${QT_LIB_SUFFIX} QtWebKit${QT_LIB_SUFFIX})
-		list(APPEND MAPPER_PLUGINS_SQLDRIVERS qsqlite${QT_LIB_SUFFIX})
-	endif(Mapper_PACKAGE_ASSISTANT)
+	if(NOT Mapper_USE_QT5)
+		list(APPEND MAPPER_LIBS
+		  QtCore${QT_LIB_SUFFIX} QtGui${QT_LIB_SUFFIX}
+		  QtNetwork${QT_LIB_SUFFIX} QtXml${QT_LIB_SUFFIX}
+		)
+		set(MAPPER_QT_PLUGINS
+		  imageformats/qgif${QT_LIB_SUFFIX} imageformats/jpeg${QT_LIB_SUFFIX}
+		  imageformats/qmng${QT_LIB_SUFFIX} imageformats/qsvg${QT_LIB_SUFFIX}
+		  imageformats/qtga${QT_LIB_SUFFIX} imageformats/qtiff${QT_LIB_SUFFIX}
+		  CACHE INTERNAL "The plugins which need to be deployed"
+		)
+		if(Mapper_PACKAGE_ASSISTANT)
+			list(APPEND MAPPER_LIBS 
+			  QtHelp${QT_LIB_SUFFIX} QtCLucene${QT_LIB_SUFFIX}
+			  QtSql${QT_LIB_SUFFIX} QtWebKit${QT_LIB_SUFFIX}
+			)
+			list(APPEND MAPPER_QT_PLUGINS
+			  sqldrivers/qsqlite${QT_LIB_SUFFIX}
+			)
+		endif()
+	else()
+		list(APPEND MAPPER_LIBS 
+		  Qt5Core Qt5Gui Qt5Widgets Qt5Svg
+		  Qt5PrintSupport Qt5Network Qt5Xml)
+		set(MAPPER_QT_PLUGINS
+		  imageformats/qgif imageformats/qico imageformats/qjpeg imageformats/qmng
+		  imageformats/qsvg imageformats/qtga imageformats/qtiff imageformats/qwbmp
+		  platforms/qminimal platforms/qwindows
+		  printsupport/windowsprintersupport
+		  CACHE INTERNAL "The plugins which need to be deployed"
+		)
+		if(Mapper_PACKAGE_ASSISTANT)
+			list(APPEND MAPPER_LIBS 
+			  Qt5Help Qt5CLucene Qt5Sql
+			)
+		endif()
+	endif()
 
 	if(TOOLCHAIN_SHARED_LIBS)
 		list(APPEND MAPPER_LIBS ${TOOLCHAIN_SHARED_LIBS})
@@ -229,74 +257,51 @@ endif()
 
 if(Mapper_PACKAGE_LIBRARIES)
 	foreach(_mapper_lib ${MAPPER_LIBS})
-		unset(_mapper_lib_path CACHE)
-		find_library(_mapper_lib_path ${_mapper_lib}
+		set(_mapper_lib_id "QT_${_mapper_lib}_LIB")
+		find_library(${_mapper_lib_id} ${_mapper_lib}
 		  HINTS ${PROJ_BINARY_DIR} ${QT_BINARY_DIR}
-		  PATH_SUFFIXES ${TOOLCHAIN_PATH_SUFFIXES}
+		  PATH_SUFFIXES "../bin" ${TOOLCHAIN_PATH_SUFFIXES}
 		  NO_CMAKE_FIND_ROOT_PATH)
-		get_filename_component(_mapper_lib_ext "${_mapper_lib_path}" EXT)
+		get_filename_component(_mapper_lib_ext "${${_mapper_lib_id}}" EXT)
 		if(_mapper_lib_ext STREQUAL ".dll")
 			message("   ${_mapper_lib} DLL - found")
-			list(APPEND CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS "${_mapper_lib_path}")
+			list(APPEND CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS "${${_mapper_lib_id}}")
 		else()
 			message("   ${_mapper_lib} DLL - not found")
 		endif()
 	endforeach(_mapper_lib)
-	unset(_mapper_lib_path CACHE)
 	install(
 	  FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} 
 	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
 	
-	unset(_bundle_plugins)
-
-	unset(MAPPER_QT_IMAGEFORMATS CACHE)
-	foreach(_qt_imageformat ${MAPPER_PLUGINS_IMAGEFORMATS})
-		unset(_qt_imageformat_path CACHE)
-		find_library(_qt_imageformat_path ${_qt_imageformat}
-		  HINTS ${QT_PLUGINS_DIR} NO_CMAKE_FIND_ROOT_PATH
-		  PATH_SUFFIXES imageformats)
-		if(_qt_imageformat_path)
-			message("   ${_qt_imageformat} DLL (plugin) - found")
-			list(APPEND MAPPER_QT_IMAGEFORMATS "${_qt_imageformat_path}")
-			list(APPEND _bundle_plugins "${_qt_imageformat_path}")
+	unset(MAPPER_QT_PLUGINS_FOUND)
+	foreach(_qt_plugin ${MAPPER_QT_PLUGINS})
+		get_filename_component(_qt_plugin_name "${_qt_plugin}" NAME)
+		get_filename_component(_qt_plugin_dir "${_qt_plugin}" PATH)
+		set(_qt_plugin_id "QT_${_qt_plugin_dir}-${_qt_plugin_name}_PLUGIN")
+		find_library(${_qt_plugin_id} ${_qt_plugin_name}
+		  HINTS ${QT_PLUGINS_DIR}
+		  PATH_SUFFIXES ${_qt_plugin_dir} plugins/${_qt_plugin_dir}
+		  NO_CMAKE_FIND_ROOT_PATH)
+		if(NOT ${${_qt_plugin_id}} MATCHES NOTFOUND)
+			message("   ${_qt_plugin} DLL (plugin) - found")
+			list(APPEND MAPPER_QT_PLUGINS_FOUND "${${_qt_plugin_id}}")
+			if(WIN32)
+				install(
+				  FILES "${${_qt_plugin_id}}" 
+				  DESTINATION "${MAPPER_RUNTIME_DESTINATION}/plugins/${_qt_plugin_dir}")
+			endif(WIN32)
 		else()
-			message("   ${_qt_imageformat} DLL (plugin) - not found")
-		endif(_qt_imageformat_path)
-	endforeach(_qt_imageformat)
-	unset(_qt_imageformat_path CACHE)
-if(WIN32)
-	install(
-	  FILES ${MAPPER_QT_IMAGEFORMATS} 
-	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}/plugins/imageformats")
-endif(WIN32)
-
-	unset(MAPPER_QT_SQLDRIVERS CACHE)
-	foreach(_qt_sqldriver ${MAPPER_PLUGINS_SQLDRIVERS})
-		unset(_qt_sqldriver_path CACHE)
-		find_library(_qt_sqldriver_path ${_qt_sqldriver}
-		  HINTS ${QT_PLUGINS_DIR} NO_CMAKE_FIND_ROOT_PATH
-		  PATH_SUFFIXES sqldrivers)
-		if(_qt_sqldriver_path)
-			message("   ${_qt_sqldriver} DLL (plugin) - found")
-			list(APPEND MAPPER_QT_SQLDRIVERS "${_qt_sqldriver_path}")
-			list(APPEND _bundle_plugins "${_qt_sqldriver_path}")
-		else()
-			message("   ${_qt_sqldriver} DLL (plugin) - not found")
-		endif(_qt_sqldriver_path)
-	endforeach(_qt_sqldriver)
-	unset(_qt_sqldriver_path CACHE)
-if(WIN32)
-	install(
-	  FILES ${MAPPER_QT_SQLDRIVERS} 
-	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}/plugins/sqldrivers")
-endif(WIN32)
+			message("   ${_qt_plugin} DLL (plugin) - not found")
+		endif()
+	endforeach(_qt_plugin)
 endif()
 
 if(Mapper_PACKAGE_LIBRARIES AND APPLE)
 	# use updated DeployQt4.cmake from CMake git repository
 	include(${PROJECT_SOURCE_DIR}/cmake/DeployQt4.cmake)
 	install_qt4_executable(Mapper.app 
-	  "${MAPPER_PLUGINS_IMAGEFORMATS};${MAPPER_PLUGINS_SQLDRIVERS}"
+	  "${MAPPER_QT_PLUGINS_FOUND}"
 	  "Mapper.app/Contents/MacOS/assistant")
 endif()
 
@@ -362,3 +367,5 @@ if(GIT_EXECUTABLE)
 	  COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/Mapper_Source.cmake"
 	)
 endif()
+
+message(STATUS "Configuring ${PROJECT_NAME} packaging - done")

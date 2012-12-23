@@ -1,6 +1,10 @@
 # This toolchain file is known to work with:
 # Ubuntu 12.04 (Precise)
 
+# Release build options
+set(Mapper_BUILD_QT   TRUE CACHE BOOL "Toolchain default")
+set(Mapper_BUILD_PROJ TRUE CACHE BOOL "Toolchain default")
+
 # The name of the target operating system
 set(CMAKE_SYSTEM_NAME Windows)
 
@@ -16,6 +20,9 @@ set(QT_PLATFORM "unsupported/win32-g++-${GCC_VERSION}-${GNU_SYSTEM_NAME}-cross")
 # The name of a target system known to Qt from which to inherit settings
 # when QT_PLATFORM is unknown to Qt
 set(QT_PARENT_PLATFORM "unsupported/win32-g++-${GCC_VERSION}-cross")
+
+# The name of the target system name as Qt5 platform
+set(QT5_PLATFORM "-xplatform win32-g++ -device-option CROSS_COMPILE=${GNU_SYSTEM_NAME}-")
 
 # Find the tools
 find_program(CMAKE_C_COMPILER NAMES ${GNU_SYSTEM_NAME}-gcc)

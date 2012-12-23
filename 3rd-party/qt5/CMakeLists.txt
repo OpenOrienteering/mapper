@@ -19,8 +19,10 @@
 
 project(Qt5)
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.3)
  
+include(ExternalProject)
+
 # Configuration options
 
 if(NOT QT5_VERSION)
@@ -56,18 +58,16 @@ mark_as_advanced(SH_PROGRAM)
 
 # Build definition
 
-if(CMAKE_VERSION VERSION_GREATER 2.8.1)
-	set(_ep_qt5_options URL_MD5 ${QT5_MD5})
-else()
-	set(_ep_qt5_options)
-endif()
+# Don't touch the configured qt5-config unless the content really changes.
+add_custom_command(OUTPUT qt5-config
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different qt5-config.new qt5-config
+  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qt5-config.new
+)
 
-include(ExternalProject)
-ExternalProject_Add(
-  Qt5
+ExternalProject_Add(Qt5
   DOWNLOAD_DIR ${PROJECT_SOURCE_DIR}/download
   URL "http://releases.qt-project.org/qt5/${QT5_VERSION}/single/qt-everywhere-opensource-src-${QT5_VERSION}.tar.gz"
-  ${_ep_qt5_options}
+  URL_MD5 ${QT5_MD5}
   CONFIGURE_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/qt5-config
   BUILD_COMMAND ${QT5_MAKE_COMMAND}
   INSTALL_COMMAND ${QT5_MAKE_COMMAND} install
@@ -76,17 +76,25 @@ ExternalProject_Get_Property(Qt5 SOURCE_DIR)
 ExternalProject_Get_Property(Qt5 BINARY_DIR)
 ExternalProject_Get_Property(Qt5 INSTALL_DIR)
 
-configure_file(qt5-config.in ${CMAKE_CURRENT_BINARY_DIR}/qt5-config)
-configure_file(qt5-make.in ${CMAKE_CURRENT_BINARY_DIR}/qt5-make)
+# Trigger configure when qt5-config has changed.
+ExternalProject_Add_Step(Qt5 configure-dependencies
+  COMMAND ${CMAKE_COMMAND} -E echo_append "" # Do nothing
+  DEPENDEES update patch
+  DEPENDERS configure
+  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qt5-config
+)
 
 # Exported configuration
 
-# qmake will be created early in the Qt the build.
-# QT_QMAKE_EXECUTABLE will be used by find_package(Qt5 ...).
-
-unset(QT5_DIR CACHE)
-if(EXISTS "${INSTALL_DIR}")
-	set(QT5_DIR "${INSTALL_DIR}" CACHE FILE "The Qt5 install directory.")
+if (CMAKE_CROSSCOMPILING)
+	set(QT5_DIR "${INSTALL_DIR}/${GNU_SYSTEM_NAME}" CACHE INTERNAL "The Qt5 target platform directory." FORCE)
+else()
+	set(QT5_DIR "${INSTALL_DIR}" CACHE INTERNAL "The Qt5 target platform directory." FORCE)
 endif()
-mark_as_advanced(QT5_DIR)
+set(QT5_HOST_DIR "${INSTALL_DIR}" CACHE INTERNAL "The Qt5 host platform directory." FORCE)
+set(QT_TRANSLATIONS_DIR "${QT5_DIR}/translations" CACHE INTERNAL "The Qt5 translation directory." FORCE)
 
+# Build script configuration
+
+configure_file(qt5-config.in qt5-config.new @ONLY)
+configure_file(qt5-make.in qt5-make @ONLY)
