@@ -35,6 +35,7 @@
 #include "symbol_dock_widget.h"
 #include "settings.h"
 #include "tool_helpers.h"
+#include "symbol_line.h"
 
 QCursor* DrawPathTool::cursor = NULL;
 
@@ -57,7 +58,7 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, Sy
 	following = false;
 	picking_angle = false;
 	picked_angle = false;
-	space_pressed = false;
+	draw_dash_points = false;
 	shift_pressed = false;
 	ctrl_pressed = false;
 	
@@ -69,6 +70,7 @@ DrawPathTool::~DrawPathTool()
 }
 void DrawPathTool::init()
 {
+	updateDashPointDrawing();
 	updateStatusText();
 }
 
@@ -76,9 +78,21 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 {
 	cur_map_widget = widget;
 	
-	if (((event->button() == Qt::RightButton) && draw_in_progress) && !Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool())
+	if (draw_in_progress &&
+		((event->button() == Qt::RightButton) &&
+		!Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool()))
 	{
 		finishDrawing();
+		return true;
+	}
+	else if (draw_in_progress &&
+		((event->button() == Qt::RightButton && event->buttons() & Qt::LeftButton) ||
+		 (event->button() == Qt::LeftButton && event->buttons() & Qt::RightButton)))
+	{
+		if (!previous_point_is_curve_point)
+			undoLastPoint();
+		if (draw_in_progress)
+			finishDrawing();
 		return true;
 	}
 	else if ((event->button() == Qt::LeftButton) || (draw_in_progress && drawMouseButtonClicked(event)))
@@ -157,7 +171,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 
 		// Set path point
 		MapCoord coord = click_pos_map.toMapCoord();
-		if (space_pressed)
+		if (draw_dash_points)
 			coord.setDashPoint(true);
 		
 		if (preview_path->getCoordinateCount() > 0 && picked_angle)
@@ -219,7 +233,8 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 			return true;
 		}
 		
-		if (dragging && (event->pos() - click_pos).manhattanLength() < QApplication::startDragDistance())
+		bool drag_distance_reached = (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance();
+		if (dragging && !drag_distance_reached)
 		{
 			if (create_spline_corner)
 			{
@@ -251,38 +266,38 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 				updatePreviewPath();
 				updateDirtyRect();
 			}
-			
-			return true;
 		}
-		
-		// Giving a direction by dragging
-		dragging = true;
-		create_spline_corner = false;
-		create_segment = true;
-		
-		if (previous_point_is_curve_point)
-			angle_helper->setCenter(click_pos_map);
-		
-		QPointF constrained_pos;
-		angle_helper->getConstrainedCursorPositions(map_coord, constrained_pos_map, constrained_pos, widget);
-		
-		if (previous_point_is_curve_point)
+		else if (drag_distance_reached)
 		{
-			hidePreviewPoints();
-			float drag_direction = calculateRotation(constrained_pos.toPoint(), constrained_pos_map);
+			// Giving a direction by dragging
+			dragging = true;
+			create_spline_corner = false;
+			create_segment = true;
 			
-			// Add a new node or convert the last node into a corner?
-			if ((widget->mapToViewport(previous_pos_map) - click_pos).manhattanLength() >= QApplication::startDragDistance())
-				createPreviewCurve(click_pos_map.toMapCoord(), drag_direction);
-			else
+			if (previous_point_is_curve_point)
+				angle_helper->setCenter(click_pos_map);
+			
+			QPointF constrained_pos;
+			angle_helper->getConstrainedCursorPositions(map_coord, constrained_pos_map, constrained_pos, widget);
+			
+			if (previous_point_is_curve_point)
 			{
-				create_spline_corner = true;
-				// This hides the old direction indicator
-				previous_drag_map = previous_pos_map;
+				hidePreviewPoints();
+				float drag_direction = calculateRotation(constrained_pos.toPoint(), constrained_pos_map);
+				
+				// Add a new node or convert the last node into a corner?
+				if ((widget->mapToViewport(previous_pos_map) - click_pos).manhattanLength() >= QApplication::startDragDistance())
+					createPreviewCurve(click_pos_map.toMapCoord(), drag_direction);
+				else
+				{
+					create_spline_corner = true;
+					// This hides the old direction indicator
+					previous_drag_map = previous_pos_map;
+				}
 			}
+			
+			updateDirtyRect();
 		}
-		
-		updateDirtyRect();
 	}
 	
 	return true;
@@ -324,7 +339,7 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 		}
 		else
 			coord = map_coord.toMapCoord();
-		if (space_pressed)
+		if (draw_dash_points)
 			coord.setDashPoint(true);
 		preview_path->addCoordinate(coord);
 		updatePreviewPath();
@@ -384,7 +399,7 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 		editor->setEditTool();
 	else if (event->key() == Qt::Key_Space)
 	{
-		space_pressed = !space_pressed;
+		draw_dash_points = !draw_dash_points;
 		updateStatusText();
 	}
 	else if (event->key() == Qt::Key_Control)
@@ -532,7 +547,7 @@ void DrawPathTool::createPreviewCurve(MapCoord position, float direction)
 		
 		preview_path->addCoordinate(MapCoord(0, 0));
 		preview_path->addCoordinate(MapCoord(0, 0));
-		if (space_pressed)
+		if (draw_dash_points)
 			position.setDashPoint(true);
 		preview_path->addCoordinate(position);
 		
@@ -544,7 +559,7 @@ void DrawPathTool::createPreviewCurve(MapCoord position, float direction)
 	MapCoord previous_point = preview_path->getCoordinate(last - 3);
 	MapCoord last_point = preview_path->getCoordinate(last);
 	
-	double bezier_handle_distance = 0.4 * previous_point.lengthTo(last_point);
+	double bezier_handle_distance = BEZIER_HANDLE_DISTANCE * previous_point.lengthTo(last_point);
 	
 	preview_path->setCoordinate(last - 2, MapCoord(previous_point.xd() - bezier_handle_distance * sin(previous_point_direction),
 												   previous_point.yd() - bezier_handle_distance * cos(previous_point_direction)));
@@ -706,6 +721,15 @@ void DrawPathTool::updateDirtyRect()
 	}
 }
 
+void DrawPathTool::selectedSymbolsChanged()
+{
+	if (is_helper_tool)
+		return;
+	DrawLineAndAreaTool::selectedSymbolsChanged();
+	
+	updateDashPointDrawing();
+}
+
 void DrawPathTool::updateAngleHelper()
 {
 	if (picked_angle)
@@ -854,13 +878,27 @@ float DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map)
 		return 0;
 }
 
+void DrawPathTool::updateDashPointDrawing()
+{
+	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
+	if (symbol->getType() == Symbol::Line)
+	{
+		// Auto-activate dash points depending on if the selected symbol has a dash symbol.
+		// TODO: instead of just looking if it is a line symbol with dash points,
+		// could also check for combined symbols containing lines with dash points
+		draw_dash_points = (symbol->asLine()->getDashSymbol() != NULL);
+		
+		updateStatusText();
+	}
+}
+
 void DrawPathTool::updateStatusText()
 {
 	if (is_helper_tool)
 		return;
 	
 	QString text = "";
-	if (space_pressed)
+	if (draw_dash_points)
 		text += tr("<b>Dash points on.</b> ");
 	
 	if (!draw_in_progress)

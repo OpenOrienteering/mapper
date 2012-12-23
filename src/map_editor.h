@@ -149,6 +149,7 @@ public slots:
 	void showWholeMap();
 	
 	void editToolClicked();
+	void editLineToolClicked();
 	void drawPointClicked();
 	void drawPathClicked();
 	void drawCircleClicked();
@@ -269,6 +270,7 @@ private:
 	QAction* reopen_template_act;
 	
 	QAction* edit_tool_act;
+	QAction* edit_line_tool_act;
 	QAction* draw_point_act;
 	QAction* draw_path_act;
 	QAction* draw_circle_act;

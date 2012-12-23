@@ -812,6 +812,19 @@ int PathObject::findPartIndexForIndex(int coords_index)
 	assert(false);
 	return 0;
 }
+
+bool PathObject::isCurveHandle(int coord_index)
+{
+	PathPart& part = findPartForIndex(coord_index);
+	int index_minus_2 = shiftedCoordIndex(coord_index, -2, part);
+	if (getCoordinate(index_minus_2).isCurveStart())
+		return true;
+	int index_minus_1 = shiftedCoordIndex(coord_index, -1, part);
+	if (getCoordinate(index_minus_1).isCurveStart())
+		return true;
+	return false;
+}
+
 void PathObject::deletePart(int part_index)
 {
 	coords.erase(coords.begin() + parts[part_index].start_index, coords.begin() + (parts[part_index].end_index + 1));
@@ -2236,7 +2249,7 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords, int delete_
 				}
 				else if (delete_bezier_point_action == Settings::DeleteBezierPoint_ResetHandles)
 				{
-					double target_length = 0.4 * p0.lengthTo(q3);
+					double target_length = BEZIER_HANDLE_DISTANCE * p0.lengthTo(q3);
 					pfactor = target_length / qMax(p0.lengthTo(p1), 0.01);
 					qfactor = target_length / qMax(q3.lengthTo(q2), 0.01);
 				}

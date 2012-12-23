@@ -204,6 +204,9 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 		rectInclude(extent, QPointF(used_path_coords->at(i).pos.getX() - half_line_width * right.getX(), used_path_coords->at(i).pos.getY() - half_line_width * right.getY()));
 	}
 	
+	// Reset line width to correct value (for helper lines)
+	line_width = 0.001f * symbol->getLineWidth();
+	
 	assert(extent.right() < 999999);	// assert if bogus values are returned
 }
 void LineRenderable::extentIncludeCap(int i, float half_line_width, bool end_cap, LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed)

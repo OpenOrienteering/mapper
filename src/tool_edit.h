@@ -1,141 +1,192 @@
 /*
  *    Copyright 2012 Thomas Schöps
- *    
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #ifndef _OPENORIENTEERING_EDIT_TOOL_H_
 #define _OPENORIENTEERING_EDIT_TOOL_H_
 
-#include <QScopedPointer>
-
 #include "tool.h"
-#include "tool_helpers.h"
 
-class MapWidget;
-class CombinedSymbol;
-class PointObject;
+#include <QSet>
+
+class TextObject;
 class PathObject;
-class Symbol;
-class TextObjectEditorHelper;
-class Renderable;
-class MapRenderables;
 class SymbolWidget;
-typedef std::vector<Renderable*> RenderableVector;
 typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
 
 
-/// The standard tool to edit all types of objects
-class EditTool : public MapEditorTool
+/**
+ * Implements the object selection logic for edit tools.
+ */
+class ObjectSelector
 {
-Q_OBJECT
 public:
-	EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
-	virtual ~EditTool();
+	/** Creates a selector for the given map. */
+	ObjectSelector(Map* map);
 	
-    virtual void init();
-    virtual QCursor* getCursor() {return cursor;}
-    
-    virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-    virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	/**
+	 * Selects an object at the given position.
+	 * If there is already an object selected at this position, switches through
+	 * the available objects.
+	 * @param tolerance maximum, normal selection distance in map units.
+	 *    It is enlarged by 1.5 if no objects are found with the normal distance.
+	 * @param toggle corresponds to the shift key modifier.
+	 * @return true if the selection has changed.
+	 */
+	bool selectAt(MapCoordF position, double tolerance, bool toggle);
 	
-    virtual bool keyPressEvent(QKeyEvent* event);
-    virtual bool keyReleaseEvent(QKeyEvent* event);
-    virtual void focusOutEvent(QFocusEvent* event);
+	/**
+	 * Applies box selection.
+	 * @param toggle corresponds to the shift key modifier.
+	 * @return true if the selection has changed.
+	 */
+	bool selectBox(MapCoordF corner1, MapCoordF corner2, bool toggle);
 	
-    virtual void draw(QPainter* painter, MapWidget* widget);
-	
-	inline bool hoveringOverFrame() const {return hover_point == -1;}
-	
-	static QCursor* cursor;
-	
-	static const Qt::KeyboardModifiers selection_modifier;
-	static const Qt::KeyboardModifiers control_point_modifier;
-	static const Qt::Key selection_key;
-	static const Qt::Key control_point_key;
-	
-public slots:
-	void objectSelectionChanged();
-	void selectedSymbolsChanged();
-	void textSelectionChanged(bool text_change);
-	
-protected slots:
-	void updatePreviewObjects(bool force = false);
-	void updateDirtyRect();
-	
-protected:
-	void updateStatusText();
-	void updateHoverPoint(QPointF point, MapWidget* widget);
-	void updateDragging(const MapCoordF& cursor_pos_map);
-	bool hoveringOverSingleText(MapCoordF cursor_pos_map);
-	
-	void startEditing();
-	void finishEditing();
-	void updateAngleHelper(const MapCoordF& cursor_pos);
-	void deleteSelectedObjects();
-	
+private:
 	static bool sortObjects(const std::pair<int, Object*>& a, const std::pair<int, Object*>& b);
 	bool selectionInfosEqual(const SelectionInfoVector& a, const SelectionInfoVector& b);
-	
-	// Mouse handling
-	QPoint click_pos;
-	MapCoordF click_pos_map;
-	QPoint cur_pos;
-	MapCoordF cur_pos_map;
-	bool dragging;
-	bool box_selection;
-	bool no_more_effect_on_click;
-	
-	bool control_pressed;
-	bool shift_pressed;
-	bool space_pressed;
-	
-	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
-	MapCoordF constrained_pos_map;
-	QPointF constrained_pos;
-	
-	// Information about the selection
-	QRectF selection_extent;
-	QRectF original_selection_extent;	// before starting an edit operation
-	int hover_point;					// path point index if non-negative; if hovering over the extent rect: -1, if hovering over nothing: -2
-	int opposite_curve_handle_index;	// -1 if no opposite curve handle
-	double opposite_curve_handle_dist;
-	MapCoord opposite_curve_handle_original_position;
-	int curve_anchor_index;				// if moving a curve handle, this is the index of the point between the handle and its opposite handle, if that exists
-	std::vector<Object*> undo_duplicates;
-	
-	TextObjectEditorHelper* text_editor;
-	QString old_text;					// to prevent creating an undo step if text edit mode is entered and left, but no text was changed
-	int old_horz_alignment;
-	int old_vert_alignment;
-	QPointF box_text_handles[4];
 	
 	// Information about the last click
 	SelectionInfoVector last_results;
 	SelectionInfoVector last_results_ordered;
 	int next_object_to_select;
 	
-	QScopedPointer<MapRenderables> old_renderables;
-	QScopedPointer<MapRenderables> renderables;
-	SymbolWidget* symbol_widget;
-	MapWidget* cur_map_widget;
+	Map* map;
+};
+
+/**
+ * Implements the logic to move sets of objects and / or object points for edit tools.
+ */
+class ObjectMover
+{
+public:
+	/** Creates a mover for the map with the given cursor start position. */
+	ObjectMover(Map* map, const MapCoordF& start_pos);
 	
-	bool preview_update_triggered;
+	/** Sets the start position. */
+	void setStartPos(const MapCoordF& start_pos);
+	
+	/** Adds an object to the set of elements to move. */
+	void addObject(Object* object);
+	
+	/** Adds a point to the set of elements to move. */
+	void addPoint(PathObject* object, int point_index);
+	
+	/** Adds a line to the set of elements to move. */
+	void addLine(PathObject* object, int start_point_index);
+	
+	/** Adds a text handle to the set of elements to move. */
+	void addTextHandle(TextObject* text, int handle);
+	
+	/**
+	 * Moves the elements.
+	 * @param move_opposite_handles If false, opposite handles are reset to their original position.
+	 * @param out_dx returns the move along the x coordinate in map units
+	 * @param out_dy returns the move along the y coordinate in map units
+	 */
+	void move(const MapCoordF& cursor_pos, bool move_opposite_handles, qint64* out_dx = NULL, qint64* out_dy = NULL);
+	
+	/** Overload of move() taking delta values. */
+	void move(qint64 dx, qint64 dy, bool move_opposite_handles);
+	
+private:
+	QSet< int >* insertPointObject(PathObject* object);
+	void calculateConstraints();
+	
+	// Basic information
+	Map* map;
+	MapCoordF start_position;
+	qint64 prev_drag_x;
+	qint64 prev_drag_y;
+	QSet< Object* > objects;
+	QHash< PathObject*, QSet< int > > points;
+	QHash< TextObject*, int > text_handles;
+	
+	// Constraints calculated from the basic information
+	struct OppositeHandleConstraint
+	{
+		/// Object to which the constraint applies
+		PathObject* object;
+		/// Index of moved handle
+		int moved_handle_index;
+		/// Index of opposite handle
+		int opposite_handle_index;
+		/// Index of center point in the middle of the handles
+		int curve_anchor_index;
+		/// Distance of opposite handle to center point
+		double opposite_handle_dist;
+		/// Original position of the opposite handle
+		MapCoord opposite_handle_original_position;
+	};
+	std::vector< OppositeHandleConstraint > handle_constraints;
+	bool constraints_calculated;
+};
+
+
+/// Base class for edit tools
+class EditTool : public MapEditorToolBase
+{
+Q_OBJECT
+public:
+	EditTool(MapEditorController* editor, MapEditorTool::Type type, SymbolWidget* symbol_widget, QAction* tool_button);
+	virtual ~EditTool();
+	
+	static const Qt::KeyboardModifiers selection_modifier;
+	static const Qt::KeyboardModifiers control_point_modifier;
+	static const Qt::Key selection_key;
+	static const Qt::Key control_point_key;
+	static const Qt::Key delete_object_key;
+	
+protected slots:
+	void selectedSymbolsChanged();
+	
+protected:
+	/** Deletes all selected objects and updates the status text. */
+	void deleteSelectedObjects();
+	
+	/** Creates a replace object undo step for the given object. */
+	void createReplaceUndoStep(Object* object);
+	
+	/** Returns if the point is inside the click_tolerance from the rect's border. */
+	bool pointOverRectangle(QPointF point, const QRectF& rect);
+	
+	/** Returns the point on the rect which is closest to the given point. */
+	MapCoordF closestPointOnRect(MapCoordF point, const QRectF& rect);
+	
+	/**
+	 * Tries to determine the primary directions from the selected objects and
+	 * sets them in the angle helper. If no primary directions are found,
+	 * the default directions are set.
+	 */
+	void setupAngleHelperFromSelectedObjects();
+	
+	/**
+	 * Draws a bounding box with a dashed line of the given color.
+	 * @param bounding_box the box extent in map coordinates
+	 */
+	void drawBoundingBox(QPainter* painter, MapWidget* widget, const QRectF& bounding_box, const QRgb& color);
+	
+	/** Draws a selection box. */
+	void drawSelectionBox(QPainter* painter, MapWidget* widget, const MapCoordF& corner1, const MapCoordF& corner2);
+	
+	QScopedPointer<ObjectSelector> object_selector;
+	
+	SymbolWidget* symbol_widget;
 };
 
 #endif

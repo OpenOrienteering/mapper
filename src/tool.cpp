@@ -23,6 +23,7 @@
 #include <QApplication>
 #include <QPainter>
 #include <QMouseEvent>
+#include <QTimer>
 
 #include "map.h"
 #include "map_widget.h"
@@ -32,6 +33,7 @@
 #include "settings.h"
 #include "map_editor.h"
 #include "map_undo.h"
+#include "tool_helpers.h"
 
 // ### MapEditorTool ###
 
@@ -49,10 +51,27 @@ MapEditorTool::~MapEditorTool()
 		tool_button->setChecked(false);
 }
 
+Map* MapEditorTool::map() const
+{
+	return editor->getMap();
+}
+
 void MapEditorTool::loadPointHandles()
 {
 	if (!point_handles)
 		point_handles = new QImage(":/images/point-handles.png");
+}
+
+QRgb MapEditorTool::getPointHandleStateColor(PointHandleState state)
+{
+	if (state == NormalHandleState)
+		return qRgb(0, 0, 255);
+	else if (state == ActiveHandleState)
+		return qRgb(255, 150, 0);
+	else if (state == SelectedHandleState)
+		return qRgb(255, 0, 0);
+	else //if (state == DisabledHandleState)
+		return qRgb(106, 106, 106);
 }
 
 void MapEditorTool::setStatusBarText(const QString& text)
@@ -138,7 +157,7 @@ void MapEditorTool::deleteOldSelectionRenderables(MapRenderables& old_renderable
 	old_renderables.clear(set_area_dirty);
 }
 
-void MapEditorTool::includeControlPointRect(QRectF& rect, Object* object, QPointF* box_text_handles)
+void MapEditorTool::includeControlPointRect(QRectF& rect, Object* object)
 {
 	if (object->getType() == Object::Path)
 	{
@@ -154,29 +173,31 @@ void MapEditorTool::includeControlPointRect(QRectF& rect, Object* object, QPoint
 			rectInclude(rect, text_object->getAnchorCoordF());
 		else
 		{
+			QPointF box_text_handles[4];
+			calculateBoxTextHandles(box_text_handles, text_object);
 			for (int i = 0; i < 4; ++i)
 				rectInclude(rect, box_text_handles[i]);
 		}
 	}
 }
-void MapEditorTool::drawPointHandles(int hover_point, QPainter* painter, Object* object, MapWidget* widget)
+void MapEditorTool::drawPointHandles(int hover_point, QPainter* painter, Object* object, MapWidget* widget, bool draw_curve_handles, PointHandleState base_state)
 {
 	if (object->getType() == Object::Point)
 	{
 		PointObject* point = reinterpret_cast<PointObject*>(object);
-		drawPointHandle(painter, widget->mapToViewport(point->getCoordF()), NormalHandle, hover_point == 0);
+		drawPointHandle(painter, widget->mapToViewport(point->getCoordF()), NormalHandle, (hover_point == 0) ? ActiveHandleState : base_state);
 	}
 	else if (object->getType() == Object::Text)
 	{
 		TextObject* text = reinterpret_cast<TextObject*>(object);
 		if (text->hasSingleAnchor())
-			drawPointHandle(painter, widget->mapToViewport(text->getAnchorCoordF()), NormalHandle, hover_point == 0);
+			drawPointHandle(painter, widget->mapToViewport(text->getAnchorCoordF()), NormalHandle, (hover_point == 0) ? ActiveHandleState : base_state);
 		else
 		{
 			QPointF box_text_handles[4];
-			calculateSelectedBoxTextHandles(box_text_handles, widget->getMapView()->getMap());	// TODO: object->getMap() has lead to a crash here ...
+			calculateBoxTextHandles(box_text_handles, text);
 			for (int i = 0; i < 4; ++i)
-				drawPointHandle(painter, widget->mapToViewport(box_text_handles[i]), NormalHandle, hover_point == i);
+				drawPointHandle(painter, widget->mapToViewport(box_text_handles[i]), NormalHandle, (hover_point == i) ? ActiveHandleState : base_state);
 		}
 	}
 	else if (object->getType() == Object::Path)
@@ -209,31 +230,34 @@ void MapEditorTool::drawPointHandles(int hover_point, QPainter* painter, Object*
 				
 				// Draw incoming curve handle
 				QPointF curve_handle;
-				if (have_curve)
+				if (draw_curve_handles && have_curve)
 				{
 					int curve_index = (i == part.start_index) ? (part.end_index - 1) : (i - 1);
 					curve_handle = widget->mapToViewport(path->getCoordinate(curve_index));
-					drawCurveHandleLine(painter, point, handle_type, curve_handle, is_active);
-					drawPointHandle(painter, curve_handle, CurveHandle, is_active || hover_point == curve_index);
+					drawCurveHandleLine(painter, point, handle_type, curve_handle, is_active ? ActiveHandleState : base_state);
+					drawPointHandle(painter, curve_handle, CurveHandle, (is_active || hover_point == curve_index) ? ActiveHandleState : base_state);
 					have_curve = false;
 				}
 				
 				// Draw outgoing curve handle, first part
-				if (coord.isCurveStart())
+				if (draw_curve_handles && coord.isCurveStart())
 				{
 					curve_handle = widget->mapToViewport(path->getCoordinate(i+1));
-					drawCurveHandleLine(painter, point, handle_type, curve_handle, is_active);
+					drawCurveHandleLine(painter, point, handle_type, curve_handle, is_active ? ActiveHandleState : base_state);
 				}
 				
 				// Draw point
-				drawPointHandle(painter, point, handle_type, is_active);
+				drawPointHandle(painter, point, handle_type, is_active ? ActiveHandleState : base_state);
 				
 				// Draw outgoing curve handle, second part
 				if (coord.isCurveStart())
 				{
-					drawPointHandle(painter, curve_handle, CurveHandle, is_active || hover_point == i + 1);
+					if (draw_curve_handles)
+					{
+						drawPointHandle(painter, curve_handle, CurveHandle, (is_active || hover_point == i + 1) ? ActiveHandleState : base_state);
+						have_curve = true;
+					}
 					i += 2;
-					have_curve = true;
 				}
 			}
 		}
@@ -241,14 +265,14 @@ void MapEditorTool::drawPointHandles(int hover_point, QPainter* painter, Object*
 	else
 		assert(false);
 }
-void MapEditorTool::drawPointHandle(QPainter* painter, QPointF point, PointHandleType type, bool active)
+void MapEditorTool::drawPointHandle(QPainter* painter, QPointF point, PointHandleType type, PointHandleState state)
 {
-	painter->drawImage(qRound(point.x()) - 5, qRound(point.y()) - 5, *point_handles, (int)type * 11, active ? 11 : 0, 11, 11);
+	painter->drawImage(qRound(point.x()) - 5, qRound(point.y()) - 5, *point_handles, (int)type * 11, (int)state * 11, 11, 11);
 }
-void MapEditorTool::drawCurveHandleLine(QPainter* painter, QPointF point, PointHandleType type, QPointF curve_handle, bool active)
+void MapEditorTool::drawCurveHandleLine(QPainter* painter, QPointF point, PointHandleType type, QPointF curve_handle, PointHandleState state)
 {
 	const float handle_radius = 3;
-	painter->setPen(active ? active_color : inactive_color);
+	painter->setPen(getPointHandleStateColor(state));
 	
 	QPointF to_handle = curve_handle - point;
 	float to_handle_len = to_handle.x()*to_handle.x() + to_handle.y()*to_handle.y();
@@ -267,94 +291,88 @@ void MapEditorTool::drawCurveHandleLine(QPainter* painter, QPointF point, PointH
 	
 	painter->drawLine(point, curve_handle);
 }
-bool MapEditorTool::calculateSelectedBoxTextHandles(QPointF* out, Map* map)
+void MapEditorTool::calculateBoxTextHandles(QPointF* out, TextObject* text_object)
 {
-	Object* single_selected_object = (map->getNumSelectedObjects() == 1) ? *map->selectedObjectsBegin() : NULL;
-	if (single_selected_object && single_selected_object->getType() == Object::Text)
-	{
-		TextObject* text_object = single_selected_object->asText();
-		if (!text_object->hasSingleAnchor())
-		{
-			QTransform transform;
-			transform.rotate(-text_object->getRotation() * 180 / M_PI);
-			out[0] = transform.map(QPointF(text_object->getBoxWidth() / 2, -text_object->getBoxHeight() / 2)) + text_object->getAnchorCoordF().toQPointF();
-			out[1] = transform.map(QPointF(text_object->getBoxWidth() / 2, text_object->getBoxHeight() / 2)) + text_object->getAnchorCoordF().toQPointF();
-			out[2] = transform.map(QPointF(-text_object->getBoxWidth() / 2, text_object->getBoxHeight() / 2)) + text_object->getAnchorCoordF().toQPointF();
-			out[3] = transform.map(QPointF(-text_object->getBoxWidth() / 2, -text_object->getBoxHeight() / 2)) + text_object->getAnchorCoordF().toQPointF();
-			return true;
-		}
-	}
-	return false;
+	assert(!text_object->hasSingleAnchor());
+
+	QTransform transform;
+	transform.rotate(-text_object->getRotation() * 180 / M_PI);
+	out[0] = transform.map(QPointF(text_object->getBoxWidth() / 2, -text_object->getBoxHeight() / 2)) + text_object->getAnchorCoordF().toQPointF();
+	out[1] = transform.map(QPointF(text_object->getBoxWidth() / 2, text_object->getBoxHeight() / 2)) + text_object->getAnchorCoordF().toQPointF();
+	out[2] = transform.map(QPointF(-text_object->getBoxWidth() / 2, text_object->getBoxHeight() / 2)) + text_object->getAnchorCoordF().toQPointF();
+	out[3] = transform.map(QPointF(-text_object->getBoxWidth() / 2, -text_object->getBoxHeight() / 2)) + text_object->getAnchorCoordF().toQPointF();
 }
 
-int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QPointF* box_text_handles, QRectF* selection_extent, MapWidget* widget)
+int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QRectF* selection_extent, MapWidget* widget, MapCoordF* out_handle_pos)
 {
 	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
 	const float click_tolerance_squared = click_tolerance * click_tolerance;
 	
-	// Check object
-	if (object)
+	if (object->getType() == Object::Point)
 	{
-		if (object->getType() == Object::Point)
+		PointObject* point = reinterpret_cast<PointObject*>(object);
+		if (distanceSquared(widget->mapToViewport(point->getCoordF()), cursor) <= click_tolerance_squared)
 		{
-			PointObject* point = reinterpret_cast<PointObject*>(object);
-			if (distanceSquared(widget->mapToViewport(point->getCoordF()), cursor) <= click_tolerance_squared)
-				return 0;
+			if (out_handle_pos)
+				*out_handle_pos = point->getCoordF();
+			return 0;
 		}
-		else if (object->getType() == Object::Text)
+	}
+	else if (object->getType() == Object::Text)
+	{
+		TextObject* text = reinterpret_cast<TextObject*>(object);
+		if (text->hasSingleAnchor() && distanceSquared(widget->mapToViewport(text->getAnchorCoordF()), cursor) <= click_tolerance_squared)
 		{
-			TextObject* text = reinterpret_cast<TextObject*>(object);
-			if (text->hasSingleAnchor() && distanceSquared(widget->mapToViewport(text->getAnchorCoordF()), cursor) <= click_tolerance_squared)
-				return 0;
-			else if (!text->hasSingleAnchor())
+			if (out_handle_pos)
+				*out_handle_pos = text->getAnchorCoordF();
+			return 0;
+		}
+		else if (!text->hasSingleAnchor())
+		{
+			QPointF box_text_handles[4];
+			calculateBoxTextHandles(box_text_handles, text);
+			for (int i = 0; i < 4; ++i)
 			{
-				for (int i = 0; i < 4; ++i)
+				if (distanceSquared(widget->mapToViewport(box_text_handles[i]), cursor) <= click_tolerance_squared)
 				{
-					if (box_text_handles && distanceSquared(widget->mapToViewport(box_text_handles[i]), cursor) <= click_tolerance_squared)
-						return i;
+					if (out_handle_pos)
+						*out_handle_pos = MapCoordF(box_text_handles[i]);
+					return i;
 				}
 			}
 		}
-		else if (object->getType() == Object::Path)
+	}
+	else if (object->getType() == Object::Path)
+	{
+		PathObject* path = reinterpret_cast<PathObject*>(object);
+		int size = path->getCoordinateCount();
+		
+		int best_index = -1;
+		float best_dist_sq = click_tolerance_squared;
+		for (int i = size - 1; i >= 0; --i)
 		{
-			PathObject* path = reinterpret_cast<PathObject*>(object);
-			int size = path->getCoordinateCount();
-			
-			int best_index = -1;
-			float best_dist_sq = click_tolerance_squared;
-			for (int i = size - 1; i >= 0; --i)
+			if (!path->getCoordinate(i).isClosePoint())
 			{
-				if (!path->getCoordinate(i).isClosePoint())
+				float distance_sq = distanceSquared(widget->mapToViewport(path->getCoordinate(i)), cursor);
+				bool is_handle = (i >= 1 && path->getCoordinate(i - 1).isCurveStart()) ||
+									(i >= 2 && path->getCoordinate(i - 2).isCurveStart());
+				if (distance_sq < best_dist_sq || (distance_sq == best_dist_sq && is_handle))
 				{
-					float distance_sq = distanceSquared(widget->mapToViewport(path->getCoordinate(i)), cursor);
-					bool is_handle = (i >= 1 && path->getCoordinate(i - 1).isCurveStart()) ||
-					                 (i >= 2 && path->getCoordinate(i - 2).isCurveStart());
-					if (distance_sq < best_dist_sq || (distance_sq == best_dist_sq && is_handle))
-					{
-						best_index = i;
-						best_dist_sq = distance_sq;
-					}
+					best_index = i;
+					best_dist_sq = distance_sq;
 				}
-				if (!include_curve_handles && i >= 3 && path->getCoordinate(i - 3).isCurveStart())
-					i -= 2;
 			}
-			if (best_index >= 0)
-				return best_index;
+			if (!include_curve_handles && i >= 3 && path->getCoordinate(i - 3).isCurveStart())
+				i -= 2;
+		}
+		if (best_index >= 0)
+		{
+			if (out_handle_pos)
+				*out_handle_pos = MapCoordF(path->getCoordinate(best_index));
+			return best_index;
 		}
 	}
 	
-	// Check bounding box
-	if (!selection_extent)
-		return -2;
-	QRectF selection_extent_viewport = widget->mapToViewport(*selection_extent);
-	if (cursor.x() < selection_extent_viewport.left() - click_tolerance) return -2;
-	if (cursor.y() < selection_extent_viewport.top() - click_tolerance) return -2;
-	if (cursor.x() > selection_extent_viewport.right() + click_tolerance) return -2;
-	if (cursor.y() > selection_extent_viewport.bottom() + click_tolerance) return -2;
-	if (cursor.x() > selection_extent_viewport.left() + click_tolerance &&
-		cursor.y() > selection_extent_viewport.top() + click_tolerance &&
-		cursor.x() < selection_extent_viewport.right() - click_tolerance &&
-		cursor.y() < selection_extent_viewport.bottom() - click_tolerance) return -2;
 	return -1;
 }
 
@@ -385,12 +403,18 @@ bool MapEditorTool::drawMouseButtonClicked(QMouseEvent* event)
 MapEditorToolBase::MapEditorToolBase(const QCursor cursor, MapEditorTool::Type type, MapEditorController* editor, QAction* tool_button)
  : MapEditorTool(editor, type, tool_button),
    dragging(false),
+   start_drag_distance(QApplication::startDragDistance()),
+   angle_helper(new ConstrainAngleToolHelper()),
+   snap_helper(new SnappingToolHelper(editor->getMap())),
+   snap_exclude_object(NULL),
    cur_map_widget(editor->getMainWidget()),
-   cursor(cursor),
    editing(false),
-   old_renderables(new MapRenderables(editor->getMap())), 
-   renderables(new MapRenderables(editor->getMap()))
+   cursor(cursor),
+   preview_update_triggered(false),
+   renderables(new MapRenderables(editor->getMap())),
+   old_renderables(new MapRenderables(editor->getMap()))
 {
+	angle_helper->setActive(false);
 }
 MapEditorToolBase::~MapEditorToolBase()
 {
@@ -399,30 +423,37 @@ MapEditorToolBase::~MapEditorToolBase()
 
 void MapEditorToolBase::init()
 {
-	initImpl();
 	connect(editor->getMap(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	connect(editor->getMap(), SIGNAL(selectedObjectEdited()), this, SLOT(updateDirtyRect()));
+	initImpl();
 	updateDirtyRect();
 	updateStatusText();
 }
 
 bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (!(event->buttons() & Qt::LeftButton))
-		return false;
+	active_modifiers = event->modifiers();
+	if (event->button() != Qt::LeftButton)
+	{
+		// Do not show the ring menu when editing
+		return editing;
+	}
 	cur_map_widget = widget;
 	
 	click_pos = event->pos();
 	click_pos_map = map_coord;
 	cur_pos = click_pos;
 	cur_pos_map = click_pos_map;
+	calcConstrainedPositions(widget);
 	clickPress();
 	return true;
 }
 bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	active_modifiers = event->modifiers();
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
+	calcConstrainedPositions(widget);
 	if (!(event->buttons() & Qt::LeftButton))
 	{
 		mouseMove();
@@ -431,18 +462,26 @@ bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, 
 	
 	if (dragging)
 		dragMove();
-	else if ((event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance())
+	else if ((event->pos() - click_pos).manhattanLength() >= start_drag_distance)
 	{
 		dragging = true;
 		dragStart();
+		dragMove();
 	}
 	
 	return true;
 }
 bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	active_modifiers = event->modifiers();
+	cur_pos = event->pos();
+	cur_pos_map = map_coord;
+	calcConstrainedPositions(widget);
 	if (event->button() != Qt::LeftButton)
-		return false;
+	{
+		// Do not show the ring menu when editing
+		return editing;
+	}
 	
 	if (dragging)
 	{
@@ -456,19 +495,46 @@ bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 	return true;
 }
 
+bool MapEditorToolBase::keyPressEvent(QKeyEvent* event)
+{
+	active_modifiers = event->modifiers();
+    return keyPress(event);
+}
+bool MapEditorToolBase::keyReleaseEvent(QKeyEvent* event)
+{
+	active_modifiers = event->modifiers();
+    return keyRelease(event);
+}
+
 void MapEditorToolBase::draw(QPainter* painter, MapWidget* widget)
 {
-	editor->getMap()->drawSelection(painter, true, widget, renderables->isEmpty() ? NULL : renderables.data());
+	drawImpl(painter, widget);
+	if (angle_helper->isActive())
+		angle_helper->draw(painter, widget);
+	if (snap_helper->getFilter() != SnappingToolHelper::NoSnapping)
+		snap_helper->draw(painter, widget);
 }
 
 void MapEditorToolBase::updateDirtyRect()
 {
+	int pixel_border = 0;
 	QRectF rect;
-	editor->getMap()->includeSelectionRect(rect);
 	
-	int result = updateDirtyRectImpl(rect);
-	if (result >= 0)
-		editor->getMap()->setDrawingBoundingBox(rect, result, true);
+	editor->getMap()->includeSelectionRect(rect);
+	if (angle_helper->isActive())
+	{
+		angle_helper->includeDirtyRect(rect);
+		pixel_border = qMax(pixel_border, angle_helper->getDisplayRadius());
+	}
+	if (snap_helper->getFilter() != SnappingToolHelper::NoSnapping)
+	{
+		snap_helper->includeDirtyRect(rect);
+		pixel_border = qMax(pixel_border, snap_helper->getDisplayRadius());
+	}
+	
+	pixel_border = qMax(pixel_border, updateDirtyRectImpl(rect));
+	if (pixel_border >= 0)
+		editor->getMap()->setDrawingBoundingBox(rect, pixel_border, true);
 	else
 		editor->getMap()->clearDrawingBoundingBox();
 }
@@ -478,10 +544,47 @@ void MapEditorToolBase::objectSelectionChanged()
 	objectSelectionChangedImpl();
 }
 
+void MapEditorToolBase::drawImpl(QPainter* painter, MapWidget* widget)
+{
+	drawSelectionOrPreviewObjects(painter, widget);
+}
+
+void MapEditorToolBase::updatePreviewObjectsSlot()
+{
+	preview_update_triggered = false;
+	if (editing)
+		updatePreviewObjects();
+}
+
 void MapEditorToolBase::updatePreviewObjects()
 {
+	if (!editing)
+	{
+		qWarning("MapEditorToolBase::updatePreviewObjects() called but editing == false");
+		return;
+	}
 	updateSelectionEditPreview(*renderables);
 	updateDirtyRect();
+}
+
+void MapEditorToolBase::updatePreviewObjectsAsynchronously()
+{
+	if (!editing)
+	{
+		qWarning("MapEditorToolBase::updatePreviewObjectsAsynchronously() called but editing == false");
+		return;
+	}
+	
+	if (!preview_update_triggered)
+	{
+		QTimer::singleShot(10, this, SLOT(updatePreviewObjectsSlot()));
+		preview_update_triggered = true;
+	}
+}
+
+void MapEditorToolBase::drawSelectionOrPreviewObjects(QPainter* painter, MapWidget* widget, bool draw_opaque)
+{
+	editor->getMap()->drawSelection(painter, true, widget, renderables->isEmpty() ? NULL : renderables.data(), draw_opaque);
 }
 
 void MapEditorToolBase::startEditing()
@@ -496,11 +599,34 @@ void MapEditorToolBase::abortEditing()
 	editing = false;
 	finishEditingSelection(*renderables, *old_renderables, false, &undo_duplicates);
 }
-void MapEditorToolBase::finishEditing()
+void MapEditorToolBase::finishEditing(bool delete_objects, bool create_undo_step)
 {
 	assert(editing);
 	editing = false;
-	finishEditingSelection(*renderables, *old_renderables, true, &undo_duplicates);
+	finishEditingSelection(*renderables, *old_renderables, create_undo_step, &undo_duplicates, delete_objects);
 	editor->getMap()->setObjectsDirty();
 	editor->getMap()->emitSelectionEdited();
+}
+
+void MapEditorToolBase::calcConstrainedPositions(MapWidget* widget)
+{
+	if (snap_helper->getFilter() != SnappingToolHelper::NoSnapping)
+	{
+		SnappingToolHelperSnapInfo info;
+		constrained_pos_map = MapCoordF(snap_helper->snapToObject(cur_pos_map, widget, &info, snap_exclude_object));
+		constrained_pos = widget->mapToViewport(constrained_pos_map).toPoint();
+		snapped_to_pos = info.type != SnappingToolHelper::NoSnapping;
+	}
+	else
+	{
+		constrained_pos_map = cur_pos_map;
+		constrained_pos = cur_pos;
+		snapped_to_pos = false;
+	}
+	if (angle_helper->isActive())
+	{
+		QPointF temp_pos;
+		angle_helper->getConstrainedCursorPositions(constrained_pos_map, constrained_pos_map, temp_pos, widget);
+		constrained_pos = temp_pos.toPoint();
+	}
 }

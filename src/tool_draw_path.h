@@ -36,25 +36,26 @@ class DrawPathTool : public DrawLineAndAreaTool
 Q_OBJECT
 public:
 	DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget, bool allow_closing_paths);
-    virtual ~DrawPathTool();
+	virtual ~DrawPathTool();
 	
-    virtual void init();
-    virtual QCursor* getCursor() {return cursor;}
-    
-    virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual void init();
+	virtual QCursor* getCursor() {return cursor;}
+	
+	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-    virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-    virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	
-    virtual bool keyPressEvent(QKeyEvent* event);
-    virtual bool keyReleaseEvent(QKeyEvent* event);
+	virtual bool keyPressEvent(QKeyEvent* event);
+	virtual bool keyReleaseEvent(QKeyEvent* event);
 	
-    virtual void draw(QPainter* painter, MapWidget* widget);
+	virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	static QCursor* cursor;
 	
 protected slots:
 	void updateDirtyRect();
+	virtual void selectedSymbolsChanged();
 	
 protected:
 	void updateHover();
@@ -75,6 +76,7 @@ protected:
 	void finishFollowing();
 	
 	float calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map);
+	void updateDashPointDrawing();
 	void updateStatusText();
 	
 	QPoint click_pos;
@@ -91,7 +93,7 @@ protected:
 	bool create_spline_corner; // for drawing bezier splines without parallel handles
 	bool create_segment;
 	
-	bool space_pressed;
+	bool draw_dash_points;
 	bool allow_closing_paths;
 	
 	QScopedPointer<ConstrainAngleToolHelper> angle_helper;

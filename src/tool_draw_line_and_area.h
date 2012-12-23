@@ -52,7 +52,7 @@ signals:
 	void pathFinished(PathObject* path);
 	
 protected slots:
-	void selectedSymbolsChanged();
+	virtual void selectedSymbolsChanged();
 	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
 	void symbolDeleted(int pos, Symbol* old_symbol);
 	

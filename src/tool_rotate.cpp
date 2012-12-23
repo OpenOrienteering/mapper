@@ -106,7 +106,7 @@ void RotateTool::dragFinish()
 
 void RotateTool::draw(QPainter* painter, MapWidget* widget)
 {
-	MapEditorToolBase::draw(painter, widget);
+	drawSelectionOrPreviewObjects(painter, widget);
 	
 	if (rotation_center_set)
 	{

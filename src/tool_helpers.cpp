@@ -668,13 +668,15 @@ SnappingToolHelper::SnappingToolHelper(Map* map, SnapObjects filter)
 void SnappingToolHelper::setFilter(SnapObjects filter)
 {
 	this->filter = filter;
+	if (!(filter & snapped_type))
+		snapped_type = NoSnapping;
 }
 SnappingToolHelper::SnapObjects SnappingToolHelper::getFilter() const
 {
 	return filter;
 }
 
-MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info)
+MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info, Object* exclude_object)
 {
 	const float snap_distance = 0.001f * widget->getMapView()->pixelToLength(Settings::getInstance().getSettingCached(Settings::MapEditor_SnapDistance).toInt());
 	float closest_distance_sq = snap_distance * snap_distance;
@@ -697,8 +699,11 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 		// Find closest snap spot from map objects
 		for (SelectionInfoVector::const_iterator it = objects.begin(), end = objects.end(); it != end; ++it)
 		{
-			float distance_sq;
 			Object* object = it->second;
+			if (object == exclude_object)
+				continue;
+			
+			float distance_sq;
 			if (object->getType() == Object::Point)
 			{
 				PointObject* point = object->asPoint();
@@ -855,7 +860,8 @@ void SnappingToolHelper::draw(QPainter* painter, MapWidget* widget)
 	if (snapped_type != NoSnapping)
 	{
 		MapEditorTool::drawPointHandle(painter, widget->mapToViewport(snap_mark),
-									    (snapped_type == ObjectPaths) ? MapEditorTool::NormalHandle : MapEditorTool::EndHandle, false);
+									    (snapped_type == ObjectPaths) ? MapEditorTool::NormalHandle : MapEditorTool::EndHandle,
+									    MapEditorTool::NormalHandleState);
 	}
 }
 

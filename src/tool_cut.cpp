@@ -329,7 +329,7 @@ void CutTool::updateDirtyRect(const QRectF* path_rect)
 	
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
-		includeControlPointRect(rect, *it, NULL);
+		includeControlPointRect(rect, *it);
 	
 	if (rect.isValid())
 		editor->getMap()->setDrawingBoundingBox(rect, 6, true);
@@ -391,7 +391,7 @@ void CutTool::updateHoverPoint(QPointF cursor_pos_screen, MapWidget* widget)
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 	{
-		int new_hover_point = findHoverPoint(cursor_pos_screen, *it, false, NULL, NULL, widget);
+		int new_hover_point = findHoverPoint(cursor_pos_screen, *it, false, NULL, widget);
 		if (new_hover_point > -2)
 		{
 			has_hover_point = true;

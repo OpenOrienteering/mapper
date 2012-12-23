@@ -230,7 +230,17 @@ void TemplateTrack::drawTracks(QPainter* painter)
 			const TrackPoint& point = track.getSegmentPoint(i, k);
 			
 			if (k > 0)
-				path.lineTo(point.map_coord.getX(), point.map_coord.getY());
+			{
+				if (track.getSegmentPoint(i, k - 1).is_curve_start && k < track.getSegmentPointCount(i) - 2)
+				{
+					path.cubicTo(point.map_coord.toQPointF(),
+						track.getSegmentPoint(i, k + 1).map_coord.toQPointF(),
+						track.getSegmentPoint(i, k + 2).map_coord.toQPointF());
+					k += 2;
+				}
+				else
+					path.lineTo(point.map_coord.getX(), point.map_coord.getY());
+			}
 			else
 				path.moveTo(point.map_coord.getX(), point.map_coord.getY());
 		}
@@ -384,7 +394,13 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 	{
 		PathObject* path = importPathStart();
 		for (int j = 0; j < track.getSegmentPointCount(i); j++)
-			path->addCoordinate(templateToMap(track.getSegmentPoint(i, j).map_coord).toMapCoord());
+		{
+			const TrackPoint& track_point = track.getSegmentPoint(i, j);
+			MapCoord coord = templateToMap(track_point.map_coord).toMapCoord();
+			if (track_point.is_curve_start && j < track.getSegmentPointCount(i) - 3)
+				coord.setCurveStart(true);
+			path->addCoordinate(coord);
+		}
 		importPathEnd(path);
 		result.push_back(path);
 	}

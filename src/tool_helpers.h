@@ -192,7 +192,7 @@ public:
 	/// Snaps the given position to the closest snapping object, or returns the original position if no snapping object is close enough.
 	/// Internally remembers the position so the next call to draw() will draw the snap mark there.
 	/// If the info parameter is set, information about the object snapped onto is returned there.
-	MapCoord snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info = NULL);
+	MapCoord snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info = NULL, Object* exclude_object = NULL);
 	
 	/// Checks for existing objects in map at position and if one is found,
 	/// returns true and sets related angles in angle_tool.

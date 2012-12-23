@@ -17,10 +17,7 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include "tool_edit.h"
-
-#include <algorithm>
 
 #if QT_VERSION < 0x050000
 #include <QtGui>
@@ -28,496 +25,141 @@
 #include <QtWidgets>
 #endif
 
-#include "util.h"
-#include "symbol.h"
-#include "object.h"
-#include "object_text.h"
+#include "map.h"
 #include "map_editor.h"
 #include "map_widget.h"
 #include "map_undo.h"
-#include "symbol_dock_widget.h"
-#include "tool_draw_text.h"
-#include "tool_helpers.h"
-#include "symbol_text.h"
-#include "renderable.h"
+#include "object.h"
 #include "settings.h"
+#include "symbol_dock_widget.h"
+#include "tool_helpers.h"
+#include "object_text.h"
+#include "symbol_text.h"
 
-QCursor* EditTool::cursor = NULL;
 
-// Mac convention for selecting multiple items is the command key (In Qt the command key is ControlModifier)
-#ifdef Q_OS_MAC
-const Qt::KeyboardModifiers EditTool::selection_modifier = Qt::ControlModifier;
-const Qt::KeyboardModifiers EditTool::control_point_modifier = Qt::ShiftModifier;
-const Qt::Key EditTool::selection_key = Qt::Key_Control;
-const Qt::Key EditTool::control_point_key = Qt::Key_Shift;
-#else
-const Qt::KeyboardModifiers EditTool::selection_modifier = Qt::ShiftModifier;
-const Qt::KeyboardModifiers EditTool::control_point_modifier = Qt::ControlModifier;
-const Qt::Key EditTool::selection_key = Qt::Key_Shift;
-const Qt::Key EditTool::control_point_key = Qt::Key_Control;
-#endif
-
-EditTool::EditTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
-: MapEditorTool(editor, Edit, tool_button),
-  angle_helper(new ConstrainAngleToolHelper()),
-  old_renderables(new MapRenderables(editor->getMap())),
-  renderables(new MapRenderables(editor->getMap())),
-  symbol_widget(symbol_widget),
-  cur_map_widget(editor->getMainWidget())
+ObjectSelector::ObjectSelector(Map* map)
+ : map(map)
 {
-	preview_update_triggered = false;
-	dragging = false;
-	hover_point = -2;
-	text_editor = NULL;
-	
-	control_pressed = false;
-	shift_pressed = false;
-	space_pressed = false;
-	
-	angle_helper->setActive(false);
-
-	if (!cursor)
-		cursor = new QCursor(QPixmap(":/images/cursor-hollow.png"), 1, 1);
-}
-void EditTool::init()
-{
-	connect(editor->getMap(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
-	connect(editor->getMap(), SIGNAL(selectedObjectEdited()), this, SLOT(objectSelectionChanged()));
-	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
-	objectSelectionChanged();
-}
-EditTool::~EditTool()
-{
-	if (text_editor)
-		delete text_editor;
-	deleteOldSelectionRenderables(*old_renderables, false);
 }
 
-bool EditTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool ObjectSelector::selectAt(MapCoordF position, double tolerance, bool toggle)
 {
-	if (!(event->button() == Qt::LeftButton))
-	{
-		if (event->button() == Qt::RightButton)
-		{
-			dragging = false;
-			box_selection = false;
-		}
-		return false;
-	}
+	bool selection_changed;
 	
-	cur_map_widget = widget;
-	dragging = false;
-	box_selection = false;
-	no_more_effect_on_click = false;
-	click_pos = event->pos();
-	click_pos_map = map_coord;
-	cur_pos = event->pos();
-	constrained_pos = cur_pos;
-	cur_pos_map = map_coord;
-	constrained_pos_map = cur_pos_map;
-	
-	updateHoverPoint(widget->mapToViewport(map_coord), widget);
-	
-	bool single_object_selected = editor->getMap()->getNumSelectedObjects() == 1;
+	bool single_object_selected = map->getNumSelectedObjects() == 1;
 	Object* single_selected_object = NULL;
 	if (single_object_selected)
-		single_selected_object = *editor->getMap()->selectedObjectsBegin();
+		single_selected_object = *map->selectedObjectsBegin();
 	
-	if (hover_point >= 0)
-	{
-		opposite_curve_handle_index = -1;
-		curve_anchor_index = -1;
-		
-		if (single_object_selected && single_selected_object->getType() == Object::Path)
-		{
-			PathObject* path = reinterpret_cast<PathObject*>(single_selected_object);
-			int hover_point_part_index = path->findPartIndexForIndex(hover_point);
-			PathObject::PathPart& hover_point_part = path->getPart(hover_point_part_index);
-			
-			// Check if clicked on a bezier curve handle
-			int hover_point_minus_1 = path->shiftedCoordIndex(hover_point, -1, hover_point_part);
-			int hover_point_minus_2 = path->shiftedCoordIndex(hover_point, -2, hover_point_part);
-			if (hover_point_minus_1 >= 0 && path->getCoordinate(hover_point_minus_1).isCurveStart())
-			{
-				int hover_point_minus_4 = path->shiftedCoordIndex(hover_point, -4, hover_point_part);
-				if (hover_point_minus_4 >= 0 && path->getCoordinate(hover_point_minus_4).isCurveStart())
-					opposite_curve_handle_index = hover_point_minus_2;
-				curve_anchor_index = hover_point_minus_1;
-			}
-			else if (hover_point_minus_2 >= 0 && path->getCoordinate(hover_point_minus_2).isCurveStart())
-			{
-				int hover_point_plus_1 = path->shiftedCoordIndex(hover_point, 1, hover_point_part);
-				if (hover_point_plus_1 >= 0 && path->getCoordinate(hover_point_plus_1).isCurveStart())
-					opposite_curve_handle_index = path->shiftedCoordIndex(hover_point, 2, hover_point_part);
-				curve_anchor_index = hover_point_plus_1;
-			}
-			
-			if (opposite_curve_handle_index >= 0)
-			{
-				MapCoord& opposite_curve_handle = path->getCoordinate(opposite_curve_handle_index);
-				opposite_curve_handle_dist = opposite_curve_handle.lengthTo(path->getCoordinate(curve_anchor_index));
-				opposite_curve_handle_original_position = path->getCoordinate(opposite_curve_handle_index);
-			}
-			else if (curve_anchor_index == -1)
-			{
-				// Clicked on a regular point
-				if (event->modifiers() & Qt::ControlModifier)
-				{
-					// Ctrl held -> delete the point
-					if (hover_point_part.calcNumRegularPoints() <= 2 || (!(path->getSymbol()->getContainedTypes() & Symbol::Line) && hover_point_part.getNumCoords() <= 3))
-					{
-						// Delete the part and maybe object
-						if (path->getNumParts() == 1)
-							deleteSelectedObjects();
-						else
-						{
-							ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(editor->getMap());
-							Object* undo_duplicate = path->duplicate();
-							undo_duplicate->setMap(editor->getMap());
-							undo_step->addObject(path, undo_duplicate);
-							editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
-							
-							path->deletePart(hover_point_part_index);
-							path->update(true);
-							updateHoverPoint(widget->mapToViewport(map_coord), widget);
-							updateDirtyRect();
-						}
-						no_more_effect_on_click = true;
-						return true;
-					}
-					else
-					{
-						ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(editor->getMap());	// TODO: use optimized undo step
-						Object* undo_duplicate = path->duplicate();
-						undo_duplicate->setMap(editor->getMap());
-						undo_step->addObject(path, undo_duplicate);
-						editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
-						
-						int delete_bezier_spline_point_setting;
-						if (event->modifiers() & Qt::ShiftModifier)
-							delete_bezier_spline_point_setting = Settings::EditTool_DeleteBezierPointActionAlternative;
-						else
-							delete_bezier_spline_point_setting = Settings::EditTool_DeleteBezierPointAction;
-						path->deleteCoordinate(hover_point, true, Settings::getInstance().getSettingCached((Settings::SettingsEnum)delete_bezier_spline_point_setting).toInt());
-						path->update(true);
-						updateHoverPoint(widget->mapToViewport(map_coord), widget);
-						updateDirtyRect();
-						no_more_effect_on_click = true;
-						return true;
-					}
-				}
-				else if (space_pressed)
-				{
-					// Space held -> switch point between dash / normal point
-					ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(editor->getMap());	// TODO: use optimized undo step
-					Object* undo_duplicate = path->duplicate();
-					undo_duplicate->setMap(editor->getMap());
-					undo_step->addObject(path, undo_duplicate);
-					editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
-					
-					MapCoord& hover_coord = path->getCoordinate(hover_point);
-					hover_coord.setDashPoint(!hover_coord.isDashPoint());
-					path->update(true);
-					updateDirtyRect();
-					no_more_effect_on_click = true;
-					return true;
-				}
-			}
-		}
-	}
-	else if (hover_point == -2)
-	{
-		if (text_editor)
-			return text_editor->mousePressEvent(event, map_coord, widget);
-		
-		if (hoveringOverSingleText(map_coord))
-		{
-			TextObject* text_object = reinterpret_cast<TextObject*>(single_selected_object);
-			
-			startEditing();
-			
-			// Don't show the original text while editing
-			editor->getMap()->removeRenderablesOfObject(single_selected_object, true);
-			
-			// Make sure that the TextObjectEditorHelper remembers the correct standard cursor
-			widget->setCursor(*getCursor());
-			
-			old_text = text_object->getText();
-			old_horz_alignment = (int)text_object->getHorizontalAlignment();
-			old_vert_alignment = (int)text_object->getVerticalAlignment();
-			text_editor = new TextObjectEditorHelper(text_object, editor);
-			connect(text_editor, SIGNAL(selectionChanged(bool)), this, SLOT(textSelectionChanged(bool)));
-			
-			// Select clicked position
-			int pos = text_object->calcTextPositionAt(map_coord, false);
-			text_editor->setSelection(pos, pos);
-			
-			updatePreviewObjects(true);
-		}
-	}
+	// Clicked - get objects below cursor
+	SelectionInfoVector objects;
+	map->findObjectsAt(position, 0.001f * tolerance, false, false, false, false, objects);
+	if (objects.empty())
+		map->findObjectsAt(position, 0.001f * 1.5f * tolerance, false, true, false, false, objects);
 	
-	if (single_object_selected && single_selected_object->getType() == Object::Path && hover_point < 0 && event->modifiers() & control_point_modifier)
+	// Selection logic, trying to select the most relevant object(s)
+	if (!toggle || map->getNumSelectedObjects() == 0)
 	{
-		// Add new point to path
-		PathObject* path = reinterpret_cast<PathObject*>(single_selected_object);
-		
-		float distance_sq;
-		PathCoord path_coord;
-		path->calcClosestPointOnPath(map_coord, distance_sq, path_coord);
-		
-		int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
-		float click_tolerance_map_sq = widget->getMapView()->pixelToLength(click_tolerance);
-		click_tolerance_map_sq = click_tolerance_map_sq * click_tolerance_map_sq;
-		
-		if (distance_sq <= click_tolerance_map_sq)
-		{
-			startEditing();
-			dragging = true;	// necessary to prevent second call to startEditing()
-			hover_point = path->subdivide(path_coord.index, path_coord.param);
-			if (space_pressed)
-			{
-				MapCoord point = path->getCoordinate(hover_point);
-				point.setDashPoint(true);
-				path->setCoordinate(hover_point, point);
-			}
-			opposite_curve_handle_index = -1;
-			updatePreviewObjects(true);
-			updateAngleHelper(click_pos_map);
-		}
-	}
-	
-	return true;
-}
-bool EditTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
-{
-	bool mouse_down = event->buttons() & Qt::LeftButton;
-	
-	if (!mouse_down && !dragging)
-	{
-		if (text_editor)
-			return text_editor->mouseMoveEvent(event, map_coord, widget);
-		
-		updateHoverPoint(widget->mapToViewport(map_coord), widget);
-		
-		// For texts, decide whether to show the beam cursor
-		if (hoveringOverSingleText(map_coord))
-			widget->setCursor(QCursor(Qt::IBeamCursor));
-		else
-			widget->setCursor(*getCursor());
-	}
-	else // if (mouse_down)
-	{
-		if (no_more_effect_on_click)
-			return true;
-		if (text_editor && hover_point == -2)
-			return text_editor->mouseMoveEvent(event, map_coord, widget);
-		
-		if (!dragging && ((hover_point >= -1) || (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance()))
-		{
-			// Start dragging
-			if (hover_point >= -1)
-			{
-				// Treat this position as click position
-				/*click_pos = event->pos();
-				click_pos_map = map_coord;
-				cur_pos = click_pos;
-				cur_pos_map = click_pos_map;
-				constrained_pos = cur_pos;
-				constrained_pos_map = cur_pos_map;*/
-				
-				startEditing();
-				updatePreviewObjects(true);
-				updateAngleHelper(click_pos_map);
-			}
-			else if (hover_point == -2)
-				box_selection = true;
-			
-			dragging = true;
-		}
-		
-		if (dragging)
-		{
-			if (hover_point >= -1)
-			{
-				updateDragging(map_coord);
-				if (!preview_update_triggered)
-				{
-					// Handle screen update asynchronously
-					QTimer::singleShot(10, this, SLOT(updatePreviewObjects()));
-					preview_update_triggered = true;
-				}
-			}
-			else if (box_selection)
-			{
-				cur_pos = event->pos();
-				cur_pos_map = map_coord;
-				updateDirtyRect();
-			}
-		}
-	}
-	
-	// NOTE: This must be after the rest of the processing
-	cur_pos = event->pos();
-	cur_pos_map = map_coord;
-	if (!box_selection)
-		angle_helper->getConstrainedCursorPositions(cur_pos_map, constrained_pos_map, constrained_pos, widget);
-	else
-	{
-		constrained_pos_map = cur_pos_map;
-		constrained_pos = cur_pos;
-	}
-	if (dragging && !box_selection)
-		updateStatusText();
-	
-	return true;
-}
-bool EditTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
-{
-	if (event->button() != Qt::LeftButton)
-		return false;
-	
-	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
-	Map* map = editor->getMap();
-	
-	if (no_more_effect_on_click)
-	{
-		no_more_effect_on_click = false;
-		return true;	
-	}
-	if (text_editor && hover_point == -2)
-	{
-		if (text_editor->mouseReleaseEvent(event, map_coord, widget))
-			return true;
-		else
-			finishEditing();
-	}
-
-	if (dragging)
-	{
-		// Dragging finished
-		if (hover_point >= -1)
-		{
-			updateDragging(map_coord);
-			finishEditing();
-		}
-		else if (box_selection)
-		{
-			// Do box selection
-			bool selection_changed = false;
-			
-			std::vector<Object*> objects;
-			map->findObjectsAtBox(click_pos_map, cur_pos_map, false, false, objects);
-			
-			if (!(event->modifiers() & selection_modifier))
-			{
-				if (map->getNumSelectedObjects() > 0)
-					selection_changed = true;
-				map->clearObjectSelection(false);
-			}
-			
-			int size = objects.size();
-			for (int i = 0; i < size; ++i)
-			{
-				if (!(event->modifiers() & selection_modifier))
-					map->addObjectToSelection(objects[i], i == size - 1);
-				else
-					map->toggleObjectSelection(objects[i], i == size - 1);
-				selection_changed = true;
-			}
-			
-			box_selection = false;
-			if (selection_changed)
-				updateStatusText();
-			updateDirtyRect();
-		}
-		
-		dragging = false;
-		updateStatusText();
-	}
-	else
-	{
-		bool single_object_selected = map->getNumSelectedObjects() == 1;
-		Object* single_selected_object = NULL;
-		if (single_object_selected)
-			single_selected_object = *map->selectedObjectsBegin();
-		
-		// Clicked - get objects below cursor
-		SelectionInfoVector objects;
-		map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(click_tolerance), false, false, false, false, objects);
 		if (objects.empty())
-			map->findObjectsAt(map_coord, 0.001f * widget->getMapView()->pixelToLength(1.5f * click_tolerance), false, true, false, false, objects);
-		
-		// Selection logic, trying to select the most relevant object(s)
-		if (!(event->modifiers() & selection_modifier) || map->getNumSelectedObjects() == 0)
 		{
-			if (hover_point >= -1)
-				return true;	// Clicked a handle or the bounding rect, do nothing
+			// Clicked on empty space, deselect everything
+			selection_changed = map->getNumSelectedObjects() > 0;
+			last_results.clear();
+			map->clearObjectSelection(true);
+		}
+		else if (!last_results.empty() && selectionInfosEqual(objects, last_results))
+		{
+			// If this result is the same as last time, select next object
+			next_object_to_select = next_object_to_select % last_results_ordered.size();
 			
-			if (objects.empty())
+			map->clearObjectSelection(false);
+			map->addObjectToSelection(last_results_ordered[next_object_to_select].second, true);
+			selection_changed = true;
+			
+			++next_object_to_select;
+		}
+		else
+		{
+			// Results different - select object with highest priority, if it is not the same as before
+			last_results = objects;
+			std::sort(objects.begin(), objects.end(), sortObjects);
+			last_results_ordered = objects;
+			next_object_to_select = 1;
+			
+			map->clearObjectSelection(false);
+			if (single_selected_object == objects.begin()->second)
 			{
-				// Clicked on empty space, deselect everything
-				last_results.clear();
-				map->clearObjectSelection(true);
-			}
-			else if (!last_results.empty() && selectionInfosEqual(objects, last_results))
-			{
-				// If this result is the same as last time, select next object
 				next_object_to_select = next_object_to_select % last_results_ordered.size();
-				
-				map->clearObjectSelection(false);
-				map->addObjectToSelection(last_results_ordered[next_object_to_select].second, true);
-				
+				map->addObjectToSelection(objects[next_object_to_select].second, true);
 				++next_object_to_select;
 			}
 			else
-			{
-				// Results different - select object with highest priority, if it is not the same as before
-				last_results = objects;
-				std::sort(objects.begin(), objects.end(), sortObjects);
-				last_results_ordered = objects;
-				next_object_to_select = 1;
-				
-				map->clearObjectSelection(false);
-				if (single_selected_object == objects.begin()->second)
-				{
-					next_object_to_select = next_object_to_select % last_results_ordered.size();
-					map->addObjectToSelection(objects[next_object_to_select].second, true);
-					++next_object_to_select;
-				}
-				else
-					map->addObjectToSelection(objects.begin()->second, true);
-			}
+				map->addObjectToSelection(objects.begin()->second, true);
+			
+			selection_changed = true;
+		}
+	}
+	else
+	{
+		// Shift held and something is already selected
+		if (objects.empty())
+		{
+			// do nothing
+			selection_changed = false;
+		}
+		else if (!last_results.empty() && selectionInfosEqual(objects, last_results))
+		{
+			// Toggle last selected object - must work the same way, regardless if other objects are selected or not
+			next_object_to_select = next_object_to_select % last_results_ordered.size();
+			
+			if (map->toggleObjectSelection(last_results_ordered[next_object_to_select].second, true) == false)
+				++next_object_to_select;	// only advance if object has been deselected
+			selection_changed = true;
 		}
 		else
 		{
-			// Shift held and something is already selected
-			if (objects.empty())
-			{
-				// do nothing
-			}
-			else if (!last_results.empty() && selectionInfosEqual(objects, last_results))
-			{
-				// Toggle last selected object - must work the same way, regardless if other objects are selected or not
-				next_object_to_select = next_object_to_select % last_results_ordered.size();
-				
-				if (map->toggleObjectSelection(last_results_ordered[next_object_to_select].second, true) == false)
-					++next_object_to_select;	// only advance if object has been deselected
-			}
-			else
-			{
-				// Toggle selection of highest priority object
-				last_results = objects;
-				std::sort(objects.begin(), objects.end(), sortObjects);
-				last_results_ordered = objects;
-				
-				map->toggleObjectSelection(objects.begin()->second, true);
-			}
+			// Toggle selection of highest priority object
+			last_results = objects;
+			std::sort(objects.begin(), objects.end(), sortObjects);
+			last_results_ordered = objects;
+			
+			map->toggleObjectSelection(objects.begin()->second, true);
+			selection_changed = true;
 		}
 	}
 	
-	return true;
+	return selection_changed;
 }
-bool EditTool::sortObjects(const std::pair<int, Object*>& a, const std::pair<int, Object*>& b)
+
+bool ObjectSelector::selectBox(MapCoordF corner1, MapCoordF corner2, bool toggle)
+{
+	bool selection_changed = false;
+	
+	std::vector<Object*> objects;
+	map->findObjectsAtBox(corner1, corner2, false, false, objects);
+	
+	if (!toggle)
+	{
+		if (map->getNumSelectedObjects() > 0)
+			selection_changed = true;
+		map->clearObjectSelection(false);
+	}
+	
+	int size = objects.size();
+	for (int i = 0; i < size; ++i)
+	{
+		if (toggle)
+			map->toggleObjectSelection(objects[i], i == size - 1);
+		else
+			map->addObjectToSelection(objects[i], i == size - 1);
+			
+		selection_changed = true;
+	}
+	
+	return selection_changed;
+}
+
+bool ObjectSelector::sortObjects(const std::pair< int, Object* >& a, const std::pair< int, Object* >& b)
 {
 	if (a.first != b.first)
 		return a.first < b.first;
@@ -527,182 +169,286 @@ bool EditTool::sortObjects(const std::pair<int, Object*>& a, const std::pair<int
 	
 	return a_area < b_area;
 }
-bool EditTool::selectionInfosEqual(const SelectionInfoVector& a, const SelectionInfoVector& b)
+
+bool ObjectSelector::selectionInfosEqual(const SelectionInfoVector& a, const SelectionInfoVector& b)
 {
 	return a.size() == b.size() && std::equal(a.begin(), a.end(), b.begin());
 }
 
-bool EditTool::keyPressEvent(QKeyEvent* event)
+
+ObjectMover::ObjectMover(Map* map, const MapCoordF& start_pos)
+: map(map), start_position(start_pos), prev_drag_x(0), prev_drag_y(0), constraints_calculated(true)
 {
-	if (text_editor)
+}
+
+void ObjectMover::setStartPos(const MapCoordF& start_pos)
+{
+	this->start_position = start_pos;
+}
+
+void ObjectMover::addObject(Object* object)
+{
+	objects.insert(object);
+}
+
+void ObjectMover::addPoint(PathObject* object, int point_index)
+{
+	QSet< int >* index_set = insertPointObject(object);
+	index_set->insert(point_index);
+
+	constraints_calculated = false;
+}
+
+void ObjectMover::addLine(PathObject* object, int start_point_index)
+{
+	QSet< int >* index_set = insertPointObject(object);
+	index_set->insert(start_point_index);
+	index_set->insert(start_point_index + 1);
+	if (object->getCoordinate(start_point_index).isCurveStart())
 	{
-		if (event->key() == Qt::Key_Escape)
-		{
-			finishEditing(); 
-			return true;
-		}
-		return text_editor->keyPressEvent(event);
+		index_set->insert(start_point_index + 2);
+		index_set->insert(start_point_index + 3);
 	}
 	
-	int num_selected_objects = editor->getMap()->getNumSelectedObjects();
+	constraints_calculated = false;
+}
+
+void ObjectMover::addTextHandle(TextObject* text, int handle)
+{
+	text_handles.insert(text, handle);
+}
+
+void ObjectMover::move(const MapCoordF& cursor_pos, bool move_opposite_handles, qint64* out_dx, qint64* out_dy)
+{
+	qint64 delta_x = qRound64(1000 * (cursor_pos.getX() - start_position.getX())) - prev_drag_x;
+	qint64 delta_y = qRound64(1000 * (cursor_pos.getY() - start_position.getY())) - prev_drag_y;
+	if (out_dx)
+		*out_dx = delta_x;
+	if (out_dy)
+		*out_dy = delta_y;
 	
-	// Delete objects if the delete key is pressed, or backspace key on Mac OSX, since that is the convention for Mac apps
-	#ifdef Q_OS_MAC
-		Qt::Key delete_key = Qt::Key_Backspace;
-	#else
-		Qt::Key delete_key = Qt::Key_Delete;
-	#endif
+	move(delta_x, delta_y, move_opposite_handles);
+	
+	prev_drag_x += delta_x;
+	prev_drag_y += delta_y;
+}
 
-	if (num_selected_objects > 0 && event->key() == delete_key)
-		deleteSelectedObjects();
-	else if (event->key() == Qt::Key_Tab)
+void ObjectMover::move(qint64 dx, qint64 dy, bool move_opposite_handles)
+{
+	calculateConstraints();
+	
+	// Move objects
+	for (QSet< Object* >::iterator it = objects.begin(), end = objects.end(); it != end; ++it)
+		(*it)->move(dx, dy);
+	
+	// Move points
+	for (QHash< PathObject*, QSet< int > >::const_iterator it = points.constBegin(), end = points.constEnd(); it != end; ++it)
 	{
-		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(editor->getSymbolWidget()->getSingleSelectedSymbol());
-		if (draw_tool)
-			editor->setTool(draw_tool);
-	}
-	else if (event->key() == Qt::Key_Space)
-	{
-		space_pressed = true;
-		updateStatusText();
-	}
-	else if (event->key() == control_point_key)
-	{
-		control_pressed = true;
-
-		angle_helper->setActive(true);
-		if (dragging)
+		PathObject* path = it.key();
+		for (QSet< int >::const_iterator pit = it.value().constBegin(), pit_end = it.value().constEnd(); pit != pit_end; ++pit)
 		{
-			updateDragging(cur_pos_map);
-			updatePreviewObjects();
+			MapCoord coord = path->getCoordinate(*pit);
+			coord.setRawX(coord.rawX() + dx);
+			coord.setRawY(coord.rawY() + dy);
+			path->setCoordinate(*pit, coord);
 		}
+	}
+	
+	// Apply handle constraints
+	for (size_t i = 0, end = handle_constraints.size(); i < end; ++i)
+	{
+		OppositeHandleConstraint& constraint = handle_constraints[i];
+		if (!move_opposite_handles)
+			constraint.object->setCoordinate(constraint.opposite_handle_index, constraint.opposite_handle_original_position);
+		else
+		{
+			MapCoord anchor_point = constraint.object->getCoordinate(constraint.curve_anchor_index);
+			MapCoordF to_hover_point = MapCoordF(constraint.object->getCoordinate(constraint.moved_handle_index) - anchor_point);
+			to_hover_point.normalize();
+			
+			MapCoord control = constraint.object->getCoordinate(constraint.opposite_handle_index);
+			control.setX(anchor_point.xd() - constraint.opposite_handle_dist * to_hover_point.getX());
+			control.setY(anchor_point.yd() - constraint.opposite_handle_dist * to_hover_point.getY());
+			constraint.object->setCoordinate(constraint.opposite_handle_index, control);
+		}
+	}
+	
+	// Move box text object handles
+	for (QHash< TextObject*, int >::const_iterator it = text_handles.constBegin(), end = text_handles.constEnd(); it != end; ++it)
+	{
+		TextObject* text_object = it.key();
+		TextSymbol* text_symbol = text_object->getSymbol()->asText();
 		
-		updateStatusText();
+		QTransform transform;
+		transform.rotate(text_object->getRotation() * 180 / M_PI);
+		QPointF delta_point = transform.map(QPointF(dx, dy));
+		
+		int move_point = it.value();
+		int x_sign = (move_point <= 1) ? 1 : -1;
+		int y_sign = (move_point >= 1 && move_point <= 2) ? 1 : -1;
+		
+		double new_box_width = qMax(text_symbol->getFontSize() / 2, text_object->getBoxWidth() + 0.001 * x_sign * delta_point.x());
+		double new_box_height = qMax(text_symbol->getFontSize() / 2, text_object->getBoxHeight() + 0.001 * y_sign * delta_point.y());
+		
+		text_object->move(dx / 2, dy / 2);
+		text_object->setBox(text_object->getAnchorCoordF().getIntX(), text_object->getAnchorCoordF().getIntY(), new_box_width, new_box_height);
 	}
-	else if (event->key() == selection_key)
-	{
-		shift_pressed = true;
-		if (dragging)
-		{
-			updateDragging(cur_pos_map);
-			updatePreviewObjects();
-		}
-		updateStatusText();
-	}
+}
+
+QSet< int >* ObjectMover::insertPointObject(PathObject* object)
+{
+	if (!points.contains(object))
+		return &points.insert(object, QSet< int >()).value();
 	else
-		return false;
-	
-	return true;
-}
-bool EditTool::keyReleaseEvent(QKeyEvent* event)
-{
-	if (text_editor)
-		return text_editor->keyReleaseEvent(event);
-	
-	if (event->key() == Qt::Key_Space)
-	{
-		space_pressed = false;
-		updateStatusText();
-	}
-	else if (event->key() == control_point_key)
-	{
-		control_pressed = false;
-		
-		angle_helper->setActive(false);
-		if (dragging)
-		{
-			updateDragging(cur_pos_map);
-			updatePreviewObjects();
-		}
-		
-		updateStatusText();
-	}
-	else if (event->key() == selection_key)
-	{
-		shift_pressed = false;
-		if (dragging)
-		{
-			updateDragging(cur_pos_map);
-			updatePreviewObjects();
-		}
-		updateStatusText();
-	}
-	
-	return false;
-}
-void EditTool::focusOutEvent(QFocusEvent* event)
-{
-	// Deactivate all modifiers - not always correct, but should be wrong only in very unusual cases and better than leaving the modifiers on forever
-	control_pressed = false;
-	angle_helper->setActive(false);
-	shift_pressed = false;
-	space_pressed = false;
-	updateStatusText();
+		return &points[object];
 }
 
-void EditTool::draw(QPainter* painter, MapWidget* widget)
+void ObjectMover::calculateConstraints()
 {
-	int num_selected_objects = editor->getMap()->getNumSelectedObjects();
-	if (num_selected_objects > 0)
+	if (constraints_calculated)
+		return;
+	handle_constraints.clear();
+	
+	// Remove all objects in the object list from the point list
+	for (QSet< Object* >::iterator it = objects.begin(), end = objects.end(); it != end; ++it)
 	{
-		editor->getMap()->drawSelection(painter, true, widget, renderables->isEmpty() ? NULL : renderables.data(), text_editor != NULL);
+		if ((*it)->getType() == Object::Path)
+			points.remove((*it)->asPath());
+		else if ((*it)->getType() == Object::Text)
+			text_handles.remove((*it)->asText());
+	}
+	
+	// Points
+	for (QHash< PathObject*, QSet< int > >::iterator it = points.begin(), end = points.end(); it != end; ++it)
+	{
+		PathObject* path = it.key();
+		QSet< int >& point_set = it.value();
 		
-		if (!text_editor)
+		// If end points of closed paths are contained in the move set,
+		// change them to the corresponding start points
+		// (as these trigger moving the end points automatically and are better to handle:
+		//  they are set as curve start points if a curve starts there, in contrast to the end points)
+		for (int i = 0; i < path->getNumParts(); ++i)
 		{
-			if (selection_extent.isValid())
+			PathObject::PathPart& part = path->getPart(i);
+			if (part.isClosed() && point_set.contains(part.end_index))
 			{
-				QPen pen((hover_point == -1) ? active_color : selection_color);
-				pen.setStyle(Qt::DashLine);
-				painter->setPen(pen);
-				painter->setBrush(Qt::NoBrush);
-				painter->drawRect(widget->mapToViewport(selection_extent));
+				point_set.remove(part.end_index);
+				point_set.insert(part.start_index);
+			}
+		}
+		
+		// Expand set of moved points: if curve points are moved, their handles must be moved too.
+		// Also find opposite handle constraints.
+		for (QSet< int >::iterator pit = point_set.begin(), pit_end = point_set.end(); pit != pit_end; ++pit)
+		{
+			int index = *pit;
+			bool could_be_handle = true;
+			PathObject::PathPart& part = path->findPartForIndex(index);
+			
+			// If a curve starts here, add first handle
+			if (path->getCoordinate(index).isCurveStart())
+			{
+				assert(index < path->getCoordinateCount() - 1);
+				point_set.insert(index + 1);
+				could_be_handle = false;
 			}
 			
-			if (num_selected_objects == 1)
+			// If a curve ends here, add last handle
+			int index_minus_3 = path->shiftedCoordIndex(index, -3, part);
+			if (index_minus_3 >= 0 &&
+				path->getCoordinate(index_minus_3).isCurveStart())
 			{
-				Object* selection = *editor->getMap()->selectedObjectsBegin();
-				drawPointHandles(hover_point, painter, selection, widget);
+				point_set.insert(path->shiftedCoordIndex(index, -1, part));
+				could_be_handle = false;
+			}
+			
+			// If this is a handle and the opposite handle is not moved, add constraint
+			if (!could_be_handle)
+				continue;
+			
+			int index_minus_2 = path->shiftedCoordIndex(index, -2, part);
+			if (index_minus_2 >= 0 &&
+				path->getCoordinate(index_minus_2).isCurveStart())
+			{
+				int index_plus_2 = path->shiftedCoordIndex(index, 2, part);
+				if (index_plus_2 < 0)
+					continue; // error
+				if (!point_set.contains(index_plus_2))
+				{
+					int index_plus_1 = path->shiftedCoordIndex(index, 1, part);
+					if (index_plus_1 < 0)
+						continue; // error
+					
+					if (path->getCoordinate(index_plus_1).isCurveStart())
+					{
+						OppositeHandleConstraint constraint;
+						constraint.object = path;
+						constraint.moved_handle_index = index;
+						constraint.curve_anchor_index = index_plus_1;
+						constraint.opposite_handle_index = index_plus_2;
+						constraint.opposite_handle_original_position = path->getCoordinate(constraint.opposite_handle_index);
+						constraint.opposite_handle_dist = constraint.opposite_handle_original_position.lengthTo(path->getCoordinate(constraint.curve_anchor_index));
+						handle_constraints.push_back(constraint);
+						continue;
+					}
+				}
+			}
+			
+			int index_minus_1 = path->shiftedCoordIndex(index, -1, part);
+			if (index_minus_1 >= 0 &&
+				!point_set.contains(index_minus_2) &&
+				path->getCoordinate(index_minus_1).isCurveStart())
+			{
+				int index_minus_4 = path->shiftedCoordIndex(index, -4, part);
+				if (index_minus_4 >= 0 &&
+					path->getCoordinate(index_minus_4).isCurveStart())
+				{
+					OppositeHandleConstraint constraint;
+					constraint.object = path;
+					constraint.moved_handle_index = index;
+					constraint.curve_anchor_index = index_minus_1;
+					constraint.opposite_handle_index = index_minus_2;
+					constraint.opposite_handle_original_position = path->getCoordinate(constraint.opposite_handle_index);
+					constraint.opposite_handle_dist = constraint.opposite_handle_original_position.lengthTo(path->getCoordinate(constraint.curve_anchor_index));
+					handle_constraints.push_back(constraint);
+					continue;
+				}
 			}
 		}
 	}
 	
-	// Angle helper
-	if (dragging && hover_point >= -1)
-		angle_helper->draw(painter, widget);
-	
-	// Text editor
-	if (text_editor)
-	{
-		painter->save();
-		widget->applyMapTransform(painter);
-		text_editor->draw(painter, widget);
-		painter->restore();
-	}
-	
-	// Box selection
-	if (dragging && box_selection)
-	{
-		painter->setPen(active_color);
-		painter->setBrush(Qt::NoBrush);
-		
-		QPoint point1 = widget->mapToViewport(click_pos_map).toPoint();
-		QPoint point2 = widget->mapToViewport(constrained_pos_map).toPoint();
-		QPoint top_left = QPoint(qMin(point1.x(), point2.x()), qMin(point1.y(), point2.y()));
-		QPoint bottom_right = QPoint(qMax(point1.x(), point2.x()), qMax(point1.y(), point2.y()));
-		
-		painter->drawRect(QRect(top_left, bottom_right - QPoint(1, 1)));
-		painter->setPen(qRgb(255, 255, 255));
-		painter->drawRect(QRect(top_left + QPoint(1, 1), bottom_right - QPoint(2, 2)));
-	}
+	constraints_calculated = true;
 }
 
-void EditTool::objectSelectionChanged()
+
+// Mac convention for selecting multiple items is the command key (In Qt the command key is ControlModifier),
+// for deleting it is the backspace key
+#ifdef Q_OS_MAC
+const Qt::KeyboardModifiers EditTool::selection_modifier = Qt::ControlModifier;
+const Qt::KeyboardModifiers EditTool::control_point_modifier = Qt::ShiftModifier;
+const Qt::Key EditTool::selection_key = Qt::Key_Control;
+const Qt::Key EditTool::control_point_key = Qt::Key_Shift;
+const Qt::Key EditTool::delete_object_key = Qt::Key_Backspace;
+#else
+const Qt::KeyboardModifiers EditTool::selection_modifier = Qt::ShiftModifier;
+const Qt::KeyboardModifiers EditTool::control_point_modifier = Qt::ControlModifier;
+const Qt::Key EditTool::selection_key = Qt::Key_Shift;
+const Qt::Key EditTool::control_point_key = Qt::Key_Control;
+const Qt::Key EditTool::delete_object_key = Qt::Key_Delete;
+#endif
+
+EditTool::EditTool(MapEditorController* editor, MapEditorTool::Type type, SymbolWidget* symbol_widget, QAction* tool_button)
+ : MapEditorToolBase(QCursor(QPixmap(":/images/cursor-hollow.png"), 1, 1), type, editor, tool_button),
+   object_selector(new ObjectSelector(editor->getMap())),
+   symbol_widget(symbol_widget)
 {
-	updateStatusText();
-	updateDirtyRect();
-	if (calculateSelectedBoxTextHandles(box_text_handles, editor->getMap()))
-		updateDirtyRect();
+	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
 }
+EditTool::~EditTool()
+{
+}
+
 void EditTool::selectedSymbolsChanged()
 {
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
@@ -712,331 +458,90 @@ void EditTool::selectedSymbolsChanged()
 		editor->setTool(draw_tool);
 	}
 }
-void EditTool::textSelectionChanged(bool text_change)
-{
-	updatePreviewObjects(true);
-}
-
-void EditTool::updateStatusText()
-{
-	if (dragging && !box_selection)
-	{
-		QString helper_remarks = "";
-		if (!angle_helper->isActive())
-			helper_remarks += tr("<u>Ctrl</u> for fixed angles");
-		if (!shift_pressed && opposite_curve_handle_index >= 0)
-		{
-			if (!helper_remarks.isEmpty())
-				helper_remarks += ", ";
-			helper_remarks += tr("<u>Shift</u> to keep opposite handle position");
-		}
-		
-		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
-		setStatusBarText(tr("<b>Coordinate offset [mm]:</b> %1, %2  <b>Distance [m]:</b> %3  %4")
-						  .arg(drag_vector.getX(), 0, 'f', 1)
-						  .arg(-drag_vector.getY(), 0, 'f', 1)
-						  .arg(0.001 * editor->getMap()->getScaleDenominator() * drag_vector.length(), 0, 'f', 1)
-						  .arg(helper_remarks.isEmpty() ? "" : ("(" + helper_remarks + ")")));
-		return;
-	}
-	
-	QString str = tr("<b>Click</b> to select an object, <b>Drag</b> for box selection, <b>Shift</b> to toggle selection");
-	if (editor->getMap()->getNumSelectedObjects() > 0)
-	{
-		str += tr(", <b>Del</b> to delete");
-		
-		if (editor->getMap()->getNumSelectedObjects() == 1)
-		{
-			Object* single_selected_object = *editor->getMap()->selectedObjectsBegin();
-			if (single_selected_object->getType() == Object::Path)
-			{
-				if (control_pressed)
-					str = tr("<b>Ctrl+Click</b> on point to delete it, on path to add a new point, with <b>Space</b> to make it a dash point");
-				else if (space_pressed)
-					str = tr("<b>Space+Click</b> on point to switch between dash and normal point");
-				else
-					str += tr("; Try <u>Ctrl</u>, <u>Space</u>");
-			}
-		}
-	}
-	setStatusBarText(str);
-}
-
-void EditTool::updatePreviewObjects(bool force)
-{
-	preview_update_triggered = false;
-	if (force || !renderables->isEmpty())
-	{
-		updateSelectionEditPreview(*renderables);
-		updateDirtyRect();
-	}
-}
-void EditTool::updateDirtyRect()
-{
-	selection_extent = QRectF();
-	editor->getMap()->includeSelectionRect(selection_extent);
-	
-	QRectF rect = selection_extent;
-	bool single_object_selected = editor->getMap()->getNumSelectedObjects() == 1;
-	int pixel_border = single_object_selected ? 6 : 1;
-	
-	// For selected paths, include the control points
-	if (single_object_selected)
-	{
-		Object* object = *editor->getMap()->selectedObjectsBegin();
-		includeControlPointRect(rect, object, box_text_handles);
-	}
-	
-	// Angle helper
-	if (dragging && hover_point >= -1)
-	{
-		angle_helper->includeDirtyRect(rect);
-		pixel_border = qMax(pixel_border, angle_helper->getDisplayRadius());
-	}
-	
-	// Text selection
-	if (text_editor)
-		text_editor->includeDirtyRect(rect);
-	
-	// Box selection
-	if (dragging && box_selection)
-	{
-		rectIncludeSafe(rect, click_pos_map.toQPointF());
-		rectIncludeSafe(rect, constrained_pos_map.toQPointF());
-	}
-	
-	if (rect.isValid())
-		editor->getMap()->setDrawingBoundingBox(rect, pixel_border, true);
-	else
-		editor->getMap()->clearDrawingBoundingBox();
-}
-
-void EditTool::updateHoverPoint(QPointF point, MapWidget* widget)
-{
-	int new_hover_point = findHoverPoint(point, (editor->getMap()->getNumSelectedObjects() == 1) ? *editor->getMap()->selectedObjectsBegin() : NULL, true, box_text_handles, &selection_extent, widget);
-	if (text_editor)
-		new_hover_point = -2;
-	if (new_hover_point != hover_point)
-	{
-		updateDirtyRect();
-		hover_point = new_hover_point;
-	}
-}
-void EditTool::updateDragging(const MapCoordF& cursor_pos_map)
-{
-	if (box_selection)
-		return;
-	
-	Map* map = editor->getMap();
-	
-	qint64 prev_drag_x = qRound64(1000 * (constrained_pos_map.getX() - click_pos_map.getX()));
-	qint64 prev_drag_y = qRound64(1000 * (constrained_pos_map.getY() - click_pos_map.getY()));
-	
-	angle_helper->getConstrainedCursorPositions(cursor_pos_map, constrained_pos_map, constrained_pos, cur_map_widget);
-	
-	qint64 delta_x = qRound64(1000 * (constrained_pos_map.getX() - click_pos_map.getX())) - prev_drag_x;
-	qint64 delta_y = qRound64(1000 * (constrained_pos_map.getY() - click_pos_map.getY())) - prev_drag_y;
-	
-	Object::Type first_selected_object_type = (*map->selectedObjectsBegin())->getType();
-	if (hover_point >= 0 && first_selected_object_type == Object::Text && (reinterpret_cast<TextObject*>(*map->selectedObjectsBegin())->hasSingleAnchor() == false))
-	{
-		// Dragging a box text object handle
-		TextObject* text_object = reinterpret_cast<TextObject*>(*map->selectedObjectsBegin());
-		TextSymbol* text_symbol = reinterpret_cast<TextSymbol*>(text_object->getSymbol());
-		
-		QTransform transform;
-		transform.rotate(text_object->getRotation() * 180 / M_PI);
-		QPointF delta_point = transform.map(QPointF(delta_x, delta_y));
-		
-		int x_sign = (hover_point <= 1) ? 1 : -1;
-		int y_sign = (hover_point >= 1 && hover_point <= 2) ? 1 : -1;
-		
-		double new_box_width = qMax(text_symbol->getFontSize() / 2, text_object->getBoxWidth() + 0.001 * x_sign * delta_point.x());
-		double new_box_height = qMax(text_symbol->getFontSize() / 2, text_object->getBoxHeight() + 0.001 * y_sign * delta_point.y());
-		
-		text_object->move(delta_x / 2, delta_y / 2);
-		text_object->setBox(text_object->getAnchorCoordF().getIntX(), text_object->getAnchorCoordF().getIntY(), new_box_width, new_box_height);
-	}
-	else if (hover_point == -1 || (map->getNumSelectedObjects() == 1 &&
-		(first_selected_object_type == Object::Point || first_selected_object_type == Object::Text)))
-	{
-		Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
-		for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
-			(*it)->move(delta_x, delta_y);
-	}
-	else
-	{
-		assert(map->getNumSelectedObjects() == 1);
-		Object* object = *map->selectedObjectsBegin();
-		assert(object->getType() == Object::Path);
-		PathObject* path = reinterpret_cast<PathObject*>(object);
-		assert(hover_point >= 0 && hover_point < path->getCoordinateCount());
-		
-		MapCoord coord = path->getCoordinate(hover_point);
-		coord.setRawX(coord.rawX() + delta_x);
-		coord.setRawY(coord.rawY() + delta_y);
-		path->setCoordinate(hover_point, coord);
-		
-		// Move curve handles with the point they extend from
-		if (coord.isCurveStart())
-		{
-			assert(hover_point < path->getCoordinateCount() - 1);
-			MapCoord control = path->getCoordinate(hover_point + 1);
-			control.setRawX(control.rawX() + delta_x);
-			control.setRawY(control.rawY() + delta_y);
-			path->setCoordinate(hover_point + 1, control);
-		}
-		
-		int hover_point_minus_3 = path->shiftedCoordIndex(hover_point, -3, path->findPartForIndex(hover_point));
-		if (hover_point_minus_3 >= 0 && path->getCoordinate(hover_point_minus_3).isCurveStart())
-		{
-			int index = path->shiftedCoordIndex(hover_point, -1, path->findPartForIndex(hover_point));
-			MapCoord control = path->getCoordinate(index);
-			control.setRawX(control.rawX() + delta_x);
-			control.setRawY(control.rawY() + delta_y);
-			path->setCoordinate(index, control);
-		}
-		
-		// Move opposite curve handles
-		if (opposite_curve_handle_index >= 0)
-		{
-			if (shift_pressed)
-				path->setCoordinate(opposite_curve_handle_index, opposite_curve_handle_original_position);
-			else
-			{
-				MapCoord anchor_point = path->getCoordinate(curve_anchor_index);
-				MapCoordF to_hover_point = MapCoordF(coord.xd() - anchor_point.xd(), coord.yd() - anchor_point.yd());
-				to_hover_point.normalize();
-				
-				MapCoord control = path->getCoordinate(opposite_curve_handle_index);
-				control.setX(anchor_point.xd() - opposite_curve_handle_dist * to_hover_point.getX());
-				control.setY(anchor_point.yd() - opposite_curve_handle_dist * to_hover_point.getY());
-				path->setCoordinate(opposite_curve_handle_index, control);
-			}
-		}
-	}
-	
-	if (calculateSelectedBoxTextHandles(box_text_handles, map))
-		updateDirtyRect();
-}
-
-bool EditTool::hoveringOverSingleText(MapCoordF cursor_pos_map)
-{
-	if (hover_point != -2)
-		return false;
-	
-	Map* map = editor->getMap();
-	Object* single_selected_object = (map->getNumSelectedObjects() == 1) ? *map->selectedObjectsBegin() : NULL;
-	if (single_selected_object && single_selected_object->getType() == Object::Text)
-	{
-		TextObject* text_object = reinterpret_cast<TextObject*>(single_selected_object);
-		return text_object->calcTextPositionAt(cursor_pos_map, true) >= 0;
-	}
-	return false;
-}
-
-void EditTool::startEditing()
-{
-	startEditingSelection(*old_renderables, &undo_duplicates);
-	
-	// Save original extent to be able to mark it as dirty later
-	original_selection_extent = selection_extent;
-}
-void EditTool::finishEditing()
-{
-	Map* map = editor->getMap();
-	bool create_undo_step = true;
-	bool delete_objects = false;
-	
-	if (text_editor)
-	{
-		delete text_editor;
-		text_editor = NULL;
-		
-		TextObject* text_object = reinterpret_cast<TextObject*>(*editor->getMap()->selectedObjectsBegin());
-		if (text_object->getText().isEmpty())
-		{
-			text_object->setText(old_text);
-			text_object->setHorizontalAlignment((TextObject::HorizontalAlignment)old_horz_alignment);
-			text_object->setVerticalAlignment((TextObject::VerticalAlignment)old_vert_alignment);
-			create_undo_step = false;
-			delete_objects = true;
-		}
-		else if (text_object->getText() == old_text && (int)text_object->getHorizontalAlignment() == old_horz_alignment && (int)text_object->getVerticalAlignment() == old_vert_alignment)
-			create_undo_step = false;
-	}
-	
-	finishEditingSelection(*renderables, *old_renderables, create_undo_step, &undo_duplicates, delete_objects);
-	
-	map->setObjectAreaDirty(original_selection_extent);
-	map->setObjectsDirty();
-	
-	// updateDirtyRect() included here:
-	map->emitSelectionEdited();
-	
-	if (delete_objects)
-		deleteSelectedObjects();
-}
-
-void EditTool::updateAngleHelper(const MapCoordF& cursor_pos)
-{
-	Map* map = editor->getMap();
-	
-	angle_helper->setCenter(cursor_pos);
-	angle_helper->clearAngles();
-	
-	Object::Type first_selected_object_type = (*map->selectedObjectsBegin())->getType();
-	if (hoveringOverFrame() || (map->getNumSelectedObjects() == 1 &&
-		(first_selected_object_type == Object::Point || first_selected_object_type == Object::Text)))
-	{
-		angle_helper->addDefaultAnglesDeg(0);
-	}
-	else
-	{
-		assert(map->getNumSelectedObjects() == 1);
-		Object* object = *map->selectedObjectsBegin();
-		assert(object->getType() == Object::Path);
-		PathObject* path = reinterpret_cast<PathObject*>(object);
-		assert(hover_point >= 0 && hover_point < path->getCoordinateCount());
-		
-		bool forward_ok = false;
-		MapCoordF forward_tangent = PathCoord::calculateTangent(path->getRawCoordinateVector(), hover_point, false, forward_ok);
-		bool backward_ok = false;
-		MapCoordF backward_tangent = PathCoord::calculateTangent(path->getRawCoordinateVector(), hover_point, true, backward_ok);
-		
-		if (forward_ok)
-		{
-			angle_helper->addAngle(-forward_tangent.getAngle());
-			angle_helper->addAngle(-forward_tangent.getAngle() + M_PI);
-			if (!backward_ok)
-			{
-				angle_helper->addAngle(-forward_tangent.getAngle() + M_PI/2);
-				angle_helper->addAngle(-forward_tangent.getAngle() + 3*M_PI/2);
-			}
-		}
-		if (backward_ok)
-		{
-			angle_helper->addAngle(-backward_tangent.getAngle());
-			angle_helper->addAngle(-backward_tangent.getAngle() + M_PI);
-			if (!forward_ok)
-			{
-				angle_helper->addAngle(-backward_tangent.getAngle() + M_PI/2);
-				angle_helper->addAngle(-backward_tangent.getAngle() + 3*M_PI/2);
-			}
-		}
-		if (forward_ok && backward_ok)
-		{
-			double angle = (-backward_tangent.getAngle() - forward_tangent.getAngle()) / 2;
-			angle_helper->addAngle(angle);
-			angle_helper->addAngle(angle + M_PI/2);
-			angle_helper->addAngle(angle + M_PI);
-			angle_helper->addAngle(angle + 3*M_PI/2);
-		}
-	}
-}
 
 void EditTool::deleteSelectedObjects()
 {
 	editor->getMap()->deleteSelectedObjects();
 	updateStatusText();
+}
+
+void EditTool::createReplaceUndoStep(Object* object)
+{
+	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());	// TODO: use optimized undo step
+	Object* undo_duplicate = object->duplicate();
+	undo_duplicate->setMap(map());
+	undo_step->addObject(object, undo_duplicate);
+	map()->objectUndoManager().addNewUndoStep(undo_step);
+}
+
+bool EditTool::pointOverRectangle(QPointF point, const QRectF& rect)
+{
+	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
+	if (point.x() < rect.left() - click_tolerance) return false;
+	if (point.y() < rect.top() - click_tolerance) return false;
+	if (point.x() > rect.right() + click_tolerance) return false;
+	if (point.y() > rect.bottom() + click_tolerance) return false;
+	if (point.x() > rect.left() + click_tolerance &&
+		point.y() > rect.top() + click_tolerance &&
+		point.x() < rect.right() - click_tolerance &&
+		point.y() < rect.bottom() - click_tolerance) return false;
+	return true;
+}
+
+MapCoordF EditTool::closestPointOnRect(MapCoordF point, const QRectF& rect)
+{
+	MapCoordF result = point;
+	if (result.getX() < rect.left()) result.setX(rect.left());
+	if (result.getY() < rect.top()) result.setY(rect.top());
+	if (result.getX() > rect.right()) result.setX(rect.right());
+	if (result.getY() > rect.bottom()) result.setY(rect.bottom());
+	if (rect.height() > 0 && rect.width() > 0)
+	{
+		if ((result.getX() - rect.left()) / rect.width() > (result.getY() - rect.top()) / rect.height())
+		{
+			if ((result.getX() - rect.left()) / rect.width() > (rect.bottom() - result.getY()) / rect.height())
+				result.setX(rect.right());
+			else
+				result.setY(rect.top());
+		}
+		else
+		{
+			if ((result.getX() - rect.left()) / rect.width() > (rect.bottom() - result.getY()) / rect.height())
+				result.setY(rect.bottom());
+			else
+				result.setX(rect.left());
+		}
+	}
+	return result;
+}
+
+void EditTool::setupAngleHelperFromSelectedObjects()
+{
+	angle_helper->clearAngles();
+	// TODO!
+	angle_helper->addDefaultAnglesDeg(0);
+}
+
+void EditTool::drawBoundingBox(QPainter* painter, MapWidget* widget, const QRectF& bounding_box, const QRgb& color)
+{
+	QPen pen(color);
+	pen.setStyle(Qt::DashLine);
+	painter->setPen(pen);
+	painter->setBrush(Qt::NoBrush);
+	painter->drawRect(widget->mapToViewport(bounding_box));
+}
+
+void EditTool::drawSelectionBox(QPainter* painter, MapWidget* widget, const MapCoordF& corner1, const MapCoordF& corner2)
+{
+	painter->setPen(active_color);
+	painter->setBrush(Qt::NoBrush);
+	
+	QPoint point1 = widget->mapToViewport(corner1).toPoint();
+	QPoint point2 = widget->mapToViewport(corner2).toPoint();
+	QPoint top_left = QPoint(qMin(point1.x(), point2.x()), qMin(point1.y(), point2.y()));
+	QPoint bottom_right = QPoint(qMax(point1.x(), point2.x()), qMax(point1.y(), point2.y()));
+	
+	painter->drawRect(QRect(top_left, bottom_right - QPoint(1, 1)));
+	painter->setPen(qRgb(255, 255, 255));
+	painter->drawRect(QRect(top_left + QPoint(1, 1), bottom_right - QPoint(2, 2)));
 }

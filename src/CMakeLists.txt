@@ -92,6 +92,8 @@ set(Mapper_Common_SRCS
  tool_helpers.cpp
  tool_pan.cpp
  tool_edit.cpp
+ tool_edit_point.cpp
+ tool_edit_line.cpp
  tool_draw_line_and_area.cpp
  tool_draw_point.cpp
  tool_draw_path.cpp
@@ -172,6 +174,8 @@ set(Mapper_Common_MOC_INPUT
  tool_draw_rectangle.h
  tool_draw_text.h
  tool_edit.h
+ tool_edit_point.h
+ tool_edit_line.h
  tool_helpers.h
  tool_measure.h
  tool_pan.h

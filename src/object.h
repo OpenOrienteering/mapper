@@ -194,6 +194,7 @@ public:
 	int shiftedCoordIndex(int base_index, int offset, PathPart& part); // Returns the base_index shifted by offset, correctly handling holes in areas and closed paths. Returns -1 if the index is invalid (happens if going over a path end or after looping around once in a closed path)
 	PathPart& findPartForIndex(int coords_index);
 	int findPartIndexForIndex(int coords_index);
+	bool isCurveHandle(int coord_index);
 	
 	inline int getNumParts() const {return (int)parts.size();}
 	inline PathPart& getPart(int index) {return parts[index];}
