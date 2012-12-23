@@ -2249,7 +2249,7 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords, int delete_
 				}
 				else if (delete_bezier_point_action == Settings::DeleteBezierPoint_ResetHandles)
 				{
-					double target_length = 0.4 * p0.lengthTo(q3);
+					double target_length = BEZIER_HANDLE_DISTANCE * p0.lengthTo(q3);
 					pfactor = target_length / qMax(p0.lengthTo(p1), 0.01);
 					qfactor = target_length / qMax(q3.lengthTo(q2), 0.01);
 				}

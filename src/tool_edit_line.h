@@ -43,6 +43,7 @@ public:
 	virtual ~EditLineTool();
 	
     virtual void mouseMove();
+    virtual void clickPress();
 	virtual void clickRelease();
 	
     virtual void dragStart();
@@ -60,6 +61,9 @@ protected:
 	
 	/// In addition to the base class implementation, updates the status text.
     virtual void updatePreviewObjects();
+	
+	/// Deletes the highlight object if it exists and correctly removes its renderables.
+	void deleteHighlightObject();
 	
 	void updateStatusText();
 	void updateHoverLine(MapCoordF cursor_pos);
@@ -83,6 +87,8 @@ protected:
 	
 	/// Is a box selection in progress?
 	bool box_selection;
+	
+	bool no_more_effect_on_click;
 	
 	/// Offset from cursor position to drag handle of moved element.
 	/// When snapping to another element, this offset must be corrected.

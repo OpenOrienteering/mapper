@@ -159,6 +159,9 @@ protected:
 	/** Deletes all selected objects and updates the status text. */
 	void deleteSelectedObjects();
 	
+	/** Creates a replace object undo step for the given object. */
+	void createReplaceUndoStep(Object* object);
+	
 	/** Returns if the point is inside the click_tolerance from the rect's border. */
 	bool pointOverRectangle(QPointF point, const QRectF& rect);
 	

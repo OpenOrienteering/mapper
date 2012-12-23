@@ -28,12 +28,14 @@
 #include "map.h"
 #include "map_editor.h"
 #include "map_widget.h"
+#include "map_undo.h"
 #include "object.h"
 #include "settings.h"
 #include "symbol_dock_widget.h"
 #include "tool_helpers.h"
 #include "object_text.h"
 #include "symbol_text.h"
+
 
 ObjectSelector::ObjectSelector(Map* map)
  : map(map)
@@ -461,6 +463,15 @@ void EditTool::deleteSelectedObjects()
 {
 	editor->getMap()->deleteSelectedObjects();
 	updateStatusText();
+}
+
+void EditTool::createReplaceUndoStep(Object* object)
+{
+	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());	// TODO: use optimized undo step
+	Object* undo_duplicate = object->duplicate();
+	undo_duplicate->setMap(map());
+	undo_step->addObject(object, undo_duplicate);
+	map()->objectUndoManager().addNewUndoStep(undo_step);
 }
 
 bool EditTool::pointOverRectangle(QPointF point, const QRectF& rect)

@@ -559,7 +559,7 @@ void DrawPathTool::createPreviewCurve(MapCoord position, float direction)
 	MapCoord previous_point = preview_path->getCoordinate(last - 3);
 	MapCoord last_point = preview_path->getCoordinate(last);
 	
-	double bezier_handle_distance = 0.4 * previous_point.lengthTo(last_point);
+	double bezier_handle_distance = BEZIER_HANDLE_DISTANCE * previous_point.lengthTo(last_point);
 	
 	preview_path->setCoordinate(last - 2, MapCoord(previous_point.xd() - bezier_handle_distance * sin(previous_point_direction),
 												   previous_point.yd() - bezier_handle_distance * cos(previous_point_direction)));

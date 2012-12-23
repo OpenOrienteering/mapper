@@ -53,6 +53,7 @@ EditLineTool::EditLineTool(MapEditorController* editor, QAction* tool_button, Sy
 	highlight_object = NULL;
 	highlight_renderables.reset(new MapRenderables(editor->getMap()));
 	box_selection = false;
+	no_more_effect_on_click = false;
 }
 
 EditLineTool::~EditLineTool()
@@ -67,8 +68,67 @@ void EditLineTool::mouseMove()
 	updateHoverLine(cur_pos_map);
 }
 
+void EditLineTool::clickPress()
+{
+	if (hover_object &&
+		hover_line >= 0 &&
+		active_modifiers & control_point_modifier)
+	{
+		// Toggle segment between straight line and curve
+		createReplaceUndoStep(hover_object);
+		
+		MapCoord& start_coord = hover_object->getCoordinate(hover_line);
+		if (start_coord.isCurveStart())
+		{
+			// Convert to straight segment
+			start_coord.setCurveStart(false);
+			hover_object->deleteCoordinate(hover_line + 2, false);
+			hover_object->deleteCoordinate(hover_line + 1, false);
+		}
+		else
+		{
+			// Convert to curve
+			start_coord.setCurveStart(true);
+			MapCoord end_coord = hover_object->getCoordinate(hover_line + 1);
+			double baseline = start_coord.lengthTo(end_coord);
+			
+			bool tangent_ok = false;
+			MapCoordF start_tangent = PathCoord::calculateTangent(hover_object->getRawCoordinateVector(), hover_line, true, tangent_ok);
+			if (!tangent_ok)
+				start_tangent = MapCoordF(end_coord - start_coord);
+			start_tangent.normalize();
+			
+			MapCoordF end_tangent = PathCoord::calculateTangent(hover_object->getRawCoordinateVector(), hover_line + 1, false, tangent_ok);
+			if (!tangent_ok)
+				end_tangent = MapCoordF(start_coord - end_coord);
+			else
+				end_tangent = -end_tangent;
+			end_tangent.normalize();
+			
+			double handle_distance = baseline * BEZIER_HANDLE_DISTANCE;
+			MapCoord handle = start_coord + (start_tangent * handle_distance).toMapCoord();
+			handle.setFlags(0);
+			hover_object->addCoordinate(hover_line + 1, handle);
+			handle = end_coord + (end_tangent * handle_distance).toMapCoord();
+			handle.setFlags(0);
+			hover_object->addCoordinate(hover_line + 2, handle);
+		}
+		
+		hover_object->update(true);
+		// Make sure that the highlight object is recreated
+		deleteHighlightObject();
+		updateHoverLine(cur_pos_map);
+		no_more_effect_on_click = true;
+	}
+}
+
 void EditLineTool::clickRelease()
 {
+	if (no_more_effect_on_click)
+	{
+		no_more_effect_on_click = false;
+		return;
+	}
 	if (hover_line >= -1)
 		return;
 	
@@ -79,6 +139,9 @@ void EditLineTool::clickRelease()
 
 void EditLineTool::dragStart()
 {
+	if (no_more_effect_on_click)
+		return;
+	
 	updateHoverLine(click_pos_map);
 	
 	Map* map = editor->getMap();
@@ -134,6 +197,9 @@ void EditLineTool::dragStart()
 
 void EditLineTool::dragMove()
 {
+	if (no_more_effect_on_click)
+		return;
+	
 	if (editing)
 	{
 		if (snapped_to_pos && handle_offset != MapCoordF(0, 0))
@@ -165,6 +231,12 @@ void EditLineTool::dragMove()
 
 void EditLineTool::dragFinish()
 {
+	if (no_more_effect_on_click)
+	{
+		no_more_effect_on_click = false;
+		return;
+	}
+	
 	if (editing)
 	{
 		finishEditing();
@@ -186,9 +258,10 @@ bool EditLineTool::keyPress(QKeyEvent* event)
 		deleteSelectedObjects();
 	else if (num_selected_objects > 0 && event->key() == Qt::Key_Escape)
 		editor->getMap()->clearObjectSelection(true);
-	else if (event->key() == Qt::Key_Control && editing)
+	else if (event->key() == Qt::Key_Control)
 	{
-		toggleAngleHelper();
+		if (editing)
+			toggleAngleHelper();
 	}
 	else if (event->key() == Qt::Key_Shift && editing)
 	{
@@ -293,6 +366,16 @@ void EditLineTool::updatePreviewObjects()
 	MapEditorToolBase::updatePreviewObjects();
 }
 
+void EditLineTool::deleteHighlightObject()
+{
+	if (highlight_object)
+	{
+		highlight_renderables->removeRenderablesOfObject(highlight_object, false);
+		delete highlight_object;
+		highlight_object = NULL;
+	}
+}
+
 void EditLineTool::updateStatusText()
 {
 	if (editing)
@@ -328,10 +411,10 @@ void EditLineTool::updateStatusText()
 		
 		if (map()->getNumSelectedObjects() <= max_objects_for_handle_display)
 		{
-			/*if (active_modifiers & Qt::ControlModifier)
-				str = tr("<b>Ctrl+Click</b> on point to delete it, on path to add a new point, with <b>Space</b> to make it a dash point");
+			if (active_modifiers & Qt::ControlModifier)
+				str = tr("<b>Ctrl+Click</b> on segment to toggle between straight and curved");
 			else
-				str += tr("; Try <u>Ctrl</u>");*/
+				str += tr("; Try <u>Ctrl</u>");
 		}
 	}
 	setStatusBarText(str);
@@ -384,10 +467,7 @@ void EditLineTool::updateHoverLine(MapCoordF cursor_pos)
 		hover_line = new_hover_line;
 		hover_object = new_hover_object;
 		
-		if (highlight_object)
-			highlight_renderables->removeRenderablesOfObject(highlight_object, false);
-		delete highlight_object;
-		highlight_object = NULL;
+		deleteHighlightObject();
 		if (hover_object)
 		{
 			// Extract hover line

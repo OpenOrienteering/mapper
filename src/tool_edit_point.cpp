@@ -347,11 +347,14 @@ bool EditPointTool::keyPress(QKeyEvent* event)
 		deleteSelectedObjects();
 	else if (num_selected_objects > 0 && event->key() == Qt::Key_Escape)
 		map()->clearObjectSelection(true);
-	else if (event->key() == Qt::Key_Control && editing)
+	else if (event->key() == Qt::Key_Control)
 	{
-		angle_helper->setActive(true);
-		calcConstrainedPositions(cur_map_widget);
-		dragMove();
+		if (editing)
+		{
+			angle_helper->setActive(true);
+			calcConstrainedPositions(cur_map_widget);
+			dragMove();
+		}
 	}
 	else if (event->key() == Qt::Key_Shift && editing)
 	{
@@ -682,15 +685,6 @@ void EditPointTool::startEditingSetup()
 			angle_helper->addAngle(angle + 3*M_PI/2);
 		}
 	}
-}
-
-void EditPointTool::createReplaceUndoStep(Object* object)
-{
-	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());	// TODO: use optimized undo step
-	Object* undo_duplicate = object->duplicate();
-	undo_duplicate->setMap(map());
-	undo_step->addObject(object, undo_duplicate);
-	map()->objectUndoManager().addNewUndoStep(undo_step);
 }
 
 bool EditPointTool::hoveringOverSingleText()

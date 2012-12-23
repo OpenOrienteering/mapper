@@ -79,8 +79,6 @@ protected:
 	void updateHoverPoint(MapCoordF cursor_pos);
 	/// Does additional editing setup required after calling startEditing().
 	void startEditingSetup();
-	/// Creates a replace object undo step for the given object.
-	void createReplaceUndoStep(Object* object);
 	
 	bool hoveringOverSingleText();
 	inline bool hoveringOverFrame() const {return hover_point == -1;}
