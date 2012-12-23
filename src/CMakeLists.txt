@@ -250,3 +250,10 @@ install(TARGETS Mapper
   RUNTIME DESTINATION "${MAPPER_RUNTIME_DESTINATION}"
   BUNDLE DESTINATION "${MAPPER_RUNTIME_DESTINATION}"
 )
+
+# Mapper.pro file
+
+set(MAPPER_PRO_GENERATOR "Generated in src/CMakeLists.txt from src/qmake/oo-mapper.pro.in")
+string(REPLACE ";" " \\\n  src/" MAPPER_PRO_HEADERS "src/${Mapper_Common_MOC_INPUT}")
+string(REPLACE ";" " \\\n  src/" MAPPER_PRO_SOURCES "src/${Mapper_Common_SRCS}")
+configure_file(qmake/oo-mapper.pro.in ${PROJECT_SOURCE_DIR}/oo-mapper.pro @ONLY)
