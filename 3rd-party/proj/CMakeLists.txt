@@ -37,6 +37,15 @@ if(NOT PROJ_MD5)
 endif(NOT PROJ_MD5)
 mark_as_advanced(PROJ_MD5)
 
+find_program(SH_PROGRAM sh
+  PATHS
+  "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\MSYS-1.0_is1;Inno Setup: App Path]/bin"
+  "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\MinGW;InstallLocation]/bin"
+  C:
+  C:/MinGW
+  PATH_SUFFIXES msys/1.0/bin)
+mark_as_advanced(SH_PROGRAM)
+
 if("${CMAKE_GENERATOR} ${CMAKE_EXTRA_GENERATOR}" MATCHES "Unix Makefiles" OR
    "${CMAKE_GENERATOR}" STREQUAL "MSYS Makefiles")
 	# use magic MAKE macro
@@ -48,15 +57,6 @@ else()
 	  "The 'make' command for building the Proj library")
 endif()
 mark_as_advanced(PROJ_MAKE_COMMAND)
-
-find_program(SH_PROGRAM sh 
-  PATHS 
-  "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\MSYS-1.0_is1;Inno Setup: App Path]/bin"
-  "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\MinGW;InstallLocation]/bin"
-  C:
-  C:/MinGW
-  PATH_SUFFIXES msys/1.0/bin)
-mark_as_advanced(SH_PROGRAM)
 
 # Build definition
 
