@@ -30,7 +30,7 @@
 #include "../src/georeferencing.h"
 #include "../src/map_grid.h"
 #include "../src/symbol_line.h"
-#include "../src/tool_edit.h"
+#include "../src/tool_edit_point.h"
 #include "../src/map_editor.h"
 #include "../src/map_widget.h"
 
@@ -160,7 +160,7 @@ void ToolsTest::editTool()
 	// Initialization
 	TestMap map;
 	TestMapEditor editor(map.map);
-	EditTool* tool = new EditTool(editor.editor, NULL, editor.editor->getSymbolWidget());	// TODO: Refactor EditTool: MapEditorController and SymbolWidget pointers could be unnecessary
+	EditTool* tool = new EditPointTool(editor.editor, NULL, editor.editor->getSymbolWidget());	// TODO: Refactor EditTool: MapEditorController and SymbolWidget pointers could be unnecessary
 	editor.editor->setTool(tool);
 	
 	// Move the first coordinate of the line object
