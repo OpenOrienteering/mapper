@@ -120,31 +120,31 @@ public slots:
 	void setPrintArea(const QRectF& area);
 	
 	/** Sets the paper size to be used. */
-	void setPaperSize(QPrinter::PaperSize size);
+	void setPaperSize(const QPrinter::PaperSize size);
 	
 	/** Sets a custom paper size with the given dimensions. */
-	void setCustomPaperSize(QSizeF dimensions);
+	void setCustomPaperSize(const QSizeF dimensions);
 	
 	/** Sets the page orientation. */
-	void setPageOrientation(QPrinter::Orientation orientation);
+	void setPageOrientation(const QPrinter::Orientation orientation);
 	
 	/** Sets the desired printing resolution in dpi. 
 	 *  The actual resolution will	be set by the printer. */
-	void setResolution(float dpi);
+	void setResolution(const float dpi);
 	
 	/** Sets the denominator of the map scale for printing. */
-	void setScale(int value);
+	void setScale(const int value);
 	
 	/** Controls whether to print templates. 
 	 *  If a MapView is given when enabling template printing, 
 	 *  it will determine the visibility of map and templates. */
-	void setPrintTemplates(bool visible, MapView* view = NULL);
+	void setPrintTemplates(const bool visible, MapView* view = NULL);
 	
 	/** Controls whether to print the map grid. */
-	void setPrintGrid(bool visible);
+	void setPrintGrid(const bool visible);
 	
 	/** Controls whether to print in overprinting simulation mode. */
-	void setSimulateOverprinting(bool enabled);
+	void setSimulateOverprinting(const bool enabled);
 	
 	/** Saves the print parameter (to the map). */
 	void saveParameters() const;

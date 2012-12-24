@@ -215,9 +215,9 @@ void MapPrinter::setPrintArea(const QRectF& area)
 }
 
 // slot
-void MapPrinter::setPaperSize(QPrinter::PaperSize size)
+void MapPrinter::setPaperSize(const QPrinter::PaperSize size)
 {
-	if (page_format.paper_size == QPrinter::Custom)
+	if (size == QPrinter::Custom)
 		setCustomPaperSize(print_area.size() * options.scale_adjustment);
 	else if (page_format.paper_size != size)
 	{
@@ -228,7 +228,7 @@ void MapPrinter::setPaperSize(QPrinter::PaperSize size)
 }
 
 // slot
-void MapPrinter::setCustomPaperSize(QSizeF dimensions)
+void MapPrinter::setCustomPaperSize(const QSizeF dimensions)
 {
 	if ((page_format.paper_size != QPrinter::Custom || 
 	     page_format.paper_dimensions != dimensions) &&
@@ -243,7 +243,7 @@ void MapPrinter::setCustomPaperSize(QSizeF dimensions)
 }
 
 // slot
-void MapPrinter::setPageOrientation(QPrinter::Orientation orientation)
+void MapPrinter::setPageOrientation(const QPrinter::Orientation orientation)
 {
 	if (page_format.paper_size == QPrinter::Custom)
 	{
@@ -291,7 +291,7 @@ void MapPrinter::updatePaperDimensions()
 }
 
 // slot
-void MapPrinter::setResolution(float dpi)
+void MapPrinter::setResolution(const float dpi)
 {
 	Q_ASSERT(dpi >= 0.05f);
 	if (options.resolution != dpi)
@@ -302,7 +302,7 @@ void MapPrinter::setResolution(float dpi)
 }
 
 // slot
-void MapPrinter::setScale(int value)
+void MapPrinter::setScale(const int value)
 {
 	if (options.scale != value)
 	{
@@ -315,7 +315,7 @@ void MapPrinter::setScale(int value)
 }
 
 // slot
-void MapPrinter::setPrintTemplates(bool visible, MapView* view)
+void MapPrinter::setPrintTemplates(const bool visible, MapView* view)
 {
 	if (options.show_templates != visible || view != view)
 	{
@@ -326,7 +326,7 @@ void MapPrinter::setPrintTemplates(bool visible, MapView* view)
 }
 
 // slot
-void MapPrinter::setPrintGrid(bool visible)
+void MapPrinter::setPrintGrid(const bool visible)
 {
 	if (options.show_grid != visible)
 	{
@@ -336,7 +336,7 @@ void MapPrinter::setPrintGrid(bool visible)
 }
 
 // slot
-void MapPrinter::setSimulateOverprinting(bool enabled)
+void MapPrinter::setSimulateOverprinting(const bool enabled)
 {
 	if (options.simulate_overprinting != enabled)
 	{
