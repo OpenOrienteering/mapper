@@ -281,11 +281,26 @@ void MapWidget::completeDragging(QPoint offset, qint64 dx, qint64 dy)
 	panView(dx, dy);
 }
 
-void MapWidget::ensureVisibilityOfRect(const QRectF& map_rect)
+void MapWidget::ensureVisibilityOfRect(const QRectF& map_rect, bool show_completely, bool zoom_in_steps)
 {
-	const int pixel_border = 70;	// amount in pixels that is scrolled "too much" if the rect is not completely visible
-	
+	// Amount in pixels that is scrolled "too much" if the rect is not completely visible
+	// TODO: change to absolute size using dpi value
+	const int pixel_border = 70;
 	QRectF viewport_rect = mapToViewport(map_rect);
+	
+	// TODO: this method assumes that the viewport is not rotated.
+	
+	if (!show_completely)
+	{
+		// Check if enough of the rect is visible
+		QRectF intersected_rect = QRectF(rect()).intersected(viewport_rect);
+		
+		float min_visible_area = 120 * 100;
+		float visible_area = intersected_rect.width() * intersected_rect.height();
+		if (visible_area >= min_visible_area)
+			return;
+	}
+	
 	if (rect().contains(viewport_rect.topLeft().toPoint()) && rect().contains(viewport_rect.bottomRight().toPoint()))
 		return;
 	
@@ -302,9 +317,9 @@ void MapWidget::ensureVisibilityOfRect(const QRectF& map_rect)
 	// If the rect is still not completely in view, we have to zoom out
 	viewport_rect = mapToViewport(map_rect);
 	if (!(rect().contains(viewport_rect.topLeft().toPoint()) && rect().contains(viewport_rect.bottomRight().toPoint())))
-		adjustViewToRect(map_rect);
+		adjustViewToRect(map_rect, zoom_in_steps);
 }
-void MapWidget::adjustViewToRect(const QRectF& map_rect)
+void MapWidget::adjustViewToRect(const QRectF& map_rect, bool zoom_in_steps)
 {
 	const int pixel_border = 15;
 	
@@ -312,10 +327,21 @@ void MapWidget::adjustViewToRect(const QRectF& map_rect)
 	view->setPositionY(qRound64(1000 * (map_rect.top() + map_rect.height() / 2)));
 	
 	// NOTE: The loop is an inelegant way to fight inaccuracies that occur somewhere ...
+	float initial_zoom = view->getZoom();
 	for (int i = 0; i < 10; ++i)
 	{
-		float zoom_factor = qMin(height() / (view->lengthToPixel(1000 * map_rect.height()) + 2*pixel_border), width() / (view->lengthToPixel(1000 * map_rect.width()) + 2*pixel_border));
-		view->setZoom(view->getZoom() * zoom_factor);
+		float zoom_factor = qMin(height() / (view->lengthToPixel(1000 * map_rect.height()) + 2*pixel_border),
+		                         width() / (view->lengthToPixel(1000 * map_rect.width()) + 2*pixel_border));
+		float zoom = view->getZoom() * zoom_factor;
+		if (zoom_in_steps)
+		{
+			zoom = log2(zoom);
+			zoom = (zoom - log2(initial_zoom)) * 2.0;
+			zoom = floor(zoom);
+			zoom = (zoom * 0.5) + log2(initial_zoom);
+			zoom = pow(2, zoom);
+		}
+		view->setZoom(zoom);
 	}
 }
 

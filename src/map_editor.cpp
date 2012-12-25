@@ -859,7 +859,7 @@ void MapEditorController::doUndo(bool redo)
 		map->addObjectToSelection(affected_objects[i], i == (int)affected_objects.size() - 1);
 	}
 	if (object_rect.isValid())
-		map_widget->ensureVisibilityOfRect(object_rect);
+		map_widget->ensureVisibilityOfRect(object_rect, false, true);
 }
 
 void MapEditorController::cut()
@@ -1407,7 +1407,7 @@ void MapEditorController::updatePasteAvailability()
 void MapEditorController::showWholeMap()
 {
 	QRectF map_extent = map->calculateExtent(true, true, main_view);
-	map_widget->adjustViewToRect(map_extent);
+	map_widget->adjustViewToRect(map_extent, false);
 }
 
 void MapEditorController::editToolClicked()

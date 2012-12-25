@@ -80,18 +80,41 @@ public:
 	void setDragOffset(QPoint offset);
 	void completeDragging(QPoint offset, qint64 dx, qint64 dy);
 	
-	void ensureVisibilityOfRect(const QRectF& map_rect);	// does nothing if the rect is completely in view
-	void adjustViewToRect(const QRectF& map_rect);			// sets the view so the rect is centered and zooomed to fill the widget
+	/**
+	 * Adjusts the viewport so the given rect is inside the view.
+	 * @param show_completely If true, the method ensures that 100% of the rect
+	 *    is visible. If false, a weaker definition of "visible" is used:
+	 *    then a certain area of the rect must be visible.
+	 * @param zoom_in_steps If true, zoom is done in the usual power-of-two
+	 *    steps only. If false, the zoom level is chosen to fit the rect.
+	 */
+	void ensureVisibilityOfRect(const QRectF& map_rect, bool show_completely, bool zoom_in_steps);
 	
-	/// Mark a rectangular region of a template cache as dirty. This rect is united with possible previous dirty rects of that cache.
+	/**
+	 * Sets the view so the rect is centered and zooomed to fill the widget.
+	 * @param zoom_in_steps If true, zoom is done in the usual power-of-two
+	 *    steps only. If false, the zoom level is chosen to fit the rect.
+	 */
+	void adjustViewToRect(const QRectF& map_rect, bool zoom_in_steps);
+	
+	/**
+	 * Mark a rectangular region of a template cache as dirty.
+	 * This rect is united with possible previous dirty rects of that cache.
+	 */
 	void markTemplateCacheDirty(QRectF view_rect, int pixel_border, bool front_cache);
 	
-	/// Mark a rectangular region of the map cache as dirty. This rect is united with possible previous dirty rects of that cache.
+	/**
+	 * Mark a rectangular region of the map cache as dirty.
+	 * This rect is united with possible previous dirty rects of that cache.
+	 */
 	void markObjectAreaDirty(QRectF map_rect);
 	
-	/// Set the given rect as bounding box for the current drawing.
-	/// NOTE: Unlike with markTemplateCacheDirty(), multiple calls to these methods do not result in uniting all given rects, instead only the last rect is used!
-	/// Pass QRect() to disable the current drawing.
+	/**
+	 * Set the given rect as bounding box for the current drawing.
+	 * NOTE: Unlike with markTemplateCacheDirty(), multiple calls to these methods do not
+	 * result in uniting all given rects, instead only the last rect is used!
+	 * Pass QRect() to disable the current drawing.
+	 */
 	void setDrawingBoundingBox(QRectF map_rect, int pixel_border, bool do_update);
 	void clearDrawingBoundingBox();
 	

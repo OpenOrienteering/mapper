@@ -997,7 +997,7 @@ void Map::ensureVisibilityOfSelectedObjects()
 	QRectF rect;
 	includeSelectionRect(rect);
 	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->ensureVisibilityOfRect(rect);
+		widgets[i]->ensureVisibilityOfRect(rect, true, true);
 }
 
 /*void Map::addMapView(MapView* view)
