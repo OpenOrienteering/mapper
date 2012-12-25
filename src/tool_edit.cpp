@@ -471,11 +471,13 @@ void EditTool::deleteSelectedObjects()
 
 void EditTool::createReplaceUndoStep(Object* object)
 {
-	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());	// TODO: use optimized undo step
+	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());
 	Object* undo_duplicate = object->duplicate();
 	undo_duplicate->setMap(map());
 	undo_step->addObject(object, undo_duplicate);
 	map()->objectUndoManager().addNewUndoStep(undo_step);
+	
+	map()->setObjectsDirty();
 }
 
 bool EditTool::pointOverRectangle(QPointF point, const QRectF& rect)
