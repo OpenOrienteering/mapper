@@ -886,7 +886,7 @@ float DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map)
 void DrawPathTool::updateDashPointDrawing()
 {
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
-	if (symbol->getType() == Symbol::Line)
+	if (symbol && symbol->getType() == Symbol::Line)
 	{
 		// Auto-activate dash points depending on if the selected symbol has a dash symbol.
 		// TODO: instead of just looking if it is a line symbol with dash points,

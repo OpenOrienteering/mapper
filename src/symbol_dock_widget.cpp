@@ -479,12 +479,13 @@ void SymbolRenderWidget::mouseMoveEvent(QMouseEvent* event)
 void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 {
 	updateIcon(current_symbol_index);
+	int old_symbol_index = current_symbol_index;
 	current_symbol_index = getSymbolIndexAt(event->x(), event->y());
 	updateIcon(current_symbol_index);
 	
 	if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton)
 	{
-		if (event->modifiers() & Qt::ShiftModifier)
+		if (event->modifiers() & Qt::ControlModifier)
 		{
 			if (current_symbol_index >= 0)
 			{
@@ -492,6 +493,30 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 					selected_symbols.insert(current_symbol_index);
 				else
 					selected_symbols.erase(current_symbol_index);
+				symbol_widget->emitSelectedSymbolsChanged();
+			}
+		}
+		else if (event->modifiers() & Qt::ShiftModifier)
+		{
+			if (current_symbol_index >= 0)
+			{
+				bool insert = !isSymbolSelected(current_symbol_index);
+				int i = (old_symbol_index >= 0) ? old_symbol_index : current_symbol_index;
+				while (true)
+				{
+					if (insert)
+						selected_symbols.insert(i);
+					else
+						selected_symbols.erase(i);
+					updateIcon(i);
+					
+					if (current_symbol_index > i)
+						++i;
+					else if (current_symbol_index < i)
+						--i;
+					else
+						break;
+				}
 				symbol_widget->emitSelectedSymbolsChanged();
 			}
 		}
