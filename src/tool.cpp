@@ -435,8 +435,13 @@ bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 	active_modifiers = event->modifiers();
 	if (event->button() != Qt::LeftButton)
 	{
-		// Do not show the ring menu when editing
-		return editing;
+		if (event->button() == Qt::RightButton)
+		{
+			// Do not show the ring menu when editing
+			return editing;
+		}
+		else
+			return false;
 	}
 	cur_map_widget = widget;
 	
@@ -479,8 +484,13 @@ bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 	calcConstrainedPositions(widget);
 	if (event->button() != Qt::LeftButton)
 	{
-		// Do not show the ring menu when editing
-		return editing;
+		if (event->button() == Qt::RightButton)
+		{
+			// Do not show the ring menu when editing
+			return editing;
+		}
+		else
+			return false;
 	}
 	
 	if (dragging)
