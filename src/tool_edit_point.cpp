@@ -272,6 +272,11 @@ void EditPointTool::dragStart()
 	{
 		startEditing();
 		startEditingSetup();
+		
+		if (active_modifiers & Qt::ControlModifier)
+			activateAngleHelperWhileEditing();
+		if (active_modifiers & Qt::ShiftModifier)
+			activateSnapHelperWhileEditing();
 	}
 	else if (hover_point == -2)
 	{
@@ -350,11 +355,7 @@ bool EditPointTool::keyPress(QKeyEvent* event)
 	else if (event->key() == Qt::Key_Control)
 	{
 		if (editing)
-		{
-			angle_helper->setActive(true);
-			calcConstrainedPositions(cur_map_widget);
-			dragMove();
-		}
+			activateAngleHelperWhileEditing();
 	}
 	else if (event->key() == Qt::Key_Shift && editing)
 	{
@@ -367,9 +368,7 @@ bool EditPointTool::keyPress(QKeyEvent* event)
 			// the opposite curve handle constraints
 			return true;
 		}
-		snap_helper->setFilter(SnappingToolHelper::AllTypes);
-		calcConstrainedPositions(cur_map_widget);
-		dragMove();
+		activateSnapHelperWhileEditing();
 	}
 	else if (event->key() == Qt::Key_Space)
 	{

@@ -268,6 +268,14 @@ protected:
 	/// else draws the renderables of the selected map objects.
 	void drawSelectionOrPreviewObjects(QPainter* painter, MapWidget* widget, bool draw_opaque = false);
 	
+	/// Activates or deactivates the angle helper, recalculates (un-)constrained cursor position,
+	/// and calls mouseMove() or dragMove() to update the tool.
+	void activateAngleHelperWhileEditing(bool enable = true);
+	
+	/// Activates or deactivates the snap helper, recalculates (un-)constrained cursor position,
+	/// and calls mouseMove() or dragMove() to update the tool.
+	void activateSnapHelperWhileEditing(bool enable = true);
+	
 	/// Calculates the constrained cursor position from the current position.
 	/// Normally it is not needed to call this yourself, as it is called by the mouse handling methods,
 	/// only in case a constrain tool helper is activated it is useful to get instant feedback.

@@ -608,6 +608,26 @@ void MapEditorToolBase::finishEditing(bool delete_objects, bool create_undo_step
 	editor->getMap()->emitSelectionEdited();
 }
 
+void MapEditorToolBase::activateAngleHelperWhileEditing(bool enable)
+{
+	angle_helper->setActive(enable);
+	calcConstrainedPositions(cur_map_widget);
+	if (dragging)
+		dragMove();
+	else
+		mouseMove();
+}
+
+void MapEditorToolBase::activateSnapHelperWhileEditing(bool enable)
+{
+	snap_helper->setFilter(SnappingToolHelper::AllTypes);
+	calcConstrainedPositions(cur_map_widget);
+	if (dragging)
+		dragMove();
+	else
+		mouseMove();
+}
+
 void MapEditorToolBase::calcConstrainedPositions(MapWidget* widget)
 {
 	if (snap_helper->getFilter() != SnappingToolHelper::NoSnapping)

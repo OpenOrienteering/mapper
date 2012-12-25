@@ -188,6 +188,12 @@ void EditLineTool::dragStart()
 			if (ok)
 				angle_helper->addAngles(-tangent.getAngle(), M_PI/2);
 		}
+		
+		// Activate tool helpers if modifier pressed
+		if (active_modifiers & Qt::ControlModifier)
+			toggleAngleHelper();
+		if (active_modifiers & Qt::ShiftModifier)
+			activateSnapHelperWhileEditing();
 	}
 	else if (hover_line == -2)
 	{
@@ -264,11 +270,7 @@ bool EditLineTool::keyPress(QKeyEvent* event)
 			toggleAngleHelper();
 	}
 	else if (event->key() == Qt::Key_Shift && editing)
-	{
-		snap_helper->setFilter(SnappingToolHelper::AllTypes);
-		calcConstrainedPositions(cur_map_widget);
-		dragMove();
-	}
+		activateSnapHelperWhileEditing();
 	else
 		return false;
 	updateStatusText();
@@ -503,9 +505,5 @@ void EditLineTool::toggleAngleHelper()
 	if (!editing)
 		angle_helper->setActive(false);
 	else
-	{
-		angle_helper->setActive(!angle_helper->isActive());
-		calcConstrainedPositions(cur_map_widget);
-		dragMove();
-	}
+		activateAngleHelperWhileEditing(!angle_helper->isActive());
 }
