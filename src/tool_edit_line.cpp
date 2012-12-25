@@ -426,7 +426,7 @@ void EditLineTool::updateHoverLine(MapCoordF cursor_pos)
 	float click_tolerance_sq = qPow(0.001f * cur_map_widget->getMapView()->pixelToLength(click_tolerance), 2);
 	float best_distance_sq = std::numeric_limits<float>::max();
 	PathObject* new_hover_object = NULL;
-	int new_hover_line = -1;
+	int new_hover_line = -2;
 	PathCoord hover_path_coord;
 	
 	// Check objects
@@ -453,7 +453,9 @@ void EditLineTool::updateHoverLine(MapCoordF cursor_pos)
 	}
 	
 	// Check bounding box
-	if (new_hover_line < 0)
+	if (new_hover_line < 0 &&
+		map()->getNumSelectedObjects() > 0 &&
+		selection_extent.isValid())
 	{
 		QRectF selection_extent_viewport = cur_map_widget->mapToViewport(selection_extent);
 		new_hover_line = pointOverRectangle(cur_map_widget->mapToViewport(cursor_pos), selection_extent_viewport) ? -1 : -2;

@@ -586,10 +586,8 @@ void EditPointTool::updateStatusText()
 
 void EditPointTool::updateHoverPoint(MapCoordF cursor_pos)
 {
-	QRectF selection_extent_viewport = cur_map_widget->mapToViewport(selection_extent);
-	
 	Object* new_hover_object = NULL;
-	int new_hover_point = -1;
+	int new_hover_point = -2;
 	float new_hover_point_dist_sq = std::numeric_limits<float>::max();
 	for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
 	{
@@ -604,8 +602,11 @@ void EditPointTool::updateHoverPoint(MapCoordF cursor_pos)
 			handle_offset = handle_pos - cursor_pos;
 		}
 	}
-	if (new_hover_point < 0)
+	if (new_hover_point < 0 &&
+		map()->getNumSelectedObjects() > 0 &&
+		selection_extent.isValid())
 	{
+		QRectF selection_extent_viewport = cur_map_widget->mapToViewport(selection_extent);
 		new_hover_point = pointOverRectangle(cur_map_widget->mapToViewport(cursor_pos), selection_extent_viewport) ? -1 : -2;
 		handle_offset = closestPointOnRect(cursor_pos, selection_extent) - cursor_pos;
 	}
