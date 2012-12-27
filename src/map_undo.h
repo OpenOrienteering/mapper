@@ -60,6 +60,7 @@ public:
 	virtual bool load(QIODevice* file, int version);
 	
 	virtual void getAffectedOutcome(std::vector< Object* >& out) const {out = objects;}
+	inline bool isEmpty() const {return objects.empty();}
 	
 public slots:
 	virtual void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);

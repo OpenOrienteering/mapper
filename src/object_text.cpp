@@ -133,6 +133,17 @@ Object* TextObject::duplicate()
 	return new_text;
 }
 
+Object& TextObject::operator=(const Object& other)
+{
+	return Object::operator=(other);
+	const TextObject* text_other = (&other)->asText();
+	setText(text_other->getText());
+	setHorizontalAlignment(text_other->getHorizontalAlignment());
+	setVerticalAlignment(text_other->getVerticalAlignment());
+	setRotation(text_other->getRotation());
+	return *this;
+}
+
 void TextObject::setAnchorPosition(qint64 x, qint64 y)
 {
 	coords.resize(1);

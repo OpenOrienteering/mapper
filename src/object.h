@@ -61,14 +61,17 @@ public:
 	virtual ~Object();
 	virtual Object* duplicate() = 0;
 	bool equals(Object* other, bool compare_symbol);
-	Object& operator= (const Object& other);
+	virtual Object& operator= (const Object& other);
 	
 	/// Returns the object type determined by the subclass
     inline Type getType() const {return type;}
     // Convenience casts with type checking
     PointObject* asPoint();
+	const PointObject* asPoint() const;
 	PathObject* asPath();
+	const PathObject* asPath() const;
 	TextObject* asText();
+	const TextObject* asText() const;
 	
 	void save(QIODevice* file);
 	void load(QIODevice* file, int version, Map* map);
@@ -176,6 +179,7 @@ public:
 	PathObject(Symbol* symbol, const MapCoordVector& coords, Map* map = 0);
     virtual Object* duplicate();
 	PathObject* duplicatePart(int part_index);
+    virtual Object& operator=(const Object& other);
 	
 	// Coordinate access methods
 	
@@ -240,8 +244,25 @@ public:
 	void reversePart(int part_index);
 	/// Ensures that all parts are closed. Useful for objects with area-only symbols.
 	void closeAllParts();
+	/// Creates a new path object containing the given coordinate range.
+	PathObject* extractCoords(int start, int end);
+	/// Converts all polygonal sections in this path to splines.
+	/// If at least one section is converted, returns true and
+	/// returns an undo duplicate if the corresponding pointer is set.
+	bool convertToCurves(PathObject** undo_duplicate = NULL);
+	/// Converts the given range of coordinates to a spline by inserting handles.
+	/// The range must consist of only polygonal segments before.
+	void convertRangeToCurves(int part_number, int start_index, int end_index);
+	/// Tries to remove points while retaining the path shape as much as possible.
+	/// If at least one point is changed, returns true and
+	/// returns an undo duplicate if the corresponding pointer is set.
+	bool simplify(PathObject** undo_duplicate = NULL);
 	/// See Object::isPointOnObject()
 	int isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection);
+	/// Calculates the average distance (of the first part) to another path
+	float calcAverageDistanceTo(PathObject* other);
+	/// Calculates the maximum distance (of the first part) to another path
+	float calcMaximumDistanceTo(PathObject* other);
 	
 	/// Called by Object::update()
 	void updatePathCoords(MapCoordVectorF& float_coords);
@@ -272,6 +293,7 @@ class PointObject : public Object
 public:
 	PointObject(Symbol* symbol = NULL);
     virtual Object* duplicate();
+    virtual Object& operator=(const Object& other);
 	
 	void setPosition(qint64 x, qint64 y);
 	void setPosition(MapCoordF coord);

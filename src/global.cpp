@@ -39,7 +39,7 @@ void doStaticInitializations()
 	MapEditorTool::loadPointHandles();
 	
 	// Register projection templates
-	CRSTemplate* temp = new CRSTemplate(QObject::tr("UTM"), "+proj=utm +zone=%1");
+	CRSTemplate* temp = new CRSTemplate(QObject::tr("UTM"), "+proj=utm +datum=WGS84 +zone=%1");
 	temp->addParam(new CRSTemplate::ZoneParam(QObject::tr("UTM Zone (number north/south, e.g. \"32 N\", \"24 S\")")));
 	CRSTemplate::registerCRSTemplate(temp);
 	

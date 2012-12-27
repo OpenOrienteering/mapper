@@ -149,6 +149,8 @@ public:
 	 */
 	virtual Object* duplicate();
 	
+    virtual Object& operator=(const Object& other);
+	
 	
 	/** Returns true if the text object has a single anchor, false if it has as word wrap box
 	 */

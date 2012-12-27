@@ -60,11 +60,14 @@ public:
 	inline double yd() const {return (y >> 4) / 1000.0;}
 	inline qint64 rawX() const {return x >> 4;}
 	inline qint64 rawY() const {return y >> 4;}
-    inline qint64 internalX() const {return x;}
-    inline qint64 internalY() const {return y;}
-    
-    inline int getFlags() const {return (x & 15) | ((y & 15) << 4);}
-    inline void setFlags(int flags) {x = (x & ~15) | (flags & 15); y = (y & ~15) | ((flags >> 4) & 15);}
+	inline qint64 internalX() const {return x;}
+	inline qint64 internalY() const {return y;}
+
+	inline int getFlags() const {return (x & 15) | ((y & 15) << 4);}
+	inline void setFlags(int flags) {x = (x & ~15) | (flags & 15); y = (y & ~15) | ((flags >> 4) & 15);}
+
+	inline double length() const {return sqrt(xd()*xd() + yd()*yd());}
+	inline double lengthSquared() const {return xd()*xd() + yd()*yd();}
 
 	inline double lengthSquaredTo(const MapCoord& other)
 	{

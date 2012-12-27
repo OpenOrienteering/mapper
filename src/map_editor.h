@@ -175,6 +175,8 @@ public slots:
 	void booleanIntersectionClicked();
 	void booleanDifferenceClicked();
 	void booleanXOrClicked();
+	void convertToCurvesClicked();
+	void simplifyPathClicked();
 	
 	void paintOnTemplateClicked(bool checked);
 	void paintOnTemplateSelectClicked();
@@ -298,6 +300,8 @@ private:
 	QAction* boolean_intersection_act;
 	QAction* boolean_difference_act;
 	QAction* boolean_xor_act;
+	QAction* convert_to_curves_act;
+	QAction* simplify_path_act;
 	
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;

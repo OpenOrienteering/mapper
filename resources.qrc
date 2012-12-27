@@ -61,6 +61,7 @@
   <file>images/tool-boolean-union.png</file>
   <file>images/tool-boolean-xor.png</file>
   <file>images/tool-connect-paths.png</file>
+  <file>images/tool-convert-to-curves.png</file>
   <file>images/tool-cut.png</file>
   <file>images/tool-cut-hole.png</file>
   <file>images/tool-duplicate.png</file>
@@ -71,6 +72,7 @@
   <file>images/tool-rotate.png</file>
   <file>images/tool-rotate-pattern.png</file>
   <file>images/tool-scale.png</file>
+  <file>images/tool-simplify-path.png</file>
   <file>images/tool-switch-dashes.png</file>
   <file>images/tool-switch-symbol.png</file>
   <file>images/undo.png</file>

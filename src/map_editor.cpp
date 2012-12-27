@@ -397,10 +397,11 @@ void MapEditorController::assignKeyboardShortcuts()
     template_window_act->setShortcut(QKeySequence("Ctrl+Shift+9"));
 
 	findAction("editobjects")->setShortcut(QKeySequence("E"));
+	findAction("editlines")->setShortcut(QKeySequence("L"));
 	findAction("drawpoint")->setShortcut(QKeySequence("S"));
 	findAction("drawpath")->setShortcut(QKeySequence("P"));
 	findAction("drawcircle")->setShortcut(QKeySequence("O"));
-	findAction("drawrectangle")->setShortcut(QKeySequence("L"));
+	findAction("drawrectangle")->setShortcut(QKeySequence("Ctrl+R"));
     findAction("drawtext")->setShortcut(QKeySequence("T"));
 	
     findAction("duplicate")->setShortcut(QKeySequence("D"));
@@ -412,6 +413,7 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("cuthole")->setShortcut(QKeySequence("H"));
 	findAction("measure")->setShortcut(QKeySequence("M"));
 	findAction("booleanunion")->setShortcut(QKeySequence("U"));
+	findAction("converttocurves")->setShortcut(QKeySequence("N"));
 }
 
 void MapEditorController::createMenuAndToolbars()
@@ -487,6 +489,8 @@ void MapEditorController::createMenuAndToolbars()
 	boolean_intersection_act = newAction("booleanintersection", tr("Intersect areas"), this, SLOT(booleanIntersectionClicked()), "tool-boolean-intersection.png");
 	boolean_difference_act = newAction("booleandifference", tr("Area difference"), this, SLOT(booleanDifferenceClicked()), "tool-boolean-difference.png");
 	boolean_xor_act = newAction("booleanxor", tr("Area XOr"), this, SLOT(booleanXOrClicked()), "tool-boolean-xor.png");
+	convert_to_curves_act = newAction("converttocurves", tr("Convert to curves"), this, SLOT(convertToCurvesClicked()), "tool-convert-to-curves.png");
+	simplify_path_act = newAction("simplify", tr("Simplify path"), this, SLOT(simplifyPathClicked()), "tool-simplify-path.png");
 
 	paint_on_template_act = new QAction(QIcon(":/images/pencil.png"), tr("Paint on template"), this);
 	paint_on_template_act->setCheckable(true);
@@ -588,6 +592,8 @@ void MapEditorController::createMenuAndToolbars()
 	tools_menu->addAction(boolean_intersection_act);
 	tools_menu->addAction(boolean_difference_act);
 	tools_menu->addAction(boolean_xor_act);
+	tools_menu->addAction(convert_to_curves_act);
+	tools_menu->addAction(simplify_path_act);
 	tools_menu->addAction(cut_tool_act);
 	cut_hole_menu = new QMenu(tr("Cut hole"));
 	cut_hole_menu->setIcon(QIcon(":/images/tool-cut-hole.png"));
@@ -715,6 +721,8 @@ void MapEditorController::createMenuAndToolbars()
 	// Advanced editing toolbar
 	toolbar_advanced_editing = window->addToolBar(tr("Advanced editing"));
 	toolbar_advanced_editing->setObjectName("Advanved editing toolbar");
+	toolbar_advanced_editing->addAction(convert_to_curves_act);
+	toolbar_advanced_editing->addAction(simplify_path_act);
 	toolbar_advanced_editing->addAction(boolean_intersection_act);
 	toolbar_advanced_editing->addAction(boolean_difference_act);
 	toolbar_advanced_editing->addAction(boolean_xor_act);
@@ -1361,7 +1369,11 @@ void MapEditorController::objectSelectionChanged()
 	boolean_difference_act->setStatusTip(tr("Subtract all other selected area objects from the first selected area object.") + (boolean_difference_act->isEnabled() ? "" : (" " + tr("Select at least two area objects to activate this tool."))));
 	boolean_xor_act->setEnabled(have_two_same_symbol_areas && uniform_symbol_selected);
 	boolean_xor_act->setStatusTip(tr("Calculate nonoverlapping parts of areas.") + (boolean_xor_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
-
+	convert_to_curves_act->setEnabled(have_area || have_line);
+	convert_to_curves_act->setStatusTip(tr("Turn paths made of straight segments into smooth bezier splines.") + (convert_to_curves_act->isEnabled() ? "" : (" " + tr("Select a path object to activate this tool."))));
+	simplify_path_act->setEnabled(have_area || have_line);
+	simplify_path_act->setStatusTip(tr("Reduce the number of points in path objects while trying to retain their shape.") + (convert_to_curves_act->isEnabled() ? "" : (" " + tr("Select a path object to activate this tool."))));
+	
 	// Automatic symbol selection of selected objects
 	if (symbol_widget && uniform_symbol_selected && Settings::getInstance().getSettingCached(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool())
 		symbol_widget->selectSingleSymbol(uniform_symbol);
@@ -1859,6 +1871,65 @@ void MapEditorController::booleanXOrClicked()
 	BooleanTool tool(map);
 	if (!tool.execute(BooleanTool::XOr))
 		QMessageBox::warning(window, QObject::tr("Error"), QObject::tr("XOr failed."));
+}
+
+void MapEditorController::convertToCurvesClicked()
+{
+	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
+	MapPart* part = map->getCurrentPart();
+	
+	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		if ((*it)->getType() != Object::Path)
+			continue;
+		
+		PathObject* path = (*it)->asPath();
+		PathObject* undo_duplicate = NULL;
+		if (path->convertToCurves(&undo_duplicate))
+		{
+			undo_step->addObject(part->findObjectIndex(path), undo_duplicate);
+			path->simplify();
+		}
+		path->update(true);
+	}
+	
+	if (undo_step->isEmpty())
+		delete undo_step;
+	else
+	{
+		map->setObjectsDirty();
+		map->objectUndoManager().addNewUndoStep(undo_step);
+		map->emitSelectionEdited();
+	}
+}
+
+void MapEditorController::simplifyPathClicked()
+{
+	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
+	MapPart* part = map->getCurrentPart();
+	
+	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		if ((*it)->getType() != Object::Path)
+			continue;
+		
+		PathObject* path = (*it)->asPath();
+		PathObject* undo_duplicate = NULL;
+		if (path->simplify(&undo_duplicate))
+			undo_step->addObject(part->findObjectIndex(path), undo_duplicate);
+		path->update(true);
+	}
+	
+	if (undo_step->isEmpty())
+		delete undo_step;
+	else
+	{
+		map->setObjectsDirty();
+		map->objectUndoManager().addNewUndoStep(undo_step);
+		map->emitSelectionEdited();
+	}
 }
 
 void MapEditorController::addFloatingDockWidget(QDockWidget* dock_widget)
