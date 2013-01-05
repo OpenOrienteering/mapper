@@ -89,7 +89,6 @@ MainWindow::~MainWindow()
 		delete controller;
 		delete general_toolbar;
 	}
-	num_windows--;
 }
 
 const QString& MainWindow::appName() const
@@ -321,6 +320,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 	if (showSaveOnCloseDialog())
 	{
 		saveWindowSettings();
+		num_windows--;
 		event->accept();
 	}
 	else
