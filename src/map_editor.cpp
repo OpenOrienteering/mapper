@@ -127,7 +127,9 @@ MapEditorController::~MapEditorController()
 
 void MapEditorController::setTool(MapEditorTool* new_tool)
 {
-	current_tool->deleteLater();
+	if (current_tool)
+		current_tool->deleteLater();
+	
 	if (!override_tool)
 	{
 		map->clearDrawingBoundingBox();
