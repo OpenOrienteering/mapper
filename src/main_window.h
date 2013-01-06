@@ -78,11 +78,6 @@ public:
 	virtual void keyPressEvent(QKeyEvent* event) {}
 	virtual void keyReleaseEvent(QKeyEvent* event) {}
 	
-	/** Notify the controller of a change to the list of recent files.
-	 *  FIXME: This seems to be specific for HomeScreenController.
-	 */
-	virtual void recentFilesUpdated() {}
-	
 	/** Get the main window this controller is attached to.
 	 */
 	inline MainWindow* getWindow() const {return window;}
@@ -221,7 +216,7 @@ public slots:
 	 *  FIXME: remove obsolete parameter.
 	 *  @param show not used
 	 */
-	void updateRecentFileActions(bool show);
+	void updateRecentFileActions();
 	
 	/** Save the current content to the current path.
 	 *  This will trigger a file-save dialog if the current path is not set (i.e. empty).

@@ -531,14 +531,6 @@
     </message>
 </context>
 <context>
-    <name>DocumentSelectionWidget</name>
-    <message>
-        <location filename="../src/main_window_home_screen.cpp" line="141"/>
-        <source>Clear list</source>
-        <translation>Dzēst sarakstu</translation>
-    </message>
-</context>
-<context>
     <name>DrawCircleTool</name>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="256"/>
@@ -1010,7 +1002,7 @@
     </message>
 </context>
 <context>
-    <name>HomeScreenOtherWidget</name>
+    <name>HomeScreenWidget</name>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="336"/>
         <source>Settings</source>
@@ -1028,7 +1020,16 @@
     </message>
 </context>
 <context>
-    <name>HomeScreenTipOfTheDayWidget</name>
+    <name>HomeScreenWidget</name>
+    <message>
+        <location filename="../src/main_window_home_screen.cpp" line="141"/>
+        <source>Clear list</source>
+        <translation>Dzēst sarakstu</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translation>Iziet</translation>
+    </message>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="243"/>
         <source>Tip of the day</source>
@@ -1044,9 +1045,6 @@
         <source>Next</source>
         <translation>Nākošais</translation>
     </message>
-</context>
-<context>
-    <name>HomeScreenWidget</name>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="67"/>
         <source>Maps</source>

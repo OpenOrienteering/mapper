@@ -31,15 +31,15 @@
 
 #include <mapper_config.h> // TODO: Replace APP_NAME by runtime function to remove this dependency
 
-#include "main_window_home_screen.h"
+#include "gui/home_screen_controller.h"
 #include "map.h"
 #include "map_dialog_new.h"
 #include "map_editor.h"
 #include "mapper_resource.h"
 #include "file_format.h"
+#include "settings.h"
 #include "settings_dialog.h"
 
-// ### MainWindowController ###
 
 MainWindowController* MainWindowController::controllerForFile(const QString& filename)
 {
@@ -79,6 +79,8 @@ MainWindow::MainWindow(bool as_main_window)
 		loadWindowSettings();
 	
 	installEventFilter(this);
+	
+	connect(&Settings::getInstance(), SIGNAL(settingsChanged()), this, SLOT(updateRecentFileActions()));
 }
 MainWindow::~MainWindow()
 {
@@ -214,7 +216,7 @@ void MainWindow::createFileMenu()
 	save_act->setEnabled(false);
 	save_as_act->setEnabled(false);
 	close_act->setEnabled(false);
-	updateRecentFileActions(false);
+	updateRecentFileActions();
 }
 void MainWindow::createHelpMenu()
 {
@@ -248,28 +250,21 @@ void MainWindow::setCurrentFile(const QString& path)
 	if (current_path.isEmpty())
 		return;
 	
-	QSettings settings;
+	Settings& settings = Settings::getInstance();
 	
 	// Update least recently used directory
 	QString open_directory = info.canonicalPath();
-	settings.setValue("openFileDirectory", open_directory);
-
+	QSettings().setValue("openFileDirectory", open_directory);
+	
 	// Update recent file lists
-	QStringList files = settings.value("recentFileList").toStringList();
-	if (!files.isEmpty())
-		files.removeAll(current_path);
+	QStringList files = settings.getSettingCached(Settings::General_RecentFilesList).toStringList();
+	files.removeAll(current_path);
 	files.prepend(current_path);
 	while (files.size() > max_recent_files)
 		files.removeLast();
-	settings.setValue("recentFileList", files);
-	
-	foreach (QWidget* widget, QApplication::topLevelWidgets())
-	{
-		MainWindow* main_window = qobject_cast<MainWindow*>(widget);
-		if (main_window)
-			main_window->updateRecentFileActions(true);
-	}
+	settings.setSetting(Settings::General_RecentFilesList, files);
 }
+
 void MainWindow::setHasOpenedFile(bool value)
 {
 	if (value && !has_opened_file)
@@ -545,10 +540,10 @@ void MainWindow::openRecentFile()
 	if (action)
 		openPath(action->data().toString());
 }
-void MainWindow::updateRecentFileActions(bool show)
+
+void MainWindow::updateRecentFileActions()
 {
-	QSettings settings;
-	QStringList files = settings.value("recentFileList").toStringList();
+	QStringList files = Settings::getInstance().getSettingCached(Settings::General_RecentFilesList).toStringList();
 	
 	int num_recent_files = qMin(files.size(), (int)max_recent_files);
 	
@@ -565,9 +560,6 @@ void MainWindow::updateRecentFileActions(bool show)
 	else if (!(num_recent_files > 0) && open_recent_menu_inserted)
 		file_menu->removeAction(open_recent_menu->menuAction());
 	open_recent_menu_inserted = num_recent_files > 0;
-	
-	if (controller)
-		controller->recentFilesUpdated();
 }
 
 bool MainWindow::save()
@@ -863,6 +855,12 @@ QString MainWindow::makeHelpUrl(QString filename, QString fragment)
 
 void MainWindow::linkClicked(const QString &link)
 {
+	if (link.compare("settings:", Qt::CaseInsensitive) == 0)
+		showSettings();
+	else if (link.compare("help:", Qt::CaseInsensitive) == 0)
+		showHelp();
+	else if (link.compare("about:", Qt::CaseInsensitive) == 0)
+		showAbout();
 	QDesktopServices::openUrl(link);
 }
 

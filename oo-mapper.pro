@@ -22,7 +22,6 @@ HEADERS += \
   src/georeferencing.h \
   src/georeferencing_dialog.h \
   src/main_window.h \
-  src/main_window_home_screen.h \
   src/map.h \
   src/map_dialog_new.h \
   src/map_dialog_scale.h \
@@ -78,9 +77,11 @@ HEADERS += \
   src/util_task_dialog.h \
   src/core/map_printer.h \
   src/gui/color_dialog.h \
+  src/gui/home_screen_controller.h \
   src/gui/print_tool.h \
   src/gui/print_widget.h \
   src/gui/widgets/color_dropdown.h \
+  src/gui/widgets/home_screen_widget.h \
   3rd-party/qtsingleapplication/src/qtlocalpeer.h \
   3rd-party/qtsingleapplication/src/qtsingleapplication.h \
   libocad/libocad.h \
@@ -101,7 +102,6 @@ SOURCES += \
   src/matrix.cpp \
   src/transformation.cpp \
   src/main_window.cpp \
-  src/main_window_home_screen.cpp \
   src/settings.cpp \
   src/settings_dialog.cpp \
   src/map.cpp \
@@ -172,9 +172,11 @@ SOURCES += \
   src/file_format_xml.cpp \
   src/core/map_printer.cpp \
   src/gui/color_dialog.cpp \
+  src/gui/home_screen_controller.cpp \
   src/gui/print_tool.cpp \
   src/gui/print_widget.cpp \
   src/gui/widgets/color_dropdown.cpp \
+  src/gui/widgets/home_screen_widget.cpp \
   src/main.cpp \
   3rd-party/qtsingleapplication/src/qtlocalpeer.cpp \
   3rd-party/qtsingleapplication/src/qtsingleapplication.cpp \

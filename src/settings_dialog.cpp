@@ -34,6 +34,8 @@
 #include "util_translation.h"
 #include "settings.h"
 
+#include "gui/widgets/home_screen_widget.h"
+
 void SettingsPage::apply()
 {
 	QSettings settings;
@@ -301,15 +303,12 @@ void EditorPage::rectanglePreviewLineWidthChanged(bool checked)
 
 GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 {
-	QLabel* language_label = new QLabel(tr("Language:"));
-	language_box = new QComboBox(this);
-	
 	QGridLayout* layout = new QGridLayout();
 	setLayout(layout);
 	
-	layout->addWidget(language_label, 0, 0);
-	layout->addWidget(language_box, 0, 1);
-	layout->setRowStretch(1, 1);
+	int row = 0;
+	QLabel* language_label = new QLabel(tr("Language:"));
+	language_box = new QComboBox(this);
 	
 	//  Add the available languages to the widget
 	LanguageCollection language_map = TranslationUtil::getAvailableLanguages();
@@ -322,7 +321,25 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	language_default_index = (index >= 0) ? index : language_box->findData((int)QLocale::English);
 	language_box->setCurrentIndex(language_default_index);
 	
+	layout->addWidget(language_label, row, 0);
+	layout->addWidget(language_box, row, 1);
+	
+	row++;
+	QCheckBox* open_mru_check = new QCheckBox(HomeScreenWidget::tr("Open most recently used file on start"));
+	open_mru_check->setChecked(Settings::getInstance().getSetting(Settings::General_OpenMRUFile).toBool());
+	layout->addWidget(open_mru_check, row, 0, 1, 2);
+	
+	row++;
+	QCheckBox* tips_visible_check = new QCheckBox(HomeScreenWidget::tr("Show tip of the day"));
+	tips_visible_check->setChecked(Settings::getInstance().getSetting(Settings::HomeScreen_TipsVisible).toBool());
+	layout->addWidget(tips_visible_check, row, 0, 1, 2);
+	
+	row++;
+	layout->setRowStretch(row, 1);
+	
 	connect(language_box, SIGNAL(currentIndexChanged(int)), this, SLOT(languageChanged(int)));
+	connect(open_mru_check, SIGNAL(clicked(bool)), this, SLOT(openMRUFileClicked(bool)));
+	connect(tips_visible_check, SIGNAL(clicked(bool)), this, SLOT(tipsVisibleClicked(bool)));
 }
 
 void GeneralPage::apply()
@@ -336,4 +353,14 @@ void GeneralPage::apply()
 void GeneralPage::languageChanged(int index)
 {
 	changes.insert(Settings::getInstance().getSettingPath(Settings::General_Language), language_box->itemData(index).toInt());
+}
+
+void GeneralPage::openMRUFileClicked(bool state)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::General_OpenMRUFile), state);
+}
+
+void GeneralPage::tipsVisibleClicked(bool state)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::HomeScreen_TipsVisible), state);
 }

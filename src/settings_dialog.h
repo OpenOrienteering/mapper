@@ -129,6 +129,10 @@ public:
 private slots:
 	void languageChanged(int index);
 	
+	void openMRUFileClicked(bool state);
+	
+	void tipsVisibleClicked(bool state);
+	
 private:
 	int language_default_index;
 	QComboBox* language_box;

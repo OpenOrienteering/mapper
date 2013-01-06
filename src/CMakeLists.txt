@@ -40,7 +40,6 @@ set(Mapper_Common_SRCS
  transformation.cpp
 
  main_window.cpp
- main_window_home_screen.cpp
  settings.cpp
  settings_dialog.cpp
 
@@ -120,10 +119,12 @@ set(Mapper_Common_SRCS
  core/map_printer.cpp
  
  gui/color_dialog.cpp
+ gui/home_screen_controller.cpp
  gui/print_tool.cpp
  gui/print_widget.cpp
  
  gui/widgets/color_dropdown.cpp
+ gui/widgets/home_screen_widget.cpp
 )
 
 set(Mapper_Common_MOC_INPUT
@@ -131,7 +132,6 @@ set(Mapper_Common_MOC_INPUT
  georeferencing.h
  georeferencing_dialog.h
  main_window.h
- main_window_home_screen.h
  map.h
  map_dialog_new.h
  map_dialog_scale.h
@@ -189,10 +189,12 @@ set(Mapper_Common_MOC_INPUT
  core/map_printer.h
  
  gui/color_dialog.h
+ gui/home_screen_controller.h
  gui/print_tool.h
  gui/print_widget.h
  
  gui/widgets/color_dropdown.h
+ gui/widgets/home_screen_widget.h
 )
 
 qt4_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})
