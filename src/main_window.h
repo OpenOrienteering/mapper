@@ -337,7 +337,7 @@ private:
 	bool maximized_before_fullscreen;
 
 	/// Number of active main windows. The last window shall not close on File > Close.
-	static int num_windows;
+	static int num_open_files;
 	
 	/// The central widget which never changes during a MainWindow's lifecycle
 	QStackedWidget* central_widget;

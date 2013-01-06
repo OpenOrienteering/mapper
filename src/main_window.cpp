@@ -52,11 +52,10 @@ MainWindowController* MainWindowController::controllerForFile(const QString& fil
 
 // ### MainWindow ###
 
-int MainWindow::num_windows = 0;
+int MainWindow::num_open_files = 0;
 
 MainWindow::MainWindow(bool as_main_window)
 {
-	num_windows++;
 	controller = NULL;
 	has_unsaved_changes = false;
 	has_opened_file = false;
@@ -302,10 +301,13 @@ void MainWindow::setStatusBarText(const QString& text)
 
 void MainWindow::closeFile()
 {
-	if (num_windows > 1)
+	if (num_open_files > 1)
 		close();
 	else if (showSaveOnCloseDialog())
+	{
+		num_open_files--;
 		setController(new HomeScreenController());
+	}
 }
 
 bool MainWindow::event(QEvent* event)
@@ -319,8 +321,11 @@ void MainWindow::closeEvent(QCloseEvent* event)
 {
 	if (showSaveOnCloseDialog())
 	{
-		saveWindowSettings();
-		num_windows--;
+		if (has_opened_file)
+		{
+			saveWindowSettings();
+			num_open_files--;
+		}
 		event->accept();
 	}
 	else
@@ -517,6 +522,7 @@ bool MainWindow::openPath(const QString &path)
 	open_window->show();
 	open_window->raise();
 	open_window->activateWindow();
+	num_open_files++;
 	return true;
 }
 
