@@ -65,7 +65,7 @@ MainWindow::MainWindow(bool as_main_window)
 	maximized_before_fullscreen = false;
 	general_toolbar = NULL;
 	
-	setWindowIcon(QIcon(":/images/control.png"));
+	setWindowIcon(QIcon(":/images/mapper.png"));
 	setAttribute(Qt::WA_DeleteOnClose);
 	
 	status_label = new QLabel();
