@@ -816,10 +816,10 @@ bool PathObject::isCurveHandle(int coord_index)
 {
 	PathPart& part = findPartForIndex(coord_index);
 	int index_minus_2 = shiftedCoordIndex(coord_index, -2, part);
-	if (getCoordinate(index_minus_2).isCurveStart())
+	if (index_minus_2 >= 0 && getCoordinate(index_minus_2).isCurveStart())
 		return true;
 	int index_minus_1 = shiftedCoordIndex(coord_index, -1, part);
-	if (getCoordinate(index_minus_1).isCurveStart())
+	if (index_minus_1 >= 0 && getCoordinate(index_minus_1).isCurveStart())
 		return true;
 	return false;
 }

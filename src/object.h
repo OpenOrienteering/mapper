@@ -184,7 +184,7 @@ public:
 	// Coordinate access methods
 	
 	inline int getCoordinateCount() const {return (int)coords.size();}
-	inline MapCoord& getCoordinate(int pos) {return coords[pos];}
+	inline MapCoord& getCoordinate(int pos) {assert(pos >= 0 && pos < (int)coords.size()); return coords[pos];}
 	void setCoordinate(int pos, MapCoord c);
 	void addCoordinate(int pos, MapCoord c);
 	void addCoordinate(MapCoord c, bool start_new_part = false);
