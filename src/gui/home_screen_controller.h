@@ -21,7 +21,7 @@
 #ifndef _OPENORIENTEERING_HOME_SCREEN_CONTROLLER_H_
 #define _OPENORIENTEERING_HOME_SCREEN_CONTROLLER_H_
 
-#include "../main_window.h"
+#include "main_window_controller.h"
 
 class HomeScreenWidget;
 

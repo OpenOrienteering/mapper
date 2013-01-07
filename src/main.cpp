@@ -27,8 +27,8 @@
 #include <mapper_config.h>
 
 #include "global.h"
-#include "main_window.h"
 #include "gui/home_screen_controller.h"
+#include "gui/main_window.h"
 #include "settings.h"
 #include "util_translation.h"
 

@@ -28,6 +28,8 @@ class QLabel;
 class QStackedWidget;
 QT_END_NAMESPACE
 
+class MainWindowController;
+
 /// File type enumeration. Currently the program is only used for mapping,
 /// so "Map" is the only element. "Course" or "Event" are possible additions.
 struct FileType
@@ -38,59 +40,6 @@ struct FileType
 		
 		All = Map
 	};
-};
-
-class MainWindow;
-
-/** A MainWindowController provides the specific content and 
- *  behaviours for a main window.
- */
-class MainWindowController : public QObject
-{
-Q_OBJECT
-public:
-	
-	virtual ~MainWindowController() {}
-	
-	/** Save to a file.
-	 *  @param path the path to save to
-	 *  @return true if saving was sucessful, false on errors
-	 */
-	virtual bool save(const QString& path) {return false;}
-
-	/** Load from a file.
-	 *  @param path the path to load from
-	 *  @return true if loading was sucessful, false on errors
-	 */
-	virtual bool load(const QString& path) {return false;}
-	
-	/** Attach the controller to a main window. 
-	 *  The controller should create its user interface here.
-	 */
-	virtual void attach(MainWindow* window) = 0;
-	
-	/** Detach the controller from a main window. 
-	 *  The controller should delete its user interface here.
-	 */
-	virtual void detach() {}
-	
-	// Get key press events from the main window
-	virtual void keyPressEvent(QKeyEvent* event) {}
-	virtual void keyReleaseEvent(QKeyEvent* event) {}
-	
-	/** Get the main window this controller is attached to.
-	 */
-	inline MainWindow* getWindow() const {return window;}
-	
-	/** Get a controller suitable for a particular file.
-	 *  @param filename the name of the file
-	 *  @return a MainWindowController that is able to load the file
-	 */
-	static MainWindowController* controllerForFile(const QString& filename);
-	
-protected:
-	
-	MainWindow* window;
 };
 
 /** The MainWindow class provides the generic application window. 
@@ -107,50 +56,70 @@ public:
 	 *  @param as_main_window if false, disables the loading of save windows geometry and hides the bottom-right handle for resizing.
 	 */
 	MainWindow(bool as_main_window = true);
+	
+	/** Destroys a main window. */
 	virtual ~MainWindow();
 	
 	/** Returns the application's name. */
 	const QString& appName() const;
 	
-	/** Change the controller to new_controller.
-	 */
+	
+	/** Change the controller to new_controller. */
 	void setController(MainWindowController* new_controller);
+	
+	/** Returns the current controller. */
 	inline MainWindowController* getController() const {return controller;}
+	
 	
 	/** Returns the canonical path of the currently open file or 
 	 *  an empty string if no file is open.
 	 */
 	inline const QString& getCurrentFilePath() const {return current_path;}
 	
-	
+	/** Sets the opened-file state to value. */
 	void setHasOpenedFile(bool value);
+	
+	/** Returns true if a file is opened in this main window. */
 	inline bool hasOpenedFile() const {return has_opened_file;}
 	
+	
+	/** Sets the unsaved-changes state to value. */
 	void setHasUnsavedChanges(bool value);
+	
+	/** Returns true if the opened file is marked as having unsaved changes. */
 	inline bool hasUnsavedChanges() const {return has_unsaved_changes;}
+	
 	
 	/** Sets the text in the status bar.
 	 */ 
 	void setStatusBarText(const QString& text);
+	
 	
 	/** Enable or disable shortcuts.
 	 *  During text input, it may be neccessary to disable shortcuts.
 	 *  @param enable true for enabling shortcuts, false for disabling.
 	 */
 	inline void setShortcutsEnabled(bool enable) {disable_shortcuts = !enable;}
+	
+	/** Returns true if shortcuts are currently disabled. */
 	inline bool areShortcutsDisabled() const {return disable_shortcuts;}
 	
-	// Getters to make it possible to extend the file menu
+	
+	/** Returns the main window's file menu so that it can be extended. */
 	inline QMenu* getFileMenu() const {return file_menu;}
+	
+	/** Returns an QAction which serves as extension point in the file menu. */
 	inline QAction* getFileMenuExtensionAct() const {return settings_act;}
 	
+	
 	/**
-	 * Get a general toolbar with standard file actions (new, open, save).
+	 * Returns a general toolbar with standard file actions (new, open, save).
 	 * 
 	 * The MainWindowController is responsible to add it to the main window.
 	 * It will be destroyed (and recreated) when the controller changes.
 	 */
 	inline QToolBar* getGeneralToolBar() const { return general_toolbar; }
+	
 	
 	/** Open the file with the given path after all events have been processed.
 	 *  May open a new main window.
@@ -286,12 +255,20 @@ private:
 		max_recent_files = 10
 	};
 	
-	/// Called when the user closes the window with unsaved changes. Returns true if window should be closed, false otherwise
+	/** If this main window has an opened file with unsaved changes, shows
+	 *  a dialog which lets the user save the file, discard the changes or
+	 *  cancel. 
+	 *  Returns true if the window can be closed, false otherwise.
+	 */
 	bool showSaveOnCloseDialog();
 	
-	/// Save and load window position, maximized state, etc.
+	
+	/** Saves the window position and state. */
 	void saveWindowSettings();
+	
+	/** Loads the window position and state. */
 	void loadWindowSettings();
+	
 	
 	void updateWindowTitle();
 	

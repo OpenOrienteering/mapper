@@ -24,6 +24,7 @@
 #include "map_color.h"
 #include "util_gui.h"
 #include "gui/color_dialog.h"
+#include "gui/main_window.h"
 
 ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 : QWidget(parent), 

@@ -29,7 +29,7 @@
 
 #include "map_editor.h"
 #include "map_widget.h"
-#include "main_window.h"
+#include "gui/main_window.h"
 #include "util_gui.h"
 #include "util_translation.h"
 #include "settings.h"

@@ -21,20 +21,21 @@
 #include "tool_cut.h"
 
 #include <QApplication>
-#include <QMouseEvent>
 #include <QMessageBox>
+#include <QMouseEvent>
 #include <QPainter>
 
+#include "gui/main_window.h"
 #include "map_editor.h"
+#include "map_undo.h"
 #include "map_widget.h"
-#include "util.h"
 #include "object.h"
 #include "renderable.h"
+#include "settings.h"
 #include "symbol.h"
 #include "symbol_combined.h"
-#include "map_undo.h"
 #include "tool_draw_path.h"
-#include "settings.h"
+#include "util.h"
 
 QCursor* CutTool::cursor = NULL;
 

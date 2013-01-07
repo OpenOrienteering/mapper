@@ -39,7 +39,6 @@ set(Mapper_Common_SRCS
  matrix.cpp
  transformation.cpp
 
- main_window.cpp
  settings.cpp
  settings_dialog.cpp
 
@@ -120,6 +119,8 @@ set(Mapper_Common_SRCS
  
  gui/color_dialog.cpp
  gui/home_screen_controller.cpp
+ gui/main_window.cpp
+ gui/main_window_controller.cpp
  gui/print_tool.cpp
  gui/print_widget.cpp
  
@@ -131,7 +132,6 @@ set(Mapper_Common_MOC_INPUT
  color_dock_widget.h
  georeferencing.h
  georeferencing_dialog.h
- main_window.h
  map.h
  map_dialog_new.h
  map_dialog_scale.h
@@ -190,6 +190,8 @@ set(Mapper_Common_MOC_INPUT
  
  gui/color_dialog.h
  gui/home_screen_controller.h
+ gui/main_window.h
+ gui/main_window_controller.h
  gui/print_tool.h
  gui/print_widget.h
  

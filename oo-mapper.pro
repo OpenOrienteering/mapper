@@ -21,7 +21,6 @@ HEADERS += \
   src/color_dock_widget.h \
   src/georeferencing.h \
   src/georeferencing_dialog.h \
-  src/main_window.h \
   src/map.h \
   src/map_dialog_new.h \
   src/map_dialog_scale.h \
@@ -78,6 +77,8 @@ HEADERS += \
   src/core/map_printer.h \
   src/gui/color_dialog.h \
   src/gui/home_screen_controller.h \
+  src/gui/main_window.h \
+  src/gui/main_window_controller.h \
   src/gui/print_tool.h \
   src/gui/print_widget.h \
   src/gui/widgets/color_dropdown.h \
@@ -101,7 +102,6 @@ SOURCES += \
   src/qbezier.cpp \
   src/matrix.cpp \
   src/transformation.cpp \
-  src/main_window.cpp \
   src/settings.cpp \
   src/settings_dialog.cpp \
   src/map.cpp \
@@ -173,6 +173,8 @@ SOURCES += \
   src/core/map_printer.cpp \
   src/gui/color_dialog.cpp \
   src/gui/home_screen_controller.cpp \
+  src/gui/main_window.cpp \
+  src/gui/main_window_controller.cpp \
   src/gui/print_tool.cpp \
   src/gui/print_widget.cpp \
   src/gui/widgets/color_dropdown.cpp \

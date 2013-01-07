@@ -36,6 +36,7 @@
 #include "map_grid.h"
 #include "georeferencing.h"
 #include "georeferencing_dialog.h"
+#include "gui/main_window.h"
 #include "gui/print_widget.h"
 #include "color_dock_widget.h"
 #include "symbol_dock_widget.h"

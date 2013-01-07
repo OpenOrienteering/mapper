@@ -26,9 +26,10 @@
 #include <QtWidgets>
 #endif
 
-#include "template.h"
+#include "gui/main_window.h"
 #include "map_editor.h"
 #include "map_widget.h"
+#include "template.h"
 #include "util.h"
 
 QCursor* PaintOnTemplateTool::cursor = NULL;

@@ -28,14 +28,15 @@
 #include <QtWidgets>
 #endif
 
-#include "map.h"
-#include "template.h"
-#include "map_editor.h"
-#include "template_adjust.h"
-#include "template_tool_move.h"
-#include "template_position_dock_widget.h"
 #include "georeferencing.h"
+#include "gui/main_window.h"
+#include "map.h"
+#include "map_editor.h"
 #include "settings.h"
+#include "template.h"
+#include "template_adjust.h"
+#include "template_position_dock_widget.h"
+#include "template_tool_move.h"
 
 /** Parses a user-entered opacity value. Values must be strings of the form "F%" where F is any decimal number between 0 and
  *  100 (inclusive). Leading and trailing whitespace is trimmed. If the value is invalid, the arguments are unchanged and the method returns false.

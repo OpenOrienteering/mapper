@@ -23,6 +23,7 @@
 #include <QFile>
 #include <QStatusBar>
 
+#include "main_window.h"
 #include "widgets/home_screen_widget.h"
 #include "../settings.h"
 

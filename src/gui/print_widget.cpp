@@ -31,7 +31,7 @@
 
 #include "../core/map_printer.h"
 #include "../map.h"
-#include "../main_window.h"
+#include "main_window.h"
 #include "../map_widget.h"
 #include "../settings.h"
 #include "../util.h"

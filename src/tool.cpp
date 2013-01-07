@@ -25,15 +25,16 @@
 #include <QMouseEvent>
 #include <QTimer>
 
+#include "gui/main_window.h"
 #include "map.h"
+#include "map_editor.h"
+#include "map_undo.h"
 #include "map_widget.h"
 #include "object.h"
 #include "object_text.h"
-#include "util.h"
 #include "settings.h"
-#include "map_editor.h"
-#include "map_undo.h"
 #include "tool_helpers.h"
+#include "util.h"
 
 // ### MapEditorTool ###
 

@@ -27,7 +27,7 @@
 #endif
 
 #include "../home_screen_controller.h"
-#include "../../main_window.h"
+#include "../main_window.h"
 
 
 HomeScreenWidget::HomeScreenWidget(HomeScreenController* controller, QWidget* parent)

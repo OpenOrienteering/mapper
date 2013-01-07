@@ -21,20 +21,21 @@
 #include "tool_helpers.h"
 
 #include <qmath.h>
+#include <QApplication>
+#include <QKeyEvent>
+#include <QMimeData>
+#include <QMouseEvent>
 #include <QPainter>
 #include <QTimer>
-#include <QMouseEvent>
-#include <QKeyEvent>
-#include <QApplication>
-#include <QMimeData>
 
+#include "gui/main_window.h"
 #include "map_editor.h"
-#include "tool_draw_text.h"
-#include "object_text.h"
-#include "map_widget.h"
-#include "util.h"
-#include "settings.h"
 #include "map_grid.h"
+#include "map_widget.h"
+#include "object_text.h"
+#include "settings.h"
+#include "tool_draw_text.h"
+#include "util.h"
 
 
 // ### TextObjectEditorHelper ###
