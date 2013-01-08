@@ -31,7 +31,7 @@
 
 #include "../core/map_printer.h"
 #include "../map.h"
-#include "../main_window.h"
+#include "main_window.h"
 #include "../map_widget.h"
 #include "../settings.h"
 #include "../util.h"
@@ -106,7 +106,11 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	different_scale_edit = Util::SpinBox::create(1, std::numeric_limits<int>::max(), "", 500);
 	different_scale_edit->setPrefix("1 : ");
 	different_scale_edit->setEnabled(false);
-	// TODO: Fix vertical alignment of this row:
+	int different_scale_height = qMax(
+	  different_scale_edit->minimumSizeHint().height(),
+	  different_scale_check->minimumSizeHint().height() );
+	different_scale_check->setMinimumHeight(different_scale_height);
+	different_scale_edit->setMinimumHeight(different_scale_height);
 	layout->addRow(different_scale_check, different_scale_edit);
 	
 	show_templates_check = new QCheckBox(tr("Show templates"));	// this must be created before its value is used to determine the default setting of page_orientation_combo

@@ -20,11 +20,10 @@
 
 #include "settings.h"
 
-#include <cassert>
-
+#include <QLocale>
 #include <QVariant>
 #include <QSettings>
-#include <QLocale>
+#include <QStringList>
 
 Settings::Settings(): QObject()
 {
@@ -45,8 +44,14 @@ Settings::Settings(): QObject()
 	
 	registerSetting(Templates_KeepSettingsOfClosed, "Templates/keep_settings_of_closed_templates", true);
 	
-	registerSetting(General_Language, "General/language", QVariant((int)QLocale::system().language()));
+	registerSetting(General_Language, "General/language", QVariant((int)QLocale::system().language())); // FIXME: Remove "General/" prefix (requires migration)
+	registerSetting(General_RecentFilesList, "recentFileList", QVariant(QStringList()));
+	registerSetting(General_OpenMRUFile, "openMRUFile", false);
+	
+	registerSetting(HomeScreen_TipsVisible, "HomeScreen/tipsVisible", true);
+	registerSetting(HomeScreen_CurrentTip, "HomeScreen/currentTip", -1);
 }
+
 void Settings::registerSetting(Settings::SettingsEnum id, const QString& path, const QVariant& default_value)
 {
 	setting_paths[id] = path;
@@ -58,6 +63,7 @@ QVariant Settings::getSetting(Settings::SettingsEnum setting) const
 	QSettings settings;
 	return settings.value(getSettingPath(setting), getDefaultValue(setting));
 }
+
 QVariant Settings::getSettingCached(Settings::SettingsEnum setting)
 {
 	if (settings_cache.contains(setting))
@@ -72,6 +78,39 @@ QVariant Settings::getSettingCached(Settings::SettingsEnum setting)
 void Settings::setSettingInCache(Settings::SettingsEnum setting, QVariant value)
 {
 	settings_cache.insert(setting, value);
+}
+
+void Settings::setSetting(Settings::SettingsEnum setting, QVariant value)
+{
+	bool setting_changed = true;
+	if (settings_cache.contains(setting))
+		setting_changed = settings_cache.value(setting) != value;
+	else
+		setting_changed = QSettings().value(getSettingPath(setting), getDefaultValue(setting)) != value;
+	
+	if (setting_changed)
+	{
+		QSettings().setValue(getSettingPath(setting), value);
+		settings_cache.clear();
+		emit settingsChanged();
+	}
+}
+
+void Settings::remove(Settings::SettingsEnum setting)
+{
+	QVariant value = getDefaultValue(setting);
+	bool setting_changed = true;
+	if (settings_cache.contains(setting))
+		setting_changed = settings_cache.value(setting) != value;
+	else
+		setting_changed = QSettings().value(getSettingPath(setting), value) != value;
+	
+	QSettings().remove(getSettingPath(setting));
+	if (setting_changed)
+	{
+		settings_cache.clear();
+		emit settingsChanged();
+	}
 }
 
 void Settings::applySettings()

@@ -32,7 +32,7 @@
 #include <QXmlStreamReader>
 
 #include "georeferencing.h"
-#include "main_window.h"
+#include "gui/main_window.h"
 #include "map.h"
 #include "map_editor.h"
 #include "util_gui.h"

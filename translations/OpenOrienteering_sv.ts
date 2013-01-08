@@ -589,14 +589,6 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     </message>
 </context>
 <context>
-    <name>DocumentSelectionWidget</name>
-    <message>
-        <location filename="../src/main_window_home_screen.cpp" line="141"/>
-        <source>Clear list</source>
-        <translation>Töm listan</translation>
-    </message>
-</context>
-<context>
     <name>DrawCircleTool</name>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="256"/>
@@ -1191,7 +1183,16 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     </message>
 </context>
 <context>
-    <name>HomeScreenOtherWidget</name>
+    <name>HomeScreenWidget</name>
+    <message>
+        <location filename="../src/main_window_home_screen.cpp" line="141"/>
+        <source>Clear list</source>
+        <translation>Töm listan</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translation>Avsluta</translation>
+    </message>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="336"/>
         <source>Settings</source>
@@ -1207,9 +1208,6 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <source>Help</source>
         <translation>Hjälp</translation>
     </message>
-</context>
-<context>
-    <name>HomeScreenTipOfTheDayWidget</name>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="243"/>
         <source>Tip of the day</source>
@@ -1225,9 +1223,6 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <source>Next</source>
         <translation>Nästa</translation>
     </message>
-</context>
-<context>
-    <name>HomeScreenWidget</name>
     <message>
         <location filename="../src/main_window_home_screen.cpp" line="67"/>
         <source>Maps</source>

@@ -20,19 +20,21 @@
 
 #include "tools_t.h"
 
-#include "../src/global.h"
-#include "../src/mapper_resource.h"
 #include "../src/file_format.h"
-#include "../src/map_color.h"
-#include "../src/symbol.h"
-#include "../src/object.h"
-#include "../src/template.h"
 #include "../src/georeferencing.h"
-#include "../src/map_grid.h"
-#include "../src/symbol_line.h"
-#include "../src/tool_edit_point.h"
+#include "../src/global.h"
+#include "../src/map_color.h"
 #include "../src/map_editor.h"
+#include "../src/map_grid.h"
 #include "../src/map_widget.h"
+#include "../src/mapper_resource.h"
+#include "../src/object.h"
+#include "../src/symbol.h"
+#include "../src/symbol_line.h"
+#include "../src/template.h"
+#include "../src/tool_edit_point.h"
+
+#include "../src/gui/main_window.h"
 
 /// Creates a test map and provides pointers to specific map elements.
 /// NOTE: delete the map manually in case its ownership is not transferred to a MapEditorController or similar!

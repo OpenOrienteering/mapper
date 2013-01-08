@@ -29,7 +29,7 @@
 #endif
 #include <QSet>
 
-#include "main_window.h"
+#include "gui/main_window.h"
 #include "map.h"
 #include "object.h"
 

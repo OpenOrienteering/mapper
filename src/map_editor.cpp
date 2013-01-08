@@ -36,6 +36,7 @@
 #include "map_grid.h"
 #include "georeferencing.h"
 #include "georeferencing_dialog.h"
+#include "gui/main_window.h"
 #include "gui/print_widget.h"
 #include "color_dock_widget.h"
 #include "symbol_dock_widget.h"
@@ -127,7 +128,9 @@ MapEditorController::~MapEditorController()
 
 void MapEditorController::setTool(MapEditorTool* new_tool)
 {
-	current_tool->deleteLater();
+	if (current_tool)
+		current_tool->deleteLater();
+	
 	if (!override_tool)
 	{
 		map->clearDrawingBoundingBox();

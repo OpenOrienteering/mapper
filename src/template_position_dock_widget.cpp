@@ -27,8 +27,9 @@
 #endif
 #include <qmath.h>
 
-#include "template_dock_widget.h"
+#include "gui/main_window.h"
 #include "template.h"
+#include "template_dock_widget.h"
 #include "util.h"
 
 TemplatePositionDockWidget::TemplatePositionDockWidget(Template* temp, MapEditorController* controller, QWidget* parent)

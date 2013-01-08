@@ -28,12 +28,13 @@
 #include <QScopedPointer>
 #include <QClipboard>
 
-#include "main_window.h"
+#include "gui/main_window_controller.h"
 #include "map.h"
 
 QT_BEGIN_NAMESPACE
-class QLabel;
 class QFrame;
+class QLabel;
+class QToolBar;
 QT_END_NAMESPACE
 
 class Template;

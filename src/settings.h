@@ -48,7 +48,12 @@ public:
 		RectangleTool_HelperCrossRadius,
 		RectangleTool_PreviewLineWidth,
 		Templates_KeepSettingsOfClosed,
-		General_Language
+		General_Language,
+		General_RecentFilesList,
+		General_OpenMRUFile,
+		HomeScreen_TipsVisible,
+		HomeScreen_CurrentTip,
+		END_OF_SETTINGSENUM /* Don't add items below this line. */
 	};
 	
 	enum DeleteBezierPointAction
@@ -67,13 +72,20 @@ public:
 	/// Change a setting, but only in the cache. Do not use this if in doubt.
 	void setSettingInCache(Settings::SettingsEnum setting, QVariant value);
 	
-	/// This must be called after the settings have been changed or on application startup.
+	/// This must be called after cached settings have been changed and on application startup.
 	void applySettings();
+	
+	/// Change a setting immediately.
+	void setSetting(Settings::SettingsEnum setting, QVariant value);
+	
+	/// Removes a setting immediately. Next reading will return the default value.
+	void remove(Settings::SettingsEnum setting);
 	
 	// TODO: Methods for settings import / export?
 	
 	/// Returns the path to use with QSettings
 	inline QString getSettingPath(SettingsEnum setting) const { return setting_paths[setting]; }
+	
 	/// Returns the default value for the setting
 	inline QVariant getDefaultValue(SettingsEnum setting) const { return setting_defaults[setting]; }
 	

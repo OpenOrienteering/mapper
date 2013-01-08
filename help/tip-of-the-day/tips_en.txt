@@ -1,5 +1,4 @@
-15
-<h2>Welcome to OpenOrienteering Mapper!</h2>If this is the first time you use the program, please read this first.<br/><br/>You might want to check out the <a href="settings">settings</a> and adjust the program to you. For detailed advice on using Mapper, read the <a href="help">help files</a>.<br/><br/><b>Quick start advice</b>:<br/>- Create or load a map using the buttons on the left<br/>- Hold the middle mouse button to drag the map<br/>- Zoom using the mouse wheel, if available<br/>- Read the hints in the status bar at the bottom to learn how the tools work
+<h2>Welcome to OpenOrienteering Mapper!</h2>If this is the first time you use the program, please read this first.<br/><br/>You might want to check out the <a href="settings">settings:</a> and adjust the program to you. For detailed advice on using Mapper, read the <a href="help:">help files</a>.<br/><br/><b>Quick start advice</b>:<br/>- Create or load a map using the buttons on the left<br/>- Hold the middle mouse button to drag the map<br/>- Zoom using the mouse wheel, if available<br/>- Read the hints in the status bar at the bottom to learn how the tools work
 While editing a map, press Tab to switch between the edit tool and the drawing tools quickly.
 A map with few well chosen features will give a much better map than a map cluttered with many insignificant features.   Eduard Imhof
 Features that are not important for a competitor taking part in a sprint orienteering event should not be mapped. Examples of this are waste baskets, fire hydrants, parking meters and individual street lights as they clutter the map with unhelpful detail.
@@ -13,5 +12,4 @@ Shortest dashed line: at least two dashes
 Smallest area enclosed by a dotted line: 1.5 mm (diameter) with 5 dots
 Smallest area of colour:<br/>Blue, green, grey or yellow full colour: 0.5 mm2; <br/>Black dot screen: 0.5 mm2; <br/>Blue, brown, green or yellow dot screen: 1.0 mm2
 All features plotting smaller than the minimum dimensions must be either exaggerated or omitted, depending on whether or not they are of significance to the competitor.
-The sprint map format should not exceed DINA4.
-
+The sprint map format should not exceed DIN A4.

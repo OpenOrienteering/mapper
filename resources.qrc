@@ -34,6 +34,7 @@
   <file>images/group.png</file>
   <file>images/help.png</file>
   <file>images/magnifying-glass-12.png</file>
+  <file>images/mapper.png</file>
   <file>images/minus.png</file>
   <file>images/move.png</file>
   <file>images/new.png</file>
@@ -81,13 +82,13 @@
   <file>images/view-zoom-out.png</file>
   <file>images/window-new.png</file>
 
-  <file>etc/tipoftheday.txt</file>
+  <file alias="help/tip-of-the-day/tips.txt">help/tip-of-the-day/tips_en.txt</file>
   
   <file>3rd-party/clipper/License.txt</file>
   <file>3rd-party/proj/COPYING</file>
  </qresource>
  
  <qresource lang="de">
-  <file alias="etc/tipoftheday.txt">etc/tipoftheday_de.txt</file>
+  <file alias="help/tip-of-the-day/tips.txt">help/tip-of-the-day/tips_de.txt</file>
  </qresource>
 </RCC>

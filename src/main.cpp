@@ -27,8 +27,8 @@
 #include <mapper_config.h>
 
 #include "global.h"
-#include "main_window.h"
-#include "main_window_home_screen.h"
+#include "gui/home_screen_controller.h"
+#include "gui/main_window.h"
 #include "settings.h"
 #include "util_translation.h"
 
@@ -52,10 +52,12 @@ int main(int argc, char** argv)
 	// Load resources
 	Q_INIT_RESOURCE(resources);
 	
-	// Set settings defaults
 	QCoreApplication::setOrganizationName("Thomas Schoeps");
 	QCoreApplication::setApplicationName("OpenOrienteering");
-	Settings::getInstance().applySettings();
+	
+	// Set settings defaults
+	Settings& settings = Settings::getInstance();
+	settings.applySettings();
 	
 #ifdef WIN32
 	// Load plugins on Windows
@@ -63,7 +65,7 @@ int main(int argc, char** argv)
 #endif
 	
 	// Localization
-	QLocale::Language lang = (QLocale::Language)Settings::getInstance().getSetting(Settings::General_Language).toInt();
+	QLocale::Language lang = (QLocale::Language)settings.getSetting(Settings::General_Language).toInt();
 	TranslationUtil translation(lang);
 	QLocale::setDefault(translation.getLocale());
 	qapp.installTranslator(&translation.getQtTranslator());
@@ -87,15 +89,11 @@ int main(int argc, char** argv)
 			first_window.openPathLater(argv[i]);
 	}
 	// Optionally open most recently used file on startup
-	if (argc <= 1)
+	if (argc <= 1 && settings.getSettingCached(Settings::General_OpenMRUFile).toBool())
 	{
-		QSettings settings;
-		if (settings.value("openMRUFile", QVariant(false)).toBool())
-		{
-			QStringList files = settings.value("recentFileList").toStringList();
-			if (files.size() > 0)
-				first_window.openPathLater(files[0]);
-		}
+		QStringList files = settings.getSettingCached(Settings::General_RecentFilesList).toStringList();
+		if (files.size() > 0)
+			first_window.openPathLater(files[0]);
 	}
 	
 	// If we need to respond to a second app launch, do so, but also accept a file open request.
