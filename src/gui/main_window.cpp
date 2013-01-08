@@ -739,7 +739,7 @@ void MainWindow::showAbout()
 		QString(
 		     "<a href=\"http://openorienteering.org\"><img src=\":/images/open-orienteering.png\"/></a><br/><br/>"
 		     "OpenOrienteering Mapper %1<br/>"
-		     "Copyright (C) 2012  Thomas Sch&ouml;ps<br/>"
+		     "Copyright (C) 2012, 2013  Thomas Sch&ouml;ps<br/>"
 		     "This program comes with ABSOLUTELY NO WARRANTY;<br/>"
 		     "This is free software, and you are welcome to redistribute it<br/>"
 		     "under certain conditions; see the file COPYING for details.<br/><br/>").
@@ -749,7 +749,7 @@ void MainWindow::showAbout()
 		     "For contributions, thanks to:<br/>%2<br/>"
 		     "Additional information:").
 		  arg(QString("Peter Curtis<br/>Kai Pastor<br/>Russell Porter<br/>Thomas Sch&ouml;ps %1<br/>").arg(tr("(project leader)"))).
-		  arg("Jon Cundill<br/>Jan Dalheimer<br/>Eugeniy Fedirets<br/>Peter Hoban<br/>Henrik Johansson<br/>Oskar Karlin<br/>Tojo Masaya<br/>Vincent Poinsignon<br/>Christopher Schive<br/>Aivars Zogla<br/>")
+		  arg("Jon Cundill<br/>Jan Dalheimer<br/>Eugeniy Fedirets<br/>Anders Gressli<br/>Peter Hoban<br/>Henrik Johansson<br/>Oskar Karlin<br/>Tojo Masaya<br/>Vincent Poinsignon<br/>Christopher Schive<br/>Aivars Zogla<br/>")
 		 );
 	QTextEdit* additional_text = new QTextEdit( 
 	  clipper_about % "<br/><br/>" %
