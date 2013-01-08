@@ -503,7 +503,7 @@
     <message>
         <location filename="../src/map_grid.cpp" line="371"/>
         <source>projected coordinates origin</source>
-        <translation>Ursprung derprojizierten Koordinaten</translation>
+        <translation type="unfinished">Ursprung der projizierten Koordinaten</translation>
     </message>
 </context>
 <context>

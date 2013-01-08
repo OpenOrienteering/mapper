@@ -77,7 +77,7 @@ protected:
 	virtual void import(bool load_symbols_only) throw (FormatException);
 	
 	void addWarningUnsupportedElement();
-	void importGeoreferencing();
+	void importGeoreferencing(bool load_symbols_only);
 	void importColors();
 	void importSymbols();
 	void importMapParts();
@@ -392,12 +392,12 @@ void XMLFileImporter::import(bool load_symbols_only) throw (FormatException)
 	{
 		const QStringRef name(xml.name());
 		
-		if (name == "georeferencing")
-			importGeoreferencing();
-		else if (name == "colors")
+		if (name == "colors")
 			importColors();
 		else if (name == "symbols")
 			importSymbols();
+		else if (name == "georeferencing")
+			importGeoreferencing(load_symbols_only);
 		else if (load_symbols_only)
 			xml.skipCurrentElement();
 		else if (name == "notes")
@@ -425,11 +425,11 @@ void XMLFileImporter::import(bool load_symbols_only) throw (FormatException)
 		throw FormatException(xml.errorString());
 }
 
-void XMLFileImporter::importGeoreferencing()
+void XMLFileImporter::importGeoreferencing(bool load_symbols_only)
 {
 	Q_ASSERT(xml.name() == "georeferencing");
 	Georeferencing georef;
-	georef.load(xml);
+	georef.load(xml, load_symbols_only);
 	map->setGeoreferencing(georef);
 }
 

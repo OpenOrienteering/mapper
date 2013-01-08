@@ -133,6 +133,8 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
 		}
 		if (version <= 17)
 			georef.initDeclination();
+		// Correctly set georeferencing state
+		georef.setProjectedCRS(georef.projected_crs_id, georef.projected_crs_spec);
 		*map->georeferencing = georef;
 	}
 	

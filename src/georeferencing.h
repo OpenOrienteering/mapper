@@ -153,8 +153,22 @@ friend class NativeFileImport;
 friend QDebug operator<<(QDebug dbg, const Georeferencing& georef);
 
 public:
+	/// Georeferencing state
+	enum State
+	{
+		/// The settings have not been set yet. Only the scale denominator is valid.
+		ScaleOnly = 0,
+		
+		/// Only conversions between map and projected coordinates are possible.
+		Local,
+		
+		/// All coordinate conversions are possible (if there is no error in the
+		/// crs specification).
+		Normal
+	};
+	
 	/** 
-	 * Constructs a local georeferencing.
+	 * Constructs a scale-only georeferencing.
 	 */
 	Georeferencing();
 	
@@ -177,7 +191,7 @@ public:
 	/**
 	 * Creates a georeferencing from an XML stream.
 	 */
-	void load(QXmlStreamReader& xml) throw (FormatException);
+	void load(QXmlStreamReader& xml, bool load_scale_only) throw (FormatException);
 	
 	
 	/**
@@ -190,6 +204,15 @@ public:
 	Georeferencing& operator=(const Georeferencing& other);
 	
 	
+	/**
+	 * Returns if the georeferencing settings are valid.
+	 * 
+	 * This means that coordinates can be converted between map and projected
+	 * coordinates. isLocal() can be checked to determine if a conversion
+	 * to geographic coordinates is also possible.
+	 */
+	inline bool isValid() const {return state == Local || projected_crs != NULL;}
+	
 	/** 
 	 * Returns true if this georeferencing is local.
 	 * 
@@ -197,7 +220,21 @@ public:
 	 * is given for the projected coordinates. A local georeferencing cannot 
 	 * convert coordinates from and to geographic coordinate systems.
 	 */
-	inline bool isLocal() const { return projected_crs == NULL; }
+	inline bool isLocal() const { return state == Local; }
+	
+	
+	/**
+	 * Returns the georeferencing state.
+	 */
+	inline State getState() const {return state;}
+	
+	/**
+	 * Sets the georeferencing state.
+	 * 
+	 * This is only neccessary to decrease the state to Local or ScaleOnly,
+	 * as otherwise it will be automatically changed when setting the respective values.
+	 */
+	void setState(State value);
 	
 	
 	/**
@@ -212,7 +249,7 @@ public:
 	
 	
 	/**
-	 * Returns the magnetic declination.
+	 * Returns the magnetic declination (in degrees).
 	 * 
 	 * @see setDeclination()
 	 */
@@ -277,11 +314,26 @@ public:
 	void setProjectedRefPoint(QPointF point);
 	
 	
+	/**
+	 * Returns the unique id of the projected CRS.
+	 */
+	QString getProjectedCRSId() const { return projected_crs_id; }
+	
 	/** 
-	 * Returns the name (ID) of the coordinate reference system (CRS) of the
+	 * Returns the name of the coordinate reference system (CRS) of the
 	 * projected coordinates.
 	 */
-	QString getProjectedCRS() const { return projected_crs_id; }
+	QString getProjectedCRSName() const;
+	
+	/**
+	 * Returns the array of projected crs parameter values.
+	 */
+	std::vector< QString > getProjectedCRSParameters() const { return projected_crs_parameters; }
+	
+	/**
+	 * Sets the array of projected crs parameter values.
+	 */
+	void setProjectedCRSParameters(std::vector< QString > values) { projected_crs_parameters = values; }
 	
 	/** 
 	 * Returns the specification of the coordinate reference system (CRS) of the
@@ -449,6 +501,8 @@ signals:
 	
 	
 private:
+	State state;
+	
 	int scale_denominator;
 	double declination;
 	double grivation;
@@ -459,8 +513,11 @@ private:
 	QTransform from_projected;
 	QTransform to_projected;
 	
+	/// Projected CRS id, used for lookup in the CRS registry.
+	/// If the spec is directly entered as string, the id is empty.
 	QString projected_crs_id;
 	QString projected_crs_spec;
+	std::vector< QString > projected_crs_parameters;
 	projPJ projected_crs;
 	
 	LatLon geographic_ref_point;
@@ -476,5 +533,90 @@ private:
  * Note that this requires a *reference*, not a pointer.
  */
 QDebug operator<<(QDebug dbg, const Georeferencing &georef);
+
+
+
+/// A template for a coordinate reference system specification string,
+/// which may contain one or more parameters described by the Param struct.
+/// For each param, spec_template must contain a free parameter for QString::arg(),
+/// e.g. "%1" for the first parameter.
+class CRSTemplate
+{
+public:
+	struct Param
+	{
+		Param(const QString& desc);
+		virtual ~Param() {}
+		virtual QWidget* createEditWidget(QObject* edit_receiver) const = 0;
+		/// Must return the widget's value so it can be pasted into the CRS specification
+		virtual QString getSpecValue(QWidget* edit_widget) const = 0;
+		/// Must return the widget's value so it can be stored
+		virtual QString getValue(QWidget* edit_widget) const = 0;
+		/// Must set the stored value in the widget
+		virtual void setValue(QWidget* edit_widget, const QString& value) = 0;
+		
+		QString desc;
+	};
+	
+	struct ZoneParam : public Param
+	{
+		ZoneParam(const QString& desc);
+		virtual QWidget* createEditWidget(QObject* edit_receiver) const;
+		virtual QString getSpecValue(QWidget* edit_widget) const;
+		virtual QString getValue(QWidget* edit_widget) const;
+		virtual void setValue(QWidget* edit_widget, const QString& value);
+	};
+	
+	struct IntRangeParam : public Param
+	{
+		IntRangeParam(const QString& desc, int min_value, int max_value, int apply_factor = 1);
+		virtual QWidget* createEditWidget(QObject* edit_receiver) const;
+		virtual QString getSpecValue(QWidget* edit_widget) const;
+		virtual QString getValue(QWidget* edit_widget) const;
+		virtual void setValue(QWidget* edit_widget, const QString& value);
+		
+		int min_value;
+		int max_value;
+		int apply_factor;
+	};
+	
+	/// Creates a new CRS template. The id must be unique and different from "Local".
+	CRSTemplate(const QString& id, const QString& name, const QString& coordinates_name, const QString& spec_template);
+	~CRSTemplate();
+	
+	void addParam(Param* param);
+	
+	inline const QString& getId() const {return id;}
+	inline const QString& getName() const {return name;}
+	inline const QString& getCoordinatesName() const {return coordinates_name;}
+	inline const QString& getSpecTemplate() const {return spec_template;}
+	inline int getNumParams() const {return (int)params.size();}
+	inline Param& getParam(int index) {return *params[index];}
+	
+	// CRS Registry
+	
+	/// Returns the number of CRS templates which are registered
+	static int getNumCRSTemplates();
+	
+	/// Returns a registered CRS template by index
+	static CRSTemplate& getCRSTemplate(int index);
+	
+	/// Returns a registered CRS template by id,
+	/// or NULL if the given id does not exist
+	static CRSTemplate* getCRSTemplate(const QString& id);
+	
+	/// Registers a CRS template
+	static void registerCRSTemplate(CRSTemplate* temp);
+	
+private:
+	QString id;
+	QString name;
+	QString coordinates_name;
+	QString spec_template;
+	std::vector<Param*> params;
+	
+	// CRS Registry
+	static std::vector<CRSTemplate*> crs_templates;
+};
 
 #endif

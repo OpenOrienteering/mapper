@@ -37,11 +37,8 @@ void GeoreferencingTest::initTestCase()
 
 void GeoreferencingTest::testEmptyProjectedCRS()
 {
-	georef.setProjectedCRS("", "");
-	QVERIFY(georef.isLocal());
-	
 	Georeferencing new_georef;
-	QVERIFY(new_georef.isLocal());
+	QVERIFY(new_georef.getState() == Georeferencing::ScaleOnly);
 }
 
 

@@ -1,18 +1,18 @@
 /*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012 Thomas Schöps, Kai Pastor
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -47,6 +47,8 @@ class Map;
 class MapCoord;
 class MapEditorController;
 class GeoreferencingTool;
+class ProjectedCRSSelector;
+class CRSTemplate;
 
 /**
  * A GeoreferencingDialog allows the user to adjust the georeferencing properties
@@ -59,17 +61,21 @@ public:
 	/**
 	 * Constructs a new georeferencing dialog for the map handled by the given 
 	 * controller. The optional parameter initial allows to override the current 
-	 * properties of the map's georeferencing.
+	 * properties of the map's georeferencing. The parameter
+	 * allow_no_georeferencing determines if the okay button can
+	 * be clicked while "- none -" is selected.
 	 */
-	GeoreferencingDialog(MapEditorController* controller, const Georeferencing* initial = NULL);
+	GeoreferencingDialog(MapEditorController* controller, const Georeferencing* initial = NULL, bool allow_no_georeferencing = true);
 	
 	/**
 	 * Constructs a new georeferencing dialog for the given map. The optional 
 	 * parameter initial allows to override the current properties of the map's
 	 * georeferencing. Since the dialog will not know a MapEditorController,
 	 * it will not allow to select a new reference point from the map.
+	 * The parameter allow_no_georeferencing determines if the okay button can
+	 * be clicked while "- none -" is selected.
 	 */
-	GeoreferencingDialog(QWidget* parent, Map* map, const Georeferencing* initial = NULL);
+	GeoreferencingDialog(QWidget* parent, Map* map, const Georeferencing* initial = NULL, bool allow_no_georeferencing = true);
 	
 	/**
 	 * Releases resources.
@@ -88,6 +94,12 @@ public:
 	 */
 	int exec();
 	
+	/**
+	 * Sets all values in the dialog's widgets to the values from the
+	 * given Georeferencing object.
+	 */
+	void setValuesFrom(Georeferencing* values);
+	
 	
 public slots:
 	/**
@@ -100,7 +112,7 @@ public slots:
 	/**
 	 * Sets the map coordinates of the reference point
 	 */
-	void setRefPoint(MapCoord coords);
+	void setMapRefPoint(MapCoord coords);
 	
 	/**
 	 * Notifies the dialog that the active GeoreferencingTool was deleted.
@@ -127,42 +139,52 @@ public slots:
 	void accept();
 	
 protected slots:
+	
 	/**
-	 * Handles replies from the online declination service.
+	 * Updates enabled / disabled states of all widgets.
 	 */
-	void declinationReplyFinished(QNetworkReply* reply);
+	void updateWidgets();
+	
+	/**
+	 * Updates enabled / disabled state and text of the declination query button.
+	 */
+	void updateDeclinationButton();
+	
+	/** 
+	 * Notifies the dialog of a change in the CRS selector widget.
+	 */
+	void crsEdited();
+	
+	/**
+	 * Hides the dialog and activates a GeoreferencingTool for selecting
+	 * the reference point on the map.
+	 */
+	void selectMapRefPoint();
+	
+	/**
+	 * Notifies the dialog of a change in the map reference point fields.
+	 */
+	void mapRefChanged(double value);
+	
+	/**
+	 * Notifies the dialog of a change in the easting / northing fields.
+	 */
+	void eastingNorthingChanged(double value = -1);
+	
+	/**
+	 * Notifies the dialog of a change in the latitude / longitude fields.
+	 */
+	void latLonChanged(double value = -1);
 	
 	/** 
 	 * Notifies the dialog of a change in the declination field.
 	 */
 	void declinationChanged(double value);
 	
-	/** 
-	 * Notifies the dialog of a change in the grivation field.
-	 */
-	void grivationChanged(double value);
-	
 	/**
-	 * Hides the dialog and activates a GeoreferencingTool for selecting
-	 * the reference point on the map.
+	 * Handles replies from the online declination service.
 	 */
-	void selectRefPoint();
-	
-	/**
-	 * Notifies the dialog of a change in the crs or zone field.
-	 */
-	void crsChanged();
-	
-	/** 
-	 * Notifies the dialog of a change in the easting or northing field
-	 * (projected coordinates).
-	 */
-	void eastingNorthingChanged();
-	
-	/**
-	 * Notifies the dialog of a change in the latitude or longitude field
-	 */
-	void latLonChanged();
+	void declinationReplyFinished(QNetworkReply* reply);
 	
 protected:
 	/**
@@ -170,83 +192,63 @@ protected:
 	 */
 	void init(const Georeferencing* initial);
 	
-	/** 
-	 * Updates the general field group in the dialog from the underlying Georeferencing. 
-	 */
-	void updateGeneral();
+	// Helper methods for handling value changes
 	
-	/** 
-	 * Updates the CRS field in the dialog from the underlying Georeferencing. 
-	 */
-	void updateCRS();
-	
-	/** 
-	 * Updates the zone field in the dialog from the underlying Georeferencing.  
-	 * 
-	 * This will also show, hide and clear the zone field as neccessary, and 
-	 * try to determine a default value if empty.
-	 */
+	/// Updates the zone field in the dialog from the underlying Georeferencing if
+	/// UTM is used as coordinate reference system.
 	void updateZone();
 	
-	/**
-	 * Updates the error status field.
-	 */
-	void updateStatus();
-	
-	/** 
-	 * Updates the easting and northing fields (projected coordinates) in the 
-	 * dialog from the underlying Georeferencing.
-	 */
-	void updateEastingNorthing();
-	
-	/**
-	 * Updates the magnetic convergence field from the underlying Georeferencing.
-	 */
+	/// Updates the grivation field from the underlying Georeferencing.
 	void updateNorth();
 	
-	/** 
-	 * Updates the latitude and longitude fields (geographic coordinates) in the
-	 * dialog from the underlying Georeferencing. 
-	 */
-	void updateLatLon();
+	/// Sets map reference point widget values from the given Georeferencing object
+	void setMapRefValuesFrom(Georeferencing* values);
+	
+	/// Sets easting / northing widget values from the given Georeferencing object
+	void setEastingNorthingValuesFrom(Georeferencing* values);
+	
+	/// Sets latitude / longitude widget values from the given Georeferencing object
+	void setLatLonValuesFrom(Georeferencing* values);
 	
 private:
 	/* Internal state */
 	MapEditorController* const controller;
 	Map* const map;
 	QScopedPointer<Georeferencing> georef;
-	QString crs_spec_template;
+	bool allow_no_georeferencing;
 	bool tool_active;
+	bool declination_query_in_progress;
+	bool zone_update_in_progress;
 	
 	/* GUI elements */
-	QLabel* scale_edit;
-	QDoubleSpinBox* declination_edit;
-	QPushButton* declination_button;
-	QDoubleSpinBox* grivation_edit;
-	QLabel* ref_point_edit;
-	
-	QComboBox* crs_edit;
-	QLineEdit* zone_edit;
+	ProjectedCRSSelector* crs_edit;
+	QLabel* crs_spec_label;
+	QLineEdit* crs_spec_edit;
 	QLabel* status_label;
+	QLabel* status_display_label;
+	
+	QDoubleSpinBox* map_x_edit;
+	QDoubleSpinBox* map_y_edit;
+	QPushButton* ref_point_button;
+	
+	QLabel* projected_ref_label;
 	QDoubleSpinBox* easting_edit;
 	QDoubleSpinBox* northing_edit;
-	QLabel* convergence_edit;
 	
-	QComboBox* ll_datum_edit;
 	QDoubleSpinBox* lat_edit;
 	QDoubleSpinBox* lon_edit;
-	
+	QLabel* show_refpoint_label;
 	QLabel* link_label;
 	
-	QPushButton* reset_button;
+	QRadioButton* keep_projected_radio;
+	QRadioButton* keep_geographic_radio;
 	
-	enum ChangeType
-	{
-		NONE,
-		PROJECTED,
-		GEOGRAPHIC
-	};
-	ChangeType changed_coords;
+	QDoubleSpinBox* declination_edit;
+	QPushButton* declination_button;
+	QLabel* grivation_label;
+	
+	QDialogButtonBox* buttons_box;
+	QPushButton* reset_button;
 };
 
 
@@ -295,74 +297,6 @@ private:
 
 
 
-/// A template for a coordinate reference system specification string,
-/// which may contain one or more parameters described by the Param struct.
-/// For each param, spec_template must contain a free parameter for QString::arg(),
-/// e.g. "%1" for the first parameter.
-class CRSTemplate
-{
-public:
-	struct Param
-	{
-		Param(const QString& desc);
-		virtual ~Param() {}
-		virtual QWidget* createEditWidget(QObject* edit_receiver) const = 0;
-		virtual QString getValue(QWidget* edit_widget) const = 0;
-		
-		QString desc;
-	};
-	
-	struct ZoneParam : public Param
-	{
-		ZoneParam(const QString& desc);
-		virtual QWidget* createEditWidget(QObject* edit_receiver) const;
-		virtual QString getValue(QWidget* edit_widget) const;
-	};
-	
-	struct IntRangeParam : public Param
-	{
-		IntRangeParam(const QString& desc, int min_value, int max_value, int apply_factor = 1);
-		virtual QWidget* createEditWidget(QObject* edit_receiver) const;
-		virtual QString getValue(QWidget* edit_widget) const;
-		
-		int min_value;
-		int max_value;
-		int apply_factor;
-	};
-	
-	/// Creates a new CRS template with the given id (name) and spec template
-	CRSTemplate(const QString& id, const QString& spec_template);
-	~CRSTemplate();
-	
-	void addParam(Param* param);
-	
-	inline const QString& getId() const {return id;}
-	inline const QString& getSpecTemplate() const {return spec_template;}
-	inline int getNumParams() const {return (int)params.size();}
-	inline const Param& getParam(int index) const {return *params[index];}
-	
-	// CRS Registry
-	
-	/// Returns the number of CRS templates which are registered
-	static int getNumCRSTemplates();
-	
-	/// Returns a registered CRS template by index
-	static CRSTemplate& getCRSTemplate(int index);
-	
-	/// Registers a CRS template
-	static void registerCRSTemplate(CRSTemplate* temp);
-	
-private:
-	QString id;
-	QString spec_template;
-	std::vector<Param*> params;
-	
-	// CRS Registry
-	static std::vector<CRSTemplate*> crs_templates;
-};
-
-
-
 /// Combobox for projected coordinate reference system (CRS) selection,
 /// with a QLineEdit below to specify one parameter if necessary
 class ProjectedCRSSelector : public QWidget
@@ -371,7 +305,40 @@ Q_OBJECT
 public:
 	ProjectedCRSSelector(QWidget* parent = NULL);
 	
+	/// Adds a custom text item at the top which can be identified by the given id.
+	void addCustomItem(const QString& text, int id);
+	
+	
+	/// Returns the selected CRS template,
+	/// or NULL if a custom item is selected
+	CRSTemplate* getSelectedCRSTemplate();
+	
+	/// Returns the selected CRS specification string,
+	/// or an empty string if a custom item is selected
 	QString getSelectedCRSSpec();
+	
+	/// Returns the id of the selected custom item,
+	/// or -1 in case a normal item is selected
+	int getSelectedCustomItemId();
+	
+
+	/// Selects the given item
+	void selectItem(CRSTemplate* temp);
+	
+	/// Selects the given item
+	void selectCustomItem(int id);
+	
+	
+	/// Returns the number of parameters shown currently
+	int getNumParams();
+	
+	/// Returns the i-th parameters' value (for storage,
+	/// not for pasting into the crs specification!)
+	QString getParam(int i);
+	
+	/// Sets the i-th parameters' value.
+	/// Does not emit crsEdited().
+	void setParam(int i, const QString& value);
 	
 signals:
 	void crsEdited();
@@ -382,6 +349,7 @@ private slots:
 	
 private:
 	QComboBox* crs_dropdown;
+	int num_custom_items;
 	
 	QLineEdit* param_edit;
 	QSpinBox* param_int_spinbox;

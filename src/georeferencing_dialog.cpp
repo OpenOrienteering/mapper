@@ -1,18 +1,18 @@
 ﻿/*
- *    Copyright 2012 Thomas Schöps
- *    
+ *    Copyright 2012 Thomas Schöps, Kai Pastor
+ *
  *    This file is part of OpenOrienteering.
- * 
+ *
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
  *    (at your option) any later version.
- * 
+ *
  *    OpenOrienteering is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU General Public License for more details.
- * 
+ *
  *    You should have received a copy of the GNU General Public License
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -37,18 +37,22 @@
 #include "map_editor.h"
 #include "util_gui.h"
 
-GeoreferencingDialog::GeoreferencingDialog(MapEditorController* controller, const Georeferencing* initial)
+GeoreferencingDialog::GeoreferencingDialog(MapEditorController* controller, const Georeferencing* initial, bool allow_no_georeferencing)
 : QDialog(controller->getWindow(), Qt::WindowSystemMenuHint | Qt::WindowTitleHint),
   controller(controller), 
-  map(controller->getMap())
+  map(controller->getMap()),
+  allow_no_georeferencing(allow_no_georeferencing),
+  zone_update_in_progress(false)
 {
 	init(initial);
 }
 
-GeoreferencingDialog::GeoreferencingDialog(QWidget* parent, Map* map, const Georeferencing* initial)
+GeoreferencingDialog::GeoreferencingDialog(QWidget* parent, Map* map, const Georeferencing* initial, bool allow_no_georeferencing)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint),
   controller(NULL), 
-  map(map)
+  map(map),
+  allow_no_georeferencing(allow_no_georeferencing),
+  zone_update_in_progress(false)
 {
 	init(initial);
 }
@@ -58,81 +62,111 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	setWindowModality(Qt::WindowModal);
 	
 	tool_active = false;
-	changed_coords = NONE;
+	declination_query_in_progress = false;
 	
 	// A working copy of the current or given initial Georeferencing
 	georef.reset( new Georeferencing(initial == NULL ? map->getGeoreferencing() : *initial) );
 	
 	setWindowTitle(tr("Map Georeferencing"));
 	
-	scale_edit  = new QLabel();
-	declination_edit = Util::SpinBox::create(1, -180.0, +180.0, trUtf8("°"));
-	declination_button = new QPushButton(tr("Lookup..."));
-	declination_button->setEnabled(!georef->isLocal());
-	QHBoxLayout* declination_layout = new QHBoxLayout();
-	declination_layout->addWidget(declination_edit, 1);
-	declination_layout->addWidget(declination_button, 0);
-	grivation_edit = Util::SpinBox::create(1, -180.0, +180.0, trUtf8("°"));
-	ref_point_edit = new QLabel();
-	QPushButton* ref_point_button = new QPushButton(tr("&Select..."));
+	// Create widgets
+	QLabel* map_crs_label = Util::Headline::create(tr("Map coordinate reference system"));
+	
+	crs_edit = new ProjectedCRSSelector();
+	crs_edit->addCustomItem(tr("- none -"), 0);
+	crs_edit->addCustomItem(tr("- from Proj.4 specification -"), 1);
+	crs_edit->addCustomItem(tr("- local -"), 2);
+	
+	crs_spec_label = new QLabel(tr("CRS specification:"));
+	crs_spec_edit = new QLineEdit();
+	status_label = new QLabel(tr("Status:"));
+	status_display_label = new QLabel();
+	
+	QLabel* reference_point_label = Util::Headline::create(tr("Reference point"));
+	
+	ref_point_button = new QPushButton(tr("&Pick on map"));
+	int ref_point_button_width = ref_point_button->sizeHint().width();
+	QLabel* geographic_datum_label = new QLabel(tr("(Datum: WGS84)"));
+	int geographic_datum_label_width = geographic_datum_label->sizeHint().width();
+	
+	map_x_edit = Util::SpinBox::create(2, -1 * std::numeric_limits<double>::max(), std::numeric_limits<double>::max(), tr("mm"));
+	map_y_edit = Util::SpinBox::create(2, -1 * std::numeric_limits<double>::max(), std::numeric_limits<double>::max(), tr("mm"));
 	ref_point_button->setEnabled(controller != NULL);
-	QHBoxLayout* ref_point_layout = new QHBoxLayout();
-	ref_point_layout->addWidget(ref_point_edit, 1);
-	ref_point_layout->addWidget(ref_point_button, 0);
+	QHBoxLayout* map_ref_layout = new QHBoxLayout();
+	map_ref_layout->addWidget(map_x_edit, 1);
+	map_ref_layout->addWidget(new QLabel(tr("X", "x coordinate")), 0);
+	map_ref_layout->addWidget(map_y_edit, 1);
+	map_ref_layout->addWidget(new QLabel(tr("Y", "y coordinate")), 0);
+	if (ref_point_button_width < geographic_datum_label_width)
+		map_ref_layout->addSpacing(geographic_datum_label_width - ref_point_button_width);
+	map_ref_layout->addWidget(ref_point_button, 0);
 	
-	crs_edit = new QComboBox();
-	crs_edit->setEditable(true);
-	// TODO: move crs registry out of georeferencing GUI
-	crs_edit->addItem(tr("Local coordinates"), "");
-	crs_edit->addItem("UTM", "+proj=utm +datum=WGS84 +zone=!ZONE!");
-	crs_edit->addItem("Gauss-Krueger zone 3, datum: Potsdam", "+proj=tmerc +lat_0=0 +lon_0=9 +k=1.000000 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");
-	crs_edit->addItem(tr("Edit projection parameters..."), "!EDIT!");
+	easting_edit = Util::SpinBox::create(2, -1 * std::numeric_limits<double>::max(), std::numeric_limits<double>::max(), tr("m"));
+	northing_edit = Util::SpinBox::create(2, -1 * std::numeric_limits<double>::max(), std::numeric_limits<double>::max(), tr("m"));
+	QHBoxLayout* projected_ref_layout = new QHBoxLayout();
+	projected_ref_layout->addWidget(easting_edit, 1);
+	projected_ref_layout->addWidget(new QLabel(tr("E", "west / east")), 0);
+	projected_ref_layout->addWidget(northing_edit, 1);
+	projected_ref_layout->addWidget(new QLabel(tr("N", "north / south")), 0);
+	projected_ref_layout->addSpacing(qMax(ref_point_button_width, geographic_datum_label_width));
 	
-	zone_edit = new QLineEdit();
+	projected_ref_label = new QLabel();
+	lat_edit = Util::SpinBox::create(8, -90.0, +90.0, trUtf8("°"));
+	lon_edit = Util::SpinBox::create(8, -180.0, +180.0, trUtf8("°"));
+	QHBoxLayout* geographic_ref_layout = new QHBoxLayout();
+	geographic_ref_layout->addWidget(lat_edit, 1);
+	geographic_ref_layout->addWidget(new QLabel(tr("N", "north")), 0);
+	geographic_ref_layout->addWidget(lon_edit, 1);
+	geographic_ref_layout->addWidget(new QLabel(tr("E", "east")), 0);
+	if (geographic_datum_label_width < ref_point_button_width)
+		geographic_ref_layout->addSpacing(ref_point_button_width - geographic_datum_label_width);
+	geographic_ref_layout->addWidget(geographic_datum_label, 0);
 	
-	status_label = new QLabel();
-	
-	easting_edit = Util::SpinBox::create(0, std::numeric_limits<double>::min(), std::numeric_limits<double>::max(), tr("m"));
-	northing_edit = Util::SpinBox::create(0, std::numeric_limits<double>::min(), std::numeric_limits<double>::max(), tr("m"));
-	
-	convergence_edit = new QLabel();
-	
-	QLabel* datum_edit = new QLabel("WGS84");
-	lat_edit = Util::SpinBox::create(8, -90.0, +90.0, trUtf8("°"), 1);
-	lon_edit = Util::SpinBox::create(8, -180.0, +180.0, trUtf8("°"), 1);
+	show_refpoint_label = new QLabel(tr("Show reference point in:"));
 	link_label = new QLabel();
 	link_label->setOpenExternalLinks(true);
 	
-	QDialogButtonBox* buttons_box = new QDialogButtonBox(
+	keep_projected_radio = new QRadioButton(tr("Projected coordinates"));
+	keep_geographic_radio = new QRadioButton(tr("Geographic coordinates"));
+	keep_geographic_radio->setChecked(true);
+	
+	QLabel* map_north_label = Util::Headline::create(tr("Map north"));
+	
+	declination_edit = Util::SpinBox::create(1, -180.0, +180.0, trUtf8("°"));
+	declination_button = new QPushButton("");
+	QHBoxLayout* declination_layout = new QHBoxLayout();
+	declination_layout->addWidget(declination_edit, 1);
+	declination_layout->addWidget(declination_button, 0);
+	
+	grivation_label = new QLabel();
+	
+	buttons_box = new QDialogButtonBox(
 	  QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Reset | QDialogButtonBox::Help,
 	  Qt::Horizontal);
 	reset_button = buttons_box->button(QDialogButtonBox::Reset);
 	reset_button->setEnabled(initial != NULL);
 	QPushButton* help_button = buttons_box->button(QDialogButtonBox::Help);
 	
-	QFormLayout* edit_layout = new QFormLayout;
+	QFormLayout* edit_layout = new QFormLayout();
 	
-	edit_layout->addRow(Util::Headline::create(tr("General")));
-	edit_layout->addRow(tr("Map scale:"), scale_edit);
-	edit_layout->addRow(tr("Declination:"), declination_layout); 
-	edit_layout->addRow(tr("Reference point:"), ref_point_layout);
+	edit_layout->addRow(map_crs_label);
+	edit_layout->addRow(crs_edit);
+	edit_layout->addRow(crs_spec_label, crs_spec_edit);
+	edit_layout->addRow(status_label, status_display_label);
 	edit_layout->addItem(Util::SpacerItem::create(this));
 	
-	edit_layout->addRow(Util::Headline::create(tr("Projected coordinates")));
-	edit_layout->addRow(tr("&Coordinate reference system:"), crs_edit);
-	edit_layout->addRow(tr("&Zone:"), zone_edit);
-	edit_layout->addRow(tr("Status:"), status_label);
-	edit_layout->addRow(tr("Reference point &easting:"), easting_edit);
-	edit_layout->addRow(tr("Reference point &northing:"), northing_edit);
-	edit_layout->addRow(tr("Convergence:"), convergence_edit);
-	edit_layout->addRow(tr("&Grivation:"), grivation_edit);
+	edit_layout->addRow(reference_point_label);
+	edit_layout->addRow(tr("Map coordinates:"), map_ref_layout);
+	edit_layout->addRow(projected_ref_label, projected_ref_layout);
+	edit_layout->addRow(tr("Geographic coordinates:"), geographic_ref_layout);
+	edit_layout->addRow(show_refpoint_label, link_label);
+	edit_layout->addRow(tr("On CRS changes, keep:"), keep_projected_radio);
+	edit_layout->addRow("", keep_geographic_radio);
 	edit_layout->addItem(Util::SpacerItem::create(this));
 	
-	edit_layout->addRow(Util::Headline::create(tr("Geographic coordinates")));
-	edit_layout->addRow(tr("Datum"), datum_edit);
-	edit_layout->addRow(tr("Reference point &latitude:"), lat_edit);
-	edit_layout->addRow(tr("Reference point longitude:"), lon_edit);
-	edit_layout->addRow(tr("Show reference point in:"), link_label);
+	edit_layout->addRow(map_north_label);
+	edit_layout->addRow(tr("Declination:"), declination_layout);
+	edit_layout->addRow(tr("Grivation:"), grivation_label);
 	
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addLayout(edit_layout);
@@ -142,31 +176,28 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	
 	setLayout(layout);
 	
-	connect(declination_button, SIGNAL(clicked(bool)), this, SLOT(requestDeclination()));
+	connect(crs_edit, SIGNAL(crsEdited()), this, SLOT(crsEdited()));
+	connect(crs_spec_edit, SIGNAL(textEdited(QString)), this, SLOT(crsEdited()));
+	
+	connect(map_x_edit, SIGNAL(valueChanged(double)), this, SLOT(mapRefChanged(double)));
+	connect(map_y_edit, SIGNAL(valueChanged(double)), this, SLOT(mapRefChanged(double)));
+	connect(ref_point_button, SIGNAL(clicked(bool)), this,SLOT(selectMapRefPoint()));
+	
+	connect(easting_edit, SIGNAL(valueChanged(double)), this, SLOT(eastingNorthingChanged(double)));
+	connect(northing_edit, SIGNAL(valueChanged(double)), this, SLOT(eastingNorthingChanged(double)));
+	
+	connect(lat_edit, SIGNAL(valueChanged(double)), this, SLOT(latLonChanged(double)));
+	connect(lon_edit, SIGNAL(valueChanged(double)), this, SLOT(latLonChanged(double)));
+	
 	connect(declination_edit, SIGNAL(valueChanged(double)), this, SLOT(declinationChanged(double)));
-	connect(grivation_edit, SIGNAL(valueChanged(double)), this, SLOT(grivationChanged(double)));
-	connect(ref_point_button, SIGNAL(clicked(bool)), this,SLOT(selectRefPoint()));
-	connect(crs_edit, SIGNAL(editTextChanged(QString)), this, SLOT(crsChanged()));
-	connect(zone_edit, SIGNAL(textChanged(QString)), this, SLOT(crsChanged()));
-	connect(easting_edit, SIGNAL(valueChanged(double)), this, SLOT(eastingNorthingChanged()));
-	connect(northing_edit, SIGNAL(valueChanged(double)), this, SLOT(eastingNorthingChanged()));
-	connect(lat_edit, SIGNAL(valueChanged(double)), this, SLOT(latLonChanged()));
-	connect(lon_edit, SIGNAL(valueChanged(double)), this, SLOT(latLonChanged()));
+	connect(declination_button, SIGNAL(clicked(bool)), this, SLOT(requestDeclination()));
+	
 	connect(buttons_box, SIGNAL(accepted()), this, SLOT(accept()));
 	connect(buttons_box, SIGNAL(rejected()), this, SLOT(reject()));
 	connect(reset_button, SIGNAL(clicked(bool)), this, SLOT(reset()));
 	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
 	
-	changed_coords = NONE;
-	updateGeneral();
-	updateNorth();
-	updateCRS();
-	updateStatus();
-	updateEastingNorthing();
-	updateNorth();
-	updateLatLon();
-	updateZone();
-	reset_button->setEnabled(false);
+	reset();
 }
 
 GeoreferencingDialog::~GeoreferencingDialog()
@@ -183,157 +214,58 @@ int GeoreferencingDialog::exec()
 	return QDialog::exec();
 }
 
-void GeoreferencingDialog::setRefPoint(MapCoord coords)
+void GeoreferencingDialog::setValuesFrom(Georeferencing* values)
 {
-	georef->setMapRefPoint(coords);
-	updateGeneral();
-	reset_button->setEnabled(true);
-}
-
-void GeoreferencingDialog::updateGeneral()
-{
-	scale_edit->setText( QString("1:") % QString::number(georef->getScaleDenominator()) );
-	const MapCoord& coords(georef->getMapRefPoint());
-	ref_point_edit->setText(tr("%1 %2 (mm)").arg(locale().toString(coords.xd())).arg(locale().toString(-coords.yd())));
-}
-
-void GeoreferencingDialog::updateCRS()
-{
-	crs_spec_template = georef->getProjectedCRSSpec();
-	
-	int index = crs_edit->findText(georef->getProjectedCRS(), Qt::MatchExactly);
-	
-	if (index == -1)
-		index = crs_edit->findData(crs_spec_template);
-	
-	crs_edit->blockSignals(true);
-	crs_edit->setCurrentIndex(index);
-	if (index >= 0)
+	if (values->getState() == Georeferencing::ScaleOnly)
 	{
-		crs_spec_template = crs_edit->itemData(index).toString();
+		crs_edit->selectCustomItem(0);
+		crs_spec_edit->setText("");
+	}
+	else if (values->getState() == Georeferencing::Local)
+	{
+		crs_edit->selectCustomItem(2);
+		crs_spec_edit->setText("");
 	}
 	else
 	{
-		crs_edit->setEditText(crs_spec_template);
-	}
-	crs_edit->blockSignals(false);
-}
-
-void GeoreferencingDialog::updateZone()
-{
-	if (crs_spec_template.contains("!ZONE!"))
-	{
-		if (!zone_edit->isModified())
+		QString crs_id = values->getProjectedCRSId();
+		if (crs_id.isEmpty())
+			crs_edit->selectCustomItem(1);
+		else
 		{
-			zone_edit->blockSignals(true);
-			if (crs_spec_template.startsWith("+proj=utm"))
+			CRSTemplate* temp = CRSTemplate::getCRSTemplate(crs_id);
+			if (!temp || temp->getNumParams() != (int)values->getProjectedCRSParameters().size())
 			{
-				const LatLon ref_point(georef->getGeographicRefPoint());
-				double lat = Georeferencing::radToDeg(ref_point.latitude);
-				if (abs(lat) < 84.0)
-				{
-					double lon = Georeferencing::radToDeg(ref_point.longitude);
-					int zone_no = int(floor(lon) + 180) / 6 % 60 + 1;
-					if (zone_no == 31 && lon >= 3.0 && lat >= 56.0 && lat < 64.0)
-						zone_no = 32; // South Norway
-					else if (lat >= 72.0 && lon >= 3.0 && lon <= 39.0)
-						zone_no = 2 * (int(floor(lon) + 3.0) / 12) + 31; // Svalbard
-					QString zone = QString::number(zone_no);
-					zone.append((ref_point.latitude >= 0.0) ? " N" : " S");
-					if (zone != zone_edit->text())
-					{
-						zone_edit->setText(zone);
-						crsChanged();
-					}
-				}
+				// The CRS id is not there anymore or the number of parameters has changed.
+				// Enter as custom spec.
+				crs_edit->selectCustomItem(1);
 			}
-			zone_edit->blockSignals(false);
+			else
+			{
+				crs_edit->selectItem(temp);
+				std::vector< QString > params = values->getProjectedCRSParameters();
+				for (int i = 0; i < crs_edit->getNumParams(); ++i)
+					crs_edit->setParam(i, params[i]);
+			}
 		}
-		zone_edit->setEnabled(true);
+		
+		crs_spec_edit->setText(values->getProjectedCRSSpec());
 	}
-	else
-	{
-		zone_edit->setText("");
-		zone_edit->setEnabled(false);
-	}
-}
-
-void GeoreferencingDialog::updateStatus()
-{
-	QString error = georef->getErrorText();
-	if (error.length() == 0)
-		status_label->setText(tr("valid"));
-	else
-		status_label->setText(QString("<b>") % error % "</b>");
-}
-
-void GeoreferencingDialog::updateEastingNorthing()
-{
-	easting_edit->blockSignals(true);
-	northing_edit->blockSignals(true);
-	easting_edit->setValue(georef->getProjectedRefPoint().x());
-	northing_edit->setValue(georef->getProjectedRefPoint().y());
-	easting_edit->blockSignals(false);
-	northing_edit->blockSignals(false);
-}
-
-void GeoreferencingDialog::updateNorth()
-{
+	
+	setMapRefValuesFrom(values);
+	setEastingNorthingValuesFrom(values);
+	setLatLonValuesFrom(values);
+	
 	declination_edit->blockSignals(true);
-	grivation_edit->blockSignals(true);
-	declination_edit->setValue(georef->getDeclination());
-	grivation_edit->setValue(georef->getGrivation());
-	convergence_edit->setText( locale().toString(georef->getConvergence(), 'f', 1) % QString::fromUtf8(" °") );
+	declination_edit->setValue(values->getDeclination());
 	declination_edit->blockSignals(false);
-	grivation_edit->blockSignals(false);
-}
-
-void GeoreferencingDialog::updateLatLon()
-{
-	// NOTE: There might be lat/lon already saved in the file
-	//       even when the (new) Georeferencing is "local".
-	const LatLon ref_point(georef->getGeographicRefPoint());
-	double latitude = ref_point.latitude * 180.0 / M_PI;
-	double longitude = ref_point.longitude * 180.0 / M_PI;
 	
-	lat_edit->blockSignals(true);
-	lon_edit->blockSignals(true);
-	lat_edit->setValue(latitude);
-	lon_edit->setValue(longitude);
-	lat_edit->blockSignals(false);
-	lon_edit->blockSignals(false);
-	
-	QString osm_link = 
-	  QString("http://www.openstreetmap.org/?lat=%1&lon=%2&zoom=18&layers=M").
-	  arg(latitude).arg(longitude);
-	QString worldofo_link =
-	  QString("http://maps.worldofo.com/?zoom=15&lat=%1&lng=%2").
-	  arg(latitude).arg(longitude);
-	link_label->setText(
-	  tr("<a href=\"%1\">OpenStreetMap</a> | <a href=\"%2\">World of O Maps</a>").
-	  arg(osm_link).
-	  arg(worldofo_link)
-	);
-	
-	if (!georef->isLocal())
-	{
-		lat_edit->setEnabled(true);
-		lon_edit->setEnabled(true);
-		link_label->setEnabled(true);
-		declination_button->setEnabled(true);
-	}
-	else
-	{
-		lat_edit->setEnabled(false);
-		lon_edit->setEnabled(false);
-		link_label->clear();
-		declination_button->setEnabled(false);
-	}
+	updateWidgets();
 }
 
 void GeoreferencingDialog::requestDeclination(bool no_confirm)
 {
-	if (georef->isLocal())
+	if (georef->isLocal() || georef->getState() == Georeferencing::ScaleOnly)
 		return;
 	
 	// TODO: Move to resources or preferences. Assess security risks of url distinction.
@@ -352,8 +284,8 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 			return;
 	}
 	
-	declination_button->setEnabled(false);
-	declination_button->setText(tr("Loading..."));
+	declination_query_in_progress = true;
+	updateDeclinationButton();
 	
 	QNetworkAccessManager *network = new QNetworkAccessManager(this);
 	connect(network, SIGNAL(finished(QNetworkReply*)), this, SLOT(declinationReplyFinished(QNetworkReply*)));
@@ -372,10 +304,226 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	network->get(QNetworkRequest(service_url));
 }
 
+void GeoreferencingDialog::setMapRefPoint(MapCoord coords)
+{
+	georef->setMapRefPoint(coords);
+	setMapRefValuesFrom(georef.data());
+	reset_button->setEnabled(true);
+}
+
+void GeoreferencingDialog::toolDeleted()
+{
+	tool_active = false;
+}
+
+void GeoreferencingDialog::showHelp()
+{
+	controller->getWindow()->showHelp("georeferencing.html");
+}
+
+void GeoreferencingDialog::reset()
+{
+	*georef = map->getGeoreferencing();
+	setValuesFrom(georef.data());
+	reset_button->setEnabled(false);
+}
+
+void GeoreferencingDialog::accept()
+{
+	map->setGeoreferencing(*georef);
+	map->setOtherDirty(true);
+	QDialog::accept();
+}
+
+void GeoreferencingDialog::updateWidgets()
+{
+	// Dialog is enabled if anything different from "none" is selected
+	bool dialog_enabled = crs_edit->getSelectedCustomItemId() != 0;
+	bool proj_spec_visible = crs_edit->getSelectedCustomItemId() == 1;
+	crs_spec_label->setVisible(proj_spec_visible);
+	crs_spec_edit->setVisible(proj_spec_visible);
+	status_label->setVisible(proj_spec_visible);
+	status_display_label->setVisible(proj_spec_visible);
+	if (status_display_label->isVisible())
+	{
+		QString error = georef->getErrorText();
+		if (error.length() == 0)
+			status_display_label->setText(tr("valid"));
+		else
+			status_display_label->setText(QString("<b style=\"color:red\">") % error % "</b>");
+	}
+	
+	map_x_edit->setEnabled(dialog_enabled);
+	map_y_edit->setEnabled(dialog_enabled);
+	ref_point_button->setEnabled(dialog_enabled && controller != NULL);
+	
+	QString projected_ref_label_string;
+	if (proj_spec_visible || !dialog_enabled)
+		projected_ref_label_string = tr("Projected coordinates:");
+	else if (crs_edit->getSelectedCustomItemId() == 2)
+		projected_ref_label_string = tr("Local coordinates:");
+	else if (dialog_enabled)
+		projected_ref_label_string = crs_edit->getSelectedCRSTemplate()->getCoordinatesName() + ":";
+	if (!projected_ref_label_string.isEmpty())
+		projected_ref_label->setText(projected_ref_label_string);
+	easting_edit->setEnabled(dialog_enabled);
+	northing_edit->setEnabled(dialog_enabled);
+	
+	bool geographic_coords_enabled =
+		dialog_enabled &&
+		(proj_spec_visible ||
+		 crs_edit->getSelectedCustomItemId() == -1);
+	lat_edit->setEnabled(geographic_coords_enabled);
+	lon_edit->setEnabled(geographic_coords_enabled);
+	
+	link_label->setEnabled(geographic_coords_enabled);
+	double latitude = georef->getGeographicRefPoint().getLatitudeInDegrees();
+	double longitude = georef->getGeographicRefPoint().getLongitudeInDegrees();
+	QString osm_link = 
+	  QString("http://www.openstreetmap.org/?lat=%1&lon=%2&zoom=18&layers=M").
+	  arg(latitude).arg(longitude);
+	QString worldofo_link =
+	  QString("http://maps.worldofo.com/?zoom=15&lat=%1&lng=%2").
+	  arg(latitude).arg(longitude);
+	link_label->setText(
+	  tr("<a href=\"%1\">OpenStreetMap</a> | <a href=\"%2\">World of O Maps</a>").
+	  arg(osm_link).
+	  arg(worldofo_link)
+	);
+	
+	declination_edit->setEnabled(dialog_enabled);
+	updateDeclinationButton();
+	
+	updateNorth();
+	
+	bool ok_enabled = (georef->getState() == Georeferencing::ScaleOnly && allow_no_georeferencing) || georef->isValid();
+	buttons_box->button(QDialogButtonBox::Ok)->setEnabled(ok_enabled);
+}
+
+void GeoreferencingDialog::updateDeclinationButton()
+{
+	bool dialog_enabled = crs_edit->getSelectedCustomItemId() != 0;
+	bool proj_spec_visible = crs_edit->getSelectedCustomItemId() == 1;
+	bool geographic_coords_enabled =
+		dialog_enabled &&
+		(proj_spec_visible ||
+		 crs_edit->getSelectedCustomItemId() == -1);
+	
+	declination_button->setEnabled(geographic_coords_enabled && !declination_query_in_progress);
+	declination_button->setText(declination_query_in_progress ? tr("Loading...") : tr("Lookup..."));
+}
+
+void GeoreferencingDialog::crsEdited()
+{
+	QString spec = crs_edit->getSelectedCRSSpec();
+	if (!spec.isEmpty())
+		crs_spec_edit->setText(spec);
+	
+	int selected_item_id = crs_edit->getSelectedCustomItemId();
+	if (selected_item_id == -1)
+	{
+		// CRS from list
+		CRSTemplate* temp = crs_edit->getSelectedCRSTemplate();
+		Q_ASSERT(temp);
+		
+		georef->setProjectedCRS(temp->getId(), crs_edit->getSelectedCRSSpec());
+		std::vector<QString> crs_params;
+		for (int i = 0; i < temp->getNumParams(); ++i)
+			crs_params.push_back(crs_edit->getParam(i));
+		georef->setProjectedCRSParameters(crs_params);
+	}
+	else if (selected_item_id == 0)
+	{
+		// None
+		georef->setState(Georeferencing::ScaleOnly);
+	}
+	else if (selected_item_id == 1)
+	{
+		// CRS from spec edit, no id
+		georef->setProjectedCRS("", crs_spec_edit->text());
+		georef->setProjectedCRSParameters(std::vector<QString>());
+	}
+	else if (selected_item_id == 2)
+	{
+		// Local
+		georef->setProjectedCRS("", "");
+		georef->setProjectedCRSParameters(std::vector<QString>());
+		georef->setState(Georeferencing::Local);
+	}
+	
+	if (selected_item_id == -1 || selected_item_id == 1)
+	{
+		if (keep_geographic_radio->isChecked())
+		{
+			// TODO: This makes it impossible (well, not impossible, but hard)
+			//       to use another UTM zone than the "correct" one, because
+			//       this here is called when changing the zone parameter,
+			//       which will then be reset by the updateZone() inside latLonChanged().
+			//       Solution: determine if this call comes from a zone edit,
+			//       don't call updateZone() in this case - this also applies to the call below!
+			latLonChanged();
+		}
+		else
+		{
+			eastingNorthingChanged();
+			updateZone();
+		}
+	}
+	
+	updateNorth();
+	updateWidgets();
+	reset_button->setEnabled(true);
+}
+
+void GeoreferencingDialog::selectMapRefPoint()
+{
+	if (controller != NULL)
+	{
+		controller->setTool(new GeoreferencingTool(this, controller));
+		tool_active = true;
+		hide();
+	}
+}
+
+void GeoreferencingDialog::mapRefChanged(double value)
+{
+	MapCoord coord(map_x_edit->value(), -1 * map_y_edit->value());
+	setMapRefPoint(coord);
+}
+
+void GeoreferencingDialog::eastingNorthingChanged(double value)
+{
+	QPointF easting_northing(easting_edit->value(), northing_edit->value());
+	georef->setProjectedRefPoint(easting_northing);
+	setLatLonValuesFrom(georef.data());
+	
+	updateWidgets();
+	reset_button->setEnabled(true);
+}
+
+void GeoreferencingDialog::latLonChanged(double value)
+{
+	double latitude = lat_edit->value() * M_PI / 180;
+	double longitude = lon_edit->value() * M_PI / 180;
+	georef->setGeographicRefPoint(LatLon(latitude, longitude));
+	setEastingNorthingValuesFrom(georef.data());
+	
+	updateZone();
+	updateWidgets();
+	reset_button->setEnabled(true);
+}
+
+void GeoreferencingDialog::declinationChanged(double value)
+{
+	georef->setDeclination(value);
+	updateNorth();
+	reset_button->setEnabled(true);
+}
+
 void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 {
-	declination_button->setEnabled(!georef->isLocal());
-	declination_button->setText(tr("Lookup..."));
+	declination_query_in_progress = false;
+	updateDeclinationButton();
 	
 	QString error_string;
 	if (reply->error() != QNetworkReply::NoError)
@@ -430,141 +578,71 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 		requestDeclination(true);
 }
 
-void GeoreferencingDialog::declinationChanged(double value)
+void GeoreferencingDialog::updateZone()
 {
-	georef->setDeclination(value);
-	updateNorth();
-	reset_button->setEnabled(true);
-}
-
-void GeoreferencingDialog::grivationChanged(double value)
-{
-	georef->setGrivation(value);
-	updateNorth();
-	reset_button->setEnabled(true);
-}
-
-void GeoreferencingDialog::crsChanged()
-{
-	QString crs, crs_spec;
-	const int index = crs_edit->currentIndex();
-	const QVariant itemData(crs_edit->itemData(index));
-	if (index < 0 || itemData == QVariant::Invalid)
+	// HACK to prevent infinite recursion.
+	if (zone_update_in_progress)
+		return;
+	
+	CRSTemplate* temp = crs_edit->getSelectedCRSTemplate();
+	if (!temp || temp->getId() != "UTM")
+		return;
+	
+	const LatLon ref_point(georef->getGeographicRefPoint());
+	double lat = Georeferencing::radToDeg(ref_point.latitude);
+	if (abs(lat) < 84.0)
 	{
-		crs_spec = crs_edit->currentText();
-		crs = crs_spec.length() > 0 ? tr("Custom coordinates") : tr("Local coordinates");
-	}
-	else
-	{
-		crs_spec_template = itemData.toString();
-		if (crs_spec_template == "!EDIT!")
+		double lon = Georeferencing::radToDeg(ref_point.longitude);
+		int zone_no = int(floor(lon) + 180) / 6 % 60 + 1;
+		if (zone_no == 31 && lon >= 3.0 && lat >= 56.0 && lat < 64.0)
+			zone_no = 32; // South Norway
+		else if (lat >= 72.0 && lon >= 3.0 && lon <= 39.0)
+			zone_no = 2 * (int(floor(lon) + 3.0) / 12) + 31; // Svalbard
+		QString zone = QString::number(zone_no);
+		zone.append((ref_point.latitude >= 0.0) ? " N" : " S");
+		if (zone != crs_edit->getParam(0))
 		{
-			// set text and proj_params to current params
-			crs = tr("Custom coordinates");
-			crs_spec_template = georef->getProjectedCRSSpec();
-			crs_edit->blockSignals(true);
-			crs_edit->setCurrentIndex(-1);
-			crs_edit->setEditText(crs_spec_template);
-			crs_edit->blockSignals(false);
+			crs_edit->setParam(0, zone);
+			zone_update_in_progress = true;
+			crsEdited();
+			zone_update_in_progress = false;
 		}
-		else
-		{
-			crs = crs_edit->itemText(index);
-		}
-		
-		crs_spec = crs_spec_template;
-	}
-	
-	updateZone();
-	if (crs_spec.contains("!ZONE!"))
-	{
-		QString zone = zone_edit->text();
-		zone.replace(" N", "");
-		zone.replace(" S", " +south");
-		crs_spec.replace("!ZONE!", zone);
-	}
-	
-	bool crs_was_local = georef->isLocal();
-	bool crs_ok = georef->setProjectedCRS(crs, crs_spec);
-	if (crs_ok)
-	{
-		if (crs_was_local && changed_coords == PROJECTED)
-			eastingNorthingChanged();
-		else
-			latLonChanged();
-	}
-	else
-		updateNorth();
-	updateLatLon();
-	updateStatus();
-	reset_button->setEnabled(true);
-}
-
-void GeoreferencingDialog::latLonChanged()
-{
-	double latitude = lat_edit->value() * M_PI / 180;
-	double longitude = lon_edit->value() * M_PI / 180;
-	georef->setGeographicRefPoint(LatLon(latitude, longitude));
-	changed_coords = GEOGRAPHIC;
-	
-	updateZone();
-	updateEastingNorthing();
-	updateNorth();
-	updateStatus();
-	reset_button->setEnabled(true);
-}
-
-void GeoreferencingDialog::eastingNorthingChanged()
-{
-	QPointF easting_northing(easting_edit->value(), northing_edit->value());
-	georef->setProjectedRefPoint(easting_northing);
-	changed_coords = PROJECTED;
-	
-	updateLatLon();
-	updateNorth();
-	updateStatus();
-	reset_button->setEnabled(true);
-}
-
-void GeoreferencingDialog::selectRefPoint()
-{
-	if (controller != NULL)
-	{
-		controller->setTool(new GeoreferencingTool(this, controller));
-		tool_active = true;
-		hide();
 	}
 }
 
-void GeoreferencingDialog::toolDeleted()
+void GeoreferencingDialog::updateNorth()
 {
-	tool_active = false;
+	grivation_label->setText(trUtf8("%1 °", "degree value").arg(QLocale().toString(georef->getGrivation(), 'f', 1)));
 }
 
-void GeoreferencingDialog::showHelp()
+void GeoreferencingDialog::setMapRefValuesFrom(Georeferencing* values)
 {
-	controller->getWindow()->showHelp("georeferencing.html");
+	map_x_edit->blockSignals(true);
+	map_y_edit->blockSignals(true);
+	map_x_edit->setValue(values->getMapRefPoint().xd());
+	map_y_edit->setValue(-1 * values->getMapRefPoint().yd());
+	map_x_edit->blockSignals(false);
+	map_y_edit->blockSignals(false);
 }
 
-void GeoreferencingDialog::reset()
+void GeoreferencingDialog::setEastingNorthingValuesFrom(Georeferencing* values)
 {
-	*georef = map->getGeoreferencing();
-	changed_coords = NONE;
-	updateGeneral();
-	updateNorth();
-	updateCRS();
-	updateStatus();
-	updateEastingNorthing();
-	updateLatLon();
-	updateZone();
-	reset_button->setEnabled(false);
+	easting_edit->blockSignals(true);
+	northing_edit->blockSignals(true);
+	easting_edit->setValue(values->getProjectedRefPoint().x());
+	northing_edit->setValue(values->getProjectedRefPoint().y());
+	easting_edit->blockSignals(false);
+	northing_edit->blockSignals(false);
 }
 
-void GeoreferencingDialog::accept()
+void GeoreferencingDialog::setLatLonValuesFrom(Georeferencing* values)
 {
-	map->setGeoreferencing(*georef);
-	map->setOtherDirty(true);
-	QDialog::accept();
+	lat_edit->blockSignals(true);
+	lon_edit->blockSignals(true);
+	lat_edit->setValue(values->getGeographicRefPoint().getLatitudeInDegrees());
+	lon_edit->setValue(values->getGeographicRefPoint().getLongitudeInDegrees());
+	lat_edit->blockSignals(false);
+	lon_edit->blockSignals(false);
 }
 
 
@@ -592,7 +670,7 @@ bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coo
 {
 	if (event->button() == Qt::LeftButton)
 	{
-		dialog->setRefPoint(map_coord.toMapCoord());
+		dialog->setMapRefPoint(map_coord.toMapCoord());
 	}
 	QTimer::singleShot(0, dialog, SIGNAL(exec()));
 	return true;
@@ -602,87 +680,11 @@ QCursor* GeoreferencingTool::cursor = NULL;
 
 
 
-// ### CRSTemplate ###
-
-std::vector<CRSTemplate*> CRSTemplate::crs_templates;
-
-CRSTemplate::Param::Param(const QString& desc)
- : desc(desc)
-{
-}
-
-CRSTemplate::ZoneParam::ZoneParam(const QString& desc)
- : Param(desc)
-{
-}
-QWidget* CRSTemplate::ZoneParam::createEditWidget(QObject* edit_receiver) const
-{
-	QLineEdit* widget = new QLineEdit();
-	QObject::connect(widget, SIGNAL(textEdited(QString)), edit_receiver, SLOT(crsParamEdited(QString)));
-	return widget;
-}
-QString CRSTemplate::ZoneParam::getValue(QWidget* edit_widget) const
-{
-	QLineEdit* text_edit = static_cast<QLineEdit*>(edit_widget);
-	QString zone = text_edit->text();
-	zone.replace(" N", "");
-	zone.replace(" S", " +south");
-	return zone;
-}
-
-CRSTemplate::IntRangeParam::IntRangeParam(const QString& desc, int min_value, int max_value, int apply_factor)
-: Param(desc), min_value(min_value), max_value(max_value), apply_factor(apply_factor)
-{
-}
-QWidget* CRSTemplate::IntRangeParam::createEditWidget(QObject* edit_receiver) const
-{
-	QSpinBox* widget = Util::SpinBox::create(min_value, max_value);
-	QObject::connect(widget, SIGNAL(valueChanged(QString)), edit_receiver, SLOT(crsParamEdited(QString)));
-	return widget;
-}
-QString CRSTemplate::IntRangeParam::getValue(QWidget* edit_widget) const
-{
-	QSpinBox* spin_box = static_cast<QSpinBox*>(edit_widget);
-	return QString::number(apply_factor * spin_box->value());
-}
-
-CRSTemplate::CRSTemplate(const QString& id, const QString& spec_template)
- : id(id), spec_template(spec_template)
-{
-}
-
-CRSTemplate::~CRSTemplate()
-{
-	for (int i = 0; i < (int)params.size(); ++i)
-		delete params[i];
-}
-
-void CRSTemplate::addParam(Param* param)
-{
-	params.push_back(param);
-}
-
-int CRSTemplate::getNumCRSTemplates()
-{
-	return (int)crs_templates.size();
-}
-
-CRSTemplate& CRSTemplate::getCRSTemplate(int index)
-{
-	return *crs_templates[index];
-}
-
-void CRSTemplate::registerCRSTemplate(CRSTemplate* temp)
-{
-	crs_templates.push_back(temp);
-}
-
-
-
 // ### ProjectedCRSSelector ###
 
 ProjectedCRSSelector::ProjectedCRSSelector(QWidget* parent) : QWidget(parent)
 {
+	num_custom_items = 0;
 	crs_dropdown = new QComboBox();
 	for (int i = 0; i < CRSTemplate::getNumCRSTemplates(); ++i)
 	{
@@ -696,28 +698,107 @@ ProjectedCRSSelector::ProjectedCRSSelector(QWidget* parent) : QWidget(parent)
 	crsDropdownChanged(crs_dropdown->currentIndex());
 }
 
+void ProjectedCRSSelector::addCustomItem(const QString& text, int id)
+{
+	crs_dropdown->insertItem(num_custom_items, text, QVariant(id));
+	if (num_custom_items == 0)
+		crs_dropdown->insertSeparator(1);
+	++num_custom_items;
+}
+
+CRSTemplate* ProjectedCRSSelector::getSelectedCRSTemplate()
+{
+	QVariant item_data = crs_dropdown->itemData(crs_dropdown->currentIndex());
+	if (!item_data.canConvert<void*>())
+		return NULL;
+	return static_cast<CRSTemplate*>(item_data.value<void*>());
+}
+
 QString ProjectedCRSSelector::getSelectedCRSSpec()
 {
-	CRSTemplate* temp = static_cast<CRSTemplate*>(crs_dropdown->itemData(crs_dropdown->currentIndex()).value<void*>());
+	QVariant item_data = crs_dropdown->itemData(crs_dropdown->currentIndex());
+	if (!item_data.canConvert<void*>())
+		return QString();
+	
+	CRSTemplate* temp = static_cast<CRSTemplate*>(item_data.value<void*>());
 	QString spec = temp->getSpecTemplate();
 	
 	for (int param = 0; param < temp->getNumParams(); ++param)
 	{
 		QWidget* edit_widget = layout->itemAt(1 + param, QFormLayout::FieldRole)->widget();
-		spec = spec.arg(temp->getParam(param).getValue(edit_widget));
+		spec = spec.arg(temp->getParam(param).getSpecValue(edit_widget));
 	}
 	
 	return spec;
 }
 
+int ProjectedCRSSelector::getSelectedCustomItemId()
+{
+	QVariant item_data = crs_dropdown->itemData(crs_dropdown->currentIndex());
+	if (!item_data.canConvert<int>())
+		return -1;
+	return item_data.toInt();
+}
+
+void ProjectedCRSSelector::selectItem(CRSTemplate* temp)
+{
+	int index = crs_dropdown->findData(qVariantFromValue<void*>(temp));
+	blockSignals(true);
+	crs_dropdown->setCurrentIndex(index);
+	blockSignals(false);
+}
+
+void ProjectedCRSSelector::selectCustomItem(int id)
+{
+	int index = crs_dropdown->findData(QVariant(id));
+	blockSignals(true);
+	crs_dropdown->setCurrentIndex(index);
+	blockSignals(false);
+}
+
+int ProjectedCRSSelector::getNumParams()
+{
+	CRSTemplate* temp = getSelectedCRSTemplate();
+	if (temp == NULL)
+		return 0;
+	else
+		return temp->getNumParams();
+}
+
+QString ProjectedCRSSelector::getParam(int i)
+{
+	CRSTemplate* temp = getSelectedCRSTemplate();
+	Q_ASSERT(temp != NULL);
+	Q_ASSERT(i < temp->getNumParams());
+	
+	int widget_index = 3 + 2 * i;
+	return temp->getParam(i).getValue(layout->itemAt(widget_index)->widget());
+}
+
+void ProjectedCRSSelector::setParam(int i, const QString& value)
+{
+	CRSTemplate* temp = getSelectedCRSTemplate();
+	Q_ASSERT(temp != NULL);
+	Q_ASSERT(i < temp->getNumParams());
+	
+	int widget_index = 3 + 2 * i;
+	QWidget* edit_widget = layout->itemAt(widget_index)->widget();
+	edit_widget->blockSignals(true);
+	temp->getParam(i).setValue(edit_widget, value);
+	edit_widget->blockSignals(false);
+}
+
 void ProjectedCRSSelector::crsDropdownChanged(int index)
 {
-	if (layout && layout->rowCount() > 1)
+	if (layout)
 	{
 		for (int i = 2 * layout->rowCount() - 1; i >= 2; --i)
 			delete layout->takeAt(i)->widget();
-		layout->takeAt(1);
-		delete layout->takeAt(0)->widget();
+		if (layout->count() > 0)
+		{
+			layout->takeAt(1);
+			delete layout->takeAt(0)->widget();
+		}
 		delete layout;
 		layout = NULL;
 	}
@@ -725,10 +806,14 @@ void ProjectedCRSSelector::crsDropdownChanged(int index)
 	layout = new QFormLayout();
 	layout->addRow(tr("&Coordinate reference system:"), crs_dropdown);
 	
-	CRSTemplate* temp = static_cast<CRSTemplate*>(crs_dropdown->itemData(crs_dropdown->currentIndex()).value<void*>());
-	for (int param = 0; param < temp->getNumParams(); ++param)
+	QVariant item_data = crs_dropdown->itemData(crs_dropdown->currentIndex());
+	if (item_data.canConvert<void*>())
 	{
-		layout->addRow(temp->getParam(param).desc + ":", temp->getParam(param).createEditWidget(this));
+		CRSTemplate* temp = static_cast<CRSTemplate*>(item_data.value<void*>());
+		for (int param = 0; param < temp->getNumParams(); ++param)
+		{
+			layout->addRow(temp->getParam(param).desc + ":", temp->getParam(param).createEditWidget(this));
+		}
 	}
 	
 	setLayout(layout);
@@ -749,6 +834,8 @@ SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, bool show_take_from_
 								 bool show_local, bool show_geographic, const QString& desc_text)
  : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
 {
+	Q_ASSERT(map->getGeoreferencing().getState() != Georeferencing::ScaleOnly);
+	
 	setWindowModality(Qt::WindowModal);
 	setWindowTitle(tr("Select coordinate reference system"));
 	

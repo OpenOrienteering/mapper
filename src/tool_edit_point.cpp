@@ -592,7 +592,7 @@ void EditPointTool::updateHoverPoint(MapCoordF cursor_pos)
 	{
 		MapCoordF handle_pos;
 		int hover_point = findHoverPoint(cur_map_widget->mapToViewport(cursor_pos), *it, true, &selection_extent, cur_map_widget, &handle_pos);
-		float distance_sq = cursor_pos.lengthToSquared(handle_pos);
+		float distance_sq = (hover_point >= 0) ? cursor_pos.lengthToSquared(handle_pos) : -1;
 		if (hover_point >= 0 && distance_sq < new_hover_point_dist_sq)
 		{
 			new_hover_object = *it;

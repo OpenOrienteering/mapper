@@ -610,7 +610,7 @@ void TemplateWidget::selectionChanged(const QItemSelection& selected, const QIte
 	else if (map_row)
 	{
 		active_group_title = tr("- Map -");
-		georef_active = !map->getGeoreferencing().isLocal();
+		georef_active = map->getGeoreferencing().isValid() && !map->getGeoreferencing().isLocal();
 		georef_text = georef_active ? tr("yes") : tr("no");
 	}
 	else

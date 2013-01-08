@@ -39,7 +39,7 @@ private slots:
 	void initTestCase();
 	
 	/**
-	 * Tests the behaviour for unset projected CRS aka local coordinates.
+	 * Tests the behaviour for unset projected CRS.
 	 */
 	void testEmptyProjectedCRS();
 	
