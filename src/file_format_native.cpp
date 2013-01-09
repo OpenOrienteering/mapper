@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps, Pete Curtis
+ *    Copyright 2012, 2013 Thomas Schöps, Pete Curtis
  *
  *    This file is part of OpenOrienteering.
  *

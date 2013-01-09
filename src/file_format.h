@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Pete Curtis
+ *    Copyright 2012, 2013 Pete Curtis
  *
  *    This file is part of OpenOrienteering.
  *

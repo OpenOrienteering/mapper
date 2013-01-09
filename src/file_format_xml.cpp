@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Pete Curtis, Kai Pastor
+ *    Copyright 2012, 2013 Pete Curtis, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schoeps
+ *    Copyright 2012, 2013 Thomas Schoeps
  *
  *    This file is part of OpenOrienteering.
  *

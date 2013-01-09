@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Kai Pastor
+ *    Copyright 2012, 2013 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *

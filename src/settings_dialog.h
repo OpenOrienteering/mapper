@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Jan Dalheimer
+ *    Copyright 2012, 2013 Jan Dalheimer
  *
  *    This file is part of OpenOrienteering.
  *
