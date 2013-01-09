@@ -25,8 +25,39 @@
 #include "file_format_native.h"
 #include "file_format_ocad8.h"
 #include "file_format_xml.h"
-#include "georeferencing_dialog.h"
+#include "georeferencing.h"
 #include "tool.h"
+
+void registerProjectionTemplates()
+{
+	/*
+	 * CRSTemplate(
+	 *     id,
+	 *     name,
+	 *     coordinates name,
+	 *     specification string)
+	 * 
+	 * The id must be unique and different from "Local".
+	 */
+	
+	// UTM
+	CRSTemplate* temp = new CRSTemplate(
+		"UTM",
+		QObject::tr("UTM", "UTM coordinate reference system"),
+		QObject::tr("UTM coordinates"),
+		"+proj=utm +datum=WGS84 +zone=%1");
+	temp->addParam(new CRSTemplate::ZoneParam(QObject::tr("UTM Zone (number north/south, e.g. \"32 N\", \"24 S\")")));
+	CRSTemplate::registerCRSTemplate(temp);
+	
+	// Gauss-Krueger
+	temp = new CRSTemplate(
+		"Gauss-Krueger, datum: Potsdam",
+		QObject::tr("Gauss-Krueger, datum: Potsdam", "Gauss-Krueger coordinate reference system"),
+		QObject::tr("Gauss-Krueger coordinates"),
+		"+proj=tmerc +lat_0=0 +lon_0=%1 +k=1.000000 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");
+	temp->addParam(new CRSTemplate::IntRangeParam(QObject::tr("Zone number (1 to 119)", "Zone number for Gauss-Krueger coordinates"), 1, 119, 3));
+	CRSTemplate::registerCRSTemplate(temp);
+}
 
 void doStaticInitializations()
 {
@@ -39,11 +70,5 @@ void doStaticInitializations()
 	MapEditorTool::loadPointHandles();
 	
 	// Register projection templates
-	CRSTemplate* temp = new CRSTemplate(QObject::tr("UTM"), "+proj=utm +datum=WGS84 +zone=%1");
-	temp->addParam(new CRSTemplate::ZoneParam(QObject::tr("UTM Zone (number north/south, e.g. \"32 N\", \"24 S\")")));
-	CRSTemplate::registerCRSTemplate(temp);
-	
-	temp = new CRSTemplate(QObject::tr("Gauss-Krueger, datum: Potsdam"), "+proj=tmerc +lat_0=0 +lon_0=%1 +k=1.000000 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");
-	temp->addParam(new CRSTemplate::IntRangeParam(QObject::tr("Zone number (1 to 119)"), 1, 119, 3));
-	CRSTemplate::registerCRSTemplate(temp);
+	registerProjectionTemplates();
 }

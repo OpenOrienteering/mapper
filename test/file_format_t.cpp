@@ -143,7 +143,8 @@ bool FileFormatTest::compareMaps(Map* a, Map* b, QString& error)
 		a_geo.getGrivation() != b_geo.getGrivation() ||
 		a_geo.getMapRefPoint() != b_geo.getMapRefPoint() ||
 		a_geo.getProjectedRefPoint() != b_geo.getProjectedRefPoint() ||
-		a_geo.getProjectedCRS() != b_geo.getProjectedCRS() ||
+		a_geo.getProjectedCRSId() != b_geo.getProjectedCRSId() ||
+		a_geo.getProjectedCRSName() != b_geo.getProjectedCRSName() ||
 		a_geo.getProjectedCRSSpec() != b_geo.getProjectedCRSSpec() ||
 		a_geo.getGeographicRefPoint().getLatitudeInDegrees() != b_geo.getGeographicRefPoint().getLatitudeInDegrees() ||
 		a_geo.getGeographicRefPoint().getLongitudeInDegrees() != b_geo.getGeographicRefPoint().getLongitudeInDegrees())

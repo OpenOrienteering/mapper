@@ -1068,17 +1068,14 @@ void MapEditorController::coordsDisplayChanged()
 void MapEditorController::projectionChanged()
 {
 	const Georeferencing& geo(map->getGeoreferencing());
-	projected_coordinates_act->setText(geo.getProjectedCRS());
-	if (geo.isLocal())
-	{
-		geographic_coordinates_act->setEnabled(false);
-		geographic_coordinates_dms_act->setEnabled(false);
-	}
-	else
-	{
-		geographic_coordinates_act->setEnabled(true);
-		geographic_coordinates_dms_act->setEnabled(true);
-	}
+	
+	bool enable_projected = geo.getState() != Georeferencing::ScaleOnly;
+	projected_coordinates_act->setEnabled(enable_projected);
+	projected_coordinates_act->setText(geo.getProjectedCRSName());
+	
+	bool enable_geographic = geo.getState() != Georeferencing::ScaleOnly && !geo.isLocal();
+	geographic_coordinates_act->setEnabled(enable_geographic);
+	geographic_coordinates_dms_act->setEnabled(enable_geographic);
 }
 
 void MapEditorController::showSymbolWindow(bool show)

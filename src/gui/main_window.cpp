@@ -861,7 +861,8 @@ void MainWindow::linkClicked(const QString &link)
 		showHelp();
 	else if (link.compare("about:", Qt::CaseInsensitive) == 0)
 		showAbout();
-	QDesktopServices::openUrl(link);
+	else
+		QDesktopServices::openUrl(link);
 }
 
 bool MainWindow::eventFilter(QObject *object, QEvent *event){

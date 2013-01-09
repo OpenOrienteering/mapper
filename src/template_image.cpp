@@ -138,10 +138,10 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 		if (open_dialog.exec() == QDialog::Rejected)
 			return false;
 		
-		if (open_dialog.isGeorefRadioChecked() && map->getGeoreferencing().isLocal())
+		if (open_dialog.isGeorefRadioChecked() && !map->getGeoreferencing().isValid())
 		{
-			// Make sure that map is georeferenced
-			GeoreferencingDialog dialog(dialog_parent, map);
+			// Make sure that the map is georeferenced
+			GeoreferencingDialog dialog(dialog_parent, map, NULL, false);
 			if (dialog.exec() == QDialog::Rejected)
 				continue;
 		}

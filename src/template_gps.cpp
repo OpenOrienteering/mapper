@@ -102,7 +102,7 @@ bool TemplateTrack::loadTemplateFileImpl(bool configuring)
 		track_crs->setTransformationDirectly(QTransform());
 		track.setTrackCRS(track_crs);
 		
-		bool crs_is_geographic = track_crs_spec.contains("+proj=latlong"); // TODO: should that be case insensitive?
+		bool crs_is_geographic = track_crs_spec.contains("+proj=latlong");
 		if (!is_georeferenced && crs_is_geographic)
 			calculateLocalGeoreferencing();
 		else
@@ -119,12 +119,18 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 	// If no track CRS is given by the template file, ask the user
 	if (!track.hasTrackCRS())
 	{
-		SelectCRSDialog dialog(map, dialog_parent, true, true, true, tr("Select the coordinate reference system of the track coordinates"));
-		if (dialog.exec() == QDialog::Rejected)
-			return false;
+		if (map->getGeoreferencing().getState() == Georeferencing::ScaleOnly ||
+			map->getGeoreferencing().isLocal())
+			track_crs_spec = "";
+		else
+		{
+			SelectCRSDialog dialog(map, dialog_parent, true, true, true, tr("Select the coordinate reference system of the track coordinates"));
+			if (dialog.exec() == QDialog::Rejected)
+				return false;
+			track_crs_spec = dialog.getCRSSpec();
+		}
 		
 		Georeferencing* track_crs = new Georeferencing();
-		track_crs_spec = dialog.getCRSSpec();
 		if (!track_crs_spec.isEmpty())
 			track_crs->setProjectedCRS("", track_crs_spec);
 		track_crs->setTransformationDirectly(QTransform());
@@ -140,7 +146,7 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 			tr("Load the track in georeferenced or non-georeferenced mode?"),
 			QDialogButtonBox::Abort);
 		QString georef_text = tr("Positions the track according to the map's georeferencing settings.");
-		if (map->getGeoreferencing().isLocal())
+		if (!map->getGeoreferencing().isValid())
 			georef_text += " " + tr("These are not configured yet, so they will be shown as the next step.");
 		QAbstractButton* georef_button = georef_dialog.addCommandButton(tr("Georeferenced"), georef_text);
 		QAbstractButton* non_georef_button = georef_dialog.addCommandButton(tr("Non-georeferenced"), tr("Projects the track using an orthographic projection with center at the track's coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position."));
@@ -163,10 +169,7 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 		if (dialog.exec() == QDialog::Rejected)
 			return false;
 		
-		if (map->getGeoreferencing().isLocal())
-			transform.template_scale_x = dialog.getUnitScale();
-		else
-			transform.template_scale_x = dialog.getUnitScale() / (map->getScaleDenominator() / 1000.0);
+		transform.template_scale_x = dialog.getUnitScale() / (map->getScaleDenominator() / 1000.0);
 		transform.template_scale_y = transform.template_scale_x;
 		updateTransformationMatrices();
 		out_center_in_view = dialog.centerOnView();
@@ -174,7 +177,8 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 	
 	// If the track is loaded as georeferenced and the transformation parameters
 	// were not set yet, it must be done now
-	if (is_georeferenced && map->getGeoreferencing().isLocal())
+	if (is_georeferenced &&
+		(!map->getGeoreferencing().isValid() || map->getGeoreferencing().isLocal()))
 	{
 		// Set default for real world reference point as some average of the track coordinates
 		Georeferencing georef(map->getGeoreferencing());
