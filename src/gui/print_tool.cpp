@@ -24,6 +24,7 @@
 #include <QPainter>
 
 #include "../core/map_printer.h"
+#include "../map_editor.h"
 #include "../map_widget.h"
 #include "print_widget.h"
 

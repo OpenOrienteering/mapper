@@ -26,27 +26,26 @@
 #include <QtWidgets>
 #endif
 
-#include "util.h"
-#include "renderable.h"
-#include "symbol.h"
-#include "object.h"
-#include "map_editor.h"
+#include "map.h"
 #include "map_widget.h"
-#include "symbol_dock_widget.h"
+#include "object.h"
+#include "renderable.h"
 #include "settings.h"
-#include "tool_helpers.h"
+#include "symbol.h"
 #include "symbol_line.h"
+#include "symbol_dock_widget.h"
+#include "tool_helpers.h"
+#include "util.h"
 
 QCursor* DrawPathTool::cursor = NULL;
 
 DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget, bool allow_closing_paths)
  : DrawLineAndAreaTool(editor, tool_button, symbol_widget), allow_closing_paths(allow_closing_paths),
+   cur_map_widget(mapWidget()),
    angle_helper(new ConstrainAngleToolHelper()),
-   snap_helper(new SnappingToolHelper(editor->getMap())),
+   snap_helper(new SnappingToolHelper(map())),
    follow_helper(new FollowPathToolHelper())
 {
-	cur_map_widget = editor->getMainWidget();
-	
 	angle_helper->setActive(false);
 	connect(angle_helper.data(), SIGNAL(displayChanged()), this, SLOT(updateDirtyRect()));
 	
@@ -65,9 +64,12 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, Sy
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-draw-path.png"), 11, 11);
 }
+
 DrawPathTool::~DrawPathTool()
 {
+	// Nothing, not inlined
 }
+
 void DrawPathTool::init()
 {
 	updateDashPointDrawing();
@@ -204,6 +206,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	
 	return false;
 }
+
 bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	bool mouse_down = drawMouseButtonHeld(event);
@@ -301,6 +304,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	
 	return true;
 }
+
 bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (!drawMouseButtonClicked(event))
@@ -366,6 +370,7 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 		finishDrawing();
 	return true;
 }
+
 bool DrawPathTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (event->button() != Qt::LeftButton)
@@ -395,7 +400,7 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 			key_handled = false;
 	}
 	if (event->key() == Qt::Key_Tab)
-		editor->setEditTool();
+		deactivate();
 	else if (event->key() == Qt::Key_Space)
 	{
 		draw_dash_points = !draw_dash_points;
@@ -424,6 +429,7 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 		return key_handled;
 	return true;
 }
+
 bool DrawPathTool::keyReleaseEvent(QKeyEvent* event)
 {
 	if (event->key() == Qt::Key_Control)
@@ -572,6 +578,7 @@ void DrawPathTool::createPreviewCurve(MapCoord position, float direction)
 												   last_point.yd() + bezier_handle_distance * cos(direction)));
 	updatePreviewPath();	
 }
+
 void DrawPathTool::undoLastPoint()
 {
 	if (preview_path->getCoordinateCount() <= (preview_path->getPart(0).isClosed() ? 3 : (path_has_preview_point ? 2 : 1)))
@@ -627,6 +634,7 @@ void DrawPathTool::undoLastPoint()
 	cur_pos_map = click_pos_map;
 	updateDirtyRect();
 }
+
 void DrawPathTool::closeDrawing()
 {
 	if (preview_path->getCoordinateCount() <= 1)
@@ -649,6 +657,7 @@ void DrawPathTool::closeDrawing()
 	if (preview_path->getNumParts() > 0)
 		preview_path->getPart(0).setClosed(true, true);
 }
+
 void DrawPathTool::finishDrawing()
 {
 	// Does the symbols contain only areas? If so, auto-close the path if not done yet
@@ -678,6 +687,7 @@ void DrawPathTool::finishDrawing()
 	
 	DrawLineAndAreaTool::finishDrawing(appending ? append_to_object : NULL);
 }
+
 void DrawPathTool::abortDrawing()
 {
 	dragging = false;
@@ -720,9 +730,9 @@ void DrawPathTool::updateDirtyRect()
 	else
 	{
 		if (rect.isValid())
-			editor->getMap()->setDrawingBoundingBox(rect, qMax(qMax(dragging ? 1 : 0, angle_helper->getDisplayRadius()), snap_helper->getDisplayRadius()), true);
+			map()->setDrawingBoundingBox(rect, qMax(qMax(dragging ? 1 : 0, angle_helper->getDisplayRadius()), snap_helper->getDisplayRadius()), true);
 		else
-			editor->getMap()->clearDrawingBoundingBox();
+			map()->clearDrawingBoundingBox();
 	}
 }
 

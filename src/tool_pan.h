@@ -21,20 +21,22 @@
 #ifndef _OPENORIENTEERING_TOOL_PAN_H_
 #define _OPENORIENTEERING_TOOL_PAN_H_
 
-#include "tool.h"
-#include "tool_helpers.h"
+#include "tool_base.h"
 
-/// Tool to pan the map
+/** 
+ * A tool to pan the map.
+ */
 class PanTool : public MapEditorToolBase
 {
 Q_OBJECT
 public:
 	PanTool(MapEditorController* editor, QAction* tool_button);
-
+	virtual ~PanTool();
+	
 protected:
 	virtual void updateStatusText();
 	virtual void objectSelectionChangedImpl();
-
+	
 	virtual void dragStart();
 	virtual void dragMove();
 	virtual void dragFinish();

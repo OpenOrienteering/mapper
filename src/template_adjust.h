@@ -24,9 +24,9 @@
 #include <QWidget>
 #include <QDockWidget>
 
-#include "tool.h"
 #include "map_editor_activity.h"
 #include "template.h"
+#include "tool.h"
 
 QT_BEGIN_NAMESPACE
 class QGridLayout;
@@ -45,10 +45,10 @@ class TemplateAdjustActivity : public MapEditorActivity
 Q_OBJECT
 public:
 	TemplateAdjustActivity(Template* temp, MapEditorController* controller);
-    virtual ~TemplateAdjustActivity();
+	virtual ~TemplateAdjustActivity();
 	
-    virtual void init();
-    virtual void draw(QPainter* painter, MapWidget* widget);
+	virtual void init();
+	virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	inline TemplateAdjustDockWidget* getDockWidget() const {return dock;}
 	
@@ -74,7 +74,7 @@ class TemplateAdjustDockWidget : public QDockWidget
 Q_OBJECT
 public:
 	TemplateAdjustDockWidget(const QString title, MapEditorController* controller, QWidget* parent = 0);
-    virtual bool event(QEvent* event);
+	virtual bool event(QEvent* event);
 	virtual void closeEvent(QCloseEvent* event);
 	
 signals:
@@ -156,14 +156,14 @@ Q_OBJECT
 public:
 	TemplateAdjustAddTool(MapEditorController* editor, QAction* tool_button, TemplateAdjustWidget* widget);
 	
-    virtual void init();
-    virtual QCursor* getCursor() {return cursor;}
-    
-    virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-    virtual bool keyPressEvent(QKeyEvent* event);
+	virtual void init();
+	virtual QCursor* getCursor() {return cursor;}
 	
-    virtual void draw(QPainter* painter, MapWidget* widget);
+	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool keyPressEvent(QKeyEvent* event);
+	
+	virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	static QCursor* cursor;
 	
@@ -208,8 +208,8 @@ Q_OBJECT
 public:
 	TemplateAdjustDeleteTool(MapEditorController* editor, QAction* tool_button, TemplateAdjustWidget* widget);
 	
-    virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-    virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	
 	virtual void init();
 	virtual QCursor* getCursor() {return cursor;}

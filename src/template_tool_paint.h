@@ -39,22 +39,22 @@ class PaintOnTemplateTool : public MapEditorTool
 Q_OBJECT
 public:
 	PaintOnTemplateTool(MapEditorController* editor, QAction* tool_button, Template* temp);
-    virtual ~PaintOnTemplateTool();
+	virtual ~PaintOnTemplateTool();
 	
 	virtual void init();
 	virtual QCursor* getCursor() {return cursor;}
 	
 	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-    virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	
 	virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	static QCursor* cursor;
 	
 public slots:
-    void templateDeleted(int pos, Template* temp);
-    void colorSelected(QColor color);
+	void templateDeleted(int pos, Template* temp);
+	void colorSelected(QColor color);
 	
 private:
 	bool dragging;
@@ -80,8 +80,8 @@ signals:
 	void colorSelected(QColor color);
 	
 protected:
-    virtual void paintEvent(QPaintEvent* event);
-    virtual void mousePressEvent(QMouseEvent* event);
+	virtual void paintEvent(QPaintEvent* event);
+	virtual void mousePressEvent(QMouseEvent* event);
 	
 private:
 	int getNumFieldsX();

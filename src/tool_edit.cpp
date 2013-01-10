@@ -29,7 +29,6 @@
 #include <qmath.h>
 
 #include "map.h"
-#include "map_editor.h"
 #include "map_widget.h"
 #include "map_undo.h"
 #include "object.h"
@@ -40,6 +39,8 @@
 #include "symbol_text.h"
 #include "util.h"
 
+
+// ### ObjectSelector ###
 
 ObjectSelector::ObjectSelector(Map* map)
  : map(map)
@@ -179,6 +180,8 @@ bool ObjectSelector::selectionInfosEqual(const SelectionInfoVector& a, const Sel
 	return a.size() == b.size() && std::equal(a.begin(), a.end(), b.begin());
 }
 
+
+// ### ObjectMover ###
 
 ObjectMover::ObjectMover(Map* map, const MapCoordF& start_pos)
 : map(map), start_position(start_pos), prev_drag_x(0), prev_drag_y(0), constraints_calculated(true)
@@ -426,6 +429,8 @@ void ObjectMover::calculateConstraints()
 }
 
 
+// ### EditTool ###
+
 // Mac convention for selecting multiple items is the command key (In Qt the command key is ControlModifier),
 // for deleting it is the backspace key
 #ifdef Q_OS_MAC
@@ -444,11 +449,12 @@ const Qt::Key EditTool::delete_object_key = Qt::Key_Delete;
 
 EditTool::EditTool(MapEditorController* editor, MapEditorTool::Type type, SymbolWidget* symbol_widget, QAction* tool_button)
  : MapEditorToolBase(QCursor(QPixmap(":/images/cursor-hollow.png"), 1, 1), type, editor, tool_button),
-   object_selector(new ObjectSelector(editor->getMap())),
+   object_selector(new ObjectSelector(map())),
    symbol_widget(symbol_widget)
 {
 	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
 }
+
 EditTool::~EditTool()
 {
 }
@@ -456,16 +462,15 @@ EditTool::~EditTool()
 void EditTool::selectedSymbolsChanged()
 {
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
-	if (symbol && editor->getMap()->getNumSelectedObjects() == 0 && !symbol->isHidden() && !symbol->isProtected())
+	if (symbol && map()->getNumSelectedObjects() == 0 && !symbol->isHidden() && !symbol->isProtected())
 	{
-		MapEditorTool* draw_tool = editor->getDefaultDrawToolForSymbol(symbol);
-		editor->setTool(draw_tool);
+		switchToDefaultDrawTool(symbol);
 	}
 }
 
 void EditTool::deleteSelectedObjects()
 {
-	editor->getMap()->deleteSelectedObjects();
+	map()->deleteSelectedObjects();
 	updateStatusText();
 }
 

@@ -23,8 +23,6 @@
 
 #include <QScopedPointer>
 
-#include "tool.h"
-#include "tool_helpers.h"
 #include "tool_edit.h"
 
 class MapWidget;
@@ -34,7 +32,9 @@ class Symbol;
 class TextObjectEditorHelper;
 
 
-/// Standard tool to edit all types of objects
+/**
+ * A standard tool to edit all types of objects.
+ */
 class EditPointTool : public EditTool
 {
 Q_OBJECT
@@ -42,19 +42,19 @@ public:
 	EditPointTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
 	virtual ~EditPointTool();
 	
-    virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-    virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-    virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	
 	virtual void mouseMove();
-    virtual void clickPress();
+	virtual void clickPress();
 	virtual void clickRelease();
 	
 	virtual void dragStart();
 	virtual void dragMove();
 	virtual void dragFinish();
 	
-    virtual void focusOutEvent(QFocusEvent* event);
+	virtual void focusOutEvent(QFocusEvent* event);
 	
 public slots:
 	void textSelectionChanged(bool text_change);
@@ -72,7 +72,7 @@ protected:
 	/// Contains special treatment for text objects.
 	void finishEditing();
 	/// In addition to the base class implementation, updates the status text.
-    virtual void updatePreviewObjects();
+	virtual void updatePreviewObjects();
 	
 	void updateStatusText();
 	/// Updates hover_point and hover_object.

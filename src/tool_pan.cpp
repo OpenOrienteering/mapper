@@ -20,7 +20,6 @@
 
 #include "tool_pan.h"
 
-#include "map_editor.h"
 #include "map_widget.h"
 
 PanTool::PanTool(MapEditorController* editor, QAction* tool_button)
@@ -28,18 +27,25 @@ PanTool::PanTool(MapEditorController* editor, QAction* tool_button)
 {
 }
 
+PanTool::~PanTool()
+{
+	// Nothing, not inlined
+}
+
 void PanTool::dragStart()
 {
 	cur_map_widget->setCursor(Qt::ClosedHandCursor);
 }
+
 void PanTool::dragMove()
 {
-	MapView* view = editor->getMainWidget()->getMapView();
+	MapView* view = mapWidget()->getMapView();
 	view->setDragOffset(cur_pos - click_pos);
 }
+
 void PanTool::dragFinish()
 {
-	MapView* view = editor->getMainWidget()->getMapView();
+	MapView* view = mapWidget()->getMapView();
 	view->completeDragging(cur_pos - click_pos);
 	
 	cur_map_widget->setCursor(Qt::OpenHandCursor);
@@ -49,6 +55,7 @@ void PanTool::updateStatusText()
 {
 	setStatusBarText(tr("<b>Drag</b> to move the map"));
 }
+
 void PanTool::objectSelectionChangedImpl()
 {
 }

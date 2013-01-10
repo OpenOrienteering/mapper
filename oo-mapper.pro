@@ -54,6 +54,7 @@ HEADERS += \
   src/template_tool_move.h \
   src/template_tool_paint.h \
   src/tool.h \
+  src/tool_base.h \
   src/tool_cut.h \
   src/tool_cut_hole.h \
   src/tool_draw_circle.h \
@@ -66,7 +67,6 @@ HEADERS += \
   src/tool_edit_point.h \
   src/tool_edit_line.h \
   src/tool_helpers.h \
-  src/tool_measure.h \
   src/tool_pan.h \
   src/tool_rotate.h \
   src/tool_rotate_pattern.h \
@@ -83,6 +83,7 @@ HEADERS += \
   src/gui/print_widget.h \
   src/gui/widgets/color_dropdown.h \
   src/gui/widgets/home_screen_widget.h \
+  src/gui/widgets/measure_widget.h \
   3rd-party/qtsingleapplication/src/qtlocalpeer.h \
   3rd-party/qtsingleapplication/src/qtsingleapplication.h \
   libocad/libocad.h \
@@ -145,6 +146,7 @@ SOURCES += \
   src/template_tool_move.cpp \
   src/template_tool_paint.cpp \
   src/tool.cpp \
+  src/tool_base.cpp \
   src/tool_helpers.cpp \
   src/tool_pan.cpp \
   src/tool_edit.cpp \
@@ -161,7 +163,6 @@ SOURCES += \
   src/tool_rotate.cpp \
   src/tool_rotate_pattern.cpp \
   src/tool_scale.cpp \
-  src/tool_measure.cpp \
   src/tool_boolean.cpp \
   src/gps_coordinates.cpp \
   src/gps_track.cpp \
@@ -179,6 +180,7 @@ SOURCES += \
   src/gui/print_widget.cpp \
   src/gui/widgets/color_dropdown.cpp \
   src/gui/widgets/home_screen_widget.cpp \
+  src/gui/widgets/measure_widget.cpp \
   src/main.cpp \
   3rd-party/qtsingleapplication/src/qtlocalpeer.cpp \
   3rd-party/qtsingleapplication/src/qtsingleapplication.cpp \

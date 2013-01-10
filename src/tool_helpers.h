@@ -100,6 +100,7 @@ public:
 	/// Constructs a helper without allowed angles. Use addAngle() and / or addAngles() to add allowed lines.
 	ConstrainAngleToolHelper();
 	ConstrainAngleToolHelper(const MapCoordF& center);
+	~ConstrainAngleToolHelper();
 	
 	/// Sets the center of the lines
 	void setCenter(const MapCoordF& center);

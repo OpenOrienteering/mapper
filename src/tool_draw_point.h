@@ -24,7 +24,6 @@
 #include <QScopedPointer>
 
 #include "tool.h"
-#include "tool_helpers.h"
 
 class MapWidget;
 class PointObject;
@@ -32,13 +31,15 @@ class Symbol;
 class SymbolWidget;
 class ConstrainAngleToolHelper;
 
-/// Tool to draw point objects
+/**
+ * A tool to draw point objects.
+ */
 class DrawPointTool : public MapEditorTool
 {
 Q_OBJECT
 public:
 	DrawPointTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
-    virtual ~DrawPointTool();
+	virtual ~DrawPointTool();
 	
 	virtual void init();
 	virtual QCursor* getCursor() {return cursor;}
@@ -48,7 +49,7 @@ public:
 	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual void leaveEvent(QEvent* event);
 	virtual bool keyPressEvent(QKeyEvent* event);
-    virtual bool keyReleaseEvent(QKeyEvent* event);
+	virtual bool keyReleaseEvent(QKeyEvent* event);
 	
 	virtual void draw(QPainter* painter, MapWidget* widget);
 	

@@ -29,18 +29,19 @@
 #include <QtWidgets>
 #endif
 
-#include "util.h"
-#include "symbol.h"
+#include "map.h"
+#include "map_undo.h"
+#include "map_widget.h"
 #include "object.h"
 #include "object_text.h"
-#include "map_editor.h"
-#include "map_widget.h"
-#include "map_undo.h"
+#include "renderable.h"
 #include "symbol_dock_widget.h"
 #include "symbol_combined.h"
 #include "symbol_line.h"
-#include "renderable.h"
 #include "settings.h"
+#include "symbol.h"
+#include "tool_helpers.h"
+#include "util.h"
 
 
 int EditLineTool::max_objects_for_handle_display = 10;
@@ -51,7 +52,7 @@ EditLineTool::EditLineTool(MapEditorController* editor, QAction* tool_button, Sy
 	hover_line = -2;
 	hover_object = NULL;
 	highlight_object = NULL;
-	highlight_renderables.reset(new MapRenderables(editor->getMap()));
+	highlight_renderables.reset(new MapRenderables(map()));
 	box_selection = false;
 	no_more_effect_on_click = false;
 }
@@ -144,7 +145,7 @@ void EditLineTool::dragStart()
 	
 	updateHoverLine(click_pos_map);
 	
-	Map* map = editor->getMap();
+	Map* map = this->map();
 	if (hover_line >= -1)
 	{
 		startEditing();
@@ -258,12 +259,12 @@ void EditLineTool::dragFinish()
 
 bool EditLineTool::keyPress(QKeyEvent* event)
 {
-	int num_selected_objects = editor->getMap()->getNumSelectedObjects();
+	int num_selected_objects = map()->getNumSelectedObjects();
 	
 	if (num_selected_objects > 0 && event->key() == delete_object_key)
 		deleteSelectedObjects();
 	else if (num_selected_objects > 0 && event->key() == Qt::Key_Escape)
-		editor->getMap()->clearObjectSelection(true);
+		map()->clearObjectSelection(true);
 	else if (event->key() == Qt::Key_Control)
 	{
 		if (editing)
@@ -315,7 +316,7 @@ int EditLineTool::updateDirtyRectImpl(QRectF& rect)
 	bool show_object_points = map()->getNumSelectedObjects() <= max_objects_for_handle_display;
 	
 	selection_extent = QRectF();
-	editor->getMap()->includeSelectionRect(selection_extent);
+	map()->includeSelectionRect(selection_extent);
 	
 	rectInclude(rect, selection_extent);
 	int pixel_border = show_object_points ? 6 : 1;
@@ -339,7 +340,7 @@ int EditLineTool::updateDirtyRectImpl(QRectF& rect)
 
 void EditLineTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
-	int num_selected_objects = editor->getMap()->getNumSelectedObjects();
+	int num_selected_objects = map()->getNumSelectedObjects();
 	if (num_selected_objects > 0)
 	{
 		drawSelectionOrPreviewObjects(painter, widget);
@@ -354,7 +355,7 @@ void EditLineTool::drawImpl(QPainter* painter, MapWidget* widget)
 		}
 		
 		if (!highlight_renderables->isEmpty())
-			editor->getMap()->drawSelection(painter, true, widget, highlight_renderables.data(), true);
+			map()->drawSelection(painter, true, widget, highlight_renderables.data(), true);
 	}
 	
 	// Box selection

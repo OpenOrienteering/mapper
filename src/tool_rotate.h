@@ -21,10 +21,11 @@
 #ifndef _OPENORIENTEERING_TOOL_ROTATE_H_
 #define _OPENORIENTEERING_TOOL_ROTATE_H_
 
-#include "tool.h"
-#include "tool_helpers.h"
+#include "tool_base.h"
 
 #include <QScopedPointer>
+
+class ConstrainAngleToolHelper;
 
 /// Tool to rotate objects
 class RotateTool : public MapEditorToolBase
@@ -32,19 +33,20 @@ class RotateTool : public MapEditorToolBase
 Q_OBJECT
 public:
 	RotateTool(MapEditorController* editor, QAction* tool_button);
+	virtual ~RotateTool();
 	
-    virtual void draw(QPainter* painter, MapWidget* widget);
+	virtual void draw(QPainter* painter, MapWidget* widget);
 	
-    virtual bool keyPressEvent(QKeyEvent* event);
-    virtual bool keyReleaseEvent(QKeyEvent* event);
+	virtual bool keyPressEvent(QKeyEvent* event);
+	virtual bool keyReleaseEvent(QKeyEvent* event);
 	
 protected:
-    virtual void initImpl();
+	virtual void initImpl();
 	virtual int updateDirtyRectImpl(QRectF& rect);
 	virtual void updateStatusText();
 	virtual void objectSelectionChangedImpl();
 	
-    virtual void clickRelease();
+	virtual void clickRelease();
 	virtual void dragStart();
 	virtual void dragMove();
 	virtual void dragFinish();

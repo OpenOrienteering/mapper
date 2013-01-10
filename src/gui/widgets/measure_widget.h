@@ -18,16 +18,14 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TOOL_MEASURE_H_
-#define _OPENORIENTEERING_TOOL_MEASURE_H_
+#ifndef _OPENORIENTEERING_MEASURE_WIDGET_H_
+#define _OPENORIENTEERING_MEASURE_WIDGET_H_
 
 #include <QSize>
-
-#include "map_editor.h"
+#include <QWidget>
 
 class QLabel;
 class QStackedWidget;
-class QWidget;
 
 class Map;
 

@@ -21,7 +21,6 @@
 #ifndef _OPENORIENTEERING_OBJECT_H_
 #define _OPENORIENTEERING_OBJECT_H_
 
-#include <cassert>
 #include <vector>
 
 #include <QRectF>
@@ -64,9 +63,9 @@ public:
 	virtual Object& operator= (const Object& other);
 	
 	/// Returns the object type determined by the subclass
-    inline Type getType() const {return type;}
-    // Convenience casts with type checking
-    PointObject* asPoint();
+	inline Type getType() const {return type;}
+	// Convenience casts with type checking
+	PointObject* asPoint();
 	const PointObject* asPoint() const;
 	PathObject* asPath();
 	const PathObject* asPath() const;
@@ -162,7 +161,7 @@ public:
 		PathObject* path;
 		
 		inline int getNumCoords() const {return end_index - start_index + 1;}
-		inline bool isClosed() const {assert(end_index < (int)path->coords.size()); return path->coords[end_index].isClosePoint();}
+		inline bool isClosed() const {Q_ASSERT(end_index < (int)path->coords.size()); return path->coords[end_index].isClosePoint();}
 		/// Closes or opens the sub-path.
 		/// If closed == true and may_use_existing_close_point == false, a new point is added as closing point even if its coordinates are identical to the existing last point.
 		void setClosed(bool closed, bool may_use_existing_close_point = false);
@@ -177,14 +176,14 @@ public:
 	
 	PathObject(Symbol* symbol = NULL);
 	PathObject(Symbol* symbol, const MapCoordVector& coords, Map* map = 0);
-    virtual Object* duplicate();
+	virtual Object* duplicate();
 	PathObject* duplicatePart(int part_index);
-    virtual Object& operator=(const Object& other);
+	virtual Object& operator=(const Object& other);
 	
 	// Coordinate access methods
 	
 	inline int getCoordinateCount() const {return (int)coords.size();}
-	inline MapCoord& getCoordinate(int pos) {assert(pos >= 0 && pos < (int)coords.size()); return coords[pos];}
+	inline MapCoord& getCoordinate(int pos) {Q_ASSERT(pos >= 0 && pos < (int)coords.size()); return coords[pos];}
 	void setCoordinate(int pos, MapCoord c);
 	void addCoordinate(int pos, MapCoord c);
 	void addCoordinate(MapCoord c, bool start_new_part = false);
@@ -292,8 +291,8 @@ class PointObject : public Object
 {
 public:
 	PointObject(Symbol* symbol = NULL);
-    virtual Object* duplicate();
-    virtual Object& operator=(const Object& other);
+	virtual Object* duplicate();
+	virtual Object& operator=(const Object& other);
 	
 	void setPosition(qint64 x, qint64 y);
 	void setPosition(MapCoordF coord);

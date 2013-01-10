@@ -23,8 +23,6 @@
 
 #include <QScopedPointer>
 
-#include "tool.h"
-#include "tool_helpers.h"
 #include "tool_edit.h"
 
 class MapWidget;
@@ -34,7 +32,9 @@ class PathObject;
 class Symbol;
 
 
-/// Tool to edit lines of path objects
+/**
+ * A tool to edit lines of path objects.
+ */
 class EditLineTool : public EditTool
 {
 Q_OBJECT
@@ -42,25 +42,25 @@ public:
 	EditLineTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
 	virtual ~EditLineTool();
 	
-    virtual void mouseMove();
-    virtual void clickPress();
+	virtual void mouseMove();
+	virtual void clickPress();
 	virtual void clickRelease();
 	
-    virtual void dragStart();
-    virtual void dragMove();
-    virtual void dragFinish();
+	virtual void dragStart();
+	virtual void dragMove();
+	virtual void dragFinish();
 	
 protected:
-    virtual bool keyPress(QKeyEvent* event);
-    virtual bool keyRelease(QKeyEvent* event);
+	virtual bool keyPress(QKeyEvent* event);
+	virtual bool keyRelease(QKeyEvent* event);
 	
-    virtual void initImpl();
-    virtual void objectSelectionChangedImpl();
-    virtual int updateDirtyRectImpl(QRectF& rect);
+	virtual void initImpl();
+	virtual void objectSelectionChangedImpl();
+	virtual int updateDirtyRectImpl(QRectF& rect);
 	virtual void drawImpl(QPainter* painter, MapWidget* widget);
 	
 	/// In addition to the base class implementation, updates the status text.
-    virtual void updatePreviewObjects();
+	virtual void updatePreviewObjects();
 	
 	/// Deletes the highlight object if it exists and correctly removes its renderables.
 	void deleteHighlightObject();

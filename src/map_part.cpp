@@ -20,46 +20,35 @@
 
 #include "map.h"
 
-#include <cassert>
 #include <algorithm>
 
-#include <QDebug>
-#include <QFile>
 #include <qmath.h>
+#include <QDebug>
 #include <QDir>
+#include <QFile>
 #include <QMessageBox>
 #include <QPainter>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "map_color.h"
-#include "map_editor.h"
-#include "map_grid.h"
-#include "map_widget.h"
+#include "map.h"
 #include "map_undo.h"
 #include "util.h"
-#include "template.h"
-#include "gps_coordinates.h"
 #include "object.h"
 #include "object_operations.h"
 #include "renderable.h"
-#include "symbol.h"
-#include "symbol_point.h"
-#include "symbol_line.h"
-#include "symbol_combined.h"
-#include "file_format_ocad8.h"
-#include "file_format_xml.h"
-#include "georeferencing.h"
 
 MapPart::MapPart(const QString& name, Map* map) : name(name), map(map)
 {
 }
+
 MapPart::~MapPart()
 {
 	int size = (int)objects.size();
 	for (int i = 0; i < size; ++i)
 		delete objects[i];
 }
+
 void MapPart::save(QIODevice* file, Map* map)
 {
 	saveString(file, name);
@@ -147,9 +136,10 @@ int MapPart::findObjectIndex(Object* object)
 		if (objects[i] == object)
 			return i;
 	}
-	assert(false);
+	Q_ASSERT(false);
 	return -1;
 }
+
 void MapPart::setObject(Object* object, int pos, bool delete_old)
 {
 	map->removeRenderablesOfObject(objects[pos], true);
@@ -162,6 +152,7 @@ void MapPart::setObject(Object* object, int pos, bool delete_old)
 	object->update(true, delete_old_renderables);
 	map->setObjectsDirty();
 }
+
 void MapPart::addObject(Object* object, int pos)
 {
 	objects.insert(objects.begin() + pos, object);
@@ -172,6 +163,7 @@ void MapPart::addObject(Object* object, int pos)
 	if (map->getNumObjects() == 1)
 		map->updateAllMapWidgets();
 }
+
 void MapPart::deleteObject(int pos, bool remove_only)
 {
 	map->removeRenderablesOfObject(objects[pos], true);
@@ -185,6 +177,7 @@ void MapPart::deleteObject(int pos, bool remove_only)
 	if (map->getNumObjects() == 0)
 		map->updateAllMapWidgets();
 }
+
 bool MapPart::deleteObject(Object* object, bool remove_only)
 {
 	int size = objects.size();
@@ -252,6 +245,7 @@ void MapPart::findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_a
 			out.push_back(std::pair<int, Object*>(selected_type, objects[i]));
 	}
 }
+
 void MapPart::findObjectsAtBox(MapCoordF corner1, MapCoordF corner2, bool include_hidden_objects, bool include_protected_objects, std::vector< Object* >& out)
 {
 	QRectF rect = QRectF(QPointF(qMin(corner1.getX(), corner2.getX()), qMin(corner1.getY(), corner2.getY())),
@@ -313,6 +307,7 @@ QRectF MapPart::calculateExtent(bool include_helper_symbols)
 	
 	return rect;
 }
+
 void MapPart::scaleAllObjects(double factor)
 {
 	operationOnAllObjects(ObjectOp::Scale(factor));

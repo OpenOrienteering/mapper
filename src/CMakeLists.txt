@@ -87,6 +87,7 @@ set(Mapper_Common_SRCS
  template_tool_paint.cpp
 
  tool.cpp
+ tool_base.cpp
  tool_helpers.cpp
  tool_pan.cpp
  tool_edit.cpp
@@ -103,7 +104,6 @@ set(Mapper_Common_SRCS
  tool_rotate.cpp
  tool_rotate_pattern.cpp
  tool_scale.cpp
- tool_measure.cpp
  tool_boolean.cpp
 
  gps_coordinates.cpp
@@ -126,6 +126,7 @@ set(Mapper_Common_SRCS
  
  gui/widgets/color_dropdown.cpp
  gui/widgets/home_screen_widget.cpp
+ gui/widgets/measure_widget.cpp
 )
 
 set(Mapper_Common_MOC_INPUT
@@ -165,6 +166,7 @@ set(Mapper_Common_MOC_INPUT
  template_tool_move.h
  template_tool_paint.h
  tool.h
+ tool_base.h
  tool_cut.h
  tool_cut_hole.h
  tool_draw_circle.h
@@ -177,7 +179,6 @@ set(Mapper_Common_MOC_INPUT
  tool_edit_point.h
  tool_edit_line.h
  tool_helpers.h
- tool_measure.h
  tool_pan.h
  tool_rotate.h
  tool_rotate_pattern.h
@@ -197,6 +198,7 @@ set(Mapper_Common_MOC_INPUT
  
  gui/widgets/color_dropdown.h
  gui/widgets/home_screen_widget.h
+ gui/widgets/measure_widget.h
 )
 
 qt4_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})

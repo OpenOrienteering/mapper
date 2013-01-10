@@ -28,9 +28,8 @@
 #include <QtWidgets>
 #endif
 
-#include "map_editor.h"
-
 class ColorDropDown;
+class MainWindow;
 class Map;
 class MapColor;
 class PaletteColor;

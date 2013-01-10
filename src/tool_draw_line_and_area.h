@@ -35,8 +35,10 @@ class SymbolWidget;
 class LineSymbol;
 struct LineSymbolBorder;
 
-/// Base class for drawing tools for line and area symbols.
-/// Provides some common functionality like for example displaying the preview objects.
+/**
+ * A base class for drawing tools for line and area symbols.
+ * Provides some common functionality like for example displaying the preview objects.
+ */
 class DrawLineAndAreaTool : public MapEditorTool
 {
 Q_OBJECT

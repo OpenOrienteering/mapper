@@ -18,9 +18,7 @@
  */
 
 
-#include "tool_measure.h"
-
-#include <cassert>
+#include "measure_widget.h"
 
 #if QT_VERSION < 0x050000
 #include <QtGui>
@@ -28,12 +26,12 @@
 #include <QtWidgets>
 #endif
 
-#include "map.h"
-#include "global.h"
-#include "object.h"
-#include "symbol.h"
-#include "symbol_area.h"
-#include "symbol_line.h"
+#include "../../map.h"
+#include "../../global.h"
+#include "../../object.h"
+#include "../../symbol.h"
+#include "../../symbol_area.h"
+#include "../../symbol_line.h"
 
 MeasureWidget::MeasureWidget(Map* map, QWidget* parent)
 : QWidget(parent),
@@ -138,7 +136,7 @@ void MeasureWidget::objectSelectionChanged()
 			
 			double mm_to_meters = 0.001 * map->getScaleDenominator();
 			
-			assert(path->getNumParts() > 0);
+			Q_ASSERT(path->getNumParts() > 0);
 			double length_mm = path->getPart(0).getLength();
 			double length_meters = length_mm * mm_to_meters;
 			

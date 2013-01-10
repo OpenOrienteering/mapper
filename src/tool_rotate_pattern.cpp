@@ -25,14 +25,14 @@
 #include <QMouseEvent>
 #include <QPainter>
 
-#include "tool_helpers.h"
-#include "map_editor.h"
+#include "map.h"
 #include "map_widget.h"
 #include "object.h"
 #include "renderable.h"
-#include "util.h"
 #include "symbol.h"
 #include "symbol_point.h"
+#include "tool_helpers.h"
+#include "util.h"
 
 RotatePatternTool::RotatePatternTool(MapEditorController* editor, QAction* tool_button)
 : MapEditorToolBase(QCursor(QPixmap(":/images/cursor-rotate.png"), 1, 1), Other, editor, tool_button),
@@ -41,6 +41,11 @@ RotatePatternTool::RotatePatternTool(MapEditorController* editor, QAction* tool_
 	angle_helper->addDefaultAnglesDeg(0);
 	angle_helper->setActive(false);
 	connect(angle_helper.data(), SIGNAL(displayChanged()), this, SLOT(updateDirtyRect()));
+}
+
+RotatePatternTool::~RotatePatternTool()
+{
+	// nothing, not inlined!
 }
 
 void RotatePatternTool::dragStart()
@@ -54,10 +59,11 @@ void RotatePatternTool::dragMove()
 	angle_helper->getConstrainedCursorPositions(cur_pos_map, constrained_pos_map, constrained_pos, cur_map_widget);
 	double rotation = -M_PI / 2 - (constrained_pos_map - click_pos_map).getAngle();
 	
-	Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
+	Map::ObjectSelection::const_iterator it_end = map()->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(); it != it_end; ++it)
 	{
 		Object* object = *it;
+		// TODO: Refactor, provided unified interface for rotation in Object
 		if (object->getType() == Object::Point)
 		{
 			if (object->getSymbol()->asPoint()->isRotatable())
@@ -131,8 +137,8 @@ int RotatePatternTool::updateDirtyRectImpl(QRectF& rect)
 
 void RotatePatternTool::objectSelectionChangedImpl()
 {
-	if (editor->getMap()->getNumSelectedObjects() == 0)
-		editor->setEditTool();
+	if (map()->getNumSelectedObjects() == 0)
+		deactivate();
 	else
 		updateDirtyRect();
 }

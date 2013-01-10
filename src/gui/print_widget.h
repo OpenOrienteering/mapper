@@ -24,9 +24,6 @@
 #include <QWidget>
 #include <QPrinterInfo>
 
-#include "../map_editor.h"
-#include "../tool.h"
-
 QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QComboBox;
@@ -39,6 +36,7 @@ class QSpinBox;
 QT_END_NAMESPACE
 
 class Map;
+class MapEditorController;
 class MapPrinter;
 class MapPrinterOptions;
 class MapPrinterPageFormat;

@@ -26,25 +26,25 @@
 #include <QtWidgets>
 #endif
 
-#include "util.h"
-#include "renderable.h"
-#include "symbol_dock_widget.h"
-#include "symbol.h"
-#include "object.h"
-#include "map_editor.h"
+#include "map.h"
 #include "map_widget.h"
 #include "map_undo.h"
+#include "object.h"
+#include "renderable.h"
+#include "symbol.h"
+#include "symbol_dock_widget.h"
 #include "symbol_point.h"
 #include "tool_helpers.h"
+#include "util.h"
 
 QCursor* DrawPointTool::cursor = NULL;
 
 DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
  : MapEditorTool(editor, Other, tool_button),
    angle_helper(new ConstrainAngleToolHelper()),
-   renderables(new MapRenderables(editor->getMap())),
+   renderables(new MapRenderables(map())),
    symbol_widget(symbol_widget),
-   cur_map_widget(editor->getMainWidget())
+   cur_map_widget(mapWidget())
 {
 	dragging = false;
 	preview_object = NULL;
@@ -54,15 +54,17 @@ DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button, 
 	connect(angle_helper.data(), SIGNAL(displayChanged()), this, SLOT(updateDirtyRect()));
 	
 	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
-	connect(editor->getMap(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
+	connect(map(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
 	
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-draw-point.png"), 11, 11);
 }
+
 void DrawPointTool::init()
 {
 	updateStatusText();
 }
+
 DrawPointTool::~DrawPointTool()
 {
 	if (preview_object)
@@ -86,6 +88,7 @@ bool DrawPointTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Map
 	dragging = false;
 	return true;
 }
+
 bool DrawPointTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	PointSymbol* point = reinterpret_cast<PointSymbol*>(symbol_widget->getSingleSelectedSymbol());
@@ -124,7 +127,7 @@ bool DrawPointTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 		if (!dragging)
 		{
 			dragging = true;
-			editor->setEditingInProgress(true);
+			setEditingInProgress(true);
 		}
 		
 		updateDragging();
@@ -132,12 +135,13 @@ bool DrawPointTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	
 	return true;
 }
+
 bool DrawPointTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
-	Map* map = editor->getMap();
+	Map* map = this->map();
 	
 	PointSymbol* symbol = reinterpret_cast<PointSymbol*>(symbol_widget->getSingleSelectedSymbol());
 	PointObject* point = new PointObject(symbol);
@@ -155,18 +159,20 @@ bool DrawPointTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, M
 	map->objectUndoManager().addNewUndoStep(undo_step);
 	
 	dragging = false;
-	editor->setEditingInProgress(false);
+	setEditingInProgress(false);
 	updateStatusText();
 	return true;
 }
+
 void DrawPointTool::leaveEvent(QEvent* event)
 {
-	editor->getMap()->clearDrawingBoundingBox();
+	map()->clearDrawingBoundingBox();
 }
+
 bool DrawPointTool::keyPressEvent(QKeyEvent* event)
 {
 	if (event->key() == Qt::Key_Tab)
-		editor->setEditTool();
+		deactivate();
 	else if (event->key() == Qt::Key_Control)
 	{
 		angle_helper->setActive(true, click_pos_map);
@@ -177,6 +183,7 @@ bool DrawPointTool::keyPressEvent(QKeyEvent* event)
 		return false;
 	return true;
 }
+
 bool DrawPointTool::keyReleaseEvent(QKeyEvent* event)
 {
 	if (event->key() == Qt::Key_Control && angle_helper->isActive())
@@ -228,16 +235,17 @@ void DrawPointTool::updateDirtyRect()
 		if (preview_object)
 			rectInclude(rect, preview_object->getExtent());
 		angle_helper->includeDirtyRect(rect);
-		editor->getMap()->setDrawingBoundingBox(rect, qMax(1, angle_helper->getDisplayRadius()), true);
+		map()->setDrawingBoundingBox(rect, qMax(1, angle_helper->getDisplayRadius()), true);
 	}
 	else
 	{
 		if (preview_object)
-			editor->getMap()->setDrawingBoundingBox(preview_object->getExtent(), 0, true);
+			map()->setDrawingBoundingBox(preview_object->getExtent(), 0, true);
 		else
-			editor->getMap()->clearDrawingBoundingBox();
+			map()->clearDrawingBoundingBox();
 	}
 }
+
 float DrawPointTool::calculateRotation(QPointF mouse_pos, MapCoordF mouse_pos_map)
 {
 	if (dragging && (mouse_pos - click_pos).manhattanLength() >= QApplication::startDragDistance())
@@ -281,9 +289,9 @@ void DrawPointTool::selectedSymbolsChanged()
 	if (single_selected_symbol == NULL || single_selected_symbol->getType() != Symbol::Point || single_selected_symbol->isHidden())
 	{
 		if (single_selected_symbol && single_selected_symbol->isHidden())
-			editor->setEditTool();
+			deactivate();
 		else
-			editor->setTool(editor->getDefaultDrawToolForSymbol(single_selected_symbol));
+			switchToDefaultDrawTool(single_selected_symbol);
 	}
 	else
 		last_used_symbol = single_selected_symbol;
@@ -292,5 +300,5 @@ void DrawPointTool::selectedSymbolsChanged()
 void DrawPointTool::symbolDeleted(int pos, Symbol* old_symbol)
 {
 	if (last_used_symbol == old_symbol)
-		editor->setEditTool();
+		deactivate();
 }

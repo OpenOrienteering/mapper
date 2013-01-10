@@ -132,7 +132,7 @@ public:
 	
 	inline PieMenu& getPieMenu() {return pie_menu;}
 	
-    virtual QSize sizeHint() const;
+	virtual QSize sizeHint() const;
 	
 public slots:
 	void keyPressed(QKeyEvent* event);
@@ -148,10 +148,10 @@ protected:
 	virtual void mouseReleaseEvent(QMouseEvent* event);
 	virtual void mouseDoubleClickEvent(QMouseEvent* event);
 	virtual void wheelEvent(QWheelEvent* event);
-    virtual void leaveEvent(QEvent* event);
+	virtual void leaveEvent(QEvent* event);
 	
 	// Key input (see also slots)
-    virtual void focusOutEvent(QFocusEvent* event);
+	virtual void focusOutEvent(QFocusEvent* event);
 	
 private:
 	bool containsVisibleTemplate(int first_template, int last_template);

@@ -22,20 +22,22 @@
 
 #include <QPainter>
 
-#include "util.h"
+#include "map.h"
+#include "map_widget.h"
+#include "map_undo.h"
+#include "object.h"
 #include "renderable.h"
 #include "symbol.h"
 #include "symbol_dock_widget.h"
-#include "symbol_point.h"
-#include "symbol_line.h"
 #include "symbol_combined.h"
-#include "object.h"
-#include "map_editor.h"
-#include "map_widget.h"
-#include "map_undo.h"
+#include "symbol_line.h"
+#include "symbol_point.h"
+#include "util.h"
 
 DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : MapEditorTool(editor, Other, tool_button), renderables(new MapRenderables(editor->getMap())), symbol_widget(symbol_widget)
+ : MapEditorTool(editor, Other, tool_button), 
+   renderables(new MapRenderables(map())),
+   symbol_widget(symbol_widget)
 {
 	preview_points_shown = false;
 	draw_in_progress = false;
@@ -48,10 +50,11 @@ DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, QAction* t
 	{
 		selectedSymbolsChanged();
 		connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
-		connect(editor->getMap(), SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(symbolChanged(int,Symbol*,Symbol*)));
-		connect(editor->getMap(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
+		connect(map(), SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(symbolChanged(int,Symbol*,Symbol*)));
+		connect(map(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
 	}
 }
+
 DrawLineAndAreaTool::~DrawLineAndAreaTool()
 {
 	deletePreviewObjects();
@@ -61,7 +64,7 @@ DrawLineAndAreaTool::~DrawLineAndAreaTool()
 void DrawLineAndAreaTool::leaveEvent(QEvent* event)
 {
 	if (!draw_in_progress)
-		editor->getMap()->clearDrawingBoundingBox();
+		map()->clearDrawingBoundingBox();
 }
 
 void DrawLineAndAreaTool::selectedSymbolsChanged()
@@ -75,24 +78,26 @@ void DrawLineAndAreaTool::selectedSymbolsChanged()
 	if (symbol == NULL || ((symbol->getType() & (Symbol::Line | Symbol::Area | Symbol::Combined)) == 0) || symbol->isHidden())
 	{
 		if (symbol && symbol->isHidden())
-			editor->setEditTool();
+			deactivate();
 		else
-			editor->setTool(editor->getDefaultDrawToolForSymbol(symbol));
+			switchToDefaultDrawTool(symbol);
 		return;
 	}
 	
 	last_used_symbol = symbol;
 	createPreviewPoints();
 }
+
 void DrawLineAndAreaTool::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
 {
 	if (old_symbol == last_used_symbol)
 		selectedSymbolsChanged();
 }
+
 void DrawLineAndAreaTool::symbolDeleted(int pos, Symbol* old_symbol)
 {
 	if (old_symbol == last_used_symbol)
-		editor->setEditTool();
+		deactivate();
 }
 
 void DrawLineAndAreaTool::createPreviewPoints()
@@ -110,6 +115,7 @@ void DrawLineAndAreaTool::createPreviewPoints()
 			preview_points[p][i] = new PointObject(preview_point_symbols[i]);
 	}
 }
+
 void DrawLineAndAreaTool::setPreviewPointsPosition(MapCoordF map_coord, int index)
 {
 	int size = (int)preview_points[index].size();
@@ -123,6 +129,7 @@ void DrawLineAndAreaTool::setPreviewPointsPosition(MapCoordF map_coord, int inde
 	}
 	preview_points_shown = true;
 }
+
 void DrawLineAndAreaTool::hidePreviewPoints()
 {
 	if (!preview_points_shown)
@@ -153,6 +160,7 @@ void DrawLineAndAreaTool::includePreviewRects(QRectF& rect)
 		}
 	}
 }
+
 void DrawLineAndAreaTool::drawPreviewObjects(QPainter* painter, MapWidget* widget)
 {
 	if (preview_path || preview_points_shown)
@@ -181,7 +189,7 @@ void DrawLineAndAreaTool::startDrawing()
 	preview_path = new PathObject(path_combination);
 	
 	draw_in_progress = true;
-	editor->setEditingInProgress(true);
+	setEditingInProgress(true);
 }
 
 void DrawLineAndAreaTool::updatePreviewPath()
@@ -195,12 +203,12 @@ void DrawLineAndAreaTool::abortDrawing()
 {
 	renderables->removeRenderablesOfObject(preview_path, false);
 	delete preview_path;
-	editor->getMap()->clearDrawingBoundingBox();
+	map()->clearDrawingBoundingBox();
 	
 	preview_path = NULL;
 	draw_in_progress = false;
 	
-	editor->setEditingInProgress(false);
+	setEditingInProgress(false);
 	
 	emit(pathAborted());
 }
@@ -224,29 +232,29 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 			append_to_object->connectIfClose(preview_path, 0.01*0.01);
 			delete preview_path;
 			
-			editor->getMap()->clearObjectSelection(false);
-			editor->getMap()->addObjectToSelection(append_to_object, true);
+			map()->clearObjectSelection(false);
+			map()->addObjectToSelection(append_to_object, true);
 			
-			MapPart* cur_part = editor->getMap()->getCurrentPart();
-			ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(editor->getMap());
+			MapPart* cur_part = map()->getCurrentPart();
+			ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());
 			undo_step->addObject(cur_part->findObjectIndex(append_to_object), undo_duplicate);
-			editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
+			map()->objectUndoManager().addNewUndoStep(undo_step);
 		}
 		else
 		{
-			int index = editor->getMap()->addObject(preview_path);
-			editor->getMap()->clearObjectSelection(false);
-			editor->getMap()->addObjectToSelection(preview_path, true);
+			int index = map()->addObject(preview_path);
+			map()->clearObjectSelection(false);
+			map()->addObjectToSelection(preview_path, true);
 			
-			DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(editor->getMap());
+			DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
 			undo_step->addObject(index);
-			editor->getMap()->objectUndoManager().addNewUndoStep(undo_step);
+			map()->objectUndoManager().addNewUndoStep(undo_step);
 		}
 	}
-	editor->getMap()->clearDrawingBoundingBox();
+	map()->clearDrawingBoundingBox();
 	
 	draw_in_progress = false;
-	editor->setEditingInProgress(false);
+	setEditingInProgress(false);
 	
 	if (is_helper_tool)
 	{
@@ -295,6 +303,7 @@ void DrawLineAndAreaTool::deletePreviewObjects()
 	}
 	draw_in_progress = false; // FIXME: does not belong here
 }
+
 void DrawLineAndAreaTool::addPreviewPointSymbols(Symbol* symbol)
 {
 	if (symbol->getType() == Symbol::Line)

@@ -26,9 +26,9 @@
 #include <QtWidgets>
 #endif
 
-#include "util.h"
+#include "map.h"
 #include "object.h"
-#include "map_editor.h"
+#include "util.h"
 
 QCursor* DrawCircleTool::cursor = NULL;
 
@@ -86,6 +86,7 @@ bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	}
 	return false;
 }
+
 bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	bool mouse_down = drawMouseButtonHeld(event);
@@ -131,6 +132,7 @@ bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, Map
 	}
 	return true;
 }
+
 bool DrawCircleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (!drawMouseButtonClicked(event))
@@ -163,7 +165,7 @@ bool DrawCircleTool::keyPressEvent(QKeyEvent* event)
 		abortDrawing();
 	else if (event->key() == Qt::Key_Tab)
 	{
-		editor->setEditTool();
+		deactivate();
 		return true;
 	}
 	return false;
@@ -235,6 +237,7 @@ void DrawCircleTool::updateCircle()
 	updatePreviewPath();
 	setDirtyRect();
 }
+
 void DrawCircleTool::setDirtyRect()
 {
 	QRectF rect;
@@ -245,11 +248,12 @@ void DrawCircleTool::setDirtyRect()
 	else
 	{
 		if (rect.isValid())
-			editor->getMap()->setDrawingBoundingBox(rect, 0, true);
+			map()->setDrawingBoundingBox(rect, 0, true);
 		else
-			editor->getMap()->clearDrawingBoundingBox();
+			map()->clearDrawingBoundingBox();
 	}
 }
+
 void DrawCircleTool::updateStatusText()
 {
 	if (!first_point_set || (!second_point_set && dragging))

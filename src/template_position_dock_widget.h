@@ -23,8 +23,11 @@
 
 #include <QDockWidget>
 
-class MapEditorController;
+QT_BEGIN_NAMESPACE
 class QLineEdit;
+QT_END_NAMESPACE
+
+class MapEditorController;
 class Template;
 class TemplateWidget;
 
