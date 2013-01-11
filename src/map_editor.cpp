@@ -1059,10 +1059,23 @@ void MapEditorController::projectionChanged()
 	bool enable_projected = geo.getState() != Georeferencing::ScaleOnly;
 	projected_coordinates_act->setEnabled(enable_projected);
 	projected_coordinates_act->setText(geo.getProjectedCRSName());
+	if (!enable_projected &&
+		map_widget->getCoordsDisplay() == MapWidget::PROJECTED_COORDS)
+	{
+		map_widget->setCoordsDisplay(MapWidget::MAP_COORDS);
+		map_coordinates_act->setChecked(true);
+	}
 	
 	bool enable_geographic = geo.getState() != Georeferencing::ScaleOnly && !geo.isLocal();
 	geographic_coordinates_act->setEnabled(enable_geographic);
 	geographic_coordinates_dms_act->setEnabled(enable_geographic);
+	if (!enable_geographic &&
+		(map_widget->getCoordsDisplay() == MapWidget::GEOGRAPHIC_COORDS ||
+		map_widget->getCoordsDisplay() == MapWidget::GEOGRAPHIC_COORDS_DMS))
+	{
+		map_widget->setCoordsDisplay(MapWidget::MAP_COORDS);
+		map_coordinates_act->setChecked(true);
+	}
 }
 
 void MapEditorController::showSymbolWindow(bool show)

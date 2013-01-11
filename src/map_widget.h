@@ -129,6 +129,7 @@ public:
 	void setZoomLabel(QLabel* zoom_label);
 	void setCursorposLabel(QLabel* cursorpos_label);
 	void setCoordsDisplay(CoordsType type);
+	inline CoordsType getCoordsDisplay() const {return coords_type;}
 	
 	inline PieMenu& getPieMenu() {return pie_menu;}
 	
