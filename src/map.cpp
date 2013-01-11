@@ -294,19 +294,19 @@ void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_
 	setScaleDenominator(new_scale_denominator);
 	setOtherDirty(true);
 }
-void Map::rotateMap(double rotation, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates)
+void Map::rotateMap(double rotation, const MapCoord& center, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates)
 {
 	if (fmod(rotation, 360) == 0)
 		return;
 	
 	object_undo_manager.clear(false);
-	rotateAllObjects(rotation);
+	rotateAllObjects(rotation, center);
 	
 	if (adjust_georeferencing)
 	{
-		MapCoordF reference_point = MapCoordF(georeferencing->getMapRefPoint());
+		MapCoordF reference_point = MapCoordF(georeferencing->getMapRefPoint() - center);
 		reference_point.rotate(-rotation);
-		georeferencing->setMapRefPoint(reference_point.toMapCoord());
+		georeferencing->setMapRefPoint(center + reference_point.toMapCoord());
 	}
 	if (adjust_declination)
 	{
@@ -321,7 +321,7 @@ void Map::rotateMap(double rotation, bool adjust_georeferencing, bool adjust_dec
 			if (temp->isTemplateGeoreferenced())
 				continue;
 			setTemplateAreaDirty(i);
-			temp->rotateAroundOrigin(rotation);
+			temp->rotate(rotation, center);
 			setTemplateAreaDirty(i);
 		}
 		for (int i = 0; i < getNumClosedTemplates(); ++i)
@@ -329,11 +329,12 @@ void Map::rotateMap(double rotation, bool adjust_georeferencing, bool adjust_dec
 			Template* temp = getClosedTemplate(i);
 			if (temp->isTemplateGeoreferenced())
 				continue;
-			temp->rotateAroundOrigin(rotation);
+			temp->rotate(rotation, center);
 		}
 	}
 	
 	setOtherDirty(true);
+	updateAllMapWidgets();
 }
 
 bool Map::saveTo(const QString& path, MapEditorController* map_editor)
@@ -1773,9 +1774,9 @@ void Map::scaleAllObjects(double factor)
 {
 	operationOnAllObjects(ObjectOp::Scale(factor));
 }
-void Map::rotateAllObjects(double rotation)
+void Map::rotateAllObjects(double rotation, const MapCoord& center)
 {
-	operationOnAllObjects(ObjectOp::Rotate(rotation));
+	operationOnAllObjects(ObjectOp::Rotate(rotation, center));
 }
 void Map::updateAllObjects()
 {

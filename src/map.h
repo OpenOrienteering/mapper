@@ -310,7 +310,7 @@ public:
 		return (ObjectOperationResult::Enum)result;
 	}
 	void scaleAllObjects(double factor);
-	void rotateAllObjects(double rotation);
+	void rotateAllObjects(double rotation, const MapCoord& center);
 	void updateAllObjects();
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);
@@ -363,7 +363,7 @@ public:
 	void setScaleDenominator(int value);
 	int getScaleDenominator() const;
 	void changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates);
-	void rotateMap(double rotation, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates);
+	void rotateMap(double rotation, const MapCoord& center, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates);
 	
 	inline const QString& getMapNotes() const {return map_notes;}
 	inline void setMapNotes(const QString& text) {map_notes = text;}

@@ -26,6 +26,7 @@
 QT_BEGIN_NAMESPACE
 class QDoubleSpinBox;
 class QCheckBox;
+class QRadioButton;
 QT_END_NAMESPACE
 
 class Map;
@@ -37,10 +38,17 @@ public:
 	RotateMapDialog(QWidget* parent, Map* map);
 	
 private slots:
+	void updateWidgets();
 	void okClicked();
 	
 private:
 	QDoubleSpinBox* rotation_edit;
+	QRadioButton* center_origin_radio;
+	QRadioButton* center_georef_radio;
+	QRadioButton* center_other_radio;
+	QDoubleSpinBox* other_x_edit;
+	QDoubleSpinBox* other_y_edit;
+	
 	QCheckBox* adjust_georeferencing_check;
 	QCheckBox* adjust_declination_check;
 	QCheckBox* adjust_templates_check;

@@ -210,9 +210,9 @@ public:
 	/// NOTE: for non-georeferenced templates only!
 	void scaleFromOrigin(double factor);
 	
-	/// Rotates the template around the origin.
+	/// Rotates the template around the given point.
 	/// NOTE: for non-georeferenced templates only!
-	void rotateAroundOrigin(double rotation);
+	void rotate(double rotation, const MapCoord& center);
 	
 	
 	// Coordinate transformations between template coordinates and map coordinates

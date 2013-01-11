@@ -317,9 +317,9 @@ void MapPart::scaleAllObjects(double factor)
 {
 	operationOnAllObjects(ObjectOp::Scale(factor));
 }
-void MapPart::rotateAllObjects(double rotation)
+void MapPart::rotateAllObjects(double rotation, const MapCoord& center)
 {
-	operationOnAllObjects(ObjectOp::Rotate(rotation));
+	operationOnAllObjects(ObjectOp::Rotate(rotation, center));
 }
 void MapPart::updateAllObjects()
 {

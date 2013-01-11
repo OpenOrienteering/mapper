@@ -139,7 +139,7 @@ public:
 		return (ObjectOperationResult::Enum)result;
 	}
 	void scaleAllObjects(double factor);
-	void rotateAllObjects(double rotation);
+	void rotateAllObjects(double rotation, const MapCoord& center);
 	void updateAllObjects();
 	void updateAllObjectsWithSymbol(Symbol* symbol);
 	void changeSymbolForAllObjects(Symbol* old_symbol, Symbol* new_symbol);

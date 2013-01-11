@@ -513,7 +513,7 @@ void Template::scaleFromOrigin(double factor)
 	setTemplateScaleY(factor * getTemplateScaleY());
 }
 
-void Template::rotateAroundOrigin(double rotation)
+void Template::rotate(double rotation, const MapCoord& center)
 {
 	assert(!is_georeferenced);
 	
@@ -521,9 +521,12 @@ void Template::rotateAroundOrigin(double rotation)
 	
 	double sinr = sin(rotation);
 	double cosr = cos(rotation);
-	qint64 temp_x = qRound64(1000.0 * (cosr * (getTemplateX()/1000.0) + sinr * (getTemplateY()/1000.0)));
-	setTemplateY(qRound64(1000.0 * (-sinr * (getTemplateX()/1000.0) + cosr * (getTemplateY()/1000.0))));
-	setTemplateX(temp_x);
+	qint64 offset_x = getTemplateX() - center.rawX();
+	qint64 offset_y = getTemplateY() - center.rawY();
+	qint64 temp_x = qRound64(1000.0 * (cosr * (offset_x/1000.0) + sinr * (offset_y/1000.0)));
+	qint64 temp_y = qRound64(1000.0 * (-sinr * (offset_x/1000.0) + cosr * (offset_y/1000.0)));
+	setTemplateX(center.rawX() + temp_x);
+	setTemplateY(center.rawY() + temp_y);
 }
 
 void Template::setTemplateAreaDirty()

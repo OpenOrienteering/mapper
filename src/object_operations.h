@@ -89,15 +89,16 @@ namespace ObjectOp
 	
 	struct Rotate
 	{
-		inline Rotate(double angle) : angle(angle) {}
+		inline Rotate(double angle, const MapCoord& center) : angle(angle), center(center) {}
 		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
-			object->rotateAround(MapCoordF(0, 0), angle);
+			object->rotateAround(center, angle);
 			object->update(true, true);
 			return true;
 		}
 	private:
 		double angle;
+		MapCoordF center;
 	};
 	
 	struct Update
