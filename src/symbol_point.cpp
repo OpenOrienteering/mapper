@@ -263,7 +263,7 @@ void PointSymbol::scale(double factor)
 	for (int i = 0; i < size; ++i)
 	{
 		symbols[i]->scale(factor);
-		objects[i]->scale(factor);
+		objects[i]->scale(MapCoordF(0, 0), factor);
 	}
 	
 	resetIcon();

@@ -504,11 +504,11 @@ QRectF Template::getTemplateExtent()
 	return infinteRectF();
 }
 
-void Template::scaleFromOrigin(double factor)
+void Template::scale(double factor, const MapCoord& center)
 {
 	assert(!is_georeferenced);
-	setTemplateX(qRound64(factor * getTemplateX()));
-	setTemplateY(qRound64(factor * getTemplateY()));
+	setTemplateX(qRound64(center.rawX() + factor * (getTemplateX() - center.rawX()) ));
+	setTemplateY(qRound64(center.rawY() + factor * (getTemplateY() - center.rawY()) ));
 	setTemplateScaleX(factor * getTemplateScaleX());
 	setTemplateScaleY(factor * getTemplateScaleY());
 }

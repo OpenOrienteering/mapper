@@ -28,6 +28,8 @@
 QT_BEGIN_NAMESPACE
 class QLineEdit;
 class QCheckBox;
+class QRadioButton;
+class QDoubleSpinBox;
 QT_END_NAMESPACE
 
 class Map;
@@ -39,10 +41,17 @@ public:
 	ScaleMapDialog(QWidget* parent, Map* map);
 	
 private slots:
+	void updateWidgets();
 	void okClicked();
 	
 private:
 	QLineEdit* scale_edit;
+	QRadioButton* center_origin_radio;
+	QRadioButton* center_georef_radio;
+	QRadioButton* center_other_radio;
+	QDoubleSpinBox* other_x_edit;
+	QDoubleSpinBox* other_y_edit;
+	
 	QCheckBox* adjust_symbols_check;
 	QCheckBox* adjust_objects_check;
 	QCheckBox* adjust_georeferencing_check;

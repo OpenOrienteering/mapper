@@ -170,11 +170,7 @@ void ScaleTool::updateDragging(const MapCoordF cursor_pos_map)
 		resetEditedObjects(&undo_duplicates);
 		Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
 		for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
-		{
-			(*it)->move(-scaling_center.getIntX(), -scaling_center.getIntY());
-			(*it)->scale(scaling_factor);
-			(*it)->move(scaling_center.getIntX(), scaling_center.getIntY());
-		}
+			(*it)->scale(scaling_center, scaling_factor);
 		updatePreviewObjects();
 		updateStatusText();
 	}

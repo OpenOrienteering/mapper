@@ -255,7 +255,7 @@ int Map::getScaleDenominator() const
 	return georeferencing->getScaleDenominator();
 }
 
-void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates)
+void Map::changeScale(int new_scale_denominator, const MapCoord& scaling_center, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates)
 {
 	if (new_scale_denominator == getScaleDenominator())
 		return;
@@ -267,10 +267,10 @@ void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_
 	if (scale_objects)
 	{
 		object_undo_manager.clear(false);
-		scaleAllObjects(factor);
+		scaleAllObjects(factor, scaling_center);
 	}
 	if (scale_georeferencing)
-		georeferencing->setMapRefPoint(factor * georeferencing->getMapRefPoint());
+		georeferencing->setMapRefPoint(scaling_center + factor * (georeferencing->getMapRefPoint() - scaling_center));
 	if (scale_templates)
 	{
 		for (int i = 0; i < getNumTemplates(); ++i)
@@ -279,7 +279,7 @@ void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_
 			if (temp->isTemplateGeoreferenced())
 				continue;
 			setTemplateAreaDirty(i);
-			temp->scaleFromOrigin(factor);
+			temp->scale(factor, scaling_center);
 			setTemplateAreaDirty(i);
 		}
 		for (int i = 0; i < getNumClosedTemplates(); ++i)
@@ -287,12 +287,13 @@ void Map::changeScale(int new_scale_denominator, bool scale_symbols, bool scale_
 			Template* temp = getClosedTemplate(i);
 			if (temp->isTemplateGeoreferenced())
 				continue;
-			temp->scaleFromOrigin(factor);
+			temp->scale(factor, scaling_center);
 		}
 	}
 	
 	setScaleDenominator(new_scale_denominator);
 	setOtherDirty(true);
+	updateAllMapWidgets();
 }
 void Map::rotateMap(double rotation, const MapCoord& center, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates)
 {
@@ -562,7 +563,7 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 										   .arg(QLocale().toString(other->getScaleDenominator()))
 										   .arg(QLocale().toString(getScaleDenominator())), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 		if (answer == QMessageBox::Yes)
-			other->changeScale(getScaleDenominator(), true, true, true, true);
+			other->changeScale(getScaleDenominator(), MapCoord(0, 0), true, true, true, true);
 	}
 	
 	// TODO: As a special case if both maps are georeferenced, the location of the imported objects could be corrected
@@ -1770,9 +1771,9 @@ int Map::countObjectsInRect(QRectF map_coord_rect, bool include_hidden_objects)
 	return count;
 }
 
-void Map::scaleAllObjects(double factor)
+void Map::scaleAllObjects(double factor, const MapCoord& scaling_center)
 {
-	operationOnAllObjects(ObjectOp::Scale(factor));
+	operationOnAllObjects(ObjectOp::Scale(factor, scaling_center));
 }
 void Map::rotateAllObjects(double rotation, const MapCoord& center)
 {

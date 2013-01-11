@@ -76,15 +76,16 @@ namespace ObjectOp
 	
 	struct Scale
 	{
-		inline Scale(double factor) : factor(factor) {}
+		inline Scale(double factor, const MapCoord& scaling_center) : factor(factor), center(scaling_center) {}
 		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
-			object->scale(factor);
+			object->scale(center, factor);
 			object->update(true, true);
 			return true;
 		}
 	private:
 		double factor;
+		MapCoordF center;
 	};
 	
 	struct Rotate

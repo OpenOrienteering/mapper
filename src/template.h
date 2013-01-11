@@ -206,9 +206,9 @@ public:
 	/// NOTE: for non-georeferenced templates only!
 	virtual QRectF getTemplateExtent();
 	
-	/// Scales the template with the origin as scaling center.
+	/// Scales the template with the given scaling center.
 	/// NOTE: for non-georeferenced templates only!
-	void scaleFromOrigin(double factor);
+	void scale(double factor, const MapCoord& center);
 	
 	/// Rotates the template around the given point.
 	/// NOTE: for non-georeferenced templates only!

@@ -21,6 +21,7 @@
 #include "map_dialog_scale.h"
 
 #include <cassert>
+#include <limits>
 
 #if QT_VERSION < 0x050000
 #include <QtGui>
@@ -30,55 +31,112 @@
 
 #include "map.h"
 #include "georeferencing.h"
+#include "template.h"
+#include "util_gui.h"
 
 ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
 {
 	setWindowTitle(tr("Change map scale"));
 	
-	QLabel* scale_label = new QLabel(tr("New scale:  1 :"));
+	QFormLayout* layout = new QFormLayout();
+	
+	layout->addRow(Util::Headline::create(tr("Scaling parameters")));
+	
 	scale_edit = new QLineEdit(QString::number(map->getScaleDenominator()));
 	scale_edit->setValidator(new QIntValidator(1, 9999999, scale_edit));
+	layout->addRow(tr("New scale:  1 :"), scale_edit);
+	
+	layout->addRow(new QLabel(tr("Scaling center:")));
+	
+	center_origin_radio = new QRadioButton(tr("Map coordinate system origin", "Scaling center point"));
+	center_origin_radio->setChecked(true);
+	layout->addRow(center_origin_radio);
+	
+	center_georef_radio = new QRadioButton(tr("Georeferencing reference point", "Scaling center point"));
+	if (!map->getGeoreferencing().isValid())
+		center_georef_radio->setEnabled(false);
+	layout->addRow(center_georef_radio);
+	
+	center_other_radio = new QRadioButton(tr("Other,", "Scaling center point"));
+	other_x_edit = Util::SpinBox::create(2, -1 * std::numeric_limits<double>::max(), std::numeric_limits<double>::max(), tr("mm"));
+	other_y_edit = Util::SpinBox::create(2, -1 * std::numeric_limits<double>::max(), std::numeric_limits<double>::max(), tr("mm"));
+	QHBoxLayout* other_center_layout = new QHBoxLayout();
+	other_center_layout->addWidget(center_other_radio);
+	other_center_layout->addWidget(new QLabel(tr("X:", "x coordinate")), 0);
+	other_center_layout->addWidget(other_x_edit, 1);
+	other_center_layout->addWidget(new QLabel(tr("Y:", "y coordinate")), 0);
+	other_center_layout->addWidget(other_y_edit, 1);
+	layout->addRow(other_center_layout);
+	
+	
+	layout->addItem(Util::SpacerItem::create(this));
+	layout->addRow(Util::Headline::create(tr("Options")));
 	
 	adjust_symbols_check = new QCheckBox(tr("Scale symbol sizes"));
-	adjust_symbols_check->setChecked(true);
+	if (map->getNumSymbols() > 0)
+		adjust_symbols_check->setChecked(true);
+	else
+		adjust_symbols_check->setEnabled(false);
+	layout->addRow(adjust_symbols_check);
+	
 	adjust_objects_check = new QCheckBox(tr("Scale map object positions"));
-	adjust_objects_check->setChecked(true);
+	if (map->getNumObjects() > 0)
+		adjust_objects_check->setChecked(true);
+	else
+		adjust_objects_check->setEnabled(false);
+	layout->addRow(adjust_objects_check);
+	
 	adjust_georeferencing_check = new QCheckBox(tr("Adjust georeferencing reference point"));
-	adjust_georeferencing_check->setChecked(true);
+	if (map->getGeoreferencing().isValid())
+		adjust_georeferencing_check->setChecked(true);
+	else
+		adjust_georeferencing_check->setEnabled(false);
+	layout->addRow(adjust_georeferencing_check);
+	
 	adjust_templates_check = new QCheckBox(tr("Scale non-georeferenced templates"));
-	adjust_templates_check->setChecked(true);
+	bool have_non_georeferenced_template = false;
+	for (int i = 0; i < map->getNumTemplates() && !have_non_georeferenced_template; ++i)
+		have_non_georeferenced_template = !map->getTemplate(i)->isTemplateGeoreferenced();
+	for (int i = 0; i < map->getNumClosedTemplates() && !have_non_georeferenced_template; ++i)
+		have_non_georeferenced_template = !map->getClosedTemplate(i)->isTemplateGeoreferenced();
+	if (have_non_georeferenced_template)
+		adjust_templates_check->setChecked(true);
+	else
+		adjust_templates_check->setEnabled(false);
+	layout->addRow(adjust_templates_check);
 	
-	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	ok_button = new QPushButton(QIcon(":/images/arrow-right.png"), tr("Adjust"));
-	ok_button->setDefault(true);
 	
-	QHBoxLayout* scale_layout = new QHBoxLayout();
-	scale_layout->addWidget(scale_label);
-	scale_layout->addWidget(scale_edit);
-	scale_layout->addStretch(1);
+	layout->addItem(Util::SpacerItem::create(this));
+	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal);
+	ok_button = button_box->button(QDialogButtonBox::Ok);
+	layout->addRow(button_box);
 	
-	QHBoxLayout* buttons_layout = new QHBoxLayout();
-	buttons_layout->addWidget(cancel_button);
-	buttons_layout->addStretch(1);
-	buttons_layout->addWidget(ok_button);
-	
-	QVBoxLayout* layout = new QVBoxLayout();
-	layout->addLayout(scale_layout);
-	layout->addWidget(adjust_symbols_check);
-	layout->addWidget(adjust_objects_check);
-	layout->addWidget(adjust_georeferencing_check);
-	layout->addWidget(adjust_templates_check);
-	layout->addSpacing(16);
-	layout->addLayout(buttons_layout);
 	setLayout(layout);
 	
-	connect(cancel_button, SIGNAL(clicked(bool)), this, SLOT(reject()));
-	connect(ok_button, SIGNAL(clicked(bool)), this, SLOT(okClicked()));
+	connect(center_origin_radio, SIGNAL(clicked(bool)), this, SLOT(updateWidgets()));
+	connect(center_georef_radio, SIGNAL(clicked(bool)), this, SLOT(updateWidgets()));
+	connect(center_other_radio, SIGNAL(clicked(bool)), this, SLOT(updateWidgets()));
+	connect(button_box, SIGNAL(accepted()), this, SLOT(okClicked()));
+	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
+	
+	updateWidgets();
+}
+
+void ScaleMapDialog::updateWidgets()
+{
+	other_x_edit->setEnabled(center_other_radio->isChecked());
+	other_y_edit->setEnabled(center_other_radio->isChecked());
 }
 
 void ScaleMapDialog::okClicked()
 {
 	int scale = scale_edit->text().toInt();
-	map->changeScale(scale, adjust_symbols_check->isChecked(), adjust_objects_check->isChecked(), adjust_georeferencing_check->isChecked(), adjust_templates_check->isChecked());
+	MapCoord center = MapCoord(0, 0);
+	if (center_georef_radio->isChecked())
+		center = map->getGeoreferencing().getMapRefPoint();
+	else if (center_other_radio->isChecked())
+		center = MapCoord(other_x_edit->value(), -1 * other_y_edit->value());
+	
+	map->changeScale(scale, center, adjust_symbols_check->isChecked(), adjust_objects_check->isChecked(), adjust_georeferencing_check->isChecked(), adjust_templates_check->isChecked());
 	accept();
 }

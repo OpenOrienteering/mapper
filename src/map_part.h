@@ -138,7 +138,7 @@ public:
 		}
 		return (ObjectOperationResult::Enum)result;
 	}
-	void scaleAllObjects(double factor);
+	void scaleAllObjects(double factor, const MapCoord& scaling_center);
 	void rotateAllObjects(double rotation, const MapCoord& center);
 	void updateAllObjects();
 	void updateAllObjectsWithSymbol(Symbol* symbol);

@@ -85,8 +85,8 @@ public:
 	/// Moves the whole object
 	void move(qint64 dx, qint64 dy);
 	
-	/// Scales all coordinates, with the origin as scaling center
-	void scale(double factor);
+	/// Scales all coordinates, with the given scaling center
+	void scale(MapCoordF center, double factor);
 	
 	/// Rotates the whole object. The angle must be given in radians.
 	void rotateAround(MapCoordF center, double angle);

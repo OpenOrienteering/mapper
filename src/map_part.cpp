@@ -313,9 +313,9 @@ QRectF MapPart::calculateExtent(bool include_helper_symbols)
 	
 	return rect;
 }
-void MapPart::scaleAllObjects(double factor)
+void MapPart::scaleAllObjects(double factor, const MapCoord& scaling_center)
 {
-	operationOnAllObjects(ObjectOp::Scale(factor));
+	operationOnAllObjects(ObjectOp::Scale(factor, scaling_center));
 }
 void MapPart::rotateAllObjects(double rotation, const MapCoord& center)
 {

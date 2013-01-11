@@ -489,15 +489,24 @@ void Object::move(qint64 dx, qint64 dy)
 	setOutputDirty();
 }
 
-void Object::scale(double factor)
+void Object::scale(MapCoordF center, double factor)
 {
 	int coords_size = coords.size();
-	for (int c = 0; c < coords_size; ++c)
+	if (type == Text && coords_size == 2)
 	{
-		coords[c].setX(coords[c].xd() * factor);
-		coords[c].setY(coords[c].yd() * factor);
+		coords[0].setX(center.getX() + (coords[0].xd() - center.getX()) * factor);
+		coords[0].setY(center.getY() + (coords[0].yd() - center.getY()) * factor);
+		coords[1].setX(coords[1].xd() * factor);
+		coords[1].setY(coords[1].yd() * factor);
 	}
-	
+	else
+	{
+		for (int c = 0; c < coords_size; ++c)
+		{
+			coords[c].setX(center.getX() + (coords[c].xd() - center.getX()) * factor);
+			coords[c].setY(center.getY() + (coords[c].yd() - center.getY()) * factor);
+		}
+	}
 	setOutputDirty();
 }
 
