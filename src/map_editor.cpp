@@ -2140,28 +2140,6 @@ void MapEditorController::updateWidgets()
 	}
 }
 
-// ### EditorDockWidget ###
-
-EditorDockWidget::EditorDockWidget(const QString title, QAction* action, MapEditorController* editor, QWidget* parent): QDockWidget(title, parent), action(action), editor(editor)
-{
-	if (editor)
-		connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), editor, SLOT(saveWindowState()));
-}
-
-bool EditorDockWidget::event(QEvent* event)
-{
-	if (event->type() == QEvent::ShortcutOverride && editor->getWindow()->areShortcutsDisabled())
-		event->accept();
-	return QDockWidget::event(event);
-}
-
-void EditorDockWidget::closeEvent(QCloseEvent* event)
-{
-	if (action)
-		action->setChecked(false);
-	QDockWidget::closeEvent(event);
-}
-
 void MapEditorController::importClicked()
 {
 	QSettings settings;
@@ -2231,6 +2209,30 @@ bool MapEditorController::importMapFile(const QString& filename)
 	delete imported_map;
 	return true;
 }
+
+
+// ### EditorDockWidget ###
+
+EditorDockWidget::EditorDockWidget(const QString title, QAction* action, MapEditorController* editor, QWidget* parent): QDockWidget(title, parent), action(action), editor(editor)
+{
+	if (editor)
+		connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), editor, SLOT(saveWindowState()));
+}
+
+bool EditorDockWidget::event(QEvent* event)
+{
+	if (event->type() == QEvent::ShortcutOverride && editor->getWindow()->areShortcutsDisabled())
+		event->accept();
+	return QDockWidget::event(event);
+}
+
+void EditorDockWidget::closeEvent(QCloseEvent* event)
+{
+	if (action)
+		action->setChecked(false);
+	QDockWidget::closeEvent(event);
+}
+
 
 // ### MapEditorToolAction ###
 
