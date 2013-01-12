@@ -52,6 +52,20 @@ class PrintWidget : public QWidget
 {
 Q_OBJECT
 public:
+	enum TaskFlag
+	{
+		EXPORT_FLAG    = 0x02,
+		MULTIPAGE_FLAG = 0x04,
+		
+		UNDEFINED_TASK     = 0x00,
+		PRINT_TASK         = 0x14, // 0x10 | 0x04
+		EXPORT_PDF_TASK    = 0x26, // 0x20 | 0x04 | 0x02
+		EXPORT_IMAGE_TASK  = 0x42, // 0x40        | 0x02
+		
+		END_JOB_TYPE
+	};
+	Q_DECLARE_FLAGS(TaskFlags, TaskFlag)
+	
 	/** Constructs a new print widget. */
 	PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, MapEditorController* editor, QWidget* parent = NULL);
 	
@@ -60,6 +74,9 @@ public:
 	virtual QSize sizeHint() const;
 	
 public slots:
+	/** Changes the type of the print or export task. */
+	void setTask(TaskFlags type);
+	
 	/** 
 	 * Sets the active state of the print widget.
 	 * 
@@ -82,6 +99,12 @@ public slots:
 	void setOptions(const MapPrinterOptions& parameters);
 	
 signals:
+	/**
+	 * This signal is emitted when the type of task changes.
+	 * It may be used to set a window title.
+	 */
+	void taskChanged(QString name);
+	
 	/**
 	 * This signal is emitted when a print or export job has been started 
 	 * and finished. 
@@ -165,6 +188,7 @@ private:
 		PdfExporter = -1,
 		ImageExporter = -2
 	};
+	TaskFlags task;
 	
 	QFormLayout* layout;
 	
@@ -199,5 +223,7 @@ private:
 	MapEditorController* editor;
 	PrintTool* print_tool;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(PrintWidget::TaskFlags)
 
 #endif

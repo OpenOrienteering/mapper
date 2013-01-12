@@ -46,6 +46,7 @@ const QString toString(QPrinter::PaperSize size);
 
 PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, MapEditorController* editor, QWidget* parent)
 : QWidget(parent), 
+  task(UNDEFINED_TASK),
   map(map), 
   map_printer(new MapPrinter(*map)),
   main_window(main_window), 
@@ -57,7 +58,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	
 	target_combo = new QComboBox();
 	target_combo->setMinimumWidth(1); // Not zero, but not as long as the items
-	layout->addRow(Util::Headline::create(tr("Printer or exporter:")), target_combo);
+	layout->addRow(Util::Headline::create(tr("Printer:")), target_combo);
 	
 	paper_size_combo = new QComboBox();
 	layout->addRow(tr("Page format:"), paper_size_combo);
@@ -182,6 +183,44 @@ QSize PrintWidget::sizeHint() const
 }
 
 // slot
+void PrintWidget::setTask(PrintWidget::TaskFlags type)
+{
+	if (task != type)
+	{
+		task = type;
+		bool is_print_task = type==PRINT_TASK;
+		bool is_multipage  = type.testFlag(MULTIPAGE_FLAG);
+		layout->labelForField(target_combo)->setVisible(is_print_task);
+		target_combo->setVisible(is_print_task);
+		layout->labelForField(copies_edit)->setVisible(is_multipage);
+		copies_edit->setVisible(is_multipage);
+		policy_combo->setVisible(is_print_task);
+		updateTargets();
+		switch (type)
+		{
+			case PRINT_TASK:
+				// TODO: Set target to most recently used printer
+				emit taskChanged(tr("Print"));
+				break;
+				
+			case EXPORT_PDF_TASK:
+				map_printer->setTarget(MapPrinter::pdfTarget());
+				emit taskChanged(tr("PDF export"));
+				break;
+				
+			case EXPORT_IMAGE_TASK:
+				map_printer->setTarget(MapPrinter::imageTarget());
+				policy_combo->setCurrentIndex(policy_combo->findData(SinglePage));
+				emit taskChanged(tr("Image export"));
+				break;
+				
+			default:
+				emit taskChanged(QString::null);
+		}
+	}
+}
+
+// slot
 void PrintWidget::setActive(bool state)
 {
 	if (state)
@@ -216,25 +255,27 @@ void PrintWidget::updateTargets()
 		ScopedSignalsBlocker block(target_combo);
 		target_combo->clear();
 		
-		// Exporters
-#if QT_VERSION < 0x050000
-		target_combo->addItem(tr("Export to PDF or PS"), QVariant((int)PdfExporter));
-#else
-		target_combo->addItem(tr("Export to PDF"), QVariant((int)PdfExporter));
-#endif
-		target_combo->addItem(tr("Export to image"), QVariant((int)ImageExporter));
-		target_combo->insertSeparator(target_combo->count());
-		target_combo->setCurrentIndex(0);
-		
-		// Printers
-		printers = QPrinterInfo::availablePrinters();
-		for (int i = 0; i < printers.size(); ++i)
+		if (task == PRINT_TASK)
 		{
-			if (printers[i].printerName() == saved_printer_name)
-				saved_target_index = target_combo->count();
-			if (printers[i].isDefault())
-				default_printer_index = target_combo->count();
-			target_combo->addItem(printers[i].printerName(), i);
+			// Exporters
+#if QT_VERSION < 0x050000
+			target_combo->addItem(tr("Export to PDF or PS"), QVariant((int)PdfExporter));
+#else
+			target_combo->addItem(tr("Save to PDF"), QVariant((int)PdfExporter));
+#endif
+			target_combo->insertSeparator(target_combo->count());
+			target_combo->setCurrentIndex(0);
+			
+			// Printers
+			printers = QPrinterInfo::availablePrinters();
+			for (int i = 0; i < printers.size(); ++i)
+			{
+				if (printers[i].printerName() == saved_printer_name)
+					saved_target_index = target_combo->count();
+				if (printers[i].isDefault())
+					default_printer_index = target_combo->count();
+				target_combo->addItem(printers[i].printerName(), i);
+			}
 		}
 		
 		// Restore selected target if possible and exit on success

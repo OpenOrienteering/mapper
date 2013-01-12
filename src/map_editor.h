@@ -100,7 +100,9 @@ public:
 	virtual void keyReleaseEvent(QKeyEvent* event);
 	
 public slots:
-	void printClicked();
+	/** Makes the print/export dock widget visible, and configures it for 
+	 *  the given task (which is of type PrintWidget::TaskFlags). */
+	void printClicked(int task);
 	
 	void undo();
 	void redo();
@@ -240,7 +242,6 @@ private:
 	// Action handling
 	QHash<const char *, QAction *> actionsById;
 	
-	QAction* print_act;
 	EditorDockWidget* print_dock_widget;
 	PrintWidget* print_widget;
 	

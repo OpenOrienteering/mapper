@@ -209,7 +209,12 @@ void MapPrinter::setPrintArea(const QRectF& area)
 	if (print_area != area && area.left() < area.right() && area.top() < area.bottom())
 	{
 		print_area = area;
-		updatePageBreaks();
+		
+		if (target == imageTarget() && print_area.size() != page_format.paper_dimensions)
+			setCustomPaperSize(print_area.size());
+		else
+			updatePageBreaks();
+		
 		emit printAreaChanged(print_area);
 	}
 }
@@ -262,6 +267,14 @@ void MapPrinter::setPageOrientation(const QPrinter::Orientation orientation)
 
 void MapPrinter::updatePaperDimensions()
 {
+	if (target == imageTarget() && page_format.paper_size == QPrinter::Custom)
+	{
+		// No margins, no need to query QPrinter.
+		page_format.page_rect = QRectF(QPointF(0.0, 0.0), page_format.paper_dimensions);
+		updatePageBreaks();
+		return;
+	}
+	
 	QPrinter* printer = (target==NULL) ? 
 	  new QPrinter(QPrinter::HighResolution) : new QPrinter(*target, QPrinter::HighResolution);
 	  

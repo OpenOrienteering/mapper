@@ -25,6 +25,7 @@
 #else
 #include <QtWidgets>
 #endif
+#include <QSignalMapper>
 
 #include "color_dock_widget.h"
 #include "georeferencing.h"
@@ -428,7 +429,14 @@ void MapEditorController::assignKeyboardShortcuts()
 void MapEditorController::createMenuAndToolbars()
 {
 	// Define all the actions, saving them into variables as necessary. Can also get them by ID.
-	print_act = newAction("print", tr("Print / Export..."), this, SLOT(printClicked()), "print.png", QString::null, "file_menu.html");
+	QSignalMapper* print_act_mapper = new QSignalMapper(this);
+	connect(print_act_mapper, SIGNAL(mapped(int)), this, SLOT(printClicked(int)));
+	QAction* print_act = newAction("print", tr("Print..."), print_act_mapper, SLOT(map()), "print.png", QString::null, "file_menu.html");
+	print_act_mapper->setMapping(print_act, PrintWidget::PRINT_TASK);
+	QAction* export_image_act = newAction("export-image", tr("&Image..."), print_act_mapper, SLOT(map()), NULL, QString::null, "file_menu.html");
+	print_act_mapper->setMapping(export_image_act, PrintWidget::EXPORT_IMAGE_TASK);
+	QAction* export_pdf_act = newAction("export-pdf", tr("&PDF..."), print_act_mapper, SLOT(map()), NULL, QString::null, "file_menu.html");
+	print_act_mapper->setMapping(export_pdf_act, PrintWidget::EXPORT_PDF_TASK);
 	
 	undo_act = newAction("undo", tr("Undo"), this, SLOT(undo()), "undo.png", tr("Undo the last step"), "edit_menu.html");
 	redo_act = newAction("redo", tr("Redo"), this, SLOT(redo()), "redo.png", tr("Redo the last step"), "edit_menu.html");
@@ -541,11 +549,17 @@ void MapEditorController::createMenuAndToolbars()
 	// Refactored so we can do custom key bindings in the future
 	assignKeyboardShortcuts();
 	
+	// Export menu
+	QMenu* export_menu = new QMenu(tr("&Export"));
+	export_menu->addAction(export_image_act);
+	export_menu->addAction(export_pdf_act);
+	
 	// Extend file menu
 	QMenu* file_menu = window->getFileMenu();
 	file_menu->insertAction(window->getFileMenuExtensionAct(), print_act);
 	file_menu->insertSeparator(window->getFileMenuExtensionAct());
 	file_menu->insertAction(print_act, import_act);
+	file_menu->insertMenu(print_act, export_menu);
 	file_menu->insertSeparator(print_act);
 		
 	// Edit menu
@@ -785,21 +799,23 @@ void MapEditorController::keyReleaseEvent(QKeyEvent* event)
 	map_widget->keyReleased(event);
 }
 
-void MapEditorController::printClicked()
+void MapEditorController::printClicked(int task)
 {
 	if (!print_dock_widget)
 	{
-		print_dock_widget = new EditorDockWidget(tr("Print or Export"), print_act, this, window);
+		print_dock_widget = new EditorDockWidget(QString::null, NULL, this, window);
 		print_dock_widget->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
 		print_widget = new PrintWidget(map, window, main_view, this, print_dock_widget);
 		connect(print_dock_widget, SIGNAL(visibilityChanged(bool)), print_widget, SLOT(setActive(bool)));
 		connect(print_widget, SIGNAL(finished(int)), print_dock_widget, SLOT(close()));
+		connect(print_widget, SIGNAL(taskChanged(QString)), print_dock_widget, SLOT(setWindowTitle(QString)));
 		print_dock_widget->setWidget(print_widget);
 		print_dock_widget->setObjectName("Print dock widget");
 		if (!window->restoreDockWidget(print_dock_widget))
 			addFloatingDockWidget(print_dock_widget);
 	}
 	
+	print_widget->setTask((PrintWidget::TaskFlags)task);
 	print_dock_widget->show();
 	QTimer::singleShot(0, print_dock_widget, SLOT(raise()));
 }
