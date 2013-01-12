@@ -126,6 +126,7 @@ void ScaleMapDialog::updateWidgets()
 {
 	other_x_edit->setEnabled(center_other_radio->isChecked());
 	other_y_edit->setEnabled(center_other_radio->isChecked());
+	adjust_georeferencing_check->setEnabled(!center_georef_radio->isChecked());
 }
 
 void ScaleMapDialog::okClicked()

@@ -35,6 +35,7 @@
 #include "gui/main_window.h"
 #include "map.h"
 #include "map_editor.h"
+#include "map_dialog_rotate.h"
 #include "util_gui.h"
 
 GeoreferencingDialog::GeoreferencingDialog(MapEditorController* controller, const Georeferencing* initial, bool allow_no_georeferencing)
@@ -330,6 +331,25 @@ void GeoreferencingDialog::reset()
 
 void GeoreferencingDialog::accept()
 {
+	float declination_change_degrees = georef->getDeclination() - map->getGeoreferencing().getDeclination();
+	bool declination_changed = map->getGeoreferencing().isValid() && declination_change_degrees != 0;
+	if (declination_changed &&
+		(map->getNumObjects() > 0 ||
+		map->getNumTemplates() > 0))
+	{
+		int result = QMessageBox::question(this, tr("Declination change"), tr("The declination has been changed. Do you want to rotate the map content accordingly, too?"), QMessageBox::Yes | QMessageBox::No);
+		if (result == QMessageBox::Yes)
+		{
+			RotateMapDialog dialog(this, map);
+			dialog.setWindowModality(Qt::WindowModal);
+			dialog.setRotationDegrees(declination_change_degrees);
+			dialog.setRotateAroundGeorefRefPoint();
+			dialog.setAdjustDeclination(false);
+			dialog.showAdjustDeclination(false);
+			dialog.exec();
+		}
+	}
+	
 	map->setGeoreferencing(*georef);
 	map->setOtherDirty(true);
 	QDialog::accept();

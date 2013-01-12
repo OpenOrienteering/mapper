@@ -37,6 +37,11 @@ Q_OBJECT
 public:
 	RotateMapDialog(QWidget* parent, Map* map);
 	
+	void setRotationDegrees(float rotation);
+	void setRotateAroundGeorefRefPoint();
+	void setAdjustDeclination(bool adjust);
+	void showAdjustDeclination(bool show);
+	
 private slots:
 	void updateWidgets();
 	void okClicked();

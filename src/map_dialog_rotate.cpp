@@ -114,10 +114,35 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 	updateWidgets();
 }
 
+void RotateMapDialog::setRotationDegrees(float rotation)
+{
+	rotation_edit->setValue(rotation);
+}
+
+void RotateMapDialog::setRotateAroundGeorefRefPoint()
+{
+	if (center_georef_radio->isEnabled())
+	{
+		center_georef_radio->setChecked(true);
+		updateWidgets();
+	}
+}
+
+void RotateMapDialog::setAdjustDeclination(bool adjust)
+{
+	adjust_declination_check->setChecked(adjust);
+}
+
+void RotateMapDialog::showAdjustDeclination(bool show)
+{
+	adjust_declination_check->setVisible(show);
+}
+
 void RotateMapDialog::updateWidgets()
 {
 	other_x_edit->setEnabled(center_other_radio->isChecked());
 	other_y_edit->setEnabled(center_other_radio->isChecked());
+	adjust_georeferencing_check->setEnabled(!center_georef_radio->isChecked());
 }
 
 void RotateMapDialog::okClicked()
