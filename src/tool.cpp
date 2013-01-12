@@ -43,9 +43,32 @@ const QRgb MapEditorTool::active_color = qRgb(255, 150, 0);
 const QRgb MapEditorTool::selection_color = qRgb(210, 0, 229);
 QImage* MapEditorTool::point_handles = NULL;
 
-MapEditorTool::MapEditorTool(MapEditorController* editor, Type type, QAction* tool_button): QObject(NULL), tool_button(tool_button), type(type), editor(editor)
+MapEditorTool::MapEditorTool(MapEditorController* editor, Type type, QAction* tool_button)
+: QObject(NULL),
+  tool_button(tool_button),
+  type(type),
+  editor(editor)
 {
 }
+
+void MapEditorTool::deactivate()
+{
+	if (getType() == MapEditorTool::EditPoint)
+		editor->setTool(NULL);
+	else
+		editor->setEditTool();
+}
+
+void MapEditorTool::switchToDefaultDrawTool(Symbol* symbol) const
+{
+	editor->setTool(editor->getDefaultDrawToolForSymbol(symbol));
+}
+
+void MapEditorTool::setEditingInProgress(bool state)
+{
+	editor->setEditingInProgress(state);
+}
+
 MapEditorTool::~MapEditorTool()
 {
 	if (tool_button)
@@ -55,6 +78,21 @@ MapEditorTool::~MapEditorTool()
 Map* MapEditorTool::map() const
 {
 	return editor->getMap();
+}
+
+MapWidget* MapEditorTool::mapWidget() const
+{
+	return editor->getMainWidget();
+}
+
+MainWindow* MapEditorTool::mainWindow() const
+{
+	return editor->getWindow();
+}
+
+QWidget* MapEditorTool::window() const
+{
+	return editor->getWindow();
 }
 
 void MapEditorTool::loadPointHandles()
@@ -100,6 +138,7 @@ void MapEditorTool::startEditingSelection(MapRenderables& old_renderables, std::
 	
 	editor->setEditingInProgress(true);
 }
+
 void MapEditorTool::resetEditedObjects(std::vector< Object* >* undo_duplicates)
 {
 	assert(undo_duplicates);
@@ -114,6 +153,7 @@ void MapEditorTool::resetEditedObjects(std::vector< Object* >* undo_duplicates)
 		++i;
 	}
 }
+
 void MapEditorTool::finishEditingSelection(MapRenderables& renderables, MapRenderables& old_renderables, bool create_undo_step, std::vector< Object* >* undo_duplicates, bool delete_objects)
 {
 	ReplaceObjectsUndoStep* undo_step = create_undo_step ? new ReplaceObjectsUndoStep(editor->getMap()) : NULL;
@@ -143,6 +183,7 @@ void MapEditorTool::finishEditingSelection(MapRenderables& renderables, MapRende
 	
 	editor->setEditingInProgress(false);
 }
+
 void MapEditorTool::updateSelectionEditPreview(MapRenderables& renderables)
 {
 	Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
@@ -153,6 +194,7 @@ void MapEditorTool::updateSelectionEditPreview(MapRenderables& renderables)
 		renderables.insertRenderablesOfObject(*it);
 	}
 }
+
 void MapEditorTool::deleteOldSelectionRenderables(MapRenderables& old_renderables, bool set_area_dirty)
 {
 	old_renderables.clear(set_area_dirty);
@@ -181,6 +223,7 @@ void MapEditorTool::includeControlPointRect(QRectF& rect, Object* object)
 		}
 	}
 }
+
 void MapEditorTool::drawPointHandles(int hover_point, QPainter* painter, Object* object, MapWidget* widget, bool draw_curve_handles, PointHandleState base_state)
 {
 	if (object->getType() == Object::Point)
@@ -266,10 +309,12 @@ void MapEditorTool::drawPointHandles(int hover_point, QPainter* painter, Object*
 	else
 		assert(false);
 }
+
 void MapEditorTool::drawPointHandle(QPainter* painter, QPointF point, PointHandleType type, PointHandleState state)
 {
 	painter->drawImage(qRound(point.x()) - 5, qRound(point.y()) - 5, *point_handles, (int)type * 11, (int)state * 11, 11, 11);
 }
+
 void MapEditorTool::drawCurveHandleLine(QPainter* painter, QPointF point, PointHandleType type, QPointF curve_handle, PointHandleState state)
 {
 	const float handle_radius = 3;
@@ -397,267 +442,4 @@ bool MapEditorTool::drawMouseButtonClicked(QMouseEvent* event)
 		return true;
 	}
 	return false;
-}
-
-// ### MapEditorToolBase ###
-
-MapEditorToolBase::MapEditorToolBase(const QCursor cursor, MapEditorTool::Type type, MapEditorController* editor, QAction* tool_button)
- : MapEditorTool(editor, type, tool_button),
-   dragging(false),
-   start_drag_distance(QApplication::startDragDistance()),
-   angle_helper(new ConstrainAngleToolHelper()),
-   snap_helper(new SnappingToolHelper(editor->getMap())),
-   snap_exclude_object(NULL),
-   cur_map_widget(editor->getMainWidget()),
-   editing(false),
-   cursor(cursor),
-   preview_update_triggered(false),
-   renderables(new MapRenderables(editor->getMap())),
-   old_renderables(new MapRenderables(editor->getMap()))
-{
-	angle_helper->setActive(false);
-}
-MapEditorToolBase::~MapEditorToolBase()
-{
-	deleteOldSelectionRenderables(*old_renderables, false);
-}
-
-void MapEditorToolBase::init()
-{
-	connect(editor->getMap(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
-	connect(editor->getMap(), SIGNAL(selectedObjectEdited()), this, SLOT(updateDirtyRect()));
-	initImpl();
-	updateDirtyRect();
-	updateStatusText();
-}
-
-bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
-{
-	active_modifiers = event->modifiers();
-	if (event->button() != Qt::LeftButton)
-	{
-		if (event->button() == Qt::RightButton)
-		{
-			// Do not show the ring menu when editing
-			return editing;
-		}
-		else
-			return false;
-	}
-	cur_map_widget = widget;
-	
-	click_pos = event->pos();
-	click_pos_map = map_coord;
-	cur_pos = click_pos;
-	cur_pos_map = click_pos_map;
-	calcConstrainedPositions(widget);
-	clickPress();
-	return true;
-}
-bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
-{
-	active_modifiers = event->modifiers();
-	cur_pos = event->pos();
-	cur_pos_map = map_coord;
-	calcConstrainedPositions(widget);
-	if (!(event->buttons() & Qt::LeftButton))
-	{
-		mouseMove();
-		return false;
-	}
-	
-	if (dragging)
-		dragMove();
-	else if ((event->pos() - click_pos).manhattanLength() >= start_drag_distance)
-	{
-		dragging = true;
-		dragStart();
-		dragMove();
-	}
-	
-	return true;
-}
-bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
-{
-	active_modifiers = event->modifiers();
-	cur_pos = event->pos();
-	cur_pos_map = map_coord;
-	calcConstrainedPositions(widget);
-	if (event->button() != Qt::LeftButton)
-	{
-		if (event->button() == Qt::RightButton)
-		{
-			// Do not show the ring menu when editing
-			return editing;
-		}
-		else
-			return false;
-	}
-	
-	if (dragging)
-	{
-		dragging = false;
-		dragMove();
-		dragFinish();
-	}
-	else
-		clickRelease();
-	
-	return true;
-}
-
-bool MapEditorToolBase::keyPressEvent(QKeyEvent* event)
-{
-	active_modifiers = event->modifiers();
-    return keyPress(event);
-}
-bool MapEditorToolBase::keyReleaseEvent(QKeyEvent* event)
-{
-	active_modifiers = event->modifiers();
-    return keyRelease(event);
-}
-
-void MapEditorToolBase::draw(QPainter* painter, MapWidget* widget)
-{
-	drawImpl(painter, widget);
-	if (angle_helper->isActive())
-		angle_helper->draw(painter, widget);
-	if (snap_helper->getFilter() != SnappingToolHelper::NoSnapping)
-		snap_helper->draw(painter, widget);
-}
-
-void MapEditorToolBase::updateDirtyRect()
-{
-	int pixel_border = 0;
-	QRectF rect;
-	
-	editor->getMap()->includeSelectionRect(rect);
-	if (angle_helper->isActive())
-	{
-		angle_helper->includeDirtyRect(rect);
-		pixel_border = qMax(pixel_border, angle_helper->getDisplayRadius());
-	}
-	if (snap_helper->getFilter() != SnappingToolHelper::NoSnapping)
-	{
-		snap_helper->includeDirtyRect(rect);
-		pixel_border = qMax(pixel_border, snap_helper->getDisplayRadius());
-	}
-	
-	pixel_border = qMax(pixel_border, updateDirtyRectImpl(rect));
-	if (pixel_border >= 0)
-		editor->getMap()->setDrawingBoundingBox(rect, pixel_border, true);
-	else
-		editor->getMap()->clearDrawingBoundingBox();
-}
-
-void MapEditorToolBase::objectSelectionChanged()
-{
-	objectSelectionChangedImpl();
-}
-
-void MapEditorToolBase::drawImpl(QPainter* painter, MapWidget* widget)
-{
-	drawSelectionOrPreviewObjects(painter, widget);
-}
-
-void MapEditorToolBase::updatePreviewObjectsSlot()
-{
-	preview_update_triggered = false;
-	if (editing)
-		updatePreviewObjects();
-}
-
-void MapEditorToolBase::updatePreviewObjects()
-{
-	if (!editing)
-	{
-		qWarning("MapEditorToolBase::updatePreviewObjects() called but editing == false");
-		return;
-	}
-	updateSelectionEditPreview(*renderables);
-	updateDirtyRect();
-}
-
-void MapEditorToolBase::updatePreviewObjectsAsynchronously()
-{
-	if (!editing)
-	{
-		qWarning("MapEditorToolBase::updatePreviewObjectsAsynchronously() called but editing == false");
-		return;
-	}
-	
-	if (!preview_update_triggered)
-	{
-		QTimer::singleShot(10, this, SLOT(updatePreviewObjectsSlot()));
-		preview_update_triggered = true;
-	}
-}
-
-void MapEditorToolBase::drawSelectionOrPreviewObjects(QPainter* painter, MapWidget* widget, bool draw_opaque)
-{
-	editor->getMap()->drawSelection(painter, true, widget, renderables->isEmpty() ? NULL : renderables.data(), draw_opaque);
-}
-
-void MapEditorToolBase::startEditing()
-{
-	assert(!editing);
-	editing = true;
-	startEditingSelection(*old_renderables, &undo_duplicates);
-}
-void MapEditorToolBase::abortEditing()
-{
-	assert(editing);
-	editing = false;
-	finishEditingSelection(*renderables, *old_renderables, false, &undo_duplicates);
-}
-void MapEditorToolBase::finishEditing(bool delete_objects, bool create_undo_step)
-{
-	assert(editing);
-	editing = false;
-	finishEditingSelection(*renderables, *old_renderables, create_undo_step, &undo_duplicates, delete_objects);
-	editor->getMap()->setObjectsDirty();
-	editor->getMap()->emitSelectionEdited();
-}
-
-void MapEditorToolBase::activateAngleHelperWhileEditing(bool enable)
-{
-	angle_helper->setActive(enable);
-	calcConstrainedPositions(cur_map_widget);
-	if (dragging)
-		dragMove();
-	else
-		mouseMove();
-}
-
-void MapEditorToolBase::activateSnapHelperWhileEditing(bool enable)
-{
-	snap_helper->setFilter(SnappingToolHelper::AllTypes);
-	calcConstrainedPositions(cur_map_widget);
-	if (dragging)
-		dragMove();
-	else
-		mouseMove();
-}
-
-void MapEditorToolBase::calcConstrainedPositions(MapWidget* widget)
-{
-	if (snap_helper->getFilter() != SnappingToolHelper::NoSnapping)
-	{
-		SnappingToolHelperSnapInfo info;
-		constrained_pos_map = MapCoordF(snap_helper->snapToObject(cur_pos_map, widget, &info, snap_exclude_object));
-		constrained_pos = widget->mapToViewport(constrained_pos_map).toPoint();
-		snapped_to_pos = info.type != SnappingToolHelper::NoSnapping;
-	}
-	else
-	{
-		constrained_pos_map = cur_pos_map;
-		constrained_pos = cur_pos;
-		snapped_to_pos = false;
-	}
-	if (angle_helper->isActive())
-	{
-		QPointF temp_pos;
-		angle_helper->getConstrainedCursorPositions(constrained_pos_map, constrained_pos_map, temp_pos, widget);
-		constrained_pos = temp_pos.toPoint();
-	}
 }

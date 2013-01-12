@@ -28,6 +28,7 @@
 #include <qmath.h>
 
 #include "gui/main_window.h"
+#include "map_editor.h"
 #include "template.h"
 #include "template_dock_widget.h"
 #include "util.h"
@@ -96,6 +97,7 @@ bool TemplatePositionDockWidget::event(QEvent* event)
 		event->accept();
 	return QDockWidget::event(event);
 }
+
 void TemplatePositionDockWidget::closeEvent(QCloseEvent* event)
 {
 	controller->removeTemplatePositionDockWidget(temp);
@@ -108,6 +110,7 @@ void TemplatePositionDockWidget::templateChanged(int index, Template* temp)
 	
 	updateValues();
 }
+
 void TemplatePositionDockWidget::templateDeleted(int index, Template* temp)
 {
 	if (this->temp != temp)
@@ -115,6 +118,7 @@ void TemplatePositionDockWidget::templateDeleted(int index, Template* temp)
 	
 	close();
 }
+
 void TemplatePositionDockWidget::valueChanged()
 {
 	// Mark original template area as dirty

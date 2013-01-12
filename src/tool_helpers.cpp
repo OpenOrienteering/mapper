@@ -446,6 +446,11 @@ ConstrainAngleToolHelper::ConstrainAngleToolHelper(const MapCoordF& center)
 {
 }
 
+ConstrainAngleToolHelper::~ConstrainAngleToolHelper()
+{
+	// nothing, not inlined!
+}
+
 void ConstrainAngleToolHelper::setCenter(const MapCoordF& center)
 {
 	if (this->center != center)

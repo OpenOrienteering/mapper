@@ -65,7 +65,7 @@ public:
 	
 	MapEditorController(OperatingMode mode, Map* map = NULL);
 	~MapEditorController();
-
+	
 	void setTool(MapEditorTool* new_tool);
 	void setEditTool();
 	void setOverrideTool(MapEditorTool* new_override_tool);
@@ -90,14 +90,14 @@ public:
 	void addTemplatePositionDockWidget(Template* temp);
 	void removeTemplatePositionDockWidget(Template* temp); // should be called by the dock widget if it is closed or the template deleted; deletes the dock widget
 	
-    virtual bool save(const QString& path);
+	virtual bool save(const QString& path);
 	virtual bool load(const QString& path);
 	
-    virtual void attach(MainWindow* window);
-    virtual void detach();
+	virtual void attach(MainWindow* window);
+	virtual void detach();
 	
-    virtual void keyPressEvent(QKeyEvent* event);
-    virtual void keyReleaseEvent(QKeyEvent* event);
+	virtual void keyPressEvent(QKeyEvent* event);
+	virtual void keyReleaseEvent(QKeyEvent* event);
 	
 public slots:
 	void printClicked();
@@ -184,7 +184,7 @@ public slots:
 	
 	void templateAdded(int pos, Template* temp);
 	void templateDeleted(int pos, Template* temp);
-
+	
 	void importGeoFile(const QString& filename);
 	bool importMapFile(const QString& filename);
 	void importClicked();
@@ -215,9 +215,9 @@ private:
 	QAction* newAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
 	QAction* newCheckAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
 	QAction* newToolAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
-    QAction* findAction(const char* id);
-    void assignKeyboardShortcuts();
-    void createMenuAndToolbars();
+	QAction* findAction(const char* id);
+	void assignKeyboardShortcuts();
+	void createMenuAndToolbars();
 	void createPieMenu(PieMenu* menu);
 	
 	void paintOnTemplate(Template* temp);
@@ -236,9 +236,9 @@ private:
 	MapEditorActivity* editor_activity;
 	
 	bool editing_in_progress;
-
-    // Action handling
-    QHash<const char *, QAction *> actionsById;
+	
+	// Action handling
+	QHash<const char *, QAction *> actionsById;
 	
 	QAction* print_act;
 	EditorDockWidget* print_dock_widget;

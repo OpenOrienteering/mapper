@@ -25,7 +25,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 
-#include "map_editor.h"
+#include "map.h"
 #include "map_widget.h"
 #include "object.h"
 #include "renderable.h"
@@ -35,8 +35,8 @@ QCursor* ScaleTool::cursor = NULL;
 
 ScaleTool::ScaleTool(MapEditorController* editor, QAction* tool_button)
 : MapEditorTool(editor, Other, tool_button),
-  old_renderables(new MapRenderables(editor->getMap())), 
-  renderables(new MapRenderables(editor->getMap()))
+  old_renderables(new MapRenderables(map())), 
+  renderables(new MapRenderables(map()))
 {
 	scaling_center_set = false;
 	scaling = false;
@@ -49,17 +49,16 @@ ScaleTool::ScaleTool(MapEditorController* editor, QAction* tool_button)
 void ScaleTool::init()
 {
 	// Set initial scaling center to the center of the bounding box of the selected objects
-	Map* map = editor->getMap();
-	if (map->getNumSelectedObjects() > 0)
+	if (map()->getNumSelectedObjects() > 0)
 	{
 		QRectF rect;
-		map->includeSelectionRect(rect);
+		map()->includeSelectionRect(rect);
 		scaling_center = MapCoordF(rect.center());
 		scaling_center_set = true;
 	}
 	
-	connect(editor->getMap(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
-	connect(editor->getMap(), SIGNAL(selectedObjectEdited()), this, SLOT(updateDirtyRect()));
+	connect(map(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
+	connect(map(), SIGNAL(selectedObjectEdited()), this, SLOT(updateDirtyRect()));
 	updateDirtyRect();
 	updateStatusText();
 }
@@ -111,8 +110,8 @@ bool ScaleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 		scaling = false;
 		updateDragging(map_coord);
 		finishEditingSelection(*renderables, *old_renderables, true, &undo_duplicates);
-		editor->getMap()->setObjectsDirty();
-		editor->getMap()->emitSelectionEdited();
+		map()->setObjectsDirty();
+		map()->emitSelectionEdited();
 	}
 	
 	updateDirtyRect();
@@ -122,7 +121,7 @@ bool ScaleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 
 void ScaleTool::draw(QPainter* painter, MapWidget* widget)
 {
-	editor->getMap()->drawSelection(painter, true, widget, renderables->isEmpty() ? NULL : renderables.data());
+	map()->drawSelection(painter, true, widget, renderables->isEmpty() ? NULL : renderables.data());
 	
 	if (scaling_center_set)
 	{
@@ -139,23 +138,23 @@ void ScaleTool::draw(QPainter* painter, MapWidget* widget)
 void ScaleTool::updateDirtyRect()
 {
 	QRectF rect;
-	editor->getMap()->includeSelectionRect(rect);
+	map()->includeSelectionRect(rect);
 	
 	if (scaling_center_set)
 	{
 		rectIncludeSafe(rect, scaling_center.toQPointF());
-		editor->getMap()->setDrawingBoundingBox(rect, 5, true);
+		map()->setDrawingBoundingBox(rect, 5, true);
 	}
 	else if (rect.isValid())
-		editor->getMap()->setDrawingBoundingBox(rect, 0, true);
+		map()->setDrawingBoundingBox(rect, 0, true);
 	else
-		editor->getMap()->clearDrawingBoundingBox();
+		map()->clearDrawingBoundingBox();
 }
 
 void ScaleTool::objectSelectionChanged()
 {
-	if (editor->getMap()->getNumSelectedObjects() == 0)
-		editor->setEditTool();
+	if (map()->getNumSelectedObjects() == 0)
+		deactivate();
 	else
 		updateDirtyRect();
 }
@@ -168,8 +167,8 @@ void ScaleTool::updateDragging(const MapCoordF cursor_pos_map)
 		scaling_factor = scaling / qMax(1e-7, original_scale);
 		
 		resetEditedObjects(&undo_duplicates);
-		Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
-		for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
+		Map::ObjectSelection::const_iterator it_end = map()->selectedObjectsEnd();
+		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(); it != it_end; ++it)
 			(*it)->scale(scaling_center, scaling_factor);
 		updatePreviewObjects();
 		updateStatusText();

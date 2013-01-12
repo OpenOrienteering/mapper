@@ -25,10 +25,11 @@
 #include <QMouseEvent>
 #include <QPainter>
 
-#include "map_editor.h"
+#include "map.h"
 #include "map_widget.h"
 #include "object.h"
 #include "renderable.h"
+#include "tool_helpers.h"
 #include "util.h"
 
 RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button)
@@ -40,14 +41,18 @@ RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button)
 	rotating = false;
 }
 
+RotateTool::~RotateTool()
+{
+	// Nothing, not inlined
+}
+
 void RotateTool::initImpl()
 {
 	// Set initial rotation center to the bounding box center of the selected objects
-	Map* map = editor->getMap();
-	if (map->getNumSelectedObjects() > 0)
+	if (map()->getNumSelectedObjects() > 0)
 	{
 		QRectF rect;
-		map->includeSelectionRect(rect);
+		map()->includeSelectionRect(rect);
 		rotation_center = MapCoordF(rect.center());
 		rotation_center_set = true;
 	}
@@ -84,8 +89,8 @@ void RotateTool::dragMove()
 		double rotation = (constrained_pos_map - rotation_center).getAngle();
 		double delta_rotation = rotation - old_rotation;
 		
-		Map::ObjectSelection::const_iterator it_end = editor->getMap()->selectedObjectsEnd();
-		for (Map::ObjectSelection::const_iterator it = editor->getMap()->selectedObjectsBegin(); it != it_end; ++it)
+		Map::ObjectSelection::const_iterator it_end = map()->selectedObjectsEnd();
+		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(); it != it_end; ++it)
 			(*it)->rotateAround(rotation_center, -1.0 * delta_rotation);
 		updatePreviewObjects();
 		
@@ -158,8 +163,8 @@ int RotateTool::updateDirtyRectImpl(QRectF& rect)
 
 void RotateTool::objectSelectionChangedImpl()
 {
-	if (editor->getMap()->getNumSelectedObjects() == 0)
-		editor->setEditTool();
+	if (map()->getNumSelectedObjects() == 0)
+		deactivate();
 	else
 		updateDirtyRect();
 }

@@ -38,12 +38,12 @@ public:
 	CutTool(MapEditorController* editor, QAction* tool_button);
 	virtual ~CutTool();
 	
-    virtual void init();
-    virtual QCursor* getCursor() {return cursor;}
-    
-    virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual void init();
+	virtual QCursor* getCursor() {return cursor;}
+	
+	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-    virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual void leaveEvent(QEvent* event);
 	
@@ -51,7 +51,7 @@ public:
 	virtual bool keyReleaseEvent(QKeyEvent* event);
 	virtual void focusOutEvent(QFocusEvent* event);
 	
-    virtual void draw(QPainter* painter, MapWidget* widget);
+	virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	static QCursor* cursor;
 	

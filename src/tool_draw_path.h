@@ -30,7 +30,9 @@ class SnappingToolHelper;
 class SnappingToolHelperSnapInfo;
 class FollowPathToolHelper;
 
-/// Tool to draw path objects
+/** 
+ * A tool to draw path objects.
+ */
 class DrawPathTool : public DrawLineAndAreaTool
 {
 Q_OBJECT
@@ -97,6 +99,8 @@ protected:
 	bool draw_dash_points;
 	bool allow_closing_paths;
 	
+	MapWidget* cur_map_widget;
+	
 	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
 	bool left_mouse_down;
 	bool ctrl_pressed;
@@ -106,7 +110,6 @@ protected:
 	
 	QScopedPointer<SnappingToolHelper> snap_helper;
 	bool shift_pressed;
-	MapWidget* cur_map_widget;
 	
 	bool appending;
 	PathObject* append_to_object;

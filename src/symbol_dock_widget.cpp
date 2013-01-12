@@ -31,6 +31,7 @@
 
 #include "map.h"
 #include "map_color.h"
+#include "map_editor.h"
 #include "file_format.h"
 #include "settings.h"
 #include "symbol_area.h"
@@ -1190,4 +1191,24 @@ Symbol* SymbolToolTip::getCurrentTipSymbol()
 	if (!tooltip)
 		return NULL;
 	return tooltip->symbol;
+}
+
+template<typename T>
+void SymbolRenderWidget::sort(T compare)
+{
+	// save selection
+	std::set<Symbol *> sel;
+	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it) {
+		sel.insert(map->getSymbol(*it));
+	}
+	
+	map->sortSymbols(compare);
+	
+	//restore selection
+	selected_symbols.clear();
+	for (int i = 0; i < map->getNumSymbols(); i++) {
+		if (sel.find(map->getSymbol(i)) != sel.end()) selected_symbols.insert(i);
+	}
+	
+	update();
 }

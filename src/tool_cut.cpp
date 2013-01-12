@@ -25,8 +25,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 
-#include "gui/main_window.h"
-#include "map_editor.h"
+#include "map.h"
 #include "map_undo.h"
 #include "map_widget.h"
 #include "object.h"
@@ -39,7 +38,7 @@
 
 QCursor* CutTool::cursor = NULL;
 
-CutTool::CutTool(MapEditorController* editor, QAction* tool_button) : MapEditorTool(editor, Other, tool_button), renderables(new MapRenderables(editor->getMap()))
+CutTool::CutTool(MapEditorController* editor, QAction* tool_button) : MapEditorTool(editor, Other, tool_button), renderables(new MapRenderables(map()))
 {
 	dragging = false;
 	hover_object = NULL;
@@ -50,12 +49,14 @@ CutTool::CutTool(MapEditorController* editor, QAction* tool_button) : MapEditorT
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-cut.png"), 11, 11);
 }
+
 void CutTool::init()
 {
-	connect(editor->getMap(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
+	connect(map(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	updateDirtyRect();
     updateStatusText();
 }
+
 CutTool::~CutTool()
 {
 	deletePreviewPath();
@@ -87,6 +88,7 @@ bool CutTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 	
 	return true;
 }
+
 bool CutTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (path_tool)
@@ -103,7 +105,7 @@ bool CutTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget*
 			// Start dragging
 			dragging = true;
 			dragging_on_line = false;
-			editor->setEditingInProgress(true);
+			setEditingInProgress(true);
 			
 			PathCoord split_pos;
 			if (findEditPoint(split_pos, edit_object, click_pos_map, (int)Symbol::Line, (int)Symbol::Area, widget))
@@ -121,6 +123,7 @@ bool CutTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget*
 	}
 	return false;
 }
+
 bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (path_tool)
@@ -128,7 +131,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 	
 	if (event->button() != Qt::LeftButton)
 		return false;
-	Map* map = editor->getMap();
+	Map* map = this->map();
 	
 	if (dragging)
 	{
@@ -263,7 +266,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 	}
 	
 	dragging = false;
-	editor->setEditingInProgress(false);
+	setEditingInProgress(false);
 	return true;
 }
 
@@ -273,6 +276,7 @@ bool CutTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, Map
 		return path_tool->mouseDoubleClickEvent(event, map_coord, widget);
 	return false;
 }
+
 void CutTool::leaveEvent(QEvent* event)
 {
 	if (path_tool)
@@ -285,12 +289,14 @@ bool CutTool::keyPressEvent(QKeyEvent* event)
 		return path_tool->keyPressEvent(event);
 	return false;
 }
+
 bool CutTool::keyReleaseEvent(QKeyEvent* event)
 {
 	if (path_tool)
 		return path_tool->keyReleaseEvent(event);
 	return false;
 }
+
 void CutTool::focusOutEvent(QFocusEvent* event)
 {
 	if (path_tool)
@@ -299,7 +305,7 @@ void CutTool::focusOutEvent(QFocusEvent* event)
 
 void CutTool::draw(QPainter* painter, MapWidget* widget)
 {
-	Map* map = editor->getMap();
+	Map* map = this->map();
 	map->drawSelection(painter, true, widget, NULL);
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
@@ -320,22 +326,23 @@ void CutTool::draw(QPainter* painter, MapWidget* widget)
 	if (path_tool)
 		path_tool->draw(painter, widget);
 }
+
 void CutTool::updateDirtyRect(const QRectF* path_rect)
 {
-	Map* map = editor->getMap();
+	Map* map = this->map();
 	QRectF rect;
 	if (path_rect)
 		rect = *path_rect;
-	editor->getMap()->includeSelectionRect(rect);
+	map->includeSelectionRect(rect);
 	
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 		includeControlPointRect(rect, *it);
 	
 	if (rect.isValid())
-		editor->getMap()->setDrawingBoundingBox(rect, 6, true);
+		map->setDrawingBoundingBox(rect, 6, true);
 	else
-		editor->getMap()->clearDrawingBoundingBox();
+		map->clearDrawingBoundingBox();
 }
 
 void CutTool::updateDragging(MapCoordF cursor_pos_map, MapWidget* widget)
@@ -385,9 +392,10 @@ void CutTool::updateDragging(MapCoordF cursor_pos_map, MapWidget* widget)
 		}
 	}
 }
+
 void CutTool::updateHoverPoint(QPointF cursor_pos_screen, MapWidget* widget)
 {
-	Map* map = editor->getMap();
+	Map* map = this->map();
 	bool has_hover_point = false;
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
@@ -411,10 +419,11 @@ void CutTool::updateHoverPoint(QPointF cursor_pos_screen, MapWidget* widget)
 		hover_object = NULL;
 	}
 }
+
 bool CutTool::findEditPoint(PathCoord& out_edit_point, PathObject*& out_edit_object, MapCoordF cursor_pos_map, int with_type, int without_type, MapWidget* widget)
 {
 	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
-	Map* map = editor->getMap();
+	Map* map = this->map();
 	
 	out_edit_object = NULL;
 	if (hover_point >= 0 && hover_object->getSymbol()->getContainedTypes() & with_type && !(hover_object->getSymbol()->getContainedTypes() & without_type))
@@ -458,6 +467,7 @@ bool CutTool::findEditPoint(PathCoord& out_edit_point, PathObject*& out_edit_obj
 	}
 	return out_edit_object != NULL;
 }
+
 void CutTool::updatePreviewObjects()
 {
 	deletePreviewPath();
@@ -478,6 +488,7 @@ void CutTool::updatePreviewObjects()
 	
 	updateDirtyRect();
 }
+
 void CutTool::deletePreviewPath()
 {
 	if (preview_path)
@@ -487,9 +498,10 @@ void CutTool::deletePreviewPath()
 		preview_path = NULL;
 	}
 }
+
 void CutTool::objectSelectionChanged()
 {
-	Map* map = editor->getMap();
+	Map* map = this->map();
 	bool have_line_or_area = false;
 	
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
@@ -503,14 +515,16 @@ void CutTool::objectSelectionChanged()
 	}
 	
 	if (!have_line_or_area)
-		editor->setEditTool();
+		deactivate();
 	else
 		updateDirtyRect();
 }
+
 void CutTool::pathDirtyRectChanged(const QRectF& rect)
 {
 	updateDirtyRect(&rect);
 }
+
 void CutTool::pathAborted()
 {
 	delete path_tool;
@@ -518,10 +532,11 @@ void CutTool::pathAborted()
 	cutting_area = false;
 	updateDirtyRect();
 }
+
 void CutTool::pathFinished(PathObject* split_path)
 {
 	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
-	Map* map = editor->getMap();
+	Map* map = this->map();
 	
 	// Get path endpoint and check if it is on the area boundary
 	const MapCoordVector& path_coords = split_path->getRawCoordinateVector();
@@ -535,19 +550,19 @@ void CutTool::pathFinished(PathObject* split_path)
 	float click_tolerance_map = 0.001 * edit_widget->getMapView()->pixelToLength(click_tolerance);
 	if (distance_sq > click_tolerance_map*click_tolerance_map)
 	{
-		QMessageBox::warning(editor->getWindow(), tr("Error"), tr("The split line must end on the area boundary!"));
+		QMessageBox::warning(window(), tr("Error"), tr("The split line must end on the area boundary!"));
 		pathAborted();
 		return;
 	}
 	else if (drag_part_index != edited_path->findPartIndexForIndex(end_path_coord.index))
 	{
-		QMessageBox::warning(editor->getWindow(), tr("Error"), tr("Start and end of the split line are at different parts of the object!"));
+		QMessageBox::warning(window(), tr("Error"), tr("Start and end of the split line are at different parts of the object!"));
 		pathAborted();
 		return;
 	}
 	else if (drag_start_len == end_path_coord.clen)
 	{
-		QMessageBox::warning(editor->getWindow(), tr("Error"), tr("Start and end of the split line are at the same position!"));
+		QMessageBox::warning(window(), tr("Error"), tr("Start and end of the split line are at the same position!"));
 		pathAborted();
 		return;
 	}
@@ -652,6 +667,7 @@ void CutTool::pathFinished(PathObject* split_path)
 	
 	pathAborted();
 }
+
 void CutTool::updateStatusText()
 {
 	setStatusBarText(tr("<b>Click</b> on a line to split it into two, <b>Drag</b> along a line to remove this line part, <b>Click or Drag</b> at an area boundary to start drawing a split line"));
@@ -662,7 +678,7 @@ void CutTool::startCuttingArea(const PathCoord& coord, MapWidget* widget)
 	drag_part_index = edit_object->findPartIndexForIndex(coord.index);
 	if (drag_part_index > 0)
 	{
-		QMessageBox::warning(editor->getWindow(), tr("Error"), tr("Splitting holes of area objects is not supported yet!"));
+		QMessageBox::warning(window(), tr("Error"), tr("Splitting holes of area objects is not supported yet!"));
 		return;
 	}
 	cutting_area = true;

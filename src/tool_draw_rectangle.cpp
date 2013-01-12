@@ -31,7 +31,6 @@
 #include "util.h"
 #include "object.h"
 #include "map_widget.h"
-#include "map_editor.h"
 #include "settings.h"
 #include "tool_helpers.h"
 #include "symbol_dock_widget.h"
@@ -41,9 +40,9 @@ QCursor* DrawRectangleTool::cursor = NULL;
 DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
  : DrawLineAndAreaTool(editor, tool_button, symbol_widget),
    angle_helper(new ConstrainAngleToolHelper()),
-   snap_helper(new SnappingToolHelper(editor->getMap()))
+   snap_helper(new SnappingToolHelper(map()))
 {
-	cur_map_widget = editor->getMainWidget();
+	cur_map_widget = mapWidget();
 	draw_dash_points = true;
 	shift_pressed = false;
 	ctrl_pressed = false;
@@ -60,6 +59,7 @@ DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-draw-rectangle.png"), 11, 11);
 }
+
 DrawRectangleTool::~DrawRectangleTool()
 {
 }
@@ -147,6 +147,7 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 		return false;
 	return true;
 }
+
 bool DrawRectangleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	cur_pos = event->pos();
@@ -221,6 +222,7 @@ bool DrawRectangleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 	}
 	return result;
 }
+
 bool DrawRectangleTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
 	if (event->button() != Qt::LeftButton)
@@ -238,7 +240,7 @@ bool DrawRectangleTool::keyPressEvent(QKeyEvent* event)
 	else if (event->key() == Qt::Key_Backspace)
 		undoLastPoint();
 	else if (event->key() == Qt::Key_Tab)
-		editor->setEditTool();
+		deactivate();
 	else if (event->key() == Qt::Key_Space)
 	{
 		draw_dash_points = !draw_dash_points;
@@ -272,6 +274,7 @@ bool DrawRectangleTool::keyPressEvent(QKeyEvent* event)
 		return false;
 	return true;
 }
+
 bool DrawRectangleTool::keyReleaseEvent(QKeyEvent* event)
 {
 	if (event->key() == Qt::Key_Control)
@@ -582,10 +585,10 @@ void DrawRectangleTool::updateDirtyRect()
 				pixel_border = helper_cross_radius;	// helper_cross_radius as border is less than ideal but the only way to always ensure visibility of the helper cross at the moment
 			if (angle_helper->isActive())
 				pixel_border = qMax(pixel_border, angle_helper->getDisplayRadius());
-			editor->getMap()->setDrawingBoundingBox(rect, pixel_border, true);
+			map()->setDrawingBoundingBox(rect, pixel_border, true);
 		}
 		else
-			editor->getMap()->clearDrawingBoundingBox();
+			map()->clearDrawingBoundingBox();
 	}
 }
 

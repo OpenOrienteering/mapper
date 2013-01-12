@@ -20,7 +20,7 @@
 #ifndef _OPENORIENTEERING_EDIT_TOOL_H_
 #define _OPENORIENTEERING_EDIT_TOOL_H_
 
-#include "tool.h"
+#include "tool_base.h"
 
 #include <QSet>
 
@@ -138,7 +138,9 @@ private:
 };
 
 
-/// Base class for edit tools
+/**
+ * A base class for edit tools.
+ */
 class EditTool : public MapEditorToolBase
 {
 Q_OBJECT

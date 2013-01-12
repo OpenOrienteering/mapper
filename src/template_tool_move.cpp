@@ -22,7 +22,7 @@
 
 #include <QMouseEvent>
 
-#include "map_editor.h"
+#include "map.h"
 #include "template.h"
 
 QCursor* TemplateMoveTool::cursor = NULL;
@@ -39,7 +39,7 @@ void TemplateMoveTool::init()
 {
 	setStatusBarText(tr("<b>Drag</b> to move the current template"));
 	
-	connect(editor->getMap(), SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
+	connect(map(), SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
 }
 
 bool TemplateMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -72,7 +72,7 @@ bool TemplateMoveTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord
 void TemplateMoveTool::templateDeleted(int index, Template* temp)
 {
 	if (templ == temp)
-		editor->setTool(NULL);
+		deactivate();
 }
 
 void TemplateMoveTool::updateDragging(MapCoordF mouse_pos_map)
@@ -99,6 +99,6 @@ void TemplateMoveTool::updateDragging(MapCoordF mouse_pos_map)
 			point->src_coords.moveInt(dx, dy);
 	}
 	
-	editor->getMap()->setTemplatesDirty();
-	editor->getMap()->emitTemplateChanged(templ);
+	map()->setTemplatesDirty();
+	map()->emitTemplateChanged(templ);
 }

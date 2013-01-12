@@ -21,8 +21,6 @@
 #ifndef _OPENORIENTEERING_SYMBOL_DOCK_WIDGET_H_
 #define _OPENORIENTEERING_SYMBOL_DOCK_WIDGET_H_
 
-#include "map_editor.h"
-
 #include <set>
 
 #include <QWidget>
@@ -53,17 +51,17 @@ public:
 	
 	/// Returns the single "current" symbol (the symbol which was clicked last). Can be -1 if no symbol selected
 	inline int currentSymbolIndex() const {return current_symbol_index;}
-
-    /// Selects the symbol with the given number. Deselects other symbols, if there was a different selection before.
-    void selectSingleSymbol(int i);
-
+	
+	/// Selects the symbol with the given number. Deselects other symbols, if there was a different selection before.
+	void selectSingleSymbol(int i);
+	
 public slots:
 	void updateIcon(int i);
 	
 protected:
-    // Used to update actions in the context menu
-    void updateContextMenuState();
-
+	// Used to update actions in the context menu
+	void updateContextMenuState();
+	
 protected slots:
 	void newPointSymbol();
 	void newLineSymbol();
@@ -81,10 +79,10 @@ protected slots:
 	void selectAll();
 	void selectUnused();
 	void invertSelection();
-    void sortByNumber();
+	void sortByNumber();
 	void sortByColor();
 	void sortByColorPriority();
-
+	
 	void setScroll(int new_scroll);
 	
 protected:
@@ -109,7 +107,7 @@ protected:
 	QAction* protect_action;
 	QAction* duplicate_action;
 	QAction* delete_action;
-    QAction* select_objects_action;
+	QAction* select_objects_action;
 	
 	Map* map;
 	
@@ -128,36 +126,19 @@ protected:
 	QRect getDragIndicatorRect(int row, int pos_in_row);
 	void updateScrollRange();
 	
-	template<typename T> void sort(T compare)
-	{
-		// save selection
-		std::set<Symbol *> sel;
-		for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it) {
-			sel.insert(map->getSymbol(*it));
-		}
-		
-		map->sortSymbols(compare);
-		
-		//restore selection
-		selected_symbols.clear();
-		for (int i = 0; i < map->getNumSymbols(); i++) {
-			if (sel.find(map->getSymbol(i)) != sel.end()) selected_symbols.insert(i);
-		}
-		
-		update();
-	}
+	template<typename T> void sort(T compare);
 	
 	virtual void paintEvent(QPaintEvent* event);
-    virtual void resizeEvent(QResizeEvent* event);
-    virtual void mouseMoveEvent(QMouseEvent* event);
-    virtual void mousePressEvent(QMouseEvent* event);
-    virtual void mouseDoubleClickEvent(QMouseEvent* event);
-    virtual void leaveEvent(QEvent* event);
-    virtual void wheelEvent(QWheelEvent* event);
+	virtual void resizeEvent(QResizeEvent* event);
+	virtual void mouseMoveEvent(QMouseEvent* event);
+	virtual void mousePressEvent(QMouseEvent* event);
+	virtual void mouseDoubleClickEvent(QMouseEvent* event);
+	virtual void leaveEvent(QEvent* event);
+	virtual void wheelEvent(QWheelEvent* event);
 	
-    virtual void dragEnterEvent(QDragEnterEvent* event);
-    virtual void dragMoveEvent(QDragMoveEvent* event);
-    virtual void dropEvent(QDropEvent* event);
+	virtual void dragEnterEvent(QDragEnterEvent* event);
+	virtual void dragMoveEvent(QDragMoveEvent* event);
+	virtual void dropEvent(QDropEvent* event);
 };
 
 /// Combines SymbolRenderWidget and a scroll bar to a symbol widget
@@ -172,14 +153,14 @@ public:
 	Symbol* getSingleSelectedSymbol() const;
 	int getNumSelectedSymbols() const;
 	bool isSymbolSelected(Symbol* symbol) const;
-
-    // Programmatic select of a symbol
-    void selectSingleSymbol(Symbol *symbol);
+	
+	// Programmatic select of a symbol
+	void selectSingleSymbol(Symbol *symbol);
 	
 	void adjustSize(int width = -1, int height = -1);
-    virtual QSize sizeHint() const;
+	virtual QSize sizeHint() const;
 	
-    inline void emitSelectedSymbolsChanged() {emit selectedSymbolsChanged();}
+	inline void emitSelectedSymbolsChanged() {emit selectedSymbolsChanged();}
 	inline SymbolRenderWidget* getRenderWidget() const {return render_widget;}
 	
 public slots:
@@ -188,17 +169,17 @@ public slots:
 	
 	void emitSwitchSymbolClicked() {emit switchSymbolClicked();}
 	void emitFillBorderClicked() {emit fillBorderClicked();}
-    void emitSelectObjectsClicked() {emit selectObjectsClicked(); }
+	void emitSelectObjectsClicked() {emit selectObjectsClicked(); }
 	
 signals:
 	void selectedSymbolsChanged();
-
-    void switchSymbolClicked();
+	
+	void switchSymbolClicked();
 	void fillBorderClicked();
-    void selectObjectsClicked();
-
+	void selectObjectsClicked();
+	
 protected:
-    virtual void resizeEvent(QResizeEvent* event);
+	virtual void resizeEvent(QResizeEvent* event);
 	
 private:
 	SymbolRenderWidget* render_widget;
@@ -224,8 +205,8 @@ public:
 	static Symbol* getCurrentTipSymbol();
 	
 protected:
-    virtual void enterEvent(QEvent* event);
-    virtual void paintEvent(QPaintEvent* event);
+	virtual void enterEvent(QEvent* event);
+	virtual void paintEvent(QPaintEvent* event);
 	
 private:
 	void setPosition();
