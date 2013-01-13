@@ -1066,7 +1066,7 @@ void MapEditorController::hideAllTemplates(bool checked)
 void MapEditorController::overprintingSimulation(bool checked)
 {
 	main_view->setOverprintingSimulationEnabled(checked);
-	map->updateAllObjects();
+	map->updateAllMapWidgets();
 }
 
 void MapEditorController::coordsDisplayChanged()
@@ -2129,12 +2129,15 @@ void MapEditorController::updateWidgets()
 	if (mode == MapEditor)
 	{
 		if (main_view)
+		{
 			show_grid_act->setChecked(main_view->isGridVisible());
+			hide_all_templates_act->setChecked(main_view->areAllTemplatesHidden());
+			overprinting_simulation_act->setChecked(main_view->isOverprintingSimulationEnabled());
+		}
 		if (map)
 		{
 			hatch_areas_view_act->setChecked(map->isAreaHatchingEnabled());
 			baseline_view_act->setChecked(map->isBaselineViewEnabled());
-			hide_all_templates_act->setChecked(main_view->areAllTemplatesHidden());
 			closedTemplateAvailabilityChanged();
 		}
 	}

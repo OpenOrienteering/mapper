@@ -2035,6 +2035,8 @@ void MapView::save(QXmlStreamWriter& xml)
 	xml.writeAttribute("drag_offset_y", QString::number(drag_offset.y()));
 	if (grid_visible)
 		xml.writeAttribute("grid", "true");
+	if (overprinting_simulation_enabled)
+		xml.writeAttribute("overprinting_simulation_enabled", "true");
 	
 	xml.writeEmptyElement("map");
 	if (!map_visibility->visible)
@@ -2078,6 +2080,7 @@ void MapView::load(QXmlStreamReader& xml)
 		drag_offset.setX(attributes.value("drag_offset_x").toString().toInt());
 		drag_offset.setY(attributes.value("drag_offset_y").toString().toInt());
 		grid_visible = (attributes.value("grid") == "true");
+		overprinting_simulation_enabled = (attributes.value("overprinting_simulation_enabled") == "true");
 		update();
 	}
 	
