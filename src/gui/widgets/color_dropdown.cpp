@@ -23,7 +23,7 @@
 #include <QDebug>
 
 #include "../../map.h"
-#include "../../map_color.h"
+#include "../../core/map_color.h"
 
 
 // Allow explicit use of MapColor pointers in QVariant
@@ -59,7 +59,7 @@ ColorDropDown::ColorDropDown(const Map* map, const MapColor* initial_color, bool
 		// FIXME: these methods will not work when the box contains only spot colors
 		connect(map, SIGNAL(colorAdded(int,MapColor*)), this, SLOT(colorAdded(int,MapColor*)));
 		connect(map, SIGNAL(colorChanged(int,MapColor*)), this, SLOT(colorChanged(int,MapColor*)));
-		connect(map, SIGNAL(colorDeleted(int,MapColor*)), this, SLOT(colorDeleted(int,MapColor*)));
+		connect(map, SIGNAL(colorDeleted(int,const MapColor*)), this, SLOT(colorDeleted(int,const MapColor*)));
 	}
 }
 
@@ -68,9 +68,11 @@ MapColor* ColorDropDown::color() const
 	return itemData(currentIndex()).value<MapColor*>();
 }
 
-void ColorDropDown::setColor(MapColor* color)
+void ColorDropDown::setColor(const MapColor* color)
 {
-	setCurrentIndex(findData(QVariant::fromValue(color)));
+	// Note: No danger in the following cast of color to non-const,
+	//       since we are doing in a const context.
+	setCurrentIndex(findData(QVariant::fromValue((MapColor*)color)));
 }
 
 void ColorDropDown::colorAdded(int pos, MapColor* color)
@@ -91,7 +93,7 @@ void ColorDropDown::colorChanged(int pos, MapColor* color)
 	setItemData(pos + 1, pixmap, Qt::DecorationRole);
 }
 
-void ColorDropDown::colorDeleted(int pos, MapColor* color)
+void ColorDropDown::colorDeleted(int pos, const MapColor* color)
 {
 	if (currentIndex() == pos + 1)
 		setCurrentIndex(0);

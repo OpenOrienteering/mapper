@@ -28,10 +28,10 @@
 #include <QIODevice>
 #include <QXmlStreamWriter>
 
+#include "core/map_color.h"
 #include "map.h"
 #include "symbol_setting_dialog.h"
 #include "symbol_properties_widget.h"
-#include "map_color.h"
 
 CombinedSymbol::CombinedSymbol() : Symbol(Symbol::Combined)
 {
@@ -50,7 +50,7 @@ CombinedSymbol::~CombinedSymbol()
 	}
 }
 
-Symbol* CombinedSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) const
+Symbol* CombinedSymbol::duplicate(const MapColorMap* color_map) const
 {
 	CombinedSymbol* new_symbol = new CombinedSymbol();
 	new_symbol->duplicateImplCommon(this);
@@ -73,7 +73,7 @@ void CombinedSymbol::createRenderables(Object* object, const MapCoordVector& fla
 	}
 }
 
-void CombinedSymbol::colorDeleted(MapColor* color)
+void CombinedSymbol::colorDeleted(const MapColor* color)
 {
 	if (containsColor(color))
 		resetIcon();
@@ -84,7 +84,7 @@ void CombinedSymbol::colorDeleted(MapColor* color)
 	}
 }
 
-bool CombinedSymbol::containsColor(MapColor* color)
+bool CombinedSymbol::containsColor(const MapColor* color) const
 {
 	for (int i = 0, size = (int)parts.size(); i < size; ++i)
 	{
@@ -96,10 +96,10 @@ bool CombinedSymbol::containsColor(MapColor* color)
 	return false;
 }
 
-MapColor* CombinedSymbol::getDominantColorGuess()
+const MapColor* CombinedSymbol::getDominantColorGuess() const
 {
 	// Speculative heuristic. Prefers areas and non-white colors.
-	MapColor* dominant_color = NULL;
+	const MapColor* dominant_color = NULL;
 	for (int i = 0, size = (int)parts.size(); i < size; ++i)
 	{
 		if (parts[i] && parts[i]->getContainedTypes() & Symbol::Area)

@@ -24,8 +24,8 @@
 #include <qmath.h>
 
 #include "core/image_transparency_fixup.h"
+#include "core/map_color.h"
 #include "map.h"
-#include "map_color.h"
 #include "object.h"
 #include "symbol.h"
 #include "util.h"

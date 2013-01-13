@@ -26,6 +26,7 @@
 #include <qmath.h>
 #include <QColor>
 #include <QString>
+#include <QHash>
 
 class Map;
 class MapColor;
@@ -357,6 +358,10 @@ public:
 	/** Compares this color and another. */
 	bool equals(const MapColor& other, bool compare_priority) const;
 	
+	/** Compares two colors given by pointers.
+	 *  Return true if the colors are equal or if both pointers are NULL. */
+	static bool equals(const MapColor* color, const MapColor* other);
+	
 	/** Returns true if this color's priority is less than the other's. */
 	bool comparePriority(const MapColor& other) const { return priority < other.priority; }
 	
@@ -392,5 +397,22 @@ protected:
 	SpotColorComponents components;
 };
 
+
+/** MapColorMap provides a mapping from one map color to another. */
+typedef QHash<const MapColor*, const MapColor*> MapColorMap;
+
+
+// ### MapColor inline code ###
+
+inline
+bool MapColor::equals(const MapColor* color, const MapColor* other)
+{
+	if (color == other)
+		return true;
+	else if (color && other)
+		return color->equals(*other, false);
+	else
+		return false;
+}
 
 #endif

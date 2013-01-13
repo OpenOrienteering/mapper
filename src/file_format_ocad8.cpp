@@ -25,17 +25,17 @@
 #include <QDir>
 #include <QImageReader>
 
+#include "core/map_color.h"
 #include "map.h"
-#include "map_color.h"
 #include "object.h"
-#include "symbol.h"
-#include "symbol_point.h"
-#include "symbol_line.h"
-#include "symbol_area.h"
-#include "symbol_text.h"
-#include "symbol_combined.h"
-#include "template_image.h"
 #include "object_text.h"
+#include "symbol.h"
+#include "symbol_area.h"
+#include "symbol_combined.h"
+#include "symbol_line.h"
+#include "symbol_point.h"
+#include "symbol_text.h"
+#include "template_image.h"
 #include "util.h"
 
 #if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
@@ -2430,7 +2430,7 @@ s32 OCAD8FileExport::convertSize(qint64 size)
 	return (s32)(size / 10);
 }
 
-s16 OCAD8FileExport::convertColor(MapColor* color)
+s16 OCAD8FileExport::convertColor(const MapColor* color) const
 {
 	int index = map->findColorIndex(color);
 	return (index > 0) ? index : 0;

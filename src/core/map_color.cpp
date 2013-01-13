@@ -22,7 +22,7 @@
 
 #include <QDebug>
 
-#include "map.h"
+#include "../map.h"
 
 
 MapColor::MapColor()

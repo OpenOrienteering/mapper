@@ -29,8 +29,8 @@
 #include <QtWidgets>
 #endif
 
+#include "core/map_color.h"
 #include "map.h"
-#include "map_color.h"
 #include "map_editor.h"
 #include "file_format.h"
 #include "settings.h"
@@ -59,8 +59,8 @@ struct Compare_symbolByColor
 {
 	bool operator() (Symbol* s1, Symbol* s2)
 	{
-		MapColor* c1 = s1->getDominantColorGuess();
-		MapColor* c2 = s2->getDominantColorGuess();
+		const MapColor* c1 = s1->getDominantColorGuess();
+		const MapColor* c2 = s2->getDominantColorGuess();
 		
 		if (c1 && c2)
 			return color_map.value(QRgb(*c1)) < color_map.value(QRgb(*c2));
@@ -79,8 +79,8 @@ struct Compare_symbolByColor
 // STL comparison function for sorting symbols by color priority
 static bool Compare_symbolByColorPriority(Symbol* s1, Symbol* s2)
 {
-	MapColor* c1 = s1->getDominantColorGuess();
-	MapColor* c2 = s2->getDominantColorGuess();
+	const MapColor* c1 = s1->getDominantColorGuess();
+	const MapColor* c2 = s2->getDominantColorGuess();
 	
 	if (c1 && c2)
 		return c1->comparePriority(*c2);
@@ -153,7 +153,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	sort_menu->addAction(tr("Sort by primary color priority"), this, SLOT(sortByColorPriority()));
 	context_menu->addMenu(sort_menu);
 
-	connect(map, SIGNAL(colorDeleted(int,MapColor*)), this, SLOT(update()));
+	connect(map, SIGNAL(colorDeleted(int,const MapColor*)), this, SLOT(update()));
 }
 
 bool SymbolRenderWidget::scrollBarNeeded(int width, int height)

@@ -26,9 +26,9 @@
 #include <QtWidgets>
 #endif
 
+#include "core/map_color.h"
 #include "georeferencing.h"
 #include "map.h"
-#include "map_color.h"
 #include "map_editor_activity.h"
 #include "settings.h"
 #include "template.h"

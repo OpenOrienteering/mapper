@@ -44,7 +44,7 @@ class PointSymbol;
 
 struct LineSymbolBorder
 {
-	MapColor* color;
+	const MapColor* color;
 	int width;
 	int shift;
 	bool dashed;
@@ -57,7 +57,7 @@ struct LineSymbolBorder
 	void save(QXmlStreamWriter& xml, const Map& map) const;
 	bool load(QXmlStreamReader& xml, Map& map);
 	bool equals(const LineSymbolBorder* other) const;
-	void assign(const LineSymbolBorder& other, const QHash<MapColor*, MapColor*>* color_map);
+	void assign(const LineSymbolBorder& other, const MapColorMap* color_map);
 	
 	bool isVisible() const;
 	void createSymbol(LineSymbol& out);
@@ -89,14 +89,14 @@ public:
 	/// Constructs an empty line symbol
 	LineSymbol();
 	virtual ~LineSymbol();
-	virtual Symbol* duplicate(const QHash<MapColor*, MapColor*>* color_map = NULL) const;
+	virtual Symbol* duplicate(const MapColorMap* color_map) const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
 	void createRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, PathCoordVector* path_coords, ObjectRenderables& output);
-	virtual void colorDeleted(MapColor* color);
-    virtual bool containsColor(MapColor* color);
-    virtual MapColor* getDominantColorGuess();
-    virtual void scale(double factor);
+	virtual void colorDeleted(const MapColor* color);
+	virtual bool containsColor(const MapColor* color) const;
+	virtual const MapColor* getDominantColorGuess() const;
+	virtual void scale(double factor);
 	
 	/// Creates empty point symbols for contained NULL symbols with the given names
     void ensurePointSymbols(const QString& start_name, const QString& mid_name, const QString& end_name, const QString& dash_name);
@@ -115,8 +115,8 @@ public:
 	// Getters / Setters
 	inline int getLineWidth() const {return line_width;}
 	inline void setLineWidth(double width) {line_width = qRound(1000 * width);}
-	inline MapColor* getColor() const {return color;}
-	inline void setColor(MapColor* color) {this->color = color;}
+	inline const MapColor* getColor() const {return color;}
+	inline void setColor(const MapColor* color) {this->color = color;}
 	inline int getMinimumLength() const {return minimum_length;}
 	inline void setMinimumLength(int length) {this->minimum_length = length;}
 	inline CapStyle getCapStyle() const {return cap_style;}
@@ -204,7 +204,7 @@ protected:
 	
 	// Base line
 	int line_width;		// in 1/1000 mm
-	MapColor* color;
+	const MapColor* color;
 	int minimum_length;
 	CapStyle cap_style;
 	JoinStyle join_style;

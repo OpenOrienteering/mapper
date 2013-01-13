@@ -19,11 +19,11 @@
 
 #include <QFile>
 
+#include "core/map_color.h"
 #include "file_format_native.h"
 #include "georeferencing.h"
 #include "gps_coordinates.h"
 #include "map.h"
-#include "map_color.h"
 #include "map_grid.h"
 #include "symbol.h"
 #include "template.h"

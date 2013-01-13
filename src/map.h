@@ -28,6 +28,7 @@
 #include <QHash>
 #include <QSet>
 #include <QScopedPointer>
+#include <QExplicitlySharedDataPointer>
 
 #include "global.h"
 #include "undo.h"
@@ -174,11 +175,11 @@ public:
 	MapColor* addColor(int pos);
 	void addColor(MapColor* color, int pos);
 	void deleteColor(int pos);
-	int findColorIndex(MapColor* color) const;	// returns -1 if not found
+	int findColorIndex(const MapColor* color) const;	// returns -1 if not found
 	void setColorsDirty();
 	
 	void useColorsFrom(Map* map);
-	bool isColorUsedByASymbol(MapColor* color);
+	bool isColorUsedByASymbol(const MapColor* color) const;
 	
 	/// Returns a vector of the same size as the color list, where each element is set to true if
 	/// the color is used by at least one symbol.
@@ -417,7 +418,7 @@ signals:
 	
 	void colorAdded(int pos, MapColor* color);
 	void colorChanged(int pos, MapColor* color);
-	void colorDeleted(int pos, MapColor* old_color);
+	void colorDeleted(int pos, const MapColor* old_color);
 	
 	void symbolAdded(int pos, Symbol* symbol);
 	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
@@ -461,7 +462,7 @@ private:
 		/// if this color exists in both sets, otherwise above the existing colors.
 		/// If a map is given, the color is properly inserted into the map.
 		void importSet(MapColorSet* other, Map* map = NULL, std::vector<bool>* filter = NULL, QHash<int, int>* out_indexmap = NULL,
-					   QHash<MapColor*, MapColor*>* out_pointermap = NULL);
+					   MapColorMap* out_pointermap = NULL);
 		
 	private:
 		int ref_count;
@@ -475,7 +476,7 @@ private:
 	
 	/// Imports the other symbol set into this set, only importing the symbols for which filter[color_index] == true and
 	/// returning the map from symbol indices in other to imported indices. Imported symbols are placed after the existing symbols.
-	void importSymbols(Map* other, const QHash<MapColor*, MapColor*>& color_map, int insert_pos = -1, bool merge_duplicates = true, std::vector<bool>* filter = NULL,
+	void importSymbols(Map* other, const MapColorMap& color_map, int insert_pos = -1, bool merge_duplicates = true, std::vector<bool>* filter = NULL,
 					   QHash<int, int>* out_indexmap = NULL, QHash<Symbol*, Symbol*>* out_pointermap = NULL);
 	
 	void addSelectionRenderables(Object* object);

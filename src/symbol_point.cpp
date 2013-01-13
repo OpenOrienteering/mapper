@@ -27,15 +27,15 @@
 #endif
 #include <QXmlStreamAttributes>
 
+#include "core/map_color.h"
 #include "map.h"
-#include "util.h"
-#include "util_gui.h"
-#include "map_color.h"
+#include "object.h"
 #include "symbol_setting_dialog.h"
 #include "symbol_properties_widget.h"
 #include "symbol_point_editor.h"
-#include "object.h"
 #include "renderable_implementation.h"
+#include "util.h"
+#include "util_gui.h"
 
 PointSymbol::PointSymbol() : Symbol(Symbol::Point)
 {
@@ -54,7 +54,7 @@ PointSymbol::~PointSymbol()
 		delete symbols[i];
 	}
 }
-Symbol* PointSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) const
+Symbol* PointSymbol::duplicate(const MapColorMap* color_map) const
 {
 	PointSymbol* new_point = new PointSymbol();
 	new_point->duplicateImplCommon(this);
@@ -187,7 +187,7 @@ bool PointSymbol::isSymmetrical() const
 	return true;
 }
 
-void PointSymbol::colorDeleted(MapColor* color)
+void PointSymbol::colorDeleted(const MapColor* color)
 {
 	bool change = false;
 	
@@ -212,7 +212,7 @@ void PointSymbol::colorDeleted(MapColor* color)
 	if (change)
 		resetIcon();
 }
-bool PointSymbol::containsColor(MapColor* color)
+bool PointSymbol::containsColor(const MapColor* color) const
 {
 	if (color == inner_color)
 		return true;
@@ -229,7 +229,7 @@ bool PointSymbol::containsColor(MapColor* color)
 	return false;
 }
 
-MapColor* PointSymbol::getDominantColorGuess()
+const MapColor* PointSymbol::getDominantColorGuess() const
 {
 	bool have_inner_color = inner_color && inner_radius > 0;
 	bool have_outer_color = outer_color && outer_width > 0;
@@ -396,11 +396,11 @@ bool PointSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity
 	
 	if (rotatable != point->rotatable)
 		return false;
-	if (!colorEquals(inner_color, point->inner_color))
+	if (!MapColor::equals(inner_color, point->inner_color))
 		return false;
 	if (inner_color && inner_radius != point->inner_radius)
 		return false;
-	if (!colorEquals(outer_color, point->outer_color))
+	if (!MapColor::equals(outer_color, point->outer_color))
 		return false;
 	if (outer_color && outer_width != point->outer_width)
 		return false;

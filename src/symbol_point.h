@@ -47,13 +47,13 @@ public:
 	/// Constructs an empty point symbol
 	PointSymbol();
 	virtual ~PointSymbol();
-	virtual Symbol* duplicate(const QHash<MapColor*, MapColor*>* color_map = NULL) const;
+	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
 	void createRenderablesScaled(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, float coord_scale);
-	virtual void colorDeleted(MapColor* color);
-	virtual bool containsColor(MapColor* color);
-    virtual MapColor* getDominantColorGuess();
+	virtual void colorDeleted(const MapColor* color);
+	virtual bool containsColor(const MapColor* color) const;
+	const MapColor* getDominantColorGuess() const;
 	virtual void scale(double factor);
 	
 	// Contained objects and symbols (elements)
@@ -76,12 +76,12 @@ public:
 	inline void setRotatable(bool enable) {rotatable = enable;}
 	inline int getInnerRadius() const {return inner_radius;}
 	inline void setInnerRadius(int value) {inner_radius = value;}
-	inline MapColor* getInnerColor() const {return inner_color;}
-	inline void setInnerColor(MapColor* color) {inner_color = color;}
+	inline const MapColor* getInnerColor() const {return inner_color;}
+	inline void setInnerColor(const MapColor* color) {inner_color = color;}
 	inline int getOuterWidth() const {return outer_width;}
 	inline void setOuterWidth(int value) {outer_width = value;}
-	inline MapColor* getOuterColor() const {return outer_color;}
-	inline void setOuterColor(MapColor* color) {outer_color = color;}
+	inline const MapColor* getOuterColor() const {return outer_color;}
+	inline void setOuterColor(const MapColor* color) {outer_color = color;}
 	
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
 	
@@ -98,9 +98,9 @@ protected:
 	
 	bool rotatable;
 	int inner_radius;		// in 1/1000 mm
-	MapColor* inner_color;
+	const MapColor* inner_color;
 	int outer_width;		// in 1/1000 mm
-	MapColor* outer_color;
+	const MapColor* outer_color;
 };
 
 

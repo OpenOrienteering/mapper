@@ -31,14 +31,15 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "core/map_color.h"
 #include "map.h"
 #include "object.h"
 #include "qbezier_p.h"
 #include "renderable_implementation.h"
-#include "symbol_setting_dialog.h"
-#include "symbol_point_editor.h"
-#include "symbol_point.h"
 #include "symbol_area.h"
+#include "symbol_point.h"
+#include "symbol_point_editor.h"
+#include "symbol_setting_dialog.h"
 #include "util.h"
 #include "util_gui.h"
 #include "gui/widgets/color_dropdown.h"
@@ -111,7 +112,7 @@ bool LineSymbolBorder::load(QXmlStreamReader& xml, Map& map)
 
 bool LineSymbolBorder::equals(const LineSymbolBorder* other) const
 {
-	if (!Symbol::colorEquals(color, other->color))
+	if (!MapColor::equals(color, other->color))
 		return false;
 	
 	if (width != other->width)
@@ -130,7 +131,7 @@ bool LineSymbolBorder::equals(const LineSymbolBorder* other) const
 	return true;
 }
 
-void LineSymbolBorder::assign(const LineSymbolBorder& other, const QHash<MapColor*, MapColor*>* color_map)
+void LineSymbolBorder::assign(const LineSymbolBorder& other, const MapColorMap* color_map)
 {
 	color = color_map ? color_map->value(other.color) : other.color;
 	width = other.width;
@@ -212,7 +213,7 @@ LineSymbol::~LineSymbol()
 	delete dash_symbol;
 }
 
-Symbol* LineSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) const
+Symbol* LineSymbol::duplicate(const MapColorMap* color_map) const
 {
 	LineSymbol* new_line = new LineSymbol();
 	new_line->duplicateImplCommon(this);
@@ -1439,7 +1440,7 @@ void LineSymbol::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 	}	
 }
 
-void LineSymbol::colorDeleted(MapColor* color)
+void LineSymbol::colorDeleted(const MapColor* color)
 {
 	bool have_changes = false;
 	if (mid_symbol && mid_symbol->containsColor(color))
@@ -1481,7 +1482,7 @@ void LineSymbol::colorDeleted(MapColor* color)
 		resetIcon();
 }
 
-bool LineSymbol::containsColor(MapColor* color)
+bool LineSymbol::containsColor(const MapColor* color) const
 {
 	if (color == this->color || color == border.color || color == right_border.color)
 		return true;
@@ -1496,7 +1497,7 @@ bool LineSymbol::containsColor(MapColor* color)
     return false;
 }
 
-MapColor* LineSymbol::getDominantColorGuess()
+const MapColor* LineSymbol::getDominantColorGuess() const
 {
 	bool has_main_line = line_width > 0 && color;
 	bool has_border = hasBorder() && border.width > 0 && border.color;
@@ -1541,7 +1542,7 @@ MapColor* LineSymbol::getDominantColorGuess()
 		}
 	}
 	
-	MapColor* dominant_color = mid_symbol ? mid_symbol->getDominantColorGuess() : NULL;
+	const MapColor* dominant_color = mid_symbol ? mid_symbol->getDominantColorGuess() : NULL;
 	if (dominant_color) return dominant_color;
 	
 	dominant_color = start_symbol ? start_symbol->getDominantColorGuess() : NULL;
@@ -1980,7 +1981,7 @@ bool LineSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 		return false;
 	if (line_width > 0)
 	{
-		if (!colorEquals(color, line->color))
+		if (!MapColor::equals(color, line->color))
 			return false;
 		
 		if ((cap_style != line->cap_style) ||

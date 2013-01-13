@@ -21,16 +21,16 @@
 
 #include <qmath.h>
 
+#include "core/map_color.h"
 #include "map.h"
-#include "map_color.h"
 #include "object.h"
 #include "object_text.h"
-#include "symbol_point.h"
-#include "symbol_line.h"
+#include "settings.h"
 #include "symbol_area.h"
+#include "symbol_line.h"
+#include "symbol_point.h"
 #include "symbol_text.h"
 #include "util.h"
-#include "settings.h"
 
 // ### DotRenderable ###
 
@@ -367,7 +367,7 @@ void AreaRenderable::render(QPainter& painter, bool force_min_size, float scalin
 
 // ### TextRenderable ###
 
-TextRenderable::TextRenderable(TextSymbol* symbol, TextObject* text_object, MapColor* color, double anchor_x, double anchor_y, bool framing_line)
+TextRenderable::TextRenderable(TextSymbol* symbol, TextObject* text_object, const MapColor* color, double anchor_x, double anchor_y, bool framing_line)
 {
 	const QFont& font(symbol->getQFont());
 	const QFontMetricsF& metrics(symbol->getFontMetrics());

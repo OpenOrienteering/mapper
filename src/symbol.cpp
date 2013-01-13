@@ -29,19 +29,19 @@
 #include <QXmlStreamWriter>
 #include <qmath.h>
 
-#include "util.h"
+#include "core/map_color.h"
 #include "map.h"
-#include "map_color.h"
 #include "object.h"
 #include "object_text.h"
+#include "renderable_implementation.h"
+#include "symbol_area.h"
+#include "symbol_combined.h"
 #include "symbol_line.h"
 #include "symbol_point.h"
-#include "symbol_area.h"
-#include "symbol_text.h"
-#include "symbol_combined.h"
 #include "symbol_properties_widget.h"
 #include "symbol_setting_dialog.h"
-#include "renderable_implementation.h"
+#include "symbol_text.h"
+#include "util.h"
 
 Symbol::Symbol(Type type) : type(type), name(""), description(""), is_helper_symbol(false), is_hidden(false), is_protected(false), icon(NULL)
 {
@@ -522,14 +522,14 @@ bool Symbol::loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* ma
 void Symbol::createBaselineRenderables(Object* object, Symbol* symbol, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, bool hatch_areas)
 {
 	Symbol::Type type = symbol->getType();
-	MapColor* dominant_color = symbol->getDominantColorGuess();
+	const MapColor* dominant_color = symbol->getDominantColorGuess();
 	if (dominant_color == NULL)
 		return;
 	
 	if (type == Symbol::Point)
 	{
 		PointSymbol* point = Map::getUndefinedPoint();
-		MapColor* temp_color = point->getInnerColor();
+		const MapColor* temp_color = point->getInnerColor();
 		point->setInnerColor(dominant_color);
 		
 		point->createRenderables(object, flags, coords, output);
@@ -627,16 +627,6 @@ int Symbol::getCompatibleTypes(Symbol::Type type)
 	
 	assert(false);
 	return type;
-}
-
-bool Symbol::colorEquals(MapColor* color, MapColor* other)
-{
-	if ((color == NULL && other != NULL) ||
-		(color != NULL && other == NULL))
-		return false;
-	if (color && !color->equals(*other, false))
-		return false;
-	return true;
 }
 
 void Symbol::duplicateImplCommon(const Symbol* other)

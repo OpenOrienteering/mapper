@@ -60,20 +60,20 @@ public:
 	
 	TextSymbol();
 	virtual ~TextSymbol();
-	virtual Symbol* duplicate(const QHash<MapColor*, MapColor*>* color_map = NULL) const;
+	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
 	void createLineBelowRenderables(Object* object, ObjectRenderables& output);
-	virtual void colorDeleted(MapColor* color);
-    virtual bool containsColor(MapColor* color);
-    virtual MapColor* getDominantColorGuess();
-    virtual void scale(double factor);
+	virtual void colorDeleted(const MapColor* color);
+	virtual bool containsColor(const MapColor* color) const;
+	virtual const MapColor* getDominantColorGuess() const;
+	virtual void scale(double factor);
 	
 	void updateQFont();
 	inline double calculateInternalScaling() const {return internal_point_size / (0.001 * font_size);}
 	
 	// Getters
-	inline MapColor* getColor() const {return color;}
+	inline const MapColor* getColor() const {return color;}
 	inline const QString& getFontFamily() const {return font_family;}
 	inline double getFontSize() const {return 0.001 * font_size;}
 	inline bool isBold() const {return bold;}
@@ -85,13 +85,13 @@ public:
 	inline bool usesKerning() const {return kerning;}
 	QString getIconText() const; // returns a default text if no custom text is set.
 	inline bool usesFraming() const {return framing;}
-	inline MapColor* getFramingColor() const {return framing_color;}
+	inline const MapColor* getFramingColor() const {return framing_color;}
 	inline int getFramingMode() const {return framing_mode;}
 	inline int getFramingLineHalfWidth() const {return framing_line_half_width;}
 	inline int getFramingShadowXOffset() const {return framing_shadow_x_offset;}
 	inline int getFramingShadowYOffset() const {return framing_shadow_y_offset;}
 	inline bool hasLineBelow() const {return line_below;}
-	inline MapColor* getLineBelowColor() const {return line_below_color;}
+	inline const MapColor* getLineBelowColor() const {return line_below_color;}
 	inline double getLineBelowWidth() const {return 0.001 * line_below_width;}
 	inline double getLineBelowDistance() const {return 0.001 * line_below_distance;}
 	inline int getNumCustomTabs() const {return (int)custom_tabs.size();}
@@ -116,7 +116,7 @@ protected:
 	QFont qfont;
 	QFontMetricsF metrics;
 	
-	MapColor* color;
+	const MapColor* color;
 	QString font_family;
 	int font_size;				// this defines the font size in 1000 mm. How big the letters really are depends on the design of the font though
 	bool bold;
@@ -129,7 +129,7 @@ protected:
 	QString icon_text;			// text to be drawn in the symbol's icon
 	
 	bool framing;
-	MapColor* framing_color;
+	const MapColor* framing_color;
 	int framing_mode;
 	int framing_line_half_width;
 	int framing_shadow_x_offset;
@@ -137,7 +137,7 @@ protected:
 	
 	// OCAD compatibility features
 	bool line_below;
-	MapColor* line_below_color;
+	const MapColor* line_below_color;
 	int line_below_width;
 	int line_below_distance;
 	std::vector<int> custom_tabs;

@@ -43,12 +43,12 @@ public:
 	MapColor* color() const;
 	
 	/** Sets the selection to the given color. */
-	void setColor(MapColor* color);
+	void setColor(const MapColor* color);
 	
 protected slots:
 	void colorAdded(int pos, MapColor* color);
 	void colorChanged(int pos, MapColor* color);
-	void colorDeleted(int pos, MapColor* color);
+	void colorDeleted(int pos, const MapColor* color);
 };
 
 #endif

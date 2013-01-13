@@ -55,7 +55,6 @@ set(Mapper_Common_SRCS
  georeferencing.cpp
  georeferencing_dialog.cpp
 
- map_color.cpp
  color_dock_widget.cpp
 
  symbol.cpp
@@ -115,6 +114,7 @@ set(Mapper_Common_SRCS
  file_format_ocad8.cpp
  file_format_xml.cpp
  
+ core/map_color.cpp
  core/map_printer.cpp
  
  gui/color_dialog.cpp

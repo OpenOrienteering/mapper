@@ -54,6 +54,9 @@ typedef std::vector<Renderable*> RenderableVector;
 class Symbol;
 typedef QHash<QString, Symbol*> SymbolDictionary;
 
+// From core/map_color.h
+typedef QHash<const MapColor*, const MapColor*> MapColorMap;
+
 
 /// Base class for map symbols.
 /// Provides among other things a symbol number consisting of multiple parts, e.g. "2.4.12". Parts which are not set are assigned the value -1.
@@ -74,10 +77,12 @@ public:
 		AllSymbols = Point | Line | Area | Text | Combined
 	};
 	
+// 	typedef QHash<const MapColor*, const MapColor*> MapColorMap;
+	
 	/// Constructs an empty symbol
 	Symbol(Type type);
 	virtual ~Symbol();
-	virtual Symbol* duplicate(const QHash<MapColor*, MapColor*>* color_map = NULL) const = 0;
+	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const = 0;
 	bool equals(Symbol* other, Qt::CaseSensitivity case_sensitivity = Qt::CaseSensitive, bool compare_state = false);
 	
 	/// Returns the type of the symbol
@@ -118,13 +123,13 @@ public:
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) = 0;
 	
 	/// Called by the map in which the symbol is to notify it of a color being deleted (pointer becomes invalid, indices change)
-	virtual void colorDeleted(MapColor* color) = 0;
+	virtual void colorDeleted(const MapColor* color) = 0;
 	
 	/// Must return if the given color is used by this symbol
-	virtual bool containsColor(MapColor* color) = 0;
+	virtual bool containsColor(const MapColor* color) const = 0;
 	
 	/// Returns the dominant color of this symbol, or a guess for this color in case it is impossible to determine it uniquely
-	virtual MapColor* getDominantColorGuess() = 0;
+	virtual const MapColor* getDominantColorGuess() const = 0;
 	
 	/// Called by the map in which the symbol is to notify it of a symbol being changed (pointer becomes invalid).
 	/// If new_symbol == NULL, the symbol is being deleted.
@@ -192,9 +197,6 @@ public:
 	
 	/// Returns a bitmask of all types which can be applied to the same objects as the given type
 	static int getCompatibleTypes(Type type);
-	
-	// TODO: Refactor: move to MapColor
-	static bool colorEquals(MapColor* color, MapColor* other);
 	
 	static const int number_components = 3;
 	static const int icon_size = 32;

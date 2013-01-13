@@ -27,6 +27,7 @@
 #endif
 #include <QIODevice>
 
+#include "core/map_color.h"
 #include "map.h"
 #include "object_text.h"
 #include "renderable_implementation.h"
@@ -67,7 +68,7 @@ TextSymbol::~TextSymbol()
 {
 }
 
-Symbol* TextSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) const
+Symbol* TextSymbol::duplicate(const MapColorMap* color_map) const
 {
 	TextSymbol* new_text = new TextSymbol();
 	new_text->duplicateImplCommon(this);
@@ -175,7 +176,7 @@ void TextSymbol::createLineBelowRenderables(Object* object, ObjectRenderables& o
 	output.insertRenderable(new AreaRenderable(&area_symbol, line_coords, line_flags, NULL));
 }
 
-void TextSymbol::colorDeleted(MapColor* color)
+void TextSymbol::colorDeleted(const MapColor* color)
 {
 	if (color == this->color)
 	{
@@ -189,7 +190,7 @@ void TextSymbol::colorDeleted(MapColor* color)
 	}
 }
 
-bool TextSymbol::containsColor(MapColor* color)
+bool TextSymbol::containsColor(const MapColor* color) const
 {
 	if (color == this->color)
 		return true;
@@ -198,7 +199,7 @@ bool TextSymbol::containsColor(MapColor* color)
 	return false;
 }
 
-MapColor* TextSymbol::getDominantColorGuess()
+const MapColor* TextSymbol::getDominantColorGuess() const
 {
 	if (color)
 		return color;
@@ -453,7 +454,7 @@ bool TextSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 {
 	TextSymbol* text = static_cast<TextSymbol*>(other);
 	
-	if (!colorEquals(color, text->color))
+	if (!MapColor::equals(color, text->color))
 		return false;
 	if (font_family.compare(text->font_family, Qt::CaseInsensitive) != 0)
 		return false;
@@ -470,7 +471,7 @@ bool TextSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 		return false;
 	if (framing)
 	{
-		if (!colorEquals(framing_color, text->framing_color))
+		if (!MapColor::equals(framing_color, text->framing_color))
 			return false;
 		if (framing_mode != text->framing_mode ||
 			(framing_mode == LineFraming && framing_line_half_width != text->framing_line_half_width) ||
@@ -479,7 +480,7 @@ bool TextSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 	}
 	if (line_below)
 	{
-		if (!colorEquals(line_below_color, text->line_below_color))
+		if (!MapColor::equals(line_below_color, text->line_below_color))
 			return false;
 		if (line_below_width != text->line_below_width ||
 			line_below_distance != text->line_below_distance)

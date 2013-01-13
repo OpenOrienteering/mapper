@@ -55,7 +55,7 @@ protected slots:
 	void cellDoubleClick(int row, int column);
 	
 	void colorAdded(int index, MapColor* color);
-	void colorDeleted(int index, MapColor* color);
+	void colorDeleted(int index, const MapColor* color);
 	
 protected:
 	QAbstractButton* newToolButton(const QIcon& icon, const QString& text, QAbstractButton* prototype = NULL);

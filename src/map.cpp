@@ -32,7 +32,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "map_color.h"
+#include "core/map_color.h"
 #include "map_editor.h"
 #include "map_grid.h"
 #include "map_part.h"
@@ -73,7 +73,7 @@ void Map::MapColorSet::dereference()
 	}
 }
 
-void Map::MapColorSet::importSet(Map::MapColorSet* other, Map* map, std::vector< bool >* filter, QHash< int, int >* out_indexmap, QHash<MapColor*, MapColor*>* out_pointermap)
+void Map::MapColorSet::importSet(Map::MapColorSet* other, Map* map, std::vector< bool >* filter, QHash< int, int >* out_indexmap, MapColorMap* out_pointermap)
 {
 	// Count colors to import
 	size_t import_count;
@@ -203,7 +203,9 @@ LineSymbol* Map::undefined_line;
 PointSymbol* Map::undefined_point;
 CombinedSymbol* Map::covering_combined_line;
 
-Map::Map() : renderables(new MapRenderables(this)), selection_renderables(new MapRenderables(this))
+Map::Map()
+ : renderables(new MapRenderables(this)),
+   selection_renderables(new MapRenderables(this))
 {
 	if (!static_initialized)
 		initStatic();
@@ -598,7 +600,7 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 	}
 	
 	// Import colors
-	QHash<MapColor*, MapColor*> color_map;
+	MapColorMap color_map;
 	color_set->importSet(other->color_set, this, &color_filter, NULL, &color_map);
 	
 	if (mode == ColorImport)
@@ -1164,7 +1166,7 @@ void Map::deleteColor(int pos)
 	
 	delete color;
 }
-int Map::findColorIndex(MapColor* color) const
+int Map::findColorIndex(const MapColor* color) const
 {
 	int size = (int)color_set->colors.size();
 	for (int i = 0; i < size; ++i)
@@ -1186,7 +1188,8 @@ void Map::useColorsFrom(Map* map)
 	color_set = map->color_set;
 	color_set->addReference();
 }
-bool Map::isColorUsedByASymbol(MapColor* color)
+
+bool Map::isColorUsedByASymbol(const MapColor* color) const
 {
 	int size = (int)symbols.size();
 	for (int i = 0; i < size; ++i)
@@ -1226,7 +1229,7 @@ void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std:
 	}
 }
 
-void Map::importSymbols(Map* other, const QHash<MapColor*, MapColor*>& color_map, int insert_pos, bool merge_duplicates, std::vector< bool >* filter,
+void Map::importSymbols(Map* other, const MapColorMap& color_map, int insert_pos, bool merge_duplicates, std::vector< bool >* filter,
 						QHash< int, int >* out_indexmap, QHash< Symbol*, Symbol* >* out_pointermap)
 {
 	// We need a pointer map (and keep track of added symbols) to adjust the references of combined symbols

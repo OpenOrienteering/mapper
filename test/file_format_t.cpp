@@ -19,9 +19,9 @@
 
 #include "file_format_t.h"
 
+#include "../src/core/map_color.h"
 #include "../src/georeferencing.h"
 #include "../src/global.h"
-#include "../src/map_color.h"
 #include "../src/map_grid.h"
 #include "../src/mapper_resource.h"
 #include "../src/object.h"

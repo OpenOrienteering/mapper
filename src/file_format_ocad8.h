@@ -183,7 +183,7 @@ protected:
 	/// Attention: this ignores the coordinate flags!
 	OCADPoint convertPoint(const MapCoord& coord);
 	s32 convertSize(qint64 size);
-	s16 convertColor(MapColor* color);
+	s16 convertColor(const MapColor* color) const;
 	double convertTemplateScale(double mapper_scale);
 	
 private:

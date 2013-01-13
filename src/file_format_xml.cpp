@@ -26,17 +26,17 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "core/map_color.h"
 #include "georeferencing.h"
 #include "map.h"
-#include "map_color.h"
 #include "map_grid.h"
 #include "object.h"
 #include "object_text.h"
-#include "symbol_point.h"
-#include "symbol_line.h"
 #include "symbol_area.h"
-#include "symbol_text.h"
 #include "symbol_combined.h"
+#include "symbol_line.h"
+#include "symbol_point.h"
+#include "symbol_text.h"
 #include "template.h"
 #include "map_grid.h"
 

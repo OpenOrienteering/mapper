@@ -30,17 +30,18 @@
 #include <QIODevice>
 #include <QXmlStreamWriter>
 
+#include "core/map_color.h"
 #include "map.h"
+#include "object.h"
+#include "renderable_implementation.h"
+#include "symbol_line.h"
+#include "symbol_point.h"
+#include "symbol_point_editor.h"
+#include "symbol_properties_widget.h"
+#include "symbol_setting_dialog.h"
+#include "gui/widgets/color_dropdown.h"
 #include "util_gui.h"
 #include "util.h"
-#include "symbol_point.h"
-#include "symbol_line.h"
-#include "object.h"
-#include "symbol_setting_dialog.h"
-#include "symbol_properties_widget.h"
-#include "symbol_point_editor.h"
-#include "renderable_implementation.h"
-#include "gui/widgets/color_dropdown.h"
 
 // ### FillPattern ###
 
@@ -210,7 +211,7 @@ bool AreaSymbol::FillPattern::equals(AreaSymbol::FillPattern& other, Qt::CaseSen
 	}
 	else if (type == LinePattern)
 	{
-		if (!colorEquals(line_color, other.line_color))
+		if (!MapColor::equals(line_color, other.line_color))
 			return false;
 		if (line_width != other.line_width)
 			return false;
@@ -465,7 +466,7 @@ AreaSymbol::~AreaSymbol()
 	}
 }
 
-Symbol* AreaSymbol::duplicate(const QHash<MapColor*, MapColor*>* color_map) const
+Symbol* AreaSymbol::duplicate(const MapColorMap* color_map) const
 {
 	AreaSymbol* new_area = new AreaSymbol();
 	new_area->duplicateImplCommon(this);
@@ -511,7 +512,7 @@ void AreaSymbol::createRenderablesNormal(Object* object, const MapCoordVector& f
 		patterns[i].createRenderables(color_fill->getExtent(), path->getPatternRotation(), path->getPatternOrigin(), output);
 	output.setClipPath(old_clip_path);
 }
-void AreaSymbol::colorDeleted(MapColor* color)
+void AreaSymbol::colorDeleted(const MapColor* color)
 {
 	bool change = false;
 	if (color == this->color)
@@ -534,7 +535,7 @@ void AreaSymbol::colorDeleted(MapColor* color)
 	if (change)
 		resetIcon();
 }
-bool AreaSymbol::containsColor(MapColor* color)
+bool AreaSymbol::containsColor(const MapColor* color) const
 {
 	if (color == this->color)
 		return true;
@@ -550,7 +551,7 @@ bool AreaSymbol::containsColor(MapColor* color)
 	return false;
 }
 
-MapColor* AreaSymbol::getDominantColorGuess()
+const MapColor* AreaSymbol::getDominantColorGuess() const
 {
 	if (color)
 		return color;
@@ -560,7 +561,7 @@ MapColor* AreaSymbol::getDominantColorGuess()
 	{
 		if (patterns[i].type == FillPattern::PointPattern && patterns[i].point)
 		{
-			MapColor* dominant_color = patterns[i].point->getDominantColorGuess();
+			const MapColor* dominant_color = patterns[i].point->getDominantColorGuess();
 			if (dominant_color) return dominant_color;
 		}
 		else if (patterns[i].type == FillPattern::LinePattern && patterns[i].line_color)
@@ -663,7 +664,7 @@ bool AreaSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 bool AreaSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 {
 	AreaSymbol* area = static_cast<AreaSymbol*>(other);
-	if (!colorEquals(color, area->color))
+	if (!MapColor::equals(color, area->color))
 		return false;
 	if (minimum_area != area->minimum_area)
 		return false;

@@ -20,8 +20,8 @@
 
 #include "color_dialog.h"
 
+#include "../core/map_color.h"
 #include "../map.h"
-#include "../map_color.h"
 #include "../util_gui.h"
 #include "widgets/color_dropdown.h"
 

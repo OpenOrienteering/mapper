@@ -28,7 +28,7 @@
 #include <QtWidgets>
 #endif
 
-#include "../map_color.h"
+#include "../core/map_color.h"
 
 class ColorDropDown;
 class Map;

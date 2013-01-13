@@ -46,12 +46,12 @@ friend class OCAD8FileImport;
 public:
 	CombinedSymbol();
 	virtual ~CombinedSymbol();
-	virtual Symbol* duplicate(const QHash<MapColor*, MapColor*>* color_map = NULL) const;
+	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
 	
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output);
-	virtual void colorDeleted(MapColor* color);
-	virtual bool containsColor(MapColor* color);
-    virtual MapColor* getDominantColorGuess();
+	virtual void colorDeleted(const MapColor* color);
+	virtual bool containsColor(const MapColor* color) const;
+	const MapColor* getDominantColorGuess() const;
 	virtual bool symbolChanged(Symbol* old_symbol, Symbol* new_symbol);
 	virtual bool containsSymbol(const Symbol* symbol) const;
 	virtual void scale(double factor);

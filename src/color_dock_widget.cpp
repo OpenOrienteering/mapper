@@ -20,8 +20,8 @@
 
 #include "color_dock_widget.h"
 
+#include "core/map_color.h"
 #include "map.h"
-#include "map_color.h"
 #include "util_gui.h"
 #include "gui/color_dialog.h"
 #include "gui/main_window.h"
@@ -104,7 +104,7 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
 	
 	connect(map, SIGNAL(colorAdded(int,MapColor*)), this, SLOT(colorAdded(int,MapColor*)));
-	connect(map, SIGNAL(colorDeleted(int,MapColor*)), this, SLOT(colorDeleted(int,MapColor*)));
+	connect(map, SIGNAL(colorDeleted(int,const MapColor*)), this, SLOT(colorDeleted(int,const MapColor*)));
 }
 
 ColorWidget::~ColorWidget()
@@ -296,7 +296,7 @@ void ColorWidget::colorAdded(int index, MapColor* color)
 	color_table->setCurrentCell(index, 1);
 }
 
-void ColorWidget::colorDeleted(int index, MapColor* color)
+void ColorWidget::colorDeleted(int index, const MapColor* color)
 {
 	color_table->removeRow(index);
 	currentCellChange(color_table->currentRow(), color_table->currentColumn(), -1, -1);

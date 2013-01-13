@@ -117,7 +117,6 @@ SOURCES += \
   src/map_grid.cpp \
   src/georeferencing.cpp \
   src/georeferencing_dialog.cpp \
-  src/map_color.cpp \
   src/color_dock_widget.cpp \
   src/symbol.cpp \
   src/symbol_dock_widget.cpp \
@@ -171,6 +170,7 @@ SOURCES += \
   src/file_format_native.cpp \
   src/file_format_ocad8.cpp \
   src/file_format_xml.cpp \
+  src/core/map_color.cpp \
   src/core/map_printer.cpp \
   src/gui/color_dialog.cpp \
   src/gui/home_screen_controller.cpp \

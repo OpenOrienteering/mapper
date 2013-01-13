@@ -105,7 +105,7 @@ protected:
 class TextRenderable : public Renderable
 {
 public:
-	TextRenderable(TextSymbol* symbol, TextObject* text_object, MapColor* color, double anchor_x, double anchor_y, bool framing_line = false);
+	TextRenderable(TextSymbol* symbol, TextObject* text_object, const MapColor* color, double anchor_x, double anchor_y, bool framing_line = false);
 	TextRenderable(const TextRenderable& other);
 	virtual void render(QPainter& painter, bool force_min_size, float scaling, bool on_screen) const;
 	virtual void getRenderStates(RenderStates& out) const;
