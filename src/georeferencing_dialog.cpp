@@ -297,8 +297,12 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 #else
 	QUrlQuery query;
 #endif
+	QDate today = QDate::currentDate();
 	query.addQueryItem("lat1", QString::number(latlon.getLatitudeInDegrees()));
 	query.addQueryItem("lon1", QString::number(latlon.getLongitudeInDegrees()));
+	query.addQueryItem("startYear", QString::number(today.year()));
+	query.addQueryItem("startMonth", QString::number(today.month()));
+	query.addQueryItem("startDay", QString::number(today.day()));
 	query.addQueryItem("resultFormat", "xml");
 #if QT_VERSION >= 0x050000
 	service_url.setQuery(query);
