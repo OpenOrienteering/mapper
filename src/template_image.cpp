@@ -140,8 +140,26 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 		
 		if (open_dialog.isGeorefRadioChecked() && !map->getGeoreferencing().isValid())
 		{
-			// Make sure that the map is georeferenced
-			GeoreferencingDialog dialog(dialog_parent, map, NULL, false);
+			// Make sure that the map is georeferenced;
+			// use the center coordinates of the image as initial reference point.
+			calculateGeoreferencing();
+			QPointF template_coords_center = georef->toProjectedCoords(MapCoordF(0.5 * (image->width() - 1), 0.5 * (image->height() - 1)));
+			bool template_coords_probably_geographic =
+				template_coords_center.x() >= -90 && template_coords_center.x() <= 90 &&
+				template_coords_center.y() >= -90 && template_coords_center.y() <= 90;
+			
+			Georeferencing initial_georef(map->getGeoreferencing());
+			if (template_coords_probably_geographic)
+				initial_georef.setGeographicRefPoint(LatLon(template_coords_center.y(), template_coords_center.x(), true));
+			else
+				initial_georef.setProjectedRefPoint(template_coords_center);
+			initial_georef.setState(Georeferencing::ScaleOnly);
+			
+			GeoreferencingDialog dialog(dialog_parent, map, &initial_georef, false);
+			if (template_coords_probably_geographic)
+				dialog.setKeepGeographicRefCoords();
+			else
+				dialog.setKeepProjectedRefCoords();
 			if (dialog.exec() == QDialog::Rejected)
 				continue;
 		}
@@ -295,7 +313,8 @@ void TemplateImage::calculateGeoreferencing()
 		// TODO: GeoTiff
 	}
 	
-	updatePosFromGeoreferencing();
+	if (map->getGeoreferencing().isValid())
+		updatePosFromGeoreferencing();
 }
 
 void TemplateImage::updatePosFromGeoreferencing()

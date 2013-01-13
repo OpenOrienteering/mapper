@@ -115,6 +115,16 @@ public slots:
 	void setMapRefPoint(MapCoord coords);
 	
 	/**
+	 * Activates the "keep projected reference point coordinates on CRS changes" radio button.
+	 */
+	void setKeepProjectedRefCoords();
+	
+	/**
+	 * Activates the "keep geographic reference point coordinates on CRS changes" radio button.
+	 */
+	void setKeepGeographicRefCoords();
+	
+	/**
 	 * Notifies the dialog that the active GeoreferencingTool was deleted.
 	 */
 	void toolDeleted();
@@ -215,6 +225,7 @@ private:
 	MapEditorController* const controller;
 	Map* const map;
 	QScopedPointer<Georeferencing> georef;
+	const Georeferencing* initial_georef;
 	bool allow_no_georeferencing;
 	bool tool_active;
 	bool declination_query_in_progress;

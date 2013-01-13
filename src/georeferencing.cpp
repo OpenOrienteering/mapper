@@ -114,6 +114,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	projected_crs_parameters = other.projected_crs_parameters;
 	geographic_ref_point     = other.geographic_ref_point;
 	
+	// TODO: is this call unnecessary?
 	updateTransformation();
 	
 	if (projected_crs != NULL)

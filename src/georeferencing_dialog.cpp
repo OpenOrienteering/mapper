@@ -66,7 +66,8 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	declination_query_in_progress = false;
 	
 	// A working copy of the current or given initial Georeferencing
-	georef.reset( new Georeferencing(initial == NULL ? map->getGeoreferencing() : *initial) );
+	initial_georef = (initial == NULL) ? &map->getGeoreferencing() : initial;
+	georef.reset( new Georeferencing(*initial_georef) );
 	
 	setWindowTitle(tr("Map Georeferencing"));
 	
@@ -312,6 +313,16 @@ void GeoreferencingDialog::setMapRefPoint(MapCoord coords)
 	reset_button->setEnabled(true);
 }
 
+void GeoreferencingDialog::setKeepProjectedRefCoords()
+{
+	keep_projected_radio->setChecked(true);
+}
+
+void GeoreferencingDialog::setKeepGeographicRefCoords()
+{
+	keep_geographic_radio->setChecked(true);
+}
+
 void GeoreferencingDialog::toolDeleted()
 {
 	tool_active = false;
@@ -324,15 +335,15 @@ void GeoreferencingDialog::showHelp()
 
 void GeoreferencingDialog::reset()
 {
-	*georef = map->getGeoreferencing();
+	*georef.data() = *initial_georef;
 	setValuesFrom(georef.data());
 	reset_button->setEnabled(false);
 }
 
 void GeoreferencingDialog::accept()
 {
-	float declination_change_degrees = georef->getDeclination() - map->getGeoreferencing().getDeclination();
-	bool declination_changed = map->getGeoreferencing().isValid() && declination_change_degrees != 0;
+	float declination_change_degrees = georef->getDeclination() - initial_georef->getDeclination();
+	bool declination_changed = initial_georef->isValid() && declination_change_degrees != 0;
 	if (declination_changed &&
 		(map->getNumObjects() > 0 ||
 		map->getNumTemplates() > 0))
@@ -600,7 +611,7 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 
 void GeoreferencingDialog::updateZone()
 {
-	// HACK to prevent infinite recursion.
+	// HACK to prevent infinite recursion via crsEdited().
 	if (zone_update_in_progress)
 		return;
 	
