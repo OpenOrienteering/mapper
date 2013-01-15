@@ -28,7 +28,6 @@
 #include <QSettings>
 
 #include <proj_api.h>
-#include <fcntl.h>
 
 #include <mapper_config.h>
 
