@@ -170,7 +170,7 @@ public:
 	// Colors
 	
 	inline int getNumColors() const {return (int)color_set->colors.size();}
-	inline MapColor* getColor(int i) const {return color_set->colors[i];}
+	inline MapColor* getColor(int i) const {return (0 <= i && i < (int)color_set->colors.size()) ? color_set->colors[i] : NULL;}
 	void setColor(MapColor* color, int pos);
 	MapColor* addColor(int pos);
 	void addColor(MapColor* color, int pos);
