@@ -25,8 +25,10 @@
 #else
 #include <QtWidgets>
 #endif
+#include <QSettings>
 
 #include <proj_api.h>
+#include <fcntl.h>
 
 #include <mapper_config.h>
 
@@ -483,6 +485,23 @@ bool MainWindow::openPath(const QString &path)
 	// Empty path does nothing. This also helps with the single instance application code.
 	if (path.isEmpty()) return true;
 	
+	// Check a blocker that prevents immediate re-opening of crashing files.
+	// Needed for stopping auto-loading a crashing file on startup.
+	static const QString reopen_blocker = "open_in_progress";
+	QSettings settings;
+	QString open_in_progress = settings.value(reopen_blocker, QString("")).toString();
+	if (open_in_progress == path)
+	{
+		QMessageBox::warning(this, tr("Crash warning"), 
+		  tr("It seems that %1 crashed the last time this file was opened:<br /><tt>%2</tt><br /><br />Opening aborted.").arg(appName()).arg(path),
+		  QMessageBox::Ok);
+		settings.remove(reopen_blocker);
+		return false;
+	}
+	
+	settings.setValue(reopen_blocker, path);
+	settings.sync();
+	
 	MainWindow* existing = findMainWindow(path);
 	if (existing)
 	{
@@ -517,6 +536,7 @@ bool MainWindow::openPath(const QString &path)
 	open_window->raise();
 	open_window->activateWindow();
 	num_open_files++;
+	settings.remove(reopen_blocker);
 	return true;
 }
 
