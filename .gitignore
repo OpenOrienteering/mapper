@@ -2,7 +2,6 @@
 *.kdev4
 *.pro.user
 *~
-Makefile
 build*/
 help/*.qhc
 3rd-party/clipper

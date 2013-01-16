@@ -28,6 +28,10 @@ SET(Mapper_VERSION_MAJOR 0)
 SET(Mapper_VERSION_MINOR 4)
 SET(Mapper_VERSION_PATCH 99)
 
+if(${CMAKE_CURRENT_BINARY_DIR} STREQUAL ${PROJECT_SOURCE_DIR})
+	message(FATAL_ERROR "You must not use the source directory as build directory.")
+endif()
+
 # Build configuration options
 
 if(NOT CMAKE_BUILD_TYPE)
