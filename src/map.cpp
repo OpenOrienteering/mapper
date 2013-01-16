@@ -49,6 +49,8 @@
 #include "symbol_line.h"
 #include "symbol_combined.h"
 #include "file_format_ocad8.h"
+#include "file_format_registry.h"
+#include "file_import_export.h"
 #include "georeferencing.h"
 
 // ### MapColorSet ###
@@ -344,7 +346,7 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 {
 	assert(map_editor && "Preserving the widget&view information without retrieving it from a MapEditorController is not implemented yet!");
 	
-	const Format *format = FileFormats.findFormatForFilename(path);
+	const FileFormat *format = FileFormats.findFormatForFilename(path);
 	if (!format) format = FileFormats.findFormat(FileFormats.defaultFormat());
 	
 	if (!format || !format->supportsExport())
@@ -477,7 +479,7 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 
 	bool import_complete = false;
 	QString error_msg = tr("Invalid file type.");
-	Q_FOREACH(const Format *format, FileFormats.formats())
+	Q_FOREACH(const FileFormat *format, FileFormats.formats())
 	{
 		// If the format supports import, and thinks it can understand the file header, then proceed.
 		if (format->supportsImport() && format->understands(buffer, total_read))
@@ -666,7 +668,7 @@ bool Map::exportToIODevice(QIODevice* stream)
 	stream->open(QIODevice::WriteOnly);
 	Exporter* exporter = NULL;
 	try {
-		const Format* native_format = FileFormats.findFormat("XML");
+		const FileFormat* native_format = FileFormats.findFormat("XML");
 		exporter = native_format->createExporter(stream, this, NULL);
 		exporter->doExport();
 		stream->close();
@@ -686,7 +688,7 @@ bool Map::importFromIODevice(QIODevice* stream)
 {
 	Importer* importer = NULL;
 	try {
-		const Format* native_format = FileFormats.findFormat("XML");
+		const FileFormat* native_format = FileFormats.findFormat("XML");
 		importer = native_format->createImporter(stream, this, NULL);
 		importer->doImport(false);
 		importer->finishImport();

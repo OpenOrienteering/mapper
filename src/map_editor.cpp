@@ -28,6 +28,7 @@
 #include <QSignalMapper>
 
 #include "color_dock_widget.h"
+#include "file_format_registry.h"
 #include "georeferencing.h"
 #include "georeferencing_dialog.h"
 #include "map.h"
@@ -2150,7 +2151,7 @@ void MapEditorController::importClicked()
 	
 	QString map_names = "";
 	QString map_extensions = "";
-	Q_FOREACH(const Format *format, FileFormats.formats())
+	Q_FOREACH(const FileFormat *format, FileFormats.formats())
 	{
 		if (!format->supportsImport())
 			continue;

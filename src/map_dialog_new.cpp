@@ -32,6 +32,7 @@
 #include <QCoreApplication>
 
 #include "file_format.h"
+#include "file_format_registry.h"
 #include "mapper_resource.h"
 
 NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
@@ -212,7 +213,7 @@ void NewMapDialog::showFileDialog()
 	
 	// Build the list of supported file filters based on the file format registry
 	QString filters, extensions;
-	Q_FOREACH(const Format *format, FileFormats.formats())
+	Q_FOREACH(const FileFormat *format, FileFormats.formats())
 	{
 		if (format->supportsImport())
 		{
@@ -270,7 +271,7 @@ void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 		}
 		
 		QStringList symbol_set_filters;
-		Q_FOREACH(const Format *format, FileFormats.formats())
+		Q_FOREACH(const FileFormat *format, FileFormats.formats())
 		{
 			if (format->supportsImport())
 				symbol_set_filters << ("*." % format->fileExtension());

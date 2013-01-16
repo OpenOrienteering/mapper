@@ -20,51 +20,43 @@
 #ifndef _OPENORIENTEERING_FILE_FORMAT_XML_H
 #define _OPENORIENTEERING_FILE_FORMAT_XML_H
 
-#include <QHash>
-
 #include "file_format.h"
 
-/**
- * Interface for dealing with XML files of maps.
+/** Interface for dealing with XML files of maps.
  */
-class XMLFileFormat : public Format
+class XMLFileFormat : public FileFormat
 {
 public:
-	/**
-	 * Creates a new file format of type XML.
+	/** Creates a new file format of type XML.
 	 */
 	XMLFileFormat();
 	
-	/**
-	 * Returns true if the file starts with the character sequence "<?xml".
-	 * FIXME: Needs to deal with different encodings. Provide test cases.
+	/** Returns true if the file starts with the character sequence "<?xml".
+	 *  FIXME: Needs to deal with different encodings. Provide test cases.
 	 */
 	bool understands(const unsigned char *buffer, size_t sz) const;
 	
-	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
-	
-	/**
-	 * Creates an exporter for XML files.
+	/** Creates an importer for XML files.
 	 */
-	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException);
+	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException);
 	
-	/**
-	 * The minimum XML file format version supported by this implementation.
+	/** Creates an exporter for XML files.
+	 */
+	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException);
+	
+	/** The minimum XML file format version supported by this implementation.
 	 */
 	static const int minimum_version;
 	
-	/**
-	 * The XML file format version created by this implementation.
+	/** The XML file format version created by this implementation.
 	 */
 	static const int current_version;
 	
-	/**
-	 * The characteristic magic string at the beginning of the file
+	/** The characteristic magic string at the beginning of the file
 	 */
 	static const QString magic_string;
 	
-	/**
-	 * The XML namespace of the Mapper XML file format
+	/** The XML namespace of the Mapper XML file format
 	 */
 	static const QString mapper_namespace;
 };

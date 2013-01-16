@@ -167,6 +167,8 @@ SOURCES += \
   src/gps_track.cpp \
   src/dxfparser.cpp \
   src/file_format.cpp \
+  src/file_format_registry.cpp \
+  src/file_import_export.cpp \
   src/file_format_native.cpp \
   src/file_format_ocad8.cpp \
   src/file_format_xml.cpp \

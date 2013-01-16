@@ -125,14 +125,14 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	return *this;
 }
 
-void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only) throw (FormatException)
+void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only) throw (FileFormatException)
 {
 	Q_ASSERT(xml.name() == "georeferencing");
 	
 	QXmlStreamAttributes attributes(xml.attributes());
 	scale_denominator   = attributes.value("scale").toString().toInt();
 	if (scale_denominator <= 0)
-		throw FormatException(QObject::tr("Map scale specification invalid or missing."));
+		throw FileFormatException(QObject::tr("Map scale specification invalid or missing."));
 	state = ScaleOnly;
 	if (load_scale_only)
 	{
@@ -162,7 +162,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only) throw (Fo
 				if (xml.name() == "spec")
 				{
 					if (xml.attributes().value("language") != "PROJ.4")
-						throw FormatException(QObject::tr("Unknown CRS specification language: %1").arg(xml.attributes().value("language").toString()));
+						throw FileFormatException(QObject::tr("Unknown CRS specification language: %1").arg(xml.attributes().value("language").toString()));
 					projected_crs_spec = xml.readElementText();
 				}
 				else if (xml.name() == "parameter")
@@ -188,10 +188,10 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only) throw (Fo
 				{
 					if (xml.attributes().hasAttribute("language") &&
 						xml.attributes().value("language") != "PROJ.4" )
-						throw FormatException(QObject::tr("Unknown CRS specification language: %1").arg(xml.attributes().value("language").toString()));
+						throw FileFormatException(QObject::tr("Unknown CRS specification language: %1").arg(xml.attributes().value("language").toString()));
 					QString geographic_crs_spec = xml.readElementText();
 					if (geographic_crs_spec != geographic_crs_spec)
-						throw FormatException(QObject::tr("Unsupported geographic CRS specification: %1").arg(geographic_crs_spec));
+						throw FileFormatException(QObject::tr("Unsupported geographic CRS specification: %1").arg(geographic_crs_spec));
 				}
 				else if (xml.name() == "ref_point")
 				{

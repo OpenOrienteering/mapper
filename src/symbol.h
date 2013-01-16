@@ -113,7 +113,7 @@ public:
 	void save(QIODevice* file, Map* map);
 	bool load(QIODevice* file, int version, Map* map);
 	void save(QXmlStreamWriter& xml, const Map& map) const;
-	static Symbol* load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict) throw (FormatException);
+	static Symbol* load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict) throw (FileFormatException);
 	
 	/// Called after loading of the map is finished. Can do tasks that need to reference other symbols or map objects.
 	virtual bool loadFinished(Map* map) {return true;}

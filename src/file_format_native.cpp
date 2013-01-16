@@ -17,10 +17,12 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "file_format_native.h"
+
 #include <QFile>
 
 #include "core/map_color.h"
-#include "file_format_native.h"
+#include "file_import_export.h"
 #include "georeferencing.h"
 #include "gps_coordinates.h"
 #include "map.h"
@@ -29,28 +31,99 @@
 #include "template.h"
 #include "util.h"
 
+
+// ### NativeFileImport declaration ###
+
+/** An Importer for the native file format. This class delegates to the load() and loadImpl() methods of the
+ *  model objects, but long-term this can be refactored out of the model into this class.
+ * 
+ *  \deprecated
+ */
+class NativeFileImport : public Importer
+{
+public:
+	/** Creates a new native file importer.
+	 */
+	NativeFileImport(QIODevice* stream, Map *map, MapView *view);
+
+	/** Destroys this importer.
+	 */
+	~NativeFileImport();
+
+protected:
+	/** Imports a native file.
+	 */
+	void import(bool load_symbols_only) throw (FileFormatException);
+};
+
+
+#ifdef MAPPER_ENABLE_NATIVE_EXPORTER
+
+// ### NativeFileExport declaration ###
+
+/** An Exporter for the native file format. This class delegates to the save() and saveImpl() methods of the
+ *  model objects, but long-term this can be refactored out of the model into this class.
+ * 
+ *  \deprecated
+ */
+class NativeFileExport : public Exporter
+{
+public:
+	/** Creates a new native file exporter.
+	 */
+	NativeFileExport(QIODevice* stream, Map *map, MapView *view);
+
+	/** Destroys this importer.
+	 */
+	~NativeFileExport();
+
+	/** Exports a native file.
+	 */
+	void doExport() throw (FileFormatException);
+};
+
+#endif
+
+
+// ### NativeFileFormat ###
+
 const int NativeFileFormat::least_supported_file_format_version = 0;
 const int NativeFileFormat::current_file_format_version = 30;
 const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 
-bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
+NativeFileFormat::NativeFileFormat()
+ : FileFormat("native", QObject::tr("OpenOrienteering Mapper"), "omap", 
+              FileFormat::MapFile, 
+#ifdef MAPPER_ENABLE_NATIVE_EXPORTER
+              FileFormat::ExportSupported | FileFormat::ExportLossy |
+#endif
+              FileFormat::ImportSupported)
 {
-    // The first four bytes of the file must be 'OMAP'.
-    if (sz >= 4 && memcmp(buffer, magic_bytes, 4) == 0) return true;
-    return false;
+	// Nothing
 }
 
-Importer *NativeFileFormat::createImporter(QIODevice* stream, Map* map, MapView* view) const throw (FormatException)
+bool NativeFileFormat::understands(const unsigned char *buffer, size_t sz) const
+{
+	// The first four bytes of the file must be 'OMAP'.
+	return (sz >= 4 && memcmp(buffer, magic_bytes, 4) == 0);
+}
+
+Importer *NativeFileFormat::createImporter(QIODevice* stream, Map* map, MapView* view) const throw (FileFormatException)
 {
 	return new NativeFileImport(stream, map, view);
 }
 
-Exporter *NativeFileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FormatException)
+#ifdef MAPPER_ENABLE_NATIVE_EXPORTER
+
+Exporter *NativeFileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FileFormatException)
 {
     return new NativeFileExport(stream, map, view);
 }
 
+#endif
 
+
+// ### NativeFileImport ###
 
 NativeFileImport::NativeFileImport(QIODevice* stream, Map *map, MapView *view) : Importer(stream, map, view)
 {
@@ -60,7 +133,7 @@ NativeFileImport::~NativeFileImport()
 {
 }
 
-void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
+void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException)
 {
     char buffer[4];
     stream->read(buffer, 4); // read the magic
@@ -73,11 +146,11 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
     }
     else if (version < NativeFileFormat::least_supported_file_format_version)
     {
-        throw FormatException(QObject::tr("Unsupported file format version. Please use an older program version to load and update the file."));
+        throw FileFormatException(QObject::tr("Unsupported file format version. Please use an older program version to load and update the file."));
     }
     else if (version > NativeFileFormat::current_file_format_version)
     {
-        throw FormatException(QObject::tr("File format version too high. Please update to a newer program version to load this file."));
+        throw FileFormatException(QObject::tr("File format version too high. Please update to a newer program version to load this file."));
     }
 
     if (version <= 16)
@@ -227,12 +300,12 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
         Symbol* symbol = Symbol::getSymbolForType(static_cast<Symbol::Type>(symbol_type));
         if (!symbol)
         {
-            throw FormatException(QObject::tr("Error while loading a symbol with type %2.").arg(symbol_type));
+            throw FileFormatException(QObject::tr("Error while loading a symbol with type %2.").arg(symbol_type));
         }
 
         if (!symbol->load(stream, version, map))
         {
-            throw FormatException(QObject::tr("Error while loading a symbol."));
+            throw FileFormatException(QObject::tr("Error while loading a symbol."));
         }
         map->symbols[i] = symbol;
     }
@@ -295,7 +368,7 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
 		{
 			if (!map->object_undo_manager.load(stream, version))
 			{
-				throw FormatException(QObject::tr("Error while loading undo steps."));
+				throw FileFormatException(QObject::tr("Error while loading undo steps."));
 			}
 		}
 
@@ -305,7 +378,7 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
 		int num_parts;
 		if (stream->read((char*)&num_parts, sizeof(int)) < (int)sizeof(int))
 		{
-			throw FormatException(QObject::tr("Error while reading map part count."));
+			throw FileFormatException(QObject::tr("Error while reading map part count."));
 		}
 		delete map->parts[0];
 		map->parts.resize(num_parts);
@@ -315,7 +388,7 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
 			MapPart* part = new MapPart("", map);
 			if (!part->load(stream, version, map))
 			{
-				throw FormatException(QObject::tr("Error while loading map part %2.").arg(i+1));
+				throw FileFormatException(QObject::tr("Error while loading map part %2.").arg(i+1));
 			}
 			map->parts[i] = part;
 		}
@@ -323,8 +396,9 @@ void NativeFileImport::import(bool load_symbols_only) throw (FormatException)
 }
 
 
+#ifdef MAPPER_ENABLE_NATIVE_EXPORTER
 
-
+// ### NativeFileImport ###
 
 NativeFileExport::NativeFileExport(QIODevice* stream, Map *map, MapView *view) : Exporter(stream, map, view)
 {
@@ -334,7 +408,7 @@ NativeFileExport::~NativeFileExport()
 {
 }
 
-void NativeFileExport::doExport() throw (FormatException)
+void NativeFileExport::doExport() throw (FileFormatException)
 {
     // Basic stuff
     stream->write(NativeFileFormat::magic_bytes, 4);
@@ -488,3 +562,5 @@ void NativeFileExport::doExport() throw (FormatException)
         part->save(stream, map);
     }
 }
+
+#endif

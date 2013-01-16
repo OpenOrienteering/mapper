@@ -191,7 +191,7 @@ public:
 	/**
 	 * Creates a georeferencing from an XML stream.
 	 */
-	void load(QXmlStreamReader& xml, bool load_scale_only) throw (FormatException);
+	void load(QXmlStreamReader& xml, bool load_scale_only) throw (FileFormatException);
 	
 	
 	/**

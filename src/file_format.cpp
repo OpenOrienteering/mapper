@@ -19,164 +19,50 @@
 
 #include "file_format.h"
 
-#include <QFileInfo>
 
-#include "map.h"
-#include "symbol.h"
-#include "template.h"
-#include "object.h"
+// ### FileFormatException ###
+
+FileFormatException::~FileFormatException() throw()
+{
+	// Nothing, not inlined
+}
+
+const char* FileFormatException::what() const throw()
+{
+	return msg.toLocal8Bit().constData();
+}
 
 
-FormatRegistry FileFormats;
 
+// ### FileFormat ###
 
-// ### Format ###
-
-Format::Format(const QString& id, const QString& description, const QString& file_extension, bool supportsImport, bool supportsExport, bool export_lossy)
+FileFormat::FileFormat(const QString& id, const QString& description, const QString& file_extension, FileTypes file_types, FormatFeatures features)
  : format_id(id),
    format_description(description),
    file_extension(file_extension),
    format_filter(QString("%1 (*.%2)").arg(description).arg(file_extension)),
-   supports_import(supportsImport),
-   supports_export(supportsExport),
-   export_lossy(export_lossy)
+   file_types(file_types),
+   format_features(features)
 {
 	// Nothing
 }
 
-bool Format::understands(const unsigned char *buffer, size_t sz) const
+FileFormat::~FileFormat()
+{
+	// Nothing
+}
+
+bool FileFormat::understands(const unsigned char *buffer, size_t sz) const
 {
 	return false;
 }
 
-Importer *Format::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException)
+Importer *FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException)
 {
-	throw FormatException(QString("Format (%1) does not support import").arg(description()));
+	throw FileFormatException(QString("Format (%1) does not support import").arg(description()));
 }
 
-Exporter *Format::createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException)
+Exporter *FileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException)
 {
-	throw FormatException(QString("Format (%1) does not support export").arg(description()));
-}
-
-
-// ### FormatRegistry ###
-
-void FormatRegistry::registerFormat(Format *format)
-{
-	fmts.push_back(format);
-	if (fmts.size() == 1) default_format_id = format->id();
-	Q_ASSERT(findFormatForFilename("filename."+format->fileExtension()) == format);
-	Q_ASSERT(findFormatByFilter(format->filter()) == format);
-}
-
-const Format *FormatRegistry::findFormat(const QString& id) const
-{
-	Q_FOREACH(const Format *format, fmts)
-	{
-		if (format->id() == id) return format;
-	}
-	return NULL;
-}
-
-const Format *FormatRegistry::findFormatByFilter(const QString& filter) const
-{
-	Q_FOREACH(const Format *format, fmts)
-	{
-		if (format->filter() == filter) return format;
-	}
-	return NULL;
-}
-
-const Format *FormatRegistry::findFormatForFilename(const QString& filename) const
-{
-	QString file_extension = QFileInfo(filename).suffix();
-	Q_FOREACH(const Format *format, fmts)
-	{
-		if (format->fileExtension() == file_extension) return format;
-	}
-	return NULL;
-}
-
-FormatRegistry::~FormatRegistry()
-{
-	for (std::vector<Format *>::reverse_iterator it = fmts.rbegin(); it != fmts.rend(); ++it)
-	{
-		delete *it;
-	}
-}
-
-
-// ### Importer ###
-
-void Importer::doImport(bool load_symbols_only, const QString& map_path) throw (FormatException)
-{
-	import(load_symbols_only);
-	
-	// Object post processing:
-	// - make sure that all area-only path objects are closed
-	// - make sure that there are no special points in wrong places (e.g. curve starts inside curves)
-	for (int p = 0; p < map->getNumParts(); ++p)
-	{
-		MapPart* part = map->getPart(p);
-		for (int o = 0; o < part->getNumObjects(); ++o)
-		{
-			Object* object = part->getObject(o);
-			if (object->getType() == Object::Path)
-			{
-				PathObject* path = object->asPath();
-				Symbol::Type contained_types = path->getSymbol()->getContainedTypes();
-				if (contained_types & Symbol::Area && !(contained_types & Symbol::Line))
-					path->closeAllParts();
-				
-				for (int i = 0; i < path->getCoordinateCount(); ++i)
-				{
-					if (!path->getCoordinate(i).isCurveStart())
-						continue;
-					
-					if (i >= path->getCoordinateCount() - 3)
-					{
-						path->getCoordinate(i).setCurveStart(false);
-						continue;
-					}
-					if (path->getCoordinate(i + 1).isClosePoint() || path->getCoordinate(i + 1).isHolePoint() ||
-						path->getCoordinate(i + 2).isClosePoint() || path->getCoordinate(i + 2).isHolePoint())
-					{
-						path->getCoordinate(i).setCurveStart(false);
-						continue;
-					}
-					
-					path->getCoordinate(i + 1).setCurveStart(false);
-					path->getCoordinate(i + 1).setDashPoint(false);
-					path->getCoordinate(i + 2).setCurveStart(false);
-					path->getCoordinate(i + 2).setDashPoint(false);
-					i += 2;
-				}
-			}
-		}
-	}
-	
-	// Symbol post processing
-	for (int i = 0; i < map->getNumSymbols(); ++i)
-	{
-		if (!map->getSymbol(i)->loadFinished(map))
-			throw FormatException(QObject::tr("Error during symbol post-processing."));
-	}
-	
-	// Template loading: try to find all template files
-	bool have_lost_template = false;
-	for (int i = 0; i < map->getNumTemplates(); ++i)
-	{
-		Template* temp = map->getTemplate(i);
-		
-		bool loaded_from_template_dir = false;
-		temp->tryToFindAndReloadTemplateFile(map_path, &loaded_from_template_dir);
-		if (loaded_from_template_dir)
-			addWarning(QObject::tr("Template \"%1\" has been loaded from the map's directory instead of the relative location to the map file where it was previously.").arg(temp->getTemplateFilename()));
-		
-		if (temp->getTemplateState() != Template::Loaded)
-			have_lost_template = true;
-	}
-	if (have_lost_template)
-		addWarning(QObject::tr("At least one template file could not be found. Click the red template name(s) in the Templates -> Template setup window to locate the template file name(s)."));
+	throw FileFormatException(QString("Format (%1) does not support export").arg(description()));
 }

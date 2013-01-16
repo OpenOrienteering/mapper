@@ -23,24 +23,14 @@
 
 #include <QMainWindow>
 
+#include "../file_format.h"
+
 QT_BEGIN_NAMESPACE
 class QLabel;
 class QStackedWidget;
 QT_END_NAMESPACE
 
 class MainWindowController;
-
-/// File type enumeration. Currently the program is only used for mapping,
-/// so "Map" is the only element. "Course" or "Event" are possible additions.
-struct FileType
-{
-	enum Enum
-	{
-		Map = 1,
-		
-		All = Map
-	};
-};
 
 /** The MainWindow class provides the generic application window. 
  *  It always has an active controller (class MainWindowController) 
@@ -136,7 +126,7 @@ public:
 	/** Shows the open file dialog for the given file type(s) and returns the chosen file
 	 *  or an empty string if the dialog is aborted.
 	 */
-	static QString getOpenFileName(QWidget* parent, const QString& title, FileType::Enum types);
+	static QString getOpenFileName(QWidget* parent, const QString& title, FileFormat::FileTypes types);
 	
 	/**
 	 * Sets the MainWindow's effective central widget.

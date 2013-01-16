@@ -40,7 +40,7 @@ private slots:
 	void saveAndLoad();
 	
 private:
-	Map* saveAndLoadMap(Map* input, const Format* format);
+	Map* saveAndLoadMap(Map* input, const FileFormat* format);
 	bool compareMaps(Map* a, Map* b, QString& error);
 	QString map_filename;
 };

@@ -20,6 +20,8 @@
 #include "file_format_t.h"
 
 #include "../src/core/map_color.h"
+#include "../src/file_format_registry.h"
+#include "../src/file_import_export.h"
 #include "../src/georeferencing.h"
 #include "../src/global.h"
 #include "../src/map_grid.h"
@@ -42,7 +44,7 @@ void FileFormatTest::saveAndLoad_data()
 	QTest::addColumn<QString>("format_id");
 	QTest::addColumn<QString>("map_filename");
 	
-	Q_FOREACH(const Format* format, FileFormats.formats())
+	Q_FOREACH(const FileFormat* format, FileFormats.formats())
 	{
 		if (format->supportsExport() && format->supportsImport())
 			QTest::newRow(format->id().toLocal8Bit()) << format->id() << map_filename;
@@ -55,7 +57,7 @@ void FileFormatTest::saveAndLoad()
 	QFETCH(QString, map_filename);
 	
 	// Find the file format and verify that it exists
-	const Format* format = FileFormats.findFormat(format_id);
+	const FileFormat* format = FileFormats.findFormat(format_id);
 	QVERIFY(format);
 	
 	// Load the test map
@@ -86,7 +88,7 @@ void FileFormatTest::saveAndLoad()
 	delete original;
 }
 
-Map* FileFormatTest::saveAndLoadMap(Map* input, const Format* format)
+Map* FileFormatTest::saveAndLoadMap(Map* input, const FileFormat* format)
 {
 	try {
 		QBuffer buffer;

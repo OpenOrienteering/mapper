@@ -31,6 +31,8 @@
 
 #include <mapper_config.h>
 
+#include "../file_format_registry.h"
+#include "../file_import_export.h"
 #include "home_screen_controller.h"
 #include "../map.h"
 #include "../map_dialog_new.h"
@@ -471,7 +473,7 @@ void MainWindow::showNewMapWizard()
 
 void MainWindow::showOpenDialog()
 {
-	QString path = getOpenFileName(this, tr("Open file"), FileType::All);
+	QString path = getOpenFileName(this, tr("Open file"), FileFormat::AllFiles);
 	
 	if (path.isEmpty())
 		return;
@@ -593,7 +595,7 @@ bool MainWindow::savePath(const QString &path)
 	if (path.isEmpty())
 		return showSaveAsDialog();
 	
-	const Format *format = FileFormats.findFormatForFilename(path);
+	const FileFormat *format = FileFormats.findFormatForFilename(path);
 	if (format->isExportLossy())
 	{
 		QString message = tr("This map is being saved as a \"%1\" file. Information may be lost.\n\nPress Yes to save in this format.\nPress No to choose a different format.").arg(format->description());
@@ -610,7 +612,7 @@ bool MainWindow::savePath(const QString &path)
 	return true;
 }
 
-QString MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileType::Enum types)
+QString MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileFormat::FileTypes types)
 {
 	// Get the saved directory to start in, defaulting to the user's home directory.
 	QSettings settings;
@@ -619,9 +621,9 @@ QString MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileT
 	// Build the list of supported file filters based on the file format registry
 	QString filters, extensions;
 	
-	if (types & FileType::Map)
+	if (types.testFlag(FileFormat::MapFile))
 	{
-		Q_FOREACH(const Format *format, FileFormats.formats())
+		Q_FOREACH(const FileFormat *format, FileFormats.formats())
 		{
 			if (format->supportsImport())
 			{
@@ -666,7 +668,7 @@ bool MainWindow::showSaveAsDialog()
 	
 	// Build the list of supported file filters based on the file format registry
 	QString filters;
-	Q_FOREACH(const Format *format, FileFormats.formats())
+	Q_FOREACH(const FileFormat *format, FileFormats.formats())
 	{
 		if (format->supportsExport())
 		{
@@ -682,7 +684,7 @@ bool MainWindow::showSaveAsDialog()
 	if (path.isEmpty())
 		return false;
 	
-	const Format *format = FileFormats.findFormatByFilter(filter);
+	const FileFormat *format = FileFormats.findFormatByFilter(filter);
 	if (NULL == format)
 	{
 		QMessageBox::information(this, tr("Error"), 

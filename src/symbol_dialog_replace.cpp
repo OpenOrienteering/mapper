@@ -29,6 +29,7 @@
 #endif
 #include <QSet>
 
+#include "file_format.h"
 #include "gui/main_window.h"
 #include "map.h"
 #include "object.h"
@@ -306,7 +307,7 @@ bool ReplaceSymbolSetDialog::showDialog(QWidget* parent, Map* map)
 	while (true)
 	{
 		QString path = MainWindow::getOpenFileName(parent, tr("Choose map file to load symbols from"),
-													FileType::Map);
+													FileFormat::MapFile);
 		if (path.isEmpty())
 			return false;
 		

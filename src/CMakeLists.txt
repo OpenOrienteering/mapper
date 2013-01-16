@@ -110,6 +110,8 @@ set(Mapper_Common_SRCS
  dxfparser.cpp
 
  file_format.cpp
+ file_format_registry.cpp
+ file_import_export.cpp
  file_format_native.cpp
  file_format_ocad8.cpp
  file_format_xml.cpp

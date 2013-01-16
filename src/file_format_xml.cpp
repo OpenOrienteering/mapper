@@ -27,6 +27,7 @@
 #include <QXmlStreamWriter>
 
 #include "core/map_color.h"
+#include "file_import_export.h"
 #include "georeferencing.h"
 #include "map.h"
 #include "map_grid.h"
@@ -48,7 +49,7 @@ public:
 	XMLFileExporter(QIODevice* stream, Map *map, MapView *view);
 	virtual ~XMLFileExporter() {}
 	
-	virtual void doExport() throw (FormatException);
+	virtual void doExport() throw (FileFormatException);
 	
 	void exportGeoreferencing();
 	void exportColors();
@@ -74,7 +75,7 @@ public:
 	virtual ~XMLFileImporter() {}
 
 protected:
-	virtual void import(bool load_symbols_only) throw (FormatException);
+	virtual void import(bool load_symbols_only) throw (FileFormatException);
 	
 	void addWarningUnsupportedElement();
 	void importGeoreferencing(bool load_symbols_only);
@@ -101,9 +102,10 @@ const QString XMLFileFormat::magic_string = "<?xml ";
 const QString XMLFileFormat::mapper_namespace = "http://oorienteering.sourceforge.net/mapper/xml/v2";
 
 XMLFileFormat::XMLFileFormat()
-: Format("XML", QObject::tr("OpenOrienteering Mapper XML"), "xmap", true, true, false) 
+ : FileFormat("XML", QObject::tr("OpenOrienteering Mapper XML"), "xmap", 
+              MapFile, ImportSupported | ExportSupported) 
 {
-	// NOP
+	// Nothing
 }
 
 bool XMLFileFormat::understands(const unsigned char *buffer, size_t sz) const
@@ -114,12 +116,12 @@ bool XMLFileFormat::understands(const unsigned char *buffer, size_t sz) const
 	return false;
 }
 
-Importer *XMLFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException)
+Importer *XMLFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException)
 {
 	return new XMLFileImporter(stream, map, view);
 }
 
-Exporter *XMLFileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException)
+Exporter *XMLFileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException)
 {
 	return new XMLFileExporter(stream, map, view);
 }
@@ -135,7 +137,7 @@ XMLFileExporter::XMLFileExporter(QIODevice* stream, Map *map, MapView *view)
 	xml.setAutoFormatting(true);
 }
 
-void XMLFileExporter::doExport() throw (FormatException)
+void XMLFileExporter::doExport() throw (FileFormatException)
 {
 	xml.writeDefaultNamespace(XMLFileFormat::mapper_namespace);
 	xml.writeStartDocument();
@@ -362,7 +364,7 @@ void XMLFileImporter::addWarningUnsupportedElement()
 	);
 }
 
-void XMLFileImporter::import(bool load_symbols_only) throw (FormatException)
+void XMLFileImporter::import(bool load_symbols_only) throw (FileFormatException)
 {
 	/*while (!xml.atEnd())
 	{
@@ -422,7 +424,7 @@ void XMLFileImporter::import(bool load_symbols_only) throw (FormatException)
 	}
 	
 	if (xml.error())
-		throw FormatException(xml.errorString());
+		throw FileFormatException(xml.errorString());
 }
 
 void XMLFileImporter::importGeoreferencing(bool load_symbols_only)

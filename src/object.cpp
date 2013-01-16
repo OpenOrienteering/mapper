@@ -348,7 +348,7 @@ void Object::save(QXmlStreamWriter& xml) const
 	xml.writeEndElement(/*object*/);
 }
 
-Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& symbol_dict, Symbol* symbol) throw (FormatException)
+Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& symbol_dict, Symbol* symbol) throw (FileFormatException)
 {
 	Q_ASSERT(xml.name() == "object");
 	
@@ -357,7 +357,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	int object_type = attributes.value("type").toString().toInt();
 	Object* object = Object::getObjectForType(static_cast<Object::Type>(object_type));
 	if (!object)
-		throw FormatException(QObject::tr("Error while loading an object of type %1.").arg(object_type));
+		throw FileFormatException(QObject::tr("Error while loading an object of type %1.").arg(object_type));
 	
 	object->map = map;
 	
@@ -368,7 +368,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		QString symbol_id = attributes.value("symbol").toString();
 		object->symbol = symbol_dict[symbol_id]; // FIXME: cannot work for forward references
 		if (!object->symbol)
-			throw FormatException(QObject::tr("Unable to find symbol for object at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
+			throw FileFormatException(QObject::tr("Unable to find symbol for object at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
 	}
 	
 	if (object_type == Point)
@@ -378,7 +378,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		if (point_symbol && point_symbol->isRotatable())
 			point->setRotation(attributes.value("rotation").toString().toFloat());
 		else if (!point_symbol)
-			throw FormatException(QObject::tr("Point object with undefined or wrong symbol at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
+			throw FileFormatException(QObject::tr("Point object with undefined or wrong symbol at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
 	}
 	else if (object_type == Text)
 	{

@@ -22,11 +22,12 @@
 
 #include "../map_editor.h"
 #include "../file_format.h"
+#include "../file_format_registry.h"
 
 
 MainWindowController* MainWindowController::controllerForFile(const QString& filename)
 {
-	const Format* format = FileFormats.findFormatForFilename(filename);
+	const FileFormat* format = FileFormats.findFormatForFilename(filename);
 	if (format != NULL && format->supportsImport()) 
 		return new MapEditorController(MapEditorController::MapEditor);
 	

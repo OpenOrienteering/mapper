@@ -19,14 +19,21 @@
 
 #include "file_format_ocad8.h"
 
-#include <QDebug>
-#include <QDateTime>
+#include <set>
+
 #include <qmath.h>
+#include <QDateTime>
+#include <QDebug>
 #include <QDir>
 #include <QImageReader>
+#include <QTextCodec>
+
+#include "../libocad/libocad.h"
 
 #include "core/map_color.h"
+#include "file_import_export.h"
 #include "map.h"
+#include "map_part.h"
 #include "object.h"
 #include "object_text.h"
 #include "symbol.h"
@@ -35,6 +42,7 @@
 #include "symbol_line.h"
 #include "symbol_point.h"
 #include "symbol_text.h"
+#include "template.h"
 #include "template_image.h"
 #include "util.h"
 
@@ -42,8 +50,190 @@
 #define currentMSecsSinceEpoch() currentDateTime().toTime_t() * 1000
 #endif
 
-OCAD8FileFormat::OCAD8FileFormat() : Format("OCAD78", QObject::tr("OCAD Versions 7, 8"), "ocd", true, true, true)
+
+// ### OCAD8FileImport declaration ###
+
+class OCAD8FileImport : public Importer
 {
+private:
+	/// Information about an OCAD rectangle symbol
+	struct RectangleInfo
+	{
+		LineSymbol* border_line;
+		double corner_radius;
+		bool has_grid;
+		
+		// Only valid if has_grid is true
+		LineSymbol* inner_line;
+		TextSymbol* text;
+		bool number_from_bottom;
+		double cell_width;
+		double cell_height;
+		int unnumbered_cells;
+		QString unnumbered_text;
+	};
+	
+public:
+	OCAD8FileImport(QIODevice* stream, Map *map, MapView *view);
+    ~OCAD8FileImport();
+
+    void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
+
+    static const float ocad_pt_in_mm;
+
+protected:
+	void import(bool load_symbols_only) throw (FileFormatException);
+	
+    // Symbol import
+    Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);
+    Symbol *importLineSymbol(const OCADLineSymbol *ocad_symbol);
+    Symbol *importAreaSymbol(const OCADAreaSymbol *ocad_symbol);
+    Symbol *importTextSymbol(const OCADTextSymbol *ocad_symbol);
+    RectangleInfo *importRectSymbol(const OCADRectSymbol *ocad_symbol);
+
+    // Object import
+    Object *importObject(const OCADObject *ocad_object, MapPart* part);
+	bool importRectangleObject(const OCADObject* ocad_object, MapPart* part, const RectangleInfo& rect);
+
+    // String import
+    void importString(OCADStringEntry *entry);
+    Template *importRasterTemplate(const OCADBackground &background);
+
+    // Some helper functions that are used in multiple places
+    PointSymbol *importPattern(s16 npts, OCADPoint *pts);
+    void fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol);
+	void setPathHolePoint(Object *object, int i);
+    void fillPathCoords(Object *object, bool is_area, s16 npts, OCADPoint *pts);
+	bool fillTextPathCoords(TextObject *object, TextSymbol *symbol, s16 npts, OCADPoint *pts);
+
+
+    // Unit conversion functions
+    QString convertPascalString(const char *p);
+	QString convertCString(const char *p, size_t n, bool ignore_first_newline);
+	QString convertWideCString(const char *p, size_t n, bool ignore_first_newline);
+    float convertRotation(int angle);
+    void convertPoint(MapCoord &c, int ocad_x, int ocad_y);
+    qint64 convertSize(int ocad_size);
+    MapColor *convertColor(int color);
+	double convertTemplateScale(double ocad_scale);
+	
+	static bool isRasterImageFile(const QString &filename);
+
+private:
+    /// Handle to the open OCAD file
+    OCADFile *file;
+
+    /// Character encoding to use for 1-byte (narrow) strings
+    QTextCodec *encoding_1byte;
+
+    /// Character encoding to use for 2-byte (wide) strings
+    QTextCodec *encoding_2byte;
+
+    /// maps OCAD color number to oo-mapper color object
+    QHash<int, MapColor *> color_index;
+
+    /// maps OCAD symbol number to oo-mapper symbol object
+    QHash<int, Symbol *> symbol_index;
+	
+	/// maps OO Mapper text symbol pointer to OCAD text symbol horizontal alignment (stored in objects instead of symbols in OO Mapper)
+	QHash<Symbol*, int> text_halign_map;
+	
+	/// maps OCAD symbol number to rectangle information struct
+	QHash<int, RectangleInfo> rectangle_info;
+
+    /// Offset between OCAD map origin and Mapper map origin (in Mapper coordinates)
+    qint64 offset_x, offset_y;
+};
+
+
+// ### OCAD8FileExport declaration ###
+
+class OCAD8FileExport : public Exporter
+{
+public:
+	OCAD8FileExport(QIODevice* stream, Map *map, MapView *view);
+	~OCAD8FileExport();
+	
+	void doExport() throw (FileFormatException);
+	
+protected:
+	
+	// Symbol export
+	void exportCommonSymbolFields(Symbol* symbol, OCADSymbol* ocad_symbol, int size);
+	int getPatternSize(PointSymbol* point);
+	s16 exportPattern(PointSymbol* point, OCADPoint** buffer);		// returns the number of written coordinates, including the headers
+	s16 exportSubPattern(Object* object, Symbol* symbol, OCADPoint** buffer);
+	
+	s16 exportPointSymbol(PointSymbol* point);
+	s16 exportLineSymbol(LineSymbol* line);
+	s16 exportAreaSymbol(AreaSymbol* area);
+	s16 exportTextSymbol(TextSymbol* text);
+	void setTextSymbolFormatting(OCADTextSymbol* ocad_symbol, TextObject* formatting);
+	std::set<s16> exportCombinedSymbol(CombinedSymbol* combination);
+	
+	// Helper functions
+	/// Returns the number of exported coordinates. If not NULL, the given symbol is used to determine the meaning of dash points.
+	s16 exportCoordinates(const MapCoordVector& coords, OCADPoint** buffer, Symbol* symbol);
+	s16 exportTextCoordinates(TextObject* object, OCADPoint** buffer);
+	int getOcadColor(QRgb rgb);
+	s16 getPointSymbolExtent(PointSymbol* symbol);
+	
+	// Conversion functions
+	void convertPascalString(const QString& text, char* buffer, int buffer_size);
+	void convertCString(const QString& text, unsigned char* buffer, int buffer_size);
+	/// Returns the number of bytes written into buffer
+	int convertWideCString(const QString& text, unsigned char* buffer, int buffer_size);
+	int convertRotation(float angle);
+	OCADPoint convertPoint(qint64 x, qint64 y);
+	/// Attention: this ignores the coordinate flags!
+	OCADPoint convertPoint(const MapCoord& coord);
+	s32 convertSize(qint64 size);
+	s16 convertColor(const MapColor* color) const;
+	double convertTemplateScale(double mapper_scale);
+	
+private:
+	/// Handle to the open OCAD file
+	OCADFile *file;
+	
+	/// Character encoding to use for 1-byte (narrow) strings
+	QTextCodec *encoding_1byte;
+	
+	/// Character encoding to use for 2-byte (wide) strings
+	QTextCodec *encoding_2byte;
+	
+	/// Set of used symbol numbers. Needed to ensure uniqueness of the symbol number as Mapper does not enforce it,
+	/// but the indexing of symbols in OCAD depends on it.
+	std::set<s16> symbol_numbers;
+	
+	/// Maps OO Mapper symbol pointer to a list of OCAD symbol numbers.
+	/// Usually the list contains only one entry, except for combined symbols,
+	/// for which it contains the indices of all basic parts
+	QHash<Symbol*, std::set<s16> > symbol_index;
+	
+	/// In .ocd 8, text alignment needs to be specified in the text symbols instead of objects, so it is possible
+	/// that multiple ocd text symbols have to be created for one native TextSymbol.
+	/// This structure maps text symbols to lists containing information about the already created ocd symbols.
+	/// The TextObject in each pair just gives information about the alignment option used for the symbol indexed by the
+	/// second part of the pair.
+	/// If there is no entry for a TextSymbol in this map yet, no object using this symbol has been encountered yet,
+	/// no no specific formatting was set in the corresponding symbol (which has to be looked up using symbol_index).
+	typedef std::vector< std::pair< TextObject*, s16 > > TextFormatList;
+	QHash<TextSymbol*, TextFormatList > text_format_map;
+	
+	/// Helper object for pattern export
+	PointObject* origin_point_object;
+	
+	void addStringTruncationWarning(const QString& text, int truncation_pos);
+};
+
+
+// ### OCAD8FileFormat ###
+
+OCAD8FileFormat::OCAD8FileFormat()
+ : FileFormat("OCAD78", QObject::tr("OCAD Versions 7, 8"), "ocd", 
+              MapFile, ImportSupported | ExportSupported | ExportLossy)
+{
+	// Nothing
 }
 
 bool OCAD8FileFormat::understands(const unsigned char* buffer, size_t sz) const
@@ -53,27 +243,18 @@ bool OCAD8FileFormat::understands(const unsigned char* buffer, size_t sz) const
     return false;
 }
 
-Importer* OCAD8FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException)
+Importer* OCAD8FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException)
 {
 	return new OCAD8FileImport(stream, map, view);
 }
 
-Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FormatException)
+Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FileFormatException)
 {
     return new OCAD8FileExport(stream, map, view);
 }
 
-bool OCAD8FileFormat::isRasterImageFile(const QString &filename)
-{
-	int dot_pos = filename.lastIndexOf('.');
-	if (dot_pos < 0)
-		return false;
-	QString extension = filename.right(filename.length() - dot_pos - 1).toLower();
-	return QImageReader::supportedImageFormats().contains(extension.toLatin1());
-}
 
-
-
+// ### OCAD8FileImport ###
 
 OCAD8FileImport::OCAD8FileImport(QIODevice* stream, Map* map, MapView* view) : Importer(stream, map, view), file(NULL)
 {
@@ -88,21 +269,30 @@ OCAD8FileImport::~OCAD8FileImport()
     ocad_shutdown();
 }
 
-void OCAD8FileImport::import(bool load_symbols_only) throw (FormatException)
+bool OCAD8FileImport::isRasterImageFile(const QString &filename)
+{
+	int dot_pos = filename.lastIndexOf('.');
+	if (dot_pos < 0)
+		return false;
+	QString extension = filename.right(filename.length() - dot_pos - 1).toLower();
+	return QImageReader::supportedImageFormats().contains(extension.toLatin1());
+}
+
+void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
 {
     //qint64 start = QDateTime::currentMSecsSinceEpoch();
 	
 	u32 size = stream->bytesAvailable();
 	u8* buffer = (u8*)malloc(size);
 	if (!buffer)
-		throw FormatException(QObject::tr("Could not allocate buffer."));
+		throw FileFormatException(QObject::tr("Could not allocate buffer."));
 	if (stream->read((char*)buffer, size) != size)
-		throw FormatException(QObject::tr("Could not read file."));
+		throw FileFormatException(QObject::tr("Could not read file."));
 	int err = ocad_file_open_memory(&file, buffer, size);
-    if (err != 0) throw FormatException(QObject::tr("Could not open file: libocad returned %1").arg(err));
+    if (err != 0) throw FileFormatException(QObject::tr("Could not open file: libocad returned %1").arg(err));
 	
 	if (file->header->major <= 5 || file->header->major >= 9)
-		throw FormatException(QObject::tr("OCAD files of version %1 cannot be loaded!").arg(file->header->major));
+		throw FileFormatException(QObject::tr("OCAD files of version %1 cannot be loaded!").arg(file->header->major));
 
     //qDebug() << "file version is" << file->header->major << ", type is"
     //         << ((file->header->ftype == 2) ? "normal" : "other");
@@ -1097,7 +1287,7 @@ Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background
 {
     QString filename(background.filename); // FIXME: use platform char encoding?
 	filename = QDir::cleanPath(filename.replace('\\', '/'));
-	if (OCAD8FileFormat::isRasterImageFile(filename))
+	if (isRasterImageFile(filename))
     {
         TemplateImage* templ = new TemplateImage(filename, map);
         MapCoord c;
@@ -1330,6 +1520,7 @@ double OCAD8FileImport::convertTemplateScale(double ocad_scale)
 }
 
 
+// ### OCAD8FileExport ###
 
 OCAD8FileExport::OCAD8FileExport(QIODevice* stream, Map* map, MapView* view) : Exporter(stream, map, view), file(NULL)
 {
@@ -1345,14 +1536,14 @@ OCAD8FileExport::~OCAD8FileExport()
 	delete origin_point_object;
 }
 
-void OCAD8FileExport::doExport() throw (FormatException)
+void OCAD8FileExport::doExport() throw (FileFormatException)
 {
 	if (map->getNumColors() > 256)
-		throw FormatException(QObject::tr("The map contains more than 256 colors which is not supported by ocd version 8."));
+		throw FileFormatException(QObject::tr("The map contains more than 256 colors which is not supported by ocd version 8."));
 	
 	// Create struct in memory
 	int err = ocad_file_new(&file);
-	if (err != 0) throw FormatException(QObject::tr("Could not create new file: libocad returned %1").arg(err));
+	if (err != 0) throw FileFormatException(QObject::tr("Could not create new file: libocad returned %1").arg(err));
 	
 	// Fill header struct
 	OCADFileHeader* header = file->header;
