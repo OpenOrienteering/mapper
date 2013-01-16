@@ -19,8 +19,6 @@
 
 #include "file_format.h"
 
-#include <cassert>
-
 #include <QFileInfo>
 
 #include "map.h"
@@ -28,75 +26,88 @@
 #include "template.h"
 #include "object.h"
 
+
+FormatRegistry FileFormats;
+
+
+// ### Format ###
+
 Format::Format(const QString& id, const QString& description, const QString& file_extension, bool supportsImport, bool supportsExport, bool export_lossy)
-    : format_id(id), format_description(description), file_extension(file_extension),
-      format_filter(QString("%1 (*.%2)").arg(description).arg(file_extension)),
-      supports_import(supportsImport), supports_export(supportsExport), export_lossy(export_lossy)
+ : format_id(id),
+   format_description(description),
+   file_extension(file_extension),
+   format_filter(QString("%1 (*.%2)").arg(description).arg(file_extension)),
+   supports_import(supportsImport),
+   supports_export(supportsExport),
+   export_lossy(export_lossy)
 {
+	// Nothing
 }
 
 bool Format::understands(const unsigned char *buffer, size_t sz) const
 {
-    return false;
+	return false;
 }
 
 Importer *Format::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException)
 {
-    throw FormatException(QString("Format (%1) does not support import").arg(description()));
+	throw FormatException(QString("Format (%1) does not support import").arg(description()));
 }
 
 Exporter *Format::createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FormatException)
 {
-    throw FormatException(QString("Format (%1) does not support export").arg(description()));
+	throw FormatException(QString("Format (%1) does not support export").arg(description()));
 }
 
 
+// ### FormatRegistry ###
+
 void FormatRegistry::registerFormat(Format *format)
 {
-    fmts.push_back(format);
-    if (fmts.size() == 1) default_format_id = format->id();
-	assert(findFormatForFilename("filename."+format->fileExtension()) == format);
-	assert(findFormatByFilter(format->filter()) == format);
+	fmts.push_back(format);
+	if (fmts.size() == 1) default_format_id = format->id();
+	Q_ASSERT(findFormatForFilename("filename."+format->fileExtension()) == format);
+	Q_ASSERT(findFormatByFilter(format->filter()) == format);
 }
 
 const Format *FormatRegistry::findFormat(const QString& id) const
 {
-    Q_FOREACH(const Format *format, fmts)
-    {
-        if (format->id() == id) return format;
-    }
-    return NULL;
+	Q_FOREACH(const Format *format, fmts)
+	{
+		if (format->id() == id) return format;
+	}
+	return NULL;
 }
 
 const Format *FormatRegistry::findFormatByFilter(const QString& filter) const
 {
-    Q_FOREACH(const Format *format, fmts)
-    {
-        if (format->filter() == filter) return format;
-    }
-    return NULL;
+	Q_FOREACH(const Format *format, fmts)
+	{
+		if (format->filter() == filter) return format;
+	}
+	return NULL;
 }
 
 const Format *FormatRegistry::findFormatForFilename(const QString& filename) const
 {
-    QString file_extension = QFileInfo(filename).suffix();
-    Q_FOREACH(const Format *format, fmts)
-    {
-        if (format->fileExtension() == file_extension) return format;
-    }
-    return NULL;
+	QString file_extension = QFileInfo(filename).suffix();
+	Q_FOREACH(const Format *format, fmts)
+	{
+		if (format->fileExtension() == file_extension) return format;
+	}
+	return NULL;
 }
 
 FormatRegistry::~FormatRegistry()
 {
-    for (std::vector<Format *>::reverse_iterator it = fmts.rbegin(); it != fmts.rend(); ++it)
-    {
-        delete *it;
-    }
+	for (std::vector<Format *>::reverse_iterator it = fmts.rbegin(); it != fmts.rend(); ++it)
+	{
+		delete *it;
+	}
 }
 
-FormatRegistry FileFormats;
 
+// ### Importer ###
 
 void Importer::doImport(bool load_symbols_only, const QString& map_path) throw (FormatException)
 {
