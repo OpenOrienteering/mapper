@@ -36,8 +36,8 @@ void FileFormatRegistry::registerFormat(FileFormat *format)
 {
 	fmts.push_back(format);
 	if (fmts.size() == 1) default_format_id = format->id();
-	Q_ASSERT(findFormatForFilename("filename."+format->fileExtension()) == format);
-	Q_ASSERT(findFormatByFilter(format->filter()) == format);
+	Q_ASSERT(findFormatForFilename("filename."+format->primaryExtension()) != NULL); // There may be more than one format!
+	Q_ASSERT(findFormatByFilter(format->filter()) == format); // The filter shall be unique at least by description.
 }
 
 const FileFormat *FileFormatRegistry::findFormat(const QString& id) const
@@ -63,7 +63,7 @@ const FileFormat *FileFormatRegistry::findFormatForFilename(const QString& filen
 	QString file_extension = QFileInfo(filename).suffix();
 	Q_FOREACH(const FileFormat *format, fmts)
 	{
-		if (format->fileExtension() == file_extension) return format;
+		if (format->fileExtensions().contains(file_extension)) return format;
 	}
 	return NULL;
 }

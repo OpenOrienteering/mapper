@@ -220,12 +220,12 @@ void NewMapDialog::showFileDialog()
 			if (filters.isEmpty())
 			{
 				filters    = format->filter();
-				extensions = "*." % format->fileExtension();
+				extensions = "*." % format->fileExtensions().join(" *.");
 			}
 			else
 			{
 				filters    = filters    % ";;"  % format->filter();
-				extensions = extensions % " *." % format->fileExtension();
+				extensions = extensions % " *." % format->fileExtensions().join(" *.");
 			}
 		}
 	}
@@ -274,7 +274,7 @@ void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 		Q_FOREACH(const FileFormat *format, FileFormats.formats())
 		{
 			if (format->supportsImport())
-				symbol_set_filters << ("*." % format->fileExtension());
+				symbol_set_filters << QStringList(format->fileExtensions()).replaceInStrings(QRegExp("^"), "*.");
 		}
 		subdir.setNameFilters(symbol_set_filters);
 		

@@ -630,12 +630,12 @@ QString MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileF
 				if (filters.isEmpty())
 				{
 					filters    = format->filter();
-					extensions = "*." % format->fileExtension();
+					extensions = "*." % format->fileExtensions().join(" *.");
 				}
 				else
 				{
 					filters    = filters    % ";;"  % format->filter();
-					extensions = extensions % " *." % format->fileExtension();
+					extensions = extensions % " *." % format->fileExtensions().join(" *.");
 				}
 			}
 		}
@@ -694,14 +694,24 @@ bool MainWindow::showSaveAsDialog()
 		return false;
 	}
 	
-	// Ensure the provided filename has the correct file extension.
+	// Ensure that the provided filename has a correct file extension.
 	// Among other things, this will ensure that FileFormats.formatForFilename()
 	// returns the same thing the user selected in the dialog.
-	QString selected_extension = "." % format->fileExtension();
-	if (!path.endsWith(selected_extension, Qt::CaseInsensitive))
+// 	QString selected_extension = "." % format->primaryExtension();
+	QStringList selected_extensions(format->fileExtensions());
+	selected_extensions.replaceInStrings(QRegExp("^"), ".");
+	bool has_extension = false;
+	Q_FOREACH(QString selected_extension, selected_extensions)
 	{
-		path.append(selected_extension);
+		if (path.endsWith(selected_extension, Qt::CaseInsensitive))
+		{
+			has_extension = true;
+			break;
+		}
 	}
+	if (!has_extension)
+		path.append(".").append(format->primaryExtension());
+	// Ensure that the file name matches the format.
 	Q_ASSERT(FileFormats.findFormatForFilename(path) == format);
 	
 	return savePath(path);

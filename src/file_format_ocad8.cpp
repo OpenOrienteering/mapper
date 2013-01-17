@@ -230,8 +230,8 @@ private:
 // ### OCAD8FileFormat ###
 
 OCAD8FileFormat::OCAD8FileFormat()
- : FileFormat("OCAD78", QObject::tr("OCAD Versions 7, 8"), "ocd", 
-              MapFile, ImportSupported | ExportSupported | ExportLossy)
+ : FileFormat(MapFile, "OCAD78", QObject::tr("OCAD Versions 7, 8"), "ocd", 
+              ImportSupported | ExportSupported | ExportLossy)
 {
 	// Nothing
 }

@@ -36,20 +36,28 @@ const char* FileFormatException::what() const throw()
 
 // ### FileFormat ###
 
-FileFormat::FileFormat(const QString& id, const QString& description, const QString& file_extension, FileTypes file_types, FormatFeatures features)
- : format_id(id),
+FileFormat::FileFormat(FileFormat::FileType file_type, const QString& id, const QString& description, const QString& file_extension, FileFormat::FormatFeatures features)
+ : file_type(file_type),
+   format_id(id),
    format_description(description),
-   file_extension(file_extension),
-   format_filter(QString("%1 (*.%2)").arg(description).arg(file_extension)),
-   file_types(file_types),
    format_features(features)
 {
-	// Nothing
+	Q_ASSERT(file_type != 0);
+	Q_ASSERT(!id.isEmpty());
+	Q_ASSERT(!description.isEmpty());
+	Q_ASSERT(!file_extension.isEmpty());
+	addExtension(file_extension);
 }
 
 FileFormat::~FileFormat()
 {
 	// Nothing
+}
+
+void FileFormat::addExtension(const QString& file_extension)
+{
+	file_extensions << file_extension;
+	format_filter = QString("%1 (*.%2)").arg(format_description).arg(file_extensions.join(" "));
 }
 
 bool FileFormat::understands(const unsigned char *buffer, size_t sz) const

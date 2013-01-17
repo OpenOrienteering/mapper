@@ -22,7 +22,7 @@
 
 #include <exception>
 
-#include <QString>
+#include <QStringList>
 
 class QIODevice;
 
@@ -125,20 +125,24 @@ public:
 	 */
 	Q_DECLARE_FLAGS(FormatFeatures, FormatFeatureFlag)
 	
-// 	/** Creates a new file format with the given parameters.
-// 	 * 
-// 	 *  Don't use a leading dot on the file extension.
-// 	 */
-// 	FileFormat(const QString& id, const QString& description, const QString& file_extension, bool supportsImport = true, bool supportsExport = true, bool export_lossy = true);
-// 	
 	/** Creates a new file format with the given parameters.
 	 * 
 	 *  Don't use a leading dot on the file extension.
+	 *  
 	 */
-	FileFormat(const QString& id, const QString& description, const QString& file_extension, FileTypes file_types, FormatFeatures features);
+	FileFormat(FileType file_type, const QString& id, const QString& description, const QString& file_extension, FormatFeatures features);
 	
 	/** Destroys the file format information. */
 	virtual ~FileFormat();
+	
+	/** Registers an alternative file name extension.
+	 *  It is used by the filter.
+	 */
+	void addExtension(const QString& file_extension);
+	
+	/** Returns the type of file.
+	 */
+	const FileType fileType() const;
 	
 	/** Returns the internal ID of the file format.
 	 */
@@ -148,9 +152,16 @@ public:
 	 */
 	const QString& description() const;
 	
-	/** Returns the file extension used by this file format.
+	/** Returns the primary file name extension used by this file format.
+	 * 
+	 *  This shall only be used for constructing new file names. Otherwise
+	 *  you will probably need to use fileExtensions().
 	 */
-	const QString& fileExtension() const;
+	const QString& primaryExtension() const;
+	
+	/** Returns all file name extension supported by this file format.
+	 */
+	const QStringList& fileExtensions() const;
 	
 	/** Returns the filter that represents this format in file dialogs.
 	 */
@@ -195,11 +206,11 @@ public:
 	virtual Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException);
 	
 private:
+	FileType file_type;
 	QString format_id;
 	QString format_description;
-	QString file_extension;
+	QStringList file_extensions;
 	QString format_filter;
-	FileTypes file_types;
 	FormatFeatures format_features;
 };
 
@@ -234,6 +245,12 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(FileFormat::FileTypes)
 Q_DECLARE_OPERATORS_FOR_FLAGS(FileFormat::FormatFeatures)
 
 inline
+const FileFormat::FileType FileFormat::fileType() const
+{
+	return file_type;
+}
+
+inline
 const QString& FileFormat::id() const
 {
 	return format_id;
@@ -246,9 +263,16 @@ const QString& FileFormat::description() const
 }
 
 inline
-const QString& FileFormat::fileExtension() const
+const QString& FileFormat::primaryExtension() const
 {
-	return file_extension;
+	Q_ASSERT(file_extensions.size() > 0); // by constructor
+	return file_extensions[0];
+}
+
+inline
+const QStringList& FileFormat::fileExtensions() const
+{
+	return file_extensions;
 }
 
 inline

@@ -2162,8 +2162,9 @@ void MapEditorController::importClicked()
 			map_extensions = map_extensions + " ";
 		}
 		
-		map_names = map_names + format->fileExtension().toUpper();
-		map_extensions = map_extensions + "*." % format->fileExtension();
+		// FIXME: primaryExtension is incomplete, but fileExtensions may produce redundant entries
+		map_names = map_names + format->primaryExtension().toUpper();
+		map_extensions = map_extensions + "*." % format->fileExtensions().join(" *.");
 	}
 	
 	QString filename = QFileDialog::getOpenFileName(window, tr("Import %1, GPX, OSM or DXF file").arg(map_names), import_directory, QString("%1 (%2 *.gpx *.osm *.dxf);;%3 (*.*)").arg(tr("Importable files")).arg(map_extensions).arg(tr("All files")));

@@ -92,8 +92,7 @@ const int NativeFileFormat::current_file_format_version = 30;
 const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 
 NativeFileFormat::NativeFileFormat()
- : FileFormat("native", QObject::tr("OpenOrienteering Mapper"), "omap", 
-              FileFormat::MapFile, 
+ : FileFormat(FileFormat::MapFile, "native (deprecated)", QObject::tr("OpenOrienteering Mapper").append(" pre-0.5"), "omap", 
 #ifdef MAPPER_ENABLE_NATIVE_EXPORTER
               FileFormat::ExportSupported | FileFormat::ExportLossy |
 #endif
