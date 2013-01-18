@@ -133,6 +133,9 @@ protected slots:
 	/** This slot reacts to changes of print area size widget. */
 	void printAreaResized();
 	
+	/** This slot reacts to changes to the page overlap widget. */
+	void overlapEdited(double overlap);
+	
 	/** This slot is called when the resolution widget signals that editing finished. */
 	void resolutionEdited();
 	
@@ -182,6 +185,9 @@ protected:
 	/** Shows a warning and returns true if the output would be empty. */
 	bool checkForEmptyMap();
 	
+	/** Sets the enabled state of the page overlap field. */
+	void setOverlapEditEnabled(bool state = true) const;
+	
 private:
 	enum Exporters
 	{
@@ -210,6 +216,7 @@ private:
 	QDoubleSpinBox* top_edit;
 	QDoubleSpinBox* width_edit;
 	QDoubleSpinBox* height_edit;
+	QDoubleSpinBox* overlap_edit;
 	
 	QPushButton* preview_button;
 	QPushButton* print_button;

@@ -76,6 +76,9 @@ MapPrinter::MapPrinter(Map& map, QObject* parent)
 {
 	options.scale = map.getScaleDenominator();
 	options.scale_adjustment = 1.0;
+	// TODO: save overlap
+	page_format.h_overlap = 5.0;
+	page_format.v_overlap = 5.0;
 	if (map.arePrintParametersSet())
 	{
 		float left, top, width, height;
@@ -265,12 +268,26 @@ void MapPrinter::setPageOrientation(const QPrinter::Orientation orientation)
 	}
 }
 
+// slot
+void MapPrinter::setOverlap(qreal h_overlap, qreal v_overlap)
+{
+	if (page_format.h_overlap != h_overlap || page_format.v_overlap != v_overlap)
+	{
+		page_format.h_overlap = qMax(0.0, qMin(h_overlap, page_format.page_rect.width()));
+		page_format.v_overlap = qMax(0.0, qMin(v_overlap, page_format.page_rect.height()));
+		updatePageBreaks();
+		emit pageFormatChanged(page_format);
+	}
+}
+
 void MapPrinter::updatePaperDimensions()
 {
 	if (target == imageTarget() && page_format.paper_size == QPrinter::Custom)
 	{
 		// No margins, no need to query QPrinter.
 		page_format.page_rect = QRectF(QPointF(0.0, 0.0), page_format.paper_dimensions);
+		page_format.h_overlap = qMax(0.0, qMin(page_format.h_overlap, page_format.page_rect.width()));
+		page_format.v_overlap = qMax(0.0, qMin(page_format.v_overlap, page_format.page_rect.height()));
 		updatePageBreaks();
 		return;
 	}
@@ -298,6 +315,8 @@ void MapPrinter::updatePaperDimensions()
 		printer->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
 		page_format.page_rect.adjust(left, top, -right, -bottom);
 	}
+	page_format.h_overlap = qMax(0.0, qMin(page_format.h_overlap, page_format.page_rect.width()));
+	page_format.v_overlap = qMax(0.0, qMin(page_format.v_overlap, page_format.page_rect.height()));
 	
 	delete printer;
 	updatePageBreaks();
@@ -373,31 +392,39 @@ void MapPrinter::updatePageBreaks()
 	Q_ASSERT(print_area.top() <= print_area.bottom());
 	
 	h_page_pos.clear();
-	qreal hpos = print_area.left();
-	h_page_pos.push_back(hpos);
-	qreal page_width = page_format.page_rect.width() / options.scale_adjustment;
-	if (page_width >= 0.01)
+	qreal h_pos = print_area.left();
+	h_page_pos.push_back(h_pos);
+	const qreal page_width = page_format.page_rect.width() / options.scale_adjustment;
+	const qreal h_overlap = page_format.h_overlap / options.scale_adjustment;
+	if (page_width - h_overlap >= 0.01)
 	{
-		for (hpos += page_width; hpos < print_area.right(); hpos += page_width)
-			h_page_pos.push_back(hpos);
+		for (h_pos += page_width; h_pos < print_area.right(); h_pos += page_width)
+		{
+			h_pos -= h_overlap;
+			h_page_pos.push_back(h_pos);
+		}
 		// Don' pre-calculate offset to avoid FP precision problems
-		qreal hoffset = 0.5 * (hpos - print_area.right());
+		const qreal h_offset = 0.5 * (h_pos - print_area.right());
 		for (std::vector<qreal>::iterator it=h_page_pos.begin(); it != h_page_pos.end(); ++it)
-			*it -= hoffset;
+			*it -= h_offset;
 	}
 	
 	v_page_pos.clear();
-	qreal vpos = print_area.top();
-	v_page_pos.push_back(vpos);
-	qreal page_height = page_format.page_rect.height() / options.scale_adjustment;
-	if (page_height >= 0.01)
+	qreal v_pos = print_area.top();
+	v_page_pos.push_back(v_pos);
+	const qreal page_height = page_format.page_rect.height() / options.scale_adjustment;
+	const qreal v_overlap = page_format.v_overlap / options.scale_adjustment;
+	if (page_height - v_overlap >= 0.01)
 	{
-		for (vpos += page_height; vpos < print_area.bottom(); vpos += page_height)
-			v_page_pos.push_back(vpos);
+		for (v_pos += page_height; v_pos < print_area.bottom(); v_pos += page_height)
+		{
+			v_pos -= v_overlap;
+			v_page_pos.push_back(v_pos);
+		}
 		// Don' pre-calculate offset to avoid FP precision problems
-		qreal voffset = 0.5 * (vpos - print_area.bottom());
+		const qreal v_offset = 0.5 * (v_pos - print_area.bottom());
 		for (std::vector<qreal>::iterator it=v_page_pos.begin(); it != v_page_pos.end(); ++it)
-			*it -= voffset;
+			*it -= v_offset;
 	}
 }
 

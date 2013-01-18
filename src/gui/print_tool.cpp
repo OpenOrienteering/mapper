@@ -102,6 +102,8 @@ void PrintTool::draw(QPainter* painter, MapWidget* widget)
 {
 	QRect view_area = QRect(0, 0, widget->width(), widget->height());
 	QRect print_area = widget->mapToViewport(map_printer->getPrintArea()).toRect();
+	QSizeF page_size = widget->mapToViewport(map_printer->getPageFormat().page_rect).size();
+	qreal scale = map_printer->getOptions().scale_adjustment;
 	
 	// Strongly darken the region outside the print area
 	painter->setBrush(QColor(0, 0, 0, 160));
@@ -110,23 +112,30 @@ void PrintTool::draw(QPainter* painter, MapWidget* widget)
 	outside_path.addRect(view_area);
 	outside_path.addRect(view_area.intersected(print_area));
 	painter->drawPath(outside_path);
-
+	
 	// Draw red lines for page breaks
-	painter->setPen(QColor(255, 0, 0, 160));
+	QColor top_left_margin_color(255, 0, 0, 160);
+	QColor bottom_right_margin_color(255, 128, 128, 160);
 	painter->setBrush(Qt::NoBrush);
-	bool first_item = true;
 	Q_FOREACH(qreal hpos, map_printer->horizontalPagePositions())
 	{
-		if (first_item) { first_item = false; continue; }
-		QPointF view_pos = widget->mapToViewport(MapCoordF(hpos, 0));
-		painter->drawLine(view_pos.x(), 0, view_pos.x(), widget->height());
+		qreal x_pos = widget->mapToViewport(MapCoordF(hpos, 0)).x();
+		painter->setPen(top_left_margin_color);
+		painter->drawLine(x_pos, 0, x_pos, widget->height());
+		
+		x_pos += page_size.width() / scale;
+		painter->setPen(bottom_right_margin_color);
+		painter->drawLine(x_pos, 0, x_pos, widget->height());
 	}
-	first_item = true;
 	Q_FOREACH(qreal vpos, map_printer->verticalPagePositions())
 	{
-		if (first_item) { first_item = false; continue; }
-		QPointF view_pos = widget->mapToViewport(MapCoordF(0, vpos));
-		painter->drawLine(0, view_pos.y(), widget->width(), view_pos.y());
+		qreal y_pos = widget->mapToViewport(MapCoordF(0, vpos)).y();
+		painter->setPen(top_left_margin_color);
+		painter->drawLine(0, y_pos, widget->width(), y_pos);
+		
+		y_pos += page_size.height() / scale;
+		painter->setPen(bottom_right_margin_color);
+		painter->drawLine(0, y_pos, widget->width(), y_pos);
 	}
 }
 

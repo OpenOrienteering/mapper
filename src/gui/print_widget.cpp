@@ -94,6 +94,9 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	height_edit = Util::SpinBox::create(2, -999999.9, 999999.9, tr("mm"), 1.0);
 	layout->addRow(tr("Height:"), height_edit);
 	
+	overlap_edit = Util::SpinBox::create(2, -999999.9, 999999.9, tr("mm"), 1.0);
+	layout->addRow(tr("Page overlap:"), overlap_edit);
+	
 	layout->addItem(Util::SpacerItem::create(this));
 	
 	layout->addRow(Util::Headline::create(tr("Options")));
@@ -145,6 +148,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(left_edit, SIGNAL(valueChanged(double)), this, SLOT(printAreaMoved()));
 	connect(width_edit, SIGNAL(valueChanged(double)), this, SLOT(printAreaResized()));
 	connect(height_edit, SIGNAL(valueChanged(double)), this, SLOT(printAreaResized()));
+	connect(overlap_edit, SIGNAL(valueChanged(double)), this, SLOT(overlapEdited(double)));
 	
 	connect(dpi_combo->lineEdit(), SIGNAL(editingFinished()), this, SLOT(resolutionEdited()));
 	connect(different_scale_check, SIGNAL(clicked(bool)), this, SLOT(differentScaleClicked(bool)));
@@ -395,9 +399,12 @@ void PrintWidget::updatePaperSizes(const QPrinterInfo* target) const
 void PrintWidget::setPageFormat(const MapPrinterPageFormat& format)
 {
 	ScopedMultiSignalsBlocker block;
-	block << paper_size_combo << page_orientation_combo;
+	block << paper_size_combo << page_orientation_combo << overlap_edit;
 	paper_size_combo->setCurrentIndex(paper_size_combo->findData(format.paper_size));
 	page_orientation_combo->setCurrentIndex(page_orientation_combo->findData(format.orientation));
+	// We only have a single overlap edit field, but MapPrinter supports 
+	// distinct horizontal and vertical overlap. Choose the minimum.
+	overlap_edit->setValue(qMin(format.h_overlap, format.v_overlap));
 	applyPrintAreaPolicy();
 }
 
@@ -430,11 +437,18 @@ void PrintWidget::applyPrintAreaPolicy() const
 	
 	PrintAreaPolicy policy = (PrintAreaPolicy)policy_combo->itemData(policy_combo->currentIndex()).toInt();
 	if (policy == SinglePage)
+	{
 		print_area.setSize(map_printer->getPageFormat().page_rect.size() / map_printer->getScaleAdjustment());
+		setOverlapEditEnabled(false);
+	}
+	else
+	{
+		setOverlapEditEnabled(true);
+	}
 	
 	if (center_check->isChecked())
 		centerOnMap(print_area);
-
+	
 	map_printer->setPrintArea(print_area);
 }
 
@@ -483,6 +497,7 @@ void PrintWidget::setPrintArea(const QRectF& area)
 				block << policy_combo;
 				policy_combo->setCurrentIndex(policy_combo->findData(CustomArea));
 				center_check->setChecked(false);
+				setOverlapEditEnabled(true);
 			}
 		}
 	}
@@ -506,6 +521,17 @@ void PrintWidget::printAreaResized()
 	map_printer->setPrintArea(area);
 }
 
+// slot
+void PrintWidget::overlapEdited(double overlap)
+{
+	map_printer->setOverlap(overlap, overlap);
+}
+
+void PrintWidget::setOverlapEditEnabled(bool state) const
+{
+	overlap_edit->setEnabled(state);
+	layout->labelForField(overlap_edit)->setEnabled(state);
+}
 
 
 // slot

@@ -37,6 +37,8 @@ public:
 	QPrinter::Orientation orientation;
 	QSizeF paper_dimensions;
 	QRectF page_rect;
+	qreal h_overlap;
+	qreal v_overlap;
 };
 
 
@@ -74,32 +76,32 @@ public:
 	virtual ~MapPrinter();
 	
 	/** Returns the configured target printer in terms of QPrinterInfo. */
-	const QPrinterInfo* getTarget() const { return target; }
+	const QPrinterInfo* getTarget() const;
 	
 	/** Returns true if a real printer is configured. */
 	bool isPrinter() const;
 	
 	/** Returns the page format specification. */
-	const MapPrinterPageFormat& getPageFormat() const { return page_format; }
+	const MapPrinterPageFormat& getPageFormat() const;
 	
 	/** Returns the map area to be printed. */
-	const QRectF& getPrintArea() const { return print_area; }
+	const QRectF& getPrintArea() const;
 	
 	/** Returns the rendering options. */
-	const MapPrinterOptions& getOptions() const { return options; }
+	const MapPrinterOptions& getOptions() const;
 	
 	/** Returns true if the current print area and rendering options will 
 	 *  result in empty pages. (The grid is not considered.) */
 	bool isOutputEmpty() const;
 
 	/** Returns the quotient of map scale denominator and print scale denominator. */
-	qreal getScaleAdjustment() const { return options.scale_adjustment; }
+	qreal getScaleAdjustment() const;
 	
 	/** Returns a list of horizontal page positions on the map. */
-	const std::vector<qreal>& horizontalPagePositions() const { return h_page_pos; }
+	const std::vector< qreal >& horizontalPagePositions() const;
 	
 	/** Returns a list of vertical page positions on the map. */
-	const std::vector<qreal>& verticalPagePositions() const { return v_page_pos; }
+	const std::vector< qreal >& verticalPagePositions() const;
 	
 	/** Creates a printer configured according to the current settings. */
 	QPrinter* makePrinter() const;
@@ -127,6 +129,9 @@ public slots:
 	
 	/** Sets the page orientation. */
 	void setPageOrientation(const QPrinter::Orientation orientation);
+	
+	/** Sets the overlapping of the pages at the margins. */
+	void setOverlap(qreal h_overlap, qreal v_overlap);
 	
 	/** Sets the desired printing resolution in dpi. 
 	 *  The actual resolution will	be set by the printer. */
@@ -184,5 +189,50 @@ protected:
 	std::vector<qreal> h_page_pos;
 	std::vector<qreal> v_page_pos;
 };
+
+
+// ### MapPrinter ###
+
+inline
+const QPrinterInfo* MapPrinter::getTarget() const
+{
+	return target;
+}
+
+inline
+const MapPrinterPageFormat& MapPrinter::getPageFormat() const
+{
+	return page_format;
+}
+
+inline
+const QRectF& MapPrinter::getPrintArea() const
+{
+	return print_area;
+}
+
+inline
+const MapPrinterOptions& MapPrinter::getOptions() const
+{
+	return options;
+}
+
+inline
+qreal MapPrinter::getScaleAdjustment() const
+{
+	return options.scale_adjustment;
+}
+
+inline
+const std::vector< qreal >& MapPrinter::horizontalPagePositions() const
+{
+	return h_page_pos;
+}
+
+inline
+const std::vector< qreal >& MapPrinter::verticalPagePositions() const
+{
+	return v_page_pos;
+}
 
 #endif
