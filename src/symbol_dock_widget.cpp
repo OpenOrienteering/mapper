@@ -523,7 +523,9 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 		}
 		else
 		{
-			if (!(event->button() == Qt::RightButton && current_symbol_index < 0))
+			if (event->button() == Qt::LeftButton ||
+				(event->button() == Qt::RightButton &&
+				current_symbol_index >= 0 && !isSymbolSelected(current_symbol_index)))
 				selectSingleSymbol(current_symbol_index);
 		}
 	}
