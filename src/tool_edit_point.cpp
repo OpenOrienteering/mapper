@@ -587,18 +587,21 @@ void EditPointTool::updateHoverPoint(MapCoordF cursor_pos)
 {
 	Object* new_hover_object = NULL;
 	int new_hover_point = -2;
-	float new_hover_point_dist_sq = std::numeric_limits<float>::max();
-	for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
+	if (map()->getNumSelectedObjects() <= max_objects_for_handle_display)
 	{
-		MapCoordF handle_pos;
-		int hover_point = findHoverPoint(cur_map_widget->mapToViewport(cursor_pos), *it, true, &selection_extent, cur_map_widget, &handle_pos);
-		float distance_sq = (hover_point >= 0) ? cursor_pos.lengthToSquared(handle_pos) : -1;
-		if (hover_point >= 0 && distance_sq < new_hover_point_dist_sq)
+		float new_hover_point_dist_sq = std::numeric_limits<float>::max();
+		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
 		{
-			new_hover_object = *it;
-			new_hover_point = hover_point;
-			new_hover_point_dist_sq = distance_sq;
-			handle_offset = handle_pos - cursor_pos;
+			MapCoordF handle_pos;
+			int hover_point = findHoverPoint(cur_map_widget->mapToViewport(cursor_pos), *it, true, &selection_extent, cur_map_widget, &handle_pos);
+			float distance_sq = (hover_point >= 0) ? cursor_pos.lengthToSquared(handle_pos) : -1;
+			if (hover_point >= 0 && distance_sq < new_hover_point_dist_sq)
+			{
+				new_hover_object = *it;
+				new_hover_point = hover_point;
+				new_hover_point_dist_sq = distance_sq;
+				handle_offset = handle_pos - cursor_pos;
+			}
 		}
 	}
 	if (new_hover_point < 0 &&

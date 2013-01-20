@@ -433,25 +433,28 @@ void EditLineTool::updateHoverLine(MapCoordF cursor_pos)
 	PathCoord hover_path_coord;
 	
 	// Check objects
-	for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
+	if (map()->getNumSelectedObjects() <= max_objects_for_handle_display)
 	{
-		Object* object = *it;
-		if (object->getType() != Object::Path)
-			continue;
-		
-		float distance_sq;
-		PathCoord path_coord;
-		PathObject* path = object->asPath();
-		path->calcClosestPointOnPath(cursor_pos, distance_sq, path_coord);
-		
-		if (distance_sq < best_distance_sq &&
-			distance_sq < qMax(click_tolerance_sq, (float)qPow(path->getSymbol()->calculateLargestLineExtent(map()), 2)))
+		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
 		{
-			best_distance_sq = distance_sq;
-			new_hover_object = path;
-			new_hover_line = path_coord.index;
-			hover_path_coord = path_coord;
-			handle_offset = hover_path_coord.pos - cursor_pos;
+			Object* object = *it;
+			if (object->getType() != Object::Path)
+				continue;
+			
+			float distance_sq;
+			PathCoord path_coord;
+			PathObject* path = object->asPath();
+			path->calcClosestPointOnPath(cursor_pos, distance_sq, path_coord);
+			
+			if (distance_sq < best_distance_sq &&
+				distance_sq < qMax(click_tolerance_sq, (float)qPow(path->getSymbol()->calculateLargestLineExtent(map()), 2)))
+			{
+				best_distance_sq = distance_sq;
+				new_hover_object = path;
+				new_hover_line = path_coord.index;
+				hover_path_coord = path_coord;
+				handle_offset = hover_path_coord.pos - cursor_pos;
+			}
 		}
 	}
 	
