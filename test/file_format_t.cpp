@@ -20,6 +20,7 @@
 #include "file_format_t.h"
 
 #include "../src/core/map_color.h"
+#include "../src/core/map_printer.h"
 #include "../src/file_format_registry.h"
 #include "../src/file_import_export.h"
 #include "../src/georeferencing.h"
@@ -30,12 +31,58 @@
 #include "../src/template.h"
 
 
+
+namespace QTest
+{
+	template<>
+	char* toString(const MapPrinterPageFormat& page_format)
+	{
+		QByteArray ba = "MapPrinterPageFormat(";
+		ba += MapPrinter::paperSizeNames()[page_format.paper_size];
+		ba += (page_format.orientation == QPrinter::Landscape) ? ", Landscape, " : ", Portrait, ";
+		ba += QByteArray::number(page_format.paper_dimensions.width()) + "x";
+		ba += QByteArray::number(page_format.paper_dimensions.height()) + ", ";
+		ba += QByteArray::number(page_format.page_rect.left()) + ",";
+		ba += QByteArray::number(page_format.page_rect.top()) + "+";
+		ba += QByteArray::number(page_format.page_rect.width()) + "x";
+		ba += QByteArray::number(page_format.page_rect.height());
+		ba += ")";
+		return qstrdup(ba.data());
+	}
+	
+	template<>
+	char* toString(const MapPrinterOptions& options)
+	{
+		QByteArray ba = "MapPrinterOptions(";
+		ba += "1:" + QByteArray::number(options.scale) + ", ";
+		ba += QByteArray::number(options.resolution) + " dpi, ";
+		if (options.show_templates)
+			ba += ", templates";
+		if (options.show_grid)
+			ba += ", grid";
+		if (options.simulate_overprinting)
+			ba += ", overprinting";
+		ba += ")";
+		return qstrdup(ba.data());
+	}
+}
+
+
+
 void FileFormatTest::initTestCase()
 {
 	doStaticInitializations();
 	
-	map_filename = MapperResource::locate(MapperResource::TEST_DATA, "COPY_OF_test_map.omap");
-	QVERIFY2(!map_filename.isEmpty(), "Unable to locate test map");
+	map_filenames 
+	  << "COPY_OF_test_map.omap"
+	  << "COPY_OF_spotcolor_overprint.xmap";
+	  
+	for (int i = 0; i < map_filenames.size(); ++i)
+	{
+		QString filename = MapperResource::locate(MapperResource::TEST_DATA, map_filenames[i]);
+		QVERIFY2(!filename.isEmpty(), QString("Unable to locate %1").arg(map_filenames[i]).toLocal8Bit());
+		map_filenames[i] = filename;
+	}
 }
 
 void FileFormatTest::saveAndLoad_data()
@@ -47,7 +94,10 @@ void FileFormatTest::saveAndLoad_data()
 	Q_FOREACH(const FileFormat* format, FileFormats.formats())
 	{
 		if (format->supportsExport() && format->supportsImport())
-			QTest::newRow(format->id().toLocal8Bit()) << format->id() << map_filename;
+		{
+			Q_FOREACH(QString filename, map_filenames)
+				QTest::newRow(format->id().toLocal8Bit()) << format->id() << filename;
+		}
 	}
 }
 
@@ -63,6 +113,7 @@ void FileFormatTest::saveAndLoad()
 	// Load the test map
 	Map* original = new Map();
 	original->loadFrom(map_filename);
+	QVERIFY(!original->hasUnsavedChanged());
 	
 	// If the export is lossy, do one export / import cycle first to get rid of all information which cannot be exported into this format
 	if (format->isExportLossy())
@@ -83,6 +134,8 @@ void FileFormatTest::saveAndLoad()
 	bool equal = compareMaps(original, new_map, error);
 	if (!equal)
 		QFAIL(QString("Loaded map does not equal saved map, error: %1").arg(error).toLocal8Bit());
+	
+	comparePrinterConfig(new_map->printerConfig(), original->printerConfig());
 	
 	delete new_map;
 	delete original;
@@ -178,44 +231,6 @@ bool FileFormatTest::compareMaps(Map* a, Map* b, QString& error)
 	{
 		error = "The view mode differs.";
 		return false;
-	}
-	
-	if (a->arePrintParametersSet() != b->arePrintParametersSet())
-	{
-		error = "Print parameters are only set in one of the maps.";
-		return false;
-	}
-	if (a->arePrintParametersSet())
-	{
-		int a_orientation, a_prev_paper_size;
-		float a_dpi, a_left, a_top, a_width, a_height;
-		bool a_show_templates, a_show_grid, a_simulate_overprinting, a_center, a_different_scale_enabled;
-		int a_different_scale;
-		a->getPrintParameters(a_orientation, a_prev_paper_size, a_dpi, a_show_templates, a_show_grid, a_simulate_overprinting, a_center, a_left, a_top, a_width, a_height, a_different_scale_enabled, a_different_scale);
-		
-		int b_orientation, b_prev_paper_size;
-		float b_dpi, b_left, b_top, b_width, b_height;
-		bool b_show_templates, b_show_grid, b_simulate_overprinting, b_center, b_different_scale_enabled;
-		int b_different_scale;
-		b->getPrintParameters(b_orientation, b_prev_paper_size, b_dpi, b_show_templates, b_show_grid, b_simulate_overprinting, b_center, b_left, b_top, b_width, b_height, b_different_scale_enabled, b_different_scale);
-		
-		if (a_orientation != b_orientation ||
-			a_prev_paper_size != b_prev_paper_size ||
-			a_dpi != b_dpi ||
-			a_left != b_left ||
-			a_top != b_top ||
-			a_width != b_width ||
-			a_height != b_height ||
-			a_show_templates != b_show_templates ||
-			a_show_grid != b_show_grid ||
-			a_simulate_overprinting != b_simulate_overprinting ||
-			a_center != b_center ||
-			a_different_scale_enabled != b_different_scale_enabled ||
-			a_different_scale != b_different_scale)
-		{
-			error = "Print parameters differ.";
-			return false;
-		}
 	}
 	
 	// Colors
@@ -339,5 +354,17 @@ bool FileFormatTest::compareMaps(Map* a, Map* b, QString& error)
 	
 	return true;
 }
+
+ 
+void FileFormatTest::comparePrinterConfig(const MapPrinterConfig& copy, const MapPrinterConfig& orig)
+{
+	QCOMPARE(copy.center_print_area, orig.center_print_area);
+	QCOMPARE(copy.options, orig.options);
+	QCOMPARE(copy.page_format, orig.page_format);
+	QCOMPARE(copy.print_area, orig.print_area);
+	QCOMPARE(copy.printer_name, orig.printer_name);
+	QCOMPARE(copy.single_page_print_area, orig.single_page_print_area);
+}
+
 
 QTEST_MAIN(FileFormatTest)

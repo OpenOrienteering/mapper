@@ -27,19 +27,19 @@
 #include <QXmlStreamWriter>
 
 #include "core/map_color.h"
+#include "core/map_printer.h"
 #include "file_import_export.h"
 #include "georeferencing.h"
 #include "map.h"
 #include "map_grid.h"
 #include "object.h"
-#include "object_text.h"
 #include "symbol_area.h"
+#include "object_text.h"
 #include "symbol_combined.h"
 #include "symbol_line.h"
 #include "symbol_point.h"
 #include "symbol_text.h"
 #include "template.h"
-#include "map_grid.h"
 
 // ### XMLFileExporter declaration ###
 
@@ -307,31 +307,7 @@ void XMLFileExporter::exportView()
 
 void XMLFileExporter::exportPrint()
 {
-	if (map->print_params_set)
-	{
-		xml.writeStartElement("print");
-		xml.writeAttribute("orientation",
-		  (map->print_orientation == QPrinter::Portrait) ? "portrait" : "landscape" );
-		xml.writeAttribute("QPrinter_PaperSize", QString::number(map->print_format)); // FIXME: use readable names
-		xml.writeAttribute("dpi", QString::number(map->print_dpi));
-		if (map->print_show_templates)
-			xml.writeAttribute("templates_visible", "true");
-		if (map->print_show_grid)
-			xml.writeAttribute("grid_visible", "true");
-		if (map->print_simulate_overprinting)
-			xml.writeAttribute("simulate_overprinting", "true");
-		if (map->print_center)
-			xml.writeAttribute("center", "true");
-		xml.writeAttribute("area_left", QString::number(map->print_area_left));
-		xml.writeAttribute("area_top", QString::number(map->print_area_top));
-		xml.writeAttribute("area_width", QString::number(map->print_area_width));
-		xml.writeAttribute("area_height", QString::number(map->print_area_height));
-		if (map->print_different_scale_enabled)
-			xml.writeAttribute("alternative_scale_enabled", "true");
-		xml.writeAttribute("alternative_scale", QString::number(map->print_different_scale));
-		
-		xml.writeEndElement(/*print*/);
-    }
+	map->printerConfig().save(xml, "print");
 }
 
 void XMLFileExporter::exportUndo()
@@ -705,23 +681,7 @@ void XMLFileImporter::importPrint()
 {
 	Q_ASSERT(xml.name() == "print");
 	
-	map->print_params_set = true;
-	QXmlStreamAttributes attributes = xml.attributes();
-	map->print_orientation = 
-	  (attributes.value("orientation") == "portrait") ? QPrinter::Portrait : QPrinter::Landscape;
-	map->print_format = (QPrinter::PaperSize) attributes.value("QPrinter_PaperSize").toString().toInt();
-	map->print_dpi = attributes.value("dpi").toString().toFloat();
-	map->print_show_templates = (attributes.value("templates_visible") == "true");
-	map->print_show_grid = (attributes.value("grid_visible") == "true");
-	map->print_simulate_overprinting = (attributes.value("simulate_overprinting") == "true");
-	map->print_center = (attributes.value("center") == "true");
-	map->print_area_left = attributes.value("area_left").toString().toFloat();
-	map->print_area_top = attributes.value("area_top").toString().toFloat();
-	map->print_area_width = attributes.value("area_width").toString().toFloat();
-	map->print_area_height = attributes.value("area_height").toString().toFloat();
-	map->print_different_scale_enabled = (attributes.value("alternative_scale_enabled") == "true");
-	map->print_different_scale = attributes.value("alternative_scale").toString().toInt();
-    xml.skipCurrentElement();
+	map->setPrinterConfig(MapPrinterConfig(*map, xml));
 }
 
 void XMLFileImporter::importUndo()

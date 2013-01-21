@@ -22,6 +22,7 @@
 #include <QFile>
 
 #include "core/map_color.h"
+#include "core/map_printer.h"
 #include "file_import_export.h"
 #include "georeferencing.h"
 #include "gps_coordinates.h"
@@ -223,32 +224,46 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 		map->area_hatching_enabled = false;
 		map->baseline_view_enabled = false;
 	}
-
-    if (version >= 6)
-    {
-        stream->read((char*)&map->print_params_set, sizeof(bool));
-        if (map->print_params_set)
-        {
-            stream->read((char*)&map->print_orientation, sizeof(int));
-            stream->read((char*)&map->print_format, sizeof(int));
-            stream->read((char*)&map->print_dpi, sizeof(float));
-            stream->read((char*)&map->print_show_templates, sizeof(bool));
+	
+	if (version >= 6)
+	{
+		bool print_params_set;
+		stream->read((char*)&print_params_set, sizeof(bool));
+		if (print_params_set)
+		{
+			MapPrinterConfig printer_config(*map);
+			stream->read((char*)&printer_config.page_format.orientation, sizeof(int));
+			stream->read((char*)&printer_config.page_format.paper_size, sizeof(int));
+			
+			float resolution;
+			stream->read((char*)&resolution, sizeof(float));
+			printer_config.options.resolution = qRound(resolution);
+			stream->read((char*)&printer_config.options.show_templates, sizeof(bool));
 			if (version >= 24)
-				stream->read((char*)&map->print_show_grid, sizeof(bool));
+				stream->read((char*)&printer_config.options.show_grid, sizeof(bool));
 			else
-				map->print_show_grid = false;
-            stream->read((char*)&map->print_center, sizeof(bool));
-            stream->read((char*)&map->print_area_left, sizeof(float));
-            stream->read((char*)&map->print_area_top, sizeof(float));
-            stream->read((char*)&map->print_area_width, sizeof(float));
-            stream->read((char*)&map->print_area_height, sizeof(float));
+				printer_config.options.show_grid = false;
+			
+			stream->read((char*)&printer_config.center_print_area, sizeof(bool));
+			
+			float print_area_left, print_area_top, print_area_width, print_area_height;
+			stream->read((char*)&print_area_left, sizeof(float));
+			stream->read((char*)&print_area_top, sizeof(float));
+			stream->read((char*)&print_area_width, sizeof(float));
+			stream->read((char*)&print_area_height, sizeof(float));
+			printer_config.print_area = QRectF(print_area_left, print_area_top, print_area_width, print_area_height);
+			
 			if (version >= 26)
 			{
-				stream->read((char*)&map->print_different_scale_enabled, sizeof(bool));
-				stream->read((char*)&map->print_different_scale, sizeof(int));
+				bool print_different_scale_enabled;
+				stream->read((char*)&print_different_scale_enabled, sizeof(bool));
+				stream->read((char*)&printer_config.options.scale, sizeof(int));
+				if (!print_different_scale_enabled)
+					printer_config.options.scale = map->getScaleDenominator();
 			}
-        }
-    }
+			map->setPrinterConfig(printer_config);
+		}
+	}
 	
     if (version >= 16)
 	{
@@ -442,22 +457,25 @@ void NativeFileExport::doExport() throw (FileFormatException)
 	stream->write((const char*)&map->area_hatching_enabled, sizeof(bool));
 	stream->write((const char*)&map->baseline_view_enabled, sizeof(bool));
 
-	stream->write((const char*)&map->print_params_set, sizeof(bool));
-	if (map->print_params_set)
-	{
-		stream->write((const char*)&map->print_orientation, sizeof(int));
-		stream->write((const char*)&map->print_format, sizeof(int));
-		stream->write((const char*)&map->print_dpi, sizeof(float));
-		stream->write((const char*)&map->print_show_templates, sizeof(bool));
-		stream->write((const char*)&map->print_show_grid, sizeof(bool));
-		stream->write((const char*)&map->print_center, sizeof(bool));
-		stream->write((const char*)&map->print_area_left, sizeof(float));
-		stream->write((const char*)&map->print_area_top, sizeof(float));
-		stream->write((const char*)&map->print_area_width, sizeof(float));
-		stream->write((const char*)&map->print_area_height, sizeof(float));
-		stream->write((const char*)&map->print_different_scale_enabled, sizeof(bool));
-		stream->write((const char*)&map->print_different_scale, sizeof(int));
-	}
+	bool print_params_set = false;
+	stream->write((const char*)&print_params_set, sizeof(bool));
+// Native file format is obsolete and optional, print parameters no longer saved.
+// 	stream->write((const char*)&map->print_params_set, sizeof(bool));
+// 	if (map->print_params_set)
+// 	{
+// 		stream->write((const char*)&map->print_orientation, sizeof(int));
+// 		stream->write((const char*)&map->print_format, sizeof(int));
+// 		stream->write((const char*)&map->print_dpi, sizeof(float));
+// 		stream->write((const char*)&map->print_show_templates, sizeof(bool));
+// 		stream->write((const char*)&map->print_show_grid, sizeof(bool));
+// 		stream->write((const char*)&map->print_center, sizeof(bool));
+// 		stream->write((const char*)&map->print_area_left, sizeof(float));
+// 		stream->write((const char*)&map->print_area_top, sizeof(float));
+// 		stream->write((const char*)&map->print_area_width, sizeof(float));
+// 		stream->write((const char*)&map->print_area_height, sizeof(float));
+// 		stream->write((const char*)&map->print_different_scale_enabled, sizeof(bool));
+// 		stream->write((const char*)&map->print_different_scale, sizeof(int));
+// 	}
 
 	stream->write((const char*)&map->image_template_use_meters_per_pixel, sizeof(bool));
 	stream->write((const char*)&map->image_template_meters_per_pixel, sizeof(double));

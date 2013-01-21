@@ -98,7 +98,7 @@ NewMapDialog::NewMapDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMe
 	updateSymbolSetList();
 }
 
-int NewMapDialog::getSelectedScale() const
+unsigned int NewMapDialog::getSelectedScale() const
 {
 	return scale_combo->currentText().toInt();
 }

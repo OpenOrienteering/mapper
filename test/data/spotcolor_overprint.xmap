@@ -2648,7 +2648,7 @@ given without the dot.</description>
             <templates count="0"/>
         </map_view>
     </view>
-    <print orientation="landscape" QPrinter_PaperSize="0" dpi="600" center="true" area_left="-169.383" area_top="-174.794" area_width="297.032" area_height="209.91" alternative_scale="1"/>
+    <print orientation="landscape" QPrinter_PaperSize="0" dpi="600" center="true" area_left="-169.383" area_top="-174.794" area_width="297.032" area_height="209.91" alternative_scale="10000"/>
     <undo count="0"/>
     <redo count="0"/>
 </map>

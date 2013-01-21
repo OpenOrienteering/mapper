@@ -69,13 +69,21 @@ public:
 	/** Constructs a new print widget. */
 	PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, MapEditorController* editor, QWidget* parent = NULL);
 	
+	/** Destroys the widget. */
 	virtual ~PrintWidget();
 	
+	/** Indicates the default widget size. */
 	virtual QSize sizeHint() const;
+	
+	/** Returns a translated name for the given paper size. */
+	static QString toString(QPrinter::PaperSize size);
 	
 public slots:
 	/** Changes the type of the print or export task. */
 	void setTask(TaskFlags type);
+	
+	/** Saves the print or export settings. */
+	void savePrinterConfig() const;
 	
 	/** 
 	 * Sets the active state of the print widget.
@@ -124,8 +132,14 @@ protected slots:
 	/** This slot reacts to changes of the page orientation combobox. */
 	void pageOrientationChanged(int index) const;
 	
+	/** This slot reacts to changes of the print area policy combobox. */
+	void printAreaPolicyChanged(int index);
+	
 	/** This slot applies the map area policy to the current area. */
 	void applyPrintAreaPolicy() const;
+	
+	/** This slot applies the center map area policy to the current area. */
+	void applyCenterPolicy() const;
 	
 	/** This slot reacts to changes of print area position widgets. */
 	void printAreaMoved();
@@ -154,7 +168,10 @@ protected slots:
 	/** This slot reacts to changes of the "Simulate overprinting" option. */
 	void overprintingClicked(bool checked);
 	
+	/** Opens a preview window. */
 	void previewClicked();
+	
+	/** Starts printing and terminates this dialog. */
 	void printClicked();
 	
 protected:
@@ -222,6 +239,8 @@ private:
 	QPushButton* print_button;
 	
 	QList<QPrinterInfo> printers;
+	
+	PrintAreaPolicy policy;
 	
 	Map* map;
 	MapPrinter* map_printer;

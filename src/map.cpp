@@ -33,6 +33,7 @@
 #include <QXmlStreamWriter>
 
 #include "core/map_color.h"
+#include "core/map_printer.h"
 #include "map_editor.h"
 #include "map_grid.h"
 #include "map_part.h"
@@ -207,7 +208,8 @@ CombinedSymbol* Map::covering_combined_line;
 
 Map::Map()
  : renderables(new MapRenderables(this)),
-   selection_renderables(new MapRenderables(this))
+   selection_renderables(new MapRenderables(this)),
+   printer_config(NULL)
 {
 	if (!static_initialized)
 		initStatic();
@@ -249,17 +251,17 @@ Map::~Map()
 	delete georeferencing;
 }
 
-void Map::setScaleDenominator(int value)
+void Map::setScaleDenominator(unsigned int value)
 {
 	georeferencing->setScaleDenominator(value);
 }
 
-int Map::getScaleDenominator() const
+unsigned int Map::getScaleDenominator() const
 {
 	return georeferencing->getScaleDenominator();
 }
 
-void Map::changeScale(int new_scale_denominator, const MapCoord& scaling_center, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates)
+void Map::changeScale(unsigned int new_scale_denominator, const MapCoord& scaling_center, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates)
 {
 	if (new_scale_denominator == getScaleDenominator())
 		return;
@@ -545,6 +547,8 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 
 	// Update all objects without trying to remove their renderables first, this gives a significant speedup when loading large files
 	updateAllObjects(); // TODO: is the comment above still applicable?
+	
+	setHasUnsavedChanges(false);
 
 	return true;
 }
@@ -738,8 +742,8 @@ void Map::clear()
 	
 	map_notes = "";
 	
-	print_params_set = false;
-	print_simulate_overprinting = false;
+	printer_config.reset();
+	
 	image_template_use_meters_per_pixel = true;
 	image_template_meters_per_pixel = 0;
 	image_template_dpi = 0;
@@ -1812,46 +1816,37 @@ bool Map::doObjectsExistWithSymbol(Symbol* symbol)
 void Map::setGeoreferencing(const Georeferencing& georeferencing)
 {
 	*this->georeferencing = georeferencing;
+	setOtherDirty(true);
 }
 
-void Map::setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool show_grid, bool simulate_overprinting, bool center, float left, float top, float width, float height, bool different_scale_enabled, int different_scale)
+const MapPrinterConfig& Map::printerConfig()
 {
-	if ((print_orientation != orientation) || (print_format != format) || (print_dpi != dpi) || 
-		(print_show_templates != show_templates) || (print_show_grid != show_grid) || (print_simulate_overprinting != simulate_overprinting) ||
-		(print_center != center) || (print_area_left != left) || (print_area_top != top) || (print_area_width != width) || (print_area_height != height))
-		setHasUnsavedChanges();
-
-	print_orientation = orientation;
-	print_format = format;
-	print_dpi = dpi;
-	print_show_templates = show_templates;
-	print_show_grid = show_grid;
-	print_simulate_overprinting = simulate_overprinting;
-	print_center = center;
-	print_area_left = left;
-	print_area_top = top;
-	print_area_width = width;
-	print_area_height = height;
-	print_different_scale_enabled = different_scale_enabled;
-	print_different_scale = different_scale;
+	if (printer_config.isNull())
+		printer_config.reset(new MapPrinterConfig(*this));
 	
-	print_params_set = true;
+	return *printer_config;
 }
-void Map::getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& show_grid, bool &simulate_overprinting, bool& center, float& left, float& top, float& width, float& height, bool& different_scale_enabled, int& different_scale)
+
+MapPrinterConfig Map::printerConfig() const
 {
-	orientation = print_orientation;
-	format = print_format;
-	dpi = print_dpi;
-	show_templates = print_show_templates;
-	show_grid = print_show_grid;
-	simulate_overprinting = print_simulate_overprinting;
-	center = print_center;
-	left = print_area_left;
-	top = print_area_top;
-	width = print_area_width;
-	height = print_area_height;
-	different_scale_enabled = print_different_scale_enabled;
-	different_scale = print_different_scale;
+	if (printer_config.isNull())
+		return MapPrinterConfig(*this);
+	
+	return *printer_config;
+}
+
+void Map::setPrinterConfig(const MapPrinterConfig& config)
+{
+	if (printer_config.isNull())
+	{
+		printer_config.reset(new MapPrinterConfig(config));
+		setOtherDirty(true);
+	}
+	else if (*printer_config != config)
+	{
+		*printer_config = config;
+		setOtherDirty(true);
+	}
 }
 
 void Map::setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel, double dpi, double scale)

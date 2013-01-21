@@ -48,6 +48,7 @@ struct MapColor;
 class MapWidget;
 class MapView;
 class MapEditorController;
+class MapPrinterConfig;
 class Symbol;
 class CombinedSymbol;
 class LineSymbol;
@@ -95,7 +96,7 @@ public:
 	~Map();
 	
 	/// Attempts to save the map to the given file. If a MapEditorController is given, the widget positions and MapViews stored in the map file are also updated.
-    bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
+	bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
 	/// Attempts to load the map from the specified path. Returns true on success.
 	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL, bool load_symbols_only = false, bool show_error_messages = true);
 	/// Imports the other map into this map with the following strategy:
@@ -361,9 +362,9 @@ public:
 	
 	// Other settings
 	
-	void setScaleDenominator(int value);
-	int getScaleDenominator() const;
-	void changeScale(int new_scale_denominator, const MapCoord& scaling_center, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates);
+	void setScaleDenominator(unsigned int value);
+	unsigned int getScaleDenominator() const;
+	void changeScale(unsigned int new_scale_denominator, const MapCoord& scaling_center, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates);
 	void rotateMap(double rotation, const MapCoord& center, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates);
 	
 	inline const QString& getMapNotes() const {return map_notes;}
@@ -380,9 +381,16 @@ public:
 	inline bool isBaselineViewEnabled() const {return baseline_view_enabled;}
 	inline void setBaselineViewEnabled(bool enabled) {baseline_view_enabled = enabled;}
 	
-	inline bool arePrintParametersSet() const {return print_params_set;}
-	void setPrintParameters(int orientation, int format, float dpi, bool show_templates, bool show_grid, bool simulate_overprinting, bool center, float left, float top, float width, float height, bool different_scale_enabled, int different_scale);
-	void getPrintParameters(int& orientation, int& format, float& dpi, bool& show_templates, bool& show_grid, bool &simulate_overprinting, bool& center, float& left, float& top, float& width, float& height, bool& different_scale_enabled, int& different_scale);
+	
+	/** Returns a copy of the current print configuration. */
+	MapPrinterConfig printerConfig() const;
+	
+	/** Returns a const reference to the current print configuration. */
+	const MapPrinterConfig& printerConfig();
+	
+	/** Sets the current print configuration. */
+	void setPrinterConfig(const MapPrinterConfig& config);
+	
 	
 	void setImageTemplateDefaults(bool use_meters_per_pixel, double meters_per_pixel, double dpi, double scale);
 	void getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel, double& dpi, double& scale);
@@ -509,20 +517,7 @@ private:
 	bool area_hatching_enabled;
 	bool baseline_view_enabled;
 	
-	bool print_params_set;			// have the parameters been set (are they valid)?
-	int print_orientation;			// QPrinter::Orientation
-	int print_format;				// QPrinter::PaperSize
-	float print_dpi;
-	bool print_show_templates;
-	bool print_show_grid;
-	bool print_simulate_overprinting;
-	bool print_center;
-	float print_area_left;
-	float print_area_top;
-	float print_area_width;
-	float print_area_height;
-	bool print_different_scale_enabled;
-	int print_different_scale;
+	QScopedPointer<MapPrinterConfig> printer_config;
 	
 	bool image_template_use_meters_per_pixel;
 	double image_template_meters_per_pixel;

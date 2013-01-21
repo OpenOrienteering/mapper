@@ -44,7 +44,7 @@ public:
 	/** Get the denominator of the chosen map scale.
 	 *  For a scale of 1:10000, this function returns 10000.
 	 */
-	int getSelectedScale() const;
+	unsigned int getSelectedScale() const;
 	
 	/** Get the full path of the selected symbol set.
 	 *  Returns an empty string if the map shall be created with an empty symbol set. 

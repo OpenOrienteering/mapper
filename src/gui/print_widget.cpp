@@ -27,6 +27,7 @@
 #else
 #include <QtWidgets>
 #endif
+#include <QPrintDialog>
 #include <QPrintPreviewDialog>
 
 #include "main_window.h"
@@ -41,7 +42,7 @@
 #include "print_tool.h"
 
 
-const QString toString(QPrinter::PaperSize size);
+const QString trPaperSize(QPrinter::PaperSize size);
 
 
 PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, MapEditorController* editor, QWidget* parent)
@@ -79,7 +80,6 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	layout->addRow(Util::Headline::create(tr("Map area:")), policy_combo); // or print/export area
 	
 	center_check = new QCheckBox(tr("Center page on map"));
-	center_check->setCheckable(true);
 	layout->addRow(center_check);
 	
 	left_edit = Util::SpinBox::create(2, -999999.9, 999999.9, tr("mm"), 1.0);
@@ -142,8 +142,6 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(paper_size_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(paperSizeChanged(int)));
 	connect(page_orientation_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(pageOrientationChanged(int)));
 	
-	connect(policy_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(applyPrintAreaPolicy()));
-	connect(center_check, SIGNAL(clicked(bool)), this, SLOT(applyPrintAreaPolicy()));
 	connect(top_edit, SIGNAL(valueChanged(double)), this, SLOT(printAreaMoved()));
 	connect(left_edit, SIGNAL(valueChanged(double)), this, SLOT(printAreaMoved()));
 	connect(width_edit, SIGNAL(valueChanged(double)), this, SLOT(printAreaResized()));
@@ -160,6 +158,13 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(preview_button, SIGNAL(clicked(bool)), this, SLOT(previewClicked()));
 	connect(print_button, SIGNAL(clicked(bool)), this, SLOT(printClicked()));
 	
+	policy = map->printerConfig().single_page_print_area ? SinglePage : CustomArea;
+	policy_combo->setCurrentIndex(policy_combo->findData(policy));
+	connect(policy_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(printAreaPolicyChanged(int)));
+	
+	center_check->setChecked(map->printerConfig().center_print_area);
+	connect(center_check, SIGNAL(clicked(bool)), this, SLOT(applyCenterPolicy()));
+	
 	setPageFormat(map_printer->getPageFormat());
 	connect(map_printer, SIGNAL(pageFormatChanged(const MapPrinterPageFormat&)),
 	        this, SLOT(setPageFormat(const MapPrinterPageFormat&)));
@@ -173,7 +178,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 // 	setTarget(exporter->getSettings().target);
 	connect(map_printer, SIGNAL(targetChanged(const QPrinterInfo*)), this, SLOT(setTarget(const QPrinterInfo*)));
 	
-	connect(this, SIGNAL(finished(int)), map_printer, SLOT(saveParameters()));
+	connect(this, SIGNAL(finished(int)), this, SLOT(savePrinterConfig()));
 }
 
 PrintWidget::~PrintWidget()
@@ -198,11 +203,21 @@ void PrintWidget::setTask(PrintWidget::TaskFlags type)
 		target_combo->setVisible(is_print_task);
 		layout->labelForField(copies_edit)->setVisible(is_multipage);
 		copies_edit->setVisible(is_multipage);
-		policy_combo->setVisible(is_print_task);
+		policy_combo->setVisible(is_multipage);
 		updateTargets();
 		switch (type)
 		{
 			case PRINT_TASK:
+				// Reset values which are typically modified for exporting
+				if (policy == SinglePage && !map->printerConfig().single_page_print_area)
+				{
+					policy = CustomArea;
+					policy_combo->setCurrentIndex(policy_combo->findData(policy));
+				}
+				if (map_printer->getPageFormat().paper_size == QPrinter::Custom)
+				{
+					map_printer->setPaperSize(map->printerConfig().page_format.paper_size);
+				}
 				// TODO: Set target to most recently used printer
 				emit taskChanged(tr("Print"));
 				break;
@@ -214,7 +229,12 @@ void PrintWidget::setTask(PrintWidget::TaskFlags type)
 				
 			case EXPORT_IMAGE_TASK:
 				map_printer->setTarget(MapPrinter::imageTarget());
-				policy_combo->setCurrentIndex(policy_combo->findData(SinglePage));
+				policy = SinglePage;
+				if (policy_combo->itemData(policy_combo->currentIndex()) != policy)
+				{
+					map_printer->setCustomPaperSize(map_printer->getPrintAreaPaperSize());
+					policy_combo->setCurrentIndex(policy_combo->findData(policy));
+				}
 				emit taskChanged(tr("Image export"));
 				break;
 				
@@ -222,6 +242,23 @@ void PrintWidget::setTask(PrintWidget::TaskFlags type)
 				emit taskChanged(QString::null);
 		}
 	}
+}
+
+// slot
+void PrintWidget::savePrinterConfig() const
+{
+	MapPrinterConfig printer_config(map_printer->config());
+	printer_config.center_print_area = center_check->isChecked();
+	if (task.testFlag(MULTIPAGE_FLAG))
+	{
+		printer_config.single_page_print_area = policy == SinglePage;
+	}
+	if (task.testFlag(EXPORT_IMAGE_TASK))
+	{
+		// Don't override the printer page format from the custom image format.
+		printer_config.page_format = map->printerConfig().page_format;
+	}
+	map->setPrinterConfig(printer_config);
 }
 
 // slot
@@ -429,27 +466,41 @@ void PrintWidget::pageOrientationChanged(int index) const
 }
 
 
+// slot
+void PrintWidget::printAreaPolicyChanged(int index)
+{
+	policy = (PrintAreaPolicy)policy_combo->itemData(index).toInt();
+	applyPrintAreaPolicy();
+}
+
 
 // slot
 void PrintWidget::applyPrintAreaPolicy() const
 {
-	QRectF print_area = map_printer->getPrintArea();
-	
-	PrintAreaPolicy policy = (PrintAreaPolicy)policy_combo->itemData(policy_combo->currentIndex()).toInt();
 	if (policy == SinglePage)
 	{
-		print_area.setSize(map_printer->getPageFormat().page_rect.size() / map_printer->getScaleAdjustment());
 		setOverlapEditEnabled(false);
+		QRectF print_area = map_printer->getPrintArea();
+		print_area.setSize(map_printer->getPageRectPrintAreaSize());
+		if (center_check->isChecked())
+			centerOnMap(print_area);
+		map_printer->setPrintArea(print_area);
 	}
 	else
 	{
 		setOverlapEditEnabled(true);
 	}
-	
+}
+
+// slot
+void PrintWidget::applyCenterPolicy() const
+{
 	if (center_check->isChecked())
+	{
+		QRectF print_area = map_printer->getPrintArea();
 		centerOnMap(print_area);
-	
-	map_printer->setPrintArea(print_area);
+		map_printer->setPrintArea(print_area);
+	}
 }
 
 void PrintWidget::centerOnMap(QRectF& area) const
@@ -476,22 +527,31 @@ void PrintWidget::setPrintArea(const QRectF& area)
 	{
 		QRectF centered_area = map_printer->getPrintArea();
 		centerOnMap(centered_area);
-		if (qAbs(centered_area.left() - area.left()) > 0.005f ||
-			qAbs(centered_area.top() - area.top()) > 0.005f)
+		if ( qAbs(centered_area.left() - area.left()) > 0.005 ||
+			 qAbs(centered_area.top()  - area.top())  > 0.005 )
 		{
 			// No longer centered.
 			center_check->setChecked(false);
 		}
 	}
 	
-	PrintAreaPolicy policy = (PrintAreaPolicy)policy_combo->itemData(policy_combo->currentIndex()).toInt();
 	if (policy == SinglePage)
 	{
-		if (map_printer->getPageFormat().paper_size != QPrinter::Custom)
+		if (map_printer->getPageFormat().paper_size == QPrinter::Custom || !task.testFlag(MULTIPAGE_FLAG))
 		{
-			QSizeF page_dimensions = map_printer->getPageFormat().page_rect.size() / map_printer->getScaleAdjustment();
-			if ( qAbs(area.width() - page_dimensions.width()) > 0.05 || 
-				 qAbs(area.height() - page_dimensions.height()) > 0.05 )
+			// Update custom paper size from print area size
+			QSizeF area_dimensions = area.size() * map_printer->getScaleAdjustment();
+			if (map_printer->getPageFormat().page_rect.size() != area_dimensions)
+			{
+				// Don't force a custom paper size unless necessary
+				map_printer->setCustomPaperSize(area_dimensions);
+			}
+		}
+		else
+		{
+			QSizeF page_dimensions = map_printer->getPageRectPrintAreaSize();
+			if ( qAbs(area.width()  - page_dimensions.width())  > 0.005 || 
+				 qAbs(area.height() - page_dimensions.height()) > 0.005 )
 			{
 				// No longer single page.
 				block << policy_combo;
@@ -547,13 +607,20 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	show_templates_check->setChecked(options.show_templates);
 	show_grid_check->setChecked(options.show_grid);
 	overprinting_check->setChecked(options.simulate_overprinting);
-	different_scale_edit->setValue(options.scale);
-	if (options.scale != map->getScaleDenominator())
+	if (different_scale_edit->value() != (int)options.scale)
 	{
-		different_scale_check->setChecked(true);
-		different_scale_edit->setEnabled(true);
+		different_scale_edit->setValue(options.scale);
+		if (options.scale != map->getScaleDenominator())
+		{
+			different_scale_check->setChecked(true);
+			different_scale_edit->setEnabled(true);
+		}
+		applyPrintAreaPolicy();
 	}
-	applyPrintAreaPolicy();
+	else
+	{
+		applyCenterPolicy();
+	}
 }
 
 void PrintWidget::updateResolutions(const QPrinterInfo* target) const
@@ -613,13 +680,25 @@ void PrintWidget::differentScaleClicked(bool checked)
 void PrintWidget::differentScaleEdited(int value)
 {
 	map_printer->setScale(value);
+	if (policy == SinglePage)
+	{ 
+		if (map_printer->getPageFormat().paper_size == QPrinter::Custom)
+		{
+			// Adjust the custom paper size.
+			map_printer->setCustomPaperSize(map_printer->getPrintAreaPaperSize());
+		 }
+		 else
+		 {
+			// Adjust the print area.
+			applyPrintAreaPolicy();
+		 }
+	}
 }
 
 // slot
 void PrintWidget::showTemplatesClicked(bool checked)
 {
 	map_printer->setPrintTemplates(checked, main_view);
-	applyPrintAreaPolicy();
 }
 
 // slot
@@ -728,6 +807,7 @@ void PrintWidget::printClicked()
 
 QList<QPrinter::PaperSize> PrintWidget::defaultPaperSizes() const
 {
+	// TODO: Learn from user's past choices, present reduced list unless asked for more.
 	static QList<QPrinter::PaperSize> default_paper_sizes(QList<QPrinter::PaperSize>()
 	  << QPrinter::A4
 	  << QPrinter::Letter
@@ -764,46 +844,15 @@ QList<QPrinter::PaperSize> PrintWidget::defaultPaperSizes() const
 	return default_paper_sizes;
 }
 
-const QString toString(QPrinter::PaperSize size)
+QString PrintWidget::toString(QPrinter::PaperSize size)
 {
-	QString name;
-	switch (size)
-	{
-	case QPrinter::A4:			name = "A4";			break;
-	case QPrinter::B5:			name = "B5";			break;
-	case QPrinter::Letter:		name = QObject::tr("Letter");	break;
-	case QPrinter::Legal:		name = QObject::tr("Legal");		break;
-	case QPrinter::Executive:	name = QObject::tr("Executive");	break;
-	case QPrinter::A0:			name = "A0";			break;
-	case QPrinter::A1:			name = "A1";			break;
-	case QPrinter::A2:			name = "A2";			break;
-	case QPrinter::A3:			name = "A3";			break;
-	case QPrinter::A5:			name = "A5";			break;
-	case QPrinter::A6:			name = "A6";			break;
-	case QPrinter::A7:			name = "A7";			break;
-	case QPrinter::A8:			name = "A8";			break;
-	case QPrinter::A9:			name = "A9";			break;
-	case QPrinter::B0:			name = "B0";			break;
-	case QPrinter::B1:			name = "B1";			break;
-	case QPrinter::B10:			name = "B10";			break;
-	case QPrinter::B2:			name = "B2";			break;
-	case QPrinter::B3:			name = "B3";			break;
-	case QPrinter::B4:			name = "B4";			break;
-	case QPrinter::B6:			name = "B6";			break;
-	case QPrinter::B7:			name = "B7";			break;
-	case QPrinter::B8:			name = "B8";			break;
-	case QPrinter::B9:			name = "B9";			break;
-	case QPrinter::C5E:			name = QObject::tr("C5E");		break;
-	case QPrinter::Comm10E:		name = QObject::tr("Comm10E");	break;
-	case QPrinter::DLE:			name = QObject::tr("DLE");		break;
-	case QPrinter::Folio:		name = QObject::tr("Folio");		break;
-	case QPrinter::Ledger:		name = QObject::tr("Ledger");	break;
-	case QPrinter::Tabloid:		name = QObject::tr("Tabloid");	break;
-	case QPrinter::Custom:		name = QObject::tr("Custom");	break;
-	default:					name = QObject::tr("Unknown");	break;
-	}
-	
-	return name;
+	const QHash< int, const char*>& paper_size_names = MapPrinter::paperSizeNames();
+	if (paper_size_names.contains(size))
+		// These translations are not used in QPrintDialog, 
+		// but in Qt's qpagesetupdialog_unix.cpp.
+		return QPrintDialog::tr(paper_size_names[size]);
+	else
+		return tr("Unknown", "Paper size");
 }
 
 bool PrintWidget::checkForEmptyMap()

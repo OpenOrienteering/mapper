@@ -240,7 +240,7 @@ public:
 	/**
 	 * Returns the map scale denominator.
 	 */
-	inline int getScaleDenominator() const { return scale_denominator; }
+	inline unsigned int getScaleDenominator() const { return scale_denominator; }
 	
 	/**
 	 * Sets the map scale denominator.
@@ -503,7 +503,7 @@ signals:
 private:
 	State state;
 	
-	int scale_denominator;
+	unsigned int scale_denominator;
 	double declination;
 	double grivation;
 	MapCoord map_ref_point;

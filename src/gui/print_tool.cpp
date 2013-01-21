@@ -103,7 +103,7 @@ void PrintTool::draw(QPainter* painter, MapWidget* widget)
 	QRect view_area = QRect(0, 0, widget->width(), widget->height());
 	QRect print_area = widget->mapToViewport(map_printer->getPrintArea()).toRect();
 	QSizeF page_size = widget->mapToViewport(map_printer->getPageFormat().page_rect).size();
-	qreal scale = map_printer->getOptions().scale_adjustment;
+	qreal scale_adjustment = map_printer->getScaleAdjustment();
 	
 	// Strongly darken the region outside the print area
 	painter->setBrush(QColor(0, 0, 0, 160));
@@ -123,7 +123,7 @@ void PrintTool::draw(QPainter* painter, MapWidget* widget)
 		painter->setPen(top_left_margin_color);
 		painter->drawLine(x_pos, 0, x_pos, widget->height());
 		
-		x_pos += page_size.width() / scale;
+		x_pos += page_size.width() / scale_adjustment;
 		painter->setPen(bottom_right_margin_color);
 		painter->drawLine(x_pos, 0, x_pos, widget->height());
 	}
@@ -133,7 +133,7 @@ void PrintTool::draw(QPainter* painter, MapWidget* widget)
 		painter->setPen(top_left_margin_color);
 		painter->drawLine(0, y_pos, widget->width(), y_pos);
 		
-		y_pos += page_size.height() / scale;
+		y_pos += page_size.height() / scale_adjustment;
 		painter->setPen(bottom_right_margin_color);
 		painter->drawLine(0, y_pos, widget->width(), y_pos);
 	}

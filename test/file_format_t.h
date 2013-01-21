@@ -41,8 +41,9 @@ private slots:
 	
 private:
 	Map* saveAndLoadMap(Map* input, const FileFormat* format);
+	void comparePrinterConfig(const MapPrinterConfig& copy, const MapPrinterConfig& orig);
 	bool compareMaps(Map* a, Map* b, QString& error);
-	QString map_filename;
+	QStringList map_filenames;
 };
 
 #endif // _OPENORIENTEERING_FILE_FORMAT_T_H

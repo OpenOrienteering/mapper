@@ -18,6 +18,7 @@
  
 set(Mapper_TEST_DATA
   test_map.omap
+  spotcolor_overprint.xmap
 )
 
 set(_test_data)

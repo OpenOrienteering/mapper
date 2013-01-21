@@ -23,38 +23,142 @@
 #include <limits>
 
 #include <QPainter>
+#include <QXmlStreamAttributes>
+#include <QXmlStreamReader>
+#include <QXmlStreamWriter>
 
 #include "../util.h"
 #include "../map.h"
 #include "../settings.h"
 
-//### MapPrinterPageFormat ###
+// #### MapPrinterPageFormat ###
 
-/**
- * Returns true if the MapPrinterPageFormat objects are not equal.
- */
-inline
-bool operator!=(const MapPrinterPageFormat& lhs, const MapPrinterPageFormat& rhs)
+MapPrinterPageFormat::MapPrinterPageFormat(QSizeF page_rect_size, qreal margin) 
+ : paper_size(QPrinter::Custom),
+   orientation(QPrinter::Portrait),
+   page_rect(QRectF(QPointF(margin, margin), page_rect_size)),
+   h_overlap(5.0), // mm
+   v_overlap(5.0)  // mm
 {
-	return 
-	  lhs.paper_size != rhs.paper_size ||
-	  lhs.orientation != rhs.orientation ||
-	  lhs.paper_dimensions != rhs.paper_dimensions ||
-	  lhs.page_rect != rhs.page_rect;
-}
-
-/**
- * Returns true if the MapPrinterPageFormat objects are equal.
- */
-inline
-bool operator==(const MapPrinterPageFormat& lhs, const MapPrinterPageFormat& rhs)
-{
-	return !(lhs != rhs);
+	const qreal double_margin = 2 * margin;
+	paper_dimensions = page_rect.size() + QSizeF(double_margin, double_margin);
 }
 
 
 
-//### MapPrinter ###
+// ### MapPrinterOptions ###
+
+MapPrinterOptions::MapPrinterOptions(unsigned int scale, unsigned int resolution)
+ : scale(scale),
+   resolution(resolution),
+   show_templates(false),
+   show_grid(false),
+   simulate_overprinting(false)
+{
+	// nothing
+}
+
+
+
+// ### MapPrinterConfig ###
+
+MapPrinterConfig::MapPrinterConfig(const Map& map)
+ : printer_name("DEFAULT"),
+   print_area(map.calculateExtent()),
+   page_format(),                      // Use defaults.
+   options(map.getScaleDenominator()),
+   center_print_area(false),
+   single_page_print_area(false)
+{
+	options.resolution = 600.0;
+	options.scale = map.getScaleDenominator();
+	options.show_grid = false;
+	options.show_templates = false;
+	options.simulate_overprinting = false;
+}
+
+MapPrinterConfig::MapPrinterConfig(const Map& map, QXmlStreamReader& xml)
+ : printer_name("DEFAULT"),
+   print_area(0.0, 0.0, 100.0, 100.0), // Avoid expensive calculation before loading.
+   page_format(),                      // Use defaults.
+   options(map.getScaleDenominator()),
+   center_print_area(false),
+   single_page_print_area(false)
+{
+	QXmlStreamAttributes attributes = xml.attributes();
+	
+	if (attributes.hasAttribute("QPrinter_PaperSize"))
+	{
+		page_format.paper_size =
+		  (QPrinter::PaperSize)   attributes.value("QPrinter_PaperSize").toString().toInt();
+	}
+	page_format.orientation = (attributes.value("orientation") == "landscape") ? QPrinter::Landscape : QPrinter::Portrait;
+	// Warning: page_format member paper_dimensions and page_rect remain uninitialized at the moment.
+	
+	options.resolution =      attributes.value("resolution").toString().toUInt();
+	options.scale =           attributes.value("scale").toString().toUInt();
+	options.show_templates =  attributes.value("templates_visible") == "true";
+	options.show_grid =       attributes.value("grid_visible") == "true";
+	options.simulate_overprinting =
+	                          attributes.value("simulate_overprinting") == "true";
+	
+	print_area.setLeft(       attributes.value("area_left").toString().toFloat() );
+	print_area.setTop(        attributes.value("area_top").toString().toFloat()  );
+	print_area.setWidth( qAbs(attributes.value("area_width").toString().toFloat()) );
+	print_area.setHeight(qAbs(attributes.value("area_height").toString().toFloat()) );
+	center_print_area =       attributes.value("center_area") == "true";
+	single_page_print_area =  attributes.value("single_page") == "true";
+	
+	// Legacy items.
+	// TODO: Remove before release 1.0.
+	if (attributes.hasAttribute("dpi"))
+		options.resolution =  attributes.value("dpi").toString().toUInt();
+	if (attributes.hasAttribute("alternative_scale"))
+		options.scale =       attributes.value("alternative_scale").toString().toUInt();
+	
+	// Sanity checks
+	if (options.scale <= 0)
+		options.scale = map.getScaleDenominator();
+	if (options.resolution <= 0)
+		options.resolution = 600;
+	
+	xml.skipCurrentElement();
+	
+}
+
+void MapPrinterConfig::save(QXmlStreamWriter& xml, const QString& element_name) const
+{
+	xml.writeStartElement(element_name);
+	
+	// TODO: use readable paper size names
+	xml.writeAttribute( "QPrinter_PaperSize", QString::number(page_format.paper_size) );
+	xml.writeAttribute( "orientation",
+	  (page_format.orientation == QPrinter::Portrait) ? "portrait" : "landscape" );
+	
+	xml.writeAttribute( "resolution",  QString::number(options.resolution)  );
+	xml.writeAttribute( "scale",       QString::number(options.scale)       );
+	if (options.show_templates)
+		xml.writeAttribute("templates_visible", "true");
+	if (options.show_grid)
+		xml.writeAttribute("grid_visible", "true");
+	if (options.simulate_overprinting)
+		xml.writeAttribute("simulate_overprinting", "true");
+	
+	xml.writeAttribute( "area_left",   QString::number(print_area.left())   );
+	xml.writeAttribute( "area_top",    QString::number(print_area.top())    );
+	xml.writeAttribute( "area_width",  QString::number(print_area.width())  );
+	xml.writeAttribute( "area_height", QString::number(print_area.height()) );
+	if (center_print_area)
+		xml.writeAttribute("center_area", "true");
+	if (single_page_print_area)
+		xml.writeAttribute("single_page", "true");
+	
+	xml.writeEndElement(/*element_name*/);
+}
+
+
+
+// ### MapPrinter ###
 
 const QPrinterInfo* MapPrinter::pdfTarget()
 {
@@ -68,57 +172,55 @@ const QPrinterInfo* MapPrinter::imageTarget()
 	return &image_target;
 }
 
+const QHash< int, const char* >& MapPrinter::paperSizeNames()
+{
+	static QHash< int, const char* > names;
+	if (names.empty())
+	{
+		names[QPrinter::A0]        = "A0";
+		names[QPrinter::A1]        = "A1";
+		names[QPrinter::A2]        = "A2";
+		names[QPrinter::A3]        = "A3";
+		names[QPrinter::A4]        = "A4";
+		names[QPrinter::A5]        = "A5";
+		names[QPrinter::A6]        = "A6";
+		names[QPrinter::A7]        = "A7";
+		names[QPrinter::A8]        = "A8";
+		names[QPrinter::A9]        = "A9";
+		names[QPrinter::B0]        = "B0";
+		names[QPrinter::B1]        = "B1";
+		names[QPrinter::B2]        = "B2";
+		names[QPrinter::B3]        = "B3";
+		names[QPrinter::B4]        = "B4";
+		names[QPrinter::B5]        = "B5";
+		names[QPrinter::B6]        = "B6";
+		names[QPrinter::B7]        = "B7";
+		names[QPrinter::B8]        = "B8";
+		names[QPrinter::B9]        = "B9";
+		names[QPrinter::B10]       = "B10";
+		names[QPrinter::C5E]       = "C5E";
+		names[QPrinter::DLE]       = "DLE";
+		names[QPrinter::Executive] = "Executive";
+		names[QPrinter::Folio]     = "Folio";
+		names[QPrinter::Ledger]    = "Ledger";
+		names[QPrinter::Legal]     = "Legal";
+		names[QPrinter::Letter]    = "Letter";
+		names[QPrinter::Tabloid]   = "Tabloid";
+		names[QPrinter::Comm10E]   = "US Common #10 Envelope";
+		names[QPrinter::Custom]    = "Custom";
+	}
+	return names;
+}
+
+
 MapPrinter::MapPrinter(Map& map, QObject* parent)
-: QObject(parent), 
+: QObject(parent),
+  MapPrinterConfig(map.printerConfig()),
   map(map),
   view(NULL),
   target(NULL)
 {
-	options.scale = map.getScaleDenominator();
-	options.scale_adjustment = 1.0;
-	// TODO: save overlap
-	page_format.h_overlap = 5.0;
-	page_format.v_overlap = 5.0;
-	if (map.arePrintParametersSet())
-	{
-		float left, top, width, height;
-		bool different_scale_enabled;
-		int different_scale;
-		int int_orientation, int_paper_size;
-		float resolution_f;
-		map.getPrintParameters(
-		  int_orientation, int_paper_size, resolution_f,
-		  options.show_templates, options.show_grid, options.simulate_overprinting,
-		  center, left, top, width, height,
-		  different_scale_enabled, different_scale
-		);
-		page_format.orientation = (QPrinter::Orientation)int_orientation;
-		page_format.paper_size = (QPrinter::PaperSize)int_paper_size;
-		print_area = QRectF(left, top, width, height);
-		options.resolution = qRound(resolution_f);
-		if (different_scale_enabled)
-		{
-			options.scale = qMax(1, different_scale);
-			options.scale_adjustment = map.getScaleDenominator() / (qreal) options.scale;
-		}
-		if (page_format.paper_size == QPrinter::Custom);
-		{
-			// TODO: Save/load custom paper dimensions.
-			page_format.paper_dimensions = print_area.size() * options.scale_adjustment;
-			page_format.page_rect = QRectF(QPointF(0.0, 0.0), page_format.paper_dimensions);
-		}
-	}
-	else
-	{
-		page_format.paper_size = QPrinter::Custom;
-		options.resolution = 600; // dpi
-		options.show_templates = false;
-		options.show_grid = false;
-		options.simulate_overprinting = false;
-		center = true;
-		print_area = QRectF(map.calculateExtent());
-		page_format.orientation = (print_area.width() > print_area.height()) ? QPrinter::Landscape : QPrinter::Portrait;
-	}
+	scale_adjustment = map.getScaleDenominator() / (qreal) options.scale;
 	updatePaperDimensions();
 }
 
@@ -127,15 +229,9 @@ MapPrinter::~MapPrinter()
 	// Do not remove.
 }
 
-void MapPrinter::saveParameters() const
+void MapPrinter::saveConfig() const
 {
-	map.setPrintParameters(
-	  page_format.orientation, page_format.paper_size, (float)options.resolution,
-	  options.show_templates, options.show_grid, options.simulate_overprinting,
-	  center,
-	  print_area.left(), print_area.top(), print_area.width(), print_area.height(),
-	  (options.scale != map.getScaleDenominator()), options.scale
-	);
+	map.setPrinterConfig(*this);
 }
 
 // slot
@@ -160,9 +256,8 @@ void MapPrinter::setTarget(const QPrinterInfo* new_target)
 		
 		if (old_target == imageTarget() || new_target == imageTarget())
 		{
-			// Page margins change
-			updatePaperDimensions();
-			emit pageFormatChanged(page_format);
+			// No page margins. Will emit pageFormatChanged( ).
+			setCustomPaperSize(page_format.page_rect.size());
 		}
 	}
 }
@@ -175,9 +270,9 @@ QPrinter* MapPrinter::makePrinter() const
 	printer->setDocName("MAP"/* FIXME QFileInfo(main_window->getCurrentFilePath()).fileName()*/);
 	printer->setFullPage(true);
 	if (page_format.paper_size == QPrinter::Custom)
-	{	
+	{
 		// TODO: Proper handling of custom paper dimensions.
-		printer->setPaperSize(print_area.size() * options.scale_adjustment, QPrinter::Millimeter);
+		printer->setPaperSize(print_area.size() * scale_adjustment, QPrinter::Millimeter);
 		printer->setOrientation(QPrinter::Portrait);
 	}
 	else
@@ -214,9 +309,9 @@ void MapPrinter::setPrintArea(const QRectF& area)
 		print_area = area;
 		
 		if (target == imageTarget() && print_area.size() != page_format.paper_dimensions)
-			setCustomPaperSize(print_area.size());
-		else
-			updatePageBreaks();
+			setCustomPaperSize(print_area.size() * scale_adjustment);
+		
+		updatePageBreaks();
 		
 		emit printAreaChanged(print_area);
 	}
@@ -226,9 +321,15 @@ void MapPrinter::setPrintArea(const QRectF& area)
 void MapPrinter::setPaperSize(const QPrinter::PaperSize size)
 {
 	if (size == QPrinter::Custom)
-		setCustomPaperSize(print_area.size() * options.scale_adjustment);
+		setCustomPaperSize(print_area.size() * scale_adjustment);
 	else if (page_format.paper_size != size)
 	{
+		if ( page_format.paper_size == QPrinter::Custom &&
+		     page_format.paper_dimensions.width() > page_format.paper_dimensions.height() )
+		{
+			// After QPrinter::Custom, determine orientation from actual dimensions.
+			page_format.orientation = QPrinter::Landscape;
+		}
 		page_format.paper_size = size;
 		updatePaperDimensions();
 		emit pageFormatChanged(page_format);
@@ -323,7 +424,7 @@ void MapPrinter::updatePaperDimensions()
 }
 
 // slot
-void MapPrinter::setResolution(const float dpi)
+void MapPrinter::setResolution(const unsigned int dpi)
 {
 	Q_ASSERT(dpi >= 0.05f);
 	if (options.resolution != dpi)
@@ -334,13 +435,13 @@ void MapPrinter::setResolution(const float dpi)
 }
 
 // slot
-void MapPrinter::setScale(const int value)
+void MapPrinter::setScale(const unsigned int value)
 {
 	if (options.scale != value)
 	{
 		Q_ASSERT(value > 0);
 		options.scale = value;
-		options.scale_adjustment = map.getScaleDenominator() / (qreal) value;
+		scale_adjustment = map.getScaleDenominator() / (qreal) value;
 		updatePageBreaks();
 		emit optionsChanged(options);
 	}
@@ -391,20 +492,22 @@ void MapPrinter::updatePageBreaks()
 	Q_ASSERT(print_area.left() <= print_area.right());
 	Q_ASSERT(print_area.top() <= print_area.bottom());
 	
+	// This whole implementation needs to deal with FP precision issues
+	
 	h_page_pos.clear();
 	qreal h_pos = print_area.left();
 	h_page_pos.push_back(h_pos);
-	const qreal page_width = page_format.page_rect.width() / options.scale_adjustment;
-	const qreal h_overlap = page_format.h_overlap / options.scale_adjustment;
-	if (page_width - h_overlap >= 0.01)
+	const qreal h_overlap = page_format.h_overlap / scale_adjustment;
+	const qreal page_width = page_format.page_rect.width() / scale_adjustment - h_overlap;
+	const qreal right_bound = print_area.right() - h_overlap - 0.05;
+	if (page_width >= 0.01)
 	{
-		for (h_pos += page_width; h_pos < print_area.right(); h_pos += page_width)
-		{
-			h_pos -= h_overlap;
+		for (h_pos += page_width; h_pos < right_bound; h_pos += page_width)
 			h_page_pos.push_back(h_pos);
-		}
-		// Don' pre-calculate offset to avoid FP precision problems
-		const qreal h_offset = 0.5 * (h_pos - print_area.right());
+		
+		// Center the print area on the pages total area.
+		// Don' pre-calculate this offset to avoid FP precision problems
+		const qreal h_offset = 0.5 * (h_pos + h_overlap - print_area.right());
 		for (std::vector<qreal>::iterator it=h_page_pos.begin(); it != h_page_pos.end(); ++it)
 			*it -= h_offset;
 	}
@@ -412,17 +515,16 @@ void MapPrinter::updatePageBreaks()
 	v_page_pos.clear();
 	qreal v_pos = print_area.top();
 	v_page_pos.push_back(v_pos);
-	const qreal page_height = page_format.page_rect.height() / options.scale_adjustment;
-	const qreal v_overlap = page_format.v_overlap / options.scale_adjustment;
-	if (page_height - v_overlap >= 0.01)
+	const qreal v_overlap = page_format.v_overlap / scale_adjustment;
+	const qreal page_height = page_format.page_rect.height() / scale_adjustment - v_overlap;
+	const qreal bottom_bound = print_area.bottom() - v_overlap - 0.05;
+	if (page_height >= 0.01)
 	{
-		for (v_pos += page_height; v_pos < print_area.bottom(); v_pos += page_height)
-		{
-			v_pos -= v_overlap;
+		for (v_pos += page_height; v_pos < bottom_bound; v_pos += page_height)
 			v_page_pos.push_back(v_pos);
-		}
+		
 		// Don' pre-calculate offset to avoid FP precision problems
-		const qreal v_offset = 0.5 * (v_pos - print_area.bottom());
+		const qreal v_offset = 0.5 * (v_pos + v_overlap - print_area.bottom());
 		for (std::vector<qreal>::iterator it=v_page_pos.begin(); it != v_page_pos.end(); ++it)
 			*it -= v_offset;
 	}
@@ -496,10 +598,10 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 	painter->translate(page_format.page_rect.left(), page_format.page_rect.top());
 	
 	// Convert native map scale to print scale
-	if (options.scale_adjustment != (qreal)1.0)
+	if (scale_adjustment != 1.0)
 	{
-		scale *= options.scale_adjustment;
-		painter->scale(options.scale_adjustment, options.scale_adjustment);
+		scale *= scale_adjustment;
+		painter->scale(scale_adjustment, scale_adjustment);
 	}
 	
 	// Translate and clip for margins and print area
@@ -572,7 +674,7 @@ void MapPrinter::printMap(QPrinter* printer)
 	// We need to use them for printing.
 	takePrinterSettings(printer);
 	
-	QSizeF extent_size = page_format.page_rect.size() / options.scale_adjustment;
+	QSizeF extent_size = page_format.page_rect.size() / scale_adjustment;
 	QPainter p(printer);
 	bool need_new_page = false;
 	Q_FOREACH(qreal vpos, v_page_pos)
