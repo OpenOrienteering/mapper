@@ -134,11 +134,17 @@ XMLFileExporter::XMLFileExporter(QIODevice* stream, Map *map, MapView *view)
 : Exporter(stream, map, view),
   xml(stream)
 {
-	xml.setAutoFormatting(true);
+	// Determine auto-formatting default from filename, if possible.
+	const QFile* file = qobject_cast< const QFile* >(stream);
+	bool auto_formatting = (file && file->fileName().endsWith(".xmap"));
+	setOption("autoFormatting", auto_formatting);
 }
 
 void XMLFileExporter::doExport() throw (FileFormatException)
 {
+	if (option("autoFormatting").toBool() == true)
+		xml.setAutoFormatting(true);
+	
 	xml.writeDefaultNamespace(XMLFileFormat::mapper_namespace);
 	xml.writeStartDocument();
 	xml.writeStartElement("map");
