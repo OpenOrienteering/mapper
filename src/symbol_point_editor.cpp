@@ -71,6 +71,8 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	add_element_button_menu->addAction(tr("Area"), this, SLOT(addAreaClicked()));
 	add_element_button->setMenu(add_element_button_menu);
 	
+	center_all_elements_button = new QPushButton(tr("Center all elements"));
+	
 	QLabel* current_element_label = Util::Headline::create(tr("Current element"));
 	
 	element_properties_widget = new QStackedWidget();
@@ -192,12 +194,13 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	QBoxLayout* left_layout = new QVBoxLayout();
 	
 	left_layout->addWidget(elements_label);
-	left_layout->addWidget(element_list);
-	QHBoxLayout* element_buttons_layout = new QHBoxLayout();
-	element_buttons_layout->addStretch(1);
-	element_buttons_layout->addWidget(add_element_button);
-	element_buttons_layout->addWidget(delete_element_button);
-	element_buttons_layout->addStretch(1);
+	left_layout->addWidget(element_list, 1);
+	QGridLayout* element_buttons_layout = new QGridLayout();
+	element_buttons_layout->setColumnStretch(0, 1);
+	element_buttons_layout->addWidget(add_element_button, 1, 2);
+	element_buttons_layout->addWidget(delete_element_button, 1, 3);
+	element_buttons_layout->addWidget(center_all_elements_button, 2, 1, 1, 4);
+	element_buttons_layout->setColumnStretch(5, 1);
 	left_layout->addLayout(element_buttons_layout);
 	
 	QBoxLayout* right_layout = new QVBoxLayout();
@@ -232,6 +235,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	
 	connect(element_list, SIGNAL(currentRowChanged(int)), this, SLOT(changeElement(int)));
 	connect(delete_element_button, SIGNAL(clicked(bool)), this, SLOT(deleteCurrentElement()));
+	connect(center_all_elements_button, SIGNAL(clicked(bool)), this, SLOT(centerAllElements()));
 	
 	connect(point_inner_radius_edit, SIGNAL(valueChanged(double)), this, SLOT(pointInnerRadiusChanged(double)));
 	connect(point_inner_color_edit, SIGNAL(currentIndexChanged(int)), this, SLOT(pointInnerColorChanged()));
@@ -382,6 +386,7 @@ void PointSymbolEditorWidget::orientedToNorthClicked(bool checked)
 void PointSymbolEditorWidget::changeElement(int row)
 {
 	delete_element_button->setEnabled(row > 0);	// must not remove first row
+	center_all_elements_button->setEnabled(symbol->getNumElements() > 0);
 	
 	if (row >= 0)
 	{
@@ -504,6 +509,70 @@ void PointSymbolEditorWidget::deleteCurrentElement()
 	symbol->deleteElement(pos);
 	delete element_list->item(row);
 	midpoint_object->update(true);
+	emit symbolEdited();
+}
+
+void PointSymbolEditorWidget::centerAllElements()
+{
+	bool has_coordinates = false;
+	qint64 min_x, min_y, max_x, max_y;
+	
+	for (int i = 0; i < symbol->getNumElements(); ++i)
+	{
+		Object* object = symbol->getElementObject(i);
+		for (size_t c = 0; c < object->getRawCoordinateVector().size(); ++c)
+		{
+			MapCoord coord = object->getRawCoordinateVector().at(c);
+			if (has_coordinates)
+			{
+				min_x = std::min(min_x, coord.rawX());
+				min_y = std::min(min_y, coord.rawY());
+				max_x = std::max(max_x, coord.rawX());
+				max_y = std::max(max_y, coord.rawY());
+			}
+			else
+			{
+				min_x = coord.rawX();
+				min_y = coord.rawY();
+				max_x = coord.rawX();
+				max_y = coord.rawY();
+				has_coordinates = true;
+			}
+		}
+	}
+	
+	if (has_coordinates)
+	{
+		qint64 center_x = (min_x + max_x) / 2;
+		qint64 center_y = (min_y + max_y) / 2;
+		
+		for (int i = 0; i < symbol->getNumElements(); ++i)
+		{
+			Object* object = symbol->getElementObject(i);
+			if (object->getType() == Object::Point)
+			{
+				PointObject* point = object->asPoint();
+				point->setPosition(point->getCoord().rawX() - center_x, point->getCoord().rawY() - center_y);
+			}
+			else if (object->getType() == Object::Path)
+			{
+				PathObject* path = object->asPath();
+				for (int c = 0; c < path->getCoordinateCount(); ++c)
+				{
+					MapCoord& coord = path->getCoordinate(c);
+					coord.setRawX(coord.rawX() - center_x);
+					coord.setRawY(coord.rawY() - center_y);
+				}
+			}
+			else
+				Q_ASSERT(false);
+			
+			object->update(true);
+		}
+	}
+	
+	if (element_list->currentRow() > 0)
+		updateCoordsTable();
 	emit symbolEdited();
 }
 

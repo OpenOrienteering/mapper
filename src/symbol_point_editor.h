@@ -90,6 +90,7 @@ private slots:
 	void addLineClicked();
 	void addAreaClicked();
 	void deleteCurrentElement();
+	void centerAllElements();
 	
 	void pointInnerRadiusChanged(double value);
 	void pointInnerColorChanged();
@@ -130,6 +131,7 @@ private:
 	
 	QListWidget* element_list;
 	QPushButton* delete_element_button;
+	QPushButton* center_all_elements_button;
 	
 	QStackedWidget* element_properties_widget;
 	
