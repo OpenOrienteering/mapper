@@ -20,6 +20,8 @@
 
 #include "map_editor.h"
 
+#include <limits>
+
 #if QT_VERSION < 0x050000
 #include <QtGui>
 #else
@@ -1733,6 +1735,45 @@ void MapEditorController::switchDashesClicked()
 	map->emitSelectionEdited();
 }
 
+float connectPaths_FindClosestEnd(const std::vector<Object*>& objects, PathObject* a, int a_index, int path_part_a, bool path_part_a_begin, PathObject** out_b, int* out_b_index, int* out_path_part_b, bool* out_path_part_b_begin)
+{
+	float best_dist_sq = std::numeric_limits<float>::max();
+	for (int i = a_index; i < (int)objects.size(); ++i)
+	{
+		PathObject* b = reinterpret_cast<PathObject*>(objects[i]);
+		if (b->getSymbol() != a->getSymbol())
+			continue;
+		
+		int num_parts = b->getNumParts();
+		for (int path_part_b = (a == b) ? path_part_a : 0; path_part_b < num_parts; ++path_part_b)
+		{
+			PathObject::PathPart& part = b->getPart(path_part_b);
+			if (!part.isClosed())
+			{
+				for (int begin = 0; begin < 2; ++begin)
+				{
+					bool path_part_b_begin = (begin == 0);
+					if (a == b && path_part_a == path_part_b && path_part_a_begin == path_part_b_begin)
+						continue;
+					
+					MapCoord& coord_a = a->getCoordinate(path_part_a_begin ? a->getPart(path_part_a).start_index : a->getPart(path_part_a).end_index);
+					MapCoord& coord_b = b->getCoordinate(path_part_b_begin ? b->getPart(path_part_b).start_index : b->getPart(path_part_b).end_index);
+					float distance_sq = coord_a.lengthSquaredTo(coord_b);
+					if (distance_sq < best_dist_sq)
+					{
+						best_dist_sq = distance_sq;
+						*out_b = b;
+						*out_b_index = i;
+						*out_path_part_b = path_part_b;
+						*out_path_part_b_begin = path_part_b_begin;
+					}
+				}
+			}
+		}
+	}
+	return best_dist_sq;
+}
+
 void MapEditorController::connectPathsClicked()
 {
 	std::vector<Object*> objects;
@@ -1747,6 +1788,7 @@ void MapEditorController::connectPathsClicked()
 	{
 		if ((*it)->getSymbol()->getContainedTypes() & Symbol::Line && (*it)->getType() == Object::Path)
 		{
+			(*it)->update(false);
 			objects.push_back(*it);
 			undo_objects.push_back(NULL);
 		}
@@ -1755,73 +1797,126 @@ void MapEditorController::connectPathsClicked()
 	AddObjectsUndoStep* add_step = NULL;
 	MapPart* part = map->getCurrentPart();
 	
-	// Process all objects
-	for (int i = 0; i < (int)objects.size(); ++i)
+	while (true)
 	{
-		PathObject* a = reinterpret_cast<PathObject*>(objects[i]);
-		a->update(false);
+		// Find the closest pair of open ends of objects with the same symbol,
+		// which is closer than a threshold
+		PathObject* best_object_a;
+		PathObject* best_object_b;
+		int best_object_a_index;
+		int best_object_b_index;
+		int best_part_a;
+		int best_part_b;
+		bool best_part_a_begin;
+		bool best_part_b_begin;
+		float best_dist_sq = std::numeric_limits<float>::max();
 		
-		// Choose connection threshold as maximum of 0.35mm, 1.5 * largest line extent, and 6 pixels
-		// TODO: instead of 6 pixels, use a physical size as soon as screen dpi is in the settings
-		float close_distance_sq = qMax(0.35f, 1.5f * a->getSymbol()->calculateLargestLineExtent(map));
-		close_distance_sq = qMax(close_distance_sq, 0.001f * main_view->pixelToLength(6));
-		close_distance_sq = qPow(close_distance_sq, 2);
-		
-		// Loop over all parts and check if they should be closed
-		int num_parts = a->getNumParts();
-		bool all_paths_closed = true;
-		for (int part_index = 0; part_index < num_parts; ++part_index)
+		for (int i = 0; i < (int)objects.size(); ++i)
 		{
-			PathObject::PathPart& part = a->getPart(part_index);
-			if (!part.isClosed())
+			PathObject* a = reinterpret_cast<PathObject*>(objects[i]);
+			
+			// Choose connection threshold as maximum of 0.35mm, 1.5 * largest line extent, and 6 pixels
+			// TODO: instead of 6 pixels, use a physical size as soon as screen dpi is in the settings
+			float close_distance_sq = qMax(0.35f, 1.5f * a->getSymbol()->calculateLargestLineExtent(map));
+			close_distance_sq = qMax(close_distance_sq, 0.001f * main_view->pixelToLength(6));
+			close_distance_sq = qPow(close_distance_sq, 2);
+			
+			int num_parts = a->getNumParts();
+			for (int path_part_a = 0; path_part_a < num_parts; ++path_part_a)
 			{
-				if (a->getCoordinate(part.start_index).lengthSquaredTo(a->getCoordinate(part.end_index)) <= close_distance_sq)
+				PathObject::PathPart& part = a->getPart(path_part_a);
+				if (!part.isClosed())
 				{
-					undo_objects[i] = a->duplicate();
-					part.connectEnds();
+					PathObject* b;
+					int b_index;
+					int path_part_b;
+					bool path_part_b_begin;
+					float distance_sq;
+					
+					for (int begin = 0; begin < 2; ++begin)
+					{
+						bool path_part_a_begin = (begin == 0);
+						distance_sq = connectPaths_FindClosestEnd(objects, a, i, path_part_a, path_part_a_begin, &b, &b_index, &path_part_b, &path_part_b_begin);
+						if (distance_sq <= close_distance_sq && distance_sq < best_dist_sq)
+						{
+							best_dist_sq = distance_sq;
+							best_object_a = a;
+							best_object_b = b;
+							best_object_a_index = i;
+							best_object_b_index = b_index;
+							best_part_a = path_part_a;
+							best_part_b = path_part_b;
+							best_part_a_begin = path_part_a_begin;
+							best_part_b_begin = path_part_b_begin;
+						}
+					}
 				}
-				else
-					all_paths_closed = false;
 			}
 		}
-		if (all_paths_closed)
-			continue;
 		
-		// Check for other endpoints which are close enough together to be closed
-		for (int k = i + 1; k < (int)objects.size(); ++k)
+		// Abort if no possible connections found
+		if (best_dist_sq == std::numeric_limits<float>::max())
+			break;
+		
+		// Create undo objects for a and b
+		if (!undo_objects[best_object_a_index])
+			undo_objects[best_object_a_index] = best_object_a->duplicate();
+		if (!undo_objects[best_object_b_index])
+			undo_objects[best_object_b_index] = best_object_b->duplicate();
+		
+		// Connect the best parts
+		if (best_part_a_begin && best_part_b_begin)
 		{
-			PathObject* b = reinterpret_cast<PathObject*>(objects[k]);
-			if (b->getSymbol() != a->getSymbol())
-				continue;
-			
-			if (a->canBeConnected(b, close_distance_sq))
+			best_object_b->reversePart(best_part_b);
+			best_object_a->connectPathParts(best_part_a, best_object_b, best_part_b, true);
+		}
+		else if (best_part_a_begin && !best_part_b_begin)
+		{
+			if (best_object_a == best_object_b && best_part_a == best_part_b)
+				best_object_a->getPart(best_part_a).connectEnds();
+			else
+				best_object_a->connectPathParts(best_part_a, best_object_b, best_part_b, true);
+		}
+		else if (!best_part_a_begin && best_part_b_begin)
+		{
+			if (best_object_a == best_object_b && best_part_a == best_part_b)
+				best_object_a->getPart(best_part_a).connectEnds();
+			else
+				best_object_a->connectPathParts(best_part_a, best_object_b, best_part_b, false);
+		}
+		else //if (!best_part_a_begin && !best_part_b_begin)
+		{
+			best_object_b->reversePart(best_part_b);
+			best_object_a->connectPathParts(best_part_a, best_object_b, best_part_b, false);
+		}
+		
+		if (best_object_a != best_object_b)
+		{
+			// Copy all remaining parts of object b over to a
+			best_object_a->getCoordinate(best_object_a->getCoordinateCount() - 1).setHolePoint(true);
+			for (int i = 0; i < best_object_b->getNumParts(); ++i)
 			{
-				// Duplicate objects if necessary and append b to a
-				if (!undo_objects[i])
-					undo_objects[i] = a->duplicate();
-				if (!undo_objects[k])
-					undo_objects[k] = b->duplicate();
-				bool connected = a->connectIfClose(b, close_distance_sq);
-				assert(connected);
-				
-				// Were all parts of b deleted?
-				//if (b->getNumParts() == 0)
-				//{
-					// Create an add step for b
-					int b_index = part->findObjectIndex(b);
-					deleted_objects.push_back(b);
-					if (!add_step)
-						add_step = new AddObjectsUndoStep(map);
-					add_step->addObject(b_index, undo_objects[k]);
-					undo_objects[k] = NULL;
-					
-					// Delete b from the active list
-					objects.erase(objects.begin() + k);
-					undo_objects.erase(undo_objects.begin() + k);
-				//}
-				
-				k = i;	// have to check other objects again
+				if (i != best_part_b)
+					best_object_a->appendPathPart(best_object_b, i);
 			}
+			
+			// Create an add step for b
+			int b_index_in_part = part->findObjectIndex(best_object_b);
+			deleted_objects.push_back(best_object_b);
+			if (!add_step)
+				add_step = new AddObjectsUndoStep(map);
+			add_step->addObject(b_index_in_part, undo_objects[best_object_b_index]);
+			undo_objects[best_object_b_index] = NULL;
+			
+			// Delete b from the active list
+			objects.erase(objects.begin() + best_object_b_index);
+			undo_objects.erase(undo_objects.begin() + best_object_b_index);
+		}
+		else
+		{
+			// Delete the part which has been merged with another part
+			if (best_part_a != best_part_b)
+				best_object_a->deletePart(best_part_b);
 		}
 	}
 	

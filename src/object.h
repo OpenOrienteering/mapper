@@ -229,6 +229,8 @@ public:
 	bool canBeConnected(PathObject* other, double connect_threshold_sq);
 	/// Returns if the objects were connected (if so, you can delete the other object). If one of the paths has to be reversed, it is done for the "other" path. Otherwise, the "other" path is not changed.
 	bool connectIfClose(PathObject* other, double connect_threshold_sq);
+	/// Connects the given parts, merging the end coordinates at the center position and copying over the coorindates from other.
+	void connectPathParts(int part_index, PathObject* other, int other_part_index, bool prepend);
 	/// Splits the path into up to two parts at the given position
 	void splitAt(const PathCoord& split_pos, Object*& out1, Object*& out2);
 	/// Replaces the path with a range of it starting and ending at the given lengths
@@ -269,7 +271,6 @@ public:
 	void recalculateParts();
 	
 protected:
-	void connectPathParts(int part_index, PathObject* other, int other_part_index, bool prepend);
 	bool advanceCoordinateRangeTo(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& path_coords, int& cur_path_coord, int& current_index, float cur_length,
 								  bool enforce_wrap, int start_bezier_index, MapCoordVector& out_flags, MapCoordVectorF& out_coords, const MapCoordF& o3, const MapCoordF& o4);
 	void calcBezierPointDeletionRetainingShapeFactors(MapCoord p0, MapCoord p1, MapCoord p2, MapCoord q0, MapCoord q1, MapCoord q2, MapCoord q3, double& out_pfactor, double& out_qfactor);
