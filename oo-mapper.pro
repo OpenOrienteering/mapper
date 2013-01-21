@@ -19,6 +19,7 @@ QMAKE_LIBS += -lproj
 # Input
 HEADERS += \
   src/color_dock_widget.h \
+  src/file_import_export.h \
   src/georeferencing.h \
   src/georeferencing_dialog.h \
   src/map.h \

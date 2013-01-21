@@ -23,6 +23,7 @@
 #include <vector>
 
 #include <QHash>
+#include <QObject>
 #include <QVariant>
 
 #include "file_format.h"
@@ -41,25 +42,28 @@ class MapView;
  *  Subclasses should define default values for options they intend to use in their constructors,
  *  by calling setOption() with the relevant values. There is no such thing as an "implicit default"
  *  for options.
+ * 
+ *  ImportExport inherits QObject for translation purposes.
  */
-class ImportExport
+class ImportExport : public QObject
 {
+Q_OBJECT
 public:
 	/** Creates a new importer or exporter with the given input stream, map, and view.
 	 */
-	ImportExport(QIODevice* stream, Map *map, MapView *view) : stream(stream), map(map), view(view) {}
+	ImportExport(QIODevice* stream, Map *map, MapView *view);
 	
 	/** Destroys an importer or exporter.
 	 */
-	virtual ~ImportExport() {}
+	virtual ~ImportExport();
 	
 	/** Returns the current list of warnings collected by this object.
 	 */
-	inline const std::vector<QString> &warnings() const { return warn; }
+	const std::vector<QString> &warnings() const;
 	
 	/** Sets an option in this importer or exporter.
 	 */
-	inline void setOption(const QString& name, QVariant value) { options[name] = value; }
+	void setOption(const QString& name, QVariant value);
 	
 	/** Retrieves the value of an options in this importer or exporter. If the option does not have
 	 *  a value - either a default value assigned in the constructor, or a custom value assigned
@@ -71,7 +75,7 @@ public:
 	/** Adds an import/export warning to the current list of warnings. The provided message
 	 *  should be translated.
 	 */
-	inline void addWarning(const QString& str) { warn.push_back(str); }
+	void addWarning(const QString& str);
 	
 protected:
 	/// The input / output stream
@@ -118,15 +122,15 @@ class Importer : public ImportExport
 public:
 	/** Creates a new Importer with the given output stream, map, and view.
 	 */
-	Importer(QIODevice* stream, Map *map, MapView *view) : ImportExport(stream, map, view) {}
+	Importer(QIODevice* stream, Map *map, MapView *view);
 	
 	/** Destroys this Importer.
 	 */
-	virtual ~Importer() {}
+	virtual ~Importer();
 	
 	/** Returns the current list of action items.
 	 */
-	inline const std::vector<ImportAction> &actions() const { return act; }
+	inline const std::vector<ImportAction> &actions() const;
 	
 	/** Begins the import process. The implementation of this method should read the file
 	 *  and populate the map and view from it. If a fatal error is encountered (such as a
@@ -142,7 +146,7 @@ public:
 	/** Once all action items are satisfied, this method should be called to complete the
 	 *  import process. This class defines a default implementation, that does nothing.
 	 */
-	virtual void finishImport() throw (FileFormatException) {}
+	virtual void finishImport() throw (FileFormatException);
 	
 protected:
 	/** Implementation of doImport().
@@ -151,7 +155,7 @@ protected:
 	
 	/** Adds an action item to the current list.
 	 */
-	inline void addAction(const ImportAction &action) { act.push_back(action); }
+	inline void addAction(const ImportAction &action);
 	
 private:
 	/// A list of action items that must be resolved before the import can be completed
@@ -172,11 +176,11 @@ class Exporter : public ImportExport
 public:
 	/** Creates a new Importer with the given i/o stream, map, and view.
 	 */
-	Exporter(QIODevice* stream, Map *map, MapView *view) : ImportExport(stream, map, view) {}
+	Exporter(QIODevice* stream, Map *map, MapView *view);
 	
 	/** Destroys the current Exporter.
 	 */
-	virtual ~Exporter() {}
+	virtual ~Exporter();
 	
 	/** Exports the map and view to the given file. If a fatal error is encountered (such as a
 	 *  permission problem), than this method should throw a FormatException. If the export can
@@ -185,5 +189,74 @@ public:
 	 */
 	virtual void doExport() throw (FileFormatException) = 0;
 };
+
+
+// ### ImportExport inline code ###
+
+inline
+ImportExport::ImportExport(QIODevice* stream, Map* map, MapView* view)
+ : stream(stream), map(map), view(view)
+{
+	// Nothing
+}
+
+inline
+const std::vector< QString >& ImportExport::warnings() const
+{
+	return warn;
+}
+
+inline
+void ImportExport::addWarning(const QString& str)
+{
+	warn.push_back(str);
+}
+
+inline
+void ImportExport::setOption(const QString& name, QVariant value)
+{
+	options[name] = value;
+}
+
+inline
+QVariant ImportExport::option(const QString& name) const throw (FileFormatException)
+{
+	if (!options.contains(name))
+		throw FileFormatException(tr("No such option: %1").arg(name));
+	return options[name];
+}
+
+
+// ### Importer inline code ###
+
+inline
+Importer::Importer(QIODevice* stream, Map* map, MapView* view)
+ : ImportExport(stream, map, view)
+{
+	// Nothing
+}
+
+inline
+const std::vector< ImportAction >& Importer::actions() const
+{
+	return act;
+}
+
+inline
+void Importer::addAction(const ImportAction& action)
+{
+	act.push_back(action);
+}
+
+
+// ### Exporter ###
+
+inline
+Exporter::Exporter(QIODevice* stream, Map* map, MapView* view)
+ : ImportExport(stream, map, view)
+{
+	// Nothing
+}
+
 
 #endif // _OPENORIENTEERING_IMPORT_EXPORT_H

@@ -27,7 +27,20 @@
 #include "object.h"
 
 
+// ### ImportExport ###
+
+ImportExport::~ImportExport()
+{
+	// Nothing, not inlined
+}
+
+
 // ### Importer ###
+
+Importer::~Importer()
+{
+	// Nothing, not inlined
+}
 
 void Importer::doImport(bool load_symbols_only, const QString& map_path) throw (FileFormatException)
 {
@@ -80,7 +93,7 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path) throw (
 	for (int i = 0; i < map->getNumSymbols(); ++i)
 	{
 		if (!map->getSymbol(i)->loadFinished(map))
-			throw FileFormatException(QObject::tr("Error during symbol post-processing."));
+			throw FileFormatException(tr("Error during symbol post-processing."));
 	}
 	
 	// Template loading: try to find all template files
@@ -92,11 +105,24 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path) throw (
 		bool loaded_from_template_dir = false;
 		temp->tryToFindAndReloadTemplateFile(map_path, &loaded_from_template_dir);
 		if (loaded_from_template_dir)
-			addWarning(QObject::tr("Template \"%1\" has been loaded from the map's directory instead of the relative location to the map file where it was previously.").arg(temp->getTemplateFilename()));
+			addWarning(tr("Template \"%1\" has been loaded from the map's directory instead of the relative location to the map file where it was previously.").arg(temp->getTemplateFilename()));
 		
 		if (temp->getTemplateState() != Template::Loaded)
 			have_lost_template = true;
 	}
 	if (have_lost_template)
-		addWarning(QObject::tr("At least one template file could not be found. Click the red template name(s) in the Templates -> Template setup window to locate the template file name(s)."));
+		addWarning(tr("At least one template file could not be found. Click the red template name(s) in the Templates -> Template setup window to locate the template file name(s)."));
+}
+
+void Importer::finishImport() throw (FileFormatException)
+{
+	// Nothing, not inlined
+}
+
+
+// ### Exporter ###
+
+Exporter::~Exporter()
+{
+	// Nothing, not inlined
 }

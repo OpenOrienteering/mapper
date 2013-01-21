@@ -133,6 +133,7 @@ set(Mapper_Common_SRCS
 
 set(Mapper_Common_MOC_INPUT
  color_dock_widget.h
+ file_import_export.h
  georeferencing.h
  georeferencing_dialog.h
  map.h
