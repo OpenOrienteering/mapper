@@ -30,6 +30,7 @@
 #include "../util.h"
 #include "../map.h"
 #include "../settings.h"
+#include "../util/xml_stream_util.h"
 
 // #### MapPrinterPageFormat ###
 
@@ -85,75 +86,93 @@ MapPrinterConfig::MapPrinterConfig(const Map& map, QXmlStreamReader& xml)
    center_print_area(false),
    single_page_print_area(false)
 {
-	QXmlStreamAttributes attributes = xml.attributes();
+	ScopedXmlReaderElement printer_config_element(xml);
 	
-	if (attributes.hasAttribute("QPrinter_PaperSize"))
+	printer_config_element.readAttribute("scale", options.scale);
+	printer_config_element.readAttribute("resolution", options.resolution);
+	printer_config_element.readAttribute("templates_visible", options.show_templates);
+	printer_config_element.readAttribute("grid_visible", options.show_grid);
+	printer_config_element.readAttribute("simulate_overprinting", options.simulate_overprinting);
+	
+	while (xml.readNextStartElement())
 	{
-		page_format.paper_size =
-		  (QPrinter::PaperSize)   attributes.value("QPrinter_PaperSize").toString().toInt();
+		if (xml.name() == "page_format")
+		{
+			ScopedXmlReaderElement page_format_element(xml);
+			QString value;
+			page_format_element.readAttribute("paper_size", value);
+			const QHash< int, const char* >& paper_size_names = MapPrinter::paperSizeNames();
+			for (int i = 0; i < paper_size_names.count(); ++i)
+			{
+				if (value == paper_size_names[i])
+					page_format.paper_size = (QPrinter::PaperSize)i;
+			}
+			page_format_element.readAttribute("orientation", value);
+			page_format.orientation =
+			  (value == "portrait") ? QPrinter::Portrait : QPrinter::Landscape;
+			while (xml.readNextStartElement())
+			{
+				if (xml.name() == "paper_dimensions")
+				{
+					ScopedXmlReaderElement(xml).read(page_format.paper_dimensions);
+				}
+				else if (xml.name() == "page_rect")
+				{
+					ScopedXmlReaderElement(xml).read(page_format.page_rect);
+				}
+				else
+					xml.skipCurrentElement();
+			}
+		}
+		else if (xml.name() == "print_area")
+		{
+			ScopedXmlReaderElement print_area_element(xml);
+			print_area_element.read(print_area);
+			print_area_element.readAttribute("center_area", center_print_area);
+			print_area_element.readAttribute("single_page_print_area", single_page_print_area);
+		}
+		else
+			xml.skipCurrentElement();
 	}
-	page_format.orientation = (attributes.value("orientation") == "landscape") ? QPrinter::Landscape : QPrinter::Portrait;
-	// Warning: page_format member paper_dimensions and page_rect remain uninitialized at the moment.
-	
-	options.resolution =      attributes.value("resolution").toString().toUInt();
-	options.scale =           attributes.value("scale").toString().toUInt();
-	options.show_templates =  attributes.value("templates_visible") == "true";
-	options.show_grid =       attributes.value("grid_visible") == "true";
-	options.simulate_overprinting =
-	                          attributes.value("simulate_overprinting") == "true";
-	
-	print_area.setLeft(       attributes.value("area_left").toString().toFloat() );
-	print_area.setTop(        attributes.value("area_top").toString().toFloat()  );
-	print_area.setWidth( qAbs(attributes.value("area_width").toString().toFloat()) );
-	print_area.setHeight(qAbs(attributes.value("area_height").toString().toFloat()) );
-	center_print_area =       attributes.value("center_area") == "true";
-	single_page_print_area =  attributes.value("single_page") == "true";
-	
-	// Legacy items.
-	// TODO: Remove before release 1.0.
-	if (attributes.hasAttribute("dpi"))
-		options.resolution =  attributes.value("dpi").toString().toUInt();
-	if (attributes.hasAttribute("alternative_scale"))
-		options.scale =       attributes.value("alternative_scale").toString().toUInt();
 	
 	// Sanity checks
 	if (options.scale <= 0)
 		options.scale = map.getScaleDenominator();
 	if (options.resolution <= 0)
 		options.resolution = 600;
-	
-	xml.skipCurrentElement();
-	
 }
 
 void MapPrinterConfig::save(QXmlStreamWriter& xml, const QString& element_name) const
 {
-	xml.writeStartElement(element_name);
+	ScopedXmlWriterElement printer_config_element(xml, element_name);
 	
-	// TODO: use readable paper size names
-	xml.writeAttribute( "QPrinter_PaperSize", QString::number(page_format.paper_size) );
-	xml.writeAttribute( "orientation",
-	  (page_format.orientation == QPrinter::Portrait) ? "portrait" : "landscape" );
+	printer_config_element.writeAttribute("scale", options.scale);
+	printer_config_element.writeAttribute("resolution", options.resolution);
+	printer_config_element.writeAttribute("templates_visible", options.show_templates);
+	printer_config_element.writeAttribute("grid_visible", options.show_grid);
+	printer_config_element.writeAttribute("simulate_overprinting", options.simulate_overprinting);
 	
-	xml.writeAttribute( "resolution",  QString::number(options.resolution)  );
-	xml.writeAttribute( "scale",       QString::number(options.scale)       );
-	if (options.show_templates)
-		xml.writeAttribute("templates_visible", "true");
-	if (options.show_grid)
-		xml.writeAttribute("grid_visible", "true");
-	if (options.simulate_overprinting)
-		xml.writeAttribute("simulate_overprinting", "true");
-	
-	xml.writeAttribute( "area_left",   QString::number(print_area.left())   );
-	xml.writeAttribute( "area_top",    QString::number(print_area.top())    );
-	xml.writeAttribute( "area_width",  QString::number(print_area.width())  );
-	xml.writeAttribute( "area_height", QString::number(print_area.height()) );
-	if (center_print_area)
-		xml.writeAttribute("center_area", "true");
-	if (single_page_print_area)
-		xml.writeAttribute("single_page", "true");
-	
-	xml.writeEndElement(/*element_name*/);
+	{
+		ScopedXmlWriterElement page_format_element(xml, "page_format");
+		page_format_element.writeAttribute("paper_size",
+		  MapPrinter::paperSizeNames()[page_format.paper_size]);
+		page_format_element.writeAttribute("orientation",
+		  (page_format.orientation == QPrinter::Portrait) ? "portrait" : "landscape" );
+		page_format_element.writeAttribute("h_overlap", page_format.h_overlap, 2);
+		page_format_element.writeAttribute("v_overlap", page_format.v_overlap, 2);
+		{
+			ScopedXmlWriterElement(xml, "dimensions").write(page_format.paper_dimensions);
+		}
+		{
+			ScopedXmlWriterElement(xml, "page_rect").write(page_format.page_rect);
+		}
+	}
+	{
+		ScopedXmlWriterElement print_area_element(xml, "print_area");
+		print_area_element.write(print_area);
+		print_area_element.writeAttribute("center_area", center_print_area);
+		print_area_element.writeAttribute("single_page", single_page_print_area);
+	}
 }
 
 
