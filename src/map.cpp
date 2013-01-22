@@ -557,7 +557,7 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 					bool merge_duplicate_symbols, QHash<Symbol*, Symbol*>* out_symbol_map)
 {
 	// Check if there is something to import
-	if (other->getNumColors() == 0)
+	if (other->getNumColors() == 0 && other->getNumSymbols() == 0 && other->getNumObjects() == 0)
 	{
 		QMessageBox::critical(dialog_parent, tr("Error"), tr("Nothing to import."));
 		return;
@@ -612,57 +612,57 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 	if (mode == ColorImport)
 		return;
 	
+	QHash<Symbol*, Symbol*> symbol_map;
 	if (other->getNumSymbols() > 0)
 	{
 		// Import symbols
-		QHash<Symbol*, Symbol*> symbol_map;
 		importSymbols(other, color_map, symbol_insert_pos, merge_duplicate_symbols, &symbol_filter, NULL, &symbol_map);
 		if (out_symbol_map != NULL)
 			*out_symbol_map = symbol_map;
-		
-		if (mode == MinimalSymbolImport)
-			return;
-		
-		if (other->getNumObjects() > 0)
+	}
+	
+	if (mode == MinimalSymbolImport)
+		return;
+	
+	if (other->getNumObjects() > 0)
+	{
+		// Import parts like this:
+		//  - if the other map has only one part, import it into the current part
+		//  - else check if there is already a part with an equal name for every part to import and import into this part if found, else create a new part
+		for (int part = 0; part < other->getNumParts(); ++part)
 		{
-			// Import parts like this:
-			//  - if the other map has only one part, import it into the current part
-			//  - else check if there is already a part with an equal name for every part to import and import into this part if found, else create a new part
-			for (int part = 0; part < other->getNumParts(); ++part)
+			MapPart* part_to_import = other->getPart(part);
+			MapPart* dest_part = NULL;
+			if (other->getNumParts() == 1)
+				dest_part = getCurrentPart();
+			else
 			{
-				MapPart* part_to_import = other->getPart(part);
-				MapPart* dest_part = NULL;
-				if (other->getNumParts() == 1)
-					dest_part = getCurrentPart();
-				else
+				for (int check_part = 0; check_part < getNumParts(); ++check_part)
 				{
-					for (int check_part = 0; check_part < getNumParts(); ++check_part)
+					if (getPart(check_part)->getName().compare(other->getPart(part)->getName(), Qt::CaseInsensitive) == 0)
 					{
-						if (getPart(check_part)->getName().compare(other->getPart(part)->getName(), Qt::CaseInsensitive) == 0)
-						{
-							dest_part = getPart(check_part);
-							break;
-						}
-					}
-					if (dest_part == NULL)
-					{
-						// Import as new part
-						dest_part = new MapPart(part_to_import->getName(), this);
-						addPart(dest_part, 0);
+						dest_part = getPart(check_part);
+						break;
 					}
 				}
-				
-				// Temporarily switch the current part for importing so the undo step gets created for the right part
-				MapPart* temp_current_part = getCurrentPart();
-				current_part_index = findPartIndex(dest_part);
-				
-				bool select_and_center_objects = dest_part == temp_current_part;
-				dest_part->importPart(part_to_import, symbol_map, select_and_center_objects);
-				if (select_and_center_objects)
-					ensureVisibilityOfSelectedObjects();
-				
-				current_part_index = findPartIndex(temp_current_part);
+				if (dest_part == NULL)
+				{
+					// Import as new part
+					dest_part = new MapPart(part_to_import->getName(), this);
+					addPart(dest_part, 0);
+				}
 			}
+			
+			// Temporarily switch the current part for importing so the undo step gets created for the right part
+			MapPart* temp_current_part = getCurrentPart();
+			current_part_index = findPartIndex(dest_part);
+			
+			bool select_and_center_objects = dest_part == temp_current_part;
+			dest_part->importPart(part_to_import, symbol_map, select_and_center_objects);
+			if (select_and_center_objects)
+				ensureVisibilityOfSelectedObjects();
+			
+			current_part_index = findPartIndex(temp_current_part);
 		}
 	}
 }
