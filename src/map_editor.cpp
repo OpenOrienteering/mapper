@@ -1766,6 +1766,8 @@ float connectPaths_FindClosestEnd(const std::vector<Object*>& objects, PathObjec
 						*out_b_index = i;
 						*out_path_part_b = path_part_b;
 						*out_path_part_b_begin = path_part_b_begin;
+						if (distance_sq == 0)
+							return 0;
 					}
 				}
 			}
