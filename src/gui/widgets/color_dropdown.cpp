@@ -70,9 +70,7 @@ MapColor* ColorDropDown::color() const
 
 void ColorDropDown::setColor(const MapColor* color)
 {
-	// Note: No danger in the following cast of color to non-const,
-	//       since we are doing in a const context.
-	setCurrentIndex(findData(QVariant::fromValue((MapColor*)color)));
+	setCurrentIndex(findData(QVariant::fromValue(const_cast< MapColor* >(color))));
 }
 
 void ColorDropDown::colorAdded(int pos, MapColor* color)
