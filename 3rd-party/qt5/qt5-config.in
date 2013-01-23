@@ -28,20 +28,47 @@
 cd "@SOURCE_DIR@"
 SOURCE_DIR=$(pwd)
 
-# [2] Go to build directory
+# [2] Customize build by removing and disabling subdirs.
+for I in \
+  qtactiveqt \
+  qtdeclarative \
+  qtdoc \
+  qtgraphicaleffects \
+  qtjsbackend \
+  qtmultimedia \
+  qtquick1 \
+  qtscript \
+  qtwebkit-examples-and-demos \
+  qtwebkit \
+  qtxmlpatterns
+do
+       if [ -d "./$I" ]
+       then
+               rm -R "./$I"
+       fi
+done
+
+# [3] Go to build directory
 cd "@BINARY_DIR@"
 
-# [3] Cleanup existing configuration, ignoring errors
+# [4] Cleanup existing configuration, ignoring errors
 if [ -f qtbase/Makefile ]
 then 
 	make -i -C qtbase confclean
 fi
 
-# [4] Configure
+# [5] Configure
+QT5_CONFIG_EXTRA_OPTS=
+if [ "@APPLE@" != "" ]
+then
+	QT5_CONFIG_EXTRA_OPTS="-no-framework"
+fi
+
 "$SOURCE_DIR/configure" \
   -opensource \
   -confirm-license \
   @QT5_PLATFORM@ \
+  $QT5_CONFIG_EXTRA_OPTS \
   -prefix "@QT5_DIR@" \
   -hostprefix "@QT5_HOST_DIR@" \
   -release \
