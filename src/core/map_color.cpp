@@ -327,7 +327,7 @@ MapColorCmyk MapColor::cmykFromSpotColors() const
 {
 	Q_ASSERT(components.size() > 0);
 	
-	MapColorCmyk cmyk(QColor(Qt::white));
+	MapColorCmyk cmyk(Qt::white);
 	Q_ASSERT(cmyk.isWhite());
 	Q_FOREACH(SpotColorComponent component, components)
 	{
