@@ -362,7 +362,7 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	
 	updateAngleHelper();
 	
-	create_spline_corner - false;
+	create_spline_corner = false;
 	path_has_preview_point = false;
 	dragging = false;
 	
