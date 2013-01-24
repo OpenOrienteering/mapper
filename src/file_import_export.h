@@ -119,6 +119,7 @@ class ImportAction
  */
 class Importer : public ImportExport
 {
+Q_OBJECT
 public:
 	/** Creates a new Importer with the given output stream, map, and view.
 	 */
@@ -173,6 +174,7 @@ private:
  */
 class Exporter : public ImportExport
 {
+Q_OBJECT
 public:
 	/** Creates a new Importer with the given i/o stream, map, and view.
 	 */
@@ -222,7 +224,7 @@ inline
 QVariant ImportExport::option(const QString& name) const throw (FileFormatException)
 {
 	if (!options.contains(name))
-		throw FileFormatException(tr("No such option: %1").arg(name));
+		throw FileFormatException(QObject::tr("No such option: %1", "No such import / export option").arg(name));
 	return options[name];
 }
 
