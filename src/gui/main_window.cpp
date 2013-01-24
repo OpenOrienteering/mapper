@@ -493,11 +493,12 @@ bool MainWindow::openPath(const QString &path)
 	QString open_in_progress = settings.value(reopen_blocker, QString("")).toString();
 	if (open_in_progress == path)
 	{
-		QMessageBox::warning(this, tr("Crash warning"), 
-		  tr("It seems that %1 crashed the last time this file was opened:<br /><tt>%2</tt><br /><br />Opening aborted.").arg(appName()).arg(path),
-		  QMessageBox::Ok);
+		int result = QMessageBox::warning(this, tr("Crash warning"), 
+		  tr("It seems that %1 crashed the last time this file was opened:<br /><tt>%2</tt><br /><br />Really retry to open it?").arg(appName()).arg(path),
+		  QMessageBox::Yes | QMessageBox::No);
 		settings.remove(reopen_blocker);
-		return false;
+		if (result == QMessageBox::No)
+			return false;
 	}
 	
 	settings.setValue(reopen_blocker, path);
