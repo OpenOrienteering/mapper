@@ -25,6 +25,8 @@
 #include "symbol.h"
 #include "template.h"
 #include "object.h"
+#include "symbol_line.h"
+#include "symbol_point.h"
 
 
 // ### ImportExport ###
@@ -47,6 +49,7 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path) throw (
 	import(load_symbols_only);
 	
 	// Object post processing:
+	// - make sure that there is no object without symbol
 	// - make sure that all area-only path objects are closed
 	// - make sure that there are no special points in wrong places (e.g. curve starts inside curves)
 	for (int p = 0; p < map->getNumParts(); ++p)
@@ -55,6 +58,22 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path) throw (
 		for (int o = 0; o < part->getNumObjects(); ++o)
 		{
 			Object* object = part->getObject(o);
+			if (object->getSymbol() == NULL)
+			{
+				addWarning(tr("Found an object without symbol."));
+				if (object->getType() == Object::Point)
+					object->setSymbol(map->getUndefinedPoint(), true);
+				else if (object->getType() == Object::Path)
+					object->setSymbol(map->getUndefinedLine(), true);
+				else
+				{
+					// There is no undefined symbol for this type of object, delete the object
+					part->deleteObject(o, false);
+					--o;
+					continue;
+				}
+			}
+			
 			if (object->getType() == Object::Path)
 			{
 				PathObject* path = object->asPath();
