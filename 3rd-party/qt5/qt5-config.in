@@ -61,7 +61,12 @@ fi
 QT5_CONFIG_EXTRA_OPTS=
 if [ "@APPLE@" != "" ]
 then
-	QT5_CONFIG_EXTRA_OPTS="-no-framework"
+	QT5_CONFIG_EXTRA_OPTS="-no-framework -no-rpath"
+else if [ "@UNIX@" != "" ]
+then
+	QT5_CONFIG_EXTRA_OPTS="-R \\\$ORIGIN/../lib"
+else
+	QT5_CONFIG_EXTRA_OPTS="-no-rpath"
 fi
 
 "$SOURCE_DIR/configure" \
@@ -73,7 +78,6 @@ fi
   -hostprefix "@QT5_HOST_DIR@" \
   -release \
   -shared \
-  -no-rpath \
   -gui \
   -widgets \
   -qt-sql-sqlite \

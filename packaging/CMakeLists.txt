@@ -18,6 +18,19 @@
  
 message(STATUS "Configuring ${PROJECT_NAME} packaging")
 
+if(APPLE AND Mapper_USE_QT5)
+	# Set some Qt4 variables to reasonable values for Qt5, too.
+	find_package(Qt5Core REQUIRED QUIET)
+	if(NOT QT_LIBRARY_DIR)
+		get_target_property(_qt5core_lib Qt5::Core IMPORTED_LOCATION_RELEASE)
+		get_filename_component(QT_LIBRARY_DIR ${_qt5core_lib} PATH)
+	endif()
+	if(NOT QT_BINARY_DIR)
+		get_target_property(_qt5moc_bin Qt5::moc IMPORTED_LOCATION)
+		get_filename_component(QT_BINARY_DIR ${_qt5moc_bin} PATH)
+	endif()
+endif()
+
 if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	# cf. http://www.cmake.org/cmake/help/cmake-2-8-docs.html#module:CPack
 	# cf. http://www.cmake.org/Wiki/CMake:CPackPackageGenerators
@@ -231,17 +244,21 @@ if(Mapper_PACKAGE_LIBRARIES)
 			)
 		endif()
 	else()
-		list(APPEND MAPPER_LIBS 
-		  Qt5Core Qt5Gui Qt5Widgets Qt5Svg
-		  Qt5PrintSupport Qt5Network Qt5Xml)
+		if(NOT APPLE)
+			list(APPEND MAPPER_LIBS 
+			  Qt5Core Qt5Gui Qt5Widgets Qt5Svg
+			  Qt5PrintSupport Qt5Network Qt5Xml)
+		endif()
 		set(MAPPER_QT_PLUGINS
+		  accessible/qtaccessiblewidgets
+		  iconengines/qsvgicon
 		  imageformats/qgif imageformats/qico imageformats/qjpeg imageformats/qmng
 		  imageformats/qsvg imageformats/qtga imageformats/qtiff imageformats/qwbmp
-		  platforms/qminimal platforms/qwindows
-		  printsupport/windowsprintersupport
+		  platforms/qminimal platforms/qwindows platforms/qcocoa
+		  printsupport/windowsprintersupport printsupport/cocoaprintersupport
 		  CACHE INTERNAL "The plugins which need to be deployed"
 		)
-		if(Mapper_PACKAGE_ASSISTANT)
+		if(Mapper_PACKAGE_ASSISTANT AND NOT APPLE)
 			list(APPEND MAPPER_LIBS 
 			  Qt5Help Qt5CLucene Qt5Sql
 			)
@@ -263,16 +280,16 @@ if(Mapper_PACKAGE_LIBRARIES)
 		  PATH_SUFFIXES "../bin" ${TOOLCHAIN_PATH_SUFFIXES}
 		  NO_CMAKE_FIND_ROOT_PATH)
 		get_filename_component(_mapper_lib_ext "${${_mapper_lib_id}}" EXT)
-		if(_mapper_lib_ext STREQUAL ".dll")
-			message("   ${_mapper_lib} DLL - found")
+		if(_mapper_lib_ext STREQUAL ${CMAKE_SHARED_LIBRARY_SUFFIX})
+			message("   ${_mapper_lib} shared library - found")
 			list(APPEND CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS "${${_mapper_lib_id}}")
 		else()
-			message("   ${_mapper_lib} DLL - not found")
+			message("   ${_mapper_lib} shared library - not found")
 		endif()
 	endforeach(_mapper_lib)
 	install(
 	  FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} 
-	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
+	  DESTINATION "${MAPPER_RUNTIME_DESTINATION}${MAPPER_MACOS_SUBDIR}")
 	
 	unset(MAPPER_QT_PLUGINS_FOUND)
 	foreach(_qt_plugin ${MAPPER_QT_PLUGINS})
@@ -284,7 +301,7 @@ if(Mapper_PACKAGE_LIBRARIES)
 		  PATH_SUFFIXES ${_qt_plugin_dir} plugins/${_qt_plugin_dir}
 		  NO_CMAKE_FIND_ROOT_PATH)
 		if(NOT ${${_qt_plugin_id}} MATCHES NOTFOUND)
-			message("   ${_qt_plugin} DLL (plugin) - found")
+			message("   ${_qt_plugin} plugin library - found")
 			list(APPEND MAPPER_QT_PLUGINS_FOUND "${${_qt_plugin_id}}")
 			if(WIN32)
 				install(
@@ -299,6 +316,7 @@ endif()
 
 if(Mapper_PACKAGE_LIBRARIES AND APPLE)
 	# use updated DeployQt4.cmake from CMake git repository
+	# This works for Qt5, too (at least given our Qt5Quirks).
 	include(${PROJECT_SOURCE_DIR}/cmake/DeployQt4.cmake)
 	install_qt4_executable(Mapper.app 
 	  "${MAPPER_QT_PLUGINS_FOUND}"
