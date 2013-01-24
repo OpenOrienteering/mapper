@@ -134,6 +134,11 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	button_box->addButton(preview_button, QDialogButtonBox::ActionRole);
 	print_button = new QPushButton(tr("Print"));
 	button_box->addButton(print_button, QDialogButtonBox::AcceptRole);
+	// Use a distinct export button.
+	// Changing the text at runtime causes distortions on Mac OS X.
+	export_button = new QPushButton(tr("Export..."));
+	export_button->hide();
+	button_box->addButton(export_button, QDialogButtonBox::AcceptRole);
 	layout->addRow(button_box);
 	
 	setLayout(layout);
@@ -157,6 +162,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	
 	connect(preview_button, SIGNAL(clicked(bool)), this, SLOT(previewClicked()));
 	connect(print_button, SIGNAL(clicked(bool)), this, SLOT(printClicked()));
+	connect(export_button, SIGNAL(clicked(bool)), this, SLOT(printClicked()));
 	
 	policy = map->printerConfig().single_page_print_area ? SinglePage : CustomArea;
 	policy_combo->setCurrentIndex(policy_combo->findData(policy));
@@ -370,7 +376,11 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 	copies_edit->setEnabled(supports_copies);
 	layout->labelForField(copies_edit)->setEnabled(supports_copies);
 	
-	print_button->setText(map_printer->isPrinter() ? tr("Print") : tr("Export"));
+	bool is_printer = map_printer->isPrinter();
+	print_button->setVisible(is_printer);
+	print_button->setDefault(is_printer);
+	export_button->setVisible(!is_printer);
+	export_button->setDefault(!is_printer);
 }
 
 // slot

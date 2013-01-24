@@ -237,6 +237,7 @@ private:
 	
 	QPushButton* preview_button;
 	QPushButton* print_button;
+	QPushButton* export_button;
 	
 	QList<QPrinterInfo> printers;
 	

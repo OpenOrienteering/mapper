@@ -61,7 +61,7 @@ fi
 QT5_CONFIG_EXTRA_OPTS=
 if [ "@APPLE@" != "" ]
 then
-	QT5_CONFIG_EXTRA_OPTS="-no-framework -no-rpath"
+	QT5_CONFIG_EXTRA_OPTS="-no-framework"
 elif [ "@UNIX@" != "" ]
 then
 	QT5_CONFIG_EXTRA_OPTS="-R \\\$ORIGIN/../lib"
