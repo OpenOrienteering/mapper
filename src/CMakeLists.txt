@@ -133,6 +133,8 @@ set(Mapper_Common_SRCS
 
 set(Mapper_Common_MOC_INPUT
  color_dock_widget.h
+ file_format_ocad8_p.h
+ file_format_xml_p.h
  file_import_export.h
  georeferencing.h
  georeferencing_dialog.h
@@ -224,7 +226,7 @@ add_dependencies(Mapper_Common
 )
 
 qt4_translations_sources(
-  SOURCES ${Mapper_Common_SRCS}
+  SOURCES ${Mapper_Common_SRCS} ${Mapper_COMMON_MOC_INPUT}
 )
 
 

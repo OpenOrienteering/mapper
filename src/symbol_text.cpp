@@ -502,7 +502,7 @@ bool TextSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 QString TextSymbol::getIconText() const
 {
 	if (icon_text.isEmpty())
-		return QObject::tr("A", "First capital letter of the local alphabet");
+		return TextSymbolSettings::tr("A", "First capital letter of the local alphabet");
 	return icon_text;
 }
 

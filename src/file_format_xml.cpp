@@ -18,6 +18,7 @@
  */
 
 #include "file_format_xml.h"
+#include "file_format_xml_p.h"
 
 #include <QDebug>
 #include <QFile>
@@ -33,66 +34,13 @@
 #include "map.h"
 #include "map_grid.h"
 #include "object.h"
-#include "symbol_area.h"
 #include "object_text.h"
+#include "symbol_area.h"
 #include "symbol_combined.h"
 #include "symbol_line.h"
 #include "symbol_point.h"
 #include "symbol_text.h"
 #include "template.h"
-
-// ### XMLFileExporter declaration ###
-
-class XMLFileExporter : public Exporter
-{
-public:
-	XMLFileExporter(QIODevice* stream, Map *map, MapView *view);
-	virtual ~XMLFileExporter() {}
-	
-	virtual void doExport() throw (FileFormatException);
-	
-	void exportGeoreferencing();
-	void exportColors();
-	void exportSymbols();
-	void exportMapParts();
-	void exportTemplates();
-	void exportView();
-	void exportPrint();
-	void exportUndo();
-	void exportRedo();
-
-protected:
-	QXmlStreamWriter xml;
-};
-
-
-// ### XMLFileImporter declaration ###
-
-class XMLFileImporter : public Importer
-{
-public:
-	XMLFileImporter(QIODevice* stream, Map *map, MapView *view);
-	virtual ~XMLFileImporter() {}
-
-protected:
-	virtual void import(bool load_symbols_only) throw (FileFormatException);
-	
-	void addWarningUnsupportedElement();
-	void importGeoreferencing(bool load_symbols_only);
-	void importColors();
-	void importSymbols();
-	void importMapParts();
-	void importTemplates();
-	void importView();
-	void importPrint();
-	void importUndo();
-	void importRedo();
-	
-	QXmlStreamReader xml;
-	SymbolDictionary symbol_dict;
-};
-
-
 
 // ### XMLFileFormat definition ###
 
@@ -102,7 +50,7 @@ const QString XMLFileFormat::magic_string = "<?xml ";
 const QString XMLFileFormat::mapper_namespace = "http://oorienteering.sourceforge.net/mapper/xml/v2";
 
 XMLFileFormat::XMLFileFormat()
- : FileFormat(MapFile, "XML", QObject::tr("OpenOrienteering Mapper"), "omap", 
+ : FileFormat(MapFile, "XML", ImportExport::tr("OpenOrienteering Mapper"), "omap", 
               ImportSupported | ExportSupported) 
 {
 	addExtension("xmap"); // Legacy, TODO: Remove .xmap in release 1.0.
@@ -339,7 +287,7 @@ XMLFileImporter::XMLFileImporter(QIODevice* stream, Map *map, MapView *view)
 
 void XMLFileImporter::addWarningUnsupportedElement()
 {
-	addWarning(QObject::tr("Unsupported element: %1 (line %2 column %3)").
+	addWarning(tr("Unsupported element: %1 (line %2 column %3)").
 	  arg(xml.name().toString()).
 	  arg(xml.lineNumber()).
 	  arg(xml.columnNumber())
@@ -359,16 +307,16 @@ void XMLFileImporter::import(bool load_symbols_only) throw (FileFormatException)
 	if (xml.readNextStartElement())
 	{
 		if (xml.name() != "map")
-			xml.raiseError(QObject::tr("Unsupport file format."));
+			xml.raiseError(Importer::tr("Unsupported file format."));
 		else
 		{
 			int version = xml.attributes().value("version").toString().toInt();
 			if (version < 1)
-				xml.raiseError(QObject::tr("Invalid file format version."));
+				xml.raiseError(Importer::tr("Invalid file format version."));
 			else if (version < XMLFileFormat::minimum_version)
-				xml.raiseError(QObject::tr("Unsupported file format version. Please use an older program version to load and update the file."));
+				xml.raiseError(Importer::tr("Unsupported old file format version. Please use an older program version to load and update the file."));
 			else if (version > XMLFileFormat::current_version)
-				addWarning(QObject::tr("New file format version detected. Some features will be not be supported by this version of the program."));
+				addWarning(Importer::tr("Unsupported new file format version. Some map features will not be loaded or saved by this version of the program."));
 		}
 	}
 	
@@ -528,7 +476,7 @@ void XMLFileImporter::importColors()
 	}
 	
 	if (num_colors > 0 && num_colors != (int)colors.size())
-		addWarning(QObject::tr("Expected %1 colors, found %2.").
+		addWarning(tr("Expected %1 colors, found %2.").
 		  arg(num_colors).
 		  arg(colors.size())
 		);
@@ -544,7 +492,7 @@ void XMLFileImporter::importColors()
 			MapColor* out_color = map->getColor(in_component.spot_color->getPriority());
 			if (out_color == NULL || out_color->getSpotColorMethod() != MapColor::SpotColor)
 			{
-				addWarning(QObject::tr("Spot color %1 not found while processing %2 (%3).").
+				addWarning(tr("Spot color %1 not found while processing %2 (%3).").
 				  arg(in_component.spot_color->getPriority()).
 				  arg(item.color->getPriority()).
 				  arg(item.color->getName())
@@ -589,7 +537,7 @@ void XMLFileImporter::importSymbols()
 	}
 	
 	if (num_symbols > 0 && num_symbols != map->getNumSymbols())
-		addWarning(QObject::tr("Expected %1 symbols, found %2.").
+		addWarning(tr("Expected %1 symbols, found %2.").
 		  arg(num_symbols).
 		  arg(map->getNumSymbols())
 		);
@@ -619,7 +567,7 @@ void XMLFileImporter::importMapParts()
 		map->current_part_index = current_part_index;
 	
 	if (num_parts > 0 && num_parts != map->getNumParts())
-		addWarning(QObject::tr("Expected %1 map parts, found %2.").
+		addWarning(tr("Expected %1 map parts, found %2.").
 		  arg(num_parts).
 		  arg(map->getNumParts())
 		);

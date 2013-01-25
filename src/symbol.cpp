@@ -30,6 +30,7 @@
 #include <qmath.h>
 
 #include "core/map_color.h"
+#include "file_import_export.h"
 #include "map.h"
 #include "object.h"
 #include "object_text.h"
@@ -226,7 +227,7 @@ Symbol* Symbol::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_d
 	int symbol_type = xml.attributes().value("type").toString().toInt();
 	Symbol* symbol = Symbol::getSymbolForType(static_cast<Symbol::Type>(symbol_type));
 	if (!symbol)
-		throw FileFormatException(QObject::tr("Error while loading a symbol of type %1 at line %2 column %3.").arg(symbol_type).arg(xml.lineNumber()).arg(xml.columnNumber()));
+		throw FileFormatException(ImportExport::tr("Error while loading a symbol of type %1 at line %2 column %3.").arg(symbol_type).arg(xml.lineNumber()).arg(xml.columnNumber()));
 	
 	QXmlStreamAttributes attributes = xml.attributes();
 	QString code = attributes.value("code").toString();
@@ -234,7 +235,7 @@ Symbol* Symbol::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_d
 	{
 		QString id = attributes.value("id").toString();
 		if (symbol_dict.contains(id)) 
-			throw FileFormatException(QObject::tr("Symbol ID '%1' not unique at line %2 column %3.").arg(id).arg(xml.lineNumber()).arg(xml.columnNumber()));
+			throw FileFormatException(ImportExport::tr("Symbol ID '%1' not unique at line %2 column %3.").arg(id).arg(xml.lineNumber()).arg(xml.columnNumber()));
 		
 		symbol_dict[id] = symbol;
 		
@@ -281,7 +282,7 @@ Symbol* Symbol::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_d
 	if (xml.error())
 	{
 		delete symbol;
-		throw FileFormatException(QObject::tr("Error while loading a symbol."));
+		throw FileFormatException(ImportExport::tr("Error while loading a symbol."));
 	}
 	
 	return symbol;

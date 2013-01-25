@@ -1655,19 +1655,19 @@ float LineSymbol::calculateLargestLineExtent(Map* map)
 
 void LineSymbol::setStartSymbol(PointSymbol* symbol)
 {
-	replaceSymbol(start_symbol, symbol, QObject::tr("Start symbol"));
+	replaceSymbol(start_symbol, symbol, LineSymbolSettings::tr("Start symbol"));
 }
 void LineSymbol::setMidSymbol(PointSymbol* symbol)
 {
-	replaceSymbol(mid_symbol, symbol, QObject::tr("Mid symbol"));
+	replaceSymbol(mid_symbol, symbol, LineSymbolSettings::tr("Mid symbol"));
 }
 void LineSymbol::setEndSymbol(PointSymbol* symbol)
 {
-	replaceSymbol(end_symbol, symbol, QObject::tr("End symbol"));
+	replaceSymbol(end_symbol, symbol, LineSymbolSettings::tr("End symbol"));
 }
 void LineSymbol::setDashSymbol(PointSymbol* symbol)
 {
-	replaceSymbol(dash_symbol, symbol, QObject::tr("Dash symbol"));
+	replaceSymbol(dash_symbol, symbol, LineSymbolSettings::tr("Dash symbol"));
 }
 void LineSymbol::replaceSymbol(PointSymbol*& old_symbol, PointSymbol* replace_with, const QString& name)
 {

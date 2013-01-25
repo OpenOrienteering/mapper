@@ -60,7 +60,7 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path) throw (
 			Object* object = part->getObject(o);
 			if (object->getSymbol() == NULL)
 			{
-				addWarning(tr("Found an object without symbol."));
+				addWarning(Importer::tr("Found an object without symbol."));
 				if (object->getType() == Object::Point)
 					object->setSymbol(map->getUndefinedPoint(), true);
 				else if (object->getType() == Object::Path)
@@ -112,7 +112,7 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path) throw (
 	for (int i = 0; i < map->getNumSymbols(); ++i)
 	{
 		if (!map->getSymbol(i)->loadFinished(map))
-			throw FileFormatException(tr("Error during symbol post-processing."));
+			throw FileFormatException(Importer::tr("Error during symbol post-processing."));
 	}
 	
 	// Template loading: try to find all template files
@@ -124,13 +124,13 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path) throw (
 		bool loaded_from_template_dir = false;
 		temp->tryToFindAndReloadTemplateFile(map_path, &loaded_from_template_dir);
 		if (loaded_from_template_dir)
-			addWarning(tr("Template \"%1\" has been loaded from the map's directory instead of the relative location to the map file where it was previously.").arg(temp->getTemplateFilename()));
+			addWarning(Importer::tr("Template \"%1\" has been loaded from the map's directory instead of the relative location to the map file where it was previously.").arg(temp->getTemplateFilename()));
 		
 		if (temp->getTemplateState() != Template::Loaded)
 			have_lost_template = true;
 	}
 	if (have_lost_template)
-		addWarning(tr("At least one template file could not be found. Click the red template name(s) in the Templates -> Template setup window to locate the template file name(s)."));
+		addWarning(Importer::tr("At least one template file could not be found. Click the red template name(s) in the Templates -> Template setup window to locate the template file name(s)."));
 }
 
 void Importer::finishImport() throw (FileFormatException)

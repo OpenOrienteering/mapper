@@ -31,6 +31,7 @@
 #include <mapper_config.h> // TODO: Replace APP_NAME by runtime function to remove this dependency
 
 #include "dxfparser.h"
+#include "template_gps.h"
 
 TrackPoint::TrackPoint(LatLon coord, QDateTime datetime, float elevation, int num_satellites, float hDOP)
 {
@@ -353,7 +354,7 @@ bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent
 	QString result = parser->parse();
 	if (!result.isEmpty())
 	{
-		QMessageBox::critical(dialog_parent, QObject::tr("Error reading"), QObject::tr("There was an error reading the DXF file %1:\n\n%1").arg(file->fileName(), result));
+		QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error reading"), TemplateTrack::tr("There was an error reading the DXF file %1:\n\n%1").arg(file->fileName(), result));
 		delete parser;
 		return false;
 	}
@@ -364,7 +365,7 @@ bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent
 	//       It does not fit here as this method is called again every time a map
 	//       containing a track is re-loaded, and in this case the question should
 	//       not be asked again.
-	//int res = QMessageBox::question(dialog_parent, QObject::tr("Question"), QObject::tr("Are the coordinates in the DXF file in degrees?"), QMessageBox::Yes|QMessageBox::No);
+	//int res = QMessageBox::question(dialog_parent, TemplateTrack::tr("Question"), TemplateTrack::tr("Are the coordinates in the DXF file in degrees?"), QMessageBox::Yes|QMessageBox::No);
 	bool degrees = false; //(res == QMessageBox::Yes);
 	foreach (path_t path, paths)
 	{
@@ -497,12 +498,12 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 				double osm_version = attributes.value("version").toString().toDouble();
 				if (osm_version < min_supported_version)
 				{
-					QMessageBox::critical(dialog_parent, QObject::tr("Error"), QObject::tr("The OSM file has version %1.\nThe minimum supported version is %2.").arg(attributes.value("version").toString(), QString::number(min_supported_version, 'g', 1)));
+					QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error"), TemplateTrack::tr("The OSM file has version %1.\nThe minimum supported version is %2.").arg(attributes.value("version").toString(), QString::number(min_supported_version, 'g', 1)));
 					return false;
 				}
 				if (osm_version > max_supported_version)
 				{
-					QMessageBox::critical(dialog_parent, QObject::tr("Error"), QObject::tr("The OSM file has version %1.\nThe maximum supported version is %2.").arg(attributes.value("version").toString(), QString::number(min_supported_version, 'g', 1)));
+					QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error"), TemplateTrack::tr("The OSM file has version %1.\nThe maximum supported version is %2.").arg(attributes.value("version").toString(), QString::number(min_supported_version, 'g', 1)));
 					return false;
 				}
 			}
@@ -514,7 +515,7 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 	}
 	
 	if (node_problems > 0)
-		QMessageBox::warning(dialog_parent, QObject::tr("Problems"), QObject::tr("%1 nodes could not be processed correctly.").arg(node_problems));
+		QMessageBox::warning(dialog_parent, TemplateTrack::tr("Problems"), TemplateTrack::tr("%1 nodes could not be processed correctly.").arg(node_problems));
 	
 	return true;
 }

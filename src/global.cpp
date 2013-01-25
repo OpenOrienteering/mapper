@@ -44,19 +44,19 @@ void registerProjectionTemplates()
 	// UTM
 	CRSTemplate* temp = new CRSTemplate(
 		"UTM",
-		QObject::tr("UTM", "UTM coordinate reference system"),
-		QObject::tr("UTM coordinates"),
+		Georeferencing::tr("UTM", "UTM coordinate reference system"),
+		Georeferencing::tr("UTM coordinates"),
 		"+proj=utm +datum=WGS84 +zone=%1");
-	temp->addParam(new CRSTemplate::ZoneParam(QObject::tr("UTM Zone (number north/south, e.g. \"32 N\", \"24 S\")")));
+	temp->addParam(new CRSTemplate::ZoneParam(Georeferencing::tr("UTM Zone (number north/south, e.g. \"32 N\", \"24 S\")")));
 	CRSTemplate::registerCRSTemplate(temp);
 	
 	// Gauss-Krueger
 	temp = new CRSTemplate(
 		"Gauss-Krueger, datum: Potsdam",
-		QObject::tr("Gauss-Krueger, datum: Potsdam", "Gauss-Krueger coordinate reference system"),
-		QObject::tr("Gauss-Krueger coordinates"),
+		Georeferencing::tr("Gauss-Krueger, datum: Potsdam", "Gauss-Krueger coordinate reference system"),
+		Georeferencing::tr("Gauss-Krueger coordinates"),
 		"+proj=tmerc +lat_0=0 +lon_0=%1 +k=1.000000 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");
-	temp->addParam(new CRSTemplate::IntRangeParam(QObject::tr("Zone number (1 to 119)", "Zone number for Gauss-Krueger coordinates"), 1, 119, 3));
+	temp->addParam(new CRSTemplate::IntRangeParam(Georeferencing::tr("Zone number (1 to 119)", "Zone number for Gauss-Krueger coordinates"), 1, 119, 3));
 	CRSTemplate::registerCRSTemplate(temp);
 }
 

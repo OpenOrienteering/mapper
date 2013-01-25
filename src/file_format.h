@@ -72,7 +72,7 @@ private:
  *  \code
  *  class MyCustomFileFormat : public FileFormat {
  *  public:
- *      MyCustomFileFormat : FileFormat("custom", QObject::tr("Custom file"), "custom", true, true) {
+ *      MyCustomFileFormat : FileFormat("custom", ImportExport::tr("Custom file"), "custom", true, true) {
  *      }
  *
  *      Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException) {

@@ -224,7 +224,7 @@ inline
 QVariant ImportExport::option(const QString& name) const throw (FileFormatException)
 {
 	if (!options.contains(name))
-		throw FileFormatException(QObject::tr("No such option: %1", "No such import / export option").arg(name));
+		throw FileFormatException(ImportExport::tr("No such option: %1", "No such import / export option").arg(name));
 	return options[name];
 }
 

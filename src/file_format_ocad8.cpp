@@ -18,8 +18,7 @@
  */
 
 #include "file_format_ocad8.h"
-
-#include <set>
+#include "file_format_ocad8_p.h"
 
 #include <qmath.h>
 #include <QDateTime>
@@ -27,8 +26,6 @@
 #include <QDir>
 #include <QImageReader>
 #include <QTextCodec>
-
-#include "../libocad/libocad.h"
 
 #include "core/map_color.h"
 #include "file_import_export.h"
@@ -50,187 +47,10 @@
 #define currentMSecsSinceEpoch() currentDateTime().toTime_t() * 1000
 #endif
 
-
-// ### OCAD8FileImport declaration ###
-
-class OCAD8FileImport : public Importer
-{
-private:
-	/// Information about an OCAD rectangle symbol
-	struct RectangleInfo
-	{
-		LineSymbol* border_line;
-		double corner_radius;
-		bool has_grid;
-		
-		// Only valid if has_grid is true
-		LineSymbol* inner_line;
-		TextSymbol* text;
-		bool number_from_bottom;
-		double cell_width;
-		double cell_height;
-		int unnumbered_cells;
-		QString unnumbered_text;
-	};
-	
-public:
-	OCAD8FileImport(QIODevice* stream, Map *map, MapView *view);
-    ~OCAD8FileImport();
-
-    void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
-
-    static const float ocad_pt_in_mm;
-
-protected:
-	void import(bool load_symbols_only) throw (FileFormatException);
-	
-    // Symbol import
-    Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);
-    Symbol *importLineSymbol(const OCADLineSymbol *ocad_symbol);
-    Symbol *importAreaSymbol(const OCADAreaSymbol *ocad_symbol);
-    Symbol *importTextSymbol(const OCADTextSymbol *ocad_symbol);
-    RectangleInfo *importRectSymbol(const OCADRectSymbol *ocad_symbol);
-
-    // Object import
-    Object *importObject(const OCADObject *ocad_object, MapPart* part);
-	bool importRectangleObject(const OCADObject* ocad_object, MapPart* part, const RectangleInfo& rect);
-
-    // String import
-    void importString(OCADStringEntry *entry);
-    Template *importRasterTemplate(const OCADBackground &background);
-
-    // Some helper functions that are used in multiple places
-    PointSymbol *importPattern(s16 npts, OCADPoint *pts);
-    void fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol);
-	void setPathHolePoint(Object *object, int i);
-    void fillPathCoords(Object *object, bool is_area, s16 npts, OCADPoint *pts);
-	bool fillTextPathCoords(TextObject *object, TextSymbol *symbol, s16 npts, OCADPoint *pts);
-
-
-    // Unit conversion functions
-    QString convertPascalString(const char *p);
-	QString convertCString(const char *p, size_t n, bool ignore_first_newline);
-	QString convertWideCString(const char *p, size_t n, bool ignore_first_newline);
-    float convertRotation(int angle);
-    void convertPoint(MapCoord &c, int ocad_x, int ocad_y);
-    qint64 convertSize(int ocad_size);
-    MapColor *convertColor(int color);
-	double convertTemplateScale(double ocad_scale);
-	
-	static bool isRasterImageFile(const QString &filename);
-
-private:
-    /// Handle to the open OCAD file
-    OCADFile *file;
-
-    /// Character encoding to use for 1-byte (narrow) strings
-    QTextCodec *encoding_1byte;
-
-    /// Character encoding to use for 2-byte (wide) strings
-    QTextCodec *encoding_2byte;
-
-    /// maps OCAD color number to oo-mapper color object
-    QHash<int, MapColor *> color_index;
-
-    /// maps OCAD symbol number to oo-mapper symbol object
-    QHash<int, Symbol *> symbol_index;
-	
-	/// maps OO Mapper text symbol pointer to OCAD text symbol horizontal alignment (stored in objects instead of symbols in OO Mapper)
-	QHash<Symbol*, int> text_halign_map;
-	
-	/// maps OCAD symbol number to rectangle information struct
-	QHash<int, RectangleInfo> rectangle_info;
-
-    /// Offset between OCAD map origin and Mapper map origin (in Mapper coordinates)
-    qint64 offset_x, offset_y;
-};
-
-
-// ### OCAD8FileExport declaration ###
-
-class OCAD8FileExport : public Exporter
-{
-public:
-	OCAD8FileExport(QIODevice* stream, Map *map, MapView *view);
-	~OCAD8FileExport();
-	
-	void doExport() throw (FileFormatException);
-	
-protected:
-	
-	// Symbol export
-	void exportCommonSymbolFields(Symbol* symbol, OCADSymbol* ocad_symbol, int size);
-	int getPatternSize(PointSymbol* point);
-	s16 exportPattern(PointSymbol* point, OCADPoint** buffer);		// returns the number of written coordinates, including the headers
-	s16 exportSubPattern(Object* object, Symbol* symbol, OCADPoint** buffer);
-	
-	s16 exportPointSymbol(PointSymbol* point);
-	s16 exportLineSymbol(LineSymbol* line);
-	s16 exportAreaSymbol(AreaSymbol* area);
-	s16 exportTextSymbol(TextSymbol* text);
-	void setTextSymbolFormatting(OCADTextSymbol* ocad_symbol, TextObject* formatting);
-	std::set<s16> exportCombinedSymbol(CombinedSymbol* combination);
-	
-	// Helper functions
-	/// Returns the number of exported coordinates. If not NULL, the given symbol is used to determine the meaning of dash points.
-	s16 exportCoordinates(const MapCoordVector& coords, OCADPoint** buffer, Symbol* symbol);
-	s16 exportTextCoordinates(TextObject* object, OCADPoint** buffer);
-	int getOcadColor(QRgb rgb);
-	s16 getPointSymbolExtent(PointSymbol* symbol);
-	
-	// Conversion functions
-	void convertPascalString(const QString& text, char* buffer, int buffer_size);
-	void convertCString(const QString& text, unsigned char* buffer, int buffer_size);
-	/// Returns the number of bytes written into buffer
-	int convertWideCString(const QString& text, unsigned char* buffer, int buffer_size);
-	int convertRotation(float angle);
-	OCADPoint convertPoint(qint64 x, qint64 y);
-	/// Attention: this ignores the coordinate flags!
-	OCADPoint convertPoint(const MapCoord& coord);
-	s32 convertSize(qint64 size);
-	s16 convertColor(const MapColor* color) const;
-	double convertTemplateScale(double mapper_scale);
-	
-private:
-	/// Handle to the open OCAD file
-	OCADFile *file;
-	
-	/// Character encoding to use for 1-byte (narrow) strings
-	QTextCodec *encoding_1byte;
-	
-	/// Character encoding to use for 2-byte (wide) strings
-	QTextCodec *encoding_2byte;
-	
-	/// Set of used symbol numbers. Needed to ensure uniqueness of the symbol number as Mapper does not enforce it,
-	/// but the indexing of symbols in OCAD depends on it.
-	std::set<s16> symbol_numbers;
-	
-	/// Maps OO Mapper symbol pointer to a list of OCAD symbol numbers.
-	/// Usually the list contains only one entry, except for combined symbols,
-	/// for which it contains the indices of all basic parts
-	QHash<Symbol*, std::set<s16> > symbol_index;
-	
-	/// In .ocd 8, text alignment needs to be specified in the text symbols instead of objects, so it is possible
-	/// that multiple ocd text symbols have to be created for one native TextSymbol.
-	/// This structure maps text symbols to lists containing information about the already created ocd symbols.
-	/// The TextObject in each pair just gives information about the alignment option used for the symbol indexed by the
-	/// second part of the pair.
-	/// If there is no entry for a TextSymbol in this map yet, no object using this symbol has been encountered yet,
-	/// no no specific formatting was set in the corresponding symbol (which has to be looked up using symbol_index).
-	typedef std::vector< std::pair< TextObject*, s16 > > TextFormatList;
-	QHash<TextSymbol*, TextFormatList > text_format_map;
-	
-	/// Helper object for pattern export
-	PointObject* origin_point_object;
-	
-	void addStringTruncationWarning(const QString& text, int truncation_pos);
-};
-
-
 // ### OCAD8FileFormat ###
 
 OCAD8FileFormat::OCAD8FileFormat()
- : FileFormat(MapFile, "OCAD78", QObject::tr("OCAD Versions 7, 8"), "ocd", 
+ : FileFormat(MapFile, "OCAD78", ImportExport::tr("OCAD Versions 7, 8"), "ocd", 
               ImportSupported | ExportSupported | ExportLossy)
 {
 	// Nothing
@@ -285,14 +105,14 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
 	u32 size = stream->bytesAvailable();
 	u8* buffer = (u8*)malloc(size);
 	if (!buffer)
-		throw FileFormatException(QObject::tr("Could not allocate buffer."));
+		throw FileFormatException(tr("Could not allocate buffer."));
 	if (stream->read((char*)buffer, size) != size)
-		throw FileFormatException(QObject::tr("Could not read file."));
+		throw FileFormatException(Importer::tr("Could not read file: %1").arg(stream->errorString()));
 	int err = ocad_file_open_memory(&file, buffer, size);
-    if (err != 0) throw FileFormatException(QObject::tr("Could not open file: libocad returned %1").arg(err));
+    if (err != 0) throw FileFormatException(Importer::tr("Could not read file: %1").arg(tr("libocad returned %1").arg(err)));
 	
 	if (file->header->major <= 5 || file->header->major >= 9)
-		throw FileFormatException(QObject::tr("OCAD files of version %1 cannot be loaded!").arg(file->header->major));
+		throw FileFormatException(Importer::tr("Could not read file: %1").arg(tr("OCAD files of version %1 are not supported!").arg(file->header->major)));
 
     //qDebug() << "file version is" << file->header->major << ", type is"
     //         << ((file->header->ftype == 2) ? "normal" : "other");
@@ -374,7 +194,7 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
                 }
                 else
                 {
-                    addWarning(QObject::tr("Unable to import symbol \"%3\" (%1.%2)")
+                    addWarning(tr("Unable to import symbol \"%3\" (%1.%2)")
                                .arg(ocad_symbol->number / 10).arg(ocad_symbol->number % 10)
                                .arg(convertPascalString(ocad_symbol->name)));
                 }
@@ -387,7 +207,7 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
 		// Load objects
 
 		// Place all objects into a single OCAD import part
-		MapPart* part = new MapPart(QObject::tr("OCAD import layer"), map);
+		MapPart* part = new MapPart(tr("OCAD import layer"), map);
 		for (OCADObjectIndex *idx = ocad_objidx_first(file); idx != NULL; idx = ocad_objidx_next(file, idx))
 		{
 			for (int i = 0; i < 256; i++)
@@ -525,7 +345,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 		if (main_line->cap_style == LineSymbol::PointedCap)
 		{
 			if (ocad_symbol->bdist != ocad_symbol->edist)
-				addWarning(QObject::tr("In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.")
+				addWarning(tr("In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.")
 				.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->bdist).arg(ocad_symbol->edist).arg((ocad_symbol->bdist + ocad_symbol->edist) / 2));
 			main_line->pointed_cap_length = convertSize((ocad_symbol->bdist + ocad_symbol->edist) / 2); // FIXME: Different lengths for start and end length of pointed line ends are not supported yet, so take the average
 			main_line->join_style = LineSymbol::RoundJoin;	// NOTE: while the setting may be different (see what is set in the first place), OCAD always draws round joins if the line cap is pointed!
@@ -542,9 +362,9 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 				main_line->dash_length = convertSize(ocad_symbol->len - ocad_symbol->gap2);
 				main_line->break_length = convertSize(ocad_symbol->gap2);
 				if (!(ocad_symbol->elen >= ocad_symbol->len / 2 - 1 && ocad_symbol->elen <= ocad_symbol->len / 2 + 1))
-					addWarning(QObject::tr("In dashed line symbol %1, the end length cannot be imported correctly.").arg(0.1 * ocad_symbol->number));
+					addWarning(tr("In dashed line symbol %1, the end length cannot be imported correctly.").arg(0.1 * ocad_symbol->number));
 				if (ocad_symbol->egap != 0)
-					addWarning(QObject::tr("In dashed line symbol %1, the end gap cannot be imported correctly.").arg(0.1 * ocad_symbol->number));
+					addWarning(tr("In dashed line symbol %1, the end gap cannot be imported correctly.").arg(0.1 * ocad_symbol->number));
 			}
 			else
 			{
@@ -553,7 +373,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 					if (ocad_symbol->elen >= ocad_symbol->len / 2 - 1 && ocad_symbol->elen <= ocad_symbol->len / 2 + 1)
 						main_line->half_outer_dashes = true;
 					else
-						addWarning(QObject::tr("In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.")
+						addWarning(tr("In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.")
 						.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->len).arg(ocad_symbol->elen).arg(ocad_symbol->len));
 				}
 				
@@ -563,7 +383,7 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 				{
 					main_line->dashes_in_group = 2;
 					if (ocad_symbol->gap2 != ocad_symbol->egap)
-						addWarning(QObject::tr("In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.")
+						addWarning(tr("In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.")
 						.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->gap2).arg(ocad_symbol->egap).arg(ocad_symbol->gap2));
 					main_line->in_group_break_length = convertSize(ocad_symbol->gap2);
 					main_line->dash_length = (main_line->dash_length - main_line->in_group_break_length) / 2;
@@ -688,13 +508,13 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
     if( ocad_symbol->scnpts > 0 )
     {
 		symbol_line->dash_symbol = importPattern( ocad_symbol->scnpts, symbolptr);
-        symbol_line->dash_symbol->setName(QObject::tr("Dash symbol"));
+        symbol_line->dash_symbol->setName(LineSymbolSettings::tr("Dash symbol"));
         symbolptr += ocad_symbol->scnpts; 
     }
     if( ocad_symbol->sbnpts > 0 )
     {
 		symbol_line->start_symbol = importPattern( ocad_symbol->sbnpts, symbolptr);
-        symbol_line->start_symbol->setName(QObject::tr("Start symbol"));
+        symbol_line->start_symbol->setName(LineSymbolSettings::tr("Start symbol"));
         symbolptr += ocad_symbol->sbnpts;
     }
     if( ocad_symbol->senpts > 0 )
@@ -847,28 +667,28 @@ Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
 	else if (ocad_symbol->halign == 3)
 	{
 		// TODO: implement justified alignment
-		addWarning(QObject::tr("During import of text symbol %1: ignoring justified alignment").arg(0.1 * ocad_symbol->number));
+		addWarning(tr("During import of text symbol %1: ignoring justified alignment").arg(0.1 * ocad_symbol->number));
 	}
 	text_halign_map[symbol] = halign;
 
     if (ocad_symbol->bold != 400 && ocad_symbol->bold != 700)
     {
-        addWarning(QObject::tr("During import of text symbol %1: ignoring custom weight (%2)")
+        addWarning(tr("During import of text symbol %1: ignoring custom weight (%2)")
                        .arg(0.1 * ocad_symbol->number).arg(ocad_symbol->bold));
     }
     if (ocad_symbol->cspace != 0)
 	{
-		addWarning(QObject::tr("During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD's behavior yet")
+		addWarning(tr("During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD's behavior yet")
 		.arg(0.1 * ocad_symbol->number));
 	}
     if (ocad_symbol->wspace != 100)
     {
-        addWarning(QObject::tr("During import of text symbol %1: ignoring custom word spacing (%2%)")
+        addWarning(tr("During import of text symbol %1: ignoring custom word spacing (%2%)")
                        .arg(0.1 * ocad_symbol->number).arg(ocad_symbol->wspace));
     }
     if (ocad_symbol->indent1 != 0 || ocad_symbol->indent2 != 0)
     {
-        addWarning(QObject::tr("During import of text symbol %1: ignoring custom indents (%2/%3)")
+        addWarning(tr("During import of text symbol %1: ignoring custom indents (%2/%3)")
                        .arg(0.1 * ocad_symbol->number).arg(ocad_symbol->indent1).arg(ocad_symbol->indent2));
     }
 	
@@ -889,7 +709,7 @@ Symbol *OCAD8FileImport::importTextSymbol(const OCADTextSymbol *ocad_symbol)
 		}
 		else
 		{
-			addWarning(QObject::tr("During import of text symbol %1: ignoring text framing (mode %2)")
+			addWarning(tr("During import of text symbol %1: ignoring text framing (mode %2)")
 			.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->fmode));
 		}
 	}
@@ -1041,14 +861,14 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapPart* pa
 				symbol = map->getUndefinedLine();
 			else
 			{
-				addWarning(QObject::tr("Unable to load object"));
+				addWarning(tr("Unable to load object"));
 				return NULL;
 			}
 		}
 		else
 		{
 			if (!importRectangleObject(ocad_object, part, rectangle_info[ocad_object->symbol]))
-				addWarning(QObject::tr("Unable to import rectangle object"));
+				addWarning(tr("Unable to import rectangle object"));
 			return NULL;
 		}
     }
@@ -1096,7 +916,7 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapPart* pa
         // Text objects need special path translation
         if (!fillTextPathCoords(t, reinterpret_cast<TextSymbol*>(symbol), ocad_object->npts, (OCADPoint *)ocad_object->pts))
         {
-            addWarning(QObject::tr("Not importing text symbol, couldn't figure out path' (npts=%1): %2")
+            addWarning(tr("Not importing text symbol, couldn't figure out path' (npts=%1): %2")
                            .arg(ocad_object->npts).arg(t->getText()));
             delete t;
             return NULL;
@@ -1276,7 +1096,7 @@ void OCAD8FileImport::importString(OCADStringEntry *entry)
 			}
         }
         else
-			addWarning(QObject::tr("Unable to import template: %1").arg(ocad_str->str));
+			addWarning(tr("Unable to import template: %1").arg(ocad_str->str));
     }
     // FIXME: parse more types of strings, maybe the print parameters?
     
@@ -1303,7 +1123,7 @@ Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background
     }
     else
     {
-        addWarning(QObject::tr("Unable to import template: background \"%1\" doesn't seem to be a raster image").arg(filename));
+        addWarning(tr("Unable to import template: background \"%1\" doesn't seem to be a raster image").arg(filename));
     }
     return NULL;
 }
@@ -1408,7 +1228,7 @@ bool OCAD8FileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol,
 	{
 		// Single anchor text
 		if (npts != 5)
-			addWarning(QObject::tr("Trying to import a text object with unknown coordinate format"));
+			addWarning(tr("Trying to import a text object with unknown coordinate format"));
 		
 		s32 buf[3];
 		ocad_point(buf, &(pts[0])); // anchor point
@@ -1507,7 +1327,7 @@ qint64 OCAD8FileImport::convertSize(int ocad_size) {
 MapColor *OCAD8FileImport::convertColor(int color) {
 	if (!color_index.contains(color))
 	{
-		addWarning(QObject::tr("Color id not found: %1, ignoring this color").arg(color));
+		addWarning(tr("Color id not found: %1, ignoring this color").arg(color));
 		return NULL;
 	}
 	else
@@ -1539,11 +1359,11 @@ OCAD8FileExport::~OCAD8FileExport()
 void OCAD8FileExport::doExport() throw (FileFormatException)
 {
 	if (map->getNumColors() > 256)
-		throw FileFormatException(QObject::tr("The map contains more than 256 colors which is not supported by ocd version 8."));
+		throw FileFormatException(tr("The map contains more than 256 colors which is not supported by ocd version 8."));
 	
 	// Create struct in memory
 	int err = ocad_file_new(&file);
-	if (err != 0) throw FileFormatException(QObject::tr("Could not create new file: libocad returned %1").arg(err));
+	if (err != 0) throw FileFormatException(Exporter::tr("Could not create new file: %1").arg(tr("libocad returned %1").arg(err)));
 	
 	// Fill header struct
 	OCADFileHeader* header = file->header;
@@ -1657,7 +1477,7 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 				PathObject* path = static_cast<PathObject*>(object);
 				ocad_object->angle = convertRotation(path->getPatternRotation());
 				if (path->getPatternOrigin() != MapCoord(0, 0))
-					addWarning(QObject::tr("Unable to export fill pattern shift for an area object"));
+					addWarning(tr("Unable to export fill pattern shift for an area object"));
 			}
 			else if (object->getType() == Object::Text)
 			{
@@ -1797,7 +1617,7 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 		}
 		else
 		{
-			addWarning(QObject::tr("Unable to export template: file type of \"%1\" is not supported yet").arg(temp->getTemplateFilename()));
+			addWarning(tr("Unable to export template: file type of \"%1\" is not supported yet").arg(temp->getTemplateFilename()));
 		}
 	}
 	
@@ -2013,7 +1833,7 @@ s16 OCAD8FileExport::exportLineSymbol(LineSymbol* line)
 		ocad_symbol->ends = 6;
 	else
 	{
-		addWarning(QObject::tr("In line symbol \"%1\", cannot represent cap/join combination.").arg(line->getPlainTextName()));
+		addWarning(tr("In line symbol \"%1\", cannot represent cap/join combination.").arg(line->getPlainTextName()));
 		// Decide based on the caps
 		if (line->getCapStyle() == LineSymbol::FlatCap)
 			ocad_symbol->ends = 0;
@@ -2037,7 +1857,7 @@ s16 OCAD8FileExport::exportLineSymbol(LineSymbol* line)
 		if (line->getMidSymbol() != NULL && !line->getMidSymbol()->isEmpty())
 		{
 			if (line->getDashesInGroup() > 1)
-				addWarning(QObject::tr("In line symbol \"%1\", neglecting the dash grouping.").arg(line->getPlainTextName()));
+				addWarning(tr("In line symbol \"%1\", neglecting the dash grouping.").arg(line->getPlainTextName()));
 			
 			ocad_symbol->len = convertSize(line->getDashLength() + line->getBreakLength());
 			ocad_symbol->elen = ocad_symbol->len / 2;
@@ -2048,7 +1868,7 @@ s16 OCAD8FileExport::exportLineSymbol(LineSymbol* line)
 			if (line->getDashesInGroup() > 1)
 			{
 				if (line->getDashesInGroup() > 2)
-					addWarning(QObject::tr("In line symbol \"%1\", the number of dashes in a group has been reduced to 2.").arg(line->getPlainTextName()));
+					addWarning(tr("In line symbol \"%1\", the number of dashes in a group has been reduced to 2.").arg(line->getPlainTextName()));
 				
 				ocad_symbol->len = convertSize(2 * line->getDashLength() + line->getInGroupBreakLength());
 				ocad_symbol->elen = convertSize(2 * line->getDashLength() + line->getInGroupBreakLength());
@@ -2104,7 +1924,7 @@ s16 OCAD8FileExport::exportLineSymbol(LineSymbol* line)
 				line->getBorder().break_length != line->getRightBorder().break_length)) ||
 			(!line->getBorder().dashed && line->getRightBorder().dashed))
 		{
-			addWarning(QObject::tr("In line symbol \"%1\", cannot export the borders correctly.").arg(line->getPlainTextName()));
+			addWarning(tr("In line symbol \"%1\", cannot export the borders correctly.").arg(line->getPlainTextName()));
 		}
 	}
 	
@@ -2161,7 +1981,7 @@ s16 OCAD8FileExport::exportAreaSymbol(AreaSymbol* area)
 		{
 			if (ocad_symbol->hmode == 1 && ocad_symbol->hcolor != convertColor(pattern.line_color))
 			{
-				addWarning(QObject::tr("In area symbol \"%1\", skipping a fill pattern.").arg(area->getPlainTextName()));
+				addWarning(tr("In area symbol \"%1\", skipping a fill pattern.").arg(area->getPlainTextName()));
 				continue;
 			}
 			
@@ -2211,7 +2031,7 @@ s16 OCAD8FileExport::exportAreaSymbol(AreaSymbol* area)
 				// NOTE: This is only a heuristic which works for the orienteering symbol sets, not a real conversion, which would be impossible in most cases.
 				//       There are no further checks done to find out if the conversion is applicable because with these checks, already a tiny (not noticeable) error
 				//       in the symbol definition would make it take the wrong choice.
-				addWarning(QObject::tr("In area symbol \"%1\", assuming a \"shifted rows\" point pattern. This might be correct as well as incorrect.").arg(area->getPlainTextName()));
+				addWarning(tr("In area symbol \"%1\", assuming a \"shifted rows\" point pattern. This might be correct as well as incorrect.").arg(area->getPlainTextName()));
 				
 				if (pattern.line_offset != 0)
 					ocad_symbol->pheight /= 2;
@@ -2250,16 +2070,16 @@ s16 OCAD8FileExport::exportTextSymbol(TextSymbol* text)
 	//ocad_symbol->charset
 	ocad_symbol->cspace = convertSize(1000 * text->getCharacterSpacing());
 	if (ocad_symbol->cspace != 0)
-		addWarning(QObject::tr("In text symbol %1: custom character spacing is set, its implementation does not match OCAD's behavior yet").arg(text->getPlainTextName()));
+		addWarning(tr("In text symbol %1: custom character spacing is set, its implementation does not match OCAD's behavior yet").arg(text->getPlainTextName()));
 	ocad_symbol->wspace = 100;
 	ocad_symbol->halign = 0;	// Default value, we might have to change this or even create copies of this symbol with other alignments later
 	double absolute_line_spacing = text->getLineSpacing() * (text->getFontMetrics().lineSpacing() / text->calculateInternalScaling());
 	ocad_symbol->lspace = qRound(absolute_line_spacing / (text->getFontSize() * 0.01));
 	ocad_symbol->pspace = convertSize(1000 * text->getParagraphSpacing());
 	if (text->isUnderlined())
-		addWarning(QObject::tr("In text symbol %1: ignoring underlining").arg(text->getPlainTextName()));
+		addWarning(tr("In text symbol %1: ignoring underlining").arg(text->getPlainTextName()));
 	if (text->usesKerning())
-		addWarning(QObject::tr("In text symbol %1: ignoring kerning").arg(text->getPlainTextName()));
+		addWarning(tr("In text symbol %1: ignoring kerning").arg(text->getPlainTextName()));
 	
 	ocad_symbol->under = text->hasLineBelow() ? 1 : 0;
 	ocad_symbol->ucolor = convertColor(text->getLineBelowColor());
@@ -2636,5 +2456,5 @@ void OCAD8FileExport::addStringTruncationWarning(const QString& text, int trunca
 {
 	QString temp = text;
 	temp.insert(truncation_pos, "|||");
-	addWarning(QObject::tr("String truncated (truncation marked with three '|'): %1").arg(temp));
+	addWarning(tr("String truncated (truncation marked with three '|'): %1").arg(temp));
 }

@@ -1709,7 +1709,7 @@ void MapEditorController::selectObjectsClicked()
 	if (map->getNumSelectedObjects() > 0)
 		setEditTool();
 	else
-		QMessageBox::warning(window, QObject::tr("Object selection"), QObject::tr("No objects were selected because there are no objects with the selected symbol(s)"));
+		QMessageBox::warning(window, tr("Object selection"), tr("No objects were selected because there are no objects with the selected symbol(s)"));
 }
 
 void MapEditorController::switchDashesClicked()
@@ -2015,28 +2015,28 @@ void MapEditorController::booleanUnionClicked()
 {
 	BooleanTool tool(map);
 	if (!tool.execute(BooleanTool::Union))
-		QMessageBox::warning(window, QObject::tr("Error"), QObject::tr("Unification failed."));
+		QMessageBox::warning(window, tr("Error"), tr("Unification failed."));
 }
 
 void MapEditorController::booleanIntersectionClicked()
 {
 	BooleanTool tool(map);
 	if (!tool.execute(BooleanTool::Intersection))
-		QMessageBox::warning(window, QObject::tr("Error"), QObject::tr("Intersection failed."));
+		QMessageBox::warning(window, tr("Error"), tr("Intersection failed."));
 }
 
 void MapEditorController::booleanDifferenceClicked()
 {
 	BooleanTool tool(map);
 	if (!tool.execute(BooleanTool::Difference))
-		QMessageBox::warning(window, QObject::tr("Error"), QObject::tr("Difference failed."));
+		QMessageBox::warning(window, tr("Error"), tr("Difference failed."));
 }
 
 void MapEditorController::booleanXOrClicked()
 {
 	BooleanTool tool(map);
 	if (!tool.execute(BooleanTool::XOr))
-		QMessageBox::warning(window, QObject::tr("Error"), QObject::tr("XOr failed."));
+		QMessageBox::warning(window, tr("Error"), tr("XOr failed."));
 }
 
 void MapEditorController::convertToCurvesClicked()

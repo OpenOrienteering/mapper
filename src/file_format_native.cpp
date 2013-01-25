@@ -93,7 +93,7 @@ const int NativeFileFormat::current_file_format_version = 30;
 const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP"
 
 NativeFileFormat::NativeFileFormat()
- : FileFormat(FileFormat::MapFile, "native (deprecated)", QObject::tr("OpenOrienteering Mapper").append(" pre-0.5"), "omap", 
+ : FileFormat(FileFormat::MapFile, "native (deprecated)", ImportExport::tr("OpenOrienteering Mapper").append(" pre-0.5"), "omap", 
 #ifdef MAPPER_ENABLE_NATIVE_EXPORTER
               FileFormat::ExportSupported | FileFormat::ExportLossy |
 #endif
@@ -142,15 +142,15 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
     stream->read((char*)&version, sizeof(int));
     if (version < 0)
     {
-        addWarning(QObject::tr("Invalid file format version."));
+        addWarning(Importer::tr("Invalid file format version."));
     }
     else if (version < NativeFileFormat::least_supported_file_format_version)
     {
-        throw FileFormatException(QObject::tr("Unsupported file format version. Please use an older program version to load and update the file."));
+        throw FileFormatException(Importer::tr("Unsupported old file format version. Please use an older program version to load and update the file."));
     }
     else if (version > NativeFileFormat::current_file_format_version)
     {
-        throw FileFormatException(QObject::tr("File format version too high. Please update to a newer program version to load this file."));
+        throw FileFormatException(Importer::tr("Unsupported new file format version. Some map features will not be loaded or saved by this version of the program. Consider updating."));
     }
 
     if (version <= 16)
@@ -199,7 +199,7 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 		if (geographic_crs_spec != Georeferencing::geographic_crs_spec)
 		{
 			addWarning(
-			  QObject::tr("The geographic coordinate reference system of the map was \"%1\". This CRS is not supported. Using \"%2\".").
+			  Importer::tr("The geographic coordinate reference system of the map was \"%1\". This CRS is not supported. Using \"%2\".").
 			  arg(geographic_crs_spec).
 			  arg(Georeferencing::geographic_crs_spec)
 			);
@@ -314,12 +314,12 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
         Symbol* symbol = Symbol::getSymbolForType(static_cast<Symbol::Type>(symbol_type));
         if (!symbol)
         {
-            throw FileFormatException(QObject::tr("Error while loading a symbol with type %2.").arg(symbol_type));
+            throw FileFormatException(Importer::tr("Error while loading a symbol with type %2.").arg(symbol_type));
         }
 
         if (!symbol->load(stream, version, map))
         {
-            throw FileFormatException(QObject::tr("Error while loading a symbol."));
+            throw FileFormatException(Importer::tr("Error while loading a symbol."));
         }
         map->symbols[i] = symbol;
     }
@@ -382,7 +382,7 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 		{
 			if (!map->object_undo_manager.load(stream, version))
 			{
-				throw FileFormatException(QObject::tr("Error while loading undo steps."));
+				throw FileFormatException(Importer::tr("Error while loading undo steps."));
 			}
 		}
 
@@ -392,7 +392,7 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 		int num_parts;
 		if (stream->read((char*)&num_parts, sizeof(int)) < (int)sizeof(int))
 		{
-			throw FileFormatException(QObject::tr("Error while reading map part count."));
+			throw FileFormatException(Importer::tr("Error while reading map part count."));
 		}
 		delete map->parts[0];
 		map->parts.resize(num_parts);
@@ -402,7 +402,7 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 			MapPart* part = new MapPart("", map);
 			if (!part->load(stream, version, map))
 			{
-				throw FileFormatException(QObject::tr("Error while loading map part %2.").arg(i+1));
+				throw FileFormatException(Importer::tr("Error while loading map part %2.").arg(i+1));
 			}
 			map->parts[i] = part;
 		}
