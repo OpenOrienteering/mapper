@@ -454,7 +454,7 @@ bool TextSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 {
 	TextSymbol* text = static_cast<TextSymbol*>(other);
 	
-	if (!MapColor::equals(color, text->color))
+	if (!MapColor::equal(color, text->color))
 		return false;
 	if (font_family.compare(text->font_family, Qt::CaseInsensitive) != 0)
 		return false;
@@ -471,7 +471,7 @@ bool TextSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 		return false;
 	if (framing)
 	{
-		if (!MapColor::equals(framing_color, text->framing_color))
+		if (!MapColor::equal(framing_color, text->framing_color))
 			return false;
 		if (framing_mode != text->framing_mode ||
 			(framing_mode == LineFraming && framing_line_half_width != text->framing_line_half_width) ||
@@ -480,7 +480,7 @@ bool TextSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 	}
 	if (line_below)
 	{
-		if (!MapColor::equals(line_below_color, text->line_below_color))
+		if (!MapColor::equal(line_below_color, text->line_below_color))
 			return false;
 		if (line_below_width != text->line_below_width ||
 			line_below_distance != text->line_below_distance)

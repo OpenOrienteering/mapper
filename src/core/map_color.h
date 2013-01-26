@@ -353,8 +353,8 @@ public:
 	bool equals(const MapColor& other, bool compare_priority) const;
 	
 	/** Compares two colors given by pointers.
-	 *  Return true if the colors are equal or if both pointers are NULL. */
-	static bool equals(const MapColor* color, const MapColor* other);
+	 *  Returns true if the colors are equal or if both pointers are NULL. */
+	static bool equal(const MapColor* color, const MapColor* other);
 	
 	/** Returns true if this color's priority is less than the other's. */
 	bool comparePriority(const MapColor& other) const;
@@ -635,7 +635,7 @@ bool MapColor::comparePriority(const MapColor& other) const
 }
 
 inline
-bool MapColor::equals(const MapColor* color, const MapColor* other)
+bool MapColor::equal(const MapColor* color, const MapColor* other)
 {
 	if (color == other)
 		return true;

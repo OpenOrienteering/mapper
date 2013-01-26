@@ -112,7 +112,7 @@ bool LineSymbolBorder::load(QXmlStreamReader& xml, Map& map)
 
 bool LineSymbolBorder::equals(const LineSymbolBorder* other) const
 {
-	if (!MapColor::equals(color, other->color))
+	if (!MapColor::equal(color, other->color))
 		return false;
 	
 	if (width != other->width)
@@ -1981,7 +1981,7 @@ bool LineSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 		return false;
 	if (line_width > 0)
 	{
-		if (!MapColor::equals(color, line->color))
+		if (!MapColor::equal(color, line->color))
 			return false;
 		
 		if ((cap_style != line->cap_style) ||

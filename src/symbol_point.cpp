@@ -396,11 +396,11 @@ bool PointSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity
 	
 	if (rotatable != point->rotatable)
 		return false;
-	if (!MapColor::equals(inner_color, point->inner_color))
+	if (!MapColor::equal(inner_color, point->inner_color))
 		return false;
 	if (inner_color && inner_radius != point->inner_radius)
 		return false;
-	if (!MapColor::equals(outer_color, point->outer_color))
+	if (!MapColor::equal(outer_color, point->outer_color))
 		return false;
 	if (outer_color && outer_width != point->outer_width)
 		return false;

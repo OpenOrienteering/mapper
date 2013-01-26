@@ -211,7 +211,7 @@ bool AreaSymbol::FillPattern::equals(AreaSymbol::FillPattern& other, Qt::CaseSen
 	}
 	else if (type == LinePattern)
 	{
-		if (!MapColor::equals(line_color, other.line_color))
+		if (!MapColor::equal(line_color, other.line_color))
 			return false;
 		if (line_width != other.line_width)
 			return false;
@@ -664,7 +664,7 @@ bool AreaSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 bool AreaSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 {
 	AreaSymbol* area = static_cast<AreaSymbol*>(other);
-	if (!MapColor::equals(color, area->color))
+	if (!MapColor::equal(color, area->color))
 		return false;
 	if (minimum_area != area->minimum_area)
 		return false;
