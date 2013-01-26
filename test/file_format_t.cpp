@@ -361,7 +361,9 @@ void FileFormatTest::comparePrinterConfig(const MapPrinterConfig& copy, const Ma
 	QCOMPARE(copy.center_print_area, orig.center_print_area);
 	QCOMPARE(copy.options, orig.options);
 	QCOMPARE(copy.page_format, orig.page_format);
-	QCOMPARE(copy.print_area, orig.print_area);
+	// Compare print area with reasonable precision, here: 0.1 mm
+	QCOMPARE((copy.print_area.topLeft()*10.0).toPoint(), (orig.print_area.topLeft()*10.0).toPoint());
+	QCOMPARE((copy.print_area.size()*10.0).toSize(), (orig.print_area.size()*10.0).toSize());
 	QCOMPARE(copy.printer_name, orig.printer_name);
 	QCOMPARE(copy.single_page_print_area, orig.single_page_print_area);
 }
