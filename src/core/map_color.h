@@ -49,28 +49,28 @@ struct MapColorCmyk
 	float k;
 	
 	/** Constructs a black color. */
-	MapColorCmyk() : c(0.0f), m(0.0f), y(0.0f), k(1.0f) { Q_ASSERT(isBlack()); }
+	MapColorCmyk();
 	
 	/** Constructs a color with the given components. */
-	MapColorCmyk(float c, float m, float y, float k) : c(c), m(m), y(y), k(k) {}
+	MapColorCmyk(float c, float m, float y, float k);
 	
 	/** Constructs a copy of the given CMYK color. */
-	MapColorCmyk(const MapColorCmyk& other) : c(other.c), m(other.m), y(other.y), k(other.k) {}
+	MapColorCmyk(const MapColorCmyk& other);
 	
 	/** Constructs a CMYK color of the given QColor. Used for type conversions. */
-	MapColorCmyk(const QColor& other) : c(other.cyanF()), m(other.magentaF()), y(other.yellowF()), k(other.blackF()) {}
+	MapColorCmyk(const QColor& other);
 	
 	/** Assigns another color's value to this color. */
-	void operator=(const MapColorCmyk& other) { c = other.c; m = other.m; y = other.y; k = other.k; }
+	void operator=(const MapColorCmyk& other);
 	
 	/** Converts this color to a QColor. */
-	operator QColor() const { return QColor::fromCmykF(c, m, y, k); }
+	operator QColor() const;
 	
 	/** Returns true if this color is black. */
-	bool isBlack() const { return (1.0 == k) || (1.0 == c && 1.0 == m && 1.0 == y); }
+	bool isBlack() const;
 	
 	/** Returns true if this color is white. */
-	bool isWhite() const { return (0.0 == c && 0.0 == m && 0.0 == y && 0.0 == k); }
+	bool isWhite() const;
 };
 
 
@@ -90,28 +90,28 @@ struct MapColorRgb
 	float b;
 	
 	/** Constructs a black color. */
-	MapColorRgb() : r(0.0f), g(0.0f), b(0.0f) { Q_ASSERT(isBlack()); }
+	MapColorRgb();
 	
 	/** Constructs a color with the given components. */
-	MapColorRgb(float r, float g, float b) : r(r), g(g), b(b) {}
+	MapColorRgb(float r, float g, float b);
 	
 	/** Constructs a copy of the given RGB color. */
-	MapColorRgb(const MapColorRgb& other) : r(other.r), g(other.g), b(other.b) {}
+	MapColorRgb(const MapColorRgb& other);
 	
 	/** Constructs a RGB color of the given QColor. Used for type conversions. */
-	MapColorRgb(const QColor& other) : r(other.redF()), g(other.greenF()), b(other.blueF()) {}
+	MapColorRgb(const QColor& other);
 	
 	/** Assigns another color's value to this color. */
-	void operator=(const MapColorRgb& other) { r = other.r; g = other.g; b = other.b; }
+	void operator=(const MapColorRgb& other);
 	
 	/** Converts this color to a QColor. */
-	operator QColor() const { return QColor::fromRgbF(r, g, b); }
+	operator QColor() const;
 	
 	/** Returns true if this color is black. */
-	bool isBlack() const { return (0.0 == r && 0.0 == g && 0.0 == b); }
+	bool isBlack() const;
 	
 	/** Returns true if this color is white. */
-	bool isWhite() const { return (1.0 == r && 1.0 == g && 1.0 == b); }
+	bool isWhite() const;
 };
 
 
@@ -121,24 +121,21 @@ struct MapColorRgb
  */
 struct SpotColorComponent
 {
-	/** 
-	 * The number which identifies the spot color in the map.
-	 */
+	/** A map color which is a spot color. */
 	MapColor* spot_color;
 	
-	/**
-	 * The factor describes the halftoning (screen).
-	 * It is a value in the range [0.0; 1.0].
-	 */
+	/** The factor describes the halftoning (screen).
+	 *  It is a value in the range [0.0; 1.0]. */
 	float factor;
 	
-	SpotColorComponent()
-	: spot_color(NULL), factor(0.0f)
-	{}
+	/** Constructs a component with an undefined spot color and halftoning. */
+	SpotColorComponent();
 	
-	SpotColorComponent(MapColor* spot_color, float factor)
-	: spot_color(spot_color), factor(factor)
-	{}
+	/** Constructs a component for the given spot color and halftoning. */
+	SpotColorComponent(MapColor* spot_color, float factor);
+	
+	/** Returns true iff the spot color is defined. */
+	bool isValid() const;
 };
 
 
@@ -202,35 +199,32 @@ public:
 	 * The returned const QColor& can be passed to QtGui operations. 
 	 * MapColor maintains an own QColor instance for efficienc
 	 */
-	operator const QColor&() const { return q_color; }
+	operator const QColor&() const;
 	
 	/** Converts the current CMYK values to a QRgb. */
-	operator QRgb() const
-	{
-		return qRgba(qFloor(255.9 * cmyk.c), qFloor(255.9 * cmyk.m), qFloor(255.9 * cmyk.y), qFloor(255.9 * cmyk.k));
-	}
+	operator QRgb() const;
 	
 	
 	/** Returns the color's name for the mapping context. */
-	const QString& getName() const { return name; }
+	const QString& getName() const;
 	
 	/** Sets the color's name for the mapping context. */
-	void setName(const QString& name) { this->name = name; }
+	void setName(const QString& name);
 	
 	/** Returns the color's priority. */
-	int getPriority() const { return priority; }
+	int getPriority() const;
 	
 	/** 
 	 * Sets the color's priority.
 	 * Normally you don't want to call this directly.
 	 */
-	void setPriority(int priority) { this->priority = priority; }
+	void setPriority(int priority);
 	
 	/** @deprecated Returns the color's opacity. */
-	float getOpacity() const { return opacity; }
+	float getOpacity() const;
 	
 	/** @deprecated Sets the color's opacity. */
-	void setOpacity(float opacity) { this->opacity = opacity; }
+	void setOpacity(float opacity);
 	
 	
 	/** 
@@ -240,14 +234,14 @@ public:
 	 * referenced by name), or CustomColor (for a color created from named 
 	 * colors using halftoning (screens) and overprint.
 	 */
-	ColorMethod getSpotColorMethod() const { return (ColorMethod)spot_color_method; }
+	ColorMethod getSpotColorMethod() const;
 	
 	/** 
 	 * Returns the name for the single spot color or a label for the spot color 
 	 * composition which realizes this map color.
 	 * Returns an empty string for an UndefinedMethod.
 	 */
-	const QString& getSpotColorName() const { return spot_color_name; }
+	const QString& getSpotColorName() const;
 	
 	/**
 	 * Sets the name of a single spot color which realizes this map color,
@@ -265,7 +259,7 @@ public:
 	 * Returns the components of the spot color realization of this color.
 	 * Returns an empty list if the spot color method is not CustomColor.
 	 */
-	const SpotColorComponents& getComponents() const { return components; }
+	const SpotColorComponents& getComponents() const;
 	
 	/**
 	 * Sets the value of knockout flag for spot color printing.
@@ -285,10 +279,10 @@ public:
 	 * SpotColor (for values determined from evaluation the spot color composition),
 	 * or RgbColor (for values directly derived from the current RGB values).
 	 */
-	ColorMethod getCmykColorMethod() const { return (ColorMethod)cmyk_color_method; }
+	ColorMethod getCmykColorMethod() const;
 	
 	/** Returns the map color's CMYK values. */
-	const MapColorCmyk& getCmyk() const { return cmyk; }
+	const MapColorCmyk& getCmyk() const;
 	
 	/** Sets the CMYK values, and sets the CMYK color method to CustomColor. */
 	void setCmyk(const MapColorCmyk& cmyk);
@@ -320,10 +314,10 @@ public:
 	 * SpotColor (for values determined from evaluation the spot color composition),
 	 * or CmykColor (for values directly derived from the current CMYK value).
 	 */
-	ColorMethod getRgbColorMethod() const { return (ColorMethod)rgb_color_method; }
+	ColorMethod getRgbColorMethod() const;
 	
 	/** Returns the map color's RGB values. */
-	const MapColorRgb& getRgb() const { return rgb; }
+	const MapColorRgb& getRgb() const;
 	
 	/** Sets the RGB values, and sets the RGB color method to CustomColor. */
 	void setRgb(const MapColorRgb& rgb);
@@ -363,7 +357,7 @@ public:
 	static bool equals(const MapColor* color, const MapColor* other);
 	
 	/** Returns true if this color's priority is less than the other's. */
-	bool comparePriority(const MapColor& other) const { return priority < other.priority; }
+	bool comparePriority(const MapColor& other) const;
 	
 protected:
 	/** 
@@ -402,7 +396,243 @@ protected:
 typedef QHash<const MapColor*, const MapColor*> MapColorMap;
 
 
+// ### MapColorCmyk inline code ###
+
+inline
+MapColorCmyk::MapColorCmyk()
+ : c(0.0f), m(0.0f), y(0.0f), k(1.0f)
+{
+	Q_ASSERT(isBlack());
+}
+
+inline
+MapColorCmyk::MapColorCmyk(float c, float m, float y, float k)
+ : c(c), m(m), y(y), k(k) 
+{
+	// Nothing
+}
+
+inline
+MapColorCmyk::MapColorCmyk(const MapColorCmyk& other)
+ : c(other.c), m(other.m), y(other.y), k(other.k)
+{
+	// Nothing
+}
+
+inline
+MapColorCmyk::MapColorCmyk(const QColor& other)
+ : c(other.cyanF()), m(other.magentaF()), y(other.yellowF()), k(other.blackF())
+{
+	// Nothing
+}
+
+inline
+void MapColorCmyk::operator=(const MapColorCmyk& other)
+{
+	c = other.c;
+	m = other.m;
+	y = other.y;
+	k = other.k;
+}
+
+inline
+MapColorCmyk::operator QColor() const
+{
+	return QColor::fromCmykF(c, m, y, k);
+}
+
+inline
+bool MapColorCmyk::isBlack() const
+{
+	return (1.0 == k) || (1.0 == c && 1.0 == m && 1.0 == y);
+}
+
+inline
+bool MapColorCmyk::isWhite() const
+{
+	return (0.0 == c && 0.0 == m && 0.0 == y && 0.0 == k);
+}
+
+
+// ### MapColorRgb inline code ###
+
+inline
+MapColorRgb::MapColorRgb()
+ : r(0.0f), g(0.0f), b(0.0f)
+{
+	Q_ASSERT(isBlack());
+}
+
+inline
+MapColorRgb::MapColorRgb(float r, float g, float b)
+ : r(r), g(g), b(b)
+{
+	// Nothing
+}
+
+inline
+MapColorRgb::MapColorRgb(const MapColorRgb& other)
+ : r(other.r), g(other.g), b(other.b)
+{
+	// Nothing
+}
+
+inline
+MapColorRgb::MapColorRgb(const QColor& other)
+ : r(other.redF()), g(other.greenF()), b(other.blueF())
+{
+	// Nothing
+}
+
+inline
+void MapColorRgb::operator=(const MapColorRgb& other)
+{
+	r = other.r;
+	g = other.g;
+	b = other.b;
+}
+
+inline
+MapColorRgb::operator QColor() const
+{
+	return QColor::fromRgbF(r, g, b);
+}
+
+inline
+bool MapColorRgb::isBlack() const
+{
+	return (0.0 == r && 0.0 == g && 0.0 == b);
+}
+
+inline
+bool MapColorRgb::isWhite() const
+{
+	return (1.0 == r && 1.0 == g && 1.0 == b);
+}
+
+
+// ### SpotColorComponent inline code ###
+
+inline
+SpotColorComponent::SpotColorComponent()
+ : spot_color(NULL),
+   factor(0.0f)
+{
+	// Nothing
+}
+
+inline
+SpotColorComponent::SpotColorComponent(MapColor* spot_color, float factor)
+ : spot_color(spot_color),
+   factor(factor)
+{
+	// Nothing
+}
+
+inline
+bool SpotColorComponent::isValid() const
+{
+	return spot_color != NULL;
+}
+
+
 // ### MapColor inline code ###
+
+inline
+MapColor::operator const QColor&() const
+{
+	return q_color;
+}
+
+inline
+MapColor::operator QRgb() const
+{
+	return qRgba(qFloor(255.9 * cmyk.c), qFloor(255.9 * cmyk.m), qFloor(255.9 * cmyk.y), qFloor(255.9 * cmyk.k));
+}
+
+inline
+const QString& MapColor::getName() const
+{
+	return name;
+}
+
+inline
+void MapColor::setName(const QString& name)
+{
+	this->name = name;
+}
+
+inline
+int MapColor::getPriority() const
+{
+	return priority;
+}
+
+inline
+void MapColor::setPriority(int priority)
+{
+	this->priority = priority;
+}
+
+inline
+float MapColor::getOpacity() const
+{
+	return opacity;
+}
+
+inline
+void MapColor::setOpacity(float opacity)
+{
+	this->opacity = opacity;
+}
+
+inline
+MapColor::ColorMethod MapColor::getSpotColorMethod() const
+{
+	return (ColorMethod)spot_color_method;
+}
+
+inline
+const QString& MapColor::getSpotColorName() const
+{
+	return spot_color_name;
+}
+
+inline
+const SpotColorComponents& MapColor::getComponents() const
+{
+	return components;
+}
+
+inline
+MapColor::ColorMethod MapColor::getCmykColorMethod() const
+{
+	return (ColorMethod)cmyk_color_method;
+}
+
+inline
+const MapColorCmyk& MapColor::getCmyk() const
+{
+	return cmyk;
+}
+
+inline
+MapColor::ColorMethod MapColor::getRgbColorMethod() const
+{
+	return (ColorMethod)rgb_color_method;
+}
+
+inline
+const MapColorRgb& MapColor::getRgb() const
+{
+	return rgb;
+}
+
+inline
+bool MapColor::comparePriority(const MapColor& other) const
+{
+	return priority < other.priority;
+}
 
 inline
 bool MapColor::equals(const MapColor* color, const MapColor* other)
