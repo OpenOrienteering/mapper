@@ -91,6 +91,7 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 # Unit tests
 add_unit_test(georeferencing_t ../src/georeferencing ../src/mapper_resource ../src/file_format)
+add_unit_test(map_color_t ../src/core/map_color)
 add_unit_test(qpainter_t)
 
 # System tests

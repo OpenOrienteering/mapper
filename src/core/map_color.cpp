@@ -29,6 +29,7 @@ MapColor::MapColor()
 : name("?"),
   priority(Undefined),
   opacity(1.0f),
+  q_color(Qt::black),
   spot_color_method(MapColor::UndefinedMethod),
   cmyk_color_method(MapColor::CustomColor),
   rgb_color_method(MapColor::CmykColor),
@@ -42,6 +43,7 @@ MapColor::MapColor(int priority)
 : name("?"),
   priority(priority),
   opacity(1.0f),
+  q_color(Qt::black),
   spot_color_method(MapColor::UndefinedMethod),
   cmyk_color_method(MapColor::CustomColor),
   rgb_color_method(MapColor::CmykColor),
@@ -73,6 +75,7 @@ MapColor::MapColor(const QString& name, int priority)
 : name(name),
   priority(priority),
   opacity(1.0),
+  q_color(Qt::black),
   spot_color_method(MapColor::UndefinedMethod),
   cmyk_color_method(MapColor::CustomColor),
   rgb_color_method(MapColor::CmykColor),
@@ -113,12 +116,16 @@ bool MapColor::isWhite() const
 
 bool MapColor::equals(const MapColor& other, bool compare_priority) const
 {
-	// FIXME: MapColor::equals may be incomplete regarding new features
-	return (name.compare(other.name, Qt::CaseInsensitive) == 0) &&
-		   (!compare_priority || (priority == other.priority)) && 
-		   (qAbs(cmyk.c - other.cmyk.c) < 1e-03) && (qAbs(cmyk.m - other.cmyk.m) < 1e-03) &&
-		   (qAbs(cmyk.y - other.cmyk.y) < 1e-03) && (qAbs(cmyk.k - other.cmyk.k) < 1e-03) &&
-		   (qAbs(opacity - other.opacity) < 1e-03);
+	return (!compare_priority || (priority == other.priority)) &&
+	       (name.compare(other.name, Qt::CaseInsensitive) == 0) &&
+	       (spot_color_method == other.spot_color_method) &&
+	       (cmyk_color_method == other.cmyk_color_method) &&
+	       (rgb_color_method == other.rgb_color_method) &&
+	       (flags == other.flags) &&
+	       (spot_color_method == UndefinedMethod || spot_color_name.compare(other.spot_color_name, Qt::CaseInsensitive) == 0) && // This is an approximation!
+	       (cmyk_color_method != CustomColor || cmyk == other.cmyk) &&
+	       (rgb_color_method != CustomColor || rgb == other.rgb) &&
+	       (qAbs(opacity - other.opacity) < 1e-03);
 }
 
 

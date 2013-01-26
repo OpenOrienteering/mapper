@@ -73,6 +73,12 @@ struct MapColorCmyk
 	bool isWhite() const;
 };
 
+/** Returns true iff the MapColorCmyk are equal in all components. */
+bool operator==(const MapColorCmyk& lhs, const MapColorCmyk& rhs);
+
+/** Returns true iff the MapColorCmyk differ in at least one components. */
+bool operator!=(const MapColorCmyk& lhs, const MapColorCmyk& rhs);
+
 
 /**
  * The MapColorRgb class provides a datatype for storing and transfering 
@@ -113,6 +119,12 @@ struct MapColorRgb
 	/** Returns true if this color is white. */
 	bool isWhite() const;
 };
+
+/** Returns true if both MapColorRgb are equal in all components. */
+bool operator==(const MapColorRgb& lhs, const MapColorRgb& rhs);
+
+/** Returns true iff the MapColorRgb differ in at least one components. */
+bool operator!=(const MapColorRgb& lhs, const MapColorRgb& rhs);
 
 
 /**
@@ -181,7 +193,7 @@ public:
 		Knockout        = 16
 	};
 	
-	/** Constructs a black CMYK map color.*/
+	/** Constructs a black CMYK map color of undefined priority.*/
 	MapColor();
 	
 	/** Constructs a black CMYK map color with the given priority. */
@@ -391,6 +403,12 @@ protected:
 	SpotColorComponents components;
 };
 
+/** Returns true if both MapColor are equal in all components. */
+bool operator==(const MapColor& lhs, const MapColor& rhs);
+
+/** Returns true iff the MapColor differ in at least one components. */
+bool operator!=(const MapColor& lhs, const MapColor& rhs);
+
 
 /** MapColorMap provides a mapping from one map color to another. */
 typedef QHash<const MapColor*, const MapColor*> MapColorMap;
@@ -453,6 +471,24 @@ bool MapColorCmyk::isWhite() const
 	return (0.0 == c && 0.0 == m && 0.0 == y && 0.0 == k);
 }
 
+inline
+bool operator==(const MapColorCmyk& lhs, const MapColorCmyk& rhs)
+{
+	// The maximum difference of two floating point member values
+	//  which are regarded as *equal*.
+	static const float epsilon = 0.0005f;
+	return ( qAbs(lhs.c - rhs.c) <= epsilon &&
+	         qAbs(lhs.m - rhs.m) <= epsilon &&
+	         qAbs(lhs.y - rhs.y) <= epsilon &&
+	         qAbs(lhs.k - rhs.k) <= epsilon );
+}
+
+inline
+bool operator!=(const MapColorCmyk& lhs, const MapColorCmyk& rhs)
+{
+	return !(lhs == rhs);
+}
+
 
 // ### MapColorRgb inline code ###
 
@@ -508,6 +544,23 @@ inline
 bool MapColorRgb::isWhite() const
 {
 	return (1.0 == r && 1.0 == g && 1.0 == b);
+}
+
+inline
+bool operator==(const MapColorRgb& lhs, const MapColorRgb& rhs)
+{
+	// The maximum difference of two floating point member values
+	//  which are regarded as *equal*.
+	static const float epsilon = 0.0005f;
+	return ( qAbs(lhs.r - rhs.r) <= epsilon &&
+	         qAbs(lhs.g - rhs.g) <= epsilon &&
+	         qAbs(lhs.b - rhs.b) <= epsilon );
+}
+
+inline
+bool operator!=(const MapColorRgb& lhs, const MapColorRgb& rhs)
+{
+	return !(lhs == rhs);
 }
 
 
@@ -643,6 +696,18 @@ bool MapColor::equal(const MapColor* color, const MapColor* other)
 		return color->equals(*other, false);
 	else
 		return false;
+}
+
+inline
+bool operator==(const MapColor& lhs, const MapColor& rhs)
+{
+	return lhs.equals(rhs, true);
+}
+
+inline
+bool operator!=(const MapColor& lhs, const MapColor& rhs)
+{
+	return !lhs.equals(rhs, true);
 }
 
 #endif
