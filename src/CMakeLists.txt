@@ -240,7 +240,7 @@ if(MINGW)
 	enable_language(RC)
 	Quirks_CMake_RC_Compiler()
 	configure_file(mingw/resources.rc.in ${CMAKE_CURRENT_BINARY_DIR}/resources.rc @ONLY)
-	configure_file(mingw/control.ico     ${CMAKE_CURRENT_BINARY_DIR}/control.ico  COPYONLY)
+	configure_file(${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper.ico ${CMAKE_CURRENT_BINARY_DIR}/Mapper.ico COPYONLY)
 	list(APPEND Mapper_SRCS ${CMAKE_CURRENT_BINARY_DIR}/resources.rc)
 endif(MINGW)
 

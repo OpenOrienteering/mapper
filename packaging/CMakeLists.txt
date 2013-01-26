@@ -105,16 +105,16 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		set(MAPPER_MACOS_SUBDIR "/Mapper.app/Contents/MacOS")
 		set(CPACK_GENERATOR_DEFAULT "DragNDrop")
 		set(CPACK_PACKAGE_EXECUTABLES "Mapper" "OpenOrienteering Mapper ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
-		set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/macosx/Mapper.icns")
+		set(CPACK_PACKAGE_ICON "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper.icns")
 		set_target_properties(Mapper PROPERTIES
 		  MACOSX_BUNDLE_INFO_STRING          "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}"
 		  MACOSX_BUNDLE_ICON_FILE            "Mapper.icns"
-		  MACOSX_BUNDLE_GUI_IDENTIFIER       "net.sourceforge.oorienteering.Mapper"
+		  MACOSX_BUNDLE_GUI_IDENTIFIER       "org.openorienteering.Mapper"
 		  MACOSX_BUNDLE_LONG_VERSION_STRING  "Mapper ${Mapper_VERSION_DISPLAY} for Mac OS X"
 		  MACOSX_BUNDLE_BUNDLE_NAME          "Mapper" # less than 16 characters long
 		  MACOSX_BUNDLE_SHORT_VERSION_STRING "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}"
 		  MACOSX_BUNDLE_BUNDLE_VERSION       "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}"
-		  MACOSX_BUNDLE_COPYRIGHT            "(C) 2012 OpenOrienteering developers"
+		  MACOSX_BUNDLE_COPYRIGHT            "(C) 2012, 2013 OpenOrienteering developers"
 
 		)
 		install(FILES "${CPACK_PACKAGE_ICON}"
@@ -367,9 +367,14 @@ if(UNIX AND NOT APPLE AND NOT CYGWIN)
 	install(
 	  FILES "debian/Mapper.desktop"
 	  DESTINATION "share/applications")
-	install(
-	  FILES "debian/Mapper.xpm"
-	  DESTINATION "share/pixmaps")
+	# Cf. http://standards.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html#directory_layout
+	foreach(_size 16 24 32 48 96 128 256 512)
+		install(
+		  FILES "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper-${_size}.png"
+		  DESTINATION "share/icons/hicolor/${_size}x${_size}/apps"
+		  RENAME Mapper.png
+		)
+	endforeach()
 endif(UNIX AND NOT APPLE AND NOT CYGWIN)
 
 

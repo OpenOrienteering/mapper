@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -21,7 +21,7 @@
 
  // Cf. http://msdn.microsoft.com/en-us/library/aa381058%28v=vs.85%29
 
-IDI_ICON1 ICON "control.ico"
+IDI_ICON1 ICON "Mapper.ico"
 
 1 VERSIONINFO
 FILEVERSION    @Mapper_VERSION_MAJOR@,@Mapper_VERSION_MINOR@,@Mapper_VERSION_PATCH@,0
@@ -35,7 +35,7 @@ BEGIN
 			VALUE "FileDescription", "Map drawing program from OpenOrienteering"
 			VALUE "FileVersion", "@Mapper_VERSION_MAJOR@.@Mapper_VERSION_MINOR@.@Mapper_VERSION_PATCH@ @CMAKE_BUILD_TYPE@"
 			VALUE "InternalName", "Mapper"
-			VALUE "LegalCopyright", "(C) 2012 OpenOrienteering Developers"
+			VALUE "LegalCopyright", "(C) 2012, 2013 OpenOrienteering Developers"
 			VALUE "OriginalFilename", "Mapper.exe"
 			VALUE "ProductName", "OpenOrienteering Mapper"
 			VALUE "ProductVersion", "@Mapper_VERSION_MAJOR@.@Mapper_VERSION_MINOR@.@Mapper_VERSION_PATCH@ @CMAKE_BUILD_TYPE@"
