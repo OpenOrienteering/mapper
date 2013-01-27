@@ -82,6 +82,11 @@ ExternalProject_Add(Qt5
 ExternalProject_Get_Property(Qt5 SOURCE_DIR)
 ExternalProject_Get_Property(Qt5 BINARY_DIR)
 ExternalProject_Get_Property(Qt5 INSTALL_DIR)
+if(NOT EXISTS "${BINARY_DIR}/qtbase/Makefile")
+	# Required for initial confclean
+	file(MAKE_DIRECTORY "${BINARY_DIR}/qtbase")
+	file(WRITE "${BINARY_DIR}/qtbase/Makefile" "confclean:")
+endif()
 
 # Trigger patch step when qt5-patchqt has changed.
 ExternalProject_Add_Step(Qt5 patch-dependencies
@@ -126,7 +131,11 @@ configure_file(qt5-make.in qt5-make @ONLY)
 
 if(CMAKE_CROSSCOMPILING)
 	set(QT5_EXTRA_HOST_DIR "${BINARY_DIR}/../${PROJECT_NAME}-build-host")
-	file(MAKE_DIRECTORY "${QT5_EXTRA_HOST_DIR}")
+	if(NOT EXISTS "${QT5_EXTRA_HOST_DIR}/qtbase/Makefile")
+		# Required for initial confclean-host
+		file(MAKE_DIRECTORY "${QT5_EXTRA_HOST_DIR}/qtbase")
+		file(WRITE "${QT5_EXTRA_HOST_DIR}/qtbase/Makefile" "confclean:")
+	endif()
 	configure_file(qt5-config-host.in qt5-config-host.new @ONLY)
 	add_custom_command(OUTPUT qt5-config-host
 	  COMMAND ${CMAKE_COMMAND} -E copy_if_different qt5-config-host.new qt5-config-host
