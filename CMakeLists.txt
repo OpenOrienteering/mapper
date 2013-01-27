@@ -46,9 +46,10 @@ option(Mapper_BUILD_PROJ "Build the Proj library from source")
 
 option(Mapper_BUILD_QT   "Build the Qt library from source")
 
-option(Mapper_USE_QT5    "Use Qt library version 5")
+set(Mapper_USE_QT5_DEFAULT ${Mapper_BUILD_QT})
+option(Mapper_USE_QT5    "Use Qt library version 5" ${Mapper_USE_QT5_DEFAULT})
 
-if (NOT CMAKE_BUILD_TYPE MATCHES Release|MinSizeRel)
+if(NOT CMAKE_BUILD_TYPE MATCHES Release|MinSizeRel)
 	set(Mapper_DEVELOPMENT_BUILD_DEFAULT ON)
 else()
 	set(Mapper_DEVELOPMENT_BUILD_DEFAULT OFF)
