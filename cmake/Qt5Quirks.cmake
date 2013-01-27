@@ -34,12 +34,15 @@ if(CMAKE_CROSSCOMPILING)
 	macro(QT5_FIND_HOST_PROGRAM VAR)
 		# Get rid of non-cached Qt5 configuration variable
 		unset(${VAR})
-		if(NOT HOST_${VAR}_FOUND)
+		if(HOST_${VAR}_FOUND AND NOT ${VAR})
+			unset(HOST_${VAR}_FOUND CACHE)
+		endif()
+		if (NOT HOST_${VAR}_FOUND)
 			# Search QT5_HOST_DIR first
 			unset(${VAR} CACHE)
 			find_program(${ARGV}
 			  HINTS ${QT5_HOST_DIR}
-			  PATH_SUFFIXES bin
+			  PATH_SUFFIXES bin host/bin
 			  NO_DEFAULT_PATH
 			)
 			if(${VAR} MATCHES NOTFOUND)

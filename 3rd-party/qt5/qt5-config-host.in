@@ -29,14 +29,14 @@ cd "@SOURCE_DIR@"
 SOURCE_DIR=$(pwd)
 
 # [2] Go to build directory
-cd "@BINARY_DIR@"
+cd "@QT5_EXTRA_HOST_DIR@"
 
-# [3] Configure
+# [3] Configure, but for host system of cross compilation
 QT5_CONFIG_EXTRA_OPTS=
-if [ "@APPLE@" != "" ]
+if [ "@CMAKE_HOST_APPLE@" != "" ]
 then
 	QT5_CONFIG_EXTRA_OPTS="-no-framework"
-elif [ "@UNIX@" != "" ]
+elif [ "@CMAKE_HOST_UNIX@" != "" ]
 then
 	QT5_CONFIG_EXTRA_OPTS="-R \\\$ORIGIN/../lib"
 else
@@ -46,10 +46,8 @@ fi
 "$SOURCE_DIR/configure" \
   -opensource \
   -confirm-license \
-  @QT5_PLATFORM@ \
   $QT5_CONFIG_EXTRA_OPTS \
-  -prefix "@QT5_DIR@" \
-  -hostprefix "@QT5_HOST_DIR@" \
+  -prefix "@QT5_HOST_DIR@/host" \
   -release \
   -shared \
   -gui \

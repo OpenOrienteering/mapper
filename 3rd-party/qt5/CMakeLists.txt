@@ -1,5 +1,5 @@
 #
-#    Copyright 2012 Kai Pastor
+#    Copyright 2012, 2013 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -42,7 +42,7 @@ if("${CMAKE_GENERATOR}" MATCHES "Makefiles" OR
 	  "The 'make' command for building the Qt library")
 else()
 	# require make
-	set(QT5_MAKE_COMMAND "${SH_PROGRAM}" -l -e "${CMAKE_CURRENT_BINARY_DIR}/qt5-make" make CACHE STRING
+	set(QT5_MAKE_COMMAND "${SH_PROGRAM}" -l -e "${CMAKE_CURRENT_BINARY_DIR}/qt5-make" CACHE STRING
 	  "The 'make' command for building the Qt library")
 endif()
 mark_as_advanced(QT5_MAKE_COMMAND)
@@ -58,6 +58,12 @@ mark_as_advanced(SH_PROGRAM)
 
 # Build definition
 
+# Don't touch the configured qt5-patchqt unless the content really changes.
+add_custom_command(OUTPUT qt5-patchqt
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different qt5-patchqt.new qt5-patchqt
+  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qt5-patchqt.new
+)
+
 # Don't touch the configured qt5-config unless the content really changes.
 add_custom_command(OUTPUT qt5-config
   COMMAND ${CMAKE_COMMAND} -E copy_if_different qt5-config.new qt5-config
@@ -68,6 +74,7 @@ ExternalProject_Add(Qt5
   DOWNLOAD_DIR ${PROJECT_SOURCE_DIR}/download
   URL "http://releases.qt-project.org/qt5/${QT5_VERSION}/single/qt-everywhere-opensource-src-${QT5_VERSION}.tar.gz"
   URL_MD5 ${QT5_MD5}
+  PATCH_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/qt5-patchqt
   CONFIGURE_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/qt5-config
   BUILD_COMMAND ${QT5_MAKE_COMMAND}
   INSTALL_COMMAND ${QT5_MAKE_COMMAND} install
@@ -76,12 +83,26 @@ ExternalProject_Get_Property(Qt5 SOURCE_DIR)
 ExternalProject_Get_Property(Qt5 BINARY_DIR)
 ExternalProject_Get_Property(Qt5 INSTALL_DIR)
 
-# Trigger configure when qt5-config has changed.
+# Trigger patch step when qt5-patchqt has changed.
+ExternalProject_Add_Step(Qt5 patch-dependencies
+  COMMAND ${CMAKE_COMMAND} -E echo_append "" # Do nothing
+  DEPENDEES download update
+  DEPENDERS patch
+  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qt5-patchqt
+)
+
+# Trigger confclean and configure steps when qt5-config has changed.
+ExternalProject_Add_Step(Qt5 confclean
+  COMMAND ${QT5_MAKE_COMMAND} -C qtbase confclean
+  DEPENDEES patch
+  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qt5-config
+  WORKING_DIRECTORY "${BINARY_DIR}"
+)
 ExternalProject_Add_Step(Qt5 configure-dependencies
   COMMAND ${CMAKE_COMMAND} -E echo_append "" # Do nothing
-  DEPENDEES update patch
+  DEPENDEES confclean
   DEPENDERS configure
-  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qt5-config
+  WORKING_DIRECTORY "${BINARY_DIR}"
 )
 
 # Exported configuration
@@ -96,5 +117,38 @@ set(QT_TRANSLATIONS_DIR "${QT5_DIR}/translations" CACHE INTERNAL "The Qt5 transl
 
 # Build script configuration
 
+configure_file(qt5-patchqt.in qt5-patchqt.new @ONLY)
 configure_file(qt5-config.in qt5-config.new @ONLY)
 configure_file(qt5-make.in qt5-make @ONLY)
+
+# Cross-compiling requires an extra host build in order to get 
+# qcollectiongenerator (required) and lupdate (optional)
+
+if(CMAKE_CROSSCOMPILING)
+	set(QT5_EXTRA_HOST_DIR "${BINARY_DIR}/../${PROJECT_NAME}-build-host")
+	file(MAKE_DIRECTORY "${QT5_EXTRA_HOST_DIR}")
+	configure_file(qt5-config-host.in qt5-config-host.new @ONLY)
+	add_custom_command(OUTPUT qt5-config-host
+	  COMMAND ${CMAKE_COMMAND} -E copy_if_different qt5-config-host.new qt5-config-host
+	  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qt5-config-host.new
+	)
+	ExternalProject_Add_Step(Qt5 confclean-host
+	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}/qtbase" confclean
+	  DEPENDEES patch
+	  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qt5-config-host
+	)
+	ExternalProject_Add_Step(Qt5 configure-host
+	  COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/qt5-config-host
+	  DEPENDEES confclean-host
+	  WORKING_DIRECTORY "${QT5_EXTRA_HOST_DIR}"
+	)
+	ExternalProject_Add_Step(Qt5 build-host
+	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}"
+	  DEPENDEES configure-host
+	)
+	ExternalProject_Add_Step(Qt5 install-host
+	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}" install
+	  DEPENDEES build-host
+	  DEPENDERS install
+	)
+endif()
