@@ -25,14 +25,14 @@ include(ExternalProject)
 
 # Configuration options
 
-if(NOT QT5_VERSION)
-	set(QT5_VERSION 5.0.0 CACHE STRING
-	  "Version number of the Qt5 library, minumum recommended value: 5.0.0")
-endif(NOT QT5_VERSION)
+set(QT5_VERSION 5.0.0 CACHE STRING
+  "Version number of the Qt5 library, minimum recommended value: 5.0.0")
 mark_as_advanced(QT5_VERSION)
 
 if(QT5_VERSION STREQUAL 5.0.0)
 	set(QT5_MD5 1a1b73f913a965f6b0cf02bb820c8a03)
+elseif(QT5_VERSION STREQUAL 5.0.1-rc1)
+	set(QT5_MD5 e74765aa1620ff56d4642119078628c3)
 endif()
 
 if("${CMAKE_GENERATOR}" MATCHES "Makefiles" OR 
@@ -70,9 +70,10 @@ add_custom_command(OUTPUT qt5-config
   DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qt5-config.new
 )
 
+string(REGEX REPLACE "-.*" "" _qt5_version ${QT5_VERSION})
 ExternalProject_Add(Qt5
   DOWNLOAD_DIR ${PROJECT_SOURCE_DIR}/download
-  URL "http://releases.qt-project.org/qt5/${QT5_VERSION}/single/qt-everywhere-opensource-src-${QT5_VERSION}.tar.gz"
+  URL "http://releases.qt-project.org/qt5/${QT5_VERSION}/single/qt-everywhere-opensource-src-${_qt5_version}.tar.gz"
   URL_MD5 ${QT5_MD5}
   PATCH_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/qt5-patchqt
   CONFIGURE_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/qt5-config
