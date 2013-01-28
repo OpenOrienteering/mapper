@@ -40,6 +40,11 @@ if(NOT CMAKE_BUILD_TYPE)
 	  FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
+if(APPLE)
+	SET(Mapper_MACOSX_VERSION "10.6" CACHE STRING
+	  "Minimum Mac OS X version to build for, recommended: 10.6")
+endif()
+
 option(Mapper_TRANSLATIONS_EMBEDDED "Embed all translations in the program executable")
 
 option(Mapper_BUILD_PROJ "Build the Proj library from source")
@@ -94,6 +99,12 @@ endif()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(CMake28Quirks)
+
+if(APPLE AND Mapper_MACOSX_VERSION)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mmacosx-version-min=${Mapper_MACOSX_VERSION}")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mmacosx-version-min=${Mapper_MACOSX_VERSION}")
+	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mmacosx-version-min=${Mapper_MACOSX_VERSION}")
+endif()
 
 add_custom_target(Mapper_prerequisites)
 set(Mapper_prerequisites_FOUND TRUE)

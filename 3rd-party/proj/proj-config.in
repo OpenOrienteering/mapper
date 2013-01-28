@@ -31,10 +31,9 @@ SOURCE_DIR=$(pwd)
 # [2] Go to build directory
 cd "@BINARY_DIR@"
 
-CC=@CMAKE_C_COMPILER@
-
 "$SOURCE_DIR/configure" \
   --without-mutex \
   --prefix "@INSTALL_DIR@" \
-  @_proj_cfg_cross@
-
+  @_proj_cfg_cross@ \
+  CC=@CMAKE_C_COMPILER@ \
+  CFLAGS="@CMAKE_C_FLAGS@"
