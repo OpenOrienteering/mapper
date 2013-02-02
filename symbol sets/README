@@ -1,0 +1,8 @@
+The ISOM 1:10000 symbol set can be created from the 1:15000 version by following these steps:
+- Map -> Scale map ... from 15000 to 10000, all options ticked on
+- set north line patterns spacing from 50mm to 40mm
+- delete the oo mapper logo and copy over the original version without adjusting scale 
+      
+The ISSOM 1:4000 symbol set can be created from the 1:5000 version by following these steps:
+- Map -> Scale map ... from 5000 to 4000, DEACTIVATE ALL OPTIONS
+- set north line patterns spacing from 30mm to 37.5mm
