@@ -1749,6 +1749,8 @@ QRectF Map::calculateExtent(bool include_helper_symbols, bool include_templates,
 		{
 			if (view && !view->isTemplateVisible(templates[i]))
 				continue;
+            if (templates[i]->getTemplateState() != Template::Loaded)
+              continue;
 			
 			QRectF template_bbox = templates[i]->calculateTemplateBoundingBox();
 			rectIncludeSafe(rect, template_bbox);
