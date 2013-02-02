@@ -132,7 +132,8 @@ public:
 	/// Draws the templates first_template until last_template which are visible in the given bouding box.
 	/// view determines template visibility and can be NULL to show all templates.
 	/// The initial transform of the given QPainter must be the map-to-paintdevice transformation.
-	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, MapView* view);
+    /// If on_screen is set to true, some optimizations will be applied, leading to a possibly lower display quality.
+	void drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, MapView* view, bool on_screen);
 	/// Updates the renderables and extent of all objects which have been changed. This is automatically called by draw(), you normally do not need it
 	void updateObjects();
 	

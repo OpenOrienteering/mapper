@@ -86,7 +86,7 @@ void TemplateMap::unloadTemplateFileImpl()
 	template_map = NULL;
 }
 
-void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity)
+void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity)
 {
 	if (!is_georeferenced)
 		applyTemplateTransform(painter);
@@ -107,7 +107,8 @@ void TemplateMap::drawTemplate(QPainter* painter, QRectF& clip_rect, double scal
 		// TODO!
 	}
 	
-	template_map->draw(painter, transformed_clip_rect, false, scale, false, opacity);
+	// TODO: introduce template-specific options, adjustable by the user, to allow changing some of these parameters
+	template_map->draw(painter, transformed_clip_rect, false, scale, on_screen, false, opacity);
 }
 
 QRectF TemplateMap::getTemplateExtent()

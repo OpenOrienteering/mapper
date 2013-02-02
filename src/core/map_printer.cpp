@@ -628,7 +628,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 	painter->setClipRect(page_extent.intersected(print_area), Qt::ReplaceClip);
 	
 	if (options.show_templates)
-		map.drawTemplates(painter, page_extent, 0, map.getFirstFrontTemplate() - 1, view);
+		map.drawTemplates(painter, page_extent, 0, map.getFirstFrontTemplate() - 1, view, false);
 	
 	if (view == NULL || view->getMapVisibility()->visible)
 	{
@@ -671,7 +671,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 		map.drawGrid(painter, print_area);
 	
 	if (options.show_templates)
-		map.drawTemplates(painter, page_extent, map.getFirstFrontTemplate(), map.getNumTemplates() - 1, view);
+		map.drawTemplates(painter, page_extent, map.getFirstFrontTemplate(), map.getNumTemplates() - 1, view, false);
 	
 	// If a temporary buffer has been used, paint it on the device painter
 	if (painter != device_painter)

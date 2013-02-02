@@ -166,7 +166,7 @@ public:
 	/// the scale is the combined view & template scale,
 	/// which can be used to give a minimum size to elements.
 	/// The painter transformation is set to use template coordinates.
-	virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity) = 0;
+    virtual void drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity) = 0;
 	
 	/// Calculates the template's bounding box in map coordinates.
 	virtual QRectF calculateTemplateBoundingBox();

@@ -199,7 +199,7 @@ void TemplateImage::unloadTemplateFileImpl()
 	image = NULL;
 }
 
-void TemplateImage::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, float opacity)
+void TemplateImage::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity)
 {
 	applyTemplateTransform(painter);
 	

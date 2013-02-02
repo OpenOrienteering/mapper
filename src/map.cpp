@@ -785,7 +785,7 @@ void Map::drawGrid(QPainter* painter, QRectF bounding_box)
 {
 	grid->draw(painter, bounding_box, this);
 }
-void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, MapView* view)
+void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, MapView* view, bool on_screen)
 {
 	for (int i = first_template; i <= last_template; ++i)
 	{
@@ -795,7 +795,7 @@ void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_templa
 		float scale = (view ? view->getZoom() : 1) * std::max(temp->getTemplateScaleX(), temp->getTemplateScaleY());
 		
 		painter->save();
-		temp->drawTemplate(painter, bounding_box, scale, view ? view->getTemplateVisibility(temp)->opacity : 1);
+		temp->drawTemplate(painter, bounding_box, scale, on_screen, view ? view->getTemplateVisibility(temp)->opacity : 1);
 		painter->restore();
 	}
 }
