@@ -1605,10 +1605,13 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 			int y = pos.y >> 8;
 			double u = convertTemplateScale(temp->getTemplateScaleX());
 			double v = convertTemplateScale(temp->getTemplateScaleY());
+            
+            QString template_path = temp->getTemplatePath();
+            template_path.replace('/', '\\');
 			
 			QString string;
 			string.sprintf("%s\ts%d\tx%d\ty%d\ta%f\tu%f\tv%f\td%d\tp%d\tt%d\to%d",
-				temp->getTemplatePath().toLatin1().data(), s, x, y, a, u, v, d, p, t, o
+				template_path.toLatin1().data(), s, x, y, a, u, v, d, p, t, o
 			);
 			
 			OCADStringEntry* entry = ocad_string_entry_new(file, string.length() + 1);
