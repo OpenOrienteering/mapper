@@ -228,12 +228,27 @@ install(FILES COPYING
   DESTINATION "${MAPPER_ABOUT_DESTINATION}"
 )
 
-else(Mapper_prerequisites_FOUND)
+set(MAPPER_SUPERBUILD 0 CACHE INTERNAL "Flag to avoid superbuild loops." FORCE)
 
-add_custom_target(Mapper_superbuild ALL "${CMAKE_COMMAND}" .
-  COMMAND "${CMAKE_BUILD_TOOL}"
-)
-add_dependencies(Mapper_superbuild Mapper_prerequisites)
+elseif(MAPPER_SUPERBUILD)
 
-endif(Mapper_prerequisites_FOUND)
+	set(MAPPER_SUPERBUILD 0 CACHE INTERNAL "Flag to avoid superbuild loops." FORCE)
+	message(FATAL_ERROR "Mapper prerequisites marked as build but not found by cmake re-run.")
 
+else() # NOT Mapper_prerequisites_FOUND AND NOT MAPPER_SUPERBUILD
+
+	if("${CMAKE_GENERATOR}" MATCHES "Makefiles" OR 
+	   "${CMAKE_EXTRA_GENERATOR}" MATCHES "Makefiles")
+		# use magic MAKE macro
+		set(_build_tool "\$(MAKE)")
+	else()
+		set(_build_tool ${CMAKE_BUILD_TOOL})
+	endif()
+	add_custom_target(Mapper_superbuild ALL
+	  COMMAND "${CMAKE_COMMAND}" . -DMAPPER_SUPERBUILD=1
+	  COMMAND $_build_tool
+	  VERBATIM
+	)
+	add_dependencies(Mapper_superbuild Mapper_prerequisites)
+
+endif()
