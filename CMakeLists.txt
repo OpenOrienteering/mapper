@@ -246,7 +246,7 @@ else() # NOT Mapper_prerequisites_FOUND AND NOT MAPPER_SUPERBUILD
 	endif()
 	add_custom_target(Mapper_superbuild ALL
 	  COMMAND "${CMAKE_COMMAND}" . -DMAPPER_SUPERBUILD=1
-	  COMMAND $_build_tool
+	  COMMAND ${_build_tool}
 	  VERBATIM
 	)
 	add_dependencies(Mapper_superbuild Mapper_prerequisites)
