@@ -154,22 +154,22 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		endif(NOT FAKEROOT_EXECUTABLE)
 		mark_as_advanced(FAKEROOT_EXECUTABLE)
 		
-		# workaround for https://bugs.launchpad.net/ubuntu/+source/cmake/+bug/972419
-		if (CPACK_LSB_RELEASE STREQUAL "precise")
-			install(CODE "MESSAGE(\"\n\"
-			  \"Ubuntu 12.04 (${CPACK_LSB_RELEASE}) had got a broken DEB package generator\n\"
-			  \"(cf. https://bugs.launchpad.net/ubuntu/+source/cmake/+bug/972419).\n\"
-			  \"Make sure you use cmake package version 2.8.7-0ubuntu5 or later.\n\")")
- 		endif (CPACK_LSB_RELEASE STREQUAL "precise")
-		add_custom_target(package_repair
-		  COMMENT "Rebuilding DEB package"
-		  COMMAND umask 022
-		  COMMAND dpkg-deb -R "${PROJECT_BINARY_DIR}/${CPACK_PACKAGE_FILE_NAME}.deb" "${CPACK_PACKAGE_FILE_NAME}"
-		  COMMAND ldconfig -n "${CPACK_PACKAGE_FILE_NAME}${MAPPER_LIBRARY_DESTINATION}/lib"
-		  COMMAND /usr/bin/fakeroot dpkg-deb -b "${CPACK_PACKAGE_FILE_NAME}"
-		  COMMAND mv "${PROJECT_BINARY_DIR}/${CPACK_PACKAGE_FILE_NAME}.deb" "${PROJECT_BINARY_DIR}/${CPACK_PACKAGE_FILE_NAME}.deb.bak"
-		  COMMAND mv "${CPACK_PACKAGE_FILE_NAME}.deb" "${PROJECT_BINARY_DIR}/${CPACK_PACKAGE_FILE_NAME}.deb"
-		  COMMAND rm -R "${CPACK_PACKAGE_FILE_NAME}")
+		message(WARNING 
+		  "The CPackDeb generator for creating deb packages has some issues. Run\n"
+		  "   make deb\n"
+		  "instead of running make package directly." )
+		add_custom_target(deb
+		  COMMENT "Building a DEB package"
+		  COMMAND sh -c 'if [ -d \"${CPACK_PACKAGE_FILE_NAME}\" ]; then rm -R \"${CPACK_PACKAGE_FILE_NAME}\" ";" fi'
+		  COMMAND sh -c 'mkdir \"${CPACK_PACKAGE_FILE_NAME}\" && chmod 0755 \"${CPACK_PACKAGE_FILE_NAME}\"'
+		  COMMAND sh -c '
+		    umask 022 && 
+		    "\$(MAKE)" package &&
+		    dpkg-deb -R \"${CPACK_PACKAGE_FILE_NAME}.deb\" \"${CPACK_PACKAGE_FILE_NAME}\" &&
+		    ldconfig -n \"${CPACK_PACKAGE_FILE_NAME}${MAPPER_LIBRARY_DESTINATION}/lib\" &&
+		    fakeroot dpkg-deb -b \"${CPACK_PACKAGE_FILE_NAME}\"'
+		  COMMAND rm -R "./${CPACK_PACKAGE_FILE_NAME}"
+		  WORKING_DIRECTORY "${PROJECT_BINARY_DIR}")
 	
 	endif()
 
