@@ -140,7 +140,7 @@ configure_file(qt5-make.in qt5-make @ONLY)
 configure_file(qt.conf.in qt.conf @ONLY)
 configure_file(qt.conf.qrc.in qt.conf.qrc @ONLY)
 
-if(UNIX AND NOT APPLE)
+if(UNIX)
 	# Wrappers which set LD_LIBRARY_PATH.
 	configure_file(qt5-wrapper.in qcollectiongenerator @ONLY)
 	configure_file(qt5-wrapper.in lupdate @ONLY)

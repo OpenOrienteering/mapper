@@ -17,5 +17,13 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-LD_LIBRARY_PATH='@INSTALL_DIR@@QT5_BINARY_DESTINATION@/lib' '@INSTALL_DIR@@QT5_BINARY_DESTINATION@/bin/'$(basename $0) "$@"
+if [ ! "@APPLE@" = "" ]
+then
+	DYLD_LIBRARY_PATH='@INSTALL_DIR@@QT5_BINARY_DESTINATION@/lib' '@INSTALL_DIR@@QT5_BINARY_DESTINATION@/bin/'$(basename $0) "$@"
+elif [ ! "@UNIX@" = "" ]
+then
+	LD_LIBRARY_PATH='@INSTALL_DIR@@QT5_BINARY_DESTINATION@/lib' '@INSTALL_DIR@@QT5_BINARY_DESTINATION@/bin/'$(basename $0) "$@"
+else
+	exit 1
+fi
 
