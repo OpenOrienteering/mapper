@@ -34,6 +34,7 @@
 
 int main(int argc, char** argv)
 {
+
 #if QT_VERSION < 0x050000
 	// Set the default graphics system to raster. This can be overwritten by the command line option "-graphicssystem".
 	// This must be called before the QApplication constructor is called!
@@ -50,6 +51,9 @@ int main(int argc, char** argv)
 	}
 	
 	// Load resources
+#ifdef MAPPER_USE_QT_CONF_QRC
+	Q_INIT_RESOURCE(qt);
+#endif
 	Q_INIT_RESOURCE(resources);
 	
 	QCoreApplication::setOrganizationName("Thomas Schoeps");

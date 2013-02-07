@@ -38,7 +38,7 @@ then
 	QT5_CONFIG_EXTRA_OPTS="-no-framework"
 elif [ "@CMAKE_HOST_UNIX@" != "" ]
 then
-	QT5_CONFIG_EXTRA_OPTS="-R \\\$ORIGIN/../lib"
+	QT5_CONFIG_EXTRA_OPTS="-rpath"
 else
 	QT5_CONFIG_EXTRA_OPTS="-no-rpath"
 fi
@@ -47,7 +47,7 @@ fi
   -opensource \
   -confirm-license \
   $QT5_CONFIG_EXTRA_OPTS \
-  -prefix "@QT5_HOST_DIR@/host" \
+  -prefix "@QT5_HOST_DIR@" \
   -release \
   -shared \
   -gui \

@@ -18,6 +18,10 @@
 
 include(../3rd-party/clipper.cmake)
 
+if(Mapper_PACKAGE_QT AND UNIX AND NOT APPLE)
+	set(MAPPER_USE_QT_CONF_QRC 1)
+endif()
+
 configure_file(mapper_config.h.in "${CMAKE_CURRENT_BINARY_DIR}/mapper_config.h.tmp")
 execute_process(
   COMMAND "${CMAKE_COMMAND}" -E copy_if_different mapper_config.h.tmp mapper_config.h
@@ -210,6 +214,9 @@ qt4_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})
 
 # Resources (from project root)
 
+if(MAPPER_USE_QT_CONF_QRC)
+	set(Mapper_RESOURCES ${Mapper_RESOURCES} ${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf.qrc)
+endif()
 set(Mapper_RESOURCES ${Mapper_RESOURCES} ${PROJECT_SOURCE_DIR}/resources.qrc)
 qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 

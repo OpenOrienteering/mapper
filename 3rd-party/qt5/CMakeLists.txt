@@ -78,7 +78,7 @@ ExternalProject_Add(Qt5
   PATCH_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/qt5-patchqt
   CONFIGURE_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/qt5-config
   BUILD_COMMAND ${QT5_MAKE_COMMAND}
-  INSTALL_COMMAND ${QT5_MAKE_COMMAND} install
+  INSTALL_COMMAND ${QT5_MAKE_COMMAND} install INSTALL_ROOT=<INSTALL_DIR>
 )
 ExternalProject_Get_Property(Qt5 SOURCE_DIR)
 ExternalProject_Get_Property(Qt5 BINARY_DIR)
@@ -111,21 +111,57 @@ ExternalProject_Add_Step(Qt5 configure-dependencies
   WORKING_DIRECTORY "${BINARY_DIR}"
 )
 
-# Exported configuration
-
-if (CMAKE_CROSSCOMPILING)
-	set(QT5_DIR "${INSTALL_DIR}/${GNU_SYSTEM_NAME}" CACHE INTERNAL "The Qt5 target platform directory." FORCE)
-else()
-	set(QT5_DIR "${INSTALL_DIR}" CACHE INTERNAL "The Qt5 target platform directory." FORCE)
-endif()
-set(QT5_HOST_DIR "${INSTALL_DIR}" CACHE INTERNAL "The Qt5 host platform directory." FORCE)
-set(QT_TRANSLATIONS_DIR "${QT5_DIR}/translations" CACHE INTERNAL "The Qt5 translation directory." FORCE)
-
 # Build script configuration
+
+if(${MAPPER_LIBRARY_DESTINATION} STREQUAL .)
+	set(QT5_BINARY_DESTINATION "/binary")
+elseif(NOT ${MAPPER_LIBRARY_DESTINATION} MATCHES "^/")
+	set(QT5_BINARY_DESTINATION "/binary/${MAPPER_LIBRARY_DESTINATION}")
+else()
+	set(QT5_BINARY_DESTINATION "${MAPPER_LIBRARY_DESTINATION}")
+endif()
+set(QT5_PLUGINS_DESTINATION "${QT5_BINARY_DESTINATION}/plugins")
+if(${MAPPER_DATA_DESTINATION} STREQUAL .)
+	set(QT5_DATA_DESTINATION "/data")
+elseif(NOT ${MAPPER_DATA_DESTINATION} MATCHES "^/")
+	set(QT5_DATA_DESTINATION "/data/${MAPPER_DATA_DESTINATION}")
+else()
+	set(QT5_DATA_DESTINATION "${MAPPER_DATA_DESTINATION}")
+endif()
 
 configure_file(qt5-patchqt.in qt5-patchqt.new @ONLY)
 configure_file(qt5-config.in qt5-config.new @ONLY)
 configure_file(qt5-make.in qt5-make @ONLY)
+configure_file(qt.conf.in qt.conf @ONLY)
+configure_file(qt.conf.qrc.in qt.conf.qrc @ONLY)
+
+if(UNIX AND NOT APPLE)
+	# Wrappers which set LD_LIBRARY_PATH.
+	configure_file(qt5-wrapper.in qcollectiongenerator @ONLY)
+	configure_file(qt5-wrapper.in lupdate @ONLY)
+	execute_process(
+	  COMMAND chmod +x qcollectiongenerator lupdate
+	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
+	set(QT_QCOLLECTIONGENERATOR_EXECUTABLE "${CMAKE_CURRENT_BINARY_DIR}/qcollectiongenerator"
+	  CACHE PATH "The qcollectiongenerator wrapper.")
+	set(QT_LUPDATE_EXECUTABLE "${CMAKE_CURRENT_BINARY_DIR}/lupdate"
+	  CACHE PATH "The lupdate wrapper.")
+endif()
+
+# Exported configuration
+
+# Cached only for export, not for reuse
+set(QT5_DIR "${INSTALL_DIR}${QT5_BINARY_DESTINATION}" CACHE INTERNAL
+  "The Qt5 target platform directory." FORCE)
+set(QT_TRANSLATIONS_DIR "${INSTALL_DIR}/${QT5_DATA_DESTINATION}/translations" CACHE INTERNAL
+  "The Qt5 translation directory." FORCE)
+if (CMAKE_CROSSCOMPILING)
+	set(QT5_HOST_DIR "${INSTALL_DIR}/local" CACHE INTERNAL
+	  "The Qt5 host platform directory." FORCE)
+else()
+	set(QT5_HOST_DIR ${QT5_DIR} CACHE INTERNAL
+	  "The Qt5 host platform directory." FORCE)
+endif()
 
 # Cross-compiling requires an extra host build in order to get 
 # qcollectiongenerator (required) and lupdate (optional)

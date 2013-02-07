@@ -47,9 +47,17 @@ endif()
 
 option(Mapper_TRANSLATIONS_EMBEDDED "Embed all translations in the program executable")
 
-option(Mapper_BUILD_PROJ "Build the Proj library from source")
+if(WIN32 OR APPLE)
+	set(Mapper_BUILD_PROJ_DEFAULT ON)
+	set(Mapper_BUILD_QT_DEFAULT ON)
+else()
+	set(Mapper_BUILD_PROJ_DEFAULT OFF)
+	set(Mapper_BUILD_QT_DEFAULT OFF)
+endif()
 
-option(Mapper_BUILD_QT   "Build the Qt library from source")
+option(Mapper_BUILD_PROJ "Build the Proj library from source" ${Mapper_BUILD_PROJ_DEFAULT})
+
+option(Mapper_BUILD_QT   "Build the Qt library from source" ${Mapper_BUILD_QT_DEFAULT})
 
 set(Mapper_USE_QT5_DEFAULT ${Mapper_BUILD_QT})
 option(Mapper_USE_QT5    "Use Qt library version 5" ${Mapper_USE_QT5_DEFAULT})
@@ -66,33 +74,35 @@ option(Mapper_AUTORUN_UNIT_TESTS "Run the unit tests as part of the default targ
 option(Mapper_AUTORUN_SYSTEM_TESTS "Run the system tests as part of the default target" OFF)
 mark_as_advanced(Mapper_AUTORUN_UNIT_TESTS Mapper_AUTORUN_SYSTEM_TESTS)
 
-option(Mapper_BUILD_PACKAGE "Create a target for building packages" ON)
-if(WIN32 OR APPLE)
-	set(Mapper_PACKAGE_ALL_DEFAULT ON)
-else()
-	set(Mapper_PACKAGE_ALL_DEFAULT OFF)
-endif()
-option(Mapper_PACKAGE_LIBRARIES    "Include all libraries in the packages"   ${Mapper_PACKAGE_ALL_DEFAULT})
-option(Mapper_PACKAGE_TRANSLATIONS "Include Qt translations in the packages" ${Mapper_PACKAGE_ALL_DEFAULT})
-option(Mapper_PACKAGE_ASSISTANT    "Include Qt Assistant in the packages"    ${Mapper_PACKAGE_ALL_DEFAULT})
-mark_as_advanced(Mapper_BUILD_PACKAGE Mapper_PACKAGE_LIBRARIES Mapper_PACKAGE_TRANSLATIONS Mapper_PACKAGE_ASSISTANT)
+option(Mapper_BUILD_PACKAGE     "Create a target for building packages" ON)
+option(Mapper_PACKAGE_PROJ      "Include all required Proj components in the packages" ${Mapper_BUILD_PROJ_DEFAULT})
+option(Mapper_PACKAGE_QT        "Include all required Qt components in the packages"   ${Mapper_BUILD_QT_DEFAULT})
+option(Mapper_PACKAGE_ASSISTANT "Include Qt Assistant in the packages"                 ${Mapper_BUILD_QT_DEFAULT})
+mark_as_advanced(Mapper_BUILD_PACKAGE Mapper_PACKAGE_QT Mapper_PACKAGE_ASSISTANT Mapper_PACKAGE_PROJ)
+
+unset(Mapper_PACKAGE_LIBRARIES CACHE) # Legacy
 
 
 # Installation configuration
 
+# These value are used for the DESTINATION parameter of the install command
+# and must not be empty.
 if(WIN32)
 	set(MAPPER_RUNTIME_DESTINATION .)
-	set(MAPPER_DATA_DESTINATION .)
-	set(MAPPER_ABOUT_DESTINATION "doc")
+	set(MAPPER_LIBRARY_DESTINATION .)
+	set(MAPPER_DATA_DESTINATION    .)
+	set(MAPPER_ABOUT_DESTINATION   "doc")
 elseif(APPLE)
 	set(MAPPER_RUNTIME_DESTINATION .)
-	set(MAPPER_DATA_DESTINATION "Mapper.app/Contents/Resources")
-	set(MAPPER_ABOUT_DESTINATION "Mapper.app/Contents/Resources")
-else()
-	set(CPACK_DEBIAN_PACKAGE_NAME "openorienteering-mapper")
-	set(MAPPER_RUNTIME_DESTINATION bin)
-	set(MAPPER_DATA_DESTINATION "share/${CPACK_DEBIAN_PACKAGE_NAME}")
-	set(MAPPER_ABOUT_DESTINATION "share/doc/${CPACK_DEBIAN_PACKAGE_NAME}")
+	set(MAPPER_LIBRARY_DESTINATION .)
+	set(MAPPER_DATA_DESTINATION    "Mapper.app/Contents/Resources")
+	set(MAPPER_ABOUT_DESTINATION   "Mapper.app/Contents/Resources")
+else() # LINUX and alike
+	set(CPACK_DEBIAN_PACKAGE_NAME  "openorienteering-mapper")
+	set(MAPPER_RUNTIME_DESTINATION "/usr/bin")
+	set(MAPPER_LIBRARY_DESTINATION "/usr/lib/${CPACK_DEBIAN_PACKAGE_NAME}")
+	set(MAPPER_DATA_DESTINATION    "/usr/share/${CPACK_DEBIAN_PACKAGE_NAME}")
+	set(MAPPER_ABOUT_DESTINATION   "/usr/share/doc/${CPACK_DEBIAN_PACKAGE_NAME}")
 endif()
 
 # Build definitons
@@ -171,6 +181,11 @@ if(CMAKE_CROSSCOMPILING)
 		qt5_find_host_program(Qt5Core_MOC_EXECUTABLE NAMES moc)
 		qt5_find_host_program(Qt5Core_RCC_EXECUTABLE NAMES rcc)
 	endif()
+endif()
+
+if(UNIX AND NOT APPLE)
+#	set(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib/${CPACK_DEBIAN_PACKAGE_NAME}/lib")
+	set(CMAKE_INSTALL_RPATH "${MAPPER_LIBRARY_DESTINATION}/lib")
 endif()
 
 if (CMAKE_COMPILER_IS_GNUCXX)
