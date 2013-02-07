@@ -25,14 +25,19 @@ include(ExternalProject)
 
 # Configuration options
 
-set(QT5_VERSION 5.0.0 CACHE STRING
+set(QT5_VERSION_DEFAULT 5.0.1)
+set(QT5_VERSION ${QT5_VERSION_DEFAULT} CACHE STRING
   "Version number of the Qt5 library, minimum recommended value: 5.0.0")
 mark_as_advanced(QT5_VERSION)
 
 if(QT5_VERSION STREQUAL 5.0.0)
 	set(QT5_MD5 1a1b73f913a965f6b0cf02bb820c8a03)
+	message(WARNING "Using Qt ${QT5_VERSION} which has been superseded by Qt ${QT5_VERSION_DEFAULT}.")
 elseif(QT5_VERSION STREQUAL 5.0.1-rc1)
 	set(QT5_MD5 e74765aa1620ff56d4642119078628c3)
+	message(WARNING "Using Qt ${QT5_VERSION} which has been superseded by Qt ${QT5_VERSION_DEFAULT}.")
+elseif(QT5_VERSION STREQUAL 5.0.1)
+	set(QT5_MD5 8e8137c23c8ff078a560d3c62b4383e7)
 endif()
 
 if("${CMAKE_GENERATOR}" MATCHES "Makefiles" OR 
