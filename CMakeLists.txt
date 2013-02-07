@@ -59,8 +59,7 @@ option(Mapper_BUILD_PROJ "Build the Proj library from source" ${Mapper_BUILD_PRO
 
 option(Mapper_BUILD_QT   "Build the Qt library from source" ${Mapper_BUILD_QT_DEFAULT})
 
-set(Mapper_USE_QT5_DEFAULT ${Mapper_BUILD_QT})
-option(Mapper_USE_QT5    "Use Qt library version 5" ${Mapper_USE_QT5_DEFAULT})
+option(Mapper_USE_QT5    "Use Qt library version 5" ${Mapper_BUILD_QT})
 
 if(NOT CMAKE_BUILD_TYPE MATCHES Release|MinSizeRel)
 	set(Mapper_DEVELOPMENT_BUILD_DEFAULT ON)
@@ -75,9 +74,9 @@ option(Mapper_AUTORUN_SYSTEM_TESTS "Run the system tests as part of the default 
 mark_as_advanced(Mapper_AUTORUN_UNIT_TESTS Mapper_AUTORUN_SYSTEM_TESTS)
 
 option(Mapper_BUILD_PACKAGE     "Create a target for building packages" ON)
-option(Mapper_PACKAGE_PROJ      "Include all required Proj components in the packages" ${Mapper_BUILD_PROJ_DEFAULT})
-option(Mapper_PACKAGE_QT        "Include all required Qt components in the packages"   ${Mapper_BUILD_QT_DEFAULT})
-option(Mapper_PACKAGE_ASSISTANT "Include Qt Assistant in the packages"                 ${Mapper_BUILD_QT_DEFAULT})
+option(Mapper_PACKAGE_PROJ      "Include all required Proj components in the packages" ${Mapper_BUILD_PROJ})
+option(Mapper_PACKAGE_QT        "Include all required Qt components in the packages"   ${Mapper_BUILD_QT})
+option(Mapper_PACKAGE_ASSISTANT "Include Qt Assistant in the packages"                 ${Mapper_BUILD_QT})
 mark_as_advanced(Mapper_BUILD_PACKAGE Mapper_PACKAGE_QT Mapper_PACKAGE_ASSISTANT Mapper_PACKAGE_PROJ)
 
 unset(Mapper_PACKAGE_LIBRARIES CACHE) # Legacy
