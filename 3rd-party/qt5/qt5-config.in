@@ -41,6 +41,9 @@ elif [ "@UNIX@" != "" ]
 then
 	# Linux and alike
 	QT5_CONFIG_EXTRA_OPTS="-R '@QT5_BINARY_DESTINATION@/lib'"
+	case "@Mapper_DEVELOPMENT_BUILD@" in
+	  1|ON|TRUE|Y) QT5_CONFIG_EXTRA_OPTS="-R '@INSTALL_DIR@@QT5_BINARY_DESTINATION@/lib' $QT5_CONFIG_EXTRA_OPTS"
+	esac
 else
 	# Windows, probably
 	QT5_CONFIG_EXTRA_OPTS="-no-rpath"
