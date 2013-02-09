@@ -31,7 +31,7 @@ class QWidget;
 QT_END_NAMESPACE
 
 class Map;
-struct MapColor;
+class MapColor;
 class MapEditorController;
 class SymbolSettingDialog;
 class PointSymbolEditorWidget;

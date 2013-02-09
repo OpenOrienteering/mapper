@@ -67,8 +67,9 @@ protected:
  * 
  * Used to group renderables by common render attributes.
  */
-struct RenderStates
+class RenderStates
 {
+public:
 	enum RenderMode
 	{
 		Reserved = -1,

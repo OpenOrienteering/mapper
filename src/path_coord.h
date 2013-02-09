@@ -23,13 +23,14 @@
 
 #include "map_coord.h"
 
-struct PathCoord;
+class PathCoord;
 typedef std::vector<PathCoord> PathCoordVector;
 
 /// Paths that may consist of polygonal segments and curves are processed into PathCoordVectors,
 /// approximating the path only with polygonal segments and containing information about lengths etc.
-struct PathCoord
+class PathCoord
 {
+public:
 	MapCoordF pos;
 	float clen;		// cumulative length since path part start
 	int index;		// index into the MapCoordVector(F) to the first coordinate of the segment which contains this PathCoord

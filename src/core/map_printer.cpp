@@ -469,7 +469,7 @@ void MapPrinter::setScale(const unsigned int value)
 // slot
 void MapPrinter::setPrintTemplates(const bool visible, MapView* view)
 {
-	if (options.show_templates != visible || view != view)
+	if (options.show_templates != visible || this->view != view)
 	{
 		options.show_templates = visible;
 		view = visible ? view : NULL;

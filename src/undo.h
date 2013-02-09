@@ -36,7 +36,7 @@ class QXmlStreamWriter;
 QT_END_NAMESPACE
 
 class Map;
-struct MapColor;
+class MapColor;
 class Object;
 
 class UndoStep : public QObject

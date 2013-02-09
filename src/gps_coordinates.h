@@ -35,7 +35,7 @@ class Georeferencing;
 
 /// Parameters for an ellipsoid and an orthographic projection of ellipsoid coordinates to 2D map (template) coordinates
 /// @deprecated
-struct GPSProjectionParameters
+class GPSProjectionParameters
 {
 friend class LatLon;
 friend class NativeFileImport;

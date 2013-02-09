@@ -42,7 +42,7 @@ class CombinedSymbol;
 class Georeferencing;
 class LineSymbol;
 class Map;
-struct MapColor;
+class MapColor;
 class MapEditorController;
 class MapGrid;
 class MapRenderables;

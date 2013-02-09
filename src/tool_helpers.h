@@ -166,7 +166,7 @@ private:
 };
 
 
-struct SnappingToolHelperSnapInfo;
+class SnappingToolHelperSnapInfo;
 
 /// Helper class to snap to existing objects or a grid on the map
 class SnappingToolHelper : public QObject
@@ -221,8 +221,9 @@ private:
 };
 
 /// Information returned from a snap process from SnappingToolHelper
-struct SnappingToolHelperSnapInfo
+class SnappingToolHelperSnapInfo
 {
+public:
 	/// Type of object snapped onto
 	SnappingToolHelper::SnapObjects type;
 	/// Object snapped onto, if type is ObjectCorners or ObjectPaths, else NULL

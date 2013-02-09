@@ -44,7 +44,7 @@ class QXmlStreamWriter;
 QT_END_NAMESPACE
 
 class Map;
-struct MapColor;
+class MapColor;
 class MapWidget;
 class MapView;
 class MapEditorController;

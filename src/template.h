@@ -42,8 +42,9 @@ class MapView;
 class MapWidget;
 
 /// Transformation parameters for non-georeferenced templates
-struct TemplateTransform
+class TemplateTransform
 {
+public:
 	TemplateTransform();
 	
 	void save(QIODevice* file);
