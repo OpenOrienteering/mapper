@@ -246,11 +246,9 @@ if(Mapper_PACKAGE_QT)
 			  FILES "${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf"
 			  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
 		endif()
-		if(NOT APPLE)
-			list(APPEND MAPPER_LIBS 
-			  Qt5Core Qt5Gui Qt5Widgets Qt5Svg
-			  Qt5PrintSupport Qt5Network Qt5Xml)
-		endif()
+		list(APPEND MAPPER_LIBS 
+		  Qt5Core Qt5Gui Qt5Widgets Qt5Svg
+		  Qt5PrintSupport Qt5Network Qt5Xml)
 		set(MAPPER_QT_PLUGINS
 		  accessible/qtaccessiblewidgets
 		  iconengines/qsvgicon
@@ -265,6 +263,7 @@ if(Mapper_PACKAGE_QT)
 	endif()
 endif()
 
+unset(FIXUP_ASSISTANT)
 if(Mapper_PACKAGE_ASSISTANT)
 	if(NOT QT_QTASSISTANT_EXECUTABLE)
 		message(FATAL_ERROR "QT_QTASSISTANT_EXECUTABLE: not found, "
@@ -297,6 +296,9 @@ if(Mapper_PACKAGE_ASSISTANT)
 		  Qt5Help Qt5CLucene Qt5Sql
 		)
 	endif()
+	if(APPLE)
+		set(FIXUP_ASSISTANT "Mapper.app/Contents/MacOS/Assistant")
+	endif()
 	list(APPEND MAPPER_QT_TRANSLATIONS qt_help assistant)
 endif(Mapper_PACKAGE_ASSISTANT)
 
@@ -319,11 +321,11 @@ foreach(_mapper_lib ${MAPPER_LIBS})
 		message("   ${_mapper_lib} shared library - not found")
 	endif()
 endforeach(_mapper_lib)
-if(WIN32 OR APPLE)
+if(WIN32)
 	install(
 	  FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} 
-	  DESTINATION "${MAPPER_LIBRARY_DESTINATION}${MAPPER_MACOS_SUBDIR}")
-else()
+	  DESTINATION "${MAPPER_LIBRARY_DESTINATION}")
+elseif(UNIX AND NOT APPLE) # Libs on OSX will be handled by fixup_bundle.
 	install(
 	  FILES ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} 
 	  DESTINATION "${MAPPER_LIBRARY_DESTINATION}/lib")
@@ -352,15 +354,18 @@ foreach(_qt_plugin ${MAPPER_QT_PLUGINS})
 	endif()
 endforeach(_qt_plugin)
 
-if(APPLE AND CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS)
-	# Use updated DeployQt4.cmake from CMake git repository
+if(APPLE)
 	# This works for Qt5, too (at least given our Qt5Quirks).
-	include(${PROJECT_SOURCE_DIR}/cmake/DeployQt4.cmake)
+	if(CMAKE_VERSION VERSION_LESS "2.8.9")
+		# Use updated DeployQt4.cmake from CMake git repository
+		include(${PROJECT_SOURCE_DIR}/cmake/DeployQt4.cmake)
+	else()
+		include(DeployQt4)
+	endif()
 	install_qt4_executable(Mapper.app 
 	  "${MAPPER_QT_PLUGINS_FOUND}"
-	  "Mapper.app/Contents/MacOS/assistant")
-elseif(UNIX AND CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS)
-	# Linux: install libraries to /usr/lib/openorienteering-mapper.
+	  ${FIXUP_ASSISTANT})
+elseif(UNIX)
 	find_program(LDCONFIG_COMMAND NAMES ldconfig)
 	if(${LDCONFIG_COMMAND} MATCHES NOTFOUND)
 		message(FATAL_ERROR "Could not find ldconfig command.")

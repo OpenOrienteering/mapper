@@ -136,6 +136,11 @@ elseif(NOT ${MAPPER_DATA_DESTINATION} MATCHES "^/")
 else()
 	set(QT5_DATA_DESTINATION "${MAPPER_DATA_DESTINATION}")
 endif()
+# Cached only for export, not for reuse
+set(QT5_DIR "${INSTALL_DIR}${QT5_BINARY_DESTINATION}" CACHE INTERNAL
+  "The Qt5 target platform directory." FORCE)
+set(QT_TRANSLATIONS_DIR "${INSTALL_DIR}/${QT5_DATA_DESTINATION}/translations" CACHE INTERNAL
+  "The Qt5 translation directory." FORCE)
 if(QT5_INSTALL_ROOT)
 	set(QT5_CONFIG_EXTRA_OPTS "-R '${QT5_BINARY_DESTINATION}/lib' ${QT5_CONFIG_EXTRA_OPTS}")
 	if(Mapper_DEVELOPMENT_BUILD)
@@ -148,6 +153,13 @@ else()
 endif()
 if(APPLE)
 	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -no-framework")
+endif()
+if (CMAKE_CROSSCOMPILING)
+	set(QT5_HOST_DIR "${INSTALL_DIR}/local" CACHE INTERNAL
+	  "The Qt5 host platform directory." FORCE)
+else()
+	set(QT5_HOST_DIR ${QT5_DIR} CACHE INTERNAL
+	  "The Qt5 host platform directory." FORCE)
 endif()
 
 configure_file(qt5-patchqt.in qt5-patchqt.new @ONLY)
@@ -167,21 +179,6 @@ if(UNIX AND QT5_INSTALL_ROOT)
 	  CACHE PATH "The qcollectiongenerator wrapper.")
 	set(QT_LUPDATE_EXECUTABLE "${CMAKE_CURRENT_BINARY_DIR}/lupdate"
 	  CACHE PATH "The lupdate wrapper.")
-endif()
-
-# Exported configuration
-
-# Cached only for export, not for reuse
-set(QT5_DIR "${INSTALL_DIR}${QT5_BINARY_DESTINATION}" CACHE INTERNAL
-  "The Qt5 target platform directory." FORCE)
-set(QT_TRANSLATIONS_DIR "${INSTALL_DIR}/${QT5_DATA_DESTINATION}/translations" CACHE INTERNAL
-  "The Qt5 translation directory." FORCE)
-if (CMAKE_CROSSCOMPILING)
-	set(QT5_HOST_DIR "${INSTALL_DIR}/local" CACHE INTERNAL
-	  "The Qt5 host platform directory." FORCE)
-else()
-	set(QT5_HOST_DIR ${QT5_DIR} CACHE INTERNAL
-	  "The Qt5 host platform directory." FORCE)
 endif()
 
 # Cross-compiling requires an extra host build in order to get 
