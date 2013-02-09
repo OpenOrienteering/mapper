@@ -75,6 +75,9 @@ add_custom_command(OUTPUT qt5-config
   DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qt5-config.new
 )
 
+if(UNIX AND NOT APPLE)
+	set(QT5_INSTALL_ROOT "INSTALL_ROOT=<INSTALL_DIR>")
+endif()
 string(REGEX REPLACE "-.*" "" _qt5_version ${QT5_VERSION})
 ExternalProject_Add(Qt5
   DOWNLOAD_DIR ${PROJECT_SOURCE_DIR}/download
@@ -83,7 +86,7 @@ ExternalProject_Add(Qt5
   PATCH_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/qt5-patchqt
   CONFIGURE_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/qt5-config
   BUILD_COMMAND ${QT5_MAKE_COMMAND}
-  INSTALL_COMMAND ${QT5_MAKE_COMMAND} install INSTALL_ROOT=<INSTALL_DIR>
+  INSTALL_COMMAND ${QT5_MAKE_COMMAND} install ${QT5_INSTALL_ROOT}
 )
 ExternalProject_Get_Property(Qt5 SOURCE_DIR)
 ExternalProject_Get_Property(Qt5 BINARY_DIR)
@@ -133,6 +136,19 @@ elseif(NOT ${MAPPER_DATA_DESTINATION} MATCHES "^/")
 else()
 	set(QT5_DATA_DESTINATION "${MAPPER_DATA_DESTINATION}")
 endif()
+if(QT5_INSTALL_ROOT)
+	set(QT5_CONFIG_EXTRA_OPTS "-R '${QT5_BINARY_DESTINATION}/lib' ${QT5_CONFIG_EXTRA_OPTS}")
+	if(Mapper_DEVELOPMENT_BUILD)
+		set(QT5_CONFIG_EXTRA_OPTS "-R '${INSTALL_DIR}${QT5_BINARY_DESTINATION}/lib' ${QT5_CONFIG_EXTRA_OPTS}")
+	endif()
+else()
+	set(QT5_BINARY_DESTINATION "${INSTALL_DIR}${QT5_BINARY_DESTINATION}")
+	set(QT5_PLUGINS_DESTINATION "${INSTALL_DIR}${QT5_PLUGINS_DESTINATION}")
+	set(QT5_DATA_DESTINATION "${INSTALL_DIR}${QT5_DATA_DESTINATION}")
+endif()
+if(APPLE)
+	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -no-framework")
+endif()
 
 configure_file(qt5-patchqt.in qt5-patchqt.new @ONLY)
 configure_file(qt5-config.in qt5-config.new @ONLY)
@@ -140,7 +156,7 @@ configure_file(qt5-make.in qt5-make @ONLY)
 configure_file(qt.conf.in qt.conf @ONLY)
 configure_file(qt.conf.qrc.in qt.conf.qrc @ONLY)
 
-if(UNIX)
+if(UNIX AND QT5_INSTALL_ROOT)
 	# Wrappers which set LD_LIBRARY_PATH.
 	configure_file(qt5-wrapper.in qcollectiongenerator @ONLY)
 	configure_file(qt5-wrapper.in lupdate @ONLY)
