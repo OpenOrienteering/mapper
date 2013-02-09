@@ -216,3 +216,7 @@ if(CMAKE_CROSSCOMPILING)
 	  DEPENDERS install
 	)
 endif()
+
+# Don't let Xcode re-root the install
+set_target_properties(Qt5 PROPERTIES XCODE_ATTRIBUTE_INSTALL_ROOT "")
+

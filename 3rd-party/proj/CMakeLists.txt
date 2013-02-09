@@ -116,3 +116,6 @@ if(PROJ_INCLUDE_DIR AND PROJ_LIBRARY)
 	set(PROJ_FOUND TRUE PARENT_SCOPE)
 endif()
 
+# Don't let Xcode re-root the install
+set_target_properties(Proj PROPERTIES XCODE_ATTRIBUTE_INSTALL_ROOT "")
+
