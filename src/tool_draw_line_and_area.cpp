@@ -213,6 +213,11 @@ void DrawLineAndAreaTool::abortDrawing()
 	emit(pathAborted());
 }
 
+void DrawLineAndAreaTool::finishDrawing()
+{
+    finishDrawing(NULL);
+}
+
 void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 {
 	if (preview_path)
