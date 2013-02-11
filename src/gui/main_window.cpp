@@ -469,6 +469,7 @@ void MainWindow::showNewMapWizard()
 	new_window->show();
 	new_window->raise();
 	new_window->activateWindow();
+	num_open_files++;
 }
 
 void MainWindow::showOpenDialog()
