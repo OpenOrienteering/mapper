@@ -172,8 +172,6 @@ public slots:
 	void openRecentFile();
 	
 	/** Notify the main window of a change to the list of recent files.
-	 *  FIXME: remove obsolete parameter.
-	 *  @param show not used
 	 */
 	void updateRecentFileActions();
 	
