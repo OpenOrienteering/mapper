@@ -376,8 +376,18 @@ elseif(UNIX)
 	install(CODE "file(MAKE_DIRECTORY \"\$ENV{DESTDIR}/DEBIAN\")") 
 endif()
 
-# Install all translations
-if(Mapper_PACKAGE_QT)
+# Install Qt translations
+set(Mapper_PACKAGE_QT_ALL_TRANSLATIONS TRUE)
+if(Mapper_PACKAGE_QT AND Mapper_PACKAGE_QT_ALL_TRANSLATIONS)
+	# Simply install Qt translations for all languages
+	foreach(_qt_component ${MAPPER_QT_TRANSLATIONS})
+		install(
+		  DIRECTORY "${QT_TRANSLATIONS_DIR}/"
+		  DESTINATION "${MAPPER_DATA_DESTINATION}/translations"
+		  FILES_MATCHING PATTERN "${_qt_component}_*.qm")
+	endforeach()
+elseif(Mapper_PACKAGE_QT AND NOT Mapper_PACKAGE_QT_ALL_TRANSLATIONS)
+	# Install Qt translations only for existing Mapper translations
 	message(STATUS "Checking for Qt translations")
 	unset(_install_translations)
 	foreach(_mapper_trans ${Mapper_TRANS})

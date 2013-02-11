@@ -70,8 +70,10 @@ int main(int argc, char** argv)
 #endif
 	
 	// Localization
+	TranslationUtil::setBaseName(QString("OpenOrienteering"));
 	QLocale::Language lang = (QLocale::Language)settings.getSetting(Settings::General_Language).toInt();
-	TranslationUtil translation(lang);
+	QString translation_file = settings.getSetting(Settings::General_TranslationFile).toString();
+	TranslationUtil translation(lang, translation_file);
 	QLocale::setDefault(translation.getLocale());
 	qapp.installTranslator(&translation.getQtTranslator());
 	qapp.installTranslator(&translation.getAppTranslator());

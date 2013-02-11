@@ -44,7 +44,6 @@ set(Mapper_Common_SRCS
  transformation.cpp
 
  settings.cpp
- settings_dialog.cpp
 
  map.cpp
  map_part.cpp
@@ -129,6 +128,7 @@ set(Mapper_Common_SRCS
  gui/main_window_controller.cpp
  gui/print_tool.cpp
  gui/print_widget.cpp
+ gui/settings_dialog.cpp
  
  gui/widgets/color_dropdown.cpp
  gui/widgets/home_screen_widget.cpp
@@ -152,7 +152,6 @@ set(Mapper_Common_MOC_INPUT
  map_undo.h
  map_widget.h
  settings.h
- settings_dialog.h
  symbol.h
  symbol_area.h
  symbol_combined.h
@@ -204,6 +203,8 @@ set(Mapper_Common_MOC_INPUT
  gui/main_window_controller.h
  gui/print_tool.h
  gui/print_widget.h
+ gui/settings_dialog.h
+ gui/settings_dialog_p.h
  
  gui/widgets/color_dropdown.h
  gui/widgets/home_screen_widget.h

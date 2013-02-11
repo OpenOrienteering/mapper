@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_SETTINGS_DIALOG_H_
-#define _OPENORIENTEERING_SETTINGS_DIALOG_H_
+#ifndef _OPENORIENTEERING_SETTINGS_DIALOG_PRIVATE_H_
+#define _OPENORIENTEERING_SETTINGS_DIALOG_PRIVATE_H_
 
 #include <QHash>
 #include <QDialog>
@@ -51,23 +51,6 @@ public:
 protected:
 	// The changes to be done when accepted
 	QHash<QString, QVariant> changes;
-};
-
-class SettingsDialog : public QDialog
-{
-Q_OBJECT
-public:
-	SettingsDialog(QWidget* parent = 0);
-
-private slots:
-	void buttonPressed(QAbstractButton* button);
-
-private:
-	void addPage(SettingsPage* page);
-
-	QTabWidget* tab_widget;
-	QVector<SettingsPage*> pages;
-	QDialogButtonBox* button_box;
 };
 
 class EditorPage : public SettingsPage
@@ -133,9 +116,16 @@ private slots:
 	
 	void tipsVisibleClicked(bool state);
 	
+	void openTranslationFileDialog();
+	
 private:
-	int language_default_index;
+	/** Adds the available languages to the language combo box,
+	 *  and sets the current element.
+	 */
+	void updateLanguageBox();
+	
 	QComboBox* language_box;
+	const static int TranslationFromFile;
 };
 
 #endif

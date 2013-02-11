@@ -34,7 +34,6 @@ HEADERS += \
   src/map_undo.h \
   src/map_widget.h \
   src/settings.h \
-  src/settings_dialog.h \
   src/symbol.h \
   src/symbol_area.h \
   src/symbol_combined.h \
@@ -84,6 +83,8 @@ HEADERS += \
   src/gui/main_window_controller.h \
   src/gui/print_tool.h \
   src/gui/print_widget.h \
+  src/gui/settings_dialog.h \
+  src/gui/settings_dialog_p.h \
   src/gui/widgets/color_dropdown.h \
   src/gui/widgets/home_screen_widget.h \
   src/gui/widgets/measure_widget.h \
@@ -107,7 +108,6 @@ SOURCES += \
   src/matrix.cpp \
   src/transformation.cpp \
   src/settings.cpp \
-  src/settings_dialog.cpp \
   src/map.cpp \
   src/map_part.cpp \
   src/map_widget.cpp \
@@ -183,6 +183,7 @@ SOURCES += \
   src/gui/main_window_controller.cpp \
   src/gui/print_tool.cpp \
   src/gui/print_widget.cpp \
+  src/gui/settings_dialog.cpp \
   src/gui/widgets/color_dropdown.cpp \
   src/gui/widgets/home_screen_widget.cpp \
   src/gui/widgets/measure_widget.cpp \

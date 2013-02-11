@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Jan Dalheimer
+ *    Copyright 2012, 2013 Jan Dalheimer, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,6 +18,7 @@
  */
 
 #include "settings_dialog.h"
+#include "settings_dialog_p.h"
 
 #if QT_VERSION < 0x050000
 #include <QtGui>
@@ -25,33 +26,29 @@
 #include <QtWidgets>
 #endif
 
-#include "settings.h"
-#include "util_gui.h"
-#include "util_translation.h"
+#include "../settings.h"
+#include "../util_gui.h"
+#include "../util_translation.h"
+#include "../util/scoped_signals_blocker.h"
+#include "widgets/home_screen_widget.h"
 
-#include "gui/widgets/home_screen_widget.h"
-
-void SettingsPage::apply()
-{
-	QSettings settings;
-	for (int i = 0; i < changes.size(); i++)
-		settings.setValue(changes.keys().at(i), changes.values().at(i));
-	changes.clear();
-}
 
 // ### SettingsDialog ###
 
-SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
+SettingsDialog::SettingsDialog(QWidget* parent)
+ : QDialog(parent)
 {
 	setWindowTitle(tr("Settings"));
+	
 	QVBoxLayout* layout = new QVBoxLayout();
 	this->setLayout(layout);
 	
-	tab_widget = new QTabWidget(this);
+	tab_widget = new QTabWidget();
 	layout->addWidget(tab_widget);
 	
-	button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel,
-									   Qt::Horizontal, this);
+	button_box = new QDialogButtonBox(
+	  QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel,
+	  Qt::Horizontal );
 	layout->addWidget(button_box);
 	connect(button_box, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonPressed(QAbstractButton*)));
 	
@@ -61,35 +58,52 @@ SettingsDialog::SettingsDialog(QWidget* parent) : QDialog(parent)
 	//addPage(new PrintingPage(this));
 }
 
+SettingsDialog::~SettingsDialog()
+{
+	// Nothing, not inlined.
+}
+
 void SettingsDialog::addPage(SettingsPage* page)
 {
-	pages.push_back(page);
 	tab_widget->addTab(page, page->title());
 }
 
 void SettingsDialog::buttonPressed(QAbstractButton* button)
 {
 	QDialogButtonBox::StandardButton id = button_box->standardButton(button);
+	int count = tab_widget->count();
 	if (id == QDialogButtonBox::Ok)
 	{
-		foreach(SettingsPage* page, pages)
-			page->ok();
+		for (int i = 0; i < count; i++)
+			static_cast< SettingsPage* >(tab_widget->widget(i))->ok();
 		Settings::getInstance().applySettings();
 		this->accept();
 	}
 	else if (id == QDialogButtonBox::Apply)
 	{
-		foreach(SettingsPage* page, pages)
-			page->apply();
+		for (int i = 0; i < count; i++)
+			static_cast< SettingsPage* >(tab_widget->widget(i))->apply();
 		Settings::getInstance().applySettings();
 	}
 	else if (id == QDialogButtonBox::Cancel)
 	{
-		foreach(SettingsPage* page, pages)
-			page->cancel();
+		for (int i = 0; i < count; i++)
+			static_cast< SettingsPage* >(tab_widget->widget(i))->cancel();
 		this->reject();
 	}
 }
+
+
+// ### SettingsPage ###
+
+void SettingsPage::apply()
+{
+	QSettings settings;
+	for (int i = 0; i < changes.size(); i++)
+		settings.setValue(changes.keys().at(i), changes.values().at(i));
+	changes.clear();
+}
+
 
 // ### EditorPage ###
 
@@ -296,58 +310,139 @@ void EditorPage::rectanglePreviewLineWidthChanged(bool checked)
 
 // ### GeneralPage ###
 
+const int GeneralPage::TranslationFromFile = -1;
+
 GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 {
 	QGridLayout* layout = new QGridLayout();
 	setLayout(layout);
 	
 	int row = 0;
-	QLabel* language_label = new QLabel(tr("Language:"));
-	language_box = new QComboBox(this);
-	
-	//  Add the available languages to the widget
-	LanguageCollection language_map = TranslationUtil::getAvailableLanguages();
-	LanguageCollection::const_iterator end = language_map.constEnd();
-	for (LanguageCollection::const_iterator it = language_map.constBegin(); it != end; ++it)
-		language_box->addItem(it.key(), (int)it.value());
-	
-	// Select current language
-	int index = language_box->findData(Settings::getInstance().getSetting(Settings::General_Language).toInt());
-	language_default_index = (index >= 0) ? index : language_box->findData((int)QLocale::English);
-	language_box->setCurrentIndex(language_default_index);
-	
-	layout->addWidget(language_label, row, 0);
-	layout->addWidget(language_box, row, 1);
+	layout->addWidget(Util::Headline::create(tr("Appearance")), row, 1, 1, 2);
 	
 	row++;
-	QCheckBox* open_mru_check = new QCheckBox(HomeScreenWidget::tr("Open most recently used file on start"));
+	QLabel* language_label = new QLabel(tr("Language:"));
+	layout->addWidget(language_label, row, 1);
+	
+	language_box = new QComboBox(this);
+	updateLanguageBox();
+	layout->addWidget(language_box, row, 2);
+	
+	QAbstractButton* language_file_button = new QToolButton();
+	language_file_button->setIcon(QIcon(":/images/open.png"));
+	layout->addWidget(language_file_button, row, 3);
+	
+	row++;
+	layout->addItem(Util::SpacerItem::create(this), row, 1);
+	
+	row++;
+	layout->addWidget(Util::Headline::create(tr("Program start")), row, 1, 1, 2);
+	
+	row++;
+	QCheckBox* open_mru_check = new QCheckBox(HomeScreenWidget::tr("Open most recently used file"));
 	open_mru_check->setChecked(Settings::getInstance().getSetting(Settings::General_OpenMRUFile).toBool());
-	layout->addWidget(open_mru_check, row, 0, 1, 2);
+	layout->addWidget(open_mru_check, row, 1, 1, 2);
 	
 	row++;
 	QCheckBox* tips_visible_check = new QCheckBox(HomeScreenWidget::tr("Show tip of the day"));
 	tips_visible_check->setChecked(Settings::getInstance().getSetting(Settings::HomeScreen_TipsVisible).toBool());
-	layout->addWidget(tips_visible_check, row, 0, 1, 2);
+	layout->addWidget(tips_visible_check, row, 1, 1, 2);
 	
 	row++;
 	layout->setRowStretch(row, 1);
 	
+#if defined(Q_OS_MAC)
+	// Center setting items
+	layout->setColumnStretch(0, 2);
+#endif
+	layout->setColumnStretch(2, 1);
+	layout->setColumnStretch(2, 2);
+	layout->setColumnStretch(layout->columnCount(), 2);
+	
 	connect(language_box, SIGNAL(currentIndexChanged(int)), this, SLOT(languageChanged(int)));
+	connect(language_file_button, SIGNAL(clicked(bool)), this, SLOT(openTranslationFileDialog()));
 	connect(open_mru_check, SIGNAL(clicked(bool)), this, SLOT(openMRUFileClicked(bool)));
 	connect(tips_visible_check, SIGNAL(clicked(bool)), this, SLOT(tipsVisibleClicked(bool)));
 }
 
 void GeneralPage::apply()
 {
-	if (language_box->currentIndex() != language_default_index)
+	const Settings& settings = Settings::getInstance();
+	const QString translation_file_key(settings.getSettingPath(Settings::General_TranslationFile));
+	const QString language_key(settings.getSettingPath(Settings::General_Language));
+	
+	QVariant lang = changes.contains(language_key) ? changes[language_key] : settings.getSetting(Settings::General_Language);
+	QVariant translation_file = changes.contains(translation_file_key) ? changes[translation_file_key] : settings.getSetting(Settings::General_TranslationFile);
+	if ( settings.getSetting(Settings::General_Language) != lang ||
+	     settings.getSetting(Settings::General_TranslationFile) != translation_file )
+	{
+		TranslationUtil translation((QLocale::Language)lang.toInt(), translation_file.toString());
+		qApp->installTranslator(&translation.getQtTranslator());
+		qApp->installTranslator(&translation.getAppTranslator());
 		QMessageBox::information(window(), tr("Notice"), tr("The program must be restarted for the language change to take effect!"));
+		qApp->removeTranslator(&translation.getAppTranslator());
+		qApp->removeTranslator(&translation.getQtTranslator());
+	}
 	SettingsPage::apply();
-	language_default_index = language_box->currentIndex();
 }
 
 void GeneralPage::languageChanged(int index)
 {
-	changes.insert(Settings::getInstance().getSettingPath(Settings::General_Language), language_box->itemData(index).toInt());
+	if (language_box->itemData(index) == TranslationFromFile)
+	{
+		openTranslationFileDialog();
+	}
+	else
+	{
+		changes.insert(Settings::getInstance().getSettingPath(Settings::General_Language), language_box->itemData(index).toInt());
+	}
+}
+
+void GeneralPage::updateLanguageBox()
+{
+	const Settings& settings = Settings::getInstance();
+	const QString translation_file_key(settings.getSettingPath(Settings::General_TranslationFile));
+	const QString language_key(settings.getSettingPath(Settings::General_Language));
+	
+	LanguageCollection language_map = TranslationUtil::getAvailableLanguages();
+	
+	// Add the locale of the explicit translation file
+	QString translation_file;
+	if (changes.contains(translation_file_key))
+		translation_file = changes[translation_file_key].toString();
+	else 
+		translation_file = settings.getSetting(Settings::General_TranslationFile).toString();
+	
+	QString locale_name = TranslationUtil::localeNameForFile(translation_file);
+	if (!locale_name.isEmpty())
+	{
+		QLocale file_locale(locale_name);
+#if (QT_VERSION >= QT_VERSION_CHECK(4, 8, 0))
+		QString language_name = file_locale.nativeLanguageName();
+#else
+		QString language_name = QLocale::languageToString(file_locale.language());
+#endif
+		if (!language_map.contains(language_name))
+			language_map.insert(language_name, file_locale.language());
+	}
+	
+	// Update the language box
+	ScopedSignalsBlocker block(language_box);
+	language_box->clear();
+	
+	LanguageCollection::const_iterator end = language_map.constEnd();
+	for (LanguageCollection::const_iterator it = language_map.constBegin(); it != end; ++it)
+		language_box->addItem(it.key(), (int)it.value());
+	language_box->addItem(tr("Use translation file..."), TranslationFromFile);
+	
+	// Select current language
+	int index = language_box->findData(changes.contains(language_key) ? 
+	  changes[language_key].toInt() :
+	  settings.getSetting(Settings::General_Language).toInt() );
+	
+	if (index < 0)
+		index = language_box->findData((int)QLocale::English);
+	language_box->setCurrentIndex(index);
 }
 
 void GeneralPage::openMRUFileClicked(bool state)
@@ -358,4 +453,34 @@ void GeneralPage::openMRUFileClicked(bool state)
 void GeneralPage::tipsVisibleClicked(bool state)
 {
 	changes.insert(Settings::getInstance().getSettingPath(Settings::HomeScreen_TipsVisible), state);
+}
+
+void GeneralPage::openTranslationFileDialog()
+{
+	Settings& settings = Settings::getInstance();
+	const QString translation_file_key(settings.getSettingPath(Settings::General_TranslationFile));
+	const QString language_key(settings.getSettingPath(Settings::General_Language));
+	
+	QString current_filename(settings.getSetting(Settings::General_Language).toString());
+	if (changes.contains(translation_file_key))
+		current_filename = changes[translation_file_key].toString();
+	
+	QString filename = QFileDialog::getOpenFileName(this,
+	  tr("Open translation"), current_filename, tr("Translation files (*.qm)"));
+	if (!filename.isNull())
+	{
+		QString locale_name(TranslationUtil::localeNameForFile(filename));
+		if (locale_name.isEmpty())
+		{
+			QMessageBox::critical(this, tr("Open translation"),
+			  tr("The selected file is not a valid translation.") );
+		}
+		else
+		{
+			QLocale locale(locale_name);
+			changes.insert(translation_file_key, filename);
+			changes.insert(language_key, locale.language());
+		}
+	}
+	updateLanguageBox();
 }

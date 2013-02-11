@@ -29,12 +29,12 @@
 
 #include "mapper_resource.h"
 
-const QString TranslationUtil::base_name("OpenOrienteering_");
+QString TranslationUtil::base_name("qt_"); 
 
 QStringList TranslationUtil::search_path;
 
 
-TranslationUtil::TranslationUtil(QLocale::Language lang)
+TranslationUtil::TranslationUtil(QLocale::Language lang, QString translation_file)
 : locale(lang)
 {
 	if (search_path.size() == 0)
@@ -46,8 +46,16 @@ TranslationUtil::TranslationUtil(QLocale::Language lang)
 	if (!qt_translator.load(translation_name, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
 		load(qt_translator, translation_name);
 	
-	translation_name = base_name + locale_name;
-	load(app_translator, translation_name);
+	QString file_locale = localeNameForFile(translation_file);
+	if (!file_locale.isEmpty() && QLocale(file_locale).language() == lang)
+	{
+		load(app_translator, translation_file);
+	}
+	else
+	{
+		translation_name = base_name + locale_name;
+		load(app_translator, translation_name);
+	}
 }
 
 
@@ -90,6 +98,29 @@ LanguageCollection TranslationUtil::getAvailableLanguages()
 	}
 	
 	return language_map;
+}
+
+QString TranslationUtil::localeNameForFile(const QString& filename)
+{
+	if (!filename.endsWith(".qm", Qt::CaseInsensitive))
+		return QString();
+	
+	QFileInfo info(filename);
+	if (!info.isFile())
+		return QString();
+	
+	QString name(info.fileName());
+	if (!name.startsWith(base_name, Qt::CaseInsensitive))
+		return QString();
+	
+	name.remove(0, base_name.length());
+	name.remove(name.length()-3, 3);
+	return name;
+}
+
+void TranslationUtil::setBaseName(const QString& name)
+{
+	base_name = name + "_";
 }
 
 void TranslationUtil::init_search_path()

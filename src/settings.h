@@ -51,6 +51,7 @@ public:
 		Templates_KeepSettingsOfClosed,
 		General_Language,
 		General_RecentFilesList,
+		General_TranslationFile,
 		General_OpenMRUFile,
 		HomeScreen_TipsVisible,
 		HomeScreen_CurrentTip,

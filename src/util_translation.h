@@ -40,9 +40,10 @@ class TranslationUtil
 {
 public:
 	/**
-	 * Creates a new translation utility for the given application and language.
+	 * Creates a new translation utility for the given language.
+	 * The base name of the translation files should be set in advance.
 	 */
-	TranslationUtil(QLocale::Language lang);
+	TranslationUtil(QLocale::Language lang, QString translation_file = QString());
 	
 	/**
 	 * Returns the locale.
@@ -64,6 +65,18 @@ public:
 	 */
 	static LanguageCollection getAvailableLanguages();
 	
+	/** Sets the common base name of the application's translation files. */
+	static void setBaseName(const QString& name);
+	
+	/** Returns the locale name for a given translation file,
+	 *  or returns an empty string if the file is not a valid translation.
+	 * 
+	 *  In order to be valid, the file must exist, and the file name
+	 *  (without directory) must be composed of the base name, an underscore,
+	 *  the locale name and the suffix ".qm".
+	 */
+	static QString localeNameForFile(const QString& filename);
+	
 protected:
 	/**
 	 * Initializes the search path.
@@ -76,7 +89,7 @@ protected:
 	 */
 	bool load(QTranslator& translator, QString translation_name);
 	
-	const static QString base_name;
+	static QString base_name;
 	
 	static QStringList search_path;
 	

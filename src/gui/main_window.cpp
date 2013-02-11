@@ -40,7 +40,7 @@
 #include "../mapper_resource.h"
 #include "../file_format.h"
 #include "../settings.h"
-#include "../settings_dialog.h"
+#include "settings_dialog.h"
 
 
 int MainWindow::num_open_files = 0;
