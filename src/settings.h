@@ -23,6 +23,7 @@
 
 #include <QObject>
 #include <QHash>
+#include <QSettings>
 #include <QVariant>
 
 /** Singleton which handles the global application settings.
@@ -101,6 +102,10 @@ signals:
 private:
 	Settings();
 	void registerSetting(SettingsEnum id, const QString& path, const QVariant& default_value);
+	
+	/** Migrates a value from an old key to a new key.
+	 *  Uses the given or a newly constructed QSettings object. */
+	void migrateValue(const QString& old_key, SettingsEnum new_setting, QSettings& settings) const;
 	
 	QHash<SettingsEnum, QVariant> settings_cache;
 	QHash<SettingsEnum, QString> setting_paths;
