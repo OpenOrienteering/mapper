@@ -56,8 +56,9 @@ int main(int argc, char** argv)
 #endif
 	Q_INIT_RESOURCE(resources);
 	
-	QCoreApplication::setOrganizationName("Thomas Schoeps");
-	QCoreApplication::setApplicationName("OpenOrienteering");
+	// QSettings on OS X benefits from using an internet domain here.
+	QCoreApplication::setOrganizationName("OpenOrienteering.org");
+	QCoreApplication::setApplicationName("Mapper");
 	
 	// Set settings defaults
 	Settings& settings = Settings::getInstance();

@@ -53,8 +53,21 @@ Settings::Settings()
 	registerSetting(HomeScreen_CurrentTip, "HomeScreen/currentTip", -1);
 	
 	// Migrate old settings
+	static QVariant current_version("0.5");
 	QSettings settings;
-	migrateValue("General/language", General_Language, settings);
+	if (settings.value("version") != current_version)
+	{
+		if (!settings.contains("version"))
+		{
+			// pre-0.5
+			QSettings old_settings("Thomas Schoeps", "OpenOrienteering");
+			old_settings.setFallbacksEnabled(false);
+			Q_FOREACH(QString key, old_settings.allKeys())
+				settings.setValue(key, old_settings.value(key));
+		}
+		migrateValue("General/language", General_Language, settings);
+		settings.setValue("version", current_version);
+	}
 }
 
 void Settings::registerSetting(Settings::SettingsEnum id, const QString& path, const QVariant& default_value)

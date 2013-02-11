@@ -76,6 +76,8 @@ protected:
 	 */
 	bool load(QTranslator& translator, QString translation_name);
 	
+	const static QString base_name;
+	
 	static QStringList search_path;
 	
 	QLocale locale;
