@@ -135,19 +135,29 @@ QStringList MapperResource::getProgramLocations(MapperResource::RESOURCE_TYPE re
 	switch (resource_type)
 	{
 		case ASSISTANT:
+#ifdef Q_OS_WIN
+			program_name = "assistant.exe";
+#else
 			program_name = "assistant";
+#endif
 			break;
 		default:
 			return locations;
 	}
 	
-	// Find the program which is in the same directory as Mapper
-	QDir app_dir(QCoreApplication::applicationDirPath());
-#ifdef Q_OS_WIN
-	addIfExists(locations, app_dir.absoluteFilePath(program_name + ".exe"));
-#else
-	addIfExists(locations, app_dir.absoluteFilePath(program_name));
+#if defined(MAPPER_DEVELOPMENT_BUILD) and defined(QT_QTASSISTANT_EXECUTABLE)
+	addIfExists(locations, QString(QT_QTASSISTANT_EXECUTABLE));
 #endif
+	
+	QDir app_dir(QCoreApplication::applicationDirPath());
+	
+#if defined(Mapper_PACKAGE_ASSISTANT) and defined(MAPPER_DEBIAN_PACKAGE_NAME)
+	// Linux: extra binaries in xxx/bin/../share/PACKAGE_NAME/bin
+	addIfExists(locations, app_dir.absoluteFilePath(QString("../lib/") + MAPPER_DEBIAN_PACKAGE_NAME + "/bin/" + program_name));
+#endif
+	
+	// Find the program which is in the same directory as Mapper
+	addIfExists(locations, app_dir.absoluteFilePath(program_name));
 	
 	// General: let system use its search path to find the program
 	locations << program_name;
