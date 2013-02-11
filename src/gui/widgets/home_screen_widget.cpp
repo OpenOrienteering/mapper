@@ -96,7 +96,7 @@ QWidget* HomeScreenWidget::makeMenuWidget(HomeScreenController* controller, QWid
 	  tr("Help"), QIcon(":/images/help.png"));
 	menu_layout->addWidget(button_help);
 	QAbstractButton* button_exit = makeButton(
-	  tr("Exit")); // TODO: Exit icon
+	  tr("Exit"), QIcon(":/qt-project.org/styles/commonstyle/images/standardbutton-close-32.png")); // From Qt5
 	menu_layout->addWidget(button_exit);
 	
 	connect(button_new_map, SIGNAL(clicked(bool)), window, SLOT(showNewMapWizard()));
