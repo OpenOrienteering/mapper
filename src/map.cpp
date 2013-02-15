@@ -76,123 +76,237 @@ void Map::MapColorSet::dereference()
 	}
 }
 
-void Map::MapColorSet::importSet(Map::MapColorSet* other, Map* map, std::vector< bool >* filter, QHash< int, int >* out_indexmap, MapColorMap* out_pointermap)
+struct MapColorSetMergeItem
 {
-	// Count colors to import
-	size_t import_count;
+	MapColor* src_color;
+	MapColor* dest_color;
+	std::size_t dest_index;
+	std::size_t lower_bound;
+	std::size_t upper_bound;
+	int lower_errors;
+	int upper_errors;
+	int num_dependers;
+	
+	MapColorSetMergeItem()
+	 : src_color(NULL),
+	   dest_color(NULL),
+	   dest_index(0),
+	   lower_bound(0),
+	   upper_bound(0),
+	   lower_errors(0),
+	   upper_errors(0),
+	   num_dependers(0)
+	{ }
+};
+
+typedef std::vector<MapColorSetMergeItem> MapColorSetMergeList;
+
+// This algorithm tries to maintain the relative order of colors.
+MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vector< bool >* filter, Map* map)
+{
+	MapColorMap out_pointermap;
+	
+	// Determine number of colors to import
+	std::size_t import_count = other.colors.size();
 	if (filter)
 	{
-		import_count = 0;
-		for (size_t i = 0, end = other->colors.size(); i < end; ++i)
-		{
-			if (filter->at(i))
-				++import_count;
-		}
-	}
-	else
-		import_count = other->colors.size();
-	if (import_count == 0)
-		return;
-	
-	colors.reserve(colors.size() + import_count);
-	
-	// Import colors
-	int start_insertion_index = 0;
-	bool priorities_changed = false;
-	for (int i = 0; i < (int)other->colors.size(); ++i)
-	{
-		if (filter && !filter->at(i))
-			continue;
-		MapColor* other_color = other->colors.at(i);
+		Q_ASSERT(filter->size() == other.colors.size());
 		
-		// Check if color is already present, first with comparing the priority, then without
-		// TODO: priorities are shifted as soon as one new color is inserted, so this breaks
-		int found_index = -1;
-		for (size_t k = 0, colors_size = colors.size(); k < colors_size; ++k)
+		for (std::size_t i = 0, end = other.colors.size(); i != end; ++i)
 		{
-			if (colors.at(k)->equals(*other_color, true))
+			MapColor* color = other.colors[i];
+			if (!(*filter)[i] || out_pointermap.contains(color))
 			{
-				found_index = k;
-				break;
+				continue;
 			}
-		}
-		if (found_index == -1)
-		{
-			for (size_t k = 0, colors_size = colors.size(); k < colors_size; ++k)
+			
+			out_pointermap[color] = NULL; // temporary used as a flag
+			
+			// Determine referenced spot colors, and add them to the filter
+			if (color->getSpotColorMethod() == MapColor::CustomColor)
 			{
-				if (colors.at(k)->equals(*other_color, false))
+				SpotColorComponents components(color->getComponents());
+				for (SpotColorComponents::iterator it = components.begin(), end = components.end(); it != end; ++it)
 				{
-					found_index = k;
-					break;
-				}
-			}
-		}
-		
-		if (found_index >= 0)
-		{
-			if (out_indexmap)
-				out_indexmap->insert(i, found_index);
-			if (out_pointermap)
-				out_pointermap->insert(other_color, colors[found_index]);
-		}
-		else
-		{
-			// Color does not exist in this map yet.
-			// Check if the color above in other also exists in this set
-			int found_above_index = -1;
-			if (i > 0)
-			{
-				MapColor* other_color_above = other->colors.at(i - 1);
-				for (size_t k = 0, colors_size = colors.size(); k < colors_size; ++k)
-				{
-					if (colors.at(k)->equals(*other_color_above, false))
+					if (!out_pointermap.contains(it->spot_color))
 					{
-						found_above_index = k;
-						break;
+						// Add this spot color to the filter
+						int i = 0;
+						while (other.colors[i] != it->spot_color)
+							++i;
+						(*filter)[i] = true;
+						out_pointermap[it->spot_color] = NULL;
 					}
 				}
 			}
+		}
+		import_count = out_pointermap.size();
+		out_pointermap.clear();
+	}
+	
+	if (import_count > 0)
+	{
+		colors.reserve(colors.size() + import_count);
+		
+		MapColorSetMergeList merge_list;
+		merge_list.resize(import_count);
+		
+		bool priorities_changed = false;
+		
+		// Initialize merge_list
+		MapColorSetMergeList::iterator merge_list_item = merge_list.begin();
+		for (std::size_t i = 0; i < other.colors.size(); ++i)
+		{
+			if (filter && !(*filter)[i])
+				continue;
 			
-			int insertion_index;
-			if (found_above_index >= 0)
+			MapColor* src_color = other.colors[i];
+			merge_list_item->src_color = src_color;
+			for (std::size_t k = 0, colors_size = colors.size(); k < colors_size; ++k)
 			{
-				// Add it below the same color under which it was before
-				insertion_index = found_above_index + 1;
+				if (colors[k]->equals(*src_color, false))
+				{
+					merge_list_item->dest_color = colors[k];
+					merge_list_item->dest_index = k;
+					out_pointermap[src_color] = colors[k];
+					break;
+				}
 			}
-			else
+			++merge_list_item;
+		}
+		Q_ASSERT(merge_list_item == merge_list.end());
+		
+		while (true)
+		{
+			// Evaluate bounds and conflicting order of colors
+			int max_conflicts = 0;
+			MapColorSetMergeList::iterator selected_item = merge_list.begin();
+			for (merge_list_item = merge_list.begin(); merge_list_item != merge_list.end(); ++merge_list_item)
 			{
-				// Add it at the beginning
-				insertion_index = start_insertion_index;
-				++start_insertion_index;
+				std::size_t& lower_bound(merge_list_item->lower_bound);
+				lower_bound = merge_list_item->dest_color ? merge_list_item->dest_index : 0;
+				
+				MapColorSetMergeList::iterator it = merge_list.begin();
+				for (; it != merge_list_item; ++it)
+				{
+					if (it->dest_color)
+					{
+						if (it->dest_index > lower_bound)
+						{
+							lower_bound = it->dest_index;
+						}
+						if (merge_list_item->dest_color && merge_list_item->dest_index < it->dest_index)
+						{
+							++merge_list_item->lower_errors;
+						}
+					}
+				}
+				std::size_t& upper_bound(merge_list_item->upper_bound);
+				upper_bound = merge_list_item->dest_color ? merge_list_item->dest_index : colors.size();
+				
+				for (++it; it != merge_list.end(); ++it)
+				{
+					if (it->dest_color)
+					{
+						if (it->dest_index < upper_bound)
+						{
+							upper_bound = it->dest_index;
+						}
+						if (merge_list_item->dest_color && merge_list_item->dest_index > it->dest_index)
+						{
+							++merge_list_item->upper_errors;
+						}
+					}
+				}
+				if (merge_list_item->lower_errors == 0 && merge_list_item->upper_errors > max_conflicts)
+				{
+					selected_item = merge_list_item;
+					max_conflicts = merge_list_item->upper_errors;
+				}
+				else if (merge_list_item->upper_errors == 0 && merge_list_item->lower_errors > max_conflicts)
+				{
+					selected_item = merge_list_item;
+					max_conflicts = merge_list_item->lower_errors;
+				}
 			}
 			
-			MapColor* new_color = new MapColor(*other_color);
+			if (max_conflicts == 0)
+				break;
+			
+			// Solve selected conflict item
+			MapColor* new_color = new MapColor(*selected_item->dest_color);
+			selected_item->dest_color = new_color;
+			out_pointermap[selected_item->src_color] = new_color;
+			std::size_t insertion_index = (selected_item->lower_errors == 0) ? selected_item->upper_bound : (selected_item->lower_bound+1);
+			selected_item->dest_index = insertion_index;
+			
 			if (map)
 				map->addColor(new_color, insertion_index);
 			else
 				colors.insert(colors.begin() + insertion_index, new_color);
-			
 			priorities_changed = true;
 			
-			if (out_indexmap)
+			for (MapColorSetMergeList::iterator it = merge_list.begin(); it != merge_list.end(); ++it)
 			{
-				QHash<int, int>::iterator it = out_indexmap->begin();
-				while (it != out_indexmap->end())
-				{
-					if (it.value() >= insertion_index)
-						++it.value();
-					++it;
-				}
-				out_indexmap->insert(i, insertion_index);
+				merge_list_item->lower_errors = 0;
+				merge_list_item->upper_errors = 0;
+				if (it->dest_color && it->dest_index >= insertion_index)
+					++it->dest_index;
 			}
-			if (out_pointermap)
-				out_pointermap->insert(other_color, new_color);
+		}
+		
+		// Some missing colors may be spot color compositions which can be 
+		// resolved to new colors only after all colors have been created.
+		// That is why we create all missing colors first.
+		for (MapColorSetMergeList::reverse_iterator it = merge_list.rbegin(); it != merge_list.rend(); ++it)
+		{
+			if (!it->dest_color)
+			{
+				it->dest_color = new MapColor(*it->src_color);
+				out_pointermap[it->src_color] = it->dest_color;
+			}
+			else
+			{
+				// Existing colors don't need to be touched again.
+				it->dest_color = NULL;
+			}
+		}
+		
+		// Now process all new colors for spot color resolution and insertion
+		for (MapColorSetMergeList::reverse_iterator it = merge_list.rbegin(); it != merge_list.rend(); ++it)
+		{
+			MapColor* new_color = it->dest_color;
+			if (new_color)
+			{
+				if (new_color->getSpotColorMethod() == MapColor::CustomColor)
+				{
+					SpotColorComponents components = new_color->getComponents();
+					for (SpotColorComponents::iterator it = components.begin(), end = components.end(); it != end; ++it)
+					{
+						Q_ASSERT(out_pointermap.contains(it->spot_color));
+						it->spot_color = const_cast< MapColor* >(out_pointermap[it->spot_color]);
+					}
+					new_color->setSpotColorComposition(components);
+				}
+				
+				std::size_t insertion_index = it->upper_bound;
+				if (map)
+					map->addColor(new_color, insertion_index);
+				else
+					colors.insert(colors.begin() + insertion_index, new_color);
+				priorities_changed = true;
+			}
+		}
+		
+		if (map && priorities_changed)
+		{
+			map->updateAllObjects();
 		}
 	}
 	
-	if (map && priorities_changed)
-		map->updateAllObjects();
+	return out_pointermap;
 }
+
 
 // ### Map ###
 
@@ -606,8 +720,7 @@ void Map::importMap(Map* other, ImportMode mode, QWidget* dialog_parent, std::ve
 	}
 	
 	// Import colors
-	MapColorMap color_map;
-	color_set->importSet(other->color_set, this, &color_filter, NULL, &color_map);
+	MapColorMap color_map(color_set->importSet(*other->color_set, &color_filter, this));
 	
 	if (mode == ColorImport)
 		return;

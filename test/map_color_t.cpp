@@ -215,6 +215,26 @@ void MapColorTest::spotColorTest()
 	QCOMPARE(spot_cyan_copy.getCmykColorMethod(), MapColor::SpotColor);   // unchanged
 	QVERIFY(spot_cyan_copy.getCmyk() != spot_cyan.getCmyk());             // new
 	QCOMPARE(spot_cyan_copy.getCmyk().c, 0.5f);                           // computed!
+	
+	// Copy and compare spot color composition
+	MapColor compo_copy(spot_cyan_copy);
+	QCOMPARE(compo_copy.getSpotColorMethod(), MapColor::CustomColor);
+	QCOMPARE(compo_copy.getCmykColorMethod(), MapColor::SpotColor);
+	QCOMPARE(compo_copy.getCmyk().c, 0.5f);
+	QCOMPARE(compo_copy, spot_cyan_copy);
+	
+	MapColor spot_yellow("Yellow", 8);
+	spot_yellow.setCmyk(MapColorCmyk(0.0, 0.0, 1.0, 0.0));
+	
+	composition.clear();
+	composition.push_back(SpotColorComponent(&spot_cyan, 0.8));
+	composition.push_back(SpotColorComponent(&spot_yellow, 0.8));
+	spot_cyan_copy.setSpotColorComposition(composition);
+	composition.clear();
+	composition.push_back(SpotColorComponent(&spot_yellow, 0.8));
+	composition.push_back(SpotColorComponent(&spot_cyan, 0.8));
+	compo_copy.setSpotColorComposition(composition);
+	QCOMPARE(compo_copy, spot_cyan_copy); // Equal! Order of compositions doesn't matter.
 }
 
 

@@ -114,6 +114,28 @@ bool MapColor::isWhite() const
 }
 
 
+bool operator==(const SpotColorComponents &lhs, const SpotColorComponents& rhs)
+{
+	if (lhs.size() != rhs.size())
+		return false;
+	
+	// Not efficient, but correct.
+	SpotColorComponents::const_iterator rhs_it, rhs_end = rhs.end();
+	for (SpotColorComponents::const_iterator lhs_it = lhs.begin(), lhs_end = lhs.end(); lhs_it != lhs_end; ++lhs_it)
+	{
+		for (rhs_it = rhs.begin(); rhs_it != rhs_end; ++rhs_it)
+		{
+			if (*lhs_it->spot_color != *rhs_it->spot_color)
+				continue;
+			if (qAbs(lhs_it->factor - rhs_it->factor) < 1e-03)
+				break;
+		}
+		if (rhs_it == rhs_end)
+			return false; // No match for *lhs_it
+	}
+	return true;
+}
+
 bool MapColor::equals(const MapColor& other, bool compare_priority) const
 {
 	return (!compare_priority || (priority == other.priority)) &&
@@ -122,9 +144,11 @@ bool MapColor::equals(const MapColor& other, bool compare_priority) const
 	       (cmyk_color_method == other.cmyk_color_method) &&
 	       (rgb_color_method == other.rgb_color_method) &&
 	       (flags == other.flags) &&
-	       (spot_color_method == UndefinedMethod || spot_color_name.compare(other.spot_color_name, Qt::CaseInsensitive) == 0) && // This is an approximation!
 	       (cmyk_color_method != CustomColor || cmyk == other.cmyk) &&
 	       (rgb_color_method != CustomColor || rgb == other.rgb) &&
+	       (  spot_color_method == UndefinedMethod || 
+	         (spot_color_method == SpotColor && spot_color_name.compare(other.spot_color_name, Qt::CaseInsensitive) == 0) ||
+	         (spot_color_method == CustomColor && components == other.components) ) &&
 	       (qAbs(opacity - other.opacity) < 1e-03);
 }
 

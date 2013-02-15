@@ -157,6 +157,11 @@ struct SpotColorComponent
  */
 typedef std::vector<SpotColorComponent> SpotColorComponents;
 
+/** 
+ * Returns true if for each element in lhs, there is an element of equal color
+ * and factor in rhs. */
+bool operator==(const SpotColorComponents &lhs, const SpotColorComponents& rhs);
+
 
 /**
  * The MapColor class provides colors which may be used by symbols (and 

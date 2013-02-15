@@ -464,14 +464,20 @@ private:
 		void addReference();
 		void dereference();
 		
-		/// Imports the other set into this set, only importing the colors for
-		/// which filter[color_index] == true and returning the map
-		/// from color indices in other to imported indices.
-		/// Imported colors are placed below the color they were below before,
-		/// if this color exists in both sets, otherwise above the existing colors.
-		/// If a map is given, the color is properly inserted into the map.
-		void importSet(MapColorSet* other, Map* map = NULL, std::vector<bool>* filter = NULL, QHash<int, int>* out_indexmap = NULL,
-					   MapColorMap* out_pointermap = NULL);
+		/** Merges another MapColorSet into this set, trying to maintain
+		 *  the relative order of colors.
+		 *  If a filter is given, imports only the colors for  which
+		 *  filter[color_index] is true, or which are spot colors referenced
+		 *  by the selected colors.
+		 *  If a map is given, this color set is modified through the map's
+		 *  color accessor methods so that other object become aware of the
+		 *  changes.
+		 *  @return a mapping from the imported color pointer in the other set
+		 *          to color pointers in this set.
+		 */
+		MapColorMap importSet(const MapColorSet& other, 
+		                      std::vector<bool>* filter = NULL,
+		                      Map* map = NULL);
 		
 	private:
 		int ref_count;
