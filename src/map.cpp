@@ -238,7 +238,6 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 			selected_item->dest_color = new_color;
 			out_pointermap[selected_item->src_color] = new_color;
 			std::size_t insertion_index = (selected_item->lower_errors == 0) ? selected_item->upper_bound : (selected_item->lower_bound+1);
-			selected_item->dest_index = insertion_index;
 			
 			if (map)
 				map->addColor(new_color, insertion_index);
@@ -246,13 +245,14 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 				colors.insert(colors.begin() + insertion_index, new_color);
 			priorities_changed = true;
 			
-			for (MapColorSetMergeList::iterator it = merge_list.begin(); it != merge_list.end(); ++it)
+			for (merge_list_item = merge_list.begin(); merge_list_item != merge_list.end(); ++merge_list_item)
 			{
 				merge_list_item->lower_errors = 0;
 				merge_list_item->upper_errors = 0;
-				if (it->dest_color && it->dest_index >= insertion_index)
-					++it->dest_index;
+				if (merge_list_item->dest_color && merge_list_item->dest_index >= insertion_index)
+					++merge_list_item->dest_index;
 			}
+			selected_item->dest_index = insertion_index;
 		}
 		
 		// Some missing colors may be spot color compositions which can be 
