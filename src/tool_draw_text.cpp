@@ -258,7 +258,8 @@ void DrawTextTool::symbolDeleted(int pos, Symbol* old_symbol)
 {
 	if (old_symbol == drawing_symbol)
 	{
-		preview_text->setText("");
+		if (preview_text)
+			preview_text->setText("");
 		deactivate();
 	}
 }
