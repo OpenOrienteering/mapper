@@ -298,7 +298,7 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 					if (extent.y() > bounding_box.bottom())	continue;
 					
 					// Render the renderable
-					(*renderable)->render(*painter, force_min_size, scaling, on_screen);
+					(*renderable)->render(*painter, bounding_box, force_min_size, scaling, on_screen);
 				}
 			}
 		}
@@ -514,7 +514,7 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation
 					if (extent.y() > bounding_box.bottom())	continue;
 					
 					// Render the renderable
-					(*renderable)->render(*painter, force_min_size, scaling, on_screen);
+					(*renderable)->render(*painter, bounding_box, force_min_size, scaling, on_screen);
 				}
 			}
 		}

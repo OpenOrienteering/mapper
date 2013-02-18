@@ -51,7 +51,7 @@ public:
 	inline const QRectF& getExtent() const {return extent;}
 	
 	/// Renders the renderable with the given painter
-	virtual void render(QPainter& painter, bool force_min_size, float scaling, bool on_screen) const = 0;
+	virtual void render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const = 0;
 	
 	/// Creates the render state information which must be set when rendering this renderable
 	virtual void getRenderStates(RenderStates& out) const = 0;

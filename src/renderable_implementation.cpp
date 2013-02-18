@@ -52,7 +52,7 @@ void DotRenderable::getRenderStates(RenderStates& out) const
 	out.mode = RenderStates::BrushOnly;
 	out.pen_width = 0;
 }
-void DotRenderable::render(QPainter& painter, bool force_min_size, float scaling, bool on_screen) const
+void DotRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
 {
 	if (force_min_size && extent.width() * scaling < 1.5f)
 		painter.drawEllipse(extent.center(), 0.5f * (1/scaling), 0.5f * (1/scaling));
@@ -84,7 +84,7 @@ void CircleRenderable::getRenderStates(RenderStates& out) const
 	out.mode = RenderStates::PenOnly;
 	out.pen_width = line_width;
 }
-void CircleRenderable::render(QPainter& painter, bool force_min_size, float scaling, bool on_screen) const
+void CircleRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
 {
 	if (force_min_size && rect.width() * scaling < 1.5f)
 		painter.drawEllipse(rect.center(), 0.5f * (1/scaling), 0.5f * (1/scaling));
@@ -260,7 +260,7 @@ void LineRenderable::getRenderStates(RenderStates& out) const
 	out.mode = RenderStates::PenOnly;
 	out.pen_width = line_width;
 }
-void LineRenderable::render(QPainter& painter, bool force_min_size, float scaling, bool on_screen) const
+void LineRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
 {
 	QPen pen(painter.pen());
 	pen.setCapStyle(cap_style);
@@ -268,7 +268,101 @@ void LineRenderable::render(QPainter& painter, bool force_min_size, float scalin
 	if (join_style == Qt::MiterJoin)
 		pen.setMiterLimit(LineSymbol::miterLimit());
 	painter.setPen(pen);
-	painter.drawPath(path);
+	
+	if (bounding_box.contains(path.controlPointRect()))
+		painter.drawPath(path);
+	else
+	{
+		// Manually clip the path with bounding_box, this seems to be faster.
+		// The code splits up the painter path into new paths which intersect
+		// the view rect and renders these only.
+		QPainterPath::Element prev_element = path.elementAt(0);
+		QRectF element_bbox;
+		QPainterPath part_path;
+		bool path_started = false;
+		for (int i = 1; i < path.elementCount(); ++i)
+		{
+			QPainterPath::Element element = path.elementAt(i);
+			if (element.isLineTo())
+			{
+				qreal min_x, min_y, max_x, max_y;
+				if (prev_element.x < element.x)
+				{
+					min_x = prev_element.x;
+					max_x = element.x;
+				}
+				else
+				{
+					min_x = element.x;
+					max_x = prev_element.x;
+				}
+				if (prev_element.y < element.y)
+				{
+					min_y = prev_element.y;
+					max_y = element.y;
+				}
+				else
+				{
+					min_y = element.y;
+					max_y = prev_element.y;
+				}
+				element_bbox = QRectF(min_x - 0.5f * line_width, min_y - 0.5f * line_width,
+									  max_x - min_x + line_width, max_y - min_y + line_width);
+				if (element_bbox.intersects(bounding_box))
+				{
+					if (!path_started)
+					{
+						part_path = QPainterPath();
+						part_path.moveTo(prev_element.x, prev_element.y);
+						path_started = true;
+					}
+					part_path.lineTo(element.x, element.y);
+				}
+				else if (path_started)
+				{
+					painter.drawPath(part_path);
+					path_started = false;
+				}
+			}
+			else if (element.isCurveTo())
+			{
+				assert(i < path.elementCount() - 2);
+				QPainterPath::Element next_element = path.elementAt(i + 1);
+				QPainterPath::Element end_element = path.elementAt(i + 2);
+				
+				qreal min_x = qMin(prev_element.x, qMin(element.x, qMin(next_element.x, end_element.x)));
+				qreal min_y = qMin(prev_element.y, qMin(element.y, qMin(next_element.y, end_element.y)));
+				qreal max_x = qMax(prev_element.x, qMax(element.x, qMax(next_element.x, end_element.x)));
+				qreal max_y = qMax(prev_element.y, qMax(element.y, qMax(next_element.y, end_element.y)));
+				
+				element_bbox = QRectF(min_x - 0.5f * line_width, min_y - 0.5f * line_width,
+									  max_x - min_x + line_width, max_y - min_y + line_width);
+				if (element_bbox.intersects(bounding_box))
+				{
+					if (!path_started)
+					{
+						part_path = QPainterPath();
+						part_path.moveTo(prev_element.x, prev_element.y);
+						path_started = true;
+					}
+					part_path.cubicTo(element.x, element.y, next_element.x, next_element.y, end_element.x, end_element.y);
+				}
+				else if (path_started)
+				{
+					painter.drawPath(part_path);
+					path_started = false;
+				}
+			}
+			else if (element.isMoveTo() && path_started)
+			{
+				part_path.moveTo(element.x, element.y);
+			}
+			
+			prev_element = element;
+		}
+		if (path_started)
+			painter.drawPath(part_path);
+	}
 	
 	// DEBUG: show all control points
 	/*QPen debugPen(QColor(Qt::red));
@@ -346,7 +440,7 @@ void AreaRenderable::getRenderStates(RenderStates& out) const
 	out.mode = RenderStates::BrushOnly;
 	out.pen_width = 0;
 }
-void AreaRenderable::render(QPainter& painter, bool force_min_size, float scaling, bool on_screen) const
+void AreaRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
 {
 	painter.drawPath(path);
 	
@@ -472,7 +566,7 @@ void TextRenderable::getRenderStates(RenderStates& out) const
 	}
 }
 
-void TextRenderable::render(QPainter& painter, bool force_min_size, float scaling, bool on_screen) const
+void TextRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const
 {
 	bool used_antialiasing_before = painter.renderHints() & QPainter::Antialiasing;
 	bool disable_antialiasing = on_screen && !(Settings::getInstance().getSettingCached(Settings::MapDisplay_TextAntialiasing).toBool());
