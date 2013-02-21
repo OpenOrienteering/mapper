@@ -57,7 +57,7 @@ FileFormat::~FileFormat()
 void FileFormat::addExtension(const QString& file_extension)
 {
 	file_extensions << file_extension;
-	format_filter = QString("%1 (*.%2)").arg(format_description).arg(file_extensions.join(" "));
+	format_filter = QString("%1 (*.%2)").arg(format_description).arg(file_extensions.join(" *."));
 }
 
 bool FileFormat::understands(const unsigned char *buffer, size_t sz) const
