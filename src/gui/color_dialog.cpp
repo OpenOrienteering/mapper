@@ -217,13 +217,13 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	updateButtons();
 	
 	connect(spot_color_options, SIGNAL(buttonClicked(int)), this, SLOT(spotColorTypeChanged(int)));
-	connect(sc_name_edit, SIGNAL(textChanged(QString)), this, SLOT(setColorModified()));
+	connect(sc_name_edit, SIGNAL(textChanged(QString)), this, SLOT(nameChanged()));
 	for (int i = 0; i < composition_size; i++)
 	{
 		connect(component_colors[i], SIGNAL(currentIndexChanged(int)), this, SLOT(spotColorCompositionChanged()));
 		connect(component_halftone[i], SIGNAL(valueChanged(double)), this, SLOT(spotColorCompositionChanged()));
 	}
-	connect(knockout_option, SIGNAL(clicked(bool)), this, SLOT(setColorModified()));
+	connect(knockout_option, SIGNAL(clicked(bool)), this, SLOT(knockoutChanged()));
 	
 	connect(cmyk_color_options, SIGNAL(buttonClicked(int)), this, SLOT(cmykColorTypeChanged(int)));
 	connect(c_edit, SIGNAL(valueChanged(double)), this, SLOT(cmykValueChanged()));
@@ -370,11 +370,6 @@ void ColorDialog::updateWidgets()
 
 void ColorDialog::accept()
 {
-	if (full_tone_option->isChecked())
-		color.setSpotColorName(sc_name_edit->text());
-	
-	color.setKnockout(knockout_option->isChecked());
-	
 	QSettings settings;
 	settings.beginGroup("ColorDialog");
 	settings.setValue("view", properties_widget->currentWidget()->objectName());
@@ -435,6 +430,17 @@ void ColorDialog::spotColorTypeChanged(int id)
 	setColorModified(true);
 }
 
+void ColorDialog::nameChanged()
+{
+	if (!react_to_changes)
+		return;
+	
+	Q_ASSERT(full_tone_option->isChecked());
+	color.setSpotColorName(sc_name_edit->text());
+	
+	setColorModified();
+}
+
 void ColorDialog::spotColorCompositionChanged()
 {
 	if (!react_to_changes)
@@ -460,6 +466,15 @@ void ColorDialog::spotColorCompositionChanged()
 	
 	updateWidgets();
 	setColorModified(true);
+}
+
+void ColorDialog::knockoutChanged()
+{
+	if (!react_to_changes)
+		return;
+	
+	color.setKnockout(knockout_option->isChecked());
+	setColorModified();
 }
 
 void ColorDialog::cmykColorTypeChanged(int id)
