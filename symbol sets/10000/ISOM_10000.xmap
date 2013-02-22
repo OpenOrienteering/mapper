@@ -40,10 +40,10 @@
         </color>
         <color priority="5" name="Blue (knockout)" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
-                <namedcolor>BLUE</namedcolor>
+                <component factor="1" spotcolor="6"/>
             </spotcolors>
-            <cmyk method="custom"/>
-            <rgb method="custom" r="0.130" g="0.820" b="1.000"/>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.130" g="0.820" b="1.000"/>
         </color>
         <color priority="6" name="Blue" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
             <spotcolors>
@@ -83,10 +83,10 @@
         </color>
         <color priority="11" name="Green (knockout)" c="0.760" m="0.000" y="0.910" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
-                <namedcolor>GREEN</namedcolor>
+                <component factor="1" spotcolor="12"/>
             </spotcolors>
-            <cmyk method="custom"/>
-            <rgb method="custom" r="0.240" g="1.000" b="0.090"/>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.240" g="1.000" b="0.090"/>
         </color>
         <color priority="12" name="Green" c="0.760" m="0.000" y="0.910" k="0.000" opacity="1.000">
             <spotcolors>
