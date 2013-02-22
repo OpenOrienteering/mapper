@@ -2,7 +2,7 @@
 <map xmlns="http://oorienteering.sourceforge.net/mapper/xml/v2" version="3">
     <notes></notes>
     <georeferencing scale="15000"/>
-    <colors count="19">
+    <colors count="21">
         <color priority="0" name="Purple" c="0.200" m="0.900" y="0.000" k="0.200" opacity="1.000">
             <spotcolors>
                 <namedcolor>PURPLE</namedcolor>
@@ -38,96 +38,116 @@
             <cmyk method="custom"/>
             <rgb method="custom" r="0.820" g="0.361" b="0.000"/>
         </color>
-        <color priority="5" name="Blue" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
+        <color priority="5" name="Blue (knockout)" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
+            <spotcolors knockout="true">
+                <namedcolor>BLUE</namedcolor>
+            </spotcolors>
+            <cmyk method="custom"/>
+            <rgb method="custom" r="0.130" g="0.820" b="1.000"/>
+        </color>
+        <color priority="6" name="Blue" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
             <spotcolors>
                 <namedcolor>BLUE</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="custom" r="0.130" g="0.820" b="1.000"/>
         </color>
-        <color priority="6" name="Blue 50%" c="0.435" m="0.090" y="0.000" k="0.000" opacity="1.000">
+        <color priority="7" name="Blue 50%" c="0.435" m="0.090" y="0.000" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0.5" spotcolor="5"/>
+                <component factor="0.5" spotcolor="6"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.565" g="0.910" b="1.000"/>
         </color>
-        <color priority="7" name="Black 30%" c="0.000" m="0.000" y="0.000" k="0.300" opacity="1.000">
+        <color priority="8" name="Black 30%" c="0.000" m="0.000" y="0.000" k="0.300" opacity="1.000">
             <spotcolors knockout="true">
                 <component factor="0.3" spotcolor="1"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.700" g="0.700" b="0.700"/>
         </color>
-        <color priority="8" name="Green 50%, Yellow" c="0.380" m="0.270" y="0.886" k="0.000" opacity="1.000">
+        <color priority="9" name="Green 50%, Yellow" c="0.380" m="0.270" y="0.886" k="0.000" opacity="1.000">
             <spotcolors>
-                <component factor="0.5" spotcolor="10"/>
-                <component factor="1" spotcolor="14"/>
+                <component factor="0.5" spotcolor="12"/>
+                <component factor="1" spotcolor="16"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.620" g="0.730" b="0.114"/>
         </color>
-        <color priority="9" name="White over Green" c="0.000" m="0.000" y="0.000" k="0.000" opacity="1.000">
-            <cmyk method="custom"/>
-            <rgb method="custom" r="1.000" g="1.000" b="1.000"/>
+        <color priority="10" name="White over Green" c="0.000" m="0.000" y="0.000" k="0.000" opacity="1.000">
+            <spotcolors>
+                <component factor="0" spotcolor="12"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="1.000" g="1.000" b="1.000"/>
         </color>
-        <color priority="10" name="Green" c="0.760" m="0.000" y="0.910" k="0.000" opacity="1.000">
+        <color priority="11" name="Green (knockout)" c="0.760" m="0.000" y="0.910" k="0.000" opacity="1.000">
+            <spotcolors knockout="true">
+                <namedcolor>GREEN</namedcolor>
+            </spotcolors>
+            <cmyk method="custom"/>
+            <rgb method="custom" r="0.240" g="1.000" b="0.090"/>
+        </color>
+        <color priority="12" name="Green" c="0.760" m="0.000" y="0.910" k="0.000" opacity="1.000">
             <spotcolors>
                 <namedcolor>GREEN</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="custom" r="0.240" g="1.000" b="0.090"/>
         </color>
-        <color priority="11" name="Green 60%" c="0.456" m="0.000" y="0.546" k="0.000" opacity="1.000">
+        <color priority="13" name="Green 60%" c="0.456" m="0.000" y="0.546" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0.6" spotcolor="10"/>
+                <component factor="0.6" spotcolor="12"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.544" g="1.000" b="0.454"/>
         </color>
-        <color priority="12" name="Green 30%" c="0.228" m="0.000" y="0.273" k="0.000" opacity="1.000">
+        <color priority="14" name="Green 30%" c="0.228" m="0.000" y="0.273" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0.3" spotcolor="10"/>
+                <component factor="0.3" spotcolor="12"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.772" g="1.000" b="0.727"/>
         </color>
-        <color priority="13" name="Green below light greens" c="0.760" m="0.000" y="0.910" k="0.000" opacity="1.000">
+        <color priority="15" name="Green below light greens" c="0.760" m="0.000" y="0.910" k="0.000" opacity="1.000">
             <spotcolors>
-                <component factor="1" spotcolor="10"/>
+                <namedcolor>Green below light greens</namedcolor>
             </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.240" g="1.000" b="0.090"/>
+            <cmyk method="custom"/>
+            <rgb method="custom" r="0.240" g="1.000" b="0.090"/>
         </color>
-        <color priority="14" name="Yellow" c="0.000" m="0.270" y="0.790" k="0.000" opacity="1.000">
+        <color priority="16" name="Yellow" c="0.000" m="0.270" y="0.790" k="0.000" opacity="1.000">
             <spotcolors>
                 <namedcolor>YELLOW</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="custom" r="1.000" g="0.730" b="0.210"/>
         </color>
-        <color priority="15" name="Yellow 50%" c="0.000" m="0.135" y="0.395" k="0.000" opacity="1.000">
+        <color priority="17" name="Yellow 50%" c="0.000" m="0.135" y="0.395" k="0.000" opacity="1.000">
             <spotcolors>
-                <component factor="0.5" spotcolor="14"/>
+                <component factor="0.5" spotcolor="16"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1.000" g="0.865" b="0.605"/>
         </color>
-        <color priority="16" name="White over Yellow 70%" c="0.000" m="0.000" y="0.000" k="0.000" opacity="1.000">
-            <cmyk method="custom"/>
-            <rgb method="custom" r="1.000" g="1.000" b="1.000"/>
-        </color>
-        <color priority="17" name="Yellow 70%" c="0.000" m="0.189" y="0.553" k="0.000" opacity="1.000">
+        <color priority="18" name="White over Yellow 70%" c="0.000" m="0.000" y="0.000" k="0.000" opacity="1.000">
             <spotcolors>
-                <component factor="0.7" spotcolor="14"/>
+                <component factor="0" spotcolor="16"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="1.000" g="1.000" b="1.000"/>
+        </color>
+        <color priority="19" name="Yellow 70%" c="0.000" m="0.189" y="0.553" k="0.000" opacity="1.000">
+            <spotcolors>
+                <component factor="0.7" spotcolor="16"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1.000" g="0.811" b="0.447"/>
         </color>
-        <color priority="18" name="Orange" c="0.000" m="0.474" y="0.895" k="0.090" opacity="1.000">
+        <color priority="20" name="Orange (for logo)" c="0.000" m="0.474" y="0.895" k="0.090" opacity="1.000">
             <spotcolors>
                 <component factor="0.5" spotcolor="4"/>
-                <component factor="1" spotcolor="14"/>
+                <component factor="1" spotcolor="16"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.910" g="0.497" b="0.105"/>
@@ -772,7 +792,7 @@
         </symbol>
         <symbol type="4" id="37" code="211" name="Open sandy ground">
             <description>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</description>
-            <area_symbol inner_color="15" min_area="1000" patterns="1">
+            <area_symbol inner_color="17" min_area="1000" patterns="1">
                 <pattern type="2" angle="0.785398" line_spacing="450" line_offset="0" offset_along_line="0" point_distance="450">
                     <symbol type="1" code="" name="1">
                         <point_symbol rotatable="true" inner_radius="90" inner_color="1" outer_width="0" outer_color="-1" elements="0"/>
@@ -782,11 +802,11 @@
         </symbol>
         <symbol type="4" id="38" code="212" name="Bare rock">
             <description>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</description>
-            <area_symbol inner_color="7" min_area="500" patterns="0"/>
+            <area_symbol inner_color="8" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="4" id="39" code="301" name="Lake">
             <description>Large areas of water are shown with dot screen. Small areas of water should be shown with full colour. A black bank line indicates that the feature cannot be crossed.</description>
-            <area_symbol inner_color="6" min_area="1000" patterns="0"/>
+            <area_symbol inner_color="7" min_area="1000" patterns="0"/>
         </symbol>
         <symbol type="2" id="40" code="301.1" name="Lake, bank line">
             <description>A black bank line indicates that the feature cannot be crossed.</description>
@@ -807,7 +827,7 @@
             <point_symbol inner_radius="900" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="6" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="7">
@@ -828,22 +848,22 @@
         </symbol>
         <symbol type="2" id="44" code="305" name="Crossable watercourse">
             <description>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</description>
-            <line_symbol color="5" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="6" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="45" code="306" name="Crossable small watercourse">
             <description>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</description>
-            <line_symbol color="5" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="6" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="46" code="307" name="Minor water channel">
             <description>A natural or man-made minor water channel which may contain water only intermittently.</description>
-            <line_symbol color="5" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="6" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="47" code="308" name="Narrow marsh">
             <description>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</description>
             <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="500" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
-                        <point_symbol rotatable="true" inner_radius="125" inner_color="5" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="125" inner_color="6" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
@@ -851,7 +871,7 @@
         <symbol type="4" id="48" code="309" name="Uncrossable marsh">
             <description>A marsh which is uncrossable or dangerous for the runner. A black line surrounds the symbol.</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="0" line_spacing="500" line_offset="0" offset_along_line="0" color="5" line_width="250"/>
+                <pattern type="1" angle="0" line_spacing="500" line_offset="0" offset_along_line="0" color="6" line_width="250"/>
             </area_symbol>
         </symbol>
         <symbol type="2" id="49" code="309.1" name="Uncrossable marsh, border line">
@@ -867,14 +887,14 @@
         <symbol type="4" id="51" code="310" name="Marsh">
             <description>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="0" line_spacing="300" line_offset="0" offset_along_line="0" color="5" line_width="100"/>
+                <pattern type="1" angle="0" line_spacing="300" line_offset="0" offset_along_line="0" color="6" line_width="100"/>
             </area_symbol>
         </symbol>
         <symbol type="1" id="52" code="310.1" name="Marsh, minimum size">
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="6" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -888,7 +908,7 @@
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="6" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -910,7 +930,7 @@
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="6" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -930,7 +950,7 @@
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="6" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -951,7 +971,7 @@
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="4">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="6" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -965,7 +985,7 @@
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="6" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -979,7 +999,7 @@
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="6" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -993,7 +1013,7 @@
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="6" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1009,7 +1029,7 @@
         </symbol>
         <symbol type="1" id="55" code="312" name="Well">
             <description>Wells and captive springs, which are clearly visible on the ground.</description>
-            <point_symbol inner_radius="310" inner_color="-1" outer_width="180" outer_color="5" elements="0"/>
+            <point_symbol inner_radius="310" inner_color="-1" outer_width="180" outer_color="6" elements="0"/>
         </symbol>
         <symbol type="1" id="56" code="313" name="Spring">
             <description>The source of a stream with a distinct outflow. The symbol is orientated to open
@@ -1017,7 +1037,7 @@ downstream.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="5" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="6" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="7">
@@ -1041,7 +1061,7 @@ downstream.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="5" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="6" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1055,7 +1075,7 @@ downstream.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="5" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="6" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1071,102 +1091,102 @@ downstream.</description>
         </symbol>
         <symbol type="4" id="58" code="401" name="Open land">
             <description>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</description>
-            <area_symbol inner_color="14" min_area="500" patterns="0"/>
+            <area_symbol inner_color="16" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="4" id="59" code="402" name="Open land with scattered trees">
             <description>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</description>
             <area_symbol inner_color="-1" min_area="10000" patterns="1">
                 <pattern type="2" angle="0.785398" line_spacing="500" line_offset="0" offset_along_line="0" point_distance="500">
                     <symbol type="1" code="" name="1">
-                        <point_symbol rotatable="true" inner_radius="200" inner_color="14" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="200" inner_color="16" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </pattern>
             </area_symbol>
         </symbol>
         <symbol type="4" id="60" code="403" name="Rough open land">
             <description>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</description>
-            <area_symbol inner_color="15" min_area="1000" patterns="0"/>
+            <area_symbol inner_color="17" min_area="1000" patterns="0"/>
         </symbol>
         <symbol type="4" id="61" code="404" name="Rough open land with scattered trees">
             <description>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</description>
-            <area_symbol inner_color="17" min_area="16000" patterns="1">
+            <area_symbol inner_color="19" min_area="16000" patterns="1">
                 <pattern type="2" angle="0.785398" line_spacing="700" line_offset="0" offset_along_line="0" point_distance="700">
                     <symbol type="1" code="" name="1">
-                        <point_symbol rotatable="true" inner_radius="275" inner_color="16" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="275" inner_color="18" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </pattern>
             </area_symbol>
         </symbol>
         <symbol type="4" id="62" code="405" name="Forest: easy running">
             <description>Typically open runnable forest for the particular type of terrain. If no part of the forest is runnable then no white should appear on the map.</description>
-            <area_symbol inner_color="9" min_area="500" patterns="0"/>
+            <area_symbol inner_color="10" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="4" id="63" code="406" name="Forest: slow running">
             <description>An area with dense trees (low visibility) which reduces running to ca. 60-80% of normal speed.</description>
-            <area_symbol inner_color="12" min_area="1000" patterns="0"/>
+            <area_symbol inner_color="14" min_area="1000" patterns="0"/>
         </symbol>
         <symbol type="4" id="64" code="407" name="Undergrowth: slow running">
             <description>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="1.5708" line_spacing="840" line_offset="0" offset_along_line="0" color="13" line_width="120"/>
+                <pattern type="1" angle="1.5708" line_spacing="840" line_offset="0" offset_along_line="0" color="15" line_width="120"/>
             </area_symbol>
         </symbol>
         <symbol type="4" id="65" code="408" name="Forest: difficult to run">
             <description>An area with dense trees or thicket (low visibility) which reduce running to ca. 20-60% of normal speed.</description>
-            <area_symbol inner_color="11" min_area="1000" patterns="0"/>
+            <area_symbol inner_color="13" min_area="1000" patterns="0"/>
         </symbol>
         <symbol type="4" id="66" code="409" name="Undergrowth: difficult to run">
             <description>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="1.5708" line_spacing="420" line_offset="0" offset_along_line="0" color="13" line_width="120"/>
+                <pattern type="1" angle="1.5708" line_spacing="420" line_offset="0" offset_along_line="0" color="15" line_width="120"/>
             </area_symbol>
         </symbol>
         <symbol type="4" id="67" code="410" name="Vegetation: very difficult to run, impassable">
             <description>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.</description>
-            <area_symbol inner_color="10" min_area="500" patterns="0"/>
+            <area_symbol inner_color="11" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="2" id="68" code="410.1" name="Vegetation: very difficult to run, impassable, line">
             <description>Line of minimum width for symbol 410.</description>
-            <line_symbol color="10" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="11" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="69" code="411.0" name="Forest runnable in one direction, 1">
             <description>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</description>
-            <area_symbol inner_color="12" min_area="1000" patterns="1">
-                <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="9" line_width="400"/>
+            <area_symbol inner_color="14" min_area="1000" patterns="1">
+                <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="10" line_width="400"/>
             </area_symbol>
         </symbol>
         <symbol type="4" id="70" code="411.1" name="Forest runnable in one direction, 2">
             <description>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</description>
-            <area_symbol inner_color="11" min_area="1000" patterns="1">
-                <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="9" line_width="400"/>
+            <area_symbol inner_color="13" min_area="1000" patterns="1">
+                <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="10" line_width="400"/>
             </area_symbol>
         </symbol>
         <symbol type="4" id="71" code="411.2" name="Forest runnable in one direction, 3">
             <description>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</description>
-            <area_symbol inner_color="10" min_area="1000" patterns="1">
-                <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="9" line_width="400"/>
+            <area_symbol inner_color="11" min_area="1000" patterns="1">
+                <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="10" line_width="400"/>
             </area_symbol>
         </symbol>
         <symbol type="4" id="72" code="412" name="Orchard">
             <description>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
 direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</description>
-            <area_symbol inner_color="14" min_area="500" patterns="1">
+            <area_symbol inner_color="16" min_area="500" patterns="1">
                 <pattern type="2" angle="0" rotatable="true" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
-                    <symbol type="1" code="" name="1">
-                        <point_symbol rotatable="true" inner_radius="225" inner_color="10" outer_width="0" outer_color="-1" elements="0"/>
+                    <symbol type="1" code="" name="Füllmuster 1">
+                        <point_symbol rotatable="true" inner_radius="225" inner_color="11" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </pattern>
             </area_symbol>
         </symbol>
         <symbol type="4" id="73" code="413" name="Vineyard">
             <description>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</description>
-            <area_symbol inner_color="14" min_area="500" patterns="2">
+            <area_symbol inner_color="16" min_area="500" patterns="2">
                 <pattern type="2" angle="1.5708" rotatable="true" line_spacing="1700" line_offset="0" offset_along_line="0" point_distance="1900">
-                    <symbol type="1" code="" name="1">
+                    <symbol type="1" code="" name="Füllmuster 1">
                         <point_symbol rotatable="true" inner_radius="0" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="10" line_width="200" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="11" line_width="200" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1182,11 +1202,11 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
                     </symbol>
                 </pattern>
                 <pattern type="2" angle="1.5708" rotatable="true" line_spacing="1700" line_offset="850" offset_along_line="950" point_distance="1900">
-                    <symbol type="1" code="" name="2">
+                    <symbol type="1" code="" name="Füllmuster 2">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="10" line_width="200" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="11" line_width="200" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1209,7 +1229,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         </symbol>
         <symbol type="4" id="75" code="415" name="Cultivated land">
             <description>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</description>
-            <area_symbol inner_color="14" min_area="500" patterns="1">
+            <area_symbol inner_color="16" min_area="500" patterns="1">
                 <pattern type="2" angle="0" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
                     <symbol type="1" code="" name="1">
                         <point_symbol rotatable="true" inner_radius="100" inner_color="1" outer_width="0" outer_color="-1" elements="0"/>
@@ -1232,7 +1252,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="10" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="11" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1246,7 +1266,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="10" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="11" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1262,11 +1282,11 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         </symbol>
         <symbol type="1" id="78" code="419" name="Special vegetation feature">
             <description>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</description>
-            <point_symbol inner_radius="310" inner_color="-1" outer_width="180" outer_color="10" elements="0"/>
+            <point_symbol inner_radius="310" inner_color="-1" outer_width="180" outer_color="11" elements="0"/>
         </symbol>
         <symbol type="1" id="79" code="420" name="Special vegetation feature">
             <description>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</description>
-            <point_symbol inner_radius="250" inner_color="10" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="250" inner_color="11" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="16" id="80" code="501.0" name="Motorway">
             <description>A road with two carriageways. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</description>
@@ -1706,7 +1726,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         </symbol>
         <symbol type="4" id="107" code="527" name="Settlement">
             <description>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</description>
-            <area_symbol inner_color="8" min_area="500" patterns="0"/>
+            <area_symbol inner_color="9" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="4" id="108" code="527.1" name="Settlement">
             <description>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</description>
@@ -2085,11 +2105,11 @@ symbols must be given in each case in the map legend.</description>
         </symbol>
         <symbol type="2" id="129" code="601.2" name="Magnetic north line, blue">
             <description>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</description>
-            <line_symbol color="5" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="6" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="130" code="601.3" name="North lines pattern, blue">
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="1.5708" rotatable="true" line_spacing="33330" line_offset="0" offset_along_line="0" color="5" line_width="180"/>
+                <pattern type="1" angle="1.5708" rotatable="true" line_spacing="33330" line_offset="0" offset_along_line="0" color="6" line_width="180"/>
             </area_symbol>
         </symbol>
         <symbol type="1" id="131" code="602" name="Registration mark">
@@ -2153,7 +2173,7 @@ symbols must be given in each case in the map legend.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="6" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2167,7 +2187,7 @@ symbols must be given in each case in the map legend.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="6" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2181,7 +2201,7 @@ symbols must be given in each case in the map legend.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="10" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="12" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2195,7 +2215,7 @@ symbols must be given in each case in the map legend.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="10" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="12" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2501,7 +2521,7 @@ Colour: purple</description>
             <point_symbol inner_radius="250" inner_color="-1" outer_width="0" outer_color="-1" elements="30">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="10">
@@ -2523,7 +2543,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="14">
@@ -2587,7 +2607,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="6" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="37">
@@ -2636,7 +2656,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="20" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="35">
@@ -2683,7 +2703,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="20" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="25">
@@ -2720,7 +2740,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="20" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="5">
@@ -2775,7 +2795,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="20" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="37">
@@ -2824,7 +2844,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="20" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="39">
@@ -2951,7 +2971,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="20" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="35">
@@ -2998,7 +3018,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="20" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="25">
@@ -3035,7 +3055,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="20" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="5">
@@ -3052,7 +3072,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="20" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="37">
@@ -3101,7 +3121,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="6" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="74">
@@ -3187,7 +3207,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="6" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="69">
@@ -3268,7 +3288,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="6" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -3419,7 +3439,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="20" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -3520,7 +3540,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="20" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -3621,7 +3641,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="20" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="89">
@@ -3722,7 +3742,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="20" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="87">
@@ -3871,7 +3891,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="20" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="74">
@@ -5763,7 +5783,7 @@ Colour: purple</description>
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="8" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="572">
@@ -6436,7 +6456,474 @@ Colour: purple</description>
     </symbols>
     <parts count="1" current="0">
         <part name="default layer">
-            <objects count="0"/>
+            <objects count="27">
+                <object type="1" symbol="70">
+                    <coords count="5">
+                        <coord x="-12148" y="-34717"/>
+                        <coord x="-10325" y="-35275"/>
+                        <coord x="-9618" y="-32913"/>
+                        <coord x="-11441" y="-33025"/>
+                        <coord x="-12148" y="-34717" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="67">
+                    <coords count="13">
+                        <coord x="-4122" y="-32241" flags="1"/>
+                        <coord x="-3549" y="-32169"/>
+                        <coord x="-3027" y="-32575"/>
+                        <coord x="-2956" y="-33147" flags="1"/>
+                        <coord x="-2884" y="-33719"/>
+                        <coord x="-3291" y="-34242"/>
+                        <coord x="-3863" y="-34313" flags="1"/>
+                        <coord x="-4435" y="-34385"/>
+                        <coord x="-4957" y="-33979"/>
+                        <coord x="-5029" y="-33407" flags="1"/>
+                        <coord x="-5100" y="-32834"/>
+                        <coord x="-4694" y="-32312"/>
+                        <coord x="-4122" y="-32241" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="38">
+                    <coords count="13">
+                        <coord x="-5907" y="-30556" flags="1"/>
+                        <coord x="-6149" y="-30883"/>
+                        <coord x="-6611" y="-30953"/>
+                        <coord x="-6939" y="-30711" flags="1"/>
+                        <coord x="-7267" y="-30469"/>
+                        <coord x="-7337" y="-30007"/>
+                        <coord x="-7095" y="-29679" flags="1"/>
+                        <coord x="-6853" y="-29351"/>
+                        <coord x="-6390" y="-29281"/>
+                        <coord x="-6062" y="-29523" flags="1"/>
+                        <coord x="-5734" y="-29765"/>
+                        <coord x="-5665" y="-30228"/>
+                        <coord x="-5907" y="-30556" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="0">
+                    <coords count="26">
+                        <coord x="-1745" y="-29497" flags="1"/>
+                        <coord x="-3072" y="-28612"/>
+                        <coord x="-3763" y="-28011"/>
+                        <coord x="-5340" y="-27771" flags="1"/>
+                        <coord x="-6044" y="-27663"/>
+                        <coord x="-6463" y="-27781"/>
+                        <coord x="-7084" y="-28131" flags="1"/>
+                        <coord x="-7317" y="-28262"/>
+                        <coord x="-7428" y="-28337"/>
+                        <coord x="-7659" y="-28472" flags="1"/>
+                        <coord x="-7815" y="-28563"/>
+                        <coord x="-8029" y="-28467"/>
+                        <coord x="-8073" y="-28292" flags="1"/>
+                        <coord x="-8164" y="-27928"/>
+                        <coord x="-8680" y="-27786"/>
+                        <coord x="-8972" y="-28023" flags="1"/>
+                        <coord x="-9363" y="-28340"/>
+                        <coord x="-9544" y="-28525"/>
+                        <coord x="-9979" y="-28778" flags="1"/>
+                        <coord x="-10404" y="-29026"/>
+                        <coord x="-10706" y="-29151"/>
+                        <coord x="-11183" y="-29029" flags="1"/>
+                        <coord x="-11815" y="-28869"/>
+                        <coord x="-12179" y="-28635"/>
+                        <coord x="-12801" y="-28831"/>
+                        <coord x="-13484" y="-29047"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="0" symbol="30">
+                    <coords count="1">
+                        <coord x="-11057" y="-29929"/>
+                    </coords>
+                </object>
+                <object type="1" symbol="60">
+                    <coords count="13">
+                        <coord x="-6251" y="-31654" flags="1"/>
+                        <coord x="-5973" y="-31181"/>
+                        <coord x="-5365" y="-31023"/>
+                        <coord x="-4893" y="-31301" flags="1"/>
+                        <coord x="-4421" y="-31578"/>
+                        <coord x="-4262" y="-32186"/>
+                        <coord x="-4539" y="-32658" flags="1"/>
+                        <coord x="-4817" y="-33131"/>
+                        <coord x="-5425" y="-33289"/>
+                        <coord x="-5897" y="-33011" flags="1"/>
+                        <coord x="-6370" y="-32734"/>
+                        <coord x="-6528" y="-32127"/>
+                        <coord x="-6251" y="-31654" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="0">
+                    <coords count="17">
+                        <coord x="-2482" y="-31043" flags="1"/>
+                        <coord x="-3296" y="-30560"/>
+                        <coord x="-3671" y="-30244"/>
+                        <coord x="-4549" y="-29893" flags="1"/>
+                        <coord x="-5491" y="-29516"/>
+                        <coord x="-6308" y="-29204"/>
+                        <coord x="-7084" y="-29857" flags="1"/>
+                        <coord x="-8116" y="-30724"/>
+                        <coord x="-8437" y="-31597"/>
+                        <coord x="-9745" y="-31924" flags="1"/>
+                        <coord x="-10362" y="-32079"/>
+                        <coord x="-10639" y="-31581"/>
+                        <coord x="-11255" y="-31421" flags="1"/>
+                        <coord x="-12245" y="-31164"/>
+                        <coord x="-13249" y="-31071"/>
+                        <coord x="-13754" y="-31960"/>
+                        <coord x="-14203" y="-32769"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="67">
+                    <coords count="9">
+                        <coord x="-7841" y="-28945" flags="1"/>
+                        <coord x="-8577" y="-28172"/>
+                        <coord x="-10548" y="-27636"/>
+                        <coord x="-9682" y="-27011" flags="1"/>
+                        <coord x="-8895" y="-26444"/>
+                        <coord x="-7733" y="-24744"/>
+                        <coord x="-7636" y="-25709"/>
+                        <coord x="-7413" y="-27941"/>
+                        <coord x="-7841" y="-28945" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="0">
+                    <coords count="7">
+                        <coord x="-8832" y="-29392" flags="1"/>
+                        <coord x="-8549" y="-29067"/>
+                        <coord x="-8420" y="-28745"/>
+                        <coord x="-8538" y="-28620" flags="1"/>
+                        <coord x="-8657" y="-28494"/>
+                        <coord x="-8990" y="-28609"/>
+                        <coord x="-9332" y="-28879" flags="16"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="60">
+                    <coords count="13">
+                        <coord x="-9627" y="-33434" flags="1"/>
+                        <coord x="-8651" y="-33149"/>
+                        <coord x="-7849" y="-33091"/>
+                        <coord x="-7424" y="-32169" flags="1"/>
+                        <coord x="-7001" y="-31253"/>
+                        <coord x="-6027" y="-29478"/>
+                        <coord x="-7015" y="-29679" flags="1"/>
+                        <coord x="-9133" y="-30111"/>
+                        <coord x="-12385" y="-30472"/>
+                        <coord x="-11627" y="-32495" flags="1"/>
+                        <coord x="-11281" y="-33431"/>
+                        <coord x="-10455" y="-33675"/>
+                        <coord x="-9627" y="-33434" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="65">
+                    <coords count="13">
+                        <coord x="-4627" y="-32516" flags="1"/>
+                        <coord x="-4217" y="-32891"/>
+                        <coord x="-4189" y="-33527"/>
+                        <coord x="-4564" y="-33938" flags="1"/>
+                        <coord x="-4939" y="-34348"/>
+                        <coord x="-5575" y="-34377"/>
+                        <coord x="-5986" y="-34001" flags="1"/>
+                        <coord x="-6396" y="-33627"/>
+                        <coord x="-6425" y="-32990"/>
+                        <coord x="-6049" y="-32579" flags="1"/>
+                        <coord x="-5675" y="-32169"/>
+                        <coord x="-5038" y="-32141"/>
+                        <coord x="-4627" y="-32516" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="58">
+                    <coords count="13">
+                        <coord x="-3497" y="-31298" flags="1"/>
+                        <coord x="-3020" y="-31581"/>
+                        <coord x="-2861" y="-32197"/>
+                        <coord x="-3144" y="-32675" flags="1"/>
+                        <coord x="-3427" y="-33152"/>
+                        <coord x="-4043" y="-33311"/>
+                        <coord x="-4521" y="-33028" flags="1"/>
+                        <coord x="-4998" y="-32745"/>
+                        <coord x="-5156" y="-32129"/>
+                        <coord x="-4874" y="-31651" flags="1"/>
+                        <coord x="-4591" y="-31174"/>
+                        <coord x="-3975" y="-31015"/>
+                        <coord x="-3497" y="-31298" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="42">
+                    <coords count="13">
+                        <coord x="-3103" y="-34915" flags="1"/>
+                        <coord x="-3401" y="-35395"/>
+                        <coord x="-4033" y="-35543"/>
+                        <coord x="-4513" y="-35245" flags="1"/>
+                        <coord x="-4994" y="-34947"/>
+                        <coord x="-5142" y="-34315"/>
+                        <coord x="-4843" y="-33834" flags="1"/>
+                        <coord x="-4545" y="-33353"/>
+                        <coord x="-3913" y="-33206"/>
+                        <coord x="-3433" y="-33504" flags="1"/>
+                        <coord x="-2953" y="-33803"/>
+                        <coord x="-2805" y="-34434"/>
+                        <coord x="-3103" y="-34915" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="39">
+                    <coords count="13">
+                        <coord x="-6305" y="-35033" flags="1"/>
+                        <coord x="-6629" y="-34607"/>
+                        <coord x="-6545" y="-33999"/>
+                        <coord x="-6117" y="-33677" flags="1"/>
+                        <coord x="-5691" y="-33353"/>
+                        <coord x="-5083" y="-33437"/>
+                        <coord x="-4761" y="-33864" flags="1"/>
+                        <coord x="-4438" y="-34291"/>
+                        <coord x="-4522" y="-34898"/>
+                        <coord x="-4949" y="-35221" flags="1"/>
+                        <coord x="-5375" y="-35544"/>
+                        <coord x="-5983" y="-35460"/>
+                        <coord x="-6305" y="-35033" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="0">
+                    <coords count="7">
+                        <coord x="-9710" y="-29241" flags="1"/>
+                        <coord x="-9981" y="-29561"/>
+                        <coord x="-10105" y="-29874"/>
+                        <coord x="-9989" y="-29996" flags="1"/>
+                        <coord x="-9874" y="-30117"/>
+                        <coord x="-9562" y="-30015"/>
+                        <coord x="-9234" y="-29768" flags="16"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="0" symbol="29">
+                    <coords count="1">
+                        <coord x="-11507" y="-30414"/>
+                    </coords>
+                </object>
+                <object type="1" symbol="65">
+                    <coords count="28">
+                        <coord x="-13079" y="-32763" flags="1"/>
+                        <coord x="-11281" y="-31121"/>
+                        <coord x="-9979" y="-30533"/>
+                        <coord x="-7571" y="-30168" flags="1"/>
+                        <coord x="-6461" y="-30000"/>
+                        <coord x="-5720" y="-29683"/>
+                        <coord x="-4765" y="-30274" flags="1"/>
+                        <coord x="-4023" y="-30734"/>
+                        <coord x="-3154" y="-31515"/>
+                        <coord x="-2647" y="-30804" flags="1"/>
+                        <coord x="-2207" y="-30188"/>
+                        <coord x="-1448" y="-29443"/>
+                        <coord x="-2065" y="-29003" flags="1"/>
+                        <coord x="-4137" y="-27523"/>
+                        <coord x="-5862" y="-27093"/>
+                        <coord x="-8313" y="-27785" flags="1"/>
+                        <coord x="-11008" y="-28547"/>
+                        <coord x="-12929" y="-28919"/>
+                        <coord x="-14349" y="-31333" flags="1"/>
+                        <coord x="-14673" y="-31882"/>
+                        <coord x="-14995" y="-32585"/>
+                        <coord x="-14455" y="-32922" flags="1"/>
+                        <coord x="-14078" y="-33157"/>
+                        <coord x="-13775" y="-33030"/>
+                        <coord x="-13343" y="-32922" flags="1"/>
+                        <coord x="-13223" y="-32892"/>
+                        <coord x="-13169" y="-32847"/>
+                        <coord x="-13079" y="-32763" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="107">
+                    <coords count="13">
+                        <coord x="-7716" y="-35085" flags="1"/>
+                        <coord x="-8039" y="-34658"/>
+                        <coord x="-7955" y="-34051"/>
+                        <coord x="-7528" y="-33728" flags="1"/>
+                        <coord x="-7101" y="-33405"/>
+                        <coord x="-6494" y="-33489"/>
+                        <coord x="-6171" y="-33915" flags="1"/>
+                        <coord x="-5849" y="-34342"/>
+                        <coord x="-5933" y="-34949"/>
+                        <coord x="-6359" y="-35273" flags="1"/>
+                        <coord x="-6786" y="-35595"/>
+                        <coord x="-7393" y="-35511"/>
+                        <coord x="-7716" y="-35085" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="82">
+                    <coords count="2">
+                        <coord x="-13197" y="-34711"/>
+                        <coord x="-13216" y="-25002"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="82">
+                    <coords count="2">
+                        <coord x="-14964" y="-26565"/>
+                        <coord x="-1665" y="-26490"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="76">
+                    <coords count="7">
+                        <coord x="-6587" y="-30111" flags="1"/>
+                        <coord x="-6805" y="-30813"/>
+                        <coord x="-6974" y="-31273"/>
+                        <coord x="-7309" y="-31918" flags="1"/>
+                        <coord x="-7571" y="-32420"/>
+                        <coord x="-7715" y="-32797"/>
+                        <coord x="-8231" y="-33031"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="1">
+                    <coords count="17">
+                        <coord x="-1835" y="-30432" flags="1"/>
+                        <coord x="-2796" y="-29643"/>
+                        <coord x="-3320" y="-29167"/>
+                        <coord x="-4531" y="-28885" flags="1"/>
+                        <coord x="-5587" y="-28639"/>
+                        <coord x="-6722" y="-28306"/>
+                        <coord x="-7651" y="-29304" flags="1"/>
+                        <coord x="-8215" y="-29911"/>
+                        <coord x="-8094" y="-30355"/>
+                        <coord x="-9216" y="-30899" flags="1"/>
+                        <coord x="-9960" y="-31261"/>
+                        <coord x="-10453" y="-30519"/>
+                        <coord x="-11345" y="-30126" flags="1"/>
+                        <coord x="-12302" y="-29704"/>
+                        <coord x="-13063" y="-29923"/>
+                        <coord x="-13934" y="-30503"/>
+                        <coord x="-14905" y="-31439"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="46">
+                    <coords count="8">
+                        <coord x="-8827" y="-33831" flags="1"/>
+                        <coord x="-8816" y="-33324"/>
+                        <coord x="-8870" y="-30727"/>
+                        <coord x="-8681" y="-30258" flags="1"/>
+                        <coord x="-8462" y="-29715"/>
+                        <coord x="-7919" y="-28860"/>
+                        <coord x="-7841" y="-28281"/>
+                        <coord x="-7379" y="-26628"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="61">
+                    <coords count="14">
+                        <coord x="-12899" y="-26915"/>
+                        <coord x="-9575" y="-26880"/>
+                        <coord x="-9654" y="-26991" flags="1"/>
+                        <coord x="-9664" y="-26998"/>
+                        <coord x="-9673" y="-27004"/>
+                        <coord x="-9682" y="-27011" flags="1"/>
+                        <coord x="-10165" y="-27360"/>
+                        <coord x="-9766" y="-27680"/>
+                        <coord x="-9190" y="-28030"/>
+                        <coord x="-9224" y="-28039" flags="1"/>
+                        <coord x="-10655" y="-28439"/>
+                        <coord x="-11846" y="-28805"/>
+                        <coord x="-12848" y="-29583"/>
+                        <coord x="-12899" y="-26915" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="66">
+                    <coords count="11">
+                        <coord x="-12846" y="-28206"/>
+                        <coord x="-9814" y="-27569"/>
+                        <coord x="-9752" y="-27620" flags="1"/>
+                        <coord x="-9627" y="-27751"/>
+                        <coord x="-9431" y="-27883"/>
+                        <coord x="-9207" y="-28020"/>
+                        <coord x="-9270" y="-28052" flags="1"/>
+                        <coord x="-10668" y="-28444"/>
+                        <coord x="-11837" y="-28807"/>
+                        <coord x="-12823" y="-29563"/>
+                        <coord x="-12846" y="-28206" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="68">
+                    <coords count="2">
+                        <coord x="-9807" y="-27306"/>
+                        <coord x="-10815" y="-27306"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+                <object type="1" symbol="68">
+                    <coords count="2">
+                        <coord x="-12840" y="-27325"/>
+                        <coord x="-11568" y="-27325"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+            </objects>
         </part>
     </parts>
     <templates count="0" first_front_template="0">
@@ -6444,7 +6931,7 @@ Colour: purple</description>
     </templates>
     <view>
         <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
-        <map_view zoom="5.65685" rotation="0" position_x="-12472" position_y="-51456" view_x="0" view_y="0" drag_offset_x="0" drag_offset_y="0">
+        <map_view zoom="11.3137" rotation="0" position_x="-6874" position_y="-28394" view_x="0" view_y="0" drag_offset_x="0" drag_offset_y="0" overprinting_simulation_enabled="true">
             <map opacity="1"/>
             <templates count="0"/>
         </map_view>
@@ -6456,6 +6943,608 @@ Colour: purple</description>
         </page_format>
         <print_area left="0.000000" top="0.000000" width="0.000000" height="0.000000"/>
     </print>
-    <undo count="0"/>
-    <redo count="0"/>
+    <undo count="26">
+        <step type="1">
+            <affected_objects part="0" count="23">
+                <ref object="0"/>
+                <ref object="1"/>
+                <ref object="2"/>
+                <ref object="3"/>
+                <ref object="4"/>
+                <ref object="5"/>
+                <ref object="6"/>
+                <ref object="7"/>
+                <ref object="8"/>
+                <ref object="9"/>
+                <ref object="10"/>
+                <ref object="11"/>
+                <ref object="12"/>
+                <ref object="13"/>
+                <ref object="14"/>
+                <ref object="15"/>
+                <ref object="16"/>
+                <ref object="17"/>
+                <ref object="18"/>
+                <ref object="19"/>
+                <ref object="20"/>
+                <ref object="21"/>
+                <ref object="22"/>
+            </affected_objects>
+        </step>
+        <step type="5">
+            <substeps count="2">
+                <step type="1">
+                    <affected_objects part="0" count="2">
+                        <ref object="21"/>
+                        <ref object="22"/>
+                    </affected_objects>
+                </step>
+                <step type="2">
+                    <affected_objects part="0" count="2">
+                        <ref object="6"/>
+                        <ref object="21"/>
+                    </affected_objects>
+                    <contained_objects count="2">
+                        <object type="1" symbol="0">
+                            <coords count="2">
+                                <coord x="-13197" y="-34711"/>
+                                <coord x="-13216" y="-25002"/>
+                            </coords>
+                            <pattern rotation="0">
+                                <coord x="0" y="0"/>
+                            </pattern>
+                        </object>
+                        <object type="1" symbol="0">
+                            <coords count="2">
+                                <coord x="-14964" y="-26565"/>
+                                <coord x="-1665" y="-26490"/>
+                            </coords>
+                            <pattern rotation="0">
+                                <coord x="0" y="0"/>
+                            </pattern>
+                        </object>
+                    </contained_objects>
+                </step>
+            </substeps>
+        </step>
+        <step type="0">
+            <affected_objects part="0" count="1">
+                <ref object="0"/>
+            </affected_objects>
+            <contained_objects count="1">
+                <object type="1" symbol="0">
+                    <coords count="5">
+                        <coord x="-12148" y="-34717"/>
+                        <coord x="-10325" y="-35275"/>
+                        <coord x="-9618" y="-32913"/>
+                        <coord x="-11441" y="-33025"/>
+                        <coord x="-12148" y="-34717" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+            </contained_objects>
+        </step>
+        <step type="0">
+            <affected_objects part="0" count="1">
+                <ref object="11"/>
+            </affected_objects>
+            <contained_objects count="1">
+                <object type="1" symbol="0">
+                    <coords count="13">
+                        <coord x="-9627" y="-33434" flags="1"/>
+                        <coord x="-8651" y="-33149"/>
+                        <coord x="-7849" y="-33091"/>
+                        <coord x="-7424" y="-32169" flags="1"/>
+                        <coord x="-7001" y="-31253"/>
+                        <coord x="-6027" y="-29478"/>
+                        <coord x="-7015" y="-29679" flags="1"/>
+                        <coord x="-9133" y="-30111"/>
+                        <coord x="-12385" y="-30472"/>
+                        <coord x="-11627" y="-32495" flags="1"/>
+                        <coord x="-11281" y="-33431"/>
+                        <coord x="-10455" y="-33675"/>
+                        <coord x="-9627" y="-33434" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+            </contained_objects>
+        </step>
+        <step type="5">
+            <substeps count="2">
+                <step type="1">
+                    <affected_objects part="0" count="1">
+                        <ref object="22"/>
+                    </affected_objects>
+                </step>
+                <step type="2">
+                    <affected_objects part="0" count="1">
+                        <ref object="9"/>
+                    </affected_objects>
+                    <contained_objects count="1">
+                        <object type="1" symbol="0">
+                            <coords count="7">
+                                <coord x="-6587" y="-30111" flags="1"/>
+                                <coord x="-6805" y="-30813"/>
+                                <coord x="-6974" y="-31273"/>
+                                <coord x="-7309" y="-31918" flags="1"/>
+                                <coord x="-7571" y="-32420"/>
+                                <coord x="-7715" y="-32797"/>
+                                <coord x="-8231" y="-33031"/>
+                            </coords>
+                            <pattern rotation="0">
+                                <coord x="0" y="0"/>
+                            </pattern>
+                        </object>
+                    </contained_objects>
+                </step>
+            </substeps>
+        </step>
+        <step type="0">
+            <affected_objects part="0" count="1">
+                <ref object="19"/>
+            </affected_objects>
+            <contained_objects count="1">
+                <object type="1" symbol="0">
+                    <coords count="13">
+                        <coord x="-7716" y="-35085" flags="1"/>
+                        <coord x="-8039" y="-34658"/>
+                        <coord x="-7955" y="-34051"/>
+                        <coord x="-7528" y="-33728" flags="1"/>
+                        <coord x="-7101" y="-33405"/>
+                        <coord x="-6494" y="-33489"/>
+                        <coord x="-6171" y="-33915" flags="1"/>
+                        <coord x="-5849" y="-34342"/>
+                        <coord x="-5933" y="-34949"/>
+                        <coord x="-6359" y="-35273" flags="1"/>
+                        <coord x="-6786" y="-35595"/>
+                        <coord x="-7393" y="-35511"/>
+                        <coord x="-7716" y="-35085" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+            </contained_objects>
+        </step>
+        <step type="0">
+            <affected_objects part="0" count="1">
+                <ref object="14"/>
+            </affected_objects>
+            <contained_objects count="1">
+                <object type="1" symbol="0">
+                    <coords count="13">
+                        <coord x="-6305" y="-35033" flags="1"/>
+                        <coord x="-6629" y="-34607"/>
+                        <coord x="-6545" y="-33999"/>
+                        <coord x="-6117" y="-33677" flags="1"/>
+                        <coord x="-5691" y="-33353"/>
+                        <coord x="-5083" y="-33437"/>
+                        <coord x="-4761" y="-33864" flags="1"/>
+                        <coord x="-4438" y="-34291"/>
+                        <coord x="-4522" y="-34898"/>
+                        <coord x="-4949" y="-35221" flags="1"/>
+                        <coord x="-5375" y="-35544"/>
+                        <coord x="-5983" y="-35460"/>
+                        <coord x="-6305" y="-35033" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+            </contained_objects>
+        </step>
+        <step type="0">
+            <affected_objects part="0" count="1">
+                <ref object="13"/>
+            </affected_objects>
+            <contained_objects count="1">
+                <object type="1" symbol="0">
+                    <coords count="13">
+                        <coord x="-3103" y="-34915" flags="1"/>
+                        <coord x="-3401" y="-35395"/>
+                        <coord x="-4033" y="-35543"/>
+                        <coord x="-4513" y="-35245" flags="1"/>
+                        <coord x="-4994" y="-34947"/>
+                        <coord x="-5142" y="-34315"/>
+                        <coord x="-4843" y="-33834" flags="1"/>
+                        <coord x="-4545" y="-33353"/>
+                        <coord x="-3913" y="-33206"/>
+                        <coord x="-3433" y="-33504" flags="1"/>
+                        <coord x="-2953" y="-33803"/>
+                        <coord x="-2805" y="-34434"/>
+                        <coord x="-3103" y="-34915" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+            </contained_objects>
+        </step>
+        <step type="0">
+            <affected_objects part="0" count="1">
+                <ref object="11"/>
+            </affected_objects>
+            <contained_objects count="1">
+                <object type="1" symbol="0">
+                    <coords count="13">
+                        <coord x="-4627" y="-32516" flags="1"/>
+                        <coord x="-4217" y="-32891"/>
+                        <coord x="-4189" y="-33527"/>
+                        <coord x="-4564" y="-33938" flags="1"/>
+                        <coord x="-4939" y="-34348"/>
+                        <coord x="-5575" y="-34377"/>
+                        <coord x="-5986" y="-34001" flags="1"/>
+                        <coord x="-6396" y="-33627"/>
+                        <coord x="-6425" y="-32990"/>
+                        <coord x="-6049" y="-32579" flags="1"/>
+                        <coord x="-5675" y="-32169"/>
+                        <coord x="-5038" y="-32141"/>
+                        <coord x="-4627" y="-32516" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+            </contained_objects>
+        </step>
+        <step type="0">
+            <affected_objects part="0" count="1">
+                <ref object="2"/>
+            </affected_objects>
+            <contained_objects count="1">
+                <object type="1" symbol="0">
+                    <coords count="13">
+                        <coord x="-4122" y="-32241" flags="1"/>
+                        <coord x="-3549" y="-32169"/>
+                        <coord x="-3027" y="-32575"/>
+                        <coord x="-2956" y="-33147" flags="1"/>
+                        <coord x="-2884" y="-33719"/>
+                        <coord x="-3291" y="-34242"/>
+                        <coord x="-3863" y="-34313" flags="1"/>
+                        <coord x="-4435" y="-34385"/>
+                        <coord x="-4957" y="-33979"/>
+                        <coord x="-5029" y="-33407" flags="1"/>
+                        <coord x="-5100" y="-32834"/>
+                        <coord x="-4694" y="-32312"/>
+                        <coord x="-4122" y="-32241" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+            </contained_objects>
+        </step>
+        <step type="0">
+            <affected_objects part="0" count="1">
+                <ref object="6"/>
+            </affected_objects>
+            <contained_objects count="1">
+                <object type="1" symbol="0">
+                    <coords count="13">
+                        <coord x="-6251" y="-31654" flags="1"/>
+                        <coord x="-5973" y="-31181"/>
+                        <coord x="-5365" y="-31023"/>
+                        <coord x="-4893" y="-31301" flags="1"/>
+                        <coord x="-4421" y="-31578"/>
+                        <coord x="-4262" y="-32186"/>
+                        <coord x="-4539" y="-32658" flags="1"/>
+                        <coord x="-4817" y="-33131"/>
+                        <coord x="-5425" y="-33289"/>
+                        <coord x="-5897" y="-33011" flags="1"/>
+                        <coord x="-6370" y="-32734"/>
+                        <coord x="-6528" y="-32127"/>
+                        <coord x="-6251" y="-31654" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+            </contained_objects>
+        </step>
+        <step type="0">
+            <affected_objects part="0" count="1">
+                <ref object="12"/>
+            </affected_objects>
+            <contained_objects count="1">
+                <object type="1" symbol="0">
+                    <coords count="13">
+                        <coord x="-3497" y="-31298" flags="1"/>
+                        <coord x="-3020" y="-31581"/>
+                        <coord x="-2861" y="-32197"/>
+                        <coord x="-3144" y="-32675" flags="1"/>
+                        <coord x="-3427" y="-33152"/>
+                        <coord x="-4043" y="-33311"/>
+                        <coord x="-4521" y="-33028" flags="1"/>
+                        <coord x="-4998" y="-32745"/>
+                        <coord x="-5156" y="-32129"/>
+                        <coord x="-4874" y="-31651" flags="1"/>
+                        <coord x="-4591" y="-31174"/>
+                        <coord x="-3975" y="-31015"/>
+                        <coord x="-3497" y="-31298" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+            </contained_objects>
+        </step>
+        <step type="0">
+            <affected_objects part="0" count="1">
+                <ref object="3"/>
+            </affected_objects>
+            <contained_objects count="1">
+                <object type="1" symbol="0">
+                    <coords count="13">
+                        <coord x="-5907" y="-30556" flags="1"/>
+                        <coord x="-6149" y="-30883"/>
+                        <coord x="-6611" y="-30953"/>
+                        <coord x="-6939" y="-30711" flags="1"/>
+                        <coord x="-7267" y="-30469"/>
+                        <coord x="-7337" y="-30007"/>
+                        <coord x="-7095" y="-29679" flags="1"/>
+                        <coord x="-6853" y="-29351"/>
+                        <coord x="-6390" y="-29281"/>
+                        <coord x="-6062" y="-29523" flags="1"/>
+                        <coord x="-5734" y="-29765"/>
+                        <coord x="-5665" y="-30228"/>
+                        <coord x="-5907" y="-30556" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+            </contained_objects>
+        </step>
+        <step type="0">
+            <affected_objects part="0" count="1">
+                <ref object="18"/>
+            </affected_objects>
+            <contained_objects count="1">
+                <object type="1" symbol="0">
+                    <coords count="28">
+                        <coord x="-13079" y="-32763" flags="1"/>
+                        <coord x="-11281" y="-31121"/>
+                        <coord x="-9979" y="-30533"/>
+                        <coord x="-7571" y="-30168" flags="1"/>
+                        <coord x="-6461" y="-30000"/>
+                        <coord x="-5720" y="-29683"/>
+                        <coord x="-4765" y="-30274" flags="1"/>
+                        <coord x="-4023" y="-30734"/>
+                        <coord x="-3154" y="-31515"/>
+                        <coord x="-2647" y="-30804" flags="1"/>
+                        <coord x="-2207" y="-30188"/>
+                        <coord x="-1448" y="-29443"/>
+                        <coord x="-2065" y="-29003" flags="1"/>
+                        <coord x="-4137" y="-27523"/>
+                        <coord x="-5862" y="-27093"/>
+                        <coord x="-8313" y="-27785" flags="1"/>
+                        <coord x="-11008" y="-28547"/>
+                        <coord x="-12929" y="-28919"/>
+                        <coord x="-14349" y="-31333" flags="1"/>
+                        <coord x="-14673" y="-31882"/>
+                        <coord x="-14995" y="-32585"/>
+                        <coord x="-14455" y="-32922" flags="1"/>
+                        <coord x="-14078" y="-33157"/>
+                        <coord x="-13775" y="-33030"/>
+                        <coord x="-13343" y="-32922" flags="1"/>
+                        <coord x="-13223" y="-32892"/>
+                        <coord x="-13169" y="-32847"/>
+                        <coord x="-13079" y="-32763" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+            </contained_objects>
+        </step>
+        <step type="5">
+            <substeps count="2">
+                <step type="1">
+                    <affected_objects part="0" count="1">
+                        <ref object="22"/>
+                    </affected_objects>
+                </step>
+                <step type="2">
+                    <affected_objects part="0" count="1">
+                        <ref object="1"/>
+                    </affected_objects>
+                    <contained_objects count="1">
+                        <object type="1" symbol="0">
+                            <coords count="17">
+                                <coord x="-1835" y="-30432" flags="1"/>
+                                <coord x="-2796" y="-29643"/>
+                                <coord x="-3320" y="-29167"/>
+                                <coord x="-4531" y="-28885" flags="1"/>
+                                <coord x="-5587" y="-28639"/>
+                                <coord x="-6722" y="-28306"/>
+                                <coord x="-7651" y="-29304" flags="1"/>
+                                <coord x="-8215" y="-29911"/>
+                                <coord x="-8094" y="-30355"/>
+                                <coord x="-9216" y="-30899" flags="1"/>
+                                <coord x="-9960" y="-31261"/>
+                                <coord x="-10453" y="-30519"/>
+                                <coord x="-11345" y="-30126" flags="1"/>
+                                <coord x="-12302" y="-29704"/>
+                                <coord x="-13063" y="-29923"/>
+                                <coord x="-13934" y="-30503"/>
+                                <coord x="-14905" y="-31439"/>
+                            </coords>
+                            <pattern rotation="0">
+                                <coord x="0" y="0"/>
+                            </pattern>
+                        </object>
+                    </contained_objects>
+                </step>
+            </substeps>
+        </step>
+        <step type="0">
+            <affected_objects part="0" count="1">
+                <ref object="7"/>
+            </affected_objects>
+            <contained_objects count="1">
+                <object type="1" symbol="0">
+                    <coords count="9">
+                        <coord x="-7841" y="-28945" flags="1"/>
+                        <coord x="-8577" y="-28172"/>
+                        <coord x="-10548" y="-27636"/>
+                        <coord x="-9682" y="-27011" flags="1"/>
+                        <coord x="-8895" y="-26444"/>
+                        <coord x="-7733" y="-24744"/>
+                        <coord x="-7636" y="-25709"/>
+                        <coord x="-7413" y="-27941"/>
+                        <coord x="-7841" y="-28945" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+            </contained_objects>
+        </step>
+        <step type="5">
+            <substeps count="2">
+                <step type="1">
+                    <affected_objects part="0" count="1">
+                        <ref object="22"/>
+                    </affected_objects>
+                </step>
+                <step type="2">
+                    <affected_objects part="0" count="1">
+                        <ref object="14"/>
+                    </affected_objects>
+                    <contained_objects count="1">
+                        <object type="1" symbol="0">
+                            <coords count="8">
+                                <coord x="-8827" y="-33831" flags="1"/>
+                                <coord x="-8816" y="-33324"/>
+                                <coord x="-8870" y="-30727"/>
+                                <coord x="-8681" y="-30258" flags="1"/>
+                                <coord x="-8462" y="-29715"/>
+                                <coord x="-7919" y="-28860"/>
+                                <coord x="-7841" y="-28281"/>
+                                <coord x="-7379" y="-26628"/>
+                            </coords>
+                            <pattern rotation="0">
+                                <coord x="0" y="0"/>
+                            </pattern>
+                        </object>
+                    </contained_objects>
+                </step>
+            </substeps>
+        </step>
+        <step type="1">
+            <affected_objects part="0" count="1">
+                <ref object="23"/>
+            </affected_objects>
+        </step>
+        <step type="1">
+            <affected_objects part="0" count="1">
+                <ref object="24"/>
+            </affected_objects>
+        </step>
+        <step type="1">
+            <affected_objects part="0" count="1">
+                <ref object="25"/>
+            </affected_objects>
+        </step>
+        <step type="2">
+            <affected_objects part="0" count="1">
+                <ref object="25"/>
+            </affected_objects>
+            <contained_objects count="1">
+                <object type="1" symbol="72">
+                    <coords count="13">
+                        <coord x="-13678" y="-37241" flags="1"/>
+                        <coord x="-14108" y="-37241"/>
+                        <coord x="-14456" y="-36893"/>
+                        <coord x="-14456" y="-36463" flags="1"/>
+                        <coord x="-14456" y="-36033"/>
+                        <coord x="-14108" y="-35685"/>
+                        <coord x="-13678" y="-35685" flags="1"/>
+                        <coord x="-13249" y="-35685"/>
+                        <coord x="-12901" y="-36033"/>
+                        <coord x="-12901" y="-36463" flags="1"/>
+                        <coord x="-12901" y="-36893"/>
+                        <coord x="-13249" y="-37241"/>
+                        <coord x="-13678" y="-37241" flags="18"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+            </contained_objects>
+        </step>
+        <step type="1">
+            <affected_objects part="0" count="1">
+                <ref object="25"/>
+            </affected_objects>
+        </step>
+        <step type="1">
+            <affected_objects part="0" count="1">
+                <ref object="26"/>
+            </affected_objects>
+        </step>
+        <step type="0">
+            <affected_objects part="0" count="1">
+                <ref object="26"/>
+            </affected_objects>
+            <contained_objects count="1">
+                <object type="1" symbol="68">
+                    <coords count="2">
+                        <coord x="-12840" y="-27413"/>
+                        <coord x="-11568" y="-27413"/>
+                    </coords>
+                    <pattern rotation="0">
+                        <coord x="0" y="0"/>
+                    </pattern>
+                </object>
+            </contained_objects>
+        </step>
+        <step type="1">
+            <affected_objects part="0" count="1">
+                <ref object="27"/>
+            </affected_objects>
+        </step>
+        <step type="2">
+            <affected_objects part="0" count="1">
+                <ref object="27"/>
+            </affected_objects>
+            <contained_objects count="1">
+                <object type="0" symbol="77">
+                    <coords count="1">
+                        <coord x="-3984" y="-31691"/>
+                    </coords>
+                </object>
+            </contained_objects>
+        </step>
+    </undo>
+    <redo count="2">
+        <step type="2">
+            <affected_objects part="0" count="1">
+                <ref object="28"/>
+            </affected_objects>
+            <contained_objects count="1">
+                <object type="0" symbol="56" rotation="0">
+                    <coords count="1">
+                        <coord x="-5628" y="-28986"/>
+                    </coords>
+                </object>
+            </contained_objects>
+        </step>
+        <step type="2">
+            <affected_objects part="0" count="1">
+                <ref object="27"/>
+            </affected_objects>
+            <contained_objects count="1">
+                <object type="0" symbol="56" rotation="0">
+                    <coords count="1">
+                        <coord x="-8156" y="-31656"/>
+                    </coords>
+                </object>
+            </contained_objects>
+        </step>
+    </redo>
 </map>
