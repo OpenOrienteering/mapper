@@ -88,6 +88,7 @@ SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDial
 
 SymbolPropertiesWidget::~SymbolPropertiesWidget()
 {
+	delete[] number_edit;
 }
 
 void SymbolPropertiesWidget::addPropertiesGroup(const QString& name, QWidget* widget)
