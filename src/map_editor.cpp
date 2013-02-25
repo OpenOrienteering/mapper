@@ -928,6 +928,9 @@ void MapEditorController::copy()
 			symbol_filter[symbol_index] = true;
 	}
 	
+	// Copy all colors. This improves preservation of relative order during paste.
+	copy_map->importMap(map, Map::ColorImport, window);
+	
 	// Export symbols and colors into copy_map
 	QHash<Symbol*, Symbol*> symbol_map;
 	copy_map->importMap(map, Map::MinimalSymbolImport, window, &symbol_filter, -1, true, &symbol_map);
@@ -994,8 +997,8 @@ void MapEditorController::paste()
 	for (int i = 0; i < part->getNumObjects(); ++i)
 		part->getObject(i)->move(dx, dy);
 	
-	// Import pasted map
-	map->importMap(paste_map, Map::CompleteImport, window);
+	// Import pasted map. Do not blindly import all colors.
+	map->importMap(paste_map, Map::MinimalObjectImport, window);
 	
 	// Show message
 	window->statusBar()->showMessage(tr("Pasted %1 object(s)").arg(paste_map->getNumObjects()), 2000);
