@@ -478,9 +478,11 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 		const MapCoord& flags_i  = flags[i];
 		
 		tangent_in = PathCoord::calculateIncomingTangent(coords, path_closed, i, ok_in);
-		tangent_in.normalize();
+		if (ok_in)
+			tangent_in.normalize();
 		tangent_out = PathCoord::calculateOutgoingTangent(coords, path_closed, i, ok_out);
-		tangent_out.normalize();
+		if (ok_out)
+			tangent_out.normalize();
 		
 		if (!ok_in && !ok_out)
 		{

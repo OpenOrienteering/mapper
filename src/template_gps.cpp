@@ -223,7 +223,9 @@ void TemplateTrack::drawTracks(QPainter* painter)
 	
 	// Tracks
 	// TODO: could speed that up by storing the template coords of the GPS points in a separate vector or caching the painter paths
-	painter->setPen(qRgb(212, 0, 244));
+	QPen pen(qRgb(212, 0, 244));
+	pen.setCosmetic(true);
+	painter->setPen(pen);
 	painter->setBrush(Qt::NoBrush);
 	for (int i = 0; i < track.getNumSegments(); ++i)
 	{

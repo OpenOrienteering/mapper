@@ -31,6 +31,8 @@
 
 void registerProjectionTemplates()
 {
+	// TODO: These objects are never deleted.
+	
 	/*
 	 * CRSTemplate(
 	 *     id,

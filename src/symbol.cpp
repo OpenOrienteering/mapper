@@ -292,10 +292,12 @@ QImage* Symbol::getIcon(Map* map, bool update)
 {
 	if (icon && !update)
 		return icon;
-	delete icon;
 	
-	icon = createIcon(map, icon_size, true, 1);
-	return icon;
+	// Delete old icon after creating the new as it may be accessed inside createIcon().
+	QImage* new_icon = createIcon(map, icon_size, true, 1);
+	delete icon;
+	icon = new_icon;
+	return new_icon;
 }
 
 QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bottom_right_border)

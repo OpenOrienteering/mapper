@@ -64,7 +64,11 @@ protected slots:
 	
 	void spotColorTypeChanged(int id);
 	
+	void nameChanged();
+	
 	void spotColorCompositionChanged();
+	
+	void knockoutChanged();
 	
 	void cmykColorTypeChanged(int id);
 	
