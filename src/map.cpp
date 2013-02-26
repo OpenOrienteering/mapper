@@ -76,6 +76,11 @@ void Map::MapColorSet::dereference()
 	}
 }
 
+// ### MapColorMergeItem ###
+
+/** A record of information about the mapping of a color in a source MapColorSet
+ *  to a color in a destination MapColorSet.
+ */
 struct MapColorSetMergeItem
 {
 	MapColor* src_color;
@@ -85,7 +90,7 @@ struct MapColorSetMergeItem
 	std::size_t upper_bound;
 	int lower_errors;
 	int upper_errors;
-	int num_dependers;
+	bool filter;
 	
 	MapColorSetMergeItem()
 	 : src_color(NULL),
@@ -95,10 +100,12 @@ struct MapColorSetMergeItem
 	   upper_bound(0),
 	   lower_errors(0),
 	   upper_errors(0),
-	   num_dependers(0)
+	   filter(false)
 	{ }
 };
 
+/** The mapping of all colors in a source MapColorSet
+ *  to colors in a destination MapColorSet. */
 typedef std::vector<MapColorSetMergeItem> MapColorSetMergeList;
 
 // This algorithm tries to maintain the relative order of colors.
@@ -149,7 +156,7 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 		colors.reserve(colors.size() + import_count);
 		
 		MapColorSetMergeList merge_list;
-		merge_list.resize(import_count);
+		merge_list.resize(other.colors.size());
 		
 		bool priorities_changed = false;
 		
@@ -157,8 +164,7 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 		MapColorSetMergeList::iterator merge_list_item = merge_list.begin();
 		for (std::size_t i = 0; i < other.colors.size(); ++i)
 		{
-			if (filter && !(*filter)[i])
-				continue;
+			merge_list_item->filter = (!filter || (*filter)[i]);
 			
 			MapColor* src_color = other.colors[i];
 			merge_list_item->src_color = src_color;
@@ -185,7 +191,6 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 			{
 				std::size_t& lower_bound(merge_list_item->lower_bound);
 				lower_bound = merge_list_item->dest_color ? merge_list_item->dest_index : 0;
-				
 				MapColorSetMergeList::iterator it = merge_list.begin();
 				for (; it != merge_list_item; ++it)
 				{
@@ -201,9 +206,9 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 						}
 					}
 				}
+				
 				std::size_t& upper_bound(merge_list_item->upper_bound);
 				upper_bound = merge_list_item->dest_color ? merge_list_item->dest_index : colors.size();
-				
 				for (++it; it != merge_list.end(); ++it)
 				{
 					if (it->dest_color)
@@ -218,20 +223,23 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 						}
 					}
 				}
-				if (merge_list_item->lower_errors == 0 && merge_list_item->upper_errors > max_conflicts)
+				if (merge_list_item->filter)
 				{
-					selected_item = merge_list_item;
-					max_conflicts = merge_list_item->upper_errors;
-				}
-				else if (merge_list_item->upper_errors == 0 && merge_list_item->lower_errors > max_conflicts)
-				{
-					selected_item = merge_list_item;
-					max_conflicts = merge_list_item->lower_errors;
+					if (merge_list_item->lower_errors == 0 && merge_list_item->upper_errors > max_conflicts)
+					{
+						selected_item = merge_list_item;
+						max_conflicts = merge_list_item->upper_errors;
+					}
+					else if (merge_list_item->upper_errors == 0 && merge_list_item->lower_errors > max_conflicts)
+					{
+						selected_item = merge_list_item;
+						max_conflicts = merge_list_item->lower_errors;
+					}
 				}
 			}
 			
 			if (max_conflicts == 0)
-				break;
+				break; // No conflicts.
 			
 			// Solve selected conflict item
 			MapColor* new_color = new MapColor(*selected_item->dest_color);
@@ -260,7 +268,7 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 		// That is why we create all missing colors first.
 		for (MapColorSetMergeList::reverse_iterator it = merge_list.rbegin(); it != merge_list.rend(); ++it)
 		{
-			if (!it->dest_color)
+			if (it->filter && !it->dest_color)
 			{
 				it->dest_color = new MapColor(*it->src_color);
 				out_pointermap[it->src_color] = it->dest_color;
