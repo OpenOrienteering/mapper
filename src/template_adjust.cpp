@@ -304,8 +304,14 @@ void TemplateAdjustWidget::deletePassPoint(int number)
 }
 void TemplateAdjustWidget::stopTemplateAdjust()
 {
-	if (new_act->isChecked() || move_act->isChecked() || delete_act->isChecked())
+	// If one of these is checked, the corresponding tool should be set. The last condition is just to be sure.
+	if ((new_act->isChecked() || move_act->isChecked() || delete_act->isChecked()) && controller->getTool())
+	{
+		// Set the tool's button to NULL, so on later deletion the tool does not
+		// try to unset the button, which has already been deleted at that time
+		controller->getTool()->setAction(NULL);
 		controller->setTool(NULL);
+	}
 }
 
 void TemplateAdjustWidget::updateActions()

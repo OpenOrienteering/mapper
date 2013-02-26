@@ -87,6 +87,11 @@ bool EditPointTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, M
 	// TODO: port TextObjectEditorHelper to MapEditorToolBase
 	if (text_editor)
 	{
+		if (event->button() == Qt::LeftButton)
+		{
+			dragging = false;
+			box_selection = false;
+		}
 		if (!text_editor->mouseReleaseEvent(event, map_coord, widget))
 			finishEditing();
 		return true;
@@ -322,8 +327,8 @@ void EditPointTool::dragFinish()
 	else if (box_selection)
 	{
 		object_selector->selectBox(click_pos_map, cur_pos_map, active_modifiers & selection_modifier);
-		box_selection = false;
 	}
+	box_selection = false;
 }
 
 void EditPointTool::focusOutEvent(QFocusEvent* event)

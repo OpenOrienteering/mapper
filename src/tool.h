@@ -114,6 +114,7 @@ public:
 	
 	inline Type getType() const {return type;}
 	inline QAction* getAction() const {return tool_button;}
+	inline void setAction(QAction* new_tool_button) {tool_button = new_tool_button;}
 	
 	/** Returns the map being edited. */
 	Map* map() const;
