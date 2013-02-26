@@ -2248,7 +2248,7 @@ void MapEditorController::importClicked()
 	
 	QString map_names = "";
 	QString map_extensions = "";
-	Q_FOREACH(const FileFormat *format, FileFormats.formats())
+	Q_FOREACH(const FileFormat* format, FileFormats.formats())
 	{
 		if (!format->supportsImport())
 			continue;
@@ -2276,15 +2276,28 @@ void MapEditorController::importClicked()
 	{
 		importGeoFile(filename);
 	}
-	else if (filename.endsWith(".ocd", Qt::CaseInsensitive) || 
-			 filename.endsWith(".omap", Qt::CaseInsensitive) ||
-			 filename.endsWith(".xmap", Qt::CaseInsensitive))
-	{
-		importMapFile(filename);
-	}
 	else
 	{
-		QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected file because its file format is not supported."));
+		bool is_map_format = false;
+		Q_FOREACH(const FileFormat* format, FileFormats.formats())
+		{
+			const QStringList& extensions = format->fileExtensions();
+			Q_FOREACH(const QString& ext, extensions)
+			{
+				if (filename.endsWith("." + ext, Qt::CaseInsensitive))
+				{
+					is_map_format = true;
+					break;
+				}
+			}
+			if (is_map_format)
+				break;
+		}
+		
+		if (is_map_format)
+			importMapFile(filename);
+		else
+			QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected file because its file format is not supported."));
 	}
 }
 
