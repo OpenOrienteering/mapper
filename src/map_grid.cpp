@@ -130,7 +130,9 @@ void MapGrid::draw(QPainter* painter, QRectF bounding_box, Map* map)
 	double final_rotation;
 	calculateFinalParameters(final_horz_spacing, final_vert_spacing, final_horz_offset, final_vert_offset, final_rotation, map);
 	
-	painter->setPen(color);
+	QPen pen(color);
+	pen.setCosmetic(true);
+	painter->setPen(pen);
 	painter->setBrush(Qt::NoBrush);
 	painter->setOpacity(qAlpha(color) / 255.0);
 	

@@ -450,7 +450,7 @@ void MapEditorController::createMenuAndToolbars()
 	
 	show_grid_act = newCheckAction("showgrid", tr("Show grid"), this, SLOT(showGrid()), "grid.png", QString::null, QString::null);	// TODO: link to manual
 	QAction* configure_grid_act = newAction("configuregrid", tr("Configure grid..."), this, SLOT(configureGrid()), "grid.png", QString::null, QString::null);	// TODO: link to manual
-	pan_act = newCheckAction("panmap", tr("Pan"), this, SLOT(pan()), "move.png", QString::null, "view_menu.html");
+	pan_act = newToolAction("panmap", tr("Pan"), this, SLOT(pan()), "move.png", QString::null, "view_menu.html");
 	QAction* zoom_in_act = newAction("zoomin", tr("Zoom in"), this, SLOT(zoomIn()), "view-zoom-in.png", QString::null, "view_menu.html");
 	QAction* zoom_out_act = newAction("zoomout", tr("Zoom out"), this, SLOT(zoomOut()), "view-zoom-out.png", QString::null, "view_menu.html");
 	QAction* show_all_act = newAction("showall", tr("Show whole map"), this, SLOT(showWholeMap()), "view-show-all.png");
@@ -2249,25 +2249,28 @@ void MapEditorController::importClicked()
 	QSettings settings;
 	QString import_directory = settings.value("importFileDirectory", QDir::homePath()).toString();
 	
-	QString map_names = "";
-	QString map_extensions = "";
-	Q_FOREACH(const FileFormat *format, FileFormats.formats())
+	QStringList map_names;
+	QStringList map_extensions;
+	Q_FOREACH(const FileFormat* format, FileFormats.formats())
 	{
 		if (!format->supportsImport())
 			continue;
 		
-		if (!map_extensions.isEmpty())
-		{
-			map_names = map_names + ", ";
-			map_extensions = map_extensions + " ";
-		}
-		
-		// FIXME: primaryExtension is incomplete, but fileExtensions may produce redundant entries
-		map_names = map_names + format->primaryExtension().toUpper();
-		map_extensions = map_extensions + "*." % format->fileExtensions().join(" *.");
+		map_names.push_back(format->primaryExtension().toUpper());
+		map_extensions.append(format->fileExtensions());
 	}
+	map_names.removeDuplicates();
+	map_extensions.removeDuplicates();
 	
-	QString filename = QFileDialog::getOpenFileName(window, tr("Import %1, GPX, OSM or DXF file").arg(map_names), import_directory, QString("%1 (%2 *.gpx *.osm *.dxf);;%3 (*.*)").arg(tr("Importable files")).arg(map_extensions).arg(tr("All files")));
+	QString filename = QFileDialog::getOpenFileName(
+		window,
+		tr("Import %1, GPX, OSM or DXF file")
+			.arg(map_names.join(", ")),
+		import_directory,
+		QString("%1 (%2 *.gpx *.osm *.dxf);;%3 (*.*)")
+			.arg(tr("Importable files"))
+			.arg("*." % map_extensions.join(" *."))
+			.arg(tr("All files")));
 	if (filename.isEmpty() || filename.isNull())
 		return;
 	
@@ -2279,15 +2282,22 @@ void MapEditorController::importClicked()
 	{
 		importGeoFile(filename);
 	}
-	else if (filename.endsWith(".ocd", Qt::CaseInsensitive) || 
-			 filename.endsWith(".omap", Qt::CaseInsensitive) ||
-			 filename.endsWith(".xmap", Qt::CaseInsensitive))
-	{
-		importMapFile(filename);
-	}
 	else
 	{
-		QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected file because its file format is not supported."));
+		bool is_map_format = false;
+		Q_FOREACH(const QString& ext, map_extensions)
+		{
+			if (filename.endsWith("." + ext, Qt::CaseInsensitive))
+			{
+				is_map_format = true;
+				break;
+			}
+		}
+		
+		if (is_map_format)
+			importMapFile(filename);
+		else
+			QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected file because its file format is not supported."));
 	}
 }
 
