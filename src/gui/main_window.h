@@ -197,11 +197,9 @@ public slots:
 	 */
 	void showAbout();
 	
-	/** Show the manual in Qt assistant.
-	 *  @param filename the name of the help html file
-	 *  @param fragment the fragment in the specified file to jump to
+	/** Show the index page of the manual in Qt assistant.
 	 */
-	void showHelp(QString filename = "index.html", QString fragment = "");
+	void showHelp();
 	
 	/** Open a link.
 	 *  This is called when the user clicks on a link in the UI,
@@ -266,8 +264,6 @@ private:
 	bool eventFilter(QObject* object, QEvent* event);
 	
 	static MainWindow* findMainWindow(const QString& file_name);
-	
-	static QString makeHelpUrl(QString filename, QString fragment);
 	
 	
 	/// The active controller

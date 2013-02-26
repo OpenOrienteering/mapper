@@ -43,6 +43,7 @@
 #include "symbol_point_editor.h"
 #include "symbol_combined.h"
 #include "symbol_properties_widget.h"
+#include "util.h"
 
 SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map, QWidget* parent)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), 
@@ -441,13 +442,13 @@ void SymbolSettingDialog::createPreviewMap()
 
 void SymbolSettingDialog::showHelp()
 {
-	QString fragment = "general";
+	QString fragment = "editor";
 	if (properties_widget->currentIndex() > 0)
 	{
 		fragment = "symbol-type-";
 		fragment.append(QString::number(symbol->getType()));
 	}
-	preview_controller->getWindow()->showHelp("symbol_editor.html", fragment);
+	Util::showHelp(preview_controller->getWindow(), "symbol_dock_widget.html", fragment);
 }
 
 void SymbolSettingDialog::reset()

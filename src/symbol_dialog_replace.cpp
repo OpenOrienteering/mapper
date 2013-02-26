@@ -33,6 +33,7 @@
 #include "gui/main_window.h"
 #include "map.h"
 #include "object.h"
+#include "util.h"
 
 ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map* map, Map* symbol_map)
  : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map), symbol_map(symbol_map)
@@ -66,7 +67,7 @@ ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map* map, Map* s
 	mapping_table->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
 #endif
 	
-	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal);
+	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, Qt::Horizontal);
 	
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->addWidget(desc_label);
@@ -83,6 +84,7 @@ ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map* map, Map* s
 	setLayout(layout);
 	
 	connect(match_by_number_check, SIGNAL(clicked(bool)), this, SLOT(matchByNumberClicked(bool)));
+	connect(button_box, SIGNAL(helpRequested()), this, SLOT(showHelp()));
 	connect(button_box, SIGNAL(accepted()), this, SLOT(apply()));
 	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
 	
@@ -110,6 +112,11 @@ void ReplaceSymbolSetDialog::matchByNumberClicked(bool checked)
 		mapping_table->item(row, 1)->setFlags(checked ?
 			Qt::NoItemFlags : (Qt::ItemIsEnabled | Qt::ItemIsEditable));
 	}
+}
+
+void ReplaceSymbolSetDialog::showHelp()
+{
+	Util::showHelp(this, "symbol_replace_dialog.html");
 }
 
 struct ReplaceSymbolSetOperation

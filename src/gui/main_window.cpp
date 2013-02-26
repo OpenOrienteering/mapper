@@ -41,6 +41,7 @@
 #include "../file_format.h"
 #include "../settings.h"
 #include "settings_dialog.h"
+#include "../util.h"
 
 
 int MainWindow::num_open_files = 0;
@@ -807,83 +808,9 @@ void MainWindow::showAbout()
 	about_dialog.exec();
 }
 
-
-void MainWindow::showHelp(QString filename, QString fragment)
+void MainWindow::showHelp()
 {
-	static QProcess assistant_process;
-	if (assistant_process.state() == QProcess::Running)
-	{
-		QString command("setSource " + makeHelpUrl(filename, fragment) + "\n");
-		assistant_process.write(command.toLatin1());
-	}
-	else
-	{
-		QString manual_path = MapperResource::locate(MapperResource::MANUAL);
-		if (manual_path.isEmpty())
-		{
-			QMessageBox::warning(this, tr("Error"), tr("Failed to locate the help files."));
-			return;
-		}
-		
-		QString assistant_path = MapperResource::locate(MapperResource::ASSISTANT);
-		if (assistant_path.isEmpty())
-		{
-			QMessageBox::warning(this, tr("Error"), tr("Failed to locate the help browser (\"Qt Assistant\")."));
-			return;
-		}
-		
-		// Try to start the Qt Assistant process
-		QStringList args;
-		args << QLatin1String("-collectionFile")
-			 << QDir::toNativeSeparators(manual_path)
-			 << QLatin1String("-showUrl")
-			 << makeHelpUrl(filename, fragment)
-			 << QLatin1String("-enableRemoteControl");
-		
-		assistant_process.start(assistant_path, args);
-		
-		// FIXME: Calling waitForStarted() from the main thread might cause the user interface to freeze.
-		if (!assistant_process.waitForStarted())
-		{
-			QMessageBox msg_box;
-			msg_box.setIcon(QMessageBox::Warning);
-			msg_box.setWindowTitle(tr("Error"));
-			
-			QString assistant_install_cmd;
-#ifdef MAPPER_DEBIAN_PACKAGE_NAME
-			QDir usr_bin("/usr/bin");
-			if (!usr_bin.exists("assistant") && usr_bin.exists("software-center"))
-				assistant_install_cmd = "/usr/bin/software-center qt4-dev-tools";
-#endif
-			if (!assistant_install_cmd.isEmpty())
-			{
-				msg_box.setText(tr("The help browser (\"Qt Assistant\") is not installed.") + "\n" +
-				                tr("Do you want to install it now?"));
-				msg_box.setStandardButtons(QMessageBox::Cancel);
-				msg_box.addButton(tr("Install..."), QMessageBox::ActionRole);
-			}
-			else
-			{
-				msg_box.setText(tr("Failed to launch the help browser (\"Qt Assistant\")."));
-				msg_box.setStandardButtons(QMessageBox::Ok);
-				QString details = assistant_process.readAllStandardError();
-				if (! details.isEmpty())
-					msg_box.setDetailedText(details);
-			}
-			
-			int result = msg_box.exec();
-			if ( result != QMessageBox::Ok && result != QMessageBox::Cancel &&
-			     !assistant_install_cmd.isEmpty() )
-			{
-				QProcess::startDetached(assistant_install_cmd);
-			}
-		}
-	}
-}
-
-QString MainWindow::makeHelpUrl(QString filename, QString fragment)
-{
-	return "qthelp://openorienteering.mapper.help/oohelpdoc/help/html_en/" + filename + (fragment.isEmpty() ? "" : ("#" + fragment));
+	Util::showHelp(this);
 }
 
 void MainWindow::linkClicked(const QString &link)
@@ -904,11 +831,11 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event){
 		QWhatsThisClickedEvent* e = static_cast<QWhatsThisClickedEvent*>(event);
 		QStringList parts = e->href().split("#");
 		if(parts.size() == 0)
-			this->showHelp();
+			Util::showHelp(this);
 		else if(parts.size() == 1)
-			this->showHelp(parts.at(0));
+			Util::showHelp(this, parts.at(0));
 		else if(parts.size() == 2)
-			this->showHelp(parts.at(0), parts.at(1));
+			Util::showHelp(this, parts.at(0), parts.at(1));
 	}
 	return false;
 }

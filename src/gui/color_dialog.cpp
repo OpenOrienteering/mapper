@@ -22,6 +22,7 @@
 
 #include "../core/map_color.h"
 #include "../map.h"
+#include "../util.h"
 #include "../util_gui.h"
 #include "widgets/color_dropdown.h"
 
@@ -402,7 +403,7 @@ void ColorDialog::updateButtons()
 
 void ColorDialog::showHelp()
 {
-	emit showHelp("color_editor.html", "single-color");
+	Util::showHelp(this, "color_dock_widget.html", "editor");
 }
 
 void ColorDialog::spotColorTypeChanged(int id)

@@ -112,6 +112,8 @@ protected slots:
 	void clearAndApplyClicked(bool checked);
 	void clearAndRevertClicked(bool checked);
 	
+	void showHelp();
+	
 private:
 	void addRow(int row);
 	void updateActions();

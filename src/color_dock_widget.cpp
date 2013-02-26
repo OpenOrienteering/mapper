@@ -22,6 +22,7 @@
 
 #include "core/map_color.h"
 #include "map.h"
+#include "util.h"
 #include "util_gui.h"
 #include "gui/color_dialog.h"
 #include "gui/main_window.h"
@@ -35,7 +36,7 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	
 	// Color table
 	color_table = new QTableWidget(map->getNumColors(), 6);
-	color_table->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
+	color_table->setWhatsThis("<a href=\"color_dock_widget.html\">See more</a>");
 	color_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
 	color_table->verticalHeader()->setVisible(false);
 	color_table->setHorizontalHeaderLabels(QStringList() <<
@@ -122,7 +123,7 @@ QAbstractButton* ColorWidget::newToolButton(const QIcon& icon, const QString& te
 	}
 	prototype->setIcon(icon);
 	prototype->setText(text);
-	prototype->setWhatsThis("<a href=\"symbols.html#colors\">See more</a>");
+	prototype->setWhatsThis("<a href=\"color_dock_widget.html\">See more</a>");
 	return prototype;
 }
 
@@ -204,7 +205,7 @@ void ColorWidget::moveColorDown()
 
 void ColorWidget::showHelp()
 {
-	window->showHelp("symbols.html", "colors");
+	Util::showHelp(window, "color_dock_widget.html", "");
 }
 
 void ColorWidget::cellChange(int row, int column)
@@ -276,7 +277,6 @@ void ColorWidget::cellDoubleClick(int row, int column)
 		MapColor* color = map->getColor(row);
 		ColorDialog dialog(*map, *color, this);
 		dialog.setWindowModality(Qt::WindowModal);
-		connect(&dialog, SIGNAL(showHelp(QString,QString)), window, SLOT(showHelp(QString,QString)));
 		int result = dialog.exec();
 		if (result == QDialog::Accepted)
 		{

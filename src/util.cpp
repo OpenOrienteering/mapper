@@ -21,6 +21,11 @@
 #include "util.h"
 
 #include <QIODevice>
+#include <QProcess>
+#include <QMessageBox>
+#include <QDir>
+
+#include "mapper_resource.h"
 
 DoubleValidator::DoubleValidator(double bottom, double top, QObject* parent, int decimals) : QDoubleValidator(bottom, top, decimals, parent)
 {
@@ -165,4 +170,87 @@ void loadString(QIODevice* file, QString& str)
 	}
 	else
 		str = "";
+}
+
+namespace Util
+{
+
+void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
+{
+	static QProcess assistant_process;
+	if (assistant_process.state() == QProcess::Running)
+	{
+		QString command("setSource " + makeHelpUrl(filename, fragment) + "\n");
+		assistant_process.write(command.toLatin1());
+	}
+	else
+	{
+		QString manual_path = MapperResource::locate(MapperResource::MANUAL);
+		if (manual_path.isEmpty())
+		{
+			QMessageBox::warning(dialog_parent, QFile::tr("Error"), QFile::tr("Failed to locate the help files."));
+			return;
+		}
+		
+		QString assistant_path = MapperResource::locate(MapperResource::ASSISTANT);
+		if (assistant_path.isEmpty())
+		{
+			QMessageBox::warning(dialog_parent, QFile::tr("Error"), QFile::tr("Failed to locate the help browser (\"Qt Assistant\")."));
+			return;
+		}
+		
+		// Try to start the Qt Assistant process
+		QStringList args;
+		args << QLatin1String("-collectionFile")
+			 << QDir::toNativeSeparators(manual_path)
+			 << QLatin1String("-showUrl")
+			 << makeHelpUrl(filename, fragment)
+			 << QLatin1String("-enableRemoteControl");
+		
+		assistant_process.start(assistant_path, args);
+		
+		// FIXME: Calling waitForStarted() from the main thread might cause the user interface to freeze.
+		if (!assistant_process.waitForStarted())
+		{
+			QMessageBox msg_box;
+			msg_box.setIcon(QMessageBox::Warning);
+			msg_box.setWindowTitle(QFile::tr("Error"));
+			
+			QString assistant_install_cmd;
+#ifdef MAPPER_DEBIAN_PACKAGE_NAME
+			QDir usr_bin("/usr/bin");
+			if (!usr_bin.exists("assistant") && usr_bin.exists("software-center"))
+				assistant_install_cmd = "/usr/bin/software-center qt4-dev-tools";
+#endif
+			if (!assistant_install_cmd.isEmpty())
+			{
+				msg_box.setText(QFile::tr("The help browser (\"Qt Assistant\") is not installed.") + "\n" +
+				                QFile::tr("Do you want to install it now?"));
+				msg_box.setStandardButtons(QMessageBox::Cancel);
+				msg_box.addButton(QFile::tr("Install..."), QMessageBox::ActionRole);
+			}
+			else
+			{
+				msg_box.setText(QFile::tr("Failed to launch the help browser (\"Qt Assistant\")."));
+				msg_box.setStandardButtons(QMessageBox::Ok);
+				QString details = assistant_process.readAllStandardError();
+				if (! details.isEmpty())
+					msg_box.setDetailedText(details);
+			}
+			
+			int result = msg_box.exec();
+			if ( result != QMessageBox::Ok && result != QMessageBox::Cancel &&
+			     !assistant_install_cmd.isEmpty() )
+			{
+				QProcess::startDetached(assistant_install_cmd);
+			}
+		}
+	}
+}
+
+QString makeHelpUrl(QString filename, QString fragment)
+{
+	return "qthelp://openorienteering.mapper.help/oohelpdoc/help/html_en/" + filename + (fragment.isEmpty() ? "" : ("#" + fragment));
+}
+	
 }

@@ -210,12 +210,14 @@ TemplateAdjustWidget::TemplateAdjustWidget(Template* temp, MapEditorController* 
 	
 	apply_check = new QCheckBox(tr("Apply pass points"));
 	apply_check->setChecked(temp->isAdjustmentApplied());
+	QPushButton* help_button = new QPushButton(QIcon(":/images/help.png"), tr("Help"));
 	clear_and_apply_button = new QPushButton(tr("Apply && clear all"));
 	clear_and_revert_button = new QPushButton(tr("Clear all"));
 	
 	QHBoxLayout* buttons_layout = new QHBoxLayout();
-	buttons_layout->addWidget(clear_and_revert_button);
+	buttons_layout->addWidget(help_button);
 	buttons_layout->addStretch(1);
+	buttons_layout->addWidget(clear_and_revert_button);
 	buttons_layout->addWidget(clear_and_apply_button);
 
 	
@@ -235,6 +237,7 @@ TemplateAdjustWidget::TemplateAdjustWidget(Template* temp, MapEditorController* 
 	connect(delete_act, SIGNAL(triggered(bool)), this, SLOT(deleteClicked(bool)));
 	
 	connect(apply_check, SIGNAL(clicked(bool)), this, SLOT(applyClicked(bool)));
+	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
 	connect(clear_and_apply_button, SIGNAL(clicked(bool)), this, SLOT(clearAndApplyClicked(bool)));
 	connect(clear_and_revert_button, SIGNAL(clicked(bool)), this, SLOT(clearAndRevertClicked(bool)));
 	
@@ -391,6 +394,7 @@ void TemplateAdjustWidget::clearAndApplyClicked(bool checked)
 	
 	clearPassPoints();
 }
+
 void TemplateAdjustWidget::clearAndRevertClicked(bool checked)
 {
 	if (temp->isAdjustmentApplied())
@@ -398,6 +402,12 @@ void TemplateAdjustWidget::clearAndRevertClicked(bool checked)
 	
 	clearPassPoints();
 }
+
+void TemplateAdjustWidget::showHelp()
+{
+	Util::showHelp(controller->getWindow(), "template_adjust.html");
+}
+
 void TemplateAdjustWidget::clearPassPoints()
 {
 	temp->clearPassPoints();

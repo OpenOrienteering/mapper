@@ -124,7 +124,6 @@ QWidget* HomeScreenWidget::makeRecentFilesWidget(HomeScreenController* controlle
 	list_font.setPointSize((int)list_font.pointSize()*1.5);
 	recent_files_list->setFont(list_font);
 	recent_files_list->setSpacing(list_font.pointSize()/2);
-	recent_files_list->setWhatsThis("<a href=\"opening.html\">See more</a>");
 	recent_files_list->setCursor(Qt::PointingHandCursor);
 	recent_files_list->setStyleSheet(" \
 	  QListWidget::item:hover { \
@@ -134,11 +133,9 @@ QWidget* HomeScreenWidget::makeRecentFilesWidget(HomeScreenController* controlle
 	recent_files_layout->addWidget(recent_files_list, 1, 0, 1, 2);
 	
 	open_mru_file_check = new QCheckBox(tr("Open most recently used file on start"));
-	open_mru_file_check->setWhatsThis("<a href=\"opening.html\">See more</a>");
 	recent_files_layout->addWidget(open_mru_file_check, 2, 0, 1, 1);
 	
 	QPushButton* clear_list_button = new QPushButton(tr("Clear list"));
-	clear_list_button->setWhatsThis("<a href=\"opening.html\">See more</a>");
 	recent_files_layout->addWidget(clear_list_button, 2, 1, 1, 1);
 	
 	recent_files_layout->setRowStretch(1, 1);

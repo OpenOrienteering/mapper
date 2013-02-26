@@ -48,13 +48,6 @@ public:
 	 */
 	const MapColor& getColor() const { return color; }
 	
-signals:
-	/** 
-	 * This signal shall be connected to a slot which opens the given help 
-	 * file at the position specified by fragment.
-	 */
-	void showHelp(QString filename, QString fragment);
-	
 protected slots:
 	void accept();
 	

@@ -234,7 +234,7 @@ ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, Map* map, MapView* mai
 	QLabel* vert_offset_label = new QLabel(tr("Vertical offset:"));
 	vert_offset_edit = Util::SpinBox::create(1, -std::numeric_limits<double>::max(), std::numeric_limits<double>::max());
 
-	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal);
+	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, Qt::Horizontal);
 	
 	
 	MapGrid& grid = map->getGrid();
@@ -294,6 +294,7 @@ ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, Map* map, MapView* mai
 	connect(grid_north_radio, SIGNAL(clicked(bool)), this, SLOT(updateStates()));
 	connect(true_north_radio, SIGNAL(clicked(bool)), this, SLOT(updateStates()));
 	connect(unit_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateStates()));
+	connect(button_box, SIGNAL(helpRequested()), this, SLOT(showHelp()));
 	
 	connect(button_box, SIGNAL(accepted()), this, SLOT(okClicked()));
 	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
@@ -377,4 +378,9 @@ void ConfigureGridDialog::updateStates()
 	horz_offset_edit->setSuffix(unit_suffix);
 	vert_offset_edit->setEnabled(show_grid_check->isChecked() && display_mode != MapGrid::VerticalLines);
 	vert_offset_edit->setSuffix(unit_suffix);
+}
+
+void ConfigureGridDialog::showHelp()
+{
+	Util::showHelp(this, "grid.html");
 }

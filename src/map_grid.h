@@ -141,6 +141,7 @@ private slots:
 	void updateColorDisplay();
 	void okClicked();
 	void updateStates();
+	void showHelp();
 	
 private:
 	QCheckBox* show_grid_check;

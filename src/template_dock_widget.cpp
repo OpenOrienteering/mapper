@@ -37,6 +37,7 @@
 #include "template_adjust.h"
 #include "template_position_dock_widget.h"
 #include "template_tool_move.h"
+#include "util.h"
 
 // TODO: Review formatting et al.
 /** Parses a user-entered opacity value. Values must be strings of the form "F%" where F is any decimal number between 0 and
@@ -69,7 +70,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
   main_view(main_view), 
   controller(controller)
 {
-	this->setWhatsThis("<a href=\"template_menu.html\">See more</a>");
+	this->setWhatsThis("<a href=\"templates.html#setup\">See more</a>");
 	react_to_changes = true;
 	
 	// Template table
@@ -460,7 +461,7 @@ void TemplateWidget::moveTemplateDown()
 
 void TemplateWidget::showHelp()
 {
-	controller->getWindow()->showHelp("template_menu.html");
+	Util::showHelp(controller->getWindow(), "templates.html", "setup");
 }
 
 void TemplateWidget::cellChange(int row, int column)

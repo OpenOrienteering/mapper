@@ -37,6 +37,7 @@
 #include "map_editor.h"
 #include "map_dialog_rotate.h"
 #include "util_gui.h"
+#include "util.h"
 
 GeoreferencingDialog::GeoreferencingDialog(MapEditorController* controller, const Georeferencing* initial, bool allow_no_georeferencing)
 : QDialog(controller->getWindow(), Qt::WindowSystemMenuHint | Qt::WindowTitleHint),
@@ -334,7 +335,7 @@ void GeoreferencingDialog::toolDeleted()
 
 void GeoreferencingDialog::showHelp()
 {
-	controller->getWindow()->showHelp("georeferencing.html");
+	Util::showHelp(controller->getWindow(), "georeferencing.html");
 }
 
 void GeoreferencingDialog::reset()

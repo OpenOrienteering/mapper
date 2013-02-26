@@ -78,6 +78,16 @@ void loadString(QIODevice* file, QString& str);
 // TODO: Refactor: put remaining stuff into this namespace, too
 namespace Util
 {
+	/**
+	 *  Show the manual in Qt assistant.
+	 *  @param filename the name of the help html file
+	 *  @param fragment the fragment in the specified file to jump to
+	 */
+	void showHelp(QWidget* dialog_parent, QString filename = "index.html", QString fragment = "");
+	
+	/// Converts the given help file name to a string which can be used to access it inside QtHelp.
+	QString makeHelpUrl(QString filename, QString fragment);
+	
 	/// See Util::gridOperation(). This function handles only parallel lines.
 	template<typename T> void hatchingOperation(QRectF extent, double spacing, double offset, double rotation, T& processor)
 	{

@@ -43,6 +43,7 @@ public:
 	
 private slots:
 	void matchByNumberClicked(bool checked);
+	void showHelp();
 	void apply();
 	
 private:

@@ -27,6 +27,7 @@
 #endif
 
 #include "../settings.h"
+#include "../util.h"
 #include "../util_gui.h"
 #include "../util_translation.h"
 #include "../util/scoped_signals_blocker.h"
@@ -47,7 +48,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 	layout->addWidget(tab_widget);
 	
 	button_box = new QDialogButtonBox(
-	  QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel,
+		QDialogButtonBox::Ok | QDialogButtonBox::Apply | QDialogButtonBox::Cancel | QDialogButtonBox::Help,
 	  Qt::Horizontal );
 	layout->addWidget(button_box);
 	connect(button_box, SIGNAL(clicked(QAbstractButton*)), this, SLOT(buttonPressed(QAbstractButton*)));
@@ -90,6 +91,10 @@ void SettingsDialog::buttonPressed(QAbstractButton* button)
 		for (int i = 0; i < count; i++)
 			static_cast< SettingsPage* >(tab_widget->widget(i))->cancel();
 		this->reject();
+	}
+	else if (id == QDialogButtonBox::Help)
+	{
+		Util::showHelp(this, "settings.html");
 	}
 }
 
