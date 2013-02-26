@@ -2246,25 +2246,28 @@ void MapEditorController::importClicked()
 	QSettings settings;
 	QString import_directory = settings.value("importFileDirectory", QDir::homePath()).toString();
 	
-	QString map_names = "";
-	QString map_extensions = "";
+	QStringList map_names;
+	QStringList map_extensions;
 	Q_FOREACH(const FileFormat* format, FileFormats.formats())
 	{
 		if (!format->supportsImport())
 			continue;
 		
-		if (!map_extensions.isEmpty())
-		{
-			map_names = map_names + ", ";
-			map_extensions = map_extensions + " ";
-		}
-		
-		// FIXME: primaryExtension is incomplete, but fileExtensions may produce redundant entries
-		map_names = map_names + format->primaryExtension().toUpper();
-		map_extensions = map_extensions + "*." % format->fileExtensions().join(" *.");
+		map_names.push_back(format->primaryExtension().toUpper());
+		map_extensions.append(format->fileExtensions());
 	}
+	map_names.removeDuplicates();
+	map_extensions.removeDuplicates();
 	
-	QString filename = QFileDialog::getOpenFileName(window, tr("Import %1, GPX, OSM or DXF file").arg(map_names), import_directory, QString("%1 (%2 *.gpx *.osm *.dxf);;%3 (*.*)").arg(tr("Importable files")).arg(map_extensions).arg(tr("All files")));
+	QString filename = QFileDialog::getOpenFileName(
+		window,
+		tr("Import %1, GPX, OSM or DXF file")
+			.arg(map_names.join(", ")),
+		import_directory,
+		QString("%1 (%2 *.gpx *.osm *.dxf);;%3 (*.*)")
+			.arg(tr("Importable files"))
+			.arg("*." % map_extensions.join(" *."))
+			.arg(tr("All files")));
 	if (filename.isEmpty() || filename.isNull())
 		return;
 	
@@ -2279,19 +2282,13 @@ void MapEditorController::importClicked()
 	else
 	{
 		bool is_map_format = false;
-		Q_FOREACH(const FileFormat* format, FileFormats.formats())
+		Q_FOREACH(const QString& ext, map_extensions)
 		{
-			const QStringList& extensions = format->fileExtensions();
-			Q_FOREACH(const QString& ext, extensions)
+			if (filename.endsWith("." + ext, Qt::CaseInsensitive))
 			{
-				if (filename.endsWith("." + ext, Qt::CaseInsensitive))
-				{
-					is_map_format = true;
-					break;
-				}
-			}
-			if (is_map_format)
+				is_map_format = true;
 				break;
+			}
 		}
 		
 		if (is_map_format)
