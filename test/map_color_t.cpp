@@ -235,6 +235,16 @@ void MapColorTest::spotColorTest()
 	composition.push_back(SpotColorComponent(&spot_cyan, 0.8));
 	compo_copy.setSpotColorComposition(composition);
 	QCOMPARE(compo_copy, spot_cyan_copy); // Equal! Order of compositions doesn't matter.
+	
+	// Test MapColor::equals() with cloned spot color compositions
+	MapColor spot_yellow_copy(spot_yellow);
+	composition.front().spot_color = &spot_yellow_copy;
+	compo_copy.setSpotColorComposition(composition);
+	QVERIFY(compo_copy.equals(spot_cyan_copy, false));
+	QVERIFY(compo_copy.equals(spot_cyan_copy, true));
+	spot_yellow_copy.setPriority(spot_yellow_copy.getPriority() + 1);
+	QVERIFY(compo_copy.equals(spot_cyan_copy, false));
+	QVERIFY(!compo_copy.equals(spot_cyan_copy, true));
 }
 
 
