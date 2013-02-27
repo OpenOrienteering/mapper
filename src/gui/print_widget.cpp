@@ -79,7 +79,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	policy_combo->addItem(tr("Custom area"), CustomArea);
 	layout->addRow(Util::Headline::create(tr("Map area:")), policy_combo); // or print/export area
 	
-	center_check = new QCheckBox(tr("Center page on map"));
+	center_check = new QCheckBox(tr("Center print area"));
 	layout->addRow(center_check);
 	
 	left_edit = Util::SpinBox::create(2, -999999.9, 999999.9, tr("mm"), 1.0);

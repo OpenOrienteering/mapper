@@ -1714,7 +1714,7 @@ void MapEditorController::selectObjectsClicked()
 	if (map->getNumSelectedObjects() > 0)
 		setEditTool();
 	else
-		QMessageBox::warning(window, tr("Object selection"), tr("No objects were selected because there are no objects with the selected symbol(s)"));
+		QMessageBox::warning(window, tr("Object selection"), tr("No objects were selected because there are no objects with the selected symbol(s)."));
 }
 
 void MapEditorController::switchDashesClicked()

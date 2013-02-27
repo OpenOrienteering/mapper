@@ -57,7 +57,7 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 		center_georef_radio->setEnabled(false);
 	layout->addRow(center_georef_radio);
 	
-	center_other_radio = new QRadioButton(tr("Other,", "Rotation center point"));
+	center_other_radio = new QRadioButton(tr("Other point,", "Rotation center point"));
 	other_x_edit = Util::SpinBox::create(2, -1 * std::numeric_limits<double>::max(), std::numeric_limits<double>::max(), tr("mm"));
 	other_y_edit = Util::SpinBox::create(2, -1 * std::numeric_limits<double>::max(), std::numeric_limits<double>::max(), tr("mm"));
 	QHBoxLayout* other_center_layout = new QHBoxLayout();

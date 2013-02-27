@@ -92,12 +92,12 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	QButtonGroup* cmyk_color_options = new QButtonGroup(this);
 	
 	++row;
-	cmyk_spot_color_option = new QRadioButton(tr("Evaluate spot colors"));
+	cmyk_spot_color_option = new QRadioButton(tr("Calculate from spot colors"));
 	cmyk_color_options->addButton(cmyk_spot_color_option, MapColor::SpotColor);
 	prof_color_layout->addWidget(cmyk_spot_color_option, row, col, 1, 2);
 	
 	++row;
-	evaluate_rgb_option = new QRadioButton(tr("Evaluate RGB color"));
+	evaluate_rgb_option = new QRadioButton(tr("Calculate from RGB color"));
 	cmyk_color_options->addButton(evaluate_rgb_option, MapColor::RgbColor);
 	prof_color_layout->addWidget(evaluate_rgb_option, row, col, 1, 2);
 	
@@ -146,12 +146,12 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	QButtonGroup* rgb_color_options = new QButtonGroup(this);
 	
 	++row;
-	rgb_spot_color_option = new QRadioButton(tr("Evaluate spot colors"));
+	rgb_spot_color_option = new QRadioButton(tr("Calculate from spot colors"));
 	rgb_color_options->addButton(rgb_spot_color_option, MapColor::SpotColor);
 	desktop_layout->addWidget(rgb_spot_color_option, row, col, 1, 2);
 	
 	++row;
-	evaluate_cmyk_option = new QRadioButton(tr("Evaluate CMYK color"));
+	evaluate_cmyk_option = new QRadioButton(tr("Calculate from CMYK color"));
 	rgb_color_options->addButton(evaluate_cmyk_option, MapColor::CmykColor);
 	desktop_layout->addWidget(evaluate_cmyk_option, row, col, 1, 2);
 	
