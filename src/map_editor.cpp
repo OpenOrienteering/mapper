@@ -436,9 +436,9 @@ void MapEditorController::createMenuAndToolbars()
 	connect(print_act_mapper, SIGNAL(mapped(int)), this, SLOT(printClicked(int)));
 	QAction* print_act = newAction("print", tr("Print..."), print_act_mapper, SLOT(map()), "print.png", QString::null, "file_menu.html");
 	print_act_mapper->setMapping(print_act, PrintWidget::PRINT_TASK);
-	QAction* export_image_act = newAction("export-image", tr("&Image..."), print_act_mapper, SLOT(map()), NULL, QString::null, "file_menu.html");
+	QAction* export_image_act = newAction("export-image", tr("&Image"), print_act_mapper, SLOT(map()), NULL, QString::null, "file_menu.html");
 	print_act_mapper->setMapping(export_image_act, PrintWidget::EXPORT_IMAGE_TASK);
-	QAction* export_pdf_act = newAction("export-pdf", tr("&PDF..."), print_act_mapper, SLOT(map()), NULL, QString::null, "file_menu.html");
+	QAction* export_pdf_act = newAction("export-pdf", tr("&PDF"), print_act_mapper, SLOT(map()), NULL, QString::null, "file_menu.html");
 	print_act_mapper->setMapping(export_pdf_act, PrintWidget::EXPORT_PDF_TASK);
 	
 	undo_act = newAction("undo", tr("Undo"), this, SLOT(undo()), "undo.png", tr("Undo the last step"), "edit_menu.html");
@@ -554,7 +554,7 @@ void MapEditorController::createMenuAndToolbars()
 	assignKeyboardShortcuts();
 	
 	// Export menu
-	QMenu* export_menu = new QMenu(tr("&Export"));
+	QMenu* export_menu = new QMenu(tr("&Export as..."));
 	export_menu->addAction(export_image_act);
 	export_menu->addAction(export_pdf_act);
 	

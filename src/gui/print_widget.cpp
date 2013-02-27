@@ -107,7 +107,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	// TODO: Implement spinbox-style " dpi" suffix
 	layout->addRow(tr("Resolution:"), dpi_combo);
 	
-	different_scale_check = new QCheckBox(tr("Alternative scale:"));
+	different_scale_check = new QCheckBox(tr("Print in different scale:"));
 	different_scale_edit = Util::SpinBox::create(1, std::numeric_limits<int>::max(), "", 500);
 	different_scale_edit->setPrefix("1 : ");
 	different_scale_edit->setEnabled(false);

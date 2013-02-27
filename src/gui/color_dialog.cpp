@@ -51,7 +51,7 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	QButtonGroup* spot_color_options = new QButtonGroup(this);
 	
 	++row;
-	full_tone_option = new QRadioButton(tr("Spot color:"));
+	full_tone_option = new QRadioButton(tr("Defines a spot color:"));
 	spot_color_options->addButton(full_tone_option, MapColor::SpotColor);
 	prof_color_layout->addWidget(full_tone_option, row, col, 1, 2);
 	
@@ -60,7 +60,7 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	prof_color_layout->addWidget(sc_name_edit, row, col, 1, 2);
 	
 	++row;
-	composition_option = new QRadioButton(tr("Screens and overprint:"));
+	composition_option = new QRadioButton(tr("Mixture of spot colors (screens and overprint):"));
 	spot_color_options->addButton(composition_option, MapColor::CustomColor);
 	prof_color_layout->addWidget(composition_option, row, col, 1, 2);
 	
@@ -74,7 +74,7 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	}
 	
 	++row;
-	knockout_option = new QCheckBox(tr("Knockout"));
+	knockout_option = new QCheckBox(tr("Knockout: erases lower colors"));
 	prof_color_layout->addWidget(knockout_option);
 	knockout_option->setEnabled(false);
 	
