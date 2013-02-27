@@ -136,6 +136,30 @@ bool operator==(const SpotColorComponents &lhs, const SpotColorComponents& rhs)
 	return true;
 }
 
+bool MapColor::componentsEqual(const MapColor& other, bool compare_priority) const
+{
+	const SpotColorComponents& lhs(components);
+	const SpotColorComponents& rhs(other.components);
+	if (lhs.size() != rhs.size())
+		return false;
+	
+	// Not efficient, but correct.
+	SpotColorComponents::const_iterator rhs_it, rhs_end = rhs.end();
+	for (SpotColorComponents::const_iterator lhs_it = lhs.begin(), lhs_end = lhs.end(); lhs_it != lhs_end; ++lhs_it)
+	{
+		for (rhs_it = rhs.begin(); rhs_it != rhs_end; ++rhs_it)
+		{
+			if (!lhs_it->spot_color->equals(*rhs_it->spot_color, compare_priority))
+				continue;
+			if (qAbs(lhs_it->factor - rhs_it->factor) < 1e-03)
+				break;
+		}
+		if (rhs_it == rhs_end)
+			return false; // No match for *lhs_it
+	}
+	return true;
+}
+
 bool MapColor::equals(const MapColor& other, bool compare_priority) const
 {
 	return (!compare_priority || (priority == other.priority)) &&
@@ -148,7 +172,7 @@ bool MapColor::equals(const MapColor& other, bool compare_priority) const
 	       (rgb_color_method != CustomColor || rgb == other.rgb) &&
 	       (  spot_color_method == UndefinedMethod || 
 	         (spot_color_method == SpotColor && spot_color_name.compare(other.spot_color_name, Qt::CaseInsensitive) == 0) ||
-	         (spot_color_method == CustomColor && components == other.components) ) &&
+	         (spot_color_method == CustomColor && componentsEqual(other, compare_priority)) ) &&
 	       (qAbs(opacity - other.opacity) < 1e-03);
 }
 

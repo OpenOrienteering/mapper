@@ -376,6 +376,9 @@ public:
 	/** Returns true if this color's priority is less than the other's. */
 	bool comparePriority(const MapColor& other) const;
 	
+	/** Compares this color's components and another. */
+	bool componentsEqual(const MapColor& other, bool compare_priority) const;
+	
 protected:
 	/** 
 	 * Returns a CMYK color determined from the cmyk color of the spot color
