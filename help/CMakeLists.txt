@@ -21,7 +21,7 @@ message(STATUS "Configuring ${PROJECT_NAME} help")
 if(Mapper_USE_QT5)
 	find_package(Qt5Help REQUIRED)
 	qt5_find_host_program(QT_QCOLLECTIONGENERATOR_EXECUTABLE NAMES qcollectiongenerator)
-	find_program(QT_QTASSISTANT_EXECUTABLE NAMES assistant${CMAKE_EXECUTABLE_SUFFIX}
+	find_program(QT_QTASSISTANT_EXECUTABLE NAMES assistant${CMAKE_EXECUTABLE_SUFFIX} Assistant${CMAKE_EXECUTABLE_SUFFIX}
 	  DOC "The path of the Qt Assistant executable"
 	  HINTS ${QT5_DIR}
 	  PATH_SUFFIXES bin
