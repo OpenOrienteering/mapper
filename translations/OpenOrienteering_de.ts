@@ -2264,28 +2264,28 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
 <context>
     <name>LocalCRSPositioningDialog</name>
     <message>
-        <location filename="../src/template_gps.cpp" line="451"/>
+        <location filename="../src/template_gps.cpp" line="467"/>
         <source>Track scaling and positioning</source>
         <translation>Skalierung und Positionierung des Tracks</translation>
     </message>
     <message>
-        <location filename="../src/template_gps.cpp" line="455"/>
+        <location filename="../src/template_gps.cpp" line="471"/>
         <source>m</source>
         <comment>meters</comment>
         <translation>m</translation>
     </message>
     <message>
-        <location filename="../src/template_gps.cpp" line="457"/>
+        <location filename="../src/template_gps.cpp" line="473"/>
         <source>One coordinate unit equals:</source>
         <translation>Eine Koordinateneinheit entspricht:</translation>
     </message>
     <message>
-        <location filename="../src/template_gps.cpp" line="459"/>
+        <location filename="../src/template_gps.cpp" line="475"/>
         <source>Position track at given coordinates</source>
         <translation>Track an gegebenen Koordinaten positionieren</translation>
     </message>
     <message>
-        <location filename="../src/template_gps.cpp" line="462"/>
+        <location filename="../src/template_gps.cpp" line="478"/>
         <source>Position track at view center</source>
         <translation>Track in der Mitte der Kartenansicht positionieren</translation>
     </message>
@@ -6378,6 +6378,19 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
         <location filename="../src/template_gps.cpp" line="383"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
         <translation>Sollen Wegpunkte als Punkte eines Linienobjekts importiert werden?</translation>
+    </message>
+    <message>
+        <location filename="../src/template_gps.cpp" line="434"/>
+        <source>Import problems</source>
+        <translation>Probleme beim Import</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/template_gps.cpp" line="435"/>
+        <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
+        <translation>
+            <numerusform>%n Pfadobjekt konnte nicht importiert werden (Grund: fehlende Koordinaten).</numerusform>
+            <numerusform>%n Pfadobjekte konnte nicht importiert werden (Grund: fehlende Koordinaten).</numerusform>
+        </translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="357"/>

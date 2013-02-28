@@ -396,14 +396,22 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		}
 	}
 	
+	int skipped_paths = 0;
 	for (int i = 0; i < track.getNumSegments(); i++)
 	{
+		const int segment_size = track.getSegmentPointCount(i);
+		if (segment_size == 0)
+		{
+			++skipped_paths;
+			continue; // Don't create path without objects.
+		}
+		
 		PathObject* path = importPathStart();
-		for (int j = 0; j < track.getSegmentPointCount(i); j++)
+		for (int j = 0; j < segment_size; j++)
 		{
 			const TrackPoint& track_point = track.getSegmentPoint(i, j);
 			MapCoord coord = templateToMap(track_point.map_coord).toMapCoord();
-			if (track_point.is_curve_start && j < track.getSegmentPointCount(i) - 3)
+			if (track_point.is_curve_start && j < segment_size - 3)
 				coord.setCurveStart(true);
 			path->addCoordinate(coord);
 		}
@@ -418,6 +426,14 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 	
 	map->emitSelectionChanged();
 	map->emitSelectionEdited();		// TODO: is this necessary here?
+	
+	if (skipped_paths)
+	{
+		QMessageBox::information(
+		  dialog_parent,
+		  tr("Import problems"),
+		  tr("%n path object(s) could not be imported (reason: missing coordinates).", "", skipped_paths) );
+	}
 	
 	return true;
 }
