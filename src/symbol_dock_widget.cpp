@@ -1084,7 +1084,6 @@ SymbolToolTip::SymbolToolTip(Symbol* symbol, QRect icon_rect, QWidget* parent) :
 		html_description.remove('\r');
 		help_text += html_description;
 	}
-	help_text += "";
 	
 	help_label = new QLabel(help_text);
 	help_label->setPalette(text_palette);
