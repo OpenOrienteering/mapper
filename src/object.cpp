@@ -2550,10 +2550,17 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords, int delete_
 	coords.erase(coords.begin() + pos);
 	
 	int part_index = findPartIndexForIndex(pos);
+	Q_ASSERT(part_index >= 0 && part_index < (int)parts.size());
 	PathPart& part = parts[part_index];
 	partSizeChanged(part_index, -1);
 	
-	if (parts[part_index].isClosed())
+	// Check this before isClosed(), otherwise illegal accesses will happen!
+	if (parts[part_index].end_index - parts[part_index].start_index == -1)
+	{
+		deletePart(part_index);
+		return;
+	}
+	else if (parts[part_index].isClosed())
 	{
 		if (parts[part_index].end_index - parts[part_index].start_index == 0)
 		{
@@ -2562,11 +2569,6 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords, int delete_
 		}
 		else if (pos == parts[part_index].start_index)
 			setClosingPoint(parts[part_index].end_index, coords[parts[part_index].start_index]);
-	}
-	else if (parts[part_index].end_index - parts[part_index].start_index == -1)
-	{
-		deletePart(part_index);
-		return;
 	}
 	
 	if (adjust_other_coords && part.getNumCoords() >= 2)

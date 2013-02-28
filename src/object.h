@@ -161,7 +161,7 @@ public:
 		PathObject* path;
 		
 		inline int getNumCoords() const {return end_index - start_index + 1;}
-		inline bool isClosed() const {Q_ASSERT(end_index < (int)path->coords.size()); return path->coords[end_index].isClosePoint();}
+		inline bool isClosed() const {Q_ASSERT(end_index >= 0 && end_index < (int)path->coords.size()); return path->coords[end_index].isClosePoint();}
 		/// Closes or opens the sub-path.
 		/// If closed == true and may_use_existing_close_point == false, a new point is added as closing point even if its coordinates are identical to the existing last point.
 		void setClosed(bool closed, bool may_use_existing_close_point = false);
