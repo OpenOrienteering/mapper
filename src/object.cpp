@@ -2697,8 +2697,11 @@ void PathObject::recalculateParts()
 {
 	parts.clear();
 	
-	int start = 0;
 	int coords_size = coords.size();
+	if (coords_size == 0)
+		return;
+	
+	int start = 0;
 	for (int i = 0; i < coords_size - 1; ++i)
 	{
 		if (coords[i].isHolePoint())
