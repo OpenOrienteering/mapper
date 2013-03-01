@@ -65,7 +65,7 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			break;
 			
 		case PROJ_DATA:
-#ifdef Mapper_BUILD_PROJ
+#if defined(Mapper_BUILD_PROJ)
 			resource_path = "/proj";
 			break;
 #else
@@ -85,7 +85,7 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			break;
 	
 		case TRANSLATION:
-#ifdef Mapper_TRANSLATIONS_EMBEDDED
+#if defined(Mapper_TRANSLATIONS_EMBEDDED)
 			// Always load embedded translations first if enabled
 			addIfExists(locations, ":/translations");
 #endif
@@ -96,7 +96,7 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			return locations;
 	}
 	
-#ifdef MAPPER_DEVELOPMENT_BUILD
+#if defined(MAPPER_DEVELOPMENT_BUILD)
 	// Use the directory where Mapper is built during development, 
 	// even for the unit tests located in other directories.
 	QString build_dir(MAPPER_DEVELOPMENT_RES_DIR + resource_path);
@@ -104,17 +104,15 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 #endif
 	
 	QDir app_dir(QCoreApplication::applicationDirPath());
-#ifdef MAPPER_DEBIAN_PACKAGE_NAME
+#if defined(MAPPER_DEBIAN_PACKAGE_NAME)
 	// Linux: program in xxx/bin, resources in xxx/bin/../share/PACKAGE_NAME
 	QString linux_dir(app_dir.absoluteFilePath(QString("../share/") + MAPPER_DEBIAN_PACKAGE_NAME + resource_path));
 	addIfExists(locations, linux_dir);
-#endif
-#ifdef Q_OS_MAC
+#elif defined(Q_OS_MAC)
 	// Mac OS X: load resources from the Resources directory of the bundle
 	QString osx_dir(app_dir.absoluteFilePath("../Resources" + resource_path));
 	addIfExists(locations, osx_dir);
-#endif
-#ifdef Q_OS_WIN
+#elif defined(Q_OS_WIN)
 	// Windows: load resources from the application directory
 	QString win_dir(app_dir.absolutePath() + resource_path);
 	addIfExists(locations, win_dir);
@@ -135,8 +133,10 @@ QStringList MapperResource::getProgramLocations(MapperResource::RESOURCE_TYPE re
 	switch (resource_type)
 	{
 		case ASSISTANT:
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN)
 			program_name = "assistant.exe";
+#elif defined(Q_OS_MAC)
+			program_name = "Assistant";
 #else
 			program_name = "assistant";
 #endif
