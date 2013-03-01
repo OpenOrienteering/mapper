@@ -128,50 +128,9 @@
         <translation>Flächenfarbe:</translation>
     </message>
     <message>
-        <source>Minimum area:</source>
-        <translation type="obsolete">Mindestfläche:</translation>
-    </message>
-    <message>
-        <source>Fill patterns</source>
-        <translation type="obsolete">Füllmuster</translation>
-    </message>
-    <message>
-        <source>Pattern number:</source>
-        <translatorcomment>Check both.</translatorcomment>
-        <translation type="obsolete">Nummer:</translation>
-    </message>
-    <message>
-        <source>Type:</source>
-        <translation type="obsolete">Typ:</translation>
-    </message>
-    <message>
-        <source>Line pattern</source>
-        <translation type="obsolete">Linienmuster</translation>
-    </message>
-    <message>
-        <source>Point pattern</source>
-        <translation type="obsolete">Punktmuster</translation>
-    </message>
-    <message>
-        <source>Angle [degrees]:</source>
-        <translation type="obsolete">Winkel [Grad]:</translation>
-    </message>
-    <message>
-        <source>Filling is rotatable by mapper</source>
-        <translation type="obsolete">Füllmuster kann rotiert werden</translation>
-    </message>
-    <message>
-        <source>Distance between center lines:</source>
-        <translation type="obsolete">Abstand zwischen den Mittellinien:</translation>
-    </message>
-    <message>
         <location filename="../src/symbol_area.cpp" line="790"/>
         <source>Line offset:</source>
         <translation>Linienversatz:</translation>
-    </message>
-    <message>
-        <source>Offset along line:</source>
-        <translation type="obsolete">Versatz entlang Linie:</translation>
     </message>
     <message>
         <location filename="../src/symbol_area.cpp" line="785"/>
@@ -182,10 +141,6 @@
         <location filename="../src/symbol_area.cpp" line="780"/>
         <source>Line width:</source>
         <translation>Linienbreite:</translation>
-    </message>
-    <message>
-        <source>Point distance:</source>
-        <translation type="obsolete">Punktabstand:</translation>
     </message>
 </context>
 <context>
@@ -218,11 +173,6 @@
         <location filename="../src/gui/color_dialog.cpp" line="77"/>
         <source>Knockout: erases lower colors</source>
         <translation>Knockout: löscht darunterliegende Farben</translation>
-    </message>
-    <message>
-        <source>Evaluate spot colors</source>
-        <translatorcomment>Improve Original?</translatorcomment>
-        <translation type="obsolete">Aus Schmuckfarben berechnen</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="105"/>
@@ -317,37 +267,9 @@
         <translation>Name</translation>
     </message>
     <message>
-        <source>C</source>
-        <translation type="obsolete">C</translation>
-    </message>
-    <message>
-        <source>M</source>
-        <translation type="obsolete">M</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="obsolete">Y</translation>
-    </message>
-    <message>
-        <source>K</source>
-        <translation type="obsolete">K</translation>
-    </message>
-    <message>
         <location filename="../src/color_dock_widget.cpp" line="43"/>
         <source>Opacity</source>
         <translation>Deckkraft</translation>
-    </message>
-    <message>
-        <source>R</source>
-        <translation type="obsolete">R</translation>
-    </message>
-    <message>
-        <source>G</source>
-        <translation type="obsolete">G</translation>
-    </message>
-    <message>
-        <source>B</source>
-        <translation type="obsolete">B</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="43"/>
@@ -436,14 +358,6 @@
         <source>Double click to define the color</source>
         <translation>Doppelklick, um die Farbe festzulegen</translation>
     </message>
-    <message>
-        <source>Please enter a valid number from 0 to 255, or specify a percentage from 0 to 100!</source>
-        <translation type="obsolete">Geben Sie eine Zahl zwischen 0 und 255 oder einen Prozentwert zwischen 0 und 100%% ein!</translation>
-    </message>
-    <message>
-        <source>Double click to pick a color</source>
-        <translation type="obsolete">Doppelklick, um eine Farbe auszuwählen</translation>
-    </message>
 </context>
 <context>
     <name>CombinedSymbolSettings</name>
@@ -482,10 +396,6 @@
         <location filename="../src/symbol_combined.cpp" line="478"/>
         <source>Take the old symbol as template for the private symbol?</source>
         <translation>Das alte Symbol als Vorlage für das private Symbol nehmen?</translation>
-    </message>
-    <message>
-        <source>Symbol count:</source>
-        <translation type="obsolete">Anzahl der Symbole:</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="394"/>
@@ -698,12 +608,6 @@
         <translation>Schriftgröße bestimmen</translation>
     </message>
     <message>
-        <source>How big a letter in a font is depends on the design of the font.
-This dialog allows to choose a font size which results in a given exact height for a specific letter.</source>
-        <translation type="obsolete">Die Größe eines Zeichens hängt vom Design des Zeichensatzes ab.
-Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bestimmten Buchstaben eine definierte Höhe ergibt.</translation>
-    </message>
-    <message>
         <location filename="../src/symbol_text.cpp" line="1063"/>
         <source>Letter:</source>
         <translation>Buchstabe:</translation>
@@ -728,14 +632,6 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <source>Height:</source>
         <translation>Höhe:</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Abbrechen</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="obsolete">OK</translation>
-    </message>
 </context>
 <context>
     <name>DrawCircleTool</name>
@@ -756,10 +652,6 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <location filename="../src/tool_draw_path.cpp" line="923"/>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
         <translation>&lt;b&gt;Strichelungspunkte aktiv.&lt;/b&gt; </translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to start a polygonal segment, &lt;b&gt;Drag&lt;/b&gt; to start a curve. Hold &lt;u&gt;Shift&lt;/u&gt; to snap or append to existing objects.</source>
-        <translation type="obsolete">&lt;b&gt;Klicken&lt;/b&gt; um ein gerades Segment zu starten, &lt;b&gt;Ziehen&lt;/b&gt; um eine Kurve zu starten. &lt;u&gt;Shift&lt;/u&gt; halten, um an bestehenden Objekten einzurasten oder weiterzuzeichnen</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="928"/>
@@ -791,14 +683,6 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <source>&lt;b&gt;Click&lt;/b&gt; to draw a polygonal segment, &lt;b&gt;Drag&lt;/b&gt; to draw a curve, &lt;b&gt;Right or double click&lt;/b&gt; to finish the path, &lt;b&gt;Return&lt;/b&gt; to close the path, &lt;b&gt;Backspace&lt;/b&gt; to undo, &lt;b&gt;Esc&lt;/b&gt; to abort. Try &lt;b&gt;Space&lt;/b&gt;, &lt;u&gt;Shift&lt;/u&gt;, &lt;u&gt;Ctrl&lt;/u&gt;</source>
         <translation>&lt;b&gt;Klicken&lt;/b&gt; um ein gerades Segment zu zeichnen, &lt;b&gt;Ziehen&lt;/b&gt; um eine Kurve zu zeichnen, &lt;b&gt;Rechts- oder Doppelklicken&lt;/b&gt; um den Pfad zu beenden, &lt;b&gt;Enter&lt;/b&gt; um den Pfad zu schließen, &lt;b&gt;Esc&lt;/b&gt; zum Abbrechen. Mehr mit &lt;b&gt;Leertaste&lt;/b&gt;, &lt;u&gt;Shift&lt;/u&gt;, &lt;u&gt;Strg&lt;/u&gt;</translation>
     </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to start a polygonal segment, &lt;b&gt;Drag&lt;/b&gt; to start a curve</source>
-        <translation type="obsolete">&lt;b&gt;Mausklick&lt;/b&gt;, um ein gerades Segment zu beginnen, &lt;b&gt;Ziehen&lt;/b&gt;, um eine Kurve zu beginnen</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to draw a polygonal segment, &lt;b&gt;Drag&lt;/b&gt; to draw a curve, &lt;b&gt;Right or double click&lt;/b&gt; to finish the path, &lt;b&gt;Return&lt;/b&gt; to close the path, &lt;b&gt;Backspace&lt;/b&gt; to undo, &lt;b&gt;Esc&lt;/b&gt; to abort. Try &lt;b&gt;Space&lt;/b&gt;</source>
-        <translation type="obsolete">&lt;b&gt;Mausklick&lt;/b&gt;, um ein gerades Segment zu beginnen, &lt;b&gt;Ziehen&lt;/b&gt;, um eine Kurve zu beginnen. &lt;b&gt;Rechte Maustaste oder Doppelklick&lt;/b&gt;, um den Pfad zu beenden.&lt;b&gt;Return&lt;/b&gt;, um den Pfad zu schließen. &lt;b&gt;Löschtaste&lt;/b&gt; zum Zurücknehmen, &lt;b&gt;Esc&lt;/b&gt; zum Abbrechen. Mehr mit &lt;b&gt;Leertaste&lt;/b&gt;</translation>
-    </message>
 </context>
 <context>
     <name>DrawPointTool</name>
@@ -824,14 +708,6 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <location filename="../src/tool_draw_rectangle.cpp" line="642"/>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
         <translation>&lt;b&gt;Strichelungspunkte aktiv.&lt;/b </translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to start drawing a rectangle</source>
-        <translation type="obsolete">&lt;b&gt;Mausklick&lt;/b&gt;, um ein Rechteck zu beginnen</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click or Drag&lt;/b&gt; to start drawing a rectangle  (&lt;u&gt;Ctrl&lt;/u&gt; for fixed angles)</source>
-        <translation type="obsolete">&lt;b&gt;Klicken oder Ziehen&lt;/b&gt; um ein Rechteck zu zeichnen (&lt;u&gt;Strg&lt;/u&gt; für eingeschränkte Winkel)</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="605"/>
@@ -982,55 +858,6 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
     </message>
 </context>
 <context>
-    <name>EditTool</name>
-    <message>
-        <source>&lt;b&gt;Coordinate offset [mm]:&lt;/b&gt; %1, %2  &lt;b&gt;Distance [m]:&lt;/b&gt; %3</source>
-        <translatorcomment>Position der Maßeinheiten überdenken</translatorcomment>
-        <translation type="obsolete">&lt;b&gt;Koordinatenversatz [mm]:&lt;/b&gt; %1, %2  &lt;b&gt;Entfernung [m]:&lt;/b&gt; %3</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Coordinate offset [mm]:&lt;/b&gt; %1, %2  &lt;b&gt;Distance [m]:&lt;/b&gt; %3  %4</source>
-        <translation type="obsolete">&lt;b&gt;Koordinatenversatz [mm]:&lt;/b&gt; %1, %2  &lt;b&gt;Entfernung [m]:&lt;/b&gt; %3  %4</translation>
-    </message>
-    <message>
-        <source>(&lt;u&gt;Ctrl&lt;/u&gt; for fixed angles)</source>
-        <translation type="obsolete">(&lt;u&gt;Strg&lt;/u&gt; für eingeschränkte Winkel)</translation>
-    </message>
-    <message>
-        <source>&lt;u&gt;Ctrl&lt;/u&gt; for fixed angles</source>
-        <translation type="obsolete">&lt;u&gt;Strg&lt;/u&gt; für eingeschränkte Winkel</translation>
-    </message>
-    <message>
-        <source>&lt;u&gt;Shift&lt;/u&gt; to keep opposite handle position</source>
-        <translation type="obsolete">&lt;u&gt;Shift&lt;/u&gt; um die Position des gegenüberliegenden Punktes beizubehalten</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to select an object, &lt;b&gt;Drag&lt;/b&gt; for box selection, &lt;b&gt;Shift&lt;/b&gt; to toggle selection</source>
-        <translation type="obsolete">&lt;b&gt;Klicken&lt;/b&gt; um ein Objekt auszuwählen, &lt;b&gt;Ziehen&lt;/b&gt; um einen Bereich zu markieren, &lt;b&gt;Umschalttaste&lt;/b&gt; zum Umkehren der Selektion</translation>
-    </message>
-    <message>
-        <source>, &lt;b&gt;Del&lt;/b&gt; to delete</source>
-        <translation type="obsolete">, &lt;b&gt;Entf&lt;/b&gt; zum Löschen</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Ctrl+Click&lt;/b&gt; on point to delete it, on path to add a new point, with &lt;b&gt;Space&lt;/b&gt; to make it a dash point</source>
-        <translation type="obsolete">&lt;b&gt;Ctrl+Klick&lt;/b&gt; auf einen Punkt, um ihn zu löschen; auf einem Pfad, um einen Punkt einzufügen, mit &lt;b&gt;Leertaste&lt;/b&gt;, um einen Strichelungspunkt anzulegen</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Space+Click&lt;/b&gt; on point to switch between dash and normal point</source>
-        <translation type="obsolete">&lt;b&gt;Leertaste + Klick&lt;/b&gt; auf einen Punkt, um zwischen Strichelungs- und normalem Punkt umzuschalten</translation>
-    </message>
-    <message>
-        <source>; Try &lt;u&gt;Ctrl&lt;/u&gt;, &lt;u&gt;Space&lt;/u&gt;</source>
-        <translation type="obsolete">; Mehr mit &lt;u&gt;Strg&lt;/u&gt;, &lt;u&gt;Leertaste&lt;/u&gt;</translation>
-    </message>
-    <message>
-        <source>; Try &lt;u&gt;Ctrl&lt;/u&gt;</source>
-        <translatorcomment>only here &lt;u&gt;&lt;/u&gt;</translatorcomment>
-        <translation type="obsolete">; Mehr mit &lt;u&gt;Strg&lt;/u&gt;</translation>
-    </message>
-</context>
-<context>
     <name>EditorPage</name>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="122"/>
@@ -1144,10 +971,6 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <source>Preview the width of lines with helper cross</source>
         <translation>Breite von Linien mit dem Hilfskreuz darstellen</translation>
     </message>
-    <message>
-        <source>Editor</source>
-        <translation type="obsolete">Editor</translation>
-    </message>
 </context>
 <context>
     <name>Exporter</name>
@@ -1155,33 +978,6 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <location filename="../src/file_format_ocad8.cpp" line="1366"/>
         <source>Could not create new file: %1</source>
         <translation>Kann Datei nicht erstellen: %1</translation>
-    </message>
-</context>
-<context>
-    <name>GPSProjectionParametersDialog</name>
-    <message>
-        <source>GPS coordinates projection parameters</source>
-        <translation type="obsolete">Projektionsparameter für GPS-Koordinaten</translation>
-    </message>
-    <message>
-        <source>Orthographic projection:</source>
-        <translation type="obsolete">Orthographische Projektion:</translation>
-    </message>
-    <message>
-        <source>Origin latitude &lt;b&gt;phi 0&lt;/b&gt;:</source>
-        <translation type="obsolete">Breite am Nullpunkt des Koordinatensystems &lt;b&gt;Phi 0&lt;/b&gt;:</translation>
-    </message>
-    <message>
-        <source>Origin longitude &lt;b&gt;lambda 0&lt;/b&gt;:</source>
-        <translation type="obsolete">Länge am Nullpunkt des Koordinatensystems &lt;b&gt;Lambda 0&lt;/b&gt;:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Abbrechen</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="obsolete">OK</translation>
     </message>
 </context>
 <context>
@@ -1233,17 +1029,9 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <source>The selected file is not a valid translation.</source>
         <translation>Die gewählte Datei ist keine gültige Übersetzung.</translation>
     </message>
-    <message>
-        <source>General</source>
-        <translation type="obsolete">Allgemein</translation>
-    </message>
 </context>
 <context>
     <name>Georeferencing</name>
-    <message>
-        <source>Local coordinates</source>
-        <translation type="obsolete">Lokale Koordinaten</translation>
-    </message>
     <message>
         <location filename="../src/global.cpp" line="49"/>
         <source>UTM</source>
@@ -1310,73 +1098,16 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
     </message>
 </context>
 <context>
-    <name>GeoreferencingActivity</name>
-    <message>
-        <source>Georeferencing</source>
-        <translation type="obsolete">Georeferenzierung</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="obsolete">Fehler</translation>
-    </message>
-    <message>
-        <source>Failed to calculate georeferencing!</source>
-        <translation type="obsolete">Berechnung der Georeferenzierung fehlgeschlagen!</translation>
-    </message>
-</context>
-<context>
-    <name>GeoreferencingAddTool</name>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set the source position of the pass point</source>
-        <translation type="obsolete">&lt;b&gt;Mausklick&lt;/b&gt;, um die Ausgangsposition des Referenzpunkts festzulegen</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set the destination position of the pass point, &lt;b&gt;Esc&lt;/b&gt; to abort</source>
-        <translation type="obsolete">&lt;b&gt;Mausklick&lt;/b&gt;, um die Zielposition des Referenzpunkts festzulegen, &lt;b&gt;Esc&lt;/b&gt; zum Abbrechen</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set the template position of the pass point</source>
-        <translation type="obsolete">&lt;b&gt;Mausklick&lt;/b&gt;, um die Position des Referenzpunkts auf der Vorlage festzulegen</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to set the map position of the pass point, &lt;b&gt;Esc&lt;/b&gt; to abort</source>
-        <translation type="obsolete">&lt;b&gt;Mausklick&lt;/b&gt;, um die Position des Referenzpunkts auf der Karte festzulegen, &lt;b&gt;Esc&lt;/b&gt; zum Abbrechen</translation>
-    </message>
-</context>
-<context>
-    <name>GeoreferencingDeleteTool</name>
-    <message>
-        <source>&lt;b&gt;Click&lt;/b&gt; to delete pass points</source>
-        <translation type="obsolete">&lt;b&gt;Mausklick&lt;/b&gt; zum Löschen von Referenzpunkten</translation>
-    </message>
-</context>
-<context>
     <name>GeoreferencingDialog</name>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="73"/>
         <source>Map Georeferencing</source>
         <translation>Georeferenzierung</translation>
     </message>
-    <message utf8="true">
-        <source>�</source>
-        <translation type="obsolete">°</translation>
-    </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="448"/>
         <source>Lookup...</source>
         <translation>Abrufen...</translation>
-    </message>
-    <message>
-        <source>&amp;Select...</source>
-        <translation type="obsolete">Auswählen...</translation>
-    </message>
-    <message>
-        <source>Local coordinates</source>
-        <translation type="obsolete">Lokale Koordinaten</translation>
-    </message>
-    <message>
-        <source>Edit projection parameters...</source>
-        <translation type="obsolete">Projektionsparameter bearbeiten...</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="107"/>
@@ -1385,21 +1116,9 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <translation>m</translation>
     </message>
     <message>
-        <source>General</source>
-        <translation type="obsolete">Allgemein</translation>
-    </message>
-    <message>
-        <source>Map scale:</source>
-        <translation type="obsolete">Maßstab:</translation>
-    </message>
-    <message>
         <location filename="../src/georeferencing_dialog.cpp" line="171"/>
         <source>Declination:</source>
         <translation>Deklination:</translation>
-    </message>
-    <message>
-        <source>Reference point:</source>
-        <translation type="obsolete">Referenzpunkt:</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="132"/>
@@ -1407,33 +1126,9 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <translation>Projizierte Koordinaten</translation>
     </message>
     <message>
-        <source>&amp;Coordinate reference system:</source>
-        <translation type="obsolete">&amp;Koordinatenbezugssystem:</translation>
-    </message>
-    <message>
-        <source>&amp;Zone:</source>
-        <translation type="obsolete">&amp;Zone:</translation>
-    </message>
-    <message>
         <location filename="../src/georeferencing_dialog.cpp" line="85"/>
         <source>Status:</source>
         <translation>Status:</translation>
-    </message>
-    <message>
-        <source>Reference point &amp;easting:</source>
-        <translation type="obsolete">Referenzpunkt-Rechtswert:</translation>
-    </message>
-    <message>
-        <source>Reference point &amp;northing:</source>
-        <translation type="obsolete">Referenzpunkt-Hochwert:</translation>
-    </message>
-    <message>
-        <source>Convergence:</source>
-        <translation type="obsolete">Konvergenz:</translation>
-    </message>
-    <message>
-        <source>&amp;Grivation:</source>
-        <translation type="obsolete">Gitterabweichung:</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="133"/>
@@ -1441,25 +1136,9 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <translation>Geographische Koordinaten</translation>
     </message>
     <message>
-        <source>Datum</source>
-        <translation type="obsolete">Datum</translation>
-    </message>
-    <message>
-        <source>Reference point &amp;latitude:</source>
-        <translation type="obsolete">Referenzpunkt-Breite:</translation>
-    </message>
-    <message>
-        <source>Reference point longitude:</source>
-        <translation type="obsolete">Referenzpunkt-Länge:</translation>
-    </message>
-    <message>
         <location filename="../src/georeferencing_dialog.cpp" line="128"/>
         <source>Show reference point in:</source>
         <translation>Referenzpunkt anzeigen in:</translation>
-    </message>
-    <message>
-        <source>%1 %2 (mm)</source>
-        <translation type="obsolete">%1 %2 (mm)</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="386"/>
@@ -1476,10 +1155,6 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <location filename="../src/georeferencing_dialog.cpp" line="608"/>
         <source>Online declination lookup</source>
         <translation>Deklination online abrufen</translation>
-    </message>
-    <message utf8="true">
-        <source>The magnetic declination for the reference point %1� %2� will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation type="obsolete">Die magnetische Deklination des Referenzpunkts %1� %2� wird nun online von &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt; abgerufen. Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="76"/>
@@ -1648,17 +1323,6 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <comment>degree value</comment>
         <translation>%1 °</translation>
     </message>
-    <message>
-        <source>Custom coordinates</source>
-        <translation type="obsolete">Benutzerdefinierte Koordinaten</translation>
-    </message>
-</context>
-<context>
-    <name>GeoreferencingMoveTool</name>
-    <message>
-        <source>&lt;b&gt;Drag&lt;/b&gt; to move pass points</source>
-        <translation type="obsolete">&lt;b&gt;Ziehen&lt;/b&gt; zum Verschieben von Referenzpunkten</translation>
-    </message>
 </context>
 <context>
     <name>GeoreferencingTool</name>
@@ -1666,81 +1330,6 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <location filename="../src/georeferencing_dialog.cpp" line="701"/>
         <source>&lt;b&gt;Left click&lt;/b&gt; to set the reference point, another button to cancel</source>
         <translation>&lt;b&gt;Klicken&lt;/b&gt; zum Setzen des Referenzpunkts, andere Maustaste zum Abbrechen</translation>
-    </message>
-</context>
-<context>
-    <name>GeoreferencingWidget</name>
-    <message>
-        <source>New point</source>
-        <translation type="obsolete">Neuer Punkt</translation>
-    </message>
-    <message>
-        <source>Pass points:</source>
-        <translation type="obsolete">Referenzpunkte:</translation>
-    </message>
-    <message>
-        <source>New</source>
-        <translation type="obsolete">Neu</translation>
-    </message>
-    <message>
-        <source>Move</source>
-        <translation type="obsolete">Verschieben</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Löschen</translation>
-    </message>
-    <message>
-        <source>Template X</source>
-        <translation type="obsolete">Vorlagen-X</translation>
-    </message>
-    <message>
-        <source>Template Y</source>
-        <translation type="obsolete">Vorlagen-Y</translation>
-    </message>
-    <message>
-        <source>Map X</source>
-        <translation type="obsolete">Karten-X</translation>
-    </message>
-    <message>
-        <source>Map Y</source>
-        <translation type="obsolete">Karten-Y</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="obsolete">Fehler</translation>
-    </message>
-    <message>
-        <source>Apply pass points</source>
-        <translation type="obsolete">Referenzpunkte anwenden</translation>
-    </message>
-    <message>
-        <source>Apply &amp;&amp; clear all</source>
-        <translation type="obsolete">Anwenden &amp;&amp; alle löschen</translation>
-    </message>
-    <message>
-        <source>Clear all</source>
-        <translation type="obsolete">Alle löschen</translation>
-    </message>
-    <message>
-        <source>Apply transformation</source>
-        <translation type="obsolete">Transformation anwenden</translation>
-    </message>
-    <message>
-        <source>Clear points &amp;&amp; apply</source>
-        <translation type="obsolete">Punkte löschen und anwenden</translation>
-    </message>
-    <message>
-        <source>Clear points &amp;&amp; revert</source>
-        <translation type="obsolete">Punkte löschen &amp;&amp; zurücksetzen</translation>
-    </message>
-</context>
-<context>
-    <name>Global</name>
-    <message>
-        <source>OpenOrienteering Mapper</source>
-        <translatorcomment>Wird vermutlich nicht übersetzt</translatorcomment>
-        <translation type="obsolete">OpenOrienteering Mapper</translation>
     </message>
 </context>
 <context>
@@ -1774,15 +1363,6 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <source>About %1</source>
-        <translation type="obsolete">Über %1</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translatorcomment>&quot;Über&quot; scheint zu kurz. Alternative: Über OpenOrienteering Mapper</translatorcomment>
-        <translation type="obsolete">Über dieses Progamm</translation>
-    </message>
-    <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="96"/>
         <source>Help</source>
         <translation>Hilfe</translation>
@@ -1808,10 +1388,6 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <translation>Nächster</translation>
     </message>
     <message>
-        <source>Maps</source>
-        <translation type="obsolete">Karten</translation>
-    </message>
-    <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="81"/>
         <source>Create a new map ...</source>
         <translation>Neue Karte erstellen...</translation>
@@ -1831,11 +1407,6 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="119"/>
         <source>Recent maps</source>
         <translation>Zuletzt geöffnet</translation>
-    </message>
-    <message>
-        <source>Open Map ...</source>
-        <translatorcomment>FIXME: Geringfügige Variante eines anderen Originals</translatorcomment>
-        <translation type="obsolete">Karte öffnen...</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="347"/>
@@ -2072,14 +1643,6 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <translation>gestrichelte Linie</translation>
     </message>
     <message>
-        <source>Segment length:</source>
-        <translation type="obsolete">Segmentlänge:</translation>
-    </message>
-    <message>
-        <source>End length:</source>
-        <translation type="obsolete">Endstücklänge:</translation>
-    </message>
-    <message>
         <location filename="../src/symbol_line.cpp" line="2220"/>
         <source>Show at least one mid symbol</source>
         <translation>Mindestens ein Mittelsymbol anzeigen</translation>
@@ -2226,10 +1789,6 @@ Dieser Dialog ermöglicht es, eine Schriftgröße zu wählen, die für einen bes
         <translation>Abstand vom Linienende:</translation>
     </message>
     <message>
-        <source>Border</source>
-        <translation type="obsolete">Rand</translation>
-    </message>
-    <message>
         <location filename="../src/symbol_line.cpp" line="2508"/>
         <source>Border width:</source>
         <translation>Randbreite:</translation>
@@ -2333,11 +1892,6 @@ Unbekanntes Dateiformat.</translation>
         <location filename="../src/gui/main_window.cpp" line="152"/>
         <source>Open &amp;recent</source>
         <translation>Zu&amp;letzt bearbeitet</translation>
-    </message>
-    <message>
-        <source>&amp;Save...</source>
-        <translatorcomment>Original sollte &quot;&amp;Save&quot; heißen</translatorcomment>
-        <translation type="obsolete">&amp;Speichern</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="163"/>
@@ -2464,52 +2018,6 @@ Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
         <translation>(Projektstarter)</translation>
     </message>
     <message>
-        <source>(project leader)</source>
-        <translation type="obsolete">(Projektleiter)</translation>
-    </message>
-    <message>
-        <source>The help browser (&quot;Qt Assistant&quot;) is not installed.</source>
-        <translation type="obsolete">Das Handbuchprogramm (&quot;Qt Assistant&quot;) ist nicht installiert.</translation>
-    </message>
-    <message>
-        <source>Do you want to install it now?</source>
-        <translation type="obsolete">Wollen Sie es jetzt installieren?</translation>
-    </message>
-    <message>
-        <source>Install...</source>
-        <translation type="obsolete">Installieren...</translation>
-    </message>
-    <message>
-        <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation type="obsolete">Das Handbuchprogramm (&quot;Qt Assistant&quot;) konnte nicht gestartet werden.</translation>
-    </message>
-    <message>
-        <source>project leader</source>
-        <translation type="obsolete">Projektleiter</translation>
-    </message>
-    <message>
-        <source>Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Additional information:</source>
-        <translation type="obsolete">Entwickler in alphabetischer Reihenfolge:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (Projektleiter)&lt;br/&gt;&lt;br/&gt;Dank für Beiträge an:&lt;br/&gt;Jon Cundill&lt;br/&gt;Jan Dalheimer&lt;br/&gt;Eugeniy Fedirets&lt;br/&gt;Peter Hoban&lt;br/&gt;Henrik Johansson&lt;br/&gt;Tojo Masaya&lt;br/&gt;Aivars Zogla&lt;br/&gt;&lt;br/&gt;Weitere Informationen:</translation>
-    </message>
-    <message>
-        <source>Failed to locate the help files.</source>
-        <translation type="obsolete">Die Hilfedateien konnten nicht gefunden werden.</translation>
-    </message>
-    <message>
-        <source>Failed to find the help browser (&quot;Qt Assistant&quot;). For Windows, it is available as a separate download. After extracting this archive, copy its contents into the directory containing the Mapper executable, so the Mapper and assistant executables are in the same directory, and try again.</source>
-        <translation type="obsolete">Das Handbuchprogramm (&quot;Qt Assistant&quot;) konnte nicht gefunden werden. Für Windows ist es als separater Download verfügbar. Kopieren Sie nach dem Entpacken des Archivs dessen Inhalt in das Verzeichnis, welches Mapper.exe enthält, so dass assistant.exe und Mapper.exe im selben Vezeichnis sind, und versuchen Sie es erneut.</translation>
-    </message>
-    <message>
-        <source>Failed to start the help browser.</source>
-        <translation type="obsolete">Das Handbuchprogramm konnte nicht gestartet werden.</translation>
-    </message>
-    <message>
-        <source>The selected map scale is 1:%1, but the selected symbol file has a scale of 1:%2! Do you want to scale the symbols to the selected scale?</source>
-        <translation type="obsolete">Der neue Maßstab ist 1:%1, aber der ausgewählte Symbolsatz hat den Maßstab 1:%2.
-
-Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
-    </message>
-    <message>
         <location filename="../src/gui/main_window.cpp" line="646"/>
         <source>All maps</source>
         <translation>Alle Karten</translation>
@@ -2540,18 +2048,9 @@ Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
         <translation>Bitte melden Sie das als Programmfehler.</translation>
     </message>
     <message>
-        <source>Developers in alphabetical order:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (project leader)&lt;br/&gt;&lt;br/&gt;For patches, thanks to:&lt;br/&gt;Jon Cundill&lt;br/&gt;Aivars Zogla</source>
-        <translation type="obsolete">Entwickler in alphabetischer Reihenfolge:&lt;br/&gt;Peter Curtis&lt;br/&gt;Kai Pastor&lt;br/&gt;Russell Porter&lt;br/&gt;Thomas Sch&amp;ouml;ps (Projektleiter)&lt;br/&gt;&lt;br/&gt;Danke für Patches an:&lt;br/&gt;Jon Cundill&lt;br/&gt;Aivars Zogla</translation>
-    </message>
-    <message>
         <location filename="../src/gui/main_window.cpp" line="795"/>
         <source>OK</source>
         <translation>OK</translation>
-    </message>
-    <message>
-        <source>&amp;About</source>
-        <translatorcomment>Ausführlicher</translatorcomment>
-        <translation type="obsolete">Über &amp;OpenOrienteering</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="223"/>
@@ -2564,21 +2063,9 @@ Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
         <translation>Über &amp;Qt</translation>
     </message>
     <message>
-        <source>Show information about QT</source>
-        <translatorcomment>Typo im Original</translatorcomment>
-        <translation type="obsolete">Informationen über Qt anzeigen</translation>
-    </message>
-    <message>
         <location filename="../src/gui/main_window.cpp" line="230"/>
         <source>&amp;Help</source>
         <translation>&amp;Hilfe</translation>
-    </message>
-    <message>
-        <source>The document has been modified.
-Do you want to save your changes?</source>
-        <translatorcomment>&quot;Dokument&quot; in diesem Programm untypisch, besser Datei oder Karte.</translatorcomment>
-        <translation type="obsolete">Das Dokument wurde geändert.
-Möchten Sie die Änderungen speichern?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="425"/>
@@ -2592,22 +2079,9 @@ Möchten Sie die Änderungen speichern?</translation>
         <translation>Warnung</translation>
     </message>
     <message>
-        <source>The selected map scale is 1:%1, but the selected symbol file has a scale of 1:%2! Is the file in the wrong folder?
-
-The new map&apos;s scale will be 1:%3.</source>
-        <translatorcomment>Frei übersetzt, Original diskutabel.</translatorcomment>
-        <translation type="obsolete">Der ausgewählte Maßstab ist 1:%1, aber der ausgewählte Symbolsatz hat den Maßstab 1:%2. Möglicherweise wurde der Symbolsatz im falschen Ordner abgelegt.
-
-Die neue Karten wird mit dem Maßstab 1:%3 angelegt.</translation>
-    </message>
-    <message>
         <location filename="../src/gui/main_window.cpp" line="650"/>
         <source>All files</source>
         <translation>Alle Dateien</translation>
-    </message>
-    <message>
-        <source>Open file ...</source>
-        <translation type="obsolete">Datei öffnen...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="575"/>
@@ -2627,29 +2101,13 @@ Wählen Sie Ja, um die Datei in diesem Format zu speichern.
 Wählen Sie Nein, um ein anderes Dateiformat auszusuchen.</translation>
     </message>
     <message>
-        <source>Save file ...</source>
-        <translation type="obsolete">Datei speichern...</translation>
-    </message>
-    <message>
-        <source>Sorry, settings are not implemented yet!</source>
-        <translation type="obsolete">Leider sind noch keine Einstellungen implementiert!</translation>
-    </message>
-    <message>
         <location filename="../src/gui/main_window.cpp" line="751"/>
         <source>About %1</source>
         <translation>Über %1</translation>
     </message>
-    <message>
-        <source>Sorry, help is not implemented yet!</source>
-        <translation type="obsolete">Leider ist noch keine Hilfe implementiert!</translation>
-    </message>
 </context>
 <context>
     <name>Map</name>
-    <message>
-        <source>default layer</source>
-        <translation type="obsolete">Standardebene</translation>
-    </message>
     <message>
         <location filename="../src/map.cpp" line="479"/>
         <location filename="../src/map.cpp" line="481"/>
@@ -2660,10 +2118,6 @@ Wählen Sie Nein, um ein anderes Dateiformat auszusuchen.</translation>
         <location filename="../src/map.cpp" line="684"/>
         <source>Error</source>
         <translation>Fehler</translation>
-    </message>
-    <message>
-        <source>Unable to find an exporter for file named &quot;%1&quot;.</source>
-        <translation type="obsolete">Speichern im Format &quot;%1&quot; nicht unterstützt.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="479"/>
@@ -2714,14 +2168,6 @@ exportieren, weil das Format unbekannt ist.</translation>
         <translation>Beim Kartenimport sind Warnmeldungen aufgetreten.</translation>
     </message>
     <message>
-        <source>The map export generated the following warning(s):
-
-%1</source>
-        <translation type="obsolete">Beim Kartenexport traten die folgenden Warnung(en) auf:
-
-%1</translation>
-    </message>
-    <message>
         <location filename="../src/map.cpp" line="592"/>
         <source>Cannot open file:
 %1
@@ -2735,14 +2181,6 @@ Datei kann nicht zum Lesen geöffnet werden.</translation>
         <translation>Ungültiger Dateityp.</translation>
     </message>
     <message>
-        <source>The map import generated the following warning(s):
-
-%1</source>
-        <translation type="obsolete">Beim Kartenimport traten die folgenden Warnung(en) auf:
-
-%1</translation>
-    </message>
-    <message>
         <location filename="../src/map.cpp" line="666"/>
         <source>Cannot open file:
 %1
@@ -2752,22 +2190,6 @@ Datei kann nicht zum Lesen geöffnet werden.</translation>
 %1
 
 %2</translation>
-    </message>
-    <message>
-        <source>Cannot open file:
-%1
-
-Invalid file type.</source>
-        <translation type="obsolete">%1:
-Fehler beim Einlesen.</translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-Error during symbol post-processing.</source>
-        <translation type="obsolete">%1:
-Fehler beim Verarbeiten der Symbole.</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="684"/>
@@ -2801,10 +2223,6 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
 </context>
 <context>
     <name>MapEditorController</name>
-    <message>
-        <source>One or more templates could not be loaded. Use the Templates -&gt; Template setup window to resolve the issue(s) by clicking on the red template file name(s).</source>
-        <translation type="obsolete">Eine oder mehrere Vorlagen konnten nicht geladen werden. Bearbeiten Sie die rot markierten Dateinamen unter Vorlagen -&gt; Vorlagen verwalten, um das Problem zu lösen.</translation>
-    </message>
     <message>
         <location filename="../src/map_editor.cpp" line="437"/>
         <source>Print...</source>
@@ -2886,22 +2304,10 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <translation>Farbfenster anzeigen/verbergen</translation>
     </message>
     <message>
-        <source>Load symbols from...</source>
-        <translation type="obsolete">Symbole laden...</translation>
-    </message>
-    <message>
         <location filename="../src/map_editor.cpp" line="467"/>
         <source>Replace the symbols with those from another map file</source>
         <translatorcomment>Replace map file with either map or file</translatorcomment>
         <translation>Symbole mit denen aus einer anderen Datei ersetzen</translation>
-    </message>
-    <message>
-        <source>Load colors from...</source>
-        <translation type="obsolete">Farben laden...</translation>
-    </message>
-    <message>
-        <source>Replace the colors with those from another map file</source>
-        <translation type="obsolete">Farben mit denen aus einer anderen Datei ersetzen</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="470"/>
@@ -2942,10 +2348,6 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <location filename="../src/map_editor.cpp" line="479"/>
         <source>Open template...</source>
         <translation>Vorlage öffnen...</translation>
-    </message>
-    <message>
-        <source>Edit projection parameters...</source>
-        <translation type="obsolete">Projektionsparameter bearbeiten...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="456"/>
@@ -3009,11 +2411,6 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <translation>Objekt aufschneiden</translation>
     </message>
     <message>
-        <source>Cut holes</source>
-        <translatorcomment>Singular vs. Plural</translatorcomment>
-        <translation type="obsolete">Ein Loch schneiden</translation>
-    </message>
-    <message>
         <location filename="../src/map_editor.cpp" line="504"/>
         <source>Rotate object(s)</source>
         <translation>Objekt(e) rotieren</translation>
@@ -3059,10 +2456,6 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <translation>&amp;Vorlagen</translation>
     </message>
     <message>
-        <source>&amp;GPS</source>
-        <translation type="obsolete">&amp;GPS</translation>
-    </message>
-    <message>
         <location filename="../src/map_editor.cpp" line="704"/>
         <source>Drawing</source>
         <translation>Zeichnen</translation>
@@ -3072,10 +2465,6 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <source>Paint on template</source>
         <translatorcomment>To be checked</translatorcomment>
         <translation>Auf Vorlage zeichnen</translation>
-    </message>
-    <message>
-        <source>Print / Export...</source>
-        <translation type="obsolete">Drucken / Exportieren...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="451"/>
@@ -3234,11 +2623,6 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <translation>Fortgeschrittene Bearbeitung</translation>
     </message>
     <message>
-        <source>Print or Export</source>
-        <translatorcomment>Standardize &quot;or&quot; or &quot;/&quot;</translatorcomment>
-        <translation type="obsolete">Drucken / Exportieren</translation>
-    </message>
-    <message>
         <location filename="../src/map_editor.cpp" line="844"/>
         <location filename="../src/map_editor.cpp" line="955"/>
         <location filename="../src/map_editor.cpp" line="975"/>
@@ -3372,10 +2756,6 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <location filename="../src/map_editor.cpp" line="1414"/>
         <source>Select an area object with rotatable fill pattern or a rotatable point object to activate this tool.</source>
         <translation>Wählen Sie ein Flächenobjekt mit drehbarem Füllmuster oder ein drehbares Punktobjekt, um dieses Werkzeug verwenden zu können.</translation>
-    </message>
-    <message>
-        <source>Import OMAP, OCD, GPX, OSM or DXF file</source>
-        <translation type="obsolete">OMAP-, OCD-, GPX-, OSM- oder DXF-Datei importieren</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2320"/>
@@ -3585,10 +2965,6 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <translation>Es wurden keine Objekte ausgewählt, weil es keine Objekte mit dem ausgewählten Symbol gibt.</translation>
     </message>
     <message>
-        <source>No objects were selected because there are no objects with the selected symbol(s)</source>
-        <translation type="obsolete">Es wurden keine Objekte ausgewählt, weil es keine Objekte mit dem ausgewählten Symbol gibt.</translation>
-    </message>
-    <message>
         <location filename="../src/map_editor.cpp" line="2006"/>
         <source>Measure</source>
         <translation>Messen</translation>
@@ -3647,10 +3023,6 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
 </context>
 <context>
     <name>MapWidget</name>
-    <message>
-        <source>Zoom: %1x</source>
-        <translation type="obsolete">Zoom: %1x</translation>
-    </message>
     <message>
         <location filename="../src/map_widget.cpp" line="516"/>
         <source>%1x</source>
@@ -3815,10 +3187,6 @@ Zoomen ist mit dem Mausrad möglich.</translation>
         <source>mm</source>
         <translation>mm</translation>
     </message>
-    <message>
-        <source>Area</source>
-        <translation type="obsolete">Fläche</translation>
-    </message>
 </context>
 <context>
     <name>NewMapDialog</name>
@@ -3826,12 +3194,6 @@ Zoomen ist mit dem Mausrad möglich.</translation>
         <location filename="../src/map_dialog_new.cpp" line="41"/>
         <source>Create new map</source>
         <translation>Neue Karte erstellen</translation>
-    </message>
-    <message>
-        <source>Choose the scale and symbol set for your new map here.
-The available symbol sets depend on the selected scale.</source>
-        <translation type="obsolete">Maßstab und Symbolsatz der neuen Karte wählen.
-Die verfügbaren Symbolsätze hängen vom gewählten Maßstab ab.</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_new.cpp" line="43"/>
@@ -3881,17 +3243,9 @@ Die verfügbaren Symbolsätze hängen vom gewählten Maßstab ab.</translation>
         <translation>Alle Symbolsatz-Dateien</translation>
     </message>
     <message>
-        <source>OpenOrienteering symbol sets</source>
-        <translation type="obsolete">OpenOrienteering-Symbolsätze</translation>
-    </message>
-    <message>
         <location filename="../src/map_dialog_new.cpp" line="235"/>
         <source>All files</source>
         <translation>Alle Dateien</translation>
-    </message>
-    <message>
-        <source>(empty symbol set)</source>
-        <translation type="obsolete">(leerer Symbolsatz)</translation>
     </message>
 </context>
 <context>
@@ -4127,25 +3481,13 @@ Die verfügbaren Symbolsätze hängen vom gewählten Maßstab ab.</translation>
 <context>
     <name>PointSymbolEditorTool</name>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="965"/>
+        <location filename="../src/symbol_point_editor.cpp" line="967"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to add a coordinate, &lt;b&gt;Ctrl+Click&lt;/b&gt; to change the selected coordinate</source>
         <translation>&lt;b&gt;Maustaste&lt;/b&gt;, um Koordinate zu setzen, &lt;b&gt;Ctrl+Maustaste&lt;/b&gt;, um die gewählte Koordinate zu ändern</translation>
     </message>
 </context>
 <context>
     <name>PointSymbolEditorWidget</name>
-    <message>
-        <source>Point editor</source>
-        <translation type="obsolete">Punkteditor</translation>
-    </message>
-    <message>
-        <source>Edit:</source>
-        <translation type="obsolete">Bearbeiten:</translation>
-    </message>
-    <message>
-        <source>Elements:</source>
-        <translation type="obsolete">Elemente:</translation>
-    </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="54"/>
         <source>Always oriented to north (not rotatable)</source>
@@ -4158,19 +3500,19 @@ Die verfügbaren Symbolsätze hängen vom gewählten Maßstab ab.</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="69"/>
-        <location filename="../src/symbol_point_editor.cpp" line="924"/>
+        <location filename="../src/symbol_point_editor.cpp" line="926"/>
         <source>Point</source>
         <translation>Punkt</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="70"/>
-        <location filename="../src/symbol_point_editor.cpp" line="926"/>
+        <location filename="../src/symbol_point_editor.cpp" line="928"/>
         <source>Line</source>
         <translation>Linie</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="71"/>
-        <location filename="../src/symbol_point_editor.cpp" line="928"/>
+        <location filename="../src/symbol_point_editor.cpp" line="930"/>
         <source>Area</source>
         <translation>Fläche</translation>
     </message>
@@ -4298,22 +3640,13 @@ Die verfügbaren Symbolsätze hängen vom gewählten Maßstab ab.</translation>
         <translation>[Innerer Punkt]</translation>
     </message>
     <message>
-        <location filename="../src/symbol_point_editor.cpp" line="931"/>
+        <location filename="../src/symbol_point_editor.cpp" line="933"/>
         <source>Unknown</source>
         <translation>Unbekannt</translation>
     </message>
 </context>
 <context>
     <name>PointSymbolSettings</name>
-    <message>
-        <source>Point settings</source>
-        <translatorcomment>Check</translatorcomment>
-        <translation type="obsolete">Punkteinstellungen</translation>
-    </message>
-    <message>
-        <source>Always oriented to north (not rotatable)</source>
-        <translation type="obsolete">Immer nach Norden ausrichten (Rotieren unzulässig)</translation>
-    </message>
     <message>
         <location filename="../src/symbol_point.cpp" line="443"/>
         <source>Point symbol</source>
@@ -4323,10 +3656,6 @@ Die verfügbaren Symbolsätze hängen vom gewählten Maßstab ab.</translation>
 <context>
     <name>PrintTool</name>
     <message>
-        <source>&lt;b&gt;Drag&lt;/b&gt; to move the print area</source>
-        <translation type="obsolete">&lt;b&gt;Ziehen&lt;/b&gt;, um den Druckbereich zu verschieben</translation>
-    </message>
-    <message>
         <location filename="../src/gui/print_tool.cpp" line="49"/>
         <source>&lt;b&gt;Drag&lt;/b&gt; to move the print area or its borders.</source>
         <translation>&lt;b&gt;Ziehen&lt;/b&gt; um den Druckbereich oder dessen Ränder zu verschieben.</translation>
@@ -4335,22 +3664,9 @@ Die verfügbaren Symbolsätze hängen vom gewählten Maßstab ab.</translation>
 <context>
     <name>PrintWidget</name>
     <message>
-        <source>Printer or exporter:</source>
-        <translatorcomment>Check &quot;exporter&quot;</translatorcomment>
-        <translation type="obsolete">Drucker oder Exportformat:</translation>
-    </message>
-    <message>
         <location filename="../src/gui/print_widget.cpp" line="309"/>
         <source>Export to PDF or PS</source>
         <translation>Als PDF oder PS exportieren</translation>
-    </message>
-    <message>
-        <source>Export to PDF</source>
-        <translation type="obsolete">Als PDF exportieren</translation>
-    </message>
-    <message>
-        <source>Export to image</source>
-        <translation type="obsolete">Als Bild exportieren</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="121"/>
@@ -4388,18 +3704,9 @@ Die verfügbaren Symbolsätze hängen vom gewählten Maßstab ab.</translation>
         <translation>Seitenformat:</translation>
     </message>
     <message>
-        <source>Dots per inch (dpi):</source>
-        <translatorcomment>Check original, maybe &quot;Resolution (dpi)&quot;</translatorcomment>
-        <translation type="obsolete">Auflösung (dpi):</translation>
-    </message>
-    <message>
         <location filename="../src/gui/print_widget.cpp" line="73"/>
         <source>Copies:</source>
         <translation>Kopien:</translation>
-    </message>
-    <message>
-        <source>Print area</source>
-        <translation type="obsolete">Druckgebiet</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="86"/>
@@ -4422,25 +3729,9 @@ Die verfügbaren Symbolsätze hängen vom gewählten Maßstab ab.</translation>
         <translation>Höhe:</translation>
     </message>
     <message>
-        <source>Center area on map</source>
-        <translation type="obsolete">Druckbereich in Karte zentrieren</translation>
-    </message>
-    <message>
         <location filename="../src/gui/print_widget.cpp" line="133"/>
         <source>Preview...</source>
         <translation>Vorschau...</translation>
-    </message>
-    <message>
-        <source>Export in different scale 1 :</source>
-        <translation type="obsolete">In anderem Maßstab exportieren:  1 :</translation>
-    </message>
-    <message>
-        <source>Print in different scale 1 :</source>
-        <translation type="obsolete">In anderem Maßstab drucken:  1 :</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="obsolete">Exportieren</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="78"/>
@@ -4584,58 +3875,6 @@ Die verfügbaren Symbolsätze hängen vom gewählten Maßstab ab.</translation>
         <source>The map area is empty. Output canceled.</source>
         <translation>Der Kartenbereich ist leer. Ausgabe abgebrochen.</translation>
     </message>
-    <message>
-        <source>Letter</source>
-        <translation type="obsolete">Letter</translation>
-    </message>
-    <message>
-        <source>Legal</source>
-        <translation type="obsolete">Legal</translation>
-    </message>
-    <message>
-        <source>Executive</source>
-        <translation type="obsolete">Executive</translation>
-    </message>
-    <message>
-        <source>C5E</source>
-        <translation type="obsolete">C5E</translation>
-    </message>
-    <message>
-        <source>Comm10E</source>
-        <translation type="obsolete">Comm10E</translation>
-    </message>
-    <message>
-        <source>DLE</source>
-        <translation type="obsolete">DLE</translation>
-    </message>
-    <message>
-        <source>Folio</source>
-        <translation type="obsolete">Folio</translation>
-    </message>
-    <message>
-        <source>Ledger</source>
-        <translation type="obsolete">Ledger</translation>
-    </message>
-    <message>
-        <source>Tabloid</source>
-        <translation type="obsolete">Tabloid</translation>
-    </message>
-    <message>
-        <source>Custom</source>
-        <translation type="obsolete">Benutzerdefiniert</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <translation type="obsolete">Unbekannt</translation>
-    </message>
-    <message>
-        <source>The print area is empty, so there is nothing to print!</source>
-        <translation type="obsolete">Die Karte ist leer. Nichts zu drucken.</translation>
-    </message>
-    <message>
-        <source>The map is empty, there is nothing to print!</source>
-        <translation type="obsolete">Die Karte ist leer. Nichts zu drucken.</translation>
-    </message>
 </context>
 <context>
     <name>ProjectedCRSSelector</name>
@@ -4683,552 +3922,6 @@ Die verfügbaren Symbolsätze hängen vom gewählten Maßstab ab.</translation>
         <location filename="../src/util.cpp" line="234"/>
         <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
         <translation>Das Handbuchprogramm (&quot;Qt Assistant&quot;) konnte nicht gestartet werden.</translation>
-    </message>
-</context>
-<context>
-    <name>QObject</name>
-    <message>
-        <source>Cannot open file:
-%1
-for reading.</source>
-        <translation type="obsolete">%1:
-Datei kann nicht zum Lesen geöffnet werden.</translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-Invalid file format version.</source>
-        <translation type="obsolete">%1:
-Ungültige Version des Dateiformats.</translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-Unsupported file format version. Please use an older program version to load and update the file.</source>
-        <translation type="obsolete">%1:
-Nicht unterstützte Version des Dateiformats.
-Verwenden Sie bitte eine ältere Programmversion, um die Datei zu verarbeiten.</translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-File format version too high. Please update to a newer program version to load this file.</source>
-        <translation type="obsolete">%1:
-Neue Version des Dateiformats. Aktalisieren Sie das Programm, um diese Datei zu verarbeiten.</translation>
-    </message>
-    <message>
-        <source>Invalid file format version.</source>
-        <translation type="obsolete">Ungültige Version des Dateiformats.</translation>
-    </message>
-    <message>
-        <source>Unsupported file format version. Please use an older program version to load and update the stream-&gt;</source>
-        <translatorcomment>FIXME: End of line incorrect.</translatorcomment>
-        <translation type="obsolete">Nicht unterstützte Version des Dateiformats. Bitte eine ältere Programmversion verwenden, um die Datei zu öffnen und neu zu speichern.</translation>
-    </message>
-    <message>
-        <source>File format version too high. Please update to a newer program version to load this stream-&gt;</source>
-        <translation type="obsolete">Nicht unterstützte Version des Dateiformats. Bitte eine neuere Programmversion verwenden, um die Datei zu öffnen.</translation>
-    </message>
-    <message>
-        <source>Unsupported file format version. Please use an older program version to load and update the file.</source>
-        <translation type="obsolete">Nicht unterstützte Version des Dateiformats. Bitte eine ältere Programmversion verwenden, um die Datei zu öffnen und neu zu speichern.</translation>
-    </message>
-    <message>
-        <source>File format version too high. Please update to a newer program version to load this file.</source>
-        <translation type="obsolete">Nicht unterstützte Version des Dateiformats. Bitte eine neuere Programmversion verwenden, um die Datei zu öffnen.</translation>
-    </message>
-    <message>
-        <source>The geographic coordinate reference system of the map was &quot;%1&quot;. This CRS is not supported. Using &quot;%2&quot;.</source>
-        <translation type="obsolete">Das geographische Koordinatensystem dieser Datei war &quot;%1&quot;. Dieses Koordinatenbezugssystem wird nicht unterstützt. Es wird &quot;%2&quot; verwendet.</translation>
-    </message>
-    <message>
-        <source>Error while loading a symbol with type %2.</source>
-        <translation type="obsolete">Fehler beim Laden eines Symbols vom Typ %2.</translation>
-    </message>
-    <message>
-        <source>Error while reading map part count.</source>
-        <translation type="obsolete">Fehler beim Lesen des Kartenteilzählers.</translation>
-    </message>
-    <message>
-        <source>Error while loading map part %2.</source>
-        <translation type="obsolete">Fehler beim Laden des Kartenteils %2.</translation>
-    </message>
-    <message>
-        <source>Error while loading a symbol of type %1 at line %2 column %3.</source>
-        <translation type="obsolete">Fehler beim Laden eines Symbols vom Typ %1 in Zeile %2 Spalte %3.</translation>
-    </message>
-    <message>
-        <source>Symbol ID &apos;%1&apos; not unique at line %2 column %3.</source>
-        <translation type="obsolete">Symbol-ID &apos;%1&apos; nicht eindeutig in Zeile %2 Spalte %3.</translation>
-    </message>
-    <message>
-        <source>Error while loading a symbol.</source>
-        <translation type="obsolete">Fehler beim Laden eines Symbols.</translation>
-    </message>
-    <message>
-        <source>Error while loading undo steps.</source>
-        <translation type="obsolete">Fehler beim Laden von Rückgängig-Schritten.</translation>
-    </message>
-    <message>
-        <source>Error while reading layer count.</source>
-        <translation type="obsolete">Fehler beim Lesen des Ebenenzählers.</translation>
-    </message>
-    <message>
-        <source>Error while loading layer %2.</source>
-        <translation type="obsolete">Fehler beim Laden der Ebene %2.</translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-Error while loading a symbol with type %2.</source>
-        <translation type="obsolete">%1:
-Fehler beim Laden eines Symbols vom Typ %2.</translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-Error while loading a symbol.</source>
-        <translation type="obsolete">%1:
-Fehler beim Laden eines Symbols.</translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-Error while loading undo steps.</source>
-        <translation type="obsolete">%1:
-Fehler beim Laden der-Rückgängig-Historie.</translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-Error while reading layer count.</source>
-        <translation type="obsolete">%1:
-Fehler beim Lesen der Ebenenanzahl.</translation>
-    </message>
-    <message>
-        <source>Problem while opening file:
-%1
-
-Error while loading layer %2.</source>
-        <translation type="obsolete">%1:
-Fehler beim Laden der Ebene %2.</translation>
-    </message>
-    <message>
-        <source>default</source>
-        <translation type="obsolete">Standard</translation>
-    </message>
-    <message>
-        <source>Cannot open file:
-%1
-for writing.</source>
-        <translation type="obsolete">%1:
-Kann Datei nicht zum Schreiben öffnen.</translation>
-    </message>
-    <message>
-        <source>Could not open file: libocad returned %1</source>
-        <translation type="obsolete">Kann Datei nicht öffnen:
-libocad-Fehler %1</translation>
-    </message>
-    <message>
-        <source>OCAD files of version %1 cannot be loaded!</source>
-        <translation type="obsolete">OCAD-Dateien der Version %1 können nicht geladen werden!</translation>
-    </message>
-    <message>
-        <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation type="obsolete">Kann Symbol %1.%2 &quot;%3&quot; nicht importieren</translation>
-    </message>
-    <message>
-        <source>OCAD import layer</source>
-        <translation type="obsolete">OCAD-Import-Ebene</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation type="obsolete">Im gestrichelten Liniensymbol %1 sind die Längen für die spitzen Enden am Anfang und Ende verschieden (%2 and %3). Verwende %4.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
-        <translation type="obsolete">Die Länge des Endstücks des gestrichelten Liniensymbols %1 kann nicht korrekt importiert werden.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
-        <translation type="obsolete">Die Länge der Endunterbrechung des gestrichelten Liniensymbols %1 kann nicht korrekt importiert werden.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation type="obsolete">Im gestrichelten Liniensymbol %1 sind die Haupt- und Endlänge verschieden (%2 and %3). Verwende %4.</translation>
-    </message>
-    <message>
-        <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
-        <translation type="obsolete">Im gestrichelten Liniensymbol %1 sind die Unterbrüche D und E verschieden (%2 and %3). Verwende %4.</translation>
-    </message>
-    <message>
-        <source>In symbol %1, left and right borders are different colors (%2 and %3). Using %4.</source>
-        <translation type="obsolete">Bei Symbol %1 haben linker und rechter Rand verschiedene Farben (%2 bzw. %3). Verwende %4.</translation>
-    </message>
-    <message>
-        <source>In symbol %1, left and right borders are different width (%2 and %3). Using %4.</source>
-        <translation type="obsolete">Bei Symbol %1 haben linker und rechter Rand verschiedene Breiten (%2 bzw. %3). Verwende %4.</translation>
-    </message>
-    <message>
-        <source>In line symbol %1, ignoring that only the left border line should be dashed</source>
-        <translation type="obsolete">Ignoriere, dass bei Symbol %1 nur die linke Randlinie gestrichelt sein soll</translation>
-    </message>
-    <message>
-        <source>Dash symbol</source>
-        <translation type="obsolete">Strichelungssymbol</translation>
-    </message>
-    <message>
-        <source>Start symbol</source>
-        <translation type="obsolete">Anfangssymbol</translation>
-    </message>
-    <message>
-        <source>In symbol %1, ignoring framing line.</source>
-        <translation type="obsolete">Ignoriere Rahmen bei Symbol %1.</translation>
-    </message>
-    <message>
-        <source>Could not allocate buffer.</source>
-        <translation type="obsolete">Kann Puffer nicht allokieren.</translation>
-    </message>
-    <message>
-        <source>Could not read file.</source>
-        <translation type="obsolete">Kann Datei nicht lesen.</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation type="obsolete">Ignoriere Ausrichtung bei Textsymbol %1</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation type="obsolete">Ignoriere Höhe (%2) bei Textsymbol %1</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="obsolete">Vom Original abweichende Zeichenabstände bei Textsymbol %1</translation>
-    </message>
-    <message>
-        <source>Color id not found: %1, ignoring this color</source>
-        <translation type="obsolete">Farb-ID nicht gefunden: %1, ignoriere diese Farbe</translation>
-    </message>
-    <message>
-        <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
-        <translation type="obsolete">Die Karte enthält mehr als 256 Farben, was von der ocd-Version 8 nicht unterstützt wird.</translation>
-    </message>
-    <message>
-        <source>Could not create new file: libocad returned %1</source>
-        <translation type="obsolete">Kann Datei nicht erstellen:
-libocad-Fehler %1</translation>
-    </message>
-    <message>
-        <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="obsolete">Kann den Versatz eines Füllmusters für ein Flächenobjekt nicht exportieren</translation>
-    </message>
-    <message>
-        <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="obsolete">Kann Vorlage nicht exportieren: der Dateityp von &quot;%1&quot; wird noch nicht unterstützt</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="obsolete">Im Liniensymbol &quot;%1&quot; kann die Kombination der Linienenden/ecken nicht repräsentiert werden.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="obsolete">Im Liniensymbol &quot;%1&quot; wird die Gruppierung der Strichelungen verworfen.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="obsolete">Im Liniensymbol &quot;%1&quot; wird die Anzahl der Striche in einer Gruppe auf 2 reduziert.</translation>
-    </message>
-    <message>
-        <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="obsolete">Im Liniensymbol &quot;%1&quot; können die Ränder nicht korrekt exportiert werden.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="obsolete">Im Flächensymbol &quot;%1&quot; wird ein Füllmuster verworfen.</translation>
-    </message>
-    <message>
-        <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="obsolete">Im Flächensymbol &quot;%1&quot; wird ein Punktmuster mit gegeneinander versetzten Reihen angenommen. Dies könnte stimmen, aber auch falsch sein.</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="obsolete">Im Textsymbol &quot;%1&quot; ist der Zeichenabstand geändert. Dies wird von diesem Programm und OCAD verschieden interpretiert</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring underlining</source>
-        <translation type="obsolete">Im Textsymbol &quot;%1&quot; wird das Unterstreichen verworfen</translation>
-    </message>
-    <message>
-        <source>In text symbol %1: ignoring kerning</source>
-        <translation type="obsolete">Im Textsymbol &quot;%1&quot; wird das Kerning verworfen</translation>
-    </message>
-    <message>
-        <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
-        <translation type="obsolete">Zeichenkette verkürzt (Abbruchstelle mit drei &apos;|&apos; markiert): %1</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom underline color, width, and positioning</source>
-        <translation type="obsolete">Ignoriere Unterstreichungsfarbe, -breite und -position bei Textsymbol %1</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom character spacing (%2%)</source>
-        <translation type="obsolete">Ignoriere Zeichenabstand (%2%) bei Textsymbol %1</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation type="obsolete">Ignoriere Wordabstand (%2%) bei Textsymbol %1</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom paragraph spacing (%2%)</source>
-        <translation type="obsolete">Ignoriere Absatzabstand (%2%) bei Textsymbol %1</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation type="obsolete">Ignoriere Enrückung (%2/%3) bei Textsymbol %1</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring custom tabs</source>
-        <translation type="obsolete">Ignoriere Tabulatorweiten bei Textsymbol %1</translation>
-    </message>
-    <message>
-        <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation type="obsolete">Ignoriere Textrahmen (Modus %2) bei Textsymbol %1</translation>
-    </message>
-    <message>
-        <source>Unable to load object</source>
-        <translation type="obsolete">Kann Objekt nicht Laden</translation>
-    </message>
-    <message>
-        <source>Unable to import rectangle object</source>
-        <translation type="obsolete">Kann Rechtecksobjekt nicht importieren</translation>
-    </message>
-    <message>
-        <source>An object with the symbol &apos;%1&apos;, which is oriented to north, is rotated. Ignoring the rotation</source>
-        <translation type="obsolete">Ein Objekt mit dem nach Norden ausgerichteten Symbol &apos;%1&apos; ist gedreht. Ignoriere die Drehung</translation>
-    </message>
-    <message>
-        <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation type="obsolete">Textsymbol nicht importiert: Konnte Pfad nicht ermitteln (npts=%1): %2</translation>
-    </message>
-    <message>
-        <source>Unable to import template: %1</source>
-        <translation type="obsolete">Kann Vorlage nicht importieren: %1</translation>
-    </message>
-    <message>
-        <source>Ignoring template of type: %1 (%2)</source>
-        <translation type="obsolete">Ignoriere Vorlage vom Typ %1 (%2)</translation>
-    </message>
-    <message>
-        <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation type="obsolete">Kann Vorlage nicht importieren: Hintegrund &quot;%1&quot; scheint kein Rasterbild zu sein</translation>
-    </message>
-    <message>
-        <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="obsolete">Versuch, ein Textobjekt mit unbekanntem Koordinatenformat zu importieren</translation>
-    </message>
-    <message>
-        <source>OCAD Versions 7, 8</source>
-        <translatorcomment>verkürzt</translatorcomment>
-        <translation type="obsolete">OCAD Version 7/8</translation>
-    </message>
-    <message>
-        <source>OpenOrienteering Map</source>
-        <translation type="obsolete">OpenOrienteering Karte</translation>
-    </message>
-    <message>
-        <source>OpenOrienteering Mapper XML</source>
-        <translation type="obsolete">OpenOrienteering Mapper XML</translation>
-    </message>
-    <message>
-        <source>Unsupported element: %1 (line %2 column %3)</source>
-        <translation type="obsolete">Element nicht unterstützt: %1 (Zeile %2 Spalte %3)</translation>
-    </message>
-    <message>
-        <source>Unsupport file format.</source>
-        <translation type="obsolete">Dateiformat nicht unterstützt.</translation>
-    </message>
-    <message>
-        <source>New file format version detected. Some features will be not be supported by this version of the program.</source>
-        <translation type="obsolete">Neue Version des Dateiformats erkannt. Einige Funktionen werden von dieser Programmversion nicht unterstützt.</translation>
-    </message>
-    <message>
-        <source>Expected %1 colors, found %2.</source>
-        <translation type="obsolete">%1 Farben erwartet, %2 gefunden.</translation>
-    </message>
-    <message>
-        <source>Expected %1 symbols, found %2.</source>
-        <translation type="obsolete">%1 Symbole erwartet, %2 gefunden.</translation>
-    </message>
-    <message>
-        <source>Expected %1 map parts, found %2.</source>
-        <translation type="obsolete">%1 Kartenteile erwartet, %2 gefunden.</translation>
-    </message>
-    <message>
-        <source>OpenOrienteering maps</source>
-        <translation type="obsolete">OpenOrienteering-Karten</translation>
-    </message>
-    <message>
-        <source>OpenOrienteering Mapper</source>
-        <translation type="obsolete">OpenOrienteering Mapper</translation>
-    </message>
-    <message>
-        <source>Error reading</source>
-        <translatorcomment>FIXME: change original string</translatorcomment>
-        <translation type="obsolete">Fehler</translation>
-    </message>
-    <message>
-        <source>There was an error reading the DXF file %1:
-
-%1</source>
-        <translatorcomment>FIXME: check double %1 in original string</translatorcomment>
-        <translation type="obsolete">Fehler beim Lesen der DXF-Datei %1
-
-%2</translation>
-    </message>
-    <message>
-        <source>Question</source>
-        <translation type="obsolete">Frage</translation>
-    </message>
-    <message>
-        <source>Are the coordinates in the DXF file in degrees?</source>
-        <translation type="obsolete">Sind die Koordinaten in der DXF-Datei in Grad angegeben?</translation>
-    </message>
-    <message>
-        <source>Scale value</source>
-        <translation type="obsolete">Skalierungsfaktor</translation>
-    </message>
-    <message>
-        <source>Choose a value to scale latitude coordinates by. A value of 1 does nothing, over one scales up and under one scales down.</source>
-        <translatorcomment>Original schlecht und sollte insgesamt nur ein Dialog sein</translatorcomment>
-        <translation type="obsolete">Wählen Sie einen Skalierungsfaktor für die Breitengrade.</translation>
-    </message>
-    <message>
-        <source>Choose a value to scale longitude coordinates by. A value of 1 does nothing, over one scales up and under one scales down.</source>
-        <translation type="obsolete">Wählen Sie einen Skalierungsfaktor für die Längengrade.</translation>
-    </message>
-    <message>
-        <source>The OSM file has version %1.
-The minimum supported version is %2.</source>
-        <translation type="obsolete">Die OSM-Datei hat Version %1.
-Die kleinste unterstütze Version ist %2.</translation>
-    </message>
-    <message>
-        <source>The OSM file has version %1.
-The maximum supported version is %2.</source>
-        <translation type="obsolete">Die OSM-Datei hat Version %1.
-Die höchste unterstütze Version ist %2.</translation>
-    </message>
-    <message>
-        <source>Problems</source>
-        <translation type="obsolete">Probleme</translation>
-    </message>
-    <message>
-        <source>%1 nodes could not be processed correctly.</source>
-        <translation type="obsolete">%1 Knoten konnten nicht korrekt verarbeitet werden.</translation>
-    </message>
-    <message>
-        <source>Object selection</source>
-        <translation type="obsolete">Objektauswahl</translation>
-    </message>
-    <message>
-        <source>No objects were selected because there are no objects with the selected symbol(s)</source>
-        <translation type="obsolete">Es gibt keine Objekte mit dem ausgewählten Symbol.</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="obsolete">Fehler</translation>
-    </message>
-    <message>
-        <source>Unification failed.</source>
-        <translation type="obsolete">Verschmelzen fehlgeschlagen.</translation>
-    </message>
-    <message>
-        <source>Intersection failed.</source>
-        <translation type="obsolete">Berechnung der Schnittfläche fehlgeschlagen.</translation>
-    </message>
-    <message>
-        <source>Difference failed.</source>
-        <translation type="obsolete">Subtraktion fehlgeschlagen.</translation>
-    </message>
-    <message>
-        <source>XOr failed.</source>
-        <translation type="obsolete">XOr-Operation fehlgeschlagen.</translation>
-    </message>
-    <message>
-        <source>A</source>
-        <comment>First capital letter of the local alphabet</comment>
-        <translation type="obsolete">A</translation>
-    </message>
-    <message>
-        <source>Mid symbol</source>
-        <translation type="obsolete">Zwischensymbol</translation>
-    </message>
-    <message>
-        <source>End symbol</source>
-        <translation type="obsolete">Endsymbol</translation>
-    </message>
-    <message>
-        <source>OpenOrienteering Mapper XML (export only)</source>
-        <translation type="obsolete">OpenOrienteering-XML-Karten (nur Export)</translation>
-    </message>
-    <message>
-        <source>Map scale specification invalid or missing.</source>
-        <translation type="obsolete">Angabe des Kartenmaßstabs ist ungültig oder fehlt.</translation>
-    </message>
-    <message>
-        <source>Unknown CRS specification language: %1</source>
-        <translation type="obsolete">Unbekannte Sprache der Koordinatenreferenzsystems-Angabe: %1</translation>
-    </message>
-    <message>
-        <source>Unsupported geographic CRS specification: %1</source>
-        <translation type="obsolete">Geographisches Koordinatenreferenzsystem nicht unterstützt: %1</translation>
-    </message>
-    <message>
-        <source>Error while loading an object of type %1.</source>
-        <translation type="obsolete">Fehler beim Laden eines Objekts vom Typ %1.</translation>
-    </message>
-    <message>
-        <source>Unable to find symbol for object at %1:%2.</source>
-        <translation type="obsolete">Kann Symbol für Objekt nicht finden bei %1:%2.</translation>
-    </message>
-    <message>
-        <source>Point object with undefined or wrong symbol at %1:%2.</source>
-        <translation type="obsolete">Punktobjekt mit undefiniertem oder falschen Symbol bei %1:%2.</translation>
-    </message>
-    <message>
-        <source>Error during symbol post-processing.</source>
-        <translation type="obsolete">Fehler beim Nachbearbeiten der Symbole.</translation>
-    </message>
-    <message>
-        <source>Template &quot;%1&quot; has been loaded from the map&apos;s directory instead of the relative location to the map file where it was previously.</source>
-        <translation type="obsolete">Die Vorlage &quot;%1&quot; wurde aus dem Verzeichnis der Karte geladen anstatt vom relativen Pfad zur Kartendatei, wo sie zuvor war.</translation>
-    </message>
-    <message>
-        <source>At least one template file could not be found. Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation type="obsolete">Eine oder mehrere Vorlagen konnten nicht gefunden werden. Klicken Sie die rot markierten Dateinamen unter Vorlagen -&gt; Vorlagen verwalten an, um die Datei(en) zu finden..</translation>
-    </message>
-    <message>
-        <source>UTM</source>
-        <translation type="obsolete">UTM</translation>
-    </message>
-    <message>
-        <source>UTM Zone (number north/south, e.g. &quot;32 N&quot;, &quot;24 S&quot;)</source>
-        <translation type="obsolete">UTM-Zone (Zahl Nord/Süd, z.B. &quot;32 N&quot;, &quot;24 S&quot;)</translation>
-    </message>
-    <message>
-        <source>Gauss-Krueger, datum: Potsdam</source>
-        <translation type="obsolete">Gauss-Krüger, Datum: Potsdam</translation>
-    </message>
-    <message>
-        <source>Zone number (1 to 119)</source>
-        <translation type="obsolete">Zonennummer (1 bis 119)</translation>
     </message>
 </context>
 <context>
@@ -5382,11 +4075,6 @@ Die höchste unterstütze Version ist %2.</translation>
         <translation>Referenzpunkt der Georeferenzierung</translation>
     </message>
     <message>
-        <source>Other,</source>
-        <comment>Rotation center point</comment>
-        <translation type="obsolete">Anderer Punkt,</translation>
-    </message>
-    <message>
         <location filename="../src/map_dialog_rotate.cpp" line="60"/>
         <source>Other point,</source>
         <comment>Rotation center point</comment>
@@ -5451,11 +4139,6 @@ Die höchste unterstütze Version ist %2.</translation>
 </context>
 <context>
     <name>RotateTool</name>
-    <message>
-        <source>&lt;b&gt;Rotation:&lt;/b&gt; %1</source>
-        <translatorcomment>FIXME: Add unit to original string.</translatorcomment>
-        <translation type="obsolete">&lt;b&gt;Drehung:&lt;/b&gt; %1°</translation>
-    </message>
     <message utf8="true">
         <location filename="../src/tool_rotate.cpp" line="181"/>
         <source>&lt;b&gt;Rotation:&lt;/b&gt; %1°  %2</source>
@@ -5475,10 +4158,6 @@ Die höchste unterstütze Version ist %2.</translation>
         <location filename="../src/tool_rotate.cpp" line="188"/>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the rotation center, &lt;b&gt;drag&lt;/b&gt; to rotate the selected object(s)</source>
         <translation>&lt;b&gt;Klicken&lt;/b&gt;, um den Rotationspunkt festzulegen, &lt;b&gt;Ziehen&lt;/b&gt; zum Rotieren</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Drag&lt;/b&gt; to rotate the selected object(s)</source>
-        <translation type="obsolete">&lt;b&gt;Ziehen&lt;/b&gt; zum Rotieren</translation>
     </message>
 </context>
 <context>
@@ -5514,11 +4193,6 @@ Die höchste unterstütze Version ist %2.</translation>
         <source>Georeferencing reference point</source>
         <comment>Scaling center point</comment>
         <translation>Referenzpunkt der Georeferenzierung</translation>
-    </message>
-    <message>
-        <source>Other,</source>
-        <comment>Scaling center point</comment>
-        <translation type="obsolete">Anderer Punkt,</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="60"/>
@@ -5568,15 +4242,6 @@ Die höchste unterstütze Version ist %2.</translation>
         <location filename="../src/map_dialog_scale.cpp" line="96"/>
         <source>Scale non-georeferenced templates</source>
         <translation>Nicht-georeferenzierte Vorlagen skalieren</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Abbrechen</translation>
-    </message>
-    <message>
-        <source>Adjust</source>
-        <translatorcomment>Alternatives: &quot;OK&quot;,&quot;Finish&quot;</translatorcomment>
-        <translation type="obsolete">Skalieren</translation>
     </message>
 </context>
 <context>
@@ -5787,14 +4452,6 @@ Die höchste unterstütze Version ist %2.</translation>
         <translation>Symbole auswählen</translation>
     </message>
     <message>
-        <source>All</source>
-        <translation type="obsolete">Alle</translation>
-    </message>
-    <message>
-        <source>Unused</source>
-        <translation type="obsolete">Unbenutzte</translation>
-    </message>
-    <message>
         <location filename="../src/symbol_dock_widget.cpp" line="745"/>
         <location filename="../src/symbol_dock_widget.cpp" line="759"/>
         <location filename="../src/symbol_dock_widget.cpp" line="772"/>
@@ -5901,34 +4558,6 @@ Die höchste unterstütze Version ist %2.</translation>
 <context>
     <name>SymbolSettingDialog</name>
     <message>
-        <source>General</source>
-        <translation type="obsolete">Allgemein</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Nummer:</translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation type="obsolete">Name:</translation>
-    </message>
-    <message>
-        <source>Description:</source>
-        <translation type="obsolete">Beschreibung:</translation>
-    </message>
-    <message>
-        <source>Helper symbol (not shown in finished map)</source>
-        <translation type="obsolete">Hilfssymbol (in fertiger Karte nicht sichtbar)</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Abbrechen</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="obsolete">OK</translation>
-    </message>
-    <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="54"/>
         <source>Symbol settings</source>
         <translation>Symboleinstellungen</translation>
@@ -5981,33 +4610,6 @@ to jump over the lazy dog
 von Oldenbourg hält, jagt im komplett
 verwahrlosten Taxi quer durch Bayern
 1234567890</translation>
-    </message>
-    <message>
-        <source>Start symbol</source>
-        <translation type="obsolete">Anfangssymbol</translation>
-    </message>
-    <message>
-        <source>Mid symbol</source>
-        <translatorcomment>Standardize German translation of Mid symbol. Standardize original.</translatorcomment>
-        <translation type="obsolete">Zwischensymbol</translation>
-    </message>
-    <message>
-        <source>End symbol</source>
-        <translation type="obsolete">Endsymbol</translation>
-    </message>
-    <message>
-        <source>Dash symbol</source>
-        <translation type="obsolete">Strichelungssymbol</translation>
-    </message>
-    <message>
-        <source>Symbol settings - Please enter a symbol name!</source>
-        <translatorcomment>Window title not the right place for hints. (Maybe invisible.)</translatorcomment>
-        <translation type="obsolete">Unbenanntes Symbol - Einstellungen</translation>
-    </message>
-    <message>
-        <source>Symbol settings for %1</source>
-        <translatorcomment>Modify original</translatorcomment>
-        <translation type="obsolete">Symbol %1 - Einstellungen</translation>
     </message>
 </context>
 <context>
@@ -6157,26 +4759,6 @@ verwahrlosten Taxi quer durch Bayern
     </message>
 </context>
 <context>
-    <name>TemplateGPS</name>
-    <message>
-        <source>Error</source>
-        <translation type="obsolete">Fehler</translation>
-    </message>
-    <message>
-        <source>The path is empty, there is nothing to import!</source>
-        <translatorcomment>FIXME: check original string.</translatorcomment>
-        <translation type="obsolete">Leere Aufzeichnung, nicht zum Importieren vorhanden!</translation>
-    </message>
-    <message>
-        <source>Question</source>
-        <translation type="obsolete">Frage</translation>
-    </message>
-    <message>
-        <source>Should the waypoints be imported as a line going through all points?</source>
-        <translation type="obsolete">Sollen Wegpunkte als Punkte eines Linienobjekts importiert werden?</translation>
-    </message>
-</context>
-<context>
     <name>TemplateImage</name>
     <message>
         <location filename="../src/template_image.cpp" line="132"/>
@@ -6199,10 +4781,6 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
 </context>
 <context>
     <name>TemplateImageOpenDialog</name>
-    <message>
-        <source>Open image template</source>
-        <translation type="obsolete">Vorlagenbild öffnen</translation>
-    </message>
     <message>
         <location filename="../src/template_image.cpp" line="443"/>
         <source>Opening %1</source>
@@ -6257,10 +4835,6 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
         <location filename="../src/template_image.cpp" line="477"/>
         <source>Template scale:  1 :</source>
         <translation>Vorlagenmaßstab: 1 :</translation>
-    </message>
-    <message>
-        <source>Different template scale 1 :</source>
-        <translation type="obsolete">Abweichender Vorlagenmaßstab 1 :</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="503"/>
@@ -6539,10 +5113,6 @@ Die höchste unterstütze Version ist %2.</translation>
         <translation>Hilfe</translation>
     </message>
     <message>
-        <source>Selected template(s)</source>
-        <translation type="obsolete">Ausgewählte Vorlage(n)</translation>
-    </message>
-    <message>
         <location filename="../src/template_dock_widget.cpp" line="139"/>
         <source>Move by hand</source>
         <translation>Frei verschieben</translation>
@@ -6559,10 +5129,6 @@ Die höchste unterstütze Version ist %2.</translation>
         <translation>Karte, Bild-, DXF-, GPX- oder OSM-Datei öffnen</translation>
     </message>
     <message>
-        <source>Georeference...</source>
-        <translation type="obsolete">Georeferenzieren...</translation>
-    </message>
-    <message>
         <location filename="../src/template_dock_widget.cpp" line="148"/>
         <source>Positioning...</source>
         <translation>Positionierung...</translation>
@@ -6576,35 +5142,6 @@ Die höchste unterstütze Version ist %2.</translation>
         <location filename="../src/template_dock_widget.cpp" line="245"/>
         <source>All files</source>
         <translation>Alle Dateien</translation>
-    </message>
-    <message>
-        <source>(Un)group</source>
-        <translation type="obsolete">Gruppieren / Gruppierung aufheben</translation>
-    </message>
-    <message>
-        <source>More...</source>
-        <translation type="obsolete">Mehr...</translation>
-    </message>
-    <message>
-        <source>Numeric transformation window</source>
-        <translation type="obsolete">Numerische Transformation</translation>
-    </message>
-    <message>
-        <source>Set transparent color...</source>
-        <translation type="obsolete">Transparente Farbe festlegen...</translation>
-    </message>
-    <message>
-        <source>Trace lines...</source>
-        <translation type="obsolete">Linien nachfahren...</translation>
-    </message>
-    <message>
-        <source>Open image or GPS track ...</source>
-        <translation type="obsolete">Bild oder GPS-Datei öffnen...</translation>
-    </message>
-    <message>
-        <source>Template files (*.bmp *.jpg *.jpeg *.gif *.png *.tiff *.gpx);;All files (*.*)</source>
-        <translatorcomment>Split, &quot;all files&quot; is redundant.</translatorcomment>
-        <translation type="obsolete">Vorlagen (*.bmp *.jpg *.jpeg *.gif *.png *.tiff *.gpx);;Alle Dateien (*.*)</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="255"/>
@@ -6648,19 +5185,6 @@ Vorlage konnte nicht geladen werden. Existiert diese Datei?</translation>
         <location filename="../src/template_dock_widget.cpp" line="841"/>
         <source>- Map -</source>
         <translation>- Karte -</translation>
-    </message>
-    <message>
-        <source>Find the moved template file</source>
-        <translation type="obsolete">Vorlage wiederfinden</translation>
-    </message>
-    <message>
-        <source>All files (*.*)</source>
-        <translation type="obsolete">Alle Dateien (*.*)</translation>
-    </message>
-    <message>
-        <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
-        <translatorcomment>verkürzt</translatorcomment>
-        <translation type="obsolete">Diese Datei passt nicht zur Vorlage. Datei im richtigen Format ausgewählt?</translation>
     </message>
 </context>
 <context>
@@ -6865,29 +5389,9 @@ Vorlage konnte nicht geladen werden. Existiert diese Datei?</translation>
         <translation>Position:</translation>
     </message>
     <message>
-        <source>Paragraph spacing [mm]:</source>
-        <translation type="obsolete">Absatzabstand [mm]:</translation>
-    </message>
-    <message>
-        <source>Character spacing [percentage of space character]:</source>
-        <translation type="obsolete">Zeichenabstand [prozentual bzgl. Leerzeichen]:</translation>
-    </message>
-    <message>
-        <source>use kerning</source>
-        <translation type="obsolete">Kerning verwenden</translation>
-    </message>
-    <message>
-        <source>Show OCAD compatibility settings</source>
-        <translation type="obsolete">OCAD-Kompatibilitätseinstellungen anzeigen</translation>
-    </message>
-    <message>
         <location filename="../src/symbol_text.cpp" line="651"/>
         <source>Line below paragraphs</source>
         <translation>Linie unter dem Absatz</translation>
-    </message>
-    <message>
-        <source>Enable</source>
-        <translation type="obsolete">Aktivieren</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="633"/>
@@ -6908,10 +5412,6 @@ Vorlage konnte nicht geladen werden. Existiert diese Datei?</translation>
         <location filename="../src/symbol_text.cpp" line="923"/>
         <source>Add custom tabulator</source>
         <translation>Tabulator hinzufügen</translation>
-    </message>
-    <message>
-        <source>Position [mm]:</source>
-        <translation type="obsolete">Position [mm]:</translation>
     </message>
 </context>
 <context>
