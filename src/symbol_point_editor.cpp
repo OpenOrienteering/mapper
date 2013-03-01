@@ -757,12 +757,14 @@ void PointSymbolEditorWidget::deleteCoordClicked()
 	PathObject* path = reinterpret_cast<PathObject*>(object);
 	
 	int row = coords_table->currentRow();
-	assert(row >= 0);
+	if (row < 0)
+		return;
 	
 	path->deleteCoordinate(row, false);
 	
 	updateCoordsTable();	// NOTE: incremental updates (to the curve start boxes) would be possible but mean some implementation effort
 	center_coords_button->setEnabled(path->getCoordinateCount() > 0);
+	updateDeleteCoordButton();
 	midpoint_object->update(true);
 	emit symbolEdited();
 }
