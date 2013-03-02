@@ -917,7 +917,7 @@ void DrawPathTool::updateStatusText()
 	{
 		//assert(!preview_path->isDirty());
 		float length = 0.001 * map()->getScaleDenominator() * preview_path->getPathCoordinateVector()[preview_path->getPart(0).path_coord_end_index].clen;
-		text += QString("<b>%1:</b> %2 <b>|</b> ").arg("Length [m]").arg(length, 0, 'f', 1);
+		text += QString("<b>%1:</b> %2 <b>|</b> ").arg(tr("Length [m]")).arg(length, 0, 'f', 1);
 	}
 	if (draw_dash_points)
 		text += tr("<b>Dash points on.</b> ");
