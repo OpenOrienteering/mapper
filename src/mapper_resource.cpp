@@ -73,6 +73,10 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			return locations;
 #endif
 			
+		case EXAMPLE:
+			resource_path = "/examples";
+			break;
+			
 		case SYMBOLSET:
 			// TODO: Translate directory name "my symbol sets"?
 			//       Possible Windows solution: desktop.ini

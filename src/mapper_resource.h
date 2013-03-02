@@ -39,6 +39,7 @@ namespace MapperResource
 		ASSISTANT,
 		MANUAL,
 		PROJ_DATA,
+		EXAMPLE,
 		SYMBOLSET,
 		TEST_DATA,
 		TRANSLATION

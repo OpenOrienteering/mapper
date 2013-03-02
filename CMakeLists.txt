@@ -217,6 +217,7 @@ endif()
 
 # Subdirectories
 
+add_subdirectory("examples")
 add_subdirectory("symbol sets")
 add_subdirectory("help")
 add_subdirectory("translations")
