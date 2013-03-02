@@ -488,11 +488,20 @@ bool MainWindow::openPath(const QString &path)
 	// Empty path does nothing. This also helps with the single instance application code.
 	if (path.isEmpty()) return true;
 	
+	MainWindow* const existing = findMainWindow(path);
+	if (existing)
+	{
+		existing->show();
+		existing->raise();
+		existing->activateWindow();
+		return true;
+	}
+	
 	// Check a blocker that prevents immediate re-opening of crashing files.
 	// Needed for stopping auto-loading a crashing file on startup.
 	static const QString reopen_blocker = "open_in_progress";
 	QSettings settings;
-	QString open_in_progress = settings.value(reopen_blocker, QString("")).toString();
+	const QString open_in_progress(settings.value(reopen_blocker).toString());
 	if (open_in_progress == path)
 	{
 		int result = QMessageBox::warning(this, tr("Crash warning"), 
@@ -506,24 +515,17 @@ bool MainWindow::openPath(const QString &path)
 	settings.setValue(reopen_blocker, path);
 	settings.sync();
 	
-	MainWindow* existing = findMainWindow(path);
-	if (existing)
-	{
-		existing->show();
-		existing->raise();
-		existing->activateWindow();
-		return true;
-	}
-	
-	MainWindowController* new_controller = MainWindowController::controllerForFile(path);
+	MainWindowController* const new_controller = MainWindowController::controllerForFile(path);
 	if (!new_controller)
 	{
 		QMessageBox::warning(this, tr("Error"), tr("Cannot open file:\n%1\n\nFile format not recognized.").arg(path));
+		settings.remove(reopen_blocker);
 		return false;
 	}
 	if (!new_controller->load(path))
 	{
 		delete new_controller;
+		settings.remove(reopen_blocker);
 		return false;
 	}
 	
