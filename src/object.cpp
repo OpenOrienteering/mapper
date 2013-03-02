@@ -21,6 +21,7 @@
 #include "object.h"
 
 #include <qmath.h>
+#include <QtCore/qnumeric.h>
 #include <QDebug>
 #include <QIODevice>
 #include <QXmlStreamAttributes>
@@ -1486,7 +1487,7 @@ void PathObject::calcBezierPointDeletionRetainingShapeFactors(MapCoord p0, MapCo
 	double p_length = p_curve.length(PathCoord::bezier_error);
 	QBezierCopy q_curve = QBezierCopy::fromPoints(q0.toQPointF(), q1.toQPointF(), q2.toQPointF(), q3.toQPointF());
 	double q_length = q_curve.length(PathCoord::bezier_error);
-	double sp = p_length / (p_length + q_length);
+	double sp = p_length / qMax(1e-08, p_length + q_length);
 	
 	// Least squares curve fitting with the constraint that handles are on the same line as before.
 	// To reproduce the formulas, run the following Matlab script:
@@ -2629,6 +2630,12 @@ void PathObject::deleteCoordinate(int pos, bool adjust_other_coords, int delete_
 				else if (delete_bezier_point_action == Settings::DeleteBezierPoint_RetainExistingShape)
 				{
 					calcBezierPointDeletionRetainingShapeFactors(p0, p1, p2, q0, q1, q2, q3, pfactor, qfactor);
+					
+					if (qIsInf(pfactor))
+						pfactor = 1;
+					if (qIsInf(qfactor))
+						qfactor = 1;
+					
 					calcBezierPointDeletionRetainingShapeOptimization(p0, p1, p2, q0, q1, q2, q3, pfactor, qfactor);
 					
 					double minimum_length = 0.01 * p0.lengthTo(q3);

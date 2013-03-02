@@ -1263,7 +1263,7 @@
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="166"/>
         <source>On CRS changes, keep:</source>
-        <translation>Bei Änderungen des Koordinatenbezugssystems, behalte bei:</translation>
+        <translation type="unfinished">Bei Änderungen des&lt;br/&gt;Koordinatenbezugssystems, behalte bei:</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="172"/>
