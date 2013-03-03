@@ -62,6 +62,7 @@
 #include "tool_boolean.h"
 #include "tool_cut.h"
 #include "tool_cut_hole.h"
+#include "tool_cutout.h"
 #include "tool_draw_circle.h"
 #include "tool_draw_path.h"
 #include "tool_draw_point.h"
@@ -244,7 +245,14 @@ void MapEditorController::removeTemplatePositionDockWidget(Template* temp)
 bool MapEditorController::save(const QString& path)
 {
 	if (map)
+	{
+		if (editing_in_progress)
+		{
+			QMessageBox::warning(window, tr("Editing in progress"), tr("The map is currently being edited. Please finish the edit operation before saving."));
+			return false;
+		}
 		return map->saveTo(path, this);
+	}
 	else
 		return false;
 }
@@ -511,6 +519,8 @@ void MapEditorController::createMenuAndToolbars()
 	boolean_xor_act = newAction("booleanxor", tr("Area XOr"), this, SLOT(booleanXOrClicked()), "tool-boolean-xor.png", QString::null, "toolbars.html#area_xor");
 	convert_to_curves_act = newAction("converttocurves", tr("Convert to curves"), this, SLOT(convertToCurvesClicked()), "tool-convert-to-curves.png", QString::null, "toolbars.html#convert_to_curves");
 	simplify_path_act = newAction("simplify", tr("Simplify path"), this, SLOT(simplifyPathClicked()), "tool-simplify-path.png", QString::null, "toolbars.html#simplify_path");
+	cutout_physical_act = newToolAction("cutoutphysical", tr("Cutout"), this, SLOT(cutoutPhysicalClicked()), "tool-cutout-physical.png", QString::null, "toolbars.html#cutout_physical");
+	cutaway_physical_act = newToolAction("cutawayphysical", tr("Cut away"), this, SLOT(cutawayPhysicalClicked()), "tool-cutout-physical-inner.png", QString::null, "toolbars.html#cutaway_physical");
 	
 	paint_on_template_act = new QAction(QIcon(":/images/pencil.png"), tr("Paint on template"), this);
 	paint_on_template_act->setCheckable(true);
@@ -620,8 +630,6 @@ void MapEditorController::createMenuAndToolbars()
 	tools_menu->addAction(boolean_intersection_act);
 	tools_menu->addAction(boolean_difference_act);
 	tools_menu->addAction(boolean_xor_act);
-	tools_menu->addAction(convert_to_curves_act);
-	tools_menu->addAction(simplify_path_act);
 	tools_menu->addAction(cut_tool_act);
 	cut_hole_menu = new QMenu(tr("Cut hole"));
 	cut_hole_menu->setIcon(QIcon(":/images/tool-cut-hole.png"));
@@ -633,6 +641,10 @@ void MapEditorController::createMenuAndToolbars()
 	tools_menu->addAction(rotate_pattern_act);
 	tools_menu->addAction(scale_act);
 	tools_menu->addAction(measure_act);
+	tools_menu->addAction(convert_to_curves_act);
+	tools_menu->addAction(simplify_path_act);
+	tools_menu->addAction(cutout_physical_act);
+	tools_menu->addAction(cutaway_physical_act);
 	
 	// Map menu
 	QMenu* map_menu = window->menuBar()->addMenu(tr("M&ap"));
@@ -749,6 +761,8 @@ void MapEditorController::createMenuAndToolbars()
 	// Advanced editing toolbar
 	toolbar_advanced_editing = window->addToolBar(tr("Advanced editing"));
 	toolbar_advanced_editing->setObjectName("Advanved editing toolbar");
+	toolbar_advanced_editing->addAction(cutout_physical_act);
+	toolbar_advanced_editing->addAction(cutaway_physical_act);
 	toolbar_advanced_editing->addAction(convert_to_curves_act);
 	toolbar_advanced_editing->addAction(simplify_path_act);
 	toolbar_advanced_editing->addAction(boolean_intersection_act);
@@ -1131,7 +1145,7 @@ void MapEditorController::showSymbolWindow(bool show)
 		
 		connect(symbol_widget, SIGNAL(switchSymbolClicked()), this, SLOT(switchSymbolClicked()));
 		connect(symbol_widget, SIGNAL(fillBorderClicked()), this, SLOT(fillBorderClicked()));
-		connect(symbol_widget, SIGNAL(selectObjectsClicked()), this, SLOT(selectObjectsClicked()));
+		connect(symbol_widget, SIGNAL(selectObjectsClicked(bool)), this, SLOT(selectObjectsClicked(bool)));
 		connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
 		selectedSymbolsChanged();
 	}
@@ -1426,6 +1440,10 @@ void MapEditorController::objectSelectionChanged()
 	convert_to_curves_act->setStatusTip(tr("Turn paths made of straight segments into smooth bezier splines.") + (convert_to_curves_act->isEnabled() ? "" : (" " + tr("Select a path object to activate this tool."))));
 	simplify_path_act->setEnabled(have_area || have_line);
 	simplify_path_act->setStatusTip(tr("Reduce the number of points in path objects while trying to retain their shape.") + (convert_to_curves_act->isEnabled() ? "" : (" " + tr("Select a path object to activate this tool."))));
+	cutout_physical_act->setEnabled((have_area || have_line) && single_object_selected && (*(map->selectedObjectsBegin()))->asPath()->getPart(0).isClosed() && (*(map->selectedObjectsBegin()))->asPath()->getNumParts() == 1);
+	cutout_physical_act->setStatusTip(tr("Create a cutout of some objects or the whole map.") + (cutout_physical_act->isEnabled() ? "" : (" " + tr("Select a closed path object as cutout shape to activate this tool."))));
+	cutaway_physical_act->setEnabled(cutout_physical_act->isEnabled());
+	cutaway_physical_act->setStatusTip(tr("Cut away some objects or everything in a limited area.") + (cutout_physical_act->isEnabled() ? "" : (" " + tr("Select a closed path object as cutout shape to activate this tool."))));
 	
 	// Automatic symbol selection of selected objects
 	if (symbol_widget && uniform_symbol_selected && Settings::getInstance().getSettingCached(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool())
@@ -1538,6 +1556,7 @@ void MapEditorController::duplicateClicked()
 		map->addObjectToSelection(new_objects[i], i == (int)new_objects.size() - 1);
 	}
 	
+	map->setObjectsDirty();
 	map->objectUndoManager().addNewUndoStep(undo_step);
 	setEditTool();
 	window->statusBar()->showMessage(tr("%1 object(s) duplicated").arg((int)new_objects.size()), 2000);
@@ -1689,6 +1708,7 @@ void MapEditorController::fillBorderClicked()
 		}
 	}
 	
+	map->setObjectsDirty();
 	map->clearObjectSelection(false);
 	for (int i = 0; i < (int)new_objects.size(); ++i)
 	{
@@ -1697,22 +1717,37 @@ void MapEditorController::fillBorderClicked()
 	}
 	map->objectUndoManager().addNewUndoStep(undo_step);
 }
-void MapEditorController::selectObjectsClicked()
+void MapEditorController::selectObjectsClicked(bool select_exclusively)
 {
-	map->clearObjectSelection(false);
-	
+	bool selection_changed = false;
+	if (select_exclusively)
+	{
+		if (map->getNumSelectedObjects() > 0)
+			selection_changed = true;
+		map->clearObjectSelection(false);
+	}
+
+	bool object_selected = false;	
 	MapPart* part = map->getCurrentPart();
 	for (int i = 0, size = map->getNumObjects(); i < size; ++i)
 	{
 		Object* object = part->getObject(i);
-		if (symbol_widget->isSymbolSelected(object->getSymbol()))
+		if (symbol_widget->isSymbolSelected(object->getSymbol()) && !(!select_exclusively && map->isObjectSelected(object)))
+		{
 			map->addObjectToSelection(object, false);
+			object_selected = true;
+		}
 	}
 	
-	map->emitSelectionChanged();
+	selection_changed |= object_selected;
+	if (selection_changed)
+		map->emitSelectionChanged();
 	
-	if (map->getNumSelectedObjects() > 0)
-		setEditTool();
+	if (object_selected)
+	{
+		if (current_tool && MapEditorTool::isDrawTool(current_tool->getType()))
+			setEditTool();
+	}
 	else
 		QMessageBox::warning(window, tr("Object selection"), tr("No objects were selected because there are no objects with the selected symbol(s)."));
 }
@@ -1960,6 +1995,7 @@ void MapEditorController::connectPathsClicked()
 		if (replace_step)
 			undo_step->addSubStep(replace_step);
 		map->objectUndoManager().addNewUndoStep(undo_step);
+		map->setObjectsDirty();
 	}
 	
 	map->emitSelectionChanged();
@@ -2101,6 +2137,16 @@ void MapEditorController::simplifyPathClicked()
 		map->objectUndoManager().addNewUndoStep(undo_step);
 		map->emitSelectionEdited();
 	}
+}
+
+void MapEditorController::cutoutPhysicalClicked()
+{
+	setTool(new CutoutTool(this, cutout_physical_act, false));
+}
+
+void MapEditorController::cutawayPhysicalClicked()
+{
+	setTool(new CutoutTool(this, cutaway_physical_act, true));
 }
 
 void MapEditorController::addFloatingDockWidget(QDockWidget* dock_widget)

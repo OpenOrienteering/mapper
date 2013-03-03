@@ -38,7 +38,7 @@
 QCursor* DrawRectangleTool::cursor = NULL;
 
 DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : DrawLineAndAreaTool(editor, tool_button, symbol_widget),
+ : DrawLineAndAreaTool(editor, DrawRectangle, tool_button, symbol_widget),
    angle_helper(new ConstrainAngleToolHelper()),
    snap_helper(new SnappingToolHelper(map()))
 {

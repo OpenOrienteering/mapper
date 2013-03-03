@@ -92,6 +92,7 @@ public:
 	virtual UndoStep* undo();
 	
 	virtual void getAffectedOutcome(std::vector< Object* >& out) const {out.clear();}
+	inline bool isEmpty() const {return affected_objects.empty();}
 };
 
 class AddObjectsUndoStep : public ObjectContainingUndoStep
@@ -100,6 +101,12 @@ Q_OBJECT
 public:
 	AddObjectsUndoStep(Map* map);
 	virtual UndoStep* undo();
+	
+	/// Removes all contained objects from the map.
+	/// This can be useful after constructing the undo step,
+	/// as it is often impractical to remove the objects directly
+	/// when adding them as the indexing would be changed this way.
+	void removeContainedObjects(bool emit_selection_changed);
 protected:
 	static bool sortOrder(const std::pair<int, int>& a, const std::pair<int, int>& b);
 };

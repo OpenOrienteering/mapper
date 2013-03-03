@@ -170,9 +170,46 @@ public:
 		/// Calculates the number of points, excluding close points and curve handles
 		int calcNumRegularPoints();
 		
+		/// This returns the *cumulative length* at the part end!
+		/// TODO: rename method
 		double getLength();
 		double calculateArea();
 	};
+	
+	/// Returned by calcAllIntersectionsWith().
+	struct Intersection
+	{
+		/// Coordinate of the intersection
+		MapCoordF coord;
+		/// Part index of intersection
+		int part_index;
+		/// Length of path until this intersection point
+		double length;
+		/// Part index of intersection in other path
+		int other_part_index;
+		/// Length of other path until this intersection point
+		double other_length;
+		
+		inline bool operator< (const Intersection& b) const {return length < b.length;}
+		inline bool operator== (const Intersection& b) const
+		{
+			// NOTE: coord is not compared, as the intersection is defined by the other params already.
+			const double epsilon = 1e-10;
+			return part_index == b.part_index &&
+				qAbs(length - b.length) <= epsilon &&
+				other_part_index == b.other_part_index &&
+				qAbs(other_length - b.other_length) <= epsilon;
+		}
+		
+		static Intersection makeIntersectionAt(double a, double b, const PathCoord& a0, const PathCoord& a1, const PathCoord& b0, const PathCoord& b1, int part_index, int other_part_index);
+	};
+	class Intersections : public std::vector<Intersection>
+	{
+	public:
+		/// Sorts the intersections and removes duplicates.
+		void clean();
+	};
+	
 	
 	PathObject(Symbol* symbol = NULL);
 	PathObject(Symbol* symbol, const MapCoordVector& coords, Map* map = 0);
@@ -229,7 +266,7 @@ public:
 	bool canBeConnected(PathObject* other, double connect_threshold_sq);
 	/// Returns if the objects were connected (if so, you can delete the other object). If one of the paths has to be reversed, it is done for the "other" path. Otherwise, the "other" path is not changed.
 	bool connectIfClose(PathObject* other, double connect_threshold_sq);
-	/// Connects the given parts, merging the end coordinates at the center position and copying over the coorindates from other.
+	/// Connects the given parts, merging the end coordinates at the center position and copying over the coordindates from other.
 	void connectPathParts(int part_index, PathObject* other, int other_part_index, bool prepend);
 	/// Splits the path into up to two parts at the given position
 	void splitAt(const PathCoord& split_pos, Object*& out1, Object*& out2);
@@ -260,10 +297,17 @@ public:
 	bool simplify(PathObject** undo_duplicate = NULL);
 	/// See Object::isPointOnObject()
 	int isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection);
+	/// Returns true if the given coordinate is inside the area defined by this object, which must be closed.
+	bool isPointInsideArea(MapCoordF coord);
 	/// Calculates the average distance (of the first part) to another path
 	float calcAverageDistanceTo(PathObject* other);
 	/// Calculates the maximum distance (of the first part) to another path
 	float calcMaximumDistanceTo(PathObject* other);
+	/// Calculates and adds all intersections with the other path to out.
+	/// Note: intersections are not sorted and may contain duplicates!
+	/// To clean them up, call clean() on the Intersections object after adding
+	/// all intersections with objects you are interested in.
+	void calcAllIntersectionsWith(PathObject* other, Intersections& out);
 	
 	/// Called by Object::update()
 	void updatePathCoords(MapCoordVectorF& float_coords);

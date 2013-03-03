@@ -150,7 +150,7 @@ void MapPart::setObject(Object* object, int pos, bool delete_old)
 	bool delete_old_renderables = object->getMap() == map;
 	object->setMap(map);
 	object->update(true, delete_old_renderables);
-	map->setObjectsDirty();
+	map->setObjectsDirty(); // TODO: remove from here, dirty state handling should be separate
 }
 
 void MapPart::addObject(Object* object, int pos)
@@ -158,7 +158,6 @@ void MapPart::addObject(Object* object, int pos)
 	objects.insert(objects.begin() + pos, object);
 	object->setMap(map);
 	object->update(true, true);
-	map->setObjectsDirty();
 	
 	if (map->getNumObjects() == 1)
 		map->updateAllMapWidgets();
@@ -172,7 +171,6 @@ void MapPart::deleteObject(int pos, bool remove_only)
 	else
 		delete objects[pos];
 	objects.erase(objects.begin() + pos);
-	map->setObjectsDirty();
 	
 	if (map->getNumObjects() == 0)
 		map->updateAllMapWidgets();

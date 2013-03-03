@@ -95,6 +95,11 @@ QWidget* MapEditorTool::window() const
 	return editor->getWindow();
 }
 
+bool MapEditorTool::isDrawTool(MapEditorTool::Type type)
+{
+	return type == DrawPoint || type == DrawPath || type == DrawCircle || type == DrawRectangle || type == DrawText;
+}
+
 void MapEditorTool::loadPointHandles()
 {
 	if (!point_handles)

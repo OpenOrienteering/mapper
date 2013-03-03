@@ -72,7 +72,7 @@ public:
 	inline MapEditorTool* getTool() const {return current_tool;}
 	MapEditorTool* getDefaultDrawToolForSymbol(Symbol* symbol);
 	
-	/// If this is set to true (usually by the current tool), undo/redo is deactivated
+	/// If this is set to true (usually by the current tool), undo/redo and saving the map is deactivated
 	void setEditingInProgress(bool value);
 	
 	/// Adds a a floating dock widget to the main window. Adjusts some geometric properties.
@@ -163,7 +163,7 @@ public slots:
 	void duplicateClicked();
 	void switchSymbolClicked();
 	void fillBorderClicked();
-	void selectObjectsClicked();	// Selects all objects with the selected symbol(s)
+	void selectObjectsClicked(bool select_exclusively);	// Selects all objects with the selected symbol(s)
 	void switchDashesClicked();
 	void connectPathsClicked();
 	void cutClicked();
@@ -180,6 +180,8 @@ public slots:
 	void booleanXOrClicked();
 	void convertToCurvesClicked();
 	void simplifyPathClicked();
+	void cutoutPhysicalClicked();
+	void cutawayPhysicalClicked();
 	
 	void paintOnTemplateClicked(bool checked);
 	void paintOnTemplateSelectClicked();
@@ -304,6 +306,8 @@ private:
 	QAction* boolean_xor_act;
 	QAction* convert_to_curves_act;
 	QAction* simplify_path_act;
+	QAction* cutout_physical_act;
+	QAction* cutaway_physical_act;
 	
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;

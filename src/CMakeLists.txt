@@ -103,6 +103,7 @@ set(Mapper_Common_SRCS
  tool_draw_text.cpp
  tool_cut.cpp
  tool_cut_hole.cpp
+ tool_cutout.cpp
  tool_rotate.cpp
  tool_rotate_pattern.cpp
  tool_scale.cpp
@@ -177,6 +178,7 @@ set(Mapper_Common_MOC_INPUT
  tool_base.h
  tool_cut.h
  tool_cut_hole.h
+ tool_cutout.h
  tool_draw_circle.h
  tool_draw_line_and_area.h
  tool_draw_path.h

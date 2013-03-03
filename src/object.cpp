@@ -2376,25 +2376,30 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 	// Check for area selection
 	if ((contained_types & Symbol::Area) && !treat_areas_as_paths)
 	{
-		update(false);
-		bool inside = false;
-		for (int part = 0, end = (int)parts.size(); part < end; ++part)
-		{
-			int size = parts[part].path_coord_end_index + 1;
-			int i, j;
-			for (i = parts[part].path_coord_start_index, j = size - 1; i < size; j = i++)
-			{
-				if ( ((path_coords[i].pos.getY() > coord.getY()) != (path_coords[j].pos.getY() > coord.getY())) &&
-					(coord.getX() < (path_coords[j].pos.getX() - path_coords[i].pos.getX()) *
-					(coord.getY() - path_coords[i].pos.getY()) / (path_coords[j].pos.getY() - path_coords[i].pos.getY()) + path_coords[i].pos.getX()) )
-					inside = !inside;
-			}
-		}
-		if (inside)
+		if (isPointInsideArea(coord))
 			return Symbol::Area;
 	}
 	
 	return Symbol::NoSymbol;
+}
+
+bool PathObject::isPointInsideArea(MapCoordF coord)
+{
+	update(false);
+	bool inside = false;
+	for (int part = 0, end = (int)parts.size(); part < end; ++part)
+	{
+		int size = parts[part].path_coord_end_index + 1;
+		int i, j;
+		for (i = parts[part].path_coord_start_index, j = size - 1; i < size; j = i++)
+		{
+			if ( ((path_coords[i].pos.getY() > coord.getY()) != (path_coords[j].pos.getY() > coord.getY())) &&
+				(coord.getX() < (path_coords[j].pos.getX() - path_coords[i].pos.getX()) *
+				(coord.getY() - path_coords[i].pos.getY()) / (path_coords[j].pos.getY() - path_coords[i].pos.getY()) + path_coords[i].pos.getX()) )
+				inside = !inside;
+		}
+	}
+	return inside;
 }
 
 float PathObject::calcAverageDistanceTo(PathObject* other)
@@ -2471,6 +2476,303 @@ float PathObject::calcMaximumDistanceTo(PathObject* other)
 	}
 	
 	return max_distance;
+}
+
+PathObject::Intersection PathObject::Intersection::makeIntersectionAt(double a, double b, const PathCoord& a0, const PathCoord& a1, const PathCoord& b0, const PathCoord& b1, int part_index, int other_part_index)
+{
+	PathObject::Intersection new_intersection;
+	new_intersection.coord = MapCoordF(a0.pos.getX() + a * (a1.pos.getX() - a0.pos.getX()), a0.pos.getY() + a * (a1.pos.getY() - a0.pos.getY()));
+	new_intersection.part_index = part_index;
+	new_intersection.length = a0.clen + a * (a1.clen - a0.clen);
+	new_intersection.other_part_index = other_part_index;
+	new_intersection.other_length = b0.clen + b * (b1.clen - b0.clen);
+	return new_intersection;
+}
+
+void PathObject::Intersections::clean()
+{
+	// Sort
+	std::sort(begin(), end());
+	
+	// Remove duplicates
+	if (size() > 1)
+	{
+		size_t i = size() - 1;
+		size_t next = i - 1;
+		while (next < i)
+		{
+			if (at(i) == at(next))
+				erase(begin() + i);
+			
+			i = next;
+			--next;
+		}
+	}
+}
+
+void PathObject::calcAllIntersectionsWith(PathObject* other, PathObject::Intersections& out)
+{
+	update();
+	other->update();
+	
+	const double epsilon = 1e-10;
+	const double zero_minus_epsilon = 0 - epsilon;
+	const double one_plus_epsilon = 1 + epsilon;
+	
+	for (size_t part_index = 0; part_index < parts.size(); ++part_index)
+	{
+		PathPart& part = getPart(part_index);
+		for (int i = part.path_coord_start_index + 1; i <= part.path_coord_end_index; ++i)
+		{
+			// Get information about this path coord
+			bool has_segment_before = (i > part.path_coord_start_index + 1) || part.isClosed();
+			MapCoordF ingoing_direction;
+			if (has_segment_before && i == part.path_coord_start_index + 1)
+			{
+				Q_ASSERT(part.path_coord_end_index >= 1 && part.path_coord_end_index < (int)path_coords.size());
+				ingoing_direction = path_coords[part.path_coord_end_index].pos - path_coords[part.path_coord_end_index - 1].pos;
+				ingoing_direction.normalize();
+			}
+			else if (has_segment_before)
+			{
+				Q_ASSERT(i >= 1 && i < (int)path_coords.size());
+				ingoing_direction = path_coords[i-1].pos - path_coords[i-2].pos;
+				ingoing_direction.normalize();
+			}
+			
+			bool has_segment_after = (i < part.path_coord_end_index) || part.isClosed();
+			MapCoordF outgoing_direction;
+			if (has_segment_after && i == part.path_coord_end_index)
+			{
+				Q_ASSERT(part.path_coord_start_index >= 0 && part.path_coord_start_index < (int)path_coords.size() - 1);
+				outgoing_direction = path_coords[part.path_coord_start_index+1].pos - path_coords[part.path_coord_start_index].pos;
+				outgoing_direction.normalize();
+			}
+			else if (has_segment_after)
+			{
+				Q_ASSERT(i >= 0 && i < (int)path_coords.size() - 1);
+				outgoing_direction = path_coords[i+1].pos - path_coords[i].pos;
+				outgoing_direction.normalize();
+			}
+			
+			// Collision state with other object at current other path coord
+			bool colliding = false;
+			// Last known intersecting point.
+			// This is valid as long as colliding == true and entered as intersection
+			// when the next segment suddenly is not colliding anymore.
+			Intersection last_intersection;
+			
+			for (size_t other_part_index = 0; other_part_index < other->parts.size(); ++other_part_index)
+			{
+				PathPart& other_part = other->getPart(part_index);
+				for (int k = other_part.path_coord_start_index + 1; k <= other_part.path_coord_end_index; ++k)
+				{
+					// Test the two line segments against each other.
+					// Naming: segment in this path is a, segment in other path is b
+					PathCoord& a0 = path_coords[i-1];
+					PathCoord& a1 = path_coords[i];
+					PathCoord& b0 = other->path_coords[k-1];
+					PathCoord& b1 = other->path_coords[k];
+					MapCoordF b_direction = b1.pos - b0.pos;
+					b_direction.normalize();
+					
+					bool first_other_segment = (k == other_part.path_coord_start_index + 1);
+					if (first_other_segment)
+					{
+						colliding = isPointOnSegment(a0.pos, a1.pos, b0.pos);
+						if (colliding && !other_part.isClosed())
+						{
+							// Enter intersection at start of other segment
+							bool ok;
+							double a = parameterOfPointOnLine(a0.pos.getX(), a0.pos.getY(), a1.pos.getX() - a0.pos.getX(), a1.pos.getY() - a0.pos.getY(), b0.pos.getX(), b0.pos.getY(), ok);
+							Q_ASSERT(ok);
+							out.push_back(Intersection::makeIntersectionAt(a, 0, a0, a1, b0, b1, part_index, other_part_index));
+						}
+					}
+					
+					bool last_other_segment = (k == other_part.path_coord_end_index);
+					if (last_other_segment)
+					{
+						bool collision_at_end = isPointOnSegment(a0.pos, a1.pos, b1.pos);
+						if (collision_at_end && !other_part.isClosed())
+						{
+							// Enter intersection at end of other segment
+							bool ok;
+							double a = parameterOfPointOnLine(a0.pos.getX(), a0.pos.getY(), a1.pos.getX() - a0.pos.getX(), a1.pos.getY() - a0.pos.getY(), b1.pos.getX(), b1.pos.getY(), ok);
+							Q_ASSERT(ok);
+							out.push_back(Intersection::makeIntersectionAt(a, 1, a0, a1, b0, b1, part_index, other_part_index));
+						}
+					}
+					
+					double denominator = a0.pos.getX()*b0.pos.getY() - a0.pos.getY()*b0.pos.getX() - a0.pos.getX()*b1.pos.getY() - a1.pos.getX()*b0.pos.getY() + a0.pos.getY()*b1.pos.getX() + a1.pos.getY()*b0.pos.getX() + a1.pos.getX()*b1.pos.getY() - a1.pos.getY()*b1.pos.getX();
+					if (denominator == 0)
+					{
+						// Parallel lines, calculate parameters for b's start and end points in a and b.
+						// This also checks whether the lines are actually on the same level.
+						bool ok;
+						double b_start = 0;
+						double a_start = parameterOfPointOnLine(a0.pos.getX(), a0.pos.getY(), a1.pos.getX() - a0.pos.getX(), a1.pos.getY() - a0.pos.getY(), b0.pos.getX(), b0.pos.getY(), ok);
+						if (!ok)
+						{
+							if (colliding) out.push_back(last_intersection);
+							colliding = false;
+							continue;
+						}
+						double b_end = 1;
+						double a_end = parameterOfPointOnLine(a0.pos.getX(), a0.pos.getY(), a1.pos.getX() - a0.pos.getX(), a1.pos.getY() - a0.pos.getY(), b1.pos.getX(), b1.pos.getY(), ok);
+						if (!ok)
+						{
+							if (colliding) out.push_back(last_intersection);
+							colliding = false;
+							continue;
+						}
+						
+						// Cull ranges
+						if (a_start < zero_minus_epsilon && a_end < zero_minus_epsilon)
+						{
+							if (colliding) out.push_back(last_intersection);
+							colliding = false;
+							continue;
+						}
+						if (a_start > one_plus_epsilon && a_end > one_plus_epsilon)
+						{
+							if (colliding) out.push_back(last_intersection);
+							colliding = false;
+							continue;
+						}
+						
+						// b overlaps somehow with a, check if we have to enter one or two collisions
+						// (provided the incoming / outgoing tangents are not parallel!)
+						if (!colliding)
+						{
+							if (a_start <= 0)
+							{
+								// b comes in over the start of a
+								Q_ASSERT(a_end >= 0);
+								
+								// Check for parallel tangent case
+								if (!has_segment_before || b_direction.dot(ingoing_direction) < 1 - epsilon)
+								{
+									// Enter intersection at a=0
+									double b = b_start + (0 - a_start) / (a_end - a_start) * (b_end - b_start);
+									out.push_back(Intersection::makeIntersectionAt(0, b, a0, a1, b0, b1, part_index, other_part_index));
+								}
+								
+								colliding = true;
+							}
+							else if (a_start >= 1)
+							{
+								// b comes in over the end of a
+								Q_ASSERT(a_end <= 1);
+								
+								// Check for parallel tangent case
+								if (!has_segment_after || -1 * b_direction.dot(outgoing_direction) < 1 - epsilon)
+								{
+									// Enter intersection at a=1
+									double b = b_start + (1 - a_start) / (a_end - a_start) * (b_end - b_start);
+									out.push_back(Intersection::makeIntersectionAt(1, b, a0, a1, b0, b1, part_index, other_part_index));
+								}
+								
+								colliding = true;
+							}
+							else
+								Q_ASSERT(false);
+						}
+						if (colliding)
+						{
+							if (a_end > 1)
+							{
+								// b goes out over the end of a
+								Q_ASSERT(a_start <= 1);
+								
+								// Check for parallel tangent case
+								if (!has_segment_after || b_direction.dot(outgoing_direction) < 1 - epsilon)
+								{
+									// Enter intersection at a=1
+									double b = b_start + (1 - a_start) / (a_end - a_start) * (b_end - b_start);
+									out.push_back(Intersection::makeIntersectionAt(1, b, a0, a1, b0, b1, part_index, other_part_index));
+								}
+								
+								colliding = false;
+							}
+							else if (a_end < 0)
+							{
+								// b goes out over the start of a
+								Q_ASSERT(a_start >= 1);
+								
+								// Check for parallel tangent case
+								if (!has_segment_before || -1 * b_direction.dot(ingoing_direction) < 1 - epsilon)
+								{
+									// Enter intersection at a=0
+									double b = b_start + (0 - a_start) / (a_end - a_start) * (b_end - b_start);
+									out.push_back(Intersection::makeIntersectionAt(1, b, a0, a1, b0, b1, part_index, other_part_index));
+								}
+								
+								colliding = false;
+							}
+							else
+							{
+								// b stops in the middle of a.
+								// Remember last known colliding point, the endpoint of b.
+								last_intersection = Intersection::makeIntersectionAt(a_end, 1, a0, a1, b0, b1, part_index, other_part_index);
+							}
+						}
+						
+						// Check if there is a collision at the endpoint
+						Q_ASSERT(colliding == (a_end >= 0 && a_end <= 1));
+					}
+					else
+					{
+						// Non-parallel lines, calculate intersection parameters and check if in range
+						double a = +(a0.pos.getX()*b0.pos.getY() - a0.pos.getY()*b0.pos.getX() - a0.pos.getX()*b1.pos.getY() + a0.pos.getY()*b1.pos.getX() + b0.pos.getX()*b1.pos.getY() - b1.pos.getX()*b0.pos.getY()) / denominator;
+						if (a < zero_minus_epsilon || a > one_plus_epsilon)
+						{
+							if (colliding) out.push_back(last_intersection);
+							colliding = false;
+							continue;
+						}
+						
+						double b = -(a0.pos.getX()*a1.pos.getY() - a1.pos.getX()*a0.pos.getY() - a0.pos.getX()*b0.pos.getY() + a0.pos.getY()*b0.pos.getX() + a1.pos.getX()*b0.pos.getY() - a1.pos.getY()*b0.pos.getX()) / denominator;
+						if (b < zero_minus_epsilon || b > one_plus_epsilon)
+						{
+							if (colliding) out.push_back(last_intersection);
+							colliding = false;
+							continue;
+						}
+						
+						// Special case for overlapping (cloned / traced) polylines: check if b is parallel to adjacent direction.
+						// If so, set colliding to true / false without entering an intersection because the other line
+						// simply continues along / comes from the path of both polylines instead of intersecting.
+						double dot = -1;
+						if (has_segment_before && a <= 0 + epsilon)
+						{
+							// Ingoing direction
+							dot = b_direction.dot(ingoing_direction);
+							if (b <= 0 + epsilon)
+								dot = -1 * dot;
+						}
+						else if (has_segment_after && a >= 1 - epsilon)
+						{
+							// Outgoing direction
+							dot = b_direction.dot(outgoing_direction);
+							if (b >= 1 - epsilon)
+								dot = -1 * dot;
+						}
+						if (dot >= 1 - epsilon)
+						{
+							colliding = (b > 0.5);
+							continue;
+						}
+						
+						// Enter the intersection
+						last_intersection = Intersection::makeIntersectionAt(a, b, a0, a1, b0, b1, part_index, other_part_index);
+						out.push_back(last_intersection);
+						colliding = (b == 1);
+					}
+				}
+			}
+		}
+	}
 }
 
 void PathObject::setCoordinate(int pos, MapCoord c)

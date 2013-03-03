@@ -37,6 +37,8 @@ class PathCoord;
 class BooleanTool
 {
 public:
+	typedef std::vector< PathObject* > PathObjects;
+	
 	enum Operation
 	{
 		Union = 0,
@@ -48,12 +50,19 @@ public:
 	BooleanTool(Map* map);
 	bool execute(Operation op);
 	
+	/// Executes the given operation on in_objects, returning the result in out_objects.
+	/// subject must be contained in in_objects.
+	/// The symbol of the returned objects will be result_objects_symbol.
+	bool executeForObjects(Operation op, PathObject* subject, Symbol* result_objects_symbol, PathObjects& in_objects, PathObjects& out_objects);
+	
+	/// Takes a line as subject.
+	/// Only the Intersection and Difference operations are implemented for now.
+	void executeForLine(Operation op, PathObject* area, PathObject* line, PathObjects& out_objects);
+	
 private:
-	typedef std::vector< PathObject* > PathObjects;
 	typedef QHash< Symbol*, PathObjects > ObjectGroups;
 	typedef std::pair< PathObject::PathPart*, const PathCoord* > PathCoordInfo;
 	
-	bool executeImpl(Operation op, PathObjects& in_objects, PathObjects& out_objects);
 	void polygonToPathPart(ClipperLib::Polygon& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object);
 	void rebuildSegment(int start_index, int end_index, bool have_sequence, bool sequence_increasing, ClipperLib::Polygon& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object);
 	void rebuildCoordinate(int index, ClipperLib::Polygon& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object, bool start_new_part = false);

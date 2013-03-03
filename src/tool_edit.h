@@ -139,7 +139,7 @@ private:
 
 
 /**
- * A base class for edit tools.
+ * Base class for edit tools.
  */
 class EditTool : public MapEditorToolBase
 {
@@ -153,6 +153,9 @@ public:
 	static const Qt::Key selection_key;
 	static const Qt::Key control_point_key;
 	static const Qt::Key delete_object_key;
+	
+	/** Draws a selection box. */
+	static void drawSelectionBox(QPainter* painter, MapWidget* widget, const MapCoordF& corner1, const MapCoordF& corner2);
 	
 protected slots:
 	void selectedSymbolsChanged();
@@ -182,9 +185,6 @@ protected:
 	 * @param bounding_box the box extent in map coordinates
 	 */
 	void drawBoundingBox(QPainter* painter, MapWidget* widget, const QRectF& bounding_box, const QRgb& color);
-	
-	/** Draws a selection box. */
-	void drawSelectionBox(QPainter* painter, MapWidget* widget, const MapCoordF& corner1, const MapCoordF& corner2);
 	
 	QScopedPointer<ObjectSelector> object_selector;
 	

@@ -249,6 +249,7 @@ void MapEditorToolBase::abortEditing()
 {
 	assert(editing);
 	editing = false;
+	resetEditedObjects(&undo_duplicates);
 	finishEditingSelection(*renderables, *old_renderables, false, &undo_duplicates);
 }
 

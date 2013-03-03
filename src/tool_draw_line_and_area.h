@@ -43,7 +43,7 @@ class DrawLineAndAreaTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	DrawLineAndAreaTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
+	DrawLineAndAreaTool(MapEditorController* editor, Type type, QAction* tool_button, SymbolWidget* symbol_widget);
 	virtual ~DrawLineAndAreaTool();
 	
 	virtual void leaveEvent(QEvent* event);

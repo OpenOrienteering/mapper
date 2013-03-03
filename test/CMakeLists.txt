@@ -100,6 +100,7 @@ add_dependencies(file_format_t Mapper_test_data)
 add_system_test(duplicate_equals_t)
 add_dependencies(duplicate_equals_t Mapper_test_data)
 add_system_test(tools_t)
+add_system_test(path_object_t)
 
 
 # Collect the AUTORUN_TESTS

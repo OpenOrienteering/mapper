@@ -33,7 +33,7 @@
 QCursor* DrawCircleTool::cursor = NULL;
 
 DrawCircleTool::DrawCircleTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : DrawLineAndAreaTool(editor, tool_button, symbol_widget)
+ : DrawLineAndAreaTool(editor, DrawCircle, tool_button, symbol_widget)
 {
 	dragging = false;
 	first_point_set = false;

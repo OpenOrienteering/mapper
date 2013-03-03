@@ -136,6 +136,20 @@ public:
 		}
 		return (ObjectOperationResult::Enum)result;
 	}
+	template<typename Processor> ObjectOperationResult::Enum operationOnAllObjects(Processor& processor)
+	{
+		int size = (int)objects.size();
+		int result = size >= 1 ? ObjectOperationResult::Success : ObjectOperationResult::NoResult;
+		for (int i = size - 1; i >= 0; --i)
+		{
+			if (!processor(objects[i], this, i))
+			{
+				result |= ObjectOperationResult::Abort;
+				return (ObjectOperationResult::Enum)result;
+			}
+		}
+		return (ObjectOperationResult::Enum)result;
+	}
 	void scaleAllObjects(double factor, const MapCoord& scaling_center);
 	void rotateAllObjects(double rotation, const MapCoord& center);
 	void updateAllObjects();

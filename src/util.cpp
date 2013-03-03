@@ -151,6 +151,37 @@ bool lineIntersectsRect(const QRectF& rect, const QPointF& p1, const QPointF& p2
 	return false;
 }
 
+double parameterOfPointOnLine(double x0, double y0, double dx, double dy, double x, double y, bool& ok)
+{
+	const double epsilon = 1e-5;
+	ok = true;
+	
+	if (qAbs(dx) > qAbs(dy))
+	{
+		double param = (x - x0) / dx;
+		if (qAbs(y0 + param * dy - y) < epsilon)
+			return param;
+	}
+	else if (dy != 0)
+	{
+		double param = (y - y0) / dy;
+		if (qAbs(x0 + param * dx - x) < epsilon)
+			return param;
+	}
+	
+	ok = false;
+	return -1;
+}
+
+bool isPointOnSegment(const MapCoordF& seg_start, const MapCoordF& seg_end, const MapCoordF& point)
+{
+	bool ok;
+	double param = parameterOfPointOnLine(seg_start.getX(), seg_start.getY(),
+										  seg_end.getX() - seg_start.getX(), seg_end.getY() - seg_start.getY(),
+										  point.getX(), point.getY(), ok);
+	return ok && param >= 0 && param <= 1;
+}
+
 void saveString(QIODevice* file, const QString& str)
 {
 	int length = str.length();

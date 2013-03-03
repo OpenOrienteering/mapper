@@ -56,7 +56,12 @@ public:
 	{
 		Other = 0,
 		EditPoint = 1,
-		EditLine = 2
+		EditLine = 2,
+		DrawPoint = 3,
+		DrawPath = 4,
+		DrawCircle = 5,
+		DrawRectangle = 6,
+		DrawText = 7
 	};
 	
 	/// The numbers correspond to the columns in point-handles.png
@@ -127,6 +132,9 @@ public:
 	
 	/** Returns the main window the controller is attached to as a QWidget.*/
 	QWidget* window() const;
+	
+	
+	static bool isDrawTool(Type type);
 	
 	// Helper methods for object handles
 	

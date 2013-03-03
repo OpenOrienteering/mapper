@@ -59,6 +59,7 @@ HEADERS += \
   src/tool_base.h \
   src/tool_cut.h \
   src/tool_cut_hole.h \
+  src/tool_cutout.h \
   src/tool_draw_circle.h \
   src/tool_draw_line_and_area.h \
   src/tool_draw_path.h \
@@ -162,6 +163,7 @@ SOURCES += \
   src/tool_draw_text.cpp \
   src/tool_cut.cpp \
   src/tool_cut_hole.cpp \
+  src/tool_cutout.cpp \
   src/tool_rotate.cpp \
   src/tool_rotate_pattern.cpp \
   src/tool_scale.cpp \

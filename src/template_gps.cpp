@@ -422,6 +422,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 	for (int i = 0; i < (int)result.size(); ++i) // keep as separate loop to get the correct (final) indices
 		undo_step->addObject(part->findObjectIndex(result[i]));
 	
+	map->setObjectsDirty();
 	map->objectUndoManager().addNewUndoStep(undo_step);
 	
 	map->emitSelectionChanged();

@@ -290,6 +290,26 @@ UndoStep* AddObjectsUndoStep::undo()
 	objects.clear();
 	return undo_step;
 }
+
+void AddObjectsUndoStep::removeContainedObjects(bool emit_selection_changed)
+{
+	MapPart* part = map->getPart(this->part);
+	int size = (int)objects.size();
+	bool object_deselected = false;
+	for (int i = 0; i < size; ++i)
+	{
+		if (map->isObjectSelected(objects[i]))
+		{
+			map->removeObjectFromSelection(objects[i], false);
+			object_deselected = true;
+		}
+		part->deleteObject(objects[i], true);
+		map->setObjectsDirty();
+	}
+	if (object_deselected && emit_selection_changed)
+		map->emitSelectionChanged();
+}
+
 bool AddObjectsUndoStep::sortOrder(const std::pair< int, int >& a, const std::pair< int, int >& b)
 {
 	return a.second < b.second;

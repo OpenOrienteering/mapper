@@ -226,6 +226,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 			
 			add_step->addObject(part->findObjectIndex(split_object), split_object);
 			map->deleteObject(split_object, true);
+			map->setObjectsDirty();
 			map->removeObjectFromSelection(split_object, false);
 			if (!out1 && !out2)
 			{
@@ -579,6 +580,7 @@ void CutTool::pathFinished(PathObject* split_path)
 	add_step->addObject(part->findObjectIndex(edited_path), edited_path);
 	map->removeObjectFromSelection(edited_path, false);
 	map->deleteObject(edited_path, true);
+	map->setObjectsDirty();
 	
 	DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
 	
@@ -664,6 +666,7 @@ void CutTool::pathFinished(PathObject* split_path)
 	undo_step->addSubStep(delete_step);
 	undo_step->addSubStep(add_step);
 	map->objectUndoManager().addNewUndoStep(undo_step);
+	map->setObjectsDirty();
 	
 	pathAborted();
 }

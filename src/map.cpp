@@ -983,7 +983,10 @@ void Map::deleteSelectedObjects()
 		undo_step->addObject(index, *it);
 	}
 	for (Map::ObjectSelection::const_iterator it = selectedObjectsBegin(); it != it_end; ++it)
+	{
 		deleteObject(*it, true);
+		setObjectsDirty();
+	}
 	clearObjectSelection(true);
 	objectUndoManager().addNewUndoStep(undo_step);
 }

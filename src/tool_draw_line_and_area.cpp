@@ -34,8 +34,8 @@
 #include "symbol_point.h"
 #include "util.h"
 
-DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : MapEditorTool(editor, Other, tool_button), 
+DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, Type type, QAction* tool_button, SymbolWidget* symbol_widget)
+ : MapEditorTool(editor, type, tool_button), 
    renderables(new MapRenderables(map())),
    symbol_widget(symbol_widget)
 {
@@ -257,6 +257,7 @@ void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 		}
 	}
 	map()->clearDrawingBoundingBox();
+	map()->setObjectsDirty();
 	
 	draw_in_progress = false;
 	setEditingInProgress(false);

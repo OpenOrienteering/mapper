@@ -108,6 +108,7 @@ protected:
 	QAction* duplicate_action;
 	QAction* delete_action;
 	QAction* select_objects_action;
+	QAction* select_objects_additionally_action;
 	
 	Map* map;
 	
@@ -169,14 +170,15 @@ public slots:
 	
 	void emitSwitchSymbolClicked() {emit switchSymbolClicked();}
 	void emitFillBorderClicked() {emit fillBorderClicked();}
-	void emitSelectObjectsClicked() {emit selectObjectsClicked(); }
+	void emitSelectObjectsClicked() {emit selectObjectsClicked(true);}
+	void emitSelectObjectsAdditionallyClicked() {emit selectObjectsClicked(false);}
 	
 signals:
 	void selectedSymbolsChanged();
 	
 	void switchSymbolClicked();
 	void fillBorderClicked();
-	void selectObjectsClicked();
+	void selectObjectsClicked(bool select_exclusively);
 	
 protected:
 	virtual void resizeEvent(QResizeEvent* event);

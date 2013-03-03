@@ -71,6 +71,15 @@ void rectIncludeSafe(QRectF& rect, const QRectF& other_rect); // checks if rect 
 /// Checks for line - rect intersection
 bool lineIntersectsRect(const QRectF& rect, const QPointF& p1, const QPointF& p2);
 
+/// Sets ok to false in case of an error (if the line is actually a point, or if the test point is not on the line).
+/// x0, y0: line start
+/// dx, dy: vector from line start to line end
+/// x, y: suspected point on the line to calculate the parameter for so x0 + parameter * dx = x (and the same for y).
+double parameterOfPointOnLine(double x0, double y0, double dx, double dy, double x, double y, bool& ok);
+
+/// Checks if the point is on the segment defined by the given start and end coordinates.
+bool isPointOnSegment(const MapCoordF& seg_start, const MapCoordF& seg_end, const MapCoordF& point);
+
 /// Helper functions to save a string to a file and load it again
 void saveString(QIODevice* file, const QString& str);
 void loadString(QIODevice* file, QString& str);

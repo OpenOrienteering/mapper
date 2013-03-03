@@ -42,7 +42,7 @@
 QCursor* DrawTextTool::cursor = NULL;
 
 DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : MapEditorTool(editor, Other, tool_button),
+ : MapEditorTool(editor, DrawText, tool_button),
    renderables(new MapRenderables(map())),
    symbol_widget(symbol_widget)
 {
@@ -342,6 +342,7 @@ void DrawTextTool::finishEditing()
 		int index = map()->addObject(preview_text);
 		map()->clearObjectSelection(false);
 		map()->addObjectToSelection(preview_text, true);
+		map()->setObjectsDirty();
 		
 		DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map());
 		undo_step->addObject(index);

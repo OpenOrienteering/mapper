@@ -109,7 +109,7 @@ void RotateTool::dragFinish()
 	}
 }
 
-void RotateTool::draw(QPainter* painter, MapWidget* widget)
+void RotateTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
 	drawSelectionOrPreviewObjects(painter, widget);
 	
@@ -128,7 +128,7 @@ void RotateTool::draw(QPainter* painter, MapWidget* widget)
 		angle_helper->draw(painter, widget);
 }
 
-bool RotateTool::keyPressEvent(QKeyEvent* event)
+bool RotateTool::keyPress(QKeyEvent* event)
 {
 	if (event->key() == Qt::Key_Control)
 	{
@@ -138,7 +138,7 @@ bool RotateTool::keyPressEvent(QKeyEvent* event)
 	}
     return false;
 }
-bool RotateTool::keyReleaseEvent(QKeyEvent* event)
+bool RotateTool::keyRelease(QKeyEvent* event)
 {
 	if (event->key() == Qt::Key_Control && angle_helper->isActive())
 	{

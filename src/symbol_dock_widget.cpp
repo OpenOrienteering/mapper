@@ -133,6 +133,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	fill_border_action = context_menu->addAction(QIcon(":/images/tool-fill-border.png"), tr("Fill / Create border for selected object(s)"), parent, SLOT(emitFillBorderClicked()));
 	// text will be filled in by updateContextMenuState()
 	select_objects_action = context_menu->addAction(QIcon(":/images/tool-edit.png"), "", parent, SLOT(emitSelectObjectsClicked()));
+	select_objects_additionally_action = context_menu->addAction(QIcon(":/images/tool-edit.png"), "", parent, SLOT(emitSelectObjectsAdditionallyClicked()));
 	context_menu->addSeparator();
 	hide_action = context_menu->addAction("", this, SLOT(setSelectedSymbolVisibility(bool)));
 	hide_action->setCheckable(true);
@@ -911,16 +912,19 @@ void SymbolRenderWidget::updateContextMenuState()
 	if (single_selection)
 	{
 		select_objects_action->setText(tr("Select all objects with this symbol"));
+		select_objects_additionally_action->setText(tr("Add all objects with this symbol to selection"));
 		hide_action->setText(tr("Hide objects with this symbol"));
 		protect_action->setText(tr("Protect objects with this symbol"));
 	}
 	else
 	{
 		select_objects_action->setText(tr("Select all objects with selected symbols"));
+		select_objects_additionally_action->setText(tr("Add all objects with selected symbols to selection"));
 		hide_action->setText(tr("Hide objects with selected symbols"));
 		protect_action->setText(tr("Protect objects with selected symbols"));
 	}
     select_objects_action->setEnabled(have_selection);
+	select_objects_additionally_action->setEnabled(have_selection);
 }
 
 bool SymbolRenderWidget::newSymbol(Symbol* prototype)

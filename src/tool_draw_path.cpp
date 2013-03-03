@@ -40,7 +40,7 @@
 QCursor* DrawPathTool::cursor = NULL;
 
 DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget, bool allow_closing_paths)
- : DrawLineAndAreaTool(editor, tool_button, symbol_widget), allow_closing_paths(allow_closing_paths),
+ : DrawLineAndAreaTool(editor, DrawPath, tool_button, symbol_widget), allow_closing_paths(allow_closing_paths),
    cur_map_widget(mapWidget()),
    angle_helper(new ConstrainAngleToolHelper()),
    snap_helper(new SnappingToolHelper(map())),

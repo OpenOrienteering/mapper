@@ -35,10 +35,10 @@ public:
 	RotateTool(MapEditorController* editor, QAction* tool_button);
 	virtual ~RotateTool();
 	
-	virtual void draw(QPainter* painter, MapWidget* widget);
+	virtual void drawImpl(QPainter* painter, MapWidget* widget);
 	
-	virtual bool keyPressEvent(QKeyEvent* event);
-	virtual bool keyReleaseEvent(QKeyEvent* event);
+	virtual bool keyPress(QKeyEvent* event);
+	virtual bool keyRelease(QKeyEvent* event);
 	
 protected:
 	virtual void initImpl();

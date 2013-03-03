@@ -40,7 +40,7 @@
 QCursor* DrawPointTool::cursor = NULL;
 
 DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : MapEditorTool(editor, Other, tool_button),
+ : MapEditorTool(editor, DrawPoint, tool_button),
    angle_helper(new ConstrainAngleToolHelper()),
    renderables(new MapRenderables(map())),
    symbol_widget(symbol_widget),
@@ -151,6 +151,7 @@ bool DrawPointTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, M
 	int index = map->addObject(point);
 	map->clearObjectSelection(false);
 	map->addObjectToSelection(point, true);
+	map->setObjectsDirty();
 	map->clearDrawingBoundingBox();
 	renderables->removeRenderablesOfObject(preview_object, false);
 	

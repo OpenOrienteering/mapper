@@ -82,7 +82,7 @@ bool BooleanTool::execute(BooleanTool::Operation op)
 	{
 		// Do operation
 		PathObjects group_result;
-		if (!executeImpl(op, it.value(), group_result))
+		if (!executeForObjects(op, map->getFirstSelectedObject()->asPath(), map->getFirstSelectedObject()->getSymbol(), it.value(), group_result))
 		{
 			delete add_step;
 			for (int i = 0; i < (int)result.size(); ++i)
@@ -130,6 +130,7 @@ bool BooleanTool::execute(BooleanTool::Operation op)
 	undo_step->addSubStep(delete_step);
 	undo_step->addSubStep(add_step);
 	map->objectUndoManager().addNewUndoStep(undo_step);
+	map->setObjectsDirty();
 	
 	map->emitSelectionChanged();
 	map->emitSelectionEdited();
@@ -137,7 +138,7 @@ bool BooleanTool::execute(BooleanTool::Operation op)
 	return true;
 }
 
-bool BooleanTool::executeImpl(BooleanTool::Operation op, PathObjects& in_objects, PathObjects& out_objects)
+bool BooleanTool::executeForObjects(BooleanTool::Operation op, PathObject* subject, Symbol* result_objects_symbol, PathObjects& in_objects, PathObjects& out_objects)
 {
 	// Convert the objects to Clipper polygons and create a hash map, mapping point positions to the PathCoords
 	Polygons subject_polygons;
@@ -153,7 +154,7 @@ bool BooleanTool::executeImpl(BooleanTool::Operation op, PathObjects& in_objects
 		for (int part_number = 0; part_number < object->getNumParts(); ++part_number)
 		{
 			Polygon* polygon;
-			if (object == map->getFirstSelectedObject())
+			if (object == subject)
 			{
 				subject_polygons.push_back(Polygon());
 				polygon = &subject_polygons.back();
@@ -199,7 +200,7 @@ bool BooleanTool::executeImpl(BooleanTool::Operation op, PathObjects& in_objects
 		ExPolygon& expolygon = solution.at(polygon_number);
 		
 		PathObject* object = new PathObject();
-		object->setSymbol(map->getFirstSelectedObject()->getSymbol(), true);
+		object->setSymbol(result_objects_symbol, true);
 		
 		polygonToPathPart(expolygon.outer, polymap, object);
 		for (int i = 0; i < (int)expolygon.holes.size(); ++i)
@@ -209,6 +210,85 @@ bool BooleanTool::executeImpl(BooleanTool::Operation op, PathObjects& in_objects
 	}
 	
 	return true;
+}
+
+void BooleanTool::executeForLine(BooleanTool::Operation op, PathObject* area, PathObject* line, BooleanTool::PathObjects& out_objects)
+{
+	Q_ASSERT((op == BooleanTool::Intersection || op == BooleanTool::Difference) && "Only intersection and difference are implemented!");
+	Q_ASSERT(line->getNumParts() == 1);
+	
+	// Calculate all intersection points of line with the area path
+	PathObject::Intersections intersections;
+	line->calcAllIntersectionsWith(area, intersections);
+	intersections.clean();
+	
+	// For every segment, check whether it is inside or outside of the area.
+	// Keep only segments inside the area.
+	int line_coord_search_start = 0;
+	MapCoordVectorF mapCoordVectorF;
+	mapCoordVectorToF(line->getRawCoordinateVector(), mapCoordVectorF);
+	MapCoordF middle_pos;
+	
+	PathObject* first_segment = NULL;
+	PathObject* last_segment = NULL;
+	
+	// Only one segment?
+	if (intersections.size() == 0)
+	{
+		double middle_length = line->getPart(0).getLength();
+		PathCoord::calculatePositionAt(line->getRawCoordinateVector(), mapCoordVectorF, line->getPathCoordinateVector(), middle_length, line_coord_search_start, &middle_pos, NULL);
+		if (area->isPointInsideArea(middle_pos) == (op == BooleanTool::Intersection))
+			out_objects.push_back(line->duplicate()->asPath());
+		return;
+	}
+	
+	// First segment
+	double middle_length = intersections[0].length / 2;
+	PathCoord::calculatePositionAt(line->getRawCoordinateVector(), mapCoordVectorF, line->getPathCoordinateVector(), middle_length, line_coord_search_start, &middle_pos, NULL);
+	if (area->isPointInsideArea(middle_pos) == (op == BooleanTool::Intersection))
+	{
+		PathObject* part = line->duplicate()->asPath();
+		part->changePathBounds(0, 0, intersections[0].length);
+		first_segment = part;
+	}
+	
+	// Middle segments
+	for (int i = 0; i < (int)intersections.size() - 1; ++i)
+	{
+		middle_length = (intersections[i].length + intersections[i+1].length) / 2;
+		PathCoord::calculatePositionAt(line->getRawCoordinateVector(), mapCoordVectorF, line->getPathCoordinateVector(), middle_length, line_coord_search_start, &middle_pos, NULL);
+		if (area->isPointInsideArea(middle_pos) == (op == BooleanTool::Intersection))
+		{
+			PathObject* part = line->duplicate()->asPath();
+			part->changePathBounds(0, intersections[i].length, intersections[i+1].length);
+			out_objects.push_back(part);
+		}
+	}
+	
+	// Last segment
+	middle_length = (line->getPart(0).getLength() + intersections[intersections.size() - 1].length) / 2;
+	PathCoord::calculatePositionAt(line->getRawCoordinateVector(), mapCoordVectorF, line->getPathCoordinateVector(), middle_length, line_coord_search_start, &middle_pos, NULL);
+	if (area->isPointInsideArea(middle_pos) == (op == BooleanTool::Intersection))
+	{
+		PathObject* part = line->duplicate()->asPath();
+		part->changePathBounds(0, intersections[intersections.size() - 1].length, line->getPart(0).getLength());
+		last_segment = part;
+	}
+	
+	// If the line was closed at the beginning, merge the first and last segments if they were kept both.
+	if (line->getPart(0).isClosed() && first_segment && last_segment)
+	{
+		last_segment->connectPathParts(0, first_segment, 0, false);
+		delete first_segment;
+		out_objects.push_back(last_segment);
+	}
+	else
+	{
+		if (first_segment)
+			out_objects.push_back(first_segment);
+		if (last_segment)
+			out_objects.push_back(last_segment);
+	}
 }
 
 void BooleanTool::polygonToPathPart(Polygon& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object)
@@ -570,7 +650,8 @@ void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_seque
 			
 			qint64 TESTX = end_point.X - end_coord.rawX();
 			qint64 TESTY = end_point.Y - end_coord.rawY();
-			assert(sqrt(TESTX*TESTX + TESTY*TESTY) < 400);
+			// TODO: This assert triggers sometimes, but the result is just a relatively small error in the reconstruction
+			Q_ASSERT(sqrt(TESTX*TESTX + TESTY*TESTY) < 400);
 		}
 	}
 	else
