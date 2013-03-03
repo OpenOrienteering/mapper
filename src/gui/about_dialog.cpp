@@ -110,7 +110,8 @@ AboutDialog::AboutDialog(QWidget* parent)
 	}
 	
 	// Tab: Additional information
-	QString clipper_about(tr("This program uses the <b>Clipper library</b> by Angus Johnson.") % "<br/><br/>");
+	QString clipper_about(tr("This program uses the <b>Clipper library</b> by Angus Johnson.") % "<br/>");
+	clipper_about.append("Release ").append(CLIPPER_VERSION).append("<br><br/>");
 	QFile clipper_about_file(":/3rd-party/clipper/License.txt");
 	if (clipper_about_file.open(QIODevice::ReadOnly))
 	{

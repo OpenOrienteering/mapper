@@ -118,6 +118,10 @@ endif()
 add_custom_target(Mapper_prerequisites)
 set(Mapper_prerequisites_FOUND TRUE)
 
+add_subdirectory("3rd-party/clipper")
+add_dependencies(Mapper_prerequisites Clipper)
+include_directories(${CLIPPER_INCLUDE_DIR})
+
 if(Mapper_BUILD_PROJ)
 	add_subdirectory(3rd-party/proj)
 	add_dependencies(Mapper_prerequisites Proj)

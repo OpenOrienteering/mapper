@@ -16,8 +16,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-include(../3rd-party/clipper.cmake)
-
 if(Mapper_PACKAGE_QT AND UNIX AND NOT APPLE)
 	set(MAPPER_USE_QT_CONF_QRC 1)
 endif()
@@ -30,8 +28,6 @@ execute_process(
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 set(Mapper_Common_SRCS
- ../3rd-party/clipper/cpp/clipper.cpp
-
  global.cpp
  util.cpp
  util_pie_menu.cpp
@@ -265,6 +261,7 @@ target_link_libraries(Mapper
   QtSingleApplication
   ${PROJ_LIBRARY}
   ${QT_LIBRARIES}
+  ${CLIPPER_LIBRARY}
 )
 
 install(TARGETS Mapper

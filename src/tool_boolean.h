@@ -25,7 +25,7 @@
 
 #include <QHash>
 
-#include "../3rd-party/clipper/cpp/clipper.hpp"
+#include <clipper.hpp>
 #include "object.h"
 
 class Symbol;

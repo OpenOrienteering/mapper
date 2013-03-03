@@ -97,7 +97,6 @@ HEADERS += \
   libocad/types.h
 
 SOURCES += \
-  src/../3rd-party/clipper/cpp/clipper.cpp \
   src/global.cpp \
   src/util.cpp \
   src/util_pie_menu.cpp \
