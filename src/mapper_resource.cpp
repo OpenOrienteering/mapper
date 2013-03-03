@@ -59,6 +59,10 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 		case ASSISTANT:
 			return MapperResource::getProgramLocations(resource_type);
 			
+		case EXAMPLE:
+			resource_path = "/examples";
+			break;
+			
 		case MANUAL:
 			// TODO: Support localized manual
 			resource_path = "/help/oomaphelpcollection.qhc";
@@ -72,10 +76,6 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			// Don't fiddle with proj resource path.
 			return locations;
 #endif
-			
-		case EXAMPLE:
-			resource_path = "/examples";
-			break;
 			
 		case SYMBOLSET:
 			// TODO: Translate directory name "my symbol sets"?

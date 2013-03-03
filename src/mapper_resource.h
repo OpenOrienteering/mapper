@@ -37,9 +37,9 @@ namespace MapperResource
 	 */
 	enum RESOURCE_TYPE {
 		ASSISTANT,
+		EXAMPLE,
 		MANUAL,
 		PROJ_DATA,
-		EXAMPLE,
 		SYMBOLSET,
 		TEST_DATA,
 		TRANSLATION
