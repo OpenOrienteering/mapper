@@ -4,13 +4,13 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="35"/>
-        <location filename="../src/gui/about_dialog.cpp" line="80"/>
+        <location filename="../src/gui/about_dialog.cpp" line="37"/>
+        <location filename="../src/gui/about_dialog.cpp" line="89"/>
         <source>About %1</source>
         <translation>Über %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="44"/>
+        <location filename="../src/gui/about_dialog.cpp" line="77"/>
         <source>This program comes with ABSOLUTELY NO WARRANTY;&lt;br/&gt;This is free software, and you are welcome to redistribute it&lt;br/&gt;under certain conditions; see the file %1 for details.&lt;br/&gt;&lt;br/&gt;</source>
         <translation>Dieses Programm kommt ohne jegliche Garantie, soweit rechtlich ausschließbar.&lt;br/&gt;
 OpenOrienteering Mapper ist freie Software, und Sie dürfen es gern&lt;br /&gt;
@@ -19,37 +19,38 @@ Weitergabebedinungen finden Sie in der Datei %1.&lt;br/&gt;
 &lt;br/&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="48"/>
+        <location filename="../src/gui/about_dialog.cpp" line="81"/>
         <source>Developers in alphabetical order:&lt;br/&gt;%1&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;%2</source>
         <translation>Entwickler in alphabetischer Reihenfolge:&lt;br/&gt;%1&lt;br/&gt;Dank für Beiträge an:&lt;br/&gt;%2</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="51"/>
+        <location filename="../src/gui/about_dialog.cpp" line="83"/>
         <source>(project initiator)</source>
         <translation>(Projektstarter)</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="56"/>
+        <location filename="../src/gui/about_dialog.cpp" line="108"/>
+        <source>License (%1)</source>
+        <translation>Lizenz (%1)</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="113"/>
         <source>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</source>
         <translation>Dieses Programm benutzt die &lt;b&gt;Clipper library&lt;/b&gt; von Angus Johnson.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="63"/>
-        <location filename="../src/gui/about_dialog.cpp" line="73"/>
+        <location filename="../src/gui/about_dialog.cpp" line="120"/>
+        <location filename="../src/gui/about_dialog.cpp" line="130"/>
         <source>See &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; for more information.</source>
         <translation>Mehr Informationen unter &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="65"/>
+        <location filename="../src/gui/about_dialog.cpp" line="122"/>
         <source>This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</source>
         <translation>Dieses Programm benutzt die &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; von Frank Warmerdam.</translation>
     </message>
     <message>
-        <source>About Mapper</source>
-        <translation type="obsolete">Über Mapper</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/about_dialog.cpp" line="89"/>
+        <location filename="../src/gui/about_dialog.cpp" line="141"/>
         <source>Additional information</source>
         <translation>Weitere Informationen</translation>
     </message>
@@ -2045,26 +2046,6 @@ Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
         <translation>Anscheinend ist %1 beim letzten Mal abgestürzt, als diese Datei geöffnet wurde:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Wirklich erneut versuchen, siezu öffnen?</translation>
     </message>
     <message>
-        <source>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</source>
-        <translation type="obsolete">Dieses Programm benutzt die &lt;b&gt;Clipper library&lt;/b&gt; von Angus Johnson.</translation>
-    </message>
-    <message>
-        <source>See &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; for more information.</source>
-        <translation type="obsolete">Mehr Informationen unter &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;.</translation>
-    </message>
-    <message>
-        <source>This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</source>
-        <translation type="obsolete">Dieses Programm benutzt die &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; von Frank Warmerdam.</translation>
-    </message>
-    <message>
-        <source>Developers in alphabetical order:&lt;br/&gt;%1&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;%2&lt;br/&gt;Additional information:</source>
-        <translation type="obsolete">Entwickler in alphabetischer Reihenfolge:&lt;br/&gt;%1&lt;br/&gt;Dank für Beiträge an:&lt;br/&gt;%2&lt;br/&gt;Weitere Informationen:</translation>
-    </message>
-    <message>
-        <source>(project initiator)</source>
-        <translation type="obsolete">(Projektstarter)</translation>
-    </message>
-    <message>
         <location filename="../src/gui/main_window.cpp" line="647"/>
         <source>All maps</source>
         <translation>Alle Karten</translation>
@@ -2093,10 +2074,6 @@ Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
         <location filename="../src/gui/main_window.cpp" line="697"/>
         <source>Please report this as a bug.</source>
         <translation>Bitte melden Sie das als Programmfehler.</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="obsolete">OK</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="222"/>
@@ -2145,10 +2122,6 @@ Press No to choose a different format.</source>
 
 Wählen Sie Ja, um die Datei in diesem Format zu speichern.
 Wählen Sie Nein, um ein anderes Dateiformat auszusuchen.</translation>
-    </message>
-    <message>
-        <source>About %1</source>
-        <translation type="obsolete">Über %1</translation>
     </message>
 </context>
 <context>

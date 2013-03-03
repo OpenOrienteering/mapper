@@ -244,6 +244,7 @@ add_subdirectory("docs/api")
 install(FILES COPYING 
   DESTINATION "${MAPPER_ABOUT_DESTINATION}"
 )
+configure_file(COPYING COPYING COPYONLY)
 
 set(MAPPER_SUPERBUILD 0 CACHE INTERNAL "Flag to avoid superbuild loops." FORCE)
 

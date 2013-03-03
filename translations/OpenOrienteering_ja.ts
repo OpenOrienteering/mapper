@@ -4,44 +4,49 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="35"/>
-        <location filename="../src/gui/about_dialog.cpp" line="80"/>
+        <location filename="../src/gui/about_dialog.cpp" line="37"/>
+        <location filename="../src/gui/about_dialog.cpp" line="89"/>
         <source>About %1</source>
         <translation type="unfinished">%1 について</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="44"/>
+        <location filename="../src/gui/about_dialog.cpp" line="77"/>
         <source>This program comes with ABSOLUTELY NO WARRANTY;&lt;br/&gt;This is free software, and you are welcome to redistribute it&lt;br/&gt;under certain conditions; see the file %1 for details.&lt;br/&gt;&lt;br/&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="48"/>
+        <location filename="../src/gui/about_dialog.cpp" line="81"/>
         <source>Developers in alphabetical order:&lt;br/&gt;%1&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="51"/>
+        <location filename="../src/gui/about_dialog.cpp" line="83"/>
         <source>(project initiator)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="56"/>
+        <location filename="../src/gui/about_dialog.cpp" line="108"/>
+        <source>License (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="113"/>
         <source>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</source>
         <translation type="unfinished">This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="63"/>
-        <location filename="../src/gui/about_dialog.cpp" line="73"/>
+        <location filename="../src/gui/about_dialog.cpp" line="120"/>
+        <location filename="../src/gui/about_dialog.cpp" line="130"/>
         <source>See &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; for more information.</source>
         <translation type="unfinished">See &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; for more information.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="65"/>
+        <location filename="../src/gui/about_dialog.cpp" line="122"/>
         <source>This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</source>
         <translation type="unfinished">This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</translation>
     </message>
     <message>
-        <location filename="../src/gui/about_dialog.cpp" line="89"/>
+        <location filename="../src/gui/about_dialog.cpp" line="141"/>
         <source>Additional information</source>
         <translation type="unfinished"></translation>
     </message>
