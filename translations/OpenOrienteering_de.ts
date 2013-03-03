@@ -2,6 +2,59 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="de_DE">
 <context>
+    <name>AboutDialog</name>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="35"/>
+        <location filename="../src/gui/about_dialog.cpp" line="80"/>
+        <source>About %1</source>
+        <translation>Über %1</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="44"/>
+        <source>This program comes with ABSOLUTELY NO WARRANTY;&lt;br/&gt;This is free software, and you are welcome to redistribute it&lt;br/&gt;under certain conditions; see the file %1 for details.&lt;br/&gt;&lt;br/&gt;</source>
+        <translation>Dieses Programm kommt ohne jegliche Garantie, soweit rechtlich ausschließbar.&lt;br/&gt;
+OpenOrienteering Mapper ist freie Software, und Sie dürfen es gern&lt;br /&gt;
+unter den Bedingungen der GPL 3 weitergeben. Details zu den &lt;br /&gt;
+Weitergabebedinungen finden Sie in der Datei %1.&lt;br/&gt;
+&lt;br/&gt;</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="48"/>
+        <source>Developers in alphabetical order:&lt;br/&gt;%1&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;%2</source>
+        <translation>Entwickler in alphabetischer Reihenfolge:&lt;br/&gt;%1&lt;br/&gt;Dank für Beiträge an:&lt;br/&gt;%2</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="51"/>
+        <source>(project initiator)</source>
+        <translation>(Projektstarter)</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="56"/>
+        <source>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</source>
+        <translation>Dieses Programm benutzt die &lt;b&gt;Clipper library&lt;/b&gt; von Angus Johnson.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="63"/>
+        <location filename="../src/gui/about_dialog.cpp" line="73"/>
+        <source>See &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; for more information.</source>
+        <translation>Mehr Informationen unter &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;.</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="65"/>
+        <source>This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</source>
+        <translation>Dieses Programm benutzt die &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; von Frank Warmerdam.</translation>
+    </message>
+    <message>
+        <source>About Mapper</source>
+        <translation type="obsolete">Über Mapper</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/about_dialog.cpp" line="89"/>
+        <source>Additional information</source>
+        <translation>Weitere Informationen</translation>
+    </message>
+</context>
+<context>
     <name>AreaSymbolSettings</name>
     <message utf8="true">
         <location filename="../src/symbol_area.cpp" line="703"/>
@@ -327,34 +380,34 @@
         <translation>Doppelklick auf einen Farbeintrag öffnet den Farbdialog.</translation>
     </message>
     <message>
-        <location filename="../src/color_dock_widget.cpp" line="148"/>
+        <location filename="../src/color_dock_widget.cpp" line="149"/>
         <source>Confirmation</source>
         <translation>Bestätigung</translation>
     </message>
     <message>
-        <location filename="../src/color_dock_widget.cpp" line="148"/>
+        <location filename="../src/color_dock_widget.cpp" line="149"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
         <translation>Die Karte enthält Symbole mit dieser Farbe. Diese Symbole würden die Farbe verlieren. Wollen Sie das wirklich?</translation>
     </message>
     <message>
-        <location filename="../src/color_dock_widget.cpp" line="164"/>
+        <location filename="../src/color_dock_widget.cpp" line="165"/>
         <source> (Duplicate)</source>
         <translatorcomment>Remove initial space from tr.</translatorcomment>
         <translation> (Kopie)</translation>
     </message>
     <message>
-        <location filename="../src/color_dock_widget.cpp" line="246"/>
+        <location filename="../src/color_dock_widget.cpp" line="247"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/color_dock_widget.cpp" line="246"/>
+        <location filename="../src/color_dock_widget.cpp" line="247"/>
         <source>Please enter a percentage from 0% to 100%!</source>
         <translation>Bitte geben Sie einen Prozentsatz von 0% bis 100% ein!</translation>
     </message>
     <message>
-        <location filename="../src/color_dock_widget.cpp" line="337"/>
-        <location filename="../src/color_dock_widget.cpp" line="342"/>
+        <location filename="../src/color_dock_widget.cpp" line="339"/>
+        <location filename="../src/color_dock_widget.cpp" line="344"/>
         <source>Double click to define the color</source>
         <translation>Doppelklick, um die Farbe festzulegen</translation>
     </message>
@@ -1263,7 +1316,7 @@
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="166"/>
         <source>On CRS changes, keep:</source>
-        <translation type="unfinished">Bei Änderungen des&lt;br/&gt;Koordinatenbezugssystems, behalte bei:</translation>
+        <translation>Bei Änderungen des&lt;br/&gt;Koordinatenbezugssystems, behalte bei:</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="172"/>
@@ -1438,17 +1491,17 @@
         <translation>Fehler beim Laden eines Symbols.</translation>
     </message>
     <message>
-        <location filename="../src/object.cpp" line="361"/>
+        <location filename="../src/object.cpp" line="362"/>
         <source>Error while loading an object of type %1.</source>
         <translation>Fehler beim Laden eines Objekts vom Typ %1.</translation>
     </message>
     <message>
-        <location filename="../src/object.cpp" line="372"/>
+        <location filename="../src/object.cpp" line="373"/>
         <source>Unable to find symbol for object at %1:%2.</source>
         <translation>Kann Symbol für Objekt nicht finden bei %1:%2.</translation>
     </message>
     <message>
-        <location filename="../src/object.cpp" line="382"/>
+        <location filename="../src/object.cpp" line="383"/>
         <source>Point object with undefined or wrong symbol at %1:%2.</source>
         <translation>Punktobjekt mit undefiniertem oder falschen Symbol bei %1:%2.</translation>
     </message>
@@ -1852,13 +1905,13 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="521"/>
-        <location filename="../src/gui/main_window.cpp" line="693"/>
+        <location filename="../src/gui/main_window.cpp" line="520"/>
+        <location filename="../src/gui/main_window.cpp" line="694"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="521"/>
+        <location filename="../src/gui/main_window.cpp" line="520"/>
         <source>Cannot open file:
 %1
 
@@ -1869,111 +1922,111 @@ File format not recognized.</source>
 Unbekanntes Dateiformat.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="140"/>
+        <location filename="../src/gui/main_window.cpp" line="139"/>
         <source>&amp;New</source>
         <translation>&amp;Neu</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="142"/>
+        <location filename="../src/gui/main_window.cpp" line="141"/>
         <source>Create a new map</source>
         <translation>Eine neue Karte erstellen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="146"/>
+        <location filename="../src/gui/main_window.cpp" line="145"/>
         <source>&amp;Open...</source>
         <translation>Ö&amp;ffnen...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="148"/>
+        <location filename="../src/gui/main_window.cpp" line="147"/>
         <source>Open an existing file</source>
         <translation>Eine vorhandene Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="152"/>
+        <location filename="../src/gui/main_window.cpp" line="151"/>
         <source>Open &amp;recent</source>
         <translation>Zu&amp;letzt bearbeitet</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="163"/>
+        <location filename="../src/gui/main_window.cpp" line="162"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="168"/>
+        <location filename="../src/gui/main_window.cpp" line="167"/>
         <source>Save &amp;as...</source>
         <translation>Speichern &amp;unter...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="170"/>
+        <location filename="../src/gui/main_window.cpp" line="169"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="176"/>
+        <location filename="../src/gui/main_window.cpp" line="175"/>
         <source>Settings...</source>
         <translation>Einstellungen...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="179"/>
+        <location filename="../src/gui/main_window.cpp" line="178"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="181"/>
+        <location filename="../src/gui/main_window.cpp" line="180"/>
         <source>Close this file</source>
         <translation>Diese Datei schließen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="185"/>
+        <location filename="../src/gui/main_window.cpp" line="184"/>
         <source>E&amp;xit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="187"/>
+        <location filename="../src/gui/main_window.cpp" line="186"/>
         <source>Exit the application</source>
         <translatorcomment>Ausführlicher</translatorcomment>
         <translation>Die Anwendung beenden und alle Fenster schließen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="191"/>
+        <location filename="../src/gui/main_window.cpp" line="190"/>
         <source>&amp;File</source>
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="203"/>
+        <location filename="../src/gui/main_window.cpp" line="202"/>
         <source>General</source>
         <translation>Allgemein</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="218"/>
+        <location filename="../src/gui/main_window.cpp" line="217"/>
         <source>Open &amp;Manual</source>
         <translatorcomment>Kürzer</translatorcomment>
         <translation>&amp;Handbuch</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="219"/>
+        <location filename="../src/gui/main_window.cpp" line="218"/>
         <source>Show the help file for this application</source>
         <translation>Die Dokumentation zu diesem Programm anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="222"/>
+        <location filename="../src/gui/main_window.cpp" line="221"/>
         <source>&amp;About %1</source>
         <translation>&amp;Über %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="227"/>
+        <location filename="../src/gui/main_window.cpp" line="226"/>
         <source>Show information about Qt</source>
         <translation>Informationen über Qt anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="359"/>
+        <location filename="../src/gui/main_window.cpp" line="358"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
         <translation>Die Datei wurde geändert.
 Möchten Sie die Änderungen speichern?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="453"/>
+        <location filename="../src/gui/main_window.cpp" line="452"/>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
@@ -1982,115 +2035,108 @@ Do you want to scale the symbols to the selected scale?</source>
 Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="498"/>
+        <location filename="../src/gui/main_window.cpp" line="506"/>
         <source>Crash warning</source>
         <translation>Absturz-Warnung</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="499"/>
+        <location filename="../src/gui/main_window.cpp" line="507"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
         <translation>Anscheinend ist %1 beim letzten Mal abgestürzt, als diese Datei geöffnet wurde:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Wirklich erneut versuchen, siezu öffnen?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="753"/>
         <source>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</source>
-        <translation>Dieses Programm benutzt die &lt;b&gt;Clipper library&lt;/b&gt; von Angus Johnson.</translation>
+        <translation type="obsolete">Dieses Programm benutzt die &lt;b&gt;Clipper library&lt;/b&gt; von Angus Johnson.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="760"/>
-        <location filename="../src/gui/main_window.cpp" line="770"/>
         <source>See &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; for more information.</source>
-        <translation>Mehr Informationen unter &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;.</translation>
+        <translation type="obsolete">Mehr Informationen unter &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="762"/>
         <source>This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</source>
-        <translation>Dieses Programm benutzt die &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; von Frank Warmerdam.</translation>
+        <translation type="obsolete">Dieses Programm benutzt die &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; von Frank Warmerdam.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="782"/>
         <source>Developers in alphabetical order:&lt;br/&gt;%1&lt;br/&gt;For contributions, thanks to:&lt;br/&gt;%2&lt;br/&gt;Additional information:</source>
-        <translation>Entwickler in alphabetischer Reihenfolge:&lt;br/&gt;%1&lt;br/&gt;Dank für Beiträge an:&lt;br/&gt;%2&lt;br/&gt;Weitere Informationen:</translation>
+        <translation type="obsolete">Entwickler in alphabetischer Reihenfolge:&lt;br/&gt;%1&lt;br/&gt;Dank für Beiträge an:&lt;br/&gt;%2&lt;br/&gt;Weitere Informationen:</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="785"/>
         <source>(project initiator)</source>
-        <translation>(Projektstarter)</translation>
+        <translation type="obsolete">(Projektstarter)</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="646"/>
+        <location filename="../src/gui/main_window.cpp" line="647"/>
         <source>All maps</source>
         <translation>Alle Karten</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="478"/>
+        <location filename="../src/gui/main_window.cpp" line="477"/>
         <source>Open file</source>
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="686"/>
+        <location filename="../src/gui/main_window.cpp" line="687"/>
         <source>Save file</source>
         <translation>Datei speichern</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="694"/>
+        <location filename="../src/gui/main_window.cpp" line="695"/>
         <source>File could not be saved:</source>
         <translation>Datei konnte nicht gespeichert werden:</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="695"/>
+        <location filename="../src/gui/main_window.cpp" line="696"/>
         <source>There was a problem in determining the file format.</source>
         <translation>Beim Ermitteln des Dateiformat ist ein Problem aufgetreten.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="696"/>
+        <location filename="../src/gui/main_window.cpp" line="697"/>
         <source>Please report this as a bug.</source>
         <translation>Bitte melden Sie das als Programmfehler.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="795"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation type="obsolete">OK</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="223"/>
+        <location filename="../src/gui/main_window.cpp" line="222"/>
         <source>Show information about this application</source>
         <translation>Informationen über dieses Programm anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="226"/>
+        <location filename="../src/gui/main_window.cpp" line="225"/>
         <source>About &amp;Qt</source>
         <translation>Über &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="230"/>
+        <location filename="../src/gui/main_window.cpp" line="229"/>
         <source>&amp;Help</source>
         <translation>&amp;Hilfe</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="425"/>
+        <location filename="../src/gui/main_window.cpp" line="424"/>
         <source>Unsaved file</source>
         <translation>Ungespeicherte Datei</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="453"/>
-        <location filename="../src/gui/main_window.cpp" line="605"/>
+        <location filename="../src/gui/main_window.cpp" line="452"/>
+        <location filename="../src/gui/main_window.cpp" line="606"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="650"/>
+        <location filename="../src/gui/main_window.cpp" line="651"/>
         <source>All files</source>
         <translation>Alle Dateien</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="575"/>
+        <location filename="../src/gui/main_window.cpp" line="576"/>
         <source>&amp;%1 %2</source>
         <translatorcomment>Nicht zu übersetzen</translatorcomment>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="604"/>
+        <location filename="../src/gui/main_window.cpp" line="605"/>
         <source>This map is being saved as a &quot;%1&quot; file. Information may be lost.
 
 Press Yes to save in this format.
@@ -2101,9 +2147,8 @@ Wählen Sie Ja, um die Datei in diesem Format zu speichern.
 Wählen Sie Nein, um ein anderes Dateiformat auszusuchen.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="751"/>
         <source>About %1</source>
-        <translation>Über %1</translation>
+        <translation type="obsolete">Über %1</translation>
     </message>
 </context>
 <context>

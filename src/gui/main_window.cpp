@@ -27,10 +27,9 @@
 #endif
 #include <QSettings>
 
-#include <proj_api.h>
-
 #include <mapper_config.h>
 
+#include "about_dialog.h"
 #include "../file_format_registry.h"
 #include "../file_import_export.h"
 #include "home_screen_controller.h"
@@ -749,64 +748,8 @@ void MainWindow::showSettings()
 
 void MainWindow::showAbout()
 {
-	QDialog about_dialog(this);
-	about_dialog.setWindowTitle(tr("About %1").arg(APP_NAME));
-	
-	QString clipper_about(tr("This program uses the <b>Clipper library</b> by Angus Johnson.") % "<br/><br/>");
-	QFile clipper_about_file(":/3rd-party/clipper/License.txt");
-	if (clipper_about_file.open(QIODevice::ReadOnly))
-	{
-		clipper_about.append(clipper_about_file.readAll().replace('\n', "<br/>"));
-		clipper_about.append("<br/>");
-	}
-	clipper_about.append(tr("See <a href=\"%1\">%1</a> for more information.").arg("http://www.angusj.com/delphi/clipper.php"));	
-	
-	QString proj_about(tr("This program uses the <b>PROJ.4 Cartographic Projections Library</b> by Frank Warmerdam.") % "<br/>");
-    proj_about.append(pj_get_release()).append("<br/><br/>");
-	QFile proj_about_file(":/3rd-party/proj/COPYING");
-	if (proj_about_file.open(QIODevice::ReadOnly))
-	{
-		proj_about.append(proj_about_file.readAll().replace('\n', "<br/>"));
-		proj_about.append("<br/>");
-	}
-	proj_about.append(tr("See <a href=\"%1\">%1</a> for more information.").arg("http://trac.osgeo.org/proj/"));	
-	
-	QLabel* about_label = new QLabel(
-		QString(
-		     "<a href=\"http://openorienteering.org\"><img src=\":/images/open-orienteering.png\"/></a><br/><br/>"
-		     "OpenOrienteering Mapper %1<br/>"
-		     "Copyright (C) 2012, 2013  Thomas Sch&ouml;ps<br/>"
-		     "This program comes with ABSOLUTELY NO WARRANTY;<br/>"
-		     "This is free software, and you are welcome to redistribute it<br/>"
-		     "under certain conditions; see the file COPYING for details.<br/><br/>").
-		   arg(APP_VERSION)
-		
-		% tr("Developers in alphabetical order:<br/>%1<br/>"
-		     "For contributions, thanks to:<br/>%2<br/>"
-		     "Additional information:").
-		  arg(QString("Peter Curtis<br/>Kai Pastor<br/>Thomas Sch&ouml;ps %1<br/>").arg(tr("(project initiator)"))).
-		  arg("Jon Cundill<br/>Jan Dalheimer<br/>Eugeniy Fedirets<br/>Anders Gressli<br/>Peter Hoban<br/>Henrik Johansson<br/>Oskar Karlin<br/>Tojo Masaya<br/>Vincent Poinsignon<br/>Russell Porter<br/>Christopher Schive<br/>Aivars Zogla<br/>")
-		 );
-	QTextEdit* additional_text = new QTextEdit( 
-	  clipper_about % "<br/><br/>" %
-	  QString("_").repeated(80) % "<br/><br/>" %
-	  proj_about 
-	);
-	additional_text->setReadOnly(true);
-	additional_text->setLineWrapMode(QTextEdit::NoWrap);
-	QPushButton* about_ok = new QPushButton(tr("OK"));
-	
-	QGridLayout* layout = new QGridLayout();
-	layout->addWidget(about_label, 0, 0, 1, 2);
-	layout->addWidget(additional_text, 1, 0, 1, 2);
-	layout->addWidget(about_ok, 2, 1);
-	layout->setColumnStretch(0, 1);
-	about_dialog.setLayout(layout);
-	
-	connect(about_ok, SIGNAL(clicked(bool)), &about_dialog, SLOT(accept()));
-	connect(about_label, SIGNAL(linkActivated(QString)), this, SLOT(linkClicked(QString)));
-	
-	about_dialog.setWindowModality(Qt::WindowModal);
+	AboutDialog about_dialog(this);
+	connect(&about_dialog, SIGNAL(linkActivated(QString)), this, SLOT(linkClicked(QString)));
 	about_dialog.exec();
 }
 

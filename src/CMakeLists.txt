@@ -122,6 +122,7 @@ set(Mapper_Common_SRCS
  core/map_color.cpp
  core/map_printer.cpp
  
+ gui/about_dialog.cpp
  gui/color_dialog.cpp
  gui/home_screen_controller.cpp
  gui/main_window.cpp
@@ -197,6 +198,7 @@ set(Mapper_Common_MOC_INPUT
  
  core/map_printer.h
  
+ gui/about_dialog.h
  gui/color_dialog.h
  gui/home_screen_controller.h
  gui/main_window.h

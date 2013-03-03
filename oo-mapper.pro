@@ -77,6 +77,7 @@ HEADERS += \
   src/util_pie_menu.h \
   src/util_task_dialog.h \
   src/core/map_printer.h \
+  src/gui/about_dialog.h \
   src/gui/color_dialog.h \
   src/gui/home_screen_controller.h \
   src/gui/main_window.h \
@@ -177,6 +178,7 @@ SOURCES += \
   src/file_format_xml.cpp \
   src/core/map_color.cpp \
   src/core/map_printer.cpp \
+  src/gui/about_dialog.cpp \
   src/gui/color_dialog.cpp \
   src/gui/home_screen_controller.cpp \
   src/gui/main_window.cpp \
