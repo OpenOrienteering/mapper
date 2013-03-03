@@ -209,6 +209,30 @@ Using this tool, objects can be selected like with the <a href="#tool_edit_point
 <p><img class=small src="../../images/tool-measure.png" width="32" height="32" border="0">This tool can be used to measure line lengths and area sizes. It will show both real world length or area in meters and the resulting length or area on the printed map.<br/>
 When this tool is activated, a window appears containing the measurements for the selected object. To measure different objects, the selection can be changed using the edit tool while the window is active. It is also possible to draw new paths and have their length or area shown as they are drawn.</p><br clear=all />
 
+
+<h3 id="advanceddrawing">Advanced drawing toolbar</h3>
+
+<h4 id="cutout_physical">Cutout</h4>
+<p><img class=small src="../../images/tool-cutout-physical.png" width="32" height="32" border="0" /> This cuts away all objects except inside a given region, making a map excerpt. It can also be used to cut away only a selected subset of objects outside the region.<br/>
+To use it:
+<ul>
+<li>Draw the cutout shape (with any line or area symbol). The shape must be closed, ensure this by finishing the drawing by pressing the return key.</li>
+<li>Then select the cutout tool. The shape will be marked in red.</li>
+<li>For making a cutout of the map, now press the return key.</li>
+<li>For cutting only some object, select those objects before pressing return.</li>
+</ul></p><br clear=all />
+
+<h4 id="cutaway_physical">Cut away</h4>
+<p><img class=small src="../../images/tool-cutout-physical-inner.png" width="32" height="32" border="0" /> This is the opposite to the above cutout tool. It cuts away all or a subset of objects inside a selected cutout region. Usage is identical to those of the cutout tool.<br/>
+This tool is useful for making training maps where certain symbols are missing in some places. For example, to create a contour-only region in a map, proceed like this:
+<ul>
+<li>Draw the cutout shape (with any line or area symbol). The shape must be closed, ensure this by finishing the drawing by pressing the return key.</li>
+<li>Click the cut away tool. The shape will be marked in red.</li>
+<li>In the symbol pane, select all symbols you want to cut away, e.g. everything except contours. You can select a range of symbols by clicking the first symbol, then clicking the last symbol while holding the Shift key.</li>
+<li>Press the return key.</li>
+</ul>
+</p><br clear=all />
+
 <h4 id="convert_to_curves">Convert to curves</h4>
 <p><img class=small src="../../images/tool-convert-to-curves.png" width="32" height="32" border="0" /> This tool changes the shape of selected polygonal objects to smooth. It can be used to "prettify" objects which have been drawn as polygonal objects but are curved in reality (however, it is usually less effort to draw these as curved objects from the start). Note that this tool is still experimental and might take some time to compute for a large number of objects.</p><br clear=all />
 
