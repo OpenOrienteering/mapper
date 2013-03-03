@@ -105,6 +105,7 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	connect(help_button, SIGNAL(clicked(bool)), this, SLOT(showHelp()));
 	
 	connect(map, SIGNAL(colorAdded(int,MapColor*)), this, SLOT(colorAdded(int,MapColor*)));
+	connect(map, SIGNAL(colorChanged(int,MapColor*)), this, SLOT(colorChanged(int, MapColor*)));
 	connect(map, SIGNAL(colorDeleted(int,const MapColor*)), this, SLOT(colorDeleted(int,const MapColor*)));
 }
 
@@ -272,20 +273,16 @@ void ColorWidget::currentCellChange(int current_row, int current_column, int pre
 
 void ColorWidget::cellDoubleClick(int row, int column)
 {
-	if (column != 1)
+	MapColor* color = map->getColor(row);
+	ColorDialog dialog(*map, *color, this);
+	dialog.setWindowModality(Qt::WindowModal);
+	int result = dialog.exec();
+	if (result == QDialog::Accepted)
 	{
-		MapColor* color = map->getColor(row);
-		ColorDialog dialog(*map, *color, this);
-		dialog.setWindowModality(Qt::WindowModal);
-		int result = dialog.exec();
-		if (result == QDialog::Accepted)
-		{
-			*color = dialog.getColor();
-			map->setColor(color, row); // trigger colorChanged signal
-			map->setColorsDirty();
-			map->updateAllObjects();
-			updateRow(row);
-		}
+		*color = dialog.getColor();
+		map->setColor(color, row); // trigger colorChanged signal
+		map->setColorsDirty();
+		map->updateAllObjects();
 	}
 }
 
@@ -294,6 +291,11 @@ void ColorWidget::colorAdded(int index, MapColor* color)
 	color_table->insertRow(index);
 	addRow(index);
 	color_table->setCurrentCell(index, 1);
+}
+
+void ColorWidget::colorChanged(int index, MapColor* color)
+{
+	updateRow(index);
 }
 
 void ColorWidget::colorDeleted(int index, const MapColor* color)

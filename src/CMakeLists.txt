@@ -16,8 +16,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-include(../3rd-party/clipper.cmake)
-
 if(Mapper_PACKAGE_QT AND UNIX AND NOT APPLE)
 	set(MAPPER_USE_QT_CONF_QRC 1)
 endif()
@@ -30,8 +28,6 @@ execute_process(
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 set(Mapper_Common_SRCS
- ../3rd-party/clipper/cpp/clipper.cpp
-
  global.cpp
  util.cpp
  util_pie_menu.cpp
@@ -123,6 +119,7 @@ set(Mapper_Common_SRCS
  core/map_color.cpp
  core/map_printer.cpp
  
+ gui/about_dialog.cpp
  gui/color_dialog.cpp
  gui/home_screen_controller.cpp
  gui/main_window.cpp
@@ -199,6 +196,7 @@ set(Mapper_Common_MOC_INPUT
  
  core/map_printer.h
  
+ gui/about_dialog.h
  gui/color_dialog.h
  gui/home_screen_controller.h
  gui/main_window.h
@@ -265,6 +263,7 @@ target_link_libraries(Mapper
   QtSingleApplication
   ${PROJ_LIBRARY}
   ${QT_LIBRARIES}
+  ${CLIPPER_LIBRARY}
 )
 
 install(TARGETS Mapper

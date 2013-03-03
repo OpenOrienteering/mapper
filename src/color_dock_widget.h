@@ -55,6 +55,7 @@ protected slots:
 	void cellDoubleClick(int row, int column);
 	
 	void colorAdded(int index, MapColor* color);
+	void colorChanged(int index, MapColor* color);
 	void colorDeleted(int index, const MapColor* color);
 	
 protected:

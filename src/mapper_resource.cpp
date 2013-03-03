@@ -25,6 +25,7 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
+#include <qabstractitemmodel.h>
 
 /**
  * Private MapperResource utilities
@@ -56,8 +57,26 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 	
 	switch (resource_type)
 	{
+		case ABOUT:
+#if defined(MAPPER_DEVELOPMENT_BUILD)
+			addIfExists(locations, MAPPER_DEVELOPMENT_RES_DIR);
+#endif
+#if defined(Q_OS_WIN)
+			resource_path = "/doc";
+#elif defined(Q_OS_MAC)
+			resource_path = "";
+#elif defined(MAPPER_DEBIAN_PACKAGE_NAME)
+			resource_path = QString("/../doc/") + MAPPER_DEBIAN_PACKAGE_NAME;
+#endif
+			break;
+			
+			
 		case ASSISTANT:
 			return MapperResource::getProgramLocations(resource_type);
+			
+		case EXAMPLE:
+			resource_path = "/examples";
+			break;
 			
 		case MANUAL:
 			// TODO: Support localized manual

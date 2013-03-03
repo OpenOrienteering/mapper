@@ -118,6 +118,10 @@ endif()
 add_custom_target(Mapper_prerequisites)
 set(Mapper_prerequisites_FOUND TRUE)
 
+add_subdirectory("3rd-party/clipper")
+add_dependencies(Mapper_prerequisites Clipper)
+include_directories(${CLIPPER_INCLUDE_DIR})
+
 if(Mapper_BUILD_PROJ)
 	add_subdirectory(3rd-party/proj)
 	add_dependencies(Mapper_prerequisites Proj)
@@ -217,6 +221,7 @@ endif()
 
 # Subdirectories
 
+add_subdirectory("examples")
 add_subdirectory("symbol sets")
 add_subdirectory("help")
 add_subdirectory("translations")
@@ -243,6 +248,7 @@ add_subdirectory("docs/api")
 install(FILES COPYING 
   DESTINATION "${MAPPER_ABOUT_DESTINATION}"
 )
+configure_file(COPYING COPYING COPYONLY)
 
 set(MAPPER_SUPERBUILD 0 CACHE INTERNAL "Flag to avoid superbuild loops." FORCE)
 

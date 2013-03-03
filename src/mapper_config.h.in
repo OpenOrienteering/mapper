@@ -22,6 +22,7 @@
 
 #define APP_NAME qApp->translate("Global", QT_TRANSLATE_NOOP("Global", "OpenOrienteering Mapper"))
 #define APP_VERSION "@Mapper_VERSION_DISPLAY@"
+#define CLIPPER_VERSION "@CLIPPER_VERSION@"
 
 #cmakedefine Mapper_BUILD_PROJ
 #cmakedefine Mapper_TRANSLATIONS_EMBEDDED
