@@ -28,6 +28,7 @@
 #include "symbol.h"
 #include "object.h"
 #include "map_undo.h"
+#include "util.h"
 
 using namespace ClipperLib;
 
@@ -172,7 +173,7 @@ bool BooleanTool::executeForObjects(BooleanTool::Operation op, PathObject* subje
 			for (int i = part.path_coord_start_index + (part.isClosed() ? 1 : 0); i <= part.path_coord_end_index; ++i)
 			{
 				polygon->push_back(IntPoint(path_coords[i].pos.getIntX(), path_coords[i].pos.getIntY()));
-				polymap.insert(intPointToQInt64(polygon->back()), std::make_pair(&part, &path_coords[i]));	// FIXME: would it be possible to fix potential collisions here?
+				polymap.insertMulti(intPointToQInt64(polygon->back()), std::make_pair(&part, &path_coords[i]));
 			}
 			
 			bool orientation = Orientation(*polygon);
@@ -461,189 +462,265 @@ void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_seque
 	{
 		// This could happen for a straight line or a very flat curve - take coords directly from original
 		rebuildTwoIndexSegment(start_index, end_index, have_sequence, sequence_increasing, polygon, polymap, object);
+		return;
+	}
+
+	// Get polygon point coordinates
+	IntPoint& start_point = polygon.at(start_index);
+	PathCoordInfo start_info;
+	start_info.first = NULL;
+	
+	IntPoint& second_point = polygon.at((start_index + 1) % num_points);
+	PathCoordInfo second_info;
+	
+	IntPoint& end_point = polygon.at(end_index);
+	PathCoordInfo end_info;
+	end_info.first = NULL;
+	
+	int second_last_index = end_index - 1;
+	if (second_last_index < 0)
+		second_last_index = num_points - 1;
+	IntPoint& second_last_point = polygon.at(second_last_index);
+	PathCoordInfo second_last_info;
+	
+	// Try to find a consistent set of path coord infos for the middle coordinates
+	bool found = false;
+	qint64 second_key = intPointToQInt64(second_point);
+	qint64 second_last_key = intPointToQInt64(second_last_point);
+	QHash< qint64, PathCoordInfo >::iterator second_it = polymap.find(second_key);
+	QHash< qint64, PathCoordInfo >::iterator second_last_it = polymap.find(second_last_key);
+	while (second_it != polymap.end() && second_it.key() == second_key)
+	{
+		while (second_last_it != polymap.end() && second_last_it.key() == second_last_key)
+		{
+			if (second_it->first == second_last_it->first)
+			{
+				found = true;
+				break;
+			}
+			++second_last_it;
+		}
+		if (found)
+			break;
+		++second_it;
+		second_last_it = polymap.find(second_last_key);
+	}
+	if (!found)
+	{
+		// Need unambiguous path part information to find the original object with high probability
+		qDebug() << "BooleanTool::rebuildSegment: cannot identify original object!";
+		rebuildSegmentFromPolygonOnly(start_point, second_point, second_last_point, end_point, object);
+		return;
+	}
+	
+	second_info = *second_it;
+	second_last_info = *second_last_it;
+	
+	// Also try to find consistent outer coordinates
+	PathObject::PathPart* original_path = second_info.first;
+	PathObject* original = original_path->path;
+	int original_index = second_info.second->index;
+	
+	qint64 start_key = intPointToQInt64(start_point);
+	QHash< qint64, PathCoordInfo >::iterator start_it = polymap.find(start_key);
+	while (start_it != polymap.end() && start_it.key() == start_key)
+	{
+		if (start_it->first == original_path)
+			break;
+		++start_it;
+	}
+	if (start_it != polymap.end())
+		start_info = *start_it;
+	
+	qint64 end_key = intPointToQInt64(end_point);
+	QHash< qint64, PathCoordInfo >::iterator end_it = polymap.find(end_key);
+	while (end_it != polymap.end() && end_it.key() == end_key)
+	{
+		if (end_it->first == original_path)
+			break;
+		++end_it;
+	}
+	if (end_it != polymap.end())
+		end_info = *end_it;
+	
+	// Find out start tangent
+	float start_param;
+	MapCoord start_coord = MapCoord(0.001 * start_point.X, 0.001 * start_point.Y);
+	MapCoord start_tangent;
+	MapCoord original_end_tangent;
+	
+	double start_error_sq, end_error_sq;
+	// Maximum difference in mm from reconstructed start and end coords to the
+	// intersection points returned by Clipper
+	const double error_bound = 0.4;
+	
+	if (start_info.first && start_info.first == second_info.first &&
+		((!sequence_increasing && start_info.second->param == 1) || (sequence_increasing && start_info.second->param == 0)) &&
+		((start_info.second->index == second_info.second->index) ||
+			(sequence_increasing && start_info.second->param >= 1))) //&& start_info.second->index + 1 == second_info.second->index
+	{
+		// Take coordinates directly
+		start_param = sequence_increasing ? 0 : 1;
+		start_tangent = sequence_increasing ? original->getCoordinate(original_index + 1) : original->getCoordinate(original_index + 2);
+		original_end_tangent = sequence_increasing ? original->getCoordinate(original_index + 2) : original->getCoordinate(original_index + 1);
+		
+		const MapCoord& assumed_start = sequence_increasing ? original->getCoordinate(original_index + 0) : original->getCoordinate(original_index + 3);
+		start_error_sq = start_coord.lengthSquaredTo(assumed_start);
+		if (start_error_sq > error_bound)
+			qDebug() << "BooleanTool::rebuildSegment: start error too high in direct case: " << sqrt(start_error_sq);
 	}
 	else
 	{
-		// Find out start tangent
-		PathCoordInfo start_info;
-		start_info.first = NULL;
-		IntPoint& start_point = polygon.at(start_index);
-		if (polymap.contains(intPointToQInt64(start_point)))
-			start_info = polymap.value(intPointToQInt64(start_point));
+		// Approximate coords
+		start_param = second_info.second->param;
+		int dx = second_point.X - start_point.X;
+		int dy = second_point.Y - start_point.Y;
+		float point_dist = 0.001 * sqrt(dx*dx + dy*dy);
 		
-		PathCoordInfo second_info;
-		second_info.first = NULL;
-		IntPoint& second_point = polygon.at((start_index + 1) % num_points);
-		if (polymap.contains(intPointToQInt64(second_point)))
-			second_info = polymap.value(intPointToQInt64(second_point));
-		
-		assert(second_info.first);
-		PathObject* original = second_info.first->path;
-		int original_index = second_info.second->index;
-		
-		float start_param;
-		MapCoord start_coord = MapCoord(0.001 * start_point.X, 0.001 * start_point.Y);
-		MapCoord start_tangent;
-		MapCoord original_end_tangent;
-		
-		if (start_info.first && start_info.first == second_info.first &&
-			((!sequence_increasing && start_info.second->param == 1) || (sequence_increasing && start_info.second->param == 0)) &&
-			((start_info.second->index == second_info.second->index) ||
-				(sequence_increasing && start_info.second->param >= 1))) //&& start_info.second->index + 1 == second_info.second->index
+		if (sequence_increasing)
 		{
-			// Take coordinates directly
-			start_param = sequence_increasing ? 0 : 1;
-			start_tangent = sequence_increasing ? original->getCoordinate(original_index + 1) : original->getCoordinate(original_index + 2);
-			original_end_tangent = sequence_increasing ? original->getCoordinate(original_index + 2) : original->getCoordinate(original_index + 1);
+			const PathCoord* prev_coord = (second_info.second->param <= 0) ? second_info.second : (second_info.second - 1);
+			float prev_param = (prev_coord->param == 1) ? 0 : prev_coord->param;
+			start_param -= (second_info.second->param - prev_param) * point_dist / qMax(1e-7f, (second_info.second->clen - prev_coord->clen));
+			if (start_param < 0)
+				start_param = 0;
 			
-			const MapCoord& assumed_start = sequence_increasing ? original->getCoordinate(original_index + 0) : original->getCoordinate(original_index + 3);
-			qint64 TESTX = start_point.X - assumed_start.rawX();
-			qint64 TESTY = start_point.Y - assumed_start.rawY();
-			Q_ASSERT(sqrt(TESTX*TESTX + TESTY*TESTY) < 400);
+			MapCoordF o0, o1, o2, o3, o4;
+			PathCoord::splitBezierCurve(MapCoordF(original->getCoordinate(original_index + 0)), MapCoordF(original->getCoordinate(original_index + 1)),
+										MapCoordF(original->getCoordinate(original_index + 2)), MapCoordF(original->getCoordinate(original_index + 3)),
+										start_param,
+										o0, o1, o2, o3, o4);
+			start_tangent = o3.toMapCoord();
+			original_end_tangent = o4.toMapCoord();
+			start_error_sq = start_coord.lengthSquaredTo(o2.toMapCoord());
+			if (start_error_sq > error_bound)
+				qDebug() << "BooleanTool::rebuildSegment: start error too high in increasing general case: " << sqrt(start_error_sq);
 		}
 		else
 		{
-			// Approximate coords
-			start_param = second_info.second->param;
-			int dx = second_point.X - start_point.X;
-			int dy = second_point.Y - start_point.Y;
-			float point_dist = 0.001 * sqrt(dx*dx + dy*dy);
+			const PathCoord* next_coord = (second_info.second->param >= 1) ? second_info.second : (second_info.second + 1);
+			float next_param = next_coord->param;
+			start_param += (next_param - second_info.second->param) * point_dist / qMax(1e-7f, (next_coord->clen - second_info.second->clen));
+			if (start_param > 1)
+				start_param = 1;
 			
-			if (sequence_increasing)
-			{
-				const PathCoord* prev_coord = (second_info.second->param <= 0) ? second_info.second : (second_info.second - 1);
-				float prev_param = (prev_coord->param == 1) ? 0 : prev_coord->param;
-				start_param -= (second_info.second->param - prev_param) * point_dist / qMax(1e-7f, (second_info.second->clen - prev_coord->clen));
-				if (start_param < 0)
-					start_param = 0;
-				
-				MapCoordF o0, o1, o2, o3, o4;
-				PathCoord::splitBezierCurve(MapCoordF(original->getCoordinate(original_index + 0)), MapCoordF(original->getCoordinate(original_index + 1)),
-											MapCoordF(original->getCoordinate(original_index + 2)), MapCoordF(original->getCoordinate(original_index + 3)),
-											start_param,
-											o0, o1, o2, o3, o4);
-				start_tangent = o3.toMapCoord();
-				original_end_tangent = o4.toMapCoord();
-				
-				qint64 TESTX = start_point.X - o2.getIntX();
-				qint64 TESTY = start_point.Y - o2.getIntY();
-				Q_ASSERT(sqrt(TESTX*TESTX + TESTY*TESTY) < 400);
-			}
-			else
-			{
-				const PathCoord* next_coord = (second_info.second->param >= 1) ? second_info.second : (second_info.second + 1);
-				float next_param = next_coord->param;
-				start_param += (next_param - second_info.second->param) * point_dist / qMax(1e-7f, (next_coord->clen - second_info.second->clen));
-				if (start_param > 1)
-					start_param = 1;
-				
-				MapCoordF o0, o1, o2, o3, o4;
-				PathCoord::splitBezierCurve(MapCoordF(original->getCoordinate(original_index + 3)), MapCoordF(original->getCoordinate(original_index + 2)),
-											MapCoordF(original->getCoordinate(original_index + 1)), MapCoordF(original->getCoordinate(original_index + 0)),
-											1 - start_param,
-								o0, o1, o2, o3, o4);
-				start_tangent = o3.toMapCoord();
-				original_end_tangent = o4.toMapCoord();
-				
-				qint64 TESTX = start_point.X - o2.getIntX();
-				qint64 TESTY = start_point.Y - o2.getIntY();
-				Q_ASSERT(sqrt(TESTX*TESTX + TESTY*TESTY) < 400);
-			}
+			MapCoordF o0, o1, o2, o3, o4;
+			PathCoord::splitBezierCurve(MapCoordF(original->getCoordinate(original_index + 3)), MapCoordF(original->getCoordinate(original_index + 2)),
+										MapCoordF(original->getCoordinate(original_index + 1)), MapCoordF(original->getCoordinate(original_index + 0)),
+										1 - start_param,
+							o0, o1, o2, o3, o4);
+			start_tangent = o3.toMapCoord();
+			original_end_tangent = o4.toMapCoord();
+			start_error_sq = start_coord.lengthSquaredTo(o2.toMapCoord());
+			if (start_error_sq > error_bound)
+				qDebug() << "BooleanTool::rebuildSegment: start error too high in decreasing general case: " << sqrt(start_error_sq);
 		}
+	}
+	
+	// Find better end point approximation and its tangent
+	MapCoord end_tangent;
+	MapCoord end_coord;
+	
+	if (end_info.first && end_info.first == second_last_info.first &&
+		((!sequence_increasing && end_info.second->param == 0) || (sequence_increasing && end_info.second->param == 1)) &&
+		((end_info.second->index == second_last_info.second->index) ||
+		(!sequence_increasing && end_info.second->param >= 1))) //&& end_info.second->index + 1 == second_last_info.second->index
+	{
+		// Take coordinates directly
+		end_coord = sequence_increasing ? original->getCoordinate(original_index + 3) : original->getCoordinate(original_index + 0);
+		end_tangent = original_end_tangent;
 		
-		// Find better end point approximation and its tangent
-		MapCoord end_tangent;
-		MapCoord end_coord;
-		
-		PathCoordInfo end_info;
-		end_info.first = NULL;
-		IntPoint& end_point = polygon.at(end_index);
-		if (polymap.contains(intPointToQInt64(end_point)))
-			end_info = polymap.value(intPointToQInt64(end_point));
-		
-		PathCoordInfo second_last_info;
-		second_last_info.first = NULL;
-		int second_last_index = end_index - 1;
-		if (second_last_index < 0)
-			second_last_index = num_points - 1;
-		IntPoint& second_last_point = polygon.at(second_last_index);
-		if (polymap.contains(intPointToQInt64(second_last_point)))
-			second_last_info = polymap.value(intPointToQInt64(second_last_point));
-		
-		if (end_info.first && end_info.first == second_last_info.first &&
-			((!sequence_increasing && end_info.second->param == 0) || (sequence_increasing && end_info.second->param == 1)) &&
-			((end_info.second->index == second_last_info.second->index) ||
-			(!sequence_increasing && end_info.second->param >= 1))) //&& end_info.second->index + 1 == second_last_info.second->index
+		qint64 test_x = end_point.X - end_coord.rawX();
+		qint64 test_y = end_point.Y - end_coord.rawY();
+		end_error_sq = 0.001 * sqrt(test_x*test_x + test_y*test_y);
+		if (end_error_sq > error_bound)
+			qDebug() << "BooleanTool::rebuildSegment: end error too high in direct case: " << sqrt(end_error_sq);
+	}
+	else
+	{
+		// Approximate coords
+		float end_param = second_last_info.second->param;
+		int dx = end_point.X - second_last_point.X;
+		int dy = end_point.Y - second_last_point.Y;
+		float point_dist = 0.001 * sqrt(dx*dx + dy*dy);
+		if (sequence_increasing)
 		{
-			// Take coordinates directly
-			end_coord = sequence_increasing ? original->getCoordinate(original_index + 3) : original->getCoordinate(original_index + 0);
-			end_tangent = original_end_tangent;
+			const PathCoord* next_coord = (second_last_info.second->param >= 1) ? second_last_info.second : (second_last_info.second + 1);
+			float next_param = next_coord->param;
+			end_param += (next_param - second_last_info.second->param) * point_dist / qMax(1e-7f, (next_coord->clen - second_last_info.second->clen));
+			if (end_param > 1)
+				end_param = 1;
 			
-			qint64 TESTX = end_point.X - end_coord.rawX();
-			qint64 TESTY = end_point.Y - end_coord.rawY();
-			Q_ASSERT(sqrt(TESTX*TESTX + TESTY*TESTY) < 400);
+			MapCoordF o0, o1, o2, o3, o4;
+			PathCoord::splitBezierCurve(MapCoordF(start_coord), MapCoordF(start_tangent),
+										MapCoordF(original_end_tangent), MapCoordF(original->getCoordinate(original_index + 3)),
+										(end_param - start_param) / (1 - start_param),
+										o0, o1, o2, o3, o4);
+			start_tangent = o0.toMapCoord();
+			end_tangent = o1.toMapCoord();
+			end_coord = o2.toMapCoord();
+			
+			qint64 test_x = end_point.X - end_coord.rawX();
+			qint64 test_y = end_point.Y - end_coord.rawY();
+			end_error_sq = 0.001 * sqrt(test_x*test_x + test_y*test_y);
+			if (end_error_sq > error_bound)
+				qDebug() << "BooleanTool::rebuildSegment: end error too high in increasing general case: " << sqrt(end_error_sq);
 		}
 		else
 		{
-			// Approximate coords
-			float end_param = second_last_info.second->param;
-			int dx = end_point.X - second_last_point.X;
-			int dy = end_point.Y - second_last_point.Y;
-			float point_dist = 0.001 * sqrt(dx*dx + dy*dy);
-			if (sequence_increasing)
-			{
-				const PathCoord* next_coord = (second_last_info.second->param >= 1) ? second_last_info.second : (second_last_info.second + 1);
-				float next_param = next_coord->param;
-				end_param += (next_param - second_last_info.second->param) * point_dist / qMax(1e-7f, (next_coord->clen - second_last_info.second->clen));
-				if (end_param > 1)
-					end_param = 1;
-				
-				MapCoordF o0, o1, o2, o3, o4;
-				PathCoord::splitBezierCurve(MapCoordF(start_coord), MapCoordF(start_tangent),
-											MapCoordF(original_end_tangent), MapCoordF(original->getCoordinate(original_index + 3)),
-											(end_param - start_param) / (1 - start_param),
+			const PathCoord* prev_coord = (second_last_info.second->param <= 0) ? second_last_info.second : (second_last_info.second - 1);
+			float prev_param = (prev_coord->param == 1) ? 0 : prev_coord->param;
+			end_param -= (second_last_info.second->param - prev_param) * point_dist / qMax(1e-7f, (second_last_info.second->clen - prev_coord->clen));
+			if (end_param < 0)
+				end_param = 0;
+			
+			MapCoordF o0, o1, o2, o3, o4;
+			PathCoord::splitBezierCurve(MapCoordF(start_coord), MapCoordF(start_tangent),
+											MapCoordF(original_end_tangent), MapCoordF(original->getCoordinate(original_index + 0)),
+											1 - (end_param / start_param),
 											o0, o1, o2, o3, o4);
-				start_tangent = o0.toMapCoord();
-				end_tangent = o1.toMapCoord();
-				end_coord = o2.toMapCoord();
-				
-				qint64 TESTX = end_point.X - end_coord.rawX();
-				qint64 TESTY = end_point.Y - end_coord.rawY();
-				Q_ASSERT(sqrt(TESTX*TESTX + TESTY*TESTY) < 400);
-			}
-			else
-			{
-				const PathCoord* prev_coord = (second_last_info.second->param <= 0) ? second_last_info.second : (second_last_info.second - 1);
-				float prev_param = (prev_coord->param == 1) ? 0 : prev_coord->param;
-				end_param -= (second_last_info.second->param - prev_param) * point_dist / qMax(1e-7f, (second_last_info.second->clen - prev_coord->clen));
-				if (end_param < 0)
-					end_param = 0;
-				
-				MapCoordF o0, o1, o2, o3, o4;
-				PathCoord::splitBezierCurve(MapCoordF(start_coord), MapCoordF(start_tangent),
-												MapCoordF(original_end_tangent), MapCoordF(original->getCoordinate(original_index + 0)),
-												1 - (end_param / start_param),
-												o0, o1, o2, o3, o4);
-				start_tangent = o0.toMapCoord();
-				end_tangent = o1.toMapCoord();
-				end_coord = o2.toMapCoord();
-				
-				qint64 TESTX = end_point.X - end_coord.rawX();
-				qint64 TESTY = end_point.Y - end_coord.rawY();
-				Q_ASSERT(sqrt(TESTX*TESTX + TESTY*TESTY) < 400);
-			}
+			start_tangent = o0.toMapCoord();
+			end_tangent = o1.toMapCoord();
+			end_coord = o2.toMapCoord();
+			
+			qint64 test_x = end_point.X - end_coord.rawX();
+			qint64 test_y = end_point.Y - end_coord.rawY();
+			end_error_sq = 0.001 * sqrt(test_x*test_x + test_y*test_y);
+			if (end_error_sq > error_bound)
+				qDebug() << "BooleanTool::rebuildSegment: end error too high in decreasing general case: " << sqrt(end_error_sq);
 		}
-		
-		// Rebuild bezier curve
+	}
+	
+	if (start_error_sq <= error_bound && end_error_sq <= error_bound)
+	{
+		// Rebuild bezier curve using information from original curve
 		object->addCoordinate(start_tangent);
 		object->addCoordinate(end_tangent);
 		object->addCoordinate(convertOriginalCoordinate(end_coord));
-		
-		qint64 TESTX = end_point.X - end_coord.rawX();
-		qint64 TESTY = end_point.Y - end_coord.rawY();
-		// TODO: This assert triggers sometimes, but the result is just a relatively small error in the reconstruction
-		Q_ASSERT(sqrt(TESTX*TESTX + TESTY*TESTY) < 400);
 	}
+	else
+	{
+		// Rebuild bezier curve approximately using tangents derived from result polygon
+		rebuildSegmentFromPolygonOnly(start_point, second_point, second_last_point, end_point, object);
+	}
+}
+
+void BooleanTool::rebuildSegmentFromPolygonOnly(const IntPoint& start_point, const IntPoint& second_point, const IntPoint& second_last_point, const IntPoint& end_point, PathObject* object)
+{
+	MapCoord start_point_c = MapCoord::fromRaw(start_point.X, start_point.Y);
+	MapCoord second_point_c = MapCoord::fromRaw(second_point.X, second_point.Y);
+	MapCoord second_last_point_c = MapCoord::fromRaw(second_last_point.X, second_last_point.Y);
+	MapCoord end_point_c = MapCoord::fromRaw(end_point.X, end_point.Y);
+	
+	MapCoordF polygon_start_tangent = MapCoordF(second_point_c - start_point_c);
+	polygon_start_tangent.normalize();
+	MapCoordF polygon_end_tangent = MapCoordF(second_last_point_c - end_point_c);
+	polygon_end_tangent.normalize();
+	
+	double tangent_length = BEZIER_HANDLE_DISTANCE * start_point_c.lengthTo(end_point_c);
+	object->addCoordinate((MapCoordF(start_point_c) + tangent_length * polygon_start_tangent).toMapCoord());
+	object->addCoordinate((MapCoordF(end_point_c) + tangent_length * polygon_end_tangent).toMapCoord());
+	object->addCoordinate(end_point_c);
 }
 
 void BooleanTool::rebuildTwoIndexSegment(int start_index, int end_index, bool have_sequence, bool sequence_increasing, Polygon& polygon, QHash< qint64, BooleanTool::PathCoordInfo >& polymap, PathObject* object)
@@ -665,7 +742,7 @@ void BooleanTool::rebuildTwoIndexSegment(int start_index, int end_index, bool ha
 			rebuildCoordinate(end_index, polygon, polymap, object);
 			return;
 		}
-		assert(coords_increasing == sequence_increasing);
+		Q_ASSERT(coords_increasing == sequence_increasing);
 	}
 	else
 	{

@@ -51,6 +51,14 @@ public:
 		this->y = qRound64(point.y() * 1000) << 4;
 	}
 	
+	static inline MapCoord fromRaw(qint64 x, qint64 y)
+	{
+		MapCoord new_coord;
+		new_coord.x = x << 4;
+		new_coord.y = y << 4;
+		return new_coord;
+	}
+	
 	inline void setX(double x) {this->x = (qRound64(x * 1000) << 4) | (this->x & 15);}
 	inline void setY(double y) {this->y = (qRound64(y * 1000) << 4) | (this->y & 15);}
 	inline void setRawX(qint64 new_x) {this->x = (new_x << 4) | (this->x & 15);}
