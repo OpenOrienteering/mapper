@@ -45,7 +45,8 @@ CutoutTool::~CutoutTool()
 {
 	if (editing)
 	{
-		map()->addObject(cutout_object);
+		if (cutout_object_index >= 0)
+			map()->getCurrentPart()->addObject(cutout_object, cutout_object_index);
 		map()->clearObjectSelection(false);
 		map()->addObjectToSelection(cutout_object, true);
 		
@@ -63,6 +64,7 @@ void CutoutTool::initImpl()
 	cutout_object->setSymbol(Map::getCoveringCombinedLine(), true);
 	updatePreviewObjects();
 	
+	cutout_object_index = map()->getCurrentPart()->findObjectIndex(cutout_object);
 	map()->removeObjectFromSelection(cutout_object, true);
 	map()->deleteObject(cutout_object, true);
 }
@@ -84,6 +86,11 @@ bool CutoutTool::keyPress(QKeyEvent* event)
 {
 	if (event->key() == Qt::Key_Return)
 	{
+		// Insert cutout object again at its original index to keep the objects order
+		// (necessary no to break undo / redo)
+		map()->getCurrentPart()->addObject(cutout_object, cutout_object_index);
+		cutout_object_index = -1;
+		
 		// Apply tool via static function and deselect this tool
 		apply(map(), cutout_object, cut_away);
 		editor->setEditTool();

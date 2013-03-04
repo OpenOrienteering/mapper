@@ -66,6 +66,12 @@ protected:
 	/// The object which determines the cutout's shape
 	PathObject* cutout_object;
 	
+	/// The index of the cutout object in its map part,
+	/// so it can be inserted there again after taking it out.
+	/// Set to a negative value to indicate that the object
+	/// has already been re-added.
+	int cutout_object_index;
+	
 	/// Object selection helper
 	QScopedPointer<ObjectSelector> object_selector;
 };
