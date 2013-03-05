@@ -39,6 +39,11 @@
 #include "tool_helpers.h"
 #include "util.h"
 
+#if defined(__MINGW32__) and defined(DrawText)
+// MinGW(64) winuser.h issue
+#undef DrawText
+#endif
+
 QCursor* DrawTextTool::cursor = NULL;
 
 DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
