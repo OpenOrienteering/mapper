@@ -43,6 +43,21 @@
 #include "../util.h"
 
 
+#if (defined Q_OS_MAC)
+// Cf. qtbase/src/plugins/platforms/cocoa/qcocoamenuloader.mm.
+// These translations should come with Qt, but are missing
+// for some language (at least for de in Qt 5.0.1).
+static const char *application_menu_strings[] = {
+  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Services"),
+  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Hide %1"),
+  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Hide Others"),
+  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Show All"),
+  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Preferences..."),
+  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Quit %1"),
+  QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "About %1")
+};
+#endif
+
 int MainWindow::num_open_files = 0;
 
 MainWindow::MainWindow(bool as_main_window)
@@ -236,7 +251,7 @@ void MainWindow::createHelpMenu()
 	QAction* aboutQtAct = new QAction(tr("About &Qt"), this);
 	aboutQtAct->setStatusTip(tr("Show information about Qt"));
 #if defined(Q_OS_MAC)
-	aboutAct->setMenuRole(QAction::AboutQtRole);
+	aboutQtAct->setMenuRole(QAction::AboutQtRole);
 #endif
 	connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 	

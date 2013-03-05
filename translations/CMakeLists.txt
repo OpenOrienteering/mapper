@@ -1,5 +1,5 @@
 #
-#    Copyright 2012 Thomas Schöps, Kai Pastor
+#    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -100,6 +100,18 @@ else()
 	  DESTINATION "${MAPPER_DATA_DESTINATION}/translations")
 
 endif(Mapper_TRANSLATIONS_EMBEDDED)
+
+if(APPLE)
+	# Localized resources just to enable localized native dialogs.
+	foreach(_mapper_trans ${Mapper_TRANS})
+		get_filename_component(_mapper_lang ${_mapper_trans} NAME_WE)
+		string(REPLACE OpenOrienteering_ "" LANGUAGE_CODE ${_mapper_lang})
+		configure_file(locversion.plist.in ${LANGUAGE_CODE}.lproj/locversion.plist @ONLY)
+		install(
+		  DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGE_CODE}.lproj"
+		  DESTINATION "${MAPPER_DATA_DESTINATION}")
+	endforeach()
+endif()
 
 # For super-builds (e.g. cross-compilation), wait for the Qt build.
 add_dependencies(Mapper_translations Mapper_prerequisites)
