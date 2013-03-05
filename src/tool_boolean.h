@@ -79,11 +79,15 @@ private:
 	void polygonToPathPart(ClipperLib::Polygon& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object);
 	
 	/**
-	 * Tries to reconstruct a curved segment with given start and end indices from the polygon.
+	 * Tries to reconstruct a straight or curved segment with given start and end indices from the polygon.
 	 * The first coordinate of the segment is assumed to be already added.
 	 */
 	void rebuildSegment(int start_index, int end_index, bool have_sequence, bool sequence_increasing, ClipperLib::Polygon& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object);
-	/// Special case of rebuildSegment().
+	
+	/** Approximates a curved segment from the result polygon alone. */
+	void rebuildSegmentFromPolygonOnly(const ClipperLib::IntPoint& start_point, const ClipperLib::IntPoint& second_point, const ClipperLib::IntPoint& second_last_point, const ClipperLib::IntPoint& end_point, PathObject* object);
+	
+	/** Special case of rebuildSegment() for straight or very short lines. */
 	void rebuildTwoIndexSegment(int start_index, int end_index, bool have_sequence, bool sequence_increasing, ClipperLib::Polygon& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object);
 	
 	/**
@@ -92,7 +96,13 @@ private:
 	 */
 	void rebuildCoordinate(int index, ClipperLib::Polygon& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object, bool start_new_part = false);
 	
+	/** Removes flags from the coordinate to be able to use it in the reconstruction. */
 	MapCoord convertOriginalCoordinate(MapCoord in);
+	
+	/**
+	 * Compares the points between the given indices from the polygon to the original at coord_index.
+	 * Returns true if the segments match. In this case, the out_... parameters are set.
+	 */
 	bool check_segment_match(int coord_index, PathObject* original, ClipperLib::Polygon& polygon, int start_index, int end_index, bool& out_coords_increasing, bool& out_is_curve);
 	
 	/**
