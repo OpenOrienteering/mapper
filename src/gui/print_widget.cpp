@@ -730,7 +730,14 @@ void PrintWidget::previewClicked()
 		return;
 	
 	QPrinter* printer = map_printer->makePrinter();
+#if !defined(Q_OS_MAC)
 	QPrintPreviewDialog preview(printer, this);
+#else
+	// https://bugreports.qt-project.org/browse/QTBUG-10206 :
+	//   Mac QPrintPreviewDialog is missing Close icon
+	QPrintPreviewDialog preview(printer, this, 
+	  Qt::Window | Qt::CustomizeWindowHint | Qt::WindowSystemMenuHint );
+#endif
 	connect(&preview, SIGNAL(paintRequested(QPrinter*)), map_printer, SLOT(printMap(QPrinter*)));
 	preview.exec();
 	
