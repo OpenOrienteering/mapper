@@ -173,6 +173,10 @@ void MainWindow::createFileMenu()
 	connect(save_as_act, SIGNAL(triggered()), this, SLOT(showSaveAsDialog()));
 	
 	settings_act = new QAction(tr("Settings..."), this);
+#if defined(Q_OS_MAC)
+	settings_act->setShortcut(QKeySequence::Preferences);
+	settings_act->setMenuRole(QAction::PreferencesRole);
+#endif
 	connect(settings_act, SIGNAL(triggered()), this, SLOT(showSettings()));
 	
 	close_act = new QAction(tr("Close"), this);
@@ -184,7 +188,10 @@ void MainWindow::createFileMenu()
 	QAction* exit_act = new QAction(tr("E&xit"), this);
 	exit_act->setShortcuts(QKeySequence::Quit);
 	exit_act->setStatusTip(tr("Exit the application"));
-	close_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
+#if defined(Q_OS_MAC)
+	exit_act->setMenuRole(QAction::QuitRole);
+#endif
+	exit_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(exit_act, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
 	
 	file_menu = menuBar()->addMenu(tr("&File"));
@@ -216,14 +223,21 @@ void MainWindow::createHelpMenu()
 	// Help menu
 	QAction* manualAct = new QAction(QIcon(":/images/help.png"), tr("Open &Manual"), this);
 	manualAct->setStatusTip(tr("Show the help file for this application"));
+	manualAct->setShortcut(QKeySequence::HelpContents);
 	connect(manualAct, SIGNAL(triggered()), this, SLOT(showHelp()));
 	
 	QAction* aboutAct = new QAction(tr("&About %1").arg(APP_NAME), this);
 	aboutAct->setStatusTip(tr("Show information about this application"));
+#if defined(Q_OS_MAC)
+	aboutAct->setMenuRole(QAction::AboutRole);
+#endif
 	connect(aboutAct, SIGNAL(triggered()), this, SLOT(showAbout()));
 	
 	QAction* aboutQtAct = new QAction(tr("About &Qt"), this);
 	aboutQtAct->setStatusTip(tr("Show information about Qt"));
+#if defined(Q_OS_MAC)
+	aboutAct->setMenuRole(QAction::AboutQtRole);
+#endif
 	connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 	
 	QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
