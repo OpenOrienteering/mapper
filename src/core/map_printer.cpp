@@ -414,6 +414,8 @@ void MapPrinter::updatePaperDimensions()
 	
 	QPrinter* printer = (target==NULL) ? 
 	  new QPrinter(QPrinter::HighResolution) : new QPrinter(*target, QPrinter::HighResolution);
+	if (!printer->isValid())
+		printer->setOutputFormat(QPrinter::PdfFormat);
 	  
 	if (page_format.paper_size == QPrinter::Custom)
 	{
