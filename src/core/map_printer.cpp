@@ -570,6 +570,8 @@ void MapPrinter::takePrinterSettings(const QPrinter* printer)
 		updatePageBreaks();
 		emit pageFormatChanged(page_format);
 	}
+
+	setResolution(printer->resolution());
 }
 
 void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& page_extent, bool white_background) const
@@ -604,6 +606,18 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 	{
 		int w = qCeil(device_painter->device()->widthMM() * scale);
 		int h = qCeil(device_painter->device()->heightMM() * scale);
+#if defined (Q_OS_MAC)
+		if (device_painter->device()->physicalDpiX() == 0)
+		{
+			// Possible Qt bug, since according to QPaintDevice documentation,
+			// "if the physicalDpiX() doesn't equal the logicalDpiX(),
+			// the corresponding QPaintEngine must handle the resolution mapping"
+			// which doesn't seem to happen here.
+			qreal corr = device_painter->device()->logicalDpiX() / 72.0;
+			w = qCeil(device_painter->device()->widthMM() * scale * corr);
+			h = qCeil(device_painter->device()->heightMM() * scale * corr);
+		}
+#endif
 		print_buffer = QImage(w, h, QImage::Format_RGB32);
 		print_buffer.fill(QColor(Qt::white));
 		painter = new QPainter(&print_buffer);
@@ -679,6 +693,21 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 		delete painter; 
 		painter = NULL;
 		
+#if defined(Q_OS_MAC)
+		// Workaround for miss-scaled image export output
+		int logical_dpi = device_painter->device()->logicalDpiX(); 
+		if (logical_dpi != 0)
+		{
+			int physical_dpi = device_painter->device()->physicalDpiX();
+			if (physical_dpi != 0 && logical_dpi != physical_dpi)
+			{
+				qreal s = (qreal)logical_dpi / (qreal)physical_dpi;
+				//qreal s = physical_dpi / logical_dpi;
+				device_painter->scale(s, s);
+			}
+		}
+#endif
+
 		device_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
 		device_painter->drawImage(0, 0, print_buffer);
 	}
