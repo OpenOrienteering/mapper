@@ -587,13 +587,16 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 	// If the target is an image, use the temporary image to enforce
 	// the given resolution during preview.
 	bool have_transparency = options.simulate_overprinting || target == imageTarget();
-	if (view != NULL)
+	if (!have_transparency && view != NULL)
 	{
 		have_transparency = view->getMapVisibility()->visible && view->getMapVisibility()->opacity < 1.0f;
-		for (int i = 0; i < map.getNumTemplates() && !have_transparency; ++i)
+		if (options.show_templates)
 		{
-			TemplateVisibility* visibility = view->getTemplateVisibility(map.getTemplate(i));
-			have_transparency = visibility->visible && visibility->opacity < 1.0f;
+			for (int i = 0; i < map.getNumTemplates() && !have_transparency; ++i)
+			{
+				TemplateVisibility* visibility = view->getTemplateVisibility(map.getTemplate(i));
+				have_transparency = visibility->visible && visibility->opacity < 1.0f;
+			}
 		}
 	}
 	
