@@ -614,7 +614,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </element>
             </point_symbol>
         </symbol>
-        <symbol type="2" id="20" code="201.1" name="Impassable cliff, no tags">
+        <symbol type="2" id="20" code="201.1" name="Impassable cliff, no tags &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;">
             <description>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).
 
 Colour: black</description>
