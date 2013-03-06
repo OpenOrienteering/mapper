@@ -869,7 +869,7 @@ void DrawPathTool::finishFollowing()
 	
 	int last = preview_path->getCoordinateCount() - 1;
 	
-	if (preview_path->getCoordinate(last - 3).isCurveStart())
+	if (last >= 3 && preview_path->getCoordinate(last - 3).isCurveStart())
 	{
 		MapCoord first = preview_path->getCoordinate(last - 1);
 		MapCoord second = preview_path->getCoordinate(last);
