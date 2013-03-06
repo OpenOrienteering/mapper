@@ -372,8 +372,8 @@ void DrawRectangleTool::draw(QPainter* painter, MapWidget* widget)
 
 void DrawRectangleTool::finishDrawing()
 {
-	if (angles.size() == 1 && symbol_widget->getSingleSelectedSymbol() &&
-		!(symbol_widget->getSingleSelectedSymbol()->getContainedTypes() & Symbol::Line))
+	if (angles.size() == 1 && preview_path &&
+		!(preview_path->getSymbol()->getContainedTypes() & Symbol::Line))
 	{
 		// Do not draw a line object with an area-only symbol
 		return;
@@ -387,18 +387,22 @@ void DrawRectangleTool::finishDrawing()
 		preview_path->getPart(0).setClosed(true, true);
 	}
 	
-	DrawLineAndAreaTool::finishDrawing();
 	angle_helper->setActive(false);
 	angles.clear();
+	draw_in_progress = false;
 	updateStatusText();
+	DrawLineAndAreaTool::finishDrawing();
+	// HACK: do not add stuff here as the tool might get deleted on call to DrawLineAndAreaTool::finishDrawing()!
 }
 
 void DrawRectangleTool::abortDrawing()
 {
-	DrawLineAndAreaTool::abortDrawing();
 	angle_helper->setActive(false);
 	angles.clear();
+	draw_in_progress = false;
 	updateStatusText();
+	DrawLineAndAreaTool::abortDrawing();
+	// HACK: do not add stuff here as the tool might get deleted on call to DrawLineAndAreaTool::finishDrawing()!
 }
 
 void DrawRectangleTool::undoLastPoint()

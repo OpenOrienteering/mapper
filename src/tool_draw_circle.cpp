@@ -184,6 +184,7 @@ void DrawCircleTool::finishDrawing()
 	updateStatusText();
 	
 	DrawLineAndAreaTool::finishDrawing();
+	// Do not add stuff here as the tool might get deleted in DrawLineAndAreaTool::finishDrawing()!
 }
 void DrawCircleTool::abortDrawing()
 {

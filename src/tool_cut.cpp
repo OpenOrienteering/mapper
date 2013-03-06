@@ -83,7 +83,10 @@ bool CutTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 	if (findEditPoint(path_point, edit_object, map_coord, (int)Symbol::Area, 0, widget))
 	{
 		startCuttingArea(path_point, widget);
-		path_tool->mousePressEvent(event, path_point.pos, widget);
+		// The check is actually necessary to prevent segfaults,
+		// even though path_tool is created in the method called above!
+		if (path_tool)
+			path_tool->mousePressEvent(event, path_point.pos, widget);
 	}
 	
 	return true;
