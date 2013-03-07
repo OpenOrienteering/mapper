@@ -285,6 +285,8 @@ QPrinter* MapPrinter::makePrinter() const
 {
 	QPrinter* printer = (target==NULL) ? 
 	  new QPrinter(QPrinter::HighResolution) : new QPrinter(*target, QPrinter::HighResolution);
+	if (!printer->isValid())
+		printer->setOutputFormat(QPrinter::PdfFormat);
 	
 	printer->setDocName("MAP"/* FIXME QFileInfo(main_window->getCurrentFilePath()).fileName()*/);
 	printer->setFullPage(true);
