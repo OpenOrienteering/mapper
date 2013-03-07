@@ -2,50 +2,44 @@
 
 See below for build instructions for your platform.
 
-The program is known to work with Qt 4.6, 4.7 and 4.8 and not to compile with 
-Qt 4.4 or earlier.
-
 The supported build process requires CMake 2.8. CMake is available from
-http://www.cmake.org/
+http://www.cmake.org/. The recommended version is 2.8.9 or newer.
 
-Qmake / Qt Creator based builds are not fully supported. The provided 
-oo-mapper.pro file does not include the translations yet, and it may be 
-outdated.
+Qmake / Qt Creator based builds are not supported at the moment.
+
+
+== Qt Library ==
+
+This program uses the Qt library from http://qt-project.org.
+The program is known to work with Qt 4.8 and 5.0 and not to compile with 
+Qt 4.4 or earlier. Qt 5.0.1 is the recommended version. By default build
+settings, Qt 5.0.1 will be downloaded and built as part of the build process. 
 
 
 == Clipper Library ==
 
 The program uses parts of the clipper code library from 
-http://www.angusj.com/delphi/clipper.php which is released under the terms of
-the Boost Software License, Version 1.0. The program is known to work with
-release 4.8.4 which is revision 251 in the clipper SVN repository.
-
-The required files are downloaded to 3rd-party/clipper if missing during cmake
-build configuration. To use another revision of the library, remove the 
-3rd-party/clipper directory and adjust the CLIPPER_REVISION variable in 
-3rd-party/clipper.cmake before next build.
-
-If you use qmake / Qt Creator instead of cmake, or cmake with Windows and
-get an error about clipper.cpp/hpp not being found in the CMake configure step,
-then you need to download Clipper manually.
-
-In this case, you have to download the required files from:
+http://www.angusj.com/delphi/clipper.php /
 http://polyclipping.svn.sourceforge.net/viewvc/polyclipping/trunk
-Place them in the 3rd-party directory so you get:
-3rd-party/clipper/README
-3rd-party/clipper/License.txt
-3rd-party/clipper/cpp/clipper.cpp
-3rd-party/clipper/cpp/clipper.hpp
+which is released under the terms of the Boost Software License, Version 1.0.
+The program is known to work with release 4.8.4 through 5.0.3. By default build
+settings, clipper 5.0.3 will be downloaded and built as part of the build
+process. 
 
 
 == PROJ.4 Cartographic Projections Library ==
 
 The program uses the PROJ.4 Cartographic Projections Library. The program is
 known to work with the releases 4.7.0 (as contained in Ubuntu 10.04 and 12.04)
-and 4.8.0 (from upstream). See the platform specific notes.
+and 4.8.0. By default Windows and Mac OS X build settings, proj 4.8.0 will be
+downloaded and built as part of the build process. On Linux, default settings
+will use the installed proj library.
 
 
 == Compiling on Windows ==
+
+*These instructions for native builds are outdated and may no longer work.*
+See below cross-compiling instructions.
 
 * Requirements:
 - CMake
@@ -125,7 +119,6 @@ package call
 * Requirements:
 - A C++ compiler (g++)
 - CMake
-- Qt library (and development packages)
 - PROJ.4 library (and development package)
 
 * PROJ.4 library
@@ -137,10 +130,7 @@ Run the following in the project's root directory:
 mkdir build     ("build" is just an example.)
 cd build
 cmake ../
-make -jX        (where X is the number of threads for building)
-
-If you get an error saying that qcollectiongenerator cannot be found, add
-the directory containing this program to the search path for executables.
+make -jX        (where X is the number of parallel jobs for building)
 
 * Running:
 cd ../bin       (if still in the build directory)
@@ -151,12 +141,7 @@ To create the DEB package for your particular distribution, make sure that
 fakeroot is installed. Start the build process from a fresh build directory.
 Call:
   cmake -DCMAKE_BUILD_TYPE=Release ..
-  make package
-
-There is a bug in Ubuntu 12.04 (precise) cmake package which might result in 
-DEB packages which fail to install with the message 'corrupted filesystem 
-tarfile'. You can repair the DEB package by calling:
-  make package_repair
+  make deb
 
 You may list the package contents with:
 dpkg --contents PACKAGENAME.deb
@@ -172,16 +157,13 @@ sudo dpkg -r openorienteering-mapper
 == Cross-Compiling on Linux for Windows in General ==
 
 Some linux distributions may offer cross compiler packages based on MinGW or
-MinGW-w64 (for Ubuntu: g++-mingw-w64 et al.). Unlike MXE, these tools do not
-offer packages or scripts to setup the required libraries. The Mapper build
-system can do the neccessary steps.
+MinGW-w64 (for Ubuntu: g++-mingw-w64 et al.).
 
 For MinGW-w64 i686 (32 bit) builds, call
 
-cmake PATH_TO_MAPPER_SRC -DCMAKE_TOOLCHAIN_FILE=(path to source)cmake/toolchain/i686-w64-mingw32 \
-  -DMapper_BUILD_PROJ=1 -DMapper_BUILD_QT=1 [OTHER OPTIONS]
+cmake PATH_TO_MAPPER_SRC -DCMAKE_TOOLCHAIN_FILE=(path to source)cmake/toolchain/i686-w64-mingw32
 
-This will add targets and rules to the build system which download, patch,
+This will add targets and rules to the build system which download,
 configure and build the proj and Qt libraries with all neccessary components.
 Note that initially there will be no build rules for Mapper and its components
 (and no rules for packaging) because the final configuration can only be done
@@ -191,7 +173,7 @@ make
 
 will trigger a "superbuild" which will re-run cmake and make when the required
 libraries are completed. Note that such a build requires much space (~2 GB,
-mostly for Qt) and time (hours! - consider make -j X).
+mostly for Qt) and time. Consider make -j X.
 Of course you can call
 
 make package
@@ -204,32 +186,36 @@ packages.
 
 == Compiling on Mac OS X ==
 
-=== Build Prerequisites ===
-
 You will need to know how to use the command line ("Terminal").
-
 You will need the following software:
 
 * 64-bit Apple Mac OS X 10.6 or later 
-* Xcode (from Apple)
-* Xcode command line tools (cf. http://stackoverflow.com/a/6767528)
+* Command Line Tools for Xcode - November 2012 (from Apple, tested with the package for OS X Lion). The January 2013 package is not able to compile to Qt 5.0.0/5.0.1, due to a Qt bug.
 * Git from http://git-scm.com/download/mac 
 * CMake 2.8.x from http://www.cmake.org/cmake/resources/software.html
-* Qt SDK 4.8.x from http://qt-project.org/downloads
 
+Open a Terminal. cd to the directory which will host your working directory.
+Checkout the source code with git:
 
-=== PROJ.4 library ===
+   git clone git://git.code.sf.net/p/oorienteering/code oorienteering-code
 
-In cmake (or cmake-gui), set "Mapper_BUILD_PROJ" to 1 to have the PROJ.4
-library be downloaded and built as part of the build process. 
+Change to the working directory:
 
+   cd oorienteering-code
 
-=== Building Packages ===
+From the working directory, prepare and configure a build directory:
 
-The "DragNDrop" CPack generator is configured. It can be used after make has run
-once successfully:
+   mkdir build
+   cd build
+   cmake ..
 
-    make
+From the build directory, you may now do a build by running
+
+   make
+
+The "DragNDrop" CPack generator can be used after make has run once
+successfully:
+
     make package
 
 
@@ -248,11 +234,10 @@ release.
 Official release packages will include the Qt libraries and the Qt assistant
 executable. Official release shall build the Qt components from the Qt source
 code in the particular version which we distribute along with our source. The
-Mapper_BUILD_QT option to cmake will take care of this. At the moment, you will
-still need the following programs from a binary Qt SDK: lrelease and 
-qcollectiongenerator.
+Mapper_BUILD_QT option to cmake will take care of this.
 
-Similar to Qt, use Mapper_BUILD_PROJ to build the PROJ.4 library from source.
+Similar to Qt, use Mapper_BUILD_PROJ to build the PROJ.4 library from source
+(unless building for a Linux distribution),
 
 The build shall start from a fresh build directory. The build shall be in
 release mode.
@@ -264,15 +249,8 @@ release mode.
    cmake .. -DCMAKE_BUILD_TYPE=Release \
             -DMapper_BUILD_QT=1 \
             -DMapper_BUILD_PROJ=1 \
-            -DQT_LRELEASE_EXECUTABLE=/path/to/binary/lrelease \
-            -DQT_QCOLLECTIONGENERATOR_EXECUTABLE=/path/to/binary/qcollectiongenerator
    make
    make package
-
-On Linux systems, Qt libraries, Qt Assistant and PROJ.4 library are usually
-available as packages from the distributor. Replace the cmake call above with:
-
-   cmake .. -DCMAKE_BUILD_TYPE=Release
 
 
 

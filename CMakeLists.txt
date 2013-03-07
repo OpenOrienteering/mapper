@@ -52,7 +52,7 @@ if(WIN32 OR APPLE)
 	set(Mapper_BUILD_QT_DEFAULT ON)
 else()
 	set(Mapper_BUILD_PROJ_DEFAULT OFF)
-	set(Mapper_BUILD_QT_DEFAULT OFF)
+	set(Mapper_BUILD_QT_DEFAULT ON)
 endif()
 
 option(Mapper_BUILD_PROJ "Build the Proj library from source" ${Mapper_BUILD_PROJ_DEFAULT})
