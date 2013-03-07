@@ -17,8 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_FILE_FORMAT_XML_P_H
-#define _OPENORIENTEERING_FILE_FORMAT_XML_P_H
+#ifndef _OPENORIENTEERING_FILE_FORMAT_OCAD_P_H
+#define _OPENORIENTEERING_FILE_FORMAT_OCAD_P_H
 
 #include "file_import_export.h"
 
@@ -26,7 +26,7 @@
 
 #include <QRgb>
 
-#include "../libocad/libocad.h"
+#include "libocad/libocad.h"
 
 #include "map_coord.h"
 
