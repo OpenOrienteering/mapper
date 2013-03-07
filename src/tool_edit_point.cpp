@@ -527,6 +527,7 @@ void EditPointTool::finishEditing()
 	
 	if (delete_objects)
 		deleteSelectedObjects();
+	updateStatusText();
 }
 
 void EditPointTool::updatePreviewObjects()

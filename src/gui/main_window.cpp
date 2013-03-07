@@ -238,7 +238,9 @@ void MainWindow::createHelpMenu()
 	// Help menu
 	QAction* manualAct = new QAction(QIcon(":/images/help.png"), tr("Open &Manual"), this);
 	manualAct->setStatusTip(tr("Show the help file for this application"));
-	manualAct->setShortcut(QKeySequence::HelpContents);
+	// This conflicts with pressing F1 while hovering over the symbol pane
+	// to view the symbol description
+	//manualAct->setShortcut(QKeySequence::HelpContents);
 	connect(manualAct, SIGNAL(triggered()), this, SLOT(showHelp()));
 	
 	QAction* aboutAct = new QAction(tr("&About %1").arg(APP_NAME), this);

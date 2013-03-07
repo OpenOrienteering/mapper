@@ -249,6 +249,7 @@ void EditLineTool::dragFinish()
 		finishEditing();
 		angle_helper->setActive(false);
 		snap_helper->setFilter(SnappingToolHelper::NoSnapping);
+		updateStatusText();
 	}
 	else if (box_selection)
 	{
