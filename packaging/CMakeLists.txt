@@ -204,6 +204,7 @@ if(TOOLCHAIN_SHARED_LIBS)
 	list(APPEND MAPPER_LIBS ${TOOLCHAIN_SHARED_LIBS})
 elseif(MINGW)
 	list(APPEND MAPPER_LIBS libgcc_s_dw2-1 mingwm10)
+	list(APPEND MAPPER_LIBS libgcc_s_sjlj-1 libwinpthread-1 libstdc++-6)
 endif()
 
 if(Mapper_PACKAGE_PROJ)

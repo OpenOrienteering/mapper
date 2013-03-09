@@ -17,6 +17,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
+cd "@SOURCE_DIR@"
+
 # [1] Normal patching
 for I in "@PROJECT_SOURCE_DIR@"/qt5-[1-9]*.patch
 do
@@ -43,3 +45,14 @@ do
        fi
 done
 
+# [3] MinGW on Windows issue
+if [ ! -f qtbase/.gitignore ]
+then
+	touch qtbase/.gitignore
+fi
+
+# [4] Placeholder Makefile for initial "make confclean"
+if [ ! -f qtbase/Makefile ]
+then
+	echo "confclean:" > qtbase/Makefile
+fi

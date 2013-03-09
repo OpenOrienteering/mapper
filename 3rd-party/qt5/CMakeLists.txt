@@ -40,18 +40,6 @@ elseif(QT5_VERSION STREQUAL 5.0.1)
 	set(QT5_MD5 8e8137c23c8ff078a560d3c62b4383e7)
 endif()
 
-if("${CMAKE_GENERATOR}" MATCHES "Makefiles" OR 
-   "${CMAKE_EXTRA_GENERATOR}" MATCHES "Makefiles")
-	# use magic MAKE macro
-	set(QT5_MAKE_COMMAND "\$(MAKE)" CACHE STRING
-	  "The 'make' command for building the Qt library")
-else()
-	# require make
-	set(QT5_MAKE_COMMAND "${SH_PROGRAM}" -l -e "${CMAKE_CURRENT_BINARY_DIR}/qt5-make" CACHE STRING
-	  "The 'make' command for building the Qt library")
-endif()
-mark_as_advanced(QT5_MAKE_COMMAND)
-
 find_program(SH_PROGRAM sh 
   PATHS 
   "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\MSYS-1.0_is1;Inno Setup: App Path]/bin"
@@ -60,6 +48,23 @@ find_program(SH_PROGRAM sh
   C:/MinGW
   PATH_SUFFIXES msys/1.0/bin)
 mark_as_advanced(SH_PROGRAM)
+
+if("${CMAKE_GENERATOR}" MATCHES "Makefiles" OR
+   "${CMAKE_EXTRA_GENERATOR}" MATCHES "Makefiles")
+	# use magic MAKE macro
+	set(QT5_MAKE_COMMAND "\$(MAKE)")
+else()
+	# require make
+	set(QT5_MAKE_COMMAND "${SH_PROGRAM}" -l -e "${CMAKE_CURRENT_BINARY_DIR}/qt5-make")
+endif()
+
+if(MINGW AND NOT CMAKE_CROSSCOMPILING)
+	set(QT5_CONFIG_SCRIPT qt5-config.cmd)
+	set(QT5_CONFIG_COMMAND "$ENV{ComSpec}" /C ${CMAKE_CURRENT_BINARY_DIR}/${QT5_CONFIG_SCRIPT})
+else()
+	set(QT5_CONFIG_SCRIPT qt5-config)
+	set(QT5_CONFIG_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/${QT5_CONFIG_SCRIPT})
+endif()
 
 # Build definition
 
@@ -70,9 +75,9 @@ add_custom_command(OUTPUT qt5-patchqt
 )
 
 # Don't touch the configured qt5-config unless the content really changes.
-add_custom_command(OUTPUT qt5-config
-  COMMAND ${CMAKE_COMMAND} -E copy_if_different qt5-config.new qt5-config
-  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qt5-config.new
+add_custom_command(OUTPUT ${QT5_CONFIG_SCRIPT}
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different ${QT5_CONFIG_SCRIPT}.new ${QT5_CONFIG_SCRIPT}
+  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${QT5_CONFIG_SCRIPT}.new
 )
 
 if(UNIX AND NOT APPLE)
@@ -84,18 +89,15 @@ ExternalProject_Add(Qt5
   URL "http://releases.qt-project.org/qt5/${QT5_VERSION}/single/qt-everywhere-opensource-src-${_qt5_version}.tar.gz"
   URL_MD5 ${QT5_MD5}
   PATCH_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/qt5-patchqt
-  CONFIGURE_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/qt5-config
+  CONFIGURE_COMMAND ${QT5_CONFIG_COMMAND}
   BUILD_COMMAND ${QT5_MAKE_COMMAND}
   INSTALL_COMMAND ${QT5_MAKE_COMMAND} install ${QT5_INSTALL_ROOT}
+  SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/src
+  BUILD_IN_SOURCE 1
 )
 ExternalProject_Get_Property(Qt5 SOURCE_DIR)
 ExternalProject_Get_Property(Qt5 BINARY_DIR)
 ExternalProject_Get_Property(Qt5 INSTALL_DIR)
-if(NOT EXISTS "${BINARY_DIR}/qtbase/Makefile")
-	# Required for initial confclean
-	file(MAKE_DIRECTORY "${BINARY_DIR}/qtbase")
-	file(WRITE "${BINARY_DIR}/qtbase/Makefile" "confclean:")
-endif()
 
 # Trigger patch step when qt5-patchqt has changed.
 ExternalProject_Add_Step(Qt5 patch-dependencies
@@ -109,7 +111,7 @@ ExternalProject_Add_Step(Qt5 patch-dependencies
 ExternalProject_Add_Step(Qt5 confclean
   COMMAND ${QT5_MAKE_COMMAND} -C qtbase confclean
   DEPENDEES patch
-  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qt5-config
+  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${QT5_CONFIG_SCRIPT}
   WORKING_DIRECTORY "${BINARY_DIR}"
 )
 ExternalProject_Add_Step(Qt5 configure-dependencies
@@ -163,7 +165,7 @@ else()
 endif()
 
 configure_file(qt5-patchqt.in qt5-patchqt.new @ONLY)
-configure_file(qt5-config.in qt5-config.new @ONLY)
+configure_file(${QT5_CONFIG_SCRIPT}.in ${QT5_CONFIG_SCRIPT}.new @ONLY)
 configure_file(qt5-make.in qt5-make @ONLY)
 configure_file(qt.conf.in qt.conf @ONLY)
 configure_file(qt.conf.qrc.in qt.conf.qrc @ONLY)
