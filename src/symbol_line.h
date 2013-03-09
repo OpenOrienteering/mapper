@@ -142,6 +142,9 @@ public:
 	inline int getMidSymbolDistance() const {return mid_symbol_distance;}
 	inline void setMidSymbolDistance(int value) {mid_symbol_distance = value;}
 	
+	inline bool getSuppressDashSymbolAtLineEnds() const {return suppress_dash_symbol_at_ends;}
+	inline void setSuppressDashSymbolAtLineEnds(bool value) {suppress_dash_symbol_at_ends = value;}
+	
 	inline int getSegmentLength() const {return segment_length;}
 	inline void setSegmentLength(int value) {segment_length = value;}
 	inline int getEndLength() const {return end_length;}
@@ -216,10 +219,11 @@ protected:
 	PointSymbol* start_symbol;
 	PointSymbol* mid_symbol;
 	PointSymbol* end_symbol;
-    PointSymbol* dash_symbol;
-
+	PointSymbol* dash_symbol;
+	
 	int mid_symbols_per_spot;
 	int mid_symbol_distance;
+	bool suppress_dash_symbol_at_ends;
 	
 	// Not dashed
 	int segment_length;
@@ -322,6 +326,7 @@ protected slots:
 	void borderCheckClicked(bool checked);
 	void differentBordersClicked(bool checked);
 	void borderChanged();
+	void suppressDashSymbolClicked(bool checked);
 	
 private slots:
 	/** Ensure that a predetermined widget is visible in the scoll area.
@@ -375,6 +380,8 @@ private:
 	QList<QWidget *> different_borders_widget_list;
 	BorderWidgets border_widgets;
 	BorderWidgets right_border_widgets;
+	
+	QCheckBox* supress_dash_symbol_check;
 	
 	QScrollArea* scroll_area;
 	QWidget* widget_to_ensure_visible;

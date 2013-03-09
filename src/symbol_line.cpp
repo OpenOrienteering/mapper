@@ -199,6 +199,7 @@ LineSymbol::LineSymbol() : Symbol(Symbol::Line)
 	half_outer_dashes = false;
 	mid_symbols_per_spot = 1;
 	mid_symbol_distance = 0;
+	suppress_dash_symbol_at_ends = false;
 	
 	// Border lines
 	have_border_lines = false;
@@ -240,6 +241,7 @@ Symbol* LineSymbol::duplicate(const MapColorMap* color_map) const
 	new_line->half_outer_dashes = half_outer_dashes;
 	new_line->mid_symbols_per_spot = mid_symbols_per_spot;
 	new_line->mid_symbol_distance = mid_symbol_distance;
+	new_line->suppress_dash_symbol_at_ends = suppress_dash_symbol_at_ends;
 	new_line->have_border_lines = have_border_lines;
 	new_line->border.assign(border, color_map);
 	new_line->right_border.assign(right_border, color_map);
@@ -1090,6 +1092,9 @@ void LineSymbol::createDashSymbolRenderables(Object* object, bool path_closed, c
 		// Only apply the symbol at dash points
 		if (!flags[i].isDashPoint()) continue;
 		
+		// Suppress dash symbol at line ends
+		if (suppress_dash_symbol_at_ends && (i == 0 || i+1 == size)) continue;
+		
 		float scaling;
 		MapCoordF right = PathCoord::calculateRightVector(flags, coords, path_closed, i, &scaling);
 		
@@ -1840,6 +1845,8 @@ void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 		xml.writeAttribute("half_outer_dashes", "true");
 	xml.writeAttribute("mid_symbols_per_spot", QString::number(mid_symbols_per_spot));
 	xml.writeAttribute("mid_symbol_distance", QString::number(mid_symbol_distance));
+	if (suppress_dash_symbol_at_ends)
+		xml.writeAttribute("suppress_dash_symbol_at_ends", "true");
 	
 	if (start_symbol != NULL)
 	{
@@ -1911,6 +1918,7 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 	half_outer_dashes = (attributes.value("half_outer_dashes") == "true");
 	mid_symbols_per_spot = attributes.value("mid_symbols_per_spot").toString().toInt();
 	mid_symbol_distance = attributes.value("mid_symbol_distance").toString().toInt();
+	suppress_dash_symbol_at_ends = (attributes.value("suppress_dash_symbol_at_ends") == "true");
 	
 	have_border_lines = false;
 	while (xml.readNextStartElement())
@@ -2036,6 +2044,8 @@ bool LineSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 		(dash_symbol != NULL && line->dash_symbol == NULL))
 		return false;
 	if (dash_symbol && !dash_symbol->equals(line->dash_symbol))
+		return false;
+	if (suppress_dash_symbol_at_ends != line->suppress_dash_symbol_at_ends)
 		return false;
 	
 	if (mid_symbol)
@@ -2249,7 +2259,6 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	layout->addWidget(minimum_mid_symbol_count_when_closed_edit, row, col, 1, -1);
 	
 	
-	
 	row++; col = 0;
 	layout->addWidget(new QWidget(), row, col, 1, -1);
 	row++; col = 0;
@@ -2275,6 +2284,16 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	border_widget_list << different_borders_check << border_widgets.widget_list;
 	different_borders_widget_list << left_border_label << right_border_label << right_border_widgets.widget_list;
 	
+	
+	row++; col = 0;
+	layout->addWidget(new QWidget(), row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(new QLabel(QString("<b>%1</b>").arg(tr("Dash symbol"))), row, col++, 1, -1);
+	
+	supress_dash_symbol_check = new QCheckBox(tr("Suppress the dash symbol at line start and line end"));
+	supress_dash_symbol_check->setChecked(symbol->getSuppressDashSymbolAtLineEnds());
+	row++; col = 0;
+	layout->addWidget(supress_dash_symbol_check, row, col, 1, -1);
 	
 	row++;
 	layout->setRowStretch(row, 1);
@@ -2325,6 +2344,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	connect(mid_symbol_distance_edit, SIGNAL(valueChanged(double)), this, SLOT(midSymbolDistanceChanged(double)));
 	connect(border_check, SIGNAL(clicked(bool)), this, SLOT(borderCheckClicked(bool)));
 	connect(different_borders_check, SIGNAL(clicked(bool)), this, SLOT(differentBordersClicked(bool)));
+	connect(supress_dash_symbol_check, SIGNAL(clicked(bool)), this, SLOT(suppressDashSymbolClicked(bool)));
 }
 
 LineSymbolSettings::~LineSymbolSettings()
@@ -2500,6 +2520,12 @@ void LineSymbolSettings::borderChanged()
 	else
 		symbol->getRightBorder().assign(symbol->getBorder(), NULL);
 	
+	emit propertiesModified();
+}
+
+void LineSymbolSettings::suppressDashSymbolClicked(bool checked)
+{
+	symbol->suppress_dash_symbol_at_ends = checked;
 	emit propertiesModified();
 }
 
