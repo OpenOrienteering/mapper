@@ -38,6 +38,7 @@
 #include "symbol_dock_widget.h"
 #include "tool_draw_text.h"
 #include "tool_helpers.h"
+#include "symbol_line.h"
 #include "symbol_text.h"
 #include "renderable.h"
 #include "settings.h"
@@ -60,6 +61,16 @@ EditPointTool::~EditPointTool()
 {
 	if (text_editor)
 		delete text_editor;
+}
+
+bool EditPointTool::addDashPointDefault() const
+{
+	// Toggle dash points depending on if the selected symbol has a dash symbol.
+	// TODO: instead of just looking if it is a line symbol with dash points,
+	// could also check for combined symbols containing lines with dash points
+	return ( hover_object &&
+	         hover_object->getSymbol()->getType() == Symbol::Line &&
+	         hover_object->getSymbol()->asLine()->getDashSymbol() != NULL );
 }
 
 bool EditPointTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -149,7 +160,7 @@ void EditPointTool::clickPress()
 			startEditing();
 			dragging = true;	// necessary to prevent second call to startEditing()
 			hover_point = path->subdivide(path_coord.index, path_coord.param);
-			if (space_pressed)
+			if (addDashPointDefault() ^ space_pressed)
 			{
 				MapCoord point = path->getCoordinate(hover_point);
 				point.setDashPoint(true);
@@ -579,7 +590,12 @@ void EditPointTool::updateStatusText()
 		{
 			// TODO: maybe show this only if at least one PathObject among the selected objects?
 			if (active_modifiers & Qt::ControlModifier)
-				str = tr("<b>Ctrl+Click</b> on point to delete it, on path to add a new point, with <b>Space</b> to make it a dash point");
+			{
+				if (addDashPointDefault())
+					str = tr("<b>Ctrl+Click</b> on point to delete it, on path to add a new dash point, with <b>Space</b> to add a normal point");
+				else
+					str = tr("<b>Ctrl+Click</b> on point to delete it, on path to add a new point, with <b>Space</b> to add a dash point");
+			}
 			else if (space_pressed)
 				str = tr("<b>Space+Click</b> on point to switch between dash and normal point");
 			else
