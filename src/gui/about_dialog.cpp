@@ -29,7 +29,31 @@
 
 #include <mapper_config.h>
 
-#include "../mapper_resource.h"
+
+/** Puts QStringList items in an HTML table of the given number of columns. */
+static QString formatTable(int columns, QStringList items)
+{
+	Q_ASSERT(columns > 0);
+	const int rows = (int)ceil((double)items.size() / columns);
+	QString table("<table><tr><td>");
+	for(int i = 0, row = 1; i < items.size(); ++i)
+	{
+		table.append(items[i]);
+		if (rows != row)
+		{
+			table.append("<br/>");
+			++row;
+		}
+		else if (i < items.size())
+		{
+			table.append("</td><td>&nbsp;&nbsp;&nbsp;</td><td>");
+			row = 1;
+		}
+	}
+	table.append("</tr></table>");
+	return table;
+}
+
 
 AboutDialog::AboutDialog(QWidget* parent)
  : QDialog(parent)
@@ -67,78 +91,127 @@ AboutDialog::AboutDialog(QWidget* parent)
 	layout->setColumnStretch(1, 1);
 	
 	// Tab: About OpenOrienteering Mapper
-	QString mapper_about = 
-	  QString("%1 %2<br/>"
-	          "Copyright (C) 2012, 2013 Thomas Sch&ouml;ps<br/>"
-	          "<a href=\"%3\">%3</a><br/>" ).
-	    arg(APP_NAME).
-	    arg(APP_VERSION).
-	    arg("http://openorienteering.org") %
-	  tr("This program comes with ABSOLUTELY NO WARRANTY;<br/>"
-	     "This is free software, and you are welcome to redistribute it<br/>"
-	     "under certain conditions; see the file %1 for details.<br/><br/>").
-	    arg("COPYING") %
-	  tr("Developers in alphabetical order:<br/>%1<br/>"
-	     "For contributions, thanks to:<br/>%2" ).
-	    arg(QString("Peter Curtis<br/>Kai Pastor<br/>Thomas Sch&ouml;ps %1<br/>").arg(tr("(project initiator)"))).
-	    arg("Jon Cundill<br/>Jan Dalheimer<br/>Eugeniy Fedirets<br/>Anders Gressli<br/>Peter Hoban<br/>"
-	        "Henrik Johansson<br/>Oskar Karlin<br/>Tojo Masaya<br/>Vincent Poinsignon<br/>Russell Porter<br/>"
-	        "Christopher Schive<br/>Aivars Zogla<br/>");
-	QLabel* about_label = new QLabel(mapper_about);
+	QLabel* about_label = new QLabel(about());
 	about_label->setContentsMargins(left, top, right, bottom);
 	info_tabs->addTab(about_label, tr("About %1").arg(APP_NAME));
 	connect(about_label, SIGNAL(linkActivated(QString)), this, SIGNAL(linkActivated(QString)));
 	
 	// Tab: License (COPYING)
-	QString mapper_copying;
-	QFile mapper_copying_file(MapperResource::locate(MapperResource::ABOUT, "COPYING"));
-	if (mapper_copying_file.open(QIODevice::ReadOnly))
-	{
-		mapper_copying = mapper_copying_file.readAll();
-		mapper_copying.replace("<", "&lt;");
-		mapper_copying.replace(">", "&gt;");
-		mapper_copying.replace('\n', "<br/>");
-		mapper_copying.replace(QRegExp("&lt;(http[^;]*)&gt;"), "&lt;<a href=\"\\1\">\\1</a>&gt;");
-		
-		QLabel* mapper_copying_label = new QLabel(mapper_copying);
-		mapper_copying_label->setContentsMargins(left, top, right, bottom);
-		QScrollArea* mapper_copying_widget = new QScrollArea();
-		mapper_copying_widget->setWidget(mapper_copying_label);
-		mapper_copying_widget->setFrameStyle(QFrame::NoFrame);
-		info_tabs->addTab(mapper_copying_widget, tr("License (%1)").arg("COPYING"));
-		connect(mapper_copying_label, SIGNAL(linkActivated(QString)), this, SIGNAL(linkActivated(QString)));
-	}
+	QLabel* mapper_copying_label = new QLabel(licenseText());
+	mapper_copying_label->setContentsMargins(left, top, right, bottom);
+	QScrollArea* mapper_copying_widget = new QScrollArea();
+	mapper_copying_widget->setWidget(mapper_copying_label);
+	mapper_copying_widget->setFrameStyle(QFrame::NoFrame);
+	info_tabs->addTab(mapper_copying_widget, tr("License (%1)").arg("COPYING"));
+	connect(mapper_copying_label, SIGNAL(linkActivated(QString)), this, SIGNAL(linkActivated(QString)));
 	
 	// Tab: Additional information
-	QString clipper_about(tr("This program uses the <b>Clipper library</b> by Angus Johnson.") % "<br/>");
-	clipper_about.append("Release ").append(CLIPPER_VERSION).append("<br><br/>");
-	QFile clipper_about_file(":/3rd-party/clipper/License.txt");
-	if (clipper_about_file.open(QIODevice::ReadOnly))
-	{
-		clipper_about.append(clipper_about_file.readAll().replace('\n', "<br/>"));
-		clipper_about.append("<br/>");
-	}
-	clipper_about.append(tr("See <a href=\"%1\">%1</a> for more information.").arg("http://www.angusj.com/delphi/clipper.php"));	
-	
-	QString proj_about(tr("This program uses the <b>PROJ.4 Cartographic Projections Library</b> by Frank Warmerdam.") % "<br/>");
-    proj_about.append(pj_get_release()).append("<br/><br/>");
-	QFile proj_about_file(":/3rd-party/proj/COPYING");
-	if (proj_about_file.open(QIODevice::ReadOnly))
-	{
-		proj_about.append(proj_about_file.readAll().replace('\n', "<br/>"));
-		proj_about.append("<br/>");
-	}
-	proj_about.append(tr("See <a href=\"%1\">%1</a> for more information.").arg("http://trac.osgeo.org/proj/"));	
-	
-	QLabel* additional_info_label = new QLabel( 
-	  clipper_about %
-	  "<br/><br/>" % QString("_").repeated(80) % "<br/><br/>" %
-	  proj_about 
-	);
+	QLabel* additional_info_label = new QLabel(additionalInformation());
 	additional_info_label->setContentsMargins(left, top, right, bottom);
 	QScrollArea* additional_info_widget = new QScrollArea();
 	additional_info_widget->setWidget(additional_info_label);
 	additional_info_widget->setFrameStyle(QFrame::NoFrame);
 	info_tabs->addTab(additional_info_widget, tr("Additional information"));
 	connect(additional_info_label, SIGNAL(linkActivated(QString)), this, SIGNAL(linkActivated(QString)));
+}
+
+QString AboutDialog::about()
+{
+	static QStringList developers_list( QStringList()
+	  << "Peter Curtis"
+	  << "Kai Pastor"
+	  << QString("Thomas Sch&ouml;ps %1").arg(tr("(project initiator)"))
+	);
+	
+	static QStringList contributors_list( QStringList()
+	  << "Jon Cundill"
+	  << "Jan Dalheimer"
+	  << "Eugeniy Fedirets"
+	  << "Anders Gressli"
+	  << "Peter Hoban"
+	  << "Henrik Johansson"
+	  << "Oskar Karlin"
+	  << "Tojo Masaya"
+	  << "Vincent Poinsignon"
+	  << "Russell Porter"
+	  << "Christopher Schive"
+	  << "Aivars Zogla"
+	);
+	
+	static QString mapper_about(
+	  QString("<h1>%1 %2</h1>"
+	          "<p>"
+	          "%3<br/>"
+	          "<a href=\"%4\">%4</a></p>"
+	          "<p>Copyright (C) 2012, 2013 The OpenOrienteering developers<br/>%5</p>"
+	          "<p>%7</p>%8"
+	          "<p>&nbsp;<br/>%9</p>%10"
+	         ).
+	    arg(APP_NAME).
+	    arg(APP_VERSION).
+	    arg(tr("A free software for drawing orienteering maps")).
+	    arg("http://openorienteering.org").
+	    arg(tr("This software is licensed under the term of the "
+	           "GNU General Public License (GPL), version 3.<br/>"
+	           "You are welcome to redistribute it under the terms of this license.<br/>"
+	           "THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.<br>"
+	           "The full license text is supplied in the file %1.").arg("COPYING")).
+	    arg(tr("Developers in alphabetical order:")).
+	    arg(formatTable(4, developers_list)).
+	    arg(tr("For contributions, thanks to:")).
+	    arg(formatTable(4, contributors_list)) );
+	
+	return mapper_about;
+}
+
+QString AboutDialog::licenseText()
+{
+	static QString mapper_copying;
+	if (mapper_copying.isEmpty())
+	{
+		QFile mapper_copying_file(":/COPYING");
+		if (mapper_copying_file.open(QIODevice::ReadOnly))
+		{
+			mapper_copying = mapper_copying_file.readAll();
+			mapper_copying.replace("<", "&lt;");
+			mapper_copying.replace(">", "&gt;");
+			mapper_copying.replace('\n', "<br/>");
+			mapper_copying.replace(QRegExp("&lt;(http[^;]*)&gt;"), "&lt;<a href=\"\\1\">\\1</a>&gt;");
+		}
+	}
+	return mapper_copying;
+}
+
+QString AboutDialog::additionalInformation()
+{
+	static QString additional_info;
+	if (additional_info.isEmpty())
+	{
+		QString clipper_about(tr("This program uses the <b>Clipper library</b> by Angus Johnson.") % "<br/>");
+		clipper_about.append("Release ").append(CLIPPER_VERSION).append("<br><br/>");
+		QFile clipper_about_file(":/3rd-party/clipper/License.txt");
+		if (clipper_about_file.open(QIODevice::ReadOnly))
+		{
+			clipper_about.append(clipper_about_file.readAll().replace('\n', "<br/>"));
+			clipper_about.append("<br/>");
+		}
+		clipper_about.append(tr("See <a href=\"%1\">%1</a> for more information.").arg("http://www.angusj.com/delphi/clipper.php"));	
+		
+		QString proj_about(tr("This program uses the <b>PROJ.4 Cartographic Projections Library</b> by Frank Warmerdam.") % "<br/>");
+		proj_about.append(pj_get_release()).append("<br/><br/>");
+		QFile proj_about_file(":/3rd-party/proj/COPYING");
+		if (proj_about_file.open(QIODevice::ReadOnly))
+		{
+			proj_about.append(proj_about_file.readAll().replace('\n', "<br/>"));
+			proj_about.append("<br/>");
+		}
+		proj_about.append(tr("See <a href=\"%1\">%1</a> for more information.").arg("http://trac.osgeo.org/proj/"));	
+		
+		additional_info =
+		  clipper_about %
+		  "<br/><br/>" % QString("_").repeated(80) % "<br/><br/>" %
+		  proj_about;
+	}
+	
+	return additional_info;
 }

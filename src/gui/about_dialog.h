@@ -33,6 +33,15 @@ public:
 	/** Construct a new About Dialog. */
 	AboutDialog(QWidget* parent = NULL);
 	
+	/** Returns the basic information about this software. */
+	static QString about();
+	
+	/** Returns the license text. */
+	static QString licenseText();
+	
+	/** Returns information about additional components. */
+	static QString additionalInformation();
+	
 signals:
 	/** This signals is emitted when the user clicks a link. */
 	void linkActivated(QString link);

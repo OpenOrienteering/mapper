@@ -87,6 +87,8 @@
 
   <file alias="help/tip-of-the-day/tips.txt">help/tip-of-the-day/tips_en.txt</file>
   
+  <!-- Files which are used by the About dialog. -->
+  <file>COPYING</file>
   <file>3rd-party/clipper/License.txt</file>
   <file>3rd-party/proj/COPYING</file>
  </qresource>
