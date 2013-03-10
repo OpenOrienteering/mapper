@@ -28,6 +28,7 @@
 #else
 #include <QtWidgets>
 #endif
+#include <QDebug>
 
 #include "core/map_color.h"
 #include "map.h"
@@ -304,8 +305,8 @@ void SymbolRenderWidget::updateSelectedIcons()
 }
 void SymbolRenderWidget::getRowInfo(int width, int height, int& icons_per_row, int& num_rows)
 {
-	icons_per_row = qMax(1, qRound(width / (float)Symbol::icon_size));
-	num_rows = ceil(map->getNumSymbols() / (float)icons_per_row);
+	icons_per_row = qMax(1, (int)floor(width / (float)Symbol::icon_size));
+	num_rows = (int)ceil(map->getNumSymbols() / (float)icons_per_row);
 }
 bool SymbolRenderWidget::getDropPosition(QPoint pos, int& row, int& pos_in_row)
 {
@@ -714,7 +715,7 @@ void SymbolRenderWidget::deleteSymbols()
 	symbol_widget->emitSelectedSymbolsChanged();
 	update();
 	
-	symbol_widget->adjustSize();
+	symbol_widget->adjustContents();
 	map->setSymbolsDirty();
 }
 void SymbolRenderWidget::duplicateSymbol()
@@ -724,7 +725,7 @@ void SymbolRenderWidget::duplicateSymbol()
 	map->addSymbol(map->getSymbol(current_symbol_index)->duplicate(), current_symbol_index + 1);
 	selectSingleSymbol(current_symbol_index + 1);
 	
-	symbol_widget->adjustSize();
+	symbol_widget->adjustContents();
 	map->setSymbolsDirty();
 }
 
@@ -944,7 +945,7 @@ bool SymbolRenderWidget::newSymbol(Symbol* prototype)
 	// as the changing symbol indices can make selectSingleSymbol() think that the selection did not change.
 	symbol_widget->emitSelectedSymbolsChanged();
 	
-	symbol_widget->adjustSize();
+	symbol_widget->adjustContents();
 	map->setSymbolsDirty();
 	return true;
 }
@@ -955,8 +956,6 @@ SymbolWidget::SymbolWidget(Map* map, QWidget* parent)
 : QWidget(parent),
   map(map)
 {
-	no_resize_handling = false;
-	
 	scroll_bar = new QScrollBar();
 	scroll_bar->setEnabled(false);
 	scroll_bar->hide();
@@ -965,11 +964,12 @@ SymbolWidget::SymbolWidget(Map* map, QWidget* parent)
 	scroll_bar->setPageStep(3 * Symbol::icon_size);
 	render_widget = new SymbolRenderWidget(map, scroll_bar, this);
 	
-	// Load settings
-	QSettings settings;
-	settings.beginGroup("SymbolWidget");
-	preferred_size = settings.value("size", QSize(200, 500)).toSize();
-	settings.endGroup();
+// 	// Load settings
+// 	QSettings settings;
+// 	settings.beginGroup("SymbolWidget");
+// 	preferred_size = settings.value("size", QSize(200, 500)).toSize();
+// 	settings.endGroup();
+	preferred_size = QSize(6 * Symbol::icon_size, 5 * Symbol::icon_size);
 	
 	// Create layout
 	layout = new QHBoxLayout();
@@ -979,14 +979,16 @@ SymbolWidget::SymbolWidget(Map* map, QWidget* parent)
 	layout->addWidget(scroll_bar);
 	setLayout(layout);
 }
+
 SymbolWidget::~SymbolWidget()
 {
-	// Save settings
-	QSettings settings;
-	settings.beginGroup("SymbolWidget");
-	settings.setValue("size", size());
-	settings.endGroup();
+// 	// Save settings
+// 	QSettings settings;
+// 	settings.beginGroup("SymbolWidget");
+// 	settings.setValue("size", size());
+// 	settings.endGroup();
 }
+
 QSize SymbolWidget::sizeHint() const
 {
 	return preferred_size;
@@ -1009,10 +1011,10 @@ void SymbolWidget::selectSingleSymbol(Symbol *symbol)
     int index = map->findSymbolIndex(symbol);
     if (index >= 0) render_widget->selectSingleSymbol(index);
 }
-void SymbolWidget::adjustSize(int width, int height)
+void SymbolWidget::adjustContents()
 {
-	if (width < 0) width = this->width();
-	if (height < 0) height = this->height();
+	int width = this->width();
+	int height = this->height();
 	
 	// Do we need a scroll bar?
 	bool scroll_needed = render_widget->scrollBarNeeded(width, height);
@@ -1026,30 +1028,12 @@ void SymbolWidget::adjustSize(int width, int height)
 		scroll_bar->show();
 		render_widget->setScrollBar(scroll_bar);
 	}
-	
-	// Determine optimal width
-	int new_width;
-	if (scroll_needed)
-	{
-		int icons_in_row = floor(width / (float)Symbol::icon_size);
-		new_width = icons_in_row * Symbol::icon_size + scroll_bar->width();
-	}
-	else
-		new_width = width;
-	
-	no_resize_handling = true;
-	resize(new_width, height);
-	no_resize_handling = false;
 }
 
 void SymbolWidget::resizeEvent(QResizeEvent* event)
 {
-	if (no_resize_handling)
-		return;
-	
-	adjustSize(event->size().width(), event->size().height());
-	
-    event->accept();
+	adjustContents();
+	event->accept();
 }
 void SymbolWidget::keyPressed(QKeyEvent* event)
 {
