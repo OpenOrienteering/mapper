@@ -52,7 +52,8 @@ then
 fi
 
 # [4] Placeholder Makefile for initial "make confclean"
-if [ ! -f qtbase/Makefile ]
+if [ ! -f "@BINARY_DIR@/qtbase/Makefile" ]
 then
-	echo "confclean:" > qtbase/Makefile
+	mkdir -p "@BINARY_DIR@/qtbase"
+	echo "confclean:" > "@BINARY_DIR@/qtbase/Makefile"
 fi
