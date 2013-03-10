@@ -42,6 +42,10 @@ public:
 	EditPointTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
 	virtual ~EditPointTool();
 	
+	/** Returns true if new points shall be added as dash points by default.
+	 *  This depends only on the symbol of the selected element. */
+	bool addDashPointDefault() const;
+	
 	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);

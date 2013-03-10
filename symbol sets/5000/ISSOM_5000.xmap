@@ -3101,10 +3101,8 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         <symbol type="2" id="167" code="799" name="Simple Orienteering Course">
             <description>This symbol provides a simple and quick way to make training courses.
 
-After selecting it and activating the path drawing tool, press the space bar once to disable dash point drawing, then left click to set the start. Now press the space bar again to enable dash point drawing and left click at each desired control point location. Finally press the space bar again to disable dash point drawing and right click to set the finish.
-
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</description>
-            <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="1150" end_length="3650" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1000" break_length="1450" dashes_in_group="1" in_group_break_length="1600" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="1150" end_length="3650" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1000" break_length="1450" dashes_in_group="1" in_group_break_length="1600" mid_symbols_per_spot="1" mid_symbol_distance="0" suppress_dash_symbol_at_ends="true">
                 <start_symbol>
                     <symbol type="1" code="" name="Anfangssymbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">

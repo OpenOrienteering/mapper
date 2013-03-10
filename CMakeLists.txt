@@ -274,3 +274,5 @@ else() # NOT Mapper_prerequisites_FOUND AND NOT MAPPER_SUPERBUILD
 	add_dependencies(Mapper_superbuild Mapper_prerequisites)
 
 endif()
+
+add_subdirectory("packaging/src")

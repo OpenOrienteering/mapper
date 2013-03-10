@@ -30,12 +30,12 @@ endif()
 message(STATUS "Checking git working directory - clean")
 
 # Working directory is clean, now let git build the archive
-message(STATUS "Creating @CPACK_SOURCE_PACKAGE_FILE_NAME@.@Mapper_Source_FORMAT@")
+message(STATUS "Creating @Mapper_Source_FILE_NAME@.@Mapper_Source_FORMAT@")
 execute_process(
   COMMAND "@GIT_EXECUTABLE@" archive
     --format "@Mapper_Source_FORMAT@"
-    --prefix "@CPACK_SOURCE_PACKAGE_FILE_NAME@/"
-    --output "@PROJECT_BINARY_DIR@/@CPACK_SOURCE_PACKAGE_FILE_NAME@.@Mapper_Source_FORMAT@"
+    --prefix "@Mapper_Source_FILE_NAME@/"
+    --output "@PROJECT_BINARY_DIR@/@Mapper_Source_FILE_NAME@.@Mapper_Source_FORMAT@"
     HEAD
   WORKING_DIRECTORY "@PROJECT_SOURCE_DIR@"
 )

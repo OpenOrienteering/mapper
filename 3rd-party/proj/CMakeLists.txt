@@ -21,6 +21,11 @@ project(Proj)
 
 cmake_minimum_required(VERSION 2.8)
 
+if(${CMAKE_CURRENT_BINARY_DIR} MATCHES " ")
+	# Note: autotools don't allow whitespace and some other special characters.
+	message(FATAL_ERROR "The build directory must not contain whitespace.")
+endif()
+
 # Configuration options
 
 if(NOT PROJ_VERSION)
@@ -49,14 +54,11 @@ mark_as_advanced(SH_PROGRAM)
 if("${CMAKE_GENERATOR} ${CMAKE_EXTRA_GENERATOR}" MATCHES "Unix Makefiles" OR
    "${CMAKE_GENERATOR}" STREQUAL "MSYS Makefiles")
 	# use magic MAKE macro
-	set(PROJ_MAKE_COMMAND "\$(MAKE)" CACHE STRING
-	  "The 'make' command for building the Proj library")
+	set(PROJ_MAKE_COMMAND "\$(MAKE)")
 else()
 	# use wrapper
-	set(PROJ_MAKE_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/proj-make CACHE STRING
-	  "The 'make' command for building the Proj library")
+	set(PROJ_MAKE_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/proj-make)
 endif()
-mark_as_advanced(PROJ_MAKE_COMMAND)
 
 # Build definition
 

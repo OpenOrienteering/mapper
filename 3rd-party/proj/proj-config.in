@@ -31,6 +31,9 @@ SOURCE_DIR=$(pwd)
 # [2] Go to build directory
 cd "@BINARY_DIR@"
 
+# [3] Put msys-bundled gcc at the end of the PATH
+export PATH=$(echo "$PATH" | sed -e 's/\(^\|:\)\([/]mingw[/]bin\):\(.*\)/\1\3:\2/')
+
 "$SOURCE_DIR/configure" \
   --without-mutex \
   --prefix "@INSTALL_DIR@" \

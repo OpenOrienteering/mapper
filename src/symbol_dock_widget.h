@@ -158,7 +158,7 @@ public:
 	// Programmatic select of a symbol
 	void selectSingleSymbol(Symbol *symbol);
 	
-	void adjustSize(int width = -1, int height = -1);
+	void adjustContents();
 	virtual QSize sizeHint() const;
 	
 	inline void emitSelectedSymbolsChanged() {emit selectedSymbolsChanged();}
@@ -188,7 +188,6 @@ private:
 	QScrollBar* scroll_bar;
 	
 	QHBoxLayout* layout;
-	bool no_resize_handling;
 	QSize preferred_size;
 	
 	Map* map;

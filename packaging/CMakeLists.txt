@@ -1,5 +1,5 @@
 #
-#    Copyright 2012 Kai Pastor
+#    Copyright 2012, 2013 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -59,9 +59,10 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	  "${PROJECT_BINARY_DIR}"
 	  "/docs/"
 	  "/[.]git/"
-	  "/3rd-party/clipper/"
+	  "/3rd-party/clipper/download/"
 	  "/3rd-party/proj/download/"
 	  "/3rd-party/qt4/download/"
+	  "/3rd-party/qt5/download/"
 	  ${CPACK_SOURCE_IGNORE_FILES})
 	
 	set(MAPPER_MACOS_SUBDIR "")
@@ -203,6 +204,7 @@ if(TOOLCHAIN_SHARED_LIBS)
 	list(APPEND MAPPER_LIBS ${TOOLCHAIN_SHARED_LIBS})
 elseif(MINGW)
 	list(APPEND MAPPER_LIBS libgcc_s_dw2-1 mingwm10)
+	list(APPEND MAPPER_LIBS libgcc_s_sjlj-1 libwinpthread-1 libstdc++-6)
 endif()
 
 if(Mapper_PACKAGE_PROJ)
@@ -428,20 +430,6 @@ if(UNIX AND NOT APPLE)
 		  RENAME Mapper.png
 		)
 	endforeach()
-endif()
-
-
-# Custom source package target Mapper_Source
-
-set(Mapper_Source_FORMAT tgz CACHE STRING
-  "The archive format for source packages (see `git archive -l` for valid options)")
-
-find_program(GIT_EXECUTABLE git)
-if(GIT_EXECUTABLE)
-	configure_file(Mapper_Source.cmake.in Mapper_Source.cmake @ONLY)
-	add_custom_target(Mapper_Source
-	  COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/Mapper_Source.cmake"
-	)
 endif()
 
 message(STATUS "Configuring ${PROJECT_NAME} packaging - done")

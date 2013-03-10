@@ -307,7 +307,8 @@ void LineRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_
 					max_y = prev_element.y;
 				}
 				element_bbox = QRectF(min_x - 0.5f * line_width, min_y - 0.5f * line_width,
-									  max_x - min_x + line_width, max_y - min_y + line_width);
+									  qMax(max_x - min_x + line_width, (qreal)1e-6f),
+									  qMax(max_y - min_y + line_width, (qreal)1e-6f));
 				if (element_bbox.intersects(bounding_box))
 				{
 					if (!path_started)
