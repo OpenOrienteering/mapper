@@ -239,8 +239,12 @@ void MainWindow::createHelpMenu()
 	QAction* manualAct = new QAction(QIcon(":/images/help.png"), tr("Open &Manual"), this);
 	manualAct->setStatusTip(tr("Show the help file for this application"));
 	// This conflicts with pressing F1 while hovering over the symbol pane
-	// to view the symbol description
-	//manualAct->setShortcut(QKeySequence::HelpContents);
+	// to view the symbol description.
+	// Maybe use "What's this" shortcut for symbol description?
+#if defined(Q_OS_MAC)
+	// But Mac OS X uses Cmd-? for HelpContents.
+	manualAct->setShortcut(QKeySequence::HelpContents);
+#endif
 	connect(manualAct, SIGNAL(triggered()), this, SLOT(showHelp()));
 	
 	QAction* aboutAct = new QAction(tr("&About %1").arg(APP_NAME), this);
