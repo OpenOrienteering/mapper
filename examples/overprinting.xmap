@@ -2709,10 +2709,8 @@ Colour: purple</description>
         <symbol type="2" id="154" code="799" name="Simple Orienteering Course">
             <description>This symbol provides a simple and quick way to make training courses.
 
-After selecting it and activating the path drawing tool, press the space bar once to disable dash point drawing, then left click to set the start. Now press the space bar again to enable dash point drawing and left click at each desired control point location. Finally press the space bar again to disable dash point drawing and right click to set the finish.
-
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</description>
-            <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="1725" end_length="5475" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="2175" dashes_in_group="1" in_group_break_length="2400" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="1725" end_length="5475" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="2175" dashes_in_group="1" in_group_break_length="2400" mid_symbols_per_spot="1" mid_symbol_distance="0" suppress_dash_symbol_at_ends="true">
                 <start_symbol>
                     <symbol type="1" code="" name="Anfangssymbol">
                         <point_symbol rotatable="true" inner_radius="1500" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
@@ -7164,65 +7162,7 @@ preview.</text>
             </objects>
         </part>
     </parts>
-    <templates count="2" first_front_template="0">
-        <template open="false" name="overprinting.png" path="/home/kpa/Projekte/OpenOrienteering/overprinting.png" relpath="../../../../kpa/Projekte/OpenOrienteering/overprinting.png" group="-1">
-            <transformations adjustment_dirty="true" passpoints="0">
-                <transformation role="active" x="-23392" y="-65104" scale_x="0.132292" scale_y="0.132292" rotation="0"/>
-                <transformation role="other" x="0" y="0" scale_x="1" scale_y="1" rotation="0"/>
-                <matrix role="map_to_template" n="3" m="3">
-                    <element value="7.55906"/>
-                    <element value="0"/>
-                    <element value="176.821"/>
-                    <element value="0"/>
-                    <element value="7.55906"/>
-                    <element value="492.125"/>
-                    <element value="0"/>
-                    <element value="0"/>
-                    <element value="1"/>
-                </matrix>
-                <matrix role="template_to_map" n="3" m="3">
-                    <element value="0.132292"/>
-                    <element value="0"/>
-                    <element value="-23.392"/>
-                    <element value="0"/>
-                    <element value="0.132292"/>
-                    <element value="-65.104"/>
-                    <element value="0"/>
-                    <element value="0"/>
-                    <element value="1"/>
-                </matrix>
-                <matrix role="template_to_map_other" n="0" m="0"/>
-            </transformations>
-        </template>
-        <template open="false" name="overprinting.png" path="/home/kpa/Projekte/OpenOrienteering/overprinting.png" relpath="../../../../kpa/Projekte/OpenOrienteering/overprinting.png" group="-1">
-            <transformations adjustment_dirty="true" passpoints="0">
-                <transformation role="active" x="-19490" y="-62152" scale_x="0.0661458" scale_y="0.0661458" rotation="0"/>
-                <transformation role="other" x="0" y="0" scale_x="1" scale_y="1" rotation="0"/>
-                <matrix role="map_to_template" n="3" m="3">
-                    <element value="15.1181"/>
-                    <element value="0"/>
-                    <element value="294.652"/>
-                    <element value="0"/>
-                    <element value="15.1181"/>
-                    <element value="939.621"/>
-                    <element value="0"/>
-                    <element value="0"/>
-                    <element value="1"/>
-                </matrix>
-                <matrix role="template_to_map" n="3" m="3">
-                    <element value="0.0661458"/>
-                    <element value="0"/>
-                    <element value="-19.49"/>
-                    <element value="0"/>
-                    <element value="0.0661458"/>
-                    <element value="-62.152"/>
-                    <element value="0"/>
-                    <element value="0"/>
-                    <element value="1"/>
-                </matrix>
-                <matrix role="template_to_map_other" n="0" m="0"/>
-            </transformations>
-        </template>
+    <templates count="0" first_front_template="0">
         <defaults use_meters_per_pixel="false" meters_per_pixel="0" dpi="144" scale="3750"/>
     </templates>
     <view>
