@@ -77,7 +77,8 @@ option(Mapper_BUILD_PACKAGE     "Create a target for building packages" ON)
 option(Mapper_PACKAGE_PROJ      "Include all required Proj components in the packages" ${Mapper_BUILD_PROJ})
 option(Mapper_PACKAGE_QT        "Include all required Qt components in the packages"   ${Mapper_BUILD_QT})
 option(Mapper_PACKAGE_ASSISTANT "Include Qt Assistant in the packages"                 ${Mapper_BUILD_QT})
-mark_as_advanced(Mapper_BUILD_PACKAGE Mapper_PACKAGE_QT Mapper_PACKAGE_ASSISTANT Mapper_PACKAGE_PROJ)
+option(Mapper_PACKAGE_LINGUIST  "Build a Qt Linguist package"                          ${WIN32})
+mark_as_advanced(Mapper_BUILD_PACKAGE Mapper_PACKAGE_QT Mapper_PACKAGE_ASSISTANT Mapper_PACKAGE_PROJ Mapper_PACKAGE_LINGUIST)
 
 unset(Mapper_PACKAGE_LIBRARIES CACHE) # Legacy
 

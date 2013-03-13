@@ -433,3 +433,25 @@ if(UNIX AND NOT APPLE)
 endif()
 
 message(STATUS "Configuring ${PROJECT_NAME} packaging - done")
+
+if(Mapper_USE_QT5 AND Mapper_BUILD_QT AND Mapper_PACKAGE_LINGUIST)
+	include(ExternalProject)
+	ExternalProject_Add("Linguist package"
+	  DEPENDS Qt5
+	  SOURCE_DIR ${PROJECT_SOURCE_DIR}/packaging/linguist
+	  UPDATE_COMMAND ${CMAKE_COMMAND} -E remove <BINARY_DIR>/CMakeCache.txt
+	  CMAKE_ARGS
+	    -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
+	    -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}
+	    -DQT5_DIR=${QT5_DIR}
+		-DQT_TRANSLATIONS_DIR=${QT_TRANSLATIONS_DIR}
+		-DQT_CONF=${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf
+	  BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --target package
+	  INSTALL_COMMAND ""
+	)
+	ExternalProject_Get_Property("Linguist package" BINARY_DIR)
+	# Copy the linguist package to the build tree root during install/packaging
+	install(CODE
+	  "execute_process(COMMAND \${CMAKE_COMMAND} --build \"${BINARY_DIR}\" --target \"package-install\" -- \"DESTDIR=${PROJECT_BINARY_DIR}\")"
+	)
+endif()
