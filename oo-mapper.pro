@@ -184,6 +184,7 @@ SOURCES += \
   src/gui/home_screen_controller.cpp \
   src/gui/main_window.cpp \
   src/gui/main_window_controller.cpp \
+  src/gui/modifier_key.cpp \
   src/gui/print_tool.cpp \
   src/gui/print_widget.cpp \
   src/gui/settings_dialog.cpp \

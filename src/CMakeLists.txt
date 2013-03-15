@@ -124,6 +124,7 @@ set(Mapper_Common_SRCS
  gui/home_screen_controller.cpp
  gui/main_window.cpp
  gui/main_window_controller.cpp
+ gui/modifier_key.cpp
  gui/print_tool.cpp
  gui/print_widget.cpp
  gui/settings_dialog.cpp
