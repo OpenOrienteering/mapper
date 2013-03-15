@@ -431,19 +431,22 @@ void ObjectMover::calculateConstraints()
 
 // ### EditTool ###
 
-// Mac convention for selecting multiple items is the command key (In Qt the command key is ControlModifier),
-// for deleting it is the backspace key
 #ifdef Q_OS_MAC
-const Qt::KeyboardModifiers EditTool::selection_modifier = Qt::ControlModifier;
-const Qt::KeyboardModifiers EditTool::control_point_modifier = Qt::ShiftModifier;
-const Qt::Key EditTool::selection_key = Qt::Key_Control;
-const Qt::Key EditTool::control_point_key = Qt::Key_Shift;
+// Mac convention for deleting selected objects is the backspace key
+// 
+// FIXME: This causes translation issues, and cannot be confirmed:
+// - In Finder, moving an object to trash is Cmd+Backspace.
+// - Other programs are reported to use [forward] delete.
+// - Some programs are reported to support multiple keys, e.g. Delete and Backspace.
+// - A major source of irritation is the absence of a delete key on some Macbooks.
+//   On these keyboards, delete is entered as Fn+Backspace.
+// - Some programs use another key for delete, e.g. "x".
+//   (Note that Cmd-x (aka Cut) will have a similar effect.)
+// TODO: either use a function for testing whether a key means "delete object",
+//   or switch to a QAction based implementation since QAction supports alternative
+//   QKeySequences.
 const Qt::Key EditTool::delete_object_key = Qt::Key_Backspace;
 #else
-const Qt::KeyboardModifiers EditTool::selection_modifier = Qt::ShiftModifier;
-const Qt::KeyboardModifiers EditTool::control_point_modifier = Qt::ControlModifier;
-const Qt::Key EditTool::selection_key = Qt::Key_Shift;
-const Qt::Key EditTool::control_point_key = Qt::Key_Control;
 const Qt::Key EditTool::delete_object_key = Qt::Key_Delete;
 #endif
 

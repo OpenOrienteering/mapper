@@ -142,7 +142,7 @@ void EditPointTool::clickPress()
 	else if (hover_object &&
 		hover_object->getType() == Object::Path &&
 		hover_point < 0 &&
-		active_modifiers & control_point_modifier)
+		active_modifiers & Qt::ControlModifier)
 	{
 		// Add new point to path
 		PathObject* path = hover_object->asPath();
@@ -173,7 +173,7 @@ void EditPointTool::clickPress()
 	else if (hover_object &&
 		hover_object->getType() == Object::Path &&
 		hover_point >= 0 &&
-		active_modifiers & control_point_modifier)
+		active_modifiers & Qt::ControlModifier)
 	{
 		PathObject* path = hover_object->asPath();
 		int hover_point_part_index = path->findPartIndexForIndex(hover_point);
@@ -274,7 +274,7 @@ void EditPointTool::clickRelease()
 		return;
 	
 	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
-	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(click_tolerance), active_modifiers & selection_modifier);
+	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(click_tolerance), active_modifiers & Qt::ShiftModifier);
 	updateHoverPoint(cur_pos_map);
 }
 
@@ -315,7 +315,7 @@ void EditPointTool::dragMove()
 			handle_offset = MapCoordF(0, 0);
 		}
 		
-		object_mover->move(constrained_pos_map, !(active_modifiers & selection_modifier));
+		object_mover->move(constrained_pos_map, !(active_modifiers & Qt::ShiftModifier));
 		updatePreviewObjectsAsynchronously();
 	}
 	else if (box_selection)
@@ -337,7 +337,7 @@ void EditPointTool::dragFinish()
 	}
 	else if (box_selection)
 	{
-		object_selector->selectBox(click_pos_map, cur_pos_map, active_modifiers & selection_modifier);
+		object_selector->selectBox(click_pos_map, cur_pos_map, active_modifiers & Qt::ShiftModifier);
 	}
 	box_selection = false;
 }

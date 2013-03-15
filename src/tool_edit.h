@@ -148,10 +148,6 @@ public:
 	EditTool(MapEditorController* editor, MapEditorTool::Type type, SymbolWidget* symbol_widget, QAction* tool_button);
 	virtual ~EditTool();
 	
-	static const Qt::KeyboardModifiers selection_modifier;
-	static const Qt::KeyboardModifiers control_point_modifier;
-	static const Qt::Key selection_key;
-	static const Qt::Key control_point_key;
 	static const Qt::Key delete_object_key;
 	
 	/** Draws a selection box. */

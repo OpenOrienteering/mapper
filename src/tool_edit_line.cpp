@@ -73,7 +73,7 @@ void EditLineTool::clickPress()
 {
 	if (hover_object &&
 		hover_line >= 0 &&
-		active_modifiers & control_point_modifier)
+		active_modifiers & Qt::ControlModifier)
 	{
 		// Toggle segment between straight line and curve
 		createReplaceUndoStep(hover_object);
@@ -134,7 +134,7 @@ void EditLineTool::clickRelease()
 		return;
 	
 	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
-	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(click_tolerance), active_modifiers & selection_modifier);
+	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(click_tolerance), active_modifiers & Qt::ShiftModifier);
 	updateHoverLine(cur_pos_map);
 }
 
@@ -219,7 +219,7 @@ void EditLineTool::dragMove()
 		}
 		
 		qint64 dx, dy;
-		object_mover->move(constrained_pos_map, !(active_modifiers & selection_modifier), &dx, &dy);
+		object_mover->move(constrained_pos_map, !(active_modifiers & Qt::ShiftModifier), &dx, &dy);
 		if (highlight_object)
 		{
 			highlight_renderables->removeRenderablesOfObject(highlight_object, false);
@@ -253,7 +253,7 @@ void EditLineTool::dragFinish()
 	}
 	else if (box_selection)
 	{
-		object_selector->selectBox(click_pos_map, cur_pos_map, active_modifiers & selection_modifier);
+		object_selector->selectBox(click_pos_map, cur_pos_map, active_modifiers & Qt::ShiftModifier);
 		box_selection = false;
 	}
 }

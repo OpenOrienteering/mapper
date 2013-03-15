@@ -132,7 +132,7 @@ void CutoutTool::objectSelectionChangedImpl()
 void CutoutTool::clickRelease()
 {
 	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
-	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(click_tolerance), active_modifiers & EditTool::selection_modifier);
+	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(click_tolerance), active_modifiers & Qt::ShiftModifier);
 }
 
 void CutoutTool::dragStart()
@@ -147,7 +147,7 @@ void CutoutTool::dragMove()
 
 void CutoutTool::dragFinish()
 {
-	object_selector->selectBox(click_pos_map, cur_pos_map, active_modifiers & EditTool::selection_modifier);
+	object_selector->selectBox(click_pos_map, cur_pos_map, active_modifiers & Qt::ShiftModifier);
 }
 
 
