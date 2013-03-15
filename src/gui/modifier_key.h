@@ -36,6 +36,10 @@
  * 
  * For true QKeySequences, call QKeySequence::toString(QKeySequence::NativeText)
  * directly.
+ *
+ * On Windows and Linux, the keys will be displayed as word ("Shift" etc.).
+ * On OS X, the keys will be displayed as graphical symbols ("⇧", i.e.
+ * Unicode character U+21E7, etc.).
  * 
  * Synopsis:
  * 
