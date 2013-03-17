@@ -71,6 +71,8 @@ void DrawRectangleTool::init()
 
 bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	ctrl_pressed = event->modifiers() & Qt::ControlModifier;
+	shift_pressed = event->modifiers() & Qt::ShiftModifier;
 	cur_map_widget = widget;
 	if (event->button() == Qt::LeftButton || (draw_in_progress && drawMouseButtonClicked(event)))
 	{

@@ -2309,9 +2309,9 @@ bool PathObject::simplify(PathObject** undo_duplicate)
 					if (c_minus_3 >= 0 && getCoordinate(c_minus_3).isCurveStart())
 						c = c_minus_3;
 					else
-						c = c - 1;	
+						c = c - 1;
 				}
-				if (getCoordinate(c).isCurveStart())
+				if (c >= 0 && getCoordinate(c).isCurveStart())
 					c += 2;
 			}
 		}

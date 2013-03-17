@@ -176,8 +176,13 @@ void CutHoleTool::pathAborted()
 
 void CutHoleTool::pathFinished(PathObject* hole_path)
 {
-	Map* map = this->map();
-	Object* edited_object = *map->selectedObjectsBegin();
+	if (map()->getNumSelectedObjects() == 0)
+	{
+		pathAborted();
+		return;
+	}
+	
+	Object* edited_object = *map()->selectedObjectsBegin();
 	Object* undo_duplicate = edited_object->duplicate();
 	
 	// Close the hole path
@@ -193,11 +198,11 @@ void CutHoleTool::pathFinished(PathObject* hole_path)
 	edited_path->update(true);
 	updateDirtyRect();
 	
-	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map);
+	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());
 	undo_step->addObject(edited_object, undo_duplicate);
-	map->objectUndoManager().addNewUndoStep(undo_step);
-	map->setObjectsDirty();
-	map->emitSelectionEdited();
+	map()->objectUndoManager().addNewUndoStep(undo_step);
+	map()->setObjectsDirty();
+	map()->emitSelectionEdited();
 	
 	pathAborted();
 }
