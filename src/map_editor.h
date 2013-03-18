@@ -324,6 +324,8 @@ private:
 	QScopedPointer<ReopenTemplateDialog> reopen_template_dialog;
 	
 	QHash<Template*, TemplatePositionDockWidget*> template_position_widgets;
+	
+	bool being_destructed;
 };
 
 /// Custom QDockWidget which unchecks the associated menu action when closed and delivers a notification to its child

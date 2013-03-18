@@ -731,9 +731,12 @@ void SymbolRenderWidget::duplicateSymbol()
 
 void SymbolRenderWidget::copySymbols()
 {
-	// Create map containing selected symbols and their color dependencies
+	// Create map containing all colors and the selected symbols.
+	// Copying all colors improves preservation of relative order during paste.
 	Map* copy_map = new Map();
 	copy_map->setScaleDenominator(map->getScaleDenominator());
+
+	copy_map->importMap(map, Map::ColorImport, this);
 	
 	std::vector<bool> selection;
 	getSelectionBitfield(selection);
@@ -776,7 +779,7 @@ void SymbolRenderWidget::pasteSymbols()
 	}
 	
 	// Import pasted map
-	map->importMap(paste_map, Map::CompleteImport, this, NULL, currentSymbolIndex(), false);
+	map->importMap(paste_map, Map::MinimalSymbolImport, this, NULL, currentSymbolIndex(), false);
 	delete paste_map;
 	
 	symbol_widget->emitSelectedSymbolsChanged();

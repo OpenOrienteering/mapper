@@ -108,11 +108,14 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	symbol_dock_widget = NULL;
 	template_dock_widget = NULL;
 	
+	being_destructed = false;
+	
 	actionsById[""] = new QAction(this); // dummy action
 }
 
 MapEditorController::~MapEditorController()
 {
+	being_destructed = true;
 	paste_act = NULL;
 	delete current_tool;
 	delete override_tool;
@@ -786,6 +789,7 @@ void MapEditorController::createPieMenu(PieMenu* menu)
 void MapEditorController::detach()
 {
 	saveWindowState();
+	being_destructed = true;
 	
 	window->setCentralWidget(NULL);
 	delete map_widget;
@@ -796,6 +800,8 @@ void MapEditorController::detach()
 
 void MapEditorController::saveWindowState()
 {
+	if (mode == SymbolEditor || being_destructed)
+		return;
 	QSettings settings;
 	settings.beginGroup(metaObject()->className());
 	settings.setValue("state", window->saveState());
