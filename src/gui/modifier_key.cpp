@@ -49,3 +49,28 @@ const ModifierKey ModifierKey::shift()
 	static const ModifierKey key(Qt::ShiftModifier);
 	return key;
 }
+
+const ModifierKey ModifierKey::space()
+{
+	static const ModifierKey key(Qt::Key_Space);
+	return key;
+}
+
+const ModifierKey ModifierKey::return_key()
+{
+	static const ModifierKey key(Qt::Key_Return);
+	return key;
+}
+
+const ModifierKey ModifierKey::backspace()
+{
+	static const ModifierKey key(Qt::Key_Backspace);
+	return key;
+}
+
+const ModifierKey ModifierKey::escape()
+{
+	static const ModifierKey key(Qt::Key_Escape);
+	return key;
+}
+

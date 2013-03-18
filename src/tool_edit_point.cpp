@@ -42,6 +42,7 @@
 #include "symbol_text.h"
 #include "renderable.h"
 #include "settings.h"
+#include "gui/modifier_key.h"
 
 
 int EditPointTool::max_objects_for_handle_display = 10;
@@ -549,60 +550,61 @@ void EditPointTool::updatePreviewObjects()
 
 void EditPointTool::updateStatusText()
 {
+	QString text;
 	if (editing)
 	{
-		QString helper_remarks = "";
+		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
+		text = EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").
+		       arg(QLocale().toString(drag_vector.getX(), 'f', 1)).
+		       arg(QLocale().toString(-drag_vector.getY(), 'f', 1)).
+		       arg(QLocale().toString(0.001 * map()->getScaleDenominator() * drag_vector.length(), 'f', 1)) +
+		       "| ";
+		
 		if (!angle_helper->isActive())
-			helper_remarks += tr("<u>Ctrl</u> for fixed angles");
+			text += EditTool::tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control());
+		
 		if (!(active_modifiers & Qt::ShiftModifier))
 		{
-			if (!helper_remarks.isEmpty())
-				helper_remarks += ", ";
-			
 			if (hover_object != NULL &&
 				hover_point >= 0 &&
 				hover_object->getType() == Object::Path &&
 				hover_object->asPath()->isCurveHandle(hover_point))
 			{
-				helper_remarks += tr("<u>Shift</u> to keep opposite handle positions");
+				text += tr("<b>%1</b>: Keep opposite handle positions. ").arg(ModifierKey::shift());
 			}
 			else
 			{
-				helper_remarks += tr("<u>Shift</u> to snap to existing objects");
+				text += EditTool::tr("<b>%1</b>: Snap to existing objects. ").arg(ModifierKey::shift());
 			}
 		}
-		
-		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
-		setStatusBarText(tr("<b>Coordinate offset [mm]:</b> %1, %2  <b>Distance [m]:</b> %3  %4")
-						  .arg(drag_vector.getX(), 0, 'f', 1)
-						  .arg(-drag_vector.getY(), 0, 'f', 1)
-						  .arg(0.001 * map()->getScaleDenominator() * drag_vector.length(), 0, 'f', 1)
-						  .arg(helper_remarks.isEmpty() ? "" : ("(" + helper_remarks + ")")));
-		return;
 	}
-	
-	QString str = tr("<b>Click</b> to select an object, <b>Drag</b> for box selection, <b>Shift</b> to toggle selection");
-	if (map()->getNumSelectedObjects() > 0)
+	else
 	{
-		str += tr(", <b>Del</b> to delete");
-		
-		if (map()->getNumSelectedObjects() <= max_objects_for_handle_display)
+		text = EditTool::tr("<b>Click</b>: Select a single object. <b>Drag</b>: Select multiple objects. <b>%1+Click</b>: Toggle selection. ").arg(ModifierKey::shift());
+		if (map()->getNumSelectedObjects() > 0)
 		{
-			// TODO: maybe show this only if at least one PathObject among the selected objects?
-			if (active_modifiers & Qt::ControlModifier)
+			text += EditTool::tr("<b>%1</b>: Delete selected objects. ").arg(ModifierKey(delete_object_key));
+			
+			if (map()->getNumSelectedObjects() <= max_objects_for_handle_display)
 			{
-				if (addDashPointDefault())
-					str = tr("<b>Ctrl+Click</b> on point to delete it, on path to add a new dash point, with <b>Space</b> to add a normal point");
+				// TODO: maybe show this only if at least one PathObject among the selected objects?
+				if (active_modifiers & Qt::ControlModifier)
+				{
+					if (addDashPointDefault())
+						text = tr("<b>%1+Click</b> on point: Delete it; on path: Add a new dash point; with <b>%2</b>: Add a normal point. ").
+						       arg(ModifierKey::control(), ModifierKey::space());
+					else
+						text = tr("<b>%1+Click</b> on point: Delete it; on path: Add a new point; with <b>%2</b>: Add a dash point. ").
+						       arg(ModifierKey::control(), ModifierKey::space());
+				}
+				else if (space_pressed)
+					text = tr("<b>%1+Click</b> on point to switch between dash and normal point. ").arg(ModifierKey::space());
 				else
-					str = tr("<b>Ctrl+Click</b> on point to delete it, on path to add a new point, with <b>Space</b> to add a dash point");
+					text += "| " + MapEditorTool::tr("More: %1, %2").arg(ModifierKey::control(), ModifierKey::space());
 			}
-			else if (space_pressed)
-				str = tr("<b>Space+Click</b> on point to switch between dash and normal point");
-			else
-				str += tr("; Try <u>Ctrl</u>, <u>Space</u>");
 		}
 	}
-	setStatusBarText(str);
+	setStatusBarText(text);
 }
 
 void EditPointTool::updateHoverPoint(MapCoordF cursor_pos)

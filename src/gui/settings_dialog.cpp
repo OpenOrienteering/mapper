@@ -163,14 +163,14 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	edit_tool_delete_bezier_point_action->addItem(tr("Retain old shape"), (int)Settings::DeleteBezierPoint_RetainExistingShape);
 	edit_tool_delete_bezier_point_action->addItem(tr("Reset outer curve handles"), (int)Settings::DeleteBezierPoint_ResetHandles);
 	edit_tool_delete_bezier_point_action->addItem(tr("Keep outer curve handles"), (int)Settings::DeleteBezierPoint_KeepHandles);
-	layout->addWidget(new QLabel(tr("Action on deleting a bezier spline point with %1:").arg(ModifierKey::control())), row, 0);
+	layout->addWidget(new QLabel(tr("Action on deleting a curve point with %1:").arg(ModifierKey::control())), row, 0);
 	layout->addWidget(edit_tool_delete_bezier_point_action, row++, 1);
 	
 	edit_tool_delete_bezier_point_action_alternative = new QComboBox();
 	edit_tool_delete_bezier_point_action_alternative->addItem(tr("Retain old shape"), (int)Settings::DeleteBezierPoint_RetainExistingShape);
 	edit_tool_delete_bezier_point_action_alternative->addItem(tr("Reset outer curve handles"), (int)Settings::DeleteBezierPoint_ResetHandles);
 	edit_tool_delete_bezier_point_action_alternative->addItem(tr("Keep outer curve handles"), (int)Settings::DeleteBezierPoint_KeepHandles);
-	layout->addWidget(new QLabel(tr("Action on deleting a bezier spline point with %1:").arg(ModifierKey::controlShift())), row, 0);
+	layout->addWidget(new QLabel(tr("Action on deleting a curve point with %1:").arg(ModifierKey::controlShift())), row, 0);
 	layout->addWidget(edit_tool_delete_bezier_point_action_alternative, row++, 1);
 	
 	layout->setRowMinimumHeight(row++, 16);

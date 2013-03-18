@@ -46,7 +46,7 @@ PrintTool::PrintTool(MapEditorController* editor, MapPrinter* map_printer)
 
 void PrintTool::init()
 {
-	setStatusBarText(tr("<b>Drag</b> to move the print area or its borders."));
+	setStatusBarText(tr("<b>Drag</b>: Move the print area or its borders. "));
 	updatePrintArea();
 }
 

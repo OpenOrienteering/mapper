@@ -33,6 +33,7 @@
 #include "tool_draw_path.h"
 #include "tool_draw_rectangle.h"
 #include "util.h"
+#include "gui/modifier_key.h"
 
 QCursor* CutHoleTool::cursor = NULL;
 
@@ -172,6 +173,7 @@ void CutHoleTool::pathAborted()
 	delete path_tool;
 	path_tool = NULL;
 	updateDirtyRect();
+	updateStatusText();
 }
 
 void CutHoleTool::pathFinished(PathObject* hole_path)
@@ -204,5 +206,9 @@ void CutHoleTool::pathFinished(PathObject* hole_path)
 
 void CutHoleTool::updateStatusText()
 {
-	setStatusBarText(tr("<b>Click</b> on a line to split it into two, <b>Drag</b> along a line to remove this line part, <b>Click or Drag</b> at an area boundary to start drawing a split line"));
+	if (!path_tool)
+	{
+		// FIXME: The path_tool would have better instrution, but is not initialized yet.
+		setStatusBarText(tr("<b>Click or drag</b>: Start drawing the hole. "));
+	}
 }

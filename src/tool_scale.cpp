@@ -184,9 +184,10 @@ void ScaleTool::updatePreviewObjects()
 void ScaleTool::updateStatusText()
 {
 	if (scaling)
-		setStatusBarText(tr("<b>Scaling:</b> %1%").arg(scaling_factor * 100, 0, 'f', 1));
+		setStatusBarText(tr("<b>Scaling:</b> %1%").arg(QLocale().toString(scaling_factor * 100, 'f', 1)));
 	else if (!scaling_center_set)
-		setStatusBarText(tr("<b>Click</b> to set the scaling center"));
+		setStatusBarText(tr("<b>Click</b>: Set the scaling center. "));
 	else
-		setStatusBarText(tr("<b>Click</b> to set the scaling center, <b>drag</b> to scale the selected object(s)"));
+		setStatusBarText(tr("<b>Click</b>: Set the scaling center. ") +
+		                 tr("<b>Drag</b>: Scale the selected objects. "));
 }

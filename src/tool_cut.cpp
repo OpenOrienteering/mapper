@@ -676,7 +676,7 @@ void CutTool::pathFinished(PathObject* split_path)
 
 void CutTool::updateStatusText()
 {
-	setStatusBarText(tr("<b>Click</b> on a line to split it into two, <b>Drag</b> along a line to remove this line part, <b>Click or Drag</b> at an area boundary to start drawing a split line"));
+	setStatusBarText(tr("<b>Click</b> on a line: Split it into two. <b>Drag</b> along a line: Remove this line part. <b>Click or Drag</b> at an area boundary: Start a split line. "));
 }
 
 void CutTool::startCuttingArea(const PathCoord& coord, MapWidget* widget)

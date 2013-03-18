@@ -33,6 +33,8 @@
 #include "symbol_point.h"
 #include "tool_helpers.h"
 #include "util.h"
+#include "gui/modifier_key.h"
+
 
 RotatePatternTool::RotatePatternTool(MapEditorController* editor, QAction* tool_button)
 : MapEditorToolBase(QCursor(QPixmap(":/images/cursor-rotate.png"), 1, 1), Other, editor, tool_button),
@@ -147,11 +149,15 @@ void RotatePatternTool::updateStatusText()
 {
 	if (dragging)
 	{
-		double rotation = fmod(-1 * (constrained_pos_map - click_pos_map).getAngle() + 3*M_PI/2, 2*M_PI);
-		setStatusBarText(trUtf8("<b>Angle:</b> %1°  %2")
-			.arg(rotation * 180 / M_PI, 0, 'f', 1)
-			.arg(angle_helper->isActive() ? "" : tr("(<u>Ctrl</u> for fixed angles)")));
+		static const double pi_x_1_5 = M_PI * 1.5;
+		static const double pi_x_2 = M_PI * 2.0;
+		static const double to_deg = 180.0 / M_PI;
+		double rotation = fmod(-(constrained_pos_map - click_pos_map).getAngle() + pi_x_1_5, pi_x_2) * to_deg;
+		setStatusBarText( trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(rotation, 'f', 1)) + "| " +
+		                  tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control()) );
 	}
 	else
-		setStatusBarText(tr("<b>Drag</b> to set the direction of area fill patterns or point objects"));
+	{
+		setStatusBarText(tr("<b>Drag</b>: Set the direction of area fill patterns or point objects. "));
+	}
 }

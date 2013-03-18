@@ -36,6 +36,7 @@
 #include "symbol_point.h"
 #include "tool_helpers.h"
 #include "util.h"
+#include "gui/modifier_key.h"
 
 QCursor* DrawPointTool::cursor = NULL;
 
@@ -276,12 +277,16 @@ void DrawPointTool::updateStatusText()
 {
 	if (dragging)
 	{
-		setStatusBarText(trUtf8("<b>Angle:</b> %1°  %2")
-			.arg(fmod(calculateRotation(constrained_pos, constrained_pos_map) + 2*M_PI, 2*M_PI) * 180 / M_PI, 0, 'f', 1)
-			.arg(angle_helper->isActive() ? "" : tr("(<u>Ctrl</u> for fixed angles)")));
+		static const double pi_x_2 = M_PI * 2.0;
+		static const double to_deg = 180.0 / M_PI;
+		double angle = fmod(calculateRotation(constrained_pos, constrained_pos_map) + pi_x_2, pi_x_2) * to_deg;
+		setStatusBarText( trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(angle, 'f', 1)) + "| " +
+		                  tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control()) );
 	}
 	else
-		setStatusBarText(tr("<b>Click</b> to set a point object, <b>Drag</b> to set its rotation if the symbol is rotatable"));
+	{
+		setStatusBarText( tr("<b>Click</b>: Create a point object. <b>Drag</b>: Create an object and set its orientation (if rotatable). "));
+	}
 }
 
 void DrawPointTool::selectedSymbolsChanged()

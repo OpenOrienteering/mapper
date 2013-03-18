@@ -299,7 +299,7 @@ void DrawTextTool::updateDirtyRect()
 
 void DrawTextTool::updateStatusText()
 {
-	setStatusBarText(tr("<b>Click</b> to write text with a single anchor, <b>Drag</b> to create a text box"));
+	setStatusBarText(tr("<b>Click</b>: Create a text object with a single anchor. <b>Drag</b>: Create a text box. "));
 }
 
 void DrawTextTool::updatePreviewObject()

@@ -42,6 +42,7 @@
 #include "symbol.h"
 #include "tool_helpers.h"
 #include "util.h"
+#include "gui/modifier_key.h"
 
 
 int EditLineTool::max_objects_for_handle_display = 10;
@@ -382,46 +383,45 @@ void EditLineTool::deleteHighlightObject()
 
 void EditLineTool::updateStatusText()
 {
+	QString text;
 	if (editing)
 	{
-		QString helper_remarks = "";
-		if (!(active_modifiers & Qt::ControlModifier))
-		{
-			if (angle_helper->isActive())
-				helper_remarks += tr("<u>Ctrl</u> for free movement");
-			else
-				helper_remarks += tr("<u>Ctrl</u> for fixed angles");
-		}
+		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
+		text = EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").
+		       arg(QLocale().toString(drag_vector.getX(), 'f', 1)).
+		       arg(QLocale().toString(-drag_vector.getY(), 'f', 1)).
+		       arg(QLocale().toString(0.001 * map()->getScaleDenominator() * drag_vector.length(), 'f', 1)) +
+		       "| ";
+		
 		if (!(active_modifiers & Qt::ShiftModifier))
 		{
-			if (!helper_remarks.isEmpty())
-				helper_remarks += ", ";
-			helper_remarks += tr("<u>Shift</u> to snap to existing objects");
-		}
-		
-		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
-		setStatusBarText(tr("<b>Coordinate offset [mm]:</b> %1, %2  <b>Distance [m]:</b> %3  %4")
-		.arg(drag_vector.getX(), 0, 'f', 1)
-		.arg(-drag_vector.getY(), 0, 'f', 1)
-		.arg(0.001 * map()->getScaleDenominator() * drag_vector.length(), 0, 'f', 1)
-		.arg(helper_remarks.isEmpty() ? "" : ("(" + helper_remarks + ")")));
-		return;
-	}
-	
-	QString str = tr("<b>Click</b> to select an object, <b>Drag</b> for box selection, <b>Shift</b> to toggle selection");
-	if (map()->getNumSelectedObjects() > 0)
-	{
-		str += tr(", <b>Del</b> to delete");
-		
-		if (map()->getNumSelectedObjects() <= max_objects_for_handle_display)
-		{
-			if (active_modifiers & Qt::ControlModifier)
-				str = tr("<b>Ctrl+Click</b> on segment to toggle between straight and curved");
+			if ( ((active_modifiers & Qt::ControlModifier) > 0) ^ angle_helper->isActive() )
+				text += tr("<b>%1</b>: Free movement. ").arg(ModifierKey::control());
 			else
-				str += tr("; Try <u>Ctrl</u>");
+				text += EditTool::tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control());
+		}
+		if (!(active_modifiers & Qt::ControlModifier))
+		{
+			text += EditTool::tr("<b>%1</b>: Snap to existing objects. ").arg(ModifierKey::shift());
 		}
 	}
-	setStatusBarText(str);
+	else
+	{
+		text = EditTool::tr("<b>Click</b>: Select a single object. <b>Drag</b>: Select multiple objects. <b>%1+Click</b>: Toggle selection. ").arg(ModifierKey::shift());
+		if (map()->getNumSelectedObjects() > 0)
+		{
+			text += EditTool::tr("<b>%1</b>: Delete selected objects. ").arg(ModifierKey(delete_object_key));
+			
+			if (map()->getNumSelectedObjects() <= max_objects_for_handle_display)
+			{
+				if (active_modifiers & Qt::ControlModifier)
+					text = tr("<b>%1+Click</b> on segment: Toggle between straight and curved. ").arg(ModifierKey::control());
+				else
+					text += MapEditorTool::tr("More: %1").arg(ModifierKey::control());
+			}
+		}
+	}
+	setStatusBarText(text);
 }
 
 void EditLineTool::updateHoverLine(MapCoordF cursor_pos)

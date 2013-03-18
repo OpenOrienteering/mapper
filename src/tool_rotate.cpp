@@ -31,6 +31,7 @@
 #include "renderable.h"
 #include "tool_helpers.h"
 #include "util.h"
+#include "gui/modifier_key.h"
 
 RotateTool::RotateTool(MapEditorController* editor, QAction* tool_button)
  : MapEditorToolBase(QCursor(QPixmap(":/images/cursor-rotate.png"), 1, 1), Other, editor, tool_button),
@@ -173,17 +174,23 @@ void RotateTool::updateStatusText()
 {
 	if (rotating)
 	{
+		static const double pi_x_2 = M_PI * 2.0;
+		static const double to_deg = 180.0 / M_PI;
 		double delta_rotation = old_rotation - original_rotation;
 		if (delta_rotation < -M_PI)
-			delta_rotation = delta_rotation + 2*M_PI;
+			delta_rotation = delta_rotation + pi_x_2;
 		else if (delta_rotation > M_PI)
-			delta_rotation = delta_rotation - 2*M_PI;
-		setStatusBarText(trUtf8("<b>Rotation:</b> %1°  %2")
-			.arg(-delta_rotation * 180 / M_PI, 0, 'f', 1)
-			.arg(angle_helper->isActive() ? "" : tr("(<u>Ctrl</u> for fixed angles)")));
+			delta_rotation = delta_rotation - pi_x_2;
+		setStatusBarText( trUtf8("<b>Rotation:</b> %1° ").arg(QLocale().toString(-delta_rotation * to_deg, 'f', 1)) + "| " +
+		                  tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control()) );
 	}
 	else if (!rotation_center_set)
-		setStatusBarText(tr("<b>Click</b> to set the rotation center"));
+	{
+		setStatusBarText( tr("<b>Click</b>: Set the center of rotation. ") );
+	}
 	else
-		setStatusBarText(tr("<b>Click</b> to set the rotation center, <b>drag</b> to rotate the selected object(s)"));
+	{
+		setStatusBarText( tr("<b>Click</b>: Set the center of rotation. ") +
+		                  tr("<b>Drag</b>: Rotate the selected objects. ") );
+	}
 }

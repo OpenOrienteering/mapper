@@ -77,6 +77,18 @@ public:
 	/** Returns a shared Shift modifier key. */
 	static const ModifierKey shift();
 	
+	/** Returns a shared Space key. */
+	static const ModifierKey space();
+	
+	/** Returns a shared Return key. */
+	static const ModifierKey return_key();
+	
+	/** Returns a shared Backspace key. */
+	static const ModifierKey backspace();
+	
+	/** Returns a shared Escape modifier key. */
+	static const ModifierKey escape();
+	
 private:
 	/** The native text (localized, adapted to the system). */
 	QString native_text;

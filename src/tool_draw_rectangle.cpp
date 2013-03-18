@@ -34,6 +34,7 @@
 #include "settings.h"
 #include "tool_helpers.h"
 #include "symbol_dock_widget.h"
+#include "gui/modifier_key.h"
 
 QCursor* DrawRectangleTool::cursor = NULL;
 
@@ -598,26 +599,30 @@ void DrawRectangleTool::updateDirtyRect()
 
 void DrawRectangleTool::updateStatusText()
 {
-	QString text = "";
-	QString text_more = "";
+	QString text;
+	static const QString text_more_shift_control_space(MapEditorTool::tr("More: %1, %2, %3").arg(ModifierKey::shift(), ModifierKey::control(), ModifierKey(Qt::Key_Space)));
+	static const QString text_more_shift_space(MapEditorTool::tr("More: %1, %2").arg(ModifierKey::shift(), ModifierKey(Qt::Key_Space)));
+	static const QString text_more_control_space(MapEditorTool::tr("More: %1, %2").arg(ModifierKey::control(), ModifierKey(Qt::Key_Space)));
+	QString text_more(text_more_shift_control_space);
 	
-	bool show_dashpoint_text = true;
+	if (draw_dash_points)
+		text += DrawLineAndAreaTool::tr("<b>Dash points on.</b> ") + "| ";
+	
 	if (!draw_in_progress)
 	{
 		if (ctrl_pressed)
 		{
-			text += tr("<b>Ctrl + Click</b>: pick direction from existing objects");
-			show_dashpoint_text = false;
+			text += DrawLineAndAreaTool::tr("<b>%1+Click</b>: Pick direction from existing objects. ").arg(ModifierKey::control());
+			text_more = text_more_shift_space;
 		}
 		else if (shift_pressed)
 		{
-			text += tr("<b>Shift</b>: snap to existing objects");
-			show_dashpoint_text = false;
+			text += DrawLineAndAreaTool::tr("<b>%1+Click</b>: Snap to existing objects. ").arg(ModifierKey::shift());
+			text_more = text_more_control_space;
 		}
 		else
 		{
-			text += tr("<b>Click or Drag</b> to start drawing a rectangle");	
-			text_more += tr("(More: <u>Ctrl</u>, <u>Shift</u>)");
+			text += tr("<b>Click or Drag</b>: Start drawing a rectangle. ");	
 		}
 	}
 	else
@@ -625,25 +630,29 @@ void DrawRectangleTool::updateStatusText()
 		if (ctrl_pressed)
 		{
 			if (angles.size() == 1)
-				text += tr("<u>Ctrl</u>: fixed angles");
+			{
+				text += DrawLineAndAreaTool::tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control());
+			}
 			else
-				text += tr("<u>Ctrl</u>: snap to previous lines");
-			show_dashpoint_text = false;
+			{
+				text += tr("<b>%1</b>: Snap to previous lines. ").arg(ModifierKey::control());
+			}
+			text_more = text_more_shift_space;
 		}
 		else if (shift_pressed)
 		{
-			text += tr("<b>Shift</b>: snap to existing objects");
-			show_dashpoint_text = false;
+			text += DrawLineAndAreaTool::tr("<b>%1+Click</b>: Snap to existing objects. ").arg(ModifierKey::shift());
+			text_more = text_more_control_space;
 		}
 		else
 		{
-			text += tr("<b>Click</b> to set a corner point, <b>Right or double click</b> to finish the rectangle, <b>Backspace</b> to undo, <b>Esc</b> to abort");
-			text_more += tr("(More: <u>Ctrl</u>, <u>Shift</u>)");
+			text += tr("<b>Click</b>: Set a corner point. <b>Right or double click</b>: Finish the rectangle. ");
+			text += DrawLineAndAreaTool::tr("<b>%1</b>: Undo last point. ").arg(ModifierKey::backspace());
+			text += MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape());
 		}
 	}
 	
-	if (show_dashpoint_text)
-		text = (draw_dash_points ? tr("<b>Dash points on.</b> ") : "") + text + ", " + tr("<b>Space</b> to toggle dash points");
-	text += " " + text_more;
+	text += "| " + text_more;
+	
 	setStatusBarText(text);
 }
