@@ -94,7 +94,7 @@ SymbolSettingDialog::SymbolSettingDialog(Symbol* source_symbol, Map* source_map,
 	QVBoxLayout* preview_layout = NULL;
 	if (symbol->getType() == Symbol::Point)
 	{
-		QLabel* template_label = new QLabel(tr("<b>Template</b>: "));
+		QLabel* template_label = new QLabel(tr("<b>Template:</b> "));
 		template_file_label = new QLabel(tr("(none)"));
 		QPushButton* load_template_button = new QPushButton(tr("Open..."));
 		

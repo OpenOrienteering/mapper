@@ -4647,7 +4647,7 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="97"/>
-        <source>&lt;b&gt;Template&lt;/b&gt;: </source>
+        <source>&lt;b&gt;Template:&lt;/b&gt; </source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -5457,8 +5457,8 @@ The maximum supported version is %2.</source>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="97"/>
-        <source>&lt;b&gt;Template&lt;/b&gt;: </source>
-        <translation>&lt;b&gt;Шаблон&lt;/b&gt;: </translation>
+        <source>&lt;b&gt;Template:&lt;/b&gt; </source>
+        <translation>&lt;b&gt;Шаблон:&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="98"/>

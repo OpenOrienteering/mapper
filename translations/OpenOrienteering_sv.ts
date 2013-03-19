@@ -5676,8 +5676,8 @@ Högsta versionen som stöds är %2.</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="97"/>
-        <source>&lt;b&gt;Template&lt;/b&gt;: </source>
-        <translation>&lt;b&gt;Bakgrundsbild&lt;/b&gt;: </translation>
+        <source>&lt;b&gt;Template:&lt;/b&gt; </source>
+        <translation>&lt;b&gt;Bakgrundsbild:&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="98"/>
