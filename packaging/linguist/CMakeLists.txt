@@ -70,10 +70,13 @@ if(WIN32)
 elseif(APPLE)
 	set(RUNTIME_DESTINATION .)
 	set(LIBRARY_DESTINATION .)
-	set(DATA_DESTINATION    "${PROJECT_NAME}.app/Contents/Resources")
-	set(ABOUT_DESTINATION   "${PROJECT_NAME}.app/Contents/Resources")
+	set(DATA_DESTINATION    "Linguist.app/Contents/Resources")
+	set(ABOUT_DESTINATION   "Linguist.app/Contents/Resources")
 	set(PACKAGE_FILE_NAME ${CPACK_PACKAGE_FILE_NAME}.dmg)
 	set(CPACK_GENERATOR     "DragNDrop")
+	string(REGEX REPLACE Linguist.app.* Linguist.app LINGUIST_BUNDLE_DIR ${QT_QTLINGUIST_EXECUTABLE})
+	set(CPACK_PACKAGE_EXECUTABLES "Linguist" "Qt Linguist ${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+	set(CPACK_PACKAGE_ICON "${LINGUIST_BUNDLE_DIR}/Contents/Resources/linguist.icns")
 else()
 	set(RUNTIME_DESTINATION .)
 	set(LIBRARY_DESTINATION .)
@@ -88,19 +91,35 @@ include(CPack)
 
 # Copy the created package to another location
 
-set(MAKE_DESTDIR_VAR "\$(DESTDIR)")
+set(MAKEFILE_DESTDIR_VAR "\$(DESTDIR)")
 add_custom_target(package-install
   COMMAND ${CMAKE_COMMAND} -E
-    copy ${PROJECT_BINARY_DIR}/${PACKAGE_FILE_NAME} "${MAKE_DESTDIR_VAR}/"
+    copy ${PROJECT_BINARY_DIR}/${PACKAGE_FILE_NAME} "${MAKEFILE_DESTDIR_VAR}/"
 )
 
 
 # Define package contents (by install commands)
 
-install(
-  PROGRAMS ${QT_QTLINGUIST_EXECUTABLE}
-  DESTINATION ${RUNTIME_DESTINATION}
-)
+if(APPLE)
+	install(
+	  DIRECTORY "${LINGUIST_BUNDLE_DIR}/"
+	  DESTINATION "${RUNTIME_DESTINATION}/Linguist.app"
+	  USE_SOURCE_PERMISSIONS)
+	find_program(QT_MACDEPLOYQT_EXECUTABLE NAMES macdeployqt
+	  DOC "The path of the macdeployqt executable"
+	  HINTS ${QT5_DIR}
+	  PATH_SUFFIXES bin
+	  NO_DEFAULT_PATH)
+	mark_as_advanced(QT_MACDEPLOYQT_EXECUTABLE)
+	install(CODE
+	  "execute_process(COMMAND \"${QT_MACDEPLOYQT_EXECUTABLE}\" \"\${CMAKE_INSTALL_PREFIX}/Linguist.app\")")
+	install(CODE
+	  "file(APPEND \"\${CMAKE_INSTALL_PREFIX}/Linguist.app/Contents/Resources/qt.conf\" \"Translations = Resources/translations\")")
+else()
+	install(
+	  PROGRAMS ${QT_QTLINGUIST_EXECUTABLE}
+	  DESTINATION ${RUNTIME_DESTINATION})
+endif()
 
 if(WIN32)
 	set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP TRUE)
