@@ -25,8 +25,8 @@ project(Mapper)
 # All version components must be integers.
 # We use 99 to mark development builds.
 SET(Mapper_VERSION_MAJOR 0)
-SET(Mapper_VERSION_MINOR 4)
-SET(Mapper_VERSION_PATCH 99)
+SET(Mapper_VERSION_MINOR 5)
+SET(Mapper_VERSION_PATCH 0)
 
 if(${CMAKE_CURRENT_BINARY_DIR} STREQUAL ${PROJECT_SOURCE_DIR})
 	message(FATAL_ERROR "You must not use the source directory as build directory.")
