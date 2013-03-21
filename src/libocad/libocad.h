@@ -64,7 +64,7 @@ typedef char str;
 #define PY_RIGHT 0x4
 #define PY_DASH 0x8
 
-#define OCAD_MAX_OBJECT_PTS 32767
+#define OCAD_MAX_OBJECT_PTS 32768
 
 typedef
 struct _OCADString {
@@ -213,7 +213,7 @@ struct _OCADSymbolElement {
 	s16 color;
 	s16 width;
 	s16 diameter;
-	s16 npts;
+	u16 npts;
 	s16 res1;
 	s16 res2;
     OCADPoint pts[1];
@@ -371,8 +371,8 @@ struct _OCADObject {
 	s16 symbol; // symbol number
 	byte type; // object type
 	byte unicode;
-	s16 npts; // number of OCADPoints
-	s16 ntext;
+	u16 npts; // number of OCADPoints
+	u16 ntext;
 	s16 angle;
 	s16 res1;
 	s32 res2;
@@ -386,7 +386,7 @@ PACK(typedef
 struct _OCADObjectEntry {
 	OCADRect rect;
 	dword ptr;
-	word npts;
+	u16 npts;
 	word symbol; // symbol number
 }
 , OCADObjectEntry)
