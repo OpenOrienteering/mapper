@@ -369,8 +369,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	{
 		QString symbol_id = attributes.value("symbol").toString();
 		object->symbol = symbol_dict[symbol_id]; // FIXME: cannot work for forward references
-		if (!object->symbol)
-			throw FileFormatException(ImportExport::tr("Unable to find symbol for object at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
+		// NOTE: object->symbol may be NULL.
 	}
 	
 	if (object_type == Point)
@@ -424,6 +423,30 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		}
 		else
 			xml.skipCurrentElement(); // unknown
+	}
+	
+	if (!object->symbol)
+	{
+		// Throwing an exception will cause loading to fail.
+		// Rather than not loading the broken file at all,
+		// use the same symbols which are used for importing GPS tracks etc.
+		// FIXME: Implement a way to send a warning to the user.
+		switch (object_type)
+		{
+			case Point:
+				object->symbol = map->getUndefinedPoint();
+				break;
+			case Path:
+				object->symbol = map->getUndefinedLine();
+				break;
+			case Text:
+				object->symbol = (object->coords.size() > 1) ? static_cast<Symbol*>(map->getUndefinedLine()) : static_cast<Symbol*>(map->getUndefinedPoint());
+				break;
+			default:
+				throw FileFormatException(
+				  ImportExport::tr("Unable to find symbol for object at %1:%2.").
+				  arg(xml.lineNumber()).arg(xml.columnNumber()) );
+		}
 	}
 	
 	if (object_type == Path)
