@@ -125,6 +125,7 @@ QString AboutDialog::about()
 	
 	static QStringList contributors_list( QStringList()
 	  << "Jon Cundill"
+	  << "Sławomir Cygler"
 	  << "Jan Dalheimer"
 	  << "Eugeniy Fedirets"
 	  << "Anders Gressli"
