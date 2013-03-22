@@ -25,6 +25,7 @@
 #else
 #include <QtWidgets>
 #endif
+#include <QProxyStyle>
 #include <QSettings>
 
 #include <mapper_config.h>
@@ -56,12 +57,31 @@ static const char *application_menu_strings[] = {
   QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Quit %1"),
   QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "About %1")
 };
+
+/** A proxy style which modifies the size of the toolbar icons. */ 
+class MapperProxyStyle : public QProxyStyle
+{
+public:
+	virtual int pixelMetric(PixelMetric metric, const QStyleOption* option = 0, const QWidget* widget = 0) const
+	{
+		if (metric == QStyle::PM_ToolBarIconSize)
+		{
+			static int s = (QProxyStyle::pixelMetric(QStyle::PM_SmallIconSize) + QProxyStyle::pixelMetric(QStyle::PM_ToolBarIconSize)) / 2;
+			return s;
+		}
+		return QProxyStyle::pixelMetric(metric, option, widget);
+	}
+};
 #endif
 
 int MainWindow::num_open_files = 0;
 
 MainWindow::MainWindow(bool as_main_window)
 {
+#if (defined Q_OS_MAC)
+	static bool proxy_style_installed = ( qApp->setStyle(new MapperProxyStyle), true );
+#endif
+	
 	controller = NULL;
 	has_unsaved_changes = false;
 	has_opened_file = false;
