@@ -52,6 +52,7 @@ set(Mapper_TRANS
  OpenOrienteering_ja.ts
  OpenOrienteering_lv.ts
  OpenOrienteering_nb.ts
+ OpenOrienteering_pl.ts
  OpenOrienteering_sv.ts
  OpenOrienteering_uk.ts
  CACHE INTERNAL "Translation files"
