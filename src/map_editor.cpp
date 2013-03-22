@@ -715,6 +715,8 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_view->addAction(zoom_out_act);
 	toolbar_view->addAction(show_all_act);
 	
+	window->addToolBarBreak();
+	
 	// Drawing toolbar
 	toolbar_drawing = window->addToolBar(tr("Drawing"));
 	toolbar_drawing->setObjectName("Drawing toolbar");
@@ -790,6 +792,10 @@ void MapEditorController::detach()
 {
 	saveWindowState();
 	being_destructed = true;
+	
+	// Avoid a crash triggered by pressing Ctrl-W during loading.
+	if (NULL != symbol_dock_widget)
+		window->removeDockWidget(symbol_dock_widget);
 	
 	window->setCentralWidget(NULL);
 	delete map_widget;
