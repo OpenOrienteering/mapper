@@ -2,3 +2,4 @@
 .gitattributes       export-ignore
 docs/ISOM2000.pdf    export-ignore
 docs/ISSOM2007.pdf   export-ignore
+src/libocad/format8.txt export-ignore
