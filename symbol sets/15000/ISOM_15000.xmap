@@ -24,7 +24,7 @@
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.910" g="0.680" b="0.500"/>
         </color>
-        <color priority="3" name="Black below browns" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000">
+        <color priority="3" name="Black below light browns" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000">
             <spotcolors knockout="true">
                 <component factor="1" spotcolor="1"/>
             </spotcolors>
@@ -38,7 +38,7 @@
             <cmyk method="custom"/>
             <rgb method="custom" r="0.820" g="0.361" b="0.000"/>
         </color>
-        <color priority="5" name="Blue (knockout)" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
+        <color priority="5" name="Opaque Blue" c="0.870" m="0.180" y="0.000" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
                 <component factor="1" spotcolor="6"/>
             </spotcolors>
@@ -81,7 +81,7 @@
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1.000" g="1.000" b="1.000"/>
         </color>
-        <color priority="11" name="Green (knockout)" c="0.760" m="0.000" y="0.910" k="0.000" opacity="1.000">
+        <color priority="11" name="Opaque Green" c="0.760" m="0.000" y="0.910" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
                 <component factor="1" spotcolor="12"/>
             </spotcolors>
@@ -111,10 +111,10 @@
         </color>
         <color priority="15" name="Green below light greens" c="0.760" m="0.000" y="0.910" k="0.000" opacity="1.000">
             <spotcolors>
-                <namedcolor>Green below light greens</namedcolor>
+                <component factor="1" spotcolor="12"/>
             </spotcolors>
-            <cmyk method="custom"/>
-            <rgb method="custom" r="0.240" g="1.000" b="0.090"/>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.240" g="1.000" b="0.090"/>
         </color>
         <color priority="16" name="Yellow" c="0.000" m="0.270" y="0.790" k="0.000" opacity="1.000">
             <spotcolors>
