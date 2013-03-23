@@ -418,10 +418,9 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation
 						{
 							// draw with spot color
 							drawing_color = SpotColorComponent(renderables_color, 1.0f);
-							if (!drawing_started)
-								drawing_started = true;
+							drawing_started = true;
 						}
-						else if (renderables_color->getKnockout() && renderables_color->getPriority() < separation->getPriority())
+						else if (drawing_started && renderables_color->getKnockout())
 							// explicit knockout
 							drawing_color = SpotColorComponent(separation, 0.0f);
 						break;
@@ -429,26 +428,27 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation
 					case MapColor::CustomColor:
 					{
 						// First, check if the renderables draw color to this separation
-						Q_FOREACH(SpotColorComponent component, renderables_color->getComponents())
+						const SpotColorComponents& components = renderables_color->getComponents();
+						for ( SpotColorComponents::const_iterator component = components.begin(), c_end = components.end();
+						      component != c_end;
+						      ++component )
 						{
-							if (component.spot_color == separation)
+							if (component->spot_color == separation)
 							{
 								// The renderables do draw the current spot color
-								drawing_color = component;
+								drawing_color = *component;
 								if (!drawing_started)
-									drawing_started = (component.factor > 0.0005f);
+									drawing_started = (component->factor > 0.0005f);
+								break;
 							}
 						}
-						if (drawing_color.spot_color->getPriority() == MapColor::Undefined)
+						// If the renderables do not explicitly draw color to this separation,
+						// check if they need a knockout.
+						if ( drawing_started && 
+						     drawing_color.spot_color->getPriority() == MapColor::Undefined &&
+						     renderables_color->getKnockout() )
 						{
-							// If the renderables do not draw color to this separation,
-							// check if they need a knockout.
-							if (renderables_color->getKnockout() && renderables_color->getPriority() < separation->getPriority())
-								// explicit knockout
-								drawing_color = SpotColorComponent(separation, 0.0f);
-							else if (drawing_started)
-								// knockout for out-of-sequence colors
-								drawing_color = SpotColorComponent(separation, 0.0f);
+							drawing_color = SpotColorComponent(separation, 0.0f);
 						}
 						break;
 					}
