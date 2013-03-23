@@ -428,17 +428,17 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="397"/>
         <source>- Private line symbol -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Symbol linii prywatnej -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="398"/>
         <source>- Private area symbol -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Symbol terenu prywatnego -</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="404"/>
         <source>Edit private symbol...</source>
-        <translation type="unfinished"></translation>
+        <translation>Edytuj prywatny symbol...</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="424"/>
@@ -448,12 +448,12 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="477"/>
         <source>Change from public to private symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmień z publicznego do prywatnego symbolu</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="478"/>
         <source>Take the old symbol as template for the private symbol?</source>
-        <translation type="unfinished">Użyć starego symbolu jako szablonu?</translation>
+        <translation>Użyć starego symbolu jako szablonu do prywatnego symbolu?</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="394"/>
@@ -780,7 +780,7 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="944"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation>&lt;b&gt;Kliknij&lt;/b&gt;: Zacznij rysować linię. &lt;b&gt;Przeciągnij&lt;/b&gt;: Zacznij rysować krzywą. </translation>
+        <translation>&lt;b&gt;Kliknij&lt;/b&gt;: Zacznij rysować krzywą. &lt;b&gt;Przeciągnij&lt;/b&gt;: Zacznij rysować krzywą. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="953"/>
@@ -790,7 +790,7 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="963"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation>&lt;b&gt;Kliknij&lt;/b&gt;: Narysuj linię. &lt;b&gt;Przeciągnij&lt;/b&gt;:Narysuj krzywą. &lt;b&gt;PPM lub podwójne kliknięcie&lt;/b&gt;: Skończ rysowanie. &lt;b&gt;%1&lt;/b&gt;: Zamknij ścieżkę. </translation>
+        <translation>&lt;b&gt;Kliknij&lt;/b&gt;: Narysuj krzywą. &lt;b&gt;Przeciągnij&lt;/b&gt;:Narysuj krzywą. &lt;b&gt;PPM lub podwójne kliknięcie&lt;/b&gt;: Skończ rysowanie. &lt;b&gt;%1&lt;/b&gt;: Zamknij ścieżkę. </translation>
     </message>
 </context>
 <context>
@@ -861,22 +861,22 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="573"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Keep opposite handle positions. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Utrzymać przeciwne pozycje trzonków. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="594"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Kliknięcie&lt;/b&gt; na punkcie: Usuń; na linii: Dodaj nowy punkt pośredni; z &lt;b&gt;%2&lt;/b&gt;: Dodaj normalny punkt. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="597"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Kliknięcie&lt;/b&gt; na punkcie: Usuń; na linii: Dodaj nowy punkt z &lt;b&gt;%2&lt;/b&gt;: Dodaj pośredni punkt. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="601"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Kliknięcie&lt;/b&gt; na punkcie aby przełączać pomiędzy pośrednim a normalnym punktem.</translation>
     </message>
 </context>
 <context>
@@ -945,12 +945,12 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="136"/>
         <source>Snap distance (%1):</source>
-        <translation>Dysntans przyciągania (%1):</translation>
+        <translation>Dystans przyciągania (%1):</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="141"/>
         <source>Stepping of fixed angle mode (%1):</source>
-        <translation>Intensyfikacja trypu stałego kąta (%1):</translation>
+        <translation>Intensyfikacja trybu stałego kąta (%1):</translation>
     </message>
     <message utf8="true">
         <location filename="../src/gui/settings_dialog.cpp" line="142"/>
@@ -993,19 +993,19 @@
         <location filename="../src/gui/settings_dialog.cpp" line="164"/>
         <location filename="../src/gui/settings_dialog.cpp" line="171"/>
         <source>Reset outer curve handles</source>
-        <translation type="unfinished">Resetuj zewnętrzną obsługę krzywych</translation>
+        <translation>Resetuj zewnętrzną obsługę krzywych</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="165"/>
         <location filename="../src/gui/settings_dialog.cpp" line="172"/>
         <source>Keep outer curve handles</source>
-        <translation type="unfinished">Zachowaj zewnętrzną obsługę krzywych</translation>
+        <translation>Zachowaj zewnętrzną obsługę krzywych</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="166"/>
         <location filename="../src/gui/settings_dialog.cpp" line="173"/>
         <source>Action on deleting a curve point with %1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Akcja przy usuwaniu punktu krzywej z %1:</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="177"/>
@@ -1415,7 +1415,7 @@
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="93"/>
         <source>About %1</source>
         <comment>As in &apos;About OpenOrienteering Mapper&apos;</comment>
-        <translation>O nas %1</translation>
+        <translation>O %1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="96"/>
@@ -1555,7 +1555,7 @@
     <message>
         <location filename="../src/file_format_native.cpp" line="202"/>
         <source>The geographic coordinate reference system of the map was &quot;%1&quot;. This CRS is not supported. Using &quot;%2&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>System odniesienia współrzędnych geograficznych mapy był &quot;%1&quot;. Ten CRS nie jest obsługiwany. Używa &quot;%2&quot;.</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="317"/>
@@ -1642,7 +1642,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2106"/>
         <source>Line cap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Koniec linii:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2108"/>
@@ -1683,7 +1683,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2114"/>
         <source>Cap length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Długość końca linii:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2124"/>
@@ -1718,7 +1718,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2160"/>
         <source>Break length:</source>
-        <translation type="unfinished">Przerwij długość:</translation>
+        <translation>Długość przerwy:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2163"/>
@@ -1748,7 +1748,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2171"/>
         <source>In-group break length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Długość przerwy w grupie:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2174"/>
@@ -1854,7 +1854,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2540"/>
         <source>Border shift:</source>
-        <translation>Zmiana obramowania</translation>
+        <translation>Zmiana obramowania:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2543"/>
@@ -2871,7 +2871,7 @@ Przeskalować importowane dane?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="461"/>
         <source>Pan</source>
-        <translation type="unfinished"></translation>
+        <translation>Niecka</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="471"/>
@@ -3001,7 +3001,7 @@ Przeskalować importowane dane?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1440"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zamień ścieżki zrobione z prostych segmentów na wygładzone krzywe Beziera.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1440"/>
@@ -3369,12 +3369,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1366"/>
         <source>libocad returned %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Libocad - zwrot %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1480"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można eksportować przerwy wypełnienia dla obiektu powierzchniowego</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1623"/>
@@ -3384,52 +3384,52 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1839"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished"></translation>
+        <translation>W obiekcie liniowym &quot;%1&quot;, nie można odtworzyć kombinacji końcówek/połączeń.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1863"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="unfinished"></translation>
+        <translation>W obiekcie liniowym &quot;%1&quot;, lekceważąc grupowanie kresek.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1874"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="unfinished"></translation>
+        <translation>W symbolu liniowym &quot;%1&quot;, liczba kresek w grupie została zredukowana do 2.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1930"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>W symbolu liniowym &quot;%1&quot;, nie można prawidłowo eksportować obramowań.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1987"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished"></translation>
+        <translation>W symbolu powierzchniowym &quot;%1&quot;, omijam wzór wypełnienia.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2037"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="unfinished"></translation>
+        <translation>W symbolu powierzchniowym &quot;%1&quot;, zakładasz &quot;przesunięcia wierszy&quot; wzorów punktu. To może być nieprawidłowe.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2076"/>
         <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished"></translation>
+        <translation>W symbolu tekstowym %1: własne przerwy pomiędzy znakami są ustawione, ta implementacja nie odpowiada OCADowi</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2083"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished"></translation>
+        <translation>W symbolu tekstowym %1: igoruję podkreślenie</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2085"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished"></translation>
+        <translation>W symbolu tekstowym %1: ignoruję kerning</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2462"/>
         <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Linka odcięta (odcinanie oznaczone trójką &apos;|&apos;): %1</translation>
     </message>
 </context>
 <context>
@@ -3437,12 +3437,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="108"/>
         <source>Could not allocate buffer.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można przydzielić buforów.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="112"/>
         <source>libocad returned %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Lobocad zwrócony %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="115"/>
@@ -3462,57 +3462,57 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="348"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation type="unfinished"></translation>
+        <translation>W kreskowanym symbolu liniowym %1, przerwy początkowe i końcowe są różne (%2 i %3). Używa %4.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="365"/>
         <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>W kreskowanym symbolu liniowym %1, długość końcowa nie może być poprawnie zaimportowana.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="367"/>
         <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>W kreskowanym symbolu liniowym %1, końcowa przerwa nie może być zaimportowana poprawnie.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="376"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation type="unfinished"></translation>
+        <translation>W kreskowanym symbolu liniowym %1, główna i końcowa długość są różne (%2 i %3). Używa %4.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="386"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
-        <translation type="unfinished"></translation>
+        <translation>W kreskowanym symbolu liniowym %1, przerwy D i E są różne (%2 i %3). Użyto %4.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="670"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation type="unfinished"></translation>
+        <translation>Podczas importowania symbolu tekstowego %1: zignorowano wyjustrowanie</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="676"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Podczas importowania symbolu tekstowego %1: zignorowano własną szerokość (%2)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="681"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished"></translation>
+        <translation>Podczas importowania symbolu tekstowego %1: własne odstępy pomiędzy literami są określone, implementacja nie pasuje do zachowania OCADa</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="686"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation type="unfinished"></translation>
+        <translation>Podczas importowania symbolu tekstowego %1: zignorowano własne odstępy pomiędzy słowami (%2%)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="691"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation type="unfinished"></translation>
+        <translation>Podczas importowania symbolu tekstowego %1: zignorowano własne tirety (%2/%3)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="712"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Podczas importowania symbolu tekstowego %1: zignorowano ramy tekstu (tryb %2)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="864"/>
@@ -3527,7 +3527,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="919"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie importuję symbolu tekstowego, nie mogę rozpoznać ścieżki (npts=%1): %2</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1099"/>
@@ -3542,7 +3542,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1231"/>
         <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="unfinished"></translation>
+        <translation>Próba importu obiektu tekstowego z nieznanym formacie koordynatów</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1330"/>
@@ -3677,7 +3677,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="123"/>
         <source>Line cap:</source>
-        <translation type="unfinished"></translation>
+        <translation>Koniec linii:</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="125"/>
@@ -3703,12 +3703,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="132"/>
         <source>miter</source>
-        <translation type="unfinished"></translation>
+        <translation>kant</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="134"/>
         <source>bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>ukos</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="136"/>
@@ -4703,12 +4703,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="107"/>
         <source>bounding box on origin</source>
-        <translation type="unfinished"></translation>
+        <translation>obwiednia ze źródła</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="108"/>
         <source>center of gravity on origin</source>
-        <translation type="unfinished">Środek ciężkości </translation>
+        <translation>Środek ciężkości ze źródła</translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="233"/>
@@ -4781,12 +4781,12 @@ przeskoczenia leniwego psa
     <message>
         <location filename="../src/template_adjust.cpp" line="566"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the template position of the pass point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Kliknij&lt;/b&gt;: Określ pozycję podkładu z punktu zaczepienia. </translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="581"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the map position of the pass point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Kliknij&lt;/b&gt;: Określ pozycję mapy z punktu zaczepienia. </translation>
     </message>
 </context>
 <context>
@@ -4794,7 +4794,7 @@ przeskoczenia leniwego psa
     <message>
         <location filename="../src/template_adjust.cpp" line="782"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Delete pass points. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Kliknij&lt;/b&gt;: Usuń punkty zaczepienia. </translation>
     </message>
 </context>
 <context>
@@ -4802,7 +4802,7 @@ przeskoczenia leniwego psa
     <message>
         <location filename="../src/template_adjust.cpp" line="663"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move pass points. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Przeciągnij&lt;/b&gt;: Przenieś punkty zaczepienia. </translation>
     </message>
 </context>
 <context>
@@ -4892,7 +4892,7 @@ Jeśli nie masz zamiaru rysować na tym podkładzie, nie masz się czym martwić
     <message>
         <location filename="../src/template_image.cpp" line="170"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz system odniesienia koordynatów z koordynatów z pliku world</translation>
     </message>
 </context>
 <context>
@@ -5044,7 +5044,7 @@ Jeśli nie masz zamiaru rysować na tym podkładzie, nie masz się czym martwić
     <message>
         <location filename="../src/template_gps.cpp" line="152"/>
         <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokazuje ślad używając rzutu prostokątnego ze środkiem na średniej koordynatów śladu. Pozwala regulować transformację i ustawiać georeferencje mapy używając określonej pozycji śladu.</translation>
     </message>
     <message>
         <location filename="../src/template_gps.cpp" line="371"/>
@@ -5078,8 +5078,8 @@ Jeśli nie masz zamiaru rysować na tym podkładzie, nie masz się czym martwić
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
             <numerusform>%n obiekt(y) ścieżki nie mogą być zaimportowane (powód: brakujące koordynaty).</numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n obiekt(y) ścieżki nie mogą być zaimportowane (powód: brakujące koordynaty).</numerusform>
+            <numerusform>%n obiekt(y) ścieżki nie mogą być zaimportowane (powód: brakujące koordynaty).</numerusform>
         </translation>
     </message>
     <message>
@@ -5195,7 +5195,7 @@ Maksymalna obsługiwana wersja to %2.</translation>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="634"/>
         <source>Georeferenced: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Zgodne z georeferencjami: %1</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="695"/>
@@ -5460,17 +5460,17 @@ Nie udało się załadować podkładu. Czy plik istnieje i jest poprawny?</trans
     <message>
         <location filename="../src/symbol_text.cpp" line="629"/>
         <source>Line framing</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponowanie linii</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="633"/>
         <source>Width:</source>
-        <translation>Szerokość</translation>
+        <translation>Szerokość:</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="635"/>
         <source>Shadow framing</source>
-        <translation type="unfinished"></translation>
+        <translation>Komponowanie cieni</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="639"/>
