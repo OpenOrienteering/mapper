@@ -128,7 +128,7 @@ public:
 	// Set the labels where the map widget will display the respective piece of information
 	void setZoomLabel(QLabel* zoom_label);
 	void setCursorposLabel(QLabel* cursorpos_label);
-    void setObjectTagLabel(QLabel* objecttag_label);
+	void setObjectTagLabel(QLabel* objecttag_label);
 	void setCoordsDisplay(CoordsType type);
 	inline CoordsType getCoordsDisplay() const {return coords_type;}
 	
@@ -141,7 +141,7 @@ public slots:
 	void keyReleased(QKeyEvent* event);
 
 private slots:
-    void updateObjectTagLabel();
+	void updateObjectTagLabel();
 	
 protected:
 	virtual void paintEvent(QPaintEvent* event);
@@ -183,8 +183,8 @@ private:
 	void showHelpMessage(QPainter* painter, const QString& text);
 	
 	void updateZoomLabel();
-    void updateCursorposLabel(const MapCoordF pos);
-    void updateObjectTagLabel(const MapCoordF pos);
+	void updateCursorposLabel(const MapCoordF pos);
+	void updateObjectTagLabel(const MapCoordF pos);
 	
 	MapView* view;
 	MapEditorTool* tool;
@@ -194,7 +194,7 @@ private:
 	
 	QLabel* zoom_label;
 	QLabel* cursorpos_label;
-    QLabel* objecttag_label;
+	QLabel* objecttag_label;
 	MapCoordF last_cursor_pos;
 	
 	bool show_help;

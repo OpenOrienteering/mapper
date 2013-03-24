@@ -31,8 +31,8 @@
 //TODO: Tool to open this dialog (instead of normal edit tool + key)
 
 TagsDialog::TagsDialog(Object *object, QWidget *parent)
-	: QDialog(parent),
-	  object(object)
+ : QDialog(parent),
+   object(object)
 {
 	tags_table = new QTableWidget(this);
 	tags_table->setSelectionMode(QTableWidget::SingleSelection);
@@ -110,7 +110,7 @@ void TagsDialog::closeClicked()
 
 bool TagsDialog::doesKeyExist(const QString &key)
 {
-	for( int i = 0; i < tags_table->rowCount(); i++)
+	for (int i = 0; i < tags_table->rowCount(); i++)
 	{
 		if (tags_table->item(i, 0)->text() == key)
 			return true;

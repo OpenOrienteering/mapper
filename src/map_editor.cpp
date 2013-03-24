@@ -321,9 +321,14 @@ void MapEditorController::attach(MainWindow* window)
     statusbar_objecttag_label->setFixedWidth(160);
     statusbar_objecttag_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	
+	statusbar_objecttag_label = new QLabel();
+	statusbar_objecttag_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
+	statusbar_objecttag_label->setFixedWidth(160);
+	statusbar_objecttag_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+	
 	window->statusBar()->addPermanentWidget(statusbar_zoom_frame);
 	window->statusBar()->addPermanentWidget(statusbar_cursorpos_label);
-    window->statusBar()->addPermanentWidget(statusbar_objecttag_label);
+	window->statusBar()->addPermanentWidget(statusbar_objecttag_label);
 	
 	// Create map widget
 	map_widget = new MapWidget(mode == MapEditor, mode == SymbolEditor);
@@ -332,7 +337,7 @@ void MapEditorController::attach(MainWindow* window)
 	map_widget->setMapView(main_view);
 	map_widget->setZoomLabel(statusbar_zoom_label);
 	map_widget->setCursorposLabel(statusbar_cursorpos_label);
-    map_widget->setObjectTagLabel(statusbar_objecttag_label);
+	map_widget->setObjectTagLabel(statusbar_objecttag_label);
 	window->setCentralWidget(map_widget);
 	
 	// Create menu and toolbar together, so actions can be inserted into one or both

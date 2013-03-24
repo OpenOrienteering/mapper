@@ -384,7 +384,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	foreach(const QString& tag, tags)
 	{
 		QStringList split_tag = tag.split(':', QString::SkipEmptyParts);
-		if(split_tag.isEmpty())
+		if (split_tag.isEmpty())
 			continue;
 		QString key = split_tag.takeFirst();
 		QString value = split_tag.isEmpty() ? "" : split_tag.first();

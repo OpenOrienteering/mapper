@@ -394,14 +394,14 @@ bool EditPointTool::keyPress(QKeyEvent* event)
 	{
 		space_pressed = true;
 	}
-    else if (event->key() == Qt::Key_F9)
-    {
-        if(map()->getNumSelectedObjects() == 1)
-        {
+	else if (event->key() == Qt::Key_F9)
+	{
+		if (map()->getNumSelectedObjects() == 1)
+		{
 			TagsDialog dialog(map()->getFirstSelectedObject(), editor->getWindow());
 			dialog.exec();
-        }
-    }
+		}
+	}
 	else
 		return false;
 	updateStatusText();
