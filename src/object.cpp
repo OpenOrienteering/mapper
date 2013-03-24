@@ -310,6 +310,13 @@ void Object::save(QXmlStreamWriter& xml) const
 		symbol_index = map->findSymbolIndex(symbol);
 	if (symbol_index != -1)
 		xml.writeAttribute("symbol", QString::number(symbol_index));
+
+	QStringList tags;
+	foreach(const QString& key, this->tags.keys())
+	{
+		tags.append(key + ":" + this->tags[key]);
+	}
+	xml.writeAttribute("tags", tags.join(';'));
 	
 	if (type == Point)
 	{
@@ -372,6 +379,18 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		// NOTE: object->symbol may be NULL.
 	}
 	
+	QString rawTags = attributes.value("tags").toString();
+	QStringList tags = rawTags.split(';', QString::SkipEmptyParts);
+	foreach(const QString& tag, tags)
+	{
+		QStringList split_tag = tag.split(':', QString::SkipEmptyParts);
+		if(split_tag.isEmpty())
+			continue;
+		QString key = split_tag.takeFirst();
+		QString value = split_tag.isEmpty() ? "" : split_tag.first();
+		object->tags.insert(key, value);
+	}
+
 	if (object_type == Point)
 	{
 		PointObject* point = reinterpret_cast<PointObject*>(object);

@@ -24,6 +24,7 @@
 #include <vector>
 
 #include <QRectF>
+#include <QHash>
 
 #include "file_format.h"
 #include "map_coord.h"
@@ -126,12 +127,19 @@ public:
 	inline Map* getMap() const {return map;}
 	
 	static Object* getObjectForType(Type type, Symbol* symbol = NULL);
+
+	void setTag(const QString& key, const QString& value) {this->tags[key] = value;}
+	QString getTag(const QString& key) const {return this->tags[key];}
+	bool hasTag(const QString& key) const {return this->tags.contains(key);}
+	QHash<QString, QString> getTags() const {return tags;}
+	void setTags(const QHash<QString, QString>& tags) {this->tags = tags;}
 	
 protected:
 	Type type;
 	Symbol* symbol;
 	MapCoordVector coords;
 	Map* map;
+	QHash<QString, QString> tags;
 	
 	bool output_dirty;				// does the output have to be re-generated because of changes?
 	QRectF extent;					// only valid after calling update()

@@ -87,6 +87,7 @@ HEADERS += \
   src/gui/print_widget.h \
   src/gui/settings_dialog.h \
   src/gui/settings_dialog_p.h \
+  src/gui/tags_dialog.h \
   src/gui/widgets/color_dropdown.h \
   src/gui/widgets/home_screen_widget.h \
   src/gui/widgets/measure_widget.h \
@@ -188,6 +189,7 @@ SOURCES += \
   src/gui/print_tool.cpp \
   src/gui/print_widget.cpp \
   src/gui/settings_dialog.cpp \
+  src/gui/tags_dialog.cpp \
   src/gui/widgets/color_dropdown.cpp \
   src/gui/widgets/home_screen_widget.cpp \
   src/gui/widgets/measure_widget.cpp \

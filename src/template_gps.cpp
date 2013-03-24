@@ -355,10 +355,11 @@ void TemplateTrack::importPathEnd(PathObject* path)
 	map->addObjectToSelection(path, false);
 }
 
-PointObject* TemplateTrack::importWaypoint(const MapCoordF& position)
+PointObject* TemplateTrack::importWaypoint(const MapCoordF& position, const QString& name)
 {
 	PointObject* point = new PointObject(map->getUndefinedPoint());
 	point->setPosition(position);
+	point->setTag("name", name);
 	map->addObject(point);
 	map->addObjectToSelection(point, false);
 	return point;
@@ -384,7 +385,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		if (res == QMessageBox::No)
 		{
 			for (int i = 0; i < track.getNumWaypoints(); i++)
-				result.push_back(importWaypoint(templateToMap(track.getWaypoint(i).map_coord)));
+				result.push_back(importWaypoint(templateToMap(track.getWaypoint(i).map_coord), track.getWaypointName(i)));
 		}
 		else
 		{
@@ -392,6 +393,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 			for (int i = 0; i < track.getNumWaypoints(); i++)
 				path->addCoordinate(templateToMap(track.getWaypoint(i).map_coord).toMapCoord());
 			importPathEnd(path);
+			path->setTag("name", "");
 			result.push_back(path);
 		}
 	}
@@ -407,6 +409,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		}
 		
 		PathObject* path = importPathStart();
+		path->setTag("name", track.getSegmentName(i));
 		for (int j = 0; j < segment_size; j++)
 		{
 			const TrackPoint& track_point = track.getSegmentPoint(i, j);

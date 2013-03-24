@@ -33,6 +33,8 @@
 #include "settings.h"
 #include "template.h"
 #include "tool.h"
+#include "object.h"
+#include "tool_edit.h"
 
 #if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
 #define MiddleButton MidButton
@@ -59,6 +61,7 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
 	activity_dirty_rect_new_border = -1;
 	zoom_label = NULL;
 	cursorpos_label = NULL;
+    objecttag_label = NULL;
 	coords_type = MAP_COORDS;
 	last_cursor_pos = MapCoordF(0, 0);
 	
@@ -94,6 +97,8 @@ void MapWidget::setMapView(MapView* view)
 		
 		if (view)
 			view->addMapWidget(this);
+
+        connect(view->getMap(), SIGNAL(objectSelectionChanged()), this, SLOT(updateObjectTagLabel()));
 		
 		update();
 	}
@@ -508,6 +513,11 @@ void MapWidget::setCursorposLabel(QLabel* cursorpos_label)
 	this->cursorpos_label = cursorpos_label;
 }
 
+void MapWidget::setObjectTagLabel(QLabel *objecttag_label)
+{
+    this->objecttag_label = objecttag_label;
+}
+
 void MapWidget::updateZoomLabel()
 {
 	if (!zoom_label)
@@ -577,6 +587,30 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 		if (!ok)
 			cursorpos_label->setText(tr("Error"));
 	}
+}
+
+void MapWidget::updateObjectTagLabel(const MapCoordF pos)
+{
+    if(!objecttag_label)
+        return;
+
+    SelectionInfoVector objects;
+    view->getMap()->findObjectsAt(pos, 0.001f * view->pixelToLength(5), false, false, false, true, objects);
+    if(objects.empty())
+    {
+        objecttag_label->setText("");
+        return;
+    }
+    std::sort(objects.begin(), objects.end(), ObjectSelector::sortObjects);
+    Object* object = objects[0].second;
+	if(!object->hasTag("name"))
+		return;
+	objecttag_label->setText(object->getTag("name"));
+}
+
+void MapWidget::updateObjectTagLabel()
+{
+    updateObjectTagLabel(last_cursor_pos);
 }
 
 QSize MapWidget::sizeHint() const
@@ -777,7 +811,10 @@ void MapWidget::mouseMoveEvent(QMouseEvent* event)
 		return;
 	}
 	else
+    {
 		updateCursorposLabel(view->viewToMapF(viewportToView(event->pos())));
+        updateObjectTagLabel(view->viewToMapF(viewportToView(event->pos())));
+    }
 	
 	if (tool && tool->mouseMoveEvent(event, view->viewToMapF(viewportToView(event->pos())), this))
 	{

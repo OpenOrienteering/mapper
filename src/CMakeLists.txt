@@ -128,6 +128,7 @@ set(Mapper_Common_SRCS
  gui/print_tool.cpp
  gui/print_widget.cpp
  gui/settings_dialog.cpp
+ gui/tags_dialog.cpp
  
  gui/widgets/color_dropdown.cpp
  gui/widgets/home_screen_widget.cpp
@@ -206,6 +207,7 @@ set(Mapper_Common_MOC_INPUT
  gui/print_widget.h
  gui/settings_dialog.h
  gui/settings_dialog_p.h
+ gui/tags_dialog.h
  
  gui/widgets/color_dropdown.h
  gui/widgets/home_screen_widget.h
