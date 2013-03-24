@@ -158,11 +158,12 @@ and proceed with
    make package
 
 
-== Building Release Packages for Distribution ==
+== Binary Package Distribution ==
 
 Distributing binary code under open source licenses creates certain legal
-obligations, such as the distribution of the source code. This is how to do this
-correctly for Mapper.
+obligations, such as the distribution of the corresponding source code and
+build instructions for GPL licensed binaries. This is how to do this correctly
+for Mapper.
 
 Official release packages need to be build from an official source code archive.
 This is to make sure that every user can indeed get all required sources for the
@@ -174,7 +175,9 @@ code in the particular version which we distribute along with our source. The
 Mapper default build configuration will normally take care of this.
 
 The same principle applies to the other third party components (PROJ.4,
-Clipper)
+Clipper). If the compiler requires distribution of additional libraries, such
+as a libstdc++ DLL, these binaries' licenses must be respected as well, which
+may add additional source code and build instruction distribution requirements.
 
 The build shall start from a fresh build directory. The build shall be in
 release mode, i.e. with -DCMAKE_BUILD_TYPE=Release. Synopsis:

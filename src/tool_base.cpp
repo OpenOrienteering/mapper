@@ -148,12 +148,60 @@ bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 bool MapEditorToolBase::keyPressEvent(QKeyEvent* event)
 {
 	active_modifiers = event->modifiers();
+#if defined(Q_OS_MAC)
+	// FIXME: On Mac, QKeyEvent::modifiers() seems to return the keyboard 
+	// modifier flags that existed immediately before the event occurred.
+	// This is in contradiction to the documenation for QKeyEvent::modifiers(),
+	// but the documented behaviour of (parent) QInputEvent::modifiers().
+	// Qt5 doc says QKeyEvent::modifiers() "cannot always be trusted." ...
+	switch (event->key())
+	{
+		case Qt::Key_Shift:
+			active_modifiers |= Qt::ShiftModifier;
+			break;
+		case Qt::Key_Control:
+			active_modifiers |= Qt::ControlModifier;
+			break;
+		case Qt::Key_Alt:
+			active_modifiers |= Qt::AltModifier;
+			break;
+		case Qt::Key_Meta:
+			active_modifiers |= Qt::MetaModifier;
+			break;
+		default:
+			; // nothing
+	}
+#endif
 	return keyPress(event);
 }
 
 bool MapEditorToolBase::keyReleaseEvent(QKeyEvent* event)
 {
 	active_modifiers = event->modifiers();
+#if defined(Q_OS_MAC)
+	// FIXME: On Mac, QKeyEvent::modifiers() seems to return the keyboard 
+	// modifier flags that existed immediately before the event occurred.
+	// This is in contradiction to the documenation for QKeyEvent::modifiers(),
+	// but the documented behaviour of (parent) QInputEvent::modifiers().
+	// Qt5 doc says QKeyEvent::modifiers() "cannot always be trusted." ...
+	switch (event->key())
+	{
+		case Qt::Key_Shift:
+			active_modifiers &= ~Qt::ShiftModifier;
+			break;
+		case Qt::Key_Control:
+			active_modifiers &= ~Qt::ControlModifier;
+			break;
+		case Qt::Key_Alt:
+			active_modifiers &= ~Qt::AltModifier;
+			break;
+		case Qt::Key_Meta:
+			active_modifiers &= ~Qt::MetaModifier;
+			break;
+		default:
+			; // nothing
+	}
+#endif
 	return keyRelease(event);
 }
 

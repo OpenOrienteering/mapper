@@ -25,6 +25,7 @@
 #else
 #include <QtWidgets>
 #endif
+#include <QProxyStyle>
 #include <QSettings>
 
 #include <mapper_config.h>
@@ -56,12 +57,31 @@ static const char *application_menu_strings[] = {
   QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "Quit %1"),
   QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU", "About %1")
 };
+
+/** A proxy style which modifies the size of the toolbar icons. */ 
+class MapperProxyStyle : public QProxyStyle
+{
+public:
+	virtual int pixelMetric(PixelMetric metric, const QStyleOption* option = 0, const QWidget* widget = 0) const
+	{
+		if (metric == QStyle::PM_ToolBarIconSize)
+		{
+			static int s = (QProxyStyle::pixelMetric(QStyle::PM_SmallIconSize) + QProxyStyle::pixelMetric(QStyle::PM_ToolBarIconSize)) / 2;
+			return s;
+		}
+		return QProxyStyle::pixelMetric(metric, option, widget);
+	}
+};
 #endif
 
 int MainWindow::num_open_files = 0;
 
 MainWindow::MainWindow(bool as_main_window)
 {
+#if (defined Q_OS_MAC)
+	static bool proxy_style_installed = ( qApp->setStyle(new MapperProxyStyle), true );
+#endif
+	
 	controller = NULL;
 	has_unsaved_changes = false;
 	has_opened_file = false;
@@ -720,6 +740,19 @@ bool MainWindow::showSaveAsDialog()
 	
 	QString filter = NULL; // will be set to the selected filter by QFileDialog
 	QString path = QFileDialog::getSaveFileName(this, tr("Save file"), save_directory, filters, &filter);
+	
+	// On Windows, when the user enters "sample", we get "sample.omap *.xmap".
+	// (Fixed in upstream qtbase/src/plugins/platforms/windows/qwindowsdialoghelpers.cpp
+	// Wednesday March 20 2013 in commit 426f2cc.)
+	// This results in an error later, because "*" is not a valid character.
+	// But it is reasonable to apply the workaround to all platforms, 
+	// due to the special meaning of "*" in shell patterns.
+	const int extensions_quirk = path.indexOf(" *.");
+	if (extensions_quirk >= 0)
+	{
+		path.truncate(extensions_quirk);
+	}
+	
 	if (path.isEmpty())
 		return false;
 	

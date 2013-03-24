@@ -98,8 +98,8 @@ protected:
     PointSymbol *importPattern(s16 npts, OCADPoint *pts);
     void fillCommonSymbolFields(Symbol *symbol, const OCADSymbol *ocad_symbol);
 	void setPathHolePoint(Object *object, int i);
-    void fillPathCoords(Object *object, bool is_area, s16 npts, OCADPoint *pts);
-	bool fillTextPathCoords(TextObject *object, TextSymbol *symbol, s16 npts, OCADPoint *pts);
+	void fillPathCoords(Object* object, bool is_area, u16 npts, const OCADPoint* pts);
+	bool fillTextPathCoords(TextObject* object, TextSymbol* symbol, u16 npts, OCADPoint* pts);
 
 
     // Unit conversion functions
@@ -169,8 +169,8 @@ protected:
 	
 	// Helper functions
 	/// Returns the number of exported coordinates. If not NULL, the given symbol is used to determine the meaning of dash points.
-	s16 exportCoordinates(const MapCoordVector& coords, OCADPoint** buffer, Symbol* symbol);
-	s16 exportTextCoordinates(TextObject* object, OCADPoint** buffer);
+	u16 exportCoordinates(const MapCoordVector& coords, OCADPoint** buffer, Symbol* symbol);
+	u16 exportTextCoordinates(TextObject* object, OCADPoint** buffer);
 	int getOcadColor(QRgb rgb);
 	s16 getPointSymbolExtent(PointSymbol* symbol);
 	

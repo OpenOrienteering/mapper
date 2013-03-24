@@ -57,8 +57,10 @@ public:
 	 */
 	bool selectBox(MapCoordF corner1, MapCoordF corner2, bool toggle);
 	
-private:
+	// TODO: move to other place? util.h/cpp or object.h/cpp
 	static bool sortObjects(const std::pair<int, Object*>& a, const std::pair<int, Object*>& b);
+	
+private:
 	bool selectionInfosEqual(const SelectionInfoVector& a, const SelectionInfoVector& b);
 	
 	// Information about the last click

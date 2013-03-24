@@ -79,7 +79,7 @@ protected:
 	
 	PathObject* importPathStart();
 	void importPathEnd(PathObject* path);
-	PointObject* importWaypoint(const MapCoordF& position);
+	PointObject* importWaypoint(const MapCoordF& position, const QString &name = QString());
 	
 	
 	Track track;

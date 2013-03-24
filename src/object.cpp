@@ -27,6 +27,7 @@
 #include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
+#include <qjsonobject.h>
 
 #include "util.h"
 #include "file_import_export.h"
@@ -326,6 +327,21 @@ void Object::save(QXmlStreamWriter& xml) const
 		xml.writeAttribute("v_align", QString::number(text->getVerticalAlignment()));
 	}
 	
+	const int num_tags = object_tags.size();
+	if (num_tags > 0)
+	{
+		xml.writeStartElement("tags");
+		xml.writeAttribute("count", QString::number(num_tags));
+		for (Tags::const_iterator tag = object_tags.constBegin(), end = object_tags.constEnd(); tag != end; ++tag)
+		{
+			xml.writeStartElement("tag");
+			xml.writeAttribute("key", tag.key());
+			xml.writeCharacters(tag.value());
+			xml.writeEndElement(/*tag*/);
+		}
+		xml.writeEndElement(/*tags*/);
+	}
+	
 	xml.writeStartElement("coords");
 	int num_coords = (int)coords.size();
 	xml.writeAttribute("count", QString::number(num_coords));
@@ -369,8 +385,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	{
 		QString symbol_id = attributes.value("symbol").toString();
 		object->symbol = symbol_dict[symbol_id]; // FIXME: cannot work for forward references
-		if (!object->symbol)
-			throw FileFormatException(ImportExport::tr("Unable to find symbol for object at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
+		// NOTE: object->symbol may be NULL.
 	}
 	
 	if (object_type == Point)
@@ -422,8 +437,46 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 			TextObject* text = reinterpret_cast<TextObject*>(object);
 			text->setText(xml.readElementText());
 		}
+		else if (xml.name() == "tags")
+		{
+			object->object_tags.clear();
+			while (xml.readNextStartElement())
+			{
+				if (xml.name() == "tag")
+				{
+					const QString key(xml.attributes().value("key").toString());
+					object->object_tags.insert(key, xml.readElementText());
+				}
+				else
+					xml.skipCurrentElement();
+			}
+		}
 		else
 			xml.skipCurrentElement(); // unknown
+	}
+	
+	if (!object->symbol)
+	{
+		// Throwing an exception will cause loading to fail.
+		// Rather than not loading the broken file at all,
+		// use the same symbols which are used for importing GPS tracks etc.
+		// FIXME: Implement a way to send a warning to the user.
+		switch (object_type)
+		{
+			case Point:
+				object->symbol = map->getUndefinedPoint();
+				break;
+			case Path:
+				object->symbol = map->getUndefinedLine();
+				break;
+			case Text:
+				object->symbol = (object->coords.size() > 1) ? static_cast<Symbol*>(map->getUndefinedLine()) : static_cast<Symbol*>(map->getUndefinedPoint());
+				break;
+			default:
+				throw FileFormatException(
+				  ImportExport::tr("Unable to find symbol for object at %1:%2.").
+				  arg(xml.lineNumber()).arg(xml.columnNumber()) );
+		}
 	}
 	
 	if (object_type == Path)
@@ -656,6 +709,37 @@ Object* Object::getObjectForType(Object::Type type, Symbol* symbol)
 		return NULL;
 	}
 }
+
+void Object::setTags(const Object::Tags& tags)
+{
+	if (object_tags != tags)
+	{
+		object_tags = tags;
+		if (map)
+			map->setObjectsDirty();
+	}
+}
+
+void Object::setTag(const QString& key, const QString& value)
+{
+	if (!object_tags.contains(key) || object_tags.value("key") != value)
+	{
+		object_tags.insert(key, value);
+		if (map)
+			map->setObjectsDirty();
+	}
+}
+
+void Object::removeTag(const QString& key)
+{
+	if (object_tags.contains(key))
+	{
+		object_tags.remove(key);
+		if (map)
+			map->setObjectsDirty();
+	}
+}
+
 
 // ### PathObject::PathPart ###
 

@@ -36,6 +36,7 @@
 #include "symbol_dock_widget.h"
 #include "tool_helpers.h"
 #include "util.h"
+#include "gui/modifier_key.h"
 
 QCursor* DrawPathTool::cursor = NULL;
 
@@ -909,38 +910,65 @@ void DrawPathTool::updateDashPointDrawing()
 
 void DrawPathTool::updateStatusText()
 {
-	if (is_helper_tool)
-		return;
+	QString text;
+	static const QString text_more_shift_control_space(MapEditorTool::tr("More: %1, %2, %3").arg(ModifierKey::shift(), ModifierKey::control(), ModifierKey(Qt::Key_Space)));
+	static const QString text_more_shift_space(MapEditorTool::tr("More: %1, %2").arg(ModifierKey::shift(), ModifierKey(Qt::Key_Space)));
+	static const QString text_more_control_space(MapEditorTool::tr("More: %1, %2").arg(ModifierKey::control(), ModifierKey(Qt::Key_Space)));
+	QString text_more(text_more_shift_control_space);
 	
-	QString text = "";
 	if (draw_in_progress && preview_path && preview_path->getCoordinateCount() >= 2)
 	{
 		//assert(!preview_path->isDirty());
-		float length = 0.001 * map()->getScaleDenominator() * preview_path->getPathCoordinateVector()[preview_path->getPart(0).path_coord_end_index].clen;
-		text += QString("<b>%1:</b> %2 <b>|</b> ").arg(tr("Length [m]")).arg(length, 0, 'f', 1);
+		float length = map()->getScaleDenominator() * preview_path->getPathCoordinateVector()[preview_path->getPart(0).path_coord_end_index].clen * 0.001f;
+		text += tr("<b>Length:</b> %1 m ").arg(QLocale().toString(length, 'f', 1));
+		text += "| ";
 	}
-	if (draw_dash_points)
-		text += tr("<b>Dash points on.</b> ");
+	
+	if (draw_dash_points && !is_helper_tool)
+		text += DrawLineAndAreaTool::tr("<b>Dash points on.</b> ") + "| ";
 	
 	if (!draw_in_progress)
 	{
 		if (shift_pressed)
-			text += tr("<u>Shift</u>: snap or append to existing objects");
+		{
+			text += DrawLineAndAreaTool::tr("<b>%1+Click</b>: Snap or append to existing objects. ").arg(ModifierKey::shift());
+			text_more = text_more_control_space;
+		}
 		else if (ctrl_pressed)
-			text += tr("<b>Ctrl + Click</b>: pick direction from existing objects");
+		{
+			text += DrawLineAndAreaTool::tr("<b>%1+Click</b>: Pick direction from existing objects. ").arg(ModifierKey::control());
+			text_more = text_more_shift_space;
+		}
 		else
-			text += tr("<b>Click</b> to start a polygonal segment, <b>Drag</b> to start a curve (More: <u>Shift</u>, <u>Ctrl</u>)");
+		{
+			text += tr("<b>Click</b>: Start a straight line. <b>Drag</b>: Start a curve. ");
+// 			text += DrawLineAndAreaTool::tr(draw_dash_points ? "<b>%1</b> Disable dash points. " : "<b>%1</b>: Enable dash points. ").arg(ModifierKey::space());
+		}
 	}
 	else
 	{
 		if (shift_pressed)
-			text += tr("<b>Shift + Click</b> to snap to existing objects, <b>Shift + Drag</b> to follow existing objects");
-		else if (angle_helper->isActive())
-			text += tr("<u>Ctrl</u>: fixed angles");
+		{
+			text += DrawLineAndAreaTool::tr("<b>%1+Click</b>: Snap to existing objects. ").arg(ModifierKey::shift());
+			text += tr("<b>%1+Drag</b>: Follow existing objects. ").arg(ModifierKey::shift());
+			text_more = text_more_control_space;
+		}
+		else if (ctrl_pressed && angle_helper->isActive())
+		{
+			text += DrawLineAndAreaTool::tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control());
+			text_more = text_more_shift_space;
+		}
 		else
-			text += tr("<b>Click</b> to draw a polygonal segment, <b>Drag</b> to draw a curve, <b>Right or double click</b> to finish the path, "
-					   "<b>Return</b> to close the path, <b>Backspace</b> to undo, <b>Esc</b> to abort. Try <b>Space</b>, <u>Shift</u>, <u>Ctrl</u>");
+		{
+			text += tr("<b>Click</b>: Draw a straight line. <b>Drag</b>: Draw a curve. "
+			           "<b>Right or double click</b>: Finish the path. "
+			           "<b>%1</b>: Close the path. ").arg(ModifierKey::return_key());
+			text += DrawLineAndAreaTool::tr("<b>%1</b>: Undo last point. ").arg(ModifierKey::backspace());
+			text += MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape());
+		}
 	}
+	
+	text += "| " + text_more;
 	
 	setStatusBarText(text);
 }

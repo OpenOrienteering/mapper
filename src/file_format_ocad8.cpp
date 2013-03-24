@@ -895,7 +895,7 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapPart* pa
 		}
 
         // only 1 coordinate is allowed, enforce it even if the OCAD object claims more.
-        fillPathCoords(p, false, 1, (OCADPoint *)ocad_object->pts);
+		fillPathCoords(p, false, 1, ocad_object->pts);
         p->setMap(map);
         return p;
     }
@@ -930,7 +930,7 @@ Object *OCAD8FileImport::importObject(const OCADObject* ocad_object, MapPart* pa
 		p->setPatternRotation(convertRotation(ocad_object->angle));
 
 		// Normal path
-		fillPathCoords(p, symbol->getType() == Symbol::Area, ocad_object->npts, (OCADPoint *)ocad_object->pts);
+		fillPathCoords(p, symbol->getType() == Symbol::Area, ocad_object->npts, ocad_object->pts);
 		p->recalculateParts();
 		p->setMap(map);
 		return p;
@@ -1144,7 +1144,7 @@ void OCAD8FileImport::setPathHolePoint(Object *object, int i)
 
 /** Translates the OCAD path given in the last two arguments into an Object.
  */
-void OCAD8FileImport::fillPathCoords(Object *object, bool is_area, s16 npts, OCADPoint *pts)
+void OCAD8FileImport::fillPathCoords(Object *object, bool is_area, u16 npts, const OCADPoint *pts)
 {
     object->coords.resize(npts);
     s32 buf[3];
@@ -1191,7 +1191,7 @@ void OCAD8FileImport::fillPathCoords(Object *object, bool is_area, s16 npts, OCA
  *  If successful, sets either 1 or 2 coordinates in the text object and returns true.
  *  If the OCAD path was not importable, leaves the TextObject alone and returns false.
  */
-bool OCAD8FileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, s16 npts, OCADPoint *pts)
+bool OCAD8FileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, u16 npts, OCADPoint *pts)
 {
     // text objects either have 1 point (free anchor) or 2 (midpoint/size)
     // OCAD appears to always have 5 or 4 points (possible single anchor, then 4 corner coordinates going clockwise from anchor).
@@ -2162,7 +2162,7 @@ std::set< s16 > OCAD8FileExport::exportCombinedSymbol(CombinedSymbol* combinatio
 	return result;
 }
 
-s16 OCAD8FileExport::exportCoordinates(const MapCoordVector& coords, OCADPoint** buffer, Symbol* symbol)
+u16 OCAD8FileExport::exportCoordinates(const MapCoordVector& coords, OCADPoint** buffer, Symbol* symbol)
 {
 	s16 num_points = 0;
 	bool curve_start = false;
@@ -2206,7 +2206,7 @@ s16 OCAD8FileExport::exportCoordinates(const MapCoordVector& coords, OCADPoint**
 	return num_points;
 }
 
-s16 OCAD8FileExport::exportTextCoordinates(TextObject* object, OCADPoint** buffer)
+u16 OCAD8FileExport::exportTextCoordinates(TextObject* object, OCADPoint** buffer)
 {
 	if (object->getNumLines() == 0)
 		return 0;

@@ -144,7 +144,9 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		set(CPACK_DEBIAN_PACKAGE_HOMEPAGE 
 		  "http://oorienteering.sourceforge.net/?cat=3")
 		set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS "ON")
-		set(CPACK_DEBIAN_PACKAGE_RECOMMENDS "qt4-dev-tools")
+		if(NOT Mapper_USE_QT5)
+			set(CPACK_DEBIAN_PACKAGE_RECOMMENDS "qt4-dev-tools")
+		endif()
 		
 		unset(FAKEROOT_EXECUTABLE CACHE)
 		find_program(FAKEROOT_EXECUTABLE fakeroot)

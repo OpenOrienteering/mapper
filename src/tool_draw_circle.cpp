@@ -29,6 +29,7 @@
 #include "map.h"
 #include "object.h"
 #include "util.h"
+#include "gui/modifier_key.h"
 
 QCursor* DrawCircleTool::cursor = NULL;
 
@@ -258,7 +259,14 @@ void DrawCircleTool::setDirtyRect()
 void DrawCircleTool::updateStatusText()
 {
 	if (!first_point_set || (!second_point_set && dragging))
-		setStatusBarText(tr("<b>Click</b> to start a circle or ellipse, <b>Drag</b> to draw a circle"));
+	{
+		setStatusBarText( tr("<b>Click</b>: Start a circle or ellipse. ") + 
+		                  tr("<b>Drag</b>: Draw a circle. ") );
+	}
 	else
-		setStatusBarText(tr("<b>Click</b> to draw a circle, <b>Drag</b> to draw an ellipse, <b>Esc</b> to abort"));
+	{
+		setStatusBarText( tr("<b>Click</b>: Finish the circle. ") +
+		                  tr("<b>Drag</b>: Draw an ellipse. ") +
+		                  MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape()) );
+	}
 }

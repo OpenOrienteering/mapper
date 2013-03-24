@@ -314,6 +314,7 @@ private:
 	
 	QFrame* statusbar_zoom_frame;
 	QLabel* statusbar_cursorpos_label;
+	QLabel* statusbar_objecttag_label;
 	
 	QToolBar* toolbar_view;
 	QToolBar* toolbar_drawing;

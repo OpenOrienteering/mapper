@@ -25,7 +25,7 @@ project(Mapper)
 # All version components must be integers.
 # We use 99 to mark development builds.
 SET(Mapper_VERSION_MAJOR 0)
-SET(Mapper_VERSION_MINOR 4)
+SET(Mapper_VERSION_MINOR 5)
 SET(Mapper_VERSION_PATCH 99)
 
 if(${CMAKE_CURRENT_BINARY_DIR} STREQUAL ${PROJECT_SOURCE_DIR})
@@ -50,9 +50,11 @@ option(Mapper_TRANSLATIONS_EMBEDDED "Embed all translations in the program execu
 if(WIN32 OR APPLE)
 	set(Mapper_BUILD_PROJ_DEFAULT ON)
 	set(Mapper_BUILD_QT_DEFAULT ON)
+	set(Mapper_PACKAGE_LINGUIST_DEFAULT ON)
 else()
 	set(Mapper_BUILD_PROJ_DEFAULT OFF)
 	set(Mapper_BUILD_QT_DEFAULT ON)
+	set(Mapper_PACKAGE_LINGUIST_DEFAULT OFF)
 endif()
 
 option(Mapper_BUILD_PROJ "Build the Proj library from source" ${Mapper_BUILD_PROJ_DEFAULT})
@@ -77,7 +79,7 @@ option(Mapper_BUILD_PACKAGE     "Create a target for building packages" ON)
 option(Mapper_PACKAGE_PROJ      "Include all required Proj components in the packages" ${Mapper_BUILD_PROJ})
 option(Mapper_PACKAGE_QT        "Include all required Qt components in the packages"   ${Mapper_BUILD_QT})
 option(Mapper_PACKAGE_ASSISTANT "Include Qt Assistant in the packages"                 ${Mapper_BUILD_QT})
-option(Mapper_PACKAGE_LINGUIST  "Build a Qt Linguist package"                          ${WIN32})
+option(Mapper_PACKAGE_LINGUIST  "Build a Qt Linguist package"                          ${Mapper_PACKAGE_LINGUIST_DEFAULT})
 mark_as_advanced(Mapper_BUILD_PACKAGE Mapper_PACKAGE_QT Mapper_PACKAGE_ASSISTANT Mapper_PACKAGE_PROJ Mapper_PACKAGE_LINGUIST)
 
 unset(Mapper_PACKAGE_LIBRARIES CACHE) # Legacy

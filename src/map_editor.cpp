@@ -316,9 +316,20 @@ void MapEditorController::attach(MainWindow* window)
 	statusbar_cursorpos_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 	statusbar_cursorpos_label->setFixedWidth(160);
 	statusbar_cursorpos_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+
+    statusbar_objecttag_label = new QLabel();
+    statusbar_objecttag_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
+    statusbar_objecttag_label->setFixedWidth(160);
+    statusbar_objecttag_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+	
+	statusbar_objecttag_label = new QLabel();
+	statusbar_objecttag_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
+	statusbar_objecttag_label->setFixedWidth(160);
+	statusbar_objecttag_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	
 	window->statusBar()->addPermanentWidget(statusbar_zoom_frame);
 	window->statusBar()->addPermanentWidget(statusbar_cursorpos_label);
+	window->statusBar()->addPermanentWidget(statusbar_objecttag_label);
 	
 	// Create map widget
 	map_widget = new MapWidget(mode == MapEditor, mode == SymbolEditor);
@@ -327,6 +338,7 @@ void MapEditorController::attach(MainWindow* window)
 	map_widget->setMapView(main_view);
 	map_widget->setZoomLabel(statusbar_zoom_label);
 	map_widget->setCursorposLabel(statusbar_cursorpos_label);
+	map_widget->setObjectTagLabel(statusbar_objecttag_label);
 	window->setCentralWidget(map_widget);
 	
 	// Create menu and toolbar together, so actions can be inserted into one or both
@@ -716,6 +728,8 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_view->addAction(zoom_out_act);
 	toolbar_view->addAction(show_all_act);
 	
+	window->addToolBarBreak();
+	
 	// Drawing toolbar
 	toolbar_drawing = window->addToolBar(tr("Drawing"));
 	toolbar_drawing->setObjectName("Drawing toolbar");
@@ -791,6 +805,10 @@ void MapEditorController::detach()
 {
 	saveWindowState();
 	being_destructed = true;
+	
+	// Avoid a crash triggered by pressing Ctrl-W during loading.
+	if (NULL != symbol_dock_widget)
+		window->removeDockWidget(symbol_dock_widget);
 	
 	window->setCentralWidget(NULL);
 	delete map_widget;

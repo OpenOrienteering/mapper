@@ -233,6 +233,18 @@ const TrackPoint& Track::getSegmentPoint(int segment_number, int point_number) c
 	return segment_points[segment_starts[segment_number] + point_number];
 }
 
+const QString& Track::getSegmentName(int segment_number) const
+{
+	// NOTE: Segment names not [yet] supported by most track importers.
+	if (segment_names.size() == 0)
+	{
+		static const QString empty_string;
+		return empty_string;
+	}
+	
+	return segment_names[segment_number];
+}
+
 int Track::getNumWaypoints() const
 {
 	return waypoints.size();
@@ -385,6 +397,7 @@ bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent
 			if (path.coords.size() < 1)
 				continue;
 			segment_starts.push_back(segment_points.size());
+			segment_names.push_back(path.layer);
 			int i = 0;
 			foreach(coordinate_t coord, path.coords)
 			{

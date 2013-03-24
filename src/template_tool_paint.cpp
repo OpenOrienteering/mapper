@@ -55,7 +55,7 @@ PaintOnTemplateTool::~PaintOnTemplateTool()
 
 void PaintOnTemplateTool::init()
 {
-	setStatusBarText(tr("<b>Left mouse click and drag</b> to paint, <b>Right mouse click and drag</b> to erase"));
+	setStatusBarText(tr("<b>Click and drag</b>: Paint. <b>Right click and drag</b>: Erase. "));
 	
 	dock_widget = new QDockWidget(tr("Color selection"), window());
 	dock_widget->setFeatures(dock_widget->features() & ~QDockWidget::DockWidgetClosable);

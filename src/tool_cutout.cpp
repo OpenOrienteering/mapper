@@ -32,6 +32,7 @@
 #include "map_undo.h"
 #include "tool_boolean.h"
 #include "map_editor.h"
+#include "gui/modifier_key.h"
 
 CutoutTool::CutoutTool(MapEditorController* editor, QAction* tool_button, bool cut_away)
  : MapEditorToolBase(QCursor(QPixmap(":/images/cursor-hollow.png"), 1, 1), Other, editor, tool_button),
@@ -121,7 +122,19 @@ int CutoutTool::updateDirtyRectImpl(QRectF& rect)
 
 void CutoutTool::updateStatusText()
 {
-	setStatusBarText(tr("<b>Select</b> the objects to be clipped, then press <b>Return</b> to apply, or press <b>Return without selection</b> to clip the whole map, <b>Esc</b> to abort"));
+	QString text;
+	if (map()->getNumSelectedObjects() <= 1)
+	{
+		text = tr("<b>%1</b>: Clip the whole map. ").arg(ModifierKey::return_key()) +
+		       tr("<b>%1+Click or drag</b>: Select the objects to be clipped. ").arg(ModifierKey::shift());
+	}
+	else
+	{
+		text = tr("<b>%1+Click or drag</b>: Select the objects to be clipped. ").arg(ModifierKey::shift()) +
+		       tr("<b>%1</b>: Clip the selected objects. ").arg(ModifierKey::return_key());
+	}
+	text += MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape());
+	setStatusBarText(text);	
 }
 
 void CutoutTool::objectSelectionChangedImpl()
@@ -133,6 +146,7 @@ void CutoutTool::clickRelease()
 {
 	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
 	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(click_tolerance), active_modifiers & Qt::ShiftModifier);
+	updateStatusText();
 }
 
 void CutoutTool::dragStart()
@@ -148,6 +162,7 @@ void CutoutTool::dragMove()
 void CutoutTool::dragFinish()
 {
 	object_selector->selectBox(click_pos_map, cur_pos_map, active_modifiers & Qt::ShiftModifier);
+	updateStatusText();
 }
 
 

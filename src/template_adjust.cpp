@@ -32,6 +32,7 @@
 #include "template.h"
 #include "transformation.h"
 #include "util.h"
+#include "gui/modifier_key.h"
 
 float TemplateAdjustActivity::cross_radius = 4;
 
@@ -562,7 +563,7 @@ TemplateAdjustAddTool::TemplateAdjustAddTool(MapEditorController* editor, QActio
 void TemplateAdjustAddTool::init()
 {
 	// NOTE: this is called by other methods to set this text again. Change that behavior if adding stuff here
-	setStatusBarText(tr("<b>Click</b> to set the template position of the pass point"));
+	setStatusBarText(tr("<b>Click</b>: Set the template position of the pass point. "));
 }
 
 bool TemplateAdjustAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -577,7 +578,8 @@ bool TemplateAdjustAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_co
 		first_point_set = true;
 		setDirtyRect(map_coord);
 		
-		setStatusBarText(tr("<b>Click</b> to set the map position of the pass point, <b>Esc</b> to abort"));
+		setStatusBarText(tr("<b>Click</b>: Set the map position of the pass point. ") +
+		                 MapEditorTool::tr("<b>%1</b>: Abort. ").arg(ModifierKey::escape()) );
 	}
 	else
 	{
@@ -658,7 +660,7 @@ TemplateAdjustMoveTool::TemplateAdjustMoveTool(MapEditorController* editor, QAct
 }
 void TemplateAdjustMoveTool::init()
 {
-	setStatusBarText(tr("<b>Drag</b> to move pass points"));
+	setStatusBarText(tr("<b>Drag</b>: Move pass points. "));
 }
 
 bool TemplateAdjustMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -774,9 +776,10 @@ TemplateAdjustDeleteTool::TemplateAdjustDeleteTool(MapEditorController* editor, 
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-delete.png"), 1, 1);
 }
+
 void TemplateAdjustDeleteTool::init()
 {
-	setStatusBarText(tr("<b>Click</b> to delete pass points"));
+	setStatusBarText(tr("<b>Click</b>: Delete pass points. "));
 }
 
 bool TemplateAdjustDeleteTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)

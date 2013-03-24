@@ -53,7 +53,7 @@ void PanTool::dragFinish()
 
 void PanTool::updateStatusText()
 {
-	setStatusBarText(tr("<b>Drag</b> to move the map"));
+	setStatusBarText(tr("<b>Drag</b>: Move the map. "));
 }
 
 void PanTool::objectSelectionChangedImpl()
