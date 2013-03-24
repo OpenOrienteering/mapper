@@ -271,15 +271,29 @@ void LineRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_
 	
 	if (bounding_box.contains(path.controlPointRect()))
 		painter.drawPath(path);
-	else
+	else if (path.elementCount() > 0)
 	{
 		// Manually clip the path with bounding_box, this seems to be faster.
 		// The code splits up the painter path into new paths which intersect
 		// the view rect and renders these only.
+		// NOTE: this does not work correctly with miter joins, but this
+		//       should be a minor issue.
 		QPainterPath::Element prev_element = path.elementAt(0);
+		bool path_closed =
+			(path.elementAt(0).x == path.elementAt(path.elementCount()-1).x) &&
+			(path.elementAt(0).y == path.elementAt(path.elementCount()-1).y);
 		QRectF element_bbox;
 		QPainterPath part_path;
+		QPainterPath first_path;
 		bool path_started = false;
+		bool current_part_is_first = bounding_box.intersects(QRectF(
+			path.elementAt(0).x - 0.5f * line_width,
+			path.elementAt(0).y - 0.5f * line_width,
+			line_width,
+			line_width
+		));
+		bool first_element_in_view = false;
+		bool part_finished = false;
 		for (int i = 1; i < path.elementCount(); ++i)
 		{
 			QPainterPath::Element element = path.elementAt(i);
@@ -320,10 +334,9 @@ void LineRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_
 					part_path.lineTo(element.x, element.y);
 				}
 				else if (path_started)
-				{
-					painter.drawPath(part_path);
-					path_started = false;
-				}
+					part_finished = true;
+				else
+					current_part_is_first = false;
 			}
 			else if (element.isCurveTo())
 			{
@@ -349,20 +362,37 @@ void LineRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_
 					part_path.cubicTo(element.x, element.y, next_element.x, next_element.y, end_element.x, end_element.y);
 				}
 				else if (path_started)
-				{
-					painter.drawPath(part_path);
-					path_started = false;
-				}
+					part_finished = true;
+				else
+					current_part_is_first = false;
 			}
 			else if (element.isMoveTo() && path_started)
 			{
 				part_path.moveTo(element.x, element.y);
 			}
 			
+			if (part_finished)
+			{
+				if (current_part_is_first && path_closed)
+				{
+					current_part_is_first = false;
+					first_element_in_view = true;
+					first_path = part_path;
+				}
+				else
+					painter.drawPath(part_path);
+				path_started = false;
+				part_finished = false;
+			}
+			
 			prev_element = element;
 		}
 		if (path_started)
+		{
+			if (path_closed && first_element_in_view)
+				part_path.connectPath(first_path);
 			painter.drawPath(part_path);
+		}
 	}
 	
 	// DEBUG: show all control points
