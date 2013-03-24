@@ -127,19 +127,32 @@ public:
 	inline Map* getMap() const {return map;}
 	
 	static Object* getObjectForType(Type type, Symbol* symbol = NULL);
-
-	void setTag(const QString& key, const QString& value) {this->tags[key] = value;}
-	QString getTag(const QString& key) const {return this->tags[key];}
-	bool hasTag(const QString& key) const {return this->tags.contains(key);}
-	QHash<QString, QString> getTags() const {return tags;}
-	void setTags(const QHash<QString, QString>& tags) {this->tags = tags;}
+	
+	
+	/** Defines a type which maps keys to values, to be used for tagging objects. */
+	typedef QHash<QString, QString> Tags;
+	
+	/** Returns a const reference to the object's tags. */
+	const Tags& tags() const;
+	
+	/** Replaces the object's tags. */
+	void setTags(const Tags& tags);
+	
+	/** Returns the value of the given tag key. */
+	QString getTag(const QString& key) const;
+	
+	/** Sets the given tag key to the value. */
+	void setTag(const QString& key, const QString& value);
+	
+	/** Removes the given tag key and its value. */
+	void removeTag(const QString& key);
 	
 protected:
 	Type type;
 	Symbol* symbol;
 	MapCoordVector coords;
 	Map* map;
-	QHash<QString, QString> tags;
+	Tags object_tags;
 	
 	bool output_dirty;				// does the output have to be re-generated because of changes?
 	QRectF extent;					// only valid after calling update()
@@ -359,5 +372,21 @@ public:
 private:
 	float rotation;	// 0 to 2*M_PI
 };
+
+
+//### Object inline code ###
+
+inline
+const Object::Tags& Object::tags() const
+{
+	return object_tags;
+}
+
+inline
+QString Object::getTag(const QString& key) const
+{
+	return object_tags.value("key");
+}
+
 
 #endif

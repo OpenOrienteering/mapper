@@ -27,6 +27,7 @@
 #include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
+#include <qjsonobject.h>
 
 #include "util.h"
 #include "file_import_export.h"
@@ -326,16 +327,16 @@ void Object::save(QXmlStreamWriter& xml) const
 		xml.writeAttribute("v_align", QString::number(text->getVerticalAlignment()));
 	}
 	
-	const int num_tags = tags.keys().size();
+	const int num_tags = object_tags.size();
 	if (num_tags > 0)
 	{
 		xml.writeStartElement("tags");
 		xml.writeAttribute("count", QString::number(num_tags));
-		Q_FOREACH (const QString& key, tags.keys())
+		for (Tags::const_iterator tag = object_tags.constBegin(), end = object_tags.constEnd(); tag != end; ++tag)
 		{
 			xml.writeStartElement("tag");
-			xml.writeAttribute("key", key);
-			xml.writeCharacters(tags[key]);
+			xml.writeAttribute("key", tag.key());
+			xml.writeCharacters(tag.value());
 			xml.writeEndElement(/*tag*/);
 		}
 		xml.writeEndElement(/*tags*/);
@@ -438,13 +439,13 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		}
 		else if (xml.name() == "tags")
 		{
-			object->tags.clear();
+			object->object_tags.clear();
 			while (xml.readNextStartElement())
 			{
 				if (xml.name() == "tag")
 				{
 					const QString key(xml.attributes().value("key").toString());
-					object->tags.insert(key, xml.readElementText());
+					object->object_tags.insert(key, xml.readElementText());
 				}
 				else
 					xml.skipCurrentElement();
@@ -708,6 +709,37 @@ Object* Object::getObjectForType(Object::Type type, Symbol* symbol)
 		return NULL;
 	}
 }
+
+void Object::setTags(const Object::Tags& tags)
+{
+	if (object_tags != tags)
+	{
+		object_tags = tags;
+		if (map)
+			map->setObjectsDirty();
+	}
+}
+
+void Object::setTag(const QString& key, const QString& value)
+{
+	if (!object_tags.contains(key) || object_tags.value("key") != value)
+	{
+		object_tags.insert(key, value);
+		if (map)
+			map->setObjectsDirty();
+	}
+}
+
+void Object::removeTag(const QString& key)
+{
+	if (object_tags.contains(key))
+	{
+		object_tags.remove(key);
+		if (map)
+			map->setObjectsDirty();
+	}
+}
+
 
 // ### PathObject::PathPart ###
 

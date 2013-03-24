@@ -17,23 +17,23 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _OPENORIENTEERING_SETTINGS_DIALOG_H_
-#define _OPENORIENTEERING_SETTINGS_DIALOG_H_
+#ifndef _OPENORIENTEERING_TAGS_DIALOG_H_
+#define _OPENORIENTEERING_TAGS_DIALOG_H_
 
 #include <QDialog>
 
-class Object;
-
 QT_BEGIN_NAMESPACE
-class QTableWidget;
 class QHBoxLayout;
-class QVBoxLayout;
 class QPushButton;
+class QTableWidget;
+class QVBoxLayout;
 QT_END_NAMESPACE
+
+class Object;
 
 class TagsDialog : public QDialog
 {
-	Q_OBJECT
+Q_OBJECT
 public:
 	TagsDialog(Object* object, QWidget* parent = 0);
 
@@ -53,7 +53,7 @@ private:
 
 	Object* object;
 
-	bool doesKeyExist(const QString& key);
+	bool keyExists(const QString& key) const;
 };
 
 #endif

@@ -19,9 +19,9 @@
 
 #include "tags_dialog.h"
 
-#include <QTableWidget>
-#include <QPushButton>
 #include <QHBoxLayout>
+#include <QPushButton>
+#include <QTableWidget>
 #include <QVBoxLayout>
 
 #include <QDebug>
@@ -52,16 +52,17 @@ TagsDialog::TagsDialog(Object *object, QWidget *parent)
 
 	this->setWindowFlags(this->windowFlags() & ~Qt::WindowCloseButtonHint & ~Qt::WindowSystemMenuHint);
 
-	QHash<QString, QString> tags = object->getTags();
+	const Object::Tags& tags = object->tags();
 	int rows = tags.size();
 	tags_table->setColumnCount(2);
 	tags_table->setRowCount(rows);
-	for (int i = 0; i < rows; i++)
-	{
-		tags_table->setItem(i, 0, new QTableWidgetItem(tags.keys()[i]));
-		tags_table->setItem(i, 1, new QTableWidgetItem(tags[tags.keys()[i]]));
-	}
 	tags_table->setHorizontalHeaderLabels(QStringList() << tr("Key") << tr("Value"));
+	int row = 0;
+	for (Object::Tags::const_iterator tag = tags.constBegin(), end = tags.constEnd(); tag != end; ++tag, ++row)
+	{
+		tags_table->setItem(row, 0, new QTableWidgetItem(tag.key()));
+		tags_table->setItem(row, 1, new QTableWidgetItem(tag.value()));
+	}
 
 	connect(add_tag_button, SIGNAL(clicked()), this, SLOT(addTagClicked()));
 	connect(remove_tag_button, SIGNAL(clicked()), this, SLOT(removeTagClicked()));
@@ -70,19 +71,16 @@ TagsDialog::TagsDialog(Object *object, QWidget *parent)
 
 void TagsDialog::addTagClicked()
 {
-	QString key;
-	for (int i = 0; true; i++)
+	QString key(tr("key"));
+	for (int i = 2; keyExists(key); ++i)
 	{
-		if (!doesKeyExist(QString("key%1").arg(i)))
-		{
-			key = QString("key%1").arg(i);
-			break;
-		}
+		key = tr("key %0").arg(i);
 	}
 
-	tags_table->setRowCount(tags_table->rowCount()+1);
-	tags_table->setItem(tags_table->rowCount(), 0, new QTableWidgetItem(key));
-	tags_table->setItem(tags_table->rowCount(), 1, new QTableWidgetItem(""));
+	const int row = tags_table->rowCount();
+	tags_table->setRowCount(row + 1);
+	tags_table->setItem(row, 0, new QTableWidgetItem(key));
+	tags_table->setItem(row, 1, new QTableWidgetItem(""));
 }
 
 void TagsDialog::removeTagClicked()
@@ -95,20 +93,19 @@ void TagsDialog::removeTagClicked()
 
 void TagsDialog::closeClicked()
 {
-	QHash<QString, QString> tags;
-
+	Object::Tags tags;
 	for (int i = 0; i < tags_table->rowCount(); i++)
 	{
 		QString key = tags_table->item(i, 0)->text();
 		QString value = tags_table->item(i, 1)->text();
 		tags.insert(key, value);
 	}
-
 	object->setTags(tags);
+	
 	this->accept();
 }
 
-bool TagsDialog::doesKeyExist(const QString &key)
+bool TagsDialog::keyExists(const QString &key) const
 {
 	for (int i = 0; i < tags_table->rowCount(); i++)
 	{

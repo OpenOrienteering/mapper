@@ -591,22 +591,20 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 
 void MapWidget::updateObjectTagLabel(const MapCoordF pos)
 {
-	if (!objecttag_label)
-		return;
-	
-	SelectionInfoVector objects;
-	view->getMap()->findObjectsAt(pos, 0.001f * view->pixelToLength(5), false, false, false, true, objects);
-	if (objects.empty())
+	if (objecttag_label)
 	{
-		objecttag_label->setText("");
-		return;
+		QString text;
+		SelectionInfoVector objects;
+		view->getMap()->findObjectsAt(pos, 0.001f * view->pixelToLength(5), false, false, false, true, objects);
+		if (!objects.empty())
+		{
+			std::sort(objects.begin(), objects.end(), ObjectSelector::sortObjects);
+			Object* object = objects.front().second;
+			if (object->tags().contains("name"))
+				text = object->tags()["name"];
+		}
+		objecttag_label->setText(text);
 	}
-	std::sort(objects.begin(), objects.end(), ObjectSelector::sortObjects);
-	Object* object = objects[0].second;
-	if (!object->hasTag("name"))
-		return;
-	
-	objecttag_label->setText(object->getTag("name"));
 }
 
 void MapWidget::updateObjectTagLabel()
