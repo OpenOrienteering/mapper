@@ -280,6 +280,7 @@ bool MapEditorController::load(const QString& path)
 
 void MapEditorController::attach(MainWindow* window)
 {
+	being_destructed = false;
 	print_dock_widget = NULL;
 	measure_dock_widget = NULL;
 	color_dock_widget = NULL;
