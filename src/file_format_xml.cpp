@@ -45,7 +45,7 @@
 // ### XMLFileFormat definition ###
 
 const int XMLFileFormat::minimum_version = 2;
-const int XMLFileFormat::current_version = 3;
+const int XMLFileFormat::current_version = 4;
 const QString XMLFileFormat::magic_string = "<?xml ";
 const QString XMLFileFormat::mapper_namespace = "http://oorienteering.sourceforge.net/mapper/xml/v2";
 
