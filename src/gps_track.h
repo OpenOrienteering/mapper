@@ -44,8 +44,6 @@ struct TrackPoint
 	float elevation;		// -9999 if invalid
 	int num_satellites;		// -1 if invalid
 	float hDOP;				// -1 if invalid
-
-	QString layer;
 	
 	TrackPoint(LatLon coord = LatLon(), QDateTime datetime = QDateTime(), float elevation = -9999, int num_satellites = -1, float hDOP = -1);
 	void save(QXmlStreamWriter* stream) const;

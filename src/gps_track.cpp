@@ -235,6 +235,13 @@ const TrackPoint& Track::getSegmentPoint(int segment_number, int point_number) c
 
 const QString& Track::getSegmentName(int segment_number) const
 {
+	// NOTE: Segment names not [yet] supported by most track importers.
+	if (segment_names.size() == 0)
+	{
+		static const QString empty_string;
+		return empty_string;
+	}
+	
 	return segment_names[segment_number];
 }
 
