@@ -310,13 +310,6 @@ void Object::save(QXmlStreamWriter& xml) const
 		symbol_index = map->findSymbolIndex(symbol);
 	if (symbol_index != -1)
 		xml.writeAttribute("symbol", QString::number(symbol_index));
-
-	QStringList tags;
-	foreach(const QString& key, this->tags.keys())
-	{
-		tags.append(key + ":" + this->tags[key]);
-	}
-	xml.writeAttribute("tags", tags.join(';'));
 	
 	if (type == Point)
 	{
@@ -331,6 +324,21 @@ void Object::save(QXmlStreamWriter& xml) const
 		xml.writeAttribute("rotation", QString::number(text->getRotation()));
 		xml.writeAttribute("h_align", QString::number(text->getHorizontalAlignment()));
 		xml.writeAttribute("v_align", QString::number(text->getVerticalAlignment()));
+	}
+	
+	const int num_tags = tags.keys().size();
+	if (num_tags > 0)
+	{
+		xml.writeStartElement("tags");
+		xml.writeAttribute("count", QString::number(num_tags));
+		Q_FOREACH (const QString& key, tags.keys())
+		{
+			xml.writeStartElement("tag");
+			xml.writeAttribute("key", key);
+			xml.writeCharacters(tags[key]);
+			xml.writeEndElement(/*tag*/);
+		}
+		xml.writeEndElement(/*tags*/);
 	}
 	
 	xml.writeStartElement("coords");
@@ -379,18 +387,6 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		// NOTE: object->symbol may be NULL.
 	}
 	
-	QString rawTags = attributes.value("tags").toString();
-	QStringList tags = rawTags.split(';', QString::SkipEmptyParts);
-	foreach(const QString& tag, tags)
-	{
-		QStringList split_tag = tag.split(':', QString::SkipEmptyParts);
-		if (split_tag.isEmpty())
-			continue;
-		QString key = split_tag.takeFirst();
-		QString value = split_tag.isEmpty() ? "" : split_tag.first();
-		object->tags.insert(key, value);
-	}
-
 	if (object_type == Point)
 	{
 		PointObject* point = reinterpret_cast<PointObject*>(object);
@@ -439,6 +435,20 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		{
 			TextObject* text = reinterpret_cast<TextObject*>(object);
 			text->setText(xml.readElementText());
+		}
+		else if (xml.name() == "tags")
+		{
+			object->tags.clear();
+			while (xml.readNextStartElement())
+			{
+				if (xml.name() == "tag")
+				{
+					const QString key(xml.attributes().value("key").toString());
+					object->tags.insert(key, xml.readElementText());
+				}
+				else
+					xml.skipCurrentElement();
+			}
 		}
 		else
 			xml.skipCurrentElement(); // unknown
