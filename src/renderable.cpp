@@ -336,9 +336,28 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF boundi
 			drawColorSeparation(&p, *map_color, bounding_box, force_min_size, scaling, on_screen, true);
 			p.end();
 			
-			// Add this separation to the composition
+			// Add this separation to the composition with multiplication.
+			painter->setCompositionMode(QPainter::CompositionMode_Multiply);
 			painter->drawImage(0, 0, separation);
 			image_fixup();
+			
+			// Add some opacity to the multiplication, but not for black,
+			// since halftones (i.e. grey) might unduly lighten the composition.
+			if (static_cast<QRgb>(**map_color) != 0xff000000)
+			{
+				// FIXME: Implement this for Format_ARGB32_Premultiplied,
+				//        if efficiently possible.
+				QImage copy = separation.convertToFormat(QImage::Format_ARGB32);
+				QRgb* dest = (QRgb*)copy.bits();
+				const QRgb* dest_end = dest + copy.byteCount() / sizeof(QRgb);
+				for (QRgb* px = dest; px < dest_end; ++px)
+				{
+					const unsigned int alpha = qAlpha(*px) * ((255-qGray(*px)) << 16) & 0xff000000;
+					*px = alpha | (*px & 0xffffff);
+				}
+				painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
+				painter->drawImage(0, 0, copy);
+			}
 		}
 	}
 	
