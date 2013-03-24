@@ -740,6 +740,17 @@ bool MainWindow::showSaveAsDialog()
 	
 	QString filter = NULL; // will be set to the selected filter by QFileDialog
 	QString path = QFileDialog::getSaveFileName(this, tr("Save file"), save_directory, filters, &filter);
+	
+	// On Windows, when the user enters "sample", we get "sample.omap *.xmap".
+	// This results in an error later, because "*" is not a valid character.
+	// But it is reasonable to apply the workaround to all platforms, 
+	// due to the special meaning of "*" in shell patterns.
+	const int extensions_quirk = path.indexOf(" *.");
+	if (extensions_quirk >= 0)
+	{
+		path.truncate(extensions_quirk);
+	}
+	
 	if (path.isEmpty())
 		return false;
 	
