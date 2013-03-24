@@ -742,6 +742,8 @@ bool MainWindow::showSaveAsDialog()
 	QString path = QFileDialog::getSaveFileName(this, tr("Save file"), save_directory, filters, &filter);
 	
 	// On Windows, when the user enters "sample", we get "sample.omap *.xmap".
+	// (Fixed in upstream qtbase/src/plugins/platforms/windows/qwindowsdialoghelpers.cpp
+	// Wednesday March 20 2013 in commit 426f2cc.)
 	// This results in an error later, because "*" is not a valid character.
 	// But it is reasonable to apply the workaround to all platforms, 
 	// due to the special meaning of "*" in shell patterns.
