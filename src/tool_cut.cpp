@@ -587,23 +587,26 @@ void CutTool::pathFinished(PathObject* split_path)
 	
 	DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
 	
-	PathObject* holes = NULL; // if the edited path contains holes, these are saved in this temporary object
+	PathObject* holes = NULL; // if the edited path contains holes, they are saved in this temporary object
 	if (edited_path->getNumParts() > 1)
 	{
-		holes = reinterpret_cast<PathObject*>(edited_path->duplicate());
+		holes = edited_path->duplicate()->asPath();
 		holes->deletePart(0);
 	}
 	
+	bool ok;
 	PathObject* parts[2];
 	if (edited_path->getPart(drag_part_index).isClosed())
 	{
 		parts[0] = edited_path->duplicatePart(0);
 		parts[0]->changePathBounds(drag_part_index, drag_start_len, end_path_coord.clen);
-		assert(parts[0]->connectIfClose(split_path, split_threshold));
+		ok = parts[0]->connectIfClose(split_path, split_threshold);
+		Q_ASSERT(ok);
 
 		parts[1] = edited_path->duplicatePart(0);
 		parts[1]->changePathBounds(drag_part_index, end_path_coord.clen, drag_start_len);
-		assert(parts[1]->connectIfClose(split_path, split_threshold));
+		ok = parts[1]->connectIfClose(split_path, split_threshold);
+		Q_ASSERT(ok);
 	}
 	else
 	{
@@ -613,7 +616,8 @@ void CutTool::pathFinished(PathObject* split_path)
 		if (min_cut_pos <= 0 && max_cut_pos >= path_len)
 		{
 			parts[0] = edited_path->duplicatePart(0);
-			assert(parts[0]->connectIfClose(split_path, split_threshold));
+			ok = parts[0]->connectIfClose(split_path, split_threshold);
+			Q_ASSERT(ok);
 			
 			parts[1] = reinterpret_cast<PathObject*>(split_path->duplicate());
 			parts[1]->setSymbol(edited_path->getSymbol(), false);
@@ -624,24 +628,29 @@ void CutTool::pathFinished(PathObject* split_path)
 			
 			parts[0] = edited_path->duplicatePart(0);
 			parts[0]->changePathBounds(drag_part_index, 0, cut_pos);
-			assert(parts[0]->connectIfClose(split_path, split_threshold));
+			ok = parts[0]->connectIfClose(split_path, split_threshold);
+			Q_ASSERT(ok);
 			
 			parts[1] = edited_path->duplicatePart(0);
 			parts[1]->changePathBounds(drag_part_index, cut_pos, path_len);
-			assert(parts[1]->connectIfClose(split_path, split_threshold));
+			ok = parts[1]->connectIfClose(split_path, split_threshold);
+			Q_ASSERT(ok);
 		}
 		else
 		{
 			parts[0] = edited_path->duplicatePart(0);
 			parts[0]->changePathBounds(drag_part_index, min_cut_pos, max_cut_pos);
-			assert(parts[0]->connectIfClose(split_path, split_threshold));
+			ok = parts[0]->connectIfClose(split_path, split_threshold);
+			Q_ASSERT(ok);
 			
 			parts[1] = edited_path->duplicatePart(0);
 			parts[1]->changePathBounds(drag_part_index, 0, min_cut_pos);
-			assert(parts[1]->connectIfClose(split_path, split_threshold));
+			ok = parts[1]->connectIfClose(split_path, split_threshold);
+			Q_ASSERT(ok);
 			PathObject* temp_path = edited_path->duplicatePart(0);
 			temp_path->changePathBounds(drag_part_index, max_cut_pos, path_len);
-			assert(parts[1]->connectIfClose(temp_path, split_threshold));
+			ok = parts[1]->connectIfClose(temp_path, split_threshold);
+			Q_ASSERT(ok);
 			delete temp_path;
 		}
 	}
