@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map xmlns="http://oorienteering.sourceforge.net/mapper/xml/v2" version="3">
+<map xmlns="http://oorienteering.sourceforge.net/mapper/xml/v2" version="4">
     <notes></notes>
     <georeferencing scale="10000"/>
     <colors count="22">
@@ -1353,7 +1353,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
             <area_symbol inner_color="18" min_area="1125" patterns="1">
                 <pattern type="2" angle="0" rotatable="true" line_spacing="1200" line_offset="0" offset_along_line="0" point_distance="1200">
                     <symbol type="1" code="" name="Füllmuster 1">
-                        <point_symbol rotatable="true" inner_radius="338" inner_color="13" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="338" inner_color="14" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </pattern>
             </area_symbol>
@@ -1366,7 +1366,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
                         <point_symbol rotatable="true" inner_radius="0" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="13" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="14" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1386,7 +1386,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
                         <point_symbol rotatable="true" inner_radius="1500" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="13" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="14" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
