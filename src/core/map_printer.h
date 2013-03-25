@@ -28,6 +28,7 @@
 #include <QPrinterInfo>
 
 QT_BEGIN_NAMESPACE
+class QImage;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 QT_END_NAMESPACE
@@ -195,8 +196,11 @@ public:
 	 *  and generates signals for changing properties. */
 	void takePrinterSettings(const QPrinter* printer);
 	
-	/** Draws a single page to the painter.	 */
-	void drawPage(QPainter* device_painter, float dpi, const QRectF& page_extent, bool white_background) const;
+	/** Draws a single page to the painter.
+	 *  When the actual paint device is a QImage, pass it as page_buffer.
+	 *  This helps to determine the exact dimensions and to avoid the allocation
+	 *  of another buffer. */
+	void drawPage(QPainter* device_painter, float dpi, const QRectF& page_extent, bool white_background, QImage* page_buffer = NULL) const;
 	
 	/** Returns the current configuration. */
 	const MapPrinterConfig& config() const;

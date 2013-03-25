@@ -578,7 +578,7 @@ void MapPrinter::takePrinterSettings(const QPrinter* printer)
 	setResolution(printer->resolution());
 }
 
-void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& page_extent, bool white_background) const
+void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& page_extent, bool white_background, QImage* page_buffer) const
 {
 	device_painter->save();
 	
@@ -608,8 +608,8 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 	qreal scale = dpi / 25.4;
 	
 	QPainter* painter = device_painter;
-	QImage print_buffer;
-	if (have_transparency)
+	QImage scoped_buffer;
+	if (have_transparency && !page_buffer)
 	{
 		int w = qCeil(device_painter->device()->widthMM() * scale);
 		int h = qCeil(device_painter->device()->heightMM() * scale);
@@ -625,13 +625,16 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 			h = qCeil(device_painter->device()->heightMM() * scale * corr);
 		}
 #endif
-		print_buffer = QImage(w, h, QImage::Format_RGB32);
-		print_buffer.fill(QColor(Qt::white));
-		painter = new QPainter(&print_buffer);
+		scoped_buffer = QImage(w, h, QImage::Format_RGB32);
+		page_buffer = &scoped_buffer;
+		page_buffer->fill(QColor(Qt::white));
+		painter = new QPainter(page_buffer);
 		painter->setRenderHints(device_painter->renderHints());
 	}
 	else if (white_background)
+	{
 		painter->fillRect(QRect(0, 0, painter->device()->width(), painter->device()->height()), Qt::white);
+	}
 	
 	// Translate for top left page margin 
 	painter->scale(scale, scale);
@@ -659,7 +662,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 		{
 			// Draw map into a temporary buffer first which is printed with the map's opacity later.
 			// This prevents artifacts with overlapping objects.
-			map_buffer = QImage(print_buffer.size(), QImage::Format_ARGB32_Premultiplied);
+			map_buffer = QImage(page_buffer->size(), QImage::Format_ARGB32_Premultiplied);
 			map_buffer.fill(QColor(Qt::transparent));
 			
 			map_painter = new QPainter(&map_buffer);
@@ -714,9 +717,9 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 			}
 		}
 #endif
-
+		
 		device_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
-		device_painter->drawImage(0, 0, print_buffer);
+		device_painter->drawImage(0, 0, *page_buffer);
 	}
 	
 	device_painter->restore();

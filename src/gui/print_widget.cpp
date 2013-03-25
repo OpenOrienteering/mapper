@@ -779,7 +779,7 @@ void PrintWidget::printClicked()
 		image.setDotsPerMeterX(dots_per_meter);
 		image.setDotsPerMeterY(dots_per_meter);
 		QPainter p(&image);
-		map_printer->drawPage(&p, map_printer->getOptions().resolution, map_printer->getPrintArea(), true);
+		map_printer->drawPage(&p, map_printer->getOptions().resolution, map_printer->getPrintArea(), true, &image);
 		p.end();
 		if (!image.save(path))
 		{
