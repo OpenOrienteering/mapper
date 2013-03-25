@@ -43,7 +43,7 @@ public:
 	/** Constructs a new page format.
 	 * 
 	 *  It is initialized a custom page format with a page rectangle of the
-	 *  given size, surrounded by the given margin (in mm). 
+	 *  given size, surrounded by the given margin (in mm).
 	 *  The page overlap values are initialized to 5 (mm). */
 	MapPrinterPageFormat(QSizeF page_rect_size = QSizeF(100.0, 100.0), qreal margin = 5.0);
 	
@@ -53,16 +53,16 @@ public:
 	/** The orientation of the paper. */
 	QPrinter::Orientation orientation;
 	
-	/** The total dimensions of the page. */
+	/** The total dimensions of the page in mm. */
 	QSizeF paper_dimensions;
 	
-	/** The printable page rectangle. */
+	/** The printable page rectangle in mm. */
 	QRectF page_rect;
 	
-	/** The horizontal overlap of pages when the output covers muliple pages. */
+	/** The horizontal overlap in mm of pages when the output covers muliple pages. */
 	qreal h_overlap;
 	
-	/** The vertival overlap of pages when the output covers muliple pages. */
+	/** The vertival overlap in mm of pages when the output covers muliple pages. */
 	qreal v_overlap;
 };
 
