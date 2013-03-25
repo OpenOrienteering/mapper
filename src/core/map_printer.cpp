@@ -522,6 +522,7 @@ void MapPrinter::updatePageBreaks()
 	h_page_pos.push_back(h_pos);
 	const qreal h_overlap = page_format.h_overlap / scale_adjustment;
 	const qreal page_width = page_format.page_rect.width() / scale_adjustment - h_overlap;
+	
 	const qreal right_bound = print_area.right() - h_overlap - 0.05;
 	if (page_width >= 0.01)
 	{
@@ -529,7 +530,7 @@ void MapPrinter::updatePageBreaks()
 			h_page_pos.push_back(h_pos);
 		
 		// Center the print area on the pages total area.
-		// Don' pre-calculate this offset to avoid FP precision problems
+		// Don't pre-calculate this offset to avoid FP precision problems
 		const qreal h_offset = 0.5 * (h_pos + h_overlap - print_area.right());
 		for (std::vector<qreal>::iterator it=h_page_pos.begin(); it != h_page_pos.end(); ++it)
 			*it -= h_offset;
@@ -546,7 +547,7 @@ void MapPrinter::updatePageBreaks()
 		for (v_pos += page_height; v_pos < bottom_bound; v_pos += page_height)
 			v_page_pos.push_back(v_pos);
 		
-		// Don' pre-calculate offset to avoid FP precision problems
+		// Don't pre-calculate offset to avoid FP precision problems
 		const qreal v_offset = 0.5 * (v_pos + v_overlap - print_area.bottom());
 		for (std::vector<qreal>::iterator it=v_page_pos.begin(); it != v_page_pos.end(); ++it)
 			*it -= v_offset;
@@ -611,8 +612,8 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 	QImage scoped_buffer;
 	if (have_transparency && !page_buffer)
 	{
-		int w = qCeil(device_painter->device()->widthMM() * scale);
-		int h = qCeil(device_painter->device()->heightMM() * scale);
+		int w = qCeil(page_format.paper_dimensions.width() * scale);
+		int h = qCeil(page_format.paper_dimensions.height() * scale);
 #if defined (Q_OS_MAC)
 		if (device_painter->device()->physicalDpiX() == 0)
 		{
@@ -621,8 +622,8 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 			// the corresponding QPaintEngine must handle the resolution mapping"
 			// which doesn't seem to happen here.
 			qreal corr = device_painter->device()->logicalDpiX() / 72.0;
-			w = qCeil(device_painter->device()->widthMM() * scale * corr);
-			h = qCeil(device_painter->device()->heightMM() * scale * corr);
+			w = qCeil(page_format.paper_dimensions.width() * scale * corr);
+			h = qCeil(page_format.paper_dimensions.height() * scale * corr);
 		}
 #endif
 		scoped_buffer = QImage(w, h, QImage::Format_RGB32);

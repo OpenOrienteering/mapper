@@ -691,17 +691,9 @@ void PrintWidget::differentScaleEdited(int value)
 {
 	map_printer->setScale(value);
 	if (policy == SinglePage)
-	{ 
-		if (map_printer->getPageFormat().paper_size == QPrinter::Custom)
-		{
-			// Adjust the custom paper size.
-			map_printer->setCustomPaperSize(map_printer->getPrintAreaPaperSize());
-		 }
-		 else
-		 {
-			// Adjust the print area.
-			applyPrintAreaPolicy();
-		 }
+	{
+		// Adjust the print area.
+		applyPrintAreaPolicy();
 	}
 }
 
@@ -772,8 +764,8 @@ void PrintWidget::printClicked()
 		
 		qreal pixel_per_mm = map_printer->getOptions().resolution / 25.4;
 		
-		int print_width = qRound(map_printer->getPrintArea().width() * pixel_per_mm);
-		int print_height = qRound(map_printer->getPrintArea().height() * pixel_per_mm);
+		int print_width = qRound(map_printer->getPrintAreaPaperSize().width() * pixel_per_mm);
+		int print_height = qRound(map_printer->getPrintAreaPaperSize().height() * pixel_per_mm);
 		QImage image(print_width, print_height, QImage::Format_ARGB32_Premultiplied);
 		int dots_per_meter = qRound(pixel_per_mm * 1000);
 		image.setDotsPerMeterX(dots_per_meter);
