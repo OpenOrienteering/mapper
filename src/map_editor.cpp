@@ -605,8 +605,8 @@ void MapEditorController::createMenuAndToolbars()
 	view_menu->addAction(show_grid_act);
 	view_menu->addAction(hatch_areas_view_act);
 	view_menu->addAction(baseline_view_act);
-	view_menu->addAction(hide_all_templates_act);
 	view_menu->addAction(overprinting_simulation_act);
+	view_menu->addAction(hide_all_templates_act);
 	view_menu->addSeparator();
 	view_menu->addMenu(coordinates_menu);
 	view_menu->addSeparator();
