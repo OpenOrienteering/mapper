@@ -1217,7 +1217,7 @@ Minimum width 0.25 mm.</description>
         <symbol type="4" id="69" code="407" name="Undergrowth: slow running">
             <description>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, cut branches, etc.) which reduces running to ca. 60-80% of normal speed. This symbol shall not be combined with the symbol forest: slow running (406) or forest: difficult to run (408).</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="1.5708" line_spacing="840" line_offset="0" offset_along_line="0" color="26" line_width="120"/>
+                <pattern type="1" angle="1.5708" line_spacing="840" line_offset="0" offset_along_line="0" color="29" line_width="120"/>
             </area_symbol>
         </symbol>
         <symbol type="4" id="70" code="408" name="Forest: difficult to run">
@@ -1230,7 +1230,7 @@ Minimum width 0.25 mm.</description>
         <symbol type="4" id="72" code="409" name="Undergrowth: difficult to run">
             <description>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="1.5708" line_spacing="420" line_offset="0" offset_along_line="0" color="26" line_width="120"/>
+                <pattern type="1" angle="1.5708" line_spacing="420" line_offset="0" offset_along_line="0" color="29" line_width="120"/>
             </area_symbol>
         </symbol>
         <symbol type="4" id="73" code="410" name="Vegetation: very difficult to run">
