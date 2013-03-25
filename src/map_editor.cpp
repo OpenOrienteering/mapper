@@ -316,11 +316,6 @@ void MapEditorController::attach(MainWindow* window)
 	statusbar_cursorpos_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 	statusbar_cursorpos_label->setFixedWidth(160);
 	statusbar_cursorpos_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-
-    statusbar_objecttag_label = new QLabel();
-    statusbar_objecttag_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-    statusbar_objecttag_label->setFixedWidth(160);
-    statusbar_objecttag_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	
 	statusbar_objecttag_label = new QLabel();
 	statusbar_objecttag_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
@@ -816,6 +811,7 @@ void MapEditorController::detach()
 	
 	delete statusbar_zoom_frame;
 	delete statusbar_cursorpos_label;
+	delete statusbar_objecttag_label;
 }
 
 void MapEditorController::saveWindowState()

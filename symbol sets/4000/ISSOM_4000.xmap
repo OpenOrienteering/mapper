@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map xmlns="http://oorienteering.sourceforge.net/mapper/xml/v2" version="3">
+<map xmlns="http://oorienteering.sourceforge.net/mapper/xml/v2" version="4">
     <notes></notes>
     <georeferencing scale="4000" declination="0" grivation="0">
         <ref_point x="0" y="0"/>
@@ -27,71 +27,70 @@
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.900" g="0.500" b="1.000"/>
         </color>
-        <color priority="2" name="Green, Black 50% above Black" c="0.760" m="0.000" y="0.910" k="0.500" opacity="1.000">
-            <spotcolors knockout="true">
-                <component factor="1" spotcolor="26"/>
-                <component factor="0.5" spotcolor="4"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.120" g="0.500" b="0.045"/>
-        </color>
-        <color priority="3" name="Green above Black" c="0.760" m="0.000" y="0.910" k="0.000" opacity="1.000">
-            <spotcolors>
-                <component factor="1" spotcolor="26"/>
-                <component factor="0" spotcolor="4"/>
-                <component factor="0" spotcolor="14"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.240" g="1.000" b="0.090"/>
-        </color>
-        <color priority="4" name="Black" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000">
+        <color priority="2" name="Black" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000">
             <spotcolors knockout="true">
                 <namedcolor>BLACK</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="custom" r="0.000" g="0.000" b="0.000"/>
         </color>
-        <color priority="5" name="Opaque White below Black" c="0.000" m="0.000" y="0.000" k="0.000" opacity="1.000">
+        <color priority="3" name="Opaque White below Black" c="0.000" m="0.000" y="0.000" k="0.000" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0" spotcolor="4"/>
+                <component factor="0" spotcolor="2"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1.000" g="1.000" b="1.000"/>
         </color>
-        <color priority="6" name="Brown for contours" c="0.000" m="0.560" y="1.000" k="0.180" opacity="1.000">
+        <color priority="4" name="Brown for contours" c="0.000" m="0.560" y="1.000" k="0.180" opacity="1.000">
             <spotcolors>
                 <component factor="1" spotcolor="14"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.820" g="0.361" b="0.000"/>
         </color>
-        <color priority="7" name="Black 50-65% for buildings" c="0.000" m="0.000" y="0.000" k="0.650" opacity="1.000">
+        <color priority="5" name="Black 50-65% for buildings" c="0.000" m="0.000" y="0.000" k="0.650" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0.65" spotcolor="4"/>
+                <component factor="0.65" spotcolor="2"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.350" g="0.350" b="0.350"/>
         </color>
-        <color priority="8" name="Black 50%" c="0.000" m="0.000" y="0.000" k="0.500" opacity="1.000">
+        <color priority="6" name="Black 50%" c="0.000" m="0.000" y="0.000" k="0.500" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0.5" spotcolor="4"/>
+                <component factor="0.5" spotcolor="2"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.500" g="0.500" b="0.500"/>
         </color>
-        <color priority="9" name="Black 30%" c="0.000" m="0.000" y="0.000" k="0.300" opacity="1.000">
+        <color priority="7" name="Black 30%" c="0.000" m="0.000" y="0.000" k="0.300" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0.3" spotcolor="4"/>
+                <component factor="0.3" spotcolor="2"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.700" g="0.700" b="0.700"/>
         </color>
-        <color priority="10" name="Black 20%" c="0.000" m="0.000" y="0.000" k="0.200" opacity="1.000">
+        <color priority="8" name="Black 20%" c="0.000" m="0.000" y="0.000" k="0.200" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0.2" spotcolor="4"/>
+                <component factor="0.2" spotcolor="2"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.800" g="0.800" b="0.800"/>
+        </color>
+        <color priority="9" name="Green, Black 50% above Brown" c="0.760" m="0.000" y="0.910" k="0.500" opacity="1.000">
+            <spotcolors knockout="true">
+                <component factor="1" spotcolor="26"/>
+                <component factor="0.5" spotcolor="2"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.120" g="0.500" b="0.045"/>
+        </color>
+        <color priority="10" name="Green above Brown" c="0.760" m="0.000" y="0.910" k="0.000" opacity="1.000">
+            <spotcolors>
+                <component factor="1" spotcolor="26"/>
+                <component factor="0" spotcolor="2"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.240" g="1.000" b="0.090"/>
         </color>
         <color priority="11" name="Brown 20-50% for paved area, non-urban" c="0.000" m="0.224" y="0.400" k="0.072" opacity="1.000">
             <spotcolors knockout="true">
@@ -109,7 +108,7 @@
         </color>
         <color priority="13" name="Black below light browns" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="1" spotcolor="4"/>
+                <component factor="1" spotcolor="2"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.000" g="0.000" b="0.000"/>
@@ -166,7 +165,7 @@
         </color>
         <color priority="21" name="Grey" c="0.000" m="0.000" y="0.000" k="0.200" opacity="1.000">
             <spotcolors knockout="true">
-                <component factor="0.2" spotcolor="4"/>
+                <component factor="0.2" spotcolor="2"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.800" g="0.800" b="0.800"/>
@@ -189,7 +188,7 @@
         <color priority="24" name="Green, Black 50%" c="0.760" m="0.000" y="0.910" k="0.500" opacity="1.000">
             <spotcolors knockout="true">
                 <component factor="1" spotcolor="26"/>
-                <component factor="0.5" spotcolor="4"/>
+                <component factor="0.5" spotcolor="2"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.120" g="0.500" b="0.045"/>
@@ -263,22 +262,22 @@
             <description>A line joining points of equal height. The standard vertical interval between contours is 2 or 2.5 m. To emphasize the 3-dimensional effect of the contour line image, contour lines shall be represented as continuous lines through all symbols, also building (526.1) and canopy (526.2). However, contour lines shall be cut out for better legibility, if they touch the following symbols: small earth wall (108.1), small knoll (112), small elongated knoll (113), small depression (115), pit or hole (116), prominent landform feature (118), step or edge of paved area (529.1). 
 
 The relative height difference between neighbouring features must be represented on the map as accurately as possible.  Absolute height accuracy is of less importance. It is permissible to alter the height of a contour slightly if this will improve the representation of a feature. This deviation should not exceed 25% of the contour interval and attention must be paid to neighbouring features. The smallest bend in a contour is 0.4 mm from centre to centre of the lines.</description>
-            <line_symbol color="6" line_width="210" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="4" line_width="210" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="1" code="102" name="Index contour">
             <description>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface.  Where an index contour coincides with an area of much detail, it may be shown with symbol contour (101).</description>
-            <line_symbol color="6" line_width="350" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="4" line_width="350" minimum_length="0" join_style="2" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="2" code="103" name="Form line">
             <description>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</description>
-            <line_symbol color="6" line_width="210" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1870" break_length="350" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="4" line_width="210" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1870" break_length="350" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="3" code="104" name="Slope line">
             <description>Slope lines should be drawn on the lower side of a contour line where it is necessary to clarify the direction of slope, e.g. along the line of a re-entrant or in a depression.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="6" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="4" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -296,7 +295,7 @@ The relative height difference between neighbouring features must be represented
             <description>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</description>
             <text_symbol icon_text="375">
                 <font family="Arial" size="2117"/>
-                <text color="6" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
+                <text color="4" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
             </text_symbol>
         </symbol>
         <symbol type="2" id="5" code="106.0" name="Earth bank">
@@ -369,7 +368,7 @@ The relative height difference between neighbouring features must be represented
         </symbol>
         <symbol type="2" id="10" code="110" name="Small erosion gully">
             <description>Asmall erosion gully or trench. Minimum depth is 0.5 m.</description>
-            <line_symbol color="4" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="2" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
                         <point_symbol rotatable="true" inner_radius="185" inner_color="14" outer_width="0" outer_color="-1" elements="0"/>
@@ -508,13 +507,13 @@ The tags may extend over an area symbol representing detail immediately below th
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
-            <line_symbol color="4" line_width="500" minimum_length="900" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="750" end_length="270" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="2" line_width="500" minimum_length="900" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="750" end_length="270" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="2" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -541,7 +540,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="500" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="500" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -555,7 +554,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -569,7 +568,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -585,14 +584,14 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         </symbol>
         <symbol type="2" id="20" code="201.1" name="Impassable cliff, no tags &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;">
             <description>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</description>
-            <line_symbol color="4" line_width="500" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="2" line_width="500" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="21" code="201.1.1" name="Impassable cliff, no tags, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;">
             <description>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="500" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="500" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -608,21 +607,21 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         </symbol>
         <symbol type="2" id="22" code="201.2" name="Impassable cliff, tag line">
             <description>Use this symbol to display the full extent of a wide cliff.</description>
-            <line_symbol color="4" line_width="180" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="2" line_width="180" minimum_length="500" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="23" code="202" name="Gigantic boulder or rock pillar">
             <description>A gigantic boulder, rock pillar or massive cliff shall be represented in plan shape without tags.</description>
-            <area_symbol inner_color="4" min_area="0" patterns="0"/>
+            <area_symbol inner_color="2" min_area="0" patterns="0"/>
         </symbol>
         <symbol type="2" id="24" code="203" name="Passable rock face">
             <description>A small vertical rock face may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. Minimum height is 1 m. For passable rock faces shown without tags the end of the line may be rounded to improve legibility.</description>
-            <line_symbol color="4" line_width="300" minimum_length="900" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="750" end_length="270" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="2" line_width="300" minimum_length="900" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="750" end_length="270" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="2" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -644,7 +643,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="3">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -658,7 +657,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -672,7 +671,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -688,14 +687,14 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         </symbol>
         <symbol type="2" id="26" code="203.1" name="Passable rock face, no tags">
             <description>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</description>
-            <line_symbol color="4" line_width="300" minimum_length="900" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="2" line_width="300" minimum_length="900" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="27" code="203.1.1" name="Passable rock face, no tags, minimum size">
             <description>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -711,14 +710,14 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         </symbol>
         <symbol type="2" id="28" code="203.2" name="Passable rock face, no tags, rounded">
             <description>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good. For passable rock faces shown without tags the end of the line may be rounded to improve legibility.</description>
-            <line_symbol color="4" line_width="300" minimum_length="900" join_style="1" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="2" line_width="300" minimum_length="900" join_style="1" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="1" id="29" code="203.2.1" name="Passable rock face, no tags, rounded, minimum size">
             <description>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good. For passable rock faces shown without tags the end of the line may be rounded to improve legibility.</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="300" minimum_length="0" join_style="1" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="300" minimum_length="0" join_style="1" cap_style="1" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -737,7 +736,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
             <point_symbol inner_radius="900" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="2" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="6">
@@ -762,7 +761,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
             <point_symbol rotatable="true" inner_radius="900" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="2" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="6">
@@ -782,18 +781,18 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         </symbol>
         <symbol type="1" id="32" code="206" name="Boulder">
             <description>A small distinct boulder. The minimum height is 1 m.  Every boulder marked on the map shall be immediately identifiable on the ground.</description>
-            <point_symbol inner_radius="300" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="300" inner_color="2" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="33" code="207" name="Large boulder">
             <description>A particularly large and distinct boulder. Gigantic boulders shall be represented in plan shape with the symbol gigantic boulder or rock pillar (202).</description>
-            <point_symbol inner_radius="450" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="450" inner_color="2" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="34" code="208" name="Boulder field">
             <description>An area which is covered with so many blocks of stone that they cannot be marked individually is represented with randomly orientated solid triangles. The runnability is reduced and is indicated by the density of the triangles. A minimum of two triangles shall be used. The triangles can be enlarged by up to 20 %.</description>
             <point_symbol rotatable="true" inner_radius="640" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="2" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="3">
@@ -813,7 +812,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
             <point_symbol rotatable="true" inner_radius="768" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="2" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="3">
@@ -830,18 +829,18 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         </symbol>
         <symbol type="1" id="36" code="210.1" name="Stony ground">
             <description>An area of stony or rocky ground which reduces runnability. The dots shall be randomly distributed with density according to the amount of rock. A minimum of three dots shall be used.</description>
-            <point_symbol inner_radius="100" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="100" inner_color="2" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="37" code="210.2" name="Stony ground, large">
             <description>An area of stony or rocky ground which reduces runnability. The dots shall be randomly distributed with density according to the amount of rock. A minimum of three dots shall be used.</description>
-            <point_symbol inner_radius="125" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="125" inner_color="2" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="4" id="38" code="211" name="Open sandy ground">
             <description>An area of soft sandy ground or gravel with no vegetation which reduces runnability. Where an area of sandy ground is open and has good runnability, it is represented with symbol open land (401), open land with scattered trees (402) or paved area (529).</description>
             <area_symbol inner_color="31" min_area="1000" patterns="1">
                 <pattern type="2" angle="0.785398" line_spacing="450" line_offset="0" offset_along_line="0" point_distance="450">
                     <symbol type="1" code="" name="Pattern fill 1">
-                        <point_symbol rotatable="true" inner_radius="90" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="90" inner_color="2" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </pattern>
             </area_symbol>
@@ -897,7 +896,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         </symbol>
         <symbol type="2" id="43" code="304.2" name="Impassable body of water, bank line &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;">
             <description>The bordering black line indicates that the feature cannot or shall not be crossed.</description>
-            <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="2" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="44" code="304.3" name="Impassable body of water, fill, 100% blue &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;">
             <description>An area of deep water such as a lake, pond, river or fountain which may constitute a danger to the competitor or has forbidden access. The dark blue colour and the bordering black line indicates that the feature cannot or shall not be crossed. The minimum dimension is 1 mm².
@@ -938,7 +937,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         </symbol>
         <symbol type="2" id="51" code="308" name="Narrow marsh">
             <description>A marsh or trickle of water which is too narrow to be shown with symbol marsh (310).</description>
-            <line_symbol color="4" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="2" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
                         <point_symbol rotatable="true" inner_radius="185" inner_color="17" outer_width="0" outer_color="-1" elements="0"/>
@@ -954,7 +953,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         </symbol>
         <symbol type="2" id="53" code="309.0.2" name="Impassable marsh, border line">
             <description>This symbol should not be used on its own.</description>
-            <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="2" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="16" id="54" code="309" name="Impassable marsh &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;">
             <description>A marsh which is impassable or which may constitute a danger to the competitor.  The feature cannot or shall not be crossed.
@@ -1241,7 +1240,7 @@ Minimum width: 0.25 mm.</description>
             <area_symbol inner_color="25" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="2" id="74" code="410.1" name="Vegetation, very difficult to run, minimum width (hedge)">
-            <line_symbol color="3" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="10" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="75" code="421" name="Impassable vegetation &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;">
             <description>An area of dense vegetation (trees or undergrowth) which is impassable or which shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor.
@@ -1253,7 +1252,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
             <area_symbol inner_color="24" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="2" id="76" code="421.1" name="Impassable vegetation, minimum width (hedge)">
-            <line_symbol color="2" line_width="400" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="9" line_width="400" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="77" code="411.1" name="Forest (406) runnable in one direction">
             <description>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol (406) to show the direction with good runnability.</description>
@@ -1278,7 +1277,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
             <area_symbol inner_color="30" min_area="500" patterns="1">
                 <pattern type="2" angle="0" rotatable="true" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
                     <symbol type="1" code="" name="Pattern fill 1">
-                        <point_symbol rotatable="true" inner_radius="225" inner_color="25" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="225" inner_color="26" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </pattern>
             </area_symbol>
@@ -1291,7 +1290,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                         <point_symbol rotatable="true" inner_radius="0" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="25" line_width="200" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="26" line_width="200" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1311,7 +1310,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="25" line_width="200" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="26" line_width="200" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1330,42 +1329,42 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         </symbol>
         <symbol type="2" id="82" code="414" name="Distinct cultivation boundary">
             <description>The boundary of symbol cultivated land (seasonally out of bounds) (415) when not shown with other symbols (fence, wall, path, etc.) is represented with a black line. A permanent boundary between different types of cultivated land is also represented with this symbol.</description>
-            <line_symbol color="4" line_width="70" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="2" line_width="70" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="83" code="415" name="Cultivated land (seasonally out of bounds)">
             <description>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</description>
             <area_symbol inner_color="30" min_area="500" patterns="1">
                 <pattern type="2" angle="0" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
                     <symbol type="1" code="" name="Pattern fill 1">
-                        <point_symbol rotatable="true" inner_radius="100" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="100" inner_color="2" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </pattern>
             </area_symbol>
         </symbol>
         <symbol type="2" id="84" code="416" name="Distinct vegetation boundary">
             <description>A distinct forest edge or very distinct vegetation boundary within the forest. For indistinct boundaries, the area edges are shown only by the change in colour and/or dot screen.</description>
-            <line_symbol color="4" line_width="0" minimum_length="220" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="2" minimum_mid_symbol_count_when_closed="5" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="2" line_width="0" minimum_length="220" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="2" minimum_mid_symbol_count_when_closed="5" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
-                        <point_symbol rotatable="true" inner_radius="125" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="125" inner_color="2" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
         </symbol>
         <symbol type="1" id="85" code="418" name="Prominent large tree">
             <description>A prominent single tree.</description>
-            <point_symbol inner_radius="350" inner_color="-1" outer_width="250" outer_color="3" elements="0"/>
+            <point_symbol inner_radius="350" inner_color="-1" outer_width="250" outer_color="10" elements="0"/>
         </symbol>
         <symbol type="1" id="86" code="419" name="Prominent bush or small tree">
             <description>A bush or a tree with a trunk less than 0.5 m diameter.</description>
-            <point_symbol inner_radius="375" inner_color="3" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="375" inner_color="10" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="1" id="87" code="420" name="Prominent vegetation feature">
             <description>A vegetation feature which is significant or prominent. The definition of the symbol shall always be given in the map legend. The symbol is orientated to north.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="3" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="10" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1379,7 +1378,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="3" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="10" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1443,15 +1442,15 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
         </symbol>
         <symbol type="2" id="92" code="507" name="Small unpaved footpath or track">
             <description>A small unpaved footpath or track. Not to be used in urban areas.</description>
-            <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="2" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1000" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="93" code="508" name="Less distinct small path">
             <description>Aless distinct path or forestry extraction track. Not to be used in urban areas.</description>
-            <line_symbol color="4" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1000" break_length="1000" dashes_in_group="2" in_group_break_length="250" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="2" line_width="180" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1000" break_length="1000" dashes_in_group="2" in_group_break_length="250" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="94" code="509" name="Narrow ride">
             <description>A distinct ride is a linear break in the forest (usually in a plantation), which does not have a distinct path along it. Where there is a path along a ride, the symbol small unpaved footpath or track (506.1) shall be used. Not to be used in urban areas.</description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="2" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="95" code="512.1.1" name="Bridge, minimum width">
             <description>A bridge is a structure spanning and permitting passage over a river, chasm, road or the like.</description>
@@ -1461,7 +1460,7 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="2" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1475,7 +1474,7 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
                             </element>
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="2" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1495,7 +1494,7 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="2" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1509,7 +1508,7 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
                             </element>
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="2" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1525,19 +1524,19 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
                     </symbol>
                 </end_symbol>
                 <borders>
-                    <border color="4" width="250" shift="125" dash_length="2000" break_length="1000"/>
+                    <border color="2" width="250" shift="125" dash_length="2000" break_length="1000"/>
                 </borders>
             </line_symbol>
         </symbol>
         <symbol type="2" id="96" code="512.1.2" name="Bridge, one side">
             <description>A bridge is a structure spanning and permitting passage over a river, chasm, road or the like.</description>
-            <line_symbol color="4" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="2" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <start_symbol>
                     <symbol type="1" code="" name="Start symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="2" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1557,7 +1556,7 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="2" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1579,14 +1578,14 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
             <combined_symbol parts="2">
                 <part private="true">
                     <symbol type="2" code="515.1.2" name="Railway helper: inner black dashes">
-                        <line_symbol color="4" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="3000" end_length="1500" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="3000" end_length="1500" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                 </part>
                 <part private="true">
                     <symbol type="2" code="515.1.1" name="Railway helper: black border, white background">
-                        <line_symbol color="5" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3000" end_length="1500" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+                        <line_symbol color="3" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3000" end_length="1500" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                             <borders>
-                                <border color="4" width="100" shift="0" dash_length="2000" break_length="1000"/>
+                                <border color="2" width="100" shift="0" dash_length="2000" break_length="1000"/>
                             </borders>
                         </line_symbol>
                     </symbol>
@@ -1597,7 +1596,7 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
             <description>A tramway is a public vehicle running regularly along certain streets, usually on rails. The track can be easily crossed by the competitor. Tramways are generally not represented. However, if they serve navigation or orientation, they can be represented.</description>
             <line_symbol color="-1" line_width="300" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3000" end_length="1500" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1500" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <borders>
-                    <border color="8" width="100" shift="0" dash_length="2000" break_length="1000"/>
+                    <border color="6" width="100" shift="0" dash_length="2000" break_length="1000"/>
                 </borders>
             </line_symbol>
         </symbol>
@@ -1605,13 +1604,13 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
             <description>Power line, cableway or skilift. The bars indicate the exact location of the pylons.
 
 &lt;b&gt;Note: When drawing this symbol, press space to toggle placing the pylon symbols at new nodes.&lt;/b&gt;</description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="2" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <dash_symbol>
                     <symbol type="1" code="" name="Dash symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="2" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1640,7 +1639,7 @@ Very large carrying masts shall be represented in plan shape or with the symbol 
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="2" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1656,7 +1655,7 @@ Very large carrying masts shall be represented in plan shape or with the symbol 
                     </symbol>
                 </dash_symbol>
                 <borders>
-                    <border color="4" width="140" shift="70" dash_length="2000" break_length="1000"/>
+                    <border color="2" width="140" shift="70" dash_length="2000" break_length="1000"/>
                 </borders>
             </line_symbol>
         </symbol>
@@ -1664,13 +1663,13 @@ Very large carrying masts shall be represented in plan shape or with the symbol 
             <description>An underpass or a tunnel is a passage running underneath the ground, especially a passage for pedestrians or vehicles, crossing under for instance a railroad or a road.
 
 &lt;span style=&quot;color: magenta&quot;&gt;If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol crossing point (708) or crossing section (708.1)!&lt;/span&gt;</description>
-            <line_symbol color="4" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="500" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="2" minimum_mid_symbol_count_when_closed="0" dash_length="250" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="2" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="500" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="2" minimum_mid_symbol_count_when_closed="0" dash_length="250" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="4" code="">
-                                    <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                                    <area_symbol inner_color="2" min_area="0" patterns="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="4">
@@ -1691,47 +1690,47 @@ Very large carrying masts shall be represented in plan shape or with the symbol 
         </symbol>
         <symbol type="2" id="102" code="519" name="Passable stone wall">
             <description>A stone wall or stone faced bank. This symbol shall be used only in non-urban areas. If such a wall is higher than 2 m, it shall be represented with the symbol impassable wall (521.1).</description>
-            <line_symbol color="4" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3750" end_length="1875" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="2" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3750" end_length="1875" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
-                        <point_symbol rotatable="true" inner_radius="300" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol rotatable="true" inner_radius="300" inner_color="2" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                 </mid_symbol>
             </line_symbol>
         </symbol>
         <symbol type="2" id="103" code="519.1.1" name="Passable wall">
             <description>A passable wall or retaining wall is a construction made of stone, brick, concrete etc., which can be passed. This symbol is suitable for urban areas. If such a wall is higher than 2 m, it shall be represented with the symbol impassable wall (521.1). Wide walls shall be drawn in plan shape.</description>
-            <line_symbol color="8" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="0" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="6" line_width="350" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="0" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="104" code="519.1.2" name="Passable wall, plan shape">
             <description>A passable wall or retaining wall is a construction made of stone, brick, concrete etc., which can be passed. This symbol is suitable for urban areas. If such a wall is higher than 2 m, it shall be represented with the symbol (521.1). Wide walls shall be drawn in plan shape.</description>
-            <area_symbol inner_color="8" min_area="500" patterns="0"/>
+            <area_symbol inner_color="6" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="2" id="105" code="521.1.1" name="Impassable wall &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;">
             <description>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable wall!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
-            <line_symbol color="4" line_width="400" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="0" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="2" line_width="400" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="0" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="4" id="106" code="521.1.2" name="Impassable wall, plan shape &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;">
             <description>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable wall!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
-            <area_symbol inner_color="4" min_area="500" patterns="0"/>
+            <area_symbol inner_color="2" min_area="500" patterns="0"/>
         </symbol>
         <symbol type="2" id="107" code="522" name="Passable fence or railing">
             <description>A passable fence is a barrier enclosing or bordering a field, yard, etc., usually made of posts and wire or wood. It is used to prevent entrance or to confine or mark a boundary. A railing is a fencelike barrier composed of one or more horizontal rails supported by widely spaced upright poles, usually it can be slipped through.
 
 If a fence or railing is higher than 2 m or very difficult to cross, it shall be represented with the symbol impassable fence or railing (524).</description>
-            <line_symbol color="4" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3750" end_length="1875" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="2" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3750" end_length="1875" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="2" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1753,13 +1752,13 @@ If a fence or railing is higher than 2 m or very difficult to cross, it shall be
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable fence or railing!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
-            <line_symbol color="4" line_width="400" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4650" end_length="2325" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="2" line_width="400" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4650" end_length="2325" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="2" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1773,7 +1772,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                             </element>
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="2" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -1795,7 +1794,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1809,7 +1808,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -1825,11 +1824,11 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         </symbol>
         <symbol type="4" id="110" code="526.1.1" name="Building helper 1">
             <description>Do not use this symbol on its own!</description>
-            <area_symbol inner_color="7" min_area="250" patterns="0"/>
+            <area_symbol inner_color="5" min_area="250" patterns="0"/>
         </symbol>
         <symbol type="2" id="111" code="526.1.2" name="Building helper 2">
             <description>Do not use this symbol on its own!</description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="2" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="16" id="112" code="526.1" name="Building &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to pass through or over)&lt;/span&gt;">
             <description>A building is a relatively permanent construction having a roof. Buildings within symbol area with forbidden access (527.1) may just be represented in a simplified manner.Areas totally contained within a building shall be mapped as being a part of the building. 
@@ -1853,7 +1852,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="5" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="4">
@@ -1869,7 +1868,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="5">
@@ -1888,11 +1887,11 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         </symbol>
         <symbol type="4" id="114" code="526.0.2" name="Canopy helper 1">
             <description>Do not use this symbol on its own!</description>
-            <area_symbol inner_color="10" min_area="250" patterns="0"/>
+            <area_symbol inner_color="8" min_area="250" patterns="0"/>
         </symbol>
         <symbol type="2" id="115" code="526.2.2" name="Canopy helper 2">
             <description>Do not use this symbol on its own!</description>
-            <line_symbol color="4" line_width="70" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="2" line_width="70" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="16" id="116" code="526.2" name="Canopy">
             <description>A canopy is a building construction (with a roof), normally supported by pillars, poles or walls, such as passages, gangways, courts, bus stops, gas stations or garages. 
@@ -1910,7 +1909,7 @@ Columns of pillars and pillars along buildings are not represented. However, if 
             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="2" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="5">
@@ -2072,21 +2071,21 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
         </symbol>
         <symbol type="2" id="131" code="529.1.1" name="Step or edge of paved area, urban">
             <description>A step or an edge of a paved area. Steps of a stairway shall be represented in a generalized manner. Edges within paved areas are generally not represented, unless they serve navigation. The thickness of edge of paved areas shall be enlarged to 0.14 mm in non-urban areas to improve legibility. The thickness of step lines shall always be 0.07 mm.</description>
-            <line_symbol color="4" line_width="70" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="2" line_width="70" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="132" code="529.1.2" name="Step or edge of paved area, non-urban">
             <description>A step or an edge of a paved area. Steps of a stairway shall be represented in a generalized manner. Edges within paved areas are generally not represented, unless they serve navigation. The thickness of edge of paved areas shall be enlarged to 0.14 mm in non-urban areas to improve legibility. The thickness of step lines shall always be 0.07 mm.</description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="2" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="133" code="529.1.3" name="Step or edge of paved area, narrow stairway">
             <description>A step or an edge of a paved area. Steps of a stairway shall be represented in a generalized manner. Edges within paved areas are generally not represented, unless they serve navigation. The thickness of edge of paved areas shall be enlarged to 0.14 mm in non-urban areas to improve legibility. The thickness of step lines shall always be 0.07 mm.</description>
-            <line_symbol color="4" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="420" end_length="35" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="2" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="420" end_length="35" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="70" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="2" line_width="70" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -2105,13 +2104,13 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
         </symbol>
         <symbol type="2" id="134" code="529.1.4" name="Step or edge of paved area, wide stairway">
             <description>A step or an edge of a paved area. Steps of a stairway shall be represented in a generalized manner. Edges within paved areas are generally not represented, unless they serve navigation. The thickness of edge of paved areas shall be enlarged to 0.14 mm in non-urban areas to improve legibility. The thickness of step lines shall always be 0.07 mm.</description>
-            <line_symbol color="4" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="420" end_length="35" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="2" line_width="0" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="420" end_length="35" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="70" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="2" line_width="70" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="2">
@@ -2130,13 +2129,13 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
         </symbol>
         <symbol type="2" id="135" code="533" name="Passable pipeline">
             <description>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</description>
-            <line_symbol color="4" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3750" end_length="1875" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="2" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3750" end_length="1875" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="2" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="3">
@@ -2159,13 +2158,13 @@ Colour: brown 0 (white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (non-urban
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable pipeline!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
-            <line_symbol color="4" line_width="400" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3750" end_length="1875" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="2" mid_symbol_distance="900">
+            <line_symbol color="2" line_width="400" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="3750" end_length="1875" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="2" mid_symbol_distance="900">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="2" code="">
-                                    <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                    <line_symbol color="2" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="3">
@@ -2185,10 +2184,10 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         </symbol>
         <symbol type="1" id="137" code="535" name="High tower">
             <description>A high tower or large pylon. Very large towers shall be represented in plan shape with the symbol building (526.1). The symbol is orientated to north.</description>
-            <point_symbol inner_radius="600" inner_color="4" outer_width="0" outer_color="-1" elements="2">
+            <point_symbol inner_radius="600" inner_color="2" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2202,7 +2201,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="250" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2221,7 +2220,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
             <point_symbol inner_radius="600" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="220" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="220" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2235,7 +2234,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="220" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="220" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2251,10 +2250,10 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         </symbol>
         <symbol type="1" id="139" code="537" name="Cairn, memorial, small monument or boundary stone">
             <description>Cairn, memorial, small monument or boundary stone more than 0.5 m high.  Large massive monuments shall be represented in plan shape with the symbol building (526.1).</description>
-            <point_symbol inner_radius="380" inner_color="-1" outer_width="220" outer_color="4" elements="1">
+            <point_symbol inner_radius="380" inner_color="-1" outer_width="220" outer_color="2" elements="1">
                 <element>
                     <symbol type="1" code="">
-                        <point_symbol inner_radius="100" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+                        <point_symbol inner_radius="100" inner_color="2" outer_width="0" outer_color="-1" elements="0"/>
                     </symbol>
                     <object type="0">
                         <coords count="1">
@@ -2269,7 +2268,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
             <point_symbol inner_radius="600" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="220" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="220" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="3">
@@ -2284,7 +2283,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="220" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="220" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2300,14 +2299,14 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
         </symbol>
         <symbol type="1" id="141" code="539" name="Prominent man-made feature">
             <description>A man-made feature which is significant or prominent. The definition of the symbol shall always be given in the map legend.</description>
-            <point_symbol inner_radius="380" inner_color="-1" outer_width="220" outer_color="4" elements="0"/>
+            <point_symbol inner_radius="380" inner_color="-1" outer_width="220" outer_color="2" elements="0"/>
         </symbol>
         <symbol type="1" id="142" code="540" name="Prominent man-made feature">
             <description>A man-made feature which is significant or prominent. The definition of the symbol shall always be given in the map legend. The symbol is orientated to north.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="220" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="220" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2321,7 +2320,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="220" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="220" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2339,7 +2338,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</description>
             <description>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            <line_symbol color="2" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
         <symbol type="2" id="144" code="601.0.2" name="Magnetic north line, black with arrow">
             <description>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
@@ -2347,13 +2346,13 @@ North lines may be broken where they obscure small features such as boulders, kn
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.
 
 &lt;b&gt;Note: this is a non-standard addition to the symbol set.&lt;/b&gt;</description>
-            <line_symbol color="4" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+            <line_symbol color="2" line_width="140" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <end_symbol>
                     <symbol type="1" code="" name="End symbol">
                         <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                             <element>
                                 <symbol type="4" code="">
-                                    <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                                    <area_symbol inner_color="2" min_area="0" patterns="0"/>
                                 </symbol>
                                 <object type="1">
                                     <coords count="5">
@@ -2378,7 +2377,7 @@ North lines may be broken where they obscure small features such as boulders, kn
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.  Cut holes in the pattern to create these breaks.</description>
             <area_symbol inner_color="-1" min_area="0" patterns="1">
-                <pattern type="1" angle="1.5708" rotatable="true" line_spacing="37500" line_offset="0" offset_along_line="0" color="4" line_width="140"/>
+                <pattern type="1" angle="1.5708" rotatable="true" line_spacing="37500" line_offset="0" offset_along_line="0" color="2" line_width="140"/>
             </area_symbol>
         </symbol>
         <symbol type="2" id="146" code="601.0.4" name="Magnetic north line, blue">
@@ -2520,7 +2519,7 @@ This symbol includes all printed colours - do not place colours as separate symb
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2534,7 +2533,7 @@ This symbol includes all printed colours - do not place colours as separate symb
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="4" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="2" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2550,13 +2549,13 @@ This symbol includes all printed colours - do not place colours as separate symb
         </symbol>
         <symbol type="1" id="150" code="603.0.1" name="Spot height, dot">
             <description>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</description>
-            <point_symbol inner_radius="150" inner_color="4" outer_width="0" outer_color="-1" elements="0"/>
+            <point_symbol inner_radius="150" inner_color="2" outer_width="0" outer_color="-1" elements="0"/>
         </symbol>
         <symbol type="8" id="151" code="603.0.2" name="Spot height">
             <description>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</description>
             <text_symbol icon_text="321">
                 <font family="Arial" size="1500"/>
-                <text color="4" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
+                <text color="2" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
             </text_symbol>
         </symbol>
         <symbol type="1" id="152" code="701" name="Start">
@@ -2937,7 +2936,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             <point_symbol inner_radius="250" inner_color="-1" outer_width="0" outer_color="-1" elements="30">
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="9" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="10">
@@ -2959,7 +2958,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="9" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="14">
@@ -2985,7 +2984,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="2" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="26">
@@ -3173,7 +3172,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="2" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="26">
@@ -3311,7 +3310,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="2" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="26">
@@ -3349,7 +3348,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="2" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="26">
@@ -3805,7 +3804,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="2" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="38">
@@ -4257,7 +4256,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="2" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="38">
@@ -4393,7 +4392,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="2" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="1794">
@@ -6199,7 +6198,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="9" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="7" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="572">
@@ -6783,7 +6782,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="2" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="31">
@@ -6826,7 +6825,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                 </element>
                 <element>
                     <symbol type="4" code="">
-                        <area_symbol inner_color="4" min_area="0" patterns="0"/>
+                        <area_symbol inner_color="2" min_area="0" patterns="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="31">
