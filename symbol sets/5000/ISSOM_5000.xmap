@@ -107,7 +107,7 @@
             <rgb method="spotcolor" r="0.964" g="0.872" b="0.800"/>
         </color>
         <color priority="13" name="Black below light browns" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000">
-            <spotcolors knockout="true">
+            <spotcolors>
                 <component factor="1" spotcolor="2"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
