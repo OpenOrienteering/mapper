@@ -428,6 +428,7 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("hatchareasview")->setShortcut(QKeySequence("F2"));
 	findAction("baselineview")->setShortcut(QKeySequence("F3"));
 	findAction("hidealltemplates")->setShortcut(QKeySequence("F10"));
+	findAction("overprintsimulation")->setShortcut(QKeySequence("F4"));
 	findAction("fullscreen")->setShortcut(QKeySequence("F11"));
 	color_window_act->setShortcut(QKeySequence("Ctrl+Shift+7"));
 	symbol_window_act->setShortcut(QKeySequence("Ctrl+Shift+8"));
