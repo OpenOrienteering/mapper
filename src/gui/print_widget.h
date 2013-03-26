@@ -129,6 +129,9 @@ protected slots:
 	/** This slot reacts to changes of the paper size combobox. */
 	void paperSizeChanged(int index) const;
 	
+	/** This slot reacts to changes of the paper dimension widgets. */
+	void paperDimensionsChanged() const;
+	
 	/** This slot reacts to changes of the page orientation combobox. */
 	void pageOrientationChanged(int index) const;
 	
@@ -219,6 +222,8 @@ private:
 	QComboBox* paper_size_combo;
 	QComboBox* page_orientation_combo;
 	QSpinBox* copies_edit;
+	QDoubleSpinBox* page_width_edit;
+	QDoubleSpinBox* page_height_edit;
 	
 	QComboBox* dpi_combo;
 	QCheckBox* show_templates_check;

@@ -292,8 +292,7 @@ QPrinter* MapPrinter::makePrinter() const
 	printer->setFullPage(true);
 	if (page_format.paper_size == QPrinter::Custom)
 	{
-		// TODO: Proper handling of custom paper dimensions.
-		printer->setPaperSize(print_area.size() * scale_adjustment, QPrinter::Millimeter);
+		printer->setPaperSize(page_format.paper_dimensions, QPrinter::Millimeter);
 		printer->setOrientation(QPrinter::Portrait);
 	}
 	else
@@ -341,18 +340,23 @@ void MapPrinter::setPrintArea(const QRectF& area)
 // slot
 void MapPrinter::setPaperSize(const QPrinter::PaperSize size)
 {
-	if (size == QPrinter::Custom)
-		setCustomPaperSize(print_area.size() * scale_adjustment);
-	else if (page_format.paper_size != size)
+	if (page_format.paper_size != size)
 	{
-		if ( page_format.paper_size == QPrinter::Custom &&
-		     page_format.paper_dimensions.width() > page_format.paper_dimensions.height() )
+		if (size == QPrinter::Custom)
 		{
-			// After QPrinter::Custom, determine orientation from actual dimensions.
-			page_format.orientation = QPrinter::Landscape;
+			setCustomPaperSize(page_format.paper_dimensions);
 		}
-		page_format.paper_size = size;
-		updatePaperDimensions();
+		else
+		{
+			if ( page_format.paper_size == QPrinter::Custom &&
+			     page_format.paper_dimensions.width() > page_format.paper_dimensions.height() )
+			{
+				// After QPrinter::Custom, determine orientation from actual dimensions.
+				page_format.orientation = QPrinter::Landscape;
+			}
+			page_format.paper_size = size;
+			updatePaperDimensions();
+		}
 		emit pageFormatChanged(page_format);
 	}
 }

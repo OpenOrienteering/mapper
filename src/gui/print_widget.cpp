@@ -64,6 +64,19 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	paper_size_combo = new QComboBox();
 	layout->addRow(tr("Page format:"), paper_size_combo);
 	
+	QWidget* page_size_widget = new QWidget();
+	QHBoxLayout* page_size_layout = new QHBoxLayout();
+	page_size_widget->setLayout(page_size_layout);
+	page_size_layout->setMargin(0);
+	page_width_edit = Util::SpinBox::create(1, 0.1, 1000.0, tr("mm"), 1.0);
+	page_width_edit->setEnabled(false);
+	page_size_layout->addWidget(page_width_edit, 1);
+	page_size_layout->addWidget(new QLabel("x"), 0);
+	page_height_edit = Util::SpinBox::create(1, 0.1, 1000.0, tr("mm"), 1.0);
+	page_height_edit->setEnabled(false);
+	page_size_layout->addWidget(page_height_edit, 1);
+	layout->addRow("", page_size_widget);
+	
 	page_orientation_combo = new QComboBox();
 	page_orientation_combo->addItem(tr("Portrait"), QPrinter::Portrait);
 	page_orientation_combo->addItem(tr("Landscape"), QPrinter::Landscape);
@@ -145,6 +158,8 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	
 	connect(target_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(targetChanged(int)));
 	connect(paper_size_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(paperSizeChanged(int)));
+	connect(page_width_edit, SIGNAL(valueChanged(double)), this, SLOT(paperDimensionsChanged()));
+	connect(page_height_edit, SIGNAL(valueChanged(double)), this, SLOT(paperDimensionsChanged()));
 	connect(page_orientation_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(pageOrientationChanged(int)));
 	
 	connect(top_edit, SIGNAL(valueChanged(double)), this, SLOT(printAreaMoved()));
@@ -446,9 +461,13 @@ void PrintWidget::updatePaperSizes(const QPrinterInfo* target) const
 void PrintWidget::setPageFormat(const MapPrinterPageFormat& format)
 {
 	ScopedMultiSignalsBlocker block;
-	block << paper_size_combo << page_orientation_combo << overlap_edit;
+	block << paper_size_combo << page_orientation_combo << overlap_edit << page_width_edit << page_height_edit;
 	paper_size_combo->setCurrentIndex(paper_size_combo->findData(format.paper_size));
 	page_orientation_combo->setCurrentIndex(page_orientation_combo->findData(format.orientation));
+	page_width_edit->setValue(format.paper_dimensions.width());
+	page_width_edit->setEnabled(format.paper_size == QPrinter::Custom);
+	page_height_edit->setValue(format.paper_dimensions.height());
+	page_height_edit->setEnabled(format.paper_size == QPrinter::Custom);
 	// We only have a single overlap edit field, but MapPrinter supports 
 	// distinct horizontal and vertical overlap. Choose the minimum.
 	overlap_edit->setValue(qMin(format.h_overlap, format.v_overlap));
@@ -463,6 +482,13 @@ void PrintWidget::paperSizeChanged(int index) const
 		QPrinter::PaperSize paper_size = (QPrinter::PaperSize)paper_size_combo->itemData(index).toInt();
 		map_printer->setPaperSize(paper_size);
 	}
+}
+
+// slot
+void PrintWidget::paperDimensionsChanged() const
+{
+	const QSizeF dimensions(page_width_edit->value(), page_height_edit->value());
+	map_printer->setCustomPaperSize(dimensions);
 }
 
 // slot
