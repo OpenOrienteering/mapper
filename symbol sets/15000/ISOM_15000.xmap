@@ -2766,7 +2766,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                 </dash_symbol>
             </line_symbol>
         </symbol>
-        <symbol type="1" id="155" code="9999" name="OpenOrienteering Logo">
+        <symbol type="1" id="155" code="999" name="OpenOrienteering Logo">
             <description>The OpenOrienteering Logo.</description>
             <point_symbol inner_radius="250" inner_color="-1" outer_width="0" outer_color="-1" elements="30">
                 <element>

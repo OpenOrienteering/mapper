@@ -525,7 +525,16 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
     symbol_line->minimum_mid_symbol_count = 0; //1 + ocad_symbol->smin;
 	symbol_line->minimum_mid_symbol_count_when_closed = 0; //1 + ocad_symbol->smin;
 	symbol_line->show_at_least_one_symbol = false; // NOTE: this works in a different way than OCAD's 'at least X symbols' setting (per-segment instead of per-object)
-
+	
+	// Suppress dash symbol at line ends if both start symbol and end symbol exist,
+	// but don't create a warning unless a dash symbol is actually defined.
+	if (symbol_line->start_symbol != NULL && symbol_line->end_symbol != NULL)
+	{
+		symbol_line->setSuppressDashSymbolAtLineEnds(true);
+		if (symbol_line->dash_symbol)
+			addWarning(tr("Line symbol %1: suppressing dash symbol at line ends.").arg(QString::number(0.1 * ocad_symbol->number) + " " + symbol_line->getName()));
+	}
+	
     // TODO: taper fields (tmode and tlast)
 	
     if (main_line == NULL && framing_line == NULL)
