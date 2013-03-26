@@ -672,6 +672,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 		}
 		
 		out_flags.push_back(flags_i);
+		out_flags.back().setCurveStart(false); // Must not be set if bezier.shifted() fails!
 		out_coords.push_back(segment_start);
 		
 		if (flags_i.isCurveStart())
