@@ -48,7 +48,7 @@ DotRenderable::DotRenderable(const DotRenderable& other) : Renderable(other)
 void DotRenderable::getRenderStates(RenderStates& out) const
 {
 	out.color_priority = color_priority;
-	assert(out.color_priority < 3000);
+	Q_ASSERT(out.color_priority < 3000);
 	out.mode = RenderStates::BrushOnly;
 	out.pen_width = 0;
 }
@@ -80,7 +80,7 @@ CircleRenderable::CircleRenderable(const CircleRenderable& other): Renderable(ot
 void CircleRenderable::getRenderStates(RenderStates& out) const
 {
 	out.color_priority = color_priority;
-	assert(out.color_priority < 3000);
+	Q_ASSERT(out.color_priority < 3000);
 	out.mode = RenderStates::PenOnly;
 	out.pen_width = line_width;
 }
@@ -96,7 +96,7 @@ void CircleRenderable::render(QPainter& painter, QRectF& bounding_box, bool forc
 
 LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector& path_coords, bool closed) : Renderable()
 {
-	assert(transformed_coords.size() == coords.size());
+	Q_ASSERT(transformed_coords.size() == coords.size());
 	color_priority = symbol->getColor()->getPriority();
 	line_width = 0.001f * symbol->getLineWidth();
 	if (color_priority < 0)
@@ -121,7 +121,7 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 	}
 	
 	int size = (int)coords.size();
-	assert(size >= 2);
+	Q_ASSERT(size >= 2);
 	
 	bool has_curve = false;
 	bool hole = false;
@@ -135,7 +135,7 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 	{
 		if (hole)
 		{
-			assert(!coords[i].isHolePoint() && "Two hole points in a row!");
+			Q_ASSERT(!coords[i].isHolePoint() && "Two hole points in a row!");
 			if (first_subpath.isEmpty() && closed)
 			{
 				first_subpath = path;
@@ -149,7 +149,7 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 		
 		if (coords[i-1].isCurveStart())
 		{
-            assert(i < size - 2);
+			Q_ASSERT(i < size - 2);
 			has_curve = true;
 			path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
 			i += 2;
@@ -207,7 +207,7 @@ LineRenderable::LineRenderable(LineSymbol* symbol, const MapCoordVectorF& transf
 	// Reset line width to correct value (for helper lines)
 	line_width = 0.001f * symbol->getLineWidth();
 	
-	assert(extent.right() < 999999);	// assert if bogus values are returned
+	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
 }
 void LineRenderable::extentIncludeCap(int i, float half_line_width, bool end_cap, LineSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, bool closed)
 {
@@ -340,7 +340,7 @@ void LineRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_
 			}
 			else if (element.isCurveTo())
 			{
-				assert(i < path.elementCount() - 2);
+				Q_ASSERT(i < path.elementCount() - 2);
 				QPainterPath::Element next_element = path.elementAt(i + 1);
 				QPainterPath::Element end_element = path.elementAt(i + 2);
 				
@@ -410,7 +410,7 @@ void LineRenderable::render(QPainter& painter, QRectF& bounding_box, bool force_
 
 AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transformed_coords, const MapCoordVector& coords, const PathCoordVector* path_coords) : Renderable()
 {
-	assert(transformed_coords.size() >= 3 && transformed_coords.size() == coords.size());
+	Q_ASSERT(transformed_coords.size() >= 3 && transformed_coords.size() == coords.size());
 	color_priority = symbol->getColor() ? symbol->getColor()->getPriority() : MapColor::Reserved;
 	
 	// Special case: first coord
@@ -432,7 +432,7 @@ AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transf
 		
 		if (coords[i-1].isCurveStart())
 		{
-			assert(i < size - 2);
+			Q_ASSERT(i < size - 2);
 			path.cubicTo(transformed_coords[i].toQPointF(), transformed_coords[i+1].toQPointF(), transformed_coords[i+2].toQPointF());
 			i += 2;
 		}
@@ -459,7 +459,7 @@ AreaRenderable::AreaRenderable(AreaSymbol* symbol, const MapCoordVectorF& transf
 	}
 	else
 		extent = path.controlPointRect();
-	assert(extent.right() < 999999);	// assert if bogus values are returned
+	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
 }
 AreaRenderable::AreaRenderable(const AreaRenderable& other) : Renderable(other)
 {
@@ -568,7 +568,7 @@ TextRenderable::TextRenderable(TextSymbol* symbol, TextObject* text_object, cons
 	}
 	extent = QRectF(extent.left() + anchor_x, extent.top() + anchor_y, extent.width(), extent.height());
 	
-	assert(extent.right() < 999999);	// assert if bogus values are returned
+	Q_ASSERT(extent.right() < 999999);	// assert if bogus values are returned
 }
 
 TextRenderable::TextRenderable(const TextRenderable& other) : Renderable(other)

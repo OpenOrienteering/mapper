@@ -20,8 +20,6 @@
 
 #include "symbol_line.h"
 
-#include <cassert>
-
 #if QT_VERSION < 0x050000
 #include <QtGui>
 #else
@@ -363,7 +361,7 @@ void LineSymbol::createRenderables(Object* object, bool path_closed, const MapCo
 			return;	// wrong parameter
 	}
 	
-	assert(processed_coords.size() != 1);
+	Q_ASSERT(processed_coords.size() != 1);
 	if (processed_coords.size() >= 2)
 	{
 		// Create main line renderable
@@ -450,7 +448,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 	
 	double miter_limit = 2.0 * miterLimit(); // needed more than once
 	if (miter_limit <= 0.0)
-		miter_limit = 1.0e6;                 // assert(miter_limit != 0)
+		miter_limit = 1.0e6;                 // Q_ASSERT(miter_limit != 0)
 	double miter_reference = 0.0;            // reference value: 
 	if (join_style == MiterJoin)             //  when to bevel MiterJoins
 		miter_reference = cos(atan(4.0 / miter_limit));
@@ -792,7 +790,7 @@ void LineSymbol::createPointedLineCap(Object* object, const MapCoordVector& flag
 	{
 		float dist_from_start = is_end ? (end - cap_lengths[i]) : (cap_lengths[i] - start);
 		float factor = dist_from_start / cap_length;
-		//assert(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
+		//Q_ASSERT(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
 		factor = qMax(0.0f, qMin(1.0f, factor));
 		
 		MapCoordF right_vector;
@@ -807,7 +805,7 @@ void LineSymbol::createPointedLineCap(Object* object, const MapCoordVector& flag
 			right_vector = PathCoord::calculateRightVector(flags, coords, false, orig_end_index, &scaling);
 		else
 			right_vector = PathCoord::calculateRightVector(cap_flags, cap_middle_coords, false, i, &scaling);
-		assert(right_vector.lengthSquared() < 1.01f);
+		Q_ASSERT(right_vector.lengthSquared() < 1.01f);
 		float radius = factor * scaling * line_half_width;
 		if (radius > 2 * line_half_width)
 			radius = 2 * line_half_width;
@@ -825,7 +823,7 @@ void LineSymbol::createPointedLineCap(Object* object, const MapCoordVector& flag
 			cap_coords_left.push_back(cap_coords_left[cap_coords_left.size() - 1]);
 			
 			MapCoordF tangent = MapCoordF(cap_middle_coords[i].getX() - cap_middle_coords[i-1].getX(), cap_middle_coords[i].getY() - cap_middle_coords[i-1].getY());
-			assert(tangent.lengthSquared() < 999*999);
+			Q_ASSERT(tangent.lengthSquared() < 999*999);
 			float right_scale = tangent.length() * tan_angle * sign;
 			cap_coords[i-1] = MapCoordF(cap_coords[i].getX() - tangent.getX() - right_vector.getX() * right_scale, cap_coords[i].getY() - tangent.getY() - right_vector.getY() * right_scale);
 			cap_coords_left[i-1] = MapCoordF(cap_coords_left[i].getX() - tangent.getX() + right_vector.getX() * right_scale, cap_coords_left[i].getY() - tangent.getY() + right_vector.getY() * right_scale);
@@ -834,7 +832,7 @@ void LineSymbol::createPointedLineCap(Object* object, const MapCoordVector& flag
 		{
 			// TODO: Tangent scaling depending on curvature? Adaptive subdivision of the curves?
 			MapCoordF tangent = MapCoordF(cap_middle_coords[i+1].getX() - cap_middle_coords[i].getX(), cap_middle_coords[i+1].getY() - cap_middle_coords[i].getY());
-			assert(tangent.lengthSquared() < 999*999);
+			Q_ASSERT(tangent.lengthSquared() < 999*999);
 			float right_scale = tangent.length() * tan_angle * sign;
 			cap_coords.push_back(MapCoordF(cap_coords[i].getX() + tangent.getX() + right_vector.getX() * right_scale, cap_coords[i].getY() + tangent.getY() + right_vector.getY() * right_scale));
 			cap_coords_left.push_back(MapCoordF(cap_coords_left[i].getX() + tangent.getX() - right_vector.getX() * right_scale, cap_coords_left[i].getY() + tangent.getY() - right_vector.getY() * right_scale));
@@ -919,7 +917,7 @@ void LineSymbol::createPointedLineCap(Object* object, const MapCoordVector& flag
 	}
 	
 	// Add renderable
-	assert(cap_coords.size() >= 3 && cap_coords.size() == cap_flags.size());
+	Q_ASSERT(cap_coords.size() >= 3 && cap_coords.size() == cap_flags.size());
 	output.insertRenderable(new AreaRenderable(&area_symbol, cap_coords, cap_flags, NULL));
 }
 
@@ -1017,9 +1015,9 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 			int higher_dashgroup_count = qRound(ceil(num_dashgroups_f));
 			double lower_dashgroup_deviation  = (length_plus_break - lower_dashgroup_count * total_dash_group_length)  / lower_dashgroup_count;
 			double higher_dashgroup_deviation = (higher_dashgroup_count * total_dash_group_length - length_plus_break) / higher_dashgroup_count;
-			assert(half_first_dash || half_last_dash || (lower_dashgroup_deviation >= -0.001 && higher_dashgroup_deviation >= -0.001)); // TODO; seems to fail as long as halving first/last dashes affects the outermost dash only
+			Q_ASSERT(half_first_dash || half_last_dash || (lower_dashgroup_deviation >= -0.001 && higher_dashgroup_deviation >= -0.001)); // TODO; seems to fail as long as halving first/last dashes affects the outermost dash only
 			int num_dashgroups = (lower_dashgroup_deviation > higher_dashgroup_deviation) ? higher_dashgroup_count : lower_dashgroup_count;
-			assert(num_dashgroups >= 2);
+			Q_ASSERT(num_dashgroups >= 2);
 			
 			int num_half_dashes = 2*num_dashgroups*dashes_in_group - half_first_last_dash;
 			double adapted_dash_length = (length - (num_dashgroups-1) * break_length_f - num_dashgroups * total_in_group_break_length) / (0.5 * num_half_dashes);
@@ -1189,7 +1187,7 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 				double ideal_length = segment_count * segment_length_f + end_length_twice_f;
 				double adapted_end_length = end_length_f + deviation * (end_length_f / ideal_length);
 				double adapted_segment_length = segment_length_f + deviation * (segment_length_f / ideal_length);
-				assert(qAbs(2*adapted_end_length + segment_count*adapted_segment_length + (segment_count + 1)*mid_symbols_length - length) < 0.001);
+				Q_ASSERT(qAbs(2*adapted_end_length + segment_count*adapted_segment_length + (segment_count + 1)*mid_symbols_length - length) < 0.001);
 				
 				if (adapted_segment_length >= 0 && (show_at_least_one_symbol || higher_segment_count > 0 || length > end_length_twice_f - 0.5 * (segment_length_f + mid_symbols_length)))
 				{
@@ -1216,7 +1214,7 @@ void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const
 				double higher_segment_deviation = qAbs(length - higher_segment_count * segment_length_f - (higher_segment_count+1)*mid_symbols_length) / higher_segment_count;
 				int segment_count = (lower_segment_deviation > higher_segment_deviation) ? higher_segment_count : lower_segment_count;
 				double adapted_segment_length = (length - (segment_count+1)*mid_symbols_length) / segment_count + mid_symbols_length;
-				assert(qAbs(segment_count * adapted_segment_length + mid_symbols_length) - length < 0.001f);
+				Q_ASSERT(qAbs(segment_count * adapted_segment_length + mid_symbols_length) - length < 0.001f);
 				
 				if (adapted_segment_length >= mid_symbols_length)
 				{
@@ -1262,7 +1260,7 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 										float start, float end, int& cur_line_coord, bool include_start_coord, MapCoordVector& out_flags, MapCoordVectorF& out_coords,
 										std::vector<float>* out_lengths, bool set_mid_symbols, ObjectRenderables& output)
 {
-	assert(cur_line_coord > 0);
+	Q_ASSERT(cur_line_coord > 0);
 	int line_coords_size = (int)line_coords.size();
 	while (cur_line_coord < line_coords_size - 1 && line_coords[cur_line_coord].clen < start)
 		++cur_line_coord;
@@ -1275,15 +1273,15 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 	{
 		int index = line_coords[cur_line_coord].index;
 		float factor = (start - line_coords[cur_line_coord-1].clen) / qMax(1e-7f, (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen));
-		//assert(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
+		//Q_ASSERT(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
 		if (factor > 1)
 			factor = 1;
 		else if (factor < 0)
 			factor = 0;
 		float prev_param = (line_coords[cur_line_coord-1].index == line_coords[cur_line_coord].index) ? line_coords[cur_line_coord-1].param : 0;
-		assert(prev_param <= line_coords[cur_line_coord].param);
+		Q_ASSERT(prev_param <= line_coords[cur_line_coord].param);
 		float p = prev_param + (line_coords[cur_line_coord].param - prev_param) * factor;
-		assert(p >= 0 && p <= 1);
+		Q_ASSERT(p >= 0 && p <= 1);
 		
 		MapCoordF o0, o1;
 		if (!include_start_coord)
@@ -1350,15 +1348,15 @@ void LineSymbol::calculateCoordinatesForRange(const MapCoordVector& flags, const
 	{
 		int index = line_coords[cur_line_coord].index;
 		float factor = (end - line_coords[cur_line_coord-1].clen) / qMax(1e-7f, (line_coords[cur_line_coord].clen - line_coords[cur_line_coord-1].clen));
-		//assert(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
+		//Q_ASSERT(factor >= -0.01f && factor <= 1.01f); happens when using large break lengths as these are not adjusted
 		if (factor > 1)
 			factor = 1;
 		else if (factor < 0)
 			factor = 0;
 		float prev_param = (line_coords[cur_line_coord-1].index == line_coords[cur_line_coord].index) ? line_coords[cur_line_coord-1].param : 0;
-		assert(prev_param <= line_coords[cur_line_coord].param);
+		Q_ASSERT(prev_param <= line_coords[cur_line_coord].param);
 		float p = prev_param + (line_coords[cur_line_coord].param - prev_param) * factor;
-		assert(p >= 0 && p <= 1);
+		Q_ASSERT(p >= 0 && p <= 1);
 		
 		out_flags.push_back(MapCoord(0, 0));
 		out_coords.push_back(MapCoordF(0, 0));
@@ -1428,11 +1426,11 @@ void LineSymbol::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 					out_lengths->push_back(line_coords[cur_line_coord-1].clen);
 				
 				current_index += 3;
-				assert(current_index == line_coords[cur_line_coord].index);
+				Q_ASSERT(current_index == line_coords[cur_line_coord].index);
 			}
 			else
 			{
-				assert((!flags[current_index].isCurveStart() && current_index + 1 == line_coords[cur_line_coord].index) ||
+				Q_ASSERT((!flags[current_index].isCurveStart() && current_index + 1 == line_coords[cur_line_coord].index) ||
 				       (flags[current_index].isCurveStart() && current_index + 3 == line_coords[cur_line_coord].index) ||
 				       (flags[current_index+1].isHolePoint() && current_index + 2 == line_coords[cur_line_coord].index));
 				do
@@ -2607,7 +2605,7 @@ void LineSymbolSettings::updateBorder(LineSymbolBorder& border, LineSymbolSettin
 
 void LineSymbolSettings::updateBorderContents(LineSymbolBorder& border, LineSymbolSettings::BorderWidgets& widgets)
 {
-	assert(this->signalsBlocked());
+	Q_ASSERT(this->signalsBlocked());
 	
 	widgets.width_edit->setValue(0.001 * border.width);
 	widgets.color_edit->setColor(border.color);
@@ -2757,7 +2755,7 @@ void LineSymbolSettings::updateContents()
 
 void LineSymbolSettings::reset(Symbol* symbol)
 {
-	assert(symbol->getType() == Symbol::Line);
+	Q_ASSERT(symbol->getType() == Symbol::Line);
 	
 	SymbolPropertiesWidget::reset(symbol);
 	
