@@ -431,55 +431,76 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 	QHash<QString, TrackPoint> nodes;
 	int node_problems = 0;
 	
-	QXmlStreamReader stream(file);
-	while (!stream.atEnd())
+	QXmlStreamReader xml(file);
+	if (xml.readNextStartElement())
 	{
-		stream.readNext();
-		QXmlStreamAttributes attributes(stream.attributes());
-		if (stream.tokenType() == QXmlStreamReader::StartElement)
+		if (xml.name() != "osm")
 		{
-			if (stream.name() == "node")
+			QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error"), TemplateTrack::tr("%1:\nNot an OSM file."));
+			return false;
+		}
+		else
+		{
+			QXmlStreamAttributes attributes(xml.attributes());
+			const double osm_version = attributes.value("version").toString().toDouble();
+			if (osm_version < min_supported_version)
 			{
-				if (attributes.value("visible") == "false")
+				QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error"), TemplateTrack::tr("The OSM file has version %1.\nThe minimum supported version is %2.").arg(attributes.value("version").toString(), QString::number(min_supported_version, 'g', 1)));
+				return false;
+			}
+			if (osm_version > max_supported_version)
+			{
+				QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error"), TemplateTrack::tr("The OSM file has version %1.\nThe maximum supported version is %2.").arg(attributes.value("version").toString(), QString::number(min_supported_version, 'g', 1)));
+				return false;
+			}
+		}
+	}
+	
+	while (xml.readNextStartElement())
+	{
+		const QStringRef name(xml.name());
+		QXmlStreamAttributes attributes(xml.attributes());
+		if (attributes.value("visible") == "false")
+		{
+			xml.skipCurrentElement();
+			continue;
+		}
+		
+		if (name == "node")
+		{
+			bool ok = !attributes.value("id").isEmpty();
+			double lat, lon;
+			if (ok) lat = attributes.value("lat").toString().toDouble(&ok);
+			if (ok) lon = attributes.value("lon").toString().toDouble(&ok);
+			if (!ok)
+			{
+				node_problems++;
+				xml.skipCurrentElement();
+				continue;
+			}
+			
+			QString  point_name(attributes.value("id").toString());
+			TrackPoint point(LatLon(lat, lon, true));
+			if (project_points)
+			{
+				point.map_coord = map_georef.toMapCoordF(track_crs, MapCoordF(point.gps_coord.longitude, point.gps_coord.latitude), NULL); // FIXME: check for errors
+			}
+			nodes.insert(point_name, point);
+			
+			while (xml.readNextStartElement())
+			{
+				if (xml.name() == "tag")
 				{
-					stream.skipCurrentElement();
-					continue;
-				}
-				
-				bool ok = !attributes.value("id").isEmpty();
-				double lat, lon;
-				if (ok) lat = attributes.value("lat").toString().toDouble(&ok);
-				if (ok) lon = attributes.value("lon").toString().toDouble(&ok);
-				if (!ok)
-				{
-					node_problems++;
-					stream.skipCurrentElement();
-					continue;
-				}
-				
-				QString  point_name(attributes.value("id").toString());
-				TrackPoint point(LatLon(lat, lon, true));
-				if (project_points)
-					point.map_coord = map_georef.toMapCoordF(track_crs, MapCoordF(point.gps_coord.longitude, point.gps_coord.latitude), NULL); // FIXME: check for errors
-				nodes.insert(point_name, point);
-				
-				while (!stream.atEnd())
-				{
-					stream.readNext();
-					if (stream.tokenType() == QXmlStreamReader::EndElement && stream.name() == "node")
-						break;
-					if (stream.tokenType() == QXmlStreamReader::StartElement && stream.name() != "tag")
-						continue;
-					
-					if (stream.attributes().value("k") == "ele")
+					const QStringRef k(xml.attributes().value("k"));
+					if (k == "ele")
 					{
 						bool ok;
-						double elevation = stream.attributes().value("v").toString().toDouble(&ok);
+						double elevation = xml.attributes().value("v").toString().toDouble(&ok);
 						if (ok) nodes[point_name].elevation = elevation;
 					}
-					else if (stream.attributes().value("k") == "name")
+					else if (k == "name")
 					{
-						QString name = stream.attributes().value("v").toString();
+						QString name = xml.attributes().value("v").toString();
 						if (!name.isEmpty() && !nodes.contains(name)) 
 						{
 							waypoints.push_back(point);
@@ -487,43 +508,28 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 						}
 					}
 				}
+				xml.skipCurrentElement();
 			}
-			else if (stream.name() == "way")
+		}
+		else if (name == "way")
+		{
+			segment_starts.push_back(segment_points.size());
+			while (xml.readNextStartElement())
 			{
-				if (attributes.value("visible") == "false")
+				if (xml.name() == "nd")
 				{
-					stream.skipCurrentElement();
-					continue;
+					QString ref = xml.attributes().value("ref").toString();
+					if (ref.isEmpty() || !nodes.contains(ref))
+						node_problems++;
+					else
+						segment_points.push_back(nodes[ref]);
 				}
-				
-				segment_starts.push_back(segment_points.size());
+				xml.skipCurrentElement();
 			}
-			else if (stream.name() == "nd")
-			{
-				QString ref = attributes.value("ref").toString();
-				if (ref.isEmpty() || !nodes.contains(ref))
-					node_problems++;
-				else
-					segment_points.push_back(nodes[ref]);
-			}
-			else if (stream.name() == "osm")
-			{
-				double osm_version = attributes.value("version").toString().toDouble();
-				if (osm_version < min_supported_version)
-				{
-					QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error"), TemplateTrack::tr("The OSM file has version %1.\nThe minimum supported version is %2.").arg(attributes.value("version").toString(), QString::number(min_supported_version, 'g', 1)));
-					return false;
-				}
-				if (osm_version > max_supported_version)
-				{
-					QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error"), TemplateTrack::tr("The OSM file has version %1.\nThe maximum supported version is %2.").arg(attributes.value("version").toString(), QString::number(min_supported_version, 'g', 1)));
-					return false;
-				}
-			}
-			else
-			{
-				stream.skipCurrentElement();
-			}
+		}
+		else
+		{
+			xml.skipCurrentElement();
 		}
 	}
 	
