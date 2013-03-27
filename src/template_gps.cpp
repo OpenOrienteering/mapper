@@ -373,6 +373,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		return false;
 	}
 	
+	const Track::ElementTags& tags = track.tags();
 	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	std::vector< Object* > result;
@@ -409,7 +410,16 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		}
 		
 		PathObject* path = importPathStart();
-		path->setTag("name", track.getSegmentName(i));
+		QString name = track.getSegmentName(i);
+		if (!tags[name].isEmpty())
+		{
+			path->setTags(tags[name]);
+		}
+		else
+		{
+			path->setTag("name", name);
+		}
+		
 		for (int j = 0; j < segment_size; j++)
 		{
 			const TrackPoint& track_point = track.getSegmentPoint(i, j);

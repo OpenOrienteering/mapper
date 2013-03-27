@@ -21,8 +21,11 @@
 #ifndef _OPENORIENTEERING_GPS_TRACK_H_
 #define _OPENORIENTEERING_GPS_TRACK_H_
 
-#include <QString>
+#include <vector>
+
 #include <QDate>
+#include <QHash>
+#include <QString>
 
 #include "georeferencing.h"
 
@@ -100,6 +103,16 @@ public:
 	/// Averages all track coordinates
 	LatLon calcAveragePosition() const;
 	
+	
+	/** A collection of key:value tags. Cf. Object::Tags. */
+	typedef QHash<QString, QString> Tags;
+	
+	/** A mapping of an element name to a tags collection. */
+	typedef QHash<QString, Tags> ElementTags;
+	
+	/** Returns the mapping of element names to tag collections. */
+	const ElementTags& tags() const;
+	
 private:
 	bool loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent);
 	bool loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent);
@@ -107,6 +120,9 @@ private:
 	
 	void projectPoints();
 	
+	
+	/** A mapping of element id to tags. */
+	ElementTags element_tags; 
 	
 	std::vector<TrackPoint> waypoints;
 	std::vector<QString> waypoint_names;
@@ -121,5 +137,15 @@ private:
 	Georeferencing* track_crs;
 	Georeferencing map_georef;
 };
+
+
+// ### Track inline code ###
+
+inline
+const Track::ElementTags& Track::tags() const
+{
+	return element_tags;
+}
+
 
 #endif

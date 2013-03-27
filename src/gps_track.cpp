@@ -456,6 +456,7 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 		}
 	}
 	
+	qint64 internal_node_id = 0;
 	while (xml.readNextStartElement())
 	{
 		const QStringRef name(xml.name());
@@ -466,9 +467,15 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 			continue;
 		}
 		
+		QString id(attributes.value("id").toString());
+		if (id.isEmpty())
+		{
+			id = "!" + QString::number(++internal_node_id);
+		}
+		
 		if (name == "node")
 		{
-			bool ok = !attributes.value("id").isEmpty();
+			bool ok = true;
 			double lat, lon;
 			if (ok) lat = attributes.value("lat").toString().toDouble(&ok);
 			if (ok) lon = attributes.value("lon").toString().toDouble(&ok);
@@ -479,32 +486,33 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 				continue;
 			}
 			
-			QString  point_name(attributes.value("id").toString());
 			TrackPoint point(LatLon(lat, lon, true));
 			if (project_points)
 			{
 				point.map_coord = map_georef.toMapCoordF(track_crs, MapCoordF(point.gps_coord.longitude, point.gps_coord.latitude), NULL); // FIXME: check for errors
 			}
-			nodes.insert(point_name, point);
+			nodes.insert(id, point);
 			
 			while (xml.readNextStartElement())
 			{
 				if (xml.name() == "tag")
 				{
-					const QStringRef k(xml.attributes().value("k"));
+					const QString k(xml.attributes().value("k").toString());
+					const QString v(xml.attributes().value("v").toString());
+					element_tags[id][k] = v;
+					
 					if (k == "ele")
 					{
 						bool ok;
-						double elevation = xml.attributes().value("v").toString().toDouble(&ok);
-						if (ok) nodes[point_name].elevation = elevation;
+						double elevation = v.toDouble(&ok);
+						if (ok) nodes[id].elevation = elevation;
 					}
 					else if (k == "name")
 					{
-						QString name = xml.attributes().value("v").toString();
-						if (!name.isEmpty() && !nodes.contains(name)) 
+						if (!v.isEmpty() && !nodes.contains(v)) 
 						{
 							waypoints.push_back(point);
-							waypoint_names.push_back(name);
+							waypoint_names.push_back(v);
 						}
 					}
 				}
@@ -514,6 +522,7 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 		else if (name == "way")
 		{
 			segment_starts.push_back(segment_points.size());
+			segment_names.push_back(id);
 			while (xml.readNextStartElement())
 			{
 				if (xml.name() == "nd")
@@ -523,6 +532,12 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 						node_problems++;
 					else
 						segment_points.push_back(nodes[ref]);
+				}
+				else if (xml.name() == "tag")
+				{
+					const QString k(xml.attributes().value("k").toString());
+					const QString v(xml.attributes().value("v").toString());
+					element_tags[id][k] = v;
 				}
 				xml.skipCurrentElement();
 			}
