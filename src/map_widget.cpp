@@ -649,13 +649,16 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		painter.fillRect(QRect(0, height() + drag_offset.y(), width(), -drag_offset.y()), QColor(Qt::gray));
 	
 	// No colors defined? Provide a litte help message ...
-	bool no_templates_or_grid = view->getMap()->getNumTemplates() == 0 && !view->isGridVisible();
-	if (show_help && view && view->getMap()->getNumColors() == 0 && no_templates_or_grid)
-		showHelpMessage(&painter, tr("Empty map!\n\nStart by defining some colors:\nSelect Symbols -> Color window to\nopen the color dialog and\ndefine the colors there."));
-	else if (show_help && view && view->getMap()->getNumSymbols() == 0 && no_templates_or_grid)
-		showHelpMessage(&painter, tr("No symbols!\n\nNow define some symbols:\nRight-click in the symbol bar\nand select \"New symbol\"\nto create one."));
-	else if (show_help && view && view->getMap()->getNumObjects() == 0 && no_templates_or_grid)	// No templates or objects defined?
-		showHelpMessage(&painter, tr("Ready to draw!\n\nStart drawing or load a base map.\nTo load a base map, click\nTemplates -> Open template...") + "\n\n" + tr("Hint: Hold the middle mouse button to drag the map,\nzoom using the mouse wheel, if available."));
+	bool no_contents = view->getMap()->getNumObjects() == 0 && view->getMap()->getNumTemplates() == 0 && !view->isGridVisible();
+	if (show_help && view && no_contents)
+	{
+		if (view->getMap()->getNumColors() == 0)
+			showHelpMessage(&painter, tr("Empty map!\n\nStart by defining some colors:\nSelect Symbols -> Color window to\nopen the color dialog and\ndefine the colors there."));
+		else if (view->getMap()->getNumSymbols() == 0)
+			showHelpMessage(&painter, tr("No symbols!\n\nNow define some symbols:\nRight-click in the symbol bar\nand select \"New symbol\"\nto create one."));
+		else
+			showHelpMessage(&painter, tr("Ready to draw!\n\nStart drawing or load a base map.\nTo load a base map, click\nTemplates -> Open template...") + "\n\n" + tr("Hint: Hold the middle mouse button to drag the map,\nzoom using the mouse wheel, if available."));
+	}
 	else if (view)
 	{
 		// Update all dirty caches
