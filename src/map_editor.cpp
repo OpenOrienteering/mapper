@@ -79,6 +79,7 @@
 // ### MapEditorController ###
 
 MapEditorController::MapEditorController(OperatingMode mode, Map* map)
+ : overprinting_simulation_act(NULL)
 {
 	this->mode = mode;
 	this->map = NULL;
@@ -1041,6 +1042,22 @@ void MapEditorController::clearUndoRedoHistory()
 	map->setOtherDirty();
 }
 
+void MapEditorController::spotColorPresenceChanged(bool has_spot_colors)
+{
+	if (overprinting_simulation_act != NULL)
+	{
+		if (has_spot_colors)
+		{
+			overprinting_simulation_act->setEnabled(true);
+		}
+		else
+		{
+			overprinting_simulation_act->setChecked(false);
+			overprinting_simulation_act->setEnabled(false);
+		}
+	}
+}
+
 void MapEditorController::showGrid()
 {
 	main_view->setGridVisible(show_grid_act->isChecked());
@@ -1101,6 +1118,10 @@ void MapEditorController::hideAllTemplates(bool checked)
 
 void MapEditorController::overprintingSimulation(bool checked)
 {
+	if (checked && !map->hasSpotColors())
+	{
+		checked = false;
+	}
 	main_view->setOverprintingSimulationEnabled(checked);
 	map->updateAllMapWidgets();
 }
@@ -2278,6 +2299,7 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 	connect(map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
 	connect(map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
 	connect(map, SIGNAL(closedTemplateAvailabilityChanged()), this, SLOT(closedTemplateAvailabilityChanged()));
+	connect(map, SIGNAL(spotColorPresenceChanged(bool)), this, SLOT(spotColorPresenceChanged(bool)));
 	if (symbol_widget)
 		connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*,Symbol*)));
 	
@@ -2302,6 +2324,7 @@ void MapEditorController::updateWidgets()
 			hatch_areas_view_act->setChecked(map->isAreaHatchingEnabled());
 			baseline_view_act->setChecked(map->isBaselineViewEnabled());
 			closedTemplateAvailabilityChanged();
+			spotColorPresenceChanged(map->hasSpotColors());
 		}
 	}
 }

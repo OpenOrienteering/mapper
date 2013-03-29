@@ -329,7 +329,8 @@ PointSymbol* Map::undefined_point;
 CombinedSymbol* Map::covering_combined_line;
 
 Map::Map()
- : renderables(new MapRenderables(this)),
+ : has_spot_colors(false),
+   renderables(new MapRenderables(this)),
    selection_renderables(new MapRenderables(this)),
    printer_config(NULL)
 {
@@ -344,6 +345,10 @@ Map::Map()
 	baseline_view_enabled = false;
 	
 	clear();
+	
+	connect(this, SIGNAL(colorAdded(int,MapColor*)), SLOT(checkSpotColorPresence()));
+	connect(this, SIGNAL(colorChanged(int,MapColor*)), SLOT(checkSpotColorPresence()));
+	connect(this, SIGNAL(colorDeleted(int,const MapColor*)), SLOT(checkSpotColorPresence()));
 }
 Map::~Map()
 {
@@ -1357,6 +1362,26 @@ void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std:
 			}
 		}
 	}
+}
+
+void Map::checkSpotColorPresence()
+{
+	const bool has_spot_colors = hasSpotColors();
+	if (this->has_spot_colors != has_spot_colors)
+	{
+		this->has_spot_colors = has_spot_colors;
+		emit spotColorPresenceChanged(has_spot_colors);
+	}
+}
+
+bool Map::hasSpotColors() const
+{
+	for (ColorVector::const_iterator c = color_set->colors.begin(), end = color_set->colors.end(); c != end; ++c)
+	{
+		if ((*c)->getSpotColorMethod() == MapColor::SpotColor)
+			return true;
+	}
+	return false;
 }
 
 void Map::importSymbols(Map* other, const MapColorMap& color_map, int insert_pos, bool merge_duplicates, std::vector< bool >* filter,
