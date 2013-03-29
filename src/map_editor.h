@@ -150,6 +150,10 @@ public slots:
 	void clipboardChanged(QClipboard::Mode mode);
 	void updatePasteAvailability();
 	
+	/** This slot cause the map editor to check the presence of spot colors,
+	 *  and to disable overprinting simulation if there are no spot colors. */
+	void spotColorPresenceChanged(bool has_spot_colors);
+	
 	void showWholeMap();
 	
 	void editToolClicked();

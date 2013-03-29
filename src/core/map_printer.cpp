@@ -496,9 +496,14 @@ void MapPrinter::setPrintGrid(const bool visible)
 }
 
 // slot
-void MapPrinter::setSimulateOverprinting(const bool enabled)
+void MapPrinter::setSimulateOverprinting(bool enabled)
 {
-	if (options.simulate_overprinting != enabled)
+	if (enabled && !map.hasSpotColors())
+	{
+		options.simulate_overprinting = false;
+		emit optionsChanged(options);
+	}
+	else if (options.simulate_overprinting != enabled)
 	{
 		options.simulate_overprinting = enabled;
 		emit optionsChanged(options);

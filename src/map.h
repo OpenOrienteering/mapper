@@ -188,6 +188,9 @@ public:
 	/// WARNING (FIXME): returns an empty list if the map does not contain symbols
 	void determineColorsInUse(const std::vector< bool >& by_which_symbols, std::vector< bool >& out);
 	
+	/** Returns true if the map contains spot colors. */
+	bool hasSpotColors() const;
+	
 	// Symbols
 	
 	inline int getNumSymbols() const {return (int)symbols.size();}
@@ -428,6 +431,7 @@ signals:
 	void colorAdded(int pos, MapColor* color);
 	void colorChanged(int pos, MapColor* color);
 	void colorDeleted(int pos, const MapColor* old_color);
+	void spotColorPresenceChanged(bool has_spot_colors) const;
 	
 	void symbolAdded(int pos, Symbol* symbol);
 	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
@@ -446,6 +450,9 @@ signals:
 	/// This signal is emitted when at least one of the selected objects is edited in any way.
 	/// For example, this includes the case where a symbol of one of the selected objects is edited, too.
 	void selectedObjectEdited();
+	
+protected slots:
+	void checkSpotColorPresence();
 	
 private:
 	typedef std::vector<MapColor*> ColorVector;
@@ -501,6 +508,7 @@ private:
 	static void initStatic();
 	
 	MapColorSet* color_set;
+	bool has_spot_colors;
 	SymbolVector symbols;
 	TemplateVector templates;
 	TemplateVector closed_templates;
@@ -715,5 +723,6 @@ private:
 	
 	WidgetVector widgets;
 };
+
 
 #endif
