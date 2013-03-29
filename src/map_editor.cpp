@@ -79,7 +79,8 @@
 // ### MapEditorController ###
 
 MapEditorController::MapEditorController(OperatingMode mode, Map* map)
- : overprinting_simulation_act(NULL)
+ : overprinting_simulation_act(NULL),
+   statusbar_objecttag_label(NULL)
 {
 	this->mode = mode;
 	this->map = NULL;
@@ -318,14 +319,17 @@ void MapEditorController::attach(MainWindow* window)
 	statusbar_cursorpos_label->setFixedWidth(160);
 	statusbar_cursorpos_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	
-	statusbar_objecttag_label = new QLabel();
-	statusbar_objecttag_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-	statusbar_objecttag_label->setFixedWidth(160);
-	statusbar_objecttag_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
-	
 	window->statusBar()->addPermanentWidget(statusbar_zoom_frame);
 	window->statusBar()->addPermanentWidget(statusbar_cursorpos_label);
-	window->statusBar()->addPermanentWidget(statusbar_objecttag_label);
+	
+	if (mode == MapEditor)
+	{
+		statusbar_objecttag_label = new QLabel();
+		statusbar_objecttag_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
+		statusbar_objecttag_label->setFixedWidth(160);
+		statusbar_objecttag_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+		window->statusBar()->addPermanentWidget(statusbar_objecttag_label);
+	}
 	
 	// Create map widget
 	map_widget = new MapWidget(mode == MapEditor, mode == SymbolEditor);
