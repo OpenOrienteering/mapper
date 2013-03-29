@@ -1251,9 +1251,6 @@ void Map::addColor(MapColor* color, int pos)
 void Map::deleteColor(int pos)
 {
 	MapColor* color = color_set->colors[pos];
-	color_set->colors.erase(color_set->colors.begin() + pos);
-	adjustColorPriorities(pos, color_set->colors.size() - 1);
-	
 	if (color->getSpotColorMethod() == MapColor::SpotColor)
 	{
 		// Update dependent colors
@@ -1279,6 +1276,9 @@ void Map::deleteColor(int pos)
 		}
 	}
 	
+	color_set->colors.erase(color_set->colors.begin() + pos);
+	adjustColorPriorities(pos, color_set->colors.size() - 1);
+	
 	if (getNumColors() == 0)
 	{
 		// That was the last color - the help text in the map widget(s) should be updated
@@ -1301,6 +1301,7 @@ void Map::deleteColor(int pos)
 	
 	delete color;
 }
+
 int Map::findColorIndex(const MapColor* color) const
 {
 	int size = (int)color_set->colors.size();
