@@ -42,12 +42,12 @@ endif()
 # Configure CPack
 
 set(CPACK_PACKAGE_NAME "Qt Linguist")
-set(CPACK_PACKAGE_VENDOR "Qt")
+set(CPACK_PACKAGE_VENDOR "OpenOrienteering")
 set(CPACK_PACKAGE_VERSION_MAJOR ${Qt5Core_VERSION_MAJOR})
 set(CPACK_PACKAGE_VERSION_MINOR ${Qt5Core_VERSION_MINOR})
 set(CPACK_PACKAGE_VERSION_PATCH ${Qt5Core_VERSION_PATCH})
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY 
-  "Translation tool from Qt")
+  "Qt translation tool, packaged by OpenOrienteering.")
 if(CMAKE_SIZEOF_VOID_P EQUAL 4)
 	set(_system_name "${CMAKE_SYSTEM_NAME}-x86")
 elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -57,14 +57,14 @@ else()
 endif()
 set(CPACK_PACKAGE_FILE_NAME 
   "qt-linguist_${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}-${_system_name}")
-#	set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/COPYING")
-#	set(CPACK_STRIP_FILES "TRUE")
+set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/COPYING")
+set(CPACK_STRIP_FILES "TRUE")
 
 if(WIN32)
 	set(RUNTIME_DESTINATION .)
 	set(LIBRARY_DESTINATION .)
 	set(DATA_DESTINATION    .)
-	set(ABOUT_DESTINATION   "doc")
+	set(ABOUT_DESTINATION   .)
 	set(PACKAGE_FILE_NAME   ${CPACK_PACKAGE_FILE_NAME}.zip)
 	set(CPACK_GENERATOR     "ZIP")
 elseif(APPLE)
@@ -81,7 +81,7 @@ else()
 	set(RUNTIME_DESTINATION .)
 	set(LIBRARY_DESTINATION .)
 	set(DATA_DESTINATION    .)
-	set(ABOUT_DESTINATION   "doc")
+	set(ABOUT_DESTINATION   .)
 	set(PACKAGE_FILE_NAME   ${CPACK_PACKAGE_FILE_NAME}.zip)
 	set(CPACK_GENERATOR     "ZIP")
 endif()
@@ -89,7 +89,7 @@ endif()
 include(CPack)
 
 
-# Copy the created package to another location
+# Copy the created package to the make-time DESTDIR location
 
 set(MAKEFILE_DESTDIR_VAR "\$(DESTDIR)")
 add_custom_target(package-install
@@ -99,6 +99,11 @@ add_custom_target(package-install
 
 
 # Define package contents (by install commands)
+
+install(
+  FILES COPYING
+  DESTINATION "${ABOUT_DESTINATION}"
+)
 
 if(APPLE)
 	install(
@@ -216,6 +221,13 @@ foreach(_qt_component ${LINGUIST_QT_TRANSLATIONS})
 	  DESTINATION "${DATA_DESTINATION}/translations"
 	  FILES_MATCHING PATTERN "${_qt_component}_*.qm")
 endforeach()
+
+# Install phrasebooks
+install(
+  DIRECTORY "${QT_TRANSLATIONS_DIR}/../phrasebooks/"
+  DESTINATION "${DATA_DESTINATION}/phrasebooks"
+  FILES_MATCHING PATTERN "*.qph")
+
 
 if(WIN32)
 	install(
