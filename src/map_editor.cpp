@@ -571,25 +571,17 @@ void MapEditorController::createMenuAndToolbars()
 	statusbar_cursorpos_label->addAction(geographic_coordinates_act);
 	statusbar_cursorpos_label->addAction(geographic_coordinates_dms_act);
 	
-	QMenu* coordinates_menu = new QMenu(tr("Display coordinates as..."));
-	coordinates_menu->addAction(map_coordinates_act);
-	coordinates_menu->addAction(projected_coordinates_act);
-	coordinates_menu->addAction(geographic_coordinates_act);
-	coordinates_menu->addAction(geographic_coordinates_dms_act);
-	
 	// Refactored so we can do custom key bindings in the future
 	assignKeyboardShortcuts();
-	
-	// Export menu
-	QMenu* export_menu = new QMenu(tr("&Export as..."));
-	export_menu->addAction(export_image_act);
-	export_menu->addAction(export_pdf_act);
 	
 	// Extend file menu
 	QMenu* file_menu = window->getFileMenu();
 	file_menu->insertAction(window->getFileMenuExtensionAct(), print_act);
 	file_menu->insertSeparator(window->getFileMenuExtensionAct());
 	file_menu->insertAction(print_act, import_act);
+	QMenu* export_menu = new QMenu(tr("&Export as..."), file_menu);
+	export_menu->addAction(export_image_act);
+	export_menu->addAction(export_pdf_act);
 	file_menu->insertMenu(print_act, export_menu);
 	file_menu->insertSeparator(print_act);
 		
@@ -620,6 +612,11 @@ void MapEditorController::createMenuAndToolbars()
 	view_menu->addAction(overprinting_simulation_act);
 	view_menu->addAction(hide_all_templates_act);
 	view_menu->addSeparator();
+	QMenu* coordinates_menu = new QMenu(tr("Display coordinates as..."), view_menu);
+	coordinates_menu->addAction(map_coordinates_act);
+	coordinates_menu->addAction(projected_coordinates_act);
+	coordinates_menu->addAction(geographic_coordinates_act);
+	coordinates_menu->addAction(geographic_coordinates_dms_act);
 	view_menu->addMenu(coordinates_menu);
 	view_menu->addSeparator();
 	view_menu->addAction(fullscreen_act);
@@ -648,7 +645,7 @@ void MapEditorController::createMenuAndToolbars()
 	tools_menu->addAction(boolean_difference_act);
 	tools_menu->addAction(boolean_xor_act);
 	tools_menu->addAction(cut_tool_act);
-	cut_hole_menu = new QMenu(tr("Cut hole"));
+	cut_hole_menu = new QMenu(tr("Cut hole"), tools_menu);
 	cut_hole_menu->setIcon(QIcon(":/images/tool-cut-hole.png"));
 	cut_hole_menu->addAction(cut_hole_act);
 	cut_hole_menu->addAction(cut_hole_circle_act);
