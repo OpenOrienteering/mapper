@@ -778,45 +778,53 @@ Pārbaudi datnes adresi un nosaukumu.</translation>
     <message>
         <source>Could not read directory
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās ielasīt mapi
+%1</translation>
     </message>
     <message>
         <source>Could not create directory
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās izvedot mapi
+%1</translation>
     </message>
     <message>
         <source>Could not remove file or directory
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās dzēst datni vai mapi
+%1</translation>
     </message>
     <message>
         <source>Could not rename
 %1
 to
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās pārsaukt
+%1
+par
+%2</translation>
     </message>
     <message>
         <source>Could not open
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās atvērt
+%1</translation>
     </message>
     <message>
         <source>Could not write
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās ierakstīt
+%1</translation>
     </message>
 </context>
 <context>
     <name>Q3MainWindow</name>
     <message>
         <source>Line up</source>
-        <translation type="unfinished"></translation>
+        <translation>Uz augšu</translation>
     </message>
     <message>
         <source>Customize...</source>
-        <translation type="unfinished"></translation>
+        <translation>Mainīt...</translation>
     </message>
 </context>
 <context>
@@ -2290,7 +2298,7 @@ to
     </message>
     <message>
         <source>Help</source>
-        <translation>Palīdziba</translation>
+        <translation>Palīdzība</translation>
     </message>
     <message>
         <source>Don&apos;t Save</source>
@@ -2349,40 +2357,40 @@ to
     <name>QDirModel</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nosaukums</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Izmērs</translation>
     </message>
     <message>
         <source>Kind</source>
         <comment>Match OS X Finder</comment>
-        <translation type="unfinished"></translation>
+        <translation>Veids</translation>
     </message>
     <message>
         <source>Type</source>
         <comment>All other platforms</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tips</translation>
     </message>
     <message>
         <source>Date Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Izmaiņu datums</translation>
     </message>
 </context>
 <context>
     <name>QDockWidget</name>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Aizvērt</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation type="unfinished"></translation>
+        <translation>Fiksēt</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Atbrīvot</translation>
     </message>
 </context>
 <context>
@@ -2400,23 +2408,23 @@ to
     <name>QErrorMessage</name>
     <message>
         <source>&amp;Show this message again</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Parādīt ziņojumu vēlreiz</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;OK</translation>
     </message>
     <message>
         <source>Debug Message:</source>
-        <translation type="unfinished"></translation>
+        <translation>Atkļūdošanas ziņojums:</translation>
     </message>
     <message>
         <source>Warning:</source>
-        <translation type="unfinished"></translation>
+        <translation>Brīdinājums:</translation>
     </message>
     <message>
         <source>Fatal Error:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelabojama kļūda:</translation>
     </message>
 </context>
 <context>
@@ -2458,201 +2466,207 @@ to
     <name>QFileDialog</name>
     <message>
         <source>All Files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Visas datnes (*)</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Atpakaļ</translation>
     </message>
     <message>
         <source>List View</source>
-        <translation type="unfinished"></translation>
+        <translation>Saraksta skats</translation>
     </message>
     <message>
         <source>Detail View</source>
-        <translation type="unfinished"></translation>
+        <translation>Detalizēts skats</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datne</translation>
     </message>
     <message>
         <source>File Folder</source>
         <comment>Match Windows Explorer</comment>
-        <translation type="unfinished"></translation>
+        <translation>Datņu mape</translation>
     </message>
     <message>
         <source>Folder</source>
         <comment>All other platforms</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mape</translation>
     </message>
     <message>
         <source>Alias</source>
         <comment>Mac OS X Finder</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pseidonīms</translation>
     </message>
     <message>
         <source>Shortcut</source>
         <comment>All other platforms</comment>
-        <translation type="unfinished"></translation>
+        <translation>Saīsne</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Atvērt</translation>
     </message>
     <message>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>Saglabāt kā</translation>
     </message>
     <message>
         <source>&amp;Open</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Atvērt</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Saglabāt</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ir aizsargāts pret ierakstu.
+Vai vēlies to dzēst?</translation>
     </message>
     <message>
         <source>Recent Places</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesenās vietas</translation>
     </message>
     <message>
         <source>&amp;Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pārsaukt</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dzēst</translation>
     </message>
     <message>
         <source>Show &amp;hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt s&amp;lēptās datnes</translation>
     </message>
     <message>
         <source>New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Jauna mape</translation>
     </message>
     <message>
         <source>Find Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Atrast mapi</translation>
     </message>
     <message>
         <source>Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapes</translation>
     </message>
     <message>
         <source>All Files (*.*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Visas datnes (*.*)</translation>
     </message>
     <message>
         <source>Directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mape:</translation>
     </message>
     <message>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 jau eksistē.
+Vai vēlies to aizvietot?</translation>
     </message>
     <message>
         <source>%1
 File not found.
 Please verify the correct file name was given.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1
+Datne nav atrasta.
+Pārbaudi vai datnes nosaukums ir uzrādīts korekti.</translation>
     </message>
     <message>
         <source>My Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Mans dators</translation>
     </message>
     <message>
         <source>Parent Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Virsmape</translation>
     </message>
     <message>
         <source>Files of type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Datnes, kuru tips:</translation>
     </message>
     <message>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1
+Mape nav atrasta.
+Pārbaudi vai mapes nosaukums ir uzrādīts korekti.</translation>
     </message>
     <message>
         <source>Are sure you want to delete &apos;%1&apos;?</source>
-        <translation type="unfinished"></translation>
+        <translation>Vai tiešām vēlies dzēst &apos;%1&apos;?</translation>
     </message>
     <message>
         <source>Could not delete directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neizdevās dzēst mapi.</translation>
     </message>
     <message>
         <source>Drive</source>
-        <translation type="unfinished"></translation>
+        <translation>Dzinis</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Nezināms</translation>
     </message>
     <message>
         <source>Show </source>
-        <translation type="unfinished"></translation>
+        <translation>Rādīt </translation>
     </message>
     <message>
         <source>Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Uz priekšu</translation>
     </message>
     <message>
         <source>&amp;New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Jauna mape</translation>
     </message>
     <message>
         <source>&amp;Choose</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Izvēlēties</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Aizvākt</translation>
     </message>
     <message>
         <source>File &amp;name:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Datnes nosaukums:</translation>
     </message>
     <message>
         <source>Look in:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skatīt:</translation>
     </message>
     <message>
         <source>Create New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Izveidot mapi</translation>
     </message>
     <message>
         <source>Go back</source>
-        <translation type="unfinished"></translation>
+        <translation>Atpakaļ</translation>
     </message>
     <message>
         <source>Go forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Uz priekšu</translation>
     </message>
     <message>
         <source>Go to the parent directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Uz virsmapi</translation>
     </message>
     <message>
         <source>Create a New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Izveidot mapi</translation>
     </message>
     <message>
         <source>Change to list view mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārslēgt uz saraksta režīmu</translation>
     </message>
     <message>
         <source>Change to detail view mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Pārslēgt uz detalizēta saraksta režīmu</translation>
     </message>
 </context>
 <context>
@@ -3711,7 +3725,7 @@ Please verify the correct directory name was given.</source>
     </message>
     <message>
         <source>Help</source>
-        <translation>Palīdziba</translation>
+        <translation>Palīdzība</translation>
     </message>
     <message>
         <source>Show Details...</source>
@@ -6486,43 +6500,43 @@ Izvēlies citu datnes nosaukumu.</translation>
     <name>QSql</name>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Dzēst</translation>
     </message>
     <message>
         <source>Delete this record?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dzēst šo ierakstu?</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Jā</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Nē</translation>
     </message>
     <message>
         <source>Insert</source>
-        <translation type="unfinished"></translation>
+        <translation>Ievietot</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Atjaunot</translation>
     </message>
     <message>
         <source>Save edits?</source>
-        <translation type="unfinished"></translation>
+        <translation>Saglabāt labojumus?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Atcelt</translation>
     </message>
     <message>
         <source>Confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>Apstiprināt</translation>
     </message>
     <message>
         <source>Cancel your edits?</source>
-        <translation type="unfinished"></translation>
+        <translation>Atcelt labojumus?</translation>
     </message>
 </context>
 <context>
@@ -6967,39 +6981,39 @@ Izvēlies citu datnes nosaukumu.</translation>
     <name>QToolButton</name>
     <message>
         <source>Press</source>
-        <translation type="unfinished"></translation>
+        <translation>Nospiest</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Atvērt</translation>
     </message>
 </context>
 <context>
     <name>QUdpSocket</name>
     <message>
         <source>This platform does not support IPv6</source>
-        <translation type="unfinished"></translation>
+        <translation>Šajā vidē IPv6 nav atbalstīts</translation>
     </message>
 </context>
 <context>
     <name>QUndoGroup</name>
     <message>
         <source>Undo %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Atcelt darbību %1</translation>
     </message>
     <message>
         <source>Undo</source>
         <comment>Default text for undo action</comment>
-        <translation type="unfinished"></translation>
+        <translation>Atcelt darbību</translation>
     </message>
     <message>
         <source>Redo %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Atsaukt darbību %1</translation>
     </message>
     <message>
         <source>Redo</source>
         <comment>Default text for redo action</comment>
-        <translation type="unfinished"></translation>
+        <translation>Atsaukt</translation>
     </message>
 </context>
 <context>
@@ -7013,21 +7027,21 @@ Izvēlies citu datnes nosaukumu.</translation>
     <name>QUndoStack</name>
     <message>
         <source>Undo %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Atcelt darbību %1</translation>
     </message>
     <message>
         <source>Undo</source>
         <comment>Default text for undo action</comment>
-        <translation type="unfinished"></translation>
+        <translation>Atcelt darbību</translation>
     </message>
     <message>
         <source>Redo %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Atsaukt darbību %1</translation>
     </message>
     <message>
         <source>Redo</source>
         <comment>Default text for redo action</comment>
-        <translation type="unfinished"></translation>
+        <translation>Atsaukt</translation>
     </message>
 </context>
 <context>
@@ -7898,113 +7912,113 @@ Izvēlies citu datnes nosaukumu.</translation>
     <name>QWizard</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Atcelt</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Palīdzība</translation>
     </message>
     <message>
         <source>&lt; &amp;Back</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt; At&amp;pakaļ</translation>
     </message>
     <message>
         <source>&amp;Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>Pa&amp;beigt</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Pa&amp;līdzība</translation>
     </message>
     <message>
         <source>Go Back</source>
-        <translation type="unfinished"></translation>
+        <translation>Atpakaļ</translation>
     </message>
     <message>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Turpināt</translation>
     </message>
     <message>
         <source>Commit</source>
-        <translation type="unfinished"></translation>
+        <translation>Izpildīt</translation>
     </message>
     <message>
         <source>Done</source>
-        <translation type="unfinished"></translation>
+        <translation>Padarīts</translation>
     </message>
     <message>
         <source>&amp;Next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nākošais</translation>
     </message>
     <message>
         <source>&amp;Next &gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Uz priekšu &gt;</translation>
     </message>
 </context>
 <context>
     <name>QWorkspace</name>
     <message>
         <source>&amp;Restore</source>
-        <translation type="unfinished"></translation>
+        <translation>At&amp;jaunot</translation>
     </message>
     <message>
         <source>&amp;Move</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pārvietot</translation>
     </message>
     <message>
         <source>&amp;Size</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Izmērs</translation>
     </message>
     <message>
         <source>Mi&amp;nimize</source>
-        <translation type="unfinished"></translation>
+        <translation>Mi&amp;nimizēt</translation>
     </message>
     <message>
         <source>Ma&amp;ximize</source>
-        <translation type="unfinished"></translation>
+        <translation>Ma&amp;ksimizēt</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Ai&amp;zvērt</translation>
     </message>
     <message>
         <source>Stay on &amp;Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Palikt au&amp;gšā</translation>
     </message>
     <message>
         <source>Minimize</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimizēt</translation>
     </message>
     <message>
         <source>Restore Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Atjaunot uz leju</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Aizvērt</translation>
     </message>
     <message>
         <source>Sh&amp;ade</source>
-        <translation type="unfinished"></translation>
+        <translation>Ē&amp;na</translation>
     </message>
     <message>
         <source>%1 - [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 - [%2]</translation>
     </message>
     <message>
         <source>&amp;Unshade</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Bezēnas</translation>
     </message>
 </context>
 <context>
     <name>QXml</name>
     <message>
         <source>no error occurred</source>
-        <translation type="unfinished"></translation>
+        <translation>kļūdas nebija</translation>
     </message>
     <message>
         <source>error triggered by consumer</source>
-        <translation type="unfinished"></translation>
+        <translation>kļūdu izsauca lietotājs</translation>
     </message>
     <message>
         <source>unexpected end of file</source>
