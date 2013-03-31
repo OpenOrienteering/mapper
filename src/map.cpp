@@ -430,7 +430,7 @@ void Map::changeScale(unsigned int new_scale_denominator, const MapCoord& scalin
 }
 void Map::rotateMap(double rotation, const MapCoord& center, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates)
 {
-	if (fmod(rotation, 360) == 0)
+	if (fmod(rotation, 2 * M_PI) == 0)
 		return;
 	
 	object_undo_manager.clear(false);
@@ -1139,23 +1139,6 @@ void Map::ensureVisibilityOfSelectedObjects()
 		widgets[i]->ensureVisibilityOfRect(rect, true, true);
 }
 
-/*void Map::addMapView(MapView* view)
-{
-	views.push_back(view);
-}
-void Map::removeMapView(MapView* view)
-{
-	for (int i = 0; i < (int)views.size(); ++i)
-	{
-		if (views[i] == view)
-		{
-			views.erase(views.begin() + i);
-			return;
-		}
-	}
-	assert(false);
-}*/
-
 void Map::setDrawingBoundingBox(QRectF map_coords_rect, int pixel_border, bool do_update)
 {
 	for (int i = 0; i < (int)widgets.size(); ++i)
@@ -1351,6 +1334,7 @@ void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std:
 		return;
 	}
 	
+	Q_ASSERT((int)by_which_symbols.size() == getNumSymbols());
 	out.assign(getNumColors(), false);
 	for (int c = 0; c < getNumColors(); ++c)
 	{
