@@ -27,8 +27,7 @@
 
 #include "symbol.h"
 
-// ### XMLFileExporter declaration ###
-
+/** Map exporter for the xml based map format. */
 class XMLFileExporter : public Exporter
 {
 Q_OBJECT
@@ -54,8 +53,7 @@ private:
 };
 
 
-// ### XMLFileImporter declaration ###
-
+/** Map importer for the xml based map format. */
 class XMLFileImporter : public Importer
 {
 Q_OBJECT

@@ -29,16 +29,28 @@ class QStackedWidget;
 
 class Map;
 
+/**
+ * The widget which is shown in a dock widget when the measure tool is active.
+ * Displays information about the currently selected objects.
+ */
 class MeasureWidget : public QWidget
 {
 Q_OBJECT
 public:
+	/** Creates a new MeasureWidget for a given map. */
 	MeasureWidget(Map* map, QWidget* parent = NULL);
+
+	/** Destroys the MeasureWidget. */
 	virtual ~MeasureWidget();
 	
+	/** Returns the preferred size for this widget. */
 	virtual QSize sizeHint() const;
 	
 protected slots:
+	/**
+	 * Is called when the object selection in the map changes.
+	 * Updates the widget content.
+	 */
 	void objectSelectionChanged();
 	
 private:

@@ -309,7 +309,7 @@ private:
 
 
 /// Combobox for projected coordinate reference system (CRS) selection,
-/// with a QLineEdit below to specify one parameter if necessary
+/// with edit widgets below to specify the free parameters, if necessary.
 class ProjectedCRSSelector : public QWidget
 {
 Q_OBJECT
@@ -370,14 +370,26 @@ private:
 
 
 
-/// Dialog to select a coordinate reference system (CRS)
+/** Dialog to select a coordinate reference system (CRS) */
 class SelectCRSDialog : public QDialog
 {
 Q_OBJECT
 public:
+	/**
+	 * Creates a SelectCRSDialog.
+	 * 
+	 * @param map The map to create the dialog for.
+	 * @param parent The parent widget.
+	 * @param show_take_from_map Toggle whether to show the "Take the map's CRS" option.
+	 * @param show_local Toggle whether to show the "Local" option.
+	 * @param show_geographic Toggle whether to show the "Geographic (WGS84)" option.
+	 * @param desc_text Optional description text for the dialog. Should explain
+	 *                  for what the selected CRS will be used for.
+	 */
 	SelectCRSDialog(Map* map, QWidget* parent, bool show_take_from_map,
 					bool show_local, bool show_geographic, const QString& desc_text = QString());
 	
+	/** Returns the chosen CRS spec after the dialog has completed. */
 	QString getCRSSpec() const;
 	
 private slots:

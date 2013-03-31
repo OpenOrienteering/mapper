@@ -35,6 +35,7 @@ class MainWindowController;
 /** The MainWindow class provides the generic application window. 
  *  It always has an active controller (class MainWindowController) 
  *  which provides the specific window content and behaviours.
+ *  The controller can be exchanged while the window is visible.
  */
 class MainWindow : public QMainWindow
 {

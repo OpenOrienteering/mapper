@@ -78,6 +78,7 @@ int main(int argc, char** argv)
 	qapp.installTranslator(&translation.getQtTranslator());
 	qapp.installTranslator(&translation.getAppTranslator());
 	
+	// Initialize static things like the file format registry.
 	doStaticInitializations();
 	
 	// Create first main window

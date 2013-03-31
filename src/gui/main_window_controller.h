@@ -27,7 +27,8 @@ class MainWindow;
 
 
 /** A MainWindowController provides the specific content and 
- *  behaviours for a main window.
+ *  behaviours for a main window, for example map drawing or
+ *  course setting functions.
  */
 class MainWindowController : public QObject
 {

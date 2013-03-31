@@ -23,7 +23,7 @@
 #include "file_format.h"
 
 /** Provides a description of the old native file format. 
- *  This is a (arch-dependent) binary packed format
+ *  This is an (architecture-dependent) binary packed format
  *  with a file extension of "omap", and internal versioning.
  * 
  *  \deprecated

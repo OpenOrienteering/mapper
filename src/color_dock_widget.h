@@ -34,12 +34,19 @@ class Map;
 class MapColor;
 class PaletteColor;
 
+/** 
+ * A widget showing the list of map colors and some edit buttons at the bottom.
+ * Enables to define new colors and edit or delete existing colors.
+ * This widget is used inside a dock widget.
+ */
 class ColorWidget : public QWidget
 {
 Q_OBJECT
-
 public:
+  /** Creates a new ColorWidget for a given map and MainWindow. */
 	ColorWidget(Map* map, MainWindow* window, QWidget* parent = NULL);
+  
+  /** Destroys the ColorWidget. */
 	virtual ~ColorWidget();
 	
 protected slots:

@@ -52,159 +52,318 @@ class ReopenTemplateDialog;
 class PieMenu;
 typedef std::vector<Renderable*> RenderableVector;
 
+/**
+ * MainWindowController for editing a map.
+ * 
+ * Creates menus and toolbars, manages editing tools,
+ * dock widgets, and much more.
+ */
 class MapEditorController : public MainWindowController
 {
 friend class Map;
 Q_OBJECT
 public:
+	/** See MapEditorController constructor. */
 	enum OperatingMode
 	{
 		MapEditor = 0,
 		SymbolEditor = 1
 	};
 	
+	/**
+	 * Constructs a new MapEditorController for a map.
+	 * 
+	 * @param mode Normally, MapEditor should be used. However, as a HACK the
+	 *     MapEditorController is also used in the symbol editor for the preview.
+	 *     In this case, SymbolEditor is passed to disable showing the menus,
+	 *     toolbars, etc.
+	 * @param map The map for which the controller is created. If passing NULL,
+	 *     it has to be set later using setMap() (private!)
+	 */
 	MapEditorController(OperatingMode mode, Map* map = NULL);
+	
+	/** Destroys the MapEditorController. */
 	~MapEditorController();
 	
+	/**
+	 * Changes to new_tool as the new active tool.
+	 * If there is a current tool before, calls deleteLater() on it.
+	 * new_tool may be NULL, but it is unusual to have no active tool, so
+	 * consider setEditTool() instead.
+	 */
 	void setTool(MapEditorTool* new_tool);
+	
+	/**
+	 * Shortcut to change to the point edit tool as new active tool.
+	 * See setTool().
+	 */
 	void setEditTool();
+	
+	/**
+	 * Sets new_override_tool as the new active override tool.
+	 * This takes precedence over all tools set via setTool().
+	 * new_override_tool may be NULL, which disables using an override tool
+	 * and re-enables the normal tool set via setTool().
+	 */
 	void setOverrideTool(MapEditorTool* new_override_tool);
+	
+	/** Returns the current tool. */
 	inline MapEditorTool* getTool() const {return current_tool;}
+	
+	/** Returns the default drawing tool for a given symbol. */
 	MapEditorTool* getDefaultDrawToolForSymbol(Symbol* symbol);
 	
-	/// If this is set to true (usually by the current tool), undo/redo and saving the map is deactivated
+	/**
+	 * If this is set to true (usually by the current tool),
+	 * undo/redo and saving the map is deactivated.
+	 * 
+	 * This is important if the map is in an "unstable" state temporarily.
+	 */
 	void setEditingInProgress(bool value);
 	
-	/// Adds a a floating dock widget to the main window. Adjusts some geometric properties.
+	/**
+	 * Adds a a floating dock widget to the main window.
+	 * Adjusts some geometric properties.
+	 */
 	void addFloatingDockWidget(QDockWidget* dock_widget);
 	
+	/**
+	 * Sets the current editor activity.
+	 * new_activity may be NULL to disable the current editor activity.
+	 */
 	void setEditorActivity(MapEditorActivity* new_activity);
+	
+	/** Returns the current editor activity. */
 	inline MapEditorActivity* getEditorActivity() const {return editor_activity;}
 	
+	/** Returns the map on which this controller operates. */
 	inline Map* getMap() const {return map;}
+	/** Returns the main map widget (which is currently the only map widget). */
 	inline MapWidget* getMainWidget() const {return map_widget;}
+	/** Returns this controller's symbol widget, where the symbol selection happens. */
 	inline SymbolWidget* getSymbolWidget() const {return symbol_widget;}
 	
+	/** Returns if a template position dock widget exists for a template. */
 	inline bool existsTemplatePositionDockWidget(Template* temp) const {return template_position_widgets.contains(temp);}
+	/** Returns the template position dock widget for a template. */
 	inline TemplatePositionDockWidget* getTemplatePositionDockWidget(Template* temp) const {return template_position_widgets.value(temp);}
+	/** Adds a template position dock widget for the given template. */
 	void addTemplatePositionDockWidget(Template* temp);
-	void removeTemplatePositionDockWidget(Template* temp); // should be called by the dock widget if it is closed or the template deleted; deletes the dock widget
+	/**
+	 * Removes the template position dock widget for the template.
+	 * 
+	 * Should be called by the dock widget if it is closed or the
+	 * template deleted; deletes the dock widget.
+	 */
+	void removeTemplatePositionDockWidget(Template* temp);
 	
+	/** Override from MainWindowController */
 	virtual bool save(const QString& path);
+	/** Override from MainWindowController */
 	virtual bool load(const QString& path);
 	
+	/** Override from MainWindowController */
 	virtual void attach(MainWindow* window);
+	/** Override from MainWindowController */
 	virtual void detach();
 	
+	/** Override from MainWindowController */
 	virtual void keyPressEvent(QKeyEvent* event);
+	/** Override from MainWindowController */
 	virtual void keyReleaseEvent(QKeyEvent* event);
 	
 public slots:
-	/** Makes the print/export dock widget visible, and configures it for 
-	 *  the given task (which is of type PrintWidget::TaskFlags). */
+	/**
+	 * Makes the print/export dock widget visible, and configures it for 
+	 * the given task (which is of type PrintWidget::TaskFlags).
+	 */
 	void printClicked(int task);
 	
+	/** Undoes the last object edit step. */
 	void undo();
+	/** Redoes the last object edit step */
 	void redo();
+	/** Cuts the selected object(s). */
 	void cut();
+	/** Copies the selecte object(s). */
 	void copy();
+	/** Pastes the object(s) from the clipboard. */
 	void paste();
+	/** Empties the undo / redo history to save space. */
 	void clearUndoRedoHistory();
 	
+	/** Toggles visivbility of the map grid. */
 	void showGrid();
+	/** Shows the map grid configuration dialog. */
 	void configureGrid();
 	
+	/** Activates the pan tool. */
 	void pan();
+	/** Zooms in in the current map widget. */
 	void zoomIn();
+	/** Zooms out in the current map widget. */
 	void zoomOut();
+	/** Shows the dialog to set a custom zoom factor in the current map widget. */
 	void setCustomZoomFactorClicked();
 	
+	/** Sets the hatch areas view option. */
 	void hatchAreas(bool checked);
+	/** Sets the baseline view option. */
 	void baselineView(bool checked);
+	/** Sets the "hide all templates" view option. */
 	void hideAllTemplates(bool checked);
+	/** Sets the overprinting simulation view option. */
 	void overprintingSimulation(bool checked);
 	
+	/** Adjusts the coordinates display of the map widget to the selected option. */
 	void coordsDisplayChanged();
 	
+	/** Shows or hides the symbol pane. */
 	void showSymbolWindow(bool show);
+	/** Shows or hides the color dock widget. */
 	void showColorWindow(bool show);
+	/** Shows the "load symbols from" dialog. */
 	void loadSymbolsFromClicked();
+	/** TODO: not implemented yet. */
 	void loadColorsFromClicked();
+	/** Shows the "scale all symbols" dialog. */
 	void scaleAllSymbolsClicked();
 	
+	/** Shows the ScaleMapDialog. */
 	void scaleMapClicked();
+	/** Shows the RotateMapDialog. */
 	void rotateMapClicked();
+	/** Shows the dialog to enter map notes. */
 	void mapNotesClicked();
 	
+	/** Shows or hides the template setup dock widget. */
 	void showTemplateWindow(bool show);
+	/** Shows a file selector to open a template. */
 	void openTemplateClicked();
+	/** Shows the ReopenTemplateDialog. */
 	void reopenTemplateClicked();
+	/** Updates the reopen_template_act enabled state. */
 	void closedTemplateAvailabilityChanged();
 	
+	/** Shows the GeoreferencingDialog. */
 	void editGeoreferencing();
 	
+	/**
+	 * Adjusts the enabled state of various actions
+	 * after the selected symbol(s) have changed.
+	 */
 	void selectedSymbolsChanged();
+	/**
+	 * Adjusts the enabled state of various actions
+	 * after the selected object(s) have changed.
+	 */
 	void objectSelectionChanged();
+	/**
+	 * Adjusts the enabled state of various actions
+	 * after the selected symbol(s) or object(s) have changed.
+	 * Internally called by selectedSymbolsChanged() and objectSelectionChanged().
+	 */
 	void selectedSymbolsOrObjectsChanged();
+	/** Adjusts the enabled state of the undo / redo actions. */
 	void undoStepAvailabilityChanged();
+	/** Adjusts the enabled state of the paste action (specific signature required). */
 	void clipboardChanged(QClipboard::Mode mode);
+	/** Adjusts the enabled state of the paste action. */
 	void updatePasteAvailability();
 	
-	/** This slot cause the map editor to check the presence of spot colors,
-	 *  and to disable overprinting simulation if there are no spot colors. */
+	/**
+	 * Checks the presence of spot colors,
+	 * and to disables overprinting simulation if there are no spot colors.
+	 */
 	void spotColorPresenceChanged(bool has_spot_colors);
 	
+	/** Adjusts the view in the current map widget to show the whole map. */
 	void showWholeMap();
 	
+	/** Activates the point edit tool. */
 	void editToolClicked();
+	/** Activates the line edit tool. */
 	void editLineToolClicked();
+	/** Activates the draw point tool. */
 	void drawPointClicked();
+	/** Activates the draw path tool. */
 	void drawPathClicked();
+	/** Activates the draw circle tool. */
 	void drawCircleClicked();
+	/** Activates the draw rectangle tool. */
 	void drawRectangleClicked();
+	/** Activates the draw text tool. */
 	void drawTextClicked();
 	
+	/** Duplicates the selected object(s) */
 	void duplicateClicked();
+	/** Switches the symbol of the selected object(s) to the selected symbol. */
 	void switchSymbolClicked();
+	/** Creates duplicates of the selected object(s) and assigns them the selected symbol. */
 	void fillBorderClicked();
-	void selectObjectsClicked(bool select_exclusively);	// Selects all objects with the selected symbol(s)
+	/** Selects all objects with the selected symbol(s) */
+	void selectObjectsClicked(bool select_exclusively);
+	/**
+	 * Reverses the selected object(s) direcction(s),
+	 * thus switching dash directions for lines.
+	 */
 	void switchDashesClicked();
+	/** Connects close endpoints of selected lines */
 	void connectPathsClicked();
+	/** Activates the cut tool */
 	void cutClicked();
+	/** Activates the cut hole tool */
 	void cutHoleClicked();
+	/** Activates the cut circular hole tool */
 	void cutHoleCircleClicked();
+	/** Activates the cut rectangular hole tool */
 	void cutHoleRectangleClicked();
+	/** Activates the rotate tool */
 	void rotateClicked();
+	/** Activates the rotate pattern tool */
 	void rotatePatternClicked();
+	/** Activates the scale tool */
 	void scaleClicked();
+	/** Shows or hides the MeasureWidget */
 	void measureClicked(bool checked);
+	/** Calculates the union of selected same-symbol area objects */
 	void booleanUnionClicked();
+	/** Calculates the intersection of selected same-symbol area objects */
 	void booleanIntersectionClicked();
+	/** Calculates the difference of selected area objects from the first selected area object */
 	void booleanDifferenceClicked();
+	/** Calculates the boolean XOr of selected same-symbol area objects */
 	void booleanXOrClicked();
+	/** Converts selected polygonal paths to curves */
 	void convertToCurvesClicked();
+	/** Tries to remove points of selected paths while retaining their shape */
 	void simplifyPathClicked();
+	/** Activates the physical cutout tool */
 	void cutoutPhysicalClicked();
+	/** Activates the physical cutout tool (inversed) */
 	void cutawayPhysicalClicked();
 	
+	/** Shows or hides the paint-on-template widget */
 	void paintOnTemplateClicked(bool checked);
+	/** Shows the template selection dialog for for the paint-on-template functionality */
 	void paintOnTemplateSelectClicked();
 	
+	/** Updates action enabled states after a template has been added */
 	void templateAdded(int pos, Template* temp);
+	/** Updates action enabled states after a template has been deleted */
 	void templateDeleted(int pos, Template* temp);
 	
+	/** Imports a track file (GPX, DXF, OSM, ...) into the map */
 	void importGeoFile(const QString& filename);
+	/** Imports a map file into the loaded map */
 	bool importMapFile(const QString& filename);
+	/** Shows the import file selector and imports the selected file, if any. */
 	void importClicked();
 	
-	/** 
-	 * Save the current toolbar and dock widget positions
-	 */
+	/** Save the current toolbar and dock widget positions */
 	void saveWindowState();
 	
-	/**
-	 * Restore previously saved toolbar and dock widget positions
-	 */
+	/** Restore previously saved toolbar and dock widget positions */
 	void restoreWindowState();
 	
 signals:
@@ -333,12 +492,16 @@ private:
 	bool being_destructed;
 };
 
-/// Custom QDockWidget which unchecks the associated menu action when closed and delivers a notification to its child
+/**
+ * Custom QDockWidget which unchecks the associated menu action when closed
+ * and delivers a notification to its child
+ */
 class EditorDockWidget : public QDockWidget
 {
 Q_OBJECT
 public:
-	EditorDockWidget(const QString title, QAction* action, MapEditorController* editor, QWidget* parent = NULL);
+	EditorDockWidget(const QString title, QAction* action,
+					 MapEditorController* editor, QWidget* parent = NULL);
 	virtual bool event(QEvent* event);
 	virtual void closeEvent(QCloseEvent* event);
 private:
@@ -346,7 +509,9 @@ private:
 	MapEditorController* editor;
 };
 
-/// Helper class which disallows deselecting the checkable action by the user
+/**
+ * Helper class which disallows deselecting the checkable action by the user
+ */
 class MapEditorToolAction : public QAction
 {
 Q_OBJECT

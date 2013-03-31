@@ -34,10 +34,14 @@ QT_END_NAMESPACE
 
 class Map;
 
+/**
+ * Dialog for scaling the whole map.
+ */
 class ScaleMapDialog : public QDialog
 {
 Q_OBJECT
 public:
+	/** Creates a new ScaleMapDialog. */
 	ScaleMapDialog(QWidget* parent, Map* map);
 	
 private slots:

@@ -34,6 +34,10 @@ class QListWidgetItem;
 class QCheckBox;
 QT_END_NAMESPACE
 
+/**
+ * Dialog for creating a new map.
+ * Shows scale and symbol set selection.
+ */
 class NewMapDialog : public QDialog
 {
 Q_OBJECT

@@ -96,7 +96,10 @@ private:
 };
 
 
-/** Represents an action that the user must take to successfully complete an import.
+/**
+ * Represents an action that the user must take to successfully complete an import.
+ * TODO: Currently not fully implemented, as this should be done using the
+ * planned ProblemWidget instead, which works independently of import / export.
  */
 class ImportAction
 {

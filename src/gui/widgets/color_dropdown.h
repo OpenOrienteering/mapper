@@ -27,7 +27,7 @@ class Map;
 class MapColor;
 
 /**
- * ColorDropDown is a combobox which lets the user select a map color.
+ * A combobox which lets the user select a map color.
  */
 class ColorDropDown : public QComboBox
 {

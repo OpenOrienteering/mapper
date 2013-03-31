@@ -36,7 +36,10 @@ QT_END_NAMESPACE
 
 class MapEditorController;
 
-/// A point in a track or a waypoint, which stores position on ellipsoid and map and more attributes (e.g. number of satellites)
+/**
+ * A point in a track or a waypoint, which stores position on ellipsoid and
+ * map and more attributes (e.g. number of satellites)
+ */
 struct TrackPoint
 {
 	LatLon gps_coord;
@@ -48,13 +51,16 @@ struct TrackPoint
 	int num_satellites;		// -1 if invalid
 	float hDOP;				// -1 if invalid
 	
-	TrackPoint(LatLon coord = LatLon(), QDateTime datetime = QDateTime(), float elevation = -9999, int num_satellites = -1, float hDOP = -1);
+	TrackPoint(LatLon coord = LatLon(), QDateTime datetime = QDateTime(),
+			   float elevation = -9999, int num_satellites = -1, float hDOP = -1);
 	void save(QXmlStreamWriter* stream) const;
 };
 
-/// Stores a set of tracks and / or waypoints, e.g. taken from a GPS device.
-/// Can optionally store a track coordinate reference system in track_georef;
-/// if no track CRS is given, assumes that coordinates are geographic WGS84 coordinates
+/**
+ * Stores a set of tracks and / or waypoints, e.g. taken from a GPS device.
+ * Can optionally store a track coordinate reference system in track_georef;
+ * if no track CRS is given, assumes that coordinates are geographic WGS84 coordinates
+ */
 class Track
 {
 public:
@@ -76,11 +82,20 @@ public:
 	bool saveTo(const QString& path) const;
 	
 	// Modifiers
-	void appendTrackPoint(TrackPoint& point);	// also converts the point's gps coords to map coords
+	
+	/** Appends the point and also converts the point's gps coords to map coords */
+	void appendTrackPoint(TrackPoint& point);
+	
+	/**
+	 * Marks the current track segment as finished, so the next added point
+	 * will define the start of a new track segment.
+	 */
 	void finishCurrentSegment();
 	
-	void appendWaypoint(TrackPoint& point, const QString& name);	// also converts the point's gps coords to map coords
+	/** Appends the waypoint and also converts the point's gps coords to map coords */
+	void appendWaypoint(TrackPoint& point, const QString& name);
 	
+	/** Updates the map positions of all points based on the new georeferencing. */
 	void changeMapGeoreferencing(const Georeferencing& new_georef);
 	
 	/// Sets the track coordinate reference system.
