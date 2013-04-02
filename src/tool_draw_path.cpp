@@ -906,6 +906,12 @@ void DrawPathTool::updateDashPointDrawing()
 		
 		updateStatusText();
 	}
+	else if (symbol &&
+		(symbol->getType() == Symbol::Area ||
+		 symbol->getType() == Symbol::Combined))
+	{
+		draw_dash_points = false;
+	}
 }
 
 void DrawPathTool::updateStatusText()
