@@ -27,7 +27,7 @@
 
 class ConstrainAngleToolHelper;
 
-/// Tool to rotate objects
+/** Tool to rotate objects. */
 class RotateTool : public MapEditorToolBase
 {
 Q_OBJECT

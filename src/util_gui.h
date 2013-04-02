@@ -29,8 +29,7 @@
 #include <QtWidgets>
 #endif
 
-/* A collection of GUI utility functions. */
-
+/** A collection of GUI utility functions. */
 namespace Util
 {
 	namespace Headline

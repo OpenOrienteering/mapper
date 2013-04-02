@@ -38,7 +38,7 @@ class Symbol;
 class SymbolWidget;
 
 /**
- * A tool to draw text objects.
+ * Tool to draw text objects.
  */
 class DrawTextTool : public MapEditorTool
 {
@@ -92,6 +92,10 @@ protected:
 	SymbolWidget* symbol_widget;
 };
 
+/**
+ * Widget which is shown while the DrawTextTool is active, allowing the set
+ * the text alignment.
+ */
 class TextObjectAlignmentDockWidget : public QDockWidget
 {
 Q_OBJECT

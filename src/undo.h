@@ -39,10 +39,18 @@ class Map;
 class MapColor;
 class Object;
 
+/**
+ * Abstract base class for undo steps.
+ * 
+ * Stores information which is necessary for executing an undo step.
+ * While executing the step, creates a new UndoStep for the corresponding
+ * redo step.
+ */
 class UndoStep : public QObject
 {
 Q_OBJECT
 public:
+	/** Types of undo steps for identification. */
 	enum Type
 	{
 		ReplaceObjectsUndoStepType = 0,
@@ -53,25 +61,44 @@ public:
 		CombinedUndoStepType = 5
 	};
 	
+	/** Constructs an undo step having the given type. */
 	UndoStep(Type type);
 	virtual ~UndoStep() {}
 	
-	/// Must undo the action and generate another UndoStep that can redo the action again
+	/** Must undo the action and return a new UndoStep
+	 *  which can redo the action again. */
 	virtual UndoStep* undo() = 0;
 	
+	/** Must save the undo step to the file in the old "native" format. */
 	virtual void save(QIODevice* file) = 0;
+	/** Must load the undo step from the file in the old "native" format. */
 	virtual bool load(QIODevice* file, int version) = 0;
 	
+	/** Must save the undo step to the stream in xml format. */
 	void save(QXmlStreamWriter& xml);
+	/** Must load the undo step from the stream in xml format. */
 	static UndoStep* load(QXmlStreamReader& xml, void* owner, SymbolDictionary& symbol_dict);
 	
-	/// Returns if the step can still be undone. This must be true after generating the step
-	/// (otherwise it would not make sense to generate it) but can change to false if an object the step depends on,
-	/// which is not tracked by the undo system, is deleted. Example: changing a map object's symbol to a different one, then deleting the first one.
+	/**
+	 * Returns if the step can still be undone. This must be true after
+	 * generating the step (otherwise it would not make sense to generate it)
+	 * but can change to false if an object the step depends on,
+	 * which is not tracked by the undo system, is deleted.
+	 * 
+	 * Example: changing a map object's symbol to a different one,
+	 * then deleting the first symbol. Then changing the symbol cannot be undone
+	 * as the old symbol does not exist anymore.
+	 */
 	virtual bool isValid() const {return valid;}
 	
+	/** Returns the undo step's type. */
 	inline Type getType() const {return type;}
 	
+	/**
+	 * Constructs an undo step of the given type.
+	 * The owner pointer can be used to pass in additional information,
+	 * usually the Map in which the step will be.
+	 */
 	static UndoStep* getUndoStepForType(Type type, void* owner);
 	
 protected:
@@ -82,6 +109,10 @@ protected:
 	Type type;
 };
 
+/**
+ * Undo step which internally consists of one or more other UndoSteps (sub steps),
+ * which it executes in order.
+ */
 class CombinedUndoStep : public UndoStep
 {
 Q_OBJECT
@@ -89,8 +120,13 @@ public:
 	CombinedUndoStep(void* owner);
 	virtual ~CombinedUndoStep();
 	
+	/** Returns the number of sub steps. */
 	inline int getNumSubSteps() const {return (int)steps.size();}
+	
+	/** Adds the sub step. */
 	inline void addSubStep(UndoStep* step) {steps.push_back(step);}
+	
+	/** Returns the i-th sub step. */
 	inline UndoStep* getSubStep(int i) {return steps[i];}
 	
 	virtual UndoStep* undo();
@@ -107,34 +143,55 @@ protected:
 	void* owner;
 };
 
+/** Keeps an undo and redo step list, thus storing a complete undo history. */
 class UndoManager : public QObject
 {
 Q_OBJECT
 public:
-	/// The owner pointer is a way to pass the map pointer to the steps without making this class dependent on Map
+	/** Constructor.
+	 * 
+	 *  The owner pointer is a way to pass the map pointer to the steps
+	 *  without making this class dependent on Map. */
 	UndoManager(void* owner = NULL);
 	inline void setOwner(void* owner) {this->owner = owner;}
 	~UndoManager();
 	
+	/** Saves the UndoManager to the file in the old "native" format. */
 	void save(QIODevice* file);
+	/** Loads the UndoManager from the file in the old "native" format. */
 	bool load(QIODevice* file, int version);
 	
+	/** Saves the undo steps to the file in xml format. */
 	void saveUndo(QXmlStreamWriter& xml);
+	/** Loads the undo steps from the file in xml format. */
 	bool loadUndo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
+	/** Saves the redo steps to the file in xml format. */
 	void saveRedo(QXmlStreamWriter& xml);
+	/** Loads the redo steps from the file in xml format. */
 	bool loadRedo(QXmlStreamReader& xml, SymbolDictionary& symbol_dict);
 	
-	/// Call this to add a new step resulting from an edit action
+	/** Call this to add a new step resulting from an edit action. */
 	void addNewUndoStep(UndoStep* step);
 	
-	/// Deletes all undo and redo steps. Can be necessary if changes are made to objects which are not tracked by the undo system but related to it.
+	/** Deletes all undo and redo steps. Can be necessary if changes are made
+	 *  to objects which are not tracked by the undo system but related to it. */
 	void clear(bool current_state_is_saved);
 	
-	/// undo() and redo() return true if, as the result of the action, the file is in the state where it was saved the last time
+	/** Executes the most recently added undo step.
+	 *  @param dialog_parent Optional QWidget parent for any dialogs
+	 *      shown by the method.
+	 *  @param done If set, will return whether an undo step actually has been
+	 *      executed, or if not because of a problem.
+	 * 
+	 *  undo() and redo() return true if, as the result of the action,
+	 *  the file is in the state where it was saved the last time */
 	bool undo(QWidget* dialog_parent = NULL, bool* done = NULL);
+	
+	/** Executes the most recently added redo step.
+	 *  See undo() for a description of the parameters. */
 	bool redo(QWidget* dialog_parent = NULL, bool* done = NULL);
 	
-	/// Call this when the currently edited file is saved
+	/** Call this when the currently edited file is saved. */
 	void notifyOfSave();
 	
 	inline int getNumUndoSteps() const {return (int)undo_steps.size();}
@@ -142,10 +199,16 @@ public:
 	inline int getNumRedoSteps() const {return (int)redo_steps.size();}
 	inline UndoStep* getLastRedoStep() const {assert(getNumRedoSteps() > 0); return redo_steps[redo_steps.size() - 1];}
 	
-	static const int max_undo_steps = 128;	// TODO: Make configurable (maybe by used memory instead of step count)
+	/** The maximum number of undo steps stored in an UndoManager.
+	 *  If more steps are added, the first steps will be deleted again.
+	 * 
+	 *  TODO: Make configurable (maybe by used memory instead of step count) */
+	static const int max_undo_steps = 128;
 	
 signals:
-	void undoStepAvailabilityChanged();	// Emitted when the number of undo (or redo) steps changes from 0 to positive or vice versa
+	/** Emitted when the number of undo (or redo) steps changes
+	 *  from 0 to positive or vice versa */
+	void undoStepAvailabilityChanged();
 	
 private:
 	void addUndoStep(UndoStep* step);

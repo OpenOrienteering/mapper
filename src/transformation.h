@@ -32,7 +32,7 @@ QT_END_NAMESPACE
 
 class TemplateTransform;
 
-/// Pair of source and destination coordinates used to calculate transformations.
+/** Pair of source and destination coordinates used to calculate transformations. */
 struct PassPoint
 {
 	void save(QIODevice* file);
@@ -41,33 +41,34 @@ struct PassPoint
 	void save(QXmlStreamWriter& xml);
 	static PassPoint load(QXmlStreamReader& xml);
 	
-	/// Start position specified by the user
+	/** Start position specified by the user */
 	MapCoordF src_coords;
 	
-	/// End position specified by the user
+	/** End position specified by the user */
 	MapCoordF dest_coords;
 	
-	/// Position where the point really ended up
+	/** Position where the point really ended up */
 	MapCoordF calculated_coords;
 	
-	/// Distance between dest_coords_map and calculated_coords; negative if not calculated yet
+	/** Distance between dest_coords_map and calculated_coords;
+	 *  negative if not calculated yet */
 	double error;
 };
 
-/// List of pass points with methods for transformation calculation.
+/** List of pass points with methods for transformation calculation. */
 class PassPointList : public std::vector< PassPoint >
 {
 public:
-	/// Estimates a similarity transformation based on the contained pass points and
-	/// applies it to the transformation passed in.
+	/** Estimates a similarity transformation based on the contained pass points
+	 *  and applies it to the transformation passed in. */
 	bool estimateSimilarityTransformation(TemplateTransform* transform);
 	
-	/// Estimates an affine transformation without shearing.
+	/** Estimates an affine transformation without shearing. */
 	bool estimateNonIsometricSimilarityTransform(QTransform* out);
 };
 
-/// Converts a QTranform into a template transform. Takes only affine parts
-/// and removes any shearing.
+/** Converts a QTranform into a template transform. Takes only affine parts
+ *  and removes any shearing. */
 void qTransformToTemplateTransform(const QTransform& in, TemplateTransform* out);
 
 #endif

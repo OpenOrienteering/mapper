@@ -28,7 +28,9 @@
 class ConstrainAngleToolHelper;
 class SnappingToolHelper;
 
-/// Tool to draw rectangles
+/**
+ * Tool to draw rectangular PathObjects (but also 45 degree angles).
+ */
 class DrawRectangleTool : public DrawLineAndAreaTool
 {
 Q_OBJECT
@@ -57,14 +59,37 @@ protected slots:
 protected:
 	virtual void finishDrawing();
 	virtual void abortDrawing();
+	
+	/** Deletes the last drawn point. */
 	void undoLastPoint();
+	
+	/** Picks a direction from an existing object. */
 	void pickDirection(MapCoordF coord, MapWidget* widget);
+	
+	/** Checks if the current drawing direction is parallel to the angle. */
 	bool drawingParallelTo(double angle);
 	
+	/** 
+	 * Updates the preview after cursor position changes.
+	 * May call updateRectangle() internally.
+	 */
 	void updateHover(bool mouse_down);
+	
+	/**
+	 * Recalculates the "close vector"
+	 * (direction from current drawing perpendicular to the start point)
+	 */
 	void updateCloseVector();
+	
+	/**
+	 * Deletes all points from the preview path which were introduced to close
+	 * it temporarily (for preview visualization).
+	 */
 	void deleteClosePoint();
+	
+	/** Recalculates the rectangle shape based on the current input. */
 	void updateRectangle();
+	
 	void updateStatusText();
 	
 	QPoint click_pos;
@@ -81,13 +106,17 @@ protected:
 	MapCoord snapped_to_line_a;
 	MapCoord snapped_to_line_b;
 	
-	/// List of angles for first, second, etc. edge.
-	/// Includes the currently edited angle.
-	/// The index of currently edited point in preview_path is angles.size().
+	/**
+	 * List of angles for first, second, etc. edge.
+	 * Includes the currently edited angle.
+	 * The index of currently edited point in preview_path is angles.size().
+	 */
 	std::vector< double > angles;
-	/// Vector in forward drawing direction
+	
+	/** Vector in forward drawing direction */
 	MapCoordF forward_vector;
-	/// Direction from current drawing perpendicular to the start point
+	
+	/** Direction from current drawing perpendicular to the start point */
 	MapCoordF close_vector;
 	
 	QScopedPointer<ConstrainAngleToolHelper> angle_helper;

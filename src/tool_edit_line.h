@@ -33,7 +33,7 @@ class Symbol;
 
 
 /**
- * A tool to edit lines of path objects.
+ * Tool to edit lines of PathObjects.
  */
 class EditLineTool : public EditTool
 {
@@ -59,39 +59,46 @@ protected:
 	virtual int updateDirtyRectImpl(QRectF& rect);
 	virtual void drawImpl(QPainter* painter, MapWidget* widget);
 	
-	/// In addition to the base class implementation, updates the status text.
+	/** In addition to the base class implementation, updates the status text. */
 	virtual void updatePreviewObjects();
 	
-	/// Deletes the highlight object if it exists and correctly removes its renderables.
+	/** Deletes the highlight object if it exists and correctly removes its renderables. */
 	void deleteHighlightObject();
 	
 	void updateStatusText();
+	
+	/** Recalculates hover_line. */
 	void updateHoverLine(MapCoordF cursor_pos);
+	
 	void toggleAngleHelper();
 	
 	inline bool hoveringOverFrame() const {return hover_line == -1;}
 	
-	/// Bounding box of the selection
+	/** Bounding box of the selection */
 	QRectF selection_extent;
 	
-	/// Path point index of the hover line's starting point if non-negative;
-	/// if hovering over the extent rect: -1
-	/// if hovering over nothing: -2
+	/**
+	 * Path point index of the hover line's starting point if non-negative;
+	 * if hovering over the extent rect: -1
+	 * if hovering over nothing: -2
+	 */
 	int hover_line;
 	
-	/// Object for hover_line, or NULL in case of no hover line.
+	/** Object for hover_line, or NULL in case of no hover line. */
 	PathObject* hover_object;
 	
-	/// Object made of the extracted hover line
+	/** Object made of the extracted hover line */
 	PathObject* highlight_object;
 	
-	/// Is a box selection in progress?
+	/** Is a box selection in progress? */
 	bool box_selection;
 	
 	bool no_more_effect_on_click;
 	
-	/// Offset from cursor position to drag handle of moved element.
-	/// When snapping to another element, this offset must be corrected.
+	/**
+	 * Offset from cursor position to drag handle of moved element.
+	 * When snapping to another element, this offset must be corrected.
+	 */
 	MapCoordF handle_offset;
 	
 	QScopedPointer<ObjectMover> object_mover;

@@ -46,7 +46,13 @@ class Object;
 class PathObject;
 class PathCoord;
 
-/// Helper class to enable text editing using the DrawTextTool and the EditTool
+/**
+ * Helper class to enable text editing (using the DrawTextTool and the EditTool).
+ * 
+ * To use it, after constructing an instance for the TextObject to edit, you must
+ * pass through all mouse and key events to it and call draw() & includeDirtyRect().
+ * If mousePressEvent() or mouseReleaseEvent() returns false, editing is finished.
+ */
 class TextObjectEditorHelper : public QObject
 {
 Q_OBJECT
@@ -92,73 +98,125 @@ private:
 };
 
 
-/// Helper class to constrain cursor positions to specific lines going outwards from a given point
+/**
+ * Helper class to constrain cursor positions to specific lines / directions
+ * which originate from a given point
+ */
 class ConstrainAngleToolHelper : public QObject
 {
 Q_OBJECT
 public:
-	/// Constructs a helper without allowed angles. Use addAngle() and / or addAngles() to add allowed lines.
+	/**
+	 * Constructs a helper without allowed angles.
+	 * Use addAngle() and / or addAngles() to add allowed lines.
+	 */
 	ConstrainAngleToolHelper();
 	ConstrainAngleToolHelper(const MapCoordF& center);
 	~ConstrainAngleToolHelper();
 	
-	/// Sets the center of the lines
+	/** Sets the center of the lines */
 	void setCenter(const MapCoordF& center);
-	/// Adds a single allowed angle. Zero is to the right, the direction counter-clockwise in Qt's coordinate system.
+	
+	/**
+	 * Adds a single allowed angle. Zero is to the right,
+	 * the direction counter-clockwise in Qt's coordinate system.
+	 */
 	void addAngle(double angle);
-	/// Adds a circular set of allowed angles, starting from 'base' with interval 'stepping'. Zero is to the right, the direction counter-clockwise in Qt's coordinate system.
+	
+	/**
+	 * Adds a circular set of allowed angles, starting from 'base' with
+	 * interval 'stepping'. Zero is to the right, the direction counter-clockwise
+	 * in Qt's coordinate system.
+	 */
 	void addAngles(double base, double stepping);
-	/// Like addAngles, but in degrees. Helps to avoid floating-point inaccuracies if using angle steppings like 15 degrees which could lead to two near-zero allowed angles otherwise.
+	
+	/**
+	 * Like addAngles, but in degrees. Helps to avoid floating-point
+	 * inaccuracies if using angle steppings like 15 degrees which could lead
+	 * to two near-zero allowed angles otherwise.
+	 */
 	void addAnglesDeg(double base, double stepping);
-	/// Adds the default angles given by the MapEditor_FixedAngleStepping setting.
-	/// Usage of this method has the advantage that the stepping is updated automatically when the setting is changed.
+	
+	/**
+	 * Adds the default angles given by the MapEditor_FixedAngleStepping setting.
+	 * Usage of this method has the advantage that the stepping is updated
+	 * automatically when the setting is changed.
+	 */
 	void addDefaultAnglesDeg(double base);
-	/// Removes all allowed angles
+	
+	/** Removes all allowed angles */
 	void clearAngles();
 	
-	/// Get the cursor position, rotated onto the closest of the allowed angles. Returns the chosen angle and marks it as active.
+	/**
+	 * Get the cursor position, projected onto the closest of the allowed angles.
+	 * Returns the chosen angle and marks it as active.
+	 */
 	double getConstrainedCursorPos(const QPoint& in_pos, QPointF& out_pos, MapWidget* widget);
-	/// Get the cursor position, rotated onto the closest of the allowed angles. Returns the chosen angle and marks it as active.
-	double getConstrainedCursorPosMap(const MapCoordF& in_pos, MapCoordF& out_pos);
-	/// Combination of the above methods for convenience
-	double getConstrainedCursorPositions(const MapCoordF& in_pos_map, MapCoordF& out_pos_map, QPointF& out_pos, MapWidget* widget);
 	
-	/// Activates or deactivates this tool.
-	/// If deactivated, it does nothing. This is just for convenience to avoid if-clauses in places where this tool is used sometimes.
-	/// If activated, the center is replaced with the new one.
-	/// TODO: This is ugly and should be two functions. Do not use in new code.
-	///       Instead of setting the center when activating, the center should be always kept up-to-date independently of the activation which is more intuitive.
+	/**
+	 * Get the cursor position, projected onto the closest of the allowed angles.
+	 * Returns the chosen angle and marks it as active.
+	 */
+	double getConstrainedCursorPosMap(const MapCoordF& in_pos, MapCoordF& out_pos);
+	
+	/** Combination of the above methods for convenience */
+	double getConstrainedCursorPositions(const MapCoordF& in_pos_map,
+		MapCoordF& out_pos_map, QPointF& out_pos, MapWidget* widget);
+	
+	/**
+	 * Activates or deactivates this tool.
+	 * 
+	 * If deactivated, it does nothing. This is just for convenience to avoid
+	 * if-clauses in places where this tool is used sometimes.
+	 * If activated, the center is replaced with the new one.
+	 * 
+	 * TODO: This is ugly and should be two functions. Do not use in new code.
+	 *       Instead of setting the center when activating, the center should
+	 *       be always kept up-to-date independently of the activation which
+	 *       is more intuitive.
+	 */
 	void setActive(bool active, const MapCoordF& center);
-	/// Version of setActive() which does not override the center
+	
+	/** Version of setActive() which does not override the center */
 	void setActive(bool active);
+	
 	inline bool isActive() const {return active;}
 	
-	/// Draws the set of allowed angles as lines radiating out from the center point. The active angle, if any, is highlighted.
+	/**
+	 * Draws the set of allowed angles as lines radiating out from the
+	 * center point. The active angle, if any, is highlighted.
+	 */
 	void draw(QPainter* painter, MapWidget* widget);
-	/// Includes this helper's drawing region in the given rect.
+	
+	/** Includes this helper's drawing region in the given rect. */
 	void includeDirtyRect(QRectF& rect);
-	/// Returns the radius of the visualization in pixels
+	
+	/** Returns the radius of the visualization in pixels */
 	inline int getDisplayRadius() const {return active ? 40 : 0;}
 	
 public slots:
 	void settingsChanged();
 	
 signals:
-	/// Emitted when the angle the cursor position is constrained to changes
+	/** Emitted when the angle the cursor position is constrained to changes */
 	void activeAngleChanged() const;
-	/// Emitted whenever the display of this tool helper changes. This is when the active angle changes or the tool is activated / deactivated.
+	
+	/**
+	 * Emitted whenever the display of this tool helper changes.
+	 * This is when the active angle changes or the tool is activated / deactivated.
+	 */
 	void displayChanged() const;
 	
 private:
 	inline void emitActiveAngleChanged() const {emit activeAngleChanged(); emit displayChanged();}
 	
-	/// The active angle or a negative number if no angle is active
+	/** The active angle or a negative number if no angle is active */
 	double active_angle;
-	/// The set of allowed angles. Values are in the range [0, 2*M_PI)
+	/** The set of allowed angles. Values are in the range [0, 2*M_PI) */
 	std::set<double> angles;
-	/// The center point of all lines
+	/** The center point of all lines */
 	MapCoordF center;
-	/// Is this helper active?
+	/** Is this helper active? */
 	bool active;
 	
 	bool have_default_angles_only;
@@ -168,7 +226,7 @@ private:
 
 class SnappingToolHelperSnapInfo;
 
-/// Helper class to snap to existing objects or a grid on the map
+/** Helper class to snap to existing objects or a grid on the map. */
 class SnappingToolHelper : public QObject
 {
 Q_OBJECT
@@ -183,32 +241,46 @@ public:
 		AllTypes = 1 + 2 + 4
 	};
 	
-	/// Constructs a snapping tool helper. By default it is disabled (filter set to NoSnapping).
+	/**
+	 * Constructs a snapping tool helper. By default it is disabled
+	 * (filter set to NoSnapping).
+	 */
 	SnappingToolHelper(Map* map, SnapObjects filter = NoSnapping);
 	
-	/// Constrain the objects to snap onto.
+	/** Constrain the objects to snap onto. */
 	void setFilter(SnapObjects filter);
 	SnapObjects getFilter() const;
 	
-	/// Snaps the given position to the closest snapping object, or returns the original position if no snapping object is close enough.
-	/// Internally remembers the position so the next call to draw() will draw the snap mark there.
-	/// If the info parameter is set, information about the object snapped onto is returned there.
+	/**
+	 * Snaps the given position to the closest snapping object, or returns
+	 * the original position if no snapping object is close enough.
+	 * Internally remembers the position so the next call to draw() will
+	 * draw the snap mark there.
+	 * 
+	 * If the info parameter is set, information about the object
+	 * snapped onto is returned there.
+	 */
 	MapCoord snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info = NULL, Object* exclude_object = NULL);
 	
-	/// Checks for existing objects in map at position and if one is found,
-	/// returns true and sets related angles in angle_tool.
-	/// Internally remembers the position so the next call to draw() will draw the snap mark there.
+	/**
+	 * Checks for existing objects in map at position and if one is found,
+	 * returns true and sets related angles in angle_tool.
+	 * Internally remembers the position so the next call to draw() will
+	 * draw the snap mark there.
+	 */
 	bool snapToDirection(MapCoordF position, MapWidget* widget, ConstrainAngleToolHelper* angle_tool, MapCoord* out_snap_position = NULL);
 	
-	/// Draws the snap mark which was last returned by snapToObject().
+	/** Draws the snap mark which was last returned by snapToObject(). */
 	void draw(QPainter* painter, MapWidget* widget);
-	/// Includes this helper's drawing region in the given rect.
+	
+	/** Includes this helper's drawing region in the given rect. */
 	void includeDirtyRect(QRectF& rect);
-	/// Returns the radius of the visualization in pixels
+	
+	/** Returns the radius of the visualization in pixels. */
 	inline int getDisplayRadius() const {return (snapped_type != NoSnapping) ? 6 : 0;}
 	
 signals:
-	/// Emitted whenever the snap mark changes position
+	/** Emitted whenever the snap mark changes position. */
 	void displayChanged() const;
 	
 private:
@@ -220,42 +292,53 @@ private:
 	Map* map;
 };
 
-/// Information returned from a snap process from SnappingToolHelper
+/** Information returned from a snap process from SnappingToolHelper. */
 class SnappingToolHelperSnapInfo
 {
 public:
-	/// Type of object snapped onto
+	/** Type of object snapped onto */
 	SnappingToolHelper::SnapObjects type;
-	/// Object snapped onto, if type is ObjectCorners or ObjectPaths, else NULL
+	/** Object snapped onto, if type is ObjectCorners or ObjectPaths, else NULL */
 	Object* object;
-	/// Index of the coordinate which was snapped onto if type is ObjectCorners, else -1 (not snapped to a specific coordinate)
+	/** Index of the coordinate which was snapped onto if type is ObjectCorners,
+	 *  else -1 (not snapped to a specific coordinate) */
 	int coord_index;
-	/// The closest point on the snapped path is returned in path_coord if type == ObjectPaths
+	/** The closest point on the snapped path is returned
+	 *  in path_coord if type == ObjectPaths  */
 	PathCoord path_coord;
 };
 
 
-/// Helper class to 'follow' (i.e. extract continuous parts from) path objects
+/** Helper class to 'follow' (i.e. extract continuous parts from) PathObjects */
 class FollowPathToolHelper
 {
 public:
 	FollowPathToolHelper();
 	
-	/// Starts following the given object from a coordinate.
-	/// FollowPathToolHelpers can be reused for following different paths.
+	/**
+	 * Starts following the given object from a coordinate.
+	 * FollowPathToolHelpers can be reused for following different paths.
+	 */
 	void startFollowingFromCoord(PathObject* path, int coord_index);
 	
-	/// Starts following the given object from an arbitrary position indicated by the path coord.
-	/// The path coord does not need to be from the object's path coord vector.
-	/// FollowPathToolHelpers can be reused for following different paths.
+	/**
+	 * Starts following the given object from an arbitrary position indicated by the path coord.
+	 * The path coord does not need to be from the object's path coord vector.
+	 * FollowPathToolHelpers can be reused for following different paths.
+	 */
 	void startFollowingFromPathCoord(PathObject* path, PathCoord& coord);
 	
-	/// Updates the process and returns the followed part of the path as a new path object in 'result' (ownership of this object is transferred to the caller!)
-	/// Returns false if the following failed, e.g. because the path coord is on another path part than the beginning or
-	/// path and end are the same.
+	/**
+	 * Updates the process and returns the followed part of the path as a
+	 * new path object in 'result' (ownership of this object is transferred
+	 * to the caller!)
+	 * 
+	 * Returns false if the following failed, e.g. because the path coord is
+	 * on another path part than the beginning or path and end are the same.
+	 */
 	bool updateFollowing(PathCoord& end_coord, PathObject*& result);
 	
-	/// Returns the index of the path part which is being followed
+	/** Returns the index of the path part which is being followed */
 	inline int getPartIndex() const {return part_index;}
 	
 private:

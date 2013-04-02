@@ -32,7 +32,7 @@ class SymbolWidget;
 class ConstrainAngleToolHelper;
 
 /**
- * A tool to draw point objects.
+ * Tool to draw PointObjects.
  */
 class DrawPointTool : public MapEditorTool
 {
@@ -61,7 +61,14 @@ protected slots:
 	void updateDirtyRect();
 	
 protected:
+	/**
+	 * Checks if the user dragged the mouse away a certain minimum distance from
+	 * the click point and if yes, returns the drag angle, otherwise returns 0.
+	 */
 	float calculateRotation(QPointF mouse_pos, MapCoordF mouse_pos_map);
+	/**
+	 * Updates the preview due to cursor position changes.
+	 */
 	void updateDragging();
 	void updateStatusText();
 	

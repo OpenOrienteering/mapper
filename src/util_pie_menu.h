@@ -23,31 +23,31 @@
 
 #include <QWidget>
 
-/// Displays a pie menu
+/** Displays a pie menu. */
 class PieMenu : public QWidget
 {
 Q_OBJECT
 public:
-	/// Constructs a pie menu with the given initial number of (empty) items and given dimensions
+	/** Constructs a pie menu with the given initial number of (empty) items
+	 *  and given dimensions. */
 	PieMenu(QWidget* parent, int action_count, int icon_size);
 	
-	/// Sets the number of items in the menu (must be at least three)
+	/** Sets the number of items in the menu (must be at least three). */
 	void setSize(int action_count);
 	
-	/// Replaces the action in place index with the new action. Index zero is at the top, the order is counter-clockwise.
+	/** Replaces the action in place index with the new action.
+	 *  Index zero is at the top, the order is counter-clockwise. */
 	void setAction(int index, QAction* action);
 	
-	/// Removes all actions from the menu, but leaves the number of menu items unchanged
+	/** Removes all actions from the menu, but leaves the number of
+	 *  menu items unchanged. */
 	void clear();
 	
-	/// Returns whether all actions are set to NULL
+	/** Returns whether all actions are set to NULL. */
 	bool isEmpty() const;
 	
-	/// Shows the menu at the given absolute position
+	/** Shows the menu at the given absolute position */
 	void popup(const QPoint pos);
-	
-signals:
-	void triggered(QAction* action);
 	
 protected:
 	virtual void mousePressEvent(QMouseEvent* event);

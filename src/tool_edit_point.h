@@ -33,7 +33,7 @@ class TextObjectEditorHelper;
 
 
 /**
- * A standard tool to edit all types of objects.
+ * Standard tool to edit all types of objects.
  */
 class EditPointTool : public EditTool
 {
@@ -72,34 +72,49 @@ protected:
 	virtual int updateDirtyRectImpl(QRectF& rect);
 	virtual void drawImpl(QPainter* painter, MapWidget* widget);
 	
-	/// Hides the method from MapEditorToolBase.
-	/// Contains special treatment for text objects.
+	/**
+	 * Hides the method from MapEditorToolBase.
+	 * Contains special treatment for text objects.
+	 */
 	void finishEditing();
-	/// In addition to the base class implementation, updates the status text.
+	
+	/** In addition to the base class implementation, updates the status text. */
 	virtual void updatePreviewObjects();
 	
 	void updateStatusText();
-	/// Updates hover_point and hover_object.
+	
+	/** Updates hover_point and hover_object. */
 	void updateHoverPoint(MapCoordF cursor_pos);
-	/// Does additional editing setup required after calling startEditing().
+	
+	/** Does additional editing setup required after calling startEditing(). */
 	void startEditingSetup();
 	
+	/**
+	 * Checks if a single text object is the only selected object and the
+	 * cursor hovers over it.
+	 */
 	bool hoveringOverSingleText();
+	
+	/** Checks if the cursor hovers over the selection frame. */
 	inline bool hoveringOverFrame() const {return hover_point == -1;}
 	
-	/// Bounding box of the selection
+	/** Bounding box of the selection */
 	QRectF selection_extent;
 	
-	/// Path point index of the hover point if non-negative;
-	/// if hovering over the extent rect: -1
-	/// if hovering over nothing: -2
+	/**
+	 * Path point index of the hover point if non-negative;
+	 * if hovering over the extent rect: -1
+	 * if hovering over nothing: -2
+	 */
 	int hover_point;
 	
-	/// Object for hover_point, or the closest object if no hover point,
-	/// or NULL.
+	/**
+	 * Object for hover_point, or the closest object if no hover point,
+	 * or NULL.
+	 */
 	Object* hover_object;
 	
-	/// Is a box selection in progress?
+	/** Is a box selection in progress? */
 	bool box_selection;
 	
 	QScopedPointer<ObjectMover> object_mover;
@@ -108,19 +123,29 @@ protected:
 	bool no_more_effect_on_click;
 	bool space_pressed;
 	
-	/// Offset from cursor position to drag handle of moved element.
-	/// When snapping to another element, this offset must be corrected.
+	/**
+	 * Offset from cursor position to drag handle of moved element.
+	 * When snapping to another element, this offset must be corrected.
+	 */
 	MapCoordF handle_offset;
 	
-	/// Text editor tool helper
+	/** Text editor tool helper */
 	TextObjectEditorHelper* text_editor;
-	/// To prevent creating an undo step if text edit mode is entered and finished, but no text was changed
+	
+	/**
+	 * To prevent creating an undo step if text edit mode is entered and
+	 * finished, but no text was changed
+	 */
 	QString old_text;
-	/// See old_text
+	/** See old_text */
 	int old_horz_alignment;
-	/// See old_text
+	/** See old_text */
 	int old_vert_alignment;
 	
+	/**
+	 * Maximum number of objects in the selection for which point handles
+	 * will still be displayed (and can be edited).
+	 */
 	static int max_objects_for_handle_display;
 };
 

@@ -31,7 +31,7 @@ class SnappingToolHelperSnapInfo;
 class FollowPathToolHelper;
 
 /** 
- * A tool to draw path objects.
+ * Tool to draw arbitrarily shaped PathObjects.
  */
 class DrawPathTool : public DrawLineAndAreaTool
 {
@@ -61,9 +61,13 @@ protected slots:
 	
 protected:
     virtual void updatePreviewPath();
+	/** Should be called when moving the cursor without the draw button being held */
 	void updateHover();
+	/** Called by updateHover() if the user is currently drawing */
 	void updateDrawHover();
+	/** Updates the last three points of the path to form a bezier curve */
 	void createPreviewCurve(MapCoord position, float direction);
+	/** Closes the preview path */
 	void closeDrawing();
 	virtual void finishDrawing();
 	virtual void abortDrawing();
@@ -72,13 +76,23 @@ protected:
 	bool pickAngle(MapCoordF coord, MapWidget* widget);
 	void updateSnapHelper();
 	
+	/** Starts appending to another, existing object */
 	void startAppending(SnappingToolHelperSnapInfo& snap_info);
 	
+	/** Starts following another, existing path */
 	void startFollowing(SnappingToolHelperSnapInfo& snap_info, const MapCoord& snap_coord);
 	void updateFollowing();
 	void finishFollowing();
 	
+	/**
+	 * Checks if the user dragged the mouse away a certain minimum distance from
+	 * the click point and if yes, returns the drag angle, otherwise returns 0.
+	 */
 	float calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map);
+	/**
+	 * Activates or deactivates dash point drawing depending on if a line symbol
+	 * with dash symbols is selcted.
+	 */
 	void updateDashPointDrawing();
 	void updateStatusText();
 	
