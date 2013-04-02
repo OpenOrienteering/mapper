@@ -28,12 +28,17 @@ class PathObject;
 class Symbol;
 class ObjectSelector;
 
-/// Tool to make map cutouts
+/** Tool to make map cutouts */
 class CutoutTool : public MapEditorToolBase
 {
 Q_OBJECT
 public:
-	/// Setting cut_away to true inverts the effect.
+	/**
+	 * Constructs a CutoutTool.
+	 * 
+	 * Setting cut_away to true inverts the tool's effect, cutting the
+	 * part inside the cut shape away instead of the part outside.
+	 */
 	CutoutTool(MapEditorController* editor, QAction* tool_button, bool cut_away);
 	virtual ~CutoutTool();
 
@@ -41,11 +46,15 @@ public:
 
 	virtual bool keyPress(QKeyEvent* event);
 	
-	/// Applies the tool to cut all selected objects in map,
-	/// or to all objects if there is no selection.
-	/// cutout_object itself must not be selected!
-	/// Can also be used without constructing a tool object.
-	/// Setting cut_away to true inverts the effect.
+	/**
+	 * Applies the tool to cut all selected objects in map, or to all objects
+	 * if there is no selection. cutout_object itself must not be selected!
+	 * 
+	 * Can also be used without constructing a tool object.
+	 * 
+	 * Setting cut_away to true inverts the effect, cutting the
+	 * part inside the cut shape away instead of the part outside.
+	 */
 	static void apply(Map* map, PathObject* cutout_object, bool cut_away);
 	
 protected:
@@ -59,20 +68,23 @@ protected:
     virtual void dragMove();
     virtual void dragFinish();
 	
-	/// If false, the tool removes all objects outside the cutout area,
-	/// otherwise it removes all objects inside the cutout area
+	/**
+	 * If false, the tool removes all objects outside the cutout area,
+	 * otherwise it removes all objects inside the cutout area
+	 */
 	bool cut_away;
 	
-	/// The object which determines the cutout's shape
+	/** The object which determines the cutout's shape */
 	PathObject* cutout_object;
 	
-	/// The index of the cutout object in its map part,
-	/// so it can be inserted there again after taking it out.
-	/// Set to a negative value to indicate that the object
-	/// has already been re-added.
+	/**
+	 * The index of the cutout object in its map part, so it can be inserted
+	 * there again after taking it out. Set to a negative value to indicate
+	 * that the object has already been re-added.
+	 */
 	int cutout_object_index;
 	
-	/// Object selection helper
+	/** Object selection helper */
 	QScopedPointer<ObjectSelector> object_selector;
 };
 

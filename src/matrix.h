@@ -38,11 +38,15 @@ QT_END_NAMESPACE
 	#define isnan _isnan
 #endif
 
+/** Dynamically sized matrix of doubles. */
 class Matrix
 {
 public:
 	
+	/** Constructs a 0x0 matrix. */
 	inline Matrix() : d(NULL), n(0), m(0) {}
+	
+	/** Copy constructor. */
 	Matrix(const Matrix& other)
 	{
 		n = other.n;
@@ -50,25 +54,36 @@ public:
 		d = new double[n * m];
 		memcpy(d, other.d, n * m * sizeof(double));
 	}
+	
+	/** Constructs a nxm matrix. */
 	inline Matrix(int n, int m) : n(n), m(m)
 	{
 		d = new double[n*m];
 		memset(d, 0, m*n*sizeof(double));
 	}
+	
+	/** Destructs the matrix. */
 	~Matrix()
 	{
 		delete[] d;
 	}
 	
+	/** Saves the matrix in the old "native" file format to the given file. */
 	void save(QIODevice* file);
+	/** Loads the matrix in the old "native" file format from the given file. */
 	void load(QIODevice* file);
 	
+	/** Saves the matrix in xml format with the given value of the role attribute. */
 	void save(QXmlStreamWriter& xml, const QString role);
+	/** Loads the matrix in xml format. */
  	void load(QXmlStreamReader& xml);
 	
+	/** Returns the number of rows. */
 	inline int getRows() const {return n;}
+	/** Returns the number of columns. */
 	inline int getCols() const {return m;}
 	
+	/** Assignment */
 	void operator=(const Matrix& other)
 	{
 		delete[] d;
@@ -78,6 +93,10 @@ public:
 		memcpy(d, other.d, n * m * sizeof(double));
 	}
 	
+	/**
+	 * Changes the size of the matrix. If the new size is different to the old,
+	 * all matrix elements will be reset to zero.
+	 */
 	void setSize(int n, int m)
 	{
 		if (this->n == n && this->m == m)
@@ -89,21 +108,26 @@ public:
 		d = new double[n*m];
 		memset(d, 0, m*n*sizeof(double));
 	}
+	
+	/** Sets all matrix elements to v. */
 	void setTo(double v)
 	{
 		for (int i = 0; i < n*m; ++i)
 			d[i] = v;
 	}
 	
+	/** Sets a matrix element. */
 	inline void set(int i, int j, double v)
 	{
 		d[i*m + j] = v;
 	}
+	/** Returns a matrix element. */
 	inline double get(int i, int j) const
 	{
 		return d[i*m + j];
 	}
 	
+	/** Exchanges the rows with indices a and b. */
 	void swapRows(int a, int b)
 	{
 		assert(a != b);
@@ -115,6 +139,7 @@ public:
 		}
 	}
 	
+	/** Component-wise subtraction. */
 	void subtract(const Matrix& b, Matrix& out) const
 	{
 		assert(n == b.n && m == b.m);
@@ -122,6 +147,7 @@ public:
 		for (int i = 0; i < n*m; ++i)
 			out.d[i] = d[i] - b.d[i];
 	}
+	/** Component-wise addition. */
 	void add(const Matrix& b, Matrix& out) const
 	{
 		assert(n == b.n && m == b.m);
@@ -129,12 +155,14 @@ public:
 		for (int i = 0; i < n*m; ++i)
 			out.d[i] = d[i] + b.d[i];
 	}
+	/** Multiplication with scalar factor. */
 	void multiply(double b, Matrix& out) const
 	{
 		out.setSize(n, m);
 		for (int i = 0; i < n*m; ++i)
 			out.d[i] = d[i] * b;
 	}
+	/** Matrix multiplication. */
 	void multiply(const Matrix& b, Matrix& out) const
 	{
 		assert(m == b.n);
@@ -146,6 +174,7 @@ public:
 				for (int k = 0; k < m; ++k)
 					out.set(i, j, out.get(i,j) + get(i, k) * b.get(k, j));
 	}
+	/** Matrix transpose. */
 	void transpose(Matrix& out)
 	{
 		assert(this != &out);
@@ -154,6 +183,7 @@ public:
 			for (int j = 0; j < m; ++j)
 				out.set(j, i, get(i, j));
 	}
+	/** Calculates the determinant. */
 	double determinant() const
 	{
 		Matrix a = Matrix(*this);
@@ -203,6 +233,7 @@ public:
 		
 		return result;
 	}
+	/** Tries to inverts the matrix. Returns true if successful. */
 	bool invert(Matrix& out) const
 	{
 		Matrix a = Matrix(*this);
@@ -268,6 +299,7 @@ public:
 		return true;
 	}
 	
+	/** Outputs the matrix to stdout for debugging purposes. */
 	void print() const
 	{
 		for (int i = 0; i < n; ++i)

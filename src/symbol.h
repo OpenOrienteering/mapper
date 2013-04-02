@@ -58,13 +58,19 @@ typedef QHash<QString, Symbol*> SymbolDictionary;
 typedef QHash<const MapColor*, const MapColor*> MapColorMap;
 
 
-/// Base class for map symbols.
-/// Provides among other things a symbol number consisting of multiple parts, e.g. "2.4.12". Parts which are not set are assigned the value -1.
+/**
+ * Abstract base class for map symbols.
+ * 
+ * Provides among other things a symbol number consisting of multiple parts,
+ * e.g. "2.4.12". Parts which are not set are assigned the value -1.
+ */
 class Symbol
 {
 friend class OCAD8FileImport;
 friend class XMLImportExport;
 public:
+	/** Enumeration of all possible symbol types,
+	 *  must be able to be used as bits in a bitmask. */
 	enum Type
 	{
 		Point = 1,
@@ -77,185 +83,333 @@ public:
 		AllSymbols = Point | Line | Area | Text | Combined
 	};
 	
-// 	typedef QHash<const MapColor*, const MapColor*> MapColorMap;
-	
-	/// Constructs an empty symbol
+	/** Constructs an empty symbol */
 	Symbol(Type type);
 	virtual ~Symbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const = 0;
+	
+	/**
+	 * Checks for equality to the other symbol.
+	 * @param other The symbol to compare with.
+	 * @param case_sensitivity Comparison mode for strings, e.g. symbol names.
+	 * @param compare_state If true, also compares symbol state (protected / hidden).
+	 */
 	bool equals(Symbol* other, Qt::CaseSensitivity case_sensitivity = Qt::CaseSensitive, bool compare_state = false);
 	
-	/// Returns the type of the symbol
+	
+	/** Returns the type of the symbol */
 	inline Type getType() const {return type;}
+	
 	// Convenience casts with type checking
+	/** Case to PointSymbol with type checking */
 	const PointSymbol* asPoint() const;
+	/** Case to PointSymbol with type checking */
 	PointSymbol* asPoint();
+	/** Case to LineSymbol with type checking */
 	const LineSymbol* asLine() const;
+	/** Case to LineSymbol with type checking */
 	LineSymbol* asLine();
+	/** Case to AreaSymbol with type checking */
 	const AreaSymbol* asArea() const;
+	/** Case to AreaSymbol with type checking */
 	AreaSymbol* asArea();
+	/** Case to TextSymbol with type checking */
 	const TextSymbol* asText() const;
+	/** Case to TextSymbol with type checking */
 	TextSymbol* asText();
+	/** Case to CombinedSymbol with type checking */
 	const CombinedSymbol* asCombined() const;
+	/** Case to CombinedSymbol with type checking */
 	CombinedSymbol* asCombined();
 	
-	/// Returns the or-ed together bitmask of all symbol types this symbol contains
+	/** Returns the or-ed together bitmask of all symbol types
+	 *  this symbol contains */
 	virtual Type getContainedTypes() const {return getType();}
 	
-	/// Can the symbol be applied to the given object?
-	/// TODO: refactor: use static areTypesCompatible() instead with the type of the object's symbol
+	
+	/**
+	 * Checks if the symbol can be applied to the given object.
+	 * TODO: refactor: use static areTypesCompatible() instead with the type of the object's symbol
+	 */
 	bool isTypeCompatibleTo(Object* object);
 	
-	/// Returns if the symbol numbers are identical.
+	/** Returns if the symbol numbers are identical. */
 	bool numberEquals(Symbol* other, bool ignore_trailing_zeros);
 	
-	/// Saving and loading
+	
+	// Saving and loading
+	
+	/** Saves the symbol in the old "native" file format. */
 	void save(QIODevice* file, Map* map);
+	/** Loads the symbol in the old "native" file format. */
 	bool load(QIODevice* file, int version, Map* map);
+	
+	/**
+	 * Saves the symbol in xml format.
+	 * @param xml Stream to save to.
+	 * @param map Reference to the map containing the symbol. Needed to find
+	 *     symbol indices.
+	 */
 	void save(QXmlStreamWriter& xml, const Map& map) const;
+	/**
+	 * Load the symbol in xml format.
+	 * @param xml Stream to load from.
+	 * @param map Reference to the map containing the symbol.
+	 * @param symbol_dict Dictionary mapping symbol IDs to symbol pointers.
+	 */
 	static Symbol* load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict) throw (FileFormatException);
 	
-	/// Called after loading of the map is finished. Can do tasks that need to reference other symbols or map objects.
+	/**
+	 * Called after loading of the map is finished.
+	 *  Can do tasks that need to reference other symbols or map objects.
+	 */
 	virtual bool loadFinished(Map* map) {return true;}
 	
-	/// Creates renderables to display one specific instance of this symbol defined by the given object and coordinates
-	/// (NOTE: methods which implement this should use the given coordinates instead of the object's coordinates, as those can be an updated, transformed version of the object's coords!)
+	
+	/**
+	 * Creates renderables to display one specific instance of this symbol
+	 * defined by the given object and coordinates.
+	 * 
+	 * NOTE: methods which implement this should use the given coordinates
+	 * instead of the object's coordinates, as those can be an updated,
+	 * transformed version of the object's coords!
+	 */
 	virtual void createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) = 0;
 	
-	/// Called by the map in which the symbol is to notify it of a color being deleted (pointer becomes invalid, indices change)
+	/**
+	 * Called by the map in which the symbol is to notify it of a color being
+	 * deleted (pointer becomes invalid, indices change).
+	 */
 	virtual void colorDeleted(const MapColor* color) = 0;
 	
-	/// Must return if the given color is used by this symbol
+	/** Must return if the given color is used by this symbol. */
 	virtual bool containsColor(const MapColor* color) const = 0;
 	
-	/// Returns the dominant color of this symbol, or a guess for this color in case it is impossible to determine it uniquely
+	/**
+	 * Returns the dominant color of this symbol, or a guess for this color
+	 * in case it is impossible to determine it uniquely.
+	 */
 	virtual const MapColor* getDominantColorGuess() const = 0;
 	
-	/// Called by the map in which the symbol is to notify it of a symbol being changed (pointer becomes invalid).
-	/// If new_symbol == NULL, the symbol is being deleted.
-	/// Must return true if this symbol contained the deleted symbol.
+	/**
+	 * Called by the map in which the symbol is to notify it of a symbol being
+	 * changed (pointer becomes invalid).
+	 * If new_symbol == NULL, the symbol is being deleted.
+	 * Must return true if this symbol contained the deleted symbol.
+	 */
 	virtual bool symbolChanged(Symbol* old_symbol, Symbol* new_symbol) {return false;}
 	
-	/// Must return if the given symbol is referenced by this symbol.
-	/// Should NOT return true if the argument is itself.
+	/**
+	 * Must return if the given symbol is referenced by this symbol.
+	 * Should NOT return true if the argument is itself.
+	 */
 	virtual bool containsSymbol(const Symbol* symbol) const {return false;}
 	
-	/// Scales the whole symbol
+	/** Scales the whole symbol */
 	virtual void scale(double factor) = 0;
 	
-	/// Returns the symbol's icon, creates it if it was not created yet. update == true forces an update of the icon.
+	/**
+	 * Returns the symbol's icon, creates it if it was not created yet.
+	 * update == true forces an update of the icon.
+	 */
 	QImage* getIcon(Map* map, bool update = false);
 	
-	/// Creates a new image with the given side length and draws the smybol icon onto it.
-	/// Returns an image pointer which you must delete yourself when no longer needed.
+	/**
+	 * Creates a new image with the given side length and draws the smybol icon onto it.
+	 * Returns an image pointer which you must delete yourself when no longer needed.
+	 */
 	QImage* createIcon(Map* map, int side_length, bool antialiasing, int bottom_right_border = 0);
 	
-	/// Clear the symbol's icon. It will be recreated when it is needed.
+	/** Clear the symbol's icon. It will be recreated when it is needed. */
 	void resetIcon() { delete icon; icon = NULL; }
 	
-	/// Returns the largest extent (half width) of all line symbols
-	/// which may be included in this symbol.
-	/// TODO: may fit into a subclass "PathSymbol"?
+	/**
+	 * Returns the largest extent (half width) of all line symbols
+	 * which may be included in this symbol.
+	 * TODO: may fit into a subclass "PathSymbol"?
+	 */
 	virtual float calculateLargestLineExtent(Map* map) {return 0;}
 	
+	
 	// Getters / Setters
+	
+	/** Returns the symbol name. */
 	inline const QString& getName() const {return name;}
+	/** Returns the symbol name after stripping all HTML. */
 	QString getPlainTextName() const;
+	/** Sets the symbol name. */
 	inline void setName(const QString& new_name) {name = new_name;}
 	
+	/** Returns the symbol number as string. */
     QString getNumberAsString() const;
+	/** Returns the i-th component of the symbol number as int. */
 	inline int getNumberComponent(int i) const {assert(i >= 0 && i < number_components); return number[i];}
+	/** Sets the i-th component of the symbol number. */
 	inline void setNumberComponent(int i, int new_number) {assert(i >= 0 && i < number_components); number[i] = new_number;}
 	
+	/** Returns the symbol description. */
 	inline const QString& getDescription() const {return description;}
+	/** Sets the symbol description. */
 	inline void setDescription(const QString& new_description) {description = new_description;}
 	
+	/** Returns if this is a helper symbol (which is not printed in the final map) */
 	inline bool isHelperSymbol() const {return is_helper_symbol;}
+	/** Sets if this is a helper symbol, see isHelperSymbol(). */
 	inline void setIsHelperSymbol(bool value) {is_helper_symbol = value;}
 	
+	/** Returns if this symbol is hidden. */
 	inline bool isHidden() const {return is_hidden;}
+	/** Sets the hidden state of this symbol. */
 	inline void setHidden(bool value) {is_hidden = value;}
 	
+	/** Returns if this symbol is protected, i.e. objects with this symbol
+	 *  cannot be edited. */
 	inline bool isProtected() const {return is_protected;}
+	/** Sets the protected state of this symbol. */
 	inline void setProtected(bool value) {is_protected = value;}
 	
+	/** Creates a properties widget for the symbol. */
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
+	
 	
 	// Static
 	
-	/// Returns a newly created symbol of the given type
+	/** Returns a newly created symbol of the given type */
 	static Symbol* getSymbolForType(Type type);
-	/// Static save function; saves the symbol and its type number
+	
+	/** Static save function; saves the symbol and its type number */
 	static void saveSymbol(Symbol* symobl, QIODevice* stream, Map* map);
-	/// Static read function; reads the type number, creates a symbol of this type and loads it. Returns true if successful.
+	
+	/** Static read function; reads the type number, creates a symbol of
+	 *  this type and loads it. Returns true if successful. */
 	static bool loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* map);
-	/// Creates "baseline" renderables for an object - symbol combination. These only show the coordinate paths with minimum line width, and optionally a hatching pattern for areas.
+	
+	/**
+	 * Creates "baseline" renderables for an object - symbol combination.
+	 * These only show the coordinate paths with minimum line width,
+	 * and optionally a hatching pattern for areas.
+	 */
 	static void createBaselineRenderables(Object* object, Symbol* symbol, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, bool hatch_areas);
 	
-	/// Returns if the symbol types can be applied to the same object types
+	/**
+	 * Returns if the symbol types can be applied to the same object types
+	 */
 	static bool areTypesCompatible(Type a, Type b);
 	
-	/// Returns a bitmask of all types which can be applied to the same objects as the given type
+	/**
+	 * Returns a bitmask of all types which can be applied to
+	 * the same objects as the given type.
+	 */
 	static int getCompatibleTypes(Type type);
 	
+	
+	/**
+	 * Number of components of symbol numbers.
+	 */
 	static const int number_components = 3;
+	
+	/**
+	 * Symbol icon size in pixels.
+	 * TODO: make configurable!
+	 */
 	static const int icon_size = 32;
 	
 protected:
-	/// Must be overridden to save type-specific symbol properties. The map pointer can be used to get persistent indices to any pointers on map data
+	/**
+	 * Must be overridden to save type-specific symbol properties.
+	 * The map pointer can be used to get persistent indices to any pointers on map data
+	 */
 	virtual void saveImpl(QIODevice* file, Map* map) = 0;
-	/// Must be overridden to load type-specific symbol properties. See saveImpl()
+	
+	/**
+	 * Must be overridden to load type-specific symbol properties. See saveImpl()
+	 */
 	virtual bool loadImpl(QIODevice* file, int version, Map* map) = 0;
-	/// Must be overridden to save type-specific symbol properties. The map pointer can be used to get persistent indices to any pointers on map data
+	
+	/**
+	 * Must be overridden to save type-specific symbol properties.
+	 * The map pointer can be used to get persistent indices to any pointers on map data
+	 */
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const = 0;
-	/// Must be overridden to load type-specific symbol properties. See saveImpl().
-	/// Return false if the current xml tag does not belong to the symbol and should be skipped, true if the element has been read completely.
+	
+	/**
+	 * Must be overridden to load type-specific symbol properties. See saveImpl().
+	 * Return false if the current xml tag does not belong to the symbol and
+	 * should be skipped, true if the element has been read completely.
+	 */
 	virtual bool loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict) = 0;
-	/// Must be overridden to compare symbol-specific attributes.
+	
+	/**
+	 * Must be overridden to compare symbol-specific attributes.
+	 */
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity) = 0;
 	
-	/// Duplicates properties which are common for all symbols from other to this object
+	/**
+	 * Duplicates properties which are common for all
+	 * symbols from other to this object
+	 */
 	void duplicateImplCommon(const Symbol* other);
 	
+	
+	/** The symbol type, determined by the subclass */
 	Type type;
+	/** Symbol name */
 	QString name;
+	/** Symbol number */
 	int number[number_components];
+	/** Symbol description */
 	QString description;
+	/** Helper symbol flag, see isHelperSymbol() */
 	bool is_helper_symbol;
+	/** Hidden flag, see isHidden() */
 	bool is_hidden;
+	/** Protected flag, see isProtected() */
 	bool is_protected;
+	/** Pointer to symbol icon, if generated */
 	QImage* icon;
 };
 
+/** Drop down combobox for selecting a symbol. */
 class SymbolDropDown : public QComboBox
 {
 Q_OBJECT
 public:
-	/// filter is a bitwise-or combination of the allowed Symbol::Type types.
+	/**
+	 * Creates a SymbolDropDown.
+	 * @param map Map in which to choose a symbol.
+	 * @param filter Bitwise-or combination of the allowed Symbol::Type types.
+	 * @param initial_symbol Initial choice or NULL for "- none -".
+	 * @param excluded_symbol Symbol to exclude from the list or NULL.
+	 * @param parent QWidget parent.
+	 */
 	SymbolDropDown(Map* map, int filter, Symbol* initial_symbol = NULL, const Symbol* excluded_symbol = NULL, QWidget* parent = NULL);
 	
-	/// Returns the selected symbol or NULL if no symbol selected
+	/** Returns the selected symbol or NULL if no symbol selected */
 	Symbol* symbol() const;
 	
-	/// Sets the selection to the given symbol
+	/** Sets the selection to the given symbol  */
 	void setSymbol(Symbol* symbol);
 	
-	/// Adds a custom text item below the topmost "- none -" which can be identified by the given id.
+	/** Adds a custom text item below the topmost "- none -" which
+	 *  can be identified by the given id. */
 	void addCustomItem(const QString& text, int id);
 	
-	/// Returns the id of the current item if it is a custom item, or -1 otherwise
+	/** Returns the id of the current item if it is a custom item,
+	 *  or -1 otherwise */
 	int customID() const;
 	
-	/// Sets the selection to the custom item with the given id
+	/** Sets the selection to the custom item with the given id */
 	void setCustomItem(int id);
 	
 protected slots:
-	// TODO: react to changes in the map (not important as long as that cannot happen as long as a SymbolDropDown is shown, which is the case currently)
+	// TODO: react to changes in the map (not important as long as that cannot
+	// happen as long as a SymbolDropDown is shown, which is the case currently)
 	
 private:
 	int num_custom_items;
 };
 
+/** Qt item delegate for SymbolDropDown. */
 class SymbolDropDownDelegate : public QItemDelegate
 {
 Q_OBJECT

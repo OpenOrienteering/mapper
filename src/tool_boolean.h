@@ -33,8 +33,12 @@ class PathObject;
 class PathCoord;
 
 /**
- * Wraps some helper functions for boolean operations using the Clipper library ( http://www.angusj.com/delphi/clipper.php ) which are presented as separate tools in the UI.
- * As Clipper does not support bezier curves, the areas are clipped as polygonal approximations and it is tried to rebuild the curves afterwards.
+ * Wraps some helper functions for boolean operations using the Clipper library
+ * ( http://www.angusj.com/delphi/clipper.php ) which are presented as separate
+ * tools in the UI.
+ * 
+ * As Clipper does not support bezier curves, the areas are clipped as polygonal
+ * approximations and it is tried to rebuild the curves afterwards.
  */
 class BooleanTool
 {

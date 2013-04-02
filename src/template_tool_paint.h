@@ -34,6 +34,7 @@ class Map;
 class Template;
 class PaintOnTemplatePaletteWidget;
 
+/** Tool to paint on image templates. */
 class PaintOnTemplateTool : public MapEditorTool
 {
 Q_OBJECT
@@ -70,6 +71,7 @@ private:
 	static int erase_width;
 };
 
+/** Color selection widget for PaintOnTemplateTool. */
 class PaintOnTemplatePaletteWidget : public QWidget
 {
 Q_OBJECT
@@ -91,6 +93,7 @@ private:
 	bool close_on_selection;
 };
 
+/** Template selection dialog for PaintOnTemplateTool. */
 class PaintOnTemplateSelectDialog : public QDialog
 {
 Q_OBJECT

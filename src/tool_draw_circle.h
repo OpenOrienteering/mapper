@@ -23,7 +23,7 @@
 
 #include "tool_draw_line_and_area.h"
 
-/// Tool to draw circles and ellipses
+/** Tool to draw circles and ellipses. */
 class DrawCircleTool : public DrawLineAndAreaTool
 {
 Q_OBJECT

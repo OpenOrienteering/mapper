@@ -26,7 +26,7 @@
 
 class DrawLineAndAreaTool;
 
-/// Tool to cut holes into area objects
+/** Tool to cut holes into area objects */
 class CutHoleTool : public MapEditorTool
 {
 Q_OBJECT

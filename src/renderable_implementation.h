@@ -44,6 +44,7 @@ class TextSymbol;
 class TextObject;
 struct TextObjectLineInfo;
 
+/** Renderable for displaying a filled dot. */
 class DotRenderable : public Renderable
 {
 public:
@@ -54,6 +55,7 @@ public:
 	//virtual Renderable* duplicate() {return new DotRenderable(*this);}
 };
 
+/** Renderable for displaying a circle. */
 class CircleRenderable : public Renderable
 {
 public:
@@ -68,6 +70,7 @@ protected:
 	float line_width;
 };
 
+/** Renderable for displaying a line. */
 class LineRenderable : public Renderable
 {
 public:
@@ -87,6 +90,7 @@ protected:
 	Qt::PenJoinStyle join_style;
 };
 
+/** Renderable for displaying an area. */
 class AreaRenderable : public Renderable
 {
 public:
@@ -102,6 +106,7 @@ protected:
 	QPainterPath path;
 };
 
+/** Renderable for displaying text. */
 class TextRenderable : public Renderable
 {
 public:

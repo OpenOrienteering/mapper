@@ -42,6 +42,7 @@ class SymbolSettingDialog;
 class PointSymbolEditorWidget;
 class PointSymbol;
 
+/** Settings for a line symbol's border. */
 struct LineSymbolBorder
 {
 	const MapColor* color;
@@ -65,6 +66,7 @@ struct LineSymbolBorder
 };
 
 
+/** Symbol for PathObjects which displays a line along the path. */
 class LineSymbol : public Symbol
 {
 friend class LineSymbolSettings;
@@ -86,7 +88,7 @@ public:
 		RoundJoin = 2
 	};
 	
-	/// Constructs an empty line symbol
+	/** Constructs an empty line symbol. */
 	LineSymbol();
 	virtual ~LineSymbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map) const;
@@ -98,18 +100,35 @@ public:
 	virtual const MapColor* getDominantColorGuess() const;
 	virtual void scale(double factor);
 	
-	/// Creates empty point symbols for contained NULL symbols with the given names
-    void ensurePointSymbols(const QString& start_name, const QString& mid_name, const QString& end_name, const QString& dash_name);
-	/// Deletes unused point symbols and sets them to NULL
+	/**
+	 * Creates empty point symbols for contained NULL symbols
+	 * with the given names. Useful to prevent having to deal with NULL
+	 * pointers. Use cleanupPointSymbols() later.
+	 */
+    void ensurePointSymbols(
+		const QString& start_name,
+		const QString& mid_name,
+		const QString& end_name,
+		const QString& dash_name
+	);
+	
+	/**
+	 * Deletes unused point symbols and sets them to NULL again.
+	 * See ensurePointSymbols().
+	 */
 	void cleanupPointSymbols();
 	
-	/// Returns the largest extent (half width) of the components of this line.
+	/**
+	 * Returns the largest extent (half width) of the components of this line.
+	 */
 	virtual float calculateLargestLineExtent(Map* map);
 	
-	/// Returns the limit for miter joins in units of the line width.
-	/// See the Qt docs for QPainter::setMiterJoin().
-	/// TODO: Should that better be a line property?
-// FIXME: shall be 0 for border lines.
+	/**
+	 * Returns the limit for miter joins in units of the line width.
+	 * See the Qt docs for QPainter::setMiterJoin().
+	 * TODO: Should that better be a line property?
+	 * FIXME: shall be 0 for border lines.
+	 */
 	static const float miterLimit() {return 1;}
 	
 	// Getters / Setters

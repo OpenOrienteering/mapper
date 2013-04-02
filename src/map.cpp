@@ -2360,7 +2360,7 @@ void MapView::completeDragging(QPoint offset)
 	update();
 	
 	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->completeDragging(offset, move_x, move_y);
+		widgets[i]->completeDragging(move_x, move_y);
 }
 
 bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF cursor_pos_view)

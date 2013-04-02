@@ -144,10 +144,10 @@ void PathCoord::curveToPathCoord(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCo
 	end.param = 1;
 	path_coords->push_back(end);
 }
-void PathCoord::calculatePositionAt(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& path_coords, float length, int& line_coord_search_start, MapCoordF* out_pos, MapCoordF* out_right_vector)
+void PathCoord::calculatePositionAt(const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& path_coords, float length, int& path_coord_search_start, MapCoordF* out_pos, MapCoordF* out_right_vector)
 {
 	int size = (int)path_coords.size();
-	for (int i = qMax(1, line_coord_search_start); i < size; ++i)	// i may not be 0 because the previous LineParam is accessed (and it is unnecessary to look at the 0th line ;coord)
+	for (int i = qMax(1, path_coord_search_start); i < size; ++i)	// i may not be 0 because the previous LineParam is accessed (and it is unnecessary to look at the 0th path coord)
 	{
 		if (path_coords[i].clen < length)
 			continue;
@@ -202,7 +202,7 @@ void PathCoord::calculatePositionAt(const MapCoordVector& flags, const MapCoordV
 			}
 		}
 		
-		line_coord_search_start = i;
+		path_coord_search_start = i;
 		return;
 	}
 	

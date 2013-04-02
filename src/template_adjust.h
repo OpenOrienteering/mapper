@@ -39,7 +39,10 @@ class Template;
 class TemplateAdjustDockWidget;
 class TemplateAdjustWidget;
 
-/// Activity which allows the positioning of a template by specifying source-destination pass point pairs
+/**
+ * Activity which allows the positioning of a template by
+ * specifying source-destination pass point pairs
+ */
 class TemplateAdjustActivity : public MapEditorActivity
 {
 Q_OBJECT
@@ -68,7 +71,7 @@ private:
 	MapEditorController* controller;
 };
 
-/// Custom QDockWidget which closes the assigned activity when it is closed
+/** Custom QDockWidget which closes the assigned activity when it is closed */
 class TemplateAdjustDockWidget : public QDockWidget
 {
 Q_OBJECT
@@ -84,7 +87,7 @@ private:
 	MapEditorController* controller;
 };
 
-/// The widget contained in a TemplateAdjustDockWidget
+/** The widget contained in a TemplateAdjustDockWidget */
 class TemplateAdjustWidget : public QWidget
 {
 Q_OBJECT
@@ -133,7 +136,7 @@ private:
 	bool react_to_changes;
 };
 
-/// Base class for tools which involve selecting pass points for editing
+/** Base class for tools which involve selecting pass points for editing */
 class TemplateAdjustEditTool : public MapEditorTool
 {
 Q_OBJECT
@@ -151,7 +154,7 @@ protected:
 	TemplateAdjustWidget* widget;
 };
 
-/// Tool to add a new pass point
+/** Tool to add a new pass point */
 class TemplateAdjustAddTool : public MapEditorTool
 {
 Q_OBJECT
@@ -179,7 +182,7 @@ protected:
 	TemplateAdjustWidget* widget;
 };
 
-/// Tool to move pass points
+/** Tool to move pass points */
 class TemplateAdjustMoveTool : public TemplateAdjustEditTool
 {
 Q_OBJECT
@@ -203,7 +206,7 @@ protected:
 	MapCoordF dragging_offset;	// offset from cursor pos to dragged point center
 };
 
-/// Tool to delete pass points
+/** Tool to delete pass points */
 class TemplateAdjustDeleteTool : public TemplateAdjustEditTool
 {
 Q_OBJECT

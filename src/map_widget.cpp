@@ -285,7 +285,7 @@ void MapWidget::setDragOffset(QPoint offset)
 	update();
 }
 
-void MapWidget::completeDragging(QPoint offset, qint64 dx, qint64 dy)
+void MapWidget::completeDragging(qint64 dx, qint64 dy)
 {
 	drag_offset = QPoint(0, 0);
 	panView(dx, dy);

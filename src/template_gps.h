@@ -33,7 +33,7 @@ QT_END_NAMESPACE
 class PathObject;
 class PointObject;
 
-/// A template consisting of a set of tracks (polylines) and waypoints
+/** A template consisting of a set of tracks (polylines) and waypoints */
 class TemplateTrack : public Template
 {
 Q_OBJECT
@@ -86,6 +86,9 @@ protected:
 	QString track_crs_spec;
 };
 
+/**
+ * Dialog allowing for local positioning of a track (without georeferencing).
+ */
 class LocalCRSPositioningDialog : public QDialog
 {
 Q_OBJECT

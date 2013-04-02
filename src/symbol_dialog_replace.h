@@ -33,12 +33,19 @@ class Map;
 class Symbol;
 class SymbolDropDownDelegate;
 
+/**
+ * Dialog for replacing the map's symbol set with another.
+ * Lets the user choose options and possibly even choose the replacement
+ * for every single symbol.
+ */
 class ReplaceSymbolSetDialog : public QDialog
 {
 Q_OBJECT
 public:
-	/// Lets the user select a file to load the symbols from and shows the dialog.
-	/// Returns true if the replacement has been finished, false if aborted.
+	/**
+	 * Lets the user select a file to load the symbols from and shows the dialog.
+	 * Returns true if the replacement has been finished, false if aborted.
+	 */
 	static bool showDialog(QWidget* parent, Map* map);
 	
 private slots:

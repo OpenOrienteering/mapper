@@ -110,11 +110,16 @@ struct TextObjectLineInfo
 };
 
 /** A text object.
+ * 
  *  A text object is an instance of a text symbol. 
  *  Its position may be specified by a single coordinate (the anchor point) 
  *  or by two coordinates (word wrap box: 
  *  first coordinate specifies the coordinate of the midpoint,
  *  second coordinates specifies the width and height).
+ * 
+ * TODO: the way of defining word wrap boxes is inconvenient, as the second
+ * coordinate does not specify a real coordinate in this case, but is misused
+ * as extent. Change this?
  */
 class TextObject : public Object
 {

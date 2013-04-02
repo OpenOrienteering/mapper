@@ -41,7 +41,7 @@ class Map;
 class MapView;
 class MapWidget;
 
-/// Transformation parameters for non-georeferenced templates
+/** Transformation parameters for non-georeferenced templates */
 class TemplateTransform
 {
 public:
@@ -63,7 +63,7 @@ public:
 	double template_rotation;
 };
 
-/// Base class for templates
+/** Abstract base class for templates. */
 class Template : public QObject
 {
 Q_OBJECT

@@ -37,7 +37,14 @@ QT_END_NAMESPACE
 
 class SymbolSettingDialog;
 
-/// Symbol which can combine other line and area symbols
+/**
+ * Symbol which can combine other line and area symbols,
+ * creating renderables for each of them.
+ * 
+ * To use, set the number of parts with setNumParts() and set the indivdual part
+ * pointers with setPart(). Parts can be private, i.e. the CombinedSymbol owns
+ * the part symbol and it is not entered in the map as an individual symbol.
+ */
 class CombinedSymbol : public Symbol
 {
 friend class CombinedSymbolSettings;

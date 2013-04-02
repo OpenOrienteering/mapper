@@ -39,6 +39,11 @@ class Template;
 class MapView;
 class MapEditorController;
 
+/**
+ * Widget showing the list of templates, including the map layer.
+ * Allows to load templates, set their view properties and reoder them,
+ * and do various other actions like adjusting template positions.
+ */
 class TemplateWidget : public QWidget
 {
 Q_OBJECT

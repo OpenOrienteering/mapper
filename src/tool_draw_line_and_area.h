@@ -36,8 +36,9 @@ class LineSymbol;
 struct LineSymbolBorder;
 
 /**
- * A base class for drawing tools for line and area symbols.
- * Provides some common functionality like for example displaying the preview objects.
+ * Base class for drawing tools for line and area symbols.
+ * Provides some common functionality, e.g. displaying the preview objects or
+ * coping with changing symbols.
  */
 class DrawLineAndAreaTool : public MapEditorTool
 {
@@ -59,20 +60,53 @@ protected slots:
 	void symbolDeleted(int pos, Symbol* old_symbol);
 	
 protected:
+	/**
+	 * Creates point objects and symbols which serve as a preview for
+	 * drawing the selected symbol.
+	 */
 	void createPreviewPoints();
+	
+	/** Creates preview point symbols for the given symbol. */
 	void addPreviewPointSymbols(Symbol* symbol);
+	
+	/** Creates preview point symbols for the border of the given line symbol. */
 	void addPreviewPointSymbolsForBorder(LineSymbol* line, LineSymbolBorder* border);
+	
+	/**
+	 * Sets the position of the preview objects (after cursor movements).
+	 * @param map_coord The new position.
+	 * @param points_index The index of the points set; there are two sets,
+	 *     so the preview points can be displayed at two positions at the same time.
+	 */
 	void setPreviewPointsPosition(MapCoordF map_coord, int points_index = 0);
+	
+	/** Hides all preview points. */
 	void hidePreviewPoints();
 	
+	
+	/** Does necessary preparations to start drawing. */
 	void startDrawing();
+	
+	/** Calls update() on the preview path, correctly handling its renderables. */
 	virtual void updatePreviewPath();
+	
+	/** Aborts drawing. */
 	virtual void abortDrawing();
+	
+	/** Finishes drawing, creating a new undo step. */
 	virtual void finishDrawing();
+	
+	/** Finishes drawing, appending to the given object if not NULL. */
 	void finishDrawing(PathObject* append_to_object);
+	
+	
+	/** Deletes preview all objects and points. */
 	void deletePreviewObjects();
 	
+	/** Extends the rect to conver all preview objects. */
 	void includePreviewRects(QRectF& rect);
+	
+	/** Draws the preview objects. */
 	void drawPreviewObjects(QPainter* painter, MapWidget* widget);
 	
 	

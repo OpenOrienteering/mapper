@@ -1326,7 +1326,10 @@ public:
 	/** Sets the current drag offset while the map is being dragged. */
 	void setDragOffset(QPoint offset);
 	
-	/** Finishes dragging the map. */
+	/**
+	 * Finishes dragging the map.
+	 * @param offset Drag offset of the whole pan operation, from start to end.
+	 */
 	void completeDragging(QPoint offset);
 	
 	/**

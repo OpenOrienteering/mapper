@@ -464,13 +464,13 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		switch (object_type)
 		{
 			case Point:
-				object->symbol = map->getUndefinedPoint();
+				object->symbol = Map::getUndefinedPoint();
 				break;
 			case Path:
-				object->symbol = map->getUndefinedLine();
+				object->symbol = Map::getUndefinedLine();
 				break;
 			case Text:
-				object->symbol = (object->coords.size() > 1) ? static_cast<Symbol*>(map->getUndefinedLine()) : static_cast<Symbol*>(map->getUndefinedPoint());
+				object->symbol = (object->coords.size() > 1) ? static_cast<Symbol*>(Map::getUndefinedLine()) : static_cast<Symbol*>(Map::getUndefinedPoint());
 				break;
 			default:
 				throw FileFormatException(

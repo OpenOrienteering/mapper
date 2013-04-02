@@ -37,7 +37,7 @@ class Object;
 class RenderStates;
 
 /**
- * A Renderable is a graphical map item with a simple shape and a single color.
+ * Graphical map item with a simple shape and a single color.
  * 
  * This is the abstract base class.
  */
@@ -48,12 +48,19 @@ public:
 	Renderable(const Renderable& other);
 	virtual ~Renderable();
 	
+	/** Returns the extent (bounding box). */
 	inline const QRectF& getExtent() const {return extent;}
 	
-	/// Renders the renderable with the given painter
+	/**
+	 * Renders the renderable with the given painter.
+	 * See Map::draw() for a description of the parameters.
+	 */
 	virtual void render(QPainter& painter, QRectF& bounding_box, bool force_min_size, float scaling, bool on_screen) const = 0;
 	
-	/// Creates the render state information which must be set when rendering this renderable
+	/**
+	 * Creates the render state information which must be set
+	 * when rendering this renderable 
+	 */
 	virtual void getRenderStates(RenderStates& out) const = 0;
 	
 protected:
@@ -190,12 +197,17 @@ class MapRenderables : protected std::map<int, ObjectRenderablesMap>
 public:
 	MapRenderables(Map* map);
 	
+	/**
+	 * Draws the renderables normally.
+	 * See Map::draw() for an explanation of the parameters.
+	 */
 	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor = 1.0f, bool highlighted = false) const;
 	void drawOverprintingSimulation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor = 1.0f, bool highlighted = false) const;
 	void drawColorSeparation(QPainter* painter, MapColor* separation, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor = 1.0f, bool highlighted = false) const;
 	
 	void insertRenderablesOfObject(const Object* object);
-	void removeRenderablesOfObject(const Object* object, bool mark_area_as_dirty);	// NOTE: does not delete the renderables, just removes them from display
+	/** NOTE: does not delete the renderables, just removes them from display */
+	void removeRenderablesOfObject(const Object* object, bool mark_area_as_dirty);
 	
 	void clear(bool set_area_dirty = false);
 	inline bool isEmpty() const {return empty();}

@@ -37,6 +37,16 @@ class SymbolSettingDialog;
 class PointSymbolEditorWidget;
 class ColorDropDown;
 
+/**
+ * Symbol for PointObjects.
+ * 
+ * Apart from its own settings which are presented to the user as "[Midpoint
+ * symbol]" in the point symbol editor, this class can contain a list of
+ * elements together with a symbol for each element. All elements and the
+ * PointObject's own settings make up the appearance of the point symbol.
+ * The reason the own settings are left in is just efficiency, as for some
+ * symbols like crop land, a really huge number of point objects may be generated.
+ */
 class PointSymbol : public Symbol
 {
 friend class PointSymbolSettings;
@@ -44,7 +54,7 @@ friend class PointSymbolEditorWidget;
 friend class OCAD8FileImport;
 friend class XMLImportExport;
 public:
-	/// Constructs an empty point symbol
+	/** Constructs an empty point symbol. */
 	PointSymbol();
 	virtual ~PointSymbol();
 	virtual Symbol* duplicate(const MapColorMap* color_map = NULL) const;
@@ -57,18 +67,32 @@ public:
 	virtual void scale(double factor);
 	
 	// Contained objects and symbols (elements)
+	
+	/** Returns the number of contained elements. */
 	int getNumElements() const;
+	/** Adds a new element consisting of object and symbol at the given index. */
 	void addElement(int pos, Object* object, Symbol* symbol);
+	/** Returns the object of the i-th element. */
 	Object* getElementObject(int pos);
+	/** Returns the object of the i-th element. */
 	const Object* getElementObject(int pos) const;
+	/** Returns the symbol of the i-th element. */
 	Symbol* getElementSymbol(int pos);
+	/** Returns the symbol of the i-th element. */
 	const Symbol* getElementSymbol(int pos) const;
+	/** Deletes the i-th element. */
 	void deleteElement(int pos);
 	
-	/// Returns true if the point contains no elements and does not create renderables itself
+	/**
+	 * Returns true if the point contains no elements and does not create
+	 * renderables itself. Useful to check if it can be deleted.
+	 */
 	bool isEmpty() const;
 	
-	/// Checks if the contained elements are rotationally symmetrical around the origin (this means, only point elements at (0,0) are allowed)
+	/**
+	 * Checks if the contained elements are rotationally symmetrical around
+	 * the origin (this means, only point elements at (0,0) are allowed).
+	 */
 	bool isSymmetrical() const;
 	
 	// Getters / Setters
