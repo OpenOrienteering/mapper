@@ -44,6 +44,7 @@ endif()
 # Qt translations which are not yet available from upstream
 set(Mapper_QT_TRANS
   qt_lv.ts
+  qt_nb.ts
 )
 
 set(Mapper_TRANS
