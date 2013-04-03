@@ -409,9 +409,9 @@ public:
 	}
 	
 	/**
-	 * Changes the length of the vector from the origin to this position
+	 * Treats this coordinate as vector and changes its length
 	 * to the given target length, while keeping the vector's direction.
-	 * Does nothing if the position is very close to (0, 0).
+	 * Does nothing if the vector is very close to (0, 0).
 	 */
 	inline void toLength(float target_length)
 	{
@@ -468,21 +468,6 @@ public:
 		double x = getX();
 		setX(-getY());
 		setY(x);
-	}
-	
-	/**
-	 * Scales the vector to a given length
-	 * 
-	 * TODO: this is a duplicate of toLength(), delete one variant!
-	 */
-	inline void setLength(double length)
-	{
-		double cur_length = sqrt(getX()*getX() + getY()*getY());
-		if (cur_length < 1e-08)
-			return;
-		
-		setX(getX() * length / cur_length);
-		setY(getY() * length / cur_length);
 	}
 	
 	/**

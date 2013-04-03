@@ -75,7 +75,7 @@ set(Mapper_Common_SRCS
 
  template.cpp
  template_image.cpp
- template_gps.cpp
+ template_track.cpp
  template_map.cpp
  template_dialog_reopen.cpp
  template_dock_widget.cpp
@@ -167,7 +167,7 @@ set(Mapper_Common_MOC_INPUT
  template_adjust.h
  template_dialog_reopen.h
  template_dock_widget.h
- template_gps.h
+ template_track.h
  template_image.h
  template_map.h
  template_position_dock_widget.h

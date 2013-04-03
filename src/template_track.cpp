@@ -18,7 +18,7 @@
  */
 
 
-#include "template_gps.h"
+#include "template_track.h"
 
 #include <qmath.h>
 #include <QtGui>

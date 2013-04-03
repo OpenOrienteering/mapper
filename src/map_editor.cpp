@@ -55,7 +55,7 @@
 #include "template.h"
 #include "template_dialog_reopen.h"
 #include "template_dock_widget.h"
-#include "template_gps.h"
+#include "template_track.h"
 #include "template_position_dock_widget.h"
 #include "template_tool_paint.h"
 #include "tool.h"
@@ -2051,17 +2051,17 @@ void MapEditorController::cutClicked()
 }
 void MapEditorController::cutHoleClicked()
 {
-	setTool(new CutHoleTool(this, cut_hole_act, PathObject::Path));
+	setTool(new CutHoleTool(this, cut_hole_act, CutHoleTool::Path));
 }
 
 void MapEditorController::cutHoleCircleClicked()
 {
-	setTool(new CutHoleTool(this, cut_hole_circle_act, PathObject::Circle));
+	setTool(new CutHoleTool(this, cut_hole_circle_act, CutHoleTool::Circle));
 }
 
 void MapEditorController::cutHoleRectangleClicked()
 {
-	setTool(new CutHoleTool(this, cut_hole_rectangle_act, PathObject::Rect));
+	setTool(new CutHoleTool(this, cut_hole_rectangle_act, CutHoleTool::Rect));
 }
 
 void MapEditorController::rotateClicked()

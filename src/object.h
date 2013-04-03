@@ -258,14 +258,6 @@ protected:
 class PathObject : public Object
 {
 public:
-	/// TODO: this is currently only used by the CutHoleTool!
-	enum PartType
-	{
-		Path = 0,
-		Circle = 1,
-		Rect = 2
-	};
-	
 	/**
 	 * Helper struct with information about parts of paths.
 	 * A part is a path segment which is separated from other parts by

@@ -18,8 +18,8 @@
  */
 
 
-#ifndef _OPENORIENTEERING_TEMPLATE_GPS_H_
-#define _OPENORIENTEERING_TEMPLATE_GPS_H_
+#ifndef _OPENORIENTEERING_TEMPLATE_TRACK_H_
+#define _OPENORIENTEERING_TEMPLATE_TRACK_H_
 
 #include "template.h"
 #include "gps_track.h"

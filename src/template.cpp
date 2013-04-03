@@ -32,7 +32,7 @@
 #include "util.h"
 #include "map.h"
 #include "template_image.h"
-#include "template_gps.h"
+#include "template_track.h"
 #include "template_map.h"
 
 // ### TemplateTransform ###

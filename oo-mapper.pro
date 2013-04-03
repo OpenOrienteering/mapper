@@ -49,7 +49,7 @@ HEADERS += \
   src/template_adjust.h \
   src/template_dialog_reopen.h \
   src/template_dock_widget.h \
-  src/template_gps.h \
+  src/template_track.h \
   src/template_image.h \
   src/template_map.h \
   src/template_position_dock_widget.h \
@@ -141,7 +141,7 @@ SOURCES += \
   src/path_coord.cpp \
   src/template.cpp \
   src/template_image.cpp \
-  src/template_gps.cpp \
+  src/template_track.cpp \
   src/template_map.cpp \
   src/template_dialog_reopen.cpp \
   src/template_dock_widget.cpp \

@@ -31,7 +31,7 @@
 #include <mapper_config.h> // TODO: Replace APP_NAME by runtime function to remove this dependency
 
 #include "dxfparser.h"
-#include "template_gps.h"
+#include "template_track.h"
 
 TrackPoint::TrackPoint(LatLon coord, QDateTime datetime, float elevation, int num_satellites, float hDOP)
 {

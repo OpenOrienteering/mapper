@@ -204,7 +204,7 @@ void DrawCircleTool::updateCircle()
 	float m_kappa = 1 - BEZIER_KAPPA;
 	
 	MapCoordF across = opposite_pos_map - circle_start_pos_map;
-	across.setLength(radius);
+	across.toLength(radius);
 	MapCoordF right = across;
 	right.perpRight();
 	
@@ -219,7 +219,7 @@ void DrawCircleTool::updateCircle()
 			right_radius = to_cursor.dot(right) / right.length();
 		}
 	}
-	right.setLength(right_radius);
+	right.toLength(right_radius);
 	
 	preview_path->clearCoordinates();
 	preview_path->addCoordinate(circle_start_pos_map.toCurveStartMapCoord());
