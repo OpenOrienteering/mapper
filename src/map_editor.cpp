@@ -63,6 +63,7 @@
 #include "tool_cut.h"
 #include "tool_cut_hole.h"
 #include "tool_cutout.h"
+#include "tool_distribute_points.h"
 #include "tool_draw_circle.h"
 #include "tool_draw_path.h"
 #include "tool_draw_point.h"
@@ -538,6 +539,7 @@ void MapEditorController::createMenuAndToolbars()
 	simplify_path_act = newAction("simplify", tr("Simplify path"), this, SLOT(simplifyPathClicked()), "tool-simplify-path.png", QString::null, "toolbars.html#simplify_path");
 	cutout_physical_act = newToolAction("cutoutphysical", tr("Cutout"), this, SLOT(cutoutPhysicalClicked()), "tool-cutout-physical.png", QString::null, "toolbars.html#cutout_physical");
 	cutaway_physical_act = newToolAction("cutawayphysical", tr("Cut away"), this, SLOT(cutawayPhysicalClicked()), "tool-cutout-physical-inner.png", QString::null, "toolbars.html#cutaway_physical");
+	distribute_points_act = newAction("distributepoints", tr("Distribute points along path"), this, SLOT(distributePointsClicked()), "tool-distribute-points.png", QString::null, "toolbars.html#distribute_points"); // TODO: write documentation
 	
 	paint_on_template_act = new QAction(QIcon(":/images/pencil.png"), tr("Paint on template"), this);
 	paint_on_template_act->setCheckable(true);
@@ -659,6 +661,7 @@ void MapEditorController::createMenuAndToolbars()
 	tools_menu->addAction(simplify_path_act);
 	tools_menu->addAction(cutout_physical_act);
 	tools_menu->addAction(cutaway_physical_act);
+	tools_menu->addAction(distribute_points_act);
 	
 	// Map menu
 	QMenu* map_menu = window->menuBar()->addMenu(tr("M&ap"));
@@ -781,6 +784,7 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_advanced_editing->addAction(cutaway_physical_act);
 	toolbar_advanced_editing->addAction(convert_to_curves_act);
 	toolbar_advanced_editing->addAction(simplify_path_act);
+	toolbar_advanced_editing->addAction(distribute_points_act);
 	toolbar_advanced_editing->addAction(boolean_intersection_act);
 	toolbar_advanced_editing->addAction(boolean_difference_act);
 	toolbar_advanced_editing->addAction(boolean_xor_act);
@@ -1500,8 +1504,16 @@ void MapEditorController::selectedSymbolsOrObjectsChanged()
 {
 	//Symbol::Type single_symbol_type = Symbol::NoSymbol;
 	Symbol* single_symbol = symbol_widget ? symbol_widget->getSingleSelectedSymbol() : NULL;
-	//if (single_symbol)
-	//	single_symbol_type = single_symbol->getType();
+	bool path_object_among_selection = false;
+	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		if ((*it)->getType() == Object::Path)
+		{
+			path_object_among_selection = true;
+			break;
+		}
+	}
 	
 	bool single_symbol_compatible;
 	bool single_symbol_different;
@@ -1511,6 +1523,11 @@ void MapEditorController::selectedSymbolsOrObjectsChanged()
 	switch_symbol_act->setStatusTip(tr("Switches the symbol of the selected object(s) to the selected symbol.") + (switch_symbol_act->isEnabled() ? "" : (" " + tr("Select at least one object and a fitting, different symbol to activate this tool."))));
 	fill_border_act->setEnabled(single_symbol_compatible && single_symbol_different);
 	fill_border_act->setStatusTip(tr("Fill the selected line(s) or create a border for the selected area(s).") + (fill_border_act->isEnabled() ? "" : (" " + tr("Select at least one object and a fitting, different symbol to activate this tool."))));
+	distribute_points_act->setEnabled(
+		single_symbol
+		&& single_symbol->getType() == Symbol::Point
+		&& path_object_among_selection);
+	distribute_points_act->setStatusTip(tr("Places evenly spaced point objects along an existing path object") + (distribute_points_act->isEnabled() ? "" : (" " + tr("Select at least one path object and a single point symbol to activate this tool."))));
 }
 
 void MapEditorController::undoStepAvailabilityChanged()
@@ -2191,6 +2208,46 @@ void MapEditorController::cutoutPhysicalClicked()
 void MapEditorController::cutawayPhysicalClicked()
 {
 	setTool(new CutoutTool(this, cutaway_physical_act, true));
+}
+
+void MapEditorController::distributePointsClicked()
+{
+	Q_ASSERT(symbol_widget && symbol_widget->getSingleSelectedSymbol()->getType() == Symbol::Point);
+	PointSymbol* point = symbol_widget->getSingleSelectedSymbol()->asPoint();
+	
+	DistributePointsTool::Settings settings;
+	if (!DistributePointsTool::showSettingsDialog(window, point, settings))
+		return;
+	
+	// Create points along paths
+	std::vector<PointObject*> created_objects;
+	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
+	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
+	{
+		if ((*it)->getType() != Object::Path)
+			continue;
+		
+		DistributePointsTool::execute((*it)->asPath(), point, settings, &created_objects);
+	}
+	if (created_objects.empty())
+		return;
+	
+	// Add points to map
+	for (size_t i = 0; i < created_objects.size(); ++i)
+		map->addObject(created_objects[i]);
+	
+	// Create undo step and select new objects
+	map->clearObjectSelection(false);
+	MapPart* part = map->getCurrentPart();
+	DeleteObjectsUndoStep* delete_step = new DeleteObjectsUndoStep(map);
+	for (size_t i = 0; i < created_objects.size(); ++i)
+	{
+		Object* object = created_objects[i];
+		delete_step->addObject(part->findObjectIndex(object));
+		map->addObjectToSelection(object, i == created_objects.size() - 1);
+	}
+	map->objectUndoManager().addNewUndoStep(delete_step);
+	map->setObjectsDirty();
 }
 
 void MapEditorController::addFloatingDockWidget(QDockWidget* dock_widget)

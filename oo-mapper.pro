@@ -60,6 +60,7 @@ HEADERS += \
   src/tool_cut.h \
   src/tool_cut_hole.h \
   src/tool_cutout.h \
+  src/tool_distribute_points.h \
   src/tool_draw_circle.h \
   src/tool_draw_line_and_area.h \
   src/tool_draw_path.h \
@@ -156,6 +157,7 @@ SOURCES += \
   src/tool_edit.cpp \
   src/tool_edit_point.cpp \
   src/tool_edit_line.cpp \
+  src/tool_distribute_points.cpp \
   src/tool_draw_line_and_area.cpp \
   src/tool_draw_point.cpp \
   src/tool_draw_path.cpp \

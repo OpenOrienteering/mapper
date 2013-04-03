@@ -342,6 +342,9 @@ public slots:
 	void cutoutPhysicalClicked();
 	/** Activates the physical cutout tool (inversed) */
 	void cutawayPhysicalClicked();
+	/** Executes the "distribute points along path" action.
+	 *  The prerequisites for using the tool must be given. */
+	void distributePointsClicked();
 	
 	/** Shows or hides the paint-on-template widget */
 	void paintOnTemplateClicked(bool checked);
@@ -471,6 +474,7 @@ private:
 	QAction* simplify_path_act;
 	QAction* cutout_physical_act;
 	QAction* cutaway_physical_act;
+	QAction* distribute_points_act;
 	
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;

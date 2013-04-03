@@ -91,6 +91,7 @@ set(Mapper_Common_SRCS
  tool_edit.cpp
  tool_edit_point.cpp
  tool_edit_line.cpp
+ tool_distribute_points.cpp
  tool_draw_line_and_area.cpp
  tool_draw_point.cpp
  tool_draw_path.cpp
@@ -178,6 +179,7 @@ set(Mapper_Common_MOC_INPUT
  tool_cut.h
  tool_cut_hole.h
  tool_cutout.h
+ tool_distribute_points.h
  tool_draw_circle.h
  tool_draw_line_and_area.h
  tool_draw_path.h
