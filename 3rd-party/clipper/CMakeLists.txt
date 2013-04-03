@@ -23,7 +23,7 @@ cmake_minimum_required(VERSION 2.8.3)
 
 # Configuration options
 
-set(CLIPPER_VERSION_DEFAULT 5.0.3)
+set(CLIPPER_VERSION_DEFAULT 5.1.4)
 set(CLIPPER_VERSION ${CLIPPER_VERSION_DEFAULT} CACHE STRING
   "Version number of the Clipper library, minumum recommended value: 4.10.0")
 mark_as_advanced(CLIPPER_VERSION)
@@ -34,6 +34,8 @@ elseif(CLIPPER_VERSION STREQUAL 5.0.2)
 	set(CLIPPER_MD5 879749c46f5c2608d1f42a9090dc47d7)
 elseif(CLIPPER_VERSION STREQUAL 5.0.3)
 	set(CLIPPER_MD5 8509ee63d716e46e88a21ab31b315411)
+elseif(CLIPPER_VERSION STREQUAL 5.1.4)
+	set(CLIPPER_MD5 8693d4ca96f50d93ae36ea5761e07119)	
 endif()
 mark_as_advanced(CLIPPER_MD5)
 

@@ -193,27 +193,41 @@ bool BooleanTool::executeForObjects(BooleanTool::Operation op, PathObject* subje
 	else if (op == Difference) clip_type = ctDifference;
 	else if (op == XOr) clip_type = ctXor;
 	else return false;
-	ExPolygons solution;
+	PolyTree solution;
 	if (!clipper.Execute(clip_type, solution, pftNonZero, pftNonZero))
 		return false;
 	
 	// Try to convert the solution polygons to objects again
-	for (int polygon_number = 0; polygon_number < (int)solution.size(); ++polygon_number)
-	{
-		ExPolygon& expolygon = solution.at(polygon_number);
-		
-		PathObject* object = new PathObject();
-		object->setSymbol(result_objects_symbol, true);
-		
-		polygonToPathPart(expolygon.outer, polymap, object);
-		for (int i = 0; i < (int)expolygon.holes.size(); ++i)
-			polygonToPathPart(expolygon.holes.at(i), polymap, object);
-		
-		out_objects.push_back(object);
-	}
+	polyTreeToPathObjects(solution, out_objects, result_objects_symbol, polymap);
 	
 	return true;
 }
+
+void BooleanTool::polyTreeToPathObjects(const PolyTree& tree, PathObjects& out_objects, Symbol* result_objects_symbol, QHash< qint64, PathCoordInfo >& polymap)
+{
+	for (int i = 0; i < tree.ChildCount(); ++i)
+		outerPolyNodeToPathObjects(*tree.Childs[i], out_objects, result_objects_symbol, polymap);
+}
+
+void BooleanTool::outerPolyNodeToPathObjects(const PolyNode& node, PathObjects& out_objects, Symbol* result_objects_symbol, QHash< qint64, PathCoordInfo >& polymap)
+{
+	PathObject* object = new PathObject();
+	object->setSymbol(result_objects_symbol, true);
+	
+	polygonToPathPart(node.Contour, polymap, object);
+	for (int i = 0; i < node.ChildCount(); ++i)
+	{
+		polygonToPathPart(node.Childs[i]->Contour, polymap, object);
+		
+		// Add outer polygons contained by (nested within) holes ...
+		for (int j = 0; j < node.Childs[i]->ChildCount(); ++j)
+			outerPolyNodeToPathObjects(*node.Childs[i]->Childs[j], out_objects, result_objects_symbol, polymap);
+	}
+	
+	out_objects.push_back(object);
+}
+
+
 
 void BooleanTool::executeForLine(BooleanTool::Operation op, PathObject* area, PathObject* line, BooleanTool::PathObjects& out_objects)
 {
@@ -294,7 +308,7 @@ void BooleanTool::executeForLine(BooleanTool::Operation op, PathObject* area, Pa
 	}
 }
 
-void BooleanTool::polygonToPathPart(Polygon& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object)
+void BooleanTool::polygonToPathPart(const Polygon& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object)
 {
 	if (polygon.size() < 3)
 		return;
@@ -444,7 +458,7 @@ void BooleanTool::polygonToPathPart(Polygon& polygon, QHash< qint64, PathCoordIn
 	object->getPart(object->getNumParts() - 1).connectEnds();
 }
 
-void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_sequence, bool sequence_increasing, Polygon& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object)
+void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_sequence, bool sequence_increasing, const Polygon& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object)
 {
 	int num_points = (int)polygon.size();
 	
@@ -466,21 +480,21 @@ void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_seque
 	}
 
 	// Get polygon point coordinates
-	IntPoint& start_point = polygon.at(start_index);
+	const IntPoint& start_point = polygon.at(start_index);
 	PathCoordInfo start_info;
 	start_info.first = NULL;
 	
-	IntPoint& second_point = polygon.at((start_index + 1) % num_points);
+	const IntPoint& second_point = polygon.at((start_index + 1) % num_points);
 	PathCoordInfo second_info;
 	
-	IntPoint& end_point = polygon.at(end_index);
+	const IntPoint& end_point = polygon.at(end_index);
 	PathCoordInfo end_info;
 	end_info.first = NULL;
 	
 	int second_last_index = end_index - 1;
 	if (second_last_index < 0)
 		second_last_index = num_points - 1;
-	IntPoint& second_last_point = polygon.at(second_last_index);
+	const IntPoint& second_last_point = polygon.at(second_last_index);
 	PathCoordInfo second_last_info;
 	
 	// Try to find a consistent set of path coord infos for the middle coordinates
@@ -723,7 +737,7 @@ void BooleanTool::rebuildSegmentFromPolygonOnly(const IntPoint& start_point, con
 	object->addCoordinate(end_point_c);
 }
 
-void BooleanTool::rebuildTwoIndexSegment(int start_index, int end_index, bool have_sequence, bool sequence_increasing, Polygon& polygon, QHash< qint64, BooleanTool::PathCoordInfo >& polymap, PathObject* object)
+void BooleanTool::rebuildTwoIndexSegment(int start_index, int end_index, bool have_sequence, bool sequence_increasing, const Polygon& polygon, QHash< qint64, BooleanTool::PathCoordInfo >& polymap, PathObject* object)
 {
 	PathCoordInfo start_info = polymap.value(intPointToQInt64(polygon.at(start_index)));
 	PathCoordInfo end_info = polymap.value(intPointToQInt64(polygon.at(end_index)));
@@ -783,7 +797,7 @@ void BooleanTool::rebuildTwoIndexSegment(int start_index, int end_index, bool ha
 	}
 }
 
-void BooleanTool::rebuildCoordinate(int index, Polygon& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object, bool start_new_part)
+void BooleanTool::rebuildCoordinate(int index, const Polygon& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object, bool start_new_part)
 {
 	MapCoord coord(0.001 * polygon.at(index).X, 0.001 * polygon.at(index).Y);
 	if (polymap.contains(intPointToQInt64(polygon.at(index))))
@@ -805,7 +819,7 @@ MapCoord BooleanTool::convertOriginalCoordinate(MapCoord in)
 	return in;
 }
 
-bool BooleanTool::check_segment_match(int coord_index, PathObject* original, Polygon& polygon, int start_index, int end_index, bool& out_coords_increasing, bool& out_is_curve)
+bool BooleanTool::check_segment_match(int coord_index, PathObject* original, const Polygon& polygon, int start_index, int end_index, bool& out_coords_increasing, bool& out_is_curve)
 {
 	bool found;
 	MapCoord& coord_index_coord = original->getCoordinate(coord_index);
