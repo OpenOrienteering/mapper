@@ -31,6 +31,7 @@
 #include "gui/main_window.h"
 #include "settings.h"
 #include "util_translation.h"
+#include "util/recording_translator.h"
 
 int main(int argc, char** argv)
 {
@@ -75,6 +76,13 @@ int main(int argc, char** argv)
 	QString translation_file = settings.getSetting(Settings::General_TranslationFile).toString();
 	TranslationUtil translation(lang, translation_file);
 	QLocale::setDefault(translation.getLocale());
+#if defined(Mapper_DEBUG_TRANSLATIONS)
+	if (!translation.getAppTranslator().isEmpty())
+	{
+		// Debug translation only if there is a Mapper translation, i.e. not for English.
+		qapp.installTranslator(new RecordingTranslator());
+	}
+#endif
 	qapp.installTranslator(&translation.getQtTranslator());
 	qapp.installTranslator(&translation.getAppTranslator());
 	

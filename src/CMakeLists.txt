@@ -134,6 +134,8 @@ set(Mapper_Common_SRCS
  gui/widgets/color_dropdown.cpp
  gui/widgets/home_screen_widget.cpp
  gui/widgets/measure_widget.cpp
+ 
+ util/recording_translator.cpp
 )
 
 set(Mapper_Common_MOC_INPUT
@@ -214,6 +216,8 @@ set(Mapper_Common_MOC_INPUT
  gui/widgets/color_dropdown.h
  gui/widgets/home_screen_widget.h
  gui/widgets/measure_widget.h
+ 
+ util/recording_translator.h
 )
 
 qt4_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})

@@ -47,6 +47,8 @@ endif()
 
 option(Mapper_TRANSLATIONS_EMBEDDED "Embed all translations in the program executable")
 
+option(Mapper_DEBUG_TRANSLATIONS "Debug missing translations" OFF)
+
 if(WIN32 OR APPLE)
 	set(Mapper_BUILD_PROJ_DEFAULT ON)
 	set(Mapper_BUILD_QT_DEFAULT ON)
