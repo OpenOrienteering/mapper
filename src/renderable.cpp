@@ -218,18 +218,14 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 			{
 				const RenderStates& new_states = it->first;
 				MapColor* color;
-				float pen_width;
+				float pen_width = new_states.pen_width;
 				
 				if (new_states.color_priority > MapColor::Reserved)
 				{
-					pen_width = new_states.pen_width;
 					color = colors[new_states.color_priority];
 				}
 				else
 				{
-					painter->setRenderHint(QPainter::Antialiasing, true);	// this is not undone here anywhere as it should apply to all special symbols and these are always painted last
-					pen_width = new_states.pen_width / scaling;
-					
 					if (new_states.color_priority == MapColor::CoveringWhite)
 						color = Map::getCoveringWhite();
 					else if (new_states.color_priority == MapColor::CoveringRed)
@@ -239,7 +235,15 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 					else if (new_states.color_priority == MapColor::Reserved)
 						continue;
 					else
-						assert(!"Invalid special color!");
+					{
+						Q_ASSERT(!"Invalid special color!");
+						continue; // in release build
+					}
+					
+					// this is not undone here anywhere as it should apply to 
+					// all special symbols and these are always painted last
+					painter->setRenderHint(QPainter::Antialiasing, true);
+					pen_width = new_states.pen_width / scaling;
 				}
 				
 				if (new_states.mode == RenderStates::PenOnly)
@@ -361,15 +365,15 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF boundi
 		}
 	}
 	
+	static MapColor reserved_color(MapColor::Reserved);
 	painter->setWorldTransform(t, false);
 	painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
-	drawColorSeparation(painter, Map::getCoveringWhite(), bounding_box, force_min_size, scaling, on_screen, true);
-	drawColorSeparation(painter, Map::getCoveringRed(), bounding_box, force_min_size, scaling, on_screen, true);
+	drawColorSeparation(painter, &reserved_color, bounding_box, force_min_size, scaling, on_screen, true);
 	
 	painter->restore();
 }
 
-void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor, bool highlighted) const
+void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor) const
 {
 	Map::ColorVector& colors = map->color_set->colors;
 	
@@ -404,82 +408,91 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation
 			{
 				const RenderStates& new_states = it->first;
 				MapColor* renderables_color;
-				float pen_width;
+				float pen_width = new_states.pen_width;
 				
+				SpotColorComponent drawing_color(Map::getUndefinedColor(), 0.0f);
 				if (new_states.color_priority > MapColor::Reserved)
 				{
-					pen_width = new_states.pen_width;
+					// a regular map color
 					renderables_color = colors[new_states.color_priority];
+					switch(renderables_color->getSpotColorMethod())
+					{
+						case MapColor::SpotColor:
+						{
+							if (renderables_color == separation) 
+							{
+								// draw with spot color
+								drawing_color = SpotColorComponent(renderables_color, 1.0f);
+								drawing_started = true;
+							}
+							else if (drawing_started && renderables_color->getKnockout())
+								// explicit knockout
+								drawing_color = SpotColorComponent(separation, 0.0f);
+							break;
+						}
+						case MapColor::CustomColor:
+						{
+							// First, check if the renderables draw color to this separation
+							const SpotColorComponents& components = renderables_color->getComponents();
+							for ( SpotColorComponents::const_iterator component = components.begin(), c_end = components.end();
+								component != c_end;
+								++component )
+							{
+								if (component->spot_color == separation)
+								{
+									// The renderables do draw the current spot color
+									drawing_color = *component;
+									if (!drawing_started)
+										drawing_started = (component->factor > 0.0005f);
+									break;
+								}
+							}
+							// If the renderables do not explicitly draw color to this separation,
+							// check if they need a knockout.
+							if ( drawing_started && 
+								drawing_color.spot_color->getPriority() == MapColor::Undefined &&
+								renderables_color->getKnockout() )
+							{
+								drawing_color = SpotColorComponent(separation, 0.0f);
+							}
+							break;
+						}
+						default:
+							; // nothing
+					}
+					if (drawing_color.spot_color->getPriority() == MapColor::Undefined)
+						continue;
 				}
-				else
+				else if (separation->getPriority() == MapColor::Reserved)
 				{
-					painter->setRenderHint(QPainter::Antialiasing, true);	// this is not undone here anywhere as it should apply to all special symbols and these are always painted last
-					pen_width = new_states.pen_width / scaling;
-					
 					if (new_states.color_priority == MapColor::CoveringWhite)
-						renderables_color = Map::getCoveringWhite();
+						drawing_color.spot_color = Map::getCoveringWhite();
 					else if (new_states.color_priority == MapColor::CoveringRed)
-						renderables_color = Map::getCoveringRed();
+						drawing_color.spot_color = Map::getCoveringRed();
 					else if (new_states.color_priority == MapColor::Undefined)
-						renderables_color = Map::getUndefinedColor();
+						drawing_color.spot_color = Map::getUndefinedColor();
 					else if (new_states.color_priority == MapColor::Reserved)
 						continue;
 					else
-						assert(!"Invalid special color!");
+					{
+						Q_ASSERT(!"Invalid special color!");                 // in development build
+						drawing_color.spot_color = Map::getUndefinedColor(); // in release build
+					}
+					
+					drawing_color.factor = 1.0f;
+					pen_width = new_states.pen_width / scaling;
+					painter->setRenderHint(QPainter::Antialiasing, true);	// this is not undone here anywhere as it should apply to all special symbols and these are always painted last
 				}
-				
-				SpotColorComponent drawing_color(Map::getUndefinedColor(), 0.0f);
-				switch(renderables_color->getSpotColorMethod())
+				else
 				{
-					case MapColor::SpotColor:
-					{
-						if (renderables_color == separation) 
-						{
-							// draw with spot color
-							drawing_color = SpotColorComponent(renderables_color, 1.0f);
-							drawing_started = true;
-						}
-						else if (drawing_started && renderables_color->getKnockout())
-							// explicit knockout
-							drawing_color = SpotColorComponent(separation, 0.0f);
-						break;
-					}
-					case MapColor::CustomColor:
-					{
-						// First, check if the renderables draw color to this separation
-						const SpotColorComponents& components = renderables_color->getComponents();
-						for ( SpotColorComponents::const_iterator component = components.begin(), c_end = components.end();
-						      component != c_end;
-						      ++component )
-						{
-							if (component->spot_color == separation)
-							{
-								// The renderables do draw the current spot color
-								drawing_color = *component;
-								if (!drawing_started)
-									drawing_started = (component->factor > 0.0005f);
-								break;
-							}
-						}
-						// If the renderables do not explicitly draw color to this separation,
-						// check if they need a knockout.
-						if ( drawing_started && 
-						     drawing_color.spot_color->getPriority() == MapColor::Undefined &&
-						     renderables_color->getKnockout() )
-						{
-							drawing_color = SpotColorComponent(separation, 0.0f);
-						}
-						break;
-					}
-					default:
-						; // nothing
-				}
-				if (drawing_color.spot_color->getPriority() == MapColor::Undefined)
 					continue;
+				}
 				
 				QColor color = *drawing_color.spot_color;
 				if (drawing_color.factor < 0.0005f)
+				{
 					color = Qt::white;
+				}
 				else
 				{
 					qreal c, m, y, k;
@@ -490,14 +503,13 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation
 				if (new_states.mode == RenderStates::PenOnly)
 				{
 					bool pen_too_small = (force_min_size && pen_width * scaling <= 1.0f);
-					painter->setPen(QPen(highlighted ? getHighlightedColor(color) : color, pen_too_small ? 0 : pen_width));
+					painter->setPen(QPen(color, pen_too_small ? 0 : pen_width));
 					painter->setBrush(QBrush(Qt::NoBrush));
 				}
 				else if (new_states.mode == RenderStates::BrushOnly)
 				{
-					QBrush brush(highlighted ? getHighlightedColor(color) : color);
 					painter->setPen(QPen(Qt::NoPen));
-					painter->setBrush(brush);
+					painter->setBrush(QBrush(color));
 				}
 				
 				// TODO: Check for removal
