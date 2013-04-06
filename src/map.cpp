@@ -893,25 +893,26 @@ void Map::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, floa
 	renderables->draw(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, opacity);
 }
 
-void Map::drawOverprintingSimulation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity)
+void Map::drawOverprintingSimulation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols)
 {
 	// Update the renderables of all objects marked as dirty
 	updateObjects();
 	
 	// The actual drawing
-	renderables->drawOverprintingSimulation(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, opacity);
+	renderables->drawOverprintingSimulation(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols);
 }
 
-void Map::drawColorSeparation(QPainter* painter, MapColor* spot_color, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity)
+void Map::drawColorSeparation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, const MapColor* spot_color)
 {
 	// The actual drawing
-	renderables->drawColorSeparation(painter, spot_color, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, opacity);
+	renderables->drawColorSeparation(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, spot_color);
 }
 
 void Map::drawGrid(QPainter* painter, QRectF bounding_box)
 {
 	grid->draw(painter, bounding_box, this);
 }
+
 void Map::drawTemplates(QPainter* painter, QRectF bounding_box, int first_template, int last_template, MapView* view, bool on_screen)
 {
 	for (int i = first_template; i <= last_template; ++i)

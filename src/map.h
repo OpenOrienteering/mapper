@@ -163,7 +163,7 @@ public:
 	void clear();
 	
 	/**
-	 * Draws the part of the map which is visible in the bounding box
+	 * Draws the part of the map which is visible in the bounding box.
 	 * 
 	 * @param painter The QPainter used for drawing.
 	 * @param bounding_box Bounding box of area to draw, given in map coordinates.
@@ -178,32 +178,38 @@ public:
 	 *     flag should be shown.
 	 * @param opacity Opacity to draw the map with.
 	 */
-	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size,
-			  float scaling, bool on_screen, bool show_helper_symbols,
-		      float opacity = 1.0);
-	
-	/**
-	 * Draws a spot color overprinting simualation for the part of the map which
-	 * is visible in the given bounding box in map coordinates.
-	 * 
-	 * See draw() for an explanation of the parameters.
-	 */
-	void drawOverprintingSimulation(QPainter* painter, QRectF bounding_box,
+	void draw(QPainter* painter, QRectF bounding_box,
 		bool force_min_size, float scaling, bool on_screen,
 		bool show_helper_symbols, float opacity = 1.0);
 	
 	/**
-	 * Draws a particular spot color for the part of the map which is visible
-	 * in the given bounding box in map coordinates
-	 * This will not update the renderables of modified objects.
+	 * Draws a spot color overprinting simulation for the part of the map
+	 * which is visible in the given bounding box.
+	 * 
+	 * See draw() for an explanation of the parameters.
+	 * 
+	 * @param painter Must be a QPainter on a QImage of Format_ARGB32_Premultiplied.
+	 */
+	void drawOverprintingSimulation(QPainter* painter, QRectF bounding_box,
+		bool force_min_size, float scaling, bool on_screen,
+		bool show_helper_symbols);
+	
+	/**
+	 * Draws the separation for a particular spot color for the part of the
+	 * map which is visible in the given bounding box.
+	 *
+	 * This will not update the renderables of modified objects. The user
+	 * should call Map::updateObjects() before the first call to this
+	 * function when doing a sequence of separations.
 	 * 
 	 * See draw() for an explanation of the remaining parameters.
 	 * 
 	 * @param spot_color The spot color to draw the separation for.
 	 */
-	void drawColorSeparation(QPainter* painter, MapColor* spot_color,
-		QRectF bounding_box, bool force_min_size, float scaling, bool on_screen,
-		bool show_helper_symbols, float opacity = 1.0);
+	void drawColorSeparation(QPainter* painter, QRectF bounding_box,
+		bool force_min_size, float scaling, bool on_screen,
+		bool show_helper_symbols,
+		const MapColor* spot_color);
 	
 	/**
 	 * Draws the map grid

@@ -314,7 +314,7 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 	painter->restore();
 }
 
-void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor, bool highlighted) const
+void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols) const
 {
 	// NOTE: painter must be a QPainter on a QImage of Format_ARGB32_Premultiplied.
 	QImage* image = static_cast<QImage*>(painter->device());
@@ -341,7 +341,7 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF boundi
 			QPainter p(&separation);
 			p.setRenderHints(hints);
 			p.setWorldTransform(t, false);
-			drawColorSeparation(&p, *map_color, bounding_box, force_min_size, scaling, on_screen, true);
+			drawColorSeparation(&p, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, *map_color);
 			p.end();
 			
 			// Add this separation to the composition with multiplication.
@@ -372,12 +372,12 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF boundi
 	static MapColor reserved_color(MapColor::Reserved);
 	painter->setWorldTransform(t, false);
 	painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
-	drawColorSeparation(painter, &reserved_color, bounding_box, force_min_size, scaling, on_screen, true);
+	drawColorSeparation(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, &reserved_color);
 	
 	painter->restore();
 }
 
-void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor) const
+void MapRenderables::drawColorSeparation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, const MapColor* separation) const
 {
 	Map::ColorVector& colors = map->color_set->colors;
 	
@@ -524,9 +524,6 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation
 					painter->setPen(QPen(Qt::NoPen));
 					painter->setBrush(QBrush(color));
 				}
-				
-				// TODO: Check for removal
-				painter->setOpacity(qMin(1.0f, opacity_factor * drawing_color.spot_color->getOpacity()));
 				
 				if (current_clip != new_states.clip_path)
 				{

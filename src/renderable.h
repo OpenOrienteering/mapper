@@ -198,12 +198,37 @@ public:
 	MapRenderables(Map* map);
 	
 	/**
-	 * Draws the renderables normally.
-	 * See Map::draw() for an explanation of the parameters.
+	 * Draws the renderables normally (one opaque over the other).
+	 * See Map::draw() for an explanation of the remaining parameters.
+	 * 
+	 * @param highlighted Use a highlighted variation of the renderables' colors.
 	 */
-	void draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor = 1.0f, bool highlighted = false) const;
-	void drawOverprintingSimulation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor = 1.0f, bool highlighted = false) const;
-	void drawColorSeparation(QPainter* painter, MapColor* separation, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor = 1.0f) const;
+	void draw(QPainter* painter, QRectF bounding_box,
+		bool force_min_size, float scaling, bool on_screen,
+		bool show_helper_symbols, float opacity_factor = 1.0f,
+		bool highlighted = false) const;
+	
+	/**
+	 * Draws the renderables in a spot color overprinting simulation.
+	 * See Map::draw() for an explanation of the remaining parameters.
+	 * 
+	 * @param painter Must be a QPainter on a QImage of Format_ARGB32_Premultiplied.
+	 */
+	void drawOverprintingSimulation(QPainter* painter, QRectF bounding_box,
+		bool force_min_size, float scaling, bool on_screen,
+		bool show_helper_symbols) const;
+	
+	/**
+	 * Draws only the renderables which belong to a particular spot color.
+	 * See Map::draw() for an explanation of the remaining parameters.
+	 * 
+	 * @param separation The spot color to draw the separation for.
+	 */
+	void drawColorSeparation(QPainter* painter, QRectF bounding_box,
+		bool force_min_size, float scaling, bool on_screen,
+		bool show_helper_symbols,
+		const MapColor* separation) const;
+	
 	
 	void insertRenderablesOfObject(const Object* object);
 	/** NOTE: does not delete the renderables, just removes them from display */
