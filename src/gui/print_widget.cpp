@@ -205,8 +205,8 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	
 	setOptions(map_printer->getOptions());
 	connect(map_printer, SIGNAL(optionsChanged(const MapPrinterOptions&)), this, SLOT(setOptions(const MapPrinterOptions&)));
-	setOverprintingCheckEnabled(map->hasSpotColors());
-	connect(map, SIGNAL(spotColorPresenceChanged(bool)), this, SLOT(setOverprintingCheckEnabled(bool)));
+	spotColorPresenceChanged(map->hasSpotColors());
+	connect(map, SIGNAL(spotColorPresenceChanged(bool)), this, SLOT(spotColorPresenceChanged(bool)));
 	
 	setPrintArea(map_printer->getPrintArea());
 	connect(map_printer, SIGNAL(printAreaChanged(QRectF)), this, SLOT(setPrintArea(QRectF)));
@@ -757,6 +757,23 @@ void PrintWidget::differentScaleEdited(int value)
 }
 
 // slot
+void PrintWidget::spotColorPresenceChanged(bool has_spot_colors)
+{
+	if (has_spot_colors)
+	{
+		separation_mode_check->setEnabled(true);
+		overprinting_check->setEnabled(true);
+	}
+	else
+	{
+		normal_mode_check->setChecked(true);
+		separation_mode_check->setEnabled(false);
+		overprinting_check->setChecked(false);
+		overprinting_check->setEnabled(false);
+	}
+}
+
+// slot
 void PrintWidget::separationModeChanged()
 {
 	map_printer->setPrintSpotColorSeparations(separation_mode_check->isChecked());
@@ -772,16 +789,6 @@ void PrintWidget::showTemplatesClicked(bool checked)
 void PrintWidget::showGridClicked(bool checked)
 {
 	map_printer->setPrintGrid(checked);
-}
-
-// slot
-void PrintWidget::setOverprintingCheckEnabled(bool enabled)
-{
-	if (!enabled)
-	{
-		overprinting_check->setChecked(false);
-	}
-	overprinting_check->setEnabled(enabled);
 }
 
 // slot

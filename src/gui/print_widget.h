@@ -163,6 +163,13 @@ protected slots:
 	/** This slot reacts to changes in the alternative scale widget. */
 	void differentScaleEdited(int value);
 	
+	/** This slot reacts to changes in the presence of spot colors in the map.
+	 *  The following features are enabled only when spot colors are present:
+	 *  - spot color separations
+	 *  - overprinting simulation
+	 */
+	void spotColorPresenceChanged(bool has_spot_colors);
+	
 	/** This slot reacts to changes in the normal/separation mode radio buttons. */
 	void separationModeChanged();
 	
@@ -171,10 +178,6 @@ protected slots:
 	
 	/** This slot reacts to changes of the "Show grid" option. */
 	void showGridClicked(bool checked);
-	
-	/** This sets the enabled state of the overprinting simulation option.
-	 *  When the options gets disabled, it will also become unchecked. */
-	void setOverprintingCheckEnabled(bool enabled);
 	
 	/** This slot reacts to changes of the "Simulate overprinting" option. */
 	void overprintingClicked(bool checked);
