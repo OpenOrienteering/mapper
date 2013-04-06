@@ -1693,6 +1693,8 @@ void MapEditorController::switchSymbolClicked()
 	else
 		map->objectUndoManager().addNewUndoStep(switch_step);
 	map->emitSelectionEdited();
+	// Also emit selectionChanged, as symbols of selected objects changed
+	map->emitSelectionChanged();
 }
 
 void MapEditorController::fillBorderClicked()

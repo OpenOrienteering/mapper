@@ -445,6 +445,9 @@ signals:
 	/// Emitted when the number of closed templates changes between zero and one.
 	void closedTemplateAvailabilityChanged();
 	
+	/** Emitted when the set of selected objects changes. Also emitted when the
+	 *  symbol of a selected object changes (which is similar to selecting another
+	 *  object). */
 	void objectSelectionChanged();
 	
 	/// This signal is emitted when at least one of the selected objects is edited in any way.
