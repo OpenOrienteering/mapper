@@ -114,6 +114,18 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	
 	layout->addRow(Util::Headline::create(tr("Options")));
 	
+	QWidget* mode_widget = new QWidget();
+	QBoxLayout* mode_layout = new QHBoxLayout();
+	mode_widget->setLayout(mode_layout);
+	mode_layout->setMargin(0);
+	normal_mode_check = new QRadioButton(tr("Normal output"));
+	mode_layout->addWidget(normal_mode_check);
+	separation_mode_check = new QRadioButton(tr("Color separations"));
+	mode_layout->addWidget(separation_mode_check);
+	mode_layout->addStretch(1);
+	normal_mode_check->setChecked(true);
+	layout->addRow(mode_widget);
+	
 	dpi_combo = new QComboBox();
 	dpi_combo->setEditable(true);
 	dpi_combo->setValidator(new QRegExpValidator(QRegExp("^[1-9]\\d{1,4} dpi$|^[1-9]\\d{1,4}$"), dpi_combo));
@@ -171,6 +183,7 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(dpi_combo->lineEdit(), SIGNAL(editingFinished()), this, SLOT(resolutionEdited()));
 	connect(different_scale_check, SIGNAL(clicked(bool)), this, SLOT(differentScaleClicked(bool)));
 	connect(different_scale_edit, SIGNAL(valueChanged(int)), this, SLOT(differentScaleEdited(int)));
+	connect(separation_mode_check, SIGNAL(toggled(bool)), this, SLOT(separationModeChanged()));
 	connect(show_templates_check, SIGNAL(clicked(bool)), this, SLOT(showTemplatesClicked(bool)));
 	connect(show_grid_check, SIGNAL(clicked(bool)), this, SLOT(showGridClicked(bool)));
 	connect(overprinting_check, SIGNAL(clicked(bool)), this, SLOT(overprintingClicked(bool)));
@@ -638,13 +651,11 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	ScopedMultiSignalsBlocker block;
 	block << dpi_combo->lineEdit() << show_templates_check 
 	      << show_grid_check << overprinting_check
+	      << normal_mode_check << separation_mode_check
 	      << different_scale_check << different_scale_edit;
 	
 	static QString dpi_template("%1 " + tr("dpi"));
 	dpi_combo->setEditText(dpi_template.arg(options.resolution));
-	show_templates_check->setChecked(options.show_templates);
-	show_grid_check->setChecked(options.show_grid);
-	overprinting_check->setChecked(options.simulate_overprinting);
 	if (different_scale_edit->value() != (int)options.scale)
 	{
 		different_scale_edit->setValue(options.scale);
@@ -658,6 +669,26 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	else
 	{
 		applyCenterPolicy();
+	}
+	if (options.print_spot_color_separations)
+	{
+		separation_mode_check->setChecked(true);
+		show_templates_check->setChecked(false);
+		show_templates_check->setEnabled(false);
+		show_grid_check->setChecked(false);
+		show_grid_check->setEnabled(false);
+		overprinting_check->setChecked(false);
+		overprinting_check->setEnabled(false);
+	}
+	else
+	{
+		normal_mode_check->setChecked(true);
+		show_templates_check->setChecked(options.show_templates);
+		show_templates_check->setEnabled(true);
+		show_grid_check->setChecked(options.show_grid);
+		show_grid_check->setEnabled(true);
+		overprinting_check->setChecked(options.simulate_overprinting);
+		overprinting_check->setEnabled(true);
 	}
 }
 
@@ -723,6 +754,12 @@ void PrintWidget::differentScaleEdited(int value)
 		// Adjust the print area.
 		applyPrintAreaPolicy();
 	}
+}
+
+// slot
+void PrintWidget::separationModeChanged()
+{
+	map_printer->setPrintSpotColorSeparations(separation_mode_check->isChecked());
 }
 
 // slot

@@ -341,7 +341,7 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF boundi
 			QPainter p(&separation);
 			p.setRenderHints(hints);
 			p.setWorldTransform(t, false);
-			drawColorSeparation(&p, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, *map_color);
+			drawColorSeparation(&p, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, *map_color, true);
 			p.end();
 			
 			// Add this separation to the composition with multiplication.
@@ -372,12 +372,12 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF boundi
 	static MapColor reserved_color(MapColor::Reserved);
 	painter->setWorldTransform(t, false);
 	painter->setCompositionMode(QPainter::CompositionMode_SourceOver);
-	drawColorSeparation(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, &reserved_color);
+	drawColorSeparation(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, &reserved_color, true);
 	
 	painter->restore();
 }
 
-void MapRenderables::drawColorSeparation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, const MapColor* separation) const
+void MapRenderables::drawColorSeparation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, const MapColor* separation, bool use_color) const
 {
 	Map::ColorVector& colors = map->color_set->colors;
 	
@@ -506,11 +506,15 @@ void MapRenderables::drawColorSeparation(QPainter* painter, QRectF bounding_box,
 				{
 					color = Qt::white;
 				}
-				else
+				else if (use_color)
 				{
 					qreal c, m, y, k;
 					color.getCmykF(&c, &m, &y, &k);
 					color.setCmykF(c*drawing_color.factor,m*drawing_color.factor,y*drawing_color.factor,k*drawing_color.factor,1.0f);
+				}
+				else
+				{
+					color.setCmykF(0.0f, 0.0f, 0.0f, drawing_color.factor, 1.0f);
 				}
 				
 				if (new_states.mode == RenderStates::PenOnly)

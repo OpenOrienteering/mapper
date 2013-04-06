@@ -27,9 +27,10 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include "../util.h"
+#include "../core/map_color.h"
 #include "../map.h"
 #include "../settings.h"
+#include "../util.h"
 #include "../util/xml_stream_util.h"
 
 // #### MapPrinterPageFormat ###
@@ -52,6 +53,7 @@ MapPrinterPageFormat::MapPrinterPageFormat(QSizeF page_rect_size, qreal margin)
 MapPrinterOptions::MapPrinterOptions(unsigned int scale, unsigned int resolution)
  : scale(scale),
    resolution(resolution),
+   print_spot_color_separations(false),
    show_templates(false),
    show_grid(false),
    simulate_overprinting(false)
@@ -300,7 +302,7 @@ QPrinter* MapPrinter::makePrinter() const
 		printer->setPaperSize(page_format.paper_size);
 		printer->setOrientation(page_format.orientation);
 	}
-	printer->setColorMode(QPrinter::Color);
+	printer->setColorMode(options.print_spot_color_separations ? QPrinter::GrayScale : QPrinter::Color);
 	printer->setResolution(options.resolution);
 	
 	if (target == imageTarget() || page_format.paper_size == QPrinter::Custom)
@@ -470,6 +472,16 @@ void MapPrinter::setScale(const unsigned int value)
 		options.scale = value;
 		scale_adjustment = map.getScaleDenominator() / (qreal) value;
 		updatePageBreaks();
+		emit optionsChanged(options);
+	}
+}
+
+// slot
+void MapPrinter::setPrintSpotColorSeparations(bool enabled)
+{
+	if (options.print_spot_color_separations != enabled)
+	{
+		options.print_spot_color_separations = enabled;
 		emit optionsChanged(options);
 	}
 }
@@ -735,6 +747,48 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 	device_painter->restore();
 }
 
+void MapPrinter::drawSeparationPages(QPrinter* printer, QPainter* device_painter, float dpi, const QRectF& page_extent) const
+{
+	Q_ASSERT(printer->colorMode() == QPrinter::GrayScale);
+	
+	device_painter->save();
+	
+	device_painter->setRenderHint(QPainter::Antialiasing);
+	
+	// Translate for top left page margin 
+	qreal scale = dpi / 25.4; // Dots per mm
+	device_painter->scale(scale, scale);
+	device_painter->translate(page_format.page_rect.left(), page_format.page_rect.top());
+	
+	// Convert native map scale to print scale
+	if (scale_adjustment != 1.0)
+	{
+		scale *= scale_adjustment;
+		device_painter->scale(scale_adjustment, scale_adjustment);
+	}
+	
+	// Translate and clip for margins and print area
+	device_painter->translate(-page_extent.left(), -page_extent.top());
+	device_painter->setClipRect(page_extent.intersected(print_area), Qt::ReplaceClip);
+	
+	bool need_new_page = false;
+	for (int i = map.getNumColors() - 1; i >= 0; --i)
+	{
+		const MapColor* color = map.getColor(i);
+		if (color->getSpotColorMethod() == MapColor::SpotColor)
+		{
+			if (need_new_page)
+			{
+				printer->newPage();
+			}
+			map.drawColorSeparation(device_painter, page_extent, false, scale, false, false, color);
+			need_new_page = true;
+		}
+	}
+	
+	device_painter->restore();
+}
+
 // slot
 void MapPrinter::printMap(QPrinter* printer)
 {
@@ -743,19 +797,28 @@ void MapPrinter::printMap(QPrinter* printer)
 	takePrinterSettings(printer);
 	
 	QSizeF extent_size = page_format.page_rect.size() / scale_adjustment;
-	QPainter p(printer);
+	QPainter painter(printer);
 	bool need_new_page = false;
 	Q_FOREACH(qreal vpos, v_page_pos)
 	{
 		Q_FOREACH(qreal hpos, h_page_pos)
 		{
-			if (p.isActive())
+			if (painter.isActive())
 			{
 				if (need_new_page)
+				{
 					printer->newPage();
+				}
 				
 				QRectF page_extent = QRectF(QPointF(hpos, vpos), extent_size);
-				drawPage(&p, (float)options.resolution, page_extent, false);
+				if (options.print_spot_color_separations)
+				{
+					drawSeparationPages(printer, &painter, (float)options.resolution, page_extent);
+				}
+				else
+				{
+					drawPage(&painter, (float)options.resolution, page_extent, false);
+				}
 				need_new_page = true;
 			}
 		}

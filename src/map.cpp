@@ -902,10 +902,13 @@ void Map::drawOverprintingSimulation(QPainter* painter, QRectF bounding_box, boo
 	renderables->drawOverprintingSimulation(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols);
 }
 
-void Map::drawColorSeparation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, const MapColor* spot_color)
+void Map::drawColorSeparation(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, const MapColor* spot_color, bool use_color)
 {
+	// Update the renderables of all objects marked as dirty
+	updateObjects();
+	
 	// The actual drawing
-	renderables->drawColorSeparation(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, spot_color);
+	renderables->drawColorSeparation(painter, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, spot_color, use_color);
 }
 
 void Map::drawGrid(QPainter* painter, QRectF bounding_box)

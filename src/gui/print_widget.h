@@ -32,6 +32,7 @@ class QFormLayout;
 class QLabel;
 class QLineEdit;
 class QPushButton;
+class QRadioButton;
 class QSpinBox;
 QT_END_NAMESPACE
 
@@ -162,6 +163,9 @@ protected slots:
 	/** This slot reacts to changes in the alternative scale widget. */
 	void differentScaleEdited(int value);
 	
+	/** This slot reacts to changes in the normal/separation mode radio buttons. */
+	void separationModeChanged();
+	
 	/** This slot reacts to changes of the "Show template" option. */
 	void showTemplatesClicked(bool checked);
 	
@@ -243,6 +247,9 @@ private:
 	QDoubleSpinBox* width_edit;
 	QDoubleSpinBox* height_edit;
 	QDoubleSpinBox* overlap_edit;
+	
+	QRadioButton* normal_mode_check;
+	QRadioButton* separation_mode_check;
 	
 	QPushButton* preview_button;
 	QPushButton* print_button;

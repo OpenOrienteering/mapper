@@ -220,14 +220,20 @@ public:
 	
 	/**
 	 * Draws only the renderables which belong to a particular spot color.
+	 * 
+	 * Separations are normally drawn in levels of gray where black means
+	 * full tone of the spot color. The parameter use_color can be used to
+	 * draw in the actual spot color instead.
+	 * 
 	 * See Map::draw() for an explanation of the remaining parameters.
 	 * 
 	 * @param separation The spot color to draw the separation for.
+	 * @param use_color  If true, forces the separation to be drawn in its actual color.
 	 */
 	void drawColorSeparation(QPainter* painter, QRectF bounding_box,
 		bool force_min_size, float scaling, bool on_screen,
 		bool show_helper_symbols,
-		const MapColor* separation) const;
+		const MapColor* separation, bool use_color = false) const;
 	
 	
 	void insertRenderablesOfObject(const Object* object);

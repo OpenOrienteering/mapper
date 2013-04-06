@@ -197,19 +197,20 @@ public:
 	/**
 	 * Draws the separation for a particular spot color for the part of the
 	 * map which is visible in the given bounding box.
-	 *
-	 * This will not update the renderables of modified objects. The user
-	 * should call Map::updateObjects() before the first call to this
-	 * function when doing a sequence of separations.
 	 * 
+	 * Separations are normally drawn in levels of gray where black means
+	 * full tone of the spot color. The parameter use_color can be used to
+	 * draw in the actual spot color instead.
+	 *
 	 * See draw() for an explanation of the remaining parameters.
 	 * 
 	 * @param spot_color The spot color to draw the separation for.
+	 * @param use_color  If true, forces the separation to be drawn in its actual color.
 	 */
 	void drawColorSeparation(QPainter* painter, QRectF bounding_box,
 		bool force_min_size, float scaling, bool on_screen,
 		bool show_helper_symbols,
-		const MapColor* spot_color);
+		const MapColor* spot_color, bool use_color = false);
 	
 	/**
 	 * Draws the map grid

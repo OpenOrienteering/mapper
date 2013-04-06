@@ -84,6 +84,9 @@ public:
 	/** The nominal resolution to be used. */
 	unsigned int resolution;
 	
+	/** Controls if spot color separations are to be printed. */
+	bool print_spot_color_separations;
+	
 	/** Controls if templates get printed. */
 	bool show_templates;
 	
@@ -202,6 +205,9 @@ public:
 	 *  of another buffer. */
 	void drawPage(QPainter* device_painter, float dpi, const QRectF& page_extent, bool white_background, QImage* page_buffer = NULL) const;
 	
+	/** Draws the separations as distinct pages to the printer. */
+	void drawSeparationPages(QPrinter* printer, QPainter* device_painter, float dpi, const QRectF& page_extent) const;
+	
 	/** Returns the current configuration. */
 	const MapPrinterConfig& config() const;
 	
@@ -232,6 +238,11 @@ public slots:
 	/** Sets the denominator of the map scale for printing. */
 	void setScale(const unsigned int value);
 	
+	/** Enables or disables the printing of spot color separations.
+	 *  Note that templates, grid, and overprinting simulation will be ignored
+	 *  in spot color mode. */
+	void setPrintSpotColorSeparations(bool enabled);
+	
 	/** Controls whether to print templates. 
 	 *  If a MapView is given when enabling template printing, 
 	 *  it will determine the visibility of map and templates. */
@@ -247,7 +258,7 @@ public slots:
 	void saveConfig() const;
 	
 	/** Prints the map to the given printer. 
-	 *  Multiple pages may be generated. */
+	 *  This will first update this object's properties from the printer's properties. */
 	void printMap(QPrinter* printer);
 	
 signals:

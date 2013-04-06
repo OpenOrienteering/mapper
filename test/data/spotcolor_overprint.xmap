@@ -2564,7 +2564,7 @@ given without the dot.</description>
     </templates>
     <view>
         <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
-        <map_view zoom="7.98746" rotation="0" position_x="-20867" position_y="-69839" view_x="0" view_y="0" drag_offset_x="0" drag_offset_y="0">
+        <map_view zoom="3.99374" rotation="0" position_x="-20867" position_y="-69839" view_x="0" view_y="0" drag_offset_x="0" drag_offset_y="0" overprinting_simulation_enabled="true">
             <map opacity="1"/>
             <templates count="0"/>
         </map_view>
@@ -2572,9 +2572,9 @@ given without the dot.</description>
     <print scale="10000" resolution="600">
         <page_format paper_size="Custom" orientation="portrait" h_overlap="5.00" v_overlap="5.00">
             <dimensions width="110.000000" height="110.000000"/>
-            <page_rect left="5.000000" top="5.000000" width="100.000000" height="100.000000"/>
+            <page_rect left="0.000000" top="0.000000" width="109.982000" height="109.982000"/>
         </page_format>
-        <print_area left="0.000000" top="0.000000" width="100.000000" height="100.000000"/>
+        <print_area left="-70.867439" top="-119.877997" width="100.000000" height="100.000000" center_area="true"/>
     </print>
     <undo count="0"/>
     <redo count="0"/>
