@@ -1033,6 +1033,9 @@ public:
 	/** Returns the special covering gray color for "undefined" objects. */
 	static const MapColor* getUndefinedColor();
 	
+	/** Returns the special registration color. */
+	static const MapColor* getRegistrationColor();
+	
 	/** Returns the special covering white line symbol. */
 	static LineSymbol* getCoveringWhiteLine() {return covering_white_line;}
 	/** Returns the special covering red line symbol. */
@@ -1190,6 +1193,7 @@ private:
 	static MapColor covering_white;
 	static MapColor covering_red;
 	static MapColor undefined_symbol_color;
+	static MapColor registration_color;
 	static LineSymbol* covering_white_line;
 	static LineSymbol* covering_red_line;
 	static LineSymbol* undefined_line;
@@ -1519,6 +1523,12 @@ const MapColor* Map::getUndefinedColor()
 }
 
 inline
+const MapColor* Map::getRegistrationColor()
+{
+	return &registration_color;
+}
+
+inline
 MapColor* Map::getColor(int i)
 {
 	if (0 <= i && i < (int)color_set->colors.size())
@@ -1541,6 +1551,8 @@ const MapColor* Map::getColor(int i) const
 			return getCoveringRed();
 		case -1000:
 			return getCoveringWhite();
+		case -900:
+			return getRegistrationColor();
 		case -500:
 			return getUndefinedColor();
 		default:

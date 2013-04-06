@@ -126,29 +126,38 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
 
     // TODO: print parameters
 
-    // Load colors
-    int num_colors = ocad_color_count(file);
-
-    for (int i = 0; i < num_colors; i++)
-    {
-        OCADColor *ocad_color = ocad_color_at(file, i);
-
-        MapColor* color = new MapColor(i);
-
-        // OCAD stores CMYK values as integers from 0-200.
-        MapColorCmyk cmyk;
-        cmyk.c = 0.005f * ocad_color->cyan;
-        cmyk.m = 0.005f * ocad_color->magenta;
-        cmyk.y = 0.005f * ocad_color->yellow;
-        cmyk.k = 0.005f * ocad_color->black;
+	// Load colors
+	int num_colors = ocad_color_count(file);
+	for (int i = 0; i < num_colors; i++)
+	{
+		OCADColor *ocad_color = ocad_color_at(file, i);
+		MapColor* color = new MapColor(convertPascalString(ocad_color->name), map->color_set->colors.size());
+		// OCD stores CMYK values as integers from 0-200.
+		MapColorCmyk cmyk(
+		  0.005f * ocad_color->cyan,
+		  0.005f * ocad_color->magenta,
+		  0.005f * ocad_color->yellow,
+		  0.005f * ocad_color->black );
 		color->setCmyk(cmyk);
-        color->setOpacity(1.0f);
-		color->setName(convertPascalString(ocad_color->name));
-
-        map->color_set->colors.push_back(color);
-        color_index[ocad_color->number] = color;
-    }
-
+		color->setOpacity(1.0f);
+		
+		if (i == 0 && color->getName() == QLatin1String("Registration black") && color->isBlack())
+		{
+			delete color; color = NULL;
+			color_index[ocad_color->number] = Map::getRegistrationColor();
+			addWarning(tr("Color \"Registration black\" is imported as a special color."));
+			// NOTE: This does not make a difference in output
+			// as long as no spot colors are created,
+			// but as a special color, it is protected from modification,
+			// and it will be saved as number 0 in OCD export.
+		}
+		else
+		{
+			map->color_set->colors.push_back(color);
+			color_index[ocad_color->number] = color;
+		}
+	}
+	
     // Load symbols
     for (OCADSymbolIndex *idx = ocad_symidx_first(file); idx != NULL; idx = ocad_symidx_next(file, idx))
     {
@@ -1334,7 +1343,7 @@ qint64 OCAD8FileImport::convertSize(int ocad_size) {
     return ((qint64)ocad_size) * 10;
 }
 
-MapColor *OCAD8FileImport::convertColor(int color) {
+const MapColor *OCAD8FileImport::convertColor(int color) {
 	if (!color_index.contains(color))
 	{
 		addWarning(tr("Color id not found: %1, ignoring this color").arg(color));
@@ -1352,7 +1361,10 @@ double OCAD8FileImport::convertTemplateScale(double ocad_scale)
 
 // ### OCAD8FileExport ###
 
-OCAD8FileExport::OCAD8FileExport(QIODevice* stream, Map* map, MapView* view) : Exporter(stream, map, view), file(NULL)
+OCAD8FileExport::OCAD8FileExport(QIODevice* stream, Map* map, MapView* view)
+ : Exporter(stream, map, view),
+   uses_registration_color(false),
+   file(NULL)
 {
 	ocad_init();
 	encoding_1byte = QTextCodec::codecForName("Windows-1252");
@@ -1368,7 +1380,8 @@ OCAD8FileExport::~OCAD8FileExport()
 
 void OCAD8FileExport::doExport() throw (FileFormatException)
 {
-	if (map->getNumColors() > 256)
+	uses_registration_color = map->isColorUsedByASymbol(map->getRegistrationColor());
+	if (map->getNumColors() > (uses_registration_color ? 255 : 256))
 		throw FileFormatException(tr("The map contains more than 256 colors which is not supported by ocd version 8."));
 	
 	// Create struct in memory
@@ -1407,22 +1420,40 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 	// TODO: print parameters
 	
 	// Colors
+	int ocad_color_index = 0;
+	if (uses_registration_color)
+	{
+		addWarning(tr("Registration black is exported as a regular color."));
+		
+		++file->header->ncolors;
+		OCADColor *ocad_color = ocad_color_at(file, ocad_color_index);
+		ocad_color->number = ocad_color_index;
+		
+		const MapColor* color = Map::getRegistrationColor();
+		const MapColorCmyk& cmyk = color->getCmyk();
+		ocad_color->cyan = qRound(1 / 0.005f * cmyk.c);
+		ocad_color->magenta = qRound(1 / 0.005f * cmyk.m);
+		ocad_color->yellow = qRound(1 / 0.005f * cmyk.y);
+		ocad_color->black = qRound(1 / 0.005f * cmyk.k);
+		convertPascalString(QString("Registration black"), ocad_color->name, 32); // not translated
+		
+		++ocad_color_index;
+	}
 	for (int i = 0; i < map->getNumColors(); i++)
 	{
 		++file->header->ncolors;
-		OCADColor *ocad_color = ocad_color_at(file, i);
+		OCADColor *ocad_color = ocad_color_at(file, ocad_color_index);
+		ocad_color->number = ocad_color_index;
 		
 		MapColor* color = map->getColor(i);
-		
-		ocad_color->number = i;
-		
 		const MapColorCmyk& cmyk = color->getCmyk();
 		ocad_color->cyan = qRound(1 / 0.005f * cmyk.c);
 		ocad_color->magenta = qRound(1 / 0.005f * cmyk.m);
 		ocad_color->yellow = qRound(1 / 0.005f * cmyk.y);
 		ocad_color->black = qRound(1 / 0.005f * cmyk.k);
 		convertPascalString(color->getName(), ocad_color->name, 32);
-		// ocad_color->spot
+		
+		++ocad_color_index;
 	}
 	
 	// Symbols
@@ -2457,7 +2488,11 @@ s32 OCAD8FileExport::convertSize(qint64 size)
 s16 OCAD8FileExport::convertColor(const MapColor* color) const
 {
 	int index = map->findColorIndex(color);
-	return (index > 0) ? index : 0;
+	if (index >= 0)
+	{
+		return uses_registration_color ? (index + 1) : index;
+	}
+	return 0;
 }
 
 double OCAD8FileExport::convertTemplateScale(double mapper_scale)

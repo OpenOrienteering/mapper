@@ -224,6 +224,10 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 				{
 					color = colors[new_states.color_priority];
 				}
+				else if (new_states.color_priority == MapColor::Registration)
+				{
+					color = Map::getRegistrationColor();
+				}
 				else
 				{
 					if (new_states.color_priority == MapColor::CoveringWhite)
@@ -382,7 +386,7 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation
 	const QPainterPath* current_clip = NULL;
 	
 	// As soon as the spot color is actually used for drawing (i.e. drawing_started = true),
-	// we need to take care of out-of-sequence map colors.
+	// we need to take care of knockouts.
 	bool drawing_started = false;
 	
 	painter->save();
@@ -471,6 +475,8 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation
 						drawing_color.spot_color = Map::getCoveringRed();
 					else if (new_states.color_priority == MapColor::Undefined)
 						drawing_color.spot_color = Map::getUndefinedColor();
+					else if (new_states.color_priority == MapColor::Registration)
+						continue; // treated per spot color
 					else if (new_states.color_priority == MapColor::Reserved)
 						continue;
 					else
@@ -481,7 +487,14 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation
 					
 					drawing_color.factor = 1.0f;
 					pen_width = new_states.pen_width / scaling;
-					painter->setRenderHint(QPainter::Antialiasing, true);	// this is not undone here anywhere as it should apply to all special symbols and these are always painted last
+					// this is not undone here anywhere as it should apply to
+					// all special symbols and these are always painted last
+					painter->setRenderHint(QPainter::Antialiasing, true);
+				}
+				else if (new_states.color_priority == MapColor::Registration)
+				{
+					drawing_color.spot_color = separation;
+					drawing_color.factor = 1.0f;
 				}
 				else
 				{

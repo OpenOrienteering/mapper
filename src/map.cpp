@@ -322,6 +322,7 @@ bool Map::static_initialized = false;
 MapColor Map::covering_white(MapColor::CoveringWhite);
 MapColor Map::covering_red(MapColor::CoveringRed);
 MapColor Map::undefined_symbol_color(MapColor::Undefined);
+MapColor Map::registration_color(MapColor::Registration);
 LineSymbol* Map::covering_white_line;
 LineSymbol* Map::covering_red_line;
 LineSymbol* Map::undefined_line;
@@ -1292,6 +1293,10 @@ int Map::findColorIndex(const MapColor* color) const
 	{
 		if (color_set->colors[i] == color)
 			return i;
+	}
+	if (color && color->getPriority() == MapColor::Registration)
+	{
+		return MapColor::Registration;
 	}
 	return -1;
 }

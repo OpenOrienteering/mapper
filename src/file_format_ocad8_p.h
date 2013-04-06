@@ -108,7 +108,7 @@ protected:
 	float convertRotation(int angle);
 	void convertPoint(MapCoord &c, int ocad_x, int ocad_y);
 	qint64 convertSize(int ocad_size);
-	MapColor *convertColor(int color);
+	const MapColor *convertColor(int color);
 	double convertTemplateScale(double ocad_scale);
 	
 	static bool isRasterImageFile(const QString &filename);
@@ -124,7 +124,7 @@ private:
 	QTextCodec *encoding_2byte;
 
 	/// maps OCAD color number to oo-mapper color object
-	QHash<int, MapColor *> color_index;
+	QHash<int, const MapColor *> color_index;
 
 	/// maps OCAD symbol number to oo-mapper symbol object
 	QHash<int, Symbol *> symbol_index;
@@ -186,6 +186,9 @@ protected:
 	double convertTemplateScale(double mapper_scale);
 	
 private:
+	/** Indicates that the map uses the special registration color. */
+	bool uses_registration_color;
+	
 	/// Handle to the open OCAD file
 	OCADFile *file;
 	

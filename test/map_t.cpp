@@ -46,6 +46,9 @@ void MapTest::specialColorsTest()
 	QVERIFY(Map::getUndefinedColor() != NULL);
 	QCOMPARE(Map::getUndefinedColor()->getPriority(), static_cast<int>(MapColor::Undefined));
 	
+	QVERIFY(Map::getRegistrationColor() != NULL);
+	QCOMPARE(Map::getRegistrationColor()->getPriority(), static_cast<int>(MapColor::Registration));
+	
 	Map map;               // non-const
 	const Map& cmap(map);  // const
 	QCOMPARE(map.getColor(MapColor::CoveringWhite), (MapColor*)NULL);
@@ -54,6 +57,8 @@ void MapTest::specialColorsTest()
 	QCOMPARE(cmap.getColor(MapColor::CoveringRed), Map::getCoveringRed());
 	QCOMPARE(map.getColor(MapColor::Undefined), (MapColor*)NULL);
 	QCOMPARE(cmap.getColor(MapColor::Undefined), Map::getUndefinedColor());
+	QCOMPARE(map.getColor(MapColor::Registration), (MapColor*)NULL);
+	QCOMPARE(cmap.getColor(MapColor::Registration), Map::getRegistrationColor());
 	
 	QCOMPARE(map.getColor(MapColor::Reserved), (MapColor*)NULL);
 	QCOMPARE(cmap.getColor(MapColor::Reserved), (MapColor*)NULL);

@@ -52,6 +52,17 @@ ColorDropDown::ColorDropDown(const Map* map, const MapColor* initial_color, bool
 		QString name = spot_colors_only ? color->getSpotColorName() : color->getName();
 		addItem(QIcon(pixmap), name, QVariant::fromValue(color));
 	}
+	if (!spot_colors_only)
+	{
+		const int count = this->count();
+		if (count > 0)
+		{
+			insertSeparator(count);
+		}
+		const MapColor* color = Map::getRegistrationColor();
+		pixmap.fill(*color);
+		addItem(QIcon(pixmap), color->getName(), QVariant::fromValue(color));
+	}
 	setCurrentIndex(initial_index);
 
 	if (!spot_colors_only)

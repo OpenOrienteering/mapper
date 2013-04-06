@@ -180,6 +180,7 @@ public:
 	{
 		CoveringRed   = -1005,
 		CoveringWhite = -1000,  // used for tool helper line colors	
+		Registration  = -900,   // used for registration marks: all printed colors
 		Undefined     = -500,
 		Reserved      = -1      // used to mark renderables which should not be inserted into the map
 	};

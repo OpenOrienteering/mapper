@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map xmlns="http://oorienteering.sourceforge.net/mapper/xml/v2" version="3">
+<map xmlns="http://oorienteering.sourceforge.net/mapper/xml/v2" version="5">
     <notes></notes>
     <georeferencing scale="10000" declination="0" grivation="0">
         <ref_point x="0" y="0"/>
@@ -2095,10 +2095,10 @@ symbols must be given in each case in the map legend.</description>
         </symbol>
         <symbol type="1" id="131" code="602" name="Registration mark">
             <description>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</description>
-            <point_symbol inner_radius="1500" inner_color="-1" outer_width="0" outer_color="-1" elements="8">
+            <point_symbol inner_radius="1500" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="0" line_width="150" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="-900" line_width="150" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2112,96 +2112,12 @@ symbols must be given in each case in the map legend.</description>
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="0" line_width="150" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="-900" line_width="150" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
                             <coord x="-3000" y="0"/>
                             <coord x="3000" y="0"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                </element>
-                <element>
-                    <symbol type="2" code="">
-                        <line_symbol color="3" line_width="150" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
-                    </symbol>
-                    <object type="1">
-                        <coords count="2">
-                            <coord x="-3000" y="0"/>
-                            <coord x="3000" y="0"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                </element>
-                <element>
-                    <symbol type="2" code="">
-                        <line_symbol color="3" line_width="150" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
-                    </symbol>
-                    <object type="1">
-                        <coords count="2">
-                            <coord x="0" y="-3000"/>
-                            <coord x="0" y="3000"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                </element>
-                <element>
-                    <symbol type="2" code="">
-                        <line_symbol color="4" line_width="150" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
-                    </symbol>
-                    <object type="1">
-                        <coords count="2">
-                            <coord x="-3000" y="0"/>
-                            <coord x="3000" y="0"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                </element>
-                <element>
-                    <symbol type="2" code="">
-                        <line_symbol color="4" line_width="150" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
-                    </symbol>
-                    <object type="1">
-                        <coords count="2">
-                            <coord x="0" y="-3000"/>
-                            <coord x="0" y="3000"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                </element>
-                <element>
-                    <symbol type="2" code="">
-                        <line_symbol color="9" line_width="150" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
-                    </symbol>
-                    <object type="1">
-                        <coords count="2">
-                            <coord x="-3000" y="0"/>
-                            <coord x="3000" y="0"/>
-                        </coords>
-                        <pattern rotation="0">
-                            <coord x="0" y="0"/>
-                        </pattern>
-                    </object>
-                </element>
-                <element>
-                    <symbol type="2" code="">
-                        <line_symbol color="9" line_width="150" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
-                    </symbol>
-                    <object type="1">
-                        <coords count="2">
-                            <coord x="0" y="-3000"/>
-                            <coord x="0" y="3000"/>
                         </coords>
                         <pattern rotation="0">
                             <coord x="0" y="0"/>
@@ -2225,7 +2141,7 @@ given without the dot.</description>
     </symbols>
     <parts count="1" current="0">
         <part name="default layer">
-            <objects count="23">
+            <objects count="24">
                 <object type="1" symbol="60">
                     <coords count="13">
                         <coord x="-22789" y="-74676" flags="1"/>
@@ -2635,6 +2551,11 @@ given without the dot.</description>
                         <coord x="0" y="0"/>
                     </pattern>
                 </object>
+                <object type="0" symbol="131">
+                    <coords count="1">
+                        <coord x="-14228" y="-72000"/>
+                    </coords>
+                </object>
             </objects>
         </part>
     </parts>
@@ -2648,7 +2569,13 @@ given without the dot.</description>
             <templates count="0"/>
         </map_view>
     </view>
-    <print orientation="landscape" QPrinter_PaperSize="0" dpi="600" center="true" area_left="-169.383" area_top="-174.794" area_width="297.032" area_height="209.91" alternative_scale="10000"/>
+    <print scale="10000" resolution="600">
+        <page_format paper_size="Custom" orientation="portrait" h_overlap="5.00" v_overlap="5.00">
+            <dimensions width="110.000000" height="110.000000"/>
+            <page_rect left="5.000000" top="5.000000" width="100.000000" height="100.000000"/>
+        </page_format>
+        <print_area left="0.000000" top="0.000000" width="100.000000" height="100.000000"/>
+    </print>
     <undo count="0"/>
     <redo count="0"/>
 </map>
