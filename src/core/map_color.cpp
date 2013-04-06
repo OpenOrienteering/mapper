@@ -66,8 +66,9 @@ MapColor::MapColor(int priority)
 			break;
 		case Undefined:
 			setCmyk(QColor(Qt::darkGray));
-			opacity = 1.0f;
 			break;
+		default:
+			; // no change
 	}	
 }
 

@@ -296,7 +296,7 @@ bool TextSymbol::loadImpl(QIODevice* file, int version, Map* map)
 	{
 		file->read((char*)&framing, sizeof(bool));
 		file->read((char*)&temp, sizeof(int));
-		framing_color = (temp >= 0) ? map->getColor(temp) : NULL;
+		framing_color = map->getColor(temp);
 		file->read((char*)&framing_mode, sizeof(int));
 		file->read((char*)&framing_line_half_width, sizeof(int));
 		file->read((char*)&framing_shadow_x_offset, sizeof(int));
@@ -378,7 +378,7 @@ void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*text_symbol*/);
 }
 
-bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
+bool TextSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
 	if (xml.name() != "text_symbol")
 		return false;
@@ -403,7 +403,7 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 		else if (xml.name() == "text")
 		{
 			int temp = attributes.value("color").toString().toInt();
-			color = (temp >= 0) ? map.getColor(temp) : NULL;
+			color = map.getColor(temp);
 			line_spacing = attributes.value("line_spacing").toString().toFloat();
 			paragraph_spacing = attributes.value("paragraph_spacing").toString().toInt();
 			character_spacing = attributes.value("character_spacing").toString().toFloat();
@@ -414,7 +414,7 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 		{
 			framing = true;
 			int temp = attributes.value("color").toString().toInt();
-			framing_color = (temp >= 0) ? map.getColor(temp) : NULL;
+			framing_color = map.getColor(temp);
 			framing_mode = attributes.value("mode").toString().toInt();
 			framing_line_half_width = attributes.value("line_half_width").toString().toInt();
 			framing_shadow_x_offset = attributes.value("shadow_x_offset").toString().toInt();
@@ -425,7 +425,7 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 		{
 			line_below = true;
 			int temp = attributes.value("color").toString().toInt();
-			line_below_color = (temp >= 0) ? map.getColor(temp) : NULL;
+			line_below_color = map.getColor(temp);
 			line_below_width = attributes.value("width").toString().toInt();
 			line_below_distance = attributes.value("distance").toString().toInt();
 			xml.skipCurrentElement();

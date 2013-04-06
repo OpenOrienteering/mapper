@@ -157,7 +157,7 @@ public:
 	 * @param map Reference to the map containing the symbol.
 	 * @param symbol_dict Dictionary mapping symbol IDs to symbol pointers.
 	 */
-	static Symbol* load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict) throw (FileFormatException);
+	static Symbol* load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) throw (FileFormatException);
 	
 	/**
 	 * Called after loading of the map is finished.
@@ -337,7 +337,7 @@ protected:
 	 * Return false if the current xml tag does not belong to the symbol and
 	 * should be skipped, true if the element has been read completely.
 	 */
-	virtual bool loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict) = 0;
+	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) = 0;
 	
 	/**
 	 * Must be overridden to compare symbol-specific attributes.

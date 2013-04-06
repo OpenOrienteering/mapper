@@ -56,7 +56,7 @@ struct LineSymbolBorder
 	void save(QIODevice* file, Map* map);
 	bool load(QIODevice* file, int version, Map* map);
 	void save(QXmlStreamWriter& xml, const Map& map) const;
-	bool load(QXmlStreamReader& xml, Map& map);
+	bool load(QXmlStreamReader& xml, const Map& map);
 	bool equals(const LineSymbolBorder* other) const;
 	void assign(const LineSymbolBorder& other, const MapColorMap* color_map);
 	
@@ -201,8 +201,8 @@ protected:
 	virtual void saveImpl(QIODevice* file, Map* map);
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
-	virtual bool loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
-	PointSymbol* loadPointSymbol(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
+	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
+	PointSymbol* loadPointSymbol(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	void createBorderLines(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, ObjectRenderables& output);

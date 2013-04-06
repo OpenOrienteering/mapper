@@ -323,8 +323,19 @@ public:
 	/** Returns the number of map colors defined in this map. */
 	inline int getNumColors() const {return (int)color_set->colors.size();}
 	
-	/** Returns the i-th map color or NULL if the index is out of range. */
-	inline MapColor* getColor(int i) const {return (0 <= i && i < (int)color_set->colors.size()) ? color_set->colors[i] : NULL;}
+	/** Returns a pointer to the MapColor identified by the non-negative priority i.
+	 *  Returns NULL if the color is not defined, or if it is a special color (i.e i<0).
+	 *  Note: you can get a pointer to a _const_ special color from a
+	 *  non-const map by const_casting the map:
+	 * 
+	 *    const MapColor* registration = const_cast<const Map&>(map).getColor(i);
+	 */
+	MapColor* getColor(int i);
+	
+	/** Returns a pointer to the const MapColor identified by the priority i.
+	 *  Parameter i may also be negative (for special reserved colors).
+	 *  Returns NULL if the color is not defined. */
+	const MapColor* getColor(int i) const;
 	
 	/**
 	 * Replaces the color at index pos with the given color, updates dependent
@@ -1014,11 +1025,14 @@ public:
 	// Static
 	
 	/** Returns the special covering white color. */
-	static MapColor* getCoveringWhite() {return &covering_white;}
+	static const MapColor* getCoveringWhite();
+	
 	/** Returns the special covering red color. */
-	static MapColor* getCoveringRed() {return &covering_red;}
+	static const MapColor* getCoveringRed();
+	
 	/** Returns the special covering gray color for "undefined" objects. */
-	static MapColor* getUndefinedColor() {return &undefined_symbol_color;}
+	static const MapColor* getUndefinedColor();
+	
 	/** Returns the special covering white line symbol. */
 	static LineSymbol* getCoveringWhiteLine() {return covering_white_line;}
 	/** Returns the special covering red line symbol. */
@@ -1483,5 +1497,55 @@ private:
 	WidgetVector widgets;
 };
 
+
+// ### Map inline code ###
+
+inline
+const MapColor* Map::getCoveringRed()
+{
+	return &covering_red;
+}
+
+inline
+const MapColor* Map::getCoveringWhite()
+{
+	return &covering_white;
+}
+
+inline
+const MapColor* Map::getUndefinedColor()
+{
+	return &undefined_symbol_color;
+}
+
+inline
+MapColor* Map::getColor(int i)
+{
+	if (0 <= i && i < (int)color_set->colors.size())
+	{
+		return color_set->colors[i];
+	}
+	return NULL;
+}
+
+inline
+const MapColor* Map::getColor(int i) const
+{
+	if (0 <= i && i < (int)color_set->colors.size())
+	{
+		return color_set->colors[i];
+	}
+	else switch (i)
+	{
+		case -1005:
+			return getCoveringRed();
+		case -1000:
+			return getCoveringWhite();
+		case -500:
+			return getUndefinedColor();
+		default:
+			return NULL;
+	}
+}
 
 #endif

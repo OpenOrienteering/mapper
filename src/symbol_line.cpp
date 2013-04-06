@@ -92,13 +92,13 @@ void LineSymbolBorder::save(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*border*/);
 }
 
-bool LineSymbolBorder::load(QXmlStreamReader& xml, Map& map)
+bool LineSymbolBorder::load(QXmlStreamReader& xml, const Map& map)
 {
 	Q_ASSERT(xml.name() == "border");
 	
 	QXmlStreamAttributes attributes = xml.attributes();
 	int temp = attributes.value("color").toString().toInt();
-	color = (temp >= 0) ? map.getColor(temp) : NULL;
+	color = map.getColor(temp);
 	width = attributes.value("width").toString().toInt();
 	shift = attributes.value("shift").toString().toInt();
 	dashed = (attributes.value("dashed") == "true");
@@ -1890,14 +1890,14 @@ void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*line_symbol*/);
 }
 
-bool LineSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
+bool LineSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
 	if (xml.name() != "line_symbol")
 		return false;
 	
 	QXmlStreamAttributes attributes = xml.attributes();
 	int temp = attributes.value("color").toString().toInt();
-	color = (temp >= 0) ? map.getColor(temp) : NULL;
+	color = map.getColor(temp);
 	line_width = attributes.value("line_width").toString().toInt();
 	minimum_length = attributes.value("minimum_length").toString().toInt();
 	join_style = static_cast<LineSymbol::JoinStyle>(attributes.value("join_style").toString().toInt());
@@ -1965,7 +1965,7 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& sym
 	return true;
 }
 
-PointSymbol* LineSymbol::loadPointSymbol(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
+PointSymbol* LineSymbol::loadPointSymbol(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
 	while (xml.readNextStartElement())
 	{

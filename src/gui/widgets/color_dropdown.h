@@ -40,7 +40,7 @@ public:
 	ColorDropDown(const Map* map, const MapColor* initial_color = 0, bool spot_colors_only = false, QWidget* parent = 0);
 	
 	/** Returns the selected color or NULL if no color selected. */
-	MapColor* color() const;
+	const MapColor* color() const;
 	
 	/** Sets the selection to the given color. */
 	void setColor(const MapColor* color);

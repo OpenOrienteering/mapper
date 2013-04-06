@@ -95,6 +95,7 @@ add_unit_test(map_color_t ../src/core/map_color)
 add_unit_test(qpainter_t)
 
 # System tests
+add_system_test(map_t)
 add_system_test(file_format_t)
 add_dependencies(file_format_t Mapper_test_data)
 add_system_test(duplicate_equals_t)

@@ -134,7 +134,7 @@ bool operator!=(const MapColorRgb& lhs, const MapColorRgb& rhs);
 struct SpotColorComponent
 {
 	/** A map color which is a spot color. */
-	MapColor* spot_color;
+	const MapColor* spot_color;
 	
 	/** The factor describes the halftoning (screen).
 	 *  It is a value in the range [0.0; 1.0]. */
@@ -144,7 +144,7 @@ struct SpotColorComponent
 	SpotColorComponent();
 	
 	/** Constructs a component for the given spot color and halftoning. */
-	SpotColorComponent(MapColor* spot_color, float factor);
+	SpotColorComponent(const MapColor* spot_color, float factor);
 	
 	/** Returns true iff the spot color is defined. */
 	bool isValid() const;
@@ -583,7 +583,7 @@ SpotColorComponent::SpotColorComponent()
 }
 
 inline
-SpotColorComponent::SpotColorComponent(MapColor* spot_color, float factor)
+SpotColorComponent::SpotColorComponent(const MapColor* spot_color, float factor)
  : spot_color(spot_color),
    factor(factor)
 {

@@ -305,7 +305,7 @@ void ColorDialog::updateWidgets()
 	for (int i = 0; i < composition_size; i++)
 	{
 		bool have_component = (i < (int)color_components.size());
-		MapColor* component_color = have_component ? color_components[i].spot_color : NULL;
+		const MapColor* component_color = have_component ? color_components[i].spot_color : NULL;
 		component_colors[i]->setEnabled(enable_component);
 		component_colors[i]->setColor(component_color);
 		
@@ -455,7 +455,7 @@ void ColorDialog::spotColorCompositionChanged()
 		if (!component_colors[i]->isEnabled())
 			break;
 		
-		MapColor* spot_color = component_colors[i]->color();
+		const MapColor* spot_color = component_colors[i]->color();
 		if (spot_color == NULL)
 			continue;
 		

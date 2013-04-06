@@ -217,7 +217,7 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 			for (SharedRenderables::const_iterator it = object->second->begin(); it != it_end; ++it)
 			{
 				const RenderStates& new_states = it->first;
-				MapColor* color;
+				const MapColor* color;
 				float pen_width = new_states.pen_width;
 				
 				if (new_states.color_priority > MapColor::Reserved)

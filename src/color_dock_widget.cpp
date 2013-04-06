@@ -320,7 +320,7 @@ void ColorWidget::updateRow(int row)
 {
 	react_to_changes = false;
 	
-	MapColor* color = map->getColor(row);
+	const MapColor* color = map->getColor(row);
 	
 	// Color preview
 	QTableWidgetItem* item = color_table->item(row, 0);

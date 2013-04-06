@@ -152,7 +152,7 @@ void AreaSymbol::FillPattern::save(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*pattern*/);
 }
 
-void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
+void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
 	Q_ASSERT (xml.name() == "pattern");
 	
@@ -167,7 +167,7 @@ void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, Map& map, SymbolDictio
 	if (type == LinePattern)
 	{
 		int temp = attributes.value("color").toString().toInt();
-		line_color = (temp >= 0) ? map.getColor(temp) : NULL;
+		line_color = map.getColor(temp);
 		line_width = attributes.value("line_width").toString().toInt();
 		xml.skipCurrentElement();
 	}
@@ -635,14 +635,14 @@ void AreaSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*area_symbol*/);
 }
 
-bool AreaSymbol::loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict)
+bool AreaSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
 	if (xml.name() != "area_symbol")
 		return false;
 	
 	QXmlStreamAttributes attributes = xml.attributes();
 	int temp = attributes.value("inner_color").toString().toInt();
-	color = (temp >= 0) ? map.getColor(temp) : NULL;
+	color = map.getColor(temp);
 	minimum_area = attributes.value("min_area").toString().toInt();
 	
 	int num_patterns = attributes.value("patterns").toString().toInt();

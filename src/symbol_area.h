@@ -109,7 +109,7 @@ public:
 		/** Saves the pattern in xml format */
 		void save(QXmlStreamWriter& file, const Map& map) const;
 		/** Loads the pattern in xml format */
-		void load(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
+		void load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
 		/**
 		 * Checks if the pattern settings are equal to the other.
 		 * TODO: should the transient name really be compared?!
@@ -167,7 +167,7 @@ protected:
 	virtual void saveImpl(QIODevice* file, Map* map);
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
-	virtual bool loadImpl(QXmlStreamReader& xml, Map& map, SymbolDictionary& symbol_dict);
+	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
 	virtual bool equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity);
 	
 	const MapColor* color;
