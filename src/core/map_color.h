@@ -609,7 +609,7 @@ MapColor::operator const QColor&() const
 inline
 MapColor::operator QRgb() const
 {
-	return qRgba(qFloor(255.9 * cmyk.c), qFloor(255.9 * cmyk.m), qFloor(255.9 * cmyk.y), qFloor(255.9 * cmyk.k));
+	return qRgba(qFloor(255.9 * rgb.r), qFloor(255.9 * rgb.g), qFloor(255.9 * rgb.b), qFloor(255.9 * opacity));
 }
 
 inline
