@@ -2556,7 +2556,7 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="471"/>
         <source>Hatch areas</source>
-        <translation>Flächen stricheln</translation>
+        <translation>Flächen schraffieren</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="472"/>
