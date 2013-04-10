@@ -90,16 +90,23 @@ int main(int argc, char** argv)
 	// top of a regular main window (home screen or other file).
 	
 	// Treat all program parameters as files to be opened
-	for (int i = 1; i < argc; i++)
+	bool no_files_given = true;
+	QStringList args(qapp.arguments());
+	args.removeFirst(); // the program name
+	Q_FOREACH(QString arg, args)
 	{
-		if (argv[i][0] != '-')
-			first_window.openPathLater(argv[i]);
+		if (arg[0] != '-')
+		{
+			first_window.openPathLater(arg);
+			no_files_given = false;
+		}
 	}
+	
 	// Optionally open most recently used file on startup
-	if (argc <= 1 && settings.getSettingCached(Settings::General_OpenMRUFile).toBool())
+	if (no_files_given && settings.getSettingCached(Settings::General_OpenMRUFile).toBool())
 	{
-		QStringList files = settings.getSettingCached(Settings::General_RecentFilesList).toStringList();
-		if (files.size() > 0)
+		QStringList files(settings.getSettingCached(Settings::General_RecentFilesList).toStringList());
+		if (!files.isEmpty())
 			first_window.openPathLater(files[0]);
 	}
 	
