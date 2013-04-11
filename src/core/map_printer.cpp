@@ -659,10 +659,12 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 	
 	// Translate and clip for margins and print area
 	painter->translate(-page_extent.left(), -page_extent.top());
-	painter->setClipRect(page_extent.intersected(print_area), Qt::ReplaceClip);
+	
+	QRectF page_region_used(page_extent.intersected(print_area));
+	painter->setClipRect(page_region_used, Qt::ReplaceClip);
 	
 	if (options.show_templates)
-		map.drawTemplates(painter, page_extent, 0, map.getFirstFrontTemplate() - 1, view, false);
+		map.drawTemplates(painter, page_region_used, 0, map.getFirstFrontTemplate() - 1, view, false);
 	
 	if (view == NULL || view->getMapVisibility()->visible)
 	{
@@ -681,9 +683,9 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 		}
 		
 		if (options.simulate_overprinting)
-			map.drawOverprintingSimulation(map_painter, page_extent, false, scale, false, false);
+			map.drawOverprintingSimulation(map_painter, page_region_used, false, scale, false, false);
 		else
-			map.draw(map_painter, page_extent, false, scale, false, false);
+			map.draw(map_painter, page_region_used, false, scale, false, false);
 			
 		if (map_painter != painter)
 		{
@@ -702,10 +704,10 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 	}
 	
 	if (options.show_grid)
-		map.drawGrid(painter, print_area);
+		map.drawGrid(painter, print_area); // Maybe replace by page_region_used?
 	
 	if (options.show_templates)
-		map.drawTemplates(painter, page_extent, map.getFirstFrontTemplate(), map.getNumTemplates() - 1, view, false);
+		map.drawTemplates(painter, page_region_used, map.getFirstFrontTemplate(), map.getNumTemplates() - 1, view, false);
 	
 	// If a temporary buffer has been used, paint it on the device painter
 	if (painter != device_painter)
