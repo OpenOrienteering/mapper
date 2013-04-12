@@ -49,6 +49,7 @@ set(Mapper_QT_TRANS
 
 set(Mapper_TRANS
  OpenOrienteering_de.ts
+ OpenOrienteering_es.ts
  OpenOrienteering_fr.ts
  OpenOrienteering_ja.ts
  OpenOrienteering_lv.ts
