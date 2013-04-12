@@ -794,6 +794,10 @@ void MapPrinter::drawSeparationPages(QPrinter* printer, QPainter* device_painter
 // slot
 void MapPrinter::printMap(QPrinter* printer)
 {
+	int num_steps = v_page_pos.size() * h_page_pos.size();
+	int step = 0;
+	printMapProgress(1);
+	
 	// Printer settings may have been changed by preview or application.
 	// We need to use them for printing.
 	takePrinterSettings(printer);
@@ -823,7 +827,11 @@ void MapPrinter::printMap(QPrinter* printer)
 				}
 				need_new_page = true;
 			}
+			++step;
+			emit printMapProgress(qMax(1, qMin(99, 100*step/num_steps)));
 		}
 	}
+	
+	printMapProgress(100);
 }
 

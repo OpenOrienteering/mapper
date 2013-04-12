@@ -274,6 +274,14 @@ signals:
 	/** Indicates a change in the rendering options. */
 	void optionsChanged(const MapPrinterOptions& options) const;
 	
+	/** Emitted during printMap() to indicate progress. You can expect this
+	 *  signal to be emitted at the start of the print process (value = 1),
+	 *  after each page printed, and at the end of the process (value = 100).
+	 * 
+	 *  @param value Reflects the progress in the range from 1 (just started)
+	 *               to 100 (finished). */
+	void printMapProgress(int value) const;
+	
 protected:
 	/** Updates the paper dimensions from paper format and orientation. */
 	void updatePaperDimensions();

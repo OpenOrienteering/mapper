@@ -805,6 +805,12 @@ void PrintWidget::previewClicked()
 	if (checkForEmptyMap())
 		return;
 	
+	QProgressDialog progress(tr("Generating preview..."), QString(), 0, 100, this);
+	progress.setWindowModality(Qt::WindowModal);
+	progress.setMinimumDuration(0);
+	progress.setValue(0);
+	connect(map_printer, SIGNAL(printMapProgress(int)), &progress, SLOT(setValue(int)));
+	
 	QPrinter* printer = map_printer->makePrinter();
 #if !defined(Q_OS_MAC)
 	QPrintPreviewDialog preview(printer, this);
@@ -839,6 +845,12 @@ void PrintWidget::printClicked()
 		if (path.isEmpty())
 			return;
 	}
+	
+	QProgressDialog progress(tr("Printing..."), QString(), 0, 100, this);
+	progress.setWindowModality(Qt::WindowModal);
+	progress.setMinimumDuration(0);
+	progress.setValue(0);
+	connect(map_printer, SIGNAL(printMapProgress(int)), &progress, SLOT(setValue(int)));
 	
 	if (map_printer->getTarget() == MapPrinter::imageTarget())
 	{
