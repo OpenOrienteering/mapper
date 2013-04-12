@@ -122,6 +122,11 @@ signals:
 	 */
 	void finished(int result);
 	
+	/**
+	 * This signal is emitted when the dialog's close button is clicked.
+	 */
+	void closeClicked();
+	
 protected slots:
 	/** This slot reacts to changes of the target combobox. */
 	void targetChanged(int index) const;
