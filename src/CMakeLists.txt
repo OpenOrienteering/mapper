@@ -126,6 +126,7 @@ set(Mapper_Common_SRCS
  gui/main_window.cpp
  gui/main_window_controller.cpp
  gui/modifier_key.cpp
+ gui/print_progress_dialog.cpp
  gui/print_tool.cpp
  gui/print_widget.cpp
  gui/settings_dialog.cpp
@@ -207,6 +208,7 @@ set(Mapper_Common_MOC_INPUT
  gui/home_screen_controller.h
  gui/main_window.h
  gui/main_window_controller.h
+ gui/print_progress_dialog.h
  gui/print_tool.h
  gui/print_widget.h
  gui/settings_dialog.h

@@ -31,6 +31,7 @@
 #include <QPrintPreviewDialog>
 
 #include "main_window.h"
+#include "print_progress_dialog.h"
 #include "../core/map_printer.h"
 #include "../map.h"
 #include "../map_editor.h"
@@ -41,8 +42,6 @@
 #include "../util/scoped_signals_blocker.h"
 #include "print_tool.h"
 
-
-const QString trPaperSize(QPrinter::PaperSize size);
 
 
 PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, MapEditorController* editor, QWidget* parent)
@@ -805,11 +804,10 @@ void PrintWidget::previewClicked()
 	if (checkForEmptyMap())
 		return;
 	
-	QProgressDialog progress(tr("Generating preview..."), QString(), 0, 100, this);
-	progress.setWindowModality(Qt::WindowModal);
-	progress.setMinimumDuration(0);
-	progress.setValue(0);
-	connect(map_printer, SIGNAL(printMapProgress(int)), &progress, SLOT(setValue(int)));
+	PrintProgressDialog progress(main_window);
+	progress.setWindowTitle(tr("Print Preview Progress"));
+	progress.attach(map_printer);
+	progress.show();
 	
 	QPrinter* printer = map_printer->makePrinter();
 #if !defined(Q_OS_MAC)
@@ -846,11 +844,11 @@ void PrintWidget::printClicked()
 			return;
 	}
 	
-	QProgressDialog progress(tr("Printing..."), QString(), 0, 100, this);
+	PrintProgressDialog progress(main_window);
+	progress.setWindowTitle(tr("Printing Progress"));
 	progress.setWindowModality(Qt::WindowModal);
-	progress.setMinimumDuration(0);
-	progress.setValue(0);
-	connect(map_printer, SIGNAL(printMapProgress(int)), &progress, SLOT(setValue(int)));
+	progress.attach(map_printer);
+	progress.show();
 	
 	if (map_printer->getTarget() == MapPrinter::imageTarget())
 	{
@@ -900,13 +898,31 @@ void PrintWidget::printClicked()
 	
 	// Print the map
 	map_printer->printMap(printer);
-	delete printer;
 	
-	if (map_printer->isPrinter())
+	if (progress.wasCanceled())
+	{
+		if (printer->abort() || !map_printer->isPrinter())
+		{
+			main_window->statusBar()->showMessage(tr("Canceled."), 4000);
+		}
+		else
+		{
+			QMessageBox::warning(
+			  main_window, tr("Printing"),
+			  tr("The print job could not be stopped."),
+			  QMessageBox::Ok, QMessageBox::Ok );
+		}
+	}
+	else if (map_printer->isPrinter())
+	{
 		main_window->statusBar()->showMessage(tr("Successfully created print job"), 4000);
+	}
 	else
+	{
 		main_window->statusBar()->showMessage(tr("Exported successfully to %1").arg(path), 4000);
+	}
 	
+	delete printer;
 	emit finished(0);
 }
 

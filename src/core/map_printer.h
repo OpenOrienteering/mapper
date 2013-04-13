@@ -261,6 +261,10 @@ public slots:
 	 *  This will first update this object's properties from the printer's properties. */
 	void printMap(QPrinter* printer);
 	
+	/** Cancels a running printMap(), if possible.
+	 *  This can only be used during handlers of the printMapProgress() signal. */
+	void cancelPrintMap();
+	
 signals:
 	/** Indicates a new target printer. */
 	void targetChanged(const QPrinterInfo* target) const;
@@ -279,8 +283,9 @@ signals:
 	 *  after each page printed, and at the end of the process (value = 100).
 	 * 
 	 *  @param value Reflects the progress in the range from 1 (just started)
-	 *               to 100 (finished). */
-	void printMapProgress(int value) const;
+	 *               to 100 (finished).
+	 *  @param status A verbal representation of what printMap() is doing. */
+	void printProgress(int value, QString status) const;
 	
 protected:
 	/** Updates the paper dimensions from paper format and orientation. */
@@ -296,6 +301,7 @@ protected:
 	qreal scale_adjustment;
 	std::vector<qreal> h_page_pos;
 	std::vector<qreal> v_page_pos;
+	bool cancel_print_map;
 };
 
 

@@ -796,7 +796,10 @@ void MapPrinter::printMap(QPrinter* printer)
 {
 	int num_steps = v_page_pos.size() * h_page_pos.size();
 	int step = 0;
-	printMapProgress(1);
+	cancel_print_map = false;
+	const QString message_template( options.print_spot_color_separations ?
+	  tr("Processing separations of page %1...") :
+	  tr("Processing page %1...") );
 	
 	// Printer settings may have been changed by preview or application.
 	// We need to use them for printing.
@@ -807,31 +810,62 @@ void MapPrinter::printMap(QPrinter* printer)
 	bool need_new_page = false;
 	Q_FOREACH(qreal vpos, v_page_pos)
 	{
+		if (!painter.isActive())
+		{
+			break;
+		}
+		
 		Q_FOREACH(qreal hpos, h_page_pos)
 		{
-			if (painter.isActive())
+			if (!painter.isActive())
 			{
-				if (need_new_page)
-				{
-					printer->newPage();
-				}
-				
-				QRectF page_extent = QRectF(QPointF(hpos, vpos), extent_size);
-				if (options.print_spot_color_separations)
-				{
-					drawSeparationPages(printer, &painter, (float)options.resolution, page_extent);
-				}
-				else
-				{
-					drawPage(&painter, (float)options.resolution, page_extent, false);
-				}
-				need_new_page = true;
+				break;
 			}
+			
 			++step;
-			emit printMapProgress(qMax(1, qMin(99, 100*step/num_steps)));
+			int progress = qMin(99, qMax(1, (100*step-50)/num_steps));
+			emit printProgress(progress, message_template.arg(step));
+			
+			if (cancel_print_map) /* during printProgress handling */
+			{
+				painter.end();
+				break;
+			}
+				
+			if (need_new_page)
+			{
+				printer->newPage();
+			}
+			
+			QRectF page_extent = QRectF(QPointF(hpos, vpos), extent_size);
+			if (options.print_spot_color_separations)
+			{
+				drawSeparationPages(printer, &painter, (float)options.resolution, page_extent);
+			}
+			else
+			{
+				drawPage(&painter, (float)options.resolution, page_extent, false);
+			}
+			
+			need_new_page = true;
 		}
 	}
 	
-	printMapProgress(100);
+	if (cancel_print_map)
+	{
+		emit printProgress(100, tr("Canceled"));
+		return;
+	}
+	else if (!painter.isActive())
+	{
+		emit printProgress(100, tr("Error"));
+		return;
+	}
+	
+	emit printProgress(100, tr("Finished"));
 }
 
+void MapPrinter::cancelPrintMap()
+{
+	cancel_print_map = true;
+}
