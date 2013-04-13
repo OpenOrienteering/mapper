@@ -46,26 +46,25 @@ PrintTool::PrintTool(MapEditorController* editor, MapPrinter* map_printer)
 
 void PrintTool::init()
 {
-	setStatusBarText(tr("<b>Drag</b>: Move the print area or its borders. "));
+	setStatusBarText(tr("<b>Drag</b>: Move the map, the print area or the area's borders. "));
 	updatePrintArea();
 }
 
 QCursor* PrintTool::getCursor()
 {
-	static QCursor cursor(Qt::ArrowCursor);
+	static QCursor cursor(Qt::OpenHandCursor);
 	return &cursor;
 }
 
 bool PrintTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (region == Unknown)
-		mouseMoved(map_coord, widget);
-	
-	if (event->button() == Qt::LeftButton && region != Outside)
+	if (event->button() == Qt::LeftButton)
 	{
+		mouseMoved(map_coord, widget);
 		dragging = true;
+		click_pos = event->pos();
 		click_pos_map = map_coord;
-		if (region == Inside)
+		if (region == Inside || region == Outside)
 			widget->setCursor(Qt::ClosedHandCursor);
 		return true;
 	}
@@ -75,9 +74,16 @@ bool PrintTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 
 bool PrintTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if ((event->buttons() & Qt::LeftButton) && dragging)
+	if (dragging && event->buttons() & Qt::LeftButton)
 	{
-		updateDragging(map_coord);
+		if (region == Outside)
+		{
+			mapWidget()->getMapView()->setDragOffset(event->pos() - click_pos);
+		}
+		else
+		{
+			updateDragging(map_coord);
+		}
 		return true;
 	}
 	
@@ -87,9 +93,16 @@ bool PrintTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 
 bool PrintTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (event->button() == Qt::LeftButton && dragging)
+	if (dragging && event->button() == Qt::LeftButton)
 	{
-		updateDragging(map_coord);
+		if (region == Outside)
+		{
+			mapWidget()->getMapView()->completeDragging(event->pos() - click_pos);
+		}
+		else
+		{
+			updateDragging(map_coord);
+		}
 		dragging = false;
 		mouseMoved(map_coord, widget);
 		return true;
@@ -180,6 +193,7 @@ void PrintTool::updateDragging(MapCoordF mouse_pos_map)
 			area.setBottomLeft(area.bottomLeft() + delta);
 			break;
 		case Outside:
+			Q_ASSERT(false); // Handled outside.
 		case Unknown:
 			; // Nothing
 	}
@@ -231,6 +245,7 @@ void PrintTool::mouseMoved(MapCoordF mouse_pos_map, MapWidget* widget)
 	switch (region)
 	{
 		case Inside:
+		case Outside:
 			widget->setCursor(Qt::OpenHandCursor);
 			break;
 		case LeftBorder:
@@ -249,7 +264,6 @@ void PrintTool::mouseMoved(MapCoordF mouse_pos_map, MapWidget* widget)
 		case BottomLeftCorner:
 			widget->setCursor(Qt::SizeBDiagCursor);
 			break;
-		case Outside:
 		case Unknown:
 			widget->setCursor(Qt::ArrowCursor);
 	}

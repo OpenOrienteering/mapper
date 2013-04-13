@@ -28,7 +28,8 @@
 class MapPrinter;
 
 /**
- * The PrintTool lets the user see and modify the print area on the map.
+ * The PrintTool lets the user see and modify the print area on the map
+ * by dragging
  * 
  * It interacts with a MapEditorController and a PrintWidget which are set in
  * the constructor.
@@ -37,16 +38,28 @@ class PrintTool : public MapEditorTool
 {
 Q_OBJECT
 public:
+	/** Constructs a new PrintTool to configure the given map printer in the 
+	 *  context of the editor.
+	 *  The parameters must not be NULL. */
 	PrintTool(MapEditorController* editor, MapPrinter* map_printer);
 	
+	/** Notifies the tool that it becomes active. */
 	virtual void init();
 	
+	/** Always returns the tool's default cursor. */
 	virtual QCursor* getCursor();
 	
+	/** Starts a dragging interaction. */
 	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	
+	/** Updates the state of a running dragging interaction. When not dragging,
+	 *  it will update the cursor to indicate a possible interaction. */
 	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	
+	/** Finishes dragging interactions. */
 	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
 	
+	/** Draws a visualization of the print area the map widget. */
 	virtual void draw(QPainter* painter, MapWidget* widget);
 	
 public slots:
@@ -54,10 +67,12 @@ public slots:
 	void updatePrintArea();
 	
 protected:
-	/** Modifies the print area while dragging. */
+	/** Modifies the print area while dragging.
+	 *  This must not be called when the region is Outside. */
 	void updateDragging(MapCoordF mouse_pos_map);
 	
-	/** Updates the current interaction region. */
+	/** Updates the current interaction region.
+	 *  This must not be called during dragging. */
 	void mouseMoved(MapCoordF mouse_pos_map, MapWidget* widget);
 	
 	/** Regions of interaction with the print area. */
@@ -75,9 +90,19 @@ protected:
 		Unknown           = 0xFF
 	};
 	
-	MapPrinter* map_printer;
+	/** The map printer this tool is operation on. */
+	MapPrinter* const map_printer;
+	
+	/** The region of the print area where the current interaction takes place. */
 	InteractionRegion region;
+	
+	/** Indicates whether an interaction is taking place at the moment. */
 	bool dragging;
+	
+	/** The screen position where the initial click was made. */
+	QPoint click_pos;
+	
+	/** The map position where the initial click was made. */
 	MapCoordF click_pos_map;
 };
 
