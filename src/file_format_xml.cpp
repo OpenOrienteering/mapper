@@ -254,7 +254,7 @@ void XMLFileExporter::exportView()
 	map->getGrid().save(xml);
 	
 	if (view)
-		view->save(xml);
+		view->save(xml, QLatin1String("map_view"));
 	
 	xml.writeEndElement(/*view*/);
 }

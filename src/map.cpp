@@ -2163,9 +2163,9 @@ void MapView::load(QIODevice* file, int version)
 		file->read((char*)&grid_visible, sizeof(bool));
 }
 
-void MapView::save(QXmlStreamWriter& xml)
+void MapView::save(QXmlStreamWriter& xml, const QString& element_name, bool skip_templates)
 {
-	xml.writeStartElement("map_view");
+	xml.writeStartElement(element_name);
 	
 	xml.writeAttribute("zoom", QString::number(zoom));
 	xml.writeAttribute("rotation", QString::number(rotation));
@@ -2186,18 +2186,22 @@ void MapView::save(QXmlStreamWriter& xml)
 	xml.writeAttribute("opacity", QString::number(map_visibility->opacity));
 	
 	xml.writeStartElement("templates");
-	int num_template_visibilities = template_visibilities.size();
-	xml.writeAttribute("count", QString::number(num_template_visibilities));
 	if (all_templates_hidden)
 		xml.writeAttribute("hidden", "true");
-	QHash<const Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
-	for ( ; it != template_visibilities.constEnd(); ++it)
+	if (!skip_templates)
 	{
-		xml.writeEmptyElement("ref");
-		int pos = map->findTemplateIndex(it.key());
-		xml.writeAttribute("template", QString::number(pos));
-		xml.writeAttribute("visible", (*it)->visible ? "true" : "false");
-		xml.writeAttribute("opacity", QString::number((*it)->opacity));
+		int num_template_visibilities = template_visibilities.size();
+		xml.writeAttribute("count", QString::number(num_template_visibilities));
+		
+		QHash<const Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
+		for ( ; it != template_visibilities.constEnd(); ++it)
+		{
+			xml.writeEmptyElement("ref");
+			int pos = map->findTemplateIndex(it.key());
+			xml.writeAttribute("template", QString::number(pos));
+			xml.writeAttribute("visible", (*it)->visible ? "true" : "false");
+			xml.writeAttribute("opacity", QString::number((*it)->opacity));
+		}
 	}
 	xml.writeEndElement(/*templates*/);
 	
@@ -2206,10 +2210,7 @@ void MapView::save(QXmlStreamWriter& xml)
 
 void MapView::load(QXmlStreamReader& xml)
 {
-	Q_ASSERT(xml.name() == "map_view");
-	
-	{
-		// keep variable "attributes" local to this block
+	{	// Limit scope of variable "attributes" to this block
 		QXmlStreamAttributes attributes = xml.attributes();
 		zoom = attributes.value("zoom").toString().toDouble();
 		if (zoom < 0.001)

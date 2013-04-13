@@ -1252,9 +1252,14 @@ public:
 	/** Loads the map view in the old "native" format from the file. */
 	void load(QIODevice* file, int version);
 	
-	/** Saves the map view in xml format the the stream. */
-	void save(QXmlStreamWriter& xml);
-	/** Loads the map view in xml format the the stream. */
+	/** Saves the map view state to an XML stream.
+	 *  @param xml The XML output stream.
+	 *  @param element_name The name of the element which will be written. 
+	 *  @param skip_templates If true, visibility details of individual templates are not saved.
+	 */
+	void save(QXmlStreamWriter& xml, const QString& element_name, bool skip_templates = false);
+	
+	/** Loads the map view state from the current element of an xml stream. */
 	void load(QXmlStreamReader& xml);
 	
 	/**

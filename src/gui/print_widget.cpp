@@ -52,7 +52,8 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
   main_window(main_window), 
   main_view(main_view), 
   editor(editor),
-  print_tool(NULL)
+  print_tool(NULL),
+  active(false)
 {
 	layout = new QFormLayout();
 	
@@ -204,7 +205,6 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(map_printer, SIGNAL(pageFormatChanged(const MapPrinterPageFormat&)),
 	        this, SLOT(setPageFormat(const MapPrinterPageFormat&)));
 	
-	setOptions(map_printer->getOptions());
 	connect(map_printer, SIGNAL(optionsChanged(const MapPrinterOptions&)), this, SLOT(setOptions(const MapPrinterOptions&)));
 	spotColorPresenceChanged(map->hasSpotColors());
 	connect(map, SIGNAL(spotColorPresenceChanged(bool)), this, SLOT(spotColorPresenceChanged(bool)));
@@ -299,24 +299,58 @@ void PrintWidget::savePrinterConfig() const
 }
 
 // slot
-void PrintWidget::setActive(bool state)
+void PrintWidget::setActive(bool active)
 {
-	if (state)
+	if (this->active != active)
 	{
-		// Printers may have been added or removed.
-		updateTargets();
+		this->active = active;
 		
-		// The map may have been modified.
-		applyPrintAreaPolicy();
-		
-		if (!print_tool)
-			print_tool = new PrintTool(editor, map_printer);
-		editor->setOverrideTool(print_tool);
-	}
-	else
-	{
-		editor->setOverrideTool(NULL);
-		print_tool = NULL;
+		if (active)
+		{
+			// Save the current state of the map view.
+			saved_view_state.clear();
+			QXmlStreamWriter writer(&saved_view_state);
+			main_view->save(writer, QLatin1String("saved_view"), true);
+			
+			// Printers may have been added or removed.
+			updateTargets();
+			
+			// Update the map view from the current options
+			setOptions(map_printer->getOptions());
+			
+			// Set reasonable zoom.
+			bool zoom_to_map = true;
+			if (zoom_to_map)
+			{
+				// Ensure the visibility of the whole map.
+				QRectF map_extent = map->calculateExtent(true, !main_view->areAllTemplatesHidden(), main_view);
+				editor->getMainWidget()->ensureVisibilityOfRect(map_extent, true, false);
+			}
+			else
+			{
+				// Ensure the visibility of the print area.
+				QRectF print_area(map_printer->getPrintArea());
+				editor->getMainWidget()->ensureVisibilityOfRect(print_area, true, false);
+			}
+			
+			// Activate PrintTool.
+			if (!print_tool)
+			{
+				print_tool = new PrintTool(editor, map_printer);
+			}
+			editor->setOverrideTool(print_tool);
+		}
+		else
+		{
+			editor->setOverrideTool(NULL);
+			print_tool = NULL;
+			
+			// Restore view
+			QXmlStreamReader reader(saved_view_state);
+			reader.readNextStartElement();
+			main_view->load(reader);
+			main_view->updateAllMapWidgets();
+		}
 	}
 }
 
@@ -655,8 +689,36 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	      << normal_mode_check << separation_mode_check
 	      << different_scale_check << different_scale_edit;
 	
+	if (options.print_spot_color_separations)
+	{
+		separation_mode_check->setChecked(true);
+		main_view->setHideAllTemplates(true);
+		show_templates_check->setChecked(false);
+		show_templates_check->setEnabled(false);
+		main_view->setGridVisible(false);
+		show_grid_check->setChecked(false);
+		show_grid_check->setEnabled(false);
+		main_view->setOverprintingSimulationEnabled(true);
+		overprinting_check->setChecked(false);
+		overprinting_check->setEnabled(false);
+	}
+	else
+	{
+		normal_mode_check->setChecked(true);
+		main_view->setHideAllTemplates(!options.show_templates);
+		show_templates_check->setChecked(options.show_templates);
+		show_templates_check->setEnabled(true);
+		main_view->setGridVisible(options.show_grid);
+		show_grid_check->setChecked(options.show_grid);
+		show_grid_check->setEnabled(true);
+		main_view->setOverprintingSimulationEnabled(options.simulate_overprinting);
+		overprinting_check->setChecked(options.simulate_overprinting);
+		overprinting_check->setEnabled(true);
+	}
+	
 	static QString dpi_template("%1 " + tr("dpi"));
 	dpi_combo->setEditText(dpi_template.arg(options.resolution));
+	
 	if (different_scale_edit->value() != (int)options.scale)
 	{
 		different_scale_edit->setValue(options.scale);
@@ -671,26 +733,7 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	{
 		applyCenterPolicy();
 	}
-	if (options.print_spot_color_separations)
-	{
-		separation_mode_check->setChecked(true);
-		show_templates_check->setChecked(false);
-		show_templates_check->setEnabled(false);
-		show_grid_check->setChecked(false);
-		show_grid_check->setEnabled(false);
-		overprinting_check->setChecked(false);
-		overprinting_check->setEnabled(false);
-	}
-	else
-	{
-		normal_mode_check->setChecked(true);
-		show_templates_check->setChecked(options.show_templates);
-		show_templates_check->setEnabled(true);
-		show_grid_check->setChecked(options.show_grid);
-		show_grid_check->setEnabled(true);
-		overprinting_check->setChecked(options.simulate_overprinting);
-		overprinting_check->setEnabled(true);
-	}
+	main_view->updateAllMapWidgets();
 }
 
 void PrintWidget::updateResolutions(const QPrinterInfo* target) const
