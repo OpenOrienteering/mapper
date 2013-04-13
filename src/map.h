@@ -586,7 +586,14 @@ public:
 	void save(QIODevice* file);
 	void load(QIODevice* file, int version);
 	
-	void save(QXmlStreamWriter& xml);
+	/** Saves the map view state to an XML stream.
+	 *  @param xml The XML output stream.
+	 *  @param element_name The name of the element which will be written. 
+	 *  @param skip_templates If true, visibility details of individual templates are not saved.
+	 */
+	void save(QXmlStreamWriter& xml, const QString& element_name, bool skip_templates = false);
+	
+	/** Loads the map view state from the current element of an xml stream. */
 	void load(QXmlStreamReader& xml);
 	
 	/// Must be called to notify the map view of new widgets displaying it. Useful to notify the widgets which need to be redrawn

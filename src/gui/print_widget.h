@@ -88,11 +88,12 @@ public slots:
 	/** 
 	 * Sets the active state of the print widget.
 	 * 
-	 * When the widget becomes active, it activates a tool on the map editor
-	 * which allows to move the print area. When the widget becomes inactive,
-	 * the tool is removed.
+	 * When the widget becomes active, it saves the map view state and 
+	 * activates a tool on the map editor which allows to move the print area.
+	 * When the widget becomes inactive, the tool is removed, and the map view
+	 * state is restored.
 	 */
-	void setActive(bool state);
+	void setActive(bool active);
 	
 	/** Sets the widget's (print/export) target. */
 	void setTarget(const QPrinterInfo* target);
@@ -263,6 +264,8 @@ private:
 	MapView* main_view;
 	MapEditorController* editor;
 	PrintTool* print_tool;
+	QString saved_view_state;
+	bool active;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(PrintWidget::TaskFlags)
