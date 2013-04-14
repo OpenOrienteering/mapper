@@ -19,45 +19,43 @@
 
 #include "dxfparser.h"
 
-#define PARSE_COMMON(p) do{ \
-if(line1 == "8") \
-	p.layer = line2; \
-if(line1 == "420"){ \
-	QColor color; \
-	color.setRed(line2.left(2).toInt()); \
-	color.setGreen(line2.mid(2, 2).toInt()); \
-	color.setBlue(line2.right(2).toInt()); \
-	p.color = color; \
-} \
-if(line1 == "430") \
-	p.color.setNamedColor(line2); \
-if(line1 == "440") \
-	p.color.setAlpha(line2.toInt()); \
-}while(false)
+#include <QApplication>
+#include <QBuffer>
+#include <QDebug>
 
-QString DXFParser::parse(){
-	bool weOpened = false;
-	if(!device){
-		return QString("No data set");
-	}
-	if(!device->isOpen()){
-		if(!device->open(QIODevice::ReadOnly)){
-			return QString("Could not open device");
+
+QString DXFParser::parse()
+{
+	Q_ASSERT(device != NULL); // Programmer's responsibility
+	
+	bool must_close_device = false;
+	if (!device->isOpen())
+	{
+		if (!device->open(QIODevice::ReadOnly))
+		{
+			return QApplication::tr("Could not open the file.", "DXFParser");
 		}
-		weOpened = true;
+		must_close_device = true;
+	}
+	
+	int code;
+	QString value;
+	
+	QByteArray head(device->peek(16));
+	QBuffer buffer(&head);
+	buffer.open(QIODevice::ReadOnly);
+	readNextCodeValue(&buffer, code, value);
+	buffer.close();
+	if (code != 0 || value != "SECTION")
+	{
+		// File does not start with DXF section
+		return QApplication::tr("The file is not an DXF file.", "DXFParser");
 	}
 
-	if(!device->readAll().contains("EOF"))
-		return "The file is not a DXF file";
-	device->seek(0);
-
-	paths = QList<path_t>();
-	QString line1 = "  0";
-	QString line2 = "  0";
-	getLines(line1, line2, device);
-	currentSection = NOTHING;
-	QPointF bottomRight, topLeft;
-
+	paths = QList<DXFPath>();
+	current_section = NOTHING;
+	QPointF bottom_right, top_left;
+	
 	/*
 	SECTION
 		ENTITIES
@@ -66,400 +64,438 @@ QString DXFParser::parse(){
 	ENDSEC
 	EOF
 	  */
-	do{
-		if(currentSection == NOTHING){
-			if(line1 == "0" && line2 == "SECTION"){
-				parseUnknown(device);
-				currentSection = SECTION;
+	while (readNextCodeValue(device, code, value))
+	{
+		if (code == 0 && value == "ENDSEC")
+		{
+			current_section = NOTHING;
+		}
+		else if (code == 0 && value == "EOF")
+		{
+			current_section = NOTHING;
+		}
+		else if (current_section == NOTHING)
+		{
+			if (code == 0 && value == "SECTION")
+			{
+				current_section = SECTION;
 			}
-			else if(line2 == "EOF")
+			else if (value == "EOF")
+			{
 				break;
-		}
-		else if(currentSection == SECTION){
-			if(line1 == "2" && line2 == "ENTITIES"){
-				parseUnknown(device);
-				currentSection = ENTITIES;
-			}
-			if(line1 == "2" && line2 == "HEADER"){
-				parseUnknown(device);
-				currentSection = HEADER;
 			}
 		}
-		else if(currentSection == ENTITIES){
-			if(line1 == "0" && line2 == "LINE")
+		else if (current_section == SECTION)
+		{
+			if (code == 2 && value == "ENTITIES")
+			{
+				current_section = ENTITIES;
+			}
+			if (code == 2 && value == "HEADER")
+			{
+				current_section = HEADER;
+			}
+		}
+		else if (current_section == ENTITIES)
+		{
+			if (code == 0 && value == "LINE")
 				parseLine(device, &paths);
-			else if(line1 == "0" && line2 == "POLYLINE"){
+			else if (code == 0 && value == "POLYLINE")
+			{
 				parsePolyline(device, &paths);
-				currentSection = POLYLINE;
+				current_section = POLYLINE;
 			}
-			else if(line1 == "0" && line2 == "LWPOLYLINE")
+			else if (code == 0 && value == "LWPOLYLINE")
 				parseLwPolyline(device, &paths);
-			else if(line1 == "0" && line2 == "SPLINE")
+			else if (code == 0 && value == "SPLINE")
 				parseSpline(device, &paths);
-			else if(line1 == "0" && line2 == "CIRCLE")
+			else if (code == 0 && value == "CIRCLE")
 				parseCircle(device, &paths);
-			else if(line1 == "0" && line2 == "POINT")
+			else if (code == 0 && value == "POINT")
 				parsePoint(device, &paths);
-			else if(line1 == "0" && line2 == "TEXT")
+			else if (code == 0 && value == "TEXT")
 				parseText(device, &paths);
-			else if(line1 == "0" && line2 == "ARC")
+			else if (code == 0 && value == "ARC")
 				parseArc(device, &paths);
-			else if(line1 == "0" && line2 == "ENDSEC"){
-				parseUnknown(device);
-				currentSection = NOTHING;
-			}
-			else;
-				//qDebug(qPrintable(QString("Unknown entity: ")+line2));
+#if defined(MAPPER_DEVELOPMENT_BUILD)
+			else if (code == 0)
+				qDebug() << "Unknown entity:" << value;
+#endif
 		}
-		else if(currentSection == HEADER){
-			if(line1 == "9" && line2 == "$EXTMIN")
-				parseExtminmax(device, bottomRight);
-			else if(line1 == "9" && line2 == "$EXTMAX")
-				parseExtminmax(device, topLeft);
+		else if (current_section == HEADER)
+		{
+			if (code == 9 && value == "$EXTMIN")
+				parseExtminmax(device, bottom_right);
+			else if (code == 9 && value == "$EXTMAX")
+				parseExtminmax(device, top_left);
 		}
-		else if(currentSection == POLYLINE){
-			if(line1 == "0" && line2 == "SEQEND"){
+		else if (current_section == POLYLINE)
+		{
+			if (code == 0 && value == "SEQEND")
+			{
 				parseSeqend(device, &paths);
-				currentSection = ENTITIES;
+				current_section = ENTITIES;
 			}
-			else if(line1 == "0" && line2 == "VERTEX")
+			else if (code == 0 && value == "VERTEX")
 				parseVertex(device, &paths);
 		}
-		getLines(line1, line2, device);
-		if(device->atEnd())
-			break;
-	}while(true);
-
-	if(weOpened)
+	}
+	
+	if (must_close_device)
+	{
 		device->close();
-	size = QRectF(topLeft, bottomRight);
+	}
+	
+	size = QRectF(top_left, bottom_right);
 	return QString();
 }
 
-void DXFParser::getLines(QString &l1, QString &l2, QIODevice *d){
-
-	l1 = QString(d->readLine(128).trimmed());
-	l2 = QString(d->readLine(128).trimmed());
+inline
+bool DXFParser::atEntityEnd(QIODevice* d)
+{
+	return d->peek(3).trimmed() == "0";
 }
 
-void DXFParser::parseLine(QIODevice *d, QList<path_t> *p){
-	if(invertex){
-		vertexMain.coords = vertexs;
-		paths.append(vertexMain);
-		invertex = false;
+inline
+bool DXFParser::readNextCodeValue(QIODevice *device, int &code, QString &value)
+{
+	code  = device->readLine(128).trimmed().toInt();
+	value = device->readLine(256).trimmed();
+	return !device->atEnd();
+}
+
+inline
+void DXFParser::parseCommon(int code, const QString& value, DXFPath& path)
+{
+	if (code == 8)
+	{
+		path.layer = value;
 	}
-	QString line1;
-	QString line2;
+	else if (code == 420)
+	{
+		QColor color;
+		color.setRed(value.left(2).toInt());
+		color.setGreen(value.mid(2, 2).toInt());
+		color.setBlue(value.right(2).toInt());
+		path.color = color;
+	}
+	else if (code == 430)
+	{
+		path.color.setNamedColor(value);
+	}
+	else if (code == 440)
+	{
+		path.color.setAlpha(value.toInt());
+	}
+}
 
-	path_t path;
-	INIT_PATH(path);
-	path.type = LINE;
-	coordinate_t co1;
-	co1.x = 0.0;
-	co1.y = 0.0;
-	co1.z = 0.0;
-	coordinate_t co2;
-	co2.x = 0.0;
-	co2.y = 0.0;
-	co2.z = 0.0;
-
-	do{
-		if(d->peek(3).trimmed() == "0")
-			break;
-		getLines(line1, line2, d);
-		PARSE_COMMON(path);
-		if(line1 == "39")
-			path.thickness = line2.toInt();
-		if(line1 == "10")
-			co1.x = line2.toDouble();
-		if(line1 == "20")
-			co1.y = line2.toDouble();
-		if(line1 == "30" || line1 == "50")
-			co1.z = line2.toDouble();
-		if(line1 == "11")
-			co2.x = line2.toDouble();
-		if(line1 == "21")
-			co2.y = line2.toDouble();
-		if(line1 == "31")
-			co2.z = line2.toDouble();
-	}while(true);
+void DXFParser::parseLine(QIODevice *d, QList<DXFPath> *p)
+{
+	if (in_vertex)
+	{
+		vertex_main.coords = vertices;
+		paths.append(vertex_main);
+		in_vertex = false;
+	}
+	
+	DXFPath path(LINE);
+	DXFCoordinate co1;
+	DXFCoordinate co2;
+	
+	int code;
+	QString value;
+	while (!atEntityEnd(d) && readNextCodeValue(d, code, value))
+	{
+		if (code == 39)
+			path.thickness = value.toInt();
+		else if (code == 10)
+			co1.x = value.toDouble();
+		else if (code == 20)
+			co1.y = value.toDouble();
+		else if (code == 30 || code == 50)
+			co1.z = value.toDouble();
+		else if (code == 11)
+			co2.x = value.toDouble();
+		else if (code == 21)
+			co2.y = value.toDouble();
+		else if (code == 31)
+			co2.z = value.toDouble();
+		else
+			parseCommon(code, value, path);
+	}
+	
 	path.coords.append(co1);
 	path.coords.append(co2);
 	p->append(path);
 }
 
-void DXFParser::parsePolyline(QIODevice *d, QList<path_t> *p){
-	QString line1;
-	QString line2;
-
-	INIT_PATH(vertexMain);
-	vertexMain.type = LINE;
-	vertexs = QList<coordinate_t>();
-	invertex = true;
-
-	do{
-		if(d->peek(3).trimmed() == "0")
-			break;
-		getLines(line1, line2, d);
-		PARSE_COMMON(vertexMain);
-		if(line1 == "39")
-			vertexMain.thickness = line2.toInt();
-	}while(true);
+void DXFParser::parsePolyline(QIODevice *d, QList<DXFPath> *p)
+{
 	Q_UNUSED(p)
+	
+	vertex_main = DXFPath(LINE);
+	vertices = QList<DXFCoordinate>();
+	in_vertex = true;
+	
+	int code;
+	QString value;
+	while (!atEntityEnd(d) && readNextCodeValue(d, code, value))
+	{
+		if (code == 39)
+			vertex_main.thickness = value.toInt();
+		else
+			parseCommon(code, value, vertex_main);
+	}
 }
 
-void DXFParser::parseLwPolyline(QIODevice *d, QList<path_t> *p){
-	QString line1;
-	QString line2;
+void DXFParser::parseLwPolyline(QIODevice *d, QList<DXFPath> *p)
+{
+	DXFPath path(LINE);
+	QList<DXFCoordinate> coordinates;
+	DXFCoordinate coord;
+	bool have_x = false;
+	bool have_y = false;
 
-	path_t path;
-	INIT_PATH(path);
-	path.type = LINE;
-	QList<coordinate_t> coordinates;
-	coordinate_t coord;
-	bool haveX = false;
-	bool haveY = false;
-
-	do{
-		if(d->peek(3).trimmed() == "0")
-			break;
-		getLines(line1, line2, d);
-		PARSE_COMMON(path);
-		if(line1 == "39")
-			path.thickness = line2.toInt();
-		else if(line1 == "10"){
-			coord.x = line2.toDouble();
-			haveX = true;
+	int code;
+	QString value;
+	while (!atEntityEnd(d) && readNextCodeValue(d, code, value))
+	{
+		if (code == 39)
+			path.thickness = value.toInt();
+		else if (code == 10)
+		{
+			coord.x = value.toDouble();
+			have_x = true;
 		}
-		else if(line1 == "20"){
-			coord.y = line2.toDouble();
-			haveY = true;
+		else if (code == 20)
+		{
+			coord.y = value.toDouble();
+			have_y = true;
 		}
-		if(haveX && haveY){
+		else if (code == 70)
+		{
+			path.closed = (value.toInt() & 1) == 1;
+		}
+		else
+			parseCommon(code, value, path);
+		
+		if (have_x && have_y)
+		{
 			coordinates.append(coord);
-			haveX = false;
-			haveY = false;
+			have_x = false;
+			have_y = false;
 		}
-	}while(1);
+	}
 	path.coords = coordinates;
 	p->append(path);
 }
 
-void DXFParser::parseSpline(QIODevice* d, QList<path_t>* p)
+void DXFParser::parseSpline(QIODevice* d, QList<DXFPath>* p)
 {
-	QString line1;
-	QString line2;
-	
-	path_t path;
-	INIT_PATH(path);
-	path.type = SPLINE;
-	QList<coordinate_t> coordinates;
-	coordinate_t coord;
-	bool haveX = false;
-	bool haveY = false;
+	DXFPath path(SPLINE);
+	QList<DXFCoordinate> coordinates;
+	DXFCoordinate coord;
+	bool have_x = false;
+	bool have_y = false;
 	
 	// TODO: very basic implementation assuming cubic bezier splines.
-	do{
-		if(d->peek(3).trimmed() == "0")
-			break;
-		getLines(line1, line2, d);
-		PARSE_COMMON(path);
-		if (line1 == "71"){
-			if (line2 != "3"){
-				qWarning("DXFParser: non-cubic splines are not supported!");
+	int code;
+	QString value;
+	while (!atEntityEnd(d) && readNextCodeValue(d, code, value))
+	{
+		if (code == 71)
+		{
+			if (value != "3")
+			{
+				qWarning() << QString("DXFParser: Splines of degree %1 are not supported!").arg(value);
 				return;
 			}
 		}
-		else if(line1 == "10"){
-			coord.x = line2.toDouble();
-			haveX = true;
+		else if (code == 10)
+		{
+			coord.x = value.toDouble();
+			have_x = true;
 		}
-		else if(line1 == "20"){
-			coord.y = line2.toDouble();
-			haveY = true;
+		else if (code == 20)
+		{
+			coord.y = value.toDouble();
+			have_y = true;
 		}
-		if(haveX && haveY){
+		else if (code == 70)
+		{
+			path.closed = (value.toInt() & 1) == 1;
+		}
+		else
+			parseCommon(code, value, path);
+		
+		if (have_x && have_y)
+		{
 			coordinates.append(coord);
-			haveX = false;
-			haveY = false;
+			have_x = false;
+			have_y = false;
 		}
-	}while(1);
+	}
 	path.coords = coordinates;
 	p->append(path);
 }
 
-void DXFParser::parseCircle(QIODevice *d, QList<path_t> *p){
-	if(invertex){
-		vertexMain.coords = vertexs;
-		paths.append(vertexMain);
-		invertex = false;
+void DXFParser::parseCircle(QIODevice *d, QList<DXFPath> *p)
+{
+	if (in_vertex)
+	{
+		vertex_main.coords = vertices;
+		paths.append(vertex_main);
+		in_vertex = false;
 	}
-	QString line1;
-	QString line2;
+	
+	DXFPath path(CIRCLE);
+	DXFCoordinate co;
 
-	path_t path;
-	INIT_PATH(path);
-	path.type = CIRCLE;
-	coordinate_t co;
-	co.x = 0.0;
-	co.y = 0.0;
-	co.z = 0.0;
-
-	do{
-		if(d->peek(3).trimmed() == "0")
-			break;
-		getLines(line1, line2, d);
-		PARSE_COMMON(path);
-		if(line1 == "39")
-			path.thickness = line2.toInt();
-		if(line1 == "10")
-			co.x = line2.toDouble();
-		if(line1 == "20")
-			co.y = line2.toDouble();
-		if(line1 == "30" || line1 == "50")
-			co.z = line2.toDouble();
-		if(line1 == "40")
-			path.radius = line2.toInt();
-	}while(true);
+	int code;
+	QString value;
+	while (!atEntityEnd(d) && readNextCodeValue(d, code, value))
+	{
+		if (code == 39)
+			path.thickness = value.toInt();
+		else if (code == 10)
+			co.x = value.toDouble();
+		else if (code == 20)
+			co.y = value.toDouble();
+		else if (code == 30 || code == 50)
+			co.z = value.toDouble();
+		else if (code == 40)
+			path.radius = value.toInt();
+		else
+			parseCommon(code, value, path);
+	}
 	path.coords.append(co);
 	p->append(path);
 }
 
-void DXFParser::parsePoint(QIODevice *d, QList<path_t> *p){
-	if(invertex){
-		vertexMain.coords = vertexs;
-		paths.append(vertexMain);
-		invertex = false;
+void DXFParser::parsePoint(QIODevice *d, QList<DXFPath> *p)
+{
+	if (in_vertex)
+	{
+		vertex_main.coords = vertices;
+		paths.append(vertex_main);
+		in_vertex = false;
 	}
-	QString line1;
-	QString line2;
-
-	path_t path;
-	INIT_PATH(path);
-	path.type = POINT;
-	coordinate_t co;
-	co.x = 0.0;
-	co.y = 0.0;
-	co.z = 0.0;
-
-	do{
-		if(d->peek(3).trimmed() == "0")
-			break;
-		getLines(line1, line2, d);
-		PARSE_COMMON(path);
-		if(line1 == "39")
-			path.thickness = line2.toInt();
-		if(line1 == "10")
-			co.x = line2.toDouble();
-		if(line1 == "20")
-			co.y = line2.toDouble();
-		if(line1 == "30")
-			co.z = line2.toDouble();
-		if(line1 == "50")
-			path.rotation = line2.toDouble();
-	}while(true);
+	
+	DXFPath path(POINT);
+	DXFCoordinate co;
+	
+	int code;
+	QString value;
+	while (!atEntityEnd(d) && readNextCodeValue(d, code, value))
+	{
+		if (code == 39)
+			path.thickness = value.toInt();
+		else if (code == 10)
+			co.x = value.toDouble();
+		else if (code == 20)
+			co.y = value.toDouble();
+		else if (code == 30)
+			co.z = value.toDouble();
+		else if (code == 50)
+			path.rotation = value.toDouble();
+		else
+			parseCommon(code, value, path);
+	}
 	path.coords.append(co);
 	p->append(path);
 }
 
-void DXFParser::parseVertex(QIODevice *d, QList<path_t> *p){
-	QString line1;
-	QString line2;
-
-	coordinate_t co;
-	co.x = 0.0;
-	co.y = 0.0;
-	co.z = 0.0;
-
-	do{
-		if(d->peek(3).trimmed() == "0")
-			break;
-		getLines(line1, line2, d);
-		if(line1 == "10")
-			co.x = line2.toDouble();
-		if(line1 == "20")
-			co.y = line2.toDouble();
-		if(line1 == "30" || line1 == "50")
-			co.z = line2.toDouble();
-	}while(true);
-	vertexs.append(co);
+void DXFParser::parseVertex(QIODevice *d, QList<DXFPath> *p)
+{
 	Q_UNUSED(p)
+	
+	DXFCoordinate co;
+	
+	int code;
+	QString value;
+	while (!atEntityEnd(d) && readNextCodeValue(d, code, value))
+	{
+		if (code == 10)
+			co.x = value.toDouble();
+		if (code == 20)
+			co.y = value.toDouble();
+		if (code == 30 || code == 50)
+			co.z = value.toDouble();
+	}
+	vertices.append(co);
 }
 
-void DXFParser::parseSeqend(QIODevice *d, QList<path_t> *p){
-	if(invertex){
-		vertexMain.coords = vertexs;
-		p->append(vertexMain);
-		invertex = false;
+void DXFParser::parseSeqend(QIODevice *d, QList<DXFPath> *p)
+{
+	if (in_vertex)
+	{
+		vertex_main.coords = vertices;
+		p->append(vertex_main);
+		in_vertex = false;
 	}
-	QString line1;
-	QString line2;
-
-	if(d->peek(3).trimmed() == "0")
-		return;
-	getLines(line1, line2, d);
-
-	do{
-		if(d->peek(3).trimmed() == "0")
-			break;
-		getLines(line1, line2, d);
-	}while(true);
+	
+	int code;
+	QString value;
+	while (!atEntityEnd(d) && readNextCodeValue(d, code, value))
+	{
+		; // nothing
+	}
 }
 
-void DXFParser::parseText(QIODevice *d, QList<path_t> *p){
-	if(invertex){
-		vertexMain.coords = vertexs;
-		paths.append(vertexMain);
-		invertex = false;
+void DXFParser::parseText(QIODevice *d, QList<DXFPath> *p)
+{
+	if (in_vertex)
+	{
+		vertex_main.coords = vertices;
+		paths.append(vertex_main);
+		in_vertex = false;
 	}
-	QString line1;
-	QString line2;
-
-	path_t path;
-	INIT_PATH(path);
-	path.type = TEXT;
+	
+	DXFPath path(TEXT);
 	path.color = Qt::red;
 	path.text = "<span style=\"%1\"></span>";
-	coordinate_t co;
-	co.x = 0.0;
-	co.y = 0.0;
-	co.z = 0.0;
+	DXFCoordinate co;
 	int alignment = 0;
 	int valignment = 0;
-
-	do{
-		if(d->peek(3).trimmed() == "0")
-			break;
-		getLines(line1, line2, d);
-		PARSE_COMMON(path);
-		if(line1 == "39")
-			path.thickness = line2.toInt();
-		if(line1 == "10")
-			co.x = line2.toDouble();
-		if(line1 == "20")
-			co.y = line2.toDouble();
-		if(line1 == "30")
-			co.z = line2.toDouble();
-		if(line1 == "50")
-			path.rotation = line2.toDouble();
-		if(line1 == "1")
-			path.text = path.text.insert(path.text.indexOf(">")+1, line2);
-		if(line1 == "7")
-			path.text = path.text.arg(QString("font-family:")+line2+QString(";%1"));
-		if(line1 == "40")
-			path.font.setPointSizeF(line2.toDouble());
-		if(line1 == "72")
-			alignment = line2.toInt();
-		if(line1 == "73")
-			valignment = line2.toInt();
-	}while(true);
-	if(path.color != QColor(127,127,127)){
+	
+	int code;
+	QString value;
+	while (!atEntityEnd(d) && readNextCodeValue(d, code, value))
+	{
+		if (code == 39)
+			path.thickness = value.toInt();
+		else if (code == 10)
+			co.x = value.toDouble();
+		else if (code == 20)
+			co.y = value.toDouble();
+		else if (code == 30)
+			co.z = value.toDouble();
+		else if (code == 50)
+			path.rotation = value.toDouble();
+		else if (code == 1)
+			path.text = path.text.insert(path.text.indexOf(">")+1, value);
+		else if (code == 7)
+			path.text = path.text.arg(QString("font-family:")+value+QString(";%1"));
+		else if (code == 40)
+			path.font.setPointSizeF(value.toDouble());
+		else if (code == 72)
+			alignment = value.toInt();
+		else if (code == 73)
+			valignment = value.toInt();
+		else
+			parseCommon(code, value, path);
+	}
+	
+	if (path.color != QColor(127,127,127))
+	{
 		path.text = path.text.arg(QString("color:")+path.color.name()+QString(";%1"));
 	}
-	if(!path.text.contains("color")){
+	if (!path.text.contains("color"))
+	{
 		path.text = path.text.arg("color:red");
 	}
-	switch(alignment){
+	switch(alignment)
+	{
 	case 0:
 		path.text = path.text.arg(QString("text-align:left;%1"));
 		break;
@@ -470,7 +506,8 @@ void DXFParser::parseText(QIODevice *d, QList<path_t> *p){
 		path.text = path.text.arg(QString("text-align:right;%1"));
 		break;
 	}
-	switch(valignment){
+	switch(valignment)
+	{
 	case 0:
 		path.text = path.text.arg(QString("text-align:baseline;%1"));
 		break;
@@ -490,79 +527,70 @@ void DXFParser::parseText(QIODevice *d, QList<path_t> *p){
 	p->append(path);
 }
 
-void DXFParser::parseArc(QIODevice *d, QList<path_t> *p){
-	if(invertex){
-		vertexMain.coords = vertexs;
-		paths.append(vertexMain);
-		invertex = false;
+void DXFParser::parseArc(QIODevice *d, QList<DXFPath> *p)
+{
+	if (in_vertex)
+	{
+		vertex_main.coords = vertices;
+		paths.append(vertex_main);
+		in_vertex = false;
 	}
-	QString line1;
-	QString line2;
-
-	path_t path;
-	INIT_PATH(path);
-	path.type = ARC;
-	coordinate_t co;
-	co.x = 0.0;
-	co.y = 0.0;
-	co.z = 0.0;
-
-	do{
-		if(d->peek(3).trimmed() == "0")
-			break;
-		getLines(line1, line2, d);
-		PARSE_COMMON(path);
-		if(line1 == "39")
-			path.thickness = line2.toInt();
-		if(line1 == "10")
-			co.x = line2.toDouble();
-		if(line1 == "20")
-			co.y = line2.toDouble();
-		if(line1 == "30")
-			co.z = line2.toDouble();
-		if(line1 == "40")
-			path.radius = line2.toDouble();
-		if(line1 == "50")
-			path.startAngle = line2.toDouble();
-		if(line1 == "51")
-			path.endAngle = line2.toDouble();
-		//qDebug() << "start: " << path.startAngle <<" stop "<< path.endAngle << " radius " << path.radius;
-	}while(true);
+	
+	DXFPath path(ARC);
+	DXFCoordinate co;
+	
+	int code;
+	QString value;
+	while (!atEntityEnd(d) && readNextCodeValue(d, code, value))
+	{
+		if (code == 39)
+			path.thickness = value.toInt();
+		else if (code == 10)
+			co.x = value.toDouble();
+		else if (code == 20)
+			co.y = value.toDouble();
+		else if (code == 30)
+			co.z = value.toDouble();
+		else if (code == 40)
+			path.radius = value.toDouble();
+		else if (code == 50)
+			path.start_angle = value.toDouble();
+		else if (code == 51)
+			path.end_angle = value.toDouble();
+		else
+			parseCommon(code, value, path);
+	}
+	//qDebug() << "start: " << path.startAngle <<" stop "<< path.endAngle << " radius " << path.radius;
 	path.coords.append(co);
 	p->append(path);
 }
 
-void DXFParser::parseExtminmax(QIODevice *d, QPointF &ResultingPoint){
-	QString line1;
-	QString line2;
-
-	do{
-		if(d->peek(3).trimmed() == "0")
-			break;
-		getLines(line1, line2, d);
-		if(line1 == "10")
-			ResultingPoint.setX(line2.toDouble());
-		if(line1 == "20")
-			ResultingPoint.setY(line2.toDouble());
-	}while(true);
+void DXFParser::parseExtminmax(QIODevice *d, QPointF &point)
+{
+	int code;
+	QString value;
+	while (!atEntityEnd(d) && readNextCodeValue(d, code, value))
+	{
+		if (code == 10)
+			point.setX(value.toDouble());
+		if (code == 20)
+			point.setY(value.toDouble());
+	}
 }
 
-void DXFParser::parseUnknown(QIODevice *d){
-	if(invertex){
-		vertexMain.coords = vertexs;
-		paths.append(vertexMain);
-		invertex = false;
+void DXFParser::parseUnknown(QIODevice *d)
+{
+	if (in_vertex)
+	{
+		vertex_main.coords = vertices;
+		paths.append(vertex_main);
+		in_vertex = false;
 	}
-	QString line1;
-	QString line2;
-
-	if(d->peek(3).trimmed() == "0")
-		return;
-	getLines(line1, line2, d);
-
-	do{
-		if(d->peek(3).trimmed() == "0")
-			break;
-		getLines(line1, line2, d);
-	}while(true);
+	
+	int code;
+	QString value;
+	while (!atEntityEnd(d) && readNextCodeValue(d, code, value))
+	{
+		; // nothing
+	}
 }

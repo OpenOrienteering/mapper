@@ -366,11 +366,11 @@ bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent
 	QString result = parser->parse();
 	if (!result.isEmpty())
 	{
-		QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error reading"), TemplateTrack::tr("There was an error reading the DXF file %1:\n\n%1").arg(file->fileName(), result));
+		QMessageBox::critical(dialog_parent, TemplateTrack::tr("Error reading"), TemplateTrack::tr("There was an error reading the DXF file %1:\n\n%2").arg(file->fileName(), result));
 		delete parser;
 		return false;
 	}
-	QList<path_t> paths = parser->getData();
+	QList<DXFPath> paths = parser->getData();
 	delete parser;
 	
 	// TODO: Re-implement the possibility to load degree values somewhere else.
@@ -379,7 +379,7 @@ bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent
 	//       not be asked again.
 	//int res = QMessageBox::question(dialog_parent, TemplateTrack::tr("Question"), TemplateTrack::tr("Are the coordinates in the DXF file in degrees?"), QMessageBox::Yes|QMessageBox::No);
 	bool degrees = false; //(res == QMessageBox::Yes);
-	foreach (path_t path, paths)
+	foreach (DXFPath path, paths)
 	{
 		if (path.type == POINT)
 		{
@@ -399,7 +399,7 @@ bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent
 			segment_starts.push_back(segment_points.size());
 			segment_names.push_back(path.layer);
 			int i = 0;
-			foreach(coordinate_t coord, path.coords)
+			foreach(DXFCoordinate coord, path.coords)
 			{
 				TrackPoint point = TrackPoint(LatLon(coord.y, coord.x, degrees), QDateTime());
 				if (project_points)
@@ -411,6 +411,15 @@ bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent
 					
 				segment_points.push_back(point);
 				++i;
+			}
+			if (path.closed && !segment_points.empty())
+			{
+				const TrackPoint& start = segment_points[segment_starts.back()];
+				if (start.gps_coord != segment_points.back().gps_coord)
+				{
+					segment_points.push_back(start);
+					segment_points.back().is_curve_start = false;
+				}
 			}
 		}
 	}

@@ -428,6 +428,10 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 				coord.setCurveStart(true);
 			path->addCoordinate(coord);
 		}
+		if (track.getSegmentPoint(i, 0).gps_coord == track.getSegmentPoint(i, segment_size-1).gps_coord)
+		{
+			path->closeAllParts();
+		}
 		importPathEnd(path);
 		result.push_back(path);
 	}
