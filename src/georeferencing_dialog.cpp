@@ -43,8 +43,7 @@ GeoreferencingDialog::GeoreferencingDialog(MapEditorController* controller, cons
 : QDialog(controller->getWindow(), Qt::WindowSystemMenuHint | Qt::WindowTitleHint),
   controller(controller), 
   map(controller->getMap()),
-  allow_no_georeferencing(allow_no_georeferencing),
-  zone_update_in_progress(false)
+  allow_no_georeferencing(allow_no_georeferencing)
 {
 	init(initial);
 }
@@ -53,8 +52,7 @@ GeoreferencingDialog::GeoreferencingDialog(QWidget* parent, Map* map, const Geor
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint),
   controller(NULL), 
   map(map),
-  allow_no_georeferencing(allow_no_georeferencing),
-  zone_update_in_progress(false)
+  allow_no_georeferencing(allow_no_georeferencing)
 {
 	init(initial);
 }
@@ -179,8 +177,8 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	
 	setLayout(layout);
 	
-	connect(crs_edit, SIGNAL(crsEdited()), this, SLOT(crsEdited()));
-	connect(crs_spec_edit, SIGNAL(textEdited(QString)), this, SLOT(crsEdited()));
+	connect(crs_edit, SIGNAL(crsEdited(bool)), this, SLOT(crsEdited(bool)));
+	connect(crs_spec_edit, SIGNAL(textEdited(QString)), this, SLOT(crsSystemEdited()));
 	
 	connect(map_x_edit, SIGNAL(valueChanged(double)), this, SLOT(mapRefChanged(double)));
 	connect(map_y_edit, SIGNAL(valueChanged(double)), this, SLOT(mapRefChanged(double)));
@@ -448,7 +446,7 @@ void GeoreferencingDialog::updateDeclinationButton()
 	declination_button->setText(declination_query_in_progress ? tr("Loading...") : tr("Lookup..."));
 }
 
-void GeoreferencingDialog::crsEdited()
+void GeoreferencingDialog::crsEdited(bool system_changed)
 {
 	QString spec = crs_edit->getSelectedCRSSpec();
 	if (!spec.isEmpty())
@@ -496,18 +494,24 @@ void GeoreferencingDialog::crsEdited()
 			//       which will then be reset by the updateZone() inside latLonChanged().
 			//       Solution: determine if this call comes from a zone edit,
 			//       don't call updateZone() in this case - this also applies to the call below!
-			latLonChanged();
+			latLonChanged(system_changed);
 		}
 		else
 		{
 			eastingNorthingChanged();
-			updateZone();
+			if (system_changed)
+				updateZone();
 		}
 	}
 	
 	updateNorth();
 	updateWidgets();
 	reset_button->setEnabled(true);
+}
+
+void GeoreferencingDialog::crsSystemEdited()
+{
+	crsEdited(true);
 }
 
 void GeoreferencingDialog::selectMapRefPoint()
@@ -536,16 +540,22 @@ void GeoreferencingDialog::eastingNorthingChanged(double value)
 	reset_button->setEnabled(true);
 }
 
-void GeoreferencingDialog::latLonChanged(double value)
+void GeoreferencingDialog::latLonChanged(bool update_zone)
 {
 	double latitude = lat_edit->value() * M_PI / 180;
 	double longitude = lon_edit->value() * M_PI / 180;
 	georef->setGeographicRefPoint(LatLon(latitude, longitude));
 	setEastingNorthingValuesFrom(georef.data());
 	
-	updateZone();
+	if (update_zone)
+		updateZone();
 	updateWidgets();
 	reset_button->setEnabled(true);
+}
+
+void GeoreferencingDialog::latLonChanged(double value)
+{
+	latLonChanged(true);
 }
 
 void GeoreferencingDialog::declinationChanged(double value)
@@ -615,10 +625,6 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 
 void GeoreferencingDialog::updateZone()
 {
-	// HACK to prevent infinite recursion via crsEdited().
-	if (zone_update_in_progress)
-		return;
-	
 	CRSTemplate* temp = crs_edit->getSelectedCRSTemplate();
 	if (!temp || temp->getId() != "UTM")
 		return;
@@ -638,9 +644,7 @@ void GeoreferencingDialog::updateZone()
 		if (zone != crs_edit->getParam(0))
 		{
 			crs_edit->setParam(0, zone);
-			zone_update_in_progress = true;
-			crsEdited();
-			zone_update_in_progress = false;
+			crsEdited(false);
 		}
 	}
 }
@@ -853,12 +857,12 @@ void ProjectedCRSSelector::crsDropdownChanged(int index)
 	
 	setLayout(layout);
 	
-	emit crsEdited();
+	emit crsEdited(true);
 }
 
 void ProjectedCRSSelector::crsParamEdited(QString dont_use)
 {
-	emit crsEdited();
+	emit crsEdited(false);
 }
 
 
@@ -946,7 +950,7 @@ SelectCRSDialog::SelectCRSDialog(Map* map, QWidget* parent, bool show_take_from_
 		connect(geographic_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
 	connect(projected_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
 	connect(spec_radio, SIGNAL(clicked()), this, SLOT(updateWidgets()));
-	connect(crs_edit, SIGNAL(crsEdited()), this, SLOT(updateWidgets()));
+	connect(crs_edit, SIGNAL(crsEdited(bool)), this, SLOT(updateWidgets()));
 	connect(crs_spec_edit, SIGNAL(textEdited(QString)), this, SLOT(crsSpecEdited(QString)));
 	connect(button_box, SIGNAL(accepted()), this, SLOT(accept()));
 	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));

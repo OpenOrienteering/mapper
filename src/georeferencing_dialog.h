@@ -163,7 +163,10 @@ protected slots:
 	/** 
 	 * Notifies the dialog of a change in the CRS selector widget.
 	 */
-	void crsEdited();
+	void crsEdited(bool system_changed);
+	
+	/** Calls crsEdited(true). */
+	void crsSystemEdited();
 	
 	/**
 	 * Hides the dialog and activates a GeoreferencingTool for selecting
@@ -183,7 +186,13 @@ protected slots:
 	
 	/**
 	 * Notifies the dialog of a change in the latitude / longitude fields.
+	 * update_zone determines if updateZone() should also be called (which
+	 * is necessary for UTM zone changes due to changed coordinates, but may be
+	 * unwanted).
 	 */
+	void latLonChanged(bool update_zone);
+	
+	/** Variant of latLonChanged() for use with widget signal, assuming update_zone = true. */
 	void latLonChanged(double value = -1);
 	
 	/** 
@@ -229,7 +238,6 @@ private:
 	bool allow_no_georeferencing;
 	bool tool_active;
 	bool declination_query_in_progress;
-	bool zone_update_in_progress;
 	
 	/* GUI elements */
 	ProjectedCRSSelector* crs_edit;
@@ -352,7 +360,10 @@ public:
 	void setParam(int i, const QString& value);
 	
 signals:
-	void crsEdited();
+	/// Called when the user edit the CRS.
+	/// system_changed is true if the whole system was switched,
+	/// if only a parameter was changed it is false.
+	void crsEdited(bool system_changed);
 	
 private slots:
 	void crsDropdownChanged(int index);
