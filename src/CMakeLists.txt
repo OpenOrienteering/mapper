@@ -16,7 +16,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-if(Mapper_PACKAGE_QT AND UNIX AND NOT APPLE)
+if(Mapper_PACKAGE_QT AND UNIX AND NOT APPLE AND NOT Mapper_DEVELOPMENT_BUILD)
 	set(MAPPER_USE_QT_CONF_QRC 1)
 endif()
 
@@ -271,6 +271,10 @@ install(TARGETS Mapper
   RUNTIME DESTINATION "${MAPPER_RUNTIME_DESTINATION}"
   BUNDLE DESTINATION "${MAPPER_RUNTIME_DESTINATION}"
 )
+
+if(Mapper_BUILD_QT)
+	write_qt_conf()
+endif()
 
 # Mapper.pro file
 

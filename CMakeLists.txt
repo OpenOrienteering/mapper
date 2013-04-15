@@ -167,7 +167,7 @@ if(Mapper_prerequisites_FOUND)
 
 if(Mapper_USE_QT5)
 	include(Qt5Quirks)
-	foreach(qt5_module Qt5Core Qt5Gui Qt5Widgets Qt5Xml Qt5Network Qt5PrintSupport)
+	foreach(qt5_module Qt5Core Qt5Gui Qt5Widgets Qt5Xml Qt5Network Qt5PrintSupport Qt5Test)
 		find_package(${qt5_module} REQUIRED)
 		add_definitions(${${qt5_module}_DEFINITIONS})
 		list(APPEND QT_INCLUDES ${${qt5_module}_INCLUDE_DIRS})
@@ -187,6 +187,26 @@ if(CMAKE_CROSSCOMPILING)
 		qt5_find_host_program(Qt5Core_MOC_EXECUTABLE NAMES moc)
 		qt5_find_host_program(Qt5Core_RCC_EXECUTABLE NAMES rcc)
 	endif()
+elseif(UNIX AND Mapper_USE_QT5 AND Mapper_BUILD_QT AND QT5_VERSION VERSION_GREATER 5.0.1)
+	get_target_property(QT5_INSTALL_DIR Qt5 INSTALL_DIR)
+	foreach(qt5_target Qt5::moc Qt5::rcc ${QT_LIBRARIES})
+		foreach(imported_location 
+		  IMPORTED_LOCATION
+		  IMPORTED_LOCATION_RELEASE
+		  IMPORTED_LOCATION_DEBUG
+		)
+			get_target_property(qt5_tmp ${qt5_target} ${imported_location})
+			if(NOT "${qt5_tmp}" MATCHES NOTFOUND)
+				set_target_properties(${qt5_target} PROPERTIES
+				  ${imported_location} "${QT5_INSTALL_DIR}${qt5_tmp}"
+				)
+			endif()
+		endforeach()
+	endforeach()
+	string(REGEX REPLACE ";" ";${QT5_INSTALL_DIR}" QT_INCLUDES
+	  ";${QT_INCLUDES}"
+	)
+	list(REMOVE_AT QT_INCLUDES 0)
 endif()
 
 if(UNIX AND NOT APPLE)
