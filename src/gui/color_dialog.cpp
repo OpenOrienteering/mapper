@@ -40,7 +40,7 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	color_preview_label = new QLabel();
 	mc_name_label = new QLabel();
 	
-	QGridLayout* prof_color_layout = new QGridLayout();
+	prof_color_layout = new QGridLayout();
 	int col = 0;
 	prof_color_layout->setColumnStretch(col, 1);
 	prof_color_layout->setColumnStretch(col+1, 3);
@@ -64,7 +64,12 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	spot_color_options->addButton(composition_option, MapColor::CustomColor);
 	prof_color_layout->addWidget(composition_option, row, col, 1, 2);
 	
-	for (int i = 0; i < composition_size; i++)
+	int num_components = 0 /*color.getComponents().size()*/; // FIXME: cleanup
+	components_row0 = row+1;
+	components_col0 = col;
+	component_colors.resize(num_components+1);
+	component_halftone.resize(num_components+1);
+	for (int i = 0; i <= num_components; i++)
 	{
 		++row;
 		component_colors[i] = new ColorDropDown(&map, &color, true);
@@ -127,7 +132,10 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	prof_color_layout->addWidget(k_edit, row, col+1);
 	
 	++row;
-	prof_color_layout->addWidget(new QWidget(), row, col);
+	stretch_row0 = row;
+	stretch_col0 = col;
+	stretch = new QWidget();
+	prof_color_layout->addWidget(stretch, row, col);
 	prof_color_layout->setRowStretch(row, 1);
 	
 	QWidget* prof_color_widget = new QWidget();
@@ -219,7 +227,7 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	
 	connect(spot_color_options, SIGNAL(buttonClicked(int)), this, SLOT(spotColorTypeChanged(int)));
 	connect(sc_name_edit, SIGNAL(textChanged(QString)), this, SLOT(nameChanged()));
-	for (int i = 0; i < composition_size; i++)
+	for (int i = 0; i < (int)component_colors.size(); i++)
 	{
 		connect(component_colors[i], SIGNAL(currentIndexChanged(int)), this, SLOT(spotColorCompositionChanged()));
 		connect(component_halftone[i], SIGNAL(valueChanged(double)), this, SLOT(spotColorCompositionChanged()));
@@ -300,11 +308,33 @@ void ColorDialog::updateWidgets()
 		rgb_spot_color_option->setEnabled(false);
 	}
 	
-	bool enable_component = composition_option->isChecked();
 	const SpotColorComponents& color_components = color.getComponents();
-	for (int i = 0; i < composition_size; i++)
+	int num_components = color_components.size();
+	int num_editors = component_colors.size();
+	for (int i = num_components+1; i < num_editors; ++i)
 	{
-		bool have_component = (i < (int)color_components.size());
+		prof_color_layout->removeWidget(component_colors[i]);
+		delete component_colors[i];
+		prof_color_layout->removeWidget(component_halftone[i]);
+		delete component_halftone[i];
+	}
+	component_colors.resize(num_components+1);
+	component_halftone.resize(num_components+1);
+	for (int i = num_editors; i <= num_components; ++i)
+	{
+		component_colors[i] = new ColorDropDown(&map, &color, true);
+		prof_color_layout->addWidget(component_colors[i], components_row0+i, components_col0);
+		connect(component_colors[i], SIGNAL(currentIndexChanged(int)), this, SLOT(spotColorCompositionChanged()));
+		component_halftone[i] = Util::SpinBox::create(1, 0.0, 100.0, tr("%"), 10.0);
+		prof_color_layout->addWidget(component_halftone[i], components_row0+i, components_col0+1);
+		connect(component_halftone[i], SIGNAL(valueChanged(double)), this, SLOT(spotColorCompositionChanged()));
+	}
+	
+	num_editors = component_colors.size();
+	bool enable_component = composition_option->isChecked();
+	for (int i = 0; i < num_editors; i++)
+	{
+		bool have_component = (i < (int)num_components);
 		const MapColor* component_color = have_component ? color_components[i].spot_color : NULL;
 		component_colors[i]->setEnabled(enable_component);
 		component_colors[i]->setColor(component_color);
@@ -314,11 +344,21 @@ void ColorDialog::updateWidgets()
 		component_halftone[i]->setEnabled(enable_halftone);
 		component_halftone[i]->setValue(component_factor * 100.0);
 		
+		prof_color_layout->setRowStretch(components_row0 + i, 0);
+		
 		enable_component = enable_component && enable_halftone;
 	}
 	// At least one component must be editable to create a composition
 	if (color.getSpotColorMethod() == MapColor::UndefinedMethod)
 		component_colors[0]->setEnabled(true);
+	
+	int stretch_row = qMax(stretch_row0, components_row0+num_editors);
+	if (stretch_row != stretch_row0)
+	{
+		prof_color_layout->removeWidget(stretch);
+		prof_color_layout->addWidget(stretch, stretch_row, stretch_col0);
+		prof_color_layout->setRowStretch(stretch_row, 1);
+	}
 	
 	bool custom_cmyk = false;
 	if (color.getCmykColorMethod() == MapColor::SpotColor)
@@ -449,8 +489,9 @@ void ColorDialog::spotColorCompositionChanged()
 	
 	SpotColorComponents components;
 	SpotColorComponent component;
-	components.reserve(composition_size);
-	for (int i = 0; i < composition_size; i++)
+	int num_editors = component_colors.size();
+	components.reserve(num_editors);
+	for (int i = 0; i < num_editors; i++)
 	{
 		if (!component_colors[i]->isEnabled())
 			break;
