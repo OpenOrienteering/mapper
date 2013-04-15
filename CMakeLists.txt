@@ -169,7 +169,7 @@ if(Mapper_prerequisites_FOUND)
 
 if(Mapper_USE_QT5)
 	include(Qt5Quirks)
-	foreach(qt5_module Qt5Core Qt5Widgets Qt5Xml Qt5Network Qt5PrintSupport)
+	foreach(qt5_module Qt5Core Qt5Gui Qt5Widgets Qt5Xml Qt5Network Qt5PrintSupport)
 		find_package(${qt5_module} REQUIRED)
 		add_definitions(${${qt5_module}_DEFINITIONS})
 		list(APPEND QT_INCLUDES ${${qt5_module}_INCLUDE_DIRS})
