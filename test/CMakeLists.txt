@@ -139,3 +139,9 @@ add_custom_target(Mapper_Test
   DEPENDS Mapper_prerequisites ${Mapper_UNIT_TESTS} ${Mapper_SYSTEM_TESTS}
   COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
 )
+
+
+if(Mapper_BUILD_QT)
+	write_qt_conf()
+endif()
+

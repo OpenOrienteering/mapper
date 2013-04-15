@@ -116,6 +116,7 @@ ExternalProject_Add(Qt5
 ExternalProject_Get_Property(Qt5 SOURCE_DIR)
 ExternalProject_Get_Property(Qt5 BINARY_DIR)
 ExternalProject_Get_Property(Qt5 INSTALL_DIR)
+set_target_properties(Qt5 PROPERTIES INSTALL_DIR "${INSTALL_DIR}")
 
 # Trigger patch step when qt5-patchqt has changed.
 ExternalProject_Add_Step(Qt5 patch-dependencies
@@ -217,7 +218,19 @@ if(UNIX AND QT5_INSTALL_ROOT)
 	  "[Paths]\n"
 	  "Plugins=${INSTALL_DIR}${QT5_PLUGINS_DESTINATION}\n"
 	)
+	set_target_properties(Qt5 PROPERTIES
+	  PLUGINS_DIR "${INSTALL_DIR}${QT5_PLUGINS_DESTINATION}"
+	)
 endif()
+function(WRITE_QT_CONF)
+	get_target_property(qt5_plugins_dir Qt5 PLUGINS_DIR)
+	if(NOT "${qt5_plugins_dir}" MATCHES NOTFOUND)
+		file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/qt.conf"
+		  "[Paths]\n"
+		  "Plugins=${qt5_plugins_dir}\n"
+		)
+	endif()
+endfunction()
 
 # Cross-compiling requires an extra host build in order to get 
 # qcollectiongenerator (required) and lupdate (optional)
