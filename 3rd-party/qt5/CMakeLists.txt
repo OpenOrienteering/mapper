@@ -126,6 +126,7 @@ ExternalProject_Add_Step(Qt5 patch-dependencies
 )
 
 # Trigger confclean and configure steps when qt5-config has changed.
+if(NOT "${SOURCE_DIR}" STREQUAL "${BINARY_DIR}")
 ExternalProject_Add_Step(Qt5 confclean
   COMMAND ${CMAKE_COMMAND} -E remove_directory "${BINARY_DIR}"
   COMMAND ${CMAKE_COMMAND} -E make_directory "${BINARY_DIR}"
@@ -139,6 +140,15 @@ ExternalProject_Add_Step(Qt5 configure-dependencies
   DEPENDERS configure
   WORKING_DIRECTORY "${BINARY_DIR}"
 )
+else()
+# In-source-build: re-trigger extract; download will be avoided by MD5 sum.
+ExternalProject_Add_Step(Qt5 confclean
+  COMMAND ${CMAKE_COMMAND} -E echo_append "" # Do nothing
+  DEPENDERS download
+  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${QT5_CONFIG_SCRIPT}
+  WORKING_DIRECTORY "${SOURCE_DIR}"
+)
+endif()
 
 # Build script configuration
 
