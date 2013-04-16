@@ -107,6 +107,12 @@ protected:
 	MapCoord snapped_to_line_b;
 	
 	/**
+	 * This can be set to true when a mouse button is pressed down to disable all
+	 * actions for the next mouse button release.
+	 */
+	bool no_more_effect_on_click;
+	
+	/**
 	 * List of angles for first, second, etc. edge.
 	 * Includes the currently edited angle.
 	 * The index of currently edited point in preview_path is angles.size().
