@@ -232,7 +232,22 @@ bool DrawRectangleTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_
 		return false;
 	
 	if (draw_in_progress)
-		finishDrawing();
+	{
+		// Finish drawing by double click.
+		// As the double click is also reported as two single clicks first
+		// (in total: press - release - press - double - release),
+		// need to undo two steps in general.
+		if (angles.size() <= 1)
+			abortDrawing();
+		else
+		{
+			if (angles.size() > 2)
+				undoLastPoint();
+			cur_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
+			undoLastPoint();
+			finishDrawing();
+		}
+	}
 	return true;
 }
 
