@@ -110,6 +110,9 @@ protected:
 	bool create_spline_corner; // for drawing bezier splines without parallel handles
 	bool create_segment;
 	
+	/** Information for correct undo on finishing the path by double clicking. */
+	bool created_point_at_last_mouse_press;
+	
 	bool draw_dash_points;
 	bool allow_closing_paths;
 	
