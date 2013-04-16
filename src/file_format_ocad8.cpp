@@ -125,7 +125,32 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
     // TODO: GPS projection parameters
 
     // TODO: print parameters
-
+	
+	// Load the separations to a temporary stack
+	std::vector< MapColor* > separations;
+	int num_separations = ocad_separation_count(file);
+	if (num_separations < 0)
+	{
+		addWarning(tr("Could not load the spot color definitions, error: %1").arg(num_separations));
+		num_separations = 0;
+	}
+	separations.reserve(num_separations);
+	for (int i = 0; i < num_separations; i++)
+	{
+		const OCADColorSeparation *ocad_separation = ocad_separation_at(file, i);
+		MapColor* color = new MapColor(convertPascalString(ocad_separation->sep_name), MapColor::Reserved);
+		color->setSpotColorName(convertPascalString(ocad_separation->sep_name).toUpper());
+		// OCD stores CMYK values as integers from 0-200.
+		const MapColorCmyk cmyk(
+		  0.005f * ocad_separation->cyan,
+		  0.005f * ocad_separation->magenta,
+		  0.005f * ocad_separation->yellow,
+		  0.005f * ocad_separation->black );
+		color->setCmyk(cmyk);
+		color->setOpacity(1.0f);
+		separations.push_back(color);
+	}
+	
 	// Load colors
 	int num_colors = ocad_color_count(file);
 	for (int i = 0; i < num_colors; i++)
@@ -140,6 +165,26 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
 		  0.005f * ocad_color->black );
 		color->setCmyk(cmyk);
 		color->setOpacity(1.0f);
+		
+		SpotColorComponents components;
+		for (int j = 0; j < num_separations; ++j)
+		{
+			const u8& ocad_halftone = ocad_color->spot[j];
+			if (ocad_halftone <= 200)
+			{
+				float halftone = 0.005f * ocad_halftone;
+				components.push_back(SpotColorComponent(separations[j], halftone));
+			}
+		}
+		if (!components.empty())
+		{
+			color->setSpotColorComposition(components);
+			const MapColorCmyk cmyk(color->getCmyk());
+			color->setCmykFromSpotColors();
+			if (cmyk != color->getCmyk())
+				// The color's CMYK was customized.
+				color->setCmyk(cmyk);
+		}
 		
 		if (i == 0 && color->getName() == QLatin1String("Registration black") && color->isBlack())
 		{
@@ -156,6 +201,12 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
 			map->color_set->colors.push_back(color);
 			color_index[ocad_color->number] = color;
 		}
+	}
+	
+	// Insert the spot colors into the map
+	for (int i = 0; i < num_separations; ++i)
+	{
+		map->addColor(separations[i], map->color_set->colors.size());
 	}
 	
     // Load symbols
