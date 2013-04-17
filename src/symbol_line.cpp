@@ -982,6 +982,7 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 		
 		bool starts_with_dashpoint = (part_start == 0) ? path_closed : flags[part_start].isDashPoint();
 		bool ends_with_dashpoint = (part_end < last_coord) ? flags[part_end].isDashPoint() : path_closed;
+		bool ends_with_holepoint = flags[part_end].isHolePoint();
 		bool half_first_dash = (part_start == 0 && (half_outer_dashes || path_closed)) || (starts_with_dashpoint && dashes_in_group == 1);
 		bool half_last_dash = (part_end == last_coord && (half_outer_dashes || path_closed)) || (ends_with_dashpoint && dashes_in_group == 1);
 		int half_first_last_dash = (half_first_dash ? 1 : 0) + (half_last_dash ? 1 : 0);
@@ -999,7 +1000,7 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 		if (length <= 0.0 || (lower_dashgroup_count <= 1 && length < minimum_optimum_length - minimum_optimum_num_dashes * switch_deviation))
 		{
 			// Line part too short for dashes, use just one continuous line for it
-			if (!ends_with_dashpoint)
+			if (!ends_with_dashpoint || ends_with_holepoint)
 			{
 				processContinuousLine(object, path_closed, flags, coords, line_coords, cur_length, cur_length + length + old_length,
 									  (!path_closed && out_flags.empty()) || (!out_flags.empty() && out_flags.back().isHolePoint()), !(path_closed && part_end == last_coord),
