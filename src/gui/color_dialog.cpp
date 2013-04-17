@@ -80,7 +80,7 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	
 	++row;
 	knockout_option = new QCheckBox(tr("Knockout: erases lower colors"));
-	prof_color_layout->addWidget(knockout_option);
+	prof_color_layout->addWidget(knockout_option, row, col, 1, 2);
 	knockout_option->setEnabled(false);
 	
 	row = 0, col += 2;
@@ -311,6 +311,7 @@ void ColorDialog::updateWidgets()
 	const SpotColorComponents& color_components = color.getComponents();
 	int num_components = color_components.size();
 	int num_editors = component_colors.size();
+	
 	for (int i = num_components+1; i < num_editors; ++i)
 	{
 		prof_color_layout->removeWidget(component_colors[i]);
@@ -318,6 +319,13 @@ void ColorDialog::updateWidgets()
 		prof_color_layout->removeWidget(component_halftone[i]);
 		delete component_halftone[i];
 	}
+	
+	if (num_editors != num_components+1)
+	{
+		prof_color_layout->removeWidget(knockout_option);
+		prof_color_layout->addWidget(knockout_option, components_row0+num_components+1, components_col0);
+	}
+	
 	component_colors.resize(num_components+1);
 	component_halftone.resize(num_components+1);
 	for (int i = num_editors; i <= num_components; ++i)
