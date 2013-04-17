@@ -983,6 +983,7 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 		bool starts_with_dashpoint = (part_start == 0) ? path_closed : flags[part_start].isDashPoint();
 		bool ends_with_dashpoint = (part_end < last_coord) ? flags[part_end].isDashPoint() : path_closed;
 		bool ends_with_holepoint = flags[part_end].isHolePoint();
+		bool ends_with_closepoint = flags[part_end].isClosePoint();
 		bool half_first_dash = (part_start == 0 && (half_outer_dashes || path_closed)) || (starts_with_dashpoint && dashes_in_group == 1);
 		bool half_last_dash = (part_end == last_coord && (half_outer_dashes || path_closed)) || (ends_with_dashpoint && dashes_in_group == 1);
 		int half_first_last_dash = (half_first_dash ? 1 : 0) + (half_last_dash ? 1 : 0);
@@ -1032,8 +1033,10 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 					bool is_half_dash = (is_first_dash && half_first_dash) || (dashgroup == num_dashgroups && dash == dashes_in_group && half_last_dash);
 					double cur_dash_length = is_half_dash ? adapted_dash_length / 2 : adapted_dash_length;
 					
-					// Process immediately if this is not the last dash before a dash point
-					if (path_closed || !(ends_with_dashpoint && dash == dashes_in_group && dashgroup == num_dashgroups))
+					// Process immediately if this is not the last dash before a dash point,
+					// or if it is the last point and the path is closed
+					if ((ends_with_closepoint && (dash == dashes_in_group && dashgroup == num_dashgroups)) ||
+						!(ends_with_dashpoint && dash == dashes_in_group && dashgroup == num_dashgroups))
 					{
 						// The dash has an end if it is not the last dash in a closed path
 						bool has_end = !(dash == dashes_in_group && dashgroup == num_dashgroups && path_closed && part_end == last_coord);
@@ -1057,7 +1060,7 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 			}
 		}
 		
-		if (ends_with_dashpoint && dashes_in_group == 1 && mid_symbol && !mid_symbol->isEmpty())
+		if ((ends_with_dashpoint || ends_with_holepoint) && dashes_in_group == 1 && mid_symbol && !mid_symbol->isEmpty())
 		{
 			double position = line_coords[last_line_coord].clen - (mid_symbols_per_spot-1) * 0.5 * mid_symbol_distance_f;
 			int line_coord_search_start = 0;
