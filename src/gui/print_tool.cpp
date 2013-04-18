@@ -143,6 +143,7 @@ void PrintTool::draw(QPainter* painter, MapWidget* widget)
 	QColor top_left_margin_color(255, 0, 0, 160);
 	QColor bottom_right_margin_color(255, 128, 128, 160);
 	painter->setBrush(Qt::NoBrush);
+#if 0
 	Q_FOREACH(qreal hpos, map_printer->horizontalPagePositions())
 	{
 		qreal x_pos = widget->mapToViewport(MapCoordF(hpos, 0)).x();
@@ -163,6 +164,51 @@ void PrintTool::draw(QPainter* painter, MapWidget* widget)
 		painter->setPen(bottom_right_margin_color);
 		painter->drawLine(outer_rect.left(), y_pos, outer_rect.right(), y_pos);
 	}
+#else
+	// The relative length of the page dimensions to be actual drawn.
+	QSizeF drawing_size(page_size);
+	if (map_printer->horizontalPagePositions().size() > 1)
+	{
+		drawing_size.setWidth(drawing_size.width() * 0.9 * (
+		  map_printer->horizontalPagePositions()[1] - 
+		  map_printer->horizontalPagePositions()[0] ) / 
+		  map_printer->getPageFormat().page_rect.width() );
+	}
+	if (map_printer->verticalPagePositions().size() > 1)
+	{
+		drawing_size.setHeight(drawing_size.height() * 0.9 * (
+		  map_printer->verticalPagePositions()[1] - 
+		  map_printer->verticalPagePositions()[0] ) /
+		  map_printer->getPageFormat().page_rect.height() );
+	}
+	
+	Q_FOREACH(qreal hpos, map_printer->horizontalPagePositions())
+	{
+		Q_FOREACH(qreal vpos, map_printer->verticalPagePositions())
+		{
+			QPointF pos = widget->mapToViewport(MapCoordF(hpos, vpos));
+			painter->setPen(top_left_margin_color);
+			// Left vertical line
+			painter->drawLine(pos.x(), pos.y(), pos.x(), pos.y()+drawing_size.height());
+			// Top horizontal line
+			painter->drawLine(pos.x(), pos.y(), pos.x()+drawing_size.width(), pos.y());
+			
+			pos += QPointF(page_size.width(), page_size.height());
+			painter->setPen(bottom_right_margin_color);
+			// Right vertical line
+			painter->drawLine(pos.x(), pos.y()-drawing_size.height(), pos.x(), pos.y());
+			// Bottom horizontal line
+			painter->drawLine(pos.x()-drawing_size.width(), pos.y(), pos.x(), pos.y());
+		}
+	}
+	
+	painter->setPen(top_left_margin_color);
+	painter->drawLine(outer_rect.left(), outer_rect.top(), outer_rect.left(), outer_rect.bottom());
+	painter->drawLine(outer_rect.left(), outer_rect.top(), outer_rect.right(), outer_rect.top());
+	painter->setPen(bottom_right_margin_color);
+	painter->drawLine(outer_rect.right(), outer_rect.top(), outer_rect.right(), outer_rect.bottom());
+	painter->drawLine(outer_rect.left(), outer_rect.bottom(), outer_rect.right(), outer_rect.bottom());
+#endif
 	
 	QRectF print_area_f(print_area);
 	QPen marker(Qt::red);
