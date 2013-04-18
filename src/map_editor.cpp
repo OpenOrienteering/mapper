@@ -1169,6 +1169,7 @@ void MapEditorController::showSymbolWindow(bool show)
 		symbol_dock_widget = new EditorDockWidget(tr("Symbols"), symbol_window_act, this, window);
 		symbol_widget = new SymbolWidget(map, symbol_dock_widget);
 		connect(window, SIGNAL(keyPressed(QKeyEvent*)), symbol_widget, SLOT(keyPressed(QKeyEvent*)));
+		connect(map, SIGNAL(symbolAdded(int,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*)));
 		connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*,Symbol*)));	// NOTE: adjust setMap() if changing this!
 		connect(map, SIGNAL(symbolIconChanged(int)), symbol_widget->getRenderWidget(), SLOT(updateIcon(int)));
 		symbol_dock_widget->setWidget(symbol_widget);
@@ -2301,6 +2302,7 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 	connect(map, SIGNAL(closedTemplateAvailabilityChanged()), this, SLOT(closedTemplateAvailabilityChanged()));
 	connect(map, SIGNAL(spotColorPresenceChanged(bool)), this, SLOT(spotColorPresenceChanged(bool)));
 	if (symbol_widget)
+		connect(map, SIGNAL(symbolAdded(int,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*)));
 		connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*,Symbol*)));
 	
 	if (window)
