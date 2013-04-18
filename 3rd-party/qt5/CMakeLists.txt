@@ -25,7 +25,7 @@ include(ExternalProject)
 
 # Configuration options
 
-set(QT5_VERSION_DEFAULT 5.0.1)
+set(QT5_VERSION_DEFAULT 5.0.2)
 set(QT5_VERSION ${QT5_VERSION_DEFAULT} CACHE STRING
   "Version number of the Qt5 library, minimum recommended value: 5.0.0")
 mark_as_advanced(QT5_VERSION)
@@ -40,6 +40,7 @@ elseif(QT5_VERSION STREQUAL 5.0.1-rc1)
 	message(WARNING "Using Qt ${QT5_VERSION} which has been superseded by Qt ${QT5_VERSION_DEFAULT}.")
 elseif(QT5_VERSION STREQUAL 5.0.1)
 	set(QT5_MD5 8e8137c23c8ff078a560d3c62b4383e7)
+	message(WARNING "Using Qt ${QT5_VERSION} which has been superseded by Qt ${QT5_VERSION_DEFAULT}.")
 elseif(QT5_VERSION STREQUAL 5.0.2)
 	set(QT5_MD5 87cae8ae2f82f41ba027c2db0ab639b7)
 elseif(QT5_VERSION STREQUAL 5.1.0-alpha)
