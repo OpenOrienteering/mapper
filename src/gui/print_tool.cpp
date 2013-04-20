@@ -20,6 +20,7 @@
 
 #include "print_tool.h"
 
+#include <QApplication>
 #include <QMouseEvent>
 #include <QPainter>
 
@@ -46,7 +47,7 @@ PrintTool::PrintTool(MapEditorController* editor, MapPrinter* map_printer)
 
 void PrintTool::init()
 {
-	setStatusBarText(tr("<b>Drag</b>: Move the map, the print area or the area's borders. "));
+	setStatusBarText(tr("<b>Drag</b>: Move the print area or its borders. "));
 	updatePrintArea();
 }
 
@@ -288,35 +289,35 @@ void PrintTool::mouseMoved(MapCoordF mouse_pos_map, MapWidget* widget)
 		switch (region)
 		{
 			case Inside:
-				setStatusBarText(tr("<b>Drag</b>: Move the print area. "));
+				setStatusBarText(tr("<b>Drag</b>: Move the print area or its borders. "));
 				widget->setCursor(Qt::OpenHandCursor);
 				break;
 			case Outside:
-				setStatusBarText(tr("<b>Drag</b>: Move the map. "));
+				setStatusBarText(QApplication::translate("PanTool", "<b>Drag</b>: Move the map. "));
 				widget->setCursor(Qt::ArrowCursor);
 				break;
 			case LeftBorder:
 			case RightBorder:
-				setStatusBarText(tr("<b>Drag</b>: Move the print area's border. "));
+				setStatusBarText(tr("<b>Drag</b>: Move the print area or its borders. "));
 				widget->setCursor(Qt::SizeHorCursor);
 				break;
 			case TopBorder:
 			case BottomBorder:
-				setStatusBarText(tr("<b>Drag</b>: Move the print area's border. "));
+				setStatusBarText(tr("<b>Drag</b>: Move the print area or its borders. "));
 				widget->setCursor(Qt::SizeVerCursor);
 				break;
 			case TopLeftCorner:
 			case BottomRightCorner:
-				setStatusBarText(tr("<b>Drag</b>: Move the print area's borders. "));
+				setStatusBarText(tr("<b>Drag</b>: Move the print area or its borders. "));
 				widget->setCursor(Qt::SizeFDiagCursor);
 				break;
 			case TopRightCorner:
 			case BottomLeftCorner:
-				setStatusBarText(tr("<b>Drag</b>: Move the print area's borders. "));
+				setStatusBarText(tr("<b>Drag</b>: Move the print area or its borders. "));
 				widget->setCursor(Qt::SizeBDiagCursor);
 				break;
 			case Unknown:
-				setStatusBarText(tr("<b>Drag</b>: Move the map, the print area or the area's borders. "));
+				setStatusBarText(tr("<b>Drag</b>: Move the print area or its borders. "));
 				widget->setCursor(Qt::ArrowCursor);
 		}
 		
