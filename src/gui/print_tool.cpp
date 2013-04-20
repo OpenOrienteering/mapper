@@ -69,6 +69,11 @@ bool PrintTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 		return true;
 	}
 	
+	if (event->button() == Qt::RightButton)
+	{
+		return true; // disable context menu
+	}
+	
 	return false;
 }
 
@@ -104,6 +109,7 @@ bool PrintTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 			updateDragging(map_coord);
 		}
 		dragging = false;
+		region = Unknown; // forces mouseMoved() to update cursor and status
 		mouseMoved(map_coord, widget);
 		return true;
 	}
@@ -166,7 +172,7 @@ void PrintTool::draw(QPainter* painter, MapWidget* widget)
 	}
 #else
 	// The relative length of the page dimensions to be actual drawn.
-	QSizeF drawing_size(page_size);
+	QSizeF drawing_size(page_size * scale_adjustment);
 	if (map_printer->horizontalPagePositions().size() > 1)
 	{
 		drawing_size.setWidth(drawing_size.width() * 0.9 * (
