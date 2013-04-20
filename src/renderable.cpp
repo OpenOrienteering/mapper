@@ -221,7 +221,7 @@ MapRenderables::MapRenderables(Map* map) : map(map)
 {
 }
 
-void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor, bool highlighted) const
+void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling, bool on_screen, bool show_helper_symbols, float opacity_factor, bool highlighted, bool require_spot_color) const
 {
 	// TODO: improve performance by using some spatial acceleration structure?
 	
@@ -235,6 +235,12 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 	const_reverse_iterator end_of_colors = rend();
 	for (const_reverse_iterator color = rbegin(); color != end_of_colors; ++color)
 	{
+		if ( require_spot_color &&
+		     (color->first < 0 || map->getColor(color->first)->getSpotColorMethod() == MapColor::UndefinedMethod) )
+		{
+			continue;
+		}
+		
 		ObjectRenderablesMap::const_iterator end_of_objects = color->second.end();
 		for (ObjectRenderablesMap::const_iterator object = color->second.begin(); object != end_of_objects; ++object)
 		{
@@ -415,7 +421,7 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, QRectF boundi
 	QPainter p(&separation);
 	p.setRenderHints(hints);
 	p.setWorldTransform(t, false);
-	draw(&p, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols);
+	draw(&p, bounding_box, force_min_size, scaling, on_screen, show_helper_symbols, 1.0f, false, true);
 	p.end();
 	QRgb* dest = (QRgb*)separation.bits();
 	const QRgb* dest_end = dest + separation.byteCount() / sizeof(QRgb);
