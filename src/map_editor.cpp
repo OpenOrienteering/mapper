@@ -2355,14 +2355,18 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 {
 	if (this->map)
 	{
-		map->disconnect(this);
+		this->map->disconnect(this);
 		if (symbol_widget)
-			map->disconnect(symbol_widget);
+		{
+			this->map->disconnect(symbol_widget);
+		}
 	}
 	
 	this->map = map;
 	if (create_new_map_view)
+	{
 		main_view = new MapView(map);
+	}
 	
 	connect(&map->objectUndoManager(), SIGNAL(undoStepAvailabilityChanged()), this, SLOT(undoStepAvailabilityChanged()));
 	connect(map, SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
@@ -2371,11 +2375,15 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 	connect(map, SIGNAL(closedTemplateAvailabilityChanged()), this, SLOT(closedTemplateAvailabilityChanged()));
 	connect(map, SIGNAL(spotColorPresenceChanged(bool)), this, SLOT(spotColorPresenceChanged(bool)));
 	if (symbol_widget)
+	{
 		connect(map, SIGNAL(symbolAdded(int,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*)));
 		connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*,Symbol*)));
+	}
 	
 	if (window)
+	{
 		updateWidgets();
+	}
 }
 
 void MapEditorController::updateWidgets()
