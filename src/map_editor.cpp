@@ -2420,6 +2420,16 @@ bool MapEditorController::importMapFile(const QString& filename)
 	return true;
 }
 
+// slot
+void MapEditorController::setViewOptionsEnabled(bool enabled)
+{
+	show_grid_act->setEnabled(enabled);
+// 	hatch_areas_view_act->setEnabled(enabled);
+// 	baseline_view_act->setEnabled(enabled);
+	overprinting_simulation_act->setEnabled(enabled);
+	hide_all_templates_act->setEnabled(enabled);
+}
+
 
 // ### EditorDockWidget ###
 

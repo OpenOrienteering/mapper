@@ -197,6 +197,10 @@ public slots:
 	bool importMapFile(const QString& filename);
 	void importClicked();
 	
+	/** Sets the enabled state of actions which change how the map is rendered,
+	 *  such as with grid, with templates, with overprinting simulation. */
+	void setViewOptionsEnabled(bool enabled = true);
+	
 	/** 
 	 * Save the current toolbar and dock widget positions
 	 */
