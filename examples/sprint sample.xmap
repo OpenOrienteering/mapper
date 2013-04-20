@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map xmlns="http://oorienteering.sourceforge.net/mapper/xml/v2" version="5">
+<map xmlns="http://oorienteering.sourceforge.net/mapper/xml/v2" version="4">
     <notes></notes>
     <georeferencing scale="5000" declination="0" grivation="-1.96075">
         <ref_point x="0" y="0"/>
@@ -2446,10 +2446,10 @@ North lines may be broken where they obscure small features such as boulders, kn
 Colour: all printed colours.
 
 This symbol includes all printed colours - do not place colours as separate symbols as any errors of placement will appear as misregistration.  This check works with offset printing only (requires colour separations).</description>
-            <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
+            <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="8">
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="-1" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="19" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
@@ -2463,12 +2463,96 @@ This symbol includes all printed colours - do not place colours as separate symb
                 </element>
                 <element>
                     <symbol type="2" code="">
-                        <line_symbol color="-1" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                        <line_symbol color="19" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                     </symbol>
                     <object type="1">
                         <coords count="2">
                             <coord x="-2000" y="0"/>
                             <coord x="2000" y="0"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="0" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="2">
+                            <coord x="2000" y="0"/>
+                            <coord x="-2000" y="0"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="0" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="2">
+                            <coord x="0" y="-2000"/>
+                            <coord x="0" y="2000"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="32" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="2">
+                            <coord x="-2000" y="0"/>
+                            <coord x="2000" y="0"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="32" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="2">
+                            <coord x="0" y="-2000"/>
+                            <coord x="0" y="2000"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="2" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="2">
+                            <coord x="2000" y="0"/>
+                            <coord x="-2000" y="0"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </element>
+                <element>
+                    <symbol type="2" code="">
+                        <line_symbol color="2" line_width="100" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                    </symbol>
+                    <object type="1">
+                        <coords count="2">
+                            <coord x="0" y="-2000"/>
+                            <coord x="0" y="2000"/>
                         </coords>
                         <pattern rotation="0">
                             <coord x="0" y="0"/>
