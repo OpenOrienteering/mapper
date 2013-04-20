@@ -312,6 +312,8 @@ void PrintWidget::setActive(bool active)
 			QXmlStreamWriter writer(&saved_view_state);
 			main_view->save(writer, QLatin1String("saved_view"), true);
 			
+			editor->setViewOptionsEnabled(false);
+			
 			// Printers may have been added or removed.
 			updateTargets();
 			
@@ -350,6 +352,8 @@ void PrintWidget::setActive(bool active)
 			reader.readNextStartElement();
 			main_view->load(reader);
 			main_view->updateAllMapWidgets();
+			
+			editor->setViewOptionsEnabled(true);
 		}
 	}
 }
