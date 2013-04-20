@@ -202,11 +202,12 @@ public:
 	 * See Map::draw() for an explanation of the remaining parameters.
 	 * 
 	 * @param highlighted Use a highlighted variation of the renderables' colors.
+	 * @param require_spot_color Draw only colors which have a spot color definition.
 	 */
 	void draw(QPainter* painter, QRectF bounding_box,
 		bool force_min_size, float scaling, bool on_screen,
 		bool show_helper_symbols, float opacity_factor = 1.0f,
-		bool highlighted = false) const;
+		bool highlighted = false, bool require_spot_color = false) const;
 	
 	/**
 	 * Draws the renderables in a spot color overprinting simulation.
