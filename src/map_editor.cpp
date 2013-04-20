@@ -2423,6 +2423,7 @@ bool MapEditorController::importMapFile(const QString& filename)
 // slot
 void MapEditorController::setViewOptionsEnabled(bool enabled)
 {
+	pan_act->setEnabled(enabled);
 	show_grid_act->setEnabled(enabled);
 // 	hatch_areas_view_act->setEnabled(enabled);
 // 	baseline_view_act->setEnabled(enabled);
