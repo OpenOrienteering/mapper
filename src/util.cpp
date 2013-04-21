@@ -218,17 +218,39 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 	}
 	else
 	{
-		QString help_collection_path = MapperResource::locate(MapperResource::MANUAL, QLatin1String("oomaphelpcollection.qhc"));
-		if (help_collection_path.isEmpty())
-		{
-			QMessageBox::warning(dialog_parent, QFile::tr("Error"), QFile::tr("Failed to locate the help files."));
-			return;
-		}
-		
 		QString assistant_path = MapperResource::locate(MapperResource::ASSISTANT);
 		if (assistant_path.isEmpty())
 		{
 			QMessageBox::warning(dialog_parent, QFile::tr("Error"), QFile::tr("Failed to locate the help browser (\"Qt Assistant\")."));
+			return;
+		}
+		
+		QSettings settings;
+		if (settings.value("registered_help_version") != QVariant(QLatin1String(APP_VERSION)))
+		{
+			// Register the current version of the compressed help files.
+			const QString compiled_help_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("oomaphelp.qch")));
+			if (compiled_help_path.isEmpty())
+			{
+				QMessageBox::warning(dialog_parent, QFile::tr("Error"), QFile::tr("Failed to locate the help files."));
+				return;
+			}
+			
+			QStringList args;
+			args << QLatin1String("-register")
+				 << QDir::toNativeSeparators(compiled_help_path);
+			
+			int result = assistant_process.execute(assistant_path, args);
+			if (result >= 0) // success
+			{
+				settings.setValue("registered_help_version", QVariant(QLatin1String(APP_VERSION)));
+			}
+		}
+		
+		QString help_collection_path = MapperResource::locate(MapperResource::MANUAL, QLatin1String("oomaphelpcollection.qhc"));
+		if (help_collection_path.isEmpty())
+		{
+			QMessageBox::warning(dialog_parent, QFile::tr("Error"), QFile::tr("Failed to locate the help files."));
 			return;
 		}
 		
@@ -255,25 +277,6 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 				msg_box.setDetailedText(details);
 			
 			msg_box.exec();
-		}
-		else if (QSettings().value("registered_help_version") != QVariant(QLatin1String(APP_VERSION)))
-		{
-			// Register the current version of the compressed help files.
-			const QString compiled_help_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("oomaphelp.qch")));
-			if (compiled_help_path.isEmpty())
-			{
-				QMessageBox::warning(dialog_parent, QFile::tr("Error"), QFile::tr("Failed to locate the help files."));
-				return;
-			}
-			else
-			{
-				QString command("register " + compiled_help_path + "\n");
-				qint64 result = assistant_process.write(command.toLatin1());
-				if (result >= 0) // success
-				{
-					QSettings().setValue("registered_help_version", QVariant(QLatin1String(APP_VERSION)));
-				}
-			}
 		}
 	}
 }
