@@ -1048,6 +1048,11 @@ void SymbolWidget::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol
 	render_widget->updateIcon(pos);
 }
 
+void SymbolWidget::symbolDeleted(int pos, Symbol* old_symbol)
+{
+	render_widget->update();
+}
+
 // ### SymbolToolTip ###
 
 SymbolToolTip* SymbolToolTip::tooltip = NULL;

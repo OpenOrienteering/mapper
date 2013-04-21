@@ -1187,6 +1187,7 @@ void MapEditorController::showSymbolWindow(bool show)
 		connect(window, SIGNAL(keyPressed(QKeyEvent*)), symbol_widget, SLOT(keyPressed(QKeyEvent*)));
 		connect(map, SIGNAL(symbolAdded(int,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*)));
 		connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*,Symbol*)));	// NOTE: adjust setMap() if changing this!
+		connect(map, SIGNAL(symbolDeleted(int,Symbol*)), symbol_widget, SLOT(symbolDeleted(int,Symbol*)));	// NOTE: adjust setMap() if changing this!
 		connect(map, SIGNAL(symbolIconChanged(int)), symbol_widget->getRenderWidget(), SLOT(updateIcon(int)));
 		symbol_dock_widget->setWidget(symbol_widget);
 		symbol_dock_widget->setObjectName("Symbol dock widget");
