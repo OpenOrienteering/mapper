@@ -2507,7 +2507,14 @@ void MapEditorController::setViewOptionsEnabled(bool enabled)
 EditorDockWidget::EditorDockWidget(const QString title, QAction* action, MapEditorController* editor, QWidget* parent): QDockWidget(title, parent), action(action), editor(editor)
 {
 	if (editor)
+	{
 		connect(this, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)), editor, SLOT(saveWindowState()));
+	}
+	
+	if (action)
+	{
+		connect(this, SIGNAL(visibilityChanged(bool)), action, SLOT(setChecked(bool)));
+	}
 }
 
 bool EditorDockWidget::event(QEvent* event)
@@ -2517,12 +2524,6 @@ bool EditorDockWidget::event(QEvent* event)
 	return QDockWidget::event(event);
 }
 
-void EditorDockWidget::closeEvent(QCloseEvent* event)
-{
-	if (action)
-		action->setChecked(false);
-	QDockWidget::closeEvent(event);
-}
 
 
 // ### MapEditorToolAction ###

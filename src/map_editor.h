@@ -511,7 +511,7 @@ public:
 	EditorDockWidget(const QString title, QAction* action,
 					 MapEditorController* editor, QWidget* parent = NULL);
 	virtual bool event(QEvent* event);
-	virtual void closeEvent(QCloseEvent* event);
+	
 private:
 	QAction* action;
 	MapEditorController* editor;
