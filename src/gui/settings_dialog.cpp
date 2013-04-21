@@ -377,17 +377,34 @@ void GeneralPage::apply()
 	const QString translation_file_key(settings.getSettingPath(Settings::General_TranslationFile));
 	const QString language_key(settings.getSettingPath(Settings::General_Language));
 	
-	QVariant lang = changes.contains(language_key) ? changes[language_key] : settings.getSetting(Settings::General_Language);
-	QVariant translation_file = changes.contains(translation_file_key) ? changes[translation_file_key] : settings.getSetting(Settings::General_TranslationFile);
-	if ( settings.getSetting(Settings::General_Language) != lang ||
-	     settings.getSetting(Settings::General_TranslationFile) != translation_file )
+	if (changes.contains(language_key) || changes.contains(translation_file_key))
 	{
-		TranslationUtil translation((QLocale::Language)lang.toInt(), translation_file.toString());
-		qApp->installTranslator(&translation.getQtTranslator());
-		qApp->installTranslator(&translation.getAppTranslator());
-		QMessageBox::information(window(), tr("Notice"), tr("The program must be restarted for the language change to take effect!"));
-		qApp->removeTranslator(&translation.getAppTranslator());
-		qApp->removeTranslator(&translation.getQtTranslator());
+		if (!changes.contains(translation_file_key))
+		{
+			// Set an empty file name when changing the language without setting a filename.
+			changes[translation_file_key] = QString();
+		}
+		
+		QVariant lang = changes.contains(language_key) ? changes[language_key] : settings.getSetting(Settings::General_Language);
+		QVariant translation_file = changes[translation_file_key];
+		if ( settings.getSetting(Settings::General_Language) != lang ||
+		     settings.getSetting(Settings::General_TranslationFile) != translation_file )
+		{
+			// Show an message box in the new language.
+			TranslationUtil translation((QLocale::Language)lang.toInt(), translation_file.toString());
+			qApp->installTranslator(&translation.getQtTranslator());
+			qApp->installTranslator(&translation.getAppTranslator());
+			if (lang.toInt() <= 1 || lang.toInt() == 31) // cf. QLocale::Language
+			{
+				QMessageBox::information(window(), "Notice", "The program must be restarted for the language change to take effect!");
+			}
+			else
+			{
+				QMessageBox::information(window(), tr("Notice"), tr("The program must be restarted for the language change to take effect!"));
+			}
+			qApp->removeTranslator(&translation.getAppTranslator());
+			qApp->removeTranslator(&translation.getQtTranslator());
+		}
 	}
 	SettingsPage::apply();
 }
