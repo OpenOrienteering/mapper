@@ -22,8 +22,8 @@ Qmake / Qt Creator based builds are not supported at the moment.
 This program uses the Qt library from http://qt-project.org which is released
 under the terms of the GNU General Public License, Version 3. 
 The program is known to work with Qt 4.8 and 5.0 and not to compile with 
-Qt 4.4 or earlier. Qt 5.0.1 is the recommended version. By default build
-settings, Qt 5.0.1 will be downloaded and built as part of the build process. 
+Qt 4.4 or earlier. Qt 5.0.2 is the recommended version. By default build
+settings, Qt 5.0.2 will be downloaded and built as part of the build process. 
 
 
 == Clipper Library ==
@@ -32,9 +32,9 @@ The program uses the clipper code library from
 http://www.angusj.com/delphi/clipper.php /
 http://sourceforge.net/projects/polyclipping/
 which is released under the terms of the Boost Software License, Version 1.0.
-The program is known to work with release 4.8.4 through 5.0.3. By default build
-settings, clipper 5.0.3 will be downloaded and built as part of the build
-process. 
+The program is known to work with release 5.1.4 and not compile with releases
+5.0.3 or earlier. By default build settings, clipper 5.1.4 will be downloaded
+and built as part of the build process. 
 
 
 == PROJ.4 Cartographic Projections Library ==
@@ -80,7 +80,8 @@ installer can be generated.
 
 Open a command prompt. Make sure that cmake, gcc from MinGW-builds gcc 4.7.2,
 and optionally makensis can be found from the PATH. The MSYS tools must *not*
-be found from the PATH. We will specify the path to sh.exe explicitly later.
+be found from the PATH. We will specify the path to sh.exe explicitly in the
+next step.
 
 Now create a build directory, e.g. as subdirectory build in the source
 directory, and change to that directory. In the build directory, configure
