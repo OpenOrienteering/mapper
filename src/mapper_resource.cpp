@@ -80,7 +80,7 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			
 		case MANUAL:
 			// TODO: Support localized manual
-			resource_path = "/help/oomaphelpcollection.qhc";
+			resource_path = "/help";
 			break;
 			
 		case PROJ_DATA:
