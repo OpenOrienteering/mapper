@@ -618,7 +618,7 @@
     <message>
         <location filename="../src/tool_cut_hole.cpp" line="212"/>
         <source>&lt;b&gt;Click or drag&lt;/b&gt;: Start drawing the hole. </source>
-        <translation>&lt;b&gt;Clic ou Glisser&lt;/b&gt;: Dessiner le trou.</translation>
+        <translation>&lt;b&gt;Clic ou Glisser&lt;/b&gt;: Dessiner le trou. </translation>
     </message>
 </context>
 <context>
@@ -649,7 +649,7 @@
     <message>
         <location filename="../src/tool_cut.cpp" line="679"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt; sur une ligne pour la séparer en deux. &lt;b&gt;Glisser&lt;/b&gt; le long d&apos;une ligne pour supprimer la partie de cette ligne. &lt;b&gt; Clic ou Glisser&lt;/b&gt; à la limite d&apos;un objet pour dessiner une ligne de coupe.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt; sur une ligne pour la séparer en deux. &lt;b&gt;Glisser&lt;/b&gt; le long d&apos;une ligne pour supprimer la partie de cette ligne. &lt;b&gt; Clic ou Glisser&lt;/b&gt; à la limite d&apos;un objet pour dessiner une ligne de coupe. </translation>
     </message>
     <message>
         <location filename="../src/tool_cut.cpp" line="687"/>
@@ -662,18 +662,18 @@
     <message>
         <location filename="../src/tool_cutout.cpp" line="128"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the whole map. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Rogner toute la carte.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Rogner toute la carte. </translation>
     </message>
     <message>
         <location filename="../src/tool_cutout.cpp" line="129"/>
         <location filename="../src/tool_cutout.cpp" line="133"/>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
-        <translation>&lt;b&gt;%1+Clic ou Glisser&lt;/b&gt;: Sélectionner les objets à rogner.</translation>
+        <translation>&lt;b&gt;%1+Clic ou Glisser&lt;/b&gt;: Sélectionner les objets à rogner. </translation>
     </message>
     <message>
         <location filename="../src/tool_cutout.cpp" line="134"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the selected objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Rogner les objets sélectionnés.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Rogner les objets sélectionnés. </translation>
     </message>
 </context>
 <context>
@@ -714,22 +714,22 @@
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="263"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a circle or ellipse. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Dessiner un cercle ou une ellipse.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Dessiner un cercle ou une ellipse. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="264"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a circle. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt;: Dessiner un cercle.</translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt;: Dessiner un cercle. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="268"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Terminer le cercle.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Terminer le cercle. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="269"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw an ellipse. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt;: Dessiner une ellipse.</translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt;: Dessiner une ellipse. </translation>
     </message>
 </context>
 <context>
@@ -738,12 +738,12 @@
         <location filename="../src/tool_draw_path.cpp" line="928"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="609"/>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation>&lt;b&gt;Points symboles activés.&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Points symboles activés.&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="934"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation>&lt;b&gt;%1+Clic&lt;/b&gt;: Accrocher ou joindre à d&apos;autres objets.</translation>
+        <translation>&lt;b&gt;%1+Clic&lt;/b&gt;: Accrocher ou joindre à d&apos;autres objets. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="939"/>
@@ -762,7 +762,7 @@
         <location filename="../src/tool_draw_path.cpp" line="958"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="634"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Angles fixes.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Angles fixes. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="966"/>
@@ -776,12 +776,12 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="923"/>
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
-        <translation>&lt;b&gt;Longueur:&lt;/b&gt; %1 m</translation>
+        <translation>&lt;b&gt;Longueur:&lt;/b&gt; %1 m </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="944"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Dessiner une ligne droite. &lt;b&gt;Glisser&lt;/b&gt;: Dessiner une ligne courbe.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Dessiner une ligne droite. &lt;b&gt;Glisser&lt;/b&gt;: Dessiner une ligne courbe. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="953"/>
@@ -817,12 +817,12 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="625"/>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation>&lt;b&gt;Clic ou Glisser&lt;/b&gt;: Dessiner un rectangle.</translation>
+        <translation>&lt;b&gt;Clic ou Glisser&lt;/b&gt;: Dessiner un rectangle. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="638"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to previous lines. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Accrocher aux lignes précédentes.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Accrocher aux lignes précédentes. </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="649"/>
@@ -862,7 +862,7 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="573"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Keep opposite handle positions. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Conserver la position de la poignée opposée.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Conserver la position de la poignée opposée. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="594"/>
@@ -877,7 +877,7 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="601"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
-        <translation>&lt;b&gt;%1+Clic&lt;/b&gt; sur un point pour choisir entre point normal et point symbole.</translation>
+        <translation>&lt;b&gt;%1+Clic&lt;/b&gt; sur un point pour choisir entre point normal et point symbole. </translation>
     </message>
 </context>
 <context>
@@ -892,25 +892,25 @@
         <location filename="../src/tool_edit_point.cpp" line="564"/>
         <location filename="../src/tool_edit_line.cpp" line="401"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Angles fixes.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Angles fixes. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="577"/>
         <location filename="../src/tool_edit_line.cpp" line="405"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to existing objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Accrocher aux objets existants.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Accrocher aux objets existants. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="583"/>
         <location filename="../src/tool_edit_line.cpp" line="410"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Sélectionner un seul objet. &lt;b&gt;Glisser&lt;/b&gt;: Sélectionner plusieurs objets. &lt;b&gt;%1+Clic&lt;/b&gt;: Faire une sélection multiple.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Sélectionner un seul objet. &lt;b&gt;Glisser&lt;/b&gt;: Sélectionner plusieurs objets. &lt;b&gt;%1+Clic&lt;/b&gt;: Faire une sélection multiple. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="586"/>
         <location filename="../src/tool_edit_line.cpp" line="413"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Delete selected objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Supprimer les objets sélectionnés.</translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Supprimer les objets sélectionnés. </translation>
     </message>
 </context>
 <context>
@@ -4246,7 +4246,7 @@ Zoomez en utilisant la molette de votre souris.</translation>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="161"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt;: Définir la direction des surfaces avec motifs ou des objets ponctuels.</translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt;: Définir la direction des surfaces avec motifs ou des objets ponctuels. </translation>
     </message>
 </context>
 <context>
@@ -4368,7 +4368,7 @@ Zoomez en utilisant la molette de votre souris.</translation>
         <location filename="../src/tool_scale.cpp" line="189"/>
         <location filename="../src/tool_scale.cpp" line="191"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the scaling center. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Placer le centre de mise à l&apos;échelle.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Placer le centre de mise à l&apos;échelle. </translation>
     </message>
     <message>
         <location filename="../src/tool_scale.cpp" line="192"/>
@@ -4785,12 +4785,12 @@ traverser les jattes de kiwis
     <message>
         <location filename="../src/template_adjust.cpp" line="566"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the template position of the pass point. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Définir la position du point de calage sur le modèle.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Définir la position du point de calage sur le modèle. </translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="581"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the map position of the pass point. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Définir la position du point de calage sur la carte.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Définir la position du point de calage sur la carte. </translation>
     </message>
 </context>
 <context>
@@ -4798,7 +4798,7 @@ traverser les jattes de kiwis
     <message>
         <location filename="../src/template_adjust.cpp" line="782"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Delete pass points. </source>
-        <translation>&lt;b&gt;Clic&lt;/b&gt;: Effacer les points de calage.</translation>
+        <translation>&lt;b&gt;Clic&lt;/b&gt;: Effacer les points de calage. </translation>
     </message>
 </context>
 <context>
@@ -4806,7 +4806,7 @@ traverser les jattes de kiwis
     <message>
         <location filename="../src/template_adjust.cpp" line="663"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move pass points. </source>
-        <translation>&lt;b&gt;Glisser&lt;/b&gt; Déplacer les points de calage.</translation>
+        <translation>&lt;b&gt;Glisser&lt;/b&gt; Déplacer les points de calage. </translation>
     </message>
 </context>
 <context>
