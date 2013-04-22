@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QtHelpProject version="1.0">
+    <namespace>@Mapper_HELP_NAMESPACE@</namespace>
+    <virtualFolder>oohelpdoc</virtualFolder>
+    <customFilter name="OpenOrienteering">
+        <filterAttribute>Mapper</filterAttribute>
+        <filterAttribute>@Mapper_VERSION_DISPLAY@</filterAttribute>
+    </customFilter>
+    <filterSection>
+        <filterAttribute>Mapper</filterAttribute>
+        <filterAttribute>@Mapper_VERSION_DISPLAY@</filterAttribute>
+        <toc>
+            <section title="OpenOrienteering Mapper @Mapper_VERSION_MAJOR@.@Mapper_VERSION_MINOR@ Help" ref="help/html_en/index.html">
+                <section title="Mapper manual index" ref="help/html_en/index_manual.html"/>
+                <section title="FAQ" ref="help/html_en/faq.html"/>
+                
+                <section title="Starting a new map" ref="help/html_en/new_map.html"/>
+                <section title="Map screen" ref="help/html_en/main_window.html"/>
+                <section title="Templates" ref="help/html_en/templates.html"/>
+                <section title="Template position adjustment" ref="help/html_en/template_adjust.html"/>
+                <section title="Colors" ref="help/html_en/color_dock_widget.html"/>
+                <section title="Symbols" ref="help/html_en/symbol_dock_widget.html"/>
+                <section title="Symbol editor" ref="help/html_en/symbol_dock_widget.html#editor"/>
+                <section title="Symbol replacement dialog" ref="help/html_en/symbol_replace_dialog.html"/>
+                <section title="Toolbars" ref="help/html_en/toolbars.html"/>
+                
+                <section title="File menu" ref="help/html_en/file_menu.html"/>
+                <section title="Edit menu" ref="help/html_en/edit_menu.html"/>
+                <section title="View menu" ref="help/html_en/view_menu.html"/>
+                <section title="Tools menu" ref="help/html_en/tools_menu.html"/>
+                <section title="Map menu" ref="help/html_en/map_menu.html"/>
+                <section title="Symbols menu" ref="help/html_en/symbols_menu.html"/>
+                <section title="Templates menu" ref="help/html_en/templates_menu.html"/>
+                
+                <section title="Georeferencing" ref="help/html_en/georeferencing.html"/>
+                <section title="Grid" ref="help/html_en/grid.html"/>
+                <section title="Program settings" ref="help/html_en/settings.html"/>
+            </section>
+        </toc>
+        <keywords>
+            <keyword name="New map" ref="help/html_en/new_map.html"/>
+            <keyword name="Map screen" ref="help/html_en/main_window.html"/>
+            <keyword name="Symbols" ref="help/html_en/symbol_dock_widget.html"/>
+            <keyword name="Colors" ref="help/html_en/color_dock_widget.html"/>
+            <keyword name="Templates" ref="help/html_en/templates.html"/>
+            <keyword name="Georeferencing" ref="help/html_en/georeferencing.html"/>
+        </keywords>
+        <files>
+            <file>help/html_en/oomap.css</file>
+            <file>help/html_en/*.html</file>
+            <file>help/html_en/images/*</file>
+            <file>images/*</file>
+        </files>
+    </filterSection>
+</QtHelpProject>

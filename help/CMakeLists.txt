@@ -42,12 +42,13 @@ if(QT_QCOLLECTIONGENERATOR_EXECUTABLE MATCHES NOTFOUND)
 	message(FATAL_ERROR "qcollectiongenerator executable not found.")
 endif()
 
-# The manual must be compiled from the top-level directory,
-# since qcollectiongenerator is not very flexible in this regard
- 
-set(Mapper_HELP_COLLECTION oomaphelpcollection.qhc)
-set(Mapper_COMPRESSED_HELP oomaphelp.qch)
-configure_file(oomaphelpcollection.qhcp.in oomaphelpcollection.qhcp)
+set(Mapper_HELP_NAMESPACE "openorienteering.mapper-${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}.help"
+  CACHE INTERNAL "The namespace where the current version's help will be located.")
+
+set(Mapper_HELP_COLLECTION "Mapper.qhc")
+set(Mapper_COMPRESSED_HELP "Mapper ${Mapper_VERSION_DISPLAY}.qch")
+configure_file(Mapper.qhcp.in Mapper.qhcp)
+configure_file(Mapper.qhp.in Mapper.qhp)
 file(GLOB Mapper_HELP_EN
   ${PROJECT_SOURCE_DIR}/images
   ${PROJECT_SOURCE_DIR}/help/html_en 
@@ -55,14 +56,20 @@ file(GLOB Mapper_HELP_EN
 )
 add_custom_command( 
 	OUTPUT    ${Mapper_HELP_COLLECTION} ${Mapper_COMPRESSED_HELP}
- 	COMMAND   ${QT_QCOLLECTIONGENERATOR_EXECUTABLE}
-	ARGS      oomaphelpcollection.qhcp
+	COMMAND   ${CMAKE_COMMAND}
+	ARGS      -E copy_directory ${PROJECT_SOURCE_DIR}/help/html_en
+	            ${CMAKE_CURRENT_BINARY_DIR}/help/html_en
+	COMMAND   ${CMAKE_COMMAND}
+	ARGS      -E copy_directory ${PROJECT_SOURCE_DIR}/images
+	            ${CMAKE_CURRENT_BINARY_DIR}/images
+	COMMAND   ${QT_QCOLLECTIONGENERATOR_EXECUTABLE}
+	ARGS      Mapper.qhcp
 	          -o ${Mapper_HELP_COLLECTION}
-	MAIN_DEPENDENCY ${PROJECT_SOURCE_DIR}/oomaphelp.qhp 
-	DEPENDS   ${CMAKE_CURRENT_BINARY_DIR}/oomaphelpcollection.qhcp 
+	MAIN_DEPENDENCY ${CMAKE_CURRENT_BINARY_DIR}/Mapper.qhp 
+	DEPENDS   ${CMAKE_CURRENT_BINARY_DIR}/Mapper.qhcp 
 	          ${Mapper_HELP_EN}
 	WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-	COMMENT   "Compile help collection file"
+	COMMENT   "Compiling help"
 )
 add_custom_target(Mapper_manual ALL DEPENDS ${Mapper_HELP_COLLECTION})
 
