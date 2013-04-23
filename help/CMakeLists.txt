@@ -45,7 +45,7 @@ endif()
 set(Mapper_HELP_NAMESPACE "openorienteering.mapper-${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}.help"
   CACHE INTERNAL "The namespace where the current version's help will be located.")
 
-set(Mapper_HELP_COLLECTION "Mapper.qhc")
+set(Mapper_HELP_COLLECTION "Mapper ${Mapper_VERSION_DISPLAY}.qhc")
 set(Mapper_COMPRESSED_HELP "Mapper ${Mapper_VERSION_DISPLAY}.qch")
 configure_file(Mapper.qhcp.in Mapper.qhcp)
 configure_file(Mapper.qhp.in Mapper.qhp)

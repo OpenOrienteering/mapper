@@ -2,7 +2,7 @@
 <QtHelpProject version="1.0">
     <namespace>@Mapper_HELP_NAMESPACE@</namespace>
     <virtualFolder>oohelpdoc</virtualFolder>
-    <customFilter name="OpenOrienteering">
+    <customFilter name="Mapper @Mapper_VERSION_DISPLAY@">
         <filterAttribute>Mapper</filterAttribute>
         <filterAttribute>@Mapper_VERSION_DISPLAY@</filterAttribute>
     </customFilter>

@@ -226,7 +226,7 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 			return;
 		}
 		
-		const QString help_collection_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("Mapper.qhc")));
+		const QString help_collection_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("Mapper ")+APP_VERSION+".qhc"));
 		const QString compiled_help_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("Mapper ")+APP_VERSION+".qch"));
 		if (help_collection_path.isEmpty() || compiled_help_path.isEmpty())
 		{
