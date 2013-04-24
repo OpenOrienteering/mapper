@@ -318,9 +318,9 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 						else
 							painter->setClipPath(initial_clip, Qt::NoClip);
 					}
-#ifdef Q_OS_WIN
-					// Workaround for Qt::IntersectClip problem with Windows printers
-					// Cf. [tickets:196]
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
+					// Workaround for Qt::IntersectClip problem with Windows and Mac printers
+					// Cf. [tickets:#196]
 					else if (!on_screen && new_states.clip_path)
 					{
 						painter->setClipPath(initial_clip.intersected(*new_states.clip_path), Qt::ReplaceClip);
@@ -592,9 +592,9 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation
 						else
 							painter->setClipPath(initial_clip, Qt::NoClip);
 					}
-#ifdef Q_OS_WIN
-					// Workaround for Qt::IntersectClip problem with Windows printers
-					// Cf. [tickets:196]
+#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
+					// Workaround for Qt::IntersectClip problem with Windows and Mac printers
+					// Cf. [tickets:#196]
 					else if (!on_screen && new_states.clip_path)
 					{
 						painter->setClipPath(initial_clip.intersected(*new_states.clip_path), Qt::ReplaceClip);
