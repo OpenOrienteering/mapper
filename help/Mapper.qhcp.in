@@ -3,12 +3,12 @@
 	<assistant>
 		<applicationIcon>@PROJECT_SOURCE_DIR@/images/mapper-help.png</applicationIcon>
 		<title>OpenOrienteering Mapper Help</title>
-		<homePage>qthelp://openorienteering.mapper.help/oohelpdoc/help/html_en/index.html</homePage>
+		<homePage>qthelp://@Mapper_HELP_NAMESPACE@/oohelpdoc/help/html_en/index.html</homePage>
 	</assistant>
 	<docFiles>
 		<generate>
 			<file>
-				<input>@PROJECT_SOURCE_DIR@/oomaphelp.qhp</input>
+				<input>Mapper.qhp</input>
 				<output>@Mapper_COMPRESSED_HELP@</output>
 			</file>
 		</generate>

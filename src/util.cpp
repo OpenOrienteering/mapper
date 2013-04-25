@@ -20,12 +20,15 @@
 
 #include "util.h"
 
-#include <QIODevice>
-#include <QProcess>
-#include <QMessageBox>
+#include <QDebug>
 #include <QDir>
+#include <QIODevice>
+#include <QMessageBox>
+#include <QProcess>
+#include <QSettings>
 
 #include "mapper_resource.h"
+#include <mapper_config.h>
 
 DoubleValidator::DoubleValidator(double bottom, double top, QObject* parent, int decimals) : QDoubleValidator(bottom, top, decimals, parent)
 {
@@ -216,8 +219,9 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 	}
 	else
 	{
-		QString manual_path = MapperResource::locate(MapperResource::MANUAL);
-		if (manual_path.isEmpty())
+		const QString help_collection_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("Mapper ")+APP_VERSION+".qhc"));
+		const QString compiled_help_path(MapperResource::locate(MapperResource::MANUAL, QLatin1String("Mapper ")+APP_VERSION+".qch"));
+		if (help_collection_path.isEmpty() || compiled_help_path.isEmpty())
 		{
 			QMessageBox::warning(dialog_parent, QFile::tr("Error"), QFile::tr("Failed to locate the help files."));
 			return;
@@ -233,7 +237,7 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 		// Try to start the Qt Assistant process
 		QStringList args;
 		args << QLatin1String("-collectionFile")
-			 << QDir::toNativeSeparators(manual_path)
+			 << QDir::toNativeSeparators(help_collection_path)
 			 << QLatin1String("-showUrl")
 			 << makeHelpUrl(filename, fragment)
 			 << QLatin1String("-enableRemoteControl");
@@ -246,42 +250,20 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 			QMessageBox msg_box;
 			msg_box.setIcon(QMessageBox::Warning);
 			msg_box.setWindowTitle(QFile::tr("Error"));
+			msg_box.setText(QFile::tr("Failed to launch the help browser (\"Qt Assistant\")."));
+			msg_box.setStandardButtons(QMessageBox::Ok);
+			QString details = assistant_process.readAllStandardError();
+			if (! details.isEmpty())
+				msg_box.setDetailedText(details);
 			
-			QString assistant_install_cmd;
-#ifdef MAPPER_DEBIAN_PACKAGE_NAME
-			QDir usr_bin("/usr/bin");
-			if (!usr_bin.exists("assistant") && usr_bin.exists("software-center"))
-				assistant_install_cmd = "/usr/bin/software-center qt4-dev-tools";
-#endif
-			if (!assistant_install_cmd.isEmpty())
-			{
-				msg_box.setText(QFile::tr("The help browser (\"Qt Assistant\") is not installed.") + "\n" +
-				                QFile::tr("Do you want to install it now?"));
-				msg_box.setStandardButtons(QMessageBox::Cancel);
-				msg_box.addButton(QFile::tr("Install..."), QMessageBox::ActionRole);
-			}
-			else
-			{
-				msg_box.setText(QFile::tr("Failed to launch the help browser (\"Qt Assistant\")."));
-				msg_box.setStandardButtons(QMessageBox::Ok);
-				QString details = assistant_process.readAllStandardError();
-				if (! details.isEmpty())
-					msg_box.setDetailedText(details);
-			}
-			
-			int result = msg_box.exec();
-			if ( result != QMessageBox::Ok && result != QMessageBox::Cancel &&
-			     !assistant_install_cmd.isEmpty() )
-			{
-				QProcess::startDetached(assistant_install_cmd);
-			}
+			msg_box.exec();
 		}
 	}
 }
 
 QString makeHelpUrl(QString filename, QString fragment)
 {
-	return "qthelp://openorienteering.mapper.help/oohelpdoc/help/html_en/" + filename + (fragment.isEmpty() ? "" : ("#" + fragment));
+	return QLatin1String("qthelp://") + MAPPER_HELP_NAMESPACE + "/oohelpdoc/help/html_en/" + filename + (fragment.isEmpty() ? "" : ("#" + fragment));
 }
 	
 }
