@@ -333,7 +333,7 @@ void GeoreferencingDialog::toolDeleted()
 
 void GeoreferencingDialog::showHelp()
 {
-	Util::showHelp(controller->getWindow(), "georeferencing.html");
+	Util::showHelp(parentWidget(), "georeferencing.html");
 }
 
 void GeoreferencingDialog::reset()
