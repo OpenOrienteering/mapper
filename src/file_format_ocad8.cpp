@@ -29,6 +29,7 @@
 
 #include "core/map_color.h"
 #include "file_import_export.h"
+#include "georeferencing.h"
 #include "map.h"
 #include "map_part.h"
 #include "object.h"
@@ -118,11 +119,17 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
     //         << ((file->header->ftype == 2) ? "normal" : "other");
     //qDebug() << "map scale is" << file->setup->scale;
 
-    map->setScaleDenominator(file->setup->scale);
-
+	// Scale and georeferencing parameters
+	Georeferencing georef;
+	georef.setScaleDenominator(file->setup->scale);
+	georef.setProjectedRefPoint(QPointF(file->setup->offsetx, file->setup->offsety));
+	if (qAbs(file->setup->angle) >= 0.01) /* degrees */
+	{
+		georef.setGrivation(file->setup->angle);
+	}
+	map->setGeoreferencing(georef);
+	
 	map->setMapNotes(convertCString((const char*)file->buffer + file->header->infopos, file->header->infosize, false));
-
-    // TODO: GPS projection parameters
 
     // TODO: print parameters
 
@@ -1400,9 +1407,14 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 	}
 	else
 		setup->zoom = 1;
-	setup->scale = map->getScaleDenominator();
 	
-	// TODO: GPS projection parameters
+	// Scale and georeferencing parameters
+	const Georeferencing& georef = map->getGeoreferencing();
+	setup->scale = georef.getScaleDenominator();
+	const QPointF offset(georef.getProjectedRefPoint());
+	setup->offsetx = offset.x();
+	setup->offsety = offset.y();
+	setup->angle = georef.getGrivation();
 	
 	// TODO: print parameters
 	

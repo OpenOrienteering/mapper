@@ -287,8 +287,8 @@ void Georeferencing::setGrivation(double value)
 {
 	declination += value - grivation;
 	grivation = value;
-	if (state != Normal)
-		state = Normal;
+	if (state == ScaleOnly)
+		state = Local;
 	updateTransformation();
 }
 
