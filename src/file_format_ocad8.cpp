@@ -129,6 +129,10 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
 	// Load the separations to a temporary stack
 	std::vector< MapColor* > separations;
 	int num_separations = ocad_separation_count(file);
+#if 1
+	addWarning(tr("%n color separation(s) were skipped, reason: Import disabled.", "", num_separations));
+	num_separations = 0;
+#endif
 	if (num_separations < 0)
 	{
 		addWarning(tr("Could not load the spot color definitions, error: %1").arg(num_separations));
