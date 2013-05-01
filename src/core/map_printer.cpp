@@ -716,7 +716,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 	}
 	
 	if (options.show_grid)
-		map.drawGrid(painter, print_area); // Maybe replace by page_region_used?
+		map.drawGrid(painter, print_area, false); // Maybe replace by page_region_used?
 	
 	if (options.show_templates)
 		map.drawTemplates(painter, page_region_used, map.getFirstFrontTemplate(), map.getNumTemplates() - 1, view, false);

@@ -123,7 +123,7 @@ void MapGrid::load(QXmlStreamReader& xml)
 	xml.skipCurrentElement();
 }
 
-void MapGrid::draw(QPainter* painter, QRectF bounding_box, Map* map)
+void MapGrid::draw(QPainter* painter, QRectF bounding_box, Map* map, bool on_screen)
 {
 	double final_horz_spacing, final_vert_spacing;
 	double final_horz_offset, final_vert_offset;
@@ -131,7 +131,17 @@ void MapGrid::draw(QPainter* painter, QRectF bounding_box, Map* map)
 	calculateFinalParameters(final_horz_spacing, final_vert_spacing, final_horz_offset, final_vert_offset, final_rotation, map);
 	
 	QPen pen(color);
-	pen.setCosmetic(true);
+	if (on_screen)
+	{
+		// zero-width cosmetic pen (effectively one pixel)
+		pen.setWidth(0);
+		pen.setCosmetic(true);
+	}
+	else
+	{
+		// 0.1 mm wide non-cosmetic pen
+		pen.setWidthF(0.1f);
+	}
 	painter->setPen(pen);
 	painter->setBrush(Qt::NoBrush);
 	painter->setOpacity(qAlpha(color) / 255.0);

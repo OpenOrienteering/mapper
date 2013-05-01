@@ -93,8 +93,10 @@ public:
 	 * @param bounding_box Bounding box of the area to draw the grid for, in
 	 *     map coordinates.
 	 * @param map Map to draw the grid for.
+	 * @param on_screen If true, uses a cosmetic pen (one pixel wide),
+	 *                  otherwise uses a 0.1 mm wide pen.
 	 */
-	void draw(QPainter* painter, QRectF bounding_box, Map* map);
+	void draw(QPainter* painter, QRectF bounding_box, Map* map, bool on_screen);
 	
 	/**
 	 * Calculates the "final" parameters with the following properties:

@@ -213,12 +213,14 @@ public:
 		const MapColor* spot_color, bool use_color = false);
 	
 	/**
-	 * Draws the map grid
+	 * Draws the map grid.
 	 * 
 	 * @param painter The QPainter used for drawing.
 	 * @param bounding_box Bounding box of area to draw, given in map coordinates.
+	 * @param on_screen If true, uses a cosmetic pen (one pixel wide),
+	 *                  otherwise uses a 0.1 mm wide pen.
 	 */
-	void drawGrid(QPainter* painter, QRectF bounding_box);
+	void drawGrid(QPainter* painter, QRectF bounding_box, bool on_screen);
 	
 	/**
 	 * Draws the templates with indices first_template until last_template which
