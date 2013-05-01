@@ -71,7 +71,7 @@ public:
 	void save(QXmlStreamWriter& xml);
 	void load(QXmlStreamReader& xml);
 	
-	void draw(QPainter* painter, QRectF bounding_box, Map* map);
+	void draw(QPainter* painter, QRectF bounding_box, Map* map, bool on_screen);
 	
 	/// Calculates the "final" parameters with the following properties:
 	/// - spacings and offsets are in millimeters on the map
