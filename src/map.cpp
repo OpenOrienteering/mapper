@@ -175,13 +175,17 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 					merge_list_item->dest_color = colors[k];
 					merge_list_item->dest_index = k;
 					out_pointermap[src_color] = colors[k];
-					break;
+					// Prefer a matching color at the same priority,
+					// so just abort early if priority matches
+					if (merge_list_item->dest_color->getPriority() == merge_list_item->src_color->getPriority())
+						break;
 				}
 			}
 			++merge_list_item;
 		}
 		Q_ASSERT(merge_list_item == merge_list.end());
 		
+		size_t iteration_number = 1;
 		while (true)
 		{
 			// Evaluate bounds and conflicting order of colors
@@ -264,8 +268,12 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 				}
 			}
 			
-			if (selected_item == merge_list.end())
-				break; // No conflicts.
+			// Abort if no conflicts or maximum iteration count reached.
+			// The latter condition is just to prevent endless loops in
+			// case of bugs and should not occur theoretically.
+			if (selected_item == merge_list.end() ||
+				iteration_number > merge_list.size())
+				break;
 			
 			// Solve selected conflict item
 			MapColor* new_color = new MapColor(*selected_item->dest_color);
@@ -287,6 +295,8 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 					++merge_list_item->dest_index;
 			}
 			selected_item->dest_index = insertion_index;
+			
+			++iteration_number;
 		}
 		
 		// Some missing colors may be spot color compositions which can be 
