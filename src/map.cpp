@@ -185,10 +185,11 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 		while (true)
 		{
 			// Evaluate bounds and conflicting order of colors
-			int max_conflicts = 0;
-			MapColorSetMergeList::iterator selected_item = merge_list.begin();
+			int max_conflict_reduction = 0;
+			MapColorSetMergeList::iterator selected_item = merge_list.end();
 			for (merge_list_item = merge_list.begin(); merge_list_item != merge_list.end(); ++merge_list_item)
 			{
+				// Check all lower colors for a higher dest_index
 				std::size_t& lower_bound(merge_list_item->lower_bound);
 				lower_bound = merge_list_item->dest_color ? merge_list_item->dest_index : 0;
 				MapColorSetMergeList::iterator it = merge_list.begin();
@@ -207,6 +208,7 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 					}
 				}
 				
+				// Check all higher colors for a lower dest_index
 				std::size_t& upper_bound(merge_list_item->upper_bound);
 				upper_bound = merge_list_item->dest_color ? merge_list_item->dest_index : colors.size();
 				for (++it; it != merge_list.end(); ++it)
@@ -223,22 +225,46 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 						}
 					}
 				}
+				
 				if (merge_list_item->filter)
 				{
-					if (merge_list_item->lower_errors == 0 && merge_list_item->upper_errors > max_conflicts)
+					if (merge_list_item->lower_errors == 0 && merge_list_item->upper_errors > max_conflict_reduction)
 					{
-						selected_item = merge_list_item;
-						max_conflicts = merge_list_item->upper_errors;
+						int conflict_reduction = merge_list_item->upper_errors;
+						// Check new conflicts with insertion index: selected_item->upper_bound
+						for (it = merge_list.begin(); it != merge_list_item; ++it)
+						{
+							if (it->dest_color && selected_item->upper_bound <= it->dest_index)
+								--conflict_reduction;
+						}
+						// Also allow = here to make two-step resolves work
+						if (conflict_reduction >= max_conflict_reduction)
+						{
+							selected_item = merge_list_item;
+							max_conflict_reduction = conflict_reduction;
+						}
 					}
-					else if (merge_list_item->upper_errors == 0 && merge_list_item->lower_errors > max_conflicts)
+					else if (merge_list_item->upper_errors == 0 && merge_list_item->lower_errors > max_conflict_reduction)
 					{
-						selected_item = merge_list_item;
-						max_conflicts = merge_list_item->lower_errors;
+						int conflict_reduction = merge_list_item->lower_errors;
+						// Check new conflicts with insertion index: (selected_item->lower_bound+1)
+						it = merge_list_item;
+						for (++it; it != merge_list.end(); ++it)
+						{
+							if (it->dest_color && (selected_item->lower_bound+1) >= it->dest_index)
+								--conflict_reduction;
+						}
+						// Also allow = here to make two-step resolves work
+						if (conflict_reduction >= max_conflict_reduction)
+						{
+							selected_item = merge_list_item;
+							max_conflict_reduction = conflict_reduction;
+						}
 					}
 				}
 			}
 			
-			if (max_conflicts == 0)
+			if (selected_item == merge_list.end())
 				break; // No conflicts.
 			
 			// Solve selected conflict item
