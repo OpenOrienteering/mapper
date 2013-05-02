@@ -404,6 +404,14 @@ void GeneralPage::apply()
 			}
 			qApp->removeTranslator(&translation.getAppTranslator());
 			qApp->removeTranslator(&translation.getQtTranslator());
+
+#if defined(Q_OS_MAC)
+			// The native [file] dialogs will use the first element of the
+			// AppleLanguages array in the application's .plist file -
+			// and this file is also the one used by QSettings.
+			const QString mapper_language(translation.getLocale().name().left(2));
+			changes["AppleLanguages"] = ( QStringList() << mapper_language );
+#endif
 		}
 	}
 	SettingsPage::apply();
