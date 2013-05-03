@@ -74,6 +74,9 @@ public slots:
 	/** Repaints the icon with the given index. */
 	void updateIcon(int i);
 	
+	/** Updates the range of the scroll bar, if there is one. */
+	void updateScrollRange();
+	
 protected:
 	// Used to update actions in the context menu
 	void updateContextMenuState();
@@ -141,7 +144,6 @@ protected:
 	void getRowInfo(int width, int height, int& icons_per_row, int& num_rows);
 	bool getDropPosition(QPoint pos, int& row, int& pos_in_row);
 	QRect getDragIndicatorRect(int row, int pos_in_row);
-	void updateScrollRange();
 	
 	template<typename T> void sort(T compare);
 	
@@ -185,14 +187,15 @@ public:
 	/** Selects the symbol exclusively, deselecting all other symbols. */
 	void selectSingleSymbol(Symbol *symbol);
 	
-	/** Adjusts the widget contents to its size. */
-	void adjustContents();
 	virtual QSize sizeHint() const;
 	
 	inline void emitSelectedSymbolsChanged() {emit selectedSymbolsChanged();}
 	inline SymbolRenderWidget* getRenderWidget() const {return render_widget;}
 	
 public slots:
+	/** Adjusts the widget contents to its size. */
+	void adjustContents();
+	
 	virtual void keyPressed(QKeyEvent* event);
 	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol = NULL);
 	void symbolDeleted(int pos, Symbol* old_symbol);
