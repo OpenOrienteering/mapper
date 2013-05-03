@@ -687,17 +687,21 @@ void SymbolRenderWidget::editSymbol()
 }
 void SymbolRenderWidget::scaleSymbol()
 {
-	assert(current_symbol_index >= 0);
-	Symbol* symbol = map->getSymbol(current_symbol_index);
+	assert(!selected_symbols.empty());
 	
 	bool ok;
-	double percent = QInputDialog::getDouble(this, tr("Scale symbol %1").arg(symbol->getName()), tr("Scale to percentage:"), 100, 0, 999999, 6, &ok);
+	double percent = QInputDialog::getDouble(this, tr("Scale symbol(s)"), tr("Scale to percentage:"), 100, 0, 999999, 6, &ok);
 	if (!ok || percent == 100)
 		return;
 	
-	symbol->scale(percent / 100.0);
-	updateIcon(current_symbol_index);
-	map->changeSymbolForAllObjects(symbol, symbol);	// update the objects
+	for (std::set<int>::const_iterator it = selected_symbols.begin(); it != selected_symbols.end(); ++it)
+	{
+		Symbol* symbol = map->getSymbol(*it);
+		
+		symbol->scale(percent / 100.0);
+		updateIcon(current_symbol_index);
+		map->changeSymbolForAllObjects(symbol, symbol);	// update the objects
+	}
 	
 	map->setSymbolsDirty();
 }
@@ -902,7 +906,7 @@ void SymbolRenderWidget::updateContextMenuState()
 	map->getSelectionToSymbolCompatibility(single_symbol, single_symbol_compatible, single_symbol_different);
 	
 	edit_action->setEnabled(single_selection);
-	scale_action->setEnabled(single_selection);
+	scale_action->setEnabled(have_selection);
 	copy_action->setEnabled(have_selection);
 	paste_action->setEnabled(QApplication::clipboard()->mimeData()->hasFormat("openorienteering/symbols"));
 	switch_symbol_action->setEnabled(single_symbol_compatible && single_symbol_different);
