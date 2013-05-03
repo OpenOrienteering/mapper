@@ -156,6 +156,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	context_menu->addMenu(sort_menu);
 
 	connect(map, SIGNAL(colorDeleted(int,const MapColor*)), this, SLOT(update()));
+	connect(map, SIGNAL(symbolAdded(int,Symbol*)), symbol_widget, SLOT(adjustContents()));
 }
 
 bool SymbolRenderWidget::scrollBarNeeded(int width, int height)
@@ -1031,6 +1032,8 @@ void SymbolWidget::adjustContents()
 		scroll_bar->show();
 		render_widget->setScrollBar(scroll_bar);
 	}
+	
+	render_widget->updateScrollRange();
 }
 
 void SymbolWidget::resizeEvent(QResizeEvent* event)
