@@ -255,7 +255,7 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 						it = merge_list_item;
 						for (++it; it != merge_list.end(); ++it)
 						{
-							if (it->dest_color && (selected_item->lower_bound+1) >= it->dest_index)
+							if (it->dest_color && (selected_item->lower_bound+1) > it->dest_index)
 								--conflict_reduction;
 						}
 						// Also allow = here to make two-step resolves work
