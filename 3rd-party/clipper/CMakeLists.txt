@@ -25,21 +25,22 @@ cmake_minimum_required(VERSION 2.8.3)
 
 set(CLIPPER_VERSION_DEFAULT 5.1.4)
 set(CLIPPER_VERSION ${CLIPPER_VERSION_DEFAULT} CACHE STRING
-  "Version number of the Clipper library, minumum recommended value: 4.10.0")
+  "Version number of the Clipper library, minumum recommended value: 5.1.4")
 mark_as_advanced(CLIPPER_VERSION)
 
-if(CLIPPER_VERSION STREQUAL 4.10.0)
-	set(CLIPPER_MD5 64dd3cc88b8238a02aae750d4c0a0be3)
-elseif(CLIPPER_VERSION STREQUAL 5.0.2)
-	set(CLIPPER_MD5 879749c46f5c2608d1f42a9090dc47d7)
-elseif(CLIPPER_VERSION STREQUAL 5.0.3)
-	set(CLIPPER_MD5 8509ee63d716e46e88a21ab31b315411)
-elseif(CLIPPER_VERSION STREQUAL 5.1.4)
+message(STATUS "Configuring Clipper library ${CLIPPER_VERSION}")
+
+if(CLIPPER_VERSION STREQUAL 5.1.4)
 	set(CLIPPER_MD5 8693d4ca96f50d93ae36ea5761e07119)	
+elseif(CLIPPER_VERSION STREQUAL 5.1.5)
+	set(CLIPPER_MD5 f5eae2ed9a30124ff825284560fe0635)
 endif()
 mark_as_advanced(CLIPPER_MD5)
 
-message(STATUS "Configuring Clipper library ${CLIPPER_VERSION}")
+set(CLIPPER_LICENSE_FILE "${PROJECT_SOURCE_DIR}/License.txt")
+if(EXISTS "${CLIPPER_LICENSE_FILE}.${CLIPPER_VERSION}")
+	set(CLIPPER_LICENSE_FILE "${CLIPPER_LICENSE_FILE}.${CLIPPER_VERSION}")
+endif()
 
 # External project definition
 
@@ -50,7 +51,7 @@ ExternalProject_Add(
   URL "http://sourceforge.net/projects/polyclipping/files/clipper_ver${CLIPPER_VERSION}.zip/download"
   URL_MD5 ${CLIPPER_MD5}
   # Check that the license hasn't changed.
-  UPDATE_COMMAND ${CMAKE_COMMAND} -E compare_files <SOURCE_DIR>/License.txt "${PROJECT_SOURCE_DIR}/License.txt"
+  UPDATE_COMMAND ${CMAKE_COMMAND} -E compare_files <SOURCE_DIR>/License.txt "${CLIPPER_LICENSE_FILE}"
   # Force source file timestamp update.
   CONFIGURE_COMMAND ${CMAKE_COMMAND} -E copy <SOURCE_DIR>/cpp/clipper.cpp "${CMAKE_CURRENT_BINARY_DIR}/clipper.cpp"
   BUILD_COMMAND ""
@@ -79,5 +80,5 @@ add_library(${CLIPPER_LIBRARY} STATIC ${CLIPPER_SOURCES})
 add_dependencies(${CLIPPER_LIBRARY} Clipper)
 
 
-message(STATUS "Configuring Clipper library - done")
+message(STATUS "Configuring Clipper library ${CLIPPER_VERSION} - done")
 
