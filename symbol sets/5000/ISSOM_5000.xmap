@@ -2440,12 +2440,8 @@ North lines may be broken where they obscure small features such as boulders, kn
                 <pattern type="1" angle="1.5708" rotatable="true" line_spacing="30000" line_offset="0" offset_along_line="0" color="11" line_width="180"/>
             </area_symbol>
         </symbol>
-        <symbol type="1" id="149" code="602" name="Registration mark (Cyan)">
-            <description>At least three registration marks shall be placed within the frame of a map in a non-symmetrical arrangement. In addition, a colour check should be possible.
-
-Colour: all printed colours.
-
-This symbol includes all printed colours - do not place colours as separate symbols as any errors of placement will appear as misregistration.  This check works with offset printing only (requires colour separations).</description>
+        <symbol type="1" id="149" code="602" name="Registration mark">
+            <description>At least three registration marks shall be placed within the frame of a map in a non-symmetrical arrangement. In addition, a colour check should be possible.</description>
             <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                 <element>
                     <symbol type="2" code="">
