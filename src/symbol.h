@@ -38,6 +38,7 @@ QT_END_NAMESPACE
 
 class Map;
 class MapColor;
+class MapColorMap;
 class Object;
 class CombinedSymbol;
 class TextSymbol;
@@ -53,9 +54,6 @@ typedef std::vector<Renderable*> RenderableVector;
 
 class Symbol;
 typedef QHash<QString, Symbol*> SymbolDictionary;
-
-// From core/map_color.h
-typedef QHash<const MapColor*, const MapColor*> MapColorMap;
 
 
 /**

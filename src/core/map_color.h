@@ -419,8 +419,54 @@ bool operator==(const MapColor& lhs, const MapColor& rhs);
 bool operator!=(const MapColor& lhs, const MapColor& rhs);
 
 
-/** MapColorMap provides a mapping from one map color to another. */
-typedef QHash<const MapColor*, const MapColor*> MapColorMap;
+/**
+ * MapColorMap provides a mapping from one map color to another.
+ * 
+ * In addition to explicitly user-defined key-value pairs of colors, it will
+ * (in const contexts) map colors with reserved priorities to themselves,
+ * assuming that there is only a single static instance of these colors.
+ */
+class MapColorMap
+{
+public:
+	/** Constructs a new MapColorMap. */
+	MapColorMap();
+	
+	/** Returns the size, i.e. the number of user-defined key-value pairs. */
+	int size() const;
+	
+	/** Clears the user-defined key-value pairs. */
+	void clear();
+	
+	/** Returns true if there is a user-defined value for the key color */
+	bool contains(const MapColor* key) const;
+	
+	/** Returns the mapped value for the key color.
+	 * 
+	 * Returns the user-defined value for the key color if it is defined.
+	 * Otherwise, if the key color's priority is from the RESERVED domain,
+	 * returns key. Otherwise returns NULL.
+	 */
+	const MapColor* value(const MapColor* key) const;
+	
+	/** Returns the mapped value for the key color. Same as value().
+	 * 
+	 * Returns the user-defined value for the key color if it is defined.
+	 * Otherwise, if the key color's priority is from the RESERVED domain,
+	 * returns key. Otherwise returns NULL.
+	 */
+	const MapColor* operator[](const MapColor* key) const;
+	
+	/** Returns a reference to pointer to the mapped value for the key color.
+	 *  If a user-defined mapped value does not exist yet, a default-
+	 *  constructed mapped value is created first.
+	 */
+	const MapColor* & operator[](const MapColor* key);
+	
+private:
+	/** The low-level mapping. */
+	QHash<const MapColor*, const MapColor*> mapping;
+};
 
 
 // ### MapColorCmyk inline code ###
@@ -718,5 +764,63 @@ bool operator!=(const MapColor& lhs, const MapColor& rhs)
 {
 	return !lhs.equals(rhs, true);
 }
+
+
+// ### MapColorMap inline code ###
+
+inline
+MapColorMap::MapColorMap()
+ : mapping()
+{
+	// Nothing.
+}
+
+inline
+int MapColorMap::size() const
+{
+	return mapping.size();
+}
+
+inline
+void MapColorMap::clear()
+{
+	mapping.clear();
+}
+
+inline
+bool MapColorMap::contains(const MapColor* key) const
+{
+	return mapping.contains(key);
+}
+
+inline
+const MapColor* MapColorMap::value(const MapColor* key) const
+{
+	if (mapping.contains(key))
+	{
+		return mapping.value(key);
+	}
+	else if (key != NULL && key->getPriority() <= MapColor::Reserved)
+	{
+		return key;
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+inline
+const MapColor* MapColorMap::operator[](const MapColor* key) const
+{
+	return value(key);
+}
+
+inline
+const MapColor* & MapColorMap::operator[](const MapColor* key)
+{
+	return mapping[key];
+}
+
 
 #endif
