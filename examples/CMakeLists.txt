@@ -20,6 +20,7 @@ set(Mapper_EXAMPLES
   overprinting.xmap
   forest\ sample.xmap
   sprint\ sample.xmap
+  complete\ map.xmap
 )
 
 install(
