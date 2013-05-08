@@ -886,7 +886,21 @@ void PrintWidget::printClicked()
 	QString path;
 	if (!map_printer->isPrinter())
 	{
-		path = QFileDialog::getSaveFileName(this, tr("Export map ..."), QString(), tr("All files (*.*)"));
+		const QString filter_template("%1 (%2)");
+		QStringList filters;
+		if (map_printer->getTarget() == MapPrinter::imageTarget())
+		{
+			filters << filter_template.arg(tr("PNG")).arg("*.png");
+			filters << filter_template.arg(tr("BMP")).arg("*.bmp");
+			filters << filter_template.arg(tr("TIFF")).arg("*.tif *.tiff");
+			filters << filter_template.arg(tr("JPEG")).arg("*.jpg *.jpeg");
+		}
+		else if (map_printer->getTarget() == MapPrinter::pdfTarget())
+		{
+			filters << filter_template.arg(tr("PDF")).arg("*.pdf");
+		}
+		filters << tr("All files (*.*)");
+		path = QFileDialog::getSaveFileName(this, tr("Export map ..."), QString(), filters.join(";;"));
 		if (path.isEmpty())
 			return;
 	}
