@@ -169,6 +169,7 @@ void EditPointTool::clickPress()
 				MapCoord point = path->getCoordinate(hover_point);
 				point.setDashPoint(true);
 				path->setCoordinate(hover_point, point);
+				map()->emitSelectionEdited();
 			}
 			startEditingSetup();
 			updatePreviewObjects();
@@ -200,6 +201,7 @@ void EditPointTool::clickPress()
 			}
 			
 			path->update(true);
+			map()->emitSelectionEdited();
 			updateHoverPoint(cur_pos_map);
 			updateDirtyRect();
 			no_more_effect_on_click = true;
@@ -217,6 +219,7 @@ void EditPointTool::clickPress()
 					createReplaceUndoStep(path);
 					path->deletePart(hover_point_part_index);
 					path->update(true);
+					map()->emitSelectionEdited();
 					updateHoverPoint(cur_pos_map);
 					updateDirtyRect();
 				}
@@ -233,6 +236,7 @@ void EditPointTool::clickPress()
 					delete_bezier_spline_point_setting = Settings::EditTool_DeleteBezierPointAction;
 				path->deleteCoordinate(hover_point, true, Settings::getInstance().getSettingCached((Settings::SettingsEnum)delete_bezier_spline_point_setting).toInt());
 				path->update(true);
+				map()->emitSelectionEdited();
 				updateHoverPoint(cur_pos_map);
 				updateDirtyRect();
 				no_more_effect_on_click = true;

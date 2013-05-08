@@ -709,6 +709,7 @@ bool DrawPathTool::removeLastPointFromSelectedPath()
 		
 	path->update(true);
 	map()->setObjectsDirty();
+	map()->emitSelectionEdited();
 	return true;
 }
 
