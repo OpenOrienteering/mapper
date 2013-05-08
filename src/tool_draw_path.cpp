@@ -43,6 +43,7 @@ QCursor* DrawPathTool::cursor = NULL;
 
 DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget, bool allow_closing_paths)
  : DrawLineAndAreaTool(editor, DrawPath, tool_button, symbol_widget), allow_closing_paths(allow_closing_paths),
+   finished_path_is_selected(false),
    cur_map_widget(mapWidget()),
    angle_helper(new ConstrainAngleToolHelper()),
    snap_helper(new SnappingToolHelper(map())),
@@ -65,6 +66,8 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, Sy
 	
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-draw-path.png"), 11, 11);
+	
+	connect(map(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 }
 
 DrawPathTool::~DrawPathTool()
@@ -408,7 +411,7 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 		else
 			key_handled = false;
 	}
-	else if (event->key() == Qt::Key_Backspace)
+	else if (event->key() == Qt::Key_Backspace && finished_path_is_selected)
 	{
 		key_handled = removeLastPointFromSelectedPath();
 	}
@@ -760,6 +763,8 @@ void DrawPathTool::finishDrawing()
 	hidePreviewPoints();
 	
 	DrawLineAndAreaTool::finishDrawing(appending ? append_to_object : NULL);
+	
+	finished_path_is_selected = true;
 }
 
 void DrawPathTool::abortDrawing()
@@ -817,6 +822,11 @@ void DrawPathTool::selectedSymbolsChanged()
 	DrawLineAndAreaTool::selectedSymbolsChanged();
 	
 	updateDashPointDrawing();
+}
+
+void DrawPathTool::objectSelectionChanged()
+{
+	finished_path_is_selected = false;
 }
 
 void DrawPathTool::updateAngleHelper()

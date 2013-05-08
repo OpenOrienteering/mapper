@@ -59,6 +59,9 @@ protected slots:
 	void updateDirtyRect();
 	virtual void selectedSymbolsChanged();
 	
+	/** This slot listens to changes in the map's object selection. */
+	virtual void objectSelectionChanged();
+	
 protected:
     virtual void updatePreviewPath();
 	/** Should be called when moving the cursor without the draw button being held */
@@ -120,6 +123,10 @@ protected:
 	
 	bool draw_dash_points;
 	bool allow_closing_paths;
+	
+	/** This property is set to true after finishing a path
+	 *  and reset to false when the selection changes. */
+	bool finished_path_is_selected;
 	
 	MapWidget* cur_map_widget;
 	
