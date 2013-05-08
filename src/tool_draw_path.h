@@ -72,6 +72,11 @@ protected:
 	virtual void finishDrawing();
 	virtual void abortDrawing();
 	void undoLastPoint();
+	/** When not drawing but when the current selection is a single path,
+	 *  removes the last point from that path, or deletes the whole path if
+	 *  there are too few remaining points.
+	 *  Returns true if the path was modified or deleted. */
+	bool removeLastPointFromSelectedPath();
 	void updateAngleHelper();
 	bool pickAngle(MapCoordF coord, MapWidget* widget);
 	void updateSnapHelper();
