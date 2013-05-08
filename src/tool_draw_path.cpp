@@ -27,6 +27,7 @@
 #endif
 
 #include "map.h"
+#include "map_undo.h"
 #include "map_widget.h"
 #include "object.h"
 #include "renderable.h"
@@ -407,6 +408,11 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 		else
 			key_handled = false;
 	}
+	else if (event->key() == Qt::Key_Backspace)
+	{
+		key_handled = removeLastPointFromSelectedPath();
+	}
+	
 	if (event->key() == Qt::Key_Tab)
 		deactivate();
 	else if (event->key() == Qt::Key_Space)
@@ -641,6 +647,66 @@ void DrawPathTool::undoLastPoint()
 	updateAngleHelper();
 	cur_pos_map = click_pos_map;
 	updateDirtyRect();
+}
+
+bool DrawPathTool::removeLastPointFromSelectedPath()
+{
+	if (draw_in_progress || map()->getNumSelectedObjects() != 1)
+	{
+		return false;
+	}
+	
+	Object* object = map()->getFirstSelectedObject();
+	if (object->getType() != Object::Path)
+	{
+		return false;
+	}
+	
+	PathObject* path = object->asPath();
+	if (path->getNumParts() != 1)
+	{
+		return false;
+	}
+	
+	int points_on_path = 0;
+	int num_coords = path->getCoordinateCount();
+	for (int i = 0; i < num_coords && points_on_path < 3; ++i)
+	{
+		++points_on_path;
+		if (path->getCoordinate(i).isCurveStart())
+		{
+			i += 2; // Skip the control points.
+		}
+	}
+	
+	if (points_on_path < 3)
+	{
+		// Too few points after deleting the last: delete the whole object.
+		map()->deleteSelectedObjects();
+		return true;
+	}
+	
+	ReplaceObjectsUndoStep* undo_step = new ReplaceObjectsUndoStep(map());
+	Object* undo_duplicate = object->duplicate();
+	undo_duplicate->setMap(map());
+	undo_step->addObject(object, undo_duplicate);
+	map()->objectUndoManager().addNewUndoStep(undo_step);
+	updateDirtyRect();
+	
+	path->getPart(0).setClosed(false);
+	path->deleteCoordinate(num_coords - 1, false);
+	
+	MapCoord& potential_curve_start = path->getCoordinate(qMax(0, num_coords - 4));
+	if (num_coords >= 4 && potential_curve_start.isCurveStart())
+	{
+		path->deleteCoordinate(num_coords - 2, false);
+		path->deleteCoordinate(num_coords - 3, false);
+		potential_curve_start.setCurveStart(false);
+	}
+		
+	path->update(true);
+	map()->setObjectsDirty();
+	return true;
 }
 
 void DrawPathTool::closeDrawing()
