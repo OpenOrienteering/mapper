@@ -262,11 +262,19 @@ bool DrawRectangleTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_
 bool DrawRectangleTool::keyPressEvent(QKeyEvent* event)
 {
 	if (event->key() == Qt::Key_Escape)
-		abortDrawing();
+	{
+		if (draw_in_progress)
+			abortDrawing();
+	}
 	else if (event->key() == Qt::Key_Backspace)
-		undoLastPoint();
+	{
+		if (draw_in_progress)
+			undoLastPoint();
+	}
 	else if (event->key() == Qt::Key_Tab)
+	{
 		deactivate();
+	}
 	else if (event->key() == Qt::Key_Space)
 	{
 		draw_dash_points = !draw_dash_points;
