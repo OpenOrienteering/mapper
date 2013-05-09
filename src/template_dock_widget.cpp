@@ -39,31 +39,10 @@
 #include "template_position_dock_widget.h"
 #include "template_tool_move.h"
 #include "util.h"
+#include "util/item_delegates.h"
 
 // TODO: Review formatting et al.
-/** Parses a user-entered opacity value. Values must be strings of the form "F%" where F is any decimal number between 0 and
- *  100 (inclusive). Leading and trailing whitespace is trimmed. If the value is invalid, the arguments are unchanged and the method returns false.
- *  If the value is valid, the method updates both the text (to a canonical form) and the float value, and returns true.
- */
-static bool parseOpacityEntry(QString &text, float &fvalue)
-{
-	bool ok = true;
-	QString str = text.trimmed();
-	float value;
-	if (str.endsWith('%'))
-	{
-		str.chop(1);
-		str = str.trimmed();
-	}
-	value = str.toFloat(&ok) / 100.0f;
 
-	if (!ok || value < 0 || value > 1)
-		return false;
-
-	text = QString("%1%").arg(100.0f * value);
-	fvalue = value;
-	return true;
-}
 
 TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent)
 : QWidget(parent), 
@@ -83,6 +62,9 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	template_table->setSelectionBehavior(QAbstractItemView::SelectRows);
 	template_table->setHorizontalHeaderLabels(QStringList() << tr("Show") << tr("Opacity") << tr("Group") << tr("Filename"));
 	template_table->verticalHeader()->setVisible(false);
+	
+	percentage_delegate = new SpinBoxDelegate(this, 0, 100, tr("%"), 5);
+	template_table->setItemDelegateForColumn(1, percentage_delegate);
 	
 	QHeaderView* header_view = template_table->horizontalHeader();
 #if QT_VERSION < 0x050000
@@ -520,22 +502,16 @@ void TemplateWidget::cellChange(int row, int column)
 		}
 		else if (column == 1)
 		{
-			float fvalue;
-			if (!parseOpacityEntry(text, fvalue))
+			float opacity = template_table->item(row, column)->data(Qt::UserRole).toFloat() / 100.0f;
+			if (opacity <= 0.0f)
 			{
-				QMessageBox::warning(window(), tr("Error"), tr("Please enter a percentage from 0 to 100!"));
-				template_table->item(row, column)->setText(QString::number(vis->opacity * 100) + "%");
+				map->setTemplateAreaDirty(pos);
+				vis->opacity = qMax(0.0f, opacity);
 			}
 			else
 			{
-				template_table->item(row, column)->setText(text);
-				if (fvalue <= 0)
-					map->setTemplateAreaDirty(pos);
-				
-				vis->opacity = fvalue;
-				
-				if (fvalue > 0)
-					map->setTemplateAreaDirty(pos);
+				vis->opacity = qMin(1.0f, opacity);
+				map->setTemplateAreaDirty(pos);
 			}
 		}
 		else if (column == 2)
@@ -579,22 +555,16 @@ void TemplateWidget::cellChange(int row, int column)
 		}
 		else if (column == 1)
 		{
-			float fvalue;
-			if (!parseOpacityEntry(text, fvalue))
+			float opacity = template_table->item(row, column)->data(Qt::UserRole).toFloat() / 100.0f;
+			if (opacity <= 0.0f)
 			{
-				QMessageBox::warning(window(), tr("Error"), tr("Please enter a valid number from 0 to 1, or specify a percentage from 0 to 100!"));
-				template_table->item(row, column)->setText(QString::number(vis->opacity * 100) + "%");
+				map->setObjectAreaDirty(map_bounds);
+				vis->opacity = qMax(0.0f, opacity);
 			}
 			else
 			{
-				template_table->item(row, column)->setText(text);
-				if (fvalue <= 0)
-					map->setObjectAreaDirty(map_bounds);
-				
-				vis->opacity = fvalue;
-				
-				if (fvalue > 0)
-					map->setObjectAreaDirty(map_bounds);
+				vis->opacity = qMin(1.0f, opacity);
+				map->setObjectAreaDirty(map_bounds);
 			}
 		}
 		react_to_changes = true;
@@ -850,7 +820,7 @@ void TemplateWidget::updateRow(int row)
 	
 	TemplateVisibility* vis = NULL;
 	int group = -1;
-	QString name;
+	QString name, path;
 	bool valid = true;
 	if (pos >= 0)
 	{
@@ -859,6 +829,7 @@ void TemplateWidget::updateRow(int row)
 		vis = main_view->getTemplateVisibility(temp);
 		group = temp->getTemplateGroup();
 		name = temp->getTemplateFilename();
+		path = temp->getTemplatePath();
 		valid = temp->getTemplateState() != Template::Invalid;
 	}
 	else
@@ -869,11 +840,13 @@ void TemplateWidget::updateRow(int row)
 		template_table->item(row, 2)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 	}
 	
+	QAbstractItemModel* model = template_table->model();
 	template_table->item(row, 0)->setCheckState(vis->visible ? Qt::Checked : Qt::Unchecked);
-	template_table->item(row, 1)->setText(QString::number(vis->opacity * 100) + "%");
+	percentage_delegate->setModelData(model, model->index(row, 1), qRound(vis->opacity * 100));
 	template_table->item(row, 2)->setText((group < 0) ? "" : QString::number(group));
 	template_table->item(row, 3)->setText(name);
 	template_table->item(row, 3)->setTextColor(valid ? QPalette().color(QPalette::Text) : qRgb(204, 0, 0));
+	template_table->item(row, 3)->setData(Qt::ToolTipRole, path);
 	
 	react_to_changes = true;
 }

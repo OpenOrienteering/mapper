@@ -36,9 +36,10 @@ class QGroupBox;
 QT_END_NAMESPACE
 
 class Map;
-class Template;
-class MapView;
 class MapEditorController;
+class MapView;
+class Template;
+class SpinBoxDelegate;
 
 class TemplateWidget : public QWidget
 {
@@ -92,6 +93,8 @@ private:
 	Template* getCurrentTemplate();
 	
 	void changeTemplateFile(int row);
+	
+	SpinBoxDelegate* percentage_delegate;
 	
 	QCheckBox* all_hidden_check;
 	QTableWidget* template_table;
