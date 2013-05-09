@@ -36,9 +36,10 @@ class QGroupBox;
 QT_END_NAMESPACE
 
 class Map;
-class Template;
-class MapView;
 class MapEditorController;
+class MapView;
+class Template;
+class SpinBoxDelegate;
 
 /**
  * Widget showing the list of templates, including the map layer.
@@ -97,6 +98,8 @@ private:
 	Template* getCurrentTemplate();
 	
 	void changeTemplateFile(int row);
+	
+	SpinBoxDelegate* percentage_delegate;
 	
 	QCheckBox* all_hidden_check;
 	QTableWidget* template_table;

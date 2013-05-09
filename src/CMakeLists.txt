@@ -136,6 +136,7 @@ set(Mapper_Common_SRCS
  gui/widgets/home_screen_widget.cpp
  gui/widgets/measure_widget.cpp
  
+ util/item_delegates.cpp
  util/recording_translator.cpp
 )
 
@@ -219,6 +220,7 @@ set(Mapper_Common_MOC_INPUT
  gui/widgets/home_screen_widget.h
  gui/widgets/measure_widget.h
  
+ util/item_delegates.h
  util/recording_translator.h
 )
 
