@@ -20,8 +20,6 @@
 
 #include "template_dock_widget.h"
 
-#include <cassert>
-
 #if QT_VERSION < 0x050000
 #include <QtGui>
 #else
@@ -221,7 +219,14 @@ void TemplateWidget::setAllTemplatesHidden(bool value)
 	bool enabled = !value;
 	template_table->setEnabled(enabled);
 	list_buttons_group->setEnabled(enabled);
-	active_buttons_group->setEnabled(enabled);
+	if (!enabled)
+	{
+		active_buttons_group->setEnabled(false);
+	}
+	else
+	{
+		selectionChanged(QItemSelection(), QItemSelection());
+	}
 }
 
 void TemplateWidget::addTemplateAt(Template* new_template, int pos)
@@ -364,7 +369,7 @@ void TemplateWidget::openTemplate()
 void TemplateWidget::deleteTemplate()
 {
 	int pos = posFromRow(template_table->currentRow());
-	assert(pos >= 0);
+	Q_ASSERT(pos >= 0);
 	
 	map->setTemplateAreaDirty(pos);
 	
@@ -383,9 +388,9 @@ void TemplateWidget::deleteTemplate()
 void TemplateWidget::duplicateTemplate()
 {
 	int row = template_table->currentRow();
-	assert(row >= 0);
+	Q_ASSERT(row >= 0);
 	int pos = posFromRow(row);
-	assert(pos >= 0);
+	Q_ASSERT(pos >= 0);
 	
 	Template* new_template = map->getTemplate(pos)->duplicate();
 	addTemplateAt(new_template, pos);
@@ -394,7 +399,7 @@ void TemplateWidget::duplicateTemplate()
 void TemplateWidget::moveTemplateUp()
 {
 	int row = template_table->currentRow();
-	assert(row >= 1);
+	Q_ASSERT(row >= 1);
 	
 	int cur_pos = posFromRow(row);
 	int above_pos = posFromRow(row - 1);
@@ -432,7 +437,7 @@ void TemplateWidget::moveTemplateUp()
 void TemplateWidget::moveTemplateDown()
 {
 	int row = template_table->currentRow();
-	assert(row < template_table->rowCount() - 1);
+	Q_ASSERT(row < template_table->rowCount() - 1);
 	
 	int cur_pos = posFromRow(row);
 	int below_pos = posFromRow(row + 1);
@@ -694,7 +699,7 @@ void TemplateWidget::updateDeleteButtonText()
 void TemplateWidget::moveByHandClicked(bool checked)
 {
 	Template* temp = getCurrentTemplate();
-	assert(temp);
+	Q_ASSERT(temp);
 	controller->setTool(checked ? new TemplateMoveTool(temp, controller, move_by_hand_action) : NULL);
 }
 
@@ -703,7 +708,7 @@ void TemplateWidget::adjustClicked(bool checked)
 	if (checked)
 	{
 		Template* temp = getCurrentTemplate();
-		assert(temp);
+		Q_ASSERT(temp);
 		TemplateAdjustActivity* activity = new TemplateAdjustActivity(temp, controller);
 		controller->setEditorActivity(activity);
 		connect(activity->getDockWidget(), SIGNAL(closed()), this, SLOT(adjustWindowClosed()));
@@ -866,7 +871,7 @@ int TemplateWidget::posFromRow(int row)
 
 int TemplateWidget::rowFromPos(int pos)
 {
-	assert(pos >= 0);
+	Q_ASSERT(pos >= 0);
 	return map->getNumTemplates() - 1 - ((pos >= map->getFirstFrontTemplate()) ? pos : (pos - 1));
 }
 
@@ -885,7 +890,7 @@ void TemplateWidget::changeTemplateFile(int row)
 {
 	int pos = posFromRow(row);
 	Template* temp = (row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
-	assert(temp);
+	Q_ASSERT(temp);
 	
 	if (temp->execSwitchTemplateFileDialog(this))
 	{
