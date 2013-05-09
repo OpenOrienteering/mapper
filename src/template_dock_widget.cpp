@@ -32,6 +32,7 @@
 #include "gui/main_window.h"
 #include "map.h"
 #include "map_editor.h"
+#include "map_widget.h"
 #include "settings.h"
 #include "template.h"
 #include "template_adjust.h"
@@ -73,6 +74,9 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	this->setWhatsThis("<a href=\"templates.html#setup\">See more</a>");
 	react_to_changes = true;
 	
+	// Reuse the translation from MapEditorController action.
+	all_hidden_check = new QCheckBox(MapEditorController::tr("Hide all templates"));
+	
 	// Template table
 	template_table = new QTableWidget(map->getNumTemplates() + 1, 4);
 	template_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
@@ -95,6 +99,12 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	
 	for (int i = 0; i < map->getNumTemplates() + 1; ++i)
 		addRow(i);
+	
+	all_templates_layout = new QVBoxLayout();
+	all_templates_layout->addSpacing(all_templates_layout->margin());
+	all_templates_layout->setMargin(0);
+	all_templates_layout->addWidget(all_hidden_check);
+	all_templates_layout->addWidget(template_table, 1);
 	
 	// List Buttons
 	list_buttons_group = new QWidget();
@@ -172,6 +182,8 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	selectionChanged(QItemSelection(), QItemSelection()); // enable / disable buttons
 	//currentCellChange(template_table->currentRow(), 0, 0, 0);	// enable / disable buttons
 	
+	setAllTemplatesHidden(main_view->areAllTemplatesHidden());
+	
 	// Load settings
 	QSettings settings;
 	settings.beginGroup("TemplateWidget");
@@ -185,6 +197,8 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	resizeEvent(&event);
 	
 	// Connections
+	connect(all_hidden_check, SIGNAL(toggled(bool)), controller, SLOT(hideAllTemplates(bool)));
+	
 	connect(template_table, SIGNAL(cellChanged(int,int)), this, SLOT(cellChange(int,int)));
 	connect(template_table->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(selectionChanged(QItemSelection,QItemSelection)));
 	connect(template_table, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentCellChange(int,int,int,int)));
@@ -217,6 +231,17 @@ TemplateWidget::~TemplateWidget()
 	settings.endGroup();	
 }
 
+// slot
+void TemplateWidget::setAllTemplatesHidden(bool value)
+{
+	all_hidden_check->setChecked(value);
+	
+	bool enabled = !value;
+	template_table->setEnabled(enabled);
+	list_buttons_group->setEnabled(enabled);
+	active_buttons_group->setEnabled(enabled);
+}
+
 void TemplateWidget::addTemplateAt(Template* new_template, int pos)
 {
 	/*int row;
@@ -237,7 +262,7 @@ void TemplateWidget::addTemplateAt(Template* new_template, int pos)
 	map->setTemplatesDirty();
 }
 
-Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapView* main_view)
+Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller)
 {
 	QSettings settings;
 	QString template_directory = settings.value("templateFileDirectory", QDir::homePath()).toString();
@@ -249,7 +274,7 @@ Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapView
 	
 	settings.setValue("templateFileDirectory", QFileInfo(path).canonicalPath());
 	
-	Template* new_temp = Template::templateForFile(path, main_view->getMap());
+	Template* new_temp = Template::templateForFile(path, controller->getMap());
 	if (!new_temp)
 	{
 		QMessageBox::warning(dialog_parent, tr("Error"), tr("Cannot open template:\n%1\n\nFile format not recognized.").arg(path));
@@ -279,6 +304,7 @@ Template* TemplateWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapView
 	// If the template is not georeferenced, position it at the viewport midpoint
 	if (!new_temp->isTemplateGeoreferenced() && center_in_view)
 	{
+		MapView* main_view = controller->getMainWidget()->getMapView();
 		QPointF center = new_temp->calculateTemplateBoundingBox().center();
 		new_temp->setTemplateX(main_view->getPositionX() - qRound64(1000 * center.x()));
 		new_temp->setTemplateY(main_view->getPositionY() - qRound64(1000 * center.y()));
@@ -313,7 +339,7 @@ void TemplateWidget::resizeEvent(QResizeEvent* event)
 			layout = new QVBoxLayout();
 		
 		layout->setMargin(0);
-		layout->addWidget(template_table, 1);
+		layout->addLayout(all_templates_layout, 1);
 		layout->addWidget(list_buttons_group);
 		layout->addWidget(active_buttons_group);
 		setLayout(layout);
@@ -339,7 +365,7 @@ void TemplateWidget::newTemplate(QAction* action)
 
 void TemplateWidget::openTemplate()
 {
-	Template* new_template = showOpenTemplateDialog(window(), main_view);
+	Template* new_template = showOpenTemplateDialog(window(), controller);
 	if (!new_template)
 		return;
 	
@@ -485,7 +511,7 @@ void TemplateWidget::cellChange(int row, int column)
 		{
 			bool visible_new = template_table->item(row, column)->checkState() == Qt::Checked;
 			if (!visible_new)
-			map->setTemplateAreaDirty(pos);
+				map->setTemplateAreaDirty(pos);
 			
 			vis->visible = visible_new;
 			

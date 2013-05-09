@@ -26,6 +26,7 @@
 #include <QItemSelection>
 
 QT_BEGIN_NAMESPACE
+class QCheckBox;
 class QGridLayout;
 class QPushButton;
 class QTableWidget;
@@ -53,7 +54,12 @@ public:
 	
 	void addTemplateAt(Template* new_template, int pos);
 	
-	static Template* showOpenTemplateDialog(QWidget* dialog_parent, MapView* main_view);
+	static Template* showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller);
+	
+public slots:
+	/** Sets or clears the all-templates-hidden state.
+	 *  When all templates are hidden, operations on templates are disabled. */
+	void setAllTemplatesHidden(bool value);
 	
 protected:
 	virtual void resizeEvent(QResizeEvent* event);
@@ -92,7 +98,9 @@ private:
 	
 	void changeTemplateFile(int row);
 	
+	QCheckBox* all_hidden_check;
 	QTableWidget* template_table;
+	QBoxLayout* all_templates_layout;
 	
 	// Buttons
 	QWidget* list_buttons_group;
