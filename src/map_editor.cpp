@@ -1111,6 +1111,7 @@ void MapEditorController::baselineView(bool checked)
 
 void MapEditorController::hideAllTemplates(bool checked)
 {
+	hide_all_templates_act->setChecked(checked);
 	main_view->setHideAllTemplates(checked);
 }
 
@@ -1278,13 +1279,16 @@ void MapEditorController::showTemplateWindow(bool show)
 {
 	if (!template_dock_widget)
 	{
+		TemplateWidget* template_widget = new TemplateWidget(map, main_view, this, template_dock_widget);
+		connect(hide_all_templates_act, SIGNAL(toggled(bool)), template_widget, SLOT(setAllTemplatesHidden(bool)));
 		template_dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, this, window);
-		template_dock_widget->setWidget(new TemplateWidget(map, main_view, this, template_dock_widget));
+		template_dock_widget->setWidget(template_widget);
 		template_dock_widget->setObjectName("Templates dock widget");
 		if (!window->restoreDockWidget(template_dock_widget))
 			window->addDockWidget(Qt::RightDockWidgetArea, template_dock_widget, Qt::Vertical);
 	}
 	
+	template_window_act->setChecked(show);
 	template_dock_widget->setVisible(show);
 	if (show)
 		QTimer::singleShot(0, template_dock_widget, SLOT(raise()));
@@ -1292,19 +1296,22 @@ void MapEditorController::showTemplateWindow(bool show)
 
 void MapEditorController::openTemplateClicked()
 {
-	Template* new_template = TemplateWidget::showOpenTemplateDialog(window, main_view);
+	Template* new_template = TemplateWidget::showOpenTemplateDialog(window, this);
 	if (!new_template)
 		return;
 	
-	template_window_act->setChecked(true);
+	hideAllTemplates(false);
 	showTemplateWindow(true);
 	
+	// FIXME: this should be done through the core map, not throug the UI
 	TemplateWidget* template_widget = reinterpret_cast<TemplateWidget*>(template_dock_widget->widget());
 	template_widget->addTemplateAt(new_template, -1);
 }
 
 void MapEditorController::reopenTemplateClicked()
 {
+	hideAllTemplates(false);
+	
 	QString map_directory = window->getCurrentFilePath();
 	if (!map_directory.isEmpty())
 		map_directory = QFileInfo(map_directory).canonicalPath();

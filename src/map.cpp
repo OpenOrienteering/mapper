@@ -2567,6 +2567,9 @@ void MapView::deleteTemplateVisibility(Template* temp)
 
 void MapView::setHideAllTemplates(bool value)
 {
-	all_templates_hidden = value;
-	updateAllMapWidgets();
+	if (all_templates_hidden != value)
+	{
+		all_templates_hidden = value;
+		updateAllMapWidgets();
+	}
 }
