@@ -51,15 +51,33 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	this->setWhatsThis("<a href=\"templates.html#setup\">See more</a>");
 	react_to_changes = true;
 	
+	// Wrap this the checkbox in a widget and layout to force a margin.
+	QLayout* all_hidden_layout = new QHBoxLayout();
+	all_hidden_layout->setContentsMargins(4, 4, 4, 4);
+	QWidget* all_hidden_widget = new QWidget();
+	all_hidden_widget->setLayout(all_hidden_layout);
 	// Reuse the translation from MapEditorController action.
 	all_hidden_check = new QCheckBox(MapEditorController::tr("Hide all templates"));
+	all_hidden_layout->addWidget(all_hidden_check);
 	
 	// Template table
 	template_table = new QTableWidget(map->getNumTemplates() + 1, 4);
 	template_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
 	template_table->setSelectionBehavior(QAbstractItemView::SelectRows);
-	template_table->setHorizontalHeaderLabels(QStringList() << tr("Show") << tr("Opacity") << tr("Group") << tr("Filename"));
+	template_table->setHorizontalHeaderLabels(QStringList() << "" << tr("Opacity") << tr("Group") << tr("Filename"));
 	template_table->verticalHeader()->setVisible(false);
+	
+	template_table->horizontalHeaderItem(0)->setData(Qt::ToolTipRole, tr("Show"));
+	QCheckBox header_check;
+	QSize header_check_size(header_check.sizeHint());
+	if (header_check_size.isValid())
+	{
+		header_check.setChecked(true);
+		header_check.setEnabled(false);
+		QPixmap pixmap(header_check_size);
+		header_check.render(&pixmap);
+		template_table->horizontalHeaderItem(0)->setData(Qt::DecorationRole, pixmap);
+	}
 	
 	percentage_delegate = new SpinBoxDelegate(this, 0, 100, tr("%"), 5);
 	template_table->setItemDelegateForColumn(1, percentage_delegate);
@@ -81,9 +99,8 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 		addRow(i);
 	
 	all_templates_layout = new QVBoxLayout();
-	all_templates_layout->addSpacing(all_templates_layout->margin());
 	all_templates_layout->setMargin(0);
-	all_templates_layout->addWidget(all_hidden_check);
+	all_templates_layout->addWidget(all_hidden_widget);
 	all_templates_layout->addWidget(template_table, 1);
 	
 	// List Buttons
@@ -504,6 +521,8 @@ void TemplateWidget::cellChange(int row, int column)
 			
 			if (visible_new)
 				map->setTemplateAreaDirty(pos);
+			
+			updateRow(row);
 		}
 		else if (column == 1)
 		{
@@ -518,6 +537,8 @@ void TemplateWidget::cellChange(int row, int column)
 				vis->opacity = qMin(1.0f, opacity);
 				map->setTemplateAreaDirty(pos);
 			}
+			
+			template_table->item(row, 1)->setData(Qt::DecorationRole, QColor::fromCmykF(0.0f, 0.0f, 0.0f, vis->opacity));
 		}
 		else if (column == 2)
 		{
@@ -557,6 +578,8 @@ void TemplateWidget::cellChange(int row, int column)
 			
 			if (visible_new)
 				map->setObjectAreaDirty(map_bounds);
+			
+			updateRow(row);
 		}
 		else if (column == 1)
 		{
@@ -571,6 +594,8 @@ void TemplateWidget::cellChange(int row, int column)
 				vis->opacity = qMin(1.0f, opacity);
 				map->setObjectAreaDirty(map_bounds);
 			}
+			
+			template_table->item(row, 1)->setData(Qt::DecorationRole, QColor::fromCmykF(0.0f, 0.0f, 0.0f, vis->opacity));
 		}
 		react_to_changes = true;
 	}
@@ -770,39 +795,15 @@ void TemplateWidget::addRow(int row)
 {
 	react_to_changes = false;
 	
-	int pos = posFromRow(row);
-	if (pos < 0)
-	{
-		// Insert "map" row
-		QTableWidgetItem* item = new QTableWidgetItem();
-		template_table->setItem(row, 0, item);
-		
-		item = new QTableWidgetItem();
-		template_table->setItem(row, 1, item);
-		
-		item = new QTableWidgetItem();
-		template_table->setItem(row, 2, item);
-		
-		item = new QTableWidgetItem();
-		item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-		template_table->setItem(row, 3, item);
-	}
-	else
+	for (int i = 0; i < 4; ++i)
 	{
 		QTableWidgetItem* item = new QTableWidgetItem();
-		template_table->setItem(row, 0, item);
-		
-		item = new QTableWidgetItem();
-		template_table->setItem(row, 1, item);
-		
-		item = new QTableWidgetItem();
-		template_table->setItem(row, 2, item);
-		
-		item = new QTableWidgetItem();
-		item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-		template_table->setItem(row, 3, item);
+		template_table->setItem(row, i, item);
 	}
-	
+	template_table->item(row, 0)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+	template_table->item(row, 1)->setFlags(Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+	template_table->item(row, 1)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+	template_table->item(row, 2)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	updateRow(row);
 	
 	react_to_changes = true;
@@ -813,15 +814,6 @@ void TemplateWidget::updateRow(int row)
 	int pos = posFromRow(row);
 	
 	react_to_changes = false;
-	
-	template_table->item(row, 0)->setBackgroundColor(Qt::white);	// TODO: might be better to load this from some palette ...
-	template_table->item(row, 0)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-	template_table->item(row, 1)->setBackgroundColor(Qt::white);
-	template_table->item(row, 1)->setFlags(Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-	template_table->item(row, 1)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-	template_table->item(row, 2)->setBackgroundColor(Qt::white);
-	template_table->item(row, 2)->setFlags(Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-	template_table->item(row, 2)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	
 	TemplateVisibility* vis = NULL;
 	int group = -1;
@@ -836,13 +828,25 @@ void TemplateWidget::updateRow(int row)
 		name = temp->getTemplateFilename();
 		path = temp->getTemplatePath();
 		valid = temp->getTemplateState() != Template::Invalid;
+		QBrush active_background(QPalette().color(QPalette::Active, QPalette::Base));
+		template_table->item(row, 0)->setBackground(active_background);
+		template_table->item(row, 1)->setBackground(active_background);
+		template_table->item(row, 2)->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+		template_table->item(row, 2)->setBackground(active_background);
+		template_table->item(row, 3)->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		template_table->item(row, 3)->setBackground(active_background);
 	}
 	else
 	{
 		vis = main_view->getMapVisibility();
 		name = tr("- Map -");
-		template_table->item(row, 2)->setBackgroundColor(qRgb(180, 180, 180));
-		template_table->item(row, 2)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+		QBrush inactive_background(QPalette().color(QPalette::Inactive, QPalette::Window));
+		template_table->item(row, 0)->setBackground(inactive_background);
+		template_table->item(row, 1)->setBackground(inactive_background);
+		template_table->item(row, 2)->setFlags(Qt::ItemIsSelectable);
+		template_table->item(row, 2)->setBackground(inactive_background);
+		template_table->item(row, 3)->setFlags(Qt::ItemIsSelectable);
+		template_table->item(row, 3)->setBackground(inactive_background);
 	}
 	
 	QAbstractItemModel* model = template_table->model();
@@ -850,8 +854,30 @@ void TemplateWidget::updateRow(int row)
 	percentage_delegate->setModelData(model, model->index(row, 1), qRound(vis->opacity * 100));
 	template_table->item(row, 2)->setText((group < 0) ? "" : QString::number(group));
 	template_table->item(row, 3)->setText(name);
-	template_table->item(row, 3)->setTextColor(valid ? QPalette().color(QPalette::Text) : qRgb(204, 0, 0));
 	template_table->item(row, 3)->setData(Qt::ToolTipRole, path);
+	
+	QColor decoration_color(Qt::white);
+	QBrush brush(QColor::fromRgb(204, 0, 0));
+	if (vis->visible)
+	{
+		decoration_color = QColor::fromCmykF(0.0f, 0.0f, 0.0f, vis->opacity);
+		if (valid)
+		{
+			brush.setColor(QPalette().color(QPalette::Active, QPalette::Foreground));
+		}
+	}
+	else if (valid)
+	{
+		brush.setColor(QPalette().color(QPalette::Disabled, QPalette::Foreground));
+	}
+	else
+	{
+		brush.setColor(QColor::fromRgb(204, 0, 0).darker());
+	}
+	template_table->item(row, 1)->setData(Qt::DecorationRole, decoration_color);
+	template_table->item(row, 1)->setForeground(brush);
+	template_table->item(row, 2)->setForeground(brush);
+	template_table->item(row, 3)->setForeground(brush);
 	
 	react_to_changes = true;
 }
