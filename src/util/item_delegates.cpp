@@ -29,6 +29,49 @@
 #include "../util_gui.h"
 
 
+// ### ColorItemDelegate ###
+
+ColorItemDelegate::ColorItemDelegate(QObject* parent)
+ : QStyledItemDelegate(parent)
+{
+	// Nothing.
+}
+
+void ColorItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+	if (!option.state.testFlag(QStyle::State_Selected))
+	{
+		// Use the style options as is.
+		QStyledItemDelegate::paint(painter, option, index);
+	}
+	else
+	{
+		// Use the model's background and/or foreground.
+		QStyleOptionViewItem background_option(option);
+		QPalette& palette(background_option.palette);
+		
+		QVariant background_var(index.data(Qt::BackgroundRole));
+		if (!background_var.isNull())
+		{
+			palette.setColor(QPalette::Highlight, background_var.value<QColor>());
+		}
+		QVariant foreground_var(index.data(Qt::ForegroundRole));
+		if (!foreground_var.isNull())
+		{
+			palette.setColor(QPalette::HighlightedText, foreground_var.value<QColor>());
+		}
+		QStyledItemDelegate::paint(painter, background_option, index);
+		
+		// Draw an extra frame.
+		painter->save();
+		painter->setPen(QPen(option.palette.color(QPalette::Highlight), 1));
+		painter->drawRect(option.rect.adjusted(1, 1, -2, -2));
+		painter->restore();
+	}
+}
+
+
+
 //### SpinBoxDelegate ###
 
 SpinBoxDelegate::SpinBoxDelegate(QObject* parent, int min, int max, const QString& unit, int step)

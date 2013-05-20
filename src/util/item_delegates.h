@@ -21,6 +21,29 @@
 #define _OPENORIENTEERING_ITEM_DELEGATES_H_
 
 #include <QItemDelegate>
+#include <QStyledItemDelegate>
+
+
+/**
+ * An item delegate which respects colors from the model even when the item is selected.
+ * 
+ * ColorItemDelegate uses the background color and/or foreground color from the
+ * model data with Qt::BackgroundRole and/or Qt::ForegroundRole, respectively.
+ * However, an extra frame is drawn in the style's QPalette::Highlight color.
+ */
+class ColorItemDelegate : public QStyledItemDelegate
+{
+Q_OBJECT
+
+public:
+	/** Constructs a new ColorItemDelegate. */
+	ColorItemDelegate(QObject* parent = NULL);
+	
+	/** Renders the delegate. Reimplemented from QStyledItemDelegate. */
+	virtual void paint (QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+};
+
+
 
 /**
  *  A QItemDelegate which provides an editor of type (integer) spin box.
