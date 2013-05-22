@@ -48,11 +48,11 @@ protected slots:
 	void duplicateColor();
 	void moveColorUp();
 	void moveColorDown();
+	void editCurrentColor();
 	void showHelp();
 	
 	void cellChange(int row, int column);
 	void currentCellChange(int current_row, int current_column, int previous_row, int previous_column);
-	void cellDoubleClick(int row, int column);
 	
 	void colorAdded(int index, MapColor* color);
 	void colorChanged(int index, MapColor* color);
@@ -73,6 +73,7 @@ private:
 	QAbstractButton* duplicate_button;
 	QAbstractButton* move_up_button;
 	QAbstractButton* move_down_button;
+	QAbstractButton* edit_button;
 	
 	Map* map;
 	MainWindow* window;
