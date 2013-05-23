@@ -233,7 +233,12 @@ void MapRenderables::draw(QPainter* painter, QRectF bounding_box, bool force_min
 	
 	painter->save();
 	const_reverse_iterator end_of_colors = rend();
-	for (const_reverse_iterator color = rbegin(); color != end_of_colors; ++color)
+	const_reverse_iterator color = rbegin();
+	while (color != end_of_colors && color->first >= map->getNumColors())
+	{
+		++color;
+	}
+	for (; color != end_of_colors; ++color)
 	{
 		if ( require_spot_color &&
 		     (color->first < 0 || map->getColor(color->first)->getSpotColorMethod() == MapColor::UndefinedMethod) )
