@@ -477,7 +477,12 @@ void MapRenderables::drawColorSeparation(QPainter* painter, QRectF bounding_box,
 	
 	// For each pair of color priority and its renderables collection...
 	const_reverse_iterator end_of_colors = rend();
-	for (const_reverse_iterator color = rbegin(); color != end_of_colors; ++color)
+	const_reverse_iterator color = rbegin();
+	while (color != end_of_colors && color->first >= map->getNumColors())
+	{
+		++color;
+	}
+	for (; color != end_of_colors; ++color)
 	{
 		SpotColorComponent drawing_color(const_cast<const Map*>(map)->getColor(color->first), 1.0f);
 		
