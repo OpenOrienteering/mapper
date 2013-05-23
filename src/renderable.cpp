@@ -468,7 +468,12 @@ void MapRenderables::drawColorSeparation(QPainter* painter, MapColor* separation
 	painter->save();
 	
 	const_reverse_iterator end_of_colors = rend();
-	for (const_reverse_iterator color = rbegin(); color != end_of_colors; ++color)
+	const_reverse_iterator color = rbegin();
+	while (color != end_of_colors && color->first >= map->getNumColors())
+	{
+		++color;
+	}
+	for (; color != end_of_colors; ++color)
 	{
 		ObjectRenderablesMap::const_iterator end_of_objects = color->second.end();
 		for (ObjectRenderablesMap::const_iterator object = color->second.begin(); object != end_of_objects; ++object)
