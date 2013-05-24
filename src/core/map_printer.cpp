@@ -27,6 +27,12 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#define ENABLE_WIN_PRINTING_QUIRK 0
+
+#if defined(Q_OS_WIN) && ENABLE_WIN_PRINTING_QUIRK
+#include <private/qprintengine_win_p.h>
+#endif
+
 #include "../util.h"
 #include "../map.h"
 #include "../settings.h"
@@ -271,13 +277,19 @@ void MapPrinter::setTarget(const QPrinterInfo* new_target)
 			target_copy = *new_target;
 			target = &target_copy;
 		}
-		emit targetChanged(target);
 		
 		if (old_target == imageTarget() || new_target == imageTarget())
 		{
 			// No page margins. Will emit pageFormatChanged( ).
 			setCustomPaperSize(page_format.page_rect.size());
 		}
+		else if (page_format.paper_size != QPrinter::Custom)
+		{
+			updatePaperDimensions();
+			emit pageFormatChanged(page_format);
+		}
+		
+		emit targetChanged(target);
 	}
 }
 
@@ -742,10 +754,61 @@ void MapPrinter::printMap(QPrinter* printer)
 {
 	// Printer settings may have been changed by preview or application.
 	// We need to use them for printing.
+	printer->setFullPage(true);
 	takePrinterSettings(printer);
 	
 	QSizeF extent_size = page_format.page_rect.size() / scale_adjustment;
 	QPainter p(printer);
+	
+	float resolution = (float)options.resolution;
+	
+#if defined(Q_OS_WIN) && ENABLE_WIN_PRINTING_QUIRK
+	if (printer->paintEngine()->type() == QPaintEngine::Windows)
+	{
+		/* QWin32PrintEngine will (have to) do rounding when passing coordinates
+		 * to GDI, using the device's reported logical resolution.
+		 * We establish an MM_ISOTROPIC transformation from a higher resolution
+		 * to avoid the loss of precision due to this rounding.
+		 */
+		
+		QWin32PrintEngine* engine = static_cast<QWin32PrintEngine*>(printer->printEngine());
+		HDC dc = engine->getDC();
+		
+		// The high resolution in units per millimeter
+		const int hires_ppmm = 1000;
+		
+		// The paper dimensions in high resolution units
+		const int hires_width  = qRound(page_format.page_rect.width() * hires_ppmm);
+		const int hires_height = qRound(page_format.page_rect.height() * hires_ppmm);
+		
+		// The physical paper dimensions in device units
+		const int phys_width   = GetDeviceCaps(dc, PHYSICALWIDTH);
+		const int phys_height  = GetDeviceCaps(dc, PHYSICALHEIGHT);
+		
+		// The physical printing offset in device units
+		const int phys_off_x   = GetDeviceCaps(dc, PHYSICALOFFSETX);
+		const int phys_off_y   = GetDeviceCaps(dc, PHYSICALOFFSETY);
+		// (Needed to work around an unexpected offset, maybe related to QTBUG-5363)
+		
+		if (phys_width > 0)
+		{
+			// Establish the transformation
+			SetMapMode (dc, MM_ISOTROPIC);
+			SetWindowExtEx(dc, hires_width, hires_height, NULL);
+			SetViewportExtEx(dc, phys_width, phys_height, NULL);
+			SetViewportOrgEx(dc, -phys_off_x, -phys_off_y, NULL);
+			resolution *= ((double)hires_width / phys_width);
+		}
+	}
+	else if (printer->paintEngine()->type() == QPaintEngine::Picture)
+	{
+		// Preview: work around for offset, maybe related to QTBUG-5363
+		p.translate(
+		    -page_format.page_rect.left()*resolution / 25.4,
+		    -page_format.page_rect.top()*resolution / 25.4   );
+	}
+#endif
+	
 	bool need_new_page = false;
 	Q_FOREACH(qreal vpos, v_page_pos)
 	{
@@ -757,7 +820,7 @@ void MapPrinter::printMap(QPrinter* printer)
 					printer->newPage();
 				
 				QRectF page_extent = QRectF(QPointF(hpos, vpos), extent_size);
-				drawPage(&p, (float)options.resolution, page_extent, false);
+				drawPage(&p, resolution, page_extent, false);
 				need_new_page = true;
 			}
 		}
