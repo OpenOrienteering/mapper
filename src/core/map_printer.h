@@ -202,8 +202,11 @@ public:
 	/** Draws a single page to the painter.
 	 *  When the actual paint device is a QImage, pass it as page_buffer.
 	 *  This helps to determine the exact dimensions and to avoid the allocation
-	 *  of another buffer. */
-	void drawPage(QPainter* device_painter, float dpi, const QRectF& page_extent, bool white_background, QImage* page_buffer = NULL) const;
+	 *  of another buffer.
+	 *  Otherwise, drawPage() may allocate a buffer with this map printer's
+	 *  resolution and size. Parameter units_per_inch has no influence on this
+	 *  buffer but refers to the logical coordinates of device_painter. */
+	void drawPage(QPainter* device_painter, float units_per_inch, const QRectF& page_extent, bool white_background, QImage* page_buffer = NULL) const;
 	
 	/** Draws the separations as distinct pages to the printer. */
 	void drawSeparationPages(QPrinter* printer, QPainter* device_painter, float dpi, const QRectF& page_extent) const;
