@@ -22,11 +22,6 @@
 
 #include <limits>
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
-#include <QtWidgets>
-#endif
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
 
@@ -78,10 +73,18 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	page_size_layout->addWidget(page_height_edit, 1);
 	layout->addRow("", page_size_widget);
 	
-	page_orientation_combo = new QComboBox();
-	page_orientation_combo->addItem(tr("Portrait"), QPrinter::Portrait);
-	page_orientation_combo->addItem(tr("Landscape"), QPrinter::Landscape);
-	layout->addRow(tr("Page orientation:"), page_orientation_combo);
+	page_orientation_widget = new QWidget();
+	QBoxLayout* page_orientation_layout = new QHBoxLayout();
+	page_orientation_layout->setContentsMargins(QMargins());
+	page_orientation_widget->setLayout(page_orientation_layout);
+	QRadioButton* portrait_button = new QRadioButton(tr("Portrait"));
+	page_orientation_layout->addWidget(portrait_button);
+	QRadioButton* landscape_button = new QRadioButton(tr("Landscape"));
+	page_orientation_layout->addWidget(landscape_button);
+	page_orientation_group = new QButtonGroup(this);
+	page_orientation_group->addButton(portrait_button, QPrinter::Portrait);
+	page_orientation_group->addButton(landscape_button, QPrinter::Landscape);
+	layout->addRow(tr("Page orientation:"), page_orientation_widget);
 	
 	copies_edit = Util::SpinBox::create(1, 99999);
 	layout->addRow(tr("Copies:"), copies_edit);
@@ -161,8 +164,8 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
 	connect(target_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(targetChanged(int)));
 	connect(paper_size_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(paperSizeChanged(int)));
 	connect(page_width_edit, SIGNAL(valueChanged(double)), this, SLOT(paperDimensionsChanged()));
+	connect(page_orientation_group, SIGNAL(buttonClicked(int)), this, SLOT(pageOrientationChanged(int)));
 	connect(page_height_edit, SIGNAL(valueChanged(double)), this, SLOT(paperDimensionsChanged()));
-	connect(page_orientation_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(pageOrientationChanged(int)));
 	
 	connect(top_edit, SIGNAL(valueChanged(double)), this, SLOT(printAreaMoved()));
 	connect(left_edit, SIGNAL(valueChanged(double)), this, SLOT(printAreaMoved()));
@@ -503,9 +506,9 @@ void PrintWidget::updatePaperSizes(const QPrinterInfo* target) const
 void PrintWidget::setPageFormat(const MapPrinterPageFormat& format)
 {
 	ScopedMultiSignalsBlocker block;
-	block << paper_size_combo << page_orientation_combo << overlap_edit << page_width_edit << page_height_edit;
+	block << paper_size_combo << page_orientation_group << overlap_edit << page_width_edit << page_height_edit;
 	paper_size_combo->setCurrentIndex(paper_size_combo->findData(format.paper_size));
-	page_orientation_combo->setCurrentIndex(page_orientation_combo->findData(format.orientation));
+	page_orientation_group->button(format.orientation)->setChecked(true);
 	page_width_edit->setValue(format.paper_dimensions.width());
 	page_width_edit->setEnabled(format.paper_size == QPrinter::Custom);
 	page_height_edit->setValue(format.paper_dimensions.height());
@@ -534,12 +537,11 @@ void PrintWidget::paperDimensionsChanged() const
 }
 
 // slot
-void PrintWidget::pageOrientationChanged(int index) const
+void PrintWidget::pageOrientationChanged(int id) const
 {
-	if (index >= 0)
+	if (id == QPrinter::Portrait || id == QPrinter::Landscape)
 	{
-		QPrinter::Orientation orientation = (QPrinter::Orientation)page_orientation_combo->itemData(index).toInt();
-		map_printer->setPageOrientation(orientation);
+		map_printer->setPageOrientation((QPrinter::Orientation) id);
 	}
 }
 

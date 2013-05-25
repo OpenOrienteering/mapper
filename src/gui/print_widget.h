@@ -24,16 +24,11 @@
 #include <QWidget>
 #include <QPrinterInfo>
 
-QT_BEGIN_NAMESPACE
-class QCheckBox;
-class QComboBox;
-class QDoubleSpinBox;
-class QFormLayout;
-class QLabel;
-class QLineEdit;
-class QPushButton;
-class QSpinBox;
-QT_END_NAMESPACE
+#if QT_VERSION < 0x050000
+#include <QtGui>
+#else
+#include <QtWidgets>
+#endif
 
 class Map;
 class MapEditorController;
@@ -138,8 +133,8 @@ protected slots:
 	/** This slot reacts to changes of the paper dimension widgets. */
 	void paperDimensionsChanged() const;
 	
-	/** This slot reacts to changes of the page orientation combobox. */
-	void pageOrientationChanged(int index) const;
+	/** This slot reacts to changes of the page orientation widget. */
+	void pageOrientationChanged(int id) const;
 	
 	/** This slot reacts to changes of the print area policy combobox. */
 	void printAreaPolicyChanged(int index);
@@ -230,7 +225,8 @@ private:
 	
 	QComboBox* target_combo;
 	QComboBox* paper_size_combo;
-	QComboBox* page_orientation_combo;
+	QWidget*   page_orientation_widget;
+	QButtonGroup* page_orientation_group;
 	QSpinBox* copies_edit;
 	QDoubleSpinBox* page_width_edit;
 	QDoubleSpinBox* page_height_edit;
