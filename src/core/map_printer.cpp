@@ -27,7 +27,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#define ENABLE_WIN_PRINTING_QUIRK 0
+#define ENABLE_WIN_PRINTING_QUIRK 1
 
 #if defined(Q_OS_WIN) && ENABLE_WIN_PRINTING_QUIRK
 #include <private/qprintengine_win_p.h>
@@ -600,7 +600,7 @@ void MapPrinter::takePrinterSettings(const QPrinter* printer)
 	setResolution(printer->resolution());
 }
 
-void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& page_extent, bool white_background, QImage* page_buffer) const
+void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const QRectF& page_extent, bool white_background, QImage* page_buffer) const
 {
 	device_painter->save();
 	
@@ -626,13 +626,20 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 		}
 	}
 	
-	// Dots per mm
-	qreal scale = dpi / 25.4;
+	// Logical units per mm
+	qreal units_per_mm = units_per_inch / 25.4;
+	// Image pixels per mm
+	qreal pixel_per_mm = options.resolution / 25.4;
+	// Scaling from pixels to logical units
+	qreal pixel2units = units_per_inch / options.resolution;
+	// The current painter's resolution
+	qreal scale = units_per_mm;
 	
 	QPainter* painter = device_painter;
 	QImage scoped_buffer;
 	if (have_transparency && !page_buffer)
 	{
+		scale = pixel_per_mm;
 		int w = qCeil(page_format.paper_dimensions.width() * scale);
 		int h = qCeil(page_format.paper_dimensions.height() * scale);
 #if defined (Q_OS_MAC)
@@ -742,6 +749,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float dpi, const QRectF& pag
 		}
 #endif
 		
+		device_painter->scale(pixel2units, pixel2units);
 		device_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
 		device_painter->drawImage(0, 0, *page_buffer);
 	}
