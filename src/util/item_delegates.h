@@ -114,4 +114,57 @@ private:
 	const QString unit;
 };
 
+
+
+/**
+ *  A item delegate which provides a spinbox editor for values in the range
+ *  0.0 ... 1.0 presented as integer percentage values.
+ * 
+ *  Unlike the default editor behaviour, the spin box will commit each single
+ *  change as soon as control returns to the event loop.
+ */
+class PercentageDelegate : public QStyledItemDelegate
+{
+Q_OBJECT
+public:
+	/** Creates a new PercentageDelegate.
+	 *  @param parent The parent object which will be passed to QItemDelegate.
+	 *  @param step   The size of single step when using the spin box button.
+	 */
+	PercentageDelegate(QObject* parent, int step = 0);
+	
+	/** Creates a new PercentageDelegate.
+	 *  @param step   The size of single step when using the spinbox button.
+	 */
+	PercentageDelegate(int step = 0);
+	
+	/** Formats the raw value as integer percentage. */
+	virtual QString	displayText(const QVariant& value, const QLocale& locale) const;
+	
+	/** Returns a new QSpinBox configured according to the delegates properties. 
+	 *  @see QItemDelegate::createEditor().
+	 */
+	virtual QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	
+	/** Updates the spin box value from the model data with role Qt::UserData.
+	 *  @see QItemDelegate::setEditorData().
+	 */
+	virtual void setEditorData(QWidget* editor, const QModelIndex& index) const;
+	
+	/** Updates the model from the spin box value. The integer value is stored
+	 *  with role Qt::UserData. Qt::DisplayValue is set to the number followed
+	 *  by a space character and the unit.
+	 *  @see QItemDelegate::setModelData().
+	 */
+	virtual void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const;
+	
+	/** @see QItemDelegate::updateEditorGeometry().
+	 */
+	virtual void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	
+private:
+	const int step;
+	QString unit;
+};
+
 #endif
