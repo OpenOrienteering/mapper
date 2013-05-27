@@ -39,7 +39,7 @@ class Map;
 class MapEditorController;
 class MapView;
 class Template;
-class SpinBoxDelegate;
+class PercentageDelegate;
 
 class TemplateWidget : public QWidget
 {
@@ -94,7 +94,7 @@ private:
 	
 	void changeTemplateFile(int row);
 	
-	SpinBoxDelegate* percentage_delegate;
+	PercentageDelegate* percentage_delegate;
 	
 	QCheckBox* all_hidden_check;
 	QTableWidget* template_table;
