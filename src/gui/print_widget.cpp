@@ -22,6 +22,7 @@
 
 #include <limits>
 
+#include <QFileInfo>
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
 
@@ -51,6 +52,8 @@ PrintWidget::PrintWidget(Map* map, MainWindow* main_window, MapView* main_view, 
   print_tool(NULL),
   active(false)
 {
+	Q_ASSERT(main_window != NULL);
+	
 	layout = new QFormLayout();
 	
 	target_combo = new QComboBox();
@@ -810,6 +813,8 @@ void PrintWidget::previewClicked()
 		return;
 	
 	QPrinter* printer = map_printer->makePrinter();
+	printer->setCreator(main_window->appName());
+	printer->setDocName(QFileInfo(main_window->getCurrentFilePath()).baseName());
 #if !defined(Q_OS_MAC)
 	QPrintPreviewDialog preview(printer, this);
 #else
@@ -888,6 +893,8 @@ void PrintWidget::printClicked()
 	
 	QPrinter* printer = map_printer->makePrinter();
 	printer->setNumCopies(copies_edit->value());
+	printer->setCreator(main_window->appName());
+	printer->setDocName(QFileInfo(main_window->getCurrentFilePath()).baseName());
 	if (map_printer->getTarget() == MapPrinter::pdfTarget())
 	{
 #if QT_VERSION < 0x050000		
@@ -901,7 +908,6 @@ void PrintWidget::printClicked()
 				path.append(".pdf");
 		}
 		printer->setOutputFileName(path);
-		printer->setCreator(main_window->appName());
 	}
 	
 	// Print the map
