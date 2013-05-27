@@ -79,7 +79,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 		template_table->horizontalHeaderItem(0)->setData(Qt::DecorationRole, pixmap);
 	}
 	
-	percentage_delegate = new SpinBoxDelegate(this, 0, 100, tr("%"), 5);
+	percentage_delegate = new PercentageDelegate(this, 5);
 	template_table->setItemDelegateForColumn(1, percentage_delegate);
 	
 	QHeaderView* header_view = template_table->horizontalHeader();
@@ -526,7 +526,7 @@ void TemplateWidget::cellChange(int row, int column)
 		}
 		else if (column == 1)
 		{
-			float opacity = template_table->item(row, column)->data(Qt::UserRole).toFloat() / 100.0f;
+			float opacity = template_table->item(row, column)->data(Qt::DisplayRole).toFloat();
 			if (opacity <= 0.0f)
 			{
 				map->setTemplateAreaDirty(pos);
@@ -583,7 +583,7 @@ void TemplateWidget::cellChange(int row, int column)
 		}
 		else if (column == 1)
 		{
-			float opacity = template_table->item(row, column)->data(Qt::UserRole).toFloat() / 100.0f;
+			float opacity = template_table->item(row, column)->data(Qt::DisplayRole).toFloat();
 			if (opacity <= 0.0f)
 			{
 				map->setObjectAreaDirty(map_bounds);
@@ -840,18 +840,26 @@ void TemplateWidget::updateRow(int row)
 	{
 		vis = main_view->getMapVisibility();
 		name = tr("- Map -");
-		QBrush inactive_background(QPalette().color(QPalette::Inactive, QPalette::Window));
-		template_table->item(row, 0)->setBackground(inactive_background);
-		template_table->item(row, 1)->setBackground(inactive_background);
-		template_table->item(row, 2)->setFlags(Qt::ItemIsSelectable);
-		template_table->item(row, 2)->setBackground(inactive_background);
-		template_table->item(row, 3)->setFlags(Qt::ItemIsSelectable);
-		template_table->item(row, 3)->setBackground(inactive_background);
+		QBrush map_row_background(QPalette().color(QPalette::Active, QPalette::AlternateBase));
+		template_table->item(row, 0)->setBackground(map_row_background);
+		template_table->item(row, 1)->setBackground(map_row_background);
+		template_table->item(row, 2)->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		template_table->item(row, 2)->setBackground(map_row_background);
+		template_table->item(row, 3)->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+		template_table->item(row, 3)->setBackground(map_row_background);
 	}
 	
-	QAbstractItemModel* model = template_table->model();
-	template_table->item(row, 0)->setCheckState(vis->visible ? Qt::Checked : Qt::Unchecked);
-	percentage_delegate->setModelData(model, model->index(row, 1), qRound(vis->opacity * 100));
+	if (valid)
+	{
+		template_table->item(row, 0)->setCheckState(vis->visible ? Qt::Checked : Qt::Unchecked);
+		template_table->item(row, 3)->setData(Qt::DecorationRole, QVariant());
+	}
+	else
+	{
+		template_table->item(row, 0)->setCheckState(vis->visible ? Qt::PartiallyChecked : Qt::Unchecked);
+		template_table->item(row, 3)->setData(Qt::DecorationRole, QIcon(":/images/open.png"));
+	}
+	template_table->item(row, 1)->setData(Qt::DisplayRole, vis->opacity);
 	template_table->item(row, 2)->setText((group < 0) ? "" : QString::number(group));
 	template_table->item(row, 3)->setText(name);
 	template_table->item(row, 3)->setData(Qt::ToolTipRole, path);
@@ -860,9 +868,9 @@ void TemplateWidget::updateRow(int row)
 	QBrush brush(QColor::fromRgb(204, 0, 0));
 	if (vis->visible)
 	{
-		decoration_color = QColor::fromCmykF(0.0f, 0.0f, 0.0f, vis->opacity);
 		if (valid)
 		{
+			decoration_color = QColor::fromCmykF(0.0f, 0.0f, 0.0f, vis->opacity);
 			brush.setColor(QPalette().color(QPalette::Active, QPalette::Foreground));
 		}
 	}
