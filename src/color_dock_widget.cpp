@@ -161,6 +161,8 @@ void ColorWidget::newColor()
 	map->addColor(row);
 	
 	map->updateAllObjects();
+	
+	editCurrentColor();
 }
 
 void ColorWidget::deleteColor()
@@ -193,6 +195,8 @@ void ColorWidget::duplicateColor()
 	map->addColor(new_color, row);
 	
 	map->updateAllObjects();
+	
+	editCurrentColor();
 }
 
 void ColorWidget::moveColorUp()
@@ -391,7 +395,7 @@ void ColorWidget::updateRow(int row)
 			item->setData(Qt::DecorationRole, (const QColor&)*color);
 			break;
 		default:
-			item->setData(Qt::DecorationRole, QVariant());
+			item->setData(Qt::DecorationRole, QColor(Qt::transparent));
 	}
 	
 	// CMYK
@@ -404,7 +408,7 @@ void ColorWidget::updateRow(int row)
 		case MapColor::SpotColor:
 		case MapColor::RgbColor:
 			item->setForeground(palette().color(QPalette::Disabled, QPalette::Text));
-			item->setData(Qt::DecorationRole, QVariant());
+			item->setData(Qt::DecorationRole, QColor(Qt::transparent));
 			break;
 		default:
 			item->setForeground(palette().color(QPalette::Active, QPalette::Text));
@@ -420,7 +424,7 @@ void ColorWidget::updateRow(int row)
 		case MapColor::SpotColor:
 		case MapColor::CmykColor:
 			item->setForeground(palette().color(QPalette::Disabled, QPalette::Text));
-			item->setData(Qt::DecorationRole, QVariant());
+			item->setData(Qt::DecorationRole, QColor(Qt::transparent));
 			break;
 		default:
 			item->setForeground(palette().color(QPalette::Active, QPalette::Text));

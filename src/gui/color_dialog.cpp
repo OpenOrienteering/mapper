@@ -38,7 +38,7 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	setSizeGripEnabled(true);
 	
 	color_preview_label = new QLabel();
-	mc_name_label = new QLabel();
+	mc_name_edit = new QLineEdit();
 	
 	prof_color_layout = new QGridLayout();
 	int col = 0;
@@ -216,7 +216,7 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	
 	QGridLayout* layout = new QGridLayout();
 	layout->addWidget(color_preview_label, 0, 0);
-	layout->addWidget(mc_name_label, 0, 1);
+	layout->addWidget(mc_name_edit, 0, 1);
 	layout->addWidget(properties_widget, 1, 0, 1, 2);
 	layout->addWidget(button_box, 2, 0, 1, 2);
 	layout->setColumnStretch(1, 1);
@@ -225,8 +225,10 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	updateWidgets();
 	updateButtons();
 	
+	connect(mc_name_edit, SIGNAL(textChanged(QString)), this, SLOT(mapColorNameChanged()));
+	
 	connect(spot_color_options, SIGNAL(buttonClicked(int)), this, SLOT(spotColorTypeChanged(int)));
-	connect(sc_name_edit, SIGNAL(textChanged(QString)), this, SLOT(nameChanged()));
+	connect(sc_name_edit, SIGNAL(textChanged(QString)), this, SLOT(spotColorNameChanged()));
 	for (int i = 0; i < (int)component_colors.size(); i++)
 	{
 		connect(component_colors[i], SIGNAL(currentIndexChanged(int)), this, SLOT(spotColorCompositionChanged()));
@@ -260,7 +262,7 @@ void ColorDialog::updateWidgets()
 	pixmap.fill(color);
 	color_preview_label->setPixmap(pixmap);
 	
-	mc_name_label->setText(color.getName());
+	mc_name_edit->setText(color.getName());
 	
 	sc_name_edit->setText(color.getSpotColorName());
 	
@@ -454,6 +456,17 @@ void ColorDialog::showHelp()
 	Util::showHelp(this, "color_dock_widget.html", "editor");
 }
 
+// slot
+void ColorDialog::mapColorNameChanged()
+{
+	if (!react_to_changes)
+		return;
+	
+	color.setName(mc_name_edit->text());
+	
+	setColorModified();
+}
+
 void ColorDialog::spotColorTypeChanged(int id)
 {
 	if (!react_to_changes)
@@ -479,7 +492,7 @@ void ColorDialog::spotColorTypeChanged(int id)
 	setColorModified(true);
 }
 
-void ColorDialog::nameChanged()
+void ColorDialog::spotColorNameChanged()
 {
 	if (!react_to_changes)
 		return;
