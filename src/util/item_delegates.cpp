@@ -135,3 +135,61 @@ void SpinBoxDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionVi
 {
 	editor->setGeometry(option.rect);
 }
+
+
+
+//### PercentageDelegate ###
+
+PercentageDelegate::PercentageDelegate(QObject* parent, int step)
+ : QStyledItemDelegate(parent),
+   step(step)
+{
+	unit = QLatin1String(" ") % tr("%");
+}
+
+PercentageDelegate::PercentageDelegate(int step)
+ : QStyledItemDelegate(),
+   step(step)
+{
+	unit = QLatin1String(" ") % tr("%");
+}
+
+QString PercentageDelegate::displayText(const QVariant& value, const QLocale& locale) const
+{
+	int int_value = qRound(value.toFloat() * 100);
+	return locale.toString(int_value) % unit;
+}
+
+QWidget* PercentageDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+	QSpinBox* spinbox = Util::SpinBox::create(0, 100, unit, step);
+	spinbox->setParent(parent);
+	
+	// Commit each change immediately when returning to event loop
+	QSignalMapper* signal_mapper = new QSignalMapper(spinbox);
+	signal_mapper->setMapping(spinbox, spinbox);
+	connect(spinbox, SIGNAL(valueChanged(int)), signal_mapper, SLOT(map()), Qt::QueuedConnection);
+	connect(signal_mapper, SIGNAL(mapped(QWidget*)), this, SIGNAL(commitData(QWidget*)));
+	
+	return spinbox;
+}
+
+void PercentageDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
+{
+	int value = qRound(index.model()->data(index, Qt::DisplayRole).toFloat() * 100);
+	static_cast< QSpinBox* >(editor)->setValue(value);
+}
+
+void PercentageDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
+{
+	QSpinBox* spinBox = static_cast< QSpinBox* >(editor);
+	spinBox->interpretText();
+	QMap< int, QVariant > data(model->itemData(index));
+	data[Qt::DisplayRole] = (float)spinBox->value() / 100.0;
+	model->setItemData(index, data);
+}
+
+void PercentageDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+	editor->setGeometry(option.rect);
+}
