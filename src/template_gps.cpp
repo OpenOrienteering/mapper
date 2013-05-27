@@ -207,12 +207,17 @@ void TemplateTrack::unloadTemplateFileImpl()
 
 void TemplateTrack::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity)
 {
+	painter->save();
+	painter->setOpacity(opacity);
+	
 	drawTracks(painter);
-
+	
 	// Get map-to-paintdevice transformation from painter
 	QTransform map_to_device = painter->worldTransform();
 	
 	drawWaypoints(painter, map_to_device);
+	
+	painter->restore();
 }
 
 void TemplateTrack::drawTracks(QPainter* painter)
