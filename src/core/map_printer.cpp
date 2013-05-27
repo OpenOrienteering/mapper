@@ -449,7 +449,8 @@ void MapPrinter::updatePaperDimensions()
 	page_format.page_rect = printer->paperRect(QPrinter::Millimeter);
 	page_format.paper_dimensions = page_format.page_rect.size();
 	
-	if (target != imageTarget() && page_format.paper_size != QPrinter::Custom)
+	if ( target != imageTarget() && target != pdfTarget() &&
+		 page_format.paper_size != QPrinter::Custom )
 	{
 		qreal left, top, right, bottom;
 		printer->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
@@ -593,9 +594,12 @@ void MapPrinter::takePrinterSettings(const QPrinter* printer)
 	f.page_rect   = printer->paperRect(QPrinter::Millimeter); // temporary
 	f.paper_dimensions = f.page_rect.size();
 	
-	qreal left, top, right, bottom;
-	printer->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
-	f.page_rect.adjust(left, top, -right, -bottom);
+	if (target != pdfTarget() && target != imageTarget())
+	{
+		qreal left, top, right, bottom;
+		printer->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
+		f.page_rect.adjust(left, top, -right, -bottom);
+	}
 	
 	if (f != page_format)
 	{
