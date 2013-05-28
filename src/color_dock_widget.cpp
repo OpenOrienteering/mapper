@@ -53,7 +53,9 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	duplicate_button = newToolButton(QIcon(":/images/copy.png"), tr("Duplicate"));
 	move_up_button = newToolButton(QIcon(":/images/arrow-up.png"), tr("Move Up"));
 	move_down_button = newToolButton(QIcon(":/images/arrow-down.png"), tr("Move Down"));
-	edit_button = newToolButton(QIcon(":/images/settings.png"), tr("Edit"));
+	// TODO: In Mapper >= 0.6, switch to ColorWidget (or generic) translation context.
+	edit_button = newToolButton(QIcon(":/images/settings.png"), QApplication::translate("MapEditorController", "&Edit").remove(QChar('&')));
+	qobject_cast<QToolButton*>(edit_button)->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	QAbstractButton* help_button = newToolButton(QIcon(":/images/help.png"), tr("Help"));
 	
 	// The buttons row layout
