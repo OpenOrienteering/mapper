@@ -50,7 +50,7 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	// Buttons
 	QAbstractButton* new_button = newToolButton(QIcon(":/images/plus.png"), tr("New"));
 	delete_button = newToolButton(QIcon(":/images/minus.png"), tr("Delete"));
-	duplicate_button = newToolButton(QIcon(":/images/copy.png"), tr("Duplicate"));
+	duplicate_button = newToolButton(QIcon(":/images/tool-duplicate.png"), tr("Duplicate"));
 	move_up_button = newToolButton(QIcon(":/images/arrow-up.png"), tr("Move Up"));
 	move_down_button = newToolButton(QIcon(":/images/arrow-down.png"), tr("Move Down"));
 	// TODO: In Mapper >= 0.6, switch to ColorWidget (or generic) translation context.
