@@ -21,19 +21,12 @@
 #ifndef _OPENORIENTEERING_TEMPLATE_DOCK_WIDGET_H_
 #define _OPENORIENTEERING_TEMPLATE_DOCK_WIDGET_H_
 
-#include <QWidget>
-
-#include <QItemSelection>
-
-QT_BEGIN_NAMESPACE
-class QCheckBox;
-class QGridLayout;
-class QPushButton;
-class QTableWidget;
-class QBoxLayout;
-class QToolButton;
-class QGroupBox;
-QT_END_NAMESPACE
+#include <qglobal.h>
+#if QT_VERSION < 0x050000
+#include <QtGui>
+#else
+#include <QtWidgets>
+#endif
 
 class Map;
 class MapEditorController;
@@ -64,6 +57,8 @@ public slots:
 	
 protected:
 	virtual void resizeEvent(QResizeEvent* event);
+	
+	QAbstractButton* newToolButton(const QIcon& icon, const QString& text, QAbstractButton* prototype = NULL);
 	
 protected slots:
 	void newTemplate(QAction* action);
@@ -97,7 +92,7 @@ private:
 	int rowFromPos(int pos);
 	Template* getCurrentTemplate();
 	
-	void changeTemplateFile(int row);
+	void changeTemplateFile();
 	
 	PercentageDelegate* percentage_delegate;
 	
@@ -105,21 +100,20 @@ private:
 	QTableWidget* template_table;
 	QBoxLayout* all_templates_layout;
 	
+	QAction* move_by_hand_action;
+	
 	// Buttons
 	QWidget* list_buttons_group;
-	QPushButton* delete_button;
-	QPushButton* duplicate_button;
-	QPushButton* move_up_button;
-	QPushButton* move_down_button;
-	
-	QGroupBox* active_buttons_group;
-	QPushButton* georef_button;
-	QAction* move_by_hand_action;
-	QToolButton* move_by_hand_button;
-	QPushButton* adjust_button;
-	//QPushButton* group_button;
-	QPushButton* position_button;
-	//QToolButton* more_button;
+	QAbstractButton* delete_button;
+	QAbstractButton* duplicate_button;
+	QAbstractButton* move_up_button;
+	QAbstractButton* move_down_button;
+	QAbstractButton* georef_button;
+	QAbstractButton* move_by_hand_button;
+	QAbstractButton* adjust_button;
+	QAbstractButton* position_button;
+	//QAbstractButton* group_button;
+	//QAbstractButton* more_button;
 	
 	bool wide_layout;
 	QBoxLayout* layout;
