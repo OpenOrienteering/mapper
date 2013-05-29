@@ -20,12 +20,6 @@
 
 #include "template_dock_widget.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
-#include <QtWidgets>
-#endif
-
 #include "georeferencing.h"
 #include "gui/main_window.h"
 #include "map.h"
@@ -48,12 +42,19 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
   main_view(main_view), 
   controller(controller)
 {
-	this->setWhatsThis("<a href=\"templates.html#setup\">See more</a>");
 	react_to_changes = true;
 	
-	// Wrap this the checkbox in a widget and layout to force a margin.
+	this->setWhatsThis("<a href=\"templates.html#setup\">See more</a>");
+	
+	// Wrap the checkbox in a widget and layout to force a margin.
 	QLayout* all_hidden_layout = new QHBoxLayout();
-	all_hidden_layout->setContentsMargins(4, 4, 4, 4);
+	QStyleOption style_option(QStyleOption::Version, QStyleOption::SO_DockWidget);
+	all_hidden_layout->setContentsMargins(
+		style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option) / 2,
+		0, // Covered by the main layout's spacing.
+		style()->pixelMetric(QStyle::PM_LayoutRightMargin, &style_option) / 2,
+		style()->pixelMetric(QStyle::PM_LayoutBottomMargin, &style_option) / 2
+	);
 	QWidget* all_hidden_widget = new QWidget();
 	all_hidden_widget->setLayout(all_hidden_layout);
 	// Reuse the translation from MapEditorController action.
@@ -66,6 +67,9 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	template_table->setSelectionBehavior(QAbstractItemView::SelectRows);
 	template_table->setHorizontalHeaderLabels(QStringList() << "" << tr("Opacity") << tr("Group") << tr("Filename"));
 	template_table->verticalHeader()->setVisible(false);
+#if 1
+	template_table->hideColumn(2);
+#endif
 	
 	template_table->horizontalHeaderItem(0)->setData(Qt::ToolTipRole, tr("Show"));
 	QCheckBox header_check;
@@ -106,55 +110,74 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	// List Buttons
 	list_buttons_group = new QWidget();
 	
-	QToolButton* new_button = new QToolButton();
-	new_button->setText(tr("Create..."));
-	new_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	new_button->setPopupMode(QToolButton::InstantPopup);
-	new_button->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
-	QMenu* new_button_menu = new QMenu(new_button);
-	new_button_menu->addAction(tr("Sketch"));
-	new_button_menu->addAction(tr("GPS"));
-	new_button->setMenu(new_button_menu);
-	new_button->setEnabled(false);	// TODO!
+	QMenu* new_button_menu = new QMenu(this);
+	QAction* current_action = new_button_menu->addAction(tr("Open..."));
+	current_action->setIcon(QIcon(":/images/open.png"));
+	current_action = new_button_menu->addAction(QApplication::translate("MapEditorController", "Reopen template..."), controller, SLOT(reopenTemplateClicked()));
+#if 0
+	current_action = new_button_menu->addAction(tr("Sketch"));
+	current_action->setDisabled(true);
+	current_action = new_button_menu->addAction(tr("GPS"));
+	current_action->setDisabled(true);
+#endif
 	
-	QPushButton* open_button = new QPushButton(QIcon(":/images/open.png"), tr("Open..."));
-	delete_button = new QPushButton(QIcon(":/images/minus.png"), "");
+	QToolButton* new_button = qobject_cast<QToolButton*>(newToolButton(QIcon(":/images/plus.png"), tr("Add...")));
+	new_button->setPopupMode(QToolButton::MenuButtonPopup);
+	new_button->setMenu(new_button_menu);
+	
+	duplicate_button = newToolButton(QIcon(":/images/tool-duplicate.png"), tr("Duplicate"));
+	delete_button = newToolButton(QIcon(":/images/minus.png"), QString());
 	updateDeleteButtonText();
 	connect(&Settings::getInstance(), SIGNAL(settingsChanged()), this, SLOT(updateDeleteButtonText()));
-	duplicate_button = new QPushButton(QIcon(":/images/copy.png"), tr("Duplicate"));
-	move_up_button = new QPushButton(QIcon(":/images/arrow-up.png"), tr("Move Up"));
-	move_down_button = new QPushButton(QIcon(":/images/arrow-down.png"), tr("Move Down"));
-	QPushButton* help_button = new QPushButton(QIcon(":/images/help.png"), tr("Help"));
-
-	QGridLayout* list_buttons_group_layout = new QGridLayout();
-	list_buttons_group_layout->setMargin(0);
-	list_buttons_group_layout->addWidget(new_button, 0, 1);
-	list_buttons_group_layout->addWidget(open_button, 0, 0);
-	list_buttons_group_layout->addWidget(duplicate_button, 1, 1);
-	list_buttons_group_layout->addWidget(delete_button, 2, 1);
-	list_buttons_group_layout->addWidget(move_up_button, 1, 0);
-	list_buttons_group_layout->addWidget(move_down_button, 2, 0);
-	list_buttons_group_layout->setRowStretch(3, 1);
-	list_buttons_group_layout->addWidget(help_button, 4, 0, 1, 2);
-	list_buttons_group->setLayout(list_buttons_group_layout);
 	
-	// Active group
-	active_buttons_group = new QGroupBox();
+	move_up_button = newToolButton(QIcon(":/images/arrow-up.png"), tr("Move Up"));
+	move_up_button->setAutoRepeat(true);
+	move_down_button = newToolButton(QIcon(":/images/arrow-down.png"), tr("Move Down"));
+	move_down_button->setAutoRepeat(true);
 	
-	georef_button = new QPushButton();
+	// TODO: Fix string
+	georef_button = newToolButton(QIcon(":/images/grid.png"), tr("Georeferenced: %1").remove(": %1"));
+	qobject_cast<QToolButton*>(georef_button)->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	georef_button->setCheckable(true);
+	georef_button->setChecked(true);
+	georef_button->setEnabled(false); // TODO
 	move_by_hand_action = new QAction(QIcon(":/images/move.png"), tr("Move by hand"), this);
 	move_by_hand_action->setCheckable(true);
-	move_by_hand_button = new QToolButton();
-	move_by_hand_button->setDefaultAction(move_by_hand_action);
-	move_by_hand_button->setToolButtonStyle(Qt::ToolButtonTextOnly);
-	move_by_hand_button->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed));
-	adjust_button = new QPushButton(QIcon(":/images/georeferencing.png"), tr("Adjust..."));
+	move_by_hand_button = newToolButton(move_by_hand_action->icon(), move_by_hand_action->text());
+	qobject_cast<QToolButton*>(move_by_hand_button)->setDefaultAction(move_by_hand_action);
+	adjust_button = newToolButton(QIcon(":/images/georeferencing.png"), tr("Adjust..."));
 	adjust_button->setCheckable(true);
-	//group_button = new QPushButton(QIcon(":/images/group.png"), tr("(Un)group"));
-	position_button = new QPushButton(tr("Positioning..."));
+	position_button = newToolButton(QIcon(":/images/settings.png"), tr("Positioning..."));
 	position_button->setCheckable(true);
 	
+	
+	QAbstractButton* help_button = newToolButton(QIcon(":/images/help.png"), tr("Help"));
+	
+	// The buttons row layout
+	QBoxLayout* buttons_group_layout = new QHBoxLayout();
+	buttons_group_layout->setContentsMargins(
+		style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option) / 2,
+		0, // Covered by the main layout's spacing.
+		style()->pixelMetric(QStyle::PM_LayoutRightMargin, &style_option) / 2,
+		style()->pixelMetric(QStyle::PM_LayoutBottomMargin, &style_option) / 2
+	);
+	buttons_group_layout->addWidget(new_button);
+	buttons_group_layout->addWidget(duplicate_button);
+	buttons_group_layout->addWidget(delete_button);
+	buttons_group_layout->addWidget(new QLabel("   "));
+	buttons_group_layout->addWidget(move_up_button);
+	buttons_group_layout->addWidget(move_down_button);
+	buttons_group_layout->addWidget(new QLabel("   "));
+	buttons_group_layout->addWidget(adjust_button);
+	buttons_group_layout->addWidget(move_by_hand_button);
+	buttons_group_layout->addWidget(position_button);
+	buttons_group_layout->addWidget(georef_button);
+	buttons_group_layout->addWidget(new QLabel("   "), 1);
+	buttons_group_layout->addWidget(help_button);
+	
+	list_buttons_group->setLayout(buttons_group_layout);
+	
+	//group_button = new QPushButton(QIcon(":/images/group.png"), tr("(Un)group"));
 	/*more_button = new QToolButton();
 	more_button->setText(tr("More..."));
 	more_button->setPopupMode(QToolButton::InstantPopup);
@@ -164,17 +187,6 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	more_button_menu->addAction(tr("Set transparent color..."));
 	more_button_menu->addAction(tr("Trace lines..."));
 	more_button->setMenu(more_button_menu);*/
-	
-	int row = 0;
-	QGridLayout* active_buttons_group_layout = new QGridLayout();
-	active_buttons_group_layout->setMargin(0);
-	active_buttons_group_layout->addWidget(georef_button, row, 0);
-	active_buttons_group_layout->addWidget(adjust_button, row++, 1);
-	active_buttons_group_layout->addWidget(move_by_hand_button, row, 0);
-	active_buttons_group_layout->addWidget(position_button, row++, 1);
-	//active_buttons_group_layout->addWidget(group_button, row++, 0);
-	//active_buttons_group_layout->addWidget(more_button, row++, 1);
-	active_buttons_group->setLayout(active_buttons_group_layout);
 	
 	selectionChanged(QItemSelection(), QItemSelection()); // enable / disable buttons
 	//currentCellChange(template_table->currentRow(), 0, 0, 0);	// enable / disable buttons
@@ -201,8 +213,10 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	connect(template_table, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentCellChange(int,int,int,int)));
 	connect(template_table, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(cellDoubleClick(int,int)));
 	
-	connect(new_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(newTemplate(QAction*)));
-	connect(open_button, SIGNAL(clicked(bool)), this, SLOT(openTemplate()));
+// 	connect(new_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(newTemplate(QAction*)));
+	
+	connect(new_button, SIGNAL(clicked(bool)), this, SLOT(openTemplate()));
+	connect(new_button_menu->actions()[0], SIGNAL(triggered(bool)), this, SLOT(openTemplate()));
 	connect(delete_button, SIGNAL(clicked(bool)), this, SLOT(deleteTemplate()));
 	connect(duplicate_button, SIGNAL(clicked(bool)), this, SLOT(duplicateTemplate()));
 	connect(move_up_button, SIGNAL(clicked(bool)), this, SLOT(moveTemplateUp()));
@@ -211,8 +225,9 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	
 	connect(move_by_hand_action, SIGNAL(triggered(bool)), this, SLOT(moveByHandClicked(bool)));
 	connect(adjust_button, SIGNAL(clicked(bool)), this, SLOT(adjustClicked(bool)));
-	//connect(group_button, SIGNAL(clicked(bool)), this, SLOT(groupClicked()));
 	connect(position_button, SIGNAL(clicked(bool)), this, SLOT(positionClicked(bool)));
+	
+	//connect(group_button, SIGNAL(clicked(bool)), this, SLOT(groupClicked()));
 	//connect(more_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(moreActionClicked(QAction*)));
 	
 	connect(map, SIGNAL(templateAdded(int,Template*)), this, SLOT(templateAdded(int,Template*)));
@@ -228,6 +243,22 @@ TemplateWidget::~TemplateWidget()
 	settings.endGroup();	
 }
 
+QAbstractButton* TemplateWidget::newToolButton(const QIcon& icon, const QString& text, QAbstractButton* prototype)
+{
+	if (prototype == NULL)
+	{
+		QToolButton* button = new QToolButton();
+		button->setAutoRaise(true);
+		button->setToolButtonStyle(Qt::ToolButtonIconOnly);
+		button->setToolTip(text);
+		prototype = button;
+	}
+	prototype->setIcon(icon);
+	prototype->setText(text);
+	prototype->setWhatsThis("<a href=\"templates.html#setup\">See more</a>");
+	return prototype;
+}
+
 // slot
 void TemplateWidget::setAllTemplatesHidden(bool value)
 {
@@ -236,14 +267,7 @@ void TemplateWidget::setAllTemplatesHidden(bool value)
 	bool enabled = !value;
 	template_table->setEnabled(enabled);
 	list_buttons_group->setEnabled(enabled);
-	if (!enabled)
-	{
-		active_buttons_group->setEnabled(false);
-	}
-	else
-	{
-		selectionChanged(QItemSelection(), QItemSelection());
-	}
+	selectionChanged(QItemSelection(), QItemSelection());
 }
 
 void TemplateWidget::addTemplateAt(Template* new_template, int pos)
@@ -345,7 +369,6 @@ void TemplateWidget::resizeEvent(QResizeEvent* event)
 		layout->setMargin(0);
 		layout->addLayout(all_templates_layout, 1);
 		layout->addWidget(list_buttons_group);
-		layout->addWidget(active_buttons_group);
 		setLayout(layout);
 		updateGeometry();
 		
@@ -523,6 +546,7 @@ void TemplateWidget::cellChange(int row, int column)
 				map->setTemplateAreaDirty(pos);
 			
 			updateRow(row);
+			template_table->setCurrentCell(row, column);
 		}
 		else if (column == 1)
 		{
@@ -538,7 +562,10 @@ void TemplateWidget::cellChange(int row, int column)
 				map->setTemplateAreaDirty(pos);
 			}
 			
-			template_table->item(row, 1)->setData(Qt::DecorationRole, QColor::fromCmykF(0.0f, 0.0f, 0.0f, vis->opacity));
+			if (temp->getTemplateState() != Template::Invalid)
+			{
+				template_table->item(row, 1)->setData(Qt::DecorationRole, QColor::fromCmykF(0.0f, 0.0f, 0.0f, vis->opacity));
+			}
 		}
 		else if (column == 2)
 		{
@@ -580,6 +607,7 @@ void TemplateWidget::cellChange(int row, int column)
 				map->setObjectAreaDirty(map_bounds);
 			
 			updateRow(row);
+			template_table->setCurrentCell(row, column);
 		}
 		else if (column == 1)
 		{
@@ -608,84 +636,75 @@ void TemplateWidget::selectionChanged(const QItemSelection& selected, const QIte
 	
 	int current_row = template_table->currentRow();
 	int pos = posFromRow(current_row);
-	bool map_row = pos < 0;	// does the selection contain the map row?
+	bool map_row_selected = current_row > 0 && pos < 0;	// does the selection contain the map row?
 	Template* temp = (current_row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
-	bool multiple_rows_selected = false;		// is more than one row selected?
+// 	bool multiple_rows_selected = false;		// is more than one row selected?
+	int num_rows_selected = 0;
 	
-	int first_selected_row = (template_table->selectedItems().size() > 0) ? template_table->selectedItems()[0]->row() : 0;
+	int last_row = -1;
 	for (int i = 1; i < template_table->selectedItems().size(); ++i)
 	{
 		int row = template_table->selectedItems()[i]->row();
-		if (row != first_selected_row)
-			multiple_rows_selected = true;
+		if (row == last_row)
+			continue;
+		
+		last_row = row;
+		++num_rows_selected;
+			
 		if (posFromRow(row) < 0)
-			map_row = true;
+			map_row_selected = true;
 	}
-	if (current_row != first_selected_row)
-		multiple_rows_selected = true;
 	
-	duplicate_button->setEnabled(current_row >= 0 && !map_row && !multiple_rows_selected);
-	delete_button->setEnabled(current_row >= 0 && !map_row && !multiple_rows_selected);	// TODO: Make it possible to delete multiple templates at once
-	move_up_button->setEnabled(current_row >= 1 && !multiple_rows_selected);
-	move_down_button->setEnabled(current_row < template_table->rowCount() - 1 && current_row != -1 && !multiple_rows_selected);
+	bool single_row_selected = (num_rows_selected == 1);
 	
-	QString active_group_title;
-	QString georef_text;
-	bool georef_active;
-	if (current_row < 0)
+	duplicate_button->setEnabled(single_row_selected && !map_row_selected);
+	delete_button->setEnabled(single_row_selected && !map_row_selected);	// TODO: Make it possible to delete multiple templates at once
+	move_up_button->setEnabled(single_row_selected && current_row >= 1);
+	move_down_button->setEnabled(single_row_selected && current_row < template_table->rowCount() - 1);
+	
+	bool georef_visible = false;
+	bool georef_active  = false;
+	bool manual_visible = false;
+	if (single_row_selected)
 	{
-		active_group_title = tr("No selection");
-		georef_text = "-";
-		georef_active = false;
+		if (map_row_selected)
+		{
+			georef_visible = true;
+			georef_active = map->getGeoreferencing().isValid() && !map->getGeoreferencing().isLocal();
+		}
+		else if (temp->isTemplateGeoreferenced())
+		{
+			georef_visible = true;
+			georef_active  = true;
+		}
+		else
+		{
+			manual_visible = true;
+		}
 	}
-	else if (multiple_rows_selected)
-	{
-		active_group_title = tr("Multiple templates selected");
-		georef_text = "-";
-		georef_active = false;
-	}
-	else if (map_row)
-	{
-		active_group_title = tr("- Map -");
-		georef_active = map->getGeoreferencing().isValid() && !map->getGeoreferencing().isLocal();
-		georef_text = georef_active ? tr("yes") : tr("no");
-	}
-	else
-	{
-		active_group_title = temp->getTemplateFilename();
-		georef_active = temp->isTemplateGeoreferenced();
-		georef_text = georef_active ? tr("yes") : tr("no");
-	}
-	active_buttons_group->setTitle(active_group_title);
-	georef_button->setText(tr("Georeferenced: %1").arg(georef_text));
+	georef_button->setVisible(georef_visible);
 	georef_button->setChecked(georef_active);
+	move_by_hand_button->setVisible(manual_visible);
+	adjust_button->setVisible(manual_visible);
+	position_button->setVisible(manual_visible);
 	
-	bool enable_active_buttons = current_row >= 0 && !map_row && temp && !multiple_rows_selected;
-	active_buttons_group->setEnabled(enable_active_buttons);
-	if (enable_active_buttons)
+/*	if (enable_active_buttons)
 	{
-		// TODO: enable changing georeferencing state
-		georef_button->setEnabled(false);
-		
-		move_by_hand_button->setEnabled(!temp->isTemplateGeoreferenced());
-		adjust_button->setEnabled(!temp->isTemplateGeoreferenced());
-		position_button->setEnabled(!temp->isTemplateGeoreferenced());
-		
 		// TODO: Implement and enable buttons again
 		//group_button->setEnabled(false); //multiple_rows_selected || (!multiple_rows_selected && map->getTemplate(posFromRow(current_row))->getTemplateGroup() >= 0));
 		//more_button->setEnabled(false); // !multiple_rows_selected);
-	}
+	} */
 	
-	if (multiple_rows_selected)
-	{
-		adjust_button->setChecked(false);
-		position_button->setChecked(false);
-	}
-	else
-	{
-		adjust_button->setChecked(temp && controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == (void*)temp);
-		position_button->setChecked(temp && controller->existsTemplatePositionDockWidget(temp));
-	}
+// 	if (multiple_rows_selected)
+// 	{
+// 		adjust_button->setChecked(false);
+// 		position_button->setChecked(false);
+// 	}
+// 	else
+// 	{
+// 		adjust_button->setChecked(temp && controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == (void*)temp);
+// 		position_button->setChecked(temp && controller->existsTemplatePositionDockWidget(temp));
+// 	}
 }
 
 void TemplateWidget::currentCellChange(int current_row, int current_column, int previous_row, int previous_column)
@@ -698,7 +717,7 @@ void TemplateWidget::currentCellChange(int current_row, int current_column, int 
 			return;
 		
 		if (temp->getTemplateState() == Template::Invalid)
-			changeTemplateFile(current_row);
+			changeTemplateFile();
 	}
 }
 
@@ -711,14 +730,14 @@ void TemplateWidget::cellDoubleClick(int row, int column)
 		if (!temp)
 			return;
 		
-		changeTemplateFile(row);
+		changeTemplateFile();
 	}
 }
 
 void TemplateWidget::updateDeleteButtonText()
 {
 	bool keep_transformation_of_closed_templates = Settings::getInstance().getSettingCached(Settings::Templates_KeepSettingsOfClosed).toBool();
-	delete_button->setText(keep_transformation_of_closed_templates ? tr("Close") : tr("Delete"));
+	delete_button->setToolTip(keep_transformation_of_closed_templates ? tr("Close") : tr("Delete"));
 }
 
 void TemplateWidget::moveByHandClicked(bool checked)
@@ -857,7 +876,7 @@ void TemplateWidget::updateRow(int row)
 	else
 	{
 		template_table->item(row, 0)->setCheckState(vis->visible ? Qt::PartiallyChecked : Qt::Unchecked);
-		template_table->item(row, 3)->setData(Qt::DecorationRole, QIcon(":/images/open.png"));
+		template_table->item(row, 3)->setData(Qt::DecorationRole, QIcon(":/images/delete.png"));
 	}
 	template_table->item(row, 1)->setData(Qt::DisplayRole, vis->opacity);
 	template_table->item(row, 2)->setText((group < 0) ? "" : QString::number(group));
@@ -876,11 +895,12 @@ void TemplateWidget::updateRow(int row)
 	}
 	else if (valid)
 	{
+		decoration_color = QColor(Qt::transparent);
 		brush.setColor(QPalette().color(QPalette::Disabled, QPalette::Foreground));
 	}
 	else
 	{
-		brush.setColor(QColor::fromRgb(204, 0, 0).darker());
+		brush.setColor(brush.color().lighter());
 	}
 	template_table->item(row, 1)->setData(Qt::DecorationRole, decoration_color);
 	template_table->item(row, 1)->setForeground(brush);
@@ -920,13 +940,14 @@ Template* TemplateWidget::getCurrentTemplate()
 	return map->getTemplate(pos);
 }
 
-void TemplateWidget::changeTemplateFile(int row)
+void TemplateWidget::changeTemplateFile()
 {
+	int row = template_table->currentRow();
 	int pos = posFromRow(row);
 	Template* temp = (row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
 	Q_ASSERT(temp);
 	
-	if (temp->execSwitchTemplateFileDialog(this))
+	if (temp && temp->execSwitchTemplateFileDialog(this))
 	{
 		updateRow(row);
 		temp->setTemplateAreaDirty();
