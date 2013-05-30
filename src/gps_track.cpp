@@ -81,13 +81,39 @@ Track::Track(const Track& other)
 	
 	current_segment_finished = other.current_segment_finished;
 	
-	track_crs = new Georeferencing(*other.track_crs);
 	map_georef = other.map_georef;
+	
+	if (other.track_crs != NULL)
+	{
+		track_crs = new Georeferencing(*other.track_crs);
+	}
 }
 
 Track::~Track()
 {
 	delete track_crs;
+}
+
+Track& Track::operator=(const Track& rhs)
+{
+	clear();
+	
+	waypoints = rhs.waypoints;
+	waypoint_names = rhs.waypoint_names;
+	
+	segment_points = rhs.segment_points;
+	segment_starts = rhs.segment_starts;
+	
+	current_segment_finished = rhs.current_segment_finished;
+	
+	map_georef = rhs.map_georef;
+	
+	if (rhs.track_crs != NULL)
+	{
+		track_crs = new Georeferencing(*rhs.track_crs);
+	}
+	
+	return *this;
 }
 
 void Track::clear()

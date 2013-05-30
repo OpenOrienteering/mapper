@@ -118,7 +118,6 @@ public:
 	/// Averages all track coordinates
 	LatLon calcAveragePosition() const;
 	
-	
 	/** A collection of key:value tags. Cf. Object::Tags. */
 	typedef QHash<QString, QString> Tags;
 	
@@ -127,6 +126,9 @@ public:
 	
 	/** Returns the mapping of element names to tag collections. */
 	const ElementTags& tags() const;
+
+	/** Assigns a copy of another Track's data to this object. */
+	Track& operator=(const Track& rhs);
 	
 private:
 	bool loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent);
