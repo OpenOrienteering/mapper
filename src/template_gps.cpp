@@ -343,7 +343,7 @@ int TemplateTrack::getTemplateBoundingBoxPixelBorder()
 Template* TemplateTrack::duplicateImpl()
 {
 	TemplateTrack* copy = new TemplateTrack(template_path, map);
-	copy->track = Track(track);
+	copy->track = track;
 	return copy;
 }
 
