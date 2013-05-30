@@ -53,6 +53,10 @@ public slots:
 protected:
 	virtual void resizeEvent(QResizeEvent* event);
 	
+	/** When key events for Qt::Key_Space are sent to the template_table,
+	 *  this will toggle the visibility of the current template. */
+	virtual bool eventFilter(QObject* watched, QEvent* event);
+	
 	QAbstractButton* newToolButton(const QIcon& icon, const QString& text, QAbstractButton* prototype = NULL);
 	
 protected slots:
@@ -80,14 +84,14 @@ protected slots:
 	void templateAdded(int pos, Template* temp);
 	void templatePositionDockWidgetClosed(Template* temp);
 	
+	void changeTemplateFile();
+	
 private:
 	void addRow(int row);
 	void updateRow(int row);
 	int posFromRow(int row);
 	int rowFromPos(int pos);
 	Template* getCurrentTemplate();
-	
-	void changeTemplateFile();
 	
 	PercentageDelegate* percentage_delegate;
 	
