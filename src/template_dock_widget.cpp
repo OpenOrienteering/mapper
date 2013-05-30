@@ -63,8 +63,10 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	
 	// Template table
 	template_table = new QTableWidget(map->getNumTemplates() + 1, 4);
+	template_table->installEventFilter(this);
 	template_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
 	template_table->setSelectionBehavior(QAbstractItemView::SelectRows);
+	template_table->setSelectionMode(QAbstractItemView::SingleSelection);
 	template_table->setHorizontalHeaderLabels(QStringList() << "" << tr("Opacity") << tr("Group") << tr("Filename"));
 	template_table->verticalHeader()->setVisible(false);
 #if 1
@@ -378,6 +380,32 @@ void TemplateWidget::resizeEvent(QResizeEvent* event)
 	event->accept();
 }
 
+bool TemplateWidget::eventFilter(QObject* watched, QEvent* event)
+{
+	if (watched == template_table)
+	{
+		if ( event->type() == QEvent::KeyPress &&
+		     static_cast<QKeyEvent*>(event)->key() == Qt::Key_Space )
+		{
+			int row = template_table->currentRow();
+			if (row >= 0 && template_table->item(row, 1)->flags().testFlag(Qt::ItemIsEnabled))
+			{
+				bool is_checked = template_table->item(row, 0)->checkState() != Qt::Unchecked;
+				template_table->item(row, 0)->setCheckState(is_checked ? Qt::Unchecked : Qt::Checked);
+			}
+			return true;
+		}
+		
+		if ( event->type() == QEvent::KeyRelease &&
+		     static_cast<QKeyEvent*>(event)->key() == Qt::Key_Space )
+		{
+			return true;
+		}
+	}
+	
+	return false;
+}
+
 void TemplateWidget::newTemplate(QAction* action)
 {
 	if (action->text() == tr("Sketch"))
@@ -418,11 +446,19 @@ void TemplateWidget::deleteTemplate()
 	else
 		map->deleteTemplate(pos);
 	
-	template_table->removeRow(template_table->currentRow());
+	{
+		bool react_to_changes = this->react_to_changes;
+		this->react_to_changes = false;
+		template_table->removeRow(template_table->currentRow());
+		this->react_to_changes = react_to_changes;
+	}
+		
 	if (pos < map->getFirstFrontTemplate())
 		map->setFirstFrontTemplate(map->getFirstFrontTemplate() - 1);
 	
 	map->setTemplatesDirty();
+	
+	template_table->selectRow(template_table->currentRow());
 }
 
 void TemplateWidget::duplicateTemplate()
@@ -470,7 +506,12 @@ void TemplateWidget::moveTemplateUp()
 	updateRow(row - 1);
 	updateRow(row);
 	
-	template_table->setCurrentCell(row - 1, template_table->currentColumn());
+	{
+		bool react_to_changes = this->react_to_changes;
+		this->react_to_changes = false;
+		template_table->setCurrentCell(row - 1, template_table->currentColumn());
+		this->react_to_changes = react_to_changes;
+	}
 	map->setTemplatesDirty();
 }
 
@@ -508,7 +549,12 @@ void TemplateWidget::moveTemplateDown()
 	updateRow(row + 1);
 	updateRow(row);
 	
-	template_table->setCurrentCell(row + 1, template_table->currentColumn());
+	{
+		bool react_to_changes = this->react_to_changes;
+		this->react_to_changes = false;
+		template_table->setCurrentCell(row + 1, template_table->currentColumn());
+		this->react_to_changes = react_to_changes;
+	}
 	map->setTemplatesDirty();
 }
 
@@ -536,17 +582,18 @@ void TemplateWidget::cellChange(int row, int column)
 		
 		if (column == 0)
 		{
-			bool visible_new = template_table->item(row, column)->checkState() == Qt::Checked;
-			if (!visible_new)
-				map->setTemplateAreaDirty(pos);
-			
-			vis->visible = visible_new;
-			
-			if (visible_new)
-				map->setTemplateAreaDirty(pos);
-			
+			if (temp->getTemplateState() != Template::Invalid)
+			{
+				bool visible_new = template_table->item(row, column)->checkState() != Qt::Unchecked;
+				if (!visible_new)
+					map->setTemplateAreaDirty(pos);
+				
+				vis->visible = visible_new;
+				
+				if (visible_new)
+					map->setTemplateAreaDirty(pos);
+			}
 			updateRow(row);
-			template_table->setCurrentCell(row, column);
 		}
 		else if (column == 1)
 		{
@@ -607,7 +654,6 @@ void TemplateWidget::cellChange(int row, int column)
 				map->setObjectAreaDirty(map_bounds);
 			
 			updateRow(row);
-			template_table->setCurrentCell(row, column);
 		}
 		else if (column == 1)
 		{
@@ -634,45 +680,47 @@ void TemplateWidget::selectionChanged(const QItemSelection& selected, const QIte
 	if (!react_to_changes)
 		return;
 	
-	int current_row = template_table->currentRow();
-	int pos = posFromRow(current_row);
-	bool map_row_selected = current_row > 0 && pos < 0;	// does the selection contain the map row?
-	Template* temp = (current_row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
-// 	bool multiple_rows_selected = false;		// is more than one row selected?
+	bool map_row_selected = false;  // does the selection contain the map row?
+	bool first_row_selected = false;
+	bool last_row_selected = false;
 	int num_rows_selected = 0;
-	
-	int last_row = -1;
+	int visited_row = -1;
 	for (int i = 1; i < template_table->selectedItems().size(); ++i)
 	{
-		int row = template_table->selectedItems()[i]->row();
-		if (row == last_row)
+		const int row = template_table->selectedItems()[i]->row();
+		if (row == visited_row)
 			continue;
 		
-		last_row = row;
+		visited_row = row;
 		++num_rows_selected;
-			
+		
 		if (posFromRow(row) < 0)
 			map_row_selected = true;
+		
+		if (row == 0)
+			first_row_selected = true;
+		else if (row == template_table->rowCount() - 1)
+			last_row_selected = true;
 	}
-	
 	bool single_row_selected = (num_rows_selected == 1);
 	
 	duplicate_button->setEnabled(single_row_selected && !map_row_selected);
 	delete_button->setEnabled(single_row_selected && !map_row_selected);	// TODO: Make it possible to delete multiple templates at once
-	move_up_button->setEnabled(single_row_selected && current_row >= 1);
-	move_down_button->setEnabled(single_row_selected && current_row < template_table->rowCount() - 1);
+	move_up_button->setEnabled(single_row_selected && !first_row_selected);
+	move_down_button->setEnabled(single_row_selected && !last_row_selected);
 	
 	bool georef_visible = false;
 	bool georef_active  = false;
 	bool manual_visible = false;
 	if (single_row_selected)
 	{
+		Template* temp = map_row_selected ? NULL : map->getTemplate(posFromRow(visited_row));
 		if (map_row_selected)
 		{
 			georef_visible = true;
 			georef_active = map->getGeoreferencing().isValid() && !map->getGeoreferencing().isLocal();
 		}
-		else if (temp->isTemplateGeoreferenced())
+		else if (temp && temp->isTemplateGeoreferenced())
 		{
 			georef_visible = true;
 			georef_active  = true;
@@ -709,6 +757,9 @@ void TemplateWidget::selectionChanged(const QItemSelection& selected, const QIte
 
 void TemplateWidget::currentCellChange(int current_row, int current_column, int previous_row, int previous_column)
 {
+	if (!react_to_changes)
+		return;
+	
 	if (current_column == 3)
 	{
 		int pos = posFromRow(current_row);
@@ -717,20 +768,22 @@ void TemplateWidget::currentCellChange(int current_row, int current_column, int 
 			return;
 		
 		if (temp->getTemplateState() == Template::Invalid)
-			changeTemplateFile();
+		{
+			QTimer::singleShot(0, this, SLOT(changeTemplateFile()));
+		}
 	}
 }
 
 void TemplateWidget::cellDoubleClick(int row, int column)
 {
-	if (column == 3)
-	{
-		int pos = posFromRow(row);
-		Template* temp = (row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
-		if (!temp)
-			return;
+	int pos = posFromRow(row);
+	Template* temp = (row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
+	if (!temp)
+		return;
 		
-		changeTemplateFile();
+	if (column == 3 || temp->getTemplateState() == Template::Invalid)
+	{
+		QTimer::singleShot(0, this, SLOT(changeTemplateFile()));
 	}
 }
 
@@ -800,7 +853,7 @@ void TemplateWidget::templateAdded(int pos, Template* temp)
 	int row = rowFromPos(pos);
 	template_table->insertRow(row);
 	addRow(row);
-	template_table->setCurrentCell(row, 3);
+	template_table->setCurrentCell(row, 0);
 }
 
 void TemplateWidget::templatePositionDockWidgetClosed(Template* temp)
@@ -820,7 +873,6 @@ void TemplateWidget::addRow(int row)
 		template_table->setItem(row, i, item);
 	}
 	template_table->item(row, 0)->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-	template_table->item(row, 1)->setFlags(Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 	template_table->item(row, 1)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	template_table->item(row, 2)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	updateRow(row);
@@ -834,6 +886,7 @@ void TemplateWidget::updateRow(int row)
 	
 	react_to_changes = false;
 	
+	QPalette::ColorGroup color_group = template_table->isEnabled() ? QPalette::Active : QPalette::Disabled;
 	TemplateVisibility* vis = NULL;
 	int group = -1;
 	QString name, path;
@@ -847,10 +900,12 @@ void TemplateWidget::updateRow(int row)
 		name = temp->getTemplateFilename();
 		path = temp->getTemplatePath();
 		valid = temp->getTemplateState() != Template::Invalid;
-		QBrush active_background(QPalette().color(QPalette::Active, QPalette::Base));
+		Qt::ItemFlag editable = (valid && vis->visible) ? Qt::ItemIsEditable : Qt::NoItemFlags;
+		QBrush active_background(QPalette().color(color_group, QPalette::Base));
 		template_table->item(row, 0)->setBackground(active_background);
+		template_table->item(row, 1)->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | editable);
 		template_table->item(row, 1)->setBackground(active_background);
-		template_table->item(row, 2)->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
+		template_table->item(row, 2)->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | editable);
 		template_table->item(row, 2)->setBackground(active_background);
 		template_table->item(row, 3)->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		template_table->item(row, 3)->setBackground(active_background);
@@ -859,8 +914,9 @@ void TemplateWidget::updateRow(int row)
 	{
 		vis = main_view->getMapVisibility();
 		name = tr("- Map -");
-		QBrush map_row_background(QPalette().color(QPalette::Active, QPalette::AlternateBase));
+		QBrush map_row_background(QPalette().color(color_group, QPalette::AlternateBase));
 		template_table->item(row, 0)->setBackground(map_row_background);
+		template_table->item(row, 1)->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
 		template_table->item(row, 1)->setBackground(map_row_background);
 		template_table->item(row, 2)->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
 		template_table->item(row, 2)->setBackground(map_row_background);
@@ -890,7 +946,7 @@ void TemplateWidget::updateRow(int row)
 		if (valid)
 		{
 			decoration_color = QColor::fromCmykF(0.0f, 0.0f, 0.0f, vis->opacity);
-			brush.setColor(QPalette().color(QPalette::Active, QPalette::Foreground));
+			brush.setColor(QPalette().color(color_group, QPalette::Foreground));
 		}
 	}
 	else if (valid)
@@ -900,6 +956,7 @@ void TemplateWidget::updateRow(int row)
 	}
 	else
 	{
+		decoration_color = QColor(Qt::transparent);
 		brush.setColor(brush.color().lighter());
 	}
 	template_table->item(row, 1)->setData(Qt::DecorationRole, decoration_color);
