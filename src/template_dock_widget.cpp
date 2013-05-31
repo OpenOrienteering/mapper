@@ -511,6 +511,7 @@ void TemplateWidget::moveTemplateUp()
 		template_table->setCurrentCell(row - 1, template_table->currentColumn());
 		this->react_to_changes = react_to_changes;
 	}
+	updateButtons();
 	map->setTemplatesDirty();
 }
 
@@ -554,6 +555,7 @@ void TemplateWidget::moveTemplateDown()
 		template_table->setCurrentCell(row + 1, template_table->currentColumn());
 		this->react_to_changes = react_to_changes;
 	}
+	updateButtons();
 	map->setTemplatesDirty();
 }
 
