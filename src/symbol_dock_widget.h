@@ -23,6 +23,7 @@
 
 #include <set>
 
+#include <QTimer>
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -30,10 +31,12 @@ class QScrollBar;
 class QHBoxLayout;
 class QMenu;
 class QLabel;
+class QShortcut;
 QT_END_NAMESPACE
 
 class Map;
 class Symbol;
+class SymbolToolTip;
 class SymbolWidget;
 
 /** Internal class used in SymbolWidget. Displays the symbol list. */
@@ -42,6 +45,8 @@ class SymbolRenderWidget : public QWidget
 Q_OBJECT
 public:
 	SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolWidget* parent);
+	
+	SymbolToolTip* getSymbolToolTip() const;
 	
 	inline bool scrollBarNeeded(int width, int height);
 	void setScrollBar(QScrollBar* new_scroll_bar);
@@ -128,6 +133,8 @@ protected:
 	QAction* delete_action;
 	QAction* select_objects_action;
 	QAction* select_objects_additionally_action;
+	
+	SymbolToolTip* tooltip;
 	
 	Map* map;
 	
@@ -226,35 +233,100 @@ private:
 };
 
 /**
- * Tool tip showing the symbol number and name,
- * and optionally the symbol description.
+ * A SymbolToolTip displays the name and (on demand) the description of a 
+ * symbol.
+ * 
+ * The tooltip is normally not displayed immediately but scheduled to be
+ * displayed after a short delay, by a call to scheduleShow(). Initially, the
+ * tooltip displays the symbol's number and name only. The description can be
+ * made visible by a call to showDescription().
+ * 
+ * A QShortcut may be set which will trigger the display of the description
+ * while the tooltip is already visible. The shortcut does not need to be
+ * unique: SymbolToolTip enables the shortcut only when the tooltip is visible
+ * and the description is not yet shown. SymbolToolTip does not take ownership
+ * of the shortcut.
+ * 
+ * To permanently hide a SymbolToolTip it is not enough to call hide() because
+ * the widget may be hidden but scheduled to show up. Call reset() to hide the
+ * widget and stop the timer if scheduled.
+ * 
+ * SymbolToolTip does not use the standard tooltip colors but the text editor
+ * colors.
  */
 class SymbolToolTip : public QWidget
 {
 Q_OBJECT
 public:
-	SymbolToolTip(Symbol* symbol, QRect icon_rect, QWidget* parent);
+	/**
+	 * Constructs a new SymbolToolTip.
+	 * The optional shortcut will trigger the description to be shown.
+	 */
+	SymbolToolTip(QWidget* parent = NULL, QShortcut* shortcut = NULL);
+	
+	/**
+	 * Schedules the tooltip for the symbol to be shown close to
+	 * but not covering the region given by rect.
+	 */
+	void scheduleShow(const Symbol* symbol, QRect rect);
+	
+	/**
+	 * Resets the tooltip.
+	 * It hides the widget, stops the timer and disables the shortcut.
+	 */
+	void reset();
+	
+	/**
+	 * Returns the symbol for which the tooltip is currently shown or
+	 * scheduled to be shown, or NULL.
+	 */
+	const Symbol* getSymbol() const;
+	
+public slots:
+	/**
+	 * Expands the symbol's description in the tooltip.
+	 * Disables the shortcut.
+	 */
 	void showDescription();
 	
-	static void showTip(QRect rect, Symbol* symbol, QWidget* parent);
-	static void hideTip();
-	static SymbolToolTip* getTip();
-	static Symbol* getCurrentTipSymbol();
-	
 protected:
+	/**
+	 * Hides the tooltip when the mouse enters it.
+	 * This is neccessary to let the user select another symbol.
+	 */
 	virtual void enterEvent(QEvent* event);
+	
+	/**
+	 * Enables the shortcut when the tooltip is shown.
+	 */
+	virtual void showEvent(QShowEvent* event);
+	
+	/**
+	 * Resets the tooltip's state on hiding the tooltip.
+	 * Disables the shortcut.
+	 */
+	virtual void hideEvent(QHideEvent* event);
+	
+	/**
+	 * Draws the tooltip's background.
+	 */
 	virtual void paintEvent(QPaintEvent* event);
 	
 private:
-	void setPosition();
+	/**
+	 * Moves the tooltip so that it is nicely placed close the region given
+	 * to scheduleShow().
+	 */
+	void adjustPosition();
 	
-	bool help_shown;
-	QLabel* help_label;
-	Symbol* symbol;
-	QRect icon_rect;
+	QShortcut* shortcut;       /// An optional shortcut for showing the description.
+	const Symbol* symbol;      /// The current symbol, or NULL.
+	QRect icon_rect;           /// The region to be considered when determining position.
+	bool description_shown;    /// If true, the full description is visible.
+	QLabel* name_label;        /// The label displaying the symbol's name.
+	QLabel* description_label; /// The label displaying the symbol's description.
+	QTimer tooltip_timer;      /// The timer which triggers the delayed showing.
 	
-	static SymbolToolTip* tooltip;
-	static QTimer* tooltip_timer;
 };
 
 #endif
