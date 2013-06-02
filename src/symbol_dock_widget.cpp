@@ -41,6 +41,7 @@
 #include "symbol_point.h"
 #include "symbol_setting_dialog.h"
 #include "symbol_text.h"
+#include "util/overriding_shortcut.h"
 
 
 // STL comparison function for sorting symbols by number
@@ -109,9 +110,14 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolW
 	setMouseTracking(true);
 	setFocusPolicy(Qt::ClickFocus);
 	setAcceptDrops(true);
-	setStatusTip(tr("For symbols with description, press F1 while the tooltip is visible to show it"));
 	
-	tooltip = new SymbolToolTip(this);
+	QShortcut* description_shortcut = new OverridingShortcut(
+	  QKeySequence(tr("F1", "Shortcut for displaying the symbol's description")),
+	  window()
+	);
+	tooltip = new SymbolToolTip(this, description_shortcut);
+	// TODO: Use a placeholder in the literal and pass the actual shortcut's string representation.
+	setStatusTip(tr("For symbols with description, press F1 while the tooltip is visible to show it"));
 	
 	context_menu = new QMenu(this);
 	
@@ -1053,11 +1059,7 @@ void SymbolWidget::resizeEvent(QResizeEvent* event)
 	adjustContents();
 	event->accept();
 }
-void SymbolWidget::keyPressed(QKeyEvent* event)
-{
-	if (event->key() == Qt::Key_F1)
-		render_widget->getSymbolToolTip()->showDescription();
-}
+
 void SymbolWidget::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
 {
 	render_widget->updateIcon(pos);

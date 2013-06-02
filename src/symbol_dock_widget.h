@@ -176,7 +176,6 @@ public slots:
 	/** Adjusts the widget contents to its size. */
 	void adjustContents();
 	
-	virtual void keyPressed(QKeyEvent* event);
 	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol = NULL);
 	void symbolDeleted(int pos, Symbol* old_symbol);
 	
