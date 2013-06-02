@@ -274,7 +274,7 @@ void SymbolRenderWidget::mouseMove(int x, int y)
 		}
 		else
 		{
-			tooltip->hide();
+			tooltip->reset();
 		}
 	}
 }
@@ -574,7 +574,7 @@ void SymbolRenderWidget::leaveEvent(QEvent* event)
 	updateIcon(hover_symbol_index);
 	hover_symbol_index = -1;
 	
-	tooltip->hide();
+	tooltip->reset();
 }
 void SymbolRenderWidget::wheelEvent(QWheelEvent* event)
 {
@@ -1072,8 +1072,9 @@ void SymbolWidget::symbolDeleted(int pos, Symbol* old_symbol)
 
 // ### SymbolToolTip ###
 
-SymbolToolTip::SymbolToolTip(QWidget* parent)
+SymbolToolTip::SymbolToolTip(QWidget* parent, QShortcut* shortcut)
  : QWidget(parent),
+   shortcut(shortcut),
    symbol(NULL),
    description_shown(false)
 {
@@ -1104,17 +1105,38 @@ SymbolToolTip::SymbolToolTip(QWidget* parent)
 	
 	tooltip_timer.setSingleShot(true);
 	connect(&tooltip_timer, SIGNAL(timeout()), this, SLOT(show()));
+	
+	if (shortcut)
+	{
+		shortcut->setEnabled(false);
+		connect(shortcut, SIGNAL(activated()), this, SLOT(showDescription()));
+	}
 }
 
 void SymbolToolTip::showDescription()
 {
-	if (!description_shown)
+	if (symbol && !description_shown && isVisible())
 	{
 		description_label->show();
 		adjustSize();
 		adjustPosition();
 		description_shown = true;
 	}
+	
+	if (shortcut)
+		shortcut->setEnabled(false);
+}
+
+void SymbolToolTip::reset()
+{
+	symbol = NULL;
+	tooltip_timer.stop();
+	hide();
+	description_label->hide();
+	description_shown = false;
+	
+	if (shortcut)
+		shortcut->setEnabled(false);
 }
 
 void SymbolToolTip::enterEvent(QEvent* event)
@@ -1164,14 +1186,10 @@ void SymbolToolTip::adjustPosition()
 	move(QPoint(x, y));
 }
 
-void SymbolToolTip::scheduleShow(Symbol* symbol, QRect icon_rect)
+void SymbolToolTip::scheduleShow(const Symbol* symbol, QRect icon_rect)
 {
 	this->icon_rect = icon_rect;
 	this->symbol = symbol;
-	
-	hide();
-	
-	static const int delay = 150;
 	
 	name_label->setText(symbol->getNumberAsString() + " <b>" + symbol->getName() + "</b>");
 	
@@ -1186,19 +1204,31 @@ void SymbolToolTip::scheduleShow(Symbol* symbol, QRect icon_rect)
 		help_text.remove('\r');
 	}
 	description_label->setText(help_text);
+	description_label->hide();
+	description_shown = false;
+	shortcut->setEnabled(isVisible());
 	
 	adjustSize();
 	adjustPosition();
 	
+	static const int delay = 150;
 	tooltip_timer.start(delay);
+}
+
+void SymbolToolTip::showEvent(QShowEvent* event)
+{
+	if (shortcut && !description_shown && !event->spontaneous())
+		shortcut->setEnabled(true);
+	
+	QWidget::showEvent(event);
 }
 
 void SymbolToolTip::hideEvent(QHideEvent* event)
 {
-	tooltip_timer.stop();
-	description_label->hide();
-	description_shown = false;
-	symbol = NULL;
+	if (!event->spontaneous())
+		reset();
+	
+	QWidget::hideEvent(event);
 }
 
 const Symbol* SymbolToolTip::getSymbol() const

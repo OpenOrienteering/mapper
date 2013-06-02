@@ -31,6 +31,7 @@ class QScrollBar;
 class QHBoxLayout;
 class QMenu;
 class QLabel;
+class QShortcut;
 QT_END_NAMESPACE
 
 class Map;
@@ -208,7 +209,23 @@ private:
  * A SymbolToolTip displays the name and (on demand) the description of a 
  * symbol.
  * 
- * It does not use the standard tooltip colors but the text editor colors.
+ * The tooltip is normally not displayed immediately but scheduled to be
+ * displayed after a short delay, by a call to scheduleShow(). Initially, the
+ * tooltip displays the symbol's number and name only. The description can be
+ * made visible by a call to showDescription().
+ * 
+ * A QShortcut may be set which will trigger the display of the description
+ * while the tooltip is already visible. The shortcut does not need to be
+ * unique: SymbolToolTip enables the shortcut only when the tooltip is visible
+ * and the description is not yet shown. SymbolToolTip does not take ownership
+ * of the shortcut.
+ * 
+ * To permanently hide a SymbolToolTip it is not enough to call hide() because
+ * the widget may be hidden but scheduled to show up. Call reset() to hide the
+ * widget and stop the timer if scheduled.
+ * 
+ * SymbolToolTip does not use the standard tooltip colors but the text editor
+ * colors.
  */
 class SymbolToolTip : public QWidget
 {
@@ -216,19 +233,21 @@ Q_OBJECT
 public:
 	/**
 	 * Constructs a new SymbolToolTip.
+	 * The optional shortcut will trigger the description to be shown.
 	 */
-	SymbolToolTip(QWidget* parent = NULL);
+	SymbolToolTip(QWidget* parent = NULL, QShortcut* shortcut = NULL);
 	
 	/**
 	 * Schedules the tooltip for the symbol to be shown close to
 	 * but not covering the region given by rect.
 	 */
-	void scheduleShow(Symbol* symbol, QRect rect);
+	void scheduleShow(const Symbol* symbol, QRect rect);
 	
 	/**
-	 * Expands the symbol's description in the tooltip.
+	 * Resets the tooltip.
+	 * It hides the widget, stops the timer and disables the shortcut.
 	 */
-	void showDescription();
+	void reset();
 	
 	/**
 	 * Returns the symbol for which the tooltip is currently shown or
@@ -236,18 +255,30 @@ public:
 	 */
 	const Symbol* getSymbol() const;
 	
+public slots:
+	/**
+	 * Expands the symbol's description in the tooltip.
+	 * Disables the shortcut.
+	 */
+	void showDescription();
+	
 protected:
 	/**
 	 * Hides the tooltip when the mouse enters it.
-	 * 
 	 * This is neccessary to let the user select another symbol.
 	 */
 	virtual void enterEvent(QEvent* event);
 	
 	/**
-	 * Resets the tooltip's state on hiding the tooltip.
+	 * Enables the shortcut when the tooltip is shown.
 	 */
-	virtual void hideEvent(QHideEvent * event);
+	virtual void showEvent(QShowEvent* event);
+	
+	/**
+	 * Resets the tooltip's state on hiding the tooltip.
+	 * Disables the shortcut.
+	 */
+	virtual void hideEvent(QHideEvent* event);
 	
 	/**
 	 * Draws the tooltip's background.
@@ -261,7 +292,8 @@ private:
 	 */
 	void adjustPosition();
 	
-	Symbol* symbol;            /// The current symbol, or NULL.
+	QShortcut* shortcut;       /// An optional shortcut for showing the description.
+	const Symbol* symbol;      /// The current symbol, or NULL.
 	QRect icon_rect;           /// The region to be considered when determining position.
 	bool description_shown;    /// If true, the full description is visible.
 	QLabel* name_label;        /// The label displaying the symbol's name.
