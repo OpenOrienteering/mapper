@@ -91,6 +91,7 @@ HEADERS += \
   src/gui/widgets/home_screen_widget.h \
   src/gui/widgets/measure_widget.h \
   src/util/item_delegates.h \
+  src/util/overriding_shortcut.h \
   3rd-party/qtsingleapplication/src/qtlocalpeer.h \
   3rd-party/qtsingleapplication/src/qtsingleapplication.h \
   libocad/libocad.h \
@@ -193,6 +194,7 @@ SOURCES += \
   src/gui/widgets/home_screen_widget.cpp \
   src/gui/widgets/measure_widget.cpp \
   src/util/item_delegates.cpp \
+  src/util/overriding_shortcut.cpp \
   src/main.cpp \
   3rd-party/qtsingleapplication/src/qtlocalpeer.cpp \
   3rd-party/qtsingleapplication/src/qtsingleapplication.cpp \

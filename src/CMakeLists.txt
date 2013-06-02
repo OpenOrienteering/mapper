@@ -134,6 +134,7 @@ set(Mapper_Common_SRCS
  gui/widgets/measure_widget.cpp
  
  util/item_delegates.cpp
+ util/overriding_shortcut.cpp
 )
 
 set(Mapper_Common_MOC_INPUT
@@ -214,6 +215,7 @@ set(Mapper_Common_MOC_INPUT
  gui/widgets/measure_widget.h
  
  util/item_delegates.h
+ util/overriding_shortcut.h
 )
 
 qt4_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})
