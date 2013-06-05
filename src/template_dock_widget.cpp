@@ -190,8 +190,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	more_button_menu->addAction(tr("Trace lines..."));
 	more_button->setMenu(more_button_menu);*/
 	
-	selectionChanged(QItemSelection(), QItemSelection()); // enable / disable buttons
-	//currentCellChange(template_table->currentRow(), 0, 0, 0);	// enable / disable buttons
+	updateButtons();
 	
 	setAllTemplatesHidden(main_view->areAllTemplatesHidden());
 	
@@ -211,7 +210,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	connect(all_hidden_check, SIGNAL(toggled(bool)), controller, SLOT(hideAllTemplates(bool)));
 	
 	connect(template_table, SIGNAL(cellChanged(int,int)), this, SLOT(cellChange(int,int)));
-	connect(template_table->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(selectionChanged(QItemSelection,QItemSelection)));
+	connect(template_table->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(updateButtons()));
 	connect(template_table, SIGNAL(currentCellChanged(int,int,int,int)), this, SLOT(currentCellChange(int,int,int,int)));
 	connect(template_table, SIGNAL(cellDoubleClicked(int,int)), this, SLOT(cellDoubleClick(int,int)));
 	
@@ -269,7 +268,7 @@ void TemplateWidget::setAllTemplatesHidden(bool value)
 	bool enabled = !value;
 	template_table->setEnabled(enabled);
 	list_buttons_group->setEnabled(enabled);
-	selectionChanged(QItemSelection(), QItemSelection());
+	updateButtons();
 }
 
 void TemplateWidget::addTemplateAt(Template* new_template, int pos)
@@ -512,6 +511,7 @@ void TemplateWidget::moveTemplateUp()
 		template_table->setCurrentCell(row - 1, template_table->currentColumn());
 		this->react_to_changes = react_to_changes;
 	}
+	updateButtons();
 	map->setTemplatesDirty();
 }
 
@@ -555,6 +555,7 @@ void TemplateWidget::moveTemplateDown()
 		template_table->setCurrentCell(row + 1, template_table->currentColumn());
 		this->react_to_changes = react_to_changes;
 	}
+	updateButtons();
 	map->setTemplatesDirty();
 }
 
@@ -594,6 +595,7 @@ void TemplateWidget::cellChange(int row, int column)
 					map->setTemplateAreaDirty(pos);
 			}
 			updateRow(row);
+			updateButtons();
 		}
 		else if (column == 1)
 		{
@@ -654,6 +656,7 @@ void TemplateWidget::cellChange(int row, int column)
 				map->setObjectAreaDirty(map_bounds);
 			
 			updateRow(row);
+			updateButtons();
 		}
 		else if (column == 1)
 		{
@@ -675,7 +678,7 @@ void TemplateWidget::cellChange(int row, int column)
 	}
 }
 
-void TemplateWidget::selectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+void TemplateWidget::updateButtons()
 {
 	if (!react_to_changes)
 		return;
@@ -711,7 +714,8 @@ void TemplateWidget::selectionChanged(const QItemSelection& selected, const QIte
 	
 	bool georef_visible = false;
 	bool georef_active  = false;
-	bool manual_visible = false;
+	bool custom_visible = false;
+	bool custom_active  = false;
 	if (single_row_selected)
 	{
 		Template* temp = map_row_selected ? NULL : map->getTemplate(posFromRow(visited_row));
@@ -727,14 +731,18 @@ void TemplateWidget::selectionChanged(const QItemSelection& selected, const QIte
 		}
 		else
 		{
-			manual_visible = true;
+			custom_visible = true;
+			custom_active = template_table->item(visited_row, 0)->checkState() == Qt::Checked;
 		}
 	}
 	georef_button->setVisible(georef_visible);
 	georef_button->setChecked(georef_active);
-	move_by_hand_button->setVisible(manual_visible);
-	adjust_button->setVisible(manual_visible);
-	position_button->setVisible(manual_visible);
+	move_by_hand_button->setEnabled(custom_active);
+	move_by_hand_button->setVisible(custom_visible);
+	adjust_button->setEnabled(custom_active);
+	adjust_button->setVisible(custom_visible);
+	position_button->setEnabled(custom_active);
+	position_button->setVisible(custom_visible);
 	
 /*	if (enable_active_buttons)
 	{
@@ -1007,6 +1015,7 @@ void TemplateWidget::changeTemplateFile()
 	if (temp && temp->execSwitchTemplateFileDialog(this))
 	{
 		updateRow(row);
+		updateButtons();
 		temp->setTemplateAreaDirty();
 		map->setTemplatesDirty();
 	}

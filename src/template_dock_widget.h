@@ -74,7 +74,7 @@ protected slots:
 	void showHelp();
 	
 	void cellChange(int row, int column);
-	void selectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+	void updateButtons();
 	void currentCellChange(int current_row, int current_column, int previous_row, int previous_column);
 	void cellDoubleClick(int row, int column);
 	void updateDeleteButtonText();
