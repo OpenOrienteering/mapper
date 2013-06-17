@@ -27,6 +27,7 @@
 #include "util/item_delegates.h"
 #include "gui/color_dialog.h"
 #include "gui/main_window.h"
+#include "gui/widgets/segmented_button_layout.h"
 
 ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 : QWidget(parent), 
@@ -47,26 +48,41 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	  "" << tr("Name") << tr("Spot color") << tr("CMYK") << tr("RGB") << tr("K.o.") << tr("Opacity") );
 	color_table->setItemDelegateForColumn(0, new ColorItemDelegate(this));
 	
+	QMenu* new_button_menu = new QMenu(this);
+	(void) new_button_menu->addAction(tr("New"), this, SLOT(newColor()));
+	duplicate_action = new_button_menu->addAction(tr("Duplicate"), this, SLOT(duplicateColor()));
+	duplicate_action->setIcon(QIcon(":/images/tool-duplicate.png"));
+	
 	// Buttons
-	QAbstractButton* new_button = newToolButton(QIcon(":/images/plus.png"), tr("New"));
+	QToolButton* new_button = newToolButton(QIcon(":/images/plus.png"), tr("New"));
+	new_button->setPopupMode(QToolButton::DelayedPopup); // or MenuButtonPopup
+	new_button->setMenu(new_button_menu);
 	delete_button = newToolButton(QIcon(":/images/minus.png"), tr("Delete"));
-	duplicate_button = newToolButton(QIcon(":/images/tool-duplicate.png"), tr("Duplicate"));
+	
+	SegmentedButtonLayout* add_remove_layout = new SegmentedButtonLayout();
+	add_remove_layout->addWidget(new_button);
+	add_remove_layout->addWidget(delete_button);
+	
 	move_up_button = newToolButton(QIcon(":/images/arrow-up.png"), tr("Move Up"));
+	move_up_button->setAutoRepeat(true);
 	move_down_button = newToolButton(QIcon(":/images/arrow-down.png"), tr("Move Down"));
+	move_down_button->setAutoRepeat(true);
+	
+	SegmentedButtonLayout* up_down_layout = new SegmentedButtonLayout();
+	up_down_layout->addWidget(move_up_button);
+	up_down_layout->addWidget(move_down_button);
+	
 	// TODO: In Mapper >= 0.6, switch to ColorWidget (or generic) translation context.
 	edit_button = newToolButton(QIcon(":/images/settings.png"), QApplication::translate("MapEditorController", "&Edit").remove(QChar('&')));
-	qobject_cast<QToolButton*>(edit_button)->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	QAbstractButton* help_button = newToolButton(QIcon(":/images/help.png"), tr("Help"));
+	edit_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+	
+	QToolButton* help_button = newToolButton(QIcon(":/images/help.png"), tr("Help"));
+	help_button->setAutoRaise(true);
 	
 	// The buttons row layout
 	QBoxLayout* buttons_group_layout = new QHBoxLayout();
-	buttons_group_layout->addWidget(new_button);
-	buttons_group_layout->addWidget(duplicate_button);
-	buttons_group_layout->addWidget(delete_button);
-	buttons_group_layout->addWidget(new QLabel("   "));
-	buttons_group_layout->addWidget(move_up_button);
-	buttons_group_layout->addWidget(move_down_button);
-	buttons_group_layout->addWidget(new QLabel("   "));
+	buttons_group_layout->addLayout(add_remove_layout);
+	buttons_group_layout->addLayout(up_down_layout);
 	buttons_group_layout->addWidget(edit_button);
 	buttons_group_layout->addWidget(new QLabel("   "), 1);
 	buttons_group_layout->addWidget(help_button);
@@ -124,7 +140,6 @@ ColorWidget::ColorWidget(Map* map, MainWindow* window, QWidget* parent)
 	
 	connect(new_button, SIGNAL(clicked(bool)), this, SLOT(newColor()));
 	connect(delete_button, SIGNAL(clicked(bool)), this, SLOT(deleteColor()));
-	connect(duplicate_button, SIGNAL(clicked(bool)), this, SLOT(duplicateColor()));
 	connect(move_up_button, SIGNAL(clicked(bool)), this, SLOT(moveColorUp()));
 	connect(move_down_button, SIGNAL(clicked(bool)), this, SLOT(moveColorDown()));
 	connect(edit_button, SIGNAL(clicked(bool)), this, SLOT(editCurrentColor()));
@@ -139,20 +154,15 @@ ColorWidget::~ColorWidget()
 {
 }
 
-QAbstractButton* ColorWidget::newToolButton(const QIcon& icon, const QString& text, QAbstractButton* prototype)
+QToolButton* ColorWidget::newToolButton(const QIcon& icon, const QString& text)
 {
-	if (prototype == NULL)
-	{
-		QToolButton* button = new QToolButton();
-		button->setAutoRaise(true);
-		button->setToolButtonStyle(Qt::ToolButtonFollowStyle);
-		button->setToolTip(text);
-		prototype = button;
-	}
-	prototype->setIcon(icon);
-	prototype->setText(text);
-	prototype->setWhatsThis("<a href=\"color_dock_widget.html\">See more</a>");
-	return prototype;
+	QToolButton* button = new QToolButton();
+	button->setToolButtonStyle(Qt::ToolButtonFollowStyle);
+	button->setToolTip(text);
+	button->setIcon(icon);
+	button->setText(text);
+	button->setWhatsThis("<a href=\"color_dock_widget.html\">See more</a>");
+	return button;
 }
 
 void ColorWidget::newColor()
@@ -322,7 +332,7 @@ void ColorWidget::currentCellChange(int current_row, int current_column, int pre
 	
 	bool valid_row = (current_row >= 0);
 	delete_button->setEnabled(valid_row);
-	duplicate_button->setEnabled(valid_row);
+	duplicate_action->setEnabled(valid_row);
 	move_up_button->setEnabled(valid_row && current_row >= 1);
 	move_down_button->setEnabled(valid_row && current_row < color_table->rowCount() - 1);
 	edit_button->setEnabled(valid_row);
@@ -442,3 +452,4 @@ void ColorWidget::updateRow(int row)
 	
 	react_to_changes = true;
 }
+

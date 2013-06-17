@@ -66,7 +66,7 @@ protected slots:
 	void colorDeleted(int index, const MapColor* color);
 	
 protected:
-	QAbstractButton* newToolButton(const QIcon& icon, const QString& text, QAbstractButton* prototype = NULL);
+	QToolButton* newToolButton(const QIcon& icon, const QString& text);
 	
 private:
 	void addRow(int row);
@@ -75,12 +75,13 @@ private:
 	// Color list
 	QTableWidget* color_table;
 	
+	QAction* duplicate_action;
+	
 	// Buttons
-	QAbstractButton* delete_button;
-	QAbstractButton* duplicate_button;
-	QAbstractButton* move_up_button;
-	QAbstractButton* move_down_button;
-	QAbstractButton* edit_button;
+	QToolButton* delete_button;
+	QToolButton* move_up_button;
+	QToolButton* move_down_button;
+	QToolButton* edit_button;
 	
 	Map* map;
 	MainWindow* window;

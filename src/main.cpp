@@ -19,16 +19,20 @@
 
 
 #include "../3rd-party/qtsingleapplication/src/qtsingleapplication.h"
+#include <QDebug>
 #include <QLibraryInfo>
 #include <QLocale>
 #include <QSettings>
 #include <QTranslator>
+#include <QStyleFactory>
+#include <qstyle.h>
 
 #include <mapper_config.h>
 
 #include "global.h"
 #include "gui/home_screen_controller.h"
 #include "gui/main_window.h"
+#include "gui/widgets/mapper_proxystyle.h"
 #include "settings.h"
 #include "util_translation.h"
 #include "util/recording_translator.h"
@@ -93,6 +97,18 @@ int main(int argc, char** argv)
 	MainWindow first_window(true);
 	first_window.setAttribute(Qt::WA_DeleteOnClose, false);
 	first_window.setController(new HomeScreenController());
+	
+	QProxyStyle* style = new MapperProxyStyle();
+#if QT_VERSION >= 0x050000
+	if (QGuiApplication::platformName() == QLatin1String("xcb"))
+	{
+		// Use the modern 'fusion' style instead of the 
+		// default "windows" style on X11.
+		style->setBaseStyle(QStyleFactory::create("fusion"));
+	}
+#endif
+	QApplication::setStyle(style);
+	QApplication::setPalette(QApplication::style()->standardPalette());
 	
 	// Open given files later, i.e. after the initial home screen has been
 	// displayed. In this way, error messages for missing files will show on 

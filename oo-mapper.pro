@@ -92,7 +92,9 @@ HEADERS += \
   src/gui/tags_dialog.h \
   src/gui/widgets/color_dropdown.h \
   src/gui/widgets/home_screen_widget.h \
+  src/gui/widgets/mapper_proxystyle.h \
   src/gui/widgets/measure_widget.h \
+  src/gui/widgets/segmented_button_layout.h \
   src/util/item_delegates.h \
   src/util/overriding_shortcut.h \
   src/util/recording_translator.h \
@@ -199,7 +201,9 @@ SOURCES += \
   src/gui/tags_dialog.cpp \
   src/gui/widgets/color_dropdown.cpp \
   src/gui/widgets/home_screen_widget.cpp \
+  src/gui/widgets/mapper_proxystyle.cpp \
   src/gui/widgets/measure_widget.cpp \
+  src/gui/widgets/segmented_button_layout.cpp \
   src/util/item_delegates.cpp \
   src/util/overriding_shortcut.cpp \
   src/util/recording_translator.cpp \
