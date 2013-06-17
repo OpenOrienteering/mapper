@@ -46,18 +46,23 @@ public:
 	static Template* showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller);
 	
 public slots:
-	/** Sets or clears the all-templates-hidden state.
-	 *  When all templates are hidden, operations on templates are disabled. */
+	/**
+	 * Sets or clears the all-templates-hidden state.
+	 * When all templates are hidden, operations on templates are disabled.
+	 */
 	void setAllTemplatesHidden(bool value);
 	
 protected:
-	virtual void resizeEvent(QResizeEvent* event);
-	
-	/** When key events for Qt::Key_Space are sent to the template_table,
-	 *  this will toggle the visibility of the current template. */
+	/**
+	 * When key events for Qt::Key_Space are sent to the template_table,
+	 * this will toggle the visibility of the current template.
+	 */
 	virtual bool eventFilter(QObject* watched, QEvent* event);
 	
-	QAbstractButton* newToolButton(const QIcon& icon, const QString& text, QAbstractButton* prototype = NULL);
+	/**
+	 * Returns a new QToolButton with a unified appearance.
+	 */
+	QToolButton* newToolButton(const QIcon& icon, const QString& text);
 	
 protected slots:
 	void newTemplate(QAction* action);
@@ -99,23 +104,20 @@ private:
 	QTableWidget* template_table;
 	QBoxLayout* all_templates_layout;
 	
+	QAction* duplicate_action;
 	QAction* move_by_hand_action;
 	
 	// Buttons
 	QWidget* list_buttons_group;
-	QAbstractButton* delete_button;
-	QAbstractButton* duplicate_button;
-	QAbstractButton* move_up_button;
-	QAbstractButton* move_down_button;
-	QAbstractButton* georef_button;
-	QAbstractButton* move_by_hand_button;
-	QAbstractButton* adjust_button;
-	QAbstractButton* position_button;
-	//QAbstractButton* group_button;
-	//QAbstractButton* more_button;
-	
-	bool wide_layout;
-	QBoxLayout* layout;
+	QToolButton* delete_button;
+	QToolButton* move_up_button;
+	QToolButton* move_down_button;
+	QToolButton* georef_button;
+	QToolButton* move_by_hand_button;
+	QToolButton* adjust_button;
+	QToolButton* position_button;
+	//QToolButton* group_button;
+	//QToolButton* more_button;
 	
 	Map* map;
 	MapView* main_view;

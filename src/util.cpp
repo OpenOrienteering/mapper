@@ -20,6 +20,7 @@
 
 #include "util.h"
 
+#include <QApplication>
 #include <QDebug>
 #include <QDir>
 #include <QIODevice>
@@ -242,6 +243,16 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 			 << makeHelpUrl(filename, fragment)
 			 << QLatin1String("-enableRemoteControl");
 		
+#if QT_VERSION >= 0x050000
+		if ( QGuiApplication::platformName() == QLatin1String("xcb") ||
+			 QGuiApplication::platformName().isEmpty() )
+		{
+			// Use the modern 'fusion' style instead of the default "windows"
+			// style on X11.
+			args << QLatin1String("-style") << QLatin1String("fusion");
+		}
+#endif
+		 
 		assistant_process.start(assistant_path, args);
 		
 		// FIXME: Calling waitForStarted() from the main thread might cause the user interface to freeze.
