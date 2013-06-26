@@ -1015,9 +1015,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 			}
 		}
 		
-		// only 1 coordinate is allowed, enforce it even if the OC*D object claims more.
-		MapCoord pos;
-		convertPoint(pos, ocd_object.coords->x, ocd_object.coords->y);
+		MapCoord pos = convertOcdPoint(ocd_object.coords[0]);
 		p->setPosition(pos.rawX(), pos.rawY());
 		
 		p->setMap(map);
@@ -1071,25 +1069,10 @@ Object* OcdFileImport::importRectangleObject(const O& ocd_object, MapPart* part,
 	}
 	
 	// Convert corner points
-	qint32 x = ocd_object.coords[3].x >> 8;
-	qint32 y = ocd_object.coords[3].y >> 8;
-	MapCoord top_left;
-	convertPoint(top_left, x, y);
-	
-	x = ocd_object.coords[0].x >> 8;
-	y = ocd_object.coords[0].y >> 8;
-	MapCoord bottom_left;
-	convertPoint(bottom_left, x, y);
-	
-	x = ocd_object.coords[2].x >> 8;
-	y = ocd_object.coords[2].y >> 8;
-	MapCoord top_right;
-	convertPoint(top_right, x, y);
-	
-	x = ocd_object.coords[1].x >> 8;
-	y = ocd_object.coords[1].y >> 8;
-	MapCoord bottom_right;
-	convertPoint(bottom_right, x, y);
+	MapCoord bottom_left = convertOcdPoint(ocd_object.coords[0]);
+	MapCoord bottom_right = convertOcdPoint(ocd_object.coords[1]);
+	MapCoord top_right = convertOcdPoint(ocd_object.coords[2]);
+	MapCoord top_left = convertOcdPoint(ocd_object.coords[3]);
 	
 	MapCoordF top_left_f = MapCoordF(top_left);
 	MapCoordF top_right_f = MapCoordF(top_right);
@@ -1203,48 +1186,42 @@ Object* OcdFileImport::importRectangleObject(const O& ocd_object, MapPart* part,
 	return border_path;
 }
 
-void OcdFileImport::setPathHolePoint(Object *object, int i)
+void OcdFileImport::setPathHolePoint(OcdImportedPathObject *object, int pos)
 {
 	// Look for curve start points before the current point and apply hole point only if no such point is there.
 	// This prevents hole points in the middle of a curve caused by incorrect map objects.
-	PathObject* po = object->asPath();
-	if (po)
-	{
-		if (i >= 1 && po->getCoordinate(i).isCurveStart())
-			; //object->coords[i-1].setHolePoint(true);
-		else if (i >= 2 && po->getCoordinate(i-1).isCurveStart())
-			; //object->coords[i-2].setHolePoint(true);
-		else if (i >= 3 && po->getCoordinate(i-2).isCurveStart())
-			; //object->coords[i-3].setHolePoint(true);
-		else
-			po->getCoordinate(i).setHolePoint(true);
-	}
+	if (pos >= 1 && object->coords[pos].isCurveStart())
+		; //object->coords[i-1].setHolePoint(true);
+	else if (pos >= 2 && object->coords[pos-1].isCurveStart())
+		; //object->coords[i-2].setHolePoint(true);
+	else if (pos >= 3 && object->coords[pos-2].isCurveStart())
+		; //object->coords[i-3].setHolePoint(true);
+	else if (pos >= 0)
+		object->coords[pos].setHolePoint(true);
+}
+
+void OcdFileImport::setPointFlags(OcdImportedPathObject* object, quint16 pos, bool is_area, const Ocd::OcdPoint32& ocd_point)
+{
+	// We can support CurveStart, HolePoint, DashPoint.
+	// CurveStart needs to be applied to the main point though, not the control point, and
+	// hole points need to bet set as the last point of a part of an area object instead of the first point of the next part
+	if (ocd_point.x & Ocd::OcdPoint32::FlagCtl1 && pos > 0)
+		object->coords[pos-1].setCurveStart(true);
+	if ((ocd_point.y & Ocd::OcdPoint32::FlagDash) || (ocd_point.y & Ocd::OcdPoint32::FlagCorner))
+		object->coords[pos].setDashPoint(true);
+	if (ocd_point.y & Ocd::OcdPoint32::FlagHole)
+		setPathHolePoint(object, is_area ? (pos - 1) : pos);
 }
 
 /** Translates the OC*D path given in the last two arguments into an Object.
  */
-void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, quint16 npts, const Ocd::OcdPoint32* pts)
+void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, quint16 num_points, const Ocd::OcdPoint32* ocd_points)
 {
-	object->coords.resize(npts);
-	for (int i = 0; i < npts; i++)
+	object->coords.resize(num_points);
+	for (int i = 0; i < num_points; i++)
 	{
-		qint32 x = pts[i].x >> 8;
-		qint32 y = pts[i].y >> 8;
-		quint8 x_flags = pts[i].x & 0xff;
-		quint8 y_flags = pts[i].y & 0xff;
-		
-		MapCoord &map_coord = object->coords[i];
-		convertPoint(map_coord, x, y);
-		
-		// We can support CurveStart, HolePoint, DashPoint.
-		// CurveStart needs to be applied to the main point though, not the control point, and
-		// hole points need to bet set as the last point of a part of an area object instead of the first point of the next part
-		if (x_flags & Ocd::OcdPoint32::FlagCtl1 && i > 0)
-			object->coords[i-1].setCurveStart(true);
-		if ((y_flags & Ocd::OcdPoint32::FlagDash) || (y_flags & Ocd::OcdPoint32::FlagCorner))
-			map_coord.setDashPoint(true);
-		if (y_flags & Ocd::OcdPoint32::FlagHole)
-			setPathHolePoint(object, is_area ? (i - 1) : i);
+		object->coords[i] = convertOcdPoint(ocd_points[i]);
+		setPointFlags(object, i, is_area, ocd_points[i]);
     }
     
     // For path objects, create closed parts where the position of the last point is equal to that of the first point
@@ -1283,20 +1260,9 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 	if (npts == 4)
 	{
 		// Box text
-		qint32 x = pts[3].x >> 8;
-		qint32 y = pts[3].y >> 8;
-		MapCoord top_left;
-		convertPoint(top_left, x, y);
-		
-		x = pts[0].x >> 8;
-		y = pts[0].y >> 8;
-		MapCoord bottom_left;
-		convertPoint(bottom_left, x, y);
-		
-		x = pts[2].x >> 8;
-		y = pts[2].y >> 8;
-		MapCoord top_right;
-		convertPoint(top_right, x, y);
+		MapCoord bottom_left = convertOcdPoint(pts[0]);
+		MapCoord top_right = convertOcdPoint(pts[2]);
+		MapCoord top_left = convertOcdPoint(pts[3]);
 		
 		// According to Purple Pen source code: OC*D adds an extra internal leading (incorrectly).
 		QFontMetricsF metrics = symbol->getFontMetrics();
@@ -1317,10 +1283,7 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 			addWarning(tr("Trying to import a text object with unknown coordinate format"));
 		
 		// anchor point
-		qint32 x = pts[0].x >> 8;
-		qint32 y = pts[0].y >> 8;
-		MapCoord coord;
-		convertPoint(coord, x, y); 
+		MapCoord coord = convertOcdPoint(pts[0]); 
 		object->setAnchorPosition(coord.rawX(), coord.rawY());
 		object->setVerticalAlignment(TextObject::AlignBaseline);
 	}
@@ -1336,15 +1299,6 @@ float OcdFileImport::convertRotation(int angle) {
     while (a < 0) a += 2 * M_PI;
     //if (a < 0 || a > M_PI) qDebug() << "Found angle" << a;
     return (float)a;
-}
-
-void OcdFileImport::convertPoint(MapCoord& coord, int ocd_x, int ocd_y)
-{
-    // OC*D uses hundredths of a millimeter.
-    // oo-mapper uses 1/1000 mm
-    coord.setRawX(/*offset_x + */(qint64)ocd_x * 10);
-    // Y-axis is flipped.
-    coord.setRawY(/*offset_y + */(qint64)ocd_y * (-10));
 }
 
 qint64 OcdFileImport::convertSize(int ocd_size) {

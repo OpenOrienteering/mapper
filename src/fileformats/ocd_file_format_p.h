@@ -101,6 +101,8 @@ public:
 	
 	QString convertOcdString(const QChar* src) const;
 	
+	MapCoord convertOcdPoint(const Ocd::OcdPoint32& ocd_point) const;
+	
 protected:
 	void import(bool load_symbols_only) throw (FileFormatException);
 	
@@ -155,13 +157,13 @@ protected:
 	
 	// Some helper functions that are used in multiple places
 	
-	void setPathHolePoint(Object *object, int i);
-	void fillPathCoords(OcdImportedPathObject* object, bool is_area, quint16 npts, const Ocd::OcdPoint32* pts);
+	void setPointFlags(OcdImportedPathObject* object, quint16 pos, bool is_area, const Ocd::OcdPoint32& ocd_point);
+	void setPathHolePoint(OcdFileImport::OcdImportedPathObject* object, int i);
+	void fillPathCoords(OcdFileImport::OcdImportedPathObject* object, bool is_area, quint16 num_points, const Ocd::OcdPoint32* ocd_points);
 	bool fillTextPathCoords(TextObject* object, TextSymbol* symbol, quint16 npts, Ocd::OcdPoint32* pts);
 	
 	// Unit conversion functions
 	float convertRotation(int angle);
-	void convertPoint(MapCoord& coord, int ocd_x, int ocd_y);
 	qint64 convertSize(int ocd_size);
 	MapColor *convertColor(int color);
 	
@@ -183,6 +185,16 @@ protected:
 	/// maps OCAD symbol number to rectangle information struct
 	QHash<int, RectangleInfo> rectangle_info;
 };
+
+
+
+// ### OcdFileImport inline code ###
+
+inline
+MapCoord OcdFileImport::convertOcdPoint(const Ocd::OcdPoint32& ocd_point) const
+{
+	return MapCoord::fromRaw(10 * (ocd_point.x >> 8), -10 * (ocd_point.y >> 8));
+}
 
 
 #endif // _OPENORIENTEERING_OCD_FILE_FORMAT_P_
