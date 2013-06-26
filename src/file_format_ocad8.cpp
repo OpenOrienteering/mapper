@@ -52,7 +52,7 @@
 
 OCAD8FileFormat::OCAD8FileFormat()
  : FileFormat(MapFile, "OCAD78", ImportExport::tr("OCAD Versions 7, 8"), "ocd", 
-              ImportSupported | ExportSupported | ExportLossy)
+              /*ImportSupported |*/ ExportSupported | ExportLossy)
 {
 	// Nothing
 }
