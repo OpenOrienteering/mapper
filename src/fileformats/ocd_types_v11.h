@@ -189,14 +189,14 @@ namespace Ocd
 		quint16 hatch_color;
 		quint16 hatch_line_width;
 		quint16 hatch_dist;
-		quint16 hatch_angle_1;
-		quint16 hatch_angle_2;
+		qint16  hatch_angle_1;
+		qint16  hatch_angle_2;
 		quint8  fill_on;
 		quint8  border_on;
 		quint16 structure_mode;
 		quint16 structure_width;
 		quint16 structure_height;
-		quint16 structure_angle;
+		qint16  structure_angle;
 		quint16 RESERVED_MEMBER;
 		quint16 data_size;
 		

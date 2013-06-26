@@ -364,7 +364,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 		setupBaseSymbol(main_line, ocd_symbol);
 		
 		// Basic line options
-		main_line->line_width = convertSize(ocd_symbol.line_width);
+		main_line->line_width = convertLength(ocd_symbol.line_width);
 		main_line->color = convertColor(ocd_symbol.line_color);
 		
 		// Cap and join styles
@@ -404,7 +404,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 			if (ocd_symbol.dist_from_start != ocd_symbol.dist_from_end)
 				addWarning(tr("In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.")
 				.arg(0.1 * ocd_symbol.base.number).arg(ocd_symbol.dist_from_start).arg(ocd_symbol.dist_from_end).arg((ocd_symbol.dist_from_start + ocd_symbol.dist_from_end) / 2));
-			main_line->pointed_cap_length = convertSize((ocd_symbol.dist_from_start + ocd_symbol.dist_from_end) / 2); // FIXME: Different lengths for start and end length of pointed line ends are not supported yet, so take the average
+			main_line->pointed_cap_length = convertLength((ocd_symbol.dist_from_start + ocd_symbol.dist_from_end) / 2); // FIXME: Different lengths for start and end length of pointed line ends are not supported yet, so take the average
 			main_line->join_style = LineSymbol::RoundJoin;	// NOTE: while the setting may be different (see what is set in the first place), OC*D always draws round joins if the line cap is pointed!
 		}
 		
@@ -416,8 +416,8 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 			// Detect special case
 			if (ocd_symbol.sec_gap > 0 && ocd_symbol.main_gap == 0)
 			{
-				main_line->dash_length = convertSize(ocd_symbol.main_length - ocd_symbol.end_gap);
-				main_line->break_length = convertSize(ocd_symbol.end_gap);
+				main_line->dash_length = convertLength(ocd_symbol.main_length - ocd_symbol.end_gap);
+				main_line->break_length = convertLength(ocd_symbol.end_gap);
 				if (!(ocd_symbol.end_length >= ocd_symbol.main_length / 2 - 1 && ocd_symbol.end_length <= ocd_symbol.main_length / 2 + 1))
 					addWarning(tr("In dashed line symbol %1, the end length cannot be imported correctly.").arg(0.1 * ocd_symbol.base.number));
 				if (ocd_symbol.end_gap != 0)
@@ -434,23 +434,23 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 						.arg(0.1 * ocd_symbol.base.number).arg(ocd_symbol.main_length).arg(ocd_symbol.end_length).arg(ocd_symbol.main_length));
 				}
 				
-				main_line->dash_length = convertSize(ocd_symbol.main_length);
-				main_line->break_length = convertSize(ocd_symbol.main_gap);
+				main_line->dash_length = convertLength(ocd_symbol.main_length);
+				main_line->break_length = convertLength(ocd_symbol.main_gap);
 				if (ocd_symbol.sec_gap > 0)
 				{
 					main_line->dashes_in_group = 2;
 					if (ocd_symbol.sec_gap != ocd_symbol.end_gap)
 						addWarning(tr("In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.")
 						.arg(0.1 * ocd_symbol.base.number).arg(ocd_symbol.sec_gap).arg(ocd_symbol.end_gap).arg(ocd_symbol.sec_gap));
-					main_line->in_group_break_length = convertSize(ocd_symbol.sec_gap);
+					main_line->in_group_break_length = convertLength(ocd_symbol.sec_gap);
 					main_line->dash_length = (main_line->dash_length - main_line->in_group_break_length) / 2;
 				}
 			}
 		} 
 		else
 		{
-			main_line->segment_length = convertSize(ocd_symbol.main_length);
-			main_line->end_length = convertSize(ocd_symbol.end_length);
+			main_line->segment_length = convertLength(ocd_symbol.main_length);
+			main_line->end_length = convertLength(ocd_symbol.end_length);
 		}
 	}
 	
@@ -464,7 +464,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 		setupBaseSymbol(framing_line, ocd_symbol);
 		
 		// Basic line options
-		framing_line->line_width = convertSize(ocd_symbol.framing_width);
+		framing_line->line_width = convertLength(ocd_symbol.framing_width);
 		framing_line->color = convertColor(ocd_symbol.framing_color);
 		
 		// Cap and join styles
@@ -498,7 +498,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 		line_for_borders = double_line;
 		setupBaseSymbol(double_line, ocd_symbol);
 		
-		double_line->line_width = convertSize(ocd_symbol.double_width);
+		double_line->line_width = convertLength(ocd_symbol.double_width);
 		if (ocd_symbol.double_flags & S::DoubleFillColorOn)
 			double_line->color = convertColor(ocd_symbol.double_color);
 		else
@@ -507,8 +507,8 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 		double_line->cap_style = LineSymbol::FlatCap;
 		double_line->join_style = LineSymbol::MiterJoin;
 		
-		double_line->segment_length = convertSize(ocd_symbol.main_length);
-		double_line->end_length = convertSize(ocd_symbol.end_length);
+		double_line->segment_length = convertLength(ocd_symbol.main_length);
+		double_line->end_length = convertLength(ocd_symbol.end_length);
 	}
 	
 	// Border lines
@@ -521,19 +521,19 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 		
 		// Border color and width
 		border.color = convertColor(ocd_symbol.double_left_color);
-		border.width = convertSize(ocd_symbol.double_left_width);
-		border.shift = convertSize(ocd_symbol.double_left_width) / 2 + (convertSize(ocd_symbol.double_width) - line_for_borders->line_width) / 2;
+		border.width = convertLength(ocd_symbol.double_left_width);
+		border.shift = convertLength(ocd_symbol.double_left_width) / 2 + (convertLength(ocd_symbol.double_width) - line_for_borders->line_width) / 2;
 		
 		right_border.color = convertColor(ocd_symbol.double_right_color);
-		right_border.width = convertSize(ocd_symbol.double_right_width);
-		right_border.shift = convertSize(ocd_symbol.double_right_width) / 2 + (convertSize(ocd_symbol.double_width) - line_for_borders->line_width) / 2;
+		right_border.width = convertLength(ocd_symbol.double_right_width);
+		right_border.shift = convertLength(ocd_symbol.double_right_width) / 2 + (convertLength(ocd_symbol.double_width) - line_for_borders->line_width) / 2;
 		
 		// The borders may be dashed
 		if (ocd_symbol.double_gap > 0 && ocd_symbol.double_mode > 1)
 		{
 			border.dashed = true;
-			border.dash_length = convertSize(ocd_symbol.double_length);
-			border.break_length = convertSize(ocd_symbol.double_gap);
+			border.dash_length = convertLength(ocd_symbol.double_length);
+			border.break_length = convertLength(ocd_symbol.double_gap);
 			
 			// If ocd_symbol->dmode == 2, only the left border should be dashed
 			if (ocd_symbol.double_mode > 2)
@@ -553,8 +553,8 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 		symbol_line = main_line;
 		setupBaseSymbol(main_line, ocd_symbol);
 		
-		main_line->segment_length = convertSize(ocd_symbol.main_length);
-		main_line->end_length = convertSize(ocd_symbol.end_length);
+		main_line->segment_length = convertLength(ocd_symbol.main_length);
+		main_line->end_length = convertLength(ocd_symbol.end_length);
 	}
 	
 	typedef typename S::Element::PointCoord PointCoord;
@@ -563,7 +563,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	symbol_line->mid_symbol = new OcdImportedPointSymbol();
 	setupPointSymbolPattern(symbol_line->mid_symbol, ocd_symbol.primary_data_size, ocd_symbol.begin_of_elements);
 	symbol_line->mid_symbols_per_spot = ocd_symbol.num_prim_sym;
-	symbol_line->mid_symbol_distance = convertSize(ocd_symbol.prim_sym_dist);
+	symbol_line->mid_symbol_distance = convertLength(ocd_symbol.prim_sym_dist);
 	coords += ocd_symbol.primary_data_size;
 	
 	if (ocd_symbol.secondary_data_size > 0)
@@ -664,12 +664,12 @@ AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol)
 		symbol->patterns.resize(n + 1);
 		pattern = &(symbol->patterns[n]);
 		pattern->type = AreaSymbol::FillPattern::LinePattern;
-		pattern->angle = convertRotation(ocd_symbol.hatch_angle_1);
+		pattern->angle = convertAngle(ocd_symbol.hatch_angle_1);
 		pattern->rotatable = true;
-		pattern->line_spacing = convertSize(ocd_symbol.hatch_dist + ocd_symbol.hatch_line_width);
+		pattern->line_spacing = convertLength(ocd_symbol.hatch_dist + ocd_symbol.hatch_line_width);
 		pattern->line_offset = 0;
 		pattern->line_color = convertColor(ocd_symbol.hatch_color);
-		pattern->line_width = convertSize(ocd_symbol.hatch_line_width);
+		pattern->line_width = convertLength(ocd_symbol.hatch_line_width);
 		if (ocd_symbol.hatch_mode == S::HatchCross)
 		{
 			// Second hatch, same as the first, just a different angle
@@ -677,12 +677,12 @@ AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol)
 			symbol->patterns.resize(n + 1);
 			pattern = &(symbol->patterns[n]);
 			pattern->type = AreaSymbol::FillPattern::LinePattern;
-			pattern->angle = convertRotation(ocd_symbol.hatch_angle_2);
+			pattern->angle = convertAngle(ocd_symbol.hatch_angle_2);
 			pattern->rotatable = true;
-			pattern->line_spacing = convertSize(ocd_symbol.hatch_dist);
+			pattern->line_spacing = convertLength(ocd_symbol.hatch_dist);
 			pattern->line_offset = 0;
 			pattern->line_color = convertColor(ocd_symbol.hatch_color);
-			pattern->line_width = convertSize(ocd_symbol.hatch_line_width);
+			pattern->line_width = convertLength(ocd_symbol.hatch_line_width);
 		}
 	}
 	
@@ -691,16 +691,16 @@ AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol)
 		// OC*D 8 has a "staggered" pattern mode, where successive rows are shifted width/2 relative
 		// to each other. We need to simulate this in Mapper with two overlapping patterns, each with
 		// twice the height. The second is then offset by width/2, height/2.
-		int spacing = convertSize(ocd_symbol.structure_height);
+		int spacing = convertLength(ocd_symbol.structure_height);
 		if (ocd_symbol.structure_mode == S::StructureShiftedRows)
 			spacing *= 2;
 		int n = symbol->patterns.size();
 		symbol->patterns.resize(n + 1);
 		pattern = &(symbol->patterns[n]);
 		pattern->type = AreaSymbol::FillPattern::PointPattern;
-		pattern->angle = convertRotation(ocd_symbol.structure_angle);
+		pattern->angle = convertAngle(ocd_symbol.structure_angle);
 		pattern->rotatable = true;
-		pattern->point_distance = convertSize(ocd_symbol.structure_width);
+		pattern->point_distance = convertLength(ocd_symbol.structure_width);
 		pattern->line_spacing = spacing;
 		pattern->line_offset = 0;
 		pattern->offset_along_line = 0;
@@ -714,9 +714,9 @@ AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol)
 			symbol->patterns.resize(n + 1);
 			pattern = &(symbol->patterns[n]);
 			pattern->type = AreaSymbol::FillPattern::PointPattern;
-			pattern->angle = convertRotation(ocd_symbol.structure_angle);
+			pattern->angle = convertAngle(ocd_symbol.structure_angle);
 			pattern->rotatable = true;
-			pattern->point_distance = convertSize(ocd_symbol.structure_width);
+			pattern->point_distance = convertLength(ocd_symbol.structure_width);
 			pattern->line_spacing = spacing;
 			pattern->line_offset = pattern->line_spacing / 2;
 			pattern->offset_along_line = pattern->point_distance / 2;
@@ -742,16 +742,16 @@ TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol)
 	symbol->bold = (ocd_symbol.font_weight>= 550) ? true : false;
 	symbol->italic = (ocd_symbol.font_italic) ? true : false;
 	symbol->underline = false;
-	symbol->paragraph_spacing = convertSize(ocd_symbol.para_spacing);
+	symbol->paragraph_spacing = convertLength(ocd_symbol.para_spacing);
 	symbol->character_spacing = ocd_symbol.char_spacing / 100.0;
 	symbol->kerning = false;
 	symbol->line_below = ocd_symbol.line_below_on;
 	symbol->line_below_color = convertColor(ocd_symbol.line_below_color);
-	symbol->line_below_width = convertSize(ocd_symbol.line_below_width);
-	symbol->line_below_distance = convertSize(ocd_symbol.line_below_offset);
+	symbol->line_below_width = convertLength(ocd_symbol.line_below_width);
+	symbol->line_below_distance = convertLength(ocd_symbol.line_below_offset);
 	symbol->custom_tabs.resize(ocd_symbol.num_tabs);
 	for (int i = 0; i < ocd_symbol.num_tabs; ++i)
-		symbol->custom_tabs[i] = convertSize(ocd_symbol.tab_pos[i]);
+		symbol->custom_tabs[i] = convertLength(ocd_symbol.tab_pos[i]);
 	
 	int halign = (int)TextObject::AlignHCenter;
 	if (ocd_symbol.alignment == 0) // TODO: Named identifiers, all values
@@ -795,13 +795,13 @@ TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol)
 		if (ocd_symbol.framing_mode == 1)
 		{
 			symbol->framing_mode = TextSymbol::ShadowFraming;
-			symbol->framing_shadow_x_offset = convertSize(ocd_symbol.framing_offset_x);
-			symbol->framing_shadow_y_offset = -1 * convertSize(ocd_symbol.framing_offset_y);
+			symbol->framing_shadow_x_offset = convertLength(ocd_symbol.framing_offset_x);
+			symbol->framing_shadow_y_offset = -1 * convertLength(ocd_symbol.framing_offset_y);
 		}
 		else if (ocd_symbol.framing_mode == 2)
 		{
 			symbol->framing_mode = TextSymbol::LineFraming;
-			symbol->framing_line_half_width = convertSize(ocd_symbol.framing_line_width);
+			symbol->framing_line_half_width = convertLength(ocd_symbol.framing_line_width);
 		}
 		else
 		{
@@ -834,14 +834,14 @@ LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 	OcdImportedLineSymbol* symbol = new OcdImportedLineSymbol();
 	setupBaseSymbol(symbol, ocd_symbol);
 	
-	symbol->line_width = convertSize(ocd_symbol.line_width);
+	symbol->line_width = convertLength(ocd_symbol.line_width);
 	symbol->color = convertColor(ocd_symbol.line_color);
 	symbol->cap_style = LineSymbol::FlatCap;
 	symbol->join_style = LineSymbol::RoundJoin;
 	
 	RectangleInfo rect;
 	rect.border_line = symbol;
-	rect.corner_radius = 0.001 * convertSize(ocd_symbol.corner_radius);
+	rect.corner_radius = 0.001 * convertLength(ocd_symbol.corner_radius);
 	rect.has_grid = ocd_symbol.grid_flags & 1;
 	
 	if (rect.has_grid)
@@ -866,8 +866,8 @@ LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 		rect.inner_line = inner_line;
 		rect.text = text;
 		rect.number_from_bottom = ocd_symbol.grid_flags & 2;
-		rect.cell_width = 0.001 * convertSize(ocd_symbol.cell_width);
-		rect.cell_height = 0.001 * convertSize(ocd_symbol.cell_height);
+		rect.cell_width = 0.001 * convertLength(ocd_symbol.cell_width);
+		rect.cell_height = 0.001 * convertLength(ocd_symbol.cell_height);
 		rect.unnumbered_cells = ocd_symbol.unnumbered_cells;
 		rect.unnumbered_text = convertOcdString(ocd_symbol.unnumbered_text);
 	}
@@ -895,7 +895,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 				{
 					PointSymbol* working_symbol = base_symbol_used ? new PointSymbol() : symbol;
 					working_symbol->setInnerColor(convertColor(element->color));
-					working_symbol->setInnerRadius(convertSize(element->diameter) / 2);
+					working_symbol->setInnerRadius(convertLength(element->diameter) / 2);
 					working_symbol->setOuterColor(NULL);
 					working_symbol->setOuterWidth(0);
 					if (!base_symbol_used)
@@ -919,9 +919,9 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 				{
 					PointSymbol* working_symbol = base_symbol_used ? new PointSymbol() : symbol;
 					working_symbol->setInnerColor(NULL);
-					working_symbol->setInnerRadius(convertSize(element->diameter) / 2 - element->line_width);
+					working_symbol->setInnerRadius(convertLength(element->diameter) / 2 - element->line_width);
 					working_symbol->setOuterColor(convertColor(element->color));
-					working_symbol->setOuterWidth(convertSize(element->line_width));
+					working_symbol->setOuterWidth(convertLength(element->line_width));
 					if (!base_symbol_used)
 					{
 						base_symbol_used = true;
@@ -941,7 +941,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 			case E::TypeLine:
 				{
 					OcdImportedLineSymbol* element_symbol = new OcdImportedLineSymbol();
-					element_symbol->line_width = convertSize(element->line_width);
+					element_symbol->line_width = convertLength(element->line_width);
 					element_symbol->color = convertColor(element->color);
 					OcdImportedPathObject* element_object = new OcdImportedPathObject(element_symbol);
 					fillPathCoords(element_object, false, element->num_coords, reinterpret_cast<const Ocd::OcdPoint32*>(coords+i+2));
@@ -1004,14 +1004,14 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 		PointSymbol* point_symbol = reinterpret_cast<PointSymbol*>(symbol);
 		if (point_symbol->isRotatable())
 		{
-			p->setRotation(convertRotation(ocd_object.angle));
+			p->setRotation(convertAngle(ocd_object.angle));
 		}
 		else if (ocd_object.angle != 0)
 		{
 			if (!point_symbol->isSymmetrical())
 			{
 				point_symbol->setRotatable(true);
-				p->setRotation(convertRotation(ocd_object.angle));
+				p->setRotation(convertAngle(ocd_object.angle));
 			}
 		}
 		
@@ -1026,7 +1026,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 		TextObject *t = new TextObject(symbol);
 		
 		// extra properties: rotation, horizontalAlignment, verticalAlignment, text
-		t->setRotation(convertRotation(ocd_object.angle));
+		t->setRotation(convertAngle(ocd_object.angle));
 		t->setHorizontalAlignment((TextObject::HorizontalAlignment)text_halign_map.value(symbol));
 		t->setVerticalAlignment(TextObject::AlignBaseline);
 		
@@ -1047,7 +1047,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 	else if (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined)
 	{
 		OcdImportedPathObject *p = new OcdImportedPathObject(symbol);
-		p->setPatternRotation(convertRotation(ocd_object.angle));
+		p->setPatternRotation(convertAngle(ocd_object.angle));
 		
 		// Normal path
 		fillPathCoords(p, symbol->getType() == Symbol::Area, ocd_object.num_items, (Ocd::OcdPoint32*)ocd_object.coords);
@@ -1289,32 +1289,6 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 	}
 	
 	return true;
-}
-
-float OcdFileImport::convertRotation(int angle) {
-    // OC*D uses tenths of a degree, counterclockwise
-    // BUG: if sin(rotation) is < 0 for a hatched area pattern, the pattern's createRenderables() will go into an infinite loop.
-    // So until that's fixed, we keep a between 0 and PI
-    double a = (M_PI / 180) *  (0.1f * angle);
-    while (a < 0) a += 2 * M_PI;
-    //if (a < 0 || a > M_PI) qDebug() << "Found angle" << a;
-    return (float)a;
-}
-
-qint64 OcdFileImport::convertSize(int ocd_size) {
-    // OC*D uses hundredths of a millimeter.
-    // oo-mapper uses 1/1000 mm
-    return ((qint64)ocd_size) * 10;
-}
-
-MapColor *OcdFileImport::convertColor(int color) {
-	if (!color_index.contains(color))
-	{
-		addWarning(tr("Color id not found: %1, ignoring this color").arg(color));
-		return NULL;
-	}
-	else
-		return color_index[color];
 }
 
 void OcdFileImport::import(bool load_symbols_only) throw (FileFormatException)

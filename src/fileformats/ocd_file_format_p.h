@@ -103,6 +103,12 @@ public:
 	
 	MapCoord convertOcdPoint(const Ocd::OcdPoint32& ocd_point) const;
 	
+	float convertAngle(int ocd_angle) const;
+	
+	qint64 convertLength(int ocd_length) const;
+	
+	MapColor* convertColor(int ocd_color);
+	
 protected:
 	void import(bool load_symbols_only) throw (FileFormatException);
 	
@@ -162,11 +168,6 @@ protected:
 	void fillPathCoords(OcdFileImport::OcdImportedPathObject* object, bool is_area, quint16 num_points, const Ocd::OcdPoint32* ocd_points);
 	bool fillTextPathCoords(TextObject* object, TextSymbol* symbol, quint16 npts, Ocd::OcdPoint32* pts);
 	
-	// Unit conversion functions
-	float convertRotation(int angle);
-	qint64 convertSize(int ocd_size);
-	MapColor *convertColor(int color);
-	
 protected:
 	QByteArray buffer;
 	
@@ -194,6 +195,35 @@ inline
 MapCoord OcdFileImport::convertOcdPoint(const Ocd::OcdPoint32& ocd_point) const
 {
 	return MapCoord::fromRaw(10 * (ocd_point.x >> 8), -10 * (ocd_point.y >> 8));
+}
+
+inline
+float OcdFileImport::convertAngle(int ocd_angle) const
+{
+	// OC*D uses tenths of a degree, counterclockwise
+	// BUG: if sin(rotation) is < 0 for a hatched area pattern, the pattern's createRenderables() will go into an infinite loop.
+	// So until that's fixed, we keep a between 0 and PI
+	return (M_PI / 1800) * (ocd_angle % 3600);
+}
+
+inline
+qint64 OcdFileImport::convertLength(int ocd_length) const
+{
+	// OC*D uses hundredths of a millimeter.
+	// oo-mapper uses 1/1000 mm
+	return ((qint64)ocd_length) * 10;
+}
+
+inline
+MapColor *OcdFileImport::convertColor(int ocd_color)
+{
+	if (!color_index.contains(ocd_color))
+	{
+		addWarning(tr("Color id not found: %1, ignoring this color").arg(ocd_color));
+		return NULL;
+	}
+	
+	return color_index[ocd_color];
 }
 
 
