@@ -23,6 +23,8 @@
 #ifndef _OPENORIENTEERING_OCD_FILE_FORMAT_P_
 #define _OPENORIENTEERING_OCD_FILE_FORMAT_P_
 
+#include <QTextCodec>
+
 #include "ocd_types.h"
 #include "../file_import_export.h"
 
@@ -95,7 +97,8 @@ public:
 	
 	void setLocal8BitEncoding(const char *encoding);
 	
-	QString convertOcdString(const char* src) const;
+	template< std::size_t N >
+	QString convertOcdString(const Ocd::PascalString<N>& src) const;
 	
 	QString convertOcdString(const char* src, std::size_t len) const;
 	
@@ -190,6 +193,13 @@ protected:
 
 
 // ### OcdFileImport inline code ###
+
+template< std::size_t N >
+inline
+QString OcdFileImport::convertOcdString(const Ocd::PascalString<N>& src) const
+{
+	return local_8bit->toUnicode(src.data, src.length);
+}
 
 inline
 MapCoord OcdFileImport::convertOcdPoint(const Ocd::OcdPoint32& ocd_point) const

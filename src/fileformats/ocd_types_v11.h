@@ -50,7 +50,6 @@ namespace Ocd
 		
 		typedef BaseSymbolV11 BaseSymbol;
 		static const int symbol_number_factor = 1000;
-		static const int description_length   = 64;
 		
 		quint32 size;
 		quint32 number;
@@ -67,7 +66,7 @@ namespace Ocd
 		quint8  RESERVED_MEMBER[2];
 		quint16 num_colors;
 		quint16 colors[14];
-		QChar   description[description_length];
+		QChar   description[64];
 		quint8  icon_bits[484];
 		quint16 group[64];
 		
@@ -223,7 +222,7 @@ namespace Ocd
 		
 		BaseSymbol base;
 		
-		char    font_name[32];
+		PascalString<31> font_name;
 		quint16 font_color;
 		quint16 font_size;
 		quint16 font_weight;
@@ -265,7 +264,7 @@ namespace Ocd
 		
 		BaseSymbol base;
 		
-		char    font_name[32];
+		PascalString<31> font_name;
 		quint16 font_color;
 		quint16 font_size;
 		quint16 font_weight;

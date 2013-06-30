@@ -54,6 +54,18 @@ namespace Ocd
 // This pragma should be supported by msvc, gcc, clang [-fms-compatibility]
 #pragma pack(push, 1)
 	
+	/** 
+	 * A string of max. N characters with a pascal-style binary representation:
+	 * the first byte indicates the length,
+	 * the following N bytes contain the actual character data.
+	 */
+	template< unsigned int N >
+	struct PascalString
+	{
+		unsigned char length;
+		char data[N];
+	};
+	
 	struct FileHeaderGeneric
 	{
 		quint16 vendor_mark;

@@ -25,7 +25,6 @@
 
 #include <QDebug>
 #include <QBuffer>
-#include <QTextCodec>
 
 #include "ocd_types_v9.h"
 #include "ocd_types_v11.h"
@@ -78,12 +77,6 @@ OcdFileImport::~OcdFileImport()
 
 void OcdFileImport::setLocal8BitEncoding(const char *encoding) {
     local_8bit = QTextCodec::codecForName(encoding);
-}
-
-inline
-QString OcdFileImport::convertOcdString(const char* src) const
-{
-	return local_8bit->toUnicode(src+1, *src);
 }
 
 inline
@@ -734,8 +727,7 @@ TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol)
 	OcdImportedTextSymbol* symbol = new OcdImportedTextSymbol();
 	setupBaseSymbol(symbol, ocd_symbol);
 	
-// 	symbol->font_family = convertPascalString(ocd_symbol.font_name); // FIXME: font mapping?
-	symbol->font_family = local_8bit->toUnicode(ocd_symbol.font_name+1,ocd_symbol.font_name[0]); // FIXME: font mapping?
+	symbol->font_family = convertOcdString(ocd_symbol.font_name); // FIXME: font mapping?
 	symbol->color = convertColor(ocd_symbol.font_color);
 	double d_font_size = (0.1 * ocd_symbol.font_size) / 72.0 * 25.4;
 	symbol->font_size = qRound(1000 * d_font_size);
