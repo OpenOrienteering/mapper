@@ -59,7 +59,7 @@ namespace Ocd
 	 * the first byte indicates the length,
 	 * the following N bytes contain the actual character data.
 	 */
-	template< unsigned int N >
+	template< std::size_t N >
 	struct PascalString
 	{
 		unsigned char length;
