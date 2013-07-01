@@ -19,6 +19,7 @@
 
 #include "ocd_types.h"
 #include "ocd_types_v9.h"
+#include "ocd_types_v10.h"
 #include "ocd_types_v11.h"
 
 namespace Ocd
@@ -28,6 +29,8 @@ namespace Ocd
 	Q_STATIC_ASSERT(sizeof(FileHeaderGeneric) == 8);
 	
 	Q_STATIC_ASSERT(sizeof(FileHeaderV9) == 48);
+	
+	Q_STATIC_ASSERT(sizeof(FileHeaderV10) == 48);
 	
 	Q_STATIC_ASSERT(sizeof(FileHeaderV11) == 48);
 }

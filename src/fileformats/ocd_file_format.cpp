@@ -27,6 +27,7 @@
 #include <QBuffer>
 
 #include "ocd_types_v9.h"
+#include "ocd_types_v10.h"
 #include "ocd_types_v11.h"
 #include "../map.h"
 #include "../georeferencing.h"
@@ -1366,11 +1367,15 @@ void OcdFileImport::import(bool load_symbols_only) throw (FileFormatException)
 			importImplementation< Ocd::FormatV8 >(load_symbols_only);
 			break;
 		case 9:
-			addWarning("Untested file format: OCD 9");
+			addWarning(tr("Untested file format: OCD %1").arg(version));
 			importImplementation< Ocd::FormatV9 >(load_symbols_only);
 			break;
+		case 10:
+			addWarning(tr("Untested file format: OCD %1").arg(version));
+			importImplementation< Ocd::FormatV10 >(load_symbols_only);
+			break;
 		case 11:
-			addWarning("Untested file format: OCD 11");
+			addWarning(tr("Untested file format: OCD %1").arg(version));
 			importImplementation< Ocd::FormatV11 >(load_symbols_only);
 			break;
 		default:

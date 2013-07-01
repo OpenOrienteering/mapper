@@ -24,6 +24,7 @@
 
 namespace Ocd
 {
+	
 #pragma pack(push, 1)
 	
 	struct FileHeaderV11
@@ -301,7 +302,7 @@ namespace Ocd
 		quint16 line_style;
 		QChar   RESERVED_MEMBER[32];
 		quint16 RESERVED_MEMBER;
-		quint16 font_color;
+		quint16 font_size;
 		quint16 RESERVED_MEMBER[4];
 	};
 	
