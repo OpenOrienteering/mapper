@@ -27,7 +27,6 @@
 
 #include "ocd_types.h"
 #include "../file_import_export.h"
-
 #include "../object.h"
 #include "../symbol.h"
 #include "../symbol_area.h"
@@ -108,9 +107,12 @@ public:
 	
 	float convertAngle(int ocd_angle) const;
 	
-	qint64 convertLength(int ocd_length) const;
+	template< class T >
+	qint64 convertLength(T ocd_length) const;
 	
 	MapColor* convertColor(int ocd_color);
+	
+	void addSymbolWarning(LineSymbol* symbol, const QString& warning);
 	
 protected:
 	void import(bool load_symbols_only) throw (FileFormatException);
@@ -172,6 +174,9 @@ protected:
 	bool fillTextPathCoords(TextObject* object, TextSymbol* symbol, quint16 npts, Ocd::OcdPoint32* pts);
 	
 protected:
+	/// The locale is used for number formatting.
+	QLocale locale;
+	
 	QByteArray buffer;
 	
 	/// Character encoding to use for 1-byte (narrow) strings
@@ -202,6 +207,18 @@ QString OcdFileImport::convertOcdString(const Ocd::PascalString<N>& src) const
 }
 
 inline
+QString OcdFileImport::convertOcdString(const char* src, std::size_t len) const
+{
+	return local_8bit->toUnicode(src, len);
+}
+
+inline
+QString OcdFileImport::convertOcdString(const QChar* src) const
+{
+	return QString(src);
+}
+
+inline
 MapCoord OcdFileImport::convertOcdPoint(const Ocd::OcdPoint32& ocd_point) const
 {
 	return MapCoord::fromRaw(10 * (ocd_point.x >> 8), -10 * (ocd_point.y >> 8));
@@ -213,11 +230,12 @@ float OcdFileImport::convertAngle(int ocd_angle) const
 	// OC*D uses tenths of a degree, counterclockwise
 	// BUG: if sin(rotation) is < 0 for a hatched area pattern, the pattern's createRenderables() will go into an infinite loop.
 	// So until that's fixed, we keep a between 0 and PI
-	return (M_PI / 1800) * (ocd_angle % 3600);
+	return (M_PI / 1800) * ((ocd_angle + 3600) % 3600);
 }
 
+template< class T >
 inline
-qint64 OcdFileImport::convertLength(int ocd_length) const
+qint64 OcdFileImport::convertLength(T ocd_length) const
 {
 	// OC*D uses hundredths of a millimeter.
 	// oo-mapper uses 1/1000 mm

@@ -79,17 +79,50 @@ void OcdFileImport::setLocal8BitEncoding(const char *encoding) {
     local_8bit = QTextCodec::codecForName(encoding);
 }
 
-inline
-QString OcdFileImport::convertOcdString(const char* src, std::size_t len) const
+void OcdFileImport::addSymbolWarning(LineSymbol* symbol, const QString& warning)
 {
-	return local_8bit->toUnicode(src, len);
+	addWarning( tr("In line symbol %1 '%2': %3").
+	            arg(symbol->getNumberAsString()).
+	            arg(symbol->getName()).
+	            arg(warning) );
 }
 
+#ifndef NDEBUG
+
+// Heuristic detection of implementation errors
+template< >
 inline
-QString OcdFileImport::convertOcdString(const QChar* src) const
+qint64 OcdFileImport::convertLength< quint8 >(quint8 ocd_length) const
 {
-	return QString(src);
+	// OC*D uses hundredths of a millimeter.
+	// oo-mapper uses 1/1000 mm
+	if (ocd_length > 200)
+		qDebug() << "quint8 has value" << ocd_length << ", might be qint8" << (qint8)ocd_length;
+	return ((qint64)ocd_length) * 10;
 }
+
+template< >
+inline
+qint64 OcdFileImport::convertLength< quint16 >(quint16 ocd_length) const
+{
+	// OC*D uses hundredths of a millimeter.
+	// oo-mapper uses 1/1000 mm
+	if (ocd_length > 50000)
+		qDebug() << "quint16 has value" << ocd_length << ", might be qint16" << (qint16)ocd_length;
+	return ((qint64)ocd_length) * 10;
+}
+
+template< >
+inline
+qint64 OcdFileImport::convertLength< quint32 >(quint32 ocd_length) const
+{
+	// OC*D uses hundredths of a millimeter.
+	// oo-mapper uses 1/1000 mm
+	if (ocd_length > 3000000)
+		qDebug() << "quint32 has value" << ocd_length << ", might be qint32" << (qint32)ocd_length;
+	return ((qint64)ocd_length) * 10;
+}
+#endif // !NDEBUG
 
 template< >
 void OcdFileImport::importImplementation< Ocd::FormatV8 >(bool load_symbols_only) throw (FileFormatException)
@@ -281,14 +314,14 @@ void OcdFileImport::importSymbols(const OcdFile< T >& file) throw (FileFormatExc
 // 				break;
 				; // fall through
 			default:
-				addWarning(tr("Unable to import symbol \"%3\" (%1.%2)") .
+				addWarning(tr("Unable to import symbol %1.%2 \"%3\": %4") .
 				           arg(it->number / T::BaseSymbol::symbol_number_factor) .
 				           arg(it->number % T::BaseSymbol::symbol_number_factor) .
-				           arg(convertOcdString(it->description)) );
+				           arg(convertOcdString(it->description)).
+				           arg(tr("Unsupported type \"%1\".").arg(it->type)) );
 				continue;
 		}
 		
-// 		map->symbols.push_back(symbol);
 		map->addSymbol(symbol, pos);
 		symbol_index[it->number] = symbol;
 	}
@@ -297,31 +330,24 @@ void OcdFileImport::importSymbols(const OcdFile< T >& file) throw (FileFormatExc
 template< class T >
 void OcdFileImport::importObjects(const OcdFile< T >& file) throw (FileFormatException)
 {
-	// Place all objects into a single OC*D import part
-// 	MapPart* part = new MapPart(tr("OC*D import layer"), map);
 	MapPart* part = map->getCurrentPart();
 	Q_ASSERT(part);
 	
 	for (typename OcdFile<T>::ObjectIndex::iterator it = file.objects().begin(); it != file.objects().end(); ++it)
 	{
-		
 		Object* object = importObject(file[it], part);
 		if (object != NULL)
 		{
-// 			part->objects.push_back(object);
 			part->addObject(object, part->getNumObjects());
 		}
 	}
-// 	delete map->parts[0];
-// 	map->parts[0] = part;
-// 	map->current_part_index = 0;
 }
 
 template< class S >
 void OcdFileImport::setupBaseSymbol(Symbol* symbol, const S& ocd_symbol)
 {
 	typedef typename S::BaseSymbol BaseSymbol;
-	const BaseSymbol& base_symbol = reinterpret_cast<const BaseSymbol&>(ocd_symbol);
+	const BaseSymbol& base_symbol = ocd_symbol.base;
 	// common fields are name, number, description, helper_symbol, hidden/protected status
 	symbol->setName(convertOcdString(base_symbol.description));
 	symbol->setNumberComponent(0, base_symbol.number / BaseSymbol::symbol_number_factor);
@@ -388,55 +414,101 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 				main_line->cap_style = LineSymbol::PointedCap;
 				break;
 			default:
-				qDebug() << "Undefined line style '" << ocd_symbol.line_style
-				         << "at line symbol" << ocd_symbol.base.number << convertOcdString(ocd_symbol.base.description);
+				addSymbolWarning( main_line,
+				  tr("Unsupported line style '%1'.").
+				  arg(ocd_symbol.line_style) );
 		}
-
+		
 		if (main_line->cap_style == LineSymbol::PointedCap)
 		{
+			int ocd_length = ocd_symbol.dist_from_start;
 			if (ocd_symbol.dist_from_start != ocd_symbol.dist_from_end)
-				addWarning(tr("In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.")
-				.arg(0.1 * ocd_symbol.base.number).arg(ocd_symbol.dist_from_start).arg(ocd_symbol.dist_from_end).arg((ocd_symbol.dist_from_start + ocd_symbol.dist_from_end) / 2));
-			main_line->pointed_cap_length = convertLength((ocd_symbol.dist_from_start + ocd_symbol.dist_from_end) / 2); // FIXME: Different lengths for start and end length of pointed line ends are not supported yet, so take the average
+			{
+				// FIXME: Different lengths for start and end length of pointed line ends are not supported yet, so take the average
+				ocd_length = (ocd_symbol.dist_from_start + ocd_symbol.dist_from_end) / 2;
+				addSymbolWarning( main_line,
+				  tr("Different lengths for pointed caps at begin (%1 mm) and end (%2 mm) are not supported. Using %3 mm.").
+				  arg(locale.toString(0.001f * convertLength(ocd_symbol.dist_from_start))).
+				  arg(locale.toString(0.001f * convertLength(ocd_symbol.dist_from_end))).
+				  arg(locale.toString(0.001f * convertLength(ocd_length))) );
+			}
+			main_line->pointed_cap_length = convertLength(ocd_length);
 			main_line->join_style = LineSymbol::RoundJoin;	// NOTE: while the setting may be different (see what is set in the first place), OC*D always draws round joins if the line cap is pointed!
 		}
 		
 		// Handle the dash pattern
-		if( ocd_symbol.main_gap > 0 || ocd_symbol.sec_gap > 0 )
+		if (ocd_symbol.main_gap || ocd_symbol.sec_gap)
 		{
-			main_line->dashed = true;
-			
-			// Detect special case
-			if (ocd_symbol.sec_gap > 0 && ocd_symbol.main_gap == 0)
+			if (!ocd_symbol.main_length)
 			{
-				main_line->dash_length = convertLength(ocd_symbol.main_length - ocd_symbol.end_gap);
-				main_line->break_length = convertLength(ocd_symbol.end_gap);
-				if (!(ocd_symbol.end_length >= ocd_symbol.main_length / 2 - 1 && ocd_symbol.end_length <= ocd_symbol.main_length / 2 + 1))
-					addWarning(tr("In dashed line symbol %1, the end length cannot be imported correctly.").arg(0.1 * ocd_symbol.base.number));
-				if (ocd_symbol.end_gap != 0)
-					addWarning(tr("In dashed line symbol %1, the end gap cannot be imported correctly.").arg(0.1 * ocd_symbol.base.number));
+				// Invalid dash pattern
+				addSymbolWarning( main_line,
+				  tr("The dash pattern cannot be imported correctly.") );
+			}
+			else if (ocd_symbol.sec_gap && !ocd_symbol.main_gap)
+			{
+				// Special case main_gap == 0
+				main_line->dashed = true;
+				main_line->dash_length = convertLength(ocd_symbol.main_length - ocd_symbol.sec_gap);
+				main_line->break_length = convertLength(ocd_symbol.sec_gap);
+				
+				if (ocd_symbol.end_length)
+				{
+					if (qAbs((qint32)ocd_symbol.main_length - 2*ocd_symbol.end_length) > 1)
+					{
+						// End length not equal to 0.5 * main length
+						addSymbolWarning( main_line,
+						  tr("The dash pattern's end length (%1 mm) cannot be imported correctly. Using %2 mm.").
+						  arg(locale.toString(0.001f * convertLength(ocd_symbol.end_length))).
+						  arg(locale.toString(0.001f * main_line->dash_length)) );
+					}
+					if (ocd_symbol.end_gap)
+					{
+						addSymbolWarning( main_line,
+						  tr("The dash pattern's end gap (%1 mm) cannot be imported correctly. Using %2 mm.").
+						  arg(locale.toString(0.001f * convertLength(ocd_symbol.end_gap))).
+						  arg(locale.toString(0.001f * main_line->break_length)) );
+					}
+				}
 			}
 			else
 			{
-				if (ocd_symbol.main_length != ocd_symbol.end_length)
-				{
-					if (ocd_symbol.end_length >= ocd_symbol.main_length / 2 - 1 && ocd_symbol.end_length <= ocd_symbol.main_length / 2 + 1)
-						main_line->half_outer_dashes = true;
-					else
-						addWarning(tr("In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.")
-						.arg(0.1 * ocd_symbol.base.number).arg(ocd_symbol.main_length).arg(ocd_symbol.end_length).arg(ocd_symbol.main_length));
-				}
-				
+				// Standard case
+				main_line->dashed = true;
 				main_line->dash_length = convertLength(ocd_symbol.main_length);
 				main_line->break_length = convertLength(ocd_symbol.main_gap);
-				if (ocd_symbol.sec_gap > 0)
+				
+				if (ocd_symbol.end_length && ocd_symbol.end_length != ocd_symbol.main_length)
+				{
+					if (ocd_symbol.main_length && 0.75 >= ocd_symbol.end_length / ocd_symbol.main_length)
+					{
+						// End length max. 75 % of main length
+						main_line->half_outer_dashes = true;
+					}
+					
+					if (qAbs((qint32)ocd_symbol.main_length - 2*ocd_symbol.end_length) > 1)
+					{
+						// End length not equal to 0.5 * main length
+						addSymbolWarning( main_line,
+						  tr("The dash pattern's end length (%1 mm) cannot be imported correctly. Using %2 mm.").
+						  arg(locale.toString(0.001f * convertLength(ocd_symbol.end_length))).
+						  arg(locale.toString(0.001f * (main_line->half_outer_dashes ? (main_line->dash_length/2) : main_line->dash_length))) );
+					}
+				}
+				
+				if (ocd_symbol.sec_gap)
 				{
 					main_line->dashes_in_group = 2;
-					if (ocd_symbol.sec_gap != ocd_symbol.end_gap)
-						addWarning(tr("In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.")
-						.arg(0.1 * ocd_symbol.base.number).arg(ocd_symbol.sec_gap).arg(ocd_symbol.end_gap).arg(ocd_symbol.sec_gap));
 					main_line->in_group_break_length = convertLength(ocd_symbol.sec_gap);
 					main_line->dash_length = (main_line->dash_length - main_line->in_group_break_length) / 2;
+					
+					if (ocd_symbol.end_length && ocd_symbol.end_gap != ocd_symbol.sec_gap)
+					{
+						addSymbolWarning( main_line,
+						  tr("The dash pattern's end gap (%1 mm) cannot be imported correctly. Using %2 mm.").
+						  arg(locale.toString(0.001f * convertLength(ocd_symbol.end_gap))).
+						  arg(locale.toString(0.001f * main_line->in_group_break_length)) );
+					}
 				}
 			}
 		} 
@@ -476,8 +548,9 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 				framing_line->cap_style = LineSymbol::FlatCap;
 				break;
 			default:
-				qDebug() << "Undefined framing line style '" << ocd_symbol.line_style
-				         << "at line symbol" << ocd_symbol.base.number << convertOcdString(ocd_symbol.base.description);
+				addSymbolWarning( main_line, 
+				                  tr("Unsupported framing line style '%1'.").
+				                  arg(ocd_symbol.line_style) );
 		}
 	}
 	
@@ -563,7 +636,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	{
 		//symbol_line->dash_symbol = importPattern( ocd_symbol->ssnpts, symbolptr);
 		coords += ocd_symbol.secondary_data_size;
-			addWarning(tr("Line symbol %1: Skipped secondary point symbol.").arg(ocd_symbol.base.number) + " " + convertOcdString(ocd_symbol.base.description));
+		addSymbolWarning(symbol_line, tr("Skipped secondary point symbol."));
 	}
 	if (ocd_symbol.corner_data_size > 0)
 	{
@@ -597,7 +670,9 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	{
 		symbol_line->setSuppressDashSymbolAtLineEnds(true);
 		if (symbol_line->dash_symbol && symbol_line->number[0] != 799)
-			addWarning(tr("Line symbol %1: suppressing dash symbol at line ends.").arg(ocd_symbol.base.number) + " " + convertOcdString(ocd_symbol.base.description));
+		{
+			addSymbolWarning(symbol_line, tr("Suppressing dash symbol at line ends."));
+		}
 	}
 	
 	// TODO: taper fields (tmode and tlast)
@@ -648,74 +723,57 @@ AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol)
 	symbol->color = ocd_symbol.fill_on ? convertColor(ocd_symbol.fill_color) : NULL;
 	
 	symbol->patterns.clear();
-	AreaSymbol::FillPattern* pattern = NULL;
+	symbol->patterns.reserve(4);
 	
 	// Hatching
 	if (ocd_symbol.hatch_mode != S::HatchNone)
 	{
-		int n = symbol->patterns.size();
-		symbol->patterns.resize(n + 1);
-		pattern = &(symbol->patterns[n]);
-		pattern->type = AreaSymbol::FillPattern::LinePattern;
-		pattern->angle = convertAngle(ocd_symbol.hatch_angle_1);
-		pattern->rotatable = true;
-		pattern->line_spacing = convertLength(ocd_symbol.hatch_dist + ocd_symbol.hatch_line_width);
-		pattern->line_offset = 0;
-		pattern->line_color = convertColor(ocd_symbol.hatch_color);
-		pattern->line_width = convertLength(ocd_symbol.hatch_line_width);
+		AreaSymbol::FillPattern pattern;
+		pattern.type = AreaSymbol::FillPattern::LinePattern;
+		pattern.angle = convertAngle(ocd_symbol.hatch_angle_1);
+		pattern.rotatable = true;
+		pattern.line_spacing = convertLength(ocd_symbol.hatch_dist + ocd_symbol.hatch_line_width);
+		pattern.line_offset = 0;
+		pattern.line_color = convertColor(ocd_symbol.hatch_color);
+		pattern.line_width = convertLength(ocd_symbol.hatch_line_width);
+		symbol->patterns.push_back(pattern);
+		
 		if (ocd_symbol.hatch_mode == S::HatchCross)
 		{
 			// Second hatch, same as the first, just a different angle
-			n = symbol->patterns.size();
-			symbol->patterns.resize(n + 1);
-			pattern = &(symbol->patterns[n]);
-			pattern->type = AreaSymbol::FillPattern::LinePattern;
-			pattern->angle = convertAngle(ocd_symbol.hatch_angle_2);
-			pattern->rotatable = true;
-			pattern->line_spacing = convertLength(ocd_symbol.hatch_dist);
-			pattern->line_offset = 0;
-			pattern->line_color = convertColor(ocd_symbol.hatch_color);
-			pattern->line_width = convertLength(ocd_symbol.hatch_line_width);
+			pattern.angle = convertAngle(ocd_symbol.hatch_angle_2);
+			symbol->patterns.push_back(pattern);
 		}
 	}
 	
 	if (ocd_symbol.structure_mode != S::StructureNone)
 	{
+		AreaSymbol::FillPattern pattern;
+		pattern.type = AreaSymbol::FillPattern::PointPattern;
+		pattern.angle = convertAngle(ocd_symbol.structure_angle);
+		pattern.rotatable = true;
+		pattern.point_distance = convertLength(ocd_symbol.structure_width);
+		pattern.line_spacing = convertLength(ocd_symbol.structure_height);
+		pattern.line_offset = 0;
+		pattern.offset_along_line = 0;
+		// FIXME: somebody needs to own this symbol and be responsible for deleting it
+		// Right now it looks like a potential memory leak
+		pattern.point = new OcdImportedPointSymbol();
+		setupPointSymbolPattern(pattern.point, ocd_symbol.data_size, ocd_symbol.begin_of_elements);
+		
 		// OC*D 8 has a "staggered" pattern mode, where successive rows are shifted width/2 relative
 		// to each other. We need to simulate this in Mapper with two overlapping patterns, each with
 		// twice the height. The second is then offset by width/2, height/2.
-		int spacing = convertLength(ocd_symbol.structure_height);
-		if (ocd_symbol.structure_mode == S::StructureShiftedRows)
-			spacing *= 2;
-		int n = symbol->patterns.size();
-		symbol->patterns.resize(n + 1);
-		pattern = &(symbol->patterns[n]);
-		pattern->type = AreaSymbol::FillPattern::PointPattern;
-		pattern->angle = convertAngle(ocd_symbol.structure_angle);
-		pattern->rotatable = true;
-		pattern->point_distance = convertLength(ocd_symbol.structure_width);
-		pattern->line_spacing = spacing;
-		pattern->line_offset = 0;
-		pattern->offset_along_line = 0;
-		// FIXME: somebody needs to own this symbol and be responsible for deleting it
-		// Right now it looks like a potential memory leak
-		pattern->point = new OcdImportedPointSymbol();
-		setupPointSymbolPattern(pattern->point, ocd_symbol.data_size, ocd_symbol.begin_of_elements);
 		if (ocd_symbol.structure_mode == S::StructureShiftedRows)
 		{
-			int n = symbol->patterns.size();
-			symbol->patterns.resize(n + 1);
-			pattern = &(symbol->patterns[n]);
-			pattern->type = AreaSymbol::FillPattern::PointPattern;
-			pattern->angle = convertAngle(ocd_symbol.structure_angle);
-			pattern->rotatable = true;
-			pattern->point_distance = convertLength(ocd_symbol.structure_width);
-			pattern->line_spacing = spacing;
-			pattern->line_offset = pattern->line_spacing / 2;
-			pattern->offset_along_line = pattern->point_distance / 2;
-			pattern->point = new OcdImportedPointSymbol();
-			setupPointSymbolPattern(pattern->point, ocd_symbol.data_size, ocd_symbol.begin_of_elements);
+			pattern.line_spacing *= 2;
+			symbol->patterns.push_back(pattern);
+			
+			pattern.line_offset = pattern.line_spacing / 2;
+			pattern.offset_along_line = pattern.point_distance / 2;
+			pattern.point = pattern.point->duplicate()->asPoint();
 		}
+		symbol->patterns.push_back(pattern);
 	}
 	
 	return symbol;

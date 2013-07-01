@@ -228,7 +228,7 @@ namespace Ocd
 		quint16 word_spacing;
 		quint16 alignment;
 		quint16 line_spacing;
-		quint16 para_spacing;
+		qint16  para_spacing;
 		quint16 indent_first_line;
 		quint16 indent_other_lines;
 		quint16 num_tabs;
