@@ -114,8 +114,10 @@ public:
 	
 	void addSymbolWarning(LineSymbol* symbol, const QString& warning);
 	
+	virtual void finishImport() throw (FileFormatException);
+	
 protected:
-	void import(bool load_symbols_only) throw (FileFormatException);
+	virtual void import(bool load_symbols_only) throw (FileFormatException);
 	
 	template< class T >
 	void importImplementation(bool load_symbols_only) throw (FileFormatException);
@@ -178,6 +180,8 @@ protected:
 	QLocale locale;
 	
 	QByteArray buffer;
+	
+	QScopedPointer< Importer > delegate;
 	
 	/// Character encoding to use for 1-byte (narrow) strings
 	QTextCodec *local_8bit;

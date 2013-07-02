@@ -67,7 +67,9 @@ Importer* OcdFileFormat::createImporter(QIODevice* stream, Map *map, MapView *vi
 
 // ### OcdFileImport ###
 
-OcdFileImport::OcdFileImport(QIODevice* stream, Map* map, MapView* view) : Importer(stream, map, view)
+OcdFileImport::OcdFileImport(QIODevice* stream, Map* map, MapView* view)
+ : Importer(stream, map, view),
+   delegate(NULL)
 {
     local_8bit = QTextCodec::codecForName("Windows-1252");
 }
@@ -130,8 +132,19 @@ void OcdFileImport::importImplementation< Ocd::FormatV8 >(bool load_symbols_only
 {
 	QBuffer new_stream(&buffer);
 	new_stream.open(QIODevice::ReadOnly);
-	QScopedPointer<Importer> importer(OCAD8FileFormat().createImporter(&new_stream, map, view));
-	importer->doImport(load_symbols_only);
+	delegate.reset(OCAD8FileFormat().createImporter(&new_stream, map, view));
+	
+	delegate->doImport(load_symbols_only);
+	
+	for (std::vector< QString >::const_iterator w = delegate->warnings().begin(); w != delegate->warnings().end(); ++w)
+	{
+		addWarning(*w);
+	}
+	
+	for (std::vector< ImportAction >::const_iterator a = delegate->actions().begin(); a != delegate->actions().end(); ++a)
+	{
+		addAction(*a);
+	}
 }
 
 template< class T >
@@ -1386,3 +1399,25 @@ void OcdFileImport::import(bool load_symbols_only) throw (FileFormatException)
 	}
 }
 
+void OcdFileImport::finishImport() throw (FileFormatException)
+{
+	if (delegate)
+	{
+		// The current warnings and actions are already propagated.
+		std::size_t warnings_size = delegate->warnings().size();
+		std::size_t actions_size = delegate->actions().size();
+		
+		delegate->finishImport();
+		
+		// Propagate new warnings and actions from the delegate to this importer.
+		for (std::vector< QString >::const_iterator w = delegate->warnings().begin()+warnings_size; w != delegate->warnings().end(); ++w)
+		{
+			addWarning(*w);
+		}
+		
+		for (std::vector< ImportAction >::const_iterator a = delegate->actions().begin()+actions_size; a != delegate->actions().end(); ++a)
+		{
+			addAction(*a);
+		}
+	}
+}
