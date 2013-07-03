@@ -118,6 +118,8 @@ private slots:
 	
 	void openTranslationFileDialog();
 	
+	void encodingChanged(const QString& name);
+	
 private:
 	/** Adds the available languages to the language combo box,
 	 *  and sets the current element.
@@ -126,6 +128,8 @@ private:
 	
 	QComboBox* language_box;
 	const static int TranslationFromFile;
+	
+	QComboBox* encoding_box;
 };
 
 #endif

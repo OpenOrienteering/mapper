@@ -34,6 +34,7 @@
 #include "map_part.h"
 #include "object.h"
 #include "object_text.h"
+#include "settings.h"
 #include "symbol.h"
 #include "symbol_area.h"
 #include "symbol_combined.h"
@@ -80,7 +81,7 @@ Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, Map* map, MapView* 
 OCAD8FileImport::OCAD8FileImport(QIODevice* stream, Map* map, MapView* view) : Importer(stream, map, view), file(NULL)
 {
     ocad_init();
-    encoding_1byte = QTextCodec::codecForName("Windows-1252");
+    encoding_1byte = QTextCodec::codecForName(Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toByteArray());
     encoding_2byte = QTextCodec::codecForName("UTF-16LE");
     offset_x = offset_y = 0;
 }
