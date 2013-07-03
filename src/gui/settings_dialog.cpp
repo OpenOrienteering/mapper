@@ -355,6 +355,34 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	layout->addWidget(tips_visible_check, row, 1, 1, 2);
 	
 	row++;
+	layout->addItem(Util::SpacerItem::create(this), row, 1);
+	
+	row++;
+	layout->addWidget(Util::Headline::create(tr("Misc")), row, 1, 1, 2);
+	
+	row++;
+	QLabel* encoding_label = new QLabel(tr("8-bit encoding:"));
+	layout->addWidget(encoding_label, row, 1);
+	
+	encoding_box = new QComboBox();
+	encoding_box->addItem("System");
+	encoding_box->addItem("windows-1250");
+	encoding_box->addItem("windows-1252");
+	encoding_box->addItem("ISO-8859-1");
+	encoding_box->addItem("ISO-8859-15");
+	encoding_box->setEditable(true);
+	QStringList availableCodecs;
+	Q_FOREACH(QByteArray item, QTextCodec::availableCodecs())
+	{
+		availableCodecs.append(QString(item));
+	}
+	QCompleter* completer = new QCompleter(availableCodecs, this);
+	completer->setCaseSensitivity(Qt::CaseInsensitive);
+	encoding_box->setCompleter(completer);
+	encoding_box->setCurrentText(Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toString());
+	layout->addWidget(encoding_box, row, 2);
+	
+	row++;
 	layout->setRowStretch(row, 1);
 	
 #if defined(Q_OS_MAC)
@@ -369,6 +397,7 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	connect(language_file_button, SIGNAL(clicked(bool)), this, SLOT(openTranslationFileDialog()));
 	connect(open_mru_check, SIGNAL(clicked(bool)), this, SLOT(openMRUFileClicked(bool)));
 	connect(tips_visible_check, SIGNAL(clicked(bool)), this, SLOT(tipsVisibleClicked(bool)));
+	connect(encoding_box, SIGNAL(currentTextChanged(QString)), this, SLOT(encodingChanged(QString)));
 }
 
 void GeneralPage::apply()
@@ -484,6 +513,27 @@ void GeneralPage::openMRUFileClicked(bool state)
 void GeneralPage::tipsVisibleClicked(bool state)
 {
 	changes.insert(Settings::getInstance().getSettingPath(Settings::HomeScreen_TipsVisible), state);
+}
+
+void GeneralPage::encodingChanged(const QString& name)
+{
+	QByteArray old_name = Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toByteArray();
+	QTextCodec* codec = QTextCodec::codecForName(name.toLatin1());
+	if (!codec)
+	{
+		codec = QTextCodec::codecForName(old_name);
+	}
+	if (!codec)
+	{
+		codec = QTextCodec::codecForLocale();
+	}
+	
+	if (codec && codec->name() != old_name)
+	{
+		changes.insert(Settings::getInstance().getSettingPath(Settings::General_Local8BitEncoding), codec->name());
+		ScopedSignalsBlocker block(encoding_box);
+		encoding_box->setCurrentText(codec->name());
+	}
 }
 
 void GeneralPage::openTranslationFileDialog()
