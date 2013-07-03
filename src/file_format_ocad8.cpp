@@ -1177,7 +1177,7 @@ void OCAD8FileImport::importString(OCADStringEntry *entry)
 			}
         }
         else
-			addWarning(tr("Unable to import template: %1").arg(ocad_str->str));
+			addWarning(tr("Unable to import template: %1").arg(encoding_1byte->toUnicode(ocad_str->str)));
     }
     // FIXME: parse more types of strings, maybe the print parameters?
     
@@ -1186,7 +1186,7 @@ void OCAD8FileImport::importString(OCADStringEntry *entry)
 
 Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background)
 {
-    QString filename(background.filename); // FIXME: use platform char encoding?
+	QString filename(encoding_1byte->toUnicode(background.filename));
 	filename = QDir::cleanPath(filename.replace('\\', '/'));
 	if (isRasterImageFile(filename))
     {
