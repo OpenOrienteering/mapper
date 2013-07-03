@@ -21,6 +21,7 @@
 #define _OPENORIENTEERING_OCD_TYPES_V11_
 
 #include "ocd_types.h"
+#include "ocd_types_v10.h"
 
 namespace Ocd
 {
@@ -78,26 +79,7 @@ namespace Ocd
 		};
 	};
 	
-	struct PointSymbolElementV11
-	{
-		typedef OcdPoint32 PointCoord;
-		
-		quint16 type;
-		quint16 flags;
-		quint16 color;
-		quint16 line_width;
-		quint16 diameter;
-		quint16 num_coords;
-		quint32 RESERVED_MEMBER;
-		
-		enum PointSymbolElementTypes
-		{
-			TypeLine   = 1,
-			TypeArea   = 2,
-			TypeCircle = 3,
-			TypeDot    = 4
-		};
-	};
+	typedef PointSymbolElementV10 PointSymbolElementV11;
 	
 	struct PointSymbolV11
 	{
@@ -322,6 +304,14 @@ namespace Ocd
 		quint16 layer;
 		quint8  layout_font;
 		quint8  RESERVED_MEMBER;
+		
+		enum ObjectStatus
+		{
+			StatusDeleted = 0,
+			StatusNormal  = 1,
+			StatusHidden  = 2,
+			StatusDeletedForUndo = 3
+		};
 	};
 	
 	struct ObjectV11

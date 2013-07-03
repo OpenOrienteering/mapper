@@ -68,7 +68,7 @@ void doStaticInitializations()
 	// Register the supported file formats
 	FileFormats.registerFormat(new XMLFileFormat());
 	FileFormats.registerFormat(new OcdFileFormat());
-	FileFormats.registerFormat(new OCAD8FileFormat());
+// 	FileFormats.registerFormat(new OCAD8FileFormat());
 	FileFormats.registerFormat(new NativeFileFormat()); // TODO: Remove before release 1.0
 	
 	// Load resources

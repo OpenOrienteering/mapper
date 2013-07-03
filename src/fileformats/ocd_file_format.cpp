@@ -45,7 +45,8 @@
 // ### OcdFileFormat ###
 
 OcdFileFormat::OcdFileFormat()
- : FileFormat(MapFile, "OCD", ImportExport::tr("OCAD"), "ocd", ImportSupported)
+ : FileFormat(MapFile, "OCD", ImportExport::tr("OCAD"), "ocd",
+     ImportSupported | ExportSupported | ExportLossy)
 {
 	// Nothing
 }
@@ -63,6 +64,10 @@ Importer* OcdFileFormat::createImporter(QIODevice* stream, Map *map, MapView *vi
 	return new OcdFileImport(stream, map, view);
 }
 
+Exporter* OcdFileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FileFormatException)
+{
+	return OCAD8FileFormat().createExporter(stream, map, view);
+}
 
 
 // ### OcdFileImport ###
@@ -349,6 +354,12 @@ void OcdFileImport::importObjects(const OcdFile< T >& file) throw (FileFormatExc
 	
 	for (typename OcdFile<T>::ObjectIndex::iterator it = file.objects().begin(); it != file.objects().end(); ++it)
 	{
+		if ( it->status == OcdFile<T>::ObjectIndex::EntryType::StatusDeleted ||
+			 it->status == OcdFile<T>::ObjectIndex::EntryType::StatusDeletedForUndo )
+		{
+			continue;
+		}
+		
 		Object* object = importObject(file[it], part);
 		if (object != NULL)
 		{
@@ -948,21 +959,22 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 	symbol->setRotatable(true);
 	bool base_symbol_used = false;
 	
-	const typename E::PointCoord* const coords = reinterpret_cast<const typename E::PointCoord*>(elements);
 	for (std::size_t i = 0; i < data_size; i += 2)
 	{
-		const E* element = reinterpret_cast<const E*>(&coords[i]);
+		const E* element = reinterpret_cast<const E*>(&reinterpret_cast<const typename E::PointCoord*>(elements)[i]);
+		const typename E::PointCoord* const coords = reinterpret_cast<const typename E::PointCoord*>(elements) + i + 2;
 		switch (element->type)
 		{
 			case E::TypeDot:
 				if (element->diameter > 0)
 				{
-					PointSymbol* working_symbol = base_symbol_used ? new PointSymbol() : symbol;
+					bool can_use_base_symbol = (!base_symbol_used && (!element->num_coords || (!coords[0].x && !coords[0].y)));
+					PointSymbol* working_symbol = can_use_base_symbol ? symbol : new PointSymbol();
 					working_symbol->setInnerColor(convertColor(element->color));
 					working_symbol->setInnerRadius(convertLength(element->diameter) / 2);
 					working_symbol->setOuterColor(NULL);
 					working_symbol->setOuterWidth(0);
-					if (!base_symbol_used)
+					if (can_use_base_symbol)
 					{
 						base_symbol_used = true;
 					}
@@ -970,23 +982,22 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 					{
 						working_symbol->setRotatable(false);
 						PointObject* element_object = new PointObject(working_symbol);
-// 						element_object->coords.resize(1);
 						if (element->num_coords)
-// 							element_object->coords[0] = MapCoord(coords[2].x, coords[2].y);
-							element_object->setPosition(coords[2].x, coords[2].y);
+							element_object->setPosition(coords[0].x, coords[0].y);
 						symbol->addElement(symbol->getNumElements(), element_object, working_symbol);
 					}
 				}
 				break;
 			case E::TypeCircle:
-				if (element->diameter > 0 && element->line_width > 0)
+				if ((element->diameter / 2 - element->line_width) > 0)
 				{
-					PointSymbol* working_symbol = base_symbol_used ? new PointSymbol() : symbol;
+					bool can_use_base_symbol = (!base_symbol_used && (!element->num_coords || (!coords[0].x && !coords[0].y)));
+					PointSymbol* working_symbol = can_use_base_symbol ? symbol : new PointSymbol();
 					working_symbol->setInnerColor(NULL);
-					working_symbol->setInnerRadius(convertLength(element->diameter) / 2 - element->line_width);
+					working_symbol->setInnerRadius(convertLength(element->diameter / 2 - element->line_width));
 					working_symbol->setOuterColor(convertColor(element->color));
 					working_symbol->setOuterWidth(convertLength(element->line_width));
-					if (!base_symbol_used)
+					if (can_use_base_symbol)
 					{
 						base_symbol_used = true;
 					}
@@ -994,10 +1005,8 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 					{
 						working_symbol->setRotatable(false);
 						PointObject* element_object = new PointObject(working_symbol);
-// 						element_object->coords.resize(1);
 						if (element->num_coords)
-// 							element_object->coords[0] = MapCoord(coords[2].x, coords[2].y);
-							element_object->setPosition(coords[2].x, coords[2].y);
+							element_object->setPosition(coords[0].x, coords[0].y);
 						symbol->addElement(symbol->getNumElements(), element_object, working_symbol);
 					}
 				}
@@ -1008,7 +1017,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 					element_symbol->line_width = convertLength(element->line_width);
 					element_symbol->color = convertColor(element->color);
 					OcdImportedPathObject* element_object = new OcdImportedPathObject(element_symbol);
-					fillPathCoords(element_object, false, element->num_coords, reinterpret_cast<const Ocd::OcdPoint32*>(coords+i+2));
+					fillPathCoords(element_object, false, element->num_coords, coords);
 					element_object->recalculateParts();
 					symbol->addElement(symbol->getNumElements(), element_object, element_symbol);
 				}
@@ -1018,7 +1027,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 					OcdImportedAreaSymbol* element_symbol = new OcdImportedAreaSymbol();
 					element_symbol->color = convertColor(element->color);
 					OcdImportedPathObject* element_object = new OcdImportedPathObject(element_symbol);
-					fillPathCoords(element_object, true, element->num_coords, reinterpret_cast<const Ocd::OcdPoint32*>(coords+i+2));
+					fillPathCoords(element_object, true, element->num_coords, coords);
 					element_object->recalculateParts();
 					symbol->addElement(symbol->getNumElements(), element_object, element_symbol);
 				}
@@ -1264,7 +1273,8 @@ void OcdFileImport::setPathHolePoint(OcdImportedPathObject *object, int pos)
 		object->coords[pos].setHolePoint(true);
 }
 
-void OcdFileImport::setPointFlags(OcdImportedPathObject* object, quint16 pos, bool is_area, const Ocd::OcdPoint32& ocd_point)
+template< class P >
+void OcdFileImport::setPointFlags(OcdImportedPathObject* object, quint16 pos, bool is_area, const P& ocd_point)
 {
 	// We can support CurveStart, HolePoint, DashPoint.
 	// CurveStart needs to be applied to the main point though, not the control point, and
@@ -1279,7 +1289,8 @@ void OcdFileImport::setPointFlags(OcdImportedPathObject* object, quint16 pos, bo
 
 /** Translates the OC*D path given in the last two arguments into an Object.
  */
-void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, quint16 num_points, const Ocd::OcdPoint32* ocd_points)
+template< class P >
+void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, quint16 num_points, const P* ocd_points)
 {
 	object->coords.resize(num_points);
 	for (int i = 0; i < num_points; i++)
@@ -1315,7 +1326,8 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
  *  If successful, sets either 1 or 2 coordinates in the text object and returns true.
  *  If the OCAD path was not importable, leaves the TextObject alone and returns false.
  */
-bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, quint16 npts, Ocd::OcdPoint32 *pts)
+template< class P >
+bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, quint16 npts, const P *ocd_points)
 {
     // text objects either have 1 point (free anchor) or 2 (midpoint/size)
     // OCAD appears to always have 5 or 4 points (possible single anchor, then 4 corner coordinates going clockwise from anchor).
@@ -1324,9 +1336,9 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 	if (npts == 4)
 	{
 		// Box text
-		MapCoord bottom_left = convertOcdPoint(pts[0]);
-		MapCoord top_right = convertOcdPoint(pts[2]);
-		MapCoord top_left = convertOcdPoint(pts[3]);
+		MapCoord bottom_left = convertOcdPoint(ocd_points[0]);
+		MapCoord top_right = convertOcdPoint(ocd_points[2]);
+		MapCoord top_left = convertOcdPoint(ocd_points[3]);
 		
 		// According to Purple Pen source code: OC*D adds an extra internal leading (incorrectly).
 		QFontMetricsF metrics = symbol->getFontMetrics();
@@ -1347,7 +1359,7 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 			addWarning(tr("Trying to import a text object with unknown coordinate format"));
 		
 		// anchor point
-		MapCoord coord = convertOcdPoint(pts[0]); 
+		MapCoord coord = convertOcdPoint(ocd_points[0]);
 		object->setAnchorPosition(coord.rawX(), coord.rawY());
 		object->setVerticalAlignment(TextObject::AlignBaseline);
 	}

@@ -757,7 +757,9 @@ bool MainWindow::showSaveAsDialog()
 	if (!has_extension)
 		path.append(".").append(format->primaryExtension());
 	// Ensure that the file name matches the format.
-	Q_ASSERT(FileFormats.findFormatForFilename(path) == format);
+	Q_ASSERT(format->fileExtensions().contains(QFileInfo(path).suffix()));
+	// Fails when using different formats for import and export:
+	//	Q_ASSERT(FileFormats.findFormatForFilename(path) == format);
 	
 	return savePath(path);
 }

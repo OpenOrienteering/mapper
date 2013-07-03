@@ -82,8 +82,8 @@ namespace Ocd
 		quint16 type;
 		quint16 flags;
 		quint16 color;
-		quint16 line_width;
-		quint16 diameter;
+		qint16  line_width;
+		qint16  diameter;
 		quint16 num_coords;
 		quint32 RESERVED_MEMBER;
 		
@@ -312,6 +312,14 @@ namespace Ocd
 		quint16 RESERVED_MEMBER;
 		quint16 layer;
 		quint16 RESERVED_MEMBER;
+		
+		enum ObjectStatus
+		{
+			StatusDeleted = 0,
+			StatusNormal  = 1,
+			StatusHidden  = 2,
+			StatusDeletedForUndo = 3
+		};
 	};
 	
 	struct ObjectV9

@@ -170,10 +170,16 @@ protected:
 	
 	// Some helper functions that are used in multiple places
 	
-	void setPointFlags(OcdImportedPathObject* object, quint16 pos, bool is_area, const Ocd::OcdPoint32& ocd_point);
+	template< class P >
+	void setPointFlags(OcdImportedPathObject* object, quint16 pos, bool is_area, const P& ocd_point);
+	
 	void setPathHolePoint(OcdFileImport::OcdImportedPathObject* object, int i);
-	void fillPathCoords(OcdFileImport::OcdImportedPathObject* object, bool is_area, quint16 num_points, const Ocd::OcdPoint32* ocd_points);
-	bool fillTextPathCoords(TextObject* object, TextSymbol* symbol, quint16 npts, Ocd::OcdPoint32* pts);
+	
+	template< class P >
+	void fillPathCoords(OcdFileImport::OcdImportedPathObject* object, bool is_area, quint16 num_points, const P* ocd_points);
+	
+	template< class P >
+	bool fillTextPathCoords(TextObject* object, TextSymbol* symbol, quint16 npts, const P* ocd_points);
 	
 protected:
 	/// The locale is used for number formatting.

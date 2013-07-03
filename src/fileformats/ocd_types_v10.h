@@ -157,22 +157,7 @@ namespace Ocd
 		quint16 RESERVED_MEMBER[4];
 	};
 	
-	struct ObjectIndexEntryV10
-	{
-		OcdPoint32 bottom_left_bound;
-		OcdPoint32 top_right_bound;
-		quint32 pos;
-		quint32 size;
-		qint32  symbol;
-		quint8  type;
-		quint8  RESERVED_MEMBER;
-		quint8  status;
-		quint8  view_type;
-		quint16 color;
-		quint16 RESERVED_MEMBER;
-		quint16 layer;
-		quint16 RESERVED_MEMBER;
-	};
+	typedef ObjectIndexEntryV9 ObjectIndexEntryV10;
 	
 	struct ObjectV10
 	{
