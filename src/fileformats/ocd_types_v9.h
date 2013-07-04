@@ -77,8 +77,6 @@ namespace Ocd
 	
 	struct PointSymbolElementV9
 	{
-		typedef OcdPoint32 PointCoord;
-		
 		quint16 type;
 		quint16 flags;
 		quint16 color;

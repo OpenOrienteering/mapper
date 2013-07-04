@@ -119,20 +119,20 @@ public:
 protected:
 	virtual void import(bool load_symbols_only) throw (FileFormatException);
 	
-	template< class T >
+	template< class F >
 	void importImplementation(bool load_symbols_only) throw (FileFormatException);
 	
-	template< class T >
-	void importGeoreferencing(const OcdFile< T >& file) throw (FileFormatException);
+	template< class F >
+	void importGeoreferencing(const OcdFile< F >& file) throw (FileFormatException);
 	
-	template< class T >
-	void importColors(const OcdFile< T >& file) throw (FileFormatException);
+	template< class F >
+	void importColors(const OcdFile< F >& file) throw (FileFormatException);
 	
-	template< class T >
-	void importSymbols(const OcdFile< T >& file) throw (FileFormatException);
+	template< class F >
+	void importSymbols(const OcdFile< F >& file) throw (FileFormatException);
 	
-	template< class T >
-	void importObjects(const OcdFile< T >& file) throw (FileFormatException);
+	template< class F >
+	void importObjects(const OcdFile< F >& file) throw (FileFormatException);
 	
 	// Symbol import
 	
@@ -170,16 +170,13 @@ protected:
 	
 	// Some helper functions that are used in multiple places
 	
-	template< class P >
-	void setPointFlags(OcdImportedPathObject* object, quint16 pos, bool is_area, const P& ocd_point);
+	void setPointFlags(OcdImportedPathObject* object, quint16 pos, bool is_area, const Ocd::OcdPoint32& ocd_point);
 	
 	void setPathHolePoint(OcdFileImport::OcdImportedPathObject* object, int i);
 	
-	template< class P >
-	void fillPathCoords(OcdFileImport::OcdImportedPathObject* object, bool is_area, quint16 num_points, const P* ocd_points);
+	void fillPathCoords(OcdFileImport::OcdImportedPathObject* object, bool is_area, quint16 num_points, const Ocd::OcdPoint32* ocd_points);
 	
-	template< class P >
-	bool fillTextPathCoords(TextObject* object, TextSymbol* symbol, quint16 npts, const P* ocd_points);
+	bool fillTextPathCoords(TextObject* object, TextSymbol* symbol, quint16 npts, const Ocd::OcdPoint32* ocd_points);
 	
 protected:
 	/// The locale is used for number formatting.

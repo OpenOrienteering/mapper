@@ -152,23 +152,23 @@ void OcdFileImport::importImplementation< Ocd::FormatV8 >(bool load_symbols_only
 	}
 }
 
-template< class T >
+template< class F >
 void OcdFileImport::importImplementation(bool load_symbols_only) throw (FileFormatException)
 {
-	OcdFile< T > file(buffer);
-	importGeoreferencing< T >(file);
-	importColors< T >(file);
-	importSymbols< T >(file);
+	OcdFile< F > file(buffer);
+	importGeoreferencing< F >(file);
+	importColors< F >(file);
+	importSymbols< F >(file);
 	if (!load_symbols_only)
 	{
-		importObjects< T >(file);
+		importObjects< F >(file);
 	}
 }
 
-template< class T >
-void OcdFileImport::importGeoreferencing(const OcdFile< T >& file) throw (FileFormatException)
+template< class F >
+void OcdFileImport::importGeoreferencing(const OcdFile< F >& file) throw (FileFormatException)
 {
-	for (typename OcdFile<T>::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
+	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
 	{
 		if (it->type != 1039)
 			continue;
@@ -223,11 +223,11 @@ void OcdFileImport::importGeoreferencing(const OcdFile< T >& file) throw (FileFo
 	}
 }
 
-template< class T >
-void OcdFileImport::importColors(const OcdFile< T >& file) throw (FileFormatException)
+template< class F >
+void OcdFileImport::importColors(const OcdFile< F >& file) throw (FileFormatException)
 {
 	int current_color = 0;
-	for (typename OcdFile<T>::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
+	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
 	{
 		if (it->type != 9)
 			continue;
@@ -302,10 +302,10 @@ void OcdFileImport::importColors(const OcdFile< T >& file) throw (FileFormatExce
 	addWarning(tr("Spot color information was ignored."));
 }
 
-template< class T >
-void OcdFileImport::importSymbols(const OcdFile< T >& file) throw (FileFormatException)
+template< class F >
+void OcdFileImport::importSymbols(const OcdFile< F >& file) throw (FileFormatException)
 {
-	for (typename OcdFile<T>::SymbolIndex::iterator it = file.symbols().begin(); it != file.symbols().end(); ++it)
+	for (typename OcdFile< F >::SymbolIndex::iterator it = file.symbols().begin(); it != file.symbols().end(); ++it)
 	{
 		// When extra symbols are created, we want to insert the main symbol
 		// before them, i.e. at pos.
@@ -313,29 +313,29 @@ void OcdFileImport::importSymbols(const OcdFile< T >& file) throw (FileFormatExc
 		Symbol* symbol = NULL;
 		switch (it->type)
 		{
-			case T::TypePoint:
-				symbol = importPointSymbol((const typename T::PointSymbol&)*it);
+			case F::TypePoint:
+				symbol = importPointSymbol((const typename F::PointSymbol&)*it);
 				break;
-			case T::TypeLine:
-				symbol = importLineSymbol((const typename T::LineSymbol&)*it);
+			case F::TypeLine:
+				symbol = importLineSymbol((const typename F::LineSymbol&)*it);
 				break;
-			case T::TypeArea:
-				symbol = importAreaSymbol((const typename T::AreaSymbol&)*it);
+			case F::TypeArea:
+				symbol = importAreaSymbol((const typename F::AreaSymbol&)*it);
 				break;
-			case T::TypeText:
-				symbol = importTextSymbol((const typename T::TextSymbol&)*it);
+			case F::TypeText:
+				symbol = importTextSymbol((const typename F::TextSymbol&)*it);
 				break;
-			case T::TypeRectangle:
-				symbol = importRectangleSymbol((const typename T::RectangleSymbol&)*it);
+			case F::TypeRectangle:
+				symbol = importRectangleSymbol((const typename F::RectangleSymbol&)*it);
 				break;
-			case T::TypeLineText:
+			case F::TypeLineText:
 // 				symbol = importLineTextSymbol((const typename T::LineTextSymbol&)*it);
 // 				break;
 				; // fall through
 			default:
 				addWarning(tr("Unable to import symbol %1.%2 \"%3\": %4") .
-				           arg(it->number / T::BaseSymbol::symbol_number_factor) .
-				           arg(it->number % T::BaseSymbol::symbol_number_factor) .
+				           arg(it->number / F::BaseSymbol::symbol_number_factor) .
+				           arg(it->number % F::BaseSymbol::symbol_number_factor) .
 				           arg(convertOcdString(it->description)).
 				           arg(tr("Unsupported type \"%1\".").arg(it->type)) );
 				continue;
@@ -346,16 +346,16 @@ void OcdFileImport::importSymbols(const OcdFile< T >& file) throw (FileFormatExc
 	}
 }
 
-template< class T >
-void OcdFileImport::importObjects(const OcdFile< T >& file) throw (FileFormatException)
+template< class F >
+void OcdFileImport::importObjects(const OcdFile< F >& file) throw (FileFormatException)
 {
 	MapPart* part = map->getCurrentPart();
 	Q_ASSERT(part);
 	
-	for (typename OcdFile<T>::ObjectIndex::iterator it = file.objects().begin(); it != file.objects().end(); ++it)
+	for (typename OcdFile< F >::ObjectIndex::iterator it = file.objects().begin(); it != file.objects().end(); ++it)
 	{
-		if ( it->status == OcdFile<T>::ObjectIndex::EntryType::StatusDeleted ||
-			 it->status == OcdFile<T>::ObjectIndex::EntryType::StatusDeletedForUndo )
+		if ( it->status == OcdFile< F >::ObjectIndex::EntryType::StatusDeleted ||
+			 it->status == OcdFile< F >::ObjectIndex::EntryType::StatusDeletedForUndo )
 		{
 			continue;
 		}
@@ -648,8 +648,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 		main_line->end_length = convertLength(ocd_symbol.end_length);
 	}
 	
-	typedef typename S::Element::PointCoord PointCoord;
-	const PointCoord* coords = reinterpret_cast<const PointCoord*>(ocd_symbol.begin_of_elements);
+	const Ocd::OcdPoint32* coords = reinterpret_cast<const Ocd::OcdPoint32*>(ocd_symbol.begin_of_elements);
 	
 	symbol_line->mid_symbol = new OcdImportedPointSymbol();
 	setupPointSymbolPattern(symbol_line->mid_symbol, ocd_symbol.primary_data_size, ocd_symbol.begin_of_elements);
@@ -961,8 +960,8 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 	
 	for (std::size_t i = 0; i < data_size; i += 2)
 	{
-		const E* element = reinterpret_cast<const E*>(&reinterpret_cast<const typename E::PointCoord*>(elements)[i]);
-		const typename E::PointCoord* const coords = reinterpret_cast<const typename E::PointCoord*>(elements) + i + 2;
+		const E* element = reinterpret_cast<const E*>(&reinterpret_cast<const Ocd::OcdPoint32*>(elements)[i]);
+		const Ocd::OcdPoint32* const coords = reinterpret_cast<const Ocd::OcdPoint32*>(elements) + i + 2;
 		switch (element->type)
 		{
 			case E::TypeDot:
@@ -1273,8 +1272,7 @@ void OcdFileImport::setPathHolePoint(OcdImportedPathObject *object, int pos)
 		object->coords[pos].setHolePoint(true);
 }
 
-template< class P >
-void OcdFileImport::setPointFlags(OcdImportedPathObject* object, quint16 pos, bool is_area, const P& ocd_point)
+void OcdFileImport::setPointFlags(OcdImportedPathObject* object, quint16 pos, bool is_area, const Ocd::OcdPoint32& ocd_point)
 {
 	// We can support CurveStart, HolePoint, DashPoint.
 	// CurveStart needs to be applied to the main point though, not the control point, and
@@ -1289,8 +1287,7 @@ void OcdFileImport::setPointFlags(OcdImportedPathObject* object, quint16 pos, bo
 
 /** Translates the OC*D path given in the last two arguments into an Object.
  */
-template< class P >
-void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, quint16 num_points, const P* ocd_points)
+void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, quint16 num_points, const Ocd::OcdPoint32* ocd_points)
 {
 	object->coords.resize(num_points);
 	for (int i = 0; i < num_points; i++)
@@ -1326,8 +1323,7 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
  *  If successful, sets either 1 or 2 coordinates in the text object and returns true.
  *  If the OCAD path was not importable, leaves the TextObject alone and returns false.
  */
-template< class P >
-bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, quint16 npts, const P *ocd_points)
+bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, quint16 npts, const Ocd::OcdPoint32 *ocd_points)
 {
     // text objects either have 1 point (free anchor) or 2 (midpoint/size)
     // OCAD appears to always have 5 or 4 points (possible single anchor, then 4 corner coordinates going clockwise from anchor).

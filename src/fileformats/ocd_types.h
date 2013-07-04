@@ -26,20 +26,16 @@
 #include <QChar>
 
 
-#ifndef RESERVED_MEMBER
-	
-	// Helper macro
-	#define RESERVED_MEMBER_CONCAT2(A,B) A ## B
-	// Helper macro
-	#define RESERVED_MEMBER_CONCAT(A,B) RESERVED_MEMBER_CONCAT2(A,B)
-	
-	/**
-	 * A macro which generates a unique member name of the format
-	 * reserved_member_LINE_NUMBER.
-	 */
-	#define RESERVED_MEMBER RESERVED_MEMBER_CONCAT( reserved_member_ , __LINE__ )
-	
-#endif // RESERVED_MEMBER
+// Helper macro
+#define RESERVED_MEMBER_CONCAT2(A,B) A ## B
+// Helper macro
+#define RESERVED_MEMBER_CONCAT(A,B) RESERVED_MEMBER_CONCAT2(A,B)
+
+/**
+ * A macro which generates a unique member name of the format
+ * reserved_member_LINE_NUMBER.
+ */
+#define RESERVED_MEMBER RESERVED_MEMBER_CONCAT( reserved_member_ , __LINE__ )
 
 
 namespace Ocd
@@ -66,6 +62,9 @@ namespace Ocd
 		char data[N];
 	};
 	
+	/**
+	 * The generic header at the beginning of all supported OCD file formats.
+	 */
 	struct FileHeaderGeneric
 	{
 		quint16 vendor_mark;
@@ -74,6 +73,9 @@ namespace Ocd
 		quint16 subversion;
 	};
 	
+	/**
+	 * The header a version 8 OCD file.
+	 */
 	struct FileHeaderV8
 	{
 		quint16 vendor_mark;
@@ -92,6 +94,10 @@ namespace Ocd
 		quint32 RESERVED_MEMBER;
 	};
 	
+	/**
+	 * An IndexBlock collects 256 index entries, and the file position of the
+	 * next index block if more index entries exist.
+	 */
 	template< class E >
 	struct IndexBlock
 	{
@@ -101,7 +107,10 @@ namespace Ocd
 		IndexEntryType entries[256];
 	};
 	
-	struct StringIndexEntry // V11
+	/**
+	 * An index entry for string data.
+	 */
+	struct StringIndexEntry
 	{
 		quint32 pos;
 		quint32 size;
@@ -109,11 +118,23 @@ namespace Ocd
 		quint32 obj_index;
 	};
 	
+	/**
+	 * The OCD file string data type.
+	 * 
+	 * OCD strings are raw data, so this is more a trait rather than an actual
+	 * structure.
+	 */
 	struct String
 	{
 		typedef StringIndexEntry IndexEntryType;
 	};
 	
+	/**
+	 * The OCD file point data type.
+	 * 
+	 * The coordinates are not raw 32 bit signed integers but contain flags
+	 * in the lowest 8 bits.
+	 */
 	struct OcdPoint32
 	{
 		qint32  x;
@@ -139,7 +160,11 @@ namespace Ocd
 	
 #pragma pack(pop)
 	
-	/** Generic OCD file format trait. */
+	/**
+	 * A generic OCD file format trait.
+	 *
+	 * It is suitable for detecting the actual format.
+	 */
 	struct FormatGeneric
 	{
 		static inline int version() { return -1; };
@@ -151,31 +176,38 @@ namespace Ocd
 		struct Object { typedef quint32 IndexEntryType; };
 	};
 	
-	/** OCD file format version 8 trait. */
+	/**
+	 * A OCD file format version 8 trait.
+	 *
+	 * At the moment, it is only used to pass version 6-8 files to the legacy
+	 * importer (by template specialization).
+	 */
 	struct FormatV8
 	{
 		static inline int version() { return 8; };
 		
 		typedef FileHeaderV8 FileHeader;
 	};
-	
-// 	/** OCD file format version 9 trait. */
-// 	struct Format9
-// 	{
-// 		static inline int version() { return 9; };
-// 		
-// 		typedef FileHeaderV9 FileHeader;
-// 	};
-	
 }
 
 
 
+// Forward declaration, needed for class FirstIndexBlock.
 template< class F >
 class OcdFile;
 
 
 
+/**
+ * A template class which provides an operator() returning the first index
+ * block for a particular OCD entity index.
+ * 
+ * The generic template is not meant to be used but will trigger an error.
+ * Specializations must be provided for entity types to be supported.
+ * 
+ * @param F: the type defining the file format version type
+ * @param T: the entity type (string, symbol, object)
+ */
 template< class F, class T >
 class FirstIndexBlock
 {
@@ -183,6 +215,12 @@ public:
 	quint32 operator()(const OcdFile<F>* file) const;
 };
 
+/**
+ * A template class which provides an operator() returning the first string
+ * index block.
+ * 
+ * @param F: the type defining the file format version type
+ */
 template< class F >
 class FirstIndexBlock<F, Ocd::String>
 {
@@ -190,6 +228,12 @@ public:
 	quint32 operator()(const OcdFile<F>* file) const;
 };
 
+/**
+ * A template class which provides an operator() returning the first symbol
+ * index block.
+ * 
+ * @param F: the type defining the file format version type
+ */
 template< class F >
 class FirstIndexBlock<F, typename F::BaseSymbol>
 {
@@ -197,6 +241,12 @@ public:
 	quint32 operator()(const OcdFile<F>* file) const;
 };
 
+/**
+ * A template class which provides an operator() returning the first object
+ * index block.
+ * 
+ * @param F: the type defining the file format version type
+ */
 template< class F >
 class FirstIndexBlock<F, typename F::Object>
 {
@@ -206,6 +256,13 @@ public:
 
 
 
+/**
+ * A template class which provides an iterator for OCD entity indices.
+ * 
+ * @param F: the type defining the file format version type
+ * @param T: the entity type (string, symbol, object)
+ * @param E: the index entry type
+ */
 template< class F, class T, class E >
 class OcdEntityIndexIterator
 {
@@ -234,6 +291,14 @@ private:
 };
 
 
+/**
+ * A template class which provides an iterator for OCD entity indices, 
+ * specialized for the case where the index entry is just the quint32 file
+ * position of the entity data.
+ * 
+ * @param F: the type defining the file format version type
+ * @param T: the entity type (string, symbol, object)
+ */
 template< class F, class T >
 class OcdEntityIndexIterator<F, T, quint32 >
 {
@@ -263,23 +328,60 @@ private:
 
 
 
+/**
+ * A template class for dealing with OCD entity indices.
+ * 
+ * Instances of this data do not actually copy any data, but rather provide
+ * an STL container like interface for raw data. The interfaces allows for
+ * forward iterating over the index for the given entity type.
+ *
+ * @param F: the type defining the file format version type
+ * @param T: the entity type (string, symbol, object)
+ */
 template< class F, class T >
 class OcdEntityIndex
 {
 public:
+	/** The actual file format version type, reexported. */
 	typedef F FileFormat;
+	
+	/** The actual entity type. */
 	typedef T EntityType;
+	
+	/** The index entry type for the entity type. */
 	typedef typename T::IndexEntryType EntryType;
+	
+	/** The index iterator type. */
 	typedef OcdEntityIndexIterator<F, T, EntryType> iterator;
 	
+	/**
+	 * Constructs an entity index object.
+	 * 
+	 * You must call setData() before using the container interface.
+	 */
 	OcdEntityIndex();
 	
+	/**
+	 * Destroys the object.
+	 */
 	~OcdEntityIndex();
 	
+	/**
+	 * Sets the raw file data to which the object provides access.
+	 * 
+	 * The data is not copied and must not be deleted as long as the index
+	 * and its iterators are in use.
+	 */
 	void setData(const OcdFile<F>* file);
 	
+	/**
+	 * Returns a forward iterator to the beginning.
+	 */
 	iterator begin() const;
 	
+	/**
+	 * Returns a forward iterator to the end.
+	 */
 	iterator end() const;
 	
 private:
@@ -288,34 +390,81 @@ private:
 
 
 
+/**
+ * A template class for dealing with OCD files.
+ * 
+ * @param F: the type defining the actual file format version
+ */
 template< class F >
 class OcdFile
 {
 public:
+	/** The actual file format version type, reexported. */
 	typedef F Format;
+	
+	/** The actual file header type. */
 	typedef typename F::FileHeader FileHeader;
+	
+	/** The actual string index type. */
 	typedef OcdEntityIndex< F, Ocd::String > StringIndex;
+	
+	/** The actual symbol index type. */
 	typedef OcdEntityIndex< F, typename F::BaseSymbol > SymbolIndex;
+	
+	/** The actual object index type. */
 	typedef OcdEntityIndex< F, typename F::Object > ObjectIndex;
 	
+	/**
+	 * Constructs a new object for the file contents given by data.
+	 * 
+	 * We try to avoid copying the data by using the implicit sharing provided
+	 * by QByteArray.
+	 */
 	OcdFile(const QByteArray& data);
 	
+	/**
+	 * Destructs the object.
+	 */
 	~OcdFile() {};
 	
+	/**
+	 * Returns the raw data.
+	 */
 	const QByteArray& byteArray() const;
 	
+	/**
+	 * Returns a const reference to the byte specified by file_pos.
+	 */
 	const char& operator[](quint32 file_pos) const;
 	
+	/**
+	 * Returns a pointer to the file header.
+	 */
 	const FileHeader* header() const;
 	
+	/**
+	 * Returns a const reference to the string index.
+	 */
 	const StringIndex& strings() const;
 	
+	/**
+	 * Returns the raw data of the string referenced by a string index iterator.
+	 */
 	const QByteArray operator[](const typename StringIndex::iterator& it) const;
 	
+	/**
+	 * Returns a const reference to the symbol index.
+	 */
 	const SymbolIndex& symbols() const;
 	
+	/**
+	 * Returns a const reference to the object index.
+	 */
 	const ObjectIndex& objects() const;
 	
+	/**
+	 * Returns a const referenc to the object referenced by an object index iterator.
+	 */
 	const typename F::Object& operator[](const typename ObjectIndex::iterator& it) const;
 	
 private:
