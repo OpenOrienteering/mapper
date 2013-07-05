@@ -90,7 +90,11 @@ protected:
 	bool importRectangleObject(const OCADObject* ocad_object, MapPart* part, const RectangleInfo& rect);
 
 	// String import
-	void importString(OCADStringEntry *entry);
+	virtual void importString(OCADStringEntry *entry);
+	
+	Template *importTemplate(OCADCString* ocad_str);
+	OCADBackground importBackground(const QByteArray& data);
+	/// @deprecated Replaced by Template *importTemplate(OCADCString* string).
 	Template *importRasterTemplate(const OCADBackground &background);
 
 	// Some helper functions that are used in multiple places
