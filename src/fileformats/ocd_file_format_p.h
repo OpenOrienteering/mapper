@@ -35,6 +35,7 @@
 #include "../symbol_text.h"
 
 class MapPart;
+class OCAD8FileImport;
 
 /**
  * An map file importer for OC*D files.
@@ -184,7 +185,7 @@ protected:
 	
 	QByteArray buffer;
 	
-	QScopedPointer< Importer > delegate;
+	QScopedPointer< OCAD8FileImport > delegate;
 	
 	/// Character encoding to use for 1-byte (narrow) strings
 	QTextCodec *local_8bit;

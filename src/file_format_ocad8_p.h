@@ -51,7 +51,7 @@ class TextSymbol;
 
 class OCAD8FileImport : public Importer
 {
-	friend class OCAD11FileImport;
+	friend class OcdFileImport;
 Q_OBJECT
 protected:
 	/// Information about an OCAD rectangle symbol

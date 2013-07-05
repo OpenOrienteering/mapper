@@ -38,7 +38,7 @@
 #include "../symbol_point.h"
 #include "../symbol_text.h"
 #include "../object_text.h"
-#include "../file_format_ocad8.h"
+#include "../file_format_ocad8_p.h"
 #include "../util.h"
 
 
@@ -66,7 +66,7 @@ Importer* OcdFileFormat::createImporter(QIODevice* stream, Map *map, MapView *vi
 
 Exporter* OcdFileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FileFormatException)
 {
-	return OCAD8FileFormat().createExporter(stream, map, view);
+	return new OCAD8FileExport(stream, map, view);
 }
 
 
@@ -137,9 +137,9 @@ void OcdFileImport::importImplementation< Ocd::FormatV8 >(bool load_symbols_only
 {
 	QBuffer new_stream(&buffer);
 	new_stream.open(QIODevice::ReadOnly);
-	delegate.reset(OCAD8FileFormat().createImporter(&new_stream, map, view));
+	delegate.reset(new OCAD8FileImport(&new_stream, map, view));
 	
-	delegate->doImport(load_symbols_only);
+	delegate->import(load_symbols_only);
 	
 	for (std::vector< QString >::const_iterator w = delegate->warnings().begin(); w != delegate->warnings().end(); ++w)
 	{
