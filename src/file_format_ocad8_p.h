@@ -96,6 +96,10 @@ protected:
 	
 	// String import
 	virtual void importString(OCADStringEntry *entry);
+	
+	Template *importTemplate(OCADCString* ocad_str);
+	OCADBackground importBackground(const QByteArray& data);
+	/// @deprecated Replaced by Template *importTemplate(OCADCString* string).
 	Template *importRasterTemplate(const OCADBackground &background);
 	
 	// Some helper functions that are used in multiple places
