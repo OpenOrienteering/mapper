@@ -205,7 +205,7 @@ namespace Ocd
 		
 		BaseSymbol base;
 		
-		PascalString<31> font_name;
+		Utf8PascalString<31> font_name;
 		quint16 font_color;
 		quint16 font_size;
 		quint16 font_weight;
@@ -247,7 +247,7 @@ namespace Ocd
 		
 		BaseSymbol base;
 		
-		PascalString<31> font_name;
+		Utf8PascalString<31> font_name;
 		quint16 font_color;
 		quint16 font_size;
 		quint16 font_weight;
@@ -354,6 +354,8 @@ namespace Ocd
 		typedef RectangleSymbolV11 RectangleSymbol;
 		
 		typedef ObjectV11 Object;
+		
+		typedef Utf8Encoding Encoding;
 		
 		enum SymbolType
 		{

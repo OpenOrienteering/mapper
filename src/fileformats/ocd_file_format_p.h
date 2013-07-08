@@ -34,8 +34,11 @@
 #include "../symbol_point.h"
 #include "../symbol_text.h"
 
+class Georeferencing;
+class MapColor;
 class MapPart;
 class OCAD8FileImport;
+class Template;
 
 /**
  * An map file importer for OC*D files.
@@ -95,12 +98,19 @@ public:
 	OcdFileImport(QIODevice* stream, Map *map, MapView *view);
 	virtual ~OcdFileImport();
 	
-	void setLocal8BitEncoding(const char *encoding);
+	void setCustom8BitEncoding(const char *encoding);
 	
 	template< std::size_t N >
 	QString convertOcdString(const Ocd::PascalString<N>& src) const;
 	
+	template< std::size_t N >
+	QString convertOcdString(const Ocd::Utf8PascalString< N >& src) const;
+	
+	template< class E >
 	QString convertOcdString(const char* src, std::size_t len) const;
+	
+	template< class E >
+	QString convertOcdString(const QByteArray& data) const;
 	
 	QString convertOcdString(const QChar* src) const;
 	
@@ -126,14 +136,23 @@ protected:
 	template< class F >
 	void importGeoreferencing(const OcdFile< F >& file) throw (FileFormatException);
 	
+	void importGeoreferencing(const QString& param_string);
+	
 	template< class F >
 	void importColors(const OcdFile< F >& file) throw (FileFormatException);
+	
+	MapColor* importColor(const QString& param_string);
 	
 	template< class F >
 	void importSymbols(const OcdFile< F >& file) throw (FileFormatException);
 	
 	template< class F >
 	void importObjects(const OcdFile< F >& file) throw (FileFormatException);
+	
+	template< class F >
+	void importTemplates(const OcdFile< F >& file) throw (FileFormatException);
+	
+	Template* importTemplate(const QString& param_string);
 	
 	// Symbol import
 	
@@ -188,7 +207,7 @@ protected:
 	QScopedPointer< OCAD8FileImport > delegate;
 	
 	/// Character encoding to use for 1-byte (narrow) strings
-	QTextCodec *local_8bit;
+	QTextCodec *custom_8bit_encoding;
 	
 	/// maps OCAD color number to oo-mapper color object
 	QHash<int, MapColor *> color_index;
@@ -211,13 +230,42 @@ template< std::size_t N >
 inline
 QString OcdFileImport::convertOcdString(const Ocd::PascalString<N>& src) const
 {
-	return local_8bit->toUnicode(src.data, src.length);
+	return custom_8bit_encoding->toUnicode(src.data, src.length);
 }
 
+template< std::size_t N >
 inline
-QString OcdFileImport::convertOcdString(const char* src, std::size_t len) const
+QString OcdFileImport::convertOcdString(const Ocd::Utf8PascalString<N>& src) const
 {
-	return local_8bit->toUnicode(src, len);
+	return QString::fromUtf8(src.data, src.length);
+}
+
+template< >
+inline
+QString OcdFileImport::convertOcdString< Ocd::Custom8BitEncoding >(const char* src, std::size_t len) const
+{
+	return custom_8bit_encoding->toUnicode(src, len);
+}
+
+template< >
+inline
+QString OcdFileImport::convertOcdString< Ocd::Utf8Encoding >(const char* src, std::size_t len) const
+{
+	return QString::fromUtf8(src, len);
+}
+
+template< >
+inline
+QString OcdFileImport::convertOcdString< Ocd::Custom8BitEncoding >(const QByteArray& data) const
+{
+	return custom_8bit_encoding->toUnicode(data.constData(), data.length());
+}
+
+template< >
+inline
+QString OcdFileImport::convertOcdString< Ocd::Utf8Encoding >(const QByteArray& data) const
+{
+	return QString::fromUtf8(data.constData(), data.length());
 }
 
 inline

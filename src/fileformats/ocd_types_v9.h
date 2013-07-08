@@ -358,6 +358,8 @@ namespace Ocd
 		
 		typedef ObjectV9 Object;
 		
+		typedef Custom8BitEncoding Encoding;
+		
 		enum SymbolType
 		{
 			TypePoint     = 1,

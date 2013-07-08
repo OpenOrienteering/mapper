@@ -198,6 +198,8 @@ namespace Ocd
 		
 		typedef ObjectV10 Object;
 		
+		typedef Custom8BitEncoding Encoding;
+		
 		enum SymbolType
 		{
 			TypePoint     = 1,

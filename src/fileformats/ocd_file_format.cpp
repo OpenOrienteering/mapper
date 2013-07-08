@@ -23,22 +23,29 @@
 #include "ocd_file_format.h"
 #include "ocd_file_format_p.h"
 
-#include <QDebug>
 #include <QBuffer>
+#include <QDebug>
+#include <QDir>
+#include <QFileInfo>
+#include <QImageReader>
 
 #include "ocd_types_v9.h"
 #include "ocd_types_v10.h"
 #include "ocd_types_v11.h"
-#include "../map.h"
-#include "../georeferencing.h"
 #include "../core/map_color.h"
+#include "../georeferencing.h"
+#include "../file_format_ocad8.h"
+#include "../file_format_ocad8_p.h"
+#include "../map.h"
+#include "../object_text.h"
 #include "../symbol_area.h"
 #include "../symbol_combined.h"
 #include "../symbol_line.h"
 #include "../symbol_point.h"
 #include "../symbol_text.h"
-#include "../object_text.h"
-#include "../file_format_ocad8_p.h"
+#include "../template.h"
+#include "../template_image.h"
+#include "../template_map.h"
 #include "../util.h"
 
 
@@ -76,15 +83,15 @@ OcdFileImport::OcdFileImport(QIODevice* stream, Map* map, MapView* view)
  : Importer(stream, map, view),
    delegate(NULL)
 {
-    local_8bit = QTextCodec::codecForName("Windows-1252");
+    custom_8bit_encoding = QTextCodec::codecForName("Windows-1252");
 }
 
 OcdFileImport::~OcdFileImport()
 {
 }
 
-void OcdFileImport::setLocal8BitEncoding(const char *encoding) {
-    local_8bit = QTextCodec::codecForName(encoding);
+void OcdFileImport::setCustom8BitEncoding(const char *encoding) {
+    custom_8bit_encoding = QTextCodec::codecForName(encoding);
 }
 
 void OcdFileImport::addSymbolWarning(LineSymbol* symbol, const QString& warning)
@@ -162,6 +169,7 @@ void OcdFileImport::importImplementation(bool load_symbols_only) throw (FileForm
 	if (!load_symbols_only)
 	{
 		importObjects< F >(file);
+		importTemplates< F >(file);
 	}
 }
 
@@ -170,136 +178,161 @@ void OcdFileImport::importGeoreferencing(const OcdFile< F >& file) throw (FileFo
 {
 	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
 	{
-		if (it->type != 1039)
-			continue;
-		
-		Georeferencing georef;
-		QPointF proj_ref_point;
-		bool x_ok = false, y_ok = false;
-		
-		QByteArray data = file[it];
-		int i = data.indexOf('\t', 0);
-		; // skip first word for this entry type
-		while (i >= 0)
+		if (it->type == 1039)
 		{
-			int next_i = data.indexOf('\t', i+1);
-			int len = (next_i > 0 ? next_i : data.length()) - i - 2;
-			bool ok;
-			switch (data[i+1])
-			{
-				case 'm':
-				{
-					int scale = data.mid(i + 2, len).toInt(&ok);
-					if (ok) georef.setScaleDenominator(scale);
-					break;
-				}
-				case 'a':
-				{
-					double angle = data.mid(i + 2, len).toDouble(&ok);
-					if (ok && qAbs(angle) >= 0.01) georef.setGrivation(angle);
-					break;
-				}
-				case 'x':
-				{
-					proj_ref_point.setX(data.mid(i + 2, len).toDouble(&x_ok));
-					break;
-				}
-				case 'y':
-				{
-					proj_ref_point.setY(data.mid(i + 2, len).toDouble(&y_ok));
-					break;
-				}
-				default:
-					; // nothing
-			}
-			i = next_i;
+			importGeoreferencing(convertOcdString< typename F::Encoding >(file[it]));
+			break;
 		}
-		if (x_ok && y_ok)
-		{
-			georef.setProjectedRefPoint(proj_ref_point);
-		}
-		map->setGeoreferencing(georef);
-		return; // for-loop
 	}
+}
+
+void OcdFileImport::importGeoreferencing(const QString& param_string)
+{
+	const QChar* unicode = param_string.unicode();
+	
+	Georeferencing georef;
+	QPointF proj_ref_point;
+	bool x_ok = false, y_ok = false;
+	
+	int i = param_string.indexOf('\t', 0);
+	; // skip first word for this entry type
+	while (i >= 0)
+	{
+		bool ok;
+		int next_i = param_string.indexOf('\t', i+1);
+		int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
+		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
+		switch (param_string[i+1].toLatin1())
+		{
+			case '\t':
+				// empty item
+				break;
+			case 'm':
+			{
+				int scale = param_value.toInt(&ok);
+				if (ok) georef.setScaleDenominator(scale);
+				break;
+			}
+			case 'a':
+			{
+				double angle = param_value.toDouble(&ok);
+				if (ok && qAbs(angle) >= 0.01) georef.setGrivation(angle);
+				break;
+			}
+			case 'x':
+			{
+				proj_ref_point.setX(param_value.toDouble(&x_ok));
+				break;
+			}
+			case 'y':
+			{
+				proj_ref_point.setY(param_value.toDouble(&y_ok));
+				break;
+			}
+			default:
+				; // nothing
+		}
+		i = next_i;
+	}
+	
+	if (x_ok && y_ok)
+	{
+		georef.setProjectedRefPoint(proj_ref_point);
+	}
+	
+	map->setGeoreferencing(georef);
 }
 
 template< class F >
 void OcdFileImport::importColors(const OcdFile< F >& file) throw (FileFormatException)
 {
-	int current_color = 0;
 	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
 	{
-		if (it->type != 9)
-			continue;
-		
-		int number;
-		bool number_ok = false;
-		MapColorCmyk cmyk;
-		bool overprinting = false;
-		float opacity = 1.0f;
-		
-		QByteArray data = file[it];
-		int i = data.indexOf('\t', 0);
-		QByteArray name = data.mid(0, qMax(-1, i));
-		while (i >= 0)
+		if (it->type == 9)
 		{
-			float f_value;
-			int i_value;
-			bool ok;
-			int next_i = data.indexOf('\t', i+1);
-			int len = (next_i > 0 ? next_i : data.length()) - i - 2;
-			switch (data[i+1])
-			{
-				case 'n':
-					number = data.mid(i + 2, len).toInt(&number_ok);
-					break;
-				case 'c':
-					f_value = data.mid(i + 2, len).toFloat(&ok);
-					if (ok && f_value >= 0 && f_value <= 100)
-						cmyk.c = 0.01f * f_value;
-					break;
-				case 'm':
-					f_value = data.mid(i + 2, len).toFloat(&ok);
-					if (ok && f_value >= 0 && f_value <= 100)
-						cmyk.m = 0.01f * f_value;
-					break;
-				case 'y':
-					f_value = data.mid(i + 2, len).toFloat(&ok);
-					if (ok && f_value >= 0 && f_value <= 100)
-						cmyk.y = 0.01f * f_value;
-					break;
-				case 'k':
-					f_value = data.mid(i + 2, len).toFloat(&ok);
-					if (ok && f_value >= 0 && f_value <= 100)
-						cmyk.k = 0.01f * f_value;
-					break;
-				case 'o':
-					i_value = data.mid(i + 2, len).toInt(&ok);
-					if (ok)
-						overprinting = i_value;
-					break;
-				case 't':
-					f_value = data.mid(i + 2, len).toFloat(&ok);
-					if (ok && f_value >= 0.f && f_value <= 100.f)
-						opacity = 0.01f * f_value;
-					break;
-				default:
-					; // nothing
-			}
-			i = next_i;
-		}
-		if (number_ok)
-		{
-			MapColor* color = new MapColor(current_color++);
-			color->setName(name);
-			color->setCmyk(cmyk);
-			color->setKnockout(!overprinting);
-			color->setOpacity(opacity);
-			map->addColor(color, map->getNumColors());
-			color_index[number] = color;
+			importColor(convertOcdString< typename F::Encoding >(file[it]));
 		}
 	}
 	addWarning(tr("Spot color information was ignored."));
+}
+
+MapColor* OcdFileImport::importColor(const QString& param_string)
+{
+	const QChar* unicode = param_string.unicode();
+	
+	int i = param_string.indexOf('\t', 0);
+	const QString name = param_string.left(qMax(-1, i)); // copied
+	
+	int number;
+	bool number_ok = false;
+	MapColorCmyk cmyk;
+	bool overprinting = false;
+	float opacity = 1.0f;
+	
+	while (i >= 0)
+	{
+		float f_value;
+		int i_value;
+		bool ok;
+		int next_i = param_string.indexOf('\t', i+1);
+		int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
+		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
+		switch (param_string[i+1].toLatin1())
+		{
+			case '\t':
+				// empty item
+				break;
+			case 'n':
+				number = param_value.toInt(&number_ok);
+				break;
+			case 'c':
+				f_value = param_value.toFloat(&ok);
+				if (ok && f_value >= 0 && f_value <= 100)
+					cmyk.c = 0.01f * f_value;
+				break;
+			case 'm':
+				f_value = param_value.toFloat(&ok);
+				if (ok && f_value >= 0 && f_value <= 100)
+					cmyk.m = 0.01f * f_value;
+				break;
+			case 'y':
+				f_value = param_value.toFloat(&ok);
+				if (ok && f_value >= 0 && f_value <= 100)
+					cmyk.y = 0.01f * f_value;
+				break;
+			case 'k':
+				f_value = param_value.toFloat(&ok);
+				if (ok && f_value >= 0 && f_value <= 100)
+					cmyk.k = 0.01f * f_value;
+				break;
+			case 'o':
+				i_value = param_value.toInt(&ok);
+				if (ok)
+					overprinting = i_value;
+				break;
+			case 't':
+				f_value = param_value.toFloat(&ok);
+				if (ok && f_value >= 0.f && f_value <= 100.f)
+					opacity = 0.01f * f_value;
+				break;
+			default:
+				; // nothing
+		}
+		i = next_i;
+	}
+	
+	if (!number_ok)
+		return NULL;
+		
+	int color_pos = map->getNumColors();
+	MapColor* color = new MapColor(name, color_pos);
+	color->setCmyk(cmyk);
+	color->setKnockout(!overprinting);
+	color->setOpacity(opacity);
+	map->addColor(color, color_pos);
+	color_index[number] = color;
+	
+	return color;
 }
 
 template< class F >
@@ -366,6 +399,117 @@ void OcdFileImport::importObjects(const OcdFile< F >& file) throw (FileFormatExc
 			part->addObject(object, part->getNumObjects());
 		}
 	}
+}
+
+template< class F >
+void OcdFileImport::importTemplates(const OcdFile< F >& file) throw (FileFormatException)
+{
+	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
+	{
+		if (it->type == 8)
+		{
+			importTemplate(convertOcdString< typename F::Encoding >(file[it]));
+		}
+	}
+}
+
+Template* OcdFileImport::importTemplate(const QString& param_string)
+{
+	const QChar* unicode = param_string.unicode();
+	
+	int i = param_string.indexOf('\t', 0);
+	const QString filename = QString::fromRawData(unicode, qMax(-1, i));
+	const QString clean_path = QDir::cleanPath(QString(filename).replace('\\', '/'));
+	const QString extension = QFileInfo(clean_path).suffix();
+	
+	Template* templ = NULL;
+	if (extension.compare("ocd", Qt::CaseInsensitive) == 0)
+	{
+		templ = new TemplateMap(clean_path, map);
+	}
+	else if (QImageReader::supportedImageFormats().contains(extension.toLatin1()))
+	{
+		templ = new TemplateImage(clean_path, map);
+	}
+	else
+	{
+		addWarning(tr("Unable to import template: \"%1\" is not a supported template type.").arg(filename));
+		return NULL;
+	}
+	
+	unsigned int num_rotation_params = 0;
+	double rotation = 0.0;
+	double scale_x = 1.0;
+	double scale_y = 1.0;
+	int dimming = 0;
+	bool visible = false;
+	
+	while (i >= 0)
+	{
+		double value;
+		bool ok;
+		int next_i = param_string.indexOf('\t', i+1);
+		int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
+		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
+		switch (param_string[i+1].toLatin1())
+		{
+			case '\t':
+				// empty item
+				break;
+			case 'x':
+				value = param_value.toDouble(&ok);
+				if (ok)
+					templ->setTemplateX(qRound64(value*1000));
+				break;
+			case 'y':
+				value = param_value.toDouble(&ok);
+				if (ok)
+					templ->setTemplateY(-qRound64(value*1000));
+				break;
+			case 'a':
+			case 'b':
+				// TODO: use the distinct angles correctly, not just the average
+				rotation += param_value.toDouble();
+				if (ok)
+					++num_rotation_params;
+				break;
+			case 'u':
+				value = param_value.toDouble(&ok);
+				if (ok && qAbs(value) >= 0.0001)
+					scale_x = value;
+				break;
+			case 'v':
+				value = param_value.toDouble(&ok);
+				if (ok && qAbs(value) >= 0.0001)
+					scale_y = value;
+				break;
+			case 'd':
+				dimming = param_value.toInt();
+				break;
+			case 's':
+				visible = param_value.toInt();
+				break;
+			default:
+				; // nothing
+		}
+		i = next_i;
+	}
+	
+	if (num_rotation_params)
+		templ->setTemplateRotation(convertAngle(rotation / num_rotation_params));
+	
+	templ->setTemplateScaleX(scale_x);
+	templ->setTemplateScaleY(scale_y);
+	
+	int template_pos = map->getFirstFrontTemplate();
+	map->addTemplate(templ, template_pos, view);
+	map->setFirstFrontTemplate(template_pos+1);
+	
+	TemplateVisibility* visibility = view->getTemplateVisibility(templ);
+	visibility->opacity = qMax(0.0, qMin(1.0, 0.01 * (100 - dimming)));
+	visibility->visible = visible;
+	
+	return templ;
 }
 
 template< class S >
@@ -756,7 +900,7 @@ AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol)
 		pattern.type = AreaSymbol::FillPattern::LinePattern;
 		pattern.angle = convertAngle(ocd_symbol.hatch_angle_1);
 		pattern.rotatable = true;
-		pattern.line_spacing = convertLength(ocd_symbol.hatch_dist + ocd_symbol.hatch_line_width);
+		pattern.line_spacing = convertLength(ocd_symbol.hatch_dist);
 		pattern.line_offset = 0;
 		pattern.line_color = convertColor(ocd_symbol.hatch_color);
 		pattern.line_width = convertLength(ocd_symbol.hatch_line_width);

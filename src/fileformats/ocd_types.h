@@ -50,6 +50,22 @@ namespace Ocd
 // This pragma should be supported by msvc, gcc, clang [-fms-compatibility]
 #pragma pack(push, 1)
 	
+	/**
+	 * A trait for strings and file formats that use a custom 8 bit encoding.
+	 */
+	struct Custom8BitEncoding
+	{
+		// nothing
+	};
+	
+	/**
+	 * A trait for strings and file formats that use UTF-8 encoding.
+	 */
+	struct Utf8Encoding
+	{
+		// nothing
+	};
+	
 	/** 
 	 * A string of max. N characters with a pascal-style binary representation:
 	 * the first byte indicates the length,
@@ -57,6 +73,18 @@ namespace Ocd
 	 */
 	template< std::size_t N >
 	struct PascalString
+	{
+		unsigned char length;
+		char data[N];
+	};
+	
+	/** 
+	 * A UTF-8-encoded string of max. N characters with a pascal-style binary representation:
+	 * the first byte indicates the length,
+	 * the following N bytes contain the actual character data.
+	 */
+	template< std::size_t N >
+	struct Utf8PascalString
 	{
 		unsigned char length;
 		char data[N];
@@ -108,9 +136,9 @@ namespace Ocd
 	};
 	
 	/**
-	 * An index entry for string data.
+	 * An index entry for a parameter string.
 	 */
-	struct StringIndexEntry
+	struct ParameterStringIndexEntry
 	{
 		quint32 pos;
 		quint32 size;
@@ -119,14 +147,14 @@ namespace Ocd
 	};
 	
 	/**
-	 * The OCD file string data type.
+	 * The parameter string trait.
 	 * 
 	 * OCD strings are raw data, so this is more a trait rather than an actual
 	 * structure.
 	 */
-	struct String
+	struct ParameterString
 	{
-		typedef StringIndexEntry IndexEntryType;
+		typedef ParameterStringIndexEntry IndexEntryType;
 	};
 	
 	/**
@@ -222,7 +250,7 @@ public:
  * @param F: the type defining the file format version type
  */
 template< class F >
-class FirstIndexBlock<F, Ocd::String>
+class FirstIndexBlock<F, Ocd::ParameterString>
 {
 public:
 	quint32 operator()(const OcdFile<F>* file) const;
@@ -406,7 +434,7 @@ public:
 	typedef typename F::FileHeader FileHeader;
 	
 	/** The actual string index type. */
-	typedef OcdEntityIndex< F, Ocd::String > StringIndex;
+	typedef OcdEntityIndex< F, Ocd::ParameterString > StringIndex;
 	
 	/** The actual symbol index type. */
 	typedef OcdEntityIndex< F, typename F::BaseSymbol > SymbolIndex;
@@ -443,7 +471,7 @@ public:
 	const FileHeader* header() const;
 	
 	/**
-	 * Returns a const reference to the string index.
+	 * Returns a const reference to the parameter string index.
 	 */
 	const StringIndex& strings() const;
 	
@@ -491,7 +519,7 @@ quint32 FirstIndexBlock<F,T>::operator()(const OcdFile<F>* file) const
 }
 
 template< class F >
-quint32 FirstIndexBlock<F,Ocd::String>::operator()(const OcdFile<F>* file) const
+quint32 FirstIndexBlock<F,Ocd::ParameterString>::operator()(const OcdFile<F>* file) const
 {
 	return file->header()->first_string_block;
 }
