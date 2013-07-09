@@ -1828,10 +1828,11 @@ s16 OCAD8FileExport::exportPattern(PointSymbol* point, OCADPoint** buffer)
 	if (!point)
 		return 0;
 	
-	s16 num_coords = 0;
+	s16 num_coords = exportSubPattern(origin_point_object, point, buffer);
 	for (int i = 0; i < point->getNumElements(); ++i)
+	{
 		num_coords += exportSubPattern(point->getElementObject(i), point->getElementSymbol(i), buffer);
-	num_coords += exportSubPattern(origin_point_object, point, buffer);
+	}
 	return num_coords;
 }
 
