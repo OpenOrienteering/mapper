@@ -102,27 +102,6 @@ namespace Ocd
 	};
 	
 	/**
-	 * The header a version 8 OCD file.
-	 */
-	struct FileHeaderV8
-	{
-		quint16 vendor_mark;
-		quint16 section_mark;
-		quint16 version;
-		quint16 subversion;
-		quint32 first_symbol_block;
-		quint32 first_object_block;
-		quint32 setup_pos;
-		quint32 setup_size;
-		quint32 info_pos;
-		quint32 info_size;
-		quint32 first_string_block;
-		quint32 RESERVED_MEMBER;
-		quint32 RESERVED_MEMBER;
-		quint32 RESERVED_MEMBER;
-	};
-	
-	/**
 	 * An IndexBlock collects 256 index entries, and the file position of the
 	 * next index block if more index entries exist.
 	 */
@@ -205,16 +184,13 @@ namespace Ocd
 	};
 	
 	/**
-	 * A OCD file format version 8 trait.
-	 *
-	 * At the moment, it is only used to pass version 6-8 files to the legacy
-	 * importer (by template specialization).
+	 * A OCD file format trait for selecting the old version 8 importer.
 	 */
-	struct FormatV8
+	struct FormatLegacyImporter
 	{
 		static inline int version() { return 8; };
 		
-		typedef FileHeaderV8 FileHeader;
+		typedef FileHeaderGeneric FileHeader;
 	};
 }
 

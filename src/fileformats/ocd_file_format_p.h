@@ -154,6 +154,12 @@ protected:
 	
 	Template* importTemplate(const QString& param_string);
 	
+	template< class F >
+	void importExtras(const OcdFile< F >& file) throw (FileFormatException);
+	
+	template< class F >
+	void importView(const OcdFile< F >& file) throw (FileFormatException);
+	
 	// Symbol import
 	
 	template< class S >
@@ -163,7 +169,7 @@ protected:
 	Symbol* importLineSymbol(const S& ocd_symbol);
 	
 	template< class S >
-	AreaSymbol* importAreaSymbol(const S& ocd_symbol);
+	AreaSymbol* importAreaSymbol(const S& ocd_symbol, int ocd_version);
 	
 	template< class S >
 	TextSymbol* importTextSymbol(const S& ocd_symbol);
@@ -244,6 +250,7 @@ template< >
 inline
 QString OcdFileImport::convertOcdString< Ocd::Custom8BitEncoding >(const char* src, std::size_t len) const
 {
+	len = qstrnlen(src, len);
 	return custom_8bit_encoding->toUnicode(src, len);
 }
 
@@ -251,6 +258,7 @@ template< >
 inline
 QString OcdFileImport::convertOcdString< Ocd::Utf8Encoding >(const char* src, std::size_t len) const
 {
+	len = qstrnlen(src, len);
 	return QString::fromUtf8(src, len);
 }
 

@@ -29,6 +29,7 @@
 #include <QFileInfo>
 #include <QImageReader>
 
+#include "ocd_types_v8.h"
 #include "ocd_types_v9.h"
 #include "ocd_types_v10.h"
 #include "ocd_types_v11.h"
@@ -38,6 +39,7 @@
 #include "../file_format_ocad8_p.h"
 #include "../map.h"
 #include "../object_text.h"
+#include "../settings.h"
 #include "../symbol_area.h"
 #include "../symbol_combined.h"
 #include "../symbol_line.h"
@@ -140,7 +142,7 @@ qint64 OcdFileImport::convertLength< quint32 >(quint32 ocd_length) const
 #endif // !NDEBUG
 
 template< >
-void OcdFileImport::importImplementation< Ocd::FormatV8 >(bool load_symbols_only) throw (FileFormatException)
+void OcdFileImport::importImplementation< Ocd::FormatLegacyImporter >(bool load_symbols_only) throw (FileFormatException)
 {
 	QBuffer new_stream(&buffer);
 	new_stream.open(QIODevice::ReadOnly);
@@ -168,9 +170,27 @@ void OcdFileImport::importImplementation(bool load_symbols_only) throw (FileForm
 	importSymbols< F >(file);
 	if (!load_symbols_only)
 	{
+		importExtras< F >(file);
 		importObjects< F >(file);
 		importTemplates< F >(file);
+		importView< F >(file);
 	}
+}
+
+template< >
+void OcdFileImport::importGeoreferencing< Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file) throw (FileFormatException)
+{
+	const Ocd::FileHeaderV8* header = file.header();
+	const Ocd::SetupV8* setup = reinterpret_cast< const Ocd::SetupV8* >(file.byteArray().data() + header->setup_pos);
+	
+	Georeferencing georef;
+	georef.setScaleDenominator(setup->map_scale);
+	georef.setProjectedRefPoint(QPointF(setup->real_offset_x, setup->real_offset_y));
+	if (qAbs(setup->real_angle) >= 0.01) /* degrees */
+	{
+		georef.setGrivation(setup->real_angle);
+	}
+	map->setGeoreferencing(georef);
 }
 
 template< class F >
@@ -241,6 +261,35 @@ void OcdFileImport::importGeoreferencing(const QString& param_string)
 	}
 	
 	map->setGeoreferencing(georef);
+}
+
+template< >
+void OcdFileImport::importColors< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file) throw (FileFormatException)
+{
+	const Ocd::SymbolHeaderV8 & symbol_header = file.header()->symbol_header;
+	int num_colors = symbol_header.num_colors;
+	
+	for (int i = 0; i < num_colors && i < 256; i++)
+	{
+		const Ocd::ColorInfoV8& color_info = symbol_header.color_info[i];
+		const QString name = convertOcdString(color_info.name);
+		int color_pos = map->getNumColors();
+		MapColor* color = new MapColor(name, color_pos);
+		
+		// OC*D stores CMYK values as integers from 0-200.
+		MapColorCmyk cmyk;
+		cmyk.c = 0.005f * color_info.cmyk.cyan;
+		cmyk.m = 0.005f * color_info.cmyk.magenta;
+		cmyk.y = 0.005f * color_info.cmyk.yellow;
+		cmyk.k = 0.005f * color_info.cmyk.black;
+		color->setCmyk(cmyk);
+		color->setOpacity(1.0f);
+		
+		map->addColor(color, color_pos);
+		color_index[color_info.number] = color;
+	}
+	
+	addWarning(tr("Spot color information was ignored."));
 }
 
 template< class F >
@@ -344,38 +393,62 @@ void OcdFileImport::importSymbols(const OcdFile< F >& file) throw (FileFormatExc
 		// before them, i.e. at pos.
 		int pos = map->getNumSymbols();
 		Symbol* symbol = NULL;
-		switch (it->type)
+		
+		// Don't use switch, because F::SymbolType may have duplicate values.
+		if (it->type == F::TypePoint)
 		{
-			case F::TypePoint:
-				symbol = importPointSymbol((const typename F::PointSymbol&)*it);
-				break;
-			case F::TypeLine:
-				symbol = importLineSymbol((const typename F::LineSymbol&)*it);
-				break;
-			case F::TypeArea:
-				symbol = importAreaSymbol((const typename F::AreaSymbol&)*it);
-				break;
-			case F::TypeText:
-				symbol = importTextSymbol((const typename F::TextSymbol&)*it);
-				break;
-			case F::TypeRectangle:
-				symbol = importRectangleSymbol((const typename F::RectangleSymbol&)*it);
-				break;
-			case F::TypeLineText:
-// 				symbol = importLineTextSymbol((const typename T::LineTextSymbol&)*it);
-// 				break;
-				; // fall through
-			default:
-				addWarning(tr("Unable to import symbol %1.%2 \"%3\": %4") .
-				           arg(it->number / F::BaseSymbol::symbol_number_factor) .
-				           arg(it->number % F::BaseSymbol::symbol_number_factor) .
-				           arg(convertOcdString(it->description)).
-				           arg(tr("Unsupported type \"%1\".").arg(it->type)) );
-				continue;
+			symbol = importPointSymbol((const typename F::PointSymbol&)*it);
+		}
+		else if (it->type == F::TypeLine)
+		{
+			symbol = importLineSymbol((const typename F::LineSymbol&)*it);
+		}
+		else if (it->type == F::TypeArea)
+		{
+			symbol = importAreaSymbol((const typename F::AreaSymbol&)*it, F::version());
+		}
+		else if (it->type == F::TypeText)
+		{
+			symbol = importTextSymbol((const typename F::TextSymbol&)*it);
+		}
+		else if (it->type == F::TypeRectangle)
+		{
+			symbol = importRectangleSymbol((const typename F::RectangleSymbol&)*it);
+		}
+#if 0
+		else if (it->type == F::TypeLineText)
+		{
+			symbol = importLineTextSymbol((const typename T::LineTextSymbol&)*it);
+		}
+#endif
+		else if (it->type)
+		{
+			addWarning(tr("Unable to import symbol %1.%2 \"%3\": %4") .
+			           arg(it->number / F::BaseSymbol::symbol_number_factor) .
+			           arg(it->number % F::BaseSymbol::symbol_number_factor) .
+			           arg(convertOcdString(it->description)).
+			           arg(tr("Unsupported type \"%1\".").arg(it->type)) );
+			continue;
 		}
 		
 		map->addSymbol(symbol, pos);
 		symbol_index[it->number] = symbol;
+	}
+}
+
+template< >
+void OcdFileImport::importObjects< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file) throw (FileFormatException)
+{
+	MapPart* part = map->getCurrentPart();
+	Q_ASSERT(part);
+	
+	for (typename OcdFile< Ocd::FormatV8 >::ObjectIndex::iterator it = file.objects().begin(); it != file.objects().end(); ++it)
+	{
+		Object* object = importObject(file[it], part);
+		if (object != NULL)
+		{
+			part->addObject(object, part->getNumObjects());
+		}
 	}
 }
 
@@ -510,6 +583,42 @@ Template* OcdFileImport::importTemplate(const QString& param_string)
 	visibility->visible = visible;
 	
 	return templ;
+}
+
+template< >
+void OcdFileImport::importExtras< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file) throw (FileFormatException)
+{
+	const Ocd::FileHeaderV8* header = file.header();
+	map->setMapNotes(convertOcdString< Ocd::FormatV8::Encoding >(file.byteArray().data() + header->info_pos, header->info_size));
+}
+
+template< class F >
+void OcdFileImport::importExtras(const OcdFile< F >& file) throw (FileFormatException)
+{
+	; // TODO
+}
+
+template< >
+void OcdFileImport::importView< class Ocd::FormatV8 >(const OcdFile< Ocd::FormatV8 >& file) throw (FileFormatException)
+{
+	if (!view)
+		return;
+	
+	const Ocd::FileHeaderV8* header = file.header();
+	const Ocd::SetupV8* setup = reinterpret_cast< const Ocd::SetupV8* >(file.byteArray().data() + header->setup_pos);
+	
+	if (setup->zoom >= MapView::zoom_out_limit && setup->zoom <= MapView::zoom_in_limit)
+		view->setZoom(setup->zoom);
+	
+	MapCoord center = convertOcdPoint(setup->center);
+	view->setPositionX(center.rawX());
+	view->setPositionY(center.rawY());
+}
+
+template< class F >
+void OcdFileImport::importView(const OcdFile< F >& file) throw (FileFormatException)
+{
+	; // TODO
 }
 
 template< class S >
@@ -881,7 +990,7 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 }
 
 template< class S >
-AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol)
+AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version)
 {
 	OcdImportedAreaSymbol* symbol = new OcdImportedAreaSymbol();
 	setupBaseSymbol(symbol, ocd_symbol);
@@ -904,6 +1013,10 @@ AreaSymbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol)
 		pattern.line_offset = 0;
 		pattern.line_color = convertColor(ocd_symbol.hatch_color);
 		pattern.line_width = convertLength(ocd_symbol.hatch_line_width);
+		if (ocd_version <= 8)
+		{
+			pattern.line_spacing += pattern.line_width;
+		}
 		symbol->patterns.push_back(pattern);
 		
 		if (ocd_symbol.hatch_mode == S::HatchCross)
@@ -1528,19 +1641,29 @@ void OcdFileImport::import(bool load_symbols_only) throw (FileFormatException)
 	{
 		case 6:
 		case 7:
+			importImplementation< Ocd::FormatLegacyImporter >(load_symbols_only);
+			break;
 		case 8:
-			importImplementation< Ocd::FormatV8 >(load_symbols_only);
+			if (Settings::getInstance().getSetting(Settings::General_NewOcd8Implementation).toBool())
+			{
+				addWarning(tr("Untested file importer for format: OCD %1").arg(version));
+				importImplementation< Ocd::FormatV8 >(load_symbols_only);
+			}
+			else
+			{
+				importImplementation< Ocd::FormatLegacyImporter >(load_symbols_only);
+			}
 			break;
 		case 9:
-			addWarning(tr("Untested file format: OCD %1").arg(version));
+			addWarning(tr("Untested file importer for format: OCD %1").arg(version));
 			importImplementation< Ocd::FormatV9 >(load_symbols_only);
 			break;
 		case 10:
-			addWarning(tr("Untested file format: OCD %1").arg(version));
+			addWarning(tr("Untested file importer for format: OCD %1").arg(version));
 			importImplementation< Ocd::FormatV10 >(load_symbols_only);
 			break;
 		case 11:
-			addWarning(tr("Untested file format: OCD %1").arg(version));
+			addWarning(tr("Untested file importer for format: OCD %1").arg(version));
 			importImplementation< Ocd::FormatV11 >(load_symbols_only);
 			break;
 		default:

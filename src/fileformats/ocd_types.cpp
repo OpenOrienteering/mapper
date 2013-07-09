@@ -18,6 +18,7 @@
  */
 
 #include "ocd_types.h"
+#include "ocd_types_v8.h"
 #include "ocd_types_v9.h"
 #include "ocd_types_v10.h"
 #include "ocd_types_v11.h"
@@ -27,6 +28,8 @@ namespace Ocd
 	// Verify at compile time that data structures are packed, not aligned.
 	
 	Q_STATIC_ASSERT(sizeof(FileHeaderGeneric) == 8);
+	
+	Q_STATIC_ASSERT(sizeof(FileHeaderV8) - sizeof(SymbolHeaderV8) == 48);
 	
 	Q_STATIC_ASSERT(sizeof(FileHeaderV9) == 48);
 	
