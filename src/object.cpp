@@ -541,6 +541,17 @@ void Object::scale(MapCoordF center, double factor)
 	setOutputDirty();
 }
 
+void Object::scale(double factor_x, double factor_y)
+{
+	int coords_size = coords.size();
+	for (int c = 0; c < coords_size; ++c)
+	{
+		coords[c].setX(coords[c].xd() * factor_x);
+		coords[c].setY(coords[c].yd() * factor_y);
+	}
+	setOutputDirty();
+}
+
 void Object::rotateAround(MapCoordF center, double angle)
 {
 	double sin_angle = sin(angle);
@@ -554,6 +565,35 @@ void Object::rotateAround(MapCoordF center, double angle)
 		MapCoordF center_to_coord = MapCoordF(coords[c].xd() - center.getX(), coords[c].yd() - center.getY());
 		coords[c].setX(center.getX() + cos_angle * center_to_coord.getX() + sin_angle * center_to_coord.getY());
 		coords[c].setY(center.getY() - sin_angle * center_to_coord.getX() + cos_angle * center_to_coord.getY());
+	}
+	
+	if (type == Point)
+	{
+		PointObject* point = reinterpret_cast<PointObject*>(this);
+		PointSymbol* point_symbol = reinterpret_cast<PointSymbol*>(point->getSymbol());
+		if (point_symbol->isRotatable())
+			point->setRotation(point->getRotation() + angle);
+	}
+	else if (type == Text)
+	{
+		TextObject* text = reinterpret_cast<TextObject*>(this);
+		text->setRotation(text->getRotation() + angle);
+	}
+}
+
+void Object::rotate(double angle)
+{
+	double sin_angle = sin(angle);
+	double cos_angle = cos(angle);
+	
+	int coords_size = coords.size();
+	if (type == Text && coords_size == 2)
+		coords_size = 1;	// don't touch box width / height for box texts
+	for (int c = 0; c < coords_size; ++c)
+	{
+		MapCoord& coord = coords[c];
+		coord.setX(cos_angle * coord.xd() + sin_angle * coord.yd());
+		coord.setY(cos_angle * coord.yd() - sin_angle * coord.xd());
 	}
 	
 	if (type == Point)
