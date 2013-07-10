@@ -741,12 +741,13 @@ void TemplateWidget::cellDoubleClick(int row, int column)
 {
 	int pos = posFromRow(row);
 	Template* temp = (row >= 0 && pos >= 0) ? map->getTemplate(pos) : NULL;
-	if (!temp)
-		return;
-		
-	if (column == 3 || temp->getTemplateState() == Template::Invalid)
+	if (temp)
 	{
-		QTimer::singleShot(0, this, SLOT(changeTemplateFile()));
+		template_table->setCurrentCell(row, 0); // prerequisite for changeTemplateFile()
+		if (column == 3 || temp->getTemplateState() == Template::Invalid)
+		{
+			QTimer::singleShot(0, this, SLOT(changeTemplateFile()));
+		}
 	}
 }
 
