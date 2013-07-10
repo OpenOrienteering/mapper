@@ -26,9 +26,11 @@
 #include "map.h"
 #include "map_editor.h"
 #include "map_widget.h"
+#include "object.h"
 #include "settings.h"
 #include "template.h"
 #include "template_adjust.h"
+#include "template_map.h"
 #include "template_position_dock_widget.h"
 #include "template_tool_move.h"
 #include "util.h"
@@ -36,6 +38,29 @@
 
 // TODO: Review formatting et al.
 
+// ### ApplyTemplateTransform ###
+
+/**
+ * A local functor which is used when importing map templates into the current map.
+ */
+struct ApplyTemplateTransform
+{
+	inline ApplyTemplateTransform(const TemplateTransform& transform) : transform(transform) {}
+	inline bool operator()(Object* object, MapPart* part, int object_index) const
+	{
+		object->rotate(transform.template_rotation);
+		object->scale(transform.template_scale_x, transform.template_scale_y);
+		object->move(transform.template_x, transform.template_y);
+		object->update(true, true);
+		return true;
+	}
+private:
+	const TemplateTransform& transform;
+};
+
+
+
+// ### TemplateWidget ###
 
 TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent)
 : QWidget(parent), 
@@ -112,11 +137,9 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	all_templates_layout->addWidget(template_table, 1);
 	
 	QMenu* new_button_menu = new QMenu(this);
-	QAction* current_action = new_button_menu->addAction(tr("Open..."), this, SLOT(openTemplate()));
-	current_action->setIcon(QIcon(":/images/open.png"));
-	current_action = new_button_menu->addAction(QApplication::translate("MapEditorController", "Reopen template..."), controller, SLOT(reopenTemplateClicked()));
-	duplicate_action = new_button_menu->addAction(tr("Duplicate"), this, SLOT(duplicateTemplate()));
-	duplicate_action->setIcon(QIcon(":/images/tool-duplicate.png"));
+	(void) new_button_menu->addAction(QIcon(":/images/open.png"), tr("Open..."), this, SLOT(openTemplate()));
+	(void) new_button_menu->addAction(QApplication::translate("MapEditorController", "Reopen template..."), controller, SLOT(reopenTemplateClicked()));
+	duplicate_action = new_button_menu->addAction(QIcon(":/images/tool-duplicate.png"), tr("Duplicate"), this, SLOT(duplicateTemplate()));
 #if 0
 	current_action = new_button_menu->addAction(tr("Sketch"));
 	current_action->setDisabled(true);
@@ -157,8 +180,16 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	move_by_hand_button->setDefaultAction(move_by_hand_action);
 	adjust_button = newToolButton(QIcon(":/images/georeferencing.png"), tr("Adjust..."));
 	adjust_button->setCheckable(true);
-	position_button = newToolButton(QIcon(":/images/settings.png"), tr("Positioning..."));
-	position_button->setCheckable(true);
+	
+	QMenu* edit_menu = new QMenu(this);
+	position_action = edit_menu->addAction(tr("Positioning..."));
+	position_action->setCheckable(true);
+	import_action =  edit_menu->addAction(tr("Import and remove"), this, SLOT(importClicked()));
+	
+	edit_button = newToolButton(QIcon(":/images/settings.png"), QApplication::translate("MapEditorController", "&Edit").remove(QChar('&')));
+	edit_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+	edit_button->setPopupMode(QToolButton::InstantPopup);
+	edit_button->setMenu(edit_menu);
 	
 	// The buttons row layout
 	QBoxLayout* list_buttons_layout = new QHBoxLayout();
@@ -167,8 +198,8 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	list_buttons_layout->addLayout(up_down_layout);
 	list_buttons_layout->addWidget(adjust_button);
 	list_buttons_layout->addWidget(move_by_hand_button);
-	list_buttons_layout->addWidget(position_button);
 	list_buttons_layout->addWidget(georef_button);
+	list_buttons_layout->addWidget(edit_button);
 	
 	list_buttons_group = new QWidget();
 	list_buttons_group->setLayout(list_buttons_layout);
@@ -223,7 +254,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	
 	connect(move_by_hand_action, SIGNAL(triggered(bool)), this, SLOT(moveByHandClicked(bool)));
 	connect(adjust_button, SIGNAL(clicked(bool)), this, SLOT(adjustClicked(bool)));
-	connect(position_button, SIGNAL(clicked(bool)), this, SLOT(positionClicked(bool)));
+	connect(position_action, SIGNAL(triggered(bool)), this, SLOT(positionClicked(bool)));
 	
 	//connect(group_button, SIGNAL(clicked(bool)), this, SLOT(groupClicked()));
 	//connect(more_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(moreActionClicked(QAction*)));
@@ -666,11 +697,13 @@ void TemplateWidget::updateButtons()
 	delete_button->setEnabled(single_row_selected && !map_row_selected);	// TODO: Make it possible to delete multiple templates at once
 	move_up_button->setEnabled(single_row_selected && !first_row_selected);
 	move_down_button->setEnabled(single_row_selected && !last_row_selected);
+	edit_button->setEnabled(single_row_selected && !map_row_selected);
 	
 	bool georef_visible = false;
 	bool georef_active  = false;
 	bool custom_visible = false;
 	bool custom_active  = false;
+	bool import_active  = false;
 	if (single_row_selected)
 	{
 		Template* temp = map_row_selected ? NULL : map->getTemplate(posFromRow(visited_row));
@@ -689,6 +722,8 @@ void TemplateWidget::updateButtons()
 			custom_visible = true;
 			custom_active = template_table->item(visited_row, 0)->checkState() == Qt::Checked;
 		}
+		import_active = qobject_cast< TemplateMap* >(getCurrentTemplate());
+		
 	}
 	georef_button->setVisible(georef_visible);
 	georef_button->setChecked(georef_active);
@@ -696,8 +731,9 @@ void TemplateWidget::updateButtons()
 	move_by_hand_button->setVisible(custom_visible);
 	adjust_button->setEnabled(custom_active);
 	adjust_button->setVisible(custom_visible);
-	position_button->setEnabled(custom_active);
-	position_button->setVisible(custom_visible);
+	position_action->setEnabled(custom_active);
+	position_action->setVisible(custom_visible);
+	import_action->setVisible(import_active);
 	
 /*	if (enable_active_buttons)
 	{
@@ -807,6 +843,51 @@ void TemplateWidget::positionClicked(bool checked)
 		controller->addTemplatePositionDockWidget(temp);
 }
 
+void TemplateWidget::importClicked()
+{
+	Template* templ = qobject_cast< TemplateMap* >(getCurrentTemplate());
+	QScopedPointer<Map> template_map(new Map());
+	if (templ && template_map->loadFrom(templ->getTemplatePath(), NULL, false, true))
+	{
+		TemplateTransform transform;
+		templ->getTransform(transform);
+		template_map->operationOnAllObjects(ApplyTemplateTransform(transform));
+		
+		double nominal_scale = template_map->getScaleDenominator() / map->getScaleDenominator();
+		double current_scale = 0.5 * (transform.template_scale_x + transform.template_scale_y);
+		double scale = 1.0;
+		bool ok = true;
+		if (qAbs(nominal_scale - 1.0) > 0.01 || qAbs(current_scale - 1.0) > 0.01)
+		{
+			QStringList scale_options( QStringList() <<
+			  tr("Don't scale") <<
+			  tr("Scale by nominal map scale ratio (%1 %)").arg(locale().toString(nominal_scale * 100.0, 'f', 1)) <<
+			  tr("Scale by current template scaling (%1 %)").arg(locale().toString(current_scale * 100.0, 'f', 1)) );
+			QString option = QInputDialog::getItem( window(),
+			  tr("Template import"),
+			  tr("How shall the symbols of the imported template map be scaled?"),
+			  scale_options, 0, false, &ok );
+			if (option.isEmpty())
+				return;
+			else if (option == scale_options[1])
+				scale = nominal_scale;
+			else if (option == scale_options[2])
+				scale = current_scale;
+		}
+		
+		if (ok)
+		{
+			if (scale != 1.0)
+				template_map->scaleAllSymbols(scale);
+			
+			// Symbols and objects are already adjusted. Merge as is.
+			template_map->setGeoreferencing(map->getGeoreferencing());
+			map->importMap(template_map.data(), Map::MinimalObjectImport, window());
+			deleteTemplate();
+		}
+	}
+}
+
 void TemplateWidget::moreActionClicked(QAction* action)
 {
 	// TODO
@@ -824,7 +905,7 @@ void TemplateWidget::templatePositionDockWidgetClosed(Template* temp)
 {
 	Template* current_temp = getCurrentTemplate();
 	if (current_temp == temp)
-		position_button->setChecked(false);
+		position_action->setChecked(false);
 }
 
 void TemplateWidget::addRow(int row)

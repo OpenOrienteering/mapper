@@ -84,6 +84,7 @@ protected slots:
 	void adjustWindowClosed();
 	//void groupClicked();
 	void positionClicked(bool checked);
+	void importClicked();
 	void moreActionClicked(QAction* action);
 	
 	void templateAdded(int pos, Template* temp);
@@ -106,6 +107,8 @@ private:
 	
 	QAction* duplicate_action;
 	QAction* move_by_hand_action;
+	QAction* position_action;
+	QAction* import_action;
 	
 	// Buttons
 	QWidget* list_buttons_group;
@@ -115,7 +118,8 @@ private:
 	QToolButton* georef_button;
 	QToolButton* move_by_hand_button;
 	QToolButton* adjust_button;
-	QToolButton* position_button;
+	QToolButton* edit_button;
+	
 	//QToolButton* group_button;
 	//QToolButton* more_button;
 	
