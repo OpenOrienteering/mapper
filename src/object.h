@@ -153,9 +153,19 @@ public:
 	/** Scales all coordinates, with the given scaling center */
 	void scale(MapCoordF center, double factor);
 	
+	/** Scales all coordinates, with the center (0, 0).
+	 * @param factor_x horizontal scaling factor
+	 * @param factor_y vertical scaling factor
+	 */
+	void scale(double factor_x, double factor_y);
+	
 	/** Rotates the whole object around the center point.
 	 *  The angle must be given in radians. */
 	void rotateAround(MapCoordF center, double angle);
+	
+	/** Rotates the whole object around the center (0, 0).
+	 *  The angle must be given in radians. */
+	void rotate(double angle);
 	
 	/**
 	 * Checks if the given coord, with the given tolerance, is on this object;
