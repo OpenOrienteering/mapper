@@ -25,6 +25,10 @@
 
 namespace Ocd
 {
+	// Verify at compile time that a double is 8 bytes big.
+	
+	Q_STATIC_ASSERT(sizeof(double) == 8);
+	
 	// Verify at compile time that data structures are packed, not aligned.
 	
 	Q_STATIC_ASSERT(sizeof(FileHeaderGeneric) == 8);
