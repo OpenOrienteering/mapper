@@ -444,6 +444,11 @@ void OcdFileImport::importObjects< class Ocd::FormatV8 >(const OcdFile< Ocd::For
 	
 	for (typename OcdFile< Ocd::FormatV8 >::ObjectIndex::iterator it = file.objects().begin(); it != file.objects().end(); ++it)
 	{
+		if (!it->pos)
+		{
+			continue;
+		}
+		
 		Object* object = importObject(file[it], part);
 		if (object != NULL)
 		{
@@ -460,8 +465,9 @@ void OcdFileImport::importObjects(const OcdFile< F >& file) throw (FileFormatExc
 	
 	for (typename OcdFile< F >::ObjectIndex::iterator it = file.objects().begin(); it != file.objects().end(); ++it)
 	{
-		if ( it->status == OcdFile< F >::ObjectIndex::EntryType::StatusDeleted ||
-			 it->status == OcdFile< F >::ObjectIndex::EntryType::StatusDeletedForUndo )
+		if ( !it->pos ||
+		     it->status == OcdFile< F >::ObjectIndex::EntryType::StatusDeleted ||
+		     it->status == OcdFile< F >::ObjectIndex::EntryType::StatusDeletedForUndo )
 		{
 			continue;
 		}
