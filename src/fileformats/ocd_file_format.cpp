@@ -1394,7 +1394,8 @@ Object* OcdFileImport::importRectangleObject(const O& ocd_object, MapPart* part,
 	if (ocd_object.num_items != 4)
 	{
 		qDebug() << "importRectangleObject called with num_items =" << ocd_object.num_items << "for object of symbol" << ocd_object.symbol;
-		return NULL;
+		if (ocd_object.num_items != 5)  // 5 coords are handled like 4 coords now
+			return NULL;
 	}
 	
 	// Convert corner points
