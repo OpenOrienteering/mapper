@@ -229,8 +229,8 @@ void OcdFileImport::importGeoreferencing(const QString& param_string)
 				break;
 			case 'm':
 			{
-				int scale = param_value.toInt(&ok);
-				if (ok) georef.setScaleDenominator(scale);
+				double scale = param_value.toDouble(&ok);
+				if (ok && scale >= 0) georef.setScaleDenominator(qRound(scale));
 				break;
 			}
 			case 'a':
@@ -444,6 +444,11 @@ void OcdFileImport::importObjects< class Ocd::FormatV8 >(const OcdFile< Ocd::For
 	
 	for (typename OcdFile< Ocd::FormatV8 >::ObjectIndex::iterator it = file.objects().begin(); it != file.objects().end(); ++it)
 	{
+		if (!it->symbol)
+		{
+			continue;
+		}
+		
 		Object* object = importObject(file[it], part);
 		if (object != NULL)
 		{
@@ -460,7 +465,8 @@ void OcdFileImport::importObjects(const OcdFile< F >& file) throw (FileFormatExc
 	
 	for (typename OcdFile< F >::ObjectIndex::iterator it = file.objects().begin(); it != file.objects().end(); ++it)
 	{
-		if ( it->status == OcdFile< F >::ObjectIndex::EntryType::StatusDeleted ||
+		if ( !it->symbol ||
+		     it->status == OcdFile< F >::ObjectIndex::EntryType::StatusDeleted ||
 		     it->status == OcdFile< F >::ObjectIndex::EntryType::StatusDeletedForUndo )
 		{
 			continue;
@@ -610,7 +616,7 @@ void OcdFileImport::importView< class Ocd::FormatV8 >(const OcdFile< Ocd::Format
 	if (setup->zoom >= MapView::zoom_out_limit && setup->zoom <= MapView::zoom_in_limit)
 		view->setZoom(setup->zoom);
 	
-	MapCoord center = convertOcdPoint(setup->center);
+	const MapCoord center = convertOcdPoint(setup->center);
 	view->setPositionX(center.rawX());
 	view->setPositionY(center.rawY());
 }
@@ -644,6 +650,7 @@ PointSymbol* OcdFileImport::importPointSymbol(const S& ocd_symbol)
 	OcdImportedPointSymbol* symbol = new OcdImportedPointSymbol();
 	setupBaseSymbol(symbol, ocd_symbol);
 	setupPointSymbolPattern(symbol, ocd_symbol.data_size, ocd_symbol.begin_of_elements);
+	symbol->setRotatable(ocd_symbol.base.flags & 1);
 	return symbol;
 }
 
@@ -1239,7 +1246,10 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 						working_symbol->setRotatable(false);
 						PointObject* element_object = new PointObject(working_symbol);
 						if (element->num_coords)
-							element_object->setPosition(coords[0].x, coords[0].y);
+						{
+							const MapCoord coord = convertOcdPoint(coords[0]);
+							element_object->setPosition(coord.rawX(), coord.rawY());
+						}
 						symbol->addElement(symbol->getNumElements(), element_object, working_symbol);
 					}
 				}
@@ -1262,7 +1272,10 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 						working_symbol->setRotatable(false);
 						PointObject* element_object = new PointObject(working_symbol);
 						if (element->num_coords)
-							element_object->setPosition(coords[0].x, coords[0].y);
+						{
+							const MapCoord coord = convertOcdPoint(coords[0]);
+							element_object->setPosition(coord.rawX(), coord.rawY());
+						}
 						symbol->addElement(symbol->getNumElements(), element_object, working_symbol);
 					}
 				}
@@ -1344,7 +1357,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 			}
 		}
 		
-		MapCoord pos = convertOcdPoint(ocd_object.coords[0]);
+		const MapCoord pos = convertOcdPoint(ocd_object.coords[0]);
 		p->setPosition(pos.rawX(), pos.rawY());
 		
 		p->setMap(map);
@@ -1361,6 +1374,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 		
 		const QChar* text_ptr = (const QChar *)(ocd_object.coords + ocd_object.num_items);
 		t->setText(convertOcdString(text_ptr));
+		t->setText(getObjectText(ocd_object));
 		
 		// Text objects need special path translation
 		if (!fillTextPathCoords(t, reinterpret_cast<TextSymbol*>(symbol), ocd_object.num_items, (Ocd::OcdPoint32 *)ocd_object.coords))
@@ -1386,6 +1400,24 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 	}
 	
 	return NULL;
+}
+
+template< >
+inline
+QString OcdFileImport::getObjectText< class Ocd::ObjectV8 >(const Ocd::ObjectV8& ocd_object) const
+{
+	if (ocd_object.unicode)
+		return convertOcdString((const QChar*)(ocd_object.coords + ocd_object.num_items));
+	
+	const size_t len = sizeof(Ocd::OcdPoint32) * ocd_object.num_text;
+	return convertOcdString<Ocd::Custom8BitEncoding>((const char*)(ocd_object.coords + ocd_object.num_items), len);
+}
+
+template< class O >
+inline
+QString OcdFileImport::getObjectText(const O& ocd_object) const
+{
+	return QString((const QChar *)(ocd_object.coords + ocd_object.num_items));
 }
 
 template< class O >

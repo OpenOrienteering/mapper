@@ -192,6 +192,9 @@ protected:
 	Object* importObject(const O& ocd_object, MapPart* part);
 	
 	template< class O >
+	QString getObjectText(const O& ocd_object) const;
+	
+	template< class O >
 	Object* importRectangleObject(const O& ocd_object, MapPart* part, const OcdFileImport::RectangleInfo& rect);
 	
 	// Some helper functions that are used in multiple places

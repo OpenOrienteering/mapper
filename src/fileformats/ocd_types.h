@@ -525,7 +525,7 @@ OcdEntityIndexIterator<F,T,E>::OcdEntityIndexIterator(const OcdFile<F>* file, co
 	{
 		data  = file;
 		block = first_block;
-		while (data && block->entries[index].pos == 0)
+		if (data && block->entries[index].pos == 0)
 			this->operator++();
 	}
 }
@@ -600,7 +600,7 @@ OcdEntityIndexIterator<F,T,quint32>::OcdEntityIndexIterator(const OcdFile<F>* fi
 	{
 		data  = file;
 		block = first_block;
-		while (data && block->entries[index] == 0)
+		if (data && block->entries[index] == 0)
 			this->operator++();
 	}
 }
