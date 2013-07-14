@@ -138,7 +138,7 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	
 	QMenu* new_button_menu = new QMenu(this);
 	(void) new_button_menu->addAction(QIcon(":/images/open.png"), tr("Open..."), this, SLOT(openTemplate()));
-	(void) new_button_menu->addAction(QApplication::translate("MapEditorController", "Reopen template..."), controller, SLOT(reopenTemplateClicked()));
+	new_button_menu->addAction(controller->getAction("reopentemplate"));
 	duplicate_action = new_button_menu->addAction(QIcon(":/images/tool-duplicate.png"), tr("Duplicate"), this, SLOT(duplicateTemplate()));
 #if 0
 	current_action = new_button_menu->addAction(tr("Sketch"));

@@ -157,6 +157,12 @@ public:
 	 */
 	void removeTemplatePositionDockWidget(Template* temp);
 	
+	/**
+	 * Returns the action identified by id if it exists, or NULL.
+	 * This allows the reuse of the controller's actions in dock widgets etc.
+	 */
+	QAction* getAction(const char* id);
+	
 	/** Override from MainWindowController */
 	virtual bool save(const QString& path);
 	/** Override from MainWindowController */
@@ -412,7 +418,7 @@ private:
 	bool editing_in_progress;
 	
 	// Action handling
-	QHash<const char *, QAction *> actionsById;
+	QHash<QString, QAction *> actionsById;
 	
 	EditorDockWidget* print_dock_widget;
 	PrintWidget* print_widget;

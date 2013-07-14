@@ -377,7 +377,8 @@ void MapEditorController::attach(MainWindow* window)
 
 QAction* MapEditorController::newAction(const char* id, const QString &tr_text, QObject* receiver, const char* slot, const char* icon, const QString& tr_tip, const QString& whatsThisLink)
 {
-	QAction* action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, this);
+	Q_ASSERT(window); // Qt documentation recommends that actions are created as children of the window they are used in.
+	QAction* action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, window);
 	if (!tr_tip.isEmpty()) action->setStatusTip(tr_tip);
 	if (!whatsThisLink.isEmpty()) action->setWhatsThis("<a href=\"" + whatsThisLink + "\">See more</a>");
 	if (receiver) QObject::connect(action, SIGNAL(triggered()), receiver, slot);
@@ -387,7 +388,8 @@ QAction* MapEditorController::newAction(const char* id, const QString &tr_text, 
 
 QAction* MapEditorController::newCheckAction(const char* id, const QString &tr_text, QObject* receiver, const char* slot, const char* icon, const QString& tr_tip, const QString& whatsThisLink)
 {
-	QAction* action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, this);
+	Q_ASSERT(window); // Qt documentation recommends that actions are created as children of the window they are used in.
+	QAction* action = new QAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, window);
 	action->setCheckable(true);
 	if (!tr_tip.isEmpty()) action->setStatusTip(tr_tip);
 	if (!whatsThisLink.isEmpty()) action->setWhatsThis("<a href=\"" + whatsThisLink + "\">See more</a>");
@@ -398,7 +400,8 @@ QAction* MapEditorController::newCheckAction(const char* id, const QString &tr_t
 
 QAction* MapEditorController::newToolAction(const char* id, const QString &tr_text, QObject* receiver, const char* slot, const char* icon, const QString& tr_tip, const QString& whatsThisLink)
 {
-	QAction* action = new MapEditorToolAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, this);
+	Q_ASSERT(window); // Qt documentation recommends that actions are created as children of the window they are used in.
+	QAction* action = new MapEditorToolAction(icon ? QIcon(QString(":/images/%1").arg(icon)) : QIcon(), tr_text, window);
 	if (!tr_tip.isEmpty()) action->setStatusTip(tr_tip);
 	if (!whatsThisLink.isEmpty()) action->setWhatsThis("<a href=\"" + whatsThisLink + "\">See more</a>");
 	if (receiver) QObject::connect(action, SIGNAL(activated()), receiver, slot);
@@ -410,6 +413,11 @@ QAction* MapEditorController::findAction(const char* id)
 {
 	if (!actionsById.contains(id)) return actionsById[""];
 	else return actionsById[id];
+}
+
+QAction* MapEditorController::getAction(const char* id)
+{
+	return actionsById.contains(id) ? actionsById[id] : NULL;
 }
 
 void MapEditorController::assignKeyboardShortcuts()
