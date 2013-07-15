@@ -1543,11 +1543,24 @@ template< >
 inline
 QString OcdFileImport::getObjectText< class Ocd::ObjectV8 >(const Ocd::ObjectV8& ocd_object) const
 {
+	QString object_text;
 	if (ocd_object.unicode)
-		return convertOcdString((const QChar*)(ocd_object.coords + ocd_object.num_items));
+	{
+		object_text = convertOcdString((const QChar*)(ocd_object.coords + ocd_object.num_items));
+	}
+	else
+	{
+		const size_t len = sizeof(Ocd::OcdPoint32) * ocd_object.num_text;
+		object_text = convertOcdString<Ocd::Custom8BitEncoding>((const char*)(ocd_object.coords + ocd_object.num_items), len);
+	}
 	
-	const size_t len = sizeof(Ocd::OcdPoint32) * ocd_object.num_text;
-	return convertOcdString<Ocd::Custom8BitEncoding>((const char*)(ocd_object.coords + ocd_object.num_items), len);
+	// Remove leading "\r\n"
+	if (object_text.startsWith("\r\n"))
+	{
+		object_text.remove(0, 2);
+	}
+	
+	return object_text;
 }
 
 template< class O >
