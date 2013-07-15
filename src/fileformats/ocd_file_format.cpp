@@ -624,7 +624,63 @@ void OcdFileImport::importView< class Ocd::FormatV8 >(const OcdFile< Ocd::Format
 template< class F >
 void OcdFileImport::importView(const OcdFile< F >& file) throw (FileFormatException)
 {
-	; // TODO
+	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
+	{
+		if (it->type == 1030)
+		{
+			importView(convertOcdString< typename F::Encoding >(file[it]));
+			break;
+		}
+	}
+}
+
+void OcdFileImport::importView(const QString& param_string)
+{
+	const QChar* unicode = param_string.unicode();
+	
+	bool zoom_ok = false;
+	double zoom, offset_x=0.0, offset_y=0.0;
+	
+	int i = param_string.indexOf('\t', 0);
+	; // skip first word for this entry type
+	while (i >= 0)
+	{
+		int next_i = param_string.indexOf('\t', i+1);
+		int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
+		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
+		switch (param_string[i+1].toLatin1())
+		{
+			case '\t':
+				// empty item
+				break;
+			case 'x':
+			{
+				offset_x = param_value.toDouble();
+				break;
+			}
+			case 'y':
+			{
+				offset_y = param_value.toDouble();
+				break;
+			}
+			case 'z':
+			{
+				zoom = param_value.toDouble(&zoom_ok);
+				break;
+			}
+			default:
+				; // nothing
+		}
+		i = next_i;
+	}
+	
+	view->setPositionX(qRound(offset_x * 1000));
+	view->setPositionY(-qRound(offset_y * 1000));
+	if ( zoom_ok &&
+	     zoom >= MapView::zoom_out_limit && zoom <= MapView::zoom_in_limit )
+	{
+		view->setZoom(zoom);
+	}
 }
 
 template< class S >

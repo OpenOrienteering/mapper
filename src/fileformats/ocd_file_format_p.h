@@ -160,6 +160,8 @@ protected:
 	template< class F >
 	void importView(const OcdFile< F >& file) throw (FileFormatException);
 	
+	void importView(const QString& param_string);
+	
 	// Symbol import
 	
 	template< class S >
