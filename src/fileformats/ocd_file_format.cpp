@@ -1710,7 +1710,7 @@ void OcdFileImport::setPathHolePoint(OcdImportedPathObject *object, int pos)
 		; //object->coords[i-2].setHolePoint(true);
 	else if (pos >= 3 && object->coords[pos-2].isCurveStart())
 		; //object->coords[i-3].setHolePoint(true);
-	else if (pos >= 0)
+	else if (pos > 0) // Don't start with hole point.
 		object->coords[pos].setHolePoint(true);
 }
 
