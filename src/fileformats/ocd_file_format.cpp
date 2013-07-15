@@ -505,16 +505,18 @@ Template* OcdFileImport::importTemplate(const QString& param_string)
 	int i = param_string.indexOf('\t', 0);
 	const QString filename = QString::fromRawData(unicode, qMax(-1, i));
 	const QString clean_path = QDir::cleanPath(QString(filename).replace('\\', '/'));
-	const QString extension = QFileInfo(clean_path).suffix();
+	const QString extension = QFileInfo(clean_path).suffix().toLower();
 	
 	Template* templ = NULL;
-	if (extension.compare("ocd", Qt::CaseInsensitive) == 0)
+	double scale_factor = 1.0;
+	if (extension.compare("ocd") == 0)
 	{
 		templ = new TemplateMap(clean_path, map);
 	}
 	else if (QImageReader::supportedImageFormats().contains(extension.toLatin1()))
 	{
 		templ = new TemplateImage(clean_path, map);
+		scale_factor = 0.01;
 	}
 	else
 	{
@@ -583,8 +585,8 @@ Template* OcdFileImport::importTemplate(const QString& param_string)
 	if (num_rotation_params)
 		templ->setTemplateRotation(convertAngle(rotation / num_rotation_params));
 	
-	templ->setTemplateScaleX(scale_x);
-	templ->setTemplateScaleY(scale_y);
+	templ->setTemplateScaleX(scale_x * scale_factor);
+	templ->setTemplateScaleY(scale_y * scale_factor);
 	
 	int template_pos = map->getFirstFrontTemplate();
 	map->addTemplate(templ, template_pos, view);
