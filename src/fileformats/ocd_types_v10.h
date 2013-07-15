@@ -193,7 +193,7 @@ namespace Ocd
 		typedef LineSymbolV10 LineSymbol;
 		typedef AreaSymbolV10 AreaSymbol;
 		typedef TextSymbolV10 TextSymbol;
-		typedef LineSymbolV10 LineTextSymbol;
+		typedef LineTextSymbolV10 LineTextSymbol;
 		typedef RectangleSymbolV10 RectangleSymbol;
 		
 		typedef ObjectV10 Object;

@@ -353,7 +353,7 @@ namespace Ocd
 		typedef LineSymbolV9 LineSymbol;
 		typedef AreaSymbolV9 AreaSymbol;
 		typedef TextSymbolV9 TextSymbol;
-		typedef LineSymbolV9 LineTextSymbol;
+		typedef LineTextSymbolV9 LineTextSymbol;
 		typedef RectangleSymbolV9 RectangleSymbol;
 		
 		typedef ObjectV9 Object;

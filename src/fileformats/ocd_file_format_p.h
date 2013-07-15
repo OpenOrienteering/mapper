@@ -28,6 +28,7 @@
 #include "ocd_types.h"
 #include "../file_import_export.h"
 #include "../object.h"
+#include "../object_text.h"
 #include "../symbol.h"
 #include "../symbol_area.h"
 #include "../symbol_line.h"
@@ -125,6 +126,8 @@ public:
 	
 	void addSymbolWarning(LineSymbol* symbol, const QString& warning);
 	
+	void addSymbolWarning(TextSymbol* symbol, const QString& warning);
+	
 	virtual void finishImport() throw (FileFormatException);
 	
 protected:
@@ -220,16 +223,19 @@ protected:
 	/// Character encoding to use for 1-byte (narrow) strings
 	QTextCodec *custom_8bit_encoding;
 	
-	/// maps OCAD color number to oo-mapper color object
+	/// maps OCD color number to oo-mapper color object
 	QHash<int, MapColor *> color_index;
 	
-	/// maps OCAD symbol number to oo-mapper symbol object
+	/// maps OCD symbol number to oo-mapper symbol object
 	QHash<int, Symbol *> symbol_index;
 	
-	/// maps OO Mapper text symbol pointer to OCAD text symbol horizontal alignment (stored in objects instead of symbols in OO Mapper)
-	QHash<Symbol*, int> text_halign_map;
+	/// maps OO Mapper text symbol pointer to OCD defined horizontal alignment (stored in objects instead of symbols in OO Mapper)
+	QHash<Symbol*, TextObject::HorizontalAlignment> text_halign_map;
 	
-	/// maps OCAD symbol number to rectangle information struct
+	/// maps OO Mapper text symbol pointer to OCD defined vertical alignment (stored in objects instead of symbols in OO Mapper)
+	QHash<Symbol*, TextObject::VerticalAlignment> text_valign_map;
+	
+	/// maps OCD symbol number to rectangle information struct
 	QHash<int, RectangleInfo> rectangle_info;
 };
 

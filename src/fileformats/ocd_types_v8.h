@@ -453,7 +453,7 @@ namespace Ocd
 		typedef LineSymbolV8 LineSymbol;
 		typedef AreaSymbolV8 AreaSymbol;
 		typedef TextSymbolV8 TextSymbol;
-		typedef LineSymbolV8 LineTextSymbol;
+		typedef LineTextSymbolV8 LineTextSymbol;
 		typedef RectangleSymbolV8 RectangleSymbol;
 		
 		typedef ObjectV8 Object;

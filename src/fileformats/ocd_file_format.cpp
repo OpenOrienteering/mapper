@@ -104,6 +104,14 @@ void OcdFileImport::addSymbolWarning(LineSymbol* symbol, const QString& warning)
 	            arg(warning) );
 }
 
+void OcdFileImport::addSymbolWarning(TextSymbol* symbol, const QString& warning)
+{
+	addWarning( tr("In text symbol %1 '%2': %3").
+	            arg(symbol->getNumberAsString()).
+	            arg(symbol->getName()).
+	            arg(warning) );
+}
+
 #ifndef NDEBUG
 
 // Heuristic detection of implementation errors
@@ -415,12 +423,10 @@ void OcdFileImport::importSymbols(const OcdFile< F >& file) throw (FileFormatExc
 		{
 			symbol = importRectangleSymbol((const typename F::RectangleSymbol&)*it);
 		}
-#if 0
 		else if (it->type == F::TypeLineText)
 		{
-			symbol = importLineTextSymbol((const typename T::LineTextSymbol&)*it);
+			symbol = importLineTextSymbol((const typename F::LineTextSymbol&)*it);
 		}
-#endif
 		else if (it->type)
 		{
 			addWarning(tr("Unable to import symbol %1.%2 \"%3\": %4") .
@@ -1147,39 +1153,45 @@ TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol)
 	for (int i = 0; i < ocd_symbol.num_tabs; ++i)
 		symbol->custom_tabs[i] = convertLength(ocd_symbol.tab_pos[i]);
 	
-	int halign = (int)TextObject::AlignHCenter;
-	if (ocd_symbol.alignment == 0) // TODO: Named identifiers, all values
-		halign = (int)TextObject::AlignLeft;
-	else if (ocd_symbol.alignment == 1)
-		halign = (int)TextObject::AlignHCenter;
-	else if (ocd_symbol.alignment == 2)
-		halign = (int)TextObject::AlignRight;
-	else if (ocd_symbol.alignment == 3)
-	{
-		// TODO: implement justified alignment
-		addWarning(tr("During import of text symbol %1: ignoring justified alignment").arg(0.1 * ocd_symbol.base.number));
-	}
+	TextObject::HorizontalAlignment halign = TextObject::AlignHCenter;
+	int ocd_halign = ocd_symbol.alignment & 3;
+	if (ocd_halign == 0) // TODO: Named identifiers, all values
+		halign = TextObject::AlignLeft;
+	else if (ocd_halign == 1)
+		halign = TextObject::AlignHCenter;
+	else if (ocd_halign == 2)
+		halign = TextObject::AlignRight;
+	else if (ocd_halign == 3)
+		addSymbolWarning(symbol, tr("Justified alignment is not supported.")); // TODO
+	
 	text_halign_map[symbol] = halign;
-
+	
+	TextObject::VerticalAlignment valign = TextObject::AlignBaseline;
+	int ocd_valign = ocd_symbol.alignment & 12;
+	if (ocd_valign == 4) // TODO: Named identifiers, all values
+		valign = TextObject::AlignVCenter;
+	else if (ocd_valign == 8)
+		valign = TextObject::AlignTop;
+	else if (ocd_valign == 12)
+		addSymbolWarning(symbol, tr("Vertical alignment '%1' is not supported.").arg(ocd_symbol.alignment)); // TODO
+	
+	text_valign_map[symbol] = valign;
+	
 	if (ocd_symbol.font_weight != 400 && ocd_symbol.font_weight != 700)
 	{
-		addWarning(tr("During import of text symbol %1: ignoring custom weight (%2)")
-		               .arg(0.1 * ocd_symbol.base.number).arg(ocd_symbol.font_weight));
+		addSymbolWarning(symbol, tr("Ignoring custom weight (%1).").arg(ocd_symbol.font_weight));
 	}
 	if (ocd_symbol.char_spacing != 0)
 	{
-		addWarning(tr("During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD's behavior yet")
-		.arg(0.1 * ocd_symbol.base.number));
+		addSymbolWarning(symbol, tr("Custom character spacing may be incorrect."));
 	}
 	if (ocd_symbol.word_spacing != 100)
 	{
-		addWarning(tr("During import of text symbol %1: ignoring custom word spacing (%2%)")
-		               .arg(0.1 * ocd_symbol.base.number).arg(ocd_symbol.word_spacing));
+		addSymbolWarning(symbol, tr("Ignoring custom word spacing (%1 %).").arg(ocd_symbol.word_spacing));
 	}
 	if (ocd_symbol.indent_first_line != 0 || ocd_symbol.indent_other_lines != 0)
 	{
-		addWarning(tr("During import of text symbol %1: ignoring custom indents (%2/%3)")
-		               .arg(0.1 * ocd_symbol.base.number).arg(ocd_symbol.indent_first_line).arg(ocd_symbol.indent_other_lines));
+		addSymbolWarning(symbol, tr("Ignoring custom indents (%1/%2).").arg(ocd_symbol.indent_first_line).arg(ocd_symbol.indent_other_lines));
 	}
 	
 	if (ocd_symbol.framing_mode > 0) // TODO: Identifiers
@@ -1199,8 +1211,7 @@ TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol)
 		}
 		else
 		{
-			addWarning(tr("During import of text symbol %1: ignoring text framing (mode %2)")
-			.arg(0.1 * ocd_symbol.base.number).arg(ocd_symbol.framing_mode));
+			addSymbolWarning(symbol, tr("Ignoring text framing (mode %1).").arg(ocd_symbol.framing_mode));
 		}
 	}
 	
@@ -1216,9 +1227,84 @@ TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol)
 template< class S >
 TextSymbol* OcdFileImport::importLineTextSymbol(const S& ocd_symbol)
 {
-	// TODO
-	TextSymbol* symbol = new TextSymbol();
+	OcdImportedTextSymbol* symbol = new OcdImportedTextSymbol();
 	setupBaseSymbol(symbol, ocd_symbol);
+	
+	symbol->font_family = convertOcdString(ocd_symbol.font_name); // FIXME: font mapping?
+	symbol->color = convertColor(ocd_symbol.font_color);
+	double d_font_size = (0.1 * ocd_symbol.font_size) / 72.0 * 25.4;
+	symbol->font_size = qRound(1000 * d_font_size);
+	symbol->bold = (ocd_symbol.font_weight>= 550) ? true : false;
+	symbol->italic = (ocd_symbol.font_italic) ? true : false;
+	symbol->underline = false;
+	symbol->character_spacing = ocd_symbol.char_spacing / 100.0;
+	symbol->kerning = false;
+	symbol->line_below = false;
+	symbol->custom_tabs.resize(0);
+	
+	TextObject::HorizontalAlignment halign = TextObject::AlignHCenter;
+	int ocd_halign = ocd_symbol.alignment & 3;
+	if (ocd_halign == 0) // TODO: Named identifiers, all values
+		halign = TextObject::AlignLeft;
+	else if (ocd_halign == 1)
+		halign = TextObject::AlignHCenter;
+	else if (ocd_halign == 2)
+		halign = TextObject::AlignRight;
+	else if (ocd_halign == 3)
+		addSymbolWarning(symbol, tr("Justified alignment is not supported.")); // TODO
+	
+	text_halign_map[symbol] = halign;
+	
+	TextObject::VerticalAlignment valign = TextObject::AlignBaseline;
+	int ocd_valign = ocd_symbol.alignment & 12;
+	if (ocd_valign == 4) // TODO: Named identifiers, all values
+		valign = TextObject::AlignVCenter;
+	else if (ocd_valign == 8)
+		valign = TextObject::AlignTop;
+	else if (ocd_valign == 12)
+		addSymbolWarning(symbol, tr("Vertical alignment '%1' is not supported.").arg(ocd_symbol.alignment)); // TODO
+	
+	text_valign_map[symbol] = valign;
+	
+	if (ocd_symbol.font_weight != 400 && ocd_symbol.font_weight != 700)
+	{
+		addSymbolWarning(symbol, tr("Ignoring custom weight (%1).").arg(ocd_symbol.font_weight));
+	}
+	if (ocd_symbol.char_spacing != 0)
+	{
+		addSymbolWarning(symbol, tr("Custom character spacing may be incorrect."));
+	}
+	if (ocd_symbol.word_spacing != 100)
+	{
+		addSymbolWarning(symbol, tr("Ignoring custom word spacing (%1 %).").arg(ocd_symbol.word_spacing));
+	}
+	
+	if (ocd_symbol.framing_mode > 0) // TODO: Identifiers
+	{
+		symbol->framing = true;
+		symbol->framing_color = convertColor(ocd_symbol.framing_color);
+		if (ocd_symbol.framing_mode == 1)
+		{
+			symbol->framing_mode = TextSymbol::ShadowFraming;
+			symbol->framing_shadow_x_offset = convertLength(ocd_symbol.framing_offset_x);
+			symbol->framing_shadow_y_offset = -1 * convertLength(ocd_symbol.framing_offset_y);
+		}
+		else if (ocd_symbol.framing_mode == 2)
+		{
+			symbol->framing_mode = TextSymbol::LineFraming;
+			symbol->framing_line_half_width = convertLength(ocd_symbol.framing_line_width);
+		}
+		else
+		{
+			addSymbolWarning(symbol, tr("Ignoring text framing (mode %1).").arg(ocd_symbol.framing_mode));
+		}
+	}
+	
+	symbol->updateQFont();
+	
+	addSymbolWarning(symbol, tr("Line text symbols are not yet supported. Marking the symbol as hidden."));
+	symbol->setHidden(true);
+	
 	return symbol;
 }
 
@@ -1422,15 +1508,10 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 	else if (symbol->getType() == Symbol::Text)
 	{
 		TextObject *t = new TextObject(symbol);
-		
-		// extra properties: rotation, horizontalAlignment, verticalAlignment, text
-		t->setRotation(convertAngle(ocd_object.angle));
-		t->setHorizontalAlignment((TextObject::HorizontalAlignment)text_halign_map.value(symbol));
-		t->setVerticalAlignment(TextObject::AlignBaseline);
-		
-		const QChar* text_ptr = (const QChar *)(ocd_object.coords + ocd_object.num_items);
-		t->setText(convertOcdString(text_ptr));
 		t->setText(getObjectText(ocd_object));
+		t->setRotation(convertAngle(ocd_object.angle));
+		t->setHorizontalAlignment(text_halign_map.value(symbol));
+		// Vertical alignment is set in fillTextPathCoords().
 		
 		// Text objects need special path translation
 		if (!fillTextPathCoords(t, reinterpret_cast<TextSymbol*>(symbol), ocd_object.num_items, (Ocd::OcdPoint32 *)ocd_object.coords))
@@ -1703,7 +1784,7 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 		// anchor point
 		MapCoord coord = convertOcdPoint(ocd_points[0]);
 		object->setAnchorPosition(coord.rawX(), coord.rawY());
-		object->setVerticalAlignment(TextObject::AlignBaseline);
+		object->setVerticalAlignment(text_valign_map.value(symbol));
 	}
 	
 	return true;
