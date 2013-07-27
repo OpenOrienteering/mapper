@@ -48,6 +48,7 @@ class TextSymbol;
 /** Importer for OCD version 8 files. */
 class OCAD8FileImport : public Importer
 {
+	friend class OcdFileImport;
 Q_OBJECT
 private:
 	/// Information about an OCAD rectangle symbol

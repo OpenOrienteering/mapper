@@ -120,6 +120,8 @@ private slots:
 	
 	void encodingChanged(const QString& name);
 	
+	void ocdImporterClicked(bool state);
+	
 private:
 	/** Adds the available languages to the language combo box,
 	 *  and sets the current element.

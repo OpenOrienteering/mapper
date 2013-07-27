@@ -120,6 +120,9 @@ set(Mapper_Common_SRCS
  core/map_color.cpp
  core/map_printer.cpp
  
+ fileformats/ocd_file_format.cpp
+ fileformats/ocd_types.cpp
+ 
  gui/about_dialog.cpp
  gui/color_dialog.cpp
  gui/home_screen_controller.cpp
@@ -206,6 +209,8 @@ set(Mapper_Common_MOC_INPUT
  util_task_dialog.h
  
  core/map_printer.h
+ 
+ fileformats/ocd_file_format_p.h
  
  gui/about_dialog.h
  gui/color_dialog.h

@@ -358,7 +358,7 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	layout->addItem(Util::SpacerItem::create(this), row, 1);
 	
 	row++;
-	layout->addWidget(Util::Headline::create(tr("Misc")), row, 1, 1, 2);
+	layout->addWidget(Util::Headline::create(tr("File import and export")), row, 1, 1, 2);
 	
 	row++;
 	QLabel* encoding_label = new QLabel(tr("8-bit encoding:"));
@@ -366,8 +366,8 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	
 	encoding_box = new QComboBox();
 	encoding_box->addItem("System");
-	encoding_box->addItem("windows-1250");
-	encoding_box->addItem("windows-1252");
+	encoding_box->addItem("Windows-1250");
+	encoding_box->addItem("Windows-1252");
 	encoding_box->addItem("ISO-8859-1");
 	encoding_box->addItem("ISO-8859-15");
 	encoding_box->setEditable(true);
@@ -381,6 +381,11 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	encoding_box->setCompleter(completer);
 	encoding_box->setCurrentText(Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toString());
 	layout->addWidget(encoding_box, row, 2);
+	
+	row++;
+	QCheckBox* ocd_importer_check = new QCheckBox(tr("Use the new OCD importer also for version 8 files"));
+	ocd_importer_check->setChecked(Settings::getInstance().getSetting(Settings::General_NewOcd8Implementation).toBool());
+	layout->addWidget(ocd_importer_check, row, 1, 1, 2);
 	
 	row++;
 	layout->setRowStretch(row, 1);
@@ -398,6 +403,7 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	connect(open_mru_check, SIGNAL(clicked(bool)), this, SLOT(openMRUFileClicked(bool)));
 	connect(tips_visible_check, SIGNAL(clicked(bool)), this, SLOT(tipsVisibleClicked(bool)));
 	connect(encoding_box, SIGNAL(currentTextChanged(QString)), this, SLOT(encodingChanged(QString)));
+	connect(ocd_importer_check, SIGNAL(clicked(bool)), this, SLOT(ocdImporterClicked(bool)));
 }
 
 void GeneralPage::apply()
@@ -534,6 +540,12 @@ void GeneralPage::encodingChanged(const QString& name)
 		ScopedSignalsBlocker block(encoding_box);
 		encoding_box->setCurrentText(codec->name());
 	}
+}
+
+// slot
+void GeneralPage::ocdImporterClicked(bool state)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::General_NewOcd8Implementation), state);
 }
 
 void GeneralPage::openTranslationFileDialog()
