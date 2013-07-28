@@ -19,6 +19,8 @@
 
 #include "georeferencing_t.h"
 
+#include <proj_api.h>
+
 
 double GeoreferencingTest::radFromDeg(double d, double m, double s)
 {
@@ -78,8 +80,13 @@ void GeoreferencingTest::testProjection_data()
 
 void GeoreferencingTest::testProjection()
 {
+#if PJ_VERSION >= 480
+	const double max_dist_error = 2.2; // meter
+	const double max_angl_error = 0.00002/*deg*/ / 180.0 * M_PI; // radian
+#else
 	const double max_dist_error = 5.5; // meter
 	const double max_angl_error = 0.00005/*deg*/ / 180.0 * M_PI; // radian
+#endif
 	
 	QFETCH(QString, proj);
 	QVERIFY2(georef.setProjectedCRS(proj, proj), proj.toLatin1());
