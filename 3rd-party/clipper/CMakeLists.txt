@@ -23,19 +23,36 @@ cmake_minimum_required(VERSION 2.8.3)
 
 # Configuration options
 
-set(CLIPPER_VERSION_DEFAULT 5.1.4)
+set(CLIPPER_VERSION_DEFAULT 5.1.6)
 set(CLIPPER_VERSION ${CLIPPER_VERSION_DEFAULT} CACHE STRING
-  "Version number of the Clipper library, minumum recommended value: 5.1.4")
+  "Version number of the Clipper library, recommended value: 5.1.6")
 mark_as_advanced(CLIPPER_VERSION)
 
 message(STATUS "Configuring Clipper library ${CLIPPER_VERSION}")
 
-if(CLIPPER_VERSION STREQUAL 5.1.4)
-	set(CLIPPER_MD5 8693d4ca96f50d93ae36ea5761e07119)	
-elseif(CLIPPER_VERSION STREQUAL 5.1.5)
-	set(CLIPPER_MD5 f5eae2ed9a30124ff825284560fe0635)
+if (NOT ${CLIPPER_VERSION} STREQUAL ${CLIPPER_VERSION_DEFAULT})
+	message(WARNING 
+	  "The Clipper library version is different from the current recommended version "
+	  "(${CLIPPER_VERSION} vs. ${CLIPPER_VERSION_DEFAULT}).")
 endif()
-mark_as_advanced(CLIPPER_MD5)
+
+set(CLIPPER_MD5SUMS
+  5.1.4:8693d4ca96f50d93ae36ea5761e07119
+  5.1.5:f5eae2ed9a30124ff825284560fe0635 # license file has long lines
+  5.1.6:1b44159d15d75731e374f0ddda61a49a
+)
+foreach(line ${CLIPPER_MD5SUMS})
+	if(${line} MATCHES "^${CLIPPER_VERSION}:")
+		string(REPLACE "${CLIPPER_VERSION}:" "" CLIPPER_MD5 ${line})
+		break()
+	endif()
+endforeach()
+if(NOT CLIPPER_MD5)
+	message(FATAL_ERROR
+	  "Unknown MD5 sum for Clipper library ${CLIPPER_VERSION}. "
+	  "Edit ${PROJECT_SOURCE_DIR}/CMakeLists.txt, "
+	  "or specify the correct CLIPPER_MD5 value at the command line.")
+endif()
 
 set(CLIPPER_LICENSE_FILE "${PROJECT_SOURCE_DIR}/License.txt")
 if(EXISTS "${CLIPPER_LICENSE_FILE}.${CLIPPER_VERSION}")
