@@ -193,7 +193,7 @@ if(CMAKE_CROSSCOMPILING)
 		qt5_find_host_program(Qt5Core_MOC_EXECUTABLE NAMES moc)
 		qt5_find_host_program(Qt5Core_RCC_EXECUTABLE NAMES rcc)
 	endif()
-elseif(UNIX AND NOT APPLE AND Mapper_USE_QT5 AND Mapper_BUILD_QT AND QT5_VERSION VERSION_GREATER 5.0.1)
+elseif(UNIX AND NOT APPLE AND Mapper_USE_QT5 AND Mapper_BUILD_QT AND QT5_VERSION STREQUAL "5.0.2")
 	get_target_property(QT5_INSTALL_DIR Qt5 INSTALL_DIR)
 	foreach(qt5_target Qt5::moc Qt5::rcc ${QT_LIBRARIES})
 		foreach(imported_location 
