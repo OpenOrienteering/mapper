@@ -64,7 +64,7 @@
 </context>
 <context>
     <name>AreaSymbolSettings</name>
-    <message utf8="true">
+    <message>
         <location filename="../src/symbol_area.cpp" line="703"/>
         <source>mm²</source>
         <translation>mm²</translation>
@@ -148,7 +148,7 @@
         <source>Fill rotation</source>
         <translation>Fyllretning</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/symbol_area.cpp" line="821"/>
         <source>°</source>
         <translation>°</translation>
@@ -427,7 +427,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="380"/>
         <source>Click to select the name and click again to edit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klikk for å velge navn og klikk igjen for å redigere.</translation>
     </message>
 </context>
 <context>
@@ -535,7 +535,7 @@
         <source>Additional rotation (counter-clockwise):</source>
         <translation>Tilleggsrotering (mot klokken):</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/map_grid.cpp" line="227"/>
         <source>°</source>
         <translation>°</translation>
@@ -725,38 +725,38 @@
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="113"/>
         <source>Distribute points evenly along path</source>
-        <translation type="unfinished"></translation>
+        <translation>Fordel punkter likt langs linjen</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="119"/>
         <source>Number of points per path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Antall punkter langs linjen:</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="121"/>
         <source>Also place objects at line end points</source>
-        <translation type="unfinished"></translation>
+        <translation>Plasser i tillegg objekter i linjens endepunkter</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="127"/>
         <source>Rotation settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Roteringsinnstillinger</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="129"/>
         <source>Align points with direction of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilpass punkter med linjens retning</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/tool_distribute_points.cpp" line="133"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="135"/>
         <source>Additional rotation angle (counter-clockwise):</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilleggsroteringsvinkel (mot klokken):</translation>
     </message>
 </context>
 <context>
@@ -847,7 +847,7 @@
 </context>
 <context>
     <name>DrawPointTool</name>
-    <message utf8="true">
+    <message>
         <location filename="../src/tool_draw_point.cpp" line="283"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Vinkel:&lt;/b&gt; %1° </translation>
@@ -1005,7 +1005,7 @@
         <source>Stepping of fixed angle mode (%1):</source>
         <translation>Trinnvis eller fast vinkelmodus (%1):</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/gui/settings_dialog.cpp" line="142"/>
         <source>°</source>
         <comment>Degree sign for angles</comment>
@@ -1104,17 +1104,17 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="361"/>
         <source>File import and export</source>
-        <translation type="unfinished"></translation>
+        <translation>Filimport og -eksport</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="364"/>
         <source>8-bit encoding:</source>
-        <translation type="unfinished"></translation>
+        <translation>8 bits koding:</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="386"/>
         <source>Use the new OCD importer also for version 8 files</source>
-        <translation type="unfinished"></translation>
+        <translation>Bruk den nye OCD-importfunksjonen også for versjon 8-filer</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="438"/>
@@ -1344,7 +1344,7 @@
         <comment>north / south</comment>
         <translation>N</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/georeferencing_dialog.cpp" line="115"/>
         <location filename="../src/georeferencing_dialog.cpp" line="116"/>
         <location filename="../src/georeferencing_dialog.cpp" line="136"/>
@@ -1389,7 +1389,7 @@
         <source>Grivation:</source>
         <translation>Misvisning:</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/georeferencing_dialog.cpp" line="280"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
         <translation>Misvisning for referansepunktet  %1° %2° vil nå hentes fra &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Vil du fortsette?</translation>
@@ -1437,7 +1437,7 @@
         <translation>Onlineoppslag av misvisning mislyktes:
 %1</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/georeferencing_dialog.cpp" line="654"/>
         <source>%1 °</source>
         <comment>degree value</comment>
@@ -1586,7 +1586,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="57"/>
         <source>OCAD</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD</translation>
     </message>
 </context>
 <context>
@@ -2969,7 +2969,7 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="550"/>
         <source>Distribute points along path</source>
-        <translation type="unfinished"></translation>
+        <translation>Fordel punkter langs linjen</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="592"/>
@@ -3127,12 +3127,12 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/map_editor.cpp" line="1547"/>
         <source>Places evenly spaced point objects along an existing path object</source>
-        <translation type="unfinished"></translation>
+        <translation>Plassér punktobjekter med jevn avstand langs eksisterende linjeobjekt</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1547"/>
         <source>Select at least one path object and a single point symbol to activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg minst ett linjeobjekt og ett punktsymbol for å aktivere dette verktøyet.</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1640"/>
@@ -3242,27 +3242,27 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/core/map_printer.cpp" line="823"/>
         <source>Processing separations of page %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>Behandler separasjoner for side %1...</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="824"/>
         <source>Processing page %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>Behandler side %1...</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="929"/>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbrutt</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="934"/>
         <source>Error</source>
-        <translation type="unfinished">Feil</translation>
+        <translation>Feil</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="938"/>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Ferdig</translation>
     </message>
 </context>
 <context>
@@ -3385,13 +3385,13 @@ rull musehjulet for å zoome.</translation>
         <comment>meters</comment>
         <translation>m</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="156"/>
         <source>mm²</source>
         <comment>square millimeters</comment>
         <translation>mm²</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="157"/>
         <source>m²</source>
         <comment>square meters</comment>
@@ -3407,7 +3407,7 @@ rull musehjulet for å zoome.</translation>
         <source>The minimimum area is %1 %2.</source>
         <translation>Minimumsflaten er %1 %2.</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="161"/>
         <source>mm²</source>
         <translation>mm²</translation>
@@ -3507,7 +3507,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1585"/>
         <source>Registration black is exported as a regular color.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekte svart er eksportert som en vanlig farge.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1680"/>
@@ -3590,20 +3590,20 @@ rull musehjulet for å zoome.</translation>
     <message numerus="yes">
         <location filename="../src/file_format_ocad8.cpp" line="143"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n fargeseparasjon(er) ble droppet, årsak: Import deaktivert.</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="148"/>
         <source>Could not load the spot color definitions, error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunne ikke laste spotfargedefinisjoner, feil %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="207"/>
         <source>Color &quot;Registration black&quot; is imported as a special color.</source>
-        <translation type="unfinished"></translation>
+        <translation>Farge &quot;ekte svart&quot; er importert som en spesialfarge.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="271"/>
@@ -3643,7 +3643,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="610"/>
         <source>Line symbol %1: suppressing dash symbol at line ends.</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjesymbol %1: fjerner symbol i linjeender.</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="754"/>
@@ -3716,147 +3716,148 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="101"/>
         <source>In line symbol %1 &apos;%2&apos;: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>I linjesymbol %1 &apos;%2&apos;: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="109"/>
         <source>In text symbol %1 &apos;%2&apos;: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>I tekstsymbol %1 &apos;%2&apos;: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="300"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="313"/>
         <source>Spot color information was ignored.</source>
-        <translation type="unfinished"></translation>
+        <translation>Spotfargeinformasjon ble utelatt.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="432"/>
         <source>Unable to import symbol %1.%2 &quot;%3&quot;: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunne ikke importere symbol %1.%2 &quot;%3&quot;: %4</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="436"/>
         <source>Unsupported type &quot;%1&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikke støttet type &quot;%1&quot;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="523"/>
         <source>Unable to import template: &quot;%1&quot; is not a supported template type.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klarte ikke å importere bakgrunnsbilde &quot;%1&quot; er ikke en støttet  bildetype.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="767"/>
         <source>Unsupported line style &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikke støttet linjetype &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="779"/>
         <source>Different lengths for pointed caps at begin (%1 mm) and end (%2 mm) are not supported. Using %3 mm.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>FInner ikke oversettelse for pointed caps</translatorcomment>
+        <translation>Ulike lengder for pointed caps i start (%1 mm) og slutt (%2 mm) er ikke støttet. Bruker %3 mm.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="795"/>
         <source>The dash pattern cannot be imported correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjestilen kan ikke importeres korrekt.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="810"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="842"/>
         <source>The dash pattern&apos;s end length (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjestilens endelengde (%1 mm) kan ikke importeres korrekt. Bruker %2 mm.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="817"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="857"/>
         <source>The dash pattern&apos;s end gap (%1 mm) cannot be imported correctly. Using %2 mm.</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjestilens endeavstand (%1 mm) kan ikke importeres korrekt. Bruker %2 mm.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="901"/>
         <source>Unsupported framing line style &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikke støttet rammestil &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="987"/>
         <source>Skipped secondary point symbol.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoppet over sekundært punktsymbol.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1022"/>
         <source>Suppressing dash symbol at line ends.</source>
-        <translation type="unfinished"></translation>
+        <translation>Utelater streksymbol i lijeendene.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1167"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1256"/>
         <source>Justified alignment is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokkjustering er ikke støttet.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1178"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1267"/>
         <source>Vertical alignment &apos;%1&apos; is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikal tilpasning &apos;%1&apos; er ikke støttet.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1184"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1273"/>
         <source>Ignoring custom weight (%1).</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorerer valgt strektykkelse (%1).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1188"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1277"/>
         <source>Custom character spacing may be incorrect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Valgt bokstavmellomrom kan være feil.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1192"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1281"/>
         <source>Ignoring custom word spacing (%1 %).</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorerer valgt ordmellomrom (%1 %).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1196"/>
         <source>Ignoring custom indents (%1/%2).</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorerer valgte innrykk (%1/%2).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1216"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1301"/>
         <source>Ignoring text framing (mode %1).</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignorerer tekstrammer (modus %1).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1307"/>
         <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjetekstsymboler er ikke støttet ennå. Markerer symbolet som skjult.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1470"/>
         <source>Unable to load object</source>
-        <translation type="unfinished">Klarte ikke å laste inn objekt</translation>
+        <translation>Klarte ikke å laste inn objekt</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1480"/>
         <source>Unable to import rectangle object</source>
-        <translation type="unfinished">Klarte ikke å importere rektangelobjekt</translation>
+        <translation>Klarte ikke å importere rektangelobjekt</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1521"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation type="unfinished">Importerte ikke tekstsymbol, kunne ikke få tak i filsti&apos; (ntps=%1): %2</translation>
+        <translation>Importerte ikke tekstsymbol, kunne ikke få tak i filsti&apos; (ntps=%1): %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1797"/>
         <source>Trying to import a text object with unknown coordinate format</source>
-        <translation type="unfinished">Forsøker å importere et tekstobjekt med ukjent koordinatformat</translation>
+        <translation>Forsøker å importere et tekstobjekt med ukjent koordinatformat</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1818"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1822"/>
         <source>Invalid data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugyldig verdi.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1834"/>
@@ -3864,12 +3865,12 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1847"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1851"/>
         <source>Untested file importer for format: OCD %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Utestet filimport for format: OCD %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1857"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished"></translation>
+        <translation>OCD-filer i versjon %1 er ikke støttet!</translation>
     </message>
 </context>
 <context>
@@ -3917,7 +3918,7 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/util/item_delegates.cpp" line="147"/>
         <location filename="../src/util/item_delegates.cpp" line="154"/>
         <source>%</source>
-        <translation type="unfinished">%</translation>
+        <translation>%</translation>
     </message>
 </context>
 <context>
@@ -4105,29 +4106,29 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/gui/print_tool.cpp" line="49"/>
         <location filename="../src/gui/print_tool.cpp" line="371"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area&apos;s borders. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Dra&lt;/b&gt;: Flytt kartet, utskriftsområdet eller utskriftsområdets kantlinjer. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="343"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Dra&lt;/b&gt;: Flytt utskriftsområdet. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="347"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation type="unfinished">&lt;b&gt;Dra&lt;/b&gt;: Flytt kartet. </translation>
+        <translation>&lt;b&gt;Dra&lt;/b&gt;: Flytt kartet. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="352"/>
         <location filename="../src/gui/print_tool.cpp" line="357"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s border. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Dra&lt;/b&gt;: Flytt utskriftsområdets kantlinje. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="362"/>
         <location filename="../src/gui/print_tool.cpp" line="367"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s borders. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Dra&lt;/b&gt;: Flytt utskriftsområdets kantlinjer. </translation>
     </message>
 </context>
 <context>
@@ -4246,12 +4247,12 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="127"/>
         <source>Normal output</source>
-        <translation type="unfinished"></translation>
+        <translation>Normal utskrift</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="129"/>
         <source>Color separations</source>
-        <translation type="unfinished"></translation>
+        <translation>Fargeseparasjoner</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="139"/>
@@ -4303,7 +4304,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="860"/>
         <source>Print Preview Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Forhåndvisningsfremdrift</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="889"/>
@@ -4318,27 +4319,27 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="900"/>
         <source>PNG</source>
-        <translation type="unfinished"></translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="901"/>
         <source>BMP</source>
-        <translation type="unfinished"></translation>
+        <translation>BMP</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="902"/>
         <source>TIFF</source>
-        <translation type="unfinished"></translation>
+        <translation>TIFF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="903"/>
         <source>JPEG</source>
-        <translation type="unfinished"></translation>
+        <translation>JPEG</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="907"/>
         <source>PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="910"/>
@@ -4353,7 +4354,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="916"/>
         <source>Printing Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Utskriftsfremdrift</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="940"/>
@@ -4375,17 +4376,17 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="975"/>
         <source>Canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbrutt.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="980"/>
         <source>Printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriver</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="981"/>
         <source>The print job could not be stopped.</source>
-        <translation type="unfinished"></translation>
+        <translation>Utskriftsjobben kunne ikke avbrytes.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="987"/>
@@ -4418,19 +4419,19 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/dxfparser.cpp" line="36"/>
         <source>Could not open the file.</source>
         <comment>DXFParser</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke åpne filen.</translation>
     </message>
     <message>
         <location filename="../src/dxfparser.cpp" line="52"/>
         <source>The file is not an DXF file.</source>
         <comment>DXFParser</comment>
-        <translation type="unfinished"></translation>
+        <translation>Filen er ikke en DXF-fil.</translation>
     </message>
     <message>
         <location filename="../src/core/map_color.cpp" line="73"/>
         <source>Registration black (all printed colors)</source>
         <comment>MapColor</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ekte svart (alle utskriftsfarger)</translation>
     </message>
 </context>
 <context>
@@ -4593,7 +4594,7 @@ rull musehjulet for å zoome.</translation>
         <source>Angle (counter-clockwise):</source>
         <translation>Vinkel (mot klokken):</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/map_dialog_rotate.cpp" line="46"/>
         <source>°</source>
         <translation>°</translation>
@@ -4667,7 +4668,7 @@ rull musehjulet for å zoome.</translation>
 </context>
 <context>
     <name>RotatePatternTool</name>
-    <message utf8="true">
+    <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="156"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Vinkel:&lt;/b&gt; %1° </translation>
@@ -4685,7 +4686,7 @@ rull musehjulet for å zoome.</translation>
 </context>
 <context>
     <name>RotateTool</name>
-    <message utf8="true">
+    <message>
         <location filename="../src/tool_rotate.cpp" line="184"/>
         <source>&lt;b&gt;Rotation:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Rotering:&lt;/b&gt;%1° </translation>
@@ -5000,7 +5001,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="711"/>
         <source>Scale symbol(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalér symbol(er)</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="773"/>
@@ -5059,7 +5060,7 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/symbol_dock_widget.cpp" line="115"/>
         <source>F1</source>
         <comment>Shortcut for displaying the symbol&apos;s description</comment>
-        <translation type="unfinished"></translation>
+        <translation>Snarvei for å vise symbolbeskrivelse</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="154"/>
@@ -5189,37 +5190,37 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/tags_dialog.cpp" line="39"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Legg til</translation>
     </message>
     <message>
         <location filename="../src/gui/tags_dialog.cpp" line="40"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern</translation>
     </message>
     <message>
         <location filename="../src/gui/tags_dialog.cpp" line="41"/>
         <source>Close</source>
-        <translation type="unfinished">Lukk</translation>
+        <translation>Lukk</translation>
     </message>
     <message>
         <location filename="../src/gui/tags_dialog.cpp" line="59"/>
         <source>Key</source>
-        <translation type="unfinished"></translation>
+        <translation>Tast</translation>
     </message>
     <message>
         <location filename="../src/gui/tags_dialog.cpp" line="59"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Verdi</translation>
     </message>
     <message>
         <location filename="../src/gui/tags_dialog.cpp" line="74"/>
         <source>key</source>
-        <translation type="unfinished"></translation>
+        <translation>tast</translation>
     </message>
     <message>
         <location filename="../src/gui/tags_dialog.cpp" line="77"/>
         <source>key %0</source>
-        <translation type="unfinished"></translation>
+        <translation>tast %0</translation>
     </message>
 </context>
 <context>
@@ -5587,15 +5588,16 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
         <source>There was an error reading the DXF file %1:
 
 %2</source>
-        <translation type="unfinished">Feil ved lesing av DXF-fil %2:
+        <translation>Feil ved lesing av DXF-fil %2:
 
-%2 {1:?}</translation>
+%2</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="482"/>
         <source>%1:
 Not an OSM file.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1:
+Ikke en OSM-fil.</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="491"/>
@@ -5708,7 +5710,7 @@ Høyeste støttede versjon er %2.</translation>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="150"/>
         <source>Add template...</source>
-        <translation type="unfinished"></translation>
+        <translation>Legg til bakgrunnsbilde...</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="162"/>
@@ -5723,7 +5725,7 @@ Høyeste støttede versjon er %2.</translation>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="187"/>
         <source>Import and remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Importér og fjern</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="207"/>
@@ -5801,27 +5803,27 @@ Feil ved lasting av bakgrunnsbilde. Eksisterer filen og er den gyldig?</translat
     <message>
         <location filename="../src/template_dock_widget.cpp" line="863"/>
         <source>Don&apos;t scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikke skalér</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="864"/>
         <source>Scale by nominal map scale ratio (%1 %)</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalér med opprinnelig kartmålestokk (%1 %)</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="865"/>
         <source>Scale by current template scaling (%1 %)</source>
-        <translation type="unfinished"></translation>
+        <translation>Skelér med eksisterende bakgrunnsbildeskala (%1 %)</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="867"/>
         <source>Template import</source>
-        <translation type="unfinished"></translation>
+        <translation>Bakgrunnsbildeimport</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="868"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
-        <translation type="unfinished"></translation>
+        <translation>Hvordan skal symbolene i det importerte bakgrunnsbildet skaleres?</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="961"/>
