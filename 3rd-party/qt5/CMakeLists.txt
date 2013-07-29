@@ -27,24 +27,34 @@ include(ExternalProject)
 
 set(QT5_VERSION_DEFAULT 5.0.2)
 set(QT5_VERSION ${QT5_VERSION_DEFAULT} CACHE STRING
-  "Version number of the Qt5 library, minimum recommended value: 5.0.0")
+  "Version number of the Qt5 library, recommended value: ${QT5_VERSION_DEFAULT}")
 mark_as_advanced(QT5_VERSION)
 
 message(STATUS "Configuring Qt ${QT5_VERSION}")
  
-if(QT5_VERSION STREQUAL 5.0.0)
-	set(QT5_MD5 1a1b73f913a965f6b0cf02bb820c8a03)
-	message(WARNING "Using Qt ${QT5_VERSION} which has been superseded by Qt ${QT5_VERSION_DEFAULT}.")
-elseif(QT5_VERSION STREQUAL 5.0.1-rc1)
-	set(QT5_MD5 e74765aa1620ff56d4642119078628c3)
-	message(WARNING "Using Qt ${QT5_VERSION} which has been superseded by Qt ${QT5_VERSION_DEFAULT}.")
-elseif(QT5_VERSION STREQUAL 5.0.1)
-	set(QT5_MD5 8e8137c23c8ff078a560d3c62b4383e7)
-	message(WARNING "Using Qt ${QT5_VERSION} which has been superseded by Qt ${QT5_VERSION_DEFAULT}.")
-elseif(QT5_VERSION STREQUAL 5.0.2)
-	set(QT5_MD5 87cae8ae2f82f41ba027c2db0ab639b7)
-elseif(QT5_VERSION STREQUAL 5.1.0-alpha)
-	set(QT5_MD5 73d147a8965751850ff7d8b6a56d8366)
+if (NOT ${QT5_VERSION} STREQUAL ${QT5_VERSION_DEFAULT})
+	message(WARNING
+	  "The Qt5 library version is different from the current recommended version "
+	  "(${QT5_VERSION} vs. ${QT5_VERSION_DEFAULT}).")
+endif()
+
+set(QT5_MD5SUMS
+  5.0.0:1a1b73f913a965f6b0cf02bb820c8a03
+  5.0.1:8e8137c23c8ff078a560d3c62b4383e7
+  5.0.2:87cae8ae2f82f41ba027c2db0ab639b7
+  5.1.0:787ce18c7f47fc14538b4362a0aa9edd
+)
+foreach(line ${QT5_MD5SUMS})
+	if(${line} MATCHES "^${QT5_VERSION}:")
+		string(REPLACE "${QT5_VERSION}:" "" QT5_MD5 ${line})
+		break()
+	endif()
+endforeach()
+if(NOT QT5_MD5)
+	message(FATAL_ERROR
+	  "Unknown MD5 sum for Qt5 library ${QT5_VERSION}. "
+	  "Edit ${PROJECT_SOURCE_DIR}/CMakeLists.txt, "
+	  "or specify the correct QT5_MD5 value at the command line.")
 endif()
 
 string(REGEX MATCH "5.." QT5_MAJOR_MINOR ${QT5_VERSION})
@@ -204,6 +214,14 @@ configure_file(${QT5_CONFIG_SCRIPT}.in ${QT5_CONFIG_SCRIPT}.new @ONLY)
 configure_file(qt5-make.in qt5-make @ONLY)
 configure_file(qt.conf.in qt.conf @ONLY)
 configure_file(qt.conf.qrc.in qt.conf.qrc @ONLY)
+
+# cf. https://bugreports.qt-project.org/browse/QTBUG-32641 :
+# Qt 5.1.0 Release SVG module won't build on Linux when using qt-zlib
+if(UNIX AND NOT APPLE AND ${QT5_VERSION} STREQUAL "5.1.0")
+	execute_process(
+	  COMMAND sed -i -e /-qt-zlib/d ${QT5_CONFIG_SCRIPT}.new
+	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
+endif()
 
 if(UNIX AND QT5_INSTALL_ROOT)
 	# Wrappers which set LD_LIBRARY_PATH.
