@@ -297,7 +297,7 @@ void OcdFileImport::importColors< class Ocd::FormatV8 >(const OcdFile< Ocd::Form
 		color_index[color_info.number] = color;
 	}
 	
-	addWarning(tr("Spot color information was ignored."));
+	addWarning(OcdFileImport::tr("Spot color information was ignored."));
 }
 
 template< class F >
