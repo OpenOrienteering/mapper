@@ -332,27 +332,29 @@ void MapWidget::ensureVisibilityOfRect(const QRectF& map_rect, bool show_complet
 
 void MapWidget::adjustViewToRect(const QRectF& map_rect, bool zoom_in_steps)
 {
-	const int pixel_border = 15;
-	
 	view->setPositionX(qRound64(1000 * (map_rect.left() + map_rect.width() / 2)));
 	view->setPositionY(qRound64(1000 * (map_rect.top() + map_rect.height() / 2)));
 	
-	// NOTE: The loop is an inelegant way to fight inaccuracies that occur somewhere ...
-	float initial_zoom = view->getZoom();
-	for (int i = 0; i < 10; ++i)
+	if (map_rect.isValid())
 	{
-		float zoom_factor = qMin(height() / (view->lengthToPixel(1000 * map_rect.height()) + 2*pixel_border),
-		                         width() / (view->lengthToPixel(1000 * map_rect.width()) + 2*pixel_border));
-		float zoom = view->getZoom() * zoom_factor;
-		if (zoom_in_steps)
+		// NOTE: The loop is an inelegant way to fight inaccuracies that occur somewhere ...
+		const int pixel_border = 15;
+		const float initial_zoom = view->getZoom();
+		for (int i = 0; i < 10; ++i)
 		{
-			zoom = log2(zoom);
-			zoom = (zoom - log2(initial_zoom)) * 2.0;
-			zoom = floor(zoom);
-			zoom = (zoom * 0.5) + log2(initial_zoom);
-			zoom = pow(2, zoom);
+			float zoom_factor = qMin(height() / (view->lengthToPixel(1000 * map_rect.height()) + 2*pixel_border),
+			                         width() / (view->lengthToPixel(1000 * map_rect.width()) + 2*pixel_border));
+			float zoom = view->getZoom() * zoom_factor;
+			if (zoom_in_steps)
+			{
+				zoom = log2(zoom);
+				zoom = (zoom - log2(initial_zoom)) * 2.0;
+				zoom = floor(zoom);
+				zoom = (zoom * 0.5) + log2(initial_zoom);
+				zoom = pow(2, zoom);
+			}
+			view->setZoom(zoom);
 		}
-		view->setZoom(zoom);
 	}
 }
 
