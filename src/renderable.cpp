@@ -699,25 +699,28 @@ void MapRenderables::removeRenderablesOfObject(const Object* object, bool mark_a
 	const_iterator end_of_colors = end();
 	for (iterator color = begin(); color != end_of_colors; ++color)
 	{
-		ObjectRenderablesMap::const_iterator end_of_objects = color->second.end();
-		for (ObjectRenderablesMap::iterator obj = color->second.begin(); obj != end_of_objects; ++obj)
+		ObjectRenderablesMap::iterator obj = color->second.find(const_cast<Object*>(object));
+		if (obj != color->second.end())
 		{
-			if (obj->first != object)
-				continue;
-			
 			if (mark_area_as_dirty)
 			{
-				for (SharedRenderables::const_iterator renderables = obj->second->begin(); renderables != obj->second->end(); ++renderables)
+				// We don't want to loop over every dot in an area ...
+				QRectF extent = object->getExtent();
+				if (!extent.isValid())
 				{
-					for (RenderableVector::const_iterator renderable = renderables->second.begin(); renderable != renderables->second.end(); ++renderable)
+					// ... because here it gets expensive
+					for (SharedRenderables::const_iterator renderables = obj->second->begin(); renderables != obj->second->end(); ++renderables)
 					{
-						map->setObjectAreaDirty((*renderable)->getExtent());
+						for (RenderableVector::const_iterator renderable = renderables->second.begin(); renderable != renderables->second.end(); ++renderable)
+						{
+							extent = extent.isValid() ? extent.united((*renderable)->getExtent()) : (*renderable)->getExtent();
+						}
 					}
 				}
+				map->setObjectAreaDirty(extent);
 			}
-			color->second.erase(obj);
 			
-			break;
+			color->second.erase(obj);
 		}
 	}
 }

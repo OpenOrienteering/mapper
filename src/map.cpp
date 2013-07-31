@@ -1019,22 +1019,32 @@ void Map::getSelectionToSymbolCompatibility(Symbol* symbol, bool& out_compatible
 
 void Map::deleteSelectedObjects()
 {
-	AddObjectsUndoStep* undo_step = new AddObjectsUndoStep(this);
-	MapPart* part = getCurrentPart();
+	Map::ObjectSelection::const_iterator obj = selectedObjectsBegin();
+	Map::ObjectSelection::const_iterator end = selectedObjectsEnd();
+	if (obj != end)
+	{
+		// FIXME: this is not ready for multiple map parts.
+		AddObjectsUndoStep* undo_step = new AddObjectsUndoStep(this);
+		MapPart* part = getCurrentPart();
 	
-	Map::ObjectSelection::const_iterator it_end = selectedObjectsEnd();
-	for (Map::ObjectSelection::const_iterator it = selectedObjectsBegin(); it != it_end; ++it)
-	{
-		int index = part->findObjectIndex(*it);
-		undo_step->addObject(index, *it);
-	}
-	for (Map::ObjectSelection::const_iterator it = selectedObjectsBegin(); it != it_end; ++it)
-	{
-		deleteObject(*it, true);
+		for (; obj != end; ++obj)
+		{
+			int index = part->findObjectIndex(*obj);
+			if (index >= 0)
+			{
+				undo_step->addObject(index, *obj);
+				part->deleteObject(index, true);
+			}
+			else
+			{
+				qDebug() << this << "::deleteSelectedObjects(): Object" << *obj << "not found in current map part.";
+			}
+		}
+		
 		setObjectsDirty();
+		clearObjectSelection(true);
+		objectUndoManager().addNewUndoStep(undo_step);
 	}
-	clearObjectSelection(true);
-	objectUndoManager().addNewUndoStep(undo_step);
 }
 
 void Map::includeSelectionRect(QRectF& rect)
