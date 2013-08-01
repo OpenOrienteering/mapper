@@ -407,6 +407,8 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 			map->parts[i] = part;
 		}
 	}
+	
+	emit map->currentMapPartChanged(map->current_part_index);
 }
 
 

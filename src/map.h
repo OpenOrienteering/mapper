@@ -614,6 +614,9 @@ public:
 	
 	/** Adds the new part at the given index. */
 	void addPart(MapPart* part, int pos);
+
+	/** Removes the map part at position */
+	void removePart(int index);
 	
 	/**
 	 * Loops over all map parts, looking for the given part pointer.
@@ -622,17 +625,21 @@ public:
 	 */
 	int findPartIndex(MapPart* part) const;
 	
-	// TODO: Part management methods still missing! Only one part is used for now.
-	
 	/** Returns the current map part, i.e. the part where edit operations happen. */
 	inline MapPart* getCurrentPart() const {return (current_part_index < 0) ? NULL : parts[current_part_index];}
 	
 	/** Changes the current map part. */
-	inline void setCurrentPart(MapPart* part) {current_part_index = findPartIndex(part);}
-	
+	inline void setCurrentPart(MapPart* part) {setCurrentPart(findPartIndex(part));}
+	inline void setCurrentPart(int index) {current_part_index = index; emit currentMapPartChanged(index);}
+
 	/** Returns the index of the current map part, see also getCurrentPart(). */
 	inline int getCurrentPartIndex() const {return current_part_index;}
+
+	/** Moves all specified objects to the specified map part */
+	void reassignObjectsToMapPart(QSet<Object*>::const_iterator begin, QSet<Object*>::const_iterator end, int destination);
 	
+	/** Merges the source layer with the destination layer, and deletes the source layer */
+	void mergeParts(int source, int destination);
 	
 	// Objects
 	
@@ -1102,6 +1109,11 @@ signals:
 	 * selected objects is edited, too.
 	 */
 	void selectedObjectEdited();
+
+	/**
+	 * Emitted when the map part currently used for drawing changes
+	 */
+	void currentMapPartChanged(int index);
 	
 protected slots:
 	void checkSpotColorPresence();

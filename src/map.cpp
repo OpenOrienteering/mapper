@@ -1871,7 +1871,33 @@ void Map::addPart(MapPart* part, int pos)
 	parts.insert(parts.begin() + pos, part);
 	if (current_part_index >= pos)
 		++current_part_index;
+	
+	emit currentMapPartChanged(current_part_index);
+	
 	setOtherDirty(true);
+	for(unsigned int i = 0; i < widgets.size(); i++)
+		widgets[i]->updateEverything();
+}
+
+void Map::removePart(int index)
+{
+	MapPart* part = parts[index];
+	
+	// FIXME: This loop should move to MapPart.
+	while(part->getNumObjects())
+		part->deleteObject(0, false);
+	delete part;
+	
+	parts.erase(parts.begin() + index);
+	
+	if(current_part_index == index) {
+		current_part_index = 0;
+		emit currentMapPartChanged(current_part_index);
+	}
+	
+	setOtherDirty(true);
+	for(unsigned int i = 0; i < widgets.size(); i++)
+		widgets[i]->updateEverything();
 }
 
 int Map::findPartIndex(MapPart* part) const
@@ -1884,6 +1910,37 @@ int Map::findPartIndex(MapPart* part) const
 	}
 	assert(false);
 	return -1;
+}
+
+void Map::reassignObjectsToMapPart(QSet<Object*>::const_iterator begin, QSet<Object*>::const_iterator end, int destination)
+{
+	for (QSet<Object*>::const_iterator it = begin; it != end; it++) {
+		Object* object = *it;
+		deleteObject(object, true);
+		addObject(object, destination);
+	}
+	
+	setOtherDirty();
+}
+
+void Map::mergeParts(int source, int destination)
+{
+	// FIXME: Retain object selection
+	clearObjectSelection(false);
+	
+	MapPart* source_part = parts[source];
+	
+	while (source_part->getNumObjects()) {
+		int obj_index = source_part->getNumObjects() - 1;
+		Object* obj = source_part->getObject(obj_index);
+		source_part->deleteObject(obj_index, true);
+		addObject(obj, destination);
+		addObjectToSelection(obj, false);
+	}
+	
+	removePart(source);
+	
+	emit objectSelectionChanged();
 }
 
 int Map::getNumObjects()

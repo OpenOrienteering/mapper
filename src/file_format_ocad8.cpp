@@ -352,6 +352,8 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
 
     //qint64 elapsed = QDateTime::currentMSecsSinceEpoch() - start;
 	//qDebug() << "OCAD map imported:"<<map->getNumSymbols()<<"symbols and"<<map->getNumObjects()<<"objects in"<<elapsed<<"milliseconds";
+
+	emit map->currentMapPartChanged(map->current_part_index);
 }
 
 void OCAD8FileImport::setStringEncodings(const char *narrow, const char *wide) {

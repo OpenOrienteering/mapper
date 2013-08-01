@@ -571,6 +571,8 @@ void XMLFileImporter::importMapParts()
 		  arg(num_parts).
 		  arg(map->getNumParts())
 		);
+	
+	emit map->currentMapPartChanged(map->current_part_index);
 }
 
 void XMLFileImporter::importTemplates()

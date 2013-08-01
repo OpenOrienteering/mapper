@@ -35,6 +35,7 @@ QT_BEGIN_NAMESPACE
 class QFrame;
 class QLabel;
 class QToolBar;
+class QSignalMapper;
 QT_END_NAMESPACE
 
 class Template;
@@ -356,6 +357,17 @@ public slots:
 	void paintOnTemplateClicked(bool checked);
 	/** Shows the template selection dialog for for the paint-on-template functionality */
 	void paintOnTemplateSelectClicked();
+
+	/** Creates and adds a new map part */
+	void addMapPart();
+	/** Removes the current map part */
+	void removeMapPart();
+	/** Sets the current map part */
+	void changeMapPart(int part);
+	/** Moves all selected objects to a different map part */
+	void reassignObjectsToMapPart(int part);
+	/** Merges the current map part with another one */
+	void mergeMapPart();
 	
 	/** Updates action enabled states after a template has been added */
 	void templateAdded(int pos, Template* temp);
@@ -489,6 +501,8 @@ private:
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;
 	
+	QMenu* mappart_move_menu;
+	
 	QFrame* statusbar_zoom_frame;
 	QLabel* statusbar_cursorpos_label;
 	QLabel* statusbar_objecttag_label;
@@ -497,11 +511,16 @@ private:
 	QToolBar* toolbar_drawing;
 	QToolBar* toolbar_editing;
 	QToolBar* toolbar_advanced_editing;
+	QToolBar* toolbar_mapparts;
+	
+	QComboBox* mappart_selector_box;
 	
 	QScopedPointer<GeoreferencingDialog> georeferencing_dialog;
 	QScopedPointer<ReopenTemplateDialog> reopen_template_dialog;
 	
 	QHash<Template*, TemplatePositionDockWidget*> template_position_widgets;
+
+	QSignalMapper* mappart_move_mapper;
 	
 	bool being_destructed;
 };
