@@ -60,31 +60,7 @@ AreaSymbol::FillPattern::FillPattern()
 	point_distance = 5000; // 5 mm
 	point = NULL;
 }
-void AreaSymbol::FillPattern::save(QIODevice* file, Map* map)
-{
-	qint32 itype = type;
-	file->write((const char*)&itype, sizeof(qint32));
-	file->write((const char*)&angle, sizeof(float));
-	file->write((const char*)&rotatable, sizeof(bool));
-	file->write((const char*)&line_spacing, sizeof(int));
-	file->write((const char*)&line_offset, sizeof(int));
-	file->write((const char*)&offset_along_line, sizeof(int));
-	
-	if (type == LinePattern)
-	{
-		int color_index = map->findColorIndex(line_color);
-		file->write((const char*)&color_index, sizeof(int));
-		file->write((const char*)&line_width, sizeof(int));
-	}
-	else
-	{
-		file->write((const char*)&point_distance, sizeof(int));
-		bool have_point = point != NULL;
-		file->write((const char*)&have_point, sizeof(bool));
-		if (have_point)
-			point->save(file, map);
-	}
-}
+
 bool AreaSymbol::FillPattern::load(QIODevice* file, int version, Map* map)
 {
 	qint32 itype;
@@ -590,18 +566,6 @@ bool AreaSymbol::hasRotatableFillPattern() const
 			return true;
 	}
 	return false;
-}
-
-void AreaSymbol::saveImpl(QIODevice* file, Map* map)
-{
-	int temp = map->findColorIndex(color);
-	file->write((const char*)&temp, sizeof(int));
-	file->write((const char*)&minimum_area, sizeof(int));
-	
-	int size = (int)patterns.size();
-	file->write((const char*)&size, sizeof(int));
-	for (int i = 0; i < size; ++i)
-		patterns[i].save(file, map);
 }
 
 bool AreaSymbol::loadImpl(QIODevice* file, int version, Map* map)

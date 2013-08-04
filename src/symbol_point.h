@@ -111,7 +111,6 @@ public:
 	
 	
 protected:
-	virtual void saveImpl(QIODevice* file, Map* map);
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
 	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);

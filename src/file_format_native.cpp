@@ -58,33 +58,6 @@ protected:
 };
 
 
-#ifdef MAPPER_ENABLE_NATIVE_EXPORTER
-
-// ### NativeFileExport declaration ###
-
-/** An Exporter for the native file format. This class delegates to the save() and saveImpl() methods of the
- *  model objects, but long-term this can be refactored out of the model into this class.
- * 
- *  \deprecated
- */
-class NativeFileExport : public Exporter
-{
-public:
-	/** Creates a new native file exporter.
-	 */
-	NativeFileExport(QIODevice* stream, Map *map, MapView *view);
-
-	/** Destroys this importer.
-	 */
-	~NativeFileExport();
-
-	/** Exports a native file.
-	 */
-	void doExport() throw (FileFormatException);
-};
-
-#endif
-
 
 // ### NativeFileFormat ###
 
@@ -94,9 +67,6 @@ const char NativeFileFormat::magic_bytes[4] = {0x4F, 0x4D, 0x41, 0x50};	// "OMAP
 
 NativeFileFormat::NativeFileFormat()
  : FileFormat(FileFormat::MapFile, "native (deprecated)", ImportExport::tr("OpenOrienteering Mapper").append(" pre-0.5"), "omap", 
-#ifdef MAPPER_ENABLE_NATIVE_EXPORTER
-              FileFormat::ExportSupported | FileFormat::ExportLossy |
-#endif
               FileFormat::ImportSupported)
 {
 	// Nothing
@@ -113,14 +83,6 @@ Importer *NativeFileFormat::createImporter(QIODevice* stream, Map* map, MapView*
 	return new NativeFileImport(stream, map, view);
 }
 
-#ifdef MAPPER_ENABLE_NATIVE_EXPORTER
-
-Exporter *NativeFileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const throw (FileFormatException)
-{
-    return new NativeFileExport(stream, map, view);
-}
-
-#endif
 
 
 // ### NativeFileImport ###
@@ -410,176 +372,3 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 	
 	emit map->currentMapPartChanged(map->current_part_index);
 }
-
-
-#ifdef MAPPER_ENABLE_NATIVE_EXPORTER
-
-// ### NativeFileImport ###
-
-NativeFileExport::NativeFileExport(QIODevice* stream, Map *map, MapView *view) : Exporter(stream, map, view)
-{
-}
-
-NativeFileExport::~NativeFileExport()
-{
-}
-
-void NativeFileExport::doExport() throw (FileFormatException)
-{
-    // Basic stuff
-    stream->write(NativeFileFormat::magic_bytes, 4);
-    stream->write((const char*)&NativeFileFormat::current_file_format_version, sizeof(int));
-
-	saveString(stream, map->map_notes);
-	
-	const Georeferencing& georef = map->getGeoreferencing();
-	stream->write((const char*)&georef.scale_denominator, sizeof(int));
-	stream->write((const char*)&georef.declination, sizeof(double));
-	stream->write((const char*)&georef.grivation, sizeof(double));
-	double x,y;
-	x = georef.map_ref_point.xd(); 
-	y = georef.map_ref_point.yd();
-	stream->write((const char*)&x, sizeof(double));
-	stream->write((const char*)&y, sizeof(double));
-	x = georef.projected_ref_point.x();
-	y = georef.projected_ref_point.y();
-	stream->write((const char*)&x, sizeof(double));
-	stream->write((const char*)&y, sizeof(double));
-	saveString(stream, georef.projected_crs_id);
-	saveString(stream, georef.projected_crs_spec);
-	y = georef.geographic_ref_point.latitude;
-	x = georef.geographic_ref_point.longitude;
-	stream->write((const char*)&y, sizeof(double));
-	stream->write((const char*)&x, sizeof(double));
-	saveString(stream, QString("Geographic coordinates")); // reserved for geographic crs parameter or specification id
-	saveString(stream, georef.geographic_crs_spec);
-	
-	map->getGrid().save(stream);
-
-	stream->write((const char*)&map->area_hatching_enabled, sizeof(bool));
-	stream->write((const char*)&map->baseline_view_enabled, sizeof(bool));
-
-	bool print_params_set = false;
-	stream->write((const char*)&print_params_set, sizeof(bool));
-// Native file format is obsolete and optional, print parameters no longer saved.
-// 	stream->write((const char*)&map->print_params_set, sizeof(bool));
-// 	if (map->print_params_set)
-// 	{
-// 		stream->write((const char*)&map->print_orientation, sizeof(int));
-// 		stream->write((const char*)&map->print_format, sizeof(int));
-// 		stream->write((const char*)&map->print_dpi, sizeof(float));
-// 		stream->write((const char*)&map->print_show_templates, sizeof(bool));
-// 		stream->write((const char*)&map->print_show_grid, sizeof(bool));
-// 		stream->write((const char*)&map->print_center, sizeof(bool));
-// 		stream->write((const char*)&map->print_area_left, sizeof(float));
-// 		stream->write((const char*)&map->print_area_top, sizeof(float));
-// 		stream->write((const char*)&map->print_area_width, sizeof(float));
-// 		stream->write((const char*)&map->print_area_height, sizeof(float));
-// 		stream->write((const char*)&map->print_different_scale_enabled, sizeof(bool));
-// 		stream->write((const char*)&map->print_different_scale, sizeof(int));
-// 	}
-
-	stream->write((const char*)&map->image_template_use_meters_per_pixel, sizeof(bool));
-	stream->write((const char*)&map->image_template_meters_per_pixel, sizeof(double));
-	stream->write((const char*)&map->image_template_dpi, sizeof(double));
-	stream->write((const char*)&map->image_template_scale, sizeof(double));
-
-	// Write colors
-	int num_colors = (int)map->color_set->colors.size();
-	stream->write((const char*)&num_colors, sizeof(int));
-
-	for (int i = 0; i < num_colors; ++i)
-	{
-		MapColor* color = map->color_set->colors[i];
-		
-		int priority = color->getPriority();
-		stream->write((const char*)&priority, sizeof(int));
-		
-		const MapColorCmyk& cmyk = color->getCmyk();
-		stream->write((const char*)&cmyk.c, sizeof(float));
-		stream->write((const char*)&cmyk.m, sizeof(float));
-		stream->write((const char*)&cmyk.y, sizeof(float));
-		stream->write((const char*)&cmyk.k, sizeof(float));
-		float opacity = color->getOpacity();
-		stream->write((const char*)&opacity, sizeof(float));
-
-		saveString(stream, color->getName());
-	}
-
-    // Write symbols
-    int num_symbols = map->getNumSymbols();
-    stream->write((const char*)&num_symbols, sizeof(int));
-
-    for (int i = 0; i < num_symbols; ++i)
-    {
-        Symbol* symbol = map->getSymbol(i);
-
-        int type = static_cast<int>(symbol->getType());
-        stream->write((const char*)&type, sizeof(int));
-        symbol->save(stream, map);
-    }
-
-    // Write templates
-    stream->write((const char*)&map->first_front_template, sizeof(int));
-
-    int num_templates = map->getNumTemplates();
-    stream->write((const char*)&num_templates, sizeof(int));
-
-    for (int i = 0; i < num_templates; ++i)
-    {
-		Template* temp = map->getTemplate(i);
-
-		saveString(stream, temp->getTemplatePath());
-		saveString(stream, temp->getTemplateRelativePath());
-
-		temp->saveTemplateConfiguration(stream);	// save transformation etc.
-		if (temp->hasUnsavedChanges())
-		{
-			// Save the template itself (e.g. image, gpx file, etc.)
-			temp->saveTemplateFile();
-			temp->setHasUnsavedChanges(false);
-		}
-	}
-
-	// Write closed template settings
-	int num_closed_templates = map->getNumClosedTemplates();
-	stream->write((const char*)&num_closed_templates, sizeof(int));
-	
-	for (int i = 0; i < num_closed_templates; ++i)
-	{
-		Template* temp = map->getClosedTemplate(i);
-		
-		saveString(stream, temp->getTemplatePath());
-		saveString(stream, temp->getTemplateRelativePath());
-		
-		temp->saveTemplateConfiguration(stream);	// save transformation etc.
-	}
-
-	// Write widgets and views; replaces MapEditorController::saveWidgetsAndViews()
-    if (view)
-    {
-        // which only does this anyway
-        view->save(stream);
-    }
-    else
-    {
-        // TODO
-    }
-
-    // Write undo steps
-    map->object_undo_manager.save(stream);
-
-    // Write parts
-    stream->write((const char*)&map->current_part_index, sizeof(int));
-
-    int num_parts = map->getNumParts();
-    stream->write((const char*)&num_parts, sizeof(int));
-
-    for (int i = 0; i < num_parts; ++i)
-    {
-        MapPart* part = map->getPart(i);
-        part->save(stream, map);
-    }
-}
-
-#endif

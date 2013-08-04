@@ -166,7 +166,6 @@ class Georeferencing : public QObject
 {
 Q_OBJECT
 
-friend class NativeFileExport;
 friend class NativeFileImport;
 friend QDebug operator<<(QDebug dbg, const Georeferencing& georef);
 

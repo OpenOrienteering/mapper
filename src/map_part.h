@@ -92,8 +92,6 @@ public:
 	/** Destroys the map part. */
 	~MapPart();
 	
-	/** Saves the map part in the old "native" format to the given file. */
-	void save(QIODevice* file, Map* map);
 	/** Loads the map part in the old "native" format from the given file. */
 	bool load(QIODevice* file, int version, Map* map);
 	/** Saves the map part in xml format to the given stream. */

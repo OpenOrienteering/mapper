@@ -111,8 +111,6 @@ bool isPointOnSegment(const MapCoordF& seg_start, const MapCoordF& seg_end, cons
 
 
 /** Helper functions to save a string to a file and load it again. */
-void saveString(QIODevice* file, const QString& str);
-/** Helper functions to save a string to a file and load it again. */
 void loadString(QIODevice* file, QString& str);
 
 

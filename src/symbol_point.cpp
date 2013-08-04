@@ -269,32 +269,6 @@ void PointSymbol::scale(double factor)
 	resetIcon();
 }
 
-void PointSymbol::saveImpl(QIODevice* file, Map* map)
-{
-	file->write((const char*)&rotatable, sizeof(bool));
-	
-	file->write((const char*)&inner_radius, sizeof(int));
-	int temp = map->findColorIndex(inner_color);
-	file->write((const char*)&temp, sizeof(int));
-	
-	file->write((const char*)&outer_width, sizeof(int));
-	temp = map->findColorIndex(outer_color);
-	file->write((const char*)&temp, sizeof(int));
-	
-	int num_elements = (int)objects.size();
-	file->write((const char*)&num_elements, sizeof(int));
-	for (int i = 0; i < num_elements; ++i)
-	{
-		int save_type = static_cast<int>(symbols[i]->getType());
-		file->write((const char*)&save_type, sizeof(int));
-		symbols[i]->save(file, map);
-		
-		save_type = static_cast<int>(objects[i]->getType());
-		file->write((const char*)&save_type, sizeof(int));
-		objects[i]->save(file);
-	}
-}
-
 bool PointSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	file->read((char*)&rotatable, sizeof(bool));

@@ -47,7 +47,6 @@ class TemplateTransform
 public:
 	TemplateTransform();
 	
-	void save(QIODevice* file);
 	void load(QIODevice* file);
 	
 	void save(QXmlStreamWriter& xml, const QString role);
@@ -96,7 +95,6 @@ public:
 	
 	/// Saves template parameters such as filename, transformation, adjustment, etc. and
 	/// type-specific parameters (e.g. filtering mode for images)
-	void saveTemplateConfiguration(QIODevice* stream);
 	void saveTemplateConfiguration(QXmlStreamWriter& xml, bool open);
 	
 	/// Loads template parameters, see saveTemplateConfiguration(), and returns true if successful
@@ -332,9 +330,6 @@ protected:
 	/// type specific information over to the copy here.
 	/// This includes the content of the template file if it is loaded.
 	virtual Template* duplicateImpl() = 0;
-	
-	/// Derived classes must save type specific template parameters here
-	virtual void saveTypeSpecificTemplateConfiguration(QIODevice* stream) {}
 	
 	/// Derived classes must load type specific template parameters here and return true if successful
 	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version) {return true;}

@@ -182,49 +182,6 @@ const TextObject* Object::asText() const
 	return static_cast<const TextObject*>(this);
 }
 
-void Object::save(QIODevice* file)
-{
-	int symbol_index = -1;
-	if (map)
-		symbol_index = map->findSymbolIndex(symbol);
-	file->write((const char*)&symbol_index, sizeof(int));
-	
-	int num_coords = (int)coords.size();
-	file->write((const char*)&num_coords, sizeof(int));
-	file->write((const char*)&coords[0], num_coords * sizeof(MapCoord));
-	
-	// Central handling of sub-types here to avoid virtual methods
-	if (type == Point)
-	{
-		PointObject* point = reinterpret_cast<PointObject*>(this);
-		PointSymbol* point_symbol = reinterpret_cast<PointSymbol*>(point->getSymbol());
-		if (point_symbol->isRotatable())
-		{
-			float rotation = point->getRotation();
-			file->write((const char*)&rotation, sizeof(float));
-		}
-	}
-	else if (type == Path)
-	{
-		PathObject* path = reinterpret_cast<PathObject*>(this);
-		float rotation = path->getPatternRotation();
-		file->write((const char*)&rotation, sizeof(float));
-		MapCoord origin = path->getPatternOrigin();
-		file->write((const char*)&origin, sizeof(MapCoord));
-	}
-	else if (type == Text)
-	{
-		TextObject* text = reinterpret_cast<TextObject*>(this);
-		float rotation = text->getRotation();
-		file->write((const char*)&rotation, sizeof(float));
-		int temp = (int)text->getHorizontalAlignment();
-		file->write((const char*)&temp, sizeof(int));
-		temp = (int)text->getVerticalAlignment();
-		file->write((const char*)&temp, sizeof(int));
-		saveString(file, text->getText());
-	}
-}
-
 void Object::load(QIODevice* file, int version, Map* map)
 {
 	this->map = map;

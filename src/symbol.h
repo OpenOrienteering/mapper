@@ -137,8 +137,6 @@ public:
 	
 	// Saving and loading
 	
-	/** Saves the symbol in the old "native" file format. */
-	void save(QIODevice* file, Map* map);
 	/** Loads the symbol in the old "native" file format. */
 	bool load(QIODevice* file, int version, Map* map);
 	
@@ -275,9 +273,6 @@ public:
 	/** Returns a newly created symbol of the given type */
 	static Symbol* getSymbolForType(Type type);
 	
-	/** Static save function; saves the symbol and its type number */
-	static void saveSymbol(Symbol* symobl, QIODevice* stream, Map* map);
-	
 	/** Static read function; reads the type number, creates a symbol of
 	 *  this type and loads it. Returns true if successful. */
 	static bool loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* map);
@@ -313,12 +308,6 @@ public:
 	static const int icon_size = 32;
 	
 protected:
-	/**
-	 * Must be overridden to save type-specific symbol properties.
-	 * The map pointer can be used to get persistent indices to any pointers on map data
-	 */
-	virtual void saveImpl(QIODevice* file, Map* map) = 0;
-	
 	/**
 	 * Must be overridden to load type-specific symbol properties. See saveImpl()
 	 */

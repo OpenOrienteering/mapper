@@ -170,19 +170,6 @@ bool Symbol::numberEquals(Symbol* other, bool ignore_trailing_zeros)
 	return true;
 }
 
-void Symbol::save(QIODevice* file, Map* map)
-{
-	saveString(file, name);
-	for (int i = 0; i < number_components; ++i)
-		file->write((const char*)&number[i], sizeof(int));
-	saveString(file, description);
-	file->write((const char*)&is_helper_symbol, sizeof(bool));
-	file->write((const char*)&is_hidden, sizeof(bool));
-	file->write((const char*)&is_protected, sizeof(bool));
-	
-	saveImpl(file, map);
-}
-
 bool Symbol::load(QIODevice* file, int version, Map* map)
 {
 	loadString(file, name);
@@ -501,13 +488,6 @@ Symbol* Symbol::getSymbolForType(Symbol::Type type)
 		assert(false);
 		return NULL;
 	}
-}
-
-void Symbol::saveSymbol(Symbol* symbol, QIODevice* stream, Map* map)
-{
-	int save_type = static_cast<int>(symbol->getType());
-	stream->write((const char*)&save_type, sizeof(int));
-	symbol->save(stream, map);
 }
 
 bool Symbol::loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* map)

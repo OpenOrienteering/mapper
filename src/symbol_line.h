@@ -53,7 +53,6 @@ struct LineSymbolBorder
 	int break_length;
 	
 	void reset();
-	void save(QIODevice* file, Map* map);
 	bool load(QIODevice* file, int version, Map* map);
 	void save(QXmlStreamWriter& xml, const Map& map) const;
 	bool load(QXmlStreamReader& xml, const Map& map);
@@ -198,7 +197,6 @@ public:
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
 	
 protected:
-	virtual void saveImpl(QIODevice* file, Map* map);
 	virtual bool loadImpl(QIODevice* file, int version, Map* map);
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const;
 	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);

@@ -47,16 +47,6 @@ TemplateTransform::TemplateTransform()
 }
 
 
-void TemplateTransform::save(QIODevice* file)
-{
-	file->write((const char*)&template_x, sizeof(qint64));
-	file->write((const char*)&template_y, sizeof(qint64));
-	
-	file->write((const char*)&template_scale_x, sizeof(qint64));
-	file->write((const char*)&template_scale_y, sizeof(qint64));
-	file->write((const char*)&template_rotation, sizeof(qint64));
-}
-
 void TemplateTransform::load(QIODevice* file)
 {
 	file->read((char*)&template_x, sizeof(qint64));
@@ -145,35 +135,6 @@ Template* Template::duplicate()
 	copy->template_group = template_group;
 	
 	return copy;
-}
-
-void Template::saveTemplateConfiguration(QIODevice* stream)
-{
-	saveString(stream, template_file);
-	
-	stream->write((const char*)&is_georeferenced, sizeof(bool));
-	
-	if (!is_georeferenced)
-	{
-		transform.save(stream);
-		other_transform.save(stream);
-		
-		stream->write((const char*)&adjusted, sizeof(bool));
-		stream->write((const char*)&adjustment_dirty, sizeof(bool));
-		
-		int num_passpoints = (int)passpoints.size();
-		stream->write((const char*)&num_passpoints, sizeof(int));
-		for (int i = 0; i < num_passpoints; ++i)
-			passpoints[i].save(stream);
-		
-		map_to_template.save(stream);
-		template_to_map.save(stream);
-		template_to_map_other.save(stream);
-		
-		stream->write((const char*)&template_group, sizeof(int));
-	}
-	
-	saveTypeSpecificTemplateConfiguration(stream);
 }
 
 bool Template::loadTemplateConfiguration(QIODevice* stream, int version)

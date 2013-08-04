@@ -53,12 +53,6 @@ bool TemplateImage::saveTemplateFile()
 	return image->save(template_path);
 }
 
-void TemplateImage::saveTypeSpecificTemplateConfiguration(QIODevice* stream)
-{
-	if (is_georeferenced)
-		saveString(stream, temp_crs_spec);
-}
-
 bool TemplateImage::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
 {
 	if (is_georeferenced)

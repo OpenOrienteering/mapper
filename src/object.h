@@ -116,8 +116,6 @@ public:
 	/** Convenience cast to TextObject with type checking */
 	const TextObject* asText() const;
 	
-	/** Saves the object in the old "native" file format to the given file. */
-	void save(QIODevice* file);
 	/** Loads the object in the old "native" file format from the given file. */
 	void load(QIODevice* file, int version, Map* map);
 	

@@ -31,8 +31,6 @@ public:
 	/** Creates a MapUndoStep for the given map with the given type */
 	MapUndoStep(Map* map, Type type);
 	
-	/** Saves the MapUndoStep in the old "native" file format to the given file */
-	virtual void save(QIODevice* file);
 	/** Loads the MapUndoStep in the old "native" file format from the given file */
 	virtual bool load(QIODevice* file, int version);
 	
@@ -72,8 +70,6 @@ public:
 	/** Adds an object to the undo step with the index of the existing object. */
 	void addObject(Object* existing, Object* object);
 	
-	/** Saves the MapUndoStep in the old "native" file format to the given file */
-	virtual void save(QIODevice* file);
 	/** Loads the MapUndoStep in the old "native" file format from the given file */
 	virtual bool load(QIODevice* file, int version);
 	
@@ -161,7 +157,6 @@ public:
 	void addObject(int index, Symbol* target_symbol);
 	virtual UndoStep* undo();
 	
-	virtual void save(QIODevice* file);
 	virtual bool load(QIODevice* file, int version);
 	
 public slots:

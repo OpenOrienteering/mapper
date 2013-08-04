@@ -69,8 +69,6 @@ public:
 	 *  which can redo the action again. */
 	virtual UndoStep* undo() = 0;
 	
-	/** Must save the undo step to the file in the old "native" format. */
-	virtual void save(QIODevice* file) = 0;
 	/** Must load the undo step from the file in the old "native" format. */
 	virtual bool load(QIODevice* file, int version) = 0;
 	
@@ -130,7 +128,6 @@ public:
 	inline UndoStep* getSubStep(int i) {return steps[i];}
 	
 	virtual UndoStep* undo();
-	virtual void save(QIODevice* file);
 	virtual bool load(QIODevice* file, int version);
 	
 	virtual bool isValid() const;
@@ -156,8 +153,6 @@ public:
 	inline void setOwner(void* owner) {this->owner = owner;}
 	~UndoManager();
 	
-	/** Saves the UndoManager to the file in the old "native" format. */
-	void save(QIODevice* file);
 	/** Loads the UndoManager from the file in the old "native" format. */
 	bool load(QIODevice* file, int version);
 	
@@ -216,7 +211,6 @@ private:
 	bool clearUndoSteps();	// returns if at least one step was deleted
 	bool clearRedoSteps();	// returns if at least one step was deleted
 	void validateSteps(std::deque<UndoStep*>& steps);
-	void saveSteps(std::deque<UndoStep*>& steps, QIODevice* file);
 	bool loadSteps(std::deque< UndoStep* >& steps, QIODevice* file, int version);
 	void saveSteps(std::deque< UndoStep* >& steps, QXmlStreamWriter& xml);
 	bool loadSteps(std::deque< UndoStep* >& steps, QXmlStreamReader& xml, SymbolDictionary& symbol_dict);

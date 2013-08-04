@@ -50,10 +50,6 @@ TemplateTrack::~TemplateTrack()
 		unloadTemplateFile();
 }
 
-void TemplateTrack::saveTypeSpecificTemplateConfiguration(QIODevice* stream)
-{
-	saveString(stream, track_crs_spec);
-}
 bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
 {
 	if (version >= 30)

@@ -49,21 +49,6 @@ MapPart::~MapPart()
 		delete objects[i];
 }
 
-void MapPart::save(QIODevice* file, Map* map)
-{
-	saveString(file, name);
-	
-	int size = (int)objects.size();
-	file->write((const char*)&size, sizeof(int));
-	
-	for (int i = 0; i < size; ++i)
-	{
-		int save_type = static_cast<int>(objects[i]->getType());
-		file->write((const char*)&save_type, sizeof(int));
-		objects[i]->save(file);
-	}
-}
-
 bool MapPart::load(QIODevice* file, int version, Map* map)
 {
 	loadString(file, name);

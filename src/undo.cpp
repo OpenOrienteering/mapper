@@ -109,18 +109,6 @@ UndoStep* CombinedUndoStep::undo()
 	return undo_step;
 }
 
-void CombinedUndoStep::save(QIODevice* file)
-{
-	int size = (int)steps.size();
-	file->write((const char*)&size, sizeof(int));
-	for (int i = 0; i < (int)steps.size(); ++i)
-	{
-		int type = (int)steps[i]->getType();
-		file->write((char*)&type, sizeof(int));
-		steps[i]->save(file);
-	}
-}
-
 bool CombinedUndoStep::load(QIODevice* file, int version)
 {
 	int size;
@@ -215,24 +203,6 @@ void UndoManager::validateSteps(std::deque< UndoStep* >& steps)
 		emit undoStepAvailabilityChanged();
 }
 
-void UndoManager::save(QIODevice* file)
-{
-	saveSteps(undo_steps, file);
-	saveSteps(redo_steps, file);
-}
-void UndoManager::saveSteps(std::deque< UndoStep* >& steps, QIODevice* file)
-{
-	validateSteps(steps);
-	
-	int size = (int)steps.size();
-	file->write((char*)&size, sizeof(int));
-	for (int i = 0; i < size; ++i)
-	{
-		int type = (int)steps[i]->getType();
-		file->write((char*)&type, sizeof(int));
-		steps[i]->save(file);
-	}
-}
 bool UndoManager::load(QIODevice* file, int version)
 {
 	clearUndoSteps();

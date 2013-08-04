@@ -186,13 +186,6 @@ bool isPointOnSegment(const MapCoordF& seg_start, const MapCoordF& seg_end, cons
 	return ok && param >= 0 && param <= 1;
 }
 
-void saveString(QIODevice* file, const QString& str)
-{
-	int length = str.length();
-	
-	file->write((const char*)&length, sizeof(int));
-	file->write((const char*)str.constData(), length * sizeof(QChar));
-}
 void loadString(QIODevice* file, QString& str)
 {
 	int length;

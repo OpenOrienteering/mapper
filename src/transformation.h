@@ -35,7 +35,6 @@ class TemplateTransform;
 /** Pair of source and destination coordinates used to calculate transformations. */
 struct PassPoint
 {
-	void save(QIODevice* file);
 	void load(QIODevice* file, int version);
 	
 	void save(QXmlStreamWriter& xml);

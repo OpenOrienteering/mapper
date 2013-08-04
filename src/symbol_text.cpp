@@ -241,38 +241,6 @@ void TextSymbol::updateQFont()
 	tab_interval = 8.0 * metrics.averageCharWidth();
 }
 
-void TextSymbol::saveImpl(QIODevice* file, Map* map)
-{
-	int temp = map->findColorIndex(color);
-	file->write((const char*)&temp, sizeof(int));
-	saveString(file, font_family);
-	file->write((const char*)&font_size, sizeof(int));
-	file->write((const char*)&bold, sizeof(bool));
-	file->write((const char*)&italic, sizeof(bool));
-	file->write((const char*)&underline, sizeof(bool));
-	file->write((const char*)&line_spacing, sizeof(float));
-	file->write((const char*)&paragraph_spacing, sizeof(double));
-	file->write((const char*)&character_spacing, sizeof(double));
-	file->write((const char*)&kerning, sizeof(bool));
-	saveString(file, icon_text);
-	file->write((const char*)&framing, sizeof(bool));
-	temp = map->findColorIndex(framing_color);
-	file->write((const char*)&temp, sizeof(int));
-	file->write((const char*)&framing_mode, sizeof(int));
-	file->write((const char*)&framing_line_half_width, sizeof(int));
-	file->write((const char*)&framing_shadow_x_offset, sizeof(int));
-	file->write((const char*)&framing_shadow_y_offset, sizeof(int));
-	file->write((const char*)&line_below, sizeof(bool));
-	temp = map->findColorIndex(line_below_color);
-	file->write((const char*)&temp, sizeof(int));
-	file->write((const char*)&line_below_width, sizeof(int));
-	file->write((const char*)&line_below_distance, sizeof(int));
-	int num_custom_tabs = getNumCustomTabs();
-	file->write((const char*)&num_custom_tabs, sizeof(int));
-	for (int i = 0; i < num_custom_tabs; ++i)
-		file->write((const char*)&custom_tabs[i], sizeof(int));
-}
-
 bool TextSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	int temp;

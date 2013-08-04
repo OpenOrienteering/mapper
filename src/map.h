@@ -1261,8 +1261,6 @@ public:
 	/** Destroys the map view. */
 	~MapView();
 	
-	/** Saves the map view in the old "native" format to the file. */
-	void save(QIODevice* file);
 	/** Loads the map view in the old "native" format from the file. */
 	void load(QIODevice* file, int version);
 	

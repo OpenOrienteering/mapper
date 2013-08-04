@@ -55,17 +55,6 @@ void LineSymbolBorder::reset()
 	break_length = 1 * 1000;
 }
 
-void LineSymbolBorder::save(QIODevice* file, Map* map)
-{
-	int temp = map->findColorIndex(color);
-	file->write((const char*)&temp, sizeof(int));
-	file->write((const char*)&width, sizeof(int));
-	file->write((const char*)&shift, sizeof(int));
-	file->write((const char*)&dashed, sizeof(bool));
-	file->write((const char*)&dash_length, sizeof(int));
-	file->write((const char*)&break_length, sizeof(int));
-}
-
 bool LineSymbolBorder::load(QIODevice* file, int version, Map* map)
 {
 	int temp;
@@ -1684,56 +1673,6 @@ void LineSymbol::replaceSymbol(PointSymbol*& old_symbol, PointSymbol* replace_wi
 	delete old_symbol;
 	old_symbol = replace_with;
 	replace_with->setName(name);
-}
-
-void LineSymbol::saveImpl(QIODevice* file, Map* map)
-{
-	file->write((const char*)&line_width, sizeof(int));
-	int temp = map->findColorIndex(color);
-	file->write((const char*)&temp, sizeof(int));
-	file->write((const char*)&minimum_length, sizeof(int));
-	temp = (int)cap_style;
-	file->write((const char*)&temp, sizeof(int));
-	temp = (int)join_style;
-	file->write((const char*)&temp, sizeof(int));
-	file->write((const char*)&pointed_cap_length, sizeof(int));
-	bool have_symbol = start_symbol != NULL;
-	file->write((const char*)&have_symbol, sizeof(bool));
-	if (have_symbol)
-		start_symbol->save(file, map);
-	have_symbol = mid_symbol != NULL;
-	file->write((const char*)&have_symbol, sizeof(bool));
-	if (have_symbol)
-		mid_symbol->save(file, map);
-	have_symbol = end_symbol != NULL;
-	file->write((const char*)&have_symbol, sizeof(bool));
-	if (have_symbol)
-		end_symbol->save(file, map);
-	have_symbol = dash_symbol != NULL;
-	file->write((const char*)&have_symbol, sizeof(bool));
-	if (have_symbol)
-		dash_symbol->save(file, map);
-	file->write((const char*)&dashed, sizeof(bool));
-	file->write((const char*)&segment_length, sizeof(int));
-	file->write((const char*)&end_length, sizeof(int));
-	file->write((const char*)&show_at_least_one_symbol, sizeof(bool));
-	file->write((const char*)&minimum_mid_symbol_count, sizeof(int));
-	file->write((const char*)&minimum_mid_symbol_count_when_closed, sizeof(int));
-	file->write((const char*)&dash_length, sizeof(int));
-	file->write((const char*)&break_length, sizeof(int));
-	file->write((const char*)&dashes_in_group, sizeof(int));
-	file->write((const char*)&in_group_break_length, sizeof(int));
-	file->write((const char*)&half_outer_dashes, sizeof(bool));
-	file->write((const char*)&mid_symbols_per_spot, sizeof(int));
-	file->write((const char*)&mid_symbol_distance, sizeof(int));
-	file->write((const char*)&have_border_lines, sizeof(bool));
-	
-	bool are_borders_different = areBordersDifferent();
-	file->write((const char*)&are_borders_different, sizeof(bool));
-	
-	border.save(file, map);
-	if (are_borders_different)
-		right_border.save(file, map);
 }
 
 bool LineSymbol::loadImpl(QIODevice* file, int version, Map* map)

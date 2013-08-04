@@ -28,14 +28,6 @@
 
 // ### PassPoint ###
 
-void PassPoint::save(QIODevice* file)
-{
-	file->write((const char*)&src_coords, sizeof(MapCoordF));
-	file->write((const char*)&dest_coords, sizeof(MapCoordF));
-	file->write((const char*)&calculated_coords, sizeof(MapCoordF));
-	file->write((const char*)&error, sizeof(double));
-}
-
 void PassPoint::load(QIODevice* file, int version)
 {
 	if (version < 27)

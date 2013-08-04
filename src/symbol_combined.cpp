@@ -190,28 +190,6 @@ Symbol::Type CombinedSymbol::getContainedTypes() const
 	return (Type)type;
 }
 
-void CombinedSymbol::saveImpl(QIODevice* file, Map* map)
-{
-	int size = (int)parts.size();
-	file->write((const char*)&size, sizeof(int));
-	
-	for (int i = 0; i < size; ++i)
-	{
-		bool is_private = private_parts[i];
-		file->write((const char*)&is_private, sizeof(bool));
-		
-		if (is_private)
-		{
-			Symbol::saveSymbol(parts[i], file, map);
-		}
-		else
-		{
-			int temp = (parts[i] == NULL) ? -1 : map->findSymbolIndex(parts[i]);
-			file->write((const char*)&temp, sizeof(int));
-		}
-	}
-}
-
 bool CombinedSymbol::loadImpl(QIODevice* file, int version, Map* map)
 {
 	int size;

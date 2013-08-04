@@ -69,7 +69,6 @@ public slots:
 	
 protected:
 	virtual Template* duplicateImpl();
-    virtual void saveTypeSpecificTemplateConfiguration(QIODevice* stream);
     virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
     virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml);
     virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml);

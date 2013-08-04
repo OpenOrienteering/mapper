@@ -2197,38 +2197,6 @@ MapView::~MapView()
 	delete map_visibility;
 }
 
-void MapView::save(QIODevice* file)
-{
-	file->write((const char*)&zoom, sizeof(double));
-	file->write((const char*)&rotation, sizeof(double));
-	file->write((const char*)&position_x, sizeof(qint64));
-	file->write((const char*)&position_y, sizeof(qint64));
-	file->write((const char*)&view_x, sizeof(int));
-	file->write((const char*)&view_y, sizeof(int));
-	file->write((const char*)&drag_offset, sizeof(QPoint));
-	
-	file->write((const char*)&map_visibility->visible, sizeof(bool));
-	file->write((const char*)&map_visibility->opacity, sizeof(float));
-	
-	int num_template_visibilities = template_visibilities.size();
-	file->write((const char*)&num_template_visibilities, sizeof(int));
-	QHash<const Template*, TemplateVisibility*>::const_iterator it = template_visibilities.constBegin();
-	while (it != template_visibilities.constEnd())
-	{
-		int pos = map->findTemplateIndex(it.key());
-		file->write((const char*)&pos, sizeof(int));
-		
-		file->write((const char*)&it.value()->visible, sizeof(bool));
-		file->write((const char*)&it.value()->opacity, sizeof(float));
-		
-		++it;
-	}
-	
-	file->write((const char*)&all_templates_hidden, sizeof(bool));
-	
-	file->write((const char*)&grid_visible, sizeof(bool));
-}
-
 void MapView::load(QIODevice* file, int version)
 {
 	file->read((char*)&zoom, sizeof(double));

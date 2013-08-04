@@ -68,8 +68,6 @@ public:
 		delete[] d;
 	}
 	
-	/** Saves the matrix in the old "native" file format to the given file. */
-	void save(QIODevice* file);
 	/** Loads the matrix in the old "native" file format from the given file. */
 	void load(QIODevice* file);
 	

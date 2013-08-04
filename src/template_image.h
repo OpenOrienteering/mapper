@@ -52,7 +52,6 @@ public:
 	virtual const QString getTemplateType() {return "TemplateImage";}
 
 	virtual bool saveTemplateFile();
-	virtual void saveTypeSpecificTemplateConfiguration(QIODevice* stream);
 	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
 	virtual void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml);
 	virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml);

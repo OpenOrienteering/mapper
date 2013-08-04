@@ -76,8 +76,6 @@ public:
 	/** Creates a new map grid with default settings. */
 	MapGrid();
 	
-	/** Saves the grid in the old "native" format to the given file. */
-	void save(QIODevice* file);
 	/** Loads the grid in the old "native" format from the given file. */
 	void load(QIODevice* file, int version);
 	
