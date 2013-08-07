@@ -21,6 +21,7 @@
 #define _OPENORIENTEERING_OVERRIDING_SHORTCUT_H_
 
 #include <QShortcut>
+#include <QTime>
 
 /**
  * OverridingShortcut is a variation of QShortcut which takes precedence over
@@ -30,6 +31,11 @@
  * these events are of class QKeyEvent, the overriding works only for key
  * sequences consisting of a single key plus modifiers. For multi-key
  * sequences, the shortcut will work like a normal QShortcut.
+ * 
+ * OverridingShortcut now ignores a ShortcutOverride event if it occurs
+ * immediately (within less than 50 milliseconds) after another. This works
+ * around an issue which appeared in Qt 5.1.0 where the event filter receives
+ * two ShortcutOverride events for a single shortcut key press.
  */
 class OverridingShortcut : public QShortcut
 {
@@ -55,6 +61,9 @@ public:
 	 * QShortcutEvent to QShortcut::event().
 	 */
 	virtual bool eventFilter(QObject* watched, QEvent* event);
+	
+private:
+	QTime time;
 };
 
 #endif
