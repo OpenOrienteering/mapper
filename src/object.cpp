@@ -27,7 +27,6 @@
 #include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
-#include <qjsonobject.h>
 
 #include "util.h"
 #include "file_import_export.h"
@@ -40,6 +39,31 @@
 #include "renderable.h"
 #include "qbezier_p.h"
 #include "settings.h"
+#include "util/xml_stream_util.h"
+
+
+// ### A namespace which collects various string constants of type QLatin1String. ###
+
+namespace literal
+{
+	static const QLatin1String object("object");
+	static const QLatin1String symbol("symbol");
+	static const QLatin1String type("type");
+	static const QLatin1String text("text");
+	static const QLatin1String count("count");
+	static const QLatin1String coords("coords");
+	static const QLatin1String h_align("h_align");
+	static const QLatin1String v_align("v_align");
+	static const QLatin1String pattern("pattern");
+	static const QLatin1String rotation("rotation");
+	static const QLatin1String tags("tags");
+	static const QLatin1String key("key");
+	static const QLatin1String tag("tag");
+}
+
+
+
+// ### Object implementation ###
 
 Object::Object(Object::Type type, Symbol* symbol)
 : type(type),
@@ -261,76 +285,73 @@ void Object::load(QIODevice* file, int version, Map* map)
 
 void Object::save(QXmlStreamWriter& xml) const
 {
-	xml.writeStartElement("object");
-	xml.writeAttribute("type", QString::number(type));
+	XmlElementWriter object_element(xml, literal::object);
+	object_element.writeAttribute(literal::type, type);
 	int symbol_index = -1;
 	if (map)
 		symbol_index = map->findSymbolIndex(symbol);
 	if (symbol_index != -1)
-		xml.writeAttribute("symbol", QString::number(symbol_index));
+		object_element.writeAttribute(literal::symbol, symbol_index);
 	
 	if (type == Point)
 	{
 		const PointObject* point = reinterpret_cast<const PointObject*>(this);
 		const PointSymbol* point_symbol = reinterpret_cast<const PointSymbol*>(point->getSymbol());
 		if (point_symbol->isRotatable())
-			xml.writeAttribute("rotation", QString::number(point->getRotation()));
+			object_element.writeAttribute(literal::rotation, point->getRotation());
 	}
 	else if (type == Text)
 	{
 		const TextObject* text = reinterpret_cast<const TextObject*>(this);
-		xml.writeAttribute("rotation", QString::number(text->getRotation()));
-		xml.writeAttribute("h_align", QString::number(text->getHorizontalAlignment()));
-		xml.writeAttribute("v_align", QString::number(text->getVerticalAlignment()));
+		object_element.writeAttribute(literal::rotation, text->getRotation());
+		object_element.writeAttribute(literal::h_align, text->getHorizontalAlignment());
+		object_element.writeAttribute(literal::v_align, text->getVerticalAlignment());
 	}
 	
 	const int num_tags = object_tags.size();
 	if (num_tags > 0)
 	{
-		xml.writeStartElement("tags");
-		xml.writeAttribute("count", QString::number(num_tags));
+		XmlElementWriter tags_element(xml, literal::tags);
+		tags_element.writeAttribute(literal::count, num_tags);
 		for (Tags::const_iterator tag = object_tags.constBegin(), end = object_tags.constEnd(); tag != end; ++tag)
 		{
-			xml.writeStartElement("tag");
-			xml.writeAttribute("key", tag.key());
+			XmlElementWriter tag_element(xml, literal::tags);
+			tag_element.writeAttribute(literal::key, tag.key());
 			xml.writeCharacters(tag.value());
-			xml.writeEndElement(/*tag*/);
 		}
-		xml.writeEndElement(/*tags*/);
 	}
 	
-	xml.writeStartElement("coords");
-	int num_coords = (int)coords.size();
-	xml.writeAttribute("count", QString::number(num_coords));
-	for (int i = 0; i < num_coords; i++)
-		coords[i].save(xml);
-	xml.writeEndElement(/*coords*/);
+	{
+		// Scope of coords XML element
+		XmlElementWriter coords_element(xml, literal::coords);
+		int num_coords = (int)coords.size();
+		coords_element.writeAttribute(literal::count, num_coords);
+		for (int i = 0; i < num_coords; i++)
+			coords[i].save(xml);
+	}
 	
 	if (type == Path)
 	{
 		const PathObject* path = reinterpret_cast<const PathObject*>(this);
-		xml.writeStartElement("pattern");
-		xml.writeAttribute("rotation", QString::number(path->getPatternRotation()));
+		XmlElementWriter pattern_element(xml, literal::pattern);
+		pattern_element.writeAttribute(literal::rotation, path->getPatternRotation());
 		path->getPatternOrigin().save(xml);
-		xml.writeEndElement(/*pattern*/);
 	}
 	else if (type == Text)
 	{
 		const TextObject* text = reinterpret_cast<const TextObject*>(this);
-		xml.writeTextElement("text", text->getText());
+		xml.writeTextElement(literal::text, text->getText());
 	}
-	
-	xml.writeEndElement(/*object*/);
 }
 
 Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& symbol_dict, Symbol* symbol) throw (FileFormatException)
 {
-	Q_ASSERT(xml.name() == "object");
+	Q_ASSERT(xml.name() == literal::object);
 	
-	QXmlStreamAttributes attributes(xml.attributes());
+	XmlElementReader object_element(xml);
 	
-	int object_type = attributes.value("type").toString().toInt();
-	Object* object = Object::getObjectForType(static_cast<Object::Type>(object_type));
+	Object::Type object_type = object_element.attribute<Object::Type>(literal::type);
+	Object* object = Object::getObjectForType(object_type);
 	if (!object)
 		throw FileFormatException(ImportExport::tr("Error while loading an object of type %1.").arg(object_type));
 	
@@ -340,7 +361,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		object->symbol = symbol;
 	else
 	{
-		QString symbol_id = attributes.value("symbol").toString();
+		QString symbol_id =  object_element.attribute<QString>(literal::symbol);
 		object->symbol = symbol_dict[symbol_id]; // FIXME: cannot work for forward references
 		// NOTE: object->symbol may be NULL.
 	}
@@ -350,58 +371,62 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		PointObject* point = reinterpret_cast<PointObject*>(object);
 		PointSymbol* point_symbol = reinterpret_cast<PointSymbol*>(point->getSymbol());
 		if (point_symbol && point_symbol->isRotatable())
-			point->setRotation(attributes.value("rotation").toString().toFloat());
+			point->setRotation(object_element.attribute<float>(literal::rotation));
 		else if (!point_symbol)
 			throw FileFormatException(ImportExport::tr("Point object with undefined or wrong symbol at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
 	}
 	else if (object_type == Text)
 	{
 		TextObject* text = reinterpret_cast<TextObject*>(object);
-		text->setRotation(attributes.value("rotation").toString().toFloat());
-		text->setHorizontalAlignment(static_cast<TextObject::HorizontalAlignment>(attributes.value("h_align").toString().toInt()));
-		text->setVerticalAlignment(static_cast<TextObject::VerticalAlignment>(attributes.value("v_align").toString().toInt()));
+		text->setRotation(object_element.attribute<float>(literal::rotation));
+		text->setHorizontalAlignment(object_element.attribute<TextObject::HorizontalAlignment>(literal::h_align));
+		text->setVerticalAlignment(object_element.attribute<TextObject::VerticalAlignment>(literal::v_align));
 	}
 	
 	while (xml.readNextStartElement())
 	{
-		if (xml.name() == "coords")
+		if (xml.name() == literal::coords)
 		{
-			int num_coords = xml.attributes().value("count").toString().toInt();
+			XmlElementReader coords_element(xml);
+			
+			const int num_coords = coords_element.attribute<int>(literal::count);
 			object->coords.clear();
-			object->coords.reserve(qMin(num_coords, 20)); // 20 is not a limit
+			object->coords.reserve(qMin(num_coords, 5000)); // 5000 is not a limit
 			for (int i = 0; xml.readNextStartElement(); i++)
 			{
-				if (xml.name() == "coord")
+				if (xml.name() == MapCoordLiteral::coord)
 					object->coords.push_back(MapCoord::load(xml));
 				else
 					xml.skipCurrentElement();
 			}
 		}
-		else if (xml.name() == "pattern" && object_type == Path)
+		else if (xml.name() == literal::pattern && object_type == Path)
 		{
+			XmlElementReader element(xml);
+			
 			PathObject* path = reinterpret_cast<PathObject*>(object);
-			path->setPatternRotation(xml.attributes().value("rotation").toString().toFloat());
+			path->setPatternRotation(element.attribute<float>(literal::rotation));
 			while (xml.readNextStartElement())
 			{
-				if (xml.name() == "coord")
+				if (xml.name() == MapCoordLiteral::coord)
 					path->setPatternOrigin(MapCoord::load(xml));
 				else
 					xml.skipCurrentElement(); // unknown
 			}
 		}
-		else if (xml.name() == "text" && object_type == Text)
+		else if (xml.name() == literal::text && object_type == Text)
 		{
 			TextObject* text = reinterpret_cast<TextObject*>(object);
 			text->setText(xml.readElementText());
 		}
-		else if (xml.name() == "tags")
+		else if (xml.name() == literal::tags)
 		{
 			object->object_tags.clear();
 			while (xml.readNextStartElement())
 			{
-				if (xml.name() == "tag")
+				if (xml.name() == literal::tag)
 				{
-					const QString key(xml.attributes().value("key").toString());
+					const QString key(xml.attributes().value(literal::key).toString());
 					object->object_tags.insert(key, xml.readElementText());
 				}
 				else

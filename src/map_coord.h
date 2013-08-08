@@ -30,6 +30,9 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "util/xml_stream_util.h"
+
+
 /**
  * Coordinates of a point in a map, defined in native map coordinates,
  * with optional flags about the type of the point.
@@ -289,29 +292,11 @@ public:
 	}
 	
 	/** Saves the MapCoord in xml format to the stream. */
-	void save(QXmlStreamWriter& xml) const
-	{
-		xml.writeStartElement("coord");
-		xml.writeAttribute("x", QString::number(rawX()));
-		xml.writeAttribute("y", QString::number(rawY()));
-		int flags = getFlags();
-		if (flags != 0)
-			xml.writeAttribute("flags", QString::number(flags));
-		xml.writeEndElement(/*coord*/);
-	}
+	void save(QXmlStreamWriter& xml) const;
 	
 	/** Loads the MapCoord in xml format from the stream. */
-	static MapCoord load(QXmlStreamReader& xml)
-	{
-		Q_ASSERT(xml.name() == "coord");
-		MapCoord coord;
-		coord.setRawX(xml.attributes().value("x").toString().toLongLong());
-		coord.setRawY(xml.attributes().value("y").toString().toLongLong());
-		coord.setFlags(xml.attributes().value("flags").toString().toInt());
-		xml.skipCurrentElement();
-		return coord;
-	}
-
+	static MapCoord load(QXmlStreamReader& xml);
+	
 private:
 	qint64 x;
 	qint64 y;
@@ -604,6 +589,73 @@ inline void mapCoordVectorToF(const MapCoordVector& coords, MapCoordVectorF& out
 	out_coordsF.resize(size);
 	for (int i = 0; i < size; ++i)
 		out_coordsF[i] = MapCoordF(coords[i]);
+}
+
+
+
+/**
+ * @brief Local namespace for \c QLatin1String constants
+ * 
+ * This namespace collects various \c QLatin1String constants in map_coord.h.
+ * The namespace \link literal \endlink cannot be used directly in the
+ * map_coord.h header because it would easily lead to name conflicts
+ * in including files. However, MapCoordLiteral can be aliased to \c literal
+ * locally in method definitions:
+ * 
+ * \code
+ * void someFuntion()
+ * {
+ *     namespace literal = MapCoordLiteral;
+ *     writeAttribute(literal::x, 37.0);
+ * }
+ * \endcode
+ * 
+ * @sa literal
+ */
+namespace MapCoordLiteral
+{
+	static const QLatin1String coord("coord");
+	static const QLatin1String x("x");
+	static const QLatin1String y("y");
+	static const QLatin1String flags("flags");
+}
+
+
+
+//### MapCoord inline code ###
+
+inline
+void MapCoord::save(QXmlStreamWriter& xml) const
+{
+	namespace literal = MapCoordLiteral;
+	
+	XmlElementWriter element(xml, literal::coord);
+	element.writeAttribute(literal::x, rawX());
+	element.writeAttribute(literal::y, rawY());
+	int flags = getFlags();
+	if (flags)
+	{
+		element.writeAttribute(literal::flags, flags);
+	}
+}
+
+inline
+MapCoord MapCoord::load(QXmlStreamReader& xml)
+{
+	namespace literal = MapCoordLiteral;
+	
+	XmlElementReader element(xml);
+	qint64 x = element.attribute<qint64>(literal::x);
+	qint64 y = element.attribute<qint64>(literal::y);
+	MapCoord coord = MapCoord::fromRaw(x, y);
+	
+	int flags = element.attribute<int>(literal::flags);
+	if (flags)
+	{
+		coord.setFlags(flags);
+	}
+	
+	return coord;
 }
 
 #endif

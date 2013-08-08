@@ -111,7 +111,7 @@ public:
 	MapPrinterConfig(const Map& map, QXmlStreamReader& xml);
 	
 	/** Saves the map print parameters to an XML stream. */
-	void save(QXmlStreamWriter& xml, const QString& element_name) const;
+	void save(QXmlStreamWriter& xml, const QLatin1String& element_name) const;
 	
 	/** The name of the printer. */
 	QString printer_name;
