@@ -211,6 +211,17 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	view->applyTransform(&painter);
 	map()->draw(&painter, extent, true, view->calculateFinalZoomFactor(), true, true);
 	
+	// Temporarily enable baseline view and draw map again.
+	// This makes it possible to fill areas bounded by e.g. dashed paths.
+	if (!map()->isBaselineViewEnabled())
+	{
+		map()->setBaselineViewEnabled(true);
+		map()->updateAllObjects();
+		map()->draw(&painter, extent, true, view->calculateFinalZoomFactor(), true, true);
+		map()->setBaselineViewEnabled(false);
+		map()->updateAllObjects();
+	}
+	
 	out_transform = painter.combinedTransform();
 	painter.end();
 	delete view;
