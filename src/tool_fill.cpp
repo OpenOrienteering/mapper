@@ -107,7 +107,7 @@ void FillTool::clickPress()
 		QMessageBox::warning(
 			window(),
 			tr("Error"),
-			tr("The clicked area is not bounded, cannot fill this area.")
+			tr("The clicked area is not bounded by lines or areas, cannot fill this area.")
 		);
 		return;
 	}
@@ -156,7 +156,7 @@ void FillTool::clickPress()
 		}
 		
 		// Create fill object
-		if (!fillBoundary(boundary, transform.inverted()))
+		if (!fillBoundary(image, boundary, transform.inverted()))
 		{
 			QMessageBox::warning(
 				window(),
@@ -170,13 +170,13 @@ void FillTool::clickPress()
 	QMessageBox::warning(
 		window(),
 		tr("Error"),
-		tr("The clicked area is not bounded, cannot fill this area.")
+		tr("The clicked area is not bounded by lines or areas, cannot fill this area.")
 	);
 }
 
 void FillTool::updateStatusText()
 {
-	setStatusBarText(tr("<b>Click</b>: Fill area with active symbol. "));
+	setStatusBarText(tr("<b>Click</b>: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. "));
 }
 
 void FillTool::objectSelectionChangedImpl()
@@ -217,7 +217,7 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	// Draw map
 	painter.translate(image_size.width() / 2.0, image_size.height() / 2.0);
 	view->applyTransform(&painter);
-	map()->draw(&painter, extent, true, view->calculateFinalZoomFactor(), true, true);
+	drawObjectIDs(map(), &painter, extent, view->calculateFinalZoomFactor());
 	
 	// Temporarily enable baseline view and draw map again.
 	// This makes it possible to fill areas bounded by e.g. dashed paths.
@@ -225,7 +225,7 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	{
 		map()->setBaselineViewEnabled(true);
 		map()->updateAllObjects();
-		map()->draw(&painter, extent, true, view->calculateFinalZoomFactor(), true, true);
+		drawObjectIDs(map(), &painter, extent, view->calculateFinalZoomFactor());
 		map()->setBaselineViewEnabled(false);
 		map()->updateAllObjects();
 	}
@@ -234,6 +234,26 @@ QImage FillTool::rasterizeMap(const QRectF& extent, QTransform& out_transform)
 	painter.end();
 	delete view;
 	return image;
+}
+
+void FillTool::drawObjectIDs(Map* map, QPainter* painter, QRectF bounding_box, float scaling)
+{
+	MapPart* part = map->getCurrentPart();
+	for (int o = 0, num_objects = part->getNumObjects(); o < num_objects; ++o)
+	{
+		Object* object = part->getObject(o);
+		if (object->getType() != Object::Path)
+			continue;
+		
+		object->update();
+		object->renderables().draw(
+			qRgb(o % 256, (o / 256) % 256, (o / (256 * 256)) % 256),
+			painter,
+			bounding_box,
+			true,
+			scaling
+		);
+	}
 }
 
 bool FillTool::traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel, std::vector< QPoint >& out_boundary)
@@ -304,18 +324,32 @@ bool FillTool::traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel
 	return inside;
 }
 
-bool FillTool::fillBoundary(const std::vector< QPoint >& boundary, QTransform image_to_map)
+bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& boundary, QTransform image_to_map)
 {
+	// Test of simpler implementation,
+	// does not work properly like this (would need fixing of path->simplify() and dilatation of path)
+// 	PathObject* path = new PathObject(last_used_symbol);
+// 	for (size_t b = 0, end = boundary.size(); b < end; ++b)
+// 		path->addCoordinate(MapCoordF(image_to_map.map(QPointF(boundary[b]))).toMapCoord());
+// 	path->closeAllParts();
+// 	
+// 	path->convertToCurves();
+// 	path->simplify();
+	
 	// Create PathSection vector
 	std::vector< PathSection > sections;
-	SnappingToolHelper snap_helper(map(), SnappingToolHelper::ObjectPaths);
-	SnappingToolHelperSnapInfo snap_info;
 	for (size_t b = 0, end = boundary.size(); b < end; ++b)
 	{
-		MapCoordF map_pos = MapCoordF(image_to_map.map(QPointF(boundary[b])));
-		snap_helper.snapToObject(map_pos, cur_map_widget, &snap_info, NULL, std::numeric_limits<float>::max());
-		if (snap_info.type != SnappingToolHelper::ObjectPaths)
+		QRgb color = image.pixel(boundary[b]);
+		if (qAlpha(color) == 0)
 			continue;
+		int object_index = qRed(color) + 256 * qGreen(color) + (256 * 256) * qBlue(color);
+		PathObject* path = map()->getCurrentPart()->getObject(object_index)->asPath();
+		
+		MapCoordF map_pos = MapCoordF(image_to_map.map(QPointF(boundary[b])));
+		float distance_sq;
+		PathCoord path_coord;
+		path->calcClosestPointOnPath(map_pos, distance_sq, path_coord);
 		
 		// Insert snap info into sections vector.
 		// Start new section if this is the first section,
@@ -324,21 +358,21 @@ bool FillTool::fillBoundary(const std::vector< QPoint >& boundary, QTransform im
 		// or if the clen advancement is more than a magic factor times the pixel advancement
 		bool start_new_section =
 			sections.empty()
-			|| sections.back().object != snap_info.object
-			|| (sections.back().end_clen - sections.back().start_clen) * (snap_info.path_coord.clen - sections.back().end_clen) < 0
-			|| qAbs(snap_info.path_coord.clen - sections.back().end_clen) > 5 * (map_pos.lengthTo(MapCoordF(image_to_map.map(QPointF(boundary[b - 1])))));
+			|| sections.back().object != path
+			|| (sections.back().end_clen - sections.back().start_clen) * (path_coord.clen - sections.back().end_clen) < 0
+			|| qAbs(path_coord.clen - sections.back().end_clen) > 5 * (map_pos.lengthTo(MapCoordF(image_to_map.map(QPointF(boundary[b - 1])))));
 		
 		if (start_new_section)
 		{
 			PathSection new_section;
-			new_section.object = snap_info.object->asPath();
-			new_section.start_clen = snap_info.path_coord.clen;
-			new_section.end_clen = snap_info.path_coord.clen;
+			new_section.object = path;
+			new_section.start_clen = path_coord.clen;
+			new_section.end_clen = path_coord.clen;
 			sections.push_back(new_section);
 		}
 		else
 		{
-			sections.back().end_clen = snap_info.path_coord.clen;
+			sections.back().end_clen = path_coord.clen;
 		}
 	}
 	

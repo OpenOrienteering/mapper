@@ -166,6 +166,14 @@ public:
 	void deleteRenderables();
 	void takeRenderables();
 	
+	/**
+	 * Draws all renderables in this container directly with the given color.
+	 * May e.g. be used to encode object ids as colors.
+	 */
+	void draw(const QColor& color,
+		QPainter* painter, QRectF bounding_box,
+		bool force_min_size, float scaling) const;
+	
 	void setClipPath(QPainterPath* path);
 	inline QPainterPath* getClipPath() const {return clip_path;}
 	

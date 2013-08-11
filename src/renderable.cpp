@@ -162,6 +162,75 @@ ObjectRenderables::~ObjectRenderables()
 {
 }
 
+void ObjectRenderables::draw(const QColor& color, QPainter* painter, QRectF bounding_box, bool force_min_size, float scaling) const
+{
+	QPainterPath initial_clip = painter->clipPath();
+	bool no_initial_clip = initial_clip.isEmpty();
+	const QPainterPath* current_clip = NULL;
+	
+	painter->save();
+	
+	for (const_iterator object_it = begin(); object_it != end(); ++object_it)
+	{
+		SharedRenderables::const_iterator it_end = object_it->second->end();
+		for (SharedRenderables::const_iterator it = object_it->second->begin(); it != it_end; ++it)
+		{
+			const RenderStates& new_states = it->first;
+			float pen_width = new_states.pen_width;
+			
+			if (new_states.mode == RenderStates::PenOnly)
+			{
+				bool pen_too_small = (force_min_size && pen_width * scaling <= 1.0f);
+				painter->setPen(QPen(color, pen_too_small ? 0 : pen_width));
+				
+				painter->setBrush(QBrush(Qt::NoBrush));
+			}
+			else if (new_states.mode == RenderStates::BrushOnly)
+			{
+				QBrush brush(color);
+				
+				painter->setPen(QPen(Qt::NoPen));
+				painter->setBrush(brush);
+			}
+			
+			if (current_clip != new_states.clip_path)
+			{
+				if (no_initial_clip)
+				{
+					if (new_states.clip_path)
+						painter->setClipPath(*new_states.clip_path, Qt::ReplaceClip);
+					else
+						painter->setClipPath(initial_clip, Qt::NoClip);
+				}
+				else
+				{
+					painter->setClipPath(initial_clip, Qt::ReplaceClip);
+					if (new_states.clip_path)
+						painter->setClipPath(*new_states.clip_path, Qt::IntersectClip);
+				}
+				current_clip = new_states.clip_path;
+			}
+				
+			RenderableVector::const_iterator r_end = it->second.end();
+			for (RenderableVector::const_iterator renderable = it->second.begin(); renderable != r_end; ++renderable)
+			{
+				// Bounds check
+				const QRectF& extent = (*renderable)->getExtent();
+				// NOTE: !bounding_box.intersects(extent) should be logical equivalent to the following
+				if (extent.right() < bounding_box.x())	continue;
+				if (extent.bottom() < bounding_box.y())	continue;
+				if (extent.x() > bounding_box.right())	continue;
+				if (extent.y() > bounding_box.bottom())	continue;
+				
+				// Render the renderable
+				(*renderable)->render(*painter, bounding_box, force_min_size, scaling, true);
+			}
+		}
+	}
+	
+	painter->restore();
+}
+
 void ObjectRenderables::setClipPath(QPainterPath* path)
 {
 	clip_path = path;

@@ -56,8 +56,9 @@ protected:
 	virtual void clickPress();
 	
 	QImage rasterizeMap(const QRectF& extent, QTransform& out_transform);
+	void drawObjectIDs(Map* map, QPainter* painter, QRectF bounding_box, float scaling);
 	bool traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel, std::vector< QPoint >& out_boundary);
-	bool fillBoundary(const std::vector< QPoint >& boundary, QTransform image_to_map);
+	bool fillBoundary(const QImage& image, const std::vector< QPoint >& boundary, QTransform image_to_map);
 	
 	SymbolWidget* symbol_widget;
 	Symbol* last_used_symbol;
