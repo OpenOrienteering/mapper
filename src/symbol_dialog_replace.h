@@ -69,6 +69,7 @@ private:
 	QCheckBox* import_all_check;
 	QCheckBox* delete_unused_symbols_check;
 	QCheckBox* delete_unused_colors_check;
+	QCheckBox* preserve_symbol_states_check;
 	QCheckBox* match_by_number_check;
 	QTableWidget* mapping_table;
 	std::vector<SymbolDropDownDelegate*> symbol_widget_delegates;

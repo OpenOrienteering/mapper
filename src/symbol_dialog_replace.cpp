@@ -50,6 +50,8 @@ ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map* map, Map* s
 	delete_unused_colors_check->setChecked(true);
 	
 	QLabel* mapping_label = new QLabel(tr("Symbol mapping:"));
+	preserve_symbol_states_check = new QCheckBox(tr("Keep the symbols' hidden / protected states of the old symbol set"));
+	preserve_symbol_states_check->setChecked(true);
 	match_by_number_check = new QCheckBox(tr("Match replacement symbols by symbol number"));
 	match_by_number_check->setChecked(true);
 	
@@ -77,6 +79,7 @@ ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map* map, Map* s
 	layout->addWidget(delete_unused_colors_check);
 	layout->addSpacing(16);
 	layout->addWidget(mapping_label);
+	layout->addWidget(preserve_symbol_states_check);
 	layout->addWidget(match_by_number_check);
 	layout->addWidget(mapping_table);
 	layout->addSpacing(16);
@@ -172,9 +175,17 @@ void ReplaceSymbolSetDialog::apply()
 		}
 	}
 	map->importMap(symbol_map, Map::MinimalSymbolImport, this, symbol_filter, -1, false, &import_symbol_map);
-	if (!import_all_check->isChecked())
+	delete symbol_filter;
+	
+	// Take over hidden / protected states from old symbol set?
+	if (preserve_symbol_states_check->isChecked())
 	{
-		delete symbol_filter;
+		for (QHash<Symbol*, Symbol*>::iterator it = mapping.begin(), end = mapping.end(); it != end; ++it)
+		{
+			Symbol* target_symbol = import_symbol_map.value(it.value());
+			target_symbol->setHidden(it.key()->isHidden());
+			target_symbol->setProtected(it.key()->isProtected());
+		}
 	}
 	
 	// Change symbols for all objects
