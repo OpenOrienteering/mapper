@@ -138,7 +138,15 @@ void FillTool::clickPress()
 		if (!traceBoundary(image, start_pixel, test_pixel, boundary))
 		{
 			// The outline does not contain start_pixel.
-			// Skip over the floating object.
+			// Jump to the rightmost pixel of the boundary with same y as the start.
+			for (size_t b = 0, size = boundary.size(); b < size; ++b)
+			{
+				if (boundary[b].y() == start_pixel.y()
+					&& boundary[b].x() > start_pixel.x())
+					start_pixel = boundary[b];
+			}
+			
+			// Skip over the rest of the floating object.
 			start_pixel += QPoint(1, 0);
 			while (start_pixel.x() < image.width() - 1
 				&& qAlpha(image.pixel(start_pixel)) > 0)
@@ -290,7 +298,7 @@ bool FillTool::traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel
 	{
 		if ( ((out_boundary[i].y() > start_pixel.y()) != (out_boundary[j].y() > start_pixel.y())) &&
 			(start_pixel.x() < (out_boundary[j].x() - out_boundary[i].x()) *
-			(start_pixel.y() - out_boundary[i].y()) / (out_boundary[j].y() - out_boundary[i].y()) + out_boundary[i].x()) )
+			(start_pixel.y() - out_boundary[i].y()) / (float)(out_boundary[j].y() - out_boundary[i].y()) + out_boundary[i].x()) )
 			inside = !inside;
 	}
 	return inside;
