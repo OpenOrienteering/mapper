@@ -1187,43 +1187,64 @@ bool PathObject::connectIfClose(PathObject* other, double connect_threshold_sq)
 	return did_connect_path;
 }
 
-void PathObject::connectPathParts(int part_index, PathObject* other, int other_part_index, bool prepend)
+void PathObject::connectPathParts(int part_index, PathObject* other, int other_part_index, bool prepend, bool merge_ends)
 {
+	assert(part_index < (int)parts.size());
 	PathPart& part = parts[part_index];
 	PathPart& other_part = other->parts[other_part_index];
 	assert(!part.isClosed() && !other_part.isClosed());
 	
 	int other_part_size = other_part.getNumCoords();
-	coords.resize(coords.size() + other_part_size - 1);
+	int appended_part_size = other_part_size - (merge_ends ? 1 : 0);
+	coords.resize(coords.size() + appended_part_size);
 	
 	if (prepend)
 	{
-		for (int i = (int)coords.size() - 1; i >= part.start_index + (other_part_size - 1); --i)
-			coords[i] = coords[i - (other_part_size - 1)];
+		for (int i = (int)coords.size() - 1; i >= part.start_index + appended_part_size; --i)
+			coords[i] = coords[i - appended_part_size];
 		
-		MapCoord& join_coord = coords[part.start_index + other_part_size - 1];
-		join_coord.setRawX((join_coord.rawX() + other->coords[other_part.end_index].rawX()) / 2);
-		join_coord.setRawY((join_coord.rawY() + other->coords[other_part.end_index].rawY()) / 2);
+		MapCoord& join_coord = coords[part.start_index + appended_part_size];
+		if (merge_ends)
+		{
+			join_coord.setRawX((join_coord.rawX() + other->coords[other_part.end_index].rawX()) / 2);
+			join_coord.setRawY((join_coord.rawY() + other->coords[other_part.end_index].rawY()) / 2);
+		}
 		join_coord.setHolePoint(false);
 		join_coord.setClosePoint(false);
 		
-		for (int i = part.start_index; i < part.start_index + other_part_size - 1; ++i)
+		for (int i = part.start_index; i < part.start_index + appended_part_size; ++i)
 			coords[i] = other->coords[i - part.start_index + other_part.start_index];
+		
+		if (!merge_ends)
+		{
+			MapCoord& second_join_coord = coords[part.start_index + appended_part_size - 1];
+			second_join_coord.setHolePoint(false);
+			second_join_coord.setClosePoint(false);
+		}
 	}
 	else
 	{
-		MapCoord coord = other->coords[other_part.start_index];	// take flags from first coord of path to append
-		coord.setRawX((coords[part.end_index].rawX() + coord.rawX()) / 2);
-		coord.setRawY((coords[part.end_index].rawY() + coord.rawY()) / 2);
-		coords[part.end_index] = coord;
+		if (merge_ends)
+		{
+			MapCoord coord = other->coords[other_part.start_index];	// take flags from first coord of path to append
+			coord.setRawX((coords[part.end_index].rawX() + coord.rawX()) / 2);
+			coord.setRawY((coords[part.end_index].rawY() + coord.rawY()) / 2);
+			coords[part.end_index] = coord;
+		}
+		else
+		{
+			coords[part.end_index].setHolePoint(false);
+			coords[part.end_index].setClosePoint(false);
+		}
 		
-		for (int i = (int)coords.size() - 1; i > part.end_index + (other_part_size - 1); --i)
-			coords[i] = coords[i - (other_part_size - 1)];
-		for (int i = part.end_index + 1; i <= part.end_index + (other_part_size - 1); ++i)
-			coords[i] = other->coords[i - part.end_index + other_part.start_index];
+		for (int i = (int)coords.size() - 1; i > part.end_index + appended_part_size; --i)
+			coords[i] = coords[i - appended_part_size];
+		for (int i = part.end_index + 1; i <= part.end_index + appended_part_size; ++i)
+			coords[i] = other->coords[i - part.end_index + other_part.start_index - (merge_ends ? 0 : 1)];
 	}
 	
-	partSizeChanged(part_index, other_part_size - 1);
+	partSizeChanged(part_index, appended_part_size);
+	assert(!parts[part_index].isClosed());
 }
 
 void PathObject::splitAt(const PathCoord& split_pos, Object*& out1, Object*& out2)

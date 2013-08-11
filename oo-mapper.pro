@@ -70,6 +70,7 @@ HEADERS += \
   src/tool_edit.h \
   src/tool_edit_point.h \
   src/tool_edit_line.h \
+  src/tool_fill.h \
   src/tool_helpers.h \
   src/tool_pan.h \
   src/tool_rotate.h \
@@ -178,6 +179,7 @@ SOURCES += \
   src/tool_rotate_pattern.cpp \
   src/tool_scale.cpp \
   src/tool_boolean.cpp \
+  src/tool_fill.cpp \
   src/gps_coordinates.cpp \
   src/gps_track.cpp \
   src/dxfparser.cpp \

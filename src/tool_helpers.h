@@ -258,9 +258,13 @@ public:
 	 * draw the snap mark there.
 	 * 
 	 * If the info parameter is set, information about the object
-	 * snapped onto is returned there.
+	 * snapped onto is returned there. The snap_distance parameter can be
+	 * used to set the maximum snap distance. If it is negative,
+	 * the corresponding application setting will be used.
+	 * 
+	 * TODO: widget parameter is only used for getMapView(). Replace by view parameter?
 	 */
-	MapCoord snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info = NULL, Object* exclude_object = NULL);
+	MapCoord snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info = NULL, Object* exclude_object = NULL, float snap_distance = -1);
 	
 	/**
 	 * Checks for existing objects in map at position and if one is found,

@@ -299,6 +299,8 @@ public slots:
 	void drawCircleClicked();
 	/** Activates the draw rectangle tool. */
 	void drawRectangleClicked();
+	/** Activates the draw fill tool. */
+	void drawFillClicked();
 	/** Activates the draw text tool. */
 	void drawTextClicked();
 	
@@ -471,6 +473,7 @@ private:
 	QAction* draw_path_act;
 	QAction* draw_circle_act;
 	QAction* draw_rectangle_act;
+	QAction* draw_fill_act;
 	QAction* draw_text_act;
 	
 	QAction* duplicate_act;

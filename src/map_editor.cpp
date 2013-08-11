@@ -71,6 +71,7 @@
 #include "tool_draw_text.h"
 #include "tool_edit_point.h"
 #include "tool_edit_line.h"
+#include "tool_fill.h"
 #include "tool_pan.h"
 #include "tool_rotate.h"
 #include "tool_rotate_pattern.h"
@@ -527,6 +528,7 @@ void MapEditorController::createMenuAndToolbars()
 	draw_path_act = newToolAction("drawpath", tr("Draw paths"), this, SLOT(drawPathClicked()), "draw-path.png", QString::null, "toolbars.html#tool_draw_path");
 	draw_circle_act = newToolAction("drawcircle", tr("Draw circles and ellipses"), this, SLOT(drawCircleClicked()), "draw-circle.png", QString::null, "toolbars.html#tool_draw_circle");
 	draw_rectangle_act = newToolAction("drawrectangle", tr("Draw rectangles"), this, SLOT(drawRectangleClicked()), "draw-rectangle.png", QString::null, "toolbars.html#tool_draw_rectangle");
+	draw_fill_act = newToolAction("drawfill", tr("Fill bounded areas"), this, SLOT(drawFillClicked()), "tool-fill.png", QString::null, "toolbars.html#tool_draw_fill"); // TODO: documentation
 	draw_text_act = newToolAction("drawtext", tr("Write text"), this, SLOT(drawTextClicked()), "draw-text.png", QString::null, "toolbars.html#tool_draw_text");
 	duplicate_act = newAction("duplicate", tr("Duplicate"), this, SLOT(duplicateClicked()), "tool-duplicate.png", QString::null, "toolbars.html#duplicate");
 	switch_symbol_act = newAction("switchsymbol", tr("Switch symbol"), this, SLOT(switchSymbolClicked()), "tool-switch-symbol.png", QString::null, "toolbars.html#switch_symbol");
@@ -656,6 +658,7 @@ void MapEditorController::createMenuAndToolbars()
 	tools_menu->addAction(draw_path_act);
 	tools_menu->addAction(draw_circle_act);
 	tools_menu->addAction(draw_rectangle_act);
+	tools_menu->addAction(draw_fill_act);
 	tools_menu->addAction(draw_text_act);
 	tools_menu->addAction(duplicate_act);
 	tools_menu->addAction(switch_symbol_act);
@@ -776,6 +779,7 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_drawing->addAction(draw_path_act);
 	toolbar_drawing->addAction(draw_circle_act);
 	toolbar_drawing->addAction(draw_rectangle_act);
+	toolbar_drawing->addAction(draw_fill_act);
 	toolbar_drawing->addAction(draw_text_act);
 	toolbar_drawing->addSeparator();
 	
@@ -1410,6 +1414,8 @@ void MapEditorController::selectedSymbolsChanged()
 	draw_circle_act->setStatusTip(tr("Draw circles and ellipses.") + (draw_circle_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
 	draw_rectangle_act->setEnabled(draw_path_act->isEnabled());
 	draw_rectangle_act->setStatusTip(tr("Draw rectangles.") + (draw_rectangle_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
+	draw_fill_act->setEnabled(draw_path_act->isEnabled());
+	draw_fill_act->setStatusTip(tr("Fill bounded areas.") + (draw_fill_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
 	draw_text_act->setEnabled(type == Symbol::Text && !symbol->isHidden());
 	draw_text_act->setStatusTip(tr("Write text on the map.") + (draw_text_act->isEnabled() ? "" : (" " + tr("Select a text symbol to be able to use this tool."))));
 	
@@ -1632,6 +1638,11 @@ void MapEditorController::drawCircleClicked()
 void MapEditorController::drawRectangleClicked()
 {
 	setTool(new DrawRectangleTool(this, draw_rectangle_act, symbol_widget));
+}
+
+void MapEditorController::drawFillClicked()
+{
+	setTool(new FillTool(this, draw_fill_act, symbol_widget));
 }
 
 void MapEditorController::drawTextClicked()

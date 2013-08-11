@@ -542,11 +542,11 @@ public:
 	bool connectIfClose(PathObject* other, double connect_threshold_sq);
 	
 	/**
-	 * Connects the given parts, merging the end coordinates at the
-	 * center position and copying over the coordindates from other.
+	 * Connects the given parts, optionally merging the end coordinates at the
+	 * center position, and copying over the coordindates from other.
 	 */
 	void connectPathParts(int part_index, PathObject* other,
-						  int other_part_index, bool prepend);
+						  int other_part_index, bool prepend, bool merge_ends = true);
 	
 	/**
 	 * Splits the path into up to two parts at the given position.

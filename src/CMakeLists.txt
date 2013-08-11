@@ -105,6 +105,7 @@ set(Mapper_Common_SRCS
  tool_rotate_pattern.cpp
  tool_scale.cpp
  tool_boolean.cpp
+ tool_fill.cpp
 
  gps_coordinates.cpp
  gps_track.cpp
@@ -199,6 +200,7 @@ set(Mapper_Common_MOC_INPUT
  tool_edit.h
  tool_edit_point.h
  tool_edit_line.h
+ tool_fill.h
  tool_helpers.h
  tool_pan.h
  tool_rotate.h
