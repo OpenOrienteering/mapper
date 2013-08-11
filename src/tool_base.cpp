@@ -135,8 +135,8 @@ bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 	
 	if (dragging)
 	{
-		dragging = false;
 		dragMove();
+		dragging = false;
 		dragFinish();
 	}
 	else
