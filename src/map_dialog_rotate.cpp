@@ -68,6 +68,12 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 	other_center_layout->addWidget(other_y_edit, 1);
 	layout->addRow(other_center_layout);
 	
+	// There seems to be a problem with the size hint which makes the boxes
+	// take up huge amounts of horizontal space (tested with Qt 5.1.0).
+	// Setting the horizontal size policy to Ignored fixed it.
+ 	other_x_edit->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
+ 	other_y_edit->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
+	
 	
 	layout->addItem(Util::SpacerItem::create(this));
 	layout->addRow(Util::Headline::create(tr("Options")));
