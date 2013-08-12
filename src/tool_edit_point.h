@@ -22,6 +22,7 @@
 #define _OPENORIENTEERING_EDIT_POINT_TOOL_H_
 
 #include <QScopedPointer>
+#include <QElapsedTimer>
 
 #include "tool_edit.h"
 
@@ -97,6 +98,10 @@ protected:
 	
 	/** Checks if the cursor hovers over the selection frame. */
 	inline bool hoveringOverFrame() const {return hover_point == -1;}
+	
+	
+	/** Measures the time a click takes to decide whether to do selection. */
+	QElapsedTimer click_timer;
 	
 	/** Bounding box of the selection */
 	QRectF selection_extent;

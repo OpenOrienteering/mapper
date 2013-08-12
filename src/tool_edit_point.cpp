@@ -269,16 +269,25 @@ void EditPointTool::clickPress()
 		
 		updatePreviewObjects();
 	}
+	
+	click_timer.restart();
 }
 
 void EditPointTool::clickRelease()
 {
+	// Maximum time in milliseconds a click may take to cause
+	// a selection change if hovering over a handle / frame.
+	// If the click takes longer, it is assumed that the user
+	// wanted to move the objects instead and no selection change is done.
+	const int selection_click_time_threshold = 150;
+	
 	if (no_more_effect_on_click)
 	{
 		no_more_effect_on_click = false;
 		return;
 	}
-	if (hover_point >= -1)
+	if (hover_point >= -1
+		&& click_timer.elapsed() >= selection_click_time_threshold)
 		return;
 	
 	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();

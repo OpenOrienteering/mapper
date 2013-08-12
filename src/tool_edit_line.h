@@ -22,6 +22,7 @@
 #define _OPENORIENTEERING_EDIT_LINE_TOOL_H_
 
 #include <QScopedPointer>
+#include <QElapsedTimer>
 
 #include "tool_edit.h"
 
@@ -73,6 +74,10 @@ protected:
 	void toggleAngleHelper();
 	
 	inline bool hoveringOverFrame() const {return hover_line == -1;}
+	
+	
+	/** Measures the time a click takes to decide whether to do selection. */
+	QElapsedTimer click_timer;
 	
 	/** Bounding box of the selection */
 	QRectF selection_extent;
