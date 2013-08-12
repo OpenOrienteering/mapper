@@ -630,7 +630,7 @@ public:
 	
 	/** Changes the current map part. */
 	inline void setCurrentPart(MapPart* part) {setCurrentPart(findPartIndex(part));}
-	inline void setCurrentPart(int index) {current_part_index = index; emit currentMapPartChanged(index);}
+	void setCurrentPart(int index);
 
 	/** Returns the index of the current map part, see also getCurrentPart(). */
 	inline int getCurrentPartIndex() const {return current_part_index;}

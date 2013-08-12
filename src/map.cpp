@@ -1912,6 +1912,18 @@ int Map::findPartIndex(MapPart* part) const
 	return -1;
 }
 
+void Map::setCurrentPart(int index)
+{
+	Q_ASSERT(index >= 0 && index < (int)parts.size());
+	if (index == current_part_index)
+		return;
+	
+	clearObjectSelection(true);
+	
+	current_part_index = index;
+	emit currentMapPartChanged(index);
+}
+
 void Map::reassignObjectsToMapPart(QSet<Object*>::const_iterator begin, QSet<Object*>::const_iterator end, int destination)
 {
 	for (QSet<Object*>::const_iterator it = begin; it != end; it++) {

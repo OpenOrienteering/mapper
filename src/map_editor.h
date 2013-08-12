@@ -368,6 +368,8 @@ public slots:
 	void removeMapPart();
 	/** Sets the current map part */
 	void changeMapPart(int part);
+	/** Selects the given part in the selector box */
+	void selectMapPart(int part);
 	/** Moves all selected objects to a different map part */
 	void reassignObjectsToMapPart(int part);
 	/** Merges the current map part with another one */

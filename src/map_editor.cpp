@@ -2390,13 +2390,14 @@ void MapEditorController::addMapPart()
 		return;
 	MapPart* part = new MapPart(name, map);
 	int index = map->getCurrentPartIndex() + 1;
+	mappart_selector_box->insertItem(index, name);
 	map->addPart(part, index);
 	map->setCurrentPart(part);
+	
 	QAction* action = new QAction(name, this);
 	mappart_move_mapper->setMapping(action, index);
 	connect(action, SIGNAL(triggered()), mappart_move_mapper, SLOT(map()));
 	mappart_move_menu->addAction(action);
-	mappart_selector_box->insertItem(index, name);
 }
 
 void MapEditorController::removeMapPart()
@@ -2411,7 +2412,14 @@ void MapEditorController::removeMapPart()
 
 void MapEditorController::changeMapPart(int part)
 {
-	map->setCurrentPart(part);
+	if (part >= 0)
+		map->setCurrentPart(part);
+}
+
+void MapEditorController::selectMapPart(int part)
+{
+	if (window)
+		mappart_selector_box->setCurrentIndex(part);
 }
 
 void MapEditorController::reassignObjectsToMapPart(int part)
@@ -2523,6 +2531,7 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 	connect(map, SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
 	connect(map, SIGNAL(closedTemplateAvailabilityChanged()), this, SLOT(closedTemplateAvailabilityChanged()));
 	connect(map, SIGNAL(spotColorPresenceChanged(bool)), this, SLOT(spotColorPresenceChanged(bool)));
+	connect(map, SIGNAL(currentMapPartChanged(int)), this, SLOT(selectMapPart(int)));
 	if (symbol_widget)
 	{
 		connect(map, SIGNAL(symbolAdded(int,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*)));
