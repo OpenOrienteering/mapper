@@ -43,6 +43,10 @@ protected slots:
 	void symbolDeleted(int pos, Symbol* old_symbol);
 	
 protected:
+	/**
+	 * Helper structure used to represent a section of a traced path
+	 * while constructing the fill object.
+	 */
 	struct PathSection
 	{
 		PathObject* object;
@@ -56,9 +60,32 @@ protected:
 	
 	virtual void clickPress();
 	
+	/**
+	 * Rasterizes an area of the current map part with the given extent into an image.
+	 * Encodes object ids as colors, where the object with index 0 has color (0, 0, 0, 255),
+	 * the object with index 1 has (1, 0, 0, 255), and so on. The background is transparent.
+	 * Returns the image and the used map-to-image transform.
+	 */
 	QImage rasterizeMap(const QRectF& extent, QTransform& out_transform);
+	
+	/**
+	 * Helper method for rasterizeMap().
+	 */
 	void drawObjectIDs(Map* map, QPainter* painter, QRectF bounding_box, float scaling);
+	
+	/**
+	 * Traces the boundary around an "island" in the given image, starting from the
+	 * start_pixel / test_pixel pair, where start_pixel must reference a free (transparent)
+	 * pixel and test_pixel a 4-adjacent obstructed pixel of the island to trace.
+	 * Returns the found boundary as a vector of pixel positions. Returns false if the
+	 * tracing fails (e.g. because of running out of the image borders).
+	 */
 	bool traceBoundary(QImage image, QPoint start_pixel, QPoint test_pixel, std::vector< QPoint >& out_boundary);
+	
+	/**
+	 * Creates a fill object for the given image, boundary vector (of pixel positions) and transform.
+	 * Returns false if the creation fails.
+	 */
 	bool fillBoundary(const QImage& image, const std::vector< QPoint >& boundary, QTransform image_to_map);
 	
 	SymbolWidget* symbol_widget;
