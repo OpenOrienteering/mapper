@@ -46,6 +46,7 @@ protected:
 	struct PathSection
 	{
 		PathObject* object;
+		int part;
 		float start_clen;
 		float end_clen;
 	};

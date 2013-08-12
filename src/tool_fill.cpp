@@ -350,15 +350,18 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& bo
 		float distance_sq;
 		PathCoord path_coord;
 		path->calcClosestPointOnPath(map_pos, distance_sq, path_coord);
+		int part = path->findPartIndexForIndex(path_coord.index);
 		
 		// Insert snap info into sections vector.
 		// Start new section if this is the first section,
 		// if the object changed,
+		// if the part changed,
 		// if the clen advancing direction changes,
 		// or if the clen advancement is more than a magic factor times the pixel advancement
 		bool start_new_section =
 			sections.empty()
 			|| sections.back().object != path
+			|| sections.back().part != part
 			|| (sections.back().end_clen - sections.back().start_clen) * (path_coord.clen - sections.back().end_clen) < 0
 			|| qAbs(path_coord.clen - sections.back().end_clen) > 5 * (map_pos.lengthTo(MapCoordF(image_to_map.map(QPointF(boundary[b - 1])))));
 		
@@ -366,6 +369,7 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& bo
 		{
 			PathSection new_section;
 			new_section.object = path;
+			new_section.part = part;
 			new_section.start_clen = path_coord.clen;
 			new_section.end_clen = path_coord.clen;
 			sections.push_back(new_section);
@@ -425,7 +429,7 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& bo
 			|| section.end_clen > section.object->getPart(0).getLength())
 			continue;
 		
-		PathObject* part_copy = section.object->duplicatePart(0);
+		PathObject* part_copy = section.object->duplicatePart(section.part);
 		bool reverse = section.end_clen < section.start_clen;
 		part_copy->changePathBounds(0, reverse ? section.end_clen : section.start_clen, reverse ? section.start_clen : section.end_clen);
 		if (reverse)
