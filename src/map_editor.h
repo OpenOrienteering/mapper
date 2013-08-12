@@ -343,6 +343,8 @@ public slots:
 	void booleanDifferenceClicked();
 	/** Calculates the boolean XOr of selected same-symbol area objects */
 	void booleanXOrClicked();
+	/** Merges holes of the (single) selected area object */
+	void booleanMergeHolesClicked();
 	/** Converts selected polygonal paths to curves */
 	void convertToCurvesClicked();
 	/** Tries to remove points of selected paths while retaining their shape */
@@ -495,6 +497,7 @@ private:
 	QAction* boolean_intersection_act;
 	QAction* boolean_difference_act;
 	QAction* boolean_xor_act;
+	QAction* boolean_merge_holes_act;
 	QAction* convert_to_curves_act;
 	QAction* simplify_path_act;
 	QAction* cutout_physical_act;

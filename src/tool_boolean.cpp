@@ -44,7 +44,8 @@ bool BooleanTool::execute(BooleanTool::Operation op)
 
 	if (op != Difference)
 	{
-		// Find all groups (of at least two areas with the same symbol) to process
+		// Find all groups (of at least two areas with the same symbol) to process.
+		// (If op == MergeHoles, do not enforce at least two objects.)
 		Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 		for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
 		{
@@ -61,12 +62,15 @@ bool BooleanTool::execute(BooleanTool::Operation op)
 				}
 			}
 		}
-		for (ObjectGroups::iterator it = object_groups.begin(); it != object_groups.end();)
+		if (op != MergeHoles)
 		{
-			if (it.value().size() <= 1)
-				it = object_groups.erase(it);
-			else
-				++it;
+			for (ObjectGroups::iterator it = object_groups.begin(); it != object_groups.end();)
+			{
+				if (it.value().size() <= 1)
+					it = object_groups.erase(it);
+				else
+					++it;
+			}
 		}
 	}
 	else
@@ -192,9 +196,17 @@ bool BooleanTool::executeForObjects(BooleanTool::Operation op, PathObject* subje
 	else if (op == Intersection) clip_type = ctIntersection;
 	else if (op == Difference) clip_type = ctDifference;
 	else if (op == XOr) clip_type = ctXor;
+	else if (op == MergeHoles) clip_type = ctUnion;
 	else return false;
+	
+	PolyFillType fill_type;
+	if (op == MergeHoles)
+		fill_type = pftPositive;
+	else
+		fill_type = pftNonZero;
+	
 	PolyTree solution;
-	if (!clipper.Execute(clip_type, solution, pftNonZero, pftNonZero))
+	if (!clipper.Execute(clip_type, solution, fill_type, fill_type))
 		return false;
 	
 	// Try to convert the solution polygons to objects again

@@ -50,7 +50,8 @@ public:
 		Union = 0,
 		Intersection,
 		Difference,
-		XOr
+		XOr,
+		MergeHoles
 	};
 	
 	/** Constructs a boolean tool for the given map. */

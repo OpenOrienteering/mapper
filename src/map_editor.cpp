@@ -553,6 +553,7 @@ void MapEditorController::createMenuAndToolbars()
 	boolean_intersection_act = newAction("booleanintersection", tr("Intersect areas"), this, SLOT(booleanIntersectionClicked()), "tool-boolean-intersection.png", QString::null, "toolbars.html#intersect_areas");
 	boolean_difference_act = newAction("booleandifference", tr("Area difference"), this, SLOT(booleanDifferenceClicked()), "tool-boolean-difference.png", QString::null, "toolbars.html#area_difference");
 	boolean_xor_act = newAction("booleanxor", tr("Area XOr"), this, SLOT(booleanXOrClicked()), "tool-boolean-xor.png", QString::null, "toolbars.html#area_xor");
+	boolean_merge_holes_act = newAction("booleanmergeholes", tr("Merge area holes"), this, SLOT(booleanMergeHolesClicked()), "tool-boolean-merge-holes.png", QString::null, "toolbars.html#area_merge_holes"); // TODO:documentation
 	convert_to_curves_act = newAction("converttocurves", tr("Convert to curves"), this, SLOT(convertToCurvesClicked()), "tool-convert-to-curves.png", QString::null, "toolbars.html#convert_to_curves");
 	simplify_path_act = newAction("simplify", tr("Simplify path"), this, SLOT(simplifyPathClicked()), "tool-simplify-path.png", QString::null, "toolbars.html#simplify_path");
 	cutout_physical_act = newToolAction("cutoutphysical", tr("Cutout"), this, SLOT(cutoutPhysicalClicked()), "tool-cutout-physical.png", QString::null, "toolbars.html#cutout_physical");
@@ -669,6 +670,7 @@ void MapEditorController::createMenuAndToolbars()
 	tools_menu->addAction(boolean_intersection_act);
 	tools_menu->addAction(boolean_difference_act);
 	tools_menu->addAction(boolean_xor_act);
+	tools_menu->addAction(boolean_merge_holes_act);
 	tools_menu->addAction(cut_tool_act);
 	cut_hole_menu = new QMenu(tr("Cut hole"), tools_menu);
 	cut_hole_menu->setIcon(QIcon(":/images/tool-cut-hole.png"));
@@ -828,6 +830,7 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_advanced_editing->addAction(boolean_intersection_act);
 	toolbar_advanced_editing->addAction(boolean_difference_act);
 	toolbar_advanced_editing->addAction(boolean_xor_act);
+	toolbar_advanced_editing->addAction(boolean_merge_holes_act);
 }
 
 void MapEditorController::createPieMenu(PieMenu* menu)
@@ -1431,6 +1434,7 @@ void MapEditorController::objectSelectionChanged()
 	bool single_object_selected = map->getNumSelectedObjects() == 1;
 	bool have_line = false;
 	bool have_area = false;
+	bool have_area_with_holes = false;
 	bool have_rotatable_pattern = false;
 	bool have_rotatable_point = false;
 	int num_selected_areas = 0;
@@ -1472,6 +1476,7 @@ void MapEditorController::objectSelectionChanged()
 		{
 			have_area = true;
 			++num_selected_areas;
+			have_area_with_holes |= (*it)->asPath()->getNumParts() > 1;
 			if (!have_two_same_symbol_areas)
 			{
 				for (Map::ObjectSelection::const_iterator it2 = map->selectedObjectsBegin(); it2 != it; ++it2)
@@ -1535,6 +1540,8 @@ void MapEditorController::objectSelectionChanged()
 	boolean_difference_act->setStatusTip(tr("Subtract all other selected area objects from the first selected area object.") + (boolean_difference_act->isEnabled() ? "" : (" " + tr("Select at least two area objects to activate this tool."))));
 	boolean_xor_act->setEnabled(have_two_same_symbol_areas && uniform_symbol_selected);
 	boolean_xor_act->setStatusTip(tr("Calculate nonoverlapping parts of areas.") + (boolean_xor_act->isEnabled() ? "" : (" " + tr("Select at least two area objects with the same symbol to activate this tool."))));
+	boolean_merge_holes_act->setEnabled(single_object_selected && have_area_with_holes);
+	boolean_merge_holes_act->setStatusTip(tr("Merge area holes together, or merge holes with the object boundary to cut out this part.") + (boolean_xor_act->isEnabled() ? "" : (" " + tr("Select one area object with holes to activate this tool."))));
 	convert_to_curves_act->setEnabled(have_area || have_line);
 	convert_to_curves_act->setStatusTip(tr("Turn paths made of straight segments into smooth bezier splines.") + (convert_to_curves_act->isEnabled() ? "" : (" " + tr("Select a path object to activate this tool."))));
 	simplify_path_act->setEnabled(have_area || have_line);
@@ -2197,6 +2204,16 @@ void MapEditorController::booleanXOrClicked()
 	BooleanTool tool(map);
 	if (!tool.execute(BooleanTool::XOr))
 		QMessageBox::warning(window, tr("Error"), tr("XOr failed."));
+}
+
+void MapEditorController::booleanMergeHolesClicked()
+{
+	if (map->getNumSelectedObjects() != 1)
+		return;
+	
+	BooleanTool tool(map);
+	if (!tool.execute(BooleanTool::MergeHoles))
+		QMessageBox::warning(window, tr("Error"), tr("Merging holes failed."));
 }
 
 void MapEditorController::convertToCurvesClicked()

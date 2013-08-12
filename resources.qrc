@@ -62,6 +62,7 @@
   <file>images/tool-boolean-intersection.png</file>
   <file>images/tool-boolean-union.png</file>
   <file>images/tool-boolean-xor.png</file>
+  <file>images/tool-boolean-merge-holes.png</file>
   <file>images/tool-connect-paths.png</file>
   <file>images/tool-convert-to-curves.png</file>
   <file>images/tool-cut.png</file>
