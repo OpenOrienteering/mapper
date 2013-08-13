@@ -417,7 +417,7 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 	else if (contained_types & Line && !(contained_types & Area))
 	{
 		// Center horizontally on extent
-        real_icon_mm_half = qMax((qreal)(object->getExtent().width() / 2.0), object->getExtent().bottom());
+		real_icon_mm_half = qMax((qreal)(object->getExtent().width() / 2.0), object->getExtent().bottom());
 		real_icon_mm_half = qMax(real_icon_mm_half, -object->getExtent().top());
 		view.setPositionX(qRound64(1000 * object->getExtent().center().x()));
 	}

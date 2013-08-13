@@ -865,8 +865,8 @@ void PrintWidget::overprintingClicked(bool checked)
 void PrintWidget::previewClicked()
 {
 #if defined(Q_OS_ANDROID)
-    // Qt for Android has no QPrintPreviewDialog
-    QMessageBox::warning(this, tr("Error"), tr("Not supported on Android."));
+	// Qt for Android has no QPrintPreviewDialog
+	QMessageBox::warning(this, tr("Error"), tr("Not supported on Android."));
 #else
 	if (checkForEmptyMap())
 		return;
@@ -885,7 +885,7 @@ void PrintWidget::previewClicked()
 	// https://bugreports.qt-project.org/browse/QTBUG-10206 :
 	//   Mac QPrintPreviewDialog is missing Close icon
 	QPrintPreviewDialog preview(printer, this, 
-	  Qt::Window | Qt::CustomizeWindowHint | Qt::WindowSystemMenuHint );
+		Qt::Window | Qt::CustomizeWindowHint | Qt::WindowSystemMenuHint );
 #endif
 	connect(&preview, SIGNAL(paintRequested(QPrinter*)), map_printer, SLOT(printMap(QPrinter*)));
 	preview.exec();
@@ -1053,8 +1053,8 @@ QList<QPrinter::PaperSize> PrintWidget::defaultPaperSizes() const
 QString PrintWidget::toString(QPrinter::PaperSize size)
 {
 #if defined(Q_OS_ANDROID)
-    // Qt for Android has no QPrintDialog
-    return tr("Unknown", "Paper size");
+	// Qt for Android has no QPrintDialog
+	return tr("Unknown", "Paper size");
 #else
 	const QHash< int, const char*>& paper_size_names = MapPrinter::paperSizeNames();
 	if (paper_size_names.contains(size))

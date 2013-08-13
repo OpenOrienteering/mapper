@@ -1316,12 +1316,12 @@ public:
 		out_x = map_to_view.get(0, 0) * coords.xd() + map_to_view.get(0, 1) * coords.yd() + map_to_view.get(0, 2);
 		out_y = map_to_view.get(1, 0) * coords.xd() + map_to_view.get(1, 1) * coords.yd() + map_to_view.get(1, 2);
 	}
-    /// Converts map coordinates to view coordinates (with origin at the center of the view)
-    inline void mapToView(MapCoord coords, float& out_x, float& out_y)
-    {
-        out_x = map_to_view.get(0, 0) * coords.xd() + map_to_view.get(0, 1) * coords.yd() + map_to_view.get(0, 2);
-        out_y = map_to_view.get(1, 0) * coords.xd() + map_to_view.get(1, 1) * coords.yd() + map_to_view.get(1, 2);
-    }
+	/// Converts map coordinates to view coordinates (with origin at the center of the view)
+	inline void mapToView(MapCoord coords, float& out_x, float& out_y)
+	{
+		out_x = map_to_view.get(0, 0) * coords.xd() + map_to_view.get(0, 1) * coords.yd() + map_to_view.get(0, 2);
+		out_y = map_to_view.get(1, 0) * coords.xd() + map_to_view.get(1, 1) * coords.yd() + map_to_view.get(1, 2);
+	}
 	/// Converts map coordinates to view coordinates (with origin at the center of the view)
 	inline QPointF mapToView(MapCoord coords)
 	{

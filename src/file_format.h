@@ -142,7 +142,7 @@ public:
 	
 	/** Returns the type of file.
 	 */
-    FileType fileType() const;
+	FileType fileType() const;
 	
 	/** Returns the internal ID of the file format.
 	 */
