@@ -458,6 +458,7 @@ void MapEditorController::assignKeyboardShortcuts()
 	findAction("drawpath")->setShortcut(QKeySequence("P"));
 	findAction("drawcircle")->setShortcut(QKeySequence("O"));
 	findAction("drawrectangle")->setShortcut(QKeySequence("Ctrl+R"));
+	findAction("drawfill")->setShortcut(QKeySequence("F"));
 	findAction("drawtext")->setShortcut(QKeySequence("T"));
 	
 	findAction("duplicate")->setShortcut(QKeySequence("D"));
