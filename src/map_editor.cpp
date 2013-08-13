@@ -1610,8 +1610,7 @@ void MapEditorController::updatePasteAvailability()
 	if (paste_act)
 	{
 		paste_act->setEnabled(
-			QApplication::clipboard()
-			&& QApplication::clipboard()->mimeData()
+			QApplication::clipboard()->mimeData()
 			&& QApplication::clipboard()->mimeData()->hasFormat("openorienteering/objects")
 			&& !editing_in_progress);
 	}

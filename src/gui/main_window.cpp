@@ -400,6 +400,7 @@ bool MainWindow::showSaveOnCloseDialog()
 
 void MainWindow::saveWindowSettings()
 {
+#if !defined(Q_OS_ANDROID)
 	QSettings settings;
 	
 	settings.beginGroup("MainWindow");
@@ -407,10 +408,15 @@ void MainWindow::saveWindowSettings()
 	settings.setValue("size", size());
 	settings.setValue("maximized", isMaximized());
 	settings.endGroup();
+#endif
 }
 
 void MainWindow::loadWindowSettings()
 {
+#if defined(Q_OS_ANDROID)
+	// Always show the window on the whole available area on Android
+	resize(QApplication::desktop()->availableGeometry().size());
+#else
 	QSettings settings;
 	
 	settings.beginGroup("MainWindow");
@@ -423,6 +429,7 @@ void MainWindow::loadWindowSettings()
 	resize(size);
 	if (maximized)
 		showMaximized();
+#endif
 }
 
 MainWindow* MainWindow::findMainWindow(const QString& file_name)
