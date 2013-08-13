@@ -141,6 +141,15 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	
 	grivation_label = new QLabel();
 	
+	// Fix layout of SpinBoxes. Seems to be a problem with Qt (tested with Qt 5.1.0).
+	map_x_edit->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
+	map_y_edit->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
+	easting_edit->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
+	northing_edit->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
+	lat_edit->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
+	lon_edit->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
+	declination_edit->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
+	
 	buttons_box = new QDialogButtonBox(
 	  QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Reset | QDialogButtonBox::Help,
 	  Qt::Horizontal);
