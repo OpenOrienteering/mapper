@@ -232,7 +232,6 @@ Symbol* LineSymbol::duplicate(const MapColorMap* color_map) const
 	new_line->have_border_lines = have_border_lines;
 	new_line->border.assign(border, color_map);
 	new_line->right_border.assign(right_border, color_map);
-	new_line->cleanupPointSymbols();
 	return new_line;
 }
 
