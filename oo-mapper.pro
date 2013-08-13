@@ -2,19 +2,29 @@
 # Generated in src/CMakeLists.txt from src/qmake/oo-mapper.pro.in
 #####################################################################
 
-TEMPLATE = app
-TARGET = Mapper
-DEPENDPATH += . src
-INCLUDEPATH += . src src/qmake
+QT += core gui
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+QT += printsupport
 
 # Needed for QtSingleApplication
 QT += network xml
+
+TEMPLATE = app
+TARGET = Mapper
+DEPENDPATH += . src
+INCLUDEPATH += . src src/qmake 3rd-party/clipper/download/cpp
 
 # Needed when compiling pure C code
 QMAKE_CFLAGS += -std=c99
 
 # PROJ.4 library
 QMAKE_LIBS += -lproj
+
+# Defines. Use fancy quotation marks to be able to define strings with spaces.
+DEFINES += \"APP_VERSION='\\"Debug 0.5.99\\"'\"
+DEFINES += \"CLIPPER_VERSION='\\"5.1.6\\"'\"
+DEFINES += \"MAPPER_HELP_NAMESPACE='\\"openorienteering.mapper-0.5.99.help\\"'\"
 
 # Input
 HEADERS += \
@@ -102,10 +112,11 @@ HEADERS += \
   src/util/recording_translator.h \
   3rd-party/qtsingleapplication/src/qtlocalpeer.h \
   3rd-party/qtsingleapplication/src/qtsingleapplication.h \
-  libocad/libocad.h \
-  libocad/array.h \
-  libocad/geometry.h \
-  libocad/types.h
+  3rd-party/clipper/download/cpp/clipper.hpp \
+  src/libocad/libocad.h \
+  src/libocad/array.h \
+  src/libocad/geometry.h \
+  src/libocad/types.h
 
 SOURCES += \
   src/global.cpp \
@@ -215,16 +226,47 @@ SOURCES += \
   src/main.cpp \
   3rd-party/qtsingleapplication/src/qtlocalpeer.cpp \
   3rd-party/qtsingleapplication/src/qtsingleapplication.cpp \
-  libocad/types.c \
-  libocad/array.c \
-  libocad/geometry.c \
-  libocad/path.c \
-  libocad/file.c \
-  libocad/setup.c \
-  libocad/color.c \
-  libocad/ocad_symbol.c \
-  libocad/ocad_object.c \
-  libocad/string.c
+  3rd-party/clipper/download/cpp/clipper.cpp \
+  src/libocad/types.c \
+  src/libocad/array.c \
+  src/libocad/geometry.c \
+  src/libocad/path.c \
+  src/libocad/file.c \
+  src/libocad/setup.c \
+  src/libocad/color.c \
+  src/libocad/ocad_symbol.c \
+  src/libocad/ocad_object.c \
+  src/libocad/string.c
 
 RESOURCES += \
   resources.qrc
+
+OTHER_FILES += \
+  android/AndroidManifest.xml \
+  android/src/org/kde/necessitas/ministro/IMinistroCallback.aidl \
+  android/src/org/kde/necessitas/ministro/IMinistro.aidl \
+  android/src/org/qtproject/qt5/android/bindings/QtApplication.java \
+  android/src/org/qtproject/qt5/android/bindings/QtActivity.java \
+  android/version.xml \
+  android/res/values-fa/strings.xml \
+  android/res/values-ms/strings.xml \
+  android/res/values-de/strings.xml \
+  android/res/values-ro/strings.xml \
+  android/res/values/strings.xml \
+  android/res/values/libs.xml \
+  android/res/values-pt-rBR/strings.xml \
+  android/res/layout/splash.xml \
+  android/res/values-es/strings.xml \
+  android/res/values-el/strings.xml \
+  android/res/values-zh-rTW/strings.xml \
+  android/res/values-fr/strings.xml \
+  android/res/values-ru/strings.xml \
+  android/res/values-et/strings.xml \
+  android/res/values-ja/strings.xml \
+  android/res/values-id/strings.xml \
+  android/res/values-nb/strings.xml \
+  android/res/values-nl/strings.xml \
+  android/res/values-zh-rCN/strings.xml \
+  android/res/values-pl/strings.xml \
+  android/res/values-rs/strings.xml \
+  android/res/values-it/strings.xml
