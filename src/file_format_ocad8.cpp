@@ -1749,7 +1749,11 @@ void OCAD8FileExport::doExport() throw (FileFormatException)
 							symbol_numbers.insert(new_symbol->number);
 							index_to_use = new_symbol->number;
 							
-							format_list.push_back(std::make_pair(text_object, new_symbol->number));
+                            // Store packed new_symbol->number in separate variable first,
+                            // otherwise when compiling for Android this causes the error:
+                            // cannot bind packed field 'new_symbol->_OCADTextSymbol::number' to 'short int&'
+                            s16 new_symbol_number = new_symbol->number;
+                            format_list.push_back(std::make_pair(text_object, new_symbol_number));
 						}
 					}
 				}

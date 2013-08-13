@@ -332,6 +332,7 @@ void MapWidget::ensureVisibilityOfRect(const QRectF& map_rect, bool show_complet
 
 void MapWidget::adjustViewToRect(const QRectF& map_rect, bool zoom_in_steps)
 {
+    const double log2 = log(2);
 	view->setPositionX(qRound64(1000 * (map_rect.left() + map_rect.width() / 2)));
 	view->setPositionY(qRound64(1000 * (map_rect.top() + map_rect.height() / 2)));
 	
@@ -347,10 +348,10 @@ void MapWidget::adjustViewToRect(const QRectF& map_rect, bool zoom_in_steps)
 			float zoom = view->getZoom() * zoom_factor;
 			if (zoom_in_steps)
 			{
-				zoom = log2(zoom);
-				zoom = (zoom - log2(initial_zoom)) * 2.0;
+                zoom = log(zoom) / log2;
+                zoom = (zoom - log(initial_zoom) / log2) * 2.0;
 				zoom = floor(zoom);
-				zoom = (zoom * 0.5) + log2(initial_zoom);
+                zoom = (zoom * 0.5) + log(initial_zoom) / log2;
 				zoom = pow(2, zoom);
 			}
 			view->setZoom(zoom);

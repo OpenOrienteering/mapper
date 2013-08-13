@@ -864,6 +864,10 @@ void PrintWidget::overprintingClicked(bool checked)
 // slot
 void PrintWidget::previewClicked()
 {
+#if defined(Q_OS_ANDROID)
+    // Qt for Android has no QPrintPreviewDialog
+    QMessageBox::warning(this, tr("Error"), tr("Not supported on Android."));
+#else
 	if (checkForEmptyMap())
 		return;
 	
@@ -887,6 +891,7 @@ void PrintWidget::previewClicked()
 	preview.exec();
 	
 	delete printer;
+#endif
 }
 
 // slot
@@ -1047,6 +1052,10 @@ QList<QPrinter::PaperSize> PrintWidget::defaultPaperSizes() const
 
 QString PrintWidget::toString(QPrinter::PaperSize size)
 {
+#if defined(Q_OS_ANDROID)
+    // Qt for Android has no QPrintDialog
+    return tr("Unknown", "Paper size");
+#else
 	const QHash< int, const char*>& paper_size_names = MapPrinter::paperSizeNames();
 	if (paper_size_names.contains(size))
 		// These translations are not used in QPrintDialog, 
@@ -1054,6 +1063,7 @@ QString PrintWidget::toString(QPrinter::PaperSize size)
 		return QPrintDialog::tr(paper_size_names[size]);
 	else
 		return tr("Unknown", "Paper size");
+#endif
 }
 
 bool PrintWidget::checkForEmptyMap()

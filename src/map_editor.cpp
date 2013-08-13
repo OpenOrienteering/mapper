@@ -1607,7 +1607,13 @@ void MapEditorController::clipboardChanged(QClipboard::Mode mode)
 void MapEditorController::updatePasteAvailability()
 {
 	if (paste_act)
-		paste_act->setEnabled(QApplication::clipboard()->mimeData()->hasFormat("openorienteering/objects") && !editing_in_progress);
+	{
+		paste_act->setEnabled(
+			QApplication::clipboard()
+			&& QApplication::clipboard()->mimeData()
+			&& QApplication::clipboard()->mimeData()->hasFormat("openorienteering/objects")
+			&& !editing_in_progress);
+	}
 }
 
 void MapEditorController::showWholeMap()

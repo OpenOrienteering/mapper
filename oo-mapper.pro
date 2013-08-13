@@ -19,12 +19,20 @@ INCLUDEPATH += . src src/qmake 3rd-party/clipper/download/cpp
 QMAKE_CFLAGS += -std=c99
 
 # PROJ.4 library
-QMAKE_LIBS += -lproj
+LIBS += -lproj
 
 # Defines. Use fancy quotation marks to be able to define strings with spaces.
 DEFINES += \"APP_VERSION='\\"Debug 0.5.99\\"'\"
 DEFINES += \"CLIPPER_VERSION='\\"5.1.6\\"'\"
 DEFINES += \"MAPPER_HELP_NAMESPACE='\\"openorienteering.mapper-0.5.99.help\\"'\"
+
+# Android specifics
+android {
+  # Use cross-compiled PROJ.4 library
+  # TODO: do not use hardcoded paths
+  INCLUDEPATH += 3rd-party/proj/download/proj-4.8.0/src
+  LIBS += -L$$PWD/3rd-party/proj/download/proj-4.8.0/out/armeabi-v7a/lib/
+}
 
 # Input
 HEADERS += \

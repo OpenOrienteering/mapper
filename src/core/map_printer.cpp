@@ -411,8 +411,8 @@ void MapPrinter::setOverlap(qreal h_overlap, qreal v_overlap)
 {
 	if (page_format.h_overlap != h_overlap || page_format.v_overlap != v_overlap)
 	{
-		page_format.h_overlap = qMax(0.0, qMin(h_overlap, page_format.page_rect.width()));
-		page_format.v_overlap = qMax(0.0, qMin(v_overlap, page_format.page_rect.height()));
+        page_format.h_overlap = qMax((qreal)0.0, qMin(h_overlap, page_format.page_rect.width()));
+        page_format.v_overlap = qMax((qreal)0.0, qMin(v_overlap, page_format.page_rect.height()));
 		updatePageBreaks();
 		emit pageFormatChanged(page_format);
 	}
@@ -424,8 +424,8 @@ void MapPrinter::updatePaperDimensions()
 	{
 		// No margins, no need to query QPrinter.
 		page_format.page_rect = QRectF(QPointF(0.0, 0.0), page_format.paper_dimensions);
-		page_format.h_overlap = qMax(0.0, qMin(page_format.h_overlap, page_format.page_rect.width()));
-		page_format.v_overlap = qMax(0.0, qMin(page_format.v_overlap, page_format.page_rect.height()));
+        page_format.h_overlap = qMax((qreal)0.0, qMin(page_format.h_overlap, page_format.page_rect.width()));
+        page_format.v_overlap = qMax((qreal)0.0, qMin(page_format.v_overlap, page_format.page_rect.height()));
 		updatePageBreaks();
 		return;
 	}
@@ -456,8 +456,8 @@ void MapPrinter::updatePaperDimensions()
 		printer->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
 		page_format.page_rect.adjust(left, top, -right, -bottom);
 	}
-	page_format.h_overlap = qMax(0.0, qMin(page_format.h_overlap, page_format.page_rect.width()));
-	page_format.v_overlap = qMax(0.0, qMin(page_format.v_overlap, page_format.page_rect.height()));
+    page_format.h_overlap = qMax((qreal)0.0, qMin(page_format.h_overlap, page_format.page_rect.width()));
+    page_format.v_overlap = qMax((qreal)0.0, qMin(page_format.v_overlap, page_format.page_rect.height()));
 	
 	delete printer;
 	updatePageBreaks();

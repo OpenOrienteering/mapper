@@ -7,3 +7,7 @@ help/*.qhc
 3rd-party/*/download
 !3rd-party/*/download/README.txt
 resources/resources.rc
+android/bin
+android/gen
+android/libs
+android/local.properties
