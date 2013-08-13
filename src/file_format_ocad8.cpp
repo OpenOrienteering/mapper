@@ -1207,9 +1207,13 @@ Template *OCAD8FileImport::importTemplate(OCADCString* ocad_str)
 	templ->setTemplateScaleY(convertTemplateScale(background.scly));
 	
 	map->templates.push_back(templ);
-	TemplateVisibility* visibility = view->getTemplateVisibility(templ);
-	visibility->opacity = qMax(0.0, qMin(1.0, 0.01 * (100 - background.dimming)));
-	visibility->visible = background.s;
+	
+	if (view)
+	{
+		TemplateVisibility* visibility = view->getTemplateVisibility(templ);
+		visibility->opacity = qMax(0.0, qMin(1.0, 0.01 * (100 - background.dimming)));
+		visibility->visible = background.s;
+	}
 	
 	return templ;
 }
