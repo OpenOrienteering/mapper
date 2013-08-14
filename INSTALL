@@ -166,7 +166,7 @@ and proceed with
 
 You need to install the Android SDK and NDK. How to do this depends on your
 Linux distribution. When downloading packages for specific Android API levels,
-keep in mind that Qt5 requires at least API Level 10 to work, and apps
+keep in mind that Qt5 requires at least API Level 9 to work, and apps
 built for the armeabi-v7a ABI require at least an emulator image of API
 level 14 to work with the emulator.
 
