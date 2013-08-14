@@ -406,6 +406,11 @@ private:
 	
 	/** Right-click menu */
 	PieMenu pie_menu;
+
+#if defined(Q_OS_ANDROID)
+	/** Click state to compensate for input quirks */
+	int clickState;
+#endif
 };
 
 #endif
