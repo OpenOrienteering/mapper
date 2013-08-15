@@ -305,7 +305,7 @@ MapCoord OcdFileImport::convertOcdPoint(const Ocd::OcdPoint32& ocd_point) const
 	return MapCoord::fromRaw(x * 10, y * -10);
 #else // shift operator is arithmetic
 	Q_ASSERT( (-3 >> 1) == -2 );
-	return MapCoord::fromRaw(qint64(ocd_point.x >> 8) * 10, qint64(ocd_point.x >> 8) * -10);
+	return MapCoord::fromRaw(qint64(ocd_point.x >> 8) * 10, qint64(ocd_point.y >> 8) * -10);
 #endif
 }
 
