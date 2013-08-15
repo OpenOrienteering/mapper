@@ -674,14 +674,8 @@ Symbol *OCAD8FileImport::importAreaSymbol(const OCADAreaSymbol *ocad_symbol)
         if (ocad_symbol->hmode == 2)
         {
             // Second hatch, same as the first, just a different angle
-            int n = symbol->patterns.size(); symbol->patterns.resize(n + 1); pat = &(symbol->patterns[n]);
-            pat->type = AreaSymbol::FillPattern::LinePattern;
-            pat->angle = convertRotation(ocad_symbol->hangle2);
-            pat->rotatable = true;
-            pat->line_spacing = convertSize(ocad_symbol->hdist);
-            pat->line_offset = 0;
-            pat->line_color = convertColor(ocad_symbol->hcolor);
-            pat->line_width = convertSize(ocad_symbol->hwidth);
+            symbol->patterns.push_back(*pat);
+            symbol->patterns.back().angle = convertRotation(ocad_symbol->hangle2);
         }
     }
 
@@ -1206,7 +1200,7 @@ Template *OCAD8FileImport::importTemplate(OCADCString* ocad_str)
 	templ->setTemplateScaleX(convertTemplateScale(background.sclx));
 	templ->setTemplateScaleY(convertTemplateScale(background.scly));
 	
-	map->templates.push_back(templ);
+	map->templates.insert(map->templates.begin(), templ);
 	
 	if (view)
 	{
@@ -2189,12 +2183,14 @@ s16 OCAD8FileExport::exportAreaSymbol(AreaSymbol* area)
 	}
 	
 	// Hatch
+	ocad_symbol->hmode = 0;
 	for (int i = 0, end = area->getNumFillPatterns(); i < end; ++i)
 	{
 		AreaSymbol::FillPattern& pattern = area->getFillPattern(i);
 		if (pattern.type == AreaSymbol::FillPattern::LinePattern)
 		{
-			if (ocad_symbol->hmode == 1 && ocad_symbol->hcolor != convertColor(pattern.line_color))
+			if ( (ocad_symbol->hmode == 1 && ocad_symbol->hcolor != convertColor(pattern.line_color)) ||
+			     ocad_symbol->hmode == 2 )
 			{
 				addWarning(tr("In area symbol \"%1\", skipping a fill pattern.").arg(area->getPlainTextName()));
 				continue;
@@ -2216,9 +2212,6 @@ s16 OCAD8FileExport::exportAreaSymbol(AreaSymbol* area)
 				ocad_symbol->hwidth = (ocad_symbol->hwidth + convertSize(pattern.line_width)) / 2;
 				ocad_symbol->hdist = (ocad_symbol->hdist + convertSize(pattern.line_spacing - pattern.line_width)) / 2;
 				ocad_symbol->hangle2 = convertRotation(pattern.angle);
-				
-				// No futher hatch pattern supported by .ocd version 8
-				break;
 			}
 		}
 	}

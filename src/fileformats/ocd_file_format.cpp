@@ -592,7 +592,7 @@ Template* OcdFileImport::importTemplate(const QString& param_string)
 	templ->setTemplateScaleY(scale_y * scale_factor);
 	
 	int template_pos = map->getFirstFrontTemplate();
-	map->addTemplate(templ, template_pos, view);
+	map->addTemplate(templ, 0, view);
 	map->setFirstFrontTemplate(template_pos+1);
 	
 	if (view)
