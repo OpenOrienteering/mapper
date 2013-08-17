@@ -20,8 +20,12 @@
 
 #include "template_track.h"
 
-#include <qmath.h>
+#if QT_VERSION < 0x050000
 #include <QtGui>
+#else
+#include <QtWidgets>
+#endif
+#include <qmath.h>
 
 #include "map_widget.h"
 #include "map_undo.h"
@@ -165,7 +169,11 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 		if (dialog.exec() == QDialog::Rejected)
 			return false;
 		
-		transform.template_scale_x = dialog.getUnitScale() / (map->getScaleDenominator() / 1000.0);
+		transform.template_scale_x = dialog.getUnitScale();
+		if (!dialog.useRealCoords())
+		{
+			transform.template_scale_x /= (map->getScaleDenominator() / 1000.0);
+		}
 		transform.template_scale_y = transform.template_scale_x;
 		updateTransformationMatrices();
 		out_center_in_view = dialog.centerOnView();
@@ -487,15 +495,22 @@ LocalCRSPositioningDialog::LocalCRSPositioningDialog(TemplateTrack* temp, QWidge
 	
 	QFormLayout* layout = new QFormLayout();
 	
+	coord_system_box = new QComboBox();
+	layout->addRow(tr("Coordinate system"), coord_system_box);
+	coord_system_box->addItem(tr("Real"));
+	coord_system_box->addItem(tr("Map"));
+	coord_system_box->setCurrentIndex(0);
+	
 	unit_scale_edit = Util::SpinBox::create(6, 0, 1e42, tr("m", "meters"));
 	unit_scale_edit->setValue(1);
+	unit_scale_edit->setEnabled(false);
 	layout->addRow(tr("One coordinate unit equals:"), unit_scale_edit);
 	
 	original_pos_radio = new QRadioButton(tr("Position track at given coordinates"));
+	original_pos_radio->setChecked(true);
 	layout->addRow(original_pos_radio);
 	
 	view_center_radio = new QRadioButton(tr("Position track at view center"));
-	view_center_radio->setChecked(true);
 	layout->addRow(view_center_radio);
 	
 	layout->addItem(Util::SpacerItem::create(this));
@@ -507,6 +522,11 @@ LocalCRSPositioningDialog::LocalCRSPositioningDialog(TemplateTrack* temp, QWidge
 	
 	connect(button_box, SIGNAL(accepted()), this, SLOT(accept()));
 	connect(button_box, SIGNAL(rejected()), this, SLOT(reject()));
+}
+
+bool LocalCRSPositioningDialog::useRealCoords() const
+{
+	return coord_system_box->currentIndex() == 0;
 }
 
 double LocalCRSPositioningDialog::getUnitScale() const
