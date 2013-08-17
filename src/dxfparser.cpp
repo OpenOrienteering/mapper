@@ -153,7 +153,11 @@ QString DXFParser::parse()
 inline
 bool DXFParser::atEntityEnd(QIODevice* d)
 {
-	return d->peek(3).trimmed() == "0";
+	QByteArray data = d->peek(5);
+	const int linebreak = data.indexOf('\n');
+	if (linebreak > 0)
+		data.truncate(linebreak);
+	return data.trimmed() == "0";
 }
 
 inline
