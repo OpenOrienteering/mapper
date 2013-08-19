@@ -369,8 +369,8 @@ namespace Ocd
 	struct GpsPointV8
 	{
 		OcdPoint32 map_point;
-		qint32 lat;
-		qint32 lon;
+		PascalDouble lat;
+		PascalDouble lon;
 		PascalString<15> name;
 	};
 	
