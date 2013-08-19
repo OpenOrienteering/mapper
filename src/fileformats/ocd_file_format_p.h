@@ -155,7 +155,7 @@ protected:
 	template< class F >
 	void importTemplates(const OcdFile< F >& file) throw (FileFormatException);
 	
-	Template* importTemplate(const QString& param_string);
+	Template* importTemplate(const QString& param_string, const int ocd_version);
 	
 	template< class F >
 	void importExtras(const OcdFile< F >& file) throw (FileFormatException);
