@@ -98,7 +98,10 @@ public:
 	/// Attempts to save the map to the given file. If a MapEditorController is given, the widget positions and MapViews stored in the map file are also updated.
 	bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
 	/// Attempts to load the map from the specified path. Returns true on success.
-	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL, bool load_symbols_only = false, bool show_error_messages = true);
+	bool loadFrom(const QString& path,
+	              QWidget* dialog_parent,
+	              MapEditorController* map_editor = NULL,
+	              bool load_symbols_only = false, bool show_error_messages = true);
 	/// Imports the other map into this map with the following strategy:
 	///  - if the other map contains objects, import all objects with the minimum amount of colors and symbols needed to display them
 	///  - if the other map does not contain objects, import all symbols with the minimum amount of colors needed to display them

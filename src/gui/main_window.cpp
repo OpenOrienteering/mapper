@@ -476,7 +476,7 @@ void MainWindow::showNewMapWizard()
 		new_map->setScaleDenominator(newMapDialog.getSelectedScale());
 	else
 	{
-		new_map->loadFrom(symbol_set_path, NULL, true);
+		new_map->loadFrom(symbol_set_path, this, NULL, true);
 		if (new_map->getScaleDenominator() != newMapDialog.getSelectedScale())
 		{
 			if (QMessageBox::question(this, tr("Warning"), tr("The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.\n\nDo you want to scale the symbols to the selected scale?").arg(newMapDialog.getSelectedScale()).arg(new_map->getScaleDenominator()),  QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
@@ -551,7 +551,7 @@ bool MainWindow::openPath(const QString &path)
 		settings.remove(reopen_blocker);
 		return false;
 	}
-	if (!new_controller->load(path))
+	if (!new_controller->load(path, this))
 	{
 		delete new_controller;
 		settings.remove(reopen_blocker);

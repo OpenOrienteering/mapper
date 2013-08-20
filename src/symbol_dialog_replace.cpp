@@ -319,7 +319,7 @@ bool ReplaceSymbolSetDialog::showDialog(QWidget* parent, Map* map)
 			return false;
 		
 		symbol_map = new Map();
-		if (!symbol_map->loadFrom(path, NULL, true))
+		if (!symbol_map->loadFrom(path, parent, NULL, true))
 		{
 			QMessageBox::warning(parent, tr("Error"), tr("Cannot load map file, aborting."));
 			return false;
