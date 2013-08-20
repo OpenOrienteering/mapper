@@ -119,14 +119,18 @@ public:
 	 * Attempts to load the map from the specified path. Returns true on success.
 	 * 
 	 * @param path The file path to load the map from.
-	 * @param map_editor Optional pointer to MapEditorController. If given,
-	 *     restores the widget positions and MapViews of the controller.
+	 * @param dialog_parent The parent widget for all dialogs.
+	 *     This should never be NULL in a QWidgets application.
+	 * @param map_editor If not NULL, restores that map editor controller.
+	 *     Restores widget positions and MapViews.
 	 * @param load_symbols_only Loads only symbols from the chosen file.
 	 *     Useful to load symbol sets.
 	 * @param show_error_messages Whether to show import errors and warnings.
 	 */
-	bool loadFrom(const QString& path, MapEditorController* map_editor = NULL,
-				  bool load_symbols_only = false, bool show_error_messages = true);
+	bool loadFrom(const QString& path,
+	              QWidget* dialog_parent,
+	              MapEditorController* map_editor = NULL,
+	              bool load_symbols_only = false, bool show_error_messages = true);
 	
 	/**
 	 * Imports the other map into this map with the following strategy:

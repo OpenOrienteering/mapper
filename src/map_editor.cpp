@@ -271,12 +271,15 @@ bool MapEditorController::save(const QString& path)
 		return false;
 }
 
-bool MapEditorController::load(const QString& path)
+bool MapEditorController::load(const QString& path, QWidget* dialog_parent)
 {
+	if (!dialog_parent)
+		dialog_parent = window;
+	
 	if (!map)
 		map = new Map();
 	
-	bool result = map->loadFrom(path, this);
+	bool result = map->loadFrom(path, dialog_parent, this);
 	if (result)
 		setMap(map, false);
 	else
@@ -2640,7 +2643,7 @@ void MapEditorController::importGeoFile(const QString& filename)
 bool MapEditorController::importMapFile(const QString& filename)
 {
 	Map* imported_map = new Map();
-	bool result = imported_map->loadFrom(filename);
+	bool result = imported_map->loadFrom(filename, window, NULL);
 	if (!result)
 	{
 		QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected map file because it could not be loaded."));

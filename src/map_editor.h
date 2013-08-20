@@ -167,7 +167,7 @@ public:
 	/** Override from MainWindowController */
 	virtual bool save(const QString& path);
 	/** Override from MainWindowController */
-	virtual bool load(const QString& path);
+	virtual bool load(const QString& path, QWidget* dialog_parent = NULL);
 	
 	/** Override from MainWindowController */
 	virtual void attach(MainWindow* window);

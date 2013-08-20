@@ -847,7 +847,7 @@ void TemplateWidget::importClicked()
 {
 	Template* templ = qobject_cast< TemplateMap* >(getCurrentTemplate());
 	QScopedPointer<Map> template_map(new Map());
-	if (templ && template_map->loadFrom(templ->getTemplatePath(), NULL, false, true))
+	if (templ && template_map->loadFrom(templ->getTemplatePath(), this, NULL, false, true))
 	{
 		TemplateTransform transform;
 		templ->getTransform(transform);

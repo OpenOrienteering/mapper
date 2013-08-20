@@ -45,9 +45,11 @@ public:
 
 	/** Load from a file.
 	 *  @param path the path to load from
+	 *  @param dialog_parent Alternative parent widget for all dialogs.
+	 *      If NULL, implementations should use MainWindowController::window.
 	 *  @return true if loading was sucessful, false on errors
 	 */
-	virtual bool load(const QString& path) {return false;}
+	virtual bool load(const QString& path, QWidget* dialog_parent = NULL) {return false;}
 	
 	/** Attach the controller to a main window. 
 	 *  The controller should create its user interface here.

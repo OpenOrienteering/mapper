@@ -116,7 +116,7 @@ void FileFormatTest::saveAndLoad()
 	
 	// Load the test map
 	Map* original = new Map();
-	original->loadFrom(map_filename, NULL, false, false);
+	original->loadFrom(map_filename, NULL, NULL, false, false);
 	QVERIFY(!original->hasUnsavedChanged());
 	
 	// If the export is lossy, do one export / import cycle first to get rid of all information which cannot be exported into this format

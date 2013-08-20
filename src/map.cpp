@@ -622,7 +622,7 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 	
 	return true;
 }
-bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool load_symbols_only, bool show_error_messages)
+bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapEditorController* map_editor, bool load_symbols_only, bool show_error_messages)
 {
 	MapView *view = new MapView(this);
 
@@ -631,7 +631,11 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 	if (!file.open(QIODevice::ReadOnly))
 	{
 		if (show_error_messages)
-			QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\nfor reading.").arg(path));
+			QMessageBox::warning(
+			  dialog_parent,
+			  tr("Error"),
+			  tr("Cannot open file:\n%1\nfor reading.").arg(path)
+			);
 		return false;
 	}
 	
@@ -679,7 +683,13 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 							warnings += '\n';
 						warnings += *it;
 					}
-					QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The map import generated warnings."), QMessageBox::Ok);
+					QMessageBox msgBox(
+					  QMessageBox::Warning,
+					  tr("Warning"),
+					  tr("The map import generated warnings."),
+					  QMessageBox::Ok,
+					  dialog_parent
+					);
 					msgBox.setDetailedText(warnings);
 					msgBox.exec();
 				}
@@ -705,7 +715,11 @@ bool Map::loadFrom(const QString& path, MapEditorController* map_editor, bool lo
 	if (!import_complete)
 	{
 		if (show_error_messages)
-			QMessageBox::warning(NULL, tr("Error"), tr("Cannot open file:\n%1\n\n%2").arg(path).arg(error_msg));
+			QMessageBox::warning(
+			 dialog_parent,
+			 tr("Error"),
+			 tr("Cannot open file:\n%1\n\n%2").arg(path).arg(error_msg)
+			);
 		return false;
 	}
 
