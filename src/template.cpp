@@ -29,6 +29,7 @@
 #include <QPixmap>
 #include <QPainter>
 
+#include "core/map_view.h"
 #include "util.h"
 #include "map.h"
 #include "template_image.h"

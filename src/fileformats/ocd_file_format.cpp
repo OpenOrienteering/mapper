@@ -34,6 +34,7 @@
 #include "ocd_types_v10.h"
 #include "ocd_types_v11.h"
 #include "../core/map_color.h"
+#include "../core/map_view.h"
 #include "../georeferencing.h"
 #include "../file_format_ocad8.h"
 #include "../file_format_ocad8_p.h"

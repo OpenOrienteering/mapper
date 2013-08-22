@@ -32,6 +32,7 @@
 #endif
 
 #include "../core/map_color.h"
+#include "../core/map_view.h"
 #include "../map.h"
 #include "../settings.h"
 #include "../util.h"

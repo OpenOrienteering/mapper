@@ -210,6 +210,7 @@ SOURCES += \
   src/file_format_xml.cpp \
   src/core/map_color.cpp \
   src/core/map_printer.cpp \
+  src/core/map_view.cpp \
   src/fileformats/ocd_file_format.cpp \
   src/fileformats/ocd_types.cpp \
   src/gui/about_dialog.cpp \

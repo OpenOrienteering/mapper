@@ -23,6 +23,7 @@
 
 #include <QWidget>
 
+#include "core/map_view.h"
 #include "map.h"
 #include "util_pie_menu.h"
 
