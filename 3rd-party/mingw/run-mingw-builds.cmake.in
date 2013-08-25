@@ -1,0 +1,145 @@
+#    Copyright 2013 Kai Pastor
+#    
+#    This file is part of OpenOrienteering.
+# 
+#    OpenOrienteering is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+# 
+#    OpenOrienteering is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+# 
+#    You should have received a copy of the GNU General Public License
+#    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+
+set(PROJECT_SOURCE_DIR "@PROJECT_SOURCE_DIR@")
+
+include("${PROJECT_SOURCE_DIR}/functions.cmake")
+
+
+function(info_build_started)
+	file(REMOVE @MINGW_BUILDROOT@/info-stamp.txt)
+	file(WRITE  @MINGW_BUILDROOT@/info-stamp-started.txt "MINGW_GCC_ARCH:       @MINGW_GCC_ARCH@\n")
+	file(APPEND @MINGW_BUILDROOT@/info-stamp-started.txt "MINGW_GCC_VERSION:    @MINGW_GCC_VERSION@\n")
+	file(APPEND @MINGW_BUILDROOT@/info-stamp-started.txt "MINGW_GCC_THREADS:    @MINGW_GCC_THREADS@\n")
+	file(APPEND @MINGW_BUILDROOT@/info-stamp-started.txt "MINGW_GCC_EXCEPTIONS: @MINGW_GCC_EXCEPTIONS@\n")
+	file(APPEND @MINGW_BUILDROOT@/info-stamp-started.txt "MINGW_GCC_REVISION:   @MINGW_GCC_REVISION@\n")
+	file(APPEND @MINGW_BUILDROOT@/info-stamp-started.txt "ENV{PATH}:            $ENV{PATH}\n")
+endfunction()
+
+
+function(info_build_successfull)
+	file(RENAME @MINGW_BUILDROOT@/info-stamp-started.txt @MINGW_BUILDROOT@/info-stamp.txt)
+	file(APPEND @MINGW_BUILDROOT@/info-stamp.txt "BUILD SUCCESSFULL.\n")
+endfunction()
+
+
+function(info_build_failed)
+	file(APPEND @MINGW_BUILDROOT@/info-stamp-started.txt "BUILD FAILED.\n")
+	message(FATAL_ERROR "BUILD FAILED")
+endfunction()
+
+
+macro(run_mingw_builds BUILD_ERROR)
+	execute_process(
+	  COMMAND sh -l -c "cd /temp/mingw-builds && ./build ${configuration_options} ${extra_options}"
+	  RESULT_VARIABLE ${BUILD_ERROR}
+	)
+endmacro()
+
+
+macro(ls_src LS)
+	execute_process(
+	  COMMAND ls @MINGW_BUILDROOT@/src/MARKERS/
+	  OUTPUT_VARIABLE ${LS}
+	)
+endmacro()
+
+
+function(cleanup_environment)
+	# A clean environment helps to make fork() succeed.
+	# From sh, variable names containing "(x86)" cannot be unset, but cmake can.
+	execute_process(
+	  COMMAND sh -c "env | grep -i \"PROCESSOR\\|System32\\|UATDATA\\|Program\\|APPDATA\\|^USER..*\\|^HOME..*\\|^PATHEXT\\|^LOGON\\|^SESSION\\|COMPUTERNAME\\|FP_NO_HOST_CHECK\\|PUBLIC\\|VERBOSE\" | cut -d = -f 1 | grep -iv \"[!]\\|COMSPEC\\|^PATH=\""
+	  OUTPUT_VARIABLE ENV_VARS
+	  RESULT_VARIABLE BUILD_ERROR
+	)
+	if(BUILD_ERROR)
+		message(FATAL_ERROR "Failed to examine the environment")
+	endif()
+	string(REPLACE "\n" ";" ENV_VARS "${ENV_VARS}")
+	foreach(var ${ENV_VARS})
+		unset(ENV{${var}})
+	endforeach()
+	# Dump the clean environment for documentation
+	execute_process(
+	  COMMAND sh -c "env | sort"
+	  OUTPUT_VARIABLE ENV_VARS
+	  RESULT_VARIABLE BUILD_ERROR
+	)
+	if(BUILD_ERROR)
+		message(FATAL_ERROR "Failed to dump the environment")
+	endif()
+	file(WRITE env.txt "${ENV_VARS}")
+endfunction()
+
+
+
+set(ENV{PATH} "@MSYS_DIR@/bin")
+cleanup_environment()
+set(configuration_options "gcc-@MINGW_GCC_VERSION@ @MINGW_GCC_ARCH@ --rev=@MINGW_GCC_REVISION@ --threads=@MINGW_GCC_THREADS@ --exceptions=@MINGW_GCC_EXCEPTIONS@ --no-multilib --buildroot=/temp @MINGW_BUILD_OPTIONS@")
+set(extra_options "")
+
+
+if("${BUILD_TARGET}" STREQUAL download)
+	#
+	# Download only mode
+	#
+	ls_src(stamp)
+	check_stamp(unchanged "@MINGW_BUILDROOT@/src" ${stamp})
+	if("${stamp}" STREQUAL "" OR NOT ${unchanged})
+		set(extra_options "--download")
+		run_mingw_builds(BUILD_ERROR)
+		if(BUILD_ERROR)
+			message(FATAL_ERROR "DOWNLOAD FAILED")
+		endif()
+		ls_src(stamp)
+		make_stamp("@MINGW_BUILDROOT@/src" ${stamp})
+	endif()
+	
+elseif("${BUILD_TARGET}" STREQUAL archives)
+	#
+	# Archive mode
+	# May include download and build as neccessary.
+	#
+	info_build_started()
+	set(extra_options "--jobs=@BUILD_JOBS@ --mingw-compress --srcs-compress")
+	run_mingw_builds(BUILD_ERROR)
+	if(BUILD_ERROR)
+		info_build_failed()
+	endif()
+	file(MD5 @MINGW_BUILDROOT@/mingw-archives/src-@MINGW_SOURCES_VERSION@.tar.7z NEW_MINGW_SOURCES_MD5)
+	configure_file(@CMAKE_CURRENT_BINARY_DIR@/configuration-template.cmake.in @MINGW_BUILDROOT@/mingw-archives/@MINGW_CONFIGURATION_NAME@.cmake @ONLY)
+	info_build_successfull()
+	
+else()
+	#
+	# Build mode
+	# May include download as neccessary.
+	# May retry on errors is KEEP_GOING is set.
+	#
+	info_build_started()
+	set(extra_options "--jobs=@BUILD_JOBS@")
+	run_mingw_builds(BUILD_ERROR)
+	if(BUILD_ERROR AND NOT "@KEEP_GOING@")
+		info_build_failed()
+	endif()
+	# retry on build errors (not download mode, not archives mode)
+	while(BUILD_ERROR AND "@KEEP_GOING@")
+		run_mingw_builds(BUILD_ERROR)
+	endwhile()
+	info_build_successfull()
+endif()
