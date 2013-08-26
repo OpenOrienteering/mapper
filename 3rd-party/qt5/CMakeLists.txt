@@ -25,7 +25,7 @@ include(ExternalProject)
 
 # Configuration options
 
-set(QT5_VERSION_DEFAULT 5.0.2)
+set(QT5_VERSION_DEFAULT 5.1.1)
 set(QT5_VERSION ${QT5_VERSION_DEFAULT} CACHE STRING
   "Version number of the Qt5 library, recommended value: ${QT5_VERSION_DEFAULT}")
 mark_as_advanced(QT5_VERSION)
@@ -43,6 +43,8 @@ set(QT5_MD5SUMS
   5.0.1:8e8137c23c8ff078a560d3c62b4383e7
   5.0.2:87cae8ae2f82f41ba027c2db0ab639b7
   5.1.0:787ce18c7f47fc14538b4362a0aa9edd
+  5.1.1-rc1:1cb26893689fe36431754193c762765a:http://download.qt-project.org/snapshots/qt/5.1/5.1.1/backups/2013-08-20-108/single/qt-everywhere-opensource-src-5.1.1-rc1.tar.gz
+  5.1.1:33c7883a628a18c44ebf2b73996a5760:http://download.qt-project.org/snapshots/qt/5.1/5.1.1/backups/2013-08-26-117/single/qt-everywhere-opensource-src-5.1.1.tar.gz
 )
 foreach(line ${QT5_MD5SUMS})
 	if(${line} MATCHES "^${QT5_VERSION}:")
@@ -59,9 +61,10 @@ endif()
 
 string(REGEX MATCH "5.." QT5_MAJOR_MINOR ${QT5_VERSION})
 string(REGEX MATCH "5...." QT5_MAJOR_MINOR_REVISION ${QT5_VERSION})
-if(QT5_VERSION MATCHES -)
-	message(WARNING "Using a development release of Qt.")
-	set(QT5_URL "http://download.qt-project.org/development_releases/qt/${QT5_MAJOR_MINOR}/${QT5_VERSION}/single/qt-everywhere-opensource-src-${QT5_VERSION}.tar.gz")
+if(QT5_MD5 MATCHES :)
+	message(WARNING "Not using an official release of Qt.")
+	string(REGEX REPLACE "^[0-9a-fA-F]*:" "" QT5_URL "${QT5_MD5}")
+	string(REGEX REPLACE ":.*"      "" QT5_MD5 "${QT5_MD5}")
 else()
 	set(QT5_URL "http://download.qt-project.org/official_releases/qt/${QT5_MAJOR_MINOR}/${QT5_VERSION}/single/qt-everywhere-opensource-src-${QT5_VERSION}.tar.gz")
 endif()
@@ -217,7 +220,7 @@ configure_file(qt.conf.qrc.in qt.conf.qrc @ONLY)
 
 # cf. https://bugreports.qt-project.org/browse/QTBUG-32641 :
 # Qt 5.1.0 Release SVG module won't build on Linux when using qt-zlib
-if(UNIX AND NOT APPLE AND ${QT5_VERSION} STREQUAL "5.1.0")
+if(UNIX AND NOT APPLE AND ${QT5_VERSION} MATCHES "5.1.[0-1]")
 	execute_process(
 	  COMMAND sed -i -e /-qt-zlib/d ${QT5_CONFIG_SCRIPT}.new
 	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
