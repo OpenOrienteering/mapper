@@ -30,11 +30,11 @@ set(MINGW_CONFIGURATION_NAME ${MINGW_GCC_ARCH}-${MINGW_GCC_VERSION}-release-${MI
 # The build script
 set(MINGW_BUILDS_VERSION 2.0.0)
 set(MINGW_BUILDS_MD5     ea7f9b929f6ff372791da9ed6796c319)
-set(MINGW_SOURCES_URL    http://sourceforge.net/projects/oorienteering/files/Mapper/Source/3rd-party/mingw-builds-${MINGW_BUILDS_VERSION}.zip)
+set(MINGW_BUILDS_URL     http://sourceforge.net/projects/oorienteering/files/Mapper/Source/3rd-party/mingw-builds-${MINGW_BUILDS_VERSION}.zip)
 
 # The source package
 set(MINGW_SOURCES_VERSION ${MINGW_GCC_VERSION}-release-rev${MINGW_GCC_REVISION})
-set(MINGW_SOURCES_MD5     80febf5f910c1516894c70f0eaa5f21e)
+set(MINGW_SOURCES_MD5     3a3b51dd332b2f9acf94168440ad8aa9)
 set(MINGW_SOURCES_URL     http://sourceforge.net/projects/oorienteering/files/Mapper/Source/3rd-party/src-${MINGW_SOURCES_VERSION}.tar.7z)
 
 # The MinGW toolchain

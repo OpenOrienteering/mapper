@@ -42,14 +42,6 @@ diff -urwN -x toolchains mingw-builds.orig/build mingw-builds/build
  
  [[ -d /mingw ]] && {
  	die "please remove \"/mingw\" directory. terminate."
-@@ -429,6 +430,7 @@
- )
- 
- SUBTARGETS_PART1=(
-+	cleanup
- 	gmp
- 	mpfr
- 	mpc
 @@ -467,7 +469,7 @@
  	gdbinit
  	gdb
@@ -139,14 +131,15 @@ diff -urwN -x toolchains mingw-builds.orig/scripts/bzip2.sh mingw-builds/scripts
 diff -urwN -x toolchains mingw-builds.orig/scripts/cleanup.sh mingw-builds/scripts/cleanup.sh
 --- mingw-builds.orig/scripts/cleanup.sh	2013-05-22 09:52:48 +0000
 +++ mingw-builds/scripts/cleanup.sh	2013-08-19 03:13:04 +0000
-@@ -43,4 +43,9 @@
- 	touch $BUILDS_DIR/cleanup.marker
+@@ -41,6 +41,9 @@
+ 	rm -rf $PREFIX/{mingw,share/info,share/man}
+ 
+-	touch $BUILDS_DIR/cleanup.marker
++#	touch $BUILDS_DIR/cleanup.marker # Modification from OpenOrienteering
  }
  
 +# Modification from OpenOrienteering
-+find $SOURCES_DIR -type f -name "exec-after_install*.marker" -exec rm -f {} \;
-+find $SOURCES_DIR -type f -name "*stackdump" -exec rm -f {} \;
-+rm -f $BUILDS_DIR/cleanup.marker
++find $SRCS_DIR -name "*.stackdump" -o -name "exec-after_install-*" -exec rm -f {} \;
 +
  # **************************************************************************
 diff -urwN -x toolchains mingw-builds.orig/scripts/cloog.sh mingw-builds/scripts/cloog.sh
