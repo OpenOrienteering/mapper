@@ -44,5 +44,7 @@ set(MINGW_TOOLCHAIN_URL     http://sourceforge.net/projects/mingwbuilds/files/ho
 
 # Bootstrap a defined environment if called as a script (with cmake -P ...).
 if(NOT PROJECT_NAME)
+	get_filename_component(MINGW_CONFIGURATION_FILENAME ${CMAKE_CURRENT_LIST_FILE} NAME)
+	string(REPLACE ".cmake" "" MINGW_CONFIGURATION_FILENAME ${MINGW_CONFIGURATION_FILENAME})
 	include(${CMAKE_CURRENT_LIST_DIR}/../bootstrap.cmake)
 endif()

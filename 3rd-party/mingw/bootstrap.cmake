@@ -28,10 +28,7 @@ include("${CMAKE_CURRENT_LIST_DIR}/functions.cmake")
 
 message(STATUS "Bootstrapping MinGW-builds")
 if(NOT MSYS_URL)
-# rev8 works well for me
-#	set(MSYS_VERSION msys+7za+wget+svn+git+mercurial+cvs-rev8)
-#	set(MSYS_MD5  10e79cf13642655d27b7e06a74b64f36)
-# rev13 is the latest version
+	# rev13 is the latest version
 	set(MSYS_VERSION msys+7za+wget+svn+git+mercurial+cvs-rev13)
 	set(MSYS_MD5  4c79f989eb6353a0d81bc39b6f7176ea)
 	set(MSYS_URL  http://sourceforge.net/projects/mingwbuilds/files/external-binary-packages/${MSYS_VERSION}.7z)
@@ -111,11 +108,11 @@ file(WRITE cmake.cmd "@\"${CMAKE_COMMAND}\" %*\n")
 if($ENV{NUMBER_OF_PROCESSORS})
 	math(EXPR BUILD_JOBS $ENV{NUMBER_OF_PROCESSORS}+2)
 	set(DEFINE_BUILD_JOBS "-DBUILD_JOBS=${BUILD_JOBS}")
-	message(${DEFINE_BUILD_JOBS})
 endif()
 
+require_definitions(MINGW_CONFIGURATION_FILENAME)
 execute_process(
-  COMMAND "${CMAKE_COMMAND}" "${CMAKE_CURRENT_LIST_DIR}" "-G${CMAKE_GENERATOR}" -U*_PROGRAM -DMINGW_CONFIGURATION=gcc-${MINGW_GCC_VERSION}-${MINGW_GCC_EXCEPTIONS}-${MINGW_GCC_THREADS}-${MINGW_GCC_ARCH}-rev${MINGW_GCC_REVISION} -DCMAKE_MAKE_PROGRAM=${CMAKE_MAKE_PROGRAM} -DMSYS_DIR=${MSYS_DIR} ${DEFINE_BUILD_JOBS}
+  COMMAND "${CMAKE_COMMAND}" "${CMAKE_CURRENT_LIST_DIR}" "-G${CMAKE_GENERATOR}" -U*_PROGRAM -DMINGW_CONFIGURATION=${MINGW_CONFIGURATION_FILENAME} -DCMAKE_MAKE_PROGRAM=${CMAKE_MAKE_PROGRAM} -DMSYS_DIR=${MSYS_DIR} ${DEFINE_BUILD_JOBS}
   RESULT_VARIABLE CONFIGURE_ERROR
 )
 if(CONFIGURE_ERROR)

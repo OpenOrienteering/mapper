@@ -358,19 +358,18 @@ diff -urwN -x toolchains mingw-builds.orig/scripts/make_git.sh mingw-builds/scri
  	"autoreconf -i"
  )
  
-@@ -75,8 +82,11 @@
+@@ -75,8 +82,10 @@
  
  #
  
 +# Modification from OpenOrienteering / mingw-builds-3.0.0
  MAKE_FLAGS=(
  	-j$JOBS
-+	do-po-update
-+	scm-update
++	'$( if [ ! -f $SRCS_DIR/$2/po/de.po ] ; then echo -n do-po-update scm-update ; fi )'
  	all
  )
  
-@@ -87,4 +97,10 @@
+@@ -87,4 +96,10 @@
  	$( [[ $STRIP_ON_INSTALL == yes ]] && echo install-strip || echo install )
  )
  
