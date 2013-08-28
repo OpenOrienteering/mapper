@@ -39,12 +39,12 @@ if (NOT ${QT5_VERSION} STREQUAL ${QT5_VERSION_DEFAULT})
 endif()
 
 set(QT5_MD5SUMS
+  # Schema: VERSION:MD5[:DOWNLOAD_URL]
   5.0.0:1a1b73f913a965f6b0cf02bb820c8a03
   5.0.1:8e8137c23c8ff078a560d3c62b4383e7
   5.0.2:87cae8ae2f82f41ba027c2db0ab639b7
   5.1.0:787ce18c7f47fc14538b4362a0aa9edd
-  5.1.1-rc1:1cb26893689fe36431754193c762765a:http://download.qt-project.org/snapshots/qt/5.1/5.1.1/backups/2013-08-20-108/single/qt-everywhere-opensource-src-5.1.1-rc1.tar.gz
-  5.1.1:33c7883a628a18c44ebf2b73996a5760:http://download.qt-project.org/snapshots/qt/5.1/5.1.1/backups/2013-08-26-117/single/qt-everywhere-opensource-src-5.1.1.tar.gz
+  5.1.1:33c7883a628a18c44ebf2b73996a5760
 )
 foreach(line ${QT5_MD5SUMS})
 	if(${line} MATCHES "^${QT5_VERSION}:")
