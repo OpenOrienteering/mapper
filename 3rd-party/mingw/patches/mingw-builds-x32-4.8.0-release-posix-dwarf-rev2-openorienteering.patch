@@ -316,7 +316,7 @@ diff -urwN -x toolchains mingw-builds.orig/scripts/licenses.sh mingw-builds/scri
 diff -urwN -x toolchains mingw-builds.orig/scripts/make_git.sh mingw-builds/scripts/make_git.sh
 --- mingw-builds.orig/scripts/make_git.sh	2013-05-22 09:53:15 +0000
 +++ mingw-builds/scripts/make_git.sh	2013-08-22 22:20:59 +0000
-@@ -35,27 +35,34 @@
+@@ -35,56 +35,65 @@
  
  # **************************************************************************
  
@@ -351,34 +351,57 @@ diff -urwN -x toolchains mingw-builds.orig/scripts/make_git.sh mingw-builds/scri
  
  #
  
-+# Modification from OpenOrienteering / mingw-builds-3.0.0
++# Modification from OpenOrienteering / mingw-builds-3.0.0 (make_git_bat)
  EXECUTE_AFTER_PATCH=(
 -	"cp -rf $PATCHES_DIR/make/doc/* $SRCS_DIR/make_git/doc/"
 -	"cp -rf $PATCHES_DIR/make/po/* $SRCS_DIR/make_git/po/"
- 	"autoreconf -i"
+-	"autoreconf -i"
  )
- 
-@@ -75,8 +82,10 @@
  
  #
  
-+# Modification from OpenOrienteering / mingw-builds-3.0.0
++# Modification from OpenOrienteering / mingw-builds-3.0.0 (make_git_bat)
+ CONFIGURE_FLAGS=(
+-	--host=$HOST
+-	--build=$TARGET
+-	--prefix=$PREFIX
+-	--enable-case-insensitive-file-system
+-	--program-prefix=mingw32-
+-	--enable-job-server
+-	--without-guile
+-	CFLAGS="\"$COMMON_CFLAGS\""
+-	LDFLAGS="\"$COMMON_LDFLAGS -L$LIBS_DIR/lib\""
+ )
+ 
+ #
+ 
++# Modification from OpenOrienteering / mingw-builds-3.0.0 (make_git_bat)
  MAKE_FLAGS=(
- 	-j$JOBS
-+	'$( if [ ! -f $SRCS_DIR/$2/po/de.po ] ; then echo -n do-po-update scm-update ; fi )'
- 	all
+-	-j$JOBS
+-	all
  )
  
-@@ -87,4 +96,10 @@
- 	$( [[ $STRIP_ON_INSTALL == yes ]] && echo install-strip || echo install )
- )
+ #
  
-+# Modification from OpenOrienteering
-+EXECUTE_AFTER_INSTALL=(
-+	"mkdir -p $PREFIX/licenses/$SRC_DIR_NAME"
-+	"cp COPYING* $PREFIX/licenses/$SRC_DIR_NAME/"
++# Modification from OpenOrienteering / mingw-builds-3.0.0 (make_git_bat)
+ INSTALL_FLAGS=(
+-	-j$JOBS
+-	$( [[ $STRIP_ON_INSTALL == yes ]] && echo install-strip || echo install )
 +)
 +
++# Modification from OpenOrienteering / mingw-builds-3.0.0 (make_git_bat)
++EXECUTE_AFTER_INSTALL=(
++	"cp -rf $SRCS_DIR/$NAME $CURR_BUILD_DIR/"
++	"cmd /c 'build_w32.bat gcc'"
++	"strip -s gnumake.exe -o mingw32-make.exe"
++	"cp -f mingw32-make.exe $PREFIX/bin/"
++	"cp -f libgnumake-1.dll.a $PREFIX/lib/"
++	"cp -f gnumake.h $PREFIX/include/"
++	
++	"mkdir -p $PREFIX/licenses/$SRC_DIR_NAME"
++	"cp COPYING* $PREFIX/licenses/$SRC_DIR_NAME/"
+ )
+ 
  # **************************************************************************
 diff -urwN -x toolchains mingw-builds.orig/scripts/mingw-w64-api.sh mingw-builds/scripts/mingw-w64-api.sh
 --- mingw-builds.orig/scripts/mingw-w64-api.sh	2013-05-22 09:52:48 +0000

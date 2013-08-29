@@ -34,7 +34,7 @@ set(MINGW_BUILDS_URL     http://sourceforge.net/projects/oorienteering/files/Map
 
 # The source package
 set(MINGW_SOURCES_VERSION ${MINGW_GCC_VERSION}-release-rev${MINGW_GCC_REVISION})
-set(MINGW_SOURCES_MD5     3a3b51dd332b2f9acf94168440ad8aa9)
+set(MINGW_SOURCES_MD5     abd2ea112c099a635f776f6d6ca677b4)
 set(MINGW_SOURCES_URL     http://sourceforge.net/projects/oorienteering/files/Mapper/Source/3rd-party/src-${MINGW_SOURCES_VERSION}.tar.7z)
 
 # The MinGW toolchain
