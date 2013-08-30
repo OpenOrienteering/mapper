@@ -208,7 +208,8 @@ ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, Map* map, MapView* mai
 	true_north_radio = new QRadioButton(tr("Align with true north"));
 	
 	QLabel* rotate_label = new QLabel(tr("Additional rotation (counter-clockwise):"));
-	additional_rotation_edit = Util::SpinBox::create(1, -999999, +999999, trUtf8("°"));
+	additional_rotation_edit = Util::SpinBox::create(1, -360, +360, trUtf8("°"));
+	additional_rotation_edit->setWrapping(true);
 	
 	
 	QGroupBox* position_group = new QGroupBox(tr("Positioning"));
@@ -218,15 +219,15 @@ ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, Map* map, MapView* mai
 	unit_combo->addItem(tr("millimeters on map"), (int)MapGrid::MillimetersOnMap);
 	
 	QLabel* horz_spacing_label = new QLabel(tr("Horizontal spacing:"));
-	horz_spacing_edit = Util::SpinBox::create(1, 0.1, std::numeric_limits<double>::max());
+	horz_spacing_edit = Util::SpinBox::create(1, 0.1, Util::InputProperties<MapCoordF>::max());
 	QLabel* vert_spacing_label = new QLabel(tr("Vertical spacing:"));
-	vert_spacing_edit = Util::SpinBox::create(1, 0.1, std::numeric_limits<double>::max());
+	vert_spacing_edit = Util::SpinBox::create(1, 0.1, Util::InputProperties<MapCoordF>::max());
 	
 	origin_label = new QLabel();
 	QLabel* horz_offset_label = new QLabel(tr("Horizontal offset:"));
-	horz_offset_edit = Util::SpinBox::create(1, -std::numeric_limits<double>::max(), std::numeric_limits<double>::max());
+	horz_offset_edit = Util::SpinBox::create(1, Util::InputProperties<MapCoordF>::min(), Util::InputProperties<MapCoordF>::max());
 	QLabel* vert_offset_label = new QLabel(tr("Vertical offset:"));
-	vert_offset_edit = Util::SpinBox::create(1, -std::numeric_limits<double>::max(), std::numeric_limits<double>::max());
+	vert_offset_edit = Util::SpinBox::create(1, Util::InputProperties<MapCoordF>::min(), Util::InputProperties<MapCoordF>::max());
 
 	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, Qt::Horizontal);
 	
