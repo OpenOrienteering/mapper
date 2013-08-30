@@ -20,8 +20,6 @@
 
 #include "georeferencing_dialog.h"
 
-#include <limits>
-
 #if QT_VERSION < 0x050000
 #include <QtGui>
 #else
@@ -90,8 +88,8 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	QLabel* geographic_datum_label = new QLabel(tr("(Datum: WGS84)"));
 	int geographic_datum_label_width = geographic_datum_label->sizeHint().width();
 	
-	map_x_edit = Util::SpinBox::create(2, -1 * std::numeric_limits<double>::max(), std::numeric_limits<double>::max(), tr("mm"));
-	map_y_edit = Util::SpinBox::create(2, -1 * std::numeric_limits<double>::max(), std::numeric_limits<double>::max(), tr("mm"));
+	map_x_edit = Util::SpinBox::create<MapCoordF>(tr("mm"));
+	map_y_edit = Util::SpinBox::create<MapCoordF>(tr("mm"));
 	ref_point_button->setEnabled(controller != NULL);
 	QHBoxLayout* map_ref_layout = new QHBoxLayout();
 	map_ref_layout->addWidget(map_x_edit, 1);
@@ -102,8 +100,8 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 		map_ref_layout->addSpacing(geographic_datum_label_width - ref_point_button_width);
 	map_ref_layout->addWidget(ref_point_button, 0);
 	
-	easting_edit = Util::SpinBox::create(2, -1 * std::numeric_limits<double>::max(), std::numeric_limits<double>::max(), tr("m"));
-	northing_edit = Util::SpinBox::create(2, -1 * std::numeric_limits<double>::max(), std::numeric_limits<double>::max(), tr("m"));
+	easting_edit = Util::SpinBox::create<Util::RealMeters>(tr("m"));
+	northing_edit = Util::SpinBox::create<Util::RealMeters>(tr("m"));
 	QHBoxLayout* projected_ref_layout = new QHBoxLayout();
 	projected_ref_layout->addWidget(easting_edit, 1);
 	projected_ref_layout->addWidget(new QLabel(tr("E", "west / east")), 0);
@@ -140,15 +138,6 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	declination_layout->addWidget(declination_button, 0);
 	
 	grivation_label = new QLabel();
-	
-	// Fix layout of SpinBoxes. Seems to be a problem with Qt (tested with Qt 5.1.0).
-	map_x_edit->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
-	map_y_edit->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
-	easting_edit->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
-	northing_edit->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
-	lat_edit->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
-	lon_edit->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
-	declination_edit->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Fixed);
 	
 	buttons_box = new QDialogButtonBox(
 	  QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Reset | QDialogButtonBox::Help,

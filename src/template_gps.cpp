@@ -492,7 +492,7 @@ LocalCRSPositioningDialog::LocalCRSPositioningDialog(TemplateTrack* temp, QWidge
 	coord_system_box->addItem(tr("Map"));
 	coord_system_box->setCurrentIndex(0);
 	
-	unit_scale_edit = Util::SpinBox::create(6, 0, 1e42, tr("m", "meters"));
+	unit_scale_edit = Util::SpinBox::create(6, 0, 99999.999999, tr("m", "meters"));
 	unit_scale_edit->setValue(1);
 	unit_scale_edit->setEnabled(false);
 	layout->addRow(tr("One coordinate unit equals:"), unit_scale_edit);
