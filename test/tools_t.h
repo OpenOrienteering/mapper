@@ -24,7 +24,7 @@
 
 
 /**
- * Tests the editing tools.
+ * @test Tests the editing tools.
  */
 class ToolsTest : public QObject
 {

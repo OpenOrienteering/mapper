@@ -24,7 +24,7 @@
 
 
 /**
- * Test that duplicates of symbols and objects are equal to their originals.
+ * @test Test that duplicates of symbols and objects are equal to their originals.
  */
 class DuplicateEqualsTest : public QObject
 {

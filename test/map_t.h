@@ -27,7 +27,9 @@
 
 
 /**
- * Tests the Map class. Still very incomplete (TODO).
+ * @test Tests the Map class. Still very incomplete
+ *
+ * @todo Extent this test.
  */
 class MapTest : public QObject
 {

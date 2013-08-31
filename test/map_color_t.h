@@ -26,7 +26,7 @@
 
 
 /**
- * Tests MapColor properties.
+ * @test Tests MapColor properties.
  */
 class MapColorTest : public QObject
 {
