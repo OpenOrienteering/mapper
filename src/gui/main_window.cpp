@@ -148,6 +148,16 @@ void MainWindow::setController(MainWindowController* new_controller)
 	
 	if (show_menu)
 		createHelpMenu();
+		
+#if defined(Q_OS_MAC) && QT_VERSION >= 0x050000
+	if (isVisible() && qApp->activeWindow() == this)
+	{
+		// Force a menu synchronisation,
+		// QCocoaMenuBar::updateMenuBarImmediately(),
+		// via QCocoaNativeInterface::onAppFocusWindowChanged().
+		qApp->focusWindowChanged(qApp->focusWindow());
+	}
+#endif
 }
 
 void MainWindow::createFileMenu()
