@@ -54,11 +54,11 @@
         <source>mm</source>
         <translation>mm</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation>°</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>mm²</source>
         <translation>mm²</translation>
     </message>
@@ -377,7 +377,7 @@
         <source>mm</source>
         <translation type="obsolete">mm</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation>°</translation>
     </message>
@@ -644,7 +644,7 @@
 </context>
 <context>
     <name>DrawPointTool</name>
-    <message utf8="true">
+    <message>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Kąt:&lt;/b&gt; %1° </translation>
     </message>
@@ -742,7 +742,7 @@
         <source>px</source>
         <translation>px</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation type="obsolete">°</translation>
     </message>
@@ -818,7 +818,7 @@
         <source>Templates: keep settings of closed templates</source>
         <translation>Podkłady: zachowaj ustawienia zamkniętych podkładów</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <comment>Degree sign for angles</comment>
         <translation type="unfinished">°</translation>
@@ -974,7 +974,7 @@
         <source>mm</source>
         <translation>mm</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation>°</translation>
     </message>
@@ -982,7 +982,7 @@
         <source>Declination:</source>
         <translation>Deklinacja:</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>%1 °</source>
         <translation type="obsolete">%1 °</translation>
     </message>
@@ -1076,7 +1076,7 @@
         <source>Declination value not found.</source>
         <translation>Wartość deklinacji nie została znaleziona.</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
         <translation>Deklinacja magnetyczna dla punktu odniesienia %1° %2° nie będzie przywrócona z &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Czy chcesz kontynuować?</translation>
     </message>
@@ -1141,7 +1141,7 @@
         <comment>north / south</comment>
         <translation type="unfinished">N</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>%1 °</source>
         <comment>degree value</comment>
         <translation type="unfinished">%1 °</translation>
@@ -1560,6 +1560,18 @@
         <source>m</source>
         <comment>meters</comment>
         <translation type="unfinished">m</translation>
+    </message>
+    <message>
+        <source>Coordinate system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Real</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Map</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2617,11 +2629,11 @@ zoom using the mouse wheel, if available.</source>
         <source>mm</source>
         <translation>mm</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>m²</source>
         <translation type="obsolete">m²</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>mm²</source>
         <translation>mm²</translation>
     </message>
@@ -2641,7 +2653,7 @@ zoom using the mouse wheel, if available.</source>
         <source>Length:</source>
         <translation>Długość:</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>mm²</source>
         <comment>square millimeters</comment>
         <translation>mm²</translation>
@@ -2684,7 +2696,7 @@ zoom using the mouse wheel, if available.</source>
         <comment>meters</comment>
         <translation type="unfinished">m</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>m²</source>
         <comment>square meters</comment>
         <translation type="unfinished">m²</translation>
@@ -2951,27 +2963,27 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation type="unfinished">Podczas importowania symbolu tekstowego %1: zignorowano wyjustrowanie</translation>
+        <translation type="obsolete">Podczas importowania symbolu tekstowego %1: zignorowano wyjustrowanie</translation>
     </message>
     <message>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation type="unfinished">Podczas importowania symbolu tekstowego %1: zignorowano własną szerokość (%2)</translation>
+        <translation type="obsolete">Podczas importowania symbolu tekstowego %1: zignorowano własną szerokość (%2)</translation>
     </message>
     <message>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished">Podczas importowania symbolu tekstowego %1: własne odstępy pomiędzy literami są określone, implementacja nie pasuje do zachowania OCADa</translation>
+        <translation type="obsolete">Podczas importowania symbolu tekstowego %1: własne odstępy pomiędzy literami są określone, implementacja nie pasuje do zachowania OCADa</translation>
     </message>
     <message>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation type="unfinished">Podczas importowania symbolu tekstowego %1: zignorowano własne odstępy pomiędzy słowami (%2%)</translation>
+        <translation type="obsolete">Podczas importowania symbolu tekstowego %1: zignorowano własne odstępy pomiędzy słowami (%2%)</translation>
     </message>
     <message>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation type="unfinished">Podczas importowania symbolu tekstowego %1: zignorowano własne tirety (%2/%3)</translation>
+        <translation type="obsolete">Podczas importowania symbolu tekstowego %1: zignorowano własne tirety (%2/%3)</translation>
     </message>
     <message>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation type="unfinished">Podczas importowania symbolu tekstowego %1: zignorowano ramy tekstu (tryb %2)</translation>
+        <translation type="obsolete">Podczas importowania symbolu tekstowego %1: zignorowano ramy tekstu (tryb %2)</translation>
     </message>
     <message>
         <source>Unable to load object</source>
@@ -2999,6 +3011,42 @@ zoom using the mouse wheel, if available.</source>
     </message>
     <message>
         <source>OCD files of version %1 are not supported!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In text symbol %1 &apos;%2&apos;: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Justified alignment is not supported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vertical alignment &apos;%1&apos; is not supported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignoring custom weight (%1).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom character spacing may be incorrect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignoring custom word spacing (%1 %).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignoring custom indents (%1/%2).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignoring text framing (mode %1).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line text symbols are not yet supported. Marking the symbol as hidden.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3529,7 +3577,7 @@ zoom using the mouse wheel, if available.</source>
         <source>mm</source>
         <translation>mm</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation>°</translation>
     </message>
@@ -3605,7 +3653,7 @@ zoom using the mouse wheel, if available.</source>
 </context>
 <context>
     <name>RotatePatternTool</name>
-    <message utf8="true">
+    <message>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Kąt:&lt;/b&gt; %1° </translation>
     </message>
@@ -3632,7 +3680,7 @@ zoom using the mouse wheel, if available.</source>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the center of rotation. </source>
         <translation>&lt;b&gt;Kliknij&lt;/b&gt;: określ oś obrotu. </translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>&lt;b&gt;Rotation:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Obrót:&lt;/b&gt; %1° </translation>
     </message>
