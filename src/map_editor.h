@@ -415,8 +415,10 @@ private:
 	QAction* newToolAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
 	QAction* findAction(const char* id);
 	void assignKeyboardShortcuts();
+	void createActions();
 	void createMenuAndToolbars();
 	void createPieMenu(PieMenu* menu);
+	void createMobileGUI();
 	
 	void paintOnTemplate(Template* temp);
 	void updatePaintOnTemplateAction();
@@ -428,6 +430,7 @@ private:
 	MapWidget* map_widget;
 	
 	OperatingMode mode;
+	bool mobileMode;
 	
 	MapEditorTool* current_tool;
 	MapEditorTool* override_tool;
@@ -441,6 +444,10 @@ private:
 	EditorDockWidget* print_dock_widget;
 	PrintWidget* print_widget;
 	
+	QAction* print_act;
+	QAction* export_image_act;
+	QAction* export_pdf_act;
+	
 	QAction* undo_act;
 	QAction* redo_act;
 	QAction* cut_act;
@@ -449,7 +456,13 @@ private:
 	QAction* clear_undo_redo_history_act;
 	
 	QAction* pan_act;
+	QAction* zoom_in_act;
+	QAction* zoom_out_act;
+	QAction* show_all_act;
+	QAction* fullscreen_act;
+	QAction* custom_zoom_act;
 	QAction* show_grid_act;
+	QAction* configure_grid_act;
 	QAction* hatch_areas_view_act;
 	QAction* baseline_view_act;
 	QAction* hide_all_templates_act;
@@ -460,8 +473,15 @@ private:
 	QAction* geographic_coordinates_act;
 	QAction* geographic_coordinates_dms_act;
 	
+	QAction* scale_all_symbols_act;
+	QAction* georeferencing_act;
+	QAction* scale_map_act;
+	QAction* rotate_map_act;
+	QAction* map_notes_act;
+	
 	QAction* color_window_act;
 	EditorDockWidget* color_dock_widget;
+	QAction* load_symbols_from_act;
 	
 	QAction* symbol_window_act;
 	EditorDockWidget* symbol_dock_widget;
@@ -469,6 +489,7 @@ private:
 	
 	QAction* template_window_act;
 	EditorDockWidget* template_dock_widget;
+	QAction* open_template_act;
 	QAction* reopen_template_act;
 	
 	QAction* edit_tool_act;
@@ -509,7 +530,12 @@ private:
 	QAction* paint_on_template_act;
 	Template* last_painted_on_template;
 	
+	QAction* mappart_add_act;
+	QAction* mappart_remove_act;
+	QAction* mappart_merge_act;
 	QMenu* mappart_move_menu;
+	
+	QAction* import_act;
 	
 	QFrame* statusbar_zoom_frame;
 	QLabel* statusbar_cursorpos_label;
