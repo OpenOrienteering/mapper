@@ -906,6 +906,8 @@ void MapPrinter::printMap(QPrinter* printer)
 		    -page_format.page_rect.left()*resolution / 25.4,
 		    -page_format.page_rect.top()*resolution / 25.4   );
 	}
+#else
+	Q_UNUSED(resolution);
 #endif
 	
 	bool need_new_page = false;

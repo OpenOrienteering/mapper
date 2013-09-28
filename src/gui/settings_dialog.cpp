@@ -345,12 +345,12 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	layout->addWidget(Util::Headline::create(tr("Program start")), row, 1, 1, 2);
 	
 	row++;
-	QCheckBox* open_mru_check = new QCheckBox(HomeScreenWidget::tr("Open most recently used file"));
+	QCheckBox* open_mru_check = new QCheckBox(AbstractHomeScreenWidget::tr("Open most recently used file"));
 	open_mru_check->setChecked(Settings::getInstance().getSetting(Settings::General_OpenMRUFile).toBool());
 	layout->addWidget(open_mru_check, row, 1, 1, 2);
 	
 	row++;
-	QCheckBox* tips_visible_check = new QCheckBox(HomeScreenWidget::tr("Show tip of the day"));
+	QCheckBox* tips_visible_check = new QCheckBox(AbstractHomeScreenWidget::tr("Show tip of the day"));
 	tips_visible_check->setChecked(Settings::getInstance().getSetting(Settings::HomeScreen_TipsVisible).toBool());
 	layout->addWidget(tips_visible_check, row, 1, 1, 2);
 	
