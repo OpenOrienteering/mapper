@@ -65,7 +65,6 @@ private:
 	std::vector<MapCoordF> coords;
 	
 	Template* temp;
-	QDockWidget* dock_widget;
 	PaintOnTemplatePaletteWidget* widget;
 	
 	static int erase_width;
@@ -77,6 +76,8 @@ class PaintOnTemplatePaletteWidget : public QWidget
 Q_OBJECT
 public:
 	PaintOnTemplatePaletteWidget(bool close_on_selection);
+	
+	virtual QSize sizeHint() const;
 	
 signals:
 	void colorSelected(QColor color);

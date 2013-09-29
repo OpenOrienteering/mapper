@@ -29,6 +29,7 @@
 #endif
 #include <QSignalMapper>
 
+#include "gui/widgets/action_grid_bar.h"
 #include "color_dock_widget.h"
 #include "file_format_registry.h"
 #include "georeferencing.h"
@@ -268,6 +269,43 @@ void MapEditorController::removeTemplatePositionDockWidget(Template* temp)
 	assert(num_deleted == 1);
 }
 
+void MapEditorController::showPopupWidget(QWidget* child_widget, const QString& title)
+{
+	if (mobileMode)
+	{
+		QSize size = child_widget->sizeHint();
+		QRect map_widget_rect = map_widget->rect();
+		
+		child_widget->setParent(map_widget);
+		child_widget->setGeometry(
+			qMax(0, qRound(map_widget_rect.center().x() - 0.5f * size.width())),
+			qMax(0, map_widget_rect.bottom() - size.height()),
+			qMin(size.width(), map_widget_rect.width()),
+			qMin(size.height(), map_widget_rect.height())
+			);
+		child_widget->show();
+	}
+	else
+	{
+		QDockWidget* dock_widget = new QDockWidget(title, window);
+		dock_widget->setFeatures(dock_widget->features() & ~QDockWidget::DockWidgetClosable);
+		dock_widget->setWidget(child_widget);
+		
+		// Show dock in floating state
+		dock_widget->setFloating(true);
+		dock_widget->show();
+		dock_widget->setGeometry(window->geometry().left() + 40, window->geometry().top() + 100, dock_widget->width(), dock_widget->height());
+	}
+}
+
+void MapEditorController::deletePopupWidget(QWidget* child_widget)
+{
+	if (mobileMode)
+		delete child_widget;
+	else
+		delete child_widget->parentWidget();
+}
+
 bool MapEditorController::save(const QString& path)
 {
 	if (map)
@@ -365,13 +403,6 @@ void MapEditorController::attach(MainWindow* window)
 	connect(window, SIGNAL(keyPressed(QKeyEvent*)), map_widget, SLOT(keyPressed(QKeyEvent*)));
 	connect(window, SIGNAL(keyReleased(QKeyEvent*)), map_widget, SLOT(keyReleased(QKeyEvent*)));
 	map_widget->setMapView(main_view);
-	if (!mobileMode)
-	{
-		map_widget->setZoomLabel(statusbar_zoom_label);
-		map_widget->setCursorposLabel(statusbar_cursorpos_label);
-		map_widget->setObjectTagLabel(statusbar_objecttag_label);
-	}
-	window->setCentralWidget(map_widget);
 	
 	// Create menu and toolbar together, so actions can be inserted into one or both
 	if (mode == MapEditor)
@@ -381,6 +412,11 @@ void MapEditorController::attach(MainWindow* window)
 			createMobileGUI();
 		else
 		{
+			map_widget->setZoomLabel(statusbar_zoom_label);
+			map_widget->setCursorposLabel(statusbar_cursorpos_label);
+			map_widget->setObjectTagLabel(statusbar_objecttag_label);
+			window->setCentralWidget(map_widget);
+			
 			createMenuAndToolbars();
 			createPieMenu(&map_widget->getPieMenu());
 			restoreWindowState();
@@ -888,8 +924,27 @@ void MapEditorController::createPieMenu(PieMenu* menu)
 }
 
 void MapEditorController::createMobileGUI()
-{
-	// TODO
+{	
+	// TODO: allow for different orientations (adjust layout and ActionGridBars)
+	
+	ActionGridBar* bottomBar = new ActionGridBar(ActionGridBar::Horizontal, 1);
+	bottomBar->addAction(paint_on_template_act, 0, 0);
+	
+	bottomBar->addAction(pan_act, 0, 2);
+	bottomBar->addAction(zoom_in_act, 0, 3);
+	bottomBar->addAction(zoom_out_act, 0, 4);
+	
+	//bottomBar->addAction(undo_act, 0, 6);
+	//bottomBar->addAction(redo_act, 0, 7);
+	
+	QWidget* container_widget = new QWidget();
+	QVBoxLayout* layout = new QVBoxLayout();
+	layout->setMargin(0);
+	layout->setSpacing(0);
+	layout->addWidget(map_widget, 1);
+	layout->addWidget(bottomBar);
+	container_widget->setLayout(layout);
+	window->setCentralWidget(container_widget);
 }
 
 void MapEditorController::detach()

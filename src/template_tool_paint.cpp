@@ -29,6 +29,7 @@
 #include "map_widget.h"
 #include "template.h"
 #include "util.h"
+#include "map_editor.h"
 
 
 // ### PaintOnTemplateTool ###
@@ -50,23 +51,15 @@ PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* t
 
 PaintOnTemplateTool::~PaintOnTemplateTool()
 {
-	delete dock_widget;
+	editor->deletePopupWidget(widget);
 }
 
 void PaintOnTemplateTool::init()
 {
 	setStatusBarText(tr("<b>Click and drag</b>: Paint. <b>Right click and drag</b>: Erase. "));
 	
-	dock_widget = new QDockWidget(tr("Color selection"), window());
-	dock_widget->setFeatures(dock_widget->features() & ~QDockWidget::DockWidgetClosable);
 	widget = new PaintOnTemplatePaletteWidget(false);
-	dock_widget->setWidget(widget);
-	
-	// Show dock in floating state
-	dock_widget->setFloating(true);
-	dock_widget->show();
-	dock_widget->setGeometry(window()->geometry().left() + 40, window()->geometry().top() + 100, dock_widget->width(), dock_widget->height());
-	
+	editor->showPopupWidget(widget, tr("Color selection"));
 	connect(widget, SIGNAL(colorSelected(QColor)), this, SLOT(colorSelected(QColor)));
 }
 
@@ -153,6 +146,12 @@ PaintOnTemplatePaletteWidget::PaintOnTemplatePaletteWidget(bool close_on_selecti
 	setAttribute(Qt::WA_DeleteOnClose);
 	setAttribute(Qt::WA_OpaquePaintEvent);
 	setAutoFillBackground(false);
+}
+
+QSize PaintOnTemplatePaletteWidget::sizeHint() const
+{
+	// TODO: depend on screen ppi? Or handle this elsewhere?
+	return QSize(200, 64);
 }
 
 void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)

@@ -158,6 +158,25 @@ public:
 	 */
 	void removeTemplatePositionDockWidget(Template* temp);
 	
+	
+	/**
+	 * Shows the given widget in a popup window with specified title.
+	 * 
+	 * In the desktop version, the widget is shown inside a dock widget.
+	 * In the mobile version, the widget is shown as a popup over the map,
+	 * ignoring the title.
+	 * 
+	 * Make sure that the child widget has a reasonable size hint.
+	 */
+	void showPopupWidget(QWidget* child_widget, const QString& title);
+	
+	/**
+	 * Deletes the given popup widget, which was previously shown with
+	 * showPopupWidget().
+	 */
+	void deletePopupWidget(QWidget* child_widget);
+	
+	
 	/**
 	 * Returns the action identified by id if it exists, or NULL.
 	 * This allows the reuse of the controller's actions in dock widgets etc.
