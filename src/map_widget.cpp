@@ -35,6 +35,7 @@
 #include "tool.h"
 #include "object.h"
 #include "tool_edit.h"
+#include "touch_cursor.h"
 
 #if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
 #define MiddleButton MidButton
@@ -44,7 +45,8 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
  : QWidget(parent),
    show_help(show_help),
    force_antialiasing(force_antialiasing),
-   pie_menu(this, 8, 24)
+   pie_menu(this, 8, 24),
+   touch_cursor(NULL)
 {
 	view = NULL;
 	tool = NULL;
@@ -77,6 +79,9 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
 
 #if defined(Q_OS_ANDROID)
 	clickState = 0;
+	
+	// TODO: create setting for enabling touch cursor
+	touch_cursor = new TouchCursor(this);
 #endif
 }
 
@@ -88,6 +93,8 @@ MapWidget::~MapWidget()
 	delete below_template_cache;
 	delete above_template_cache;
 	delete map_cache;
+	
+	delete touch_cursor;
 }
 
 void MapWidget::setMapView(MapView* view)
@@ -138,6 +145,10 @@ QPointF MapWidget::viewportToView(QPoint input)
 {
 	return QPointF(input.x() - 0.5*width() - drag_offset.x(), input.y() - 0.5*height() - drag_offset.y());
 }
+QPointF MapWidget::viewportToView(QPointF input)
+{
+	return QPointF(input.x() - 0.5*width() - drag_offset.x(), input.y() - 0.5*height() - drag_offset.y());
+}
 QRectF MapWidget::viewToViewport(const QRectF& input)
 {
 	return QRectF(input.left() + 0.5*width() + drag_offset.x(), input.top() + 0.5*height() + drag_offset.y(), input.width(), input.height());
@@ -160,6 +171,10 @@ MapCoord MapWidget::viewportToMap(QPoint input)
 	return view->viewToMap(viewportToView(input));
 }
 MapCoordF MapWidget::viewportToMapF(QPoint input)
+{
+	return view->viewToMapF(viewportToView(input));
+}
+MapCoordF MapWidget::viewportToMapF(QPointF input)
 {
 	return view->viewToMapF(viewportToView(input));
 }
@@ -287,6 +302,11 @@ void MapWidget::setDragOffset(QPoint offset)
 {
 	drag_offset = offset;
 	update();
+}
+
+QPoint MapWidget::getDragOffset() const
+{
+	return drag_offset;
 }
 
 void MapWidget::completeDragging(qint64 dx, qint64 dy)
@@ -760,6 +780,10 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		drawing_dirty_rect_old = viewport_dirty_rect;
 	}
 	
+	// Draw touch cursor
+	if (touch_cursor)
+		touch_cursor->paint(&painter);
+	
 	painter.end();
 }
 
@@ -796,7 +820,21 @@ void MapWidget::mousePressEvent(QMouseEvent* event)
 	clickState |= event->button();
 	*event = QMouseEvent(QEvent::MouseButtonPress, event->localPos(), event->windowPos(), event->screenPos(), (Qt::MouseButton)realButtons, event->buttons(), event->modifiers());
 #endif
+	
+	if (touch_cursor)
+	{
+		touch_cursor->mousePressEvent(event);
+		if (event->type() == QEvent::MouseMove)
+		{
+			_mouseMoveEvent(event);
+			return;
+		}
+	}
+	_mousePressEvent(event);
+}
 
+void MapWidget::_mousePressEvent(QMouseEvent* event)
+{
 	if (dragging)
 	{
 		event->accept();
@@ -831,6 +869,13 @@ void MapWidget::mouseMoveEvent(QMouseEvent* event)
 		return;
 #endif
 
+	if (touch_cursor)
+		touch_cursor->mouseMoveEvent(event);
+	_mouseMoveEvent(event);
+}
+
+void MapWidget::_mouseMoveEvent(QMouseEvent* event)
+{
 	if (dragging)
 	{
 		view->setDragOffset(event->pos() - drag_start_pos);
@@ -860,6 +905,16 @@ void MapWidget::mouseReleaseEvent(QMouseEvent* event)
 	*event = QMouseEvent(QEvent::MouseButtonRelease, event->localPos(), event->windowPos(), event->screenPos(), (Qt::MouseButton)realButtons, event->buttons(), event->modifiers());
 #endif
 
+	if (touch_cursor)
+	{
+		if (!touch_cursor->mouseReleaseEvent(event))
+			return;
+	}
+	_mouseReleaseEvent(event);
+}
+
+void MapWidget::_mouseReleaseEvent(QMouseEvent* event)
+{
 	if (dragging)
 	{
 		finishPanning(event->pos());
@@ -875,6 +930,16 @@ void MapWidget::mouseReleaseEvent(QMouseEvent* event)
 }
 
 void MapWidget::mouseDoubleClickEvent(QMouseEvent* event)
+{
+	if (touch_cursor)
+	{
+		if (!touch_cursor->mouseDoubleClickEvent(event))
+			return;
+	}
+	_mouseDoubleClickEvent(event);
+}
+
+void MapWidget::_mouseDoubleClickEvent(QMouseEvent* event)
 {
 	if (tool && tool->mouseDoubleClickEvent(event, view->viewToMapF(viewportToView(event->pos())), this))
 	{

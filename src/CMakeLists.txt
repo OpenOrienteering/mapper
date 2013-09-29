@@ -44,6 +44,7 @@ set(Mapper_Common_SRCS
  map.cpp
  map_part.cpp
  map_widget.cpp
+ touch_cursor.cpp
  map_editor.cpp
  map_editor_activity.cpp
  map_undo.cpp

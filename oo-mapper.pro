@@ -142,6 +142,7 @@ SOURCES += \
   src/map.cpp \
   src/map_part.cpp \
   src/map_widget.cpp \
+  src/touch_cursor.cpp \
   src/map_editor.cpp \
   src/map_editor_activity.cpp \
   src/map_undo.cpp \

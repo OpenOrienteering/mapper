@@ -1,0 +1,97 @@
+/*
+ *    Copyright 2013 Thomas Schöps
+ *
+ *    This file is part of OpenOrienteering.
+ *
+ *    OpenOrienteering is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    OpenOrienteering is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+#ifndef _OPENORIENTEERING_TOUCH_CURSOR_H_
+#define _OPENORIENTEERING_TOUCH_CURSOR_H_
+
+#include "map_coord.h"
+
+QT_BEGIN_NAMESPACE
+class QMouseEvent;
+class QPainter;
+QT_END_NAMESPACE
+class MapWidget;
+
+/**
+ * Handles drawing and controlling a helper cursor inside the map widget for the mobile UI.
+ */
+class TouchCursor
+{
+public:
+	/** List of IDs for controls attached to the cursor. */
+	enum ControlID
+	{
+		LeftButton = 0,
+		
+		NoButton
+	};
+	
+	/** Constructs a touch cursor for a map widget. */
+	TouchCursor(MapWidget* map_widget);
+	
+	/**
+	 * Notifies the cursor of the event, possibly modifying it.
+	 * Attention: the event type may be changed to a mouse move event.
+	 */
+	void mousePressEvent(QMouseEvent* event);
+	
+	/**
+	 * Notifies the cursor of the event, possibly modifying it.
+	 */
+	void mouseMoveEvent(QMouseEvent* event);
+	
+	/**
+	 * Notifies the cursor of the event, possibly modifying it.
+	 * Returns true if the map widget should further process event.
+	 */
+	bool mouseReleaseEvent(QMouseEvent* event);
+	
+	/**
+	 * Notifies the cursor of the event, possibly modifying it.
+	 * Returns true if the map widget should further process event.
+	 */
+	bool mouseDoubleClickEvent(QMouseEvent* event);
+	
+	/** Paints the cursor. */
+	void paint(QPainter* painter);
+	
+private:
+	/**
+	 * Checks if a touch at pos is inside a control. If yes, returns true and
+	 * sets out_id to the ID of the touched control.
+	 */
+	bool touchedControl(QPoint pos, ControlID* out_id);
+	
+	/** Returns the touch point offset from the cursor in pixels. */
+	float touchPosOffsetPx() const;
+	
+	/** Returns the radius of the control ring in pixels */
+	float controlRingRadiusPx() const;
+	
+	bool visible;
+	bool left_button_pressed;
+	ControlID last_pressed_button;
+	MapCoordF cursor_coord;
+	QPointF last_cursor_pos;
+	QPoint last_touch_pos;
+	MapWidget* map_widget;
+};
+
+#endif
