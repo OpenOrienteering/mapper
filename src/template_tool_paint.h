@@ -76,6 +76,9 @@ class PaintOnTemplatePaletteWidget : public QWidget
 Q_OBJECT
 public:
 	PaintOnTemplatePaletteWidget(bool close_on_selection);
+	~PaintOnTemplatePaletteWidget();
+
+	QColor getSelectedColor();
 	
 	virtual QSize sizeHint() const;
 	
@@ -91,6 +94,7 @@ private:
 	int getNumFieldsY();
 	QColor getFieldColor(int x, int y);
 	
+	int selected_color;
 	bool close_on_selection;
 };
 

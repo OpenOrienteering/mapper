@@ -118,7 +118,7 @@ void MapWidget::setTool(MapEditorTool* tool)
 {
 	// Redraw if touch cursor usage changes
 	bool redrawTouchCursor = (touch_cursor && this->tool && tool
-		&& this->tool->usesTouchCursor() || tool->usesTouchCursor());
+		&& (this->tool->usesTouchCursor() || tool->usesTouchCursor()));
 
 	this->tool = tool;
 	

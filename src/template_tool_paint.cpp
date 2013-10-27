@@ -61,6 +61,7 @@ void PaintOnTemplateTool::init()
 	widget = new PaintOnTemplatePaletteWidget(false);
 	editor->showPopupWidget(widget, tr("Color selection"));
 	connect(widget, SIGNAL(colorSelected(QColor)), this, SLOT(colorSelected(QColor)));
+	colorSelected(widget->getSelectedColor());
 }
 
 void PaintOnTemplateTool::templateDeleted(int pos, Template* temp)
@@ -146,6 +147,24 @@ PaintOnTemplatePaletteWidget::PaintOnTemplatePaletteWidget(bool close_on_selecti
 	setAttribute(Qt::WA_DeleteOnClose);
 	setAttribute(Qt::WA_OpaquePaintEvent);
 	setAutoFillBackground(false);
+
+	QSettings settings;
+	settings.beginGroup("PaintOnTemplatePaletteWidget");
+	selected_color = qMax(0, qMin(getNumFieldsX()*getNumFieldsY() - 1, settings.value("selectedColor").toInt()));
+	settings.endGroup();
+}
+
+PaintOnTemplatePaletteWidget::~PaintOnTemplatePaletteWidget()
+{
+	QSettings settings;
+	settings.beginGroup("PaintOnTemplatePaletteWidget");
+	settings.setValue("selectedColor", selected_color);
+	settings.endGroup();
+}
+
+QColor PaintOnTemplatePaletteWidget::getSelectedColor()
+{
+	return getFieldColor(selected_color % getNumFieldsX(), selected_color / getNumFieldsX());
 }
 
 QSize PaintOnTemplatePaletteWidget::sizeHint() const
@@ -162,10 +181,26 @@ void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)
 	int max_x = getNumFieldsX();
 	int max_y = getNumFieldsY();
 	for (int x = 0; x < max_x; ++x)
+	{
 		for (int y = 0; y < getNumFieldsY(); ++y)
-			painter.fillRect(QRect(width() * x / max_x, height() * y / max_y,
-								   width() * (x+1) / max_x - (width() * x / max_x), height() * (y+1) / max_y - (height() * y / max_y)),
-								   getFieldColor(x, y));
+		{
+			int field_x = width() * x / max_x;
+			int field_y = height() * y / max_y;
+			int field_width = width() * (x+1) / max_x - (width() * x / max_x);
+			int field_height = height() * (y+1) / max_y - (height() * y / max_y);
+			QRect field_rect = QRect(field_x, field_y, field_width, field_height);
+
+			if (selected_color == x + getNumFieldsX()*y)
+			{
+				int line_width = qMax(1, qRound(Util::mmToPixelLogical(0.2f)));
+				painter.fillRect(field_rect, Qt::black);
+				painter.fillRect(field_rect.adjusted(line_width, line_width, -1 * line_width, -field_rect.height() / 2), Qt::white);
+				painter.fillRect(field_rect.adjusted(2 * line_width, 2 * line_width, -2 * line_width, -2 * line_width), getFieldColor(x, y));
+			}
+			else
+				painter.fillRect(field_rect, getFieldColor(x, y));
+		}
+	}
 	
 	painter.end();
 }
@@ -175,7 +210,12 @@ void PaintOnTemplatePaletteWidget::mousePressEvent(QMouseEvent* event)
     int x = (int)(event->x() / (width() / (float)getNumFieldsX()));
 	int y = (int)(event->y() / (height() / (float)getNumFieldsY()));
 	
-	emit colorSelected(getFieldColor(x, y));
+	if (selected_color != x + getNumFieldsX()*y)
+	{
+		selected_color = x + getNumFieldsX()*y;
+		update();
+		emit colorSelected(getFieldColor(x, y));
+	}
 	
 	if (close_on_selection)
 		close();
