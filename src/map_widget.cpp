@@ -878,7 +878,10 @@ void MapWidget::_mousePressEvent(QMouseEvent* event)
 void MapWidget::mouseMoveEvent(QMouseEvent* event)
 {
 	if (touch_cursor)
-		touch_cursor->mouseMoveEvent(event);
+	{
+		if (!touch_cursor->mouseMoveEvent(event))
+			return;
+	}
 	_mouseMoveEvent(event);
 }
 

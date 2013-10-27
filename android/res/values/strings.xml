@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Oo-mapper</string>
+    <string name="app_name">OO Mapper</string>
     <string name="app_lib_name">
         <!-- %%INSERT_APP_LIB_NAME%% -->
     </string>

@@ -54,8 +54,9 @@ public:
 	
 	/**
 	 * Notifies the cursor of the event, possibly modifying it.
+	 * Returns true if the map widget should further process event.
 	 */
-	void mouseMoveEvent(QMouseEvent* event);
+	bool mouseMoveEvent(QMouseEvent* event);
 	
 	/**
 	 * Notifies the cursor of the event, possibly modifying it.
@@ -93,6 +94,7 @@ private:
 	
 	bool visible;
 	bool left_button_pressed;
+	bool first_move_event_received;
 	ControlID last_pressed_button;
 	MapCoordF cursor_coord;
 	QPointF last_cursor_pos;

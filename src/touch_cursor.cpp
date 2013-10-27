@@ -30,8 +30,8 @@
 
 
 // TODO: convert these to settings
-const float touch_pos_offset_mm = 20;
-const float control_ring_radius_mm = 7.5f;
+const float touch_pos_offset_mm = 25;
+const float control_ring_radius_mm = 9.5f;
 
 TouchCursor::TouchCursor(MapWidget* map_widget)
 : visible(false)
@@ -47,6 +47,7 @@ void TouchCursor::mousePressEvent(QMouseEvent* event)
 	if (event->button() != Qt::LeftButton)
 		return;
 	last_touch_pos = event->pos();
+	first_move_event_received = false;
 	
 	ControlID control_id = NoButton;
 	if (!visible || !touchedControl(event->pos(), &control_id))
@@ -78,10 +79,17 @@ void TouchCursor::mousePressEvent(QMouseEvent* event)
 	}
 }
 
-void TouchCursor::mouseMoveEvent(QMouseEvent* event)
+bool TouchCursor::mouseMoveEvent(QMouseEvent* event)
 {
 	if (!(event->buttons() & Qt::LeftButton))
-		return;
+		return false;
+
+	if (last_pressed_button != NoButton && !first_move_event_received)
+	{
+		first_move_event_received = true;
+		last_touch_pos = event->pos();
+		return false;
+	}
 	
 	updateMapWidget(true);
 	
@@ -101,6 +109,7 @@ void TouchCursor::mouseMoveEvent(QMouseEvent* event)
 		event->modifiers());
 	
 	updateMapWidget(true);
+	return true;
 }
 
 bool TouchCursor::mouseReleaseEvent(QMouseEvent* event)
