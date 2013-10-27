@@ -21,6 +21,8 @@
 #ifndef _OPENORIENTEERING_PRINT_WIDGET_H_
 #define _OPENORIENTEERING_PRINT_WIDGET_H_
 
+#ifndef QT_NO_PRINTER
+
 #include <QWidget>
 #include <QPrinterInfo>
 
@@ -274,5 +276,7 @@ private:
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(PrintWidget::TaskFlags)
+
+#endif
 
 #endif

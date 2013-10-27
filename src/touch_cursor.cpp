@@ -30,8 +30,8 @@
 
 
 // TODO: convert these to settings
-const float touch_pos_offset_mm = 14;
-const float control_ring_radius_mm = 5.5f;
+const float touch_pos_offset_mm = 20;
+const float control_ring_radius_mm = 7.5f;
 
 TouchCursor::TouchCursor(MapWidget* map_widget)
 : visible(false)

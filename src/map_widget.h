@@ -431,9 +431,6 @@ private:
 	
 	/** Optional touch cursor for mobile devices */
 	TouchCursor* touch_cursor;
-
-	/** Click state to compensate for input quirks */
-	int clickState;
 };
 
 #endif

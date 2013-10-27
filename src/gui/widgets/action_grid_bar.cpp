@@ -85,7 +85,7 @@ QSize ActionGridBar::sizeHint() const
 void ActionGridBar::resizeEvent(QResizeEvent* event)
 {
 	int length_px = (direction == Horizontal) ? width() : height();
-	float length_millimeters = Util::mmToPixelLogical(length_px);
+	float length_millimeters = Util::pixelToMMLogical(length_px);
 	cols = qMax(1, qFloor(length_millimeters / millimeters_per_button));
 	
 	delete layout();

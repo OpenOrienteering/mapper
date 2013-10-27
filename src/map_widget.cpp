@@ -78,12 +78,10 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
 	setFocusPolicy(Qt::ClickFocus);
 	setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
 
-// #if defined(Q_OS_ANDROID)
-	clickState = 0;
-	
+#if defined(Q_OS_ANDROID)
 	// TODO: create setting for enabling touch cursor
 	touch_cursor = new TouchCursor(this);
-// #endif
+#endif
 }
 
 MapWidget::~MapWidget()
@@ -839,15 +837,6 @@ void MapWidget::resizeEvent(QResizeEvent* event)
 
 void MapWidget::mousePressEvent(QMouseEvent* event)
 {
-#if defined(Q_OS_ANDROID)
-	// Android input quirks: filter out double events
-	int realButtons = event->button() & ~clickState;
-	if (realButtons == 0)
-		return;
-	clickState |= event->button();
-	*event = QMouseEvent(QEvent::MouseButtonPress, event->localPos(), event->windowPos(), event->screenPos(), (Qt::MouseButton)realButtons, event->buttons(), event->modifiers());
-#endif
-	
 	if (touch_cursor)
 	{
 		touch_cursor->mousePressEvent(event);
@@ -888,14 +877,6 @@ void MapWidget::_mousePressEvent(QMouseEvent* event)
 
 void MapWidget::mouseMoveEvent(QMouseEvent* event)
 {
-#if defined(Q_OS_ANDROID)
-	// Android input quirks: ignore move events with button set.
-	// At least the emulator generates events with button() == Qt::LeftButton,
-	// but all of them are duplicates of events with correct Qt::NoButton.
-	if (event->button() != Qt::NoButton)
-		return;
-#endif
-
 	if (touch_cursor)
 		touch_cursor->mouseMoveEvent(event);
 	_mouseMoveEvent(event);
@@ -923,15 +904,6 @@ void MapWidget::_mouseMoveEvent(QMouseEvent* event)
 
 void MapWidget::mouseReleaseEvent(QMouseEvent* event)
 {
-#if defined(Q_OS_ANDROID)
-	// Android input quirks: filter out double events
-	int realButtons = event->button() & clickState;
-	if (realButtons == 0)
-		return;
-	clickState &= ~event->button();
-	*event = QMouseEvent(QEvent::MouseButtonRelease, event->localPos(), event->windowPos(), event->screenPos(), (Qt::MouseButton)realButtons, event->buttons(), event->modifiers());
-#endif
-
 	if (touch_cursor)
 	{
 		if (!touch_cursor->mouseReleaseEvent(event))

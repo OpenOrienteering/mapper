@@ -86,11 +86,11 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	this->mode = mode;
 	
 	// TODO: Allow to change this in the settings
-// #ifdef Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
 	mobileMode = true;
-// #else
-// 	mobileMode = false;
-// #endif
+#else
+	mobileMode = false;
+#endif
 	
 	this->map = NULL;
 	main_view = NULL;
@@ -547,12 +547,18 @@ void MapEditorController::createActions()
 	// Define all the actions, saving them into variables as necessary. Can also get them by ID.
 	QSignalMapper* print_act_mapper = new QSignalMapper(this);
 	connect(print_act_mapper, SIGNAL(mapped(int)), this, SLOT(printClicked(int)));
+#ifndef QT_NO_PRINTER
 	print_act = newAction("print", tr("Print..."), print_act_mapper, SLOT(map()), "print.png", QString::null, "file_menu.html");
 	print_act_mapper->setMapping(print_act, PrintWidget::PRINT_TASK);
 	export_image_act = newAction("export-image", tr("&Image"), print_act_mapper, SLOT(map()), NULL, QString::null, "file_menu.html");
 	print_act_mapper->setMapping(export_image_act, PrintWidget::EXPORT_IMAGE_TASK);
 	export_pdf_act = newAction("export-pdf", tr("&PDF"), print_act_mapper, SLOT(map()), NULL, QString::null, "file_menu.html");
 	print_act_mapper->setMapping(export_pdf_act, PrintWidget::EXPORT_PDF_TASK);
+#else
+	print_act = nullptr;
+	export_image_act = nullptr;
+	export_pdf_act = nullptr;
+#endif
 	
 	undo_act = newAction("undo", tr("Undo"), this, SLOT(undo()), "undo.png", tr("Undo the last step"), "edit_menu.html");
 	redo_act = newAction("redo", tr("Redo"), this, SLOT(redo()), "redo.png", tr("Redo the last step"), "edit_menu.html");
@@ -684,14 +690,21 @@ void MapEditorController::createMenuAndToolbars()
 	
 	// Extend file menu
 	QMenu* file_menu = window->getFileMenu();
+#ifndef QT_NO_PRINTER
 	file_menu->insertAction(window->getFileMenuExtensionAct(), print_act);
 	file_menu->insertSeparator(window->getFileMenuExtensionAct());
-	file_menu->insertAction(print_act, import_act);
+	QAction* insertion_act = print_act;
+#else
+	QAction* insertion_act = window->getFileMenuExtensionAct();
+#endif
+	file_menu->insertAction(insertion_act, import_act);
+#ifndef QT_NO_PRINTER
 	QMenu* export_menu = new QMenu(tr("&Export as..."), file_menu);
 	export_menu->addAction(export_image_act);
 	export_menu->addAction(export_pdf_act);
-	file_menu->insertMenu(print_act, export_menu);
-	file_menu->insertSeparator(print_act);
+	file_menu->insertMenu(insertion_act, export_menu);
+#endif
+	file_menu->insertSeparator(insertion_act);
 		
 	// Edit menu
 	QMenu* edit_menu = window->menuBar()->addMenu(tr("&Edit"));
@@ -812,8 +825,10 @@ void MapEditorController::createMenuAndToolbars()
 	
 	// Extend and activate general toolbar
 	QToolBar* main_toolbar = window->getGeneralToolBar();
+#ifndef QT_NO_PRINTER
 	main_toolbar->addAction(print_act);
 	main_toolbar->addSeparator();
+#endif
 	main_toolbar->addAction(cut_act);
 	main_toolbar->addAction(copy_act);
 	main_toolbar->addAction(paste_act);
@@ -997,6 +1012,7 @@ void MapEditorController::keyReleaseEvent(QKeyEvent* event)
 
 void MapEditorController::printClicked(int task)
 {
+#ifndef QT_NO_PRINTER
 	if (!print_dock_widget)
 	{
 		print_dock_widget = new EditorDockWidget(QString::null, NULL, this, window);
@@ -1015,6 +1031,9 @@ void MapEditorController::printClicked(int task)
 	print_widget->setTask((PrintWidget::TaskFlags)task);
 	print_dock_widget->show();
 	QTimer::singleShot(0, print_dock_widget, SLOT(raise()));
+#else
+	QMessageBox::warning(window, tr("Error"), tr("Print / Export is not available in this program version!"));
+#endif
 }
 
 void MapEditorController::undo()
