@@ -116,12 +116,18 @@ void MapWidget::setMapView(MapView* view)
 
 void MapWidget::setTool(MapEditorTool* tool)
 {
+	// Redraw if touch cursor usage changes
+	bool redrawTouchCursor = (touch_cursor && this->tool && tool
+		&& this->tool->usesTouchCursor() || tool->usesTouchCursor());
+
 	this->tool = tool;
 	
 	if (tool)
 		setCursor(*tool->getCursor());
 	else
 		unsetCursor();
+	if (redrawTouchCursor)
+		touch_cursor->updateMapWidget(false);
 }
 
 void MapWidget::setActivity(MapEditorActivity* activity)
@@ -803,7 +809,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	}
 	
 	// Draw touch cursor
-	if (touch_cursor)
+	if (touch_cursor && tool && tool->usesTouchCursor())
 	{
 		painter.setClipRect(event->rect());
 		touch_cursor->paint(&painter);
@@ -837,7 +843,7 @@ void MapWidget::resizeEvent(QResizeEvent* event)
 
 void MapWidget::mousePressEvent(QMouseEvent* event)
 {
-	if (touch_cursor)
+	if (touch_cursor && tool && tool->usesTouchCursor())
 	{
 		touch_cursor->mousePressEvent(event);
 		if (event->type() == QEvent::MouseMove)
@@ -877,7 +883,7 @@ void MapWidget::_mousePressEvent(QMouseEvent* event)
 
 void MapWidget::mouseMoveEvent(QMouseEvent* event)
 {
-	if (touch_cursor)
+	if (touch_cursor && tool && tool->usesTouchCursor())
 	{
 		if (!touch_cursor->mouseMoveEvent(event))
 			return;
@@ -907,7 +913,7 @@ void MapWidget::_mouseMoveEvent(QMouseEvent* event)
 
 void MapWidget::mouseReleaseEvent(QMouseEvent* event)
 {
-	if (touch_cursor)
+	if (touch_cursor && tool && tool->usesTouchCursor())
 	{
 		if (!touch_cursor->mouseReleaseEvent(event))
 			return;
@@ -933,7 +939,7 @@ void MapWidget::_mouseReleaseEvent(QMouseEvent* event)
 
 void MapWidget::mouseDoubleClickEvent(QMouseEvent* event)
 {
-	if (touch_cursor)
+	if (touch_cursor && tool && tool->usesTouchCursor())
 	{
 		if (!touch_cursor->mouseDoubleClickEvent(event))
 			return;

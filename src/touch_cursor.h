@@ -72,6 +72,9 @@ public:
 	
 	/** Paints the cursor. */
 	void paint(QPainter* painter);
+
+	/** Issues a (delayed) redraw of the cursor. */
+	void updateMapWidget(bool delayed);
 	
 private:
 	/**
@@ -79,9 +82,6 @@ private:
 	 * sets out_id to the ID of the touched control.
 	 */
 	bool touchedControl(QPoint pos, ControlID* out_id);
-	
-	/** Issues a (delayed) redraw of the cursor. */
-	void updateMapWidget(bool delayed);
 	
 	/** Returns the touch point offset from the cursor in pixels. */
 	float touchPosOffsetPx() const;

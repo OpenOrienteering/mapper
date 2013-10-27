@@ -47,6 +47,7 @@ MapEditorTool::MapEditorTool(MapEditorController* editor, Type type, QAction* to
 : QObject(NULL),
   tool_button(tool_button),
   type(type),
+  uses_touch_cursor(true),
   editor(editor)
 {
 }
