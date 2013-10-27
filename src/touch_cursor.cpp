@@ -52,13 +52,14 @@ void TouchCursor::mousePressEvent(QMouseEvent* event)
 	if (!visible || !touchedControl(event->pos(), &control_id))
 	{
 		// Jump to position
+		updateMapWidget(false);
+		
 		QPoint cursor_pos = event->pos() - QPoint(touchPosOffsetPx(), 0);
 		last_cursor_pos = cursor_pos;
 		cursor_coord = map_widget->viewportToMapF(cursor_pos);
 		visible = true;
 		
-		// TODO: limit redraw area
-		map_widget->update();
+		updateMapWidget(false);
 		
 		*event = QMouseEvent(
 			QEvent::MouseMove, cursor_pos,
@@ -72,6 +73,8 @@ void TouchCursor::mousePressEvent(QMouseEvent* event)
 			event->button(), event->buttons(), event->modifiers());
 		left_button_pressed = true;
 		last_pressed_button = LeftButton;
+		
+		last_cursor_pos = map_widget->mapToViewport(cursor_coord);
 	}
 }
 
@@ -79,6 +82,8 @@ void TouchCursor::mouseMoveEvent(QMouseEvent* event)
 {
 	if (!(event->buttons() & Qt::LeftButton))
 		return;
+	
+	updateMapWidget(true);
 	
 	QPointF cursor_pos;
 	if (last_pressed_button == LeftButton)
@@ -95,8 +100,7 @@ void TouchCursor::mouseMoveEvent(QMouseEvent* event)
 		left_button_pressed ? event->buttons() : (event->buttons() & ~Qt::LeftButton),
 		event->modifiers());
 	
-	// TODO: limit redraw area, timer-based redraw
-	map_widget->update();
+	updateMapWidget(true);
 }
 
 bool TouchCursor::mouseReleaseEvent(QMouseEvent* event)
@@ -143,16 +147,16 @@ void TouchCursor::paint(QPainter* painter)
 	else
 	{
 		// TODO: better standard "cursor"?
-		float cursor_radius = Util::mmToPixelLogical(1.5f);
+		float cursor_radius = standardCursorRadiusPx();
 		
-		painter->setPen(Qt::gray);
+		painter->setPen(QPen(Qt::gray, controlRingStrokeRadiusPx()));
 		painter->setBrush(Qt::NoBrush);
 		painter->drawLine(cursor_pos - QPointF(cursor_radius, 0), cursor_pos + QPointF(cursor_radius, 0));
 		painter->drawLine(cursor_pos - QPointF(0, cursor_radius), cursor_pos + QPointF(0, cursor_radius));
 	}
 	
 	// Draw move handle / left button
-	painter->setPen(Qt::gray);
+	painter->setPen(QPen(Qt::gray, controlRingStrokeRadiusPx()));
 	painter->setBrush(Qt::NoBrush);
 	painter->drawEllipse(cursor_pos + QPointF(touchPosOffsetPx(), 0), controlRingRadiusPx(), controlRingRadiusPx());
 }
@@ -172,6 +176,17 @@ bool TouchCursor::touchedControl(QPoint pos, TouchCursor::ControlID* out_id)
 	return false;
 }
 
+void TouchCursor::updateMapWidget(bool delayed)
+{
+	QRectF fake_rect = QRectF(cursor_coord.getX(), cursor_coord.getY(), 0.0001f, 0.0001f);
+	float pixel_border = qMax(touchPosOffsetPx() + controlRingRadiusPx(), standardCursorRadiusPx()) + controlRingStrokeRadiusPx() + 1;
+	
+	if (delayed)
+		map_widget->updateDrawingLater(fake_rect, pixel_border);
+	else
+		map_widget->updateDrawing(fake_rect, pixel_border);
+}
+
 float TouchCursor::touchPosOffsetPx() const
 {
 	return Util::mmToPixelLogical(touch_pos_offset_mm);
@@ -179,5 +194,15 @@ float TouchCursor::touchPosOffsetPx() const
 
 float TouchCursor::controlRingRadiusPx() const
 {
-	return Util::mmToPixelLogical(control_ring_radius_mm);;
+	return Util::mmToPixelLogical(control_ring_radius_mm);
+}
+
+float TouchCursor::controlRingStrokeRadiusPx() const
+{
+	return Util::mmToPixelLogical(0.1f);
+}
+
+float TouchCursor::standardCursorRadiusPx() const
+{
+	return Util::mmToPixelLogical(1.5f);
 }

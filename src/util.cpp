@@ -111,6 +111,27 @@ void rectIncludeSafe(QRectF& rect, const QRectF& other_rect)
 	}
 }
 
+void rectIncludeSafe(QRect& rect, const QRect& other_rect)
+{
+	if (other_rect.isValid())
+	{
+		if (rect.isValid())
+		{
+			if (other_rect.left() < rect.left())
+				rect.setLeft(other_rect.left());
+			if (other_rect.right() > rect.right())
+				rect.setRight(other_rect.right());
+			
+			if (other_rect.top() < rect.top())
+				rect.setTop(other_rect.top());
+			if (other_rect.bottom() > rect.bottom())
+				rect.setBottom(other_rect.bottom());
+		}
+		else 
+			rect = other_rect;
+	}
+}
+
 bool lineIntersectsRect(const QRectF& rect, const QPointF& p1, const QPointF& p2)
 {
 	if (rect.contains(p1) || rect.contains(p2))

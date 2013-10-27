@@ -88,6 +88,9 @@ void rectInclude(QRectF& rect, const QRectF& other_rect);
 /** Enlarges the rect to include the given rect. */
 void rectIncludeSafe(QRectF& rect, const QRectF& other_rect);
 
+/** Enlarges the rect to include the given rect. */
+void rectIncludeSafe(QRect& rect, const QRect& other_rect);
+
 
 /** Checks for line - rect intersection. */
 bool lineIntersectsRect(const QRectF& rect, const QPointF& p1, const QPointF& p2);

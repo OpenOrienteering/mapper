@@ -242,6 +242,11 @@ public:
 	 *     pixels. Allows to specify zoom-independent extents.
 	 */
 	void updateDrawing(QRectF map_rect, int pixel_border);
+	/**
+	 * Variant of updateDrawing() which waits for some milliseconds before
+	 * calling update() in order to avoid excessive redraws.
+	 */
+	void updateDrawingLater(QRectF map_rect, int pixel_border);
 	
 	/**
 	 * Invalidates all caches and redraws the whole widget. Very slow, try to
@@ -282,6 +287,7 @@ public slots:
 
 private slots:
 	void updateObjectTagLabel();
+	void updateDrawingLaterSlot();
 	
 protected:
 	virtual void paintEvent(QPaintEvent* event);
@@ -417,16 +423,17 @@ private:
 	QRectF activity_dirty_rect_new;
 	int activity_dirty_rect_new_border;
 	
+	// Cached updates
+	QRect cached_update_rect;
+	
 	/** Right-click menu */
 	PieMenu pie_menu;
 	
 	/** Optional touch cursor for mobile devices */
 	TouchCursor* touch_cursor;
 
-#if defined(Q_OS_ANDROID)
 	/** Click state to compensate for input quirks */
 	int clickState;
-#endif
 };
 
 #endif

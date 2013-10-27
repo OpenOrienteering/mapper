@@ -79,11 +79,17 @@ private:
 	 */
 	bool touchedControl(QPoint pos, ControlID* out_id);
 	
+	/** Issues a (delayed) redraw of the cursor. */
+	void updateMapWidget(bool delayed);
+	
 	/** Returns the touch point offset from the cursor in pixels. */
 	float touchPosOffsetPx() const;
 	
 	/** Returns the radius of the control ring in pixels */
 	float controlRingRadiusPx() const;
+	float controlRingStrokeRadiusPx() const;
+	
+	float standardCursorRadiusPx() const;
 	
 	bool visible;
 	bool left_button_pressed;

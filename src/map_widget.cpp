@@ -36,6 +36,7 @@
 #include "object.h"
 #include "tool_edit.h"
 #include "touch_cursor.h"
+#include "util.h"
 
 #if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
 #define MiddleButton MidButton
@@ -77,12 +78,12 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
 	setFocusPolicy(Qt::ClickFocus);
 	setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
 
-#if defined(Q_OS_ANDROID)
+// #if defined(Q_OS_ANDROID)
 	clickState = 0;
 	
 	// TODO: create setting for enabling touch cursor
 	touch_cursor = new TouchCursor(this);
-#endif
+// #endif
 }
 
 MapWidget::~MapWidget()
@@ -477,6 +478,29 @@ void MapWidget::updateDrawing(QRectF map_rect, int pixel_border)
 		update(viewport_rect);
 }
 
+void MapWidget::updateDrawingLater(QRectF map_rect, int pixel_border)
+{
+	QRect viewport_rect = calculateViewportBoundingBox(map_rect, pixel_border);
+	
+	if (viewport_rect.intersects(rect()))
+	{
+		if (!cached_update_rect.isValid())
+		{
+			// Start the update timer
+			QTimer::singleShot(15, this, SLOT(updateDrawingLaterSlot()));
+		}
+		
+		// NOTE: this may require a mutex for concurrent access with updateDrawingLaterSlot()?
+		rectIncludeSafe(cached_update_rect, viewport_rect);
+	}
+}
+
+void MapWidget::updateDrawingLaterSlot()
+{
+	update(cached_update_rect);
+	cached_update_rect = QRect();
+}
+
 void MapWidget::updateEverything()
 {
 	below_template_cache_dirty_rect = rect();
@@ -782,7 +806,10 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	
 	// Draw touch cursor
 	if (touch_cursor)
+	{
+		painter.setClipRect(event->rect());
 		touch_cursor->paint(&painter);
+	}
 	
 	painter.end();
 }
