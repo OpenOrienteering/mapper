@@ -50,6 +50,7 @@ public:
 		RectangleTool_PreviewLineWidth,
 		Templates_KeepSettingsOfClosed,
 		General_Language,
+		General_PixelsPerInch,
 		General_RecentFilesList,
 		General_TranslationFile,
 		General_OpenMRUFile,

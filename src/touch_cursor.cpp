@@ -26,11 +26,12 @@
 #include <QScreen>
 
 #include "map_widget.h"
+#include "util.h"
 
 
 // TODO: convert these to settings
-const float touch_pos_offset_mm = 10;
-const float control_ring_radius_mm = 5;
+const float touch_pos_offset_mm = 14;
+const float control_ring_radius_mm = 5.5f;
 
 TouchCursor::TouchCursor(MapWidget* map_widget)
 : visible(false)
@@ -50,7 +51,7 @@ void TouchCursor::mousePressEvent(QMouseEvent* event)
 	ControlID control_id = NoButton;
 	if (!visible || !touchedControl(event->pos(), &control_id))
 	{
-		// Jump tp position
+		// Jump to position
 		QPoint cursor_pos = event->pos() - QPoint(touchPosOffsetPx(), 0);
 		last_cursor_pos = cursor_pos;
 		cursor_coord = map_widget->viewportToMapF(cursor_pos);
@@ -94,7 +95,7 @@ void TouchCursor::mouseMoveEvent(QMouseEvent* event)
 		left_button_pressed ? event->buttons() : (event->buttons() & ~Qt::LeftButton),
 		event->modifiers());
 	
-	// TODO: limit redraw area
+	// TODO: limit redraw area, timer-based redraw
 	map_widget->update();
 }
 
@@ -142,10 +143,12 @@ void TouchCursor::paint(QPainter* painter)
 	else
 	{
 		// TODO: better standard "cursor"?
+		float cursor_radius = Util::mmToPixelLogical(1.5f);
+		
 		painter->setPen(Qt::gray);
 		painter->setBrush(Qt::NoBrush);
-		painter->drawLine(cursor_pos - QPointF(2, 0), cursor_pos + QPointF(2, 0));
-		painter->drawLine(cursor_pos - QPointF(0, 2), cursor_pos + QPointF(0, 2));
+		painter->drawLine(cursor_pos - QPointF(cursor_radius, 0), cursor_pos + QPointF(cursor_radius, 0));
+		painter->drawLine(cursor_pos - QPointF(0, cursor_radius), cursor_pos + QPointF(0, cursor_radius));
 	}
 	
 	// Draw move handle / left button
@@ -171,12 +174,10 @@ bool TouchCursor::touchedControl(QPoint pos, TouchCursor::ControlID* out_id)
 
 float TouchCursor::touchPosOffsetPx() const
 {
-	float pixel_to_millimeters = 25.4f / (QApplication::primaryScreen()->logicalDotsPerInch());
-	return touch_pos_offset_mm / pixel_to_millimeters;
+	return Util::mmToPixelLogical(touch_pos_offset_mm);
 }
 
 float TouchCursor::controlRingRadiusPx() const
 {
-	float pixel_to_millimeters = 25.4f / (QApplication::primaryScreen()->logicalDotsPerInch());
-	return control_ring_radius_mm / pixel_to_millimeters;
+	return Util::mmToPixelLogical(control_ring_radius_mm);;
 }

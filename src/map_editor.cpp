@@ -98,6 +98,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	window = NULL;
 	editing_in_progress = false;
 	
+	cut_hole_menu = NULL;
 	mappart_move_mapper = NULL;
 	mappart_move_menu = NULL;
 	mappart_selector_box = NULL;

@@ -342,6 +342,24 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	layout->addItem(Util::SpacerItem::create(this), row, 1);
 	
 	row++;
+	layout->addWidget(Util::Headline::create(tr("Screen")), row, 1, 1, 2);
+	
+	row++;
+	QLabel* ppi_label = new QLabel(tr("Pixels per inch:"));
+	layout->addWidget(ppi_label, row, 1);
+	
+	ppi_edit = Util::SpinBox::create(2, 0.01, 9999);
+	ppi_edit->setValue(Settings::getInstance().getSetting(Settings::General_PixelsPerInch).toFloat());
+	layout->addWidget(ppi_edit, row, 2);
+	
+	QAbstractButton* ppi_calculate_button = new QToolButton();
+	ppi_calculate_button->setIcon(QIcon(":/images/settings.png"));
+	layout->addWidget(ppi_calculate_button, row, 3);
+	
+	row++;
+	layout->addItem(Util::SpacerItem::create(this), row, 1);
+	
+	row++;
 	layout->addWidget(Util::Headline::create(tr("Program start")), row, 1, 1, 2);
 	
 	row++;
@@ -400,6 +418,8 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	
 	connect(language_box, SIGNAL(currentIndexChanged(int)), this, SLOT(languageChanged(int)));
 	connect(language_file_button, SIGNAL(clicked(bool)), this, SLOT(openTranslationFileDialog()));
+	connect(ppi_edit, SIGNAL(valueChanged(double)), this, SLOT(ppiChanged(double)));
+	connect(ppi_calculate_button, SIGNAL(clicked(bool)), this, SLOT(openPPICalculationDialog()));
 	connect(open_mru_check, SIGNAL(clicked(bool)), this, SLOT(openMRUFileClicked(bool)));
 	connect(tips_visible_check, SIGNAL(clicked(bool)), this, SLOT(tipsVisibleClicked(bool)));
 	connect(encoding_box, SIGNAL(currentTextChanged(QString)), this, SLOT(encodingChanged(QString)));
@@ -576,4 +596,59 @@ void GeneralPage::openTranslationFileDialog()
 		}
 	}
 	updateLanguageBox();
+}
+
+void GeneralPage::ppiChanged(double ppi)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::General_PixelsPerInch), QVariant(ppi));
+}
+
+void GeneralPage::openPPICalculationDialog()
+{
+	int primary_screen_width = QApplication::primaryScreen()->size().width();
+	int primary_screen_height = QApplication::primaryScreen()->size().height();
+	float screen_diagonal_pixels = qSqrt(primary_screen_width*primary_screen_width + primary_screen_height*primary_screen_height);
+	
+	float old_ppi = ppi_edit->value();
+	float old_screen_diagonal_inches = screen_diagonal_pixels / old_ppi;
+	
+	QDialog* dialog = new QDialog(window(), Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
+	
+	QGridLayout* layout = new QGridLayout();
+	
+	int row = 0;
+	QLabel* resolution_label = new QLabel(tr("Primary screen resolution in pixels:"));
+	layout->addWidget(resolution_label, row, 0);
+	
+	
+	QLabel* resolution_display = new QLabel(QString("%1 x %2").arg(primary_screen_width).arg(primary_screen_height));
+	layout->addWidget(resolution_display, row, 1);
+	
+	row++;
+	QLabel* size_label = new QLabel(tr("Primary screen size in inches (diagonal):"));
+	layout->addWidget(size_label, row, 0);
+	
+	QDoubleSpinBox* size_edit = Util::SpinBox::create(2, 0.01, 9999);
+	size_edit->setValue(old_screen_diagonal_inches);
+	layout->addWidget(size_edit, row, 1);
+	
+	row++;
+	layout->addItem(Util::SpacerItem::create(this), row, 1);
+	
+	row++;
+	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+	layout->addWidget(button_box, row, 0, 1, 2);
+	
+	dialog->setLayout(layout);
+	connect(button_box, SIGNAL(accepted()), dialog, SLOT(accept()));
+	connect(button_box, SIGNAL(rejected()), dialog, SLOT(reject()));
+	dialog->exec();
+	
+	if (dialog->result() == QDialog::Accepted)
+	{
+		float screen_diagonal_inches = size_edit->value();
+		float new_ppi = screen_diagonal_pixels / screen_diagonal_inches;
+		ppi_edit->setValue(new_ppi);
+		ppiChanged(new_ppi);
+	}
 }

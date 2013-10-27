@@ -28,6 +28,8 @@
 #include <QScreen>
 #include <QKeyEvent>
 
+#include "../src/util.h"
+
 // TODO: make configurable as a program setting
 const float millimeters_per_button = 8;
 
@@ -73,9 +75,7 @@ void ActionGridBar::addAction(QAction* action, int row, int col, int row_span, i
 
 QSize ActionGridBar::sizeHint() const
 {
-	float pixel_to_millimeters = 25.4f / (QApplication::primaryScreen()->logicalDotsPerInch());
-	
-	int height_px = rows * millimeters_per_button / pixel_to_millimeters;
+	int height_px = Util::mmToPixelLogical(rows * millimeters_per_button);
 	if (direction == Horizontal)
 		return QSize(100, height_px);
 	else
@@ -84,9 +84,8 @@ QSize ActionGridBar::sizeHint() const
 
 void ActionGridBar::resizeEvent(QResizeEvent* event)
 {
-	float pixel_to_millimeters = 25.4f / (QApplication::primaryScreen()->logicalDotsPerInch());
 	int length_px = (direction == Horizontal) ? width() : height();
-	float length_millimeters = length_px * pixel_to_millimeters;
+	float length_millimeters = Util::mmToPixelLogical(length_px);
 	cols = qMax(1, qFloor(length_millimeters / millimeters_per_button));
 	
 	delete layout();

@@ -20,8 +20,10 @@
 
 #include "settings.h"
 
+#include <QApplication>
 #include <QLocale>
 #include <QVariant>
+#include <QScreen>
 #include <QSettings>
 #include <QStringList>
 
@@ -46,6 +48,7 @@ Settings::Settings()
 	registerSetting(Templates_KeepSettingsOfClosed, "Templates/keep_settings_of_closed_templates", true);
 	
 	registerSetting(General_Language, "language", QVariant((int)QLocale::system().language()));
+	registerSetting(General_PixelsPerInch, "pixelsPerInch", QApplication::primaryScreen()->physicalDotsPerInch());
 	registerSetting(General_TranslationFile, "translationFile", QVariant(QString::null));
 	registerSetting(General_RecentFilesList, "recentFileList", QVariant(QStringList()));
 	registerSetting(General_OpenMRUFile, "openMRUFile", false);

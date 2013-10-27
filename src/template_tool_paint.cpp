@@ -150,8 +150,7 @@ PaintOnTemplatePaletteWidget::PaintOnTemplatePaletteWidget(bool close_on_selecti
 
 QSize PaintOnTemplatePaletteWidget::sizeHint() const
 {
-	// TODO: depend on screen ppi? Or handle this elsewhere?
-	return QSize(200, 64);
+	return QSize(Util::mmToPixelLogical(40), Util::mmToPixelLogical(20));
 }
 
 void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)

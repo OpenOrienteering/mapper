@@ -27,8 +27,10 @@
 #include <QMessageBox>
 #include <QProcess>
 #include <QSettings>
+#include <QScreen>
 
 #include "mapper_resource.h"
+#include "settings.h"
 #include <mapper_config.h>
 
 DoubleValidator::DoubleValidator(double bottom, double top, QObject* parent, int decimals) : QDoubleValidator(bottom, top, decimals, parent)
@@ -269,5 +271,29 @@ QString makeHelpUrl(QString filename, QString fragment)
 {
 	return QLatin1String("qthelp://") + MAPPER_HELP_NAMESPACE + "/oohelpdoc/help/html_en/" + filename + (fragment.isEmpty() ? "" : ("#" + fragment));
 }
-	
+
+float mmToPixelPhysical(float millimeters)
+{
+	float ppi = Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toFloat();
+	return millimeters * ppi / 25.4f;
+}
+
+float pixelToMMPhysical(float pixels)
+{
+	float ppi = Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toFloat();
+	return pixels * 25.4f / ppi;
+}
+
+float mmToPixelLogical(float millimeters)
+{
+	float ppi = QApplication::primaryScreen()->logicalDotsPerInch();
+	return millimeters * ppi / 25.4f;
+}
+
+float pixelToMMLogical(float pixels)
+{
+	float ppi = QApplication::primaryScreen()->logicalDotsPerInch();
+	return pixels * 25.4f / ppi;
+}
+
 }

@@ -29,6 +29,7 @@ class QTabWidget;
 class QAbstractButton;
 class QComboBox;
 class QCheckBox;
+class QDoubleSpinBox;
 class QLabel;
 class QSpinBox;
 class QGridLayout;
@@ -118,6 +119,10 @@ private slots:
 	
 	void openTranslationFileDialog();
 	
+	void ppiChanged(double ppi);
+	
+	void openPPICalculationDialog();
+	
 	void encodingChanged(const QString& name);
 	
 	void ocdImporterClicked(bool state);
@@ -130,6 +135,8 @@ private:
 	
 	QComboBox* language_box;
 	const static int TranslationFromFile;
+	
+	QDoubleSpinBox* ppi_edit;
 	
 	QComboBox* encoding_box;
 };
