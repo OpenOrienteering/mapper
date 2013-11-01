@@ -287,16 +287,25 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QCol
 	else
 		painter.setOpacity(color.alphaF());
 	
+	// Special case for points because drawPolyline() draws nothing in this case.
+	// drawPoint() is also unsuitable because it aligns the point to the closest pixel.
+	// drawEllipse() in the tested Qt version (5.1.1) seems to have a bug with antialiasing here.
+	if (num_coords >= 2 && points[0] == points[1])
+	{
+		points[0] -= QPointF(0, 0.1f);
+		points[1] += QPointF(0, 0.1f);
+	}
+
 	QPen pen(color);
 	pen.setWidthF(width);
 	pen.setCapStyle(Qt::RoundCap);
 	pen.setJoinStyle(Qt::RoundJoin);
 	painter.setPen(pen);
 	painter.setRenderHint(QPainter::Antialiasing);
-	
 	painter.drawPolyline(points, num_coords);
 	
 	painter.end();
+	delete[] points;
 }
 
 void TemplateImage::drawOntoTemplateUndo(bool redo)
