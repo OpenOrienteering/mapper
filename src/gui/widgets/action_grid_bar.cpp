@@ -31,7 +31,7 @@
 #include "../src/util.h"
 
 // TODO: make configurable as a program setting
-const float millimeters_per_button = 8;
+const float millimeters_per_button = 10;
 
 ActionGridBar::ActionGridBar(Direction direction, int rows, QWidget* parent)
 : QWidget(parent)

@@ -356,6 +356,13 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 //#ifdef Q_OS_ANDROID
 	addFilesToFileList(file_list, "/OOMapper");
 	addFilesToFileList(file_list, "/sdcard/OOMapper");
+	if (file_list->count() == 0)
+	{
+		delete file_list_layout->takeAt(file_list_layout->indexOf(file_list));
+		QLabel* message_label = new QLabel(tr("No map files found!<br/><br/>Copy a map file to /OOMapper or /sdcard/OOMapper to list it here."));
+		message_label->setWordWrap(true);
+		file_list_layout->addWidget(message_label, 1, 0, 1, 2);
+	}
 //#endif
 	file_list->sortItems();
 	

@@ -55,7 +55,7 @@ void TouchCursor::mousePressEvent(QMouseEvent* event)
 		// Jump to position
 		updateMapWidget(false);
 		
-		QPoint cursor_pos = event->pos() - QPoint(touchPosOffsetPx(), 0);
+		QPoint cursor_pos = event->pos() - QPoint(0, touchPosOffsetPx());
 		last_cursor_pos = cursor_pos;
 		cursor_coord = map_widget->viewportToMapF(cursor_pos);
 		visible = true;
@@ -97,7 +97,7 @@ bool TouchCursor::mouseMoveEvent(QMouseEvent* event)
 	if (last_pressed_button == LeftButton)
 		cursor_pos = last_cursor_pos + (event->pos() - last_touch_pos);
 	else
-		cursor_pos = event->pos() - QPoint(touchPosOffsetPx(), 0);
+		cursor_pos = event->pos() - QPoint(0, touchPosOffsetPx());
 	last_touch_pos = event->pos();
 	last_cursor_pos = cursor_pos;
 	cursor_coord = map_widget->viewportToMapF(cursor_pos);
@@ -167,13 +167,13 @@ void TouchCursor::paint(QPainter* painter)
 	// Draw move handle / left button
 	painter->setPen(QPen(Qt::gray, controlRingStrokeRadiusPx()));
 	painter->setBrush(Qt::NoBrush);
-	painter->drawEllipse(cursor_pos + QPointF(touchPosOffsetPx(), 0), controlRingRadiusPx(), controlRingRadiusPx());
+	painter->drawEllipse(cursor_pos + QPointF(0, touchPosOffsetPx()), controlRingRadiusPx(), controlRingRadiusPx());
 }
 
 bool TouchCursor::touchedControl(QPoint pos, TouchCursor::ControlID* out_id)
 {
 	QPointF cursor_pos = map_widget->mapToViewport(cursor_coord);
-	QPointF control_ring_center = cursor_pos + QPointF(touchPosOffsetPx(), 0);
+	QPointF control_ring_center = cursor_pos + QPointF(0, touchPosOffsetPx());
 	
 	QPointF dist_to_center = pos - control_ring_center;
 	if (dist_to_center.x()*dist_to_center.x() + dist_to_center.y()*dist_to_center.y() < controlRingRadiusPx()*controlRingRadiusPx())
