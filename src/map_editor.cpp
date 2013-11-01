@@ -423,6 +423,10 @@ void MapEditorController::attach(MainWindow* window)
 			restoreWindowState();
 		}
 	}
+	else if (mode == SymbolEditor)
+	{
+		window->setCentralWidget(map_widget);
+	}
 	
 	// Update enabled/disabled state for the tools ...
 	updateWidgets();
