@@ -36,6 +36,7 @@
 TemplateImage::TemplateImage(const QString& path, Map* map) : Template(path, map)
 {
 	image = NULL;
+	undo_index = 0;
 	georef.reset(new Georeferencing());
 	
 	const Georeferencing& georef = map->getGeoreferencing();
@@ -254,8 +255,24 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QCol
 {
 	QPointF* points = new QPointF[num_coords];
 	
+	QRectF bbox;
 	for (int i = 0; i < num_coords; ++i)
+	{
 		points[i] = mapToTemplateQPoint(coords[i]) + QPointF(image->width() * 0.5, image->height() * 0.5);
+		rectIncludeSafe(bbox, points[i]);
+	}
+	QRect radius_bbox = QRect(
+		qFloor(bbox.left() - width - 1), qFloor(bbox.top() - width - 1),
+		qCeil(bbox.width() + 2*width + 2.5f), qCeil(bbox.height() + 2*width + 2.5f)
+	);
+	radius_bbox = radius_bbox.intersected(QRect(0, 0, image->width(), image->height()));
+	
+	// Create undo step
+	DrawOnImageUndoStep undo_step;
+	undo_step.x = radius_bbox.left();
+	undo_step.y = radius_bbox.top();
+	undo_step.image = image->copy(radius_bbox);
+	addUndoStep(undo_step);
 	
 	// This conversion is to prevent a very strange bug where the behavior of the
 	// default QPainter composition mode seems to be incorrect for images which are
@@ -280,6 +297,57 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QCol
 	painter.drawPolyline(points, num_coords);
 	
 	painter.end();
+}
+
+void TemplateImage::drawOntoTemplateUndo(bool redo)
+{
+	int step_index;
+	if (!redo)
+	{
+		step_index = undo_index - 1;
+		if (step_index < 0)
+			return;
+	}
+	else
+	{
+		step_index = undo_index;
+		if (step_index >= static_cast<int>(undo_steps.size()))
+			return;
+	}
+	
+	DrawOnImageUndoStep& step = undo_steps[step_index];
+	QImage undo_image = step.image.copy();
+	step.image = image->copy(step.x, step.y, step.image.width(), step.image.height());
+	QPainter painter(image);
+	painter.setCompositionMode(QPainter::CompositionMode_Source);
+	painter.drawImage(step.x, step.y, undo_image);
+	
+	undo_index += redo ? 1 : -1;
+	
+	float template_left = step.x - 0.5 * image->width();
+	float template_top = step.y - 0.5 * image->height();
+	QRectF map_bbox;
+	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left, template_top)).toQPointF());
+	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left + step.image.width(), template_top)).toQPointF());
+	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left, template_top + step.image.height())).toQPointF());
+	rectIncludeSafe(map_bbox, templateToMap(QPointF(template_left + step.image.width(), template_top + step.image.height())).toQPointF());
+	map->setTemplateAreaDirty(this, map_bbox, 0);
+	
+	setHasUnsavedChanges(true);
+}
+
+void TemplateImage::addUndoStep(const TemplateImage::DrawOnImageUndoStep& new_step)
+{
+	// TODO: undo step limitation based on used memory
+	const int max_undo_steps = 5;
+	
+	while (static_cast<int>(undo_steps.size()) > undo_index)
+		undo_steps.pop_back();
+	while (static_cast<int>(undo_steps.size()) >= max_undo_steps)
+		undo_steps.erase(undo_steps.begin());
+	
+	undo_steps.push_back(new_step);
+	undo_index = static_cast<int>(undo_steps.size());
 }
 
 void TemplateImage::calculateGeoreferencing()

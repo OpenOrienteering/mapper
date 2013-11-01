@@ -61,6 +61,8 @@ void PaintOnTemplateTool::init()
 	widget = new PaintOnTemplatePaletteWidget(false);
 	editor->showPopupWidget(widget, tr("Color selection"));
 	connect(widget, SIGNAL(colorSelected(QColor)), this, SLOT(colorSelected(QColor)));
+	connect(widget, SIGNAL(undoSelected()), this, SLOT(undoSelected()));
+	connect(widget, SIGNAL(redoSelected()), this, SLOT(redoSelected()));
 	colorSelected(widget->getSelectedColor());
 }
 
@@ -73,6 +75,16 @@ void PaintOnTemplateTool::templateDeleted(int pos, Template* temp)
 void PaintOnTemplateTool::colorSelected(QColor color)
 {
 	paint_color = color;
+}
+
+void PaintOnTemplateTool::undoSelected()
+{
+	temp->drawOntoTemplateUndo(false);
+}
+
+void PaintOnTemplateTool::redoSelected()
+{
+	temp->drawOntoTemplateUndo(true);
 }
 
 bool PaintOnTemplateTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -169,7 +181,9 @@ QColor PaintOnTemplatePaletteWidget::getSelectedColor()
 
 QSize PaintOnTemplatePaletteWidget::sizeHint() const
 {
-	return QSize(Util::mmToPixelLogical(40), Util::mmToPixelLogical(20));
+	const float mmPerButton = 13;
+	return QSize(getNumFieldsX() * Util::mmToPixelLogical(mmPerButton),
+				 getNumFieldsY() * Util::mmToPixelLogical(mmPerButton));
 }
 
 void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)
@@ -182,7 +196,7 @@ void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)
 	int max_y = getNumFieldsY();
 	for (int x = 0; x < max_x; ++x)
 	{
-		for (int y = 0; y < getNumFieldsY(); ++y)
+		for (int y = 0; y < max_y; ++y)
 		{
 			int field_x = width() * x / max_x;
 			int field_y = height() * y / max_y;
@@ -190,7 +204,11 @@ void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)
 			int field_height = height() * (y+1) / max_y - (height() * y / max_y);
 			QRect field_rect = QRect(field_x, field_y, field_width, field_height);
 
-			if (selected_color == x + getNumFieldsX()*y)
+			if (isUndoField(x, y))
+				drawIcon(&painter, ":/images/undo.png", field_rect);
+			else if (isRedoField(x, y))
+				drawIcon(&painter, ":/images/redo.png", field_rect);
+			else if (selected_color == x + getNumFieldsX()*y)
 			{
 				int line_width = qMax(1, qRound(Util::mmToPixelLogical(0.2f)));
 				painter.fillRect(field_rect, Qt::black);
@@ -210,7 +228,15 @@ void PaintOnTemplatePaletteWidget::mousePressEvent(QMouseEvent* event)
     int x = (int)(event->x() / (width() / (float)getNumFieldsX()));
 	int y = (int)(event->y() / (height() / (float)getNumFieldsY()));
 	
-	if (selected_color != x + getNumFieldsX()*y)
+	if (isUndoField(x, y))
+	{
+		emit undoSelected();
+	}
+	else if (isRedoField(x, y))
+	{
+		emit redoSelected();
+	}
+	else if (selected_color != x + getNumFieldsX()*y)
 	{
 		selected_color = x + getNumFieldsX()*y;
 		update();
@@ -221,20 +247,39 @@ void PaintOnTemplatePaletteWidget::mousePressEvent(QMouseEvent* event)
 		close();
 }
 
-int PaintOnTemplatePaletteWidget::getNumFieldsX()
+int PaintOnTemplatePaletteWidget::getNumFieldsX() const
 {
-	return 4;
+	return 5;
 }
 
-int PaintOnTemplatePaletteWidget::getNumFieldsY()
+int PaintOnTemplatePaletteWidget::getNumFieldsY() const
 {
 	return 2;
 }
 
-QColor PaintOnTemplatePaletteWidget::getFieldColor(int x, int y)
+QColor PaintOnTemplatePaletteWidget::getFieldColor(int x, int y) const
 {
 	static QColor rows[2][4] = {{qRgb(255, 0, 0), qRgb(0, 255, 0), qRgb(0, 0, 255), qRgb(0, 0, 0)}, {qRgb(255, 255, 0), qRgb(219, 0, 216), qRgb(219, 180, 126), qRgb(255, 255, 255)}};
 	return rows[y][x];
+}
+
+bool PaintOnTemplatePaletteWidget::isUndoField(int x, int y) const
+{
+	return x == 4 && y == 0;
+}
+
+bool PaintOnTemplatePaletteWidget::isRedoField(int x, int y) const
+{
+	return x == 4 && y == 1;
+}
+
+void PaintOnTemplatePaletteWidget::drawIcon(QPainter* painter, const QString& resource_path, const QRect& field_rect)
+{
+	painter->fillRect(field_rect, Qt::white);
+	QIcon icon(resource_path);
+	painter->setRenderHint(QPainter::Antialiasing);
+	painter->drawPixmap(field_rect, icon.pixmap(field_rect.size()));
+	painter->setRenderHint(QPainter::Antialiasing, false);
 }
 
 // ### PaintOnTemplateSelectDialog ###

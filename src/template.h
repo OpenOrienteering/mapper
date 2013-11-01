@@ -186,10 +186,16 @@ public:
 	/// Must return if freehand drawing onto the template is possible
 	virtual bool canBeDrawnOnto() {return false;}
 	
-	/// Draws onto the template. coords is an array of points with which the drawn line is
-	/// defined and must contain at least 2 points.
+	/// Draws onto the template. coords is an array of points with which the
+	/// drawn line is defined and must contain at least 2 points.
 	/// map_bbox can be an invalid rect, then the method will calculate it itself.
+	/// This only works for templates for which canBeDrawnOnto() returns true.
 	void drawOntoTemplate(MapCoordF* coords, int num_coords, QColor color, float width, QRectF map_bbox);
+	
+	/// Triggers an undo or redo action for template freehand drawing.
+	/// The type of action is determined by the parameter.
+	/// This only works for templates for which canBeDrawnOnto() returns true.
+	virtual void drawOntoTemplateUndo(bool redo) {}
 	
 	
 	// Transformation related methods for non-georeferenced templates only
