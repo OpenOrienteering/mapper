@@ -547,7 +547,10 @@ private:
 	QAction* distribute_points_act;
 	
 	QAction* paint_on_template_act;
+	QAction* paint_on_template_settings_act;
 	Template* last_painted_on_template;
+	
+	QAction* touch_cursor_action;
 	
 	QAction* mappart_add_act;
 	QAction* mappart_remove_act;

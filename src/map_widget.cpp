@@ -77,11 +77,6 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
 	setMouseTracking(true);
 	setFocusPolicy(Qt::ClickFocus);
 	setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
-
-#if defined(Q_OS_ANDROID)
-	// TODO: create setting for enabling touch cursor
-	touch_cursor = new TouchCursor(this);
-#endif
 }
 
 MapWidget::~MapWidget()
@@ -1028,6 +1023,18 @@ void MapWidget::keyReleased(QKeyEvent* event)
 		return;
 	}
 	QWidget::keyReleaseEvent(event);
+}
+
+void MapWidget::enableTouchCursor(bool enabled)
+{
+	if (enabled && !touch_cursor)
+		touch_cursor = new TouchCursor(this);
+	else if (!enabled && touch_cursor)
+	{
+		touch_cursor->updateMapWidget(false);
+		delete touch_cursor;
+		touch_cursor = NULL;
+	}
 }
 
 void MapWidget::focusOutEvent(QFocusEvent* event)

@@ -653,9 +653,16 @@ void MapEditorController::createActions()
 	paint_on_template_act = new QAction(QIcon(":/images/pencil.png"), tr("Paint on template"), this);
 	paint_on_template_act->setCheckable(true);
 	paint_on_template_act->setWhatsThis("<a href=\"toolbars.html#draw_on_template\">See more</a>");
-	updatePaintOnTemplateAction();
 	connect(paint_on_template_act, SIGNAL(triggered(bool)), this, SLOT(paintOnTemplateClicked(bool)));
+
+	paint_on_template_settings_act = new QAction(QIcon(":/images/pencil.png"), tr("Paint on template settings"), this);
+	paint_on_template_settings_act->setWhatsThis("<a href=\"toolbars.html#draw_on_template\">See more</a>");
+	connect(paint_on_template_settings_act, SIGNAL(triggered(bool)), this, SLOT(paintOnTemplateSelectClicked()));
+
+	updatePaintOnTemplateAction();
 	
+	touch_cursor_action = newCheckAction("touchcursor", tr("Enable touch cursor"), map_widget, SLOT(enableTouchCursor(bool)), "tool-touch-cursor.png", QString::null, "toolbars.html#touch_cursor"); // TODO: write documentation
+
 	mappart_add_act = newAction("addmappart", tr("Add Map Part..."), this, SLOT(addMapPart()));
 	mappart_remove_act = newAction("removemappart", tr("Remove Map Part"), this, SLOT(removeMapPart()));
 	mappart_merge_act = newAction("mergemappart", tr("Merge this part with..."), this, SLOT(mergeMapPart()));
@@ -782,6 +789,7 @@ void MapEditorController::createMenuAndToolbars()
 	tools_menu->addAction(cutout_physical_act);
 	tools_menu->addAction(cutaway_physical_act);
 	tools_menu->addAction(distribute_points_act);
+	tools_menu->addAction(touch_cursor_action);
 	
 	// Map menu
 	QMenu* map_menu = window->menuBar()->addMenu(tr("M&ap"));
@@ -949,10 +957,13 @@ void MapEditorController::createMobileGUI()
 	
 	ActionGridBar* bottomBar = new ActionGridBar(ActionGridBar::Horizontal, 1);
 	bottomBar->addAction(paint_on_template_act, 0, 0);
+	bottomBar->addAction(paint_on_template_settings_act, 0, 1);
 	
 	bottomBar->addAction(pan_act, 0, 2);
 	bottomBar->addAction(zoom_in_act, 0, 3);
 	bottomBar->addAction(zoom_out_act, 0, 4);
+
+	bottomBar->addAction(touch_cursor_action, 0, 6);
 	
 	//bottomBar->addAction(undo_act, 0, 6);
 	//bottomBar->addAction(redo_act, 0, 7);
@@ -2613,6 +2624,8 @@ void MapEditorController::updatePaintOnTemplateAction()
 		paint_on_template_act->setStatusTip(tr("Paint free-handedly on a template"));
 	else
 		paint_on_template_act->setStatusTip(tr("Paint free-handedly on a template. Create or load a template which can be drawn onto to activate this button"));
+
+	paint_on_template_settings_act->setEnabled(paint_on_template_act->isEnabled());
 }
 
 void MapEditorController::templateAdded(int pos, Template* temp)

@@ -208,7 +208,7 @@ float TouchCursor::controlRingRadiusPx() const
 
 float TouchCursor::controlRingStrokeRadiusPx() const
 {
-	return Util::mmToPixelLogical(0.1f);
+	return Util::mmToPixelLogical(0.5f);
 }
 
 float TouchCursor::standardCursorRadiusPx() const

@@ -285,6 +285,9 @@ public slots:
 	/** Delegates the keyRelease to the active tool */
 	void keyReleased(QKeyEvent* event);
 
+	/** Enables or disables the touch cursor. */
+	void enableTouchCursor(bool enabled);
+
 private slots:
 	void updateObjectTagLabel();
 	void updateDrawingLaterSlot();
