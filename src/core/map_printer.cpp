@@ -859,9 +859,9 @@ void MapPrinter::printMap(QPrinter* printer)
 	QSizeF extent_size = page_format.page_rect.size() / scale_adjustment;
 	QPainter painter(printer);
 	
+#if defined(Q_OS_WIN)
 	float resolution = (float)options.resolution;
 	
-#if defined(Q_OS_WIN)
 	if (printer->paintEngine()->type() == QPaintEngine::Windows)
 	{
 		/* QWin32PrintEngine will (have to) do rounding when passing coordinates

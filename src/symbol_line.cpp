@@ -432,7 +432,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 {
 	const float curve_threshold = 0.03f;	// TODO: decrease for export/print?
 	const int MAX_OFFSET = 16;
-	QBezierCopy offsetCurves[MAX_OFFSET];
+	QBezier offsetCurves[MAX_OFFSET];
 	
 	double miter_limit = 2.0 * miterLimit(); // needed more than once
 	if (miter_limit <= 0.0)
@@ -667,7 +667,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 			// TODO: it may be necessary to remove some of the generated curves in the case an outer point is moved inwards
 			if (main_shift > 0.0)
 			{
-				QBezierCopy bezier = QBezierCopy::fromPoints(coords[(i+3) % size].toQPointF(), coords[i+2].toQPointF(), coords[i+1].toQPointF(), coords_i.toQPointF());
+				QBezier bezier = QBezier::fromPoints(coords[(i+3) % size].toQPointF(), coords[i+2].toQPointF(), coords[i+1].toQPointF(), coords_i.toQPointF());
 				int count = bezier.shifted(offsetCurves, MAX_OFFSET, qAbs(shift), curve_threshold);
 				for (int j = count - 1; j >= 0; --j)
 				{
@@ -688,7 +688,7 @@ void LineSymbol::shiftCoordinates(const MapCoordVector& flags, const MapCoordVec
 			}
 			else
 			{
-				QBezierCopy bezier = QBezierCopy::fromPoints(coords[i].toQPointF(), coords[i+1].toQPointF(), coords[i+2].toQPointF(), coords[(i+3) % size].toQPointF());
+				QBezier bezier = QBezier::fromPoints(coords[i].toQPointF(), coords[i+1].toQPointF(), coords[i+2].toQPointF(), coords[(i+3) % size].toQPointF());
 				int count = bezier.shifted(offsetCurves, MAX_OFFSET, qAbs(shift), curve_threshold);
 				for (int j = 0; j < count; ++j)
 				{

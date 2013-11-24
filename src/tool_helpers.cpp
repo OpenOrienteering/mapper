@@ -581,7 +581,7 @@ void ConstrainAngleToolHelper::setActive(bool active, const MapCoordF& center)
 {
 	if (active)
 	{
-		if (!this-active || (this->center != center))
+		if (!this->active || (this->center != center))
 			emit displayChanged();
 		this->center = center;
 	}
@@ -601,7 +601,7 @@ void ConstrainAngleToolHelper::setActive(bool active)
 {
 	if (active)
 	{
-		if (!this-active)
+		if (!this->active)
 			emit displayChanged();
 	}
 	else

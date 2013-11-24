@@ -1,17 +1,18 @@
 /****************************************************************************
 **
-** Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies).
-** All rights reserved.
-** Contact: Nokia Corporation (qt-info@nokia.com)
+** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
+** Contact: http://www.qt-project.org/legal
 **
 ** This file is part of the QtGui module of the Qt Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
-** Commercial Usage
-** Licensees holding valid Qt Commercial licenses may use this file in
-** accordance with the Qt Commercial License Agreement provided with the
+** Commercial License Usage
+** Licensees holding valid commercial Qt licenses may use this file in
+** accordance with the commercial license agreement provided with the
 ** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and Nokia.
+** a written agreement between you and Digia.  For licensing terms and
+** conditions see http://qt.digia.com/licensing.  For further information
+** use the contact form at http://qt.digia.com/contact-us.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
@@ -21,8 +22,8 @@
 ** ensure the GNU Lesser General Public License version 2.1 requirements
 ** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
 **
-** In addition, as a special exception, Nokia gives you certain additional
-** rights.  These rights are described in the Nokia Qt LGPL Exception
+** In addition, as a special exception, Digia gives you certain additional
+** rights.  These rights are described in the Digia Qt LGPL Exception
 ** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
 **
 ** GNU General Public License Usage
@@ -33,14 +34,13 @@
 ** ensure the GNU General Public License version 3.0 requirements will be
 ** met: http://www.gnu.org/copyleft/gpl.html.
 **
-** If you have questions regarding the use of this file, please contact
-** Nokia at qt-info@nokia.com.
+**
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
 
-#ifndef QBezierCopy_P_H
-#define QBezierCopy_P_H
+#ifndef QBEZIER_P_H
+#define QBEZIER_P_H
 
 //
 //  W A R N I N G
@@ -60,15 +60,16 @@
 #include "QtCore/qlist.h"
 #include "QtCore/qpair.h"
 #include "QtGui/qtransform.h"
+#include <private/qdatabuffer_p.h>
 
 QT_BEGIN_NAMESPACE
 
 class QPolygonF;
 
-class QBezierCopy
+class Q_GUI_EXPORT QBezier
 {
 public:
-    static QBezierCopy fromPoints(const QPointF &p1, const QPointF &p2,
+    static QBezier fromPoints(const QPointF &p1, const QPointF &p2,
                               const QPointF &p3, const QPointF &p4);
 
     static void coefficients(qreal t, qreal &a, qreal &b, qreal &c, qreal &d);
@@ -81,6 +82,7 @@ public:
 
     QPolygonF toPolygon(qreal bezier_flattening_threshold = 0.5) const;
     void addToPolygon(QPolygonF *p, qreal bezier_flattening_threshold = 0.5) const;
+    void addToPolygon(QDataBuffer<QPointF> &polygon, qreal bezier_flattening_threshold) const;
 
     QRectF bounds() const;
     qreal length(qreal error = 0.01) const;
@@ -96,7 +98,7 @@ public:
     QPointF pt3() const { return QPointF(x3, y3); }
     QPointF pt4() const { return QPointF(x4, y4); }
 
-    QBezierCopy mapBy(const QTransform &transform) const;
+    QBezier mapBy(const QTransform &transform) const;
 
     inline QPointF midPoint() const;
     inline QLineF midTangent() const;
@@ -104,24 +106,24 @@ public:
     inline QLineF startTangent() const;
     inline QLineF endTangent() const;
 
-    inline void parameterSplitLeft(qreal t, QBezierCopy *left);
-    inline void split(QBezierCopy *firstHalf, QBezierCopy *secondHalf) const;
+    inline void parameterSplitLeft(qreal t, QBezier *left);
+    inline void split(QBezier *firstHalf, QBezier *secondHalf) const;
 
-    int shifted(QBezierCopy *curveSegments, int maxSegmets,
+    int shifted(QBezier *curveSegments, int maxSegmets,
                 qreal offset, float threshold) const;
 
-    QBezierCopy bezierOnInterval(qreal t0, qreal t1) const;
-    QBezierCopy getSubRange(qreal t0, qreal t1) const;
+    QBezier bezierOnInterval(qreal t0, qreal t1) const;
+    QBezier getSubRange(qreal t0, qreal t1) const;
 
     qreal x1, y1, x2, y2, x3, y3, x4, y4;
 };
 
-inline QPointF QBezierCopy::midPoint() const
+inline QPointF QBezier::midPoint() const
 {
     return QPointF((x1 + x4 + 3*(x2 + x3))/8., (y1 + y4 + 3*(y2 + y3))/8.);
 }
 
-inline QLineF QBezierCopy::midTangent() const
+inline QLineF QBezier::midTangent() const
 {
     QPointF mid = midPoint();
     QLineF dir(QLineF(x1, y1, x2, y2).pointAt(0.5), QLineF(x3, y3, x4, y4).pointAt(0.5));
@@ -129,7 +131,7 @@ inline QLineF QBezierCopy::midTangent() const
                   mid.x() + dir.dx(), mid.y() + dir.dy());
 }
 
-inline QLineF QBezierCopy::startTangent() const
+inline QLineF QBezier::startTangent() const
 {
     QLineF tangent(pt1(), pt2());
     if (tangent.isNull())
@@ -139,7 +141,7 @@ inline QLineF QBezierCopy::startTangent() const
     return tangent;
 }
 
-inline QLineF QBezierCopy::endTangent() const
+inline QLineF QBezier::endTangent() const
 {
     QLineF tangent(pt4(), pt3());
     if (tangent.isNull())
@@ -149,7 +151,7 @@ inline QLineF QBezierCopy::endTangent() const
     return tangent;
 }
 
-inline void QBezierCopy::coefficients(qreal t, qreal &a, qreal &b, qreal &c, qreal &d)
+inline void QBezier::coefficients(qreal t, qreal &a, qreal &b, qreal &c, qreal &d)
 {
     qreal m_t = 1. - t;
     b = m_t * m_t;
@@ -160,32 +162,32 @@ inline void QBezierCopy::coefficients(qreal t, qreal &a, qreal &b, qreal &c, qre
     c *= 3. * m_t;
 }
 
-inline QPointF QBezierCopy::pointAt(qreal t) const
+inline QPointF QBezier::pointAt(qreal t) const
 {
-#if 1
-    qreal a, b, c, d;
-    coefficients(t, a, b, c, d);
-    return QPointF(a*x1 + b*x2 + c*x3 + d*x4, a*y1 + b*y2 + c*y3 + d*y4);
-#else
     // numerically more stable:
+    qreal x, y;
+
     qreal m_t = 1. - t;
-    qreal a = x1*m_t + x2*t;
-    qreal b = x2*m_t + x3*t;
-    qreal c = x3*m_t + x4*t;
-    a = a*m_t + b*t;
-    b = b*m_t + c*t;
-    qreal x = a*m_t + b*t;
-    qreal a = y1*m_t + y2*t;
-    qreal b = y2*m_t + y3*t;
-    qreal c = y3*m_t + y4*t;
-    a = a*m_t + b*t;
-    b = b*m_t + c*t;
-    qreal y = a*m_t + b*t;
+    {
+        qreal a = x1*m_t + x2*t;
+        qreal b = x2*m_t + x3*t;
+        qreal c = x3*m_t + x4*t;
+        a = a*m_t + b*t;
+        b = b*m_t + c*t;
+        x = a*m_t + b*t;
+    }
+    {
+        qreal a = y1*m_t + y2*t;
+        qreal b = y2*m_t + y3*t;
+        qreal c = y3*m_t + y4*t;
+        a = a*m_t + b*t;
+        b = b*m_t + c*t;
+        y = a*m_t + b*t;
+    }
     return QPointF(x, y);
-#endif
 }
 
-inline QPointF QBezierCopy::normalVector(qreal t) const
+inline QPointF QBezier::normalVector(qreal t) const
 {
     qreal m_t = 1. - t;
     qreal a = m_t * m_t;
@@ -195,7 +197,7 @@ inline QPointF QBezierCopy::normalVector(qreal t) const
     return QPointF((y2-y1) * a + (y3-y2) * b + (y4-y3) * c,  -(x2-x1) * a - (x3-x2) * b - (x4-x3) * c);
 }
 
-inline QPointF QBezierCopy::derivedAt(qreal t) const
+inline QPointF QBezier::derivedAt(qreal t) const
 {
     // p'(t) = 3 * (-(1-2t+t^2) * p0 + (1 - 4 * t + 3 * t^2) * p1 + (2 * t - 3 * t^2) * p2 + t^2 * p3)
 
@@ -210,7 +212,7 @@ inline QPointF QBezierCopy::derivedAt(qreal t) const
                        a * y1 + b * y2 + c * y3 + d * y4);
 }
 
-inline QPointF QBezierCopy::secondDerivedAt(qreal t) const
+inline QPointF QBezier::secondDerivedAt(qreal t) const
 {
     qreal a = 2. - 2. * t;
     qreal b = -4 + 6 * t;
@@ -221,7 +223,7 @@ inline QPointF QBezierCopy::secondDerivedAt(qreal t) const
                        a * y1 + b * y2 + c * y3 + d * y4);
 }
 
-inline void QBezierCopy::split(QBezierCopy *firstHalf, QBezierCopy *secondHalf) const
+inline void QBezier::split(QBezier *firstHalf, QBezier *secondHalf) const
 {
     Q_ASSERT(firstHalf);
     Q_ASSERT(secondHalf);
@@ -245,7 +247,7 @@ inline void QBezierCopy::split(QBezierCopy *firstHalf, QBezierCopy *secondHalf) 
     firstHalf->y4 = secondHalf->y1 = (firstHalf->y3 + secondHalf->y2)*.5;
 }
 
-inline void QBezierCopy::parameterSplitLeft(qreal t, QBezierCopy *left)
+inline void QBezier::parameterSplitLeft(qreal t, QBezier *left)
 {
     left->x1 = x1;
     left->y1 = y1;
@@ -271,4 +273,4 @@ inline void QBezierCopy::parameterSplitLeft(qreal t, QBezierCopy *left)
 
 QT_END_NAMESPACE
 
-#endif // QBezierCopy_P_H
+#endif // QBEZIER_P_H

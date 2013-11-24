@@ -46,7 +46,7 @@ bool OverridingShortcut::eventFilter(QObject* watched, QEvent* event)
 	if (event->type() == QEvent::ShortcutOverride && key().count() == 1)
 	{
 		QKeyEvent* key_event = static_cast<QKeyEvent*>(event);
-		if ((key_event->key() | key_event->modifiers()) == key()[0])
+		if (static_cast<int>(key_event->key() | key_event->modifiers()) == key()[0])
 		{
 			if (time.elapsed() < 50) // milliseconds
 			{

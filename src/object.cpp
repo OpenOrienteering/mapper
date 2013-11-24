@@ -1614,9 +1614,9 @@ bool PathObject::advanceCoordinateRangeTo(const MapCoordVector& flags, const Map
 void PathObject::calcBezierPointDeletionRetainingShapeFactors(MapCoord p0, MapCoord p1, MapCoord p2, MapCoord q0, MapCoord q1, MapCoord q2, MapCoord q3, double& out_pfactor, double& out_qfactor)
 {
 	// Heuristic for the split parameter sp (zero to one)
-	QBezierCopy p_curve = QBezierCopy::fromPoints(p0.toQPointF(), p1.toQPointF(), p2.toQPointF(), q0.toQPointF());
+	QBezier p_curve = QBezier::fromPoints(p0.toQPointF(), p1.toQPointF(), p2.toQPointF(), q0.toQPointF());
 	double p_length = p_curve.length(PathCoord::bezier_error);
-	QBezierCopy q_curve = QBezierCopy::fromPoints(q0.toQPointF(), q1.toQPointF(), q2.toQPointF(), q3.toQPointF());
+	QBezier q_curve = QBezier::fromPoints(q0.toQPointF(), q1.toQPointF(), q2.toQPointF(), q3.toQPointF());
 	double q_length = q_curve.length(PathCoord::bezier_error);
 	double sp = p_length / qMax(1e-08, p_length + q_length);
 	
@@ -1952,7 +1952,7 @@ void PathObject::calcBezierPointDeletionRetainingShapeFactors(MapCoord p0, MapCo
 float PathObject::calcBezierPointDeletionRetainingShapeCost(MapCoord p0, MapCoordF p1, MapCoordF p2, MapCoord p3, PathObject* reference)
 {
 	const int num_test_points = 20;
-	QBezierCopy curve = QBezierCopy::fromPoints(p0.toQPointF(), p1.toQPointF(), p2.toQPointF(), p3.toQPointF());
+	QBezier curve = QBezier::fromPoints(p0.toQPointF(), p1.toQPointF(), p2.toQPointF(), p3.toQPointF());
 	
 	float cost = 0;
 	for (int i = 0; i < num_test_points; ++i)
