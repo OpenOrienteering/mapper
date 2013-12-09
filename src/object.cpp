@@ -326,8 +326,23 @@ void Object::save(QXmlStreamWriter& xml) const
 		XmlElementWriter coords_element(xml, literal::coords);
 		int num_coords = (int)coords.size();
 		coords_element.writeAttribute(literal::count, num_coords);
-		for (int i = 0; i < num_coords; i++)
-			coords[i].save(xml);
+		if (xml.autoFormatting()) // xmap files: syntactically rich output
+		{
+			for (MapCoordVector::const_iterator coord = coords.begin(), end = coords.end(); coord != end; ++coord)
+				coord->save(xml);
+		}
+		else
+		{
+			QString data;
+			data.reserve(num_coords * 14);
+			QTextStream stream(&data);
+			for (MapCoordVector::const_iterator coord = coords.begin(), end = coords.end(); coord != end; ++coord)
+			{
+				stream << *coord << ';';
+			}
+			stream.flush();
+			xml.writeCharacters(data);
+		}
 	}
 	
 	if (type == Path)
@@ -389,15 +404,54 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		{
 			XmlElementReader coords_element(xml);
 			
-			const int num_coords = coords_element.attribute<int>(literal::count);
+			const unsigned int num_coords = coords_element.attribute<unsigned int>(literal::count);
 			object->coords.clear();
-			object->coords.reserve(qMin(num_coords, 5000)); // 5000 is not a limit
-			for (int i = 0; xml.readNextStartElement(); i++)
+			object->coords.reserve(qMin(num_coords, 500000u));
+			
+			for( xml.readNext();
+			     xml.tokenType() != QXmlStreamReader::EndElement;
+			     xml.readNext() )
 			{
-				if (xml.name() == MapCoordLiteral::coord)
-					object->coords.push_back(MapCoord::load(xml));
-				else
-					xml.skipCurrentElement();
+				const QXmlStreamReader::TokenType token = xml.tokenType();
+				if (xml.error() || token == QXmlStreamReader::EndDocument)
+				{
+					throw FileFormatException(ImportExport::tr("Error while loading an object of type %1.").arg(object_type));
+				}
+				else if (token == QXmlStreamReader::Characters && !xml.isWhitespace())
+				{
+					QStringRef text = xml.text();
+					QString data = QString::fromRawData(text.constData(), text.length());
+					QTextStream stream(&data, QIODevice::ReadOnly);
+					stream.setIntegerBase(10);
+					char separator;
+					while (!stream.atEnd())
+					{
+						object->coords.resize(object->coords.size() + 1);
+						stream >> object->coords.back() >> separator;
+						
+					}
+					if (stream.status() == QTextStream::ReadCorruptData)
+					{
+						throw FileFormatException(ImportExport::tr("Error while loading an object of type %1: %2").arg(object_type).arg(ImportExport::tr("Could not parse the coordinates.")));
+					}
+				}
+				else if (token == QXmlStreamReader::StartElement)
+				{
+					if (xml.name() == MapCoordLiteral::coord)
+					{
+						object->coords.push_back(MapCoord::load(xml));
+					}
+					else
+					{
+						xml.skipCurrentElement();
+					}
+				}
+				// otherwise: ignore element
+			}
+			
+			if (object->coords.size() != num_coords)
+			{
+				throw FileFormatException(ImportExport::tr("Error while loading an object of type %1: %2").arg(object_type).arg(ImportExport::tr("Expected %1 coordinates, found %2.")));
 			}
 		}
 		else if (xml.name() == literal::pattern && object_type == Path)

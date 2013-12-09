@@ -27,6 +27,7 @@
 
 #include <QPointF>
 #include <QString>
+#include <QTextStream>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -301,6 +302,17 @@ private:
 	qint64 x;
 	qint64 y;
 };
+
+/**
+ * Writes raw coordinates and flags to a text stream.
+ */
+QTextStream& operator<<(QTextStream& stream, const MapCoord& coord);
+
+/**
+ * Reads raw coordinates and flags from a text stream.
+ */
+QTextStream& operator>>(QTextStream& stream, MapCoord& coord);
+
 
 /**
  * Floating point map coordinates, only for rendering.
@@ -656,6 +668,25 @@ MapCoord MapCoord::load(QXmlStreamReader& xml)
 	}
 	
 	return coord;
+}
+
+inline
+QTextStream& operator<<(QTextStream& stream, const MapCoord& coord)
+{
+	stream << coord.rawX() << ' ' << coord.rawY() << ' ' << coord.getFlags();
+	return stream;
+}
+
+inline
+QTextStream& operator>>(QTextStream& stream, MapCoord& coord)
+{
+	qint64 x, y;
+	int flags;
+	stream >> x >> y >> flags;
+	coord.setRawX(x);
+	coord.setRawY(y);
+	coord.setFlags(flags);
+	return stream;
 }
 
 #endif
