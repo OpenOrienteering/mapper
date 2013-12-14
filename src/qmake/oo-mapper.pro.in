@@ -22,7 +22,12 @@ QMAKE_CFLAGS += -std=c99
 LIBS += -lproj
 
 # Defines. Use fancy quotation marks to be able to define strings with spaces.
-DEFINES += \"APP_VERSION='\\"@Mapper_VERSION_DISPLAY@\\"'\"
+CONFIG(debug, debug|release) {
+	DEFINES += \"APP_VERSION='\\"Debug @Mapper_VERSION_MAJOR@.@Mapper_VERSION_MINOR@.@Mapper_VERSION_PATCH@\\"'\"
+}
+else {
+	DEFINES += \"APP_VERSION='\\"@Mapper_VERSION_MAJOR@.@Mapper_VERSION_MINOR@.@Mapper_VERSION_PATCH@\\"'\"
+}
 DEFINES += \"CLIPPER_VERSION='\\"@CLIPPER_VERSION@\\"'\"
 DEFINES += \"MAPPER_HELP_NAMESPACE='\\"@Mapper_HELP_NAMESPACE@\\"'\"
 
