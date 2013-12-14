@@ -45,6 +45,7 @@ set(QT5_MD5SUMS
   5.0.2:87cae8ae2f82f41ba027c2db0ab639b7
   5.1.0:787ce18c7f47fc14538b4362a0aa9edd
   5.1.1:33c7883a628a18c44ebf2b73996a5760
+  5.2.0:228b6384dfd7272de00fd8b2c144fecd
 )
 foreach(line ${QT5_MD5SUMS})
 	if(${line} MATCHES "^${QT5_VERSION}:")
@@ -223,6 +224,12 @@ configure_file(qt.conf.qrc.in qt.conf.qrc @ONLY)
 if(UNIX AND NOT APPLE AND ${QT5_VERSION} MATCHES "5.1.[0-1]")
 	execute_process(
 	  COMMAND sed -i -e /-qt-zlib/d ${QT5_CONFIG_SCRIPT}.new
+	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
+endif()
+
+if(NOT ${QT5_VERSION} MATCHES "5.[0-1]")
+	execute_process(
+	  COMMAND sed -i -e /-no-gstreamer/d ${QT5_CONFIG_SCRIPT}.new
 	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
 endif()
 

@@ -33,6 +33,7 @@ for I in \
   qtgraphicaleffects \
   qtjsbackend \
   qtmultimedia \
+  qtlocation \
   qtquick1 \
   qtquickcontrols \
   qtscript \
