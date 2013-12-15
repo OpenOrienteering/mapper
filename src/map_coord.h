@@ -61,6 +61,9 @@
 class MapCoord
 {
 public:
+	/** Benchmark */
+	friend class CoordXmlTest;
+	
 	/** Creates a MapCoord with position at the origin and without any flags set. */
 	inline MapCoord() : x(0), y(0) {}
 	
