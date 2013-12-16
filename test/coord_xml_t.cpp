@@ -385,7 +385,14 @@ void CoordXmlTest::readHumanReadableStream()
 				while (!stream.atEnd())
 				{
 					coords.resize(coords.size() + 1);
-					stream >> coords.back() >> separator;
+					qint64 x, y;
+					int flags;
+					stream >> x >> y >> flags;
+					MapCoord& coord = coords.back();
+					coord.setRawX(x);
+					coord.setRawY(y);
+					coord.setFlags(flags);
+					stream >> separator;
 				}
 				Q_ASSERT (stream.status() != QTextStream::ReadCorruptData);
 			}
