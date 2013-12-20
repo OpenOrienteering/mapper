@@ -146,6 +146,7 @@ set(Mapper_Common_SRCS
  util/item_delegates.cpp
  util/overriding_shortcut.cpp
  util/recording_translator.cpp
+ util/xml_stream_util.cpp
 )
 
 set(Mapper_Common_MOC_INPUT

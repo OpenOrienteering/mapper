@@ -129,17 +129,97 @@ void CoordXmlTest::writeHumanReadableString_data()
 
 void CoordXmlTest::writeHumanReadableString_implementation(MapCoordVector& coords, QXmlStreamWriter& xml)
 {
+	QString data;
+	data.reserve(coords.size() * 16);
+	
+	static char encoded[11] = "0123456789";
+	
+	const std::size_t buf_size = 32;
+	char buffer[buf_size];
+	
 	for (MapCoordVector::iterator coord = coords.begin(), end = coords.end();
 	     coord != end;
 	     ++coord)
 	{
-		QString s = QString::number(coord->rawX());
-		s.append(' ');
-		s.append(QString::number(coord->rawY()));
-		s.append(' ');
-		s.append(QString::number(coord->getFlags()));
-		xml.writeCharacters(s);
+		int j = buf_size - 1;
+		
+		buffer[j] = ';';
+		--j;
+		
+		qint64 tmp = coord->getFlags();
+		char sign = 0;
+		if (tmp != 0)
+		{
+			if (tmp < 0)
+			{
+				sign = '-';
+				tmp = -tmp; // TODO catch -MAX
+			}
+			do
+			{
+				buffer[j] = encoded[tmp % 10];
+				tmp = tmp / 10;
+				--j;
+			}
+			while (tmp != 0);
+			if (sign)
+			{
+				buffer[j] = sign;
+				--j;
+				sign = 0;
+			}
+			
+			buffer[j] = ' ';
+			--j;
+		}
+		
+		tmp = coord->rawY();
+		if (tmp < 0)
+		{
+			sign = '-';
+			tmp = -tmp; // TODO catch -MAX
+		}
+		do
+		{
+			buffer[j] = encoded[tmp % 10];
+			tmp = tmp / 10;
+			--j;
+		}
+		while (tmp != 0);
+		if (sign)
+		{
+			buffer[j] = sign;
+			--j;
+		}
+		
+		buffer[j] = ' ';
+		--j;
+		
+		tmp = coord->rawX();
+		sign = 0;
+		if (tmp < 0)
+		{
+			sign = '-';
+			tmp = -tmp; // TODO catch -MAX
+		}
+		do
+		{
+			buffer[j] = encoded[tmp % 10];
+			tmp = tmp / 10;
+			--j;
+		}
+		while (tmp != 0);
+		if (sign)
+		{
+			buffer[j] = sign;
+			--j;
+		}
+		
+		++j;
+		data.append(QString::fromUtf8(buffer+j, buf_size-j));
 	}
+	
+	xml.writeCharacters(data);
 }
 
 void CoordXmlTest::writeHumanReadableString()
@@ -343,7 +423,8 @@ void CoordXmlTest::readHumanReadableStream()
 		buffer.open(QBuffer::ReadWrite);
 		xml.setDevice(&buffer);
 		xml.writeStartElement("coords");
-		writeHumanReadableStream_implementation(coords, xml);
+		// Using the more efficient string implementation.
+		writeHumanReadableString_implementation(coords, xml);
 		xml.writeEndElement();
 		
 		xml.setDevice(NULL);
@@ -381,18 +462,21 @@ void CoordXmlTest::readHumanReadableStream()
 				QString data = QString::fromRawData(text.constData(), text.length());
 				QTextStream stream(&data, QIODevice::ReadOnly);
 				stream.setIntegerBase(10);
-				char separator;
+				MapCoord coord;
 				while (!stream.atEnd())
 				{
-					coords.resize(coords.size() + 1);
 					qint64 x, y;
-					int flags;
-					stream >> x >> y >> flags;
-					MapCoord& coord = coords.back();
+					int flags = 0;
+					char separator;
+					stream >> x >> y >> separator;
 					coord.setRawX(x);
 					coord.setRawY(y);
+					if (separator != ';')
+					{
+						stream >> flags >> separator;
+					}
 					coord.setFlags(flags);
-					stream >> separator;
+					coords.push_back(coord);
 				}
 				Q_ASSERT (stream.status() != QTextStream::ReadCorruptData);
 			}

@@ -237,6 +237,7 @@ SOURCES += \
   src/util/item_delegates.cpp \
   src/util/overriding_shortcut.cpp \
   src/util/recording_translator.cpp \
+  src/util/xml_stream_util.cpp \
   src/main.cpp \
   3rd-party/qtsingleapplication/src/qtlocalpeer.cpp \
   3rd-party/qtsingleapplication/src/qtsingleapplication.cpp \

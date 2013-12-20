@@ -20,10 +20,19 @@
 #ifndef _OPENORIENTEERING_XML_STREAM_UTIL_H_
 #define _OPENORIENTEERING_XML_STREAM_UTIL_H_
 
+#include <vector>
+
 #include <QRectF>
 #include <QString>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
+
+#include "../file_import_export.h"
+
+
+// Originally defined in map_coord.h, but we want to avoid the depedency.
+class MapCoord;
+typedef std::vector<MapCoord> MapCoordVector;
 
 
 /**
@@ -145,6 +154,12 @@ public:
 	 */
 	void write(const QSizeF& size, int precision);
 	
+	/**
+	 * Writes the coordinates vector as a simple text format.
+	 * This is much more efficient than saving each coordinate as rich XML.
+	 */
+	void write(const MapCoordVector& coords);
+	
 private:
 	QXmlStreamWriter& xml;
 };
@@ -224,6 +239,12 @@ public:
 	 */
 	void read(QSizeF& size);
 	
+	/**
+	 * Reads the coordinates vector from a simple text format.
+	 * This is much more efficient than loading each coordinate from rich XML.
+	 */
+	void read(MapCoordVector& coords) throw (FileFormatException);
+	
 private:
 	QXmlStreamReader& xml;
 	const QXmlStreamAttributes attributes; // implicitly shared QVector
@@ -284,6 +305,8 @@ namespace XmlStreamLiteral
 	static const QLatin1String top("top");
 	static const QLatin1String width("width");
 	static const QLatin1String height("height");
+	
+	static const QLatin1String count("count");
 }
 
 

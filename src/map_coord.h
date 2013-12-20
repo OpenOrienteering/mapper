@@ -301,18 +301,19 @@ public:
 	/** Loads the MapCoord in xml format from the stream. */
 	static MapCoord load(QXmlStreamReader& xml);
 	
+	/**
+	 * Writes raw coordinates and flags to a string.
+	 */
+	QString toString() const;
+	
 private:
 	qint64 x;
 	qint64 y;
 };
 
 /**
- * Writes raw coordinates and flags to a text stream.
- */
-QTextStream& operator<<(QTextStream& stream, const MapCoord& coord);
-
-/**
  * Reads raw coordinates and flags from a text stream.
+ * @see MapCoord::toString()
  */
 QTextStream& operator>>(QTextStream& stream, MapCoord& coord);
 
@@ -674,20 +675,101 @@ MapCoord MapCoord::load(QXmlStreamReader& xml)
 }
 
 inline
-QTextStream& operator<<(QTextStream& stream, const MapCoord& coord)
+QString MapCoord::toString() const
 {
-	stream << coord.rawX() << ' ' << coord.rawY() << ' ' << coord.getFlags();
-	return stream;
+	/* The buffer size must allow for
+	 *  1x ';':   1
+	 *  2x '-':   2
+	 *  2x ' ':   2
+	 *  2x the decimal digits for values up to 0..2^59-1:
+	 *           34
+	 *  1x the decimal digits for 0..2^8-1:
+	 *            3
+	 *  Total:   42 */
+	static const std::size_t buf_size = 48;
+	static char encoded[11] = "0123456789";
+	char buffer[buf_size];
+	
+	// For efficiency, we construct the string from the back.
+	int j = buf_size - 1;
+	buffer[j] = ';';
+	--j;
+	
+	int flags = getFlags();
+	if (flags > 0)
+	{
+		do
+		{
+			buffer[j] = encoded[flags % 10];
+			flags = flags / 10;
+			--j;
+		}
+		while (flags != 0);
+		
+		buffer[j] = ' ';
+		--j;
+	}
+	
+	qint64 tmp = rawY();
+	char sign = 0;
+	if (tmp < 0)
+	{
+		sign = '-';
+		tmp = -tmp; // NOTE: tmp never exceeds -2^60
+	}
+	do
+	{
+		buffer[j] = encoded[tmp % 10];
+		tmp = tmp / 10;
+		--j;
+	}
+	while (tmp != 0);
+	if (sign)
+	{
+		buffer[j] = sign;
+		--j;
+		sign = 0;
+	}
+	
+	buffer[j] = ' ';
+	--j;
+	
+	tmp = rawX();
+	if (tmp < 0)
+	{
+		sign = '-';
+		tmp = -tmp; // NOTE: tmp never exceeds -2^60
+	}
+	do
+	{
+		buffer[j] = encoded[tmp % 10];
+		tmp = tmp / 10;
+		--j;
+	}
+	while (tmp != 0);
+	if (sign)
+	{
+		buffer[j] = sign;
+		--j;
+	}
+	
+	++j;
+	return QString::fromUtf8(buffer+j, buf_size-j);
 }
 
 inline
 QTextStream& operator>>(QTextStream& stream, MapCoord& coord)
 {
 	qint64 x, y;
-	int flags;
-	stream >> x >> y >> flags;
+	int flags = 0;
+	char separator;
+	stream >> x >> y >> separator;
 	coord.setRawX(x);
 	coord.setRawY(y);
+	if (separator != ';')
+	{
+		stream >> flags >> separator;
+	}
 	coord.setFlags(flags);
 	return stream;
 }
