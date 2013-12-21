@@ -100,6 +100,9 @@ bool Object::equals(Object* other, bool compare_symbol)
 			return false;
 	}
 	
+	if (object_tags != other->object_tags)
+		return false;
+	
 	if (type == Point)
 	{
 		PointObject* point_this = static_cast<PointObject*>(this);
@@ -167,6 +170,7 @@ Object& Object::operator=(const Object& other)
 	assert(type == other.type);
 	symbol = other.symbol;
 	coords = other.coords;
+	object_tags = other.object_tags;
 	return *this;
 }
 
@@ -315,7 +319,7 @@ void Object::save(QXmlStreamWriter& xml) const
 		tags_element.writeAttribute(literal::count, num_tags);
 		for (Tags::const_iterator tag = object_tags.constBegin(), end = object_tags.constEnd(); tag != end; ++tag)
 		{
-			XmlElementWriter tag_element(xml, literal::tags);
+			XmlElementWriter tag_element(xml, literal::tag);
 			tag_element.writeAttribute(literal::key, tag.key());
 			xml.writeCharacters(tag.value());
 		}
@@ -420,6 +424,13 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 			{
 				if (xml.name() == literal::tag)
 				{
+					const QString key(xml.attributes().value(literal::key).toString());
+					object->object_tags.insert(key, xml.readElementText());
+				}
+				else if (xml.name() == literal::tags)
+				{
+					// Fix for broken Object::save in pre-0.6.0 master branch
+					// TODO Remove after Mapper 0.6.x releases
 					const QString key(xml.attributes().value(literal::key).toString());
 					object->object_tags.insert(key, xml.readElementText());
 				}
@@ -732,7 +743,11 @@ void Object::setTags(const Object::Tags& tags)
 	{
 		object_tags = tags;
 		if (map)
+		{
 			map->setObjectsDirty();
+			if (map->isObjectSelected(this))
+				map->emitSelectionEdited();
+		}
 	}
 }
 
@@ -742,7 +757,11 @@ void Object::setTag(const QString& key, const QString& value)
 	{
 		object_tags.insert(key, value);
 		if (map)
+		{
 			map->setObjectsDirty();
+			if (map->isObjectSelected(this))
+				map->emitSelectionEdited();
+		}
 	}
 }
 
@@ -858,6 +877,7 @@ Object* PathObject::duplicate()
 	new_path->pattern_rotation = pattern_rotation;
 	new_path->pattern_origin = pattern_origin;
 	new_path->coords = coords;
+	new_path->object_tags = object_tags;
 	new_path->parts = parts;
 	int parts_size = parts.size();
 	for (int i = 0; i < parts_size; ++i)
@@ -3183,6 +3203,7 @@ Object* PointObject::duplicate()
 	PointObject* new_point = new PointObject(symbol);
 	new_point->coords = coords;
 	new_point->rotation = rotation;
+	new_point->object_tags = object_tags;
 	return new_point;
 }
 

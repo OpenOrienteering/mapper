@@ -124,6 +124,7 @@ Object* TextObject::duplicate()
 {
 	TextObject* new_text = new TextObject(symbol);
 	new_text->coords = coords;
+	new_text->object_tags = object_tags;
 	
 	new_text->text = text;
 	new_text->h_align = h_align;
