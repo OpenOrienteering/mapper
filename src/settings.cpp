@@ -45,6 +45,7 @@ Settings::Settings()
 	
 	registerSetting(Templates_KeepSettingsOfClosed, "Templates/keep_settings_of_closed_templates", true);
 	
+	registerSetting(General_AutoSaveInterval, "autosave", 15); // unit: minutes
 	registerSetting(General_Language, "language", QVariant((int)QLocale::system().language()));
 	registerSetting(General_TranslationFile, "translationFile", QVariant(QString::null));
 	registerSetting(General_RecentFilesList, "recentFileList", QVariant(QStringList()));

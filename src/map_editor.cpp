@@ -218,6 +218,7 @@ MapEditorTool* MapEditorController::getDefaultDrawToolForSymbol(Symbol* symbol)
 	return NULL;
 }
 
+
 void MapEditorController::setEditingInProgress(bool value)
 {
 	if (value != editing_in_progress)
@@ -229,6 +230,12 @@ void MapEditorController::setEditingInProgress(bool value)
 		updatePasteAvailability();
 	}
 }
+
+bool MapEditorController::isEditingInProgress() const
+{
+	return editing_in_progress;
+}
+
 
 void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
 {

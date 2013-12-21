@@ -49,6 +49,7 @@ public:
 		RectangleTool_HelperCrossRadius,
 		RectangleTool_PreviewLineWidth,
 		Templates_KeepSettingsOfClosed,
+		General_AutoSaveInterval,
 		General_Language,
 		General_RecentFilesList,
 		General_TranslationFile,

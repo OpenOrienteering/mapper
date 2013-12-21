@@ -123,6 +123,12 @@ public:
 	void setEditingInProgress(bool value);
 	
 	/**
+	 * Returns true when editing is in progress.
+	 * @see setEditingInProgress
+	 */
+	virtual bool isEditingInProgress() const;
+	
+	/**
 	 * Adds a a floating dock widget to the main window.
 	 * Adjusts some geometric properties.
 	 */

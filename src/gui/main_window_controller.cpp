@@ -33,3 +33,8 @@ MainWindowController* MainWindowController::controllerForFile(const QString& fil
 	
 	return NULL;
 }
+
+bool MainWindowController::isEditingInProgress() const
+{
+	return false;
+}

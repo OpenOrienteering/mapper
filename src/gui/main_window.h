@@ -28,6 +28,7 @@
 QT_BEGIN_NAMESPACE
 class QLabel;
 class QStackedWidget;
+class QTimer;
 QT_END_NAMESPACE
 
 class MainWindowController;
@@ -181,6 +182,10 @@ public slots:
 	 */
 	bool save();
 	
+	/** Save the current content to the current path.
+	 */
+	void autoSave();
+	
 	/** Close the file currently opened.
 	 *  This will close the window unless this is the last window.
 	 */
@@ -224,6 +229,11 @@ protected slots:
 	 */
 	void openPathBacklog();
 	
+	/**
+	 * Listens to configuration changes.
+	 */
+	void settingsChanged();
+	
 protected:
 	/** Notify main window of the current path where the content is saved.
 	 *  This will trigger updates to the window title, 
@@ -234,8 +244,16 @@ protected:
 	
 	virtual bool event(QEvent* event);
 	virtual void closeEvent(QCloseEvent *event);
-    virtual void keyPressEvent(QKeyEvent* event);
-    virtual void keyReleaseEvent(QKeyEvent* event);
+	virtual void keyPressEvent(QKeyEvent* event);
+	virtual void keyReleaseEvent(QKeyEvent* event);
+	
+	/**
+	 * Configures the auto-save feature from the current settings.
+	 * 
+	 * When auto-save gets activated, and the times is not yet active,
+	 * it starts the timer.
+	 */
+	void updateAutoSave();
 	
 private:
 	enum {
@@ -301,6 +319,8 @@ private:
 	
 	/// A list of paths to be opened later
 	QStringList path_backlog;
+	
+	QTimer* auto_save_timer;
 };
 
 #endif

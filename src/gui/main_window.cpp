@@ -82,13 +82,19 @@ MainWindow::MainWindow(bool as_main_window)
 	central_widget = new QStackedWidget(this);
 	QMainWindow::setCentralWidget(central_widget);
 	
+	auto_save_timer = new QTimer(this);
+	auto_save_timer->setSingleShot(true);
+	connect(auto_save_timer, SIGNAL(timeout()), this, SLOT(autoSave()));
+	updateAutoSave();
+	
 	if (as_main_window)
 		loadWindowSettings();
 	
 	installEventFilter(this);
 	
-	connect(&Settings::getInstance(), SIGNAL(settingsChanged()), this, SLOT(updateRecentFileActions()));
+	connect(&Settings::getInstance(), SIGNAL(settingsChanged()), this, SLOT(settingsChanged()));
 }
+
 MainWindow::~MainWindow()
 {
 	if (controller)
@@ -98,6 +104,62 @@ MainWindow::~MainWindow()
 		delete general_toolbar;
 	}
 }
+
+void MainWindow::settingsChanged()
+{
+	updateAutoSave();
+	updateRecentFileActions();
+}
+
+
+void MainWindow::updateAutoSave()
+{
+	int auto_save_interval = Settings::getInstance().getSetting(Settings::General_AutoSaveInterval).toInt();
+	if (auto_save_interval > 0)
+	{
+		// enable auto-save
+		auto_save_timer->setInterval(auto_save_interval * 60000); // map minutes to milliseconds
+		auto_save_timer->blockSignals(false);
+		if (has_unsaved_changes && !auto_save_timer->isActive())
+		{
+			auto_save_timer->start();
+		}
+	}
+	else
+	{
+		// disable auto-save
+		auto_save_timer->blockSignals(true);
+	}
+}
+
+void MainWindow::autoSave()
+{
+	if (!current_path.isEmpty())
+	{
+		if (controller->isEditingInProgress())
+		{
+			// Retry soon
+			QTimer::singleShot(1000, this, SLOT(autoSave()));
+		}
+		else
+		{
+			statusBar()->showMessage(tr("Auto-saving..."), 0);
+			if (save())
+			{
+				// Success
+				statusBar()->clearMessage();
+			}
+			else
+			{
+				// Failure
+				statusBar()->showMessage(tr("Auto-saving failed!"), 6000);
+				// Retry after the interval
+				auto_save_timer->start();
+			}
+		}
+	}
+}
+
 
 const QString& MainWindow::appName() const
 {
@@ -319,6 +381,15 @@ void MainWindow::setHasOpenedFile(bool value)
 void MainWindow::setHasUnsavedChanges(bool value)
 {
 	has_unsaved_changes = value;
+	if (has_unsaved_changes && !auto_save_timer->isActive())
+	{
+		auto_save_timer->start();
+	}
+	else if (!has_unsaved_changes && auto_save_timer->isActive())
+	{
+		auto_save_timer->stop();
+	}
+		
 	updateWindowTitle();
 }
 

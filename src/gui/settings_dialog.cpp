@@ -358,6 +358,30 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	layout->addItem(Util::SpacerItem::create(this), row, 1);
 	
 	row++;
+	layout->addWidget(Util::Headline::create(tr("Saving files")), row, 1, 1, 2);
+	
+	// Possible point: limit size of undo/redo journal
+	
+	int auto_save_interval = Settings::getInstance().getSetting(Settings::General_AutoSaveInterval).toInt();
+	
+	row++;
+	QCheckBox* auto_save_check = new QCheckBox(tr("Enable automatic saving of the current file"));
+	auto_save_check->setChecked(auto_save_interval > 0);
+	layout->addWidget(auto_save_check, row, 1, 1, 2);
+	
+	row++;
+	auto_save_interval_label = new QLabel(tr("Auto-save interval:"));
+	layout->addWidget(auto_save_interval_label, row, 1);
+	
+	auto_save_interval_edit = Util::SpinBox::create(1, 120, tr("min", "unit minutes"), 1);
+	auto_save_interval_edit->setValue(qAbs(auto_save_interval));
+	auto_save_interval_edit->setEnabled(auto_save_interval > 0);
+	layout->addWidget(auto_save_interval_edit, row, 2);
+	
+	row++;
+	layout->addItem(Util::SpacerItem::create(this), row, 1);
+	
+	row++;
 	layout->addWidget(Util::Headline::create(tr("File import and export")), row, 1, 1, 2);
 	
 	row++;
@@ -404,6 +428,8 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	connect(tips_visible_check, SIGNAL(clicked(bool)), this, SLOT(tipsVisibleClicked(bool)));
 	connect(encoding_box, SIGNAL(currentTextChanged(QString)), this, SLOT(encodingChanged(QString)));
 	connect(ocd_importer_check, SIGNAL(clicked(bool)), this, SLOT(ocdImporterClicked(bool)));
+	connect(auto_save_check, SIGNAL(clicked(bool)), this, SLOT(autoSaveChanged(bool)));
+	connect(auto_save_interval_edit, SIGNAL(valueChanged(int)), this, SLOT(autoSaveIntervalChanged(int)));
 }
 
 void GeneralPage::apply()
@@ -576,4 +602,20 @@ void GeneralPage::openTranslationFileDialog()
 		}
 	}
 	updateLanguageBox();
+}
+
+void GeneralPage::autoSaveChanged(bool state)
+{
+	auto_save_interval_label->setEnabled(state);
+	auto_save_interval_edit->setEnabled(state);
+	
+	int interval = auto_save_interval_edit->value();
+	if (!state)
+		interval = -interval;
+	changes.insert(Settings::getInstance().getSettingPath(Settings::General_AutoSaveInterval), interval);
+}
+
+void GeneralPage::autoSaveIntervalChanged(int value)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::General_AutoSaveInterval), value);
 }

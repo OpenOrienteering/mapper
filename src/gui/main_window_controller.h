@@ -61,6 +61,14 @@ public:
 	 */
 	virtual void detach() {}
 	
+	/**
+	 * Returns true when editing is in progress.
+	 * 
+	 * "Editing in progress" means the file is an "unstable" state where no
+	 * global operations like save, undo, redo shall not be applied.
+	 */
+	virtual bool isEditingInProgress() const;
+	
 	// Get key press events from the main window
 	virtual void keyPressEvent(QKeyEvent* event) {}
 	virtual void keyReleaseEvent(QKeyEvent* event) {}

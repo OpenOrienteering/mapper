@@ -20,23 +20,14 @@
 #ifndef _OPENORIENTEERING_SETTINGS_DIALOG_PRIVATE_H_
 #define _OPENORIENTEERING_SETTINGS_DIALOG_PRIVATE_H_
 
-#include <QHash>
-#include <QDialog>
-#include <QVariant>
-
-QT_BEGIN_NAMESPACE
-class QTabWidget;
-class QAbstractButton;
-class QComboBox;
-class QCheckBox;
-class QLabel;
-class QSpinBox;
-class QGridLayout;
-class QVBoxLayout;
-QT_END_NAMESPACE
+#include <qglobal.h>
+#if QT_VERSION < 0x050000
+#include <QtGui>
+#else
+#include <QtWidgets>
+#endif
 
 class MainWindow;
-class QDialogButtonBox;
 
 class SettingsPage : public QWidget
 {
@@ -122,6 +113,10 @@ private slots:
 	
 	void ocdImporterClicked(bool state);
 	
+	void autoSaveChanged(bool state);
+	
+	void autoSaveIntervalChanged(int value);
+	
 private:
 	/** Adds the available languages to the language combo box,
 	 *  and sets the current element.
@@ -132,6 +127,9 @@ private:
 	const static int TranslationFromFile;
 	
 	QComboBox* encoding_box;
+	
+	QLabel*       auto_save_interval_label;
+	QSpinBox*     auto_save_interval_edit;
 };
 
 #endif
