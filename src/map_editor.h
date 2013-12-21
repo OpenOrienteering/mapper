@@ -252,6 +252,9 @@ public slots:
 	/** Updates the reopen_template_act enabled state. */
 	void closedTemplateAvailabilityChanged();
 	
+	/** Shows or hides the tags editor dock widget. */
+	void showTagsWindow(bool show);
+	
 	/** Shows the GeoreferencingDialog. */
 	void editGeoreferencing();
 	
@@ -470,6 +473,9 @@ private:
 	QAction* template_window_act;
 	EditorDockWidget* template_dock_widget;
 	QAction* reopen_template_act;
+	
+	QAction* tags_window_act;
+	EditorDockWidget* tags_dock_widget;
 	
 	QAction* edit_tool_act;
 	QAction* edit_line_tool_act;

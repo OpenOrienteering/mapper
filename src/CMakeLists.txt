@@ -135,13 +135,13 @@ set(Mapper_Common_SRCS
  gui/print_tool.cpp
  gui/print_widget.cpp
  gui/settings_dialog.cpp
- gui/tags_dialog.cpp
  
  gui/widgets/color_dropdown.cpp
  gui/widgets/home_screen_widget.cpp
  gui/widgets/mapper_proxystyle.cpp
  gui/widgets/measure_widget.cpp
  gui/widgets/segmented_button_layout.cpp
+ gui/widgets/tags_widget.cpp
  
  util/item_delegates.cpp
  util/overriding_shortcut.cpp
@@ -226,13 +226,13 @@ set(Mapper_Common_MOC_INPUT
  gui/print_widget.h
  gui/settings_dialog.h
  gui/settings_dialog_p.h
- gui/tags_dialog.h
  
  gui/widgets/color_dropdown.h
  gui/widgets/home_screen_widget.h
  gui/widgets/mapper_proxystyle.h
  gui/widgets/measure_widget.h
  gui/widgets/segmented_button_layout.h
+ gui/widgets/tags_widget.h
  
  util/item_delegates.h
  util/overriding_shortcut.h

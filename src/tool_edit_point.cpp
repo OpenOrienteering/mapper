@@ -45,7 +45,6 @@
 #include "map_editor.h"
 #include "gui/main_window.h"
 #include "gui/modifier_key.h"
-#include "gui/tags_dialog.h"
 
 
 int EditPointTool::max_objects_for_handle_display = 10;
@@ -406,14 +405,6 @@ bool EditPointTool::keyPress(QKeyEvent* event)
 	else if (event->key() == Qt::Key_Space)
 	{
 		space_pressed = true;
-	}
-	else if (event->key() == Qt::Key_F9)
-	{
-		if (map()->getNumSelectedObjects() == 1)
-		{
-			TagsDialog dialog(map()->getFirstSelectedObject(), editor->getWindow());
-			dialog.exec();
-		}
 	}
 	else
 		return false;
