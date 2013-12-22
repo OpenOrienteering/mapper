@@ -452,6 +452,17 @@ void EditPointTool::initImpl()
 
 void EditPointTool::objectSelectionChangedImpl()
 {
+	if (text_editor)
+	{
+		// This case can be reproduced by using "select all objects of symbol" for any symbol while editing a text.
+		// Revert selection to text object in order to be able to finish editing. Not optimal, but better than crashing.
+		map()->clearObjectSelection(false);
+		map()->addObjectToSelection(text_editor->getObject(), false);
+		finishEditing();
+		map()->emitSelectionChanged();
+		return;
+	}
+	
 	updateHoverPoint(cur_pos_map);
 	updateDirtyRect();
 	updateStatusText();

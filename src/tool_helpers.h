@@ -71,6 +71,7 @@ public:
 	void includeDirtyRect(QRectF& rect);
 	
 	inline void setSelection(int start, int end) {selection_start = start; selection_end = end; click_position = start;}
+	inline TextObject* getObject() const {return object;}
 	
 public slots:
 	void alignmentChanged(int horz, int vert);
