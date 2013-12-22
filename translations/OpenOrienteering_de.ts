@@ -66,7 +66,7 @@ Der volle Text der Lizenz ist in der Datei %1 beigefügt.</translation>
 </context>
 <context>
     <name>AreaSymbolSettings</name>
-    <message utf8="true">
+    <message>
         <location filename="../src/symbol_area.cpp" line="703"/>
         <source>mm²</source>
         <translation>mm²</translation>
@@ -150,7 +150,7 @@ Der volle Text der Lizenz ist in der Datei %1 beigefügt.</translation>
         <source>Fill rotation</source>
         <translation>Drehung der Füllung</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/symbol_area.cpp" line="821"/>
         <source>°</source>
         <translation>°</translation>
@@ -536,7 +536,7 @@ Der volle Text der Lizenz ist in der Datei %1 beigefügt.</translation>
         <source>Additional rotation (counter-clockwise):</source>
         <translation>Zusätzliche Drehung (gegen Uhrzeigersinn):</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/map_grid.cpp" line="227"/>
         <source>°</source>
         <translation>°</translation>
@@ -749,7 +749,7 @@ Der volle Text der Lizenz ist in der Datei %1 beigefügt.</translation>
         <source>Align points with direction of line</source>
         <translation type="unfinished"></translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/tool_distribute_points.cpp" line="133"/>
         <source>°</source>
         <comment>degrees</comment>
@@ -848,7 +848,7 @@ Der volle Text der Lizenz ist in der Datei %1 beigefügt.</translation>
 </context>
 <context>
     <name>DrawPointTool</name>
-    <message utf8="true">
+    <message>
         <location filename="../src/tool_draw_point.cpp" line="283"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Winkel:&lt;/b&gt; %1° </translation>
@@ -1005,7 +1005,7 @@ Der volle Text der Lizenz ist in der Datei %1 beigefügt.</translation>
         <source>Stepping of fixed angle mode (%1):</source>
         <translation>Schrittweite bei eingeschränkten Winkeln (%1):</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/gui/settings_dialog.cpp" line="142"/>
         <source>°</source>
         <comment>Degree sign for angles</comment>
@@ -1345,7 +1345,7 @@ Der volle Text der Lizenz ist in der Datei %1 beigefügt.</translation>
         <comment>north / south</comment>
         <translation>N</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/georeferencing_dialog.cpp" line="115"/>
         <location filename="../src/georeferencing_dialog.cpp" line="116"/>
         <location filename="../src/georeferencing_dialog.cpp" line="136"/>
@@ -1389,7 +1389,7 @@ Der volle Text der Lizenz ist in der Datei %1 beigefügt.</translation>
         <source>Grivation:</source>
         <translation>Nadelabweichung:</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/georeferencing_dialog.cpp" line="280"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
         <translation>Die magnetische Deklination des Referenzpunkts %1° %2° wird nun online von &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt; abgerufen. Wollen Sie fortfahren?</translation>
@@ -1436,7 +1436,7 @@ Der volle Text der Lizenz ist in der Datei %1 beigefügt.</translation>
         <translation>Der Online-Abruf der Deklination ist fehlgeschlagen:
 %1</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/georeferencing_dialog.cpp" line="654"/>
         <source>%1 °</source>
         <comment>degree value</comment>
@@ -3393,13 +3393,13 @@ Zoomen ist mit dem Mausrad möglich.</translation>
         <comment>meters</comment>
         <translation>m</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="156"/>
         <source>mm²</source>
         <comment>square millimeters</comment>
         <translation>mm²</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="157"/>
         <source>m²</source>
         <comment>square meters</comment>
@@ -3415,7 +3415,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
         <source>The minimimum area is %1 %2.</source>
         <translation>Die Mindestgröße ist %1 %2.</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="161"/>
         <source>mm²</source>
         <translation>mm²</translation>
@@ -3600,7 +3600,6 @@ Zoomen ist mit dem Mausrad möglich.</translation>
         <location filename="../src/file_format_ocad8.cpp" line="143"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -4629,7 +4628,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
         <source>Angle (counter-clockwise):</source>
         <translation>Winkel (gegen Uhrzeigersinn):</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../src/map_dialog_rotate.cpp" line="46"/>
         <source>°</source>
         <translation>°</translation>
@@ -4703,7 +4702,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
 </context>
 <context>
     <name>RotatePatternTool</name>
-    <message utf8="true">
+    <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="156"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Winkel:&lt;/b&gt; %1° </translation>
@@ -4721,7 +4720,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
 </context>
 <context>
     <name>RotateTool</name>
-    <message utf8="true">
+    <message>
         <location filename="../src/tool_rotate.cpp" line="184"/>
         <source>&lt;b&gt;Rotation:&lt;/b&gt; %1° </source>
         <translation>&lt;b&gt;Drehung:&lt;/b&gt; %1° </translation>
@@ -5858,7 +5857,7 @@ Vorlage konnte nicht geladen werden. Existiert diese Datei?</translation>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="868"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
-        <translation>Wie sollen die Symbol der importierten Vorlage skaliert werden?</translation>
+        <translation>Wie sollen die Symbole der importierten Vorlage skaliert werden?</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="961"/>
