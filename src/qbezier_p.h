@@ -60,7 +60,7 @@
 #include "QtCore/qlist.h"
 #include "QtCore/qpair.h"
 #include "QtGui/qtransform.h"
-#include <private/qdatabuffer_p.h>
+#include "qt-private/qdatabuffer_p.h"
 
 QT_BEGIN_NAMESPACE
 

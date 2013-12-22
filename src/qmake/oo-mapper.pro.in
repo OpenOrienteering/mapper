@@ -37,6 +37,9 @@ android {
   # TODO: do not use hardcoded paths
   INCLUDEPATH += 3rd-party/proj/download/proj-4.8.0/src
   LIBS += -L$$PWD/3rd-party/proj/download/proj-4.8.0/out/armeabi-v7a/lib/
+  
+  # Use files from the android directory
+  ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 }
 
 # Input
