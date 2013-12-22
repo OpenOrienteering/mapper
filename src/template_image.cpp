@@ -253,19 +253,48 @@ Template* TemplateImage::duplicateImpl()
 
 void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width)
 {
-	QPointF* points = new QPointF[num_coords];
+	QPointF* points;
+	QRect radius_bbox;
+	int draw_iterations = 1;
 	
-	QRectF bbox;
-	for (int i = 0; i < num_coords; ++i)
+	// Special case for points because drawPolyline() draws nothing in this case.
+	// drawPoint() is also unsuitable because it aligns the point to the closest pixel.
+	// drawEllipse() in the tested Qt version (5.1.1) seems to have a bug with antialiasing here.
+	if (num_coords >= 2 && coords[0] == coords[1])
 	{
-		points[i] = mapToTemplateQPoint(coords[i]) + QPointF(image->width() * 0.5, image->height() * 0.5);
-		rectIncludeSafe(bbox, points[i]);
+		const float ring_radius = 0.8f;
+		const float width_factor = 2.0f;
+		
+		draw_iterations = 2;
+		width *= width_factor;
+		num_coords = 5;
+		points = new QPointF[5];
+		points[0] = mapToTemplateQPoint(coords[0]) + QPointF(image->width() * 0.5f, image->height() * 0.5f);
+		points[1] = points[0] + QPointF(ring_radius, 0);
+		points[2] = points[0] + QPointF(0, ring_radius);
+		points[3] = points[0] + QPointF(-ring_radius, 0);
+		points[4] = points[0] + QPointF(0, -ring_radius);
+		points[0] = points[4];
+		radius_bbox = QRect(
+			qFloor(points[3].x() - width - 1), qFloor(points[4].y() - width - 1),
+			qCeil(2 * ring_radius + 2*width + 2.5f), qCeil(2 * ring_radius + 2*width + 2.5f)
+		);
 	}
-	QRect radius_bbox = QRect(
-		qFloor(bbox.left() - width - 1), qFloor(bbox.top() - width - 1),
-		qCeil(bbox.width() + 2*width + 2.5f), qCeil(bbox.height() + 2*width + 2.5f)
-	);
-	radius_bbox = radius_bbox.intersected(QRect(0, 0, image->width(), image->height()));
+	else
+	{
+		points = new QPointF[num_coords];
+		QRectF bbox;
+		for (int i = 0; i < num_coords; ++i)
+		{
+			points[i] = mapToTemplateQPoint(coords[i]) + QPointF(image->width() * 0.5f, image->height() * 0.5f);
+			rectIncludeSafe(bbox, points[i]);
+		}
+		radius_bbox = QRect(
+			qFloor(bbox.left() - width - 1), qFloor(bbox.top() - width - 1),
+			qCeil(bbox.width() + 2*width + 2.5f), qCeil(bbox.height() + 2*width + 2.5f)
+		);
+		radius_bbox = radius_bbox.intersected(QRect(0, 0, image->width(), image->height()));
+	}
 	
 	// Create undo step
 	DrawOnImageUndoStep undo_step;
@@ -286,15 +315,6 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QCol
 		painter.setCompositionMode(QPainter::CompositionMode_Clear);
 	else
 		painter.setOpacity(color.alphaF());
-	
-	// Special case for points because drawPolyline() draws nothing in this case.
-	// drawPoint() is also unsuitable because it aligns the point to the closest pixel.
-	// drawEllipse() in the tested Qt version (5.1.1) seems to have a bug with antialiasing here.
-	if (num_coords >= 2 && points[0] == points[1])
-	{
-		points[0] -= QPointF(0, 0.1f);
-		points[1] += QPointF(0, 0.1f);
-	}
 
 	QPen pen(color);
 	pen.setWidthF(width);
@@ -302,7 +322,8 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QCol
 	pen.setJoinStyle(Qt::RoundJoin);
 	painter.setPen(pen);
 	painter.setRenderHint(QPainter::Antialiasing);
-	painter.drawPolyline(points, num_coords);
+	for (int i = 0; i < draw_iterations; ++ i)
+		painter.drawPolyline(points, num_coords);
 	
 	painter.end();
 	delete[] points;
