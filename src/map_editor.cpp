@@ -435,6 +435,8 @@ void MapEditorController::attach(MainWindow* window)
 	}
 	else if (mode == SymbolEditor)
 	{
+		map_widget->setZoomLabel(statusbar_zoom_label);
+		map_widget->setCursorposLabel(statusbar_cursorpos_label);
 		window->setCentralWidget(map_widget);
 	}
 	
