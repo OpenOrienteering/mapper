@@ -797,7 +797,8 @@ void DrawPathTool::updateDirtyRect()
 		rectInclude(rect, previous_drag_map.toQPointF());
 	}
 	if ((draw_in_progress && !dragging) ||
-		(!draw_in_progress && !shift_pressed && ctrl_pressed))
+		(!draw_in_progress && !shift_pressed && ctrl_pressed) ||
+		(!draw_in_progress && (picking_angle || picked_angle)))
 	{
 		angle_helper->includeDirtyRect(rect);
 	}
