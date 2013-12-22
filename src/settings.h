@@ -51,6 +51,7 @@ public:
 		Templates_KeepSettingsOfClosed,
 		General_AutoSaveInterval,
 		General_Language,
+		General_PixelsPerInch,
 		General_RecentFilesList,
 		General_TranslationFile,
 		General_OpenMRUFile,

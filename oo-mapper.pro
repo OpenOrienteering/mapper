@@ -114,6 +114,7 @@ HEADERS += \
   src/gui/print_widget.h \
   src/gui/settings_dialog.h \
   src/gui/settings_dialog_p.h \
+  src/gui/widgets/action_grid_bar.h \
   src/gui/widgets/color_dropdown.h \
   src/gui/widgets/home_screen_widget.h \
   src/gui/widgets/mapper_proxystyle.h \
@@ -146,6 +147,7 @@ SOURCES += \
   src/map.cpp \
   src/map_part.cpp \
   src/map_widget.cpp \
+  src/touch_cursor.cpp \
   src/map_editor.cpp \
   src/map_editor_activity.cpp \
   src/map_undo.cpp \
@@ -228,6 +230,7 @@ SOURCES += \
   src/gui/print_tool.cpp \
   src/gui/print_widget.cpp \
   src/gui/settings_dialog.cpp \
+  src/gui/widgets/action_grid_bar.cpp \
   src/gui/widgets/color_dropdown.cpp \
   src/gui/widgets/home_screen_widget.cpp \
   src/gui/widgets/mapper_proxystyle.cpp \

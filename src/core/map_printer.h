@@ -31,6 +31,10 @@ QT_BEGIN_NAMESPACE
 class QImage;
 class QXmlStreamReader;
 class QXmlStreamWriter;
+#ifdef QT_NO_PRINTER
+class QPrinter {};
+class QPrinterInfo {};
+#endif
 QT_END_NAMESPACE
 
 class Map;
@@ -40,6 +44,9 @@ class MapView;
 class MapPrinterPageFormat
 {
 public:
+	/** Copy of QPrinter::Orientation because QPrinter is not available for Android */
+	enum Orientation { Portrait, Landscape };
+	
 	/** Constructs a new page format.
 	 * 
 	 *  It is initialized a custom page format with a page rectangle of the
@@ -47,11 +54,11 @@ public:
 	 *  The page overlap values are initialized to 5 (mm). */
 	MapPrinterPageFormat(QSizeF page_rect_size = QSizeF(100.0, 100.0), qreal margin = 5.0);
 	
-	/** The nominal paper size. */
-	QPrinter::PaperSize paper_size;
+	/** The nominal paper size (of type QPrinter::PaperSize) */
+	int paper_size;
 	
 	/** The orientation of the paper. */
-	QPrinter::Orientation orientation;
+	Orientation orientation;
 	
 	/** The total dimensions of the page in mm. */
 	QSizeF paper_dimensions;
@@ -222,14 +229,14 @@ public slots:
 	/** Sets the map area which is to be printed. */
 	void setPrintArea(const QRectF& area);
 	
-	/** Sets the paper size to be used. */
-	void setPaperSize(const QPrinter::PaperSize size);
+	/** Sets the QPrinter::PaperSize to be used. */
+	void setPaperSize(const int size);
 	
 	/** Sets a custom paper size with the given dimensions. */
 	void setCustomPaperSize(const QSizeF dimensions);
 	
 	/** Sets the page orientation. */
-	void setPageOrientation(const QPrinter::Orientation orientation);
+	void setPageOrientation(const MapPrinterPageFormat::Orientation orientation);
 	
 	/** Sets the overlapping of the pages at the margins. */
 	void setOverlap(qreal h_overlap, qreal v_overlap);
@@ -306,7 +313,6 @@ protected:
 	std::vector<qreal> v_page_pos;
 	bool cancel_print_map;
 };
-
 
 
 //### MapPrinterPageFormat inline code ###

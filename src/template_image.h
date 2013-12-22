@@ -100,12 +100,31 @@ protected:
 		bool tryToLoadForImage(const QString image_path);
 	};
 	
+	/** Information about an undo step for the paint-on-template functionality. */
+	struct DrawOnImageUndoStep
+	{
+		/** Copy of previous image part */
+		QImage image;
+		
+		/** X position of image part origin */
+		int x;
+		
+		/** Y position of image part origin */
+		int y;
+	};
+	
 	virtual Template* duplicateImpl();
 	virtual void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width);
+	virtual void drawOntoTemplateUndo(bool redo);
+	void addUndoStep(const DrawOnImageUndoStep& new_step);
 	void calculateGeoreferencing();
 	void updatePosFromGeoreferencing();
 
 	QImage* image;
+	
+	std::vector< DrawOnImageUndoStep > undo_steps;
+	/// Current index in undo_steps, where 0 means before the first item.
+	int undo_index;
 	
 	GeoreferencingType available_georef;
 	QScopedPointer<Georeferencing> georef;

@@ -20,15 +20,16 @@
 
 #include "settings.h"
 
+#include <QApplication>
 #include <QLocale>
 #include <QVariant>
+#include <QScreen>
 #include <QSettings>
 #include <QStringList>
 
 Settings::Settings()
  : QObject()
 {
-	registerSetting(MapDisplay_Antialiasing, "MapDisplay/antialiasing", true);
 	registerSetting(MapDisplay_TextAntialiasing, "MapDisplay/text_antialiasing", false);
 	registerSetting(MapEditor_ClickTolerance, "MapEditor/click_tolerance", 5);
 	registerSetting(MapEditor_SnapDistance, "MapEditor/snap_distance", 20);
@@ -47,6 +48,7 @@ Settings::Settings()
 	
 	registerSetting(General_AutoSaveInterval, "autosave", 15); // unit: minutes
 	registerSetting(General_Language, "language", QVariant((int)QLocale::system().language()));
+	registerSetting(General_PixelsPerInch, "pixelsPerInch", QApplication::primaryScreen()->physicalDotsPerInch());
 	registerSetting(General_TranslationFile, "translationFile", QVariant(QString::null));
 	registerSetting(General_RecentFilesList, "recentFileList", QVariant(QStringList()));
 	registerSetting(General_OpenMRUFile, "openMRUFile", false);
@@ -55,6 +57,9 @@ Settings::Settings()
 	
 	registerSetting(HomeScreen_TipsVisible, "HomeScreen/tipsVisible", true);
 	registerSetting(HomeScreen_CurrentTip, "HomeScreen/currentTip", -1);
+	
+	// Set antialiasing default depending on screen pixels per inch
+	registerSetting(MapDisplay_Antialiasing, "MapDisplay/antialiasing", getSetting(General_PixelsPerInch).toFloat() < 140);
 	
 	// Migrate old settings
 	static QVariant current_version("0.5");

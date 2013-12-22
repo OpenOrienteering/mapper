@@ -143,6 +143,8 @@ public:
 	
 	inline Type getType() const {return type;}
 	inline QAction* getAction() const {return tool_button;}
+	/** Returns whether the touch helper cursor should be used for this tool if it is enabled. */
+	inline bool usesTouchCursor() const {return uses_touch_cursor;}
 	inline void setAction(QAction* new_tool_button) {tool_button = new_tool_button;}
 	
 	/** Returns the map being edited. */
@@ -231,6 +233,7 @@ protected:
 	
 	QAction* tool_button;
 	Type type;
+	bool uses_touch_cursor;
 	MapEditorController* editor;
 };
 

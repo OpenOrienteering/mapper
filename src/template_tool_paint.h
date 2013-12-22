@@ -56,6 +56,8 @@ public:
 public slots:
 	void templateDeleted(int pos, Template* temp);
 	void colorSelected(QColor color);
+	void undoSelected();
+	void redoSelected();
 	
 private:
 	bool dragging;
@@ -65,7 +67,6 @@ private:
 	std::vector<MapCoordF> coords;
 	
 	Template* temp;
-	QDockWidget* dock_widget;
 	PaintOnTemplatePaletteWidget* widget;
 	
 	static int erase_width;
@@ -77,19 +78,31 @@ class PaintOnTemplatePaletteWidget : public QWidget
 Q_OBJECT
 public:
 	PaintOnTemplatePaletteWidget(bool close_on_selection);
+	~PaintOnTemplatePaletteWidget();
+
+	QColor getSelectedColor();
+	
+	virtual QSize sizeHint() const;
 	
 signals:
 	void colorSelected(QColor color);
+	void undoSelected();
+	void redoSelected();
 	
 protected:
 	virtual void paintEvent(QPaintEvent* event);
 	virtual void mousePressEvent(QMouseEvent* event);
 	
 private:
-	int getNumFieldsX();
-	int getNumFieldsY();
-	QColor getFieldColor(int x, int y);
+	int getNumFieldsX() const;
+	int getNumFieldsY() const;
+	QColor getFieldColor(int x, int y) const;
+	bool isUndoField(int x, int y) const;
+	bool isRedoField(int x, int y) const;
 	
+	void drawIcon(QPainter* painter, const QString& resource_path, const QRect& field_rect);
+	
+	int selected_color;
 	bool close_on_selection;
 };
 

@@ -29,9 +29,6 @@
 #include "../util.h"
 
 
-const double screen_pixel_per_mm = 4.999838577;	// TODO: make configurable (by specifying screen diameter in inch + resolution, or dpi)
-// Calculation: pixel_height / ( sqrt((c^2)/(aspect^2 + 1)) * 2.54 )
-
 const double MapView::zoom_in_limit = 512;
 const double MapView::zoom_out_limit = 1 / 16.0;
 
@@ -227,11 +224,11 @@ void MapView::updateAllMapWidgets()
 
 double MapView::lengthToPixel(qint64 length)
 {
-	return zoom * screen_pixel_per_mm * (length / 1000.0);
+	return Util::mmToPixelPhysical(zoom * (length / 1000.0));
 }
 qint64 MapView::pixelToLength(double pixel)
 {
-	return qRound64(1000 * pixel / (zoom * screen_pixel_per_mm));
+	return qRound64(1000 * Util::pixelToMMPhysical(pixel / zoom));
 }
 
 QRectF MapView::calculateViewedRect(QRectF view_rect)

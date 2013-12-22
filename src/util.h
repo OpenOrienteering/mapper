@@ -88,6 +88,9 @@ void rectInclude(QRectF& rect, const QRectF& other_rect);
 /** Enlarges the rect to include the given rect. */
 void rectIncludeSafe(QRectF& rect, const QRectF& other_rect);
 
+/** Enlarges the rect to include the given rect. */
+void rectIncludeSafe(QRect& rect, const QRect& other_rect);
+
 
 /** Checks for line - rect intersection. */
 bool lineIntersectsRect(const QRectF& rect, const QPointF& p1, const QPointF& p2);
@@ -261,6 +264,27 @@ namespace Util
 		hatchingOperation(extent, horz_spacing, horz_offset, rotation, processor);
 		hatchingOperation(extent, vert_spacing, vert_offset, rotation + M_PI / 2, processor);
 	}
+	
+	/**
+	 * Converts millimeters to pixels using the physical dpi setting of
+	 * Mapper's settings. This should be used to calculate sizes of map elements.
+	 * @sa mmToPixelLogical()
+	 */
+	float mmToPixelPhysical(float millimeters);
+	
+	/** Inverse of mmToPixelPhysical(). */
+	float pixelToMMPhysical(float pixels);
+	
+	/**
+	 * Converts millimeters to pixels using the "logical" dpi setting of
+	 * the operating system. This should be used to calculate sizes of UI
+	 * elements.
+	 * @sa mmToPixelPhysical()
+	 */
+	float mmToPixelLogical(float millimeters);
+	
+	/** Inverse of mmToPixelLogical(). */
+	float pixelToMMLogical(float pixels);
 }
 
 #endif

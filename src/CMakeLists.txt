@@ -44,6 +44,7 @@ set(Mapper_Common_SRCS
  map.cpp
  map_part.cpp
  map_widget.cpp
+ touch_cursor.cpp
  map_editor.cpp
  map_editor_activity.cpp
  map_undo.cpp
@@ -136,6 +137,7 @@ set(Mapper_Common_SRCS
  gui/print_widget.cpp
  gui/settings_dialog.cpp
  
+ gui/widgets/action_grid_bar.cpp
  gui/widgets/color_dropdown.cpp
  gui/widgets/home_screen_widget.cpp
  gui/widgets/mapper_proxystyle.cpp
@@ -227,6 +229,7 @@ set(Mapper_Common_MOC_INPUT
  gui/settings_dialog.h
  gui/settings_dialog_p.h
  
+ gui/widgets/action_grid_bar.h
  gui/widgets/color_dropdown.h
  gui/widgets/home_screen_widget.h
  gui/widgets/mapper_proxystyle.h

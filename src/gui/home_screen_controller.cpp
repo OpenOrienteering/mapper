@@ -44,7 +44,11 @@ void HomeScreenController::attach(MainWindow* window)
 {
 	this->window = window;
 	
-	widget = new HomeScreenWidget(this);
+#if defined(Q_OS_ANDROID)
+	widget = new HomeScreenWidgetMobile(this);
+#else
+	widget = new HomeScreenWidgetDesktop(this);
+#endif
 	window->setCentralWidget(widget);
 	window->setStatusBarText("");
 	window->statusBar()->hide();

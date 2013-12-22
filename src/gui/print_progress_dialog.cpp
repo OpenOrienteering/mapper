@@ -35,8 +35,10 @@ PrintProgressDialog::PrintProgressDialog(QWidget* parent, Qt::WindowFlags f)
 
 void PrintProgressDialog::attach(MapPrinter* printer)
 {
+#ifndef QT_NO_PRINTER
 	connect(printer, SIGNAL(printProgress(int, QString)), this, SLOT(setProgress(int,QString)));
 	connect(this, SIGNAL(canceled()), printer, SLOT(cancelPrintMap()));
+#endif
 }
 
 void PrintProgressDialog::setProgress(int value, QString status)

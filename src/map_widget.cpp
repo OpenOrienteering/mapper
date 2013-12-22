@@ -35,6 +35,8 @@
 #include "tool.h"
 #include "object.h"
 #include "tool_edit.h"
+#include "touch_cursor.h"
+#include "util.h"
 
 #if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
 #define MiddleButton MidButton
@@ -44,7 +46,8 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
  : QWidget(parent),
    show_help(show_help),
    force_antialiasing(force_antialiasing),
-   pie_menu(this, 8, 24)
+   pie_menu(this, 8, 24),
+   touch_cursor(NULL)
 {
 	view = NULL;
 	tool = NULL;
@@ -74,10 +77,6 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
 	setMouseTracking(true);
 	setFocusPolicy(Qt::ClickFocus);
 	setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
-
-#if defined(Q_OS_ANDROID)
-	clickState = 0;
-#endif
 }
 
 MapWidget::~MapWidget()
@@ -88,6 +87,8 @@ MapWidget::~MapWidget()
 	delete below_template_cache;
 	delete above_template_cache;
 	delete map_cache;
+	
+	delete touch_cursor;
 }
 
 void MapWidget::setMapView(MapView* view)
@@ -110,12 +111,18 @@ void MapWidget::setMapView(MapView* view)
 
 void MapWidget::setTool(MapEditorTool* tool)
 {
+	// Redraw if touch cursor usage changes
+	bool redrawTouchCursor = (touch_cursor && this->tool && tool
+		&& (this->tool->usesTouchCursor() || tool->usesTouchCursor()));
+
 	this->tool = tool;
 	
 	if (tool)
 		setCursor(*tool->getCursor());
 	else
 		unsetCursor();
+	if (redrawTouchCursor)
+		touch_cursor->updateMapWidget(false);
 }
 
 void MapWidget::setActivity(MapEditorActivity* activity)
@@ -135,6 +142,10 @@ QRectF MapWidget::viewportToView(const QRect& input)
 	return QRectF(input.left() - 0.5*width() - drag_offset.x(), input.top() - 0.5*height() - drag_offset.y(), input.width(), input.height());
 }
 QPointF MapWidget::viewportToView(QPoint input)
+{
+	return QPointF(input.x() - 0.5*width() - drag_offset.x(), input.y() - 0.5*height() - drag_offset.y());
+}
+QPointF MapWidget::viewportToView(QPointF input)
 {
 	return QPointF(input.x() - 0.5*width() - drag_offset.x(), input.y() - 0.5*height() - drag_offset.y());
 }
@@ -160,6 +171,10 @@ MapCoord MapWidget::viewportToMap(QPoint input)
 	return view->viewToMap(viewportToView(input));
 }
 MapCoordF MapWidget::viewportToMapF(QPoint input)
+{
+	return view->viewToMapF(viewportToView(input));
+}
+MapCoordF MapWidget::viewportToMapF(QPointF input)
 {
 	return view->viewToMapF(viewportToView(input));
 }
@@ -287,6 +302,11 @@ void MapWidget::setDragOffset(QPoint offset)
 {
 	drag_offset = offset;
 	update();
+}
+
+QPoint MapWidget::getDragOffset() const
+{
+	return drag_offset;
 }
 
 void MapWidget::completeDragging(qint64 dx, qint64 dy)
@@ -455,6 +475,29 @@ void MapWidget::updateDrawing(QRectF map_rect, int pixel_border)
 	
 	if (viewport_rect.intersects(rect()))
 		update(viewport_rect);
+}
+
+void MapWidget::updateDrawingLater(QRectF map_rect, int pixel_border)
+{
+	QRect viewport_rect = calculateViewportBoundingBox(map_rect, pixel_border);
+	
+	if (viewport_rect.intersects(rect()))
+	{
+		if (!cached_update_rect.isValid())
+		{
+			// Start the update timer
+			QTimer::singleShot(15, this, SLOT(updateDrawingLaterSlot()));
+		}
+		
+		// NOTE: this may require a mutex for concurrent access with updateDrawingLaterSlot()?
+		rectIncludeSafe(cached_update_rect, viewport_rect);
+	}
+}
+
+void MapWidget::updateDrawingLaterSlot()
+{
+	update(cached_update_rect);
+	cached_update_rect = QRect();
 }
 
 void MapWidget::updateEverything()
@@ -760,6 +803,13 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		drawing_dirty_rect_old = viewport_dirty_rect;
 	}
 	
+	// Draw touch cursor
+	if (touch_cursor && tool && tool->usesTouchCursor())
+	{
+		painter.setClipRect(event->rect());
+		touch_cursor->paint(&painter);
+	}
+	
 	painter.end();
 }
 
@@ -788,15 +838,20 @@ void MapWidget::resizeEvent(QResizeEvent* event)
 
 void MapWidget::mousePressEvent(QMouseEvent* event)
 {
-#if defined(Q_OS_ANDROID)
-	// Android input quirks: filter out double events
-	int realButtons = event->button() & ~clickState;
-	if (realButtons == 0)
-		return;
-	clickState |= event->button();
-	*event = QMouseEvent(QEvent::MouseButtonPress, event->localPos(), event->windowPos(), event->screenPos(), (Qt::MouseButton)realButtons, event->buttons(), event->modifiers());
-#endif
+	if (touch_cursor && tool && tool->usesTouchCursor())
+	{
+		touch_cursor->mousePressEvent(event);
+		if (event->type() == QEvent::MouseMove)
+		{
+			_mouseMoveEvent(event);
+			return;
+		}
+	}
+	_mousePressEvent(event);
+}
 
+void MapWidget::_mousePressEvent(QMouseEvent* event)
+{
 	if (dragging)
 	{
 		event->accept();
@@ -823,14 +878,16 @@ void MapWidget::mousePressEvent(QMouseEvent* event)
 
 void MapWidget::mouseMoveEvent(QMouseEvent* event)
 {
-#if defined(Q_OS_ANDROID)
-	// Android input quirks: ignore move events with button set.
-	// At least the emulator generates events with button() == Qt::LeftButton,
-	// but all of them are duplicates of events with correct Qt::NoButton.
-	if (event->button() != Qt::NoButton)
-		return;
-#endif
+	if (touch_cursor && tool && tool->usesTouchCursor())
+	{
+		if (!touch_cursor->mouseMoveEvent(event))
+			return;
+	}
+	_mouseMoveEvent(event);
+}
 
+void MapWidget::_mouseMoveEvent(QMouseEvent* event)
+{
 	if (dragging)
 	{
 		view->setDragOffset(event->pos() - drag_start_pos);
@@ -851,15 +908,16 @@ void MapWidget::mouseMoveEvent(QMouseEvent* event)
 
 void MapWidget::mouseReleaseEvent(QMouseEvent* event)
 {
-#if defined(Q_OS_ANDROID)
-	// Android input quirks: filter out double events
-	int realButtons = event->button() & clickState;
-	if (realButtons == 0)
-		return;
-	clickState &= ~event->button();
-	*event = QMouseEvent(QEvent::MouseButtonRelease, event->localPos(), event->windowPos(), event->screenPos(), (Qt::MouseButton)realButtons, event->buttons(), event->modifiers());
-#endif
+	if (touch_cursor && tool && tool->usesTouchCursor())
+	{
+		if (!touch_cursor->mouseReleaseEvent(event))
+			return;
+	}
+	_mouseReleaseEvent(event);
+}
 
+void MapWidget::_mouseReleaseEvent(QMouseEvent* event)
+{
 	if (dragging)
 	{
 		finishPanning(event->pos());
@@ -875,6 +933,16 @@ void MapWidget::mouseReleaseEvent(QMouseEvent* event)
 }
 
 void MapWidget::mouseDoubleClickEvent(QMouseEvent* event)
+{
+	if (touch_cursor && tool && tool->usesTouchCursor())
+	{
+		if (!touch_cursor->mouseDoubleClickEvent(event))
+			return;
+	}
+	_mouseDoubleClickEvent(event);
+}
+
+void MapWidget::_mouseDoubleClickEvent(QMouseEvent* event)
 {
 	if (tool && tool->mouseDoubleClickEvent(event, view->viewToMapF(viewportToView(event->pos())), this))
 	{
@@ -955,6 +1023,18 @@ void MapWidget::keyReleased(QKeyEvent* event)
 		return;
 	}
 	QWidget::keyReleaseEvent(event);
+}
+
+void MapWidget::enableTouchCursor(bool enabled)
+{
+	if (enabled && !touch_cursor)
+		touch_cursor = new TouchCursor(this);
+	else if (!enabled && touch_cursor)
+	{
+		touch_cursor->updateMapWidget(false);
+		delete touch_cursor;
+		touch_cursor = NULL;
+	}
 }
 
 void MapWidget::focusOutEvent(QFocusEvent* event)

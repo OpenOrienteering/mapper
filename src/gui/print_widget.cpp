@@ -20,6 +20,8 @@
 
 #include "print_widget.h"
 
+#ifndef QT_NO_PRINTER
+
 #include <limits>
 
 #include <QFileInfo>
@@ -558,7 +560,7 @@ void PrintWidget::pageOrientationChanged(int id) const
 {
 	if (id == QPrinter::Portrait || id == QPrinter::Landscape)
 	{
-		map_printer->setPageOrientation((QPrinter::Orientation) id);
+		map_printer->setPageOrientation((id == QPrinter::Portrait) ? MapPrinterPageFormat::Portrait : MapPrinterPageFormat::Landscape);
 	}
 }
 
@@ -1075,3 +1077,5 @@ bool PrintWidget::checkForEmptyMap()
 	}
 	return false;
 }
+
+#endif

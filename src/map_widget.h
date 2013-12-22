@@ -32,6 +32,7 @@ class QLabel;
 class MapEditorActivity;
 class MapEditorTool;
 class MapView;
+class TouchCursor;
 
 /**
  * QWidget for displaying a map. Needs a pointer to a MapView which defines
@@ -108,6 +109,8 @@ public:
 	QRectF viewportToView(const QRect& input);
 	/** Maps viewport (GUI) coordinates to view coordinates (see MapView). */
 	QPointF viewportToView(QPoint input);
+	/** Maps viewport (GUI) coordinates to view coordinates (see MapView). */
+	QPointF viewportToView(QPointF input);
 	/** Maps view coordinates (see MapView) to viewport (GUI) coordinates. */
 	QRectF viewToViewport(const QRectF& input);
 	/** Maps view coordinates (see MapView) to viewport (GUI) coordinates. */
@@ -121,6 +124,8 @@ public:
 	MapCoord viewportToMap(QPoint input);
 	/** Maps viewport (GUI) coordinates to map coordinates. */
 	MapCoordF viewportToMapF(QPoint input);
+	/** Maps viewport (GUI) coordinates to map coordinates. */
+	MapCoordF viewportToMapF(QPointF input);
 	/** Maps map coordinates to viewport (GUI) coordinates. */
 	QPointF mapToViewport(MapCoord input);
 	/** Maps map coordinates to viewport (GUI) coordinates. */
@@ -159,6 +164,9 @@ public:
 	
 	/** Sets the current drag offset during a map pan operation. */
 	void setDragOffset(QPoint offset);
+	
+	/** Returns the current drag offset during a map pan operation. */
+	QPoint getDragOffset() const;
 	
 	/**
 	 * Completes a map panning operation. Calls panView() internally and
@@ -234,6 +242,11 @@ public:
 	 *     pixels. Allows to specify zoom-independent extents.
 	 */
 	void updateDrawing(QRectF map_rect, int pixel_border);
+	/**
+	 * Variant of updateDrawing() which waits for some milliseconds before
+	 * calling update() in order to avoid excessive redraws.
+	 */
+	void updateDrawingLater(QRectF map_rect, int pixel_border);
 	
 	/**
 	 * Invalidates all caches and redraws the whole widget. Very slow, try to
@@ -272,8 +285,12 @@ public slots:
 	/** Delegates the keyRelease to the active tool */
 	void keyReleased(QKeyEvent* event);
 
+	/** Enables or disables the touch cursor. */
+	void enableTouchCursor(bool enabled);
+
 private slots:
 	void updateObjectTagLabel();
+	void updateDrawingLaterSlot();
 	
 protected:
 	virtual void paintEvent(QPaintEvent* event);
@@ -281,9 +298,13 @@ protected:
 	
 	// Mouse input
 	virtual void mousePressEvent(QMouseEvent* event);
+	void _mousePressEvent(QMouseEvent* event);
 	virtual void mouseMoveEvent(QMouseEvent* event);
+	void _mouseMoveEvent(QMouseEvent* event);
 	virtual void mouseReleaseEvent(QMouseEvent* event);
+	void _mouseReleaseEvent(QMouseEvent* event);
 	virtual void mouseDoubleClickEvent(QMouseEvent* event);
+	void _mouseDoubleClickEvent(QMouseEvent* event);
 	virtual void wheelEvent(QWheelEvent* event);
 	virtual void leaveEvent(QEvent* event);
 	
@@ -405,13 +426,14 @@ private:
 	QRectF activity_dirty_rect_new;
 	int activity_dirty_rect_new_border;
 	
+	// Cached updates
+	QRect cached_update_rect;
+	
 	/** Right-click menu */
 	PieMenu pie_menu;
-
-#if defined(Q_OS_ANDROID)
-	/** Click state to compensate for input quirks */
-	int clickState;
-#endif
+	
+	/** Optional touch cursor for mobile devices */
+	TouchCursor* touch_cursor;
 };
 
 #endif
