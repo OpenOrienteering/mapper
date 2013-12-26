@@ -465,7 +465,7 @@ void SymbolSettingDialog::reset()
 
 void SymbolSettingDialog::setSymbolModified(bool modified)
 {
-	if (symbol_modified != modified);
+	if (symbol_modified != modified)
 	{
 		symbol_modified = modified;
 		updateSymbolLabel();

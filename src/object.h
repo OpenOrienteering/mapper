@@ -820,7 +820,7 @@ const Object::Tags& Object::tags() const
 inline
 QString Object::getTag(const QString& key) const
 {
-	return object_tags.value("key");
+	return object_tags.value(key);
 }
 
 

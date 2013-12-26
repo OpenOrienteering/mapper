@@ -438,7 +438,7 @@ void ColorDialog::reset()
 
 void ColorDialog::setColorModified(bool modified)
 {
-	if (color_modified != modified);
+	if (color_modified != modified)
 	{
 		color_modified = modified;
 		updateButtons();
