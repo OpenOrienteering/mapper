@@ -50,7 +50,8 @@ void UndoStep::save(QXmlStreamWriter& xml)
 
 void UndoStep::saveImpl(QXmlStreamWriter& xml) const
 {
-	return;
+	Q_UNUSED(xml);
+	// nothing
 }
 
 UndoStep* UndoStep::load(QXmlStreamReader& xml, void* owner, SymbolDictionary& symbol_dict)
@@ -67,6 +68,7 @@ UndoStep* UndoStep::load(QXmlStreamReader& xml, void* owner, SymbolDictionary& s
 
 void UndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
 {
+	Q_UNUSED(symbol_dict);
 	xml.skipCurrentElement(); // unknown
 }
 

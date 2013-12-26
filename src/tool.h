@@ -105,7 +105,7 @@ public:
 	 * This is called when the tool is activated and should be used to
 	 * change any settings, e.g. the status bar text.
 	 */
-	virtual void init() {}
+	virtual void init();
 	
 	/** Makes this tool inactive in the editor. 
 	 *  This will also schedule this tool's deletion. */
@@ -127,19 +127,19 @@ public:
 	 * All dynamic drawings must be drawn here using the given painter.
 	 * Drawing is only possible in the area specified by calling map->setDrawingBoundingBox().
 	 */
-	virtual void draw(QPainter* painter, MapWidget* widget) {};
+	virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	// Mouse input
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
-	virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) {return false;}
-	virtual void leaveEvent(QEvent* event) {}
+	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual void leaveEvent(QEvent* event);
 	
 	// Key input
-	virtual bool keyPressEvent(QKeyEvent* event) {return false;}
-	virtual bool keyReleaseEvent(QKeyEvent* event) {return false;}
-	virtual void focusOutEvent(QFocusEvent* event) {}
+	virtual bool keyPressEvent(QKeyEvent* event);
+	virtual bool keyReleaseEvent(QKeyEvent* event);
+	virtual void focusOutEvent(QFocusEvent* event);
 	
 	inline Type getType() const {return type;}
 	inline QAction* getAction() const {return tool_button;}

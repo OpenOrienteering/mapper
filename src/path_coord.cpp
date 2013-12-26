@@ -246,6 +246,8 @@ void PathCoord::splitBezierCurve(MapCoordF c0, MapCoordF c1, MapCoordF c2, MapCo
 
 MapCoordF PathCoord::calculateRightVector(const MapCoordVector& flags, const MapCoordVectorF& coords, bool path_closed, int i, float* scaling)
 {
+	Q_UNUSED(flags);
+	
 	bool ok_in, ok_out;
 	
 	if (!path_closed)

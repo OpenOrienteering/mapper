@@ -177,6 +177,9 @@ struct PhysicalCutoutOperation
 	
 	inline bool operator()(Object* object, MapPart* part, int object_index)
 	{
+		Q_UNUSED(part);
+		Q_UNUSED(object_index);
+		
 		// If there is a selection, only clip selected objects
 		if (map->getNumSelectedObjects() > 0 && !map->isObjectSelected(object))
 			return true;

@@ -71,6 +71,8 @@ bool MapPart::load(QIODevice* file, int version, Map* map)
 
 void MapPart::save(QXmlStreamWriter& xml, const Map& map) const
 {
+	Q_UNUSED(map);
+	
 	xml.writeStartElement("part");
 	xml.writeAttribute("name", name);
 	

@@ -74,7 +74,7 @@ protected:
 	/// Must include the area of all custom drawings into the rect,
 	/// which aleady contains the area of the selection preview and activated tool helpers when this method is called.
 	/// Must return the size of the pixel border, or -1 to clear the drawing.
-	virtual int updateDirtyRectImpl(QRectF& rect) {return -1;}
+	virtual int updateDirtyRectImpl(QRectF& rect);
 	/// Must draw the tool's graphics.
 	/// The implementation draws the preview renderables.
 	/// MapEditorToolBase::draw() draws the activated tool helpers afterwards.
@@ -87,27 +87,27 @@ protected:
 	virtual void objectSelectionChangedImpl() = 0;
 	
 	/// Called when the left mouse button is pressed
-	virtual void clickPress() {}
+	virtual void clickPress();
 	/// Called when the left mouse button is released without a drag operation before
-	virtual void clickRelease() {}
+	virtual void clickRelease();
 	
 	/// Called when the mouse is moved without the left mouse button being pressed
-	virtual void mouseMove() {}
+	virtual void mouseMove();
 	
 	/// Called when a drag operation is started. This happens when dragging the mouse some pixels
 	/// away from the mouse press position. The distance is determined by start_drag_distance.
 	/// dragMove() is called immediately after this call to account for the already moved distance.
-	virtual void dragStart() {}
+	virtual void dragStart();
 	/// Called when the mouse is moved with the left mouse button being pressed
-	virtual void dragMove() {}
+	virtual void dragMove();
 	/// Called when a drag operation is finished. There is no need to update the edit operation with the
 	/// current cursor coordinates in this call as it is ensured that dragMove() is called before.
-	virtual void dragFinish() {}
+	virtual void dragFinish();
 	
 	/// Called when a key is pressed down. Return true if the key was processed by the tool.
-	virtual bool keyPress(QKeyEvent* event) {return false;}
+	virtual bool keyPress(QKeyEvent* event);
 	/// Called when a key is released. Return true if the key was processed by the tool.
-	virtual bool keyRelease(QKeyEvent* event) {return false;}
+	virtual bool keyRelease(QKeyEvent* event);
 	
 	// Helper methods
 	

@@ -83,8 +83,11 @@ void PointSymbol::createRenderables(Object* object, const MapCoordVector& flags,
 {
 	createRenderablesScaled(object, flags, coords, output, 1.0f);
 }
+
 void PointSymbol::createRenderablesScaled(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output, float coord_scale)
 {
+	Q_UNUSED(flags);
+	
 	if (inner_color && inner_radius > 0)
 		output.insertRenderable(new DotRenderable(this, coords[0]));
 	if (outer_color && outer_width > 0)
@@ -436,5 +439,6 @@ void PointSymbolSettings::reset(Symbol* symbol)
 
 void PointSymbolSettings::tabChanged(int index)
 {
+	Q_UNUSED(index);
 	symbol_editor->setEditorActive( currentWidget()==point_tab );
 }

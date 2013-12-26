@@ -39,6 +39,7 @@ namespace ObjectOp
 		inline NoCondition() {}
 		inline bool operator()(Object* object) const
 		{
+			Q_UNUSED(object);
 			return true;
 		}
 	};
@@ -88,6 +89,8 @@ namespace ObjectOp
 		inline Scale(double factor, const MapCoord& scaling_center) : factor(factor), center(scaling_center) {}
 		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
+			Q_UNUSED(part);
+			Q_UNUSED(object_index);
 			object->scale(center, factor);
 			object->update(true, true);
 			return true;
@@ -103,6 +106,8 @@ namespace ObjectOp
 		inline Rotate(double angle, const MapCoord& center) : angle(angle), center(center) {}
 		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
+			Q_UNUSED(part);
+			Q_UNUSED(object_index);
 			object->rotateAround(center, angle);
 			object->update(true, true);
 			return true;
@@ -118,6 +123,8 @@ namespace ObjectOp
 		inline Update(bool force = true) : force(force) {}
 		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
+			Q_UNUSED(part);
+			Q_UNUSED(object_index);
 			object->update(force, true);
 			return true;
 		}
@@ -150,6 +157,7 @@ namespace ObjectOp
 		inline Delete() {}
 		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
+			Q_UNUSED(object);
 			part->deleteObject(object_index, false);
 			return true;
 		}
@@ -165,6 +173,9 @@ namespace ObjectOp
 		inline NoOp() {}
 		inline bool operator()(Object* object, MapPart* part, int object_index) const
 		{
+			Q_UNUSED(object);
+			Q_UNUSED(part);
+			Q_UNUSED(object_index);
 			// Abort
 			return false;
 		}

@@ -524,12 +524,14 @@ void GeoreferencingDialog::selectMapRefPoint()
 
 void GeoreferencingDialog::mapRefChanged(double value)
 {
+	Q_UNUSED(value);
 	MapCoord coord(map_x_edit->value(), -1 * map_y_edit->value());
 	setMapRefPoint(coord);
 }
 
 void GeoreferencingDialog::eastingNorthingChanged(double value)
 {
+	Q_UNUSED(value);
 	QPointF easting_northing(easting_edit->value(), northing_edit->value());
 	georef->setProjectedRefPoint(easting_northing);
 	setLatLonValuesFrom(georef.data());
@@ -553,6 +555,7 @@ void GeoreferencingDialog::latLonChanged(bool update_zone)
 
 void GeoreferencingDialog::latLonChanged(double value)
 {
+	Q_UNUSED(value);
 	latLonChanged(true);
 }
 
@@ -705,6 +708,7 @@ void GeoreferencingTool::init()
 
 bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
 	if (event->button() == Qt::LeftButton)
 	{
 		dialog->setMapRefPoint(map_coord.toMapCoord());
@@ -827,6 +831,7 @@ void ProjectedCRSSelector::setParam(int i, const QString& value)
 
 void ProjectedCRSSelector::crsDropdownChanged(int index)
 {
+	Q_UNUSED(index);
 	if (layout)
 	{
 		for (int i = 2 * layout->rowCount() - 1; i >= 2; --i)
@@ -858,7 +863,7 @@ void ProjectedCRSSelector::crsDropdownChanged(int index)
 	emit crsEdited(true);
 }
 
-void ProjectedCRSSelector::crsParamEdited(QString dont_use)
+void ProjectedCRSSelector::crsParamEdited(QString)
 {
 	emit crsEdited(false);
 }
@@ -961,7 +966,7 @@ QString SelectCRSDialog::getCRSSpec() const
 	return crs_spec_edit->text();
 }
 
-void SelectCRSDialog::crsSpecEdited(QString text)
+void SelectCRSDialog::crsSpecEdited(QString)
 {
 	spec_radio->setChecked(true);
 	

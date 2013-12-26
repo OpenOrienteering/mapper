@@ -71,6 +71,8 @@ bool TemplateMap::loadTemplateFileImpl(bool configuring)
 
 bool TemplateMap::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
 {
+	Q_UNUSED(dialog_parent);
+	
 	// TODO: recursive template loading dialog
 	
 	// TODO: it would be possible to load maps as georeferenced if both maps are georeferenced

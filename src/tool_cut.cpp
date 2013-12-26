@@ -351,6 +351,8 @@ void CutTool::updateDirtyRect(const QRectF* path_rect)
 
 void CutTool::updateDragging(MapCoordF cursor_pos_map, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	if (dragging_on_line)
 	{
 		PathObject* path = reinterpret_cast<PathObject*>(edit_object);

@@ -211,6 +211,10 @@ void TemplateTrack::unloadTemplateFileImpl()
 
 void TemplateTrack::drawTemplate(QPainter* painter, QRectF& clip_rect, double scale, bool on_screen, float opacity)
 {
+	Q_UNUSED(clip_rect);
+	Q_UNUSED(scale);
+	Q_UNUSED(on_screen);
+	
 	painter->save();
 	painter->setOpacity(opacity);
 	
@@ -490,6 +494,8 @@ void TemplateTrack::calculateLocalGeoreferencing()
 LocalCRSPositioningDialog::LocalCRSPositioningDialog(TemplateTrack* temp, QWidget* parent)
  : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
+	Q_UNUSED(temp);
+	
 	setWindowModality(Qt::WindowModal);
 	setWindowTitle(tr("Track scaling and positioning"));
 	

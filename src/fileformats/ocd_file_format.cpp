@@ -616,6 +616,7 @@ void OcdFileImport::importExtras< class Ocd::FormatV8 >(const OcdFile< Ocd::Form
 template< class F >
 void OcdFileImport::importExtras(const OcdFile< F >& file) throw (FileFormatException)
 {
+	Q_UNUSED(file);
 	; // TODO
 }
 

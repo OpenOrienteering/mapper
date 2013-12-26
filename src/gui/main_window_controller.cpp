@@ -25,6 +25,46 @@
 #include "../file_format_registry.h"
 
 
+MainWindowController::~MainWindowController()
+{
+	// nothing
+}
+
+bool MainWindowController::save(const QString& path)
+{
+	Q_UNUSED(path);
+	return false;
+}
+
+bool MainWindowController::load(const QString& path, QWidget* dialog_parent)
+{
+	Q_UNUSED(path);
+	Q_UNUSED(dialog_parent);
+	return false;
+}
+
+void MainWindowController::detach()
+{
+	// nothing
+}
+
+bool MainWindowController::isEditingInProgress() const
+{
+	return false;
+}
+
+void MainWindowController::keyPressEvent(QKeyEvent* event)
+{
+	Q_UNUSED(event);
+	// nothing
+}
+
+void MainWindowController::keyReleaseEvent(QKeyEvent* event)
+{
+	Q_UNUSED(event);
+	// nothing
+}
+
 MainWindowController* MainWindowController::controllerForFile(const QString& filename)
 {
 	const FileFormat* format = FileFormats.findFormatForFilename(filename);
@@ -32,9 +72,4 @@ MainWindowController* MainWindowController::controllerForFile(const QString& fil
 		return new MapEditorController(MapEditorController::MapEditor);
 	
 	return NULL;
-}
-
-bool MainWindowController::isEditingInProgress() const
-{
-	return false;
 }

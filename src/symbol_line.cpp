@@ -57,6 +57,7 @@ void LineSymbolBorder::reset()
 
 bool LineSymbolBorder::load(QIODevice* file, int version, Map* map)
 {
+	Q_UNUSED(version);
 	int temp;
 	file->read((char*)&temp, sizeof(int));
 	color = (temp >= 0) ? map->getColor(temp) : NULL;
@@ -717,6 +718,8 @@ void LineSymbol::processContinuousLine(Object* object, bool path_closed, const M
 									   float start, float end, bool has_start, bool has_end, int& cur_line_coord,
 									   MapCoordVector& processed_flags, MapCoordVectorF& processed_coords, bool include_first_point, bool set_mid_symbols, ObjectRenderables& output)
 {
+	Q_UNUSED(path_closed);
+	
 	float pointed_cap_length_f = (cap_style == PointedCap) ? (0.001f * pointed_cap_length) : 0;
 	float line_length = end - start;
 	
@@ -756,6 +759,8 @@ void LineSymbol::processContinuousLine(Object* object, bool path_closed, const M
 void LineSymbol::createPointedLineCap(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, const PathCoordVector& line_coords,
 									  float start, float end, int& cur_line_coord, bool is_end, ObjectRenderables& output)
 {
+	Q_UNUSED(object);
+	
 	AreaSymbol area_symbol;
 	area_symbol.setColor(color);
 	
@@ -1072,6 +1077,8 @@ void LineSymbol::processDashedLine(Object* object, bool path_closed, const MapCo
 
 void LineSymbol::createDashSymbolRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
 {
+	Q_UNUSED(object);
+	
 	PointObject point_object(dash_symbol);
 	MapCoordVectorF point_coord;
 	point_coord.push_back(MapCoordF(0, 0));
@@ -1098,6 +1105,8 @@ void LineSymbol::createDashSymbolRenderables(Object* object, bool path_closed, c
 
 void LineSymbol::createDottedRenderables(Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
 {
+	Q_UNUSED(object);
+	
 	Q_ASSERT(mid_symbol != NULL);
 	PointObject point_object(mid_symbol);
 	bool point_object_rotatable = point_object.getSymbol()->asPoint()->isRotatable();
@@ -1641,6 +1650,7 @@ void LineSymbol::cleanupPointSymbols()
 
 float LineSymbol::calculateLargestLineExtent(Map* map)
 {
+	Q_UNUSED(map);
 	float line_extent_f = 0.001f * 0.5f * asLine()->getLineWidth();
 	float result = line_extent_f;
 	if (asLine()->hasBorder())
@@ -1925,6 +1935,8 @@ PointSymbol* LineSymbol::loadPointSymbol(QXmlStreamReader& xml, const Map& map, 
 
 bool LineSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 {
+	Q_UNUSED(case_sensitivity);
+	
 	LineSymbol* line = static_cast<LineSymbol*>(other);
 	if (line_width != line->line_width)
 		return false;

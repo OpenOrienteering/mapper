@@ -103,6 +103,7 @@ void ReopenTemplateDialog::clearClicked()
 
 void ReopenTemplateDialog::doAccept(QAbstractButton* button)
 {
+	Q_UNUSED(button);
 	accept();
 }
 

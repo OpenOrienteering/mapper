@@ -137,6 +137,7 @@ int SymbolPropertiesWidget::indexOfPropertiesGroup(const QString& name) const
 
 void SymbolPropertiesWidget::numberChanged(QString text)
 {
+	Q_UNUSED(text);
 	bool is_valid = true;
 	int i = 0;
 	while (i < Symbol::number_components)

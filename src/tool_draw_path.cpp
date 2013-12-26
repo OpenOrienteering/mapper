@@ -381,6 +381,9 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 
 bool DrawPathTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(map_coord);
+	Q_UNUSED(widget);
+	
 	if (event->button() != Qt::LeftButton)
 		return false;
 	

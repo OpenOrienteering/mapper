@@ -248,11 +248,59 @@ void MapEditorToolBase::drawImpl(QPainter* painter, MapWidget* widget)
 	drawSelectionOrPreviewObjects(painter, widget);
 }
 
+void MapEditorToolBase::clickPress()
+{
+	// nothing
+}
+
+void MapEditorToolBase::clickRelease()
+{
+	// nothing
+}
+
+void MapEditorToolBase::mouseMove()
+{
+	// nothing
+}
+
+void MapEditorToolBase::dragStart() 
+{
+	// nothing
+}
+
+void MapEditorToolBase::dragMove()
+{
+	// nothing
+}
+
+void MapEditorToolBase::dragFinish()
+{
+	// nothing
+}
+
+bool MapEditorToolBase::keyPress(QKeyEvent* event)
+{
+	Q_UNUSED(event);
+	return false;
+}
+
+bool MapEditorToolBase::keyRelease(QKeyEvent* event)
+{
+	Q_UNUSED(event);
+	return false;
+}
+
 void MapEditorToolBase::updatePreviewObjectsSlot()
 {
 	preview_update_triggered = false;
 	if (editing)
 		updatePreviewObjects();
+}
+
+int MapEditorToolBase::updateDirtyRectImpl(QRectF& rect)
+{
+	Q_UNUSED(rect);
+	return -1;
 }
 
 void MapEditorToolBase::updatePreviewObjects()
@@ -322,6 +370,8 @@ void MapEditorToolBase::activateAngleHelperWhileEditing(bool enable)
 
 void MapEditorToolBase::activateSnapHelperWhileEditing(bool enable)
 {
+	Q_UNUSED(enable);
+	
 	snap_helper->setFilter(SnappingToolHelper::AllTypes);
 	calcConstrainedPositions(cur_map_widget);
 	if (dragging)

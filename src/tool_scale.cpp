@@ -70,6 +70,9 @@ ScaleTool::~ScaleTool()
 
 bool ScaleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(map_coord);
+	Q_UNUSED(widget);
+	
 	if (!(event->buttons() & Qt::LeftButton))
 		return false;
 	
@@ -79,6 +82,8 @@ bool ScaleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 
 bool ScaleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	if (!(event->buttons() & Qt::LeftButton))
 		return false;
 	
@@ -97,6 +102,8 @@ bool ScaleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 
 bool ScaleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	if (event->button() != Qt::LeftButton)
 		return false;
 	

@@ -164,6 +164,8 @@ bool DrawTextTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 
 void DrawTextTool::leaveEvent(QEvent* event)
 {
+	Q_UNUSED(event);
+	
 	if (!text_editor)
 		map()->clearDrawingBoundingBox();
 }
@@ -255,12 +257,17 @@ void DrawTextTool::selectedSymbolsChanged()
 
 void DrawTextTool::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
 {
+	Q_UNUSED(pos);
+	Q_UNUSED(new_symbol);
+	
 	if (old_symbol == drawing_symbol)
 		selectedSymbolsChanged();
 }
 
 void DrawTextTool::symbolDeleted(int pos, Symbol* old_symbol)
 {
+	Q_UNUSED(pos);
+	
 	if (old_symbol == drawing_symbol)
 	{
 		if (preview_text)
@@ -271,6 +278,7 @@ void DrawTextTool::symbolDeleted(int pos, Symbol* old_symbol)
 
 void DrawTextTool::selectionChanged(bool text_change)
 {
+	Q_UNUSED(text_change);	
 	updatePreviewObject();
 }
 

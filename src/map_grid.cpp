@@ -58,6 +58,7 @@ MapGrid::MapGrid()
 
 void MapGrid::load(QIODevice* file, int version)
 {
+	Q_UNUSED(version);
 	file->read((char*)&snapping_enabled, sizeof(bool));
 	file->read((char*)&color, sizeof(QRgb));
 	int temp;

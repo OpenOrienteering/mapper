@@ -68,6 +68,7 @@ void PaintOnTemplateTool::init()
 
 void PaintOnTemplateTool::templateDeleted(int pos, Template* temp)
 {
+	Q_UNUSED(pos);
 	if (temp == this->temp)
 		deactivate();
 }
@@ -89,6 +90,8 @@ void PaintOnTemplateTool::redoSelected()
 
 bool PaintOnTemplateTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton)
 	{
 		coords.push_back(map_coord);
@@ -103,6 +106,8 @@ bool PaintOnTemplateTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coor
 
 bool PaintOnTemplateTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(event);
+	
 	if (dragging)
 	{
 		float scale = qMin(temp->getTemplateScaleX(), temp->getTemplateScaleY());
@@ -120,6 +125,9 @@ bool PaintOnTemplateTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord
 
 bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(event);
+	Q_UNUSED(widget);
+	
 	if (dragging)
 	{
 		coords.push_back(map_coord);
@@ -326,6 +334,8 @@ PaintOnTemplateSelectDialog::PaintOnTemplateSelectDialog(Map* map, QWidget* pare
 
 void PaintOnTemplateSelectDialog::currentTemplateChanged(QListWidgetItem* current, QListWidgetItem* previous)
 {
+	Q_UNUSED(previous);
+	
 	draw_button->setEnabled(current != NULL);
 	if (current)
 		selection = reinterpret_cast<Template*>(current->data(Qt::UserRole).value<void*>());

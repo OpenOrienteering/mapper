@@ -360,6 +360,8 @@ void EditPointTool::dragFinish()
 
 void EditPointTool::focusOutEvent(QFocusEvent* event)
 {
+	Q_UNUSED(event);
+	
 	// Deactivate modifiers - not always correct, but should be
 	// wrong only in unusual cases and better than leaving the modifiers on forever
 	space_pressed = false;
@@ -535,6 +537,7 @@ void EditPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 
 void EditPointTool::textSelectionChanged(bool text_change)
 {
+	Q_UNUSED(text_change);
 	updatePreviewObjects();
 }
 

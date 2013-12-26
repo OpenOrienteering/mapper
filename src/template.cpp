@@ -423,6 +423,12 @@ bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_l
 	return false;
 }
 
+bool Template::preLoadConfiguration(QWidget* dialog_parent)
+{
+	Q_UNUSED(dialog_parent);
+	return true;
+}
+
 bool Template::loadTemplateFile(bool configuring)
 {
 	assert(template_state != Loaded);
@@ -438,6 +444,13 @@ bool Template::loadTemplateFile(bool configuring)
 		emit templateStateChanged();
 	}
 	return result;
+}
+
+bool Template::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
+{
+	Q_UNUSED(dialog_parent);
+	Q_UNUSED(out_center_in_view);
+	return true;
 }
 
 void Template::unloadTemplateFile()
@@ -528,6 +541,12 @@ void Template::drawOntoTemplate(MapCoordF* coords, int num_coords, QColor color,
 	map->setTemplateAreaDirty(this, radius_bbox, 0);
 	
 	setHasUnsavedChanges(true);
+}
+
+void Template::drawOntoTemplateUndo(bool redo)
+{
+	Q_UNUSED(redo);
+	// nothing
 }
 
 void Template::addPassPoint(const PassPoint& point, int pos)
@@ -624,10 +643,32 @@ Template* Template::templateForFile(const QString& path, Map* map)
 		return NULL;
 }
 
+bool Template::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
+{
+	Q_UNUSED(stream);
+	Q_UNUSED(version);
+	return true;
+}
+
+void Template::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml)
+{
+	Q_UNUSED(xml);
+	// nothing
+}
+
 bool Template::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 {
 	xml.skipCurrentElement();
 	return true;
+}
+
+void Template::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width)
+{
+	Q_UNUSED(coords);
+	Q_UNUSED(num_coords);
+	Q_UNUSED(color);
+	Q_UNUSED(width);
+	// nothing
 }
 
 void Template::updateTransformationMatrices()

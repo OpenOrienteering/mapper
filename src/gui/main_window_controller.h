@@ -35,13 +35,13 @@ class MainWindowController : public QObject
 Q_OBJECT
 public:
 	
-	virtual ~MainWindowController() {}
+	virtual ~MainWindowController();
 	
 	/** Save to a file.
 	 *  @param path the path to save to
 	 *  @return true if saving was sucessful, false on errors
 	 */
-	virtual bool save(const QString& path) {return false;}
+	virtual bool save(const QString& path);
 
 	/** Load from a file.
 	 *  @param path the path to load from
@@ -49,7 +49,7 @@ public:
 	 *      If NULL, implementations should use MainWindowController::window.
 	 *  @return true if loading was sucessful, false on errors
 	 */
-	virtual bool load(const QString& path, QWidget* dialog_parent = NULL) {return false;}
+	virtual bool load(const QString& path, QWidget* dialog_parent = NULL);
 	
 	/** Attach the controller to a main window. 
 	 *  The controller should create its user interface here.
@@ -59,7 +59,7 @@ public:
 	/** Detach the controller from a main window. 
 	 *  The controller should delete its user interface here.
 	 */
-	virtual void detach() {}
+	virtual void detach();
 	
 	/**
 	 * Returns true when editing is in progress.
@@ -70,12 +70,12 @@ public:
 	virtual bool isEditingInProgress() const;
 	
 	// Get key press events from the main window
-	virtual void keyPressEvent(QKeyEvent* event) {}
-	virtual void keyReleaseEvent(QKeyEvent* event) {}
+	virtual void keyPressEvent(QKeyEvent* event);
+	virtual void keyReleaseEvent(QKeyEvent* event);
 	
 	/** Get the main window this controller is attached to.
 	 */
-	inline MainWindow* getWindow() const {return window;}
+	inline MainWindow* getWindow() const;
 	
 	/** Get a controller suitable for a particular file.
 	 *  @param filename the name of the file
@@ -84,8 +84,17 @@ public:
 	static MainWindowController* controllerForFile(const QString& filename);
 	
 protected:
-	
 	MainWindow* window;
 };
+
+
+
+//### MainWindowController inline code ###
+
+inline
+MainWindow* MainWindowController::getWindow() const
+{
+	return window;
+}
 
 #endif

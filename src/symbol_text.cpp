@@ -100,6 +100,8 @@ Symbol* TextSymbol::duplicate(const MapColorMap* color_map) const
 
 void TextSymbol::createRenderables(Object* object, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output)
 {
+	Q_UNUSED(flags);
+	
 	TextObject* text_object = reinterpret_cast<TextObject*>(object);
 	
 	double anchor_x = coords[0].getX();
@@ -348,6 +350,8 @@ void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 
 bool TextSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
 {
+	Q_UNUSED(symbol_dict);
+	
 	if (xml.name() != "text_symbol")
 		return false;
 	
@@ -420,6 +424,8 @@ bool TextSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 
 bool TextSymbol::equalsImpl(Symbol* other, Qt::CaseSensitivity case_sensitivity)
 {
+	Q_UNUSED(case_sensitivity);
+	
 	TextSymbol* text = static_cast<TextSymbol*>(other);
 	
 	if (!MapColor::equal(color, text->color))
@@ -715,6 +721,8 @@ void TextSymbolSettings::sizeChanged(double value)
 
 void TextSymbolSettings::sizeUnitChanged(int index)
 {
+	Q_UNUSED(index);
+	
 	if (!react_to_changes)
 		return;
 	
@@ -757,6 +765,8 @@ void TextSymbolSettings::colorChanged()
 
 void TextSymbolSettings::checkToggled(bool checked)
 {
+	Q_UNUSED(checked);
+	
 	if (!react_to_changes)
 		return;
 	
@@ -770,6 +780,8 @@ void TextSymbolSettings::checkToggled(bool checked)
 
 void TextSymbolSettings::spacingChanged(double value)
 {
+	Q_UNUSED(value);
+	
 	if (!react_to_changes)
 		return;
 	

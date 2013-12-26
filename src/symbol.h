@@ -159,7 +159,7 @@ public:
 	 * Called after loading of the map is finished.
 	 *  Can do tasks that need to reference other symbols or map objects.
 	 */
-	virtual bool loadFinished(Map* map) {return true;}
+	virtual bool loadFinished(Map* map);
 	
 	
 	/**
@@ -193,13 +193,13 @@ public:
 	 * If new_symbol == NULL, the symbol is being deleted.
 	 * Must return true if this symbol contained the deleted symbol.
 	 */
-	virtual bool symbolChanged(Symbol* old_symbol, Symbol* new_symbol) {return false;}
+	virtual bool symbolChanged(Symbol* old_symbol, Symbol* new_symbol);
 	
 	/**
 	 * Must return if the given symbol is referenced by this symbol.
 	 * Should NOT return true if the argument is itself.
 	 */
-	virtual bool containsSymbol(const Symbol* symbol) const {return false;}
+	virtual bool containsSymbol(const Symbol* symbol) const;
 	
 	/** Scales the whole symbol */
 	virtual void scale(double factor) = 0;
@@ -224,7 +224,7 @@ public:
 	 * which may be included in this symbol.
 	 * TODO: may fit into a subclass "PathSymbol"?
 	 */
-	virtual float calculateLargestLineExtent(Map* map) {return 0;}
+	virtual float calculateLargestLineExtent(Map* map);
 	
 	
 	// Getters / Setters

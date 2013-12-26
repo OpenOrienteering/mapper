@@ -130,6 +130,8 @@ struct ReplaceSymbolSetOperation
 	}
 	inline bool operator()(Object* object, MapPart* part, int object_index) const
 	{
+		Q_UNUSED(part);
+		Q_UNUSED(object_index);
 		if (mapping->contains(object->getSymbol()))
 		{
 			Symbol* target_symbol = import_symbol_map->value(mapping->value(object->getSymbol()));

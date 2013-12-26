@@ -100,6 +100,8 @@ HomeScreenWidgetDesktop::~HomeScreenWidgetDesktop()
 
 void HomeScreenWidgetDesktop::paintEvent(QPaintEvent* event)
 {
+	Q_UNUSED(event);
+	
 	// Background
 	QPainter p(this);
 	p.setPen(Qt::NoPen);
@@ -109,6 +111,8 @@ void HomeScreenWidgetDesktop::paintEvent(QPaintEvent* event)
 
 QWidget* HomeScreenWidgetDesktop::makeMenuWidget(HomeScreenController* controller, QWidget* parent)
 {
+	Q_UNUSED(parent);
+	
 	MainWindow* window = controller->getWindow();
 	
 	QVBoxLayout* menu_layout = new QVBoxLayout();
@@ -152,6 +156,8 @@ QWidget* HomeScreenWidgetDesktop::makeMenuWidget(HomeScreenController* controlle
 
 QWidget* HomeScreenWidgetDesktop::makeRecentFilesWidget(HomeScreenController* controller, QWidget* parent)
 {
+	Q_UNUSED(parent);
+	
 	QGridLayout* recent_files_layout = new QGridLayout();
 	
 	QLabel* recent_files_headline = makeHeadline(tr("Recent maps"));
@@ -191,6 +197,8 @@ QWidget* HomeScreenWidgetDesktop::makeRecentFilesWidget(HomeScreenController* co
 
 QWidget* HomeScreenWidgetDesktop::makeTipsWidget(HomeScreenController* controller, QWidget* parent)
 {
+	Q_UNUSED(parent);
+	
 	QGridLayout* tips_layout = new QGridLayout();
 	QWidget* tips_headline = makeHeadline(tr("Tip of the day"));
 	tips_layout->addWidget(tips_headline, 0, 0, 1, 3);
@@ -294,6 +302,8 @@ HomeScreenWidgetMobile::~HomeScreenWidgetMobile()
 
 void HomeScreenWidgetMobile::paintEvent(QPaintEvent* event)
 {
+	Q_UNUSED(event);
+	
 	// Background
 	QPainter p(this);
 	p.setPen(Qt::NoPen);
@@ -303,21 +313,25 @@ void HomeScreenWidgetMobile::paintEvent(QPaintEvent* event)
 
 void HomeScreenWidgetMobile::setRecentFiles(const QStringList& files)
 {
+	Q_UNUSED(files);
 	// nothing
 }
 
 void HomeScreenWidgetMobile::setOpenMRUFileChecked(bool state)
 {
+	Q_UNUSED(state);
 	// nothing
 }
 
 void HomeScreenWidgetMobile::setTipOfTheDay(const QString& text)
 {
+	Q_UNUSED(text);
 	// nothing
 }
 
 void HomeScreenWidgetMobile::setTipsVisible(bool state)
 {
+	Q_UNUSED(state);
 	// nothing
 }
 
@@ -329,6 +343,9 @@ void HomeScreenWidgetMobile::fileClicked(QListWidgetItem* item)
 
 QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* controller, QWidget* parent)
 {
+	Q_UNUSED(controller);
+	Q_UNUSED(parent);
+	
 	QGridLayout* file_list_layout = new QGridLayout();
 	
 	QLabel* file_list_headline = makeHeadline(tr("File list"));

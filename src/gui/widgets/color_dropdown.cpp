@@ -104,6 +104,8 @@ void ColorDropDown::colorChanged(int pos, MapColor* color)
 
 void ColorDropDown::colorDeleted(int pos, const MapColor* color)
 {
+	Q_UNUSED(color);
+	
 	if (currentIndex() == pos + 1)
 		setCurrentIndex(0);
 	removeItem(pos + 1);

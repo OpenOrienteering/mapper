@@ -62,15 +62,23 @@ void FileFormat::addExtension(const QString& file_extension)
 
 bool FileFormat::understands(const unsigned char *buffer, size_t sz) const
 {
+	Q_UNUSED(buffer);
+	Q_UNUSED(sz);
 	return false;
 }
 
 Importer *FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException)
 {
+	Q_UNUSED(stream);
+	Q_UNUSED(map);
+	Q_UNUSED(view);
 	throw FileFormatException(QString("Format (%1) does not support import").arg(description()));
 }
 
 Exporter *FileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const throw (FileFormatException)
 {
+	Q_UNUSED(stream);
+	Q_UNUSED(map);
+	Q_UNUSED(view);
 	throw FileFormatException(QString("Format (%1) does not support export").arg(description()));
 }

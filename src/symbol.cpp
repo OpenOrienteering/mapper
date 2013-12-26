@@ -276,6 +276,25 @@ Symbol* Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& sy
 	return symbol;
 }
 
+bool Symbol::loadFinished(Map* map)
+{
+	Q_UNUSED(map);
+	return true;
+}
+
+bool Symbol::symbolChanged(Symbol* old_symbol, Symbol* new_symbol)
+{
+	Q_UNUSED(old_symbol);
+	Q_UNUSED(new_symbol);
+	return false;
+}
+
+bool Symbol::containsSymbol(const Symbol* symbol) const
+{
+	Q_UNUSED(symbol);
+	return false;
+}
+
 QImage* Symbol::getIcon(Map* map, bool update)
 {
 	if (icon && !update)
@@ -444,6 +463,12 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 	painter.end();
 	
 	return image;
+}
+
+float Symbol::calculateLargestLineExtent(Map* map)
+{
+	Q_UNUSED(map);
+	return 0.0f;
 }
 
 QString Symbol::getPlainTextName() const
@@ -710,6 +735,7 @@ SymbolDropDownDelegate::SymbolDropDownDelegate(int symbol_type_filter, QObject* 
 
 QWidget* SymbolDropDownDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
+	Q_UNUSED(option);
 	QVariantList list = index.data(Qt::UserRole).toList();
 	SymbolDropDown* widget
 		= new SymbolDropDown(static_cast<Map*>(list.at(0).value<void*>()), symbol_type_filter,
@@ -748,6 +774,7 @@ void SymbolDropDownDelegate::setModelData(QWidget* editor, QAbstractItemModel* m
 
 void SymbolDropDownDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
+	Q_UNUSED(index);
 	editor->setGeometry(option.rect);
 }
 

@@ -206,6 +206,7 @@ bool SymbolRenderWidget::isSymbolSelected(Symbol* symbol) const
 
 void SymbolRenderWidget::setScroll(int new_scroll)
 {
+	Q_UNUSED(new_scroll);
 	update();
 }
 
@@ -324,6 +325,7 @@ void SymbolRenderWidget::updateSelectedIcons()
 }
 void SymbolRenderWidget::getRowInfo(int width, int height, int& icons_per_row, int& num_rows)
 {
+	Q_UNUSED(height);
 	icons_per_row = qMax(1, (int)floor(width / (float)Symbol::icon_size));
 	num_rows = (int)ceil(map->getNumSymbols() / (float)icons_per_row);
 }
@@ -473,6 +475,7 @@ void SymbolRenderWidget::paintEvent(QPaintEvent* event)
 }
 void SymbolRenderWidget::resizeEvent(QResizeEvent* event)
 {
+	Q_UNUSED(event);
     updateScrollRange();
 }
 void SymbolRenderWidget::mouseMoveEvent(QMouseEvent* event)
@@ -577,6 +580,7 @@ void SymbolRenderWidget::mouseDoubleClickEvent(QMouseEvent* event)
 }
 void SymbolRenderWidget::leaveEvent(QEvent* event)
 {
+	Q_UNUSED(event);
 	updateIcon(hover_symbol_index);
 	hover_symbol_index = -1;
 	
@@ -1066,11 +1070,15 @@ void SymbolWidget::resizeEvent(QResizeEvent* event)
 
 void SymbolWidget::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
 {
+	Q_UNUSED(new_symbol);
+	Q_UNUSED(old_symbol);
 	render_widget->updateIcon(pos);
 }
 
 void SymbolWidget::symbolDeleted(int pos, Symbol* old_symbol)
 {
+	Q_UNUSED(pos);
+	Q_UNUSED(old_symbol);
 	render_widget->update();
 }
 
@@ -1147,11 +1155,14 @@ void SymbolToolTip::reset()
 
 void SymbolToolTip::enterEvent(QEvent* event)
 {
+	Q_UNUSED(event);
     hide();
 }
 
 void SymbolToolTip::paintEvent(QPaintEvent* event)
 {
+	Q_UNUSED(event);
+	
 	QPainter painter(this);
 	
 	painter.setBrush(palette().color(QPalette::Window));

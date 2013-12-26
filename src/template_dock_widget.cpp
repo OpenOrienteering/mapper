@@ -48,6 +48,8 @@ struct ApplyTemplateTransform
 	inline ApplyTemplateTransform(const TemplateTransform& transform) : transform(transform) {}
 	inline bool operator()(Object* object, MapPart* part, int object_index) const
 	{
+		Q_UNUSED(part);
+		Q_UNUSED(object_index);
 		object->rotate(transform.template_rotation);
 		object->scale(transform.template_scale_x, transform.template_scale_y);
 		object->move(transform.template_x, transform.template_y);
@@ -756,6 +758,9 @@ void TemplateWidget::updateButtons()
 
 void TemplateWidget::currentCellChange(int current_row, int current_column, int previous_row, int previous_column)
 {
+	Q_UNUSED(previous_row);
+	Q_UNUSED(previous_column);
+	
 	if (!react_to_changes)
 		return;
 	
@@ -833,6 +838,8 @@ void TemplateWidget::adjustWindowClosed()
 
 void TemplateWidget::positionClicked(bool checked)
 {
+	Q_UNUSED(checked);
+	
 	Template* temp = getCurrentTemplate();
 	if (!temp)
 		return;
@@ -890,11 +897,13 @@ void TemplateWidget::importClicked()
 
 void TemplateWidget::moreActionClicked(QAction* action)
 {
+	Q_UNUSED(action);
 	// TODO
 }
 
 void TemplateWidget::templateAdded(int pos, Template* temp)
 {
+	Q_UNUSED(temp);
 	int row = rowFromPos(pos);
 	template_table->insertRow(row);
 	addRow(row);

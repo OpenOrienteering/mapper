@@ -138,6 +138,7 @@ bool TemplateAdjustActivity::calculateTemplateAdjust(Template* temp, TemplateTra
 
 void TemplateAdjustActivity::templateChanged(int index, Template* temp)
 {
+	Q_UNUSED(index);
 	if ((Template*)activity_object == temp)
 	{
 		widget->updateDirtyRect(true);
@@ -146,6 +147,7 @@ void TemplateAdjustActivity::templateChanged(int index, Template* temp)
 }
 void TemplateAdjustActivity::templateDeleted(int index, Template* temp)
 {
+	Q_UNUSED(index);
 	if ((Template*)activity_object == temp)
 		controller->setEditorActivity(NULL);
 }
@@ -163,6 +165,7 @@ bool TemplateAdjustDockWidget::event(QEvent* event)
 }
 void TemplateAdjustDockWidget::closeEvent(QCloseEvent* event)
 {
+	Q_UNUSED(event);
 	emit(closed());
 	controller->setEditorActivity(NULL);
 }
@@ -390,6 +393,8 @@ void TemplateAdjustWidget::applyClicked(bool checked)
 
 void TemplateAdjustWidget::clearAndApplyClicked(bool checked)
 {
+	Q_UNUSED(checked);
+	
 	if (!temp->isAdjustmentApplied())
 		applyClicked(true);
 	
@@ -398,6 +403,8 @@ void TemplateAdjustWidget::clearAndApplyClicked(bool checked)
 
 void TemplateAdjustWidget::clearAndRevertClicked(bool checked)
 {
+	Q_UNUSED(checked);
+	
 	if (temp->isAdjustmentApplied())
 		applyClicked(false);
 	
@@ -568,6 +575,8 @@ void TemplateAdjustAddTool::init()
 
 bool TemplateAdjustAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
@@ -595,6 +604,9 @@ bool TemplateAdjustAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_co
 }
 bool TemplateAdjustAddTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(event);
+	Q_UNUSED(widget);
+	
 	if (first_point_set)
 	{
 		mouse_pos = map_coord;
@@ -704,6 +716,8 @@ bool TemplateAdjustMoveTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_co
 }
 bool TemplateAdjustMoveTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(event);
+	
 	Template* temp = this->widget->getTemplate();
 	
 	if (dragging)
@@ -784,6 +798,8 @@ void TemplateAdjustDeleteTool::init()
 
 bool TemplateAdjustDeleteTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(map_coord);
+	
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
@@ -804,6 +820,8 @@ bool TemplateAdjustDeleteTool::mousePressEvent(QMouseEvent* event, MapCoordF map
 }
 bool TemplateAdjustDeleteTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(map_coord);
+	
 	findHoverPoint(event->pos(), widget);
 	return true;
 }

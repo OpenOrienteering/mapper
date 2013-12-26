@@ -65,6 +65,7 @@ DrawPointTool::~DrawPointTool()
 
 void DrawPointTool::leaveEvent(QEvent* event)
 {
+	Q_UNUSED(event);
 	map()->clearDrawingBoundingBox();
 }
 
@@ -303,6 +304,8 @@ void DrawPointTool::selectedSymbolsChanged()
 
 void DrawPointTool::symbolDeleted(int pos, Symbol* old_symbol)
 {
+	Q_UNUSED(pos);
+	
 	if (last_used_symbol == old_symbol)
 		deactivate();
 }

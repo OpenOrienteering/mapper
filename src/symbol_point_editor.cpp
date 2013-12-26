@@ -970,6 +970,7 @@ void PointSymbolEditorTool::init()
 
 bool PointSymbolEditorTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* map_widget)
 {
+	Q_UNUSED(map_widget);
 	if (event->button() == Qt::LeftButton)
 	{
 		if (event->modifiers() & Qt::CTRL)

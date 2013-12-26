@@ -326,6 +326,8 @@ LatLon Track::calcAveragePosition() const
 
 bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent)
 {
+	Q_UNUSED(dialog_parent);
+	
 	track_crs = new Georeferencing();
 	track_crs->setProjectedCRS("", "+proj=latlong +datum=WGS84");
 	track_crs->setTransformationDirectly(QTransform());

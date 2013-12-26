@@ -197,6 +197,8 @@ QRectF MapWidget::mapToViewport(const QRectF& input)
 
 void MapWidget::zoom(float factor)
 {
+	Q_UNUSED(factor);
+	
 	// No need to update dirty rects, because everything is redrawn ...
 	/*zoomDirtyRect(above_template_cache_dirty_rect);
 	zoomDirtyRect(below_template_cache_dirty_rect);
@@ -217,6 +219,8 @@ void MapWidget::updateEverythingInRect(const QRect& dirty_rect)
 
 void MapWidget::moveView(qint64 x, qint64 y)
 {
+	Q_UNUSED(x);
+	Q_UNUSED(y);
 	// View moved externally
 	updateEverything();
 }

@@ -67,12 +67,17 @@ void FillTool::selectedSymbolsChanged()
 
 void FillTool::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
 {
+	Q_UNUSED(pos);
+	Q_UNUSED(new_symbol);
+	
 	if (old_symbol == last_used_symbol)
 		selectedSymbolsChanged();
 }
 
 void FillTool::symbolDeleted(int pos, Symbol* old_symbol)
 {
+	Q_UNUSED(pos);
+	
 	if (old_symbol == last_used_symbol)
 		deactivate();
 }

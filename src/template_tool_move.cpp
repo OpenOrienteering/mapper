@@ -44,6 +44,8 @@ void TemplateMoveTool::init()
 
 bool TemplateMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
@@ -53,6 +55,8 @@ bool TemplateMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, 
 }
 bool TemplateMoveTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	if (!(event->buttons() & Qt::LeftButton) || !dragging)
 		return false;
 	
@@ -61,6 +65,8 @@ bool TemplateMoveTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, M
 }
 bool TemplateMoveTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	if (event->button() != Qt::LeftButton || !dragging)
 		return false;
 	
@@ -71,6 +77,7 @@ bool TemplateMoveTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord
 
 void TemplateMoveTool::templateDeleted(int index, Template* temp)
 {
+	Q_UNUSED(index);
 	if (templ == temp)
 		deactivate();
 }

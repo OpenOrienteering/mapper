@@ -327,6 +327,9 @@ void ColorWidget::cellChange(int row, int column)
 
 void ColorWidget::currentCellChange(int current_row, int current_column, int previous_row, int previous_column)
 {
+	Q_UNUSED(current_column);
+	Q_UNUSED(previous_row);
+	Q_UNUSED(previous_column);
 	if (!react_to_changes)
 		return;
 	
@@ -340,6 +343,7 @@ void ColorWidget::currentCellChange(int current_row, int current_column, int pre
 
 void ColorWidget::colorAdded(int index, MapColor* color)
 {
+	Q_UNUSED(color);
 	color_table->insertRow(index);
 	addRow(index);
 	if (index < color_table->rowCount() - 1)
@@ -351,11 +355,13 @@ void ColorWidget::colorAdded(int index, MapColor* color)
 
 void ColorWidget::colorChanged(int index, MapColor* color)
 {
+	Q_UNUSED(color);
 	updateRow(index);
 }
 
 void ColorWidget::colorDeleted(int index, const MapColor* color)
 {
+	Q_UNUSED(color);
 	color_table->removeRow(index);
 	currentCellChange(color_table->currentRow(), color_table->currentColumn(), -1, -1);
 }

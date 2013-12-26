@@ -100,11 +100,14 @@ bool TemplatePositionDockWidget::event(QEvent* event)
 
 void TemplatePositionDockWidget::closeEvent(QCloseEvent* event)
 {
+	Q_UNUSED(event);
 	controller->removeTemplatePositionDockWidget(temp);
 }
 
 void TemplatePositionDockWidget::templateChanged(int index, Template* temp)
 {
+	Q_UNUSED(index);
+	
 	if (this->temp != temp)
 		return;
 	
@@ -113,6 +116,8 @@ void TemplatePositionDockWidget::templateChanged(int index, Template* temp)
 
 void TemplatePositionDockWidget::templateDeleted(int index, Template* temp)
 {
+	Q_UNUSED(index);
+	
 	if (this->temp != temp)
 		return;
 	

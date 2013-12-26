@@ -751,6 +751,8 @@ void BooleanTool::rebuildSegmentFromPolygonOnly(const IntPoint& start_point, con
 
 void BooleanTool::rebuildTwoIndexSegment(int start_index, int end_index, bool have_sequence, bool sequence_increasing, const Polygon& polygon, QHash< qint64, BooleanTool::PathCoordInfo >& polymap, PathObject* object)
 {
+	Q_UNUSED(have_sequence);
+	
 	PathCoordInfo start_info = polymap.value(intPointToQInt64(polygon.at(start_index)));
 	PathCoordInfo end_info = polymap.value(intPointToQInt64(polygon.at(end_index)));
 	PathObject* original = end_info.first->path;

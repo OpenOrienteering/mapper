@@ -52,6 +52,17 @@ MapEditorTool::MapEditorTool(MapEditorController* editor, Type type, QAction* to
 {
 }
 
+MapEditorTool::~MapEditorTool()
+{
+	if (tool_button)
+		tool_button->setChecked(false);
+}
+
+void MapEditorTool::init()
+{
+	// nothing
+}
+
 void MapEditorTool::deactivate()
 {
 	if (getType() == MapEditorTool::EditPoint)
@@ -70,11 +81,72 @@ void MapEditorTool::setEditingInProgress(bool state)
 	editor->setEditingInProgress(state);
 }
 
-MapEditorTool::~MapEditorTool()
+
+void MapEditorTool::draw(QPainter* painter, MapWidget* widget)
 {
-	if (tool_button)
-		tool_button->setChecked(false);
+	Q_UNUSED(painter);
+	Q_UNUSED(widget);
+	// nothing
 }
+
+
+bool MapEditorTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+{
+	Q_UNUSED(event);
+	Q_UNUSED(map_coord);
+	Q_UNUSED(widget);
+	return false;
+}
+
+bool MapEditorTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+{
+	Q_UNUSED(event);
+	Q_UNUSED(map_coord);
+	Q_UNUSED(widget);
+	return false;
+}
+
+bool MapEditorTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+{
+	Q_UNUSED(event);
+	Q_UNUSED(map_coord);
+	Q_UNUSED(widget);
+	return false;
+}
+
+bool MapEditorTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+{
+	Q_UNUSED(event);
+	Q_UNUSED(map_coord);
+	Q_UNUSED(widget);
+	return false;
+}
+
+void MapEditorTool::leaveEvent(QEvent* event)
+{
+	Q_UNUSED(event);
+	// nothing
+}
+
+
+bool MapEditorTool::keyPressEvent(QKeyEvent* event)
+{
+	Q_UNUSED(event);
+	return false;
+}
+
+bool MapEditorTool::keyReleaseEvent(QKeyEvent* event)
+{
+	Q_UNUSED(event);
+	return false;
+}
+
+void MapEditorTool::focusOutEvent(QFocusEvent* event)
+{
+	Q_UNUSED(event);
+	// nothing
+}
+
 
 Map* MapEditorTool::map() const
 {
@@ -357,6 +429,8 @@ void MapEditorTool::calculateBoxTextHandles(QPointF* out, TextObject* text_objec
 
 int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QRectF* selection_extent, MapWidget* widget, MapCoordF* out_handle_pos)
 {
+	Q_UNUSED(selection_extent);
+	
 	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
 	const float click_tolerance_squared = click_tolerance * click_tolerance;
 	

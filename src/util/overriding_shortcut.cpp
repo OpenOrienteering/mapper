@@ -43,6 +43,8 @@ OverridingShortcut::OverridingShortcut(const QKeySequence& key, QWidget* parent,
 
 bool OverridingShortcut::eventFilter(QObject* watched, QEvent* event)
 {
+	Q_UNUSED(watched);
+	
 	if (event->type() == QEvent::ShortcutOverride && key().count() == 1)
 	{
 		QKeyEvent* key_event = static_cast<QKeyEvent*>(event);

@@ -82,6 +82,8 @@ void TextObjectEditorHelper::setFocus()
 
 bool TextObjectEditorHelper::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
@@ -128,6 +130,8 @@ bool TextObjectEditorHelper::mouseMoveEvent(QMouseEvent* event, MapCoordF map_co
 }
 bool TextObjectEditorHelper::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
@@ -332,12 +336,15 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 
 bool TextObjectEditorHelper::keyReleaseEvent(QKeyEvent* event)
 {
+	Q_UNUSED(event);
 	// Nothing ... yet?
 	return false;
 }
 
 void TextObjectEditorHelper::draw(QPainter* painter, MapWidget* widget)
 {
+	Q_UNUSED(widget);
+	
 	// Draw selection overlay
 	painter->setPen(Qt::NoPen);
 	painter->setBrush(QBrush(qRgb(0, 0, 255)));

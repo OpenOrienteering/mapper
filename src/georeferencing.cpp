@@ -72,7 +72,8 @@ Georeferencing::Georeferencing()
 }
 
 Georeferencing::Georeferencing(const Georeferencing& other)
-: state(other.state),
+: QObject(),
+  state(other.state),
   scale_denominator(other.scale_denominator),
   declination(other.declination),
   grivation(other.grivation),

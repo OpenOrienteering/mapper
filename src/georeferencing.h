@@ -191,6 +191,9 @@ public:
 	
 	/** 
 	 * Constructs a georeferencing which is a copy of an existing georeferencing.
+	 * 
+	 * Note: Since QObjects may not be copied, this is better understood as
+	 * creating a new object with the same settings.
 	 */
 	Georeferencing(const Georeferencing& georeferencing);
 	
