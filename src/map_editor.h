@@ -51,6 +51,7 @@ class TemplatePositionDockWidget;
 class GeoreferencingDialog;
 class ReopenTemplateDialog;
 class PieMenu;
+class GPSDisplay;
 typedef std::vector<Renderable*> RenderableVector;
 
 /**
@@ -389,6 +390,9 @@ public slots:
 	void paintOnTemplateClicked(bool checked);
 	/** Shows the template selection dialog for for the paint-on-template functionality */
 	void paintOnTemplateSelectClicked();
+	
+	/** Enables or disables GPS display. */
+	void enableGPSDisplay(bool enable);
 
 	/** Creates and adds a new map part */
 	void addMapPart();
@@ -563,6 +567,8 @@ private:
 	Template* last_painted_on_template;
 	
 	QAction* touch_cursor_action;
+	QAction* gps_display_action;
+	GPSDisplay* gps_display;
 	
 	QAction* mappart_add_act;
 	QAction* mappart_remove_act;

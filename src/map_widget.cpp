@@ -37,6 +37,7 @@
 #include "tool_edit.h"
 #include "touch_cursor.h"
 #include "util.h"
+#include "gps_display.h"
 
 #if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
 #define MiddleButton MidButton
@@ -47,7 +48,8 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
    show_help(show_help),
    force_antialiasing(force_antialiasing),
    pie_menu(this, 8, 24),
-   touch_cursor(NULL)
+   touch_cursor(NULL),
+   gps_display(NULL)
 {
 	view = NULL;
 	tool = NULL;
@@ -666,6 +668,11 @@ void MapWidget::updateObjectTagLabel()
 	updateObjectTagLabel(last_cursor_pos);
 }
 
+void MapWidget::setGPSDisplay(GPSDisplay* gps_display)
+{
+	this->gps_display = gps_display;
+}
+
 QSize MapWidget::sizeHint() const
 {
     return QSize(640, 480);
@@ -807,10 +814,17 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		drawing_dirty_rect_old = viewport_dirty_rect;
 	}
 	
+	painter.setClipRect(event->rect());
+	
+	// Draw GPS display
+	if (gps_display)
+	{
+		gps_display->paint(&painter);
+	}
+	
 	// Draw touch cursor
 	if (touch_cursor && tool && tool->usesTouchCursor())
 	{
-		painter.setClipRect(event->rect());
 		touch_cursor->paint(&painter);
 	}
 	

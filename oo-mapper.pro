@@ -40,6 +40,10 @@ android {
   
   # Use files from the android directory
   ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+  
+  # Use positioning module
+  QT += positioning
+  DEFINES += ENABLE_POSITIONING
 }
 
 # Input
@@ -50,6 +54,7 @@ HEADERS += \
   src/file_import_export.h \
   src/georeferencing.h \
   src/georeferencing_dialog.h \
+  src/gps_display.h \
   src/map.h \
   src/map_dialog_new.h \
   src/map_dialog_scale.h \
@@ -211,6 +216,7 @@ SOURCES += \
   src/tool_fill.cpp \
   src/gps_coordinates.cpp \
   src/gps_track.cpp \
+  src/gps_display.cpp \
   src/dxfparser.cpp \
   src/file_format.cpp \
   src/file_format_registry.cpp \

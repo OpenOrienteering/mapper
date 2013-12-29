@@ -1056,6 +1056,7 @@ QString PrintWidget::toString(QPrinter::PaperSize size)
 {
 #if defined(Q_OS_ANDROID)
 	// Qt for Android has no QPrintDialog
+	Q_UNUSED(size);
 	return tr("Unknown", "Paper size");
 #else
 	const QHash< int, const char*>& paper_size_names = MapPrinter::paperSizeNames();

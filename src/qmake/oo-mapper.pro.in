@@ -40,6 +40,10 @@ android {
   
   # Use files from the android directory
   ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+  
+  # Use positioning module
+  QT += positioning
+  DEFINES += ENABLE_POSITIONING
 }
 
 # Input

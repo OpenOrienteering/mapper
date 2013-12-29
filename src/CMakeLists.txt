@@ -110,6 +110,7 @@ set(Mapper_Common_SRCS
 
  gps_coordinates.cpp
  gps_track.cpp
+ gps_display.cpp
  dxfparser.cpp
 
  file_format.cpp
@@ -158,6 +159,7 @@ set(Mapper_Common_MOC_INPUT
  file_import_export.h
  georeferencing.h
  georeferencing_dialog.h
+ gps_display.h
  map.h
  map_dialog_new.h
  map_dialog_scale.h

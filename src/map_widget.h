@@ -27,12 +27,15 @@
 #include "map.h"
 #include "util_pie_menu.h"
 
+QT_BEGIN_NAMESPACE
 class QLabel;
+QT_END_NAMESPACE
 
 class MapEditorActivity;
 class MapEditorTool;
 class MapView;
 class TouchCursor;
+class GPSDisplay;
 
 /**
  * QWidget for displaying a map. Needs a pointer to a MapView which defines
@@ -273,6 +276,9 @@ public:
 	/** Returns the coordinate display type set by setCoordsDisplay(). */
 	inline CoordsType getCoordsDisplay() const {return coords_type;}
 	
+	/** Sets the GPS display to use. This is called internally by the GPSDisplay constructor. */
+	void setGPSDisplay(GPSDisplay* gps_display);
+	
 	/** Returns a reference to the internally constructed PieMenu. */
 	inline PieMenu& getPieMenu() {return pie_menu;}
 	
@@ -426,7 +432,7 @@ private:
 	QRectF activity_dirty_rect_new;
 	int activity_dirty_rect_new_border;
 	
-	// Cached updates
+	/** Cached updates */
 	QRect cached_update_rect;
 	
 	/** Right-click menu */
@@ -434,6 +440,9 @@ private:
 	
 	/** Optional touch cursor for mobile devices */
 	TouchCursor* touch_cursor;
+	
+	/** Optional GPS display */
+	GPSDisplay* gps_display;
 };
 
 #endif

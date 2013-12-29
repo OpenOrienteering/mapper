@@ -41,6 +41,7 @@
 #include "map_grid.h"
 #include "map_undo.h"
 #include "map_widget.h"
+#include "gps_display.h"
 #include "gui/main_window.h"
 #include "gui/print_widget.h"
 #include "gui/widgets/measure_widget.h"
@@ -132,6 +133,8 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	statusbar_cursorpos_label = NULL;
 	statusbar_objecttag_label = NULL;
 	
+	gps_display = NULL;
+	
 	being_destructed = false;
 	
 	actionsById[""] = new QAction(this); // dummy action
@@ -159,6 +162,7 @@ MapEditorController::~MapEditorController()
 	delete mappart_move_menu;
 	for (QHash<Template*, TemplatePositionDockWidget*>::iterator it = template_position_widgets.begin(); it != template_position_widgets.end(); ++it)
 		delete it.value();
+	delete gps_display;
 	delete main_view;
 	delete map;
 }
@@ -414,6 +418,9 @@ void MapEditorController::attach(MainWindow* window)
 	connect(window, SIGNAL(keyPressed(QKeyEvent*)), map_widget, SLOT(keyPressed(QKeyEvent*)));
 	connect(window, SIGNAL(keyReleased(QKeyEvent*)), map_widget, SLOT(keyReleased(QKeyEvent*)));
 	map_widget->setMapView(main_view);
+	
+	if (mode == MapEditor)
+		gps_display = new GPSDisplay(map_widget, map->getGeoreferencing());
 	
 	// Create menu and toolbar together, so actions can be inserted into one or both
 	if (mode == MapEditor)
@@ -677,7 +684,9 @@ void MapEditorController::createActions()
 	updatePaintOnTemplateAction();
 	
 	touch_cursor_action = newCheckAction("touchcursor", tr("Enable touch cursor"), map_widget, SLOT(enableTouchCursor(bool)), "tool-touch-cursor.png", QString::null, "toolbars.html#touch_cursor"); // TODO: write documentation
-
+	gps_display_action = newCheckAction("gpsdisplay", tr("Enable GPS display"), this, SLOT(enableGPSDisplay(bool)), "tool-gps-display.png", QString::null, "toolbars.html#gps_display"); // TODO: write documentation
+	gps_display_action->setEnabled(map->getGeoreferencing().isValid() && ! map->getGeoreferencing().isLocal());
+	
 	mappart_add_act = newAction("addmappart", tr("Add Map Part..."), this, SLOT(addMapPart()));
 	mappart_remove_act = newAction("removemappart", tr("Remove Map Part"), this, SLOT(removeMapPart()));
 	mappart_merge_act = newAction("mergemappart", tr("Merge this part with..."), this, SLOT(mergeMapPart()));
@@ -980,6 +989,7 @@ void MapEditorController::createMobileGUI()
 	bottomBar->addAction(zoom_out_act, 0, 4);
 
 	bottomBar->addAction(touch_cursor_action, 0, 6);
+	bottomBar->addAction(gps_display_action, 0, 7);
 	
 	//bottomBar->addAction(undo_act, 0, 6);
 	//bottomBar->addAction(redo_act, 0, 7);
@@ -1574,6 +1584,15 @@ void MapEditorController::georeferencingDialogFinished()
 {
 	georeferencing_dialog.take()->deleteLater();
 	map->updateAllMapWidgets();
+	
+	bool gps_display_possible = map->getGeoreferencing().isValid() && ! map->getGeoreferencing().isLocal();
+	if (!gps_display_possible)
+	{
+		gps_display_action->setChecked(false);
+		gps_display->stopUpdates();
+		gps_display->setVisible(false);
+	}
+	gps_display_action->setEnabled(gps_display_possible);
 }
 
 void MapEditorController::selectedSymbolsChanged()
@@ -2559,6 +2578,15 @@ void MapEditorController::paintOnTemplateSelectClicked()
 		last_painted_on_template = paintDialog.getSelectedTemplate();
 	}
 	paintOnTemplate(last_painted_on_template);
+}
+
+void MapEditorController::enableGPSDisplay(bool enable)
+{
+	if (enable)
+		gps_display->startUpdates();
+	else
+		gps_display->stopUpdates();
+	gps_display->setVisible(enable);
 }
 
 void MapEditorController::addMapPart()
