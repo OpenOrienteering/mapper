@@ -172,6 +172,8 @@ PaintOnTemplatePaletteWidget::PaintOnTemplatePaletteWidget(bool close_on_selecti
 	settings.beginGroup("PaintOnTemplatePaletteWidget");
 	selected_color = qMax(0, qMin(getNumFieldsX()*getNumFieldsY() - 1, settings.value("selectedColor").toInt()));
 	settings.endGroup();
+	
+	pressed_buttons = 0;
 }
 
 PaintOnTemplatePaletteWidget::~PaintOnTemplatePaletteWidget()
@@ -233,6 +235,14 @@ void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)
 
 void PaintOnTemplatePaletteWidget::mousePressEvent(QMouseEvent* event)
 {
+	if (event->button() != Qt::LeftButton)
+		return;
+	
+	// Workaround for multiple press bug on Android
+	if ((event->button() & ~pressed_buttons) == 0)
+		return;
+	pressed_buttons |= event->button();
+	
     int x = (int)(event->x() / (width() / (float)getNumFieldsX()));
 	int y = (int)(event->y() / (height() / (float)getNumFieldsY()));
 	
@@ -253,6 +263,14 @@ void PaintOnTemplatePaletteWidget::mousePressEvent(QMouseEvent* event)
 	
 	if (close_on_selection)
 		close();
+}
+
+void PaintOnTemplatePaletteWidget::mouseReleaseEvent(QMouseEvent* event)
+{
+	// Workaround for multiple press bug on Android part 2, see above in mousePressEvent()
+	if ((event->button() & pressed_buttons) == 0)
+		return;
+	pressed_buttons &= ~event->button();
 }
 
 int PaintOnTemplatePaletteWidget::getNumFieldsX() const
@@ -294,6 +312,10 @@ void PaintOnTemplatePaletteWidget::drawIcon(QPainter* painter, const QString& re
 
 PaintOnTemplateSelectDialog::PaintOnTemplateSelectDialog(Map* map, QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
+#if defined(ANDROID)
+	setWindowState((windowState() & ~(Qt::WindowMinimized | Qt::WindowFullScreen))
+                   | Qt::WindowMaximized);
+#endif
 	setWindowTitle(tr("Select template to draw onto"));
 	
 	QListWidget* template_list = new QListWidget();

@@ -92,6 +92,7 @@ signals:
 protected:
 	virtual void paintEvent(QPaintEvent* event);
 	virtual void mousePressEvent(QMouseEvent* event);
+	virtual void mouseReleaseEvent(QMouseEvent* event);
 	
 private:
 	int getNumFieldsX() const;
@@ -102,6 +103,7 @@ private:
 	
 	void drawIcon(QPainter* painter, const QString& resource_path, const QRect& field_rect);
 	
+	int pressed_buttons;
 	int selected_color;
 	bool close_on_selection;
 };
