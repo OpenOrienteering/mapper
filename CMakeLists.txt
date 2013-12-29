@@ -294,7 +294,6 @@ else()
 	  COMMENT "Not a development build, skipping all tests")
 	add_dependencies(TEST_WARNING Mapper)
 endif()
-add_subdirectory("docs/api")
 
 install(FILES COPYING 
   DESTINATION "${MAPPER_ABOUT_DESTINATION}"
@@ -326,4 +325,5 @@ else() # NOT Mapper_prerequisites_FOUND AND NOT MAPPER_SUPERBUILD
 
 endif()
 
+add_subdirectory("docs/api")
 add_subdirectory("packaging/src")
