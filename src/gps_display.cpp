@@ -19,16 +19,19 @@
 
 #include "gps_display.h"
 
+#if defined(ENABLE_POSITIONING)
+	#include <QtPositioning/QGeoPositionInfoSource>
+#endif
+#include <QPainter>
 #include <QDebug>
 
 #include "map_widget.h"
 #include "georeferencing.h"
 #include "util.h"
-
-#if defined(ENABLE_POSITIONING)
-	#include <QtPositioning/QGeoPositionInfoSource>
+#if defined(ANDROID)
+	#include "gps_source_android.h"
 #endif
-#include <QPainter>
+
 
 GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing)
  : QObject()
@@ -38,9 +41,14 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing)
 	
 	gps_updated = false;
 	tracking_lost = false;
+	has_valid_position = false;
 	
 #if defined(ENABLE_POSITIONING)
-	source = QGeoPositionInfoSource::createDefaultSource(this);
+	#if defined(ANDROID)
+		source = new AndroidGPSPositionSource(this);
+	#else
+		source = QGeoPositionInfoSource::createDefaultSource(this);
+	#endif
 	if (!source)
 	{
 		qDebug() << "Cannot create QGeoPositionInfoSource!";
@@ -49,13 +57,13 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing)
 	
 	source->setPreferredPositioningMethods(QGeoPositionInfoSource::SatellitePositioningMethods);
 	source->setUpdateInterval(1000);
-	connect(source, SIGNAL(positionUpdated(QGeoPositionInfo)), this, SLOT(positionUpdated(QGeoPositionInfo)));
+	connect(source, SIGNAL(positionUpdated(const QGeoPositionInfo&)), this, SLOT(positionUpdated(const QGeoPositionInfo&)));
 	connect(source, SIGNAL(error(QGeoPositionInfoSource::Error)), this, SLOT(error(QGeoPositionInfoSource::Error)));
 	connect(source, SIGNAL(updateTimeout()), this, SLOT(updateTimeout()));
 #else
 	source = NULL;
 #endif
-	
+
 	widget->setGPSDisplay(this);
 }
 
@@ -75,6 +83,7 @@ void GPSDisplay::stopUpdates()
 {
 #if defined(ENABLE_POSITIONING)
 	source->stopUpdates();
+	has_valid_position = false;
 #endif
 }
 
@@ -89,7 +98,8 @@ void GPSDisplay::setVisible(bool visible)
 
 void GPSDisplay::paint(QPainter* painter)
 {
-	if (!visible || !source)
+#if defined(ENABLE_POSITIONING)
+	if (!visible || !source || !has_valid_position)
 		return;
 	
 	// Get GPS position on map widget
@@ -101,11 +111,24 @@ void GPSDisplay::paint(QPainter* painter)
 	
 	// Draw dot
 	qreal dot_radius = Util::mmToPixelLogical(0.5f);
-// 	painter->setPen(QPen(tracking_lost ? Qt::gray : Qt::red, Util::mmToPixelLogical(0.5f)));
-// 	painter->setBrush(Qt::NoBrush);
 	painter->setPen(Qt::NoPen);
 	painter->setBrush(QBrush(tracking_lost ? Qt::gray : Qt::red));
 	painter->drawEllipse(gps_pos, dot_radius, dot_radius);
+	
+	// Draw distance circles
+	// TODO
+	
+	// Draw accuracy circle
+	if (latest_pos_info.hasAttribute(QGeoPositionInfo::HorizontalAccuracy))
+	{
+		float accuracy_meters = latest_pos_info.attribute(QGeoPositionInfo::HorizontalAccuracy);
+		float accuracy_pixels = widget->getMapView()->lengthToPixel(1000*1000 * accuracy_meters / georeferencing.getScaleDenominator());
+		
+		painter->setPen(QPen(tracking_lost ? Qt::gray : Qt::red, Util::mmToPixelLogical(0.2f)));
+		painter->setBrush(Qt::NoBrush);
+		painter->drawEllipse(gps_pos, accuracy_pixels, accuracy_pixels);
+	}
+#endif
 }
 
 #if defined(ENABLE_POSITIONING)
@@ -115,6 +138,7 @@ void GPSDisplay::positionUpdated(const QGeoPositionInfo& info)
 
 	gps_updated = true;
 	tracking_lost = false;
+	has_valid_position = true;
 	
 	updateMapWidget();
 }
@@ -124,8 +148,10 @@ void GPSDisplay::error(QGeoPositionInfoSource::Error positioningError)
 	if (positioningError != QGeoPositionInfoSource::NoError)
 	{
 		if (!tracking_lost)
+		{
+			tracking_lost = true;
 			updateMapWidget();
-		tracking_lost = true;
+		}
 	}
 }
 
@@ -133,8 +159,10 @@ void GPSDisplay::updateTimeout()
 {
 	// Lost satellite fix
 	if (!tracking_lost)
+	{
+		tracking_lost = true;
 		updateMapWidget();
-	tracking_lost = true;
+	}
 }
 #endif
 
@@ -144,8 +172,8 @@ MapCoordF GPSDisplay::getLatestGPSCoord(bool& ok)
 	if (!gps_updated)
 		return latest_gps_coord;
 	
-	QGeoPositionInfo pos_info = source->lastKnownPosition(true);
-	QGeoCoordinate qgeo_coord = pos_info.coordinate();
+	latest_pos_info = source->lastKnownPosition(true);
+	QGeoCoordinate qgeo_coord = latest_pos_info.coordinate();
 	if (!qgeo_coord.isValid())
 	{
 		ok = false;

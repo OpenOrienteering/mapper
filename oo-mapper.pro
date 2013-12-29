@@ -42,8 +42,11 @@ android {
   ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
   
   # Use positioning module
-  QT += positioning
+  QT += positioning androidextras
   DEFINES += ENABLE_POSITIONING
+  HEADERS += src/gps_source_android.h
+  SOURCES += src/gps_source_android.cpp
+  OTHER_FILES += android/src/org/openorienteering/mapper/MapperActivity.java
 }
 
 # Input

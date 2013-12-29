@@ -23,6 +23,7 @@
 
 #include <QObject>
 #if defined(ENABLE_POSITIONING)
+	#include <QtPositioning/QGeoPositionInfo>
 	#include <QtPositioning/QGeoPositionInfoSource>
 #endif
 
@@ -74,8 +75,12 @@ private:
 	void updateMapWidget();
 	
 	bool gps_updated;
+#if defined(ENABLE_POSITIONING)
+	QGeoPositionInfo latest_pos_info;
+#endif
 	MapCoordF latest_gps_coord;
 	bool tracking_lost;
+	bool has_valid_position;
 	
 	bool visible;
 	QGeoPositionInfoSource* source;

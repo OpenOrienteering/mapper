@@ -1,0 +1,160 @@
+/*
+ *    Copyright 2013 Thomas Schöps
+ *
+ *    This file is part of OpenOrienteering.
+ *
+ *    OpenOrienteering is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    OpenOrienteering is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ *    You should have received a copy of the GNU General Public License
+ *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package org.openorienteering.mapper;
+
+import android.os.Bundle;
+import android.os.Looper;
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.DialogInterface;
+import android.provider.Settings;
+import android.location.Location;
+import android.location.LocationManager;
+import android.location.LocationProvider;
+import android.location.LocationListener;
+
+
+/**
+ * Contains Android Java code for Mapper.
+ */
+public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivity
+{
+	private static MapperActivity instance;
+	
+	private LocationManager locationManager;
+	private LocationListener locationListener;
+	private boolean gpsUpdatesEnabled;
+	private int gpsUpdateInterval;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+
+		instance = this;
+		gpsUpdatesEnabled = false;
+
+		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+		locationListener = new LocationListener() {
+			public void onLocationChanged(Location location) {
+				positionUpdated((float)location.getLatitude(), (float)location.getLongitude(), (float)location.getAltitude(), location.getAccuracy());
+			}
+
+			public void onStatusChanged(String provider, int status, Bundle extras)
+			{
+				if (provider != LocationManager.GPS_PROVIDER)
+					return;
+				
+				switch (status) {
+				case LocationProvider.OUT_OF_SERVICE:
+					error();
+					break;
+				case LocationProvider.TEMPORARILY_UNAVAILABLE:
+					updateTimeout();
+					break;
+				case LocationProvider.AVAILABLE:
+					// do nothing
+					break;
+				}
+			}
+
+			public void onProviderEnabled(String provider)
+			{
+				// nothing yet
+			}
+
+			public void onProviderDisabled(String provider)
+			{
+				if (provider == LocationManager.GPS_PROVIDER)
+					error();
+			}
+		};
+	}
+	
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		if (gpsUpdatesEnabled)
+			instance.locationManager.removeUpdates(locationListener);
+	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		if (gpsUpdatesEnabled)
+			instance.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsUpdateInterval, 0, locationListener, Looper.getMainLooper());
+	}
+	
+	/** Checks if GPS is enabled in the Android settings and if not, prompts the user to enable it.
+	 *  The dialog box works asynchronously, so the method cannot return the result. */
+	void checkIfGPSEnabled()
+	{
+		boolean enabled = instance.locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		if (!enabled)
+		{
+			runOnUiThread(new Runnable() {
+				public void run() {
+					DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							switch (which){
+							case DialogInterface.BUTTON_POSITIVE:
+								Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+								startActivity(intent);
+								break;
+
+							case DialogInterface.BUTTON_NEGATIVE:
+								//No button clicked
+								break;
+							}
+						}
+					};
+
+					AlertDialog.Builder builder = new AlertDialog.Builder(instance);
+					builder.setMessage("GPS is disabled in Android. You must enable it in the Android settings. Do you want to go there?")
+						.setPositiveButton("Yes", dialogClickListener)
+						.setNegativeButton("No", dialogClickListener)
+						.show();
+				}
+			});
+		}
+	}
+	
+	public static void startGPSUpdates(int updateInterval)
+	{
+		instance.checkIfGPSEnabled();
+
+		instance.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, updateInterval, 0, instance.locationListener, Looper.getMainLooper());
+		instance.gpsUpdateInterval = updateInterval;
+		instance.gpsUpdatesEnabled = true;
+	}
+	
+	public static void stopGPSUpdates()
+	{
+		instance.locationManager.removeUpdates(instance.locationListener);
+		instance.gpsUpdatesEnabled = false;
+	}
+	
+	private static native void positionUpdated(float latitude, float longitude, float altitude, float horizontal_stddev);
+	private static native void error();
+	private static native void updateTimeout();
+}
