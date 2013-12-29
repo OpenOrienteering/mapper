@@ -26,7 +26,6 @@
 
 #include "core/map_view.h"
 #include "map.h"
-#include "util_pie_menu.h"
 
 QT_BEGIN_NAMESPACE
 class QLabel;
@@ -35,6 +34,7 @@ QT_END_NAMESPACE
 class MapEditorActivity;
 class MapEditorTool;
 class MapView;
+class PieMenu;
 class TouchCursor;
 class GPSDisplay;
 class CompassDisplay;
@@ -291,7 +291,7 @@ public:
 	void setTemporaryMarkerDisplay(GPSTemporaryMarkers* marker_display);
 	
 	/** Returns a reference to the internally constructed PieMenu. */
-	inline PieMenu& getPieMenu() {return pie_menu;}
+	inline PieMenu& getPieMenu() {return *pie_menu;}
 	
 	/** Returns the widget's preferred size. */
 	virtual QSize sizeHint() const;
@@ -447,7 +447,7 @@ private:
 	QRect cached_update_rect;
 	
 	/** Right-click menu */
-	PieMenu pie_menu;
+	PieMenu* pie_menu;
 	
 	/** Optional touch cursor for mobile devices */
 	TouchCursor* touch_cursor;

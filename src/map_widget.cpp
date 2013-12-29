@@ -40,6 +40,7 @@
 #include "gps_display.h"
 #include "compass_display.h"
 #include "gps_temporary_markers.h"
+#include "gui/widgets/pie_menu.h"
 
 #if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
 #define MiddleButton MidButton
@@ -49,7 +50,6 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
  : QWidget(parent),
    show_help(show_help),
    force_antialiasing(force_antialiasing),
-   pie_menu(this, 8, 24),
    touch_cursor(NULL),
    gps_display(NULL),
    compass_display(NULL),
@@ -79,6 +79,8 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
 	below_template_cache_dirty_rect = rect();
 	above_template_cache_dirty_rect = rect();
 	map_cache_dirty_rect = rect();
+	
+	pie_menu = new PieMenu(this, 8, 24),
 	
 	setAttribute(Qt::WA_OpaquePaintEvent);
 	setAutoFillBackground(false);
@@ -929,8 +931,8 @@ void MapWidget::_mousePressEvent(QMouseEvent* event)
 	}
 	else if (event->button() == Qt::RightButton)
 	{
-		if (!pie_menu.isEmpty())
-			pie_menu.popup(event->globalPos());
+		if (!pie_menu->isEmpty())
+			pie_menu->popup(event->globalPos());
 	}
 }
 

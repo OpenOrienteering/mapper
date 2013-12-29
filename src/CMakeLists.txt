@@ -30,7 +30,6 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 set(Mapper_Common_SRCS
  global.cpp
  util.cpp
- util_pie_menu.cpp
  util_task_dialog.cpp
  util_translation.cpp
  mapper_resource.cpp
@@ -151,6 +150,7 @@ set(Mapper_Common_SRCS
  gui/widgets/key_button_bar.cpp
  gui/widgets/mapper_proxystyle.cpp
  gui/widgets/measure_widget.cpp
+ gui/widgets/pie_menu.cpp
  gui/widgets/segmented_button_layout.cpp
  gui/widgets/tags_widget.cpp
  
@@ -227,7 +227,6 @@ set(Mapper_Common_MOC_INPUT
  tool_rotate_pattern.h
  tool_scale.h
  undo.h
- util_pie_menu.h
  util_task_dialog.h
  
  core/map_printer.h
@@ -251,6 +250,7 @@ set(Mapper_Common_MOC_INPUT
  gui/widgets/key_button_bar.h
  gui/widgets/mapper_proxystyle.h
  gui/widgets/measure_widget.h
+ gui/widgets/pie_menu.h
  gui/widgets/segmented_button_layout.h
  gui/widgets/tags_widget.h
  

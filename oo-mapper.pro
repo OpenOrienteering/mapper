@@ -121,7 +121,6 @@ HEADERS += \
   src/tool_rotate_pattern.h \
   src/tool_scale.h \
   src/undo.h \
-  src/util_pie_menu.h \
   src/util_task_dialog.h \
   src/core/map_printer.h \
   src/fileformats/ocd_file_format_p.h \
@@ -141,6 +140,7 @@ HEADERS += \
   src/gui/widgets/key_button_bar.h \
   src/gui/widgets/mapper_proxystyle.h \
   src/gui/widgets/measure_widget.h \
+  src/gui/widgets/pie_menu.h \
   src/gui/widgets/segmented_button_layout.h \
   src/gui/widgets/tags_widget.h \
   src/util/item_delegates.h \
@@ -157,7 +157,6 @@ HEADERS += \
 SOURCES += \
   src/global.cpp \
   src/util.cpp \
-  src/util_pie_menu.cpp \
   src/util_task_dialog.cpp \
   src/util_translation.cpp \
   src/mapper_resource.cpp \
@@ -265,6 +264,7 @@ SOURCES += \
   src/gui/widgets/key_button_bar.cpp \
   src/gui/widgets/mapper_proxystyle.cpp \
   src/gui/widgets/measure_widget.cpp \
+  src/gui/widgets/pie_menu.cpp \
   src/gui/widgets/segmented_button_layout.cpp \
   src/gui/widgets/tags_widget.cpp \
   src/util/item_delegates.cpp \

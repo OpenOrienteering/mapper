@@ -47,6 +47,7 @@
 #include "gui/main_window.h"
 #include "gui/print_widget.h"
 #include "gui/widgets/measure_widget.h"
+#include "gui/widgets/pie_menu.h"
 #include "gui/widgets/tags_widget.h"
 #include "object_operations.h"
 #include "object_text.h"

@@ -18,7 +18,7 @@
  */
 
 
-#include "util_pie_menu.h"
+#include "pie_menu.h"
 
 #include <cassert>
 
@@ -29,7 +29,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 
-#include "tool.h"
+#include "../../tool.h"
 
 PieMenu::PieMenu(QWidget* parent, int action_count, int icon_size)
 : QWidget(parent, Qt::Popup | Qt::FramelessWindowHint),	// NOTE: use Qt::Window for debugging to avoid mouse grab
