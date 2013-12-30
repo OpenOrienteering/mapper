@@ -21,6 +21,7 @@ package org.openorienteering.mapper;
 
 import android.os.Bundle;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.DialogInterface;
@@ -29,6 +30,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.location.LocationListener;
+import android.location.GpsStatus;
 
 
 /**
@@ -40,12 +42,15 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 	
 	private LocationManager locationManager;
 	private LocationListener locationListener;
+	private Location lastLocation = null;
+	
+	private boolean haveGPSFix = false;
 	private boolean gpsUpdatesEnabled;
 	private int gpsUpdateInterval;
-	
-	String yes_string;
-	String no_string;
-	String gps_disabled_string;
+	private long lastLocationMillis;
+	private String yes_string;
+	private String no_string;
+	private String gps_disabled_string;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -56,9 +61,35 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 		gpsUpdatesEnabled = false;
 
 		locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+		locationManager.addGpsStatusListener(new GpsStatus.Listener() {
+			public void onGpsStatusChanged(int event) {
+				switch (event) {
+				case GpsStatus.GPS_EVENT_SATELLITE_STATUS:
+					if (lastLocation != null)
+					{
+						boolean haveGPSFixNow = (SystemClock.elapsedRealtime() - lastLocationMillis) < 5000;
+						
+						if (haveGPSFix && !haveGPSFixNow)
+							updateTimeout();
+						haveGPSFix = haveGPSFixNow;
+					}
+					break;
+				
+				case GpsStatus.GPS_EVENT_FIRST_FIX:
+					haveGPSFix = true;
+					break;
+				}
+			}
+		});
 		locationListener = new LocationListener() {
 			public void onLocationChanged(Location location) {
+				if (location == null)
+					return;
+				
+				haveGPSFix = true;
+				lastLocationMillis = SystemClock.elapsedRealtime();
 				positionUpdated((float)location.getLatitude(), (float)location.getLongitude(), (float)location.getAltitude(), location.getAccuracy());
+				lastLocation = location;
 			}
 
 			public void onStatusChanged(String provider, int status, Bundle extras)
