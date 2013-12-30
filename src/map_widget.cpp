@@ -50,7 +50,8 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
    force_antialiasing(force_antialiasing),
    pie_menu(this, 8, 24),
    touch_cursor(NULL),
-   gps_display(NULL)
+   gps_display(NULL),
+   compass_display(NULL)
 {
 	view = NULL;
 	tool = NULL;

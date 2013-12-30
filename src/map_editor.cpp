@@ -1030,6 +1030,11 @@ void MapEditorController::detach()
 	if (NULL != symbol_dock_widget)
 		window->removeDockWidget(symbol_dock_widget);
 	
+	delete gps_display;
+	gps_display = NULL;
+	delete compass_display;
+	compass_display = NULL;
+	
 	window->setCentralWidget(NULL);
 	delete map_widget;
 	
@@ -1602,8 +1607,11 @@ void MapEditorController::georeferencingDialogFinished()
 	if (!gps_display_possible)
 	{
 		gps_display_action->setChecked(false);
-		gps_display->stopUpdates();
-		gps_display->setVisible(false);
+		if (gps_display)
+		{
+			gps_display->stopUpdates();
+			gps_display->setVisible(false);
+		}
 	}
 	gps_display_action->setEnabled(gps_display_possible);
 }
