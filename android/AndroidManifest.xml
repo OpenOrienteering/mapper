@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.6.0" android:installLocation="auto" android:versionCode="1" package="org.openorienteering.mapper">
-	<application android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="@string/app_name">
+	<application android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="@string/app_name" android:icon="@drawable/icon">
 		<activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|locale|fontScale|keyboard|keyboardHidden|navigation" android:screenOrientation="portrait" android:name="org.openorienteering.mapper.MapperActivity" android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
