@@ -20,16 +20,13 @@
 
 #include "pie_menu.h"
 
-#include <cassert>
-
 #include <qmath.h>
 #include <QAction>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QMouseEvent>
 #include <QPainter>
-
-#include "../../tool.h"
+#include <QStyleOption>
 
 PieMenu::PieMenu(QWidget* parent, int action_count, int icon_size)
 : QWidget(parent, Qt::Popup | Qt::FramelessWindowHint),	// NOTE: use Qt::Window for debugging to avoid mouse grab
@@ -50,13 +47,13 @@ PieMenu::PieMenu(QWidget* parent, int action_count, int icon_size)
 
 void PieMenu::setSize(int action_count)
 {
-	assert(action_count >= 3);
+	Q_ASSERT(action_count >= 3);
 	actions.resize(action_count, NULL);
 	
 	float half_angle = 2*M_PI / (2 * action_count);
-	QPolygon inner_mask(action_count);
+	inner_mask.resize(action_count);
 	float inner_corner_radius = inner_radius / cos(half_angle);
-	QPolygon outer_mask(action_count);
+	outer_mask.resize(action_count);
 	float outer_corner_radius = (inner_radius + icon_border_inner + icon_size + icon_border_outer) / cos(half_angle);
 	total_radius = qCeil(outer_corner_radius);
 	
@@ -66,14 +63,14 @@ void PieMenu::setSize(int action_count)
 		outer_mask.setPoint(i, getPoint(outer_corner_radius, (1 + 2*i) * half_angle));
 	}
 	
-	outer_mask = outer_mask.subtracted(inner_mask);
-	setMask(outer_mask);
+	setMask(outer_mask.subtracted(inner_mask));
 }
 
 QPoint PieMenu::getPoint(float radius, float angle)
 {
 	return QPoint(qRound(total_radius + radius * -sin(angle)), qRound(total_radius + radius * -cos(angle)));
 }
+
 QPolygon PieMenu::itemArea(int index)
 {
 	float half_angle = 2*M_PI / (2 * actions.size());
@@ -173,45 +170,70 @@ void PieMenu::mouseReleaseEvent(QMouseEvent* event)
 
 void PieMenu::paintEvent(QPaintEvent* event)
 {
+	QStyleOptionMenuItem option;
+	option.initFrom(this);
+	QPalette& palette = option.palette;
+	palette.setCurrentColorGroup(QPalette::Active);
+	
 	// Draw on the widget
-	QPainter painter;
-	painter.begin(this);
+	QPainter painter(this);
 	painter.setClipRect(event->rect());
+	painter.setRenderHint(QPainter::Antialiasing, true);
 	
 	// Background color
-	painter.fillRect(rect(), QColor(qRgb(220, 220, 220)));
+	QPen pen(palette.color(QPalette::Dark));
+	pen.setWidth(2);
+	painter.setPen(pen);
+	painter.setBrush(palette.brush(QPalette::Button));
+	painter.drawConvexPolygon(outer_mask);
+	painter.setBrush(Qt::NoBrush);
+	painter.drawConvexPolygon(inner_mask);
 	
 	// Items
 	float half_angle = 2*(M_PI) / (float)(2 * actions.size());
 	float icon_radius = inner_radius + icon_border_inner + 0.5f * icon_size;
-	painter.setPen(Qt::NoPen);
 	for (int i = 0, end = (int)actions.size(); i < end; ++i)
 	{
-		bool highlight = actions[i] != NULL && actions[i]->isEnabled() && i == hover_item;
-		
-		if (actions[i] == NULL || !actions[i]->isEnabled() || actions[i]->isChecked() || highlight)
-		{
-			// Draw item background
-			if (highlight)
-				painter.setBrush(QBrush(MapEditorTool::active_color));
-			else if (actions[i] != NULL && actions[i]->isChecked())
-				painter.setBrush(QBrush(qRgb(240, 240, 240)));
-			else
-				painter.setBrush(Qt::darkGray);
-			
-			QPolygon area = itemArea(i);
-			painter.drawConvexPolygon(area);
-		}
 		if (actions[i] == NULL)
 			continue;
 		
+		QPolygon area = itemArea(i);
+		QIcon::Mode mode = QIcon::Normal;
+		if (actions[i]->isEnabled() && i == hover_item)
+		{
+			mode = QIcon::Active;
+			QPen pen(palette.color(QPalette::Dark));
+			pen.setWidth(1);
+			painter.setPen(pen);
+			painter.setBrush(palette.color(QPalette::Button).lighter(120));
+			painter.setOpacity(1.0);
+			painter.drawConvexPolygon(area);
+		}
+		else if (actions[i]->isChecked())
+		{
+			mode = QIcon::Selected;
+			QPen pen(palette.color(QPalette::Dark));
+			pen.setWidth(1);
+			painter.setPen(pen);
+			painter.setBrush(palette.color(QPalette::Button).darker(120));
+			painter.setOpacity(1.0);
+			painter.drawConvexPolygon(area);
+		}
+		else if (!actions[i]->isEnabled())
+		{
+			mode = QIcon::Disabled;
+			painter.setOpacity(0.5);
+		}
+		else
+		{
+			painter.setOpacity(1.0);
+		}
+		
 		// Draw icon
-		QPixmap pixmap = actions[i]->icon().pixmap(icon_size, actions[i]->isEnabled() ? (highlight ? QIcon::Active : QIcon::Normal) : QIcon::Disabled);
+		QPixmap pixmap = actions[i]->icon().pixmap(icon_size, mode);
 		QPoint midpoint = QPoint(total_radius + icon_radius * -sin(2*i * half_angle), total_radius + icon_radius * -cos(2*i * half_angle));
 		painter.drawPixmap(QPointF(midpoint.x() - 0.5f * pixmap.width(), midpoint.y() - 0.5f * pixmap.height()), pixmap);
 	}
-	
-	painter.end();
 }
 
 void PieMenu::findHoverItem(const QPoint& pos)

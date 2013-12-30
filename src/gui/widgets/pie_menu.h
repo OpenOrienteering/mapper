@@ -51,9 +51,9 @@ public:
 	
 protected:
 	virtual void mousePressEvent(QMouseEvent* event);
-    virtual void mouseMoveEvent(QMouseEvent* event);
-    virtual void mouseReleaseEvent(QMouseEvent* event);
-    virtual void paintEvent(QPaintEvent* event);
+	virtual void mouseMoveEvent(QMouseEvent* event);
+	virtual void mouseReleaseEvent(QMouseEvent* event);
+	virtual void paintEvent(QPaintEvent* event);
 	
 	QPoint getPoint(float radius, float angle);
 	QPolygon itemArea(int index);
@@ -71,6 +71,9 @@ protected:
 	QPoint click_pos;
 	int hover_item;
 	std::vector< QAction* > actions;
+	
+	QPolygon outer_mask;
+	QPolygon inner_mask;
 };
 
 #endif
