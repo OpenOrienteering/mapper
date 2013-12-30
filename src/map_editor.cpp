@@ -31,6 +31,7 @@
 
 #include "gui/widgets/action_grid_bar.h"
 #include "color_dock_widget.h"
+#include "compass_display.h"
 #include "file_format_registry.h"
 #include "georeferencing.h"
 #include "georeferencing_dialog.h"
@@ -134,6 +135,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	statusbar_objecttag_label = NULL;
 	
 	gps_display = NULL;
+	compass_display = NULL;
 	
 	being_destructed = false;
 	
@@ -163,6 +165,7 @@ MapEditorController::~MapEditorController()
 	for (QHash<Template*, TemplatePositionDockWidget*>::iterator it = template_position_widgets.begin(); it != template_position_widgets.end(); ++it)
 		delete it.value();
 	delete gps_display;
+	delete compass_display;
 	delete main_view;
 	delete map;
 }
@@ -420,7 +423,10 @@ void MapEditorController::attach(MainWindow* window)
 	map_widget->setMapView(main_view);
 	
 	if (mode == MapEditor)
+	{
 		gps_display = new GPSDisplay(map_widget, map->getGeoreferencing());
+		compass_display = new CompassDisplay(map_widget);
+	}
 	
 	// Create menu and toolbar together, so actions can be inserted into one or both
 	if (mode == MapEditor)
@@ -688,6 +694,8 @@ void MapEditorController::createActions()
 	gps_display_action->setEnabled(map->getGeoreferencing().isValid() && ! map->getGeoreferencing().isLocal());
 	gps_distance_rings_action = newCheckAction("gpsdistancerings", tr("Enable GPS distance rings"), this, SLOT(enableGPSDistanceRings(bool)), "gps-distance-rings.png", QString::null, "toolbars.html#gps_distance_rings"); // TODO: write documentation
 	gps_distance_rings_action->setEnabled(false);
+	
+	compass_action = newCheckAction("compassdisplay", tr("Enable compass display"), this, SLOT(enableCompassDisplay(bool)), "compass.png", QString::null, "toolbars.html#compass_display"); // TODO: write documentation
 	
 	mappart_add_act = newAction("addmappart", tr("Add Map Part..."), this, SLOT(addMapPart()));
 	mappart_remove_act = newAction("removemappart", tr("Remove Map Part"), this, SLOT(removeMapPart()));
@@ -982,7 +990,7 @@ void MapEditorController::createMobileGUI()
 {	
 	// TODO: allow for different orientations (adjust layout and ActionGridBars)
 	
-	ActionGridBar* bottomBar = new ActionGridBar(ActionGridBar::Horizontal, 1);
+	ActionGridBar* bottomBar = new ActionGridBar(ActionGridBar::Horizontal, 2);
 	bottomBar->addAction(paint_on_template_act, 0, 0);
 	bottomBar->addAction(paint_on_template_settings_act, 0, 1);
 	
@@ -993,6 +1001,8 @@ void MapEditorController::createMobileGUI()
 	bottomBar->addAction(touch_cursor_action, 0, 6);
 	bottomBar->addAction(gps_display_action, 0, 7);
 	bottomBar->addAction(gps_distance_rings_action, 0, 8);
+	
+	bottomBar->addAction(compass_action, 1, 6);
 	
 	//bottomBar->addAction(undo_act, 0, 6);
 	//bottomBar->addAction(redo_act, 0, 7);
@@ -2597,6 +2607,11 @@ void MapEditorController::enableGPSDisplay(bool enable)
 void MapEditorController::enableGPSDistanceRings(bool enable)
 {
 	gps_display->enableDistanceRings(enable);
+}
+
+void MapEditorController::enableCompassDisplay(bool enable)
+{
+	compass_display->enable(enable);
 }
 
 void MapEditorController::addMapPart()

@@ -47,11 +47,16 @@ android {
   HEADERS += src/gps_source_android.h
   SOURCES += src/gps_source_android.cpp
   OTHER_FILES += android/src/org/openorienteering/mapper/MapperActivity.java
+  
+  # Use sensors module
+  QT += sensors
+  DEFINES += HAVE_QTSENSORS
 }
 
 # Input
 HEADERS += \
   src/color_dock_widget.h \
+  src/compass_display.h \
   src/file_format_ocad8_p.h \
   src/file_format_xml_p.h \
   src/file_import_export.h \
@@ -221,6 +226,7 @@ SOURCES += \
   src/gps_track.cpp \
   src/gps_display.cpp \
   src/dxfparser.cpp \
+  src/compass_display.cpp \
   src/file_format.cpp \
   src/file_format_registry.cpp \
   src/file_import_export.cpp \

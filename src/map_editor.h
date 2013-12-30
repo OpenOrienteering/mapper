@@ -52,6 +52,7 @@ class GeoreferencingDialog;
 class ReopenTemplateDialog;
 class PieMenu;
 class GPSDisplay;
+class CompassDisplay;
 typedef std::vector<Renderable*> RenderableVector;
 
 /**
@@ -395,6 +396,9 @@ public slots:
 	void enableGPSDisplay(bool enable);
 	/** Enables or disables showing distance rings when GPS display is active. */
 	void enableGPSDistanceRings(bool enable);
+	
+	/** Enables or disables digital compass display. */
+	void enableCompassDisplay(bool enable);
 
 	/** Creates and adds a new map part */
 	void addMapPart();
@@ -572,6 +576,9 @@ private:
 	QAction* gps_display_action;
 	QAction* gps_distance_rings_action;
 	GPSDisplay* gps_display;
+	
+	QAction* compass_action;
+	CompassDisplay* compass_display;
 	
 	QAction* mappart_add_act;
 	QAction* mappart_remove_act;

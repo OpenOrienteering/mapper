@@ -38,6 +38,7 @@
 #include "touch_cursor.h"
 #include "util.h"
 #include "gps_display.h"
+#include "compass_display.h"
 
 #if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
 #define MiddleButton MidButton
@@ -673,6 +674,11 @@ void MapWidget::setGPSDisplay(GPSDisplay* gps_display)
 	this->gps_display = gps_display;
 }
 
+void MapWidget::setCompassDisplay(CompassDisplay* compass_display)
+{
+	this->compass_display = compass_display;
+}
+
 QSize MapWidget::sizeHint() const
 {
     return QSize(640, 480);
@@ -818,15 +824,15 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	
 	// Draw GPS display
 	if (gps_display)
-	{
 		gps_display->paint(&painter);
-	}
 	
 	// Draw touch cursor
 	if (touch_cursor && tool && tool->usesTouchCursor())
-	{
 		touch_cursor->paint(&painter);
-	}
+	
+	// Draw compass display
+	if (compass_display)
+		compass_display->paint(&painter);
 	
 	painter.end();
 }

@@ -36,6 +36,7 @@ class MapEditorTool;
 class MapView;
 class TouchCursor;
 class GPSDisplay;
+class CompassDisplay;
 
 /**
  * QWidget for displaying a map. Needs a pointer to a MapView which defines
@@ -278,6 +279,8 @@ public:
 	
 	/** Sets the GPS display to use. This is called internally by the GPSDisplay constructor. */
 	void setGPSDisplay(GPSDisplay* gps_display);
+	/** Sets the compass display to use. This is called internally by the CompassDisplay constructor. */
+	void setCompassDisplay(CompassDisplay* compass_display);
 	
 	/** Returns a reference to the internally constructed PieMenu. */
 	inline PieMenu& getPieMenu() {return pie_menu;}
@@ -443,6 +446,8 @@ private:
 	
 	/** Optional GPS display */
 	GPSDisplay* gps_display;
+	/** Optional compass display */
+	CompassDisplay* compass_display;
 };
 
 #endif
