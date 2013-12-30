@@ -539,8 +539,8 @@ void MapEditorController::assignKeyboardShortcuts()
 	
 	// Custom keyboard shortcuts
 	findAction("showgrid")->setShortcut(QKeySequence("G"));
-	findAction("zoomin")->setShortcut(QKeySequence("F7"));
-	findAction("zoomout")->setShortcut(QKeySequence("F8"));
+	findAction("zoomin")->setShortcuts(QList<QKeySequence>() << QKeySequence("F7") << QKeySequence("+") << QKeySequence(Qt::KeypadModifier + Qt::Key_Plus));
+	findAction("zoomout")->setShortcuts(QList<QKeySequence>() << QKeySequence("F8") << QKeySequence("-") << QKeySequence(Qt::KeypadModifier + Qt::Key_Minus));
 	findAction("hatchareasview")->setShortcut(QKeySequence("F2"));
 	findAction("baselineview")->setShortcut(QKeySequence("F3"));
 	findAction("hidealltemplates")->setShortcut(QKeySequence("F10"));
