@@ -42,6 +42,10 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 	private LocationListener locationListener;
 	private boolean gpsUpdatesEnabled;
 	private int gpsUpdateInterval;
+	
+	String yes_string;
+	String no_string;
+	String gps_disabled_string;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -130,13 +134,23 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 					};
 
 					AlertDialog.Builder builder = new AlertDialog.Builder(instance);
-					builder.setMessage("GPS is disabled in Android. You must enable it in the Android settings. Do you want to go there?")
-						.setPositiveButton("Yes", dialogClickListener)
-						.setNegativeButton("No", dialogClickListener)
+					builder.setMessage(gps_disabled_string)
+						.setPositiveButton(yes_string, dialogClickListener)
+						.setNegativeButton(no_string, dialogClickListener)
 						.show();
 				}
 			});
 		}
+	}
+	
+	
+	// Static methods to be called from C++
+	
+	public static void setTranslatableStrings(String yes_string, String no_string, String gps_disabled_string)
+	{
+		instance.yes_string = yes_string;
+		instance.no_string = no_string;
+		instance.gps_disabled_string = gps_disabled_string;
 	}
 	
 	public static void startGPSUpdates(int updateInterval)
@@ -153,6 +167,9 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 		instance.locationManager.removeUpdates(instance.locationListener);
 		instance.gpsUpdatesEnabled = false;
 	}
+	
+	
+	// Native C++ method declarations
 	
 	private static native void positionUpdated(float latitude, float longitude, float altitude, float horizontal_stddev);
 	private static native void error();

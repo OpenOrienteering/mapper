@@ -32,7 +32,21 @@ AndroidGPSPositionSource::AndroidGPSPositionSource(QObject* parent)
  : QGeoPositionInfoSource(parent)
 {
 	if (android_gps_instance == NULL)
+	{
+		// One-time initialization
 		qRegisterMetaType<QGeoPositionInfo>();
+		
+		QAndroidJniObject yes_string = QAndroidJniObject::fromString(tr("Yes"));
+		QAndroidJniObject no_string = QAndroidJniObject::fromString(tr("No"));
+		QAndroidJniObject gps_disabled_string = QAndroidJniObject::fromString(tr("GPS is disabled in Android. You must enable it in the Android settings. Do you want to go there now?"));
+		QAndroidJniObject::callStaticMethod<void>(
+			"org/openorienteering/mapper/MapperActivity",
+			"setTranslatableStrings",
+			"(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V",
+			yes_string.object<jstring>(),
+			no_string.object<jstring>(),
+			gps_disabled_string.object<jstring>());
+	}
 	
 	android_gps_instance = this;
 	has_error = false;
