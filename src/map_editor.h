@@ -393,6 +393,8 @@ public slots:
 	
 	/** Enables or disables GPS display. */
 	void enableGPSDisplay(bool enable);
+	/** Enables or disables showing distance rings when GPS display is active. */
+	void enableGPSDistanceRings(bool enable);
 
 	/** Creates and adds a new map part */
 	void addMapPart();
@@ -568,6 +570,7 @@ private:
 	
 	QAction* touch_cursor_action;
 	QAction* gps_display_action;
+	QAction* gps_distance_rings_action;
 	GPSDisplay* gps_display;
 	
 	QAction* mappart_add_act;

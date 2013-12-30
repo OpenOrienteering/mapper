@@ -96,6 +96,13 @@ void GPSDisplay::setVisible(bool visible)
 	updateMapWidget();
 }
 
+void GPSDisplay::enableDistanceRings(bool enable)
+{
+	distanceRingsEnabled = enable;
+	if (visible && has_valid_position)
+		updateMapWidget();
+}
+
 void GPSDisplay::paint(QPainter* painter)
 {
 #if defined(ENABLE_POSITIONING)
@@ -109,14 +116,27 @@ void GPSDisplay::paint(QPainter* painter)
 		return;
 	QPointF gps_pos = widget->mapToViewport(gps_coord);
 	
-	// Draw dot
+	// Draw center dot
 	qreal dot_radius = Util::mmToPixelLogical(0.5f);
 	painter->setPen(Qt::NoPen);
 	painter->setBrush(QBrush(tracking_lost ? Qt::gray : Qt::red));
 	painter->drawEllipse(gps_pos, dot_radius, dot_radius);
 	
 	// Draw distance circles
-	// TODO
+	if (distanceRingsEnabled)
+	{
+		const int num_distance_rings = 2;
+		const float distance_ring_radius_meters = 10;
+		
+		float distance_ring_radius_pixels = widget->getMapView()->lengthToPixel(1000*1000 * distance_ring_radius_meters / georeferencing.getScaleDenominator());
+		painter->setPen(QPen(Qt::gray, Util::mmToPixelLogical(0.1f)));
+		painter->setBrush(Qt::NoBrush);
+		for (int i = 0; i < num_distance_rings; ++ i)
+		{
+			float radius = (i + 1) * distance_ring_radius_pixels;
+			painter->drawEllipse(gps_pos, radius, radius);
+		}
+	}
 	
 	// Draw accuracy circle
 	if (latest_pos_info.hasAttribute(QGeoPositionInfo::HorizontalAccuracy))

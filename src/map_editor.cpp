@@ -686,6 +686,8 @@ void MapEditorController::createActions()
 	touch_cursor_action = newCheckAction("touchcursor", tr("Enable touch cursor"), map_widget, SLOT(enableTouchCursor(bool)), "tool-touch-cursor.png", QString::null, "toolbars.html#touch_cursor"); // TODO: write documentation
 	gps_display_action = newCheckAction("gpsdisplay", tr("Enable GPS display"), this, SLOT(enableGPSDisplay(bool)), "tool-gps-display.png", QString::null, "toolbars.html#gps_display"); // TODO: write documentation
 	gps_display_action->setEnabled(map->getGeoreferencing().isValid() && ! map->getGeoreferencing().isLocal());
+	gps_distance_rings_action = newCheckAction("gpsdistancerings", tr("Enable GPS distance rings"), this, SLOT(enableGPSDistanceRings(bool)), "gps-distance-rings.png", QString::null, "toolbars.html#gps_distance_rings"); // TODO: write documentation
+	gps_distance_rings_action->setEnabled(false);
 	
 	mappart_add_act = newAction("addmappart", tr("Add Map Part..."), this, SLOT(addMapPart()));
 	mappart_remove_act = newAction("removemappart", tr("Remove Map Part"), this, SLOT(removeMapPart()));
@@ -990,6 +992,7 @@ void MapEditorController::createMobileGUI()
 
 	bottomBar->addAction(touch_cursor_action, 0, 6);
 	bottomBar->addAction(gps_display_action, 0, 7);
+	bottomBar->addAction(gps_distance_rings_action, 0, 8);
 	
 	//bottomBar->addAction(undo_act, 0, 6);
 	//bottomBar->addAction(redo_act, 0, 7);
@@ -2587,6 +2590,13 @@ void MapEditorController::enableGPSDisplay(bool enable)
 	else
 		gps_display->stopUpdates();
 	gps_display->setVisible(enable);
+	
+	gps_distance_rings_action->setEnabled(enable);
+}
+
+void MapEditorController::enableGPSDistanceRings(bool enable)
+{
+	gps_display->enableDistanceRings(enable);
 }
 
 void MapEditorController::addMapPart()

@@ -60,6 +60,9 @@ public:
 	/// Returns GPS marker visibility
 	inline bool isVisible() const {return visible;}
 	
+	/// Sets whether distance rings are drawn
+	void enableDistanceRings(bool enable);
+	
 	/// This is called from the MapWidget drawing code to draw the GPS position marker.
 	void paint(QPainter* painter);
 	
@@ -83,6 +86,8 @@ private:
 	bool has_valid_position;
 	
 	bool visible;
+	bool distanceRingsEnabled;
+	
 	QGeoPositionInfoSource* source;
 	MapWidget* widget;
 	const Georeferencing& georeferencing;
