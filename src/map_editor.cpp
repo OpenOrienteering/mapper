@@ -641,6 +641,7 @@ void MapEditorController::createActions()
 	draw_rectangle_act = newToolAction("drawrectangle", tr("Draw rectangles"), this, SLOT(drawRectangleClicked()), "draw-rectangle.png", QString::null, "toolbars.html#tool_draw_rectangle");
 	draw_fill_act = newToolAction("drawfill", tr("Fill bounded areas"), this, SLOT(drawFillClicked()), "tool-fill.png", QString::null, "toolbars.html#tool_draw_fill"); // TODO: documentation
 	draw_text_act = newToolAction("drawtext", tr("Write text"), this, SLOT(drawTextClicked()), "draw-text.png", QString::null, "toolbars.html#tool_draw_text");
+	delete_act = newAction("delete", tr("Delete"), this, SLOT(deleteClicked()), "delete.png", QString::null, "toolbars.html#delete");
 	duplicate_act = newAction("duplicate", tr("Duplicate"), this, SLOT(duplicateClicked()), "tool-duplicate.png", QString::null, "toolbars.html#duplicate");
 	switch_symbol_act = newAction("switchsymbol", tr("Switch symbol"), this, SLOT(switchSymbolClicked()), "tool-switch-symbol.png", QString::null, "toolbars.html#switch_symbol");
 	fill_border_act = newAction("fillborder", tr("Fill / Create border"), this, SLOT(fillBorderClicked()), "tool-fill-border.png", QString::null, "toolbars.html#fill_create_border");
@@ -803,6 +804,7 @@ void MapEditorController::createMenuAndToolbars()
 	tools_menu->addAction(draw_rectangle_act);
 	tools_menu->addAction(draw_fill_act);
 	tools_menu->addAction(draw_text_act);
+	tools_menu->addAction(delete_act);
 	tools_menu->addAction(duplicate_act);
 	tools_menu->addAction(switch_symbol_act);
 	tools_menu->addAction(fill_border_act);
@@ -938,6 +940,7 @@ void MapEditorController::createMenuAndToolbars()
 	// Editing toolbar
 	toolbar_editing = window->addToolBar(tr("Editing"));
 	toolbar_editing->setObjectName("Editing toolbar");
+	toolbar_editing->addAction(delete_act);
 	toolbar_editing->addAction(duplicate_act);
 	toolbar_editing->addAction(switch_symbol_act);
 	toolbar_editing->addAction(fill_border_act);
@@ -1725,6 +1728,8 @@ void MapEditorController::objectSelectionChanged()
 	
 	cut_act->setEnabled(have_selection);
 	copy_act->setEnabled(have_selection);
+	delete_act->setEnabled(have_selection);
+	delete_act->setStatusTip(tr("Deletes the selected object(s).") + (delete_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
 	duplicate_act->setEnabled(have_selection);
 	duplicate_act->setStatusTip(tr("Duplicate the selected object(s).") + (duplicate_act->isEnabled() ? "" : (" " + tr("Select at least one object to activate this tool."))));
 	switch_dashes_act->setEnabled(have_line);
@@ -1874,6 +1879,13 @@ void MapEditorController::drawFillClicked()
 void MapEditorController::drawTextClicked()
 {
 	setTool(new DrawTextTool(this, draw_text_act, symbol_widget));
+}
+
+void MapEditorController::deleteClicked()
+{
+	if (editing_in_progress)
+		return;
+	map->deleteSelectedObjects();
 }
 
 void MapEditorController::duplicateClicked()

@@ -334,6 +334,8 @@ public slots:
 	/** Activates the draw text tool. */
 	void drawTextClicked();
 	
+	/** Deletes the selected object(s) */
+	void deleteClicked();
 	/** Duplicates the selected object(s) */
 	void duplicateClicked();
 	/** Switches the symbol of the selected object(s) to the selected symbol. */
@@ -542,6 +544,7 @@ private:
 	QAction* draw_fill_act;
 	QAction* draw_text_act;
 	
+	QAction* delete_act;
 	QAction* duplicate_act;
 	QAction* switch_symbol_act;
 	QAction* fill_border_act;
