@@ -36,6 +36,7 @@ class QFrame;
 class QLabel;
 class QToolBar;
 class QSignalMapper;
+class QToolButton;
 QT_END_NAMESPACE
 
 class Template;
@@ -53,6 +54,7 @@ class ReopenTemplateDialog;
 class PieMenu;
 class GPSDisplay;
 class CompassDisplay;
+class ActionGridBar;
 typedef std::vector<Renderable*> RenderableVector;
 
 /**
@@ -401,6 +403,11 @@ public slots:
 	
 	/** Enables or disables digital compass display. */
 	void enableCompassDisplay(bool enable);
+	
+	/** For mobile UI: hides the top action bar. */
+	void hideTopActionBar();
+	/** For mobile UI: shows the top action bar again after hiding it. */
+	void showTopActionBar();
 
 	/** Creates and adds a new map part */
 	void addMapPart();
@@ -599,6 +606,11 @@ private:
 	QToolBar* toolbar_editing;
 	QToolBar* toolbar_advanced_editing;
 	QToolBar* toolbar_mapparts;
+	
+	// For mobile UI
+	ActionGridBar* bottom_action_bar;
+	ActionGridBar* top_action_bar;
+	QToolButton* show_top_bar_button;
 	
 	QComboBox* mappart_selector_box;
 	

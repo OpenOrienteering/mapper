@@ -988,106 +988,137 @@ void MapEditorController::createPieMenu(PieMenu* menu)
 
 void MapEditorController::createMobileGUI()
 {
-	ActionGridBar* bottom_bar = new ActionGridBar(ActionGridBar::Horizontal, 2);
+	// Create mobile-specific actions
+	QAction* hide_top_bar_action = new QAction(QIcon(":/images/arrow-thin-upleft.png"), tr("Hide top bar"), this);
+ 	connect(hide_top_bar_action, SIGNAL(triggered()), this, SLOT(hideTopActionBar()));
+	
+	QAction* show_top_bar_action = new QAction(QIcon(":/images/arrow-thin-downright.png"), tr("Show top bar"), this);
+ 	connect(show_top_bar_action, SIGNAL(triggered()), this, SLOT(showTopActionBar()));
+	
+	// Create button for showing the top bar again after hiding it
+	int icon_size_pixel = qRound(Util::mmToPixelLogical(10));
+	const int button_icon_size = icon_size_pixel - 12;
+	QSize icon_size = QSize(button_icon_size, button_icon_size);
+	
+	QIcon icon = show_top_bar_action->icon();
+	QPixmap pixmap = icon.pixmap(icon_size, QIcon::Normal, QIcon::Off);
+	if (pixmap.width() < button_icon_size)
+	{
+		pixmap = pixmap.scaled(icon_size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+		icon.addPixmap(pixmap);
+		show_top_bar_action->setIcon(icon);
+	}
+	
+	show_top_bar_button = new QToolButton(window);
+	show_top_bar_button->setDefaultAction(show_top_bar_action);
+	show_top_bar_button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	show_top_bar_button->setAutoRaise(true);
+	show_top_bar_button->setIconSize(icon_size);
+	show_top_bar_button->setGeometry(0, 0, button_icon_size, button_icon_size);
+	
+	
+	// Create bottom action bar
+	bottom_action_bar = new ActionGridBar(ActionGridBar::Horizontal, 2);
 	
 	// Left side
 	int col = 0;
-	bottom_bar->addAction(zoom_in_act, 0, col);
-	bottom_bar->addAction(pan_act, 1, col++);
+	bottom_action_bar->addAction(zoom_in_act, 0, col);
+	bottom_action_bar->addAction(pan_act, 1, col++);
 	
-	bottom_bar->addAction(zoom_out_act, 0, col++);
+	bottom_action_bar->addAction(zoom_out_act, 0, col++);
 	//bottom_bar->addAction(temp_marker_delete_act, 1, col);
 	
 	//bottom_bar->addAction(temp_marker_path_act, 0, col);
 	//bottom_bar->addAction(temp_marker_point_act, 1, col);
 	col++;
 	
-	bottom_bar->addAction(paint_on_template_act, 0, col);
-	bottom_bar->addAction(paint_on_template_settings_act, 1, col++);
+	bottom_action_bar->addAction(paint_on_template_act, 0, col);
+	bottom_action_bar->addAction(paint_on_template_settings_act, 1, col++);
 	
 	// Right side
 	//bottom_bar->addActionAtEnd(symbol_selector_act, 0, 1, 2, 2);
 	
 	col = 2;
-	bottom_bar->addActionAtEnd(draw_point_act, 0, col++);
+	bottom_action_bar->addActionAtEnd(draw_point_act, 0, col++);
 	//bottom_bar->addActionAtEnd(gps_set_point_act, 1, col);
 	
-	bottom_bar->addActionAtEnd(draw_path_act, 0, col++);
+	bottom_action_bar->addActionAtEnd(draw_path_act, 0, col++);
 	//bottom_bar->addActionAtEnd(draw_freehand_act, 1, col);
 	
-	bottom_bar->addActionAtEnd(draw_rectangle_act, 0, col);
-	bottom_bar->addActionAtEnd(draw_circle_act, 1, col++);
+	bottom_action_bar->addActionAtEnd(draw_rectangle_act, 0, col);
+	bottom_action_bar->addActionAtEnd(draw_circle_act, 1, col++);
 	
-	bottom_bar->addActionAtEnd(draw_fill_act, 0, col++);
+	bottom_action_bar->addActionAtEnd(draw_fill_act, 0, col++);
 	//bottom_bar->addActionAtEnd(draw_text_act, 1, col++);
 	
 	
-	ActionGridBar* top_bar = new ActionGridBar(ActionGridBar::Horizontal, 2);
+	// Create top action bar
+	top_action_bar = new ActionGridBar(ActionGridBar::Horizontal, 2);
 	
 	// Left side
 	col = 0;
-	//top_bar->addAction(toggle_top_bar_act, 0, col);
-	top_bar->addAction(window->getSaveAct(), 1, col++);
+	top_action_bar->addAction(hide_top_bar_action, 0, col);
+	top_action_bar->addAction(window->getSaveAct(), 1, col++);
 	
-	top_bar->addAction(compass_action, 0, col);
-	top_bar->addAction(gps_display_action, 1, col++);
+	top_action_bar->addAction(compass_action, 0, col);
+	top_action_bar->addAction(gps_display_action, 1, col++);
 	
-	top_bar->addAction(gps_distance_rings_action, 0, col++);
+	top_action_bar->addAction(gps_distance_rings_action, 0, col++);
 	//top_bar->addAction(gps_follow_action, 1, col);
 	
-	top_bar->addAction(show_grid_act, 0, col);
-	top_bar->addAction(show_all_act, 1, col++);
+	top_action_bar->addAction(show_grid_act, 0, col);
+	top_action_bar->addAction(show_all_act, 1, col++);
 	
 	// Right side
 	col = 0;
-	top_bar->addActionAtEnd(window->getCloseAct(), 0, col);
+	top_action_bar->addActionAtEnd(window->getCloseAct(), 0, col);
 	//top_bar->addActionAtEnd(mobile_overflow_action, 1, col);
 	col++;
 	
-	top_bar->addActionAtEnd(redo_act, 0, col);
-	top_bar->addActionAtEnd(undo_act, 1, col++);
+	top_action_bar->addActionAtEnd(redo_act, 0, col);
+	top_action_bar->addActionAtEnd(undo_act, 1, col++);
 	
-	top_bar->addActionAtEnd(touch_cursor_action, 0, col++);
+	top_action_bar->addActionAtEnd(touch_cursor_action, 0, col++);
 	//top_bar->addActionAtEnd(template_toggle_action, 1, col);
 	
-	top_bar->addActionAtEnd(edit_tool_act, 0, col);
-	top_bar->addActionAtEnd(edit_line_tool_act, 1, col++);
+	top_action_bar->addActionAtEnd(edit_tool_act, 0, col);
+	top_action_bar->addActionAtEnd(edit_line_tool_act, 1, col++);
 	
-	top_bar->addActionAtEnd(delete_act, 0, col);
-	top_bar->addActionAtEnd(duplicate_act, 1, col++);
+	top_action_bar->addActionAtEnd(delete_act, 0, col);
+	top_action_bar->addActionAtEnd(duplicate_act, 1, col++);
 	
-	top_bar->addActionAtEnd(switch_symbol_act, 0, col);
-	top_bar->addActionAtEnd(fill_border_act, 1, col++);
+	top_action_bar->addActionAtEnd(switch_symbol_act, 0, col);
+	top_action_bar->addActionAtEnd(fill_border_act, 1, col++);
 	
-	top_bar->addActionAtEnd(switch_dashes_act, 0, col);
-	top_bar->addActionAtEnd(boolean_union_act, 1, col++);
+	top_action_bar->addActionAtEnd(switch_dashes_act, 0, col);
+	top_action_bar->addActionAtEnd(boolean_union_act, 1, col++);
 	
-	top_bar->addActionAtEnd(cut_tool_act, 0, col);
-	top_bar->addActionAtEnd(connect_paths_act, 1, col++);
+	top_action_bar->addActionAtEnd(cut_tool_act, 0, col);
+	top_action_bar->addActionAtEnd(connect_paths_act, 1, col++);
 	
-	top_bar->addActionAtEnd(rotate_act, 0, col);
-	top_bar->addActionAtEnd(cut_hole_act, 1, col++);
+	top_action_bar->addActionAtEnd(rotate_act, 0, col);
+	top_action_bar->addActionAtEnd(cut_hole_act, 1, col++);
 	
-	top_bar->addActionAtEnd(scale_act, 0, col);
-	top_bar->addActionAtEnd(rotate_pattern_act, 1, col++);
+	top_action_bar->addActionAtEnd(scale_act, 0, col);
+	top_action_bar->addActionAtEnd(rotate_pattern_act, 1, col++);
 	
-	top_bar->addActionAtEnd(convert_to_curves_act, 0, col);
-	top_bar->addActionAtEnd(simplify_path_act, 1, col++);
+	top_action_bar->addActionAtEnd(convert_to_curves_act, 0, col);
+	top_action_bar->addActionAtEnd(simplify_path_act, 1, col++);
 	
-	top_bar->addActionAtEnd(distribute_points_act, 0, col);
-	top_bar->addActionAtEnd(boolean_difference_act, 1, col++);
+	top_action_bar->addActionAtEnd(distribute_points_act, 0, col);
+	top_action_bar->addActionAtEnd(boolean_difference_act, 1, col++);
 	
-	top_bar->addActionAtEnd(measure_act, 0, col);
-	top_bar->addActionAtEnd(boolean_merge_holes_act, 1, col++);
+	top_action_bar->addActionAtEnd(measure_act, 0, col);
+	top_action_bar->addActionAtEnd(boolean_merge_holes_act, 1, col++);
 	
 	
 	QWidget* container_widget = new QWidget();
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->setMargin(0);
 	layout->setSpacing(0);
-	layout->addWidget(top_bar);
+	layout->addWidget(top_action_bar);
 	layout->addWidget(map_widget, 1);
-	layout->addWidget(bottom_bar);
+	layout->addWidget(bottom_action_bar);
 	container_widget->setLayout(layout);
 	window->setCentralWidget(container_widget);
 }
@@ -2701,6 +2732,18 @@ void MapEditorController::enableGPSDistanceRings(bool enable)
 void MapEditorController::enableCompassDisplay(bool enable)
 {
 	compass_display->enable(enable);
+}
+
+void MapEditorController::hideTopActionBar()
+{
+	top_action_bar->hide();
+	show_top_bar_button->show();
+}
+
+void MapEditorController::showTopActionBar()
+{
+	show_top_bar_button->hide();
+	top_action_bar->show();
 }
 
 void MapEditorController::addMapPart()
