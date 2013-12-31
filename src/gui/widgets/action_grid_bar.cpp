@@ -28,6 +28,7 @@
 #include <QScreen>
 #include <QKeyEvent>
 #include <QDebug>
+#include <QMenu>
 
 #include "../src/util.h"
 
@@ -39,6 +40,7 @@ ActionGridBar::ActionGridBar(Direction direction, int rows, QWidget* parent)
 {
 	this->direction = direction;
 	this->rows = rows;
+	next_id = 0;
 	
 	// Will be calculated in resizeEvent()
 	cols = 1;
@@ -47,6 +49,13 @@ ActionGridBar::ActionGridBar(Direction direction, int rows, QWidget* parent)
 		setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	else
 		setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+	
+	// Create overflow action
+	overflow_action = new QAction(QIcon(":/images/three-dots.png"), tr("Show remaining items"), this);
+ 	connect(overflow_action, SIGNAL(triggered()), this, SLOT(overflowActionClicked()));
+	overflow_button = NULL;
+	overflow_menu = new QMenu(this);
+	include_overflow_from_list.push_back(this);
 }
 
 int ActionGridBar::getRows() const
@@ -80,6 +89,7 @@ void ActionGridBar::addAction(QAction* action, int row, int col, int row_span, i
 
 	// Add the item
 	GridItem newItem;
+	newItem.id = next_id ++;
 	newItem.action = action;
 	newItem.button = new QToolButton();
 	newItem.button->setDefaultAction(action);
@@ -93,11 +103,25 @@ void ActionGridBar::addAction(QAction* action, int row, int col, int row_span, i
 	newItem.col_span = col_span;
 	newItem.at_end = at_end;
 	items.push_back(newItem);
+	
+	// If this is the overflow action, remember the button.
+	if (action == overflow_action)
+		overflow_button = newItem.button;
 }
 
 void ActionGridBar::addActionAtEnd(QAction* action, int row, int col, int row_span, int col_span)
 {
 	addAction(action, row, col, row_span, col_span, true);
+}
+
+QAction* ActionGridBar::getOverflowAction() const
+{
+	return overflow_action;
+}
+
+void ActionGridBar::setToUseOverflowActionFrom(ActionGridBar* other_bar)
+{
+	other_bar->include_overflow_from_list.push_back(this);
 }
 
 QSize ActionGridBar::sizeHint() const
@@ -109,8 +133,30 @@ QSize ActionGridBar::sizeHint() const
 		return QSize(height_px, 100);
 }
 
+bool ActionGridBar::compareItemPtrId(ActionGridBar::GridItem* a, ActionGridBar::GridItem* b)
+{
+	return a->id < b->id;
+}
+
+void ActionGridBar::overflowActionClicked()
+{
+	overflow_menu->clear();
+	for (size_t k = 0; k < include_overflow_from_list.size(); ++ k)
+	{
+		ActionGridBar* source_bar = include_overflow_from_list[k];
+		for (size_t i = 0, end = source_bar->hidden_items.size(); i < end; ++ i)
+			overflow_menu->addAction(source_bar->hidden_items[i]->action);
+	}
+	if (overflow_button)
+		overflow_menu->popup(overflow_button->mapToGlobal(QPoint(0, overflow_button->height())));
+	else
+		overflow_menu->popup(mapToGlobal(QPoint(0, height())));
+}
+
 void ActionGridBar::resizeEvent(QResizeEvent* event)
 {
+	hidden_items.clear();
+	
 	int length_px = (direction == Horizontal) ? width() : height();
 	float length_millimeters = Util::pixelToMMLogical(length_px);
 	cols = qMax(1, qFloor(length_millimeters / millimeters_per_button));
@@ -151,6 +197,7 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 		{
 			item.button->hide();
 			item.button_hidden = true;
+			hidden_items.push_back(&item);
 			continue;
 		}
 		
@@ -199,6 +246,9 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 		for (int i = 0; i < rows; ++ i)
 			new_layout->setColumnStretch(i, 1);
 	}
+	
+	overflow_action->setEnabled(! hidden_items.empty());
+	std::sort(hidden_items.begin(), hidden_items.end(), compareItemPtrId);
 	
 	event->accept();
 }

@@ -25,6 +25,7 @@
 
 QT_BEGIN_NAMESPACE
 class QToolButton;
+class QMenu;
 QT_END_NAMESPACE
 
 /**
@@ -42,6 +43,10 @@ public:
 	
 	/**
 	 * Constructs a new ActionGridBar.
+	 * 
+	 * After constructions, add items and either insert the overflow action
+	 * with addAction(getOverflowAction(), ...) or set another ActionGridBar
+	 * to include the overflow items.
 	 * 
 	 * @param direction Direction of the toolbar.
 	 * @param height_items Number of rows in the direction opposite to the main
@@ -61,11 +66,23 @@ public:
 	/** Adds an action to the grid, starting from the opposite direction. */
 	void addActionAtEnd(QAction* action, int row, int col, int row_span = 1, int col_span = 1);
 	
+	/** Returns the overflow action (to be inserted into the action bar with addAction()).
+	 *  The overflow action is enabled if there are items which do not fit into
+	 *  the action bar. On click, it shows a list of those actions. */
+	QAction* getOverflowAction() const;
+	
+	/** Configures this bar to put its overflow actions into another bar. */
+	void setToUseOverflowActionFrom(ActionGridBar* other_bar);
+	
 	virtual QSize sizeHint() const;
+	
+protected slots:
+	void overflowActionClicked();
 	
 protected:
 	struct GridItem
 	{
+		int id; // sequential id for sorting in overflow item chooser
 		int row;
 		int col;
 		int row_span;
@@ -76,12 +93,19 @@ protected:
 		bool button_hidden;
 	};
 	
+	static bool compareItemPtrId(GridItem* a, GridItem* b);
 	virtual void resizeEvent(QResizeEvent* event);
 	
 	Direction direction;
 	int rows;
 	int cols;
 	std::vector< GridItem > items;
+	int next_id;
+	QAction* overflow_action;
+	QToolButton* overflow_button;
+	QMenu* overflow_menu;
+	std::vector< GridItem* > hidden_items;
+	std::vector< ActionGridBar* > include_overflow_from_list;
 };
 
 #endif

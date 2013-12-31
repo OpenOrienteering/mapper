@@ -1072,7 +1072,7 @@ void MapEditorController::createMobileGUI()
 	// Right side
 	col = 0;
 	top_action_bar->addActionAtEnd(window->getCloseAct(), 0, col);
-	//top_bar->addActionAtEnd(mobile_overflow_action, 1, col);
+	top_action_bar->addActionAtEnd(top_action_bar->getOverflowAction(), 1, col);
 	col++;
 	
 	top_action_bar->addActionAtEnd(redo_act, 0, col);
@@ -1110,6 +1110,8 @@ void MapEditorController::createMobileGUI()
 	
 	top_action_bar->addActionAtEnd(measure_act, 0, col);
 	top_action_bar->addActionAtEnd(boolean_merge_holes_act, 1, col++);
+	
+	bottom_action_bar->setToUseOverflowActionFrom(top_action_bar);
 	
 	
 	QWidget* container_widget = new QWidget();
