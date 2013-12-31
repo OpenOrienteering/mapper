@@ -82,9 +82,12 @@ public:
 	inline bool hasUnsavedChanges() const {return has_unsaved_changes;}
 	
 	
-	/** Sets the text in the status bar.
-	 */ 
+	/** Sets the text in the status bar. */ 
 	void setStatusBarText(const QString& text);
+	/** Shows a temporary message in the status bar. */
+	void showStatusBarMessage(const QString& text, int timeout = 0);
+	/** Clears temporary messages set in the status bar with showStatusBarMessage(). */
+	void clearStatusBarMessage();
 	
 	
 	/** Enable or disable shortcuts.
@@ -102,6 +105,12 @@ public:
 	
 	/** Returns an QAction which serves as extension point in the file menu. */
 	inline QAction* getFileMenuExtensionAct() const {return settings_act;}
+	
+	/** Returns the save action. */
+	inline QAction* getSaveAct() const {return save_act;}
+	
+	/** Returns the close action. */
+	inline QAction* getCloseAct() const {return close_act;}
 	
 	
 	/**
@@ -287,6 +296,7 @@ private:
 	
 	/// The active controller
 	MainWindowController* controller;
+	bool create_menu;
 	bool show_menu;
 	bool disable_shortcuts;
 	

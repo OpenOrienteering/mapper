@@ -66,7 +66,13 @@ MainWindow::MainWindow(bool as_main_window)
 	controller = NULL;
 	has_unsaved_changes = false;
 	has_opened_file = false;
-	show_menu = as_main_window;
+// #if defined(ANDROID)
+	create_menu = as_main_window;
+	show_menu = false;
+// #else
+//	create_menu = as_main_window;
+// 	show_menu = create_menu;
+// #endif
 	disable_shortcuts = false;
 	setCurrentFile("");
 	maximized_before_fullscreen = false;
@@ -76,8 +82,10 @@ MainWindow::MainWindow(bool as_main_window)
 	setAttribute(Qt::WA_DeleteOnClose);
 	
 	status_label = new QLabel();
+#if ! defined(ANDROID)
 	statusBar()->addWidget(status_label, 1);
 	statusBar()->setSizeGripEnabled(as_main_window);
+#endif
 	
 	central_widget = new QStackedWidget(this);
 	QMainWindow::setCentralWidget(central_widget);
@@ -143,16 +151,16 @@ void MainWindow::autoSave()
 		}
 		else
 		{
-			statusBar()->showMessage(tr("Auto-saving..."), 0);
+			showStatusBarMessage(tr("Auto-saving..."), 0);
 			if (save())
 			{
 				// Success
-				statusBar()->clearMessage();
+				clearStatusBarMessage();
 			}
 			else
 			{
 				// Failure
-				statusBar()->showMessage(tr("Auto-saving failed!"), 6000);
+				showStatusBarMessage(tr("Auto-saving failed!"), 6000);
 				// Retry after the interval
 				auto_save_timer->start();
 			}
@@ -202,13 +210,13 @@ void MainWindow::setController(MainWindowController* new_controller)
 	disable_shortcuts = false;
 	setCurrentFile("");
 	
-	if (show_menu)
+	if (create_menu)
 		createFileMenu();
 	
 	controller = new_controller;
 	controller->attach(this);
 	
-	if (show_menu)
+	if (create_menu)
 		createHelpMenu();
 		
 #if defined(Q_OS_MAC) && QT_VERSION >= 0x050000
@@ -282,7 +290,11 @@ void MainWindow::createFileMenu()
 	exit_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	connect(exit_act, SIGNAL(triggered()), qApp, SLOT(closeAllWindows()));
 	
-	file_menu = menuBar()->addMenu(tr("&File"));
+	if (show_menu)
+		file_menu = menuBar()->addMenu(tr("&File"));
+	else
+		file_menu = new QMenu(this);
+
 	file_menu->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	file_menu->addAction(new_act);
 	file_menu->addAction(open_act);
@@ -328,12 +340,15 @@ void MainWindow::createHelpMenu()
 #endif
 	connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 	
-	QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
-	helpMenu->addAction(manualAct);
-	helpMenu->addAction(QWhatsThis::createAction(this));
-	helpMenu->addSeparator();
-	helpMenu->addAction(aboutAct);
-	helpMenu->addAction(aboutQtAct);
+	if (show_menu)
+	{
+		QMenu* helpMenu = menuBar()->addMenu(tr("&Help"));
+		helpMenu->addAction(manualAct);
+		helpMenu->addAction(QWhatsThis::createAction(this));
+		helpMenu->addSeparator();
+		helpMenu->addAction(aboutAct);
+		helpMenu->addAction(aboutQtAct);
+	}
 }
 
 void MainWindow::setCurrentFile(const QString& path)
@@ -362,17 +377,20 @@ void MainWindow::setCurrentFile(const QString& path)
 
 void MainWindow::setHasOpenedFile(bool value)
 {
-	if (value && !has_opened_file)
+	if (create_menu)
 	{
-		save_act->setEnabled(true);
-		save_as_act->setEnabled(true);
-		close_act->setEnabled(true);
-	}
-	else if (!value && has_opened_file)
-	{
-		save_act->setEnabled(false);
-		save_as_act->setEnabled(false);
-		close_act->setEnabled(false);
+		if (value && !has_opened_file)
+		{
+			save_act->setEnabled(true);
+			save_as_act->setEnabled(true);
+			close_act->setEnabled(true);
+		}
+		else if (!value && has_opened_file)
+		{
+			save_act->setEnabled(false);
+			save_as_act->setEnabled(false);
+			close_act->setEnabled(false);
+		}
 	}
 	has_opened_file = value;
 	updateWindowTitle();
@@ -397,6 +415,23 @@ void MainWindow::setStatusBarText(const QString& text)
 {
 	status_label->setText(text);
 	status_label->setToolTip(text);
+}
+
+void MainWindow::showStatusBarMessage(const QString& text, int timeout)
+{
+#if defined(ANDROID)
+	Q_UNUSED(text);
+	Q_UNUSED(timeout);
+#else
+	statusBar()->showMessage(text, timeout);
+#endif
+}
+
+void MainWindow::clearStatusBarMessage()
+{
+#if ! defined(ANDROID)
+	statusBar()->clearMessage();
+#endif
 }
 
 void MainWindow::closeFile()
@@ -685,6 +720,9 @@ void MainWindow::openRecentFile()
 
 void MainWindow::updateRecentFileActions()
 {
+	if (! create_menu)
+		return;
+	
 	QStringList files = Settings::getInstance().getSettingCached(Settings::General_RecentFilesList).toStringList();
 	
 	int num_recent_files = qMin(files.size(), (int)max_recent_files);

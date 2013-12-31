@@ -27,6 +27,7 @@
 #include <QAction>
 #include <QScreen>
 #include <QKeyEvent>
+#include <QDebug>
 
 #include "../src/util.h"
 
@@ -58,7 +59,7 @@ int ActionGridBar::getCols() const
 	return cols;
 }
 
-void ActionGridBar::addAction(QAction* action, int row, int col, int row_span, int col_span)
+void ActionGridBar::addAction(QAction* action, int row, int col, int row_span, int col_span, bool at_end)
 {
 	// Determine icon size (important for high-dpi screens).
 	// Use a somewhat smaller size than what would cover the whole icon to
@@ -78,7 +79,13 @@ void ActionGridBar::addAction(QAction* action, int row, int col, int row_span, i
 	newItem.col = col;
 	newItem.row_span = row_span;
 	newItem.col_span = col_span;
+	newItem.at_end = at_end;
 	items.push_back(newItem);
+}
+
+void ActionGridBar::addActionAtEnd(QAction* action, int row, int col, int row_span, int col_span)
+{
+	addAction(action, row, col, row_span, col_span, true);
 }
 
 QSize ActionGridBar::sizeHint() const
@@ -97,13 +104,38 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 	cols = qMax(1, qFloor(length_millimeters / millimeters_per_button));
 	
 	delete layout();
-	QGridLayout* newLayout = new QGridLayout(this);
-	newLayout->setContentsMargins(0, 0, 0, 0);
-	newLayout->setSpacing(0);
+	QGridLayout* new_layout = new QGridLayout(this);
+	new_layout->setContentsMargins(0, 0, 0, 0);
+	new_layout->setSpacing(0);
 	for (size_t i = 0, end = items.size(); i < end; ++ i)
 	{
 		GridItem& item = items[i];
-		if (item.row >= rows || item.col >= cols)
+		int resulting_col = item.at_end ? (cols - 1 - item.col) : item.col;
+		bool hidden = item.row >= rows || item.col >= cols;
+		if (! hidden)
+		{
+			// Check for collisions with other items
+			for (size_t k = 0; k < items.size(); ++ k)
+			{
+				if (i == k)
+					continue;
+				GridItem& other = items[k];
+				int resulting_col_other = other.at_end ? (cols - 1 - other.col) : other.col;
+				if (item.row == other.row && resulting_col == resulting_col_other)
+				{
+					// Check which item "wins" this spot and which will be hidden
+					if (item.at_end == other.at_end)
+						qDebug() << "Warning: two items set to same position in ActionGridBar, this case is not handled!";
+					if ((item.at_end && resulting_col <= cols / 2)
+						|| (! item.at_end && resulting_col > cols / 2))
+					{
+						hidden = true;
+						break;
+					}
+				}
+			}
+		}
+		if (hidden)
 		{
 			item.button->hide();
 			item.button_hidden = true;
@@ -112,21 +144,21 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 		
 		if (direction == Horizontal)
 		{
-			newLayout->addWidget(
+			new_layout->addWidget(
 				item.button,
 				item.row,
-				item.col,
+				resulting_col,
 				qMin(item.row_span, rows - item.row),
-				qMin(item.col_span, cols - item.col)
+				qMin(item.col_span, cols - resulting_col)
 			);
 		}
 		else
 		{
-			newLayout->addWidget(
+			new_layout->addWidget(
 				item.button,
-				item.col,
+				resulting_col,
 				item.row,
-				qMin(item.col_span, cols - item.col),
+				qMin(item.col_span, cols - resulting_col),
 				qMin(item.row_span, rows - item.row)
 			);
 		}
@@ -144,16 +176,16 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 	if (direction == Horizontal)
 	{
 		for (int i = 0; i < cols; ++ i)
-			newLayout->setColumnStretch(i, 1);
+			new_layout->setColumnStretch(i, 1);
 		for (int i = 0; i < rows; ++ i)
-			newLayout->setRowStretch(i, 1);
+			new_layout->setRowStretch(i, 1);
 	}
 	else
 	{
 		for (int i = 0; i < cols; ++ i)
-			newLayout->setRowStretch(i, 1);
+			new_layout->setRowStretch(i, 1);
 		for (int i = 0; i < rows; ++ i)
-			newLayout->setColumnStretch(i, 1);
+			new_layout->setColumnStretch(i, 1);
 	}
 	
 	event->accept();

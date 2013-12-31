@@ -959,7 +959,7 @@ void PrintWidget::printClicked()
 			return;
 		}
 		
-		main_window->statusBar()->showMessage(tr("Exported successfully to %1").arg(path), 4000);
+		main_window->showStatusBarMessage(tr("Exported successfully to %1").arg(path), 4000);
 		emit finished(0);
 		return;
 	}
@@ -990,7 +990,7 @@ void PrintWidget::printClicked()
 	{
 		if (printer->abort() || !map_printer->isPrinter())
 		{
-			main_window->statusBar()->showMessage(tr("Canceled."), 4000);
+			main_window->showStatusBarMessage(tr("Canceled."), 4000);
 		}
 		else
 		{
@@ -1002,11 +1002,11 @@ void PrintWidget::printClicked()
 	}
 	else if (map_printer->isPrinter())
 	{
-		main_window->statusBar()->showMessage(tr("Successfully created print job"), 4000);
+		main_window->showStatusBarMessage(tr("Successfully created print job"), 4000);
 	}
 	else
 	{
-		main_window->statusBar()->showMessage(tr("Exported successfully to %1").arg(path), 4000);
+		main_window->showStatusBarMessage(tr("Exported successfully to %1").arg(path), 4000);
 	}
 	
 	delete printer;

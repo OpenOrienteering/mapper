@@ -56,7 +56,10 @@ public:
 	int getCols() const;
 	
 	/** Adds an action to the grid. */
-	void addAction(QAction* action, int row, int col, int row_span = 1, int col_span = 1);
+	void addAction(QAction* action, int row, int col, int row_span = 1, int col_span = 1, bool at_end = false);
+	
+	/** Adds an action to the grid, starting from the opposite direction. */
+	void addActionAtEnd(QAction* action, int row, int col, int row_span = 1, int col_span = 1);
 	
 	virtual QSize sizeHint() const;
 	
@@ -67,6 +70,7 @@ protected:
 		int col;
 		int row_span;
 		int col_span;
+		bool at_end;
 		QAction* action;
 		QToolButton* button;
 		bool button_hidden;

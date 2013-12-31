@@ -89,11 +89,11 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	this->mode = mode;
 	
 	// TODO: Allow to change this in the settings
-#ifdef Q_OS_ANDROID
+// #ifdef Q_OS_ANDROID
 	mobileMode = true;
-#else
-	mobileMode = false;
-#endif
+// #else
+// 	mobileMode = false;
+// #endif
 	
 	this->map = NULL;
 	main_view = NULL;
@@ -477,9 +477,6 @@ void MapEditorController::attach(MainWindow* window)
 		// Set the coordinates display mode
 		map_widget->setCoordsDisplay(MapWidget::MAP_COORDS);
 	}
-	
-	if (mobileMode)
-		window->statusBar()->hide();
 }
 
 QAction* MapEditorController::newAction(const char* id, const QString &tr_text, QObject* receiver, const char* slot, const char* icon, const QString& tr_tip, const QString& whatsThisLink)
@@ -990,41 +987,113 @@ void MapEditorController::createPieMenu(PieMenu* menu)
 }
 
 void MapEditorController::createMobileGUI()
-{	
-	// TODO: allow for different orientations (adjust layout and ActionGridBars)
+{
+	ActionGridBar* bottom_bar = new ActionGridBar(ActionGridBar::Horizontal, 2);
 	
-	ActionGridBar* bottomBar = new ActionGridBar(ActionGridBar::Horizontal, 2);
-	bottomBar->addAction(paint_on_template_act, 0, 0);
-	bottomBar->addAction(paint_on_template_settings_act, 0, 1);
+	// Left side
+	int col = 0;
+	bottom_bar->addAction(zoom_in_act, 0, col);
+	bottom_bar->addAction(zoom_out_act, 1, col++);
 	
-	bottomBar->addAction(pan_act, 0, 2);
-	bottomBar->addAction(zoom_in_act, 0, 3);
-	bottomBar->addAction(zoom_out_act, 0, 4);
-
-	bottomBar->addAction(touch_cursor_action, 0, 6);
-	bottomBar->addAction(gps_display_action, 0, 7);
-	bottomBar->addAction(gps_distance_rings_action, 0, 8);
+	bottom_bar->addAction(pan_act, 0, col++);
+	//bottom_bar->addAction(temp_marker_delete_act, 1, col);
 	
-	bottomBar->addAction(compass_action, 1, 6);
+	//bottom_bar->addAction(temp_marker_path_act, 0, col);
+	//bottom_bar->addAction(temp_marker_point_act, 1, col);
+	col++;
 	
-	//bottomBar->addAction(undo_act, 0, 6);
-	//bottomBar->addAction(redo_act, 0, 7);
+	bottom_bar->addAction(paint_on_template_act, 0, col);
+	bottom_bar->addAction(paint_on_template_settings_act, 1, col++);
+	
+	// Right side
+	//bottom_bar->addActionAtEnd(symbol_selector_act, 0, 1, 2, 2);
+	
+	col = 2;
+	bottom_bar->addActionAtEnd(draw_point_act, 0, col++);
+	//bottom_bar->addActionAtEnd(gps_set_point_act, 1, col);
+	
+	bottom_bar->addActionAtEnd(draw_path_act, 0, col++);
+	//bottom_bar->addActionAtEnd(draw_freehand_act, 1, col);
+	
+	bottom_bar->addActionAtEnd(draw_rectangle_act, 0, col);
+	bottom_bar->addActionAtEnd(draw_circle_act, 1, col++);
+	
+	bottom_bar->addActionAtEnd(draw_fill_act, 0, col++);
+	//bottom_bar->addActionAtEnd(draw_text_act, 1, col++);
+	
+	
+	ActionGridBar* top_bar = new ActionGridBar(ActionGridBar::Horizontal, 2);
+	
+	// Left side
+	col = 0;
+	//top_bar->addAction(toggle_top_bar_act, 0, col);
+	top_bar->addAction(window->getSaveAct(), 1, col++);
+	
+	top_bar->addAction(compass_action, 0, col);
+	top_bar->addAction(gps_display_action, 1, col++);
+	
+	top_bar->addAction(gps_distance_rings_action, 0, col++);
+	//top_bar->addAction(gps_follow_action, 1, col);
+	
+	top_bar->addAction(show_grid_act, 0, col);
+	top_bar->addAction(show_all_act, 1, col++);
+	
+	// Right side
+	col = 0;
+	//top_bar->addActionAtEnd(mobile_menu_action, 0, col);
+	//top_bar->addActionAtEnd(mobile_overflow_action, 1, col);
+	col++;
+	
+	top_bar->addActionAtEnd(redo_act, 0, col);
+	top_bar->addActionAtEnd(undo_act, 1, col++);
+	
+	top_bar->addActionAtEnd(touch_cursor_action, 0, col++);
+	//top_bar->addActionAtEnd(template_toggle_action, 1, col);
+	
+	top_bar->addActionAtEnd(edit_tool_act, 0, col);
+	top_bar->addActionAtEnd(edit_line_tool_act, 1, col++);
+	
+	top_bar->addActionAtEnd(delete_act, 0, col);
+	top_bar->addActionAtEnd(duplicate_act, 1, col++);
+	
+	top_bar->addActionAtEnd(switch_symbol_act, 0, col);
+	top_bar->addActionAtEnd(fill_border_act, 1, col++);
+	
+	top_bar->addActionAtEnd(switch_dashes_act, 0, col);
+	top_bar->addActionAtEnd(boolean_union_act, 1, col++);
+	
+	top_bar->addActionAtEnd(cut_tool_act, 0, col);
+	top_bar->addActionAtEnd(connect_paths_act, 1, col++);
+	
+	top_bar->addActionAtEnd(rotate_act, 0, col);
+	top_bar->addActionAtEnd(cut_hole_act, 1, col++);
+	
+	top_bar->addActionAtEnd(scale_act, 0, col);
+	top_bar->addActionAtEnd(rotate_pattern_act, 1, col++);
+	
+	top_bar->addActionAtEnd(convert_to_curves_act, 0, col);
+	top_bar->addActionAtEnd(simplify_path_act, 1, col++);
+	
+	top_bar->addActionAtEnd(distribute_points_act, 0, col);
+	top_bar->addActionAtEnd(boolean_difference_act, 1, col++);
+	
+	top_bar->addActionAtEnd(measure_act, 0, col);
+	top_bar->addActionAtEnd(boolean_merge_holes_act, 1, col++);
+	
 	
 	QWidget* container_widget = new QWidget();
 	QVBoxLayout* layout = new QVBoxLayout();
 	layout->setMargin(0);
 	layout->setSpacing(0);
+	layout->addWidget(top_bar);
 	layout->addWidget(map_widget, 1);
-	layout->addWidget(bottomBar);
+	layout->addWidget(bottom_bar);
 	container_widget->setLayout(layout);
 	window->setCentralWidget(container_widget);
 }
 
 void MapEditorController::detach()
 {
-	if (mobileMode)
-		window->statusBar()->show();
-	
 	if (!mobileMode)
 		saveWindowState();
 	being_destructed = true;
@@ -1181,7 +1250,7 @@ void MapEditorController::doUndo(bool redo)
 void MapEditorController::cut()
 {
 	copy();
-	window->statusBar()->showMessage(tr("Cut %1 object(s)").arg(map->getNumSelectedObjects()), 2000);
+	window->showStatusBarMessage(tr("Cut %1 object(s)").arg(map->getNumSelectedObjects()), 2000);
 	map->deleteSelectedObjects();
 }
 
@@ -1236,7 +1305,7 @@ void MapEditorController::copy()
 	QApplication::clipboard()->setMimeData(mime_data);
 	
 	// Show message
-	window->statusBar()->showMessage(tr("Copied %1 object(s)").arg(map->getNumSelectedObjects()), 2000);
+	window->showStatusBarMessage(tr("Copied %1 object(s)").arg(map->getNumSelectedObjects()), 2000);
 }
 
 void MapEditorController::paste()
@@ -1276,7 +1345,7 @@ void MapEditorController::paste()
 	map->importMap(paste_map, Map::MinimalObjectImport, window);
 	
 	// Show message
-	window->statusBar()->showMessage(tr("Pasted %1 object(s)").arg(paste_map->getNumObjects()), 2000);
+	window->showStatusBarMessage(tr("Pasted %1 object(s)").arg(paste_map->getNumObjects()), 2000);
 	delete paste_map;
 }
 
@@ -1914,7 +1983,7 @@ void MapEditorController::duplicateClicked()
 	map->setObjectsDirty();
 	map->objectUndoManager().addNewUndoStep(undo_step);
 	setEditTool();
-	window->statusBar()->showMessage(tr("%1 object(s) duplicated").arg((int)new_objects.size()), 2000);
+	window->showStatusBarMessage(tr("%1 object(s) duplicated").arg((int)new_objects.size()), 2000);
 }
 
 void MapEditorController::switchSymbolClicked()
@@ -2642,14 +2711,16 @@ void MapEditorController::addMapPart()
 		return;
 	MapPart* part = new MapPart(name, map);
 	int index = map->getCurrentPartIndex() + 1;
-	mappart_selector_box->insertItem(index, name);
+	if (mappart_selector_box)
+		mappart_selector_box->insertItem(index, name);
 	map->addPart(part, index);
 	map->setCurrentPart(part);
 	
 	QAction* action = new QAction(name, this);
 	mappart_move_mapper->setMapping(action, index);
 	connect(action, SIGNAL(triggered()), mappart_move_mapper, SLOT(map()));
-	mappart_move_menu->addAction(action);
+	if (mappart_move_menu)
+		mappart_move_menu->addAction(action);
 }
 
 void MapEditorController::removeMapPart()
@@ -2657,9 +2728,11 @@ void MapEditorController::removeMapPart()
 	int index = map->getCurrentPartIndex();
 	map->removePart(index);
 	QAction* action = qobject_cast<QAction*>(mappart_move_mapper->mapping(index));
-	mappart_move_menu->removeAction(action);
+	if (mappart_move_menu)
+		mappart_move_menu->removeAction(action);
 	action->deleteLater();
-	mappart_selector_box->removeItem(index);
+	if (mappart_selector_box)
+		mappart_selector_box->removeItem(index);
 }
 
 void MapEditorController::changeMapPart(int part)
@@ -2670,7 +2743,7 @@ void MapEditorController::changeMapPart(int part)
 
 void MapEditorController::selectMapPart(int part)
 {
-	if (window)
+	if (window && mappart_selector_box)
 		mappart_selector_box->setCurrentIndex(part);
 }
 
@@ -2699,9 +2772,11 @@ void MapEditorController::mergeMapPart()
 		map->mergeParts(current, parts.indexOf(dialog.textValue()));
 		// so we have to remember to remove it from the menu
 		QAction* action = qobject_cast<QAction*>(mappart_move_mapper->mapping(current));
-		mappart_move_menu->removeAction(action);
+		if (mappart_move_menu)
+			mappart_move_menu->removeAction(action);
 		action->deleteLater();
-		mappart_selector_box->removeItem(current);
+		if (mappart_selector_box)
+			mappart_selector_box->removeItem(current);
 	}
 }
 
