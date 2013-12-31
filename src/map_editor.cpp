@@ -681,7 +681,7 @@ void MapEditorController::createActions()
 	paint_on_template_act->setWhatsThis("<a href=\"toolbars.html#draw_on_template\">See more</a>");
 	connect(paint_on_template_act, SIGNAL(triggered(bool)), this, SLOT(paintOnTemplateClicked(bool)));
 
-	paint_on_template_settings_act = new QAction(QIcon(":/images/pencil.png"), tr("Paint on template settings"), this);
+	paint_on_template_settings_act = new QAction(QIcon(":/images/paint-on-template-settings.png"), tr("Paint on template settings"), this);
 	paint_on_template_settings_act->setWhatsThis("<a href=\"toolbars.html#draw_on_template\">See more</a>");
 	connect(paint_on_template_settings_act, SIGNAL(triggered(bool)), this, SLOT(paintOnTemplateSelectClicked()));
 
@@ -993,9 +993,9 @@ void MapEditorController::createMobileGUI()
 	// Left side
 	int col = 0;
 	bottom_bar->addAction(zoom_in_act, 0, col);
-	bottom_bar->addAction(zoom_out_act, 1, col++);
+	bottom_bar->addAction(pan_act, 1, col++);
 	
-	bottom_bar->addAction(pan_act, 0, col++);
+	bottom_bar->addAction(zoom_out_act, 0, col++);
 	//bottom_bar->addAction(temp_marker_delete_act, 1, col);
 	
 	//bottom_bar->addAction(temp_marker_path_act, 0, col);
