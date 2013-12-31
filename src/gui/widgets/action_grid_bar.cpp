@@ -65,15 +65,27 @@ void ActionGridBar::addAction(QAction* action, int row, int col, int row_span, i
 	// Use a somewhat smaller size than what would cover the whole icon to
 	// account for the (assumed) button border.
 	int icon_size_pixel = qRound(Util::mmToPixelLogical(millimeters_per_button));
-	const int button_icon_size = icon_size_pixel - 8;
+	const int button_icon_size = icon_size_pixel - 12;
+	QSize icon_size = QSize(button_icon_size, button_icon_size);
+	
+	// Ensure that the icon of the given action is big enough. If not, scale it up.
+	QIcon icon = action->icon();
+	QPixmap pixmap = icon.pixmap(icon_size, QIcon::Normal, QIcon::Off);
+	if (pixmap.width() < button_icon_size)
+	{
+		pixmap = pixmap.scaled(icon_size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+		icon.addPixmap(pixmap);
+		action->setIcon(icon);
+	}
 
+	// Add the item
 	GridItem newItem;
 	newItem.action = action;
 	newItem.button = new QToolButton();
 	newItem.button->setDefaultAction(action);
 	newItem.button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	newItem.button->setAutoRaise(true);
-	newItem.button->setIconSize(QSize(button_icon_size, button_icon_size));
+	newItem.button->setIconSize(icon_size);
 	newItem.button_hidden = false;
 	newItem.row = row;
 	newItem.col = col;
