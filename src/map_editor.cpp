@@ -1040,7 +1040,7 @@ void MapEditorController::createMobileGUI()
 	
 	// Right side
 	col = 0;
-	//top_bar->addActionAtEnd(mobile_menu_action, 0, col);
+	top_bar->addActionAtEnd(window->getCloseAct(), 0, col);
 	//top_bar->addActionAtEnd(mobile_overflow_action, 1, col);
 	col++;
 	

@@ -275,7 +275,7 @@ void MainWindow::createFileMenu()
 #endif
 	connect(settings_act, SIGNAL(triggered()), this, SLOT(showSettings()));
 	
-	close_act = new QAction(tr("Close"), this);
+	close_act = new QAction(QIcon(":/images/close.png"), tr("Close"), this);
 	close_act->setShortcut(QKeySequence::Close);
 	close_act->setStatusTip(tr("Close this file"));
 	close_act->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
