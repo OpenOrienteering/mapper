@@ -58,6 +58,11 @@ static QString formatTable(int columns, QStringList items)
 AboutDialog::AboutDialog(QWidget* parent)
  : QDialog(parent)
 {
+#if defined(ANDROID)
+	setWindowState((windowState() & ~(Qt::WindowMinimized | Qt::WindowFullScreen))
+                   | Qt::WindowMaximized);
+#endif
+	
 	setWindowTitle(tr("About %1").arg(APP_NAME));
 	if (parent)
 	{
@@ -93,7 +98,15 @@ AboutDialog::AboutDialog(QWidget* parent)
 	// Tab: About OpenOrienteering Mapper
 	QLabel* about_label = new QLabel(about());
 	about_label->setContentsMargins(left, top, right, bottom);
-	info_tabs->addTab(about_label, tr("About %1").arg(APP_NAME));
+#if defined(ANDROID)
+	about_label->setWordWrap(true);
+	QScrollArea* scroll_area = new QScrollArea();
+	scroll_area->setWidget(about_label);
+	QWidget* about_tab_widget = scroll_area;
+#else
+	QWidget* about_tab_widget = about_label;
+#endif
+	info_tabs->addTab(about_tab_widget, tr("About %1").arg(APP_NAME));
 	connect(about_label, SIGNAL(linkActivated(QString)), this, SIGNAL(linkActivated(QString)));
 	
 	// Tab: License (COPYING)

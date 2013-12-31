@@ -286,10 +286,21 @@ HomeScreenWidgetMobile::HomeScreenWidgetMobile(HomeScreenController* controller,
 	
 	QWidget* file_list_widget = makeFileListWidget(controller, parent);
 	
+	QPushButton* about_button = new QPushButton(tr("About Mapper"));
+	connect(about_button, SIGNAL(clicked(bool)), controller->getWindow(), SLOT(showAbout()));
+	QPushButton* about_qt_button = new QPushButton(tr("About Qt"));
+	connect(about_qt_button, SIGNAL(clicked(bool)), qApp, SLOT(aboutQt()));
+	QHBoxLayout* buttons_layout = new QHBoxLayout();
+	buttons_layout->setContentsMargins(0, 0, 0, 0);
+	buttons_layout->addStretch(1);
+	buttons_layout->addWidget(about_button);
+	buttons_layout->addWidget(about_qt_button);
+	
 	QGridLayout* layout = new QGridLayout();
 	layout->setSpacing(2 * layout->spacing());
 	layout->addWidget(title_label, 0, 0);
  	layout->addWidget(file_list_widget, 1, 0);
+	layout->addLayout(buttons_layout, 2, 0);
 	setLayout(layout);
 	
 	setAutoFillBackground(false);

@@ -89,11 +89,11 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	this->mode = mode;
 	
 	// TODO: Allow to change this in the settings
-// #ifdef Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
 	mobileMode = true;
-// #else
-// 	mobileMode = false;
-// #endif
+#else
+	mobileMode = false;
+#endif
 	
 	this->map = NULL;
 	main_view = NULL;
