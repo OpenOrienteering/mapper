@@ -31,9 +31,7 @@
 #include <QMenu>
 
 #include "../src/util.h"
-
-// TODO: make configurable as a program setting
-const float millimeters_per_button = 10;
+#include "../../settings.h"
 
 ActionGridBar::ActionGridBar(Direction direction, int rows, QWidget* parent)
 : QWidget(parent)
@@ -73,14 +71,13 @@ void ActionGridBar::addAction(QAction* action, int row, int col, int row_span, i
 	// Determine icon size (important for high-dpi screens).
 	// Use a somewhat smaller size than what would cover the whole icon to
 	// account for the (assumed) button border.
-	int icon_size_pixel = qRound(Util::mmToPixelLogical(millimeters_per_button));
-	const int button_icon_size = icon_size_pixel - 12;
-	QSize icon_size = QSize(button_icon_size, button_icon_size);
+	QSize icon_size = getIconSize(row_span, col_span);
 	
 	// Ensure that the icon of the given action is big enough. If not, scale it up.
+	// NOTE: Here, row_span == col_span is assumed.
 	QIcon icon = action->icon();
 	QPixmap pixmap = icon.pixmap(icon_size, QIcon::Normal, QIcon::Off);
-	if (pixmap.width() < button_icon_size)
+	if (! pixmap.isNull() && pixmap.width() < icon_size.width())
 	{
 		pixmap = pixmap.scaled(icon_size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 		icon.addPixmap(pixmap);
@@ -114,6 +111,18 @@ void ActionGridBar::addActionAtEnd(QAction* action, int row, int col, int row_sp
 	addAction(action, row, col, row_span, col_span, true);
 }
 
+QSize ActionGridBar::getIconSize(int row_span, int col_span) const
+{
+	int icon_size_pixel_row = qRound(row_span * Util::mmToPixelLogical(Settings::getInstance().getSettingCached(Settings::ActionGridBar_ButtonSizeMM).toFloat()));
+	int icon_size_pixel_col = qRound(col_span * Util::mmToPixelLogical(Settings::getInstance().getSettingCached(Settings::ActionGridBar_ButtonSizeMM).toFloat()));
+	const int button_icon_size_row = icon_size_pixel_row - 12;
+	const int button_icon_size_col = icon_size_pixel_col - 12;
+	if (direction == Horizontal)
+		return QSize(button_icon_size_row, button_icon_size_col);
+	else
+		return QSize(button_icon_size_col, button_icon_size_row);
+}
+
 QAction* ActionGridBar::getOverflowAction() const
 {
 	return overflow_action;
@@ -126,7 +135,7 @@ void ActionGridBar::setToUseOverflowActionFrom(ActionGridBar* other_bar)
 
 QSize ActionGridBar::sizeHint() const
 {
-	int height_px = Util::mmToPixelLogical(rows * millimeters_per_button);
+	int height_px = Util::mmToPixelLogical(rows * Settings::getInstance().getSettingCached(Settings::ActionGridBar_ButtonSizeMM).toFloat());
 	if (direction == Horizontal)
 		return QSize(100, height_px);
 	else
@@ -159,7 +168,7 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 	
 	int length_px = (direction == Horizontal) ? width() : height();
 	float length_millimeters = Util::pixelToMMLogical(length_px);
-	cols = qMax(1, qFloor(length_millimeters / millimeters_per_button));
+	cols = qMax(1, qFloor(length_millimeters / Settings::getInstance().getSettingCached(Settings::ActionGridBar_ButtonSizeMM).toFloat()));
 	
 	delete layout();
 	QGridLayout* new_layout = new QGridLayout(this);
@@ -231,7 +240,6 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 	
 	// Set row/col strech. The first and last row/col acts as margin in case
 	// the available area is not a multiple of the button size.
-	//int pixel_per_button = qFloor(millimeters_per_button / pixel_to_millimeters);
 	if (direction == Horizontal)
 	{
 		for (int i = 0; i < cols; ++ i)

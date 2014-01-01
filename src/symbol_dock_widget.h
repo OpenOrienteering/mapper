@@ -44,7 +44,7 @@ class SymbolRenderWidget : public QWidget
 {
 Q_OBJECT
 public:
-	SymbolRenderWidget(Map* map, QScrollBar* scroll_bar, SymbolWidget* parent);
+	SymbolRenderWidget(Map* map, bool mobile_mode, QScrollBar* scroll_bar, SymbolWidget* parent);
 	
 	SymbolToolTip* getSymbolToolTip() const;
 	
@@ -117,6 +117,8 @@ protected:
 	QPoint last_click_pos;
 	int last_drop_pos;
 	int last_drop_row;
+	int last_click_scroll_value;
+	bool dragging;
 	
 	QScrollBar* scroll_bar;
 	SymbolWidget* symbol_widget;
@@ -134,8 +136,8 @@ protected:
 	QAction* select_objects_action;
 	QAction* select_objects_additionally_action;
 	
+	bool mobile_mode;
 	SymbolToolTip* tooltip;
-	
 	Map* map;
 	
 	bool isSymbolSelected(int i) const;
@@ -158,6 +160,7 @@ protected:
 	virtual void resizeEvent(QResizeEvent* event);
 	virtual void mouseMoveEvent(QMouseEvent* event);
 	virtual void mousePressEvent(QMouseEvent* event);
+	virtual void mouseReleaseEvent(QMouseEvent* event);
 	virtual void mouseDoubleClickEvent(QMouseEvent* event);
 	virtual void leaveEvent(QEvent* event);
 	virtual void wheelEvent(QWheelEvent* event);
@@ -176,7 +179,7 @@ class SymbolWidget : public QWidget
 {
 Q_OBJECT
 public:
-	SymbolWidget(Map* map, QWidget* parent = NULL);
+	SymbolWidget(Map* map, bool mobile_mode, QWidget* parent = NULL);
 	virtual ~SymbolWidget();
 	
 	/**

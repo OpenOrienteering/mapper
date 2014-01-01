@@ -44,6 +44,7 @@
 #include "symbol_setting_dialog.h"
 #include "symbol_text.h"
 #include "util.h"
+#include "settings.h"
 
 Symbol::Symbol(Type type) : type(type), name(""), description(""), is_helper_symbol(false), is_hidden(false), is_protected(false), icon(NULL)
 {
@@ -301,13 +302,13 @@ QImage* Symbol::getIcon(Map* map, bool update)
 		return icon;
 	
 	// Delete old icon after creating the new as it may be accessed inside createIcon().
-	QImage* new_icon = createIcon(map, icon_size, true, 1);
+	QImage* new_icon = createIcon(map, Settings::getInstance().getSymbolWidgetIconSizePx(), true, 1);
 	delete icon;
 	icon = new_icon;
 	return new_icon;
 }
 
-QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bottom_right_border)
+QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bottom_right_border, float best_zoom)
 {
 	QImage* image;
 	Type contained_types = getContainedTypes();
@@ -319,7 +320,6 @@ QImage* Symbol::createIcon(Map* map, int side_length, bool antialiasing, int bot
 	MapView view(&icon_map);
 	
 	// If the icon is bigger than the rectangle with this zoom factor, it is zoomed out to fit into the rectangle
-	const float best_zoom = 2;
 	view.setZoom(best_zoom);
 	int white_border_pixels = 0;
 	if (contained_types & Line || contained_types & Area || type == Combined)

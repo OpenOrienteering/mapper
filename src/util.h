@@ -30,6 +30,7 @@
 QT_BEGIN_NAMESPACE
 class QIODevice;
 QT_END_NAMESPACE
+class Settings;
 
 /** Value to calculate the optimum handle distance of 4 cubic bezier curves
  *  used to approximate a circle. */
@@ -285,6 +286,9 @@ namespace Util
 	
 	/** Inverse of mmToPixelLogical(). */
 	float pixelToMMLogical(float pixels);
+	
+	/** Returns true for low-dpi screens, false for high-dpi screens. */
+	bool isAntialiasingRequired(Settings* settings = NULL);
 }
 
 #endif

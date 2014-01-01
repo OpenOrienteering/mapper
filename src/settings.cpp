@@ -27,6 +27,8 @@
 #include <QSettings>
 #include <QStringList>
 
+#include "util.h"
+
 Settings::Settings()
  : QObject()
 {
@@ -46,6 +48,14 @@ Settings::Settings()
 	
 	registerSetting(Templates_KeepSettingsOfClosed, "Templates/keep_settings_of_closed_templates", true);
 	
+	float touch_button_minimum_size_default = 11;
+	registerSetting(ActionGridBar_ButtonSizeMM, "ActionGridBar/button_size_mm", touch_button_minimum_size_default);
+#if defined(ANDROID)
+	registerSetting(SymbolWidget_IconSizeMM, "SymbolWidget/icon_size_mm", 3 * touch_button_minimum_size_default);
+#else
+	registerSetting(SymbolWidget_IconSizeMM, "SymbolWidget/icon_size_mm", 8);
+#endif
+	
 	registerSetting(General_AutoSaveInterval, "autosave", 15); // unit: minutes
 	registerSetting(General_Language, "language", QVariant((int)QLocale::system().language()));
 	registerSetting(General_PixelsPerInch, "pixelsPerInch", QApplication::primaryScreen()->physicalDotsPerInch());
@@ -59,7 +69,7 @@ Settings::Settings()
 	registerSetting(HomeScreen_CurrentTip, "HomeScreen/currentTip", -1);
 	
 	// Set antialiasing default depending on screen pixels per inch
-	registerSetting(MapDisplay_Antialiasing, "MapDisplay/antialiasing", getSetting(General_PixelsPerInch).toFloat() < 140);
+	registerSetting(MapDisplay_Antialiasing, "MapDisplay/antialiasing", Util::isAntialiasingRequired(this));
 	
 	// Migrate old settings
 	static QVariant current_version("0.5");
@@ -163,4 +173,9 @@ void Settings::applySettings()
 	// Invalidate cache as settings could be changed
 	settings_cache.clear();
 	emit settingsChanged();
+}
+
+int Settings::getSymbolWidgetIconSizePx() const
+{
+	return qRound(Util::mmToPixelLogical(Settings::getInstance().getSettingCached(Settings::SymbolWidget_IconSizeMM).toFloat()));
 }

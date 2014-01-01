@@ -317,4 +317,10 @@ float pixelToMMLogical(float pixels)
 	return pixels * 25.4f / ppi;
 }
 
+bool isAntialiasingRequired(Settings* settings)
+{
+	float ppi = settings ? settings->getSettingCached(Settings::General_PixelsPerInch).toFloat() : Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toFloat();
+	return ppi < 200;
+}
+
 }

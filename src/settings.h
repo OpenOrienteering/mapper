@@ -49,6 +49,8 @@ public:
 		RectangleTool_HelperCrossRadius,
 		RectangleTool_PreviewLineWidth,
 		Templates_KeepSettingsOfClosed,
+		SymbolWidget_IconSizeMM,
+		ActionGridBar_ButtonSizeMM,
 		General_AutoSaveInterval,
 		General_Language,
 		General_PixelsPerInch,
@@ -100,6 +102,10 @@ public:
 		static Settings instance;
 		return instance;
 	}
+	
+	// Methods related to specific settings
+	
+	int getSymbolWidgetIconSizePx() const;
 	
 signals:
 	void settingsChanged();

@@ -66,6 +66,9 @@ public:
 	/** Adds an action to the grid, starting from the opposite direction. */
 	void addActionAtEnd(QAction* action, int row, int col, int row_span = 1, int col_span = 1);
 	
+	/** Returns the size of the button icons. */
+	QSize getIconSize(int row_span = 1, int col_span = 1) const;
+	
 	/** Returns the overflow action (to be inserted into the action bar with addAction()).
 	 *  The overflow action is enabled if there are items which do not fit into
 	 *  the action bar. On click, it shows a list of those actions. */

@@ -106,6 +106,9 @@ void DrawPointTool::clickPress()
 
 void DrawPointTool::clickRelease()
 {
+#if defined(ANDROID)
+	mouseMove();
+#endif
 	PointObject* point = preview_object->duplicate()->asPoint();
 	
 	int index = map()->addObject(point);

@@ -408,6 +408,10 @@ public slots:
 	void hideTopActionBar();
 	/** For mobile UI: shows the top action bar again after hiding it. */
 	void showTopActionBar();
+	/** For mobile UI: shows the symbol selection screen. */
+	void mobileSymbolSelectorClicked();
+	/** Counterpart to mobileSymbolSelectorClicked(). */
+	void mobileSymbolSelectorFinished();
 
 	/** Creates and adds a new map part */
 	void addMapPart();
@@ -457,6 +461,9 @@ private:
 	/// Updates enabled state of all widgets
 	void updateWidgets();
 	
+	void createSymbolWidget(QWidget* parent);
+	void connectMapToSymbolWidget();
+	
 	QAction* newAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
 	QAction* newCheckAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
 	QAction* newToolAction(const char* id, const QString& tr_text, QObject* receiver, const char* slot, const char* icon = NULL, const QString& tr_tip = QString::null, const QString& whatsThisLink = QString::null);
@@ -477,7 +484,7 @@ private:
 	MapWidget* map_widget;
 	
 	OperatingMode mode;
-	bool mobileMode;
+	bool mobile_mode;
 	
 	MapEditorTool* current_tool;
 	MapEditorTool* override_tool;
@@ -611,6 +618,7 @@ private:
 	ActionGridBar* bottom_action_bar;
 	ActionGridBar* top_action_bar;
 	QToolButton* show_top_bar_button;
+	QAction* mobile_symbol_selector_action;
 	
 	QComboBox* mappart_selector_box;
 	
