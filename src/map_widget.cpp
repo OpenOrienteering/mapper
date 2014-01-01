@@ -80,7 +80,9 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
 	above_template_cache_dirty_rect = rect();
 	map_cache_dirty_rect = rect();
 	
-	pie_menu = new PieMenu(this, 8, 24),
+	context_menu = new PieMenu(this);
+// 	context_menu->setMinimumActionCount(8);
+// 	context_menu->setIconSize(24);
 	
 	setAttribute(Qt::WA_OpaquePaintEvent);
 	setAutoFillBackground(false);
@@ -710,6 +712,11 @@ void MapWidget::setTemporaryMarkerDisplay(GPSTemporaryMarkers* marker_display)
 	this->marker_display = marker_display;
 }
 
+QWidget* MapWidget::getContextMenu()
+{
+	return context_menu;
+}
+
 QSize MapWidget::sizeHint() const
 {
     return QSize(640, 480);
@@ -931,8 +938,8 @@ void MapWidget::_mousePressEvent(QMouseEvent* event)
 	}
 	else if (event->button() == Qt::RightButton)
 	{
-		if (!pie_menu->isEmpty())
-			pie_menu->popup(event->globalPos());
+		if (!context_menu->isEmpty())
+			context_menu->popup(event->globalPos());
 	}
 }
 

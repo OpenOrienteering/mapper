@@ -290,8 +290,8 @@ public:
 	/** Sets the GPS temporary markers display to use. This is called internally by the GPSTemporaryMarkers constructor. */
 	void setTemporaryMarkerDisplay(GPSTemporaryMarkers* marker_display);
 	
-	/** Returns a reference to the internally constructed PieMenu. */
-	inline PieMenu& getPieMenu() {return *pie_menu;}
+	/** Returns the widget's context menu widget. */
+	QWidget* getContextMenu();
 	
 	/** Returns the widget's preferred size. */
 	virtual QSize sizeHint() const;
@@ -447,7 +447,7 @@ private:
 	QRect cached_update_rect;
 	
 	/** Right-click menu */
-	PieMenu* pie_menu;
+	PieMenu* context_menu;
 	
 	/** Optional touch cursor for mobile devices */
 	TouchCursor* touch_cursor;

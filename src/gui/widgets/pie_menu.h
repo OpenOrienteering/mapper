@@ -21,59 +21,135 @@
 #ifndef _OPENORIENTEERING_PIE_MENU_H_
 #define _OPENORIENTEERING_PIE_MENU_H_
 
+#include <cmath>
+
 #include <QWidget>
 
-/** Displays a pie menu. */
+/** 
+ * Displays a pie menu.
+ * 
+ * This class has an API and behavior similar to QMenu,
+ * but is neither a subclass nor a full replacement.
+ */
 class PieMenu : public QWidget
 {
 Q_OBJECT
 public:
-	/** Constructs a pie menu with the given initial number of (empty) items
-	 *  and given dimensions. */
-	PieMenu(QWidget* parent, int action_count, int icon_size);
+	/** Stores the geometry of a particular item in the PieMenu. */
+	struct ItemGeometry
+	{
+		/** The area covered by the item. */
+		QPolygon area;
+		
+		/** The position of the center of the item. */
+		QPoint   icon_pos;
+	};
 	
-	/** Sets the number of items in the menu (must be at least three). */
-	void setSize(int action_count);
+	/** Constructs a pie menu with default settings. */
+	PieMenu(QWidget* parent = NULL);
 	
-	/** Replaces the action in place index with the new action.
-	 *  Index zero is at the top, the order is counter-clockwise. */
-	void setAction(int index, QAction* action);
+	/** Returns the minimum number of actions in the menu. */
+	int minimumActionCount() const;
 	
-	/** Removes all actions from the menu, but leaves the number of
-	 *  menu items unchanged. */
+	/** Sets the minimum number of actions in the menu (must be at least three). */
+	void setMinimumActionCount(int count);
+	
+	/** Returns the current number of visible actions. */
+	int visibleActionCount() const;
+	
+	/** Removes all actions from the menu.
+	 *  Other than QMenu::clear(), this will not immediately delete any action,
+	 *  even if owned by this object. (Actions owned by this object will be
+	 *  deleted when this objected is deleted.)
+	 *  @see QMenu::clear() */
 	void clear();
 	
-	/** Returns whether all actions are set to NULL. */
+	/** Returns true if there are no visible actions in the menu,
+	 *  false otherwise.
+	 *  @see QMenu::isEmpty */
 	bool isEmpty() const;
 	
-	/** Shows the menu at the given absolute position */
+	/** Returns the icon size (single dimension). */
+	int iconSize() const;
+	
+	/** Sets the icon size (single dimension).
+	 *  @param icon_size the new size (at least 1) */
+	void setIconSize(int icon_size);
+	
+	/** Returns the action at pos.
+	 *  Returns NULL if there is no action at this place. */
+	QAction* actionAt(const QPoint& pos) const;
+	
+	/** Returns the geometry of the given action.
+	 *  The action must be enabled and visible.
+	 *  Otherwise the geometry will be empty.
+	 *  @see QMenu::actionGeometry */
+	ItemGeometry actionGeometry(QAction* action) const;
+	
+	/** Returns the currently highlighted action.
+	 *  Returns NULL if no action is highlighted.
+	 *  @see QMenu::activeAction */
+	QAction* activeAction() const;
+	
+	/** Sets the currently highlighted action.
+	 *  The action must be enabled and visible.
+	 *  Otherwise there will be no highlighted action.
+	 *  @see QMenu::setActiveAction */
+	void setActiveAction(QAction* action);
+	
+	/** Shows the menu at the given absolute position.
+	 *  @see QMenu::popup */
 	void popup(const QPoint pos);
 	
+signals:
+	/** This signal is emitted just before the menu is shown.
+	 *  @see QMenu::aboutToShow */
+	void aboutToShow();
+	
+	/** This signal is emitted just before the menu is hidden.
+	 *  @see QMenu::aboutToHide */
+	void aboutToHide();
+	
+	/** This signal is emitted when a menu item is highlighted.
+	 *  @see QMenu::hovered */
+	void hovered(QAction* action);
+	
+	/** This signal is emitted when a menu item's action is triggered.
+	 *  @see QMenu::triggered */
+	void triggered(QAction* action);
+	
 protected:
-	virtual void mousePressEvent(QMouseEvent* event);
+	virtual void actionEvent(QActionEvent* event);
+	virtual void hideEvent(QHideEvent* event);
 	virtual void mouseMoveEvent(QMouseEvent* event);
+	virtual void mousePressEvent(QMouseEvent* event);
 	virtual void mouseReleaseEvent(QMouseEvent* event);
 	virtual void paintEvent(QPaintEvent* event);
 	
-	QPoint getPoint(float radius, float angle);
-	QPolygon itemArea(int index);
+	void updateCachedState();
 	
-	void findHoverItem(const QPoint& pos);
-	void setHoverItem(int index);
+	QPoint getPoint(double radius, double angle) const;
 	
+	int minimum_action_count;
 	int icon_size;
-	int icon_border_inner;
-	int icon_border_outer;
-	int inner_radius;
+	QAction* active_action;
+	
+	bool actions_changed;
+	bool clicked;
 	int total_radius;
-	
-	bool mouse_moved;
-	QPoint click_pos;
-	int hover_item;
-	std::vector< QAction* > actions;
-	
-	QPolygon outer_mask;
-	QPolygon inner_mask;
+	QPolygon outer_border;
+	QPolygon inner_border;
+	QHash< QAction*, ItemGeometry > geometries;
 };
+
+
+// ### PieMenu inline code ###
+
+inline
+QPoint PieMenu::getPoint(double radius, double angle) const
+{
+	return QPoint(total_radius + qRound(radius * -sin(angle)), total_radius + qRound(radius * -cos(angle)));
+}
+
 
 #endif

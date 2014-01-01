@@ -53,7 +53,6 @@ class PrintWidget;
 class TemplatePositionDockWidget;
 class GeoreferencingDialog;
 class ReopenTemplateDialog;
-class PieMenu;
 class GPSDisplay;
 class CompassDisplay;
 class GPSTemporaryMarkers;
@@ -500,7 +499,6 @@ private:
 	void assignKeyboardShortcuts();
 	void createActions();
 	void createMenuAndToolbars();
-	void createPieMenu(PieMenu* menu);
 	void createMobileGUI();
 	
 	void paintOnTemplate(Template* temp);

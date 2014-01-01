@@ -28,92 +28,138 @@
 #include <QPainter>
 #include <QStyleOption>
 
-PieMenu::PieMenu(QWidget* parent, int action_count, int icon_size)
+PieMenu::PieMenu(QWidget* parent)
 : QWidget(parent, Qt::Popup | Qt::FramelessWindowHint),	// NOTE: use Qt::Window for debugging to avoid mouse grab
-   icon_size(icon_size),
-   hover_item(-1)
+   minimum_action_count(3),
+   icon_size(24),
+   active_action(NULL),
+   actions_changed(true),
+   clicked(false)
 {
-	icon_border_outer = qRound(0.2 * icon_size);
-	icon_border_inner = qRound(0.7 * icon_size);
-	inner_radius = qRound(0.5 * icon_size);
-	setSize(action_count);
-	
 	setCursor(QCursor(Qt::ArrowCursor));
 	setAttribute(Qt::WA_OpaquePaintEvent);
 	setAttribute(Qt::WA_ShowWithoutActivating);
 	setAutoFillBackground(false);
 	setMouseTracking(true);
+	
+	updateCachedState();
 }
 
-void PieMenu::setSize(int action_count)
+int PieMenu::minimumActionCount() const
 {
-	Q_ASSERT(action_count >= 3);
-	actions.resize(action_count, NULL);
-	
-	float half_angle = 2*M_PI / (2 * action_count);
-	inner_mask.resize(action_count);
-	float inner_corner_radius = inner_radius / cos(half_angle);
-	outer_mask.resize(action_count);
-	float outer_corner_radius = (inner_radius + icon_border_inner + icon_size + icon_border_outer) / cos(half_angle);
-	total_radius = qCeil(outer_corner_radius);
-	
-	for (int i = 0; i < action_count; ++i)
+	return minimum_action_count;
+}
+
+void PieMenu::setMinimumActionCount(int count)
+{
+	if (count >= 3 && count != minimum_action_count)
 	{
-		inner_mask.setPoint(i, getPoint(inner_corner_radius, (1 + 2*i) * half_angle));
-		outer_mask.setPoint(i, getPoint(outer_corner_radius, (1 + 2*i) * half_angle));
+		minimum_action_count = count;
+		actions_changed = true;
+		update();
 	}
-	
-	setMask(outer_mask.subtracted(inner_mask));
 }
 
-QPoint PieMenu::getPoint(float radius, float angle)
+int PieMenu::visibleActionCount() const
 {
-	return QPoint(qRound(total_radius + radius * -sin(angle)), qRound(total_radius + radius * -cos(angle)));
-}
-
-QPolygon PieMenu::itemArea(int index)
-{
-	float half_angle = 2*M_PI / (2 * actions.size());
-	float inner_corner_radius = inner_radius / cos(half_angle);
-	float outer_corner_radius = (inner_radius + icon_border_inner + icon_size + icon_border_outer) / cos(half_angle);
-	
-	QPolygon result(4);
-	result.setPoint(0, getPoint(inner_corner_radius, (2*index - 1) * half_angle));
-	result.setPoint(1, getPoint(inner_corner_radius, (2*index + 1) * half_angle));
-	result.setPoint(2, getPoint(outer_corner_radius, (2*index + 1) * half_angle));
-	result.setPoint(3, getPoint(outer_corner_radius, (2*index - 1) * half_angle));
-	return result;
-}
-
-void PieMenu::setAction(int index, QAction* action)
-{
-	actions[index] = action;
-	
-	if (isVisible())
-		update();
-}
-
-void PieMenu::clear()
-{
-	for (size_t i = 0, end = actions.size(); i < end; ++i)
-		actions[i] = NULL;
-	
-	if (isVisible())
-		update();
+	int count = 0;
+	for (int i = 0, end = actions().size(); i < end; ++i)
+	{
+		const QAction* action = actions()[i];
+		if (action->isVisible() && !action->isSeparator())
+			++count;
+	}
+	return count;
 }
 
 bool PieMenu::isEmpty() const
 {
-	for (size_t i = 0, end = actions.size(); i < end; ++i)
+	for (int i = 0, end = actions().size(); i < end; ++i)
 	{
-		if (actions[i] != NULL)
+		const QAction* action = actions()[i];
+		if (action->isVisible() && !action->isSeparator())
 			return false;
 	}
 	return true;
 }
 
+void PieMenu::clear()
+{
+	while (!actions().isEmpty())
+	{
+		removeAction(actions().last());
+	}
+}
+
+int PieMenu::iconSize() const
+{
+	return icon_size;
+}
+
+void PieMenu::setIconSize(int icon_size)
+{
+	if (icon_size > 0)
+	{
+		this->icon_size = icon_size;
+		actions_changed = true;
+		update();
+	}
+}
+
+QAction* PieMenu::actionAt(const QPoint& pos) const
+{
+	for (size_t i = 0, end = actions().size(); i < end; ++i)
+	{
+		QAction* action = actions()[i];
+		if (geometries.contains(action) &&
+		    geometries[action].area.containsPoint(pos, Qt::WindingFill))
+		{
+			return action;
+		}
+	}
+	return NULL;
+}
+
+PieMenu::ItemGeometry PieMenu::actionGeometry(QAction* action) const
+{
+	ItemGeometry geometry;
+	if (geometries.contains(action))
+		geometry = geometries[action];
+	
+	return geometry;
+}
+
+QAction* PieMenu::activeAction() const
+{
+	return active_action;
+}
+
+void PieMenu::setActiveAction(QAction* action)
+{
+	QAction* const prev_action = active_action;
+	active_action = (action && action->isEnabled() && action->isVisible() && !action->isSeparator()) ? action : NULL;
+	if (isVisible())
+	{
+		if (active_action && active_action != prev_action)
+		{
+			active_action->activate(QAction::Hover);
+			emit hovered(active_action);
+			active_action->showStatusText(0);
+		}
+		else if (prev_action && !active_action)
+		{
+			QString empty_string;
+			QStatusTipEvent e(empty_string);
+			QApplication::sendEvent(parent(), &e);
+		}
+		update();
+	}
+}
+
 void PieMenu::popup(const QPoint pos)
 {
+	updateCachedState(); // We need the current total_radius.
+	
 	QPoint cursor_pos = QCursor::pos();
 	QRect screen_rect = qApp->desktop()->availableGeometry(cursor_pos);
 	
@@ -128,48 +174,98 @@ void PieMenu::popup(const QPoint pos)
 		cursor_pos.setY(total_radius);
 	
 	setGeometry(pos.x() - total_radius, pos.y() - total_radius, 2 * total_radius, 2 * total_radius);
-	show();
 	
-	mouse_moved = false;
-	click_pos = pos;
-	hover_item = -1;
+	clicked = false;
+	active_action = NULL;
+	
+	emit aboutToShow();
+	show();
 }
 
-void PieMenu::mousePressEvent(QMouseEvent* event)
+void PieMenu::actionEvent(QActionEvent* event)
 {
-	if (event->button() != Qt::LeftButton && event->button() != Qt::RightButton)
+	if (event->type() == QEvent::ActionRemoved)
 	{
-		event->ignore();
-		return;
+		QAction* const action = event->action();
+		geometries.remove(action);
+		if (action == active_action)
+			setActiveAction(NULL);
 	}
 	
-	findHoverItem(event->pos());
-	if (hover_item >= 0 && actions[hover_item] != NULL && actions[hover_item]->isEnabled())
-		actions[hover_item]->activate(QAction::Trigger);
-	
-    event->accept();
-	hide();
+	actions_changed = true;
+	update();
+	QWidget::actionEvent(event);
+}
+
+void PieMenu::hideEvent(QHideEvent* event)
+{
+	if (!event->spontaneous())
+	{
+		emit aboutToHide();
+		setActiveAction(NULL);
+		QString empty_string;
+		QStatusTipEvent e(empty_string);
+		QApplication::sendEvent(parent(), &e);
+	}
+	QWidget::hideEvent(event);
 }
 
 void PieMenu::mouseMoveEvent(QMouseEvent* event)
 {
-	findHoverItem(event->pos());
+	setActiveAction(actionAt(event->pos()));
+	event->accept();
+}
+
+void PieMenu::mousePressEvent(QMouseEvent* event)
+{
+	if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton)
+	{
+		if (mask().contains(event->pos()))
+		{
+			clicked = true;
+			setActiveAction(actionAt(event->pos()));
+		}
+		else
+		{
+			hide();
+		}
+		event->accept();
+		return;
+	}
 	
-	if (!mouse_moved && (QCursor::pos() - click_pos).manhattanLength() >= QApplication::startDragDistance())
-		mouse_moved = true;
+	QWidget::mousePressEvent(event);
 }
 
 void PieMenu::mouseReleaseEvent(QMouseEvent* event)
 {
-	event->accept();
-	if (!mouse_moved)
+	if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton)
+	{
+		if (active_action)
+		{
+			Q_ASSERT(active_action->isEnabled());
+			Q_ASSERT(active_action->isVisible());
+			Q_ASSERT(!active_action->isSeparator());
+			active_action->activate(QAction::Trigger);
+			emit triggered(active_action);
+			hide();
+		}
+		else if (clicked && !mask().contains(event->pos()))
+		{
+			hide();
+		}
+		
+		clicked = false;
+		event->accept();
 		return;
+	}
 	
-	mousePressEvent(event);
+	QWidget::mouseReleaseEvent(event);
 }
 
 void PieMenu::paintEvent(QPaintEvent* event)
 {
+	updateCachedState();
+	
 	QStyleOptionMenuItem option;
 	option.initFrom(this);
 	QPalette& palette = option.palette;
@@ -180,36 +276,25 @@ void PieMenu::paintEvent(QPaintEvent* event)
 	painter.setClipRect(event->rect());
 	painter.setRenderHint(QPainter::Antialiasing, true);
 	
-	// Background color
+	// Background
 	QPen pen(palette.color(QPalette::Dark));
-	pen.setWidth(2);
+	pen.setWidth(1);
 	painter.setPen(pen);
 	painter.setBrush(palette.brush(QPalette::Button));
-	painter.drawConvexPolygon(outer_mask);
+	painter.drawConvexPolygon(outer_border);
 	painter.setBrush(Qt::NoBrush);
-	painter.drawConvexPolygon(inner_mask);
+	painter.drawConvexPolygon(inner_border);
 	
 	// Items
-	float half_angle = 2*(M_PI) / (float)(2 * actions.size());
-	float icon_radius = inner_radius + icon_border_inner + 0.5f * icon_size;
-	for (int i = 0, end = (int)actions.size(); i < end; ++i)
+	for (int i = 0, end = actions().size(); i < end; ++i)
 	{
-		if (actions[i] == NULL)
+		QAction* const action = actions()[i];
+		if (!geometries.contains(action))
 			continue;
 		
-		QPolygon area = itemArea(i);
+		QPolygon area = geometries[action].area;
 		QIcon::Mode mode = QIcon::Normal;
-		if (actions[i]->isEnabled() && i == hover_item)
-		{
-			mode = QIcon::Active;
-			QPen pen(palette.color(QPalette::Dark));
-			pen.setWidth(1);
-			painter.setPen(pen);
-			painter.setBrush(palette.color(QPalette::Button).lighter(120));
-			painter.setOpacity(1.0);
-			painter.drawConvexPolygon(area);
-		}
-		else if (actions[i]->isChecked())
+		if (action->isChecked())
 		{
 			mode = QIcon::Selected;
 			QPen pen(palette.color(QPalette::Dark));
@@ -219,10 +304,20 @@ void PieMenu::paintEvent(QPaintEvent* event)
 			painter.setOpacity(1.0);
 			painter.drawConvexPolygon(area);
 		}
-		else if (!actions[i]->isEnabled())
+		else if (action->isEnabled() && action == active_action)
+		{
+			mode = QIcon::Active;
+			QPen pen(palette.color(QPalette::Dark));
+			pen.setWidth(1);
+			painter.setPen(pen);
+			painter.setBrush(clicked ? palette.color(QPalette::Button).darker(120) : palette.color(QPalette::Button).lighter(120));
+			painter.setOpacity(1.0);
+			painter.drawConvexPolygon(area);
+		}
+		else if (!action->isEnabled())
 		{
 			mode = QIcon::Disabled;
-			painter.setOpacity(0.5);
+			painter.setOpacity(0.4);
 		}
 		else
 		{
@@ -230,33 +325,65 @@ void PieMenu::paintEvent(QPaintEvent* event)
 		}
 		
 		// Draw icon
-		QPixmap pixmap = actions[i]->icon().pixmap(icon_size, mode);
-		QPoint midpoint = QPoint(total_radius + icon_radius * -sin(2*i * half_angle), total_radius + icon_radius * -cos(2*i * half_angle));
-		painter.drawPixmap(QPointF(midpoint.x() - 0.5f * pixmap.width(), midpoint.y() - 0.5f * pixmap.height()), pixmap);
+		QPixmap pixmap = action->icon().pixmap(icon_size, mode);
+		QPoint midpoint = geometries[action].icon_pos;
+		painter.drawPixmap(QPoint(midpoint.x() - pixmap.width() / 2, midpoint.y() - pixmap.height() / 2), pixmap);
 	}
 }
 
-void PieMenu::findHoverItem(const QPoint& pos)
+void PieMenu::updateCachedState()
 {
-	for (size_t i = 0, end = actions.size(); i < end; ++i)
+	if (actions_changed)
 	{
-		QPolygon area = itemArea(i);
-		if (area.containsPoint(pos, Qt::WindingFill))
+		int action_count = qMax(minimum_action_count, visibleActionCount());
+		outer_border.resize(action_count);
+		inner_border.resize(action_count);
+		
+		double half_angle = M_PI / action_count;
+		double inner_radius = 0.5 * icon_size;
+		double inner_corner_radius = inner_radius / cos(half_angle);
+		
+		double icon_padding_inner = 0.7 * icon_size;
+		double icon_radius = inner_radius + icon_padding_inner + 0.5 * icon_size;
+		
+		double icon_padding_outer = 0.2 * icon_size;
+		double outer_corner_radius = (inner_radius + icon_padding_inner + icon_size + icon_padding_outer) / cos(half_angle);
+		
+		total_radius = qCeil(outer_corner_radius);
+		
+		// The total shape
+		for (int i = 0; i < action_count; ++i)
 		{
-			setHoverItem(i);
-			return;
+			double angle = (2*i + 1) * half_angle;
+			inner_border.setPoint(i, getPoint(inner_corner_radius, angle));
+			outer_border.setPoint(i, getPoint(outer_corner_radius, angle));
 		}
-	}
-	setHoverItem(-1);
-}
-
-void PieMenu::setHoverItem(int index)
-{
-	if (index != hover_item)
-	{
-		hover_item = index;
-		if (hover_item >= 0 && actions[hover_item] != NULL && actions[hover_item]->isEnabled())
-			actions[hover_item]->activate(QAction::Hover);
-		update();
+		
+		setMask(outer_border.subtracted(inner_border));
+		
+		// The items
+		for (int i = 0, j = 0, end = actions().size(); j < end; ++j)
+		{
+			QAction* const action = actions()[j];
+			if (action->isVisible() && !action->isSeparator())
+			{
+				ItemGeometry geometry;
+				
+				geometry.area.resize(4);
+				double angle = (2*i - 1) * half_angle;
+				geometry.area.setPoint(0, getPoint(inner_corner_radius, angle));
+				geometry.area.setPoint(1, inner_border.point(i));
+				geometry.area.setPoint(2, outer_border.point(i));
+				geometry.area.setPoint(3, getPoint(outer_corner_radius, angle));
+				
+				angle = 2*i * half_angle;
+				geometry.icon_pos = getPoint(icon_radius, angle);
+				
+				geometries[action] = geometry;
+				++i;
+			}
+		}
+		
+		actions_changed = false;
 	}
 }

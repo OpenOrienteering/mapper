@@ -47,7 +47,6 @@
 #include "gui/main_window.h"
 #include "gui/print_widget.h"
 #include "gui/widgets/measure_widget.h"
-#include "gui/widgets/pie_menu.h"
 #include "gui/widgets/tags_widget.h"
 #include "object_operations.h"
 #include "object_text.h"
@@ -468,7 +467,6 @@ void MapEditorController::attach(MainWindow* window)
 			window->setCentralWidget(map_widget);
 			
 			createMenuAndToolbars();
-			createPieMenu(&map_widget->getPieMenu());
 			restoreWindowState();
 		}
 	}
@@ -1014,19 +1012,16 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_advanced_editing->addAction(boolean_difference_act);
 	toolbar_advanced_editing->addAction(boolean_xor_act);
 	toolbar_advanced_editing->addAction(boolean_merge_holes_act);
-}
-
-void MapEditorController::createPieMenu(PieMenu* menu)
-{
-	int i = 0;
-	menu->setAction(i++, edit_tool_act);
-	menu->setAction(i++, draw_point_act);
-	menu->setAction(i++, draw_path_act);
-	menu->setAction(i++, draw_rectangle_act);
-	menu->setAction(i++, cut_tool_act);
-	menu->setAction(i++, cut_hole_act);
-	menu->setAction(i++, switch_dashes_act);
-	menu->setAction(i++, connect_paths_act);
+	
+	QWidget* context_menu = map_widget->getContextMenu();
+	context_menu->addAction(edit_tool_act);
+	context_menu->addAction(draw_point_act);
+	context_menu->addAction(draw_path_act);
+	context_menu->addAction(draw_rectangle_act);
+	context_menu->addAction(cut_tool_act);
+	context_menu->addAction(cut_hole_act);
+	context_menu->addAction(switch_dashes_act);
+	context_menu->addAction(connect_paths_act);
 }
 
 void MapEditorController::createMobileGUI()
