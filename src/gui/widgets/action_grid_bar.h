@@ -98,6 +98,7 @@ protected:
 	
 	static bool compareItemPtrId(GridItem* a, GridItem* b);
 	virtual void resizeEvent(QResizeEvent* event);
+	virtual void paintEvent(QPaintEvent* event);
 	
 	Direction direction;
 	int rows;

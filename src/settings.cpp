@@ -51,7 +51,7 @@ Settings::Settings()
 	float touch_button_minimum_size_default = 11;
 	registerSetting(ActionGridBar_ButtonSizeMM, "ActionGridBar/button_size_mm", touch_button_minimum_size_default);
 #if defined(ANDROID)
-	registerSetting(SymbolWidget_IconSizeMM, "SymbolWidget/icon_size_mm", 3 * touch_button_minimum_size_default);
+	registerSetting(SymbolWidget_IconSizeMM, "SymbolWidget/icon_size_mm", touch_button_minimum_size_default);
 #else
 	registerSetting(SymbolWidget_IconSizeMM, "SymbolWidget/icon_size_mm", 8);
 #endif

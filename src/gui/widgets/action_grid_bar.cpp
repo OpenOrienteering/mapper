@@ -27,6 +27,7 @@
 #include <QAction>
 #include <QScreen>
 #include <QKeyEvent>
+#include <QPainter>
 #include <QDebug>
 #include <QMenu>
 
@@ -54,6 +55,9 @@ ActionGridBar::ActionGridBar(Direction direction, int rows, QWidget* parent)
 	overflow_button = NULL;
 	overflow_menu = new QMenu(this);
 	include_overflow_from_list.push_back(this);
+	
+	setAttribute(Qt::WA_OpaquePaintEvent);
+	setAutoFillBackground(false);
 }
 
 int ActionGridBar::getRows() const
@@ -259,4 +263,18 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 	std::sort(hidden_items.begin(), hidden_items.end(), compareItemPtrId);
 	
 	event->accept();
+}
+
+void ActionGridBar::paintEvent(QPaintEvent* event)
+{
+	QPainter painter;
+	painter.begin(this);
+	painter.setClipRect(event->rect());
+	 
+	QLinearGradient gradient(QPointF(0, 0), QPointF(0, height()));
+	gradient.setColorAt(0, qRgb(255, 255, 255));
+	gradient.setColorAt(1, qRgb(220, 220, 220));
+	painter.fillRect(rect(), QBrush(gradient));
+	
+	painter.end();
 }
