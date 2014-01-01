@@ -77,6 +77,11 @@ public:
 	/** Configures this bar to put its overflow actions into another bar. */
 	void setToUseOverflowActionFrom(ActionGridBar* other_bar);
 	
+	/** Finds and returns the button corresponding to the given action or NULL
+	 *  if either the action has not been inserted into the action bar,
+	 *  or the button is hidden because of a collision. */
+	QToolButton* getButtonForAction(QAction* action);
+	
 	virtual QSize sizeHint() const;
 	
 protected slots:

@@ -89,7 +89,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	this->mode = mode;
 	
 	// TODO: Allow to change this in the settings
-#ifdef Q_OS_ANDROID
+#if defined(Q_OS_ANDROID) || defined(FORCE_MOBILE_GUI)
 	mobile_mode = true;
 #else
 	mobile_mode = false;
@@ -101,6 +101,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	window = NULL;
 	editing_in_progress = false;
 	
+	toggle_template_menu = NULL;
 	cut_hole_menu = NULL;
 	mappart_move_mapper = NULL;
 	mappart_move_menu = NULL;
@@ -117,6 +118,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	paste_act = NULL;
 	reopen_template_act = NULL;
 	overprinting_simulation_act = NULL;
+	template_toggle_action = NULL;
 	
 	toolbar_view = NULL;
 	toolbar_mapparts = NULL;
@@ -162,6 +164,7 @@ MapEditorController::~MapEditorController()
 	delete tags_dock_widget;
 	delete cut_hole_menu;
 	delete mappart_move_menu;
+	delete toggle_template_menu;
 	for (QHash<Template*, TemplatePositionDockWidget*>::iterator it = template_position_widgets.begin(); it != template_position_widgets.end(); ++it)
 		delete it.value();
 	delete gps_display;
@@ -455,6 +458,7 @@ void MapEditorController::attach(MainWindow* window)
 	
 	// Update enabled/disabled state for the tools ...
 	updateWidgets();
+	templateAvailabilityChanged();
 	// ... and make sure it is kept up to date for copy/paste
 	connect(QApplication::clipboard(), SIGNAL(changed(QClipboard::Mode)), this, SLOT(clipboardChanged(QClipboard::Mode)));
 	clipboardChanged(QClipboard::Clipboard);
@@ -696,6 +700,8 @@ void MapEditorController::createActions()
 	gps_distance_rings_action->setEnabled(false);
 	
 	compass_action = newCheckAction("compassdisplay", tr("Enable compass display"), this, SLOT(enableCompassDisplay(bool)), "compass.png", QString::null, "toolbars.html#compass_display"); // TODO: write documentation
+	
+	template_toggle_action = newAction("toggletemplate", tr("Toggle template visibility"), this, SLOT(toggleTemplateClicked()), "tool-template-toggle.png", QString::null, "toolbars.html#toggle_template"); // TODO: write documentation
 	
 	mappart_add_act = newAction("addmappart", tr("Add Map Part..."), this, SLOT(addMapPart()));
 	mappart_remove_act = newAction("removemappart", tr("Remove Map Part"), this, SLOT(removeMapPart()));
@@ -1077,14 +1083,13 @@ void MapEditorController::createMobileGUI()
 	// Right side
 	col = 0;
 	top_action_bar->addActionAtEnd(window->getCloseAct(), 0, col);
-	top_action_bar->addActionAtEnd(top_action_bar->getOverflowAction(), 1, col);
-	col++;
+	top_action_bar->addActionAtEnd(top_action_bar->getOverflowAction(), 1, col++);
 	
 	top_action_bar->addActionAtEnd(redo_act, 0, col);
 	top_action_bar->addActionAtEnd(undo_act, 1, col++);
 	
-	top_action_bar->addActionAtEnd(touch_cursor_action, 0, col++);
-	//top_bar->addActionAtEnd(template_toggle_action, 1, col);
+	top_action_bar->addActionAtEnd(touch_cursor_action, 0, col);
+	top_action_bar->addActionAtEnd(template_toggle_action, 1, col++);
 	
 	top_action_bar->addActionAtEnd(edit_tool_act, 0, col);
 	top_action_bar->addActionAtEnd(edit_line_tool_act, 1, col++);
@@ -1960,6 +1965,12 @@ void MapEditorController::updatePasteAvailability()
 	}
 }
 
+void MapEditorController::templateAvailabilityChanged()
+{
+	if (template_toggle_action)
+		template_toggle_action->setEnabled(map->getNumTemplates() > 0);
+}
+
 void MapEditorController::showWholeMap()
 {
 	QRectF map_extent = map->calculateExtent(true, !main_view->areAllTemplatesHidden(), main_view);
@@ -2760,6 +2771,59 @@ void MapEditorController::enableCompassDisplay(bool enable)
 	compass_display->enable(enable);
 }
 
+void MapEditorController::toggleTemplateClicked()
+{
+	// Build the menu
+	if (! toggle_template_menu)
+	{
+		toggle_template_menu = new QMenu(tr("Toggle template visibility"));
+		connect(toggle_template_menu, SIGNAL(triggered(QAction*)), this, SLOT(toggleTemplateItemClicked(QAction*)));
+	}
+	else
+		toggle_template_menu->clear();
+	
+	for (int i = map->getNumTemplates() - 1; i >= 0; -- i)
+	{
+		Template* temp = map->getTemplate(i);
+		QAction* temp_action = toggle_template_menu->addAction(temp->getTemplateFilename());
+		temp_action->setCheckable(true);
+		temp_action->setChecked(main_view->isTemplateVisible(temp));
+		temp_action->setData(qVariantFromValue<void*>(temp));
+	}
+	
+	// Find place to show the menu
+	QToolButton* button = NULL;
+	if (top_action_bar)
+	{
+		button = top_action_bar->getButtonForAction(template_toggle_action);
+		if (! button)
+			button = top_action_bar->getButtonForAction(top_action_bar->getOverflowAction());
+	}
+	QPoint menu_anchor = button ? button->mapToGlobal(QPoint(0, button->height())) : map_widget->mapToGlobal(QPoint(0, 0));
+	
+	// Show the menu
+	toggle_template_menu->popup(menu_anchor);
+}
+
+void MapEditorController::toggleTemplateItemClicked(QAction* item)
+{
+	Template* temp = reinterpret_cast<Template*>(item->data().value<void*>());
+	TemplateVisibility* vis = main_view->getTemplateVisibility(temp);
+	if (temp->getTemplateState() != Template::Invalid)
+	{
+		bool visible_new = ! vis->visible;
+		if (!visible_new)
+			map->setTemplateAreaDirty(map->findTemplateIndex(temp));
+		
+		vis->visible = visible_new;
+		
+		if (visible_new)
+			map->setTemplateAreaDirty(map->findTemplateIndex(temp));
+	}
+	
+	main_view->setHideAllTemplates(false);
+}
+
 void MapEditorController::hideTopActionBar()
 {
 	top_action_bar->hide();
@@ -2901,6 +2965,8 @@ void MapEditorController::templateAdded(int pos, Template* temp)
 	Q_UNUSED(pos);
 	if (mode == MapEditor && temp->canBeDrawnOnto())
 		updatePaintOnTemplateAction();
+	if (map->getNumTemplates() == 1)
+		templateAvailabilityChanged();
 }
 
 void MapEditorController::templateDeleted(int pos, Template* temp)
@@ -2908,6 +2974,8 @@ void MapEditorController::templateDeleted(int pos, Template* temp)
 	Q_UNUSED(pos);
 	if (mode == MapEditor && temp->canBeDrawnOnto())
 		updatePaintOnTemplateAction();
+	if (map->getNumTemplates() == 0)
+		templateAvailabilityChanged();
 }
 
 void MapEditorController::setMap(Map* map, bool create_new_map_view)

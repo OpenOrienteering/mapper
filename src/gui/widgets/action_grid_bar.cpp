@@ -137,6 +137,17 @@ void ActionGridBar::setToUseOverflowActionFrom(ActionGridBar* other_bar)
 	other_bar->include_overflow_from_list.push_back(this);
 }
 
+QToolButton* ActionGridBar::getButtonForAction(QAction* action)
+{
+	for (size_t i = 0, end = items.size(); i < end; ++ i)
+	{
+		GridItem& item = items[i];
+		if (item.action == action)
+			return item.button_hidden ? NULL : item.button;
+	}
+	return NULL;
+}
+
 QSize ActionGridBar::sizeHint() const
 {
 	int height_px = Util::mmToPixelLogical(rows * Settings::getInstance().getSettingCached(Settings::ActionGridBar_ButtonSizeMM).toFloat());

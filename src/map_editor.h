@@ -309,6 +309,8 @@ public slots:
 	void clipboardChanged(QClipboard::Mode mode);
 	/** Adjusts the enabled state of the paste action. */
 	void updatePasteAvailability();
+	/** Adjusts action availability based on the presence of templates */
+	void templateAvailabilityChanged();
 	
 	/**
 	 * Checks the presence of spot colors,
@@ -403,6 +405,11 @@ public slots:
 	
 	/** Enables or disables digital compass display. */
 	void enableCompassDisplay(bool enable);
+	
+	/** Shows a list of templates to toggle their visibility. */
+	void toggleTemplateClicked();
+	/** Follow-up for toggleTemplateClicked(). */
+	void toggleTemplateItemClicked(QAction* item);
 	
 	/** For mobile UI: hides the top action bar. */
 	void hideTopActionBar();
@@ -593,9 +600,10 @@ private:
 	QAction* gps_display_action;
 	QAction* gps_distance_rings_action;
 	GPSDisplay* gps_display;
-	
 	QAction* compass_action;
 	CompassDisplay* compass_display;
+	QAction* template_toggle_action;
+	QMenu* toggle_template_menu;
 	
 	QAction* mappart_add_act;
 	QAction* mappart_remove_act;
