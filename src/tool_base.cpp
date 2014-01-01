@@ -26,6 +26,7 @@
 #include <QTimer>
 
 #include "gui/main_window.h"
+#include "gui/widgets/key_button_bar.h"
 #include "map.h"
 #include "map_editor.h"
 #include "map_undo.h"
@@ -46,6 +47,7 @@ MapEditorToolBase::MapEditorToolBase(const QCursor cursor, MapEditorTool::Type t
   snap_exclude_object(NULL),
   cur_map_widget(editor->getMainWidget()),
   editing(false),
+  key_button_bar(NULL),
   cursor(cursor),
   preview_update_triggered(false),
   renderables(new MapRenderables(map())),
@@ -57,6 +59,8 @@ MapEditorToolBase::MapEditorToolBase(const QCursor cursor, MapEditorTool::Type t
 MapEditorToolBase::~MapEditorToolBase()
 {
 	deleteOldSelectionRenderables(*old_renderables, false);
+	if (key_button_bar)
+		editor->deletePopupWidget(key_button_bar);
 }
 
 void MapEditorToolBase::init()
@@ -70,7 +74,7 @@ void MapEditorToolBase::init()
 
 bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	active_modifiers = event->modifiers();
+	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
 	if (event->button() != Qt::LeftButton)
 	{
 		if (event->button() == Qt::RightButton)
@@ -94,7 +98,7 @@ bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 
 bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	active_modifiers = event->modifiers();
+	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
 	calcConstrainedPositions(widget);
@@ -118,7 +122,7 @@ bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, 
 
 bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	active_modifiers = event->modifiers();
+	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
 	calcConstrainedPositions(widget);
@@ -147,7 +151,7 @@ bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 
 bool MapEditorToolBase::keyPressEvent(QKeyEvent* event)
 {
-	active_modifiers = event->modifiers();
+	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
 #if defined(Q_OS_MAC)
 	// FIXME: On Mac, QKeyEvent::modifiers() seems to return the keyboard 
 	// modifier flags that existed immediately before the event occurred.
@@ -177,7 +181,7 @@ bool MapEditorToolBase::keyPressEvent(QKeyEvent* event)
 
 bool MapEditorToolBase::keyReleaseEvent(QKeyEvent* event)
 {
-	active_modifiers = event->modifiers();
+	active_modifiers = Qt::KeyboardModifiers(event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
 #if defined(Q_OS_MAC)
 	// FIXME: On Mac, QKeyEvent::modifiers() seems to return the keyboard 
 	// modifier flags that existed immediately before the event occurred.

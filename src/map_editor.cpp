@@ -173,6 +173,11 @@ MapEditorController::~MapEditorController()
 	delete map;
 }
 
+bool MapEditorController::isInMobileMode() const
+{
+	return mobile_mode;
+}
+
 void MapEditorController::setTool(MapEditorTool* new_tool)
 {
 	if (current_tool)
@@ -322,7 +327,11 @@ void MapEditorController::showPopupWidget(QWidget* child_widget, const QString& 
 void MapEditorController::deletePopupWidget(QWidget* child_widget)
 {
 	if (mobile_mode)
-		delete child_widget;
+	{
+		if (being_destructed)
+			return;
+			delete child_widget;
+	}
 	else
 		delete child_widget->parentWidget();
 }

@@ -38,6 +38,8 @@
 #include "tool_helpers.h"
 #include "util.h"
 #include "gui/modifier_key.h"
+#include "gui/widgets/key_button_bar.h"
+#include "map_editor.h"
 
 QCursor* DrawPathTool::cursor = NULL;
 
@@ -47,7 +49,8 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, Sy
    cur_map_widget(mapWidget()),
    angle_helper(new ConstrainAngleToolHelper()),
    snap_helper(new SnappingToolHelper(map())),
-   follow_helper(new FollowPathToolHelper())
+   follow_helper(new FollowPathToolHelper()),
+   key_button_bar(NULL)
 {
 	angle_helper->setActive(false);
 	connect(angle_helper.data(), SIGNAL(displayChanged()), this, SLOT(updateDirtyRect()));
@@ -72,13 +75,28 @@ DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, Sy
 
 DrawPathTool::~DrawPathTool()
 {
-	// Nothing, not inlined
+	if (key_button_bar)
+		editor->deletePopupWidget(key_button_bar);
 }
 
 void DrawPathTool::init()
 {
 	updateDashPointDrawing();
 	updateStatusText();
+	
+	if (editor->isInMobileMode())
+	{
+		// Create key replacement bar
+		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
+		key_button_bar->addPressKeyWithModifier(Qt::Key_Return, Qt::ControlModifier, tr("Finish"));
+		key_button_bar->addPressKey(Qt::Key_Return, tr("Close"));
+		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
+		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Angle", "Using constrained angles"));
+		key_button_bar->addPressKey(Qt::Key_Space, tr("Dash", "Drawing dash points"));
+		key_button_bar->addPressKey(Qt::Key_Backspace, tr("Undo"));
+		key_button_bar->addPressKey(Qt::Key_Escape, tr("Abort"));
+		editor->showPopupWidget(key_button_bar, "");
+	}
 }
 
 bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -408,7 +426,8 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 			undoLastPoint();
 		else if (event->key() == Qt::Key_Return && allow_closing_paths)
 		{
-			closeDrawing();
+			if (! (event->modifiers() & Qt::ControlModifier))
+				closeDrawing();
 			finishDrawing();
 		}
 		else
@@ -984,6 +1003,9 @@ float DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map)
 
 void DrawPathTool::updateDashPointDrawing()
 {
+	if (!symbol_widget)
+		return;
+	
 	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
 	if (symbol && symbol->getType() == Symbol::Line)
 	{

@@ -23,12 +23,16 @@
 
 #include "tool_draw_line_and_area.h"
 
+class KeyButtonBar;
+
+
 /** Tool to draw circles and ellipses. */
 class DrawCircleTool : public DrawLineAndAreaTool
 {
 Q_OBJECT
 public:
 	DrawCircleTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
+	virtual ~DrawCircleTool();
 	
 	virtual void init();
 	virtual QCursor* getCursor() {return cursor;}
@@ -60,6 +64,7 @@ protected:
 	bool start_from_center;
 	bool first_point_set;
 	bool second_point_set;
+	KeyButtonBar* key_button_bar;
 };
 
 #endif

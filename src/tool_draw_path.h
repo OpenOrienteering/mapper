@@ -29,6 +29,7 @@ class ConstrainAngleToolHelper;
 class SnappingToolHelper;
 class SnappingToolHelperSnapInfo;
 class FollowPathToolHelper;
+class KeyButtonBar;
 
 /** 
  * Tool to draw arbitrarily shaped PathObjects.
@@ -147,6 +148,8 @@ protected:
 	QScopedPointer<FollowPathToolHelper> follow_helper;
 	PathObject* follow_object;
 	int follow_start_index;
+	
+	KeyButtonBar* key_button_bar;
 };
 
 #endif

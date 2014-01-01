@@ -80,7 +80,8 @@ bool CutHoleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	connect(path_tool, SIGNAL(dirtyRectChanged(QRectF)), this, SLOT(pathDirtyRectChanged(QRectF)));
 	connect(path_tool, SIGNAL(pathAborted()), this, SLOT(pathAborted()));
 	connect(path_tool, SIGNAL(pathFinished(PathObject*)), this, SLOT(pathFinished(PathObject*)));
-		
+	
+	path_tool->init();
 	path_tool->mousePressEvent(event, map_coord, widget);
 	
 	return true;
@@ -215,7 +216,7 @@ void CutHoleTool::updateStatusText()
 {
 	if (!path_tool)
 	{
-		// FIXME: The path_tool would have better instrution, but is not initialized yet.
+		// FIXME: The path_tool would have better instruction, but is not initialized yet.
 		setStatusBarText(tr("<b>Click or drag</b>: Start drawing the hole. "));
 	}
 }

@@ -37,11 +37,14 @@
 #include "tool_helpers.h"
 #include "util.h"
 #include "gui/modifier_key.h"
+#include "gui/widgets/key_button_bar.h"
+#include "map_editor.h"
 
 DrawPointTool::DrawPointTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
  : MapEditorToolBase(QCursor(QPixmap(":/images/cursor-draw-point.png"), 11, 11), DrawPoint, editor, tool_button),
    renderables(new MapRenderables(map())),
-   symbol_widget(symbol_widget)
+   symbol_widget(symbol_widget),
+   key_button_bar(NULL)
 {
 	rotating = false;
 	preview_object = NULL;
@@ -60,6 +63,21 @@ DrawPointTool::~DrawPointTool()
 	{
 		renderables->removeRenderablesOfObject(preview_object, false);
 		delete preview_object;
+	}
+	
+	if (key_button_bar)
+		editor->deletePopupWidget(key_button_bar);
+}
+
+void DrawPointTool::initImpl()
+{
+	if (editor->isInMobileMode())
+	{
+		// Create key replacement bar
+		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
+		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
+		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Angle", "Using constrained angles"));
+		editor->showPopupWidget(key_button_bar, "");
 	}
 }
 

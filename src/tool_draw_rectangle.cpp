@@ -35,13 +35,16 @@
 #include "tool_helpers.h"
 #include "symbol_dock_widget.h"
 #include "gui/modifier_key.h"
+#include "gui/widgets/key_button_bar.h"
+#include "map_editor.h"
 
 QCursor* DrawRectangleTool::cursor = NULL;
 
 DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
  : DrawLineAndAreaTool(editor, DrawRectangle, tool_button, symbol_widget),
    angle_helper(new ConstrainAngleToolHelper()),
-   snap_helper(new SnappingToolHelper(map()))
+   snap_helper(new SnappingToolHelper(map())),
+   key_button_bar(NULL)
 {
 	cur_map_widget = mapWidget();
 	draw_dash_points = true;
@@ -64,17 +67,34 @@ DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_
 
 DrawRectangleTool::~DrawRectangleTool()
 {
+	if (key_button_bar)
+		editor->deletePopupWidget(key_button_bar);
 }
 
 void DrawRectangleTool::init()
 {
 	updateStatusText();
+	
+	if (editor->isInMobileMode())
+	{
+		// Create key replacement bar
+		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
+		key_button_bar->addPressKey(Qt::Key_Return, tr("Finish"));
+		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
+		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Line snap", "Using constrained angles"));
+		key_button_bar->addPressKey(Qt::Key_Space, tr("Dash", "Drawing dash points"));
+		key_button_bar->addPressKey(Qt::Key_Backspace, tr("Undo"));
+		key_button_bar->addPressKey(Qt::Key_Escape, tr("Abort"));
+		editor->showPopupWidget(key_button_bar, "");
+	}
 }
 
 bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	ctrl_pressed = event->modifiers() & Qt::ControlModifier;
-	shift_pressed = event->modifiers() & Qt::ShiftModifier;
+	// Adjust flags to have possibly more recent state
+	int modifiers = (event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0));
+	ctrl_pressed = modifiers & Qt::ControlModifier;
+	shift_pressed = modifiers & Qt::ShiftModifier;
 	cur_map_widget = widget;
 	if (event->button() == Qt::LeftButton || (draw_in_progress && drawMouseButtonClicked(event)))
 	{
@@ -266,7 +286,17 @@ bool DrawRectangleTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_
 
 bool DrawRectangleTool::keyPressEvent(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_Escape)
+	if (event->key() == Qt::Key_Return)
+	{
+		if (draw_in_progress)
+		{
+			constrained_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
+			undoLastPoint();
+			if (draw_in_progress)
+				finishDrawing();
+		}
+	}
+	else if (event->key() == Qt::Key_Escape)
 	{
 		if (draw_in_progress)
 			abortDrawing();

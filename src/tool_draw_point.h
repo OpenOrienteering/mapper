@@ -29,6 +29,7 @@ class MapWidget;
 class PointObject;
 class Symbol;
 class SymbolWidget;
+class KeyButtonBar;
 
 /**
  * Tool to draw PointObjects.
@@ -53,6 +54,7 @@ protected:
 	 */
 	float calculateRotation(QPointF mouse_pos, MapCoordF mouse_pos_map);
 
+	virtual void initImpl();
 	virtual int updateDirtyRectImpl(QRectF& rect);
 	virtual void drawImpl(QPainter* painter, MapWidget* widget);
 	virtual void updateStatusText();
@@ -72,6 +74,7 @@ protected:
 	PointObject* preview_object;
 	QScopedPointer<MapRenderables> renderables;
 	SymbolWidget* symbol_widget;
+	KeyButtonBar* key_button_bar;
 };
 
 #endif

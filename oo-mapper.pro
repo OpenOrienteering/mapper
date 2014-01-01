@@ -133,6 +133,7 @@ HEADERS += \
   src/gui/widgets/action_grid_bar.h \
   src/gui/widgets/color_dropdown.h \
   src/gui/widgets/home_screen_widget.h \
+  src/gui/widgets/key_button_bar.h \
   src/gui/widgets/mapper_proxystyle.h \
   src/gui/widgets/measure_widget.h \
   src/gui/widgets/segmented_button_layout.h \
@@ -251,6 +252,7 @@ SOURCES += \
   src/gui/widgets/action_grid_bar.cpp \
   src/gui/widgets/color_dropdown.cpp \
   src/gui/widgets/home_screen_widget.cpp \
+  src/gui/widgets/key_button_bar.cpp \
   src/gui/widgets/mapper_proxystyle.cpp \
   src/gui/widgets/measure_widget.cpp \
   src/gui/widgets/segmented_button_layout.cpp \

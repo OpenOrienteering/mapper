@@ -29,6 +29,7 @@
 
 #include "tool.h"
 
+class KeyButtonBar;
 class ConstrainAngleToolHelper;
 class SnappingToolHelper;
 
@@ -178,6 +179,11 @@ protected:
 	
 	/// True if startEditing() has been called and editing is not finished yet.
 	bool editing;
+	
+	/// Must be set by derived classes if a key button bar is used.
+	/// MapEditorToolBase will take care of including its modifiers into
+	/// active_modifiers and destruct it when the tool is destructed.
+	KeyButtonBar* key_button_bar;
 	
 private:
 	// Miscellaneous internals

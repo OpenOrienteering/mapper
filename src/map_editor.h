@@ -90,6 +90,9 @@ public:
 	/** Destroys the MapEditorController. */
 	~MapEditorController();
 	
+	/** Returns if the editor is in mobile mode. */
+	bool isInMobileMode() const;
+	
 	/**
 	 * Changes to new_tool as the new active tool.
 	 * If there is a current tool before, calls deleteLater() on it.

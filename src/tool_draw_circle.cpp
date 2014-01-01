@@ -30,11 +30,14 @@
 #include "object.h"
 #include "util.h"
 #include "gui/modifier_key.h"
+#include "gui/widgets/key_button_bar.h"
+#include "map_editor.h"
 
 QCursor* DrawCircleTool::cursor = NULL;
 
 DrawCircleTool::DrawCircleTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : DrawLineAndAreaTool(editor, DrawCircle, tool_button, symbol_widget)
+ : DrawLineAndAreaTool(editor, DrawCircle, tool_button, symbol_widget),
+   key_button_bar(NULL)
 {
 	dragging = false;
 	first_point_set = false;
@@ -44,9 +47,23 @@ DrawCircleTool::DrawCircleTool(MapEditorController* editor, QAction* tool_button
 		cursor = new QCursor(QPixmap(":/images/cursor-draw-circle.png"), 11, 11);
 }
 
+DrawCircleTool::~DrawCircleTool()
+{
+	if (key_button_bar)
+		editor->deletePopupWidget(key_button_bar);
+}
+
 void DrawCircleTool::init()
 {
 	updateStatusText();
+	
+	if (editor->isInMobileMode())
+	{
+		// Create key replacement bar
+		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
+		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("From center", "Draw circle starting from center"));
+		editor->showPopupWidget(key_button_bar, "");
+	}
 }
 
 bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -65,7 +82,7 @@ bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 			opposite_pos_map = map_coord;
 			dragging = false;
 			first_point_set = true;
-			start_from_center = event->modifiers() & Qt::ControlModifier;
+			start_from_center = (event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0)) & Qt::ControlModifier;
 			
 			if (!draw_in_progress)
 				startDrawing();

@@ -27,6 +27,7 @@
 
 class ConstrainAngleToolHelper;
 class SnappingToolHelper;
+class KeyButtonBar;
 
 /**
  * Tool to draw rectangular PathObjects (but also 45 degree angles).
@@ -128,6 +129,8 @@ protected:
 	QScopedPointer<ConstrainAngleToolHelper> angle_helper;
 	QScopedPointer<SnappingToolHelper> snap_helper;
 	MapWidget* cur_map_widget;
+	
+	KeyButtonBar* key_button_bar;
 };
 
 #endif

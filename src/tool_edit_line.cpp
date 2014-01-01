@@ -45,6 +45,7 @@
 #include "map_editor.h"
 #include "gui/main_window.h"
 #include "gui/modifier_key.h"
+#include "gui/widgets/key_button_bar.h"
 
 
 int EditLineTool::max_objects_for_handle_display = 10;
@@ -317,6 +318,15 @@ bool EditLineTool::keyRelease(QKeyEvent* event)
 void EditLineTool::initImpl()
 {
 	objectSelectionChangedImpl();
+	
+	if (editor->isInMobileMode())
+	{
+		// Create key replacement bar
+		key_button_bar = new KeyButtonBar(this, editor->getMainWidget());
+		key_button_bar->addModifierKey(Qt::Key_Shift, Qt::ShiftModifier, tr("Snap", "Snap to existing objects"));
+		key_button_bar->addModifierKey(Qt::Key_Control, Qt::ControlModifier, tr("Toggle curve", "Toggle between curved and flat segment"));
+		editor->showPopupWidget(key_button_bar, "");
+	}
 }
 
 void EditLineTool::objectSelectionChangedImpl()
