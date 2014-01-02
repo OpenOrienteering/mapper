@@ -336,6 +336,8 @@ public slots:
 	void drawCircleClicked();
 	/** Activates the draw rectangle tool. */
 	void drawRectangleClicked();
+	/** Activates the draw freehand tool. */
+	void drawFreehandClicked();
 	/** Activates the draw fill tool. */
 	void drawFillClicked();
 	/** Activates the draw text tool. */
@@ -565,6 +567,7 @@ private:
 	QAction* draw_path_act;
 	QAction* draw_circle_act;
 	QAction* draw_rectangle_act;
+	QAction* draw_freehand_act;
 	QAction* draw_fill_act;
 	QAction* draw_text_act;
 	

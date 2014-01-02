@@ -101,6 +101,7 @@ HEADERS += \
   src/tool_cutout.h \
   src/tool_distribute_points.h \
   src/tool_draw_circle.h \
+  src/tool_draw_freehand.h \
   src/tool_draw_line_and_area.h \
   src/tool_draw_path.h \
   src/tool_draw_point.h \
@@ -214,6 +215,7 @@ SOURCES += \
   src/tool_draw_path.cpp \
   src/tool_draw_circle.cpp \
   src/tool_draw_rectangle.cpp \
+  src/tool_draw_freehand.cpp \
   src/tool_draw_text.cpp \
   src/tool_cut.cpp \
   src/tool_cut_hole.cpp \

@@ -98,6 +98,7 @@ set(Mapper_Common_SRCS
  tool_draw_path.cpp
  tool_draw_circle.cpp
  tool_draw_rectangle.cpp
+ tool_draw_freehand.cpp
  tool_draw_text.cpp
  tool_cut.cpp
  tool_cut_hole.cpp
@@ -202,6 +203,7 @@ set(Mapper_Common_MOC_INPUT
  tool_cutout.h
  tool_distribute_points.h
  tool_draw_circle.h
+ tool_draw_freehand.h
  tool_draw_line_and_area.h
  tool_draw_path.h
  tool_draw_point.h

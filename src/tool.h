@@ -66,6 +66,7 @@ public:
 		DrawPath = 4,
 		DrawCircle = 5,
 		DrawRectangle = 6,
+		DrawFreehand = 8,
 		DrawText = 7
 	};
 	

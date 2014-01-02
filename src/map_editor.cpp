@@ -69,6 +69,7 @@
 #include "tool_cutout.h"
 #include "tool_distribute_points.h"
 #include "tool_draw_circle.h"
+#include "tool_draw_freehand.h"
 #include "tool_draw_path.h"
 #include "tool_draw_point.h"
 #include "tool_draw_rectangle.h"
@@ -654,6 +655,7 @@ void MapEditorController::createActions()
 	draw_path_act = newToolAction("drawpath", tr("Draw paths"), this, SLOT(drawPathClicked()), "draw-path.png", QString::null, "toolbars.html#tool_draw_path");
 	draw_circle_act = newToolAction("drawcircle", tr("Draw circles and ellipses"), this, SLOT(drawCircleClicked()), "draw-circle.png", QString::null, "toolbars.html#tool_draw_circle");
 	draw_rectangle_act = newToolAction("drawrectangle", tr("Draw rectangles"), this, SLOT(drawRectangleClicked()), "draw-rectangle.png", QString::null, "toolbars.html#tool_draw_rectangle");
+	draw_freehand_act = newToolAction("drawfreehand", tr("Draw free-handedly"), this, SLOT(drawFreehandClicked()), "draw-freehand.png", QString::null, "toolbars.html#tool_draw_freehand"); // TODO: documentation
 	draw_fill_act = newToolAction("drawfill", tr("Fill bounded areas"), this, SLOT(drawFillClicked()), "tool-fill.png", QString::null, "toolbars.html#tool_draw_fill"); // TODO: documentation
 	draw_text_act = newToolAction("drawtext", tr("Write text"), this, SLOT(drawTextClicked()), "draw-text.png", QString::null, "toolbars.html#tool_draw_text");
 	delete_act = newAction("delete", tr("Delete"), this, SLOT(deleteClicked()), "delete.png", QString::null, "toolbars.html#delete");
@@ -819,6 +821,7 @@ void MapEditorController::createMenuAndToolbars()
 	tools_menu->addAction(draw_path_act);
 	tools_menu->addAction(draw_circle_act);
 	tools_menu->addAction(draw_rectangle_act);
+	tools_menu->addAction(draw_freehand_act);
 	tools_menu->addAction(draw_fill_act);
 	tools_menu->addAction(draw_text_act);
 	tools_menu->addAction(delete_act);
@@ -940,6 +943,7 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_drawing->addAction(draw_path_act);
 	toolbar_drawing->addAction(draw_circle_act);
 	toolbar_drawing->addAction(draw_rectangle_act);
+	toolbar_drawing->addAction(draw_freehand_act);
 	toolbar_drawing->addAction(draw_fill_act);
 	toolbar_drawing->addAction(draw_text_act);
 	toolbar_drawing->addSeparator();
@@ -1066,12 +1070,12 @@ void MapEditorController::createMobileGUI()
 	//bottom_bar->addActionAtEnd(gps_set_point_act, 1, col);
 	
 	bottom_action_bar->addActionAtEnd(draw_path_act, 0, col++);
-	//bottom_bar->addActionAtEnd(draw_freehand_act, 1, col);
+	bottom_action_bar->addActionAtEnd(draw_freehand_act, 1, col);
 	
 	bottom_action_bar->addActionAtEnd(draw_rectangle_act, 0, col);
 	bottom_action_bar->addActionAtEnd(draw_circle_act, 1, col++);
 	
-	bottom_action_bar->addActionAtEnd(draw_fill_act, 0, col++);
+	//bottom_action_bar->addActionAtEnd(draw_fill_act, 0, col++);
 	//bottom_bar->addActionAtEnd(draw_text_act, 1, col++);
 	
 	
@@ -1777,6 +1781,8 @@ void MapEditorController::selectedSymbolsChanged()
 	draw_circle_act->setStatusTip(tr("Draw circles and ellipses.") + (draw_circle_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
 	draw_rectangle_act->setEnabled(draw_path_act->isEnabled());
 	draw_rectangle_act->setStatusTip(tr("Draw rectangles.") + (draw_rectangle_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
+	draw_freehand_act->setEnabled(draw_path_act->isEnabled());
+	draw_freehand_act->setStatusTip(tr("Draw paths free-handedly.") + (draw_freehand_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
 	draw_fill_act->setEnabled(draw_path_act->isEnabled());
 	draw_fill_act->setStatusTip(tr("Fill bounded areas.") + (draw_fill_act->isEnabled() ? "" : (" " + tr("Select a line, area or combined symbol to be able to use this tool."))));
 	draw_text_act->setEnabled(type == Symbol::Text && !symbol->isHidden());
@@ -2018,6 +2024,11 @@ void MapEditorController::drawCircleClicked()
 void MapEditorController::drawRectangleClicked()
 {
 	setTool(new DrawRectangleTool(this, draw_rectangle_act, symbol_widget));
+}
+
+void MapEditorController::drawFreehandClicked()
+{
+	setTool(new DrawFreehandTool(this, draw_freehand_act, symbol_widget));
 }
 
 void MapEditorController::drawFillClicked()
