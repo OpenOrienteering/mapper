@@ -41,7 +41,10 @@
 const QRgb MapEditorTool::inactive_color = qRgb(0, 0, 255);
 const QRgb MapEditorTool::active_color = qRgb(255, 150, 0);
 const QRgb MapEditorTool::selection_color = qRgb(210, 0, 229);
-QImage* MapEditorTool::point_handles = NULL;
+int MapEditorTool::resolution_index;
+int MapEditorTool::resolution_scale_factor;
+const int MapEditorTool::num_point_handle_resolutions;
+QImage* MapEditorTool::point_handles[MapEditorTool::num_point_handle_resolutions] = {NULL, NULL, NULL};
 
 MapEditorTool::MapEditorTool(MapEditorController* editor, Type type, QAction* tool_button)
 : QObject(NULL),
@@ -50,6 +53,10 @@ MapEditorTool::MapEditorTool(MapEditorController* editor, Type type, QAction* to
   uses_touch_cursor(true),
   editor(editor)
 {
+	const int base_dpi = 96;
+	resolution_index = (Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toFloat() - (base_dpi / 2)) / base_dpi;
+	resolution_index = qMax(0, qMin(num_point_handle_resolutions - 1, resolution_index));
+	resolution_scale_factor = qPow(2, resolution_index);
 }
 
 MapEditorTool::~MapEditorTool()
@@ -175,8 +182,12 @@ bool MapEditorTool::isDrawTool(MapEditorTool::Type type)
 
 void MapEditorTool::loadPointHandles()
 {
-	if (!point_handles)
-		point_handles = new QImage(":/images/point-handles.png");
+	if (!point_handles[0])
+	{
+		point_handles[0] = new QImage(":/images/point-handles.png");
+		point_handles[1] = new QImage(":/images/point-handles-2x.png");
+		point_handles[2] = new QImage(":/images/point-handles-4x.png");
+	}
 }
 
 QRgb MapEditorTool::getPointHandleStateColor(PointHandleState state)
@@ -390,13 +401,18 @@ void MapEditorTool::drawPointHandles(int hover_point, QPainter* painter, Object*
 
 void MapEditorTool::drawPointHandle(QPainter* painter, QPointF point, PointHandleType type, PointHandleState state)
 {
-	painter->drawImage(qRound(point.x()) - 5, qRound(point.y()) - 5, *point_handles, (int)type * 11, (int)state * 11, 11, 11);
+	int width = resolution_scale_factor * 11;
+	int offset = (width - 1) / 2;
+	painter->drawImage(qRound(point.x()) - offset, qRound(point.y()) - offset, *point_handles[resolution_index], (int)type * width, (int)state * width, width, width);
 }
 
 void MapEditorTool::drawCurveHandleLine(QPainter* painter, QPointF point, PointHandleType type, QPointF curve_handle, PointHandleState state)
 {
-	const float handle_radius = 3;
-	painter->setPen(getPointHandleStateColor(state));
+	const float handle_radius = 3 * resolution_scale_factor;
+	if (resolution_scale_factor > 1)
+		painter->setPen(QPen(QBrush(getPointHandleStateColor(state)), resolution_scale_factor));
+	else
+		painter->setPen(getPointHandleStateColor(state));
 	
 	QPointF to_handle = curve_handle - point;
 	float to_handle_len = to_handle.x()*to_handle.x() + to_handle.y()*to_handle.y();
@@ -404,11 +420,11 @@ void MapEditorTool::drawCurveHandleLine(QPainter* painter, QPointF point, PointH
 	{
 		to_handle_len = sqrt(to_handle_len);
 		if (type == StartHandle)
-			point += 5 / qMax(qAbs(to_handle.x()), qAbs(to_handle.y())) * to_handle;
+			point += resolution_scale_factor * 5 / qMax(qAbs(to_handle.x()), qAbs(to_handle.y())) * to_handle;
 		else if (type == DashHandle)
-			point += to_handle * (3 / to_handle_len);
+			point += resolution_scale_factor * to_handle * (3 / to_handle_len);
 		else //if (type == NormalHandle)
-			point += 3 / qMax(qAbs(to_handle.x()), qAbs(to_handle.y())) * to_handle;
+			point += resolution_scale_factor * 3 / qMax(qAbs(to_handle.x()), qAbs(to_handle.y())) * to_handle;
 		
 		curve_handle -= to_handle * (handle_radius / to_handle_len);
 	}

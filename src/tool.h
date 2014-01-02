@@ -206,8 +206,9 @@ public:
 	/// Color for selected elements
 	static const QRgb selection_color;
 	
-	/// The global point handle image
-	static QImage* point_handles;
+	/// The global point handle image (in different resolutions)
+	static const int num_point_handle_resolutions = 3;
+	static QImage* point_handles[num_point_handle_resolutions];
 	
 protected:
 	/// Can be called by subclasses to display help text in the status bar
@@ -234,6 +235,8 @@ protected:
 	QAction* tool_button;
 	Type type;
 	bool uses_touch_cursor;
+	static int resolution_index;
+	static int resolution_scale_factor;
 	MapEditorController* editor;
 };
 
