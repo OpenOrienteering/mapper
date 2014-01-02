@@ -83,6 +83,7 @@
 #include "tool_rotate_pattern.h"
 #include "tool_scale.h"
 #include "util.h"
+#include "gps_temporary_markers.h"
 
 // ### MapEditorController ###
 
@@ -140,6 +141,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	
 	gps_display = NULL;
 	compass_display = NULL;
+	gps_marker_display = NULL;
 	
 	being_destructed = false;
 	
@@ -443,6 +445,7 @@ void MapEditorController::attach(MainWindow* window)
 	{
 		gps_display = new GPSDisplay(map_widget, map->getGeoreferencing());
 		compass_display = new CompassDisplay(map_widget);
+		gps_marker_display = new GPSTemporaryMarkers(map_widget, gps_display);
 	}
 	
 	// Create menu and toolbar together, so actions can be inserted into one or both
@@ -715,6 +718,12 @@ void MapEditorController::createActions()
 	gps_distance_rings_action->setEnabled(false);
 	draw_point_gps_act = newToolAction("drawpointgps", tr("Set point object at GPS position"), this, SLOT(drawPointGPSClicked()), "draw-point-gps.png", QString::null, "toolbars.html#tool_draw_point_gps"); // TODO: write documentation
 	draw_point_gps_act->setEnabled(false);
+	gps_temporary_point_act = newAction("gpstemporarypoint", tr("Set temporary marker at GPS position"), this, SLOT(gpsTemporaryPointClicked()), "gps-temporary-point.png", QString::null, "toolbars.html#gps_temporary_point"); // TODO: write documentation
+	gps_temporary_point_act->setEnabled(false);
+	gps_temporary_path_act = newCheckAction("gpstemporarypath", tr("Create temporary path at GPS position"), this, SLOT(gpsTemporaryPathClicked(bool)), "gps-temporary-path.png", QString::null, "toolbars.html#gps_temporary_path"); // TODO: write documentation
+	gps_temporary_path_act->setEnabled(false);
+	gps_temporary_clear_act = newAction("gpstemporaryclear", tr("Clear temporary GPS markers"), this, SLOT(gpsTemporaryClearClicked()), "gps-temporary-clear.png", QString::null, "toolbars.html#gps_temporary_clear"); // TODO: write documentation
+	gps_temporary_clear_act->setEnabled(false);
 	
 	compass_action = newCheckAction("compassdisplay", tr("Enable compass display"), this, SLOT(enableCompassDisplay(bool)), "compass.png", QString::null, "toolbars.html#compass_display"); // TODO: write documentation
 	
@@ -1055,12 +1064,11 @@ void MapEditorController::createMobileGUI()
 	bottom_action_bar->addAction(zoom_in_act, 0, col);
 	bottom_action_bar->addAction(pan_act, 1, col++);
 	
-	bottom_action_bar->addAction(zoom_out_act, 0, col++);
-	//bottom_bar->addAction(temp_marker_delete_act, 1, col);
+	bottom_action_bar->addAction(zoom_out_act, 0, col);
+	bottom_action_bar->addAction(gps_temporary_clear_act, 1, col++);
 	
-	//bottom_bar->addAction(temp_marker_path_act, 0, col);
-	//bottom_bar->addAction(temp_marker_point_act, 1, col);
-	col++;
+	bottom_action_bar->addAction(gps_temporary_path_act, 0, col);
+	bottom_action_bar->addAction(gps_temporary_point_act, 1, col++);
 	
 	bottom_action_bar->addAction(paint_on_template_act, 0, col);
 	bottom_action_bar->addAction(paint_on_template_settings_act, 1, col++);
@@ -1170,6 +1178,8 @@ void MapEditorController::detach()
 	gps_display = NULL;
 	delete compass_display;
 	compass_display = NULL;
+	delete gps_marker_display;
+	gps_marker_display = NULL;
 	
 	window->setCentralWidget(NULL);
 	delete map_widget;
@@ -2785,7 +2795,15 @@ void MapEditorController::enableGPSDisplay(bool enable)
 		gps_display->stopUpdates();
 	gps_display->setVisible(enable);
 	
+	if (! enable)
+	{
+		gps_marker_display->stopPath();
+		gps_temporary_path_act->setChecked(false);
+	}
+	
 	gps_distance_rings_action->setEnabled(enable);
+	gps_temporary_point_act->setEnabled(enable);
+	gps_temporary_path_act->setEnabled(enable);
 	updateDrawPointGPSAvailability();
 }
 
@@ -2810,6 +2828,31 @@ void MapEditorController::updateDrawPointGPSAvailability()
 void MapEditorController::drawPointGPSClicked()
 {
 	setTool(new DrawPointGPSTool(gps_display, this, draw_point_gps_act, symbol_widget));
+}
+
+void MapEditorController::gpsTemporaryPointClicked()
+{
+	gps_marker_display->addPoint();
+	gps_temporary_clear_act->setEnabled(true);
+}
+
+void MapEditorController::gpsTemporaryPathClicked(bool enable)
+{
+	if (enable)
+	{
+		gps_marker_display->startPath();
+		gps_temporary_clear_act->setEnabled(true);
+	}
+	else
+		gps_marker_display->stopPath();
+}
+
+void MapEditorController::gpsTemporaryClearClicked()
+{
+	gps_marker_display->stopPath();
+	gps_temporary_path_act->setChecked(false);
+	gps_marker_display->clear();
+	gps_temporary_clear_act->setEnabled(false);
 }
 
 void MapEditorController::enableCompassDisplay(bool enable)

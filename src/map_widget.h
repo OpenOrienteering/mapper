@@ -37,6 +37,7 @@ class MapView;
 class TouchCursor;
 class GPSDisplay;
 class CompassDisplay;
+class GPSTemporaryMarkers;
 
 /**
  * QWidget for displaying a map. Needs a pointer to a MapView which defines
@@ -281,6 +282,8 @@ public:
 	void setGPSDisplay(GPSDisplay* gps_display);
 	/** Sets the compass display to use. This is called internally by the CompassDisplay constructor. */
 	void setCompassDisplay(CompassDisplay* compass_display);
+	/** Sets the GPS temporary markers display to use. This is called internally by the GPSTemporaryMarkers constructor. */
+	void setTemporaryMarkerDisplay(GPSTemporaryMarkers* marker_display);
 	
 	/** Returns a reference to the internally constructed PieMenu. */
 	inline PieMenu& getPieMenu() {return pie_menu;}
@@ -448,6 +451,8 @@ private:
 	GPSDisplay* gps_display;
 	/** Optional compass display */
 	CompassDisplay* compass_display;
+	/** Optional temporary GPS marker display. */
+	GPSTemporaryMarkers* marker_display;
 };
 
 #endif

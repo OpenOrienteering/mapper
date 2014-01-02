@@ -39,6 +39,7 @@
 #include "util.h"
 #include "gps_display.h"
 #include "compass_display.h"
+#include "gps_temporary_markers.h"
 
 #if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
 #define MiddleButton MidButton
@@ -51,7 +52,8 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
    pie_menu(this, 8, 24),
    touch_cursor(NULL),
    gps_display(NULL),
-   compass_display(NULL)
+   compass_display(NULL),
+   marker_display(NULL)
 {
 	view = NULL;
 	tool = NULL;
@@ -680,6 +682,11 @@ void MapWidget::setCompassDisplay(CompassDisplay* compass_display)
 	this->compass_display = compass_display;
 }
 
+void MapWidget::setTemporaryMarkerDisplay(GPSTemporaryMarkers* marker_display)
+{
+	this->marker_display = marker_display;
+}
+
 QSize MapWidget::sizeHint() const
 {
     return QSize(640, 480);
@@ -822,6 +829,10 @@ void MapWidget::paintEvent(QPaintEvent* event)
 	}
 	
 	painter.setClipRect(event->rect());
+	
+	// Draw temporary GPS marker display
+	if (marker_display)
+		marker_display->paint(&painter);
 	
 	// Draw GPS display
 	if (gps_display)

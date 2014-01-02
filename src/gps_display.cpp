@@ -200,7 +200,10 @@ MapCoordF GPSDisplay::calcLatestGPSCoord(bool& ok)
 		return latest_gps_coord;
 	}
 	if (!gps_updated)
+	{
+		ok = true;
 		return latest_gps_coord;
+	}
 	
 	latest_pos_info = source->lastKnownPosition(true);
 	latest_gps_coord_accuracy = latest_pos_info.hasAttribute(QGeoPositionInfo::HorizontalAccuracy) ? latest_pos_info.attribute(QGeoPositionInfo::HorizontalAccuracy) : -1;

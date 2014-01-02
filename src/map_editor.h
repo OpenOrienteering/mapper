@@ -54,6 +54,7 @@ class ReopenTemplateDialog;
 class PieMenu;
 class GPSDisplay;
 class CompassDisplay;
+class GPSTemporaryMarkers;
 class ActionGridBar;
 typedef std::vector<Renderable*> RenderableVector;
 
@@ -411,6 +412,12 @@ public slots:
 	void updateDrawPointGPSAvailability();
 	/** Switches to the GPS point drawing tool. */
 	void drawPointGPSClicked();
+	/** Sets a temporary marker at the GPS position. */
+	void gpsTemporaryPointClicked();
+	/** Draws a temporary path at the GPS position. */
+	void gpsTemporaryPathClicked(bool enable);
+	/** Clears temporary GPS markers. */
+	void gpsTemporaryClearClicked();
 	
 	/** Enables or disables digital compass display. */
 	void enableCompassDisplay(bool enable);
@@ -610,6 +617,10 @@ private:
 	QAction* gps_display_action;
 	QAction* gps_distance_rings_action;
 	QAction* draw_point_gps_act;
+	QAction* gps_temporary_point_act;
+	QAction* gps_temporary_path_act;
+	QAction* gps_temporary_clear_act;
+	GPSTemporaryMarkers* gps_marker_display;
 	GPSDisplay* gps_display;
 	QAction* compass_action;
 	CompassDisplay* compass_display;

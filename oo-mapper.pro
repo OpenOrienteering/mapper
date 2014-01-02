@@ -63,6 +63,7 @@ HEADERS += \
   src/georeferencing.h \
   src/georeferencing_dialog.h \
   src/gps_display.h \
+  src/gps_temporary_markers.h \
   src/map.h \
   src/map_dialog_new.h \
   src/map_dialog_scale.h \
@@ -230,6 +231,7 @@ SOURCES += \
   src/gps_coordinates.cpp \
   src/gps_track.cpp \
   src/gps_display.cpp \
+  src/gps_temporary_markers.cpp \
   src/dxfparser.cpp \
   src/compass_display.cpp \
   src/file_format.cpp \
