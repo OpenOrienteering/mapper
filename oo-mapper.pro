@@ -105,6 +105,7 @@ HEADERS += \
   src/tool_draw_line_and_area.h \
   src/tool_draw_path.h \
   src/tool_draw_point.h \
+  src/tool_draw_point_gps.h \
   src/tool_draw_rectangle.h \
   src/tool_draw_text.h \
   src/tool_edit.h \
@@ -212,6 +213,7 @@ SOURCES += \
   src/tool_distribute_points.cpp \
   src/tool_draw_line_and_area.cpp \
   src/tool_draw_point.cpp \
+  src/tool_draw_point_gps.cpp \
   src/tool_draw_path.cpp \
   src/tool_draw_circle.cpp \
   src/tool_draw_rectangle.cpp \

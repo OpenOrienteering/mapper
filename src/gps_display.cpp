@@ -57,7 +57,7 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing)
 	
 	source->setPreferredPositioningMethods(QGeoPositionInfoSource::SatellitePositioningMethods);
 	source->setUpdateInterval(1000);
-	connect(source, SIGNAL(positionUpdated(const QGeoPositionInfo&)), this, SLOT(positionUpdated(const QGeoPositionInfo&)));
+	connect(source, SIGNAL(positionUpdated(const QGeoPositionInfo&)), this, SLOT(positionUpdated(const QGeoPositionInfo&)), Qt::QueuedConnection);
 	connect(source, SIGNAL(error(QGeoPositionInfoSource::Error)), this, SLOT(error(QGeoPositionInfoSource::Error)));
 	connect(source, SIGNAL(updateTimeout()), this, SLOT(updateTimeout()));
 #else
@@ -111,7 +111,7 @@ void GPSDisplay::paint(QPainter* painter)
 	
 	// Get GPS position on map widget
 	bool ok = true;
-	MapCoordF gps_coord = getLatestGPSCoord(ok);
+	MapCoordF gps_coord = calcLatestGPSCoord(ok);
 	if (!ok)
 		return;
 	QPointF gps_pos = widget->mapToViewport(gps_coord);
@@ -160,6 +160,11 @@ void GPSDisplay::positionUpdated(const QGeoPositionInfo& info)
 	tracking_lost = false;
 	has_valid_position = true;
 	
+	bool ok = false;
+	calcLatestGPSCoord(ok);
+	if (ok)
+		emit mapPositionUpdated(latest_gps_coord, latest_gps_coord_accuracy);
+	
 	updateMapWidget();
 }
 
@@ -186,13 +191,20 @@ void GPSDisplay::updateTimeout()
 }
 #endif
 
-MapCoordF GPSDisplay::getLatestGPSCoord(bool& ok)
+MapCoordF GPSDisplay::calcLatestGPSCoord(bool& ok)
 {
 #if defined(ENABLE_POSITIONING)
+	if (!has_valid_position)
+	{
+		ok = false;
+		return latest_gps_coord;
+	}
 	if (!gps_updated)
 		return latest_gps_coord;
 	
 	latest_pos_info = source->lastKnownPosition(true);
+	latest_gps_coord_accuracy = latest_pos_info.hasAttribute(QGeoPositionInfo::HorizontalAccuracy) ? latest_pos_info.attribute(QGeoPositionInfo::HorizontalAccuracy) : -1;
+	
 	QGeoCoordinate qgeo_coord = latest_pos_info.coordinate();
 	if (!qgeo_coord.isValid())
 	{
@@ -204,7 +216,7 @@ MapCoordF GPSDisplay::getLatestGPSCoord(bool& ok)
 	latest_gps_coord = georeferencing.toMapCoordF(latlon, &ok);
 	if (!ok)
 	{
-		qDebug() << "GPSDisplay::getLatestGPSCoord(): Cannot convert LatLon to MapCoordF!";
+		qDebug() << "GPSDisplay::calcLatestGPSCoord(): Cannot convert LatLon to MapCoordF!";
 		return latest_gps_coord;
 	}
 	

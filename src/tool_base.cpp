@@ -147,7 +147,12 @@ bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 		dragFinish();
 	}
 	else
+	{
+#ifdef ANDROID
+		mouseMove();
+#endif
 		clickRelease();
+	}
 	
 	return true;
 }

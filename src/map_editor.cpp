@@ -72,6 +72,7 @@
 #include "tool_draw_freehand.h"
 #include "tool_draw_path.h"
 #include "tool_draw_point.h"
+#include "tool_draw_point_gps.h"
 #include "tool_draw_rectangle.h"
 #include "tool_draw_text.h"
 #include "tool_edit_point.h"
@@ -712,6 +713,8 @@ void MapEditorController::createActions()
 	gps_display_action->setEnabled(map->getGeoreferencing().isValid() && ! map->getGeoreferencing().isLocal());
 	gps_distance_rings_action = newCheckAction("gpsdistancerings", tr("Enable GPS distance rings"), this, SLOT(enableGPSDistanceRings(bool)), "gps-distance-rings.png", QString::null, "toolbars.html#gps_distance_rings"); // TODO: write documentation
 	gps_distance_rings_action->setEnabled(false);
+	draw_point_gps_act = newToolAction("drawpointgps", tr("Set point object at GPS position"), this, SLOT(drawPointGPSClicked()), "draw-point-gps.png", QString::null, "toolbars.html#tool_draw_point_gps"); // TODO: write documentation
+	draw_point_gps_act->setEnabled(false);
 	
 	compass_action = newCheckAction("compassdisplay", tr("Enable compass display"), this, SLOT(enableCompassDisplay(bool)), "compass.png", QString::null, "toolbars.html#compass_display"); // TODO: write documentation
 	
@@ -1066,17 +1069,17 @@ void MapEditorController::createMobileGUI()
 	bottom_action_bar->addActionAtEnd(mobile_symbol_selector_action, 0, 1, 2, 2);
 	
 	col = 2;
-	bottom_action_bar->addActionAtEnd(draw_point_act, 0, col++);
-	//bottom_bar->addActionAtEnd(gps_set_point_act, 1, col);
+	bottom_action_bar->addActionAtEnd(draw_point_act, 0, col);
+	bottom_action_bar->addActionAtEnd(draw_point_gps_act, 1, col++);
 	
-	bottom_action_bar->addActionAtEnd(draw_path_act, 0, col++);
-	bottom_action_bar->addActionAtEnd(draw_freehand_act, 1, col);
+	bottom_action_bar->addActionAtEnd(draw_path_act, 0, col);
+	bottom_action_bar->addActionAtEnd(draw_freehand_act, 1, col++);
 	
 	bottom_action_bar->addActionAtEnd(draw_rectangle_act, 0, col);
 	bottom_action_bar->addActionAtEnd(draw_circle_act, 1, col++);
 	
-	//bottom_action_bar->addActionAtEnd(draw_fill_act, 0, col++);
-	//bottom_bar->addActionAtEnd(draw_text_act, 1, col++);
+	//bottom_action_bar->addActionAtEnd(draw_fill_act, 0, col);
+	//bottom_action_bar->addActionAtEnd(draw_text_act, 1, col++);
 	
 	
 	// Create top action bar
@@ -1773,6 +1776,7 @@ void MapEditorController::selectedSymbolsChanged()
 		mobile_symbol_selector_action->setIcon(QIcon(pixmap));
 	}
 	
+	updateDrawPointGPSAvailability();
 	draw_point_act->setEnabled(type == Symbol::Point && !symbol->isHidden());
 	draw_point_act->setStatusTip(tr("Place point objects on the map.") + (draw_point_act->isEnabled() ? "" : (" " + tr("Select a point symbol to be able to use this tool."))));
 	draw_path_act->setEnabled((type == Symbol::Line || type == Symbol::Area || type == Symbol::Combined) && !symbol->isHidden());
@@ -2782,11 +2786,30 @@ void MapEditorController::enableGPSDisplay(bool enable)
 	gps_display->setVisible(enable);
 	
 	gps_distance_rings_action->setEnabled(enable);
+	updateDrawPointGPSAvailability();
 }
 
 void MapEditorController::enableGPSDistanceRings(bool enable)
 {
 	gps_display->enableDistanceRings(enable);
+}
+
+void MapEditorController::updateDrawPointGPSAvailability()
+{
+	if (! symbol_widget)
+		draw_point_gps_act->setEnabled(false);
+	else if (! symbol_widget->getSingleSelectedSymbol())
+		draw_point_gps_act->setEnabled(false);
+	else
+	{
+		Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
+		draw_point_gps_act->setEnabled(gps_display->isVisible() && symbol->getType() == Symbol::Point && !symbol->isHidden());
+	}
+}
+
+void MapEditorController::drawPointGPSClicked()
+{
+	setTool(new DrawPointGPSTool(gps_display, this, draw_point_gps_act, symbol_widget));
 }
 
 void MapEditorController::enableCompassDisplay(bool enable)

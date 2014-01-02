@@ -95,6 +95,7 @@ set(Mapper_Common_SRCS
  tool_distribute_points.cpp
  tool_draw_line_and_area.cpp
  tool_draw_point.cpp
+ tool_draw_point_gps.cpp
  tool_draw_path.cpp
  tool_draw_circle.cpp
  tool_draw_rectangle.cpp
@@ -207,6 +208,7 @@ set(Mapper_Common_MOC_INPUT
  tool_draw_line_and_area.h
  tool_draw_path.h
  tool_draw_point.h
+ tool_draw_point_gps.h
  tool_draw_rectangle.h
  tool_draw_text.h
  tool_edit.h

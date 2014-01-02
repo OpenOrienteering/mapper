@@ -407,6 +407,10 @@ public slots:
 	void enableGPSDisplay(bool enable);
 	/** Enables or disables showing distance rings when GPS display is active. */
 	void enableGPSDistanceRings(bool enable);
+	/** Updates availability of the GPS point drawing tool. */
+	void updateDrawPointGPSAvailability();
+	/** Switches to the GPS point drawing tool. */
+	void drawPointGPSClicked();
 	
 	/** Enables or disables digital compass display. */
 	void enableCompassDisplay(bool enable);
@@ -605,6 +609,7 @@ private:
 	QAction* touch_cursor_action;
 	QAction* gps_display_action;
 	QAction* gps_distance_rings_action;
+	QAction* draw_point_gps_act;
 	GPSDisplay* gps_display;
 	QAction* compass_action;
 	CompassDisplay* compass_display;

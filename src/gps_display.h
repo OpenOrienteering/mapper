@@ -66,6 +66,18 @@ public:
 	/// This is called from the MapWidget drawing code to draw the GPS position marker.
 	void paint(QPainter* painter);
 	
+	/// Returns if a valid position was received since the last call to startUpdates().
+	inline bool hasValidPosition() const {return has_valid_position;}
+	/// Returns the latest received GPS coord. Check hasValidPosition() beforehand!
+	const MapCoordF& getLatestGPSCoord() const {return latest_gps_coord;}
+	/// Returns the accuracy of the latest received GPS coord, or -1 if unknown. Check hasValidPosition() beforehand!
+	float getLatestGPSCoordAccuracy() const {return latest_gps_coord_accuracy;}
+	
+signals:
+	/// Is emitted whenever a new position update happens.
+	/// If the accuracy is unknown, -1 will be given.
+	void mapPositionUpdated(MapCoordF coord, float accuracy);
+	
 private slots:
 #if defined(ENABLE_POSITIONING)
     void positionUpdated(const QGeoPositionInfo& info);
@@ -74,7 +86,7 @@ private slots:
 #endif
 	
 private:
-	MapCoordF getLatestGPSCoord(bool& ok);
+	MapCoordF calcLatestGPSCoord(bool& ok);
 	void updateMapWidget();
 	
 	bool gps_updated;
@@ -82,6 +94,7 @@ private:
 	QGeoPositionInfo latest_pos_info;
 #endif
 	MapCoordF latest_gps_coord;
+	float latest_gps_coord_accuracy;
 	bool tracking_lost;
 	bool has_valid_position;
 	
