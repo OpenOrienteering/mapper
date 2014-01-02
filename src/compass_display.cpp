@@ -531,6 +531,20 @@ void CompassDisplay::paint(QPainter* painter)
 	QPointF endpoint = QPointF(midpoint.x(), bounding_box.top());
 	QLineF line(midpoint, endpoint);
 	
+	// Draw alignment cue
+	if (have_value)
+	{
+		const float max_alignment_angle = 10;
+		if (qAbs(value_azimuth) < max_alignment_angle)
+		{
+			float alignment_factor = (max_alignment_angle - qAbs(value_azimuth)) / max_alignment_angle;
+			float radius = alignment_factor * 0.25f * bounding_box.height();
+			painter->setPen(Qt::NoPen);
+			painter->setBrush(Qt::green);
+			painter->drawEllipse(line.pointAt(0.5f), radius, radius);
+		}
+	}
+	
 	// Draw up marker
 	float line_width = Util::mmToPixelLogical(0.3f);
 	
