@@ -244,7 +244,7 @@ int TextObject::calcTextPositionAt(MapCoordF coord, bool find_line_only)
 // FIXME actually this is two functions, selected by parameter find_line_only; make two functions or return TextObjectLineInfo reference
 int TextObject::calcTextPositionAt(QPointF point, bool find_line_only)
 {
-	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
+	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	
 	for (int line = 0; line < getNumLines(); ++line)
 	{

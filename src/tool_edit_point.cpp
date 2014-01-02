@@ -155,7 +155,7 @@ void EditPointTool::clickPress()
 		PathCoord path_coord;
 		path->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord);
 		
-		int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
+		float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 		float click_tolerance_map_sq = cur_map_widget->getMapView()->pixelToLength(click_tolerance);
 		click_tolerance_map_sq = click_tolerance_map_sq * click_tolerance_map_sq;
 		
@@ -290,7 +290,7 @@ void EditPointTool::clickRelease()
 		&& click_timer.elapsed() >= selection_click_time_threshold)
 		return;
 	
-	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
+	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	object_selector->selectAt(cur_pos_map, cur_map_widget->getMapView()->pixelToLength(click_tolerance), active_modifiers & Qt::ShiftModifier);
 	updateHoverPoint(cur_pos_map);
 }

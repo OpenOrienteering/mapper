@@ -129,12 +129,12 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	layout->addWidget(text_antialiasing, row++, 0, 1, 2);
 	
 	QLabel* tolerance_label = new QLabel(tr("Click tolerance:"));
-	QSpinBox* tolerance = Util::SpinBox::create(0, 50, tr("px"));
+	QSpinBox* tolerance = Util::SpinBox::create(0, 50, tr("mm", "millimeters"));
 	layout->addWidget(tolerance_label, row, 0);
 	layout->addWidget(tolerance, row++, 1);
 	
 	QLabel* snap_distance_label = new QLabel(tr("Snap distance (%1):").arg(ModifierKey::shift()));
-	QSpinBox* snap_distance = Util::SpinBox::create(0, 100, tr("px"));
+	QSpinBox* snap_distance = Util::SpinBox::create(0, 100, tr("mm", "millimeters"));
 	layout->addWidget(snap_distance_label, row, 0);
 	layout->addWidget(snap_distance, row++, 1);
 	
@@ -177,7 +177,7 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	layout->addWidget(new QLabel("<b>" % tr("Rectangle tool:") % "</b>"), row++, 0, 1, 2);
 	
 	QLabel* rectangle_helper_cross_radius_label = new QLabel(tr("Radius of helper cross:"));
-	QSpinBox* rectangle_helper_cross_radius = Util::SpinBox::create(0, 999999, tr("px"));
+	QSpinBox* rectangle_helper_cross_radius = Util::SpinBox::create(0, 999999, tr("mm", "millimeters"));
 	layout->addWidget(rectangle_helper_cross_radius_label, row, 0);
 	layout->addWidget(rectangle_helper_cross_radius, row++, 1);
 	
@@ -187,8 +187,8 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	
 	antialiasing->setChecked(Settings::getInstance().getSetting(Settings::MapDisplay_Antialiasing).toBool());
 	text_antialiasing->setChecked(Settings::getInstance().getSetting(Settings::MapDisplay_TextAntialiasing).toBool());
-	tolerance->setValue(Settings::getInstance().getSetting(Settings::MapEditor_ClickTolerance).toInt());
-	snap_distance->setValue(Settings::getInstance().getSetting(Settings::MapEditor_SnapDistance).toInt());
+	tolerance->setValue(Settings::getInstance().getSetting(Settings::MapEditor_ClickToleranceMM).toInt());
+	snap_distance->setValue(Settings::getInstance().getSetting(Settings::MapEditor_SnapDistanceMM).toInt());
 	fixed_angle_stepping->setValue(Settings::getInstance().getSetting(Settings::MapEditor_FixedAngleStepping).toInt());
 	select_symbol_of_objects->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool());
 	zoom_out_away_from_cursor->setChecked(Settings::getInstance().getSetting(Settings::MapEditor_ZoomOutAwayFromCursor).toBool());
@@ -198,7 +198,7 @@ EditorPage::EditorPage(QWidget* parent) : SettingsPage(parent)
 	edit_tool_delete_bezier_point_action->setCurrentIndex(edit_tool_delete_bezier_point_action->findData(Settings::getInstance().getSetting(Settings::EditTool_DeleteBezierPointAction).toInt()));
 	edit_tool_delete_bezier_point_action_alternative->setCurrentIndex(edit_tool_delete_bezier_point_action_alternative->findData(Settings::getInstance().getSetting(Settings::EditTool_DeleteBezierPointActionAlternative).toInt()));
 	
-	rectangle_helper_cross_radius->setValue(Settings::getInstance().getSetting(Settings::RectangleTool_HelperCrossRadius).toInt());
+	rectangle_helper_cross_radius->setValue(Settings::getInstance().getSetting(Settings::RectangleTool_HelperCrossRadiusMM).toInt());
 	rectangle_preview_line_width->setChecked(Settings::getInstance().getSetting(Settings::RectangleTool_PreviewLineWidth).toBool());
 	
 	layout->setRowStretch(row, 1);
@@ -240,12 +240,12 @@ void EditorPage::textAntialiasingClicked(bool checked)
 
 void EditorPage::toleranceChanged(int value)
 {
-	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_ClickTolerance), QVariant(value));
+	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_ClickToleranceMM), QVariant(value));
 }
 
 void EditorPage::snapDistanceChanged(int value)
 {
-	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_SnapDistance), QVariant(value));
+	changes.insert(Settings::getInstance().getSettingPath(Settings::MapEditor_SnapDistanceMM), QVariant(value));
 }
 
 void EditorPage::fixedAngleSteppingChanged(int value)
@@ -285,7 +285,7 @@ void EditorPage::editToolDeleteBezierPointActionAlternativeChanged(int index)
 
 void EditorPage::rectangleHelperCrossRadiusChanged(int value)
 {
-	changes.insert(Settings::getInstance().getSettingPath(Settings::RectangleTool_HelperCrossRadius), QVariant(value));
+	changes.insert(Settings::getInstance().getSettingPath(Settings::RectangleTool_HelperCrossRadiusMM), QVariant(value));
 }
 
 void EditorPage::rectanglePreviewLineWidthChanged(bool checked)

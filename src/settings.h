@@ -38,15 +38,15 @@ public:
 	{
 		MapDisplay_Antialiasing = 0,
 		MapDisplay_TextAntialiasing,
-		MapEditor_ClickTolerance,
-		MapEditor_SnapDistance,
+		MapEditor_ClickToleranceMM,
+		MapEditor_SnapDistanceMM,
 		MapEditor_FixedAngleStepping,
 		MapEditor_ChangeSymbolWhenSelecting,
 		MapEditor_ZoomOutAwayFromCursor,
 		MapEditor_DrawLastPointOnRightClick,
 		EditTool_DeleteBezierPointAction,
 		EditTool_DeleteBezierPointActionAlternative,
-		RectangleTool_HelperCrossRadius,
+		RectangleTool_HelperCrossRadiusMM,
 		RectangleTool_PreviewLineWidth,
 		Templates_KeepSettingsOfClosed,
 		SymbolWidget_IconSizeMM,
@@ -105,7 +105,10 @@ public:
 	
 	// Methods related to specific settings
 	
-	int getSymbolWidgetIconSizePx() const;
+	int getSymbolWidgetIconSizePx();
+	float getMapEditorClickTolerancePx();
+	float getMapEditorSnapDistancePx();
+	float getRectangleToolHelperCrossRadiusPx();
 	
 signals:
 	void settingsChanged();
@@ -115,8 +118,9 @@ private:
 	void registerSetting(SettingsEnum id, const QString& path, const QVariant& default_value);
 	
 	/** Migrates a value from an old key to a new key.
-	 *  Uses the given or a newly constructed QSettings object. */
-	void migrateValue(const QString& old_key, SettingsEnum new_setting, QSettings& settings) const;
+	 *  Uses the given or a newly constructed QSettings object.
+	 *  Returns true if the value was migrated. */
+	bool migrateValue(const QString& old_key, SettingsEnum new_setting, QSettings& settings) const;
 	
 	QHash<SettingsEnum, QVariant> settings_cache;
 	QHash<SettingsEnum, QString> setting_paths;

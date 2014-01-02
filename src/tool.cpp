@@ -431,7 +431,7 @@ int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_c
 {
 	Q_UNUSED(selection_extent);
 	
-	int click_tolerance = Settings::getInstance().getSettingCached(Settings::MapEditor_ClickTolerance).toInt();
+	float click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	const float click_tolerance_squared = click_tolerance * click_tolerance;
 	
 	if (object->getType() == Object::Point)

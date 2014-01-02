@@ -398,7 +398,7 @@ void DrawRectangleTool::draw(QPainter* painter, MapWidget* widget)
 		if (widget->getMapView()->lengthToPixel(preview_point_radius) < preview_radius_min_pixels)
 			use_preview_radius = false;
 		
-		int helper_cross_radius = Settings::getInstance().getSettingCached(Settings::RectangleTool_HelperCrossRadius).toInt();
+		float helper_cross_radius = Settings::getInstance().getRectangleToolHelperCrossRadiusPx();
 		painter->setRenderHint(QPainter::Antialiasing);
 		
 		MapCoordF perp_vector = forward_vector;
@@ -654,7 +654,7 @@ void DrawRectangleTool::updateDirtyRect()
 			angle_helper->includeDirtyRect(rect);
 		if (rect.isValid())
 		{
-			int helper_cross_radius = Settings::getInstance().getSettingCached(Settings::RectangleTool_HelperCrossRadius).toInt();
+			float helper_cross_radius = Settings::getInstance().getRectangleToolHelperCrossRadiusPx();
 			int pixel_border = 0;
 			if (draw_in_progress)
 				pixel_border = helper_cross_radius;	// helper_cross_radius as border is less than ideal but the only way to always ensure visibility of the helper cross at the moment
