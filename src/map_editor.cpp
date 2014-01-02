@@ -345,7 +345,10 @@ bool MapEditorController::save(const QString& path)
 			QMessageBox::warning(window, tr("Editing in progress"), tr("The map is currently being edited. Please finish the edit operation before saving."));
 			return false;
 		}
-		return map->saveTo(path, this);
+		bool success = map->saveTo(path, this);
+		if (success)
+			window->showStatusBarMessage(tr("Map saved"), 1000);
+		return success;
 	}
 	else
 		return false;
