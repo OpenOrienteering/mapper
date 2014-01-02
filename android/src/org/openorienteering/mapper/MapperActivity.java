@@ -31,6 +31,7 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.location.LocationListener;
 import android.location.GpsStatus;
+import android.widget.Toast;
 
 
 /**
@@ -182,6 +183,15 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 		instance.yes_string = yes_string;
 		instance.no_string = no_string;
 		instance.gps_disabled_string = gps_disabled_string;
+	}
+	
+	public static void showShortMessage(final String message)
+	{
+		instance.runOnUiThread(new Runnable() {
+			public void run() {
+				Toast.makeText(instance, message, Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 	
 	public static void startGPSUpdates(int updateInterval)

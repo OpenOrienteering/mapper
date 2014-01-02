@@ -43,6 +43,10 @@
 #include "settings_dialog.h"
 #include "../util.h"
 
+#if defined(ANDROID)
+#include <QtAndroidExtras/QAndroidJniObject>
+#endif
+
 
 #if (defined Q_OS_MAC)
 // Cf. qtbase/src/plugins/platforms/cocoa/qcocoamenuloader.mm.
@@ -66,17 +70,18 @@ MainWindow::MainWindow(bool as_main_window)
 	controller = NULL;
 	has_unsaved_changes = false;
 	has_opened_file = false;
-// #if defined(ANDROID)
+#if defined(ANDROID)
 	create_menu = as_main_window;
 	show_menu = false;
-// #else
-//	create_menu = as_main_window;
-// 	show_menu = create_menu;
-// #endif
+#else
+	create_menu = as_main_window;
+	show_menu = create_menu;
+#endif
 	disable_shortcuts = false;
 	setCurrentFile("");
 	maximized_before_fullscreen = false;
 	general_toolbar = NULL;
+	file_menu = NULL;
 	
 	setWindowIcon(QIcon(":/images/mapper.png"));
 	setAttribute(Qt::WA_DeleteOnClose);
@@ -199,8 +204,8 @@ void MainWindow::setController(MainWindowController* new_controller)
 		delete controller;
 		controller = NULL;
 		
-		// Just to make sure ...
-		menuBar()->clear();
+		if (show_menu)
+			menuBar()->clear();
 		delete general_toolbar;
 		general_toolbar = NULL;
 	}
@@ -293,7 +298,10 @@ void MainWindow::createFileMenu()
 	if (show_menu)
 		file_menu = menuBar()->addMenu(tr("&File"));
 	else
+	{
+		delete file_menu;
 		file_menu = new QMenu(this);
+	}
 
 	file_menu->setWhatsThis("<a href=\"file_menu.html\">See more</a>");
 	file_menu->addAction(new_act);
@@ -420,8 +428,13 @@ void MainWindow::setStatusBarText(const QString& text)
 void MainWindow::showStatusBarMessage(const QString& text, int timeout)
 {
 #if defined(ANDROID)
-	Q_UNUSED(text);
 	Q_UNUSED(timeout);
+	QAndroidJniObject java_string = QAndroidJniObject::fromString(text);
+	QAndroidJniObject::callStaticMethod<void>(
+		"org/openorienteering/mapper/MapperActivity",
+		"showShortMessage",
+		"(Ljava/lang/String;)V",
+		java_string.object<jstring>());
 #else
 	statusBar()->showMessage(text, timeout);
 #endif
