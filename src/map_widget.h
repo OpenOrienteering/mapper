@@ -328,6 +328,8 @@ protected:
 	// Key input (see also slots)
 	virtual void focusOutEvent(QFocusEvent* event);
 	
+	virtual void contextMenuEvent(QContextMenuEvent* event);
+	
 private:
 	/** Checks if there is a visible template in the range
 	 *  from first_template to last_template. */

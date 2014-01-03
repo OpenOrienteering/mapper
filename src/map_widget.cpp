@@ -936,11 +936,6 @@ void MapWidget::_mousePressEvent(QMouseEvent* event)
 		startPanning(event->pos());
 		event->accept();
 	}
-	else if (event->button() == Qt::RightButton)
-	{
-		if (!context_menu->isEmpty())
-			context_menu->popup(event->globalPos());
-	}
 }
 
 void MapWidget::mouseMoveEvent(QMouseEvent* event)
@@ -1111,6 +1106,14 @@ void MapWidget::focusOutEvent(QFocusEvent* event)
 	if (tool)
 		tool->focusOutEvent(event);
 	QWidget::focusOutEvent(event);
+}
+
+void MapWidget::contextMenuEvent(QContextMenuEvent* event)
+{
+	if (!context_menu->isEmpty())
+		context_menu->popup(event->globalPos());
+	
+	event->accept();
 }
 
 bool MapWidget::containsVisibleTemplate(int first_template, int last_template)
