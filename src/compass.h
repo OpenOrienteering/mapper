@@ -43,7 +43,8 @@ public:
 	/** Dereferences compass usage. */
 	void stopUsage();
 	
-	/** Returns the most recent azimuth value (in degrees; updated approx. every 30 milliseconds). */
+	/** Returns the most recent azimuth value
+	 *  (in degrees clockwise from north; updated approx. every 30 milliseconds). */
 	float getCurrentAzimuth();
 	
 	/** Connects to the azimuthChanged(float azimuth_degrees) signal. This ensures to use a queued

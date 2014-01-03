@@ -2873,15 +2873,19 @@ void MapEditorController::alignMapWithNorth(bool enable)
 	if (enable)
 	{
 		Compass::getInstance().startUsage();
+		gps_display->enableHeadingIndicator(true);
+		
 		connect(&align_map_with_north_timer, SIGNAL(timeout()), this, SLOT(alignMapWithNorthUpdate()));
 		align_map_with_north_timer.start(update_interval);
 		alignMapWithNorthUpdate();
 	}
 	else
 	{
-		Compass::getInstance().stopUsage();
 		align_map_with_north_timer.disconnect();
 		align_map_with_north_timer.stop();
+		
+		gps_display->enableHeadingIndicator(false);
+		Compass::getInstance().stopUsage();
 		
 		main_view->setRotation(0);
 		main_view->updateAllMapWidgets();

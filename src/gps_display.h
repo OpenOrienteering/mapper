@@ -62,6 +62,8 @@ public:
 	
 	/// Sets whether distance rings are drawn
 	void enableDistanceRings(bool enable);
+	/// Sets whether the current heading from the Compass is used to draw a heading indicator.
+	void enableHeadingIndicator(bool enable);
 	
 	/// This is called from the MapWidget drawing code to draw the GPS position marker.
 	void paint(QPainter* painter);
@@ -99,7 +101,8 @@ private:
 	bool has_valid_position;
 	
 	bool visible;
-	bool distanceRingsEnabled;
+	bool distance_rings_enabled;
+	bool heading_indicator_enabled;
 	
 	QGeoPositionInfoSource* source;
 	MapWidget* widget;

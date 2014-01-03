@@ -24,10 +24,12 @@
 #endif
 #include <QPainter>
 #include <QDebug>
+#include <qmath.h>
 
 #include "map_widget.h"
 #include "georeferencing.h"
 #include "util.h"
+#include "compass.h"
 #if defined(ANDROID)
 	#include "gps_source_android.h"
 #endif
@@ -42,6 +44,9 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing)
 	gps_updated = false;
 	tracking_lost = false;
 	has_valid_position = false;
+	
+	distance_rings_enabled = false;
+	heading_indicator_enabled = false;
 	
 #if defined(ENABLE_POSITIONING)
 	#if defined(ANDROID)
@@ -98,9 +103,19 @@ void GPSDisplay::setVisible(bool visible)
 
 void GPSDisplay::enableDistanceRings(bool enable)
 {
-	distanceRingsEnabled = enable;
+	distance_rings_enabled = enable;
 	if (visible && has_valid_position)
 		updateMapWidget();
+}
+
+void GPSDisplay::enableHeadingIndicator(bool enable)
+{
+	if (enable && ! heading_indicator_enabled)
+		Compass::getInstance().startUsage();
+	else if (! enable && heading_indicator_enabled)
+		Compass::getInstance().stopUsage();
+	
+	heading_indicator_enabled = enable;
 }
 
 void GPSDisplay::paint(QPainter* painter)
@@ -116,14 +131,46 @@ void GPSDisplay::paint(QPainter* painter)
 		return;
 	QPointF gps_pos = widget->mapToViewport(gps_coord);
 	
-	// Draw center dot
-	qreal dot_radius = Util::mmToPixelLogical(0.5f);
+	// Draw center dot or arrow
 	painter->setPen(Qt::NoPen);
 	painter->setBrush(QBrush(tracking_lost ? Qt::gray : Qt::red));
-	painter->drawEllipse(gps_pos, dot_radius, dot_radius);
+	if (heading_indicator_enabled)
+	{
+		const qreal arrow_length = Util::mmToPixelLogical(1.5f);
+		const qreal heading_indicator_length = Util::mmToPixelLogical(9999.0f); // very long
+
+		// For heading indicator, get azimuth from compass and calculate
+		// the relative rotation to map view rotation, clockwise.
+		float heading_rotation_deg = Compass::getInstance().getCurrentAzimuth() + 180.0f / M_PI * widget->getMapView()->getRotation();
+		
+		painter->save();
+		painter->translate(gps_pos);
+		painter->rotate(heading_rotation_deg);
+		
+		// Draw arrow
+		static const QPointF arrow_points[4] = {
+			QPointF(0, -arrow_length),
+			QPointF(0.4f * arrow_length, 0.4f * arrow_length),
+			QPointF(0, 0),
+			QPointF(-0.4f * arrow_length, 0.4f * arrow_length)
+		};
+		painter->drawPolygon(arrow_points, 4);
+		
+		// Draw heading line
+		painter->setPen(QPen(Qt::gray, Util::mmToPixelLogical(0.1f)));
+		painter->setBrush(Qt::NoBrush);
+		painter->drawLine(QPointF(0, 0), QPointF(0, -1 * heading_indicator_length));
+		
+		painter->restore();
+	}
+	else
+	{
+		const qreal dot_radius = Util::mmToPixelLogical(0.5f);
+		painter->drawEllipse(gps_pos, dot_radius, dot_radius);
+	}
 	
 	// Draw distance circles
-	if (distanceRingsEnabled)
+	if (distance_rings_enabled)
 	{
 		const int num_distance_rings = 2;
 		const float distance_ring_radius_meters = 10;
