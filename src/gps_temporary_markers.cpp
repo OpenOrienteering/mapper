@@ -44,13 +44,14 @@ GPSTemporaryMarkers::~GPSTemporaryMarkers()
 	widget->setTemporaryMarkerDisplay(NULL);
 }
 
-void GPSTemporaryMarkers::addPoint()
+bool GPSTemporaryMarkers::addPoint()
 {
-	if (gps_display->hasValidPosition())
-	{
-		points.push_back(gps_display->getLatestGPSCoord().toQPointF());
-		updateMapWidget();
-	}
+	if (!gps_display->hasValidPosition())
+		return false;
+	
+	points.push_back(gps_display->getLatestGPSCoord().toQPointF());
+	updateMapWidget();
+	return true;
 }
 
 void GPSTemporaryMarkers::startPath()

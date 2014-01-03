@@ -2835,8 +2835,8 @@ void MapEditorController::drawPointGPSClicked()
 
 void MapEditorController::gpsTemporaryPointClicked()
 {
-	gps_marker_display->addPoint();
-	gps_temporary_clear_act->setEnabled(true);
+	if (gps_marker_display->addPoint())
+		gps_temporary_clear_act->setEnabled(true);
 }
 
 void MapEditorController::gpsTemporaryPathClicked(bool enable)
@@ -2852,6 +2852,9 @@ void MapEditorController::gpsTemporaryPathClicked(bool enable)
 
 void MapEditorController::gpsTemporaryClearClicked()
 {
+	if (QMessageBox::question(window, tr("Clear temporary markers"), tr("Are you sure you want to delete all temporary GPS markers? This cannot be undone."), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+		return;
+	
 	gps_marker_display->stopPath();
 	gps_temporary_path_act->setChecked(false);
 	gps_marker_display->clear();

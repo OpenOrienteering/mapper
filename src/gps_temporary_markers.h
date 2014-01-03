@@ -40,9 +40,13 @@ public:
 	GPSTemporaryMarkers(MapWidget* widget, GPSDisplay* gps_display);
 	virtual ~GPSTemporaryMarkers();
 	
-	void addPoint();
+	/** Returns false if no point was added due to not having a valid position yet. */
+	bool addPoint();
+	/** Starts recording a GPS path. */
 	void startPath();
+	/** Stops recording a GPS path. */
 	void stopPath();
+	/** Deletes all temporary markers. */
 	void clear();
 	
 	/// This is called from the MapWidget drawing code to draw the markers.
