@@ -73,6 +73,8 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
 	objecttag_label = NULL;
 	coords_type = MAP_COORDS;
 	last_cursor_pos = MapCoordF(0, 0);
+	current_pressed_buttons = 0;
+	last_mouse_release_time = QTime::currentTime();
 	
 	below_template_cache_dirty_rect = rect();
 	above_template_cache_dirty_rect = rect();
@@ -198,7 +200,15 @@ QPointF MapWidget::mapToViewport(QPointF input)
 }
 QRectF MapWidget::mapToViewport(const QRectF& input)
 {
-	return QRectF(mapToViewport(input.topLeft()), mapToViewport(input.bottomRight()));
+	QRectF result;
+	rectIncludeSafe(result, mapToViewport(input.topLeft()));
+	rectIncludeSafe(result, mapToViewport(input.bottomRight()));
+	if (view->getRotation() != 0)
+	{
+		rectIncludeSafe(result, mapToViewport(input.topRight()));
+		rectIncludeSafe(result, mapToViewport(input.bottomLeft()));
+	}
+	return result;
 }
 
 void MapWidget::zoom(float factor)
@@ -238,9 +248,12 @@ void MapWidget::panView(qint64 x, qint64 y)
 	moveDirtyRect(drawing_dirty_rect_old, -x, -y);
 	moveDirtyRect(activity_dirty_rect_old, -x, -y);
 	
-	float px = view->lengthToPixel(x);
+	MapCoordF screen_offset(x, y);
+	screen_offset.rotate(view->getRotation());
+	
+	float px = view->lengthToPixel(screen_offset.getX());
 	int ix = qRound(px);
-	float py = view->lengthToPixel(y);
+	float py = view->lengthToPixel(screen_offset.getY());
 	int iy = qRound(py);
 	float int_deviation = qMax(qAbs(px - ix), qAbs(py - iy));
 	
@@ -672,6 +685,14 @@ void MapWidget::updateObjectTagLabel()
 	updateObjectTagLabel(last_cursor_pos);
 }
 
+int MapWidget::getTimeSinceLastInteraction()
+{
+	if (current_pressed_buttons != 0)
+		return 0;
+	else
+		return last_mouse_release_time.msecsTo(QTime::currentTime());
+}
+
 void MapWidget::setGPSDisplay(GPSDisplay* gps_display)
 {
 	this->gps_display = gps_display;
@@ -874,6 +895,7 @@ void MapWidget::resizeEvent(QResizeEvent* event)
 
 void MapWidget::mousePressEvent(QMouseEvent* event)
 {
+	current_pressed_buttons = event->buttons();
 	if (touch_cursor && tool && tool->usesTouchCursor())
 	{
 		touch_cursor->mousePressEvent(event);
@@ -944,6 +966,8 @@ void MapWidget::_mouseMoveEvent(QMouseEvent* event)
 
 void MapWidget::mouseReleaseEvent(QMouseEvent* event)
 {
+	current_pressed_buttons = event->buttons();
+	last_mouse_release_time = QTime::currentTime();
 	if (touch_cursor && tool && tool->usesTouchCursor())
 	{
 		if (!touch_cursor->mouseReleaseEvent(event))

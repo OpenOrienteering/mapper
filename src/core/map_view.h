@@ -177,13 +177,13 @@ public:
 	/** Returns the raw zoom facor, see also calculateFinalZoomFactor(). */
 	float getZoom() const;
 	
-	/** Sets the zoom factor and repaints all map widgets. */
+	/** Sets the zoom factor. */
 	void setZoom(float value);
 	
 	/** Returns the view rotation (in radians). */
 	float getRotation() const;
 	
-	/** Sets the view roation (in radians) and repaints all map widgets. */
+	/** Sets the view roation (in radians). */
 	void setRotation(float value);
 	
 	/**
@@ -400,7 +400,7 @@ float MapView::getZoom() const
 inline
 float MapView::getRotation() const
 {
-	return zoom;
+	return rotation;
 }
 
 inline

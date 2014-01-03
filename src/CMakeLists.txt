@@ -116,6 +116,7 @@ set(Mapper_Common_SRCS
  gps_temporary_markers.cpp
  dxfparser.cpp
  
+ compass.cpp
  compass_display.cpp
 
  file_format.cpp
@@ -160,6 +161,7 @@ set(Mapper_Common_SRCS
 
 set(Mapper_Common_MOC_INPUT
  color_dock_widget.h
+ compass.h
  compass_display.h
  file_format_ocad8_p.h
  file_format_xml_p.h

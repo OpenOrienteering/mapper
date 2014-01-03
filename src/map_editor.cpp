@@ -28,6 +28,7 @@
 #include <QtWidgets>
 #endif
 #include <QSignalMapper>
+#include <qmath.h>
 
 #include "gui/widgets/action_grid_bar.h"
 #include "color_dock_widget.h"
@@ -84,6 +85,7 @@
 #include "tool_scale.h"
 #include "util.h"
 #include "gps_temporary_markers.h"
+#include "compass.h"
 
 // ### MapEditorController ###
 
@@ -726,6 +728,7 @@ void MapEditorController::createActions()
 	gps_temporary_clear_act->setEnabled(false);
 	
 	compass_action = newCheckAction("compassdisplay", tr("Enable compass display"), this, SLOT(enableCompassDisplay(bool)), "compass.png", QString::null, "toolbars.html#compass_display"); // TODO: write documentation
+	align_map_with_north_act = newCheckAction("alignmapwithnorth", tr("Align map with north"), this, SLOT(alignMapWithNorth(bool)), "rotate-map.png", QString::null, "toolbars.html#align_map_with_north"); // TODO: write documentation
 	
 	template_toggle_action = newAction("toggletemplate", tr("Toggle template visibility"), this, SLOT(toggleTemplateClicked()), "tool-template-toggle.png", QString::null, "toolbars.html#toggle_template"); // TODO: write documentation
 	
@@ -1101,8 +1104,8 @@ void MapEditorController::createMobileGUI()
 	top_action_bar->addAction(compass_action, 0, col);
 	top_action_bar->addAction(gps_display_action, 1, col++);
 	
-	top_action_bar->addAction(gps_distance_rings_action, 0, col++);
-	//top_bar->addAction(gps_follow_action, 1, col);
+	top_action_bar->addAction(gps_distance_rings_action, 0, col);
+	top_action_bar->addAction(align_map_with_north_act, 1, col++);
 	
 	top_action_bar->addAction(show_grid_act, 0, col);
 	top_action_bar->addAction(show_all_act, 1, col++);
@@ -2858,6 +2861,41 @@ void MapEditorController::gpsTemporaryClearClicked()
 void MapEditorController::enableCompassDisplay(bool enable)
 {
 	compass_display->enable(enable);
+}
+
+void MapEditorController::alignMapWithNorth(bool enable)
+{
+	const int update_interval = 1000; // milliseconds
+	
+	if (enable)
+	{
+		Compass::getInstance().startUsage();
+		connect(&align_map_with_north_timer, SIGNAL(timeout()), this, SLOT(alignMapWithNorthUpdate()));
+		align_map_with_north_timer.start(update_interval);
+		alignMapWithNorthUpdate();
+	}
+	else
+	{
+		Compass::getInstance().stopUsage();
+		align_map_with_north_timer.disconnect();
+		align_map_with_north_timer.stop();
+		
+		main_view->setRotation(0);
+		main_view->updateAllMapWidgets();
+	}
+}
+
+void MapEditorController::alignMapWithNorthUpdate()
+{
+	// Time in milliseconds for which the rotation should not be updated after
+	// the user interacted with the map widget
+	const int interaction_time_threshold = 1500;
+	if (map_widget->getTimeSinceLastInteraction() < interaction_time_threshold)
+		return;
+	
+	// Set map rotation
+	main_view->setRotation(-1 * M_PI / 180.0f * Compass::getInstance().getCurrentAzimuth());
+	main_view->updateAllMapWidgets();
 }
 
 void MapEditorController::toggleTemplateClicked()

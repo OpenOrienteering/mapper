@@ -56,6 +56,7 @@ android {
 # Input
 HEADERS += \
   src/color_dock_widget.h \
+  src/compass.h \
   src/compass_display.h \
   src/file_format_ocad8_p.h \
   src/file_format_xml_p.h \
@@ -233,6 +234,7 @@ SOURCES += \
   src/gps_display.cpp \
   src/gps_temporary_markers.cpp \
   src/dxfparser.cpp \
+  src/compass.cpp \
   src/compass_display.cpp \
   src/file_format.cpp \
   src/file_format_registry.cpp \

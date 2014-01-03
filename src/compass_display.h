@@ -22,12 +22,12 @@
 #define _OPENORIENTEERING_COMPASS_DISPLAY_H_
 
 #include <QObject>
+#include <QTime>
 
 QT_BEGIN_NAMESPACE
 class QPainter;
 QT_END_NAMESPACE
 class MapWidget;
-class CompassDisplayPrivate;
 
 
 /**
@@ -48,6 +48,7 @@ public:
 	/// This is called from the MapWidget drawing code to draw the compass.
 	void paint(QPainter* painter);
 	
+public slots:
 	/// Called internally to update the value
 	void valueChanged(float azimuth_deg);
 	
@@ -56,10 +57,10 @@ private:
 	QRectF calcBoundingBox();
 	
 	
-	CompassDisplayPrivate* p;
 	bool have_value;
 	qreal value_azimuth;
 	qreal value_calibration;
+	QTime last_update_time;
 	
 	bool enabled;
 	MapWidget* widget;

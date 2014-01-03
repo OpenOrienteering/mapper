@@ -22,6 +22,7 @@
 #define _OPENORIENTEERING_MAP_WIDGET_H_
 
 #include <QWidget>
+#include <QTime>
 
 #include "core/map_view.h"
 #include "map.h"
@@ -278,6 +279,10 @@ public:
 	/** Returns the coordinate display type set by setCoordsDisplay(). */
 	inline CoordsType getCoordsDisplay() const {return coords_type;}
 	
+	/** Returns the time in milliseconds since the last user interaction
+	 *  (mouse press or drag) with the widget. */
+	int getTimeSinceLastInteraction();
+	
 	/** Sets the GPS display to use. This is called internally by the GPSDisplay constructor. */
 	void setGPSDisplay(GPSDisplay* gps_display);
 	/** Sets the compass display to use. This is called internally by the CompassDisplay constructor. */
@@ -446,6 +451,13 @@ private:
 	
 	/** Optional touch cursor for mobile devices */
 	TouchCursor* touch_cursor;
+	
+	/** For checking for interaction with the widget: the last QTime where
+	 *  a mouse release event happened. Check for current_pressed_buttons == 0
+	 *  and a last_mouse_release_time a given time interval in the past to check
+	 *  whether the user interacts or recently interacted with the widget. */
+	QTime last_mouse_release_time;
+	int current_pressed_buttons;
 	
 	/** Optional GPS display */
 	GPSDisplay* gps_display;

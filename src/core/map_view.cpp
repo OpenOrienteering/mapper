@@ -293,9 +293,12 @@ void MapView::setDragOffset(QPoint offset)
 }
 void MapView::completeDragging(QPoint offset)
 {
+	MapCoordF rotated_offset(offset.x(), offset.y());
+	rotated_offset.rotate(-1 * rotation);
+	
 	drag_offset = QPoint(0, 0);
-	qint64 move_x = -pixelToLength(offset.x());
-	qint64 move_y = -pixelToLength(offset.y());
+	qint64 move_x = -pixelToLength(rotated_offset.getX());
+	qint64 move_y = -pixelToLength(rotated_offset.getY());
 	
 	position_x += move_x;
 	position_y += move_y;

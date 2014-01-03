@@ -26,6 +26,7 @@
 #include <QAction>
 #include <QDockWidget>
 #include <QScopedPointer>
+#include <QTimer>
 #include <QClipboard>
 
 #include "gui/main_window_controller.h"
@@ -421,6 +422,10 @@ public slots:
 	
 	/** Enables or disables digital compass display. */
 	void enableCompassDisplay(bool enable);
+	/** Enables or disables map auto-rotation according to compass. */
+	void alignMapWithNorth(bool enable);
+	/** Called regularly after enabled with alignMapWithNorth() to update the map rotation. */
+	void alignMapWithNorthUpdate();
 	
 	/** Shows a list of templates to toggle their visibility. */
 	void toggleTemplateClicked();
@@ -624,6 +629,8 @@ private:
 	GPSDisplay* gps_display;
 	QAction* compass_action;
 	CompassDisplay* compass_display;
+	QAction* align_map_with_north_act;
+	QTimer align_map_with_north_timer;
 	QAction* template_toggle_action;
 	QMenu* toggle_template_menu;
 	
