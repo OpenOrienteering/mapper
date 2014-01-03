@@ -80,12 +80,23 @@ signals:
 	/// If the accuracy is unknown, -1 will be given.
 	void mapPositionUpdated(MapCoordF coord, float accuracy);
 	
+	/// Like mapPositionUpdated(), but gives the values as
+	/// latitude / longitude in degrees and also gives altitude
+	/// (meters above sea level; -9999 is unknown)
+	void latLonUpdated(double latitude, double longitude, double altitude, float accuracy);
+	
+	/// Is emitted when updates are interrupted after previously being active,
+	/// due to loss of satellite reception or another error such as the user
+	/// turning off the GPS receiver.
+	void positionUpdatesInterrupted();
+	
 private slots:
 #if defined(ENABLE_POSITIONING)
     void positionUpdated(const QGeoPositionInfo& info);
 	void error(QGeoPositionInfoSource::Error positioningError);
 	void updateTimeout();
 #endif
+	void debugPositionUpdate();
 	
 private:
 	MapCoordF calcLatestGPSCoord(bool& ok);

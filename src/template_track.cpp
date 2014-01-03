@@ -469,6 +469,21 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 	return true;
 }
 
+void TemplateTrack::configureForGPSTrack()
+{
+	is_georeferenced = true;
+	
+	track_crs_spec = "+proj=latlong +datum=WGS84";
+	Georeferencing* track_crs = new Georeferencing();
+	track_crs->setProjectedCRS("", track_crs_spec);
+	track_crs->setTransformationDirectly(QTransform());
+	track.setTrackCRS(track_crs);
+	
+	track.changeMapGeoreferencing(map->getGeoreferencing());
+	
+	template_state = Template::Loaded;
+}
+
 void TemplateTrack::updateGeoreferencing()
 {
 	if (is_georeferenced && template_state == Template::Loaded)

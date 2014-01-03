@@ -32,6 +32,7 @@
 #include "gui/main_window_controller.h"
 #include "map.h"
 
+class GPSTrackRecorder;
 QT_BEGIN_NAMESPACE
 class QFrame;
 class QLabel;
@@ -627,6 +628,7 @@ private:
 	QAction* gps_temporary_clear_act;
 	GPSTemporaryMarkers* gps_marker_display;
 	GPSDisplay* gps_display;
+	GPSTrackRecorder* gps_track_recorder;
 	QAction* compass_action;
 	CompassDisplay* compass_display;
 	QAction* align_map_with_north_act;

@@ -65,6 +65,13 @@ public:
 	/// TODO: should this be moved to the Track class?
 	bool import(QWidget* dialog_parent = NULL);
 	
+	/// Replaces the calls to pre/postLoadConfiguration() if creating a new GPS track.
+	/// Assumes that the map's georeferencing is valid.
+	void configureForGPSTrack();
+	
+	/// Returns the Track data object.
+	inline Track& getTrack() {return track;}
+	
 public slots:
 	void updateGeoreferencing();
 	

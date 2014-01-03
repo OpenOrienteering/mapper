@@ -25,6 +25,7 @@
 #include <QPainter>
 #include <QDebug>
 #include <qmath.h>
+#include <QTimer>
 
 #include "map_widget.h"
 #include "georeferencing.h"
@@ -67,6 +68,11 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing)
 	connect(source, SIGNAL(updateTimeout()), this, SLOT(updateTimeout()));
 #else
 	source = NULL;
+	
+	// DEBUG
+	QTimer* debug_timer = new QTimer(this);
+	connect(debug_timer, SIGNAL(timeout()), this, SLOT(debugPositionUpdate()));
+	debug_timer->start(500);
 #endif
 
 	widget->setGPSDisplay(this);
@@ -74,6 +80,7 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing)
 
 GPSDisplay::~GPSDisplay()
 {
+	stopUpdates();
 	widget->setGPSDisplay(NULL);
 }
 
@@ -120,8 +127,7 @@ void GPSDisplay::enableHeadingIndicator(bool enable)
 
 void GPSDisplay::paint(QPainter* painter)
 {
-#if defined(ENABLE_POSITIONING)
-	if (!visible || !source || !has_valid_position)
+	if (!visible || !has_valid_position)
 		return;
 	
 	// Get GPS position on map widget
@@ -186,16 +192,15 @@ void GPSDisplay::paint(QPainter* painter)
 	}
 	
 	// Draw accuracy circle
-	if (latest_pos_info.hasAttribute(QGeoPositionInfo::HorizontalAccuracy))
+	if (latest_gps_coord_accuracy >= 0)
 	{
-		float accuracy_meters = latest_pos_info.attribute(QGeoPositionInfo::HorizontalAccuracy);
+		float accuracy_meters = latest_gps_coord_accuracy;
 		float accuracy_pixels = widget->getMapView()->lengthToPixel(1000*1000 * accuracy_meters / georeferencing.getScaleDenominator());
 		
 		painter->setPen(QPen(tracking_lost ? Qt::gray : Qt::red, Util::mmToPixelLogical(0.2f)));
 		painter->setBrush(Qt::NoBrush);
 		painter->drawEllipse(gps_pos, accuracy_pixels, accuracy_pixels);
 	}
-#endif
 }
 
 #if defined(ENABLE_POSITIONING)
@@ -210,7 +215,15 @@ void GPSDisplay::positionUpdated(const QGeoPositionInfo& info)
 	bool ok = false;
 	calcLatestGPSCoord(ok);
 	if (ok)
+	{
 		emit mapPositionUpdated(latest_gps_coord, latest_gps_coord_accuracy);
+		emit latLonUpdated(
+			info.coordinate().latitude(),
+			info.coordinate().longitude(),
+			(info.coordinate().type() == QGeoCoordinate::Coordinate3D) ? info.coordinate().altitude() : -9999,
+			latest_gps_coord_accuracy
+		);
+	}
 	
 	updateMapWidget();
 }
@@ -222,6 +235,7 @@ void GPSDisplay::error(QGeoPositionInfoSource::Error positioningError)
 		if (!tracking_lost)
 		{
 			tracking_lost = true;
+			emit positionUpdatesInterrupted();
 			updateMapWidget();
 		}
 	}
@@ -233,10 +247,42 @@ void GPSDisplay::updateTimeout()
 	if (!tracking_lost)
 	{
 		tracking_lost = true;
+		emit positionUpdatesInterrupted();
 		updateMapWidget();
 	}
 }
 #endif
+
+void GPSDisplay::debugPositionUpdate()
+{
+	if (! visible)
+		return;
+	
+	QTime now = QTime::currentTime();
+	float offset = now.msecsSinceStartOfDay() / (float)(10 * 1000);
+	float accuracy = 12 + 7 * qSin(2 + offset);
+	float altitude = 400 + 10 * qSin(1 + 0.1f * offset);
+	
+	MapCoordF coord(30 * qSin(0.5f * offset), 30 * qCos(0.53f * offset));
+	emit mapPositionUpdated(coord, accuracy);
+	
+	if (georeferencing.isValid() && ! georeferencing.isLocal())
+	{
+		bool ok;
+		LatLon latLon = georeferencing.toGeographicCoords(coord, &ok);
+		if (ok)
+		{
+			emit latLonUpdated(latLon.getLatitudeInDegrees(), latLon.getLongitudeInDegrees(), altitude, accuracy);
+		}
+	}
+	
+	gps_updated = true;
+	tracking_lost = false;
+	has_valid_position = true;
+	latest_gps_coord = coord;
+	latest_gps_coord_accuracy = accuracy;
+	updateMapWidget();
+}
 
 MapCoordF GPSDisplay::calcLatestGPSCoord(bool& ok)
 {
@@ -274,7 +320,7 @@ MapCoordF GPSDisplay::calcLatestGPSCoord(bool& ok)
 	ok = true;
 	return latest_gps_coord;
 #else
-	ok = false;
+	ok = has_valid_position;
 	return latest_gps_coord;
 #endif
 }

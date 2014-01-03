@@ -86,6 +86,7 @@
 #include "util.h"
 #include "gps_temporary_markers.h"
 #include "compass.h"
+#include "gps_track_recorder.h"
 
 // ### MapEditorController ###
 
@@ -142,6 +143,7 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map)
 	statusbar_objecttag_label = NULL;
 	
 	gps_display = NULL;
+	gps_track_recorder = NULL;
 	compass_display = NULL;
 	gps_marker_display = NULL;
 	
@@ -174,6 +176,7 @@ MapEditorController::~MapEditorController()
 	for (QHash<Template*, TemplatePositionDockWidget*>::iterator it = template_position_widgets.begin(); it != template_position_widgets.end(); ++it)
 		delete it.value();
 	delete gps_display;
+	delete gps_track_recorder;
 	delete compass_display;
 	delete main_view;
 	delete map;
@@ -1179,6 +1182,8 @@ void MapEditorController::detach()
 	
 	delete gps_display;
 	gps_display = NULL;
+	delete gps_track_recorder;
+	gps_track_recorder = NULL;
 	delete compass_display;
 	compass_display = NULL;
 	delete gps_marker_display;
@@ -1684,7 +1689,7 @@ void MapEditorController::openTemplateClicked()
 	hideAllTemplates(false);
 	showTemplateWindow(true);
 	
-	// FIXME: this should be done through the core map, not throug the UI
+	// FIXME: this should be done through the core map, not through the UI
 	TemplateWidget* template_widget = reinterpret_cast<TemplateWidget*>(template_dock_widget->widget());
 	template_widget->addTemplateAt(new_template, -1);
 }
@@ -1747,10 +1752,7 @@ void MapEditorController::georeferencingDialogFinished()
 	{
 		gps_display_action->setChecked(false);
 		if (gps_display)
-		{
-			gps_display->stopUpdates();
-			gps_display->setVisible(false);
-		}
+			enableGPSDisplay(false);
 	}
 	gps_display_action->setEnabled(gps_display_possible);
 }
@@ -2793,9 +2795,60 @@ void MapEditorController::paintOnTemplateSelectClicked()
 void MapEditorController::enableGPSDisplay(bool enable)
 {
 	if (enable)
+	{
 		gps_display->startUpdates();
+		
+		// Create gps_track_recorder if we can determine a template track filename
+		const float gps_track_draw_update_interval = 10 * 1000; // in milliseconds
+		if (! window->getCurrentFilePath().isEmpty())
+		{
+			// Find or create a template for the track with a specific name
+			QString gpx_file_path =
+				QFileInfo(window->getCurrentFilePath()).absoluteDir().canonicalPath()
+				+ '/'
+				+ QFileInfo(window->getCurrentFilePath()).completeBaseName()
+				+ " - GPS-"
+				+ QDate::currentDate().toString(Qt::ISODate)
+				+ ".gpx";
+			
+			int template_index = -1;
+			for (int i = 0; i < map->getNumTemplates(); ++ i)
+			{
+				if (map->getTemplate(i)->getTemplatePath().compare(gpx_file_path) == 0 && map->getTemplate(i)->getTemplateType().compare("TemplateTrack") == 0)
+				{
+					template_index = i;
+					if (map->getTemplate(i)->getTemplateState() != Template::Loaded)
+					{
+						// If the template file could not be loaded, don't care
+						// at this point; simply create a new file.
+						TemplateTrack* track = static_cast<TemplateTrack*>(map->getTemplate(i));
+						track->configureForGPSTrack();
+					}
+					break;
+				}
+			}
+			
+			if (template_index == -1)
+			{
+				// Create a new template
+				TemplateTrack* new_template = new TemplateTrack(gpx_file_path, map);
+				new_template->configureForGPSTrack();
+				template_index = map->getNumTemplates();
+				map->addTemplate(new_template, template_index, NULL);
+				map->setTemplateAreaDirty(template_index);
+				map->setTemplatesDirty();
+			}
+			
+			gps_track_recorder = new GPSTrackRecorder(gps_display, static_cast<TemplateTrack*>(map->getTemplate(template_index)), gps_track_draw_update_interval, map_widget);
+		}
+	}
 	else
+	{
 		gps_display->stopUpdates();
+		
+		delete gps_track_recorder;
+		gps_track_recorder = NULL;
+	}
 	gps_display->setVisible(enable);
 	
 	if (! enable)
@@ -2922,6 +2975,7 @@ void MapEditorController::toggleTemplateClicked()
 		QAction* temp_action = toggle_template_menu->addAction(temp->getTemplateFilename());
 		temp_action->setCheckable(true);
 		temp_action->setChecked(main_view->isTemplateVisible(temp));
+		temp_action->setEnabled(temp->getTemplateState() == Template::Loaded);
 		temp_action->setData(qVariantFromValue<void*>(temp));
 	}
 	
