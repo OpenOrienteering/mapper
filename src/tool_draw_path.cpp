@@ -409,7 +409,8 @@ bool DrawPathTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord
 	{
 		if (created_point_at_last_mouse_press)
 			undoLastPoint();
-		finishDrawing();
+		if (draw_in_progress)
+			finishDrawing();
 	}
 	return true;
 }
@@ -620,6 +621,8 @@ void DrawPathTool::createPreviewCurve(MapCoord position, float direction)
 
 void DrawPathTool::undoLastPoint()
 {
+	Q_ASSERT(draw_in_progress);
+	
 	if (preview_path->getCoordinateCount() <= (preview_path->getPart(0).isClosed() ? 3 : (path_has_preview_point ? 2 : 1)))
 	{
 		abortDrawing();
@@ -737,6 +740,8 @@ bool DrawPathTool::removeLastPointFromSelectedPath()
 
 void DrawPathTool::closeDrawing()
 {
+	Q_ASSERT(draw_in_progress);
+	
 	if (preview_path->getCoordinateCount() <= 1)
 		return;
 	
@@ -760,6 +765,8 @@ void DrawPathTool::closeDrawing()
 
 void DrawPathTool::finishDrawing()
 {
+	Q_ASSERT(draw_in_progress);
+	
 	// Does the symbols contain only areas? If so, auto-close the path if not done yet
 	bool contains_only_areas = !is_helper_tool && (drawing_symbol->getContainedTypes() & ~(Symbol::Area | Symbol::Combined)) == 0 && (drawing_symbol->getContainedTypes() & Symbol::Area);
 	if (contains_only_areas && preview_path->getNumParts() > 0)
