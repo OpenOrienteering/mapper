@@ -142,6 +142,7 @@ QString AboutDialog::about()
 	  << "Sławomir Cygler"
 	  << "Jan Dalheimer"
 	  << "Eugeniy Fedirets"
+	  << "Pavel Fric"
 	  << "Anders Gressli"
 	  << "Peter Hoban"
 	  << "Henrik Johansson"
