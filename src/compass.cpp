@@ -519,10 +519,12 @@ float Compass::getCurrentAzimuth()
 {
 #ifdef HAVE_QTSENSORS
 	return p->getLatestAzimuth();
-#else
+#elif QT_VERSION >= 0x050200
 	// DEBUG: rotate around ...
 	QTime now = QTime::currentTime();
 	return 360 * (now.msecsSinceStartOfDay() % (10 * 1000)) / (float)(10 * 1000);
+#else
+	return 0.0f;
 #endif
 }
 

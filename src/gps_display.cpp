@@ -255,6 +255,7 @@ void GPSDisplay::updateTimeout()
 
 void GPSDisplay::debugPositionUpdate()
 {
+#if QT_VERSION >= 0x050200
 	if (! visible)
 		return;
 	
@@ -282,6 +283,7 @@ void GPSDisplay::debugPositionUpdate()
 	latest_gps_coord = coord;
 	latest_gps_coord_accuracy = accuracy;
 	updateMapWidget();
+#endif
 }
 
 MapCoordF GPSDisplay::calcLatestGPSCoord(bool& ok)
