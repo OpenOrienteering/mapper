@@ -7,58 +7,58 @@
         <location filename="../src/gui/about_dialog.cpp" line="61"/>
         <location filename="../src/gui/about_dialog.cpp" line="96"/>
         <source>About %1</source>
-        <translation type="unfinished">%1 について</translation>
+        <translation>%1 について</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="123"/>
         <source>(project initiator)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="105"/>
         <source>License (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>ライセンス (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="154"/>
         <source>A free software for drawing orienteering maps</source>
-        <translation type="unfinished"></translation>
+        <translation>オリエンテーリング地図作成のための自由なソフトウェア</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="156"/>
         <source>This software is licensed under the term of the GNU General Public License (GPL), version 3.&lt;br/&gt;You are welcome to redistribute it under the terms of this license.&lt;br/&gt;THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.&lt;br&gt;The full license text is supplied in the file %1.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="161"/>
         <source>Developers in alphabetical order:</source>
-        <translation type="unfinished"></translation>
+        <translation>デベロッパ (アルファベット順):</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="163"/>
         <source>For contributions, thanks to:</source>
-        <translation type="unfinished"></translation>
+        <translation>コントリビュータ:</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="192"/>
         <source>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</source>
-        <translation type="unfinished">This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</translation>
+        <translation>This program uses the &lt;b&gt;Clipper library&lt;/b&gt; by Angus Johnson.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="200"/>
         <location filename="../src/gui/about_dialog.cpp" line="210"/>
         <source>See &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; for more information.</source>
-        <translation type="unfinished">See &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; for more information.</translation>
+        <translation>See &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt; for more information.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="202"/>
         <source>This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</source>
-        <translation type="unfinished">This program uses the &lt;b&gt;PROJ.4 Cartographic Projections Library&lt;/b&gt; by Frank Warmerdam.</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="114"/>
         <source>Additional information</source>
-        <translation type="unfinished"></translation>
+        <translation>追加情報</translation>
     </message>
 </context>
 <context>
@@ -208,17 +208,17 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="37"/>
         <source>Edit map color</source>
-        <translation type="unfinished"></translation>
+        <translation>色の編集</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="54"/>
         <source>Defines a spot color:</source>
-        <translation type="unfinished"></translation>
+        <translation>スポットカラーの定義:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="63"/>
         <source>Mixture of spot colors (screens and overprint):</source>
-        <translation type="unfinished"></translation>
+        <translation>スポットカラーの混合(スクリーンとオーバープリント):</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="77"/>
@@ -228,88 +228,88 @@
         <location filename="../src/gui/color_dialog.cpp" line="130"/>
         <location filename="../src/gui/color_dialog.cpp" line="338"/>
         <source>%</source>
-        <translation type="unfinished">%</translation>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="82"/>
         <source>Knockout: erases lower colors</source>
-        <translation type="unfinished"></translation>
+        <translation>ノックアウト(抜き): 下の色を消去</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="100"/>
         <location filename="../src/gui/color_dialog.cpp" line="157"/>
         <source>Calculate from spot colors</source>
-        <translation type="unfinished"></translation>
+        <translation>スポットカラーから計算</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="105"/>
         <source>Calculate from RGB color</source>
-        <translation type="unfinished"></translation>
+        <translation>RGBカラーから計算</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="110"/>
         <source>Custom process color:</source>
-        <translation type="unfinished"></translation>
+        <translation>カスタム・プロセスカラー:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
         <source>Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>シアン</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
         <source>Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>マゼンダ</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="126"/>
         <source>Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation>イエロー</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="131"/>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation>ブラック</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="162"/>
         <source>Calculate from CMYK color</source>
-        <translation type="unfinished"></translation>
+        <translation>CMYKカラーから計算</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="167"/>
         <source>Custom RGB color:</source>
-        <translation type="unfinished"></translation>
+        <translation>カスタム・RGBカラー:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="173"/>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>赤</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="178"/>
         <source>Green</source>
-        <translation type="unfinished"></translation>
+        <translation>緑</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="183"/>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>青</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="188"/>
         <source>#RRGGBB</source>
-        <translation type="unfinished"></translation>
+        <translation>#RRGGBB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="206"/>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>デスクトップ</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="207"/>
         <source>Professional printing</source>
-        <translation type="unfinished"></translation>
+        <translation>プロフェッショナル印刷</translation>
     </message>
 </context>
 <context>
@@ -363,22 +363,22 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="48"/>
         <source>Spot color</source>
-        <translation type="unfinished"></translation>
+        <translation>スポットカラー</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="48"/>
         <source>CMYK</source>
-        <translation type="unfinished"></translation>
+        <translation>CMYK</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="48"/>
         <source>RGB</source>
-        <translation type="unfinished"></translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="48"/>
         <source>K.o.</source>
-        <translation type="unfinished"></translation>
+        <translation>ノックアウト(抜き).</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="52"/>
@@ -414,7 +414,7 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="100"/>
         <source>Double-click a color value to open a dialog.</source>
-        <translation type="unfinished"></translation>
+        <translation>色をダブルクリックするとダイアログが開きます。</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="189"/>
@@ -439,18 +439,18 @@
     <message>
         <location filename="../src/color_dock_widget.cpp" line="312"/>
         <source>Please enter a percentage from 0% to 100%!</source>
-        <translation type="unfinished"></translation>
+        <translation>0%から100%の値を入力してください。</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="373"/>
         <location filename="../src/color_dock_widget.cpp" line="415"/>
         <source>Double click to define the color</source>
-        <translation type="unfinished"></translation>
+        <translation>ダブルクリックで色を定義します</translation>
     </message>
     <message>
         <location filename="../src/color_dock_widget.cpp" line="380"/>
         <source>Click to select the name and click again to edit.</source>
-        <translation type="unfinished"></translation>
+        <translation>名前をクリックで選択。もう一度クリックで編集。</translation>
     </message>
     <message>
         <source>Please enter a valid number from 0 to 255, or specify a percentage from 0 to 100!</source>
@@ -471,17 +471,17 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="397"/>
         <source>- Private line symbol -</source>
-        <translation type="unfinished"></translation>
+        <translation>- プライベート・ライン記号-</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="398"/>
         <source>- Private area symbol -</source>
-        <translation type="unfinished"></translation>
+        <translation>- プライベート・エリア記号-</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="404"/>
         <source>Edit private symbol...</source>
-        <translation type="unfinished"></translation>
+        <translation>プライベート記号の編集...</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="424"/>
@@ -491,12 +491,12 @@
     <message>
         <location filename="../src/symbol_combined.cpp" line="477"/>
         <source>Change from public to private symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>従来の記号からプライベート記号を作成</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="478"/>
         <source>Take the old symbol as template for the private symbol?</source>
-        <translation type="unfinished"></translation>
+        <translation>選択中の記号からプライベート記号を作成しますか?</translation>
     </message>
     <message>
         <location filename="../src/symbol_combined.cpp" line="394"/>
@@ -509,150 +509,150 @@
     <message>
         <location filename="../src/map_grid.cpp" line="208"/>
         <source>Configure grid</source>
-        <translation type="unfinished"></translation>
+        <translation>グリッド設定</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="210"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>グリッドを表示</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="211"/>
         <source>Snap to grid</source>
-        <translation type="unfinished"></translation>
+        <translation>グリッドにスナップ(吸着)</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="212"/>
         <source>Choose...</source>
-        <translation type="unfinished"></translation>
+        <translation>選択...</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="215"/>
         <source>All lines</source>
-        <translation type="unfinished"></translation>
+        <translation>全ての線</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="216"/>
         <source>Horizontal lines</source>
-        <translation type="unfinished"></translation>
+        <translation>横線</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="217"/>
         <source>Vertical lines</source>
-        <translation type="unfinished"></translation>
+        <translation>縦線</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="220"/>
         <source>Alignment</source>
-        <translation type="unfinished">整列</translation>
+        <translation>アラインメント</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="222"/>
         <source>Align with magnetic north</source>
-        <translation type="unfinished"></translation>
+        <translation>磁北線に合わせる</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="223"/>
         <source>Align with grid north</source>
-        <translation type="unfinished"></translation>
+        <translation>グリッド北に合わせる</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="224"/>
         <source>Align with true north</source>
-        <translation type="unfinished"></translation>
+        <translation>真北に合わせる</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="226"/>
         <source>Additional rotation (counter-clockwise):</source>
-        <translation type="unfinished"></translation>
+        <translation>追加回転 (反時計回り):</translation>
     </message>
     <message utf8="true">
         <location filename="../src/map_grid.cpp" line="227"/>
         <source>°</source>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="230"/>
         <source>Positioning</source>
-        <translation type="unfinished">位置調整</translation>
+        <translation>位置調整</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="233"/>
         <source>meters in terrain</source>
-        <translation type="unfinished"></translation>
+        <translation>テレイン内での距離 (m)</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="234"/>
         <source>millimeters on map</source>
-        <translation type="unfinished"></translation>
+        <translation>地図上での長さ (mm)</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="236"/>
         <source>Horizontal spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>水平間隔:</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="238"/>
         <source>Vertical spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>垂直間隔:</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="242"/>
         <source>Horizontal offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>水平オフセット:</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="244"/>
         <source>Vertical offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>垂直オフセット:</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="277"/>
         <source>Unit:</source>
         <comment>measurement unit</comment>
-        <translation type="unfinished"></translation>
+        <translation>測定単位:</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="289"/>
         <source>Line color:</source>
-        <translation type="unfinished">ラインの色:</translation>
+        <translation>ラインの色:</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="290"/>
         <source>Display:</source>
-        <translation type="unfinished"></translation>
+        <translation>表示:</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="316"/>
         <source>Choose grid line color</source>
-        <translation type="unfinished"></translation>
+        <translation>グリッド線の色を選択</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="374"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished">m</translation>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="374"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished">mm</translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="380"/>
         <source>Origin at: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>原点の位置: %1</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="382"/>
         <source>paper coordinates origin</source>
-        <translation type="unfinished"></translation>
+        <translation>ペーパー座標の原点</translation>
     </message>
     <message>
         <location filename="../src/map_grid.cpp" line="384"/>
         <source>projected coordinates origin</source>
-        <translation type="unfinished"></translation>
+        <translation>投影座標の原点</translation>
     </message>
 </context>
 <context>
@@ -664,7 +664,7 @@
     <message>
         <location filename="../src/tool_cut_hole.cpp" line="219"/>
         <source>&lt;b&gt;Click or drag&lt;/b&gt;: Start drawing the hole. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;または&lt;b&gt;ドラッグ&lt;/b&gt;: 穴の描画を開始します。</translation>
     </message>
 </context>
 <context>
@@ -680,7 +680,7 @@
     <message>
         <location filename="../src/tool_cut.cpp" line="557"/>
         <source>The split line must end on the area boundary!</source>
-        <translation>分割ラインはエリアの輪郭上で終わらせてください！</translation>
+        <translation>分割ラインはエリアの輪郭上で終わらせてください。</translation>
     </message>
     <message>
         <location filename="../src/tool_cut.cpp" line="563"/>
@@ -695,7 +695,7 @@
     <message>
         <location filename="../src/tool_cut.cpp" line="688"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation type="unfinished"></translation>
+        <translation>ライン上を&lt;b&gt;クリック&lt;/b&gt;: ラインを分割。ライン上を&lt;b&gt;ドラッグ&lt;/b&gt;: ラインの一部を消去。エリアの輪郭を&lt;b&gt;クリックまたはドラッグ&lt;/b&gt;: エリアの分割を開始。</translation>
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line to split it into two, &lt;b&gt;Drag&lt;/b&gt; along a line to remove this line part, &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary to start drawing a split line</source>
@@ -712,18 +712,18 @@
     <message>
         <location filename="../src/tool_cutout.cpp" line="128"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the whole map. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 地図全体をクリップします。</translation>
     </message>
     <message>
         <location filename="../src/tool_cutout.cpp" line="129"/>
         <location filename="../src/tool_cutout.cpp" line="133"/>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+クリックまたはドラッグ&lt;/b&gt;: クリップするオブジェクトを選択します。</translation>
     </message>
     <message>
         <location filename="../src/tool_cutout.cpp" line="134"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the selected objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 選択中のオブジェクトをクリップします。</translation>
     </message>
 </context>
 <context>
@@ -790,7 +790,7 @@
         <location filename="../src/tool_distribute_points.cpp" line="133"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tool_distribute_points.cpp" line="135"/>
@@ -811,22 +811,22 @@
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="263"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a circle or ellipse. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: 円または楕円の描画を開始します。 </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="264"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a circle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 円を描画します。 </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="268"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: 円の描画を終了します。</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_circle.cpp" line="269"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw an ellipse. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 楕円を描画します。 </translation>
     </message>
 </context>
 <context>
@@ -835,37 +835,37 @@
         <location filename="../src/tool_draw_path.cpp" line="1018"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="644"/>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation type="unfinished">&lt;b&gt;ダッシュ点を入力します。&lt;/b&gt; </translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1024"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+クリック&lt;/b&gt;: 既存のオブジェクトにスナップ(吸着)またはアペンドします。 </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1029"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="650"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+クリック&lt;/b&gt;: 既存のオブジェクトから方向をピック。 </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1042"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="655"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="679"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+クリック&lt;/b&gt;: 既存のオブジェクトにスナップ(吸着)します。 </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1048"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="669"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 一定角度ずつ回転。</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1056"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="685"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Undo last point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 直前のポイントを元に戻す。 </translation>
     </message>
 </context>
 <context>
@@ -885,22 +885,22 @@
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1013"/>
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;長さ:&lt;/b&gt; %1 m </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1034"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: 直線を開始。&lt;b&gt;ドラッグ&lt;/b&gt;: 曲線を開始。</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1043"/>
         <source>&lt;b&gt;%1+Drag&lt;/b&gt;: Follow existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+ドラッグ&lt;/b&gt;: 既存のオブジェクトをフォローします。</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1053"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: 直線を描く。 &lt;b&gt;ドラッグ&lt;/b&gt;: 曲線を描く。 &lt;b&gt;右クリック/ダブルクリック&lt;/b&gt;: pathを終了。 &lt;b&gt;%1&lt;/b&gt;: pathを閉じる。 </translation>
     </message>
 </context>
 <context>
@@ -912,17 +912,17 @@
     <message utf8="true">
         <location filename="../src/tool_draw_point.cpp" line="283"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;角度:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="284"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 一定角度ずつ回転。 </translation>
     </message>
     <message>
         <location filename="../src/tool_draw_point.cpp" line="288"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object. &lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation (if rotatable). </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: ポイントオブジェクトを作成します。&lt;b&gt;ドラッグ&lt;/b&gt;: ポイントオブジェクトを作成し、方向をセットします(回転可能なオブジェクトのみ)。</translation>
     </message>
 </context>
 <context>
@@ -946,17 +946,17 @@
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="660"/>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;クリックまたはドラッグ&lt;/b&gt;: 矩形の描画を開始します。</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="673"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to previous lines. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 既存のラインにスナップ(吸着)します。</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_rectangle.cpp" line="684"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set a corner point. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the rectangle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: コーナー点を配置します。&lt;b&gt;右クリックまたはダブルクリック&lt;/b&gt;: 矩形の描画を終了します。</translation>
     </message>
 </context>
 <context>
@@ -968,7 +968,7 @@
     <message>
         <location filename="../src/tool_draw_text.cpp" line="302"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: シングルアンカーを基準にテキストオブジェクトを作成します。&lt;b&gt;ドラッグ&lt;/b&gt;: テキストボックスを作成します。</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_text.cpp" line="328"/>
@@ -994,12 +994,12 @@
     <message>
         <location filename="../src/tool_edit_line.cpp" line="412"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Free movement. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 自由に移動します。</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="431"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
-        <translation type="unfinished"></translation>
+        <translation>セグメント上を&lt;b&gt;%1+クリック&lt;/b&gt; で、直線と曲線を切り替えます。</translation>
     </message>
 </context>
 <context>
@@ -1019,22 +1019,22 @@
     <message>
         <location filename="../src/tool_edit_point.cpp" line="588"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Keep opposite handle positions. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 反対側の方向線(ハンドル)の位置を維持。 </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="609"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+クリック&lt;/b&gt; ポイント上: 削除; path上: ダッシュポイントを追加; &lt;b&gt;%2&lt;/b&gt;と: 通常の点を追加。 </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="612"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+クリック&lt;/b&gt; ポイント上: 削除; path上: ポイントを追加; &lt;b&gt;%2&lt;/b&gt;と: ダッシュ点を追加。 </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="616"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
-        <translation type="unfinished"></translation>
+        <translation>ポイント上で&lt;b&gt;%1+クリック&lt;/b&gt;: ダッシュ点と通常の点を切り換え。</translation>
     </message>
 </context>
 <context>
@@ -1063,31 +1063,31 @@
         <location filename="../src/tool_edit_point.cpp" line="572"/>
         <location filename="../src/tool_edit_line.cpp" line="403"/>
         <source>&lt;b&gt;Coordinate offset:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distance:&lt;/b&gt; %3 m </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;座標のオフセット:&lt;/b&gt; %1, %2 mm  &lt;b&gt;距離:&lt;/b&gt; %3 m </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="579"/>
         <location filename="../src/tool_edit_line.cpp" line="414"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 一定の角度上で移動。</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="592"/>
         <location filename="../src/tool_edit_line.cpp" line="418"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 既存のオブジェクトにスナップ(吸着)します。 </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="598"/>
         <location filename="../src/tool_edit_line.cpp" line="423"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: オブジェクトを選択。 &lt;b&gt;ドラッグ&lt;/b&gt;: 複数のオブジェクトを選択。 &lt;b&gt;%1+クリック&lt;/b&gt;: 選択を切り替え。 </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="601"/>
         <location filename="../src/tool_edit_line.cpp" line="426"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Delete selected objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 選択中のオブジェクトを削除します。 </translation>
     </message>
 </context>
 <context>
@@ -1106,12 +1106,12 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="127"/>
         <source>High quality text display in map (antialiasing), slow</source>
-        <translation type="unfinished"></translation>
+        <translation>高品質なテキスト表示 (アンチエイリアス処理)、(表示速度が遅くなります)</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="131"/>
         <source>Click tolerance:</source>
-        <translation>許容誤差:</translation>
+        <translation>クリックの許容誤差:</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="132"/>
@@ -1123,82 +1123,82 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="136"/>
         <source>Snap distance (%1):</source>
-        <translation type="unfinished"></translation>
+        <translation>スナップ（吸着）が有効になる既存オブジェクトからの距離 (%1):</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="141"/>
         <source>Stepping of fixed angle mode (%1):</source>
-        <translation type="unfinished"></translation>
+        <translation>一定角度ずつ回転時のステップ角(%1):</translation>
     </message>
     <message utf8="true">
         <location filename="../src/gui/settings_dialog.cpp" line="142"/>
         <source>°</source>
         <comment>Degree sign for angles</comment>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="146"/>
         <source>When selecting an object, automatically select its symbol, too</source>
-        <translation>オブジェクトの選択時に、使用されている記号も選択する</translation>
+        <translation>オブジェクトを選択する際、同時に記号も選択する</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="149"/>
         <source>Zoom away from cursor when zooming out</source>
-        <translation>カーソル位置でズームアウト</translation>
+        <translation>カーソルの位置でズームアウトする</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="152"/>
         <source>Drawing tools: set last point on finishing with right click</source>
-        <translation type="unfinished"></translation>
+        <translation>描画ツール: 右クリックによる終了で最終点をセットする</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="155"/>
         <source>Templates: keep settings of closed templates</source>
-        <translation type="unfinished"></translation>
+        <translation>テンプレート: 閉じたテンプレートの設定を維持する</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="160"/>
         <source>Edit tool:</source>
-        <translation type="unfinished"></translation>
+        <translation>編集ツール:</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="163"/>
         <location filename="../src/gui/settings_dialog.cpp" line="170"/>
         <source>Retain old shape</source>
-        <translation type="unfinished"></translation>
+        <translation>以前の形状を保つ</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="164"/>
         <location filename="../src/gui/settings_dialog.cpp" line="171"/>
         <source>Reset outer curve handles</source>
-        <translation type="unfinished"></translation>
+        <translation>方向線(ハンドル)をリセット</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="165"/>
         <location filename="../src/gui/settings_dialog.cpp" line="172"/>
         <source>Keep outer curve handles</source>
-        <translation type="unfinished"></translation>
+        <translation>方向線(ハンドル)を維持</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="166"/>
         <location filename="../src/gui/settings_dialog.cpp" line="173"/>
         <source>Action on deleting a curve point with %1:</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 でカーブ点を削除したときのふるまい:</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="177"/>
         <source>Rectangle tool:</source>
-        <translation type="unfinished"></translation>
+        <translation>矩形ツール:</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="179"/>
         <source>Radius of helper cross:</source>
-        <translation type="unfinished"></translation>
+        <translation>十字の補助線の長さ:</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="184"/>
         <source>Preview the width of lines with helper cross</source>
-        <translation type="unfinished"></translation>
+        <translation>線の太さを十字の補助線でプレビューする</translation>
     </message>
     <message>
         <source>Editor</source>
@@ -1210,7 +1210,7 @@
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1543"/>
         <source>Could not create new file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>新規ファイルの作成に失敗しました: %1</translation>
     </message>
 </context>
 <context>
@@ -1218,7 +1218,7 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="327"/>
         <source>Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>外観</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="330"/>
@@ -1228,22 +1228,22 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="345"/>
         <source>Program start</source>
-        <translation type="unfinished"></translation>
+        <translation>起動時の表示</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="361"/>
         <source>File import and export</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルのインポートとエクスポート</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="364"/>
         <source>8-bit encoding:</source>
-        <translation type="unfinished"></translation>
+        <translation>8ビットエンコーディング:</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="386"/>
         <source>Use the new OCD importer also for version 8 files</source>
-        <translation type="unfinished"></translation>
+        <translation>新しい OCD importer でもバージョン8のファイルを使用する</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="438"/>
@@ -1258,23 +1258,23 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="502"/>
         <source>Use translation file...</source>
-        <translation type="unfinished"></translation>
+        <translation>翻訳ファイルを使用...</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="562"/>
         <location filename="../src/gui/settings_dialog.cpp" line="568"/>
         <source>Open translation</source>
-        <translation type="unfinished"></translation>
+        <translation>翻訳ファイルを開く</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="562"/>
         <source>Translation files (*.qm)</source>
-        <translation type="unfinished"></translation>
+        <translation>翻訳ファイル(*.qm)</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="569"/>
         <source>The selected file is not a valid translation.</source>
-        <translation type="unfinished"></translation>
+        <translation>選択されたファイルは有効な翻訳ファイルではありません。</translation>
     </message>
     <message>
         <source>General</source>
@@ -1291,34 +1291,34 @@
         <location filename="../src/global.cpp" line="50"/>
         <source>UTM</source>
         <comment>UTM coordinate reference system</comment>
-        <translation type="unfinished"></translation>
+        <translation>UTM</translation>
     </message>
     <message>
         <location filename="../src/global.cpp" line="51"/>
         <source>UTM coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>UTM座標</translation>
     </message>
     <message>
         <location filename="../src/global.cpp" line="53"/>
         <source>UTM Zone (number north/south, e.g. &quot;32 N&quot;, &quot;24 S&quot;)</source>
-        <translation type="unfinished"></translation>
+        <translation>UTMゾーン (数字 North/South 例: &quot;32 N&quot;、&quot;24 S&quot;)</translation>
     </message>
     <message>
         <location filename="../src/global.cpp" line="59"/>
         <source>Gauss-Krueger, datum: Potsdam</source>
         <comment>Gauss-Krueger coordinate reference system</comment>
-        <translation type="unfinished"></translation>
+        <translation>ガウス・クリューゲル座標系</translation>
     </message>
     <message>
         <location filename="../src/global.cpp" line="60"/>
         <source>Gauss-Krueger coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>ガウス・クリューゲル座標</translation>
     </message>
     <message>
         <location filename="../src/global.cpp" line="62"/>
         <source>Zone number (1 to 119)</source>
         <comment>Zone number for Gauss-Krueger coordinates</comment>
-        <translation type="unfinished"></translation>
+        <translation>ゾーン番号 (1～119)</translation>
     </message>
     <message>
         <location filename="../src/georeferencing.cpp" line="135"/>
@@ -1344,7 +1344,7 @@
     <message>
         <location filename="../src/georeferencing.cpp" line="321"/>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>ローカル</translation>
     </message>
     <message>
         <location filename="../src/georeferencing.cpp" line="327"/>
@@ -1357,7 +1357,7 @@
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="71"/>
         <source>Map Georeferencing</source>
-        <translation>地図のジオリファレンシング</translation>
+        <translation>マップ ジオリファレンシング</translation>
     </message>
     <message utf8="true">
         <source>�</source>
@@ -1457,7 +1457,7 @@
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="126"/>
         <source>Show reference point in:</source>
-        <translation>基準点の表示:</translation>
+        <translation>基準点を表示:</translation>
     </message>
     <message>
         <source>%1 %2 (mm)</source>
@@ -1486,22 +1486,22 @@
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="74"/>
         <source>Map coordinate reference system</source>
-        <translation type="unfinished"></translation>
+        <translation>地図の座標参照系</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="77"/>
         <source>- none -</source>
-        <translation type="unfinished">- none -</translation>
+        <translation>- none -</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="78"/>
         <source>- from Proj.4 specification -</source>
-        <translation type="unfinished"></translation>
+        <translation>- from Proj.4 specification -</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="79"/>
         <source>- local -</source>
-        <translation type="unfinished"></translation>
+        <translation>- local -</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="81"/>
@@ -1511,12 +1511,12 @@
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="86"/>
         <source>Reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>参照点</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="88"/>
         <source>&amp;Pick on map</source>
-        <translation type="unfinished"></translation>
+        <translation>地図から選択(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="90"/>
@@ -1527,80 +1527,80 @@
         <location filename="../src/georeferencing_dialog.cpp" line="93"/>
         <location filename="../src/georeferencing_dialog.cpp" line="94"/>
         <source>mm</source>
-        <translation type="unfinished">mm</translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="98"/>
         <source>X</source>
         <comment>x coordinate</comment>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="100"/>
         <source>Y</source>
         <comment>y coordinate</comment>
-        <translation type="unfinished">Y</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="109"/>
         <source>E</source>
         <comment>west / east</comment>
-        <translation type="unfinished"></translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="111"/>
         <source>N</source>
         <comment>north / south</comment>
-        <translation type="unfinished"></translation>
+        <translation>N</translation>
     </message>
     <message utf8="true">
         <location filename="../src/georeferencing_dialog.cpp" line="115"/>
         <location filename="../src/georeferencing_dialog.cpp" line="116"/>
         <location filename="../src/georeferencing_dialog.cpp" line="136"/>
         <source>°</source>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="119"/>
         <source>N</source>
         <comment>north</comment>
-        <translation type="unfinished"></translation>
+        <translation>N</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="121"/>
         <source>E</source>
         <comment>east</comment>
-        <translation type="unfinished"></translation>
+        <translation>E</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="134"/>
         <source>Map north</source>
-        <translation type="unfinished"></translation>
+        <translation>地図上の北の向き</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="160"/>
         <source>Map coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>地図上の座標:</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="162"/>
         <source>Geographic coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>地理座標:</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="164"/>
         <source>On CRS changes, keep:</source>
-        <translation type="unfinished"></translation>
+        <translation>座標参照系の変更時に維持する座標:</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="170"/>
         <source>Grivation:</source>
-        <translation type="unfinished"></translation>
+        <translation>グリッド偏差:</translation>
     </message>
     <message utf8="true">
         <location filename="../src/georeferencing_dialog.cpp" line="280"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation type="unfinished">基準点 %1� %2� の磁気偏角を &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt; から検索します。続行しますか？ {1°?} {2°?} {3&quot;?} {3&lt;?}</translation>
+        <translation>基準点 &quot;%1&quot; &quot;%2&quot; の磁気偏角を &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt; から検索します。続行しますか？</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="354"/>
@@ -1615,12 +1615,12 @@
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="395"/>
         <source>Projected coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>投影座標:</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="397"/>
         <source>Local coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>ローカル座標:</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="446"/>
@@ -1648,7 +1648,7 @@
         <location filename="../src/georeferencing_dialog.cpp" line="654"/>
         <source>%1 °</source>
         <comment>degree value</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 °</translation>
     </message>
     <message>
         <source>Custom coordinates</source>
@@ -1664,7 +1664,7 @@
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="705"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. Another button to cancel.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: 参照点をセットします。他のボタンでキャンセルします。</translation>
     </message>
 </context>
 <context>
@@ -1679,7 +1679,7 @@
     <message>
         <location filename="../src/gui/home_screen_controller.cpp" line="136"/>
         <source>Welcome to OpenOrienteering Mapper!</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering Mapper へようこそ！</translation>
     </message>
 </context>
 <context>
@@ -1697,7 +1697,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="78"/>
         <source>Activities</source>
-        <translation type="unfinished"></translation>
+        <translation>アクティビティ</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="90"/>
@@ -1716,7 +1716,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="135"/>
         <source>Open most recently used file on start</source>
-        <translation type="unfinished"></translation>
+        <translation>直前に使用したファイルを起動時に開く</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="157"/>
@@ -1751,7 +1751,7 @@
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="93"/>
         <source>About %1</source>
         <comment>As in &apos;About OpenOrienteering Mapper&apos;</comment>
-        <translation type="unfinished">%1 について</translation>
+        <translation>%1 について</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="119"/>
@@ -1765,13 +1765,13 @@
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="348"/>
         <source>Open most recently used file</source>
-        <translation type="unfinished"></translation>
+        <translation>直前に使用したファイルを開く</translation>
     </message>
     <message>
         <location filename="../src/gui/settings_dialog.cpp" line="353"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="162"/>
         <source>Show tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation>「今日の Tip」を表示する</translation>
     </message>
 </context>
 <context>
@@ -1789,7 +1789,7 @@
     <message>
         <location filename="../src/symbol.cpp" line="285"/>
         <source>Error while loading a symbol.</source>
-        <translation type="unfinished">記号を読み込む際にエラーが発生しました。</translation>
+        <translation>記号を読み込む際にエラーが発生しました。</translation>
     </message>
     <message>
         <location filename="../src/object.cpp" line="378"/>
@@ -1810,17 +1810,17 @@
         <location filename="../src/file_format_native.cpp" line="96"/>
         <location filename="../src/file_format_xml.cpp" line="53"/>
         <source>OpenOrienteering Mapper</source>
-        <translation type="unfinished">OpenOrienteering Mapper</translation>
+        <translation>OpenOrienteering Mapper</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="57"/>
         <source>OCAD Versions 7, 8</source>
-        <translation type="unfinished">OCAD Versions 7, 8</translation>
+        <translation>OCAD Versions 7, 8</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="57"/>
         <source>OCAD</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD</translation>
     </message>
 </context>
 <context>
@@ -1849,13 +1849,13 @@
         <location filename="../src/file_format_native.cpp" line="145"/>
         <location filename="../src/file_format_xml.cpp" line="315"/>
         <source>Invalid file format version.</source>
-        <translation type="unfinished">無効なバージョンのファイル形式です。</translation>
+        <translation>無効なバージョンのファイル形式です。</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="149"/>
         <location filename="../src/file_format_xml.cpp" line="317"/>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>サポートされていない古いファイル形式のバージョンです。ファイルの読み込みと更新には古いバージョンのプログラムを使用してください。</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="153"/>
@@ -1865,22 +1865,22 @@
     <message>
         <location filename="../src/file_format_native.cpp" line="202"/>
         <source>The geographic coordinate reference system of the map was &quot;%1&quot;. This CRS is not supported. Using &quot;%2&quot;.</source>
-        <translation type="unfinished">この地図の地理座標参照系は &quot;%1&quot; です。この地理座標参照系はサポートされていません。&quot;%2&quot; を使用してください。</translation>
+        <translation>この地図の地理座標参照系は &quot;%1&quot; です。この地理座標参照系はサポートされていません。&quot;%2&quot; を使用してください。</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="317"/>
         <source>Error while loading a symbol with type %2.</source>
-        <translation type="unfinished">%2 のタイプの記号を読み込む際にエラーが発生しました。</translation>
+        <translation>%2 のタイプの記号を読み込む際にエラーが発生しました。</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="322"/>
         <source>Error while loading a symbol.</source>
-        <translation type="unfinished">記号を読み込む際にエラーが発生しました。</translation>
+        <translation>記号を読み込む際にエラーが発生しました。</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="385"/>
         <source>Error while loading undo steps.</source>
-        <translation type="unfinished">アンドゥ履歴を読み込む際にエラーが発生しました。</translation>
+        <translation>アンドゥ履歴を読み込む際にエラーが発生しました。</translation>
     </message>
     <message>
         <location filename="../src/file_format_native.cpp" line="395"/>
@@ -1901,12 +1901,12 @@
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1822"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1856"/>
         <source>Could not read file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルの読み込みに失敗しました: %1</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="310"/>
         <source>Unsupported file format.</source>
-        <translation type="unfinished"></translation>
+        <translation>サポートされていないファイル形式です。</translation>
     </message>
     <message>
         <location filename="../src/file_format_xml.cpp" line="319"/>
@@ -1934,7 +1934,7 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2106"/>
         <source>Minimum line length:</source>
-        <translation>ラインの最小の長さ:</translation>
+        <translation>最小のラインの長さ:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2109"/>
@@ -1944,23 +1944,23 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2111"/>
         <source>flat</source>
-        <translation>平ら</translation>
+        <translation>平ら(flat)</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2112"/>
         <location filename="../src/symbol_line.cpp" line="2123"/>
         <source>round</source>
-        <translation>丸型</translation>
+        <translation>丸型(round)</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2113"/>
         <source>square</source>
-        <translation>突出線端</translation>
+        <translation>突出線端(square)</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2114"/>
         <source>pointed</source>
-        <translation>三角</translation>
+        <translation>三角(pointed)</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2120"/>
@@ -1970,12 +1970,12 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2122"/>
         <source>miter</source>
-        <translation>マイター結合</translation>
+        <translation>マイター結合(miter)</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2124"/>
         <source>bevel</source>
-        <translation>ベベル結合</translation>
+        <translation>ベベル結合(bevel)</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2117"/>
@@ -1990,17 +1990,17 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2233"/>
         <source>Show at least one mid symbol</source>
-        <translation>中間点の記号を一つ以上表示する</translation>
+        <translation>mid symbolを一つ以上表示する</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2236"/>
         <source>Minimum mid symbol count:</source>
-        <translation>中間点の記号の最小数:</translation>
+        <translation>最小のmid symbol数:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2239"/>
         <source>Minimum mid symbol count when closed:</source>
-        <translation>ラインを閉じる場合の、中間点の記号の最小数:</translation>
+        <translation>ラインを閉じる場合の、最小のmid symbol数:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2160"/>
@@ -2072,22 +2072,22 @@
     <message>
         <location filename="../src/symbol_line.cpp" line="2206"/>
         <source>Mid symbols</source>
-        <translation>中間点の記号</translation>
+        <translation>Mid symbols</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2209"/>
         <source>Mid symbols per spot:</source>
-        <translation>中間点の記号のスポットごとの数:</translation>
+        <translation>mid symbolのスポットごとの数:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2212"/>
         <source>Mid symbol distance:</source>
-        <translation>中間点の記号の間の距離:</translation>
+        <translation>mid symbol 間の距離:</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2268"/>
         <source>Borders</source>
-        <translation type="unfinished"></translation>
+        <translation>輪郭線</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="2272"/>
@@ -2116,14 +2116,14 @@
         <location filename="../src/file_format_ocad8.cpp" line="591"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1000"/>
         <source>Start symbol</source>
-        <translation>始点の記号</translation>
+        <translation>Start symbol</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1672"/>
         <location filename="../src/symbol_line.cpp" line="2316"/>
         <location filename="../src/symbol_line.cpp" line="2774"/>
         <source>Mid symbol</source>
-        <translation>中間点の記号</translation>
+        <translation>Mid symbol</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1676"/>
@@ -2131,7 +2131,7 @@
         <location filename="../src/symbol_line.cpp" line="2774"/>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1007"/>
         <source>End symbol</source>
-        <translation>終点の記号</translation>
+        <translation>End symbol</translation>
     </message>
     <message>
         <location filename="../src/symbol_line.cpp" line="1680"/>
@@ -2204,7 +2204,7 @@
         <location filename="../src/template_track.cpp" line="494"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished">m</translation>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="496"/>
@@ -2227,12 +2227,12 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="52"/>
         <source>Services</source>
-        <translation type="unfinished"></translation>
+        <translation>サービス</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="53"/>
         <source>Hide %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 を非表示</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="54"/>
@@ -2242,7 +2242,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="55"/>
         <source>Show All</source>
-        <translation type="unfinished"></translation>
+        <translation>すべて表示</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="56"/>
@@ -2252,12 +2252,12 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="57"/>
         <source>Quit %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 を終了</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="58"/>
         <source>About %1</source>
-        <translation type="unfinished">%1 について</translation>
+        <translation>%1 について</translation>
     </message>
 </context>
 <context>
@@ -2300,7 +2300,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="185"/>
         <source>Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="191"/>
@@ -2339,7 +2339,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="225"/>
         <source>General</source>
-        <translation type="unfinished">一般</translation>
+        <translation>一般</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="240"/>
@@ -2386,7 +2386,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="454"/>
         <source>Unsaved file</source>
-        <translation>Unsaved file</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="482"/>
@@ -2415,7 +2415,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="677"/>
         <source>All maps</source>
-        <translation>すべての地図</translation>
+        <translation>すべての地図ファイル</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="681"/>
@@ -2442,7 +2442,7 @@ File format not recognized.</source>
         <translation>ファイルを開くことができません。
 %1
 
-ファイル形式が認識できません。</translation>
+ファイル形式を認識できません。</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="606"/>
@@ -2546,7 +2546,7 @@ because saving as %2 (.%3) is not supported.</source>
 because the format is unknown.</source>
         <translation>次の地図が作成できません。
 &quot;%1&quot;
-未知のフォーマットです。</translation>
+不明なフォーマットです。</translation>
     </message>
     <message>
         <location filename="../src/map.cpp" line="549"/>
@@ -2652,17 +2652,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="471"/>
         <source>Print...</source>
-        <translation type="unfinished">印刷...</translation>
+        <translation>印刷...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="473"/>
         <source>&amp;Image</source>
-        <translation type="unfinished"></translation>
+        <translation>画像(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="475"/>
         <source>&amp;PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="478"/>
@@ -2702,28 +2702,28 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="483"/>
         <source>Clear undo / redo history</source>
-        <translation type="unfinished"></translation>
+        <translation>元に戻す/やり直すの履歴をクリア</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="483"/>
         <source>Clear the undo / redo history to reduce map file size.</source>
-        <translation type="unfinished"></translation>
+        <translation>元に戻す/やり直すの履歴をクリアし、地図のファイルサイズを縮小します。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="485"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>グリッドを表示</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="486"/>
         <location filename="../src/map_editor.cpp" line="730"/>
         <source>Configure grid...</source>
-        <translation type="unfinished"></translation>
+        <translation>グリッド設定...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="487"/>
         <source>Pan</source>
-        <translation type="unfinished"></translation>
+        <translation>画面移動</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="488"/>
@@ -2748,23 +2748,23 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="494"/>
         <source>Hatch areas</source>
-        <translation type="unfinished"></translation>
+        <translation>面のハッチ表示</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="495"/>
         <source>Baseline view</source>
-        <translation type="unfinished"></translation>
+        <translation>ベースライン表示</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="496"/>
         <location filename="../src/template_dock_widget.cpp" line="87"/>
         <source>Hide all templates</source>
-        <translation type="unfinished"></translation>
+        <translation>すべてのテンプレートを非表示</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="497"/>
         <source>Overprinting simulation</source>
-        <translation type="unfinished"></translation>
+        <translation>オーバープリントをシミュレート</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="499"/>
@@ -2826,12 +2826,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="507"/>
         <source>Rotate map...</source>
-        <translation type="unfinished"></translation>
+        <translation>地図の回転...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="507"/>
         <source>Rotate the whole map</source>
-        <translation type="unfinished"></translation>
+        <translation>地図全体を回転します</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="508"/>
@@ -2865,12 +2865,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="501"/>
         <source>Replace symbol set...</source>
-        <translation type="unfinished"></translation>
+        <translation>記号セットを置換...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="514"/>
         <source>Reopen template...</source>
-        <translation type="unfinished"></translation>
+        <translation>テンプレートを開きなおす...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="516"/>
@@ -2880,7 +2880,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="517"/>
         <source>Edit lines</source>
-        <translation type="unfinished"></translation>
+        <translation>ラインの編集</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="518"/>
@@ -2949,22 +2949,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="546"/>
         <source>Convert to curves</source>
-        <translation type="unfinished"></translation>
+        <translation>曲線に変換</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="547"/>
         <source>Simplify path</source>
-        <translation type="unfinished"></translation>
+        <translation>pathを単純化</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="548"/>
         <source>Cutout</source>
-        <translation type="unfinished"></translation>
+        <translation>カットアウト</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="549"/>
         <source>Cut away</source>
-        <translation type="unfinished"></translation>
+        <translation>カットアウェイ</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="550"/>
@@ -3064,7 +3064,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="539"/>
         <source>Rotate pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>パターンの回転</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="540"/>
@@ -3123,7 +3123,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="592"/>
         <source>&amp;Export as...</source>
-        <translation type="unfinished"></translation>
+        <translation>形式を指定してエクスポート(&amp;E)...</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="658"/>
@@ -3284,17 +3284,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1493"/>
         <source>Set the direction of area fill patterns or point objects.</source>
-        <translation type="unfinished"></translation>
+        <translation>エリアフィルパターンまたはポイントオブジェクトの方向をセットします。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1493"/>
         <source>Select an area object with rotatable fill pattern or a rotatable point object to activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>このツールを有効にするには、回転可能なフィルパターンをもったエリアオブジェクト、または回転可能なポイントオブジェクトを選択してください。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2446"/>
         <source>Import %1, GPX, OSM or DXF file</source>
-        <translation type="unfinished"></translation>
+        <translation>%1、GPX、OSM、DXFファイルをインポート</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2497"/>
@@ -3413,18 +3413,18 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1505"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
-        <translation type="unfinished"></translation>
+        <translation>直線のpathをスムーズなベジエ曲線に変えます。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1505"/>
         <location filename="../src/map_editor.cpp" line="1507"/>
         <source>Select a path object to activate this tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>このツールを有効にするには、pathオブジェクトを選択してください。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1507"/>
         <source>Reduce the number of points in path objects while trying to retain their shape.</source>
-        <translation type="unfinished"></translation>
+        <translation>pathオブジェクト内のポイントを(pathの形が変わらない範囲で)減らします。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1509"/>
@@ -3471,17 +3471,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="1640"/>
         <source>%1 object(s) duplicated</source>
-        <translation>%1 個のオブジェクトが複製されました。</translation>
+        <translation>%1 個のオブジェクトが複製されました</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1832"/>
         <source>Object selection</source>
-        <translation type="unfinished">オブジェクトの選択</translation>
+        <translation>オブジェクトの選択</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="1832"/>
         <source>No objects were selected because there are no objects with the selected symbol(s).</source>
-        <translation type="unfinished"></translation>
+        <translation>オブジェクトは選択されませんでした。選択中の記号を使用したオブジェクトがありません。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2122"/>
@@ -3491,32 +3491,32 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/map_editor.cpp" line="2139"/>
         <source>Unification failed.</source>
-        <translation type="unfinished">エリアの論理和が失敗しました。</translation>
+        <translation>エリアの論理和が失敗しました。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2146"/>
         <source>Intersection failed.</source>
-        <translation type="unfinished">エリアの論理積が失敗しました。</translation>
+        <translation>エリアの論理積が失敗しました。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2153"/>
         <source>Difference failed.</source>
-        <translation type="unfinished">エリアの論理差が失敗しました。</translation>
+        <translation>エリアの論理差が失敗しました。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2160"/>
         <source>XOr failed.</source>
-        <translation type="unfinished">エリアの排他的論理和が失敗しました。</translation>
+        <translation>エリアの排他的論理和が失敗しました。</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2352"/>
         <source>Paint free-handedly on a template</source>
-        <translation>テンプレート上にフリーハンドで書き込みをします。</translation>
+        <translation>テンプレート上にフリーハンドで書き込みをします</translation>
     </message>
     <message>
         <location filename="../src/map_editor.cpp" line="2354"/>
         <source>Paint free-handedly on a template. Create or load a template which can be drawn onto to activate this button</source>
-        <translation>テンプレート上にフリーハンドで書き込みをします。書き込み可能なテンプレートを読み込んで、このボタンを有効にしてください。</translation>
+        <translation>テンプレート上にフリーハンドで書き込みをします。書き込み可能なテンプレートを読み込んで、このボタンを有効にしてください</translation>
     </message>
     <message>
         <source>Import DXF or GPX file</source>
@@ -3551,7 +3551,7 @@ Rescale the imported data?</source>
         <location filename="../src/tool_draw_rectangle.cpp" line="686"/>
         <location filename="../src/tool_cutout.cpp" line="136"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Abort. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 中止. </translation>
     </message>
     <message>
         <location filename="../src/tool_edit_point.cpp" line="618"/>
@@ -3560,18 +3560,18 @@ Rescale the imported data?</source>
         <location filename="../src/tool_draw_rectangle.cpp" line="639"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="640"/>
         <source>More: %1, %2</source>
-        <translation type="unfinished"></translation>
+        <translation>もっと表示: %1, %2</translation>
     </message>
     <message>
         <location filename="../src/tool_edit_line.cpp" line="433"/>
         <source>More: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>もっと表示: %1</translation>
     </message>
     <message>
         <location filename="../src/tool_draw_path.cpp" line="1004"/>
         <location filename="../src/tool_draw_rectangle.cpp" line="638"/>
         <source>More: %1, %2, %3</source>
-        <translation type="unfinished"></translation>
+        <translation>もっと表示: %1, %2, %3</translation>
     </message>
 </context>
 <context>
@@ -3579,27 +3579,27 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map_printer.cpp" line="823"/>
         <source>Processing separations of page %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>ページ %1 のセパレーションを処理中...</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="824"/>
         <source>Processing page %1...</source>
-        <translation type="unfinished"></translation>
+        <translation>ページ %1 を処理中...</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="929"/>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセルされました</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="934"/>
         <source>Error</source>
-        <translation type="unfinished">エラー</translation>
+        <translation>エラー</translation>
     </message>
     <message>
         <location filename="../src/core/map_printer.cpp" line="938"/>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>終了しました</translation>
     </message>
 </context>
 <context>
@@ -3612,7 +3612,7 @@ Rescale the imported data?</source>
         <location filename="../src/map_widget.cpp" line="526"/>
         <source>%1x</source>
         <comment>Zoom factor</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1x</translation>
     </message>
     <message>
         <location filename="../src/map_widget.cpp" line="547"/>
@@ -3655,7 +3655,7 @@ and select &quot;New symbol&quot;
 to create one.</source>
         <translation>記号がありません！
 
-いくつか記号を定義してみましょう。
+まずは記号を定義してみましょう。
 記号ウィンドウを右クリックして「新しい記号」を選択し、
 記号を作成してください。</translation>
     </message>
@@ -3868,7 +3868,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1539"/>
         <source>The map contains more than 256 colors which is not supported by ocd version 8.</source>
-        <translation type="unfinished">地図に256以上の色が含まれています。ocd バージョン 8 ではサポートされていません。</translation>
+        <translation>地図に256以上の色が含まれています。ocd バージョン 8 ではサポートされません。</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1543"/>
@@ -3888,7 +3888,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1824"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="unfinished">&quot;%1&quot; 形式のテンプレートのエクスポートは、まだサポートされていません。</translation>
+        <translation>&quot;%1&quot; 形式のテンプレートのエクスポートは、まだサポートされていません</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="2041"/>
@@ -3956,7 +3956,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="119"/>
         <source>OCAD files of version %1 are not supported!</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD %1 のファイルはサポートされていません。</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/file_format_ocad8.cpp" line="143"/>
@@ -3978,37 +3978,37 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="271"/>
         <source>Unable to import symbol &quot;%3&quot; (%1.%2)</source>
-        <translation type="unfinished">記号 &quot;%3&quot; をインポートできません (%1.%2)</translation>
+        <translation>記号 &quot;%3&quot; をインポートできません (%1.%2)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="284"/>
         <source>OCAD import layer</source>
-        <translation type="unfinished">OCADインポートレイヤー</translation>
+        <translation>OCADインポートレイヤー</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="422"/>
         <source>In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.</source>
-        <translation type="unfinished">破線のライン記号 %1 で、三角のキャップの長さが、始点と終点で異なっています (%2 と %3)。%4 を使用してください。</translation>
+        <translation>破線のライン記号 %1 で、三角のキャップの長さが、始点と終点で異なっています (%2 と %3)。%4 を使用してください。</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="439"/>
         <source>In dashed line symbol %1, the end length cannot be imported correctly.</source>
-        <translation type="unfinished">破線のライン記号 %1 で、末端の長さを正しくインポートできません。</translation>
+        <translation>破線のライン記号 %1 で、末端の長さを正しくインポートできません。</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="441"/>
         <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
-        <translation type="unfinished">破線のライン記号 %1 で、末端のギャップを正しくインポートできません。</translation>
+        <translation>破線のライン記号 %1 で、末端のギャップを正しくインポートできません。</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="450"/>
         <source>In dashed line symbol %1, main and end length are different (%2 and %3). Using %4.</source>
-        <translation type="unfinished">破線のライン記号 %1 で、本体と末端の長さが異なっています (%2 と %3)。%4 を使用してください。</translation>
+        <translation>破線のライン記号 %1 で、本体と末端の長さが異なっています (%2 と %3)。%4 を使用してください。</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="460"/>
         <source>In dashed line symbol %1, gaps D and E are different (%2 and %3). Using %4.</source>
-        <translation type="unfinished">破線のライン記号 %1 で、キャップ D と E が異なっています (%2 と %3)。%4 を使用してください。</translation>
+        <translation>破線のライン記号 %1 で、キャップ D と E が異なっています (%2 と %3)。%4 を使用してください。</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="610"/>
@@ -4018,42 +4018,42 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="754"/>
         <source>During import of text symbol %1: ignoring justified alignment</source>
-        <translation type="unfinished">テキスト記号 %1 をインポートする際、テキストの均等割付 (justified alignment) を無視します</translation>
+        <translation>テキスト記号 %1 をインポートする際、テキストの均等割付を無視します</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="760"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation type="unfinished">テキスト記号 %1 をインポートする際、文字の太さ (weight) を無視します (%2)</translation>
+        <translation>テキスト記号 %1 をインポートする際、文字の太さ (weight) を無視します (%2)</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="765"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished">テキスト記号 %1 をインポートする際、カスタムの文字間隔が設定されていますが、この実装はまだ OCAD の動作と一致しません</translation>
+        <translation>テキスト記号 %1 をインポートする際、カスタムの文字間隔が設定されていますが、この実装はまだ OCAD の動作と一致しません</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="770"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation type="unfinished">テキスト記号 %1 をインポートする際、カスタムの単語間隔 (%2%) を無視します</translation>
+        <translation>テキスト記号 %1 をインポートする際、カスタムの語間隔 (%2%) を無視します</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="775"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation type="unfinished">テキスト記号 %1 をインポートする際、カスタムの字下げ (%2/%3) を無視します</translation>
+        <translation>テキスト記号 %1 をインポートする際、カスタムの字下げ (%2/%3) を無視します</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="796"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation type="unfinished">テキスト記号 %1 をインポートする際、テキストフレーム (モード %2) を無視します</translation>
+        <translation>テキスト記号 %1 をインポートする際、テキストフレーム (モード %2) を無視します</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="948"/>
         <source>Unable to load object</source>
-        <translation type="unfinished">オブジェクトを読み込むことができません</translation>
+        <translation>オブジェクトを読み込むことができません</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="955"/>
         <source>Unable to import rectangle object</source>
-        <translation type="unfinished">矩形オブジェクトを読み込むことができません</translation>
+        <translation>矩形オブジェクトを読み込むことができません</translation>
     </message>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1003"/>
@@ -4078,7 +4078,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/file_format_ocad8.cpp" line="1503"/>
         <source>Color id not found: %1, ignoring this color</source>
-        <translation type="unfinished">色 ID が見つかりませんでした %1 。この色を無視します</translation>
+        <translation>色 ID が見つかりませんでした %1 。この色を無視します</translation>
     </message>
 </context>
 <context>
@@ -4205,12 +4205,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1470"/>
         <source>Unable to load object</source>
-        <translation type="unfinished">オブジェクトを読み込むことができません</translation>
+        <translation>オブジェクトを読み込むことができません</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1480"/>
         <source>Unable to import rectangle object</source>
-        <translation type="unfinished">矩形オブジェクトを読み込むことができません</translation>
+        <translation>矩形オブジェクトを読み込むことができません</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="1521"/>
@@ -4269,7 +4269,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="58"/>
         <source>&lt;b&gt;Click and drag&lt;/b&gt;: Paint. &lt;b&gt;Right click and drag&lt;/b&gt;: Erase. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;左クリックしながらドラッグ&lt;/b&gt;: ペイントします。&lt;b&gt;右クリックしながらドラッグ&lt;/b&gt;: 消去します。</translation>
     </message>
     <message>
         <location filename="../src/template_tool_paint.cpp" line="60"/>
@@ -4282,7 +4282,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/tool_pan.cpp" line="56"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 地図を移動します。</translation>
     </message>
 </context>
 <context>
@@ -4291,7 +4291,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/util/item_delegates.cpp" line="147"/>
         <location filename="../src/util/item_delegates.cpp" line="154"/>
         <source>%</source>
-        <translation type="unfinished">%</translation>
+        <translation>%</translation>
     </message>
 </context>
 <context>
@@ -4303,7 +4303,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="968"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: 座標を追加します。&lt;b&gt;%1 + クリック&lt;b&gt;: 選択中の座標を変更します。</translation>
     </message>
 </context>
 <context>
@@ -4323,7 +4323,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="55"/>
         <source>Always oriented to north (not rotatable)</source>
-        <translation type="unfinished">常に北に向けて正置 (回転禁止)</translation>
+        <translation>常に北に向けて正置 (回転禁止)</translation>
     </message>
     <message>
         <location filename="../src/symbol_point_editor.cpp" line="58"/>
@@ -4503,29 +4503,29 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_tool.cpp" line="49"/>
         <location filename="../src/gui/print_tool.cpp" line="371"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area&apos;s borders. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 地図、プリントエリア、エリアの縁を移動します。 </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="343"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: プリントエリアを移動します。</translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="347"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 地図を移動します。</translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="352"/>
         <location filename="../src/gui/print_tool.cpp" line="357"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s border. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: プリントエリアの縁を移動します。</translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="362"/>
         <location filename="../src/gui/print_tool.cpp" line="367"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s borders. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: プリントエリアの縁を移動します。</translation>
     </message>
 </context>
 <context>
@@ -4537,7 +4537,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="384"/>
         <source>Export to PDF or PS</source>
-        <translation>PDFまたはPSをエクスポート</translation>
+        <translation>PDF または PSをエクスポート</translation>
     </message>
     <message>
         <source>Export to image</source>
@@ -4551,7 +4551,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="155"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>グリッドを表示</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="89"/>
@@ -4561,7 +4561,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="60"/>
         <source>Printer:</source>
-        <translation type="unfinished"></translation>
+        <translation>プリンター:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="82"/>
@@ -4627,22 +4627,22 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="97"/>
         <source>Single page</source>
-        <translation type="unfinished"></translation>
+        <translation>単一ページ</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="98"/>
         <source>Custom area</source>
-        <translation type="unfinished"></translation>
+        <translation>カスタムエリア</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="99"/>
         <source>Map area:</source>
-        <translation type="unfinished"></translation>
+        <translation>マップエリア:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="101"/>
         <source>Center print area</source>
-        <translation type="unfinished"></translation>
+        <translation>地図の中心を印刷</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="69"/>
@@ -4653,42 +4653,42 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="113"/>
         <location filename="../src/gui/print_widget.cpp" line="116"/>
         <source>mm</source>
-        <translation type="unfinished">mm</translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="117"/>
         <source>Page overlap:</source>
-        <translation type="unfinished"></translation>
+        <translation>ページのオーバーラップ:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="121"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>オプション</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="127"/>
         <source>Normal output</source>
-        <translation type="unfinished"></translation>
+        <translation>通常のアウトプット</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="129"/>
         <source>Color separations</source>
-        <translation type="unfinished"></translation>
+        <translation>色分解</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="139"/>
         <source>Resolution:</source>
-        <translation type="unfinished"></translation>
+        <translation>解像度:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="141"/>
         <source>Print in different scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>縮尺を変更して印刷:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="158"/>
         <source>Simulate overprinting</source>
-        <translation type="unfinished"></translation>
+        <translation>オーバープリントをシミュレートする</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="166"/>
@@ -4699,28 +4699,28 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="170"/>
         <source>Export...</source>
-        <translation type="unfinished"></translation>
+        <translation>エクスポート...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="270"/>
         <source>PDF export</source>
-        <translation type="unfinished"></translation>
+        <translation>PDFをエクスポート</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="281"/>
         <source>Image export</source>
-        <translation type="unfinished"></translation>
+        <translation>イメージをエクスポート</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="386"/>
         <source>Save to PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>PDFに保存</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="728"/>
         <location filename="../src/gui/print_widget.cpp" line="768"/>
         <source>dpi</source>
-        <translation type="unfinished">dpi</translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="860"/>
@@ -4730,7 +4730,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="889"/>
         <source>Warning</source>
-        <translation type="unfinished">警告</translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="889"/>
@@ -4740,27 +4740,27 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="900"/>
         <source>PNG</source>
-        <translation type="unfinished"></translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="901"/>
         <source>BMP</source>
-        <translation type="unfinished"></translation>
+        <translation>BMP</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="902"/>
         <source>TIFF</source>
-        <translation type="unfinished"></translation>
+        <translation>TIFF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="903"/>
         <source>JPEG</source>
-        <translation type="unfinished"></translation>
+        <translation>JPEG</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="907"/>
         <source>PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="910"/>
@@ -4786,7 +4786,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="940"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
-        <translation>画像の保存に失敗しました。パスは存在しますか?十分な権限はもっていますか?</translation>
+        <translation>画像の保存に失敗しました。pathは存在しますか?　十分な権利はもっていますか?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="944"/>
@@ -4797,7 +4797,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="975"/>
         <source>Canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>キャンセルされました。</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="980"/>
@@ -4807,7 +4807,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="981"/>
         <source>The print job could not be stopped.</source>
-        <translation type="unfinished"></translation>
+        <translation>プリントジョブを停止できません。</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="987"/>
@@ -4818,12 +4818,12 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="1045"/>
         <source>Unknown</source>
         <comment>Paper size</comment>
-        <translation type="unfinished">不明</translation>
+        <translation>不明</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1052"/>
         <source>The map area is empty. Output canceled.</source>
-        <translation type="unfinished"></translation>
+        <translation>マップエリアが空白です。出力はキャンセルされました。</translation>
     </message>
     <message>
         <source>Letter</source>
@@ -4879,7 +4879,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="846"/>
         <source>&amp;Coordinate reference system:</source>
-        <translation type="unfinished">座標参照系 (&amp;C) :</translation>
+        <translation>座標参照系 (&amp;C) :</translation>
     </message>
 </context>
 <context>
@@ -4888,19 +4888,19 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/dxfparser.cpp" line="36"/>
         <source>Could not open the file.</source>
         <comment>DXFParser</comment>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを開けませんでした。</translation>
     </message>
     <message>
         <location filename="../src/dxfparser.cpp" line="52"/>
         <source>The file is not an DXF file.</source>
         <comment>DXFParser</comment>
-        <translation type="unfinished"></translation>
+        <translation>ファイルがDXFファイルではありません。</translation>
     </message>
     <message>
         <location filename="../src/core/map_color.cpp" line="73"/>
         <source>Registration black (all printed colors)</source>
         <comment>MapColor</comment>
-        <translation type="unfinished"></translation>
+        <translation>レジストレーションブラック(all printed colors)</translation>
     </message>
 </context>
 <context>
@@ -4910,22 +4910,22 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/util.cpp" line="234"/>
         <location filename="../src/util.cpp" line="263"/>
         <source>Error</source>
-        <translation type="unfinished">エラー</translation>
+        <translation>エラー</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="227"/>
         <source>Failed to locate the help files.</source>
-        <translation type="unfinished">ヘルプファイルを探すのに失敗しました。</translation>
+        <translation>ヘルプファイルのロケートに失敗しました。</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="234"/>
         <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation type="unfinished"></translation>
+        <translation>ヘルプブラウザのロケートに失敗しました(&quot;QT Assistant&quot;)。</translation>
     </message>
     <message>
         <location filename="../src/util.cpp" line="264"/>
         <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
-        <translation type="unfinished"></translation>
+        <translation>ヘルプブラウザの開始に失敗しました(&quot;Qt Assistant&quot;)。</translation>
     </message>
 </context>
 <context>
@@ -5271,32 +5271,32 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="36"/>
         <source>Reopen template</source>
-        <translation type="unfinished"></translation>
+        <translation>テンプレートを開きなおす</translation>
     </message>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="38"/>
         <source>Drag items from the left list to the desired spot in the right list to reload them.</source>
-        <translation type="unfinished"></translation>
+        <translation>アイテムを左のリストから右のリストの任意の場所にドラッグで再ロードします。</translation>
     </message>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="40"/>
         <source>Closed templates:</source>
-        <translation type="unfinished"></translation>
+        <translation>閉じたテンプレート:</translation>
     </message>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="43"/>
         <source>Clear list</source>
-        <translation type="unfinished">リストをクリア</translation>
+        <translation>リストをクリア</translation>
     </message>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="46"/>
         <source>Active templates:</source>
-        <translation type="unfinished"></translation>
+        <translation>アクティブなテンプレート:</translation>
     </message>
     <message>
         <location filename="../src/template_dialog_reopen.cpp" line="55"/>
         <source>- Map -</source>
-        <translation type="unfinished">- 地図 -</translation>
+        <translation>- 地図 -</translation>
     </message>
 </context>
 <context>
@@ -5349,27 +5349,27 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="284"/>
         <source>- None -</source>
-        <translation type="unfinished"></translation>
+        <translation>- None -</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="316"/>
         <source>Choose map file to load symbols from</source>
-        <translation type="unfinished"></translation>
+        <translation>記号をロードする地図を選択してください</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="324"/>
         <source>Error</source>
-        <translation type="unfinished">エラー</translation>
+        <translation>エラー</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="324"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>地図ファイルをロードできません、中断します。</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="330"/>
         <source>Warning</source>
-        <translation type="unfinished">警告</translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../src/symbol_dialog_replace.cpp" line="331"/>
@@ -5382,83 +5382,83 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="40"/>
         <source>Rotate map</source>
-        <translation type="unfinished"></translation>
+        <translation>地図を回転</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="47"/>
         <source>Angle (counter-clockwise):</source>
-        <translation type="unfinished"></translation>
+        <translation>角度 (反時計回り):</translation>
     </message>
     <message utf8="true">
         <location filename="../src/map_dialog_rotate.cpp" line="46"/>
         <source>°</source>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="44"/>
         <source>Rotation parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>回転パラメータ</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="49"/>
         <source>Rotate around:</source>
-        <translation type="unfinished"></translation>
+        <translation>回転の軸:</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="51"/>
         <source>Map coordinate system origin</source>
         <comment>Rotation center point</comment>
-        <translation type="unfinished"></translation>
+        <translation>地図座標系の原点</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="55"/>
         <source>Georeferencing reference point</source>
         <comment>Rotation center point</comment>
-        <translation type="unfinished"></translation>
+        <translation>ジオリファレンスの参照点</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="60"/>
         <source>Other point,</source>
         <comment>Rotation center point</comment>
-        <translation type="unfinished"></translation>
+        <translation>その他の座標、</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="61"/>
         <location filename="../src/map_dialog_rotate.cpp" line="62"/>
         <source>mm</source>
-        <translation type="unfinished">mm</translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="65"/>
         <source>X:</source>
         <comment>x coordinate</comment>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="67"/>
         <source>Y:</source>
         <comment>y coordinate</comment>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="73"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>オプション</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="75"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>ジオリファレンスの参照点を調節</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="82"/>
         <source>Adjust georeferencing declination</source>
-        <translation type="unfinished"></translation>
+        <translation>ジオリファレンスの磁気偏角を調節</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_rotate.cpp" line="89"/>
         <source>Rotate non-georeferenced templates</source>
-        <translation type="unfinished"></translation>
+        <translation>ジオリファレンスされていないテンプレートを回転</translation>
     </message>
 </context>
 <context>
@@ -5466,17 +5466,17 @@ The maximum supported version is %2.</source>
     <message utf8="true">
         <location filename="../src/tool_rotate_pattern.cpp" line="156"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;角度:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="157"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 一定角度ずつ回転。</translation>
     </message>
     <message>
         <location filename="../src/tool_rotate_pattern.cpp" line="161"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: エリアフィルパターンまたはポイントオブジェクトの方向をセットします。</translation>
     </message>
 </context>
 <context>
@@ -5496,23 +5496,23 @@ The maximum supported version is %2.</source>
     <message utf8="true">
         <location filename="../src/tool_rotate.cpp" line="184"/>
         <source>&lt;b&gt;Rotation:&lt;/b&gt; %1° </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;回転:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="185"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: 一定角度ずつ回転。 </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="189"/>
         <location filename="../src/tool_rotate.cpp" line="193"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the center of rotation. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: 回転の軸をセットします。 </translation>
     </message>
     <message>
         <location filename="../src/tool_rotate.cpp" line="194"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Rotate the selected objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 選択中のオブジェクトを回転します。</translation>
     </message>
 </context>
 <context>
@@ -5525,7 +5525,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="43"/>
         <source>Scaling parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>縮尺変更のパラメータ</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="47"/>
@@ -5535,48 +5535,48 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="49"/>
         <source>Scaling center:</source>
-        <translation type="unfinished"></translation>
+        <translation>縮尺変更の中心:</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="51"/>
         <source>Map coordinate system origin</source>
         <comment>Scaling center point</comment>
-        <translation type="unfinished"></translation>
+        <translation>地図座標系の原点</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="55"/>
         <source>Georeferencing reference point</source>
         <comment>Scaling center point</comment>
-        <translation type="unfinished"></translation>
+        <translation>ジオリファレンスの参照点</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="60"/>
         <source>Other point,</source>
         <comment>Scaling center point</comment>
-        <translation type="unfinished"></translation>
+        <translation>その他の座標、</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="61"/>
         <location filename="../src/map_dialog_scale.cpp" line="62"/>
         <source>mm</source>
-        <translation type="unfinished">mm</translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="65"/>
         <source>X:</source>
         <comment>x coordinate</comment>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="67"/>
         <source>Y:</source>
         <comment>y coordinate</comment>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="73"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>オプション</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="75"/>
@@ -5591,12 +5591,12 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="89"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>ジオリファレンスの参照点を調節</translation>
     </message>
     <message>
         <location filename="../src/map_dialog_scale.cpp" line="96"/>
         <source>Scale non-georeferenced templates</source>
-        <translation type="unfinished"></translation>
+        <translation>ジオリファレンスされていないテンプレートを縮尺変更</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -5618,12 +5618,12 @@ The maximum supported version is %2.</source>
         <location filename="../src/tool_scale.cpp" line="189"/>
         <location filename="../src/tool_scale.cpp" line="191"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the scaling center. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: スケール変更の中心点をセットします。</translation>
     </message>
     <message>
         <location filename="../src/tool_scale.cpp" line="192"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Scale the selected objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: 選択中のオブジェクトのスケールを変更します。</translation>
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt; to set the scaling center</source>
@@ -5639,7 +5639,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="879"/>
         <source>Select coordinate reference system</source>
-        <translation type="unfinished"></translation>
+        <translation>座標参照系を選択</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="885"/>
@@ -5649,7 +5649,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="889"/>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>ローカル</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="891"/>
@@ -5669,7 +5669,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="908"/>
         <source>(local)</source>
-        <translation type="unfinished"></translation>
+        <translation>(local)</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="921"/>
@@ -5679,12 +5679,12 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="922"/>
         <source>Status:</source>
-        <translation type="unfinished">状態:</translation>
+        <translation>ステータス:</translation>
     </message>
     <message>
         <location filename="../src/georeferencing_dialog.cpp" line="1003"/>
         <source>valid</source>
-        <translation type="unfinished">有効</translation>
+        <translation>有効</translation>
     </message>
 </context>
 <context>
@@ -5708,7 +5708,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol.cpp" line="763"/>
         <source>- None -</source>
-        <translation type="unfinished"></translation>
+        <translation>- None -</translation>
     </message>
 </context>
 <context>
@@ -5850,12 +5850,12 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="941"/>
         <source>Select all objects with this symbol</source>
-        <translation>この記号のオブジェクトを選択する</translation>
+        <translation>この記号のオブジェクトをすべて選択する</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="942"/>
         <source>Add all objects with this symbol to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>この記号のオブジェクトをすべて選択に追加する</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="943"/>
@@ -5870,7 +5870,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="949"/>
         <source>Add all objects with selected symbols to selection</source>
-        <translation type="unfinished"></translation>
+        <translation>選択中の記号のオブジェクトをすべて選択に追加する</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="950"/>
@@ -5885,18 +5885,18 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="154"/>
         <source>Select all</source>
-        <translation type="unfinished">すべてを選択</translation>
+        <translation>すべてを選択</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="115"/>
         <source>F1</source>
         <comment>Shortcut for displaying the symbol&apos;s description</comment>
-        <translation type="unfinished"></translation>
+        <translation>F1</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="155"/>
         <source>Select unused</source>
-        <translation type="unfinished"></translation>
+        <translation>未使用の記号を選択</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="157"/>
@@ -5906,7 +5906,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="160"/>
         <source>Sort symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>記号を並び替え</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="161"/>
@@ -5916,12 +5916,12 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="162"/>
         <source>Sort by primary color</source>
-        <translation type="unfinished"></translation>
+        <translation>色で並べ替え</translation>
     </message>
     <message>
         <location filename="../src/symbol_dock_widget.cpp" line="163"/>
         <source>Sort by primary color priority</source>
-        <translation type="unfinished"></translation>
+        <translation>色の優先度で並べ替え</translation>
     </message>
     <message>
         <source>Scale symbol %1</source>
@@ -6015,7 +6015,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="107"/>
         <source>bounding box on origin</source>
-        <translation>原点のバウンディングボックス</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/symbol_setting_dialog.cpp" line="108"/>
@@ -6061,17 +6061,17 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/tags_dialog.cpp" line="39"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>追加</translation>
     </message>
     <message>
         <location filename="../src/gui/tags_dialog.cpp" line="40"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <location filename="../src/gui/tags_dialog.cpp" line="41"/>
         <source>Close</source>
-        <translation type="unfinished">閉じる</translation>
+        <translation>閉じる</translation>
     </message>
     <message>
         <location filename="../src/gui/tags_dialog.cpp" line="59"/>
@@ -6081,7 +6081,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/tags_dialog.cpp" line="59"/>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>値</translation>
     </message>
     <message>
         <location filename="../src/gui/tags_dialog.cpp" line="74"/>
@@ -6099,22 +6099,22 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template.cpp" line="368"/>
         <source>Find the moved template file</source>
-        <translation type="unfinished">移動されたテンプレートを探す</translation>
+        <translation>移動されたテンプレートを探す</translation>
     </message>
     <message>
         <location filename="../src/template.cpp" line="369"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">すべてのファイル (*.*)</translation>
+        <translation>すべてのファイル (*.*)</translation>
     </message>
     <message>
         <location filename="../src/template.cpp" line="384"/>
         <source>Error</source>
-        <translation type="unfinished">エラー</translation>
+        <translation>エラー</translation>
     </message>
     <message>
         <location filename="../src/template.cpp" line="384"/>
         <source>Cannot change the template to this file! Is the format of the file correct for this template type?</source>
-        <translation type="unfinished">テンプレートをこのファイルに変更できません。ファイル形式はテンプレートの形式として正しいですか?</translation>
+        <translation>テンプレートをこのファイルに変更できません。ファイル形式はテンプレートの形式として正しいですか?</translation>
     </message>
 </context>
 <context>
@@ -6148,12 +6148,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="566"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the template position of the pass point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: パスポイントのテンプレート上の位置をセットします。</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="581"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the map position of the pass point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: パスポイントのマップ上の位置をセットします。</translation>
     </message>
 </context>
 <context>
@@ -6165,7 +6165,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="782"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Delete pass points. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: パスポイントを削除します。</translation>
     </message>
 </context>
 <context>
@@ -6177,7 +6177,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="663"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move pass points. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: パスポイントを移動します。</translation>
     </message>
 </context>
 <context>
@@ -6235,7 +6235,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/template_adjust.cpp" line="214"/>
         <source>Help</source>
-        <translation type="unfinished">ヘルプ</translation>
+        <translation>ヘルプ</translation>
     </message>
     <message>
         <location filename="../src/template_adjust.cpp" line="215"/>
@@ -6286,7 +6286,7 @@ GIFファイルの保存はサポートされていません。
     <message>
         <location filename="../src/template_image.cpp" line="170"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
-        <translation type="unfinished"></translation>
+        <translation>ワールドファイル内の座標の座標参照系を選択してください</translation>
     </message>
 </context>
 <context>
@@ -6298,37 +6298,37 @@ GIFファイルの保存はサポートされていません。
     <message>
         <location filename="../src/template_image.cpp" line="443"/>
         <source>Opening %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 を開きます</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="445"/>
         <source>Image size:</source>
-        <translation type="unfinished"></translation>
+        <translation>画像のサイズ:</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="448"/>
         <source>Specify how to position or scale the image:</source>
-        <translation type="unfinished"></translation>
+        <translation>画像の位置やサイズの調節方法を指定してください:</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="458"/>
         <source>World file</source>
-        <translation type="unfinished"></translation>
+        <translation>ワールドファイル</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="460"/>
         <source>GeoTiff</source>
-        <translation type="unfinished"></translation>
+        <translation>GeoTiff</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="462"/>
         <source>no georeferencing information</source>
-        <translation type="unfinished"></translation>
+        <translation>ジオリファレンス情報がありません</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="464"/>
         <source>Georeferenced</source>
-        <translation type="unfinished"></translation>
+        <translation>ジオリファレンス済</translation>
     </message>
     <message>
         <location filename="../src/template_image.cpp" line="468"/>
@@ -6454,22 +6454,22 @@ GIFファイルの保存はサポートされていません。
         <location filename="../src/gps_track.cpp" line="491"/>
         <location filename="../src/gps_track.cpp" line="496"/>
         <source>Error</source>
-        <translation type="unfinished">エラー</translation>
+        <translation>エラー</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="377"/>
         <source>The path is empty, there is nothing to import!</source>
-        <translation type="unfinished">path が空白です、インポートするものが何もありません。</translation>
+        <translation>path が空白です、インポートするものが何もありません。</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="390"/>
         <source>Question</source>
-        <translation type="unfinished">質問</translation>
+        <translation>質問</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="390"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
-        <translation type="unfinished">ウェイポイントを、すべてのポイントを通過しているラインとしてインポートしますか？</translation>
+        <translation>ウェイポイントを、すべてのポイントを通過しているラインとしてインポートしますか？</translation>
     </message>
     <message>
         <location filename="../src/template_track.cpp" line="457"/>
@@ -6486,7 +6486,7 @@ GIFファイルの保存はサポートされていません。
     <message>
         <location filename="../src/gps_track.cpp" line="403"/>
         <source>Error reading</source>
-        <translation type="unfinished">読み込みエラー</translation>
+        <translation>読み込みエラー</translation>
     </message>
     <message>
         <source>There was an error reading the DXF file %1:
@@ -6501,32 +6501,35 @@ GIFファイルの保存はサポートされていません。
         <source>There was an error reading the DXF file %1:
 
 %2</source>
-        <translation type="unfinished">DXF ファイル %2 を読み込む際にエラーが発生しました。
+        <translation>DXF ファイル:%1 を読み込む際にエラーが発生しました。
 
-%2 {1:?}</translation>
+%2</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="482"/>
         <source>%1:
 Not an OSM file.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1:
+OSM ファイルではありません。</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="491"/>
         <source>The OSM file has version %1.
 The minimum supported version is %2.</source>
-        <translation type="unfinished">OSM ファイルのバージョンは %1 です。 %2 以上のバージョンがサポートされています。</translation>
+        <translation>OSM ファイルのバージョンは %1 です。
+サポートされているバージョンは%2 以上です。</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="496"/>
         <source>The OSM file has version %1.
 The maximum supported version is %2.</source>
-        <translation type="unfinished">OSM ファイルのバージョンは %1 です。 %2 以下のバージョンがサポートされています。</translation>
+        <translation>OSM ファイルのバージョンは %1 です。
+サポートされているバージョンは%2 以下です。</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="595"/>
         <source>Problems</source>
-        <translation type="unfinished">問題</translation>
+        <translation>問題</translation>
     </message>
     <message>
         <location filename="../src/gps_track.cpp" line="595"/>
@@ -6590,7 +6593,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="793"/>
         <source>Close</source>
-        <translation type="unfinished">閉じる</translation>
+        <translation>閉じる</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="142"/>
@@ -6600,7 +6603,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="150"/>
         <source>Add template...</source>
-        <translation type="unfinished"></translation>
+        <translation>テンプレートを追加...</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="162"/>
@@ -6736,7 +6739,7 @@ Failed to load template. Does the file exist and is it valid?</source>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="867"/>
         <source>Template import</source>
-        <translation type="unfinished"></translation>
+        <translation>テンプレートをインポート</translation>
     </message>
     <message>
         <location filename="../src/template_dock_widget.cpp" line="868"/>
@@ -6826,7 +6829,7 @@ Failed to load template. Does the file exist and is it valid?</source>
         <location filename="../src/symbol_text.cpp" line="505"/>
         <source>A</source>
         <comment>First capital letter of the local alphabet</comment>
-        <translation type="unfinished">A</translation>
+        <translation>A</translation>
     </message>
     <message>
         <location filename="../src/symbol_text.cpp" line="567"/>
