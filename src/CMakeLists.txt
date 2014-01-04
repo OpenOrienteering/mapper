@@ -1,5 +1,5 @@
 #
-#    Copyright 2012 Thomas Schöps, Kai Pastor
+#    Copyright 2012-2014 Thomas Schöps, Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -323,9 +323,10 @@ if(Mapper_BUILD_QT)
 	write_qt_conf()
 endif()
 
-# Mapper.pro file
 
-set(MAPPER_PRO_GENERATOR "Generated in src/CMakeLists.txt from src/qmake/oo-mapper.pro.in")
-string(REPLACE ";" " \\\n  src/" MAPPER_PRO_HEADERS "src/${Mapper_Common_MOC_INPUT}")
-string(REPLACE ";" " \\\n  src/" MAPPER_PRO_SOURCES "src/${Mapper_Common_SRCS}")
-configure_file(qmake/oo-mapper.pro.in ${PROJECT_SOURCE_DIR}/oo-mapper.pro @ONLY)
+# qmake configuration
+
+set(MAPPER_PRO_GENERATOR "Generated in CMakeLists.txt from src.pro.in")
+string(REPLACE ";" " \\\n  " MAPPER_PRO_HEADERS "${Mapper_Common_MOC_INPUT}")
+string(REPLACE ";" " \\\n  " MAPPER_PRO_SOURCES "${Mapper_Common_SRCS}")
+configure_file(${PROJECT_SOURCE_DIR}/src/src.pro.in ${PROJECT_SOURCE_DIR}/src/src.pro @ONLY)

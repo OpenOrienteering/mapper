@@ -32,7 +32,7 @@
 #include "util.h"
 #include "compass.h"
 #if defined(ANDROID)
-	#include "gps_source_android.h"
+	#include "android/gps_source_android.h"
 #endif
 
 

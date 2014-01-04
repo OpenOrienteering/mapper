@@ -44,6 +44,7 @@ endif()
 set(PROJ_MD5SUMS
   4.8.0:d815838c92a29179298c126effbb1537
   4.9.0b1:5c0fd7deed207b9f97030730ce036ec7
+  4.9.0b2:d43fd87b991831faaf7e6fb5570b86aa
 )
 foreach(line ${PROJ_MD5SUMS})
 	if(${line} MATCHES "^${PROJ_VERSION}:")
@@ -91,6 +92,7 @@ ExternalProject_Add(
   URL_MD5 ${PROJ_MD5}
   # Check that the license hasn't changed.
   UPDATE_COMMAND ${CMAKE_COMMAND} -E compare_files <SOURCE_DIR>/COPYING "${PROJ_LICENSE_FILE}"
+  PATCH_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/proj-patch
   CONFIGURE_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/proj-config
   BUILD_COMMAND ${PROJ_MAKE_COMMAND}
   INSTALL_COMMAND ${PROJ_MAKE_COMMAND} install
@@ -101,11 +103,18 @@ ExternalProject_Get_Property(Proj BINARY_DIR)
 ExternalProject_Get_Property(Proj INSTALL_DIR)
 
 if(CMAKE_CROSSCOMPILING AND GNU_SYSTEM_NAME)
-	set(_proj_cfg_cross "--build=$(sh ${SOURCE_DIR}/config.guess) --host=${GNU_SYSTEM_NAME} --target=${GNU_SYSTEM_NAME}")
+	set(_proj_cfg_cross "--build=$(sh ${SOURCE_DIR}/config.guess) --host=${GNU_SYSTEM_NAME}")
+	get_directory_property(_include_dirs INCLUDE_DIRECTORIES)
+	unset(_cpp_flags)
+	foreach(_dir ${_include_dirs})
+		set(_cpp_flags "${_cpp_flags} -I${_dir}")
+	endforeach()
+	set(_proj_cfg_cross "${_proj_cfg_cross} CPPFLAGS=\"${_cpp_flags}\"")
 else(CMAKE_CROSSCOMPILING AND GNU_SYSTEM_NAME)
 	unset(_proj_cfg_cross)
 endif(CMAKE_CROSSCOMPILING AND GNU_SYSTEM_NAME)
 
+configure_file(proj-patch.in ${CMAKE_CURRENT_BINARY_DIR}/proj-patch)
 configure_file(proj-config.in ${CMAKE_CURRENT_BINARY_DIR}/proj-config)
 configure_file(proj-make.in ${CMAKE_CURRENT_BINARY_DIR}/proj-make)
 configure_file(proj-postinstall.in ${CMAKE_CURRENT_BINARY_DIR}/proj-postinstall)
