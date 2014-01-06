@@ -21,6 +21,7 @@
 
 #include <qmath.h>
 #include <QTime>
+#include <QMutex>
 
 
 namespace SensorHelpers
@@ -241,7 +242,6 @@ public:
 		{
 			last_gyro_timestamp = 0;
 			gyro_orientation_initialized = false;
-			have_new_gyro_values = false;
 			
 			accelerometer.start();
 			magnetometer.start();
@@ -274,13 +274,6 @@ public:
 		
 		if (last_gyro_timestamp > 0)
 		{
-			if (have_new_gyro_values)
-			{
-				memcpy(gyro_orientation, new_gyro_orientation, 3 * sizeof(float));
-				memcpy(gyro_rotation_matrix, new_gyro_rotation_matrix, 9 * sizeof(float));
-				have_new_gyro_values = false;
-			}
-			
 			// Calculate rotation matrix from gyro reading according to Android developer documentation
 			const float EPSILON = 1e-9f;
 			
@@ -319,9 +312,11 @@ public:
 			SensorHelpers::getRotationMatrixFromVector(R, deltaRotationVector);
 			
 			float temp[9];
+			gyro_mutex.lock();
 			SensorHelpers::matrixMultiplication(gyro_rotation_matrix, R, temp);
 			memcpy(gyro_rotation_matrix, temp, 9 * sizeof(float));
 			SensorHelpers::getOrientation(gyro_rotation_matrix, gyro_orientation);
+			gyro_mutex.unlock();
 		}
 		
 		last_gyro_timestamp = reading->timestamp();
@@ -406,15 +401,16 @@ private:
 			else
 			{
 				// Filter acc_mag_orientation and gyro_orientation to fused_orientation
+				p->gyro_mutex.lock();
 				float fused_orientation[3];
 				fused_orientation[0] = fuseOrientationCoefficient(p->gyro_orientation[0], acc_mag_orientation[0]);
 				fused_orientation[1] = fuseOrientationCoefficient(p->gyro_orientation[1], acc_mag_orientation[1]);
 				fused_orientation[2] = fuseOrientationCoefficient(p->gyro_orientation[2], acc_mag_orientation[2]);
 				
 				// Write back fused_orientation to gyro_orientation
-				SensorHelpers::getRotationMatrixFromOrientation(fused_orientation, p->new_gyro_rotation_matrix);
-				memcpy(p->new_gyro_orientation, fused_orientation, 3 * sizeof(float));
-				p->have_new_gyro_values = true;
+				SensorHelpers::getRotationMatrixFromOrientation(fused_orientation, p->gyro_rotation_matrix);
+				memcpy(p->gyro_orientation, fused_orientation, 3 * sizeof(float));
+				p->gyro_mutex.unlock();
 				
 				azimuth = fused_orientation[0];
 			}
@@ -461,9 +457,7 @@ private:
 	float gyro_rotation_matrix[9];
 	quint64 last_gyro_timestamp;
 	bool gyro_orientation_initialized;
-	float new_gyro_orientation[3];
-	float new_gyro_rotation_matrix[9];
-	bool have_new_gyro_values;
+	QMutex gyro_mutex;
 	
 	SensorThread thread;
 	Compass* compass;
