@@ -1787,6 +1787,16 @@ void MapEditorController::selectedSymbolsChanged()
 		mobile_symbol_selector_action->setIcon(QIcon(pixmap));
 	}
 	
+	if (symbol && !symbol->isHidden() && !symbol->isProtected() && current_tool)
+	{
+		// Auto-switch to a draw tool when selecting a symbol under certain conditions
+		if (current_tool->getType() == MapEditorTool::Pan
+			|| ((current_tool->getType() == MapEditorTool::EditLine || current_tool->getType() == MapEditorTool::EditPoint) && map->getNumSelectedObjects() == 0))
+		{
+			current_tool->switchToDefaultDrawTool(symbol);
+		}
+	}
+	
 	updateDrawPointGPSAvailability();
 	draw_point_act->setEnabled(type == Symbol::Point && !symbol->isHidden());
 	draw_point_act->setStatusTip(tr("Place point objects on the map.") + (draw_point_act->isEnabled() ? "" : (" " + tr("Select a point symbol to be able to use this tool."))));

@@ -89,6 +89,8 @@ void TemplateTransform::load(QXmlStreamReader& xml)
 Template::Template(const QString& path, Map* map) : map(map)
 {
 	template_path = path;
+	if (! QFileInfo(path).canonicalFilePath().isEmpty())
+		template_path = QFileInfo(path).canonicalFilePath();
 	template_file = QFileInfo(path).fileName();
 	template_relative_path = "";
 	template_state = Unloaded;
@@ -318,6 +320,8 @@ void Template::switchTemplateFile(const QString& new_path)
 	}
 	
 	template_path = new_path;
+	if (! QFileInfo(new_path).canonicalFilePath().isEmpty())
+		template_path = QFileInfo(new_path).canonicalFilePath();
 	template_file = QFileInfo(new_path).fileName();
 	template_relative_path = "";
 	
@@ -610,6 +614,8 @@ void Template::setOtherTransform(const TemplateTransform& transform)
 void Template::setTemplatePath(const QString& value)
 {
 	template_path = value;
+	if (! QFileInfo(value).canonicalFilePath().isEmpty())
+		template_path = QFileInfo(value).canonicalFilePath();
 	template_file = QFileInfo(value).fileName();
 }
 

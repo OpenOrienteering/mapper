@@ -23,7 +23,7 @@
 #include "map_widget.h"
 
 PanTool::PanTool(MapEditorController* editor, QAction* tool_button)
- : MapEditorToolBase(QCursor(Qt::OpenHandCursor), Other, editor, tool_button)
+ : MapEditorToolBase(QCursor(Qt::OpenHandCursor), Pan, editor, tool_button)
 {
 	uses_touch_cursor = false;
 }

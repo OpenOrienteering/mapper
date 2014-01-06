@@ -67,7 +67,8 @@ public:
 		DrawCircle = 5,
 		DrawRectangle = 6,
 		DrawFreehand = 8,
-		DrawText = 7
+		DrawText = 7,
+		Pan = 9
 	};
 	
 	/// The numbers correspond to the columns in point-handles.png

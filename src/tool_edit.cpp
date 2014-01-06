@@ -455,20 +455,10 @@ EditTool::EditTool(MapEditorController* editor, MapEditorTool::Type type, Symbol
    object_selector(new ObjectSelector(map())),
    symbol_widget(symbol_widget)
 {
-	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
 }
 
 EditTool::~EditTool()
 {
-}
-
-void EditTool::selectedSymbolsChanged()
-{
-	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
-	if (symbol && map()->getNumSelectedObjects() == 0 && !symbol->isHidden() && !symbol->isProtected())
-	{
-		switchToDefaultDrawTool(symbol);
-	}
 }
 
 void EditTool::deleteSelectedObjects()

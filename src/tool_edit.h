@@ -155,9 +155,6 @@ public:
 	/** Draws a selection box. */
 	static void drawSelectionBox(QPainter* painter, MapWidget* widget, const MapCoordF& corner1, const MapCoordF& corner2);
 	
-protected slots:
-	void selectedSymbolsChanged();
-	
 protected:
 	/** Deletes all selected objects and updates the status text. */
 	void deleteSelectedObjects();
