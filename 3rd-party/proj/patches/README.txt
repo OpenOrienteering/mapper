@@ -1,4 +1,4 @@
-proj-4.8.0 is quite old, and its build system needs modifications for Android support.
+proj-4.8.0 is quite old, and it needs modifications for Android support.
 
 config.guess and config.sub were taken from
 http://git.savannah.gnu.org/gitweb/?p=config.git;a=tree;h=3bfabc1475612c4425af0358c101f85f1b97fe64;hb=3bfabc1475612c4425af0358c101f85f1b97fe64
@@ -11,3 +11,6 @@ http://git.savannah.gnu.org/cgit/libtool.git/commit/?id=8eeeb00daef8c4f720c9b79a
 The original change modified a file named libtool.m4 which is part of GNU libtool
 which is under GPLv2 or any later version.
 
+pj_init.c.patch was taken from
+http://trac.osgeo.org/proj/attachment/ticket/204/
+The patch modified a file named pj_init.c which is part of PROJ.4.

@@ -21,6 +21,7 @@ cd "@SOURCE_DIR@"
 
 if [ "@PROJ_VERSION@" = "4.8.0" ]
 then
+	patch -p2 < "@PROJECT_SOURCE_DIR@/patches/pj_init.c.patch"
 	patch -p1 < "@PROJECT_SOURCE_DIR@/patches/configure.patch"
 	cp "@PROJECT_SOURCE_DIR@/patches/config.guess" .
 	cp "@PROJECT_SOURCE_DIR@/patches/config.sub" .

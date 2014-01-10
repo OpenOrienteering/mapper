@@ -14,8 +14,6 @@ The general build process prerequisites are:
 
 See below for platform-specific details and build instructions.
 
-Qmake / Qt Creator based builds are not supported at the moment.
-
 
 == Qt Library ==
 
@@ -164,65 +162,31 @@ and proceed with
 
 == Cross-Compiling on Linux for Android ==
 
-You need to install the Android SDK and NDK. How to do this depends on your
-Linux distribution. When downloading packages for specific Android API levels,
+In addition to the general build process prerequisites, you need:
+ * the Android SDK
+ * the Android NDK
+ * Qt 5.2 for Android which includes Qt Creator
+
+When downloading packages for specific Android API levels,
 keep in mind that Qt5 requires at least API Level 9 to work, and apps
 built for the armeabi-v7a ABI require at least an emulator image of API
 level 14 to work with the emulator.
 
-In addition, you need qtbase built for Android (other Qt components are not
-required). For build instructions, see:
+For official releases, you need to build the Qt libraries from sources. Not all
+modules are required, but qtbase is mandatory. For build instructions, see:
 
    http://qt-project.org/wiki/Qt5ForAndroidBuilding
 
-Mapper's dependencies must be downloaded manually at the moment. For Clipper,
-version 5.1.6 is known to work. Download and extract Clipper in directory
-3rd-party/clipper/download so the files clipper.cpp/hpp are in:
+The build of OpenOrienteering Mapper for Android is controlled by qmake and the
+oo-mapper.pro file. The easist way to do the build is using Qt Creator where you
+can define different "kits" representing different types of target devices. 
+Qt Creator takes care of switching between debug and release configurations.
+For setting up the kits, see the Qt Creator documentation:
 
-   <Mapper>/3rd-party/clipper/download/cpp
+   http://qt-project.org/doc/qtcreator/creator-targets.html
 
-For PROJ.4, version 4.8.0 is known to work with some adaptions. First,
-download and extract Proj.4 4.8.0 in directory 3rd-party/proj/download
-so the includes are in:
-
-   <Mapper>/3rd-party/proj/download/proj-4.8.0/src
-
-Then replace Proj.4's config.sub and config.guess with new versions from:
-
-   http://git.savannah.gnu.org/cgit/config.git/plain/config.sub
-   http://git.savannah.gnu.org/cgit/config.git/plain/config.guess
-
-and make them executable. (TODO: check if this step is really necessary.)
-Next, download a Proj.4 header file missing in 4.8.0 and place it in
-<Mapper>/3rd-party/proj/download/proj-4.8.0/src:
-
-   http://trac.osgeo.org/proj/export/2379/trunk/proj/src/org_Proj.4_PJ.h
-
-Download a patch for Proj.4 to fix a segfault on initialization on Android:
-
-   http://trac.osgeo.org/proj/attachment/ticket/204/pj_init.c.patch
-
-Apply it with the following command in Proj.4's root directory:
-
-   patch -p2 -i pj_init.c.patch
-
-Finally, run the script <Mapper>/3rd-party/proj/compile-for-android.sh
-with PROJ.4's root directory as working directory to cross-compile
-PROJ.4 as static library for Android. You may need to adjust some
-of the settings in the first part of the script, especially the paths
-to the Android SDK and NDK.
-
-Note that currently, as some paths are still hardcoded, other versions of
-PROJ.4 are not supported and only armeabi builds are possible without
-adaptions. (TODO)
-
-Now you can build Mapper using the oo-mapper.pro qmake project with (in
-QtCreator) an Android kit matching the Proj.4 compilation settings.
-For setting up the kit, see this page under "Developing with Qt 5":
-
-   http://qt-project.org/doc/qtcreator-2.8/creator-developing-android.html
-
-Mapper has been confirmed to work in the Android emulator with Qt 5.1.0.
+Mapper's dependencies, such as the PROJ.4 library, are build by cmake, based on
+the exisiting CMakeList.txt files and Qt Creator's kit settings.
 
 
 == Binary Package Distribution ==
