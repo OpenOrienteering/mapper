@@ -264,11 +264,21 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QCol
 	QPointF* points;
 	QRect radius_bbox;
 	int draw_iterations = 1;
+
+	bool all_coords_equal = true;
+	for (int i = 1; i < num_coords; ++i)
+	{
+		if (coords[i] != coords[i-1])
+		{
+			all_coords_equal = false;
+			break;
+		}
+	}
 	
 	// Special case for points because drawPolyline() draws nothing in this case.
 	// drawPoint() is also unsuitable because it aligns the point to the closest pixel.
 	// drawEllipse() in the tested Qt version (5.1.1) seems to have a bug with antialiasing here.
-	if (num_coords >= 2 && coords[0] == coords[1])
+	if (all_coords_equal)
 	{
 		const float ring_radius = 0.8f;
 		const float width_factor = 2.0f;
