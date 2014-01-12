@@ -29,6 +29,7 @@
 #include "../home_screen_controller.h"
 #include "../main_window.h"
 #include "../../file_format_registry.h"
+#include "../../mapper_resource.h"
 
 
 AbstractHomeScreenWidget::AbstractHomeScreenWidget(HomeScreenController* controller, QWidget* parent)
@@ -286,12 +287,15 @@ HomeScreenWidgetMobile::HomeScreenWidgetMobile(HomeScreenController* controller,
 	
 	QWidget* file_list_widget = makeFileListWidget(controller, parent);
 	
+	examples_button = new QPushButton(tr("Examples"));
+	connect(examples_button, SIGNAL(clicked(bool)), this, SLOT(showExamples()));
 	QPushButton* about_button = new QPushButton(tr("About Mapper"));
 	connect(about_button, SIGNAL(clicked(bool)), controller->getWindow(), SLOT(showAbout()));
 	QPushButton* about_qt_button = new QPushButton(tr("About Qt"));
 	connect(about_qt_button, SIGNAL(clicked(bool)), qApp, SLOT(aboutQt()));
 	QHBoxLayout* buttons_layout = new QHBoxLayout();
 	buttons_layout->setContentsMargins(0, 0, 0, 0);
+	buttons_layout->addWidget(examples_button);
 	buttons_layout->addStretch(1);
 	buttons_layout->addWidget(about_button);
 	buttons_layout->addWidget(about_qt_button);
@@ -346,6 +350,25 @@ void HomeScreenWidgetMobile::setTipsVisible(bool state)
 	// nothing
 }
 
+// slot
+void HomeScreenWidgetMobile::showExamples()
+{
+	int old_size = file_list->count();
+	
+	QStringList paths = MapperResource::getLocations(MapperResource::EXAMPLE);
+	while (!paths.isEmpty())
+	{
+		addFilesToFileList(file_list, paths.takeFirst());
+	}
+	
+	if (file_list->count() > old_size)
+	{
+		file_list_stack->setCurrentIndex(0);
+		file_list->setCurrentRow(old_size, QItemSelectionModel::ClearAndSelect);
+		examples_button->setEnabled(false);
+	}
+}
+
 void HomeScreenWidgetMobile::fileClicked(QListWidgetItem* item)
 {
 	QString path = item->data(Qt::UserRole).toString();
@@ -362,7 +385,11 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 	QLabel* file_list_headline = makeHeadline(tr("File list"));
 	file_list_layout->addWidget(file_list_headline, 0, 0, 1, 2);
 	
-	QListWidget* file_list = new QListWidget();
+	file_list_stack = new QStackedLayout();
+	file_list_layout->addLayout(file_list_stack, 1, 0, 1, 2);
+	file_list_layout->setRowStretch(1, 1);
+	
+	file_list = new QListWidget();
 	QFont list_font = file_list->font();
 	list_font.setPointSize((int)list_font.pointSize()*1.5);
 	file_list->setFont(list_font);
@@ -373,26 +400,21 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 	    color: palette(highlighted-text); \
 	    background: palette(highlight); \
 	  } ");
-	file_list_layout->addWidget(file_list, 1, 0, 1, 2);
-	
-	//open_mru_file_check = new QCheckBox(tr("Open most recently used file on start"));
-	//file_list_layout->addWidget(open_mru_file_check, 2, 0, 1, 1);
-	
-	file_list_layout->setRowStretch(1, 1);
+	file_list_stack->addWidget(file_list);
 	
 	// Look for map files at device-specific locations
 //#ifdef Q_OS_ANDROID
 	addFilesToFileList(file_list, "/OOMapper");
 	addFilesToFileList(file_list, "/sdcard/OOMapper");
+	file_list->sortItems();
 	if (file_list->count() == 0)
 	{
-		delete file_list_layout->takeAt(file_list_layout->indexOf(file_list));
 		QLabel* message_label = new QLabel(tr("No map files found!<br/><br/>Copy a map file to /OOMapper or /sdcard/OOMapper to list it here."));
 		message_label->setWordWrap(true);
-		file_list_layout->addWidget(message_label, 1, 0, 1, 2);
+		file_list_stack->addWidget(message_label);
+		file_list_stack->setCurrentWidget(message_label);
 	}
 //#endif
-	file_list->sortItems();
 	
 	connect(file_list, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(fileClicked(QListWidgetItem*)));
 	//connect(open_mru_file_check, SIGNAL(clicked(bool)), controller, SLOT(setOpenMRUFile(bool)));

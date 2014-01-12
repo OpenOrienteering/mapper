@@ -33,6 +33,8 @@ class QListWidget;
 class QListWidgetItem;
 class QMouseEvent;
 class QPaintEvent;
+class QPushButton;
+class QStackedLayout;
 QT_END_NAMESPACE
 
 class HomeScreenController;
@@ -167,6 +169,10 @@ public slots:
 	 *  sets the "checked" state of the control for displaying the tip. */
 	virtual void setTipsVisible(bool state);
 	
+	/** Adds the examples to the list of files
+	 *  if they are not already there. */
+	void showExamples();
+	
 protected slots:
 	/** Opens a file when its is list item is clicked. */
 	void fileClicked(QListWidgetItem* item);
@@ -180,6 +186,11 @@ protected:
 	
 	/** Iterates over all files at the given path and adds all map files to the list */
 	void addFilesToFileList(QListWidget* file_list, const QString& path);
+	
+private:
+	QPushButton* examples_button;
+	QStackedLayout* file_list_stack;
+	QListWidget* file_list;
 };
 
 #endif

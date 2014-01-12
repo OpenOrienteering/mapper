@@ -75,8 +75,15 @@ QStringList MapperResource::getLocations(MapperResource::RESOURCE_TYPE resource_
 			return MapperResource::getProgramLocations(resource_type);
 			
 		case EXAMPLE:
+#if defined(Q_OS_ANDROID)
+			// Qt 5.2.0: The "assets:/" file system seems to skip the first file.
+			//           That's why we use Qt's resource system at the moment.
+			locations << ":/examples";
+			return locations;
+#else
 			resource_path = "/examples";
 			break;
+#endif
 			
 		case MANUAL:
 			// TODO: Support localized manual

@@ -252,4 +252,7 @@ android {
   # Use sensors module
   QT += sensors
   DEFINES += HAVE_QTSENSORS
+
+  # Add examples as resource
+  RESOURCES += ../examples/examples.qrc
 }
