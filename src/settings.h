@@ -59,6 +59,7 @@ public:
 		General_OpenMRUFile,
 		General_Local8BitEncoding,
 		General_NewOcd8Implementation,
+		General_StartDragDistance,
 		HomeScreen_TipsVisible,
 		HomeScreen_CurrentTip,
 		END_OF_SETTINGSENUM /* Don't add items below this line. */
@@ -109,6 +110,7 @@ public:
 	float getMapEditorClickTolerancePx();
 	float getMapEditorSnapDistancePx();
 	float getRectangleToolHelperCrossRadiusPx();
+	int getStartDragDistancePx();
 	
 signals:
 	void settingsChanged();

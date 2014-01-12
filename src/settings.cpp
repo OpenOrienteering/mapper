@@ -26,6 +26,7 @@
 #include <QScreen>
 #include <QSettings>
 #include <QStringList>
+#include <QDebug>
 
 #include "util.h"
 
@@ -36,16 +37,19 @@ Settings::Settings()
 	float symbol_widget_icon_size_mm_default;
 	float map_editor_click_tolerance_default;
 	float map_editor_snap_distance_default;
+	int start_drag_distance_default;
 	
 	// Platform-specific settings defaults
 	#if defined(ANDROID)
 		symbol_widget_icon_size_mm_default = touch_button_minimum_size_default;
 		map_editor_click_tolerance_default = 4.0f;
 		map_editor_snap_distance_default = 15.0f;
+		start_drag_distance_default = Util::mmToPixelLogical(3.0f);
 	#else
 		symbol_widget_icon_size_mm_default = 8;
 		map_editor_click_tolerance_default = 3.0f;
 		map_editor_snap_distance_default = 10.0f;
+		start_drag_distance_default = QApplication::startDragDistance();
 	#endif
 	
 	registerSetting(MapDisplay_TextAntialiasing, "MapDisplay/text_antialiasing", false);
@@ -75,6 +79,7 @@ Settings::Settings()
 	registerSetting(General_OpenMRUFile, "openMRUFile", false);
 	registerSetting(General_Local8BitEncoding, "local_8bit_encoding", "Windows-1252");
 	registerSetting(General_NewOcd8Implementation, "new_ocd8_implementation", false);
+	registerSetting(General_StartDragDistance, "startDragDistance", start_drag_distance_default);
 	
 	registerSetting(HomeScreen_TipsVisible, "HomeScreen/tipsVisible", true);
 	registerSetting(HomeScreen_CurrentTip, "HomeScreen/currentTip", -1);
@@ -213,4 +218,9 @@ float Settings::getMapEditorSnapDistancePx()
 float Settings::getRectangleToolHelperCrossRadiusPx()
 {
 	return Util::mmToPixelLogical(getSettingCached(Settings::RectangleTool_HelperCrossRadiusMM).toFloat());
+}
+
+int Settings::getStartDragDistancePx()
+{
+	return getSettingCached(Settings::General_StartDragDistance).toInt();
 }

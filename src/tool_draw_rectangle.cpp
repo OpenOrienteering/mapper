@@ -203,12 +203,13 @@ void DrawRectangleTool::updateHover(bool mouse_down)
 	else
 	{
 		hidePreviewPoints();
-		if (mouse_down && !dragging && (cur_pos - click_pos).manhattanLength() >= QApplication::startDragDistance())
+		if (mouse_down && !dragging && (cur_pos - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
 		{
 			// Start dragging
 			dragging = true;
 		}
-		updateRectangle();
+		if (!mouse_down || dragging)
+			updateRectangle();
 	}
 }
 

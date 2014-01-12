@@ -202,7 +202,6 @@ namespace SensorHelpers
 
 #ifdef HAVE_QTSENSORS
 #include <QThread>
-#include <QMutex>
 #include <QDebug>
 #include <QWaitCondition>
 #include <QtSensors/QAccelerometer>
@@ -218,6 +217,9 @@ public:
 	 , enabled(false)
 	 , latest_azimuth(-1)
 	{
+		// Try to filter out non-gravity sources of acceleration
+		accelerometer.setAccelerationMode(QAccelerometer::Gravity);
+
 		// Try to filter out local magnetic interference
 		magnetometer.setReturnGeoValues(true);
 		

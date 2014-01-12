@@ -261,7 +261,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 			return true;
 		}
 		
-		bool drag_distance_reached = (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance();
+		bool drag_distance_reached = (event->pos() - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx();
 		if (dragging && !drag_distance_reached)
 		{
 			if (create_spline_corner)
@@ -314,7 +314,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 				float drag_direction = calculateRotation(constrained_pos.toPoint(), constrained_pos_map);
 				
 				// Add a new node or convert the last node into a corner?
-				if ((widget->mapToViewport(previous_pos_map) - click_pos).manhattanLength() >= QApplication::startDragDistance())
+				if ((widget->mapToViewport(previous_pos_map) - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
 					createPreviewCurve(click_pos_map.toMapCoord(), drag_direction);
 				else
 				{
@@ -503,7 +503,7 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 	if (draw_in_progress)
 	{
 		painter->setRenderHint(QPainter::Antialiasing);
-		if (dragging && (cur_pos - click_pos).manhattanLength() >= QApplication::startDragDistance())
+		if (dragging && (cur_pos - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
 		{
 			QPen pen(qRgb(255, 255, 255));
 			pen.setWidth(3);
@@ -1002,7 +1002,7 @@ void DrawPathTool::finishFollowing()
 
 float DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map)
 {
-	if (dragging && (mouse_pos - click_pos).manhattanLength() >= QApplication::startDragDistance())
+	if (dragging && (mouse_pos - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
 		return -atan2(mouse_pos_map.getX() - click_pos_map.getX(), click_pos_map.getY() - mouse_pos_map.getY());
 	else
 		return 0;

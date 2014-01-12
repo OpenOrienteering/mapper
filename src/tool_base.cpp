@@ -41,7 +41,7 @@
 MapEditorToolBase::MapEditorToolBase(const QCursor cursor, MapEditorTool::Type type, MapEditorController* editor, QAction* tool_button)
 : MapEditorTool(editor, type, tool_button),
   dragging(false),
-  start_drag_distance(QApplication::startDragDistance()),
+  start_drag_distance(Settings::getInstance().getStartDragDistancePx()),
   angle_helper(new ConstrainAngleToolHelper()),
   snap_helper(new SnappingToolHelper(map())),
   snap_exclude_object(NULL),

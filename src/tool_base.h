@@ -157,7 +157,7 @@ protected:
 	bool snapped_to_pos;
 	/// Is the left mouse button pressed and has a drag move been started (by moving the mouse a minimum amount of pixels)?
 	bool dragging;
-	/// The amount of pixels the mouse has to be moved to start dragging. Defaults to QApplication::startDragDistance().
+	/// The amount of pixels the mouse has to be moved to start dragging. Defaults to Settings::getInstance().getStartDragDistancePx().
 	int start_drag_distance;
 	
 	/// Angle tool helper. If activated, it is included in the dirty rect and drawn automatically.

@@ -33,6 +33,7 @@
 #include "map_widget.h"
 #include "object_text.h"
 #include "renderable.h"
+#include "settings.h"
 #include "symbol.h"
 #include "symbol_dock_widget.h"
 #include "symbol_text.h"
@@ -109,7 +110,7 @@ bool DrawTextTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	}
 	else // if (mouse_down)
 	{
-		if (!dragging && (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance())
+		if (!dragging && (event->pos() - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
 		{
 			// Start dragging
 			dragging = true;

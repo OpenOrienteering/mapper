@@ -31,6 +31,7 @@
 #include "map_undo.h"
 #include "object.h"
 #include "renderable.h"
+#include "settings.h"
 #include "symbol.h"
 #include "symbol_dock_widget.h"
 #include "symbol_point.h"
@@ -279,7 +280,7 @@ int DrawPointTool::updateDirtyRectImpl(QRectF& rect)
 float DrawPointTool::calculateRotation(QPointF mouse_pos, MapCoordF mouse_pos_map)
 {
 	QPoint preview_object_pos = cur_map_widget->mapToViewport(preview_object->getCoordF()).toPoint();
-	if (dragging && (mouse_pos - preview_object_pos).manhattanLength() >= QApplication::startDragDistance())
+	if (dragging && (mouse_pos - preview_object_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
 		return -atan2(mouse_pos_map.getX() - preview_object->getCoordF().getX(), preview_object->getCoordF().getY() - mouse_pos_map.getY());
 	else
 		return 0;

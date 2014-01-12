@@ -29,6 +29,7 @@
 #include "map_widget.h"
 #include "object.h"
 #include "renderable.h"
+#include "settings.h"
 #include "util.h"
 
 QCursor* ScaleTool::cursor = NULL;
@@ -90,7 +91,7 @@ bool ScaleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 	if (scaling)
 		updateDragging(map_coord);
 	else if ( !scaling && scaling_center_set &&
-	          (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance() )
+			  (event->pos() - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx() )
 	{
 		// Start scaling
 		scaling = true;

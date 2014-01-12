@@ -498,7 +498,7 @@ void SymbolRenderWidget::mouseMoveEvent(QMouseEvent* event)
 	{
 		if (event->buttons() & Qt::LeftButton)
 		{
-			if ((event->pos() - last_click_pos).manhattanLength() < QApplication::startDragDistance())
+			if ((event->pos() - last_click_pos).manhattanLength() < Settings::getInstance().getStartDragDistancePx())
 				return;
 			dragging = true;
 			
@@ -515,7 +515,7 @@ void SymbolRenderWidget::mouseMoveEvent(QMouseEvent* event)
 	{
 		if (event->buttons() & Qt::LeftButton && current_symbol_index >= 0)
 		{
-			if ((event->pos() - last_click_pos).manhattanLength() < QApplication::startDragDistance())
+			if ((event->pos() - last_click_pos).manhattanLength() < Settings::getInstance().getStartDragDistancePx())
 				return;
 			
 			tooltip->hide();

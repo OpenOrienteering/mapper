@@ -103,7 +103,7 @@ bool CutTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget*
 	
 	if (mouse_down)
 	{
-		if (!dragging && (event->pos() - click_pos).manhattanLength() >= QApplication::startDragDistance())
+		if (!dragging && (event->pos() - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
 		{
 			// Start dragging
 			dragging = true;

@@ -523,7 +523,7 @@ void EditLineTool::updateHoverLine(MapCoordF cursor_pos)
 			highlight_renderables->insertRenderablesOfObject(highlight_object);
 		}
 		
-		start_drag_distance = (hover_line >= -1) ? 0 : QApplication::startDragDistance();
+		start_drag_distance = (hover_line >= -1) ? 0 : Settings::getInstance().getStartDragDistancePx();
 		updateDirtyRect();
 	}
 }

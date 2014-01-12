@@ -696,7 +696,7 @@ void EditPointTool::updateHoverPoint(MapCoordF cursor_pos)
 		updateDirtyRect();
 		hover_object = new_hover_object;
 		hover_point = new_hover_point;
-		start_drag_distance = (hover_point >= -1) ? 0 : QApplication::startDragDistance();
+		start_drag_distance = (hover_point >= -1) ? 0 : Settings::getInstance().getStartDragDistancePx();
 	}
 }
 
