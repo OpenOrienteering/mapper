@@ -32,8 +32,6 @@ PREREQUISITES_PRI += "include($$OUT_PWD/3rd-party/clipper/clipper.pri)"
 android {
 	SUBDIRS += 3rd-party/proj
 	PREREQUISITES_PRI += "include($$OUT_PWD/3rd-party/proj/proj.pri)"
-} else {
-	PREREQUISITES_PRI += "LIBS += -lproj"
 }
 
 ## QtSingleApplication

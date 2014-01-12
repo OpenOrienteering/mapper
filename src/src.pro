@@ -6,7 +6,7 @@ TEMPLATE = app
 TARGET   = Mapper
 
 include($$OUT_PWD/../prerequisites.pri)
-LIBS += -lproj -lpolyclipping -lqtsingleapplication -locd
+LIBS *= -lproj -lpolyclipping -lqtsingleapplication -locd
 
 DEPENDPATH  += qmake
 INCLUDEPATH += qmake
