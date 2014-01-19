@@ -184,6 +184,9 @@ void MainWindow::setCentralWidget(QWidget* widget)
 {
 	if (widget != NULL)
 	{
+		// Main window shall not resize to central widget size hint.
+		widget->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+		
 		int index = central_widget->addWidget(widget);
 		central_widget->setCurrentIndex(index);
 	}

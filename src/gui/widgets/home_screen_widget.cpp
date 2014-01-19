@@ -32,6 +32,8 @@
 #include "../../mapper_resource.h"
 
 
+//### AbstractHomeScreenWidget ###
+
 AbstractHomeScreenWidget::AbstractHomeScreenWidget(HomeScreenController* controller, QWidget* parent)
 : QWidget(parent),
   controller(controller)
@@ -42,6 +44,17 @@ AbstractHomeScreenWidget::AbstractHomeScreenWidget(HomeScreenController* control
 AbstractHomeScreenWidget::~AbstractHomeScreenWidget()
 {
 	// nothing
+}
+
+void AbstractHomeScreenWidget::paintEvent(QPaintEvent* event)
+{
+	Q_UNUSED(event);
+	
+	// Background
+	QPainter p(this);
+	p.setPen(Qt::NoPen);
+	p.setBrush(Qt::gray);
+	p.drawRect(rect());
 }
 
 QLabel* AbstractHomeScreenWidget::makeHeadline(const QString& text, QWidget* parent) const
@@ -72,6 +85,9 @@ QAbstractButton* AbstractHomeScreenWidget::makeButton(const QString& text, const
 }
 
 
+
+//### HomeScreenWidgetDesktop ###
+
 HomeScreenWidgetDesktop::HomeScreenWidgetDesktop(HomeScreenController* controller, QWidget* parent)
 : AbstractHomeScreenWidget(controller, parent)
 {
@@ -99,21 +115,8 @@ HomeScreenWidgetDesktop::~HomeScreenWidgetDesktop()
 	// nothing
 }
 
-void HomeScreenWidgetDesktop::paintEvent(QPaintEvent* event)
-{
-	Q_UNUSED(event);
-	
-	// Background
-	QPainter p(this);
-	p.setPen(Qt::NoPen);
-	p.setBrush(Qt::gray);
-	p.drawRect(rect());
-}
-
 QWidget* HomeScreenWidgetDesktop::makeMenuWidget(HomeScreenController* controller, QWidget* parent)
 {
-	Q_UNUSED(parent);
-	
 	MainWindow* window = controller->getWindow();
 	
 	QVBoxLayout* menu_layout = new QVBoxLayout();
@@ -149,7 +152,7 @@ QWidget* HomeScreenWidgetDesktop::makeMenuWidget(HomeScreenController* controlle
 	connect(button_help, SIGNAL(clicked(bool)), window, SLOT(showHelp()));
 	connect(button_exit, SIGNAL(clicked(bool)), qApp, SLOT(closeAllWindows()));
 	
-	QWidget* menu_widget = new QWidget();
+	QWidget* menu_widget = new QWidget(parent);
 	menu_widget->setLayout(menu_layout);
 	menu_widget->setAutoFillBackground(true);
 	return menu_widget;
@@ -157,8 +160,6 @@ QWidget* HomeScreenWidgetDesktop::makeMenuWidget(HomeScreenController* controlle
 
 QWidget* HomeScreenWidgetDesktop::makeRecentFilesWidget(HomeScreenController* controller, QWidget* parent)
 {
-	Q_UNUSED(parent);
-	
 	QGridLayout* recent_files_layout = new QGridLayout();
 	
 	QLabel* recent_files_headline = makeHeadline(tr("Recent maps"));
@@ -190,7 +191,7 @@ QWidget* HomeScreenWidgetDesktop::makeRecentFilesWidget(HomeScreenController* co
 	connect(open_mru_file_check, SIGNAL(clicked(bool)), controller, SLOT(setOpenMRUFile(bool)));
 	connect(clear_list_button, SIGNAL(clicked(bool)), controller, SLOT(clearRecentFiles()));
 	
-	QWidget* recent_files_widget = new QWidget();
+	QWidget* recent_files_widget = new QWidget(parent);
 	recent_files_widget->setLayout(recent_files_layout);
 	recent_files_widget->setAutoFillBackground(true);
 	return recent_files_widget;
@@ -198,8 +199,6 @@ QWidget* HomeScreenWidgetDesktop::makeRecentFilesWidget(HomeScreenController* co
 
 QWidget* HomeScreenWidgetDesktop::makeTipsWidget(HomeScreenController* controller, QWidget* parent)
 {
-	Q_UNUSED(parent);
-	
 	QGridLayout* tips_layout = new QGridLayout();
 	QWidget* tips_headline = makeHeadline(tr("Tip of the day"));
 	tips_layout->addWidget(tips_headline, 0, 0, 1, 3);
@@ -230,7 +229,7 @@ QWidget* HomeScreenWidgetDesktop::makeTipsWidget(HomeScreenController* controlle
 	connect(prev_button, SIGNAL(clicked(bool)), controller, SLOT(goToPreviousTip()));
 	connect(next_button, SIGNAL(clicked(bool)), controller, SLOT(goToNextTip()));
 	
-	QWidget* tips_widget = new QWidget();
+	QWidget* tips_widget = new QWidget(parent);
 	tips_widget->setLayout(tips_layout);
 	tips_widget->setAutoFillBackground(true);
 	return tips_widget;
@@ -278,12 +277,18 @@ void HomeScreenWidgetDesktop::setTipsVisible(bool state)
 }
 
 
+
+//### HomeScreenWidgetMobile ###
+
 HomeScreenWidgetMobile::HomeScreenWidgetMobile(HomeScreenController* controller, QWidget* parent)
 : AbstractHomeScreenWidget(controller, parent)
 {
-	QLabel* title_label = new QLabel(QString("<img src=\":/images/title.png\"/>"));
+	title_pixmap = QPixmap::fromImage(QImage(":/images/title.png"));
+	
+	title_label = new QLabel();
+	title_label->setPixmap(title_pixmap);
 	title_label->setAlignment(Qt::AlignCenter);
-	title_label->setScaledContents(true);
+	adjustTitlePixmapSize();
 	
 	QWidget* file_list_widget = makeFileListWidget(controller, parent);
 	
@@ -315,15 +320,20 @@ HomeScreenWidgetMobile::~HomeScreenWidgetMobile()
 	// nothing
 }
 
-void HomeScreenWidgetMobile::paintEvent(QPaintEvent* event)
+void HomeScreenWidgetMobile::resizeEvent(QResizeEvent* event)
 {
 	Q_UNUSED(event);
-	
-	// Background
-	QPainter p(this);
-	p.setPen(Qt::NoPen);
-	p.setBrush(Qt::gray);
-	p.drawRect(rect());
+	adjustTitlePixmapSize();
+}
+
+void HomeScreenWidgetMobile::adjustTitlePixmapSize()
+{
+	QSize label_size = title_label->size();
+	QSize padding = label_size - title_pixmap.size();
+	if (!padding.isValid())
+	{
+		title_label->setPixmap(title_pixmap.scaled(label_size, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+	}
 }
 
 void HomeScreenWidgetMobile::setRecentFiles(const QStringList& files)
@@ -417,7 +427,6 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 //#endif
 	
 	connect(file_list, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(fileClicked(QListWidgetItem*)));
-	//connect(open_mru_file_check, SIGNAL(clicked(bool)), controller, SLOT(setOpenMRUFile(bool)));
 	
 	QWidget* file_list_widget = new QWidget();
 	file_list_widget->setLayout(file_list_layout);

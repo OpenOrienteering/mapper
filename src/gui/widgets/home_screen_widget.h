@@ -70,6 +70,9 @@ public slots:
 	virtual void setTipsVisible(bool state) = 0;
 	
 protected:
+	/** Draws the home screen background when a paint event occurs. */
+	virtual void paintEvent(QPaintEvent* event);
+	
 	/** Returns a QLabel for displaying a headline in the home screen. */
 	QLabel* makeHeadline(const QString& text, QWidget* parent = NULL) const;
 	
@@ -120,9 +123,6 @@ protected slots:
 	void recentFileClicked(QListWidgetItem* item);
 	
 protected:
-	/** Draws the home screen background when a paint event occurs. */
-	virtual void paintEvent(QPaintEvent* event);
-	
 	/** Creates the activities widget. */
 	QWidget* makeMenuWidget(HomeScreenController* controller, QWidget* parent = NULL);
 	
@@ -178,8 +178,11 @@ protected slots:
 	void fileClicked(QListWidgetItem* item);
 	
 protected:
-	/** Draws the home screen background when a paint event occurs. */
-	virtual void paintEvent(QPaintEvent* event);
+	/** Triggers title image adjustmen on resize events. */
+	virtual void resizeEvent(QResizeEvent* event);
+	
+	/** Resizes the title image to fit both the labels width and height */
+	void adjustTitlePixmapSize();
 	
 	/** Creates the file list widget. */
 	QWidget* makeFileListWidget(HomeScreenController* controller, QWidget* parent = NULL);
@@ -188,9 +191,11 @@ protected:
 	void addFilesToFileList(QListWidget* file_list, const QString& path);
 	
 private:
-	QPushButton* examples_button;
+	QPixmap title_pixmap;
+	QLabel* title_label;
 	QStackedLayout* file_list_stack;
 	QListWidget* file_list;
+	QPushButton* examples_button;
 };
 
 #endif
