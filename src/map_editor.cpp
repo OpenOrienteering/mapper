@@ -30,6 +30,10 @@
 #include <QSignalMapper>
 #include <qmath.h>
 
+#ifdef Q_OS_ANDROID
+#include <QtAndroidExtras/QAndroidJniObject>
+#endif
+
 #include "gui/widgets/action_grid_bar.h"
 #include "color_dock_widget.h"
 #include "compass_display.h"
@@ -399,6 +403,12 @@ void MapEditorController::attach(MainWindow* window)
 	if (mode == MapEditor)
 		window->setHasOpenedFile(true);
 	connect(map, SIGNAL(gotUnsavedChanges()), window, SLOT(gotUnsavedChanges()));
+	
+#ifdef Q_OS_ANDROID
+	QAndroidJniObject::callStaticMethod<void>("org/openorienteering/mapper/MapperActivity",
+                                       "lockOrientation",
+                                       "()V");
+#endif
 	
 	QLabel* statusbar_zoom_label;
 	if (!mobile_mode)
@@ -1191,6 +1201,13 @@ void MapEditorController::detach()
 	delete statusbar_zoom_frame;
 	delete statusbar_cursorpos_label;
 	delete statusbar_objecttag_label;
+	
+#ifdef Q_OS_ANDROID
+	QAndroidJniObject::callStaticMethod<void>("org/openorienteering/mapper/MapperActivity",
+                                       "unlockOrientation",
+                                       "()V");
+#endif
+	
 }
 
 void MapEditorController::saveWindowState()

@@ -21,16 +21,20 @@ package org.openorienteering.mapper;
 
 import android.os.Bundle;
 import android.os.Looper;
+import android.os.Build;
 import android.os.SystemClock;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.DialogInterface;
-import android.provider.Settings;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.location.LocationListener;
 import android.location.GpsStatus;
+import android.provider.Settings;
+import android.view.Surface;
 import android.widget.Toast;
 
 
@@ -209,6 +213,70 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 		instance.gpsUpdatesEnabled = false;
 	}
 	
+	/** Locks the current display orientation.
+	 *  While a native "locked" mode comes in API level 18,
+	 *  this method tries to determine and lock the current orientation
+	 *  even on devices with lower API level. On these devices, the screen
+	 *  may be temporary in reverse orientation.
+	 */
+	public static void lockOrientation()
+	{
+		// ActivityInfo.SCREEN_ORIENTATION_LOCKED == 14 comes with API level 18
+		if (Build.VERSION.SDK_INT >= 18)
+		{
+			instance.setRequestedOrientation(14);
+			return;
+		}
+		
+		int orientation = instance.getResources().getConfiguration().orientation;
+		int rotation = instance.getWindowManager().getDefaultDisplay().getRotation();
+		
+		if (orientation == Configuration.ORIENTATION_PORTRAIT)
+		{
+			if (rotation == Surface.ROTATION_180)
+				instance.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
+			else
+				instance.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		}
+		else if (orientation == Configuration.ORIENTATION_LANDSCAPE)
+		{
+			if (rotation == Surface.ROTATION_180)
+				instance.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+			else
+				instance.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		}
+		
+		// If we read another value now, then we must reverse the rotation.
+		// Maybe this can occasionally return the old value (i.e. the value 
+		// before the requested rotation takes effect).
+		int new_rotation = instance.getWindowManager().getDefaultDisplay().getRotation();
+		if (new_rotation != rotation)
+		{
+			// first try didn't lock the original rotation, retry reverse.
+			if (orientation == Configuration.ORIENTATION_PORTRAIT)
+			{
+				if (new_rotation == Surface.ROTATION_180)
+					instance.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+				else
+					instance.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
+			}
+			else if (orientation == Configuration.ORIENTATION_LANDSCAPE)
+			{
+				if (new_rotation == Surface.ROTATION_180)
+					instance.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+				else
+					instance.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+			}
+		}
+	}
+	
+	/** Unlocks the display orientation
+	 *  by setting the requested orientation to unspecified.
+	 */
+	public static void unlockOrientation()
+	{
+		instance.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+	}
 	
 	// Native C++ method declarations
 	
