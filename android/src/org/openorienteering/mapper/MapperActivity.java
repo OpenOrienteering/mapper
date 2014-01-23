@@ -278,6 +278,13 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 		instance.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 	}
 	
+	/** Returns the display's current rotation.
+	 */
+	public static int getDisplayRotation()
+	{
+		return instance.getWindowManager().getDefaultDisplay().getRotation();
+	}
+	
 	// Native C++ method declarations
 	
 	private static native void positionUpdated(float latitude, float longitude, float altitude, float horizontal_stddev);

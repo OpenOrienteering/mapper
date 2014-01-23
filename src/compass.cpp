@@ -208,6 +208,10 @@ namespace SensorHelpers
 #include <QtSensors/QMagnetometer>
 #include <QtSensors/QGyroscope>
 
+#ifdef Q_OS_ANDROID
+#include <QtAndroidExtras/QAndroidJniObject>
+#endif
+
 class CompassPrivate : public QGyroscopeFilter
 {
 public:
@@ -417,8 +421,29 @@ private:
 				azimuth = fused_orientation[0];
 			}
 			
-			// Send update to receivers
 			p->latest_azimuth = 180 * azimuth / M_PI;
+#ifdef Q_OS_ANDROID
+			// Adjust for display rotation
+			jint orientation = QAndroidJniObject::callStaticMethod<jint>(
+			                    "org/openorienteering/mapper/MapperActivity",
+                                "getDisplayRotation");
+			switch (orientation)
+			{
+			case 1:
+				p->latest_azimuth = (p->latest_azimuth < 90) ? (p->latest_azimuth + 90) : (p->latest_azimuth - 90);
+				break;
+			case 2:
+				p->latest_azimuth = (p->latest_azimuth < 180) ? (p->latest_azimuth + 180) : (p->latest_azimuth - 180);
+				break;
+			case 3:
+				p->latest_azimuth = (p->latest_azimuth < 270) ? (p->latest_azimuth + 270) : (p->latest_azimuth - 270);
+				break;
+			default:
+				;// nothing
+			}
+#endif
+
+			// Send update to receivers
 			p->compass->emitAzimuthChanged(p->latest_azimuth);
 		}
 		
