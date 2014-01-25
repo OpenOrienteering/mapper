@@ -21,11 +21,7 @@
 
 #include "map_widget.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 #include "core/map_color.h"
 #include "georeferencing.h"
@@ -43,9 +39,6 @@
 #include "gps_temporary_markers.h"
 #include "gui/widgets/pie_menu.h"
 
-#if (QT_VERSION < QT_VERSION_CHECK(4, 7, 0))
-#define MiddleButton MidButton
-#endif
 
 MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
  : QWidget(parent),

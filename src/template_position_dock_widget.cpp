@@ -20,12 +20,8 @@
 
 #include "template_position_dock_widget.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
-#include <QtWidgets>
-#endif
 #include <qmath.h>
+#include <QtWidgets>
 
 #include "gui/main_window.h"
 #include "map_editor.h"

@@ -47,15 +47,9 @@ TagsWidget::TagsWidget(Map* map, MapView* main_view, MapEditorController* contro
 	tags_table->verticalHeader()->setVisible(false);
 	
 	QHeaderView* header_view = tags_table->horizontalHeader();
-#if QT_VERSION < 0x050000
-	header_view->setResizeMode(0, QHeaderView::Stretch);
-	header_view->setResizeMode(1, QHeaderView::Stretch);
-	header_view->setClickable(false);
-#else
 	header_view->setSectionResizeMode(0, QHeaderView::Stretch);
 	header_view->setSectionResizeMode(1, QHeaderView::Stretch);
 	header_view->setSectionsClickable(false);
-#endif
 	
 	layout->addWidget(tags_table);
 	

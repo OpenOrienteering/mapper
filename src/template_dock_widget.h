@@ -21,12 +21,7 @@
 #ifndef _OPENORIENTEERING_TEMPLATE_DOCK_WIDGET_H_
 #define _OPENORIENTEERING_TEMPLATE_DOCK_WIDGET_H_
 
-#include <qglobal.h>
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 class Map;
 class MapEditorController;

@@ -22,13 +22,9 @@
 
 #include <cassert>
 
-#include <QHash>
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
-#include <QtWidgets>
-#endif
 #include <QDebug>
+#include <QHash>
+#include <QtWidgets>
 
 #include "core/map_color.h"
 #include "map.h"

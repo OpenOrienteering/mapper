@@ -20,11 +20,7 @@
 #include "settings_dialog.h"
 #include "settings_dialog_p.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 #include "../settings.h"
 #include "../util.h"
@@ -529,11 +525,7 @@ void GeneralPage::updateLanguageBox()
 	if (!locale_name.isEmpty())
 	{
 		QLocale file_locale(locale_name);
-#if (QT_VERSION >= QT_VERSION_CHECK(4, 8, 0))
 		QString language_name = file_locale.nativeLanguageName();
-#else
-		QString language_name = QLocale::languageToString(file_locale.language());
-#endif
 		if (!language_map.contains(language_name))
 			language_map.insert(language_name, file_locale.language());
 	}

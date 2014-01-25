@@ -18,17 +18,11 @@
  
 message(STATUS "Configuring ${PROJECT_NAME} translations")
 
-if(Mapper_USE_QT5)
-	find_package(Qt5LinguistTools REQUIRED)
-	qt5_find_host_program(QT_LUPDATE_EXECUTABLE NAMES lupdate)
-	qt5_find_host_program(QT_LRELEASE_EXECUTABLE NAMES lrelease)
-	# Qt5_LRELEASE_EXECUTABLE is used by the Qt5 macros
-	set(Qt5_LRELEASE_EXECUTABLE ${QT_LRELEASE_EXECUTABLE})
-else()
-	find_package(Qt4 QUIET REQUIRED)
-	find_program(QT_LUPDATE_EXECUTABLE lupdate)
-	find_program(QT_LRELEASE_EXECUTABLE lrelease)
-endif()
+find_package(Qt5LinguistTools REQUIRED)
+qt5_find_host_program(QT_LUPDATE_EXECUTABLE NAMES lupdate)
+qt5_find_host_program(QT_LRELEASE_EXECUTABLE NAMES lrelease)
+# Qt5_LRELEASE_EXECUTABLE is used by the Qt5 macros
+set(Qt5_LRELEASE_EXECUTABLE ${QT_LRELEASE_EXECUTABLE})
 mark_as_advanced(QT_LUPDATE_EXECUTABLE QT_LRELEASE_EXECUTABLE)
 
 if(QT_LUPDATE_EXECUTABLE MATCHES NOTFOUND)

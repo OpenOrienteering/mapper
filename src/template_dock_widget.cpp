@@ -118,17 +118,10 @@ TemplateWidget::TemplateWidget(Map* map, MapView* main_view, MapEditorController
 	template_table->setItemDelegateForColumn(1, percentage_delegate);
 	
 	QHeaderView* header_view = template_table->horizontalHeader();
-#if QT_VERSION < 0x050000
-	for (int i = 0; i < 3; ++i)
-		header_view->setResizeMode(i, QHeaderView::ResizeToContents);
-	header_view->setResizeMode(3, QHeaderView::Stretch);
-	header_view->setClickable(false);
-#else
 	for (int i = 0; i < 3; ++i)
 		header_view->setSectionResizeMode(i, QHeaderView::ResizeToContents);
 	header_view->setSectionResizeMode(3, QHeaderView::Stretch);
 	header_view->setSectionsClickable(false);
-#endif
 	
 	for (int i = 0; i < map->getNumTemplates() + 1; ++i)
 		addRow(i);

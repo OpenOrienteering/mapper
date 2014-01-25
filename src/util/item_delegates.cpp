@@ -20,11 +20,7 @@
 
 #include "item_delegates.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 #include "../util_gui.h"
 

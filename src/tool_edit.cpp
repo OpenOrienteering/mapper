@@ -21,12 +21,8 @@
 
 #include <limits>
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
-#include <QtWidgets>
-#endif
 #include <qmath.h>
+#include <QtWidgets>
 
 #include "map.h"
 #include "map_widget.h"

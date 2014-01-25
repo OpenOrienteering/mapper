@@ -39,13 +39,6 @@
 
 int main(int argc, char** argv)
 {
-
-#if QT_VERSION < 0x050000
-	// Set the default graphics system to raster. This can be overwritten by the command line option "-graphicssystem".
-	// This must be called before the QApplication constructor is called!
-	QApplication::setGraphicsSystem("raster");
-#endif
-	
 	// Create single-instance application.
 	// Use "oo-mapper" instead of the executable as identifier, in case we launch from different paths.
 	QtSingleApplication qapp("oo-mapper", argc, argv);
@@ -99,14 +92,12 @@ int main(int argc, char** argv)
 	first_window.setController(new HomeScreenController());
 	
 	QProxyStyle* style = new MapperProxyStyle();
-#if QT_VERSION >= 0x050000
 	if (QGuiApplication::platformName() == QLatin1String("xcb"))
 	{
 		// Use the modern 'fusion' style instead of the 
 		// default "windows" style on X11.
 		style->setBaseStyle(QStyleFactory::create("fusion"));
 	}
-#endif
 	QApplication::setStyle(style);
 	QApplication::setPalette(QApplication::style()->standardPalette());
 	

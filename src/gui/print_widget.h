@@ -23,14 +23,8 @@
 
 #ifndef QT_NO_PRINTER
 
-#include <QWidget>
 #include <QPrinterInfo>
-
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 class Map;
 class MapEditorController;

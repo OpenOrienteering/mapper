@@ -20,13 +20,8 @@
 # Prerequisite
 add_subdirectory(data)
 
-
-if(Mapper_USE_QT5)
-	find_package(Qt5Test QUIET REQUIRED)
-	set(QT_QTTEST_LIBRARY ${Qt5Test_LIBRARIES})
-else()
-	find_package(Qt4 4.6 QUIET COMPONENTS QtTest)
-endif()
+find_package(Qt5Test QUIET REQUIRED)
+set(QT_QTTEST_LIBRARY ${Qt5Test_LIBRARIES})
 
 
 # This macro defines a unit test from a list of source file names 

@@ -19,11 +19,7 @@
 
 #include "util_task_dialog.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 #include <QVBoxLayout>
 
 

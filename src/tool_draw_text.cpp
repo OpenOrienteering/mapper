@@ -22,11 +22,7 @@
 
 #include <QApplication>
 #include <QClipboard>
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 #include "map.h"
 #include "map_undo.h"

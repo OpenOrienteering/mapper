@@ -20,11 +20,7 @@
 
 #include "main_window.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 #include <QProxyStyle>
 #include <QSettings>
 
@@ -227,7 +223,7 @@ void MainWindow::setController(MainWindowController* new_controller)
 	if (create_menu)
 		createHelpMenu();
 		
-#if defined(Q_OS_MAC) && QT_VERSION >= 0x050000
+#if defined(Q_OS_MAC)
 	if (isVisible() && qApp->activeWindow() == this)
 	{
 		// Force a menu synchronisation,

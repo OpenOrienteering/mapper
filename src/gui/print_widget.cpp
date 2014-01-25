@@ -384,11 +384,7 @@ void PrintWidget::updateTargets()
 		if (task == PRINT_TASK)
 		{
 			// Exporters
-#if QT_VERSION < 0x050000
-			target_combo->addItem(tr("Export to PDF or PS"), QVariant((int)PdfExporter));
-#else
 			target_combo->addItem(tr("Save to PDF"), QVariant((int)PdfExporter));
-#endif
 			target_combo->insertSeparator(target_combo->count());
 			target_combo->setCurrentIndex(0);
 			
@@ -970,16 +966,9 @@ void PrintWidget::printClicked()
 	printer->setDocName(QFileInfo(main_window->getCurrentFilePath()).baseName());
 	if (map_printer->getTarget() == MapPrinter::pdfTarget())
 	{
-#if QT_VERSION < 0x050000		
-		if (path.endsWith(".ps", Qt::CaseInsensitive))
-			printer->setOutputFormat(QPrinter::PostScriptFormat);
-		else
-#endif
-		{
-			printer->setOutputFormat(QPrinter::PdfFormat);
-			if (!path.endsWith(".pdf", Qt::CaseInsensitive))
-				path.append(".pdf");
-		}
+		printer->setOutputFormat(QPrinter::PdfFormat);
+		if (!path.endsWith(".pdf", Qt::CaseInsensitive))
+			path.append(".pdf");
 		printer->setOutputFileName(path);
 	}
 	

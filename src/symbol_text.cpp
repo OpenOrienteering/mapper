@@ -20,11 +20,7 @@
 
 #include "symbol_text.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 #include <QIODevice>
 
 #include "core/map_color.h"
@@ -230,9 +226,7 @@ void TextSymbol::updateQFont()
 	qfont.setUnderline(underline);
 	qfont.setPixelSize(internal_point_size);
 	qfont.setFamily(font_family);
-	#if (QT_VERSION >= 0x040800)
 	qfont.setHintingPreference(QFont::PreferNoHinting);
-	#endif
 	qfont.setKerning(kerning);
 	metrics = QFontMetricsF(qfont);
 	qfont.setLetterSpacing(QFont::AbsoluteSpacing, metrics.width(" ") * character_spacing);

@@ -20,11 +20,7 @@
 
 #include "symbol_setting_dialog.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 #include "map.h"
 #include "object.h"

@@ -20,11 +20,7 @@
 
 #include "template.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 #include <QFileInfo>
 #include <QPixmap>
 #include <QPainter>

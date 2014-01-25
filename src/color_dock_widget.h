@@ -21,12 +21,7 @@
 #ifndef _OPENORIENTEERING_COLOR_DOCK_WIDGET_H_
 #define _OPENORIENTEERING_COLOR_DOCK_WIDGET_H_
 
-#include <qglobal.h>
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 class ColorDropDown;
 class MainWindow;

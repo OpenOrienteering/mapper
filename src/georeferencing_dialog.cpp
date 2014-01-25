@@ -20,11 +20,7 @@
 
 #include "georeferencing_dialog.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QXmlStreamReader>
@@ -289,11 +285,7 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	QNetworkAccessManager *network = new QNetworkAccessManager(this);
 	connect(network, SIGNAL(finished(QNetworkReply*)), this, SLOT(declinationReplyFinished(QNetworkReply*)));
 	
-#if QT_VERSION < 0x050000
-	QUrl& query = service_url;
-#else
 	QUrlQuery query;
-#endif
 	QDate today = QDate::currentDate();
 	query.addQueryItem("lat1", QString::number(latlon.getLatitudeInDegrees()));
 	query.addQueryItem("lon1", QString::number(latlon.getLongitudeInDegrees()));
@@ -301,9 +293,7 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	query.addQueryItem("startMonth", QString::number(today.month()));
 	query.addQueryItem("startDay", QString::number(today.day()));
 	query.addQueryItem("resultFormat", "xml");
-#if QT_VERSION >= 0x050000
 	service_url.setQuery(query);
-#endif
 	network->get(QNetworkRequest(service_url));
 }
 

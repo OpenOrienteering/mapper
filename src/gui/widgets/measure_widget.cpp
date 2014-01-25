@@ -20,11 +20,7 @@
 
 #include "measure_widget.h"
 
-#if QT_VERSION < 0x050000
-#include <QtGui>
-#else
 #include <QtWidgets>
-#endif
 
 #include "../../map.h"
 #include "../../global.h"

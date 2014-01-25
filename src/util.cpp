@@ -259,7 +259,6 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 			 << makeHelpUrl(filename, fragment)
 			 << QLatin1String("-enableRemoteControl");
 		
-#if QT_VERSION >= 0x050000
 		if ( QGuiApplication::platformName() == QLatin1String("xcb") ||
 			 QGuiApplication::platformName().isEmpty() )
 		{
@@ -267,7 +266,6 @@ void showHelp(QWidget* dialog_parent, QString filename, QString fragment)
 			// style on X11.
 			args << QLatin1String("-style") << QLatin1String("fusion");
 		}
-#endif
 		 
 		assistant_process.start(assistant_path, args);
 		
