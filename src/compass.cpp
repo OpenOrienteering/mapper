@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014 Thomas Schöps
+ *    Copyright 2014 Thomas Schöps, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
