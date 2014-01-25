@@ -97,8 +97,8 @@ struct TextObjectLineInfo
 	 : start_index(start_index), end_index(end_index), paragraph_end(paragraph_end), line_x(line_x), line_y(line_y), width(width), ascent(ascent), descent(descent), part_infos(part_infos) {}
 	
 	/** Get the horizontal position of a particular character in a line.
-	 *  @param index the index of the character in the original string
-	 *  @return      the character's horizontal position in text coordinates
+	 *  @param pos the index of the character in the original string
+	 *  @return    the character's horizontal position in text coordinates
 	 */
 	double getX(int pos) const;
 	

@@ -35,7 +35,7 @@
 - <a href="http://qt-project.org/doc/qt-5.1/qtdoc/">Qt 5.1 documentation</a>
 - <a href="http://www.stack.nl/~dimitri/doxygen/manual/">Doxygen documentation</a>
 
-<hr />
+<hr>
 
 Qt® is a registered trade mark of Digia Plc and/or its subsidiaries.
 

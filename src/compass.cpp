@@ -46,9 +46,11 @@ namespace SensorHelpers
 	 * 
 	 * Computes the device's orientation based on the rotation matrix.
 	 * <p> When it returns, the array values is filled with the result:
+	 * <ul>
 	 * <li>values[0]: <i>azimuth</i>, rotation around the Z axis.</li>
 	 * <li>values[1]: <i>pitch</i>, rotation around the X axis.</li>
 	 * <li>values[2]: <i>roll</i>, rotation around the Y axis.</li>
+	 * </ul>
 	 * <p>
 	 */
 	void getOrientation(float* R, float* values)

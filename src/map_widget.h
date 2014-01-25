@@ -178,8 +178,8 @@ public:
 	/**
 	 * Completes a map panning operation. Calls panView() internally and
 	 * resets the current drag offset.
-	 * @param x X offset of the total view change in native map coordinates
-	 * @param y Y offset of the total view change in native map coordinates
+	 * @param dx X offset of the total view change in native map coordinates
+	 * @param dy Y offset of the total view change in native map coordinates
 	 */
 	void completeDragging(qint64 dx, qint64 dy);
 	

@@ -637,8 +637,10 @@ const char *ocad_str(char *buf, const str *ostr);
  *  the zero byte. Subsequent calls to this function can be made to build up a list of zero-
  *  terminated strings. This is useful, for example, in printf statements.
  *
+ *  \code{.c}
  *  char tmp[512], *ptmp = &tmp;
  *  printf("%s %s", ocad_str2(&ptmp, str1), ocad_str2(&ptmp, str2));
+ *  \endcode
  *
  *  Both OCAD strings will be appended to the buffer and separate pointers will be passed to
  *  printf. Note that the buffer size must be at least 256 times the number of strings to be
