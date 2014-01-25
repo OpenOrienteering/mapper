@@ -1,0 +1,16 @@
+diff -up qt-everywhere-opensource-src-5.2.0/qtbase/src/android/jar/src/org/qtproject/qt5/android/QtSurface.java.orig qt-everywhere-opensource-src-5.2.0/qtbase/src/android/jar/src/org/qtproject/qt5/android/QtSurface.java
+--- qt-everywhere-opensource-src-5.2.0/qtbase/src/android/jar/src/org/qtproject/qt5/android/QtSurface.java.orig	2014-01-25 14:16:24.755914289 +0100
++++ qt-everywhere-opensource-src-5.2.0/qtbase/src/android/jar/src/org/qtproject/qt5/android/QtSurface.java	2014-01-25 14:19:51.212953224 +0100
+@@ -145,9 +145,9 @@ public class QtSurface extends SurfaceVi
+                 boolean ret = (Boolean) dispHoverA11y.invoke(m_accessibilityDelegate, event);
+                 if (ret)
+                     return true;
+-                SurfaceView view = (SurfaceView) this;
+-                Method dispHoverView = view.getClass().getMethod("dispatchHoverEvent", MotionEvent.class);
+-                return (Boolean) dispHoverView.invoke(view, event);
++                //SurfaceView view = (SurfaceView) this;
++                //Method dispHoverView = view.getClass().getMethod("dispatchHoverEvent", MotionEvent.class);
++                //return (Boolean) dispHoverView.invoke(view, event);
+             } catch (Exception e) {
+                 Log.w("Qt A11y", "EXCEPTION in dispatchHoverEvent for Accessibility: " + e);
+             }

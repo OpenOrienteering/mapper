@@ -1,5 +1,5 @@
 #
-#    Copyright 2012, 2013 Kai Pastor
+#    Copyright 2012-2014 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -115,7 +115,7 @@ add_custom_command(OUTPUT ${QT5_CONFIG_SCRIPT}
   DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${QT5_CONFIG_SCRIPT}.new
 )
 
-if(UNIX AND NOT APPLE)
+if(UNIX AND NOT APPLE AND NOT "${QT5_PLATFORM}" MATCHES "android")
 	set(QT5_INSTALL_ROOT "INSTALL_ROOT=<INSTALL_DIR>")
 endif()
 ExternalProject_Add(Qt5
@@ -168,7 +168,7 @@ endif()
 
 # Build script configuration
 
-if(${MAPPER_LIBRARY_DESTINATION} STREQUAL .)
+if("${MAPPER_LIBRARY_DESTINATION}" STREQUAL .)
 	set(QT5_BINARY_DESTINATION "/binary")
 elseif(NOT ${MAPPER_LIBRARY_DESTINATION} MATCHES "^/")
 	set(QT5_BINARY_DESTINATION "/binary/${MAPPER_LIBRARY_DESTINATION}")
@@ -176,7 +176,7 @@ else()
 	set(QT5_BINARY_DESTINATION "${MAPPER_LIBRARY_DESTINATION}")
 endif()
 set(QT5_PLUGINS_DESTINATION "${QT5_BINARY_DESTINATION}/plugins")
-if(${MAPPER_DATA_DESTINATION} STREQUAL .)
+if("${MAPPER_DATA_DESTINATION}" STREQUAL .)
 	set(QT5_DATA_DESTINATION "/data")
 elseif(NOT ${MAPPER_DATA_DESTINATION} MATCHES "^/")
 	set(QT5_DATA_DESTINATION "/data/${MAPPER_DATA_DESTINATION}")
@@ -188,7 +188,7 @@ set(QT5_DIR "${INSTALL_DIR}${QT5_BINARY_DESTINATION}" CACHE INTERNAL
   "The Qt5 target platform directory." FORCE)
 set(QT_TRANSLATIONS_DIR "${INSTALL_DIR}/${QT5_DATA_DESTINATION}/translations" CACHE INTERNAL
   "The Qt5 translation directory." FORCE)
-if(QT5_INSTALL_ROOT)
+if(QT5_INSTALL_ROOT AND NOT "${QT5_PLATFORM}" MATCHES "android")
 	set(QT5_CONFIG_EXTRA_OPTS "-R '${QT5_BINARY_DESTINATION}/lib' ${QT5_CONFIG_EXTRA_OPTS}")
 	if(Mapper_DEVELOPMENT_BUILD)
 		set(QT5_CONFIG_EXTRA_OPTS "-R '${INSTALL_DIR}${QT5_BINARY_DESTINATION}/lib' ${QT5_CONFIG_EXTRA_OPTS}")
@@ -201,7 +201,7 @@ endif()
 if(APPLE)
 	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -no-framework")
 endif()
-if(UNIX AND NOT APPLE)
+if(UNIX AND NOT APPLE AND NOT "${QT5_PLATFORM}" MATCHES "android")
 	set(QT5_CONFIG_ENVIRONMENT "LDFLAGS=-Wl,--enable-new-dtags")
 	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -qt-xcb")
 endif()
@@ -233,7 +233,7 @@ if(NOT ${QT5_VERSION} MATCHES "5.[0-1]")
 	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
 endif()
 
-if(UNIX AND QT5_INSTALL_ROOT)
+if(UNIX AND QT5_INSTALL_ROOT AND NOT "${QT5_PLATFORM}" MATCHES "android")
 	# Wrappers which set LD_LIBRARY_PATH.
 	configure_file(qt5-wrapper.in qcollectiongenerator @ONLY)
 	configure_file(qt5-wrapper.in lupdate @ONLY)
@@ -265,7 +265,7 @@ endfunction()
 # Cross-compiling requires an extra host build in order to get 
 # qcollectiongenerator (required) and lupdate (optional)
 
-if(CMAKE_CROSSCOMPILING)
+if(CMAKE_CROSSCOMPILING AND NOT "${QT5_PLATFORM}" MATCHES "android")
 	set(QT5_EXTRA_HOST_DIR "${BINARY_DIR}/../${PROJECT_NAME}-build-host")
 	if(NOT EXISTS "${QT5_EXTRA_HOST_DIR}/qtbase/Makefile")
 		# Required for initial confclean-host
@@ -296,6 +296,10 @@ if(CMAKE_CROSSCOMPILING)
 	  DEPENDEES build-host
 	  DEPENDERS install
 	)
+elseif(CMAKE_CROSSCOMPILING AND "${QT5_PLATFORM}" MATCHES "android")
+	execute_process(
+	  COMMAND sed -i -e "/-plugindir /d;/-datadir /d" ${QT5_CONFIG_SCRIPT}.new
+	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
 endif()
 
 # Don't let Xcode re-root the install
