@@ -34,10 +34,14 @@ android {
 	PREREQUISITES_PRI += "include($$OUT_PWD/3rd-party/proj/proj.pri)"
 }
 
+## QBezier
+SUBDIRS += 3rd-party/qbezier
+PREREQUISITES_PRI += "include($$OUT_PWD/3rd-party/qbezier/qbezier.pri)"
+
 ## QtSingleApplication
 SUBDIRS += 3rd-party/qtsingleapplication
 PREREQUISITES_PRI += "include($$OUT_PWD/3rd-party/qtsingleapplication/qtsingleapplication.pri)"
-  
+
 ## libocd
 SUBDIRS += src/libocad
 PREREQUISITES_PRI += "include($$OUT_PWD/src/libocad/libocd.pri)"

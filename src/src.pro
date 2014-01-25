@@ -125,7 +125,6 @@ SOURCES += \
   util_translation.cpp \
   mapper_resource.cpp \
   undo.cpp \
-  qbezier.cpp \
   matrix.cpp \
   transformation.cpp \
   settings.cpp \

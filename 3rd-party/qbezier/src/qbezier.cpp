@@ -47,8 +47,8 @@
 #include <qlist.h>
 #include <qmath.h>
 
-#include "qt-private/qnumeric_p.h"
-#include "qt-private/qmath_p.h"
+#include <private/qnumeric_p.h>
+#include <private/qmath_p.h>
 
 QT_BEGIN_NAMESPACE
 

@@ -25,7 +25,10 @@ execute_process(
   COMMAND "${CMAKE_COMMAND}" -E copy_if_different mapper_config.h.tmp mapper_config.h
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
-include_directories("${CMAKE_CURRENT_BINARY_DIR}")
+include_directories(
+  "${CMAKE_CURRENT_BINARY_DIR}"
+  "../3rd-party/qbezier/src"
+)
 
 set(Mapper_Common_SRCS
  global.cpp
@@ -34,7 +37,6 @@ set(Mapper_Common_SRCS
  util_translation.cpp
  mapper_resource.cpp
  undo.cpp
- qbezier.cpp
  matrix.cpp
  transformation.cpp
 
@@ -280,6 +282,10 @@ add_library(Mapper_Common STATIC
 add_dependencies(Mapper_Common
   Mapper_prerequisites
 )
+target_link_libraries(Mapper_Common
+  libocad
+  QBezier
+)
 
 qt5_translations_sources(
   SOURCES ${Mapper_Common_SRCS} ${Mapper_COMMON_MOC_INPUT}
@@ -307,7 +313,6 @@ add_executable(Mapper
 )
 target_link_libraries(Mapper
   Mapper_Common
-  libocad
   QtSingleApplication
   ${PROJ_LIBRARY}
   ${QT_LIBRARIES}
