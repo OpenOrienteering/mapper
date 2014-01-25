@@ -6,7 +6,7 @@ TEMPLATE = app
 TARGET   = Mapper
 
 include($$OUT_PWD/../prerequisites.pri)
-LIBS += -lproj -lpolyclipping -lqtsingleapplication -locd
+LIBS *= -lproj -lpolyclipping -lqtsingleapplication -locd
 
 DEPENDPATH  += qmake
 INCLUDEPATH += qmake
@@ -47,4 +47,7 @@ android {
   # Use sensors module
   QT += sensors
   DEFINES += HAVE_QTSENSORS
+
+  # Add examples as resource
+  RESOURCES += ../examples/examples.qrc
 }
