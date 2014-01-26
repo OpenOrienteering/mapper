@@ -392,7 +392,7 @@ public:
 	/** Returns the number of coordinates, including curve handles and close points. */
 	inline int getCoordinateCount() const {return (int)coords.size();}
 	/** Eeturns the i-th coordinate. */
-	inline MapCoord& getCoordinate(int pos) {Q_ASSERT(pos >= 0 && pos < (int)coords.size()); return coords[pos];}
+	inline MapCoord& getCoordinate(int pos) {Q_ASSERT(pos >= 0 && (std::size_t)pos < coords.size()); return coords[pos];}
 	
 	/** Replaces the i-th coordinate with c. */
 	void setCoordinate(int pos, MapCoord c);

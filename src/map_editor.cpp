@@ -407,7 +407,7 @@ void MapEditorController::attach(MainWindow* window)
                                        "()V");
 #endif
 	
-	QLabel* statusbar_zoom_label;
+	QLabel* statusbar_zoom_label = NULL;
 	if (!mobile_mode)
 	{
 		// Add zoom / cursor position field to status bar
@@ -2393,14 +2393,14 @@ void MapEditorController::connectPathsClicked()
 	{
 		// Find the closest pair of open ends of objects with the same symbol,
 		// which is closer than a threshold
-		PathObject* best_object_a;
-		PathObject* best_object_b;
-		int best_object_a_index;
-		int best_object_b_index;
-		int best_part_a;
-		int best_part_b;
-		bool best_part_a_begin;
-		bool best_part_b_begin;
+		PathObject* best_object_a = NULL;
+		PathObject* best_object_b = NULL;
+		int best_object_a_index = 0;
+		int best_object_b_index = 0;
+		int best_part_a = 0;
+		int best_part_b = 0;
+		bool best_part_a_begin = false;
+		bool best_part_b_begin = false;
 		float best_dist_sq = std::numeric_limits<float>::max();
 		
 		for (int i = 0; i < (int)objects.size(); ++i)

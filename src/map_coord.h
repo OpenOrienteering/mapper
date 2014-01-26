@@ -330,7 +330,7 @@ class MapCoordF
 public:
 	
 	/** Creates an uninitialized MapCoordF. */
-	inline MapCoordF() {}
+	inline MapCoordF() : x(0.0), y(0.0) {}
 	/** Creates a MapCoordF with the given position in map coordinates. */
 	inline MapCoordF(double x, double y) {setX(x); setY(y);}
 	/** Creates a MapCoordF from a MapCoord, skipping its flags. */
@@ -341,9 +341,9 @@ public:
 	inline MapCoordF(const MapCoordF& copy) {x = copy.x; y = copy.y;}
 	
 	/** Sets the x coordinate to a new value in map coordinates. */
-    inline void setX(double x) {this->x = x;};
+	inline void setX(double x) {this->x = x;}
 	/** Sets the y coordinate to a new value in map coordinates. */
-	inline void setY(double y) {this->y = y;};
+	inline void setY(double y) {this->y = y;}
 	/** Sets the x coordinate to a new value in native map coordinates. */
 	inline void setIntX(qint64 x) {this->x = 0.001 * x;}
 	/** Sets the y coordinate to a new value in native map coordinates. */

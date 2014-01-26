@@ -597,6 +597,7 @@ void CutTool::pathFinished(PathObject* split_path)
 	}
 	
 	bool ok;
+	Q_UNUSED(ok); // "ok" is only used in Q_ASSERT.
 	PathObject* parts[2];
 	if (edited_path->getPart(drag_part_index).isClosed())
 	{

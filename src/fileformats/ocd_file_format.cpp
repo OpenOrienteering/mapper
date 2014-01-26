@@ -658,7 +658,7 @@ void OcdFileImport::importView(const QString& param_string)
 	const QChar* unicode = param_string.unicode();
 	
 	bool zoom_ok = false;
-	double zoom, offset_x=0.0, offset_y=0.0;
+	double zoom=1.0, offset_x=0.0, offset_y=0.0;
 	
 	int i = param_string.indexOf('\t', 0);
 	; // skip first word for this entry type

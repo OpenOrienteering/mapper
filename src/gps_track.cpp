@@ -521,7 +521,7 @@ bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent
 		if (name == "node")
 		{
 			bool ok = true;
-			double lat, lon;
+			double lat = 0.0, lon = 0.0;
 			if (ok) lat = attributes.value("lat").toString().toDouble(&ok);
 			if (ok) lon = attributes.value("lon").toString().toDouble(&ok);
 			if (!ok)

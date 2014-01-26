@@ -2350,7 +2350,7 @@ std::set< s16 > OCAD8FileExport::exportCombinedSymbol(CombinedSymbol* combinatio
 		if (combination->isPartPrivate(i))
 		{
 			Symbol* part = combination->getPart(i);
-			int index;
+			int index = 0;
 			if (part->getType() == Symbol::Line)
 				index = exportLineSymbol(part->asLine());
 			else if (part->getType() == Symbol::Area)
