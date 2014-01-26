@@ -26,7 +26,7 @@ set(QSINGLEAPP_MOC_INPUT
   src/qtsingleapplication.h
   src/qtsinglecoreapplication.h
 )
-qt4_wrap_cpp(QSINGLEAPP_MOC ${QSINGLEAPP_MOC_INPUT})
+qt5_wrap_cpp(QSINGLEAPP_MOC ${QSINGLEAPP_MOC_INPUT})
 add_library(QtSingleApplication STATIC ${QSINGLEAPP_SRCS} ${QSINGLEAPP_MOC})
 
 # For super-builds (e.g. cross-compilation), wait for the Qt build.

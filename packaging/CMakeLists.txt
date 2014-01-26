@@ -20,6 +20,7 @@ message(STATUS "Configuring ${PROJECT_NAME} packaging")
 
 if(APPLE)
 	# Set some Qt4 variables to reasonable values for Qt5, too.
+	# (needed for DeployQt5.cmake)
 	find_package(Qt5Core REQUIRED QUIET)
 	if(NOT QT_LIBRARY_DIR)
 		get_target_property(_qt5core_lib Qt5::Core IMPORTED_LOCATION_RELEASE)
@@ -61,7 +62,6 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	  "/[.]git/"
 	  "/3rd-party/clipper/download/"
 	  "/3rd-party/proj/download/"
-	  "/3rd-party/qt4/download/"
 	  "/3rd-party/qt5/download/"
 	  ${CPACK_SOURCE_IGNORE_FILES})
 	
@@ -329,14 +329,8 @@ foreach(_qt_plugin ${MAPPER_QT_PLUGINS})
 endforeach(_qt_plugin)
 
 if(APPLE)
-	# This works for Qt5, too (at least given our Qt5Quirks).
-	if(CMAKE_VERSION VERSION_LESS "2.8.9")
-		# Use updated DeployQt4.cmake from CMake git repository
-		include(${PROJECT_SOURCE_DIR}/cmake/DeployQt4.cmake)
-	else()
-		include(DeployQt4)
-	endif()
-	install_qt4_executable(Mapper.app 
+	include(${PROJECT_SOURCE_DIR}/cmake/DeployQt5.cmake)
+	install_qt5_executable(Mapper.app
 	  "${MAPPER_QT_PLUGINS_FOUND}"
 	  ${FIXUP_ASSISTANT})
 elseif(UNIX)

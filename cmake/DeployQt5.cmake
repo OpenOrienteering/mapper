@@ -2,35 +2,38 @@
 #         (HEAD: http://cmake.org/gitweb?p=cmake.git;a=blob_plain;f=Modules/DeployQt4.cmake)
 # 
 # Changes:
+# 2013-01-26: Replaced qt4_/Qt4_/QT4_ with qt5_/Qt5_/QT5_, respectively.
+#         	  --- Kai Pastor <dg0yt@darc.de>
+#
 # 2012-09-28: Inserted this header
 #             Replaced BSD license terms reference with actual terms from the
 #             referenced Copyright.txt
 #          	  --- Kai Pastor <dg0yt@darc.de>
 
-# - Functions to help assemble a standalone Qt4 executable.
+# - Functions to help assemble a standalone Qt5 executable.
 # A collection of CMake utility functions useful for deploying
-# Qt4 executables.
+# Qt5 executables.
 #
 # The following functions are provided by this module:
-#   write_qt4_conf
-#   resolve_qt4_paths
-#   fixup_qt4_executable
-#   install_qt4_plugin_path
-#   install_qt4_plugin
-#   install_qt4_executable
+#   write_qt5_conf
+#   resolve_qt5_paths
+#   fixup_qt5_executable
+#   install_qt5_plugin_path
+#   install_qt5_plugin
+#   install_qt5_executable
 # Requires CMake 2.6 or greater because it uses function and
 # PARENT_SCOPE. Also depends on BundleUtilities.cmake.
 #
-#  WRITE_QT4_CONF(<qt_conf_dir> <qt_conf_contents>)
+#  WRITE_QT5_CONF(<qt_conf_dir> <qt_conf_contents>)
 # Writes a qt.conf file with the <qt_conf_contents> into <qt_conf_dir>.
 #
-#  RESOLVE_QT4_PATHS(<paths_var> [<executable_path>])
+#  RESOLVE_QT5_PATHS(<paths_var> [<executable_path>])
 # Loop through <paths_var> list and if any don't exist resolve them
 # relative to the <executable_path> (if supplied) or the CMAKE_INSTALL_PREFIX.
 #
-#  FIXUP_QT4_EXECUTABLE(<executable> [<qtplugins> <libs> <dirs> <plugins_dir> <request_qt_conf>])
+#  FIXUP_QT5_EXECUTABLE(<executable> [<qtplugins> <libs> <dirs> <plugins_dir> <request_qt_conf>])
 # Copies Qt plugins, writes a Qt configuration file (if needed) and fixes up a
-# Qt4 executable using BundleUtilities so it is standalone and can be
+# Qt5 executable using BundleUtilities so it is standalone and can be
 # drag-and-drop copied to another machine as long as all of the system
 # libraries are compatible.
 #
@@ -49,7 +52,7 @@
 #
 # <request_qt_conf> will force a qt.conf file to be written even if not needed.
 #
-#  INSTALL_QT4_PLUGIN_PATH(plugin executable copy installed_plugin_path_var <plugins_dir> <component> <configurations>)
+#  INSTALL_QT5_PLUGIN_PATH(plugin executable copy installed_plugin_path_var <plugins_dir> <component> <configurations>)
 # Install (or copy) a resolved <plugin> to the default plugins directory
 # (or <plugins_dir>) relative to <executable> and store the result in
 # <installed_plugin_path_var>.
@@ -60,18 +63,18 @@
 #
 # If <component> is set then anything installed will use this COMPONENT.
 #
-#  INSTALL_QT4_PLUGIN(plugin executable copy installed_plugin_path_var <plugins_dir> <component>)
+#  INSTALL_QT5_PLUGIN(plugin executable copy installed_plugin_path_var <plugins_dir> <component>)
 # Install (or copy) an unresolved <plugin> to the default plugins directory
 # (or <plugins_dir>) relative to <executable> and store the result in
-# <installed_plugin_path_var>. See documentation of INSTALL_QT4_PLUGIN_PATH.
+# <installed_plugin_path_var>. See documentation of INSTALL_QT5_PLUGIN_PATH.
 #
-#  INSTALL_QT4_EXECUTABLE(<executable> [<qtplugins> <libs> <dirs> <plugins_dir> <request_qt_conf> <component>])
+#  INSTALL_QT5_EXECUTABLE(<executable> [<qtplugins> <libs> <dirs> <plugins_dir> <request_qt_conf> <component>])
 # Installs Qt plugins, writes a Qt configuration file (if needed) and fixes up
-# a Qt4 executable using BundleUtilities so it is standalone and can be
+# a Qt5 executable using BundleUtilities so it is standalone and can be
 # drag-and-drop copied to another machine as long as all of the system
 # libraries are compatible. The executable will be fixed-up at install time.
 # <component> is the COMPONENT used for bundle fixup and plugin installation.
-# See documentation of FIXUP_QT4_BUNDLE.
+# See documentation of FIXUP_QT5_BUNDLE.
 
 #=============================================================================
 # Copyright 2011 Mike McQuaid <mike@mikemcquaid.com>
@@ -113,16 +116,16 @@
 # (and others) found in BundleUtilities.cmake
 
 include(BundleUtilities)
-set(DeployQt4_cmake_dir "${CMAKE_CURRENT_LIST_DIR}")
-set(DeployQt4_apple_plugins_dir "PlugIns")
+set(DeployQt5_cmake_dir "${CMAKE_CURRENT_LIST_DIR}")
+set(DeployQt5_apple_plugins_dir "PlugIns")
 
-function(write_qt4_conf qt_conf_dir qt_conf_contents)
+function(write_qt5_conf qt_conf_dir qt_conf_contents)
         set(qt_conf_path "${qt_conf_dir}/qt.conf")
         message(STATUS "Writing ${qt_conf_path}")
         file(WRITE "${qt_conf_path}" "${qt_conf_contents}")
 endfunction()
 
-function(resolve_qt4_paths paths_var)
+function(resolve_qt5_paths paths_var)
         set(executable_path ${ARGV1})
 
         set(paths_resolved)
@@ -140,14 +143,14 @@ function(resolve_qt4_paths paths_var)
         set(${paths_var} ${paths_resolved} PARENT_SCOPE)
 endfunction()
 
-function(fixup_qt4_executable executable)
+function(fixup_qt5_executable executable)
         set(qtplugins ${ARGV1})
         set(libs ${ARGV2})
         set(dirs ${ARGV3})
         set(plugins_dir ${ARGV4})
         set(request_qt_conf ${ARGV5})
 
-        message(STATUS "fixup_qt4_executable")
+        message(STATUS "fixup_qt5_executable")
         message(STATUS "  executable='${executable}'")
         message(STATUS "  qtplugins='${qtplugins}'")
         message(STATUS "  libs='${libs}'")
@@ -167,7 +170,7 @@ function(fixup_qt4_executable executable)
                 set(executable_path "${executable}")
                 set(write_qt_conf TRUE)
                 if(NOT plugins_dir)
-                        set(plugins_dir "${DeployQt4_apple_plugins_dir}")
+                        set(plugins_dir "${DeployQt5_apple_plugins_dir}")
                 endif()
         else()
                 get_filename_component(executable_path "${executable}" PATH)
@@ -180,7 +183,7 @@ function(fixup_qt4_executable executable)
 
         foreach(plugin ${qtplugins})
                 set(installed_plugin_path "")
-                install_qt4_plugin("${plugin}" "${executable}" 1 installed_plugin_path)
+                install_qt5_plugin("${plugin}" "${executable}" 1 installed_plugin_path)
                 list(APPEND libs ${installed_plugin_path})
         endforeach()
 
@@ -190,24 +193,24 @@ function(fixup_qt4_executable executable)
                 endif()
         endforeach()
 
-        resolve_qt4_paths(libs "${executable_path}")
+        resolve_qt5_paths(libs "${executable_path}")
 
         if(write_qt_conf)
                 set(qt_conf_contents "[Paths]\nPlugins = ${plugins_dir}")
-                write_qt4_conf("${qt_conf_dir}" "${qt_conf_contents}")
+                write_qt5_conf("${qt_conf_dir}" "${qt_conf_contents}")
         endif()
 
         fixup_bundle("${executable}" "${libs}" "${dirs}")
 endfunction()
 
-function(install_qt4_plugin_path plugin executable copy installed_plugin_path_var)
+function(install_qt5_plugin_path plugin executable copy installed_plugin_path_var)
         set(plugins_dir ${ARGV4})
         set(component ${ARGV5})
         set(configurations ${ARGV6})
         if(EXISTS "${plugin}")
                 if(APPLE)
                         if(NOT plugins_dir)
-                                set(plugins_dir "${DeployQt4_apple_plugins_dir}")
+                                set(plugins_dir "${DeployQt5_apple_plugins_dir}")
                         endif()
                         set(plugins_path "${executable}/Contents/${plugins_dir}")
                 else()
@@ -249,11 +252,11 @@ function(install_qt4_plugin_path plugin executable copy installed_plugin_path_va
         endif()
 endfunction()
 
-function(install_qt4_plugin plugin executable copy installed_plugin_path_var)
+function(install_qt5_plugin plugin executable copy installed_plugin_path_var)
         set(plugins_dir ${ARGV4})
         set(component ${ARGV5})
         if(EXISTS "${plugin}")
-                install_qt4_plugin_path("${plugin}" "${executable}" "${copy}" "${installed_plugin_path_var}" "${plugins_dir}" "${component}")
+                install_qt5_plugin_path("${plugin}" "${executable}" "${copy}" "${installed_plugin_path_var}" "${plugins_dir}" "${component}")
         else()
                 string(TOUPPER "QT_${plugin}_PLUGIN" plugin_var)
                 set(plugin_release_var "${plugin_var}_RELEASE")
@@ -268,8 +271,8 @@ function(install_qt4_plugin plugin executable copy installed_plugin_path_var)
                 endif()
 
                 if(CMAKE_CONFIGURATION_TYPES OR CMAKE_BUILD_TYPE)
-                        install_qt4_plugin_path("${plugin_release}" "${executable}" "${copy}" "${installed_plugin_path_var}_release" "${plugins_dir}" "${component}" "Release|RelWithDebInfo|MinSizeRel")
-                        install_qt4_plugin_path("${plugin_debug}" "${executable}" "${copy}" "${installed_plugin_path_var}_debug" "${plugins_dir}" "${component}" "Debug")
+                        install_qt5_plugin_path("${plugin_release}" "${executable}" "${copy}" "${installed_plugin_path_var}_release" "${plugins_dir}" "${component}" "Release|RelWithDebInfo|MinSizeRel")
+                        install_qt5_plugin_path("${plugin_debug}" "${executable}" "${copy}" "${installed_plugin_path_var}_debug" "${plugins_dir}" "${component}" "Debug")
 
                         if(CMAKE_BUILD_TYPE MATCHES "^Debug$")
                                 set(${installed_plugin_path_var} ${${installed_plugin_path_var}_debug})
@@ -277,13 +280,13 @@ function(install_qt4_plugin plugin executable copy installed_plugin_path_var)
                                 set(${installed_plugin_path_var} ${${installed_plugin_path_var}_release})
                         endif()
                 else()
-                        install_qt4_plugin_path("${plugin_release}" "${executable}" "${copy}" "${installed_plugin_path_var}" "${plugins_dir}" "${component}")
+                        install_qt5_plugin_path("${plugin_release}" "${executable}" "${copy}" "${installed_plugin_path_var}" "${plugins_dir}" "${component}")
                 endif()
         endif()
         set(${installed_plugin_path_var} ${${installed_plugin_path_var}} PARENT_SCOPE)
 endfunction()
 
-function(install_qt4_executable executable)
+function(install_qt5_executable executable)
         set(qtplugins ${ARGV1})
         set(libs ${ARGV2})
         set(dirs ${ARGV3})
@@ -317,17 +320,17 @@ function(install_qt4_executable executable)
         else()
                 foreach(plugin ${qtplugins})
                         set(installed_plugin_paths "")
-                        install_qt4_plugin("${plugin}" "${executable}" 0 installed_plugin_paths "${plugins_dir}" "${component}")
+                        install_qt5_plugin("${plugin}" "${executable}" 0 installed_plugin_paths "${plugins_dir}" "${component}")
                         list(APPEND libs ${installed_plugin_paths})
                 endforeach()
         endif()
 
-        resolve_qt4_paths(libs "")
+        resolve_qt5_paths(libs "")
 
         install(CODE
-  "include(\"${DeployQt4_cmake_dir}/DeployQt4.cmake\")
+  "include(\"${DeployQt5_cmake_dir}/DeployQt5.cmake\")
   set(BU_CHMOD_BUNDLE_ITEMS TRUE)
-  FIXUP_QT4_EXECUTABLE(\"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${executable}\" \"\" \"${libs}\" \"${dirs}\" \"${plugins_dir}\" \"${request_qt_conf}\")"
+  FIXUP_QT5_EXECUTABLE(\"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${executable}\" \"\" \"${libs}\" \"${dirs}\" \"${plugins_dir}\" \"${request_qt_conf}\")"
                 ${component}
         )
 endfunction()

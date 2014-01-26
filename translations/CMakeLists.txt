@@ -54,7 +54,7 @@ set(Mapper_TRANS
  OpenOrienteering_uk.ts
  CACHE INTERNAL "Translation files"
 )
-qt4_add_translation(Mapper_QM ${Mapper_TRANS} ${Mapper_QT_TRANS})
+qt5_add_translation(Mapper_QM ${Mapper_TRANS} ${Mapper_QT_TRANS})
 
 set(Mapper_TRANS_TEMPLATE
  OpenOrienteering_template.ts
@@ -78,7 +78,7 @@ if(Mapper_TRANSLATIONS_EMBEDDED)
 	file(APPEND "${Mapper_TRANS_QRC}.tmp"
 	  " </qresource>\n</RCC>\n")
 	execute_process(COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${Mapper_TRANS_QRC}.tmp" "${Mapper_TRANS_QRC}")
-	qt4_add_resources(Mapper_TRANSLATIONS_RCC "${Mapper_TRANS_QRC}" OPTIONS -no-compress)
+	qt5_add_resources(Mapper_TRANSLATIONS_RCC "${Mapper_TRANS_QRC}" OPTIONS -no-compress)
 
 	# A library is a top-level target, the generated source file isn't.
 	add_library(Mapper_translations STATIC ${Mapper_TRANSLATIONS_RCC})
@@ -131,9 +131,9 @@ file(WRITE "${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}")
 #
 # Synopsis:
 #
-# QT4_TRANSLATIONS_SOURCES(SOURCES a.cpp b.cpp)
+# QT5_TRANSLATIONS_SOURCES(SOURCES a.cpp b.cpp)
 #
-macro(QT4_TRANSLATIONS_SOURCES)
+macro(QT5_TRANSLATIONS_SOURCES)
 	set(_DO_SOURCES FALSE)
 	foreach(_arg ${Mapper_TRANS} ${Mapper_TRANS_TEMPLATE} ${ARGN})
 		if("${_arg}" STREQUAL "SOURCES")

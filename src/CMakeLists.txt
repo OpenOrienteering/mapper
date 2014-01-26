@@ -259,7 +259,7 @@ set(Mapper_Common_MOC_INPUT
  util/recording_translator.h
 )
 
-qt4_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})
+qt5_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})
 
 # Resources (from project root)
 
@@ -267,7 +267,7 @@ if(MAPPER_USE_QT_CONF_QRC)
 	set(Mapper_RESOURCES ${Mapper_RESOURCES} ${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf.qrc)
 endif()
 set(Mapper_RESOURCES ${Mapper_RESOURCES} ${PROJECT_SOURCE_DIR}/resources.qrc)
-qt4_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
+qt5_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
 
 # Mapper common: static library of full runtime 
 # (To be used by Mapper executable and by system tests.)
@@ -281,7 +281,7 @@ add_dependencies(Mapper_Common
   Mapper_prerequisites
 )
 
-qt4_translations_sources(
+qt5_translations_sources(
   SOURCES ${Mapper_Common_SRCS} ${Mapper_COMMON_MOC_INPUT}
 )
 
