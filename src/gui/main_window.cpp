@@ -143,7 +143,7 @@ void MainWindow::updateAutoSave()
 
 void MainWindow::autoSave()
 {
-	if (!current_path.isEmpty())
+	if (!getCurrentFilePath().isEmpty())
 	{
 		if (controller->isEditingInProgress())
 		{
@@ -360,26 +360,31 @@ void MainWindow::createHelpMenu()
 
 void MainWindow::setCurrentFile(const QString& path)
 {
-	QFileInfo info(path);
-	current_path = info.canonicalFilePath();
+	current_path = QFileInfo(path).canonicalFilePath();
 	updateWindowTitle();
 	
-	if (current_path.isEmpty())
-		return;
-	
-	Settings& settings = Settings::getInstance();
-	
-	// Update least recently used directory
-	QString open_directory = info.canonicalPath();
-	QSettings().setValue("openFileDirectory", open_directory);
-	
-	// Update recent file lists
-	QStringList files = settings.getSettingCached(Settings::General_RecentFilesList).toStringList();
-	files.removeAll(current_path);
-	files.prepend(current_path);
-	while (files.size() > max_recent_files)
-		files.removeLast();
-	settings.setSetting(Settings::General_RecentFilesList, files);
+	if (!current_path.isEmpty())
+		setMostRecentlyUsedFile(current_path);
+}
+
+void MainWindow::setMostRecentlyUsedFile(const QString& path)
+{
+	if (!path.isEmpty())
+	{
+		Settings& settings = Settings::getInstance();
+		
+		// Update least recently used directory
+		const QString open_directory = QFileInfo(path).canonicalPath();
+		QSettings().setValue("openFileDirectory", open_directory);
+		
+		// Update recent file lists
+		QStringList files = settings.getSettingCached(Settings::General_RecentFilesList).toStringList();
+		files.removeAll(path);
+		files.prepend(path);
+		if (files.size() > max_recent_files)
+			files.erase(files.begin() + max_recent_files, files.end());
+		settings.setSetting(Settings::General_RecentFilesList, files);
+	}
 }
 
 void MainWindow::setHasOpenedFile(bool value)
@@ -585,10 +590,11 @@ void MainWindow::updateWindowTitle()
 	
 	if (has_opened_file)
 	{
-		if (current_path.isEmpty())
+		const QString current_file_path = getCurrentFilePath();
+		if (current_file_path.isEmpty())
 			window_title += tr("Unsaved file") + " - ";
 		else
-			window_title += QFileInfo(current_path).fileName() + " - ";
+			window_title += QFileInfo(current_file_path).fileName() + " - ";
 	}
 	
 	window_title += APP_NAME + " " + APP_VERSION;
@@ -756,7 +762,7 @@ void MainWindow::updateRecentFileActions()
 
 bool MainWindow::save()
 {
-	return savePath(current_path);
+	return savePath(getCurrentFilePath());
 }
 
 bool MainWindow::savePath(const QString &path)
@@ -829,7 +835,7 @@ bool MainWindow::showSaveAsDialog()
 		return false;
 	
 	// Try current directory first
-	QFileInfo current(current_path);
+	QFileInfo current(getCurrentFilePath());
 	QString save_directory = current.canonicalPath();
 	if (save_directory.isEmpty())
 	{

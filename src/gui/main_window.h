@@ -68,6 +68,12 @@ public:
 	 */
 	inline const QString& getCurrentFilePath() const {return current_path;}
 	
+	/** @brief Registers the given path as most recently used file.
+	 *  The path is added at (or moved to) the top of the list of most recently
+	 *  used files, and the directory is saved as most recently used directory.
+	 */
+	static void setMostRecentlyUsedFile(const QString& path);
+	
 	/** Sets the opened-file state to value. */
 	void setHasOpenedFile(bool value);
 	
