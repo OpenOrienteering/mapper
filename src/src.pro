@@ -92,6 +92,7 @@ HEADERS += \
   tool_scale.h \
   undo.h \
   util_task_dialog.h \
+  core/auto_save_p.h \
   core/map_printer.h \
   fileformats/ocd_file_format_p.h \
   gui/about_dialog.h \
@@ -206,6 +207,7 @@ SOURCES += \
   file_format_native.cpp \
   file_format_ocad8.cpp \
   file_format_xml.cpp \
+  core/auto_save.cpp \
   core/map_color.cpp \
   core/map_printer.cpp \
   core/map_view.cpp \
