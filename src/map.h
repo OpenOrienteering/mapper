@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps
+ *    Copyright 2013, 2014 Thomas Schöps, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -113,6 +114,17 @@ public:
 	 * stored in the map file are also updated.
 	 */
 	bool saveTo(const QString& path, MapEditorController* map_editor = NULL);
+	
+	/**
+	 * Attempts to save the map to the given file.
+	 * If a MapEditorController is given, the widget positions and MapViews
+	 * stored in the map file are also updated.
+	 * If a FileFormat is given, it will be used, otherwise the file format
+	 * is determined from the filename.
+	 * If the map was modified, it will still be considered modified after
+	 * successfully saving a copy.
+	 */
+	bool exportTo(const QString& path, MapEditorController* map_editor = NULL, const FileFormat* format = NULL);
 	
 	/**
 	 * Attempts to load the map from the specified path. Returns true on success.

@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012 Thomas Schöps
+ *    Copyright 2013, 2014 Thomas Schöps, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -513,15 +514,38 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 {
 	assert(map_editor && "Preserving the widget&view information without retrieving it from a MapEditorController is not implemented yet!");
 	
-	const FileFormat *format = FileFormats.findFormatForFilename(path);
-	if (!format) format = FileFormats.findFormat(FileFormats.defaultFormat());
+	exportTo(path, map_editor);
 	
-	if (!format || !format->supportsExport())
+	colors_dirty = false;
+	symbols_dirty = false;
+	templates_dirty = false;
+	objects_dirty = false;
+	other_dirty = false;
+	unsaved_changes = false;
+	
+	objectUndoManager().notifyOfSave();
+	
+	return true;
+}
+
+bool Map::exportTo(const QString& path, MapEditorController* map_editor, const FileFormat* format)
+{
+	assert(map_editor && "Preserving the widget&view information without retrieving it from a MapEditorController is not implemented yet!");
+	
+	if (!format)
+		format = FileFormats.findFormatForFilename(path);
+
+	if (!format)
+		format = FileFormats.findFormat(FileFormats.defaultFormat());
+	
+	if (!format)
 	{
-		if (format)
-			QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").arg(path).arg(format->description()).arg(format->fileExtensions().join(", ")));
-		else
-			QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause the format is unknown.").arg(path));
+		QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause the format is unknown.").arg(path));
+		return false;
+	}
+	else if (!format->supportsExport())
+	{
+		QMessageBox::warning(NULL, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").arg(path).arg(format->description()).arg(format->fileExtensions().join(", ")));
 		return false;
 	}
 	
@@ -570,15 +594,10 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 			temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
 	}
 	
-	Exporter* exporter = NULL;
-	try {
-		// Create an exporter instance for this file and map.
-		exporter = format->createExporter(&file, this, map_editor->main_view);
-		
-		// Run the first pass.
+	try
+	{
+		QScopedPointer<Exporter> exporter(format->createExporter(&file, this, map_editor->main_view));
 		exporter->doExport();
-		
-		file.close();
 		
 		// Display any warnings.
 		if (!exporter->warnings().empty())
@@ -596,33 +615,27 @@ bool Map::saveTo(const QString& path, MapEditorController* map_editor)
 	}
 	catch (std::exception &e)
 	{
+		file.close();
+		
 		QMessageBox::warning(NULL, tr("Error"), tr("Internal error while saving:\n%1").arg(e.what()));
 		if (temp_path.isEmpty())
 			QFile::remove(path);
 		else
 			QFile::remove(temp_path);
+		
 		return false;
 	}
-	if (exporter) delete exporter;
 	
+	file.close();
 	if (!temp_path.isEmpty())
 	{
 		QFile::remove(path);
 		QFile::rename(temp_path, path);
 	}
 	
-	
-	colors_dirty = false;
-	symbols_dirty = false;
-	templates_dirty = false;
-	objects_dirty = false;
-	other_dirty = false;
-	unsaved_changes = false;
-	
-	objectUndoManager().notifyOfSave();
-	
 	return true;
 }
+
 bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapEditorController* map_editor, bool load_symbols_only, bool show_error_messages)
 {
 	MapView *view = new MapView(this);
@@ -2152,11 +2165,8 @@ void Map::setHasUnsavedChanges(bool has_unsaved_changes)
 	}
 	else
 	{
-		if (!unsaved_changes)
-		{
-			emit(gotUnsavedChanges());
-			unsaved_changes = true;
-		}
+		emit gotUnsavedChanges(); // always needed to trigger autosave
+		unsaved_changes = true;
 	}
 }
 void Map::setOtherDirty(bool value)

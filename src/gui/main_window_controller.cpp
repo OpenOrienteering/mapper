@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Thomas Schöps, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -33,6 +34,13 @@ MainWindowController::~MainWindowController()
 bool MainWindowController::save(const QString& path)
 {
 	Q_UNUSED(path);
+	return false;
+}
+
+bool MainWindowController::exportTo(const QString& path, const FileFormat* format)
+{
+	Q_UNUSED(path);
+	Q_UNUSED(format);
 	return false;
 }
 

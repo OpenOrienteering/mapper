@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Thomas Schöps, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -91,11 +92,6 @@ MainWindow::MainWindow(bool as_main_window)
 	central_widget = new QStackedWidget(this);
 	QMainWindow::setCentralWidget(central_widget);
 	
-	auto_save_timer = new QTimer(this);
-	auto_save_timer->setSingleShot(true);
-	connect(auto_save_timer, SIGNAL(timeout()), this, SLOT(autoSave()));
-	updateAutoSave();
-	
 	if (as_main_window)
 		loadWindowSettings();
 	
@@ -116,59 +112,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::settingsChanged()
 {
-	updateAutoSave();
 	updateRecentFileActions();
 }
-
-
-void MainWindow::updateAutoSave()
-{
-	int auto_save_interval = Settings::getInstance().getSetting(Settings::General_AutoSaveInterval).toInt();
-	if (auto_save_interval > 0)
-	{
-		// enable auto-save
-		auto_save_timer->setInterval(auto_save_interval * 60000); // map minutes to milliseconds
-		auto_save_timer->blockSignals(false);
-		if (has_unsaved_changes && !auto_save_timer->isActive())
-		{
-			auto_save_timer->start();
-		}
-	}
-	else
-	{
-		// disable auto-save
-		auto_save_timer->blockSignals(true);
-	}
-}
-
-void MainWindow::autoSave()
-{
-	if (!getCurrentFilePath().isEmpty())
-	{
-		if (controller->isEditingInProgress())
-		{
-			// Retry soon
-			QTimer::singleShot(1000, this, SLOT(autoSave()));
-		}
-		else
-		{
-			showStatusBarMessage(tr("Auto-saving..."), 0);
-			if (save())
-			{
-				// Success
-				clearStatusBarMessage();
-			}
-			else
-			{
-				// Failure
-				showStatusBarMessage(tr("Auto-saving failed!"), 6000);
-				// Retry after the interval
-				auto_save_timer->start();
-			}
-		}
-	}
-}
-
 
 const QString& MainWindow::appName() const
 {
@@ -411,15 +356,7 @@ void MainWindow::setHasOpenedFile(bool value)
 void MainWindow::setHasUnsavedChanges(bool value)
 {
 	has_unsaved_changes = value;
-	if (has_unsaved_changes && !auto_save_timer->isActive())
-	{
-		auto_save_timer->start();
-	}
-	else if (!has_unsaved_changes && auto_save_timer->isActive())
-	{
-		auto_save_timer->stop();
-	}
-		
+	setAutoSaveNeeded(value);
 	updateWindowTitle();
 }
 
@@ -523,9 +460,22 @@ bool MainWindow::showSaveOnCloseDialog()
 								   QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
 		
 		if (ret == QMessageBox::Save)
-			return save();
-		else if (ret == QMessageBox::Cancel)
+		{
+			bool success = save();
+			if (success)
+				removeAutoSaveFile();
+			return success;
+		}
+		else if (ret == QMessageBox::Discard)
+		{
+			removeAutoSaveFile();
+			return true;
+		}
+		else //  ret == QMessageBox::Cancel
+		{
 			return false;
+		}
+		
 	}
 	
 	return true;
@@ -692,7 +642,19 @@ bool MainWindow::openPath(const QString &path)
 		settings.remove(reopen_blocker);
 		return false;
 	}
-	if (!new_controller->load(path, this))
+	
+	QString actual_path = path;
+	QString auto_save_path = autoSaveFileName(path);
+	if (QFileInfo(auto_save_path).exists())
+	{
+		int result = QMessageBox::warning(this, tr("File recovery"), 
+		  tr("There is an automatically saved version of <br /><tt>%1</tt><br /><br />Load this version?").arg(path),
+		  QMessageBox::Yes | QMessageBox::No);
+		if (result == QMessageBox::Yes)
+			actual_path = auto_save_path;
+	}
+	
+	if (!new_controller->load(actual_path, this))
 	{
 		delete new_controller;
 		settings.remove(reopen_blocker);
@@ -706,7 +668,7 @@ bool MainWindow::openPath(const QString &path)
 		open_window = this;
 	open_window->setController(new_controller);
 	open_window->setCurrentFile(path);		// must be after setController()
-	open_window->setHasUnsavedChanges(false);
+	open_window->setHasUnsavedChanges(actual_path != path);
 	
 	open_window->show();
 	open_window->raise();
@@ -760,6 +722,58 @@ void MainWindow::updateRecentFileActions()
 	open_recent_menu_inserted = num_recent_files > 0;
 }
 
+QString MainWindow::autoSaveFileName(const QString &path)
+{
+	return path % ".autosave";
+}
+
+QString MainWindow::autoSaveFileName() const
+{
+	return autoSaveFileName(getCurrentFilePath());
+}
+
+void MainWindow::removeAutoSaveFile()
+{
+	QString path = getCurrentFilePath();
+	if (!path.isEmpty())
+	{
+		QFile auto_save_file(autoSaveFileName());
+		if (auto_save_file.exists())
+		{
+			auto_save_file.remove();
+		}
+	}
+}
+
+AutoSave::AutoSaveResult MainWindow::autoSave()
+{
+	QString path = getCurrentFilePath();
+	if (path.isEmpty() || !controller)
+	{
+		return AutoSave::PermanentFailure;
+	}
+	else if (controller->isEditingInProgress())
+	{
+		return AutoSave::TemporaryFailure;
+	}
+	else
+	{
+		showStatusBarMessage(tr("Auto-saving..."), 0);
+		if (controller->exportTo(autoSaveFileName(path)))
+		{
+			// Success
+			clearStatusBarMessage();
+			return AutoSave::Success;
+		}
+		else
+		{
+			// Failure
+			showStatusBarMessage(tr("Auto-saving failed!"), 6000);
+			return AutoSave::PermanentFailure;
+		}
+	}
+}
+
 bool MainWindow::save()
 {
 	return savePath(getCurrentFilePath());
@@ -785,6 +799,7 @@ bool MainWindow::savePath(const QString &path)
 	if (!controller->save(path))
 		return false;
 	
+	removeAutoSaveFile();
 	setCurrentFile(path);
 	setHasUnsavedChanges(false);
 	return true;

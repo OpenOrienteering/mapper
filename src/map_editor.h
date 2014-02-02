@@ -202,6 +202,8 @@ public:
 	/** Override from MainWindowController */
 	virtual bool save(const QString& path);
 	/** Override from MainWindowController */
+	virtual bool exportTo(const QString& path, const FileFormat* format = NULL);
+	/** Override from MainWindowController */
 	virtual bool load(const QString& path, QWidget* dialog_parent = NULL);
 	
 	/** Override from MainWindowController */

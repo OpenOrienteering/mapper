@@ -364,6 +364,16 @@ bool MapEditorController::save(const QString& path)
 		return false;
 }
 
+bool MapEditorController::exportTo(const QString& path, const FileFormat* format)
+{
+	if (map && !editing_in_progress)
+	{
+		return map->exportTo(path, this);
+	}
+	
+	return false;
+}
+
 bool MapEditorController::load(const QString& path, QWidget* dialog_parent)
 {
 	if (!dialog_parent)
@@ -1319,7 +1329,10 @@ void MapEditorController::doUndo(bool redo)
 		window->setHasUnsavedChanges(false);
 	}
 	else if (!map->hasUnsavedChanged() && !in_saved_state)
+	{
 		map->setHasUnsavedChanges(true);
+		window->setHasUnsavedChanges(true);
+	}
 	
 	// Select affected objects and ensure that they are visible
 	map->clearObjectSelection((int)affected_objects.size() == 0);

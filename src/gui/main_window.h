@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Thomas Schöps, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,6 +24,7 @@
 
 #include <QMainWindow>
 
+#include "../core/auto_save.h"
 #include "../file_format.h"
 
 QT_BEGIN_NAMESPACE
@@ -38,7 +40,7 @@ class MainWindowController;
  *  which provides the specific window content and behaviours.
  *  The controller can be exchanged while the window is visible.
  */
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public AutoSave
 {
 Q_OBJECT
 public:
@@ -199,7 +201,7 @@ public slots:
 	
 	/** Save the current content to the current path.
 	 */
-	void autoSave();
+	virtual AutoSave::AutoSaveResult autoSave();
 	
 	/** Close the file currently opened.
 	 *  This will close the window unless this is the last window.
@@ -257,18 +259,19 @@ protected:
 	 */
 	void setCurrentFile(const QString& path);
 	
+	/** @brief Removes the auto-save file if it exists. */
+	void removeAutoSaveFile();
+	
+	/** @brief Returns the auto-save file path for the current path. */
+	QString autoSaveFileName() const;
+	
+	/** @brief Returns the auto-save file path for the given path. */
+	static QString autoSaveFileName(const QString &path);
+	
 	virtual bool event(QEvent* event);
 	virtual void closeEvent(QCloseEvent *event);
 	virtual void keyPressEvent(QKeyEvent* event);
 	virtual void keyReleaseEvent(QKeyEvent* event);
-	
-	/**
-	 * Configures the auto-save feature from the current settings.
-	 * 
-	 * When auto-save gets activated, and the times is not yet active,
-	 * it starts the timer.
-	 */
-	void updateAutoSave();
 	
 private:
 	enum {
@@ -335,8 +338,6 @@ private:
 	
 	/// A list of paths to be opened later
 	QStringList path_backlog;
-	
-	QTimer* auto_save_timer;
 };
 
 #endif

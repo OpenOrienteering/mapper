@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Thomas Schöps, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,6 +25,7 @@
 #include <QWidget>
 
 class MainWindow;
+class FileFormat;
 
 
 /** A MainWindowController provides the specific content and 
@@ -42,6 +44,14 @@ public:
 	 *  @return true if saving was sucessful, false on errors
 	 */
 	virtual bool save(const QString& path);
+
+	/** Export to a file, but don't change modified state
+	 *  with regard to the original file.
+	 *  @param path the path to export to
+	 *  @param format the file format (automatically determined if NULL)
+	 *  @return true if saving was sucessful, false on errors
+	 */
+	virtual bool exportTo(const QString& path, const FileFormat* format = NULL);
 
 	/** Load from a file.
 	 *  @param path the path to load from

@@ -379,12 +379,12 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	int auto_save_interval = Settings::getInstance().getSetting(Settings::General_AutoSaveInterval).toInt();
 	
 	row++;
-	QCheckBox* auto_save_check = new QCheckBox(tr("Enable automatic saving of the current file"));
+	QCheckBox* auto_save_check = new QCheckBox(tr("Save information for automatic recovery"));
 	auto_save_check->setChecked(auto_save_interval > 0);
 	layout->addWidget(auto_save_check, row, 1, 1, 2);
 	
 	row++;
-	auto_save_interval_label = new QLabel(tr("Auto-save interval:"));
+	auto_save_interval_label = new QLabel(tr("Recovery information saving interval:"));
 	layout->addWidget(auto_save_interval_label, row, 1);
 	
 	auto_save_interval_edit = Util::SpinBox::create(1, 120, tr("min", "unit minutes"), 1);
