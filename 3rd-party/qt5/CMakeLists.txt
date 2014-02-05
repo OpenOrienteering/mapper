@@ -25,7 +25,7 @@ include(ExternalProject)
 
 # Configuration options
 
-set(QT5_VERSION_DEFAULT 5.1.1)
+set(QT5_VERSION_DEFAULT 5.2.1)
 set(QT5_VERSION ${QT5_VERSION_DEFAULT} CACHE STRING
   "Version number of the Qt5 library, recommended value: ${QT5_VERSION_DEFAULT}")
 mark_as_advanced(QT5_VERSION)
@@ -46,6 +46,7 @@ set(QT5_MD5SUMS
   5.1.0:787ce18c7f47fc14538b4362a0aa9edd
   5.1.1:33c7883a628a18c44ebf2b73996a5760
   5.2.0:228b6384dfd7272de00fd8b2c144fecd
+  5.2.1:a78408c887c04c34ce615da690e0b4c8
 )
 foreach(line ${QT5_MD5SUMS})
 	if(${line} MATCHES "^${QT5_VERSION}:")
