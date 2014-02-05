@@ -1168,8 +1168,7 @@ void MapWidget::updateTemplateCache(QImage*& cache, QRect& dirty_rect, int first
 	painter.restore();
 	painter.end();
 	
-	dirty_rect.setWidth(-1);
-	Q_ASSERT(!dirty_rect.isValid());
+	dirty_rect.setWidth(-1); // => !dirty_rect.isValid()
 }
 
 void MapWidget::updateMapCache(bool use_background)
@@ -1220,8 +1219,7 @@ void MapWidget::updateMapCache(bool use_background)
 	// Finish drawing
 	painter.end();
 	
-	map_cache_dirty_rect.setWidth(-1);
-	Q_ASSERT(!map_cache_dirty_rect.isValid());
+	map_cache_dirty_rect.setWidth(-1); // => !map_cache_dirty_rect.isValid()
 }
 
 void MapWidget::updateAllDirtyCaches()
