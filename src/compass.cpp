@@ -555,6 +555,9 @@ void Compass::connectToAzimuthChanges(const QObject* receiver, const char* slot)
 {
 #ifdef HAVE_QTSENSORS
 	connect(this, SIGNAL(azimuthChanged(float)), receiver, slot, Qt::QueuedConnection);
+#else
+	Q_UNUSED(receiver);
+	Q_UNUSED(slot);
 #endif
 }
 
@@ -562,6 +565,8 @@ void Compass::disconnectFromAzimuthChanges(const QObject* receiver)
 {
 #ifdef HAVE_QTSENSORS
 	this->disconnect(receiver);
+#else
+	Q_UNUSED(receiver);
 #endif
 }
 
