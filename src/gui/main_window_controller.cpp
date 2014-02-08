@@ -21,6 +21,8 @@
 
 #include "main_window_controller.h"
 
+#include <QKeyEvent>
+
 #include "../map_editor.h"
 #include "../file_format.h"
 #include "../file_format_registry.h"
@@ -61,16 +63,16 @@ bool MainWindowController::isEditingInProgress() const
 	return false;
 }
 
-void MainWindowController::keyPressEvent(QKeyEvent* event)
+bool MainWindowController::keyPressEventFilter(QKeyEvent* event)
 {
 	Q_UNUSED(event);
-	// nothing
+	return false;
 }
 
-void MainWindowController::keyReleaseEvent(QKeyEvent* event)
+bool MainWindowController::keyReleaseEventFilter(QKeyEvent* event)
 {
 	Q_UNUSED(event);
-	// nothing
+	return false;
 }
 
 MainWindowController* MainWindowController::controllerForFile(const QString& filename)

@@ -79,9 +79,29 @@ public:
 	 */
 	virtual bool isEditingInProgress() const;
 	
-	// Get key press events from the main window
-	virtual void keyPressEvent(QKeyEvent* event);
-	virtual void keyReleaseEvent(QKeyEvent* event);
+	/**
+	 * @brief Receives key press events from the main window.
+	 * 
+	 * QKeyEvent starts with isAccepted() == true, so the return value of this
+	 * function decides if the event shall be stopped from being handled further.
+	 * 
+	 * The default implementation simply returns false.
+	 * 
+	 * @return True if the event shall be stopped from being handled further, false otherwise.
+	 */
+	virtual bool keyPressEventFilter(QKeyEvent* event);
+	
+	/**
+	 * @brief Receives key release events from the main window.
+	 * 
+	 * QKeyEvent starts with isAccepted() == true, so the return value of this
+	 * function decides if the event shall be stopped from being handled further.
+	 * 
+	 * The default implementation simply returns false.
+	 * 
+	 * @return True if the event shall be stopped from being handled further, false otherwise.
+	 */
+	virtual bool keyReleaseEventFilter(QKeyEvent* event);
 	
 	/** Get the main window this controller is attached to.
 	 */

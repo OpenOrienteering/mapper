@@ -236,10 +236,6 @@ public slots:
 	 */
 	void gotUnsavedChanges();
 	
-signals:
-	void keyPressed(QKeyEvent* event);
-	void keyReleased(QKeyEvent* event);
-	
 protected slots:
 	/**
 	 * Open the files which have been registered by openPathLater().

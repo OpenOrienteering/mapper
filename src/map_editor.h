@@ -211,10 +211,17 @@ public:
 	/** Override from MainWindowController */
 	virtual void detach();
 	
-	/** Override from MainWindowController */
-	virtual void keyPressEvent(QKeyEvent* event);
-	/** Override from MainWindowController */
-	virtual void keyReleaseEvent(QKeyEvent* event);
+	/**
+	 * @copybrief MainWindowController::keyPressEventFilter
+	 * This implementation passes the event to MapWidget::keyPressEventFilter.
+	 */
+	virtual bool keyPressEventFilter(QKeyEvent* event);
+	
+	/** 
+	 * @copybrief MainWindowController::keyReleaseEventFilter
+	 * This implementation passes the event to MapWidget::keyReleaseEventFilter.
+	 */
+	virtual bool keyReleaseEventFilter(QKeyEvent* event);
 	
 public slots:
 	/**

@@ -424,24 +424,24 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
-	if (controller)
-		controller->keyPressEvent(event);
-	if (!event->isAccepted())
+	if (controller && controller->keyPressEventFilter(event))
 	{
-		emit(keyPressed(event));
-		QWidget::keyPressEvent(event);
+		// Event filtered, stop handling
+		return;
 	}
+	
+	QMainWindow::keyPressEvent(event);
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent* event)
 {
-	if (controller)
-		controller->keyReleaseEvent(event);
-	if (!event->isAccepted())
+	if (controller && controller->keyReleaseEventFilter(event))
 	{
-		emit(keyReleased(event));
-		QWidget::keyReleaseEvent(event);
+		// Event filtered, stop handling
+		return;
 	}
+	
+	QMainWindow::keyReleaseEvent(event);
 }
 
 bool MainWindow::showSaveOnCloseDialog()

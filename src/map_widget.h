@@ -297,12 +297,19 @@ public:
 	/** Returns the widget's preferred size. */
 	virtual QSize sizeHint() const;
 	
-public slots:
-	/** Delegates the keyPress to the active tool, or handles some shortcuts itself. */
-	void keyPressed(QKeyEvent* event);
-	/** Delegates the keyRelease to the active tool */
-	void keyReleased(QKeyEvent* event);
+	/**
+	 * @copybrief MainWindowController::keyPressEventFilter
+	 * Delegates the keyPress to the active tool, or handles some shortcuts itself.
+	 */
+	bool keyPressEventFilter(QKeyEvent* event);
+	
+	/**
+	 * @copybrief MainWindowController::keyPressEventFilter
+	 * Delegates the keyRelease to the active tool.
+	 */
+	bool keyReleaseEventFilter(QKeyEvent* event);
 
+public slots:
 	/** Enables or disables the touch cursor. */
 	void enableTouchCursor(bool enabled);
 

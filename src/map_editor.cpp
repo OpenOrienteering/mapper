@@ -459,8 +459,6 @@ void MapEditorController::attach(MainWindow* window)
 	
 	// Create map widget
 	map_widget = new MapWidget(mode == MapEditor, mode == SymbolEditor);
-	connect(window, SIGNAL(keyPressed(QKeyEvent*)), map_widget, SLOT(keyPressed(QKeyEvent*)));
-	connect(window, SIGNAL(keyReleased(QKeyEvent*)), map_widget, SLOT(keyReleased(QKeyEvent*)));
 	map_widget->setMapView(main_view);
 	
 	if (mode == MapEditor)
@@ -1227,14 +1225,14 @@ void MapEditorController::restoreWindowState()
 	window->restoreState(settings.value("state").toByteArray());
 }
 
-void MapEditorController::keyPressEvent(QKeyEvent* event)
+bool MapEditorController::keyPressEventFilter(QKeyEvent* event)
 {
-	map_widget->keyPressed(event);
+	return map_widget->keyPressEventFilter(event);
 }
 
-void MapEditorController::keyReleaseEvent(QKeyEvent* event)
+bool MapEditorController::keyReleaseEventFilter(QKeyEvent* event)
 {
-	map_widget->keyReleased(event);
+	return map_widget->keyReleaseEventFilter(event);
 }
 
 void MapEditorController::printClicked(int task)

@@ -1046,41 +1046,48 @@ void MapWidget::leaveEvent(QEvent* event)
 		tool->leaveEvent(event);
 }
 
-void MapWidget::keyPressed(QKeyEvent* event)
+bool MapWidget::keyPressEventFilter(QKeyEvent* event)
 {
 	if (tool && tool->keyPressEvent(event))
 	{
-		event->accept();
-		return;
+		return true;
 	}
 	
-	if (event->key() == Qt::Key_F6)
-		startPanning(mapFromGlobal(QCursor::pos()));
-	else if (event->key() == Qt::Key_Up)
-		moveMap(0, -1);
-	else if (event->key() == Qt::Key_Down)
-		moveMap(0, 1);
-	else if (event->key() == Qt::Key_Left)
-		moveMap(-1, 0);
-	else if (event->key() == Qt::Key_Right)
-		moveMap(1, 0);
-	else
+	switch (event->key())
 	{
-		QWidget::keyPressEvent(event);
-		return;
+	case Qt::Key_F6:
+		startPanning(mapFromGlobal(QCursor::pos()));
+		return true;
+		
+	case Qt::Key_Up:
+		moveMap(0, -1);
+		return true;
+		
+	case Qt::Key_Down:
+		moveMap(0, 1);
+		return true;
+		
+	case Qt::Key_Left:
+		moveMap(-1, 0);
+		return true;
+		
+	case Qt::Key_Right:
+		moveMap(1, 0);
+		return true;
+		
+	default:
+		return false;
 	}
-	
-	event->accept();
 }
 
-void MapWidget::keyReleased(QKeyEvent* event)
+bool MapWidget::keyReleaseEventFilter(QKeyEvent* event)
 {
 	if (tool && tool->keyReleaseEvent(event))
 	{
-		event->accept();
-		return;
+		return true;
 	}
-	QWidget::keyReleaseEvent(event);
+	
+	return false;
 }
 
 void MapWidget::enableTouchCursor(bool enabled)
