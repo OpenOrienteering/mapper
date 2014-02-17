@@ -285,13 +285,14 @@ void MapView::applyTransform(QPainter* painter)
 	painter->setWorldTransform(world_transform, true);
 }
 
-void MapView::setDragOffset(QPoint offset)
+void MapView::setDragOffset(QPoint offset, bool do_update)
 {
 	drag_offset = offset;
 	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->setDragOffset(drag_offset);
+		widgets[i]->setDragOffset(drag_offset, do_update);
 }
-void MapView::completeDragging(QPoint offset)
+
+void MapView::completeDragging(QPoint offset, bool do_update)
 {
 	MapCoordF rotated_offset(offset.x(), offset.y());
 	rotated_offset.rotate(-1 * rotation);
@@ -305,7 +306,7 @@ void MapView::completeDragging(QPoint offset)
 	update();
 	
 	for (int i = 0; i < (int)widgets.size(); ++i)
-		widgets[i]->completeDragging(move_x, move_y);
+		widgets[i]->completeDragging(move_x, move_y, do_update);
 }
 
 bool MapView::zoomSteps(float num_steps, bool preserve_cursor_pos, QPointF cursor_pos_view)
@@ -396,6 +397,22 @@ void MapView::setZoom(float value)
 	for (int i = 0; i < (int)widgets.size(); ++i)
 		widgets[i]->updateZoomLabel();
 }
+
+void MapView::setZoom(double value, QPointF center)
+{
+	value = qBound(zoom_out_limit, value, zoom_in_limit);
+	double zoom_factor = value / getZoom();
+	
+	MapCoordF zoom_center_map = viewToMapF(center);
+	MapCoordF view_center_map = MapCoordF(getPositionX()/1000.0 - zoom_center_map.getX(), getPositionY()/1000.0 - zoom_center_map.getY());
+	view_center_map = MapCoordF(view_center_map.getX() / zoom_factor, view_center_map.getY() / zoom_factor);
+	
+	setZoom(value);
+	
+	setPositionX(qRound64(1000 * (zoom_center_map.getX() + view_center_map.getX())));
+	setPositionY(qRound64(1000 * (zoom_center_map.getY() + view_center_map.getY())));
+}
+
 void MapView::setPositionX(qint64 value)
 {
 	qint64 offset = value - position_x;

@@ -22,6 +22,8 @@
 #include "map_widget.h"
 
 #include <QtWidgets>
+#include <QPinchGesture>
+#include <QTouchEvent>
 
 #include "core/map_color.h"
 #include "georeferencing.h"
@@ -79,6 +81,8 @@ MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)
 // 	context_menu->setIconSize(24);
 	
 	setAttribute(Qt::WA_OpaquePaintEvent);
+	setAttribute(Qt::WA_AcceptTouchEvents, true);
+	setGesturesEnabled(true);
 	setAutoFillBackground(false);
 	setMouseTracking(true);
 	setFocusPolicy(Qt::ClickFocus);
@@ -135,6 +139,21 @@ void MapWidget::setActivity(MapEditorActivity* activity)
 {
 	this->activity = activity;
 }
+
+
+void MapWidget::setGesturesEnabled(bool enabled)
+{
+	gestures_enabled = enabled;
+	if (enabled)
+	{
+		grabGesture(Qt::PinchGesture);
+	}
+	else
+	{
+		ungrabGesture(Qt::PinchGesture);
+	}
+}
+
 
 void MapWidget::applyMapTransform(QPainter* painter)
 {
@@ -319,10 +338,11 @@ void MapWidget::panView(qint64 x, qint64 y)
 	}
 }
 
-void MapWidget::setDragOffset(QPoint offset)
+void MapWidget::setDragOffset(QPoint offset, bool do_update)
 {
 	drag_offset = offset;
-	update();
+	if (do_update)
+		update();
 }
 
 QPoint MapWidget::getDragOffset() const
@@ -330,10 +350,11 @@ QPoint MapWidget::getDragOffset() const
 	return drag_offset;
 }
 
-void MapWidget::completeDragging(qint64 dx, qint64 dy)
+void MapWidget::completeDragging(qint64 dx, qint64 dy, bool do_update)
 {
 	drag_offset = QPoint(0, 0);
-	panView(dx, dy);
+	if (do_update)
+		panView(dx, dy);
 }
 
 void MapWidget::ensureVisibilityOfRect(const QRectF& map_rect, bool show_completely, bool zoom_in_steps)
@@ -760,6 +781,73 @@ void MapWidget::showHelpMessage(QPainter* painter, const QString& text)
 	font.setBold(true);
 	painter->setFont(font);
 	painter->drawText(QRect(0, 0, width(), height()), Qt::AlignCenter, text);
+}
+
+bool MapWidget::event(QEvent* event)
+{
+	switch (event->type())
+	{
+	case QEvent::Gesture:
+		gestureEvent(static_cast<QGestureEvent*>(event));
+		return event->isAccepted();
+		
+	case QEvent::TouchBegin:
+	case QEvent::TouchUpdate:
+	case QEvent::TouchEnd:
+	case QEvent::TouchCancel:
+		if (static_cast<QTouchEvent*>(event)->touchPoints().count() >= 2)
+			return true;
+		break;
+	default:
+		; // nothing
+	}
+	
+    return QWidget::event(event);
+}
+
+void MapWidget::gestureEvent(QGestureEvent* event)
+{
+	if (QGesture* gesture = event->gesture(Qt::PinchGesture))
+	{
+		//pinchTriggered(static_cast<QPinchGesture *>(pinch));
+		QPinchGesture* pinch = static_cast<QPinchGesture *>(gesture);
+		float zoom = pinch->totalScaleFactor();
+		float change = zoom/view->getZoom();
+		bool change_zoom = (change <= 0.9f || change >= 1.1f);
+		switch (pinch->state())
+		{
+		case Qt::GestureStarted:
+			if (dragging)
+				finishPanning(drag_start_pos + view->getDragOffset());
+			pinch->setStartCenterPoint(pinch->centerPoint());
+			pinch->setTotalScaleFactor(view->getZoom());
+			break;
+		case Qt::GestureUpdated:
+			view->setDragOffset((pinch->centerPoint() - pinch->startCenterPoint()).toPoint(), !change_zoom);
+			if (change_zoom) {
+				view->setZoom(pinch->totalScaleFactor(), viewportToView(pinch->centerPoint()));
+				view->updateAllMapWidgets();
+			}
+			break;
+		case Qt::GestureFinished:
+			view->completeDragging((pinch->centerPoint() - pinch->startCenterPoint()).toPoint(), !change_zoom);
+			if (change_zoom) {
+				view->setZoom(pinch->totalScaleFactor(), viewportToView(pinch->centerPoint()));
+				view->updateAllMapWidgets();
+			}
+			break;
+		case Qt::GestureCanceled:
+			view->completeDragging(QPoint(0,0), true);
+			break;
+		default:
+			Q_ASSERT(false && "Unknown gesture state");
+		}
+		event->accept();
+	}
+	else
+	{
+		event->ignore();
+	}
 }
 
 void MapWidget::paintEvent(QPaintEvent* event)

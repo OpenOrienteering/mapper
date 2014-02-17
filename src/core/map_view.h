@@ -146,13 +146,14 @@ public:
 	// Dragging
 	
 	/** Sets the current drag offset while the map is being dragged. */
-	void setDragOffset(QPoint offset);
+	void setDragOffset(QPoint offset, bool do_update = true);
 	
 	/**
 	 * Finishes dragging the map.
 	 * @param offset Drag offset of the whole pan operation, from start to end.
+	 * @param do_update If true (the default), the MapWidgets will be redrawn.
 	 */
-	void completeDragging(QPoint offset);
+	void completeDragging(QPoint offset, bool do_update = true);
 	
 	/**
 	 * Zooms the maps (in steps).
@@ -179,6 +180,9 @@ public:
 	
 	/** Sets the zoom factor. */
 	void setZoom(float value);
+	
+	/** @brief Sets the zoom factor relative to the given point.*/
+	void setZoom(double value, QPointF center);
 	
 	/** Returns the view rotation (in radians). */
 	float getRotation() const;

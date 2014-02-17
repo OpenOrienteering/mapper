@@ -29,6 +29,7 @@
 #include "map.h"
 
 QT_BEGIN_NAMESPACE
+class QGestureEvent;
 class QLabel;
 QT_END_NAMESPACE
 
@@ -102,13 +103,31 @@ public:
 	/** Sets the activity to use in this widget. Does not take ownership of the activity. */
 	void setActivity(MapEditorActivity* activity);
 	
+	
+	/**
+	 * @brief Enables or disables gesture recognition.
+	 * 
+	 * MapWidget can recognize gestures, such as two-finger gestures for panning
+	 * and zooming. However, this may disturb the work with editing tools. So gestures
+	 * may be disabled.
+	 * 
+	 * @param enabled If true, enables gesture recognition. Otherwise gestures are disabled.
+	 */
+	void setGesturesEnabled(bool enabled);
+	
+	/**
+	 * @brief Returns true if gesture recognition is enabled.
+	 * 
+	 */
+	bool gesturesEnabled() const;
+	
+	
 	/**
 	 * Applies the complete transform to the painter which enables to draw
 	 * map objects with map coordinates and have them correctly displayed in
 	 * the widget with the settings of the used MapView.
 	 */
 	void applyMapTransform(QPainter* painter);
-	
 	
 	// Coordinate transformations
 	
@@ -170,7 +189,7 @@ public:
 	void panView(qint64 x, qint64 y);
 	
 	/** Sets the current drag offset during a map pan operation. */
-	void setDragOffset(QPoint offset);
+	void setDragOffset(QPoint offset, bool do_update = true);
 	
 	/** Returns the current drag offset during a map pan operation. */
 	QPoint getDragOffset() const;
@@ -181,7 +200,7 @@ public:
 	 * @param dx X offset of the total view change in native map coordinates
 	 * @param dy Y offset of the total view change in native map coordinates
 	 */
-	void completeDragging(qint64 dx, qint64 dy);
+	void completeDragging(qint64 dx, qint64 dy, bool do_update = true);
 	
 	/**
 	 * Adjusts the viewport so the given rect is inside the view.
@@ -318,6 +337,10 @@ private slots:
 	void updateDrawingLaterSlot();
 	
 protected:
+	virtual bool event(QEvent *event);
+	
+	virtual void gestureEvent(QGestureEvent* event);
+	
 	virtual void paintEvent(QPaintEvent* event);
 	virtual void resizeEvent(QResizeEvent* event);
 	
@@ -475,6 +498,19 @@ private:
 	CompassDisplay* compass_display;
 	/** Optional temporary GPS marker display. */
 	GPSTemporaryMarkers* marker_display;
+	
+	/** @brief Indicates whether gesture recognition is enabled. */
+	bool gestures_enabled;
 };
+
+
+
+// ### MapWidget inline code ###
+
+inline
+bool MapWidget::gesturesEnabled() const
+{
+	return gestures_enabled;
+}
 
 #endif

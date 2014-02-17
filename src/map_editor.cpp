@@ -267,6 +267,8 @@ void MapEditorController::setEditingInProgress(bool value)
 		undo_act->setEnabled(!editing_in_progress && map->objectUndoManager().getNumUndoSteps() > 0);
 		redo_act->setEnabled(!editing_in_progress && map->objectUndoManager().getNumRedoSteps() > 0);
 		updatePasteAvailability();
+		
+		map_widget->setGesturesEnabled(!value);
 	}
 }
 
