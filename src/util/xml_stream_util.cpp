@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +21,7 @@
 #include "xml_stream_util.h"
 
 #include "../map_coord.h"
+#include "../file_format_xml.h"
 
 
 void XmlElementWriter::write(const MapCoordVector& coords)
@@ -30,9 +31,9 @@ void XmlElementWriter::write(const MapCoordVector& coords)
 	int num_coords = (int)coords.size();
 	writeAttribute(literal::count, num_coords);
 	
-	if (xml.autoFormatting())
+	if (XMLFileFormat::current_version < 6 || xml.autoFormatting())
 	{
-		// XMAP files: syntactically rich output
+		// XMAP files and old format: syntactically rich output
 		for (MapCoordVector::const_iterator coord = coords.begin(), end = coords.end(); coord != end; ++coord)
 			coord->save(xml);
 	}

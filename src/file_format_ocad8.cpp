@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Pete Curtis
+ *    Copyright 2012 Pete Curtis
+ *    Copyright 2013, 2014 Pete Curtis, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -30,6 +31,7 @@
 
 #include "core/map_color.h"
 #include "core/map_view.h"
+#include "file_format_xml.h"
 #include "file_import_export.h"
 #include "georeferencing.h"
 #include "map.h"
@@ -197,7 +199,8 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
 				color->setCmyk(cmyk);
 		}
 		
-		if (i == 0 && color->getName() == QLatin1String("Registration black") && color->isBlack())
+		if (i == 0 && color->isBlack() && color->getName() == QLatin1String("Registration black")
+		           && XMLFileFormat::current_version >= 6 )
 		{
 			delete color; color = NULL;
 			color_index[ocad_color->number] = Map::getRegistrationColor();

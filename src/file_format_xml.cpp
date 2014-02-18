@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Pete Curtis, Kai Pastor
+ *    Copyright 2012, 2013, 2014 Pete Curtis, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -47,7 +47,12 @@
 // ### XMLFileFormat definition ###
 
 const int XMLFileFormat::minimum_version = 2;
+#if defined(Q_OS_ANDROID)
+#pragma GCC warning "XMLFileFormat::current_version is set to 5 for Android"
 const int XMLFileFormat::current_version = 5;
+#else
+const int XMLFileFormat::current_version = 6;
+#endif
 const QString XMLFileFormat::magic_string = "<?xml ";
 const QString XMLFileFormat::mapper_namespace = "http://oorienteering.sourceforge.net/mapper/xml/v2";
 
