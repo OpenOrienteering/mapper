@@ -20,7 +20,7 @@ TEMPLATE = lib
 TARGET   = fakeqt5
 
 qt5.dir      = $$OUT_PWD/qt5
-qt5.version  = 5.2.0
+qt5.version  = 5.2.1
 qt5.target   = $$qt5.dir/Qt5-prefix/bin/qmake
 
 win32 {
