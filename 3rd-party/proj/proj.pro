@@ -16,8 +16,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-TEMPLATE = lib
-TARGET   = fakeproj
+TEMPLATE = aux
 
 proj.dir      = $$OUT_PWD/proj
 proj.target   = $$proj.dir/Proj-prefix/lib/libproj.so

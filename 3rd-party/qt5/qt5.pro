@@ -16,8 +16,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-TEMPLATE = lib
-TARGET   = fakeqt5
+TEMPLATE = aux
 
 qt5.dir      = $$OUT_PWD/qt5
 qt5.version  = 5.2.1

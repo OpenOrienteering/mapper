@@ -16,8 +16,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-TEMPLATE = lib
-TARGET   = fakeclipper
+TEMPLATE = aux
 
 clipper.dir      = $$OUT_PWD/clipper
 clipper.target   = $$clipper.dir/libpolyclipping.a
