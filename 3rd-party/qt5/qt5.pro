@@ -20,15 +20,13 @@ TEMPLATE = aux
 
 qt5.dir      = $$OUT_PWD/qt5
 qt5.version  = 5.2.1
-qt5.target   = $$qt5.dir/Qt5-prefix/bin/qmake
+qt5.target   = $$qt5.dir/Qt5-prefix/src/Qt5-stamp/Qt5-install
 
-win32 {
-	qt5.target   = $$qt5.dir/Qt5-prefix/bin/qmake.exe
-}
 android {
-	qt5.target   = $$qt5.dir/Qt5-prefix/jar/QtAndroid.jar
 	qt5.platform = -xplatform android-g++ \
-	               -android-ndk-platform android-11 \
+	               -android-ndk-platform android-9 \
+	               -android-arch "$$ANDROID_TARGET_ARCH" \
+	               -android-toolchain-version 4.8 \
 	               -skip qttranslations \
 	               -nomake tests \
 	               -nomake examples \
@@ -39,9 +37,8 @@ qt5.commands = \
   mkdir -p "$$qt5.dir" && \
   cd "$$qt5.dir" && \
   cmake "$$PWD" -DQT5_VERSION=$$qt5.version -DQT5_PLATFORM=\"$$qt5.platform\" && \
-  PATH="$$NDK_TOOLCHAIN_PATH/bin:${PATH}" $(MAKE) all && \
-  $(MAKE) clean
+  PATH="$$NDK_TOOLCHAIN_PATH/bin:${PATH}" $(MAKE) all
 
 QMAKE_EXTRA_TARGETS += qt5
 PRE_TARGETDEPS      += $$qt5.target
-QMAKE_CLEAN         += $$qt5.target $$qt5.dir/Qt5-prefix/src/Qt5-stamp/*
+QMAKE_CLEAN         += $$qt5.dir/Qt5-prefix/src/Qt5-stamp/*
