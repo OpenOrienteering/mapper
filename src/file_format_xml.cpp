@@ -48,7 +48,7 @@
 
 const int XMLFileFormat::minimum_version = 2;
 #if defined(Q_OS_ANDROID)
-#pragma GCC warning "XMLFileFormat::current_version is set to 5 for Android"
+#warning "XMLFileFormat::current_version is set to 5 for Android"
 const int XMLFileFormat::current_version = 5;
 #else
 const int XMLFileFormat::current_version = 6;
