@@ -17,39 +17,49 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
 TEMPLATE = subdirs
-CONFIG  += ordered
 
 
 # Prerequisites configuration
+#
+# addPrerequisite(subdir) will add the given subdir as target.
+# addPrerequisite(target, path) will add the given target and path.
+# Prerequisite directories must create a target.pri file in their output dir.
 
 PREREQUISITES_PRI =
 
-## Clipper
-SUBDIRS += 3rd-party/clipper
-PREREQUISITES_PRI += "include($$OUT_PWD/3rd-party/clipper/clipper.pri)"
-	
-## Proj
-android {
-	SUBDIRS += 3rd-party/proj
-	PREREQUISITES_PRI += "include($$OUT_PWD/3rd-party/proj/proj.pri)"
+defineTest(addPrerequisite) {
+	!contains(SUBDIRS, $$1) {
+		target = $$1
+		subdir = $$2
+		isEmpty(subdir): subdir = $$1
+		
+		SUBDIRS += $$target
+		export(SUBDIRS)
+		
+		$${target}.subdir = $$subdir
+		export($${target}.subdir)
+		
+		PREREQUISITES_PRI += "include($$OUT_PWD/$${subdir}/$${target}.pri)"
+		export(PREREQUISITES_PRI)
+		
+		src.depends += $$target
+		export(src.depends)
+		
+		return(true)
+	}
 }
 
-## QBezier
-SUBDIRS += 3rd-party/qbezier
-PREREQUISITES_PRI += "include($$OUT_PWD/3rd-party/qbezier/qbezier.pri)"
-
-## QtSingleApplication
-SUBDIRS += 3rd-party/qtsingleapplication
-PREREQUISITES_PRI += "include($$OUT_PWD/3rd-party/qtsingleapplication/qtsingleapplication.pri)"
-
-## libocd
-SUBDIRS += src/libocad
-PREREQUISITES_PRI += "include($$OUT_PWD/src/libocad/libocd.pri)"
+addPrerequisite(libocd, src/libocad)
+addPrerequisite(clipper, 3rd-party/clipper)
+addPrerequisite(qbezier, 3rd-party/qbezier)
+addPrerequisite(qtsingleapplication, 3rd-party/qtsingleapplication)
+!linux:addPrerequisite(proj, 3rd-party/proj)
+android:addPrerequisite(proj, 3rd-party/proj)
 
 write_file($$OUT_PWD/prerequisites.pri, PREREQUISITES_PRI)
 
 
-# Prerequisites compilation toolchain
+# CMake toolchain file for prerequisites compilation 
 
 CMAKE_TOOLCHAIN =
 
@@ -73,5 +83,4 @@ write_file($$OUT_PWD/toolchain.cmake, CMAKE_TOOLCHAIN)
 
 # Mapper build
 
-SUBDIRS += \
-  src
+SUBDIRS  += src
