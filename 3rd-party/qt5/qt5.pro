@@ -18,9 +18,20 @@
 
 TEMPLATE = aux
 
+OTHER_FILES = \
+    CMakeLists.txt \
+    qt.conf.in \
+    qt.conf.qrc.in \
+    qt5-config-host.in \
+    qt5-config.cmd.in \
+    qt5-config.in \
+    qt5-make.in \
+    qt5-patchqt.in \
+    qt5-wrapper.in
+
 qt5.dir      = $$OUT_PWD/qt5
 qt5.version  = 5.2.1
-qt5.target   = $$qt5.dir/Qt5-prefix/src/Qt5-stamp/Qt5-install
+qt5.target   = $$qt5.dir/CMakeFiles/Qt5-complete
 
 android {
 	qt5.platform = -xplatform android-g++ \
@@ -28,8 +39,6 @@ android {
 	               -android-arch "$$ANDROID_TARGET_ARCH" \
 	               -android-toolchain-version 4.8 \
 	               -skip qttranslations \
-	               -nomake tests \
-	               -nomake examples \
 	               -no-warnings-are-errors
 }
 
@@ -41,4 +50,4 @@ qt5.commands = \
 
 QMAKE_EXTRA_TARGETS += qt5
 PRE_TARGETDEPS      += $$qt5.target
-QMAKE_CLEAN         += $$qt5.dir/Qt5-prefix/src/Qt5-stamp/*
+QMAKE_CLEAN         += $$qt5.target $$qt5.dir/Qt5-prefix/src/Qt5-stamp/*

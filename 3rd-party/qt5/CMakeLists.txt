@@ -40,11 +40,6 @@ endif()
 
 set(QT5_MD5SUMS
   # Schema: VERSION:MD5[:DOWNLOAD_URL]
-  5.0.0:1a1b73f913a965f6b0cf02bb820c8a03
-  5.0.1:8e8137c23c8ff078a560d3c62b4383e7
-  5.0.2:87cae8ae2f82f41ba027c2db0ab639b7
-  5.1.0:787ce18c7f47fc14538b4362a0aa9edd
-  5.1.1:33c7883a628a18c44ebf2b73996a5760
   5.2.0:228b6384dfd7272de00fd8b2c144fecd
   5.2.1:a78408c887c04c34ce615da690e0b4c8
 )
@@ -68,7 +63,7 @@ if(QT5_MD5 MATCHES :)
 	string(REGEX REPLACE "^[0-9a-fA-F]*:" "" QT5_URL "${QT5_MD5}")
 	string(REGEX REPLACE ":.*"      "" QT5_MD5 "${QT5_MD5}")
 else()
-	set(QT5_URL "http://download.qt-project.org/official_releases/qt/${QT5_MAJOR_MINOR}/${QT5_VERSION}/single/qt-everywhere-opensource-src-${QT5_VERSION}.tar.gz")
+	set(QT5_URL "http://download.qt-project.org/archive/qt/${QT5_MAJOR_MINOR}/${QT5_VERSION}/single/qt-everywhere-opensource-src-${QT5_VERSION}.tar.gz")
 endif()
 
 find_program(SH_PROGRAM sh 

@@ -74,6 +74,4 @@ fi
   -nomake tests \
   -no-glib \
   -no-gstreamer \
-  -no-audio-backend \
-  -no-dbus \
-  -no-feature-dbus
+  -no-audio-backend
