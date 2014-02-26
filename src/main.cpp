@@ -18,7 +18,6 @@
  */
 
 
-#include "../3rd-party/qtsingleapplication/src/qtsingleapplication.h"
 #include <QDebug>
 #include <QLibraryInfo>
 #include <QLocale>
@@ -28,6 +27,14 @@
 #include <qstyle.h>
 
 #include <mapper_config.h>
+
+#if defined(QT_NETWORK_LIB)
+#define MAPPER_USE_QTSINGLEAPPLICATION 1
+#include <QtSingleApplication>
+#else
+#define MAPPER_USE_QTSINGLEAPPLICATION 0
+#include <QApplication>
+#endif
 
 #include "global.h"
 #include "gui/home_screen_controller.h"
@@ -39,6 +46,7 @@
 
 int main(int argc, char** argv)
 {
+#if MAPPER_USE_QTSINGLEAPPLICATION
 	// Create single-instance application.
 	// Use "oo-mapper" instead of the executable as identifier, in case we launch from different paths.
 	QtSingleApplication qapp("oo-mapper", argc, argv);
@@ -47,6 +55,9 @@ int main(int argc, char** argv)
 		qapp.sendMessage((argc > 1) ? argv[1] : "");
 		return 0;
 	}
+#else
+	QApplication qapp(argc, argv);
+#endif
 	
 	// Load resources
 #ifdef MAPPER_USE_QT_CONF_QRC
@@ -126,9 +137,11 @@ int main(int argc, char** argv)
 			first_window.openPathLater(files[0]);
 	}
 	
+#if MAPPER_USE_QTSINGLEAPPLICATION
 	// If we need to respond to a second app launch, do so, but also accept a file open request.
 	qapp.setActivationWindow(&first_window);
 	QObject::connect(&qapp, SIGNAL(messageReceived(const QString&)), &first_window, SLOT(openPath(const QString &)));
+#endif
 	
 	// Let application run
 	first_window.show();

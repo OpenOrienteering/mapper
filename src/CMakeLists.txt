@@ -313,9 +313,15 @@ add_executable(Mapper
   MACOSX_BUNDLE
   ${Mapper_SRCS}
 )
+
+get_property(_definitions DIRECTORY PROPERTY COMPILE_DEFINITIONS)
+if(_definitions MATCHES "QT_NETWORK_LIB")
+	include_directories("../3rd-party/qtsingleapplication/src")
+	target_link_libraries(Mapper QtSingleApplication)
+endif()
+
 target_link_libraries(Mapper
   Mapper_Common
-  QtSingleApplication
   ${PROJ_LIBRARY}
   ${QT_LIBRARIES}
   ${CLIPPER_LIBRARY}

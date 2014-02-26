@@ -244,6 +244,12 @@ android {
   # Android package template customization
   ANDROID_PACKAGE_SOURCE_DIR = $$PWD/../android
 
+  # Do not use qtsingleapplication
+  LIBS -= -lqtsingleapplication
+  
+  # Network not needed
+  QT -= network
+  
   # Use positioning module
   QT += positioning androidextras
   DEFINES += ENABLE_POSITIONING

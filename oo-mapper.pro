@@ -52,7 +52,7 @@ defineTest(addPrerequisite) {
 addPrerequisite(libocd, src/libocad)
 addPrerequisite(clipper, 3rd-party/clipper)
 addPrerequisite(qbezier, 3rd-party/qbezier)
-addPrerequisite(qtsingleapplication, 3rd-party/qtsingleapplication)
+!android:addPrerequisite(qtsingleapplication, 3rd-party/qtsingleapplication)
 !linux:addPrerequisite(proj, 3rd-party/proj)
 android:addPrerequisite(proj, 3rd-party/proj)
 

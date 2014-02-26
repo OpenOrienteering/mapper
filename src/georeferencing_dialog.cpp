@@ -21,9 +21,12 @@
 #include "georeferencing_dialog.h"
 
 #include <QtWidgets>
+#include <QXmlStreamReader>
+
+#if defined(QT_NETWORK_LIB)
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QXmlStreamReader>
+#endif
 
 #include "georeferencing.h"
 #include "gui/main_window.h"
@@ -131,7 +134,11 @@ void GeoreferencingDialog::init(const Georeferencing* initial)
 	declination_button = new QPushButton("");
 	QHBoxLayout* declination_layout = new QHBoxLayout();
 	declination_layout->addWidget(declination_edit, 1);
+#if defined(QT_NETWORK_LIB)
 	declination_layout->addWidget(declination_button, 0);
+#else
+	connect(this, SIGNAL(destroyed()), declination_button, SLOT(deleteLater()));
+#endif
 	
 	grivation_label = new QLabel();
 	
@@ -260,6 +267,7 @@ void GeoreferencingDialog::setValuesFrom(Georeferencing* values)
 
 void GeoreferencingDialog::requestDeclination(bool no_confirm)
 {
+#if defined(QT_NETWORK_LIB)
 	if (georef->isLocal() || georef->getState() == Georeferencing::ScaleOnly)
 		return;
 	
@@ -295,6 +303,9 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	query.addQueryItem("resultFormat", "xml");
 	service_url.setQuery(query);
 	network->get(QNetworkRequest(service_url));
+#else
+	Q_UNUSED(no_confirm)
+#endif
 }
 
 void GeoreferencingDialog::setMapRefPoint(MapCoord coords)
@@ -558,6 +569,7 @@ void GeoreferencingDialog::declinationChanged(double value)
 
 void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 {
+#if defined(QT_NETWORK_LIB)
 	declination_query_in_progress = false;
 	updateDeclinationButton();
 	
@@ -612,6 +624,9 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 		QMessageBox::Close );
 	if (result == QMessageBox::Retry)
 		requestDeclination(true);
+#else
+	Q_UNUSED(reply)
+#endif
 }
 
 void GeoreferencingDialog::updateZone()
