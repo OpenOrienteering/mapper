@@ -202,7 +202,7 @@ namespace SensorHelpers
 }
 
 
-#ifdef HAVE_QTSENSORS
+#ifdef QT_SENSORS_LIB
 #include <QThread>
 #include <QDebug>
 #include <QWaitCondition>
@@ -500,7 +500,7 @@ private:
 Compass::Compass(): QObject()
 {
 	reference_counter = 0;
-#ifdef HAVE_QTSENSORS
+#ifdef QT_SENSORS_LIB
 	p = new CompassPrivate(this);
 #else
 	p = NULL;
@@ -509,7 +509,7 @@ Compass::Compass(): QObject()
 
 Compass::~Compass()
 {
-#ifdef HAVE_QTSENSORS
+#ifdef QT_SENSORS_LIB
 	delete p;
 #endif
 }
@@ -523,7 +523,7 @@ Compass& Compass::getInstance()
 void Compass::startUsage()
 {
 	++ reference_counter;
-#ifdef HAVE_QTSENSORS
+#ifdef QT_SENSORS_LIB
 	if (reference_counter == 1)
 		p->enable(true);
 #endif
@@ -532,7 +532,7 @@ void Compass::startUsage()
 void Compass::stopUsage()
 {
 	-- reference_counter;
-#ifdef HAVE_QTSENSORS
+#ifdef QT_SENSORS_LIB
 	if (reference_counter == 0)
 		p->enable(false);
 #endif
@@ -540,7 +540,7 @@ void Compass::stopUsage()
 
 float Compass::getCurrentAzimuth()
 {
-#ifdef HAVE_QTSENSORS
+#ifdef QT_SENSORS_LIB
 	return p->getLatestAzimuth();
 #elif QT_VERSION >= 0x050200
 	// DEBUG: rotate around ...
@@ -553,7 +553,7 @@ float Compass::getCurrentAzimuth()
 
 void Compass::connectToAzimuthChanges(const QObject* receiver, const char* slot)
 {
-#ifdef HAVE_QTSENSORS
+#ifdef QT_SENSORS_LIB
 	connect(this, SIGNAL(azimuthChanged(float)), receiver, slot, Qt::QueuedConnection);
 #else
 	Q_UNUSED(receiver);
@@ -563,7 +563,7 @@ void Compass::connectToAzimuthChanges(const QObject* receiver, const char* slot)
 
 void Compass::disconnectFromAzimuthChanges(const QObject* receiver)
 {
-#ifdef HAVE_QTSENSORS
+#ifdef QT_SENSORS_LIB
 	this->disconnect(receiver);
 #else
 	Q_UNUSED(receiver);

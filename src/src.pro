@@ -250,16 +250,12 @@ android {
   # Network not needed
   QT -= network
   
-  # Use positioning module
-  QT += positioning androidextras
-  DEFINES += ENABLE_POSITIONING
+  # Use sensors, positioning and extra modules
+  QT += sensors positioning androidextras
+  
   HEADERS += android/gps_source_android.h
   SOURCES += android/gps_source_android.cpp
   
-  # Use sensors module
-  QT += sensors
-  DEFINES += HAVE_QTSENSORS
-
   # Add examples as resource
   RESOURCES += ../examples/examples.qrc
 }

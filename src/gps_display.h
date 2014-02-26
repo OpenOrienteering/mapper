@@ -22,7 +22,7 @@
 #define _OPENORIENTEERING_GPS_DISPLAY_H_
 
 #include <QObject>
-#if defined(ENABLE_POSITIONING)
+#if defined(QT_POSITIONING_LIB)
 	#include <QtPositioning/QGeoPositionInfo>
 	#include <QtPositioning/QGeoPositionInfoSource>
 #endif
@@ -91,7 +91,7 @@ signals:
 	void positionUpdatesInterrupted();
 	
 private slots:
-#if defined(ENABLE_POSITIONING)
+#if defined(QT_POSITIONING_LIB)
     void positionUpdated(const QGeoPositionInfo& info);
 	void error(QGeoPositionInfoSource::Error positioningError);
 	void updateTimeout();
@@ -103,7 +103,7 @@ private:
 	void updateMapWidget();
 	
 	bool gps_updated;
-#if defined(ENABLE_POSITIONING)
+#if defined(QT_POSITIONING_LIB)
 	QGeoPositionInfo latest_pos_info;
 #endif
 	MapCoordF latest_gps_coord;

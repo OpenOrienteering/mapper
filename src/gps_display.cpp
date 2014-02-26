@@ -19,7 +19,7 @@
 
 #include "gps_display.h"
 
-#if defined(ENABLE_POSITIONING)
+#if defined(QT_POSITIONING_LIB)
 	#include <QtPositioning/QGeoPositionInfoSource>
 #endif
 #include <QPainter>
@@ -49,7 +49,7 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing)
 	distance_rings_enabled = false;
 	heading_indicator_enabled = false;
 	
-#if defined(ENABLE_POSITIONING)
+#if defined(QT_POSITIONING_LIB)
 	#if defined(ANDROID)
 		source = new AndroidGPSPositionSource(this);
 	#else
@@ -86,14 +86,14 @@ GPSDisplay::~GPSDisplay()
 
 void GPSDisplay::startUpdates()
 {
-#if defined(ENABLE_POSITIONING)
+#if defined(QT_POSITIONING_LIB)
 	source->startUpdates();
 #endif
 }
 
 void GPSDisplay::stopUpdates()
 {
-#if defined(ENABLE_POSITIONING)
+#if defined(QT_POSITIONING_LIB)
 	source->stopUpdates();
 	has_valid_position = false;
 #endif
@@ -203,7 +203,7 @@ void GPSDisplay::paint(QPainter* painter)
 	}
 }
 
-#if defined(ENABLE_POSITIONING)
+#if defined(QT_POSITIONING_LIB)
 void GPSDisplay::positionUpdated(const QGeoPositionInfo& info)
 {
 	Q_UNUSED(info);
@@ -288,7 +288,7 @@ void GPSDisplay::debugPositionUpdate()
 
 MapCoordF GPSDisplay::calcLatestGPSCoord(bool& ok)
 {
-#if defined(ENABLE_POSITIONING)
+#if defined(QT_POSITIONING_LIB)
 	if (!has_valid_position)
 	{
 		ok = false;
