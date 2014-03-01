@@ -18,6 +18,8 @@
  */
 
 
+#ifdef QT_PRINTSUPPORT_LIB
+
 #ifndef _OPENORIENTEERING_PRINT_TOOL_H_
 #define _OPENORIENTEERING_PRINT_TOOL_H_
 
@@ -105,5 +107,7 @@ protected:
 	/** The map position where the initial click was made. */
 	MapCoordF click_pos_map;
 };
+
+#endif
 
 #endif

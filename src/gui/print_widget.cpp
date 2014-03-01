@@ -18,9 +18,9 @@
  */
 
 
-#include "print_widget.h"
+#ifdef QT_PRINTSUPPORT_LIB
 
-#ifndef QT_NO_PRINTER
+#include "print_widget.h"
 
 #include <limits>
 

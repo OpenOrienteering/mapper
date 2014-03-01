@@ -616,9 +616,9 @@ void MapEditorController::assignKeyboardShortcuts()
 void MapEditorController::createActions()
 {
 	// Define all the actions, saving them into variables as necessary. Can also get them by ID.
+#ifdef QT_PRINTSUPPORT_LIB
 	QSignalMapper* print_act_mapper = new QSignalMapper(this);
 	connect(print_act_mapper, SIGNAL(mapped(int)), this, SLOT(printClicked(int)));
-#ifndef QT_NO_PRINTER
 	print_act = newAction("print", tr("Print..."), print_act_mapper, SLOT(map()), "print.png", QString::null, "file_menu.html");
 	print_act_mapper->setMapping(print_act, PrintWidget::PRINT_TASK);
 	export_image_act = newAction("export-image", tr("&Image"), print_act_mapper, SLOT(map()), NULL, QString::null, "file_menu.html");
@@ -626,9 +626,9 @@ void MapEditorController::createActions()
 	export_pdf_act = newAction("export-pdf", tr("&PDF"), print_act_mapper, SLOT(map()), NULL, QString::null, "file_menu.html");
 	print_act_mapper->setMapping(export_pdf_act, PrintWidget::EXPORT_PDF_TASK);
 #else
-	print_act = nullptr;
-	export_image_act = nullptr;
-	export_pdf_act = nullptr;
+	print_act = NULL;
+	export_image_act = NULL;
+	export_pdf_act = NULL;
 #endif
 	
 	undo_act = newAction("undo", tr("Undo"), this, SLOT(undo()), "undo.png", tr("Undo the last step"), "edit_menu.html");
@@ -789,15 +789,14 @@ void MapEditorController::createMenuAndToolbars()
 	
 	// Extend file menu
 	QMenu* file_menu = window->getFileMenu();
-#ifndef QT_NO_PRINTER
-	file_menu->insertAction(window->getFileMenuExtensionAct(), print_act);
-	file_menu->insertSeparator(window->getFileMenuExtensionAct());
-	QAction* insertion_act = print_act;
-#else
 	QAction* insertion_act = window->getFileMenuExtensionAct();
+#ifdef QT_PRINTSUPPORT_LIB
+	file_menu->insertAction(insertion_act, print_act);
+	file_menu->insertSeparator(insertion_act);
+	insertion_act = print_act;
 #endif
 	file_menu->insertAction(insertion_act, import_act);
-#ifndef QT_NO_PRINTER
+#ifdef QT_PRINTSUPPORT_LIB
 	QMenu* export_menu = new QMenu(tr("&Export as..."), file_menu);
 	export_menu->addAction(export_image_act);
 	export_menu->addAction(export_pdf_act);
@@ -922,7 +921,7 @@ void MapEditorController::createMenuAndToolbars()
 	
 	// Extend and activate general toolbar
 	QToolBar* main_toolbar = window->getGeneralToolBar();
-#ifndef QT_NO_PRINTER
+#ifdef QT_PRINTSUPPORT_LIB
 	main_toolbar->addAction(print_act);
 	main_toolbar->addSeparator();
 #endif
@@ -1239,7 +1238,7 @@ bool MapEditorController::keyReleaseEventFilter(QKeyEvent* event)
 
 void MapEditorController::printClicked(int task)
 {
-#ifndef QT_NO_PRINTER
+#ifdef QT_PRINTSUPPORT_LIB
 	if (!print_dock_widget)
 	{
 		print_dock_widget = new EditorDockWidget(QString::null, NULL, this, window);
@@ -1259,6 +1258,7 @@ void MapEditorController::printClicked(int task)
 	print_dock_widget->show();
 	QTimer::singleShot(0, print_dock_widget, SLOT(raise()));
 #else
+	Q_UNUSED(task)
 	QMessageBox::warning(window, tr("Error"), tr("Print / Export is not available in this program version!"));
 #endif
 }

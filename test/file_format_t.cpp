@@ -32,6 +32,8 @@
 
 
 
+#ifdef QT_PRINTSUPPORT_LIB
+
 namespace QTest
 {
 	template<>
@@ -66,6 +68,8 @@ namespace QTest
 		return qstrdup(ba.data());
 	}
 }
+
+#endif
 
 
 

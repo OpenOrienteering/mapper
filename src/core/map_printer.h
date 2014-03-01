@@ -25,16 +25,17 @@
 
 #include <QHash>
 #include <QObject>
+#include <QRectF>
+#include <QSizeF>
+
+#ifdef QT_PRINTSUPPORT_LIB
 #include <QPrinterInfo>
+#endif
 
 QT_BEGIN_NAMESPACE
 class QImage;
 class QXmlStreamReader;
 class QXmlStreamWriter;
-#ifdef QT_NO_PRINTER
-class QPrinter {};
-class QPrinterInfo {};
-#endif
 QT_END_NAMESPACE
 
 class Map;
@@ -142,6 +143,8 @@ public:
 };
 
 
+
+#ifdef QT_PRINTSUPPORT_LIB
 
 /** MapPrinter provides an interface to print a map (to a printer or file).
  * It may render a page on any QPaintDevice, such as an QImage. */
@@ -314,6 +317,9 @@ protected:
 	bool cancel_print_map;
 };
 
+#endif
+
+
 
 //### MapPrinterPageFormat inline code ###
 
@@ -387,6 +393,8 @@ bool operator==(const MapPrinterConfig& lhs, const MapPrinterConfig& rhs)
 
 // ### MapPrinter inline code ###
 
+#ifdef QT_PRINTSUPPORT_LIB
+
 inline
 const MapPrinterConfig& MapPrinter::config() const
 {
@@ -446,5 +454,7 @@ const std::vector< qreal >& MapPrinter::verticalPagePositions() const
 {
 	return v_page_pos;
 }
+
+#endif
 
 #endif

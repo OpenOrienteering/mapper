@@ -22,10 +22,13 @@
 
 #include <QDebug>
 #include <QFile>
-#include <QPrinter>
 #include <QStringBuilder>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
+
+#ifdef QT_PRINTSUPPORT_LIB
+#  include <QPrinter>
+#endif
 
 #include "core/map_color.h"
 #include "core/map_printer.h"

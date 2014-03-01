@@ -154,8 +154,10 @@ endif()
 if(Mapper_prerequisites_FOUND)
 
 include(Qt5Quirks)
-# FIXME Get rid of all dependencies on private headers!
-find_package(Qt5PrintSupport REQUIRED COMPONENTS Private)
+if(WIN32)
+	# FIXME Get rid of all dependencies on private headers!
+	find_package(Qt5PrintSupport REQUIRED COMPONENTS Private)
+endif()
 foreach(qt5_module Qt5Core Qt5Gui Qt5Widgets Qt5Xml Qt5Network Qt5PrintSupport)
 	find_package(${qt5_module} REQUIRED)
 	add_definitions(${${qt5_module}_DEFINITIONS})

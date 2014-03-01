@@ -18,6 +18,8 @@
  */
 
 
+#ifdef QT_PRINTSUPPORT_LIB
+
 #include "print_tool.h"
 
 #include <QMouseEvent>
@@ -382,3 +384,5 @@ void PrintTool::mouseMoved(MapCoordF mouse_pos_map, MapWidget* widget)
 		updatePrintArea();
 	}
 }
+
+#endif

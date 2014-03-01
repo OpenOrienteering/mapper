@@ -18,6 +18,8 @@
  */
 
 
+#ifdef QT_PRINTSUPPORT_LIB
+
 #ifndef _OPENORIENTEERING_PRINT_WIDGET_P_H_
 #define _OPENORIENTEERING_PRINT_WIDGET_P_H_
 
@@ -44,5 +46,7 @@ protected slots:
 	void setProgress(int value, QString status);
 	
 };
+
+#endif
 
 #endif

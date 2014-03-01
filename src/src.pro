@@ -250,6 +250,9 @@ android {
   # Network not needed
   QT -= network
   
+  # Printing not needed
+  QT -= printsupport
+  
   # Use sensors, positioning and extra modules
   QT += sensors positioning androidextras
   

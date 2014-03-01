@@ -18,10 +18,10 @@
  */
 
 
+#ifdef QT_PRINTSUPPORT_LIB
+
 #ifndef _OPENORIENTEERING_PRINT_WIDGET_H_
 #define _OPENORIENTEERING_PRINT_WIDGET_H_
-
-#ifndef QT_NO_PRINTER
 
 #include <QPrinterInfo>
 #include <QtWidgets>
