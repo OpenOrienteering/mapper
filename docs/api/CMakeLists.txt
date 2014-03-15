@@ -1,5 +1,5 @@
 #
-#    Copyright 2012, 2013 Kai Pastor
+#    Copyright 2012, 2013, 2014 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -18,6 +18,11 @@
 
 message(STATUS "Configuring ${PROJECT_NAME} API documentation")
 
+set(API_SRCS
+  extra/code_overview.h
+  extra/mainpage.h
+)
+
 find_program(DOXYGEN_EXECUTABLE NAMES doxygen
 	  DOC "The path of the doxygen executable")
 mark_as_advanced(DOXYGEN_EXECUTABLE)
@@ -30,6 +35,7 @@ else()
 	  COMMAND   ${CMAKE_COMMAND} -E remove_directory html
 	  COMMAND   ${DOXYGEN_EXECUTABLE} ${PROJECT_NAME}.doxygen
 	  COMMENT   "Generating API documentation"
+	  SOURCES   ${API_SRCS}
 	)
 	add_custom_target(api-docs-package
 	  COMMAND ${CMAKE_COMMAND} -E tar czf "${PROJECT_BINARY_DIR}/api-docs.tgz"

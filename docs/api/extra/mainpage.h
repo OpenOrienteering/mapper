@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013, 2014 Thomas Schöps, Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -32,7 +32,7 @@
 
 - <a href="http://sourceforge.net/apps/mediawiki/oorienteering/">OpenOrienteering Developer Wiki</a>
 - <a href="http://sourceforge.net/projects/oorienteering/">OpenOrienteering SourceForge Pages</a>
-- <a href="http://qt-project.org/doc/qt-5.1/qtdoc/">Qt 5.1 documentation</a>
+- <a href="http://qt-project.org/doc/qt-5/">Qt 5 documentation</a>
 - <a href="http://www.stack.nl/~dimitri/doxygen/manual/">Doxygen documentation</a>
 
 <hr>
