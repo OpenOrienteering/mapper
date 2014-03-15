@@ -983,7 +983,6 @@ void MainWindow::showSettings()
 void MainWindow::showAbout()
 {
 	AboutDialog about_dialog(this);
-	connect(&about_dialog, SIGNAL(linkActivated(QString)), this, SLOT(linkClicked(QString)));
 	about_dialog.exec();
 }
 

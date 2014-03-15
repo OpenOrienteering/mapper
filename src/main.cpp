@@ -64,6 +64,7 @@ int main(int argc, char** argv)
 	Q_INIT_RESOURCE(qt);
 #endif
 	Q_INIT_RESOURCE(resources);
+	Q_INIT_RESOURCE(licensing);
 	
 	// QSettings on OS X benefits from using an internet domain here.
 	QCoreApplication::setOrganizationName("OpenOrienteering.org");
