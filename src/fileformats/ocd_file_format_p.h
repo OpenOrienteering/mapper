@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013, 2014 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -273,18 +273,11 @@ QString OcdFileImport::convertOcdString< Ocd::Utf8Encoding >(const char* src, st
 	return QString::fromUtf8(src, len);
 }
 
-template< >
+template< class E >
 inline
-QString OcdFileImport::convertOcdString< Ocd::Custom8BitEncoding >(const QByteArray& data) const
+QString OcdFileImport::convertOcdString(const QByteArray& data) const
 {
-	return custom_8bit_encoding->toUnicode(data.constData(), data.length());
-}
-
-template< >
-inline
-QString OcdFileImport::convertOcdString< Ocd::Utf8Encoding >(const QByteArray& data) const
-{
-	return QString::fromUtf8(data.constData(), data.length());
+	return OcdFileImport::convertOcdString< E >(data.constData(), data.length());
 }
 
 inline
