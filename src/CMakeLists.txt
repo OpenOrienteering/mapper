@@ -263,6 +263,19 @@ set(Mapper_Common_MOC_INPUT
  util/recording_translator.h
 )
 
+set(Mapper_EXTRA_HEADERS
+  core/auto_save_p.h
+  core/image_transparency_fixup.h
+  fileformats/ocd_file_format_p.h
+  fileformats/ocd_types_v8.h
+  fileformats/ocd_types_v9.h
+  fileformats/ocd_types_v10.h
+  fileformats/ocd_types_v11.h
+  gui/settings_dialog_p.h
+  util/scoped_signals_blocker.h
+  file_format_ocad8_p.h
+)
+
 qt5_wrap_cpp(Mapper_Common_MOC ${Mapper_Common_MOC_INPUT})
 
 # Resources (from project root)
@@ -272,6 +285,13 @@ if(MAPPER_USE_QT_CONF_QRC)
 endif()
 set(Mapper_RESOURCES ${Mapper_RESOURCES} ${PROJECT_SOURCE_DIR}/resources.qrc)
 qt5_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
+
+
+# Mapper_Extra_Header: dummy target to indicate extra headers to IDEs
+
+add_custom_target(Mapper_Extras
+  SOURCES ${Mapper_EXTRA_HEADERS}
+)
 
 # Mapper common: static library of full runtime 
 # (To be used by Mapper executable and by system tests.)
@@ -283,6 +303,7 @@ add_library(Mapper_Common STATIC
 )
 add_dependencies(Mapper_Common
   Mapper_prerequisites
+  Mapper_Extras
 )
 target_link_libraries(Mapper_Common
   libocad
