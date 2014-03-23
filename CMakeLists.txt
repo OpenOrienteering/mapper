@@ -249,6 +249,7 @@ endif()
 
 # Subdirectories
 
+add_subdirectory("docs/licensing")
 add_subdirectory("examples")
 add_subdirectory("symbol sets")
 add_subdirectory("help")

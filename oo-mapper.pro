@@ -41,7 +41,10 @@ defineTest(addPrerequisite) {
 		
 		PREREQUISITES_PRI += "include($$OUT_PWD/$${subdir}/$${target}.pri)"
 		export(PREREQUISITES_PRI)
-		
+
+		empty =
+		write_file($$OUT_PWD/$${subdir}/$${target}.pri, empty, append)
+
 		src.depends += $$target
 		export(src.depends)
 		
@@ -55,6 +58,7 @@ addPrerequisite(qbezier, 3rd-party/qbezier)
 !android:addPrerequisite(qtsingleapplication, 3rd-party/qtsingleapplication)
 !linux:addPrerequisite(proj, 3rd-party/proj)
 android:addPrerequisite(proj, 3rd-party/proj)
+addPrerequisite(licensing, docs/licensing)
 
 write_file($$OUT_PWD/prerequisites.pri, PREREQUISITES_PRI)
 
