@@ -174,6 +174,13 @@ template< class F >
 void OcdFileImport::importImplementation(bool load_symbols_only) throw (FileFormatException)
 {
 	OcdFile< F > file(buffer);
+#if 0
+	for (typename OcdFile< F >::StringIndex::iterator it = file.strings().begin(); it != file.strings().end(); ++it)
+	{
+		qDebug() << it->type << convertOcdString< typename F::Encoding >(file[it]);
+	}
+#endif
+	
 	importGeoreferencing< F >(file);
 	importColors< F >(file);
 	importSymbols< F >(file);
