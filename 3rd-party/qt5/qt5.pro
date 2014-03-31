@@ -30,7 +30,6 @@ OTHER_FILES = \
     qt5-wrapper.in
 
 qt5.dir      = $$OUT_PWD/qt5
-qt5.version  = 5.2.1
 qt5.target   = $$qt5.dir/CMakeFiles/Qt5-complete
 
 android {
@@ -45,7 +44,7 @@ android {
 qt5.commands = \
   mkdir -p "$$qt5.dir" && \
   cd "$$qt5.dir" && \
-  cmake "$$PWD" -DQT5_VERSION=$$qt5.version -DQT5_PLATFORM=\"$$qt5.platform\" && \
+  cmake "$$PWD" -UQT5_* -DQT5_PLATFORM=\"$$qt5.platform\" && \
   PATH="$$NDK_TOOLCHAIN_PATH/bin:${PATH}" $(MAKE) all
 
 QMAKE_EXTRA_TARGETS += qt5
