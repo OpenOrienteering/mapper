@@ -913,7 +913,7 @@ void MapPrinter::printMap(QPrinter* printer)
 	else if (printer->paintEngine()->type() == QPaintEngine::Picture)
 	{
 		// Preview: work around for offset, maybe related to QTBUG-5363
-		p.translate(
+		painter.translate(
 		    -page_format.page_rect.left()*resolution / 25.4,
 		    -page_format.page_rect.top()*resolution / 25.4   );
 	}
