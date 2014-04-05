@@ -1018,6 +1018,11 @@ void MapWidget::_mousePressEvent(QMouseEvent* event)
 		startPanning(event->pos());
 		event->accept();
 	}
+	else if (event->button() == Qt::RightButton)
+	{
+		if (!context_menu->isEmpty())
+			context_menu->popup(event->globalPos());
+	}
 }
 
 void MapWidget::mouseMoveEvent(QMouseEvent* event)
@@ -1199,6 +1204,14 @@ void MapWidget::focusOutEvent(QFocusEvent* event)
 
 void MapWidget::contextMenuEvent(QContextMenuEvent* event)
 {
+	if (event->reason() == QContextMenuEvent::Mouse)
+	{
+		// HACK: Ignore context menu events caused by the mouse, because right click
+		// events need to be sent to the current tool first.
+		event->ignore();
+		return;
+	}
+	
 	if (!context_menu->isEmpty())
 		context_menu->popup(event->globalPos());
 	
