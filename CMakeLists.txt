@@ -107,10 +107,13 @@ else() # LINUX and alike
 	set(MAPPER_ABOUT_DESTINATION   "/usr/share/doc/${CPACK_DEBIAN_PACKAGE_NAME}")
 endif()
 
+if(CMAKE_CROSSCOMPILING)
+	message(STATUS "Crosscompiling, host: ${CMAKE_HOST_SYSTEM_NAME}, target: ${CMAKE_SYSTEM_NAME}")
+endif()
+
 # Build definitons
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-include(CMake28Quirks)
 
 if(APPLE AND Mapper_MACOSX_VERSION)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mmacosx-version-min=${Mapper_MACOSX_VERSION}")
@@ -153,10 +156,11 @@ endif()
 
 if(Mapper_prerequisites_FOUND)
 
-include(Qt5Quirks)
+# FIXME Get rid of all dependencies on private headers!
 if(WIN32)
-	# FIXME Get rid of all dependencies on private headers!
-	find_package(Qt5PrintSupport REQUIRED COMPONENTS Private)
+	foreach(qt5_module Qt5Core Qt5Gui Qt5PrintSupport)
+		find_package(${qt5_module} REQUIRED COMPONENTS Private)
+	endforeach()
 endif()
 foreach(qt5_module Qt5Core Qt5Gui Qt5Widgets Qt5Xml Qt5Network Qt5PrintSupport)
 	find_package(${qt5_module} REQUIRED)
@@ -173,7 +177,7 @@ if(Mapper_DEVELOPMENT_BUILD)
 	endforeach()
 endif()
 # FIXME Get rid of all dependencies on private headers!
-foreach(qt5_module Qt5PrintSupport)
+foreach(qt5_module Qt5Core Qt5Gui Qt5PrintSupport)
 	find_package(${qt5_module} REQUIRED)
 	if("${${qt5_module}_PRIVATE_INCLUDE_DIRS}" STREQUAL "")
 		# While "find_package(Qt5Xyz REQUIRED COMPONENTS Private)" is supposed to set
@@ -187,34 +191,6 @@ foreach(qt5_module Qt5PrintSupport)
 	endif()
 	list(APPEND QT_INCLUDES ${${qt5_module}_PRIVATE_INCLUDE_DIRS})
 endforeach()
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Core_EXECUTABLE_COMPILE_FLAGS}")
-
-if(CMAKE_CROSSCOMPILING)
-	message(STATUS "Crosscompiling, host: ${CMAKE_HOST_SYSTEM_NAME}, target: ${CMAKE_SYSTEM_NAME}")
-
-	qt5_find_host_program(Qt5Core_MOC_EXECUTABLE NAMES moc)
-	qt5_find_host_program(Qt5Core_RCC_EXECUTABLE NAMES rcc)
-elseif(UNIX AND NOT APPLE AND Mapper_BUILD_QT AND QT5_VERSION STREQUAL "5.0.2")
-	get_target_property(QT5_INSTALL_DIR Qt5 INSTALL_DIR)
-	foreach(qt5_target Qt5::moc Qt5::rcc ${QT_LIBRARIES})
-		foreach(imported_location 
-		  IMPORTED_LOCATION
-		  IMPORTED_LOCATION_RELEASE
-		  IMPORTED_LOCATION_DEBUG
-		)
-			get_target_property(qt5_tmp ${qt5_target} ${imported_location})
-			if(NOT "${qt5_tmp}" MATCHES NOTFOUND)
-				set_target_properties(${qt5_target} PROPERTIES
-				  ${imported_location} "${QT5_INSTALL_DIR}${qt5_tmp}"
-				)
-			endif()
-		endforeach()
-	endforeach()
-	string(REGEX REPLACE ";" ";${QT5_INSTALL_DIR}" QT_INCLUDES
-	  ";${QT_INCLUDES}"
-	)
-	list(REMOVE_AT QT_INCLUDES 0)
-endif()
 
 if(UNIX AND NOT APPLE)
 #	set(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib/${CPACK_DEBIAN_PACKAGE_NAME}/lib")
@@ -256,7 +232,9 @@ add_subdirectory("examples")
 add_subdirectory("symbol sets")
 add_subdirectory("help")
 add_subdirectory("translations")
-add_subdirectory("3rd-party/qbezier")
+if(NOT Qt5Gui_PRIVATE_INCLUDE_DIRS)
+	add_subdirectory("3rd-party/qbezier")
+endif()
 add_subdirectory("3rd-party/qtsingleapplication")
 add_subdirectory("src/libocad")
 add_subdirectory("src")

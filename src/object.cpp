@@ -28,7 +28,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include <qbezier_p.h>
+#include <private/qbezier_p.h>
 
 #include "util.h"
 #include "file_import_export.h"

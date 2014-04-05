@@ -95,6 +95,10 @@ else()
 	set(QT5_CONFIG_SCRIPT qt5-config)
 	set(QT5_CONFIG_COMMAND "${SH_PROGRAM}" -l -e ${CMAKE_CURRENT_BINARY_DIR}/${QT5_CONFIG_SCRIPT})
 	set(QT5_SOURCE_CONFIG )
+	if(MINGW AND CMAKE_CROSSCOMPILING AND NOT QT5_PLATFORM)
+		string(REGEX REPLACE gcc\$ "" QT5_CROSS_COMPILE ${CMAKE_C_COMPILER})
+		set(QT5_PLATFORM "-xplatform win32-g++ -device-option CROSS_COMPILE='${QT5_CROSS_COMPILE}'")
+	endif()
 endif()
 
 # Build definition
@@ -215,20 +219,6 @@ configure_file(qt5-make.in qt5-make @ONLY)
 configure_file(qt.conf.in qt.conf @ONLY)
 configure_file(qt.conf.qrc.in qt.conf.qrc @ONLY)
 
-# cf. https://bugreports.qt-project.org/browse/QTBUG-32641 :
-# Qt 5.1.0 Release SVG module won't build on Linux when using qt-zlib
-if(UNIX AND NOT APPLE AND ${QT5_VERSION} MATCHES "5.1.[0-1]")
-	execute_process(
-	  COMMAND sed -i -e /-qt-zlib/d ${QT5_CONFIG_SCRIPT}.new
-	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
-endif()
-
-if(NOT ${QT5_VERSION} MATCHES "5.[0-1]")
-	execute_process(
-	  COMMAND sed -i -e /-no-gstreamer/d ${QT5_CONFIG_SCRIPT}.new
-	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
-endif()
-
 if(UNIX AND QT5_INSTALL_ROOT AND NOT "${QT5_PLATFORM}" MATCHES "android")
 	# Wrappers which set LD_LIBRARY_PATH.
 	configure_file(qt5-wrapper.in qcollectiongenerator @ONLY)
@@ -259,22 +249,19 @@ function(WRITE_QT_CONF)
 endfunction()
 
 # Cross-compiling requires an extra host build in order to get 
-# qcollectiongenerator (required) and lupdate (optional)
+# qcollectiongenerator
 
 if(CMAKE_CROSSCOMPILING AND NOT "${QT5_PLATFORM}" MATCHES "android")
-	set(QT5_EXTRA_HOST_DIR "${BINARY_DIR}/../${PROJECT_NAME}-build-host")
-	if(NOT EXISTS "${QT5_EXTRA_HOST_DIR}/qtbase/Makefile")
-		# Required for initial confclean-host
-		file(MAKE_DIRECTORY "${QT5_EXTRA_HOST_DIR}/qtbase")
-		file(WRITE "${QT5_EXTRA_HOST_DIR}/qtbase/Makefile" "confclean:")
-	endif()
+	set(QT5_EXTRA_HOST_DIR "${BINARY_DIR}/../Qt5-build-host")
 	configure_file(qt5-config-host.in qt5-config-host.new @ONLY)
 	add_custom_command(OUTPUT qt5-config-host
 	  COMMAND ${CMAKE_COMMAND} -E copy_if_different qt5-config-host.new qt5-config-host
 	  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qt5-config-host.new
 	)
 	ExternalProject_Add_Step(Qt5 confclean-host
-	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}/qtbase" confclean
+	  COMMAND ${CMAKE_COMMAND} -E make_directory "${QT5_EXTRA_HOST_DIR}"
+	  COMMAND ${CMAKE_COMMAND} -E remove_directory "${QT5_EXTRA_HOST_DIR}"
+	  COMMAND ${CMAKE_COMMAND} -E make_directory "${QT5_EXTRA_HOST_DIR}"
 	  DEPENDEES patch
 	  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qt5-config-host
 	)
@@ -284,14 +271,25 @@ if(CMAKE_CROSSCOMPILING AND NOT "${QT5_PLATFORM}" MATCHES "android")
 	  WORKING_DIRECTORY "${QT5_EXTRA_HOST_DIR}"
 	)
 	ExternalProject_Add_Step(Qt5 build-host
-	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}"
+	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}" module-qtdeclarative
+	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}" module-qttools-qmake_all
+	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}/qttools/src/assistant" sub-qcollectiongenerator
 	  DEPENDEES configure-host
 	)
 	ExternalProject_Add_Step(Qt5 install-host
-	  COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}" install
+	  # not needed: COMMAND ${QT5_MAKE_COMMAND} -C "${QT5_EXTRA_HOST_DIR}/qttools/src/assistant" sub-qcollectiongenerator-install_subtargets
 	  DEPENDEES build-host
 	  DEPENDERS install
 	)
+	
+	if(NOT TARGET Qt5::qcollectiongenerator)
+		add_executable(Qt5::qcollectiongenerator IMPORTED GLOBAL)
+		set(imported_location ${QT5_EXTRA_HOST_DIR}/qttools/bin/qcollectiongenerator)
+		set_target_properties(Qt5::qcollectiongenerator PROPERTIES
+			IMPORTED_LOCATION ${imported_location}
+		)
+		add_dependencies(Qt5::qcollectiongenerator Qt5)
+	endif()
 elseif(CMAKE_CROSSCOMPILING AND "${QT5_PLATFORM}" MATCHES "android")
 	execute_process(
 	  COMMAND sed -i -e "/-plugindir /d;/-datadir /d" ${QT5_CONFIG_SCRIPT}.new

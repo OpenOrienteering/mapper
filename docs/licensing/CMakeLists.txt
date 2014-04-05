@@ -27,9 +27,17 @@ if (NOT TARGET Qt5::qdoc AND TARGET Qt5::moc)
     get_target_property(_qt5_moc_path Qt5::moc IMPORTED_LOCATION)
     get_filename_component(_qt5_bin_prefix "${_qt5_moc_path}" PATH)
     add_executable(Qt5::qdoc IMPORTED)
-    set_target_properties(Qt5::qdoc PROPERTIES
-        IMPORTED_LOCATION "${_qt5_bin_prefix}/qdoc"
-    )
+	set(imported_location ${_qt5_bin_prefix}/qdoc)
+	if(NOT EXISTS "${imported_location}")
+		message(FATAL_ERROR "qdoc executable does not exist: "
+		                    "${imported_location}")
+	endif()
+	set_target_properties(Qt5::qdoc PROPERTIES
+		IMPORTED_LOCATION ${imported_location}
+	)
+	if(TARGET Qt5)
+		add_dependencies(Qt5::qdoc Qt5)
+	endif()
 endif()
 set(Qt5Core_QDOC_EXECUTABLE Qt5::qdoc)
 

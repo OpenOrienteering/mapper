@@ -159,10 +159,3 @@ fi
 
 # [4] Create an archive of the remaining source code
 ( cd .. && tar czf qt-everywhere-opensource-src-@QT5_MAJOR_MINOR_REVISION@-openorienteering-$PRETTY_DATE.tar.gz Qt5 )
-
-# [5] Placeholder Makefile for initial "make confclean"
-if [ ! -f "@BINARY_DIR@/qtbase/Makefile" ]
-then
-	mkdir -p "@BINARY_DIR@/qtbase"
-	echo "confclean:" > "@BINARY_DIR@/qtbase/Makefile"
-fi

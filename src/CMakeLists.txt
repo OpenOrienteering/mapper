@@ -25,10 +25,7 @@ execute_process(
   COMMAND "${CMAKE_COMMAND}" -E copy_if_different mapper_config.h.tmp mapper_config.h
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
-include_directories(
-  "${CMAKE_CURRENT_BINARY_DIR}"
-  "../3rd-party/qbezier/src"
-)
+include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 
 set(Mapper_Common_SRCS
  global.cpp
@@ -307,8 +304,12 @@ add_dependencies(Mapper_Common
 )
 target_link_libraries(Mapper_Common
   libocad
-  QBezier
 )
+
+if(NOT Qt5Gui_PRIVATE_INCLUDE_DIRS)
+	include_directories("../3rd-party/qbezier/src")
+	target_link_libraries(Mapper_Common QBezier)
+endif()
 
 qt5_translations_sources(
   SOURCES ${Mapper_Common_SRCS} ${Mapper_COMMON_MOC_INPUT}
@@ -321,13 +322,20 @@ set(Mapper_SRCS
   main.cpp
 )
  
-if(MINGW)
+if(WINDOWS)
 	enable_language(RC)
-	Quirks_CMake_RC_Compiler()
+	if(MINGW)
+		# Cf. http://public.kitware.com/Bug/view.php?id=12480
+		cmake_minimum_required(VERSION 2.8.7 FATAL_ERROR)
+		# Cf. http://public.kitware.com/Bug/view.php?id=14865
+		if(CMAKE_RC_COMPILER MATCHES "windres\$" AND CMAKE_RC_COMPILE_OBJECT MATCHES "/fo")
+			include(Platform/${CMAKE_SYSTEM_NAME}-windres)
+		endif()
+	endif()
 	configure_file(mingw/resources.rc.in ${CMAKE_CURRENT_BINARY_DIR}/resources.rc @ONLY)
 	configure_file(${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper.ico ${CMAKE_CURRENT_BINARY_DIR}/Mapper.ico COPYONLY)
 	list(APPEND Mapper_SRCS ${CMAKE_CURRENT_BINARY_DIR}/resources.rc)
-endif(MINGW)
+endif()
 
 add_executable(Mapper
   WIN32

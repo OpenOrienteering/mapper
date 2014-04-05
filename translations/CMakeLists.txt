@@ -1,5 +1,5 @@
 #
-#    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+#    Copyright 2012, 2013, 2014 Thomas Schöps, Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -19,21 +19,6 @@
 message(STATUS "Configuring ${PROJECT_NAME} translations")
 
 find_package(Qt5LinguistTools REQUIRED)
-qt5_find_host_program(QT_LUPDATE_EXECUTABLE NAMES lupdate)
-qt5_find_host_program(QT_LRELEASE_EXECUTABLE NAMES lrelease)
-# Qt5_LRELEASE_EXECUTABLE is used by the Qt5 macros
-set(Qt5_LRELEASE_EXECUTABLE ${QT_LRELEASE_EXECUTABLE})
-mark_as_advanced(QT_LUPDATE_EXECUTABLE QT_LRELEASE_EXECUTABLE)
-
-if(QT_LUPDATE_EXECUTABLE MATCHES NOTFOUND)
-	message(WARNING "lupdate executable not found. "
-	  "You will not be able to update the translations from the source code.")
-endif()
-
-if(QT_LRELEASE_EXECUTABLE MATCHES NOTFOUND)
-	message(FATAL_ERROR "lrelease executable not found. "
-	  "Cannot build the translations.")
-endif()
 
 # Qt translations which are not yet available from upstream
 set(Mapper_QT_TRANS
@@ -144,7 +129,7 @@ macro(QT5_TRANSLATIONS_SOURCES)
 		else()
 			get_filename_component(_ts_filename ${_arg} NAME_WE)
 			add_custom_target(${PROJECT_NAME}_${_ts_filename}_update
-			  COMMAND ${QT_LUPDATE_EXECUTABLE} @${${PROJECT_NAME}_TRANSLATIONS_LISTFILE} -ts ${Mapper_TRANS_DIR}/${_arg}
+			  COMMAND ${Qt5_LUPDATE_EXECUTABLE} @${${PROJECT_NAME}_TRANSLATIONS_LISTFILE} -ts ${Mapper_TRANS_DIR}/${_arg}
 			  DEPENDS ${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}
 			  VERBATIM)
 			add_dependencies(${PROJECT_NAME}_translations_update ${PROJECT_NAME}_${_ts_filename}_update)

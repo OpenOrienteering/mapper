@@ -1,5 +1,5 @@
 #
-#    Copyright 2012, 2013 Kai Pastor
+#    Copyright 2012, 2013, 2014 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -42,6 +42,20 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	set(CPACK_PACKAGE_VERSION_PATCH ${Mapper_VERSION_PATCH})
 	set(CPACK_PACKAGE_DESCRIPTION_SUMMARY 
 	  "Map drawing program from OpenOrienteering")
+	if(NOT CMAKE_SIZEOF_VOID_P AND MINGW)
+		set(_env_lang $ENV{LANG})
+		set(ENV{LANG} C)
+		execute_process(
+		  COMMAND ${CMAKE_C_COMPILER} -dumpmachine
+		  OUTPUT_VARIABLE HOST_TRIPLET
+		)
+		set(ENV{LANG} ${_env_lang})
+		if(${HOST_TRIPLET} MATCHES ^i686)
+			set(CMAKE_SIZEOF_VOID_P 4)
+		elseif(${HOST_TRIPLET} MATCHES ^x86_64)
+			set(CMAKE_SIZEOF_VOID_P 8)
+		endif()
+	endif()
 	if(CMAKE_SIZEOF_VOID_P EQUAL 4)
 		set(_system_name "${CMAKE_SYSTEM_NAME}-x86")
 	elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
@@ -91,12 +105,14 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 			set(_nsis_extra_inst 
 			  ReadEnvStr $1 ComSpec\n
 			  ExecWait '\\\"$1\\\" /C assoc .omap=OpenOrienteering Map' $0\n
+			  ExecWait '\\\"$1\\\" /C assoc .xmap=OpenOrienteering Map' $0\n
 			  ExecWait '\\\"$1\\\" /C ftype OpenOrienteering Map=\\\"$INSTDIR\\\\Mapper.exe\\\" \\\"%1\\\"' $0)
 			string(REPLACE ";" " " _nsis_extra_inst "${_nsis_extra_inst}")
 			set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS ${_nsis_extra_inst})
 			set(_nsis_extra_uninst 
 			  ReadEnvStr $1 ComSpec\n
 			  ExecWait '\\\"$1\\\" /C ftype OpenOrienteering Map= ' $0\n
+			  ExecWait '\\\"$1\\\" /C assoc .xmap=' $0\n
 			  ExecWait '\\\"$1\\\" /C assoc .omap=' $0)
 			string(REPLACE ";" " " _nsis_extra_uninst "${_nsis_extra_uninst}")
 			set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS ${_nsis_extra_uninst})
@@ -230,7 +246,7 @@ if(Mapper_PACKAGE_QT)
 		  DESTINATION "${MAPPER_RUNTIME_DESTINATION}")
 	endif()
 	list(APPEND MAPPER_LIBS 
-	  Qt5Core Qt5Gui Qt5Widgets Qt5Svg
+	  Qt5Core Qt5Gui Qt5Widgets
 	  Qt5PrintSupport Qt5Network Qt5Xml)
 	set(MAPPER_QT_PLUGINS
 	  accessible/qtaccessiblewidgets
@@ -247,19 +263,19 @@ endif()
 
 unset(FIXUP_ASSISTANT)
 if(Mapper_PACKAGE_ASSISTANT)
-	if(NOT QT_QTASSISTANT_EXECUTABLE)
-		message(FATAL_ERROR "QT_QTASSISTANT_EXECUTABLE: not found, "
+	if(NOT Qt5Help_ASSISTANT_EXECUTABLE)
+		message(FATAL_ERROR "Qt5Help_ASSISTANT_EXECUTABLE: not found, "
 		  "but required by option Mapper_PACKAGE_ASSISTANT="
 		  ${Mapper_PACKAGE_ASSISTANT})
 	endif()
 	message(STATUS "Qt Assistant - found")
 	if(WIN32 OR APPLE)
 		install(
-		  PROGRAMS ${QT_QTASSISTANT_EXECUTABLE}
+		  PROGRAMS ${Qt5Help_ASSISTANT_EXECUTABLE}
 		  DESTINATION "${MAPPER_RUNTIME_DESTINATION}${MAPPER_MACOS_SUBDIR}")
 	else()
 		install(
-		  PROGRAMS ${QT_QTASSISTANT_EXECUTABLE}
+		  PROGRAMS ${Qt5Help_ASSISTANT_EXECUTABLE}
 		  DESTINATION "${MAPPER_LIBRARY_DESTINATION}/bin")
 		install(
 		  FILES "${PROJECT_BINARY_DIR}/3rd-party/qt5/qt.conf"
@@ -275,6 +291,20 @@ if(Mapper_PACKAGE_ASSISTANT)
 	endif()
 	list(APPEND MAPPER_QT_TRANSLATIONS qt_help assistant)
 endif(Mapper_PACKAGE_ASSISTANT)
+
+if(CMAKE_CROSSCOMPILING AND MINGW)
+	set(_env_lang $ENV{LANG})
+	set(ENV{LANG} C)
+	execute_process(
+	  COMMAND ${CMAKE_C_COMPILER} --print-search-dirs
+	  OUTPUT_VARIABLE MINGW_SEARCH_DIRS
+	)
+	set(ENV{LANG} ${_env_lang})
+	string(REGEX REPLACE ".*libraries: ?=?([^\n]*).*" \\1 MINGW_SEARCH_DIRS "${MINGW_SEARCH_DIRS}")
+	string(REPLACE \; \\\; MINGW_SEARCH_DIRS "${MINGW_SEARCH_DIRS}")
+	string(REPLACE : \; MINGW_SEARCH_DIRS "${MINGW_SEARCH_DIRS}")
+	list(APPEND MAPPER_LIB_HINTS ${MINGW_SEARCH_DIRS})
+endif()
 
 # Install all libs
 foreach(_mapper_lib ${MAPPER_LIBS})
