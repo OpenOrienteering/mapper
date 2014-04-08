@@ -61,5 +61,6 @@
   -make tools \
   -nomake examples \
   -nomake tests \
+  -system-proxies \
   -no-glib \
   -no-audio-backend

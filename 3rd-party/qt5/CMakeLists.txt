@@ -42,6 +42,7 @@ set(QT5_MD5SUMS
   # Schema: VERSION:MD5[:DOWNLOAD_URL]
   5.2.0:228b6384dfd7272de00fd8b2c144fecd
   5.2.1:a78408c887c04c34ce615da690e0b4c8
+  5.3.0-beta:47b39d3abc47c3d413df895be66347a1:http://download.qt-project.org/development_releases/qt/5.3/5.3.0-beta/single/qt-everywhere-opensource-src-5.3.0-beta.tar.gz
 )
 foreach(line ${QT5_MD5SUMS})
 	if(${line} MATCHES "^${QT5_VERSION}:")
@@ -219,6 +220,12 @@ configure_file(qt5-make.in qt5-make @ONLY)
 configure_file(qt.conf.in qt.conf @ONLY)
 configure_file(qt.conf.qrc.in qt.conf.qrc @ONLY)
 
+if(NOT ${QT5_VERSION} MATCHES "5.[0-2]")
+	execute_process(
+	  COMMAND sed -i -e /-no-javascript-jit/d ${QT5_CONFIG_SCRIPT}.new
+	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
+endif()
+
 if(UNIX AND QT5_INSTALL_ROOT AND NOT "${QT5_PLATFORM}" MATCHES "android")
 	# Wrappers which set LD_LIBRARY_PATH.
 	configure_file(qt5-wrapper.in qcollectiongenerator @ONLY)
@@ -253,7 +260,14 @@ endfunction()
 
 if(CMAKE_CROSSCOMPILING AND NOT "${QT5_PLATFORM}" MATCHES "android")
 	set(QT5_EXTRA_HOST_DIR "${BINARY_DIR}/../Qt5-build-host")
+	
 	configure_file(qt5-config-host.in qt5-config-host.new @ONLY)
+	if(NOT ${QT5_VERSION} MATCHES "5.[0-2]")
+		execute_process(
+		  COMMAND sed -i -e /-no-javascript-jit/d qt5-config-host.new
+		  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
+	endif()
+	
 	add_custom_command(OUTPUT qt5-config-host
 	  COMMAND ${CMAKE_COMMAND} -E copy_if_different qt5-config-host.new qt5-config-host
 	  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/qt5-config-host.new
