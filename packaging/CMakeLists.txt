@@ -293,13 +293,13 @@ if(Mapper_PACKAGE_ASSISTANT)
 endif(Mapper_PACKAGE_ASSISTANT)
 
 if(CMAKE_CROSSCOMPILING AND MINGW)
-	set(_env_lang $ENV{LANG})
-	set(ENV{LANG} C)
+	set(_env_lang $ENV{LC_ALL})
+	set(ENV{LC_ALL} C)
 	execute_process(
 	  COMMAND ${CMAKE_C_COMPILER} --print-search-dirs
 	  OUTPUT_VARIABLE MINGW_SEARCH_DIRS
 	)
-	set(ENV{LANG} ${_env_lang})
+	set(ENV{LC_ALL} ${_env_lang})
 	string(REGEX REPLACE ".*libraries: ?=?([^\n]*).*" \\1 MINGW_SEARCH_DIRS "${MINGW_SEARCH_DIRS}")
 	string(REPLACE \; \\\; MINGW_SEARCH_DIRS "${MINGW_SEARCH_DIRS}")
 	string(REPLACE : \; MINGW_SEARCH_DIRS "${MINGW_SEARCH_DIRS}")

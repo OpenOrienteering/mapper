@@ -178,6 +178,7 @@ if(WIN32)
 		if("${${qt5_module}_PRIVATE_INCLUDE_DIRS}" STREQUAL "")
 			# While "find_package(Qt5Xyz REQUIRED COMPONENTS Private)" is supposed to set
 			# Qt5Xyz_PRIVATE_INCLUDE_DIRS, it doesn't seem to take place in Qt 5.2.0
+			# Cf. https://bugreports.qt-project.org/browse/QTBUG-37417
 			foreach(base_dir ${${qt5_module}_INCLUDE_DIRS})
 				string(REPLACE Qt5 Qt qt_module ${qt5_module})
 				if("${base_dir}" MATCHES "include/${qt_module}\$")
@@ -284,3 +285,6 @@ endif()
 
 add_subdirectory("docs/api")
 add_subdirectory("packaging/src")
+
+include(FeatureSummary)
+feature_summary(WHAT ALL)

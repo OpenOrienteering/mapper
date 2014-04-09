@@ -306,7 +306,7 @@ target_link_libraries(Mapper_Common
   libocad
 )
 
-if(NOT Qt5Gui_PRIVATE_INCLUDE_DIRS)
+if(NOT Mapper_PACKAGE_QT OR NOT Qt5Gui_PRIVATE_INCLUDE_DIRS)
 	include_directories("../3rd-party/qbezier/src")
 	target_link_libraries(Mapper_Common QBezier)
 endif()
@@ -322,7 +322,7 @@ set(Mapper_SRCS
   main.cpp
 )
  
-if(WINDOWS)
+if(WIN32)
 	enable_language(RC)
 	if(MINGW)
 		# Cf. http://public.kitware.com/Bug/view.php?id=12480
