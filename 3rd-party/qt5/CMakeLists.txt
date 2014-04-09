@@ -59,6 +59,7 @@ endif()
 
 string(REGEX MATCH "5.." QT5_MAJOR_MINOR ${QT5_VERSION})
 string(REGEX MATCH "5...." QT5_MAJOR_MINOR_REVISION ${QT5_VERSION})
+set(QT5_MAJOR_MINOR_REVISION ${QT5_MAJOR_MINOR_REVISION} PARENT_SCOPE)
 if(QT5_MD5 MATCHES :)
 	message(WARNING "Not using an official release of Qt.")
 	string(REGEX REPLACE "^[0-9a-fA-F]*:" "" QT5_URL "${QT5_MD5}")
