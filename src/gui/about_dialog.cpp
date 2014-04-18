@@ -105,7 +105,13 @@ AboutDialog::AboutDialog(QWidget* parent)
 	connect(text_browser, SIGNAL(sourceChanged(QUrl)), this, SLOT(sourceChanged(QUrl)));
 	connect(text_browser, SIGNAL(textChanged()), this, SLOT(updateWindowTitle()));
 	connect(text_browser, SIGNAL(backwardAvailable(bool)), back_button, SLOT(setEnabled(bool)));
+// Android: Crash in Qt 5.3.0 beta,
+// cf. https://bugreports.qt-project.org/browse/QTBUG-38434
+// and highlighting won't work anyway due to missing (stylus) hover events,
+// cf. https://bugreports.qt-project.org/browse/QTBUG-36105
+#ifndef Q_OS_ANDROID
 	connect(text_browser, SIGNAL(highlighted(QString)), this, SLOT(highlighted(QString)));
+#endif
 	connect(back_button,  SIGNAL(clicked()), text_browser, SLOT(backward()));
 	connect(close_button, SIGNAL(clicked()), this, SLOT(accept()));
 	
