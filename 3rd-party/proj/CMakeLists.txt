@@ -1,5 +1,5 @@
 #
-#    Copyright 2012, 2013 Kai Pastor
+#    Copyright 2012, 2013, 2014 Kai Pastor
 #
 #    This file is part of OpenOrienteering.
 #
@@ -102,17 +102,29 @@ ExternalProject_Get_Property(Proj SOURCE_DIR)
 ExternalProject_Get_Property(Proj BINARY_DIR)
 ExternalProject_Get_Property(Proj INSTALL_DIR)
 
+if(CMAKE_CROSSCOMPILING AND NOT GNU_SYSTEM_NAME AND MINGW)
+	set(_env_lang $ENV{LC_ALL})
+	set(ENV{LC_ALL} C)
+	execute_process(
+	  COMMAND ${CMAKE_C_COMPILER} -v
+	  ERROR_VARIABLE GNU_SYSTEM_NAME
+	)
+	set(ENV{LC_ALL} ${_env_lang})
+	string(REGEX REPLACE ".*Target: ?([^\n]*).*" \\1 GNU_SYSTEM_NAME ${GNU_SYSTEM_NAME})
+endif()
 if(CMAKE_CROSSCOMPILING AND GNU_SYSTEM_NAME)
 	set(_proj_cfg_cross "--build=$(sh ${SOURCE_DIR}/config.guess) --host=${GNU_SYSTEM_NAME}")
 	get_directory_property(_include_dirs INCLUDE_DIRECTORIES)
-	unset(_cpp_flags)
-	foreach(_dir ${_include_dirs})
-		set(_cpp_flags "${_cpp_flags} -I${_dir}")
-	endforeach()
-	set(_proj_cfg_cross "${_proj_cfg_cross} CPPFLAGS=\"${_cpp_flags}\"")
-else(CMAKE_CROSSCOMPILING AND GNU_SYSTEM_NAME)
+	if(_include_dirs)
+		unset(_c_flags)
+		foreach(_dir ${_include_dirs})
+			set(_cpp_flags "${_c_flags} -I${_dir}")
+		endforeach()
+		set(_proj_cfg_cross "${_proj_cfg_cross} CFLAGS=\"${_c_flags}\"")
+	endif()
+else()
 	unset(_proj_cfg_cross)
-endif(CMAKE_CROSSCOMPILING AND GNU_SYSTEM_NAME)
+endif()
 
 configure_file(proj-patch.in ${CMAKE_CURRENT_BINARY_DIR}/proj-patch)
 configure_file(proj-config.in ${CMAKE_CURRENT_BINARY_DIR}/proj-config)
