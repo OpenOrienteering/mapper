@@ -26,6 +26,7 @@ execute_process(
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
+include_directories(AFTER "../3rd-party/qbezier/src") # Always, last
 
 set(Mapper_Common_SRCS
  global.cpp
@@ -305,11 +306,6 @@ add_dependencies(Mapper_Common
 target_link_libraries(Mapper_Common
   libocad
 )
-
-if(NOT Mapper_PACKAGE_QT OR NOT Qt5Gui_PRIVATE_INCLUDE_DIRS)
-	include_directories("../3rd-party/qbezier/src")
-	target_link_libraries(Mapper_Common QBezier)
-endif()
 
 qt5_translations_sources(
   SOURCES ${Mapper_Common_SRCS} ${Mapper_COMMON_MOC_INPUT}
