@@ -26,8 +26,7 @@ OTHER_FILES = \
     qt5-config.cmd.in \
     qt5-config.in \
     qt5-make.in \
-    qt5-patchqt.in \
-    qt5-wrapper.in
+    qt5-patchqt.in
 
 qt5.dir      = $$OUT_PWD/qt5
 qt5.target   = $$qt5.dir/CMakeFiles/Qt5-complete
@@ -41,12 +40,22 @@ android {
 	               -no-warnings-are-errors
 }
 
+CONFIG(debug) {
+	qt5.debug = -DQT5_DEBUG:BOOL=ON
+} else {
+	qt5.debug =
+}
+
+qt5.cmake    = \
+  cmake "$$PWD" -UQT5_* -DQT5_PLATFORM=\"$$qt5.platform\" $$qt5.debug
 qt5.commands = \
-  mkdir -p "$$qt5.dir" && \
   cd "$$qt5.dir" && \
-  cmake "$$PWD" -UQT5_* -DQT5_PLATFORM=\"$$qt5.platform\" && \
+  $$qt5.cmake && \
   PATH="$$NDK_TOOLCHAIN_PATH/bin:${PATH}" $(MAKE) all
+  
+mkpath($$qt5.dir)
+system(cd "$$qt5.dir" && $$qt5.cmake)
 
 QMAKE_EXTRA_TARGETS += qt5
 PRE_TARGETDEPS      += $$qt5.target
-QMAKE_CLEAN         += $$qt5.target $$qt5.dir/Qt5-prefix/src/Qt5-stamp/*
+QMAKE_CLEAN         += $$qt5.target $$qt5.dir/Qt5-prefix/src/Qt5-stamp/Qt5-download

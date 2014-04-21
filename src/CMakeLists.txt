@@ -343,8 +343,7 @@ add_executable(Mapper
   ${Mapper_SRCS}
 )
 
-get_property(_definitions DIRECTORY PROPERTY COMPILE_DEFINITIONS)
-if(_definitions MATCHES "QT_NETWORK_LIB")
+if(TARGET QtSingleApplication)
 	include_directories("../3rd-party/qtsingleapplication/src")
 	target_link_libraries(Mapper QtSingleApplication)
 endif()

@@ -18,21 +18,16 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
 # Configure for host system of cross compilation
-QT5_CONFIG_EXTRA_OPTS=
+QT5_CONFIG_HOST_OPTS=
 if [ -n "@CMAKE_HOST_APPLE@" ]
 then
-	QT5_CONFIG_EXTRA_OPTS="-no-framework"
-elif [ -n "@CMAKE_HOST_UNIX@" ]
-then
-	QT5_CONFIG_EXTRA_OPTS="-rpath"
-else
-	QT5_CONFIG_EXTRA_OPTS="-no-rpath"
+	QT5_CONFIG_HOST_OPTS="-no-framework"
 fi
 
 "@SOURCE_DIR@/configure" \
   -opensource \
   -confirm-license \
-  $QT5_CONFIG_EXTRA_OPTS \
+  $QT5_CONFIG_HOST_OPTS \
   -prefix "@QT5_HOST_DIR@" \
   -release \
   -static \
@@ -59,16 +54,12 @@ fi
   -no-directfb \
   -no-linuxfb \
   -no-qml-debug \
-  -no-javascript-jit \
   -no-cups \
   -no-opengl \
   -no-dbus \
   -no-accessibility \
   -no-fontconfig \
   -no-sm \
-  -no-icu \
-  -make libs \
-  -make tools \
   -nomake examples \
   -nomake tests \
   -system-proxies \

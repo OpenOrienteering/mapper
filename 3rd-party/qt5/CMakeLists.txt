@@ -30,6 +30,18 @@ set(QT5_VERSION ${QT5_VERSION_DEFAULT} CACHE STRING
   "Version number of the Qt5 library, recommended value: ${QT5_VERSION_DEFAULT}")
 mark_as_advanced(QT5_VERSION)
 
+
+if(NOT MAPPER_LIBRARY_DESTINATION AND CMAKE_BUILD_TYPE MATCHES "Debug")
+	# stand-alone debug build of Qt5
+	set(QT5_DEBUG_DEFAULT On)
+else()
+	set(QT5_DEBUG_DEFAULT Off)
+endif()
+set(QT5_DEBUG ${QT5_DEBUG_DEFAULT} CACHE BOOL
+  "Enable debug build of Qt"
+)
+mark_as_advanced(QT5_DEBUG)
+
 message(STATUS "Configuring Qt ${QT5_VERSION}")
  
 if (NOT ${QT5_VERSION} STREQUAL ${QT5_VERSION_DEFAULT})
@@ -59,7 +71,8 @@ endif()
 
 string(REGEX MATCH "5.." QT5_MAJOR_MINOR ${QT5_VERSION})
 string(REGEX MATCH "5...." QT5_MAJOR_MINOR_REVISION ${QT5_VERSION})
-set(QT5_MAJOR_MINOR_REVISION ${QT5_MAJOR_MINOR_REVISION} PARENT_SCOPE)
+set(QT5_MAJOR_MINOR_REVISION ${QT5_MAJOR_MINOR_REVISION} CACHE STRING
+  "The Qt version number without additional release markers" FORCE) # Export
 if(QT5_MD5 MATCHES :)
 	message(WARNING "Not using an official release of Qt.")
 	string(REGEX REPLACE "^[0-9a-fA-F]*:" "" QT5_URL "${QT5_MD5}")
@@ -117,7 +130,7 @@ add_custom_command(OUTPUT ${QT5_CONFIG_SCRIPT}
   DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${QT5_CONFIG_SCRIPT}.new
 )
 
-if(UNIX AND NOT APPLE AND NOT "${QT5_PLATFORM}" MATCHES "android")
+if(UNIX AND NOT APPLE AND MAPPER_LIBRARY_DESTINATION)
 	set(QT5_INSTALL_ROOT "INSTALL_ROOT=<INSTALL_DIR>")
 endif()
 ExternalProject_Add(Qt5
@@ -170,35 +183,63 @@ endif()
 
 # Build script configuration
 
-if("${MAPPER_LIBRARY_DESTINATION}" STREQUAL .)
-	set(QT5_BINARY_DESTINATION "/binary")
-elseif(NOT ${MAPPER_LIBRARY_DESTINATION} MATCHES "^/")
-	set(QT5_BINARY_DESTINATION "/binary/${MAPPER_LIBRARY_DESTINATION}")
+# Debug or release build
+if (QT5_DEBUG)
+	set(QT5_CONFIG_EXTRA_OPTS "-debug -qml-debug ${QT5_CONFIG_EXTRA_OPTS}")
 else()
-	set(QT5_BINARY_DESTINATION "${MAPPER_LIBRARY_DESTINATION}")
+	set(QT5_CONFIG_EXTRA_OPTS "-release -no-qml-debug ${QT5_CONFIG_EXTRA_OPTS}")
 endif()
-set(QT5_PLUGINS_DESTINATION "${QT5_BINARY_DESTINATION}/plugins")
-if("${MAPPER_DATA_DESTINATION}" STREQUAL .)
-	set(QT5_DATA_DESTINATION "/data")
-elseif(NOT ${MAPPER_DATA_DESTINATION} MATCHES "^/")
-	set(QT5_DATA_DESTINATION "/data/${MAPPER_DATA_DESTINATION}")
+
+# Paths
+if(NOT MAPPER_LIBRARY_DESTINATION)
+	# stand-alone build of Qt5
+	set(QT5_BINARY_DESTINATION  "")
+	set(QT5_PLUGINS_DESTINATION "/plugins")
+elseif(MAPPER_LIBRARY_DESTINATION MATCHES "^/")
+	# absolute path
+	set(QT5_BINARY_DESTINATION  "${MAPPER_LIBRARY_DESTINATION}")
+	set(QT5_PLUGINS_DESTINATION "${MAPPER_LIBRARY_DESTINATION}/plugins")
+elseif(MAPPER_LIBRARY_DESTINATION STREQUAL ".")
+	# .
+	set(QT5_BINARY_DESTINATION  "/binary")
+	set(QT5_PLUGINS_DESTINATION "/binary/plugins")
 else()
+	# relative path other than .
+	set(QT5_BINARY_DESTINATION  "/binary/${MAPPER_LIBRARY_DESTINATION}")
+	set(QT5_PLUGINS_DESTINATION "/binary/${MAPPER_LIBRARY_DESTINATION}/plugins")
+endif()
+if(NOT MAPPER_DATA_DESTINATION)
+	# stand-alone build of Qt5
+	set(QT5_DATA_DESTINATION "")
+elseif(MAPPER_DATA_DESTINATION MATCHES "^/")
+	# absolute path
 	set(QT5_DATA_DESTINATION "${MAPPER_DATA_DESTINATION}")
+elseif(MAPPER_DATA_DESTINATION STREQUAL .)
+	# .
+	set(QT5_DATA_DESTINATION "/data")
+else()
+	# relative path other than .
+	set(QT5_DATA_DESTINATION "/data/${MAPPER_DATA_DESTINATION}")
 endif()
+
 # Cached only for export, not for reuse
 set(QT5_DIR "${INSTALL_DIR}${QT5_BINARY_DESTINATION}" CACHE INTERNAL
   "The Qt5 target platform directory." FORCE)
-set(QT_TRANSLATIONS_DIR "${INSTALL_DIR}/${QT5_DATA_DESTINATION}/translations" CACHE INTERNAL
+set(QT_TRANSLATIONS_DIR "${INSTALL_DIR}${QT5_DATA_DESTINATION}/translations" CACHE INTERNAL
   "The Qt5 translation directory." FORCE)
+
+if(NOT QT5_INSTALL_ROOT)
+	set(QT5_BINARY_DESTINATION "${INSTALL_DIR}${QT5_BINARY_DESTINATION}")
+	set(QT5_PLUGINS_DESTINATION "${INSTALL_DIR}${QT5_PLUGINS_DESTINATION}")
+	set(QT5_DATA_DESTINATION "${INSTALL_DIR}${QT5_DATA_DESTINATION}")
+endif()
+
+# Extra configuration options
 if(QT5_INSTALL_ROOT AND NOT "${QT5_PLATFORM}" MATCHES "android")
 	set(QT5_CONFIG_EXTRA_OPTS "-R '${QT5_BINARY_DESTINATION}/lib' ${QT5_CONFIG_EXTRA_OPTS}")
 	if(Mapper_DEVELOPMENT_BUILD)
 		set(QT5_CONFIG_EXTRA_OPTS "-R '${INSTALL_DIR}${QT5_BINARY_DESTINATION}/lib' ${QT5_CONFIG_EXTRA_OPTS}")
 	endif()
-else()
-	set(QT5_BINARY_DESTINATION "${INSTALL_DIR}${QT5_BINARY_DESTINATION}")
-	set(QT5_PLUGINS_DESTINATION "${INSTALL_DIR}${QT5_PLUGINS_DESTINATION}")
-	set(QT5_DATA_DESTINATION "${INSTALL_DIR}${QT5_DATA_DESTINATION}")
 endif()
 if(APPLE)
 	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -no-framework")
@@ -207,12 +248,14 @@ if(UNIX AND NOT APPLE AND NOT "${QT5_PLATFORM}" MATCHES "android")
 	set(QT5_CONFIG_ENVIRONMENT "LDFLAGS=-Wl,--enable-new-dtags")
 	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -qt-xcb")
 endif()
-if (CMAKE_CROSSCOMPILING)
-	set(QT5_HOST_DIR "${INSTALL_DIR}/local" CACHE INTERNAL
-	  "The Qt5 host platform directory." FORCE)
+if(${QT5_VERSION} MATCHES "5.[0-2]")
+	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -no-javascript-jit")
+endif()
+if("${QT5_PLATFORM}" MATCHES "android")
+	# cf. https://bugreports.qt-project.org/browse/QTBUG-38452
+	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -nomake tools")
 else()
-	set(QT5_HOST_DIR ${QT5_DIR} CACHE INTERNAL
-	  "The Qt5 host platform directory." FORCE)
+	set(QT5_CONFIG_EXTRA_OPTS "${QT5_CONFIG_EXTRA_OPTS} -make tools")
 endif()
 
 configure_file(qt5-patchqt.in qt5-patchqt.new @ONLY)
@@ -221,23 +264,7 @@ configure_file(qt5-make.in qt5-make @ONLY)
 configure_file(qt.conf.in qt.conf @ONLY)
 configure_file(qt.conf.qrc.in qt.conf.qrc @ONLY)
 
-if(NOT ${QT5_VERSION} MATCHES "5.[0-2]")
-	execute_process(
-	  COMMAND sed -i -e /-no-javascript-jit/d ${QT5_CONFIG_SCRIPT}.new
-	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
-endif()
-
 if(UNIX AND QT5_INSTALL_ROOT AND NOT "${QT5_PLATFORM}" MATCHES "android")
-	# Wrappers which set LD_LIBRARY_PATH.
-	configure_file(qt5-wrapper.in qcollectiongenerator @ONLY)
-	configure_file(qt5-wrapper.in lupdate @ONLY)
-	execute_process(
-	  COMMAND chmod +x qcollectiongenerator lupdate
-	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}" )
-	set(QT_QCOLLECTIONGENERATOR_EXECUTABLE "${CMAKE_CURRENT_BINARY_DIR}/qcollectiongenerator"
-	  CACHE PATH "The qcollectiongenerator wrapper.")
-	set(QT_LUPDATE_EXECUTABLE "${CMAKE_CURRENT_BINARY_DIR}/lupdate"
-	  CACHE PATH "The lupdate wrapper.")
 	file(WRITE "${INSTALL_DIR}${QT5_BINARY_DESTINATION}/bin/qt.conf"
 	  "[Paths]\n"
 	  "Plugins=${INSTALL_DIR}${QT5_PLUGINS_DESTINATION}\n"
@@ -315,4 +342,3 @@ endif()
 set_target_properties(Qt5 PROPERTIES XCODE_ATTRIBUTE_INSTALL_ROOT "")
 
 message(STATUS "Configuring Qt ${QT5_VERSION} - done")
- 

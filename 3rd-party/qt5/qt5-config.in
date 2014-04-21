@@ -17,13 +17,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-# sh wrapping:
-# Especially MSYS needs -l so that it reads /etc/profile and sets up a proper
-# environment. But /etc/profile will cd to the home directory. The wrapper needs
-# to cd back to the BINARY_DIR. [2]
-# In addition, configure must be called from its proper /[DRIVER_LETTER]/...
-# path in MSYS, while CMAKE provides a [DRIVE_LETTER]:/... path. [1]
-
 # Configure
 @QT5_CONFIG_ENVIRONMENT@ \
 "@SOURCE_DIR@/configure" \
@@ -34,7 +27,6 @@
   -plugindir '@QT5_PLUGINS_DESTINATION@' \
   -datadir '@QT5_DATA_DESTINATION@' \
   @QT5_CONFIG_EXTRA_OPTS@ \
-  -release \
   -shared \
   -gui \
   -widgets \
@@ -54,11 +46,6 @@
   -qt-pcre \
   -no-directfb \
   -no-linuxfb \
-  -no-qml-debug \
-  -no-javascript-jit \
-  -opengl desktop \
-  -make libs \
-  -make tools \
   -nomake examples \
   -nomake tests \
   -system-proxies \
