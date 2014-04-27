@@ -148,8 +148,8 @@ bool BooleanTool::execute(BooleanTool::Operation op)
 bool BooleanTool::executeForObjects(BooleanTool::Operation op, PathObject* subject, Symbol* result_objects_symbol, PathObjects& in_objects, PathObjects& out_objects)
 {
 	// Convert the objects to Clipper polygons and create a hash map, mapping point positions to the PathCoords
-	Polygons subject_polygons;
-	Polygons clip_polygons;
+	Paths subject_polygons;
+	Paths clip_polygons;
 	QHash< qint64, PathCoordInfo > polymap;
 	
 	for (int object_number = 0; object_number < (int)in_objects.size(); ++object_number)
@@ -160,15 +160,15 @@ bool BooleanTool::executeForObjects(BooleanTool::Operation op, PathObject* subje
 		
 		for (int part_number = 0; part_number < object->getNumParts(); ++part_number)
 		{
-			Polygon* polygon;
+			Path* polygon;
 			if (object == subject)
 			{
-				subject_polygons.push_back(Polygon());
+				subject_polygons.push_back(Path());
 				polygon = &subject_polygons.back();
 			}
 			else
 			{
-				clip_polygons.push_back(Polygon());
+				clip_polygons.push_back(Path());
 				polygon = &clip_polygons.back();
 			}
 			
@@ -187,9 +187,10 @@ bool BooleanTool::executeForObjects(BooleanTool::Operation op, PathObject* subje
 	}
 	
 	// Do the operation. Add the first selected object as subject, the rest as clip polygons
+	// These paths are to be regarded as closed.
 	Clipper clipper;
-	clipper.AddPolygons(subject_polygons, ptSubject);
-	clipper.AddPolygons(clip_polygons, ptClip);
+	clipper.AddPaths(subject_polygons, ptSubject, true);
+	clipper.AddPaths(clip_polygons, ptClip, true);
 	
 	ClipType clip_type;
 	if (op == Union) clip_type = ctUnion;
@@ -320,7 +321,7 @@ void BooleanTool::executeForLine(BooleanTool::Operation op, PathObject* area, Pa
 	}
 }
 
-void BooleanTool::polygonToPathPart(const Polygon& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object)
+void BooleanTool::polygonToPathPart(const Path& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object)
 {
 	if (polygon.size() < 3)
 		return;
@@ -470,7 +471,7 @@ void BooleanTool::polygonToPathPart(const Polygon& polygon, QHash< qint64, PathC
 	object->getPart(object->getNumParts() - 1).connectEnds();
 }
 
-void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_sequence, bool sequence_increasing, const Polygon& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object)
+void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_sequence, bool sequence_increasing, const Path& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object)
 {
 	int num_points = (int)polygon.size();
 	
@@ -535,7 +536,7 @@ void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_seque
 	{
 		// Need unambiguous path part information to find the original object with high probability
 		qDebug() << "BooleanTool::rebuildSegment: cannot identify original object!";
-		rebuildSegmentFromPolygonOnly(start_point, second_point, second_last_point, end_point, object);
+		rebuildSegmentFromPathOnly(start_point, second_point, second_last_point, end_point, object);
 		return;
 	}
 	
@@ -727,11 +728,11 @@ void BooleanTool::rebuildSegment(int start_index, int end_index, bool have_seque
 	else
 	{
 		// Rebuild bezier curve approximately using tangents derived from result polygon
-		rebuildSegmentFromPolygonOnly(start_point, second_point, second_last_point, end_point, object);
+		rebuildSegmentFromPathOnly(start_point, second_point, second_last_point, end_point, object);
 	}
 }
 
-void BooleanTool::rebuildSegmentFromPolygonOnly(const IntPoint& start_point, const IntPoint& second_point, const IntPoint& second_last_point, const IntPoint& end_point, PathObject* object)
+void BooleanTool::rebuildSegmentFromPathOnly(const IntPoint& start_point, const IntPoint& second_point, const IntPoint& second_last_point, const IntPoint& end_point, PathObject* object)
 {
 	MapCoord start_point_c = MapCoord::fromRaw(start_point.X, start_point.Y);
 	MapCoord second_point_c = MapCoord::fromRaw(second_point.X, second_point.Y);
@@ -749,7 +750,7 @@ void BooleanTool::rebuildSegmentFromPolygonOnly(const IntPoint& start_point, con
 	object->addCoordinate(end_point_c);
 }
 
-void BooleanTool::rebuildTwoIndexSegment(int start_index, int end_index, bool have_sequence, bool sequence_increasing, const Polygon& polygon, QHash< qint64, BooleanTool::PathCoordInfo >& polymap, PathObject* object)
+void BooleanTool::rebuildTwoIndexSegment(int start_index, int end_index, bool have_sequence, bool sequence_increasing, const Path& polygon, QHash< qint64, BooleanTool::PathCoordInfo >& polymap, PathObject* object)
 {
 	Q_UNUSED(have_sequence);
 	Q_UNUSED(sequence_increasing); // "sequence_increasing" is only used in Q_ASSERT.
@@ -812,7 +813,7 @@ void BooleanTool::rebuildTwoIndexSegment(int start_index, int end_index, bool ha
 	}
 }
 
-void BooleanTool::rebuildCoordinate(int index, const Polygon& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object, bool start_new_part)
+void BooleanTool::rebuildCoordinate(int index, const Path& polygon, QHash< qint64, PathCoordInfo >& polymap, PathObject* object, bool start_new_part)
 {
 	MapCoord coord(0.001 * polygon.at(index).X, 0.001 * polygon.at(index).Y);
 	if (polymap.contains(intPointToQInt64(polygon.at(index))))
@@ -834,7 +835,7 @@ MapCoord BooleanTool::convertOriginalCoordinate(MapCoord in)
 	return in;
 }
 
-bool BooleanTool::check_segment_match(int coord_index, PathObject* original, const Polygon& polygon, int start_index, int end_index, bool& out_coords_increasing, bool& out_is_curve)
+bool BooleanTool::check_segment_match(int coord_index, PathObject* original, const Path& polygon, int start_index, int end_index, bool& out_coords_increasing, bool& out_is_curve)
 {
 	bool found;
 	MapCoord& coord_index_coord = original->getCoordinate(coord_index);

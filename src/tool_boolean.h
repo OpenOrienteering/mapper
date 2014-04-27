@@ -98,7 +98,7 @@ private:
 	 * Curves are reconstructed with the help of the polymap, mapping locations
 	 * to path coords of the original objects.
 	 */
-	void polygonToPathPart(const ClipperLib::Polygon& polygon,
+	void polygonToPathPart(const ClipperLib::Path& polygon,
 		QHash< qint64, PathCoordInfo >& polymap, PathObject* object);
 	
 	/**
@@ -107,11 +107,11 @@ private:
 	 * The first coordinate of the segment is assumed to be already added.
 	 */
 	void rebuildSegment(int start_index, int end_index, bool have_sequence,
-		bool sequence_increasing, const ClipperLib::Polygon& polygon,
+		bool sequence_increasing, const ClipperLib::Path& polygon,
 		QHash< qint64, PathCoordInfo >& polymap, PathObject* object);
 	
 	/** Approximates a curved segment from the result polygon alone. */
-	void rebuildSegmentFromPolygonOnly(const ClipperLib::IntPoint& start_point,
+	void rebuildSegmentFromPathOnly(const ClipperLib::IntPoint& start_point,
 		const ClipperLib::IntPoint& second_point,
 		const ClipperLib::IntPoint& second_last_point,
 		const ClipperLib::IntPoint& end_point, PathObject* object);
@@ -119,7 +119,7 @@ private:
 	/** Special case of rebuildSegment() for straight or very short lines. */
 	void rebuildTwoIndexSegment(int start_index, int end_index,
 		bool have_sequence, bool sequence_increasing,
-		const ClipperLib::Polygon& polygon,
+		const ClipperLib::Path& polygon,
 		QHash< qint64, PathCoordInfo >& polymap,
 		PathObject* object);
 	
@@ -127,7 +127,7 @@ private:
 	 * Reconstructs one polygon coordinate and adds it to the object.
 	 * Uses the polymap to check whether the coorinate should be a dash point.
 	 */
-	void rebuildCoordinate(int index, const ClipperLib::Polygon& polygon,
+	void rebuildCoordinate(int index, const ClipperLib::Path& polygon,
 		QHash< qint64, PathCoordInfo >& polymap, PathObject* object,
 		bool start_new_part = false);
 	
@@ -139,7 +139,7 @@ private:
 	 * Returns true if the segments match. In this case, the out_... parameters are set.
 	 */
 	bool check_segment_match(int coord_index, PathObject* original,
-		const ClipperLib::Polygon& polygon, int start_index, int end_index,
+		const ClipperLib::Path& polygon, int start_index, int end_index,
 		bool& out_coords_increasing, bool& out_is_curve);
 	
 	/**

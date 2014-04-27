@@ -20,7 +20,7 @@ CONFIG(debug, debug|release) {
 else {
 	DEFINES += \"APP_VERSION='\\"0.5.99\\"'\"
 }
-DEFINES += \"CLIPPER_VERSION='\\"5.1.6\\"'\"
+DEFINES += \"CLIPPER_VERSION='\\"6.1.3a\\"'\"
 DEFINES += \"MAPPER_HELP_NAMESPACE='\\"openorienteering.mapper-0.5.99.help\\"'\"
 
 # Input
