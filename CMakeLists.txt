@@ -104,11 +104,13 @@ elseif(APPLE)
 	set(MAPPER_DATA_DESTINATION    "Mapper.app/Contents/Resources")
 	set(MAPPER_ABOUT_DESTINATION   "Mapper.app/Contents/Resources")
 else() # LINUX and alike
-	set(CPACK_DEBIAN_PACKAGE_NAME  "openorienteering-mapper")
+	set(Mapper_PACKAGE_NAME        "openorienteering-mapper" CACHE STRING
+	  "The package name"
+	)
 	set(MAPPER_RUNTIME_DESTINATION "/usr/bin")
-	set(MAPPER_LIBRARY_DESTINATION "/usr/lib/${CPACK_DEBIAN_PACKAGE_NAME}")
-	set(MAPPER_DATA_DESTINATION    "/usr/share/${CPACK_DEBIAN_PACKAGE_NAME}")
-	set(MAPPER_ABOUT_DESTINATION   "/usr/share/doc/${CPACK_DEBIAN_PACKAGE_NAME}")
+	set(MAPPER_LIBRARY_DESTINATION "/usr/lib/${Mapper_PACKAGE_NAME}")
+	set(MAPPER_DATA_DESTINATION    "/usr/share/${Mapper_PACKAGE_NAME}")
+	set(MAPPER_ABOUT_DESTINATION   "/usr/share/doc/${Mapper_PACKAGE_NAME}")
 endif()
 
 if(CMAKE_CROSSCOMPILING)
@@ -203,7 +205,7 @@ list(REMOVE_DUPLICATES QT_LIBRARIES)
 list(REVERSE QT_LIBRARIES)
 
 if(UNIX AND NOT APPLE)
-#	set(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib/${CPACK_DEBIAN_PACKAGE_NAME}/lib")
+#	set(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib/${Mapper_PACKAGE_NAME}/lib")
 	set(CMAKE_INSTALL_RPATH "${MAPPER_LIBRARY_DESTINATION}/lib")
 endif()
 
