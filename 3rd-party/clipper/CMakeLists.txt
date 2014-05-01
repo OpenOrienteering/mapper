@@ -105,12 +105,16 @@ ExternalProject_Get_Property(Clipper SOURCE_DIR)
 
 # Exported configuration
 
-set(CLIPPER_INCLUDE_DIR ${SOURCE_DIR}/cpp CACHE STRING
-  "The directory where to find clipper.hpp")
+set(CLIPPER_INCLUDE_DIR ${SOURCE_DIR}/cpp CACHE PATH
+  "The directory where to find clipper.hpp"
+  FORCE
+)
 mark_as_advanced(CLIPPER_INCLUDE_DIR)
 
 set(CLIPPER_LIBRARY polyclipping CACHE STRING
-  "The Clipper C++ library.")
+  "The Clipper C++ library."
+  FORCE
+)
 mark_as_advanced(CLIPPER_LIBRARY)
 
 
@@ -121,6 +125,3 @@ set_source_files_properties(${CLIPPER_SOURCES} PROPERTIES GENERATED TRUE)
 include_directories(${CLIPPER_INCLUDE_DIR})
 add_library(${CLIPPER_LIBRARY} STATIC ${CLIPPER_SOURCES})
 add_dependencies(${CLIPPER_LIBRARY} Clipper)
-
-
-message(STATUS "Configuring Clipper library ${CLIPPER_VERSION} - done")

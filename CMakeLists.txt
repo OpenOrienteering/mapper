@@ -17,6 +17,7 @@
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
 cmake_minimum_required(VERSION 2.8.3 FATAL_ERROR)
+include(FeatureSummary)
 
 # Project declaration
 
@@ -49,6 +50,7 @@ option(Mapper_TRANSLATIONS_EMBEDDED "Embed all translations in the program execu
 
 option(Mapper_DEBUG_TRANSLATIONS "Debug missing translations" OFF)
 
+set(Mapper_BUILD_CLIPPER_DEFAULT ON)
 if(WIN32 OR APPLE)
 	set(Mapper_BUILD_PROJ_DEFAULT ON)
 	set(Mapper_BUILD_QT_DEFAULT ON)
@@ -58,6 +60,8 @@ else()
 	set(Mapper_BUILD_QT_DEFAULT ON)
 	set(Mapper_PACKAGE_LINGUIST_DEFAULT OFF)
 endif()
+
+option(Mapper_BUILD_CLIPPER "Build the Clipper package from source" ${Mapper_BUILD_CLIPPER_DEFAULT})
 
 option(Mapper_BUILD_PROJ "Build the Proj library from source" ${Mapper_BUILD_PROJ_DEFAULT})
 
@@ -124,9 +128,14 @@ endif()
 add_custom_target(Mapper_prerequisites)
 set(Mapper_prerequisites_FOUND TRUE)
 
-add_subdirectory("3rd-party/clipper")
-add_dependencies(Mapper_prerequisites Clipper)
-include_directories(${CLIPPER_INCLUDE_DIR})
+if(Mapper_BUILD_CLIPPER)
+	add_subdirectory(3rd-party/clipper)
+	add_dependencies(Mapper_prerequisites ${CLIPPER_LIBRARY})
+	set_package_properties(Clipper PROPERTIES
+	  DESCRIPTION "build from source, version: ${CLIPPER_VERSION}"
+	)
+endif()
+find_package(Clipper MODULE REQUIRED)
 
 if(Mapper_BUILD_PROJ)
 	add_subdirectory(3rd-party/proj)
@@ -289,5 +298,4 @@ endif()
 add_subdirectory("docs/api")
 add_subdirectory("packaging/src")
 
-include(FeatureSummary)
 feature_summary(WHAT ALL)

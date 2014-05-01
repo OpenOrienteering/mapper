@@ -25,6 +25,7 @@ execute_process(
   COMMAND "${CMAKE_COMMAND}" -E copy_if_different mapper_config.h.tmp mapper_config.h
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
+include_directories(${CLIPPER_INCLUDE_DIRS})
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 include_directories(AFTER "../3rd-party/qbezier/src") # Always, last
 
@@ -349,7 +350,7 @@ target_link_libraries(Mapper
   docs-licensing
   ${PROJ_LIBRARY}
   ${QT_LIBRARIES}
-  ${CLIPPER_LIBRARY}
+  ${CLIPPER_LIBRARIES}
 )
 
 install(TARGETS Mapper
