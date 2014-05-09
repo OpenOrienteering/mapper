@@ -54,7 +54,7 @@ set(QT5_MD5SUMS
   # Schema: VERSION:MD5[:DOWNLOAD_URL]
   5.2.0:228b6384dfd7272de00fd8b2c144fecd
   5.2.1:a78408c887c04c34ce615da690e0b4c8
-  5.3.0-beta:47b39d3abc47c3d413df895be66347a1:http://download.qt-project.org/development_releases/qt/5.3/5.3.0-beta/single/qt-everywhere-opensource-src-5.3.0-beta.tar.gz
+  5.3.0-RC:a165a4b5469638c50adae48948caecc8:http://download.qt-project.org/development_releases/qt/5.3/5.3.0-rc/single/qt-everywhere-opensource-src-5.3.0-RC.tar.gz
 )
 foreach(line ${QT5_MD5SUMS})
 	if(${line} MATCHES "^${QT5_VERSION}:")
