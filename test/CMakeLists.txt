@@ -133,10 +133,11 @@ configure_file(AUTORUN_TESTS.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/AUTORUN_TESTS.
 #
 add_custom_target(AUTORUN_TESTS
   ALL
-  DEPENDS Mapper_prerequisites ${Mapper_AUTORUN_TESTS}
+  DEPENDS ${Mapper_AUTORUN_TESTS}
   COMMAND ${CMAKE_COMMAND} -P AUTORUN_TESTS.cmake
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
+add_dependencies(AUTORUN_TESTS Mapper_prerequisites)
 
 
 # This top-level target always runs CTest (i.e. all tests) but
@@ -146,9 +147,10 @@ add_custom_target(AUTORUN_TESTS
 #   c) show up in KDevelop's project view.
 #
 add_custom_target(Mapper_Test
-  DEPENDS Mapper_prerequisites ${Mapper_UNIT_TESTS} ${Mapper_SYSTEM_TESTS}
+  DEPENDS ${Mapper_UNIT_TESTS} ${Mapper_SYSTEM_TESTS}
   COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
 )
+add_dependencies(Mapper_Test Mapper_prerequisites)
 
 
 if(Mapper_BUILD_QT)
