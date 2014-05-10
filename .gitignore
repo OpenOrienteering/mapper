@@ -1,4 +1,5 @@
 .DS_Store
+CMakeLists.txt.user
 *.kdev4
 *.pro.user
 *~
@@ -6,8 +7,3 @@ build*/
 help/*.qhc
 3rd-party/*/download
 !3rd-party/*/download/README.txt
-resources/resources.rc
-android/bin
-android/gen
-android/libs
-android/local.properties
