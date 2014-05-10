@@ -30,6 +30,7 @@ set(Mapper_TRANS
  OpenOrienteering_cs.ts
  OpenOrienteering_de.ts
  OpenOrienteering_es.ts
+ OpenOrienteering_fi.ts
  OpenOrienteering_fr.ts
  OpenOrienteering_ja.ts
  OpenOrienteering_lv.ts
@@ -119,6 +120,7 @@ file(WRITE "${${PROJECT_NAME}_TRANSLATIONS_LISTFILE}")
 # QT5_TRANSLATIONS_SOURCES(SOURCES a.cpp b.cpp)
 #
 macro(QT5_TRANSLATIONS_SOURCES)
+	find_package(Qt5LinguistTools REQUIRED QUIET) # Provides Qt5_LUPDATE_EXECUTABLE
 	set(_DO_SOURCES FALSE)
 	foreach(_arg ${Mapper_TRANS} ${Mapper_TRANS_TEMPLATE} ${ARGN})
 		if("${_arg}" STREQUAL "SOURCES")

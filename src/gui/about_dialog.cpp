@@ -194,6 +194,7 @@ QString AboutDialog::about()
 	  << "Anders Gressli"
 	  << "Peter Hoban"
 	  << "Henrik Johansson"
+	  << "Panu Karhu"
 	  << "Oskar Karlin"
 	  << "Tojo Masaya"
 	  << "Vincent Poinsignon"
