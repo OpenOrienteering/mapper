@@ -416,6 +416,9 @@ endif()
 
 if(UNIX AND NOT APPLE)
 	install(
+	  FILES "${PROJECT_SOURCE_DIR}/docs/man/Mapper.1"
+	  DESTINATION "share/man/man1")
+	install(
 	  FILES "debian/Mapper.desktop"
 	  DESTINATION "share/applications")
 	# Cf. http://standards.freedesktop.org/icon-theme-spec/icon-theme-spec-latest.html#directory_layout
