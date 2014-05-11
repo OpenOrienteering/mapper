@@ -68,16 +68,27 @@ add_custom_command(
   DEPENDS   ${LICENSING_SRCS}
 )
 
-add_custom_command(
-  OUTPUT    licensing.qrc
-  COMMAND   ${CMAKE_COMMAND} -E copy "@CMAKE_CURRENT_SOURCE_DIR@/licensing.qrc" licensing.qrc
-  DEPENDS   licensing.qrc html/licensing.html
-)
-
-qt5_add_resources(LICENSING_QRC_CPP
-  "${CMAKE_CURRENT_BINARY_DIR}/licensing.qrc"
-  OPTIONS -compress 9 -threshold 50
-)
+if(NOT CMAKE_CURRENT_SOURCE_DIR STREQUAL ${CMAKE_CURRENT_BINARY_DIR})
+	add_custom_command(
+	  OUTPUT    licensing.qrc
+	  COMMAND   ${CMAKE_COMMAND} -E copy "@CMAKE_CURRENT_SOURCE_DIR@/licensing.qrc" licensing.qrc
+	  DEPENDS   "${CMAKE_CURRENT_SOURCE_DIR}/licensing.qrc" html/licensing.html
+	)
+	qt5_add_resources(LICENSING_QRC_CPP
+	  "${CMAKE_CURRENT_BINARY_DIR}/licensing.qrc"
+	  OPTIONS -compress 9 -threshold 50
+	)
+else()
+	add_custom_command(
+	  OUTPUT    licensing.tmp.qrc
+	  COMMAND   ${CMAKE_COMMAND} -E copy "@CMAKE_CURRENT_SOURCE_DIR@/licensing.qrc" licensing.tmp.qrc
+	  DEPENDS   "${CMAKE_CURRENT_SOURCE_DIR}/licensing.qrc" html/licensing.html
+	)
+	qt5_add_resources(LICENSING_QRC_CPP
+	  "${CMAKE_CURRENT_BINARY_DIR}/licensing.tmp.qrc"
+	  OPTIONS -compress 9 -threshold 50
+	)
+endif()
 
 add_library(docs-licensing
   STATIC
