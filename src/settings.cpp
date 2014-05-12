@@ -94,14 +94,6 @@ Settings::Settings()
 	QSettings settings;
 	if (settings.value("version") != current_version)
 	{
-		if (!settings.contains("version"))
-		{
-			// pre-0.5
-			QSettings old_settings("Thomas Schoeps", "OpenOrienteering");
-			old_settings.setFallbacksEnabled(false);
-			Q_FOREACH(QString key, old_settings.allKeys())
-				settings.setValue(key, old_settings.value(key));
-		}
 		migrateValue("General/language", General_Language, settings);
 		if (migrateValue("MapEditor/click_tolerance", MapEditor_ClickToleranceMM, settings))
 			settings.setValue(getSettingPath(MapEditor_ClickToleranceMM), Util::pixelToMMLogical(settings.value(getSettingPath(MapEditor_ClickToleranceMM)).toFloat()));
