@@ -200,7 +200,7 @@ void OCAD8FileImport::import(bool load_symbols_only) throw (FileFormatException)
 		}
 		
 		if (i == 0 && color->isBlack() && color->getName() == QLatin1String("Registration black")
-		           && XMLFileFormat::current_version >= 6 )
+		           && XMLFileFormat::active_version >= 6 )
 		{
 			delete color; color = NULL;
 			color_index[ocad_color->number] = Map::getRegistrationColor();

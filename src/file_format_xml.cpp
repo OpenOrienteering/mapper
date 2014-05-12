@@ -39,6 +39,7 @@
 #include "map_grid.h"
 #include "object.h"
 #include "object_text.h"
+#include "settings.h"
 #include "symbol_area.h"
 #include "symbol_combined.h"
 #include "symbol_line.h"
@@ -50,12 +51,10 @@
 // ### XMLFileFormat definition ###
 
 const int XMLFileFormat::minimum_version = 2;
-#if defined(Q_OS_ANDROID)
-#warning "XMLFileFormat::current_version is set to 5 for Android"
-const int XMLFileFormat::current_version = 5;
-#else
 const int XMLFileFormat::current_version = 6;
-#endif
+
+int XMLFileFormat::active_version = 5; // updated by XMLFileExporter::doExport()
+
 const QString XMLFileFormat::magic_string = "<?xml ";
 const QString XMLFileFormat::mapper_namespace = "http://oorienteering.sourceforge.net/mapper/xml/v2";
 
@@ -169,12 +168,16 @@ void XMLFileExporter::doExport() throw (FileFormatException)
 	if (option("autoFormatting").toBool() == true)
 		xml.setAutoFormatting(true);
 	
+	int current_version = XMLFileFormat::current_version;
+	bool retain_compatibility = Settings::getInstance().getSetting(Settings::General_RetainCompatiblity).toBool();
+	XMLFileFormat::active_version = retain_compatibility ? current_version-1 : current_version;
+	
 	xml.writeDefaultNamespace(XMLFileFormat::mapper_namespace);
 	xml.writeStartDocument();
 	
 	{
 		XmlElementWriter map_element(xml, literal::map);
-		map_element.writeAttribute(literal::version, XMLFileFormat::current_version);
+		map_element.writeAttribute(literal::version, XMLFileFormat::active_version);
 		
 		xml.writeTextElement(literal::notes, map->getMapNotes());
 		

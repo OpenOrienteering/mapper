@@ -31,7 +31,7 @@ void XmlElementWriter::write(const MapCoordVector& coords)
 	int num_coords = (int)coords.size();
 	writeAttribute(literal::count, num_coords);
 	
-	if (XMLFileFormat::current_version < 6 || xml.autoFormatting())
+	if (XMLFileFormat::active_version < 6 || xml.autoFormatting())
 	{
 		// XMAP files and old format: syntactically rich output
 		for (MapCoordVector::const_iterator coord = coords.begin(), end = coords.end(); coord != end; ++coord)

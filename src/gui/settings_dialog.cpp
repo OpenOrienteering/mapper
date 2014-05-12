@@ -374,6 +374,11 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	row++;
 	layout->addWidget(Util::Headline::create(tr("Saving files")), row, 1, 1, 2);
 	
+	row++;
+	QCheckBox* compatibility_check = new QCheckBox(tr("Retain compatibility with Mapper %1").arg("0.5"));
+	compatibility_check->setChecked(Settings::getInstance().getSetting(Settings::General_RetainCompatiblity).toBool());
+	layout->addWidget(compatibility_check, row, 1, 1, 2);
+	
 	// Possible point: limit size of undo/redo journal
 	
 	int auto_save_interval = Settings::getInstance().getSetting(Settings::General_AutoSaveInterval).toInt();
@@ -446,6 +451,7 @@ GeneralPage::GeneralPage(QWidget* parent) : SettingsPage(parent)
 	connect(ocd_importer_check, SIGNAL(clicked(bool)), this, SLOT(ocdImporterClicked(bool)));
 	connect(auto_save_check, SIGNAL(clicked(bool)), this, SLOT(autoSaveChanged(bool)));
 	connect(auto_save_interval_edit, SIGNAL(valueChanged(int)), this, SLOT(autoSaveIntervalChanged(int)));
+	connect(compatibility_check, SIGNAL(clicked(bool)), this, SLOT(retainCompatibilityChanged(bool)));
 }
 
 void GeneralPage::apply()
@@ -630,6 +636,11 @@ void GeneralPage::autoSaveChanged(bool state)
 void GeneralPage::autoSaveIntervalChanged(int value)
 {
 	changes.insert(Settings::getInstance().getSettingPath(Settings::General_AutoSaveInterval), value);
+}
+
+void GeneralPage::retainCompatibilityChanged(bool state)
+{
+	changes.insert(Settings::getInstance().getSettingPath(Settings::General_RetainCompatiblity), state);
 }
 
 void GeneralPage::ppiChanged(double ppi)
