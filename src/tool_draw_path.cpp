@@ -30,12 +30,13 @@
 #include "settings.h"
 #include "symbol.h"
 #include "symbol_line.h"
-#include "symbol_dock_widget.h"
 #include "tool_helpers.h"
 #include "util.h"
 #include "gui/modifier_key.h"
 #include "gui/widgets/key_button_bar.h"
+#include "gui/widgets/symbol_widget.h"
 #include "map_editor.h"
+
 
 QCursor* DrawPathTool::cursor = NULL;
 

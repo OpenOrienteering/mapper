@@ -31,7 +31,6 @@
 #include "map.h"
 #include "map_widget.h"
 #include "map_undo.h"
-#include "symbol_dock_widget.h"
 #include "tool_draw_text.h"
 #include "tool_helpers.h"
 #include "symbol_line.h"
@@ -42,6 +41,8 @@
 #include "gui/main_window.h"
 #include "gui/modifier_key.h"
 #include "gui/widgets/key_button_bar.h"
+
+class SymbolWidget;
 
 
 int EditPointTool::max_objects_for_handle_display = 10;

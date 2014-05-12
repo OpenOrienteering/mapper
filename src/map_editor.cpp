@@ -32,6 +32,8 @@
 #endif
 
 #include "gui/widgets/action_grid_bar.h"
+#include "gui/widgets/symbol_render_widget.h"
+#include "gui/widgets/symbol_widget.h"
 #include "color_dock_widget.h"
 #include "compass_display.h"
 #include "file_format_registry.h"
@@ -56,7 +58,6 @@
 #include "symbol.h"
 #include "symbol_area.h"
 #include "symbol_dialog_replace.h"
-#include "symbol_dock_widget.h"
 #include "symbol_point.h"
 #include "template.h"
 #include "template_dialog_reopen.h"

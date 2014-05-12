@@ -50,7 +50,6 @@ HEADERS += \
   symbol_area.h \
   symbol_combined.h \
   symbol_dialog_replace.h \
-  symbol_dock_widget.h \
   symbol_line.h \
   symbol_point.h \
   symbol_point_editor.h \
@@ -113,6 +112,9 @@ HEADERS += \
   gui/widgets/measure_widget.h \
   gui/widgets/pie_menu.h \
   gui/widgets/segmented_button_layout.h \
+  gui/widgets/symbol_render_widget.h \
+  gui/widgets/symbol_tooltip.h \
+  gui/widgets/symbol_widget.h \
   gui/widgets/tags_widget.h \
   util/item_delegates.h \
   util/overriding_shortcut.h \
@@ -144,7 +146,6 @@ SOURCES += \
   georeferencing_dialog.cpp \
   color_dock_widget.cpp \
   symbol.cpp \
-  symbol_dock_widget.cpp \
   symbol_dialog_replace.cpp \
   symbol_setting_dialog.cpp \
   symbol_properties_widget.cpp \
@@ -231,6 +232,9 @@ SOURCES += \
   gui/widgets/measure_widget.cpp \
   gui/widgets/pie_menu.cpp \
   gui/widgets/segmented_button_layout.cpp \
+  gui/widgets/symbol_render_widget.cpp \
+  gui/widgets/symbol_tooltip.cpp \
+  gui/widgets/symbol_widget.cpp \
   gui/widgets/tags_widget.cpp \
   util/item_delegates.cpp \
   util/overriding_shortcut.cpp \

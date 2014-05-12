@@ -25,11 +25,11 @@
 #include <QMessageBox>
 #include <QPainter>
 
+#include "gui/widgets/symbol_widget.h"
 #include "map_widget.h"
 #include "object.h"
 #include "tool_helpers.h"
 #include "map_undo.h"
-#include "symbol_dock_widget.h"
 
 
 FillTool::FillTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)

@@ -31,7 +31,6 @@
 #include "object.h"
 #include "object_text.h"
 #include "renderable.h"
-#include "symbol_dock_widget.h"
 #include "symbol_combined.h"
 #include "symbol_line.h"
 #include "settings.h"
@@ -42,6 +41,8 @@
 #include "gui/main_window.h"
 #include "gui/modifier_key.h"
 #include "gui/widgets/key_button_bar.h"
+
+class SymbolWidget;
 
 
 int EditLineTool::max_objects_for_handle_display = 10;

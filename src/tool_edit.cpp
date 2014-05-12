@@ -29,11 +29,12 @@
 #include "map_undo.h"
 #include "object.h"
 #include "settings.h"
-#include "symbol_dock_widget.h"
 #include "tool_helpers.h"
 #include "object_text.h"
 #include "symbol_text.h"
 #include "util.h"
+
+class SymbolWidget;
 
 
 // ### ObjectSelector ###

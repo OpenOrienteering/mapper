@@ -22,13 +22,13 @@
 
 #include <QtWidgets>
 
+#include "gui/widgets/symbol_widget.h"
 #include "map.h"
 #include "map_widget.h"
 #include "map_undo.h"
 #include "object.h"
 #include "renderable.h"
 #include "symbol.h"
-#include "symbol_dock_widget.h"
 #include "symbol_point.h"
 #include "tool_helpers.h"
 #include "util.h"

@@ -29,10 +29,12 @@
 #include "map_widget.h"
 #include "settings.h"
 #include "tool_helpers.h"
-#include "symbol_dock_widget.h"
 #include "gui/modifier_key.h"
 #include "gui/widgets/key_button_bar.h"
 #include "map_editor.h"
+
+class SymbolWidget;
+
 
 QCursor* DrawRectangleTool::cursor = NULL;
 
