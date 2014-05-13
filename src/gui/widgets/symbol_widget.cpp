@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,15 +23,13 @@
 
 #include <QtWidgets>
 
-#include "../../map.h"
 #include "../../settings.h"
 #include "../../symbol.h"
 #include "symbol_render_widget.h"
 
 
 SymbolWidget::SymbolWidget(Map* map, bool mobile_mode, QWidget* parent)
-: QWidget(parent),
-  map(map)
+: QWidget(parent)
 {
 	int icon_size = Settings::getInstance().getSymbolWidgetIconSizePx();
 	
@@ -42,15 +41,10 @@ SymbolWidget::SymbolWidget(Map* map, bool mobile_mode, QWidget* parent)
 	scroll_bar->setPageStep(3 * icon_size);
 	render_widget = new SymbolRenderWidget(map, mobile_mode, scroll_bar, this);
 	
-// 	// Load settings
-// 	QSettings settings;
-// 	settings.beginGroup("SymbolWidget");
-// 	preferred_size = settings.value("size", QSize(200, 500)).toSize();
-// 	settings.endGroup();
 	preferred_size = QSize(6 * icon_size, 5 * icon_size);
 	
 	// Create layout
-	layout = new QHBoxLayout();
+	QHBoxLayout* layout = new QHBoxLayout();
 	layout->setMargin(0);
 	layout->setSpacing(0);
     layout->addWidget(render_widget);
@@ -60,11 +54,7 @@ SymbolWidget::SymbolWidget(Map* map, bool mobile_mode, QWidget* parent)
 
 SymbolWidget::~SymbolWidget()
 {
-// 	// Save settings
-// 	QSettings settings;
-// 	settings.beginGroup("SymbolWidget");
-// 	settings.setValue("size", size());
-// 	settings.endGroup();
+	; // nothing
 }
 
 QSize SymbolWidget::sizeHint() const
@@ -89,8 +79,7 @@ bool SymbolWidget::isSymbolSelected(Symbol* symbol) const
 
 void SymbolWidget::selectSingleSymbol(Symbol *symbol)
 {
-    int index = map->findSymbolIndex(symbol);
-    if (index >= 0) render_widget->selectSingleSymbol(index);
+    render_widget->selectSingleSymbol(symbol);
 }
 
 void SymbolWidget::adjustContents()
@@ -132,4 +121,9 @@ void SymbolWidget::symbolDeleted(int pos, Symbol* old_symbol)
 	Q_UNUSED(pos);
 	Q_UNUSED(old_symbol);
 	render_widget->update();
+}
+
+void SymbolWidget::symbolIconChanged(int pos)
+{
+	render_widget->updateIcon(pos);
 }

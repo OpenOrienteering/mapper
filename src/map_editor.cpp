@@ -32,7 +32,6 @@
 #endif
 
 #include "gui/widgets/action_grid_bar.h"
-#include "gui/widgets/symbol_render_widget.h"
 #include "gui/widgets/symbol_widget.h"
 #include "color_dock_widget.h"
 #include "compass_display.h"
@@ -3283,7 +3282,7 @@ void MapEditorController::connectMapToSymbolWidget()
 	connect(map, SIGNAL(symbolAdded(int,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*)));
 	connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*,Symbol*)));
 	connect(map, SIGNAL(symbolDeleted(int,Symbol*)), symbol_widget, SLOT(symbolDeleted(int,Symbol*)));
-	connect(map, SIGNAL(symbolIconChanged(int)), symbol_widget->getRenderWidget(), SLOT(updateIcon(int)));
+	connect(map, SIGNAL(symbolIconChanged(int)), symbol_widget, SLOT(symbolIconChanged(int)));
 }
 
 void MapEditorController::importClicked()

@@ -70,6 +70,13 @@ public:
 	inline int currentSymbolIndex() const {return current_symbol_index;}
 	
 	/**
+	 * @brief Selects the given symbol.
+	 * 
+	 * Deselects other symbols, if there was a different selection before.
+	 */
+	void selectSingleSymbol(Symbol *symbol);
+	
+	/**
 	 * Selects the symbol with the given number. Deselects other symbols,
 	 * if there was a different selection before.
 	 */

@@ -133,10 +133,10 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QScrollBar* s
 	copy_action = context_menu->addAction(QIcon(":/images/copy.png"), tr("Copy"), this, SLOT(copySymbols()));
 	paste_action = context_menu->addAction(QIcon(":/images/paste.png"), tr("Paste"), this, SLOT(pasteSymbols()));
 	context_menu->addSeparator();
-	switch_symbol_action = context_menu->addAction(QIcon(":/images/tool-switch-symbol.png"), tr("Switch symbol of selected object(s)"), parent, SLOT(emitSwitchSymbolClicked()));
-	fill_border_action = context_menu->addAction(QIcon(":/images/tool-fill-border.png"), tr("Fill / Create border for selected object(s)"), parent, SLOT(emitFillBorderClicked()));
+	switch_symbol_action = context_menu->addAction(QIcon(":/images/tool-switch-symbol.png"), tr("Switch symbol of selected object(s)"), parent, SIGNAL(switchSymbolClicked()));
+	fill_border_action = context_menu->addAction(QIcon(":/images/tool-fill-border.png"), tr("Fill / Create border for selected object(s)"), parent, SIGNAL(fillBorderClicked()));
 	// text will be filled in by updateContextMenuState()
-	select_objects_action = context_menu->addAction(QIcon(":/images/tool-edit.png"), "", parent, SLOT(emitSelectObjectsClicked()));
+	select_objects_action = context_menu->addAction(QIcon(":/images/tool-edit.png"), "", parent, SLOT(emitSelectObjectsExclusivelyClicked()));
 	select_objects_additionally_action = context_menu->addAction(QIcon(":/images/tool-edit.png"), "", parent, SLOT(emitSelectObjectsAdditionallyClicked()));
 	context_menu->addSeparator();
 	hide_action = context_menu->addAction("", this, SLOT(setSelectedSymbolVisibility(bool)));
@@ -206,6 +206,12 @@ void SymbolRenderWidget::setScroll(int new_scroll)
 	update();
 }
 
+void SymbolRenderWidget::selectSingleSymbol(Symbol *symbol)
+{
+	int index = map->findSymbolIndex(symbol);
+    if (index >= 0) selectSingleSymbol(index);
+}
+
 void SymbolRenderWidget::selectSingleSymbol(int i)
 {
 	if (selected_symbols.size() == 1 && *selected_symbols.begin() == i)
@@ -224,7 +230,7 @@ void SymbolRenderWidget::selectSingleSymbol(int i)
 	// and the selection of the newly inserted object triggers the selection of a different symbol, leading to bugs.
 	bool change_symbol_setting = Settings::getInstance().getSettingCached(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool();
 	Settings::getInstance().setSettingInCache(Settings::MapEditor_ChangeSymbolWhenSelecting, false);
-	symbol_widget->emitSelectedSymbolsChanged();
+	emit symbol_widget->selectedSymbolsChanged();
 	Settings::getInstance().setSettingInCache(Settings::MapEditor_ChangeSymbolWhenSelecting, change_symbol_setting);
 }
 
@@ -252,7 +258,7 @@ void SymbolRenderWidget::setSelectionBitfield(std::vector< bool >& in)
 			updateIcon(i);
 		}
 	}
-	symbol_widget->emitSelectedSymbolsChanged();
+	emit symbol_widget->selectedSymbolsChanged();
 }
 
 int SymbolRenderWidget::getNumSelectedSymbols() const
@@ -566,7 +572,7 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 					selected_symbols.insert(current_symbol_index);
 				else
 					selected_symbols.erase(current_symbol_index);
-				symbol_widget->emitSelectedSymbolsChanged();
+				emit symbol_widget->selectedSymbolsChanged();
 			}
 		}
 		else if (event->modifiers() & Qt::ShiftModifier)
@@ -590,7 +596,7 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 					else
 						break;
 				}
-				symbol_widget->emitSelectedSymbolsChanged();
+				emit symbol_widget->selectedSymbolsChanged();
 			}
 		}
 		else
@@ -633,7 +639,7 @@ void SymbolRenderWidget::mouseReleaseEvent(QMouseEvent* event)
 		if (current_symbol_index >= 0 && !isSymbolSelected(current_symbol_index))
 			selectSingleSymbol(current_symbol_index);
 		else
-			symbol_widget->emitSelectedSymbolsChanged(); // HACK, will close the symbol selection screen
+			emit symbol_widget->selectedSymbolsChanged(); // HACK, will close the symbol selection screen
 	}
 }
 
@@ -823,7 +829,7 @@ void SymbolRenderWidget::deleteSymbols()
 		map->deleteSymbol(*it);
 	}
 	selected_symbols.clear();
-	symbol_widget->emitSelectedSymbolsChanged();
+	emit symbol_widget->selectedSymbolsChanged();
 	update();
 	
 	symbol_widget->adjustContents();
@@ -895,7 +901,7 @@ void SymbolRenderWidget::pasteSymbols()
 	map->importMap(paste_map, Map::MinimalSymbolImport, this, NULL, currentSymbolIndex(), false);
 	delete paste_map;
 	
-	symbol_widget->emitSelectedSymbolsChanged();
+	emit symbol_widget->selectedSymbolsChanged();
 }
 
 void SymbolRenderWidget::setSelectedSymbolVisibility(bool checked)
@@ -916,7 +922,7 @@ void SymbolRenderWidget::setSelectedSymbolVisibility(bool checked)
 		map->emitSelectionChanged();
 	map->updateAllMapWidgets();
 	map->setSymbolsDirty();
-	symbol_widget->emitSelectedSymbolsChanged();
+	emit symbol_widget->selectedSymbolsChanged();
 }
 void SymbolRenderWidget::setSelectedSymbolProtection(bool checked)
 {
@@ -935,14 +941,14 @@ void SymbolRenderWidget::setSelectedSymbolProtection(bool checked)
 	if (selection_changed)
 		map->emitSelectionChanged();
 	map->setSymbolsDirty();
-	symbol_widget->emitSelectedSymbolsChanged();
+	emit symbol_widget->selectedSymbolsChanged();
 }
 
 void SymbolRenderWidget::selectAll()
 {
 	for (int i = 0; i < map->getNumSymbols(); ++i)
 		selected_symbols.insert(i);
-	symbol_widget->emitSelectedSymbolsChanged();
+	emit symbol_widget->selectedSymbolsChanged();
 	update();
 }
 
@@ -964,7 +970,7 @@ void SymbolRenderWidget::invertSelection()
 			new_set.insert(i);
 	}
 	selected_symbols = new_set;
-	symbol_widget->emitSelectedSymbolsChanged();
+	emit symbol_widget->selectedSymbolsChanged();
 	update();
 }
 
@@ -1063,7 +1069,7 @@ bool SymbolRenderWidget::newSymbol(Symbol* prototype)
 	
 	// Normally selectSingleSymbol() calls this already but here we must do it manually,
 	// as the changing symbol indices can make selectSingleSymbol() think that the selection did not change.
-	symbol_widget->emitSelectedSymbolsChanged();
+	emit symbol_widget->selectedSymbolsChanged();
 	
 	symbol_widget->adjustContents();
 	map->setSymbolsDirty();
