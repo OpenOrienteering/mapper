@@ -22,7 +22,7 @@
 #ifndef _OPENORIENTEERING_SYMBOL_WIDGET_H_
 #define _OPENORIENTEERING_SYMBOL_WIDGET_H_
 
-#include <QWidget>
+#include <QScrollArea>
 
 QT_BEGIN_NAMESPACE
 class QScrollBar;
@@ -44,7 +44,7 @@ class SymbolRenderWidget;
  * 
  * Normally it is used inside a dock widget.
  */
-class SymbolWidget : public QWidget
+class SymbolWidget : public QScrollArea
 {
 Q_OBJECT
 public:
@@ -88,13 +88,13 @@ public:
 	 * 
 	 * Reimplementation of QWidget::sizeHint().
 	 */
-	virtual QSize sizeHint() const;
+//	virtual QSize sizeHint() const;
 	
 public slots:
 	/**
 	 * @brief Adjusts the widget contents to its size.
 	 */
-	void adjustContents();
+//	void adjustContents();
 	
 	/**
 	 * @brief Listens to changes of map symols.
@@ -151,12 +151,12 @@ protected:
 	 * 
 	 * Reimplementation of QWidget::resizeEvent().
 	 */
-	virtual void resizeEvent(QResizeEvent* event);
+//	virtual void resizeEvent(QResizeEvent* event);
 	
 private:
 	SymbolRenderWidget* render_widget;
-	QScrollBar* scroll_bar;
-	QSize preferred_size;
+//	QScrollBar* scroll_bar;
+//	QSize preferred_size;
 };
 
 #endif

@@ -26,6 +26,7 @@
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE
+class QScrollArea;
 class QScrollBar;
 class QMenu;
 QT_END_NAMESPACE
@@ -46,10 +47,9 @@ Q_OBJECT
 public:
 	SymbolRenderWidget(Map* map, bool mobile_mode, QScrollBar* scroll_bar, SymbolWidget* parent);
 	
-	SymbolToolTip* getSymbolToolTip() const;
+	QScrollArea* makeScrollArea(QWidget* parent = NULL);
 	
-	bool scrollBarNeeded(int width, int height);
-	void setScrollBar(QScrollBar* new_scroll_bar);
+	SymbolToolTip* getSymbolToolTip() const;
 	
 	/** Returns the number of selected symbols. */
 	int getNumSelectedSymbols() const;
@@ -82,12 +82,19 @@ public:
 	 */
 	void selectSingleSymbol(int i);
 	
+	/**
+	 * @brief Returns the recommended size for the widget.
+	 * 
+	 * Reimplementation of QWidget::sizeHint().
+	 */
+	virtual QSize sizeHint() const;
+	
 public slots:
 	/** Repaints the icon with the given index. */
 	void updateIcon(int i);
 	
 	/** Updates the range of the scroll bar, if there is one. */
-	void updateScrollRange();
+	void adjustHeight();
 	
 protected:
 	// Used to update actions in the context menu
@@ -113,8 +120,6 @@ protected slots:
 	void sortByNumber();
 	void sortByColor();
 	void sortByColorPriority();
-	
-	void setScroll(int new_scroll);
 	
 protected:
 	int current_symbol_index;
@@ -146,6 +151,7 @@ protected:
 	bool mobile_mode;
 	SymbolToolTip* tooltip;
 	Map* map;
+	QSize preferred_size;
 	
 	bool isSymbolSelected(int i) const;
 	void getSelectionBitfield(std::vector<bool>& out) const;

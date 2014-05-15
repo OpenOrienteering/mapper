@@ -29,8 +29,9 @@
 
 
 SymbolWidget::SymbolWidget(Map* map, bool mobile_mode, QWidget* parent)
-: QWidget(parent)
+: QScrollArea(parent)
 {
+#if 0
 	int icon_size = Settings::getInstance().getSymbolWidgetIconSizePx();
 	
 	scroll_bar = new QScrollBar();
@@ -50,6 +51,15 @@ SymbolWidget::SymbolWidget(Map* map, bool mobile_mode, QWidget* parent)
     layout->addWidget(render_widget);
 	layout->addWidget(scroll_bar);
 	setLayout(layout);
+#else
+	render_widget = new SymbolRenderWidget(map, mobile_mode, NULL, this);
+	setWidget(render_widget);
+	
+	setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	setWidgetResizable(true);
+	setBackgroundRole(QPalette::Base);
+#endif
 }
 
 SymbolWidget::~SymbolWidget()
@@ -57,10 +67,12 @@ SymbolWidget::~SymbolWidget()
 	; // nothing
 }
 
+#if 0
 QSize SymbolWidget::sizeHint() const
 {
 	return preferred_size;
 }
+#endif
 
 Symbol* SymbolWidget::getSingleSelectedSymbol() const
 {
@@ -82,6 +94,7 @@ void SymbolWidget::selectSingleSymbol(Symbol *symbol)
     render_widget->selectSingleSymbol(symbol);
 }
 
+#if 0
 void SymbolWidget::adjustContents()
 {
 	int width = this->width();
@@ -108,6 +121,7 @@ void SymbolWidget::resizeEvent(QResizeEvent* event)
 	adjustContents();
 	event->accept();
 }
+#endif
 
 void SymbolWidget::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
 {

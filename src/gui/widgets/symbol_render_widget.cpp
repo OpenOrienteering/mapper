@@ -100,6 +100,9 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QScrollBar* s
 	last_drop_row = -1;
 	last_drop_pos = -1;
 	
+	int icon_size = Settings::getInstance().getSymbolWidgetIconSizePx();
+	preferred_size = QSize(6 * icon_size, 5 * icon_size);
+	
 	setAttribute(Qt::WA_OpaquePaintEvent);
 	setAutoFillBackground(false);
 	setMouseTracking(true);
@@ -159,33 +162,30 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QScrollBar* s
 	context_menu->addMenu(sort_menu);
 
 	connect(map, SIGNAL(colorDeleted(int,const MapColor*)), this, SLOT(update()));
-	connect(map, SIGNAL(symbolAdded(int,Symbol*)), symbol_widget, SLOT(adjustContents()));
+	connect(map, SIGNAL(symbolAdded(int,Symbol*)), this, SLOT(adjustHeight()));
+}
+
+QScrollArea* SymbolRenderWidget::makeScrollArea(QWidget* parent)
+{
+	Q_ASSERT(this->parent() == NULL); // No reparenting
+	
+	QScrollArea* scroll_area = new QScrollArea(parent);
+	scroll_area->setBackgroundRole(QPalette::Base);
+	scroll_area->setWidget(this);
+	scroll_area->setWidgetResizable(true);
+	scroll_area->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+	scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	return scroll_area;
+}
+
+QSize SymbolRenderWidget::sizeHint() const
+{
+	return preferred_size;
 }
 
 SymbolToolTip* SymbolRenderWidget::getSymbolToolTip() const
 {
 	return tooltip;
-}
-
-bool SymbolRenderWidget::scrollBarNeeded(int width, int height)
-{
-	int icons_per_row, num_rows;
-	getRowInfo(width, height, icons_per_row, num_rows);
-	
-	return (num_rows * Settings::getInstance().getSymbolWidgetIconSizePx()) > height;
-}
-void SymbolRenderWidget::setScrollBar(QScrollBar* new_scroll_bar)
-{
-	if (scroll_bar)
-		disconnect(scroll_bar, SIGNAL(valueChanged(int)), this, SLOT(setScroll(int)));
-	else
-		new_scroll_bar->setValue(0);
-	
-	scroll_bar = new_scroll_bar;
-	updateScrollRange();
-	
-	if (scroll_bar)
-		connect(scroll_bar, SIGNAL(valueChanged(int)), this, SLOT(setScroll(int)));
 }
 
 Symbol* SymbolRenderWidget::getSingleSelectedSymbol() const
@@ -198,12 +198,6 @@ Symbol* SymbolRenderWidget::getSingleSelectedSymbol() const
 bool SymbolRenderWidget::isSymbolSelected(Symbol* symbol) const
 {
 	return isSymbolSelected(map->findSymbolIndex(symbol));
-}
-
-void SymbolRenderWidget::setScroll(int new_scroll)
-{
-	Q_UNUSED(new_scroll);
-	update();
 }
 
 void SymbolRenderWidget::selectSingleSymbol(Symbol *symbol)
@@ -387,23 +381,12 @@ QRect SymbolRenderWidget::getDragIndicatorRect(int row, int pos_in_row)
 	return QRect(pos_in_row * icon_size - rect_width / 2 - 1, row * icon_size - scroll - 1, rect_width, icon_size + 2);
 }
 
-void SymbolRenderWidget::updateScrollRange()
+void SymbolRenderWidget::adjustHeight()
 {
-	if (!scroll_bar)
-		return;
 	int icons_per_row, num_rows;
 	getRowInfo(width(), height(), icons_per_row, num_rows);
-	
 	int icon_size = Settings::getInstance().getSymbolWidgetIconSizePx();
-	int pixels_too_much = qMax(0, (num_rows * icon_size) - height());
-	if (pixels_too_much > 0)
-	{
-		scroll_bar->setEnabled(true);
-		scroll_bar->setMinimum(0);
-		scroll_bar->setMaximum(pixels_too_much);
-	}
-	else
-		scroll_bar->setEnabled(false);
+	setFixedHeight(num_rows * icon_size);
 }
 
 void SymbolRenderWidget::paintEvent(QPaintEvent* event)
@@ -498,8 +481,10 @@ void SymbolRenderWidget::paintEvent(QPaintEvent* event)
 
 void SymbolRenderWidget::resizeEvent(QResizeEvent* event)
 {
-	Q_UNUSED(event);
-    updateScrollRange();
+	if (width() != event->oldSize().width())
+	{
+		adjustHeight();
+	}
 }
 
 void SymbolRenderWidget::mouseMoveEvent(QMouseEvent* event)
@@ -832,7 +817,7 @@ void SymbolRenderWidget::deleteSymbols()
 	emit symbol_widget->selectedSymbolsChanged();
 	update();
 	
-	symbol_widget->adjustContents();
+	adjustHeight();
 	map->setSymbolsDirty();
 }
 
@@ -843,7 +828,7 @@ void SymbolRenderWidget::duplicateSymbol()
 	map->addSymbol(map->getSymbol(current_symbol_index)->duplicate(), current_symbol_index + 1);
 	selectSingleSymbol(current_symbol_index + 1);
 	
-	symbol_widget->adjustContents();
+	adjustHeight();
 	map->setSymbolsDirty();
 }
 
@@ -1071,7 +1056,7 @@ bool SymbolRenderWidget::newSymbol(Symbol* prototype)
 	// as the changing symbol indices can make selectSingleSymbol() think that the selection did not change.
 	emit symbol_widget->selectedSymbolsChanged();
 	
-	symbol_widget->adjustContents();
+	adjustHeight();
 	map->setSymbolsDirty();
 	return true;
 }
