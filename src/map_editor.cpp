@@ -1582,8 +1582,7 @@ void MapEditorController::showSymbolWindow(bool show)
 	if (!symbol_dock_widget)
 	{
 		symbol_dock_widget = new EditorDockWidget(tr("Symbols"), symbol_window_act, this, window);
-		createSymbolWidget(symbol_dock_widget);
-		symbol_dock_widget->setWidget(symbol_widget);
+		createSymbolWidget();
 		symbol_dock_widget->setObjectName("Symbol dock widget");
 		if (!window->restoreDockWidget(symbol_dock_widget))
 			window->addDockWidget(Qt::RightDockWidgetArea, symbol_dock_widget, Qt::Vertical);
@@ -1787,13 +1786,13 @@ void MapEditorController::selectedSymbolsChanged()
 		QSize icon_size = bottom_action_bar->getIconSize(2, 2);
 		QPixmap pixmap(icon_size);
 		pixmap.fill(Qt::white);
-		if (symbol_widget->getNumSelectedSymbols() != 1)
+		if (symbol_widget->selectedSymbolsCount() != 1)
 		{
 			QFont font(window->font());
 			font.setPixelSize(icon_size.height() / 5);
 			QPainter painter(&pixmap);
 			painter.setFont(font);
-			QString text = (symbol_widget->getNumSelectedSymbols() == 0) ?
+			QString text = (symbol_widget->selectedSymbolsCount() == 0) ?
 				tr("No\nsymbol\nselected", "Keep it short. Should not be much longer per line than the longest word in the original.") :
 				tr("Multiple\nsymbols\nselected", "Keep it short. Should not be much longer per line than the longest word in the original.");
 			painter.drawText(pixmap.rect(), Qt::AlignCenter, text);
@@ -3056,6 +3055,7 @@ void MapEditorController::mobileSymbolSelectorClicked()
 {
 	// NOTE: this does not handle window resizes, however it is assumed that in
 	// mobile mode there is no window, instead the application is running fullscreen.
+#warning Test in mobile mode
 	symbol_widget->setGeometry(window->rect());
 	symbol_widget->raise();
 	symbol_widget->show();
@@ -3064,6 +3064,7 @@ void MapEditorController::mobileSymbolSelectorClicked()
 
 void MapEditorController::mobileSymbolSelectorFinished()
 {
+#warning Test in mobile mode
 	disconnect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(mobileSymbolSelectorFinished()));
 	symbol_widget->hide();
 }
@@ -3232,7 +3233,13 @@ void MapEditorController::setMap(Map* map, bool create_new_map_view)
 	connect(map, SIGNAL(closedTemplateAvailabilityChanged()), this, SLOT(closedTemplateAvailabilityChanged()));
 	connect(map, SIGNAL(spotColorPresenceChanged(bool)), this, SLOT(spotColorPresenceChanged(bool)));
 	connect(map, SIGNAL(currentMapPartChanged(int)), this, SLOT(selectMapPart(int)));
-	connectMapToSymbolWidget();
+	
+	if (symbol_widget)
+	{
+		delete symbol_widget;
+		symbol_widget = NULL;
+		createSymbolWidget();
+	}
 	
 	if (window)
 	{
@@ -3264,25 +3271,21 @@ void MapEditorController::updateWidgets()
 
 void MapEditorController::createSymbolWidget(QWidget* parent)
 {
-	if (symbol_widget)
-		return;
-	symbol_widget = new SymbolWidget(map, mobile_mode, parent);
-	connectMapToSymbolWidget();
-	connect(symbol_widget, SIGNAL(switchSymbolClicked()), this, SLOT(switchSymbolClicked()));
-	connect(symbol_widget, SIGNAL(fillBorderClicked()), this, SLOT(fillBorderClicked()));
-	connect(symbol_widget, SIGNAL(selectObjectsClicked(bool)), this, SLOT(selectObjectsClicked(bool)));
-	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
-	selectedSymbolsChanged();
-}
-
-void MapEditorController::connectMapToSymbolWidget()
-{
-	if (!map || !symbol_widget)
-		return;
-	connect(map, SIGNAL(symbolAdded(int,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*)));
-	connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), symbol_widget, SLOT(symbolChanged(int,Symbol*,Symbol*)));
-	connect(map, SIGNAL(symbolDeleted(int,Symbol*)), symbol_widget, SLOT(symbolDeleted(int,Symbol*)));
-	connect(map, SIGNAL(symbolIconChanged(int)), symbol_widget, SLOT(symbolIconChanged(int)));
+	if (!symbol_widget)
+	{
+		symbol_widget = new SymbolWidget(map, mobile_mode, parent);
+		connect(symbol_widget, SIGNAL(switchSymbolClicked()), this, SLOT(switchSymbolClicked()));
+		connect(symbol_widget, SIGNAL(fillBorderClicked()), this, SLOT(fillBorderClicked()));
+		connect(symbol_widget, SIGNAL(selectObjectsClicked(bool)), this, SLOT(selectObjectsClicked(bool)));
+		connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
+		if (symbol_dock_widget)
+		{
+			Q_ASSERT(!parent);
+			symbol_dock_widget->setWidget(symbol_widget);
+		}
+		
+		selectedSymbolsChanged();
+	}
 }
 
 void MapEditorController::importClicked()

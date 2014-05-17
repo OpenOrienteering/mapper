@@ -24,24 +24,17 @@
 
 #include <QScrollArea>
 
-QT_BEGIN_NAMESPACE
-class QScrollBar;
-class QHBoxLayout;
-QT_END_NAMESPACE
-
 class Map;
 class Symbol;
 class SymbolRenderWidget;
 
 /**
- * @brief Shows all symbols from a map.
+ * @brief Shows all symbols from a map in a scrollable widget.
  * 
  * SymbolWidget shows all symbols from a map's symbol set.
  * It lets the user select symbols and perform actions on symbols.
  * 
- * The implementation is based on SymbolRenderWidget and
- * adds a scroll bar as needed.
- * 
+ * The implementation is based on SymbolRenderWidget and QScrollArea.
  * Normally it is used inside a dock widget.
  */
 class SymbolWidget : public QScrollArea
@@ -71,7 +64,7 @@ public:
 	/**
 	 * @brief Returns the number of selected symbols.
 	 */
-	int getNumSelectedSymbols() const;
+	int selectedSymbolsCount() const;
 	
 	/**
 	 * @brief Checks if the symbol is selected.
@@ -83,80 +76,33 @@ public:
 	 */
 	void selectSingleSymbol(Symbol *symbol);
 	
-	/**
-	 * @brief Returns the recommended size for the widget.
-	 * 
-	 * Reimplementation of QWidget::sizeHint().
-	 */
-//	virtual QSize sizeHint() const;
-	
-public slots:
-	/**
-	 * @brief Adjusts the widget contents to its size.
-	 */
-//	void adjustContents();
-	
-	/**
-	 * @brief Listens to changes of map symols.
-	 */
-	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol = NULL);
-	
-	/**
-	 * @brief Listens to deletion of map symbols.
-	 */
-	void symbolDeleted(int pos, Symbol* old_symbol);
-	
-	/**
-	 * @brief Listens to changes of map symbol icons.
-	 */
-	void symbolIconChanged(int pos);
-	
-	/**
-	 * @brief Emits selectObjectsClicked(true).
-	 */
-	void emitSelectObjectsExclusivelyClicked() {emit selectObjectsClicked(true);}
-	
-	/**
-	 * @brief Emits selectObjectsClicked(false).
-	 */
-	void emitSelectObjectsAdditionallyClicked() {emit selectObjectsClicked(false);}
-	
 signals:
 	/**
-	 * @brief This signal indicicates a change of the selected symbol(s).
+	 * @brief The collection of selected symbols changed.
 	 */
 	void selectedSymbolsChanged();
 	
 	/**
-	 * @brief This signal is triggered when the user activates "Switch symbol".
+	 * @brief The user triggered "Switch symbol".
 	 * @todo  Merge with/Reuse corresponding action in MapEditorController.
 	 */
 	void switchSymbolClicked();
 	
 	/**
-	 * @brief This signal is triggered when the user activates "Fill/Create border".
+	 * @brief The user triggered "Fill/Create border".
 	 * @todo  Merge with/Reuse corresponding action in MapEditorController.
 	 */
 	void fillBorderClicked();
 	
 	/**
-	 * @brief This signal is triggered when the user selects symbols.
-	 * @param select_exclusively It true, the new selection is a single symbol.
+	 * @brief The user triggered selecting objects with the active symbol.
+	 * @param select_exclusively If true, an existing selection is replaced,
+	 *                           otherwise it is extend.
 	 */
 	void selectObjectsClicked(bool select_exclusively);
 	
-protected:
-	/**
-	 * @brief Receives widget resize events.
-	 * 
-	 * Reimplementation of QWidget::resizeEvent().
-	 */
-//	virtual void resizeEvent(QResizeEvent* event);
-	
 private:
 	SymbolRenderWidget* render_widget;
-//	QScrollBar* scroll_bar;
-//	QSize preferred_size;
 };
 
 #endif

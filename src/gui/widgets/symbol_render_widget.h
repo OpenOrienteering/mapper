@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,79 +27,117 @@
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE
-class QScrollArea;
-class QScrollBar;
 class QMenu;
 QT_END_NAMESPACE
 
 class Map;
 class Symbol;
 class SymbolToolTip;
-class SymbolWidget;
 
 /**
- * @brief Displays a list of symbols.
+ * @brief Shows all symbols from a map in a size-constrained widget.
  * 
- * Internal class used in SymbolWidget.
+ * SymbolRenderWidget lets the user select symbols and perform actions on them.
+ * It is a plain widget which does not implement scrolling but takes as much
+ * height as neccessary for given width and number of symbols. Scrolling is
+ * realized by SymbolWidget.
  */
 class SymbolRenderWidget : public QWidget
 {
 Q_OBJECT
 public:
-	SymbolRenderWidget(Map* map, bool mobile_mode, QScrollBar* scroll_bar, SymbolWidget* parent);
-	
-	QScrollArea* makeScrollArea(QWidget* parent = NULL);
-	
-	SymbolToolTip* getSymbolToolTip() const;
-	
-	/** Returns the number of selected symbols. */
-	int getNumSelectedSymbols() const;
+	/**
+	 * @brief Constructs a new SymbolRenderWidget.
+	 * @param map         The map which provides the symbols. Must not be NULL.
+	 * @param mobile_mode If true, enables a special mode for mobile devices.
+	 * @param parent      The parent QWidget.
+	 */
+	SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* parent = NULL);
 	
 	/**
-	 * If exactly one symbol is selected, returns this symbol,
-	 * otherwise returns NULL.
+	 * @brief Destroys the SymbolRenderWidget.
 	 */
-	Symbol* getSingleSelectedSymbol() const;
+	virtual ~SymbolRenderWidget();
+
+	/**
+	 * @brief Returns the number of selected symbols.
+	 */
+	int selectedSymbolsCount() const;
 	
-	/** Checks if the symbol is selected. */
+	/**
+	 * @brief Checks if the symbol is selected.
+	 */
 	bool isSymbolSelected(Symbol* symbol) const;
 	
 	/**
-	 * Returns the single "current" symbol (the symbol which was clicked last).
-	 * Can be -1 if no symbol selected.
+	 * @brief Checks if the symbol with given index is selected.
 	 */
-	inline int currentSymbolIndex() const {return current_symbol_index;}
+	bool isSymbolSelected(int i) const;
 	
 	/**
-	 * @brief Selects the given symbol.
+	 * @brief If exactly one symbol is selected, returns this symbol.
+	 * 
+	 * Otherwise returns NULL.
+	 */
+	Symbol* singleSelectedSymbol() const;
+	
+	/**
+	 * @brief Selects the given symbol exclusively.
 	 * 
 	 * Deselects other symbols, if there was a different selection before.
 	 */
 	void selectSingleSymbol(Symbol *symbol);
 	
 	/**
-	 * Selects the symbol with the given number. Deselects other symbols,
-	 * if there was a different selection before.
+	 * @brief Selects the given symbol exclusively.
+	 * 
+	 * Selects the symbol with the given number.
+	 * Deselects other symbols, if there was a different selection before.
 	 */
 	void selectSingleSymbol(int i);
 	
 	/**
 	 * @brief Returns the recommended size for the widget.
 	 * 
-	 * Reimplementation of QWidget::sizeHint().
+	 * Reimplemented from QWidget::sizeHint().
 	 */
 	virtual QSize sizeHint() const;
 	
 public slots:
-	/** Repaints the icon with the given index. */
-	void updateIcon(int i);
+	/**
+	 * @brief Updates the layout and marks all icons for repainting.
+	 */
+	void updateAll();
 	
-	/** Updates the range of the scroll bar, if there is one. */
-	void adjustHeight();
+	/**
+	 * @brief Marks the icon with the given index for repainting.
+	 */
+	void updateSingleIcon(int i);
 	
-protected:
-	// Used to update actions in the context menu
-	void updateContextMenuState();
+signals:
+	/**
+	 * @brief The collection of selected symbols changed.
+	 */
+	void selectedSymbolsChanged();
+	
+	/**
+	 * @brief The user triggered "Switch symbol".
+	 * @todo  Merge with/Reuse corresponding action in MapEditorController.
+	 */
+	void switchSymbolClicked();
+	
+	/**
+	 * @brief The user triggered "Fill/Create border".
+	 * @todo  Merge with/Reuse corresponding action in MapEditorController.
+	 */
+	void fillBorderClicked();
+	
+	/**
+	 * @brief The user triggered selecting objects with the active symbol.
+	 * @param exclusively If true, an existing selection is replaced,
+	 *                    otherwise it is extend.
+	 */
+	void selectObjectsClicked(bool exclusively);
 	
 protected slots:
 	void newPointSymbol();
@@ -114,6 +153,8 @@ protected slots:
 	void pasteSymbols();
 	void setSelectedSymbolVisibility(bool checked);
 	void setSelectedSymbolProtection(bool checked);
+	void selectObjectsExclusively();
+	void selectObjectsAdditionally();
 	void selectAll();
 	void selectUnused();
 	void invertSelection();
@@ -122,6 +163,104 @@ protected slots:
 	void sortByColorPriority();
 	
 protected:
+	virtual void resizeEvent(QResizeEvent* event);
+	
+	/**
+	 * @brief Recalculates the layout and size.
+	 * 
+	 * This function reads the icon size from the settings and the widget's
+	 * current width and adjusts the number of icons per row, the number of
+	 * rows and the widget's height to fit the current number of symbols.
+	 */
+	void adjustLayout();
+	
+	/**
+	 * @brief Returns the top-left coordinates of a symbol's icon.
+	 * @param i The index of the symbol.
+	 */
+	QPoint iconPosition(int i) const;
+	
+	/**
+	 * @brief Returns the index of the symbol represented at a particular location
+	 * @param pos The location
+	 */
+	int symbolIndexAt(QPoint pos) const;
+	
+	
+	virtual void paintEvent(QPaintEvent* event);
+	
+	/**
+	 * @brief Draws the icon and its decoration (hidden, protected).
+	 * @param painter The QPainter to be used (must be active).
+	 * @param i       The index of the symbol.
+	 * @param x       The x coordinate of the top left corner.
+	 * @param y       The y coordinate of the top left corner.
+	 */
+	void drawIcon(QPainter& painter, int i, int x, int y);
+	
+	
+	virtual void mouseMoveEvent(QMouseEvent* event);
+	virtual void mousePressEvent(QMouseEvent* event);
+	virtual void mouseReleaseEvent(QMouseEvent* event);
+	virtual void mouseDoubleClickEvent(QMouseEvent* event);
+	virtual void leaveEvent(QEvent* event);
+	
+	/**
+	 * @brief Handles hovering over the icons, i.e. controlling the tool tip.
+	 * @param pos The current location of the pointing device.
+	 */
+	void hover(QPoint pos);
+	
+	
+	virtual void dragEnterEvent(QDragEnterEvent* event);
+	virtual void dragMoveEvent(QDragMoveEvent* event);
+	virtual void dropEvent(QDropEvent* event);
+	
+	/**
+	 * @brief Determines the drop location for a given pointing device position.
+	 * @param pos        The pointing device position.
+	 * @param row        The icon row where to insert the dropped symbol.
+	 * @param pos_in_row The position in the row where to insert the dropped symbol.
+	 * @return If there is a valid drop position, returns true, otherwise false.
+	 */
+	bool dropPosition(QPoint pos, int& row, int& pos_in_row);
+	
+	/**
+	 * @brief Determines a drop indicator rectangle for a given location in the icons.
+	 * @param row        The icon row where to insert the dropped symbol.
+	 * @param pos_in_row The position in the row where to insert the dropped symbol.
+	 */
+	QRect dropIndicatorRect(int row, int pos_in_row);
+	
+	
+	/**
+	 * @brief Takes care of editing and inserting a newly created symbol.
+	 * @param prototype The symbol which will be edited and inserted in the map.
+	 * @return If editing is cancelled, returns false. Otherwise returns true.
+	 */
+	bool newSymbol(Symbol* prototype);
+	
+	/**
+	 * @brief Sorts the map's symbol set by arbitrary criteria.
+	 */
+	template<typename T> void sort(T compare);
+	
+	/**
+	 * @brief Marks the icons of the selected symbols for repainting.
+	 */
+	void updateSelectedIcons();
+	
+	/** 
+	 * @brief Updates the state of the actions in the context menu.
+	 */
+	void updateContextMenuState();
+	
+private:
+	Map* map;
+	bool mobile_mode;
+	
+	bool dragging;
+	
 	int current_symbol_index;
 	int hover_symbol_index;
 	std::set<int> selected_symbols;
@@ -129,11 +268,12 @@ protected:
 	QPoint last_click_pos;
 	int last_drop_pos;
 	int last_drop_row;
-	int last_click_scroll_value;
-	bool dragging;
 	
-	QScrollBar* scroll_bar;
-	SymbolWidget* symbol_widget;
+	int icon_size;
+	int icons_per_row;
+	int num_rows;
+	QSize preferred_size;
+	
 	QMenu* context_menu;
 	QAction* edit_action;
 	QAction* scale_action;
@@ -148,39 +288,15 @@ protected:
 	QAction* select_objects_action;
 	QAction* select_objects_additionally_action;
 	
-	bool mobile_mode;
 	SymbolToolTip* tooltip;
-	Map* map;
-	QSize preferred_size;
-	
-	bool isSymbolSelected(int i) const;
-	void getSelectionBitfield(std::vector<bool>& out) const;
-	void setSelectionBitfield(std::vector<bool>& in);
-	
-	bool newSymbol(Symbol* prototype);
-	
-	void mouseMove(int x, int y);
-	int getSymbolIndexAt(int x, int y);
-	QRect getIconRect(int i);
-	void updateSelectedIcons();
-	void getRowInfo(int width, int height, int& icons_per_row, int& num_rows);
-	bool getDropPosition(QPoint pos, int& row, int& pos_in_row);
-	QRect getDragIndicatorRect(int row, int pos_in_row);
-	
-	template<typename T> void sort(T compare);
-	
-	virtual void paintEvent(QPaintEvent* event);
-	virtual void resizeEvent(QResizeEvent* event);
-	virtual void mouseMoveEvent(QMouseEvent* event);
-	virtual void mousePressEvent(QMouseEvent* event);
-	virtual void mouseReleaseEvent(QMouseEvent* event);
-	virtual void mouseDoubleClickEvent(QMouseEvent* event);
-	virtual void leaveEvent(QEvent* event);
-	virtual void wheelEvent(QWheelEvent* event);
-	
-	virtual void dragEnterEvent(QDragEnterEvent* event);
-	virtual void dragMoveEvent(QDragMoveEvent* event);
-	virtual void dropEvent(QDropEvent* event);
 };
+
+//### SymbolRenderWidget inline code ###
+
+inline
+int SymbolRenderWidget::selectedSymbolsCount() const
+{
+	return (int)selected_symbols.size();
+}
 
 #endif
