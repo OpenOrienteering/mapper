@@ -41,6 +41,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 : QWidget(parent)
 , map(map)
 , mobile_mode(mobile_mode)
+, selection_locked(false)
 , dragging(false)
 , current_symbol_index(-1)
 , hover_symbol_index(-1)
@@ -107,6 +108,10 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	sort_menu->addAction(tr("Sort by primary color"), this, SLOT(sortByColor()));
 	sort_menu->addAction(tr("Sort by primary color priority"), this, SLOT(sortByColorPriority()));
 	context_menu->addMenu(sort_menu);
+	
+	// lockSelection() will be the first slot called by selectedSymbolsChanged().
+	// cf. http://qt-project.org/doc/qt-5/signalsandslots.html#signals
+	connect(this, SIGNAL(selectedSymbolsChanged()), this, SLOT(lockSelection()));
 
 	connect(map, SIGNAL(colorDeleted(int,const MapColor*)), this, SLOT(update()));
 	connect(map, SIGNAL(symbolAdded(int,Symbol*)), this, SLOT(updateAll()));
@@ -150,6 +155,18 @@ void SymbolRenderWidget::adjustLayout()
 	setFixedHeight(num_rows * icon_size);
 }
 
+void SymbolRenderWidget::lockSelection()
+{
+	selection_locked = true;
+	// Unlock on return to event loop.
+	QTimer::singleShot(0, this, SLOT(unlockSelection()));
+}
+
+void SymbolRenderWidget::unlockSelection()
+{
+	selection_locked = false;
+}
+
 Symbol* SymbolRenderWidget::singleSelectedSymbol() const
 {
 	if (selected_symbols.size() != 1)
@@ -176,6 +193,9 @@ void SymbolRenderWidget::selectSingleSymbol(Symbol *symbol)
 
 void SymbolRenderWidget::selectSingleSymbol(int i)
 {
+	if (selection_locked)
+		return;
+	
 	if (selected_symbols.size() == 1 && *selected_symbols.begin() == i)
 		return;	// Symbol already selected as only selection
 	
@@ -187,13 +207,7 @@ void SymbolRenderWidget::selectSingleSymbol(int i)
 		updateSingleIcon(i);
 	}
 	
-	// Deactivate the change symbol on object selection setting temporarily while emitting the selected symbols changes signal.
-	// If not doing this, a currently used tool could catch the signal, finish its editing as the selected symbol has changed,
-	// and the selection of the newly inserted object triggers the selection of a different symbol, leading to bugs.
-	bool change_symbol_setting = Settings::getInstance().getSettingCached(Settings::MapEditor_ChangeSymbolWhenSelecting).toBool();
-	Settings::getInstance().setSettingInCache(Settings::MapEditor_ChangeSymbolWhenSelecting, false);
 	emit selectedSymbolsChanged();
-	Settings::getInstance().setSettingInCache(Settings::MapEditor_ChangeSymbolWhenSelecting, change_symbol_setting);
 }
 
 void SymbolRenderWidget::hover(QPoint pos)
@@ -914,6 +928,7 @@ bool SymbolRenderWidget::newSymbol(Symbol* prototype)
 	map->addSymbol(new_symbol, pos);
 	// Ensure that a change in selection is detected
 	selectSingleSymbol(-1);
+	unlockSelection();
 	selectSingleSymbol(pos);
 	return true;
 }

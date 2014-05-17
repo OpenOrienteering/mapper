@@ -162,6 +162,28 @@ protected slots:
 	void sortByColor();
 	void sortByColorPriority();
 	
+	/**
+	 * @brief Locks the current symbol selection against external changes.
+	 * 
+	 * A currently used tool could catch the selectedSymbolsChanged() and
+	 * finish its editing for that reason. It would than insert a new object to
+	 * the map and so trigger another change of selection. This not desired,
+	 * and lockSelection(), being the first slot listening on
+	 * selectedSymbolsChanged(), will block external changes to the selection.
+	 * 
+	 * It does take care of unlocking too, by scheduling a call to
+	 * unlockSelection() for the next time control returns to the event loop.
+	 */
+	void lockSelection();
+	
+	/**
+	 * @brief Unlocks the current symbol selection.
+	 * 
+	 * It should be rarely needed to call this actively because lockSelection
+	 * already schedules a call to this function.
+	 */
+	void unlockSelection();
+	
 protected:
 	virtual void resizeEvent(QResizeEvent* event);
 	
@@ -259,6 +281,7 @@ private:
 	Map* map;
 	bool mobile_mode;
 	
+	bool selection_locked;
 	bool dragging;
 	
 	int current_symbol_index;
