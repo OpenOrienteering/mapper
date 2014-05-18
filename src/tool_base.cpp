@@ -43,7 +43,7 @@ MapEditorToolBase::MapEditorToolBase(const QCursor cursor, MapEditorTool::Type t
   dragging(false),
   start_drag_distance(Settings::getInstance().getStartDragDistancePx()),
   angle_helper(new ConstrainAngleToolHelper()),
-  snap_helper(new SnappingToolHelper(map())),
+  snap_helper(new SnappingToolHelper(this)),
   snap_exclude_object(NULL),
   cur_map_widget(editor->getMainWidget()),
   editing(false),
@@ -70,6 +70,8 @@ void MapEditorToolBase::init()
 	initImpl();
 	updateDirtyRect();
 	updateStatusText();
+	
+	MapEditorTool::init();
 }
 
 bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)

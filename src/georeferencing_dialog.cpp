@@ -709,6 +709,8 @@ GeoreferencingTool::~GeoreferencingTool()
 void GeoreferencingTool::init()
 {
 	setStatusBarText(tr("<b>Click</b>: Set the reference point. Another button to cancel."));
+	
+	MapEditorTool::init();
 }
 
 bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)

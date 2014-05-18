@@ -40,6 +40,8 @@ void TemplateMoveTool::init()
 	setStatusBarText(tr("<b>Drag</b> to move the current template"));
 	
 	connect(map(), SIGNAL(templateDeleted(int,Template*)), this, SLOT(templateDeleted(int,Template*)));
+	
+	MapEditorTool::init();
 }
 
 bool TemplateMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)

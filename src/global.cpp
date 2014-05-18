@@ -28,7 +28,6 @@
 #include "file_format_xml.h"
 #include "fileformats/ocd_file_format.h"
 #include "georeferencing.h"
-#include "tool.h"
 
 void registerProjectionTemplates()
 {
@@ -70,9 +69,6 @@ void doStaticInitializations()
 	FileFormats.registerFormat(new OcdFileFormat());
 // 	FileFormats.registerFormat(new OCAD8FileFormat());
 	FileFormats.registerFormat(new NativeFileFormat()); // TODO: Remove before release 1.0
-	
-	// Load resources
-	MapEditorTool::loadPointHandles();
 	
 	// Register projection templates
 	registerProjectionTemplates();

@@ -80,7 +80,7 @@ void CutoutTool::drawImpl(QPainter* painter, MapWidget* widget)
 
 	// Box selection
 	if (dragging)
-		EditTool::drawSelectionBox(painter, widget, click_pos_map, cur_pos_map);
+		drawSelectionBox(painter, widget, click_pos_map, cur_pos_map);
 }
 
 bool CutoutTool::keyPress(QKeyEvent* event)

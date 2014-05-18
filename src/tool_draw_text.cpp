@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,8 +25,8 @@
 #include <QClipboard>
 #include <QtWidgets>
 
-#include "gui/widgets/symbol_widget.h"
 #include "map.h"
+#include "map_editor.h"
 #include "map_undo.h"
 #include "map_widget.h"
 #include "object_text.h"
@@ -43,19 +44,15 @@
 
 QCursor* DrawTextTool::cursor = NULL;
 
-DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : MapEditorTool(editor, DrawText, tool_button),
-   renderables(new MapRenderables(map())),
-   symbol_widget(symbol_widget)
+DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button)
+: MapEditorTool(editor, DrawText, tool_button)
+, drawing_symbol(editor->activeSymbol())
+, dragging(false)
+, preview_text(NULL)
+, text_editor(NULL)
+, renderables(new MapRenderables(map()))
 {
-	dragging = false;
-	preview_text = NULL;
-	text_editor = NULL;
-	
-	selectedSymbolsChanged();
-	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
-	connect(map(), SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(symbolChanged(int,Symbol*,Symbol*)));
-	connect(map(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
+	connect(editor, SIGNAL(activeSymbolChanged(Symbol*)), this, SLOT(setDrawingSymbol(Symbol*)));
 	
 	if (!cursor)
 		cursor = new QCursor(QPixmap(":/images/cursor-draw-text.png"), 11, 11);
@@ -64,13 +61,15 @@ DrawTextTool::DrawTextTool(MapEditorController* editor, QAction* tool_button, Sy
 void DrawTextTool::init()
 {
 	updateStatusText();
+	
+	MapEditorTool::init();
 }
 
 DrawTextTool::~DrawTextTool()
 {
 	if (text_editor)
 		finishEditing();
-	deletePreviewObject();
+	deletePreviewText();
 }
 
 bool DrawTextTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -126,6 +125,8 @@ bool DrawTextTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 			return true;
 		else
 		{
+			cur_pos = event->pos();
+			cur_pos_map = map_coord;
 			finishEditing();
 			return true;
 		}
@@ -154,7 +155,7 @@ bool DrawTextTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	text_editor = new TextObjectEditorHelper(preview_text, editor);
 	connect(text_editor, SIGNAL(selectionChanged(bool)), this, SLOT(selectionChanged(bool)));
 	
-	updatePreviewObject();
+	updatePreviewText();
 	
 	return true;
 }
@@ -226,57 +227,37 @@ void DrawTextTool::draw(QPainter* painter, MapWidget* widget)
 	}
 }
 
-void DrawTextTool::selectedSymbolsChanged()
+void DrawTextTool::setDrawingSymbol(Symbol* symbol)
 {
-	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
-	if (symbol == NULL || symbol->getType() != Symbol::Text || symbol->isHidden())
-	{
-		if (text_editor)
-			finishEditing();
-		
-		if (symbol && symbol->isHidden())
-			deactivate();
-		else
-			switchToDefaultDrawTool(symbol);
-		
-		return;
-	}
+	// Avoid using deleted symbol
+	if (map()->findSymbolIndex(drawing_symbol) == -1)
+		symbol = NULL;
 	
-	drawing_symbol = symbol;
+	// End current editing
 	if (text_editor)
 	{
-		preview_text->setSymbol(drawing_symbol, true);
-		updatePreviewObject();
+		if (symbol)
+			finishEditing();
+		else
+			abortEditing();
 	}
-	else
-		deletePreviewObject();
-}
-
-void DrawTextTool::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
-{
-	Q_UNUSED(pos);
-	Q_UNUSED(new_symbol);
 	
-	if (old_symbol == drawing_symbol)
-		selectedSymbolsChanged();
-}
-
-void DrawTextTool::symbolDeleted(int pos, Symbol* old_symbol)
-{
-	Q_UNUSED(pos);
+	// Handle new symbol
+	drawing_symbol = symbol;
+	deletePreviewText();
 	
-	if (old_symbol == drawing_symbol)
-	{
-		if (preview_text)
-			preview_text->setText("");
+	if (!symbol)
 		deactivate();
-	}
+	else if (symbol->isHidden())
+		deactivate();
+	else if (symbol->getType() != Symbol::Text)
+		switchToDefaultDrawTool(symbol);
 }
 
 void DrawTextTool::selectionChanged(bool text_change)
 {
 	Q_UNUSED(text_change);	
-	updatePreviewObject();
+	updatePreviewText();
 }
 
 void DrawTextTool::updateDirtyRect()
@@ -307,7 +288,7 @@ void DrawTextTool::updateStatusText()
 	setStatusBarText(tr("<b>Click</b>: Create a text object with a single anchor. <b>Drag</b>: Create a text box. "));
 }
 
-void DrawTextTool::updatePreviewObject()
+void DrawTextTool::updatePreviewText()
 {
 	renderables->removeRenderablesOfObject(preview_text, false);
 	preview_text->update(true);
@@ -315,7 +296,7 @@ void DrawTextTool::updatePreviewObject()
 	updateDirtyRect();
 }
 
-void DrawTextTool::deletePreviewObject()
+void DrawTextTool::deletePreviewText()
 {
 	if (preview_text)
 	{
@@ -330,11 +311,22 @@ void DrawTextTool::setPreviewLetter()
 	if (!preview_text)
 	{
 		preview_text = new TextObject(drawing_symbol);
-		preview_text->setText(tr("A"));
 	}
 	
+	preview_text->setText(static_cast<TextSymbol*>(drawing_symbol)->getIconText());
 	preview_text->setAnchorPosition(cur_pos_map);
-	updatePreviewObject();
+	updatePreviewText();
+}
+
+void DrawTextTool::abortEditing()
+{
+	delete text_editor;
+	text_editor = NULL;
+	
+	renderables->removeRenderablesOfObject(preview_text, false);
+	map()->clearDrawingBoundingBox();
+	
+	setPreviewLetter();
 }
 
 void DrawTextTool::finishEditing()
@@ -345,9 +337,7 @@ void DrawTextTool::finishEditing()
 	renderables->removeRenderablesOfObject(preview_text, false);
 	map()->clearDrawingBoundingBox();
 	
-	if (preview_text->getText().isEmpty())
-		preview_text->setText(tr("A"));
-	else
+	if (!preview_text->getText().isEmpty())
 	{
 		int index = map()->addObject(preview_text);
 		map()->clearObjectSelection(false);
@@ -360,6 +350,8 @@ void DrawTextTool::finishEditing()
 		
 		preview_text = NULL;
 	}
+	
+	setPreviewLetter();
 }
 
 

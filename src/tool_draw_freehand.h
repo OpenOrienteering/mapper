@@ -29,7 +29,7 @@ class DrawFreehandTool : public DrawLineAndAreaTool
 {
 Q_OBJECT
 public:
-	DrawFreehandTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
+	DrawFreehandTool(MapEditorController* editor, QAction* tool_action, bool is_helper_tool);
 	virtual ~DrawFreehandTool();
 	
 	virtual void init();

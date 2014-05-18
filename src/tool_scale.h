@@ -36,7 +36,7 @@ class ScaleTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	ScaleTool(MapEditorController* editor, QAction* tool_button);
+	ScaleTool(MapEditorController* editor, QAction* tool_action);
 	virtual ~ScaleTool();
 	
     virtual void init();

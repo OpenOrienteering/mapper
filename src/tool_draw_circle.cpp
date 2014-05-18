@@ -32,8 +32,8 @@
 
 QCursor* DrawCircleTool::cursor = NULL;
 
-DrawCircleTool::DrawCircleTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : DrawLineAndAreaTool(editor, DrawCircle, tool_button, symbol_widget),
+DrawCircleTool::DrawCircleTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool)
+ : DrawLineAndAreaTool(editor, DrawCircle, tool_button, is_helper_tool),
    key_button_bar(NULL)
 {
 	dragging = false;
@@ -67,7 +67,7 @@ bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 {
 	Q_UNUSED(widget);
 	
-	if ((event->button() == Qt::LeftButton) || (draw_in_progress && drawMouseButtonClicked(event)))
+	if ((event->button() == Qt::LeftButton) || (editingInProgress() && drawMouseButtonClicked(event)))
 	{
 		cur_pos = event->pos();
 		cur_pos_map = map_coord;
@@ -81,7 +81,7 @@ bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 			first_point_set = true;
 			start_from_center = (event->modifiers() | (key_button_bar ? key_button_bar->activeModifiers() : 0)) & Qt::ControlModifier;
 			
-			if (!draw_in_progress)
+			if (!editingInProgress())
 				startDrawing();
 		}
 		else if (first_point_set && !second_point_set)
@@ -97,7 +97,7 @@ bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 		hidePreviewPoints();
 		return true;
 	}
-	else if (event->button() == Qt::RightButton && draw_in_progress)
+	else if (event->button() == Qt::RightButton && editingInProgress())
 	{
 		abortDrawing();
 		return true;
@@ -113,7 +113,7 @@ bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, Map
 	
 	if (!mouse_down)
 	{
-		if (!draw_in_progress)
+		if (!editingInProgress())
 		{
 			setPreviewPointsPosition(map_coord);
 			setDirtyRect();
@@ -129,7 +129,7 @@ bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, Map
 	}
 	else
 	{
-		if (!draw_in_progress)
+		if (!editingInProgress())
 			return false;
 		
 		if ((event->pos() - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
@@ -163,7 +163,7 @@ bool DrawCircleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, 
 			abortDrawing();
 		return false;
 	}
-	if (!draw_in_progress)
+	if (!editingInProgress())
 		return false;
 	
 	updateStatusText();

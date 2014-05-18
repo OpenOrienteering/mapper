@@ -62,6 +62,8 @@ void ScaleTool::init()
 	connect(map(), SIGNAL(selectedObjectEdited()), this, SLOT(updateDirtyRect()));
 	updateDirtyRect();
 	updateStatusText();
+	
+	MapEditorTool::init();
 }
 
 ScaleTool::~ScaleTool()

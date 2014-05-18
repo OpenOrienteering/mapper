@@ -47,8 +47,8 @@ class SymbolWidget;
 
 int EditPointTool::max_objects_for_handle_display = 10;
 
-EditPointTool::EditPointTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
-: EditTool(editor, EditPoint, symbol_widget, tool_button)
+EditPointTool::EditPointTool(MapEditorController* editor, QAction* tool_button)
+: EditTool(editor, EditPoint, tool_button)
 {
 	hover_point = -2;
 	hover_object = NULL;
@@ -486,13 +486,13 @@ int EditPointTool::updateDirtyRectImpl(QRectF& rect)
 	map()->includeSelectionRect(selection_extent);
 	
 	rectInclude(rect, selection_extent);
-	int pixel_border = show_object_points ? (resolution_scale_factor * 6) : 1;
+	int pixel_border = show_object_points ? (scaleFactor() * 6) : 1;
 	
 	// Control points
 	if (show_object_points)
 	{
 		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
-			includeControlPointRect(rect, *it);
+			(*it)->includeControlPointsRect(rect);
 	}
 	
 	// Text selection
@@ -524,7 +524,7 @@ void EditPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 			if (num_selected_objects <= max_objects_for_handle_display)
 			{
 				for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
-					drawPointHandles((hover_object == *it) ? hover_point : -2, painter, *it, widget, true, MapEditorTool::NormalHandleState);
+					pointHandles().draw(painter, widget, *it, (hover_object == *it) ? hover_point : -2, true, PointHandles::NormalHandleState);
 			}
 		}
 	}

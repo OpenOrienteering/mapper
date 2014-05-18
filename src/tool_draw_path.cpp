@@ -23,6 +23,7 @@
 #include <QtWidgets>
 
 #include "map.h"
+#include "map_editor.h"
 #include "map_undo.h"
 #include "map_widget.h"
 #include "object.h"
@@ -34,20 +35,20 @@
 #include "util.h"
 #include "gui/modifier_key.h"
 #include "gui/widgets/key_button_bar.h"
-#include "gui/widgets/symbol_widget.h"
 #include "map_editor.h"
 
 
 QCursor* DrawPathTool::cursor = NULL;
 
-DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget, bool allow_closing_paths)
- : DrawLineAndAreaTool(editor, DrawPath, tool_button, symbol_widget), allow_closing_paths(allow_closing_paths),
-   finished_path_is_selected(false),
-   cur_map_widget(mapWidget()),
-   angle_helper(new ConstrainAngleToolHelper()),
-   snap_helper(new SnappingToolHelper(map())),
-   follow_helper(new FollowPathToolHelper()),
-   key_button_bar(NULL)
+DrawPathTool::DrawPathTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool, bool allow_closing_paths)
+: DrawLineAndAreaTool(editor, DrawPath, tool_button, is_helper_tool)
+, allow_closing_paths(allow_closing_paths)
+, finished_path_is_selected(false)
+, cur_map_widget(mapWidget())
+, angle_helper(new ConstrainAngleToolHelper())
+, snap_helper(new SnappingToolHelper(this))
+, follow_helper(new FollowPathToolHelper())
+, key_button_bar(NULL)
 {
 	angle_helper->setActive(false);
 	connect(angle_helper.data(), SIGNAL(displayChanged()), this, SLOT(updateDirtyRect()));
@@ -94,6 +95,8 @@ void DrawPathTool::init()
 		key_button_bar->addPressKey(Qt::Key_Escape, tr("Abort"));
 		editor->showPopupWidget(key_button_bar, "");
 	}
+	
+	MapEditorTool::init();
 }
 
 bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -101,24 +104,24 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	cur_map_widget = widget;
 	created_point_at_last_mouse_press = false;
 	
-	if (draw_in_progress &&
+	if (editingInProgress() &&
 		((event->button() == Qt::RightButton) &&
 		!Settings::getInstance().getSettingCached(Settings::MapEditor_DrawLastPointOnRightClick).toBool()))
 	{
 		finishDrawing();
 		return true;
 	}
-	else if (draw_in_progress &&
+	else if (editingInProgress() &&
 		((event->button() == Qt::RightButton && event->buttons() & Qt::LeftButton) ||
 		 (event->button() == Qt::LeftButton && event->buttons() & Qt::RightButton)))
 	{
 		if (!previous_point_is_curve_point)
 			undoLastPoint();
-		if (draw_in_progress)
+		if (editingInProgress())
 			finishDrawing();
 		return true;
 	}
-	else if ((event->button() == Qt::LeftButton) || (draw_in_progress && drawMouseButtonClicked(event)))
+	else if ((event->button() == Qt::LeftButton) || (editingInProgress() && drawMouseButtonClicked(event)))
 	{
 		dragging = false;
 		bool start_appending = false;
@@ -133,11 +136,11 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 			// Check for following and appending
 			if (!is_helper_tool)
 			{
-				if (!draw_in_progress)
+				if (!editingInProgress())
 				{
 					if (snap_info.type == SnappingToolHelper::ObjectCorners &&
 						(snap_info.coord_index == 0 || snap_info.coord_index == snap_info.object->asPath()->getCoordinateCount() - 1) &&
-						snap_info.object->getSymbol() == symbol_widget->getSingleSelectedSymbol())
+						snap_info.object->getSymbol() == editor->activeSymbol())
 					{
 						// Appending to another path
 						start_appending = true;
@@ -148,7 +151,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 					if (snap_helper->snapToDirection(map_coord, widget, angle_helper.data()))
 						picked_angle = true;
 				}
-				else if (draw_in_progress &&
+				else if (editingInProgress() &&
 						 (snap_info.type == SnappingToolHelper::ObjectCorners || snap_info.type == SnappingToolHelper::ObjectPaths) &&
 						 snap_info.object->getType() == Object::Path)
 				{
@@ -158,7 +161,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 				}
 			}
 		}
-		else if (!draw_in_progress && ctrl_pressed)
+		else if (!editingInProgress() && ctrl_pressed)
 		{
 			// Start picking direction of an existing object
 			picking_angle = true;
@@ -172,7 +175,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 			cur_pos_map = map_coord;
 		}
 		
-		if (!draw_in_progress)
+		if (!editingInProgress())
 		{
 			// Start a new path
 			startDrawing();
@@ -244,12 +247,12 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	}
 	else // if (mouse_down)
 	{
-		if (!draw_in_progress && picking_angle)
+		if (!editingInProgress() && picking_angle)
 		{
 			pickAngle(map_coord, widget);
 			return true;
 		}
-		else if (!draw_in_progress)
+		else if (!editingInProgress())
 			return false;
 		
 		if (following)
@@ -339,7 +342,7 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 		picked_angle = pickAngle(map_coord, widget);
 		return true;
 	}
-	else if (!draw_in_progress)
+	else if (!editingInProgress())
 		return false;
 	if (following)
 	{
@@ -402,11 +405,11 @@ bool DrawPathTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
-	if (draw_in_progress)
+	if (editingInProgress())
 	{
 		if (created_point_at_last_mouse_press)
 			undoLastPoint();
-		if (draw_in_progress)
+		if (editingInProgress())
 			finishDrawing();
 	}
 	return true;
@@ -415,7 +418,7 @@ bool DrawPathTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord
 bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 {
 	bool key_handled = false;
-	if (draw_in_progress)
+	if (editingInProgress())
 	{
 		key_handled = true;
 		if (event->key() == Qt::Key_Escape)
@@ -447,7 +450,7 @@ bool DrawPathTool::keyPressEvent(QKeyEvent* event)
 	{
 		ctrl_pressed = true;
 		angle_helper->setActive(true);
-		if (draw_in_progress && !dragging)
+		if (editingInProgress() && !dragging)
 			updateDrawHover();
 		picked_angle = false;
 		updateStatusText();
@@ -474,7 +477,7 @@ bool DrawPathTool::keyReleaseEvent(QKeyEvent* event)
 		ctrl_pressed = false;
 		if (!picked_angle)
 			angle_helper->setActive(false);
-		if (draw_in_progress && !dragging)
+		if (editingInProgress() && !dragging)
 			updateDrawHover();
 		updateStatusText();
 	}
@@ -497,7 +500,7 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 {
 	drawPreviewObjects(painter, widget);
 	
-	if (draw_in_progress)
+	if (editingInProgress())
 	{
 		painter->setRenderHint(QPainter::Antialiasing);
 		if (dragging && (cur_pos - click_pos).manhattanLength() >= Settings::getInstance().getStartDragDistancePx())
@@ -525,7 +528,7 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 	
 	if (shift_pressed && !dragging)
 		snap_helper->draw(painter, widget);
-	else if (!draw_in_progress && (picking_angle || picked_angle))
+	else if (!editingInProgress() && (picking_angle || picked_angle))
 	{
 		if (picking_angle)
 			snap_helper->draw(painter, widget);
@@ -546,7 +549,7 @@ void DrawPathTool::updateHover()
 	else
 		constrained_pos_map = cur_pos_map;
 	
-	if (!draw_in_progress)
+	if (!editingInProgress())
 	{
 		// Show preview objects at this position
 		setPreviewPointsPosition(constrained_pos_map);
@@ -564,7 +567,7 @@ void DrawPathTool::updateDrawHover()
 {
 	if (!shift_pressed)
 		angle_helper->getConstrainedCursorPosMap(cur_pos_map, constrained_pos_map);
-	if (!previous_point_is_curve_point && !left_mouse_down && draw_in_progress)
+	if (!previous_point_is_curve_point && !left_mouse_down && editingInProgress())
 	{
 		// Show a line to the cursor position as preview
 		hidePreviewPoints();
@@ -579,7 +582,7 @@ void DrawPathTool::updateDrawHover()
 		updatePreviewPath();
 		updateDirtyRect();	// TODO: Possible optimization: mark only the last segment as dirty
 	}
-	else if (previous_point_is_curve_point && !left_mouse_down && draw_in_progress)
+	else if (previous_point_is_curve_point && !left_mouse_down && editingInProgress())
 	{
 		setPreviewPointsPosition(constrained_pos_map, 1);
 		updateDirtyRect();
@@ -618,7 +621,7 @@ void DrawPathTool::createPreviewCurve(MapCoord position, float direction)
 
 void DrawPathTool::undoLastPoint()
 {
-	Q_ASSERT(draw_in_progress);
+	Q_ASSERT(editingInProgress());
 	
 	if (preview_path->getCoordinateCount() <= (preview_path->getPart(0).isClosed() ? 3 : (path_has_preview_point ? 2 : 1)))
 	{
@@ -676,7 +679,7 @@ void DrawPathTool::undoLastPoint()
 
 bool DrawPathTool::removeLastPointFromSelectedPath()
 {
-	if (draw_in_progress || map()->getNumSelectedObjects() != 1)
+	if (editingInProgress() || map()->getNumSelectedObjects() != 1)
 	{
 		return false;
 	}
@@ -737,7 +740,7 @@ bool DrawPathTool::removeLastPointFromSelectedPath()
 
 void DrawPathTool::closeDrawing()
 {
-	Q_ASSERT(draw_in_progress);
+	Q_ASSERT(editingInProgress());
 	
 	if (preview_path->getCoordinateCount() <= 1)
 		return;
@@ -762,7 +765,7 @@ void DrawPathTool::closeDrawing()
 
 void DrawPathTool::finishDrawing()
 {
-	Q_ASSERT(draw_in_progress);
+	Q_ASSERT(editingInProgress());
 	
 	// Does the symbols contain only areas? If so, auto-close the path if not done yet
 	bool contains_only_areas = !is_helper_tool && (drawing_symbol->getContainedTypes() & ~(Symbol::Area | Symbol::Combined)) == 0 && (drawing_symbol->getContainedTypes() & Symbol::Area);
@@ -782,7 +785,7 @@ void DrawPathTool::finishDrawing()
 	
 	dragging = false;
 	following = false;
-	draw_in_progress = false;
+	setEditingInProgress(false);
 	if (!ctrl_pressed)
 		angle_helper->setActive(false);
 	updateSnapHelper();
@@ -798,7 +801,7 @@ void DrawPathTool::abortDrawing()
 {
 	dragging = false;
 	following = false;
-	draw_in_progress = false;
+	setEditingInProgress(false);
 	if (!ctrl_pressed)
 		angle_helper->setActive(false);
 	updateSnapHelper();
@@ -817,18 +820,18 @@ void DrawPathTool::updateDirtyRect()
 		rectIncludeSafe(rect, click_pos_map.toQPointF());
 		rectInclude(rect, cur_pos_map.toQPointF());
 	}
-	if (draw_in_progress && previous_point_is_curve_point)
+	if (editingInProgress() && previous_point_is_curve_point)
 	{
 		rectIncludeSafe(rect, previous_pos_map.toQPointF());
 		rectInclude(rect, previous_drag_map.toQPointF());
 	}
-	if ((draw_in_progress && !dragging) ||
-		(!draw_in_progress && !shift_pressed && ctrl_pressed) ||
-		(!draw_in_progress && (picking_angle || picked_angle)))
+	if ((editingInProgress() && !dragging) ||
+		(!editingInProgress() && !shift_pressed && ctrl_pressed) ||
+		(!editingInProgress() && (picking_angle || picked_angle)))
 	{
 		angle_helper->includeDirtyRect(rect);
 	}
-	if (shift_pressed || (!draw_in_progress && ctrl_pressed))
+	if (shift_pressed || (!editingInProgress() && ctrl_pressed))
 		snap_helper->includeDirtyRect(rect);
 	includePreviewRects(rect);
 	
@@ -843,11 +846,11 @@ void DrawPathTool::updateDirtyRect()
 	}
 }
 
-void DrawPathTool::selectedSymbolsChanged()
+void DrawPathTool::setDrawingSymbol(Symbol* symbol)
 {
 	if (is_helper_tool)
 		return;
-	DrawLineAndAreaTool::selectedSymbolsChanged();
+	DrawLineAndAreaTool::setDrawingSymbol(symbol);
 	
 	updateDashPointDrawing();
 }
@@ -918,7 +921,7 @@ bool DrawPathTool::pickAngle(MapCoordF coord, MapWidget* widget)
 
 void DrawPathTool::updateSnapHelper()
 {
-	if (draw_in_progress)
+	if (editingInProgress())
 		snap_helper->setFilter(SnappingToolHelper::AllTypes);
 	else
 	{
@@ -1007,10 +1010,10 @@ float DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map)
 
 void DrawPathTool::updateDashPointDrawing()
 {
-	if (!symbol_widget)
+	if (!is_helper_tool)
 		return;
 	
-	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
+	Symbol* symbol = editor->activeSymbol();
 	if (symbol && symbol->getType() == Symbol::Line)
 	{
 		// Auto-activate dash points depending on if the selected symbol has a dash symbol.
@@ -1036,7 +1039,7 @@ void DrawPathTool::updateStatusText()
 	static const QString text_more_control_space(MapEditorTool::tr("More: %1, %2").arg(ModifierKey::control(), ModifierKey(Qt::Key_Space)));
 	QString text_more(text_more_shift_control_space);
 	
-	if (draw_in_progress && preview_path && preview_path->getCoordinateCount() >= 2)
+	if (editingInProgress() && preview_path && preview_path->getCoordinateCount() >= 2)
 	{
 		//assert(!preview_path->isDirty());
 		float length = map()->getScaleDenominator() * preview_path->getPathCoordinateVector()[preview_path->getPart(0).path_coord_end_index].clen * 0.001f;
@@ -1047,7 +1050,7 @@ void DrawPathTool::updateStatusText()
 	if (draw_dash_points && !is_helper_tool)
 		text += DrawLineAndAreaTool::tr("<b>Dash points on.</b> ") + "| ";
 	
-	if (!draw_in_progress)
+	if (!editingInProgress())
 	{
 		if (shift_pressed)
 		{

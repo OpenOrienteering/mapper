@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,22 +26,19 @@
 #include <QMessageBox>
 #include <QPainter>
 
-#include "gui/widgets/symbol_widget.h"
+#include "map_editor.h"
 #include "map_widget.h"
 #include "object.h"
 #include "tool_helpers.h"
 #include "map_undo.h"
 
 
-FillTool::FillTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : MapEditorToolBase(QCursor(QPixmap(":/images/cursor-fill.png"), 11, 11), Other, editor, tool_button)
+FillTool::FillTool(MapEditorController* editor, QAction* tool_button)
+: MapEditorToolBase(QCursor(QPixmap(":/images/cursor-fill.png"), 11, 11), Other, editor, tool_button)
 {
-	this->symbol_widget = symbol_widget;
+	setDrawingSymbol(editor->activeSymbol());
 	
-	selectedSymbolsChanged();
-	connect(symbol_widget, SIGNAL(selectedSymbolsChanged()), this, SLOT(selectedSymbolsChanged()));
-	connect(map(), SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(symbolChanged(int,Symbol*,Symbol*)));
-	connect(map(), SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(symbolDeleted(int,Symbol*)));
+	connect(editor, SIGNAL(setDrawingSymbol(Symbol*)), this, SLOT(setDrawingSymbol(Symbol*)));
 }
 
 FillTool::~FillTool()
@@ -48,40 +46,22 @@ FillTool::~FillTool()
 	// Nothing, not inlined
 }
 
-// --- NOTE: start of copied section from DrawLineAndAreaTool. ---
 // TODO: create a way for tools to specify which symbols / selections they support and deactivate them automatically if these conditions are not satisfied anymore!
-void FillTool::selectedSymbolsChanged()
+void FillTool::setDrawingSymbol(Symbol* symbol)
 {
-	Symbol* symbol = symbol_widget->getSingleSelectedSymbol();
-	if (symbol == NULL || ((symbol->getType() & (Symbol::Line | Symbol::Area | Symbol::Combined)) == 0) || symbol->isHidden())
-	{
-		if (symbol && symbol->isHidden())
-			deactivate();
-		else
-			switchToDefaultDrawTool(symbol);
-		return;
-	}
+	// Avoid using deleted symbol
+	if (map()->findSymbolIndex(drawing_symbol) == -1)
+		symbol = NULL;
 	
-	last_used_symbol = symbol;
-}
-
-void FillTool::symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol)
-{
-	Q_UNUSED(pos);
-	Q_UNUSED(new_symbol);
-	
-	if (old_symbol == last_used_symbol)
-		selectedSymbolsChanged();
-}
-
-void FillTool::symbolDeleted(int pos, Symbol* old_symbol)
-{
-	Q_UNUSED(pos);
-	
-	if (old_symbol == last_used_symbol)
+	if (!symbol)
 		deactivate();
+	else if (symbol->isHidden())
+		deactivate();
+	else if ((symbol->getType() & (Symbol::Line | Symbol::Area | Symbol::Combined)) == 0)
+		switchToDefaultDrawTool(symbol);
+	else
+		drawing_symbol = symbol;
 }
-// --- NOTE: end copied section ---
 
 void FillTool::clickPress()
 {
@@ -426,7 +406,7 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector< QPoint >& bo
 	}
 	
 	// Create fill object
-	PathObject* path = new PathObject(last_used_symbol);
+	PathObject* path = new PathObject(drawing_symbol);
 	for (size_t s = 0, end = sections.size(); s < end; ++s)
 	{
 		PathSection& section = sections[s];

@@ -285,7 +285,7 @@ public:
 	/** 
 	 * Constructs a new tool for the given dialog and controller.
 	 */
-	GeoreferencingTool(GeoreferencingDialog* dialog, MapEditorController* controller, QAction* action = NULL);
+	GeoreferencingTool(GeoreferencingDialog* dialog, MapEditorController* controller, QAction* toolAction = NULL);
 	
 	/**
 	 * Notifies the dialog that the tool is deleted.

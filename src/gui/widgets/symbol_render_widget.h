@@ -140,6 +140,13 @@ signals:
 	void selectObjectsClicked(bool exclusively);
 	
 protected slots:
+	/**
+	 * @brief Updates icon and selection when a symbol changes.
+	 * 
+	 * @see Map::symbolChanged()
+	 */
+	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
+	
 	void newPointSymbol();
 	void newLineSymbol();
 	void newAreaSymbol();

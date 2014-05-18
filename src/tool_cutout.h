@@ -39,7 +39,7 @@ public:
 	 * Setting cut_away to true inverts the tool's effect, cutting the
 	 * part inside the cut shape away instead of the part outside.
 	 */
-	CutoutTool(MapEditorController* editor, QAction* tool_button, bool cut_away);
+	CutoutTool(MapEditorController* editor, QAction* tool_action, bool cut_away);
 	virtual ~CutoutTool();
 
 	virtual void drawImpl(QPainter* painter, MapWidget* widget);

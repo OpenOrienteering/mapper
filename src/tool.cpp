@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -36,46 +37,63 @@
 #include "tool_helpers.h"
 #include "util.h"
 
-// ### MapEditorTool ###
+// Utility function for MapEditorTool::findHoverPoint
+inline
+qreal distanceSquared(QPointF a, const QPointF& b)
+{
+	a -= b;
+	return QPointF::dotProduct(a, a); // introduced in Qt 5.1
+}
+
 
 const QRgb MapEditorTool::inactive_color = qRgb(0, 0, 255);
 const QRgb MapEditorTool::active_color = qRgb(255, 150, 0);
 const QRgb MapEditorTool::selection_color = qRgb(210, 0, 229);
-int MapEditorTool::resolution_index;
-int MapEditorTool::resolution_scale_factor;
-const int MapEditorTool::num_point_handle_resolutions;
-QImage* MapEditorTool::point_handles[MapEditorTool::num_point_handle_resolutions] = {NULL, NULL, NULL};
 
-MapEditorTool::MapEditorTool(MapEditorController* editor, Type type, QAction* tool_button)
-: QObject(NULL),
-  tool_button(tool_button),
-  type(type),
-  uses_touch_cursor(true),
-  editor(editor)
+MapEditorTool::MapEditorTool(MapEditorController* editor, Type type, QAction* tool_action)
+: QObject(NULL)
+, editor(editor)
+, tool_action(tool_action)
+, tool_type(type)
+, editing_in_progress(false)
+, uses_touch_cursor(true)
+, scale_factor(newScaleFactor())
+, point_handles(scale_factor)
 {
-	const int base_dpi = 96;
-	resolution_index = (Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toFloat() - (base_dpi / 2)) / base_dpi;
-	resolution_index = qMax(0, qMin(num_point_handle_resolutions - 1, resolution_index));
-	resolution_scale_factor = qPow(2, resolution_index);
+	if (tool_action)
+		connect(tool_action, SIGNAL(destroyed()), this, SLOT(toolActionDestroyed()));
+	
+	connect(&Settings::getInstance(), SIGNAL(settingsChanged()), this, SLOT(updateScaleFactor()));
 }
 
 MapEditorTool::~MapEditorTool()
 {
-	if (tool_button)
-		tool_button->setChecked(false);
+	if (tool_action)
+		tool_action->setChecked(false);
+}
+
+// slot
+void MapEditorTool::toolActionDestroyed()
+{
+	tool_action = NULL;
 }
 
 void MapEditorTool::init()
 {
-	// nothing
+	if (tool_action)
+		tool_action->setChecked(true);
 }
 
 void MapEditorTool::deactivate()
 {
-	if (getType() == MapEditorTool::EditPoint)
-		editor->setTool(NULL);
-	else
-		editor->setEditTool();
+	if (editor->getTool() == this)
+	{
+		if (toolType() == MapEditorTool::EditPoint)
+			editor->setTool(NULL);
+		else
+			editor->setEditTool();
+	}
+	deleteLater();
 }
 
 void MapEditorTool::switchToDefaultDrawTool(Symbol* symbol) const
@@ -85,7 +103,11 @@ void MapEditorTool::switchToDefaultDrawTool(Symbol* symbol) const
 
 void MapEditorTool::setEditingInProgress(bool state)
 {
-	editor->setEditingInProgress(state);
+	if (editing_in_progress != state)
+	{
+		editing_in_progress = state;
+		editor->setEditingInProgress(state);
+	}
 }
 
 
@@ -155,6 +177,11 @@ void MapEditorTool::focusOutEvent(QFocusEvent* event)
 }
 
 
+void MapEditorTool::useTouchCursor(bool enabled)
+{
+	uses_touch_cursor = enabled;
+}
+
 Map* MapEditorTool::map() const
 {
 	return editor->getMap();
@@ -175,36 +202,39 @@ QWidget* MapEditorTool::window() const
 	return editor->getWindow();
 }
 
-bool MapEditorTool::isDrawTool(MapEditorTool::Type type)
+bool MapEditorTool::isDrawTool() const
 {
-	return type == DrawPoint || type == DrawPath || type == DrawCircle || type == DrawRectangle || type == DrawFreehand || type == DrawText;
-}
-
-void MapEditorTool::loadPointHandles()
-{
-	if (!point_handles[0])
+	switch (tool_type)
 	{
-		point_handles[0] = new QImage(":/images/point-handles.png");
-		point_handles[1] = new QImage(":/images/point-handles-2x.png");
-		point_handles[2] = new QImage(":/images/point-handles-4x.png");
+	case DrawPoint:
+	case DrawPath:
+	case DrawCircle:
+	case DrawRectangle:
+	case DrawFreehand:
+	case DrawText:      return true;
+		
+	default:            return false;
 	}
-}
-
-QRgb MapEditorTool::getPointHandleStateColor(PointHandleState state)
-{
-	if (state == NormalHandleState)
-		return qRgb(0, 0, 255);
-	else if (state == ActiveHandleState)
-		return qRgb(255, 150, 0);
-	else if (state == SelectedHandleState)
-		return qRgb(255, 0, 0);
-	else //if (state == DisabledHandleState)
-		return qRgb(106, 106, 106);
 }
 
 void MapEditorTool::setStatusBarText(const QString& text)
 {
 	editor->getWindow()->setStatusBarText(text);
+}
+
+void MapEditorTool::drawSelectionBox(QPainter* painter, MapWidget* widget, const MapCoordF& corner1, const MapCoordF& corner2) const
+{
+	painter->setBrush(Qt::NoBrush);
+	
+	QPoint point1 = widget->mapToViewport(corner1).toPoint();
+	QPoint point2 = widget->mapToViewport(corner2).toPoint();
+	QPoint top_left = QPoint(qMin(point1.x(), point2.x()), qMin(point1.y(), point2.y()));
+	QPoint bottom_right = QPoint(qMax(point1.x(), point2.x()), qMax(point1.y(), point2.y()));
+	
+	painter->setPen(QPen(QBrush(active_color), scaleFactor()));
+	painter->drawRect(QRect(top_left, bottom_right - QPoint(1, 1)));
+	painter->setPen(QPen(QBrush(qRgb(255, 255, 255)), scaleFactor()));
+	painter->drawRect(QRect(top_left + QPoint(1, 1), bottom_right - QPoint(2, 2)));
 }
 
 void MapEditorTool::startEditingSelection(MapRenderables& old_renderables, std::vector< Object* >* undo_duplicates)
@@ -289,160 +319,6 @@ void MapEditorTool::deleteOldSelectionRenderables(MapRenderables& old_renderable
 	old_renderables.clear(set_area_dirty);
 }
 
-void MapEditorTool::includeControlPointRect(QRectF& rect, Object* object)
-{
-	if (object->getType() == Object::Path)
-	{
-		PathObject* path = reinterpret_cast<PathObject*>(object);
-		int size = path->getCoordinateCount();
-		for (int i = 0; i < size; ++i)
-			rectInclude(rect, path->getCoordinate(i).toQPointF());
-	}
-	else if (object->getType() == Object::Text)
-	{
-		TextObject* text_object = reinterpret_cast<TextObject*>(object);
-		if (text_object->hasSingleAnchor())
-			rectInclude(rect, text_object->getAnchorCoordF());
-		else
-		{
-			QPointF box_text_handles[4];
-			calculateBoxTextHandles(box_text_handles, text_object);
-			for (int i = 0; i < 4; ++i)
-				rectInclude(rect, box_text_handles[i]);
-		}
-	}
-}
-
-void MapEditorTool::drawPointHandles(int hover_point, QPainter* painter, Object* object, MapWidget* widget, bool draw_curve_handles, PointHandleState base_state)
-{
-	if (object->getType() == Object::Point)
-	{
-		PointObject* point = reinterpret_cast<PointObject*>(object);
-		drawPointHandle(painter, widget->mapToViewport(point->getCoordF()), NormalHandle, (hover_point == 0) ? ActiveHandleState : base_state);
-	}
-	else if (object->getType() == Object::Text)
-	{
-		TextObject* text = reinterpret_cast<TextObject*>(object);
-		if (text->hasSingleAnchor())
-			drawPointHandle(painter, widget->mapToViewport(text->getAnchorCoordF()), NormalHandle, (hover_point == 0) ? ActiveHandleState : base_state);
-		else
-		{
-			QPointF box_text_handles[4];
-			calculateBoxTextHandles(box_text_handles, text);
-			for (int i = 0; i < 4; ++i)
-				drawPointHandle(painter, widget->mapToViewport(box_text_handles[i]), NormalHandle, (hover_point == i) ? ActiveHandleState : base_state);
-		}
-	}
-	else if (object->getType() == Object::Path)
-	{
-		painter->setBrush(Qt::NoBrush); // for handle lines
-		
-		PathObject* path = reinterpret_cast<PathObject*>(object);
-		
-		int num_parts = path->getNumParts();
-		for (int part_index = 0; part_index < num_parts; ++part_index)
-		{
-			PathObject::PathPart& part = path->getPart(part_index);
-			bool have_curve = part.isClosed() && part.getNumCoords() > 3 && path->getCoordinate(part.end_index - 3).isCurveStart();
-			PointHandleType handle_type = NormalHandle;
-			
-			for (int i = part.start_index; i <= part.end_index; ++i)
-			{
-				MapCoord coord = path->getCoordinate(i);
-				if (coord.isClosePoint())
-					continue;
-				QPointF point = widget->mapToViewport(coord);
-				bool is_active = hover_point == i;
-				
-				if (i == part.start_index && !part.isClosed()) // || (i > part.start_index && path->getCoordinate(i-1).isHolePoint()))
-					handle_type = StartHandle;
-				else if (i == part.end_index && !part.isClosed()) // || coord.isHolePoint())
-					handle_type = EndHandle;
-				else
-					handle_type = coord.isDashPoint() ? DashHandle : NormalHandle;
-				
-				// Draw incoming curve handle
-				QPointF curve_handle;
-				if (draw_curve_handles && have_curve)
-				{
-					int curve_index = (i == part.start_index) ? (part.end_index - 1) : (i - 1);
-					curve_handle = widget->mapToViewport(path->getCoordinate(curve_index));
-					drawCurveHandleLine(painter, point, handle_type, curve_handle, is_active ? ActiveHandleState : base_state);
-					drawPointHandle(painter, curve_handle, CurveHandle, (is_active || hover_point == curve_index) ? ActiveHandleState : base_state);
-					have_curve = false;
-				}
-				
-				// Draw outgoing curve handle, first part
-				if (draw_curve_handles && coord.isCurveStart())
-				{
-					curve_handle = widget->mapToViewport(path->getCoordinate(i+1));
-					drawCurveHandleLine(painter, point, handle_type, curve_handle, is_active ? ActiveHandleState : base_state);
-				}
-				
-				// Draw point
-				drawPointHandle(painter, point, handle_type, is_active ? ActiveHandleState : base_state);
-				
-				// Draw outgoing curve handle, second part
-				if (coord.isCurveStart())
-				{
-					if (draw_curve_handles)
-					{
-						drawPointHandle(painter, curve_handle, CurveHandle, (is_active || hover_point == i + 1) ? ActiveHandleState : base_state);
-						have_curve = true;
-					}
-					i += 2;
-				}
-			}
-		}
-	}
-	else
-		assert(false);
-}
-
-void MapEditorTool::drawPointHandle(QPainter* painter, QPointF point, PointHandleType type, PointHandleState state)
-{
-	int width = resolution_scale_factor * 11;
-	int offset = (width - 1) / 2;
-	painter->drawImage(qRound(point.x()) - offset, qRound(point.y()) - offset, *point_handles[resolution_index], (int)type * width, (int)state * width, width, width);
-}
-
-void MapEditorTool::drawCurveHandleLine(QPainter* painter, QPointF point, PointHandleType type, QPointF curve_handle, PointHandleState state)
-{
-	const float handle_radius = 3 * resolution_scale_factor;
-	if (resolution_scale_factor > 1)
-		painter->setPen(QPen(QBrush(getPointHandleStateColor(state)), resolution_scale_factor));
-	else
-		painter->setPen(getPointHandleStateColor(state));
-	
-	QPointF to_handle = curve_handle - point;
-	float to_handle_len = to_handle.x()*to_handle.x() + to_handle.y()*to_handle.y();
-	if (to_handle_len > 0.00001f)
-	{
-		to_handle_len = sqrt(to_handle_len);
-		if (type == StartHandle)
-			point += resolution_scale_factor * 5 / qMax(qAbs(to_handle.x()), qAbs(to_handle.y())) * to_handle;
-		else if (type == DashHandle)
-			point += resolution_scale_factor * to_handle * (3 / to_handle_len);
-		else //if (type == NormalHandle)
-			point += resolution_scale_factor * 3 / qMax(qAbs(to_handle.x()), qAbs(to_handle.y())) * to_handle;
-		
-		curve_handle -= to_handle * (handle_radius / to_handle_len);
-	}
-	
-	painter->drawLine(point, curve_handle);
-}
-void MapEditorTool::calculateBoxTextHandles(QPointF* out, TextObject* text_object)
-{
-	assert(!text_object->hasSingleAnchor());
-
-	QTransform transform;
-	transform.rotate(-text_object->getRotation() * 180 / M_PI);
-	out[0] = transform.map(QPointF(text_object->getBoxWidth() / 2, -text_object->getBoxHeight() / 2)) + text_object->getAnchorCoordF().toQPointF();
-	out[1] = transform.map(QPointF(text_object->getBoxWidth() / 2, text_object->getBoxHeight() / 2)) + text_object->getAnchorCoordF().toQPointF();
-	out[2] = transform.map(QPointF(-text_object->getBoxWidth() / 2, text_object->getBoxHeight() / 2)) + text_object->getAnchorCoordF().toQPointF();
-	out[3] = transform.map(QPointF(-text_object->getBoxWidth() / 2, -text_object->getBoxHeight() / 2)) + text_object->getAnchorCoordF().toQPointF();
-}
-
 int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_curve_handles, QRectF* selection_extent, MapWidget* widget, MapCoordF* out_handle_pos)
 {
 	Q_UNUSED(selection_extent);
@@ -463,24 +339,14 @@ int MapEditorTool::findHoverPoint(QPointF cursor, Object* object, bool include_c
 	else if (object->getType() == Object::Text)
 	{
 		TextObject* text = reinterpret_cast<TextObject*>(object);
-		if (text->hasSingleAnchor() && distanceSquared(widget->mapToViewport(text->getAnchorCoordF()), cursor) <= click_tolerance_squared)
+		std::vector<QPointF> text_handles(text->controlPoints());
+		for (std::size_t i = 0; i < text_handles.size(); ++i)
 		{
-			if (out_handle_pos)
-				*out_handle_pos = text->getAnchorCoordF();
-			return 0;
-		}
-		else if (!text->hasSingleAnchor())
-		{
-			QPointF box_text_handles[4];
-			calculateBoxTextHandles(box_text_handles, text);
-			for (int i = 0; i < 4; ++i)
+			if (distanceSquared(widget->mapToViewport(text_handles[i]), cursor) <= click_tolerance_squared)
 			{
-				if (distanceSquared(widget->mapToViewport(box_text_handles[i]), cursor) <= click_tolerance_squared)
-				{
-					if (out_handle_pos)
-						*out_handle_pos = MapCoordF(box_text_handles[i]);
-					return i;
-				}
+				if (out_handle_pos)
+					*out_handle_pos = MapCoordF(text_handles[i]);
+				return i;
 			}
 		}
 	}
@@ -539,3 +405,25 @@ bool MapEditorTool::drawMouseButtonClicked(QMouseEvent* event)
 	}
 	return false;
 }
+
+// static
+int MapEditorTool::newScaleFactor()
+{
+	// NOTE: The returned value must be supported by PointHandles::loadHandleImage() !
+	int factor = 1;
+	const float base_dpi = 96.0f;
+	const float ppi = Settings::getInstance().getSettingCached(Settings::General_PixelsPerInch).toFloat();
+	if (ppi > base_dpi*2)
+		factor = 4;
+	else if (ppi > base_dpi)
+		factor = 2;
+	return factor;
+}
+
+// slot
+void MapEditorTool::updateScaleFactor()
+{
+	scale_factor = newScaleFactor();
+	point_handles = PointHandles(scale_factor);
+}
+

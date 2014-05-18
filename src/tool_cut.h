@@ -35,7 +35,7 @@ class CutTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	CutTool(MapEditorController* editor, QAction* tool_button);
+	CutTool(MapEditorController* editor, QAction* tool_action);
 	virtual ~CutTool();
 	
 	virtual void init();

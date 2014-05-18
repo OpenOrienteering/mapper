@@ -43,7 +43,7 @@ class MapEditorToolBase : public MapEditorTool
 {
 Q_OBJECT
 public:
-	MapEditorToolBase(const QCursor cursor, MapEditorTool::Type type, MapEditorController* editor, QAction* tool_button);
+	MapEditorToolBase(const QCursor cursor, MapEditorTool::Type tool_type, MapEditorController* editor, QAction* tool_action);
 	virtual ~MapEditorToolBase();
 	
 	virtual void init();

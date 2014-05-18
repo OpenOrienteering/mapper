@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -44,7 +45,7 @@ class DrawLineAndAreaTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	DrawLineAndAreaTool(MapEditorController* editor, Type type, QAction* tool_button, SymbolWidget* symbol_widget);
+	DrawLineAndAreaTool(MapEditorController* editor, Type tool_type, QAction* tool_action, bool is_helper_tool);
 	virtual ~DrawLineAndAreaTool();
 	
 	virtual void leaveEvent(QEvent* event);
@@ -55,9 +56,7 @@ signals:
 	void pathFinished(PathObject* path);
 	
 protected slots:
-	virtual void selectedSymbolsChanged();
-	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
-	void symbolDeleted(int pos, Symbol* old_symbol);
+	virtual void setDrawingSymbol(Symbol* symbol);
 	
 protected:
 	/**
@@ -110,22 +109,20 @@ protected:
 	void drawPreviewObjects(QPainter* painter, MapWidget* widget);
 	
 	
+	bool is_helper_tool;
+	Symbol* drawing_symbol;
+	
 	std::vector<PointSymbol*> preview_point_symbols;
 	std::vector<bool> preview_point_symbols_external;
 	std::vector<PointObject*> preview_points[2];
 	int preview_point_radius;
 	bool preview_points_shown;
 	
-	CombinedSymbol* path_combination;
-	Symbol* drawing_symbol;
+	QScopedPointer<CombinedSymbol> path_combination;
 	PathObject* preview_path;
-	bool draw_in_progress;
 	
-	Symbol* last_used_symbol;
 	QScopedPointer<MapRenderables> renderables;
-	SymbolWidget* symbol_widget;
 	
-	bool is_helper_tool;
 };
 
 #endif

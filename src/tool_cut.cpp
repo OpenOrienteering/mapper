@@ -54,7 +54,9 @@ void CutTool::init()
 {
 	connect(map(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	updateDirtyRect();
-    updateStatusText();
+	updateStatusText();
+	
+	MapEditorTool::init();
 }
 
 CutTool::~CutTool()
@@ -313,7 +315,7 @@ void CutTool::draw(QPainter* painter, MapWidget* widget)
 	map->drawSelection(painter, true, widget, NULL);
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
-		drawPointHandles((hover_object == *it) ? hover_point : -2, painter, *it, widget);
+		pointHandles().draw(painter, widget, *it, (hover_object == *it) ? hover_point : -2);
 	
 	if (preview_path)
 	{
@@ -341,7 +343,7 @@ void CutTool::updateDirtyRect(const QRectF* path_rect)
 	
 	Map::ObjectSelection::const_iterator it_end = map->selectedObjectsEnd();
 	for (Map::ObjectSelection::const_iterator it = map->selectedObjectsBegin(); it != it_end; ++it)
-		includeControlPointRect(rect, *it);
+		(*it)->includeControlPointsRect(rect);
 	
 	if (rect.isValid())
 		map->setDrawingBoundingBox(rect, 6, true);
@@ -703,7 +705,7 @@ void CutTool::startCuttingArea(const PathCoord& coord, MapWidget* widget)
 	drag_start_len = coord.clen;
 	edit_widget = widget;
 	
-	path_tool = new DrawPathTool(editor, NULL, NULL, false);
+	path_tool = new DrawPathTool(editor, NULL, true, false);
 	connect(path_tool, SIGNAL(dirtyRectChanged(QRectF)), this, SLOT(pathDirtyRectChanged(QRectF)));
 	connect(path_tool, SIGNAL(pathAborted()), this, SLOT(pathAborted()));
 	connect(path_tool, SIGNAL(pathFinished(PathObject*)), this, SLOT(pathFinished(PathObject*)));

@@ -140,6 +140,7 @@ set(Mapper_Common_SRCS
  gui/main_window.cpp
  gui/main_window_controller.cpp
  gui/modifier_key.cpp
+ gui/point_handles.cpp
  gui/print_progress_dialog.cpp
  gui/print_tool.cpp
  gui/print_widget.cpp
@@ -274,6 +275,7 @@ set(Mapper_EXTRA_HEADERS
   fileformats/ocd_types_v9.h
   fileformats/ocd_types_v10.h
   fileformats/ocd_types_v11.h
+  gui/point_handles.h
   gui/settings_dialog_p.h
   util/scoped_signals_blocker.h
   file_format_ocad8_p.h

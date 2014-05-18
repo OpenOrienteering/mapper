@@ -47,8 +47,8 @@ class SymbolWidget;
 
 int EditLineTool::max_objects_for_handle_display = 10;
 
-EditLineTool::EditLineTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : EditTool(editor, EditLine, symbol_widget, tool_button)
+EditLineTool::EditLineTool(MapEditorController* editor, QAction* tool_button)
+: EditTool(editor, EditLine, tool_button)
 {
 	hover_line = -2;
 	hover_object = NULL;
@@ -341,13 +341,13 @@ int EditLineTool::updateDirtyRectImpl(QRectF& rect)
 	map()->includeSelectionRect(selection_extent);
 	
 	rectInclude(rect, selection_extent);
-	int pixel_border = show_object_points ? (resolution_scale_factor * 6) : 1;
+	int pixel_border = show_object_points ? (scaleFactor() * 6) : 1;
 	
 	// Control points
 	if (show_object_points)
 	{
 		for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
-			includeControlPointRect(rect, *it);
+			(*it)->includeControlPointsRect(rect);
 	}
 	
 	// Box selection
@@ -373,7 +373,7 @@ void EditLineTool::drawImpl(QPainter* painter, MapWidget* widget)
 		if (num_selected_objects <= max_objects_for_handle_display)
 		{
 			for (Map::ObjectSelection::const_iterator it = map()->selectedObjectsBegin(), end = map()->selectedObjectsEnd(); it != end; ++it)
-				drawPointHandles(-2, painter, *it, widget, false, MapEditorTool::DisabledHandleState);
+				pointHandles().draw(painter, widget, *it, -2, false, PointHandles::DisabledHandleState);
 		}
 		
 		if (!highlight_renderables->isEmpty())

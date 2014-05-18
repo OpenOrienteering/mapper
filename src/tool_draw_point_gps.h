@@ -41,14 +41,14 @@ class DrawPointGPSTool : public MapEditorToolBase
 {
 Q_OBJECT
 public:
-	DrawPointGPSTool(GPSDisplay* gps_display, MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
+	DrawPointGPSTool(GPSDisplay* gps_display, MapEditorController* editor, QAction* tool_action);
 	virtual ~DrawPointGPSTool();
 	
 public slots:
 	void newGPSPosition(MapCoordF coord, float accuracy);
 	
 protected slots:
-	void selectedSymbolsChanged();
+	void activeSymbolChanged(Symbol* symbol);
 	void symbolDeleted(int pos, Symbol* old_symbol);
 	
 protected:
@@ -68,7 +68,6 @@ protected:
 	Symbol* last_used_symbol;
 	PointObject* preview_object;
 	QScopedPointer<MapRenderables> renderables;
-	SymbolWidget* symbol_widget;
 	QLabel* help_label;
 };
 

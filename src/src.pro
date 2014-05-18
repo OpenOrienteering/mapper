@@ -220,6 +220,7 @@ SOURCES += \
   gui/main_window.cpp \
   gui/main_window_controller.cpp \
   gui/modifier_key.cpp \
+  gui/point_handles.cpp \
   gui/print_progress_dialog.cpp \
   gui/print_tool.cpp \
   gui/print_widget.cpp \

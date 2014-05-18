@@ -38,11 +38,11 @@ class SymbolWidget;
 
 QCursor* DrawRectangleTool::cursor = NULL;
 
-DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget)
- : DrawLineAndAreaTool(editor, DrawRectangle, tool_button, symbol_widget),
-   angle_helper(new ConstrainAngleToolHelper()),
-   snap_helper(new SnappingToolHelper(map())),
-   key_button_bar(NULL)
+DrawRectangleTool::DrawRectangleTool(MapEditorController* editor, QAction* tool_button, bool is_helper_tool)
+: DrawLineAndAreaTool(editor, DrawRectangle, tool_button, is_helper_tool)
+, angle_helper(new ConstrainAngleToolHelper())
+, snap_helper(new SnappingToolHelper(this))
+, key_button_bar(NULL)
 {
 	cur_map_widget = mapWidget();
 	draw_dash_points = true;
@@ -85,6 +85,8 @@ void DrawRectangleTool::init()
 		key_button_bar->addPressKey(Qt::Key_Escape, tr("Abort"));
 		editor->showPopupWidget(key_button_bar, "");
 	}
+	
+	MapEditorTool::init();
 }
 
 bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -94,7 +96,7 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 	ctrl_pressed = modifiers & Qt::ControlModifier;
 	shift_pressed = modifiers & Qt::ShiftModifier;
 	cur_map_widget = widget;
-	if (event->button() == Qt::LeftButton || (draw_in_progress && drawMouseButtonClicked(event)))
+	if (event->button() == Qt::LeftButton || (editingInProgress() && drawMouseButtonClicked(event)))
 	{
 		dragging = false;
 		click_pos = event->pos();
@@ -105,7 +107,7 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 			cur_pos_map = MapCoordF(snap_helper->snapToObject(cur_pos_map, widget));
 		constrained_pos_map = cur_pos_map;
 		
-		if (!draw_in_progress)
+		if (!editingInProgress())
 		{
 			if (ctrl_pressed)
 			{
@@ -158,11 +160,11 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 			angle_helper->addAngles(angles[0], M_PI/4);
 		}
 	}
-	else if (event->button() == Qt::RightButton && draw_in_progress)
+	else if (event->button() == Qt::RightButton && editingInProgress())
 	{
 		constrained_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
 		undoLastPoint();
-		if (draw_in_progress)
+		if (editingInProgress()) // despite undoLastPoint()
 			finishDrawing();
 	}
 	else
@@ -188,7 +190,7 @@ void DrawRectangleTool::updateHover(bool mouse_down)
 	else
 		constrained_pos_map = cur_pos_map;
 	
-	if (!draw_in_progress)
+	if (!editingInProgress())
 	{
 		setPreviewPointsPosition(constrained_pos_map);
 		updateDirtyRect();
@@ -225,14 +227,14 @@ bool DrawRectangleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 		return true;
 	}
 	
-	if (ctrl_pressed && event->button() == Qt::LeftButton && !draw_in_progress)
+	if (ctrl_pressed && event->button() == Qt::LeftButton && !editingInProgress())
 	{
 		pickDirection(cur_pos_map, widget);
 		return true;
 	}
 	
 	bool result = false;
-	if (draw_in_progress)
+	if (editingInProgress())
 	{
 		if (drawMouseButtonClicked(event) && dragging)
 		{
@@ -262,7 +264,7 @@ bool DrawRectangleTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
-	if (draw_in_progress)
+	if (editingInProgress())
 	{
 		// Finish drawing by double click.
 		// As the double click is also reported as two single clicks first
@@ -287,22 +289,22 @@ bool DrawRectangleTool::keyPressEvent(QKeyEvent* event)
 {
 	if (event->key() == Qt::Key_Return)
 	{
-		if (draw_in_progress)
+		if (editingInProgress())
 		{
 			constrained_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
 			undoLastPoint();
-			if (draw_in_progress)
+			if (editingInProgress())
 				finishDrawing();
 		}
 	}
 	else if (event->key() == Qt::Key_Escape)
 	{
-		if (draw_in_progress)
+		if (editingInProgress())
 			abortDrawing();
 	}
 	else if (event->key() == Qt::Key_Backspace)
 	{
-		if (draw_in_progress)
+		if (editingInProgress())
 			undoLastPoint();
 	}
 	else if (event->key() == Qt::Key_Tab)
@@ -317,7 +319,7 @@ bool DrawRectangleTool::keyPressEvent(QKeyEvent* event)
 	else if (event->key() == Qt::Key_Control)
 	{
 		ctrl_pressed = true;
-		if (draw_in_progress && angles.size() == 1)
+		if (editingInProgress() && angles.size() == 1)
 		{
 			angle_helper->clearAngles();
 			angle_helper->addDefaultAnglesDeg(0);
@@ -325,7 +327,7 @@ bool DrawRectangleTool::keyPressEvent(QKeyEvent* event)
 			if (dragging)
 				updateRectangle();
 		}
-		else if (draw_in_progress && angles.size() > 2)
+		else if (editingInProgress() && angles.size() > 2)
 		{
 			// Try to snap to existing lines
 			updateRectangle();
@@ -348,13 +350,13 @@ bool DrawRectangleTool::keyReleaseEvent(QKeyEvent* event)
 	if (event->key() == Qt::Key_Control)
 	{
 		ctrl_pressed = false;
-		if (!picked_direction && (!draw_in_progress || (draw_in_progress && angles.size() == 1)))
+		if (!picked_direction && (!editingInProgress() || (editingInProgress() && angles.size() == 1)))
 		{
 			angle_helper->setActive(false);
-			if (dragging && draw_in_progress)
+			if (dragging && editingInProgress())
 				updateRectangle();
 		}
-		else if (draw_in_progress && angles.size() > 2)
+		else if (editingInProgress() && angles.size() > 2)
 		{
 			updateRectangle();
 		}
@@ -377,7 +379,7 @@ void DrawRectangleTool::draw(QPainter* painter, MapWidget* widget)
 {
 	drawPreviewObjects(painter, widget);
 	
-	if (draw_in_progress)
+	if (editingInProgress())
 	{
 		// Snap line
 		if (snapped_to_line)
@@ -458,7 +460,7 @@ void DrawRectangleTool::finishDrawing()
 	
 	angle_helper->setActive(false);
 	angles.clear();
-	draw_in_progress = false;
+	setEditingInProgress(false);
 	updateStatusText();
 	DrawLineAndAreaTool::finishDrawing();
 	// HACK: do not add stuff here as the tool might get deleted on call to DrawLineAndAreaTool::finishDrawing()!
@@ -469,7 +471,7 @@ void DrawRectangleTool::abortDrawing()
 	snapped_to_line = false;
 	angle_helper->setActive(false);
 	angles.clear();
-	draw_in_progress = false;
+	setEditingInProgress(false);
 	updateStatusText();
 	DrawLineAndAreaTool::abortDrawing();
 	// HACK: do not add stuff here as the tool might get deleted on call to DrawLineAndAreaTool::finishDrawing()!
@@ -655,7 +657,7 @@ void DrawRectangleTool::updateDirtyRect()
 		{
 			float helper_cross_radius = Settings::getInstance().getRectangleToolHelperCrossRadiusPx();
 			int pixel_border = 0;
-			if (draw_in_progress)
+			if (editingInProgress())
 				pixel_border = helper_cross_radius;	// helper_cross_radius as border is less than ideal but the only way to always ensure visibility of the helper cross at the moment
 			if (angle_helper->isActive())
 				pixel_border = qMax(pixel_border, angle_helper->getDisplayRadius());
@@ -677,7 +679,7 @@ void DrawRectangleTool::updateStatusText()
 	if (draw_dash_points)
 		text += DrawLineAndAreaTool::tr("<b>Dash points on.</b> ") + "| ";
 	
-	if (!draw_in_progress)
+	if (!editingInProgress())
 	{
 		if (ctrl_pressed)
 		{

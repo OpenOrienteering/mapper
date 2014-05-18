@@ -124,6 +124,18 @@ public:
 	/** Returns the default drawing tool for a given symbol. */
 	MapEditorTool* getDefaultDrawToolForSymbol(Symbol* symbol);
 	
+	
+	/**
+	 * @brief Returns the active symbol, or NULL.
+	 * 
+	 * The active symbol is the single symbol which is to be used by drawing
+	 * tools and actions.
+	 * 
+	 * It there is no active symbol, this function returns NULL.
+	 */
+	Symbol* activeSymbol() const;
+	
+	
 	/**
 	 * If this is set to true (usually by the current tool),
 	 * undo/redo and saving the map is deactivated.
@@ -487,6 +499,12 @@ public slots:
 	void restoreWindowState();
 	
 signals:
+	/**
+	 * @brief Indicates a change of the active symbol.
+	 * @param symbol The new active symbol, or NULL.
+	 */
+	void activeSymbolChanged(Symbol* symbol);
+	
 	void templatePositionDockWidgetClosed(Template* temp);
 	
 protected slots:
@@ -525,6 +543,8 @@ private:
 	MapEditorTool* current_tool;
 	MapEditorTool* override_tool;
 	MapEditorActivity* editor_activity;
+	
+	Symbol* active_symbol;
 	
 	bool editing_in_progress;
 	
@@ -710,5 +730,15 @@ signals:
 private slots:
 	void triggeredImpl(bool checked);
 };
+
+
+
+//### MapEditorController inline code ###
+
+inline
+Symbol* MapEditorController::activeSymbol() const
+{
+	return active_symbol;
+}
 
 #endif

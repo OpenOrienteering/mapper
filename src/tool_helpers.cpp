@@ -670,11 +670,12 @@ void ConstrainAngleToolHelper::settingsChanged()
 
 // ### SnappingToolHelper ###
 
-SnappingToolHelper::SnappingToolHelper(Map* map, SnapObjects filter)
+SnappingToolHelper::SnappingToolHelper(MapEditorTool* tool, SnapObjects filter)
  : QObject(NULL),
    filter(filter),
    snapped_type(NoSnapping),
-   map(map)
+   map(tool->map()),
+   point_handles(tool->scaleFactor())
 {
 }
 
@@ -873,9 +874,9 @@ void SnappingToolHelper::draw(QPainter* painter, MapWidget* widget)
 {
 	if (snapped_type != NoSnapping)
 	{
-		MapEditorTool::drawPointHandle(painter, widget->mapToViewport(snap_mark),
-									    (snapped_type == ObjectPaths) ? MapEditorTool::NormalHandle : MapEditorTool::EndHandle,
-									    MapEditorTool::NormalHandleState);
+		point_handles.draw( painter, widget->mapToViewport(snap_mark),
+									   (snapped_type == ObjectPaths) ? PointHandles::NormalHandle : PointHandles::EndHandle,
+									   PointHandles::NormalHandleState );
 	}
 }
 

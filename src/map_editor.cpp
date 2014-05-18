@@ -92,6 +92,8 @@
 // ### MapEditorController ###
 
 MapEditorController::MapEditorController(OperatingMode mode, Map* map)
+: MainWindowController()
+, active_symbol(NULL)
 {
 	this->mode = mode;
 	
@@ -203,8 +205,6 @@ void MapEditorController::setTool(MapEditorTool* new_tool)
 	if (current_tool && !override_tool)
 	{
 		current_tool->init();
-		if (current_tool->getAction())
-			current_tool->getAction()->setChecked(true);
 	}
 	
 	if (!override_tool)
@@ -213,14 +213,15 @@ void MapEditorController::setTool(MapEditorTool* new_tool)
 
 void MapEditorController::setEditTool()
 {
-	if (!current_tool || current_tool->getType() != MapEditorTool::EditPoint)
-		setTool(new EditPointTool(this, edit_tool_act, symbol_widget));
+	if (!current_tool || current_tool->toolType() != MapEditorTool::EditPoint)
+		setTool(new EditPointTool(this, edit_tool_act));
 }
 
 void MapEditorController::setOverrideTool(MapEditorTool* new_override_tool)
 {
 	if (override_tool == new_override_tool)
 		return;
+	
 	delete override_tool;
 	map->clearDrawingBoundingBox();
 	window->setStatusBarText("");
@@ -229,14 +230,10 @@ void MapEditorController::setOverrideTool(MapEditorTool* new_override_tool)
 	if (override_tool)
 	{
 		override_tool->init();
-		if (override_tool->getAction())
-			override_tool->getAction()->setChecked(true);
 	}
 	else if (current_tool)
 	{
 		current_tool->init();
-		if (current_tool->getAction())
-			current_tool->getAction()->setChecked(true);
 	}
 	
 	map_widget->setTool(override_tool ? override_tool : current_tool);
@@ -245,13 +242,13 @@ void MapEditorController::setOverrideTool(MapEditorTool* new_override_tool)
 MapEditorTool* MapEditorController::getDefaultDrawToolForSymbol(Symbol* symbol)
 {
 	if (!symbol)
-		return new EditPointTool(this, edit_tool_act, symbol_widget);
+		return new EditPointTool(this, edit_tool_act);
 	else if (symbol->getType() == Symbol::Point)
-		return new DrawPointTool(this, draw_point_act, symbol_widget);
+		return new DrawPointTool(this, draw_point_act);
 	else if (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined)
-		return new DrawPathTool(this, draw_path_act, symbol_widget, true);
+		return new DrawPathTool(this, draw_path_act, false, true);
 	else if (symbol->getType() == Symbol::Text)
-		return new DrawTextTool(this, draw_text_act, symbol_widget);
+		return new DrawTextTool(this, draw_text_act);
 	else
 		assert(false);
 	return NULL;
@@ -269,6 +266,9 @@ void MapEditorController::setEditingInProgress(bool value)
 		updatePasteAvailability();
 		
 		map_widget->setGesturesEnabled(!value);
+		
+		Q_ASSERT(symbol_widget);
+		symbol_widget->setEnabled(!value);
 	}
 }
 
@@ -1807,15 +1807,25 @@ void MapEditorController::selectedSymbolsChanged()
 		mobile_symbol_selector_action->setIcon(QIcon(pixmap));
 	}
 	
-	if (symbol && !symbol->isHidden() && !symbol->isProtected() && current_tool)
+	// FIXME: Postpone switch of active symbol while editing is progress
+	if (active_symbol != symbol)
 	{
-		// Auto-switch to a draw tool when selecting a symbol under certain conditions
-		if (current_tool->getType() == MapEditorTool::Pan
-			|| ((current_tool->getType() == MapEditorTool::EditLine || current_tool->getType() == MapEditorTool::EditPoint) && map->getNumSelectedObjects() == 0))
+		active_symbol = symbol;
+		
+		if (symbol && !symbol->isHidden() && !symbol->isProtected() && current_tool)
 		{
-			current_tool->switchToDefaultDrawTool(symbol);
+			// Auto-switch to a draw tool when selecting a symbol under certain conditions
+			if (current_tool->toolType() == MapEditorTool::Pan
+			    || ((current_tool->toolType() == MapEditorTool::EditLine || current_tool->toolType() == MapEditorTool::EditPoint) && map->getNumSelectedObjects() == 0))
+			{
+				current_tool->switchToDefaultDrawTool(active_symbol);
+			}
 		}
 	}
+	
+	// Even when the symbol (pointer) hasn't changed,
+	// the symbol's visibility may constitute a change.
+	emit activeSymbolChanged(active_symbol);
 	
 	updateDrawPointGPSAvailability();
 	draw_point_act->setEnabled(type == Symbol::Point && !symbol->isHidden());
@@ -2047,43 +2057,43 @@ void MapEditorController::editToolClicked()
 
 void MapEditorController::editLineToolClicked()
 {
-	if (!current_tool || current_tool->getType() != MapEditorTool::EditLine)
-		setTool(new EditLineTool(this, edit_line_tool_act, symbol_widget));
+	if (!current_tool || current_tool->toolType() != MapEditorTool::EditLine)
+		setTool(new EditLineTool(this, edit_line_tool_act));
 }
 
 void MapEditorController::drawPointClicked()
 {
-	setTool(new DrawPointTool(this, draw_point_act, symbol_widget));
+	setTool(new DrawPointTool(this, draw_point_act));
 }
 
 void MapEditorController::drawPathClicked()
 {
-	setTool(new DrawPathTool(this, draw_path_act, symbol_widget, true));
+	setTool(new DrawPathTool(this, draw_path_act, false, true));
 }
 
 void MapEditorController::drawCircleClicked()
 {
-	setTool(new DrawCircleTool(this, draw_circle_act, symbol_widget));
+	setTool(new DrawCircleTool(this, draw_circle_act, false));
 }
 
 void MapEditorController::drawRectangleClicked()
 {
-	setTool(new DrawRectangleTool(this, draw_rectangle_act, symbol_widget));
+	setTool(new DrawRectangleTool(this, draw_rectangle_act, false));
 }
 
 void MapEditorController::drawFreehandClicked()
 {
-	setTool(new DrawFreehandTool(this, draw_freehand_act, symbol_widget));
+	setTool(new DrawFreehandTool(this, draw_freehand_act, false));
 }
 
 void MapEditorController::drawFillClicked()
 {
-	setTool(new FillTool(this, draw_fill_act, symbol_widget));
+	setTool(new FillTool(this, draw_fill_act));
 }
 
 void MapEditorController::drawTextClicked()
 {
-	setTool(new DrawTextTool(this, draw_text_act, symbol_widget));
+	setTool(new DrawTextTool(this, draw_text_act));
 }
 
 void MapEditorController::deleteClicked()
@@ -2307,7 +2317,7 @@ void MapEditorController::selectObjectsClicked(bool select_exclusively)
 	
 	if (object_selected)
 	{
-		if (current_tool && MapEditorTool::isDrawTool(current_tool->getType()))
+		if (current_tool && current_tool->isDrawTool())
 			setEditTool();
 	}
 	else
@@ -2909,7 +2919,7 @@ void MapEditorController::updateDrawPointGPSAvailability()
 
 void MapEditorController::drawPointGPSClicked()
 {
-	setTool(new DrawPointGPSTool(gps_display, this, draw_point_gps_act, symbol_widget));
+	setTool(new DrawPointGPSTool(gps_display, this, draw_point_gps_act));
 }
 
 void MapEditorController::gpsTemporaryPointClicked()

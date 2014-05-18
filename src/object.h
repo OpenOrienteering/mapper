@@ -243,6 +243,12 @@ public:
 	/** Removes the given tag key and its value. */
 	void removeTag(const QString& key);
 	
+	
+	/**
+	 * @brief Extends a rectangle to enclose all of the object's control points.
+	 */
+	void includeControlPointsRect(QRectF& rect) const;
+	
 protected:
 	Type type;
 	Symbol* symbol;

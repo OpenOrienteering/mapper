@@ -777,6 +777,25 @@ void Object::removeTag(const QString& key)
 }
 
 
+void Object::includeControlPointsRect(QRectF& rect) const
+{
+	if (type == Object::Path)
+	{
+		const PathObject* path = asPath();
+		int size = path->getCoordinateCount();
+		for (int i = 0; i < size; ++i)
+			rectInclude(rect, path->coords[i].toQPointF());
+	}
+	else if (type == Object::Text)
+	{
+		const TextObject* text = asText();
+		std::vector<QPointF> text_handles(text->controlPoints());
+		for (std::size_t i = 0; i < text_handles.size(); ++i)
+			rectInclude(rect, text_handles[i]);
+	}
+}
+
+
 // ### PathObject::PathPart ###
 
 void PathObject::PathPart::setClosed(bool closed, bool may_use_existing_close_point)

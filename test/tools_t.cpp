@@ -162,7 +162,7 @@ void ToolsTest::editTool()
 	// Initialization
 	TestMap map;
 	TestMapEditor editor(map.map);
-	EditTool* tool = new EditPointTool(editor.editor, NULL, editor.editor->getSymbolWidget());	// TODO: Refactor EditTool: MapEditorController and SymbolWidget pointers could be unnecessary
+	EditTool* tool = new EditPointTool(editor.editor, NULL);	// TODO: Refactor EditTool: MapEditorController and SymbolWidget pointers could be unnecessary
 	editor.editor->setTool(tool);
 	
 	// Move the first coordinate of the line object

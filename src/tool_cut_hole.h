@@ -40,7 +40,7 @@ public:
 		Rect = 2
 	};
 	
-	CutHoleTool(MapEditorController* editor, QAction* tool_button, CutHoleTool::HoleType hole_type);
+	CutHoleTool(MapEditorController* editor, QAction* tool_action, CutHoleTool::HoleType hole_type);
 	virtual ~CutHoleTool();
 	
 	virtual void init();

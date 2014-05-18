@@ -60,6 +60,8 @@ void PaintOnTemplateTool::init()
 	connect(widget, SIGNAL(undoSelected()), this, SLOT(undoSelected()));
 	connect(widget, SIGNAL(redoSelected()), this, SLOT(redoSelected()));
 	colorSelected(widget->getSelectedColor());
+	
+	MapEditorTool::init();
 }
 
 void PaintOnTemplateTool::templateDeleted(int pos, Template* temp)

@@ -26,7 +26,6 @@
 
 class TextObject;
 class PathObject;
-class SymbolWidget;
 typedef std::vector< std::pair< int, Object* > > SelectionInfoVector;
 
 
@@ -147,13 +146,10 @@ class EditTool : public MapEditorToolBase
 {
 Q_OBJECT
 public:
-	EditTool(MapEditorController* editor, MapEditorTool::Type type, SymbolWidget* symbol_widget, QAction* tool_button);
+	EditTool(MapEditorController* editor, MapEditorTool::Type tool_type, QAction* tool_action);
 	virtual ~EditTool();
 	
 	static const Qt::Key delete_object_key;
-	
-	/** Draws a selection box. */
-	static void drawSelectionBox(QPainter* painter, MapWidget* widget, const MapCoordF& corner1, const MapCoordF& corner2);
 	
 protected:
 	/** Deletes all selected objects and updates the status text. */
@@ -182,8 +178,6 @@ protected:
 	void drawBoundingBox(QPainter* painter, MapWidget* widget, const QRectF& bounding_box, const QRgb& color);
 	
 	QScopedPointer<ObjectSelector> object_selector;
-	
-	SymbolWidget* symbol_widget;
 };
 
 #endif

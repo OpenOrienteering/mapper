@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,7 +24,6 @@
 
 #include "tool_base.h"
 
-class SymbolWidget;
 class MapView;
 class PathObject;
 
@@ -34,13 +34,11 @@ class FillTool : public MapEditorToolBase
 {
 Q_OBJECT
 public:
-	FillTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
+	FillTool(MapEditorController* editor, QAction* tool_action);
 	virtual ~FillTool();
 	
 protected slots:
-	void selectedSymbolsChanged();
-	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
-	void symbolDeleted(int pos, Symbol* old_symbol);
+	void setDrawingSymbol(Symbol* symbol);
 	
 protected:
 	/**
@@ -88,8 +86,7 @@ protected:
 	 */
 	bool fillBoundary(const QImage& image, const std::vector< QPoint >& boundary, QTransform image_to_map);
 	
-	SymbolWidget* symbol_widget;
-	Symbol* last_used_symbol;
+	Symbol* drawing_symbol;
 };
 
 #endif

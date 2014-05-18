@@ -304,9 +304,6 @@ void TemplateAdjustWidget::stopTemplateAdjust()
 	// If one of these is checked, the corresponding tool should be set. The last condition is just to be sure.
 	if ((new_act->isChecked() || move_act->isChecked() || delete_act->isChecked()) && controller->getTool())
 	{
-		// Set the tool's button to NULL, so on later deletion the tool does not
-		// try to unset the button, which has already been deleted at that time
-		controller->getTool()->setAction(NULL);
 		controller->setTool(NULL);
 	}
 }
@@ -534,15 +531,15 @@ void TemplateAdjustEditTool::findHoverPoint(QPoint mouse_pos, MapWidget* map_wid
 			if (active_point_is_src)
 			{
 				if (adjusted)
-					editor->getMap()->setDrawingBoundingBox(QRectF(point->calculated_coords.getX(), point->calculated_coords.getY(), 0, 0), TemplateAdjustActivity::cross_radius);
+					map()->setDrawingBoundingBox(QRectF(point->calculated_coords.getX(), point->calculated_coords.getY(), 0, 0), TemplateAdjustActivity::cross_radius);
 				else
-					editor->getMap()->setDrawingBoundingBox(QRectF(point->src_coords.getX(), point->src_coords.getY(), 0, 0), TemplateAdjustActivity::cross_radius);
+					map()->setDrawingBoundingBox(QRectF(point->src_coords.getX(), point->src_coords.getY(), 0, 0), TemplateAdjustActivity::cross_radius);
 			}
 			else
-				editor->getMap()->setDrawingBoundingBox(QRectF(point->dest_coords.getX(), point->dest_coords.getY(), 0, 0), TemplateAdjustActivity::cross_radius);
+				map()->setDrawingBoundingBox(QRectF(point->dest_coords.getX(), point->dest_coords.getY(), 0, 0), TemplateAdjustActivity::cross_radius);
 		}
 		else
-			editor->getMap()->clearDrawingBoundingBox();
+			map()->clearDrawingBoundingBox();
 	}
 }
 
@@ -561,6 +558,8 @@ void TemplateAdjustAddTool::init()
 {
 	// NOTE: this is called by other methods to set this text again. Change that behavior if adding stuff here
 	setStatusBarText(tr("<b>Click</b>: Set the template position of the pass point. "));
+	
+	MapEditorTool::init();
 }
 
 bool TemplateAdjustAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -585,7 +584,7 @@ bool TemplateAdjustAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_co
 		this->widget->addPassPoint(first_point, map_coord);
 		
 		first_point_set = false;
-		editor->getMap()->clearDrawingBoundingBox();
+		map()->clearDrawingBoundingBox();
 		
 		init();
 	}
@@ -610,7 +609,7 @@ bool TemplateAdjustAddTool::keyPressEvent(QKeyEvent* event)
 	if (first_point_set && event->key() == Qt::Key_Escape)
 	{
 		first_point_set = false;
-		editor->getMap()->clearDrawingBoundingBox();
+		map()->clearDrawingBoundingBox();
 		
 		init();
 		return true;
@@ -642,7 +641,7 @@ void TemplateAdjustAddTool::setDirtyRect(MapCoordF mouse_pos)
 {
 	QRectF rect = QRectF(first_point.getX(), first_point.getY(), 0, 0);
 	rectInclude(rect, mouse_pos.toQPointF());
-	editor->getMap()->setDrawingBoundingBox(rect, TemplateAdjustActivity::cross_radius);
+	map()->setDrawingBoundingBox(rect, TemplateAdjustActivity::cross_radius);
 }
 
 // ### TemplateAdjustMoveTool ###
@@ -663,6 +662,8 @@ TemplateAdjustMoveTool::TemplateAdjustMoveTool(MapEditorController* editor, QAct
 void TemplateAdjustMoveTool::init()
 {
 	setStatusBarText(tr("<b>Drag</b>: Move pass points. "));
+	
+	MapEditorTool::init();
 }
 
 bool TemplateAdjustMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -764,8 +765,8 @@ void TemplateAdjustMoveTool::setActivePointPosition(MapCoordF map_coord)
 	
 	this->widget->updateRow(active_point);
 	
-	editor->getMap()->setDrawingBoundingBox(QRectF(changed_coords->getX(), changed_coords->getY(), 0, 0), TemplateAdjustActivity::cross_radius + 1, false);
-	editor->getMap()->updateDrawing(changed_rect, TemplateAdjustActivity::cross_radius + 1);
+	map()->setDrawingBoundingBox(QRectF(changed_coords->getX(), changed_coords->getY(), 0, 0), TemplateAdjustActivity::cross_radius + 1, false);
+	map()->updateDrawing(changed_rect, TemplateAdjustActivity::cross_radius + 1);
 	widget->updateDirtyRect();
 	
 	this->widget->getTemplate()->setAdjustmentDirty(true);
@@ -784,6 +785,8 @@ TemplateAdjustDeleteTool::TemplateAdjustDeleteTool(MapEditorController* editor, 
 void TemplateAdjustDeleteTool::init()
 {
 	setStatusBarText(tr("<b>Click</b>: Delete pass points. "));
+	
+	MapEditorTool::init();
 }
 
 bool TemplateAdjustDeleteTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
@@ -804,7 +807,7 @@ bool TemplateAdjustDeleteTool::mousePressEvent(QMouseEvent* event, MapCoordF map
 		
 		this->widget->deletePassPoint(active_point);
 		findHoverPoint(event->pos(), widget);
-		editor->getMap()->updateDrawing(changed_rect, TemplateAdjustActivity::cross_radius + 1);
+		map()->updateDrawing(changed_rect, TemplateAdjustActivity::cross_radius + 1);
 	}
 	return true;
 }

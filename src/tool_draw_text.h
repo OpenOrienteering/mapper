@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -35,7 +36,6 @@ class TextObjectEditorHelper;
 class TextObjectAlignmentDockWidget;
 class MapRenderables;
 class Symbol;
-class SymbolWidget;
 
 /**
  * Tool to draw text objects.
@@ -44,7 +44,7 @@ class DrawTextTool : public MapEditorTool
 {
 Q_OBJECT
 public:
-	DrawTextTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
+	DrawTextTool(MapEditorController* editor, QAction* tool_action);
 	virtual ~DrawTextTool();
 	
 	virtual void init();
@@ -63,9 +63,7 @@ public:
 	static QCursor* cursor;
 	
 protected slots:
-	void selectedSymbolsChanged();
-	void symbolChanged(int pos, Symbol* new_symbol, Symbol* old_symbol);
-	void symbolDeleted(int pos, Symbol* old_symbol);
+	void setDrawingSymbol(Symbol* symbol);
 	
 	void selectionChanged(bool text_change);
 	
@@ -73,10 +71,13 @@ protected:
 	void updateDirtyRect();
 	void updateStatusText();
 	
-	void updatePreviewObject();
-	void deletePreviewObject();
+	void updatePreviewText();
+	void deletePreviewText();
 	void setPreviewLetter();
+	void abortEditing();
 	void finishEditing();
+	
+	Symbol* drawing_symbol;
 	
 	QPoint click_pos;
 	MapCoordF click_pos_map;
@@ -84,12 +85,10 @@ protected:
 	MapCoordF cur_pos_map;
 	bool dragging;
 	
-	Symbol* drawing_symbol;
 	TextObject* preview_text;
 	TextObjectEditorHelper* text_editor;
 	
 	QScopedPointer<MapRenderables> renderables;
-	SymbolWidget* symbol_widget;
 };
 
 /**

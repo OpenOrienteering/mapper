@@ -447,15 +447,16 @@ const Qt::Key EditTool::delete_object_key = Qt::Key_Backspace;
 const Qt::Key EditTool::delete_object_key = Qt::Key_Delete;
 #endif
 
-EditTool::EditTool(MapEditorController* editor, MapEditorTool::Type type, SymbolWidget* symbol_widget, QAction* tool_button)
- : MapEditorToolBase(QCursor(QPixmap(":/images/cursor-hollow.png"), 1, 1), type, editor, tool_button),
-   object_selector(new ObjectSelector(map())),
-   symbol_widget(symbol_widget)
+EditTool::EditTool(MapEditorController* editor, MapEditorTool::Type type, QAction* tool_button)
+: MapEditorToolBase(QCursor(QPixmap(":/images/cursor-hollow.png"), 1, 1), type, editor, tool_button)
+, object_selector(new ObjectSelector(map()))
 {
+	; // nothing
 }
 
 EditTool::~EditTool()
 {
+	; // nothing
 }
 
 void EditTool::deleteSelectedObjects()
@@ -639,24 +640,10 @@ void EditTool::drawBoundingBox(QPainter* painter, MapWidget* widget, const QRect
 {
 	QPen pen(color);
 	pen.setStyle(Qt::DashLine);
-	if (resolution_scale_factor > 1)
-		pen.setWidth(resolution_scale_factor);
+	if (scaleFactor() > 1)
+		pen.setWidth(scaleFactor());
 	painter->setPen(pen);
 	painter->setBrush(Qt::NoBrush);
 	painter->drawRect(widget->mapToViewport(bounding_box));
 }
 
-void EditTool::drawSelectionBox(QPainter* painter, MapWidget* widget, const MapCoordF& corner1, const MapCoordF& corner2)
-{
-	painter->setBrush(Qt::NoBrush);
-	
-	QPoint point1 = widget->mapToViewport(corner1).toPoint();
-	QPoint point2 = widget->mapToViewport(corner2).toPoint();
-	QPoint top_left = QPoint(qMin(point1.x(), point2.x()), qMin(point1.y(), point2.y()));
-	QPoint bottom_right = QPoint(qMax(point1.x(), point2.x()), qMax(point1.y(), point2.y()));
-	
-	painter->setPen(QPen(QBrush(active_color), resolution_scale_factor));
-	painter->drawRect(QRect(top_left, bottom_right - QPoint(1, 1)));
-	painter->setPen(QPen(QBrush(qRgb(255, 255, 255)), resolution_scale_factor));
-	painter->drawRect(QRect(top_left + QPoint(1, 1), bottom_right - QPoint(2, 2)));
-}

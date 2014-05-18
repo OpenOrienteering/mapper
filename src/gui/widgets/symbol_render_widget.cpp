@@ -116,13 +116,24 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	connect(map, SIGNAL(colorDeleted(int,const MapColor*)), this, SLOT(update()));
 	connect(map, SIGNAL(symbolAdded(int,Symbol*)), this, SLOT(updateAll()));
 	connect(map, SIGNAL(symbolDeleted(int,Symbol*)), this, SLOT(updateAll()));
-	connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(updateSingleIcon(int)));
+	connect(map, SIGNAL(symbolChanged(int,Symbol*,Symbol*)), this, SLOT(symbolChanged(int,Symbol*,Symbol*)));
 	connect(map, SIGNAL(symbolIconChanged(int)), this, SLOT(updateSingleIcon(int)));
 }
 
 SymbolRenderWidget::~SymbolRenderWidget()
 {
 	; // nothing
+}
+
+void SymbolRenderWidget::symbolChanged(int pos, Symbol *new_symbol, Symbol *old_symbol)
+{
+	Q_UNUSED(new_symbol);
+	Q_UNUSED(old_symbol);
+	
+	updateSingleIcon(pos);
+	
+	if (isSymbolSelected(pos))
+		emit selectedSymbolsChanged();
 }
 
 void SymbolRenderWidget::updateAll()

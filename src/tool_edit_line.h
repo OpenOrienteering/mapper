@@ -40,7 +40,7 @@ class EditLineTool : public EditTool
 {
 Q_OBJECT
 public:
-	EditLineTool(MapEditorController* editor, QAction* tool_button, SymbolWidget* symbol_widget);
+	EditLineTool(MapEditorController* editor, QAction* tool_action);
 	virtual ~EditLineTool();
 	
 	virtual void mouseMove();

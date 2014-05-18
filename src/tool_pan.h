@@ -30,7 +30,7 @@ class PanTool : public MapEditorToolBase
 {
 Q_OBJECT
 public:
-	PanTool(MapEditorController* editor, QAction* tool_button);
+	PanTool(MapEditorController* editor, QAction* tool_action);
 	virtual ~PanTool();
 	
 protected:

@@ -51,7 +51,9 @@ void CutHoleTool::init()
 {
 	connect(map(), SIGNAL(objectSelectionChanged()), this, SLOT(objectSelectionChanged()));
 	updateDirtyRect();
-    updateStatusText();
+	updateStatusText();
+	
+	MapEditorTool::init();
 }
 
 CutHoleTool::~CutHoleTool()
@@ -70,11 +72,11 @@ bool CutHoleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	edit_widget = widget;
 	
 	if (hole_type == CutHoleTool::Path)
-		path_tool = new DrawPathTool(editor, NULL, NULL, true);
+		path_tool = new DrawPathTool(editor, NULL, true, true);
 	else if (hole_type == CutHoleTool::Circle)
-		path_tool = new DrawCircleTool(editor, NULL, NULL);
+		path_tool = new DrawCircleTool(editor, NULL, true);
 	else if (hole_type == CutHoleTool::Rect)
-		path_tool = new DrawRectangleTool(editor, NULL, NULL);
+		path_tool = new DrawRectangleTool(editor, NULL, true);
 	else
 		assert(false);
 	connect(path_tool, SIGNAL(dirtyRectChanged(QRectF)), this, SLOT(pathDirtyRectChanged(QRectF)));
