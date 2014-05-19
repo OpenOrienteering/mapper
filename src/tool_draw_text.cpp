@@ -36,6 +36,7 @@
 #include "symbol_text.h"
 #include "tool_helpers.h"
 #include "util.h"
+#include "gui/modifier_key.h"
 
 #if defined(__MINGW32__) and defined(DrawText)
 // MinGW(64) winuser.h issue
@@ -92,12 +93,12 @@ bool DrawTextTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 
 bool DrawTextTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
 {
-	if (text_editor)
-		return text_editor->mouseMoveEvent(event, map_coord, widget);
-	
 	bool mouse_down = event->buttons() & Qt::LeftButton;
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
+	
+	if (text_editor)
+		return text_editor->mouseMoveEvent(event, map_coord, widget);
 	
 	if (!mouse_down)
 	{
@@ -156,6 +157,7 @@ bool DrawTextTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	connect(text_editor, SIGNAL(selectionChanged(bool)), this, SLOT(selectionChanged(bool)));
 	
 	updatePreviewText();
+	updateStatusText();
 	
 	return true;
 }
@@ -172,8 +174,15 @@ bool DrawTextTool::keyPressEvent(QKeyEvent* event)
 {
 	if (text_editor)
 	{
-		if (text_editor->keyPressEvent(event))
+		if (event->key() == Qt::Key_Escape)
+		{
+			finishEditing();
 			return true;
+		}
+		else if (text_editor->keyPressEvent(event))
+		{
+			return true;
+		}
 	}
 	else if (event->key() == Qt::Key_Tab)
 	{
@@ -202,7 +211,7 @@ void DrawTextTool::draw(QPainter* painter, MapWidget* widget)
 		painter->save();
 		widget->applyMapTransform(painter);
 		
-		float alpha = text_editor ? 1 : 0.5f;
+		float alpha = text_editor ? 1.0f : 0.5f;
 		renderables->draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, true, alpha);
 		
 		if (text_editor)
@@ -285,7 +294,10 @@ void DrawTextTool::updateDirtyRect()
 
 void DrawTextTool::updateStatusText()
 {
-	setStatusBarText(tr("<b>Click</b>: Create a text object with a single anchor. <b>Drag</b>: Create a text box. "));
+	if (text_editor)
+		setStatusBarText(tr("<b>%1</b>: Finish editing. ").arg(ModifierKey::escape()));
+	else
+		setStatusBarText(tr("<b>Click</b>: Create a text object with a single anchor. <b>Drag</b>: Create a text box. "));
 }
 
 void DrawTextTool::updatePreviewText()
@@ -327,6 +339,7 @@ void DrawTextTool::abortEditing()
 	map()->clearDrawingBoundingBox();
 	
 	setPreviewLetter();
+	updateStatusText();
 }
 
 void DrawTextTool::finishEditing()
@@ -352,6 +365,7 @@ void DrawTextTool::finishEditing()
 	}
 	
 	setPreviewLetter();
+	updateStatusText();
 }
 
 
