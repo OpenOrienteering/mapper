@@ -202,7 +202,7 @@ void DrawTextTool::draw(QPainter* painter, MapWidget* widget)
 		widget->applyMapTransform(painter);
 		
 		float alpha = text_editor ? 1 : 0.5f;
-		renderables->draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, alpha);
+		renderables->draw(painter, widget->getMapView()->calculateViewedRect(widget->viewportToView(widget->rect())), true, widget->getMapView()->calculateFinalZoomFactor(), true, true, alpha);
 		
 		if (text_editor)
 			text_editor->draw(painter, widget);
