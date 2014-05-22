@@ -588,7 +588,11 @@ void EditPointTool::updatePreviewObjects()
 void EditPointTool::updateStatusText()
 {
 	QString text;
-	if (editing)
+	if (text_editor)
+	{
+		text = tr("<b>%1</b>: Finish editing. ").arg(ModifierKey::escape());
+	}
+	else if (editing)
 	{
 		MapCoordF drag_vector = constrained_pos_map - click_pos_map;
 		text = EditTool::tr("<b>Coordinate offset:</b> %1, %2 mm  <b>Distance:</b> %3 m ").
