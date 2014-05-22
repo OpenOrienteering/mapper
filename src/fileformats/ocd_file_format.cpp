@@ -1376,6 +1376,18 @@ LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 	return symbol;
 }
 
+template< > // OCD::FormatV8
+int OcdFileImport::circleRadius(const Ocd::PointSymbolElementV8* element) const
+{
+	return element->diameter / 2 - element->line_width;
+}
+
+template< class E >
+int OcdFileImport::circleRadius(const E* element) const
+{
+	return (element->diameter - element->line_width) / 2;
+}
+
 template< class E >
 void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const E* elements)
 {
@@ -1417,12 +1429,14 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 				}
 				break;
 			case E::TypeCircle:
-				if ((element->diameter / 2 - element->line_width) > 0)
+			{
+				int element_radius = circleRadius(element);
+				if (element_radius > 0)
 				{
 					bool can_use_base_symbol = (!base_symbol_used && (!element->num_coords || (!coords[0].x && !coords[0].y)));
 					PointSymbol* working_symbol = can_use_base_symbol ? symbol : new PointSymbol();
 					working_symbol->setInnerColor(NULL);
-					working_symbol->setInnerRadius(convertLength(element->diameter / 2 - element->line_width));
+					working_symbol->setInnerRadius(convertLength(element_radius));
 					working_symbol->setOuterColor(convertColor(element->color));
 					working_symbol->setOuterWidth(convertLength(element->line_width));
 					if (can_use_base_symbol)
@@ -1442,6 +1456,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 					}
 				}
 				break;
+			}
 			case E::TypeLine:
 				{
 					OcdImportedLineSymbol* element_symbol = new OcdImportedLineSymbol();
