@@ -647,3 +647,21 @@ void EditTool::drawBoundingBox(QPainter* painter, MapWidget* widget, const QRect
 	painter->drawRect(widget->mapToViewport(bounding_box));
 }
 
+void EditTool::drawBoundingPath(QPainter *painter, MapWidget *widget, const std::vector<QPointF>& bounding_path, const QRgb &color)
+{
+	Q_ASSERT(bounding_path.size() > 0);
+	
+	QPen pen(color);
+	pen.setStyle(Qt::DashLine);
+	if (scaleFactor() > 1)
+		pen.setWidth(scaleFactor());
+	painter->setPen(pen);
+	painter->setBrush(Qt::NoBrush);
+	
+	QPainterPath painter_path;
+	painter_path.moveTo(widget->mapToViewport(bounding_path[0]));
+	for (std::size_t i = 1; i < bounding_path.size(); ++i)
+		painter_path.lineTo(widget->mapToViewport(bounding_path[i]));
+	painter_path.closeSubpath();
+	painter->drawPath(painter_path);
+}

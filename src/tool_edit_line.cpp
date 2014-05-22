@@ -367,8 +367,17 @@ void EditLineTool::drawImpl(QPainter* painter, MapWidget* widget)
 	{
 		drawSelectionOrPreviewObjects(painter, widget);
 		
-		if (selection_extent.isValid())
+		Object* object = *map()->selectedObjectsBegin();
+		if (num_selected_objects == 1 &&
+		    object->getType() == Object::Text &&
+		    !object->asText()->hasSingleAnchor())
+		{
+			drawBoundingPath(painter, widget, object->asText()->controlPoints(), hoveringOverFrame() ? active_color : selection_color);
+		}
+		else if (selection_extent.isValid())
+		{
 			drawBoundingBox(painter, widget, selection_extent, hoveringOverFrame() ? active_color : selection_color);
+		}
 		
 		if (num_selected_objects <= max_objects_for_handle_display)
 		{
