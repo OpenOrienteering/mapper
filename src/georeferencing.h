@@ -34,8 +34,6 @@ class QXmlStreamWriter;
 
 typedef void* projPJ;
 
-class GPSProjectionParameters;
-
 /**
  * Specifies geographic coordinates by latitude and longitude.
  */
@@ -101,33 +99,6 @@ public:
 	{
 		return (this->latitude != rhs.latitude) || (this->longitude != rhs.longitude);
 	}
-	
-private:
-	/**
-	 * @deprecated GPSProjectionParameters is no longer used.
-	 * This constructor is left for historical reasons.
-	 * Implementation in gps_coordinates.cpp.
-	 */
-	LatLon(MapCoordF map_coord, const GPSProjectionParameters& params);
-	
-	/**
-	 * @deprecated GPSProjectionParameters is no longer used.
-	 * This method is left for historical reasons.
-	 * Implementation in gps_coordinates.cpp.
-	 */
-	MapCoordF toMapCoordF(const GPSProjectionParameters& params) const;
-	/**
-	 * @deprecated GPSProjectionParameters is no longer used.
-	 * This method is left for historical reasons.
-	 * Implementation in gps_coordinates.cpp.
-	 */
-	void toCartesianCoordinates(const GPSProjectionParameters& params, double height, double& x, double& y, double& z);
-	
-	/**
-	 * @deprecated Not used at the moment
-	 * Implementation in gps_coordinates.cpp.
-	 */
-	bool fromString(QString str);	// for example "53°48'33.82"N  2°07'46.38"E" or "N 48° 31.732 E 012° 08.422" or "48.52887 12.14037"
 };
 
 /**

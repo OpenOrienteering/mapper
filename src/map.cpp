@@ -43,7 +43,6 @@
 #include "map_undo.h"
 #include "util.h"
 #include "template.h"
-#include "gps_coordinates.h"
 #include "object.h"
 #include "object_operations.h"
 #include "renderable.h"

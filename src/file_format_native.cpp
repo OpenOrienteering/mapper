@@ -26,7 +26,6 @@
 #include "core/map_view.h"
 #include "file_import_export.h"
 #include "georeferencing.h"
-#include "gps_coordinates.h"
 #include "map.h"
 #include "map_grid.h"
 #include "symbol.h"
@@ -56,6 +55,24 @@ protected:
 	/** Imports a native file.
 	 */
 	void import(bool load_symbols_only) throw (FileFormatException);
+};
+
+
+// ### GPSProjectionParameters ###
+/** 
+ * Legacy parameters for an ellipsoid and an orthographic projection of
+ * ellipsoid coordinates to 2D map (template) coordinates.
+ */
+struct GPSProjectionParameters
+{
+	double a;					// ellipsoidal semi-major axis
+	double b;					// ellipsoidal semi-minor axis
+	double e_sq;				// eccentricity of the ellipsoid (squared)
+	double center_latitude;		// latitude which gives map coordinate zero
+	double center_longitude;	// longitude which gives map coordinate zero
+	double sin_center_latitude;	// sine of center_latitude
+	double cos_center_latitude;	// cosine of center_latitude
+	double v0;					// prime vertical radius of curvature at latitude of origin center_latitude
 };
 
 

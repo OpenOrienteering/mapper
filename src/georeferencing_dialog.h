@@ -26,7 +26,6 @@
 #include <QString>
 #include <QScopedPointer>
 
-#include "gps_coordinates.h"
 #include "tool.h"
 
 QT_BEGIN_NAMESPACE

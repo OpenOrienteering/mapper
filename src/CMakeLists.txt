@@ -109,7 +109,6 @@ set(Mapper_Common_SRCS
  tool_boolean.cpp
  tool_fill.cpp
 
- gps_coordinates.cpp
  gps_track.cpp
  gps_display.cpp
  gps_temporary_markers.cpp
