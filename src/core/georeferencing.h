@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Kai Pastor
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -356,6 +356,11 @@ public:
 	 * Converts a value from radians to degrees.
 	 */
 	static double radToDeg(double val);
+	
+	/**
+	 * Converts a value from degrees to radians.
+	 */
+	static double degToRad(double val);
 	
 	/**
 	 * Converts a value from degrees to a D°M'S" string.

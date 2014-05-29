@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Kai Pastor
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -29,14 +29,19 @@ QT_END_NAMESPACE
 
 
 /**
- * Specifies geographic coordinates by latitude and longitude.
+ * @brief Specifies geographic location by latitude and longitude.
  * 
  * Latitude is a geographic coordinate that specifies the north-south
  * position (φ, phi).
+ * 
  * Longitude is a geographic coordinate that specifies the east-west 
  * position (λ, lambda).
  * 
- * @see QGeoCoordinate
+ * LatLon is meant to be similar to QGeoCoordinate (part of Qt since 5.2).
+ * This Qt class might eventually replace LatLon. QGeoCoordinate has altitude
+ * as an additional property which is rarely used in Mapper at the moment.
+ * 
+ * @see QGeoCoordinate (http://qt-project.org/doc/qt-5/qgeocoordinate.html)
  */
 class LatLon
 {
@@ -47,43 +52,24 @@ private:
 	
 public:
 	/**
-	 * @brief Supported units of measurement for latitude and longitude.
+	 * Constructs a new LatLon for the latitude and longitude given in degrees.
 	 */
-	enum Unit
-	{
-		Radiant,
-		Degrees
-	};
-
-	/**
-	 * Constructs a new LatLon with latitude and longitude set to zero.
-	 */
-	LatLon();
+	LatLon(double latitude = 0.0, double longitude = 0.0);
 	
 	/**
-	 * Constructs a new LatLon for the given latitude, longitude and unit.
+	 * Returns a new LatLon for the latitude and longitude given in radiant.
 	 */
-	LatLon(double latitude_value, double longitude_value, Unit unit);
+	static LatLon fromRadiant(double latitude, double longitude);
 	
 	/**
 	 * Returns the latitude value in degrees.
 	 */
-	double getLatitudeInDegrees() const;
+	double latitude() const;
 	
 	/**
 	 * Returns the longitude value in degrees.
 	 */
-	double getLongitudeInDegrees() const;
-	
-	/** 
-	 * Returns the latitude value in radiant.
-	 */
-	double getLatitudeInRadiant() const;
-	
-	/**
-	 * Returns the longitude value in radiant.
-	 */
-	double getLongitudeInRadiant() const;
+	double longitude() const;
 	
 	/**
 	 * Returns true if this object has exactly the same latitude and longitude
@@ -110,47 +96,29 @@ QDebug operator<<(QDebug dbg, const LatLon &lat_lon);
 //### LatLon inline code ###
 
 inline
-LatLon::LatLon()
-: latitude_value(0.0)
-, longitude_value(0.0)
+LatLon::LatLon(double latitude, double longitude)
+: latitude_value(latitude)
+, longitude_value(longitude)
 {
 	; // nothing
 }
 
 inline
-LatLon::LatLon(double latitude, double longitude, Unit unit)
-: latitude_value(latitude)
-, longitude_value(longitude)
+LatLon LatLon::fromRadiant(double latitude, double longitude)
 {
-	if (unit == Degrees)
-	{
-		latitude_value  *= M_PI / 180;
-		longitude_value *= M_PI / 180;
-	}
+	return LatLon(latitude * 180.0 / M_PI, longitude * 180.0 / M_PI);
 }
 
 inline
-double LatLon::getLatitudeInRadiant() const
+double LatLon::latitude() const
 {
 	return latitude_value;
 }
 
 inline
-double LatLon::getLongitudeInRadiant() const
+double LatLon::longitude() const
 {
 	return longitude_value;
-}
-
-inline
-double LatLon::getLatitudeInDegrees() const
-{
-	return latitude_value * 180.0 / M_PI;
-}
-
-inline
-double LatLon::getLongitudeInDegrees() const
-{
-	return longitude_value * 180.0 / M_PI;
 }
 
 inline

@@ -209,8 +209,8 @@ bool FileFormatTest::compareMaps(Map* a, Map* b, QString& error)
 		a_geo.getProjectedCRSId() != b_geo.getProjectedCRSId() ||
 		a_geo.getProjectedCRSName() != b_geo.getProjectedCRSName() ||
 		a_geo.getProjectedCRSSpec() != b_geo.getProjectedCRSSpec() ||
-		a_geo.getGeographicRefPoint().getLatitudeInDegrees() != b_geo.getGeographicRefPoint().getLatitudeInDegrees() ||
-		a_geo.getGeographicRefPoint().getLongitudeInDegrees() != b_geo.getGeographicRefPoint().getLongitudeInDegrees())
+		a_geo.getGeographicRefPoint().latitude() != b_geo.getGeographicRefPoint().latitude() ||
+		a_geo.getGeographicRefPoint().longitude() != b_geo.getGeographicRefPoint().longitude())
 	{
 		error = "The georeferencing differs.";
 		return false;

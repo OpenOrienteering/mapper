@@ -53,7 +53,7 @@ GPSTrackRecorder::GPSTrackRecorder(GPSDisplay* gps_display, TemplateTrack* targe
 void GPSTrackRecorder::newPosition(double latitude, double longitude, double altitude, float accuracy)
 {
 	TrackPoint new_point(
-		LatLon(latitude, longitude, LatLon::Degrees),
+		LatLon(latitude, longitude),
 		QDateTime::currentDateTime(),
 		altitude,
 		-1,

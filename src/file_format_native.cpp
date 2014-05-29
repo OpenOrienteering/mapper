@@ -147,7 +147,7 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 		stream->read((char*)&gps_projection_parameters, sizeof(GPSProjectionParameters));
 		if (gps_projection_params_set)
 		{
-			LatLon ref_point(gps_projection_parameters.center_latitude, gps_projection_parameters.center_longitude, LatLon::Radiant);
+			LatLon ref_point = LatLon::fromRadiant(gps_projection_parameters.center_latitude, gps_projection_parameters.center_longitude);
 			georef.setGeographicRefPoint(ref_point);
 		}
 		*map->georeferencing = georef;
@@ -172,7 +172,7 @@ void NativeFileImport::import(bool load_symbols_only) throw (FileFormatException
 		loadString(stream, georef.projected_crs_spec);
 		stream->read((char*)&y, sizeof(double));
 		stream->read((char*)&x, sizeof(double));
-		georef.geographic_ref_point = LatLon(y, x, LatLon::Radiant); 
+		georef.geographic_ref_point = LatLon::fromRadiant(y, x); 
 		QString geographic_crs_id, geographic_crs_spec;
 		loadString(stream, geographic_crs_id);   // reserved for geographic crs id
 		loadString(stream, geographic_crs_spec); // reserved for full geographic crs specification

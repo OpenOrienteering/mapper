@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Kai Pastor
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -199,7 +199,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only) throw (Fi
 				{
 					double latitude  = xml.attributes().value("lat").toString().toDouble();
 					double longitude = xml.attributes().value("lon").toString().toDouble();
-					geographic_ref_point = LatLon(latitude, longitude, LatLon::Radiant);
+					geographic_ref_point = LatLon::fromRadiant(latitude, longitude);
 					xml.skipCurrentElement();
 				}
 				else
@@ -257,8 +257,8 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 		xml.writeCharacters(geographic_crs_spec);
 		xml.writeEndElement(/*spec*/);
 		xml.writeEmptyElement("ref_point");
-		xml.writeAttribute("lat", QString::number(geographic_ref_point.getLatitudeInRadiant(), 'f', 10));
-		xml.writeAttribute("lon", QString::number(geographic_ref_point.getLongitudeInRadiant(), 'f', 10));
+		xml.writeAttribute("lat", QString::number(radToDeg(geographic_ref_point.latitude()), 'f', 10));
+		xml.writeAttribute("lon", QString::number(radToDeg(geographic_ref_point.longitude()), 'f', 10));
 		xml.writeEndElement(/*geographic_crs*/);
 	}
 	xml.writeEndElement(/*georeferencing*/);
@@ -337,10 +337,10 @@ double Georeferencing::getConvergence() const
 	
 	// Second point on the same meridian
 	const double delta_phi = 360.0 / 40000.0;  // roughly 1 km
-	double other_latitude = geographic_ref_point.getLatitudeInDegrees();
+	double other_latitude = geographic_ref_point.latitude();
 	other_latitude +=  (other_latitude < 0.0) ? delta_phi : -delta_phi;
-	const double same_longitude = geographic_ref_point.getLongitudeInDegrees();
-	QPointF projected_other = toProjectedCoords(LatLon(other_latitude, same_longitude, LatLon::Degrees));
+	const double same_longitude = geographic_ref_point.longitude();
+	QPointF projected_other = toProjectedCoords(LatLon(other_latitude, same_longitude));
 	
 	double denominator = projected_other.y() - projected_ref_point.y();
 	if (fabs(denominator) < 0.00000000001)
@@ -478,7 +478,7 @@ LatLon Georeferencing::toGeographicCoords(const QPointF& projected_coords, bool*
 		if (ok != NULL) 
 			*ok = (ret == 0);
 	}
-	return LatLon(northing, easting, LatLon::Radiant);
+	return LatLon::fromRadiant(northing, easting);
 }
 
 QPointF Georeferencing::toProjectedCoords(const LatLon& lat_lon, bool* ok) const
@@ -486,7 +486,7 @@ QPointF Georeferencing::toProjectedCoords(const LatLon& lat_lon, bool* ok) const
 	if (ok != NULL)
 		*ok = false;
 	
-	double easting = lat_lon.getLongitudeInRadiant(), northing = lat_lon.getLatitudeInRadiant();
+	double easting = degToRad(lat_lon.longitude()), northing = degToRad(lat_lon.latitude());
 	if (projected_crs && geographic_crs) {
 		int ret = pj_transform(geographic_crs, projected_crs, 1, 1, &easting, &northing, NULL);
 		if (ok != NULL) 
@@ -509,7 +509,9 @@ MapCoordF Georeferencing::toMapCoordF(Georeferencing* other, const MapCoordF& ma
 {
 	if (other == NULL)
 	{
-		return toMapCoordF(LatLon(map_coords.getY(), map_coords.getX(), LatLon::Radiant), ok);
+		if (ok)
+			*ok = true;
+		return map_coords;
 	}
 	else if (isLocal() || getState() == ScaleOnly ||
 		other->isLocal() || other->getState() == ScaleOnly)
@@ -555,6 +557,11 @@ QString Georeferencing::getErrorText() const
 double Georeferencing::radToDeg(double val)
 {
 	return RAD_TO_DEG * val;
+}
+
+double Georeferencing::degToRad(double val)
+{
+	return DEG_TO_RAD * val;
 }
 
 QString Georeferencing::degToDMS(double val)

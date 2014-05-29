@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Kai Pastor
+ *    Copyright 2012, 2013, 2014 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,8 +26,7 @@
 QDebug operator<<(QDebug dbg, const LatLon& lat_lon)
 {
 	dbg.space() 
-	  << "LatLon" << lat_lon.latitude_value << lat_lon.longitude_value
-	  << "(" << lat_lon.getLatitudeInDegrees()
-	  << lat_lon.getLongitudeInDegrees() << ")";
+	  << "LatLon"
+	  << lat_lon.latitude() << lat_lon.longitude();
 	return dbg.space();
 }

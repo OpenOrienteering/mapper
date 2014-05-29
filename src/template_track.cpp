@@ -497,7 +497,7 @@ void TemplateTrack::calculateLocalGeoreferencing()
 	georef.setScaleDenominator(map->getScaleDenominator());
 	georef.setGeographicRefPoint(proj_center);
 	georef.setProjectedCRS("", QString("+proj=ortho +datum=WGS84 +lat_0=%1 +lon_0=%2")
-		.arg(proj_center.getLatitudeInDegrees()).arg(proj_center.getLongitudeInDegrees()));
+		.arg(proj_center.latitude()).arg(proj_center.longitude()));
 	track.changeMapGeoreferencing(georef);
 }
 

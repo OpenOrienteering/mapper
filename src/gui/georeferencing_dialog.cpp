@@ -281,7 +281,7 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	{
 		int result = QMessageBox::question(this, tr("Online declination lookup"),
 		  trUtf8("The magnetic declination for the reference point %1° %2° will now be retrieved from <a href=\"%3\">%3</a>. Do you want to continue?").
-		    arg(latlon.getLatitudeInDegrees()).arg(latlon.getLongitudeInDegrees()).arg(user_url),
+		    arg(latlon.latitude()).arg(latlon.longitude()).arg(user_url),
 		  QMessageBox::Yes | QMessageBox::No,
 		  QMessageBox::Yes );
 		if (result != QMessageBox::Yes)
@@ -296,8 +296,8 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	
 	QUrlQuery query;
 	QDate today = QDate::currentDate();
-	query.addQueryItem("lat1", QString::number(latlon.getLatitudeInDegrees()));
-	query.addQueryItem("lon1", QString::number(latlon.getLongitudeInDegrees()));
+	query.addQueryItem("lat1", QString::number(latlon.latitude()));
+	query.addQueryItem("lon1", QString::number(latlon.longitude()));
 	query.addQueryItem("startYear", QString::number(today.year()));
 	query.addQueryItem("startMonth", QString::number(today.month()));
 	query.addQueryItem("startDay", QString::number(today.day()));
@@ -410,8 +410,8 @@ void GeoreferencingDialog::updateWidgets()
 	lon_edit->setEnabled(geographic_coords_enabled);
 	
 	link_label->setEnabled(geographic_coords_enabled);
-	double latitude = georef->getGeographicRefPoint().getLatitudeInDegrees();
-	double longitude = georef->getGeographicRefPoint().getLongitudeInDegrees();
+	double latitude = georef->getGeographicRefPoint().latitude();
+	double longitude = georef->getGeographicRefPoint().longitude();
 	QString osm_link = 
 	  QString("http://www.openstreetmap.org/?lat=%1&lon=%2&zoom=18&layers=M").
 	  arg(latitude).arg(longitude);
@@ -546,7 +546,7 @@ void GeoreferencingDialog::latLonChanged(bool update_zone)
 {
 	double latitude = lat_edit->value();
 	double longitude = lon_edit->value();
-	georef->setGeographicRefPoint(LatLon(latitude, longitude, LatLon::Degrees));
+	georef->setGeographicRefPoint(LatLon(latitude, longitude));
 	setEastingNorthingValuesFrom(georef.data());
 	
 	if (update_zone)
@@ -637,10 +637,10 @@ void GeoreferencingDialog::updateZone()
 		return;
 	
 	const LatLon ref_point(georef->getGeographicRefPoint());
-	const double lat = ref_point.getLatitudeInDegrees();
+	const double lat = ref_point.latitude();
 	if (abs(lat) < 84.0)
 	{
-		const double lon = ref_point.getLongitudeInDegrees();
+		const double lon = ref_point.longitude();
 		int zone_no = int(floor(lon) + 180) / 6 % 60 + 1;
 		if (zone_no == 31 && lon >= 3.0 && lat >= 56.0 && lat < 64.0)
 			zone_no = 32; // South Norway
@@ -685,8 +685,8 @@ void GeoreferencingDialog::setLatLonValuesFrom(Georeferencing* values)
 {
 	lat_edit->blockSignals(true);
 	lon_edit->blockSignals(true);
-	lat_edit->setValue(values->getGeographicRefPoint().getLatitudeInDegrees());
-	lon_edit->setValue(values->getGeographicRefPoint().getLongitudeInDegrees());
+	lat_edit->setValue(values->getGeographicRefPoint().latitude());
+	lon_edit->setValue(values->getGeographicRefPoint().longitude());
 	lat_edit->blockSignals(false);
 	lon_edit->blockSignals(false);
 }

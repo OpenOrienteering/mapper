@@ -273,7 +273,7 @@ void GPSDisplay::debugPositionUpdate()
 		LatLon latLon = georeferencing.toGeographicCoords(coord, &ok);
 		if (ok)
 		{
-			emit latLonUpdated(latLon.getLatitudeInDegrees(), latLon.getLongitudeInDegrees(), altitude, accuracy);
+			emit latLonUpdated(latLon.latitude(), latLon.longitude(), altitude, accuracy);
 		}
 	}
 	

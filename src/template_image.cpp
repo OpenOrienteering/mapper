@@ -145,7 +145,7 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 			
 			Georeferencing initial_georef(map->getGeoreferencing());
 			if (template_coords_probably_geographic)
-				initial_georef.setGeographicRefPoint(LatLon(template_coords_center.y(), template_coords_center.x(), LatLon::Degrees));
+				initial_georef.setGeographicRefPoint(LatLon(template_coords_center.y(), template_coords_center.x()));
 			else
 				initial_georef.setProjectedRefPoint(template_coords_center);
 			initial_georef.setState(Georeferencing::ScaleOnly);
