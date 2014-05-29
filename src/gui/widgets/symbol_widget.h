@@ -74,7 +74,7 @@ public:
 	/**
 	 * @brief Selects the symbol exclusively, deselecting all other symbols.
 	 */
-	void selectSingleSymbol(Symbol *symbol);
+	void selectSingleSymbol(Symbol* symbol);
 	
 signals:
 	/**
@@ -100,6 +100,12 @@ signals:
 	 *                           otherwise it is extend.
 	 */
 	void selectObjectsClicked(bool select_exclusively);
+	
+protected:
+	/**
+	 * @brief Receives context menu events and opens the context menu.
+	 */
+	virtual void contextMenuEvent(QContextMenuEvent* event);
 	
 private:
 	SymbolRenderWidget* render_widget;

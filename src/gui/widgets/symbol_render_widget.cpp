@@ -492,12 +492,6 @@ void SymbolRenderWidget::mousePressEvent(QMouseEvent* event)
 		}
 	}
 	
-	if (event->button() == Qt::RightButton)
-	{
-		updateContextMenuState();
-		context_menu->popup(event->globalPos());
-		event->accept();
-	}
 	else if (event->button() == Qt::LeftButton && current_symbol_index >= 0 && !(event->modifiers() & Qt::ShiftModifier))
 	{
 		last_click_pos = event->pos();
@@ -872,6 +866,18 @@ void SymbolRenderWidget::sortByColor()
 void SymbolRenderWidget::sortByColorPriority()
 {
 	sort(Symbol::compareByColorPriority);
+}
+
+void SymbolRenderWidget::showContextMenu(QPoint global_pos)
+{
+	updateContextMenuState();
+	context_menu->popup(global_pos);
+}
+
+void SymbolRenderWidget::contextMenuEvent(QContextMenuEvent* event)
+{
+	showContextMenu(event->globalPos());
+	event->accept();
 }
 
 void SymbolRenderWidget::updateContextMenuState()

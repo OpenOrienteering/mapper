@@ -21,6 +21,8 @@
 
 #include "symbol_widget.h"
 
+#include <QContextMenuEvent>
+
 #include "symbol_render_widget.h"
 
 
@@ -62,7 +64,13 @@ bool SymbolWidget::isSymbolSelected(Symbol* symbol) const
 	return render_widget->isSymbolSelected(symbol);
 }
 
-void SymbolWidget::selectSingleSymbol(Symbol *symbol)
+void SymbolWidget::selectSingleSymbol(Symbol* symbol)
 {
     render_widget->selectSingleSymbol(symbol);
+}
+
+void SymbolWidget::contextMenuEvent(QContextMenuEvent* event)
+{
+	render_widget->showContextMenu(event->globalPos());
+	event->accept();
 }

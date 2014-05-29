@@ -103,6 +103,11 @@ public:
 	 */
 	virtual QSize sizeHint() const;
 	
+	/**
+	 * @brief Opens the context menu at the given global position.
+	 */
+	void showContextMenu(QPoint global_pos);
+	
 public slots:
 	/**
 	 * @brief Updates the layout and marks all icons for repainting.
@@ -278,6 +283,11 @@ protected:
 	 * @brief Marks the icons of the selected symbols for repainting.
 	 */
 	void updateSelectedIcons();
+	
+	/**
+	 * @brief Receives context menu events and opens the context menu.
+	 */
+	virtual void contextMenuEvent(QContextMenuEvent* event);
 	
 	/** 
 	 * @brief Updates the state of the actions in the context menu.
