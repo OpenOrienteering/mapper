@@ -544,9 +544,9 @@ void GeoreferencingDialog::eastingNorthingChanged(double value)
 
 void GeoreferencingDialog::latLonChanged(bool update_zone)
 {
-	double latitude = lat_edit->value() * M_PI / 180;
-	double longitude = lon_edit->value() * M_PI / 180;
-	georef->setGeographicRefPoint(LatLon(latitude, longitude));
+	double latitude = lat_edit->value();
+	double longitude = lon_edit->value();
+	georef->setGeographicRefPoint(LatLon(latitude, longitude, LatLon::Degrees));
 	setEastingNorthingValuesFrom(georef.data());
 	
 	if (update_zone)
@@ -637,17 +637,17 @@ void GeoreferencingDialog::updateZone()
 		return;
 	
 	const LatLon ref_point(georef->getGeographicRefPoint());
-	double lat = Georeferencing::radToDeg(ref_point.latitude);
+	const double lat = ref_point.getLatitudeInDegrees();
 	if (abs(lat) < 84.0)
 	{
-		double lon = Georeferencing::radToDeg(ref_point.longitude);
+		const double lon = ref_point.getLongitudeInDegrees();
 		int zone_no = int(floor(lon) + 180) / 6 % 60 + 1;
 		if (zone_no == 31 && lon >= 3.0 && lat >= 56.0 && lat < 64.0)
 			zone_no = 32; // South Norway
 		else if (lat >= 72.0 && lon >= 3.0 && lon <= 39.0)
 			zone_no = 2 * (int(floor(lon) + 3.0) / 12) + 31; // Svalbard
 		QString zone = QString::number(zone_no);
-		zone.append((ref_point.latitude >= 0.0) ? " N" : " S");
+		zone.append((lat >= 0.0) ? " N" : " S");
 		if (zone != crs_edit->getParam(0))
 		{
 			crs_edit->setParam(0, zone);

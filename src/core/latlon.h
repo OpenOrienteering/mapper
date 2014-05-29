@@ -30,33 +30,40 @@ QT_END_NAMESPACE
 
 /**
  * Specifies geographic coordinates by latitude and longitude.
+ * 
+ * Latitude is a geographic coordinate that specifies the north-south
+ * position (φ, phi).
+ * Longitude is a geographic coordinate that specifies the east-west 
+ * position (λ, lambda).
+ * 
+ * @see QGeoCoordinate
  */
 class LatLon
 {
+private:
+	double latitude_value;
+	double longitude_value;
+	friend QDebug operator<<(QDebug dbg, const LatLon& lat_lon);
+	
 public:
-	/** 
-	 * Latitude is a geographic coordinate that specifies the north-south
-	 * position (φ, phi). The unit is radiant.
-	 */
-	double latitude;
-	
 	/**
-	 * Longitude is a geographic coordinate that specifies the east-west 
-	 * position (λ, lambda). The unit is radiant.
+	 * @brief Supported units of measurement for latitude and longitude.
 	 */
-	double longitude;
-	
+	enum Unit
+	{
+		Radiant,
+		Degrees
+	};
+
 	/**
 	 * Constructs a new LatLon with latitude and longitude set to zero.
 	 */
 	LatLon();
 	
 	/**
-	 * Constructs a new LatLon for the latitude and longitude.
-	 * If given_in_degrees is true, the parameters' unit is degree, otherwise 
-	 * the unit is radiant.
+	 * Constructs a new LatLon for the given latitude, longitude and unit.
 	 */
-	LatLon(double latitude, double longitude, bool given_in_degrees = false);
+	LatLon(double latitude_value, double longitude_value, Unit unit);
 	
 	/**
 	 * Returns the latitude value in degrees.
@@ -67,6 +74,16 @@ public:
 	 * Returns the longitude value in degrees.
 	 */
 	double getLongitudeInDegrees() const;
+	
+	/** 
+	 * Returns the latitude value in radiant.
+	 */
+	double getLatitudeInRadiant() const;
+	
+	/**
+	 * Returns the longitude value in radiant.
+	 */
+	double getLongitudeInRadiant() const;
 	
 	/**
 	 * Returns true if this object has exactly the same latitude and longitude
@@ -94,46 +111,58 @@ QDebug operator<<(QDebug dbg, const LatLon &lat_lon);
 
 inline
 LatLon::LatLon()
-: latitude(0.0)
-, longitude(0.0)
+: latitude_value(0.0)
+, longitude_value(0.0)
 {
 	; // nothing
 }
 
 inline
-LatLon::LatLon(double latitude, double longitude, bool given_in_degrees)
-: latitude(latitude)
-, longitude(longitude)
+LatLon::LatLon(double latitude, double longitude, Unit unit)
+: latitude_value(latitude)
+, longitude_value(longitude)
 {
-	if (given_in_degrees)
+	if (unit == Degrees)
 	{
-		this->latitude  *= M_PI / 180;
-		this->longitude *= M_PI / 180;
+		latitude_value  *= M_PI / 180;
+		longitude_value *= M_PI / 180;
 	}
+}
+
+inline
+double LatLon::getLatitudeInRadiant() const
+{
+	return latitude_value;
+}
+
+inline
+double LatLon::getLongitudeInRadiant() const
+{
+	return longitude_value;
 }
 
 inline
 double LatLon::getLatitudeInDegrees() const
 {
-	return latitude * 180.0 / M_PI;
+	return latitude_value * 180.0 / M_PI;
 }
 
 inline
 double LatLon::getLongitudeInDegrees() const
 {
-	return longitude * 180.0 / M_PI;
+	return longitude_value * 180.0 / M_PI;
 }
 
 inline
 bool LatLon::operator==(const LatLon& rhs) const
 {
-	return (this->latitude == rhs.latitude) && (this->longitude == rhs.longitude);
+	return (this->latitude_value == rhs.latitude_value) && (this->longitude_value == rhs.longitude_value);
 }
 
 inline
 bool LatLon::operator!=(const LatLon& rhs) const
 {
-	return (this->latitude != rhs.latitude) || (this->longitude != rhs.longitude);
+	return (this->latitude_value != rhs.latitude_value) || (this->longitude_value != rhs.longitude_value);
 }
 
 #endif

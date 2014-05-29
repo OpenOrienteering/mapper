@@ -657,8 +657,8 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 			const LatLon lat_lon(georef.toGeographicCoords(pos, &ok));
 			cursorpos_label->setText(
 			  QString::fromUtf8("%1° %2°").
-			  arg(locale().toString(georef.radToDeg(lat_lon.latitude), 'f', 6)).
-			  arg(locale().toString(georef.radToDeg(lat_lon.longitude), 'f', 6))
+			  arg(locale().toString(lat_lon.getLatitudeInDegrees(), 'f', 6)).
+			  arg(locale().toString(lat_lon.getLongitudeInDegrees(), 'f', 6))
 			); 
 		}
 		else if (coords_type == GEOGRAPHIC_COORDS_DMS)
@@ -666,8 +666,8 @@ void MapWidget::updateCursorposLabel(const MapCoordF pos)
 			const LatLon lat_lon(georef.toGeographicCoords(pos, &ok));
 			cursorpos_label->setText(
 			  QString::fromUtf8("%1 %2").
-			  arg(georef.radToDMS(lat_lon.latitude)).
-			  arg(georef.radToDMS(lat_lon.longitude))
+			  arg(georef.degToDMS(lat_lon.getLatitudeInDegrees())).
+			  arg(georef.degToDMS(lat_lon.getLongitudeInDegrees()))
 			); 
 		}
 		else

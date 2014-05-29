@@ -358,9 +358,9 @@ public:
 	static double radToDeg(double val);
 	
 	/**
-	 * Converts a value from radians to a D°M'S" string.
+	 * Converts a value from degrees to a D°M'S" string.
 	 */
-	static QString radToDMS(double val);
+	static QString degToDMS(double val);
 	
 	
 	/**

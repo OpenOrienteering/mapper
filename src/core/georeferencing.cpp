@@ -197,8 +197,9 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only) throw (Fi
 				}
 				else if (xml.name() == "ref_point")
 				{
-					geographic_ref_point.latitude  = xml.attributes().value("lat").toString().toDouble();
-					geographic_ref_point.longitude = xml.attributes().value("lon").toString().toDouble();
+					double latitude  = xml.attributes().value("lat").toString().toDouble();
+					double longitude = xml.attributes().value("lon").toString().toDouble();
+					geographic_ref_point = LatLon(latitude, longitude, LatLon::Radiant);
 					xml.skipCurrentElement();
 				}
 				else
@@ -256,8 +257,8 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 		xml.writeCharacters(geographic_crs_spec);
 		xml.writeEndElement(/*spec*/);
 		xml.writeEmptyElement("ref_point");
-		xml.writeAttribute("lat", QString::number(geographic_ref_point.latitude, 'f', 10));
-		xml.writeAttribute("lon", QString::number(geographic_ref_point.longitude, 'f', 10));
+		xml.writeAttribute("lat", QString::number(geographic_ref_point.getLatitudeInRadiant(), 'f', 10));
+		xml.writeAttribute("lon", QString::number(geographic_ref_point.getLongitudeInRadiant(), 'f', 10));
 		xml.writeEndElement(/*geographic_crs*/);
 	}
 	xml.writeEndElement(/*georeferencing*/);
@@ -334,10 +335,12 @@ double Georeferencing::getConvergence() const
 	if (!isValid() || isLocal())
 		return 0.0;
 	
-	const double delta_phi = M_PI / 20000.0;  // roughly 1 km, TODO: replace by literal constant.
-	LatLon geographic_other = geographic_ref_point;
-	geographic_other.latitude += (geographic_other.latitude < 0.0) ? delta_phi : -delta_phi; // 2nd point on the same meridian
-	QPointF projected_other = toProjectedCoords(geographic_other);
+	// Second point on the same meridian
+	const double delta_phi = 360.0 / 40000.0;  // roughly 1 km
+	double other_latitude = geographic_ref_point.getLatitudeInDegrees();
+	other_latitude +=  (other_latitude < 0.0) ? delta_phi : -delta_phi;
+	const double same_longitude = geographic_ref_point.getLongitudeInDegrees();
+	QPointF projected_other = toProjectedCoords(LatLon(other_latitude, same_longitude, LatLon::Degrees));
 	
 	double denominator = projected_other.y() - projected_ref_point.y();
 	if (fabs(denominator) < 0.00000000001)
@@ -475,7 +478,7 @@ LatLon Georeferencing::toGeographicCoords(const QPointF& projected_coords, bool*
 		if (ok != NULL) 
 			*ok = (ret == 0);
 	}
-	return LatLon(northing, easting);
+	return LatLon(northing, easting, LatLon::Radiant);
 }
 
 QPointF Georeferencing::toProjectedCoords(const LatLon& lat_lon, bool* ok) const
@@ -483,7 +486,7 @@ QPointF Georeferencing::toProjectedCoords(const LatLon& lat_lon, bool* ok) const
 	if (ok != NULL)
 		*ok = false;
 	
-	double easting = lat_lon.longitude, northing = lat_lon.latitude;
+	double easting = lat_lon.getLongitudeInRadiant(), northing = lat_lon.getLatitudeInRadiant();
 	if (projected_crs && geographic_crs) {
 		int ret = pj_transform(geographic_crs, projected_crs, 1, 1, &easting, &northing, NULL);
 		if (ok != NULL) 
@@ -506,7 +509,7 @@ MapCoordF Georeferencing::toMapCoordF(Georeferencing* other, const MapCoordF& ma
 {
 	if (other == NULL)
 	{
-		return toMapCoordF(LatLon(map_coords.getY(), map_coords.getX()), ok);
+		return toMapCoordF(LatLon(map_coords.getY(), map_coords.getX(), LatLon::Radiant), ok);
 	}
 	else if (isLocal() || getState() == ScaleOnly ||
 		other->isLocal() || other->getState() == ScaleOnly)
@@ -554,9 +557,9 @@ double Georeferencing::radToDeg(double val)
 	return RAD_TO_DEG * val;
 }
 
-QString Georeferencing::radToDMS(double val)
+QString Georeferencing::degToDMS(double val)
 {
-	qint64 tmp = RAD_TO_DEG * val * 360000;
+	qint64 tmp = val * 360000;
 	int csec = tmp % 6000;
 	tmp = tmp / 6000;
 	int min = tmp % 60;

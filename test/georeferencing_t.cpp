@@ -98,7 +98,7 @@ void GeoreferencingTest::testProjection()
 	QFETCH(double, longitude);
 	
 	// geographic to projected
-	LatLon lat_lon(latitude, longitude);
+	LatLon lat_lon(latitude, longitude, LatLon::Radiant);
 	bool ok;
 	QPointF proj_coord = georef.toProjectedCoords(lat_lon, &ok);
 	QVERIFY(ok);
@@ -111,9 +111,9 @@ void GeoreferencingTest::testProjection()
 	proj_coord = QPointF(easting, northing);
 	lat_lon = georef.toGeographicCoords(proj_coord, &ok);
 	QVERIFY(ok);
-	if (fabs(lat_lon.latitude - latitude) > max_angl_error)
+	if (fabs(lat_lon.getLatitudeInRadiant() - latitude) > max_angl_error)
 		QCOMPARE(QString::number(lat_lon.getLatitudeInDegrees(), 'f'), QString::number(latitude*180.0/M_PI, 'f'));
-	if (fabs(lat_lon.longitude - longitude) > (max_angl_error / cos(latitude)))
+	if (fabs(lat_lon.getLongitudeInRadiant() - longitude) > (max_angl_error / cos(latitude)))
 		QCOMPARE(QString::number(lat_lon.getLongitudeInDegrees(), 'f'), QString::number(longitude*180.0/M_PI, 'f'));
 }
 
