@@ -21,6 +21,10 @@
 
 #include <proj_api.h>
 
+#include "../src/file_format_xml.h"
+
+
+int XMLFileFormat::active_version = 6;
 
 double GeoreferencingTest::degFromDMS(double d, double m, double s)
 {
